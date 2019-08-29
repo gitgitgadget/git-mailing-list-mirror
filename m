@@ -2,95 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E06861F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 21:04:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 839CE1F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 21:40:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727440AbfH2VE3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 17:04:29 -0400
-Received: from egyptian.birch.relay.mailchannels.net ([23.83.209.56]:18713
-        "EHLO egyptian.birch.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726245AbfH2VE3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 29 Aug 2019 17:04:29 -0400
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id A3F452C2D7A;
-        Thu, 29 Aug 2019 21:04:27 +0000 (UTC)
-Received: from pdx1-sub0-mail-a35.g.dreamhost.com (100-96-45-15.trex.outbound.svc.cluster.local [100.96.45.15])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id EB4CC2C2572;
-        Thu, 29 Aug 2019 21:04:26 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from pdx1-sub0-mail-a35.g.dreamhost.com ([TEMPUNAVAIL].
- [64.90.62.162])
-        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
-        by 0.0.0.0:2500 (trex/5.17.5);
-        Thu, 29 Aug 2019 21:04:27 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|novalis@novalis.org
-X-MailChannels-Auth-Id: dreamhost
-X-Turn-Macabre: 66aeda9d04696d1c_1567112667378_3217876287
-X-MC-Loop-Signature: 1567112667378:1699084483
-X-MC-Ingress-Time: 1567112667378
-Received: from pdx1-sub0-mail-a35.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a35.g.dreamhost.com (Postfix) with ESMTP id B2CDD7F656;
-        Thu, 29 Aug 2019 14:04:21 -0700 (PDT)
-Received: from localhost.localdomain (unknown [38.27.161.17])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by pdx1-sub0-mail-a35.g.dreamhost.com (Postfix) with ESMTPSA id 69C387F5E0;
-        Thu, 29 Aug 2019 14:04:20 -0700 (PDT)
-X-DH-BACKEND: pdx1-sub0-mail-a35
-From:   David Turner <dturner@twosigma.com>
-To:     git@vger.kernel.org
-Cc:     David Turner <dturner@twosigma.com>
-Subject: [PATCH] clarify documentation for remote helpers
-Date:   Thu, 29 Aug 2019 17:03:02 -0400
-Message-Id: <20190829210301.18467-1-dturner@twosigma.com>
-X-Mailer: git-send-email 2.23.0.rc1
+        id S1727996AbfH2VkT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 17:40:19 -0400
+Received: from relay12.mail.gandi.net ([217.70.178.232]:52279 "EHLO
+        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726661AbfH2VkT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Aug 2019 17:40:19 -0400
+Received: from localhost (unknown [1.186.12.40])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay12.mail.gandi.net (Postfix) with ESMTPSA id 4F396200008;
+        Thu, 29 Aug 2019 21:40:16 +0000 (UTC)
+Date:   Fri, 30 Aug 2019 03:10:14 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] checkout: add simple check for 'git checkout -b'
+Message-ID: <20190829214014.vijdotp4g65a5mk3@yadavpratyush.com>
+References: <pull.325.git.gitgitgadget@gmail.com>
+ <dcf5c60c69d8275a557ffe3d3ae30911d2140162.1567098090.git.gitgitgadget@gmail.com>
+ <7e406b35-9ff6-348f-bdee-7540381f000e@gmail.com>
+ <206819d0-8066-e8e8-8967-8a1db05eea26@gmail.com>
+ <20190829203037.vzxuaxpsghbdc6vl@yadavpratyush.com>
 MIME-Version: 1.0
-X-VR-OUT-STATUS: OK
-X-VR-OUT-SCORE: 0
-X-VR-OUT-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduvddrudeivddgudehfecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucggtfgfnhhsuhgsshgtrhhisggvpdfftffgtefojffquffvnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertdertddtnecuhfhrohhmpeffrghvihguucfvuhhrnhgvrhcuoeguthhurhhnvghrsehtfihoshhighhmrgdrtghomheqnecukfhppeefkedrvdejrdduiedurddujeenucfrrghrrghmpehmohguvgepshhmthhppdhhvghloheplhhotggrlhhhohhsthdrlhhotggrlhguohhmrghinhdpihhnvghtpeefkedrvdejrdduiedurddujedprhgvthhurhhnqdhprghthhepffgrvhhiugcuvfhurhhnvghruceoughtuhhrnhgvrhesthifohhsihhgmhgrrdgtohhmqedpmhgrihhlfhhrohhmpeguthhurhhnvghrsehtfihoshhighhmrgdrtghomhdpnhhrtghpthhtohepughtuhhrnhgvrhesthifohhsihhgmhgrrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190829203037.vzxuaxpsghbdc6vl@yadavpratyush.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: David Turner <dturner@twosigma.com>
----
+On 30/08/19 02:00AM, Pratyush Yadav wrote:
+> On 29/08/19 04:07PM, Derrick Stolee wrote:
+> > On 8/29/2019 2:54 PM, Phillip Wood wrote:
+> > > Hi Stolee
+> > > 
+> > > On 29/08/2019 18:01, Derrick Stolee via GitGitGadget wrote:
+> > >> +   
+> > >> +    if (argc == 3 && !strcmp(argv[1], "-b")) {
+> > >> +        /*
+> > >> +         * User ran 'git checkout -b <branch>' and expects
+> > > 
+> > > What if the user ran 'git checkout -b<branch>'? Then argc == 2.
+> > 
+> > Good catch. I'm tempted to say "don't do that" to keep this
+> > simple. They won't have incorrect results, just slower than
+> > the "with space" option.
+> > 
+> > However, if there is enough interest in correcting the "-b<branch>"
+> > case, then I can make another attempt at this.
+>  
+> You can probably do this with:
+> 
+>   !strncmp(argv[1], "-b", 2)
+> 
+> The difference is so little, might as well do it IMO.
+ 
+Actually, that is not correct. I took a quick look before writing this 
+and missed the fact that argc == 3 is the bigger problem.
 
-This doesn't address the connectivity-ok problem, which I continue to
-worry is a real bug.  But it would have saved me a few minutes of
-debugging.
+Thinking a little more about this, you can mix other options with 
+checkout -b, like --track. You can also specify <start_point>.
 
- Documentation/gitremote-helpers.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Now I don't know enough about this optimization you are doing to know 
+whether we need to optimize when these options are given, but at least 
+for --track I don't see any reason not to.
 
-diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremot=
-e-helpers.txt
-index 43f80c8068..30001b2054 100644
---- a/Documentation/gitremote-helpers.txt
-+++ b/Documentation/gitremote-helpers.txt
-@@ -297,9 +297,9 @@ Supported if the helper has the "option" capability.
- 	same batch are complete. Only objects which were reported
- 	in the output of 'list' with a sha1 may be fetched this way.
- +
--Optionally may output a 'lock <file>' line indicating a file under
--GIT_DIR/objects/pack which is keeping a pack until refs can be
--suitably updated.
-+Optionally may output a 'lock <file>' line indicating the full path of
-+a file under under GIT_DIR/objects/pack which is keeping a pack until
-+refs can be suitably updated.  The path must end with ".keep".
- +
- If option 'check-connectivity' is requested, the helper must output
- 'connectivity-ok' if the clone is self-contained and connected.
---=20
-2.20.1
+So maybe you are better off using something like getopt() (warning: 
+getopt modifies the input string so you probably want to duplicate it) 
+if you want to support all cases. Though for this simple case you can 
+probably get away by just directly scanning the argv list for "-b" 
+(using strncmp instead of strcmp to account for "-b<branch-name>)
 
+-- 
+Regards,
+Pratyush Yadav
