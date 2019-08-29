@@ -2,187 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7A801F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 18:28:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B4151F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 18:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729701AbfH2S2Y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 14:28:24 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:50727 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728744AbfH2S2J (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Aug 2019 14:28:09 -0400
-Received: by mail-wm1-f66.google.com with SMTP id v15so4740223wml.0
-        for <git@vger.kernel.org>; Thu, 29 Aug 2019 11:28:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fNCEMQP8FCbtf8HiQIYPv4jwNXJ8cQPMolrSHc0GMKM=;
-        b=dQH5VKLPx9T16iiRkV1tcmN0GVwUDuGbFKwuE9FsH/swORSqLB6uQXeSQXtPgpzY2l
-         j5twijPcQOYft7HOxqyAu4jBwCZs495o6E0GSCwHqgaxZZhGeH2ATjSzFnA572I30YU/
-         MWIYiJoO75+wtmAUsiMZjV40qFHSeqLcfRQgDggeKd6ZMGY5Pk9tts+dJPQyb7yZXYui
-         XjchwRvHSu3WKsdRdyGQrQqs7N8J3yBWs2ebFKfxQb5um/FAissxLawaa3dIV3uPpibD
-         xuAo2DYmBkAW5zCmLw081XdjBAxiqLUCnxoKd2zcYD5D0UK3IRatvTKiMq8LrUu6KsNp
-         TNjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fNCEMQP8FCbtf8HiQIYPv4jwNXJ8cQPMolrSHc0GMKM=;
-        b=lhVCLI1hseDyD+YnMP7RoL4dr6D0ke+/819Oa9KOAPc+AHeFsAnJWMTrcKvBDMmcJw
-         Sv7n+6LIZQlwrh07FMDTUnLelhXzU+LacZTfroi9YtQHupXhl7RAFeCJM2CNiZqnns2Z
-         j2lYM3mpmK7oz0lSMUEcbcub3fOruFOQR12MAwDjMxvasU8sjE5t4+YrqaTk6CTfPUdg
-         SavuW3+jbWiDV/cno0DthFlhTsgdkNsnw8gu9mxHh2dBvPIAyL7ef2KaCFZMZAFclzVl
-         InDbXWZy8+4Hj8JthIwFykHHVa0UJnyPoqkM8v16ltOzNaZVp0r96rv9mXXVaAkyAPfF
-         uqdA==
-X-Gm-Message-State: APjAAAULBKmn+wvbwDrNnmcrzS9TiPKlwjRwD7CJbJ1tn63UFpqwAJod
-        KJbEHtoXDjyt53nTce+3HUGFdy/m
-X-Google-Smtp-Source: APXvYqwA1XqzWH1YmnEAViVqxILvw5lZQclfDlFMlnogdUQZTCGHls8LAaxb8UIhTis2AQ3F6ZIrsA==
-X-Received: by 2002:a7b:ce1a:: with SMTP id m26mr13615467wmc.60.1567103287497;
-        Thu, 29 Aug 2019 11:28:07 -0700 (PDT)
-Received: from localhost ([2.31.128.175])
-        by smtp.gmail.com with ESMTPSA id c132sm5289996wme.27.2019.08.29.11.28.06
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 29 Aug 2019 11:28:06 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Joel Teichroeb <joel@teichroeb.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 1/3] factor out refresh_and_write_cache function
-Date:   Thu, 29 Aug 2019 19:27:46 +0100
-Message-Id: <20190829182748.43802-2-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.23.0.rc2.194.ge5444969c9
-In-Reply-To: <20190829182748.43802-1-t.gummerer@gmail.com>
-References: <20190827101408.76757-1-t.gummerer@gmail.com>
- <20190829182748.43802-1-t.gummerer@gmail.com>
+        id S1728924AbfH2ScN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 14:32:13 -0400
+Received: from relay3-d.mail.gandi.net ([217.70.183.195]:52281 "EHLO
+        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728835AbfH2ScM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Aug 2019 14:32:12 -0400
+X-Originating-IP: 1.186.12.40
+Received: from localhost (unknown [1.186.12.40])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 6AB7C60004;
+        Thu, 29 Aug 2019 18:32:10 +0000 (UTC)
+Date:   Fri, 30 Aug 2019 00:02:07 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Paul Mackerras <paulus@ozlabs.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] gitk: Make web links clickable
+Message-ID: <20190829183207.sy66tyxnnzgvjv35@yadavpratyush.com>
+References: <20190826221444.GB7402@blackberry>
+ <20190829012702.GB3297@blackberry>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190829012702.GB3297@blackberry>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Getting the lock for the index, refreshing it and then writing it is a
-pattern that happens more than once throughout the codebase.  Factor
-out the refresh_and_write_cache function from builtin/am.c to
-read-cache.c, so it can be re-used in other places in a subsequent
-commit.
+On 29/08/19 11:27AM, Paul Mackerras wrote:
+> This makes gitk look for http or https URLs in the commit description
+> and make the URLs clickable.  Clicking on them will invoke an external
+> web browser with the URL.
+> 
+> The web browser command is by default "xdg-open" on Linux, "open" on
+> MacOS, and "cmd /c start" on Windows.  The command can be changed in
+> the preferences window, and it can include parameters as well as the
+> command name.  If it is set to the empty string then URLs will no
+> longer be made clickable.
+> 
+> Signed-off-by: Paul Mackerras <paulus@ozlabs.org>
+> ---
+> v2: Match URLs anywhere, not just after [Bug]Link:.
+> 
+>  gitk | 51 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 50 insertions(+), 1 deletion(-)
+> 
+> diff --git a/gitk b/gitk
+> index a14d7a1..2a0d00c 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -7016,6 +7016,7 @@ proc commit_descriptor {p} {
+>  
+>  # append some text to the ctext widget, and make any SHA1 ID
+>  # that we know about be a clickable link.
+> +# Also look for URLs of the form "http[s]://..." and make them web links.
+>  proc appendwithlinks {text tags} {
+>      global ctext linknum curview
+>  
+> @@ -7032,6 +7033,18 @@ proc appendwithlinks {text tags} {
+>  	setlink $linkid link$linknum
+>  	incr linknum
+>      }
+> +    set wlinks [regexp -indices -all -inline -line \
+> +		    {https?://[^[:space:]]+} $text]
 
-Note that we return different error codes for failing to refresh the
-cache, and failing to write the index.  The current caller only cares
-about failing to write the index.  However for other callers we're
-going to convert in subsequent patches we will need this distinction.
+I know I suggested searching till the first non-whitespace character, 
+but thinking more about, there are some problematic cases. Say someone 
+has a commit message like:
+  
+  Foo bar baz (more details at https://example.com/hello)
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- builtin/am.c | 16 ++--------------
- cache.h      | 13 +++++++++++++
- read-cache.c | 17 +++++++++++++++++
- 3 files changed, 32 insertions(+), 14 deletions(-)
+Or like:
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 1aea657a7f..ddedd2b9d4 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1071,19 +1071,6 @@ static const char *msgnum(const struct am_state *state)
- 	return sb.buf;
- }
- 
--/**
-- * Refresh and write index.
-- */
--static void refresh_and_write_cache(void)
--{
--	struct lock_file lock_file = LOCK_INIT;
--
--	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
--	refresh_cache(REFRESH_QUIET);
--	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
--		die(_("unable to write index file"));
--}
--
- /**
-  * Dies with a user-friendly message on how to proceed after resolving the
-  * problem. This message can be overridden with state->resolvemsg.
-@@ -1703,7 +1690,8 @@ static void am_run(struct am_state *state, int resume)
- 
- 	unlink(am_path(state, "dirtyindex"));
- 
--	refresh_and_write_cache();
-+	if (refresh_and_write_cache(REFRESH_QUIET, 0) < 0)
-+		die(_("unable to write index file"));
- 
- 	if (repo_index_has_changes(the_repository, NULL, &sb)) {
- 		write_state_bool(state, "dirtyindex", 1);
-diff --git a/cache.h b/cache.h
-index b1da1ab08f..987d289e8f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -414,6 +414,7 @@ extern struct index_state the_index;
- #define add_file_to_cache(path, flags) add_file_to_index(&the_index, (path), (flags))
- #define chmod_cache_entry(ce, flip) chmod_index_entry(&the_index, (ce), (flip))
- #define refresh_cache(flags) refresh_index(&the_index, (flags), NULL, NULL, NULL)
-+#define refresh_and_write_cache(refresh_flags, write_flags) repo_refresh_and_write_index(the_repository, (refresh_flags), (write_flags), NULL, NULL, NULL)
- #define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
- #define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
- #define cache_dir_exists(name, namelen) index_dir_exists(&the_index, (name), (namelen))
-@@ -812,6 +813,18 @@ void fill_stat_cache_info(struct index_state *istate, struct cache_entry *ce, st
- #define REFRESH_IN_PORCELAIN	0x0020	/* user friendly output, not "needs update" */
- #define REFRESH_PROGRESS	0x0040  /* show progress bar if stderr is tty */
- int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
-+/*
-+ * Refresh the index and write it to disk.
-+ *
-+ * 'refresh_flags' is passed directly to 'refresh_index()', while
-+ * 'COMMIT_LOCK | write_flags' is passed to 'write_locked_index()', so
-+ * the lockfile is always either committed or rolled back.
-+ *
-+ * Return 1 if refreshing the cache failed, -1 if writing the cache to
-+ * disk failed, 0 on success.
-+ */
-+int repo_refresh_and_write_index(struct repository*, unsigned int refresh_flags, unsigned int write_flags, const struct pathspec *, char *seen, const char *header_msg);
-+
- struct cache_entry *refresh_cache_entry(struct index_state *, struct cache_entry *, unsigned int);
- 
- void set_alternate_index_output(const char *);
-diff --git a/read-cache.c b/read-cache.c
-index 52ffa8a313..72662df077 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1472,6 +1472,23 @@ static void show_file(const char * fmt, const char * name, int in_porcelain,
- 	printf(fmt, name);
- }
- 
-+int repo_refresh_and_write_index(struct  repository *repo,
-+				 unsigned int refresh_flags,
-+				 unsigned int write_flags,
-+				 const struct pathspec *pathspec,
-+				 char *seen, const char *header_msg)
-+{
-+	struct lock_file lock_file = LOCK_INIT;
-+
-+	repo_hold_locked_index(repo, &lock_file, LOCK_DIE_ON_ERROR);
-+	if (refresh_index(repo->index, refresh_flags, pathspec, seen, header_msg))
-+		return 1;
-+	if (write_locked_index(repo->index, &lock_file, COMMIT_LOCK | write_flags))
-+		return -1;
-+	return 0;
-+}
-+
-+
- int refresh_index(struct index_state *istate, unsigned int flags,
- 		  const struct pathspec *pathspec,
- 		  char *seen, const char *header_msg)
+  Check out https://foo.com, https://bar.com
+
+In the first example, the closing parenthesis gets included in the link, 
+but shouldn't be. In the second, the comma after foo.com would be 
+included in the link, but shouldn't be. So maybe use a more 
+sophisticated regex?
+
+A quick Google search gives out the following options [0][1].
+
+[0] gives the following regex:
+
+  https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)
+
+It is kind of ugly to look at, and I'm not even sure if there are any 
+syntax differences with Tcl's regex library.
+
+[1] lists a bunch of regexes and which URLs they work on and which ones 
+they don't. The smallest among them I found is:
+
+  @^(https?|ftp)://[^\s/$.?#].[^\s]*$@iS
+
+Again, I'm not sure how well this would work with Tcl's regex library, 
+or how commonly these URL patterns appear in actual commit messages.  
+Just something to consider.
+
+[0] https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
+[1] https://mathiasbynens.be/demo/url-regex
+
+[snip]
+
 -- 
-2.23.0.rc2.194.ge5444969c9
-
+Regards,
+Pratyush Yadav
