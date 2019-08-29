@@ -2,110 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E11CF1F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 14:28:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E659F1F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 14:32:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727118AbfH2O2p (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 10:28:45 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:46121 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726518AbfH2O2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Aug 2019 10:28:44 -0400
-Received: by mail-qk1-f194.google.com with SMTP id p13so3045162qkg.13
-        for <git@vger.kernel.org>; Thu, 29 Aug 2019 07:28:44 -0700 (PDT)
+        id S1727415AbfH2Ocd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 10:32:33 -0400
+Received: from mail-wm1-f44.google.com ([209.85.128.44]:52423 "EHLO
+        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726283AbfH2Occ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Aug 2019 10:32:32 -0400
+Received: by mail-wm1-f44.google.com with SMTP id t17so3977731wmi.2
+        for <git@vger.kernel.org>; Thu, 29 Aug 2019 07:32:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=MX8RMjiouy53drYcVEJQYNLuKoju1J6c0P8Nn3EX80o=;
-        b=NRA3bxw0Wzh12u83TdtKY18aMCW+WOiG0HWZgG7qDoQWATj6BpH6cpRCw+HVQpvTqs
-         pDIdbTerMVLG9bl1SBkEy/J5ncLW8nm6kTkRB+VGZ/DmE+ZFVFX8zrLpa8tD0nA43drO
-         qIgzBUiU1Zjwgn3gxZdhqfR8LJmTgVouyF3dTkSGj9e68xgUdsSZ3cHlhjxCEiAKYpO4
-         K+eQK/eMbN+MEmgYz/My3aP0zTktNqR9HzvQNPeosoiPGtSlW3XeYBuW0MB+mYdkgPGS
-         lDWgUHmAhMjKkJE4qOvSaD1Ov8GNAkjw0Qy/0ThOXgb4dvMIZg1FKwlEosdCRaSe0p8a
-         8dmw==
+        d=continuousdelta.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=9XAOwiwmL2j2dXBKdJ29sPdry2nm9I0NVgeYeOCQI3U=;
+        b=d+gughDMgwk6GZ6tSTcSs+gbCSF4E7SnmpKearPVOX25TBWlcDG/SVr9gula3RtB4l
+         pPVSaLLXh5QX68nEbEWKS+YJIxKYqhLVxm7lFv4gN/FurOpPxWSZsB6IEUkjLCO+ESPH
+         c/4Pz8PsvXbb4WmPdS1sYRVCy6ozuOe9K129YAps97+dJ4tXOl3CwzQoKeynQx+F4rCO
+         SVWNL7jnpUzMk9es/+Qtxp/0TuoajaGE1NqU43jXkpvulfsc3Ot5h8YZNLa99ACV+/QI
+         hvPFE5Nh//HpEeT6pDSz4effsayGrN/yEZTw6J9YDh7bWkKCmo1qeOy8L7MIdKnTwqHE
+         eyKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=MX8RMjiouy53drYcVEJQYNLuKoju1J6c0P8Nn3EX80o=;
-        b=h4Cq+IHl55/8bh5tk9TLS43Z9JLhEgQtMB4hvrImiQFBurWCHnH5fyQf2AbZ6WFKdc
-         iFZjf8fZdzO7rcPZAqpKdR9o/fmvjdxpvmazLrdDdr2ORY0EyfjOdTOjLlTw9Vtf5mAK
-         Qf6lzKhy7DhOBvL4Tgbet9OFXF8naFZUbQJnah4Fcw2fipbrzwWWneF0TrFScgZWdr2L
-         uXrQaJsRMFuJ7+4Xw3PnAlE70sf9h01X/+JN3XmWGCv6KslWYIU1XofrF4sLWJVZHPpC
-         wYQ//OirFqBv432lzfkbM6+28KmyKeTzKbwAf9esEu5gH+qLl3B2CydUsPmx7+dCMGj+
-         8dZA==
-X-Gm-Message-State: APjAAAVzAEiY4a6z5m58lvTAPtzzkZuVj4RjuWVr0j65qQsLbeL6TgiX
-        5f1O6vx1fLT8GrqcCuewwiLS8cgaAhI=
-X-Google-Smtp-Source: APXvYqwQK7uNEXq6FJAfueam7FR90k89ysBnNIhXYlEfLgH6KJ5pmu1ba/hTXEVVTR9eIhwnzwn/aQ==
-X-Received: by 2002:ae9:d606:: with SMTP id r6mr9463975qkk.364.1567088923933;
-        Thu, 29 Aug 2019 07:28:43 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:f9f6:adc0:ae8d:8f1f? ([2001:4898:a800:1012:ab2a:adc0:ae8d:8f1f])
-        by smtp.gmail.com with ESMTPSA id 20sm1352285qkg.59.2019.08.29.07.28.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Aug 2019 07:28:43 -0700 (PDT)
-Subject: Re: [PATCH 2/2] list-objects-filter: handle unresolved sparse filter
- OID
-To:     Jeff King <peff@peff.net>
-Cc:     Jon Simons <jon@jonsimons.org>, git@vger.kernel.org,
-        me@ttaylorr.com
-References: <20190828201824.1255-1-jon@jonsimons.org>
- <20190828201824.1255-3-jon@jonsimons.org>
- <164fa8bc-bcf1-4cce-1b49-94b64535d332@gmail.com>
- <20190829134439.GA1797@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <2ed6a754-07ef-9131-2655-6d3fd3308623@gmail.com>
-Date:   Thu, 29 Aug 2019 10:28:42 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=9XAOwiwmL2j2dXBKdJ29sPdry2nm9I0NVgeYeOCQI3U=;
+        b=BRHVYvuqHgK3+QUptWKYLyL5tFCd9KVN0gfbHmr7ts9v4dC5/P+Tuac2xephXgCvFq
+         FIlBX34Oi/0fvlr+19zFIVZ1QIMS2LjRD1dGfZU//FFNmAl3RRnj1Z+wPG6pxQ5NzKx5
+         4zbnbZTq1OO+QmDAGZ8v9uEdgZ7zLOYyZl3U6E8h1H2YoEabB3Z/wo6vbodnKxqCapGx
+         GL/5kQxQsen7zlZqh5sV0a0Ryw9HQ50NniTxljNXxjrGtwc1EPElz+4U3/oi/7yBhCgn
+         rCxnXIKsxCxCT/S1X6Q4c9zSJ5oC2J4jnEgKgg3xiX1n88qRyX/sUS5BzT+BjAXMJyYY
+         Xf0A==
+X-Gm-Message-State: APjAAAWg+e7A273iZI8skmKjRC/X2OtJkkwKUUKtEzJR/uHW/QIj55+/
+        fbsi8lO38D5+HCnH9Xh9br0iSZuB1hUTsUvtmE+v6WZ7NiCg3w==
+X-Google-Smtp-Source: APXvYqwm3jqFnI7XtIS4lXXmvRlXrY9hzjKbS0V2xfgMtyhY1iL/cwuBWuE0ot93I59XTDaVUDm3BUg3YBk49azq0lE=
+X-Received: by 2002:a1c:be05:: with SMTP id o5mr11065773wmf.61.1567089146835;
+ Thu, 29 Aug 2019 07:32:26 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190829134439.GA1797@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From:   Matthew McClure <matt@continuousdelta.com>
+Date:   Thu, 29 Aug 2019 10:32:16 -0400
+Message-ID: <CAEV-cEryZZarfz5SQsRphBXeYMPJW7tdSfY8NYnzb_-ra-pGHw@mail.gmail.com>
+Subject: How to track history of personal changes in a repository?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/29/2019 9:44 AM, Jeff King wrote:
-> On Thu, Aug 29, 2019 at 09:12:38AM -0400, Derrick Stolee wrote:
-> 
->>> +test_expect_success 'partial clone with unresolvable sparse filter fails cleanly' '
->>> +	test_must_fail git clone --no-local --no-checkout --filter=sparse:oid=master:sparse-filter "file://$(pwd)/sparse-src" sc1 2>err &&
->>> +	test_i18ngrep "unable to read sparse filter specification from sparse:oid=master:sparse-filter" err &&
->>> +	test_must_fail git clone --no-local --no-checkout --filter=sparse:oid=master "file://$(pwd)/sparse-src" sc2 2>err &&
->>> +	test_i18ngrep "unable to parse sparse filter data in $(git -C sparse-src rev-parse master)" err
->>
->> Just as a sanity check: when we use test_i18ngrep, how does it know how to
->> separate the part that is translated and which part is not?
->>
->> 	translated: "unable to read sparse filter specification from"
->> 	not translated: "sparse:oid=master"
-> 
-> It doesn't know. By default we run the suite in LOCALE=C and it checks
-> the whole string. Under a GETTEXT_POISON build, it checks nothing at
-> all.
-> 
-> The poison stuff is really about helping people not accidentally mark a
-> plumbing string (that we expect to get parsed by a machine) as
-> translatable. So the idea is you'd build with GETTEXT_POISON and then
-> run the test suite to see if anything breaks. But that means we also
-> have to annotate the test suite with "yes, I know this will be gibberish
-> in a poison build, but that's OK because it's meant for humans". And
-> that's what test_i18ngrep is.
-> 
-> test_i18ngrep could be more clever about matching the gibberish, but
-> there's not much point. The LOCALE=C run already covered the correctness
-> of checking the message.
+Hi,
 
-Thanks for clearing this up for me!
+I'm looking for a way to track history of personal changes in a repository. I'd
+like to protect against accidentally pushing the changes to a remote branch. I
+imagine this working a little like `git ignore`, and a little like a separate
+branch. It might be like a personal sub-branch that is ignored by `git
+push`. Or it might be like a history of the work tree that runs parallel to the
+reflog and to the history of any given branch.
 
--Stolee
+Does something like this exist in Git or a complementary tool?
+
+I found `git update-index --skip-worktree`. I imagine it might be relevant in
+some kind of workflow where I can maintain a personal-worktree branch.
+
+Does any of you have a personal workflow that addresses similar concerns?
+
+Thanks.
+
+-- 
+Matthew McClure
+Continuous Delta
+https://www.continuousdelta.com/
