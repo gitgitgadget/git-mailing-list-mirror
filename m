@@ -2,182 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LONGWORDS,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4833D1F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 01:51:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F6C71F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 03:41:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726319AbfH2BvP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 21:51:15 -0400
-Received: from ozlabs.org ([203.11.71.1]:55939 "EHLO ozlabs.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726079AbfH2BvP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Aug 2019 21:51:15 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-        id 46JlvM6Yr4z9sDB; Thu, 29 Aug 2019 11:51:11 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ozlabs.org; s=201707;
-        t=1567043471; bh=XQvx1azBdRw38WoWxsCqO2hLbO5fNS08UDHvuIA2KmI=;
-        h=Date:From:To:Subject:References:In-Reply-To:From;
-        b=eo+3gEEAM8ikZWrMWW8RNio3PzljCCe6QrAMVKonw/s7mv6DdpRy9Qy8HFcuevfFL
-         YLNPVFr7toxoROgVDIy+NBupFD332WWOzaNDp3s1yKwXJMxUueenw7gNj1WeUXa7XO
-         nl+S3cxgotiNvmlRbDMe2ZQVPzg+ZieYi/gwzyg4Wp5EBg5PwCj2s1ZWaqcxEA8svy
-         PNjcAQEunsxczs5P0B41Yltk99pjJlS0RIffNvIQoc89EaPXMmyPmGYmZqhoVp+U9h
-         ZMyvMA+7HwIFp3U4COnqQA3/WtNkij9Q2phUCx/KY6XXIYH1he5lrCuxy6v9EUNlsv
-         UJ+hFkHp5oKDA==
-Date:   Thu, 29 Aug 2019 11:27:02 +1000
-From:   Paul Mackerras <paulus@ozlabs.org>
-To:     git@vger.kernel.org
-Subject: [PATCH v2] gitk: Make web links clickable
-Message-ID: <20190829012702.GB3297@blackberry>
-References: <20190826221444.GB7402@blackberry>
+        id S1727235AbfH2DlG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 23:41:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64203 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726971AbfH2DlG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Aug 2019 23:41:06 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C8BEA1685F9;
+        Wed, 28 Aug 2019 23:41:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=f324K3mbZAJzqwiHnHumwNUm8Uo=; b=hFUWuM
+        XbyYjVLLoUjS8Dvzb0yRiWOSmqgNKsPjbWzv5aw4Yn9uuY3BTswNy5+dekuEhfjN
+        d0fOjjF0cCkmP60gNaVD7xV+C9Nu3eV/kBlAAKYVNlaIVYctVGMt8Kq/J8QAA3Pz
+        MvrOW2WTqkP8mNFQksWdUZ3BRSblThp28jf7c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=T36wgydrxf3DQjGfdBHirCib1NNiPoF8
+        AgoaiqTNyAcfpJflHh7EDCRl9UXLZgKXlMnlT6kcuogEt9XLZig38xNL4C+fTqoZ
+        CMSD13SmCAOGxpKH6/LL8/m0D0oT+p/i91R7eJxovtKXpktyyoEkeeyGCbFtVkh6
+        afMfq18AE8o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BFBB91685F8;
+        Wed, 28 Aug 2019 23:41:03 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2FA041685F5;
+        Wed, 28 Aug 2019 23:41:03 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Is git clone followed by git verify-tag meaningful?
+References: <20190828203224.GE26001@chatter.i7.local>
+Date:   Wed, 28 Aug 2019 20:41:02 -0700
+In-Reply-To: <20190828203224.GE26001@chatter.i7.local> (Konstantin Ryabitsev's
+        message of "Wed, 28 Aug 2019 16:32:24 -0400")
+Message-ID: <xmqq36hk1vw1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190826221444.GB7402@blackberry>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: D3227C92-CA0E-11E9-B2C2-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes gitk look for http or https URLs in the commit description
-and make the URLs clickable.  Clicking on them will invoke an external
-web browser with the URL.
+Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 
-The web browser command is by default "xdg-open" on Linux, "open" on
-MacOS, and "cmd /c start" on Windows.  The command can be changed in
-the preferences window, and it can include parameters as well as the
-command name.  If it is set to the empty string then URLs will no
-longer be made clickable.
+> If I know that a project uses tag signing, would "git clone" followed
+> by "git verify-tag" be meaningful without a "git fsck" in-between?
+> I.e. if an attacker has control over the remote server, can they sneak
+> in any badness into any of the resulting files and still have the
+> clone, checkout, and verify-tag return success unless the repository
+> is fsck'd before verify-tag?
+>
+> I assume that it would break during the checkout stage, but I wanted
+> to verify my assumptions.
 
-Signed-off-by: Paul Mackerras <paulus@ozlabs.org>
----
-v2: Match URLs anywhere, not just after [Bug]Link:.
+What you are trusting and what you are trying to protect?
 
- gitk | 51 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 50 insertions(+), 1 deletion(-)
+I am assuming that you are cloning and a commit that has a signed
+tag is at the tip of the default branch, which gets checked out and
+you want to make sure that what you see in the working tree after
+checkout is healthy.  I also assume that you trust your local
+machine, its Git and GPG binary included, and also you trust that
+the underlying hash function Git uses has not been exploited for
+this particular repository.
 
-diff --git a/gitk b/gitk
-index a14d7a1..2a0d00c 100755
---- a/gitk
-+++ b/gitk
-@@ -7016,6 +7016,7 @@ proc commit_descriptor {p} {
- 
- # append some text to the ctext widget, and make any SHA1 ID
- # that we know about be a clickable link.
-+# Also look for URLs of the form "http[s]://..." and make them web links.
- proc appendwithlinks {text tags} {
-     global ctext linknum curview
- 
-@@ -7032,6 +7033,18 @@ proc appendwithlinks {text tags} {
- 	setlink $linkid link$linknum
- 	incr linknum
-     }
-+    set wlinks [regexp -indices -all -inline -line \
-+		    {https?://[^[:space:]]+} $text]
-+    foreach l $wlinks {
-+	set s2 [lindex $l 0]
-+	set e2 [lindex $l 1]
-+	set url [string range $text $s2 $e2]
-+	incr e2
-+	$ctext tag delete link$linknum
-+	$ctext tag add link$linknum "$start + $s2 c" "$start + $e2 c"
-+	setwlink $url link$linknum
-+	incr linknum
-+    }
- }
- 
- proc setlink {id lk} {
-@@ -7064,6 +7077,18 @@ proc setlink {id lk} {
-     }
- }
- 
-+proc setwlink {url lk} {
-+    global ctext
-+    global linkfgcolor
-+    global web_browser
-+
-+    if {$web_browser eq {}} return
-+    $ctext tag conf $lk -foreground $linkfgcolor -underline 1
-+    $ctext tag bind $lk <1> [list browseweb $url]
-+    $ctext tag bind $lk <Enter> {linkcursor %W 1}
-+    $ctext tag bind $lk <Leave> {linkcursor %W -1}
-+}
-+
- proc appendshortlink {id {pre {}} {post {}}} {
-     global ctext linknum
- 
-@@ -7098,6 +7123,16 @@ proc linkcursor {w inc} {
-     }
- }
- 
-+proc browseweb {url} {
-+    global web_browser
-+
-+    if {$web_browser eq {}} return
-+    # Use eval here in case $web_browser is a command plus some arguments
-+    if {[catch {eval exec $web_browser [list $url] &} err]} {
-+	error_popup "[mc "Error starting web browser:"] $err"
-+    }
-+}
-+
- proc viewnextline {dir} {
-     global canv linespc
- 
-@@ -11488,7 +11523,7 @@ proc create_prefs_page {w} {
- proc prefspage_general {notebook} {
-     global NS maxwidth maxgraphpct showneartags showlocalchanges
-     global tabstop limitdiffs autoselect autosellen extdifftool perfile_attrs
--    global hideremotes want_ttk have_ttk maxrefs
-+    global hideremotes want_ttk have_ttk maxrefs web_browser
- 
-     set page [create_prefs_page $notebook.general]
- 
-@@ -11539,6 +11574,13 @@ proc prefspage_general {notebook} {
-     pack configure $page.extdifff.l -padx 10
-     grid x $page.extdifff $page.extdifft -sticky ew
- 
-+    ${NS}::entry $page.webbrowser -textvariable web_browser
-+    ${NS}::frame $page.webbrowserf
-+    ${NS}::label $page.webbrowserf.l -text [mc "Web browser" ]
-+    pack $page.webbrowserf.l -side left
-+    pack configure $page.webbrowserf.l -padx 10
-+    grid x $page.webbrowserf $page.webbrowser -sticky ew
-+
-     ${NS}::label $page.lgen -text [mc "General options"]
-     grid $page.lgen - -sticky w -pady 10
-     ${NS}::checkbutton $page.want_ttk -variable want_ttk \
-@@ -12310,6 +12352,7 @@ if {[tk windowingsystem] eq "win32"} {
-     set bgcolor SystemWindow
-     set fgcolor SystemWindowText
-     set selectbgcolor SystemHighlight
-+    set web_browser "cmd /c start"
- } else {
-     set uicolor grey85
-     set uifgcolor black
-@@ -12317,6 +12360,11 @@ if {[tk windowingsystem] eq "win32"} {
-     set bgcolor white
-     set fgcolor black
-     set selectbgcolor gray85
-+    if {[tk windowingsystem] eq "aqua"} {
-+	set web_browser "open"
-+    } else {
-+	set web_browser "xdg-open"
-+    }
- }
- set diffcolors {red "#00a000" blue}
- set diffcontext 3
-@@ -12390,6 +12438,7 @@ set config_variables {
-     filesepbgcolor filesepfgcolor linehoverbgcolor linehoverfgcolor
-     linehoveroutlinecolor mainheadcirclecolor workingfilescirclecolor
-     indexcirclecolor circlecolors linkfgcolor circleoutlinecolor
-+    web_browser
- }
- foreach var $config_variables {
-     config_init_trace $var
--- 
-2.7.4
+verify-tag would tell you that the tag you specify is signed by
+which GPG key you have in your keychain.  Since tag records the
+commit object name, you can check it against the HEAD.  As long
+as you trust the underlying hash function and your local Git,
+the trust flows from the HEAD's commit object name down to each
+and every file checked out to the working tree.  As long as you
+did not get any error from checkout, no fsck is needed here.
+
+If your project is high-valued target like the Linux kernel, it is
+probably a good idea to enable fetch.fsckobjects so that the
+incoming objects are automatically checked while receiving over the
+wire.
+
 
