@@ -2,146 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F07081F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 23:09:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CEC61F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 23:12:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728023AbfH2XJh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 19:09:37 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58468 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727826AbfH2XJh (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 29 Aug 2019 19:09:37 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:60b7:b124:ccfa:d51])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8456960425;
-        Thu, 29 Aug 2019 23:09:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1567120175;
-        bh=lMStHkKLXjugAhNPel3pzxLFH7KwrIrvLa9O890b1WE=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=CV9NLxgJCa4COY6kKBQE1EofZL6+KEKaGkXknGfjMszOH5TvR0TxPzA6wD4RdjXzt
-         ZVuRcpo6TiUdjhKQP3V4jvqxTGbMK8DC5ytLw3tLa/MpHubL5OJWvKexHjV1+LOrrA
-         tKqBubrL6q2w4MAacT3jbPm5ByrPDXPzYogSneHzc4oGduoux2TbszhmZxkII0EbWF
-         g4g+iR0HjbJQr8XTTuXAS9k42IPp1ScEcIP/758Z6bkDh5YgalOF9gETxMVUb6yN6K
-         +Le3uk0tbEc7F9K5QnfYg1+MnoVhaVgqpbRlI+m3CPZUucqOPQc6Tp+oJ6FLOyoXb9
-         /Y4QWiwe8mLdxGaloVywlpQ7TS7pIdZUArLTzJBxsIBgkfCqKKrUKo3e/dJB2Kv8ku
-         AEVD7uSogXspJmcxXpEIl9HZ6b9AFrMs1FQVTQEy6uO7nZy7639p32hGT71X6kXVuI
-         xOdfdseTSGEK6kY3yqCMcpQJU/QyUR+/xAPrhbOQIZoHBNiCquf
-Date:   Thu, 29 Aug 2019 23:09:28 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v5 2/2] am: reload .gitattributes after patching it
-Message-ID: <20190829230928.GF11334@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-References: <20190825233340.10894-1-sandals@crustytoothpaste.net>
- <20190825233340.10894-3-sandals@crustytoothpaste.net>
- <nycvar.QRO.7.76.6.1908281327180.46@tvgsbejvaqbjf.bet>
+        id S1727992AbfH2XMT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 19:12:19 -0400
+Received: from smtp121.ord1d.emailsrvr.com ([184.106.54.121]:58541 "EHLO
+        smtp121.ord1d.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726526AbfH2XMT (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 29 Aug 2019 19:12:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=g001.emailsrvr.com;
+        s=20190322-9u7zjiwi; t=1567120338;
+        bh=9s24maXAF0Vut9ISYc7fUWOl1H2O5bgClTriV2gsPNM=;
+        h=Subject:To:From:Date:From;
+        b=uRSSzzsukDAr2JGzY3djdgvBVheWTA4X5uSkTO9uFI21xMzoaEblYePS8qYUV+Yg6
+         8qNy4k9qp269JVbmnW0e5xApcb3uPKCLWCQJk/S3fuUffWhGtmGOPf0uy0wdQGno9v
+         ZVZCMfdJaA8oFrOGNW+RTJPZQPMYXR2Hp4K8ICH8=
+X-Auth-ID: jon@jonsimons.org
+Received: by smtp16.relay.ord1d.emailsrvr.com (Authenticated sender: jon-AT-jonsimons.org) with ESMTPSA id 7E4F940140;
+        Thu, 29 Aug 2019 19:12:17 -0400 (EDT)
+X-Sender-Id: jon@jonsimons.org
+Received: from simonsj-mba2.hsd1.ca.comcast.net (c-73-223-68-105.hsd1.ca.comcast.net [73.223.68.105])
+        (using TLSv1.2 with cipher AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Thu, 29 Aug 2019 19:12:18 -0400
+Subject: Re: [PATCH v2 1/2] list-objects-filter: only parse sparse OID when
+ 'have_git_dir'
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>
+References: <20190829223811.12072-1-jon@jonsimons.org>
+ <20190829223811.12072-2-jon@jonsimons.org>
+ <CAPig+cQDPsXvOYa3HYo_cYeVq4PhJE_2RGw9n+92=t3BA0-yaw@mail.gmail.com>
+From:   Jon Simons <jon@jonsimons.org>
+Message-ID: <d8f1b891-4ff7-9815-2405-76e53506027c@jonsimons.org>
+Date:   Thu, 29 Aug 2019 16:12:16 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="i3lJ51RuaGWuFYNw"
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1908281327180.46@tvgsbejvaqbjf.bet>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAPig+cQDPsXvOYa3HYo_cYeVq4PhJE_2RGw9n+92=t3BA0-yaw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 8/29/19 3:45 PM, Eric Sunshine wrote:
+> On Thu, Aug 29, 2019 at 6:38 PM Jon Simons <jon@jonsimons.org> wrote:
+>> Fix a bug in partial cloning with sparse filters by ensuring to check
+>> for 'have_git_dir' before attempting to resolve the sparse filter OID.
+>> [...]
+>> Signed-off-by: Jon Simons <jon@jonsimons.org>
+>> ---
+>> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+>> @@ -241,6 +241,27 @@ test_expect_success 'fetch what is specified on CLI even if already promised' '
+>> +test_expect_success 'setup src repo for sparse filter' '
+>> +       git init sparse-src &&
+>> +       git -C sparse-src config --local uploadpack.allowfilter 1 &&
+>> +       git -C sparse-src config --local uploadpack.allowanysha1inwant 1 &&
+>> +       for n in 1 2 3 4
+>> +       do
+>> +               test_commit -C sparse-src "this-is-file-$n" file.$n.txt || return 1
+>> +       done &&
+>> +       test_write_lines /file1.txt /file3.txt >sparse-src/odd-files &&
+>> +       test_write_lines /file2.txt /file4.txt >sparse-src/even-files &&
+>> +       test_write_lines /* >sparse-src/all-files &&
+> 
+> Hmm, does this work correctly? I would expect the /* to expand to all
+> names at the root of your filesystem, which isn't what you want. You
+> want the literal string "/*", which means you should quote it (with
+> double quotes inside the test body). I'd also suggest using the simple
+> 'echo' for this one as you did in v1 since it's more obvious that
+> you're writing just a single line to the file, whereas using
+> test_write_lines() has the potential to confuses readers.
 
---i3lJ51RuaGWuFYNw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Oof, thanks -- yes, this is incorrect.  I will revert this back to
+'echo'.  I misapplied your initial suggesttion to all three lines.
 
-On 2019-08-28 at 11:30:53, Johannes Schindelin wrote:
-> > diff --git a/convert.c b/convert.c
-> > index 94ff837649..0e6e9d2d75 100644
-> > --- a/convert.c
-> > +++ b/convert.c
-> > @@ -8,6 +8,7 @@
-> >  #include "pkt-line.h"
-> >  #include "sub-process.h"
-> >  #include "utf8.h"
-> > +#include "ll-merge.h"
-> >
-> >  /*
-> >   * convert.c - convert a file when checking it out and checking it in.
-> > @@ -1293,10 +1294,11 @@ struct conv_attrs {
-> >  	const char *working_tree_encoding; /* Supported encoding or default e=
-ncoding if NULL */
-> >  };
-> >
-> > +static struct attr_check *check;
-> > +
-> >  static void convert_attrs(const struct index_state *istate,
-> >  			  struct conv_attrs *ca, const char *path)
-> >  {
-> > -	static struct attr_check *check;
-> >  	struct attr_check_item *ccheck =3D NULL;
-> >
-> >  	if (!check) {
->=20
-> After this line:
->=20
->                 check =3D attr_check_initl("crlf", "ident", "filter",
-> 				"eol", "text", "working-tree-encoding",
-> 				NULL);
-> 		user_convert_tail =3D &user_convert;
-> 		git_config(read_convert_config, NULL);
-> 	}
->=20
-> I am a bit worried about `user_convert`: it seems never to be re-set.
 
-Yeah, it looks like I'll need to reset that as well.  The only
-consequence is that we leak a small amount of memory if there are filter
-attributes, but it's better to avoid that leak if we can.
-
-> Also, how thread-safe do we need `reset_parsed_attributes()` to be?
-
-Since patch application isn't thread safe, it doesn't need to be
-thread safe at all.  The original wasn't thread safe, either, since it
-used a static variable without a mutex.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---i3lJ51RuaGWuFYNw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1oWygACgkQv1NdgR9S
-9ovaJQ/+N19RAA1e08030EQDdhnll9YuL0TedeazjqNNWrwkiZtoC9Hcc+CD3jSi
-ubHjrU55smFTFqnYiCplfq0dyS8dzZThumCpNGCyDIS9rAdJExBMp2QrumvmmVt1
-RTzuI6kCRB6BDWNG79ps6NKR8Hgwm3NzTN90fzYNM4Ul8sdXLusK8laB5/BhPZy0
-VtvFp+x9624/27IGDldaIjdAlP8M+cyaurUp2RHu4VdDeoyugVyeIvVpkLFAfadC
-PubASvKJ/5ulDHJ2N0USt+5XP99K5hMYvWoM2ITfYrQOFUlj3apaL7478yB/H6Za
-iS2ZNuYxMPjr4JFeQIAzqCJviYpBMP0MwDARdKh6rnUEhCvIDkkP4Y9f3P3rEl8+
-X52kA6fmosiEoqZV0k8zSGQKE0Ddv1bqtYHRBKKy0r2iK3q4d0MleR8kgAwTnoGU
-OeCXhn3JG4FqqeYEGCOZnppbEeOzUrQ+11vbXQi5a14eb1Kb2mgaEu2lUf/5s94p
-ageRKpOD/L1uBvB4XSxCq3OsD91q5iQ2w0dNRpy+94SVQ7IXKHExuiYgC1CeLA1b
-mN6duxAioVNtPWpUkpicHPAHuntaN3o1f0qnjqTzLV8v2xlPs1qYbkeF4UchSen2
-UYOkgFYr6YUoUkMUlSedFNdA82AVGtyhYeMGUHXw+XrA6VTllbA=
-=sIJM
------END PGP SIGNATURE-----
-
---i3lJ51RuaGWuFYNw--
+-Jon
