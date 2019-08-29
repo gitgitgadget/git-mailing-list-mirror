@@ -2,159 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BC1D1F4B7
-	for <e@80x24.org>; Thu, 29 Aug 2019 18:54:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A67E1F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 19:06:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728239AbfH2SyM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 14:54:12 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55007 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727146AbfH2SyM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Aug 2019 14:54:12 -0400
-Received: by mail-wm1-f66.google.com with SMTP id k2so3351385wmj.4
-        for <git@vger.kernel.org>; Thu, 29 Aug 2019 11:54:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=A9nlXFxe/5X02VBgh5cSVxhiDG4XgH+23hi7N8W4cnY=;
-        b=TWdPlKJndMaECpcPAAXNd2OlrCLCG//piaxjvQpUPfwxP57n44wD0/JF8UOoWAiXsl
-         oIx6sHJ1bOxK89m5EpRp1tl97mchkni89YHvXToe+13BsXjzYVdybB3XuOXD5cdbVkjE
-         Z7CqSertjuVrzYAsO6jUcyPM2JtFvTnb7IFbum/6TMP+L/drbcdF2XJocoDaCO6WyaxY
-         zYZ8L8W7o7eW9AgiadT7w+ig6sT4VvI0gMWZqJUIlDbTW1r4or4ZlE7z46m/k6JOgOkT
-         FETzCHnJgc1Z5tRRGVlnYmw7QnZ6aVSrQ4zX1S7RLuavxdUOQcECXtcXN0XaV25t8xpZ
-         IZ7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=A9nlXFxe/5X02VBgh5cSVxhiDG4XgH+23hi7N8W4cnY=;
-        b=Reovs7x9Z+DTb0qLEXt68+pCFnupNoDl6ynPDjaic4wlRsbE400TU7/hvBsRlegFzC
-         8l814iZooL2sOsn++tkGNiI5B7mKkvq/1mUC7lYFnjvWC9oQDtrFXgEEob7j9+X5VqwX
-         PsM8pwnW43d//PiVqroR8Aktkj1sOTqGStwZovoWcaif79nxEaS/byXTMTgpqqaR50xt
-         JU7M3fhq2CjAfBLLqxmDCUbmieKfi6hrpcfX6UgfbkDWhrUMgSEdEVjOXmtd1nU/0o4u
-         8jIkqg8jK+LGtZvZL1nTLAI/9aDXz7NLZzn8Giv9/pOD7Vb2f70Ys/R9+TeABisE3CKx
-         0qOg==
-X-Gm-Message-State: APjAAAUs6cu7M5TSpEYWmboXrB0rELSLuC2m/IeP3lwU8ZLAibqXhhOb
-        0dEalkYnSh7MNpr9kRQF2qM=
-X-Google-Smtp-Source: APXvYqxaqmNtkkeHXvaXjtJnDgxHXmt6KrTDhWzOAbW+BPqKb9k0FA4L+q3GyRSepsnA0AnKdktinA==
-X-Received: by 2002:a1c:f910:: with SMTP id x16mr12847115wmh.173.1567104849961;
-        Thu, 29 Aug 2019 11:54:09 -0700 (PDT)
-Received: from [192.168.2.240] (host-92-22-2-29.as13285.net. [92.22.2.29])
-        by smtp.gmail.com with ESMTPSA id s64sm6963798wmf.16.2019.08.29.11.54.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Aug 2019 11:54:09 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/1] checkout: add simple check for 'git checkout -b'
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.325.git.gitgitgadget@gmail.com>
- <dcf5c60c69d8275a557ffe3d3ae30911d2140162.1567098090.git.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <7e406b35-9ff6-348f-bdee-7540381f000e@gmail.com>
-Date:   Thu, 29 Aug 2019 19:54:08 +0100
+        id S1728512AbfH2TGf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 15:06:35 -0400
+Received: from mout.web.de ([212.227.15.4]:53459 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727437AbfH2TGf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Aug 2019 15:06:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1567105585;
+        bh=mrh8aZQTRldTtWy53emJhwxT34pPYDCmPdlkwG5hBvU=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=BjzFZuGPpBNz9kmfQq89v+YShDzDOCGVA4c8vjMKEDV2YxPSnzU1R4jYiTOLeB76O
+         sDGLD3x741L7j/wELPgIpkp3k1j648+zvLI4zIS/wc8HX0PlO2tcdzbERqwD8K0xm3
+         LwoZ3iS9LjZlovDcQhRBOBzQr6NrlvdUGvKtG/zU=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Mh7qL-1hqZrE3NXF-00MKkI; Thu, 29
+ Aug 2019 21:06:25 +0200
+Subject: Re: [PATCH] fix segv with corrupt tag object
+To:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Sperling <stsp@stsp.name>
+Cc:     git@vger.kernel.org
+References: <20190824230944.GA14132@jessup.stsp.name>
+ <bcc29199-a4ac-6bdc-6715-9807737253d8@web.de>
+ <20190826115715.GB71935@jessup.stsp.name>
+ <xmqqo90bhmi3.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <c6601cca-7de0-ba82-2e18-916a2e9048d3@web.de>
+Date:   Thu, 29 Aug 2019 21:06:22 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <dcf5c60c69d8275a557ffe3d3ae30911d2140162.1567098090.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <xmqqo90bhmi3.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:IHryajEXy4BqUunNqWBauGXZgFicjewhXOSMCmaTKOwatP+f2HO
+ hSqS+rXWhw76nd8yDbGYVoSpbNUjo4L82Ka91OUS2LGWSb9MuwUSwK0lp4MizZrgUB1GiMI
+ lrwYSnbFPgSdvSqT3uUiO+ylx8RaHnDsWc2yixiWLORWz0t5GfjEe/BNTFSfoFCWnZFq2/J
+ ALZHYvyvBZm1DSDpBzsEw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/mC2+NWxZgs=:Z/rr9t5hmllj4ZOIuxgWlI
+ 02c8J/2IjDzUpzLtcWHoOT6gd7kyVCyKXuXjp2JzMOjOJxQVF3siUYDlMIDMWifTaYF+FTYUU
+ S6tCCq6eslGTmO7NVQd2WJMrqhPp8LXdMgaT0WqhpTGl/yyPx3irirfJeApcCH4Y+POva4SaS
+ 23e6ifyCN710YyC9rdgzA8lBeQ9FH78Kl8iIHv9RXCH3zCTURoNtBk+WdxCcjpVGJP1s6NnJs
+ g8XAttbPVEF40soPVeM417TwUfn+GfSSUKss1MSVL6WTNAATPFll/CbRfE+8CbTeNj1+05FB7
+ IJn18BKoG6F2q0kcx4MHCGSycOF2j9NE4lWi3+swMOL6NHukG4Jty+POtZL4zkY8OAK7+jmZ5
+ iDOb0N94nGP2ceVamFHoWWqsyGgT8OHnuLEL7D5AA7yPRW1wUqUDyNxfEN6j2gn3Q++I1YWc4
+ 9ZofSgod89Hj8vStoNaK7MUk7Z97Xo8rCwOZPfZ6tepMPwObVhNZBuxr3S8GGPS1IfVZ1U/v7
+ nrCUZTJbfulbvcwcZQgym8xozYyHSc3bu3Rbk8B/HQ62HhcyPvAyegLz9/Pae4904F1HxPzlm
+ BGlZ+Mide/OmqvlCEJl0k+HlqOS08+m/HuL4LucoqHtTbJuI3ZBqzbrbxZ9U//cVEsr1LNubE
+ YWbBamPorEgjm00f7Lx/IHEQMKMXY8LjrJDsX/DS1TLWvaXymaHwAGAJ0gMFu17SNmU3qAAhb
+ Qo3N5olzeGvcw4b31rWiYpBQJ7uGdI4YMBVLN+RXWC291RxYssJ8nzJwA1tA7d+5OMUSXp2+5
+ DDzMUwpu8BwfoYTGmwfN7aR3Qed1T62d2aaOQrnYz2j70eXYuW7eY8O5JfPnY0Y9gQrATXP4Q
+ LYWmhnerveaFQ3sa9dfRVDPYuETmQytgUfeN+xoPOcHnSzAsCHpuAaeuWsTHXLnD2nvJhskP7
+ lcncs25/IcRPkfcRU+C9tZ3MZNwzzr6pGaCBz5+BUFU6wcIUbEwbzVn7Of+PMdaP+BRtsOTOc
+ U4xEf5reOLYRu89y7d8J3wOhumLTqV9aqM45M6df2fGFYNute1/CF4mkFfbXB1PbSnEVrqh0n
+ k2K0ZX0GilYS4EaAhJZ/vQVyPFY+agpvyR2VL5Tyi7DYcIbHRWFMJTb5hrENYxzltcUHJN2gA
+ HH2U//SP2Op7u4FEfcOkahvW9eT/zwotLGVBw9gtOCNy1LMg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee
+Am 26.08.19 um 19:20 schrieb Junio C Hamano:
+> Stefan Sperling <stsp@stsp.name> writes:
+>
+>> The root cause of this bug seems to be that the valid assumption
+>> that obj->parsed implies a successfully parsed object is broken by
+>> parse_tag_buffer() because this function sets the 'parsed' flag even
+>> if errors occur during parsing.
+>
+> I am mildly negative about that approach.  obj->parsed is about
+> "we've done all we need to do to attempt parsing this object" (so
+> that next person who gets hold of the object knows that fact---one
+> of the reasons why may be that the caller who wants to ensure that
+> the fields are ready to be accessed does not have to spend extra
+> cycles, but that is not the only one).  Those that want to look at
+> various fields in the object (e.g. the tagged object of a tag, the
+> tagger identity of a tag, etc.) should be prepared to see and react
+> to NULL in there so that they can gracefully handle "slightly"
+> corrupt objects.
 
-On 29/08/2019 18:01, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
-> 
-> The 'git switch' command was created to separate half of the
-> behavior of 'git checkout'. It specifically has the mode to
-> do nothing with the index and working directory if the user
-> only specifies to create a new branch and change HEAD to that
-> branch. This is also the behavior most users expect from
-> 'git checkout -b', but for historical reasons it also performs
-> an index update by scanning the working directory. This can be
-> slow for even moderately-sized repos.
-> 
-> A performance fix for 'git checkout -b' was introduced by
-> fa655d8411 (checkout: optimize "git checkout -b <new_branch>"
-> 2018-08-16). That change includes details about the config
-> setting checkout.optimizeNewBranch when the sparse-checkout
-> feature is required. The way this change detected if this
-> behavior change is safe was through the skip_merge_working_tree()
-> method. This method was complex and needed to be updated
-> as new options were introduced.
-> 
-> This behavior was essentially reverted by 65f099b ("switch:
-> no worktree status unless real branch switch happens"
-> 2019-03-29). Instead, two members of the checkout_opts struct
-> were used to distinguish between 'git checkout' and 'git switch':
-> 
->      * switch_branch_doing_nothing_is_ok
->      * only_merge_on_switching_branches
-> 
-> These settings have opposite values depending on if we start
-> in cmd_checkout or cmd_switch.
-> 
-> The message for 64f099b includes "Users of big repos are
-> encouraged to move to switch." Making this change while
-> 'git switch' is still experimental is too aggressive.
-> 
-> Create a happy medium between these two options by making
-> 'git checkout -b <branch>' behave just like 'git switch',
-> but only if we read exactly those arguments. This must
-> be done in cmd_checkout to avoid the arguments being
-> consumed by the option parsing logic.
-> 
-> This differs from the previous change by fa644d8 in that
-> the config option checkout.optimizeNewBranch remains
-> deleted. This means that 'git checkout -b' will ignore
-> the index merge even if we have a sparse-checkout file.
-> While this is a behavior change for 'git checkout -b',
-> it matches the behavior of 'git switch -c'.
-> 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->   builtin/checkout.c | 9 +++++++++
->   1 file changed, 9 insertions(+)
-> 
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 6123f732a2..116200cf90 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -1713,6 +1713,15 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
->   	opts.overlay_mode = -1;
->   	opts.checkout_index = -2;    /* default on */
->   	opts.checkout_worktree = -2; /* default on */
-> +	
-> +	if (argc == 3 && !strcmp(argv[1], "-b")) {
-> +		/*
-> +		 * User ran 'git checkout -b <branch>' and expects
+Not sure how this could happen under normal circumstances, but how
+about this here?
 
-What if the user ran 'git checkout -b<branch>'? Then argc == 2.
+=2D- >8 --
+Subject: [PATCH] tree: simplify parse_tree_indirect()
 
-Best Wishes
+Reduce code duplication by turning parse_tree_indirect() into a wrapper
+of repo_peel_to_type().  This avoids a segfault when handling a broken
+tag where ->tagged is NULL.  The new version also checks the return
+value of parse_object() that was ignored by the old one.
 
-Phillip
+Initial-patch-by: Stefan Sperling <stsp@stsp.name>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ tree.c | 18 +++---------------
+ 1 file changed, 3 insertions(+), 15 deletions(-)
 
-> +		 * the same behavior as 'git switch -c <branch>'.
-> +		 */
-> +		opts.switch_branch_doing_nothing_is_ok = 0;
-> +		opts.only_merge_on_switching_branches = 1;
-> +	}
->   
->   	options = parse_options_dup(checkout_options);
->   	options = add_common_options(&opts, options);
-> 
+diff --git a/tree.c b/tree.c
+index 4720945e6a..1466bcc6a8 100644
+=2D-- a/tree.c
++++ b/tree.c
+@@ -244,19 +244,7 @@ void free_tree_buffer(struct tree *tree)
+
+ struct tree *parse_tree_indirect(const struct object_id *oid)
+ {
+-	struct object *obj =3D parse_object(the_repository, oid);
+-	do {
+-		if (!obj)
+-			return NULL;
+-		if (obj->type =3D=3D OBJ_TREE)
+-			return (struct tree *) obj;
+-		else if (obj->type =3D=3D OBJ_COMMIT)
+-			obj =3D &(get_commit_tree(((struct commit *)obj))->object);
+-		else if (obj->type =3D=3D OBJ_TAG)
+-			obj =3D ((struct tag *) obj)->tagged;
+-		else
+-			return NULL;
+-		if (!obj->parsed)
+-			parse_object(the_repository, &obj->oid);
+-	} while (1);
++	struct repository *r =3D the_repository;
++	struct object *obj =3D parse_object(r, oid);
++	return (struct tree *)repo_peel_to_type(r, NULL, 0, obj, OBJ_TREE);
+ }
+=2D-
+2.23.0
