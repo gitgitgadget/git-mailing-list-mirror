@@ -2,95 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5861F1F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 20:07:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38F681F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 20:08:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727673AbfH2UHm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 16:07:42 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:36045 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727045AbfH2UHl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Aug 2019 16:07:41 -0400
-Received: by mail-qt1-f194.google.com with SMTP id z4so5171047qtc.3
-        for <git@vger.kernel.org>; Thu, 29 Aug 2019 13:07:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=MpjfWwJFlBDZhly0DxzEZE0j7mnmjq67WEcOcrwDrJ0=;
-        b=G28WhsT/Y2FDbEXJTQVkW9vb5rrKRK/iQ8Cg2mtACcmM4HUmgBbS3QpdCOLKMw2j0H
-         K6ppmvo2EVWe71p9nWrLCGyC4Q1/S3cFHSVMiNEb+hHtqgK970ikLnu3NgX2yEHRyXNO
-         abBZIthu4tUGZ6JpKHRFoa4RFY5yov0N+3Capsm0Ax7/Zno80sngRL6/cohceD5vRqpC
-         brzZ40bGEpHcxYmkjSsEl8/3kH+5en1lIBZ3S6nEW3Lnb4rGF3QKiAAD9Aq7N9pj6REK
-         Tnq+TctDNRF4CjaHxYLZ8s+b4len+vmpOPmt4HLG7OA/i0JOcs6+kD8ykFd3SoJ5zeMc
-         otmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=MpjfWwJFlBDZhly0DxzEZE0j7mnmjq67WEcOcrwDrJ0=;
-        b=Tq+GtXH0iqPXE91vNJvNzDirsrn7c16zYtEyZrG/vYKfaXjcZ54BGvR/5Mf4UIP+ws
-         1ggxEr851ZQoMRKsTvRmQQCVDNB/Qi+JG0/ZCwOXTzYn/IianXHOmEP4kEwGl05gGvNn
-         EnBChg6OInrqiPsPtSN2P0wbMkhzPns54BXUCjfytUVSm1YkmGSuHBwbuC6Clqz06CaV
-         lR9tlQlwTxMtyl7Gpk4Bn2AUtRHsflTf9x7D+VaEAGvrGw8WeWRyY50APk+pwzI7Q5mR
-         lQorYknom96bWHVJKZFPKMFKCeI/+xiqB7Rv0u0T2mA8O7MPC2MGx6LecsGvar//W2N7
-         U2IA==
-X-Gm-Message-State: APjAAAXnIk9vIBLkOw2+LnjtFHBBCuZbEy+IbyG1NsEes/z/KLHKT8l+
-        ugAHX4fCWShYP3844JAfq+k=
-X-Google-Smtp-Source: APXvYqyhZVKq4b7J3JzSe1p2OdDBWmCgbUv66ba7+3vTI+MI+76Pfgc3vxyQR7w6LFlyjzSZza92SA==
-X-Received: by 2002:ac8:124c:: with SMTP id g12mr11610528qtj.42.1567109260622;
-        Thu, 29 Aug 2019 13:07:40 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c1be:7752:fdc7:f5c9? ([2001:4898:a800:1012:72f2:7752:fdc7:f5c9])
-        by smtp.gmail.com with ESMTPSA id h137sm1236310qke.51.2019.08.29.13.07.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Aug 2019 13:07:39 -0700 (PDT)
-Subject: Re: [PATCH 1/1] checkout: add simple check for 'git checkout -b'
-To:     phillip.wood@dunelm.org.uk,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.325.git.gitgitgadget@gmail.com>
- <dcf5c60c69d8275a557ffe3d3ae30911d2140162.1567098090.git.gitgitgadget@gmail.com>
- <7e406b35-9ff6-348f-bdee-7540381f000e@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <206819d0-8066-e8e8-8967-8a1db05eea26@gmail.com>
-Date:   Thu, 29 Aug 2019 16:07:38 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        id S1727916AbfH2UIZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 16:08:25 -0400
+Received: from mout.web.de ([212.227.15.3]:53703 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727899AbfH2UIY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Aug 2019 16:08:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1567109299;
+        bh=jhu+uEKd56I7zCa28ax/KaFKgYVKR1/uZYRwwDLThrI=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=mv2w1Z6mfmACnjsQGYs6AhUTBlgnQgrQoYQphQiXDtL+N4ia2dYUsL3+Es1/KquY5
+         XKjWzB74y7oF4Wp9JLcM/NM3JzyQy69bumWgUT0/2gwyX0hXyz0qDo99yNYOF44TN0
+         PxupJCShCdV3upDo3wbDpW/kEggtIWb7Fr6ohkvE=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LjaVE-1iaZbv20RE-00bb1l; Thu, 29
+ Aug 2019 22:08:19 +0200
+Subject: Re: [PATCH] help: make help_unknown_ref() NORETURN
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <d0606d19-0900-3908-2962-ceb24015f753@web.de>
+ <CAN0heSp4bdJt4NKELOkvdpoygbkNZVn-96FrZnu9ymE5UNOSag@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <bde881b6-7c23-6f4e-5cb0-a793a5e4f5d7@web.de>
+Date:   Thu, 29 Aug 2019 22:08:18 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <7e406b35-9ff6-348f-bdee-7540381f000e@gmail.com>
+In-Reply-To: <CAN0heSp4bdJt4NKELOkvdpoygbkNZVn-96FrZnu9ymE5UNOSag@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:u1TM6sYaPgiA8f22V69ZYqI6iuN06TmYQOPODNQ5Fq8nzMSKSmj
+ WofbZSmRou5Lkk8LQhU/0YmjFp/hUU36Ehr+tfVHuLrG0mR0QLxiqn1ph9GtbddQpZL3GuO
+ eIlegkvacQSj07hEoRW2aS1ZM2q7hIJIjeEAWnvV5ATTu7jeKjEl7PKyEGl7eXTsf2f9OqD
+ +nUbpcT1rQy/yQsMrhGZg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lxRGJYO1xtM=:9Fx3JLJjB6FDslSId5OyWR
+ cYjWvCDE9fz/BVCLQnftUwFI2cWuVXUU04nEKjDVrFk7WUg1taEwXu5B8ZwIS/HTRcakN9pW2
+ aQ6yNG35zjDBEv11hB5LQiOK6gpUzopki6SOfilEVlU2Idweo+lV1ppo/TNWUB9tm0UXNtL6Q
+ W3bqEHmQ6HfVN5cZHcoh5p+7Uw8itlgnKc1xuM1ASnow8sKnH4cx+FkrhvlMqmP9pdR+z4ojg
+ fsgus9kSrefRWHkPGVCxD/GsI3ZmvKM8FKfV+SB2epCLrd1j/nswvFCsocF0XUXTAngHSNv+X
+ WWSoHUoxz2HJvq+nTLiNbJntxSErRHLfTVc6GC5bPUqhCz5DefTdWiD5kll6DITV+SoolbG91
+ cPxrQ7C5bEW61+/nZaRS0yKYDAl5CDXgD+OCqKE0vTXDsjLwNSBtIsy7tO9fp5uWrtp1MPTjd
+ GDg0Vzk+6Q95vTEjHVuXiLrWHTaJlrfn+KwoxRrEcRhZVnz2TBoI51a1aobYNiSFtSN4PE59E
+ ABhA3rQgGDhfyFl3SGFUcyWGtFXqz/KkwKiEmEZiCKsJNOgjitu4sXIi0e9Qs0IQgLZ3cDBob
+ spuYcH0s2pHtok9w9w0gQGjj6JJHQK8rLGd5FgsGReryqxG2UQ/8+EnjUx2VmpqKQr7UZJNon
+ AVHxUkjyyOPuowHmKpvnTguEwaXqBns1P56W4PY5k7fHInkWEOWWjF3GiVoGsbkzfJ65RpeS8
+ 6lerv4V5o9p5qJ6Li+nv+rM7GgxzVf4LyDtQSC6wEkhzkvv+cJYGptX4Z7PkH4LboAlT3O8M0
+ KQqAKZFdbTlOhPzGXphKJr7qgOFdxdK4q3cwn/An3w0QvOH9b1AFKwU0KsFlbxifPtVpkcWtd
+ NPxvBmrACEOGrAe/Zm/ECe9yEsB+5dlhFN5NaYPoeMglB7lWGEYqfDVvZ76APF+zw2b0e7sSs
+ 9DRwuqmVavCcMNf7sqLQ4avXCXJ8P4sZPKwOMWkrAOZPIgea72huFHej5Lyr3gHxul204WPqu
+ +CCQ887Vnk+tvXxd3PttND6Hs06osIKB0Wm8RdRcojZ0HEB4nSdx9SOyGAZWvlG8f9aj4NOPR
+ NnuPI4vLxHZrPsmi6V46UuV6Z0g9bxWd6EHKO/15BFNAMxHS6ptFJOsUVX0WDiLg7OUavzrId
+ 7ta09n2RkEgW6cMyTWmQ/ofL0OpyM8mRa7rNowcVUmjxgh4Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/29/2019 2:54 PM, Phillip Wood wrote:
-> Hi Stolee
-> 
-> On 29/08/2019 18:01, Derrick Stolee via GitGitGadget wrote:
->> +   
->> +    if (argc == 3 && !strcmp(argv[1], "-b")) {
->> +        /*
->> +         * User ran 'git checkout -b <branch>' and expects
-> 
-> What if the user ran 'git checkout -b<branch>'? Then argc == 2.
+Am 29.08.19 um 21:40 schrieb Martin =C3=85gren:
+> On Thu, 29 Aug 2019 at 21:15, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>> diff --git a/help.h b/help.h
+>> index b8780fbd0f..7a455beeb7 100644
+>> --- a/help.h
+>> +++ b/help.h
+>> @@ -42,8 +42,8 @@ void list_commands(unsigned int colopts, struct cmdna=
+mes *main_cmds, struct cmdn
+>>  /*
+>>   * call this to die(), when it is suspected that the user mistyped a
+>>   * ref to the command, to give suggested "correct" refs.
+>>   */
+>> -void help_unknown_ref(const char *ref, const char *cmd, const char *er=
+ror);
+>> +NORETURN void help_unknown_ref(const char *ref, const char *cmd, const=
+ char *error);
+>
+> Funny how this claims we'll call `die()`, when we'll actually call
+> `exit(1)`.
 
-Good catch. I'm tempted to say "don't do that" to keep this
-simple. They won't have incorrect results, just slower than
-the "with space" option.
+Ah, I didn't even notice that.
 
-However, if there is enough interest in correcting the "-b<branch>"
-case, then I can make another attempt at this.
+> If we actually did call `die()`, I suppose the compiler
+> should/could figure out by itself that this function, too, won't ever
+> return.
 
--Stolee
+The compiler can figure it out with exit(), too; system headers (at
+least for glibc, but it's probably common) assign it the noreturn
+attribute.  But there is no way to transmit that information to callers
+across compilation units  if not for the header file, right?
+
+> I wonder whether the real bug here is that the implementation calls
+> `exit(1)`, not `die()`. That is, the exit code is wrong (1 !=3D 128) and
+> we're missing out on the flexibility offered by `set_die_routine()`. If
+> not that, then I'd say the documentation is buggy. Hm?
+
+This inconsistency has been present since e56181060e ("help: add
+help_unknown_ref()", 2013-05-04).  Using die() is going to be difficult
+due to the multi-line suggestions printed by the function.
+
+Ren=C3=A9
