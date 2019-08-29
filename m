@@ -7,86 +7,71 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CAE01F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 03:54:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D833B1F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 03:57:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726888AbfH2Dyt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 23:54:49 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63972 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725844AbfH2Dyt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Aug 2019 23:54:49 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F390316882C;
-        Wed, 28 Aug 2019 23:54:46 -0400 (EDT)
+        id S1727226AbfH2D5r (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 23:57:47 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54526 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725844AbfH2D5r (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Aug 2019 23:57:47 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 60D7686C4B;
+        Wed, 28 Aug 2019 23:57:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FAgG12wPSrQ6Va5Ez64+bm94f8I=; b=iUMwL/
-        g2gcV3hDF9ACBmYDizkd2DBdwSqdQVdkEP2J/yDMn3LXb9aOpWZYSaJJXDx4eU90
-        nyTOIyDJDTbo1MN+uDuseM/W7Yi1HdTfRGZwDh2ddYx+WmhfGhHY1IdJzKF9M4CC
-        C5UeXbG2nyRlQn69Kn/wi8sdzG+zKIAwjyDYk=
+        :content-type; s=sasl; bh=VyTqwKKD2N0BCyv7f16xkECX25c=; b=cgK0CH
+        q3M09+oBrtU+jRLBJkGX7hAMpUKyiPq5Z9lEMHJlEvaPg+eJJ9dlj7HlrNMvE4LF
+        PBzEDgtRqTi2mA8byVfT+cQ8fZdlVVBJ7kvkDHQTDqoXSnuEp5Sp1WcEVihFtFr/
+        HVmr6i28QQuK/psNXFGyQt0nJtPJ5fA2MpHwo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=L+VmY5+x0UtsXSwvX/MsxPoJRWa0LXV0
-        y1U70yDlOiwFs492txeflIP7GcD0f+8gowAD/GnLzNweF3OZXI5soSIJ4jD5bDsr
-        hR9UHJZJBUnVjQ4OCFgzV8Dm1WMXBqAy6FTcDlbkYrbjnNVj02SAhzRY5hOpdxFg
-        Y1a6Nq9UBVU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EBC0F16882B;
-        Wed, 28 Aug 2019 23:54:46 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=UPdBEFZLHh9xB+J/WVYCHGEsmpU7g6AV
+        CfhAixD3XiKGG7B5ylqcZe6TeBeFr+s827DsMpxpxawOwbhAwDmQLP04WR0LD9OQ
+        DObWeNo12tyMUDLXu1dfJ2bAXl04a3npvqAgzMZdPf4kIYrklElSOgoEzXNgX86y
+        ekGNqY+83AY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 599E086C4A;
+        Wed, 28 Aug 2019 23:57:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 59D5616882A;
-        Wed, 28 Aug 2019 23:54:46 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 88A3486C49;
+        Wed, 28 Aug 2019 23:57:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Dmitry Nikulin <pastafariant@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-diff passes <rev>:<path> args to GIT_EXTERNAL_DIFF incorrectly?
-References: <CAH53SykX12SN83=gey8KS_x3cGkXH758sfEieskXnnvos8DMcA@mail.gmail.com>
-Date:   Wed, 28 Aug 2019 20:54:45 -0700
-In-Reply-To: <CAH53SykX12SN83=gey8KS_x3cGkXH758sfEieskXnnvos8DMcA@mail.gmail.com>
-        (Dmitry Nikulin's message of "Tue, 27 Aug 2019 21:24:02 +0300")
-Message-ID: <xmqqtva0zkvu.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Gadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        "Philip.McGraw" <Philip.McGraw@bentley.com>
+Subject: Re: [PATCH 1/1] git-p4: auto-delete named temporary file
+References: <pull.303.git.gitgitgadget@gmail.com>
+        <CANg4QoGSVQWG3QXzoiA8oDsjXaXGoZ+WMNLSPpu75eJWdrWxLQ@mail.gmail.com>
+        <xmqqo90bj2ye.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1908281424240.46@tvgsbejvaqbjf.bet>
+Date:   Wed, 28 Aug 2019 20:57:40 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1908281424240.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 28 Aug 2019 14:25:28 +0200 (CEST)")
+Message-ID: <xmqqpnkozkqz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BDC8644A-CA10-11E9-8A59-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 26CD059A-CA11-11E9-9F2A-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dmitry Nikulin <pastafariant@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> $ env GIT_EXTERNAL_DIFF=./print_argv.py git diff
-> origin/branch1:file1.txt origin/branch2:file2.txt
+> Yes, this was me trying to re-send the patch via GMail's web UI because
+> the first time GitGitGadget sent it, it did not get through (only the
+> cover letter did).
 
-I didn't even know external-diff driver is called (and does not even segfaut)
-in the "compare two blobs" hack codepath.
+As long as that was manual screw-up, while fixing some glitches in
+the machinery, that is fine.  I care about automation running
+smoothly.
 
-The syntax <tree-ish>:<path-in-the-tree> you have on the command
-line resolves to a blob object name.  There is no leading directory
-name, there is no permission bits or executable bit, there is no
-filename, when "diff" is told to compare two blob objects this way.
-THe "diff" machinery that drives the external (or internal for that
-matter) diff will only get two 40-hex blob object names and nothing
-else.  The only pieces of information you can trust among those the
-external program may receive are the blob object name(s) and the
-contents stored in the temporary files given to it.  The location of
-these temporary files or their mode bits have no relation to the
-"files" in some tree in the original repository, as that information
-is long lost when you write <tree-ish>:<path-in-the-tree> to tell
-Git to use that as a blob object name.
-
-    $ git diff -M branch1 branch2 -- file1 file2
-
-if file1 and file2 have similar-enough contents, may have a better
-chance of what you wanted to ask Git (if I am guessing what it is,
-that is).
-
-
-
-
-
-
+Thanks.
