@@ -2,95 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46A5E1F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 04:34:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6E801F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 05:27:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725826AbfH2Eel (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 00:34:41 -0400
-Received: from forward501o.mail.yandex.net ([37.140.190.203]:46218 "EHLO
-        forward501o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725776AbfH2Eel (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 29 Aug 2019 00:34:41 -0400
-Received: from mxback28o.mail.yandex.net (mxback28o.mail.yandex.net [IPv6:2a02:6b8:0:1a2d::79])
-        by forward501o.mail.yandex.net (Yandex) with ESMTP id 4217D1E8045F;
-        Thu, 29 Aug 2019 07:34:38 +0300 (MSK)
-Received: from localhost (localhost [::1])
-        by mxback28o.mail.yandex.net (nwsmtp/Yandex) with ESMTP id n2iqpIEB3o-YaeWPGTl;
-        Thu, 29 Aug 2019 07:34:37 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1567053277;
-        bh=MGcejs8aYleHXTtAdIfQjwxEE5Yx2BZMzzJbSP8XyyY=;
-        h=Message-Id:Cc:Subject:In-Reply-To:Date:References:To:From;
-        b=MT7V1VyV2tqMa5FkX5HGtputlKoJCFvI/nwfawhx1n7fQFPzu+UcQ3m4WEerrPEaH
-         Lcba/Zo94gSrTtcoLF3I59IT92SnWujA6OdMLEDD4aP14Uh1lUD46DgYEo6mnLhWCQ
-         vhxAXEmxjtWiWTolbjaqtTGT/28w5cJmQqpNh1HU=
-Authentication-Results: mxback28o.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by sas2-3b71b6ddd4dd.qloud-c.yandex.net with HTTP;
-        Thu, 29 Aug 2019 07:34:36 +0300
-From:   Andrey <ahippo@yandex.ru>
-Envelope-From: ahippo@yandex.com
-To:     Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>
-Cc:     Andrey Mazo <amazo@checkvideo.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Peter Osterlund <peterosterlund2@gmail.com>,
-        "cclauss@me.com" <cclauss@me.com>
-In-Reply-To: <CAE5ih79dF7LJSp=hUgj_r2XUmWKYnU3XgSReSjOetG8Sek599A@mail.gmail.com>
-References: <CAE5ih79dF7LJSp=hUgj_r2XUmWKYnU3XgSReSjOetG8Sek599A@mail.gmail.com>
-Subject: Re: git-p4, and python2 EOL
+        id S1727348AbfH2F1k (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 01:27:40 -0400
+Received: from c2.beyond.pl ([91.102.115.84]:11067 "EHLO c2.beyond.pl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727330AbfH2F1j (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Aug 2019 01:27:39 -0400
+X-Greylist: delayed 1066 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Aug 2019 01:27:38 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=klub-coupe.pl; s=default; h=Content-Transfer-Encoding:Content-Type:
+        MIME-Version:Message-ID:Date:Subject:To:From:Reply-To;
+        bh=a7Tici0ViTtkID6K7NfVmNjHM40u2Hko1Ed224kc7Fw=; b=aPl0NQ+oE255cdVnXUp2BdZLOp
+        ijNOJ4zOr6OtSRCucuElpaF6tF4jL88TwxY7wrXnes5FS6KEfL+65oXB2y/YUR8xU7e51TeWIoBFV
+        RceC9pucm+z6TlIF+Tbs10hUIPqAezpVJ1Jf1MwD76yNIYBjXCcMBAyjVlvFkImC00ADFEQ5q/2+X
+        YQsCMgQCHsB8QHEMZSpy6yazI4E6m0b9Kz1VLE47WUX6FUxHi8ErEPL9tvvWB5FdGz6agRHK9ULr/
+        +Nnc8GChggK5mfddCdSfFg3YdoLn5rQ/L3/aa+rksEqA0SNwB1DUHMyuZUzav9mNgv+s35vtNgEe6
+        ObcI/bnw==;
+Received: from [23.95.132.39] (port=49911 helo=klub-coupe.pl)
+        by c2.beyond.pl with esmtpa (Exim 4.86)
+        (envelope-from <test@klub-coupe.pl>)
+        id 1i3Cgx-003nzj-U7
+        for git@vger.kernel.org; Thu, 29 Aug 2019 07:09:52 +0200
+Reply-To: ac123@syriamail.biz
+From:   Abdelkader Alsamman <test@klub-coupe.pl>
+To:     git@vger.kernel.org
+Subject: To know
+Date:   28 Aug 2019 22:09:41 -0700
+Message-ID: <20190828220904.FFFDD632547786CC@klub-coupe.pl>
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Thu, 29 Aug 2019 00:34:36 -0400
-Message-Id: <44585511567053276@sas2-3b71b6ddd4dd.qloud-c.yandex.net>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - c2.beyond.pl
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - klub-coupe.pl
+X-Get-Message-Sender-Via: c2.beyond.pl: authenticated_id: test@klub-coupe.pl
+X-Authenticated-Sender: c2.beyond.pl: test@klub-coupe.pl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luke,
+Greetings,
 
-28.08.2019, 04:49, "Luke Diamand" <luke@diamand.org>:
-> We're coming up on when Python2 is end-of-lifed - we have until
-> January 1st 2020.
->
-> git-p4 uses python2, and doesn't work under python3 at all.
->
-> The problem is the conversions between Python3 unicode strings and git
-> (utf-8) and p4 (utf-8, except when it isn't).
->
-> I had a go at fixing this here:
->
-> https://github.com/luked99/git/commits/git-p4-python3-final-showdown
->
-> You can see from the comments that I wasn't really finding it straightforward.
->
-> I think I know a bit more about the problem now, but before I start
-> having another go at fixing this, I wondered if anyone else had any
-> thoughts on this, or even better, some time to spend on this.
+I am Mr.Abdelkader Alsamman from Syria,It's possible for a=20
+foreigner to invest in education in your country?let me know the=20
+feasibility studies as I want to relocate my investment to your=20
+country and I need a local partner because I want to relocate my=20
+family out from Syria due to the war in my country.If you are=20
+interested and willing to assist us in this issue and benefit=20
+from the project reply back for more details.
 
-Please, find a few random thoughts below.
-  1. As far as I can see, git-p4 tried to maintain compatibility with both python2 and python3.
-     Since python2 is approaching it's EOL, would it make sense to drop support for it in git-p4 completely?
-     This would simplify the implementation and wouldn't require fancy objects like PolyStringDict.
-     Many projects [2] plan to drop python 2.7 support in 2020 or earlier.
-     There are, of course, enterprise distros (RHEL, CentOS), which will keep supporting python2 for several years more.
-     As far as I can see, python3 doesn't come by default with CentOS 7, which ends its support in 2024.
-     However, RHEL/CentOS ships its own (old) version of git, and python3.6 is available through EPEL repository.
-  2. Someone tried to use git-p4 with python3 and a bare repository [1] recently, unsuccessfully.
-     A few my stupid attempts to patch git-p4 didn't help.
-  3. I no longer work with git-p4 daily, neither have a real P4 repository to test on,
-     so I can't really test anything beyond unit tests.
-     I'll be glad to review any changes though.
-
-[1] https://public-inbox.org/git/34d6121da46f35e4b81d38169b1b86ca123cef37.camel@gmx.net/
-[2] https://python3statement.org/
-
-Thank you,
-Andrey.
-
+Best Regards,
+Mr.Abdelkader Alsamman.
