@@ -2,99 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5CC81F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 13:12:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 517D01F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 13:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727244AbfH2NMk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 09:12:40 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:37847 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726985AbfH2NMk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Aug 2019 09:12:40 -0400
-Received: by mail-qt1-f193.google.com with SMTP id y26so3579020qto.4
-        for <git@vger.kernel.org>; Thu, 29 Aug 2019 06:12:40 -0700 (PDT)
+        id S1727929AbfH2NfC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 09:35:02 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:46569 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727921AbfH2NfB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Aug 2019 09:35:01 -0400
+Received: by mail-qk1-f193.google.com with SMTP id p13so2865695qkg.13
+        for <git@vger.kernel.org>; Thu, 29 Aug 2019 06:35:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ZyS5lNbrIOJc5fdsRkzyHC9bfkBrUx4oMFfWIjBvAts=;
-        b=b1bVH31IrPLyt8H4vyUz5a9LB/0jqBi0tQC/wFSX+XQNtERfvqHJVC9xOL/PkfCuuC
-         qyhkng1hBJy0y2oEmYVeXdkqOcFOzUi2t7nfo9gdjErna0b2I0mcLJA/RCQC41Rt7LKe
-         NsSoL5BebUBepTm1MRnok3Kzz+4nSs3Jz6pF1PVPpHckaax1uDztJPmxlqk+SwCBQVvP
-         BPkDrz6s+rtugHDNRKHCTnM92PTVVLVErpsYh1pNPrP+xorLEViQhouWee2LiBc9JfTE
-         m3EHG0nDpCaK0UJ2aiDrI2PlOXQJwZVhACG0a17EjtJhm1c5MIrZ0C+1u7saSbXNrJ+5
-         6ALQ==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=SxPIyIb8k0gRGNdNLfYG6wpxT5YQlJsGpOBpUtY5cZU=;
+        b=NM+yzHMmkKau01MVzxozOQjqxsFFrIkQ09+RYhQeLiDdcB3gpSVfZ1WIaepZ/xaICa
+         fczdSO8zfzT9ND7x+1eYtbSndNMhoaBQasqhSXe9OnH6B2IjLABhib0gPPW3aVBfKQ6R
+         zttu7fxSSxYzGYxu9Lw6LnEXV82QmS1SXwnzM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ZyS5lNbrIOJc5fdsRkzyHC9bfkBrUx4oMFfWIjBvAts=;
-        b=pdvgBCxu1jDuePSOPYs+CWbAh00sr4GocZs0DnzsFno8CS67bhwYuzqTlDEwHiUAkL
-         F2l7k3fJcmzEXzw3dK/+SReKfszjd43Sf2tWrilUEQ5T12N2nCe1FRIXOT+A1F6BrXa2
-         Diqcj8V4HL9XGEqDWrgebexZqw4h6hn5h2IXVktauVQOwG7OWYBSkp/4K1dC8a5fPgVr
-         hWpVjbnPJ9Er8FJTkx2Pcu+7/pl152naiQSPOv67BysPMwtl/Co/2fRgjt8mrPujHN/M
-         x6L2opUHIz9rEInESY7t8egvf5QAshn4BZRB5zTwAQq3I6TSvGv2thbjuKpLtOEIsVeB
-         TGog==
-X-Gm-Message-State: APjAAAXAaq44AcXYNmTUxd5Kohe1rvGsQLSMBuHPQuOsOgxJVNOn5zB3
-        vyk5Bfq5iaz1BhxiHyyqe5g=
-X-Google-Smtp-Source: APXvYqxDYNMCJmrpekS3XXIW71jhX8utH6BTuXckQ6feNefCml5XbRyeOHwUavyie6Y4papO4V17ig==
-X-Received: by 2002:a0c:f610:: with SMTP id r16mr6355693qvm.216.1567084359609;
-        Thu, 29 Aug 2019 06:12:39 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:f9f6:adc0:ae8d:8f1f? ([2001:4898:a800:1010:ab2c:adc0:ae8d:8f1f])
-        by smtp.gmail.com with ESMTPSA id x28sm1236407qtk.8.2019.08.29.06.12.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Aug 2019 06:12:39 -0700 (PDT)
-Subject: Re: [PATCH 2/2] list-objects-filter: handle unresolved sparse filter
- OID
-To:     Jon Simons <jon@jonsimons.org>, git@vger.kernel.org
-Cc:     me@ttaylorr.com, peff@peff.net
-References: <20190828201824.1255-1-jon@jonsimons.org>
- <20190828201824.1255-3-jon@jonsimons.org>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <164fa8bc-bcf1-4cce-1b49-94b64535d332@gmail.com>
-Date:   Thu, 29 Aug 2019 09:12:38 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=SxPIyIb8k0gRGNdNLfYG6wpxT5YQlJsGpOBpUtY5cZU=;
+        b=V2i3Z+IHmfGiPCmPFnApeLfu50y44JaJxNjFpTvUj41QiOuYfYMSpeM71AWwPtzslb
+         zEJlFIno/TsuWag7Qq/bmbMFxm7DOrsH7c0Ee41GmqEYSE5rls+9H24PNgrTzVIlMBPm
+         lRpXiXN3Cs5N7SEzxOzl08zCbCJfRS22WLliA6xJevPnUZyI8la524WzEZArteFLxnfT
+         tMkNxts4c4kFrj+uDk/7kiSL8Va3ZSnrmxXyiGU9arjPy4WIJvNk7oolot6CbrZLSYTu
+         zU0ucOab2SRVgWW05xuZLoth46IcCuzahzLIzTCPWF0o6CqysR4IpFaHu0YN+UisE0ch
+         +wlA==
+X-Gm-Message-State: APjAAAWNXf5edZgLRIjOuNwl2S9OtXWw0uaFZCODLyk1N8F1qcRH/yA7
+        L4k7VD/YsGnI5LC+6QExyGLzFw==
+X-Google-Smtp-Source: APXvYqzWqUg2NK1Ln3LTcTgGD83qegIFAIOSOXarYzbUODxeBDpnPJDetYYPCSILHF0Q9K/6L2IXBA==
+X-Received: by 2002:a37:e31a:: with SMTP id y26mr9413085qki.51.1567085699742;
+        Thu, 29 Aug 2019 06:34:59 -0700 (PDT)
+Received: from chatter.i7.local (192-0-228-88.cpe.teksavvy.com. [192.0.228.88])
+        by smtp.gmail.com with ESMTPSA id 22sm1147193qkc.90.2019.08.29.06.34.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Aug 2019 06:34:59 -0700 (PDT)
+Date:   Thu, 29 Aug 2019 09:34:57 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Is git clone followed by git verify-tag meaningful?
+Message-ID: <20190829133457.GA26173@chatter.i7.local>
+Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20190828203224.GE26001@chatter.i7.local>
+ <20190828234706.GB25355@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20190828201824.1255-3-jon@jonsimons.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20190828234706.GB25355@sigill.intra.peff.net>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/28/2019 4:18 PM, Jon Simons wrote:
-> Handle a potential NULL 'sparse_oid_value' when attempting to load
-> sparse filter exclusions by blob, to avoid segfaulting later during
-> 'add_excludes_from_blob_to_list'.
-> 
-> While here, uniquify the errors emitted to distinguish between the
-> case that a given OID is NULL due to an earlier failure to resolve it,
-> and when an OID resolves but parsing the sparse filter spec fails.
+On Wed, Aug 28, 2019 at 07:47:06PM -0400, Jeff King wrote:
+>On Wed, Aug 28, 2019 at 04:32:24PM -0400, Konstantin Ryabitsev wrote:
+>
+>> If I know that a project uses tag signing, would "git clone" followed by
+>> "git verify-tag" be meaningful without a "git fsck" in-between? I.e. if an
+>> attacker has control over the remote server, can they sneak in any badness
+>> into any of the resulting files and still have the clone, checkout, and
+>> verify-tag return success unless the repository is fsck'd before verify-tag?
+>
+>It depends on your definition of badness. :)
 
-Adding localization here also seems like a good idea. Thanks!
+As you know, for the Linux kernel we provide both tag signatures and 
+detached PGP signatures on tarballs (and the same is true for git). The 
+argument I hear frequently is that providing detached tarball signatures 
+is redundant[*] when tags are already PGP-signed, so I wanted to 
+double-check that all checksums are computed and matched on the client 
+in the process of "git checkout" and we're not just verifying a 
+signature of a non-verified checksum.
 
--Stolee
-> +test_expect_success 'partial clone with unresolvable sparse filter fails cleanly' '
-> +	test_must_fail git clone --no-local --no-checkout --filter=sparse:oid=master:sparse-filter "file://$(pwd)/sparse-src" sc1 2>err &&
-> +	test_i18ngrep "unable to read sparse filter specification from sparse:oid=master:sparse-filter" err &&
-> +	test_must_fail git clone --no-local --no-checkout --filter=sparse:oid=master "file://$(pwd)/sparse-src" sc2 2>err &&
-> +	test_i18ngrep "unable to parse sparse filter data in $(git -C sparse-src rev-parse master)" err
+In other words, I needed to double-check that what we get in the end is 
+assurance that "all files in this repository are exactly the same as on 
+the developer's system at the time when they ran 'git tag -s'."
 
-Just as a sanity check: when we use test_i18ngrep, how does it know how to
-separate the part that is translated and which part is not?
+>Generally, Git clients do not trust the server much at all (not only to
+>be no malicious, but also not to accidentally introduce bit errors).
+>
+>Even without the fsck, we will compute the sha1 of each object (we must,
+>because the other side doesn't send it at all), and that we have all
+>objects reachable from the refs. So verifying the tag at that point
+>demonstrates a signature on the tag object, which refers to probably
+>some commit via sha1, which refers to actual trees and blobs by a chain
+>of sha1s. If you believe in the integrity of sha1, then it has
+>effectively signed all of that content.
 
-	translated: "unable to read sparse filter specification from"
-	not translated: "sparse:oid=master"
+So, the client will actually calculate those checksums during the 
+checkout stage to make sure that all content in the repository matches 
+the hash of the commit being checked out, correct? 
 
-Thanks,
--Stolee
+>If you want to analyze each object for such malformed bits before the
+>checkout, you can do so with "git fsck". But consider instead setting
+>transfer.fsckObjects to check the objects while they're being indexed by
+>the initial clone (i.e., having their sha1's computed). It's effectively
+>free to do it at that point, whereas a later fsck has to access each
+>object again (this takes on the order of minutes of CPU for the kernel).
+>
+>I don't think there's any real safety in doing so for the case you've
+>described (there's no bad pattern that fsck knows about that the actual
+>checkout code does not).  But it does give you an early warning, and is
+>especially help if you're not planning to check things out yourself, but
+>want to avoid hosting malicious repos.
+
+Right, but it's not something end-users are going to do if they just 
+want to check out a repository and access code from it. The "git clone 
+&& git verify-tag" workflow is now used by some distros that are 
+packaging Github releases, and they aren't setting transfer.fsckObjects 
+before "git clone" starts, pretty sure.
+
+Thanks for your help!
+
+-K
+
+[*] Tarball signatures may be redundant in cryptographic sense, but for 
+repositories like linux.git, which are now around 1.2 GB in size, it 
+makes significant difference whether someone downloads the full git tree 
+or just a highly compressed tarball that is only 100MB. I know that it's 
+possible to clone with --depth 1 to reduce the amount of downloaded 
+history, but that's hard on the servers and not something I really want 
+to widely advertise as a mechanism for getting the kernel. :) In 
+addition to that, distributing static content like tarballs is much 
+easier logistically than git repositories, and it's much harder to 
+introduce accidental corruption to a bunch of static files. Disk is 
+cheap, but CPU and admin time aren't.
