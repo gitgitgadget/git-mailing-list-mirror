@@ -2,149 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 155ED1F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 09:15:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 245271F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 09:32:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726245AbfH2JPL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 05:15:11 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:42227 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725776AbfH2JPL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Aug 2019 05:15:11 -0400
-Received: by mail-lj1-f193.google.com with SMTP id l14so2275004ljj.9
-        for <git@vger.kernel.org>; Thu, 29 Aug 2019 02:15:10 -0700 (PDT)
+        id S1726739AbfH2JcB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 05:32:01 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:45364 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725776AbfH2JcA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Aug 2019 05:32:00 -0400
+Received: by mail-io1-f67.google.com with SMTP id t3so5504053ioj.12
+        for <git@vger.kernel.org>; Thu, 29 Aug 2019 02:32:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Rzr+sSeaIjXwcYXxbR9nhSHua55WYsGhOzdgcmD9+KE=;
-        b=JqRVu/3YevrJOcll7ZqGtSMXYusWlZz4npqnYOm+0QtT2k0yi1/m5TFxomOiaEwOwK
-         8/pPNL4+NqPG3wzgCRkju/MiDFYKdk27wf4LTuDhgJwvm5uNhTXaAz01V7xgNrBKWnvW
-         xRDshbo0pWUSgrhdedVn7BTzi9laZQJpiQSXt1ycaiqcxza3kn0Jn8nnibrGA4eIVLoO
-         xQMFWk3Z0qT9e06TcYJ7LpFwjJzCdhCyZugJiiBH4fZ9BbdQxqTeimWbb2B6iqo1KK+j
-         x4/orfVX/c19chpWGkTFBVMo9WUGww/SB1dnTbeLFmWz3x98kHUJJs4f6JiZviQFC5Fi
-         zJhA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gg2tVwkpAb5Qz6Uyx6VShxK2QDrsQdwQSQY2lB6ayWw=;
+        b=mY6q+sOiC2TkOH0M1Z0Hy8EQf3ZB3FbRnt95p8bYEJgj5aQyaaj1goeJuJy9AGz8tK
+         RIsnT8LwFxLdcql5qtKdHkfLGZS8MQfQgCxYGbclLmAtsQBfRv34fTkskGzSW0EadQ+n
+         tZKMlHvwe3wx/p45sPvJRbTGe3W3+4ldC+04/ESw3+dEoDvWP3TbGlZJCqPOYEmmqSIQ
+         CEsPKady1EhAim7Xj7vHsxkzfMKOR+O5JzuYN63cumHU1AKmbEiYZ+7MJBzJoKiGvlnF
+         Uh3VlJnqR6qn5UlqIEZV3pQ3yqPEC/axpUBJjHnFuqIxs2YT9Fw/enellQ4HZOYOmq/Q
+         QVjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=Rzr+sSeaIjXwcYXxbR9nhSHua55WYsGhOzdgcmD9+KE=;
-        b=mlcONvKUnh0auV0tFlSZtYeYlAnMyWGv/jK9Peisr6B7qxcXdgMjKvUwgWRT0jzOPY
-         bQcpj81jbIJS+Vx5M0VrrioKt3rf9OB6mIW4XxnKNNqlPYWIFGSp0lukSz3j2Pzqd6Mx
-         Bu06knYS3NqkVNlTD90WYZ6tEmQS5+bVzurXo7GO3DLqbwrJB9gIKGNHuBUDNBAshVUF
-         s6vzsbsGkio7p9sqlNzNsO2STZeJ9bscTAQrvGHS3EiUk8RWhlDlr9vuYphMLrUOsjZL
-         TrTUESl74C9vU3nnfeZozAu3yAcjKpNwIT6lLbf407JfQwIHXE9+cNbbj15c9YefzK1U
-         DufQ==
-X-Gm-Message-State: APjAAAVi9Z1XznHJv3LugrcateZsyF5KRc+66coNiFxGg9h/kdnbJGVT
-        OPvcnqnTYuchmcu2Lrj1S1ooXkDw
-X-Google-Smtp-Source: APXvYqygT9xryfVjtjpNy+aBifF2ZOdGWvMppGspXvIXlBesvP+uiaD6dTYtnLFL5zDV9pYB4U0cBA==
-X-Received: by 2002:a2e:9216:: with SMTP id k22mr4631540ljg.184.1567070109127;
-        Thu, 29 Aug 2019 02:15:09 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id f22sm263321ljh.22.2019.08.29.02.15.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 29 Aug 2019 02:15:08 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2] merge-options.txt: clarify meaning of various ff-related options
-References: <877e6x3bjj.fsf@osv.gnss.ru>
-        <20190828155131.29821-1-newren@gmail.com>
-        <CAN0heSoqy4sCY8NUWKuEkXwe2XxnYAN6Mn2N75hYwfQ_5WGYdQ@mail.gmail.com>
-        <87a7btqeyx.fsf@osv.gnss.ru>
-        <CABPp-BEsRL-JipotZ2FyrXiPcry6aSAvL8e5cbOm5jrPM63j-g@mail.gmail.com>
-Date:   Thu, 29 Aug 2019 12:15:07 +0300
-In-Reply-To: <CABPp-BEsRL-JipotZ2FyrXiPcry6aSAvL8e5cbOm5jrPM63j-g@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 28 Aug 2019 15:51:14 -0700")
-Message-ID: <874l20nxic.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gg2tVwkpAb5Qz6Uyx6VShxK2QDrsQdwQSQY2lB6ayWw=;
+        b=HxshME076G2XgcGyIoIVIp/nMcBpyMRHV2E5rDmN8yMXEENVHUb514r63Kzlicg+Uc
+         4IGgV7GflueZshXdcjoZua0VhblyGKT7iYspV974rCVrxwW7IEMcCSKVLu3cahdm6Iu7
+         bp3NJuKPrSGB/+KZIQatCig5pw9dNu7GR5nxbsMh/tZ5rI3dvoztcTHbaloJIHmFlPdg
+         ojv9x+zF5ogqzY3OdZAgWOfO2SvMBvR2AX1I0bRfTG9eid8ElPq9IpdsxPq33qJvailk
+         wrn9UuATaKdP41OkH8lS2o6DiseSo1UWlZZ3yDzyRVXOZ69tM5+d5rqMK0eph09j+1Xq
+         l5pg==
+X-Gm-Message-State: APjAAAW4KNmy2eP4pq8INmGsq5aRVviT0DoPnfxUELZmkvH9e8VxBrBl
+        mhAP1crMm9j5RnMNt18roQxbIRcE0BAmdp3Ds/c=
+X-Google-Smtp-Source: APXvYqwQpazupEK1lUqW+PIAlcd0wR6J/4u+is5KD58mYYB6fNUMp9uwm0ewpqGSNzjhBG4KmqAvacUCn8T2KASzFFI=
+X-Received: by 2002:a5d:8253:: with SMTP id n19mr10091294ioo.274.1567071120125;
+ Thu, 29 Aug 2019 02:32:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1566863604.git.matheus.bernardino@usp.br>
+ <4920d3c474375abb39ed163c5ed6138a5e5dccc6.1566863604.git.matheus.bernardino@usp.br>
+ <CACsJy8Dry7MfKBi5EKw4Ka9r63QVmDjPv9nAozS0mC6Z7-sG=w@mail.gmail.com>
+ <CAHd-oW4h80xrp6y65dqZbq_a67ncArC9rrNq7F7rAhBbrALOkA@mail.gmail.com> <CAHd-oW6doh=06nxUkMLWZOwNMyUOogLRbLstD0bJVQxLauR_Aw@mail.gmail.com>
+In-Reply-To: <CAHd-oW6doh=06nxUkMLWZOwNMyUOogLRbLstD0bJVQxLauR_Aw@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 29 Aug 2019 16:31:34 +0700
+Message-ID: <CACsJy8DpTxpejkOHCYPnt3saC-h-3Ez0TthAPnPvHHThaG64bQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] config: allow config_with_options() to handle any repo
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Thu, Aug 29, 2019 at 11:24 AM Matheus Tavares Bernardino
+<matheus.bernardino@usp.br> wrote:
+>
+> On Tue, Aug 27, 2019 at 8:46 PM Matheus Tavares Bernardino
+> <matheus.bernardino@usp.br> wrote:
+> >
+> > Hi, Duy
+> >
+> > On Tue, Aug 27, 2019 at 6:26 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> > >
+> > > On Tue, Aug 27, 2019 at 6:57 AM Matheus Tavares
+> > > <matheus.bernardino@usp.br> wrote:
+> > > >
+> > > > Currently, config_with_options() relies on the global the_repository
+> > > > when it has to configure from a blob.
+> > >
+> > > Not really reading the patch, but my last experience with moving
+> > > config.c away from the_repo [1] shows that there are more hidden
+> > > dependencies, in git_path() and particularly the git_config_clear()
+> > > call in git_config_set_multivar_... Not really sure if those deps
+> > > really affect your goals or not. Have a look at that branch, filtering
+> > > on config.c for more info (and if you want to pick up some patches
+> > > from that, you have my sign-off).
+> >
+> > Thanks for the advice. Indeed, I see now that do_git_config_sequence()
+> > may call git_pathdup(), which relies on the_repo. For my use in patch
+> > 2/2, repo_config_with_options() won't ever get to call
+> > do_git_config_sequence(), so that's fine. But in other use cases it
+> > may have to, so I'll need to check that.
+>
+> While working on this, I think I may have found a bug: The
+> repo_read_config() function takes a repository R as parameter and
+> calls this chain of functions:
+>
+> repo_read_config(struct repository *R) > config_with_options() >
+> do_git_config_sequence() > git_pathdup("config.worktree")
+>
+> Shouldn't, however, the last call consider R instead of using
+> the_repository? i.e., use repo_git_path(R, "config.worktree"),
+> instead?
 
-> On Wed, Aug 28, 2019 at 12:15 PM Sergey Organov <sorganov@gmail.com> wrote:
->>
->> Hi,
->>
-> [...]
->> Dunno if it helps, but here is what I came up with somewhere in previous
->> discussions:
->>
->> --ff::
->> --no-ff::
->> --ff-only::
->>         When the merge resolves as a fast-forward, only update the
->
-> I think this loose wording (that you just took from the original) is
-> problematic.  Saying that a "merge resolves as a fast-forward" seems
-> to imply that there are circumstances when a fast-forward is the only
-> option.  An _individual_ can decide to resolve a merge as a
-> fast-forward in some circumstances, but it's certainly not the only
-> choice in any circumstance.  If you want to keep this wording short,
-> you could replace "resolves" with "can be resolved".
->
->>         branch pointer (without creating a merge commit).  When a fast
->
-> Only update the branch pointer to what?  (Yes, I know the original
-> text we were improving left this unclear, but it's worth noting.)
->
->>         forward update is not possible, create a merge commit.  This is
->>         the default behavior, unless merging an annotated (and possibly
->>         signed) tag that is not stored in its natural place in
->>         'refs/tags/' hierarchy, in which case --no-ff is assumed.
->
-> Maybe it's just me, but I think it takes extra human cycles to figure
-> out that this paragraph is referring just to the --ff case, and that
-> users might not be able to do so until after reading the next 2-3
-> sentences.  While more brief, I think it will cause people to need to
-> read the description for these three options twice, removing most the
-> savings from being shorter.  It'd be better if it could be re-worded
-> to not need re-reads.
->
->> +
->> With --no-ff create a merge commit even when the merge could instead
->> resolve as a fast-forward.
->> +
->> With --ff-only resolve the merge as a fast-forward (never create a merge
->> commit). When fast-forward is not possible, refuse to merge and exit
->> with non-zero status.
->
-> Something else I was trying to address with my patch that perhaps you
-> can see a different way to tackle: Using the wording "when possible"
-> is probably going to make users wonder when a fast forward is
-> possible; the "can be resolved" wording tweak also makes it more
-> likely they will wonder about this.  Another question they will be
-> wondering about is what a fast forward is (which you partially
-> explain).  Some basic knowledge of both are probably very useful in
-> helping them decide which option to actually pick.  As such, I think
-> trying to explain the answers to these sub-questions will assist them
-> in knowing which option to use.  Simply inserting a couple phrases
-> (e.g. "when the merged branch contains the current branch in its
-> history", and "only update the branch pointer *to match the merged
-> branch* and do not create a merge commit") may help a lot.
->
-> Anyway, I'll send a v3 addressing Martin's comments; if you've got
-> further suggestions for streamlining or rearranging, though, please do
-> send them along.
+Yes. You just found one of the plenty traps because the_repository is
+still hidden in many core functions.
 
-Thanks for thorough reply!
+> If so, how could we get R there? I mean, we could pass it through this
+> chain, but the chain already passes a "struct config_options", which
+> carries the "commondir" and "git_dir" fields. So it would probably be
+> confusing to have them and an extra repository parameter (which also
+> has "commondir" and "git_dir"), right? Any ideas on how to better
+> approach this?
 
-My version was meant to show how to re-arrange the description
-preserving original wording as much as possible, so your version should
-be better, as it addresses other problems as well.
-
+I would change 'struct config_options' to carry 'struct repository'
+which also contains git_dir and other info inside. Though I have no
+idea how big that change would be (didn't check the code). Config code
+relies on plenty callbacks without "void *cb_data" so relying on
+global state is the only way in some cases.
 -- 
-Sergey
+Duy
