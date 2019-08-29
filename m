@@ -2,94 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6050C1F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 17:33:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 360C91F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 17:56:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728111AbfH2Rdp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 13:33:45 -0400
-Received: from sonic302-25.consmr.mail.gq1.yahoo.com ([98.137.68.151]:36562
-        "EHLO sonic302-25.consmr.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727899AbfH2Rdp (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 29 Aug 2019 13:33:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1567100024; bh=/nCtU/t6WF1MKaZ3INsLbhuZ1mNs5lypiajxSZh8cBg=; h=From:To:Subject:Date:From:Subject; b=O2jxKqFoaGb12y8Y5sqPVkCiNbSmwMBs8aafl1va6+5ka2B/7yMIdsxbe8+bkzQOsUtxLI+5BjwKwQr7F82M6G2F7kCujNWDEM18aaTbnGkJp9KA5LAEZDKAHTwGfmlUB7XzbUNa3CYfZP4TM2DIDtcmDI0Iy0dPx2vYcLfDl1qHqe2lIfNIeqwhgNxKawnWx1QXZSBSw9FcZmY/MLWS3lL/YQKKUdT/ieiZeXY+gpWhnedX0gW6/JHTTesz0j9YIdxDgwlOZK99HmUuBvMkXLG1DlaN/iV75s/c307YEJNCYC5Oh/+bvFsKjaPsUXT90aWAqHNumA/StijpRHnHEg==
-X-YMail-OSG: LMPuYJsVM1nupaTMWBJgm8zbSqU.SWV.VEb8iBpNJTI4EO0HKbG_9Dp28rzkZFV
- Xqs5OZZNFSfpGstBH30JhMFrYg88CUfdNTbm01QR2dfAuBNxBWpqjdddjKvo0Fg2VYmCBQzkow_r
- rwEE89UK3iLY.HjBPSjM5NqCk3ERuT3CCuGZ_ifNWIVzqOO_xSr.eF_XFlHTukZb4tyHR78tuKGg
- pt21JstSyLw.PElVDOfQ53y9314ZsGSXcZlKJZnMmq9nTAwvWAyiS5EdSPIeNAZoiwKQPNLwUhHd
- ByLhOHPeZHbHVDdTFw1nRO2k_XdEF2D3_0Q2dsKNpog2gcDdYXqRYYJ2gLFC9aEgB65Vfi5hbZE6
- O55RvwonoVlQNQDBdmacsKBv5ubL0TqpSaFopB7bESqDXzW7ycjpvzx_pSWAHqv5w_m5dgugsRiH
- xyC10VpMwu5.UGYrTAtlBBp7q9CIXmyhptcVVDijb.p6EmzYOg72jSaalUyc4gcf_TjGx62AiC5f
- wlHLoriIskL36V8ucTIV2eaVALzyq8OPgePvgrF6nLYnNVSL7Y9cGlhMJwCtX5xTJ9YDJ0ylcD0Y
- zADDcwF9drhEIafU.pPZrWcCudS737MbrhZeK4kjNEK_d56bPFcO1kvP3ypjWm1AuHbr0p0MUCRp
- kwdYsOMUtTx1KrAVwm6RePA5x7NYEyYf3AugPDYj0UAlsLtcMLjYoj3a._oJLRfp842DC0u9z70.
- 7hWcQOq.YC5HxobGVCCEIgBPueX_l1myGP5g.V.lqkU_0WoonI7ittcOtNZ0o2j68iAZc85N0Xrq
- ekTwlDSCi_BtHqpkoHaYYQyAEVoMWoe_cr.LOSPmAXdvWZqaPTl4OkmLNp4ToMGs3zBdLEYjCT7h
- KYIAOgfOsdajaQGB63CkssvsvWQhY.GA.N2hFkEq6xn92s.IkZKa0lTuXD0SOhi2oljAq9hIpCdo
- odvKhyF0vXPbVDSL_9Aiqx9qiST4Sff2q51y0Mn8OmQ6kQBd5q5ot7JLrko66cse_J3eCQdhfsYI
- pa8yrBjZOWNH.PgTzbUVcEqwHgDzQAPPYeAgcDusH35QFJcBM5keQkjM2XjGYYBHgRQn52WwGz_9
- 5m58Pzfzo180xBNpisDT9IEq1QgFqoBRqAcrHRtPfiSErvVN0MPrGvI5vYs6yV20MJXJ7.BYb1Fh
- yteWvPzM1484ljEKJpZ1xkaq7DrJyn6Y2U.N8bpL8djRdIl_ixaUazotF7iidfq_W7rthXgMLIIv
- y6WcnghQu2dJ8W_._MPJtzA--
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic302.consmr.mail.gq1.yahoo.com with HTTP; Thu, 29 Aug 2019 17:33:44 +0000
-Received: by smtp426.mail.gq1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID 47843a25c683645b7056a7b2c61e7892;
-          Thu, 29 Aug 2019 17:33:39 +0000 (UTC)
-From:   <randall.s.becker@rogers.com>
-To:     <git@vger.kernel.org>
-Subject: [BUG} stash show does not show untracked files stashed (reposted)
-Date:   Thu, 29 Aug 2019 13:33:36 -0400
-Message-ID: <002901d55e8f$e4a4af70$adee0e50$@rogers.com>
+        id S1727688AbfH2R4J (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 13:56:09 -0400
+Received: from mail-wm1-f46.google.com ([209.85.128.46]:50605 "EHLO
+        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727228AbfH2R4I (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Aug 2019 13:56:08 -0400
+Received: by mail-wm1-f46.google.com with SMTP id v15so4655607wml.0
+        for <git@vger.kernel.org>; Thu, 29 Aug 2019 10:56:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=continuousdelta.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=aQCcF+AWkKg8iGo+x5/yMSzfP4dRugXArAUro+cBNmE=;
+        b=EVccm4vmTtAz768liArJ6nTOrK0irrpqmFg/y9VgaYgYGhBLRNtjP2PuJhGoLRB6qa
+         4MLemOEVI5m7n7hz8SOmIxoFNC/1kxloChX78kHqRdfGZ/TDD6Yup8ck9e9ZoVdgPDS8
+         IIX1jgXdzXoyqIWuOMgsOQRXvds8uDIY6B2HnMuVL1J1MudXPkvZp33EZJk4YUvBVkPR
+         bXXu9C0qCYp7TQgjJykWxSeSHUtKbqbJVpHwVOh1k9QIq4+z6e4AxXbba+hkMCdg8aY9
+         2+aytWDaBI+AxxCE5tzGI4yi32FL8RmdG2DJTvhjhnG/npBQKb06gtVII5NXBvOdjyqo
+         Pjjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=aQCcF+AWkKg8iGo+x5/yMSzfP4dRugXArAUro+cBNmE=;
+        b=Qj7I9j9YgcywBkX83itv5nkyA6LoTaL+P5Ci8p9NMFJs8XkG1U7/mXHkSxPK50Ff87
+         KLvMBqBtU6PlFnqET+sqpqLBvJ4tLrx/NIk2RcuGJroJvJMq60503sDCaTgU2AkWD678
+         LVUgIqH/mGu5d06Ihcaj1GO2+E7RgQnpsRHf2r9jy82uFkF6rMPAVTpCjgYH4ke69L22
+         PsCyihHlKdWVxIxvdsppv1riV8Cs1YVuFzqC6BjP1DMJCshY/WnPveM2pgzQbCKdfYyC
+         LGpz35n6siXd8UsC0pIfYsWz5S5nFnS7suX5gtRhb7OEMZZHpUkl2i4jAkOqkxkz0XF8
+         yROw==
+X-Gm-Message-State: APjAAAUITiiLlfY7VbscyDB6s8yhVNFbm0QhXmzyfDfJeKiO9zU9xzWO
+        dgtnJ+j3JzGYjS24DlQKiMuQIDAHJMtmUK0yz5ez+sdRKQI=
+X-Google-Smtp-Source: APXvYqykInoCwf75E/Q7R8/GUPcbPkW2vp2p5yPTWp6R37BYHqSyWrwa7w/sa+ZP0pDIAoulYbYYl6OB/7eow4LRIzs=
+X-Received: by 2002:a1c:a481:: with SMTP id n123mr12273798wme.123.1567101366180;
+ Thu, 29 Aug 2019 10:56:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AdVejiyPVT6EXU4+R6iXrfdLmdkSvg==
+References: <CAEV-cEryZZarfz5SQsRphBXeYMPJW7tdSfY8NYnzb_-ra-pGHw@mail.gmail.com>
+ <CABPp-BE0ij8zF22xbvjbcq3vG-VwWjUmjNo45Lsm0BEnH=iZ-A@mail.gmail.com>
+In-Reply-To: <CABPp-BE0ij8zF22xbvjbcq3vG-VwWjUmjNo45Lsm0BEnH=iZ-A@mail.gmail.com>
+From:   Matthew McClure <matt@continuousdelta.com>
+Date:   Thu, 29 Aug 2019 13:55:55 -0400
+Message-ID: <CAEV-cEp19ehfBwHxh7OGsvTxTchNJLSRZGZXqAsDjyQg-W3rFA@mail.gmail.com>
+Subject: Re: How to track history of personal changes in a repository?
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I don't know whether this is new behaviour following changes to stash, but
-here goes.
+On Thu, Aug 29, 2019 at 1:04 PM Elijah Newren <newren@gmail.com> wrote:
+>
+> Perhaps put all the changes in a specific branch and run:
+>   git config branch.${personalBranchName}.pushRemote
+> Do.Not.Push.Changes.From.This.Branch
+> ?  (And make sure that push.default is not set to 'matching'.)
 
-Suppose I have files a,b,c,d modified, but only file d is in the index.
-After stash push  (or save) --include-untracked, stash show only displays
-file d. A subsequent pop will restore files a,b,c,d. So functionally push
-and pop are fine, but stash show appears to ignores files in the stash. The
-git log below shows a previous commit (dce2e3e) to the WIP stash (ab0834c)
-that does contain the untracked files, and git diff is happy to show the
-contents when using the ref directly. It is just counterintuitive for stash
-show not to display all entries previously pushed. I would have expected
-symmetry. This is not new.
+I imagine putting all the changes on a specific branch might be part
+of a solution. I'm looking for ways to keep the changes in the work
+tree as well, even as I switch among other branches I'm working on.
 
-*-.   ab0834c (refs/stash) WIP on master: bf223fc Updated known
-|\ \
-| | * dce2e3e untracked files on master: bf223fc Updated known
-| * a5ad1ef index on master: bf223fc Updated known
-|/
-* bf223fc (HEAD -> master) Updated known
-* db0efd4 (origin/master, origin/HEAD) initial
-
-This on git 2.23.0. I have the same behaviour on the Windows build of git
-2.12.3.
-
-builtins/stash.c show_stash() does not look like it accounts for multiple
-paths when calling setup_revisions, so I think it is missing the path to the
-untracked file ref (dce2e32). I am guessing.
-
-Thanks,
-Randall
-
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
-
+--
+Matthew McClure
+Continuous Delta
+https://www.continuousdelta.com/
