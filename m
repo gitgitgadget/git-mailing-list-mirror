@@ -2,105 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01C921F461
-	for <e@80x24.org>; Fri, 30 Aug 2019 16:56:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD81C1F461
+	for <e@80x24.org>; Fri, 30 Aug 2019 17:06:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727958AbfH3Q4x (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Aug 2019 12:56:53 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:40065 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726183AbfH3Q4w (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Aug 2019 12:56:52 -0400
-Received: by mail-qk1-f193.google.com with SMTP id f10so6735748qkg.7
-        for <git@vger.kernel.org>; Fri, 30 Aug 2019 09:56:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=9Rmldi4N+BAbN4KL91DR7tsx+DR4dKZjz4N28QNoIpk=;
-        b=tz/KeWfK8HovN/cREtHmc6AlLdQXBbOMcMZZ69nxPtpZZ3cyKFv+vFNM5eIE43Nnkr
-         n0OJv8CPEkvLxvABN6eHVIeINo9CuTpS56Luaz+WDOTMDcolsA8Ra3z0NFlF0rn3eOln
-         UmLEoHvImBzhO2E2d8sFBslFXr+wHphF/WfAE4XA/RwlOtuf3EnENevy0KEKpxbRmWYk
-         QrwbpMspjvwkRfLEaPEimEMqUQvVRfqyJmdc6G+akh0alQ226bhtujs6skZaeSj2aoXg
-         YnYcVGGYGJWYs2gbEEROEqh3uO95VdrDLyIyCI+OkC5+PNwQIRDws3km1N5+xfcSjEp2
-         H31Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=9Rmldi4N+BAbN4KL91DR7tsx+DR4dKZjz4N28QNoIpk=;
-        b=Cf6Fy76DvAgyyObvU5mtJodul4k/jnTRSGAt4iMZoMiFPmo9nMbGUX4IW6oCTNWrd2
-         7+rY3IWaZWmjad0P13v5tr3vkyA1z3BY1qrOnXzwJfbP4cDYWwYD5vdsieAccuK+Ypvf
-         SSsiQXPBZ5E5jKPH2GVIzdqFCaKH0KMHujJ4Z4XYv0NKIYAS4JyLr+NGf5rPWklfMMps
-         4JuO3DGGBDJoD2xpNUgt6DWs2K/1hipg7sPK+VgrKFNDsRrr2ifKhO5EOj3OBdca51iM
-         gpsAexAsJberLaxd4eXI9aohxoXifjJZBzq68iYiBdpcku7hxc9YQT3x0L3THpHH+Yo6
-         qpxg==
-X-Gm-Message-State: APjAAAWdrpACD8TBG4MvzBdSFj6B14MWSZhr2v8rwo8ZP0mAXMRnoYWy
-        /UKhuMikbKUT2aAFqQK03Ig=
-X-Google-Smtp-Source: APXvYqxpBlwpQbJ7/T9ny2VNjnRA8k/c2L8wgKDgzNttgm4xEv646tzUoluIMt1xadcPNCShGU/fxQ==
-X-Received: by 2002:a37:985:: with SMTP id 127mr16055022qkj.43.1567184211529;
-        Fri, 30 Aug 2019 09:56:51 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:cd4a:2491:4437:f3ba? ([2001:4898:a800:1010:7e80:2491:4437:f3ba])
-        by smtp.gmail.com with ESMTPSA id w34sm97579qth.84.2019.08.30.09.56.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Aug 2019 09:56:50 -0700 (PDT)
-Subject: Re: [PATCH 1/1] checkout: add simple check for 'git checkout -b'
-To:     Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        id S1728094AbfH3RGM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Aug 2019 13:06:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57111 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727246AbfH3RGM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Aug 2019 13:06:12 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D94C164771;
+        Fri, 30 Aug 2019 13:06:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Mex0Q1ncZQtr
+        FqM8xC8pg8ih3yw=; b=KuMBOQAjW70uSsUg38HWGTjgFAI4lhc80eeVYqzbhhcQ
+        9t3VtFuCjWl8LegAxcAFDJjwj2Khq+9H7MbC45znkLJ5bkKPlCglZH4Dzl3Hk4T7
+        wyzuR11oMP6mFgShoN4Sm+z8EAul1IVTN7EF0u7AFie3lywuJvSTQra0C12frVM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=OO4BQA
+        S5Th7NEN9I7cWHnF0phE+0bd3NJ1cUvyI10aBDEqZzZY2teXlxht+PqT68A6aXIA
+        c74szMNEnXPuCZYv4DP36dQPVpawF/wBGVXwp/7mjZmyfKfxvjp7inygiyw6sfth
+        j8C/EjXZ9mD/gxRynP7kXmZ8RlOfWrl316EEQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 048E0164770;
+        Fri, 30 Aug 2019 13:06:10 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6FDB116476F;
+        Fri, 30 Aug 2019 13:06:09 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.325.git.gitgitgadget@gmail.com>
- <dcf5c60c69d8275a557ffe3d3ae30911d2140162.1567098090.git.gitgitgadget@gmail.com>
- <7e406b35-9ff6-348f-bdee-7540381f000e@gmail.com>
- <206819d0-8066-e8e8-8967-8a1db05eea26@gmail.com>
- <20190829203037.vzxuaxpsghbdc6vl@yadavpratyush.com>
- <20190829214014.vijdotp4g65a5mk3@yadavpratyush.com>
- <CABPp-BF_uBTKT_5YmoMNoToiujuMdQia-OfxOPAJPrhT6jPbdA@mail.gmail.com>
- <20190830004339.GA34082@syl.lan>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <8bf76fcf-539c-6fea-170e-61fc81822ef0@gmail.com>
-Date:   Fri, 30 Aug 2019 12:56:44 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        Joel Teichroeb <joel@teichroeb.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/3] factor out refresh_and_write_cache function
+References: <20190827101408.76757-1-t.gummerer@gmail.com>
+        <20190829182748.43802-1-t.gummerer@gmail.com>
+        <20190829182748.43802-2-t.gummerer@gmail.com>
+        <CAN0heSqZOG6NMJE4=RReKzG3eD_w1mh8EcYaAQWN6WBY3WuZ1Q@mail.gmail.com>
+Date:   Fri, 30 Aug 2019 10:06:08 -0700
+In-Reply-To: <CAN0heSqZOG6NMJE4=RReKzG3eD_w1mh8EcYaAQWN6WBY3WuZ1Q@mail.gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Fri, 30 Aug 2019 17:07:29
+ +0200")
+Message-ID: <xmqq8srazipr.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190830004339.GA34082@syl.lan>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID: 7652D09E-CB48-11E9-88A3-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/29/2019 8:43 PM, Taylor Blau wrote:
-> Hi Elijah,
-> 
-> On Thu, Aug 29, 2019 at 05:19:44PM -0700, Elijah Newren wrote:
->> Personally, although I understand the desire to support any possible
->> cases in general, *this is a performance hack*.  As such, it should be
->> as simple and localized as possible.  I don't think supporting
->> old-style stuck flags (-b$BRANCH) is worth complicating this.  I'm
->> even leery of adding support for --track (do any users of huge repos
->> use -b with --track?  Does anyone at all use --track anymore?  I'm not
->> sure I've ever seen any user use that flag in the last 10 years other
->> than myself.)  Besides, in the *worst* possible case, the command the
->> user specifies works just fine...it just takes a little longer.  My
->> opinion is that Stolee's patch is perfect as-is and should not be
->> generalized at all.
-> 
-> I wholeheartedly agree with this, and pledge my $.02 towards it as well.
-> Now with a combined total of $.04, I think that this patch is ready for
-> queueing as-is.
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-Thanks, both!
+> There's a difference in behavior that I'm not sure about: We used
+> to ignore the return value of `refresh_cache()`, i.e. we didn't care
+> whether it had any errors. I have no idea whether that's safe to do --
+> especially as we go on to write the index. So I don't know whether this
+> patch fixes a bug by introducing the early return. Or if it *introduces=
+*
+> a bug by bailing too aggressively. Do you know more?
 
+One common reason why refresh_cache() fails is because the index is
+unmerged (i.e. has one or more higher-stage entries).  After an
+attempt to refresh, this would not wrote out the index in such a
+case, which might even be more correct thing to do than the original
+in the original context of "git am" implementation.  The next thing
+that happens after the caller calls this function is to ask
+repo_index_has_changes(), and we'd say "the index is dirty" whether
+the index is written back or not from such a state.
+
+> The above makes me think that once this new function is in good shape,
+> the commit introducing it could sell it as "this is hard to get right -=
+-
+> let's implement it correctly once and for all". ;-)
+
+Yes, that is a more severe issue.
