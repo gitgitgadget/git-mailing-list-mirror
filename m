@@ -2,154 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0019C1F461
-	for <e@80x24.org>; Fri, 30 Aug 2019 00:43:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D991A1F461
+	for <e@80x24.org>; Fri, 30 Aug 2019 03:50:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727434AbfH3Ann (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 20:43:43 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:33452 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726988AbfH3Anm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Aug 2019 20:43:42 -0400
-Received: by mail-qk1-f194.google.com with SMTP id w18so4752840qki.0
-        for <git@vger.kernel.org>; Thu, 29 Aug 2019 17:43:42 -0700 (PDT)
+        id S1727454AbfH3DuW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 23:50:22 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:43260 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727270AbfH3DuW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Aug 2019 23:50:22 -0400
+Received: by mail-pg1-f196.google.com with SMTP id k3so2778652pgb.10
+        for <git@vger.kernel.org>; Thu, 29 Aug 2019 20:50:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DQbx83Unm6ok8/rwSzIWwx/uiEd0YiGcRln6KwKp/4E=;
-        b=1ufvp2fAPSqy76n6+TZSo98Ldb6gJyb+dEbQNnPRdMmx0uSETwL9SteyX7qXlmQt4b
-         nRiiqLs6a2e8vx+7yjq4Pe8JhSTF8TeLtQbdvPHXmXTkX7VCF5Gwwz52DGS79M/CAun5
-         FzIJZzTQY0qjMGYllYb3LF6lOJ7oHaUtLw/7V1q+h8MwNAnZsXVUIGdNpN+3SVC8FPQ9
-         5DAa1dFpbqryG6NmwgjvBur4offZ0EBRB/J6ztiM01yvnwLs0mKVlf6A506sEw9A3827
-         B6oBgIvCgMjQIM4SPpL3QIJtKHDpR8dp+asHWwt/WoOO3WhwoG0CQm/CO8Cue4/0Ok4k
-         F6iQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=frp+VGUgPY0jEd4hp75Vpo22M5EYc8LHT0iWfC/J8pU=;
+        b=GjTyEAtdmoWyqCbnCfNsDhwW0rgUC52/IEn5iubTORTNtKi9/6Zj6adyPhTRG64B+4
+         B6bDMK+A/C8cwSz1UqHpC/UGM//+qxu0ietT+DRyjwzRGRVLw/RqxiGvkhSuMurdEfck
+         abCR3WtBWBB5MgwUO98fvp3sf2XkAmmVBsTz31XseB/DxwFXxiHsOP+PcsmGMbcu3XK+
+         zO3uAN1mGF1Tc3Flw1/RqqBcvHD+p3mKzwtX8ZnElibPzd0JO9hEsemWvaoMaGoENlW1
+         Yr157L7UpW1KMXjT/E2vAgIURagfP01YsiSUgx1ybAMvji38EjRVzdla27dQ4sdO8GzT
+         8AVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DQbx83Unm6ok8/rwSzIWwx/uiEd0YiGcRln6KwKp/4E=;
-        b=Gq5vnLjUntqODD6BE96FWOVVByHbM67bAKXDeZRXhuFs1kOT0O67+NWDTjIh8dOnzt
-         mrONALwum0b7qEQAMXHDTd0zYEwhrGtfe/LCrs1JFjnFCYFJD+wEvQA+w4pzKdk8Ex6g
-         n+3XhOv+1kcHmStmE/qxPKi/yioc1A1l2FiJP6I8fDMr0ihMFnOWVOB9NWriJ6NqLkPo
-         0UWAIBtlfYt812d27zB+u5g+c2vn/LJ7YXRR5memDyH1kW7MxV+GUGzF9zButxm0t2Cw
-         U4tzxjbllAM3P1b+UooS3AFQ4cjjR4k2l9lXF+f17Dj8VWETpFsiDhZH3iaxXhCmAXm+
-         GCOA==
-X-Gm-Message-State: APjAAAVr7rX/AYUzxP5z0XblsDzs61rQtBeiOrXUuw/riNbiUweP5nm+
-        ZuXmrUGkdH+Bmk72+2QDegW6mg==
-X-Google-Smtp-Source: APXvYqzTtC81IYQ/fY3/xb7XoBCov2FFz+EK2wja4z+ArxtCX5WDww0sv+AmAA0676Kv2yG1z7Tdyw==
-X-Received: by 2002:ae9:f30d:: with SMTP id p13mr5963844qkg.95.1567125821461;
-        Thu, 29 Aug 2019 17:43:41 -0700 (PDT)
-Received: from localhost ([2605:9480:205:fffe:ec30:b3cf:3d82:7185])
-        by smtp.gmail.com with ESMTPSA id j6sm2356866qtl.85.2019.08.29.17.43.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Aug 2019 17:43:40 -0700 (PDT)
-Date:   Thu, 29 Aug 2019 20:43:39 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] checkout: add simple check for 'git checkout -b'
-Message-ID: <20190830004339.GA34082@syl.lan>
-References: <pull.325.git.gitgitgadget@gmail.com>
- <dcf5c60c69d8275a557ffe3d3ae30911d2140162.1567098090.git.gitgitgadget@gmail.com>
- <7e406b35-9ff6-348f-bdee-7540381f000e@gmail.com>
- <206819d0-8066-e8e8-8967-8a1db05eea26@gmail.com>
- <20190829203037.vzxuaxpsghbdc6vl@yadavpratyush.com>
- <20190829214014.vijdotp4g65a5mk3@yadavpratyush.com>
- <CABPp-BF_uBTKT_5YmoMNoToiujuMdQia-OfxOPAJPrhT6jPbdA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=frp+VGUgPY0jEd4hp75Vpo22M5EYc8LHT0iWfC/J8pU=;
+        b=HIvYjJ2ZLcEAD27aUdbGBFZ/KsSOu2pzN8eWthcppHozAGDJ1ICW49/u/9lzYy4YNR
+         BUmGD1Izg400B6vW8vyAXPyirDYuJa1S+UUXQT0kPAzpl8znJY5P01aJbN5iw5ykF+eW
+         9FRrkTZOxbs2wlssSbGpS8oMtLJcNNbWHbfVQMXfnQOkbsDldIM3+TSgAtxfjjHprMDz
+         0SM1z8dBpt+gIghCurW2az8SCs7sycjUAswVyDQDt+O+8f6wqJ3MPy11CYU3iAo+Tz+E
+         rUAbHP2KJNFLWanfvUhDANkXNew5XLEripxOjNBCmwGhKwYGlAtjv9IGN8WCzC4umw3q
+         BxjQ==
+X-Gm-Message-State: APjAAAW5lrmpL96WNgG2Jf/Ex6Juv0bCLcjIu/XVasAu6cickd36gqT4
+        WTNmwm4m9R66FMsyDaqUsNR+cINfDYB8U/XzxPM=
+X-Google-Smtp-Source: APXvYqyfBW2aBu7C2WbRp55I9JPu8g5EGxs4zoP9WRvfnVRlh6xvQznPilwULpv9dPritqDBKpGv76ip5g0k3gicWMI=
+X-Received: by 2002:a65:4841:: with SMTP id i1mr11307347pgs.316.1567137021954;
+ Thu, 29 Aug 2019 20:50:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BF_uBTKT_5YmoMNoToiujuMdQia-OfxOPAJPrhT6jPbdA@mail.gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+References: <d0606d19-0900-3908-2962-ceb24015f753@web.de> <CAN0heSp4bdJt4NKELOkvdpoygbkNZVn-96FrZnu9ymE5UNOSag@mail.gmail.com>
+ <bde881b6-7c23-6f4e-5cb0-a793a5e4f5d7@web.de>
+In-Reply-To: <bde881b6-7c23-6f4e-5cb0-a793a5e4f5d7@web.de>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 30 Aug 2019 05:50:09 +0200
+Message-ID: <CAN0heSo6YdCn2cHUTiyhuZ3Z_Rk6YFg=yhWCVHhaoAC3_0=0Xg@mail.gmail.com>
+Subject: Re: [PATCH] help: make help_unknown_ref() NORETURN
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
-
-On Thu, Aug 29, 2019 at 05:19:44PM -0700, Elijah Newren wrote:
-> On Thu, Aug 29, 2019 at 2:42 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> >
-> > On 30/08/19 02:00AM, Pratyush Yadav wrote:
-> > > On 29/08/19 04:07PM, Derrick Stolee wrote:
-> > > > On 8/29/2019 2:54 PM, Phillip Wood wrote:
-> > > > > Hi Stolee
-> > > > >
-> > > > > On 29/08/2019 18:01, Derrick Stolee via GitGitGadget wrote:
-> > > > >> +
-> > > > >> +    if (argc == 3 && !strcmp(argv[1], "-b")) {
-> > > > >> +        /*
-> > > > >> +         * User ran 'git checkout -b <branch>' and expects
-> > > > >
-> > > > > What if the user ran 'git checkout -b<branch>'? Then argc == 2.
-> > > >
-> > > > Good catch. I'm tempted to say "don't do that" to keep this
-> > > > simple. They won't have incorrect results, just slower than
-> > > > the "with space" option.
-> > > >
-> > > > However, if there is enough interest in correcting the "-b<branch>"
-> > > > case, then I can make another attempt at this.
-> > >
-> > > You can probably do this with:
-> > >
-> > >   !strncmp(argv[1], "-b", 2)
-> > >
-> > > The difference is so little, might as well do it IMO.
-> >
-> > Actually, that is not correct. I took a quick look before writing this
-> > and missed the fact that argc == 3 is the bigger problem.
-> >
-> > Thinking a little more about this, you can mix other options with
-> > checkout -b, like --track. You can also specify <start_point>.
-> >
-> > Now I don't know enough about this optimization you are doing to know
-> > whether we need to optimize when these options are given, but at least
-> > for --track I don't see any reason not to.
-> >
-> > So maybe you are better off using something like getopt() (warning:
-> > getopt modifies the input string so you probably want to duplicate it)
-> > if you want to support all cases. Though for this simple case you can
-> > probably get away by just directly scanning the argv list for "-b"
-> > (using strncmp instead of strcmp to account for "-b<branch-name>)
+On Thu, 29 Aug 2019 at 22:08, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
 >
-> NO.  This would be unsafe to use if <start_point> is specified.  I
-> think either -f or -m together with -b make no sense unless
-> <start_point> is specified, but if they do make sense separately, I'm
-> guessing this hack should not be used with those flags.  And
-> additional flags may appear in the future that should not be used
-> together with this hack.
+> Am 29.08.19 um 21:40 schrieb Martin =C3=85gren:
+> > On Thu, 29 Aug 2019 at 21:15, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> >> diff --git a/help.h b/help.h
+> >> index b8780fbd0f..7a455beeb7 100644
+> >> --- a/help.h
+> >> +++ b/help.h
+> >> @@ -42,8 +42,8 @@ void list_commands(unsigned int colopts, struct cmdn=
+ames *main_cmds, struct cmdn
+> >>  /*
+> >>   * call this to die(), when it is suspected that the user mistyped a
+> >>   * ref to the command, to give suggested "correct" refs.
+> >>   */
+> >> -void help_unknown_ref(const char *ref, const char *cmd, const char *e=
+rror);
+> >> +NORETURN void help_unknown_ref(const char *ref, const char *cmd, cons=
+t char *error);
+> >
+> > Funny how this claims we'll call `die()`, when we'll actually call
+> > `exit(1)`.
 >
-> Personally, although I understand the desire to support any possible
-> cases in general, *this is a performance hack*.  As such, it should be
-> as simple and localized as possible.  I don't think supporting
-> old-style stuck flags (-b$BRANCH) is worth complicating this.  I'm
-> even leery of adding support for --track (do any users of huge repos
-> use -b with --track?  Does anyone at all use --track anymore?  I'm not
-> sure I've ever seen any user use that flag in the last 10 years other
-> than myself.)  Besides, in the *worst* possible case, the command the
-> user specifies works just fine...it just takes a little longer.  My
-> opinion is that Stolee's patch is perfect as-is and should not be
-> generalized at all.
+> Ah, I didn't even notice that.
+>
+> > If we actually did call `die()`, I suppose the compiler
+> > should/could figure out by itself that this function, too, won't ever
+> > return.
+>
+> The compiler can figure it out with exit(), too; system headers (at
+> least for glibc, but it's probably common) assign it the noreturn
+> attribute.  But there is no way to transmit that information to callers
+> across compilation units  if not for the header file, right?
 
-I wholeheartedly agree with this, and pledge my $.02 towards it as well.
-Now with a combined total of $.04, I think that this patch is ready for
-queueing as-is.
+Of course, you're right.
 
-> Just my $0.02,
-> Elijah
+> > I wonder whether the real bug here is that the implementation calls
 
-Thanks,
-Taylor
+(Re-reading this, "the real bug" might be a bit of a harsh statement. I
+didn't mean to imply that this patch does not fix an actual problem.)
+
+> > `exit(1)`, not `die()`. That is, the exit code is wrong (1 !=3D 128) an=
+d
+> > we're missing out on the flexibility offered by `set_die_routine()`. If
+> > not that, then I'd say the documentation is buggy. Hm?
+>
+> This inconsistency has been present since e56181060e ("help: add
+> help_unknown_ref()", 2013-05-04).  Using die() is going to be difficult
+> due to the multi-line suggestions printed by the function.
+
+Yeah, that's true. We could manually prefix each line with "fatal: " or
+"error: ", then die with something like "see above", which is not very
+cool, or die("%s", error), which is a bit repetitive. There are a few
+decisions to be made for fixing this discrepancy.
+
+Anyway, I don't think this is something that needs to hold up your
+patch.
+
+Martin
