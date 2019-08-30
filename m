@@ -8,125 +8,75 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A9001F461
-	for <e@80x24.org>; Fri, 30 Aug 2019 19:46:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C691C1F461
+	for <e@80x24.org>; Fri, 30 Aug 2019 19:48:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728088AbfH3TqS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Aug 2019 15:46:18 -0400
-Received: from mout.gmx.net ([212.227.17.22]:48299 "EHLO mout.gmx.net"
+        id S1728042AbfH3Tsv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Aug 2019 15:48:51 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56133 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728042AbfH3TqS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Aug 2019 15:46:18 -0400
+        id S1727304AbfH3Tsu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Aug 2019 15:48:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1567194366;
-        bh=QQP/dmqlfNOuPn35dJGBjCTxfevdMt6jklhuONGz09U=;
+        s=badeba3b8450; t=1567194525;
+        bh=SFKWjjsuZqjlruzwmN4pGzP04lpDDXXANaMNphFB5oA=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=glvoLHIZFlgU/wI8kRdB+3t6QY5IDCA5XyU8V55ehThW89kRT+FFcT+eIhq9KHjtM
-         3gCApadqaAxVLd3h0nPMSCdRIzS/n47qnn3iHpucipU6Qqhvtz92S36rcKAQx9dPTp
-         jI1IYneDOQw+MbgH3rTAIZnaD1j3w21dK1mLnltI=
+        b=VwkBq7bP/IBiZ4Vbeq2dUSRa0DnzIIQR6u8TWs0MbVZxP4zry7W7XiTZOHDmjAm57
+         99XvlH4k6V+nW4DrgHpGwfVE1WLnnXXtDlQDaxyLGZqa9ojTay1yeuw0f+nLnJvoRW
+         jEllzK4maZJi4SJshVPJ4/sBz28KRMnosc62Elr0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MtOKc-1iKtQB3sru-00uuHQ; Fri, 30
- Aug 2019 21:46:06 +0200
-Date:   Fri, 30 Aug 2019 21:46:04 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDhlV-1hwKF83Bw7-00AoLk; Fri, 30
+ Aug 2019 21:48:45 +0200
+Date:   Fri, 30 Aug 2019 21:48:44 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v5 2/2] am: reload .gitattributes after patching it
-In-Reply-To: <20190829230928.GF11334@genre.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.1908302145270.46@tvgsbejvaqbjf.bet>
-References: <20190825233340.10894-1-sandals@crustytoothpaste.net> <20190825233340.10894-3-sandals@crustytoothpaste.net> <nycvar.QRO.7.76.6.1908281327180.46@tvgsbejvaqbjf.bet> <20190829230928.GF11334@genre.crustytoothpaste.net>
+To:     "van den Berg, Kasper" <Kasper_vandenBerg@reyrey.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git range-diff <range1> <range2> throws Segmentation fault
+In-Reply-To: <6802cf61dcbf438cb2e01cd390c57390@EML-MBX11-DAY.ad.reyrey.com>
+Message-ID: <nycvar.QRO.7.76.6.1908302147490.46@tvgsbejvaqbjf.bet>
+References: <6802cf61dcbf438cb2e01cd390c57390@EML-MBX11-DAY.ad.reyrey.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:MX+e8SkXWxYJ7eAw/afGhXV2x8YkxZv+cY1EAUTTMAsWolVWaA+
- FGq802PDejfc5et5+pqRONdnGBWUELkhsHV9rZMsEqaPanSMxhdT4jqOrSn9dPztvW/TCWf
- 8WDQuVnZavStHrOip9HD/wxqsV3POY51G69yGTRFzsKTd8tQJzoORUh0CNOni7J/zzHGJ2C
- eSJZG8oQL8gdykNrwd7JQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:q1F/uaAkHsk=:jOwivkOQdDpXwe4584QMla
- /AX/1s68riB+WLQpwpSQnwKdSVBcEwmXWvuJhCcq3eKammVAFEJzinlxKyd+l7fujEFrkfTpy
- wPngkKaEZcBD1YhdV97VSkXIzXJ3ME24ywoYS2RNW/JL6WJlYVxrqIJT6Mfej65aQ58k7CUNs
- nLqvXG0MSeSHsmPlgVihoZ6wK/JuGPRO5bWpKQj9EcsNGxNCZkEt+KV0FaD/uSQP+AxjnPNuJ
- og2xOxin3s/xrNFsklkamV7yasQsXBVvwqvSqynwJ/j0PKa5bjsNDaU/NGtuc+E1KuY14gSC1
- 40oI+xhQW/GMt2/GNqSOSJkz0MxoweznV6dgNClyNKnG5qLnEf9MYYbhQPcXofG9ObINxvxzj
- haur4J27vWdY2mLET2GnlqcYZyKdo9d3f17fy1yNew7jcnB/woPQ9Pjl490V4tmdNilziqMlS
- A5iY5vmUF1q1jlDGYnLiRtKNbGkFPRfQ+xXlfIH7VyPoijcnI1nPtIXaM3hpJwJ8xSxFdMwbI
- xwl2BSkn3/7gAuiPNE5fyXiZ7My4WetK6C6YjwmOC1Kf2yrhCY+V97T8VtBkMHKJidQbuRusi
- 4cKni2LJXbwJ9o/wXJOlQJybSepA/3SUbtKvSTbXvvE3Nezap7mmkPrDKWgXk2Trpw3Jvc3W6
- dJSerhH+rXDRypv2DTFqbR6cgIvlVgNuHGTWSPH+3g+TrQrIls4CrjcrpFlMyoRMUS4xRLEsY
- Q7AIISOwykGbTK6Cpg5e8wxANH1U4y9G6PLua86xNdDaw+oSjmMq9tDgIPZEdM7IkYaUfct/p
- NNQjEk00RRPfMx9KMLz4Q69xtwt4+vleP3tdS3x7xq2/jA5XhW+Wx2B6Ib3bjZHOIFm27bcQC
- AEzwEr4o+WnqKgPvHtFzKV5k64gLxR9iJuCGP+83x0yoejWBVWx/0xRB2rnAWoxkqqkg5daXm
- lArSSQwIKJi1jkaE+7ot2SjcKORayBma/QMbwjV+z4tDSD6t+UIyK82bDAspacUo7lp12/hwg
- mSiYXHkieKXn19knpoeFGipoSSkm+YtIj/6e76ZXB4x8fu7Yb3cwy/iYW51+q83XJ43Gn/BRY
- MzsDlgDTjvshrbFFYHDi3v1Ux+wYyOGX9ZExBMYSRFZpjtf45KJjQQZNsnwMRCLFkZWzHu+qN
- yVBA++JRzhlI2VTnEe4cIIMZghIRhNmqXSYroZXkfWpuCbPc7SwEkHryeeLlK579KJKk4=
-Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:EyY5S/hRCKUn++jY+yVEoTVptjwfTuZRzDoc77PYSI/EW6b0wbk
+ IxhuGDKuqZdXa4hQXU0RtdK1019QOXQzId6K0ENW6SPMkKlODf67JLxa5p2mUWa7hM/DN8D
+ pjAIx7/Kp8wgr0hLvdeJdUNcXx/1PV95C4KsUOLHCbqCVyRiMuetSsJiVGnhxdUQziClTGP
+ HlNT46b5wf+RTw0F5Eoqg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:gLCyXVBTbIk=:jHrfIRSGVImLumHbonl7GK
+ iWSrqTaLJT6T4t4w5S0yGOnpCYhfTQOetJj2NtLlDRsb1hcG4ToCDjzvuAzR4DHOCKidmiOpB
+ GBHLjsPT4602Qq1HCcv7paFEFsf6GbM36Jxi1xFGiNTNrxUj28GQsPe84rX05fXO8719HTN/r
+ 6pObxGJQ3apWbnGhisJQ2Vk+ihpepR0vpJ2Zj9wl1roHoM14kFoZfPQg2RCnVZwwGW9l9oD+8
+ RDfUYG6JCzGjRFkUgXvCCl10WIkz4F/hFpDMP8ML4BNScUSc31bBGSq6tldC8ys1S5RwonBY5
+ oEbeq5T5HAtsK5ZNOinmloSlzkHhnJ/RL9g9J8fx74c8LfI67HGrPH5CTk86/sOeq5vLQSjlk
+ 34/nnWoMWWM32P8hgEa2Q742oxfBkOlqXs9bG5F3Vl8uskI5vcpWpFgWvJjiUjm2i5pTZuB6P
+ MPYQ4Ay9cMME12swranRICEWbsgDmWtNZ+1ehox7eIt7KiGjhjlRnYnjnurXOeNsPFQe4kzep
+ SCvKeYKQm7sFQc4sWaTWAIBAVHbTDetgnKtIkJHzRuY4kQWMLY4pgH/wmSHYElLvJQ+FNPjpp
+ 2krDBZJUePPC4A+xMGyqVa4ItUjVrlJlkUvHpsaJDKtWlgXl02eIVg8sWX8pp6gLbYuOXabVc
+ vVxdZXdvYpCM65A5aKqa9ZNXLPsseeLnRQga/2cV1O9EQbn/ZpNf+fkj0hcg8d67vC90HxjMc
+ Za4xpZBlcJbdavoHt0Xnz7/zQoayNvEOt/j74rfA7gr3Pyk0dS9GvaNuUnIl6VBJbGaOcxXk7
+ Sn6PvnLg2UzQHetE6O1x41dh64Cp+Ma1SrSWpsIMihX9w5Rp6uGCpCDGozAUq4TZaCeh0BrfK
+ t8FyYY0rjRs3EjODw58ueFh3c3tCoDlqJFd7L8PA2QHupw7LsABSflPmw8PnCmVCZFkQVt2oc
+ MgDWJnuCjNssJ7jdDUKYgfQYx/9u0mRn0X8bJjY1cC3wk8bvbs9C4daZtMZYwarnBniCpf5Jd
+ plnK6zWvKPAjF8m9v+E4f9fP3bZKgnrxjJt6m2onxFo4KwUXg4jTecQrEdiyMc4WAG6N/fXRV
+ aVMClYivnJkPybNCVQZ8n5sCxY8Af+t7SymQU2oWpfE2dli+ZJFqqNM6FbLCKQWdapEfKj/RJ
+ 73FZabD1imRHTB5jGyQkaMzao/iduAg/Vf4VUMu6fkOYUsHXvhUpGEvU4uNMcDsh5pKNo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+Hi Kasper,
 
-On Thu, 29 Aug 2019, brian m. carlson wrote:
+On Fri, 30 Aug 2019, van den Berg, Kasper wrote:
 
-> On 2019-08-28 at 11:30:53, Johannes Schindelin wrote:
-> > > diff --git a/convert.c b/convert.c
-> > > index 94ff837649..0e6e9d2d75 100644
-> > > --- a/convert.c
-> > > +++ b/convert.c
-> > > @@ -8,6 +8,7 @@
-> > >  #include "pkt-line.h"
-> > >  #include "sub-process.h"
-> > >  #include "utf8.h"
-> > > +#include "ll-merge.h"
-> > >
-> > >  /*
-> > >   * convert.c - convert a file when checking it out and checking it =
-in.
-> > > @@ -1293,10 +1294,11 @@ struct conv_attrs {
-> > >  	const char *working_tree_encoding; /* Supported encoding or defaul=
-t encoding if NULL */
-> > >  };
-> > >
-> > > +static struct attr_check *check;
-> > > +
-> > >  static void convert_attrs(const struct index_state *istate,
-> > >  			  struct conv_attrs *ca, const char *path)
-> > >  {
-> > > -	static struct attr_check *check;
-> > >  	struct attr_check_item *ccheck =3D NULL;
-> > >
-> > >  	if (!check) {
-> >
-> > After this line:
-> >
-> >                 check =3D attr_check_initl("crlf", "ident", "filter",
-> > 				"eol", "text", "working-tree-encoding",
-> > 				NULL);
-> > 		user_convert_tail =3D &user_convert;
-> > 		git_config(read_convert_config, NULL);
-> > 	}
-> >
-> > I am a bit worried about `user_convert`: it seems never to be re-set.
->
-> Yeah, it looks like I'll need to reset that as well.  The only
-> consequence is that we leak a small amount of memory if there are filter
-> attributes, but it's better to avoid that leak if we can.
+> `git range-diff <range1> <range2>` prints "segmentation fault" to the
+> console and nothing else.  It happens in git version 2.23.0.windows.1
+> and only occurs for some branches in my repository.
 
-Okay, good, so my suggestion was not so completely off the mark.
->
-> > Also, how thread-safe do we need `reset_parsed_attributes()` to be?
->
-> Since patch application isn't thread safe, it doesn't need to be
-> thread safe at all.  The original wasn't thread safe, either, since it
-> used a static variable without a mutex.
-
-Thank you for clarifying! Much appreciated.
+Maybe you can come up with a Minimal, Complete and Verifiable Example
+(https://stackoverflow.com/help/mcve)?
 
 Ciao,
-Dscho
+Johannes
