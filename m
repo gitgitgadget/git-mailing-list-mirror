@@ -2,116 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E29FF1F461
-	for <e@80x24.org>; Fri, 30 Aug 2019 13:23:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B07331F4B9
+	for <e@80x24.org>; Fri, 30 Aug 2019 13:52:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727718AbfH3NXZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Aug 2019 09:23:25 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:41978 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727135AbfH3NXZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Aug 2019 09:23:25 -0400
-Received: by mail-qt1-f195.google.com with SMTP id i4so7538196qtj.8
-        for <git@vger.kernel.org>; Fri, 30 Aug 2019 06:23:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UhkOxEevjAOe08wpMo68LqFfP0IhS254LqOAUnDDTJ8=;
-        b=gDTAp2G+/LNqa628qGMIn5ENr3rBwVdM033rbNbNSzZ/t6u9GAg+pNLNzbvDS7ExIa
-         4+sJGtRafZgja/GLQZAJTYvcCIb6pmIktVWxtiMDBH/y2m4f+ATTjvzDyV+pnFi/77jY
-         xTLoXYuM8xrsAG2ISMv5hrq8I8VEZjSEqFUONGC8U8Q/IBBBVCxk1XEZC+Lei90ix84J
-         k8CpR7Ahr+DrAJBhkuBxE/RSXp0x3ErRfnyPfXRvDiPHpUivOgSLpYq0QlNPxqA2u/L+
-         7BS75yFeSeOosQ0B5lxWjoG1hkcWArpJI9Aswz1TJkwe3Hs5LaUIOUFHWhYVZKBoPCMO
-         0IAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UhkOxEevjAOe08wpMo68LqFfP0IhS254LqOAUnDDTJ8=;
-        b=g6nS8m4J7AQSQoI/yEldjBJ7YopHBD2hUd4lq6yR19icDg/a5WO3gC4eZ/g6305eJI
-         sSVd4dQj4AM7WNByI8A9HsJwp4sqxtJjH+MuN066CYkZg5JUOtpRqiaA+pOwBFqohBTm
-         yL+Tuz5OnxzYG9AKKZQ28vm/wYyyAnHL99dwaSx8nGd4L2TmrUIZOKQ7JqdeNFh9GFay
-         +ouaagymmYPSAgFWKPK14kH31Tv2jUVvaCM4xEpZjaLIpOu7WE+NbkzP4PQ3jIkn+ypE
-         5OV5iD4Ammdp5eLB5Fb2g0v7Xj4yHEDSfirCWAwLn6049djc+C3RqRYWF7RywPZtLtyX
-         IVxQ==
-X-Gm-Message-State: APjAAAWqpUpTuyTuZrHEB4umajeHPmCAH8c1HNrlwZL06uuh9VZifdhk
-        qIJbWcUxyh2gcn1pypfmX6DfwQtp6c/2LqgDTAjP9gTmjEdB/w==
-X-Google-Smtp-Source: APXvYqwfUsoBZ5ztsl8eLEiaTNLjcX0Eq6FFsdDS4DXDBAx6nw5iuGrjiMtft9AphqYKfisqDiOjqSYXmr+vb35bwpg=
-X-Received: by 2002:ac8:340d:: with SMTP id u13mr11321691qtb.103.1567171404736;
- Fri, 30 Aug 2019 06:23:24 -0700 (PDT)
+        id S1727783AbfH3Nw1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Aug 2019 09:52:27 -0400
+Received: from mxo1.nje.dmz.twosigma.com ([208.77.214.160]:56287 "EHLO
+        mxo1.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727756AbfH3Nw1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Aug 2019 09:52:27 -0400
+X-Greylist: delayed 303 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Aug 2019 09:52:27 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTP id 46KglH5rTYz7t8s;
+        Fri, 30 Aug 2019 13:47:23 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo1.nje.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo1.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 1jV8VeUtQY67; Fri, 30 Aug 2019 13:47:23 +0000 (GMT)
+Received: from exmbdft5.ad.twosigma.com (exmbdft5.ad.twosigma.com [172.22.1.56])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTPS id 46KglH57w0z3wZ3;
+        Fri, 30 Aug 2019 13:47:23 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft5.ad.twosigma.com (172.22.1.56) with Microsoft SMTP Server (TLS) id
+ 15.0.1365.1; Fri, 30 Aug 2019 13:47:23 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
+ exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
+ 15.00.1365.000; Fri, 30 Aug 2019 13:47:23 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     =?utf-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>
+CC:     Git Mailing List <git@vger.kernel.org>
+Subject: RE: [PATCH] clarify documentation for remote helpers
+Thread-Topic: [PATCH] clarify documentation for remote helpers
+Thread-Index: AQHVXufUGlQGo8OOjkuzhV2FyVjf1acTtGxw
+Date:   Fri, 30 Aug 2019 13:47:23 +0000
+Message-ID: <88d9063060644dd99122bf0933f23fa9@exmbdft7.ad.twosigma.com>
+References: <20190829210301.18467-1-dturner@twosigma.com>
+ <CAN0heSosCnn5msMX18YPwrKJzWkSWptWSFRunQdLE7T7Lc4-OA@mail.gmail.com>
+In-Reply-To: <CAN0heSosCnn5msMX18YPwrKJzWkSWptWSFRunQdLE7T7Lc4-OA@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.189.105]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CAH53SykX12SN83=gey8KS_x3cGkXH758sfEieskXnnvos8DMcA@mail.gmail.com>
- <xmqqtva0zkvu.fsf@gitster-ct.c.googlers.com> <CAH53SymNwjrh_CzXVVtU5xABuGQWMsXhRDYyRzyHEwuxLWA2NQ@mail.gmail.com>
- <9c280a3f-6a1a-61d1-a255-1dcf0671d39c@gmail.com>
-In-Reply-To: <9c280a3f-6a1a-61d1-a255-1dcf0671d39c@gmail.com>
-From:   Dmitry Nikulin <pastafariant@gmail.com>
-Date:   Fri, 30 Aug 2019 16:23:13 +0300
-Message-ID: <CAH53SykQWLtjt0gWVrz5KyH-9WyqaQ0GtkhmyLt09QEqcAS_dw@mail.gmail.com>
-Subject: Re: git-diff passes <rev>:<path> args to GIT_EXTERNAL_DIFF incorrectly?
-To:     phillip.wood@dunelm.org.uk
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 30 Aug 2019 at 13:16, Phillip Wood <phillip.wood123@gmail.com> wrote:
-> I'm not sure why the last argument is being split in
-> your example. It is not split in the example below
-
-I have replicated the splitting issue on my small demo repo [1]:
-
-$ env GIT_EXTERNAL_DIFF=./print_argv.py git diff -M origin/branch1
-origin/branch1-mv -- file1.txt file1-mv.txt
-['./print_argv.py',
- 'file1.txt',
- '/tmp/EWaCSc_file1.txt',
- '2bef330804cb3f6962e45a72a12a3071ee9b5888',
- '100644',
- '/tmp/mtEiSc_file1-mv.txt',
- 'f8fd6737fbe5a45c97ba9c9de495dc46ff11eccd',
- '100644',
- 'file1-mv.txt',
- 'similarity index 90%\n'
- 'rename from file1.txt\n'
- 'rename to file1-mv.txt\n'
- 'index 2bef330..f8fd673 100644\n']
-
-This is, however, tangential to the original problem: documenting the
-external diff CLI interface for diffing two blobs. Here is what I am
-seeing:
-
-$ env GIT_EXTERNAL_DIFF=./print_argv.py git diff
-origin/branch1:file1.txt origin/branch1-mv:file1-mv.txt
-['./print_argv.py',
- 'file1.txt',
- '/tmp/n9USvy_file1.txt',
- '2bef330804cb3f6962e45a72a12a3071ee9b5888',
- '100644',
- '/tmp/Zst0uy_file1-mv.txt',
- 'f8fd6737fbe5a45c97ba9c9de495dc46ff11eccd',
- '100644',
- 'file1-mv.txt',
- 'index 2bef330..f8fd673 100644\n']
-
-The meaning and origin of the last arg remains mysterious, and the
-other args do not conform to the published documentation[2], which
-states that the args should be:
-
-    path old-file old-hex old-mode new-file new-hex new-mode
-
-Instead the args that are passed are:
-
-    path old-filename old-file old-hex old-mode new-file new-hex
-new-mode new-filename something
-
-[1]: https://github.com/dniku/git-external-diff-argv
-[2]: https://www.git-scm.com/docs/git#Documentation/git.txt-codeGITEXTERNALDIFFcode
+SSB3YXMgY29uZnVzZWQsIGJlY2F1c2UgSSByZWFkICJhIGZpbGUgdW5kZXIgR0lUX0RJUi9vYmpl
+Y3RzL3BhY2siIHRvIG1lYW4gImp1c3QgdGhlIGZpbGVuYW1lIi4gIFNvbWUgb2YgdGhlIHRoaW5n
+cyB0aGF0IGRlYWwgd2l0aCBwYWNrcyB0YWtlIGp1c3QgdGhlIGZpbGVuYW1lIChlLmcuIC0ta2Vl
+cC1wYWNrIGZvciBnaXQgcmVwYWNrKS4gIEknbGwgZml4IHRoZSB1bmRlciB1bmRlciBhbmQgYWRk
+ICQsIGJ1dCBJIGRvIHdhbnQgdG8gY2xhcmlmeSB0aGF0IGl0J3MgdGhlIGZ1bGwgcGF0aC4NCg0K
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBNYXJ0aW4gw4VncmVuIDxtYXJ0
+aW4uYWdyZW5AZ21haWwuY29tPg0KPiBTZW50OiBGcmlkYXksIEF1Z3VzdCAzMCwgMjAxOSAxMjow
+MyBBTQ0KPiBUbzogRGF2aWQgVHVybmVyIDxEYXZpZC5UdXJuZXJAdHdvc2lnbWEuY29tPg0KPiBD
+YzogR2l0IE1haWxpbmcgTGlzdCA8Z2l0QHZnZXIua2VybmVsLm9yZz4NCj4gU3ViamVjdDogUmU6
+IFtQQVRDSF0gY2xhcmlmeSBkb2N1bWVudGF0aW9uIGZvciByZW1vdGUgaGVscGVycw0KPiANCj4g
+T24gVGh1LCAyOSBBdWcgMjAxOSBhdCAyMzowNiwgRGF2aWQgVHVybmVyIDxkdHVybmVyQHR3b3Np
+Z21hLmNvbT4gd3JvdGU6DQo+IA0KPiA+IC1PcHRpb25hbGx5IG1heSBvdXRwdXQgYSAnbG9jayA8
+ZmlsZT4nIGxpbmUgaW5kaWNhdGluZyBhIGZpbGUgdW5kZXINCj4gPiAtR0lUX0RJUi9vYmplY3Rz
+L3BhY2sgd2hpY2ggaXMga2VlcGluZyBhIHBhY2sgdW50aWwgcmVmcyBjYW4gYmUNCj4gPiAtc3Vp
+dGFibHkgdXBkYXRlZC4NCj4gPiArT3B0aW9uYWxseSBtYXkgb3V0cHV0IGEgJ2xvY2sgPGZpbGU+
+JyBsaW5lIGluZGljYXRpbmcgdGhlIGZ1bGwgcGF0aA0KPiA+ICtvZiBhIGZpbGUgdW5kZXIgdW5k
+ZXIgR0lUX0RJUi9vYmplY3RzL3BhY2sgd2hpY2ggaXMga2VlcGluZyBhIHBhY2sNCj4gPiArdW50
+aWwgcmVmcyBjYW4gYmUgc3VpdGFibHkgdXBkYXRlZC4gIFRoZSBwYXRoIG11c3QgZW5kIHdpdGgg
+Ii5rZWVwIi4NCj4gDQo+ICJ1bmRlciB1bmRlciIuDQo+IA0KPiBBbHNvIC0tIGFuZCBJIHJlYWxp
+emUgdGhpcyBpcyBub3RoaW5nIG5ldyBpbiB5b3VyIHBhdGNoIC0tICJHSVRfRElSIg0KPiBzaG91
+bGQgYmUgcHJlZml4ZWQgd2l0aCBhICckJyBhbmQgdGhhdCB3aG9sZSBwYXRoIHdyYXBwZWQgaW4g
+YmFja3RpY2tzIHNvIGl0DQo+IGdldHMgbW9ub3NwYWNlZC4gSW4gdG90YWwsIG15IHN1Z2dlc3Rp
+b24gd291bGQgYmUNCj4gDQo+IC0rYSBmaWxlIHVuZGVyIHVuZGVyIEdJVF9ESVIvb2JqZWN0cy9w
+YWNrIHdoaWNoIGlzIGtlZXBpbmcgYSBwYWNrIHVudGlsDQo+ICsrYSBmaWxlIHVuZGVyIGAkR0lU
+X0RJUi9vYmplY3RzL3BhY2tgIHdoaWNoIGlzIGtlZXBpbmcgYSBwYWNrIHVudGlsDQo+IA0KPiBX
+aGV0aGVyIHdoYXQgeW91J3JlIHNheWluZyBpcyBhY3R1YWxseSAqdHJ1ZSosIHNvcnJ5LCBubyBp
+ZGVhLiBJIGp1c3QgaGF2ZSB0aG9zZQ0KPiBuaXRzIGFib3ZlIHRvIG9mZmVyLg0KPiANCj4gTWFy
+dGluDQo=
