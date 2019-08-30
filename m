@@ -7,24 +7,24 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F22211F461
-	for <e@80x24.org>; Fri, 30 Aug 2019 15:16:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CC9B1F461
+	for <e@80x24.org>; Fri, 30 Aug 2019 15:17:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727968AbfH3PQr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Aug 2019 11:16:47 -0400
-Received: from smtp01.domein-it.com ([92.48.232.141]:45282 "EHLO
+        id S1728079AbfH3PRA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Aug 2019 11:17:00 -0400
+Received: from smtp01.domein-it.com ([92.48.232.141]:49205 "EHLO
         smtp01.domein-it.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727135AbfH3PQq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Aug 2019 11:16:46 -0400
+        with ESMTP id S1727135AbfH3PRA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Aug 2019 11:17:00 -0400
 Received: by smtp01.domein-it.com (Postfix, from userid 1000)
-        id D8F1E80A51BF; Fri, 30 Aug 2019 17:16:45 +0200 (CEST)
-Received: from ferret.domein-it.nl (unknown [84.244.139.72])
-        by smtp01.domein-it.com (Postfix) with ESMTP id 7E5DA807B73A;
+        id 2583480A51BF; Fri, 30 Aug 2019 17:16:59 +0200 (CEST)
+Received: from ferret.domein-it.nl (unknown [92.48.232.148])
+        by smtp01.domein-it.com (Postfix) with ESMTP id B8853807B73B;
         Fri, 30 Aug 2019 17:16:13 +0200 (CEST)
 Received: from 80-112-22-40.cable.dynamic.v4.ziggo.nl ([80.112.22.40]:54406 helo=ben.local)
         by ferret.domein-it.nl with esmtpa (Exim 4.92)
         (envelope-from <ben@wijen.net>)
-        id 1i3idG-0004lz-04; Fri, 30 Aug 2019 17:16:10 +0200
+        id 1i3idF-0004lz-RF; Fri, 30 Aug 2019 17:16:09 +0200
 From:   Ben Wijen <ben@wijen.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -34,9 +34,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Szeder=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Ben Wijen <ben@wijen.net>
-Subject: [PATCH 2/2] builtin/rebase.c: Remove pointless message
-Date:   Fri, 30 Aug 2019 17:16:07 +0200
-Message-Id: <20190830151607.4208-4-ben@wijen.net>
+Subject: [PATCH v6 2/2] builtin/rebase.c: Remove pointless message
+Date:   Fri, 30 Aug 2019 17:16:06 +0200
+Message-Id: <20190830151607.4208-3-ben@wijen.net>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20190830151607.4208-1-ben@wijen.net>
 References: <20190829164757.7301-1-ben@wijen.net>
@@ -44,7 +44,7 @@ References: <20190829164757.7301-1-ben@wijen.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Domein-IT-MailScanner-Information: Please contact the ISP for more information
-X-Domein-IT-MailScanner-ID: 1i3idG-0004lz-04
+X-Domein-IT-MailScanner-ID: 1i3idF-0004lz-RF
 X-Domein-IT-MailScanner: Not scanned: please contact your Internet E-Mail Service Provider for details
 X-Domein-IT-MailScanner-SpamCheck: 
 X-Domein-IT-MailScanner-From: ben@wijen.net
@@ -66,7 +66,7 @@ Signed-off-by: Ben Wijen <ben@wijen.net>
  2 files changed, 1 insertion(+), 20 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index abcbfb8f01..118205e481 100644
+index b3b17669e3..118205e481 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
 @@ -1968,13 +1968,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
@@ -75,7 +75,7 @@ index abcbfb8f01..118205e481 100644
  			struct object_id oid;
 -			struct object_id head_oid;
 -			if (get_oid("HEAD", &head_oid)) {
--				die(_("could not determine HEAD revision"));
+-				ret = error(_("could not determine HEAD revision"));
 -			}
 -
 -			struct commit *head =
@@ -103,7 +103,7 @@ index abcbfb8f01..118205e481 100644
  			if (discard_index(the_repository->index) < 0 ||
  				repo_read_index(the_repository) < 0)
 diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index 1131e0016a..5f7e73cf83 100755
+index 43685a5c8e..2421bc39f5 100755
 --- a/t/t3420-rebase-autostash.sh
 +++ b/t/t3420-rebase-autostash.sh
 @@ -37,7 +37,6 @@ test_expect_success setup '
