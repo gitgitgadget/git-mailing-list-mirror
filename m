@@ -2,142 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CC9B1F461
-	for <e@80x24.org>; Fri, 30 Aug 2019 15:17:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 510F01F461
+	for <e@80x24.org>; Fri, 30 Aug 2019 15:21:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728079AbfH3PRA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Aug 2019 11:17:00 -0400
-Received: from smtp01.domein-it.com ([92.48.232.141]:49205 "EHLO
-        smtp01.domein-it.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727135AbfH3PRA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Aug 2019 11:17:00 -0400
-Received: by smtp01.domein-it.com (Postfix, from userid 1000)
-        id 2583480A51BF; Fri, 30 Aug 2019 17:16:59 +0200 (CEST)
-Received: from ferret.domein-it.nl (unknown [92.48.232.148])
-        by smtp01.domein-it.com (Postfix) with ESMTP id B8853807B73B;
-        Fri, 30 Aug 2019 17:16:13 +0200 (CEST)
-Received: from 80-112-22-40.cable.dynamic.v4.ziggo.nl ([80.112.22.40]:54406 helo=ben.local)
-        by ferret.domein-it.nl with esmtpa (Exim 4.92)
-        (envelope-from <ben@wijen.net>)
-        id 1i3idF-0004lz-RF; Fri, 30 Aug 2019 17:16:09 +0200
-From:   Ben Wijen <ben@wijen.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Szeder=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Ben Wijen <ben@wijen.net>
-Subject: [PATCH v6 2/2] builtin/rebase.c: Remove pointless message
-Date:   Fri, 30 Aug 2019 17:16:06 +0200
-Message-Id: <20190830151607.4208-3-ben@wijen.net>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190830151607.4208-1-ben@wijen.net>
-References: <20190829164757.7301-1-ben@wijen.net>
- <20190830151607.4208-1-ben@wijen.net>
+        id S1727919AbfH3PVa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Aug 2019 11:21:30 -0400
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:41226 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727135AbfH3PVa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Aug 2019 11:21:30 -0400
+Received: by mail-ua1-f67.google.com with SMTP id x2so2424246uar.8
+        for <git@vger.kernel.org>; Fri, 30 Aug 2019 08:21:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0lg9+9JnyEOC6OeaTfdI6brws/9CV4ReghCIUtKWz7Y=;
+        b=Vn8jv4e0cftZHbsiesJquCMzeb/x1+Tb0QIP+tKFFVegfXMSr5NNI/OHJD0A/JSfd/
+         /2PRn0wAUXYR5rI3KZmpHhqo0etgp3vBNMu8krw1lP0YgUn5+qoFO1PnWqvIztXTk6VM
+         ah1xKl+xFIzP4hf8tBv6ci3YKkoU4i1lKpjzUXoVgRhMZv4z6BwJCegs10JrOw6uw3Gg
+         Ud2E7oGMDwOiH+we4xJCNvUIojWter4yIhsqVEncR8w/hi4QD9HMNPKDD1gNOUQ1UKEZ
+         v3Dy2uVOe1lFxjdb/tfmtutcAVjaM/nwFsU7if0QRAnNLEMjJlxGQInGc0I0XsykpEVg
+         uyvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0lg9+9JnyEOC6OeaTfdI6brws/9CV4ReghCIUtKWz7Y=;
+        b=B0KSi5hFhjrFb40UjyiqjKdM+3NL+gcat885XbjJXSCq/qsZzmmy3qvgg2tIj8fnp7
+         shTMRiuKWKkjvYanHu9oPEsnsQNgdL/O3uCYDSD4P25JrR1ELzwB1k8qtEpmJfHGHt6w
+         a4vtcumdiU83kOkU0EzJzwiWgA0PIglgmuBrXqnVD9tuhjQ4n3ehsyXCZRT4nFQ/jrQG
+         UavogqD28jF9e5O8WiLbZ1lvJ32sEqhRgnvPLURmweszNZtvVKhuHwc2Q2nWUZpEYdrK
+         KiDPLMBG8z4kNA7NzECilGzyL8W7fB8qA7W0rNYoo8sWu9mk7Rlxep8NYVa7tJJNRTfO
+         AGrQ==
+X-Gm-Message-State: APjAAAWHpw3erollWV0D0fKCpAO/uqwmBG553CfAVnX0zMkZU/UBbMsp
+        NwrmtO4Vfn7tsbuQKufs0imaO71bg+JZ71xd/CQc+UUt
+X-Google-Smtp-Source: APXvYqxw3nBb53z0lE/5gdoJPM+XshYGvAin6kGshhAfcXOY5CeZDenJhc04jq/u2YRq3NdOKwWh0pdx5U9F27GkWmM=
+X-Received: by 2002:ab0:24d4:: with SMTP id k20mr7884171uan.1.1567178488986;
+ Fri, 30 Aug 2019 08:21:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Domein-IT-MailScanner-Information: Please contact the ISP for more information
-X-Domein-IT-MailScanner-ID: 1i3idF-0004lz-RF
-X-Domein-IT-MailScanner: Not scanned: please contact your Internet E-Mail Service Provider for details
-X-Domein-IT-MailScanner-SpamCheck: 
-X-Domein-IT-MailScanner-From: ben@wijen.net
+References: <CAEV-cEryZZarfz5SQsRphBXeYMPJW7tdSfY8NYnzb_-ra-pGHw@mail.gmail.com>
+ <CABPp-BE0ij8zF22xbvjbcq3vG-VwWjUmjNo45Lsm0BEnH=iZ-A@mail.gmail.com> <CAEV-cEp19ehfBwHxh7OGsvTxTchNJLSRZGZXqAsDjyQg-W3rFA@mail.gmail.com>
+In-Reply-To: <CAEV-cEp19ehfBwHxh7OGsvTxTchNJLSRZGZXqAsDjyQg-W3rFA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 30 Aug 2019 08:21:17 -0700
+Message-ID: <CABPp-BEWn1wHdxWM8cVqmvzYo8HDdUzuh4G-XTN51o8JdvkrCw@mail.gmail.com>
+Subject: Re: How to track history of personal changes in a repository?
+To:     Matthew McClure <matt@continuousdelta.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When doing 'git rebase --autostash <upstream> <master>' with a dirty worktree
-a 'HEAD is now at ...' message is emitted, which is pointless as it refers to
-the old active branch which isn't actually moved.
+On Thu, Aug 29, 2019 at 10:58 AM Matthew McClure
+<matt@continuousdelta.com> wrote:
+>
+> On Thu, Aug 29, 2019 at 1:04 PM Elijah Newren <newren@gmail.com> wrote:
+> >
+> > Perhaps put all the changes in a specific branch and run:
+> >   git config branch.${personalBranchName}.pushRemote
+> > Do.Not.Push.Changes.From.This.Branch
+> > ?  (And make sure that push.default is not set to 'matching'.)
+>
+> I imagine putting all the changes on a specific branch might be part
+> of a solution. I'm looking for ways to keep the changes in the work
+> tree as well, even as I switch among other branches I'm working on.
 
-This commit removes the 'HEAD is now at...' message.
+Well, here's some ideas...
 
-Signed-off-by: Ben Wijen <ben@wijen.net>
----
- builtin/rebase.c            | 17 +----------------
- t/t3420-rebase-autostash.sh |  4 ----
- 2 files changed, 1 insertion(+), 20 deletions(-)
+If you want personal changes kept in the worktree and aren't worried
+about versioning them:
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index b3b17669e3..118205e481 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1968,13 +1968,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 				state_dir_path("autostash", &options);
- 			struct child_process stash = CHILD_PROCESS_INIT;
- 			struct object_id oid;
--			struct object_id head_oid;
--			if (get_oid("HEAD", &head_oid)) {
--				ret = error(_("could not determine HEAD revision"));
--			}
--
--			struct commit *head =
--				lookup_commit_reference(the_repository, &head_oid);
- 
- 			argv_array_pushl(&stash.args,
- 					 "stash", "create", "autostash", NULL);
-@@ -1995,17 +1988,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 				    options.state_dir);
- 			write_file(autostash, "%s", oid_to_hex(&oid));
- 			printf(_("Created autostash: %s\n"), buf.buf);
--			if (reset_head(&head->object.oid, "reset --hard",
-+			if (reset_head(NULL, "reset --hard",
- 				       NULL, RESET_HEAD_HARD, NULL, NULL) < 0)
- 				die(_("could not reset --hard"));
--			printf(_("HEAD is now at %s"),
--			       find_unique_abbrev(&head->object.oid,
--						  DEFAULT_ABBREV));
--			strbuf_reset(&buf);
--			pp_commit_easy(CMIT_FMT_ONELINE, head, &buf);
--			if (buf.len > 0)
--				printf(" %s", buf.buf);
--			putchar('\n');
- 
- 			if (discard_index(the_repository->index) < 0 ||
- 				repo_read_index(the_repository) < 0)
-diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index 43685a5c8e..2421bc39f5 100755
---- a/t/t3420-rebase-autostash.sh
-+++ b/t/t3420-rebase-autostash.sh
-@@ -37,7 +37,6 @@ test_expect_success setup '
- create_expected_success_am () {
- 	cat >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
--	HEAD is now at $(git rev-parse --short feature-branch) third commit
- 	First, rewinding head to replay your work on top of it...
- 	Applying: second commit
- 	Applying: third commit
-@@ -48,7 +47,6 @@ create_expected_success_am () {
- create_expected_success_interactive () {
- 	q_to_cr >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
--	HEAD is now at $(git rev-parse --short feature-branch) third commit
- 	Applied autostash.
- 	Successfully rebased and updated refs/heads/rebased-feature-branch.
- 	EOF
-@@ -57,7 +55,6 @@ create_expected_success_interactive () {
- create_expected_failure_am () {
- 	cat >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
--	HEAD is now at $(git rev-parse --short feature-branch) third commit
- 	First, rewinding head to replay your work on top of it...
- 	Applying: second commit
- 	Applying: third commit
-@@ -70,7 +67,6 @@ create_expected_failure_am () {
- create_expected_failure_interactive () {
- 	cat >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
--	HEAD is now at $(git rev-parse --short feature-branch) third commit
- 	Applying autostash resulted in conflicts.
- 	Your changes are safe in the stash.
- 	You can run "git stash pop" or "git stash drop" at any time.
--- 
-2.22.0
+* If the changes are new files that are not tracked, just .gitignore them.
+* If the changes are to files that are tracked, AND you aren't making
+changes to those same files that do need to be committed and pushed,
+use the assume-unchanged bit (see git-update-index(1)).
+* If the changes are to files that are tracked and you need to make
+other changes to those same files, the best you've probably got is "be
+careful while using 'git add -p' to only select the bits that should
+be staged".
 
+If you want to keep the personal changes in the worktree AND are
+worried about version control:
+
+* You could just make sure that any personal changes are made in
+separate commits of their own and put a special string (e.g. "DO NOT
+PUSH") in the commit message.  Add a pre-push hook (see githooks) that
+checks for this string in any of the commits to be pushed and denies
+the push if it is found.  At that point, you'd just rebase to move the
+"DO NOT PUSH" to be the last commits in the series, and always make
+sure when pushing that you specify a commit older than the current tip
+of your branch to push (i.e. using refspecs; see the git-push manpage)
+* If you don't like the githook route and if the personal changes are
+all in different filenames than exist in other branches, and you're
+willing to do a little low-level hackery...then you could put all
+these changes in a different branch as mentioned previously, and use
+some low-level commands to "checkout" the files from both branches
+simultaneously.  The basic way it'd work is that the real branch would
+have a .gitignore for all files in your personal changes (whereas the
+personal changes branch would have no .gitignore because files have to
+be independent; things will just be uglier when you're on that
+branch).  You'd use 'git symbolic-ref HEAD $OTHER_BRANCH && git reset'
+to swap branches on the fly so you can commit different types of
+changes.
+
+Hope that helps,
+Elijah
