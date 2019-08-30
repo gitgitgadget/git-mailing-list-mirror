@@ -2,109 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 746961F461
-	for <e@80x24.org>; Fri, 30 Aug 2019 14:09:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 810A21F461
+	for <e@80x24.org>; Fri, 30 Aug 2019 14:17:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727914AbfH3OJb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Aug 2019 10:09:31 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:37117 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727783AbfH3OJb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Aug 2019 10:09:31 -0400
-Received: by mail-pf1-f194.google.com with SMTP id y9so4735511pfl.4
-        for <git@vger.kernel.org>; Fri, 30 Aug 2019 07:09:30 -0700 (PDT)
+        id S1727930AbfH3ORS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Aug 2019 10:17:18 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35591 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727751AbfH3ORS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Aug 2019 10:17:18 -0400
+Received: by mail-wr1-f66.google.com with SMTP id g7so7174236wrx.2
+        for <git@vger.kernel.org>; Fri, 30 Aug 2019 07:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NtaXbTVjVGLka07Dv0EyjR4F/zb8dpvf9V6J7LSXNhM=;
-        b=DypR7MuaPylzkIfF+x5afB9DchWXKKRSqSAsIxnlyQZ+/tjRbsytnJbXm7pp2VbexX
-         tTKiesBPNQG0832TVsPoi1G7yrmN9/4I3gGnPPi/uBgLxAUg4dWW5XwqEo2Yt+X1LuPj
-         ptiG4GD9iib0uNMglHaowYw47gzhBjFgZYGis/H4l2+PC+Zhi8i7xcHHA1jEFRTLMQp8
-         7PFQxWv871cwlJiCKhD5clwMKKGwDRV2cbeCwv4J+qdt8DhlRUNWVIE4d2jq7PwyzrkV
-         TJQVtepIVv6C4dM/wusNptCBQBkx+2fNcKFWnM63n+WoRwrQGi8MKIuQEeevpWtn2wW3
-         GMeQ==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tIQP2U2dhkyC5eW24zU3hF0/p6qxcB8ZFcUVheWpjDc=;
+        b=cv1HlKRi9/5HuqN/ZGEdylL9QLu5SRQbwPC76N+ZAC8T+IEv0usJI0yLjkQc5oqTB6
+         kWhFhE+9evKdyKCfjqQbjuEBgzZneCwPMqyGDKu4zX3b62PZYCyhs+Vc06kbHsS5KiBM
+         UpwG5G9+f37LuoRJLFecabv/OhKEcn9A8hR5PRBdvJ/h8cMzMJgwpHZZmPEhd1GUI+Be
+         VrIP0LDqnYRnSBjjlzlOrO8XI8GQB/EyhCfFum1vdRvzeGRvR+yB0lLMnw2UOzU2c9Gw
+         WCx5z6rcFZE1Csq82rcQsbWOA18t/WfYJ7V6XLd9l2VxXB7W21b7icgMu34eSFZnBpTE
+         Apfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NtaXbTVjVGLka07Dv0EyjR4F/zb8dpvf9V6J7LSXNhM=;
-        b=LdfT0z7hRyP3FtBtkNQSwnXMP+kfGuwUJXIpx/F/gDul0biBF5BBn+b/7m7zZLyIOM
-         MeuI0jAFT7VMIiYmCqkJAq5tp5MWT10GXRWazM8/mwr4oGWebSp1q3V7td4CARlST0Q3
-         YrJpzwMsjrqM+YaWr7k+RE+ASOSILsgfrSjvqdU5VnJAeOUyqtecKiAagGOgQRn5vHUN
-         HY+gzOBbwGbPss0haQLSYvsP7u9/ddNXOvjtp406fLQPQCpGqDd7iLPnybicbfCJ3J9z
-         9nEFfm1GCUiOvYgDMSWyrozifNvL86Vus9tF8DJtHN0OUjJudmOkSY2qoWP8S/qP2oUC
-         YP3A==
-X-Gm-Message-State: APjAAAUewBUKsv9SnjNJ/Z7p5qT84Sp4U5dxi9SRqhhyRlU+BHTlUKJT
-        aHT3eGo4UrTBkZ5Gex8ww8KVGPxzMJZmkwe1egQ=
-X-Google-Smtp-Source: APXvYqyjK7XQsa6sEVm4R3r09BycSar2GuA+H9zePAnBcV9gJOP5mvuQu7E1x80Kcwrb/0ZLU6h2YAPCUG7pNJk0JcA=
-X-Received: by 2002:a63:d741:: with SMTP id w1mr12825555pgi.155.1567174170227;
- Fri, 30 Aug 2019 07:09:30 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=tIQP2U2dhkyC5eW24zU3hF0/p6qxcB8ZFcUVheWpjDc=;
+        b=GP5F4Vd6liQDzrFxOdSPOrSVDEjNTCjD8KR9GBcdrZyqJOOC+6Zoou/DYsYGTf4NYC
+         E8z2iaNmgFrQKwP+6tH+1i2loTd+mYMEttPj5p8iQqFTtmgVZmR8HfVQXzCYY81skEZb
+         9vRJDxzZF2LJBzV9Rk6ZF9xd4lPrioQFNRWSoHO0OuY6UIxe8BK9tJ+5G8wUyfyQxzJN
+         B4L/cIm+iZSl1Bye9WE9gu0HXpID5qQTCB8/tCkY2mSNqBoACJnzSt2nOBVBJL2EKCqE
+         YWNGGlfCvHat1mZuZuqfk1OrQwjMu4S9RtVMRcqc5zcmepIAz3jiU8zc0mdcUUe42OQU
+         vafw==
+X-Gm-Message-State: APjAAAVXjxGBd0keAnIVMK2xfC4/gvbqndw3MRhZifwMqDZFav0m+SWb
+        926rSmu0Uu6P9Y5DLdNXHgO0Seav
+X-Google-Smtp-Source: APXvYqwEejSfu2HJFNWxxt/OL7AZed+JVI2FtYzLXm23KNz8myZiX+wTQHJxbEJ8axxcMvuEdPBypw==
+X-Received: by 2002:a5d:5005:: with SMTP id e5mr4061641wrt.79.1567174636141;
+        Fri, 30 Aug 2019 07:17:16 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-2-29.as13285.net. [92.22.2.29])
+        by smtp.gmail.com with ESMTPSA id h32sm4129681wrh.62.2019.08.30.07.17.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Aug 2019 07:17:15 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: git-diff passes <rev>:<path> args to GIT_EXTERNAL_DIFF
+ incorrectly?
+To:     Dmitry Nikulin <pastafariant@gmail.com>, phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <CAH53SykX12SN83=gey8KS_x3cGkXH758sfEieskXnnvos8DMcA@mail.gmail.com>
+ <xmqqtva0zkvu.fsf@gitster-ct.c.googlers.com>
+ <CAH53SymNwjrh_CzXVVtU5xABuGQWMsXhRDYyRzyHEwuxLWA2NQ@mail.gmail.com>
+ <9c280a3f-6a1a-61d1-a255-1dcf0671d39c@gmail.com>
+ <CAH53SykQWLtjt0gWVrz5KyH-9WyqaQ0GtkhmyLt09QEqcAS_dw@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <968253c6-d517-3391-4790-9a07a03fb980@gmail.com>
+Date:   Fri, 30 Aug 2019 15:17:13 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <20190830134805.9588-1-dturner@twosigma.com>
-In-Reply-To: <20190830134805.9588-1-dturner@twosigma.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 30 Aug 2019 16:09:17 +0200
-Message-ID: <CAN0heSouGV+0Z+j_Th794u-RNiLLLNNEpJu__nAH38_q_TSuig@mail.gmail.com>
-Subject: Re: [PATCH v2] clarify documentation for remote helpers
-To:     David Turner <dturner@twosigma.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAH53SykQWLtjt0gWVrz5KyH-9WyqaQ0GtkhmyLt09QEqcAS_dw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 30 Aug 2019 at 16:00, David Turner <dturner@twosigma.com> wrote:
->
-> Signed-off-by: David Turner <dturner@twosigma.com>
-> ---
->  Documentation/gitremote-helpers.txt | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-> index 43f80c8068..f4a165387f 100644
-> --- a/Documentation/gitremote-helpers.txt
-> +++ b/Documentation/gitremote-helpers.txt
-> @@ -297,9 +297,9 @@ Supported if the helper has the "option" capability.
->         same batch are complete. Only objects which were reported
->         in the output of 'list' with a sha1 may be fetched this way.
->  +
-> -Optionally may output a 'lock <file>' line indicating a file under
-> -GIT_DIR/objects/pack which is keeping a pack until refs can be
-> -suitably updated.
-> +Optionally may output a 'lock <file>' line indicating the full path of
-> +a file under $GIT_DIR/objects/pack which is keeping a pack until refs
+On 30/08/2019 14:23, Dmitry Nikulin wrote:
+> On Fri, 30 Aug 2019 at 13:16, Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> I'm not sure why the last argument is being split in
+>> your example. It is not split in the example below
+> 
+> I have replicated the splitting issue on my small demo repo [1]:
+> 
+> $ env GIT_EXTERNAL_DIFF=./print_argv.py git diff -M origin/branch1
+> origin/branch1-mv -- file1.txt file1-mv.txt
+> ['./print_argv.py',
+>   'file1.txt',
+>   '/tmp/EWaCSc_file1.txt',
+>   '2bef330804cb3f6962e45a72a12a3071ee9b5888',
+>   '100644',
+>   '/tmp/mtEiSc_file1-mv.txt',
+>   'f8fd6737fbe5a45c97ba9c9de495dc46ff11eccd',
+>   '100644',
+>   'file1-mv.txt',
+>   'similarity index 90%\n'
+>   'rename from file1.txt\n'
+>   'rename to file1-mv.txt\n'
+>   'index 2bef330..f8fd673 100644\n']
 
-I'd still like to suggest backticks: `$GIT_DIR/objects/pack`
+That's strange - What OS are you using? Does python do any 
+pre-processing of arguments with newlines in them?
 
-> +can be suitably updated.  The path must end with ".keep".
->  +
->  If option 'check-connectivity' is requested, the helper must output
->  'connectivity-ok' if the clone is self-contained and connected.
+> This is, however, tangential to the original problem: documenting the
+> external diff CLI interface for diffing two blobs. Here is what I am
+> seeing:
+> 
+> $ env GIT_EXTERNAL_DIFF=./print_argv.py git diff
+> origin/branch1:file1.txt origin/branch1-mv:file1-mv.txt
+> ['./print_argv.py',
+>   'file1.txt',
+>   '/tmp/n9USvy_file1.txt',
+>   '2bef330804cb3f6962e45a72a12a3071ee9b5888',
+>   '100644',
+>   '/tmp/Zst0uy_file1-mv.txt',
+>   'f8fd6737fbe5a45c97ba9c9de495dc46ff11eccd',
+>   '100644',
+>   'file1-mv.txt',
+>   'index 2bef330..f8fd673 100644\n']
+> 
+> The meaning and origin of the last arg remains mysterious, and the
+> other args do not conform to the published documentation[2], which
+> states that the args should be:
 
-Here's how I interpret the motivation behind the patch:
+The documentation is incomplete it should document the extra fields 
+passed when it detects renames.
 
-  Reading the text on the optional 'lock <file>' line, it's easy to
-  believe that the filename should be given relative to
-  $GIT_DIR/objects/pack. Actually, one needs to provide the full path.
-  Also, we fail to mention that the filename must end with ".pack".
+>      path old-file old-hex old-mode new-file new-hex new-mode
+> 
+> Instead the args that are passed are:
+> 
+>      path old-filename old-file old-hex old-mode new-file new-hex
+> new-mode new-filename something
 
-But I'd have to take your word for these two claims, since I haven't
-actually tested or dug myself. ;-)
+I think what is happening is that because you're passing different 
+filenames in to get the blobs the 'pass rename information' code is 
+being triggered so it shows the new filename as the name used to get the 
+  second blob and then passes the header which only has an index line as 
+there isn't any real rename information.
 
-I do wonder... If we're giving a full path which points outside of
-$GIT_DIR/objects/pack, what will happen? Will /mnt/my-packs/foo.pack
-work just as fine? If yes, then I don't see a reason to mention
-$GIT_DIR/objects/pack at all. If no, it sort of begs the question of why
-we don't accept relative filenames. (Or mandate them, but that boat has
-obviously sailed.) Either way, I'm wondering if there isn't a bug left
-here. What do you think?
+Best Wishes
 
-Martin
+Phillip
+
+> [1]: https://github.com/dniku/git-external-diff-argv
+> [2]: https://www.git-scm.com/docs/git#Documentation/git.txt-codeGITEXTERNALDIFFcode
+> 
