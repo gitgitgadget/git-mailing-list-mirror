@@ -4,186 +4,69 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ABE91F461
-	for <e@80x24.org>; Fri, 30 Aug 2019 12:10:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C6681F4B7
+	for <e@80x24.org>; Fri, 30 Aug 2019 12:49:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727792AbfH3MKK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Aug 2019 08:10:10 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:56000 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727739AbfH3MKK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Aug 2019 08:10:10 -0400
-Received: by mail-wm1-f65.google.com with SMTP id g207so3083163wmg.5
-        for <git@vger.kernel.org>; Fri, 30 Aug 2019 05:10:09 -0700 (PDT)
+        id S1727904AbfH3Mt5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Aug 2019 08:49:57 -0400
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:41685 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727170AbfH3Mt5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Aug 2019 08:49:57 -0400
+Received: by mail-ot1-f65.google.com with SMTP id o101so6768538ota.8
+        for <git@vger.kernel.org>; Fri, 30 Aug 2019 05:49:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=qCY9t8KMSAaRjBFzzNnJuRtWHd9riKjFnvVTN4WRpFQ=;
-        b=IjQJf3RdPNNVsUAA9RyXruBExPSYZOzLviCOIuM+aMGN2PLgo7cAaf00ZUjh8041Y6
-         hrAeT+mUbsQJ6ra+JMWpWXsj7vTaT9f6JwL8evftLiJs/BV02QpYoYQoYAGcyYb9h72k
-         fpgm6NglYO+jHTpbMpLIo5OekZb4pI1pVlHYvWWsu+F4lJnBUWI/vFmMdhsknZVNDNYu
-         Z10OUnNgp59ZvQUnDBCYwojcNIMMWQJvxNgnscBj6K7owoom1x0J096P/2ykeNzSTLvZ
-         sIlenq7JWjFPYCvIOjotzEG/x7fDsYu1JX8+X64zQ/ld1tx4MsSZEE/DEKOcU+uXVakA
-         hunA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/MJV/I7sEbuaYaB8+thBpU637TylA9iTPnta6bQkME4=;
+        b=UJVUdJ8kDVIt2IttcZ5wnqkoVM1Z8FQmvMkw36UQtbD7vpyo2LPsCVCMNt654/P7r/
+         FYL1vMDTWrcVCOky0yDSGNMvVta4j/+DSUPRKxBnu1s2ooo1MTlTOr0dpPzgzKQ2aTrU
+         uSUsUBhQqxNKoeRXN+Nsn0nqjaZSrQG/WEhGyl3VnuQLSaApVfaX0J1uN3z+NoJo297E
+         06Hsd985Ss1UU4Qbz698tpqr28PoEh80Klm//bCKgG2/JqEWUoFlcMQUpqL+JLs9OjyM
+         jkxoxQnyDFKHoOIBZGjKebjeNjShG60wMAUG2fLX4VBJYB7Gx8++hut4EPDiMwGwF036
+         m/TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=qCY9t8KMSAaRjBFzzNnJuRtWHd9riKjFnvVTN4WRpFQ=;
-        b=Z596f+MGfGhRgKSW6v8Rt8y02UUcub3P3MKWhmBZMGXhdYK3QXISnuEZbqxk6b5Nzy
-         oGI+21+5AkRMKWCCnmsWVgqih6HlEk2I5lARU7tfMq6KjeJhN1pa83rTNTjoc7dg5qHd
-         Q/2gnRXSPJH2PYJsXo6l4VmHMusZR5xMvBcawrbpZNZTLDn5CYPYkP0FoqLqtfOt/bXX
-         8GxXt++sYyoDB9GwTuhkap+zRNWmkCcYTT6kyYWPTzabX5wZ3fEaiVSXHtASCrVzjO3P
-         cRA6b5ilYh/chdezx9Nl2R0ih9F5RqINASd0xuwQPFJj0Qj1o6BtZoqizGy8/FrMihcg
-         zxGg==
-X-Gm-Message-State: APjAAAWaHlyfFWpWkfD3tCOF4sDbzMascSrHj7InYuNZC4/d7bdKAZqP
-        HQ5wo9swlVLH4yvNBDJxQUo=
-X-Google-Smtp-Source: APXvYqzwNBPBA5tboVDP9z3rQOxaaer6PNba594NAKw7pm4+rYL1b9mEunlcImu0FzwgoIGHb19K2A==
-X-Received: by 2002:a1c:eb0a:: with SMTP id j10mr18456077wmh.125.1567167008481;
-        Fri, 30 Aug 2019 05:10:08 -0700 (PDT)
-Received: from szeder.dev (x4db30fda.dyn.telefonica.de. [77.179.15.218])
-        by smtp.gmail.com with ESMTPSA id x10sm7228276wrn.39.2019.08.30.05.10.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 30 Aug 2019 05:10:07 -0700 (PDT)
-Date:   Fri, 30 Aug 2019 14:10:05 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] upload-pack: fix race condition in error messages
-Message-ID: <20190830121005.GI8571@szeder.dev>
-References: <20190828093408.GD8571@szeder.dev>
- <20190828145412.GB14432@sigill.intra.peff.net>
- <20190828153944.GA29715@sigill.intra.peff.net>
- <20190828161552.GE8571@szeder.dev>
- <4d5773f9-4637-d8a3-d683-82624950f319@gmail.com>
- <20190829141307.GE1797@sigill.intra.peff.net>
- <131dfa37-0f65-f0c3-6f30-5b6eca12d9c0@gmail.com>
- <20190829143805.GB1746@sigill.intra.peff.net>
- <20190829215818.GG8571@szeder.dev>
- <20190829220630.GH8571@szeder.dev>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/MJV/I7sEbuaYaB8+thBpU637TylA9iTPnta6bQkME4=;
+        b=ZY1BUUhtaZU/XgndKha0uh03arvWkPZI/7M2DhkWQA522MYeUl/M/77f0yWw1T6oFP
+         jrXEu/WV+vnOIZrDoy9eboBdb30yD1QG1JRkNsHuPbagGXAOqyFSMSNysXYC1M7pMF82
+         wvYPgXcsPtrc1YWg0uuf09aBq6pMJKDXftEPQzIWTuByzUbQ70zm3HtK04TqfJRSAEEF
+         4oo+odfe9sFP0MNSuWq2Wdi44gdCxWrABsi3W+AelW3zoOUvDj5hKkxzAajg0GZNGOs+
+         nUAQsNJo0TJtPnR58YECIISI9qfiNl/NnqBNICs/icFREUSCpyceUib5fLvmOhZzyTiH
+         NKGQ==
+X-Gm-Message-State: APjAAAU8Wm4+HYjUNVYEFxrycycogEkR6WnlCq6W6IHg8eCj2r3pMNYn
+        PpmabTFrqZ/vGCiopsdVm9x8+qCJkt9in4OGXxE=
+X-Google-Smtp-Source: APXvYqyIgDGZn42uMHuHJHdOEWjyHgqn9oquKfMmtwypohxYtKvRHR4+igNDPKS+LPonjiXdHHPHJ8REg00cU8otetY=
+X-Received: by 2002:a9d:7f92:: with SMTP id t18mr3546895otp.323.1567169396057;
+ Fri, 30 Aug 2019 05:49:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190829220630.GH8571@szeder.dev>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <CAAQViEsZW4PzHr5BrkDHU2kSd_e04n02McGPgrmXGZMpgaTePg@mail.gmail.com>
+ <d31b871a-5c2d-99e7-5616-6f43759bb948@kdbg.org> <CAAQViEv1_YXPxLRN=eT7yQhro55K4audnouzAjjbHhJsU7pgQA@mail.gmail.com>
+ <34935414-4e69-114b-7a32-f94514e3679d@iee.email> <xmqq5zmkkn4a.fsf@gitster-ct.c.googlers.com>
+ <CAAQViEsL+X5ZYmmSjG1JBksGjthHCUyWa3525b8dN7u1XAbvJg@mail.gmail.com> <xmqq4l224d0x.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq4l224d0x.fsf@gitster-ct.c.googlers.com>
+From:   Albert Vaca Cintora <albertvaka@gmail.com>
+Date:   Fri, 30 Aug 2019 14:49:30 +0200
+Message-ID: <CAAQViEv1wWGTzQ29t0qi9rYoRY=Y86GL7E5rR4XySOBoeRx2pg@mail.gmail.com>
+Subject: Re: [Feature Request] Option to make .git not read-only in cloned repos
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 30, 2019 at 12:06:30AM +0200, SZEDER Gábor wrote:
-> On Thu, Aug 29, 2019 at 11:58:18PM +0200, SZEDER Gábor wrote:
-> > On Thu, Aug 29, 2019 at 10:38:05AM -0400, Jeff King wrote:
-> > > So any fixes there have to happen on the client side. I am still
-> > > confused about why the client is writing in this case, per the argument
-> > > in 014ade7484 (upload-pack: send ERR packet for non-tip objects,
-> > > 2019-04-13). It would be nice to use GIT_TRACE_PACKET to see what it's
-> > > trying to write, but I still haven't been able to reproduce the issue.
-> > 
-> > It's the "done" line:
-> > 
-> >   + cat trace-packet
-[...]
-> >   packet:  upload-pack> 0000
-> >   packet:        fetch> done
-> > 
-> > In the avarage successful run that "fetch> done" pkt-line is
-> > immediately after the "fetch> 0000".
+On Tue, Aug 27, 2019 at 9:35 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Ah, your "rm" command needs to learn "-f" option, too, then?
 
-So instead of immediately die()int after write_in_full() returned an
-error, fetch should first try to read all incoming packets in the hope
-that the remote did send an ERR packet before it died, and then die
-with the error in that packet, or fall back to the current generic
-error message if there is no ERR packet (e.g. remote segfaulted or
-something similarly horrible).  This fixes the test failure with that
-strategically-placed sleep() in 'fetch-pack.c'.
-
-  https://travis-ci.org/szeder/git/jobs/578778749#L2689
-
-Alas, passing a 'reader' to a function called send_request() doesn't
-look quite right, does it...  And I'm not sure about the stateless
-communication, it still uses write_or_die().
-
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index e18864458b..773d9c7904 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -186,14 +186,27 @@ static enum ack_type get_ack(struct packet_reader *reader,
- }
- 
- static void send_request(struct fetch_pack_args *args,
--			 int fd, struct strbuf *buf)
-+			 int fd, struct strbuf *buf,
-+			 struct packet_reader *reader)
- {
- 	if (args->stateless_rpc) {
- 		send_sideband(fd, -1, buf->buf, buf->len, LARGE_PACKET_MAX);
- 		packet_flush(fd);
- 	} else {
--		if (write_in_full(fd, buf->buf, buf->len) < 0)
-+		if (write_in_full(fd, buf->buf, buf->len) < 0) {
-+			int save_errno = errno;
-+			/*
-+			 * Read everything the remote has sent to us.
-+			 * If there is an ERR packet, then the loop die()s
-+			 * with the received error message.
-+			 * If we reach EOF without seeing an ERR, then die()
-+			 * with a generic error message, most likely "Broken
-+			 * pipe".
-+			 */
-+			while (packet_reader_read(reader) != PACKET_READ_EOF);
-+			errno = save_errno;
- 			die_errno(_("unable to write to remote"));
-+		}
- 	}
- }
- 
-@@ -353,7 +366,7 @@ static int find_common(struct fetch_negotiator *negotiator,
- 		const char *arg;
- 		struct object_id oid;
- 
--		send_request(args, fd[1], &req_buf);
-+		send_request(args, fd[1], &req_buf, &reader);
- 		while (packet_reader_read(&reader) == PACKET_READ_NORMAL) {
- 			if (skip_prefix(reader.line, "shallow ", &arg)) {
- 				if (get_oid_hex(arg, &oid))
-@@ -376,7 +389,7 @@ static int find_common(struct fetch_negotiator *negotiator,
- 			die(_("expected shallow/unshallow, got %s"), reader.line);
- 		}
- 	} else if (!args->stateless_rpc)
--		send_request(args, fd[1], &req_buf);
-+		send_request(args, fd[1], &req_buf, &reader);
- 
- 	if (!args->stateless_rpc) {
- 		/* If we aren't using the stateless-rpc interface
-@@ -398,7 +411,7 @@ static int find_common(struct fetch_negotiator *negotiator,
- 			int ack;
- 
- 			packet_buf_flush(&req_buf);
--			send_request(args, fd[1], &req_buf);
-+			send_request(args, fd[1], &req_buf, &reader);
- 			strbuf_setlen(&req_buf, state_len);
- 			flushes++;
- 			flush_at = next_flush(args->stateless_rpc, count);
-@@ -473,7 +486,7 @@ static int find_common(struct fetch_negotiator *negotiator,
- 	if (!got_ready || !no_done) {
- 		sleep(1);
- 		packet_buf_write(&req_buf, "done\n");
--		send_request(args, fd[1], &req_buf);
-+		send_request(args, fd[1], &req_buf, &reader);
- 	}
- 	print_verbose(args, _("done"));
- 	if (retval != 0) {
-
+The whole point of this thread was to remove the need of -f forcing the removal.
