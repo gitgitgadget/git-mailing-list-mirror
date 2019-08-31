@@ -2,127 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 965671F461
-	for <e@80x24.org>; Sat, 31 Aug 2019 00:23:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95EDE1F461
+	for <e@80x24.org>; Sat, 31 Aug 2019 07:17:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728350AbfHaAXW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Aug 2019 20:23:22 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:38820 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727708AbfHaAXV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Aug 2019 20:23:21 -0400
-Received: by mail-pf1-f194.google.com with SMTP id o70so5622532pfg.5
-        for <git@vger.kernel.org>; Fri, 30 Aug 2019 17:23:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ghh6VJQglbmbAhMr88wl4QvTeb5xyLS8n8TPI5d/LpM=;
-        b=kav0km8L6H98yAJ2vnwMfpHdcKwX9QYtPR0q76jKVg1WumiGc7h/5IuTvzpQrtG3Hu
-         YMC/feho4NM0SOtmi8Px8+C8rNyoTAprr3ZMuFgT4xr7TDyk7ONmd6H/sdTSQDYAST8f
-         u1d+1aTCww3VSBI3hAXGzhbQgP+vSNYtPKxlCqKP+Jsw/N8nCAQriX7hBv/aQj91Zz5w
-         3Z5SWbIQ91anwv33JnBN42g7Ufs2uSZ+4iVSHYD9JxjrHfRDCduP2SeD2DG+XOu5CAQW
-         pKDgqcCdA/ClQCp/iv0jck38h6ysyD5m9MgY2H8aZoWFH8RgxBMCkoRgn2VMT0l0vYK8
-         J17A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ghh6VJQglbmbAhMr88wl4QvTeb5xyLS8n8TPI5d/LpM=;
-        b=cTo10rHvsRUWmYIdQDwT29jXmreQsiVOi4/BAccltze1xji2gSM3faN9Agp3WXV+oV
-         HTZY1e97T+8v8E+rX+bheojDv9vx3kICTaM5Znnj6vVieV+Nb22Ds/ZNFgUzeI95UIK1
-         N88e0EoqJfeMoMrfLa3YVXIz+DwcNNVfCK+am+1+eCot/pkA1MpvBDs+VZFyX8wAKwd/
-         71UCDPt56f6BqWv9QOB8oGfsVoc+m04d1IKiJmEh8D6Qnw/5mNiT7picPSP44TG25ax4
-         oPJzTfk/h65SGs9JllM86uS5LGTWo59DEijmm8jyu7iJzf9sS5wWpkUnHPCd2J26Zg1Y
-         uyeg==
-X-Gm-Message-State: APjAAAUONyhISAC1zcaX00JTpRuQFWKtGg5cm+z0ipd8NTGy+XKgMvjP
-        teX3tfjaRtczGcUB2dFxDP8DAdi9
-X-Google-Smtp-Source: APXvYqxRJfZzE1Q9ykGrdhGzDSzhDyNQ31GWvd+D4g5hfBUAk9GxCiCnmK9vUviXW40SQdnPttbpew==
-X-Received: by 2002:a65:6102:: with SMTP id z2mr15012115pgu.391.1567211000594;
-        Fri, 30 Aug 2019 17:23:20 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id d189sm8602449pfd.165.2019.08.30.17.23.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 30 Aug 2019 17:23:19 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        id S1725903AbfHaHRR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Aug 2019 03:17:17 -0400
+Received: from smtp01.domein-it.com ([92.48.232.141]:36806 "EHLO
+        smtp01.domein-it.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725781AbfHaHRQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Aug 2019 03:17:16 -0400
+Received: by smtp01.domein-it.com (Postfix, from userid 1000)
+        id EAE2A807B72C; Sat, 31 Aug 2019 09:17:13 +0200 (CEST)
+Received: from ferret.domein-it.nl (unknown [92.48.232.148])
+        by smtp01.domein-it.com (Postfix) with ESMTP id 44D78807B72D;
+        Sat, 31 Aug 2019 09:17:12 +0200 (CEST)
+Received: from 80-112-22-40.cable.dynamic.v4.ziggo.nl ([80.112.22.40]:45354 helo=[192.168.1.10])
+        by ferret.domein-it.nl with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.92)
+        (envelope-from <ben@wijen.net>)
+        id 1i3xdF-0000qf-01; Sat, 31 Aug 2019 09:17:09 +0200
+Subject: Re: [PATCH v6 1/2] builtin/rebase.c: make sure the active branch
+ isn't moved when autostashing
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4] merge-options.txt: clarify meaning of various ff-related options
-Date:   Fri, 30 Aug 2019 17:23:13 -0700
-Message-Id: <20190831002313.8761-1-newren@gmail.com>
-X-Mailer: git-send-email 2.23.0.39.gf92d9de5c3
-In-Reply-To: <CAPig+cRPGY4wEbUin3mDj0+nHigtndNWj6o-FHjKeCzgqY9Y5Q@mail.gmail.com>
-References: <CAPig+cRPGY4wEbUin3mDj0+nHigtndNWj6o-FHjKeCzgqY9Y5Q@mail.gmail.com>
+        =?UTF-8?Q?Szeder_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20190829164757.7301-1-ben@wijen.net>
+ <20190830151607.4208-1-ben@wijen.net> <20190830151607.4208-2-ben@wijen.net>
+ <xmqqsgpiwgts.fsf@gitster-ct.c.googlers.com>
+From:   Ben <ben@wijen.net>
+Message-ID: <bf659b1d-b9a4-cb9e-e660-fa743b4db84c@wijen.net>
+Date:   Sat, 31 Aug 2019 09:17:09 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqsgpiwgts.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Domein-IT-MailScanner-Information: Please contact the ISP for more information
+X-Domein-IT-MailScanner-ID: 1i3xdF-0000qf-01
+X-Domein-IT-MailScanner: Found to be clean
+X-Domein-IT-MailScanner-SpamCheck: 
+X-Domein-IT-MailScanner-From: ben@wijen.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As discovered on the mailing list, some of the descriptions of the
-ff-related options were unclear.  Try to be more precise with what these
-options do.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-Changes since v3:
-  * Shorten the leading paragraph, as suggested by Junio (and Eric).
 
- Documentation/merge-options.txt | 28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+On 30-08-2019 22:15, Junio C Hamano wrote:
+> Ben Wijen <ben@wijen.net> writes:
+> 
+>> +
+>>  			struct commit *head =
+>> -				lookup_commit_reference(the_repository,
+>> -							&options.orig_head);
+>> +				lookup_commit_reference(the_repository, &head_oid);
+> 
+> This introduces decl-after-statement error, doesn't it?
+> 
+> Perhaps like so...
 
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 79a00d2a4a..94be34f941 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -40,20 +40,24 @@ set to `no` at the beginning of them.
- 	case of a merge conflict.
- 
- --ff::
--	When the merge resolves as a fast-forward, only update the branch
--	pointer, without creating a merge commit.  This is the default
--	behavior.
--
- --no-ff::
--	Create a merge commit even when the merge resolves as a
--	fast-forward.  This is the default behaviour when merging an
--	annotated (and possibly signed) tag that is not stored in
--	its natural place in 'refs/tags/' hierarchy.
--
- --ff-only::
--	Refuse to merge and exit with a non-zero status unless the
--	current `HEAD` is already up to date or the merge can be
--	resolved as a fast-forward.
-+	Specifies how a merge is handled when the merged-in history is
-+	already a descendant of the current history.  `--ff` is the
-+	default unless merging an annotated (and possibly signed) tag
-+	that is not stored in its natural place in the `refs/tags/`
-+	hierarchy, in which case `--no-ff` is assumed.
-++
-+With `--ff`, when possible resolve the merge as a fast-forward (only
-+update the branch pointer to match the merged branch; do not create a
-+merge commit).  When not possible (when the merged-in history is not a
-+descendant of the current history), create a merge commit.
-++
-+With `--no-ff`, create a merge commit in all cases, even when the merge
-+could instead be resolved as a fast-forward.
-++
-+With `--ff-only`, resolve the merge as a fast-forward when possible.
-+When not possible, refuse to merge and exit with a non-zero status.
- 
- -S[<keyid>]::
- --gpg-sign[=<keyid>]::
--- 
-2.23.0.39.gf92d9de5c3
+Would you like me to send in another patch or leave it like this?
 
