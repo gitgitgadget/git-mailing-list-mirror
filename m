@@ -2,82 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 326531F461
-	for <e@80x24.org>; Sat, 31 Aug 2019 07:17:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3E2F1F461
+	for <e@80x24.org>; Sat, 31 Aug 2019 08:01:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726102AbfHaHR2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 31 Aug 2019 03:17:28 -0400
-Received: from smtp01.domein-it.com ([92.48.232.141]:44815 "EHLO
-        smtp01.domein-it.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725781AbfHaHR2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Aug 2019 03:17:28 -0400
-Received: by smtp01.domein-it.com (Postfix, from userid 1000)
-        id 90329807B738; Sat, 31 Aug 2019 09:17:26 +0200 (CEST)
-Received: from ferret.domein-it.nl (unknown [92.48.232.148])
-        by smtp01.domein-it.com (Postfix) with ESMTP id D45AE807B72C;
-        Sat, 31 Aug 2019 09:17:23 +0200 (CEST)
-Received: from 80-112-22-40.cable.dynamic.v4.ziggo.nl ([80.112.22.40]:45356 helo=[192.168.1.10])
-        by ferret.domein-it.nl with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.92)
-        (envelope-from <ben@wijen.net>)
-        id 1i3xdN-0000rY-LB; Sat, 31 Aug 2019 09:17:17 +0200
-Subject: Re: [PATCH v6 2/2] builtin/rebase.c: Remove pointless message
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Szeder_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <20190829164757.7301-1-ben@wijen.net>
- <20190830151607.4208-1-ben@wijen.net> <20190830151607.4208-3-ben@wijen.net>
- <xmqqimqewgrd.fsf@gitster-ct.c.googlers.com>
-From:   Ben <ben@wijen.net>
-Message-ID: <d5a70a17-9b4c-f060-5b4c-1e0bdb594390@wijen.net>
-Date:   Sat, 31 Aug 2019 09:17:18 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1726179AbfHaH6P (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Aug 2019 03:58:15 -0400
+Received: from mail-ed1-f47.google.com ([209.85.208.47]:35355 "EHLO
+        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726116AbfHaH6P (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Aug 2019 03:58:15 -0400
+Received: by mail-ed1-f47.google.com with SMTP id t50so10613862edd.2
+        for <git@vger.kernel.org>; Sat, 31 Aug 2019 00:58:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GDM7xNE8DoBiPx603uCjLvlbXePP5SwDnJgTt03eQ+0=;
+        b=nt9FoLGojq7PDJ/stoz7lMt97sXeHmQkVAeoSPDTa6gO4CNFRz/7kQEbwba/jiEOOW
+         +L8mhpVJ+rnJn1iiWlii7p6wu9OZov1V0J2y+wowaned4YIe+78uHxfLtlH3UsA2jXB3
+         2AyB2sH47JptVALcuGpbQZ7pAQfTyxpv46bAm4FCOU6/9+6EMRKsb+bhrr+JH6wCo0NP
+         hpLcg/46vn4bfVO6Z/IJhxu90TKoKFsD5uqgGNtUcFw8pS3S+8YCd76mK2ZyKNzN4twn
+         uHfxtnXQwWcAhpIgNq87BwQ5qH54cI2YYNOBA/pgqxjH5wTGxQy74YcZhO1q4+zRCYSV
+         NQkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GDM7xNE8DoBiPx603uCjLvlbXePP5SwDnJgTt03eQ+0=;
+        b=bDMc4/n2X9Q8XQDt7CoG1sXwsDjZ679aPlQxt76ZU9ZzfqHvG6/n5wJxWXzqUlY8tB
+         k8VaOiU5OPgm3tTKmTmgCUsweWRwwmKNHb68BKbsYPrAB2ZS6B51ire6ZT015YccjTzq
+         fJGfFWRt/Nngpvue7fynTFDGIA4dHi6VKyphKgkNQtUXgeYEHaQR9cMUMs3R3+ka+4Cw
+         O2fkyt7S++oBFo4AwjLR9nOZmD/NIefqZ3AGvBAiJpeZFE63iY6OgcxzgjOsz8gXk5e+
+         OfPm0ZPqukNq3ON497mGI+b7x5bQZ8XHzFWUqnYWq9m+TUT9J8sX6ycDczCwaBZ0/47k
+         yeoA==
+X-Gm-Message-State: APjAAAVPfVGaWzHXqJrCzXd8nAri2tJI82TMRdffHF1cImenj5cUO2Fc
+        rlrLcZvI6UIx2Ne2A/eYs9Cq3diHqDDOKzsm83k=
+X-Google-Smtp-Source: APXvYqwZt1LQFS71YRUfqZlsbIqQ3M1qF5au4cZ4ctec89M6iZ/MVoDcfiA7rBPfV1me6n0Ri1YEY/WEZHECMS+Mu9I=
+X-Received: by 2002:a05:6402:759:: with SMTP id p25mr19626728edy.119.1567238293110;
+ Sat, 31 Aug 2019 00:58:13 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqimqewgrd.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Domein-IT-MailScanner-Information: Please contact the ISP for more information
-X-Domein-IT-MailScanner-ID: 1i3xdN-0000rY-LB
-X-Domein-IT-MailScanner: Found to be clean
-X-Domein-IT-MailScanner-SpamCheck: 
-X-Domein-IT-MailScanner-From: ben@wijen.net
+References: <20190827051756.GA12795@sigill.intra.peff.net>
+In-Reply-To: <20190827051756.GA12795@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 31 Aug 2019 09:58:02 +0200
+Message-ID: <CAP8UFD31Pp9XMDpaNfYP9ph_W0LV43sXvSvppXDjrTSp89S7ZQ@mail.gmail.com>
+Subject: Re: Git in Outreachy December 2019?
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Tue, Aug 27, 2019 at 7:17 AM Jeff King <peff@peff.net> wrote:
+>
+> Do we have interested mentors for the next round of Outreachy?
 
-On 30-08-2019 22:16, Junio C Hamano wrote:
-> Ben Wijen <ben@wijen.net> writes:
-> 
->> -			struct object_id head_oid;
->> -			if (get_oid("HEAD", &head_oid)) {
->> -				ret = error(_("could not determine HEAD revision"));
-> 
-> I think we saw die() in the previous one.  This patch would not
-> apply on top of the result of applying 1/2.
+I am interested to co-mentor.
 
-Yes, my fault, sorry about that...
+> The deadline for Git to apply to the program is September 5th. The
+> deadline for mentors to have submitted project descriptions is September
+> 24th. Intern applications would start on October 1st.
+>
+> If there are mentors who want to participate, I can handle the project
+> application and can start asking around for funding.
 
-> 
-> I'll tentatively queue this instead on top of the corrected 1/2.
-
-Your patch is indeed correct.
-
-Thank you!
-
-> 
-> Thanks.
-> 
+That would be really nice, thank you!
