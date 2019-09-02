@@ -2,95 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84FC81F461
-	for <e@80x24.org>; Mon,  2 Sep 2019 22:13:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3B4C1F461
+	for <e@80x24.org>; Mon,  2 Sep 2019 22:39:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727775AbfIBWNT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 18:13:19 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:32162 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727667AbfIBWNT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Sep 2019 18:13:19 -0400
-Received: from [92.7.169.237] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1i4uZY-0003Ip-4j; Mon, 02 Sep 2019 23:13:16 +0100
-Subject: Re: [PATCH 1/1] rebase -r: let `label` generate safer labels
-To:     Matt Rogers <mattr94@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Matt R via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.327.git.gitgitgadget@gmail.com>
- <4a02c38442dd8a4c0381adc8db0dce81c253da09.1567432900.git.gitgitgadget@gmail.com>
- <444f3ec4-abdf-1aa9-e8a8-8b5346b939e8@gmail.com>
- <xmqq5zmav9ej.fsf@gitster-ct.c.googlers.com>
- <3edd55ed-b507-a14a-5cfb-0bfe471efbbc@iee.email>
- <CAOjrSZtw+wYHxFRQCfb80xzm9OsGDh2rW8uD+AYYdmDPxk5DFQ@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <b39e5215-f5d6-eca3-7f08-813b5508d779@iee.email>
-Date:   Mon, 2 Sep 2019 23:13:17 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1727688AbfIBWjx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 18:39:53 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58504 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727625AbfIBWjx (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 2 Sep 2019 18:39:53 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:6959:e43b:5cf6:a465])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9F9A260448;
+        Mon,  2 Sep 2019 22:39:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1567463991;
+        bh=7vRs5yfsf4MSoKuwg/LI5vUhNURdayDHzdUqQyhG7hw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=uTRpZbEGWXDzwmyDLWMVQodkNA4P+pC0LoY3IQ7PJz3cWizGAnqXCi0kVD5b+9ZoH
+         Bb3zPleuAI5RkOEhb6KgfYCBgYPFK+1ZUQAHdPgfIW9/bD1CXzyXocgWKzWVJ3ys6U
+         RYkwTWHXx4yi5ID24x1zc20D1MPmwWl3nCPD/3t9L/0mBclCsuT9ibx05/R8y/VEFq
+         M1h+f9GDbQNkI4pzRGhoxAVmWdsGLgckregTDZfj/PujPHfhRspxApzara0olw9tTf
+         Nj1LByUBqJ9loZOad9phHKgoRPm8w1FzAIj5ru7RqMNl4ZxFuqRr07odA6siodUqcG
+         8iQjeQNU3/xWmIugK/r4vK8IBNiDM5w2OW5ibflii0OKoVnzI6QzMURTwBHJGO3+6x
+         /jcdo0Jj9/YjWJ6Wkjn3AJmnkJvbkUn7ZDg2N4SqlrJISC1mDeLH79hR1vrwf2ATOk
+         qsRnJzuo9PMWZRmYyzXmzeEmqcJHTyhUyD0J3C6TNv8jxvVyb9M
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v6 0/2] Honor .gitattributes with rebase --am
+Date:   Mon,  2 Sep 2019 22:39:42 +0000
+Message-Id: <20190902223944.897504-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.23.0.162.g0b9fbb3734
+In-Reply-To: <20190825233340.10894-1-sandals@crustytoothpaste.net>
+References: <20190825233340.10894-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-In-Reply-To: <CAOjrSZtw+wYHxFRQCfb80xzm9OsGDh2rW8uD+AYYdmDPxk5DFQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/09/2019 22:47, Matt Rogers wrote:
-> I can redo the commit, I had thought that I had previously fixed the 
-> author but I guess I was mistaken.
->
-> As for issues with non utf-8 encodings, I don't know of any simple way 
-> to check for those except for restricting to asci alphanumeric characters
+This series makes rebase --am honor the .gitattributes file for
+subsequent patches when a patch changes it.
 
-If I read the Wikipedia article [1] about the utf-8 design choices it is 
-pretty reasonable and robust most of the time, though that maybe a part 
-one way trapdoor.
+Changes from v5:
+* Avoid leaking memory from already parsed filter rules.
 
-> Also the code given doesn't resolve onelines that consist only of 
-> restricted file names (e.g. COM, NUL, etc. On windows)
+Changes from v4:
+* Wrap lines in apply.c.
+* Handle merge and conflict-marker-size attributes.
+* Add tests for am and am -3 in addition to rebase.
 
-It maybe that the rebase doc may need (if it happens) a short comment 
-warning of that.
+Changes from v3:
+* Check for both addition and removal of .gitattributes files.
+* Switch from "test_config" to "git config".
 
-Also need to check if the `label_oid()` function actually makes the 
-label distinct, hence prevents such labels from being used as such a 
-restricted file name - i.e. does it include the oid element.
+Changes from v2:
+* Rename has_path_suffix to ends_with_path_components.
 
-Ultimately the label could be tweaked to have say the 4char prefix to 
-fool the Windows 'starts with' name detection - which assumes I 
-understand how some of those bad filenames are detected...
->
->
->
-> On Mon, Sep 2, 2019, 5:24 PM Philip Oakley <philipoakley@iee.email> wrote:
->
->     On 02/09/2019 19:29, Junio C Hamano wrote:
->     > I see there are "lets make sure it is unique by suffixing "-%d" in
->     > other codepaths; would that help if this piece of code yields a
->     > label that is not unique?
->     maybe use a trailing 4 characters  of the oid to get a reasonably
->     unique
->     label?
->
->     Oh, just seen dscho's "we make sure that the labels are unique,
->     via the
->     `label_oid()` function!", maybe needs mentioning in the commit
->     message
->     if re-rolled.
->
->     Philip
->
+Changes from v1:
+* Add has_path_suffix in a separate commit.
 
-[1] https://en.wikipedia.org/wiki/UTF-8#Description
+brian m. carlson (2):
+  path: add a function to check for path suffix
+  am: reload .gitattributes after patching it
+
+ apply.c           | 11 ++++++++++
+ convert.c         | 21 ++++++++++++++++++-
+ convert.h         |  6 ++++++
+ ll-merge.c        | 19 +++++++++++++----
+ ll-merge.h        |  1 +
+ path.c            | 39 +++++++++++++++++++++++++++--------
+ path.h            |  3 +++
+ t/t3400-rebase.sh | 36 ++++++++++++++++++++++++++++++++
+ t/t4150-am.sh     | 52 +++++++++++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 174 insertions(+), 14 deletions(-)
+
+Range-diff against v5:
+1:  2077a0829e ! 1:  1573fbd82d am: reload .gitattributes after patching it
+    @@ convert.c: static void convert_attrs(const struct index_state *istate,
+      
+     +void reset_parsed_attributes(void)
+     +{
+    ++	struct convert_driver *drv, *next;
+    ++
+     +	attr_check_free(check);
+     +	check = NULL;
+     +	reset_merge_attributes();
+    ++
+    ++	for (drv = user_convert; drv; drv = next) {
+    ++		next = drv->next;
+    ++		free((void *)drv->name);
+    ++		free(drv);
+    ++	}
+    ++	user_convert = NULL;
+    ++	user_convert_tail = NULL;
+     +}
+     +
+      int would_convert_to_git_filter_fd(const struct index_state *istate, const char *path)
