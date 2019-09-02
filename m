@@ -2,71 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 840A71F461
-	for <e@80x24.org>; Mon,  2 Sep 2019 17:35:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90D891F461
+	for <e@80x24.org>; Mon,  2 Sep 2019 17:55:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbfIBRfr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 13:35:47 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51311 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726443AbfIBRfr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Sep 2019 13:35:47 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 462B773560;
-        Mon,  2 Sep 2019 13:35:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gRKeKPpv3oZY0Z3X7w+9Qa+cOOc=; b=rJxchS
-        BeEovEYlYtHk+/1/OfB6+XzJABPMJwKEuAIjIYULu7pOFlgZgUcMxkzdZsNJBMNQ
-        v46F3fVP/uTHVt2d3TqhXEsZja84hWP4U5OIz+Lb/qEPVsudk2Pb2cCjq+suH+W1
-        FPWZd/OGIoECkmX8H8wMqNmRaq3LggDHoU9aA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DCD5U9Syu4lrYpPqvren26k9C4A6Rypv
-        kmW7E/026j1bm1Six7EOXuO43QRL+Fop6JI5HTSeBNeTfkTSxzdHAuQFP+xD5vL4
-        cJjzHLevNcaIOEACX/tLRCdxh1+XCauLZegOg+Js0Gp4APZULbFPhaV/azTfgSuL
-        sRVm2Tg39Cw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3DF127355F;
-        Mon,  2 Sep 2019 13:35:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5DE637355C;
-        Mon,  2 Sep 2019 13:35:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: git-gui: Long lines in commit message gets hidden, no scrollbar appears
-References: <CAGr--=+ThYVyZUiU1wnt0yL+MzF1RXvHnbwo9NWyh95cLyhNRQ@mail.gmail.com>
-        <CAKPyHN1LJa8Zq6rZbOMZ-KxkqQYauQcvjv+rTrHt1_zwPZLZ-A@mail.gmail.com>
-Date:   Mon, 02 Sep 2019 10:35:40 -0700
-In-Reply-To: <CAKPyHN1LJa8Zq6rZbOMZ-KxkqQYauQcvjv+rTrHt1_zwPZLZ-A@mail.gmail.com>
-        (Bert Wesarg's message of "Mon, 2 Sep 2019 14:05:55 +0200")
-Message-ID: <xmqqa7bmvbwz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726828AbfIBRz6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 13:55:58 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:34735 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726518AbfIBRz6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Sep 2019 13:55:58 -0400
+Received: by mail-wm1-f65.google.com with SMTP id y135so10407794wmc.1
+        for <git@vger.kernel.org>; Mon, 02 Sep 2019 10:55:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VNH/PPquqDk2fhxYBJS2yP7yMyW+j9Iu39jsBrItWHE=;
+        b=tALqHYpztzL6nrBMMVBSm24xnUTHTsc8PnibrQcRp701mGRVvGK79kuVvj3+T9NcSc
+         6YZrxOIWsM3GkNTz5zilgZfQHgBVOEgPE7P+C9tbWJd+Mk/SDk1RgOqhMHf+auXmXy9/
+         81jRXKSE6iqVlXMT3Llm91Y+6tOAagJ/G6QwhmgRvmLETmeVG8UvElURytQEmAGY4N/I
+         hzNbqhHPX6B/A+Arwr3X1n74rQh2os+Hms+W5dlv6WV+LJxgXzFdjgDqGImsOhv4T7bT
+         oC8oxOtHCmLJT66ONXVtMhbZnVWuOx0YV+KYnk7Si5BGo9CGW0jk236x6muOjvAXujjV
+         GQeA==
+X-Gm-Message-State: APjAAAX+TL7qzmPDBsMlOg+2U2YqsStPvgHedHiVa/LWaY0bvw6xzZeZ
+        VFxkXWyu92kIobBMcrVR2FYG+IqpMqxVjxS5zm12i0hT
+X-Google-Smtp-Source: APXvYqzJyDycTF4dKRz85WDAhcIRFibl0W0bKvPLdgU/ofif1wKgSFcJqhnIULoQHx2giazJEM2uNr5/gmIhYu1I/cY=
+X-Received: by 2002:a7b:cf37:: with SMTP id m23mr10171928wmg.53.1567446956953;
+ Mon, 02 Sep 2019 10:55:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 164F3C0C-CDA8-11E9-B523-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <pull.316.git.gitgitgadget@gmail.com> <CABPp-BFcH5hQqujjmc88L3qGx3QAYZ_chH6PXQXyp13ipfV6hQ@mail.gmail.com>
+ <08bd295b-ec5a-3128-42cf-acb24971d679@gmail.com> <CABPp-BG8GtdaogbCCZqPXYkhMAqseyAXX0ppjUbg_1hVShGG=Q@mail.gmail.com>
+In-Reply-To: <CABPp-BG8GtdaogbCCZqPXYkhMAqseyAXX0ppjUbg_1hVShGG=Q@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 2 Sep 2019 13:55:45 -0400
+Message-ID: <CAPig+cRJ8cCT4zPJmUmS6mvAhXM1QBZ4LUTtf3Std_45cWR5hA@mail.gmail.com>
+Subject: Re: [PATCH 0/9] [RFC] New sparse-checkout builtin and "cone" mode
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+On Sat, Aug 24, 2019 at 1:40 AM Elijah Newren <newren@gmail.com> wrote:
+> My $0.02: I think `git worktree add` should not only adopt the setting
+> of core.sparseCheckout from the current worktree, but it should also
+> adopt the $GIT_DIR/info/sparse-checkout file too.
 
-> the old reasoning was, that you should not create commit messages
-> which are too wide.
-
-True, and that reasoning would justify hiding scrollbar when not
-necessary to gain vertical space.  Can we arrange the scrollbar to
-appear only when needed?
+As another example in favor of imbuing "git worktree add" with
+first-class support for this feature (via command-line option and/or
+inheriting existing settings), the commit message of ef2a0ac9a0
+(worktree: add: introduce --checkout option, 2016-03-29) specifically
+sites sparse checkout as the motivation for adding --no-checkout to
+"git worktree add".
