@@ -2,187 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 945AD1F461
-	for <e@80x24.org>; Mon,  2 Sep 2019 19:42:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 504EB1F461
+	for <e@80x24.org>; Mon,  2 Sep 2019 19:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727109AbfIBTmZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 15:42:25 -0400
-Received: from mail-vk1-f195.google.com ([209.85.221.195]:46755 "EHLO
-        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726947AbfIBTmZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Sep 2019 15:42:25 -0400
-Received: by mail-vk1-f195.google.com with SMTP id m195so3089986vke.13
-        for <git@vger.kernel.org>; Mon, 02 Sep 2019 12:42:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=N+KxvuUDrKWeVJanzdhHs0+f8HpufTR7MnVkeJYzxRs=;
-        b=Q1ZhRSEOcx5RRqqC2A2MLDF+kOyShD9qE7ZfxToTvLFE1LAFy2JwdXg6tN61C4Hot1
-         qL8vgPOvwANj/DNaEqx40f3WjcREg98qRlhQ96C9R0eC5FD5JIz2OA2VEknkccAZlGGp
-         dybTb8X9Y3ZPGQbouN7FQjO0OFTZYTxTkZ8kZKh47u8ULOFzoL/r+QtlqeW9L9PVUTnF
-         TJaULUNtBUYYMeUZ2ZSQhaRYu06jGZvcPOtCnrVqyi5UcOG6k5TEncExC+S9P3NSPErh
-         9fYMqqTsVhIXGaKoWnJENn/c84lnk3tekl4UW9BeEgAi7k6tnlpJq87eoj8V+63KmvML
-         sm9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=N+KxvuUDrKWeVJanzdhHs0+f8HpufTR7MnVkeJYzxRs=;
-        b=Qbj5BJ4D4Y63atOQMxEz4Yr7rwYnmGWbCIgcOlc2yEaxC1991ecmQj1A3L4GzkLDYK
-         pWaaFFNw01MwLnZnTHdW3jEieEuafa4xFYuatWqcvynCKJtpyMaBnDz1nwgHZ09zzvrB
-         F+4r9FX7hrwyeM8BiyzpxRE0mW2arugtiprDaGoLLJB4Y2WAqI8g1ZtkLo7yanR/iIJq
-         lK9syF993D2P0vrdj1qGiMyW+MHyXq7+WP2lQgox4+0aNbFgI2QU0NsNOIqBr3XiB9oU
-         zHCm/ucxfG1LLCFYYWhZ4hNT4tJCDf/bF5M5E9GpH5uYdyye4vrl36Ba/+Ng+2oGvScU
-         to9w==
-X-Gm-Message-State: APjAAAXa79swtlJhvNqfKKirfnlDJaLZMWX6EoSgxBLJdAygdTbYKVxf
-        5Jhfh0bmtYyYxhG1ECgwiUAZMkKE5RU1OxiL7bg=
-X-Google-Smtp-Source: APXvYqzFKrCqqf+JURIimi5kHUfukatV4hvW0P0dYgQyvWTtZG9FJPnv4iPh1Xf88DQUNIk6JpP30NdOt2nqizG6JVo=
-X-Received: by 2002:a1f:3cc9:: with SMTP id j192mr5241204vka.58.1567453343905;
- Mon, 02 Sep 2019 12:42:23 -0700 (PDT)
+        id S1727146AbfIBTma (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 15:42:30 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53115 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726947AbfIBTma (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Sep 2019 15:42:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1567453339;
+        bh=ZX2MIJ8C/yFXEVG3QCD7y+xbam08xGJymB5VgIuO3Yo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=eNdO0cI/TauY7kBX5QzLV5P9g7lYRA6EPwTLDZPQkEVrnDWge4I9vwsSCaaiB4/d+
+         1dfiKuEU2JobXzJZ9n6d3zeBToJUSGTnVbh1G7v9SyexuWW7/FZJfNV0taG0qZl6XW
+         EMnNDWFT0MFwr7dYU/M/3sjxQaFBNXYMtV4dLAY8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOiHf-1hoa0q1Lnr-00QFB1; Mon, 02
+ Sep 2019 21:42:19 +0200
+Date:   Mon, 2 Sep 2019 21:42:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     phillip.wood@dunelm.org.uk
+cc:     Matt R via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Matt R <mattr94@gmail.com>
+Subject: Re: [PATCH 1/1] rebase -r: let `label` generate safer labels
+In-Reply-To: <444f3ec4-abdf-1aa9-e8a8-8b5346b939e8@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1909022124350.46@tvgsbejvaqbjf.bet>
+References: <pull.327.git.gitgitgadget@gmail.com> <4a02c38442dd8a4c0381adc8db0dce81c253da09.1567432900.git.gitgitgadget@gmail.com> <444f3ec4-abdf-1aa9-e8a8-8b5346b939e8@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CAKPyHN2_CpaJahKo2Ju2SWvU=Y79k2ArKVkkxPTbeW1t2TYRZQ@mail.gmail.com>
- <20190901193652.21086-1-birger.sp@gmail.com>
-In-Reply-To: <20190901193652.21086-1-birger.sp@gmail.com>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Mon, 2 Sep 2019 21:42:12 +0200
-Message-ID: <CAKPyHN0LtOG9mFQ6qxc-w-EdpJ3HGJmHAGdrGp2FKkq4uCf55A@mail.gmail.com>
-Subject: Re: [PATCH] [PATCH] git-gui: Add hotkeys to set widget focus
-To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323328-2091281358-1567453340=:46"
+X-Provags-ID: V03:K1:dbJeyYiyt0XFmhAFPl45JNjK+5AGv+yZK6rZ3cOhhWhJ9yWZYu9
+ CkW8I8cxqGSzQVPPGvnK7IGvCk4xI0HUP0ul3Cg6XoAUEQy4E1v6reDIFVJlRnhutceaWOV
+ QTjigEumsY16wMJuGR56rACTcqPWQtC8TorjfajzbEdOqC98LloFMgG9tlglBeLoWjuFAeU
+ jdM0/WC8eHSrZNXeFsR+A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:slXyjPFdbk8=:Plp+l/qbHIDYMkPK4yikvW
+ fcvqMfw8wsLii2nVrPy1x3MIvmvO9YWDc1zbVYphT8eiPMMJiw+luACwPjXK22Izff7SxIcX5
+ qG9Tvuvte4SXICKEATVtwCDdJGQPRiA4xWxgLSQZvPmA5OlVOM5tPNonjxi4DKshzYl5p5Kt0
+ Luir2lYgULOuncLncVWrHq9mTV11Ag5DulDhLBh62EU4fq393EwKjjV0/AxDVAOnU9RvBiLBy
+ ka5rkTWyYsrgY87EJzwZ52odK4gzSJ7zLxdITlJVE/dq0tRag0ze5o94Fbjfzs3OloAJWr8kJ
+ CQmE3wIUZYeCW9KBYuKqIJjOwMQwBvNLQqz+wGH/ELmMkQO0L6kJJq5/7sAuJP7QAPQjsYTqf
+ +LWjKRUdUG09HbpJgXIxePaEVDJMeltTQozrEYMr3QEnH5IHllEAin78X6iGZQk1N4zD9L5Z2
+ xFBFXp7gjUKPR4IBAKLW08VEXK4n/xc34AWxKwDpzuoAEv4FB+V4hiq4tfpLrk9cHsr9etDRW
+ mwgjWJFwANj40SsgnFcM2Z8RFG064QOg//ud5aVSNIpvKos1jyzIiUQ0FqxME5ze//8yfyMVc
+ gQAoFE6PeIZ4bKAuRXD5pX1qRiI7PrLlJizVYl+y1ucgnF+lt44TetcZURQBkEnCZX6VataEP
+ ysK00+Fkwfdm+UNai1BE/E0bT3VMgrRh2onvgByZIok1A766IW2e91ZEgN2iodT2frWTrGGMI
+ 07jHr2ZvBcnaXgfPAKoUi9EWtYcSdIqKN1faFYmTqNe16tjyKjpNkhEXbQl8PPiKVFTnla05P
+ MPJohd2QcNTaq5s73hVlwVE0yrOxGBzvZS6MI3CjygzquwZNZ55TnRRwnobMG8zDTzXNUYIVM
+ 8pfLsny0e8pAcMJlIflZY8+asAFEJhz7x73g/Pw31GrigNtdR0ksqIB8yqlv5KYCP83HCcvSr
+ TigikfLWH+nVnlRTILy01O4A1F6hPr0PdQtvlvLFw2UPYd+eUINzVOERrwRoae9cgkCYnQGVB
+ vf4weFRB76x1/AEYNP05z9KXpT+OfiplQPJQp3ezvde3sGPCvTeoIzJp9gFGndNCRiZLMHsqu
+ tSFNfxyXHMl8lBikz1/YCcoriUtT1v79s11wnXcXMgtZAWmgwNuBTZYfcMwHkjX9Mn1N/V5Cl
+ Vw7bW8vHx/cq1e10PNgwZAn78EBRdG6nGcL8xrXMGfAh+21voQZxUNkx4FgTt1TmzlmOA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 1, 2019 at 9:37 PM Birger Skogeng Pedersen
-<birger.sp@gmail.com> wrote:
->
-> The user cannot change focus between the list of files, the diff view and
-> the commit message widgets without using the mouse (clicking either of
-> the four widgets).
->
-> With this patch, the user may set ui focus to the previously selected path
-> in either the "Unstaged Changes" or "Staged Changes" widgets, using
-> CTRL/CMD+1 or CTRL/CMD+2.
->
-> The user may also set the ui focus to the diff view widget with
-> CTRL/CMD+3, or to the commit message widget with CTRL/CMD+4.
->
-> This enables the user to select/unselect files, view the diff and create a
-> commit in git-gui using keyboard-only.
->
-> Signed-off-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
-> ---
->  git-gui.sh | 35 ++++++++++++++++++++++++++++++++++-
->  1 file changed, 34 insertions(+), 1 deletion(-)
->
-> diff --git a/git-gui.sh b/git-gui.sh
-> index 5bc21b8..ce620f1 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -2495,7 +2495,7 @@ proc force_first_diff {after} {
->
->  proc toggle_or_diff {mode w args} {
->         global file_states file_lists current_diff_path ui_index ui_workdir
-> -       global last_clicked selected_paths
-> +       global last_clicked selected_paths file_lists_last_clicked
->
->         if {$mode eq "click"} {
->                 foreach {x y} $args break
-> @@ -2527,6 +2527,8 @@ proc toggle_or_diff {mode w args} {
->         $ui_index tag remove in_sel 0.0 end
->         $ui_workdir tag remove in_sel 0.0 end
->
-> +       set file_lists_last_clicked($w) $lno
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-So we only remember the lno in the widget, that could mean, that we
-select the wrong file after a rescan, which shifted the previous path
-one down. Can we remember the pathname instead, and try to find this
-again in the file list?
+--8323328-2091281358-1567453340=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> +
->         # Determine the state of the file
->         if {[info exists file_states($path)]} {
->                 set state [lindex $file_states($path) 0]
-> @@ -2640,6 +2642,29 @@ proc show_less_context {} {
->         }
->  }
+Hi Phillip,
+
+On Mon, 2 Sep 2019, Phillip Wood wrote:
+
+> This is definitely worth fixing, I've got a couple of comments below
 >
-> +proc select_path_in {widget} {
+> On 02/09/2019 15:01, Matt R via GitGitGadget wrote:
+> > From: Matt R <mattr94@gmail.com>
 
-can we name it 'focus_and_select_path_in', as the main job ob this
-function is to focus the widget. It makes also the 'bind' command
-below more readily, because than all bind commands start with 'focus'.
+I just noticed that the surname is abbreviated. The full name of the
+author is "Matt Rogers". (Matt, Git uses the Signed-off-by: lines as
+some sort of legally-binding assurance that you are free to submit these
+changes under the GPLv2, so your full name is kinda required.)
 
-> +       global file_lists last_clicked selected_paths ui_workdir
-
-ui_workdir not referenced in this function
-
-> +       global file_lists_last_clicked
-> +
-> +       set _list_length [llength $file_lists($widget)]
-> +       if {$_list_length > 0} {
-> +
-> +               set _index $file_lists_last_clicked($widget)
-
-I have the impression that variables starting with '_' are mainly used
-as read-only global variables, see the list at line 158, and not that
-often as temporal local variables.
-
-> +               if {$_index eq {}} {
-> +                       set _index 1
-> +               } elseif {$_index > $_list_length} {
-> +                       set _index $_list_length
-> +               }
-> +
-> +               focus $widget
-> +               set last_clicked [list $widget $_index]
-> +               set path [lindex $file_lists($widget) [expr $_index - 1]]
-> +               array unset selected_paths
-> +               set selected_paths($path) 1
-> +               show_diff $path $widget
-> +       }
-> +}
-> +
->  ######################################################################
->  ##
->  ## ui construction
-> @@ -3852,6 +3877,14 @@ foreach i [list $ui_index $ui_workdir] {
->  }
->  unset i
+> > The `label` todo command in interactive rebases creates temporary refs
+> > in the `refs/rewritten/` namespace. These refs are stored as loose ref=
+s,
+> > i.e. as files in `.git/refs/rewritten/`, therefore they have to confor=
+m
+> > with file name limitations on the current filesystem.
+> >
+> > This poses a problem in particular on NTFS/FAT, where e.g. the colon
+> > character is not a valid part of a file name.
 >
-> +bind . <$M1B-Key-1> {select_path_in $::ui_workdir}
-> +bind . <$M1B-Key-2> {select_path_in $::ui_index}
-> +bind . <$M1B-Key-3> {focus $::ui_diff}
-> +bind . <$M1B-Key-4> {focus $::ui_comm}
+> Being picking I'll point out that ':' is not a valid in refs either.
 
-I would like to bring up a proposal: AFAICS, more or less all CTRL
-bindings have a menu entry. But it does not make sense to have a menu
-entry for these bindings. And I think we could add more bindings for
-keyboard-afine users. Thus I would like to propose to use ALT as the
-modifier for these bindings, which would give us a nice binding
-classification.
+True, but that was not the primary concern here ;-)
 
-How about that?
+> Looking at
+> https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file I
+> think only " and | are not allowed on NTFS/FAT but are valid in refs
+> (see the man page for git check-ref-format for all the details). So
+> the main limitation is actually what git allows in refs.
 
-Bert
+Right. And this example shows that we really need to be a bit more
+conservative than just disallowing characters that would not be allowed
+in refs.
 
-> +
-> +set file_lists_last_clicked($ui_index) {}
-> +set file_lists_last_clicked($ui_workdir) {}
-> +
->  set file_lists($ui_index) [list]
->  set file_lists($ui_workdir) [list]
+I think it is more important to keep in mind the vagaries of various
+current and future filesystems to justify the change in this patch.
+
+> > Let's safeguard against this by replacing not only white-space
+> > characters by dashes, but all non-alpha-numeric ones.
+> >
+> > However, we exempt non-ASCII UTF-8 characters from that, as it should =
+be
+> > quite possible to reflect branch names such as `=E2=86=AF=E2=86=AF=E2=
+=86=AF` in refs/file names.
+> >
+> > Signed-off-by: Matthew Rogers <mattr94@gmail.com>
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >   sequencer.c              | 12 +++++++++++-
+> >   t/t3430-rebase-merges.sh |  5 +++++
+> >   2 files changed, 16 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 34ebf8ed94..23f4a0876a 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -4635,8 +4635,18 @@ static int make_script_with_merges(struct
+> > pretty_print_context *pp,
+> >     else
+> >      strbuf_addbuf(&label, &oneline);
+> >   +		/*
+> > +		 * Sanitize labels by replacing non-alpha-numeric characters
+> > +		 * (including white-space ones) by dashes, as they might be
+> > +		 * illegal in file names (and hence in ref names).
+> > +		 *
+> > +		 * Note that we retain non-ASCII UTF-8 characters (identified
+> > +		 * via the most significant bit). They should be all
+> > acceptable
+> > +		 * in file names. We do not validate the UTF-8 here, that's
+> > not
+> > +		 * the job of this function.
+> > +		 */
+> >   		for (p1 =3D label.buf; *p1; p1++)
+> > -			if (isspace(*p1))
+> > +			if (!(*p1 & 0x80) && !isalnum(*p1))
+> >       *(char *)p1 =3D '-';
 >
-> --
-> 2.23.0.37.g745f681289
->
+> I'm sightly concerned that this opens the possibility for unexpected eff=
+ects
+> if two different labels get sanitized to the same string. I suspect it's
+> unlikely to happen in practice but doing something like percent encoding
+> non-alphanumeric characters would avoid the problem entirely.
+
+Oh, but we make sure that the labels are unique, via the `label_oid()`
+function! Otherwise, we would not be able to label more than one merge
+parent ;-)
+
+Ciao,
+Dscho
+
+--8323328-2091281358-1567453340=:46--
