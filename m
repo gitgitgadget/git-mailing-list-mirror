@@ -2,114 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 232F51F461
-	for <e@80x24.org>; Mon,  2 Sep 2019 19:13:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B1201F461
+	for <e@80x24.org>; Mon,  2 Sep 2019 19:25:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727077AbfIBTNk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 15:13:40 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:43027 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725988AbfIBTNj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Sep 2019 15:13:39 -0400
-Received: by mail-vs1-f65.google.com with SMTP id u21so1468565vsl.10
-        for <git@vger.kernel.org>; Mon, 02 Sep 2019 12:13:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mEhl6cfR14FtA3cSgVWWK73f6TIUWCckZD/Zb0nUU88=;
-        b=nvaiAcUiVakWTKpw6kwobl7E4Uyz8ey9BvEmHn9/FLjmVdtXi/gqqm2QLrSbAnJoVp
-         9XGyTQpuiRklqCuG+RTZePYLFtqC8xLmOSL39vilonArjL9mHElH69CRkDk0+MWmOy4Y
-         wQWJNKHXFBzsvgJdgUShrH/2w0pynFfdoR6roLI7jR2oHEtJvTir6huDeGm15X0lWdUy
-         e8FprLEyTBi8imcXRPTFM1W3mb/q5k2BQHGoKgRWKqkYcBcv/Ild/dO+PtM2ozgOw8xp
-         KKbH6ARMVgBbyNQskg7D82tnzhu9WlehjKaEULg6cgfoNEdURhRCiIysVX9ifOXj+rTX
-         nsxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mEhl6cfR14FtA3cSgVWWK73f6TIUWCckZD/Zb0nUU88=;
-        b=eA4x2q4mxJqB6kXHzuhSDfm06j2zCdxs2+W0AyDq7ZAwbE+JTDaZYZDom7Jz2Enqt2
-         ppo1uBbPRJzeD65O9fThtvFhY4yIHWd6KjLGfp/AqZApuPWwXYJ/5nom5NCug4GLfrps
-         I8jF+q2dv754nJodtjw7tzv8CWwmjNDK+8I+jhfTMihD9v6IHbnGquuaCYukZdXv8Cum
-         Kbf6SH5ZNqflgS96/5RcItHUbTZg17m2/r1i1+Qr7rokLdg/oTaczNKecvuc0C+B2Kvi
-         IhZ1flY46me2vZ6OGUaRB0NxBAVkuG1sHfo0GR94QSE+HrepJduUAbn8RV75vnDtYua7
-         7MVA==
-X-Gm-Message-State: APjAAAXNmjiAJwPC0oCr3bGvjabmayb4Cd2US7LcGdtn3+F8yYRov08w
-        ChPh9aMNLv2oTfMRDMFobc3inNEGlZKjbX2OMHahQnsFdyk=
-X-Google-Smtp-Source: APXvYqzHSCHXOwpE3N1zJZsF21NqA72FJB8oyxjI2v/J/TwUHNfXdP5D8n1vNJ7RtG4KaqnV2Rk0sWGkmLvjdFf4KUk=
-X-Received: by 2002:a67:fd11:: with SMTP id f17mr3608087vsr.31.1567451618881;
- Mon, 02 Sep 2019 12:13:38 -0700 (PDT)
+        id S1727124AbfIBTZo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 15:25:44 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59600 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727046AbfIBTZo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Sep 2019 15:25:44 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 390E68C45B;
+        Mon,  2 Sep 2019 15:25:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vccI2O5Ic8eGmO+znRPpbgl437w=; b=rJsnF3
+        Qzu6JyoDmcLhdQ+xmGTWsLjdsUqPGQo2vpkCzvNhF5rrm6AH6E76pnsdG/TmM2Xx
+        ch1RuEcU30SPM3/B1gNiwPDfvT1x5CULqHy7uzF1bnwv5QJ5Y6SuOhQZrcs2xSqq
+        mGZwJzHwldtjHmHx6BZ4hzRkKU2M8m9zmb9G4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kZUIvb0AKdhWeuyB9cHX8WXnSby+o5Qa
+        7Gc+0ZcFNWRRq+l39ybC9lSGJhY0LsjBlI4csDul5pzrG16xMpHxNiuAj7vR9/Q4
+        KPZLwZWx1IrA/okeZDlTSrX28QNrA1G7wsUIhlyoxHOYMqU4ykzGlD8F0rFn/tvf
+        ZsTPWSk3wr4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 30B3D8C45A;
+        Mon,  2 Sep 2019 15:25:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5B38E8C459;
+        Mon,  2 Sep 2019 15:25:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Giuseppe =?utf-8?Q?Crin=C3=B2?= <giuscri@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [BUG] You can't have single quote in your username
+References: <20190828145640.GC14432@sigill.intra.peff.net>
+        <20190826191455.GA25695@sigill.intra.peff.net>
+        <20190831131748.GA13001@instance-1.europe-west6-a.c.vaulted-journal-250706.internal>
+        <20190902154732.GD18593@sigill.intra.peff.net>
+Date:   Mon, 02 Sep 2019 12:25:37 -0700
+In-Reply-To: <20190902154732.GD18593@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 2 Sep 2019 11:47:33 -0400")
+Message-ID: <xmqq1rwyv6tq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAGr--=+ThYVyZUiU1wnt0yL+MzF1RXvHnbwo9NWyh95cLyhNRQ@mail.gmail.com>
- <CAKPyHN1LJa8Zq6rZbOMZ-KxkqQYauQcvjv+rTrHt1_zwPZLZ-A@mail.gmail.com>
- <CAGr--=+CEX-STDgT_ZwaA=n9UHSrsgcWnxCMY=9tGDA=9XLkew@mail.gmail.com>
- <20190902181213.7jqvoyctdm26g34z@yadavpratyush.com> <CAGr--=JgqjC8FskqVFJTqAnQ5aq8J4z-Wje8s22VwBgVtkBF-Q@mail.gmail.com>
- <20190902184405.bfb5572iia2v2uwi@yadavpratyush.com> <20190902185819.fzf3lop6riiq6zja@yadavpratyush.com>
- <CAKPyHN1GgXLy0+z=JbuyuSvVXsh6u5Po18OXizPNmfLE5AC00g@mail.gmail.com>
-In-Reply-To: <CAKPyHN1GgXLy0+z=JbuyuSvVXsh6u5Po18OXizPNmfLE5AC00g@mail.gmail.com>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Mon, 2 Sep 2019 21:13:27 +0200
-Message-ID: <CAKPyHN3=QY4+XNhQPq09_PALFwfR5bWBs7q6m6LkfFoW-xeCug@mail.gmail.com>
-Subject: Re: git-gui: Long lines in commit message gets hidden, no scrollbar appears
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 726BE04E-CDB7-11E9-89F8-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 2, 2019 at 9:03 PM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
->
-> On Mon, Sep 2, 2019 at 8:58 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> >
-> > On 03/09/19 12:14AM, Pratyush Yadav wrote:
-> > > On 02/09/19 08:22PM, Birger Skogeng Pedersen wrote:
-> > > > On Mon, Sep 2, 2019 at 8:05 PM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
-> > > > > I cannot test windows easily, it looks good on Linux Tcl /Tk 8.6:
-> > > > >
-> > > > > https://kgab.selfhost.eu/s/f38GX4caCZBj4mZ
-> > > >
-> > > > On Mon, Sep 2, 2019 at 8:12 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> > > > > Hmm, it looks fine for me. Which platform are you using? I am running it
-> > > > > on Linux. Screenshot: https://imgur.com/sNp5Ktq
-> > > >
-> > > > Try resizing the bottom right pane of git gui, you should see that the
-> > > > scrollbar remains at the bottom while the input area moves upwards.
-> > >
-> > > Yes, I can reproduce the problem when I do this. Interestingly, the
-> > > vertical scrollbar does move, the horizontal one (which Bert just added)
-> > > doesn't. So I think there is a slight difference in how the horizontal
-> > > scrollbar is set up that is causing this.
-> >
-> > On second thought, wouldn't it make more sense to expand the commit
-> > message buffer instead? The point of resizing that pane is to see more
-> > of the commit message. So it makes more sense to make the commit message
-> > buffer take up all the vertical space, rather than making the scrollbar
-> > move.
->
-> it is, I just broke that ;-)
+Jeff King <peff@peff.net> writes:
 
-is fixed in GitHub:
+> But it still risks losing a case where some code path relies on the crud
+> cleanup for odd cases (mismatched delimiters, or interleaved delimiters,
+> or non-delimiter crud mixed in with delimiters).
+> ...
+> So I dunno. There is no patch to be discussed, and I am not volunteering
+> to write one.  So I think whoever chooses to do so has a lot of control
+> over what is proposed. :)
 
-    wget https://github.com/bertwesarg/git-gui/commit/56163547604f44688e208393f8941efaf5247d40.patch
+Rather, they can propose what they want, but they have a lot of
+tough defending to do on their choice.  Lack of potential harm is
+much harder to prove than coming up with a single example that
+harms.
 
-Thanks.
-
-Bert
-
->
-> Bert
->
-> >
-> > --
-> > Regards,
-> > Pratyush Yadav
+I'd rather leave the sleeping dog lie, if we need to encourage
+people to live in 21st century and step outside US-ASCII to do so,
+then do that instead.
