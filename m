@@ -7,97 +7,68 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD5981F461
-	for <e@80x24.org>; Mon,  2 Sep 2019 18:53:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA8291F461
+	for <e@80x24.org>; Mon,  2 Sep 2019 18:58:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726974AbfIBSxZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 14:53:25 -0400
-Received: from relay5-d.mail.gandi.net ([217.70.183.197]:39901 "EHLO
+        id S1726982AbfIBS6X (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 14:58:23 -0400
+Received: from relay5-d.mail.gandi.net ([217.70.183.197]:45055 "EHLO
         relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726750AbfIBSxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Sep 2019 14:53:25 -0400
+        with ESMTP id S1726750AbfIBS6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Sep 2019 14:58:22 -0400
 X-Originating-IP: 1.186.12.26
 Received: from localhost (unknown [1.186.12.26])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id 75B641C0005;
-        Mon,  2 Sep 2019 18:53:23 +0000 (UTC)
-Date:   Tue, 3 Sep 2019 00:23:21 +0530
+        by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id F03A81C0007;
+        Mon,  2 Sep 2019 18:58:20 +0000 (UTC)
+Date:   Tue, 3 Sep 2019 00:28:19 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
 To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] [PATCH] git-gui: Add hotkeys to set widget focus
-Message-ID: <20190902185321.m76dffzfc76astar@yadavpratyush.com>
-References: <CAKPyHN2_CpaJahKo2Ju2SWvU=Y79k2ArKVkkxPTbeW1t2TYRZQ@mail.gmail.com>
- <20190901193652.21086-1-birger.sp@gmail.com>
- <20190902181954.zcxuyqrdzs3dzjtq@yadavpratyush.com>
- <CAGr--=L64jiE=x_McdfWJuQTz1Qo3wp0nc8xaeKBGe0GgW5Kxg@mail.gmail.com>
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: git-gui: Long lines in commit message gets hidden, no scrollbar
+ appears
+Message-ID: <20190902185819.fzf3lop6riiq6zja@yadavpratyush.com>
+References: <CAGr--=+ThYVyZUiU1wnt0yL+MzF1RXvHnbwo9NWyh95cLyhNRQ@mail.gmail.com>
+ <CAKPyHN1LJa8Zq6rZbOMZ-KxkqQYauQcvjv+rTrHt1_zwPZLZ-A@mail.gmail.com>
+ <CAGr--=+CEX-STDgT_ZwaA=n9UHSrsgcWnxCMY=9tGDA=9XLkew@mail.gmail.com>
+ <20190902181213.7jqvoyctdm26g34z@yadavpratyush.com>
+ <CAGr--=JgqjC8FskqVFJTqAnQ5aq8J4z-Wje8s22VwBgVtkBF-Q@mail.gmail.com>
+ <20190902184405.bfb5572iia2v2uwi@yadavpratyush.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGr--=L64jiE=x_McdfWJuQTz1Qo3wp0nc8xaeKBGe0GgW5Kxg@mail.gmail.com>
+In-Reply-To: <20190902184405.bfb5572iia2v2uwi@yadavpratyush.com>
 User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/09/19 08:35PM, Birger Skogeng Pedersen wrote:
-> On Mon, Sep 2, 2019 at 8:19 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> > You missed removing this extra blank line. Will fix it up locally.
-> >
-> > > +             set _index $file_lists_last_clicked($widget)
-> > [snip]
+On 03/09/19 12:14AM, Pratyush Yadav wrote:
+> On 02/09/19 08:22PM, Birger Skogeng Pedersen wrote:
+> > On Mon, Sep 2, 2019 at 8:05 PM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+> > > I cannot test windows easily, it looks good on Linux Tcl /Tk 8.6:
+> > >
+> > > https://kgab.selfhost.eu/s/f38GX4caCZBj4mZ
+> > 
+> > On Mon, Sep 2, 2019 at 8:12 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> > > Hmm, it looks fine for me. Which platform are you using? I am running it
+> > > on Linux. Screenshot: https://imgur.com/sNp5Ktq
+> > 
+> > Try resizing the bottom right pane of git gui, you should see that the
+> > scrollbar remains at the bottom while the input area moves upwards.
 > 
-> 
-> To be honest I felt the blank line there was appropriate, in an
-> attempt to follow the same code style as the rest of the git-gui.sh.
-> For instance, the "add_range_to_selection" function
-> (https://github.com/prati0100/git-gui/blob/master/git-gui.sh#L2601-L2625)
-> has blank lines like this;
+> Yes, I can reproduce the problem when I do this. Interestingly, the 
+> vertical scrollbar does move, the horizontal one (which Bert just added) 
+> doesn't. So I think there is a slight difference in how the horizontal 
+> scrollbar is set up that is causing this.
  
-Oh yes, these types of blank lines are perfectly fine in my opinion too.  
-I actually prefer this alternative over not having any spacing at all.  
-This way you divide the function in logical sections/steps.
-
-But that was not what I pointed out. The blank line I pointed out was 
-like this:
-
-  if {condition} {
-  	
-	foo
-	bar
-  }
-
-My nitpick was with the blank line _just after_ the if.
-
-> 
-> proc add_range_to_selection {w x y} {
->     global file_lists last_clicked selected_paths
-> 
-
-So in this example, the above blank line is fine...
-
->     if {[lindex $last_clicked 0] ne $w} {
-
-...but if I add a blank line here like:
-
-  if {[lindex $last_clicked 0] ne $w} {
-
-	toggle_or_diff click $w $x $y
-	return
-  }
-
-instead of like:
-
-  if {[lindex $last_clicked 0] ne $w} {
-	toggle_or_diff click $w $x $y
-	return
-  }
-
-It is the blank line just after the start of your if statement that I 
-was pointing out. I did leave other blank lines untouched in your patch.
-
-[snip]
+On second thought, wouldn't it make more sense to expand the commit 
+message buffer instead? The point of resizing that pane is to see more 
+of the commit message. So it makes more sense to make the commit message 
+buffer take up all the vertical space, rather than making the scrollbar 
+move.
 
 -- 
 Regards,
