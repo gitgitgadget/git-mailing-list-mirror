@@ -2,101 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 726A21F461
-	for <e@80x24.org>; Mon,  2 Sep 2019 20:15:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 571361F461
+	for <e@80x24.org>; Mon,  2 Sep 2019 21:24:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727285AbfIBUPh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 16:15:37 -0400
-Received: from mail-vs1-f46.google.com ([209.85.217.46]:34741 "EHLO
-        mail-vs1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727143AbfIBUPh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Sep 2019 16:15:37 -0400
-Received: by mail-vs1-f46.google.com with SMTP id r17so7002847vso.1
-        for <git@vger.kernel.org>; Mon, 02 Sep 2019 13:15:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zVwaZ5snl61/tlY//FaA1tg1kKmQNShJV6v8+xIc84M=;
-        b=DRIxWHJTWXiDe+yxcNVX23Pf1x55HXrqxRCjyjm39BqMnpQ/oWABO/ZlbZOAifzAxx
-         DiXZ69xN/Pg0waRwx75f+uff1v1pZzyJkvmZ/8E76OxCTHgdgU9KD7+ywL2tSJelw1Lx
-         RkufUZMcNbP2p1k6Hu3hsPz+ifLVS/X2iJ7ykUK+JFlhPeBiC/Veq9rebq3vDm5Auqeu
-         5v0fkb6h+TuA4bxQ3J03a1EQoXAUUyt/kBA+STpNVOBKKGTE2FC3ZlOIXUV+aOEPRwEy
-         6qTHCqzmw0fWBvWkAlZLsnuHriZvMxHmpMubakNB55TO9EsZ2PX3YIS31n7Wd3XxmyQT
-         D3fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zVwaZ5snl61/tlY//FaA1tg1kKmQNShJV6v8+xIc84M=;
-        b=GxUkf/L7/+bq9yQHxUttyHGVszU/0TIIBMxyAMmjtB6DUneAok+AG1t8vwa13xWp2U
-         MjA6XA84XbM8SfCBWR4qZlCA3iXAUIhI2KdqabIWPX+Tok7rdurpBgiLp7o9aJOprbaI
-         SZ+EZ79YUsCqz+AWeMmQNzIIF1+AlciCTg4LHuvBSlNqOMwdHlaoMyYOQeWn1KXz+CZs
-         c6xxY54RsrzSB1LvIOQt6z4K69IvYOIt8ELc8YD0pMxZzoyYfqPBvA8wR9zpt2ZsiNNw
-         tySUVhtAKMFuKUZTYVIeVbUVNL369hBdTqUOSPB401GMybZPvbKv9rh1kw6B4ZVLWj0g
-         Z/PQ==
-X-Gm-Message-State: APjAAAVrhRf1PyOzw7NqhPMRmA2vOp2dnxxzXQPwE3xKGeKBA0NlNHh+
-        YCrh7IuWX76E7o38/JJVY0B3rGb+/SDsBbe6aZ3yyy7+
-X-Google-Smtp-Source: APXvYqzcRCROZhgy1kNOKExBe9L9wWlr9A54WlcYyXupULZKUbHwzD0aykwNOoTnoDq2EU2d8HkZPtQBE1KIKg8UA3A=
-X-Received: by 2002:a67:e45:: with SMTP id 66mr16816027vso.197.1567455336494;
- Mon, 02 Sep 2019 13:15:36 -0700 (PDT)
+        id S1727514AbfIBVYf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 17:24:35 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:16645 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726933AbfIBVYf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Sep 2019 17:24:35 -0400
+Received: from [92.7.169.237] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1i4toP-0007ks-4D; Mon, 02 Sep 2019 22:24:33 +0100
+Subject: Re: [PATCH 1/1] rebase -r: let `label` generate safer labels
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Matt R via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Matt R <mattr94@gmail.com>
+References: <pull.327.git.gitgitgadget@gmail.com>
+ <4a02c38442dd8a4c0381adc8db0dce81c253da09.1567432900.git.gitgitgadget@gmail.com>
+ <444f3ec4-abdf-1aa9-e8a8-8b5346b939e8@gmail.com>
+ <xmqq5zmav9ej.fsf@gitster-ct.c.googlers.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <3edd55ed-b507-a14a-5cfb-0bfe471efbbc@iee.email>
+Date:   Mon, 2 Sep 2019 22:24:34 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <CAGr--=Jw4DAqTi3ROujtE=xBMYErMws6B6vhuXYMQA+5Q1ccow@mail.gmail.com>
- <CAGr--=JkNqcrcenp6F1_CHTun_9wPLVvEWGOFJW=ng=XfO+jHw@mail.gmail.com>
- <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
- <CAGr--=JyJHTxtQWSnU7ivQ79qXcg7o4N142+5FSdre851xss6A@mail.gmail.com> <CAKPyHN3S-jLWmfHUyH9mCBPjHCEaBCbrkVQEKFqHv59U37=Kyg@mail.gmail.com>
-In-Reply-To: <CAKPyHN3S-jLWmfHUyH9mCBPjHCEaBCbrkVQEKFqHv59U37=Kyg@mail.gmail.com>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Mon, 2 Sep 2019 22:15:25 +0200
-Message-ID: <CAKPyHN08Z_9oByA8ruKwwXRcAfYPU95JaMb=pqQWwGwPVG=_og@mail.gmail.com>
-Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
-To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqq5zmav9ej.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 2, 2019 at 10:12 PM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
->
-> On Mon, Sep 2, 2019 at 9:49 PM Birger Skogeng Pedersen
-> <birger.sp@gmail.com> wrote:
-> >
-> > Hi Bert,
-> >
-> >
-> > On Mon, Sep 2, 2019 at 8:08 PM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
-> > > I think with your "focus" patch, this is not needed anymore:
-> > >
-> > > After focusing the commit message widget, you can focus the radio
-> > > buttons with Tab/Shift+Tab and press Space.
-> > >
-> > > I think this is short enough, so that wasting a Letter is not justified here.
-> >
-> > Pressing the Tab key while the commit message widget is focused
-> > inserts a tab in the commit message.
+On 02/09/2019 19:29, Junio C Hamano wrote:
+> I see there are "lets make sure it is unique by suffixing "-%d" in
+> other codepaths; would that help if this piece of code yields a
+> label that is not unique?
+maybe use a trailing 4 characters  of the oid to get a reasonably unique 
+label?
 
-does Control-Tab works for traversal?
+Oh, just seen dscho's "we make sure that the labels are unique, via the 
+`label_oid()` function!", maybe needs mentioning in the commit message 
+if re-rolled.
 
-> > (Again, I'm on Windows so you might get different behaviour on Linux)
-> >
-> > If the Tab key acted like you suggested, I agree it would not be
-> > necessary with this a hotkey like this.
->
-> can we try to figure this out, before going forward with anything else?
->
-> Thanks.
->
-> Bert
->
-> >
-> >
-> > Best regards,
-> > Birger
+Philip
