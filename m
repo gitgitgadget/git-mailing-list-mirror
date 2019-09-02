@@ -2,72 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7134D1F461
-	for <e@80x24.org>; Mon,  2 Sep 2019 19:28:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 945AD1F461
+	for <e@80x24.org>; Mon,  2 Sep 2019 19:42:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727046AbfIBT2R (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 15:28:17 -0400
-Received: from mail-lj1-f178.google.com ([209.85.208.178]:38483 "EHLO
-        mail-lj1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726997AbfIBT2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Sep 2019 15:28:17 -0400
-Received: by mail-lj1-f178.google.com with SMTP id h3so6934776ljb.5
-        for <git@vger.kernel.org>; Mon, 02 Sep 2019 12:28:16 -0700 (PDT)
+        id S1727109AbfIBTmZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 15:42:25 -0400
+Received: from mail-vk1-f195.google.com ([209.85.221.195]:46755 "EHLO
+        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726947AbfIBTmZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Sep 2019 15:42:25 -0400
+Received: by mail-vk1-f195.google.com with SMTP id m195so3089986vke.13
+        for <git@vger.kernel.org>; Mon, 02 Sep 2019 12:42:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=googlemail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=6h27/JvhHYkZj+M2KA+UdMUrXORMadQ8zzhyap/EJEI=;
-        b=AbrZykRYIy1DT25giWRkevmSd96udys/+W6C5jbPHe1ACbz/czZ6wV8kb1p3hChVOL
-         YsbY8ucpj+5kCXAg35PsSHRxWTMJtn3EcoXmDCE+hPJDZ6BhvvGd5u62Fp6+eI5zxuwg
-         raBRa9dhKjAOVKzHJDsI/OHJPIyIfuK98eUr+aG7CcyPpIgpg4yhp6JlkDOVZsJ6+Mf9
-         tik+wa/WQzlaXMYyCZcHQpuro6edyWP6Jho51AzaCitan8zum6hcgVBGPvN38AMHIV0K
-         95g148itv3BJC6ijbZ68cprBiqpxlmH9CccvsAA1G+CCvl0avY2V2AWbDC1xHi0kkZ9R
-         xrag==
+        bh=N+KxvuUDrKWeVJanzdhHs0+f8HpufTR7MnVkeJYzxRs=;
+        b=Q1ZhRSEOcx5RRqqC2A2MLDF+kOyShD9qE7ZfxToTvLFE1LAFy2JwdXg6tN61C4Hot1
+         qL8vgPOvwANj/DNaEqx40f3WjcREg98qRlhQ96C9R0eC5FD5JIz2OA2VEknkccAZlGGp
+         dybTb8X9Y3ZPGQbouN7FQjO0OFTZYTxTkZ8kZKh47u8ULOFzoL/r+QtlqeW9L9PVUTnF
+         TJaULUNtBUYYMeUZ2ZSQhaRYu06jGZvcPOtCnrVqyi5UcOG6k5TEncExC+S9P3NSPErh
+         9fYMqqTsVhIXGaKoWnJENn/c84lnk3tekl4UW9BeEgAi7k6tnlpJq87eoj8V+63KmvML
+         sm9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=6h27/JvhHYkZj+M2KA+UdMUrXORMadQ8zzhyap/EJEI=;
-        b=FLVSz2zKlAJzgKbTL1p70iSEIotLIfa98QNzgpO0fxTHFrrtYlLqVj/9SmFG9sR5wY
-         M49JLmGewlniW3S30jZ2S0K8AwHDLr7DzkgV0qf8R1mLC39M+0vKf2qdfUukjv2pe7Tr
-         wncpySek8cPq3lOYz9snHWebMIHcBt31saey56C1w4nvmz7fxYZTp1peVhoZRHE2pJOJ
-         CRTc3k9RBNHnF69ZKGEO+A/EV9csN3jqTIHVXTIVbnmsaWsvo9dg+zIREini+5vL2N/b
-         amWmHrXiKmFekRSMejNDCl7ejBcWz9wneqlr9/rKATpAtTHhgbidfAzlviK+OV/XIc5z
-         e7lg==
-X-Gm-Message-State: APjAAAW/woFgjQB+INPNTE+9ynoGbD/+leYcAcVPdGVqYCRz67nebyEZ
-        qcn5tGnU+wSwdzMexSUP82Mlu7DqqQ+q1NOS5Ng=
-X-Google-Smtp-Source: APXvYqybVplLWda6hEXmID/AuRKYlS4yenxOGpbddebAXeFexApOvM1M3rpcw/kBLjipn+2QGVpZ9w/z27GiZoKBVrc=
-X-Received: by 2002:a2e:b16d:: with SMTP id a13mr16940316ljm.1.1567452495365;
- Mon, 02 Sep 2019 12:28:15 -0700 (PDT)
+        bh=N+KxvuUDrKWeVJanzdhHs0+f8HpufTR7MnVkeJYzxRs=;
+        b=Qbj5BJ4D4Y63atOQMxEz4Yr7rwYnmGWbCIgcOlc2yEaxC1991ecmQj1A3L4GzkLDYK
+         pWaaFFNw01MwLnZnTHdW3jEieEuafa4xFYuatWqcvynCKJtpyMaBnDz1nwgHZ09zzvrB
+         F+4r9FX7hrwyeM8BiyzpxRE0mW2arugtiprDaGoLLJB4Y2WAqI8g1ZtkLo7yanR/iIJq
+         lK9syF993D2P0vrdj1qGiMyW+MHyXq7+WP2lQgox4+0aNbFgI2QU0NsNOIqBr3XiB9oU
+         zHCm/ucxfG1LLCFYYWhZ4hNT4tJCDf/bF5M5E9GpH5uYdyye4vrl36Ba/+Ng+2oGvScU
+         to9w==
+X-Gm-Message-State: APjAAAXa79swtlJhvNqfKKirfnlDJaLZMWX6EoSgxBLJdAygdTbYKVxf
+        5Jhfh0bmtYyYxhG1ECgwiUAZMkKE5RU1OxiL7bg=
+X-Google-Smtp-Source: APXvYqzFKrCqqf+JURIimi5kHUfukatV4hvW0P0dYgQyvWTtZG9FJPnv4iPh1Xf88DQUNIk6JpP30NdOt2nqizG6JVo=
+X-Received: by 2002:a1f:3cc9:: with SMTP id j192mr5241204vka.58.1567453343905;
+ Mon, 02 Sep 2019 12:42:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAGr--=+ThYVyZUiU1wnt0yL+MzF1RXvHnbwo9NWyh95cLyhNRQ@mail.gmail.com>
- <CAKPyHN1LJa8Zq6rZbOMZ-KxkqQYauQcvjv+rTrHt1_zwPZLZ-A@mail.gmail.com>
- <CAGr--=+CEX-STDgT_ZwaA=n9UHSrsgcWnxCMY=9tGDA=9XLkew@mail.gmail.com>
- <20190902181213.7jqvoyctdm26g34z@yadavpratyush.com> <CAGr--=JgqjC8FskqVFJTqAnQ5aq8J4z-Wje8s22VwBgVtkBF-Q@mail.gmail.com>
- <20190902184405.bfb5572iia2v2uwi@yadavpratyush.com> <20190902185819.fzf3lop6riiq6zja@yadavpratyush.com>
- <CAKPyHN1GgXLy0+z=JbuyuSvVXsh6u5Po18OXizPNmfLE5AC00g@mail.gmail.com> <CAKPyHN3=QY4+XNhQPq09_PALFwfR5bWBs7q6m6LkfFoW-xeCug@mail.gmail.com>
-In-Reply-To: <CAKPyHN3=QY4+XNhQPq09_PALFwfR5bWBs7q6m6LkfFoW-xeCug@mail.gmail.com>
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-Date:   Mon, 2 Sep 2019 21:28:04 +0200
-Message-ID: <CAGr--=JL2+yMqO5Mr19Es+787qJ=eQpzEo77Pco7GOhjvuAa+w@mail.gmail.com>
-Subject: Re: git-gui: Long lines in commit message gets hidden, no scrollbar appears
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     Git List <git@vger.kernel.org>
+References: <CAKPyHN2_CpaJahKo2Ju2SWvU=Y79k2ArKVkkxPTbeW1t2TYRZQ@mail.gmail.com>
+ <20190901193652.21086-1-birger.sp@gmail.com>
+In-Reply-To: <20190901193652.21086-1-birger.sp@gmail.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Mon, 2 Sep 2019 21:42:12 +0200
+Message-ID: <CAKPyHN0LtOG9mFQ6qxc-w-EdpJ3HGJmHAGdrGp2FKkq4uCf55A@mail.gmail.com>
+Subject: Re: [PATCH] [PATCH] git-gui: Add hotkeys to set widget focus
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+Cc:     Pratyush Yadav <me@yadavpratyush.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bert,
+On Sun, Sep 1, 2019 at 9:37 PM Birger Skogeng Pedersen
+<birger.sp@gmail.com> wrote:
+>
+> The user cannot change focus between the list of files, the diff view and
+> the commit message widgets without using the mouse (clicking either of
+> the four widgets).
+>
+> With this patch, the user may set ui focus to the previously selected path
+> in either the "Unstaged Changes" or "Staged Changes" widgets, using
+> CTRL/CMD+1 or CTRL/CMD+2.
+>
+> The user may also set the ui focus to the diff view widget with
+> CTRL/CMD+3, or to the commit message widget with CTRL/CMD+4.
+>
+> This enables the user to select/unselect files, view the diff and create a
+> commit in git-gui using keyboard-only.
+>
+> Signed-off-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
+> ---
+>  git-gui.sh | 35 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 34 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 5bc21b8..ce620f1 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -2495,7 +2495,7 @@ proc force_first_diff {after} {
+>
+>  proc toggle_or_diff {mode w args} {
+>         global file_states file_lists current_diff_path ui_index ui_workdir
+> -       global last_clicked selected_paths
+> +       global last_clicked selected_paths file_lists_last_clicked
+>
+>         if {$mode eq "click"} {
+>                 foreach {x y} $args break
+> @@ -2527,6 +2527,8 @@ proc toggle_or_diff {mode w args} {
+>         $ui_index tag remove in_sel 0.0 end
+>         $ui_workdir tag remove in_sel 0.0 end
+>
+> +       set file_lists_last_clicked($w) $lno
 
-Works great now. Thanks a lot for fixing this!
+So we only remember the lno in the widget, that could mean, that we
+select the wrong file after a rescan, which shifted the previous path
+one down. Can we remember the pathname instead, and try to find this
+again in the file list?
 
-Birger
+> +
+>         # Determine the state of the file
+>         if {[info exists file_states($path)]} {
+>                 set state [lindex $file_states($path) 0]
+> @@ -2640,6 +2642,29 @@ proc show_less_context {} {
+>         }
+>  }
+>
+> +proc select_path_in {widget} {
+
+can we name it 'focus_and_select_path_in', as the main job ob this
+function is to focus the widget. It makes also the 'bind' command
+below more readily, because than all bind commands start with 'focus'.
+
+> +       global file_lists last_clicked selected_paths ui_workdir
+
+ui_workdir not referenced in this function
+
+> +       global file_lists_last_clicked
+> +
+> +       set _list_length [llength $file_lists($widget)]
+> +       if {$_list_length > 0} {
+> +
+> +               set _index $file_lists_last_clicked($widget)
+
+I have the impression that variables starting with '_' are mainly used
+as read-only global variables, see the list at line 158, and not that
+often as temporal local variables.
+
+> +               if {$_index eq {}} {
+> +                       set _index 1
+> +               } elseif {$_index > $_list_length} {
+> +                       set _index $_list_length
+> +               }
+> +
+> +               focus $widget
+> +               set last_clicked [list $widget $_index]
+> +               set path [lindex $file_lists($widget) [expr $_index - 1]]
+> +               array unset selected_paths
+> +               set selected_paths($path) 1
+> +               show_diff $path $widget
+> +       }
+> +}
+> +
+>  ######################################################################
+>  ##
+>  ## ui construction
+> @@ -3852,6 +3877,14 @@ foreach i [list $ui_index $ui_workdir] {
+>  }
+>  unset i
+>
+> +bind . <$M1B-Key-1> {select_path_in $::ui_workdir}
+> +bind . <$M1B-Key-2> {select_path_in $::ui_index}
+> +bind . <$M1B-Key-3> {focus $::ui_diff}
+> +bind . <$M1B-Key-4> {focus $::ui_comm}
+
+I would like to bring up a proposal: AFAICS, more or less all CTRL
+bindings have a menu entry. But it does not make sense to have a menu
+entry for these bindings. And I think we could add more bindings for
+keyboard-afine users. Thus I would like to propose to use ALT as the
+modifier for these bindings, which would give us a nice binding
+classification.
+
+How about that?
+
+Bert
+
+> +
+> +set file_lists_last_clicked($ui_index) {}
+> +set file_lists_last_clicked($ui_workdir) {}
+> +
+>  set file_lists($ui_index) [list]
+>  set file_lists($ui_workdir) [list]
+>
+> --
+> 2.23.0.37.g745f681289
+>
