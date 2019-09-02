@@ -2,119 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 270631F461
-	for <e@80x24.org>; Mon,  2 Sep 2019 17:23:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E24B1F461
+	for <e@80x24.org>; Mon,  2 Sep 2019 17:33:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726606AbfIBRXL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 13:23:11 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:29648 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726185AbfIBRXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Sep 2019 13:23:11 -0400
-Received: from [92.7.169.237] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1i4q2k-00012X-3a; Mon, 02 Sep 2019 18:23:06 +0100
-Subject: Re: [PATCH] git-gui: Add hotkeys to set widget focus
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>, git@vger.kernel.org
-References: <xmqqbmg13sxq.fsf@gitster-ct.c.googlers.com>
- <20190831122326.9071-1-birger.sp@gmail.com>
- <20190901113218.3lfu4ifsxhzrsw4g@yadavpratyush.com>
- <e2b35f49-5578-c58f-326d-3111333737a0@iee.email>
- <20190902122527.6cbcizo5dsewrl57@yadavpratyush.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <ca5052b8-32ea-5d38-76ba-2389b5f95e45@iee.email>
-Date:   Mon, 2 Sep 2019 18:23:07 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1726506AbfIBRd5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 13:33:57 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52675 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726443AbfIBRd4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Sep 2019 13:33:56 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AA3C98B93C;
+        Mon,  2 Sep 2019 13:33:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dzoGsKXkdiSc2RrrEfx5PkANnzI=; b=E8piRt
+        rk3pc9hoRmKEpnvl8YIMI6EpkI2ykUbgASMd0qSGV9icGifya4s9yLoS3/M2zOdE
+        pXaIdscOFsB7FWGzruN+lLqSiz2dkdbbE1wvWprfFNYpZbFv+xfxUS36Q4P5IjO5
+        gTNs0WRmwYrQO9BLXr9mSC3cHBFcy6P7QOJ9s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ohciA7TztrRX0JFIR41LPJ1P8PIwYDZH
+        mFANc+32YgxlQIExoT2mq7Wike2dSr4ekByI8W/z55moyADcJxrpcMRvLmc04SAo
+        Xi7Z0uKQV0e9/ZkxucvZmIeOgwBE7CSO9r8AFYGLvwE1fE/gFwSNGpp3D+AKDx9q
+        cQEgP2MNqK8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8D68F8B93B;
+        Mon,  2 Sep 2019 13:33:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B5BBC8B93A;
+        Mon,  2 Sep 2019 13:33:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben <ben@wijen.net>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Szeder =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v6 1/2] builtin/rebase.c: make sure the active branch isn't moved when autostashing
+References: <20190829164757.7301-1-ben@wijen.net>
+        <20190830151607.4208-1-ben@wijen.net>
+        <20190830151607.4208-2-ben@wijen.net>
+        <xmqqsgpiwgts.fsf@gitster-ct.c.googlers.com>
+        <bf659b1d-b9a4-cb9e-e660-fa743b4db84c@wijen.net>
+        <xmqqr250uhtr.fsf@gitster-ct.c.googlers.com>
+        <57de794a-52a7-2d00-8267-127317ac9bee@wijen.net>
+Date:   Mon, 02 Sep 2019 10:33:49 -0700
+In-Reply-To: <57de794a-52a7-2d00-8267-127317ac9bee@wijen.net> (ben@wijen.net's
+        message of "Sun, 1 Sep 2019 18:27:29 +0200")
+Message-ID: <xmqqef0yvc02.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190902122527.6cbcizo5dsewrl57@yadavpratyush.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain
+X-Pobox-Relay-ID: D45D41D6-CDA7-11E9-B0D2-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/09/2019 13:25, Pratyush Yadav wrote:
-> On 01/09/19 11:27PM, Philip Oakley wrote:
->> Hi Pratyus,
->> On 01/09/2019 12:32, Pratyush Yadav wrote:
->>> Hi Birger,
->>>
->>> In case you haven't been following the list, Pat has been inactive
->>> recently, so I am acting as the interim maintainer of git-gui for now,
->>> because no one else stepped up and Junio would rather not maintain it.
->>>
->>> You can find my fork over athttps://github.com/prati0100/git-gui. I
->>> munged your patches to apply on my tree (which is separate from the
->>> git.git tree), but it would be great if you base them on my tree next
->>> time around.
->> Are there any plans or thoughts about creating a more inclusive man page for
->> the git-gui?
->   
-> Having better documentation has been one of the things I have in my
-> future plans, but I can't really say when I can get to it depending on
-> my schedule and time available. I have a couple other topics active
-> which I'd like to get resolved first.
+Ben <ben@wijen.net> writes:
+
+>> As long as you make it clear that you are 100% happy with the
+>> fixed-up result that appeared in 'pu', there is no need to resend
+>> (if you want to make any other changes, I do want to avoid me
+>> screwing up by listening to you and hand applying those changes; I'd
+>> rather want updated patch(es) be sent in such a case).
+>> 
 >
-> Of course, if someone else is willing to take the initiative, I'm happy
-> to help :)
-
-The main aspect that would help for providing a contribution would be to 
-at least decide the (rough) framework/format for a full Gui 'man page'. 
-The existing one 
-https://github.com/git/git/blob/master/Documentation/git-gui.txt is 
-rather short. (would also need the sub-tree integration to be finessed)
-
-e.g.
-1. how much should it be done via 'include' files (like the git-config 
-man page now does include::config.txt[] and onwards).
-
-2. Does it use the doc-book man-page format, or something akin to the 
-former tutorial format? (everything appears to have shifted to the man 
-page format, so looks like man format is the one.. [1,2,3,4]
-
-I'm thinking that, as it is a big job, it will need the documentation to 
-be split over a number of small include files so that more folk can be 
-contributors.
-
->> Such things as the Options dialog linkages [1], and how to drive the command
->> line options are areas I've wondered about over the years.
->>
->> Not exactly sure how our plain text man pages and formatted HTML would fare
->> for describing the gui layout and where to click. One thing I am noting is
->> that these hotkey nicely have numbers so can easily be used for reference..
->   
-> For the options dialog, I think a "tooltip" (something like what you get
-> when you hover over a image in a browser) that describes the option is a
-> better idea than having a separate man page. I don't expect the option
-> descriptions to be too long or complicated. This approach has the added
-> benefit of not having to maintain a separate man page. Whenever someone
-> adds a new options, they have to add its description as well.
-A tool tip that says 'see git help config.. ' could be done. Any 
-pointers to an existing one for trying a cookie cutter approach getting 
-started on those ones?
+> Hi Junio,
 >
-> I also think the "tools" feature needs some documentation, especially
-> about what environment variables we export.
+> I am 100% happy with with your fixed-up result.
+> I have no (planned) updates ATM.
 >
-> Other than these two, I don't see many places that need too much
-> documentation. Rest of the UI is pretty self-intuitive, at least to me.
 >
->> Philip
->>
->> [1] https://stackoverflow.com/questions/6007823/is-there-a-help-page-for-the-git-gui-options-dialog
-[1,2,3,4] 
-https://github.com/git/git/blob/master/Documentation/giteveryday.txt
-https://github.com/git/git/blob/master/Documentation/gittutorial.txt
-https://github.com/git/git/blob/master/Documentation/gitcore-tutorial.txt
-https://github.com/git/git/blob/master/Documentation/everyday.txto
+> Thank you all for the thorough reviews.
 
+Thanks. 
+
+I meant to say "(and it is pretty clear already in this case)" after
+the "... appeared in 'pu'," but forgot to do so; sorry for making
+you send an extra round of response.
