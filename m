@@ -2,132 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FAKE_REPLY_C,FREEMAIL_FORGED_FROMDOMAIN,
 	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 253401F461
-	for <e@80x24.org>; Mon,  2 Sep 2019 14:01:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C20B1F461
+	for <e@80x24.org>; Mon,  2 Sep 2019 14:09:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731034AbfIBOBo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 10:01:44 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:40718 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730974AbfIBOBo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Sep 2019 10:01:44 -0400
-Received: by mail-wr1-f66.google.com with SMTP id c3so14143978wrd.7
-        for <git@vger.kernel.org>; Mon, 02 Sep 2019 07:01:43 -0700 (PDT)
+        id S1731097AbfIBOI7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 10:08:59 -0400
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:39774 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726766AbfIBOI7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Sep 2019 10:08:59 -0400
+Received: by mail-ed1-f46.google.com with SMTP id u6so9887530edq.6
+        for <git@vger.kernel.org>; Mon, 02 Sep 2019 07:08:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=4n0KzmTPKE/1fVq3NZeDQYOS5nIVAjrXVLKVgK+DY50=;
-        b=nCPvpuRoZRPJeT9W/6HUb4hVErW1jQQclFA9nBeijBEQAwh4InV7ZlCd28AMADhjX9
-         /JXXMkYHWRukN7nlZUCvVpdfs5pRRRkEOi1PvZkBU3BwVXjmFsx9MzrscZf2TT4Uek3g
-         2cpeMEEldUbDLJdC1MNJT6R8LTYmVOehS5Z9i8jiR71/8Iij27EkFloFgV51gGKrZY1B
-         3F7cu6KzviRj4oZ3okHjvJ433CXBkcO99L+vGsmB4FrFpeGHhXPveU6Xcf543pMXBarc
-         5NJebPKEGFXIkhf5W6035b5vr3tlrQ8+iNzVY606bYllbgAh5WB7vAWhrmS5yH0CGgUc
-         3wEw==
+        h=date:from:to:cc:subject:message-id:reply-to:mime-version
+         :content-disposition:user-agent;
+        bh=lhB32muwGFx3P4e+Db3h+k//8B9NM1+LFS4jD937tKQ=;
+        b=kyZmLb0v0Bc3Dtuuu0PCZh5SySMxoMSLckKO3ROLpOpJ0Rna14pwVIMkvu7Lc8FMKy
+         pdX0tDBWjjdxXmZPCLEC7fnv1V+lkdwp2RXdjJkon/LchbOnyR/cvgnlphvAWilEwwEL
+         16BYnbnxVvmr+N1Tklh0Z/YWJ9kFV+eBRDhH7JgqQ3yrYN357alB5Uj3isilvhs8P/Zg
+         4pVLqesgMIAGz2OhoeB/Xm7ifalQ6RtnGdcg0zL+G4rvzQNZ0y9o+WDvkB637Ela5JCj
+         T/EEvp5yRjEXpmQwzkpla/vcrFrMjZxnAmAlmRBPp587hdltT9k0LfOQnIW6RPRJcuHh
+         kI7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=4n0KzmTPKE/1fVq3NZeDQYOS5nIVAjrXVLKVgK+DY50=;
-        b=ZpTKsGi8e+YsVjieLfNH3HykoC3MFxI9PbBSjf2WqmEV7wnXEYMum3EX017vJRzEeL
-         bl/RP6AfrDIVdbXFktEhSnw9f7Hf5vJ89xT81K3KIvaYJ5HoRrcQv9xwI7BTfVYJwKsG
-         j7fiymwXwBl04+vOaqd8NGevaqNqJInhmtse8kCC8WfDNW0xibS6Fkt69EjqbNeayyor
-         BgXO1mGHK7ENVx4Cmy1BMEajipR9ZqmsB6lMQfhTHJmhOZDKiltk2U/ROJPAU/3FBU3U
-         b/3BN1zZovO3GXL3Ah+IL723U6CWiC5zAqqtpnQwIaoVG6C8XHgyeLobEKFY89i/MZl2
-         FuLA==
-X-Gm-Message-State: APjAAAU6vO0cZUrUikI8tBDFD2iUM0De50DyZ2rZGufa1hshhRQzVNTp
-        ZRZXJWon7+sy+JfzpUyj8HYNyUUe
-X-Google-Smtp-Source: APXvYqx2flv51DXef2/W7Y+Gn8Pd9vQJQu/kvM+93MxLmu9bklPB94V30SpwljQoqoVIz96nYwJRhQ==
-X-Received: by 2002:a5d:6049:: with SMTP id j9mr11633546wrt.213.1567432902201;
-        Mon, 02 Sep 2019 07:01:42 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r17sm13862175wrt.68.2019.09.02.07.01.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Sep 2019 07:01:41 -0700 (PDT)
-Date:   Mon, 02 Sep 2019 07:01:41 -0700 (PDT)
-X-Google-Original-Date: Mon, 02 Sep 2019 14:01:39 GMT
-Message-Id: <4a02c38442dd8a4c0381adc8db0dce81c253da09.1567432900.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.327.git.gitgitgadget@gmail.com>
-References: <pull.327.git.gitgitgadget@gmail.com>
-From:   "Matt R via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] rebase -r: let `label` generate safer labels
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :mime-version:content-disposition:user-agent;
+        bh=lhB32muwGFx3P4e+Db3h+k//8B9NM1+LFS4jD937tKQ=;
+        b=f8h5SqFbnroU5ceNv9nLe6qhMcEH/sOTao3vw8EsgH33fg9zO3udq1CXpW4kUX34ik
+         4kkFsiF1lJNPb7w11d5COyvGY1vPLgTbBnZaBkBA26f4pqvvZWgYCvU0LMxxG7caZlDT
+         VDRko70+3DC/SMkj7JeNizX2Gur1VjbLw+mLxCzhJffTwdSyGwEjgxWPumz3YMy1L37Y
+         R61Uzcw4zsay1ik0JxEGvPJaQ4V5E/nzwquZGfrSCmVSEu14V6KiTrJtfrx9C81kXOQe
+         FrBwIr6m4V4pKwsR3naTwGGZ3WxHQM480W2ODjfJNIj2GYloZD0n41WWFlR0YSW3CoDm
+         I6cQ==
+X-Gm-Message-State: APjAAAVnOieguRymbJ3ISTaBC37ySsgthEl5B86cviMO1JSpLpHdU4Wn
+        u0QBEzAFRKOAkGKD3uYUDlMkCe0L+nI=
+X-Google-Smtp-Source: APXvYqx2l/fP7DwgzaW9bMTlKwr8vqW4+AWx9QW8D7hdc28K3HOjUO/WJC2/iZMswtFaytO56V29PQ==
+X-Received: by 2002:a17:906:5393:: with SMTP id g19mr1623157ejo.256.1567433337131;
+        Mon, 02 Sep 2019 07:08:57 -0700 (PDT)
+Received: from instance-1.europe-west6-a.c.vaulted-journal-250706.internal (169.120.65.34.bc.googleusercontent.com. [34.65.120.169])
+        by smtp.gmail.com with ESMTPSA id 9sm1961777ejw.63.2019.09.02.07.08.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 02 Sep 2019 07:08:56 -0700 (PDT)
+Date:   Mon, 2 Sep 2019 14:08:54 +0000
+From:   Giuseppe =?iso-8859-1?Q?Crin=F2?= <giuscri@gmail.com>
+To:     Reino Wijnsma <rwijnsma@xs4all.nl>
+Cc:     git@vger.kernel.org
+Subject: Re: Retrieve version-string on shallow clone
+Message-ID: <20190902140854.GA3806@instance-1.europe-west6-a.c.vaulted-journal-250706.internal>
+Reply-To: 26d7f32e-2df5-ce39-cd20-8cd82dc8587c@xs4all.nl
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Matt R <mattr94@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Matt R <mattr94@gmail.com>
+> I'd figure one of these options would be to clone everything from tag
+> v2.0.0 onward, but if so how would I do that?
+> As another option I was thinking; maybe it's possible to do git describe
+> --tags on the remote repo?
 
-The `label` todo command in interactive rebases creates temporary refs
-in the `refs/rewritten/` namespace. These refs are stored as loose refs,
-i.e. as files in `.git/refs/rewritten/`, therefore they have to conform
-with file name limitations on the current filesystem.
 
-This poses a problem in particular on NTFS/FAT, where e.g. the colon
-character is not a valid part of a file name.
+To my understanding both questions are solved by
 
-Let's safeguard against this by replacing not only white-space
-characters by dashes, but all non-alpha-numeric ones.
+* https://stackoverflow.com/a/47720414/2219670
+* https://stackoverflow.com/a/12704727/2219670
 
-However, we exempt non-ASCII UTF-8 characters from that, as it should be
-quite possible to reflect branch names such as `↯↯↯` in refs/file names.
+It seems to me that's the expected behaviour of git
 
-Signed-off-by: Matthew Rogers <mattr94@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- sequencer.c              | 12 +++++++++++-
- t/t3430-rebase-merges.sh |  5 +++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 34ebf8ed94..23f4a0876a 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4635,8 +4635,18 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 		else
- 			strbuf_addbuf(&label, &oneline);
- 
-+		/*
-+		 * Sanitize labels by replacing non-alpha-numeric characters
-+		 * (including white-space ones) by dashes, as they might be
-+		 * illegal in file names (and hence in ref names).
-+		 *
-+		 * Note that we retain non-ASCII UTF-8 characters (identified
-+		 * via the most significant bit). They should be all acceptable
-+		 * in file names. We do not validate the UTF-8 here, that's not
-+		 * the job of this function.
-+		 */
- 		for (p1 = label.buf; *p1; p1++)
--			if (isspace(*p1))
-+			if (!(*p1 & 0x80) && !isalnum(*p1))
- 				*(char *)p1 = '-';
- 
- 		strbuf_reset(&buf);
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 7b6c4847ad..737396f944 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -441,4 +441,9 @@ test_expect_success '--continue after resolving conflicts after a merge' '
- 	test_path_is_missing .git/MERGE_HEAD
- '
- 
-+test_expect_success '--rebase-merges with commit that can generate bad characters for filename' '
-+	git checkout -b colon-in-label E &&
-+	git merge -m "colon: this should work" G &&
-+	git rebase --rebase-merges --force-rebase E
-+'
- test_done
--- 
-gitgitgadget
+-Giuseppe
