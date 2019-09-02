@@ -2,91 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 972B31F461
-	for <e@80x24.org>; Mon,  2 Sep 2019 15:47:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 108671F461
+	for <e@80x24.org>; Mon,  2 Sep 2019 15:52:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725981AbfIBPre (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 11:47:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36686 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725806AbfIBPre (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Sep 2019 11:47:34 -0400
-Received: (qmail 26003 invoked by uid 109); 2 Sep 2019 15:47:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Sep 2019 15:47:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24840 invoked by uid 111); 2 Sep 2019 15:49:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 02 Sep 2019 11:49:10 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 2 Sep 2019 11:47:33 -0400
-From:   Jeff King <peff@peff.net>
-To:     Giuseppe =?utf-8?B?Q3JpbsOy?= <giuscri@gmail.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Pratyush Yadav <me@yadavpratyush.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Bryan Turner <bturner@atlassian.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [BUG] You can't have single quote in your username
-Message-ID: <20190902154732.GD18593@sigill.intra.peff.net>
-References: <20190828145640.GC14432@sigill.intra.peff.net>
- <20190826191455.GA25695@sigill.intra.peff.net>
- <20190831131748.GA13001@instance-1.europe-west6-a.c.vaulted-journal-250706.internal>
+        id S1725941AbfIBPwU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 11:52:20 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:45488 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725806AbfIBPwT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Sep 2019 11:52:19 -0400
+Received: from [92.7.169.237] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1i4ocr-0001Za-9T; Mon, 02 Sep 2019 16:52:18 +0100
+Subject: Re: Retrieve version-string on shallow clone
+To:     Reino Wijnsma <rwijnsma@xs4all.nl>, git@vger.kernel.org
+References: <26d7f32e-2df5-ce39-cd20-8cd82dc8587c@xs4all.nl>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <26794b96-8627-0d73-c548-91b0ea7fde83@iee.email>
+Date:   Mon, 2 Sep 2019 16:52:19 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <26d7f32e-2df5-ce39-cd20-8cd82dc8587c@xs4all.nl>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190831131748.GA13001@instance-1.europe-west6-a.c.vaulted-journal-250706.internal>
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 31, 2019 at 01:17:48PM +0000, Giuseppe CrinÃ² wrote:
+Hi Reino
 
-> On Mon, Aug 26, 2019 at 03:14:55PM -0400, Jeff King wrote:
-> > We'd still want to keep the low-level removal of "<>\n", since those are
-> > syntactically significant to Git (i.e., if they sneak in you end up with
-> > a broken commit object).
-> 
-> Would it work to change `strbuf_addstr_without_crud()` such that instead of
-> removing crud from the beginning and *then* crud from the end, it removes crud
-> as long as it's palindromic? Then the function proceeds to remove "<>\n" from
-> the string as before.
-> 
-> That would implement the following _mappings_:
-> 
-> 'Foo bar' => Foo bar
-> Micheal Jr. => Micheal Jr.
-> Mr. McDonalds => Mr. McDonalds
-> "John Baz" => John Baz
-> "JJ\x0a" => JJ
-> 
-> What do you think?
+On 01/09/2019 12:07, Reino Wijnsma wrote:
+> Hello git@vger.kernel.org,
+>
+> Two days ago I started https://github.com/mstorsjo/fdk-aac/issues/107, asking how to retrieve the fdk-aac version-string on a shallow clone.
+> My question was of course not fdk-aac related, so Martin Storsjö suggested I'd try here. It basicly comes down to this:
+>
+> git clone https://github.com/mstorsjo/fdk-aac.git
+> [...]
+>
+> git describe --tags
+> v2.0.0-185-gcc5c85d
+>
+> git clone --depth 1 https://github.com/mstorsjo/fdk-aac.git
+>
+> git describe --tags
+> fatal: No names found, cannot describe anything.
+>
+> The tags get lost while doing a shallow clone.
+> I'm not an expert git user, so I was wondering if anyone could tell what my options are here.
+> I'd figure one of these options would be to clone everything from tag v2.0.0 onward, but if so how would I do that?
+> As another option I was thinking; maybe it's possible to do git describe --tags on the remote repo?
+>
+This is most likely a mental model problem.
 
-I think we don't have enough data to really know how much it will help
-or hurt. :)
+If you only have a depth = 1 level clone, then there is no history 
+available locally to use from which to describe almost anything.
+Even if you had all the tags (without the actual commits they tagged) 
+you still don't have that history upon which to describe them.
 
-On the plus side, it is less risky than dropping the end-point crud removal
-entirely.
+Start by getting a bit more history depth, then see if you need to fetch 
+some of the tags (or at least any specific tags of interest).
 
-But it still risks losing a case where some code path relies on the crud
-cleanup for odd cases (mismatched delimiters, or interleaved delimiters,
-or non-delimiter crud mixed in with delimiters).
+Philip
 
-On the one hand, I am actually OK with dropping the crud removal
-entirely and seeing what happens, and this is a lesser form of that. On
-the other hand, it puts us in a funny in-between situation where tools
-can _usually_ get away without cleaning up the names, but occasionally
-get bit. It might be easier to just say that we don't do cleanup.
-
-So I dunno. There is no patch to be discussed, and I am not volunteering
-to write one.  So I think whoever chooses to do so has a lot of control
-over what is proposed. :)
-
--Peff
