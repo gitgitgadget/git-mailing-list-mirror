@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BD231F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 18:51:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 555741F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 18:52:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726401AbfICSv6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 14:51:58 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:42934 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725883AbfICSv6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 14:51:58 -0400
-Received: by mail-lf1-f67.google.com with SMTP id u13so13730909lfm.9
-        for <git@vger.kernel.org>; Tue, 03 Sep 2019 11:51:56 -0700 (PDT)
+        id S1726510AbfICSwC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 14:52:02 -0400
+Received: from mail-lf1-f50.google.com ([209.85.167.50]:33012 "EHLO
+        mail-lf1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725883AbfICSwC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 14:52:02 -0400
+Received: by mail-lf1-f50.google.com with SMTP id d10so5863704lfi.0
+        for <git@vger.kernel.org>; Tue, 03 Sep 2019 11:52:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Vt3vOzqN7elKceBe6oa2ENrExrRMrNxPTH6Dn/8E+H8=;
-        b=AxEuRtkY1qzs2nB7oyrl84+a+Pbix/wLfz+Z/SGdkavK2RC0T6tGxR5yoZ/9JZY9Nj
-         1eT+FI3U+ILVkAiL22zFcvLGlsjRlbY1mU18AMHniseAGCf3ddcwidLzXsTlotTSy7rE
-         6zmTv+CY6aqVy33x15PyomaAMER7fuWvFzjpcagfnCnxITl/vGdWw0QK8IwpOlrSGYqh
-         maEUdPDIDHIhaBwrUI0cvG7dRBbRpHiYonBeWtxiWasqFqvfhmd1hFYg6ZDIwZO/NxWJ
-         910OfEm/2NeVI++n8TBE3LDM0RjHJntOdBhARmq2qLovXYKrsDW5HpwY2i3i/PRTcX7K
-         PiMg==
+        bh=AULD7PLu9SPpQdLLUeec47RhiZ2q3IvEp7NUR1Abzhc=;
+        b=dPg98rQ5ArnuJ58GEOjpfs6wSsL3Pset1ZziIzPszOLOHFtHeyvSobAPqDwDXtTQri
+         7L7Q5k58eGoY9vQNN4SYFv0SiD0jcd5A4JObr6elgU+gPjCndlEaKszrsNwwwRSzLt1K
+         eP/3hiKicROZHL0DdnbUA6gDZN0Ox3BRhNTbiF0uN+ICoc3OrjPyy6zoJUmX4XEkjEBt
+         lV9GAxfqdTBiEjBKO+vZ2JTTGpwLRpiTP6IegLMvam0VaI1LvrnNZ8VkL3kexhAW4dbM
+         B/FywMJkVydQZ7BJXqbmqxcwfQr1fe+1ZnqrNgoMcGpj7Y0omEy7f9FbtwKqVpJOex93
+         I3XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Vt3vOzqN7elKceBe6oa2ENrExrRMrNxPTH6Dn/8E+H8=;
-        b=oky9geQoiGiSKGK875EM2E4Ho/+ls/HS9SwqGP1TdRLomCqV4AnhXs0pHanEZI/1Ch
-         +05VTF9IAjDhL5PADB4SXzruucTZwxcbLKtg6aiuMTkupX3f9Rqbntp/v7VoLungP+Pd
-         izDSBcKTs3KuAISz0bIHZZExpzqFBtmzaET/P5GZyIE+7bw3IttMlbM6lyMfEkWzvplk
-         WXahP0kBsoW5A88tVuFLZOJSvnw1HjJvlqnYegUxvJCicgaWUY7bSfaMb/LUkApV4BW1
-         T7K0Kw+S9srkMAhWw85y6d4xjJs4rFkPo8fLtX26Uz4E0y1NiGmOJA72WWDdAJvc7u9p
-         XEuw==
-X-Gm-Message-State: APjAAAWX4oObXHG/rMYrFkEx6qCmyOQAOrIIRpx3c6YfEwi50oYzHzHu
-        WWaLStiIs0p6WCFxVVQlX2GGNdiP
-X-Google-Smtp-Source: APXvYqzAuSGKrkUivG24lBzW/b7dTubDF5/qKPpN5aO8diIgh0oUMHMKWhrWKropnOgpSx5C5pVo8w==
-X-Received: by 2002:a19:c80b:: with SMTP id y11mr7842367lff.184.1567536715317;
-        Tue, 03 Sep 2019 11:51:55 -0700 (PDT)
+        bh=AULD7PLu9SPpQdLLUeec47RhiZ2q3IvEp7NUR1Abzhc=;
+        b=cSA/XtuZDPjiZs4otKTxXRe/Z4L1yGrg6AXA+CYPupZVsNyTURe74wQS0WhPbG4sC5
+         PuSdql6rTxsdW7url0x+s6VL49cp4F4DVxWbScnEC8hBZdTyaMRyBMl90tcbFxTpO2lh
+         8js/GoHyylfiYTEQqx79DLZW99IUe42lFaqMB64NAJwXjLsMhpivih2oaMAnDfPUAm9v
+         gwLRExT+NWR4Dw8FsBuxLEQpY7CIiI74hzNAp8ppx4cIvF/cH8gDdnyd7kTy7ZXobDgj
+         Ok12d8YyoULm7Cbk+MRyRTDL3xnn0ZVCnIwqPOVjjEV+mc77Gf1jpXrRZlTZZew/n+nF
+         synw==
+X-Gm-Message-State: APjAAAXGoPYcvv6PbpyUKVo34oefsx7zbUL83i/4TEHTNfu2X+gNqa8k
+        JrHqj9ZMfwVNgtY80tH/6hSA51sJ
+X-Google-Smtp-Source: APXvYqyJLBwooxdpbQ/bMSQnt/A+96DskuNNS0ulyNsScPa0cdtQUnjvyFrK5LRo8bm2+FAbWyZ1gg==
+X-Received: by 2002:ac2:531b:: with SMTP id c27mr9179048lfh.107.1567536719516;
+        Tue, 03 Sep 2019 11:51:59 -0700 (PDT)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id s21sm2971443ljm.28.2019.09.03.11.51.53
+        by smtp.gmail.com with ESMTPSA id s21sm2971443ljm.28.2019.09.03.11.51.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2019 11:51:54 -0700 (PDT)
+        Tue, 03 Sep 2019 11:51:58 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Todd Zullinger <tmz@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/2] asciidoctor-extensions: provide `<refmiscinfo/>`
-Date:   Tue,  3 Sep 2019 20:51:20 +0200
-Message-Id: <7545b16bd845580548dee380a54891ed1f75290f.1567534373.git.martin.agren@gmail.com>
+Subject: [PATCH v2 2/2] doc-diff: replace --cut-header-footer with --cut-footer
+Date:   Tue,  3 Sep 2019 20:51:21 +0200
+Message-Id: <40f3c4c3a9ce5e9152477b66016831be0b040310.1567534373.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <cover.1567534373.git.martin.agren@gmail.com>
 References: <CAN0heSr2zCQMM6wOM0UnD28qj_VygQ5CQHGHhMR9+H23snpt5Q@mail.gmail.com> <cover.1567534373.git.martin.agren@gmail.com>
@@ -70,129 +70,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we build with AsciiDoc, asciidoc.conf ensures that each xml-file we
-generate contains some meta-information which `xmlto` can act on, based
-on the following template:
+After the previous commit, AsciiDoc and Asciidoctor render the manpage
+headers identically, so we no longer need the "cut the header" part of
+our `--cut-header-footer` option. We do still need the "cut the footer"
+part, though. The previous commit improved the rendering of the footer
+in Asciidoctor by quite a bit, but the two programs still disagree on
+how to format the date in the footer: 01/01/1970 vs 1970-01-01.
 
-  <refmeta>
-  <refentrytitle>{mantitle}</refentrytitle>
-  <manvolnum>{manvolnum}</manvolnum>
-  <refmiscinfo class="source">Git</refmiscinfo>
-  <refmiscinfo class="version">{git_version}</refmiscinfo>
-  <refmiscinfo class="manual">Git Manual</refmiscinfo>
-  </refmeta>
+We could keep using `--cut-header-footer`, but it would be nice if we
+had a slightly smaller hammer `--cut-footer` that would be less likely
+to hide regressions. Rather than simply adding such an option, let's
+also drop `--cut-header-footer`, i.e., rework it to lose the "header"
+part of its name and functionality.
 
-When we build with Asciidoctor, it does not honor this configuration file
-and we end up with only this (for a hypothetical git-foo.xml):
-
-  <refmeta>
-  <refentrytitle>git-foo</refentrytitle>
-  <manvolnum>1</manvolnum>
-  </refmeta>
-
-That is, we miss out on the `<refmiscinfo/>` tags. As a result, the
-header of each man page doesn't say "Git Manual", but "git-foo(1)"
-instead. Worse, the footers don't give the Git version number and
-instead provide the fairly ugly "[FIXME: source]".
-
-That Asciidoctor ignores asciidoc.conf is nothing new. This is why we
-implement the `linkgit:` macro in asciidoc.conf *and* in
-asciidoctor-extensions.rb. Follow suit and provide these tags in
-asciidoctor-extensions.rb, using a "postprocessor" extension where we
-just search and replace in the XML, treated as text.
-
-We may consider a few alternatives:
-
-  * Provide the `mansource` attribute to Asciidoctor. This attribute
-    is only respected (i.e., turned into those <refmiscinfo/> tags) with
-    1) the "manpage" doctype and/or converter [1], which we currently do
-    not use, or 2) using Asciidoctor 1.5.7 or newer [2].
-
-  * We could inject these lines into the xml-files from the *Makefile*,
-    e.g., using `sed`. That would reduce repetition, but it feels wrong
-    to impose another step and another risk on the AsciiDoc-processing
-    only to benefit the Asciidoctor-one.
-
-  * I tried providing a "docinfo processor" to inject these tags, but
-    could not figure out how to "merge" the two <refmeta/> sections that
-    resulted. To avoid xmlto barfing on the result, I needed need to use
-    `xmlto --skip-validation ...`, which seems unfortunate.
-
-Let's instead inject the missing tags using a postprocessor. We'll make
-it fairly obvious that we aim to inject the exact same three lines of
-`<refmiscinfo/>` that asciidoc.conf provides. We inject them in
-*post*-processing so we need to do the variable expansion ourselves. We
-do introduce the bug that asciidoc.conf already has in that we won't do
-any escaping, e.g., of funky versions like "some v <2.25, >2.20".
-
-The postprocessor we add here works on the XML as raw text and doesn't
-really use the full potential of XML to do a more structured injection.
-This is actually precisely what the Asciidoctor User Manual does in its
-postprocessor example [3]. I looked into two other approaches:
-
-  1. The nokogiri library is apparently the "modern" way of doing XML
-     in ruby. I got it working fairly easily:
-        require 'nokogiri'
-        doc = Nokogiri::XML(output)
-        doc.search("refmeta").each { |n| n.add_child(new_tags) }
-        output = doc.to_xml
-     However, this adds another dependency (e.g., the "ruby-nokogiri"
-     package on Ubuntu). Using Asciidoctor is not our default, but it
-     will probably need to become so soon (AsciiDoc relies on Python 2,
-     which is going away). Let's avoid adding a dependency just so that
-     we can say "search...add_child" rather than "sub(regex...)".
-
-  2. The older REXML is apparently always(?) bundled with ruby, but I
-     couldn't even parse the original document:
-        require 'rexml/document'
-        doc = REXML::Document.new(output)
-        ...
-     The error was "no implicit conversion of nil into String" and I
-     stopped there.
-
-Having never dabbled with ruby outside of this very file, I might be
-missing something obvious, but I don't think it's unlikely that doing a
-plain old search-and-replace will work just as fine or better compared
-to parsing XML and worrying about libraries and library versions.
-
-[1] https://asciidoctor.org/docs/user-manual/#builtin-attributes
-[2] https://public-inbox.org/git/20190319074321.GA2189@sigill.intra.peff.net/
-[3] https://asciidoctor.org/docs/user-manual/#postprocessor-example
+`--cut-header-footer` is just a developer tool and it probably has no
+more than a handful of users, so we can afford be aggressive.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/asciidoctor-extensions.rb | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ Documentation/doc-diff | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-index 0089e0cfb8..4ae130d2c6 100644
---- a/Documentation/asciidoctor-extensions.rb
-+++ b/Documentation/asciidoctor-extensions.rb
-@@ -20,9 +20,24 @@ module Git
-         end
-       end
-     end
-+
-+    class DocumentPostProcessor < Asciidoctor::Extensions::Postprocessor
-+      def process document, output
-+        if document.basebackend? 'docbook'
-+          git_version = document.attributes['git_version']
-+          new_tags = "" \
-+            "<refmiscinfo class=\"source\">Git</refmiscinfo>\n" \
-+            "<refmiscinfo class=\"version\">#{git_version}</refmiscinfo>\n" \
-+            "<refmiscinfo class=\"manual\">Git Manual</refmiscinfo>\n"
-+          output = output.sub(/<\/refmeta>/, new_tags + "</refmeta>")
-+        end
-+        output
-+      end
-+    end
-   end
- end
+diff --git a/Documentation/doc-diff b/Documentation/doc-diff
+index 3355be4798..88a9b20168 100755
+--- a/Documentation/doc-diff
++++ b/Documentation/doc-diff
+@@ -21,7 +21,7 @@ asciidoc		use asciidoc with both commits
+ to-asciidoc		use asciidoc with the 'to'-commit
+ to-asciidoctor		use asciidoctor with the 'to'-commit
+ asciidoctor		use asciidoctor with both commits
+-cut-header-footer	cut away header and footer
++cut-footer		cut away footer
+ "
+ SUBDIRECTORY_OK=1
+ . "$(git --exec-path)/git-sh-setup"
+@@ -31,7 +31,7 @@ force=
+ clean=
+ from_program=
+ to_program=
+-cut_header_footer=
++cut_footer=
+ while test $# -gt 0
+ do
+ 	case "$1" in
+@@ -55,8 +55,8 @@ do
+ 	--asciidoc)
+ 		from_program=-asciidoc
+ 		to_program=-asciidoc ;;
+-	--cut-header-footer)
+-		cut_header_footer=-cut-header-footer ;;
++	--cut-footer)
++		cut_footer=-cut-footer ;;
+ 	--)
+ 		shift; break ;;
+ 	*)
+@@ -118,8 +118,8 @@ construct_makemanflags () {
+ from_makemanflags=$(construct_makemanflags "$from_program") &&
+ to_makemanflags=$(construct_makemanflags "$to_program") &&
  
- Asciidoctor::Extensions.register do
-   inline_macro Git::Documentation::LinkGitProcessor, :linkgit
-+  postprocessor Git::Documentation::DocumentPostProcessor
- end
+-from_dir=$from_oid$from_program$cut_header_footer &&
+-to_dir=$to_oid$to_program$cut_header_footer &&
++from_dir=$from_oid$from_program$cut_footer &&
++to_dir=$to_oid$to_program$cut_footer &&
+ 
+ # generate_render_makefile <srcdir> <dstdir>
+ generate_render_makefile () {
+@@ -169,12 +169,11 @@ render_tree () {
+ 		make -j$parallel -f - &&
+ 		mv "$tmp/rendered/$dname+" "$tmp/rendered/$dname"
+ 
+-		if test "$cut_header_footer" = "-cut-header-footer"
++		if test "$cut_footer" = "-cut-footer"
+ 		then
+ 			for f in $(find "$tmp/rendered/$dname" -type f)
+ 			do
+-				tail -n +3 "$f" | head -n -2 |
+-				sed -e '1{/^$/d}' -e '${/^$/d}' >"$f+" &&
++				head -n -2 "$f" | sed -e '${/^$/d}' >"$f+" &&
+ 				mv "$f+" "$f" ||
+ 				return 1
+ 			done
 -- 
 2.23.0
 
