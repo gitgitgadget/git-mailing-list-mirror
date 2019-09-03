@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 941351F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 19:10:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AEF71F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 19:10:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726490AbfICTKt (ORCPT <rfc822;e@80x24.org>);
+        id S1726590AbfICTKu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 15:10:50 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:55333 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725939AbfICTKt (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 3 Sep 2019 15:10:49 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:32956 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726383AbfICTKt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 15:10:49 -0400
-Received: by mail-wm1-f65.google.com with SMTP id r17so735351wme.0
-        for <git@vger.kernel.org>; Tue, 03 Sep 2019 12:10:47 -0700 (PDT)
+Received: by mail-wm1-f68.google.com with SMTP id g207so642885wmg.5
+        for <git@vger.kernel.org>; Tue, 03 Sep 2019 12:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=L0C6Vpjk5Wc7FtGNy8tLIf6VdopGyVfcQ6MWbNIvARk=;
-        b=XBytGYmAYrrdzNANAc0F0hqI88uZy/SP7u/qTznkDbJUSbIxUaPeVxU8egQ9RFfVhi
-         Ryr50EgDQQOv2PzhnE/AL7/fFckAJe/d5yjWTfuirnysFHjfLAOXVq8f0asuIDGslFoU
-         n3P57NAhKM8a1L+PPlkOT515d60D+/b86OU0OwWaMFMXFrxrQgHfpu2Nh1Gxpv9u1cOe
-         FNJ9jof9tl79/3dRvWAopBqKixD4nA3kxXsVxLP88QIVLhJ8RUjYntxpQLVXSFONRnBt
-         OrEKGiyIslFeibk6XL7xPaU8bUgQerGbc+oZAUq9DHWqAQVaKAfOD/WdFG5adJ/pJZcA
-         +7dw==
+        bh=lkitX9/Yct+qYCp+CzaX96mAr/7OypfSkTJZmiskgng=;
+        b=ASyFms4gyrBJ9YhXA99hTfK8E978OZnpvRw8jXLzwM4otZX99ovdyhtj89uWVp1HRI
+         PsaoohW6CuEdpuvjL5oQx3Yh3HxWw7d0EVyijmuxG5C1WJcPO37A1qDkxOGcZOcyaGNU
+         1PvZhtnWclR1zeVI/tc7ZejseqJ7zErMpvJNDP7UpKnR6rRbe2nLkL51jQ9G8Fo79zCA
+         PBbNZl+bSbVPRqSud+8MUeSTq0XNZ0VOmo/soL7RwFRf8AAUYdnbv9SUm5Ayn9BpN8Gn
+         xXbjWGzvnHR9SbPqAcsO3HvKGy2Hve6fR0obxzFv2etkcPY//P3BLgmJ9XbUu0OCN2x4
+         2BEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=L0C6Vpjk5Wc7FtGNy8tLIf6VdopGyVfcQ6MWbNIvARk=;
-        b=fN9mnyzppnU5CLVdO6v0iu3OQhKvjbSmLnOOu+MyoEL5194WLtuekW6WivfeWaIyBL
-         B5BIxJKE5l+G9DDlFmAumQWLi4BzjV/t7KaI2rJLpy9dI/k7vDY+R3So1J8nvHjTEmwx
-         t8h1cXA1rDzQGN3x++DRzuW11jIXGOAf7+W5CwAiMoDHrqpmU26Ib7rR4UDbnLT7A5Wn
-         uor7JEHpwh3bi0MSwsl9BnFhxPq7EDg3GXlB2eUVddnv+2l9phDompvDEckFbobEQtq5
-         NC9GMobRgNNqszINn5sR3OcJU2qTUIoWk6Snspg3IZvPVuV3qH99It68uAR9o3qbKGIo
-         xSCA==
-X-Gm-Message-State: APjAAAWEnbwcoYc2TaiqKS/u0iEvvL0GlJQaF7og2sBuhHGsxpWJIj2G
-        G3Ke1mjFtBA8Ieg7ia/V1HPDYh/Q
-X-Google-Smtp-Source: APXvYqx/Q7IinWExs8TATTB6Ywn8vCgbD7YX/0S+/57ucgkoJUAVhg7CqNQa7Pf0rVVVPV4iqOyPpA==
-X-Received: by 2002:a1c:a54a:: with SMTP id o71mr1084992wme.51.1567537846489;
-        Tue, 03 Sep 2019 12:10:46 -0700 (PDT)
+        bh=lkitX9/Yct+qYCp+CzaX96mAr/7OypfSkTJZmiskgng=;
+        b=lHcisiHVpYP3Le/410CwHmffrzmAd3BPnr2DaxV4j70CWSsCQ+Vlz/SEI8qohZwdcB
+         XsnmUKazEniFvsFMhU6PAepMgHRh8c5p3DWG8KYh7CKF28amhtfBX9e7zXohJx7bJB9J
+         hutRxsQTWaXqm/aWMCG9neEsza7V4TARgh3RFOaAn6IDq86e9BsxTKNR1CZgNWeJ4w9S
+         x0WUjqcvjLD3vpMBScC5HycCIZxhxxTe0nhgoF0mCzo3JFA4ER6cXJDwiQuykC6bisVL
+         muwtRB8tjBwFf42tZYos0BAOVKomrWvMutv8+COL22VhZj0ZFTJd9DjIX0wd8fSkbwoi
+         8hZQ==
+X-Gm-Message-State: APjAAAXSfMZMa1K24qqtUNtMTi9WmTjBf8dyNTrLJXIMv84F3eGROJaL
+        Z6esJIDbKeLOmIuuozJhjvCyHYEA
+X-Google-Smtp-Source: APXvYqzBNwRY5vVe3JaL3vyBtcd2ZsJ2fQzbotrPrm1tJFvMwJBceGXJMlLy1yHLhVcZgT9DpqlOHw==
+X-Received: by 2002:a7b:cc0f:: with SMTP id f15mr1037624wmh.39.1567537847700;
+        Tue, 03 Sep 2019 12:10:47 -0700 (PDT)
 Received: from localhost ([95.148.214.9])
-        by smtp.gmail.com with ESMTPSA id q25sm775325wmq.27.2019.09.03.12.10.45
+        by smtp.gmail.com with ESMTPSA id f197sm427242wme.22.2019.09.03.12.10.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 03 Sep 2019 12:10:45 -0700 (PDT)
+        Tue, 03 Sep 2019 12:10:47 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 1/3] factor out refresh_and_write_cache function
-Date:   Tue,  3 Sep 2019 20:10:39 +0100
-Message-Id: <20190903191041.10470-2-t.gummerer@gmail.com>
+Subject: [PATCH v3 2/3] merge: use refresh_and_write_cache
+Date:   Tue,  3 Sep 2019 20:10:40 +0100
+Message-Id: <20190903191041.10470-3-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc2.194.ge5444969c9
 In-Reply-To: <20190903191041.10470-1-t.gummerer@gmail.com>
 References: <20190829182748.43802-1-t.gummerer@gmail.com>
@@ -72,122 +72,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Getting the lock for the index, refreshing it and then writing it is a
-pattern that happens more than once throughout the codebase, and isn't
-trivial to get right.  Factor out the refresh_and_write_cache function
-from builtin/am.c to read-cache.c, so it can be re-used in other
-places in a subsequent commit.
-
-Note that we return different error codes for failing to refresh the
-cache, and failing to write the index.  The current caller only cares
-about failing to write the index.  However for other callers we're
-going to convert in subsequent patches we will need this distinction.
+Use the 'refresh_and_write_cache()' convenience function introduced in
+the last commit, instead of refreshing and writing the index manually
+in merge.c
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- builtin/am.c | 16 ++--------------
- cache.h      | 16 ++++++++++++++++
- read-cache.c | 19 +++++++++++++++++++
- 3 files changed, 37 insertions(+), 14 deletions(-)
+ builtin/merge.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 1aea657a7f..ddedd2b9d4 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1071,19 +1071,6 @@ static const char *msgnum(const struct am_state *state)
- 	return sb.buf;
- }
+diff --git a/builtin/merge.c b/builtin/merge.c
+index e2ccbc44e2..0148d938c9 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -688,16 +688,13 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 			      struct commit_list *remoteheads,
+ 			      struct commit *head)
+ {
+-	struct lock_file lock = LOCK_INIT;
+ 	const char *head_arg = "HEAD";
  
--/**
-- * Refresh and write index.
-- */
--static void refresh_and_write_cache(void)
--{
--	struct lock_file lock_file = LOCK_INIT;
--
--	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
+-	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
 -	refresh_cache(REFRESH_QUIET);
--	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
--		die(_("unable to write index file"));
--}
--
- /**
-  * Dies with a user-friendly message on how to proceed after resolving the
-  * problem. This message can be overridden with state->resolvemsg.
-@@ -1703,7 +1690,8 @@ static void am_run(struct am_state *state, int resume)
+-	if (write_locked_index(&the_index, &lock,
+-			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
++	if (refresh_and_write_cache(REFRESH_QUIET, SKIP_IF_UNCHANGED) < 0)
+ 		return error(_("Unable to write index."));
  
- 	unlink(am_path(state, "dirtyindex"));
+ 	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree")) {
++		struct lock_file lock = LOCK_INIT;
+ 		int clean, x;
+ 		struct commit *result;
+ 		struct commit_list *reversed = NULL;
+@@ -860,12 +857,8 @@ static int merge_trivial(struct commit *head, struct commit_list *remoteheads)
+ {
+ 	struct object_id result_tree, result_commit;
+ 	struct commit_list *parents, **pptr = &parents;
+-	struct lock_file lock = LOCK_INIT;
  
--	refresh_and_write_cache();
-+	if (refresh_and_write_cache(REFRESH_QUIET, 0) < 0)
-+		die(_("unable to write index file"));
+-	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
+-	refresh_cache(REFRESH_QUIET);
+-	if (write_locked_index(&the_index, &lock,
+-			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
++	if (refresh_and_write_cache(REFRESH_QUIET, SKIP_IF_UNCHANGED) < 0)
+ 		return error(_("Unable to write index."));
  
- 	if (repo_index_has_changes(the_repository, NULL, &sb)) {
- 		write_state_bool(state, "dirtyindex", 1);
-diff --git a/cache.h b/cache.h
-index b1da1ab08f..2b14768bea 100644
---- a/cache.h
-+++ b/cache.h
-@@ -414,6 +414,7 @@ extern struct index_state the_index;
- #define add_file_to_cache(path, flags) add_file_to_index(&the_index, (path), (flags))
- #define chmod_cache_entry(ce, flip) chmod_index_entry(&the_index, (ce), (flip))
- #define refresh_cache(flags) refresh_index(&the_index, (flags), NULL, NULL, NULL)
-+#define refresh_and_write_cache(refresh_flags, write_flags) repo_refresh_and_write_index(the_repository, (refresh_flags), (write_flags), NULL, NULL, NULL)
- #define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
- #define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
- #define cache_dir_exists(name, namelen) index_dir_exists(&the_index, (name), (namelen))
-@@ -812,6 +813,21 @@ void fill_stat_cache_info(struct index_state *istate, struct cache_entry *ce, st
- #define REFRESH_IN_PORCELAIN	0x0020	/* user friendly output, not "needs update" */
- #define REFRESH_PROGRESS	0x0040  /* show progress bar if stderr is tty */
- int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
-+/*
-+ * Refresh the index and write it to disk.
-+ *
-+ * 'refresh_flags' is passed directly to 'refresh_index()', while
-+ * 'COMMIT_LOCK | write_flags' is passed to 'write_locked_index()', so
-+ * the lockfile is always either committed or rolled back.
-+ *
-+ * Return 1 if refreshing the index returns an error, -1 if writing
-+ * the index to disk fails, 0 on success.
-+ *
-+ * Note that if refreshing the index returns an error, we don't write
-+ * the result to disk.
-+ */
-+int repo_refresh_and_write_index(struct repository*, unsigned int refresh_flags, unsigned int write_flags, const struct pathspec *, char *seen, const char *header_msg);
-+
- struct cache_entry *refresh_cache_entry(struct index_state *, struct cache_entry *, unsigned int);
- 
- void set_alternate_index_output(const char *);
-diff --git a/read-cache.c b/read-cache.c
-index 52ffa8a313..2ad96677ae 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1472,6 +1472,25 @@ static void show_file(const char * fmt, const char * name, int in_porcelain,
- 	printf(fmt, name);
- }
- 
-+int repo_refresh_and_write_index(struct  repository *repo,
-+				 unsigned int refresh_flags,
-+				 unsigned int write_flags,
-+				 const struct pathspec *pathspec,
-+				 char *seen, const char *header_msg)
-+{
-+	struct lock_file lock_file = LOCK_INIT;
-+
-+	repo_hold_locked_index(repo, &lock_file, LOCK_DIE_ON_ERROR);
-+	if (refresh_index(repo->index, refresh_flags, pathspec, seen, header_msg)) {
-+		rollback_lock_file(&lock_file);
-+		return 1;
-+	}
-+	if (write_locked_index(repo->index, &lock_file, COMMIT_LOCK | write_flags))
-+		return -1;
-+	return 0;
-+}
-+
-+
- int refresh_index(struct index_state *istate, unsigned int flags,
- 		  const struct pathspec *pathspec,
- 		  char *seen, const char *header_msg)
+ 	write_tree_trivial(&result_tree);
 -- 
 2.23.0.rc2.194.ge5444969c9
 
