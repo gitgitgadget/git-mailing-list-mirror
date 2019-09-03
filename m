@@ -3,135 +3,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DA091F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 23:16:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 335A81F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 23:36:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727257AbfICXQS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 19:16:18 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58538 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727109AbfICXQS (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 3 Sep 2019 19:16:18 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:6959:e43b:5cf6:a465])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CE23A6074C;
-        Tue,  3 Sep 2019 23:16:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1567552576;
-        bh=HaTkEt69zqmHkJwgrCGwsrxS4H2jp9kA8FXaKi7P6ow=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=IM1CjHLdoVwrwp5jyrZU/49D1V586/r3vIUAj9uAIBAF8EnDYxJJ0hGr2McffvPaD
-         oxG0bWWox5zbiCAbEGt5s0kUj9R05fueAsUTK+pMGbvGbwObvKcVoeneVIeWwBseMW
-         bPYIkUheG4neiJcYrHkQ6TtTOMnFcB5QDebimTdN41kFUGyqciAlwG0a4zZH/hhCqk
-         WMkYBL+JOi28spllHiSoMRsPD9onwfS5UzNyPYc2agaY0eFQiaySAlq98rSxgJ2as8
-         62qtm6e9q6/p9irYb26c7009kMav8a5ufMx/crbtk4HY0mLh9XxoLaB+2UGdd1SR1D
-         1AEs/MPkUpzQXpOSACOtVePEaweKDP9zlEdOs3rzs2Tg8sDIMOA9bKB82FdpnT9PSs
-         GdXVWLTCMem4+TLYrrDXkKSFFwRkBqrKJOa7Ss+J/4lAal0zxnUx8Z23dNMv2E9AXE
-         a9ZjSdEgpRE3mZKWkI3rWBMSEtAL4l0zBfFNEZjOySu+e2Ps8r0
-Date:   Tue, 3 Sep 2019 23:16:11 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>,
-        Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/2] asciidoctor-extensions: provide `<refmiscinfo/>`
-Message-ID: <20190903231610.GI11334@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>,
-        Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <CAN0heSr2zCQMM6wOM0UnD28qj_VygQ5CQHGHhMR9+H23snpt5Q@mail.gmail.com>
- <cover.1567534373.git.martin.agren@gmail.com>
+        id S1727692AbfICXgv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 19:36:51 -0400
+Received: from mail-yb1-f196.google.com ([209.85.219.196]:37593 "EHLO
+        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727486AbfICXgv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 19:36:51 -0400
+Received: by mail-yb1-f196.google.com with SMTP id t5so6622231ybt.4
+        for <git@vger.kernel.org>; Tue, 03 Sep 2019 16:36:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=wU82H3I2nQ4hvb/z9hCgHOYSM6ujl2prGyMAuLSt8VI=;
+        b=t00RM5NYdlr96QXD+vUy5sRESuUHTKqhS0vCmeLLPonlumuT+OWGmyyRLpNSKb4yb0
+         7qt5Ie06KjRlZDO+cd+qxJgKDP4pbsLl/qr9n1VxOamhElldCoVU/V6nruLwjFV+RjX8
+         pv/7O6uWvvlaqtlXwN+QWCxp+sJLar0srAHW08ekwGvARgPy/WTz+VtUZ97HMQYVKhRX
+         ZYvKsVNeifibv5JxjHNgGRWoY2CqUWJ/kaxw8Rm6+hUZ7nqGcmxoRYc2KqCB0xM1KN5p
+         eusBxquEeUgPbq83pxy1bqwPySi+8/BzmoyJjrkmojl9k6B2lGbF8WiVjfkANVYvutBb
+         j2IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=wU82H3I2nQ4hvb/z9hCgHOYSM6ujl2prGyMAuLSt8VI=;
+        b=qovxB1FUkh2gcfLQtAMopupz/0e8ypfp+CjXtrNaR29XCuvz1pg/YvX8C4y1q8RqkP
+         OGwp3i72ORscVwBSCQhXMjFaVKvPs78Z69zZbtz9BTha5l6y1EPXVCsGU7eyHvjmm6Zd
+         /yToMmFepLxEq2P8TFzQezklbD2PTPZdbmhoFHxz/ztafWn5YuC5xL4omiTEzyTLO7uK
+         71ODbaTV/hk07U5AUE8XW3nPSQpCGLot03sLT2Hs2gcs0p52UyzpnHHmvmC0crc86S6g
+         P9Gp3rLWKwAWBOarm3PPZevXULhEQT4U9jFQAhfattp8xfZnWj9v1Nyrm0Pg336gk1x0
+         uQ0A==
+X-Gm-Message-State: APjAAAWK4UWwDnOHAnm4QaULAWAZl67/UMvnwGSN8xxCe/XPovGkUA+R
+        Y4X1mGNKs3pofpBJyBsAPFU=
+X-Google-Smtp-Source: APXvYqxFYtgOOQH1qJFALcM6OEkGmOHWbtlDITnlCOHCwDd8xUeL2COIF5JpVcRRnN6ICfGQ5GXBpg==
+X-Received: by 2002:a25:9803:: with SMTP id a3mr26113938ybo.27.1567553809926;
+        Tue, 03 Sep 2019 16:36:49 -0700 (PDT)
+Received: from [192.168.1.25] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id l39sm3845748ywh.14.2019.09.03.16.36.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Sep 2019 16:36:49 -0700 (PDT)
+Subject: Re: [PATCH 1/1] fetch: add fetch.writeCommitGraph config setting
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
+        garimasigit@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+References: <pull.328.git.gitgitgadget@gmail.com>
+ <49f877c85ca2be5bb76d9082ee4aa26e26111a14.1567477320.git.gitgitgadget@gmail.com>
+ <xmqqef0xtd3p.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d550ac23-cb65-b547-d9dc-1428ee2e9420@gmail.com>
+Date:   Tue, 3 Sep 2019 19:36:48 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
+ Thunderbird/69.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="PWfwoUCx3AFJRUBq"
-Content-Disposition: inline
-In-Reply-To: <cover.1567534373.git.martin.agren@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <xmqqef0xtd3p.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 9/3/2019 3:05 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> diff --git a/builtin/fetch.c b/builtin/fetch.c
+>> index 53ce99d2bb..d36a403859 100644
+>> --- a/builtin/fetch.c
+>> +++ b/builtin/fetch.c
+>> @@ -23,6 +23,7 @@
+>>  #include "packfile.h"
+>>  #include "list-objects-filter-options.h"
+>>  #include "commit-reach.h"
+>> +#include "commit-graph.h"
+>>  
+>>  #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
+>>  
+>> @@ -1715,6 +1716,20 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>>  
+>>  	string_list_clear(&list, 0);
+>>  
+>> +	prepare_repo_settings(the_repository);
+>> +	if (the_repository->settings.fetch_write_commit_graph) {
+>> +		int commit_graph_flags = COMMIT_GRAPH_SPLIT;
+>> +		struct split_commit_graph_opts split_opts;
+>> +		memset(&split_opts, 0, sizeof(struct split_commit_graph_opts));
+>> +
+>> +		if (progress)
+>> +			commit_graph_flags |= COMMIT_GRAPH_PROGRESS;
+>> +
+>> +		write_commit_graph_reachable(get_object_directory(),
+>> +					     commit_graph_flags,
+>> +					     &split_opts);
+>> +	}
+> 
+> As a low-impact change this is good.  
+> 
+> For longer term, it feels a bit unfortunate that this is still a
+> separate phase of the program, though.  We know what new refs we
+> added, we know what new objects we received, and we even scanned
+> each and every one of them while running the index-pack step to
+> store the .pack and compute the .idx file, i.e. it feels that we
+> have most of the information already in-core to extend the commit
+> graph for new parts of the history we just received.
 
---PWfwoUCx3AFJRUBq
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+You're right that we could isolate the new write to the refs we
+just received. We could use the more cumbersome write_commit_graph()
+method with a list of commit oids as starting points. I'm happy to
+make that change if we see a lot of value there.
 
-On 2019-09-03 at 18:51:19, Martin =C3=85gren wrote:
-> Almost half a year ago, I wrote:
-> > To be clear. *This* patch has a sufficiently incorrect commit message
-> > that it really needs a makeover. You can expect a v2.
->=20
-> Finally, here's that v2. I should probably refresh memories: The goal of
-> the main patch here is to make the headers and footers of our manpages
-> built by Asciidoctor look a lot more like those generated by AsciiDoc.
-> In particular, this gets rid of the ugly "[FIXME: source]".
->=20
-> I spent a little bit of time trying to work on the XML as XML, and
-> quite a lot of time procrastinating on that. In the end, I decided that
-> the outcome of my attempts wouldn't get better and that there is some
-> value to the stupid approach from v1 of doing a simple search-and-replace
-> in the text. I've preserved my attempts in the commit message.
->=20
-> When I posted v1, it turned into quite a thread [1] on AsciiDoc vs
-> Asciidoctor vs Asciidoctor 2.0 and differences in rendering. (I am on
-> Asciidoctor 1.5.5.)
->=20
-> Among other things, the v1-thread discussed switching the rendering
-> toolchain entirely to avoid the detour over xmlto. Doing that would
-> render this patch obsolete. While I agree that such a switch is the
-> correct long-term goal and that we can be fairly aggressive about it, I
-> do also think it makes sense to first make the "softer" switch to
-> Asciidoctor-by-default and get that particular hurdle behind us. Then,
-> once we're ok with dropping AsciiDoc entirely, we can do the switch to
-> an Asciidoctor-only toolchain.
+However, the current patch also gives us a way to add local refs
+to the commit graph and "catch up" to the work the user had done.
+With this in mind, I do think the simpler code has another functional
+advantage.
 
-Yeah, this seems like a good approach.  xmlto is a neat tool, but it's
-essentially unmaintained and is designed for DocBook 4.  Avoiding it
-where possible seems like the right choice.
+Thanks,
+-Stolee
 
-I looked at this series and it seems sane.  I agree that adding a
-dependency on nokogiri isn't really desirable.  It is an extremely
-common Ruby package, but it has native extensions, which causes problems
-for some people if their distro doesn't support it.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---PWfwoUCx3AFJRUBq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1u9DoACgkQv1NdgR9S
-9ovthA/+Ps0QN1/eY47naJlmipI3a4dBvoW/zewhucr3/txSiOyLczM+9XaWA7DH
-p/mCYbtWDcGJw/aRi8xoDPAihvbfVfW/XcZrGTO0lvz22AVjAxw5ledprKrSIQmo
-yz//6xZv2nXp9jz58ODX89OHFl/OrXwzbUC8bL7KpZJaIl+fsF6HKqKpMzBKlCZa
-Lub64aeSKMpZHHCduISykIKF/t5a9twBuwNXqkwc8UGXiAbel08lRbxDk2PBB8Xa
-WSpQXnuShkCwSSxt4g1olIXPKa8ZwabyJHPWfoIZkIlB8rfFrINn2gi5EChBsi3+
-YVxuXkqlZU+xeSqmmbZbiJzcV6Pn/EVyplfCLViq3Phh8nYwgFlTI10ms4wDTmAq
-pN3yQ6q5WtLteYss4jCwvtcGACgF9OeBlcZqx7M3vgZkWeAQFbC2Z17hqMv2t10d
-pXLLO03lxpr5keqXtD0UGw8tQKa5MVWvYTDZNF5E9ycipwlRTu0DPnO9l+r05OH/
-fcxc88AwmWfd1MIj0pejERoElhsZihFQf/G+gEtgK5QvJCQLZ4vALHuvAaLGZwVp
-u27lqiO2m8maqWPG9gtvBKUMpDJvvvwXYHWwa4X3JfUHDV+FmPtI9tSto1MLYbM4
-2r3xqjyt2idhPKih1r5kchVulQDT6GrSsepSXnbxcAZssT11ZIg=
-=5UoF
------END PGP SIGNATURE-----
-
---PWfwoUCx3AFJRUBq--
