@@ -2,102 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 355CD1F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 19:56:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFA1C1F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 21:08:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725994AbfICT4H (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 15:56:07 -0400
-Received: from mail-yw1-f67.google.com ([209.85.161.67]:43999 "EHLO
-        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725990AbfICT4H (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 15:56:07 -0400
-Received: by mail-yw1-f67.google.com with SMTP id n205so6312160ywb.10
-        for <git@vger.kernel.org>; Tue, 03 Sep 2019 12:56:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YyKtxmgYgNZPhxGZHoZIGn9lYp3aBu9qaT/YoAj5tVU=;
-        b=St4I1Ly3InjEpzv3jZmtFk1X6TV50sH/lmUhVbHagnDNXSVbG1Sa3YAq4dINKuXj5D
-         2ggqow66ZiLPv89OdBlFq9phfSaCJ7QXEZBAXo8nSaPRBPVe/BXVuRQpnYMHhrFXdMmK
-         PrLhzFT/k4NuPVnNmHHFqPsUCCjw701CrmDs2u8fWqNw0KjG3lpcVbLVB+RyxW+Yxx0K
-         lgtAx+TPsQDZt1G9s+aEdcXnapYEqzQRtXvRFyhGtdEE5oNNLrTZf16jhhcFtMPmL8oG
-         7QoZFDgfAKcuSq6n+Oy+VgAUGObCi69fMHrUmLhAJXS2AySkh1G6k9ghigG35F0quaU2
-         9Kxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YyKtxmgYgNZPhxGZHoZIGn9lYp3aBu9qaT/YoAj5tVU=;
-        b=suoVprtDM4bPKJtMTcE3hHk418l9H64YvP5X1LDSuEJiYVxW0d5YrYIs/ygiC53C26
-         XwSIT0YPoZn75jI8ot9lNT6ofLXH71PWTtLICL4RNY8PRhM7jO2KMcP6m2kR/Q2QuO9P
-         HLpZgTxpEXwz1DZy+E2K6h95m1YIu0QNX2U24ei363bs2gDfWzfHeiW5duvdaSvgCHJo
-         z266HEtVzmlopsrwbtCzDvIW8YrI0/4tjik45keG4NdU2A70uf1KGAo+KtPGyy/vLLnc
-         ko98RogUQD3jJv4xe55mW2xWBIDcqypKMdqPnJRmlNeQx/mIGi99YTmTE2bit2acObR5
-         4EWg==
-X-Gm-Message-State: APjAAAXmKvVmVbUQlBDeg06tfSY0SSRiPPkJH+9o8+gYHYUcPGrJNEcn
-        ncLVwWUyH74geO9I7ozsvB7aOxs38k6axfsXR3h8M2uV+QQ=
-X-Google-Smtp-Source: APXvYqxfnvBqwaqpNVIsBzGP3Yw26uqDsuufrRQfEiXfQ19ggm/v+TXUMRqSz0cp0tnbjoOAnl3VE7fdb3iBbUuB4vA=
-X-Received: by 2002:a81:53d6:: with SMTP id h205mr3046051ywb.423.1567540565704;
- Tue, 03 Sep 2019 12:56:05 -0700 (PDT)
+        id S1726994AbfICVIT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 17:08:19 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65058 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726009AbfICVIT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 17:08:19 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 66A046FA22;
+        Tue,  3 Sep 2019 17:08:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Y51Zs5xjls/cSv8CB7CAE6lRBsc=; b=Cl+2vc
+        +jk9LkuWWKz0SNU0ddbx1ODHShOtkvqPqfJ/OBmNuQHnHAxy3ASeY014qjf2kmwc
+        UEzZpSM66ITtflnj8H5c2MsxAklKfsBi0otquK0ccIB3wVFsK8Sn6CCaohizVQVn
+        7LgPQXugRqvr1NNP5Gdzc5PGQOB4KU7A4SMYo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qhoA3v7jg3HRugocAvdW+zIAJ5bLPChS
+        T6TEdGqW+VDDuf7P5BNMAqpws8bNYpzds7iPsyK2PlTJG2QfyDToCCpzbmwzsA/H
+        JtcSlpX3wIvVTf5++gHyMIgRzM2bjKWRq4CqDCqfZWOvh9Zb69Bb4kYb7YEa70JT
+        9PXQdEZv+9Y=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5DE5A6FA21;
+        Tue,  3 Sep 2019 17:08:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 924026FA1F;
+        Tue,  3 Sep 2019 17:08:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 1/4] t6006: simplify and optimize empty message test
+References: <20190828002210.8862-1-newren@gmail.com>
+        <20190903185524.13467-1-newren@gmail.com>
+        <20190903185524.13467-2-newren@gmail.com>
+Date:   Tue, 03 Sep 2019 14:08:09 -0700
+In-Reply-To: <20190903185524.13467-2-newren@gmail.com> (Elijah Newren's
+        message of "Tue, 3 Sep 2019 11:55:21 -0700")
+Message-ID: <xmqq1rwxt7eu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAHMHMxW4-6AZEDaJU8KOy2kRSLXjdC_RTH528=nnhVLXh=ADUA@mail.gmail.com>
- <20190903133422.GA51158@syl.lan> <xmqqa7bltcyu.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqa7bltcyu.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
-        <stdedos@gmail.com>
-Date:   Tue, 3 Sep 2019 22:55:25 +0300
-Message-ID: <CAHMHMxX192aM5owHjvi3s06ZykcQAHsVneBsfv9YvbeYM-XTXA@mail.gmail.com>
-Subject: Re: Git does not recognise directory named '${sys:DATA_ROOT_DIR}'
-To:     git <git@vger.kernel.org>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.email>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: EFD8F404-CE8E-11E9-ADEE-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Makes me wonder if git status could maybe warn about empty trees as 'untracked'?
+Elijah Newren <newren@gmail.com> writes:
 
-Well, I "suppose" git-add could warn you that you are adding an empty
-tree (and I'd like if that happened, implicit vs explicit action i.e.
-ignoring).
-However, I assume the no-empty-tree case was a design decision; hence,
-it's been 2.2# versions without such warning.
+> Test t6006.71 ("oneline with empty message") was creating two commits
+> with simple commit messages, and then running filter-branch to rewrite
+> the commit messages to be empty.  This test was written this way because
+> the --allow-empty-message option to git commit did not exist at the
+> time.  Simplify this test and avoid the need to invoke filter-branch by
+> just using --allow-empty-message when creating the commit.
 
-I doubt it would be considered to be added now.
+The result of filter-branch seems to have one empty line as the body
+(i.e. "echo X; git cat-file commit A; echo Y" will show two blank
+lines between the committer line and Y), while "--allow-empty-message"
+does not leave any body (i.e. the same will give you only one blank
+line there).
 
+Was this test verifying the right thing in the first place, I have
+to wonder.
 
-On Tue, Sep 3, 2019 at 10:08 PM Junio C Hamano <gitster@pobox.com> wrote:
+IOW,
+
+	git commit --allow-empty --cleanup=verbatim -m "$LF" &&
+
+would be more faithful conversion of the original (and hopefully
+just as performant).
+
+> Despite only being one piece of the 71st test and there being 73 tests
+> overall, this small change to just this one test speeds up the overall
+> execution time of t6006 (as measured by the best of 3 runs of `time
+> ./t6006-rev-list-format.sh`) by about 11% on Linux, 13% on Mac, and
+> about 15% on Windows.
+
+Quite an improvement ;-)
+
 >
-> Taylor Blau <me@ttaylorr.com> writes:
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  t/t6006-rev-list-format.sh | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 >
-> > If you wish to keep this directory "empty", but stored in Git, a common
-> > convention is to create an empty '.gitkeep' file in the directory. This
-> > file is not special in any way to Git, rather it serves as _a_ file to
-> > keep the directory non-empty.
->
-> Hmph, I thought the common convention was to create a ".gitignore"
-> file in the directory with catch-all pattern, so that no matter what
-> cruft you had there "git add" will not add anything from it, if you
-> wish to keep this directory "empty".
-
-I believe Taylor is talking about explicitly keeping a directory
-empty, that may or may not, in the future, contain files (that will be
-tracked) [1].
-You are infering that, regardless if there are files or will be added
-in the future, you don't want to check anything in.
-
-While [1] is a very niche corner case (and maybe it doesn't make sense
-to the most of us, true), there is a "debian-equivalent" behavior
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=812223
-
-(I cannot find the definition of this behavior, but you can see an
-example usecase)
+> diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+> index da113d975b..d30e41c9f7 100755
+> --- a/t/t6006-rev-list-format.sh
+> +++ b/t/t6006-rev-list-format.sh
+> @@ -501,9 +501,8 @@ test_expect_success 'reflog identity' '
+>  '
+>  
+>  test_expect_success 'oneline with empty message' '
+> -	git commit -m "dummy" --allow-empty &&
+> -	git commit -m "dummy" --allow-empty &&
+> -	git filter-branch --msg-filter "sed -e s/dummy//" HEAD^^.. &&
+> +	git commit --allow-empty --allow-empty-message &&
+> +	git commit --allow-empty --allow-empty-message &&
+>  	git rev-list --oneline HEAD >test.txt &&
+>  	test_line_count = 5 test.txt &&
+>  	git rev-list --oneline --graph HEAD >testg.txt &&
