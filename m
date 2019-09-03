@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 220381F4B7
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAEB81F4BB
 	for <e@80x24.org>; Tue,  3 Sep 2019 18:55:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726529AbfICSze (ORCPT <rfc822;e@80x24.org>);
+        id S1726490AbfICSze (ORCPT <rfc822;e@80x24.org>);
         Tue, 3 Sep 2019 14:55:34 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:40690 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726405AbfICSzc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 14:55:32 -0400
-Received: by mail-pf1-f196.google.com with SMTP id w16so11342185pfn.7
-        for <git@vger.kernel.org>; Tue, 03 Sep 2019 11:55:32 -0700 (PDT)
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:39528 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725882AbfICSzb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 14:55:31 -0400
+Received: by mail-pf1-f193.google.com with SMTP id s12so4341519pfe.6
+        for <git@vger.kernel.org>; Tue, 03 Sep 2019 11:55:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5yoNcLAwLZMvWqhAHBTIM0Mtr8k6SzClCqF8HvmzTSo=;
-        b=FfqP4OC+fxC35/zz32EhhqAlNaM+yGZCZgI++HbMP3j9CXsopKWyYjTBaImfr1IP2S
-         0VNugDeMINzGs2+D3mwK5MnVpZw3fH+NgzKM0bzlfvuFOQxY58lnSvIinTW5rg/VdVoO
-         49biQCN2Yuh3i0wqqpLN9Ug03MuowO1au5l6SeRnQh6VUoSH++M2SRjTL5f2imfQWNke
-         tglnKYlpsDaLFZmi1DA83Ni5fZCgoMGbbO16HXECzRpRWHkfQEc9WG8ST9fHqC8cUeu3
-         E1fgD18iZqueARoIRBDsufYiw15OdKnb3ClaCizlWJYrmSpXUMkdCjHnrAjAKaP3b+4Y
-         85Rw==
+        bh=kBpBFADxWHLS5gKlvnLUPE1kuS+uZTFoZBTjczUXaec=;
+        b=VUmRwdf+8B6LuoPIsDh3ZCYW8d/6hXEsR9oE4xUhPU4mGbZZhrq13f2jscsxNr60PK
+         vTnZRSOYXg8KkgCx9/x/+sqzJSFxJ9KuM8BUCaIBPaiOfwRJvHMnBddpl3VKwBl6eIr8
+         V36lfa1O1e9lu3tZqJs3q9W/6yktVQeWEqWlzz/AECJPt3jiU0VxJ2VDRveoloK0XjN+
+         1r63iBUUEJsJrisGaQ3inUsXvo6WnheTFNkGTZMATOf58SYJmouUbjILQdEegZO/WlFE
+         mLRRwwMMUaparzF735JPKMK/9B6tStzfHQ1Y0bBLR5cSVmulGUyVmbJjMyYjOOdLrSmH
+         4LaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5yoNcLAwLZMvWqhAHBTIM0Mtr8k6SzClCqF8HvmzTSo=;
-        b=o6BiO31Zo9SNJ+DWbSVr+n0vALS/EKzH3yzCf2q7ZJGonUm5Qq8nJg67hE3j/8kXlj
-         dX8qfS54vRLbP5JVu6z5ypyHA+YZFCcS2FlD1+UZouApYY7wKVk2gMsTOVURdhVzY5OS
-         LJRqP8wLiuoKE8xu9Im9kSNicncXYQYxTf7QMtM2TWxIimNSfgMj55PGK0ZWGRbUbWuo
-         0sSV/Me3BumJU13pcBQH4HC2wgRGtQJXV0Xy8xSGnCyTXMPD8auNHGESVYNviH0VXKnx
-         atREo7XPpmuUJbD4MqaK2WDqfZ0Tn0XCKlDb6PYOyZP8B7om5o4neYmK5kqGB2vV1Jz8
-         +3Xg==
-X-Gm-Message-State: APjAAAV8fFZxjAA4j8frgdDW0N6B+FyfI37cb0jMQgzOFfpCm1Zl6lKc
-        EQE82P8PQG7+q9wI0eRiycc=
-X-Google-Smtp-Source: APXvYqy1R0Vt2hsdiAAOGU3GIurY67FrFo1M+hEmwCZ2/Uq/CmyagH2Ct/D1xpyE9FZeju4xJyYaMg==
-X-Received: by 2002:a17:90a:e654:: with SMTP id ep20mr779860pjb.65.1567536931907;
-        Tue, 03 Sep 2019 11:55:31 -0700 (PDT)
+        bh=kBpBFADxWHLS5gKlvnLUPE1kuS+uZTFoZBTjczUXaec=;
+        b=M8LAbLlRqJ63pAVPU5Egr4x0RwljxrwbuBC+4J2u6ScXRZvaqkluTxhpGW3uLJpjl4
+         0aeDdk4YiyGBbop8U1q5cJsFAPsDiT3VS6DXW1XbTQ8jmRPYAvAfOS1Q9YUly+1+jiPh
+         W6xloEzU72w/Vze3K1Pc+wGu8cbERqKOTFdPPSpAQtlyzOQzpNJIeJvO1H7BrRvYIxjz
+         0ga4kFf7xLMWKV3taJjGFgRlAAncXbV2SuOtKoi9zGjEGokZ+Eupodl75WIdfaRvEK0+
+         fctLar0YAIjehenHeqZouKEHwZF1OVTdro6ryXyISl7v9+aMx6b8g8nNhc+0Lh1pq2a2
+         UO3A==
+X-Gm-Message-State: APjAAAXfz4J2RaRHPPaZ2pAlS66Wg0JRfXlhLwPutCggKJ0RqmAUo9rg
+        5EPfv8iIsrEwOJ0TA97brJuVetqZ
+X-Google-Smtp-Source: APXvYqwvskRoII0FDd6tb31sZtjqekuwcVkxuAoG51XoyS7fiUZ/D9mjrRxPEC51yarNSH6uUQPFOQ==
+X-Received: by 2002:a65:65c5:: with SMTP id y5mr31153876pgv.342.1567536930781;
+        Tue, 03 Sep 2019 11:55:30 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id 136sm21283855pfz.123.2019.09.03.11.55.30
+        by smtp.gmail.com with ESMTPSA id 136sm21283855pfz.123.2019.09.03.11.55.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Sep 2019 11:55:31 -0700 (PDT)
+        Tue, 03 Sep 2019 11:55:30 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
@@ -61,9 +61,9 @@ Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 2/4] t3427: accelerate this test by using fast-export and fast-import
-Date:   Tue,  3 Sep 2019 11:55:22 -0700
-Message-Id: <20190903185524.13467-3-newren@gmail.com>
+Subject: [PATCH v5 1/4] t6006: simplify and optimize empty message test
+Date:   Tue,  3 Sep 2019 11:55:21 -0700
+Message-Id: <20190903185524.13467-2-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.39.gf92d9de5c3
 In-Reply-To: <20190903185524.13467-1-newren@gmail.com>
 References: <20190828002210.8862-1-newren@gmail.com>
@@ -75,116 +75,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-fast-export and fast-import can easily handle the simple rewrite that
-was being done by filter-branch, and should be significantly faster on
-systems with a slow fork.  Timings from before and after on a few
-laptops that I or others measured on (measured via `time
-./t3427-rebase-subtree.sh`, i.e. including everything in this test --
-not just the filter-branch or fast-export/fast-import pair):
+Test t6006.71 ("oneline with empty message") was creating two commits
+with simple commit messages, and then running filter-branch to rewrite
+the commit messages to be empty.  This test was written this way because
+the --allow-empty-message option to git commit did not exist at the
+time.  Simplify this test and avoid the need to invoke filter-branch by
+just using --allow-empty-message when creating the commit.
 
-   Linux:    4.305s -> 3.684s (~17% speedup)
-   Mac:     10.128s -> 7.038s (~30% speedup)
-   Windows:  1m 37s -> 1m 17s (~26% speedup)
+Despite only being one piece of the 71st test and there being 73 tests
+overall, this small change to just this one test speeds up the overall
+execution time of t6006 (as measured by the best of 3 runs of `time
+./t6006-rev-list-format.sh`) by about 11% on Linux, 13% on Mac, and
+about 15% on Windows.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t3427-rebase-subtree.sh | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ t/t6006-rev-list-format.sh | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
-index d8640522a0..c1f6102921 100755
---- a/t/t3427-rebase-subtree.sh
-+++ b/t/t3427-rebase-subtree.sh
-@@ -7,10 +7,16 @@ This test runs git rebase and tests the subtree strategy.
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-rebase.sh
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index da113d975b..d30e41c9f7 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -501,9 +501,8 @@ test_expect_success 'reflog identity' '
+ '
  
--commit_message() {
-+commit_message () {
- 	git log --pretty=format:%s -1 "$1"
- }
- 
-+extract_files_subtree () {
-+	git fast-export --no-data HEAD -- files_subtree/ |
-+		sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" |
-+		git fast-import --force --quiet
-+}
-+
- test_expect_success 'setup' '
- 	test_commit README &&
- 	mkdir files &&
-@@ -42,7 +48,7 @@ test_expect_failure REBASE_P \
- 	'Rebase -Xsubtree --preserve-merges --onto commit 4' '
- 	reset_rebase &&
- 	git checkout -b rebase-preserve-merges-4 master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
- 	verbose test "$(commit_message HEAD~)" = "files_subtree/master4"
-@@ -53,7 +59,7 @@ test_expect_failure REBASE_P \
- 	'Rebase -Xsubtree --preserve-merges --onto commit 5' '
- 	reset_rebase &&
- 	git checkout -b rebase-preserve-merges-5 master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
- 	verbose test "$(commit_message HEAD)" = "files_subtree/master5"
-@@ -64,7 +70,7 @@ test_expect_failure REBASE_P \
- 	'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit 4' '
- 	reset_rebase &&
- 	git checkout -b rebase-keep-empty-4 master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
- 	verbose test "$(commit_message HEAD~2)" = "files_subtree/master4"
-@@ -75,7 +81,7 @@ test_expect_failure REBASE_P \
- 	'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit 5' '
- 	reset_rebase &&
- 	git checkout -b rebase-keep-empty-5 master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
- 	verbose test "$(commit_message HEAD~)" = "files_subtree/master5"
-@@ -86,7 +92,7 @@ test_expect_failure REBASE_P \
- 	'Rebase -Xsubtree --keep-empty --preserve-merges --onto empty commit' '
- 	reset_rebase &&
- 	git checkout -b rebase-keep-empty-empty master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
- 	verbose test "$(commit_message HEAD)" = "Empty commit"
-@@ -96,7 +102,7 @@ test_expect_failure REBASE_P \
- test_expect_failure 'Rebase -Xsubtree --onto commit 4' '
- 	reset_rebase &&
- 	git checkout -b rebase-onto-4 master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --onto files-master master &&
- 	verbose test "$(commit_message HEAD~2)" = "files_subtree/master4"
-@@ -106,7 +112,7 @@ test_expect_failure 'Rebase -Xsubtree --onto commit 4' '
- test_expect_failure 'Rebase -Xsubtree --onto commit 5' '
- 	reset_rebase &&
- 	git checkout -b rebase-onto-5 master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --onto files-master master &&
- 	verbose test "$(commit_message HEAD~)" = "files_subtree/master5"
-@@ -115,7 +121,7 @@ test_expect_failure 'Rebase -Xsubtree --onto commit 5' '
- test_expect_failure 'Rebase -Xsubtree --onto empty commit' '
- 	reset_rebase &&
- 	git checkout -b rebase-onto-empty master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --onto files-master master &&
- 	verbose test "$(commit_message HEAD)" = "Empty commit"
+ test_expect_success 'oneline with empty message' '
+-	git commit -m "dummy" --allow-empty &&
+-	git commit -m "dummy" --allow-empty &&
+-	git filter-branch --msg-filter "sed -e s/dummy//" HEAD^^.. &&
++	git commit --allow-empty --allow-empty-message &&
++	git commit --allow-empty --allow-empty-message &&
+ 	git rev-list --oneline HEAD >test.txt &&
+ 	test_line_count = 5 test.txt &&
+ 	git rev-list --oneline --graph HEAD >testg.txt &&
 -- 
 2.23.0.39.gf92d9de5c3
 
