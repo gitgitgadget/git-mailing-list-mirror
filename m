@@ -2,128 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBF261F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 22:18:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0B011F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 22:25:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727002AbfICWS4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 18:18:56 -0400
-Received: from relay6-d.mail.gandi.net ([217.70.183.198]:54485 "EHLO
-        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726079AbfICWS4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 18:18:56 -0400
-X-Originating-IP: 1.186.12.26
-Received: from localhost (unknown [1.186.12.26])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 85C7AC0005;
-        Tue,  3 Sep 2019 22:18:53 +0000 (UTC)
-Date:   Wed, 4 Sep 2019 03:48:51 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] git-gui: Add hotkeys to set widget focus
-Message-ID: <20190903221851.gkbbvnrl72szwydx@yadavpratyush.com>
-References: <xmqqbmg13sxq.fsf@gitster-ct.c.googlers.com>
- <20190831122326.9071-1-birger.sp@gmail.com>
- <20190901113218.3lfu4ifsxhzrsw4g@yadavpratyush.com>
- <e2b35f49-5578-c58f-326d-3111333737a0@iee.email>
- <20190902122527.6cbcizo5dsewrl57@yadavpratyush.com>
- <ca5052b8-32ea-5d38-76ba-2389b5f95e45@iee.email>
+        id S1726179AbfICWZH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 18:25:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54568 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726079AbfICWZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 18:25:07 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 432261910F;
+        Tue,  3 Sep 2019 18:25:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aP7/WdXiKa2OahoFZdvsLX4IN18=; b=DjzVHL
+        DXWv3SxkipB/6RIXMIm9zKrmBj6/Tlke71AQc3NtTq3CO5rQoPB6bRWjpwG++bv1
+        Ba63Ahr4Ln3Ql/K0BXJHJVxEM9d32tksviuHAYKiwF4ZfA4BeqRbZkQuPQmFoX9b
+        fGSEdHLymOBHojGOmFBU0z2vlnNNd2jm9eEj0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=d/fD38IFpPPkx+2JUiFCBl8NIfj5yXL6
+        hyZdmWAmquAZzETJ3Dh9xX4H0N+LddsvqqWBUq+0beImogtVBERd7WvOQzXTBRdx
+        S2BpsfEhsVNtOFab30WcGTjy5J+tXVXuAE3EGJ2O1b0lpZFaDLJhIzQhWD6QTbov
+        MQCAdVg5qCw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 368161910E;
+        Tue,  3 Sep 2019 18:25:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9CA111910C;
+        Tue,  3 Sep 2019 18:25:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>, Eric Wong <e@80x24.org>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 1/4] t6006: simplify and optimize empty message test
+References: <20190828002210.8862-1-newren@gmail.com>
+        <20190903185524.13467-1-newren@gmail.com>
+        <20190903185524.13467-2-newren@gmail.com>
+        <xmqq1rwxt7eu.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BHx7=kZJ5rgz5q8xRSbVtbE-UEHMyZxjvEq1tRXW7mCzQ@mail.gmail.com>
+Date:   Tue, 03 Sep 2019 15:25:02 -0700
+In-Reply-To: <CABPp-BHx7=kZJ5rgz5q8xRSbVtbE-UEHMyZxjvEq1tRXW7mCzQ@mail.gmail.com>
+        (Elijah Newren's message of "Tue, 3 Sep 2019 14:58:12 -0700")
+Message-ID: <xmqqk1aprpa9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ca5052b8-32ea-5d38-76ba-2389b5f95e45@iee.email>
-User-Agent: NeoMutt/20180716
+Content-Type: text/plain
+X-Pobox-Relay-ID: ACD8025C-CE99-11E9-A0EC-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/09/19 06:23PM, Philip Oakley wrote:
-> On 02/09/2019 13:25, Pratyush Yadav wrote:
-> > On 01/09/19 11:27PM, Philip Oakley wrote:
-> > > Hi Pratyus,
-[snip]
-> > > Are there any plans or thoughts about creating a more inclusive 
-> > > man page for
-> > > the git-gui?
-> > Having better documentation has been one of the things I have in my
-> > future plans, but I can't really say when I can get to it depending on
-> > my schedule and time available. I have a couple other topics active
-> > which I'd like to get resolved first.
-> > 
-> > Of course, if someone else is willing to take the initiative, I'm happy
-> > to help :)
-> 
-> The main aspect that would help for providing a contribution would be to at
-> least decide the (rough) framework/format for a full Gui 'man page'. The
-> existing one
-> https://github.com/git/git/blob/master/Documentation/git-gui.txt is rather
-> short. (would also need the sub-tree integration to be finessed)
-> 
-> e.g.
-> 1. how much should it be done via 'include' files (like the git-config man
-> page now does include::config.txt[] and onwards).
-> 
-> 2. Does it use the doc-book man-page format, or something akin to the former
-> tutorial format? (everything appears to have shifted to the man page format,
-> so looks like man format is the one.. [1,2,3,4]
-> 
-> I'm thinking that, as it is a big job, it will need the documentation to be
-> split over a number of small include files so that more folk can be
-> contributors.
+Elijah Newren <newren@gmail.com> writes:
 
-What exactly do you think we should document?  From what I can see, the 
-major topics are "options", "key bindings", and "tools".  Maybe also the 
-blame viewer.
+> Ah, good catch.  I checked out the commit before 1fb5fdd25f0
+> ("rev-list: fix --pretty=oneline with empty message", 2010-03-21), to
+> try and see the error before that testcase was introduced.  I tried it
+> on a repo with both an actual empty commit message, and one with a
+> commit message consisting solely of a newline.  Both styles exhibited
+> the bug that the testcase was introduced to guard against.
 
-If we do options inside the dialog with tooltips, that leaves key 
-bindings.  If there is not much else, we might as well do it in the one 
-single man page we have, and worry about splitting later when it grows 
-in size.
+That's a good thing to know to decide what is a reasonable
+thing to do here.
 
-If you intend to have a more comprehensive documentation where we 
-demonstrate the UI stuff, then using a man page will handicap us.  In 
-that case a HTML page is a better idea.  Although I'm not too sure what 
-warrants documentation is the general UI.  It all seems pretty intuitive 
-to me, but them I am a "power user" so maybe I'm assuming too much.
+As we are creating two commits, perhaps adding one with and another
+without the extra blank line may give us more diversity, and
+explaining why we are adding two slightly different one
+(i.e. because the original bug was there for both shapes of commits)
+would help us not wasting the time we already spent discussing this
+change ;-)
 
-> > For the options dialog, I think a "tooltip" (something like what you 
-> > get
-> > when you hover over a image in a browser) that describes the option is a
-> > better idea than having a separate man page. I don't expect the option
-> > descriptions to be too long or complicated. This approach has the added
-> > benefit of not having to maintain a separate man page. Whenever someone
-> > adds a new options, they have to add its description as well.
-> A tool tip that says 'see git help config.. ' could be done. Any pointers to
-> an existing one for trying a cookie cutter approach getting started on those
-> ones?
+Of course, we can alternatively just keep the patch as-is and update
+the explanation as to why we are testing with commits different from
+the original when we are supposed to be making this change for
+performance reasons (i.e. the symptom manifests either way, so why
+not using the form that is easier to create?).
 
-The "Choose a revision" dialog shows a tooltip. You can get it by 
-creating a tool with the "Ask the user to select a revision" option 
-selected. Look in lib/choose_rev.tcl.
-
-The blame viewer also uses tooltips. When you hover over a line, it 
-shows the commit message of the last commit that touched it. Look in 
-lib/blame.tcl.
-
-Then there is Tk's tooltip package [0]. I haven't used it, so can't 
-really say what the differences are, and which is better.
-
-If you do end up using the tooltip implemented in choose_rev.tcl and 
-blame.tcl, I think it is a good idea to move the common tooltip code in 
-a "tooltip framework".
-
-Although I understand that it is a lot of work (especially if you decide 
-to refactor the existing tooltip code), and not exactly documentation, 
-so it might not be what you want to do.
-
-[0] https://core.tcl-lang.org/tklib/doc/trunk/embedded/www/tklib/files/modules/tooltip/tooltip.html
-
--- 
-Regards,
-Pratyush Yadav
+Thanks for working on this ;-)
