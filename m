@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF26B1F4B9
-	for <e@80x24.org>; Tue,  3 Sep 2019 18:55:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 220381F4B7
+	for <e@80x24.org>; Tue,  3 Sep 2019 18:55:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726401AbfICSzb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 14:55:31 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:33134 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725882AbfICSza (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 14:55:30 -0400
-Received: by mail-pl1-f194.google.com with SMTP id t11so2191483plo.0
-        for <git@vger.kernel.org>; Tue, 03 Sep 2019 11:55:30 -0700 (PDT)
+        id S1726529AbfICSze (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 14:55:34 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:40690 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726405AbfICSzc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 14:55:32 -0400
+Received: by mail-pf1-f196.google.com with SMTP id w16so11342185pfn.7
+        for <git@vger.kernel.org>; Tue, 03 Sep 2019 11:55:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zPLCJfiuWRbqEwMoVNANluME56ftVG+84Uxr2cSKl+A=;
-        b=ZO6OZCs/iYavu8AoBkgYjJ3dW5yT+zPi/bB8s3y923NIGOLO0eKBUUZKuySvbThfyz
-         19HwVeRItjMf4vwOF1zhpN4kixciYKA9nFu62Wi1uvEyV190Btavqp98anUXS1hlGDcM
-         YawtnHda7Sa2QqwZla5zhmaQGR15mENLCA9WZev7utxn0cio/HM0hPPbn+7+Z5xgYpQD
-         h9EnJwJpraSZ8G2cHy/q9Pfp7y0jrk87H9T8a+AQL1CeN1w/e8oZhO4+CdRPco22iatM
-         av8l6UekW0F6HODPb+kFv66jD0qonJ7FDhzs0J/0GT5KXCpSFL7Fc1tqLczbeRa0WNzM
-         K5QQ==
+        bh=5yoNcLAwLZMvWqhAHBTIM0Mtr8k6SzClCqF8HvmzTSo=;
+        b=FfqP4OC+fxC35/zz32EhhqAlNaM+yGZCZgI++HbMP3j9CXsopKWyYjTBaImfr1IP2S
+         0VNugDeMINzGs2+D3mwK5MnVpZw3fH+NgzKM0bzlfvuFOQxY58lnSvIinTW5rg/VdVoO
+         49biQCN2Yuh3i0wqqpLN9Ug03MuowO1au5l6SeRnQh6VUoSH++M2SRjTL5f2imfQWNke
+         tglnKYlpsDaLFZmi1DA83Ni5fZCgoMGbbO16HXECzRpRWHkfQEc9WG8ST9fHqC8cUeu3
+         E1fgD18iZqueARoIRBDsufYiw15OdKnb3ClaCizlWJYrmSpXUMkdCjHnrAjAKaP3b+4Y
+         85Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zPLCJfiuWRbqEwMoVNANluME56ftVG+84Uxr2cSKl+A=;
-        b=Piipi+Kvlr2AVQvtpJ3EHZbStb3Hc1+bKV4w68/NSip14vK4Hvafn9FIsgcPMG2Sy6
-         PxTMV17uubagYKz8dZgacSOnQwyYm/UuU8uZh5PWncEAgFtVw6eN7CtbT6HlNxY8mzVk
-         7RdrXr8BQVX40oiCn4qwkjFpr6+itRuy99gauT2K87ZX/hGS+Jzcu3zmVecJdugJF8zm
-         DS4GZJlKg/K1PU330jK8tMad76qykV4Zdu7YREW3ksLJym0zr8U8BzHERhbMHbkfTIyN
-         UE7ad+DXEVyIVCUn5F4YdYeaOO8wrVu3OUYk2vsTswLs0VOIcyEMo5Q/x1ZGo7AyXpqD
-         Nexw==
-X-Gm-Message-State: APjAAAWbQKRFzeuFM2I0MJ30uSngaG5FMpvDPZ3m+pGjOyP42oZS2GWI
-        dsh8uDolr1F1uh2E4CdmEe0=
-X-Google-Smtp-Source: APXvYqw7B0gY73N1htiMRwId3voJDY28ZS+h0lRNzybQqNiwLq+ZJu3Mq9daybrk1LDO8Wp7joC9ow==
-X-Received: by 2002:a17:902:31a4:: with SMTP id x33mr37239851plb.68.1567536929600;
-        Tue, 03 Sep 2019 11:55:29 -0700 (PDT)
+        bh=5yoNcLAwLZMvWqhAHBTIM0Mtr8k6SzClCqF8HvmzTSo=;
+        b=o6BiO31Zo9SNJ+DWbSVr+n0vALS/EKzH3yzCf2q7ZJGonUm5Qq8nJg67hE3j/8kXlj
+         dX8qfS54vRLbP5JVu6z5ypyHA+YZFCcS2FlD1+UZouApYY7wKVk2gMsTOVURdhVzY5OS
+         LJRqP8wLiuoKE8xu9Im9kSNicncXYQYxTf7QMtM2TWxIimNSfgMj55PGK0ZWGRbUbWuo
+         0sSV/Me3BumJU13pcBQH4HC2wgRGtQJXV0Xy8xSGnCyTXMPD8auNHGESVYNviH0VXKnx
+         atREo7XPpmuUJbD4MqaK2WDqfZ0Tn0XCKlDb6PYOyZP8B7om5o4neYmK5kqGB2vV1Jz8
+         +3Xg==
+X-Gm-Message-State: APjAAAV8fFZxjAA4j8frgdDW0N6B+FyfI37cb0jMQgzOFfpCm1Zl6lKc
+        EQE82P8PQG7+q9wI0eRiycc=
+X-Google-Smtp-Source: APXvYqy1R0Vt2hsdiAAOGU3GIurY67FrFo1M+hEmwCZ2/Uq/CmyagH2Ct/D1xpyE9FZeju4xJyYaMg==
+X-Received: by 2002:a17:90a:e654:: with SMTP id ep20mr779860pjb.65.1567536931907;
+        Tue, 03 Sep 2019 11:55:31 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id 136sm21283855pfz.123.2019.09.03.11.55.28
+        by smtp.gmail.com with ESMTPSA id 136sm21283855pfz.123.2019.09.03.11.55.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Sep 2019 11:55:29 -0700 (PDT)
+        Tue, 03 Sep 2019 11:55:31 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
@@ -61,12 +61,13 @@ Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 0/4] Warn about git-filter-branch usage and avoid it
-Date:   Tue,  3 Sep 2019 11:55:20 -0700
-Message-Id: <20190903185524.13467-1-newren@gmail.com>
+Subject: [PATCH v5 2/4] t3427: accelerate this test by using fast-export and fast-import
+Date:   Tue,  3 Sep 2019 11:55:22 -0700
+Message-Id: <20190903185524.13467-3-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.39.gf92d9de5c3
-In-Reply-To: <20190828002210.8862-1-newren@gmail.com>
+In-Reply-To: <20190903185524.13467-1-newren@gmail.com>
 References: <20190828002210.8862-1-newren@gmail.com>
+ <20190903185524.13467-1-newren@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -74,139 +75,116 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's been about 5 days with no further feedback, other than some timings
-from Dscho for Windows showing that my fixes help there too.  So, I did
-one last re-read, made a couple small wording tweaks, and am resending as
-ready for inclusion.
+fast-export and fast-import can easily handle the simple rewrite that
+was being done by filter-branch, and should be significantly faster on
+systems with a slow fork.  Timings from before and after on a few
+laptops that I or others measured on (measured via `time
+./t3427-rebase-subtree.sh`, i.e. including everything in this test --
+not just the filter-branch or fast-export/fast-import pair):
 
-Changes since v4:
-  * Included the windows timings from Dscho in the commit messages for
-    the first two perf patches
-  * A few slight wording tweaks to the manpage
+   Linux:    4.305s -> 3.684s (~17% speedup)
+   Mac:     10.128s -> 7.038s (~30% speedup)
+   Windows:  1m 37s -> 1m 17s (~26% speedup)
 
-Elijah Newren (4):
-  t6006: simplify and optimize empty message test
-  t3427: accelerate this test by using fast-export and fast-import
-  Recommend git-filter-repo instead of git-filter-branch
-  t9902: use a non-deprecated command for testing
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/t3427-rebase-subtree.sh | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
- Documentation/git-fast-export.txt   |   6 +-
- Documentation/git-filter-branch.txt | 273 +++++++++++++++++++++++++---
- Documentation/git-gc.txt            |  17 +-
- Documentation/git-rebase.txt        |   3 +-
- Documentation/git-replace.txt       |  10 +-
- Documentation/git-svn.txt           |  10 +-
- Documentation/githooks.txt          |  10 +-
- contrib/svn-fe/svn-fe.txt           |   4 +-
- git-filter-branch.sh                |  13 ++
- t/t3427-rebase-subtree.sh           |  24 ++-
- t/t6006-rev-list-format.sh          |   5 +-
- t/t9902-completion.sh               |  12 +-
- 12 files changed, 310 insertions(+), 77 deletions(-)
-
-Range-diff:
-1:  7ddbeea2ca ! 1:  ccea0e5846 t6006: simplify and optimize empty message test
-    @@ Commit message
-         Despite only being one piece of the 71st test and there being 73 tests
-         overall, this small change to just this one test speeds up the overall
-         execution time of t6006 (as measured by the best of 3 runs of `time
-    -    ./t6006-rev-list-format.sh`) by about 11% on Linux and by 13% on
-    -    Mac.
-    +    ./t6006-rev-list-format.sh`) by about 11% on Linux, 13% on Mac, and
-    +    about 15% on Windows.
-     
-         Signed-off-by: Elijah Newren <newren@gmail.com>
-     
-2:  e1e63189c1 ! 2:  6d73135006 t3427: accelerate this test by using fast-export and fast-import
-    @@ Commit message
-     
-         fast-export and fast-import can easily handle the simple rewrite that
-         was being done by filter-branch, and should be significantly faster on
-    -    systems with a slow fork.  Timings from before and after on two laptops
-    -    that I have access to (measured via `time ./t3427-rebase-subtree.sh`,
-    -    i.e. including everything in this test -- not just the filter-branch or
-    -    fast-export/fast-import pair):
-    +    systems with a slow fork.  Timings from before and after on a few
-    +    laptops that I or others measured on (measured via `time
-    +    ./t3427-rebase-subtree.sh`, i.e. including everything in this test --
-    +    not just the filter-branch or fast-export/fast-import pair):
-     
-    -       Linux:  4.305s -> 3.684s (~17% speedup)
-    -       Mac:   10.128s -> 7.038s (~30% speedup)
-    +       Linux:    4.305s -> 3.684s (~17% speedup)
-    +       Mac:     10.128s -> 7.038s (~30% speedup)
-    +       Windows:  1m 37s -> 1m 17s (~26% speedup)
-     
-         Signed-off-by: Elijah Newren <newren@gmail.com>
-     
-3:  ed6505584f ! 3:  2f225c8697 Recommend git-filter-repo instead of git-filter-branch
-    @@ Documentation/git-filter-branch.txt: warned.
-     +document or provide to a coworker, who then runs them on a different OS
-     +where the same commands are not working/tested (some examples in the
-     +git-filter-branch manpage are also affected by this).  BSD vs. GNU
-    -+userland differences can really bite.  If you're lucky, you get ugly
-    -+error messages spewed.  But just as likely, the commands either don't do
-    -+the filtering requested, or silently corrupt making some unwanted
-    -+change.  The unwanted change may only affect a few commits, so it's not
-    -+necessarily obvious either.  (The fact that problems won't necessarily
-    -+be obvious means they are likely to go unnoticed until the rewritten
-    -+history is in use for quite a while, at which point it's really hard to
-    -+justify another flag-day for another rewrite.)
-    ++userland differences can really bite.  If lucky, error messages are
-    ++spewed.  But just as likely, the commands either don't do the filtering
-    ++requested, or silently corrupt by making some unwanted change.  The
-    ++unwanted change may only affect a few commits, so it's not necessarily
-    ++obvious either.  (The fact that problems won't necessarily be obvious
-    ++means they are likely to go unnoticed until the rewritten history is in
-    ++use for quite a while, at which point it's really hard to justify
-    ++another flag-day for another rewrite.)
-     +
-     +* Filenames with spaces are often mishandled by shell snippets since
-     +they cause problems for shell pipelines.  Not everyone is familiar with
-     +find -print0, xargs -0, git-ls-files -z, etc.  Even people who are
-    -+familiar with these may assume such needs are not relevant because
-    ++familiar with these may assume such flags are not relevant because
-     +someone else renamed any such files in their repo back before the person
-    -+doing the filtering joined the project.  And, often, even those familiar
-    -+with handling arguments with spaces my not do so just because they
-    ++doing the filtering joined the project.  And often, even those familiar
-    ++with handling arguments with spaces may not do so just because they
-     +aren't in the mindset of thinking about everything that could possibly
-     +go wrong.
-     +
-     +* Non-ascii filenames can be silently removed despite being in a desired
-    -+directory.  The desire to select paths to keep often use pipelines like
-    ++directory.  Keeping only wanted paths is often done using pipelines like
-     +`git ls-files | grep -v ^WANTED_DIR/ | xargs git rm`.  ls-files will
-    -+only quote filenames if needed so folks may not notice that one of the
-    -+files didn't match the regex, again until it's much too late.  Yes,
-    -+someone who knows about core.quotePath can avoid this (unless they have
-    -+other special characters like \t, \n, or "), and people who use ls-files
-    -+-z with something other than grep can avoid this, but that doesn't mean
-    -+they will.
-    ++only quote filenames if needed, so folks may not notice that one of the
-    ++files didn't match the regex (at least not until it's much too late).
-    ++Yes, someone who knows about core.quotePath can avoid this (unless they
-    ++have other special characters like \t, \n, or "), and people who use
-    ++ls-files -z with something other than grep can avoid this, but that
-    ++doesn't mean they will.
-     +
-     +* Similarly, when moving files around, one can find that filenames with
-     +non-ascii or special characters end up in a different directory, one
-    @@ Documentation/git-filter-branch.txt: warned.
-     +the same name, no warning or error is provided; git-filter-branch simply
-     +overwrites each tag in some undocumented pre-defined order resulting in
-     +only one tag at the end.  (A git-filter-branch regression test requires
-    -+this.)
-    ++this surprising behavior.)
-     +
-    -+Also, the poor performance of git-filter-branch often leads to safety issues:
-    ++Also, the poor performance of git-filter-branch often leads to safety
-    ++issues:
-     +
-     +* Coming up with the correct shell snippet to do the filtering you want
-     +is sometimes difficult unless you're just doing a trivial modification
-4:  ca8e124cb3 = 4:  048eba375b t9902: use a non-deprecated command for testing
+diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
+index d8640522a0..c1f6102921 100755
+--- a/t/t3427-rebase-subtree.sh
++++ b/t/t3427-rebase-subtree.sh
+@@ -7,10 +7,16 @@ This test runs git rebase and tests the subtree strategy.
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-rebase.sh
+ 
+-commit_message() {
++commit_message () {
+ 	git log --pretty=format:%s -1 "$1"
+ }
+ 
++extract_files_subtree () {
++	git fast-export --no-data HEAD -- files_subtree/ |
++		sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" |
++		git fast-import --force --quiet
++}
++
+ test_expect_success 'setup' '
+ 	test_commit README &&
+ 	mkdir files &&
+@@ -42,7 +48,7 @@ test_expect_failure REBASE_P \
+ 	'Rebase -Xsubtree --preserve-merges --onto commit 4' '
+ 	reset_rebase &&
+ 	git checkout -b rebase-preserve-merges-4 master &&
+-	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
++	extract_files_subtree &&
+ 	git commit -m "Empty commit" --allow-empty &&
+ 	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
+ 	verbose test "$(commit_message HEAD~)" = "files_subtree/master4"
+@@ -53,7 +59,7 @@ test_expect_failure REBASE_P \
+ 	'Rebase -Xsubtree --preserve-merges --onto commit 5' '
+ 	reset_rebase &&
+ 	git checkout -b rebase-preserve-merges-5 master &&
+-	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
++	extract_files_subtree &&
+ 	git commit -m "Empty commit" --allow-empty &&
+ 	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
+ 	verbose test "$(commit_message HEAD)" = "files_subtree/master5"
+@@ -64,7 +70,7 @@ test_expect_failure REBASE_P \
+ 	'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit 4' '
+ 	reset_rebase &&
+ 	git checkout -b rebase-keep-empty-4 master &&
+-	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
++	extract_files_subtree &&
+ 	git commit -m "Empty commit" --allow-empty &&
+ 	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
+ 	verbose test "$(commit_message HEAD~2)" = "files_subtree/master4"
+@@ -75,7 +81,7 @@ test_expect_failure REBASE_P \
+ 	'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit 5' '
+ 	reset_rebase &&
+ 	git checkout -b rebase-keep-empty-5 master &&
+-	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
++	extract_files_subtree &&
+ 	git commit -m "Empty commit" --allow-empty &&
+ 	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
+ 	verbose test "$(commit_message HEAD~)" = "files_subtree/master5"
+@@ -86,7 +92,7 @@ test_expect_failure REBASE_P \
+ 	'Rebase -Xsubtree --keep-empty --preserve-merges --onto empty commit' '
+ 	reset_rebase &&
+ 	git checkout -b rebase-keep-empty-empty master &&
+-	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
++	extract_files_subtree &&
+ 	git commit -m "Empty commit" --allow-empty &&
+ 	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
+ 	verbose test "$(commit_message HEAD)" = "Empty commit"
+@@ -96,7 +102,7 @@ test_expect_failure REBASE_P \
+ test_expect_failure 'Rebase -Xsubtree --onto commit 4' '
+ 	reset_rebase &&
+ 	git checkout -b rebase-onto-4 master &&
+-	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
++	extract_files_subtree &&
+ 	git commit -m "Empty commit" --allow-empty &&
+ 	git rebase -Xsubtree=files_subtree --onto files-master master &&
+ 	verbose test "$(commit_message HEAD~2)" = "files_subtree/master4"
+@@ -106,7 +112,7 @@ test_expect_failure 'Rebase -Xsubtree --onto commit 4' '
+ test_expect_failure 'Rebase -Xsubtree --onto commit 5' '
+ 	reset_rebase &&
+ 	git checkout -b rebase-onto-5 master &&
+-	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
++	extract_files_subtree &&
+ 	git commit -m "Empty commit" --allow-empty &&
+ 	git rebase -Xsubtree=files_subtree --onto files-master master &&
+ 	verbose test "$(commit_message HEAD~)" = "files_subtree/master5"
+@@ -115,7 +121,7 @@ test_expect_failure 'Rebase -Xsubtree --onto commit 5' '
+ test_expect_failure 'Rebase -Xsubtree --onto empty commit' '
+ 	reset_rebase &&
+ 	git checkout -b rebase-onto-empty master &&
+-	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
++	extract_files_subtree &&
+ 	git commit -m "Empty commit" --allow-empty &&
+ 	git rebase -Xsubtree=files_subtree --onto files-master master &&
+ 	verbose test "$(commit_message HEAD)" = "Empty commit"
 -- 
 2.23.0.39.gf92d9de5c3
 
