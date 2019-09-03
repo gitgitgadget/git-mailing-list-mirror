@@ -2,136 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88DCC1F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 00:50:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A97E1F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 01:01:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725977AbfICAu1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 20:50:27 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58524 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725870AbfICAu0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 2 Sep 2019 20:50:26 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:6959:e43b:5cf6:a465])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B47AE60448;
-        Tue,  3 Sep 2019 00:50:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1567471825;
-        bh=+9izSUBwPCSdIDoDfj6ZwPYrQo6rK+5KOs7yo/ag8dw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=inNUhQ5ojsSgRAoKxafj3MWpH0I1ZA+nBAPlf6Z7Su+PHTB99CzxyxTtdLHOzz9wo
-         pMIhVsnrhfTTsZnqvJ1hOdWTa4J76+nk0jhU5CVWarI2p9RXPnphiTpBhx0TGv+RC1
-         1pGGNMYMNoJoiL451JnDtiGdajs5yTp42ZGKFl/9ozzwZZHxuctF7MLzquLZ8FJ6MO
-         PyA8Nrf/eIV/Ek6BJvLaqJh7Lyc1M+mpLfaQ3mZ5cXMfwZ2tWyNgGEtZya+dLfP2aJ
-         ZIQFfsMSuUuAmIdzmKFYOuDkcUOYgZo5sFctFUERyUAgnKNz28+0g1ONKdspV1vCe7
-         xVh0HgBoPkNGOLrbiVPeqQ2DXdmo9fZzw2Ht50N1ygcYCInVsU6EutLUK5yO4VtAeT
-         uW2iGZfibKnZ4TIoeZ+DUXqVST8ladSfCyIi2dHix83s7rlDpLjMTf5hJlmDPYNDi+
-         pm4HE2H9ryK3bCxtHoPAKha4CqQeEF1av0jInfHXjX4jMnVssOo
-Date:   Tue, 3 Sep 2019 00:50:18 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Warren He <pickydaemon@gmail.com>
-Cc:     git@vger.kernel.org, Warren He <wh109@yahoo.com>
-Subject: Re: [PATCH] rebase: introduce --update-branches option
-Message-ID: <20190903005018.GH11334@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Warren He <pickydaemon@gmail.com>, git@vger.kernel.org,
-        Warren He <wh109@yahoo.com>
-References: <20190902234109.2922-1-wh109@yahoo.com>
+        id S1725981AbfICBBc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 21:01:32 -0400
+Received: from mail-io1-f46.google.com ([209.85.166.46]:34987 "EHLO
+        mail-io1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725955AbfICBBc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Sep 2019 21:01:32 -0400
+Received: by mail-io1-f46.google.com with SMTP id b10so32234302ioj.2
+        for <git@vger.kernel.org>; Mon, 02 Sep 2019 18:01:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HpRaRQUI+RxJaPb/GpyHwAJgmo2mNsKsAv6B80LcGrA=;
+        b=Ocy9IDc78BkwK1nLZexbKa8kwSCkG/xRQDnm159cQeqVRGIcyD0m5AHHA3sNZwSVFm
+         xZsxp1QdTiqp0tAUxLpAOyjGZGPFAHUHaP1mgmaYoHC3OdjPH4cz1CPXywONfAR7e9rJ
+         VmLXhHOq+PLRqnL7QiK4wjlD1ln9Au8bK0JsIaIRl1g6rVA1uemDu5LXM18lbZ4wuzTv
+         5e70Prr4bHU4ZnCGCIzfduTE313FeVU7PwHF+rDFVgctUzqcDd7CNaNiMQ39Z+616PEC
+         2Kxeo1r8hQG7/vT6RWwEzKFgqUczLnhTh/WyBXZsikpk4HCWvRiCfD/2PaB/YFaYTDG6
+         wfaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HpRaRQUI+RxJaPb/GpyHwAJgmo2mNsKsAv6B80LcGrA=;
+        b=FoIRvwNpczKIPwbn/98IlIO4BECpkM0ix3aG+o4JHGUsCBzmNTA0r1b+7kNIFUNRGv
+         9YasL32ZoaDfxUiaQPOZ6rD7t7P5/iIT1Fq8xv5nuMAH6dF05ez3jxqiWjw6h4cNgoi4
+         +t1AS53j+LbgYYbMksSXSeRaPovHrpVgIxlW8O+wJOz5X2IHVJnpjPkWkux02/usCvtd
+         tnJvgEoqtWsPcX6ht+6jUZzpkMgKvKxjcp2rLo+ajoOgLRCe+F5WR2xMijwTmOqkBlr9
+         5zNYz3ljKOccg4avtxwwibQaZseCIsQfYlzLWQbpURZZ1jRDapz6i+6nc5wEzgYc6+wV
+         oFSA==
+X-Gm-Message-State: APjAAAU7q8QXiVIhD0r1vQdRip/tTM+uzyy9v5zU1n9LB4xTQJyqjy5v
+        xuGNpCinT4ViiKe513IWg+wM+8LOG+DefZcnD6E=
+X-Google-Smtp-Source: APXvYqyofHlciHUe/hd6/dv7s1x6PM/+5uYt5tmBrHvEviRBrv1C+se19H2IwggVBKZg+1+EmY2PaNZ65I7UYq5usAY=
+X-Received: by 2002:a05:6602:2193:: with SMTP id b19mr12029453iob.113.1567472491012;
+ Mon, 02 Sep 2019 18:01:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="k+G3HLlWI7eRTl+h"
-Content-Disposition: inline
-In-Reply-To: <20190902234109.2922-1-wh109@yahoo.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <CAGr--=Jw4DAqTi3ROujtE=xBMYErMws6B6vhuXYMQA+5Q1ccow@mail.gmail.com>
+ <CAGr--=JkNqcrcenp6F1_CHTun_9wPLVvEWGOFJW=ng=XfO+jHw@mail.gmail.com> <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
+In-Reply-To: <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
+From:   David <bouncingcats@gmail.com>
+Date:   Tue, 3 Sep 2019 11:01:19 +1000
+Message-ID: <CAMPXz=pUWNVkM78UHm4NpFZ_nJQOa0ba07N3gMKFzWUiindZ1Q@mail.gmail.com>
+Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, 3 Sep 2019 at 04:11, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+> On Mon, Sep 2, 2019 at 6:25 PM Birger Skogeng Pedersen <birger.sp@gmail.com> wrote:
+> > On Sat, Aug 31, 2019 at 12:51 PM Birger Skogeng Pedersen <birger.sp@gmail.com> wrote:
 
---k+G3HLlWI7eRTl+h
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > > In my pursuit to fully utilize git-gui with only using a keyboard, I
+> > > suggest that there is a hotkey to toggle between selecting "New
+> > > Commit" and "Amend Last Commit".
 
-On 2019-09-02 at 23:41:08, Warren He wrote:
-> Sometimes people have to rebase multiple related branches. One way to do =
-that
-> quickly, when there are branches pointing to ancestors of a later branch =
-(which
-> happens a lot if you try hard to pad your PR count on GitHub--I mean if y=
-ou try
-> to make small, logically separate changes), is to rebase that later branc=
-h and
-> then reset ancestor branches to the rewritten commits. You just have to w=
-ork
-> out which branches correspond to which of the new commits.
->=20
-> Here's an automated way to update those ancestor branches.
->=20
-> It's implemented as a function that processes a todo list, modeled after
-> `todo_list_add_exec_commands`. Currently steps are added as `exec git bra=
-nch -f
-> <branchname>`, which comes with the caveat that they're not applied atomi=
-cally
-> when it finishes rebasing.
+Hi, thanks for maintaining and contributing to git and git-gui, it's a
+great tool!
 
-This is an interesting idea, and I definitely would find myself using
-it.  I maintain multiple nested branches for the SHA-256 transition and
-rebasing tends to be a bit of a hassle.  The idea of reordering commits
-further down into earlier branches using this technique is also
-appealing.
+> After focusing the commit message widget, you can focus the radio
+> buttons with Tab/Shift+Tab and press Space.
 
-I like the idea of using existing tooling for this and not needing an
-additional verb.
+> I think this is short enough, so that wasting a Letter is not
+> justified here.
 
-My gut tells me folks may want a bit more control over *which* branches
-are rebased, but I don't have a personal need for that, so I'm not going
-to request it or propose an interface for it.  If nobody else does, then
-I think we should adopt the simplest approach, which is what you've
-proposed.  Users can always edit the todo list if they find an
-unexpected branch, after all.
+Ugh, may I express how unhappy I am to read that opinion from
+the maintainer. I strongly disagree, please reconsider :(
 
-The other thought I had about this is a question about how it performs
-with many refs.  I've worked with a repository with easily 80,000 refs,
-and I wonder if the current technique will perform adequately there.
+And I enthusiastically support this initial request for a single
+hotkey to immediately toggle between "New Commit" and "Amend Last
+Commit". And it should work regardless of wherever the cursor or
+highlight is currently active.
 
-I'm interested to hear others' opinions on this series and am looking
-forward to seeing it progress.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+I have used git-gui for many years and I find this is actually the
+most annoying and inconsistent aspect of its user interface. Sometimes
+if one is lucky then "spacebar" will achieve it at startup or after
+refresh, sometimes not. When I test here just now the suggested
+tab/shift-tab/spacebar method, it does toggle but it also changes the
+items in the staged changes list as an unwanted side effect. My
+version says 0.20.0.8.gd000, but I have a few local patches (written
+years ago) so sorry I am not testing with a version that you have, but
+even so I wanted to report what I observed.
 
---k+G3HLlWI7eRTl+h
-Content-Type: application/pgp-signature; name="signature.asc"
+If one is often amending commit messages as I do during large
+interactive rebases, it is painful to have to do some kind of
+context-sensitive multi-key dance just to change from "New Commit" to
+"Amend Last Commit". Especially when every other operation has become
+a single keystroke in my muscle memory.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1tuMoACgkQv1NdgR9S
-9ot9QxAAhJHF50Ovx3deCEKMQV8EV8q852dyfFKiTN808l5MwyX1ZXotiONgNxIz
-JjZWgqrsHyWdRfIyXS9ywGARf72j88lPlirUthLSRw/9EZChTMNe1VSKjWRJcJ10
-2e4z7BQDI/Z9MbJaa3dABj15WPuAljZOBgKJJlcWTGytjrKUGZEMxS1CaOQ/5v7D
-D+asMLizdTUKx0bcx/jqCyT6gPUb6/hCJUWz7ASyPkelcoOqxP7ys6PUdBW7LZLq
-jexV/dJSaJiONCyvVE5C+7jgAeyDIW/aAupZARxkXZjnKaEjlQxi4N01oejoRGWk
-MuCk6YnqoVTXoKEDDd3P2493NseEBkp39Il3wcAXURSMdYKEnfAo6mdjgSt0He/L
-03d1Myd6RLCJPDDy7JV64OsmMp+VBlQyoxbvljuTj+EMlKO+4QgxVMEq/bpeF09n
-12Y40vmx0CHzOj9wvxS/vvXdPjZGILMVEFrtzAc+7jnmtDqHTquswE4b3Dm1y0OS
-QEuB+Kkyco2RclpCRnSWR4Fa+G5zW9AV37iwdMiVgDvAeOfX3sFW7uWU+1+VVPq/
-dChTbvVOUkf2MEJ4dSTCJVlynPFEKssIpi1TvhbCs4QKpjw2QWyCO6YtwQCCNEcd
-RVsy/lnEF86S6M5UD1M1wPfOotuYSeNIqvV6iO4PhuBjR5s5NMc=
-=2jvJ
------END PGP SIGNATURE-----
-
---k+G3HLlWI7eRTl+h--
+In my world it most definitely would not be "wasting a letter" to
+implement this! It would instead be "OMG at last that got fixed for
+everyone, hooray!" :D
