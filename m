@@ -2,157 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2EC91F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 11:20:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EECD1F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 12:19:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728538AbfICLUG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 07:20:06 -0400
-Received: from mout.gmx.net ([212.227.15.15]:51403 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726631AbfICLUG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 07:20:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1567509598;
-        bh=2fudmlf46086d9xJovFt52R0BlbslvtC/WZk4yHRimg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=hyOQs3k1pVCPEVIyXDk1Cryenf90H5vgZ9qg2ZtDhscjNBL+JMqjyOKuRwt0oOB4n
-         Eh5rply5qaUi91BbT2AJwbRCYmhPNd7JGHmTnT6RCIAbi9FsZnIKXnsI3MmerCjAUO
-         crhKtNOWFMYccWIDGKnI8rtpZjGj2XqHRMzqj9I4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MAONd-1htreP1WB9-00Buge; Tue, 03
- Sep 2019 13:19:58 +0200
-Date:   Tue, 3 Sep 2019 13:19:59 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Matt R via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Matt Rogers <mattr94@gmail.com>
-Subject: Re: [PATCH 1/1] rebase -r: let `label` generate safer labels
-In-Reply-To: <xmqq5zmav9ej.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1909031256290.46@tvgsbejvaqbjf.bet>
-References: <pull.327.git.gitgitgadget@gmail.com>        <4a02c38442dd8a4c0381adc8db0dce81c253da09.1567432900.git.gitgitgadget@gmail.com>        <444f3ec4-abdf-1aa9-e8a8-8b5346b939e8@gmail.com> <xmqq5zmav9ej.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728288AbfICMTI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 08:19:08 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51608 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727077AbfICMTI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 08:19:08 -0400
+Received: by mail-wm1-f66.google.com with SMTP id k1so17909071wmi.1
+        for <git@vger.kernel.org>; Tue, 03 Sep 2019 05:19:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ckt/c03oX6iz1cfkPIuxRgODSUK2BCEpc0n4yy9mBiM=;
+        b=bBmfgRHoe/GKfOra4FVJ0AgyF7E1kRd4Z+wF4TN19Yb9hKHe5CJfsvAeJ9RXGza265
+         RfFOx6lS0SnLXdDxQuVJKPT4kSu2t0evIhQbS5DWGicbxc3oHZbNLEM/xjbV2DNly40r
+         OO7Gof4QY+ZElz0D0BBCvTubqS82Gcsb6194BU9i44NefjzhF28K1y6hgvTEzF8et4kq
+         YqT8RRWx9nYiBZ4hho7yF77cp9nLrMFGPGDGL8Gh0LcRCbMfYi0Evuu7aqRw641wgjf3
+         kwgy7X8iq8+4kmsqTQT8km3Q5C1EVVdhZmJnKkbwKdQf0ek5P2Kiu3qRpu/7cEW9pP8p
+         IHgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=ckt/c03oX6iz1cfkPIuxRgODSUK2BCEpc0n4yy9mBiM=;
+        b=Ijuh3BokkMYf+GRPW3Kh9tRmjVQWVpiXkAoMoZEyzRp4OwD48QjWxT1BtiTldB+aRt
+         KENsYeJdg+GYd+xHDgW53AxHgsOJJdhfsI0PCTQnEkAfuxt0WVvdrVMrMtEYlCYtIw5I
+         4dAEKRLsC3DamdsYJc1avw8isZVQoAX2uZRhS7zmKA29kmYd9J9x4qYWsHwgFnrWH6bu
+         YTPwgufgqkkMbHo3dLqHFTmrBVrVam/HxH90sY2z1lBZdvoXUDL0Bc5GvOpaCc4qb/Np
+         GaLcXxAKpKBDi1l0+o32/LjbxKN4FIkUFq2UB+EHH5/CIud2pSXlg/3jcZPDxn/RG8P6
+         qIMQ==
+X-Gm-Message-State: APjAAAXWj7ooM+R0BEXQV+QAiTQyGDQl3M2U1C0ADk93djmimUo2Ehkk
+        JNbE4kSKXWmnW9B2Dirg2Q0=
+X-Google-Smtp-Source: APXvYqxrHwvA3MR1/akIEm5OSs3cwBXugvQQ+zvjMHdMMxnwCKF+IYBiUhCnlf5QulugVW370lQivg==
+X-Received: by 2002:a1c:a546:: with SMTP id o67mr36786638wme.55.1567513146281;
+        Tue, 03 Sep 2019 05:19:06 -0700 (PDT)
+Received: from [192.168.1.70] (88-110-119-23.dynamic.dsl.as9105.com. [88.110.119.23])
+        by smtp.gmail.com with ESMTPSA id v11sm30481224wrv.54.2019.09.03.05.19.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Sep 2019 05:19:05 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] rebase: introduce --update-branches option
+To:     Warren He <pickydaemon@gmail.com>, git@vger.kernel.org
+Cc:     Warren He <wh109@yahoo.com>, Junio C Hamano <gitster@pobox.com>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>
+References: <20190902234109.2922-1-wh109@yahoo.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <713b055b-aaf2-4294-12d3-2941d53eac16@gmail.com>
+Date:   Tue, 3 Sep 2019 13:19:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:KHv+NXGitTSjciGIjI4FSqnCG/98546GWrE2EnflGDOSlayCmZ9
- 9qK3iD/nnaHkIgoBv5f+3YIV8n0OIvaAdr1DFU2x2d2/8JOBn3GhQacq/Cy6QPANdvYqaG+
- uWuCLste0UC8DIdkNHNIp65lbEPS8uS4pwCK4z+1sOLupcVjMtM+0/ml4cwNoZcF5L+Hy+B
- ln+WVTFz7i6kN3h692duw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:s/NNpj4Ued0=:3PYOX9gCDONnnlRNdKXQmS
- CDUSD7fG/Grssa8gErsYWuK6YIGqMX5JObG8MwAgJBwjAh2s6Bgm3LSIONuyfBrNQv02S7w/K
- bWDNukkVlaB2hKQQlhrRI7X7/rjtq3AyKVKwM17sWargHDJvQ4EqpVQVwui9QFaMaYeCIGqV8
- bBl9+oPRpnR9s6gLc015ME6Lkn5ucOjxfacvCm7kRdRfCk/Go37kZQhWCCSxWDxF/OdPMyOpG
- BvcxJBfuVs7vyKn+/Pz74iXXPn2WVXtzfpdbgK6EwsiLudLirfmTqXOEvfcVIXOVUZGa/4mUB
- OcP+go10s3/Kg1QS3r2gbvBQTgYHWrMs+FhPb/z0cRfptKgGpAnQzmdDad4qIe3P99wR0w7Tq
- X+rQrXWunB66gHrD5q5LCNfTJs5/BE8TsRfZhI3OkyEjKdmhLPkr5jF/vQPBml9D0VIqSE7Fp
- N8nhjrc5iN4p8aFR+cW3JZZsL5TKcVmePHpnAaeEmotG7kiGHGkboVRlhLq0mXS09S3NYdXXP
- 03ntEEzWMiuO+4uHRxytU27WNoDvRuLeIbGuINxPNrCSd0ausVZeMXIv0nvJEpqykooQFHXXp
- ULCaCMzantUWJ9tccNd038WamLO2N0Ibgp39jvZDJmehC2dGxpvwFdOUSQdjbK9vIO5V9KJe2
- O8yVcwIuSqyge4ogctw256YRekX9ocXDgK9k3gC4SZemwJux9av+Q9iTssD/5fLyMang++ilm
- BaiSUxeqLX1P8OytzoPKd7LlRyR8OwowUd8Ee+Zt3fetMR53hAUQSMRSO1IICA+rAvfM9vc0A
- KmbFmY2D54xkbZhUrUk8lldNI9fFtnmOmFFxpOFvzr/NfHkQp+QVDYYhSDy8JwdpLi2plv2Oe
- 3bXbBeYYvcH4Pp4lRQqFbLj67UH7S3OiS0xlNei36nGtDzXsV8fI96J7F79xXPRlrqEwuxx4y
- N0pFv+cEYLpvp6omGpb1OZkVGQABd/CjKCKrzGK+Mjb9TuwdJ1VyBPTFmm4mOc0ejw/oSpkyl
- p5WT2KJDDO0LahuHsWnCt76iQjTI9mBWvtYohlvqQocgx72DGiyBUbZrogR9t3fz27FO08AC7
- 2MxQpquVgTFpaII3qE5jElOS9JbBp2VzaQtOtM5cV37tABMAwh2y0WFbLbprAx52zoLHswmjv
- bN76PNHKtDGs3prbLe1fYnB8Tt1TBTQ8W7g35jHXQ4AVtWKYrJ6qTLgyhHW7YuJ51Eje4=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190902234109.2922-1-wh109@yahoo.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Warren
 
-On Mon, 2 Sep 2019, Junio C Hamano wrote:
+On 03/09/2019 00:41, Warren He wrote:
+> Sometimes people have to rebase multiple related branches. One way to do that
+> quickly, when there are branches pointing to ancestors of a later branch (which
+> happens a lot if you try hard to pad your PR count on GitHub--I mean if you try
+> to make small, logically separate changes), is to rebase that later branch and
+> then reset ancestor branches to the rewritten commits. You just have to work
+> out which branches correspond to which of the new commits.
+> 
+> Here's an automated way to update those ancestor branches.
 
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
-> >>   		for (p1 =3D label.buf; *p1; p1++)
-> >> -			if (isspace(*p1))
-> >> +			if (!(*p1 & 0x80) && !isalnum(*p1))
-> >>   				*(char *)p1 =3D '-';
-> >
-> > I'm sightly concerned that this opens the possibility for unexpected
-> > effects if two different labels get sanitized to the same string. I
-> > suspect it's unlikely to happen in practice but doing something like
-> > percent encoding non-alphanumeric characters would avoid the problem
-> > entirely.
->
-> I'd rather see 'x' used instead of '-' (double-or-more dashes and
-> leading dash in refnames may currently be allowed but double-or-more
-> exes and leading ex would be much more likely to stay valid) if we
-> just want to redact invalid characters.
+I think this would be really useful, but as it is implemented here it 
+only updates branch heads that are in the todo list. This means that if 
+I have a branch structure like
 
-Hmm. Let's take a concrete example from the VFS for Git fork:
+A - B (master)
+|
+C - E (topic-2)
+|
+D (topic-1)
 
-	Merge pull request #160: trace2:gvfs:experiment Add experimental regions =
-and data events to help diagnose checkout and reset perf problems
+and I do `git rebase --update-branches master topic1` Then topic-2 will 
+not be updated and if I do `git rebase --update-branches master topic2` 
+then topic-1 will not be updated even though C is updated in both cases 
+and is a common ancestor of topic-1 and topic-2. Conceptually to update 
+all the branches descended from a rewritten commit would require using 
+`git for-each-ref --contains $(git merge-base <upstream> <branch>)` and 
+then using `git rev-list <upstream>..<branch-head>` on each of those 
+refs to get the commits to generate the todo list.
 
-(Yes, we have some quite verbose merge commits, with very, very long
-onelines. Not a good practice, we stopped doing it, but it was well
-within what Git allows.)
+Another case is applying fixup commits. In the example above if I squash 
+a fixup for C from either branch I probably want to update both the 
+branches descended from it.
 
-And now use dashes to encode all white-space:
+One other thing is that if the user aborts the rebase then ideally we 
+don't want to update all the branches so it would be better to store the 
+updated heads as we go along and then update them all at the end of the 
+rebase. Worktrees add another complication as if one of the branches 
+that is to be updated is checked out in another worktree then we need 
+some way to deal with that. If there are no local changes in that 
+worktree then we could just update the local HEAD and working copy.
 
-	Merge-pull-request-#160:-trace2:gvfs:experiment-Add-experimental-regions-=
-and-data-events-to-help-diagnose-checkout-and-reset-perf-problems
+Best Wishes
 
-Pretty long, but looks okay. Of course, it does not work, because colons. =
-So here is the label with Matt's patch:
+Phillip
 
-	Merge-pull-request--160--trace2-gvfs-experiment-Add-experimental-regions-=
-and-data-events-to-help-diagnose-checkout-and-reset-perf-problems
-
-And here is the label with your proposed xs.
-
-	Mergexpullxrequestxx160xxtrace2xgvfsxexperimentxAddxexperimentalxregionsx=
-andxdataxeventsxtoxhelpxdiagnosexcheckoutxandxresetxperfxproblems
-
-I cannot speak for you, of course, but I can speak for myself: this is
-not only way too reminiscent of xoxoxothxbye, but it is also really,
-totally unreadable.
-
-If you care deeply about double dashes and leading dashes, how about
-this instead?
-
-		char *from, *to;
-
-   		for (from =3D to =3D label.buf; *from; from++)
-			if ((*from & 0x80) || isalnum(*from))
-				*(to++) =3D *from;
-			/* avoid leading dash and double-dashes */
-			else if (to !=3D label.buf && to[-1] !=3D '-')
-   				*(to++) =3D '-';
-		strbuf_setlen(&label, to - label.buf);
-
-That would result in
-
-	Merge-pull-request-160-trace2-gvfs-experiment-Add-experimental-regions-an=
-d-data-events-to-help-diagnose-checkout-and-reset-perf-problems
-
-> I see there are "lets make sure it is unique by suffixing "-%d" in
-> other codepaths; would that help if this piece of code yields a
-> label that is not unique?
-
-I'm way ahead of you. The sequencer already goes out of its way to
-guarantee the uniqueness of the labels (it's part of the design, as
-applied in 1644c73c6d4 (rebase-helper --make-script: introduce a flag to
-rebase merges, 2018-04-25)).
-
-The patch you are looking at in this thread is only concerned about the
-initial phase, `label_oid()` does a lot more. Not only does it make the
-label unique (case-insensitively!), it also prevents it from looking
-like a full 40-hex digit SHA-1, so that we can guarantee that unique
-abbreviations of commit hashes will work as labels, too.
-
-Ciao,
-Dscho
+> 
+> It's implemented as a function that processes a todo list, modeled after
+> `todo_list_add_exec_commands`. Currently steps are added as `exec git branch -f
+> <branchname>`, which comes with the caveat that they're not applied atomically
+> when it finishes rebasing.
+> 
+> If you were to use this feature to rebase `my-dev` onto `master` in this
+> situation:
+> 
+> ```
+>   A - B          (master)
+>    |\
+>    |  E          (feat-e)
+>     \   \
+>       F  |       (feat-f)
+>         \|
+>           G      (interim)
+>             \
+>               H  (my-dev)
+> ```
+> 
+> you'd get a todo list like this:
+> 
+> ```
+> label onto
+> 
+> # Branch G
+> reset onto
+> pick 65945ab E
+> exec git branch -f feat-e
+> label G
+> 
+> reset onto
+> pick 4f0b0ad F
+> exec git branch -f feat-f
+> merge -C e50066c G # G
+> exec git branch -f interim
+> pick 539e556 H
+> ```
+> 
+> Warren He (1):
+>    rebase: introduce --update-branches option
+> 
+>   Documentation/git-rebase.txt      |  8 +++++
+>   builtin/rebase.c                  | 13 ++++++--
+>   sequencer.c                       | 68 ++++++++++++++++++++++++++++++++++++++-
+>   sequencer.h                       |  6 ++--
+>   t/t3431-rebase-update-branches.sh | 64 ++++++++++++++++++++++++++++++++++++
+>   5 files changed, 154 insertions(+), 5 deletions(-)
+>   create mode 100755 t/t3431-rebase-update-branches.sh
+> 
