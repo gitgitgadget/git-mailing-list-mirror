@@ -2,88 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5568C1F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 19:51:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 355CD1F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 19:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726219AbfICTvJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 15:51:09 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50288 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725939AbfICTvJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 15:51:09 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C38918658;
-        Tue,  3 Sep 2019 15:51:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uGJHoIFBVEvB6vAg8kPqnpxVCX0=; b=VSf/uC
-        EV42NprSJDCwYGJQeDt2cn0wY7RCBmmaErUM62SZP9mmddBWDnY+Bi1hs4TiTeWn
-        sIiJRSAh4Vw2cVmapkyrrBmT1XQfjl7ncra7T91q5UJzBfL+KilkWLFfWqBFWHL0
-        QHjkC00n37eST+u6OLlN3S59ZuDdjAMM7J3Jo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kF37GnILldFGcH8HmevjYaeGmZXBYKBo
-        dsjre1u2ny5D0ZnigKtlqSJOH0wCrmPTg34KcExd0/SRahXGIqfwz7PpTv55/6ZV
-        4xrJWS9XELBbeB8yrqIFtR/CpDgtEqVMt427nX2FExWiuEK6nO6x/DEBYXAw5QNS
-        Cu+RhLY7jsU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2299A18657;
-        Tue,  3 Sep 2019 15:51:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8F68918656;
-        Tue,  3 Sep 2019 15:51:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Matt R via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Matt Rogers <mattr94@gmail.com>
-Subject: Re: [PATCH 1/1] rebase -r: let `label` generate safer labels
-References: <pull.327.git.gitgitgadget@gmail.com>
-        <4a02c38442dd8a4c0381adc8db0dce81c253da09.1567432900.git.gitgitgadget@gmail.com>
-        <444f3ec4-abdf-1aa9-e8a8-8b5346b939e8@gmail.com>
-        <xmqq5zmav9ej.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1909031256290.46@tvgsbejvaqbjf.bet>
-Date:   Tue, 03 Sep 2019 12:51:05 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1909031256290.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 3 Sep 2019 13:19:59 +0200 (CEST)")
-Message-ID: <xmqq5zm9taza.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1725994AbfICT4H (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 15:56:07 -0400
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:43999 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725990AbfICT4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 15:56:07 -0400
+Received: by mail-yw1-f67.google.com with SMTP id n205so6312160ywb.10
+        for <git@vger.kernel.org>; Tue, 03 Sep 2019 12:56:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YyKtxmgYgNZPhxGZHoZIGn9lYp3aBu9qaT/YoAj5tVU=;
+        b=St4I1Ly3InjEpzv3jZmtFk1X6TV50sH/lmUhVbHagnDNXSVbG1Sa3YAq4dINKuXj5D
+         2ggqow66ZiLPv89OdBlFq9phfSaCJ7QXEZBAXo8nSaPRBPVe/BXVuRQpnYMHhrFXdMmK
+         PrLhzFT/k4NuPVnNmHHFqPsUCCjw701CrmDs2u8fWqNw0KjG3lpcVbLVB+RyxW+Yxx0K
+         lgtAx+TPsQDZt1G9s+aEdcXnapYEqzQRtXvRFyhGtdEE5oNNLrTZf16jhhcFtMPmL8oG
+         7QoZFDgfAKcuSq6n+Oy+VgAUGObCi69fMHrUmLhAJXS2AySkh1G6k9ghigG35F0quaU2
+         9Kxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YyKtxmgYgNZPhxGZHoZIGn9lYp3aBu9qaT/YoAj5tVU=;
+        b=suoVprtDM4bPKJtMTcE3hHk418l9H64YvP5X1LDSuEJiYVxW0d5YrYIs/ygiC53C26
+         XwSIT0YPoZn75jI8ot9lNT6ofLXH71PWTtLICL4RNY8PRhM7jO2KMcP6m2kR/Q2QuO9P
+         HLpZgTxpEXwz1DZy+E2K6h95m1YIu0QNX2U24ei363bs2gDfWzfHeiW5duvdaSvgCHJo
+         z266HEtVzmlopsrwbtCzDvIW8YrI0/4tjik45keG4NdU2A70uf1KGAo+KtPGyy/vLLnc
+         ko98RogUQD3jJv4xe55mW2xWBIDcqypKMdqPnJRmlNeQx/mIGi99YTmTE2bit2acObR5
+         4EWg==
+X-Gm-Message-State: APjAAAXmKvVmVbUQlBDeg06tfSY0SSRiPPkJH+9o8+gYHYUcPGrJNEcn
+        ncLVwWUyH74geO9I7ozsvB7aOxs38k6axfsXR3h8M2uV+QQ=
+X-Google-Smtp-Source: APXvYqxfnvBqwaqpNVIsBzGP3Yw26uqDsuufrRQfEiXfQ19ggm/v+TXUMRqSz0cp0tnbjoOAnl3VE7fdb3iBbUuB4vA=
+X-Received: by 2002:a81:53d6:: with SMTP id h205mr3046051ywb.423.1567540565704;
+ Tue, 03 Sep 2019 12:56:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2B1FAC3E-CE84-11E9-92E7-C28CBED8090B-77302942!pb-smtp1.pobox.com
+References: <CAHMHMxW4-6AZEDaJU8KOy2kRSLXjdC_RTH528=nnhVLXh=ADUA@mail.gmail.com>
+ <20190903133422.GA51158@syl.lan> <xmqqa7bltcyu.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqa7bltcyu.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
+        <stdedos@gmail.com>
+Date:   Tue, 3 Sep 2019 22:55:25 +0300
+Message-ID: <CAHMHMxX192aM5owHjvi3s06ZykcQAHsVneBsfv9YvbeYM-XTXA@mail.gmail.com>
+Subject: Re: Git does not recognise directory named '${sys:DATA_ROOT_DIR}'
+To:     git <git@vger.kernel.org>
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.email>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Makes me wonder if git status could maybe warn about empty trees as 'untracked'?
 
-> If you care deeply about double dashes and leading dashes, how about
-> this instead?
+Well, I "suppose" git-add could warn you that you are adding an empty
+tree (and I'd like if that happened, implicit vs explicit action i.e.
+ignoring).
+However, I assume the no-empty-tree case was a design decision; hence,
+it's been 2.2# versions without such warning.
+
+I doubt it would be considered to be added now.
+
+
+On Tue, Sep 3, 2019 at 10:08 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> 		char *from, *to;
+> Taylor Blau <me@ttaylorr.com> writes:
 >
->    		for (from = to = label.buf; *from; from++)
-> 			if ((*from & 0x80) || isalnum(*from))
-> 				*(to++) = *from;
-> 			/* avoid leading dash and double-dashes */
-> 			else if (to != label.buf && to[-1] != '-')
->    				*(to++) = '-';
-> 		strbuf_setlen(&label, to - label.buf);
+> > If you wish to keep this directory "empty", but stored in Git, a common
+> > convention is to create an empty '.gitkeep' file in the directory. This
+> > file is not special in any way to Git, rather it serves as _a_ file to
+> > keep the directory non-empty.
+>
+> Hmph, I thought the common convention was to create a ".gitignore"
+> file in the directory with catch-all pattern, so that no matter what
+> cruft you had there "git add" will not add anything from it, if you
+> wish to keep this directory "empty".
 
-Simple enough and is a good change when judged locally.
+I believe Taylor is talking about explicitly keeping a directory
+empty, that may or may not, in the future, contain files (that will be
+tracked) [1].
+You are infering that, regardless if there are files or will be added
+in the future, you don't want to check anything in.
 
-It still would cause readers to wonder if label_oid() later append
-'-%d' to end up with double-dash near the end, etc., which made me
-wonder if the resulting code becomes better if sanitization and
-uniquefying are done at the same single place in the other message.
+While [1] is a very niche corner case (and maybe it doesn't make sense
+to the most of us, true), there is a "debian-equivalent" behavior
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=812223
+
+(I cannot find the definition of this behavior, but you can see an
+example usecase)
