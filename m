@@ -7,28 +7,27 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF74B1F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 17:27:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BE401F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 17:34:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729951AbfICR1g (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 13:27:36 -0400
-Received: from relay6-d.mail.gandi.net ([217.70.183.198]:47047 "EHLO
-        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728864AbfICR1g (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 13:27:36 -0400
+        id S1729736AbfICReX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 13:34:23 -0400
+Received: from relay9-d.mail.gandi.net ([217.70.183.199]:51913 "EHLO
+        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725782AbfICReX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 13:34:23 -0400
 X-Originating-IP: 1.186.12.26
 Received: from localhost (unknown [1.186.12.26])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id EAB4CC0008;
-        Tue,  3 Sep 2019 17:27:33 +0000 (UTC)
-Date:   Tue, 3 Sep 2019 22:57:30 +0530
+        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 23723FF80E;
+        Tue,  3 Sep 2019 17:34:19 +0000 (UTC)
+Date:   Tue, 3 Sep 2019 23:04:18 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     David <bouncingcats@gmail.com>
-Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Bert Wesarg <bert.wesarg@googlemail.com>,
-        Git List <git@vger.kernel.org>
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Git List <git@vger.kernel.org>, bouncingcats@gmail.com
 Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
-Message-ID: <20190903172730.esy3rr4gkwxhx2s6@yadavpratyush.com>
+Message-ID: <20190903173418.32hqxfzr7wajtikx@yadavpratyush.com>
 References: <CAGr--=Jw4DAqTi3ROujtE=xBMYErMws6B6vhuXYMQA+5Q1ccow@mail.gmail.com>
  <CAGr--=JkNqcrcenp6F1_CHTun_9wPLVvEWGOFJW=ng=XfO+jHw@mail.gmail.com>
  <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
@@ -37,54 +36,65 @@ References: <CAGr--=Jw4DAqTi3ROujtE=xBMYErMws6B6vhuXYMQA+5Q1ccow@mail.gmail.com>
  <CAKPyHN08Z_9oByA8ruKwwXRcAfYPU95JaMb=pqQWwGwPVG=_og@mail.gmail.com>
  <CAGr--=Jn87r_ySYkZmtqUBA40+fwdn0MbuN6_LNDO4mOWyoKTg@mail.gmail.com>
  <20190903124541.2p5hmknolh2dwqh5@yadavpratyush.com>
- <CAMPXz=r7hLn+aOp6B9arGMT2jxOTTpOvc0e5gm3=ttDqWNfmDA@mail.gmail.com>
+ <CAGr--=JaTvZ_mUK5+dW6eM3-71ROUR4c58TF9G=-jAw3GDzYTQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAMPXz=r7hLn+aOp6B9arGMT2jxOTTpOvc0e5gm3=ttDqWNfmDA@mail.gmail.com>
+In-Reply-To: <CAGr--=JaTvZ_mUK5+dW6eM3-71ROUR4c58TF9G=-jAw3GDzYTQ@mail.gmail.com>
 User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/09/19 01:35AM, David wrote:
-> On Tue, 3 Sep 2019 at 22:45, Pratyush Yadav <me@yadavpratyush.com> wrote:
-> >
+On 03/09/19 04:06PM, Birger Skogeng Pedersen wrote:
+> Hi Pratyush,
+> 
+> 
+> On Tue, Sep 3, 2019 at 2:45 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
 > > Can you try doing a Shift+Tab? For me on Linux, if I hit Shift+Tab, it
 > > immediately takes me to the "Amend last commit" option. Then I can press
 > > space to select it and Tab again to get back to the commit message.
 > 
-> Hi Pratyush Yadav,
+> It seems that Shift+Tab doesn't do anything (on Windows 10).
+
+Ah, too bad.
+
+> Regardless, imo there should be a binding dedicated to toggle amend.
 > 
-> Yes, we know it can be done this way. The point being made is not
-> "this cannot be changed with the keyboard". We know that you can
-> fool around with the tab key and the shift key and the spacebar and
-> eventually you can succeed in changing this option.
-
-Yes, but what Birger was saying was hitting Ctrl+Tab 9-10 times to get 
-to the option. This is much faster than that alternative.
-
-My aim was to let people know what options already exist before 
-proposing new ones.
- 
-> And if you want to toggle it back again, you have to do a slightly
-> different keyboard dance, depending on where your cursor or
-> highlight is currently positioned.
+> > Also, since we are on this topic, how about making the "Amend last
+> > commit" button a toggle instead? This would act as a "turn amend mode
+> > on/off" button. Since "Amend last commit" and "New Commit" are mutually
+> > exclusive, a single toggle to switch between those modes makes sense to
+> > me.
 > 
-> Rather what we (at least I) am hoping to communicate is that after you
-> have done this many thousands of times, and you can do everything
-> else in git-gui very fast without touching the mouse, you might also join
-> us in wishing for action to be achievable with one hotkey-combination
-> event that does not affect any other state, it just toggles new/amend
-> commit, and is not a sequence of several multi-key actions which must
-> be adapted according to the current status of other input mode actions.
+> I assume you're talking about the button in the "Commit" dropdown
 
-Don't get me wrong. I am not against having a dedicated hotkey for 
-toggling amends. I think it is a common enough operation to warrant a 
-dedicated keyboard toggle. I was just letting everyone know what the 
-current options are, so they can make better judgements whether they 
-really need this option or not.
+Yes. That one and the two tick boxes on the top right of the commit 
+message buffer/editor.
+
+> menu. I agree, it could be just a single entry which is a toggle to
+> enable/disable amending. And (above the commit message dialog) perhaps
+> just a single checkbox; "Amend Last Commit". In other git GUIs (Git
+> Cola and TortoiseGit) I see they're using just a single checkbox for
+> this option. But maybe that is a slightly different topic, the hotkey
+> behaviour would remain the same.
+
+Yes, of course your patch is independent of the two-button behaviour. I 
+was just pointing it out to see how others feel about it.
+
+> 
+> 
+> > ... do you still feel the need for a dedicated binding for amends?
+> 
+> How do you guys feel about it? So far it seems we're at two "yay" and
+> one "nay". I really feel it is in the best interest of the git-gui
+> project to implement this hotkey. And not just because it is my
+> personal preference to have it :-)
+
+Well, I do think amending commits is a common enough operation to 
+warrant a dedicated keyboard binding for it. So it is a "yay" for this 
+feature from my side at least.
 
 -- 
 Regards,
