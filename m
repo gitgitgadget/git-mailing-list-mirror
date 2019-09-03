@@ -2,124 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D59311F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 01:40:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85C5C1F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 02:22:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726414AbfICBkD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 21:40:03 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:34317 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725854AbfICBkC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Sep 2019 21:40:02 -0400
-Received: by mail-qt1-f196.google.com with SMTP id a13so17717205qtj.1
-        for <git@vger.kernel.org>; Mon, 02 Sep 2019 18:40:02 -0700 (PDT)
+        id S1726779AbfICCWD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 22:22:03 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:36072 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726133AbfICCWD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Sep 2019 22:22:03 -0400
+Received: by mail-wm1-f67.google.com with SMTP id p13so16329607wmh.1
+        for <git@vger.kernel.org>; Mon, 02 Sep 2019 19:22:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uVumj5vKBq3PUIt4j6XgY/FpJM3Y8b8XHDY/wPIW3cw=;
-        b=gTlaJE/D23IEz83ZYA/kmRBKdpER4LE1ZsZSJNCoaQvXO37LRpxacAs9oSgQiQCLkB
-         cFfbmpEc0FMNTNBn9BberwuTFsmgEHMbkLZjH2ln1EcbUaxCcFIeApQZGAr9GWLad84i
-         TuGyPin4Ia5oR1KSqhNTNJbDjFzYUv+dRW9/N1uwUs5zCRgSIffztiwwhpCEAE0kvsUD
-         4EY3WBofn9GzuQgWYtfBf3kINa5X+N3ZoVDQaBJc8005O6gL0fczBUXBqhHv+2ZHT/vN
-         yJGfkkEAv2hqyYHMtV7SbUS4L3DGZHBhnUS6aVKnxAf5pAonZYqfwVzlAP3eSngiZZEp
-         zfLQ==
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=vIEJ+JGJrWGS+PfSCY2eGUAJKB07AkGucdK7N2NB5sI=;
+        b=Ol+sz/BmxIdz5v4+Blw1xLivELc9NoVn9aOeLHN0RZx1er0gDmWY5KjwkE6/kFrmT9
+         vYHvYiWns4gjjC5yImSiffVJ2TxddmMEFJAA2z7Zwy+KtK0KsqwLMJUXHSM6omCIuYhu
+         lM0VnU2sdFaphCfm9PwFI9cgogPocsQW6afUEB8P4Tau6knNiDqpZp1w8FkRYfJsb4BA
+         KYiL/WFDFq0uX6MhxSLgCpMjNeVnjWOES+Jo9dT2eI8IPLS/Qtyyvdb41fpaTngzrEsr
+         QGlvzNSMeqQbQ+YOABvgD0q8K0ZZ5iupSzdIQvIb+87Nlf8w1Qme8pG+lN5LkPJzhOL3
+         5yMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uVumj5vKBq3PUIt4j6XgY/FpJM3Y8b8XHDY/wPIW3cw=;
-        b=CO6pDulgpUadrmMTT7yrIFGK3ETRYd+HMgXPa90t0KuniZv5Om83ErV570Q4zp407z
-         xQ6PoguPU9ohq2QBXmVcjbQDMDGlNyi04JR2GqD/w8XyMNVqNcdH2vjfFvX+r8mYgleQ
-         s5LhWM4AJL5wtJR1Vj19p036mAPZ7Nu56Iszqo/APGl+NF6mLzqch4lHl3PkfeLxGZZS
-         YhzU2NA+ibGLns8EgI9NNBqKSti3u5fYZcKv4lUKbfXLCCpGXxeMv/PFBP5wGSl6cSvj
-         IBQrRfemjQDxyoRKeyRWVEZGUhGY57dxbK39Qg7mvvG1zqqU6yCwopApGdq+JCNd+whr
-         Q/xQ==
-X-Gm-Message-State: APjAAAWeDHtvqrN1b8UGcsq16rxEFzqB3PPu6/ywKzTSM7Qg/KGR6x5i
-        9Wrh/OAJwwVtlZzn+I+N8VfHYA==
-X-Google-Smtp-Source: APXvYqw91VERY6nPIDi8G9DMXv7APq6mo2xfcIiieL33mr2Aq2cva+Pr8VTHY+ujmSnI7lmab8CRTg==
-X-Received: by 2002:a0c:ae9a:: with SMTP id j26mr12481585qvd.163.1567474801398;
-        Mon, 02 Sep 2019 18:40:01 -0700 (PDT)
-Received: from localhost ([2605:9480:205:dfe1:fd52:2b30:74d5:e918])
-        by smtp.gmail.com with ESMTPSA id w126sm7825946qkd.68.2019.09.02.18.40.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Sep 2019 18:40:00 -0700 (PDT)
-Date:   Mon, 2 Sep 2019 21:39:59 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Warren He <pickydaemon@gmail.com>, git@vger.kernel.org,
-        Warren He <wh109@yahoo.com>
-Subject: Re: [PATCH] rebase: introduce --update-branches option
-Message-ID: <20190903013959.GA40029@syl.lan>
-References: <20190902234109.2922-1-wh109@yahoo.com>
- <20190903005018.GH11334@genre.crustytoothpaste.net>
- <xmqqwoeqtbs2.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=vIEJ+JGJrWGS+PfSCY2eGUAJKB07AkGucdK7N2NB5sI=;
+        b=p/zyQq0nnKilwuks6xFkvcKnCrWAOaieQI5ZfH9WKzuvl+g6QL9hCOodZ9CRDeJdza
+         XYC7hcRo46v2LbCQWgXatNHgBcNTNr6LpQuQ71TUzZhll4phrAiycVxBWJZC7WizU7Of
+         4y+5uqXvWdWpryDeXRGv8uFEF/xD1NhZysX1572OdMdwYecs0ehNUlcr2fgoR1bKwMlY
+         Usl4yd66KU96giF9cMq2xTiArivRFwMTWbdmsBHcts4P1IhEctap1dnYHq1TTu1OD0ID
+         zwIuUjTmQNDWGPp1QRFBXjZNCkJ28+9htCDG6oQUi03/p/l4ywh3RgDeMfVurSdR0Cjf
+         KlxQ==
+X-Gm-Message-State: APjAAAXCq0HgOpvdpSCBJ3CW+XKg7fWdkifKAczhkhIKz9mqhUtff/fN
+        5vw4RqDl8KmagfORr2dsP2i4IbNF
+X-Google-Smtp-Source: APXvYqyBsulFUzGy4F4r3gueJIQPKQlmkTaAiH2wy5uL7QFBEbPN0I5oG3E79ilxjeAks3SQNxjxuw==
+X-Received: by 2002:a1c:ed04:: with SMTP id l4mr40582027wmh.81.1567477321862;
+        Mon, 02 Sep 2019 19:22:01 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g14sm9897056wmk.21.2019.09.02.19.22.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 02 Sep 2019 19:22:01 -0700 (PDT)
+Date:   Mon, 02 Sep 2019 19:22:01 -0700 (PDT)
+X-Google-Original-Date: Tue, 03 Sep 2019 02:21:59 GMT
+Message-Id: <pull.328.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Write commit-graph on fetch
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqwoeqtbs2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, avarab@gmail.com, garimasigit@gmail.com,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Instead of waiting for a non-trivial GC command to write the commit-graph,
+write one during 'git fetch'. By using the equivalent method for 'git
+commit-graph write --split --reachable', we create a commit-graph chain that
+includes all reachable commits. Most of the time, these writes only add the
+newly-downloaded commits in a small file at the top of the commit-graph
+chain. Commits that are no longer reachable still exist in the commit-graph,
+but will be cleaned up by a later GC command that forces the commit-graph to
+be rewritten completely.
 
-On Mon, Sep 02, 2019 at 06:21:33PM -0700, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
-> > I like the idea of using existing tooling for this and not needing an
-> > additional verb.
-> >
-> > My gut tells me folks may want a bit more control over *which* branches
-> > are rebased, but I don't have a personal need for that, so I'm not going
-> > to request it or propose an interface for it.
->
-> FWIW, I am in favor of both of the above two points.  It is quite
-> clear because "exec git branch -f <that branch name>" is spelled
-> out, people can remove the ones they want to keep a copy of when
-> they need to.
+A version of this patch [1] used to be a part of
+ds/commit-graph-incremental, but was removed to focus on the incremental
+commit-graph file format. Now that the incremental file format has been
+shipped in v2.23.0 and some config things have adjusted in
+ds/feature-macros, I'm reintroducing the idea.
 
-I agree with what you're saying here. I don't see myself having a need
-to modify the 'exec git branch -f ...' line, so I have no real need to
-make an interface suggestion per brian's comment above, but I happened
-to think of one while reading this thread that seemed worth pointing
-out.
+Ævar had mentioned wanting to do something with "incremental maintenance
+during GC" [2]. I haven't seen any patches towards that aim (please point me
+in that direction if they have been submitted). I still think it is worth
+allowing a write at fetch time, as some users have GC disabled. I know for
+sure that users who only interact with their Git repos via Visual Studio
+Team Explorer have all Git commands running with GC disabled, and likely
+other desktop GUI clients have it disabled to avoid blocking processes.
 
-Perhaps we could avoid inserting the 'exec git branch -f' step in the
-todo list for branches that have a configuration section forbidding them
-from being updated?
+Aside: VFS for Git users have GC disabled, but the commit-graph is being
+written in the background by a monitoring process. We shipped the
+incremental commit-graph writes in a recent version and reduced our writes
+from ~60 seconds each to less than a second on average. Very rarely, the
+layers of the commit-graph chain collapse and return to the old values. This
+feature has been performing well with no known issues.
 
-For example, the configuration:
+Thanks, -Stolee
 
-  [branch "dont-update-me"]
-    updateAfterRebase = false
+[1] 
+https://public-inbox.org/git/3c52385e5696887c40cab4a6b9b7923d60a0567c.1557330827.git.gitgitgadget@gmail.com/
 
-would cause the rebase of a branch upstream from 'dont-update-me' to
-omit the 'git branch -f dont-update-me'.
+[2] 
+https://public-inbox.org/git/b1de6af2-c015-098e-a656-e1b68056e037@gmail.com/
 
-To be honest, this configuration option seems like a knob we don't need.
-Especially since now three of us feel that removing the 'exec' line
-suffices anyway. I suppose that I could see a user wanting some
-integration branch to not get updated over many rebases, but it seems a
-little contrived.
+Derrick Stolee (1):
+  fetch: add fetch.writeCommitGraph config setting
 
-Anyway, perhaps others can chime in and share what they think about this
-interface and whether or not we need it. If not, we can simply file this
-away.
+ Documentation/config/feature.txt |  8 ++++++++
+ Documentation/config/fetch.txt   | 10 ++++++++++
+ builtin/fetch.c                  | 15 +++++++++++++++
+ repo-settings.c                  |  4 ++++
+ repository.h                     |  1 +
+ t/t5510-fetch.sh                 | 13 +++++++++++++
+ 6 files changed, 51 insertions(+)
 
-> I didn't look at the code more deeply than just eyeballing and
-> noticing style violations etc., and will leave the reviewing to
-> others for now.
->
-> Thanks.
 
-Thanks,
-Taylor
+base-commit: aaf633c2ad10b47af7623c130ddfe7231658c7e4
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-328%2Fderrickstolee%2Ffetch-write-commit-graph-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-328/derrickstolee/fetch-write-commit-graph-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/328
+-- 
+gitgitgadget
