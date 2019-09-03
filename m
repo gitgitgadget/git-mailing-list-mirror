@@ -2,108 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A97E1F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 01:01:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86C411F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 01:21:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725981AbfICBBc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Sep 2019 21:01:32 -0400
-Received: from mail-io1-f46.google.com ([209.85.166.46]:34987 "EHLO
-        mail-io1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725955AbfICBBc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Sep 2019 21:01:32 -0400
-Received: by mail-io1-f46.google.com with SMTP id b10so32234302ioj.2
-        for <git@vger.kernel.org>; Mon, 02 Sep 2019 18:01:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HpRaRQUI+RxJaPb/GpyHwAJgmo2mNsKsAv6B80LcGrA=;
-        b=Ocy9IDc78BkwK1nLZexbKa8kwSCkG/xRQDnm159cQeqVRGIcyD0m5AHHA3sNZwSVFm
-         xZsxp1QdTiqp0tAUxLpAOyjGZGPFAHUHaP1mgmaYoHC3OdjPH4cz1CPXywONfAR7e9rJ
-         VmLXhHOq+PLRqnL7QiK4wjlD1ln9Au8bK0JsIaIRl1g6rVA1uemDu5LXM18lbZ4wuzTv
-         5e70Prr4bHU4ZnCGCIzfduTE313FeVU7PwHF+rDFVgctUzqcDd7CNaNiMQ39Z+616PEC
-         2Kxeo1r8hQG7/vT6RWwEzKFgqUczLnhTh/WyBXZsikpk4HCWvRiCfD/2PaB/YFaYTDG6
-         wfaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HpRaRQUI+RxJaPb/GpyHwAJgmo2mNsKsAv6B80LcGrA=;
-        b=FoIRvwNpczKIPwbn/98IlIO4BECpkM0ix3aG+o4JHGUsCBzmNTA0r1b+7kNIFUNRGv
-         9YasL32ZoaDfxUiaQPOZ6rD7t7P5/iIT1Fq8xv5nuMAH6dF05ez3jxqiWjw6h4cNgoi4
-         +t1AS53j+LbgYYbMksSXSeRaPovHrpVgIxlW8O+wJOz5X2IHVJnpjPkWkux02/usCvtd
-         tnJvgEoqtWsPcX6ht+6jUZzpkMgKvKxjcp2rLo+ajoOgLRCe+F5WR2xMijwTmOqkBlr9
-         5zNYz3ljKOccg4avtxwwibQaZseCIsQfYlzLWQbpURZZ1jRDapz6i+6nc5wEzgYc6+wV
-         oFSA==
-X-Gm-Message-State: APjAAAU7q8QXiVIhD0r1vQdRip/tTM+uzyy9v5zU1n9LB4xTQJyqjy5v
-        xuGNpCinT4ViiKe513IWg+wM+8LOG+DefZcnD6E=
-X-Google-Smtp-Source: APXvYqyofHlciHUe/hd6/dv7s1x6PM/+5uYt5tmBrHvEviRBrv1C+se19H2IwggVBKZg+1+EmY2PaNZ65I7UYq5usAY=
-X-Received: by 2002:a05:6602:2193:: with SMTP id b19mr12029453iob.113.1567472491012;
- Mon, 02 Sep 2019 18:01:31 -0700 (PDT)
+        id S1726074AbfICBVh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Sep 2019 21:21:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56476 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725981AbfICBVh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Sep 2019 21:21:37 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C0B615AFD0;
+        Mon,  2 Sep 2019 21:21:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PQ44W7QrkM1fRxe8lajKeIa2sGM=; b=TR2Kw+
+        FHH0eO9XhKq1Ls6bfEsbjkYBXT/pOogCdLlP29O/Xf1/htWGks72L70NmD+rC209
+        JjY98HFb3BiXb2Cs6B88rE/LkwF7zkNM1Sj7omZzRrzDJ9ZLqm3X2VVOmGbZKdU3
+        cDEYg1/QanR6WU9k4i690Q1hVTc2G8MwxskxM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tupL+lf4SSYi/ehxU+5XK1KsOqhuR6CB
+        seeI8MUlA0IwzZcj9dlXNDwvFpKhAsAakdnidyQFD16rKREWh/05iL6H60yle31T
+        IqJN2DyYhxnwuGtMz8Te/dUsPFdnLLNTNDWO4ch2uxFiUmuroZOgn7L+9eLpWNCT
+        fj4teka42mA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3484D15AFCF;
+        Mon,  2 Sep 2019 21:21:35 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9965C15AFCA;
+        Mon,  2 Sep 2019 21:21:34 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Warren He <pickydaemon@gmail.com>, git@vger.kernel.org,
+        Warren He <wh109@yahoo.com>
+Subject: Re: [PATCH] rebase: introduce --update-branches option
+References: <20190902234109.2922-1-wh109@yahoo.com>
+        <20190903005018.GH11334@genre.crustytoothpaste.net>
+Date:   Mon, 02 Sep 2019 18:21:33 -0700
+In-Reply-To: <20190903005018.GH11334@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Tue, 3 Sep 2019 00:50:18 +0000")
+Message-ID: <xmqqwoeqtbs2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAGr--=Jw4DAqTi3ROujtE=xBMYErMws6B6vhuXYMQA+5Q1ccow@mail.gmail.com>
- <CAGr--=JkNqcrcenp6F1_CHTun_9wPLVvEWGOFJW=ng=XfO+jHw@mail.gmail.com> <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
-In-Reply-To: <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
-From:   David <bouncingcats@gmail.com>
-Date:   Tue, 3 Sep 2019 11:01:19 +1000
-Message-ID: <CAMPXz=pUWNVkM78UHm4NpFZ_nJQOa0ba07N3gMKFzWUiindZ1Q@mail.gmail.com>
-Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2B26159C-CDE9-11E9-BAE7-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 3 Sep 2019 at 04:11, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
-> On Mon, Sep 2, 2019 at 6:25 PM Birger Skogeng Pedersen <birger.sp@gmail.com> wrote:
-> > On Sat, Aug 31, 2019 at 12:51 PM Birger Skogeng Pedersen <birger.sp@gmail.com> wrote:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> > > In my pursuit to fully utilize git-gui with only using a keyboard, I
-> > > suggest that there is a hotkey to toggle between selecting "New
-> > > Commit" and "Amend Last Commit".
+> I like the idea of using existing tooling for this and not needing an
+> additional verb.
+>
+> My gut tells me folks may want a bit more control over *which* branches
+> are rebased, but I don't have a personal need for that, so I'm not going
+> to request it or propose an interface for it.
 
-Hi, thanks for maintaining and contributing to git and git-gui, it's a
-great tool!
+FWIW, I am in favor of both of the above two points.  It is quite
+clear because "exec git branch -f <that branch name>" is spelled
+out, people can remove the ones they want to keep a copy of when
+they need to.
 
-> After focusing the commit message widget, you can focus the radio
-> buttons with Tab/Shift+Tab and press Space.
+I didn't look at the code more deeply than just eyeballing and
+noticing style violations etc., and will leave the reviewing to
+others for now.
 
-> I think this is short enough, so that wasting a Letter is not
-> justified here.
-
-Ugh, may I express how unhappy I am to read that opinion from
-the maintainer. I strongly disagree, please reconsider :(
-
-And I enthusiastically support this initial request for a single
-hotkey to immediately toggle between "New Commit" and "Amend Last
-Commit". And it should work regardless of wherever the cursor or
-highlight is currently active.
-
-I have used git-gui for many years and I find this is actually the
-most annoying and inconsistent aspect of its user interface. Sometimes
-if one is lucky then "spacebar" will achieve it at startup or after
-refresh, sometimes not. When I test here just now the suggested
-tab/shift-tab/spacebar method, it does toggle but it also changes the
-items in the staged changes list as an unwanted side effect. My
-version says 0.20.0.8.gd000, but I have a few local patches (written
-years ago) so sorry I am not testing with a version that you have, but
-even so I wanted to report what I observed.
-
-If one is often amending commit messages as I do during large
-interactive rebases, it is painful to have to do some kind of
-context-sensitive multi-key dance just to change from "New Commit" to
-"Amend Last Commit". Especially when every other operation has become
-a single keystroke in my muscle memory.
-
-In my world it most definitely would not be "wasting a letter" to
-implement this! It would instead be "OMG at last that got fixed for
-everyone, hooray!" :D
+Thanks.
