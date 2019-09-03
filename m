@@ -2,93 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B1851F4B7
-	for <e@80x24.org>; Tue,  3 Sep 2019 22:46:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DA091F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 23:16:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726440AbfICWqh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 18:46:37 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63163 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725977AbfICWqh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 18:46:37 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A4041938B;
-        Tue,  3 Sep 2019 18:46:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Q2uFDcU2PA/dB1/0he8knFQR+Is=; b=D4iPWC
-        twfASgLa7/St/qtSKCjH4FGEi4cvm0lKqv1KCmYVv8XjV3o9NP0GIPJIl77UMYZd
-        yUtNnPgckRSDTGZMasAu5zCICAtspIkGOmp96PZYkcJR0uaNXBTc/R87zNXnWCOy
-        eGFH3SbmDVSxxQ5QKm64xhLwh93I7CpYfqolQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ge33qDXtHSg0CwMw4CsJ2EU2XWa3IDKW
-        ytjunrGDCjhQfLh1PKet174lpoerZb3k0NmBbZi6FxFmtrs47Fgmz19T7GYz//+z
-        d3Z4/wLcYN3MYv4vdy8ZttLCvtL/9Z61kneuSOPQSwvCPhLM+0FnoTglRts5Rm/h
-        vMqTf51B/BI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 308621938A;
-        Tue,  3 Sep 2019 18:46:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727257AbfICXQS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 19:16:18 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58538 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727109AbfICXQS (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 3 Sep 2019 19:16:18 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:6959:e43b:5cf6:a465])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9103019389;
-        Tue,  3 Sep 2019 18:46:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 2/4] t3427: accelerate this test by using fast-export and fast-import
-References: <20190828002210.8862-1-newren@gmail.com>
-        <20190903185524.13467-1-newren@gmail.com>
-        <20190903185524.13467-3-newren@gmail.com>
-        <xmqqsgpdrs01.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 03 Sep 2019 15:46:33 -0700
-In-Reply-To: <xmqqsgpdrs01.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 03 Sep 2019 14:26:22 -0700")
-Message-ID: <xmqqftldroae.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CE23A6074C;
+        Tue,  3 Sep 2019 23:16:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1567552576;
+        bh=HaTkEt69zqmHkJwgrCGwsrxS4H2jp9kA8FXaKi7P6ow=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=IM1CjHLdoVwrwp5jyrZU/49D1V586/r3vIUAj9uAIBAF8EnDYxJJ0hGr2McffvPaD
+         oxG0bWWox5zbiCAbEGt5s0kUj9R05fueAsUTK+pMGbvGbwObvKcVoeneVIeWwBseMW
+         bPYIkUheG4neiJcYrHkQ6TtTOMnFcB5QDebimTdN41kFUGyqciAlwG0a4zZH/hhCqk
+         WMkYBL+JOi28spllHiSoMRsPD9onwfS5UzNyPYc2agaY0eFQiaySAlq98rSxgJ2as8
+         62qtm6e9q6/p9irYb26c7009kMav8a5ufMx/crbtk4HY0mLh9XxoLaB+2UGdd1SR1D
+         1AEs/MPkUpzQXpOSACOtVePEaweKDP9zlEdOs3rzs2Tg8sDIMOA9bKB82FdpnT9PSs
+         GdXVWLTCMem4+TLYrrDXkKSFFwRkBqrKJOa7Ss+J/4lAal0zxnUx8Z23dNMv2E9AXE
+         a9ZjSdEgpRE3mZKWkI3rWBMSEtAL4l0zBfFNEZjOySu+e2Ps8r0
+Date:   Tue, 3 Sep 2019 23:16:11 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>,
+        Jeff King <peff@peff.net>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/2] asciidoctor-extensions: provide `<refmiscinfo/>`
+Message-ID: <20190903231610.GI11334@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>,
+        Jeff King <peff@peff.net>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <CAN0heSr2zCQMM6wOM0UnD28qj_VygQ5CQHGHhMR9+H23snpt5Q@mail.gmail.com>
+ <cover.1567534373.git.martin.agren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AE4EEEC2-CE9C-11E9-A79D-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="PWfwoUCx3AFJRUBq"
+Content-Disposition: inline
+In-Reply-To: <cover.1567534373.git.martin.agren@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Elijah Newren <newren@gmail.com> writes:
->
->> +extract_files_subtree () {
->> +	git fast-export --no-data HEAD -- files_subtree/ |
->> +		sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" |
->> +		git fast-import --force --quiet
->> +}
+--PWfwoUCx3AFJRUBq
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This change has obvious interactions with Dscho's d51b771d ("t3427:
-move the `filter-branch` invocation into the `setup` case",
-2019-07-31) that is still in flight, but in a good way.  There only
-needs a single callsite for the above helper function after that
-step.
+On 2019-09-03 at 18:51:19, Martin =C3=85gren wrote:
+> Almost half a year ago, I wrote:
+> > To be clear. *This* patch has a sufficiently incorrect commit message
+> > that it really needs a makeover. You can expect a v2.
+>=20
+> Finally, here's that v2. I should probably refresh memories: The goal of
+> the main patch here is to make the headers and footers of our manpages
+> built by Asciidoctor look a lot more like those generated by AsciiDoc.
+> In particular, this gets rid of the ugly "[FIXME: source]".
+>=20
+> I spent a little bit of time trying to work on the XML as XML, and
+> quite a lot of time procrastinating on that. In the end, I decided that
+> the outcome of my attempts wouldn't get better and that there is some
+> value to the stupid approach from v1 of doing a simple search-and-replace
+> in the text. I've preserved my attempts in the commit message.
+>=20
+> When I posted v1, it turned into quite a thread [1] on AsciiDoc vs
+> Asciidoctor vs Asciidoctor 2.0 and differences in rendering. (I am on
+> Asciidoctor 1.5.5.)
+>=20
+> Among other things, the v1-thread discussed switching the rendering
+> toolchain entirely to avoid the detour over xmlto. Doing that would
+> render this patch obsolete. While I agree that such a switch is the
+> correct long-term goal and that we can be fairly aggressive about it, I
+> do also think it makes sense to first make the "softer" switch to
+> Asciidoctor-by-default and get that particular hurdle behind us. Then,
+> once we're ok with dropping AsciiDoc entirely, we can do the switch to
+> an Asciidoctor-only toolchain.
 
-I think I'll discard this step from the "move us closer to deprecate
-filter-branch" topic, and ask you and Dscho to work together to have
-it or its moral equivalent included as part of js/rebase-r-strategy
-topic.
+Yeah, this seems like a good approach.  xmlto is a neat tool, but it's
+essentially unmaintained and is designed for DocBook 4.  Avoiding it
+where possible seems like the right choice.
 
-Thanks.
+I looked at this series and it seems sane.  I agree that adding a
+dependency on nokogiri isn't really desirable.  It is an extremely
+common Ruby package, but it has native extensions, which causes problems
+for some people if their distro doesn't support it.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--PWfwoUCx3AFJRUBq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1u9DoACgkQv1NdgR9S
+9ovthA/+Ps0QN1/eY47naJlmipI3a4dBvoW/zewhucr3/txSiOyLczM+9XaWA7DH
+p/mCYbtWDcGJw/aRi8xoDPAihvbfVfW/XcZrGTO0lvz22AVjAxw5ledprKrSIQmo
+yz//6xZv2nXp9jz58ODX89OHFl/OrXwzbUC8bL7KpZJaIl+fsF6HKqKpMzBKlCZa
+Lub64aeSKMpZHHCduISykIKF/t5a9twBuwNXqkwc8UGXiAbel08lRbxDk2PBB8Xa
+WSpQXnuShkCwSSxt4g1olIXPKa8ZwabyJHPWfoIZkIlB8rfFrINn2gi5EChBsi3+
+YVxuXkqlZU+xeSqmmbZbiJzcV6Pn/EVyplfCLViq3Phh8nYwgFlTI10ms4wDTmAq
+pN3yQ6q5WtLteYss4jCwvtcGACgF9OeBlcZqx7M3vgZkWeAQFbC2Z17hqMv2t10d
+pXLLO03lxpr5keqXtD0UGw8tQKa5MVWvYTDZNF5E9ycipwlRTu0DPnO9l+r05OH/
+fcxc88AwmWfd1MIj0pejERoElhsZihFQf/G+gEtgK5QvJCQLZ4vALHuvAaLGZwVp
+u27lqiO2m8maqWPG9gtvBKUMpDJvvvwXYHWwa4X3JfUHDV+FmPtI9tSto1MLYbM4
+2r3xqjyt2idhPKih1r5kchVulQDT6GrSsepSXnbxcAZssT11ZIg=
+=5UoF
+-----END PGP SIGNATURE-----
+
+--PWfwoUCx3AFJRUBq--
