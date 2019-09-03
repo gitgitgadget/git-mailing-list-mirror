@@ -2,133 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 940F51F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 13:34:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36DE91F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 13:34:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728992AbfICNeZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 09:34:25 -0400
-Received: from mail-qt1-f178.google.com ([209.85.160.178]:42144 "EHLO
-        mail-qt1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725782AbfICNeZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 09:34:25 -0400
-Received: by mail-qt1-f178.google.com with SMTP id t12so19877631qtp.9
-        for <git@vger.kernel.org>; Tue, 03 Sep 2019 06:34:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=o8x+unXu1cYWYpiFBbvC28mz2EVm8jbDsGdLhD5nyi8=;
-        b=G8YiEkeGfgWSvA2aNZGm4KYboZN5uu4DOrUbbvWxbHpa32GJczRAn6oY2oD4xnWCJQ
-         MssFvzHHm3K3CS/O4IQTGBoUG786dLlySeB5J8O0Q+qpovgfENv62/qzEPhg7+1bdC92
-         I0Rk4jip8K6xMtFKUYRursOmgdzdVrq4jPp7F2ITyfjpTUMyUafue5I3Q+CF8IQbe7kX
-         R02Z+xvQSgn/tEtCL/wDmyugbM5SVXSOUv9Xbn4TZlL11OlkCSiDKozBGrBTZJtSstQ5
-         zoH9eTvC0sUUX0pIQMRCZv4Z+Kj+4HYMYPiEAfKX8AqqSRAVksbmVLJQRvYc8hLrhKnw
-         upTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=o8x+unXu1cYWYpiFBbvC28mz2EVm8jbDsGdLhD5nyi8=;
-        b=fqYLIbbLVjaocJL37nxGJX+pVu37of4QWaS5SiHiaGYwNocHPiEeZbqrAEC+dAeAu4
-         iJwBBIw5LnZGm9IkqBJ/mdPhRNFA08aoXgaCfarLJ7YnLKgf4jVLlGsNMP8UV7pldJ8V
-         MlOTJGEueSWqgrA2bNJA5SbMgPc+/uC29yI4SKArzJk/rGQmqCUfl4rDBbGLcN3B6Kgc
-         AxAEoeUpmofqdcdL3bs1UqYUWspdVH7gDkUP9gTubum6OtHPRSdkwK2n+tqKmYNDBxVy
-         4lt5KKlihFyvcswFl9F1kNfmbOvo/3mfTkEqTLt6O2BD18+wTtzaH100aRVtmVQBKVGx
-         Gdtw==
-X-Gm-Message-State: APjAAAVttconnLSuSWTWv08xR4X9CX3UQ7q2m4sMMM3vjsA6JlEUKKxq
-        xpHwx5TUwBqE3YzQPVfTgcwgZOquoJk=
-X-Google-Smtp-Source: APXvYqxeukIaib+6bZqTuz96JfyjPUx49Ns40b6txVsNZjU4NO4Xk3DV7M6r5lASdNNrmWryQA1BWw==
-X-Received: by 2002:ac8:30f3:: with SMTP id w48mr31960795qta.216.1567517664280;
-        Tue, 03 Sep 2019 06:34:24 -0700 (PDT)
-Received: from localhost ([2605:9480:205:dfe1:fd52:2b30:74d5:e918])
-        by smtp.gmail.com with ESMTPSA id w126sm8582973qkd.68.2019.09.03.06.34.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2019 06:34:23 -0700 (PDT)
-Date:   Tue, 3 Sep 2019 09:34:22 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
-        <stdedos@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Git does not recognise directory named '${sys:DATA_ROOT_DIR}'
-Message-ID: <20190903133422.GA51158@syl.lan>
-References: <CAHMHMxW4-6AZEDaJU8KOy2kRSLXjdC_RTH528=nnhVLXh=ADUA@mail.gmail.com>
+        id S1729056AbfICNeo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 09:34:44 -0400
+Received: from mout.gmx.net ([212.227.17.22]:45645 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725782AbfICNeo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 09:34:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1567517678;
+        bh=CqD8NukKqK6EJHxrMV35jVH41wibp2pJHvYBOsiVjeI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=eHW9jOfWIH8I7Zmj7sZaz/S96zxmt98mvK3UsZvH7qMNy62K8DCda54NIjuLYFehv
+         ny7LiteBbksIwnTV7+hfGI/VFGnrqwX0aS4CZvexc5eYJYxD6T0GYLDjy2gAsxCifn
+         XNx7bf4NUUhVYFg+FOhdqHzpzTgKLANUJ1/GLqTA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MxlzC-1iNN3o25aY-00zIks; Tue, 03
+ Sep 2019 15:34:38 +0200
+Date:   Tue, 3 Sep 2019 15:34:39 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v4 08/24] Ensure index matches head before invoking merge
+ machinery, round N
+In-Reply-To: <nycvar.QRO.7.76.6.1909030043460.46@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1909031532160.46@tvgsbejvaqbjf.bet>
+References: <20190815214053.16594-1-newren@gmail.com> <20190817184144.32179-1-newren@gmail.com> <20190817184144.32179-9-newren@gmail.com> <nycvar.QRO.7.76.6.1909030043460.46@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHMHMxW4-6AZEDaJU8KOy2kRSLXjdC_RTH528=nnhVLXh=ADUA@mail.gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: multipart/mixed; boundary="8323328-2145648118-1567517680=:46"
+X-Provags-ID: V03:K1:V3fsvhi4KWKqBeIyzRZylfNspOwTyhBy3gILd++eIezCAeCd5mH
+ dMDvS8n/Zc/4eU/x1wR31QbbAGREsLk+6PdS6s9xmKpVNG3VeOBrIYFLY0QlyMr6kJyLdef
+ cQQk6kq6G8S25/NWaSDuaMfi/adcDyif2LY5i75AGNFZV7kGWLy+l1oGVrvLfFgut01zKS1
+ tFj1+6ryHxw613qTLnqzg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SjYG3iKfsVM=:mb+uHbh6xngmIXWDP7POGN
+ oh1aTRBCMtNFXEL4YRncnBRae8pLDnZFs2wvuZvcbX6+i9hxEuOVJ/l7HTZevnAIvmb3Vzrjp
+ kqvNdi1uBvz1aptmM9C6fb1v7F8I4l6688rscO+GpNueHbg/68VPDKfuhZksgYpjbElBAEuNn
+ dFHZ4CePbog3JoEmtiotiyGGy+Nr3DF1+GW5ump3b9whQjscIjfIsDPcuVhjtwZevyxe1SJ8B
+ JLe9wYBxISv+xOc4jWDyrdNycVwUpJPtVZ94w8Hu+bnbfoOACNnK9gzvkUoF3eIlDKXDDdSoU
+ IPkXyvAIs/CSe/5Al38MOzmO0J4XT0WPZSvfxtq50iGpKPcRQ/tZ9mHlyekTy67elyaXLgvl+
+ 0nYM0eEJHynU0Pgt/6oKR+mKJO1RI+t/AE2h6D38Gdz872gz2OfOiMZ8/a+WOfAPcMZhYn40u
+ jjEilQpvHDLsFNIrx1X5VPmr238qh+TIva66sOXZQ8kUziPdY0bPFBwasAqpyzGWCRn7z3pqQ
+ +k37vwj6mZEsRXiKSEwrIXdAtffskc88wwGW/voipzOlfyTDNuhmIYK9La3TwOu3xV8GPdhSy
+ GPKFgs5VleneQC1PlMDN5uveEViH6EpjdzIp7gwT/CIqpEEqxTCLzhEpJeT3ON6dQ/g12Rfsk
+ XoS4lKXpOSD1PKMg4cHovJ2Om2W9y/Of8L0V8lFvbteIT6eqcKeGRRvDuID+NHoPuNdLuAqPP
+ TRUM3dPLg0MZmAyAgONy5QVeWdRH8l90Y3Dl5X52WXkyAiv0EiwzofSImTJaxWG2gUDBDbaKx
+ HnI88KSXDHnNtDkpm5Z1RPyleK0H0xl/3S6ovJk3KgAW7MF71kYk2nUZoxMVHpE78rUd4QCTS
+ EFdPRBhy9aPnH+xwYy50otyh5ogWcW0JUoYGPVf1I0nPae6vj7QWtdlWGzJ9zjYe6jF8Tuje3
+ it4hLHiwIt98YeCbw+a/PWh+YjVraWJPGJCK8TpCPJMq1CSEUwGca1n5sZpJeLjasykf1Fvxv
+ eHyNYviS3+nPh2/75MEE6/d/ZxZ6RbktmPtwMJtZYD+hQXPHBVAO6e8G4EnBnhj+LywzR+LVA
+ MTj1TpWLlNkiJgu+uqZzlFJwAG5f5eMXwx1+/vBi41y6Aqssit2aWLtBrSIrYBenZpxWMZRbR
+ UxguPlGFjjIIXjsVskXA+vFe1psI3lwwzq148GWNToEaQyzi63nDg1C7cW00iREYWQao4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, Sep 03, 2019 at 03:44:14PM +0300, Σταύρος Ντέντος wrote:
-> Hello there,
+--8323328-2145648118-1567517680=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Elijah,
+
+On Tue, 3 Sep 2019, Johannes Schindelin wrote:
+
+> On Sat, 17 Aug 2019, Elijah Newren wrote:
 >
-> While the name is obviously a mistake, git refuses to even acknowledge
-> the directory.
+> >   * t3030-merge-recursive.h: this test has always been broken in that =
+it
+> >     didn't make sure to make index match head before running.  But, it
+> >     didn't care about the index or even the merge result, just the
+> >     verbose output while running.  While commit eddd1a411d93
+> >     ("merge-recursive: enforce rule that index matches head before
+> >     merging", 2018-06-30) should have uncovered this broken test, it
+> >     used a test_must_fail wrapper around the merge-recursive call
+> >     because it was known that the merge resulted in a rename/rename
+> >     conflict.  Thus, that fix only made this test fail for a different
+> >     reason, and since the index =3D=3D head check didn't happen until =
+after
+> >     coming all the way back out of the recursion, the testcase had
+> >     enough information to pass the one check that it did perform.
 >
-> ```
-> u@h:~/$ mkdir init-test
-> u@h:~/$ cd init-test
-> u@h:~/init-test$ git init
-> Initialized empty Git repository in /home/u/init-test/.git/
-> u@h:~/init-test$ (master #) mkdir \$\{sys\:DATA_ROOT_DIR\}/
-> u@h:~/init-test$ (master #) git status
-> On branch master
+> I fear that this test is still broken, it is a Schr=C3=B6dinger bug. Whe=
+re
+> `qsort()` is the cat, and the property "is it stable?" instead of death.
 >
-> No commits yet
+> In particular, at some stage in the recursive merge, a diff is generated
+> with rename detection for the target file `a` that contains two lines `h=
+ello`
+> but has two equally valid source files: `e` and `a~Temporary merge
+> branch 2_0`, both containing just the line `hello`. And since their file
+> contents are identical, the solution to the problem "which is the
+> correct source file?" is ambiguous.
 >
-> nothing to commit (create/copy files and use "git add" to track)
-> u@h:~/init-test$ (master #) git add
-> .git/                    ${sys:DATA_ROOT_DIR}/
-> u@h:~/init-test$ (master #) git add \$\{sys\:DATA_ROOT_DIR\}/
-> u@h:~/init-test$ (master #) git commit --signoff -m'a'
-> On branch master
+> If the `qsort()` in use is stable, the file `e` comes first, and wins.
+> If the `qsort()` in use is not stable, all bets are off, and the file
+> `a~Temporary merge branch 2_0` might be sorted first (which is the case,
+> for example, when using the `qsort()` implementation of MS Visual C's
+> runtime).
 >
-> Initial commit
+> Now, the _real_ problem is that t3030.35 expects the recursive merge to
+> fail, which it does when `qsort()` is stable. However, when the order of
+> `e` and `a~Temporary merge branch 2_0` is reversed, then that particular
+> merge does _not_ result in a `rename/rename` conflict. And the exit code
+> of the recursive merge is 0 for some reason!
 >
-> nothing to commit
-> u@h:~/init-test$ (master #)
-> ```
+> I don't quite understand why: clearly, there are conflicts (otherwise we
+> would not have that funny suffix `~Temporary merge branch 2_0`.
 >
-> Is that expected?
+> The real problem, though, is that even if it would fail, the outcome of
+> that recursive merge is ambiguous, and that test case should not try to
+> verify the precise order of the generated intermediate trees.
 
-Git does not track empty trees; that is to say 'git add' on an empty
-directory does not change the status of the index.
+It might not be obvious from my mail, but it took me about 7 hours to
+figure all of this out, hence I was a bit grumpy when I wrote that. My
+apologies.
 
-Try for example:
+After having slept (and written a long review about the
+`--update-branches` patch), it occurred to me that we might be better
+off enforcing the use of `git_qsort()` in `diffcore-rename.c`, so that
+we can at least guarantee stable rename detection in Git (which would
+incidentally fix the test suite for the MSVC build that I maintain in
+Git for Windows).
 
-  $ git init repo && cd repo
-  $ mkdir -p dir
-  $ git add dir
-  $ git status
+What do you think?
 
-And note that 'git status' says there are no changes.
+Ciao,
+Dscho
 
-On the other hand, 'git add' performs fine even in a directory named
-'${sys:DATA_ROOT_DIR}'; simply create a file (even an empty one) within
-that directory and then run 'git add'. It will stage your "changes" as
-expected.
-
-If you wish to keep this directory "empty", but stored in Git, a common
-convention is to create an empty '.gitkeep' file in the directory. This
-file is not special in any way to Git, rather it serves as _a_ file to
-keep the directory non-empty.
-
-Hope this helps.
-
-> Ντέντος Σταύρος
-
-Thanks,
-Taylor
+--8323328-2145648118-1567517680=:46--
