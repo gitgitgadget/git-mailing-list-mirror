@@ -2,368 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	SPOOFED_FREEMAIL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B55981F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 18:05:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CABF71F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 18:07:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729932AbfICSFC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 14:05:02 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:35356 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729579AbfICSFB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 14:05:01 -0400
-Received: by mail-wm1-f65.google.com with SMTP id n10so533950wmj.0
-        for <git@vger.kernel.org>; Tue, 03 Sep 2019 11:04:59 -0700 (PDT)
+        id S1729838AbfICSHj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 14:07:39 -0400
+Received: from mail-lj1-f178.google.com ([209.85.208.178]:44340 "EHLO
+        mail-lj1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727352AbfICSHi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 14:07:38 -0400
+Received: by mail-lj1-f178.google.com with SMTP id u14so10428693ljj.11
+        for <git@vger.kernel.org>; Tue, 03 Sep 2019 11:07:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=jJqzdogAJoLEXe8wkS1uwZvjwnGeegE0RgqJNUsIvWg=;
-        b=jda8hOb7uzwnBQMAHvUbTEBk8giDqLaWsvon9WTo9IKTj+E26458mOusXD41ij2xgH
-         Ku2H1Jm1lJv8JBejeCAnEPW87DrkpbYm7GDP2H1QFgu9UlDBhyJDFkC0cAUZ04Qpool5
-         97m/idqMh9nGGkCGvAdK7NpbdkgadS+OD8Q9aOGfqTevBvuMgNJQLroGw15CHVA5aDnG
-         mcnJMWvTQReooyrzA2dj7q5vvQ3bQu1jsB8MW8BzAInaSEwlDEi9b598mywNP3wtkXwU
-         3jJaF7cXp0QAY/pO0pt8aBlEJNRBYQKXgloEZXgWcyYecdURVjOYW254lfppT/Y23P4O
-         nlOw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=85b7yCfKNZZN7XH93GCKo6O4ySVpVP3Woa5oki0hxiA=;
+        b=i1/dWF49VO7QQk15aeqta2/K8s5ytnkBnsVHzOYjPiVlsfHx3Kg8gvsAwer7xAIQPq
+         mrOJ1GtnQMsxzVRbW02OogftkukMqZXVIi/SgzpsmSBYVH3pN7tMoo1T1l+kWNECUxTO
+         6Go16CTFJ2pPsp2U5Ehx8KibrHh+9yKzQvxkm/igV3+fEZwv1v9z2vgcAyVG5d2XcC7Z
+         o/Y0zl7L4OnxFZSWGJHue3eVgUVC8Yjpa9Brgpe4zm9VawWhc77Zp0cZt9ety7h3Zx9y
+         0kP1vxiQr+e6IWPnZs1qk+PhSMFyYiPXOLene58IGV385lGwVBkzTMW5k8Ch0GoMaqnP
+         ySBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jJqzdogAJoLEXe8wkS1uwZvjwnGeegE0RgqJNUsIvWg=;
-        b=N0dceUl0lhdfl0tWHSpXUTD6zn2MvVhUmLR/CQF6w/5eBm9Go2aVh1F8b7dJ3lIpa4
-         m4IGi+nc8JIH/V8WL5V0DR96JBIPsWJ+wbUavNGg3ZazSURzjlntsucFvdXcwxe9CQg1
-         ganZY1GO0sZHripMqFPUnEyY36bAoWd4iNqD8HtpVVi3KO0c761cyvafMP6WLOq2J80u
-         pOWoveNvqgtPg7l5UBl/FevXDUuDjBk/SGyUsokKLUT8uYy6Jf8WGrlYTh4dusT1fHFf
-         mHjnd9N6JxlQdACFM9zOomZvIVQnc5+YYrMRFndh6Kdt6eIc+SG36VF+C01192xhKhMt
-         pX0w==
-X-Gm-Message-State: APjAAAWauXtG6/JGk+djBPyU15A/HQsNZt0fDbs3PCA8MpLKWXN/yPB3
-        XVazmMntc+tGoyVtOXDFnqeqZ/bL
-X-Google-Smtp-Source: APXvYqwBh6Q7Nctsq3avkM+RL4f35HSsm4l4omC9ZjOaqMi1jXyEYtEGp/qAR/L+IJowmxc7SljbMA==
-X-Received: by 2002:a7b:c386:: with SMTP id s6mr688597wmj.93.1567533898805;
-        Tue, 03 Sep 2019 11:04:58 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y3sm15934268wrl.78.2019.09.03.11.04.58
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=85b7yCfKNZZN7XH93GCKo6O4ySVpVP3Woa5oki0hxiA=;
+        b=YsFkH6clg1qZDE8cMmW1vkT24xsR8DmLqW5TYvSE1hA85Q1iuPx0Zrcp2ccHiYYQcx
+         iT/HwytZTqIWBHQ6CQVo0VHIrz9htvDPAUN20reOnBLnyadgA+ywYs/MP1/O5olM0exH
+         4rmEKVGn4UO33qxKuJRHop0TbLfCAQIiNNJqVsScqVpxvmwQaow1tKI3HgmWnbe20pI9
+         pWyOO3OX8FFtHym9yOgVDBHI6Z2mFJAFhr+1rMpK7tvf4rOEHgqirDsQiuUm951HLGjU
+         +K6JXjLBA8jBNKXpYfOEuvpMZ8DZXvXx1mfYwY/K9daaQeeic2LZG1/FjiXXIXuExJ8B
+         Qojg==
+X-Gm-Message-State: APjAAAUGdzz/5N3LY/rUCngV3pDcjmxyrTAJSJ1gwli0hvIAxb/rsiNS
+        2EnQkwRbZrPKTTxoz8XoN6EPnuCPa4SWWQ==
+X-Google-Smtp-Source: APXvYqwpZw8/uCxv6ZHoW+UGL3FaNg1CA+919w+ohB6kh972EgAKkcRWcXJmFipVGyXiKs+nccqkfg==
+X-Received: by 2002:a2e:80c2:: with SMTP id r2mr20824871ljg.44.1567534056801;
+        Tue, 03 Sep 2019 11:07:36 -0700 (PDT)
+Received: from localhost.localdomain (static243-191-189.mimer.net. [83.243.191.189])
+        by smtp.gmail.com with ESMTPSA id p10sm2493025lji.71.2019.09.03.11.07.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Sep 2019 11:04:58 -0700 (PDT)
-Date:   Tue, 03 Sep 2019 11:04:58 -0700 (PDT)
-X-Google-Original-Date: Tue, 03 Sep 2019 18:04:53 GMT
-Message-Id: <d9a62c76339b64325a13d5f483f673450aa90c2b.1567533893.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.329.git.gitgitgadget@gmail.com>
-References: <pull.329.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 5/5] unpack-trees: rename 'is_excluded_from_list()'
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        Tue, 03 Sep 2019 11:07:36 -0700 (PDT)
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
 To:     git@vger.kernel.org
-Cc:     newren@gmail.com, pclouds@gmail.com, peff@peff.net,
-        jon@jonsimons.org, matvore@comcast.net,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Cc:     me@yadavpratyush.com, Birger Skogeng Pedersen <birger.sp@gmail.com>
+Subject: [PATCH v4] git-gui: Add hotkeys to set widget focus
+Date:   Tue,  3 Sep 2019 20:07:04 +0200
+Message-Id: <20190903180704.11812-1-birger.sp@gmail.com>
+X-Mailer: git-send-email 2.21.0.windows.1
+In-Reply-To: <20190903144536.8935-1-me@yadavpratyush.com>
+References: <20190903144536.8935-1-me@yadavpratyush.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+The user cannot change focus between the list of files, the diff view and
+the commit message widgets without using the mouse (clicking either of
+the four widgets).
 
-The first consumer of pattern-matching filenames was the
-.gitignore feature. In that context, storing a list of patterns
-as a 'struct exclude_list'  makes sense. However, the
-sparse-checkout feature then adopted these structures and methods,
-but with the opposite meaning: these patterns match the files
-that should be included!
+With this patch, the user may set ui focus to the previously selected path
+in either the "Unstaged Changes" or "Staged Changes" widgets, using
+ALT+1 or ALT+2.
 
-Now that this library is renamed to use 'struct pattern_list'
-and 'struct pattern', we can now rename the method used by
-the sparse-checkout feature to determine which paths should
-appear in the working directory.
+The user may also set the ui focus to the diff view widget with
+ALT+3, or to the commit message widget with ALT+4.
 
-The method is_excluded_from_list() is only used by the
-sparse-checkout logic in unpack-trees and list-objects-filter.
-The confusing part is that it returned 1 for "excluded" (i.e.
-it matches the list of exclusions) but that really manes that
-the path matched the list of patterns for _inclusion_ in the
-working directory.
+This enables the user to select/unselect files, view the diff and create a
+commit in git-gui using keyboard-only.
 
-Rename the method to be path_matches_pattern_list() and have
-it return an explicit 'enum pattern_match_result'. Here, the
-values MATCHED = 1, UNMATCHED = 0, and UNDECIDED = -1 agree
-with the previous integer values. This shift allows future
-consumers to better understand what the retur values mean,
-and provides more type checking for handling those values.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
 ---
- dir.c                 | 25 +++++++++++++++++--------
- dir.h                 | 21 +++++++++++++++++----
- list-objects-filter.c | 29 +++++++++++++++--------------
- unpack-trees.c        | 39 +++++++++++++++++++++++----------------
- 4 files changed, 72 insertions(+), 42 deletions(-)
+ git-gui.sh | 33 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 32 insertions(+), 1 deletion(-)
 
-diff --git a/dir.c b/dir.c
-index b057bd3d95..34972abdaf 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1072,19 +1072,28 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
- }
+diff --git a/git-gui.sh b/git-gui.sh
+index 5bc21b8..3a2df2f 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -2495,7 +2495,7 @@ proc force_first_diff {after} {
  
- /*
-- * Scan the list and let the last match determine the fate.
-- * Return 1 for exclude, 0 for include and -1 for undecided.
-+ * Scan the list of patterns to determine if the ordered list
-+ * of patterns matches on 'pathname'.
-+ *
-+ * Return 1 for a match, 0 for not matched and -1 for undecided.
-  */
--int is_excluded_from_list(const char *pathname,
--			  int pathlen, const char *basename, int *dtype,
--			  struct pattern_list *pl, struct index_state *istate)
-+enum pattern_match_result path_matches_pattern_list(
-+				const char *pathname, int pathlen,
-+				const char *basename, int *dtype,
-+				struct pattern_list *pl,
-+				struct index_state *istate)
- {
- 	struct path_pattern *pattern;
- 	pattern = last_matching_pattern_from_list(pathname, pathlen, basename,
- 						  dtype, pl, istate);
--	if (pattern)
--		return pattern->flags & PATTERN_FLAG_NEGATIVE ? 0 : 1;
--	return -1; /* undecided */
-+	if (pattern) {
-+		if (pattern->flags & PATTERN_FLAG_NEGATIVE)
-+			return NOT_MATCHED;
-+		else
-+			return MATCHED;
-+	}
+ proc toggle_or_diff {mode w args} {
+ 	global file_states file_lists current_diff_path ui_index ui_workdir
+-	global last_clicked selected_paths
++	global last_clicked selected_paths file_lists_last_clicked
+ 
+ 	if {$mode eq "click"} {
+ 		foreach {x y} $args break
+@@ -2527,6 +2527,8 @@ proc toggle_or_diff {mode w args} {
+ 	$ui_index tag remove in_sel 0.0 end
+ 	$ui_workdir tag remove in_sel 0.0 end
+ 
++	set file_lists_last_clicked($w) $path
 +
-+	return UNDECIDED;
- }
- 
- static struct path_pattern *last_matching_pattern_from_lists(
-diff --git a/dir.h b/dir.h
-index 7babf31d88..608696c958 100644
---- a/dir.h
-+++ b/dir.h
-@@ -230,10 +230,23 @@ int read_directory(struct dir_struct *, struct index_state *istate,
- 		   const char *path, int len,
- 		   const struct pathspec *pathspec);
- 
--int is_excluded_from_list(const char *pathname, int pathlen,
--			  const char *basename, int *dtype,
--			  struct pattern_list *pl,
--			  struct index_state *istate);
-+enum pattern_match_result {
-+	UNDECIDED = -1,
-+	NOT_MATCHED = 0,
-+	MATCHED = 1,
-+};
-+
-+/*
-+ * Scan the list of patterns to determine if the ordered list
-+ * of patterns matches on 'pathname'.
-+ *
-+ * Return 1 for a match, 0 for not matched and -1 for undecided.
-+ */
-+enum pattern_match_result path_matches_pattern_list(const char *pathname,
-+				int pathlen,
-+				const char *basename, int *dtype,
-+				struct pattern_list *pl,
-+				struct index_state *istate);
- struct dir_entry *dir_add_ignored(struct dir_struct *dir,
- 				  struct index_state *istate,
- 				  const char *pathname, int len);
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index ccd58e61c3..d624f1c898 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -328,12 +328,12 @@ static void filter_blobs_limit__init(
-  */
- struct frame {
- 	/*
--	 * defval is the usual default include/exclude value that
-+	 * default_match is the usual default include/exclude value that
- 	 * should be inherited as we recurse into directories based
- 	 * upon pattern matching of the directory itself or of a
- 	 * containing directory.
- 	 */
--	int defval;
-+	enum pattern_match_result default_match;
- 
- 	/*
- 	 * 1 if the directory (recursively) contains any provisionally
-@@ -363,8 +363,9 @@ static enum list_objects_filter_result filter_sparse(
- 	void *filter_data_)
- {
- 	struct filter_sparse_data *filter_data = filter_data_;
--	int val, dtype;
-+	int dtype;
- 	struct frame *frame;
-+	enum pattern_match_result match;
- 
- 	switch (filter_situation) {
- 	default:
-@@ -373,15 +374,15 @@ static enum list_objects_filter_result filter_sparse(
- 	case LOFS_BEGIN_TREE:
- 		assert(obj->type == OBJ_TREE);
- 		dtype = DT_DIR;
--		val = is_excluded_from_list(pathname, strlen(pathname),
--					    filename, &dtype, &filter_data->pl,
--					    r->index);
--		if (val < 0)
--			val = filter_data->array_frame[filter_data->nr - 1].defval;
-+		match = path_matches_pattern_list(pathname, strlen(pathname),
-+						  filename, &dtype, &filter_data->pl,
-+						  r->index);
-+		if (match == UNDECIDED)
-+			match = filter_data->array_frame[filter_data->nr - 1].default_match;
- 
- 		ALLOC_GROW(filter_data->array_frame, filter_data->nr + 1,
- 			   filter_data->alloc);
--		filter_data->array_frame[filter_data->nr].defval = val;
-+		filter_data->array_frame[filter_data->nr].default_match = match;
- 		filter_data->array_frame[filter_data->nr].child_prov_omit = 0;
- 		filter_data->nr++;
- 
-@@ -435,12 +436,12 @@ static enum list_objects_filter_result filter_sparse(
- 		frame = &filter_data->array_frame[filter_data->nr - 1];
- 
- 		dtype = DT_REG;
--		val = is_excluded_from_list(pathname, strlen(pathname),
-+		match = path_matches_pattern_list(pathname, strlen(pathname),
- 					    filename, &dtype, &filter_data->pl,
- 					    r->index);
--		if (val < 0)
--			val = frame->defval;
--		if (val > 0) {
-+		if (match == UNDECIDED)
-+			match = frame->default_match;
-+		if (match == MATCHED) {
- 			if (omits)
- 				oidset_remove(omits, &obj->oid);
- 			return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-@@ -487,7 +488,7 @@ static void filter_sparse_oid__init(
- 		die("could not load filter specification");
- 
- 	ALLOC_GROW(d->array_frame, d->nr + 1, d->alloc);
--	d->array_frame[d->nr].defval = 0; /* default to include */
-+	d->array_frame[d->nr].default_match = 0; /* default to include */
- 	d->array_frame[d->nr].child_prov_omit = 0;
- 	d->nr++;
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 902a799aeb..cd548f4fa2 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1265,7 +1265,8 @@ static int clear_ce_flags_1(struct index_state *istate,
- 			    struct cache_entry **cache, int nr,
- 			    struct strbuf *prefix,
- 			    int select_mask, int clear_mask,
--			    struct pattern_list *pl, int defval);
-+			    struct pattern_list *pl,
-+			    enum pattern_match_result default_match);
- 
- /* Whole directory matching */
- static int clear_ce_flags_dir(struct index_state *istate,
-@@ -1273,19 +1274,21 @@ static int clear_ce_flags_dir(struct index_state *istate,
- 			      struct strbuf *prefix,
- 			      char *basename,
- 			      int select_mask, int clear_mask,
--			      struct pattern_list *pl, int defval)
-+			      struct pattern_list *pl,
-+			      enum pattern_match_result default_match)
- {
- 	struct cache_entry **cache_end;
- 	int dtype = DT_DIR;
--	int ret = is_excluded_from_list(prefix->buf, prefix->len,
--					basename, &dtype, pl, istate);
- 	int rc;
-+	enum pattern_match_result ret;
-+	ret = path_matches_pattern_list(prefix->buf, prefix->len,
-+					basename, &dtype, pl, istate);
- 
- 	strbuf_addch(prefix, '/');
- 
- 	/* If undecided, use matching result of parent dir in defval */
--	if (ret < 0)
--		ret = defval;
-+	if (ret == UNDECIDED)
-+		ret = default_match;
- 
- 	for (cache_end = cache; cache_end != cache + nr; cache_end++) {
- 		struct cache_entry *ce = *cache_end;
-@@ -1298,7 +1301,7 @@ static int clear_ce_flags_dir(struct index_state *istate,
- 	 * with ret (iow, we know in advance the incl/excl
- 	 * decision for the entire directory), clear flag here without
- 	 * calling clear_ce_flags_1(). That function will call
--	 * the expensive is_excluded_from_list() on every entry.
-+	 * the expensive path_matches_pattern_list() on every entry.
- 	 */
- 	rc = clear_ce_flags_1(istate, cache, cache_end - cache,
- 			      prefix,
-@@ -1327,7 +1330,8 @@ static int clear_ce_flags_1(struct index_state *istate,
- 			    struct cache_entry **cache, int nr,
- 			    struct strbuf *prefix,
- 			    int select_mask, int clear_mask,
--			    struct pattern_list *pl, int defval)
-+			    struct pattern_list *pl,
-+			    enum pattern_match_result default_match)
- {
- 	struct cache_entry **cache_end = cache + nr;
- 
-@@ -1338,7 +1342,8 @@ static int clear_ce_flags_1(struct index_state *istate,
- 	while(cache != cache_end) {
- 		struct cache_entry *ce = *cache;
- 		const char *name, *slash;
--		int len, dtype, ret;
-+		int len, dtype;
-+		enum pattern_match_result ret;
- 
- 		if (select_mask && !(ce->ce_flags & select_mask)) {
- 			cache++;
-@@ -1362,7 +1367,7 @@ static int clear_ce_flags_1(struct index_state *istate,
- 						       prefix,
- 						       prefix->buf + prefix->len - len,
- 						       select_mask, clear_mask,
--						       pl, defval);
-+						       pl, default_match);
- 
- 			/* clear_c_f_dir eats a whole dir already? */
- 			if (processed) {
-@@ -1374,18 +1379,20 @@ static int clear_ce_flags_1(struct index_state *istate,
- 			strbuf_addch(prefix, '/');
- 			cache += clear_ce_flags_1(istate, cache, cache_end - cache,
- 						  prefix,
--						  select_mask, clear_mask, pl, defval);
-+						  select_mask, clear_mask, pl,
-+						  default_match);
- 			strbuf_setlen(prefix, prefix->len - len - 1);
- 			continue;
- 		}
- 
- 		/* Non-directory */
- 		dtype = ce_to_dtype(ce);
--		ret = is_excluded_from_list(ce->name, ce_namelen(ce),
--					    name, &dtype, pl, istate);
--		if (ret < 0)
--			ret = defval;
--		if (ret > 0)
-+		ret = path_matches_pattern_list(ce->name,
-+						ce_namelen(ce),
-+						name, &dtype, pl, istate);
-+		if (ret == UNDECIDED)
-+			ret = default_match;
-+		if (ret == MATCHED)
- 			ce->ce_flags &= ~clear_mask;
- 		cache++;
+ 	# Determine the state of the file
+ 	if {[info exists file_states($path)]} {
+ 		set state [lindex $file_states($path) 0]
+@@ -2640,6 +2642,27 @@ proc show_less_context {} {
  	}
+ }
+ 
++proc select_path_in {widget} {
++	global file_lists last_clicked selected_paths
++	global file_lists_last_clicked
++
++	set _list_length [llength $file_lists($widget)]
++	if {$_list_length > 0} {
++		set path $file_lists_last_clicked($widget)
++		set index [lsearch -sorted -exact $file_lists($widget) $path]
++		if {$index < 0} {
++			set index 0
++			set path [lindex $file_lists($widget) $index]
++		}
++
++		focus $widget
++		set last_clicked [list $widget [expr $index + 1]]
++		array unset selected_paths
++		set selected_paths($path) 1
++		show_diff $path $widget
++	}
++}
++
+ ######################################################################
+ ##
+ ## ui construction
+@@ -3852,6 +3875,14 @@ foreach i [list $ui_index $ui_workdir] {
+ }
+ unset i
+ 
++bind . <Alt-Key-1> {select_path_in $::ui_workdir}
++bind . <Alt-Key-2> {select_path_in $::ui_index}
++bind . <Alt-Key-3> {focus $::ui_diff}
++bind . <Alt-Key-4> {focus $::ui_comm}
++
++set file_lists_last_clicked($ui_index) {}
++set file_lists_last_clicked($ui_workdir) {}
++
+ set file_lists($ui_index) [list]
+ set file_lists($ui_workdir) [list]
+ 
 -- 
-gitgitgadget
+2.21.0.windows.1
+
