@@ -2,149 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36DF11F4B7
-	for <e@80x24.org>; Tue,  3 Sep 2019 14:12:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 435841F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 14:21:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728967AbfICOMQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 10:12:16 -0400
-Received: from mail-yb1-f175.google.com ([209.85.219.175]:44435 "EHLO
-        mail-yb1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728679AbfICOMP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 10:12:15 -0400
-Received: by mail-yb1-f175.google.com with SMTP id y21so5883227ybi.11
-        for <git@vger.kernel.org>; Tue, 03 Sep 2019 07:12:15 -0700 (PDT)
+        id S1729538AbfICOV4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 10:21:56 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:37688 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727005AbfICOV4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 10:21:56 -0400
+Received: by mail-lj1-f194.google.com with SMTP id t14so16263062lji.4
+        for <git@vger.kernel.org>; Tue, 03 Sep 2019 07:21:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=lvfEGxLhZQ5eWNrSM1mlA7qVXkcDLDSTi/kheREBql8=;
-        b=A3rNepZnfGvwzQ0T6JVfafL6E4Urm+QK9v02YES0WdVi2+VRJPqDCdm0zJS6RjRCkB
-         bGRTUW1aQ6mVBK5HyHhKUZWw6kjLQ4vKVp+AAWSC7EF8Oj8nHv0f+WWxOR83WkD76nq0
-         TcNPhT7U8SC6zjjpJjeynUgPMl6n9SgFAuHbeqCFq4eWoqMWA32P//wXPOUnxZFbDn7b
-         uOIrom8J9D8ySS+jSdJthCZ/LR9Rhg5XAc+c1x9RfIsiGq8HrOSyGlLq8tcy0lP13BD8
-         +MyN5lt9ro4TlDZCo2Q2a4wRP+il/zrIcTbnH9Rw3iZlJbqUQxvcDg1Xt3+7NLghmHNv
-         s58Q==
+         :cc;
+        bh=yEnqv2wu+B81yRRZnhNWlBiCJSSjRkIZ8khKHi/49ZM=;
+        b=YBSwz/s/07+Fh/0H/EcV2Bh+3CRMAgsfQ/F3Lf+fmA8+LoQVnosx0Jy3MJIbFzOZqR
+         eAgKpm1oQKG5G1xTzXfXrSIk3pKWsIEC6WoO3g/1UWOfp9eXfsGisByEgOuNfkF3QWVV
+         lqkbE9OE700IhwcGQ28P+KAoWGqDNiPEsAJseq0E6kwRNrEf1or1W92fY+0bZ4B8jy5g
+         vSS4+C/giVMW704QCH1Mi09IEYvTZU3w8yX1O84mrCktcOTmuGHPC1QbVAUjeGAvtCyg
+         E82nkEvpTw0H+kft8LVAw5YIJH9qILCBqZnet7Vf1T6QY7409B/ozgMEf0L/6CoavtPM
+         ynUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lvfEGxLhZQ5eWNrSM1mlA7qVXkcDLDSTi/kheREBql8=;
-        b=isWQiKp5hp8tvZL1S15lQZslPsaCYX09xeLeKApPd4MX65WctcvhYy7s/Zdu1PHbm9
-         dpV9v1G+dr8eculiqBN5jkMC16HyroZlTz9WMnc1r90O49ngWpY9Sxc0Kv+VgwrxDbvm
-         NBFTUx6ay5HXv7ZjbY7Kgbg7oBOzJFyQV215dPKlYAVPe6gXGv65b9k5047ZngkPXbjd
-         3mxKn9s0Tj8kLyrHM4WaUE8ec9lAjqf+FitwYO6BX9MKL51cH8u9wEFZB3Fm20L9GORB
-         DW/N+zbQVLSjmhO8YS+ygqWH8DiCw9S+fnUCdeA3gsPui64qhSp1ro3Te09K6Ign9BO6
-         aXwA==
-X-Gm-Message-State: APjAAAUwG8Oh2yzBfM9JiZ4WP9btyCFUVrml78x7+mE3rVE3Q5Yp0fgT
-        APyAU8zOh1OBShJxasFaW4afTlUDUZGXh1KelrwoqNAopeE=
-X-Google-Smtp-Source: APXvYqyy4ZW9k/NFdXF1dUiZtEJsePcQH4OOR/aJw83NBzB6s37s3V+2c4nVb2k+LF9oxgHJgl4eAtuwnDZycEMwglY=
-X-Received: by 2002:a25:d751:: with SMTP id o78mr25984115ybg.101.1567519935030;
- Tue, 03 Sep 2019 07:12:15 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=yEnqv2wu+B81yRRZnhNWlBiCJSSjRkIZ8khKHi/49ZM=;
+        b=SguYx4qsbNsX5rL4VivqtSag36hndIqRnchIe05f6tTYVv3kv3Op6K9VOwltPF2INS
+         VAVrpmw0FkJPop6B+DfvQD4nmfP4Jzgim1PK6FO06F0aKM54UHrZQXiN06XWSJl64I07
+         4/sIhAz/j1rIcZ3co0Kh9PGG5FnNlhMeQMcABG6sKnMYHD+mjbJ4i+twk7iADwXzDLoV
+         8gkOcr4KPw9juiKEJ2tP6zjnywWcPUozPI/rxINCm3TcQQJE9aaE7smgYB5xLB3fZA7e
+         4qlCXcSeqJ0G5jxdr5uIMz/uA1LV6fTiY0fBDG0vNCGAEaj9cfHSIV5Xpwx+FsaSt7oi
+         clqQ==
+X-Gm-Message-State: APjAAAUwEZCM2r70B58PfBL6LY9coKYU8n4gfi2I1bWeudV6RE9JiirQ
+        iWG5AFn6I8Qrqku0xG6Jlok0Fq80wyX5F8azlfzAORfEd3M=
+X-Google-Smtp-Source: APXvYqxWxmbRemcvaXkq9QUsD8AsIt30KPB5XEl5WZ/0Qv39dKy1wpGuRUPY+UMLpkvwjcBam2l+Aw/SEmVRS6sku7Q=
+X-Received: by 2002:a05:651c:1023:: with SMTP id w3mr18995520ljm.94.1567520514102;
+ Tue, 03 Sep 2019 07:21:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHMHMxW4-6AZEDaJU8KOy2kRSLXjdC_RTH528=nnhVLXh=ADUA@mail.gmail.com>
- <20190903133422.GA51158@syl.lan>
-In-Reply-To: <20190903133422.GA51158@syl.lan>
-From:   =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
-        <stdedos@gmail.com>
-Date:   Tue, 3 Sep 2019 17:11:38 +0300
-Message-ID: <CAHMHMxVy7Ud+pOHbfWXX4jzPoPng8TvR2zNgm_B56Srt64BrWw@mail.gmail.com>
-Subject: Re: Git does not recognise directory named '${sys:DATA_ROOT_DIR}'
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git <git@vger.kernel.org>
+References: <CAKPyHN2_CpaJahKo2Ju2SWvU=Y79k2ArKVkkxPTbeW1t2TYRZQ@mail.gmail.com>
+ <20190901193652.21086-1-birger.sp@gmail.com> <CAKPyHN0LtOG9mFQ6qxc-w-EdpJ3HGJmHAGdrGp2FKkq4uCf55A@mail.gmail.com>
+In-Reply-To: <CAKPyHN0LtOG9mFQ6qxc-w-EdpJ3HGJmHAGdrGp2FKkq4uCf55A@mail.gmail.com>
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
+Date:   Tue, 3 Sep 2019 16:21:42 +0200
+Message-ID: <CAGr--=L=iUxAOGwwbQwVB5OwmNoXorBXgehMfiC5gvfgUQEa9g@mail.gmail.com>
+Subject: Re: [PATCH] [PATCH] git-gui: Add hotkeys to set widget focus
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Taylor,
+Hi Bert,
 
-This was happening on a (much) more massive repository; I simply tried
-to dumb down the example.
 
-The original folder did had a folder structure 3 levels deep.
-Unfortunately, I don't remember if the leaves were files (or
-directories themselves). However, since I "replicated" it, I went
-ahead and cleaned up my main repo (sigh).
+On Mon, Sep 2, 2019 at 9:42 PM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+> So we only remember the lno in the widget, that could mean, that we
+> select the wrong file after a rescan, which shifted the previous path
+> one down. Can we remember the pathname instead, and try to find this
+> again in the file list?
 
-Thank you for reminding me of the empty-tree case :-)
+Seems to me like a rescan makes git-gui select the first file in the
+list, regardless of this feature (patch) or not. Ideally, git-gui
+would not do this. It should select the same file that was selected
+before (if it can). But honestly it seems like a separate (perhaps
+broader) issue. My biggest issue is not having the hotkeys, and that's
+what I'm trying to mend :-)
 
-(Reply-all missed the list)
---=20
-Until next time,
-=CE=9D=CF=84=CE=AD=CE=BD=CF=84=CE=BF=CF=82 =CE=A3=CF=84=CE=B1=CF=8D=CF=81=
-=CE=BF=CF=82
 
-On Tue, Sep 3, 2019 at 4:34 PM Taylor Blau <me@ttaylorr.com> wrote:
+> can we name it 'focus_and_select_path_in', as the main job ob this
+> function is to focus the widget. It makes also the 'bind' command
+> below more readily, because than all bind commands start with 'focus'.
+
+Agreed.
+
+
+> > +       global file_lists_last_clicked
+> > +
+> > +       set _list_length [llength $file_lists($widget)]
+> > +       if {$_list_length > 0} {
+> > +
+> > +               set _index $file_lists_last_clicked($widget)
 >
-> Hi,
+> I have the impression that variables starting with '_' are mainly used
+> as read-only global variables, see the list at line 158, and not that
+> often as temporal local variables.
+
+Agreed, I'll rename it. It's been almost a year since I wrote this
+patch so I can't really remember my reasoning for putting the
+underscore there.
+
+
+> I would like to bring up a proposal: AFAICS, more or less all CTRL
+> bindings have a menu entry. But it does not make sense to have a menu
+> entry for these bindings. And I think we could add more bindings for
+> keyboard-afine users. Thus I would like to propose to use ALT as the
+> modifier for these bindings, which would give us a nice binding
+> classification.
 >
-> On Tue, Sep 03, 2019 at 03:44:14PM +0300, =CE=A3=CF=84=CE=B1=CF=8D=CF=81=
-=CE=BF=CF=82 =CE=9D=CF=84=CE=AD=CE=BD=CF=84=CE=BF=CF=82 wrote:
-> > Hello there,
-> >
-> > While the name is obviously a mistake, git refuses to even acknowledge
-> > the directory.
-> >
-> > ```
-> > u@h:~/$ mkdir init-test
-> > u@h:~/$ cd init-test
-> > u@h:~/init-test$ git init
-> > Initialized empty Git repository in /home/u/init-test/.git/
-> > u@h:~/init-test$ (master #) mkdir \$\{sys\:DATA_ROOT_DIR\}/
-> > u@h:~/init-test$ (master #) git status
-> > On branch master
-> >
-> > No commits yet
-> >
-> > nothing to commit (create/copy files and use "git add" to track)
-> > u@h:~/init-test$ (master #) git add
-> > .git/                    ${sys:DATA_ROOT_DIR}/
-> > u@h:~/init-test$ (master #) git add \$\{sys\:DATA_ROOT_DIR\}/
-> > u@h:~/init-test$ (master #) git commit --signoff -m'a'
-> > On branch master
-> >
-> > Initial commit
-> >
-> > nothing to commit
-> > u@h:~/init-test$ (master #)
-> > ```
-> >
-> > Is that expected?
->
-> Git does not track empty trees; that is to say 'git add' on an empty
-> directory does not change the status of the index.
->
-> Try for example:
->
->   $ git init repo && cd repo
->   $ mkdir -p dir
->   $ git add dir
->   $ git status
->
-> And note that 'git status' says there are no changes.
->
-> On the other hand, 'git add' performs fine even in a directory named
-> '${sys:DATA_ROOT_DIR}'; simply create a file (even an empty one) within
-> that directory and then run 'git add'. It will stage your "changes" as
-> expected.
->
-> If you wish to keep this directory "empty", but stored in Git, a common
-> convention is to create an empty '.gitkeep' file in the directory. This
-> file is not special in any way to Git, rather it serves as _a_ file to
-> keep the directory non-empty.
->
-> Hope this helps.
->
-> > =CE=9D=CF=84=CE=AD=CE=BD=CF=84=CE=BF=CF=82 =CE=A3=CF=84=CE=B1=CF=8D=CF=
-=81=CE=BF=CF=82
->
-> Thanks,
-> Taylor
+> How about that?
+
+Makes sense. And the ALT+1/2/3/4 seems to be unused for anything else.
+At least on Windows, maybe on other systems those keystrokes are
+already in use?
+
+
+Birger
