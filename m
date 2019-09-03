@@ -2,94 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6A8C1F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 12:44:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C444B1F461
+	for <e@80x24.org>; Tue,  3 Sep 2019 12:45:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729138AbfICMow (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 08:44:52 -0400
-Received: from mail-yb1-f176.google.com ([209.85.219.176]:35927 "EHLO
-        mail-yb1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728983AbfICMow (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 08:44:52 -0400
-Received: by mail-yb1-f176.google.com with SMTP id m9so5808767ybm.3
-        for <git@vger.kernel.org>; Tue, 03 Sep 2019 05:44:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=LDsNT356H2kiss6Rl5FdoVZQqPqJEEEOmgZdRTFsmxI=;
-        b=c4tkVfLjxoftUh2d+VMRvYREYLEBlh2tKDNaov9mIxP5gDd4FY+/m7pzNgxB8SEBB5
-         HDafMND8UjSXzql59nPVJjhbz/vP4ZSDi1IntHnzdCzUDk8cjSGIortPIqxjtwq8dMvb
-         bqBTNV+qei4KH4vjE+SHxtNJyBXNWDd7z4g0/w7thSgm9OsdsguG1DsMw6Hd55L/bu8B
-         OaNTrJbB0CdzFnatcQXrhbljudghmEiXu/77pJBLtyqLB51C+Mpf94uK4AjkR1BK6Vqk
-         WADBtz0zbui4nCDJHmw7UBBqodRWluSslsj7HDL2qUYEU791mb+oV69vvDD2UL4O9i/8
-         ccyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=LDsNT356H2kiss6Rl5FdoVZQqPqJEEEOmgZdRTFsmxI=;
-        b=jeDJj9BDs9s6jQG62Odt4akjtgTekTxEMbPTebzrnALKunC9zzexIxbE5YaXrpoJzJ
-         WTxK2mL9nlACBXBgn2Yvg0fqcbmS5ioSUGBrXkyqaQ7WEOBs14uNPi5hxnoPvszLJouP
-         7GKrWpPzb2QtfZ5Y7VJQy6uBoouNF6Ctz1JSVSzRwfHByxKy8AN5Ub/gV6Q++OW6pJ4I
-         3WKSJeFsovjKcVenPcreNg+H1ScXE7NlNFC7VuM2PyXNj7U9k1k9GaYnGOtoB3SC9bK/
-         r3V2UgzCbhLPyY/u/bMLQDtob7tQVsiQfq2gOZr3pZQz29DB9RNBBJf4zZttJU8mnbZ2
-         nIQA==
-X-Gm-Message-State: APjAAAU1BJRJBZyxs6lFCDqqNOyOyTIHvyjGxOXJvuvReclj6QYlO2FA
-        egUnEYfjtxp1O664tVXa9LngWtRvsYdXZr/XwQmz/zkB
-X-Google-Smtp-Source: APXvYqzrkmkzKtVEHw2LyihnyEAWTLXpRtmxRUOsvz4qTNbo71vkg3iA7TzotKtpkYIEZV5lyGawbcdxEBNrIQ2vWq8=
-X-Received: by 2002:a25:aa23:: with SMTP id s32mr22533361ybi.198.1567514691395;
- Tue, 03 Sep 2019 05:44:51 -0700 (PDT)
+        id S1729185AbfICMpq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 08:45:46 -0400
+Received: from relay9-d.mail.gandi.net ([217.70.183.199]:41245 "EHLO
+        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725782AbfICMpq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 08:45:46 -0400
+X-Originating-IP: 1.186.12.26
+Received: from localhost (unknown [1.186.12.26])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 9433AFF80B;
+        Tue,  3 Sep 2019 12:45:43 +0000 (UTC)
+Date:   Tue, 3 Sep 2019 18:15:41 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Git List <git@vger.kernel.org>, bouncingcats@gmail.com
+Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
+Message-ID: <20190903124541.2p5hmknolh2dwqh5@yadavpratyush.com>
+References: <CAGr--=Jw4DAqTi3ROujtE=xBMYErMws6B6vhuXYMQA+5Q1ccow@mail.gmail.com>
+ <CAGr--=JkNqcrcenp6F1_CHTun_9wPLVvEWGOFJW=ng=XfO+jHw@mail.gmail.com>
+ <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
+ <CAGr--=JyJHTxtQWSnU7ivQ79qXcg7o4N142+5FSdre851xss6A@mail.gmail.com>
+ <CAKPyHN3S-jLWmfHUyH9mCBPjHCEaBCbrkVQEKFqHv59U37=Kyg@mail.gmail.com>
+ <CAKPyHN08Z_9oByA8ruKwwXRcAfYPU95JaMb=pqQWwGwPVG=_og@mail.gmail.com>
+ <CAGr--=Jn87r_ySYkZmtqUBA40+fwdn0MbuN6_LNDO4mOWyoKTg@mail.gmail.com>
 MIME-Version: 1.0
-From:   =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
-        <stdedos@gmail.com>
-Date:   Tue, 3 Sep 2019 15:44:14 +0300
-Message-ID: <CAHMHMxW4-6AZEDaJU8KOy2kRSLXjdC_RTH528=nnhVLXh=ADUA@mail.gmail.com>
-Subject: Git does not recognise directory named '${sys:DATA_ROOT_DIR}'
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGr--=Jn87r_ySYkZmtqUBA40+fwdn0MbuN6_LNDO4mOWyoKTg@mail.gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello there,
+On 03/09/19 07:37AM, Birger Skogeng Pedersen wrote:
+> On Mon, Sep 2, 2019 at 10:15 PM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+> > does Control-Tab works for traversal?
+> 
+> 
+> Bert,
+> 
+> Control+Tab works for traversal, but as a means to toggle new/amend
+> it's very tedious. I have to press Ctrl+Tab 9 times to select "new"
+> and 10 times to select "Amend"(!). Then 1 or 2 more times to go back
+> to the input area.
+> I sincerely doubt that this is your preferred method of switching
+> between new/amend. At this point we're better of letting go of the
+> keyboard and use the mouse, which is what I'm trying to avoid.
+ 
+Can you try doing a Shift+Tab? For me on Linux, if I hit Shift+Tab, it 
+immediately takes me to the "Amend last commit" option. Then I can press 
+space to select it and Tab again to get back to the commit message.
 
-While the name is obviously a mistake, git refuses to even acknowledge
-the directory.
+Also, since we are on this topic, how about making the "Amend last 
+commit" button a toggle instead? This would act as a "turn amend mode 
+on/off" button. Since "Amend last commit" and "New Commit" are mutually 
+exclusive, a single toggle to switch between those modes makes sense to 
+me.
 
-```
-u@h:~/$ mkdir init-test
-u@h:~/$ cd init-test
-u@h:~/init-test$ git init
-Initialized empty Git repository in /home/u/init-test/.git/
-u@h:~/init-test$ (master #) mkdir \$\{sys\:DATA_ROOT_DIR\}/
-u@h:~/init-test$ (master #) git status
-On branch master
+> > I think this is short enough, so that wasting a Letter is not 
+> > justified here.
+> I (also) often amend commits, so having a hotkey for this is quite a
+> necessity imo.
 
-No commits yet
+Assuming the above works for you, do you still feel the need for a 
+dedicated binding for amends?
 
-nothing to commit (create/copy files and use "git add" to track)
-u@h:~/init-test$ (master #) git add
-.git/                    ${sys:DATA_ROOT_DIR}/
-u@h:~/init-test$ (master #) git add \$\{sys\:DATA_ROOT_DIR\}/
-u@h:~/init-test$ (master #) git commit --signoff -m'a'
-On branch master
-
-Initial commit
-
-nothing to commit
-u@h:~/init-test$ (master #)
-```
-
-Is that expected?
-
-=CE=9D=CF=84=CE=AD=CE=BD=CF=84=CE=BF=CF=82 =CE=A3=CF=84=CE=B1=CF=8D=CF=81=
-=CE=BF=CF=82
+-- 
+Regards,
+Pratyush Yadav
