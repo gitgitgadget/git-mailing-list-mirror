@@ -2,67 +2,49 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88C501F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 18:25:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96F731F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 18:52:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388305AbfIDSZ6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 14:25:58 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:41845 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388187AbfIDSZ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 14:25:57 -0400
-Received: by mail-qk1-f194.google.com with SMTP id o11so1155106qkg.8
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 11:25:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=oijwF0A36hKhSvBu2wEAPSlwQdDd8OruU3DXhH9cVl0=;
-        b=Zl/J7OBVAgan49G5l3YTXqyiCkoLtkvRB5g8sglcwgxrszHkXFv37Mynk+KJ++IUoV
-         LqwmevKEwe9ObSwBcK3FYpBccWlBeBWqzcOMTfKsQaSCIuIFlQ5kiDaeOLAGO5OTRXwa
-         t3mNIUOZVq3HiNLo1tiEp2u3242KqZd2iPgHlVzobrQ43HzHmSD8XI9sk4OFiijH+ffb
-         rXevImfPsyTCc7LaYTBoVXCvKBBn3/hrNrfD2Pzl5vZgTBMB7N76lM+N6qivKFQcrP7S
-         Rk5vNuwZfyf4SNfRI1axqkSstLXDaasgdCbbJP0XkXtpTay14WY+eNegXGbmQdNx2Q/D
-         7c4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=oijwF0A36hKhSvBu2wEAPSlwQdDd8OruU3DXhH9cVl0=;
-        b=Avr3P++ZclNbsgDm4LTzjzCP61J4eeYWBGfGkVa51aDCK/amG2dmACY0zKsOsyZYSM
-         1tsWRFm7iHLlZdipWqGKT79vhtogrb3hd2iTBSSM188h7+xXWmBCBsoJswZs9eQyf/ii
-         avHrpLg+F6BHcJ2pD678hGqlRCB/hlayZe1UrfEqlaa+7aMTwz1yu2TFasVEC1MID00m
-         rLugvCfrxBoOPxsxbxXbeWfjv2mGOmmvSMBHi7nWW25Z1gUgKN1opM09iNgfvZ+rJgkF
-         djSEfyjbWOll5FKaj6055Qbd8IebgqhuNxRUKbrIm4a5pLu3kOkyfl0uAUP7BYyj3gT7
-         T5+Q==
-X-Gm-Message-State: APjAAAXV8SDCe/6PxxHaN7ktGFZrgIFNZKhdIsdl1/yiOkocKBuDmh03
-        WlMF55xY+AP5e2NiSev3y/c=
-X-Google-Smtp-Source: APXvYqwfPKAVRcuAZxQC0+/GPdXlL4ya09nHl8RpNzaO0bRzKkqz0IDFmi5Mb3ylOj3+Y89WDvvyig==
-X-Received: by 2002:ae9:ec06:: with SMTP id h6mr37918858qkg.221.1567621556472;
-        Wed, 04 Sep 2019 11:25:56 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:b1c2:c22:8b00:c17a? ([2001:4898:a800:1012:62f6:c22:8b00:c17a])
-        by smtp.gmail.com with ESMTPSA id u132sm2141874qka.50.2019.09.04.11.25.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Sep 2019 11:25:55 -0700 (PDT)
-Subject: Re: [RFC PATCH 0/1] commit-graph.c: handle corrupt commit trees
-To:     Taylor Blau <me@ttaylorr.com>, stolee@gmail.com
-Cc:     git@vger.kernel.org, peff@peff.net
-References: <cover.1567563244.git.me@ttaylorr.com>
-From:   Garima Singh <garimasigit@gmail.com>
-Message-ID: <c5ba4eaa-f995-5f2e-4f0f-a8f59ba65fd3@gmail.com>
-Date:   Wed, 4 Sep 2019 14:25:55 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+        id S2387842AbfIDSwP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 14:52:15 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:48760 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732885AbfIDSwP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 14:52:15 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 46NtGf5YvGz5tlF;
+        Wed,  4 Sep 2019 20:52:10 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id CB5A91AEB;
+        Wed,  4 Sep 2019 20:52:09 +0200 (CEST)
+Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Bert Wesarg <bert.wesarg@googlemail.com>,
+        Git List <git@vger.kernel.org>, bouncingcats@gmail.com
+References: <CAGr--=Jw4DAqTi3ROujtE=xBMYErMws6B6vhuXYMQA+5Q1ccow@mail.gmail.com>
+ <CAGr--=JkNqcrcenp6F1_CHTun_9wPLVvEWGOFJW=ng=XfO+jHw@mail.gmail.com>
+ <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
+ <CAGr--=JyJHTxtQWSnU7ivQ79qXcg7o4N142+5FSdre851xss6A@mail.gmail.com>
+ <CAKPyHN3S-jLWmfHUyH9mCBPjHCEaBCbrkVQEKFqHv59U37=Kyg@mail.gmail.com>
+ <CAKPyHN08Z_9oByA8ruKwwXRcAfYPU95JaMb=pqQWwGwPVG=_og@mail.gmail.com>
+ <CAGr--=Jn87r_ySYkZmtqUBA40+fwdn0MbuN6_LNDO4mOWyoKTg@mail.gmail.com>
+ <20190903124541.2p5hmknolh2dwqh5@yadavpratyush.com>
+ <971bbc44-d3d4-552d-d18e-58a2315c6183@kdbg.org>
+ <20190904174103.nrntgwv6zdqyjqsh@yadavpratyush.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <8a726eea-f461-db90-7e36-70b708ff8915@kdbg.org>
+Date:   Wed, 4 Sep 2019 20:52:09 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <cover.1567563244.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20190904174103.nrntgwv6zdqyjqsh@yadavpratyush.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -70,37 +52,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On 9/3/2019 10:22 PM, Taylor Blau wrote:
-> Hi,
+Am 04.09.19 um 19:46 schrieb Pratyush Yadav:
+> On 04/09/19 08:24AM, Johannes Sixt wrote:
+>> That is worth a try. The check box title offers a natural hotkey then:
+>> "_A_mend last commit", Alt-a.
 > 
-> I was running some of the new 'git commit-graph' commands, and noticed
-> that I could consistently get 'git commit-graph write --reachable' to
-> segfault when a commit's root tree is corrupt.
-> 
-> I have an extremely-unfinished fix attached as an RFC PATCH below, but I
-> wanted to get a few thoughts on this before sending it out as a non-RFC.
-> 
-> In my patch, I simply 'die()' when a commit isn't able to be parsed
-> (i.e., when 'parse_commit_no_graph' returns a non-zero code), but I
-> wanted to see if others thought that this was an OK approach. Some
-> thoughts:
+> Right now, the binding proposed is Ctrl-e.  My mental model for the key 
+> bindings as of now is having the "actions" bound to Ctrl, and bindings 
+> that move you around in the UI bound to Alt.  So it makes more sense to 
+> me to have a "amend toggle" bound to Ctrl.  Maybe that's just me though.  
+> Anyone else care to chime in?
 
-I like the idea of completely bailing if the commit can't be parsed too.
-Only question: Is there a reason you chose to die() instead of BUG() 
-like the other two places in that function? What is the criteria of 
-choosing one over the other?
+"Amend last commit" is NOT an action. It switches a state.
 
-> 
->    * It seems like we could write a commit-graph by placing a "filler"
->      entry where the broken commit would have gone. I don't see any place
->      where this is implemented currently, but this seems like a viable
->      alternative to not writing _any_ commits into the commit-graph.
+It is common in Windows GUIs that every control, including menu items,
+has a hotkey associated, the underlined letter in the caption, and the
+hotkey to access that UI control is Alt+that letter. It's not
+necessarily a matter of moving around.
 
-I would rather we didn't do this cause it will probably kick open the 
-can of always watching for that filler when we are working with the 
-commit-graph. Or do we already do that today? Maybe @stolee can chime in 
-on what we do in cases of shallow clones and other potential gaps in the 
-walk
+And, BTW, this hotkey thing is also the case on my Linux desktop
+(KDE-based).
 
--Garima
+But of course, git-gui is different and totally off track here. It has
+*zero* controls marked for hotkey-accessibility. I was just hoping to
+spark an effort to make some of the controls marked and hotkey-accessible.
+
+-- Hannes
