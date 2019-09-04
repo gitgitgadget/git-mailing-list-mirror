@@ -2,119 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EF211F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 20:30:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 260C01F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 20:31:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729122AbfIDUag (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 16:30:36 -0400
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:46783 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727426AbfIDUag (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 16:30:36 -0400
-Received: by mail-ua1-f66.google.com with SMTP id k12so3180030uan.13
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 13:30:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rUY+nIF7FKqdAs81rDqPm0uybUAECihhoruQzdbAPvw=;
-        b=lX/xR6gFD4KKJugY+kAIltNBmPzbdn1o5r7nbO+TiF7e/Tns5VCGxCyHAHBKzsndrh
-         18jBF0RCCIkHahiNbSPXrmBkrjGhqEIqqdbZGPSpLUkHihxbmule/z/pKhM385KCvQju
-         lFfyLFO5paetgXRhejEq1TDerC6uPnTRdGfK93RxbeqzC9akHKfVdfPevGJVzm2HUMr/
-         0f+uI13905LjyrUEWpk7wNdEnNyvxKAO45w0ZuCFRwSMqSLRAIDEwh32FaSr0J1Jh+W9
-         EQOwOF8YCEKSS8XJUpbbQJNEGCJfwl9CD1hz6F0FD2ag2U6oY0r3M4/spAZ7MGCB+KHX
-         DGYQ==
+        id S1729753AbfIDUbb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 16:31:31 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40040 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728196AbfIDUbb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 16:31:31 -0400
+Received: by mail-wr1-f66.google.com with SMTP id w13so180279wru.7
+        for <git@vger.kernel.org>; Wed, 04 Sep 2019 13:31:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=rUY+nIF7FKqdAs81rDqPm0uybUAECihhoruQzdbAPvw=;
-        b=mQoeEC6qxMwttOY77W5NaCP3gqyl1aTysx+Fd7qFnRiDVsUXHggFGve4uEYQrva95j
-         6ZH33XvQOW7/W7NECBtwAwcsoPXZVSlNkGHFv1cMLPn7Vmkzpqstj3OP3bNmBB7XSCfV
-         cTf3xWJ6xadwt95QFHCeVBg7S4zESUIEnuYXe/GQp4rAYpk7e1Z04BFmkVKFPrO82oyl
-         p0+NbAoPuHN6JUbSFdt+JreGhSLQb+LZNq2NTrRbSV2ZteyK17Q+KlZemhhsSFmLkLBk
-         jbufxh4AKv718P0EihEZjg0Ui77AXohII7tSzdz+nby8Nts1BpQ9WWUdR0qXT57EQbVY
-         /S7g==
-X-Gm-Message-State: APjAAAXTagbnrtC74C7VkGRzF3MrzP2ryjfJpvcdAd9BBCF2GDI7pgrb
-        aDl/atDu0MqBs+du36r0hzgV1wvxYB2TltcZ8j4=
-X-Google-Smtp-Source: APXvYqzGkjKT8/U1ZA9LXNhucajtN8+vKF4zrnj9gLHL8QYzWfsK9IbGYcvN3jvqgWUatg+0Vj751Vp9+YmkA1icsJ8=
-X-Received: by 2002:ab0:6908:: with SMTP id b8mr4620375uas.18.1567629035379;
- Wed, 04 Sep 2019 13:30:35 -0700 (PDT)
+        bh=AuM6bBQp9fuHGEBngEnBg53dJe97KZEtt0B4GoDcQCs=;
+        b=lzjtWE3UNmwESyyJ5sEVvygRLjII2cQX80PbRhgc3gP/mtXgo8wm9Xu4kVUW+V73YY
+         AX1PzWEOVK+XGvA5egDqexviLqP/pYyweHMCnKFLOGTMwFyd5HGGcgv5Jvk6GJubtv30
+         tEsECzwn12UgeKTTv4PRjfp18DQPLbr9hQzLEIix+qlr7/dy5JJLHR4Mpawyi6eQFPTV
+         H1+PPlGZL20NmakZ4XHr+JJcv/8LXc7YB2+IWOG1Vgpje835IAP1N0SE/2zsaNNKIU19
+         E2B2SUIuZ7V/MAy7Fp3rxSs1qN5IdI+1vjRABfhoEyV2A1eS+qJ09TvZwUakamG8sFLO
+         EqLA==
+X-Gm-Message-State: APjAAAVAIn2GbNg0IsXgRWklGckk/yUgf/IcgC9eRqxXGNxCEFfw0a1v
+        N4U8gKboNZwYcLVHv+6T92nCDpTBfYo77i/Y23U=
+X-Google-Smtp-Source: APXvYqyVnKDVo6wxBiq0cBLhQKlf4IiKj8d51X6UY1SD/PfEdjxNOxmMM+I+qX5VSslt2e0PreEh4XlSOEupeqE8L50=
+X-Received: by 2002:a5d:6647:: with SMTP id f7mr19740026wrw.170.1567629089334;
+ Wed, 04 Sep 2019 13:31:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190828002210.8862-1-newren@gmail.com> <20190903185524.13467-1-newren@gmail.com>
- <20190903185524.13467-4-newren@gmail.com> <xmqqo901rrcs.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqo901rrcs.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 4 Sep 2019 13:30:23 -0700
-Message-ID: <CABPp-BEEb1gZbChjbNQt_anUL65Le3Zf=seM9m3yEN1sEBf=BA@mail.gmail.com>
-Subject: Re: [PATCH v5 3/4] Recommend git-filter-repo instead of git-filter-branch
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>, Eric Wong <e@80x24.org>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+References: <7da71d89f9fa987eca2e25974e4cec382c146e44.1567627609.git.bert.wesarg@googlemail.com>
+ <62ef03a2938ac0d2158b1c3201c7f10e52e30ecb.1567627609.git.bert.wesarg@googlemail.com>
+In-Reply-To: <62ef03a2938ac0d2158b1c3201c7f10e52e30ecb.1567627609.git.bert.wesarg@googlemail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 4 Sep 2019 16:31:18 -0400
+Message-ID: <CAPig+cTZiOBwaM-BE-19CzJuZ4NwCZTaDc22WuY+bv8BLP=rrQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] git-gui: add horizontal scrollbar to commit buffer
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     Git List <git@vger.kernel.org>, me@yadavpratyush.com,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 3, 2019 at 2:40 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> > index 5c5afa2b98..f805965d87 100755
-> > --- a/git-filter-branch.sh
-> > +++ b/git-filter-branch.sh
-> > @@ -83,6 +83,19 @@ set_ident () {
-> >       finish_ident COMMITTER
-> >  }
-> >
-> > +if [ -z "$FILTER_BRANCH_SQUELCH_WARNING" -a \
-> > +     -z "$GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS" ]; then
->
-> This is probably the only place where [] instead of "test" is used
-> in our shell scripts.
->
-> if test -z "$FILTER_BRANCH_SQUELCH_WARNING$GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS"
-> then
->     ...
+On Wed, Sep 4, 2019 at 4:10 PM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+> While the commit message widget has a configurable fixed width, it
+> nevertheless allows to write commit messages which exceed this limit.
+> Though it does not show this content because there is not scrollbar for
+> this widget. No it is.
 
-Yeah, git-filter-branch.sh has approximately twice as many uses of []
-than "test", so it seemed in line with its coding style.  I can switch
-it over.
+"No it is" what?
 
-> > +     cat <<EOF
-> > +WARNING: git-filter-branch has a glut of gotchas generating mangled history
-> > +         rewrites.  Please use an alternative filtering tool such as 'git
-> > +         filter-repo' (https://github.com/newren/git-filter-repo/) instead.
-> > +         See the filter-branch manual page for more details; to squelch
-> > +         this warning, set FILTER_BRANCH_SQUELCH_WARNING=1.
-> > +
-> > +EOF
-> > +     sleep 5
-> > +fi
->
-> This should say it is "sleeping while showing the message and can
-> safely be killed before starting to do any harm"; alternatively it
-> should lose the "sleep".  The user would have fear against typing ^C
-> to get out of a bulk history rewrite command, and the message itself
-> is making the fear worse.  If your goal is to discourage its use,
-> then it would be a good idea to make it clear when it is safe to
-> kill it before going and studying the alternative.  Otherwise, the
-> sleep does not help that much---the main complaint is that filter
-> branch is too slow, so the user has plenty of time to read the
-> message anyway, right? ;-)
-
-Makes sense; will fix.
+> Suggested-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
