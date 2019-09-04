@@ -2,136 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CEF71F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 05:04:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E0AD1F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 05:44:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728545AbfIDFEn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 01:04:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38694 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725877AbfIDFEn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 01:04:43 -0400
-Received: (qmail 18639 invoked by uid 109); 4 Sep 2019 05:04:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 04 Sep 2019 05:04:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11674 invoked by uid 111); 4 Sep 2019 05:06:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Sep 2019 01:06:23 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 4 Sep 2019 01:04:42 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] upload-pack: fix race condition in error messages
-Message-ID: <20190904050441.GB6488@sigill.intra.peff.net>
-References: <20190828145412.GB14432@sigill.intra.peff.net>
- <20190828153944.GA29715@sigill.intra.peff.net>
- <20190828161552.GE8571@szeder.dev>
- <4d5773f9-4637-d8a3-d683-82624950f319@gmail.com>
- <20190829141307.GE1797@sigill.intra.peff.net>
- <131dfa37-0f65-f0c3-6f30-5b6eca12d9c0@gmail.com>
- <20190829143805.GB1746@sigill.intra.peff.net>
- <20190829215818.GG8571@szeder.dev>
- <20190829220630.GH8571@szeder.dev>
- <20190830121005.GI8571@szeder.dev>
+        id S1727722AbfIDFoz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 01:44:55 -0400
+Received: from mail-lj1-f173.google.com ([209.85.208.173]:45411 "EHLO
+        mail-lj1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725877AbfIDFoz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 01:44:55 -0400
+Received: by mail-lj1-f173.google.com with SMTP id l1so18326479lji.12
+        for <git@vger.kernel.org>; Tue, 03 Sep 2019 22:44:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=i89ZpZCqA5PqtUYqydgBCjxFE0Xmwx/moHuVIB66y2g=;
+        b=EiST12akRKgHJydmNDRYNtYjbX7036ONivf8Zp/fJCV0xhnbeXHk39peOUf7RhphCc
+         BMalQ4x6NwaBTmS/b1hKHEOesGLkIYMGPJYrrLZiJdXCVJKiMPWblpnxyAqQnXt05tiQ
+         cPv4UF8KQBe7nK2rR99x1qlYEQG5bSmf/ow0jIMslLtkHXdiR2SFo4Zls2Yk1BUVvWvG
+         dXgPbRTcNcrMy1pomKjZKvOBo/mwyb5TIlISZsum/u/ArvgwXJ/ndMLouvqt+2HnshjU
+         5KTjD8LtoQgPP7TIL33gpc8p65fiNbuWAqoI4xMC1dTS4pZ8LKXmrkYNPB6uVi1k2o8l
+         ZpEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=i89ZpZCqA5PqtUYqydgBCjxFE0Xmwx/moHuVIB66y2g=;
+        b=YWA7gAHps9WCdviqrtUZlJbOB5mOyEeH/lPdTtYX7X8H/ouN/kco0XYpAZ6YgRwsRd
+         0LaM8Ww/ENt0Rh72x4dTaDU4hW/M7cGETrpJVgChpqSxnEWeOM0cWbXbvZItzgMCqeLP
+         ijjz8JXKbS9fsOoaut14JDXO0CN/4fHL0eRa5Gyj6nb4ZYD7Xw1ldSqdZjuAUSJ3bE8s
+         hOEmcH8qYDAbxoYEs0tPb75Qba1TJm8/NcHYXrfZSuO8kOxtXoPaQzVpwt8PsmTnZQNq
+         5SIxPmkHEzjRB7c6BI26Hhhuix93HMncz7gvDp+y1pb27o8JalZ80/xX9jMrHU0IY1tU
+         pDPQ==
+X-Gm-Message-State: APjAAAXPJVFxyoLlwuFTRvvCicLb6bS58d9wqLKdX6mJvRbEwj+u1OoG
+        0AGfUTuMQSSHo+o/fc1kEJH9pwfkKY8EDAS+9tO1GqD+3GQ=
+X-Google-Smtp-Source: APXvYqxy255L2yQify1zqgrWbodXKLPtCJsg8tOPwpQic2JHFrCBbXogFkGioi8YNLQS0xTjjoEnGn4Mge40WfutcHc=
+X-Received: by 2002:a05:651c:1023:: with SMTP id w3mr20827497ljm.94.1567575892942;
+ Tue, 03 Sep 2019 22:44:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190830121005.GI8571@szeder.dev>
+References: <CAGr--=+ThYVyZUiU1wnt0yL+MzF1RXvHnbwo9NWyh95cLyhNRQ@mail.gmail.com>
+ <CAKPyHN1LJa8Zq6rZbOMZ-KxkqQYauQcvjv+rTrHt1_zwPZLZ-A@mail.gmail.com>
+ <CAGr--=+CEX-STDgT_ZwaA=n9UHSrsgcWnxCMY=9tGDA=9XLkew@mail.gmail.com>
+ <20190902181213.7jqvoyctdm26g34z@yadavpratyush.com> <CAGr--=JgqjC8FskqVFJTqAnQ5aq8J4z-Wje8s22VwBgVtkBF-Q@mail.gmail.com>
+ <20190902184405.bfb5572iia2v2uwi@yadavpratyush.com> <20190902185819.fzf3lop6riiq6zja@yadavpratyush.com>
+In-Reply-To: <20190902185819.fzf3lop6riiq6zja@yadavpratyush.com>
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
+Date:   Wed, 4 Sep 2019 07:42:28 +0200
+Message-ID: <CAGr--=+UA04F8JtpN3b8SahYtVkYgR45j_xeb3759DrtQOY6rg@mail.gmail.com>
+Subject: Re: git-gui: Long lines in commit message gets hidden, no scrollbar appears
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 30, 2019 at 02:10:05PM +0200, SZEDER Gábor wrote:
+Hi Pratyush,
 
-> On Fri, Aug 30, 2019 at 12:06:30AM +0200, SZEDER Gábor wrote:
-> > On Thu, Aug 29, 2019 at 11:58:18PM +0200, SZEDER Gábor wrote:
-> > > On Thu, Aug 29, 2019 at 10:38:05AM -0400, Jeff King wrote:
-> > > > So any fixes there have to happen on the client side. I am still
-> > > > confused about why the client is writing in this case, per the argument
-> > > > in 014ade7484 (upload-pack: send ERR packet for non-tip objects,
-> > > > 2019-04-13). It would be nice to use GIT_TRACE_PACKET to see what it's
-> > > > trying to write, but I still haven't been able to reproduce the issue.
-> > > 
-> > > It's the "done" line:
-> > > 
-> > >   + cat trace-packet
-> [...]
-> > >   packet:  upload-pack> 0000
-> > >   packet:        fetch> done
-> > > 
-> > > In the avarage successful run that "fetch> done" pkt-line is
-> > > immediately after the "fetch> 0000".
 
-Thanks for all of your persistent digging on this. I had forgotten about
-the "done" packet, but it explains all of the symptoms we've seen.
+Just wanted to chime in on this one:
 
-> So instead of immediately die()int after write_in_full() returned an
-> error, fetch should first try to read all incoming packets in the hope
-> that the remote did send an ERR packet before it died, and then die
-> with the error in that packet, or fall back to the current generic
-> error message if there is no ERR packet (e.g. remote segfaulted or
-> something similarly horrible).  This fixes the test failure with that
-> strategically-placed sleep() in 'fetch-pack.c'.
-> 
->   https://travis-ci.org/szeder/git/jobs/578778749#L2689
-> 
-> Alas, passing a 'reader' to a function called send_request() doesn't
-> look quite right, does it...  And I'm not sure about the stateless
-> communication, it still uses write_or_die().
+On Mon, Sep 2, 2019 at 8:58 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> On second thought, wouldn't it make more sense to expand the commit
+> message buffer instead? The point of resizing that pane is to see more
+> of the commit message. So it makes more sense to make the commit message
+> buffer take up all the vertical space, rather than making the scrollbar
+> move.
 
-And thank you for putting this patch together. I had taken a stab at it
-a while ago, but got discouraged by figuring out at which layer to add
-the "reader" info (I had envisioned it much lower in packet_write(), but
-it is clear from your patch that fetch-pack does most of its own
-writing).
+I also think it makes sense to expand the commit message buffer. And
+how about automatic word wrapping? Should the user really have to care
+about the 72 character limit, while typing the commit message? I'm not
+sure what solution would be best.
 
-I agree passing around the reader is a bit weird; I wonder if we should
-be representing the full-duplex connection more clearly as a single
-struct. But I suspect that creates other headaches, and what you have
-here doesn't look _too_ bad. As you note, it probably doesn't cover all
-code paths, but it at least fixes some of them, and gives us a template
-for addressing the others.
 
->  	} else {
-> -		if (write_in_full(fd, buf->buf, buf->len) < 0)
-> +		if (write_in_full(fd, buf->buf, buf->len) < 0) {
-> +			int save_errno = errno;
-> +			/*
-> +			 * Read everything the remote has sent to us.
-> +			 * If there is an ERR packet, then the loop die()s
-> +			 * with the received error message.
-> +			 * If we reach EOF without seeing an ERR, then die()
-> +			 * with a generic error message, most likely "Broken
-> +			 * pipe".
-> +			 */
-> +			while (packet_reader_read(reader) != PACKET_READ_EOF);
-> +			errno = save_errno;
->  			die_errno(_("unable to write to remote"));
-> +		}
-
-One unfortunate thing here is that we could block indefinitely in
-packet_reader_read(). That shouldn't happen, I don't think, but since
-this is an error case where we've been cutoff, anything's possible.
-
-We maybe could get away with using non-blocking I/O. We're looking for
-an ERR packet the other side sent us _before_ it hung up, so in theory
-we've have received the data before any FIN packet (or EOF on a pipe).
-But I'm wary of introducing new races there.
-
-It might be enough to put in an actual timer, waiting for an ERR packet,
-EOF, or something like 5 seconds. Or maybe I'm just being overly
-paranoid.
-
--Peff
+Birger
