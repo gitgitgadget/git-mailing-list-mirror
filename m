@@ -2,120 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D84041F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 17:55:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61A641F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 18:25:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731714AbfIDRzG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 13:55:06 -0400
-Received: from mail-qk1-f180.google.com ([209.85.222.180]:44203 "EHLO
-        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730323AbfIDRzF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 13:55:05 -0400
-Received: by mail-qk1-f180.google.com with SMTP id i78so18973037qke.11
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 10:55:05 -0700 (PDT)
+        id S2388112AbfIDSZG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 14:25:06 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:38411 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388402AbfIDSAa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 14:00:30 -0400
+Received: by mail-lj1-f195.google.com with SMTP id h3so13704153ljb.5
+        for <git@vger.kernel.org>; Wed, 04 Sep 2019 11:00:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7LaEJmpF7LJ4q9EfRBwgyyhqbIdFjM1xylU8qxUpJVI=;
-        b=A5rkZsOyxk2+MMhZ2ourvadVT4XIH3AiJpTLaoe7pRkcTmx8kGpkwIvqeNjpYXKNFi
-         E1zzT/6hvVrSs9coTC57xn2WIe8mrGQnyQjAKNr3xcDx6M7YpjIPkJTPS+FQx46qiXcP
-         cSGV6ap5VlQ8blORkEvmLDuYdjJ2bbL25F3TBbDXjzV6mNsrVkg6tgy+boClWOZVEvXr
-         oiS4XKM1h8cvSgAhUOsIbzMpBFsgJW4xkKo6A3s4BwB3MXDV60Zmt5Y9mCegbm3DQ0AB
-         y8BUqyE6nDnDZLI5PzBO10+khcc4JxCm0aRRHjdHqkWHLTUZvFcKZb+2J0bwVmK6QFQR
-         Ppag==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=WkmT1g2ddwA6H7N3/G0nunoFdX69aU2dvvV4JhjUHZY=;
+        b=NZ3A5rRyonkl9kOaq0Ca80rpnt2/VbYCBmMm7WChdw5d+salNst2VtCPEI5ty+F/oi
+         WSoegL+X0K1JwkRnVkt1qa2xifExJV/IgzUuW2Hdq+uNlgMUUBna2avpOxXJMSugPZce
+         uq8XyxpwVBSO1SSHKL+5FMhcprHHwLIp/ur86bGKPtMEdDettUMstUEg3yZeCwdGevc0
+         THxrH4i4krlnsSJ+10ZqxyFep/QGuHxwMpF5KBX6O0WhDockcQ/N3PC+aHoDcC7oA+v1
+         0SfqEPzQV2pgNfsKWKLyobiB1IhxHg+FsJLvG27b8zPZv3y1WGZkR+31gqQ0j5TUp3I1
+         MR+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7LaEJmpF7LJ4q9EfRBwgyyhqbIdFjM1xylU8qxUpJVI=;
-        b=N0MLnB+nwZczkPX3lDM7Gly45QGWsSqABzac710UMF5fyqHXdkEsSIjK5tFOdvidjF
-         mtWfyxo+JvXIFF9Td0QG3k+N3Z8SyVG8yZAmCAX+Co6CqgL8gozSlL7ftBi8ZARmk6Iz
-         gIg2d1Ikzw4gY09sEs7dwtVlJ62Mr0zjHqQpYv4W2ib0ERNpRjKY6B/imclZgXbdsWAz
-         2+VDPDy4pM72hGWYDKoQ/+B/2pLiZlxayI2OSex/TRkMDrIFgOQm0szvrITE5JtpCE1/
-         YQ7HFsoWD91+jXK38DsphtPcnqlpAkQbd+WKgNqqBrndzKR+XQ+mPuIq/QKdA12xU1du
-         QKoA==
-X-Gm-Message-State: APjAAAUqsQWfn+Rn2f3nYRx43kccg7txug6OvDurK/fmwnZ93WoZOdkY
-        O/wGWjfFPRFkUPyLz+H2OrghQuOJV7U=
-X-Google-Smtp-Source: APXvYqwjgyBiVa0H8NaLL6NOM2XOXj4yaLVJC+iwoGsaZGSxl6qobt7mv/E9QQmRyvAE2lJDjUg6NQ==
-X-Received: by 2002:a37:6650:: with SMTP id a77mr28203016qkc.65.1567619704291;
-        Wed, 04 Sep 2019 10:55:04 -0700 (PDT)
-Received: from localhost ([2605:9480:205:dfe1:24fd:2e2b:8aac:d853])
-        by smtp.gmail.com with ESMTPSA id t17sm991319qtt.57.2019.09.04.10.55.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Sep 2019 10:55:03 -0700 (PDT)
-Date:   Wed, 4 Sep 2019 13:55:03 -0400
-From:   Taylor Blau <me@ttaylorr.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=WkmT1g2ddwA6H7N3/G0nunoFdX69aU2dvvV4JhjUHZY=;
+        b=cQOQlZrZ8oy26GsAkB5k1ma/N5MNo84dTEQR/FMHNh+4p6zKzmcOfs8rNr0Gu5p3U3
+         i/QmxGnH9BGh1CihEmfcztiKmUAna8uuTjb5CHXpLYIJ1yNqPMnrDkRY3S6QOrFOFXcM
+         EAUvINCIlBqwei0c0ZDOiRfrEns3Cyid5hoa5aOgYGJCFGDAbum+LsxmlHQd6Uin+FIC
+         lcOVdLOvxn07/3v1D3nFfM3nwTrXwvRb9OVy3/lR62zRQAjutJDZrcW7Btjh2Pj0nJzA
+         FpKqSStyioBzqtxx1tCICCbfYFjnnrSVOJjUuvSfQ5QGaiPi9rmJ/q8Sj7IsLrS4hNqv
+         eP6w==
+X-Gm-Message-State: APjAAAV3IisGHh9JeJmbjtDmX63wrhDemqNS4w0bL9Qsd3fuk9KmObCh
+        TXj3dU2/6sI+gxccKZ+dy6GCQbz0gNwFzQ==
+X-Google-Smtp-Source: APXvYqx41Bki8YZX9Qiiz6N3EDX+ANf2tXW9O8laNiOM2UihtEsIH6Q3r2/KQSNHNR99eC+0UaIdcg==
+X-Received: by 2002:a2e:9a82:: with SMTP id p2mr23918279lji.64.1567620028060;
+        Wed, 04 Sep 2019 11:00:28 -0700 (PDT)
+Received: from localhost.localdomain (static243-191-189.mimer.net. [83.243.191.189])
+        by smtp.gmail.com with ESMTPSA id q25sm3662429lfc.79.2019.09.04.11.00.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 04 Sep 2019 11:00:27 -0700 (PDT)
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
 To:     git@vger.kernel.org
-Cc:     peff@peff.net
-Subject: [PATCH 1/1] contrib/git-jump/git-jump: support alias expansion
-Message-ID: <473a7c7b241ad2d449d3bcb6daeb77a179c7e45f.1567619579.git.me@ttaylorr.com>
-References: <cover.1567619579.git.me@ttaylorr.com>
+Cc:     me@yadavpratyush.com,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH v2] git-gui: add hotkey to toggle "Amend Last Commit" radio selector
+Date:   Wed,  4 Sep 2019 19:59:43 +0200
+Message-Id: <20190904175943.11924-1-birger.sp@gmail.com>
+X-Mailer: git-send-email 2.21.0.windows.1
+In-Reply-To: <20190904173642.2hkrqm5klatw33w7@yadavpratyush.com>
+References: <20190904173642.2hkrqm5klatw33w7@yadavpratyush.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1567619579.git.me@ttaylorr.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a caller of 'git-jump' has, say, the alias 'di' assigned to 'diff',
-it can be cumbersome to remember to type 'git jump diff' instead of the
-shorthand '... di' that they are used to.
+Selecting whether to do a "New Commit" or "Amend Last Commit" does not have
+a hotkey.
 
-Let's teach 'git-jump' to expand these aliases before calling the
-mode-specific subroutine. Do so by fetching the configuration value of
-'alias.$1', defaulting to "$1" in the case that no alias is set.
+With this patch, the user may toggle between the two options with
+CTRL/CMD+e.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 ---
- contrib/git-jump/README   | 4 ++++
- contrib/git-jump/git-jump | 4 +++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ git-gui.sh | 40 +++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 35 insertions(+), 5 deletions(-)
 
-diff --git a/contrib/git-jump/README b/contrib/git-jump/README
-index 2f618a7f97..9e59990ba0 100644
---- a/contrib/git-jump/README
-+++ b/contrib/git-jump/README
-@@ -74,6 +74,10 @@ git jump grep -i foo_bar
+diff --git a/git-gui.sh b/git-gui.sh
+index 5bc21b8..47c5db0 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1445,7 +1445,7 @@ proc force_amend {} {
+ 	set commit_type $newType
  
- # use the silver searcher for git jump grep
- git config jump.grepCmd "ag --column"
-+
-+# jump to changes via an alias of 'git diff', assuming you have set
-+# `git config alias.diff di`
-+git jump di
- --------------------------------------------------
- 
- 
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index 931b0fe3a9..15e129b350 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -15,6 +15,8 @@ grep: elements are grep hits. Arguments are given to git grep or, if
-       configured, to the command in `jump.grepCmd`.
- 
- ws: elements are whitespace errors. Arguments are given to diff --check.
-+
-+Aliases of any of the above are expanded automatically.
- EOF
+ 	set selected_commit_type amend
+-	do_select_commit_type
++	ui_select_commit_type
  }
  
-@@ -68,7 +70,7 @@ if test $# -lt 1; then
- 	usage >&2
- 	exit 1
- fi
--mode=$1; shift
-+mode="$(git config --default "$1" --get -- "alias.$1")"; shift
+ proc rescan {after {honor_trustmtime 1}} {
+@@ -2640,6 +2640,16 @@ proc show_less_context {} {
+ 	}
+ }
  
- trap 'rm -f "$tmp"' 0 1 2 3 15
- tmp=`mktemp -t git-jump.XXXXXX` || exit 1
++proc toggle_commit_type {} {
++	global selected_commit_type
++	if {[string match amend* $selected_commit_type]} {
++		set selected_commit_type new
++	} else {
++		set selected_commit_type amend
++	}
++	ui_select_commit_type
++}
++
+ ######################################################################
+ ##
+ ## ui construction
+@@ -2824,13 +2834,31 @@ proc commit_btn_caption {} {
+ 	}
+ }
+ 
++proc ui_select_commit_type {} {
++	global selected_commit_type
++	global ui_commit_type_commit ui_commit_type_amend
++
++	do_select_commit_type
++	if {$selected_commit_type eq {new}} {
++		.mbar.commit entryconf [mc "New Commit"] \
++			-accelerator {}
++		.mbar.commit entryconf [mc "Amend Last Commit"] \
++			-accelerator $::M1T-E
++	} elseif {$selected_commit_type eq {amend}} {
++		.mbar.commit entryconf [mc "New Commit"] \
++			-accelerator $::M1T-E
++		.mbar.commit entryconf [mc "Amend Last Commit"] \
++			-accelerator {}
++	}
++}
++
+ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
+ 	menu .mbar.commit
+ 
+ 	if {![is_enabled nocommit]} {
+ 		.mbar.commit add radiobutton \
+ 			-label [mc "New Commit"] \
+-			-command do_select_commit_type \
++			-command ui_select_commit_type \
+ 			-variable selected_commit_type \
+ 			-value new
+ 		lappend disable_on_lock \
+@@ -2838,7 +2866,8 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
+ 
+ 		.mbar.commit add radiobutton \
+ 			-label [mc "Amend Last Commit"] \
+-			-command do_select_commit_type \
++			-accelerator $M1T-E \
++			-command ui_select_commit_type \
+ 			-variable selected_commit_type \
+ 			-value amend
+ 		lappend disable_on_lock \
+@@ -3315,14 +3344,14 @@ set ui_coml .vpane.lower.commarea.buffer.header.l
+ if {![is_enabled nocommit]} {
+ 	${NS}::radiobutton .vpane.lower.commarea.buffer.header.new \
+ 		-text [mc "New Commit"] \
+-		-command do_select_commit_type \
++		-command ui_select_commit_type \
+ 		-variable selected_commit_type \
+ 		-value new
+ 	lappend disable_on_lock \
+ 		[list .vpane.lower.commarea.buffer.header.new conf -state]
+ 	${NS}::radiobutton .vpane.lower.commarea.buffer.header.amend \
+ 		-text [mc "Amend Last Commit"] \
+-		-command do_select_commit_type \
++		-command ui_select_commit_type \
+ 		-variable selected_commit_type \
+ 		-value amend
+ 	lappend disable_on_lock \
+@@ -3843,6 +3872,7 @@ bind .   <$M1B-Key-equal> {show_more_context;break}
+ bind .   <$M1B-Key-plus> {show_more_context;break}
+ bind .   <$M1B-Key-KP_Add> {show_more_context;break}
+ bind .   <$M1B-Key-Return> do_commit
++bind .   <$M1B-Key-e> toggle_commit_type
+ foreach i [list $ui_index $ui_workdir] {
+ 	bind $i <Button-1>       { toggle_or_diff click %W %x %y; break }
+ 	bind $i <$M1B-Button-1>  { add_one_to_selection %W %x %y; break }
 -- 
-2.22.0
+2.21.0.windows.1
+
