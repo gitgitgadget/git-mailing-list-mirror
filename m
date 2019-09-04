@@ -2,32 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F76D1F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 17:46:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F11211F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 17:54:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730119AbfIDRqx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 13:46:53 -0400
-Received: from relay10.mail.gandi.net ([217.70.178.230]:44047 "EHLO
-        relay10.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726589AbfIDRqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 13:46:53 -0400
-Received: from localhost (unknown [157.49.235.162])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay10.mail.gandi.net (Postfix) with ESMTPSA id AC3CE240006;
-        Wed,  4 Sep 2019 17:46:49 +0000 (UTC)
-Date:   Wed, 4 Sep 2019 23:16:43 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Bert Wesarg <bert.wesarg@googlemail.com>,
-        Git List <git@vger.kernel.org>, bouncingcats@gmail.com
-Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
-Message-ID: <20190904174103.nrntgwv6zdqyjqsh@yadavpratyush.com>
+        id S1731712AbfIDRyl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 13:54:41 -0400
+Received: from mail-lj1-f174.google.com ([209.85.208.174]:39203 "EHLO
+        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730323AbfIDRyk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 13:54:40 -0400
+Received: by mail-lj1-f174.google.com with SMTP id j16so14365215ljg.6
+        for <git@vger.kernel.org>; Wed, 04 Sep 2019 10:54:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DlU1oM3gGh8c93kwFtZjmNIfs+YQBdvUBpw1QPvqfNQ=;
+        b=hX7a7ucjRoyRDxwcOn2xnLENrV39dS/Y+MiOIVL8J3IeARiG34uu6P19IsgCF9uU1E
+         N+Nyt/U22xve5jy+sIQ2EpIQkRWAxP/mAUBU+jE8y/wbnBFp6GtGrTCfKdin4uoNhm+j
+         LlWEwln2EF1jFMHq0RJDoG0YTvhojjypMV+5hz4nwlbYyQ5yflLrfw23PKf3W+9G7ULA
+         yzbzDwTpvUVU3nkDMSaEtUhCFNzbCcRcr3mnqCLWATZN3tBy88vvzQa2B9y6gvU6CsCg
+         X5bBAHC8AIY8s/nK2/6vOxT7AfvPXD3iHXAae1oTIsIkdZhyikpiDg/9oDmCVmq0q59Y
+         eLUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DlU1oM3gGh8c93kwFtZjmNIfs+YQBdvUBpw1QPvqfNQ=;
+        b=a3T2dEC+LsVVkDIaJRrM58T2tnvjYMCyDCernHcrpbbeZDUmeuGpwapqAbmGxew4an
+         xcpDLv5brDk82x3yrOpisykOgIRzcmPYagn9GSw9p/eiOHXsSYvRoJlyhjKe0dOK9F7W
+         pYopCZeOvTpSRbY5OLzxbeIaoX4p3c2zZ30zatmiUN4rKQ796dAvna8vufq/1gfVYrks
+         feTUy/HBQjjaziOPwDIl2OoO4XuiTvTEnohTu6Ns6wv4u4iVHCMrKA9uW+xxXCCTtaY/
+         tuJBZxVi67VtrpU3t6ar2vjmYrKnI4BGf7h+AHhmJebZiOauZYOGFqo1pFeXuXRMDlm+
+         9FYg==
+X-Gm-Message-State: APjAAAUzSeIEk1bOkxuKt80LtqcixA2N2Yy8tY7ID2uhgms5U6QUqTgd
+        S3WJaahCFy0Nsg9iAKiY3M8uXnjYPZbpziVQCC3J6wKwximUCA==
+X-Google-Smtp-Source: APXvYqxPu/xn3A6Rfg4BRoCgb6DGTWzjElHu5lN2y39YATgoJENu/fa5WNnBHlfnIm2KuTkG+1m1thfmr6YKPRWP9W8=
+X-Received: by 2002:a2e:b16d:: with SMTP id a13mr1515539ljm.1.1567619678652;
+ Wed, 04 Sep 2019 10:54:38 -0700 (PDT)
+MIME-Version: 1.0
 References: <CAGr--=Jw4DAqTi3ROujtE=xBMYErMws6B6vhuXYMQA+5Q1ccow@mail.gmail.com>
  <CAGr--=JkNqcrcenp6F1_CHTun_9wPLVvEWGOFJW=ng=XfO+jHw@mail.gmail.com>
  <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
@@ -35,41 +54,29 @@ References: <CAGr--=Jw4DAqTi3ROujtE=xBMYErMws6B6vhuXYMQA+5Q1ccow@mail.gmail.com>
  <CAKPyHN3S-jLWmfHUyH9mCBPjHCEaBCbrkVQEKFqHv59U37=Kyg@mail.gmail.com>
  <CAKPyHN08Z_9oByA8ruKwwXRcAfYPU95JaMb=pqQWwGwPVG=_og@mail.gmail.com>
  <CAGr--=Jn87r_ySYkZmtqUBA40+fwdn0MbuN6_LNDO4mOWyoKTg@mail.gmail.com>
- <20190903124541.2p5hmknolh2dwqh5@yadavpratyush.com>
- <971bbc44-d3d4-552d-d18e-58a2315c6183@kdbg.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <971bbc44-d3d4-552d-d18e-58a2315c6183@kdbg.org>
-User-Agent: NeoMutt/20180716
+ <20190903124541.2p5hmknolh2dwqh5@yadavpratyush.com> <971bbc44-d3d4-552d-d18e-58a2315c6183@kdbg.org>
+ <20190904174103.nrntgwv6zdqyjqsh@yadavpratyush.com>
+In-Reply-To: <20190904174103.nrntgwv6zdqyjqsh@yadavpratyush.com>
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
+Date:   Wed, 4 Sep 2019 19:54:27 +0200
+Message-ID: <CAGr--=L0gp1XVbHzV9_rwYKFi9Xh-q+WFM2z_-=N0Ptj2aPFZQ@mail.gmail.com>
+Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
+To:     Johannes Sixt <j6t@kdbg.org>, Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/09/19 08:24AM, Johannes Sixt wrote:
-> Am 03.09.19 um 14:45 schrieb Pratyush Yadav:
-> > Can you try doing a Shift+Tab? For me on Linux, if I hit Shift+Tab, it 
-> > immediately takes me to the "Amend last commit" option. Then I can press 
-> > space to select it and Tab again to get back to the commit message.
-> 
-> That works on Windows with Ctrl+Shift+Tab, too.
-> 
-> > Also, since we are on this topic, how about making the "Amend last 
-> > commit" button a toggle instead? This would act as a "turn amend mode 
-> > on/off" button. Since "Amend last commit" and "New Commit" are mutually 
-> > exclusive, a single toggle to switch between those modes makes sense to 
-> > me.
-> 
-> That is worth a try. The check box title offers a natural hotkey then:
-> "_A_mend last commit", Alt-a.
+Hi,
 
-Right now, the binding proposed is Ctrl-e.  My mental model for the key 
-bindings as of now is having the "actions" bound to Ctrl, and bindings 
-that move you around in the UI bound to Alt.  So it makes more sense to 
-me to have a "amend toggle" bound to Ctrl.  Maybe that's just me though.  
-Anyone else care to chime in?
+You could argue that A (as in "amend") makes quite an intuitive hotkey.
+But personally I'm also leaning towards CTRL/CMD+E. The ALT+(letter)
+combination is used to open a menu, for instance ALT+R opens
+"Repository", ALT+E opens "Edit", etc. That's the behaviour on
+Windows, anyways. So the hotkeys may seem a bit "mixed up" when
+ALT+(some letter) opens the corresponding menu but ALT+A does
+something quite different.
 
--- 
-Regards,
-Pratyush Yadav
+Birger
