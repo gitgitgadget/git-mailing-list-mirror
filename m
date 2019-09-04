@@ -8,82 +8,253 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 782301F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEA6B1F461
 	for <e@80x24.org>; Wed,  4 Sep 2019 21:38:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729753AbfIDVic (ORCPT <rfc822;e@80x24.org>);
+        id S1727562AbfIDVid (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 17:38:33 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51479 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728072AbfIDVic (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 4 Sep 2019 17:38:32 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35504 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727125AbfIDVic (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 17:38:32 -0400
-Received: by mail-wr1-f68.google.com with SMTP id g7so358382wrx.2
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 14:38:30 -0700 (PDT)
+Received: by mail-wm1-f68.google.com with SMTP id k1so363322wmi.1
+        for <git@vger.kernel.org>; Wed, 04 Sep 2019 14:38:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=J8jISmyNAteygIMBkJ9T1I60XISO/IrlILiA1G8EDHI=;
-        b=XCyw0IXw/1ZHqdA9M4w00Bwg2dwka/LVaCEllURy8QlyZYbW9uwatEdZW592xfYO/u
-         RXQOpyIMJvi5xz3NiYkFRUryHqfw3ODAkNpo701VeZKjJ8SGLH4aMJnuNhnx2gZ/Q5QE
-         emKH4KNNZSRypTMogJYe/SsziI13ZVYOxFEAl1CbJa/rUGS4MC1Ykc/2m2EPKMcSRZPk
-         RY+APXYKwCamwMjBptkTb5BoqrZxnVuICHTqWHwS6KrtY2RodEH/UI6GZ064zxioUtin
-         g6O7qkBl3HbNfWTnLWbcGtyUH3YiKSWvb5Ms/HoObds0iwhZ2BOFpxDpULYzBHy8ttuR
-         reiA==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KbUvvcMdoU0LlrVjy4avNz7pxXbrwLJC+A5NPlv/iGM=;
+        b=BP5o+kfII6J2gjgA1DNdn7fdlVY212KUbNknAxK5Ytwvyn3mv+KJiIJ9VHyL1PmHpK
+         wIUWvpmmEriaalAN+SnnWB/TXuMVEMwBeRtQSJrsLqJs5w4ltejhBigShF5psJ2W8+AX
+         7Gz2STBhJEzdl8iNHVCI4VhOS/zxeJUQjEn17t0630LiDayLtAmDgj5wIrp/x2+PgB/i
+         rOW2g0kzhBcH7k0O5dRnVadlcmWsWZgbUzWReknjNfZjR83sfycWYrTlvqDcHRj5kpIA
+         7ctB/oCjz/i0Fnk0Grhppu2xU8CZ7Rb0qJ2gYzVp8T9ehkK2umTG1E0h6XIyumRldiAT
+         ZEHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=J8jISmyNAteygIMBkJ9T1I60XISO/IrlILiA1G8EDHI=;
-        b=OtRruJaNzDDIwM31/bupiCVpNql6bL/NMZPYILqd0O3KH81MvlYVpXqjWfNv5BSrgo
-         XVDOR9ih2M3breti6/6nqY7S4BU7EnfPzvOBP//+NHLqOs5VvQykKWvfTcHRK327N08s
-         RVMsFBR062TudM4fWwnuoIJPZLBULKXuJdwut4g573K6azmmiPbN/Euj4WUwvWq9Z0xZ
-         oKAVg2rnSot9OOB0RwoSc3vnzcGDU9LjgXffFAY3oQJc7lbaeKoAXEzfuCCPh850ZHGQ
-         Zw9fj5g4fHI4Qr5lVabQFZSOFECT4SzPUi0FpHR28MwFimCA7ozsItqAW0GrXCiydswB
-         XopA==
-X-Gm-Message-State: APjAAAWD2KizSkZ2tOgogwT6brdIW+Sx1G7JlGQT8Dsn8gIES3ESwJqH
-        WNACWQSFLNPcQa9eKATOxpPzQRdT
-X-Google-Smtp-Source: APXvYqwf9VQpic/pJZXmEgx2Bm9Cypahwu71r2FjKTf5lwAUj3DVfZbfACtXeMQlt0Asa81NKgu3Wg==
-X-Received: by 2002:adf:e485:: with SMTP id i5mr7326718wrm.175.1567633110234;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=KbUvvcMdoU0LlrVjy4avNz7pxXbrwLJC+A5NPlv/iGM=;
+        b=QPC6E+50Wr/RIfstMvZZyTnDLJZR2FwUY8reCtHBBpPoEramSRpaqhvFQaLrKjc7HG
+         6TS7zB5ui+Iev3Xc18DmLLk2gUR4XtKuZYgMeD9qUqJ3OEl4rUjiT15vw/N6tCW8fW5w
+         1S7e15phTLjVefP/9Ba/Emv1o27Mkn9MpDjuHAonuV02LtZTj9if4A7IgI1eZLlmLvVh
+         EjHqy6X5jbjfeYL5++tt/KSa0Srhygml8NKkxm2xxzm3rnXwqxDB8Ciq54IbcnpSNlv7
+         vyql42B+EmmO/KdRiRg1yfPpDsaM5ebGTt5lAKpiimHIqXbTV77gPaEAt4AZJoyOrYoh
+         V2aw==
+X-Gm-Message-State: APjAAAXqhURhyfH+WjhmcbAl8aYJqUg6PBbWKkcBWMOdfLR1U4QDg/7k
+        jdezYtiy0ZJ4IGmYJYUX1M6udsXc
+X-Google-Smtp-Source: APXvYqwACnIEegfvUgYdpXa1OlATx4yAgjNwPb487iNhBvpSViNGHNgHMTzEWGX7WutaooHf+Vv7gg==
+X-Received: by 2002:a7b:cc13:: with SMTP id f19mr251569wmh.141.1567633110937;
         Wed, 04 Sep 2019 14:38:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f24sm217427wmc.25.2019.09.04.14.38.29
+        by smtp.gmail.com with ESMTPSA id v4sm83340wrg.56.2019.09.04.14.38.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Sep 2019 14:38:29 -0700 (PDT)
-Date:   Wed, 04 Sep 2019 14:38:29 -0700 (PDT)
-X-Google-Original-Date: Wed, 04 Sep 2019 21:38:27 GMT
-Message-Id: <pull.133.git.gitgitgadget@gmail.com>
+        Wed, 04 Sep 2019 14:38:30 -0700 (PDT)
+Date:   Wed, 04 Sep 2019 14:38:30 -0700 (PDT)
+X-Google-Original-Date: Wed, 04 Sep 2019 21:38:28 GMT
+Message-Id: <017945a55a64ebe1913d64919b699adb3f9d5d96.1567633109.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.133.git.gitgitgadget@gmail.com>
+References: <pull.133.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Teach git reset to optionally read the pathspecs from stdin
+Subject: [PATCH 1/1] reset: support the --stdin option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Especially in 3rd-party tools, where the shape of the repository/worktree is
-unpredictable, it is a wise thing to have an option to pass pathspec
-parameters via stdin rather than via the command line, as the latter has
-size restrictions that the former does not have.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Johannes Schindelin (1):
-  reset: support the --stdin option
+Just like with other Git commands, this option makes it read the paths
+from the standard input. It comes in handy when resetting many, many
+paths at once and wildcards are not an option (e.g. when the paths are
+generated by a tool).
 
+Note: we first parse the entire list and perform the actual reset action
+only in a second phase. This make the implementation simpler than adding
+the pathspecs immediately after the corresponding lines are read.
+
+Note also that we specifically handle CR/LF line endings in `stdin` to
+support Windows better.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  Documentation/git-reset.txt | 11 +++++++++
  builtin/reset.c             | 45 ++++++++++++++++++++++++++++++++++++-
  t/t7107-reset-stdin.sh      | 41 +++++++++++++++++++++++++++++++++
  3 files changed, 96 insertions(+), 1 deletion(-)
  create mode 100755 t/t7107-reset-stdin.sh
 
-
-base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-133%2Fdscho%2Freset-stdin-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-133/dscho/reset-stdin-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/133
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 132f8e55f6..e03014eb04 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git reset' [-q] [<tree-ish>] [--] <paths>...
+ 'git reset' (--patch | -p) [<tree-ish>] [--] [<paths>...]
++'git reset' [-q] [--stdin [-z]] [<tree-ish>]
+ 'git reset' [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
+ 
+ DESCRIPTION
+@@ -100,6 +101,16 @@ OPTIONS
+ 	`reset.quiet` config option. `--quiet` and `--no-quiet` will
+ 	override the default behavior.
+ 
++--stdin::
++	Instead of taking the list of paths from the command line,
++	read the list of paths from the standard input. The paths are
++	read verbatim, i.e. without special pathspecs handling. Paths
++	are expected to be separated by LF or CR/LF, unless the `-z`
++	option is in effect.
++
++-z::
++	Only meaningful with `--stdin`; paths are separated with
++	NUL character instead of LF.
+ 
+ EXAMPLES
+ --------
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 4d18a461fa..f8d06223d6 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -25,12 +25,16 @@
+ #include "cache-tree.h"
+ #include "submodule.h"
+ #include "submodule-config.h"
++#include "strbuf.h"
++#include "quote.h"
++#include "argv-array.h"
+ 
+ #define REFRESH_INDEX_DELAY_WARNING_IN_MS (2 * 1000)
+ 
+ static const char * const git_reset_usage[] = {
+ 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
+ 	N_("git reset [-q] [<tree-ish>] [--] <paths>..."),
++	N_("git reset [-q] [--stdin [-z]] [<tree-ish>]"),
+ 	N_("git reset --patch [<tree-ish>] [--] [<paths>...]"),
+ 	NULL
+ };
+@@ -284,7 +288,8 @@ static int git_reset_config(const char *var, const char *value, void *cb)
+ int cmd_reset(int argc, const char **argv, const char *prefix)
+ {
+ 	int reset_type = NONE, update_ref_status = 0, quiet = 0;
+-	int patch_mode = 0, unborn;
++	int patch_mode = 0, nul_term_line = 0, read_from_stdin = 0, unborn;
++	struct argv_array stdin_paths = ARGV_ARRAY_INIT;
+ 	const char *rev;
+ 	struct object_id oid;
+ 	struct pathspec pathspec;
+@@ -306,6 +311,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL('p', "patch", &patch_mode, N_("select hunks interactively")),
+ 		OPT_BOOL('N', "intent-to-add", &intent_to_add,
+ 				N_("record only the fact that removed paths will be added later")),
++		OPT_BOOL('z', NULL, &nul_term_line,
++				N_("paths are separated with NUL character")),
++		OPT_BOOL(0, "stdin", &read_from_stdin,
++				N_("read paths from <stdin>")),
+ 		OPT_END()
+ 	};
+ 
+@@ -316,6 +325,38 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 						PARSE_OPT_KEEP_DASHDASH);
+ 	parse_args(&pathspec, argv, prefix, patch_mode, &rev);
+ 
++	if (read_from_stdin) {
++		strbuf_getline_fn getline_fn = nul_term_line ?
++			strbuf_getline_nul : strbuf_getline;
++		int flags = PATHSPEC_PREFER_FULL;
++		struct strbuf buf = STRBUF_INIT;
++		struct strbuf unquoted = STRBUF_INIT;
++
++		if (patch_mode)
++			die(_("--stdin is incompatible with --patch"));
++
++		if (pathspec.nr)
++			die(_("--stdin is incompatible with path arguments"));
++
++		while (getline_fn(&buf, stdin) != EOF) {
++			if (!nul_term_line && buf.buf[0] == '"') {
++				strbuf_reset(&unquoted);
++				if (unquote_c_style(&unquoted, buf.buf, NULL))
++					die(_("line is badly quoted"));
++				strbuf_swap(&buf, &unquoted);
++			}
++			argv_array_push(&stdin_paths, buf.buf);
++			strbuf_reset(&buf);
++		}
++		strbuf_release(&unquoted);
++		strbuf_release(&buf);
++
++		flags |= PATHSPEC_LITERAL_PATH;
++		parse_pathspec(&pathspec, 0, flags, prefix, stdin_paths.argv);
++
++	} else if (nul_term_line)
++		die(_("-z requires --stdin"));
++
+ 	unborn = !strcmp(rev, "HEAD") && get_oid("HEAD", &oid);
+ 	if (unborn) {
+ 		/* reset on unborn branch: treat as reset to empty tree */
+@@ -416,5 +457,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	if (!pathspec.nr)
+ 		remove_branch_state(the_repository);
+ 
++	argv_array_clear(&stdin_paths);
++
+ 	return update_ref_status;
+ }
+diff --git a/t/t7107-reset-stdin.sh b/t/t7107-reset-stdin.sh
+new file mode 100755
+index 0000000000..db5483b8f1
+--- /dev/null
++++ b/t/t7107-reset-stdin.sh
+@@ -0,0 +1,41 @@
++#!/bin/sh
++
++test_description='reset --stdin'
++
++. ./test-lib.sh
++
++test_expect_success 'reset --stdin' '
++	test_commit hello &&
++	git rm hello.t &&
++	test -z "$(git ls-files hello.t)" &&
++	echo hello.t | git reset --stdin &&
++	test hello.t = "$(git ls-files hello.t)"
++'
++
++test_expect_success 'reset --stdin -z' '
++	test_commit world &&
++	git rm hello.t world.t &&
++	test -z "$(git ls-files hello.t world.t)" &&
++	printf world.tQworld.tQhello.tQ | q_to_nul | git reset --stdin -z &&
++	printf "hello.t\nworld.t\n" >expect &&
++	git ls-files >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--stdin requires --mixed' '
++	echo hello.t >list &&
++	test_must_fail git reset --soft --stdin <list &&
++	test_must_fail git reset --hard --stdin <list &&
++	git reset --mixed --stdin <list
++'
++
++
++test_expect_success '--stdin trims carriage returns' '
++	test_commit endline &&
++	git rm endline.t &&
++	printf "endline.t\r\n" >list &&
++	git reset --stdin <list &&
++	test endline.t = "$(git ls-files endline.t)"
++'
++
++test_done
 -- 
 gitgitgadget
