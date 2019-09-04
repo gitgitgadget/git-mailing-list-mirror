@@ -2,68 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F11211F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 17:54:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E307B1F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 17:55:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731712AbfIDRyl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 13:54:41 -0400
-Received: from mail-lj1-f174.google.com ([209.85.208.174]:39203 "EHLO
-        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730323AbfIDRyk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 13:54:40 -0400
-Received: by mail-lj1-f174.google.com with SMTP id j16so14365215ljg.6
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 10:54:39 -0700 (PDT)
+        id S1731756AbfIDRzE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 13:55:04 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:42457 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730323AbfIDRzD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 13:55:03 -0400
+Received: by mail-qt1-f194.google.com with SMTP id c9so61100qth.9
+        for <git@vger.kernel.org>; Wed, 04 Sep 2019 10:55:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DlU1oM3gGh8c93kwFtZjmNIfs+YQBdvUBpw1QPvqfNQ=;
-        b=hX7a7ucjRoyRDxwcOn2xnLENrV39dS/Y+MiOIVL8J3IeARiG34uu6P19IsgCF9uU1E
-         N+Nyt/U22xve5jy+sIQ2EpIQkRWAxP/mAUBU+jE8y/wbnBFp6GtGrTCfKdin4uoNhm+j
-         LlWEwln2EF1jFMHq0RJDoG0YTvhojjypMV+5hz4nwlbYyQ5yflLrfw23PKf3W+9G7ULA
-         yzbzDwTpvUVU3nkDMSaEtUhCFNzbCcRcr3mnqCLWATZN3tBy88vvzQa2B9y6gvU6CsCg
-         X5bBAHC8AIY8s/nK2/6vOxT7AfvPXD3iHXAae1oTIsIkdZhyikpiDg/9oDmCVmq0q59Y
-         eLUQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=FbiHNvqZOfesypl77qjQQLfDClp4lib6FIQo25AfdgI=;
+        b=TXF+QdMdvoi8uUByTz/Q3xYcJfD9i7//Ttlb7w4Sf8XIWHcBoyfWbb8Dtmk3muqhFJ
+         MadrlPFfpHMbChVsW3mj3RyWVVZL3SoS6Nf+WF8U85Z3u3MdQT4yC1HQFovmQlmE01Lb
+         rtpRDZ/E6IurUh/PbsCqOBYUkHGS8EY5LPTL39S7N84v/fZ0Z4rjKdLmXD3UfpWy9HVu
+         h80LNX3pBKGWLTjPxP9deHwRGdiuCD/fYEdf0+rAyrF5HvvXU6sihuiglSGSusJ29Nll
+         +enJGR8UQTpEqHUXCz6MuAZoXl8I6c7EbCrg3BeiNV+sEQS+LnSvW+9BLEAIwYhrbn5S
+         Q0fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DlU1oM3gGh8c93kwFtZjmNIfs+YQBdvUBpw1QPvqfNQ=;
-        b=a3T2dEC+LsVVkDIaJRrM58T2tnvjYMCyDCernHcrpbbeZDUmeuGpwapqAbmGxew4an
-         xcpDLv5brDk82x3yrOpisykOgIRzcmPYagn9GSw9p/eiOHXsSYvRoJlyhjKe0dOK9F7W
-         pYopCZeOvTpSRbY5OLzxbeIaoX4p3c2zZ30zatmiUN4rKQ796dAvna8vufq/1gfVYrks
-         feTUy/HBQjjaziOPwDIl2OoO4XuiTvTEnohTu6Ns6wv4u4iVHCMrKA9uW+xxXCCTtaY/
-         tuJBZxVi67VtrpU3t6ar2vjmYrKnI4BGf7h+AHhmJebZiOauZYOGFqo1pFeXuXRMDlm+
-         9FYg==
-X-Gm-Message-State: APjAAAUzSeIEk1bOkxuKt80LtqcixA2N2Yy8tY7ID2uhgms5U6QUqTgd
-        S3WJaahCFy0Nsg9iAKiY3M8uXnjYPZbpziVQCC3J6wKwximUCA==
-X-Google-Smtp-Source: APXvYqxPu/xn3A6Rfg4BRoCgb6DGTWzjElHu5lN2y39YATgoJENu/fa5WNnBHlfnIm2KuTkG+1m1thfmr6YKPRWP9W8=
-X-Received: by 2002:a2e:b16d:: with SMTP id a13mr1515539ljm.1.1567619678652;
- Wed, 04 Sep 2019 10:54:38 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=FbiHNvqZOfesypl77qjQQLfDClp4lib6FIQo25AfdgI=;
+        b=SEZsMRDZT8Vxlbj2IzdDxkSOIjC5lfhGrqxL2Kl+Ng4iDdP9o5+fTTPZkWgN0JBrOq
+         q8wEz2QS4+tgGplkL02zjETfvZbaI+wHnxh4p//xjh0Atkw8WloKUFmtyMLMlxG4hvag
+         sKHfYz7/4B37n55C+bVKxAJ+jNdSgZwxCZJawYISgIgD+48USWpvsJexzz3PLxANfbsT
+         242kgk9TESnfnBd3G6JFy7UyjdUgMaKmeahXVrKUSSXpJV4JgxzAdIhi4PyQ+WlVfGog
+         CBR1Rnio4ln8tX0azwBsZFf8xCJj6ZrHV5leXn1ZxPITQWKB+nw0A9sFOsjbLKg2OAiN
+         T/Sw==
+X-Gm-Message-State: APjAAAWubTdasb7woR8lMihreqweUxpOOE6N8rli1ZDMidCYsVf+UU7G
+        gKyw4Qn8cQKVxNGfhxF+AOIQYdBYSLI=
+X-Google-Smtp-Source: APXvYqzLL6krPwnssuvvVOFHZdiqxEx5LF8PiroiTkAe1/tqUQtSPvnkEw/4AKwAOwyHwGPUETjHpw==
+X-Received: by 2002:ac8:2b47:: with SMTP id 7mr41584957qtv.116.1567619702306;
+        Wed, 04 Sep 2019 10:55:02 -0700 (PDT)
+Received: from localhost ([2605:9480:205:dfe1:24fd:2e2b:8aac:d853])
+        by smtp.gmail.com with ESMTPSA id z22sm10328648qti.1.2019.09.04.10.55.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Sep 2019 10:55:01 -0700 (PDT)
+Date:   Wed, 4 Sep 2019 13:55:00 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net
+Subject: [PATCH 0/1] contrib/git-jump: support alias expansion
+Message-ID: <cover.1567619579.git.me@ttaylorr.com>
 MIME-Version: 1.0
-References: <CAGr--=Jw4DAqTi3ROujtE=xBMYErMws6B6vhuXYMQA+5Q1ccow@mail.gmail.com>
- <CAGr--=JkNqcrcenp6F1_CHTun_9wPLVvEWGOFJW=ng=XfO+jHw@mail.gmail.com>
- <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
- <CAGr--=JyJHTxtQWSnU7ivQ79qXcg7o4N142+5FSdre851xss6A@mail.gmail.com>
- <CAKPyHN3S-jLWmfHUyH9mCBPjHCEaBCbrkVQEKFqHv59U37=Kyg@mail.gmail.com>
- <CAKPyHN08Z_9oByA8ruKwwXRcAfYPU95JaMb=pqQWwGwPVG=_og@mail.gmail.com>
- <CAGr--=Jn87r_ySYkZmtqUBA40+fwdn0MbuN6_LNDO4mOWyoKTg@mail.gmail.com>
- <20190903124541.2p5hmknolh2dwqh5@yadavpratyush.com> <971bbc44-d3d4-552d-d18e-58a2315c6183@kdbg.org>
- <20190904174103.nrntgwv6zdqyjqsh@yadavpratyush.com>
-In-Reply-To: <20190904174103.nrntgwv6zdqyjqsh@yadavpratyush.com>
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-Date:   Wed, 4 Sep 2019 19:54:27 +0200
-Message-ID: <CAGr--=L0gp1XVbHzV9_rwYKFi9Xh-q+WFM2z_-=N0Ptj2aPFZQ@mail.gmail.com>
-Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
-To:     Johannes Sixt <j6t@kdbg.org>, Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -71,12 +66,30 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-You could argue that A (as in "amend") makes quite an intuitive hotkey.
-But personally I'm also leaning towards CTRL/CMD+E. The ALT+(letter)
-combination is used to open a menu, for instance ALT+R opens
-"Repository", ALT+E opens "Edit", etc. That's the behaviour on
-Windows, anyways. So the hotkeys may seem a bit "mixed up" when
-ALT+(some letter) opens the corresponding menu but ALT+A does
-something quite different.
+I have been meaning to send this patch for a while, which teaches the
+'git-jump' script how to respect user aliases for commands like 'diff',
+'merge', and 'grep'.
 
-Birger
+I often find myself parsing the output of 'git diff' (which I spell 'g
+di') in less, and then wanting to jump to some specific diff in a file,
+i.e., by running 'git jump diff -- <filename>'.
+
+But, I am so used to typing 'di' instead of 'diff', that I often write
+the later invocation as 'g jump di -- <filename>', and 'git-jump'
+complains that it doesn't know what 'di' means.
+
+Let's rectify that by teaching it how to expand alises, which is
+implemented in the patch below.
+
+Thanks,
+Taylor
+
+Taylor Blau (1):
+  contrib/git-jump/git-jump: support alias expansion
+
+ contrib/git-jump/README   | 4 ++++
+ contrib/git-jump/git-jump | 4 +++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+--
+2.22.0
