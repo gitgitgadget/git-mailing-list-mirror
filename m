@@ -7,121 +7,68 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2EE11F4B7
-	for <e@80x24.org>; Wed,  4 Sep 2019 03:04:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1A531F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 03:08:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728201AbfIDDE5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 23:04:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38594 "HELO cloud.peff.net"
+        id S1727722AbfIDDIc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 23:08:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38610 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727374AbfIDDE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 23:04:57 -0400
-Received: (qmail 9652 invoked by uid 109); 4 Sep 2019 03:04:57 -0000
+        id S1727065AbfIDDIb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 23:08:31 -0400
+Received: (qmail 9679 invoked by uid 109); 4 Sep 2019 03:08:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 04 Sep 2019 03:04:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 04 Sep 2019 03:08:31 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10969 invoked by uid 111); 4 Sep 2019 03:06:37 -0000
+Received: (qmail 10998 invoked by uid 111); 4 Sep 2019 03:10:11 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Sep 2019 23:06:37 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Sep 2019 23:10:11 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 3 Sep 2019 23:04:56 -0400
+Date:   Tue, 3 Sep 2019 23:08:30 -0400
 From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, stolee@gmail.com,
-        git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/1] commit-graph.c: die on un-parseable commits
-Message-ID: <20190904030456.GA28836@sigill.intra.peff.net>
-References: <cover.1567563244.git.me@ttaylorr.com>
- <34e4ec793cb0d321d16b88777cd2db64ed7b772e.1567563244.git.me@ttaylorr.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, garimasigit@gmail.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] fetch: add fetch.writeCommitGraph config setting
+Message-ID: <20190904030829.GB28836@sigill.intra.peff.net>
+References: <pull.328.git.gitgitgadget@gmail.com>
+ <49f877c85ca2be5bb76d9082ee4aa26e26111a14.1567477320.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <34e4ec793cb0d321d16b88777cd2db64ed7b772e.1567563244.git.me@ttaylorr.com>
+In-Reply-To: <49f877c85ca2be5bb76d9082ee4aa26e26111a14.1567477320.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 03, 2019 at 10:22:57PM -0400, Taylor Blau wrote:
+On Mon, Sep 02, 2019 at 07:22:02PM -0700, Derrick Stolee via GitGitGadget wrote:
 
-> When we write a commit graph chunk, we process a given list of 'struct
-> commit *'s and parse out the parent(s) and tree OID in order to write
-> out its information.
+> From: Derrick Stolee <dstolee@microsoft.com>
 > 
-> We do this by calling 'parse_commit_no_graph', and then checking the
-> result of 'get_commit_tree_oid' to write the tree OID. This process
-> assumes that 'parse_commit_no_graph' parses the commit successfully.
-> When this isn't the case, 'get_commit_tree_oid(*list)' may return NULL,
-> in which case trying to '->hash' it causes a SIGSEGV.
+> The commit-graph feature is now on by default, and is being
+> written during 'git gc' by default. Typically, Git only writes
+> a commit-graph when a 'git gc --auto' command passes the gc.auto
+> setting to actualy do work. This means that a commit-graph will
+> typically fall behind the commits that are being used every day.
 > 
-> Instead, teach 'write_graph_chunk_data' to stop when a commit isn't able
-> to be parsed, at the peril of failing to write a commit-graph.
+> To stay updated with the latest commits, add a step to 'git
+> fetch' to write a commit-graph after fetching new objects. The
+> fetch.writeCommitGraph config setting enables writing a split
+> commit-graph, so on average the cost of writing this file is
+> very small. Occasionally, the commit-graph chain will collapse
+> to a single level, and this could be slow for very large repos.
+> 
+> For additional use, adjust the default to be true when
+> feature.experimental is enabled.
 
-Yeah, I think it makes sense for commit-graph to bail completely if it
-can't parse here. In theory it could omit the entry from the
-commit-graph file (and a reader would just fall back to trying to access
-the object contents itself), but I think we're too late in the process
-for that. And besides, this should generally only happen in a corrupt
-repository.
+Seems like a good time to do it. We'd eventually want a similar option
+for updating it on the receiving side of a push, too. I don't insist
+that come at the same time, but we should at least have a plan about how
+it will look to the user.
 
-However...
-
-> diff --git a/commit-graph.c b/commit-graph.c
-> index f2888c203b..6aa6998ecd 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -843,7 +843,9 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
->  		uint32_t packedDate[2];
->  		display_progress(ctx->progress, ++ctx->progress_cnt);
->  
-> -		parse_commit_no_graph(*list);
-> +		if (parse_commit_no_graph(*list))
-> +			die(_("unable to parse commit %s"),
-> +				oid_to_hex(&(*list)->object.oid));
->  		hashwrite(f, get_commit_tree_oid(*list)->hash, hash_len);
-
-I don't think parse_commit_no_graph() returning 0 assures us that
-get_commit_tree() and friends will return non-NULL.
-
-This is similar to the case discussed recently where a failed parse of a
-tag may leave "tag->tagged == NULL" even though "tag->obj.parsed" is
-set.
-
-Here an earlier parsing error could cause (*list)->object.parsed to be
-true, but with (*list)->maybe_tree still NULL. Our call to
-parse_commit_no_graph() here would silently return "yep, already tried
-to parse this", and then we'd still segfault.
-
-We _could_ check:
-
-  if (parse_commit_no_graph(*list))
-	die("unable to parse...");
-  tree = get_commit_tree_oid(*list);
-  if (!tree)
-	die("unable to get tree for %s...");
-
-but trees are just one piece of data. In fact, the situation is much
-worse for parents: there a NULL parent pointer is valid data, so worse
-than segfaulting, we'd write invalid data to the commit graph, skipping
-one or more parents!
-
-And I think there's literally no way for this function to tell the
-difference between "no parent" and "there was an earlier error, but we
-set the parsed flag anyway and the parent flag is invalid".
-
-I think that argues against Junio's response in:
-
-  https://public-inbox.org/git/xmqqo90bhmi3.fsf@gitster-ct.c.googlers.com/
-
-about how we can use the parsed flag to look at "slightly corrupt"
-objects. I think we'd need at least an extra flag for "corrupt", though
-I think it is simpler just _not_ setting "parsed" and letting the next
-caller spend the extra cycles to rediscover the problem if they're
-interested.
-
-(All of this presupposes that you can convince another piece of code in
-the same process to parse the commit buffer and ignore the error. I have
-no idea if that's possible or not in this case, but it sure would be
-nice not to have to care).
+Do we want to to have fetch.writeCommitGraph, receive.writeCommitGraph,
+and then a master transfer.writeCommitGraph?
 
 -Peff
