@@ -2,94 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BDB71F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 19:56:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBCEB1F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 20:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729278AbfIDT4J (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 15:56:09 -0400
-Received: from mail-vk1-f180.google.com ([209.85.221.180]:33006 "EHLO
-        mail-vk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728152AbfIDT4I (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 15:56:08 -0400
-Received: by mail-vk1-f180.google.com with SMTP id q186so3426545vkb.0
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 12:56:07 -0700 (PDT)
+        id S1729890AbfIDUK1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 16:10:27 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:53797 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727125AbfIDUK1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 16:10:27 -0400
+Received: by mail-wm1-f66.google.com with SMTP id q19so144965wmc.3
+        for <git@vger.kernel.org>; Wed, 04 Sep 2019 13:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Lw+bE2dwOegIoQzkUNBSmlLs7PAi0krdv69bCcZfmzI=;
-        b=CC0PEMa2yfDEicu6aG0RDYvp97etCZLxZxdxeG+WBilSpFh8yFbjtPu2+6AA6krDmB
-         ClppHs50pKqqklYt2zDkt8dwthwRGp3VAooqD9/ymVyMliKGso1eCj+9+833kmjs9r6W
-         ThOowPWx4/ud0tMC9T1ikUewDDNQ5jIquCJRjjQ+U0itZwmQMQZowJvUs0MtiA/bimvc
-         OCqbujH5VvqjcB+XrwHIBwq4vMBWJjy0SHjiw9dtX9B7hLm9VA3CFNJ6Fo+jIGs0ufIi
-         7sK5cgG8JZtW+D/wcem4exNv2GGnc60yEPHpORFeOiiGjQTqOx5HekuvqaBhCZ4KAaoQ
-         dEZQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hQI/CX+6goGxeN+fvOEdGestwrQV6fklFPnHMlqJhrk=;
+        b=ibDl1aKRQC1CPEerI1MpsaT/CdEYvVOQ2ADA8S1/M2zgwxZmnURIg7vcyGUNFDtmNv
+         kJG2naWchHpLRvHaE0TR2UB83oeUC74Bi2xks+rqCBCO91zNYgHwipyeU/7E2NVdhMPY
+         R6z/q4M16OM3nQ0tubP2qjEXl5+tINpf35V6wuyM6kVnShuLQYfz8r9M5U4EzYqLHZYb
+         OWRGBNbw6prrHTc1kUPSghExwbA27AVTzGEgWjc51Buv4d1fzqZDQLPcoYZXldPzyDYw
+         nF83wVZv3nR7KWZQ3/aS+8CfiA7SAmE/4t616KLDwIrimkcEhMxhx2tMGlqU649GImN3
+         /HSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Lw+bE2dwOegIoQzkUNBSmlLs7PAi0krdv69bCcZfmzI=;
-        b=i5/5LBi5Fd6JM9vCn3ZAbOrX0IPBW8mqTlW5qUaY9GCuo9rZGb7RjiAPJnhnWwXDey
-         JM6/SW4tlJ4T5U0w9EL1XBHu/eT66501bBkMBa1oEX2vK25wI53iH6OsXK5mg232ULoK
-         q6fBrswenUjfpol5LWWUgKx4mYzIzKy3PzLWGepEt9MrO4agyD4JdmlwrcfJp6JhNXr+
-         uXxU8O8Kz9XdvOMu6xuk4D9SHoHOyIbMm2/N/29SaV0PRIRbdTNiH5Y0Q6lwQWukA+yH
-         ZRV1sBCNOfefpETZTwVNK18CaQ5iazfpW3/bQze8K+h/c/ES8ykGWnKa9ioPWNl5funx
-         Xq8A==
-X-Gm-Message-State: APjAAAU3Rtec1V8PqOUuWBmll14lYip2IYn3dOevgB9n61cTI+O0si4m
-        9aVZhsOrnJ3WNNl1lxlw7Wj2SrnB6Xnq25EYMxso7J6U
-X-Google-Smtp-Source: APXvYqwvp1BUBIlPlKadBToAP27Y0X+qT4bQ1IFfD1WBaiJ86h6Z9ofUEnJyCCpVHfa+CZMyAZmkJWpbVNchkZY55/g=
-X-Received: by 2002:a1f:78c5:: with SMTP id t188mr11030147vkc.87.1567626967462;
- Wed, 04 Sep 2019 12:56:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190903214942.ubcbdgtphpwnaxs6@yadavpratyush.com>
- <20190904143055.11400-1-birger.sp@gmail.com> <510e80f4-a8e1-329d-2395-b1268bf7c1f8@kdbg.org>
-In-Reply-To: <510e80f4-a8e1-329d-2395-b1268bf7c1f8@kdbg.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hQI/CX+6goGxeN+fvOEdGestwrQV6fklFPnHMlqJhrk=;
+        b=V9xh7OrVT3DWuNydg5B7dR8q7pdgtOdC+PZJYbriWwor/WErvmOFmWiCcIiZNWau30
+         GPgMhvuYYJJMe5uuc6im3SYSFceMEw4FrHibHh2WaPFCw67b2YDNnBMnzbhUc2id8uGZ
+         8Wvll49+XcO59HW2i4Seyztj80A+cDbFAtDZBIYHcVfmnKc7M4lC9C6dl+37BEJbzkM8
+         TZSgAwjrxvCGVeyGLSu/2NAVh0d8eTkxHeL5GjB05wx8anA83oCsEiCIR0C8Zn5+Xxdz
+         t0n1h09JpNySYVv9MbDVaFat2QJB1OGqWwMGDSgSS0GPynQgy+Qepc3LC2kdM9t61+MA
+         Gfhg==
+X-Gm-Message-State: APjAAAXCMw3dGDXY73dqltM7aFViO6CIBFbXELMpRsCX1rWPvyVmvafD
+        uDHfABPVpaVx0DE8zFloxw==
+X-Google-Smtp-Source: APXvYqzoJBfiGJeOEm39ptx5hSEGrrLZV6TQa1vQhfaSozXkOoE6PAf519NbPXdWaQuQAUgGa69SFA==
+X-Received: by 2002:a7b:ca43:: with SMTP id m3mr59312wml.20.1567627824759;
+        Wed, 04 Sep 2019 13:10:24 -0700 (PDT)
+Received: from localhost ([2a02:810a:8c80:d2c:e18b:2076:d6e6:a85d])
+        by smtp.gmail.com with ESMTPSA id d28sm23746744wrb.95.2019.09.04.13.10.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 04 Sep 2019 13:10:24 -0700 (PDT)
 From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Wed, 4 Sep 2019 21:55:56 +0200
-Message-ID: <CAKPyHN3WNPbJUX-xhMPVg-WigJkMg=NU9HHm98Z6wn8xeHKv7g@mail.gmail.com>
-Subject: Re: [PATCH v5] git-gui: Add hotkeys to set widget focus
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Pratyush Yadav <me@yadavpratyush.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     me@yadavpratyush.com,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH 1/2] git-gui: warn if the commit message contains lines longer than the set limit
+Date:   Wed,  4 Sep 2019 22:10:22 +0200
+Message-Id: <7da71d89f9fa987eca2e25974e4cec382c146e44.1567627609.git.bert.wesarg@googlemail.com>
+X-Mailer: git-send-email 2.21.0.789.ga095d9d866
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Hannes,
+The commit message widget does not wrap the next and has a configurable
+fixed width to avoid creating too wide commit messages. Though this was
+only enforced in the GUI. Now we also check the commit message at commit
+time for long lines and ask the author for confirmation if it exceeds the
+configured line length.
 
-On Wed, Sep 4, 2019 at 8:59 PM Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Am 04.09.19 um 16:30 schrieb Birger Skogeng Pedersen:
-> > The user cannot change focus between the list of files, the diff view and
-> > the commit message widgets without using the mouse (clicking either of
-> > the four widgets).
-> >
-> > With this patch, the user may set ui focus to the previously selected path
-> > in either the "Unstaged Changes" or "Staged Changes" widgets, using
-> > ALT+1 or ALT+2.
-> >
-> > The user may also set the ui focus to the diff view widget with
-> > ALT+3, or to the commit message widget with ALT+4.
->
-> Many keyboards do not have a right Alt-key. That means that Alt+1 to
-> Alt+4 combinations must be typed single-handed with the left hand. This
-> is mildly awkward for Alt+4. Can we please have the very important
-> commit widget *not* at Alt+4? I could live with Alt+3.
->
+Needs Tcl 8.6 because of `lmap`.
 
-I use my left thumb to press the left Alt key and it does not feel
-mildly awkward. As Alt is also used for the mnemonics, there will
-probably more of mildly awkward key combinations, wont there?
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+---
+ git-gui.sh     |  4 ++--
+ lib/commit.tcl | 10 ++++++++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-Bert
+diff --git a/git-gui.sh b/git-gui.sh
+index 5bc21b8..a491085 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
+ ##
+ ## Tcl/Tk sanity check
+ 
+-if {[catch {package require Tcl 8.4} err]
+- || [catch {package require Tk  8.4} err]
++if {[catch {package require Tcl 8.6} err]
++ || [catch {package require Tk  8.6} err]
+ } {
+ 	catch {wm withdraw .}
+ 	tk_messageBox \
+diff --git a/lib/commit.tcl b/lib/commit.tcl
+index 83620b7..fa9760b 100644
+--- a/lib/commit.tcl
++++ b/lib/commit.tcl
+@@ -215,6 +215,16 @@ A good commit message has the following format:
+ 		unlock_index
+ 		return
+ 	}
++	if {[tcl::mathfunc::max {*}[lmap x [split $msg "\n"] {string length $x}]] >= $repo_config(gui.commitmsgwidth) \
++	    && [ask_popup "Commit message contains lines longer than $repo_config(gui.commitmsgwidth) characters.
++
++You may change this limit in the options.
++
++Continue to commit?
++"] ne yes} {
++		unlock_index
++		return
++	}
+ 
+ 	# -- Build the message file.
+ 	#
+-- 
+2.21.0.789.ga095d9d866
 
-> -- Hannes
