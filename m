@@ -2,123 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47E681F4BA
-	for <e@80x24.org>; Wed,  4 Sep 2019 22:32:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12F501F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 22:35:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730453AbfIDWcw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 18:32:52 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:33909 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730386AbfIDWcv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 18:32:51 -0400
-Received: by mail-pf1-f194.google.com with SMTP id r12so338801pfh.1
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 15:32:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WNdB5m4iZiRf04slxg1K+gKg6z+qXglVHKL3xS4Wm4Q=;
-        b=VBCBDwYKelXYQ5pFgL7PGwemLXmb72GMd2Op3LTL/LTlA595DzotcTaz4HPssf4yA+
-         E+ASJyiSMePHSi0o0ev9VhpOTvle+sWENG6Us8qryS7tFugRNWoRHxd8UMQ5vB3iw9G7
-         PDVllSBT/WCXM8mgg8STKsqqOXMHyginUFRLfSofmkjzy0mNtfg4pMZQ6/lSYxbU0Iix
-         PHFDR2X4ymoh/tt6vl44mGa1WYnx1Qjc72ckIo4xc/WPUCHj2/uq+OPhrpaSa1K0tnPg
-         WdP/Y8wld0r/COWoCjZLDLZsyw0vzce3Ve4G+vj0FsosqDZA0iasBoqyflMtW2fX9DBK
-         eBmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WNdB5m4iZiRf04slxg1K+gKg6z+qXglVHKL3xS4Wm4Q=;
-        b=eFcjZzP3jQXwG8E/qQBO25KWZFL22LucMssDZMCWV+lc9xRtrKBj+oM5Fl3S/5mdPR
-         5RLZOCO2EnIfzy97n2nE/RlXurpoWZaXozFZWl6kQnA5X3zVZcUPUjSjGpI2FGoE1y8z
-         y528hrIybAqvYLBHsHS5aE7kP7FXIpTgpwFBn9PQfYjsfxZQHaIcq8gjnpVEj9+cFUMT
-         gdGbqkgp0W92PXHqfd7ORwQtTRg809LcDtd8hsFDGHv+vtUHpy9yYUVP7oFuQ+EBpX8L
-         WoCoh2+GXsNntUBoxoZBNuyGBddmm1XZImw+nYxyGYZ98Q1PmT+QDIE6M7LAgqEjEcUm
-         9/JQ==
-X-Gm-Message-State: APjAAAWgdwciQaN+gGnKnIj1e8/3a/USz173UDyZjmRUq0WNK76XH8N5
-        NciiBes4NnTEQ6Kfx0NoMuA=
-X-Google-Smtp-Source: APXvYqzqvNZh5bU0EkEqBOIEAzlezIHOyPrqZZzPyFGClA2mhpwEhy4qaczxXEFY8BsGGTLRzgj7Nw==
-X-Received: by 2002:a65:4786:: with SMTP id e6mr376362pgs.448.1567636370857;
-        Wed, 04 Sep 2019 15:32:50 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id v12sm135898pgr.86.2019.09.04.15.32.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 04 Sep 2019 15:32:50 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v6 3/3] t9902: use a non-deprecated command for testing
-Date:   Wed,  4 Sep 2019 15:32:39 -0700
-Message-Id: <20190904223239.571-4-newren@gmail.com>
-X-Mailer: git-send-email 2.23.0.3.g19edb94ec2
-In-Reply-To: <20190904223239.571-1-newren@gmail.com>
-References: <20190903185524.13467-1-newren@gmail.com>
- <20190904223239.571-1-newren@gmail.com>
+        id S1729863AbfIDWfP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 18:35:15 -0400
+Received: from relay9-d.mail.gandi.net ([217.70.183.199]:41847 "EHLO
+        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727156AbfIDWfO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 18:35:14 -0400
+X-Originating-IP: 1.186.12.26
+Received: from localhost (unknown [1.186.12.26])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 2C85CFF808;
+        Wed,  4 Sep 2019 22:35:11 +0000 (UTC)
+Date:   Thu, 5 Sep 2019 04:05:09 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: git-gui: Long lines in commit message gets hidden, no scrollbar
+ appears
+Message-ID: <20190904223508.lmima7iv4pbbhg3z@yadavpratyush.com>
+References: <CAKPyHN1LJa8Zq6rZbOMZ-KxkqQYauQcvjv+rTrHt1_zwPZLZ-A@mail.gmail.com>
+ <CAGr--=+CEX-STDgT_ZwaA=n9UHSrsgcWnxCMY=9tGDA=9XLkew@mail.gmail.com>
+ <20190902181213.7jqvoyctdm26g34z@yadavpratyush.com>
+ <CAGr--=JgqjC8FskqVFJTqAnQ5aq8J4z-Wje8s22VwBgVtkBF-Q@mail.gmail.com>
+ <20190902184405.bfb5572iia2v2uwi@yadavpratyush.com>
+ <20190902185819.fzf3lop6riiq6zja@yadavpratyush.com>
+ <CAKPyHN1GgXLy0+z=JbuyuSvVXsh6u5Po18OXizPNmfLE5AC00g@mail.gmail.com>
+ <CAKPyHN3=QY4+XNhQPq09_PALFwfR5bWBs7q6m6LkfFoW-xeCug@mail.gmail.com>
+ <20190903171511.cd6vwn4kz7bdpose@yadavpratyush.com>
+ <CAKPyHN39AXJBtuDepb-TgGSGrvqs4a5+yp74L5im3Svmw5S8aA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKPyHN39AXJBtuDepb-TgGSGrvqs4a5+yp74L5im3Svmw5S8aA@mail.gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-t9902 had a list of three random porcelain commands as a sanity check,
-one of which was filter-branch.  Since we are recommending people not
-use filter-branch, let's update this test to use rebase instead of
-filter-branch.
+On 04/09/19 09:39PM, Bert Wesarg wrote:
+> On Tue, Sep 3, 2019 at 7:15 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> >
+> > On 02/09/19 09:13PM, Bert Wesarg wrote:
+[snip]
+> >
+> > One more observation:
+> >
+> > If I write a particularly long line (and consequently the scrollbar
+> > becomes active), and then hit Ctrl+A to select all text, and then
+> > backspace to delete it all, the scrollbar does not get updated. It still
+> > shows the old position where is is "scrolled" halfway through. As soon
+> > as I type in any other character, it takes the correct state, and
+> > becomes disabled.
+> >
+> > The vertical scrollbar behaves correctly in this scenario, and does take
+> > the correct state and position as soon as I delete all text, so I
+> > suspect it should be a small fix. Maybe a missed option or something
+> > like that?
+> 
+> While I can reproduce this, I don't figured out what is wrong here. I
+> tried a minimal example and this also fails. The yScrollCommand is
+> issued, but the xScrollCommand not. I have tcl/tk 8.6.8 on Linux.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t9902-completion.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Well, I don't think this is a big enough problem to block this patch, 
+but still something that should ideally be fixed.
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 75512c3403..4e7f669c76 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -28,10 +28,10 @@ complete ()
- #
- # (2) A test makes sure that common subcommands are included in the
- #     completion for "git <TAB>", and a plumbing is excluded.  "add",
--#     "filter-branch" and "ls-files" are listed for this.
-+#     "rebase" and "ls-files" are listed for this.
- 
--GIT_TESTING_ALL_COMMAND_LIST='add checkout check-attr filter-branch ls-files'
--GIT_TESTING_PORCELAIN_COMMAND_LIST='add checkout filter-branch'
-+GIT_TESTING_ALL_COMMAND_LIST='add checkout check-attr rebase ls-files'
-+GIT_TESTING_PORCELAIN_COMMAND_LIST='add checkout rebase'
- 
- . "$GIT_BUILD_DIR/contrib/completion/git-completion.bash"
- 
-@@ -1392,12 +1392,12 @@ test_expect_success 'basic' '
- 	# built-in
- 	grep -q "^add \$" out &&
- 	# script
--	grep -q "^filter-branch \$" out &&
-+	grep -q "^rebase \$" out &&
- 	# plumbing
- 	! grep -q "^ls-files \$" out &&
- 
--	run_completion "git f" &&
--	! grep -q -v "^f" out
-+	run_completion "git r" &&
-+	! grep -q -v "^r" out
- '
- 
- test_expect_success 'double dash "git" itself' '
+I have a really busy week/weekend coming up, so I won't really be able 
+to devote much time to this.  I'll see if I can figure something out 
+after that.  I'll wait for some comments on your patches, and then get 
+around to reading them myself when I get some more time.  Thanks.
+
 -- 
-2.23.0.3.g19edb94ec2
-
+Regards,
+Pratyush Yadav
