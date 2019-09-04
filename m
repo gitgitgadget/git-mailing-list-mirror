@@ -2,259 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEA6B1F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 21:38:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC6211F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 21:39:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727562AbfIDVid (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 17:38:33 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51479 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728072AbfIDVic (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 17:38:32 -0400
-Received: by mail-wm1-f68.google.com with SMTP id k1so363322wmi.1
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 14:38:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=KbUvvcMdoU0LlrVjy4avNz7pxXbrwLJC+A5NPlv/iGM=;
-        b=BP5o+kfII6J2gjgA1DNdn7fdlVY212KUbNknAxK5Ytwvyn3mv+KJiIJ9VHyL1PmHpK
-         wIUWvpmmEriaalAN+SnnWB/TXuMVEMwBeRtQSJrsLqJs5w4ltejhBigShF5psJ2W8+AX
-         7Gz2STBhJEzdl8iNHVCI4VhOS/zxeJUQjEn17t0630LiDayLtAmDgj5wIrp/x2+PgB/i
-         rOW2g0kzhBcH7k0O5dRnVadlcmWsWZgbUzWReknjNfZjR83sfycWYrTlvqDcHRj5kpIA
-         7ctB/oCjz/i0Fnk0Grhppu2xU8CZ7Rb0qJ2gYzVp8T9ehkK2umTG1E0h6XIyumRldiAT
-         ZEHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=KbUvvcMdoU0LlrVjy4avNz7pxXbrwLJC+A5NPlv/iGM=;
-        b=QPC6E+50Wr/RIfstMvZZyTnDLJZR2FwUY8reCtHBBpPoEramSRpaqhvFQaLrKjc7HG
-         6TS7zB5ui+Iev3Xc18DmLLk2gUR4XtKuZYgMeD9qUqJ3OEl4rUjiT15vw/N6tCW8fW5w
-         1S7e15phTLjVefP/9Ba/Emv1o27Mkn9MpDjuHAonuV02LtZTj9if4A7IgI1eZLlmLvVh
-         EjHqy6X5jbjfeYL5++tt/KSa0Srhygml8NKkxm2xxzm3rnXwqxDB8Ciq54IbcnpSNlv7
-         vyql42B+EmmO/KdRiRg1yfPpDsaM5ebGTt5lAKpiimHIqXbTV77gPaEAt4AZJoyOrYoh
-         V2aw==
-X-Gm-Message-State: APjAAAXqhURhyfH+WjhmcbAl8aYJqUg6PBbWKkcBWMOdfLR1U4QDg/7k
-        jdezYtiy0ZJ4IGmYJYUX1M6udsXc
-X-Google-Smtp-Source: APXvYqwACnIEegfvUgYdpXa1OlATx4yAgjNwPb487iNhBvpSViNGHNgHMTzEWGX7WutaooHf+Vv7gg==
-X-Received: by 2002:a7b:cc13:: with SMTP id f19mr251569wmh.141.1567633110937;
-        Wed, 04 Sep 2019 14:38:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v4sm83340wrg.56.2019.09.04.14.38.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Sep 2019 14:38:30 -0700 (PDT)
-Date:   Wed, 04 Sep 2019 14:38:30 -0700 (PDT)
-X-Google-Original-Date: Wed, 04 Sep 2019 21:38:28 GMT
-Message-Id: <017945a55a64ebe1913d64919b699adb3f9d5d96.1567633109.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.133.git.gitgitgadget@gmail.com>
-References: <pull.133.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] reset: support the --stdin option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729890AbfIDVjQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 17:39:16 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:63907 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727722AbfIDVjQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 17:39:16 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 46NxzQ4WhRz5tl9;
+        Wed,  4 Sep 2019 23:39:14 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 24DB4104;
+        Wed,  4 Sep 2019 23:39:14 +0200 (CEST)
+Subject: Re: [PATCH v5] git-gui: Add hotkeys to set widget focus
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Pratyush Yadav <me@yadavpratyush.com>
+References: <20190903214942.ubcbdgtphpwnaxs6@yadavpratyush.com>
+ <20190904143055.11400-1-birger.sp@gmail.com>
+ <510e80f4-a8e1-329d-2395-b1268bf7c1f8@kdbg.org>
+ <CAGr--=LY4JWdms3GtnKAtN6z-2c-jpXE2HJ5_dMM5gEFayrj_g@mail.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <fcf52af1-dc57-fb58-f52c-7581910a28d6@kdbg.org>
+Date:   Wed, 4 Sep 2019 23:39:14 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <CAGr--=LY4JWdms3GtnKAtN6z-2c-jpXE2HJ5_dMM5gEFayrj_g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Am 04.09.19 um 21:20 schrieb Birger Skogeng Pedersen:
+> On Wed, Sep 4, 2019 at 8:59 PM Johannes Sixt <j6t@kdbg.org> wrote:
+>> Many keyboards do not have a right Alt-key. That means that Alt+1 to
+>> Alt+4 combinations must be typed single-handed with the left hand. This
+>> is mildly awkward for Alt+4. Can we please have the very important
+>> commit widget *not* at Alt+4? I could live with Alt+3.
+> 
+> (RightAlt wouldn't be used by Europeans, anyways)
+> Are you suggesting to keep Alt+1/2/3 for the files/staged/diff
+> widgets, but use something other than Alt+4 for the commit dialog? If
+> so, which one would you prefer?
 
-Just like with other Git commands, this option makes it read the paths
-from the standard input. It comes in handy when resetting many, many
-paths at once and wildcards are not an option (e.g. when the paths are
-generated by a tool).
+I was suggesting Alt+3 for the commit message widget, but my preferences
+are actually Alt+1, Alt+2, Alt+3, in this order. My preference for the
+diff widget would be Alt+4 (the awkward one) because I do not foresee
+that I would use it a lot. Use what remains for the two file lists.
 
-Note: we first parse the entire list and perform the actual reset action
-only in a second phase. This make the implementation simpler than adding
-the pathspecs immediately after the corresponding lines are read.
+> The initial propsal from me was to use CTRL/CMD+1/2/3/4. What do you
+> think of using the CTRL/CMD key instead of ALT?
 
-Note also that we specifically handle CR/LF line endings in `stdin` to
-support Windows better.
+I would not mind Ctrl instead of Alt. Take your pick.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git-reset.txt | 11 +++++++++
- builtin/reset.c             | 45 ++++++++++++++++++++++++++++++++++++-
- t/t7107-reset-stdin.sh      | 41 +++++++++++++++++++++++++++++++++
- 3 files changed, 96 insertions(+), 1 deletion(-)
- create mode 100755 t/t7107-reset-stdin.sh
-
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index 132f8e55f6..e03014eb04 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git reset' [-q] [<tree-ish>] [--] <paths>...
- 'git reset' (--patch | -p) [<tree-ish>] [--] [<paths>...]
-+'git reset' [-q] [--stdin [-z]] [<tree-ish>]
- 'git reset' [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
- 
- DESCRIPTION
-@@ -100,6 +101,16 @@ OPTIONS
- 	`reset.quiet` config option. `--quiet` and `--no-quiet` will
- 	override the default behavior.
- 
-+--stdin::
-+	Instead of taking the list of paths from the command line,
-+	read the list of paths from the standard input. The paths are
-+	read verbatim, i.e. without special pathspecs handling. Paths
-+	are expected to be separated by LF or CR/LF, unless the `-z`
-+	option is in effect.
-+
-+-z::
-+	Only meaningful with `--stdin`; paths are separated with
-+	NUL character instead of LF.
- 
- EXAMPLES
- --------
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 4d18a461fa..f8d06223d6 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -25,12 +25,16 @@
- #include "cache-tree.h"
- #include "submodule.h"
- #include "submodule-config.h"
-+#include "strbuf.h"
-+#include "quote.h"
-+#include "argv-array.h"
- 
- #define REFRESH_INDEX_DELAY_WARNING_IN_MS (2 * 1000)
- 
- static const char * const git_reset_usage[] = {
- 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
- 	N_("git reset [-q] [<tree-ish>] [--] <paths>..."),
-+	N_("git reset [-q] [--stdin [-z]] [<tree-ish>]"),
- 	N_("git reset --patch [<tree-ish>] [--] [<paths>...]"),
- 	NULL
- };
-@@ -284,7 +288,8 @@ static int git_reset_config(const char *var, const char *value, void *cb)
- int cmd_reset(int argc, const char **argv, const char *prefix)
- {
- 	int reset_type = NONE, update_ref_status = 0, quiet = 0;
--	int patch_mode = 0, unborn;
-+	int patch_mode = 0, nul_term_line = 0, read_from_stdin = 0, unborn;
-+	struct argv_array stdin_paths = ARGV_ARRAY_INIT;
- 	const char *rev;
- 	struct object_id oid;
- 	struct pathspec pathspec;
-@@ -306,6 +311,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL('p', "patch", &patch_mode, N_("select hunks interactively")),
- 		OPT_BOOL('N', "intent-to-add", &intent_to_add,
- 				N_("record only the fact that removed paths will be added later")),
-+		OPT_BOOL('z', NULL, &nul_term_line,
-+				N_("paths are separated with NUL character")),
-+		OPT_BOOL(0, "stdin", &read_from_stdin,
-+				N_("read paths from <stdin>")),
- 		OPT_END()
- 	};
- 
-@@ -316,6 +325,38 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 						PARSE_OPT_KEEP_DASHDASH);
- 	parse_args(&pathspec, argv, prefix, patch_mode, &rev);
- 
-+	if (read_from_stdin) {
-+		strbuf_getline_fn getline_fn = nul_term_line ?
-+			strbuf_getline_nul : strbuf_getline;
-+		int flags = PATHSPEC_PREFER_FULL;
-+		struct strbuf buf = STRBUF_INIT;
-+		struct strbuf unquoted = STRBUF_INIT;
-+
-+		if (patch_mode)
-+			die(_("--stdin is incompatible with --patch"));
-+
-+		if (pathspec.nr)
-+			die(_("--stdin is incompatible with path arguments"));
-+
-+		while (getline_fn(&buf, stdin) != EOF) {
-+			if (!nul_term_line && buf.buf[0] == '"') {
-+				strbuf_reset(&unquoted);
-+				if (unquote_c_style(&unquoted, buf.buf, NULL))
-+					die(_("line is badly quoted"));
-+				strbuf_swap(&buf, &unquoted);
-+			}
-+			argv_array_push(&stdin_paths, buf.buf);
-+			strbuf_reset(&buf);
-+		}
-+		strbuf_release(&unquoted);
-+		strbuf_release(&buf);
-+
-+		flags |= PATHSPEC_LITERAL_PATH;
-+		parse_pathspec(&pathspec, 0, flags, prefix, stdin_paths.argv);
-+
-+	} else if (nul_term_line)
-+		die(_("-z requires --stdin"));
-+
- 	unborn = !strcmp(rev, "HEAD") && get_oid("HEAD", &oid);
- 	if (unborn) {
- 		/* reset on unborn branch: treat as reset to empty tree */
-@@ -416,5 +457,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	if (!pathspec.nr)
- 		remove_branch_state(the_repository);
- 
-+	argv_array_clear(&stdin_paths);
-+
- 	return update_ref_status;
- }
-diff --git a/t/t7107-reset-stdin.sh b/t/t7107-reset-stdin.sh
-new file mode 100755
-index 0000000000..db5483b8f1
---- /dev/null
-+++ b/t/t7107-reset-stdin.sh
-@@ -0,0 +1,41 @@
-+#!/bin/sh
-+
-+test_description='reset --stdin'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'reset --stdin' '
-+	test_commit hello &&
-+	git rm hello.t &&
-+	test -z "$(git ls-files hello.t)" &&
-+	echo hello.t | git reset --stdin &&
-+	test hello.t = "$(git ls-files hello.t)"
-+'
-+
-+test_expect_success 'reset --stdin -z' '
-+	test_commit world &&
-+	git rm hello.t world.t &&
-+	test -z "$(git ls-files hello.t world.t)" &&
-+	printf world.tQworld.tQhello.tQ | q_to_nul | git reset --stdin -z &&
-+	printf "hello.t\nworld.t\n" >expect &&
-+	git ls-files >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--stdin requires --mixed' '
-+	echo hello.t >list &&
-+	test_must_fail git reset --soft --stdin <list &&
-+	test_must_fail git reset --hard --stdin <list &&
-+	git reset --mixed --stdin <list
-+'
-+
-+
-+test_expect_success '--stdin trims carriage returns' '
-+	test_commit endline &&
-+	git rm endline.t &&
-+	printf "endline.t\r\n" >list &&
-+	git reset --stdin <list &&
-+	test endline.t = "$(git ls-files endline.t)"
-+'
-+
-+test_done
--- 
-gitgitgadget
+-- Hannes
