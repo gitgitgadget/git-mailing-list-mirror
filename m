@@ -2,86 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D56A1F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 20:46:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8CC21F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 20:51:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729471AbfIDUq1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 16:46:27 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:45968 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725965AbfIDUq1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 16:46:27 -0400
-Received: by mail-ua1-f65.google.com with SMTP id j6so7167134uae.12
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 13:46:26 -0700 (PDT)
+        id S1730364AbfIDUvT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 16:51:19 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:35810 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730286AbfIDUvT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 16:51:19 -0400
+Received: by mail-qk1-f194.google.com with SMTP id d26so7607qkk.2
+        for <git@vger.kernel.org>; Wed, 04 Sep 2019 13:51:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=67pp53TK1xR4n95YAe+KmwzwcolJpW3vWG143e0SF70=;
-        b=UqAE6h1vTU5IGJhE1GKP3t7YzdHRu7jVzFw9xXaGyDvrCo2Xg4Q5ieZPy4kBMypS2M
-         hLE5i26hPOU0rDr/aVfTsEKdA8q4WF3FwOrFGGguF4l96FgArmyP6VX+YQNYHYs8TUaB
-         nCdBcDIIwczxokDew1ywBov+vuF0AzD41kBpjVIRx5Nbui3+YHPut/ECN2CjyKb5BI10
-         Nk03tvsibbJ4S68j5G2nz4ac4nsMqXgWFMSe5UZQ4T+oPIwSqBy77elTE5hH7wfLXjYW
-         +kkiPkd+u0ygDjpiksqkc40307WoTcY2Lzdf7pXDOPODfSNb0S0qlslhsLpxyU6vCOIf
-         iSVA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Gqy2x16saohWjxDjmTieoifFxaukm5NKefavNo+oXvg=;
+        b=Pe1B1UvU6aYXT8M9f6/xeB7Q4zJh6crRmehFH5+h1Z7zBgFpuMlAf0WJdn+JgmqMUS
+         B+wUoKDJHXsCKaU8ZHoF+seGN1Fj4R2s/2r5PDIMJEqemthdcA100vyHdPwZZWtoVaHD
+         xbGpmDXPl+7DBD03GgFv6MIMInggDXY1aGuVeA7lcvmswwI84LnE6PSBAuKyVdw5ro4A
+         bEzPc3CIRXOZPz+wjDH2pAuNF/J4Y8n5IPUB2foJrXt+psHfSJwIvfSE3Q0PzL0komav
+         vfwyCRS+Jb6wGNlRkEm9k0/Nv0eGtOIFPaYsEQdH3zD+WZOlHXWKgjB2Yx+W5ZZU9Ayd
+         vEUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=67pp53TK1xR4n95YAe+KmwzwcolJpW3vWG143e0SF70=;
-        b=JX6jodT2uIv9lnA7YO+3kupEO30oCgqGqmEr0uacPZneHQiMQg24WYupCUVnQdXUhg
-         jTlDIzOwUj493CMbtVlMfzf/t5pH3WEraZJTZ6dqzvR2ySt2cSZZRNqYcJlNsKwWOwbp
-         zAtcnE6iSxfPYKsgoHjBudCJn7Zk+b9zglsj9j3DDNbjyC7E1a53etbEZERsJd+qdZaz
-         OQ2N/LjpJfEXAMB5OslO7o6tPRAX6UayWEKTBDIoyCRCWygag2k6bB66cARA7aWDdVuj
-         gJQftaN3szsBOnwdxiQ+6mx0ECBdFs6HsKk85av3rZ6qn5niilc2yyy7PDsB6bfMOzJq
-         DD5w==
-X-Gm-Message-State: APjAAAUNA0NYEg/fkyR2KYHa16E2zOkcllFr/yD4AbSpIjhLo35YI5Fu
-        SuJRxkAExp0AfPXShiv6sRVbv8j5o1ZRLZqIGn0=
-X-Google-Smtp-Source: APXvYqyoqS1Lu65/vBr5olPgPoLkMOF+OPJN6yZimbLH9hNy1ewZVQU45C43TYYQ9jFlX2uXy+VhGLD6XzPLZ1LrgME=
-X-Received: by 2002:ab0:758a:: with SMTP id q10mr3679359uap.76.1567629985963;
- Wed, 04 Sep 2019 13:46:25 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Gqy2x16saohWjxDjmTieoifFxaukm5NKefavNo+oXvg=;
+        b=s5pAwcnzgTRq0LYef88MKCYvvqwWGKl6GDGM5HoNllZ9rPl6RmqXghnn8pEMQtq+ar
+         trJ8eHohBsRGSHJRtLnQzD+16b9zGBYF1jCJY7ujK6TVj+gbme5F0Bs/A8WN64RkbHCZ
+         ZiAXZLGiw68d7SUrAoIZxfqZW8WCZuWqNj9zW00NwOXnI+6tp1NdAfZA2+x6JM1EpwWr
+         VJxkdcA/H2TE4ihkiKK1vGsJ8GwkXJ642lcDKTdmqab3nfO3cxwEJHPOuQ6Ti0zMPUXb
+         wGgpb9Ebs1/zL7UhonPdSQUgcsS59lsPsHZnxi1PmUVaxhoTrw0XNG7diOI3DRMlSd2J
+         Q3Fw==
+X-Gm-Message-State: APjAAAUm3VDHtYlTiWH3Uzg4GlpQQ+8xO5s3bQNgQCw5pGFhaY3ck3WF
+        YLeODvXhtyik1RR1zpfo7tMThg==
+X-Google-Smtp-Source: APXvYqzOErjnR5LRjkibpL4mjSCtoRHLKlRX48drQPiADamtcs+Ks+reK5XXGtqljSrMTidXoOvbsg==
+X-Received: by 2002:a37:ad04:: with SMTP id f4mr1935006qkm.238.1567630278421;
+        Wed, 04 Sep 2019 13:51:18 -0700 (PDT)
+Received: from localhost ([50.49.245.163])
+        by smtp.gmail.com with ESMTPSA id 131sm98578qkg.1.2019.09.04.13.51.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Sep 2019 13:51:17 -0700 (PDT)
+Date:   Wed, 4 Sep 2019 16:51:16 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH 1/1] contrib/git-jump/git-jump: support alias expansion
+Message-ID: <20190904205116.GA20056@syl.local>
+References: <cover.1567619579.git.me@ttaylorr.com>
+ <473a7c7b241ad2d449d3bcb6daeb77a179c7e45f.1567619579.git.me@ttaylorr.com>
 MIME-Version: 1.0
-References: <7da71d89f9fa987eca2e25974e4cec382c146e44.1567627609.git.bert.wesarg@googlemail.com>
- <62ef03a2938ac0d2158b1c3201c7f10e52e30ecb.1567627609.git.bert.wesarg@googlemail.com>
- <CAPig+cTZiOBwaM-BE-19CzJuZ4NwCZTaDc22WuY+bv8BLP=rrQ@mail.gmail.com>
-In-Reply-To: <CAPig+cTZiOBwaM-BE-19CzJuZ4NwCZTaDc22WuY+bv8BLP=rrQ@mail.gmail.com>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Wed, 4 Sep 2019 22:46:14 +0200
-Message-ID: <CAKPyHN0B++3w7GgTPCE6P=rWBivknfqA0YZnJdz3htbOCa0g+w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] git-gui: add horizontal scrollbar to commit buffer
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Pratyush Yadav <me@yadavpratyush.com>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <473a7c7b241ad2d449d3bcb6daeb77a179c7e45f.1567619579.git.me@ttaylorr.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 4, 2019 at 10:31 PM Eric Sunshine <sunshine@sunshineco.com> wro=
-te:
+On Wed, Sep 04, 2019 at 01:55:03PM -0400, Taylor Blau wrote:
+> @@ -68,7 +70,7 @@ if test $# -lt 1; then
+>  	usage >&2
+>  	exit 1
+>  fi
+> -mode=$1; shift
+> +mode="$(git config --default "$1" --get -- "alias.$1")"; shift
 >
-> On Wed, Sep 4, 2019 at 4:10 PM Bert Wesarg <bert.wesarg@googlemail.com> w=
-rote:
-> > While the commit message widget has a configurable fixed width, it
-> > nevertheless allows to write commit messages which exceed this limit.
-> > Though it does not show this content because there is not scrollbar for
-> > this widget. No it is.
->
-> "No it is" what?
+>  trap 'rm -f "$tmp"' 0 1 2 3 15
+>  tmp=`mktemp -t git-jump.XXXXXX` || exit 1
 
-=E2=80=A6there is no scrollbar for this widget. Now there is.
+I guess it's worth noting that this does _not_ respect extra options
+given to the various modes. For example, if I alias 'diff' to 'diff
+--minimal', we will try and invoke the function "mode_diff --minimal",
+which doesn't make sense.
 
-fixed
+Perhaps we could take the output of this through "| awk '{ print $1 }'"
+to discard any extra options, but it feels like a bit of a hack.
 
->
-> > Suggested-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
-> > Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+Personally, I'm not bothered by this, but I also don't use aliases to
+add "default" options to any git sub-commands. But, I don't know if
+other people do, in which case they may want to chime in here.
+
+Thanks in advance for your thoughts.
+
+> --
+> 2.22.0
+
+Thanks,
+Taylor
