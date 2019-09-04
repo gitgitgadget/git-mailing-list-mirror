@@ -7,89 +7,115 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E307B1F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 17:55:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D84041F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 17:55:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731756AbfIDRzE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 13:55:04 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:42457 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730323AbfIDRzD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 13:55:03 -0400
-Received: by mail-qt1-f194.google.com with SMTP id c9so61100qth.9
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 10:55:03 -0700 (PDT)
+        id S1731714AbfIDRzG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 13:55:06 -0400
+Received: from mail-qk1-f180.google.com ([209.85.222.180]:44203 "EHLO
+        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730323AbfIDRzF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 13:55:05 -0400
+Received: by mail-qk1-f180.google.com with SMTP id i78so18973037qke.11
+        for <git@vger.kernel.org>; Wed, 04 Sep 2019 10:55:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=FbiHNvqZOfesypl77qjQQLfDClp4lib6FIQo25AfdgI=;
-        b=TXF+QdMdvoi8uUByTz/Q3xYcJfD9i7//Ttlb7w4Sf8XIWHcBoyfWbb8Dtmk3muqhFJ
-         MadrlPFfpHMbChVsW3mj3RyWVVZL3SoS6Nf+WF8U85Z3u3MdQT4yC1HQFovmQlmE01Lb
-         rtpRDZ/E6IurUh/PbsCqOBYUkHGS8EY5LPTL39S7N84v/fZ0Z4rjKdLmXD3UfpWy9HVu
-         h80LNX3pBKGWLTjPxP9deHwRGdiuCD/fYEdf0+rAyrF5HvvXU6sihuiglSGSusJ29Nll
-         +enJGR8UQTpEqHUXCz6MuAZoXl8I6c7EbCrg3BeiNV+sEQS+LnSvW+9BLEAIwYhrbn5S
-         Q0fA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7LaEJmpF7LJ4q9EfRBwgyyhqbIdFjM1xylU8qxUpJVI=;
+        b=A5rkZsOyxk2+MMhZ2ourvadVT4XIH3AiJpTLaoe7pRkcTmx8kGpkwIvqeNjpYXKNFi
+         E1zzT/6hvVrSs9coTC57xn2WIe8mrGQnyQjAKNr3xcDx6M7YpjIPkJTPS+FQx46qiXcP
+         cSGV6ap5VlQ8blORkEvmLDuYdjJ2bbL25F3TBbDXjzV6mNsrVkg6tgy+boClWOZVEvXr
+         oiS4XKM1h8cvSgAhUOsIbzMpBFsgJW4xkKo6A3s4BwB3MXDV60Zmt5Y9mCegbm3DQ0AB
+         y8BUqyE6nDnDZLI5PzBO10+khcc4JxCm0aRRHjdHqkWHLTUZvFcKZb+2J0bwVmK6QFQR
+         Ppag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=FbiHNvqZOfesypl77qjQQLfDClp4lib6FIQo25AfdgI=;
-        b=SEZsMRDZT8Vxlbj2IzdDxkSOIjC5lfhGrqxL2Kl+Ng4iDdP9o5+fTTPZkWgN0JBrOq
-         q8wEz2QS4+tgGplkL02zjETfvZbaI+wHnxh4p//xjh0Atkw8WloKUFmtyMLMlxG4hvag
-         sKHfYz7/4B37n55C+bVKxAJ+jNdSgZwxCZJawYISgIgD+48USWpvsJexzz3PLxANfbsT
-         242kgk9TESnfnBd3G6JFy7UyjdUgMaKmeahXVrKUSSXpJV4JgxzAdIhi4PyQ+WlVfGog
-         CBR1Rnio4ln8tX0azwBsZFf8xCJj6ZrHV5leXn1ZxPITQWKB+nw0A9sFOsjbLKg2OAiN
-         T/Sw==
-X-Gm-Message-State: APjAAAWubTdasb7woR8lMihreqweUxpOOE6N8rli1ZDMidCYsVf+UU7G
-        gKyw4Qn8cQKVxNGfhxF+AOIQYdBYSLI=
-X-Google-Smtp-Source: APXvYqzLL6krPwnssuvvVOFHZdiqxEx5LF8PiroiTkAe1/tqUQtSPvnkEw/4AKwAOwyHwGPUETjHpw==
-X-Received: by 2002:ac8:2b47:: with SMTP id 7mr41584957qtv.116.1567619702306;
-        Wed, 04 Sep 2019 10:55:02 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7LaEJmpF7LJ4q9EfRBwgyyhqbIdFjM1xylU8qxUpJVI=;
+        b=N0MLnB+nwZczkPX3lDM7Gly45QGWsSqABzac710UMF5fyqHXdkEsSIjK5tFOdvidjF
+         mtWfyxo+JvXIFF9Td0QG3k+N3Z8SyVG8yZAmCAX+Co6CqgL8gozSlL7ftBi8ZARmk6Iz
+         gIg2d1Ikzw4gY09sEs7dwtVlJ62Mr0zjHqQpYv4W2ib0ERNpRjKY6B/imclZgXbdsWAz
+         2+VDPDy4pM72hGWYDKoQ/+B/2pLiZlxayI2OSex/TRkMDrIFgOQm0szvrITE5JtpCE1/
+         YQ7HFsoWD91+jXK38DsphtPcnqlpAkQbd+WKgNqqBrndzKR+XQ+mPuIq/QKdA12xU1du
+         QKoA==
+X-Gm-Message-State: APjAAAUqsQWfn+Rn2f3nYRx43kccg7txug6OvDurK/fmwnZ93WoZOdkY
+        O/wGWjfFPRFkUPyLz+H2OrghQuOJV7U=
+X-Google-Smtp-Source: APXvYqwjgyBiVa0H8NaLL6NOM2XOXj4yaLVJC+iwoGsaZGSxl6qobt7mv/E9QQmRyvAE2lJDjUg6NQ==
+X-Received: by 2002:a37:6650:: with SMTP id a77mr28203016qkc.65.1567619704291;
+        Wed, 04 Sep 2019 10:55:04 -0700 (PDT)
 Received: from localhost ([2605:9480:205:dfe1:24fd:2e2b:8aac:d853])
-        by smtp.gmail.com with ESMTPSA id z22sm10328648qti.1.2019.09.04.10.55.01
+        by smtp.gmail.com with ESMTPSA id t17sm991319qtt.57.2019.09.04.10.55.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Sep 2019 10:55:01 -0700 (PDT)
-Date:   Wed, 4 Sep 2019 13:55:00 -0400
+        Wed, 04 Sep 2019 10:55:03 -0700 (PDT)
+Date:   Wed, 4 Sep 2019 13:55:03 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net
-Subject: [PATCH 0/1] contrib/git-jump: support alias expansion
-Message-ID: <cover.1567619579.git.me@ttaylorr.com>
+Subject: [PATCH 1/1] contrib/git-jump/git-jump: support alias expansion
+Message-ID: <473a7c7b241ad2d449d3bcb6daeb77a179c7e45f.1567619579.git.me@ttaylorr.com>
+References: <cover.1567619579.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1567619579.git.me@ttaylorr.com>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+When a caller of 'git-jump' has, say, the alias 'di' assigned to 'diff',
+it can be cumbersome to remember to type 'git jump diff' instead of the
+shorthand '... di' that they are used to.
 
-I have been meaning to send this patch for a while, which teaches the
-'git-jump' script how to respect user aliases for commands like 'diff',
-'merge', and 'grep'.
+Let's teach 'git-jump' to expand these aliases before calling the
+mode-specific subroutine. Do so by fetching the configuration value of
+'alias.$1', defaulting to "$1" in the case that no alias is set.
 
-I often find myself parsing the output of 'git diff' (which I spell 'g
-di') in less, and then wanting to jump to some specific diff in a file,
-i.e., by running 'git jump diff -- <filename>'.
-
-But, I am so used to typing 'di' instead of 'diff', that I often write
-the later invocation as 'g jump di -- <filename>', and 'git-jump'
-complains that it doesn't know what 'di' means.
-
-Let's rectify that by teaching it how to expand alises, which is
-implemented in the patch below.
-
-Thanks,
-Taylor
-
-Taylor Blau (1):
-  contrib/git-jump/git-jump: support alias expansion
-
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
  contrib/git-jump/README   | 4 ++++
  contrib/git-jump/git-jump | 4 +++-
  2 files changed, 7 insertions(+), 1 deletion(-)
 
---
+diff --git a/contrib/git-jump/README b/contrib/git-jump/README
+index 2f618a7f97..9e59990ba0 100644
+--- a/contrib/git-jump/README
++++ b/contrib/git-jump/README
+@@ -74,6 +74,10 @@ git jump grep -i foo_bar
+ 
+ # use the silver searcher for git jump grep
+ git config jump.grepCmd "ag --column"
++
++# jump to changes via an alias of 'git diff', assuming you have set
++# `git config alias.diff di`
++git jump di
+ --------------------------------------------------
+ 
+ 
+diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
+index 931b0fe3a9..15e129b350 100755
+--- a/contrib/git-jump/git-jump
++++ b/contrib/git-jump/git-jump
+@@ -15,6 +15,8 @@ grep: elements are grep hits. Arguments are given to git grep or, if
+       configured, to the command in `jump.grepCmd`.
+ 
+ ws: elements are whitespace errors. Arguments are given to diff --check.
++
++Aliases of any of the above are expanded automatically.
+ EOF
+ }
+ 
+@@ -68,7 +70,7 @@ if test $# -lt 1; then
+ 	usage >&2
+ 	exit 1
+ fi
+-mode=$1; shift
++mode="$(git config --default "$1" --get -- "alias.$1")"; shift
+ 
+ trap 'rm -f "$tmp"' 0 1 2 3 15
+ tmp=`mktemp -t git-jump.XXXXXX` || exit 1
+-- 
 2.22.0
