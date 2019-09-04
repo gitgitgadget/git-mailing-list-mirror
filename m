@@ -7,83 +7,116 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D63FF1F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 23:36:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A4D81F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 23:36:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729863AbfIDXgA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 19:36:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59084 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726240AbfIDXgA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 19:36:00 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9EE3522B11;
-        Wed,  4 Sep 2019 19:35:58 -0400 (EDT)
+        id S1730122AbfIDXgb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 19:36:31 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63078 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726240AbfIDXgb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 19:36:31 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B697E8BBEB;
+        Wed,  4 Sep 2019 19:36:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3UabsyRJz+EpIu5ik89e4vnBP14=; b=jJYiP5
-        /1NuhdtF+QkbFm/eqwptvBXt3uJlzgdh2qAOiD4qxrF/3jdCTzxeVsJe8WXDssII
-        WgyOW2kALLhMAX99IrF8wks9tvhQFnxtMcpqDzkp5O2L7Zr9cEAWWES4bUr7pXhA
-        4YZd+KT4C9c2m3z7Ho0TGgpxESQ+nVkukzZP8=
+        :content-type; s=sasl; bh=7ghdv0avgCPjBkZVn6sePconA1o=; b=BdC8P2
+        Vv4A5clOfvB6tbLLnZ33W5bqqKlvy/Jy/wZQSXwapWDuGp1yv/r578XYBMl6lLhe
+        8enE0rcJ7PhH0MxYCVZBjI0ks+QbhtGDHFrkE6lHWbxV6UGHIxPgILhPW/SV2oEV
+        KqumS5sQ7Ctf32QLC3Ljm2LZ6oSAoj9ZLNAPk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BVBa/xrPuPkeF0V6BQQRDS+bSfARBZrY
-        nY7J+SshljxzOSr13wMGvK1sB5kFxKvC++TCA6bt9bTiFzXO3xQfFwmRo0dr+371
-        ThBDu75SUXcbq4BNzqWGiCGilDhH181EkYQj54Piyz2Qgf7R9vtP8z3LwT4UkH5m
-        OGJ9mHyVXak=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 96D9122B10;
-        Wed,  4 Sep 2019 19:35:58 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=uM9alLBJ38gwURf9g1XrUWqWVWFruWM6
+        WeVg1VGVehvbwX16aiveTRBfGiyD1+KHE/a15YrjXeCOV5rX1c7DMEW3kfI7IQFR
+        uYlarlfzYSeeZDXT7MoPzilrHh4nbuIQyRVmcA9rgNc2/r+G/UYLogzHMJN6JATp
+        nnlnwwd/B5w=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AE04F8BBEA;
+        Wed,  4 Sep 2019 19:36:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D6A1D22B0F;
-        Wed,  4 Sep 2019 19:35:56 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D36028BBE9;
+        Wed,  4 Sep 2019 19:36:27 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>,
-        David Turner <dturner@twosigma.com>
-Cc:     stolee@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH] cache-tree: do not lazy-fetch merge tree
-References: <69f2b069-3e11-4a2e-9b81-bde18c463d8c@gmail.com>
-        <20190904223529.135623-1-jonathantanmy@google.com>
-Date:   Wed, 04 Sep 2019 16:35:55 -0700
-In-Reply-To: <20190904223529.135623-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Wed, 4 Sep 2019 15:35:29 -0700")
-Message-ID: <xmqq7e6nskh0.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] mingw: apply array.cocci rule
+References: <cover.1567595331.git.liu.denton@gmail.com>
+        <dcb92cffd7bd0643e7af68d825f7517d490dcf16.1567595331.git.liu.denton@gmail.com>
+        <nycvar.QRO.7.76.6.1909042340520.5377@tvgsbejvaqbjf.bet>
+Date:   Wed, 04 Sep 2019 16:36:25 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1909042340520.5377@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Wed, 4 Sep 2019 23:41:24 +0200
+        (CEST)")
+Message-ID: <xmqq36hbskg6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BE60C148-CF6C-11E9-AD25-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: D0D897BA-CF6C-11E9-A344-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> When cherry-picking (for example), new trees may be constructed. During
-> this process, Git constructs the new tree in a struct strbuf, computes
-> the OID of the new tree, and checks if the new OID already exists on
-> disk. However, in a partial clone, the disk check causes a lazy fetch to
-> occur, which is both unnecessary (because we have the tree in the struct
-> strbuf) and likely to fail (because the remote probably doesn't have
-> this tree).
+> Hi Denton,
+>
+> On Wed, 4 Sep 2019, Denton Liu wrote:
+>
+>> After running Coccinelle on all sources inside compat/ that were created
+>> by us[1], it was found that compat/mingw.c violated an array.cocci rule
+>> in two places and, thus, a patch was generated. Apply this patch so that
+>> all compat/ sources created by us follows all cocci rules.
+>>
+>> [1]: Do not run Coccinelle on files that are taken from some upstream
+>> because in case we need to pull updates from them, we would like to have
+>> diverged as little as possible in order to make merging updates simpler.
+>>
+>> The following sources were determined to have been taken from some
+>> upstream:
+>>
+>> * compat/regex/
+>> * compat/inet_ntop.c
+>> * compat/inet_pton.c
+>> * compat/nedmalloc/
+>> * compat/obstack.{c,h}
+>> * compat/poll/
+>>
+>> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+>> ---
+>>  compat/mingw.c | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/compat/mingw.c b/compat/mingw.c
+>> index 738f0a826a..a3b1e9e3bb 100644
+>> --- a/compat/mingw.c
+>> +++ b/compat/mingw.c
+>> @@ -1265,7 +1265,7 @@ static wchar_t *make_environment_block(char **deltaenv)
+>>  		}
+>>
+>>  		ALLOC_ARRAY(result, size);
+>> -		memcpy(result, wenv, size * sizeof(*wenv));
+>> +		COPY_ARRAY(result, wenv, size);
+>>  		FreeEnvironmentStringsW(wenv);
+>>  		return result;
+>>  	}
+>> @@ -1309,7 +1309,7 @@ static wchar_t *make_environment_block(char **deltaenv)
+>>  			continue;
+>>
+>>  		size = wcslen(array[i]) + 1;
+>> -		memcpy(p, array[i], size * sizeof(*p));
+>> +		COPY_ARRAY(p, array[i], size);
+>
+> ACK!
+>
+> Thanks,
+> Dscho
 
-FWIW, this logic dates back to aecf567c ("cache-tree: create/update
-cache-tree on checkout", 2014-07-05), when "checkout" learned to
-perform opportunistic revalidation of cache-tree data structure,
-without writing into the object store.  If we were lazily checked
-out, and created a blob locally that happens to match the original
-we did not fetch in a directory this piece of code is hashing, the
-resulting hash _may_ name a tree that the other side has that we did
-not fetch, so taking the "to_invalidate = 1" side would make the
-resulting cache-tree less optimal, but because the design choice
-being made here is to take that hit in order to avoid network cost,
-as long as that is documented properly (iow, "probably doesn't have"
-is not an issue; even if they have it, you do not want to fetch and
-make the cache-tree entry valid), it is OK.
-
-
+Yup, looks good.  Thanks both.
