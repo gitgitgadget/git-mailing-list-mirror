@@ -3,130 +3,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 335A81F461
-	for <e@80x24.org>; Tue,  3 Sep 2019 23:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 493241F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 00:29:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727692AbfICXgv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Sep 2019 19:36:51 -0400
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:37593 "EHLO
-        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727486AbfICXgv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Sep 2019 19:36:51 -0400
-Received: by mail-yb1-f196.google.com with SMTP id t5so6622231ybt.4
-        for <git@vger.kernel.org>; Tue, 03 Sep 2019 16:36:50 -0700 (PDT)
+        id S1726451AbfIDA3e (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Sep 2019 20:29:34 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:39947 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726090AbfIDA3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Sep 2019 20:29:34 -0400
+Received: by mail-qk1-f195.google.com with SMTP id f10so18010598qkg.7
+        for <git@vger.kernel.org>; Tue, 03 Sep 2019 17:29:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=wU82H3I2nQ4hvb/z9hCgHOYSM6ujl2prGyMAuLSt8VI=;
-        b=t00RM5NYdlr96QXD+vUy5sRESuUHTKqhS0vCmeLLPonlumuT+OWGmyyRLpNSKb4yb0
-         7qt5Ie06KjRlZDO+cd+qxJgKDP4pbsLl/qr9n1VxOamhElldCoVU/V6nruLwjFV+RjX8
-         pv/7O6uWvvlaqtlXwN+QWCxp+sJLar0srAHW08ekwGvARgPy/WTz+VtUZ97HMQYVKhRX
-         ZYvKsVNeifibv5JxjHNgGRWoY2CqUWJ/kaxw8Rm6+hUZ7nqGcmxoRYc2KqCB0xM1KN5p
-         eusBxquEeUgPbq83pxy1bqwPySi+8/BzmoyJjrkmojl9k6B2lGbF8WiVjfkANVYvutBb
-         j2IA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=B7/D6Ae5QWRWmB4B6Fr7RAHYULOZeHY4dqrNlwAdQ+I=;
+        b=DBt5QN6O2jLBTnRTLeNrfMSwFY6Ix+CgpTsBDM9uA13GFqG96SiPZhUdhkmF+Gwz+Z
+         cx2vnSqhcNKV7RSub7IRiicDB51qp37kU4amkdinFTkqjS+2KsSPA5mFnD3bDNSqz1JD
+         27A58EDp+sQaQH4VdHOEhVc+vO27VVNUpqP23tabaJ5x9ZeFrRkbcHNO8mK9I8oCSBOS
+         3RmZ61EfBOVYl/53CrKkCCZKMGTeqVxyr3vi0lQtr0ycBazQAU/pSCh7CvhTnFG1McBJ
+         3Nq5ajUFlEpcpoV4c7TFLDptMVwFfxw+oFsBtRCqm6NJOQMVYYkKzr5UJsi20e61QBWw
+         oz5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=wU82H3I2nQ4hvb/z9hCgHOYSM6ujl2prGyMAuLSt8VI=;
-        b=qovxB1FUkh2gcfLQtAMopupz/0e8ypfp+CjXtrNaR29XCuvz1pg/YvX8C4y1q8RqkP
-         OGwp3i72ORscVwBSCQhXMjFaVKvPs78Z69zZbtz9BTha5l6y1EPXVCsGU7eyHvjmm6Zd
-         /yToMmFepLxEq2P8TFzQezklbD2PTPZdbmhoFHxz/ztafWn5YuC5xL4omiTEzyTLO7uK
-         71ODbaTV/hk07U5AUE8XW3nPSQpCGLot03sLT2Hs2gcs0p52UyzpnHHmvmC0crc86S6g
-         P9Gp3rLWKwAWBOarm3PPZevXULhEQT4U9jFQAhfattp8xfZnWj9v1Nyrm0Pg336gk1x0
-         uQ0A==
-X-Gm-Message-State: APjAAAWK4UWwDnOHAnm4QaULAWAZl67/UMvnwGSN8xxCe/XPovGkUA+R
-        Y4X1mGNKs3pofpBJyBsAPFU=
-X-Google-Smtp-Source: APXvYqxFYtgOOQH1qJFALcM6OEkGmOHWbtlDITnlCOHCwDd8xUeL2COIF5JpVcRRnN6ICfGQ5GXBpg==
-X-Received: by 2002:a25:9803:: with SMTP id a3mr26113938ybo.27.1567553809926;
-        Tue, 03 Sep 2019 16:36:49 -0700 (PDT)
-Received: from [192.168.1.25] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id l39sm3845748ywh.14.2019.09.03.16.36.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Sep 2019 16:36:49 -0700 (PDT)
-Subject: Re: [PATCH 1/1] fetch: add fetch.writeCommitGraph config setting
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
-        garimasigit@gmail.com, Derrick Stolee <dstolee@microsoft.com>
-References: <pull.328.git.gitgitgadget@gmail.com>
- <49f877c85ca2be5bb76d9082ee4aa26e26111a14.1567477320.git.gitgitgadget@gmail.com>
- <xmqqef0xtd3p.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d550ac23-cb65-b547-d9dc-1428ee2e9420@gmail.com>
-Date:   Tue, 3 Sep 2019 19:36:48 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=B7/D6Ae5QWRWmB4B6Fr7RAHYULOZeHY4dqrNlwAdQ+I=;
+        b=ueZsRr0eHgZTRaVap5li+M25nhE2wuQAjAq7wzthjYgqTqOFYf1rPNACV7C3x3vH1C
+         7CSxtFl5gXaUCwlb3C49v+aibNtBRuIi6/358lNeRFskx9NWcE8hEHtWg5kOIrHtljBo
+         4OO+KIXzfH/NeZMeMe1XdahyU9Vf/uoYPyX94JrRN8Nre4bTODKwf1PgCTC91jVYwf5g
+         GKWjGyYn79Dk8lRLxpxNZeGI71S3A713OF65QQpV1m4mrHHXO26HrfVhJUi6rfS03jL6
+         lVHJOvXqWtlXd1aeR7l1iy8Bpiv3lTNS50XBf0cRvK5ffGHyPONXy8WzhtNZF2Iz6gCj
+         WHAA==
+X-Gm-Message-State: APjAAAV6rPNoZoU915+CULGqL3EKyUO4v9ljcDk7D1JRI26LkID3SXm4
+        Y28tXF1d2ouXMqNji2aAwj34p/o3DC4=
+X-Google-Smtp-Source: APXvYqxJBrzbYShg2q8WY6+2Q1Q14NP/Ef0lSzEhWMGcfRZ4dqYW38gRz1W6QmGMzSzVQ5i322RchA==
+X-Received: by 2002:a37:bac3:: with SMTP id k186mr35610097qkf.61.1567556972922;
+        Tue, 03 Sep 2019 17:29:32 -0700 (PDT)
+Received: from localhost ([2605:9480:205:dfe1:24fd:2e2b:8aac:d853])
+        by smtp.gmail.com with ESMTPSA id h10sm6201892qtk.18.2019.09.03.17.29.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Sep 2019 17:29:31 -0700 (PDT)
+Date:   Tue, 3 Sep 2019 20:29:30 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t: use LF variable defined in the test harness
+Message-ID: <20190904002930.GA76383@syl.lan>
+References: <xmqqwoeprsp1.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqef0xtd3p.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <xmqqwoeprsp1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/3/2019 3:05 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> diff --git a/builtin/fetch.c b/builtin/fetch.c
->> index 53ce99d2bb..d36a403859 100644
->> --- a/builtin/fetch.c
->> +++ b/builtin/fetch.c
->> @@ -23,6 +23,7 @@
->>  #include "packfile.h"
->>  #include "list-objects-filter-options.h"
->>  #include "commit-reach.h"
->> +#include "commit-graph.h"
->>  
->>  #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
->>  
->> @@ -1715,6 +1716,20 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
->>  
->>  	string_list_clear(&list, 0);
->>  
->> +	prepare_repo_settings(the_repository);
->> +	if (the_repository->settings.fetch_write_commit_graph) {
->> +		int commit_graph_flags = COMMIT_GRAPH_SPLIT;
->> +		struct split_commit_graph_opts split_opts;
->> +		memset(&split_opts, 0, sizeof(struct split_commit_graph_opts));
->> +
->> +		if (progress)
->> +			commit_graph_flags |= COMMIT_GRAPH_PROGRESS;
->> +
->> +		write_commit_graph_reachable(get_object_directory(),
->> +					     commit_graph_flags,
->> +					     &split_opts);
->> +	}
-> 
-> As a low-impact change this is good.  
-> 
-> For longer term, it feels a bit unfortunate that this is still a
-> separate phase of the program, though.  We know what new refs we
-> added, we know what new objects we received, and we even scanned
-> each and every one of them while running the index-pack step to
-> store the .pack and compute the .idx file, i.e. it feels that we
-> have most of the information already in-core to extend the commit
-> graph for new parts of the history we just received.
+Hi Junio,
 
-You're right that we could isolate the new write to the refs we
-just received. We could use the more cumbersome write_commit_graph()
-method with a list of commit oids as starting points. I'm happy to
-make that change if we see a lot of value there.
+On Tue, Sep 03, 2019 at 02:11:22PM -0700, Junio C Hamano wrote:
+> A few test scripts assign a single LF to $LF, but that is already
+> given by test-lib.sh to everybody.
 
-However, the current patch also gives us a way to add local refs
-to the commit graph and "catch up" to the work the user had done.
-With this in mind, I do think the simpler code has another functional
-advantage.
+I didn't know that 't/test-lib.sh' provided '$LF' (as I'm sure was the
+case for the respective authors of those tests below ;-)), so removing
+the bespoke definitions and relying on the one already defined makes
+good sense.
+
+> Remove the unnecessary reassignment.
+
+I did find a couple of extra spots when I went looking through 't'
+myself. I ran:
+
+  $ git grep "='$" -- t
+
+which in addition to the three spots below turned up a couple more
+interesting locations, as well as a few false positives. They are:
+
+  - t/t3005: this script calls the variable '$new_line', but could be
+    renamed to LF and then removed in a second patch
+
+  - t/valgrind/analyze.sh: this script also calls the variable
+    '$new_line', but does not ever source test-lib.sh, so I think this
+    spot can be ignored.
+
+So I think that my recommendation is to either:
+
+  * introduce a prepratory patch that updates t3005 to rename
+    '$new_line' to '$LF', and then amend the patch below to also blow
+    away t3005's use of '$LF', or
+
+  * do both steps in one larger patch
+
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  t/t3404-rebase-interactive.sh | 2 --
+>  t/t4013-diff-various.sh       | 3 ---
+>  t/t5515-fetch-merge-logic.sh  | 3 ---
+>  3 files changed, 8 deletions(-)
+>
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 461dd539ff..31114d0bbb 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -155,8 +155,6 @@ test_expect_success 'rebase -x with empty command fails' '
+>  	test_i18ncmp expected actual
+>  '
+>
+> -LF='
+> -'
+>  test_expect_success 'rebase -x with newline in command fails' '
+>  	test_when_finished "git rebase --abort ||:" &&
+>  	test_must_fail env git rebase -x "a${LF}b" @ 2>actual &&
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index a9054d2db1..5ac94b390d 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -7,9 +7,6 @@ test_description='Various diff formatting options'
+>
+>  . ./test-lib.sh
+>
+> -LF='
+> -'
+> -
+>  test_expect_success setup '
+>
+>  	GIT_AUTHOR_DATE="2006-06-26 00:00:00 +0000" &&
+> diff --git a/t/t5515-fetch-merge-logic.sh b/t/t5515-fetch-merge-logic.sh
+> index e55d8474ef..961eb35c99 100755
+> --- a/t/t5515-fetch-merge-logic.sh
+> +++ b/t/t5515-fetch-merge-logic.sh
+> @@ -12,9 +12,6 @@ GIT_TEST_PROTOCOL_VERSION=
+>
+>  . ./test-lib.sh
+>
+> -LF='
+> -'
+> -
+>  test_expect_success setup '
+>  	GIT_AUTHOR_DATE="2006-06-26 00:00:00 +0000" &&
+>  	GIT_COMMITTER_DATE="2006-06-26 00:00:00 +0000" &&
+
+The rest of the patch here looks obviously good.
 
 Thanks,
--Stolee
-
+Taylor
