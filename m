@@ -2,80 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A84CB1F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 19:20:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AE261F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 19:39:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730514AbfIDTUv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 15:20:51 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:44589 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730436AbfIDTUv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 15:20:51 -0400
-Received: by mail-lf1-f68.google.com with SMTP id y4so9950338lfe.11
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 12:20:50 -0700 (PDT)
+        id S1731678AbfIDTjR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 15:39:17 -0400
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:33013 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730197AbfIDTjR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 15:39:17 -0400
+Received: by mail-ua1-f68.google.com with SMTP id g11so7143419uak.0
+        for <git@vger.kernel.org>; Wed, 04 Sep 2019 12:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=googlemail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=3Y7aggwkL+Ki4jHy1ac1Z0AbPX2JpSAQqIXeQHhceoo=;
-        b=t0f8uj117gXjtTBLxLGApaUCro2SlUhnYaTyWEbXoImdDWHa/d64gQkloycZEWNlpb
-         7Y3e8FnTxQaoH+clfDJPya1+3m68CwJPpal3Ap3JL/Ee9iCC6KIYFz8FU0Z0rSLolOzt
-         ANgK5lr8D1QCu1N3FVj/0YoD+4/3J1J9oGv8SAZzIkh81v+rdTfF5GGg/G68FugZiJgi
-         fet5p8mo6hOxjQpTDoktqsUK7uE4k+e6cxDa5XQXQXGP5pHMmljik95ExFgFEKsBj3Mn
-         +sk47FFr+DW9LXhU+MTm5vJGco5WdiErNJ3lrWSI1+nO1qkzHXY2a59q7bSrqle87c/S
-         7Arg==
+        bh=gLs3slu/F507nXJL3qYN7bKsP3yhBtom87BYeRPYFww=;
+        b=dL1cRWxLPI2nX9yQ0110UaArw94+B3O6xxqVqnGSnX4AhIC512rbku14HbThrX2pD3
+         gfQuXlwSsuQpDJZgPpZQ9tVNAWcxQYRBl41IPAyifSwhzG3sUqCfeqLecjMAgUuNJTtX
+         JL5TQz6XAdIX3cdKXcn83HGtW2usd3Hxo6pgVEywX3VQrzRXgYlTvDVSGTG+Vgl8hZPS
+         cfPWt4LJgVsvIxx4jqdCJdwp590t7VbCMsJ5wu+RToHRzv2cAQsD3ea3JUXUzNkf/i5r
+         aJNkADIJC/Zfi3ak0cgH8PZfyZT5SO1h8OGE5vY4FuzmRBUPMD2TjTTIu3mkdQIkqL6e
+         Xuxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=3Y7aggwkL+Ki4jHy1ac1Z0AbPX2JpSAQqIXeQHhceoo=;
-        b=ojo3EhsmoS3wxjMKm8OWQn6/Wap9PaoUQ9UnoWCWVe7DVei8OV9j090NJV99Q471dW
-         dRqSA+FuofV/S3kO6LHt+1FqgK6idMLeleFFSLVEXVE4GoYLTUXWw4NU24PJgUwEWCzv
-         y+Cek8UyvHE/IE+FsJO5iBexMpPhZsrMtZgLp0KEJ8jiU9RptNgtMVoC1R4u6sTmuCY6
-         BKzGx532r2ovzkpyXQUu7idysHVtR2Mr0hVrIhaowGCOrNgFVLG2Z9g0Sy2NFBUgKrbX
-         kKhpN197iOKw/BNM8DSvZ/NOHh+wVE7YeUcF5VFPFB4xPUMCnxH0hQaexEmiKi4I5wtq
-         CQUQ==
-X-Gm-Message-State: APjAAAXM9k6cpPemcGb0KZDhCvjHDdScus6A38VgBscoV1OtBAn0J4Ef
-        lXqcB/gT3UCYDhY80LNM88AeJwnQTZUQo3KShS9SBTY1y7u/5Q==
-X-Google-Smtp-Source: APXvYqwEZL+GVkN0oTGKSVuC1ahxl7paDpcknNjjTpQ57VE9BEZxw/03jilGD2K4jwyIopzZBM4e/McUvoGbcyW1x8E=
-X-Received: by 2002:ac2:5445:: with SMTP id d5mr7728564lfn.43.1567624849249;
- Wed, 04 Sep 2019 12:20:49 -0700 (PDT)
+        bh=gLs3slu/F507nXJL3qYN7bKsP3yhBtom87BYeRPYFww=;
+        b=IYRoOmzYW38xfqtagxRtvymoZASF/D6rMV+Xgai0FWsBMIxNz2AJAGVxfbIIhucAag
+         w59Bl4AZOJwzWG7kV1hnxoJ5ZTa+dJKpkczWffbCFYF+xwLbUI3rnengMdl+p97886CE
+         rVFxAfh06ZxZvvuRma+vGPYGgtnyWV5119JJJKMJnuL8xmbMEVaLQ0vkZu0xcb+P0mKs
+         Mz3w1nKA4NZmeiibDtMmMGE7irlEp07g90BSDYOzCxvpu3yCZ8BsNhQAWYRvPd1eqJDj
+         4jYLyIrLY2Ykv03m7wKzj1bxsqwAdBLlyjCR93SEMGaD4JJ6gCziwQM7hHt5z/eIhLWC
+         w5LQ==
+X-Gm-Message-State: APjAAAVxhbrZOP4/jNVIDYHXbbUIhLqzq//zd8W84P+W3fz48FB5gp2S
+        /TlNgBvfoKEmSlyZUPq8INoorHbXslYf2hurnU4=
+X-Google-Smtp-Source: APXvYqxgcK3PMKUI9nDEUYkfxhrxIZ/nHorzIZK3kxns+TqyNwn+4uNPNY99tRn5dTI4c+w3OB1KjeK2aQG8Jeoa9Ig=
+X-Received: by 2002:a9f:3110:: with SMTP id m16mr20731348uab.10.1567625953990;
+ Wed, 04 Sep 2019 12:39:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190903214942.ubcbdgtphpwnaxs6@yadavpratyush.com>
- <20190904143055.11400-1-birger.sp@gmail.com> <510e80f4-a8e1-329d-2395-b1268bf7c1f8@kdbg.org>
-In-Reply-To: <510e80f4-a8e1-329d-2395-b1268bf7c1f8@kdbg.org>
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-Date:   Wed, 4 Sep 2019 21:20:38 +0200
-Message-ID: <CAGr--=LY4JWdms3GtnKAtN6z-2c-jpXE2HJ5_dMM5gEFayrj_g@mail.gmail.com>
-Subject: Re: [PATCH v5] git-gui: Add hotkeys to set widget focus
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Git List <git@vger.kernel.org>,
-        Pratyush Yadav <me@yadavpratyush.com>
+References: <CAGr--=+ThYVyZUiU1wnt0yL+MzF1RXvHnbwo9NWyh95cLyhNRQ@mail.gmail.com>
+ <CAKPyHN1LJa8Zq6rZbOMZ-KxkqQYauQcvjv+rTrHt1_zwPZLZ-A@mail.gmail.com>
+ <CAGr--=+CEX-STDgT_ZwaA=n9UHSrsgcWnxCMY=9tGDA=9XLkew@mail.gmail.com>
+ <20190902181213.7jqvoyctdm26g34z@yadavpratyush.com> <CAGr--=JgqjC8FskqVFJTqAnQ5aq8J4z-Wje8s22VwBgVtkBF-Q@mail.gmail.com>
+ <20190902184405.bfb5572iia2v2uwi@yadavpratyush.com> <20190902185819.fzf3lop6riiq6zja@yadavpratyush.com>
+ <CAKPyHN1GgXLy0+z=JbuyuSvVXsh6u5Po18OXizPNmfLE5AC00g@mail.gmail.com>
+ <CAKPyHN3=QY4+XNhQPq09_PALFwfR5bWBs7q6m6LkfFoW-xeCug@mail.gmail.com> <20190903171511.cd6vwn4kz7bdpose@yadavpratyush.com>
+In-Reply-To: <20190903171511.cd6vwn4kz7bdpose@yadavpratyush.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Wed, 4 Sep 2019 21:39:02 +0200
+Message-ID: <CAKPyHN39AXJBtuDepb-TgGSGrvqs4a5+yp74L5im3Svmw5S8aA@mail.gmail.com>
+Subject: Re: git-gui: Long lines in commit message gets hidden, no scrollbar appears
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On Tue, Sep 3, 2019 at 7:15 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+>
+> On 02/09/19 09:13PM, Bert Wesarg wrote:
+> > On Mon, Sep 2, 2019 at 9:03 PM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+> > >
+> [snip]
+> > > > On second thought, wouldn't it make more sense to expand the
+> > > > commit
+> > > > message buffer instead? The point of resizing that pane is to see more
+> > > > of the commit message. So it makes more sense to make the commit message
+> > > > buffer take up all the vertical space, rather than making the scrollbar
+> > > > move.
+> > >
+> > > it is, I just broke that ;-)
+> >
+> > is fixed in GitHub:
+> >
+> >     wget https://github.com/bertwesarg/git-gui/commit/56163547604f44688e208393f8941efaf5247d40.patch
+>
+> I tried the patch out. Works fine on Linux. Thanks.
+>
+> There is a minor typo in your commit message.
+>
+> > Sugestted-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
+>
+> s/Sugestted/Suggested/
+>
+> > Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>
+> One more observation:
+>
+> If I write a particularly long line (and consequently the scrollbar
+> becomes active), and then hit Ctrl+A to select all text, and then
+> backspace to delete it all, the scrollbar does not get updated. It still
+> shows the old position where is is "scrolled" halfway through. As soon
+> as I type in any other character, it takes the correct state, and
+> becomes disabled.
+>
+> The vertical scrollbar behaves correctly in this scenario, and does take
+> the correct state and position as soon as I delete all text, so I
+> suspect it should be a small fix. Maybe a missed option or something
+> like that?
 
-On Wed, Sep 4, 2019 at 8:59 PM Johannes Sixt <j6t@kdbg.org> wrote:
-> Many keyboards do not have a right Alt-key. That means that Alt+1 to
-> Alt+4 combinations must be typed single-handed with the left hand. This
-> is mildly awkward for Alt+4. Can we please have the very important
-> commit widget *not* at Alt+4? I could live with Alt+3.
+While I can reproduce this, I don't figured out what is wrong here. I
+tried a minimal example and this also fails. The yScrollCommand is
+issued, but the xScrollCommand not. I have tcl/tk 8.6.8 on Linux.
 
-(RightAlt wouldn't be used by Europeans, anyways)
-Are you suggesting to keep Alt+1/2/3 for the files/staged/diff
-widgets, but use something other than Alt+4 for the commit dialog? If
-so, which one would you prefer?
-The initial propsal from me was to use CTRL/CMD+1/2/3/4. What do you
-think of using the CTRL/CMD key instead of ALT?
+Bert
 
-Birger
+>
+> --
+> Regards,
+> Pratyush Yadav
