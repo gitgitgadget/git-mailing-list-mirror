@@ -2,58 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFB081F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 21:45:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5C751F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 21:46:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730277AbfIDVpk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 17:45:40 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:60894 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725965AbfIDVpk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 17:45:40 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 46Ny6p6hrmz5tl9;
-        Wed,  4 Sep 2019 23:45:38 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 72B89104;
-        Wed,  4 Sep 2019 23:45:38 +0200 (CEST)
-Subject: Re: [PATCH v5] git-gui: Add hotkeys to set widget focus
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Pratyush Yadav <me@yadavpratyush.com>
-References: <20190903214942.ubcbdgtphpwnaxs6@yadavpratyush.com>
- <20190904143055.11400-1-birger.sp@gmail.com>
- <510e80f4-a8e1-329d-2395-b1268bf7c1f8@kdbg.org>
- <CAKPyHN3WNPbJUX-xhMPVg-WigJkMg=NU9HHm98Z6wn8xeHKv7g@mail.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <05475361-88c2-6698-9a1a-3f237561ee75@kdbg.org>
-Date:   Wed, 4 Sep 2019 23:45:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1730391AbfIDVqC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 17:46:02 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33051 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725965AbfIDVqB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 17:46:01 -0400
+Received: by mail-wr1-f67.google.com with SMTP id u16so388854wrr.0
+        for <git@vger.kernel.org>; Wed, 04 Sep 2019 14:46:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dRc6KkamwfIgr/aA3c4O0qggjlMahHrNBV0o3G+GzIQ=;
+        b=rWo+kOO71WUIh1FFahBrL0nrCG1I+qYYEw4C0DjaqhE4MZXyY5n3Z27x5wDKBBZFIh
+         mnTUo664E1qLzfuOdZyUkMlG/SQdYXVPFbwoX932RjQlCK76jRnvGakskT05EcDEsC7Z
+         gfuDcaX1acpk6GiF/4ptmsxux7HdSu8c4SJ50ZufJLHo5GVtQMu0IZFB78uJETFM2pPC
+         G0bz9kFefp4fQMx5a5LlovPk8dBV8+4o59FZ/6A2nmcOAQrRvh0TATUfpj0GzlICx2tQ
+         beaKnolcLyg4AeXc07ximA4FWVuDPv/SwryFgLt3p57uhbr/LCVbs4F1YA/202/LIrZo
+         a0bg==
+X-Gm-Message-State: APjAAAU6+KkcN6zkYj5kf3z3LhTOcKwYzvnaeWJustYj+c2WGwUQytCd
+        GBEQcvya6ntJsHf2xZGTQK+2QzmVLGgW10FfoMo=
+X-Google-Smtp-Source: APXvYqzQ/5L5CXZpMu0eu3vJedzK3jmaWgVDlVw9Zo/6RHOLJIJa2Hvn/r1v7XISihOB8GVu9wINbzrFzYJYXvHV8ro=
+X-Received: by 2002:a5d:62c1:: with SMTP id o1mr25630363wrv.231.1567633559564;
+ Wed, 04 Sep 2019 14:45:59 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAKPyHN3WNPbJUX-xhMPVg-WigJkMg=NU9HHm98Z6wn8xeHKv7g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <pull.133.git.gitgitgadget@gmail.com> <017945a55a64ebe1913d64919b699adb3f9d5d96.1567633109.git.gitgitgadget@gmail.com>
+In-Reply-To: <017945a55a64ebe1913d64919b699adb3f9d5d96.1567633109.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 4 Sep 2019 17:45:48 -0400
+Message-ID: <CAPig+cSw=qt6-b6xoyTGmtKRUdZnb=khy4eNV0_LSSNGu7x2tg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] reset: support the --stdin option
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 04.09.19 um 21:55 schrieb Bert Wesarg:
-> I use my left thumb to press the left Alt key and it does not feel
-> mildly awkward. As Alt is also used for the mnemonics, there will
-> probably more of mildly awkward key combinations, wont there?
+On Wed, Sep 4, 2019 at 5:38 PM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Just like with other Git commands, this option makes it read the paths
+> from the standard input. It comes in handy when resetting many, many
+> paths at once and wildcards are not an option (e.g. when the paths are
+> generated by a tool).
+> [...]
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> diff --git a/builtin/reset.c b/builtin/reset.c
+> @@ -316,6 +325,38 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+> +       if (read_from_stdin) {
+> +               [...]
+> +               while (getline_fn(&buf, stdin) != EOF) {
+> +                       if (!nul_term_line && buf.buf[0] == '"') {
+> +                               strbuf_reset(&unquoted);
+> +                               if (unquote_c_style(&unquoted, buf.buf, NULL))
+> +                                       die(_("line is badly quoted"));
 
-That may well be the case. However, it is the commit message widget that
-I would want to access with a hotkey most of the time. It would be nice
-to have one that is the least stressfull for the hand. See my message
-nearby for my preferences.
+Perhaps include the offending line in the error message to make it
+easier for the user to understand what went wrong:
 
--- Hannes
+     die(_("line is badly quoted: %s"), buf.buf);
