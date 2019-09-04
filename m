@@ -2,68 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0752C1F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 06:24:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB8DD1F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 07:29:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728811AbfIDGYv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 02:24:51 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:34686 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728108AbfIDGYv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 02:24:51 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 46NYhK0H84z5tlF;
-        Wed,  4 Sep 2019 08:24:48 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 062B3F99;
-        Wed,  4 Sep 2019 08:24:47 +0200 (CEST)
-Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
-To:     Pratyush Yadav <me@yadavpratyush.com>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>
-Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
-        Git List <git@vger.kernel.org>, bouncingcats@gmail.com
-References: <CAGr--=Jw4DAqTi3ROujtE=xBMYErMws6B6vhuXYMQA+5Q1ccow@mail.gmail.com>
- <CAGr--=JkNqcrcenp6F1_CHTun_9wPLVvEWGOFJW=ng=XfO+jHw@mail.gmail.com>
- <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
- <CAGr--=JyJHTxtQWSnU7ivQ79qXcg7o4N142+5FSdre851xss6A@mail.gmail.com>
- <CAKPyHN3S-jLWmfHUyH9mCBPjHCEaBCbrkVQEKFqHv59U37=Kyg@mail.gmail.com>
- <CAKPyHN08Z_9oByA8ruKwwXRcAfYPU95JaMb=pqQWwGwPVG=_og@mail.gmail.com>
- <CAGr--=Jn87r_ySYkZmtqUBA40+fwdn0MbuN6_LNDO4mOWyoKTg@mail.gmail.com>
- <20190903124541.2p5hmknolh2dwqh5@yadavpratyush.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <971bbc44-d3d4-552d-d18e-58a2315c6183@kdbg.org>
-Date:   Wed, 4 Sep 2019 08:24:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1728300AbfIDH32 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 03:29:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38742 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725938AbfIDH32 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 03:29:28 -0400
+Received: (qmail 1210 invoked by uid 109); 4 Sep 2019 07:29:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 04 Sep 2019 07:29:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12130 invoked by uid 111); 4 Sep 2019 07:31:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Sep 2019 03:31:08 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 4 Sep 2019 03:29:27 -0400
+From:   Jeff King <peff@peff.net>
+To:     randall.s.becker@rogers.com
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG} stash show does not show untracked files stashed (reposted)
+Message-ID: <20190904072926.GA18470@sigill.intra.peff.net>
+References: <002901d55e8f$e4a4af70$adee0e50$@rogers.com>
 MIME-Version: 1.0
-In-Reply-To: <20190903124541.2p5hmknolh2dwqh5@yadavpratyush.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <002901d55e8f$e4a4af70$adee0e50$@rogers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.09.19 um 14:45 schrieb Pratyush Yadav:
-> Can you try doing a Shift+Tab? For me on Linux, if I hit Shift+Tab, it 
-> immediately takes me to the "Amend last commit" option. Then I can press 
-> space to select it and Tab again to get back to the commit message.
+On Thu, Aug 29, 2019 at 01:33:36PM -0400, randall.s.becker@rogers.com wrote:
 
-That works on Windows with Ctrl+Shift+Tab, too.
+> I don't know whether this is new behaviour following changes to stash, but
+> here goes.
+> 
+> Suppose I have files a,b,c,d modified, but only file d is in the index.
+> After stash push  (or save) --include-untracked, stash show only displays
+> file d. A subsequent pop will restore files a,b,c,d. So functionally push
+> and pop are fine, but stash show appears to ignores files in the stash. The
+> git log below shows a previous commit (dce2e3e) to the WIP stash (ab0834c)
+> that does contain the untracked files, and git diff is happy to show the
+> contents when using the ref directly. It is just counterintuitive for stash
+> show not to display all entries previously pushed. I would have expected
+> symmetry. This is not new.
 
-> Also, since we are on this topic, how about making the "Amend last 
-> commit" button a toggle instead? This would act as a "turn amend mode 
-> on/off" button. Since "Amend last commit" and "New Commit" are mutually 
-> exclusive, a single toggle to switch between those modes makes sense to 
-> me.
+Right, this is expected but unfortunate. The same problem occurs with
+stashed changes to the index. The fundamental issue is that a stash is
+not representing a single diff, but rather up to three diffs:
 
-That is worth a try. The check box title offers a natural hotkey then:
-"_A_mend last commit", Alt-a.
+  - changes to the working tree
 
--- Hannes
+  - changes to the index
+
+  - a set of untracked files
+
+each of which is stored as a separate commit.
+
+This has been discussed off and on. A while ago I suggested a possible
+output format that shows all three:
+
+  https://public-inbox.org/git/20170317141417.g2oenl67k74nlqrq@sigill.intra.peff.net/
+
+The patch there is useless now, as stash has been rewritten in C (though
+that probably means it would be possible to make it less hacky). The
+main obstacle IMHO is whether we're comfortable changing the output away
+from a single diff. I could imagine somebody scripting around stash,
+though if the output remained the same for stashes without index changes
+or untracked files, that makes problems less likely.
+
+-Peff
