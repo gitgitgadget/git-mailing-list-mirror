@@ -2,85 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 372C01F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 22:48:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A8591F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 23:23:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729649AbfIDWs0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 18:48:26 -0400
-Received: from relay2-d.mail.gandi.net ([217.70.183.194]:40677 "EHLO
-        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728008AbfIDWs0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 18:48:26 -0400
-X-Originating-IP: 1.186.12.26
-Received: from localhost (unknown [1.186.12.26])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 5C39340003;
-        Wed,  4 Sep 2019 22:48:23 +0000 (UTC)
-Date:   Thu, 5 Sep 2019 04:18:21 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        id S1728878AbfIDXXG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 19:23:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59082 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726240AbfIDXXG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 19:23:06 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B08122A22;
+        Wed,  4 Sep 2019 19:23:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=J/YaJirR6Mf6b7kKvhhMzvoY3s0=; b=uEi4Nd
+        syr/xs7f4JRrv7SQNFVgqp3WnSZTJV8xK8kT7CmWWwQ3jOtI8ZplPf87L7PW4X7L
+        yl/g7EDvE2fUg0WIkJJhqupwL8K3JPxiCOB0V9yhGK+HLrDf/XMuXawLQqQOWVuC
+        STekBFMbmForz0cZBTgnZZFuK2stz0igtZ3hI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=J3szYh4blAfTXUmPhQ0ekPQU4V610iyY
+        E+7znJwa33dq3vqj9YoT/RA3MytUfFyvMwOZ8KJ97w01QLWoKEJB0k9ZKB6ZXq67
+        QiIoKLFHgq8eVc7ATzEYXopSD9SRYLcnSmnIsch+eS7Tkm6BMmDkOPTKwJynlB71
+        0tCrL3rALgs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4FEA422A21;
+        Wed,  4 Sep 2019 19:23:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7D21522A1F;
+        Wed,  4 Sep 2019 19:23:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>
-Subject: Re: [PATCH 1/2] git-gui: warn if the commit message contains lines
- longer than the set limit
-Message-ID: <20190904224821.mgh4srhc22grkraz@yadavpratyush.com>
-References: <7da71d89f9fa987eca2e25974e4cec382c146e44.1567627609.git.bert.wesarg@googlemail.com>
- <CAPig+cSL0fpc5cVgO1soAksD2b5xadkDLG+JxiDCi5s95VRU_A@mail.gmail.com>
- <CAKPyHN3=hh7DCoyEKB9DOf=t=v=Y1bX1xVx9r6Lxy=WQb9JC-A@mail.gmail.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] reset: support the --stdin option
+References: <pull.133.git.gitgitgadget@gmail.com>
+        <017945a55a64ebe1913d64919b699adb3f9d5d96.1567633109.git.gitgitgadget@gmail.com>
+        <CAPig+cSw=qt6-b6xoyTGmtKRUdZnb=khy4eNV0_LSSNGu7x2tg@mail.gmail.com>
+Date:   Wed, 04 Sep 2019 16:23:01 -0700
+In-Reply-To: <CAPig+cSw=qt6-b6xoyTGmtKRUdZnb=khy4eNV0_LSSNGu7x2tg@mail.gmail.com>
+        (Eric Sunshine's message of "Wed, 4 Sep 2019 17:45:48 -0400")
+Message-ID: <xmqqblvzsl2i.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKPyHN3=hh7DCoyEKB9DOf=t=v=Y1bX1xVx9r6Lxy=WQb9JC-A@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+Content-Type: text/plain
+X-Pobox-Relay-ID: F0D1CEDA-CF6A-11E9-95F1-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/09/19 10:43PM, Bert Wesarg wrote:
-[snip]
-> > > fixed width to avoid creating too wide commit messages. Though 
-> > > this was
-> > > only enforced in the GUI. Now we also check the commit message at commit
-> > > time for long lines and ask the author for confirmation if it exceeds the
-> > > configured line length.
-> >
-> > Hmm, more confirmation dialogs tend to mean more annoyance for users,
-> > especially considering that the line length limit is a
-> > project-specific _policy_ (so this has the potential to annoy a lot of
-> > people), and also because there often are legitimate reasons for
-> > exceeding the limit (such as pasting in URLs).
-> 
-> these people did not saw the entered text anyway. they would have
-> needed to change the option (default to 75 characters) to see what
-> they have typed. which could have been garbage to begin with.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Not true in my experience. Sure, no scrollbar appears, but the view of 
-the textbox still scrolls when I type in a long line. I can go back to 
-seeing the start of the line by moving with the arrow keys.
+> On Wed, Sep 4, 2019 at 5:38 PM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> Just like with other Git commands, this option makes it read the paths
+>> from the standard input. It comes in handy when resetting many, many
+>> paths at once and wildcards are not an option (e.g. when the paths are
+>> generated by a tool).
+>> [...]
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> ---
+>> diff --git a/builtin/reset.c b/builtin/reset.c
+>> @@ -316,6 +325,38 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+>> +       if (read_from_stdin) {
+>> +               [...]
+>> +               while (getline_fn(&buf, stdin) != EOF) {
+>> +                       if (!nul_term_line && buf.buf[0] == '"') {
+>> +                               strbuf_reset(&unquoted);
+>> +                               if (unquote_c_style(&unquoted, buf.buf, NULL))
+>> +                                       die(_("line is badly quoted"));
+>
+> Perhaps include the offending line in the error message to make it
+> easier for the user to understand what went wrong:
+>
+>      die(_("line is badly quoted: %s"), buf.buf);
 
-The point being, you _can_ see what you typed. Do you not get this 
-behaviour in Windows (or whatever platform you use)? Maybe that is a 
-Tcl/Tk problem?
+I think the patch is solving the right problem by adding a feature
+that is useful to work around the command line limit, but I doubt
+the wisdom of limiting the input to "paths" by default.  
 
-> > As an alternative to a confirmation dialog, how about instead adding 
-> > a
-> > _warning_ message (perhaps with red text) on the window itself
-> > alongside to the commit message field (below or above it or
-> > something)? Is that something that could be triggered by a text widget
-> > callback?
+It would be perfect if the command gets taught to take pathspec,
+with "git --[no-]literal-pathspec reset --stdin" as an escape hatch.
 
-I'll chime in with what I think would be a great solution: auto word 
-wrapping. This way, the users can set the text width, and not have to 
-worry about manually formatting it. Long "words" like URLs would still 
-get to be on one line, and we avoid showing annoying dialogs.
-
--- 
-Regards,
-Pratyush Yadav
