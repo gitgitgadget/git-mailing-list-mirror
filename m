@@ -8,106 +8,80 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 828B41F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 20:43:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D56A1F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 20:46:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730588AbfIDUn5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 16:43:57 -0400
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:40400 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728526AbfIDUn5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 16:43:57 -0400
-Received: by mail-vs1-f68.google.com with SMTP id i128so14756820vsc.7
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 13:43:56 -0700 (PDT)
+        id S1729471AbfIDUq1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 16:46:27 -0400
+Received: from mail-ua1-f65.google.com ([209.85.222.65]:45968 "EHLO
+        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725965AbfIDUq1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 16:46:27 -0400
+Received: by mail-ua1-f65.google.com with SMTP id j6so7167134uae.12
+        for <git@vger.kernel.org>; Wed, 04 Sep 2019 13:46:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ASF7YXjwTLGHOoFPct/7p+koTkRQonNLwokQybth1Jg=;
-        b=PgRH/jP47wywdX/75+Mh4p0KpXicskHLZWj6c+N23Vya4NhkO46u46qdv49afC4Pyr
-         hIXe9/X9UYFhS1PCLRECWrxJyBvjNk2Upp6gX19xSSdPg/5cMLPaOt4sesRK9qnt5++d
-         GJP+7Z0PQIDigPEiMNwLqTUe1nzXN09jNrJCW4GnQIfcx3SOEkR8TtF6idhgy3UqL6wp
-         mSdpSnW4quoRiBjLVXUfqVKs7Pqzp9Vj+q89RtZGIRMvvo/s/NzN3AkTYGCII0bc3UUv
-         cc8oXVWypsdAo0pDWFDHqUPOErnsteuXIoRnrWspFIg94ypqq7hw7XCUnZST0bZaM1OR
-         McPQ==
+         :cc:content-transfer-encoding;
+        bh=67pp53TK1xR4n95YAe+KmwzwcolJpW3vWG143e0SF70=;
+        b=UqAE6h1vTU5IGJhE1GKP3t7YzdHRu7jVzFw9xXaGyDvrCo2Xg4Q5ieZPy4kBMypS2M
+         hLE5i26hPOU0rDr/aVfTsEKdA8q4WF3FwOrFGGguF4l96FgArmyP6VX+YQNYHYs8TUaB
+         nCdBcDIIwczxokDew1ywBov+vuF0AzD41kBpjVIRx5Nbui3+YHPut/ECN2CjyKb5BI10
+         Nk03tvsibbJ4S68j5G2nz4ac4nsMqXgWFMSe5UZQ4T+oPIwSqBy77elTE5hH7wfLXjYW
+         +kkiPkd+u0ygDjpiksqkc40307WoTcY2Lzdf7pXDOPODfSNb0S0qlslhsLpxyU6vCOIf
+         iSVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ASF7YXjwTLGHOoFPct/7p+koTkRQonNLwokQybth1Jg=;
-        b=UXGpGpg9L+3opLhPHfWtQFSQkfhqfxhBNSS7huGryKZ83pC43wkiXx4CRbaEtQdbbB
-         XYgofeDYnuohOjaQKpM6U0hJdDGuxW8v+9TVWjV15EItcpP/EwEjGzUgT2LK5eCemLf4
-         tuy9yxnsq+llXoIFwZhhmclTFIuZ1XUqubNbJLFR9xWgOJXbe4OVJxSxrUKh4ff9FwfR
-         T7kWNpvekKtHFDmL+JpZyelCte+GuuRIHRgdLiunskzPx756Xzm/DG85J52s4usMz5Qo
-         6pWd3aTWfVJZnBazWXx2i97V4XYlRe4/jsLSnRiZc0edjzn5aahI73XRoEjmKAgEU2Ph
-         IEuw==
-X-Gm-Message-State: APjAAAWI5EmSsMGo0agswN5XG0d+hYUjqvMh5KCu5YX3qZAwUB+bNzMM
-        dKavSFpW9UpVWOzJcB/xoNc8VDokkpNedH1nAlY=
-X-Google-Smtp-Source: APXvYqxLK200LQ+NblzW5oWEIKx26kOtzUs2RzVT7KGzWbTSBvNHGU+g48ShhCrp/Oy4aUHVpUYV1zmSsZNAEmLT6/0=
-X-Received: by 2002:a67:fd11:: with SMTP id f17mr9774581vsr.31.1567629836254;
- Wed, 04 Sep 2019 13:43:56 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=67pp53TK1xR4n95YAe+KmwzwcolJpW3vWG143e0SF70=;
+        b=JX6jodT2uIv9lnA7YO+3kupEO30oCgqGqmEr0uacPZneHQiMQg24WYupCUVnQdXUhg
+         jTlDIzOwUj493CMbtVlMfzf/t5pH3WEraZJTZ6dqzvR2ySt2cSZZRNqYcJlNsKwWOwbp
+         zAtcnE6iSxfPYKsgoHjBudCJn7Zk+b9zglsj9j3DDNbjyC7E1a53etbEZERsJd+qdZaz
+         OQ2N/LjpJfEXAMB5OslO7o6tPRAX6UayWEKTBDIoyCRCWygag2k6bB66cARA7aWDdVuj
+         gJQftaN3szsBOnwdxiQ+6mx0ECBdFs6HsKk85av3rZ6qn5niilc2yyy7PDsB6bfMOzJq
+         DD5w==
+X-Gm-Message-State: APjAAAUNA0NYEg/fkyR2KYHa16E2zOkcllFr/yD4AbSpIjhLo35YI5Fu
+        SuJRxkAExp0AfPXShiv6sRVbv8j5o1ZRLZqIGn0=
+X-Google-Smtp-Source: APXvYqyoqS1Lu65/vBr5olPgPoLkMOF+OPJN6yZimbLH9hNy1ewZVQU45C43TYYQ9jFlX2uXy+VhGLD6XzPLZ1LrgME=
+X-Received: by 2002:ab0:758a:: with SMTP id q10mr3679359uap.76.1567629985963;
+ Wed, 04 Sep 2019 13:46:25 -0700 (PDT)
 MIME-Version: 1.0
 References: <7da71d89f9fa987eca2e25974e4cec382c146e44.1567627609.git.bert.wesarg@googlemail.com>
- <CAPig+cSL0fpc5cVgO1soAksD2b5xadkDLG+JxiDCi5s95VRU_A@mail.gmail.com>
-In-Reply-To: <CAPig+cSL0fpc5cVgO1soAksD2b5xadkDLG+JxiDCi5s95VRU_A@mail.gmail.com>
+ <62ef03a2938ac0d2158b1c3201c7f10e52e30ecb.1567627609.git.bert.wesarg@googlemail.com>
+ <CAPig+cTZiOBwaM-BE-19CzJuZ4NwCZTaDc22WuY+bv8BLP=rrQ@mail.gmail.com>
+In-Reply-To: <CAPig+cTZiOBwaM-BE-19CzJuZ4NwCZTaDc22WuY+bv8BLP=rrQ@mail.gmail.com>
 From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Wed, 4 Sep 2019 22:43:45 +0200
-Message-ID: <CAKPyHN3=hh7DCoyEKB9DOf=t=v=Y1bX1xVx9r6Lxy=WQb9JC-A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] git-gui: warn if the commit message contains lines
- longer than the set limit
+Date:   Wed, 4 Sep 2019 22:46:14 +0200
+Message-ID: <CAKPyHN0B++3w7GgTPCE6P=rWBivknfqA0YZnJdz3htbOCa0g+w@mail.gmail.com>
+Subject: Re: [PATCH 2/2] git-gui: add horizontal scrollbar to commit buffer
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git List <git@vger.kernel.org>,
         Pratyush Yadav <me@yadavpratyush.com>,
         Birger Skogeng Pedersen <birger.sp@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 4, 2019 at 10:30 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Wed, Sep 4, 2019 at 10:31 PM Eric Sunshine <sunshine@sunshineco.com> wro=
+te:
 >
-> On Wed, Sep 4, 2019 at 4:10 PM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
-> > The commit message widget does not wrap the next and has a configurable
+> On Wed, Sep 4, 2019 at 4:10 PM Bert Wesarg <bert.wesarg@googlemail.com> w=
+rote:
+> > While the commit message widget has a configurable fixed width, it
+> > nevertheless allows to write commit messages which exceed this limit.
+> > Though it does not show this content because there is not scrollbar for
+> > this widget. No it is.
 >
-> s/next/text/
+> "No it is" what?
+
+=E2=80=A6there is no scrollbar for this widget. Now there is.
 
 fixed
 
 >
-> > fixed width to avoid creating too wide commit messages. Though this was
-> > only enforced in the GUI. Now we also check the commit message at commit
-> > time for long lines and ask the author for confirmation if it exceeds the
-> > configured line length.
->
-> Hmm, more confirmation dialogs tend to mean more annoyance for users,
-> especially considering that the line length limit is a
-> project-specific _policy_ (so this has the potential to annoy a lot of
-> people), and also because there often are legitimate reasons for
-> exceeding the limit (such as pasting in URLs).
-
-these people did not saw the entered text anyway. they would have
-needed to change the option (default to 75 characters) to see what
-they have typed. which could have been garbage to begin with.
-
->
-> As an alternative to a confirmation dialog, how about instead adding a
-> _warning_ message (perhaps with red text) on the window itself
-> alongside to the commit message field (below or above it or
-> something)? Is that something that could be triggered by a text widget
-> callback?
-
-How about a horizontal scrollbar? This indicates pretty conveniently
-and in a standard visual way, that there is more text to the side ;-)
-
-
->
+> > Suggested-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
 > > Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-> > ---
-> > diff --git a/lib/commit.tcl b/lib/commit.tcl
-> > @@ -215,6 +215,16 @@ A good commit message has the following format:
-> > +       if {[tcl::mathfunc::max {*}[lmap x [split $msg "\n"] {string length $x}]] >= $repo_config(gui.commitmsgwidth) \
->
-> Does this take TABs into account?
-
-probably not. Does git expands tabs if it wrap lines (git shortlog's -w option)?
