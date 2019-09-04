@@ -2,105 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A96031F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 21:40:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F2041F461
+	for <e@80x24.org>; Wed,  4 Sep 2019 21:41:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730257AbfIDVkz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 17:40:55 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:44934 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726495AbfIDVkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 17:40:55 -0400
-Received: by mail-pl1-f196.google.com with SMTP id k1so145562pls.11
-        for <git@vger.kernel.org>; Wed, 04 Sep 2019 14:40:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=M7P/VyUKHPRNx5N0ZNmEBjuP9rYtiOj2Sco5SE2laf4=;
-        b=TUvRvMcNm/KzYKQs1RkXKDwqbOiHaI1ZeBrZ11dfD1TbnNKwr/gPPXcXZWwDJLayWz
-         jus/MjweqHL7r2G7mPitGdmb7jwe43CPnwBImCnhzAAXdBR2BEPfTXf8GA/cemTQzsLu
-         OvRjqWfMzjySgb+2ZTtNurSPDNJGMWi57IfUsBSeXcYWEdCSw/SIQF0UGMPpTZeZujyF
-         aOLtWaIAQD2balc7QWuPbj8lkgEiX+bfXWgoCwgE+kH0ZgXjNCgGSHC0HVfuuvMYalRv
-         2qnPiWvYMaYHPQzBdW/2zpNAvDboPsm941s3s5J3NMKcc/yMCT3cYtYqnakLkTGtCJfy
-         H7HQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=M7P/VyUKHPRNx5N0ZNmEBjuP9rYtiOj2Sco5SE2laf4=;
-        b=PanmbQ/SyOvWnHrA6gd+wF386N8Rk5Jo3edKCVqtJhqac7SU8TcbkMe7bvq/CBIoQY
-         NgpeRVyr4wC0yDd8kXxU6JqMB8gEzTwT3BvUkdwI5qmMzvIPurZoMyMoURIN+Y0p76DA
-         b6X3x9vMzYQu8vVrw/ZpHM9Zo3TBnnW3J+NDSIbvrEEZFjhqwEuWKfuf6Jauj1/kY8nZ
-         yw3WMv05nbSrt7/jZZ1z4ovOqeuxuQIKjBJZ9oVfGvH6qAkaU0J0EwxJObC+sTKDayY5
-         5oYwKg8GosZBKpi8B8B0e5Q145O7BCS9/O/jlB+Zpk1VUW27B7AKgdEAI1nWNGSVYPI0
-         NGrw==
-X-Gm-Message-State: APjAAAURgxba3elI5RvIJXy67mOGs+23YDlDrJlYzWXTzDz703vu6+Kg
-        PXyDKlqi9sXSlGr8wWw9r5M=
-X-Google-Smtp-Source: APXvYqyJmdPOkGY50aOOx6AkSSksTm7mfyMV/VV9+jNKic6X8sw/LAhXyqh9W8zl1lNPZIlU3mi9mA==
-X-Received: by 2002:a17:902:4201:: with SMTP id g1mr42980176pld.300.1567633254596;
-        Wed, 04 Sep 2019 14:40:54 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id o35sm79281pgm.29.2019.09.04.14.40.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 04 Sep 2019 14:40:54 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 17/16] t3427: accelerate this test by using fast-export and fast-import
-Date:   Wed,  4 Sep 2019 14:40:48 -0700
-Message-Id: <20190904214048.29331-1-newren@gmail.com>
-X-Mailer: git-send-email 2.22.0.19.ga495766805
-In-Reply-To: <pull.294.v2.git.gitgitgadget@gmail.com>
-References: <pull.294.v2.git.gitgitgadget@gmail.com>
+        id S1730013AbfIDVll (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 17:41:41 -0400
+Received: from mout.gmx.net ([212.227.15.15]:37047 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729503AbfIDVll (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 17:41:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1567633299;
+        bh=zZGi0kyN3gOlS4M9+tR4K0D6h4P2I8UR2H6mSSdj2ko=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Zev8+mNuRKtdxTD7zq7wuw8TtVDKkMq1S1lQPCp7CQgizzn3qe8LU38YIEL9AmJbd
+         ygWnDYPxXNe7DZWJ7YdgEU8xihPHBn7li3OjGN04OjWl9tH8PQLNkJZDbFrRd4NXYw
+         97oMwepNdUsKHxYNqiWU/CmosSc6V1Th40QA8NxU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LcBBl-1iXV0Y1efV-00jbEC; Wed, 04
+ Sep 2019 23:41:39 +0200
+Date:   Wed, 4 Sep 2019 23:41:24 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Denton Liu <liu.denton@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] mingw: apply array.cocci rule
+In-Reply-To: <dcb92cffd7bd0643e7af68d825f7517d490dcf16.1567595331.git.liu.denton@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1909042340520.5377@tvgsbejvaqbjf.bet>
+References: <cover.1567595331.git.liu.denton@gmail.com> <dcb92cffd7bd0643e7af68d825f7517d490dcf16.1567595331.git.liu.denton@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:BsU5KUSPeQ9x5EyPNHPKgaGGGGhVmEsZvJgzViJOOH/b2dQOQam
+ xfzxzIh9meR5dhulyn0AZtobcJdvcOj+Qvc5hmwtHrZY0eZ9Hw4NNEuzfqQ+m8HEYoiK4qR
+ 31CUZpr05fRmby2OiIut3M/4G7k/m3h06nTUQIRpKnbIVHrNqLT8AbPtL7eSY62ICBmxxhV
+ 3GWs+77iWZzoAzdgMsdgg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:iEuYO9QK8VU=:gSLT7P3kDcvOWmUwxWAJ2d
+ /UOED1sa93xeMJXM3ScwcopecKBj56SkQhQaVyheSjG0F4IkXHqvRbN2PvGsQeIBNUryk3Kx/
+ s6DjJ0Mi8m3xTwmWADKNoEWnjmOBIXNT8JINT+29I4msqu4srYcK0xG/J/0j4DyZPFW2FkgNl
+ jTuxkWQTIXj44uyJTue+sHr/Iwn82j674HihKylT1kweKB5q2R2v73qz8w9x1xtX/3ykHG2eJ
+ LmxoSCARBW4+JeLa9ZBW8vKjyck1CtufX4DK3ZV5vRAZ1UwAflIw2Yxq9YorKT4MEeoreweWv
+ 2myq0wWYCpd8GJp5bBnIfh2Js2swdlX+3jx/iY8+oRBQB7leMwrClxQNe7bIc2XeNoeL/PIvQ
+ Gq6pzZDvKE/FwiWpfBm6fohe6rLziFPiaJXz/oQI3dnW1FGUp8WDjIUmRVP49lU7xOXGOWP7d
+ 4vcoPm6hLCdgfOwzgximT/qSe2fjnStEhGapvwoQrmasfbOvvNreW0wwCyBWjhZK0JWYnMSZa
+ 41g/sEg89RYxRjLZUUwfLl/uJxCY3p3McR6AbuZuSf7wSE/V4pyCdEdb9v6nDBib3+j8GnUuV
+ 20tORrdgjwM72UX4jDQEW56jXnsIxCMc/OoQsBcf0+p+fSSA2NozpZt4+PY4c66XokuTk/Svj
+ aQ/E+0LtN7Xd82vNuGWEgXydmk6cCUqg+7Jgoqp0ZM5mxQ5c6XuSfuQCA9Jv9A+Fbs0+aut0L
+ UkIc6oNonRKxveuM2oSXNf/VKEDig7WE3i38+tu+CUGfbNwBnEjKf0LdZ+gAwnNjMnndDfgkD
+ 3zyCQ6IsmL/lVI5STAR6D9KhkuT8lnANzZXu9PL1YNkVQOprAvpbw+cGisERJi7mDSEJlh1IB
+ /os28sOexpmajdLijoP1bJQnsMexkeJdPg/r5zHiCZ1umlgwmL8BAwSH8fuKmO9t801oIMPt2
+ KP16sKpLbHXoY4BLwOAPi90n4f8UAx6rC6xUOHfzq5QPFZ//0OY5xgViAY2lvrFtyLOFcjBFJ
+ goznWEvS275tTY3yOPjf9dB03McBd+BkkxLN21HD6gJ4t+un1oWLRockfmZ7uLQTBj9CCBgDD
+ Rj7vuq8dOGQiIsTAaUQgETHoOuYiU5tk+6eLDiUSuFh6k/OJwJcb0irWl4rt7lcgN2NrbE2Fc
+ rAFaylGc39eVcXZaRuKjyA7Mx1GPQicItIoHhMaQ7KY9+xeEICYoeRo8x9HcubvLaPj1rPG19
+ BmB9cDE+HfIw9vU/w
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-fast-export and fast-import can easily handle the simple rewrite that
-was being done by filter-branch, and should be faster on systems with a
-slow fork.  Measuring the overall time taken for all of t3427 (not just
-the difference between filter-branch and fast-export/fast-import) shows
-a speedup of about 5% on Linux and 11% on Mac.
+Hi Denton,
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-This patch is meant to be added onto the end of js/rebase-r-strategy; an
-earlier version of this patch conflicted js/rebase-r-strategy so now I'm
-basing on top of that series.  The speedup is also less impressive now
-that there is only one filter-branch invocation being replaced instead of
-a handful.  Still a nice speedup, though.
+On Wed, 4 Sep 2019, Denton Liu wrote:
 
- t/t3427-rebase-subtree.sh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+> After running Coccinelle on all sources inside compat/ that were created
+> by us[1], it was found that compat/mingw.c violated an array.cocci rule
+> in two places and, thus, a patch was generated. Apply this patch so that
+> all compat/ sources created by us follows all cocci rules.
+>
+> [1]: Do not run Coccinelle on files that are taken from some upstream
+> because in case we need to pull updates from them, we would like to have
+> diverged as little as possible in order to make merging updates simpler.
+>
+> The following sources were determined to have been taken from some
+> upstream:
+>
+> * compat/regex/
+> * compat/inet_ntop.c
+> * compat/inet_pton.c
+> * compat/nedmalloc/
+> * compat/obstack.{c,h}
+> * compat/poll/
+>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  compat/mingw.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 738f0a826a..a3b1e9e3bb 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -1265,7 +1265,7 @@ static wchar_t *make_environment_block(char **delt=
+aenv)
+>  		}
+>
+>  		ALLOC_ARRAY(result, size);
+> -		memcpy(result, wenv, size * sizeof(*wenv));
+> +		COPY_ARRAY(result, wenv, size);
+>  		FreeEnvironmentStringsW(wenv);
+>  		return result;
+>  	}
+> @@ -1309,7 +1309,7 @@ static wchar_t *make_environment_block(char **delt=
+aenv)
+>  			continue;
+>
+>  		size =3D wcslen(array[i]) + 1;
+> -		memcpy(p, array[i], size * sizeof(*p));
+> +		COPY_ARRAY(p, array[i], size);
 
-diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
-index 39e348de16..bec48e6a1f 100755
---- a/t/t3427-rebase-subtree.sh
-+++ b/t/t3427-rebase-subtree.sh
-@@ -59,7 +59,10 @@ test_expect_success 'setup' '
- 	test_commit files_subtree/master5 &&
- 
- 	git checkout -b to-rebase &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	git fast-export --no-data HEAD -- files_subtree/ |
-+		sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" |
-+		git fast-import --force --quiet &&
-+	git reset --hard &&
- 	git commit -m "Empty commit" --allow-empty
- '
- 
--- 
-2.22.0.19.ga495766805
+ACK!
 
+Thanks,
+Dscho
+
+>  		p +=3D size;
+>  	}
+>  	*p =3D L'\0';
+> --
+> 2.23.0.248.g3a9dd8fb08
+>
+>
