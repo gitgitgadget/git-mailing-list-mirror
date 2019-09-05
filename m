@@ -2,119 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A347E1F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 22:49:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAB401F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 22:50:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389230AbfIEWtL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 18:49:11 -0400
-Received: from mout.gmx.net ([212.227.17.22]:41493 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733259AbfIEWtK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 18:49:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1567723739;
-        bh=QNlyjnAhXTvdbsnSEyeqz9K7nHQayEVHYE2mXD0rOMQ=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=JHD7+AE1iFm6fcHynBXfEMpRltr+MkXv8X6rXRuMF3PS1intvEUC+uqjzJHXsj373
-         51vDYtFTifVm11dpX7SSq4dHM9s6DIF0dNKj6gJvb4ldNK+vBMf8tHoxAR44xEqc+V
-         R/L1Hn6cfxs6hjmC7B3nHHsV8kNHo5nRk/wiEULI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from localhost.localdomain ([88.70.128.63]) by mail.gmx.com
- (mrgmx105 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 1MV67y-1hhMwX25UU-00S5HN; Fri, 06 Sep 2019 00:48:59 +0200
-From:   Stephan Beyer <s-beyer@gmx.net>
-To:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Paul Tan <pyokagan@gmail.com>, Jeff King <peff@peff.net>,
+        id S1733259AbfIEWud (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 18:50:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41390 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727213AbfIEWud (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 18:50:33 -0400
+Received: (qmail 10298 invoked by uid 109); 5 Sep 2019 22:50:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Sep 2019 22:50:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32425 invoked by uid 111); 5 Sep 2019 22:52:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Sep 2019 18:52:16 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 5 Sep 2019 18:50:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stephan Beyer <s-beyer@gmx.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Paul Tan <pyokagan@gmail.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Shawn O. Pearce" <spearce@spearce.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
-Subject: [PATCH v2 4/4] Silence false-positive maybe-uninitialized warnings found by gcc 9 -flto
-Date:   Fri,  6 Sep 2019 00:48:33 +0200
-Message-Id: <20190905224833.24913-4-s-beyer@gmx.net>
-X-Mailer: git-send-email 2.23.0.43.g31ebfd7ae6.dirty
-In-Reply-To: <20190905224833.24913-1-s-beyer@gmx.net>
-References: <20190905224833.24913-1-s-beyer@gmx.net>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: [PATCH 1/6] git-am: handle missing "author" when parsing commit
+Message-ID: <20190905225031.GA25657@sigill.intra.peff.net>
+References: <20190905224859.GA28660@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:DG4+s+65E+ciFPjhqAHsYTroDv9hecMRwfPuF65a5s6fKhJQAxn
- NoetD5UWpRf1qjIk/S9tX8HyrBHt+00VinTYqbLhjrGHX2kPM7OuzW644LHFvZmG/DF/RH3
- JMBmUtdt6+vieGkx+tmdsAWxHGsm82VOn9kkjWDoPgBMfVfVpeTrPcPoiZ5yRZy37P9QnZT
- uvXQvgxWOYIClg8Mlll/w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:23EomXmCFOo=:t2jWowwKDi88PVNokCoXWe
- +ntfAeoM6/yG3jkjngrlCSsA7ctFIxlExH0TThoDJm/oRCZTrJ/CyKAYDBWgsM410tGHbas7Z
- 4nSRAW2/salCiXFM8ChUyH4MavE605W0MecR56TRpz4MoBGKkhmlPJErfovNyWaeuPigYIvM2
- 4EIcM/Ar7CA0Da8t7QpayaRE6kDcWNYmDaFP/kXS9bm0+aFMyKat/iMX1GeVn7Ovr6DrBcxA6
- qjdvy16kBu2GacrqrZUDMxW8F0N8RnQIdFfC8i+01S7pSHZ87Hus+RQNqgE1tz2yhCrdD9jp0
- CH+sZWiUglJKc7nTWs0mvBb2I58LQk6GpX3oWRKzOJs14UpfK7rBNLTU6cyqrK6uvlWUkQ3zO
- 08E7If98GELAw9RG+UK2wuG6DiYi5LxNqKU2MnCDBkp6ca0U/PJTF8kFOvt7H1LLOFCUD/N1W
- 1fYmje6U6MS60D3hxOHOOONn+V9+7LXILaNcppqOwn8kLARN2pojqqocqN5nrYVMNUoKmfX1e
- qM2kemUvMyppm4TQf8D+236ct1siVN7urnuo2qjQ/fDn2LG1NUxoJJ4DgPItIvxz8/sir6q9H
- BG4Jb4az7OT+9eHt1jclGnSeG7EmYlaUxoAoMbAjvktb5TcidK7P65wphAmGi4GOAv1gXMG9a
- AWlVKTp+PTo5kc8Nrugc9E79vMmnwhgZiBIOLQZajyBVRrGPpzHkF0XXb3+qhPH7qfGYPCVlZ
- jP62B9a0RDLj1hP/n7oTcvGDxN/dbkWaGv/nQapqQLr3sZFRKN6tI/SrmPLwnMiAiuDMXtIur
- negdOJAwPOUrmmvyXlROJXpUJIZ5UampiEMioMQvCQ4J1hz94QEUaNVSgT8RmN8gSnMeQDZ/f
- k4nhBD3nBFMzTwETz8mn/HsVMgeEezAitmYbzgyxtjB+XQlWCnj/iQYDR6LD49BiBj2+P2497
- U6x5m86f3MNGgmeCOpZtr49tROdKFDUMP5nPntqUfQeXb6JDqmOyZMLg6a7FoxAQAsUV58qbG
- moLYex+Kk8TaGNhYxtjLz6vVMWrP3otlA2yGI7GaLAU0InTi1LNG3dMCOk/vgLzmGTwbpZ+OX
- 4yIV8FUKzAVlSvxTXRocAawW/Hnow86eOqizFSybCwehWnkXL3V04L/dJYnOHVWX9EvUfY15F
- R7VTsY18C8cA5wJxWqc4zISrcudICSV2iBuKWIwvBiEawjlgY4d/rKTV+s9NgKIRGdbkC4tDv
- 6sDNOExnz5t+bmDNz
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190905224859.GA28660@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-gcc 9.2.1 with -flto flag suspects some uninitialized variables which beco=
-me
-initialized in every code path where they are used.  These false positives
-are "fixed" by this patch in the most na=C3=AFve way.
+We try to parse the "author" line out of a commit buffer. We handle the
+case that split_ident_line() doesn't work, but we don't do any error
+checking that we found an "author" line in the first place! This would
+cause us to segfault on such a corrupt object.
 
-This allows to compile git with gcc 9, link-time optimization, and using t=
-he
-DEVELOPER=3D1 switch (which sets -Werror).
+Let's put in an explicit NULL check (we can just die(), which is what a
+bogus split would do, too). As a bonus, this silences a warning when
+compiling with gcc 9.2.1 using "-flto -O3", which claims that ident_len
+may be uninitialized (it would only be if we had a NULL here).
 
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
-=2D--
- bulk-checkin.c | 2 ++
- fast-import.c  | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+Reported-by: Stephan Beyer <s-beyer@gmx.net>
+Helped-by: René Scharfe <l.s.r@web.de>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/am.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 39ee7d6107..87fa28c227 100644
-=2D-- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -200,6 +200,8 @@ static int deflate_to_pack(struct bulk_checkin_state *=
-state,
- 	struct hashfile_checkpoint checkpoint;
- 	struct pack_idx_entry *idx =3D NULL;
-
-+	checkpoint.offset =3D 0;
-+
- 	seekback =3D lseek(fd, 0, SEEK_CUR);
- 	if (seekback =3D=3D (off_t) -1)
- 		return error("cannot find the current offset");
-diff --git a/fast-import.c b/fast-import.c
-index b44d6a467e..58f73f9105 100644
-=2D-- a/fast-import.c
-+++ b/fast-import.c
-@@ -903,7 +903,8 @@ static int store_object(
- 	struct object_entry *e;
- 	unsigned char hdr[96];
- 	struct object_id oid;
--	unsigned long hdrlen, deltalen;
-+	unsigned long hdrlen;
-+	unsigned long deltalen =3D 0;
- 	git_hash_ctx c;
- 	git_zstream s;
-
-=2D-
-2.23.0.43.g31ebfd7ae6.dirty
+diff --git a/builtin/am.c b/builtin/am.c
+index 1aea657a7f..ee7305eaa6 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1272,7 +1272,9 @@ static void get_commit_info(struct am_state *state, struct commit *commit)
+ 	buffer = logmsg_reencode(commit, NULL, get_commit_output_encoding());
+ 
+ 	ident_line = find_commit_header(buffer, "author", &ident_len);
+-
++	if (!ident_line)
++		die(_("missing author line in commit %s"),
++		      oid_to_hex(&commit->object.oid));
+ 	if (split_ident_line(&id, ident_line, ident_len) < 0)
+ 		die(_("invalid ident line: %.*s"), (int)ident_len, ident_line);
+ 
+-- 
+2.23.0.463.g883b23b1c5
 
