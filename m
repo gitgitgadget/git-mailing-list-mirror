@@ -2,109 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE4291F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 11:16:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46D3A1F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 12:33:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388200AbfIELQf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 07:16:35 -0400
-Received: from mail-wm1-f46.google.com ([209.85.128.46]:52152 "EHLO
-        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732604AbfIELQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 07:16:35 -0400
-Received: by mail-wm1-f46.google.com with SMTP id k1so2330975wmi.1
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 04:16:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=9Cwh8ZyzKx3dn6NKb3HkAHIIaMjbvZ+Hqkb0D158XiE=;
-        b=WZUTSedyxZs5hQNy2iQTDoxq4CL4nLh15T/wUP7y9qQn0WSD3qmGP67UPGvEZqtnXp
-         vLxrVfakOsOQzfHiPcpHav41dtaMX+y2E1UlhZsS68yolutm07I+HeFlLeaK8icI1ApX
-         Ot8SBgrjLGPYcaRukf+VXnAniwftt1aHCHnl5mjvkByHgo+ZtfvJLX5vUusizJvH7yA+
-         wzozpX9rk2DaedzhVlUvqpaRU3QbGXp3DT1DAut1+akDrW0Lg8S18/JnTQoVsu0Q/nub
-         QXE/QTEQy9I4Fas1e/+VKg247mUaoZwWPG3fCNzPGVsyvHqP6u66GVhvJOUeT+zp9aFE
-         ASOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9Cwh8ZyzKx3dn6NKb3HkAHIIaMjbvZ+Hqkb0D158XiE=;
-        b=pREldtYUn5NVX+P+x4eKMzqgURRm6RMLZRb2uPtlG4rjMzZBnjbTZubXWyo8qu3Zt0
-         iUcP0GJ4/f9s09A5CfCTDjqz7hu4ZkCNFdtG08xO1Vzxk4a0pLUIfkBBvKQqkbLp+t3L
-         tLLT+aXVh3dOjmVeFxJiF2hVLuCLBsoAjw0uXJKUMlC0vmWFVbL8DM9EglYdtPdhkci/
-         DymKWEcOpJEULOuaayvMP2Vy2WC878lTBsk34Pq6l/NccsTpOKZ/C8r2XhNh0nniCr5x
-         y5S7iU/LHfD4jAAdH16/d93KIDDnHdCDVg7vdOIDZ+pzgXrtwV4H2GcOKE7HT5eJNFuU
-         RNFQ==
-X-Gm-Message-State: APjAAAWJXRQDwIOLXcjh1/3dpVOoeRxE2rrnWqMotrwRuuMCzIKd4qWE
-        XNpgPsoO5BWu7r+R8AQkxddiUy1y
-X-Google-Smtp-Source: APXvYqywgHTZfxta7Nf6LaoYvgWZoFautwqC1erFw+99TE9NuMsb18tv5L6PD5W4lQwd15IfQjH+Kw==
-X-Received: by 2002:a1c:ef18:: with SMTP id n24mr2486227wmh.29.1567682193484;
-        Thu, 05 Sep 2019 04:16:33 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t203sm2900631wmf.42.2019.09.05.04.16.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Sep 2019 04:16:33 -0700 (PDT)
-Date:   Thu, 05 Sep 2019 04:16:33 -0700 (PDT)
-X-Google-Original-Date: Thu, 05 Sep 2019 11:16:31 GMT
-Message-Id: <05b341661b7e14868af0eaa9179816b28c40b8bf.1567682191.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.332.git.gitgitgadget@gmail.com>
-References: <pull.332.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] .gitignore: stop ignoring `.manifest` files
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1733221AbfIEMdY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 08:33:24 -0400
+Received: from relay9-d.mail.gandi.net ([217.70.183.199]:51535 "EHLO
+        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731438AbfIEMdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 08:33:24 -0400
+X-Originating-IP: 1.186.12.26
+Received: from localhost (unknown [1.186.12.26])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id CA727FF81A;
+        Thu,  5 Sep 2019 12:33:21 +0000 (UTC)
+Date:   Thu, 5 Sep 2019 18:03:19 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v5] git-gui: Add hotkeys to set widget focus
+Message-ID: <20190905123319.c53x34yxlt2abiac@yadavpratyush.com>
+References: <20190903214942.ubcbdgtphpwnaxs6@yadavpratyush.com>
+ <20190904143055.11400-1-birger.sp@gmail.com>
+ <510e80f4-a8e1-329d-2395-b1268bf7c1f8@kdbg.org>
+ <CAGr--=LY4JWdms3GtnKAtN6z-2c-jpXE2HJ5_dMM5gEFayrj_g@mail.gmail.com>
+ <fcf52af1-dc57-fb58-f52c-7581910a28d6@kdbg.org>
+ <20190904223102.webntwh5awsl2m3i@yadavpratyush.com>
+ <xmqqy2z3r5sx.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqy2z3r5sx.fsf@gitster-ct.c.googlers.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 04/09/19 04:38PM, Junio C Hamano wrote:
+> Pratyush Yadav <me@yadavpratyush.com> writes:
+> 
+> > On 04/09/19 11:39PM, Johannes Sixt wrote:
+> >> Am 04.09.19 um 21:20 schrieb Birger Skogeng Pedersen:
+> >> > On Wed, Sep 4, 2019 at 8:59 PM Johannes Sixt <j6t@kdbg.org> wrote:
+> >> >> Many keyboards do not have a right Alt-key. That means that Alt+1 to
+> >> >> Alt+4 combinations must be typed single-handed with the left hand. This
+> >> >> is mildly awkward for Alt+4. Can we please have the very important
+> >> >> commit widget *not* at Alt+4? I could live with Alt+3.
+> >> > 
+> >> > (RightAlt wouldn't be used by Europeans, anyways)
+> >> > Are you suggesting to keep Alt+1/2/3 for the files/staged/diff
+> >> > widgets, but use something other than Alt+4 for the commit dialog? If
+> >> > so, which one would you prefer?
+> >> 
+> >> I was suggesting Alt+3 for the commit message widget, but my preferences
+> >> are actually Alt+1, Alt+2, Alt+3, in this order. My preference for the
+> >> diff widget would be Alt+4 (the awkward one) because I do not foresee
+> >> that I would use it a lot. Use what remains for the two file lists.
+> >
+> > I wonder if that binding is very intuitive.  If we do 1/2 for the top 
+> > and bottom panes on the left side, and 3/4 for the top and bottom panes 
+> > on the right side, that makes some sense.  Doing it your way makes it a 
+> > counter-clockwise motion.
+> >
+> > I am not arguing for or against this proposal, just pointing something 
+> > worth thinking about.  Either way, I suppose after a while it becomes 
+> > muscle memory so I'm not sure how much difference this subtle thing will 
+> > make.
+> >
+> >> 
+> >> > The initial propsal from me was to use CTRL/CMD+1/2/3/4. What do you
+> >> > think of using the CTRL/CMD key instead of ALT?
+> >> 
+> >> I would not mind Ctrl instead of Alt. Take your pick.
+> >
+> > FWIW, I vote for sticking with Alt.
+> 
+> Can't these differences in personal preference be solved by
+> configurable key binding?
 
-On Windows, it is possible to embed additional metadata into an
-executable by linking in a "manifest", i.e. an XML document that
-describes capabilities and requirements (such as minimum or maximum
-Windows version). These XML documents are expected to be stored in
-`.manifest` files.
+They can be. But as of now, there is no existing mechanism to specify 
+keybindings in git-gui that I know of, so that is not a trivial task.  
+And if we do go with configurable keybindings, that raises the question 
+of whether we should allow all existing keybindings to be changed.  
+Again, this is a significant refactor.
 
-At least _some_ Visual Studio versions auto-generate `.manifest` files
-when none is specified explicitly, therefore we used to ask Git to
-ignore them.
+And in the end we still have to come up with a reasonable default, so 
+this discussion is still worth having IMO. We can keep configurable key 
+keybindings as a future feature. Of course, if the contributors are 
+willing to implement this feature along with this patch it would be 
+great, but I don't think that is reason enough to block this patch for 
+too long.
 
-However, we do have a beautiful `.manifest` file now:
-`compat/win32/git.manifest`, so neither does Visual Studio auto-generate
-a manifest for us, nor do we want Git to ignore the `.manifest` files
-anymore.
-
-Further reading on auto-generated `.manifest` files:
-https://docs.microsoft.com/en-us/cpp/build/manifest-generation-in-visual-studio
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- .gitignore | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/.gitignore b/.gitignore
-index 521d8f4fb4..fc445edea9 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -231,7 +231,6 @@
- *.ipdb
- *.dll
- .vs/
--*.manifest
- Debug/
- Release/
- /UpgradeLog*.htm
 -- 
-gitgitgadget
+Regards,
+Pratyush Yadav
