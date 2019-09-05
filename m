@@ -2,108 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E73B51F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 14:53:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A14F91F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 15:47:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390111AbfIEOxT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 10:53:19 -0400
-Received: from mail-oi1-f178.google.com ([209.85.167.178]:43560 "EHLO
-        mail-oi1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728258AbfIEOxS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 10:53:18 -0400
-Received: by mail-oi1-f178.google.com with SMTP id t84so2057612oih.10
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 07:53:18 -0700 (PDT)
+        id S1730937AbfIEPrn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 11:47:43 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:33280 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731868AbfIEPrm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 11:47:42 -0400
+Received: by mail-pf1-f193.google.com with SMTP id q10so2034911pfl.0
+        for <git@vger.kernel.org>; Thu, 05 Sep 2019 08:47:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=daedalean.ai; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HFsEUSS0BYbJcOsaTsmrGgHb5AMVovr4/8WtjrbaG9k=;
-        b=eN6nVUpbdy2G65J5wP9oB8V86US2oy2Pdl+PpLJrlluZKikOoKskQrdvRmH5Ip+0LY
-         Zf5MCxEpjeEd/70F8m5lSm2tHUSpZO/Kn2tWhPHyPK60rCUbRjrdbE0NUUFTWJFvSgIv
-         +VktKTQkPi0/mMuhsqJsr1RRgzlCx7AMi2O58=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kGt7sArqWSytDm7iQxUDTJsRuu98o3F6VnKUnGwObRU=;
+        b=YZqQHGERjxWtdrXoi7qwNacr8uXjV2ZUow07seJRH0oSOmOIaykwD9s0KDNk8StFH+
+         GQnyL+vQwum//qW5ylUaKbs9xGLc6K4RpDtBs8GfPAQqH9F21KCertytNYSQ6EezGXuK
+         vKk6pewmIP0Dpgr+VvN0Qdf733FzKmraJUsZd0V6mHVTvEPyqa1WQTZAUycK0KXtBiC6
+         lPVZVvcMSW4OT90X6HdMz/TKh0ZG5GlieaCWRrj3oQu7HEARwEWwLQE4x18TcZIlOdSZ
+         S5mZH6k0+yPvanOMqqbcjyn683rlrkd6sq65mRBJy/kxbMVb1mQakOi1Z+7fdu9jT5Lx
+         FlwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HFsEUSS0BYbJcOsaTsmrGgHb5AMVovr4/8WtjrbaG9k=;
-        b=stBg5LVnIFiPl42Vlgldt8q6+DAvWUOA21w+ZlIlMi2/u7q+CcNTacabtxjsP29QGy
-         aVmcmr0NM6m0z4989Cwli6X3UftrvsinWGDarYtXekO0nrgExF1Q1O5tScbk19v+lBZ5
-         UR7GClrx+1/PpDKlAuWJlutjjZyJsHLiAj4S9zlmdo3lgBsgCCwsXVmQR+pulfzGqAkw
-         MWdOemY8UO2K/NpCKMbwAPLXP1MUhsoBFkFWCMxrOB0jxhRleF9sbBqFuIY/dozA3Aeu
-         qMu8Wx9Kryovg7qVXQ187w6FxsfdJ+oIH9UUw6aXifEQa+AucXo4fFmA12Zbhp3/tW6j
-         9fPQ==
-X-Gm-Message-State: APjAAAWwWUVqKRIUmQYl97yOgevqHrSIQngpUvBRoAKuIqezv0GBImzb
-        pXWhh8k55kyh7b+c7333LBahMJSjR9hZ9jNqzVfDUg==
-X-Google-Smtp-Source: APXvYqzshO9SEC1td0s0B4La/jzEZsDIKnnF0JWCZMdU22m78iCFejTgjWT2qzgKp/keRJrF7M8qwDQfhjiJVLH+N/A=
-X-Received: by 2002:aca:1006:: with SMTP id 6mr2914510oiq.72.1567695197481;
- Thu, 05 Sep 2019 07:53:17 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=kGt7sArqWSytDm7iQxUDTJsRuu98o3F6VnKUnGwObRU=;
+        b=CNR2ZX0wil6Kilvq6DQmVpCeFp4Mm6Im6DdzWIUA0zU6arkHCSDkjskoReS1Jjy+ZM
+         vJq18Tj26fiOWymAHxwRSW26/RZv46iwEQmVb8FMldXB9ccHNxOj/qr56vegcs4iO3l2
+         BmpuE592awq+dnCuk9qJYvB1KLWuL3JNHjsIvfRJoTg1fB3wRCtMkp+LPctLZ6CDOoHX
+         8gC+3OJUcR3/X1V/NhBQ7Z4WgN/lDNY4+yjZJtA09Pai2Hsef45W9YXO3UZzwYVjfKho
+         QAlT3CNO2bobuqkppcRCFeb+fiuslbklD+EBDgwCMmJ0knt8yUIDMofM8Axe9FStBE0G
+         j9Rg==
+X-Gm-Message-State: APjAAAW7pB/lvNDTR0Jur9FPhBtXJsWM9Uqh5V2HCVVT1sgnLkPkT0ub
+        llseNbiBR2aPShVtBAWaMtzf/VyO
+X-Google-Smtp-Source: APXvYqxTQkKW5uWOJ8QmyoTby1s1wyM3MwJJ5dw/ndu7XHCKXSCIGmAEJZpue4tajcBIwtysbxmvEw==
+X-Received: by 2002:a17:90a:9105:: with SMTP id k5mr4724871pjo.9.1567698461739;
+        Thu, 05 Sep 2019 08:47:41 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id x16sm2339867pjn.12.2019.09.05.08.47.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 05 Sep 2019 08:47:41 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Samuel Lijin <sxlijin@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: [RFC PATCH v2 01/12] t7300: Add some testcases showing failure to clean specified pathspecs
+Date:   Thu,  5 Sep 2019 08:47:24 -0700
+Message-Id: <20190905154735.29784-2-newren@gmail.com>
+X-Mailer: git-send-email 2.22.1.11.g45a39ee867
+In-Reply-To: <20190905154735.29784-1-newren@gmail.com>
+References: <20190825185918.3909-1-szeder.dev@gmail.com>
+ <20190905154735.29784-1-newren@gmail.com>
 MIME-Version: 1.0
-References: <CACfeHrrajM8_p0=N8ZPm9h7ObcvWT5EnVa-gLhtDODdG9GeyBw@mail.gmail.com>
- <20190904031426.GC28836@sigill.intra.peff.net>
-In-Reply-To: <20190904031426.GC28836@sigill.intra.peff.net>
-From:   Grigory Yakushev <gy@daedalean.ai>
-Date:   Thu, 5 Sep 2019 16:53:06 +0200
-Message-ID: <CACfeHrpfSJ8fEwqr66snRnc3pEk_jTrYHCRLtKFgaL9p4ZKthQ@mail.gmail.com>
-Subject: Re: Failure to fetch submodule with --depth=1 parameter
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Jeff!
+Someone brought me a testcase where multiple git-clean invocations were
+required to clean out unwanted files:
+  mkdir d{1,2}
+  touch d{1,2}/ut
+  touch d1/t && git add d1/t
+With this setup, the user would need to run
+  git clean -ffd */ut
+twice to delete both ut files.
 
-Completely solved the problem for me.
+A little testing showed some interesting variants:
+  * If only one of those two ut files existed (either one), then only one
+    clean command would be necessary.
+  * If both directories had tracked files, then only one git clean would
+    be necessary to clean both files.
+  * If both directories had no tracked files then the clean command above
+    would never clean either of the untracked files despite the pathspec
+    explicitly calling both of them out.
 
-On Wed, Sep 4, 2019 at 5:14 AM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Sep 03, 2019 at 05:30:02PM +0200, Grigory Yakushev wrote:
->
-> > $ git --version
-> > git version 2.17.1
-> >
-> > Repro:
-> > $ git clone https://github.com/PX4/Firmware.git
-> > $ cd Firmware
-> > $ git submodule update --init --recursive --depth=1
-> > ...
-> > error: Server does not allow request for unadvertised object
-> > 22df9475ca0d157e2db066a20f64c35906bf7f25
-> > Fetched in submodule path 'Tools/sitl_gazebo', but it did not contain
-> > 22df9475ca0d157e2db066a20f64c35906bf7f25. Direct fetching of that
-> > commit failed.
-> >
-> > The same line without --depth=1 flag works fine:
-> > $ git submodule update --init --recursive
->
-> I think what's happening is this: the super-project (PX4/Firmware)
-> points to a specific sha1 in the submodule (Tools/sitl_gazebo). But
-> there's no branch pointing at that sha1, so the client cannot ask for it
-> directly.
->
-> As a fallback we instead fetch HEAD from the submodule and hope that we
-> got the sha1 we needed. But because we pass along "--depth=1", that
-> fallback is not likely to work.
->
-> IMHO one obvious improvement on the client side is to have a third-level
-> fallback to do a full clone, and hope we get it then.
->
-> However, there may a be an easier solution. In the v2 protocol, Git does
-> not enforce any advertisement or reachability properties for items the
-> client asks for. So the client would be free to just ask for the sha1
-> directly, no fallback required.
->
-> Try setting:
->
->   git config --global protocol.version 2
->
-> which seems to make it work.
->
-> -Peff
+A bisect showed that the failure to clean out the files started with
+commit cf424f5fd89b ("clean: respect pathspecs with "-d", 2014-03-10).
+However, that pointed to a separate issue: while the "-d" flag was used
+by the original user who showed me this problem, that flag should have
+been irrelevant to this problem.  Testing again without the "-d" flag
+showed that the same buggy behavior exists without using that flag, and
+has in fact existed since before cf424f5fd89b.
+
+Add testcases showing that multiple untracked files within entirely
+untracked directories cannot be cleaned when specifying these files to
+git clean via pathspecs.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/t7300-clean.sh | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index d01fd120ab..2c254c773c 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -691,6 +691,38 @@ test_expect_failure 'git clean -d skips nested repo containing ignored files' '
+ 	test_path_is_file nested-repo-with-ignored-file/file
+ '
+ 
++test_expect_failure 'git clean handles being told what to clean' '
++	mkdir -p d1 d2 &&
++	touch d1/ut d2/ut &&
++	git clean -f */ut &&
++	test_path_is_missing d1/ut &&
++	test_path_is_missing d2/ut
++'
++
++test_expect_failure 'git clean handles being told what to clean, with -d' '
++	mkdir -p d1 d2 &&
++	touch d1/ut d2/ut &&
++	git clean -ffd */ut &&
++	test_path_is_missing d1/ut &&
++	test_path_is_missing d2/ut
++'
++
++test_expect_failure 'git clean works if a glob is passed without -d' '
++	mkdir -p d1 d2 &&
++	touch d1/ut d2/ut &&
++	git clean -f "*ut" &&
++	test_path_is_missing d1/ut &&
++	test_path_is_missing d2/ut
++'
++
++test_expect_failure 'git clean works if a glob is passed with -d' '
++	mkdir -p d1 d2 &&
++	touch d1/ut d2/ut &&
++	git clean -ffd "*ut" &&
++	test_path_is_missing d1/ut &&
++	test_path_is_missing d2/ut
++'
++
+ test_expect_success MINGW 'handle clean & core.longpaths = false nicely' '
+ 	test_config core.longpaths false &&
+ 	a50=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
+-- 
+2.22.1.11.g45a39ee867
+
