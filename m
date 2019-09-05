@@ -2,80 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B64B31F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 19:28:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C27051F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 19:34:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389036AbfIET23 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 15:28:29 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:44641 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731527AbfIET22 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 15:28:28 -0400
-Received: by mail-pl1-f195.google.com with SMTP id k1so1783671pls.11
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 12:28:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=kJFGc/GoZeBeQvythHqTRkNekJ354f6VPeMGYmwQxs8=;
-        b=PIz5QrfVHIra7u9eXwR1mQieVkO0yQcYIIrR6cUi58KImC0G7uWb1D2GjkM87UnrYs
-         btwcnpxYD6f/unOakQoWrCsB5wuKYLBpgo7noNZpwfmNXfbhq0XJrKtNlWFxf7FUy/hV
-         gfzbGlFZOHFm16IwOHfjpbxPLpfKxK6GwfBACXrioqUMlkTla4QJdhPi0lhPncPPq8bX
-         HvOVW4f3lk7s2lo98pb4OMMBV1Jlwc5cOHrAPlGfL4tDXilFpVUgoY3vuWLgntLYuMMh
-         RX3DSPCh65+VSptzbMYKsECPGXpUZ1G6+2XFool1Qx460ZXl/qkhHJcX6tLv39xZM3Ul
-         8KmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=kJFGc/GoZeBeQvythHqTRkNekJ354f6VPeMGYmwQxs8=;
-        b=lHn0Tvisq1drsVGJ67SdhZ6yQVhUgATgLrs7bOENoxxzEQ5rMJf96KjbczPcSgereF
-         v3VV9famod9w1Jqa467PonEk89EwdkE80PYSWcM7cxQCnNmR3kaOO/ufreTf6gA9912T
-         bKo9/uQJntE5O80kj2Y35bprcwVbbkCW+LIuquG8C8LzHda/HHCehQ6cFqr4klaPviJi
-         iJNuUPL+2ze6iUKDYmx4TzVC/+LUwYYvx9BFF/HPFMC6B9sj3x8snhv6i4f3MBuFD9ZG
-         ZthJMpfPPV/W+fDfqG2OTS2CvcudaLRr8LF/h0h8t8bGFTfIPe/UnNyuFOnp/4ddQc1S
-         NWvw==
-X-Gm-Message-State: APjAAAWq0kIZsUT32Phabc6tS6SCcytkxztLcrUwoS6arN+vaPHXcXHs
-        Ag6eHo4IyN6D99aQPx3SkslZbsOBbsVz/MOAnfw=
-X-Google-Smtp-Source: APXvYqzTxc216ri19R4s3bzNN4Vkyq6icctkdFsFK8/njA7vl6qPXW24iTTbpGNK9NuQUkjTWcnAMcrqFNI22dysSFA=
-X-Received: by 2002:a17:902:b60d:: with SMTP id b13mr1528441pls.197.1567711708014;
- Thu, 05 Sep 2019 12:28:28 -0700 (PDT)
+        id S2390741AbfIETeH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 15:34:07 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54229 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729806AbfIETeG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 15:34:06 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D6E12ADB5;
+        Thu,  5 Sep 2019 15:34:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XrjEcvOwkpQU2rautMFDgxhKGIw=; b=yhNzI5
+        B6eCUtVp+d4+nkEXDPd/n9hhvZLUAoc8Y0L5BeHFWnAZElkhUmYJGcVMwgaltkLc
+        8AjZshD7YoKwKbK5gNKmCX1TBjXVJ5DXF4nhLhHL91IEy7p2qnA+Hd3ok3ytknba
+        thsosq8h3N7pDGhq7eNJ7hKgtvbDXe5Fc2758=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oDKvcB20NI+ssuymRjsbSXnnag4YpgqI
+        SU4UDYSnwwnXrl24Odt14zOELcspw2+7jTCLgVfB0dbWIeaT0nXTKK+JO0u3B19C
+        calgFSGKzNxmo1t9FQ7fWA5TgqpQiFsy+UAsuzD8Mhliu3dAQuwlMqCJ/+qBr3IR
+        Zk69BFOA+t8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 763392ADB4;
+        Thu,  5 Sep 2019 15:34:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5C06A2ADAE;
+        Thu,  5 Sep 2019 15:34:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH] t: use LF variable defined in the test harness
+References: <xmqqwoeprsp1.fsf@gitster-ct.c.googlers.com>
+        <20190904002930.GA76383@syl.lan>
+        <xmqq7e6mr4iy.fsf@gitster-ct.c.googlers.com>
+        <20190905184716.GA12647@sigill.intra.peff.net>
+Date:   Thu, 05 Sep 2019 12:34:02 -0700
+In-Reply-To: <20190905184716.GA12647@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 5 Sep 2019 14:47:16 -0400")
+Message-ID: <xmqqmufipmfp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAN0heSr2zCQMM6wOM0UnD28qj_VygQ5CQHGHhMR9+H23snpt5Q@mail.gmail.com>
- <cover.1567534373.git.martin.agren@gmail.com> <20190903231610.GI11334@genre.crustytoothpaste.net>
-In-Reply-To: <20190903231610.GI11334@genre.crustytoothpaste.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 5 Sep 2019 21:28:16 +0200
-Message-ID: <CAN0heSrQAHtjJa88utUNEqBsX-gwjp7nWA_QskDDQ8FawD8mag@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] asciidoctor-extensions: provide `<refmiscinfo/>`
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Todd Zullinger <tmz@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1E125C30-D014-11E9-9AA2-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 4 Sep 2019 at 01:16, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+Jeff King <peff@peff.net> writes:
+
+> On Thu, Sep 05, 2019 at 11:17:57AM -0700, Junio C Hamano wrote:
 >
-> I looked at this series and it seems sane.  I agree that adding a
-> dependency on nokogiri isn't really desirable.  It is an extremely
-> common Ruby package, but it has native extensions, which causes problems
-> for some people if their distro doesn't support it.
+>> Somebody may want to go clean-up the use of various $sq and $SQ
+>> locally defined by giving a unified $SQ in test-lib.sh, by the way.
+>
+> Maybe good #leftoverbits material, since we may have Outreachy
+> applications coming up soon.
 
-Ok, nice to know I wasn't too far off with avoiding the added
-dependency. I saw statements like "oh, it's available everywhere", but
-also more nuanced ones like "not necessarily...". I'm glad I have a
-trustworthy source now. ;-)
+OK, then I'd refrain from doing it as a lunchtime hack myself ;-)
 
-Martin
+ * Find sq=, $sq and ${sq} case insensitively in t/.  If there is
+   any use of $SQ that does not want a single quote in it, abort
+   the whole thing.  Otherwise proceed.
+
+ * Introduce an assignment SQ=\' in t/test-lib.sh, next to where LF
+   is assigned to.  Replace all uses you found in #1 with reference
+   to $SQ.
+
+#leftoverbits.
