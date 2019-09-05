@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E71C81F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 22:04:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39BAE1F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 22:05:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391007AbfIEWE6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 18:04:58 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:37396 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727053AbfIEWE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 18:04:57 -0400
-Received: by mail-io1-f67.google.com with SMTP id r4so8326325iop.4
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 15:04:57 -0700 (PDT)
+        id S2391045AbfIEWFC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 18:05:02 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:44453 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727053AbfIEWE7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 18:04:59 -0400
+Received: by mail-io1-f68.google.com with SMTP id j4so8249051iog.11
+        for <git@vger.kernel.org>; Thu, 05 Sep 2019 15:04:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=zLcrZnY90l4Hfr90Ula8PT5+zUvFU8174XND3uZ+jj8=;
-        b=Jx2UqJTyAQkzOQef8dc68W6Cq7K/PBBi2VSJ+2hB0W9PNlDU+rlgRdfr64HQ9bAuNf
-         c2pxQK59Xtsgpy416O5fIvZFXATjbRFQbWw2zV/si+SnCDgFqode+GGDfO5uNzGhwY3z
-         CYhhtOThmlgXDiLvUxEZKnRIXXymSROpcsy1Qb5Fuykxx0wd+eHqanVEMfSj/lUiGdJR
-         mKRPP78fHRdFPhGUWETJ+jGI2Xw1ovcaZ1tur2VY8ddGRxpPv6QiKQJnqjzbg/6NOvhk
-         YOrodH6Ldwkjx8CUEIFkYWlqleMB6+adzPB1/3WwCjMMwEse/oPNT3bCT9gjnkniK3pG
-         ARnw==
+        bh=seLlX0fcmQdYngBz51Tl2dewAbX6NRJKhiYBEXwO93s=;
+        b=u3QAuV2USFYAYd0ZivODNI+nNda9gzflLYt2focGl96tVUhFz4SZpkKEnGx6TWu574
+         FNioTya1/ZBd/rd1xu8J1uyd8FJFjXEfKckskNZPjFihkMOoSXU3OwfTX63BnI02/cqo
+         ganD6zhyGcYsBaE5lA3mRfUwKwiCafbCq8Cr2k4Qm3Di5f6Z3Wx3hAcF4O0V0/WXyor5
+         ecTFwbxQ5wXOkdCvRD7pMQhgQ/sBt/DoNZqhQOmP1q+1Jvf/5a9dXl0H7XOhtHmDdKvj
+         oLVmiiuEug8LhN/YdDz83IHjOn2y0KBHvElrZtFyP47PwItcJISJ+IiPzzr4hM4p1vVG
+         SHpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=zLcrZnY90l4Hfr90Ula8PT5+zUvFU8174XND3uZ+jj8=;
-        b=NRxzHxA3klTxEyv+aVT55HUuFpnm/bcduB5zrP87RppzkHXIiQjOrFUSOdqS/721ka
-         ThKCF4FQrlWRG9B40zrh9ZPjaVvDZj3Rr0f3rRH4Ez6Ce06tPBXlaXUtteqv6klW7x5h
-         LOyC7fl+Z0WJ2MvSrkC7wRn5D34NP36UZWElxiaEyAzIxagCKycF+xmD+S3XfWGOSlHC
-         wU78pVuSrMxBEuIC0vuxZdZwsM83K6BBqbjwhJn8k1g+i8MWzZeQ+HRqf6xMaaO0HSAL
-         UXIgOmeURAjyrMCHGaKKt9t6rFhgaN2H1DMoPsyWjD/AmeWTVRRgeceS/bph06kh4Alx
-         NUrw==
-X-Gm-Message-State: APjAAAVp0bplFwk30ypXcEU4LB1iFr5jJHEF13Q3dx4eJKVxLGJqL8ia
-        OQ0hUYg66iwjWQwIwtF4K4/O9PLYM6sb2w==
-X-Google-Smtp-Source: APXvYqw/dtWi1kedBRd1VQGYFlMbsrmgn0M9jy9z15lPSbi7upgxPOzT4rH77x1A2Sb2WLMpZ8ASiw==
-X-Received: by 2002:a05:6638:93b:: with SMTP id 27mr754605jak.36.1567721096252;
-        Thu, 05 Sep 2019 15:04:56 -0700 (PDT)
+        bh=seLlX0fcmQdYngBz51Tl2dewAbX6NRJKhiYBEXwO93s=;
+        b=g6Or4ZS0oYPPvmqvAptWkSvZJEGXt3D4fAKbLpM7RBvovyGrICARMdHKPfNqRidul3
+         16ReqUD03rKtmCdnDTXLWLzFMOS9fGrUMK/lHqxcPkqtKzXRLYxkBAZ/lLK/VUXSAFkP
+         Sa3pcvD5wYzIhUDq6MG9j0PeplbmDtzSfT78Uo4zL4w7fVCMukZNOyhqIBT1j97Jt2Q9
+         v62aC9H/5k836hBM5oAVGp2/vFIpKn27hPImbjWxOq67743OC1IaX9veiowtT+PkzllO
+         /TzkGbIOatY/XIU9B6RztXl2z8YzGbdBJbUcAHlQqACJ3Nxy3dHnJZoc9OW45SqEndGV
+         vBaA==
+X-Gm-Message-State: APjAAAWHXrk9qcSk4cifUTrYgj6YBoPEsgb/nhvXblc50nE7vBarFREi
+        8HroCPQ9DFnmXai3FlvAd9MnRl6a/fet4Q==
+X-Google-Smtp-Source: APXvYqxkIOp060G9CYmC1vNu0IjfDACtmE4CoM0QxqZZIKxvBVrPO1mzbPaXX+KUUXxMu3nZYb44/g==
+X-Received: by 2002:a02:2a0b:: with SMTP id w11mr6598102jaw.43.1567721098308;
+        Thu, 05 Sep 2019 15:04:58 -0700 (PDT)
 Received: from localhost ([2601:401:c500:7dd8:3c19:faad:a3bb:990d])
-        by smtp.gmail.com with ESMTPSA id e139sm4520201iof.60.2019.09.05.15.04.55
+        by smtp.gmail.com with ESMTPSA id w6sm2785733iob.29.2019.09.05.15.04.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2019 15:04:55 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 18:04:55 -0400
+        Thu, 05 Sep 2019 15:04:57 -0700 (PDT)
+Date:   Thu, 5 Sep 2019 18:04:57 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, stolee@gmail.com, peff@peff.net
-Subject: [PATCH 2/3] commit-graph.c: handle commit parsing errors
-Message-ID: <7fb6853ab31f35c27e5c220f11ea2de6e229a806.1567720960.git.me@ttaylorr.com>
+Subject: [PATCH 3/3] commit-graph.c: handle corrupt/missing trees
+Message-ID: <9fbd965e3892307bb5bb78952f017624fcc0b73a.1567720960.git.me@ttaylorr.com>
 References: <cover.1567720960.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -66,67 +66,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To write a commit graph chunk, 'write_graph_chunk_data()' takes a list
-of commits to write and parses each one before writing the necessary
-data, and continuing on to the next commit in the list.
+Apply similar treatment as in the previous commit to handle an unchecked
+call to 'get_commit_tree_oid()'. Previously, a NULL return value from
+this function would be immediately dereferenced with '->hash', and then
+cause a segfault.
 
-Since the majority of these commits are not parsed ahead of time (an
-exception is made for the *last* commit in the list, which is parsed
-early within 'copy_oids_to_commits'), it is possible that calling
-'parse_commit_no_graph()' on them may return an error. Failing to catch
-these errors before de-referencing later calls can result in a undefined
-memory access and a SIGSEGV.
+Before dereferencing to access the 'hash' member, check the return value
+of 'get_commit_tree_oid()' to make sure that it is not NULL.
 
-One such example of this is 'get_commit_tree_oid()', which expects a
-parsed object as its input (in this case, the commit-graph code passes
-'*list'). If '*list' causes a parse error, the subsequent call will
-fail.
+To make this check correct, a related change is also needed in
+'commit.c', which is to check the return value of 'get_commit_tree'
+before taking its address. If 'get_commit_tree' returns NULL, we
+encounter an undefined behavior when taking the address of the return
+value of 'get_commit_tree' and then taking '->object.oid'. (On my system,
+this is memory address 0x8, which is obviously wrong).
 
-Prevent such an issue by checking the return value of
-'parse_commit_no_graph()' to avoid passing an unparsed object to a
-function which expects a parsed object, thus preventing a segfault.
-
-It is worth noting that this fix is really skirting around the issue in
-object.c's 'parse_object()', which makes it difficult to tell how
-corrupt an object is without digging into it. Presumably one could
-change the meaning of 'parse_object' returns, but this would require
-adjusting each callsite accordingly. Instead of that, add an additional
-check to the object parsed.
+Fix this by making sure that 'get_commit_tree' returns something
+non-NULL before digging through a structure that is not there, thus
+preventing a segfault down the line in the commit graph code.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c          | 4 +++-
+ commit-graph.c          | 7 ++++++-
+ commit.c                | 3 ++-
  t/t5318-commit-graph.sh | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ 3 files changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index f2888c203b..6aa6998ecd 100644
+index 6aa6998ecd..cea1b37493 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -843,7 +843,9 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+@@ -839,6 +839,7 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+ 
+ 	while (list < last) {
+ 		struct commit_list *parent;
++		struct object_id *tree;
+ 		int edge_value;
  		uint32_t packedDate[2];
  		display_progress(ctx->progress, ++ctx->progress_cnt);
- 
--		parse_commit_no_graph(*list);
-+		if (parse_commit_no_graph(*list))
-+			die(_("unable to parse commit %s"),
+@@ -846,7 +847,11 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+ 		if (parse_commit_no_graph(*list))
+ 			die(_("unable to parse commit %s"),
+ 				oid_to_hex(&(*list)->object.oid));
+-		hashwrite(f, get_commit_tree_oid(*list)->hash, hash_len);
++		tree = get_commit_tree_oid(*list);
++		if (!tree)
++			die(_("unable to get tree for %s"),
 +				oid_to_hex(&(*list)->object.oid));
- 		hashwrite(f, get_commit_tree_oid(*list)->hash, hash_len);
++		hashwrite(f, tree->hash, hash_len);
  
  		parent = (*list)->parents;
+ 
+diff --git a/commit.c b/commit.c
+index a98de16e3d..fab22cb740 100644
+--- a/commit.c
++++ b/commit.c
+@@ -358,7 +358,8 @@ struct tree *repo_get_commit_tree(struct repository *r,
+ 
+ struct object_id *get_commit_tree_oid(const struct commit *commit)
+ {
+-	return &get_commit_tree(commit)->object.oid;
++	struct tree *tree = get_commit_tree(commit);
++	return tree ? &tree->object.oid : NULL;
+ }
+ 
+ void release_commit_memory(struct parsed_object_pool *pool, struct commit *c)
 diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index c855f81930..abde8d4e90 100755
+index abde8d4e90..5d2d88b100 100755
 --- a/t/t5318-commit-graph.sh
 +++ b/t/t5318-commit-graph.sh
-@@ -585,7 +585,7 @@ test_expect_success 'get_commit_tree_in_graph works for non-the_repository' '
- 	test_cmp expect actual
+@@ -607,7 +607,7 @@ test_expect_success 'corrupt commit-graph write (broken parent)' '
+ 	)
  '
  
--test_expect_failure 'corrupt commit-graph write (broken parent)' '
-+test_expect_success 'corrupt commit-graph write (broken parent)' '
+-test_expect_failure 'corrupt commit-graph write (missing tree)' '
++test_expect_success 'corrupt commit-graph write (missing tree)' '
  	rm -rf repo &&
  	git init repo &&
  	(
 -- 
 2.23.0
-
