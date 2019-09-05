@@ -2,84 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38A601F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 22:53:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0521B1F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 22:54:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731109AbfIEWxi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 18:53:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41456 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726837AbfIEWxi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 18:53:38 -0400
-Received: (qmail 10388 invoked by uid 109); 5 Sep 2019 22:53:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Sep 2019 22:53:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32533 invoked by uid 111); 5 Sep 2019 22:55:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Sep 2019 18:55:21 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 5 Sep 2019 18:53:37 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stephan Beyer <s-beyer@gmx.net>
+        id S1730809AbfIEWyN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 18:54:13 -0400
+Received: from mout.gmx.net ([212.227.15.15]:44601 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725975AbfIEWyM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 18:54:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1567724031;
+        bh=GpRablHOrWwXdLaWSkEx5ZkR4o+qHUTPUW/oFfFPcHc=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Vsbw1/1A5xv6NLXW6pXBnz3P5UX8BJt3kAVhZwNVqGngtXyi5quKo9R4T8eLzBfwU
+         Y5+deuMkMoni420yrhJuLbpivMxlW8WWj6sOimYxiQRN+qp6QI/5oH4BgHJrUxoykC
+         1ZzE6vs5EM8jAul3N8LpDUR/6OEeEzAmjjFDfcM4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.178.48] ([88.70.128.63]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MHoRA-1huU2442oo-00Erps; Fri, 06
+ Sep 2019 00:53:51 +0200
+Subject: Re: [PATCH] Fix maybe-uninitialized warnings found by gcc 9 -flto
+To:     Jeff King <peff@peff.net>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
         Paul Tan <pyokagan@gmail.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org
-Subject: [PATCH 4/6] diff-delta: set size out-parameter to 0 for NULL delta
-Message-ID: <20190905225336.GD25657@sigill.intra.peff.net>
-References: <20190905224859.GA28660@sigill.intra.peff.net>
+References: <20190905082459.26816-1-s-beyer@gmx.net>
+ <20190905224859.GA28660@sigill.intra.peff.net>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Openpgp: preference=signencrypt
+Autocrypt: addr=s-beyer@gmx.net; prefer-encrypt=mutual; keydata=
+ LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUVFOQkZJN0NUOEJJQUNX
+ RlhtNmdSM1BPMkJoaDZXZ1Bvd1FNZEZWcHc4cDlybjE3d0k0K3N3TWVxSmxrSklnClBETlFi
+ UXRPcGRGeUJYVzY4cHVDMXI1NjlNZnNhSldXYkluZGh3NVpwdTJ2djdjVXlOajlrUXR1dG10
+ Zk1TcWYKdXRSZVAxZDNINmhzOWJSSGJvWkVqeXZqc0VTV0xYM3FFak9uRTYyVmNHMUpnNS9t
+ dlFkOFRIZ3pwdDFlS0tSSAp3Vm1oY3JDRTV6a1l1YzNoZzdXdk5xNm96Vm9DbUpsYU9Qb3Zz
+ NWw4UThUaHc1elQzL2hnY2QyeEFlODRIUEtJCkFBajVsSjZRU0l3bWYxcWROSVRvZCtLUGdl
+ YnYwL3pBZ21vYUFRSW1LamdmelFMZk56WHI1TDJoNHNsaElPU0sKR0EzWnl2SXFqRGRnNmM1
+ bFVWeFRKNDRaQkRFLzMvZEtTVG0zVW5MZjJDOTI2SGZUZGQ2ZHQ1T08yLzd5b3YxdApjWWc3
+ K0t2VzV2ZWJMS0drbHhjRjhqdFMvSE9zOWxjQkJZeEg4WC9YL1N5YWc3QzIxckhGWE13aFZF
+ QTlycmZVCkNFaFYyOXgwUGU5THFwRTd4ZGpIK1FXVlMrY1RHKzhHaGtGN0FuWUtpSXo4L29K
+ VjQ1S2hTTjRrTXhPTFdZRSsKazJYd2VEOWhUTjQxMVJOd0FUS3ZJemlieElyV2xYVEVRbWJ3
+ elMvUldDRXhTWTdSdHlUTVBIc1BZdDhzRmNzKwozVUFNZHNmdlF0cmtBdXZQY3BTYS9VS0FC
+ SEF2a1VOeStvSkZqRmRUdEtrYy9oajk0UEVBQlJvbFlYUTFWRXFECjh2b1dKQ1lQUXlCUVl6
+ RTZ0RzMxZFBnWFhzK25xdVhuSnBIRzJKS0lJWktXamJXcmVBSTFaQ2hCSThCOTFXbjIKdWpV
+ VjVzdXRBbnk4VmtZY3BNQklwNVdVUVg1VDdxdE8wSUhsYmJ2RzVOZHllQ2tqMkI4Ly9LemZQ
+ K0pqc3hqRwpHMzc1Uk9PdS81eC92eXhKZlp2SmUxcDRQRnNnVWF1MFRZbHExR2JuODFHSVMw
+ MjU5NWtUSTdrVzdMcERMVG1xCnY2MEdYSWpKQWN1RFJQbWZyZktXSDhZNXk2VHVDMnZFVVpH
+ TzVsR0dwV2NLM21HRGRpd1dCNlpYRmhJVGF3YUEKQWxWaHhCVUppZ2JQLyttaG00M1ozUzRC
+ N1VqYVpsZGp6QjZuS3QzNzVQL28zYjU2NkdLaG5aVmh4S3ZvQXNoagorU3c4Vml5ZTlZb0ZC
+ c3VSeTNndk92VW9MSGtic0JrS0ZncmM0RElXN1BHWVBOdmZVbW5VSXNFbFZYdlVsMWxjCjJG
+ SWxYSnJhZDNzNlFMNW0rK0pJblZrWU5Mc2o0OVZpb2JMaUxBdk9Wd2ovN0JHQS9ralJEUXp0
+ OGQrZzgrWVIKQnYwNHQ3Vkp3ZWU5SFp1cGFwUGdyb3JzL3hsL2NwSFVFcXEzSFdDSm5ucXpt
+ MVJqbnpMZ2JwZVRjQjVBazFndgpKTDZmN05LMXYva0RucVl2a3B4K2YvUDJtNGhKdTVhTTE4
+ ODJzWmc2NlF3WDFrREw5WklRbFladFFUOElmN1gvCmV5eGZVZG9WQUpEQThIcFM0NlEyTHp3
+ WkVqZXFYYzkzTjNMSmxIZFQxcm1OZERDanhtd1BSUWllUW5TRTRRcmwKU05qWHducXl1M00z
+ Vk43ajNNQ1hJMUdWNVUwQ3VvZVd1RGdpUnMzQ0ZqZTgxS25mL0RuYy9jL2RuNmpoeVR2aQpR
+ a0NMY1hxUDY3Q0l1T2xVd3gzMU1iNWJpQ3IwL0R5YjVmVXBBQkVCQUFHMEgxTjBaWEJvWVc0
+ Z1FtVjVaWElnClBITXRZbVY1WlhKQVoyMTRMbTVsZEQ2SkJHQUVFd0VDQUVvb0dtaDBkSEE2
+ THk5d2EzRnpMbTVsZEM5K2MySmwKZVdWeUwyOXdaVzV3WjNBdmNHOXNhV041THdJYkF3SWVB
+ UUlYZ0FVQ1Vqc1pYQVVMQ1FnSEF3VVZDZ2tJQ3dVVwpBZ01CQUFBS0NSQStEK3phekFwOE80
+ LzlILzkyREltWFBiUkdSVFBjV2dOR0tKNHRBUWxWQm00eUZPQUtoTVlOCi9zcDRIME5FZlp2
+ L2ZXMXZtV3FnNlZpbjRLNngxVmhkT205MVFCOE00UThtdzVtbWVneFhNZXdMZjJteUVHamYK
+ WEt1STh2OTE3TGhkOFdvT1MydUhyOFZxVldWRGZKRzZXR3VoR3NxcTJtcnVhWk41ZzZMaDNO
+ U2QybW9heDUxRAprYTYvam4yOW45KzluNWpHQzV2eDNnTHRuSnE5dmlNbk9OVGdEZVpUcUVL
+ NmVxU1ZkMWIrNnp4TStRc0hzVFI0CklzcHNDcWgzbWxsTTdZL2Ntc0o1dWdsZHZURXhsem43
+ VkloV1FBanowc2xvbFZHTlFSN2krcmNRK3BjRFJGS2EKOWJHU0xxR3lhdEUrdVlLWVJtdldJ
+ bi9zT1FOU21MN2RXZzRiTW5wS0Njb0FBeHd6RFlQay94Sm1PSlU4QjFPQwpPMXo5b2pKZDha
+ a0YwRTlVRmswOW42ajYyVDZZWEZaemo1dFRJUU5iNW5IUVRiRFBSZWZESXMxYTBycDBNNHN4
+ CjRLZzJzZVVQZVFZVXBEV29YR3pYTHZ5ajRkMHlyWU9wUmpEb0ZJdE1oMCtndmhJd1Q0NGNv
+ aHpUUW1vZEQzVHcKSUZZbDRKOWlrTFI4SmdvRzBHeEo4ZkpnN2tyenlnNS9MOWlMMDBvZjdZ
+ ZVJuZktWTytyK05BUGk5Zld1Nm1ZRwpGaXZGQnRXYTh2Qzk4WHlWT2NUYXhvTzVSaC9WTUxm
+ OUdFTG52VWdjSEpQZVgyK0FVbkxIcjBnZ3NIdFgvK2cxCkxIRVEwMFBQdUVjTkZSODNmZWlr
+ L3FoMXVIQlhDSjIzYWJIaHVVR1Z0RXljeEY4ZWFZQ1VIYUh2VS9ldnlDSGUKeElRZWhKc2du
+ NkkzWHJURTFzMWVDSXEwRS9kdDAyQXd2cHhDUFkxRXk3UkljM0ppTE1oNVh0elp2dGtsTFRy
+ UAppREp6ekRXTll2V0RoRUJnWGM2alJteDk3VjdJZGZGbUI0K2pGR28yL1QxdlhMdElURmlO
+ SGFTT20xdWFMM1dtCkI0OWk3UVFqZVVtQVd6UE1WNE52UjJWbnNiQmdHQ2Z0cHh4REcxdmh5
+ U01TT2M3QUdXa2NtQnVKamxqcE1zVnMKSkVBaTdGVnBQUnBGcE9VdDdkcmNLSnd2aHZsV1dE
+ eDhCQlhXcHNDN0pybElvRzJNZHpNNFRDa0o4Tk5wZUNCRgo1RXJmdHZDZzNvcjFFYVBHeGFk
+ NUJsVUlUS0ZXM01ZbXhXbHo5cURHQ1E1Vm9jY3IrUkt4aGwycS9HVnhKTVRECi9JWHZ0VGNt
+ OTFQWXp2ZW44Sy9KaUs1SjhNdVFpQ29RLzc5Y2VCYTM4NjZhN1dlUkMvdGlEZEtWcDBnamlS
+ M1YKenhua0hYNU9Ud1ZLMkR6amZiTG11NC9LVVowUzNTNzkxdGRlbENRNzFhZk9DYUVRUmQw
+ TVo5L0MvS1RxTEtuYwpGdFhEUDFnd2pzbTViSTJoK1JBTVdjbDh1TFI5ZjJ6ZFo4NG5NT211
+ TUsxU2wxeXl4Qlo4aG9xVlZNeEJTcnZlClZHeHB5cm9PT0xOTitIdDhiMjkzdVY2NWZ6eUJy
+ U0dTcGN6TUx2cTBYOTcxYmU5cnZGNlZaUUtDaEp3N25lV1IKWk1vQ3BiSnE0R0NNakhEdzlp
+ Ymw0OWxrOUVWNytUelRiV0thVktvYzFyUmZCMzVyVUtMUWhPNGR2UlA2aFFNTwpwNUlzVHBM
+ bWFXOERVUTZJSThJTTg5VEtTaDRQWStCSzZDR0MwKzF6clhPdTZDSW51UVFOQkZJN0NUOEJJ
+ QURiCmtnOS9lVnVOeXdMR2RxVmpiV1NmOXdOV0ovWFBiZDY1MFlaRE5nUlNhNVE0NW1YZHhp
+ WFdEL2pRRnhRcy9iRVIKU2hCTWdYOEVGMkVVUHpmRW9jY3B2MGMvZks0cGJwT0xseGVDcE04
+ K3dZT3lSOWszRHNyZWtVa1FJaHlRcEZZVApZR0V3Zjg0TVBpT1pBSmVRYUtIVGRWMldZWjdl
+ eDFqQXVRN1ZxOWZldUdBV1ZwUFAwN2hEa0JTQkVhbHZHZ2RPCmg1S3NJQVBybVBmRU5XM1ZD
+ azhSVlNWdWIrUmRhZTdMMHBvU0VzSFhGRzlGR0ZRQlAzSGFUaFlOdk14MlR4R24KYnVQVy83
+ am9TY0I2Y0tvZVkzY0ptRjdUOEtzR2dvaUcveTVjZWpNL3R1dmVJZ2VPUXZnUUQ4U0FKcCtt
+ THBDMApqYk5UZGxsN1NET2ZXSXkwbm5OQ3ZFMGQ5ejhMbTZORDZvVEo0UCtURFpPbkpjbG1O
+ Nkl5alNxT0E2ZHM3M0VkCjV0dlpiVll0VUJzN2QwY0NjOU1aNnBzZlJ1N1VnWVZpdE54VWND
+ b2l3ZS9UOTc1NFl6a0I1SzZzeWZqL21OQjgKMDdNaXBRMTJuS3hMUXN5YjJuVlhmWnpIS1RZ
+ RjJ1Z0t1MTNMM3k3ajZPYzdkTlY2QlVnS0pSaXRrUkFRN202cgplYldCVWJ4Q1VZRS9UbmxR
+ cDlsNlhDVFNMV3FPNVI0R0JjRzJ1c091TEhDRU81dzdiVHBoSitGODgzKzZpYWM1CldpYVQ4
+ bldZL2xTWGdvTEhwN1NTbk0xRU5BMlJSUmZYeUFrYUJ0YThIVGw3dkpDK2ptS251aHI1NUpZ
+ d25NZzIKWXltOHVQNGlVLzcvMGlRa2Z6TmNPQk1JOURSZXJ0VjdEdHhBOHRtY1h0L1J3d2xM
+ SkdIQUozTGc5dFNEYU9Nbwo3eUEydnZaVlkzcWlXRkJHeE41dVRBT2hHZHVPT2YwQ3VRd1JG
+ b2ZuY1NkYjh5Y1BUSWVHTkxLcUo0Vk0wUHlICmNNcGtxUHpnc2FMTzZOT3NiZ1REcXZGU0N3
+ VWcxdThWTUNJWWJXazd3eUg5Qnd5WVNNMGU3NURPcmJYSVFtSksKSWNWZlpEdmRqSVVaVGU1
+ eXFpNWFMMkNJZkN4M0JKWTRFN21PZlBmT0Q0bmhUS1VONG9ZaXRVVmRWVlQwcEhtOApXclZM
+ QWltTFRtUXVTT3RrRUJlRkN0eTRtWlpPdTU1Zkh2ZG1ZWTFVQXVLUHlNeExDaGJ0SXIxdDZE
+ RTEwcUVZCktWR1RmUEpJc2dub3JxRTRiWGwzK2UzSjArWEtoeTdzbkNZNlZCQ2pNZkFMRDNu
+ RDNXNktoc0JVeForWVZjMFMKVGlkSzB2ekF3Y0lJWWQxMDNMNEVkdXp4dGxLeG52QjdsMndG
+ VUt5cW5DZGxsMnZrRXZUNkpSS0VOK0dLZ3cwOAozelExRzBYOEJKL3hNVDZsZXV2WGs2ckpX
+ RHpBRk9iRndUT2dMSlR6R1VvYnUwK01xeEZMRUJPdmhtU3pkNHljCjRpbjMxY0t3Nnd5ODBp
+ OEd3U0JSb2VqSSt1OWJqZGxIWXBENG1mdzdGRSsrQ1IrWXFadnJac2Foek8zUkx3WUsKVE1m
+ cnByNUlhaWlDLzNFcmE3ZG1icytrdHFWR3Y0NTN1c0tzRnFvVDJpaXo4RGx0eHF6WXNTKy9h
+ V3Q2N2JQRwo3TG5wdDl5alRLOHRnNE42dTFUdnl3dGMvejIvNUR2TjJBdlM1UG5LNkZaMU40
+ V2pmTmd5NHhUL1F2QzJkb3VZCkNwZDRkakx2NU43UUhBdHY4WlNkQUJFQkFBR0pCRWdFR0FF
+ Q0FESUZBbEk3Q1Q4b0dtaDBkSEE2THk5d2EzRnoKTG01bGRDOStjMkpsZVdWeUwyOXdaVzV3
+ WjNBdmNHOXNhV041THdJYkRBQUtDUkErRCt6YXpBcDhPNDcwSC80bwpPWlZPQU5ROUw5SmpO
+ LzU1RFArYUdoL3BoU1JHbmpWUWR5TXVEZzdYaFlEYkd5SGJESExoSlVCUEVMNU9PUG90CmRK
+ Z3lZZFZsRTFoRktZRC9Mb0tiYWZDeUJDcE10VnNKTjhtRkxONWE0TjVnR05RUzNXUklaSG1i
+ Y0YxaFA4cm0KSDdPWEtkNUVUb1VCS1FxTm1uZWc5WHJlTm5DWTZKUXFtWVhtS0RLazdWVFhN
+ QUhQWVRmcjZuZjJzdS80bzNYVwp4aktSWHFGWDdsT1lRZEhZT1FyUzhMQU5qT0QreDBPelh4
+ Q3ZhemJXdFpyZEl2MVV2NmNKWW1mZ2VwWk5HbS9TCi8xemdtV20ybjltNjYrNk9qSU4xWDdo
+ dFNYQTlmcGtKbUIxcDZHeENEaTJkL3dtaUJuMmVJNXdFL21MOEQ2UEcKVEZGTGlOcTRXMUgv
+ WXB5VkVaNUhWZTNjQzV5MnY4L1VPZWlOYWNVN1MvK1h6dnZpMDVPZWJxdUNBQTZ1SzlQTgpt
+ Q24zZFI1K2RYWjRHdzY3QitTVEcrdWxlWnFSZ1NnTWpkN2tiNzlGMy9NczFKakgrMkl0NVVt
+ enlsR0VTanpGCmpBZExBRjhPSzdQTGhzeHU2TFZrelZPTTIvRklIdGRsNmxmcVMzL1Y1b0p6
+ cEozR2lQTERXOCtXTkxhemJBRHQKaXpFV2RKcXlaOEsxWFVMSHRoem93enFMUXNWWXBIWFpR
+ VU8xb2kzYTVGTEcvckdOUlVGZXQrN0VzUlFNOGFDRgpRQ1FRbDY5RnhNYk41bUpabldGSWgz
+ TDVmK1FSM0hUajlFZXVCTGVLWnZMSFJhWThpSVBpdVYxc25LMmdqSHl1Ckp2RjYvempaSDNN
+ YzE4cXJlYzdOWStmZEk1QncwMVhyeWZwZVkwT2p4K3VHck5qdCtNS2NIL3FSeEJlWEl3WWoK
+ UWJxNjZhSXhJWTNBR0xkWDhFNHVwd2V2SnRYT0xrK2dBTmk1c0tqeTdzV2NMTEROdE9YVXNr
+ Y0tPT0k0M2huVwp0d1FMNFVLTmVVTUZ4MTdUYWVWZDVQYWZTYlRXRVRWODkwejI2RXpxZmhm
+ N29ZSGtRSGs4TmtKakZSYTF2MWRsCmh6eTI0U01ESVBZQi9iVVZPN3c3NFNUU0g1b3hIRE0r
+ cEI4YmZlOEFaU3hMWkhCdEFockZHTFk1NEE0YnNiM3YKKzJkd3d0a2RRNlJ4WDZuNVFpY29B
+ bVpFZGRJNTFSd2lRdzRneWRTVG1iL2hhUDdCOVZyWlVOdW9aSXdWSGpldgpRZkV4Sm5aVUVE
+ NEJCb3lPaDI4NzdJUEFDRFRwNVIwZTNnTDB2cE5aaHorYm5jZmQ4MlhzbnQ3T0tnM3dLTEds
+ ClVzYjBJcXNTRmZ1MHFzejNJV2JvRmlaZk5yNGROcVFCeXJYUFFodXphWXlhUGExelhqazJM
+ L3BKTGNOZjBzaEEKMkZiNGoxTjJ6b2NjMHlIWmp5ZWNSTUZBbyswWGU5MDkrRGRadXdqbmZ1
+ SFhmYTZDckZsaGlpTlBtUHNJWG14bgpmTHVqWjVHZ3JxWTRVYXIzejNmNnZiNTVJM0srNTFu
+ b3ZsNTdxYktuTHdGQWRRaFpHVjM3dDBpRkRsY01EcnZqCldGWVd3NzFQUUtaZmFuWkN6eWNR
+ NFF1bi9GckR5d3NCckJxY0M1NmkrTHBWek11YzNYZmhpU0tHb2UrWXhFY2YKTmNuMWZIZGRy
+ enpxaUVUQlhCQlNwSVJBUG14K0NCVUJWeXBRaXdBSG1lUTA0cC9icXYyTVNFTkpqeHhvam85
+ QQpwUTcwK1I4SUV2dVhoMnJKVExlTQo9LzRnMwotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBC
+ TE9DSy0tLS0tCg==
+Message-ID: <963e5249-82ca-8961-917a-f45c20b1affe@gmx.net>
+Date:   Fri, 6 Sep 2019 00:53:49 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 In-Reply-To: <20190905224859.GA28660@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:7mNvXMPdIytlFeaNEJASWCZziTPcIj5KyJ6f+ol+lssccTrQZSW
+ E6EsexhEK6/tKcAXjmFAzJx81qYV1VFvhcMgoDNzApTHC1zL6yJVq1iOt4mL/50OYwNUQwB
+ AE7OQreo+e30cmDT6nMu3d0LHzN0pjWcQDpj2P9PY4FRvqTPVZ+vgvfCAgsw6p3p4UK+Le9
+ /5hzVn6GiJ0ioutFvHmhA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:EWrZjd2gSm8=:iZuQKhvcvgzmYhaPoU/A43
+ QmI8eegmht0H66aZfBM7MyVGrqKpdIWHUop3U2lpXpYecq9NLtPUJZekIVK+3CvbUvheq96tN
+ kJfz6cVogA6J8vswAdkdOF9jMlTBcC5i1CPKRCo31i3aPPPiZ7hZJpDECLoqm/aqbv0ANURht
+ OintesLl6A1Mth5oEKyvw6g3zFY7qV0Cb+vXOdredgJqJTWvz2DxF2+A9S0D106yP309gAv5R
+ Hd0H19OWS06CO8KvAsr7m1u2GgsSRcD7V38seZageAiH6SnIgap+0zDGMBULhU6FllIIJMYww
+ y7JfTpYKJuZ+qS0bOII6gXnWWT1gf1frzp2wkqjsCfJfKHpQy9/bi3SqfezzlrW9pbwWSBq69
+ /pYaCc1BwV/jWWwqzJve7QfW6TdUNOhkL8MQnVoIBBsUBkqEcp/wtIzV+f/TSThGZCznvabbo
+ ayXIx11omVffn87AwivJBadGd/xMU/ZxiX6m0guYVynD76R40MDepTGLmt4NTNCSxpsK32XT4
+ wxVIQpvJCZoFJXwtGrgg6J4nG612eyVlEBZCnpeQ14rlL3bod3uSIT4CGfIaL0q9o51gs7NWv
+ 1gRqORwuNB530oyeUsb8am6F376zYyAPneKcMYN46rga/Oh1gsnpcilkOsUgBBUl/0Mj79FgS
+ w+V9106p8WEEjEEvDrTPzfniBPZRw/EFm/6UDX4CnP7s8TviMW2k6cJtBQjv3bjqawT6G0HVJ
+ TCCTuTq/+PJNZmg6Dz5IfzecfP/jVxP3VzQspuIxrozQwI6GQ1ZLy0M/5GavLQuspplpBDquz
+ 7peW0asw5mmmj8Kt+1Q6wPCY5H4AMxNlFxiPsmQ/3YaZkFSHGvgBRPYrEdH1YpYXjXOi5qUmh
+ ZFEhWq4HedUt7WnvhpWUDFPePiMBqwAVFGsizb2s30uJ8JYuAa6I0VWZC+Y/vN+hRsJPYG6R9
+ MsWIrJ741nCU60z0yGJLrBygGZw7pb5fofoQb4AmV+WtZTuT1ecEJNZqFZRlrPehryi8461HU
+ OiH0zjnbjswNwVewdANaCFVri36bN/mnQ0IueHtKAHsGaSoXmQTf/t9fPVTKBqeQJsFa7388n
+ VvYPACF1MOkzyarBNb9oMr4SQ3RG7N/Ug3ywRTjbYSqrQXuHT7p+301pIj9gMeDpSucO3UZ+5
+ HCKiXIAqyPzXPNoRKHgwLl2rUU23mzFwqWGqIOzWZmhoAAmjX++P5oWsbEOxJoCoamHwi88Zj
+ 0Yr3qiAK+flCPSAjM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we cannot generate a delta, we return NULL but leave delta_size
-untouched. This is generally OK, as callers rely on NULL to decide if
-the output is usable or not. But it can confuse compilers; in
-particular, gcc 9.2.1 with "-flto -O3" complains in fast-import's
-store_object() that delta_len may be used uninitialized.
+On 9/6/19 12:48 AM, Jeff King wrote:
+> On Thu, Sep 05, 2019 at 10:24:59AM +0200, Stephan Beyer wrote:
+>
+>> Compiler heuristics for detection of potentially uninitialized variable=
+s
+>> may change between compiler versions and enabling link-time optimizatio=
+n
+>> may find new warnings.  Indeed, compiling with gcc 9.2.1 and enabled
+>> link-time optimization feature resulted in a few hits that are fixed by
+>> this patch in the most na=C3=AFve way.  This allows to compile git usin=
+g the
+>> DEVELOPER=3D1 switch (which sets -Werror) and using the -flto flag.
+>
+> Lots of discussion in this thread. Let's try to turn it into some
+> patches. :)
 
-Let's change the diff-delta code to set the size explicitly to 0 for a
-NULL return. That silences the compiler and makes it easier to reason
-about the result.
+I thought the same and just sent my version of it. :D
 
-Reported-by: Stephan Beyer <s-beyer@gmx.net>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
-I suspect this same pattern of "if we return error, out-parameters are
-undefined" is used in a lot of other functions, too. And I wouldn't
-necessarily want to go around changing all of them. But the fact that
-this tickles the compiler makes me think it's worthwhile.
-
- diff-delta.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/diff-delta.c b/diff-delta.c
-index e49643353b..77fea08dfb 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -326,6 +326,8 @@ create_delta(const struct delta_index *index,
- 	const unsigned char *ref_data, *ref_top, *data, *top;
- 	unsigned char *out;
- 
-+	*delta_size = 0;
-+
- 	if (!trg_buf || !trg_size)
- 		return NULL;
- 
--- 
-2.23.0.463.g883b23b1c5
-
+Stephan
