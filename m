@@ -7,58 +7,59 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAC921F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 20:37:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 917A01F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 21:03:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732490AbfIEUhO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 16:37:14 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61689 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728072AbfIEUhN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 16:37:13 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CE9DE858ED;
-        Thu,  5 Sep 2019 16:37:11 -0400 (EDT)
+        id S2391723AbfIEVD2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 17:03:28 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53823 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728685AbfIEVD2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 17:03:28 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 77C6175394;
+        Thu,  5 Sep 2019 17:03:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=R1W6++uun+JBN7hW/yRhZOG2KNs=; b=qT+CUk
-        t1NrZK9R3jTTt0tnvPKuWyJ9WBupo2X/UGqS8HXoSdNCUQ8LPczHSYMx4McGYwBX
-        qB6r3v6xvmkOTbXPXJv+EYyjyXk3hfP10j/b6kp0jdSGUrnEVPQn3KaEIlLCNHFW
-        lwFwsSRbf2PZ1CECgl3HQxCbyKlKnT0rKWbQQ=
+        :content-type; s=sasl; bh=ONLh/30DTZMY9fUq5yaAO4e6Jt8=; b=morAHm
+        u8IbbU3fURAdD2qK1lpyvezsqjUZjG1rVUj2B0LtjOxiPC5K2NrXuZuAkdFKsRmk
+        d6msZO+oQo08XbiENU0+ArM+GnKnr9zRE+HchpWlHqyakn6G+MEVAYIBSu1N6pi7
+        TVVjiOpBkk91ipqJEc+XwOyICavCc8n2PORJ4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AaDc0F3iT08H478j7ShLi7hStK9FBQPC
-        pOCJtMHn8PW+4sAC/S3Qp6ortPptUs6wPiykwi4eMjveznK37uGTAmhRTQgYtFpE
-        mJRih0ljcZvD9ioYWApVBR8XlUug9HbiY7VC1wZOHTJ/shyq7jy9Oh0bpdlZ3Rsu
-        RTflDM6jlY4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C5F24858EC;
-        Thu,  5 Sep 2019 16:37:11 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=EuhRUe9FhFVgsBSYI2unqFaHeqIwPKcK
+        tyPgyrhXoMm51Oc8R0rL7pP7FadGSRUp50mmiG3rm9vHQPGIy2kZvm/takj0OUF3
+        wmE1wM75cSatSF+R84smp7DOYZIutiOj3MU3b2kxlg74jUrDWbbjMJisl3Jz7VnW
+        +iit/khUcbE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F64375393;
+        Thu,  5 Sep 2019 17:03:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 01BB6858EB;
-        Thu,  5 Sep 2019 16:37:08 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 98BCD75392;
+        Thu,  5 Sep 2019 17:03:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, avarab@gmail.com, garimasigit@gmail.com,
+        git@vger.kernel.org, newren@gmail.com, pclouds@gmail.com,
+        jon@jonsimons.org, matvore@comcast.net,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] fetch: add fetch.writeCommitGraph config setting
-References: <pull.328.git.gitgitgadget@gmail.com>
-        <49f877c85ca2be5bb76d9082ee4aa26e26111a14.1567477320.git.gitgitgadget@gmail.com>
-        <20190904030829.GB28836@sigill.intra.peff.net>
-Date:   Thu, 05 Sep 2019 13:37:06 -0700
-In-Reply-To: <20190904030829.GB28836@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 3 Sep 2019 23:08:30 -0400")
-Message-ID: <xmqqa7bipjil.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH 1/5] treewide: rename 'struct exclude' to 'struct path_pattern'
+References: <pull.329.git.gitgitgadget@gmail.com>
+        <8cdffbd1c82c34a7dbdb18cb396e5e422889aad6.1567533893.git.gitgitgadget@gmail.com>
+        <20190905065518.GD21450@sigill.intra.peff.net>
+Date:   Thu, 05 Sep 2019 14:03:19 -0700
+In-Reply-To: <20190905065518.GD21450@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 5 Sep 2019 02:55:18 -0400")
+Message-ID: <xmqq4l1qpiaw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: EE7BB846-D01C-11E9-BD43-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 97D6457A-D020-11E9-99F4-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,11 +67,36 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> Do we want to to have fetch.writeCommitGraph, receive.writeCommitGraph,
-> and then a master transfer.writeCommitGraph?
+> I wonder if there's a name that could more clearly distinguish the two.
+> Or if it's sufficient to just become Git jargon that "pathspec" is the
+> command-line one and "path_pattern" is the file-based one (we're at
+> least pretty consistent about the former already).
+>
+> I think one could also make an argument that the name collision is a
+> sign that these two things should actually share both syntax and
+> implementation, since we're exposing too similar-but-not-quite versions
+> of the same idea to users. But given the compatibility issues, it's
+> probably not worth changing the user facing parts at this point (and I
+> also haven't thought too hard about it; there may be reasons why the two
+> _should_ differ).
 
-If anything, it may be good for consistency.
+Hmph.  I did not realize there are so many differences X-<.  
 
-I am not sure if it is a good idea to trigger writing the commit
-graph when accepting a push, though.  It tends to be a lot finer
-grained than fetching, right?
+A pathspec is relative to $CWD, and there is a syntax, i.e.
+prefixing with ":(top)", to make it relative to the root level.  An
+entry in a .gitignore file will never affect paths outside the
+directory the file appears in.  And there should never be such a
+mechanism to allow it.
+
+An entry without slash in .gitignore is a basename match, and there
+is a syntax i.e. prefixing with "/", to anchor it to a single
+directory.  A pathspec without slash also can be a basename match
+(e.g. "*.c" matches "a/b.c" as well as "d.c").  A pathspec with a
+slash can be made to tail-match (e.g. "**/*.c" matches "a/b.c",
+"a/b/c.c", etc.) but I do not think of a way to make an entry with a
+slash in a .gitignore file a tail-match the same way.  I do not think
+this is intended but merely a missing feature.
+
+So, yes, eventually we may want to make them more similar, but I
+suspect that there are some things that should be in one but never
+be in the other.
