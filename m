@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2C1E1F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 22:04:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E71C81F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 22:04:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390961AbfIEWEz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 18:04:55 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:38527 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727053AbfIEWEz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 18:04:55 -0400
-Received: by mail-io1-f68.google.com with SMTP id p12so8309622iog.5
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 15:04:55 -0700 (PDT)
+        id S2391007AbfIEWE6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 18:04:58 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:37396 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727053AbfIEWE5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 18:04:57 -0400
+Received: by mail-io1-f67.google.com with SMTP id r4so8326325iop.4
+        for <git@vger.kernel.org>; Thu, 05 Sep 2019 15:04:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Hx0JhVRD8KfXO3QJ+mr2aw55f/Gw86K6j5hHPQpXDT8=;
-        b=WY3vj4ZexoMtMDiMBXPBCeC3xN2k6F6vRzcctIDHYeXDkZHRamyoJjqOCVjHXZj3t4
-         3sthXy5dRL117nXqqXw42UN08OCFn9hBIwDZqJ06IjsvXCKpU+SyPao5C12cR+Ixf/nx
-         Bf7kxTjcdMvtkYGeUvnTerd5WzWpIJ+LkVxXeejDCCjShKSJJfD6tzB40JwfkzD5xDrx
-         mPx32VPLaRXKn5Dqa2uRcpjf2Olmn5/FzOCqpoTZQeL6jowV5QjhiXoVRVyh5A+pPYRq
-         xgWn59vKJMkRFT2kzn+e36RPJakCOHQ48l26i3jHf6AlAeZZQlFdP6c9r5YIbQ7HMsPI
-         6HQw==
+        bh=zLcrZnY90l4Hfr90Ula8PT5+zUvFU8174XND3uZ+jj8=;
+        b=Jx2UqJTyAQkzOQef8dc68W6Cq7K/PBBi2VSJ+2hB0W9PNlDU+rlgRdfr64HQ9bAuNf
+         c2pxQK59Xtsgpy416O5fIvZFXATjbRFQbWw2zV/si+SnCDgFqode+GGDfO5uNzGhwY3z
+         CYhhtOThmlgXDiLvUxEZKnRIXXymSROpcsy1Qb5Fuykxx0wd+eHqanVEMfSj/lUiGdJR
+         mKRPP78fHRdFPhGUWETJ+jGI2Xw1ovcaZ1tur2VY8ddGRxpPv6QiKQJnqjzbg/6NOvhk
+         YOrodH6Ldwkjx8CUEIFkYWlqleMB6+adzPB1/3WwCjMMwEse/oPNT3bCT9gjnkniK3pG
+         ARnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Hx0JhVRD8KfXO3QJ+mr2aw55f/Gw86K6j5hHPQpXDT8=;
-        b=r8dC2WEHJK1Mgs+IA8uqhQ84ubcU/ftFgkdI/tCybKkb1Hdpjwe/FC1u7xw6+dUUeg
-         2nJqAP+Y/1qym2MdfjoP4R9cFBoWBg4/e8qtBSoVKhGOzPIhDTyDI4SfjveA1CJj6eKr
-         edxZlFW6kjVJv2Q+hjxi0iRI2+Nefp7f3QjxQeeC6BgUAp2fa5mm7ZzDZ50KIQmYQRp7
-         M+1iGRQDj4S5K0NY4L12UNwRxgQmd/hCV98M67XRFd6bF70Yv7esHAVlxZ5+XPtXXOoC
-         IjEfR8+NH6raRfeAxKnuPbF7pOKWlP3MhCetwWXqr3T5Ze1GwwRoOWA9agSxST01v7db
-         JPfg==
-X-Gm-Message-State: APjAAAVqItPMZ5z237JU+8R6QlZ9SuPxEcLlyTLLQg3ftH3QAI+BdotA
-        nuo4cIYy6xljfci4Tk6GEhDTh1hIG/qOMg==
-X-Google-Smtp-Source: APXvYqyoxsbheUSmg4LXbUdVAXT1or92VYa6Syyni6wf8kOGjnFlpRNWChyoyiPEoeIlhQhvBoGQPQ==
-X-Received: by 2002:a5e:c311:: with SMTP id a17mr6819677iok.140.1567721094498;
-        Thu, 05 Sep 2019 15:04:54 -0700 (PDT)
+        bh=zLcrZnY90l4Hfr90Ula8PT5+zUvFU8174XND3uZ+jj8=;
+        b=NRxzHxA3klTxEyv+aVT55HUuFpnm/bcduB5zrP87RppzkHXIiQjOrFUSOdqS/721ka
+         ThKCF4FQrlWRG9B40zrh9ZPjaVvDZj3Rr0f3rRH4Ez6Ce06tPBXlaXUtteqv6klW7x5h
+         LOyC7fl+Z0WJ2MvSrkC7wRn5D34NP36UZWElxiaEyAzIxagCKycF+xmD+S3XfWGOSlHC
+         wU78pVuSrMxBEuIC0vuxZdZwsM83K6BBqbjwhJn8k1g+i8MWzZeQ+HRqf6xMaaO0HSAL
+         UXIgOmeURAjyrMCHGaKKt9t6rFhgaN2H1DMoPsyWjD/AmeWTVRRgeceS/bph06kh4Alx
+         NUrw==
+X-Gm-Message-State: APjAAAVp0bplFwk30ypXcEU4LB1iFr5jJHEF13Q3dx4eJKVxLGJqL8ia
+        OQ0hUYg66iwjWQwIwtF4K4/O9PLYM6sb2w==
+X-Google-Smtp-Source: APXvYqw/dtWi1kedBRd1VQGYFlMbsrmgn0M9jy9z15lPSbi7upgxPOzT4rH77x1A2Sb2WLMpZ8ASiw==
+X-Received: by 2002:a05:6638:93b:: with SMTP id 27mr754605jak.36.1567721096252;
+        Thu, 05 Sep 2019 15:04:56 -0700 (PDT)
 Received: from localhost ([2601:401:c500:7dd8:3c19:faad:a3bb:990d])
-        by smtp.gmail.com with ESMTPSA id r138sm5349748iod.59.2019.09.05.15.04.53
+        by smtp.gmail.com with ESMTPSA id e139sm4520201iof.60.2019.09.05.15.04.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2019 15:04:54 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 18:04:53 -0400
+        Thu, 05 Sep 2019 15:04:55 -0700 (PDT)
+Date:   Thu, 5 Sep 2019 18:04:55 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, stolee@gmail.com, peff@peff.net
-Subject: [PATCH 1/3] t/t5318: introduce failing 'git commit-graph write' tests
-Message-ID: <042a8ba8b2a98c269f9cd1a8e88488b80d686f0d.1567720960.git.me@ttaylorr.com>
+Subject: [PATCH 2/3] commit-graph.c: handle commit parsing errors
+Message-ID: <7fb6853ab31f35c27e5c220f11ea2de6e229a806.1567720960.git.me@ttaylorr.com>
 References: <cover.1567720960.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -66,74 +66,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When invoking 'git commit-graph' in a corrupt repository, one can cause
-a segfault when ancestral commits are corrupt in one way or another.
-This is due to two function calls in the 'commit-graph.c' code that may
-return NULL, but are not checked for NULL-ness before dereferencing.
+To write a commit graph chunk, 'write_graph_chunk_data()' takes a list
+of commits to write and parses each one before writing the necessary
+data, and continuing on to the next commit in the list.
 
-Before fixing the bug, introduce two failing tests that demonstrate the
-problem. The first test corrupts an ancestral commit's parent to point
-to a non-existent object. The second test instead corrupts an ancestral
-tree by removing the 'tree' information entirely from the commit. Both
-of these cases cause segfaults, each at different lines.
+Since the majority of these commits are not parsed ahead of time (an
+exception is made for the *last* commit in the list, which is parsed
+early within 'copy_oids_to_commits'), it is possible that calling
+'parse_commit_no_graph()' on them may return an error. Failing to catch
+these errors before de-referencing later calls can result in a undefined
+memory access and a SIGSEGV.
+
+One such example of this is 'get_commit_tree_oid()', which expects a
+parsed object as its input (in this case, the commit-graph code passes
+'*list'). If '*list' causes a parse error, the subsequent call will
+fail.
+
+Prevent such an issue by checking the return value of
+'parse_commit_no_graph()' to avoid passing an unparsed object to a
+function which expects a parsed object, thus preventing a segfault.
+
+It is worth noting that this fix is really skirting around the issue in
+object.c's 'parse_object()', which makes it difficult to tell how
+corrupt an object is without digging into it. Presumably one could
+change the meaning of 'parse_object' returns, but this would require
+adjusting each callsite accordingly. Instead of that, add an additional
+check to the object parsed.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t5318-commit-graph.sh | 43 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ commit-graph.c          | 4 +++-
+ t/t5318-commit-graph.sh | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/commit-graph.c b/commit-graph.c
+index f2888c203b..6aa6998ecd 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -843,7 +843,9 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+ 		uint32_t packedDate[2];
+ 		display_progress(ctx->progress, ++ctx->progress_cnt);
+ 
+-		parse_commit_no_graph(*list);
++		if (parse_commit_no_graph(*list))
++			die(_("unable to parse commit %s"),
++				oid_to_hex(&(*list)->object.oid));
+ 		hashwrite(f, get_commit_tree_oid(*list)->hash, hash_len);
+ 
+ 		parent = (*list)->parents;
 diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index ab3eccf0fa..c855f81930 100755
+index c855f81930..abde8d4e90 100755
 --- a/t/t5318-commit-graph.sh
 +++ b/t/t5318-commit-graph.sh
-@@ -585,4 +585,47 @@ test_expect_success 'get_commit_tree_in_graph works for non-the_repository' '
+@@ -585,7 +585,7 @@ test_expect_success 'get_commit_tree_in_graph works for non-the_repository' '
  	test_cmp expect actual
  '
  
-+test_expect_failure 'corrupt commit-graph write (broken parent)' '
-+	rm -rf repo &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		empty="$(git mktree </dev/null)" &&
-+		cat >broken <<-EOF &&
-+		tree $empty
-+		parent 0000000000000000000000000000000000000000
-+		author whatever <whatever@example.com> 1234 -0000
-+		committer whatever <whatever@example.com> 1234 -0000
-+
-+		broken commit
-+		EOF
-+		broken="$(git hash-object -w -t commit --literally broken)" &&
-+		git commit-tree -p "$broken" -m "good commit" "$empty" >good &&
-+		test_must_fail git commit-graph write --stdin-commits \
-+			<good 2>test_err &&
-+		test_i18ngrep "unable to parse commit" test_err
-+	)
-+'
-+
-+test_expect_failure 'corrupt commit-graph write (missing tree)' '
-+	rm -rf repo &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		tree="$(git mktree </dev/null)" &&
-+		cat >broken <<-EOF &&
-+		parent 0000000000000000000000000000000000000000
-+		author whatever <whatever@example.com> 1234 -0000
-+		committer whatever <whatever@example.com> 1234 -0000
-+
-+		broken commit
-+		EOF
-+		broken="$(git hash-object -w -t commit --literally broken)" &&
-+		git commit-tree -p "$broken" -m "good" "$tree" >good &&
-+		test_must_fail git commit-graph write --stdin-commits \
-+			<good 2>test_err &&
-+		test_i18ngrep "unable to get tree for" test_err
-+	)
-+'
-+
- test_done
+-test_expect_failure 'corrupt commit-graph write (broken parent)' '
++test_expect_success 'corrupt commit-graph write (broken parent)' '
+ 	rm -rf repo &&
+ 	git init repo &&
+ 	(
 -- 
 2.23.0
 
