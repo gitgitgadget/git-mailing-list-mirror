@@ -2,118 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 249881F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 20:10:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14DFE1F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 20:14:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733118AbfIEUJ7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 16:09:59 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35850 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732468AbfIEUJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 16:09:58 -0400
-Received: by mail-wr1-f65.google.com with SMTP id y19so4205826wrd.3
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 13:09:57 -0700 (PDT)
+        id S2388073AbfIEUOS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 16:14:18 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:32824 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731390AbfIEUOS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 16:14:18 -0400
+Received: by mail-vs1-f67.google.com with SMTP id s18so2535887vsa.0
+        for <git@vger.kernel.org>; Thu, 05 Sep 2019 13:14:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=VV7/mU0INXPaBJmRx19QMqJNm9YJO7+7DCgSHJ697FU=;
-        b=h44ncltztTOKD3C+YbHpiMqCZrn6nr4K/oWR+ZIf0mf8KFMSTnI/wNgaskhb5F7ifk
-         RsXPL3xjvSmcrmF0dECrQiz74ZH7ja/XM52IMornZ9OkKaJo9gf1oRC5RWsO1sH5WDRk
-         9U/FQIwLmBAhKg2oPStVxS5XfEaGgHsf5SKPmOeynzD4b9XVQ0VOxvwVVTjCgdpcaI09
-         O2dazfNj63LZ/nHfJLO8/FTMlfnbnErkJ4us0NFkjZfPnl487jSHTKyqwZMLl32pS4Uf
-         Fr38LuXVBVeta/RnSCsH8FOLSJ8qs7MK/3xdeQphNYXQlRotsndVFlQe6y9ATs9BUkR8
-         g0ZQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BNZg0gwDa/MrBhl/QKWahSQLpwl7O1aexOUhmD+p15k=;
+        b=ElfSXyOF66hzjQRXyqkSIX4JYLYP31QdTfLZX7enG5ByQ6dfmPtst8tZ7fWs+4P+vb
+         kjvc6Vbg1AvuG1FlT9byp1ZXT4oK52ZDIJS4a7jY9xO/2A2zoa+2HPf6yszOzrMchvJs
+         qxemwSvsK9glsYfZdUTUUuKFmNaljTlCNwaD6Tq5r2fkU0i4AGHYSg1ixpAjpP2kkphy
+         hT7K0tiRaLOw2Kvi8BSECjt/gwShs3ZTX95UUUDCoa2nusXEWhfI4Q8I4bLRKCVPND4U
+         PDCMa3774hk0bSBpqT1t8fygKNKUJDCL9iTO1OjuBPKGIabgxpLxU1zDX+9dMtXu1Doy
+         typw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=VV7/mU0INXPaBJmRx19QMqJNm9YJO7+7DCgSHJ697FU=;
-        b=CRJ2Zwo/kndmH8/ub1hxjV2EHnJZNksXcWLUF5SRvHeSRdnEA+ih54omyfxAXASqBL
-         tWnNAVXt/Ok6qWvKg9v77OX1WDEMyKio5GJjtfGWJBEQDsbvtUM9xc0uCec21bDyTk5U
-         +gIWIirPl6HEYxn8pbFLzIqsi4zLOLEW/wq5gSXUHi38Nq6V1Ee18ojnjin0TuL7C41C
-         8GFZ598uHFbxnMdUW6LLS3WkR8fU2saX7gh5ZZwZgjqUxCoWKj3SsnvkxhY//oZwpfrj
-         tuYVo29SJWv+4T7mobDzoHC9cgt71X18JBkBNsQcl1TsScPcnXWSLqMCGJCibLn1UNjg
-         QHKA==
-X-Gm-Message-State: APjAAAV2uiELxen7owveVIXsURbRZH3gUzZRjhpMJpq+YQXn9psEaJQQ
-        VAXGfXXtu8PEGMB6rWhTFw==
-X-Google-Smtp-Source: APXvYqwlH9TdPOOvLDYVfnngDpMG2VgDZUidz4ec+EBj7tDmZlhK5qHPdg+yaeT35+LkEgTTNH/FQg==
-X-Received: by 2002:a5d:49c3:: with SMTP id t3mr4273041wrs.151.1567714196272;
-        Thu, 05 Sep 2019 13:09:56 -0700 (PDT)
-Received: from localhost ([2a02:810a:8c80:d2c:dd24:86d0:1477:aa12])
-        by smtp.gmail.com with ESMTPSA id b1sm4083937wmj.4.2019.09.05.13.09.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 05 Sep 2019 13:09:55 -0700 (PDT)
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-To:     git@vger.kernel.org
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH 2/2] git-gui: add hotkey to toggle "Amend Last Commit" check button/menu
-Date:   Thu,  5 Sep 2019 22:09:53 +0200
-Message-Id: <b82a00441ff1a6a9cea3fd235c1c33729ec31b71.1567713659.git.bert.wesarg@googlemail.com>
-X-Mailer: git-send-email 2.21.0.789.ga095d9d866
-In-Reply-To: <ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com>
-References: <ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BNZg0gwDa/MrBhl/QKWahSQLpwl7O1aexOUhmD+p15k=;
+        b=qcf6pdK6ROmf9+TX0jqleIlJm166xG8L+HX8DrxtRhcgaHLnBJ6fcSaWzyJz8UkvCZ
+         W61NIfGINsAULqnaUwU4pknvb3du8PR3YffmA+TIMPpdQApChk0tGOxPy07BzNeRKzOA
+         DwKphHGfyuhP5MyBk1NZP4peZq35+6U3fOl6bp3YioOtYyOt+2MKZsDCDMSNK9i6slfw
+         L8+AshpA4xX7JLHE9wtXKDVvUPyaKAy3X1LysvCGyu4MclgRkCqtOafkh/BniFv2lWwo
+         lndJFRCFGW7CTO0G4orzLS56ypRbLcmaBxDS08rZpSslwWMki7uQRaQaidMgVddxUL40
+         zbRA==
+X-Gm-Message-State: APjAAAV0gnssL4t/tIUXny/CvE4U7DCOc95z4M7AFQDvN4NnFMdReNoG
+        NZ4ggKiehNpm/SOEl4/mJKha8TlQpiDhq/nRLW4=
+X-Google-Smtp-Source: APXvYqykaO467HLd8rIc2dXQ0J8Ld49Gs0rPB+ABHOmJJPywvKzM+s4oinwK5Gd1DwLeEp5Fie9PfQ5wOfRIXoM2pnQ=
+X-Received: by 2002:a67:fd11:: with SMTP id f17mr2802196vsr.31.1567714457299;
+ Thu, 05 Sep 2019 13:14:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190904173642.2hkrqm5klatw33w7@yadavpratyush.com> <20190904175943.11924-1-birger.sp@gmail.com>
+In-Reply-To: <20190904175943.11924-1-birger.sp@gmail.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Thu, 5 Sep 2019 22:14:06 +0200
+Message-ID: <CAKPyHN2EFKnkgAoCCJ4zdO7hvMsATuSweraxkR_KJZUhuzizPA@mail.gmail.com>
+Subject: Re: [PATCH v2] git-gui: add hotkey to toggle "Amend Last Commit"
+ radio selector
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Pratyush Yadav <me@yadavpratyush.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Birger Skogeng Pedersen <birger.sp@gmail.com>
+On Wed, Sep 4, 2019 at 8:00 PM Birger Skogeng Pedersen
+<birger.sp@gmail.com> wrote:
+>
+> Selecting whether to do a "New Commit" or "Amend Last Commit" does not have
+> a hotkey.
+>
+> With this patch, the user may toggle between the two options with
+> CTRL/CMD+e.
+>
+> Signed-off-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> ---
+>  git-gui.sh | 40 +++++++++++++++++++++++++++++++++++-----
+>  1 file changed, 35 insertions(+), 5 deletions(-)
+>
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 5bc21b8..47c5db0 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -1445,7 +1445,7 @@ proc force_amend {} {
+>         set commit_type $newType
+>
+>         set selected_commit_type amend
+> -       do_select_commit_type
+> +       ui_select_commit_type
+>  }
+>
+>  proc rescan {after {honor_trustmtime 1}} {
+> @@ -2640,6 +2640,16 @@ proc show_less_context {} {
+>         }
+>  }
+>
+> +proc toggle_commit_type {} {
+> +       global selected_commit_type
+> +       if {[string match amend* $selected_commit_type]} {
 
-Selecting whether to "Amend Last Commit" or not does not have a hotkey.
+only $commit_type has multiple incarnations of amend, thus this should
+have been $commit_type here.
 
-With this patch, the user may toggle between the two options with
-CTRL/CMD+e.
+Though I posted new patches which convert it first to b a checkbutton
+and than addedyour keybinding patch on top of it.
 
-Signed-off-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
-Rebased-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- git-gui.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Bert
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 80a07d5..8b776dd 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2640,6 +2640,12 @@ proc show_less_context {} {
- 	}
- }
- 
-+proc toggle_commit_type {} {
-+	global commit_type_is_amend
-+	set commit_type_is_amend [expr !$commit_type_is_amend]
-+	do_select_commit_type
-+}
-+
- ######################################################################
- ##
- ## ui construction
-@@ -2830,6 +2836,7 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
- 	if {![is_enabled nocommit]} {
- 		.mbar.commit add checkbutton \
- 			-label [mc "Amend Last Commit"] \
-+			-accelerator $M1T-E \
- 			-variable commit_type_is_amend \
- 			-command do_select_commit_type
- 		lappend disable_on_lock \
-@@ -3825,6 +3832,7 @@ bind .   <$M1B-Key-equal> {show_more_context;break}
- bind .   <$M1B-Key-plus> {show_more_context;break}
- bind .   <$M1B-Key-KP_Add> {show_more_context;break}
- bind .   <$M1B-Key-Return> do_commit
-+bind .   <$M1B-Key-e> toggle_commit_type
- foreach i [list $ui_index $ui_workdir] {
- 	bind $i <Button-1>       { toggle_or_diff click %W %x %y; break }
- 	bind $i <$M1B-Button-1>  { add_one_to_selection %W %x %y; break }
--- 
-2.21.0.789.ga095d9d866
-
+> +               set selected_commit_type new
+> +       } else {
+> +               set selected_commit_type amend
+> +       }
+> +       ui_select_commit_type
+> +}
+> +
+>  ######################################################################
+>  ##
+>  ## ui construction
+> @@ -2824,13 +2834,31 @@ proc commit_btn_caption {} {
+>         }
+>  }
+>
+> +proc ui_select_commit_type {} {
+> +       global selected_commit_type
+> +       global ui_commit_type_commit ui_commit_type_amend
+> +
+> +       do_select_commit_type
+> +       if {$selected_commit_type eq {new}} {
+> +               .mbar.commit entryconf [mc "New Commit"] \
+> +                       -accelerator {}
+> +               .mbar.commit entryconf [mc "Amend Last Commit"] \
+> +                       -accelerator $::M1T-E
+> +       } elseif {$selected_commit_type eq {amend}} {
+> +               .mbar.commit entryconf [mc "New Commit"] \
+> +                       -accelerator $::M1T-E
+> +               .mbar.commit entryconf [mc "Amend Last Commit"] \
+> +                       -accelerator {}
+> +       }
+> +}
+> +
+>  if {[is_enabled multicommit] || [is_enabled singlecommit]} {
+>         menu .mbar.commit
+>
+>         if {![is_enabled nocommit]} {
+>                 .mbar.commit add radiobutton \
+>                         -label [mc "New Commit"] \
+> -                       -command do_select_commit_type \
+> +                       -command ui_select_commit_type \
+>                         -variable selected_commit_type \
+>                         -value new
+>                 lappend disable_on_lock \
+> @@ -2838,7 +2866,8 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
+>
+>                 .mbar.commit add radiobutton \
+>                         -label [mc "Amend Last Commit"] \
+> -                       -command do_select_commit_type \
+> +                       -accelerator $M1T-E \
+> +                       -command ui_select_commit_type \
+>                         -variable selected_commit_type \
+>                         -value amend
+>                 lappend disable_on_lock \
+> @@ -3315,14 +3344,14 @@ set ui_coml .vpane.lower.commarea.buffer.header.l
+>  if {![is_enabled nocommit]} {
+>         ${NS}::radiobutton .vpane.lower.commarea.buffer.header.new \
+>                 -text [mc "New Commit"] \
+> -               -command do_select_commit_type \
+> +               -command ui_select_commit_type \
+>                 -variable selected_commit_type \
+>                 -value new
+>         lappend disable_on_lock \
+>                 [list .vpane.lower.commarea.buffer.header.new conf -state]
+>         ${NS}::radiobutton .vpane.lower.commarea.buffer.header.amend \
+>                 -text [mc "Amend Last Commit"] \
+> -               -command do_select_commit_type \
+> +               -command ui_select_commit_type \
+>                 -variable selected_commit_type \
+>                 -value amend
+>         lappend disable_on_lock \
+> @@ -3843,6 +3872,7 @@ bind .   <$M1B-Key-equal> {show_more_context;break}
+>  bind .   <$M1B-Key-plus> {show_more_context;break}
+>  bind .   <$M1B-Key-KP_Add> {show_more_context;break}
+>  bind .   <$M1B-Key-Return> do_commit
+> +bind .   <$M1B-Key-e> toggle_commit_type
+>  foreach i [list $ui_index $ui_workdir] {
+>         bind $i <Button-1>       { toggle_or_diff click %W %x %y; break }
+>         bind $i <$M1B-Button-1>  { add_one_to_selection %W %x %y; break }
+> --
+> 2.21.0.windows.1
+>
