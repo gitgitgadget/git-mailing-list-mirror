@@ -2,111 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40D751F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 22:27:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD10E1F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 22:49:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389831AbfIEW1i (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 18:27:38 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:36133 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730617AbfIEW1i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 18:27:38 -0400
-Received: by mail-io1-f67.google.com with SMTP id b136so8439334iof.3
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 15:27:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=oQ6Dts6/KZccU0PaepzdXwgcsS62eRXFN3rVipEfzJg=;
-        b=FGrEU7HynsE2t3JOrrSTyEt88dEv0+zmk5wj6FF/b416NuLbxv+zEkiojiDK9p3IFt
-         qu5cHR4xSeIs6IO9q7y/Kf6SVBTQzB8nNo4E1n57nZaiAiTVpTruHeHA88YEBMwqgixU
-         BTMvu+0QiJuO43hKeINJnU07kSaE8lVl5HeIQNb1IXlN462Mumo/KRLvf8vJq/7D06zl
-         5d60v+PdbUiWs1amTL93UYvz8z+BqBk5IITtRkCc9HVvv+Zx1+eZhBXiE5OaxL/Mbwgi
-         7zuO8PWyaIF7nhNgZQ3rMNY4kctCVHl/PNv4yCC8aGONSVu+Pbb6yrRx4w20XPAjmMju
-         TPgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=oQ6Dts6/KZccU0PaepzdXwgcsS62eRXFN3rVipEfzJg=;
-        b=Z+6QQX4CY/EY3yTjh2MO1oWnUWvOcK/soYMI83M3rAioeuc2NSHensfLfJydIGJ5C5
-         j3BbIsT2n+XwdkczdxNwXJdxapi0ub7x8F1czpyDdbyn2LZrw3D86dGV0miihKBNN/pc
-         T8lITLa/uMikuUQv2l28iA8I0fuhoPXA0eGexOnqT12JCqPwLpmgvDKstsFjL/CezRRx
-         w0Ji0hkZyp6tCQu5V74BHBQNhVDu3lDp+OpXdG83ajcMRm3NfYMcHS7jgkPaRv6qsyyu
-         7bJnk34UJmUYABVboU9foIeJuafKxL//qAB8AXBErrpgPSNEJVDh8XMwpWyjpLyTo3NY
-         ukgw==
-X-Gm-Message-State: APjAAAV+dMwmWmFglsPf5XWF5vgBpvMWLFkFZJsvY3UwEpE4Npy15/mM
-        auYV+tYA6St9A635J12yYdyWxQ==
-X-Google-Smtp-Source: APXvYqzLCMlYxxyuwCYFUIp7iprd5JCVlWFBqHQi5ii1HU09fb3nUPoSf4DZL5N+cYeAStLsb1ROFw==
-X-Received: by 2002:a5d:87ce:: with SMTP id q14mr6641910ios.248.1567722457390;
-        Thu, 05 Sep 2019 15:27:37 -0700 (PDT)
-Received: from localhost ([2601:401:c500:7dd8:3c19:faad:a3bb:990d])
-        by smtp.gmail.com with ESMTPSA id u10sm4702276ior.81.2019.09.05.15.27.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2019 15:27:36 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 18:27:36 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t: use common $SQ variable
-Message-ID: <20190905222736.GA29792@syl.local>
-References: <xmqqmufipmfp.fsf@gitster-ct.c.googlers.com>
- <0598bbf4d0b2cb07ff6f06f904cbdd3f5a3ae1af.1567721303.git.liu.denton@gmail.com>
- <20190905222526.GA29743@syl.local>
+        id S1730042AbfIEWtB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 18:49:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41338 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726073AbfIEWtA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 18:49:00 -0400
+Received: (qmail 10239 invoked by uid 109); 5 Sep 2019 22:49:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Sep 2019 22:49:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32273 invoked by uid 111); 5 Sep 2019 22:50:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Sep 2019 18:50:44 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 5 Sep 2019 18:48:59 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stephan Beyer <s-beyer@gmx.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Paul Tan <pyokagan@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] Fix maybe-uninitialized warnings found by gcc 9 -flto
+Message-ID: <20190905224859.GA28660@sigill.intra.peff.net>
+References: <20190905082459.26816-1-s-beyer@gmx.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190905222526.GA29743@syl.local>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190905082459.26816-1-s-beyer@gmx.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 05, 2019 at 06:25:26PM -0400, Taylor Blau wrote:
-> On Thu, Sep 05, 2019 at 03:10:05PM -0700, Denton Liu wrote:
-> > In many test scripts, there are bespoke definitions of the single quote
-> > that are some variation of this:
-> >
-> >     SQ="'"
-> >
-> > Define a common $SQ variable in test-lib.sh and replace all usages of
-> > these bespoke variables with the common one.
-> >
-> > This change was done by running `git grep =\"\'\" t/` and
-> > `git grep =\\\\\'` and manually changing the resulting definitions and
-> > corresponding usages.
-> > Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> > ---
-> >
-> > [whoops, forgot to include the mailing list in the last email]
-> >
-> > Sorry, I wrote this patch up before I saw the email about leaving this
-> > as #leftoverbits. No point in letting it go to waste, though.
->
-> Thanks for doing this. I marked it as '#leftoverbits' in case anybody
-> hosting an Outreachy intern might be interested in having something
-> small for a newcomer to dip their toes into sending to the mailing list.
+On Thu, Sep 05, 2019 at 10:24:59AM +0200, Stephan Beyer wrote:
 
-Oh, how silly of me. I was thinking about [1], which I said would be
-good #leftoverbits material. This thread was tagged by Junio, not me.
-The rest of my point stands, though ;).
+> Compiler heuristics for detection of potentially uninitialized variables
+> may change between compiler versions and enabling link-time optimization
+> may find new warnings.  Indeed, compiling with gcc 9.2.1 and enabled
+> link-time optimization feature resulted in a few hits that are fixed by
+> this patch in the most naïve way.  This allows to compile git using the
+> DEVELOPER=1 switch (which sets -Werror) and using the -flto flag.
 
-> But, there's no shortage of other such tasks, I'd assume, so it's good
-> that you cleaned these up.
->
-> Both of your 'git grep' invocations look correct to me, so the patch
-> below looks like an obviously-correct result. Thanks.
->
-> -Taylor
-Thanks,
-Taylor
+Lots of discussion in this thread. Let's try to turn it into some
+patches. :)
 
-[1]: https://public-inbox.org/git/20190904212121.GB20904@syl.local/
+After the patches below, I can compile cleanly with gcc 9.2.1 using
+-flto with both -O2 and -O3 (some of the cases only seemed to trigger
+for me with -O3).
+
+I've ordered them in decreasing value. The first one is a real bugfix,
+the second is a related cleanup. The next 3 are appeasing the compiler,
+but I think are a good idea (but note I went more for root causes than
+your originals). The last one is perhaps more controversial, but IMHO
+worth doing.
+
+  [1/6]: git-am: handle missing "author" when parsing commit
+  [2/6]: pack-objects: use object_id in packlist_alloc()
+  [3/6]: bulk-checkin: zero-initialize hashfile_checkpoint
+  [4/6]: diff-delta: set size out-parameter to 0 for NULL delta
+  [5/6]: test-read-cache: drop namelen variable
+  [6/6]: pack-objects: drop packlist index_pos optimization
+
+ builtin/am.c               |  4 +++-
+ builtin/pack-objects.c     | 33 ++++++++++++++-------------------
+ bulk-checkin.c             |  2 +-
+ diff-delta.c               |  2 ++
+ pack-bitmap-write.c        |  2 +-
+ pack-bitmap.c              |  2 +-
+ pack-objects.c             | 20 ++++++++++----------
+ pack-objects.h             |  6 ++----
+ t/helper/test-read-cache.c |  5 ++---
+ 9 files changed, 36 insertions(+), 40 deletions(-)
+
+-Peff
