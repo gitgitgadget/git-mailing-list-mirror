@@ -2,73 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F0BD1F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 06:15:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C0431F4B7
+	for <e@80x24.org>; Thu,  5 Sep 2019 06:22:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730778AbfIEGPV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 02:15:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40078 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725921AbfIEGPU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 02:15:20 -0400
-Received: (qmail 24545 invoked by uid 109); 5 Sep 2019 06:08:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Sep 2019 06:08:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24243 invoked by uid 111); 5 Sep 2019 06:10:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Sep 2019 02:10:22 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 5 Sep 2019 02:08:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Garima Singh <garimasigit@gmail.com>, stolee@gmail.com,
-        git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/1] commit-graph.c: handle corrupt commit trees
-Message-ID: <20190905060838.GB21450@sigill.intra.peff.net>
-References: <cover.1567563244.git.me@ttaylorr.com>
- <c5ba4eaa-f995-5f2e-4f0f-a8f59ba65fd3@gmail.com>
- <20190904212121.GB20904@syl.local>
+        id S1731199AbfIEGWD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 02:22:03 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:40237 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731084AbfIEGWD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 02:22:03 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 46P9Zc5wnjz5tl9;
+        Thu,  5 Sep 2019 08:22:00 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 02D09102;
+        Thu,  5 Sep 2019 08:21:59 +0200 (CEST)
+Subject: Re: [PATCH 1/2] git-gui: warn if the commit message contains lines
+ longer than the set limit
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>
+References: <7da71d89f9fa987eca2e25974e4cec382c146e44.1567627609.git.bert.wesarg@googlemail.com>
+ <CAPig+cSL0fpc5cVgO1soAksD2b5xadkDLG+JxiDCi5s95VRU_A@mail.gmail.com>
+ <CAKPyHN3=hh7DCoyEKB9DOf=t=v=Y1bX1xVx9r6Lxy=WQb9JC-A@mail.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <ef44ce71-2ed7-0f17-faf2-06b3c7d193b9@kdbg.org>
+Date:   Thu, 5 Sep 2019 08:21:59 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <CAKPyHN3=hh7DCoyEKB9DOf=t=v=Y1bX1xVx9r6Lxy=WQb9JC-A@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190904212121.GB20904@syl.local>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 04, 2019 at 05:21:21PM -0400, Taylor Blau wrote:
+Am 04.09.19 um 22:43 schrieb Bert Wesarg:
+> these people did not saw the entered text anyway. they would have
+> needed to change the option (default to 75 characters) to see what
+> they have typed. which could have been garbage to begin with.
 
-> > I like the idea of completely bailing if the commit can't be parsed too.
-> > Only question: Is there a reason you chose to die() instead of BUG() like
-> > the other two places in that function? What is the criteria of choosing one
-> > over the other?
-> 
-> I did not call 'BUG' here because 'BUG' is traditionally used to
-> indicate an internal bug, e.g., an unexpected state or some such. On the
-> other side of that coin, 'BUG' is _not_ used to indicate repository
-> corruption, since that is not an issue in the Git codebase, rather in
-> the user's repository.
-> 
-> Though, to be honest, I've never seen that rule written out explicitly
-> (maybe if it were to be written somewhere, it could be stored in
-> Documentation/CodingGuidelines?). I think that this is some good
-> #leftoverbits material.
+Huh? When I type overly long line, all text scrolls out of view on the
+left side. So I definitely _can_ see the long text.
 
-That rule matches my understanding. A BUG() should be about asserting
-invariants or catching should-not-happen cases, etc. Any time a BUG()
-triggers, that is truly a bug in Git, no matter what input got thrown at
-it, what syscalls failed, etc, and is worth fixing (even if the only
-sensible thing is to die()).
+> How about a horizontal scrollbar? This indicates pretty conveniently
+> and in a standard visual way, that there is more text to the side ;-)
 
-As a side note, we've generally treated segfaults the same way. It
-doesn't matter if the files on disk or the program input is garbage, we
-should say so and abort the operation cleanly.
+The scrollbar is an option, of course, but I dislike somewhat that it
+takes away screen space if it is permanently visible.
 
--Peff
+-- Hannes
