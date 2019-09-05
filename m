@@ -2,143 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDBDC1F4B7
-	for <e@80x24.org>; Thu,  5 Sep 2019 22:00:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F9941F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 22:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731215AbfIEWAm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 18:00:42 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57394 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726323AbfIEWAm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 18:00:42 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 23E73759E0;
-        Thu,  5 Sep 2019 18:00:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ilWnNCJzaxr7XHnW886PronN3Ts=; b=wXOEMZ
-        sDuIkhPf/ZSAp9utixjt9paNG62FmIm76cZgFv7f8PpjYAGLfZExdqGn82KSjPkm
-        9EWNDpgdcdrKfopAZqR0CFT4t6AR/PJpl3E8vEbp4kwM81WZQ4ybf/QwtYLW+IEc
-        59hDBUwoV2sZbdCHhdjRPrxk6CrFBw0DysDJo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tEeb1ikT1OHeHxgtkd7Cwk7pBnczFqEn
-        y4pSSgSZ2H6ODdzCgV8Pkook5qeX5vdOTdzse6eODLAidjDhLiAIUCuQmnWFPiOv
-        K22komQC0NpEykUT3qEauj7BWaUK72si5bfC7ZdUGgKAJEOgRH5haEiCZw6b4U3b
-        SkApYZi40UU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1B6F3759DF;
-        Thu,  5 Sep 2019 18:00:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C6DC4759DC;
-        Thu,  5 Sep 2019 18:00:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Joel Teichroeb <joel@teichroeb.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v3 1/3] factor out refresh_and_write_cache function
-References: <20190829182748.43802-1-t.gummerer@gmail.com>
-        <20190903191041.10470-1-t.gummerer@gmail.com>
-        <20190903191041.10470-2-t.gummerer@gmail.com>
-Date:   Thu, 05 Sep 2019 15:00:34 -0700
-In-Reply-To: <20190903191041.10470-2-t.gummerer@gmail.com> (Thomas Gummerer's
-        message of "Tue, 3 Sep 2019 20:10:39 +0100")
-Message-ID: <xmqqwoemo131.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2387715AbfIEWEy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 18:04:54 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:45057 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727053AbfIEWEx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 18:04:53 -0400
+Received: by mail-io1-f65.google.com with SMTP id f12so8210886iog.12
+        for <git@vger.kernel.org>; Thu, 05 Sep 2019 15:04:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=lm/oOyJxo4sD2lsNjJchhlM9RZZKvUo04X4bWsG0Cx8=;
+        b=cABmxg4r6bOzJxgF2SV3Tjl3kGW8dU1SIjpP0wtviy+CmPh68CklEOrDfCZZcTcWiE
+         WatKReHQgdVbNId4HNa1saJvt+LIy6HxYggCHeMxpXdz5IbQ3VRLhNoRFnMc1adj1kyH
+         b+r6DihRxPmpN1v3xpBcVEMXWxJYO/HCThsJBzPRxwur0AwkGyePiOndm9YXVJSeaKlc
+         TJtiSySFaqIbPGiBgnpOjTuHQgEh7g+3PJeAH51w7EvrLbt/CbgoE7ogWkI3AN/7+igr
+         /gxFVu8ivBZdBOn1oY2XopGJhJaV10kLu3s38eox89hZxGsWYFdP1kkPstDgK4xM2Ro3
+         BBfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=lm/oOyJxo4sD2lsNjJchhlM9RZZKvUo04X4bWsG0Cx8=;
+        b=izueFHe/QHpufULEYIh34G1I+w+DuFkpIC40Qv7QY7YQCMgAboviw0DbN6LVKns0rV
+         uUr+avU7xvQVbBG9alPmik8hWqpqxVYxuclmOaQ+W0WJ4hR9RoHC9W8MWJlSWyxoiX67
+         AsnvV6duFvVDxLVB5wExi7b0FPN5W2joMCgVMxUKHHM+d2JotDidEOAcPWU8XZHnd4p3
+         N/Rt2xiavz6LD1+AKHcQQrtsyM8Vd4oCkJTguYXm8pJcq3NfQ4/YuoEdoWA7xJyB8Bie
+         9aK2bdQWif1gVKlVPy8RHrJA87mjigzwH/BchIsGGPDLZbkTjofzjZxyXYkJMGrXNVRR
+         Zlbw==
+X-Gm-Message-State: APjAAAXtb0Sm5ny7eAN38pBcXkpmOcgFz1VxJL//ilrcG098U8zFyjyF
+        tt7sSFaUf81ySQChwJ/cVCL8l+Kv6olYGw==
+X-Google-Smtp-Source: APXvYqysQviJMC8GAUbyHOi+3qN0nx4ARDA/6KWAfQ+zi6xU6pptrOajyXlHSOqqjpu1l+QbaFpl+w==
+X-Received: by 2002:a05:6602:220d:: with SMTP id n13mr3856998ion.229.1567721092649;
+        Thu, 05 Sep 2019 15:04:52 -0700 (PDT)
+Received: from localhost ([2601:401:c500:7dd8:3c19:faad:a3bb:990d])
+        by smtp.gmail.com with ESMTPSA id f7sm2589496ioc.31.2019.09.05.15.04.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Sep 2019 15:04:52 -0700 (PDT)
+Date:   Thu, 5 Sep 2019 18:04:51 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, stolee@gmail.com, peff@peff.net
+Subject: [PATCH 0/3] commit-graph: harden against various corruptions
+Message-ID: <cover.1567720960.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 975DFDD8-D028-11E9-AE46-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Hi,
 
-> Getting the lock for the index, refreshing it and then writing it is a
-> pattern that happens more than once throughout the codebase, and isn't
-> trivial to get right.  Factor out the refresh_and_write_cache function
-> from builtin/am.c to read-cache.c, so it can be re-used in other
-> places in a subsequent commit.
->
-> Note that we return different error codes for failing to refresh the
-> cache, and failing to write the index.  The current caller only cares
-> about failing to write the index.  However for other callers we're
-> going to convert in subsequent patches we will need this distinction.
->
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
->  builtin/am.c | 16 ++--------------
->  cache.h      | 16 ++++++++++++++++
->  read-cache.c | 19 +++++++++++++++++++
->  3 files changed, 37 insertions(+), 14 deletions(-)
+This patch series is a polished version of a series I posed in [1],
+based on the subsequent discussion starting in [2]. It hardens the 'git
+commit-graph write' code to handle two new types of object corruption
+that previously resulted in a SIGSEGV, which are:
 
-I think this goes in the right direction, but obviously conflicts
-with what Dscho wants to do in the builtin-add-i series, and needs
-to be reconciled by working better together.
+  - a commit which lists a parent that does not exist, or is corrupt
 
-For now, I'll eject builtin-add-i and queue this for a few days to
-give it a bit more exposure, but after that requeue builtin-add-i
-and discard these three patches.  By that time, hopefully you two
-would have a rerolled version of this one and builtin-add-i that
-agree what kind of refresh-and-write-index behaviour they both want.
+  - a commit which lists a corrupt tree, or omits the 'tree ' line
+    entirely.
 
-The differences I see that need reconciling are:
+The series goes as follows: first, we introduce failing tests that
+demonstrate the above two cases, then subsequent commits to fix each of
+them in turn.
 
- - builtin-add-i seems to allow 'gentle' and allow returning an
-   error when we cannot open the index for writing by passing false
-   to 'gentle'; this feature is not used yet, though.
+When reviewing this series, it is worth keeping in mind that this is
+really only applying a band-aid to get around a quirk of the object
+parsing code, which is graciously described by Peff in more detail in
+[3].
 
- - This version allows to pass pathspec, seen and header_msg, while
-   the one in builtin-add-i cannot limit the part of the index
-   getting refreshed with pathspec.  It wouldn't be a brain surgery
-   to use this version and adjust the caller (there only is one) in
-   the builtin-add-i topic.
+Thanks in advance for your review. I'll deploy this in the meantime to
+GitHub's fork and report back on the success in the next "What's
+Cooking".
 
- - This version does not write the index back when refresh_index()
-   returns non-zero, but the one in builtin-add-i ignores the
-   returned value.  I think, as a performance measure, it probably
-   is a better idea to write it back, even when the function returns
-   non-zero (the local variable's name is has_errors, but having an
-   entry in the index that does not get refreshed is *not* an error;
-   e.g. an unmerged entry is a normal thing in the index, and as
-   long as we refreshed other entries while having an unmerged and
-   unrefreshable entry, we are making progress that is worth writing
-   out).
+Thanks,
+Taylor
 
-Thanks.
+[1]: https://public-inbox.org/git/34e4ec793cb0d321d16b88777cd2db64ed7b772e.1567563244.git.me@ttaylorr.com/
+[2]: https://public-inbox.org/git/20190904030456.GA28836@sigill.intra.peff.net/
+[3]: https://public-inbox.org/git/20190905064723.GC21450@sigill.intra.peff.net/
 
-> +int repo_refresh_and_write_index(struct  repository *repo,
-> +				 unsigned int refresh_flags,
-> +				 unsigned int write_flags,
-> +				 const struct pathspec *pathspec,
-> +				 char *seen, const char *header_msg)
-> +{
-> +	struct lock_file lock_file = LOCK_INIT;
-> +
-> +	repo_hold_locked_index(repo, &lock_file, LOCK_DIE_ON_ERROR);
-> +	if (refresh_index(repo->index, refresh_flags, pathspec, seen, header_msg)) {
-> +		rollback_lock_file(&lock_file);
-> +		return 1;
-> +	}
-> +	if (write_locked_index(repo->index, &lock_file, COMMIT_LOCK | write_flags))
-> +		return -1;
-> +	return 0;
-> +}
-> +
-> +
->  int refresh_index(struct index_state *istate, unsigned int flags,
->  		  const struct pathspec *pathspec,
->  		  char *seen, const char *header_msg)
+Taylor Blau (3):
+  t/t5318: introduce failing 'git commit-graph write' tests
+  commit-graph.c: handle commit parsing errors
+  commit-graph.c: handle corrupt/missing trees
+
+ commit-graph.c          | 11 +++++++++--
+ commit.c                |  3 ++-
+ t/t5318-commit-graph.sh | 43 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 54 insertions(+), 3 deletions(-)
+
+--
+2.23.0
