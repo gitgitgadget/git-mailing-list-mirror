@@ -2,88 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD10E1F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 22:49:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D37D1F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 22:49:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730042AbfIEWtB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 18:49:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41338 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726073AbfIEWtA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 18:49:00 -0400
-Received: (qmail 10239 invoked by uid 109); 5 Sep 2019 22:49:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Sep 2019 22:49:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32273 invoked by uid 111); 5 Sep 2019 22:50:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Sep 2019 18:50:44 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 5 Sep 2019 18:48:59 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stephan Beyer <s-beyer@gmx.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Paul Tan <pyokagan@gmail.com>,
+        id S1732446AbfIEWtG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 18:49:06 -0400
+Received: from mout.gmx.net ([212.227.17.20]:33623 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730236AbfIEWtG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 18:49:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1567723733;
+        bh=SeMLqO86JoYG6v14vtoeMLSS93ntr0h4oFy0tBB+37g=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=Qor1So1yERtvv3DStluZeuQJaZoOifr4PRriQSmiVue17F05mbFK/oL5bqsji6VqG
+         de5o6w17wuMDpeKhCaBn/UvKIRvhsYzdNSLBXbZM/8uNDxjItRJB0e/e1Bk0jAPCnL
+         JdRVM+vA+zLKS4oUDj90SgDXCli9Ch44QMilPgxY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from localhost.localdomain ([88.70.128.63]) by mail.gmx.com
+ (mrgmx105 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 1MvbG2-1iPC4J2rri-00saOP; Fri, 06 Sep 2019 00:48:53 +0200
+From:   Stephan Beyer <s-beyer@gmx.net>
+To:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Paul Tan <pyokagan@gmail.com>, Jeff King <peff@peff.net>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] Fix maybe-uninitialized warnings found by gcc 9 -flto
-Message-ID: <20190905224859.GA28660@sigill.intra.peff.net>
-References: <20190905082459.26816-1-s-beyer@gmx.net>
+        "Shawn O. Pearce" <spearce@spearce.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
+Subject: [PATCH v2 1/4] am: fail if no author line is given in --rebasing mode
+Date:   Fri,  6 Sep 2019 00:48:30 +0200
+Message-Id: <20190905224833.24913-1-s-beyer@gmx.net>
+X-Mailer: git-send-email 2.23.0.43.g31ebfd7ae6.dirty
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190905082459.26816-1-s-beyer@gmx.net>
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:BAZEHeAiGgGYpYbZwaeeFHP3E6Zah5UgiTRBi2qMQyrbVJgI5gd
+ wCk+Czm9bU4e45sownegwnQrzlkQ1HKKA0Jd6EMGqoM7Ke+eRxr9bieywqq5wMxJ56xKBlM
+ KHcgZlj8yC0V06uv1Ya/T5n0vDAxs4kAKS5MZ3atMkPXPTfvIMuGpD0MRSqjpHwYZtiFF1M
+ KfDbZ1j1llTMV6CTsCRbw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2nAg6GmvtNc=:6nK9jzCIAQE4HJfL7ZIyRP
+ Cv9/T7JX6Q/wg8nv5ijKXg9lD4PfibFJAtIKxQMbJUSgXQrnCvsVqeBlrVPmziWNYHN/pjCNi
+ GUug8cCdcrshty7AT3IJmTeW9DtGE5zFJhrhOEkewsDOQEDtLcG9dF8EKTzi6YQHeWRWX4X3F
+ h2mJPKn2xFy3HgB4EkiiBNwM+hOpv9I5tn9lSumw/WPJo95Yft8krsI52hR8HIKRPHpMKrkvA
+ 5BxviEx07GsHAhHKqwUDVFh9n0NqBtwdRwI8cZfjbQS/dIGYohSwc6vMbXKhvTMMARWfHCosz
+ QVsRWkQKp8ozHd+LKmijSEqgAvSCIBlIeDK1HE0Lz8+N4LR0GC03ciJRyv6UOnh6IsRLLrXZT
+ +YW2dO2M+4ZEk78js5OQh3L213BTc9H0J2g5n2YWt6rv5N8q+julZscD9xGb3WxXh5KtoaXDT
+ m1PQe1sBQdmN3+Pkd9UAFbB6fAimvce0h7IJ4uPlo5CTJSF7qQq+AVfON7qVAT4ypoPDlx5AJ
+ xUoeW6cXtKQE/nkULmeD08MmhL1RGBoDr7diigZ+jUKAreh+Du1q32816TwsL4c2pwwfkOQtP
+ xHo4tZ5q47RtMT3nfYO+pAjsuYgKe7zxVZjAzxX0axWxcrMJ/PKpvczy6bZ0Hkl7zA2TxPQ+n
+ refp8p0QVw57gdAoOTIyD9ucqlIgXtbn7/oZFGUH2/UfSwWnIIpkUbBOZxeE7quKMh2GISJGB
+ 6b82clHIObo+RMoL8ja7of/GrJCG1EaNoJqC6E7oZzEDOicZnKZ7K2nCjFVQXcreruZYmsZRw
+ 4lP+9czEouA+TNrbxd0SNKAeOTbisTkRusewmy1X25t8Mhvo/PRFc51psSVrNlOdUMYlGTBhP
+ OM/uyS4dV0YzeIrjWENUuwt5hjhL9i3xbV3qlBmWofOSaWlBbEjaPN/ANfjvlOJMAVhjwTREd
+ 6/MV+BdNPLEqTGVVYbIyWjWdW+cEhXl0/9jlc6vF09tBBDUkwoB8f1HWI3YqmxMAJH0MGpRdp
+ PWkLQ3x4U1QbPeGBVyO2qpPkujTubzDhjFC3dTH9JYp8csw4mkOIi3vkUhOclwMbikK9ExHtk
+ KMGmT2ZFSn9stnh875w+DEfJ5g/B97SY+F+x3I/oulWhfbp+hMIoPHjmRlt6+Vm2UPMuxUpXD
+ /L+wFYD6QTWQHGxss7PcuFT3aum+iFzf2qTJifAFWKRDrohHS3Q0eVbxmjGEjxpnWzSn8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 05, 2019 at 10:24:59AM +0200, Stephan Beyer wrote:
+This prevents a potential segmentation fault.
 
-> Compiler heuristics for detection of potentially uninitialized variables
-> may change between compiler versions and enabling link-time optimization
-> may find new warnings.  Indeed, compiling with gcc 9.2.1 and enabled
-> link-time optimization feature resulted in a few hits that are fixed by
-> this patch in the most naïve way.  This allows to compile git using the
-> DEVELOPER=1 switch (which sets -Werror) and using the -flto flag.
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+=2D--
+ builtin/am.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Lots of discussion in this thread. Let's try to turn it into some
-patches. :)
+diff --git a/builtin/am.c b/builtin/am.c
+index 1aea657a7f..71da34913c 100644
+=2D-- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1272,7 +1272,8 @@ static void get_commit_info(struct am_state *state, =
+struct commit *commit)
+ 	buffer =3D logmsg_reencode(commit, NULL, get_commit_output_encoding());
 
-After the patches below, I can compile cleanly with gcc 9.2.1 using
--flto with both -O2 and -O3 (some of the cases only seemed to trigger
-for me with -O3).
+ 	ident_line =3D find_commit_header(buffer, "author", &ident_len);
+-
++	if (!ident_line)
++		die(_("no author line"));
+ 	if (split_ident_line(&id, ident_line, ident_len) < 0)
+ 		die(_("invalid ident line: %.*s"), (int)ident_len, ident_line);
 
-I've ordered them in decreasing value. The first one is a real bugfix,
-the second is a related cleanup. The next 3 are appeasing the compiler,
-but I think are a good idea (but note I went more for root causes than
-your originals). The last one is perhaps more controversial, but IMHO
-worth doing.
+=2D-
+2.23.0.43.g31ebfd7ae6.dirty
 
-  [1/6]: git-am: handle missing "author" when parsing commit
-  [2/6]: pack-objects: use object_id in packlist_alloc()
-  [3/6]: bulk-checkin: zero-initialize hashfile_checkpoint
-  [4/6]: diff-delta: set size out-parameter to 0 for NULL delta
-  [5/6]: test-read-cache: drop namelen variable
-  [6/6]: pack-objects: drop packlist index_pos optimization
-
- builtin/am.c               |  4 +++-
- builtin/pack-objects.c     | 33 ++++++++++++++-------------------
- bulk-checkin.c             |  2 +-
- diff-delta.c               |  2 ++
- pack-bitmap-write.c        |  2 +-
- pack-bitmap.c              |  2 +-
- pack-objects.c             | 20 ++++++++++----------
- pack-objects.h             |  6 ++----
- t/helper/test-read-cache.c |  5 ++---
- 9 files changed, 36 insertions(+), 40 deletions(-)
-
--Peff
