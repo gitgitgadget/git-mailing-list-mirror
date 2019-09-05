@@ -2,109 +2,206 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_SBL,
-	URIBL_SBL_A shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 321BD1F461
-	for <e@80x24.org>; Wed,  4 Sep 2019 23:38:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8B7C1F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 03:23:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729907AbfIDXiK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Sep 2019 19:38:10 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56023 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726240AbfIDXiK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Sep 2019 19:38:10 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 12BA922B3E;
-        Wed,  4 Sep 2019 19:38:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nPRyVsrJl6aC/aMSMWj9vkkY18A=; b=qqX1qN
-        rHowvAea2ij2jJ5jVPc8qwtzvXgkfmef4fzr3/zF3hcDhpu+M1YJ04M6cmFlK4Hg
-        QTitT4M1VLZckJRzS7CpywSMeOXhkTrGmKSE7cuhWFlR/1phqNd910KQ8noXPaHj
-        X4d9pMU5Ir0PnT6kTMlR1Vj+1D4fHyfamPhpQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=R72uhG9pjpyiSaEIzSqoYj9URzH7GoZa
-        q8G58figOXtnG0oTiL047Lzw81zo7rOX4Ium04e8Xsusg4vfrBb5Eom87JNeSu87
-        PqQTI8+Y+M1QnGsXPcni/E1NnAVL+4Vd3lyuJLtFJeDXyXTsrZYswyLhmw4S5hQM
-        qRD/CTkID+U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0AFF322B3D;
-        Wed,  4 Sep 2019 19:38:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6FD6522B3C;
-        Wed,  4 Sep 2019 19:38:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v5] git-gui: Add hotkeys to set widget focus
-References: <20190903214942.ubcbdgtphpwnaxs6@yadavpratyush.com>
-        <20190904143055.11400-1-birger.sp@gmail.com>
-        <510e80f4-a8e1-329d-2395-b1268bf7c1f8@kdbg.org>
-        <CAGr--=LY4JWdms3GtnKAtN6z-2c-jpXE2HJ5_dMM5gEFayrj_g@mail.gmail.com>
-        <fcf52af1-dc57-fb58-f52c-7581910a28d6@kdbg.org>
-        <20190904223102.webntwh5awsl2m3i@yadavpratyush.com>
-Date:   Wed, 04 Sep 2019 16:38:06 -0700
-In-Reply-To: <20190904223102.webntwh5awsl2m3i@yadavpratyush.com> (Pratyush
-        Yadav's message of "Thu, 5 Sep 2019 04:01:03 +0530")
-Message-ID: <xmqqy2z3r5sx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1730190AbfIEDXV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Sep 2019 23:23:21 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:40643 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725965AbfIEDXV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Sep 2019 23:23:21 -0400
+Received: by mail-pg1-f195.google.com with SMTP id w10so571942pgj.7
+        for <git@vger.kernel.org>; Wed, 04 Sep 2019 20:23:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=J9oDs0t7bk4kvuz/mSuMdQZbhfWOXvTbkCKY57Yjc40=;
+        b=GOLEm76Qfud9AYxOZ0QetKr7SVwcGnmYtcZvHWNwkqZglhsSzbeIIt8Qx0kbN470P0
+         bJb9LXqQqN59evjTbTg6IHrwv2xgYLys0ESlI7zkkBvAb7Xu4IgGlWqNQ0oY93yu+n3+
+         k2eUzac3CQnL6aEl0xPqMwNKvMLvfOyeMjFsWWiRxGkhPMpAkhpb9CshlIJCAPrv1mgO
+         YOtg/p4zSy3q1NI2KZxKxBYZq4rdzJuqhroo3p5+SN/S7LV99+Lq6gmq5oAQlwyF3o+4
+         hiKsUx9KsJRRTTDWPc8dApwmWWbVkQ3qc48bGy4wL/PSGbGAN8h7M7eVlZngzHgfzdXr
+         ofaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=J9oDs0t7bk4kvuz/mSuMdQZbhfWOXvTbkCKY57Yjc40=;
+        b=FQEAkxRkCLIM08qICclI6MHb0TwL3YjLlBrNo/Bp8HGxnqUD5HIXn2Kbag1xeZTkIt
+         OKMcN5hoqw6vGVRoRnNstHoqVIHU5ZFwWJm4UvKy0A2NMEmnOZZF/uW2CSrD4ts1FSP9
+         +6o7GfnXZ1YORx42zLtl3cHSRxbWTPgOSxdPP5PoOgZc6T8GVdUAKRgsSR5hOuNJbIBO
+         EMtcncEFDCmvJD9zjPFLhmJiR+qj71PcQVLYyQtJfT2ZoxZKwvaqVM3sUaExC11z1iCQ
+         m/wbR0LmDJXWEAYrgPrN8KGWreObH/8H/TR0Wryb2aDP3On0uQ07KQlRwFIsD7aKRxoI
+         ImJw==
+X-Gm-Message-State: APjAAAWwR3pXFLIzV/bUsvks8q1mR5m9WlMP6Z3caQRhKrFLFPsUuMht
+        rI218f1utwbyMf5q9YxOSGY=
+X-Google-Smtp-Source: APXvYqyXk+j+obGIpAjSNZQgNnVJS6Vp8Vq8ucBKQGY+0zwUnggylGdCUpBWvJWiO5GuotpD7arZZA==
+X-Received: by 2002:aa7:980c:: with SMTP id e12mr1107632pfl.79.1567653800390;
+        Wed, 04 Sep 2019 20:23:20 -0700 (PDT)
+Received: from archbookpro.localdomain ([2601:646:280:1b30::6486])
+        by smtp.gmail.com with ESMTPSA id b24sm531747pfi.75.2019.09.04.20.23.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Sep 2019 20:23:19 -0700 (PDT)
+Date:   Wed, 4 Sep 2019 20:23:17 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] compat/*.[ch]: remove extern from function
+ declarations using spatch
+Message-ID: <20190905032317.GA1381@archbookpro.localdomain>
+References: <cover.1567595331.git.liu.denton@gmail.com>
+ <3c08556231576d8dfe496b87ae8cdcb87c00df24.1567595331.git.liu.denton@gmail.com>
+ <nycvar.QRO.7.76.6.1909042342220.5377@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0C35ED58-CF6D-11E9-822E-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1909042342220.5377@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratyush Yadav <me@yadavpratyush.com> writes:
+Hi Dscho,
 
-> On 04/09/19 11:39PM, Johannes Sixt wrote:
->> Am 04.09.19 um 21:20 schrieb Birger Skogeng Pedersen:
->> > On Wed, Sep 4, 2019 at 8:59 PM Johannes Sixt <j6t@kdbg.org> wrote:
->> >> Many keyboards do not have a right Alt-key. That means that Alt+1 to
->> >> Alt+4 combinations must be typed single-handed with the left hand. This
->> >> is mildly awkward for Alt+4. Can we please have the very important
->> >> commit widget *not* at Alt+4? I could live with Alt+3.
->> > 
->> > (RightAlt wouldn't be used by Europeans, anyways)
->> > Are you suggesting to keep Alt+1/2/3 for the files/staged/diff
->> > widgets, but use something other than Alt+4 for the commit dialog? If
->> > so, which one would you prefer?
->> 
->> I was suggesting Alt+3 for the commit message widget, but my preferences
->> are actually Alt+1, Alt+2, Alt+3, in this order. My preference for the
->> diff widget would be Alt+4 (the awkward one) because I do not foresee
->> that I would use it a lot. Use what remains for the two file lists.
->
-> I wonder if that binding is very intuitive.  If we do 1/2 for the top 
-> and bottom panes on the left side, and 3/4 for the top and bottom panes 
-> on the right side, that makes some sense.  Doing it your way makes it a 
-> counter-clockwise motion.
->
-> I am not arguing for or against this proposal, just pointing something 
-> worth thinking about.  Either way, I suppose after a while it becomes 
-> muscle memory so I'm not sure how much difference this subtle thing will 
-> make.
->
->> 
->> > The initial propsal from me was to use CTRL/CMD+1/2/3/4. What do you
->> > think of using the CTRL/CMD key instead of ALT?
->> 
->> I would not mind Ctrl instead of Alt. Take your pick.
->
-> FWIW, I vote for sticking with Alt.
+On Wed, Sep 04, 2019 at 11:43:06PM +0200, Johannes Schindelin wrote:
+> Hi Denton,
+> 
+> On Wed, 4 Sep 2019, Denton Liu wrote:
+> 
+> > In 554544276a (*.[ch]: remove extern from function declarations using
+> > spatch, 2019-04-29), we removed externs from function declarations using
+> > spatch but we intentionally excluded files under compat/ since some are
+> > directly copied from an upstream and we should avoid churning them so
+> > that manually merging future updates will be simpler.
+> >
+> > In the last commit, we determined the files which taken from an upstream
+> > so we can exclude them and run spatch on the remainder.
+> >
+> > This was the Coccinelle patch used:
+> >
+> > 	@@
+> > 	type T;
+> > 	identifier f;
+> > 	@@
+> > 	- extern
+> > 	  T f(...);
+> >
+> > and it was run with:
+> >
+> > 	$ git ls-files compat/\*\*.{c,h} |
+> > 		xargs spatch --sp-file contrib/coccinelle/noextern.cocci --in-place
+> > 	$ git checkout -- \
+> > 		compat/regex/ \
+> > 		compat/inet_ntop.c \
+> > 		compat/inet_pton.c \
+> > 		compat/nedmalloc/ \
+> > 		compat/obstack.{c,h} \
+> > 		compat/poll/
+> >
+> > Coccinelle has some trouble dealing with `__attribute__` and varargs so
+> > we ran the following to ensure that no remaining changes were left
+> > behind:
+> >
+> > 	$ git ls-files compat/\*\*.{c,h} |
+> > 		xargs sed -i'' -e 's/^\(\s*\)extern \([^(]*([^*]\)/\1\2/'
+> > 	$ git checkout -- \
+> > 		compat/regex/ \
+> > 		compat/inet_ntop.c \
+> > 		compat/inet_pton.c \
+> > 		compat/nedmalloc/ \
+> > 		compat/obstack.{c,h} \
+> > 		compat/poll/
+> 
+> I wonder whether we want to make this part of the (slightly misnamed)
+> "Static Analysis" job in our CI.
 
-Can't these differences in personal preference be solved by
-configurable key binding?
+Do you mean running cocci on all of our source files as opposed to just
+the files we compile? These two patches are part of an experimental (and
+unsubmitted) patchset that does exactly that. Seeing that there's
+interest, I'll try to send it in soon.
+
+Thanks,
+
+Denton
+
+> 
+> >
+> > Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> > ---
+> >  compat/mingw.h         | 6 +++---
+> >  compat/win32/pthread.h | 6 +++---
+> >  2 files changed, 6 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/compat/mingw.h b/compat/mingw.h
+> > index a03e40e6e2..9ad204c57c 100644
+> > --- a/compat/mingw.h
+> > +++ b/compat/mingw.h
+> > @@ -11,7 +11,7 @@ typedef _sigset_t sigset_t;
+> >  #undef _POSIX_THREAD_SAFE_FUNCTIONS
+> >  #endif
+> >
+> > -extern int mingw_core_config(const char *var, const char *value, void *cb);
+> > +int mingw_core_config(const char *var, const char *value, void *cb);
+> >  #define platform_core_config mingw_core_config
+> >
+> >  /*
+> > @@ -443,7 +443,7 @@ static inline void convert_slashes(char *path)
+> >  			*path = '/';
+> >  }
+> >  #define PATH_SEP ';'
+> > -extern char *mingw_query_user_email(void);
+> > +char *mingw_query_user_email(void);
+> >  #define query_user_email mingw_query_user_email
+> >  #if !defined(__MINGW64_VERSION_MAJOR) && (!defined(_MSC_VER) || _MSC_VER < 1800)
+> >  #define PRIuMAX "I64u"
+> > @@ -580,4 +580,4 @@ int main(int argc, const char **argv);
+> >  /*
+> >   * Used by Pthread API implementation for Windows
+> >   */
+> > -extern int err_win_to_posix(DWORD winerr);
+> > +int err_win_to_posix(DWORD winerr);
+> > diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
+> > index c6cb8dd219..f1cfe73de9 100644
+> > --- a/compat/win32/pthread.h
+> > +++ b/compat/win32/pthread.h
+> > @@ -50,7 +50,7 @@ typedef struct {
+> >  	DWORD tid;
+> >  } pthread_t;
+> >
+> > -extern int pthread_create(pthread_t *thread, const void *unused,
+> > +int pthread_create(pthread_t *thread, const void *unused,
+> >  			  void *(*start_routine)(void*), void *arg);
+> >
+> >  /*
+> > @@ -59,10 +59,10 @@ extern int pthread_create(pthread_t *thread, const void *unused,
+> >   */
+> >  #define pthread_join(a, b) win32_pthread_join(&(a), (b))
+> >
+> > -extern int win32_pthread_join(pthread_t *thread, void **value_ptr);
+> > +int win32_pthread_join(pthread_t *thread, void **value_ptr);
+> >
+> >  #define pthread_equal(t1, t2) ((t1).tid == (t2).tid)
+> > -extern pthread_t pthread_self(void);
+> > +pthread_t pthread_self(void);
+> 
+> ACK!
+> 
+> Thanks,
+> Dscho
+> 
+> >
+> >  static inline void NORETURN pthread_exit(void *ret)
+> >  {
+> > --
+> > 2.23.0.248.g3a9dd8fb08
+> >
+> >
