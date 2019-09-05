@@ -2,95 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E65761F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 19:35:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB7201F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 19:39:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390762AbfIETfX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 15:35:23 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:41556 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726008AbfIETfW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 15:35:22 -0400
-Received: by mail-pf1-f196.google.com with SMTP id b13so2478114pfo.8
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 12:35:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=2P0W/EZ1KTaH3vgikbdG11Ze30p/CqRk3I2u3mms0N0=;
-        b=e/JkaYcQ4eGFWnNEtADtpotQ2HaankTium/MTSfjWbRgL0LM6Xcu1L5kx+VKP+BkVK
-         anXWtebf192ThzsKfM2MKCkA8/E+rgTBPZuKDrOGvVkZ67qkzdhtSOfibAGzaYeRTdrr
-         9IHA8SgqByiQCfKATwCGz/kk8tclaCcRJxq+jVS5A7YwjP1ICv5l7keEvXsD/Ha6Qmxl
-         qD1gPEJsKMedxQQp69eNAPszaGBfPulolJ0+aselc4r49jPsnLt6BZv0t+5a5TOcM5Gx
-         3ZpMR5Jy6kD+Op7s46Y/XBBSsXR31T5K+VCCOZdq+/bERDThqWWUHTSlEYTNaoOwIZW6
-         B6Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2P0W/EZ1KTaH3vgikbdG11Ze30p/CqRk3I2u3mms0N0=;
-        b=YmDqIBW032uDMD7UBfPyX7rdteAN2v2f242t7V4ECOiyqW8nOvBEwBO7MaQHNBaftY
-         DDG+3G/uH0xz0y7FjRWHKzTXajMLEyEUQ6vPY1LM0ciEdqJyfBAjJNV69ShCuCuzOP80
-         HZH8yuKrmOoDDm50CTGjvAkHg+M+ZPsrh9xBZQ3FwSjS0Xb1SLwdQY1VEG1SRSfN/Ub/
-         3287VMrl0n8ZwMUb9iqhCgDxSny7E1Oza1buxxHv/3PbC9d90VZkElb1jd5TtQZ9ADtJ
-         QTc7CTJeqbMpWo5rCI5SwV1ln2XGEtegw+qBbW1c6Yw72dmWlEa5iNRv7T5eJyXsK/Pz
-         e4ig==
-X-Gm-Message-State: APjAAAWxwdsvRG+Dsi7oSyixnzGnH4xgleJxDB5txCXrJIGV7fovknLb
-        IHdA4FFNOteqXSTkzdy5Pk2Tz2ZDH4SzrDQ+mcs=
-X-Google-Smtp-Source: APXvYqxKI+1QH01pvxL6gvV3e1HN5+bdCQu5bXg4LoZ5YJqC7bX+7RkfbBXOGpbZMDukK4NtDqRhWoi2TEzxkPSvl48=
-X-Received: by 2002:a17:90a:8911:: with SMTP id u17mr5889714pjn.128.1567712122227;
- Thu, 05 Sep 2019 12:35:22 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAN0heSr2zCQMM6wOM0UnD28qj_VygQ5CQHGHhMR9+H23snpt5Q@mail.gmail.com>
- <cover.1567534373.git.martin.agren@gmail.com> <20190904032609.GD28836@sigill.intra.peff.net>
-In-Reply-To: <20190904032609.GD28836@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 5 Sep 2019 21:35:10 +0200
-Message-ID: <CAN0heSpbRvNG9okz5pqkHqDMB2BM5T+FzAbaK3sVwzGC6fjpPA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] asciidoctor-extensions: provide `<refmiscinfo/>`
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Todd Zullinger <tmz@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        id S2389301AbfIETjz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 15:39:55 -0400
+Received: from mout.web.de ([212.227.15.4]:55679 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388174AbfIETjz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 15:39:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1567712379;
+        bh=L+TxzkJfMSmzirk7dIn3ie3u1ek2qo/GittT8wkILT0=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=ViWZKZQsFl1gpadf3Y8/p84mPA0j6nUdzOPZ5ypeZlin4uYepwJSzuKJZ67PehLIL
+         4j2YMhzvRUuXep04O3pth+Ob39djfPtarey7WLtzdcfgL/RPutndbyAJNkxyuIK3/v
+         7a0qic6ItKRQrl2/VOMjBuVJ6x79Dg4lc3Tb97jY=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LwU2B-1iDzgi0VQt-018HVo; Thu, 05
+ Sep 2019 21:39:39 +0200
+Subject: Re: [PATCH] Fix maybe-uninitialized warnings found by gcc 9 -flto
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Stephan Beyer <s-beyer@gmx.net>,
+        Paul Tan <pyokagan@gmail.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <20190905082459.26816-1-s-beyer@gmx.net>
+ <6c6c4e71-d9e5-1ad4-74db-12c323da42f7@web.de>
+ <20190905175304.GA23663@sigill.intra.peff.net>
+ <b4f53049-ff50-8143-1653-d321cce6421c@web.de>
+ <xmqqr24upmtm.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <8d90d803-8a4b-2656-550d-ccee5156b643@web.de>
+Date:   Thu, 5 Sep 2019 21:39:38 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqr24upmtm.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:dHAyfVz7p2VNKf/dkYDn6bkkjckI4LapsPpcG2aQh0QI7bz/6cx
+ cdDfwWk5SzT1s+x9HZSCPbtJjBQ/wiEgXREpPf2bpx5KMcKCm+pOaNv5E/7cIeuTS8wW2XK
+ x0fxe82KSoa5whtESBJPWIQWW4gX6PcRK5E/PcnTdZQcpLa1T8slVIDpMBYGvMWeEmDmN8E
+ hyfRzDo+cEWF7w09BpOUA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XLSnAwJJ2UI=:SCOYiiGcHahf5/WysNSaL3
+ SOObtYIbA9usGE6c4JTrRKQ1Q3R6pJLWLt/dp+BWtct4jnrS1FoeE8/CkAViL91WLq5KgNHlq
+ FWupAAFC4JK3GhUiBfUiT4fW/NVdoqKQhEewrl6XG9AKy1WrGkGeO4yy1Q+Z3iiMG1zsbEyKG
+ 0t3jxOr4v0X3B5eRZqfhVShCIVsT9zV4cXJQlXpvKPrxq4MNqfRV3T6RcxBStGz2dPBiYekK4
+ zvdMkGrqrhqkc6/rWKBcApURpLnq0r3vWVwI97DI3TgTE2l1zQ0Dm52nNMoVlmLiIO00cF4xa
+ iKtuF+KgKO7s/cyeKxiYT+lcdvUZtNILeLTBjji8z7HWzfCw3sffZRACB0lEyav+d1IHORFSx
+ ORuaevfZFe6EvtAZzKnq8GPT115izTQISSitLGE5ab0TrQ3y03ivH81NgFdicKLnHt29dzkrQ
+ g8EUEuaw7LbK0c858BUbiFMpqoC9UhHNJjlH8tn1w95XcN6AX3YzLUwWU49wjZaACnkewFxp7
+ rB69cAJ/oCENgfHHFs6CGYdYBmt3rHH+yRG6ubHYsHU09ULpzCm62qu9OhouTM5/urjwHSStC
+ dpx2h3u8hJdEkHP7FM40V/z/yRg9k4xqXs7gUSnHevpMdZJKp2hH69cTL0SidPhXzXN5TQgy+
+ SdGQqpQen9cQGo/mlEfhYl6seTNJluUepbchvnYdN1H16Ep3eyYpcOcT1Vd00tfLInURFYwzR
+ jKbd5wdbzea/pj2lJe2cEy3Ev8km6Q8+dw/H2IMfk7yUqIHCAkLQwvK7svkdrnpq1gkrjxGry
+ zRoTTGmBZZIo7iNGoNGAAr+8NzuhI3auoyyc12BbKVCkLhq04OJBvhSxoSo21vGROLDYP9NsY
+ KyxWUvr/VMXrSZru0RwVKZOH/EW/XwE5jD/DG4yCYiB0eSXWVn3IwqCSTxCn2JgIC7sp8PUPK
+ dFOlAudjb1FYq/286jMWTn4mqDV6Igh1xE6xIIo7tJg/yuVAr2XkL5xMxAYP/0b4MtVnhDVcq
+ OtYFgQOZ+QP+GSzMMzyXcUbkounOx+JA2T5b/S/TN/9gd61uNFJb/3JFKo4d5EXmk5Q7UkxDs
+ soRRvmkKP2YceUf+PalEF1n45IkdQt33MFysZgqDoD6475faQ4OoSmdt7YYbKrb4dvBMK4vQd
+ xtY2nLfzXaPTUcl6yiEFTFTbDlV2YRqQn4fD1juog5Lz2il5ekqHUVmwSVgZDr/zLLKl8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 4 Sep 2019 at 05:26, Jeff King <peff@peff.net> wrote:
+Am 05.09.19 um 21:25 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >
-> On Tue, Sep 03, 2019 at 08:51:19PM +0200, Martin =C3=85gren wrote:
+>> Am 05.09.19 um 19:53 schrieb Jeff King:
+>>>>> int cmd__read_cache(int argc, const char **argv)
+>>>>> {
+>>>>> -       int i, cnt =3D 1, namelen;
+>>>>> +       int i, cnt =3D 1, namelen =3D 0;
+>>>
+>>> I actually saw this one the other day, because it triggered for me whe=
+n
+>>> compiling with SANITIZE=3Daddress. AFAICT it's a false positive. "name=
+" is
+>>> always NULL unless skip_prefix() returns true, in which case we always
+>>> set "namelen". And we only look at "namelen" if "name" is non-NULL.
+>>>
+>>> This one doesn't even require LTO, because skip_prefix() is an inline
+>>> function. I'm not sure why the compiler gets confused here.
+>>
+>> Yes, that's curious.
+>>
+>>> I don't mind
+>>> initializing namelen to 0 to silence it, though (we already set name t=
+o
+>>> NULL, so this would just match).
+>>
+>> Pushing the strlen() call into the loop and getting rid of namelen shou=
+ld
+>> work as well -- and I'd be surprised if this had a measurable performan=
+ce
+>> impact.
 >
-> > When I posted v1, it turned into quite a thread [1] on AsciiDoc vs
-> > Asciidoctor vs Asciidoctor 2.0 and differences in rendering. (I am on
-> > Asciidoctor 1.5.5.)
->
-> Yes, sadly I still can't format the docs at all with 2.0.10 (which is
-> what ships in Debian unstable).
->
-> > do also think it makes sense to first make the "softer" switch to
-> > Asciidoctor-by-default and get that particular hurdle behind us. Then,
-> > once we're ok with dropping AsciiDoc entirely, we can do the switch to
-> > an Asciidoctor-only toolchain.
->
-> Yeah, I do still like that as an endgame, but I like what you have here
-> as an intermediate step in the right direction.
+> Yeah, we are making strlen() call on a constant "name" in a loop
+> over argv[].  I do not think it matters in this case, either.
 
-Hmm, so this sounds like once I am happy with replacing AsciiDoc with
-Asciidoctor 1(.5.5), I should rather not propose a series "let's default
-to Asciidoctor!!!" but instead a slightly more careful "go with
-Asciidoctor, but document that we work badly with v2 and that the 2nd
-choice after Asciidoctor 1 should be AsciiDoc". Or do you see it
-differently? (I wonder which Asciidoctor-version Junio would be on..)
+The loop count is either 1 or argv[1] interpreted as a number, i.e. it cou=
+ld
+be very high.  Its body consists of an index load and writing a number to =
+a
+file, though -- a strlen() call on the name of that file should go unnotic=
+ed
+amid that activity.  (I didn't measure it, though.)
 
-Martin
+Ren=C3=A9
+
