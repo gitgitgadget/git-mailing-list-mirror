@@ -7,24 +7,24 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC4391F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 22:54:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54C1C1F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 22:56:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731214AbfIEWyd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 18:54:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41484 "HELO cloud.peff.net"
+        id S1730601AbfIEW4n (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 18:56:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41502 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725975AbfIEWyc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 18:54:32 -0400
-Received: (qmail 10427 invoked by uid 109); 5 Sep 2019 22:54:33 -0000
+        id S1730065AbfIEW4n (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 18:56:43 -0400
+Received: (qmail 10462 invoked by uid 109); 5 Sep 2019 22:56:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Sep 2019 22:54:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Sep 2019 22:56:42 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32593 invoked by uid 111); 5 Sep 2019 22:56:16 -0000
+Received: (qmail 32617 invoked by uid 111); 5 Sep 2019 22:58:26 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Sep 2019 18:56:16 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Sep 2019 18:58:26 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 5 Sep 2019 18:54:31 -0400
+Date:   Thu, 5 Sep 2019 18:56:41 -0400
 From:   Jeff King <peff@peff.net>
 To:     Stephan Beyer <s-beyer@gmx.net>
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -33,8 +33,8 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org
-Subject: [PATCH 5/6] test-read-cache: drop namelen variable
-Message-ID: <20190905225431.GE25657@sigill.intra.peff.net>
+Subject: [PATCH 6/6] pack-objects: drop packlist index_pos optimization
+Message-ID: <20190905225640.GF25657@sigill.intra.peff.net>
 References: <20190905224859.GA28660@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -45,54 +45,283 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Early in the function we set "namelen = strlen(name)" if "name" is
-non-NULL. Later, we use "namelen" only if "name" is non-NULL. However,
-it's hard to immediately see this, and it seems to confuse gcc 9.2.1
-(with "-flto" interestingly, though all of the involved logic is in
-inline functions; it also triggers when building with ASan).
+Once upon a time, the code to add an object to our packing list in
+pack-objects all lived in a single function. It computed the position
+within the hash table once, then used it to check if the object was
+already present, and if not, to add it.
 
-Let's simplify the code and remove the variable entirely. There's only
-one use of namelen anyway, so we can just call strlen() then. It's true
-this is in a loop, so we might execute strlen() more often. But:
+Later, in 2834bc27c1 (pack-objects: refactor the packing list,
+2013-10-24), this was split into two functions: packlist_find() and
+packlist_alloc(). We ended up with an "index_pos" variable that gets
+passed through several functions to make it from one to the other.
 
-  - this is test code that only ever loops twice in our test suite (we
-    do loop 1000 times in a t/perf test, but without using this option).
+The resulting code is rather confusing to follow. The "index_pos"
+variable is sometimes undefined, if we don't yet have a hash table. This
+works out in practice because in that case packlist_alloc() won't use
+our index_pos at all, since it will have to create/grow the hash table
+fresh (and reassign the index for all entries). But it's hard to verify
+that, and it does cause gcc 9.2.1's -Wmaybe-uninitialized to complain
+when compiled with "-flto -O3" (rightfully, since we do pass the
+uninitialized value as a function parameter, even if nobody ends up
+using it).
 
-  - a decent compiler ought to be able to hoist that out of the loop
-    anyway (though I wouldn't count on gcc 9.2.1 doing so!)
+All of this is to save computing the hash index again when we're
+inserting into the hash table, which I found doesn't make a measurable
+difference in the program runtime (which is not surprising, since we're
+doing all kinds of other heavyweight things for each object).
+
+Let's just drop this index_pos variable entirely, simplifying the code
+(and pleasing the compiler).
+
+We might be better still refactoring this custom hash table to use one
+of our existing implementations (an oidmap, or a kh_oid_map). I stopped
+short of that here, but this would be the likely first step towards that
+anyway.
 
 Reported-by: Stephan Beyer <s-beyer@gmx.net>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/helper/test-read-cache.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+I suspect one advantage of this custom hash is that it stores a uint32_t
+instead of the hash, probably saving 16 bytes per object. But that's
+something we can think about when looking at converting the hash.
 
-diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
-index 7e79b555de..244977a29b 100644
---- a/t/helper/test-read-cache.c
-+++ b/t/helper/test-read-cache.c
-@@ -4,11 +4,10 @@
- 
- int cmd__read_cache(int argc, const char **argv)
+ builtin/pack-objects.c | 33 ++++++++++++++-------------------
+ pack-bitmap-write.c    |  2 +-
+ pack-bitmap.c          |  2 +-
+ pack-objects.c         | 18 +++++++++---------
+ pack-objects.h         |  6 ++----
+ 5 files changed, 27 insertions(+), 34 deletions(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index dc2a7e9ac0..9a8d935700 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -610,12 +610,12 @@ static int mark_tagged(const char *path, const struct object_id *oid, int flag,
+ 		       void *cb_data)
  {
--	int i, cnt = 1, namelen;
-+	int i, cnt = 1;
- 	const char *name = NULL;
+ 	struct object_id peeled;
+-	struct object_entry *entry = packlist_find(&to_pack, oid, NULL);
++	struct object_entry *entry = packlist_find(&to_pack, oid);
  
- 	if (argc > 1 && skip_prefix(argv[1], "--print-and-refresh=", &name)) {
--		namelen = strlen(name);
- 		argc--;
- 		argv++;
+ 	if (entry)
+ 		entry->tagged = 1;
+ 	if (!peel_ref(path, &peeled)) {
+-		entry = packlist_find(&to_pack, &peeled, NULL);
++		entry = packlist_find(&to_pack, &peeled);
+ 		if (entry)
+ 			entry->tagged = 1;
  	}
-@@ -24,7 +23,7 @@ int cmd__read_cache(int argc, const char **argv)
+@@ -996,12 +996,11 @@ static int no_try_delta(const char *path)
+  * few lines later when we want to add the new entry.
+  */
+ static int have_duplicate_entry(const struct object_id *oid,
+-				int exclude,
+-				uint32_t *index_pos)
++				int exclude)
+ {
+ 	struct object_entry *entry;
  
- 			refresh_index(&the_index, REFRESH_QUIET,
- 				      NULL, NULL, NULL);
--			pos = index_name_pos(&the_index, name, namelen);
-+			pos = index_name_pos(&the_index, name, strlen(name));
- 			if (pos < 0)
- 				die("%s not in index", name);
- 			printf("%s is%s up to date\n", name,
+-	entry = packlist_find(&to_pack, oid, index_pos);
++	entry = packlist_find(&to_pack, oid);
+ 	if (!entry)
+ 		return 0;
+ 
+@@ -1141,13 +1140,12 @@ static void create_object_entry(const struct object_id *oid,
+ 				uint32_t hash,
+ 				int exclude,
+ 				int no_try_delta,
+-				uint32_t index_pos,
+ 				struct packed_git *found_pack,
+ 				off_t found_offset)
+ {
+ 	struct object_entry *entry;
+ 
+-	entry = packlist_alloc(&to_pack, oid, index_pos);
++	entry = packlist_alloc(&to_pack, oid);
+ 	entry->hash = hash;
+ 	oe_set_type(entry, type);
+ 	if (exclude)
+@@ -1171,11 +1169,10 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
+ {
+ 	struct packed_git *found_pack = NULL;
+ 	off_t found_offset = 0;
+-	uint32_t index_pos;
+ 
+ 	display_progress(progress_state, ++nr_seen);
+ 
+-	if (have_duplicate_entry(oid, exclude, &index_pos))
++	if (have_duplicate_entry(oid, exclude))
+ 		return 0;
+ 
+ 	if (!want_object_in_pack(oid, exclude, &found_pack, &found_offset)) {
+@@ -1190,7 +1187,7 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
+ 
+ 	create_object_entry(oid, type, pack_name_hash(name),
+ 			    exclude, name && no_try_delta(name),
+-			    index_pos, found_pack, found_offset);
++			    found_pack, found_offset);
+ 	return 1;
+ }
+ 
+@@ -1199,17 +1196,15 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
+ 					int flags, uint32_t name_hash,
+ 					struct packed_git *pack, off_t offset)
+ {
+-	uint32_t index_pos;
+-
+ 	display_progress(progress_state, ++nr_seen);
+ 
+-	if (have_duplicate_entry(oid, 0, &index_pos))
++	if (have_duplicate_entry(oid, 0))
+ 		return 0;
+ 
+ 	if (!want_object_in_pack(oid, 0, &pack, &offset))
+ 		return 0;
+ 
+-	create_object_entry(oid, type, name_hash, 0, 0, index_pos, pack, offset);
++	create_object_entry(oid, type, name_hash, 0, 0, pack, offset);
+ 	return 1;
+ }
+ 
+@@ -1507,7 +1502,7 @@ static int can_reuse_delta(const unsigned char *base_sha1,
+ 	 * First see if we're already sending the base (or it's explicitly in
+ 	 * our "excluded" list).
+ 	 */
+-	base = packlist_find(&to_pack, &base_oid, NULL);
++	base = packlist_find(&to_pack, &base_oid);
+ 	if (base) {
+ 		if (!in_same_island(&delta->idx.oid, &base->idx.oid))
+ 			return 0;
+@@ -2579,7 +2574,7 @@ static void add_tag_chain(const struct object_id *oid)
+ 	 * it was included via bitmaps, we would not have parsed it
+ 	 * previously).
+ 	 */
+-	if (packlist_find(&to_pack, oid, NULL))
++	if (packlist_find(&to_pack, oid))
+ 		return;
+ 
+ 	tag = lookup_tag(the_repository, oid);
+@@ -2603,7 +2598,7 @@ static int add_ref_tag(const char *path, const struct object_id *oid, int flag,
+ 
+ 	if (starts_with(path, "refs/tags/") && /* is a tag? */
+ 	    !peel_ref(path, &peeled)    && /* peelable? */
+-	    packlist_find(&to_pack, &peeled, NULL))      /* object packed? */
++	    packlist_find(&to_pack, &peeled))      /* object packed? */
+ 		add_tag_chain(oid);
+ 	return 0;
+ }
+@@ -2803,7 +2798,7 @@ static void show_object(struct object *obj, const char *name, void *data)
+ 		for (p = strchr(name, '/'); p; p = strchr(p + 1, '/'))
+ 			depth++;
+ 
+-		ent = packlist_find(&to_pack, &obj->oid, NULL);
++		ent = packlist_find(&to_pack, &obj->oid);
+ 		if (ent && depth > oe_tree_depth(&to_pack, ent))
+ 			oe_set_tree_depth(&to_pack, ent, depth);
+ 	}
+@@ -3034,7 +3029,7 @@ static void loosen_unused_packed_objects(void)
+ 
+ 		for (i = 0; i < p->num_objects; i++) {
+ 			nth_packed_object_oid(&oid, p, i);
+-			if (!packlist_find(&to_pack, &oid, NULL) &&
++			if (!packlist_find(&to_pack, &oid) &&
+ 			    !has_sha1_pack_kept_or_nonlocal(&oid) &&
+ 			    !loosened_object_can_be_discarded(&oid, p->mtime))
+ 				if (force_object_loose(&oid, p->mtime))
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index fa78a460c9..a7a4964b50 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -144,7 +144,7 @@ static inline void reset_all_seen(void)
+ 
+ static uint32_t find_object_pos(const struct object_id *oid)
+ {
+-	struct object_entry *entry = packlist_find(writer.to_pack, oid, NULL);
++	struct object_entry *entry = packlist_find(writer.to_pack, oid);
+ 
+ 	if (!entry) {
+ 		die("Failed to write bitmap index. Packfile doesn't have full closure "
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index ed2befaac6..84cd1bed4a 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1063,7 +1063,7 @@ int rebuild_existing_bitmaps(struct bitmap_index *bitmap_git,
+ 
+ 		entry = &bitmap_git->pack->revindex[i];
+ 		nth_packed_object_oid(&oid, bitmap_git->pack, entry->nr);
+-		oe = packlist_find(mapping, &oid, NULL);
++		oe = packlist_find(mapping, &oid);
+ 
+ 		if (oe)
+ 			reposition[i] = oe_in_pack_pos(mapping, oe) + 1;
+diff --git a/pack-objects.c b/pack-objects.c
+index c1df08df1a..3624090593 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -68,8 +68,7 @@ static void rehash_objects(struct packing_data *pdata)
+ }
+ 
+ struct object_entry *packlist_find(struct packing_data *pdata,
+-				   const struct object_id *oid,
+-				   uint32_t *index_pos)
++				   const struct object_id *oid)
+ {
+ 	uint32_t i;
+ 	int found;
+@@ -79,9 +78,6 @@ struct object_entry *packlist_find(struct packing_data *pdata,
+ 
+ 	i = locate_object_entry_hash(pdata, oid, &found);
+ 
+-	if (index_pos)
+-		*index_pos = i;
+-
+ 	if (!found)
+ 		return NULL;
+ 
+@@ -153,8 +149,7 @@ void prepare_packing_data(struct repository *r, struct packing_data *pdata)
+ }
+ 
+ struct object_entry *packlist_alloc(struct packing_data *pdata,
+-				    const struct object_id *oid,
+-				    uint32_t index_pos)
++				    const struct object_id *oid)
+ {
+ 	struct object_entry *new_entry;
+ 
+@@ -181,8 +176,13 @@ struct object_entry *packlist_alloc(struct packing_data *pdata,
+ 
+ 	if (pdata->index_size * 3 <= pdata->nr_objects * 4)
+ 		rehash_objects(pdata);
+-	else
+-		pdata->index[index_pos] = pdata->nr_objects;
++	else {
++		int found;
++		uint32_t pos = locate_object_entry_hash(pdata,
++							&new_entry->idx.oid,
++							&found);
++		pdata->index[pos] = pdata->nr_objects;
++	}
+ 
+ 	if (pdata->in_pack)
+ 		pdata->in_pack[pdata->nr_objects - 1] = NULL;
+diff --git a/pack-objects.h b/pack-objects.h
+index 47bf7ebf86..6fe6ae5ee8 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -183,12 +183,10 @@ static inline void packing_data_unlock(struct packing_data *pdata)
+ }
+ 
+ struct object_entry *packlist_alloc(struct packing_data *pdata,
+-				    const struct object_id *oid,
+-				    uint32_t index_pos);
++				    const struct object_id *oid);
+ 
+ struct object_entry *packlist_find(struct packing_data *pdata,
+-				   const struct object_id *oid,
+-				   uint32_t *index_pos);
++				   const struct object_id *oid);
+ 
+ static inline uint32_t pack_name_hash(const char *name)
+ {
 -- 
 2.23.0.463.g883b23b1c5
-
