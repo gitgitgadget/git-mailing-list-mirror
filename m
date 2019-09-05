@@ -2,96 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AE3A1F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 15:47:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73C2C1F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 16:03:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387606AbfIEPru (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 11:47:50 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:46876 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733061AbfIEPrt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 11:47:49 -0400
-Received: by mail-pf1-f195.google.com with SMTP id q5so1993993pfg.13
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 08:47:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=FlQc7CmT3RDD9vt6BSyxrPkfE96V55LflbfO0LsQ0Ic=;
-        b=iyK7GZUql3rNEZJp0eIiCKiU7Bj8mU5amG1pJdUxcmHpOpA5fLhze8nHIcOSa6cJzZ
-         HaYisCUHj0qS6/hvVy0BMCfxV9TTpIM0rxR83miAHRymVhqoSobSN5TVojKieEGZqPyl
-         Ai1omZ3R7+dInQWicLsZaZZKakfEQEekQvDA4dC4kGKGNZwEKEQ3GNRQekRhiU19s9Xy
-         n66DYr7ub5QMTPqfDWKiIYzTM3eecqUM/NYKwUQiDxVz/Rd+bjSH6PaaszutNupJR2of
-         bVA30FDeNgKx23JAsD4eWCA8z9VLf0z1hQ6S5kaGXzl8k3/AaLrA8A98waZOv+ufagnI
-         WZzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=FlQc7CmT3RDD9vt6BSyxrPkfE96V55LflbfO0LsQ0Ic=;
-        b=YJnvOr/cEKxP9x1RHIgOGeqaYDqeYmOHGREElJmX0eT5evzJvk8S4NbJ74xLr6zzcl
-         2U2NvevHqirByxa7v7amUWgF6StrcaL8DoevPq1CUBxhPrKA6chbDEG3AaTWrMgeC6u0
-         6oZOMwuYFgmjeQJREzdn9u+Hqy+S8XAMMnldYhjZkKOORdLKBGjrCE0xgrwVPveR47xC
-         XFK4H5A1cON0L5/Dboq8VIIvVRR95S8npM6r5RpW59sOhE3v+0nXczTU1+eYvOuOXvdl
-         O9+8Npbdo+dVyp7zMGdrTdOvHCptPVKNUZ38FwUKYzOoWMcd2DgnxkFxFYaSlPDQW7r1
-         BwlQ==
-X-Gm-Message-State: APjAAAWsXNin86QPh8MwIQjuJvyTFPKsC3fDXrF9tIIrG+KppWgIAP8l
-        dvfhoUa23lWrbKbtpubGXXmjQBNC
-X-Google-Smtp-Source: APXvYqygI34Jlg004Xfm92wZlt+zFh2ZpWfiBVG0eXweDaqhDltxRNEUGuLJSG0kknv552/+hoCEkg==
-X-Received: by 2002:aa7:86c8:: with SMTP id h8mr1397572pfo.241.1567698468786;
-        Thu, 05 Sep 2019 08:47:48 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id x16sm2339867pjn.12.2019.09.05.08.47.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 05 Sep 2019 08:47:48 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH v2 08/12] git-clean.txt: do not claim we will delete files with -n/--dry-run
-Date:   Thu,  5 Sep 2019 08:47:31 -0700
-Message-Id: <20190905154735.29784-9-newren@gmail.com>
-X-Mailer: git-send-email 2.22.1.11.g45a39ee867
-In-Reply-To: <20190905154735.29784-1-newren@gmail.com>
-References: <20190825185918.3909-1-szeder.dev@gmail.com>
- <20190905154735.29784-1-newren@gmail.com>
+        id S2390701AbfIEQDc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 12:03:32 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.94]:36666 "EHLO
+        smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730518AbfIEQDc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 12:03:32 -0400
+Received: from [24.134.116.61] (helo=[192.168.92.208])
+        by smtprelay05.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.92)
+        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
+        id 1i5pSp-0002yg-9F; Thu, 05 Sep 2019 12:58:07 +0200
+Subject: Re: [PATCH 1/1] reset: support the --stdin option
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.133.git.gitgitgadget@gmail.com>
+ <017945a55a64ebe1913d64919b699adb3f9d5d96.1567633109.git.gitgitgadget@gmail.com>
+From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Message-ID: <fd300972-4fe7-54e4-3701-061ab4769c10@syntevo.com>
+Date:   Thu, 5 Sep 2019 12:58:06 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <017945a55a64ebe1913d64919b699adb3f9d5d96.1567633109.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It appears that the wrong option got included in the list of what will
-cause git-clean to actually take action.  Correct the list.
+Johannes, thanks for working on this problem!
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-clean.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+In the previous discussion, there was a suggestion to change
+'--stdin' to '--paths-file', where '--paths-file -' would mean stdin:
+https://public-inbox.org/git/066cfd61-9700-e154-042f-fc9cffbd6346@web.de/
 
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index db876f7dde..e84ffc9396 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -35,7 +35,7 @@ OPTIONS
- --force::
- 	If the Git configuration variable clean.requireForce is not set
- 	to false, 'git clean' will refuse to delete files or directories
--	unless given -f, -n or -i. Git will refuse to delete directories
-+	unless given -f or -i. Git will refuse to delete directories
- 	with .git sub directory or file unless a second -f
- 	is given.
- 
--- 
-2.22.1.11.g45a39ee867
+I believe that was a good suggestion for a few reasons:
+1) Supporting files in addition to stdin sounds reasonable for its cost.
+2) '--paths-file' will support files and stdin with the same "interface",
+    avoiding the possible need for another interface later.
+3) '--paths-file' sounds more self-documented then '--stdin'.
+
+Later, we intend to provide patches to extend the same feature to
+multiple other commands, at least {add, checkout, commit, rm, stash},
+and I'm merely trying to avoid possible design issues for this
+larger-scale change.
+
+If you don't mind the suggestion but not willing to spend time
+implementing it, we'd like to step in and contribute the remaining
+work.
 
