@@ -2,117 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F18141F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 21:40:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDBDC1F4B7
+	for <e@80x24.org>; Thu,  5 Sep 2019 22:00:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732027AbfIEVk3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 17:40:29 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:40203 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730704AbfIEVk2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 17:40:28 -0400
-Received: by mail-pf1-f195.google.com with SMTP id x127so2766389pfb.7
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 14:40:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=B5J8L96YiWXVkPWrVNGbztCdGPe1bRDZ80Yzho6QwKo=;
-        b=i8Dt0z59MPH52Q0yYC6OxLYPjWaral1NtH525JlmvbKnwTxV7mtGP6aqX0SyprsMEA
-         w13mDV95eLxQ7GUeC4+xZxPXTjKoMx9dWrIVI6JFS4qhpLhY5hmzqGqGA/4jZL1qq3B2
-         X+Oad/9mSHBsmRY0DMdbsJg9572a9MgL0BRaLWDDKCt5/w9wux4dHhD4+EaPE5ZnraWX
-         HBbfozZjsiQ+vRCWy+S99Sce2oAOhaD55EO5IiKdqy6TsGrzdJIkGwe0amRprtcEtKG2
-         eZB32PMmn9MssZh6AygfhcsPKwmSlQTGLNKpLlz03mF0aERSoSHqZYM58s0xIbh9b+ZF
-         FDZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=B5J8L96YiWXVkPWrVNGbztCdGPe1bRDZ80Yzho6QwKo=;
-        b=R+cQo0MobAPRc6HF47kGuG1Xa5/x3J2CI4gRsWkVKcFkfaLPratbLnbzpLcFCiDqDV
-         8OnXSGurptRVdFsvyc8xBZtxDWoobJyh+kYCztmkioW/8rR5uft9udrI97b04N4OdrLv
-         m64V9sLULf4rbjSijg5mQ035aXM/hW0xO3dcEPXK9xxV3uJwoPQRjlc3mKnAmkP+rpLI
-         Jqbe/ImohD382KdnyER8yh3KTuhraSiyGJWvUnNAlm/bIU9IgOHe8Sp4lqM+O/wppC5O
-         T0IpTS+q3ByuZ7lFIfPJRBIvZ3G6OAbeMlzKaG2d/n9WiqXZuwBA/TUD1UOhguha5aXL
-         287A==
-X-Gm-Message-State: APjAAAVXAZTxSRG8QvEZL1pOvZrNF7ih91AT1d8NMSEwdx9nHETlYTjJ
-        oJbVjrVoBysGOv+fKju3SDQ=
-X-Google-Smtp-Source: APXvYqzZ3HmlYM1AwXmHoxLUmpBY8LDlQ6Ywga3y9lO8mc9qS5WMZuM3mpAiAbixXm6DTznGmVbVhA==
-X-Received: by 2002:a62:e10a:: with SMTP id q10mr6539947pfh.236.1567719628134;
-        Thu, 05 Sep 2019 14:40:28 -0700 (PDT)
-Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id s5sm3306384pfm.97.2019.09.05.14.40.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Sep 2019 14:40:27 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 14:40:25 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v2 00/13] format-patch: clean up tests and documentation
-Message-ID: <20190905213933.GA62578@dentonliu-ltm.internal.salesforce.com>
-References: <cover.1566635008.git.liu.denton@gmail.com>
- <cover.1566878373.git.liu.denton@gmail.com>
- <20190904112105.GA27933@archbookpro.localdomain>
- <xmqqef0uplex.fsf@gitster-ct.c.googlers.com>
+        id S1731215AbfIEWAm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 18:00:42 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57394 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726323AbfIEWAm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 18:00:42 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 23E73759E0;
+        Thu,  5 Sep 2019 18:00:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ilWnNCJzaxr7XHnW886PronN3Ts=; b=wXOEMZ
+        sDuIkhPf/ZSAp9utixjt9paNG62FmIm76cZgFv7f8PpjYAGLfZExdqGn82KSjPkm
+        9EWNDpgdcdrKfopAZqR0CFT4t6AR/PJpl3E8vEbp4kwM81WZQ4ybf/QwtYLW+IEc
+        59hDBUwoV2sZbdCHhdjRPrxk6CrFBw0DysDJo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tEeb1ikT1OHeHxgtkd7Cwk7pBnczFqEn
+        y4pSSgSZ2H6ODdzCgV8Pkook5qeX5vdOTdzse6eODLAidjDhLiAIUCuQmnWFPiOv
+        K22komQC0NpEykUT3qEauj7BWaUK72si5bfC7ZdUGgKAJEOgRH5haEiCZw6b4U3b
+        SkApYZi40UU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1B6F3759DF;
+        Thu,  5 Sep 2019 18:00:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C6DC4759DC;
+        Thu,  5 Sep 2019 18:00:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, Joel Teichroeb <joel@teichroeb.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v3 1/3] factor out refresh_and_write_cache function
+References: <20190829182748.43802-1-t.gummerer@gmail.com>
+        <20190903191041.10470-1-t.gummerer@gmail.com>
+        <20190903191041.10470-2-t.gummerer@gmail.com>
+Date:   Thu, 05 Sep 2019 15:00:34 -0700
+In-Reply-To: <20190903191041.10470-2-t.gummerer@gmail.com> (Thomas Gummerer's
+        message of "Tue, 3 Sep 2019 20:10:39 +0100")
+Message-ID: <xmqqwoemo131.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqef0uplex.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 975DFDD8-D028-11E9-AE46-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 05, 2019 at 12:56:06PM -0700, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> > Hi Junio,
-> >
-> > I see that "dl/format-patch-doc-test-cleanup" currently has the comment
-> > "Expecting a reroll." This should be the reroll that you're expecting ;)
-> >
-> > Also, since there haven't been any comments on the topic in a while, I
-> > propose that it should be ready for inclusion.
-> 
-> I may be the only person who had issues applying that series from
-> the list, with mixtures of iso-8859-1 and utf-8 causing troubles,
-> but if I am not alone, I suspect that the reason why nobody gave a
-> comment is because the patches did not even apply so there is
-> nothing to base their comments on.
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-Which patches weren't applying properly? I managed to apply both the
-patchset I had locally and a fresh one I downloaded from public-inbox
-and both applied cleanly.
+> Getting the lock for the index, refreshing it and then writing it is a
+> pattern that happens more than once throughout the codebase, and isn't
+> trivial to get right.  Factor out the refresh_and_write_cache function
+> from builtin/am.c to read-cache.c, so it can be re-used in other
+> places in a subsequent commit.
+>
+> Note that we return different error codes for failing to refresh the
+> cache, and failing to write the index.  The current caller only cares
+> about failing to write the index.  However for other callers we're
+> going to convert in subsequent patches we will need this distinction.
+>
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+>  builtin/am.c | 16 ++--------------
+>  cache.h      | 16 ++++++++++++++++
+>  read-cache.c | 19 +++++++++++++++++++
+>  3 files changed, 37 insertions(+), 14 deletions(-)
 
-> 
-> I wiggled them and compared the result.  The range diff against what
-> has been queued seems a bit different from what you gave below
-> (e.g. I see log message got modified on patch #2 and the dropping of
-> the comma made it harder to read), but the endpoint diff looks not
-> too bad (IOW, the alloted time for the topic ran out before I
-> started looking at each individual patches in more depth).
+I think this goes in the right direction, but obviously conflicts
+with what Dscho wants to do in the builtin-add-i series, and needs
+to be reconciled by working better together.
 
-Hmmm, I don't think my workflow uses your topic branches properly. I've
-been range-diffing against the previously submitted patchsets but it
-seems like you expect a range-diff against the actual topic branch.
+For now, I'll eject builtin-add-i and queue this for a few days to
+give it a bit more exposure, but after that requeue builtin-add-i
+and discard these three patches.  By that time, hopefully you two
+would have a rerolled version of this one and builtin-add-i that
+agree what kind of refresh-and-write-index behaviour they both want.
 
-What should the ideal workflow be? I've been avoiding working directly
-from the topic branch since that would require me to manually remove
-your SOB line whenever I generate new patchsets. I guess I could
-manually remove your SOB line from each patch manually. I dunno. Any
-ideas?
+The differences I see that need reconciling are:
 
-Thanks,
+ - builtin-add-i seems to allow 'gentle' and allow returning an
+   error when we cannot open the index for writing by passing false
+   to 'gentle'; this feature is not used yet, though.
 
-Denton
+ - This version allows to pass pathspec, seen and header_msg, while
+   the one in builtin-add-i cannot limit the part of the index
+   getting refreshed with pathspec.  It wouldn't be a brain surgery
+   to use this version and adjust the caller (there only is one) in
+   the builtin-add-i topic.
+
+ - This version does not write the index back when refresh_index()
+   returns non-zero, but the one in builtin-add-i ignores the
+   returned value.  I think, as a performance measure, it probably
+   is a better idea to write it back, even when the function returns
+   non-zero (the local variable's name is has_errors, but having an
+   entry in the index that does not get refreshed is *not* an error;
+   e.g. an unmerged entry is a normal thing in the index, and as
+   long as we refreshed other entries while having an unmerged and
+   unrefreshable entry, we are making progress that is worth writing
+   out).
+
+Thanks.
+
+> +int repo_refresh_and_write_index(struct  repository *repo,
+> +				 unsigned int refresh_flags,
+> +				 unsigned int write_flags,
+> +				 const struct pathspec *pathspec,
+> +				 char *seen, const char *header_msg)
+> +{
+> +	struct lock_file lock_file = LOCK_INIT;
+> +
+> +	repo_hold_locked_index(repo, &lock_file, LOCK_DIE_ON_ERROR);
+> +	if (refresh_index(repo->index, refresh_flags, pathspec, seen, header_msg)) {
+> +		rollback_lock_file(&lock_file);
+> +		return 1;
+> +	}
+> +	if (write_locked_index(repo->index, &lock_file, COMMIT_LOCK | write_flags))
+> +		return -1;
+> +	return 0;
+> +}
+> +
+> +
+>  int refresh_index(struct index_state *istate, unsigned int flags,
+>  		  const struct pathspec *pathspec,
+>  		  char *seen, const char *header_msg)
