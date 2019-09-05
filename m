@@ -2,132 +2,224 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9692B1F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 17:01:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 580B71F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 17:09:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390904AbfIERBY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 13:01:24 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61944 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389399AbfIERBY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 13:01:24 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 61304730F9;
-        Thu,  5 Sep 2019 13:01:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hzaiLIOtvXl61m10M5HTeTYgOgI=; b=VARh/B
-        FzkQDyugiUfl0S/3hn+xDtllZeyxR7q5P0IKBtfjDl36wZrZ1A6qA+fhDrBaTpUc
-        rk0rDreZhRD+bHM14UGxfj0bm80KrtYIr8V3bCx344N093bQzDzoZ/2HlsfCURWY
-        VMfa3OGA0vBCvf7e41Z8N5ssTLP67g5xUI31M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=H3MHIWCIUiWJr5qn6GHMyTfIKiodbqN7
-        oB+jIxb/ZXjF2VXu/sVqV9qHMbu/yJPMIsER7S47AQZutDg5QuCnp/ExOiSF8Bcp
-        lb6dkXjPHGPfW41TogXKzOkDBM+xy0pLc5iTd7bOCF977LMqjywETwimn0mRez9a
-        T3iB+rzppGo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 58FC4730F8;
-        Thu,  5 Sep 2019 13:01:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 821C0730F6;
-        Thu,  5 Sep 2019 13:01:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] reset: support the --stdin option
-References: <pull.133.git.gitgitgadget@gmail.com>
-        <017945a55a64ebe1913d64919b699adb3f9d5d96.1567633109.git.gitgitgadget@gmail.com>
-        <fd300972-4fe7-54e4-3701-061ab4769c10@syntevo.com>
-Date:   Thu, 05 Sep 2019 10:01:17 -0700
-In-Reply-To: <fd300972-4fe7-54e4-3701-061ab4769c10@syntevo.com> (Alexandr
-        Miloslavskiy's message of "Thu, 5 Sep 2019 12:58:06 +0200")
-Message-ID: <xmqqtv9qr82q.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2389581AbfIERJV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 13:09:21 -0400
+Received: from mout.web.de ([212.227.15.3]:34539 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2389559AbfIERJU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 13:09:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1567703348;
+        bh=8qcK6N8VnaBqQKn7wbKPmMpoUL4XUOengrh3+tn9SWk=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=SIYTj/RT9/+SkBWCfhFnm9nc1BjpiZau5PB0CvzYGLYvQL0m4PLp/K9C/3+YK6k56
+         fqsrEvFMiXt8+vtgOV9apr39qqm6qNZv0jAH0UzEGTVASMsa63ImvR23h2+0ksqove
+         /6b7XhkCn7l1Km9YPbP/F39ND0IcR2MblWSiPmp4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LnjRP-1ieSr63eTH-00htBI; Thu, 05
+ Sep 2019 19:09:07 +0200
+Subject: Re: [PATCH] Fix maybe-uninitialized warnings found by gcc 9 -flto
+To:     Stephan Beyer <s-beyer@gmx.net>, Paul Tan <pyokagan@gmail.com>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+References: <20190905082459.26816-1-s-beyer@gmx.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <6c6c4e71-d9e5-1ad4-74db-12c323da42f7@web.de>
+Date:   Thu, 5 Sep 2019 19:08:49 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C7FE2302-CFFE-11E9-908A-B0405B776F7B-77302942!pb-smtp20.pobox.com
+In-Reply-To: <20190905082459.26816-1-s-beyer@gmx.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:lrYM3rghswj/Xi0wyO+08fXqITCzeRqQRqXXTtEHBfPOnDQ0TaT
+ gAW/iUyQsfOwqXvCN+J7nnmBs6lyQ/1vYkbSFJu05kQuDHSQLkyLpB1pw52Nh8guJbnD1Pa
+ mOhupm0OJCNukJ0xuqky/pbRiIpbojA9SlDoWtXB+UpLXlhGS2Yk6eHwmL5ckSebk17Hkvb
+ oPbhat4p6tNxXwf19iijA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6fJdnfZI/mI=:DiRnOqTluoTQG+dG7P6Wgg
+ Z6e9UXBCVq8kdIcb3sG7gAkA4HwHQ/FIk8800FXCw8FNs4a/CW4OYP8U3BvorCv5pDncdyorq
+ fmCqospkFbzUKbJKHNaEMjMuDrw6oAfij7pmbw+ApuES80q2rzuVaiMjC83BXaXob74J9+Ahz
+ gQj9lKYJ4Pors1FiE8HfBW7mtDzJ9W8+aUsk6ObLR9SNslIgM9Ee9ciS3gO0jw8U52mp94XC3
+ kOhhlyll+Vur/7vWacyO87LwQlSUgC5WLPyAHSdmAW5aHobb2kCa2KRZKzbnsxypUSVBhJm8Z
+ 6ayKZSaGtyq6CYkgm18TK8fN8Gv5AxKDoyzO0oBLUwSCA7Cv/cRzrvFDkiI4rv6nvceOaSUZJ
+ iTRodn8uh+oLCgcS6fSns2I1MtpDuLEAe4b8zfYHUm/qbKT6/IOzioB/TMc0zqUbrj+YVmQj6
+ trq1pKBQkS0t/bLf1Dht91h63vgmJl1EFSlsSSqbndKwZa0zE4EtnMukdESsAxDyvjkNZGKvI
+ vp+HRCwZHxut086cjw68gKDIZN8TPPzjF5QtoESSOr5SCD3yBGbaGCQOPG+J9aw8CpYZ7LF74
+ uHD8NXQeBN+DotI7ZxrHYHUpWLfJIAb2+PcL97Y5UdUQTI4UCJPQC2cN6p4i96ggbwDiJTmw8
+ vwlrg0JDM9p4Fvsp4KDPAFvSTm9PMxH0NWtlSVpQEtQls5joSi4Xbw2laW5xKc0AkZISuhgt9
+ +9atRsXMt8Vu5ZtK8B5+jzyJ7ABSrUm8fpHzOw6VY0tZjmoyWfdHt28Ypk5SmtQ9SGrCb2zPg
+ ku6soUmfrlAdpF6mwW92y+QPD6LdG2JeKVcfYNOAPDZa1DT6NYkQFqZ+ZiUKn9aCzCmYDfQSJ
+ wNK5NYu+9+sOoJqmy3Drr0OqYJGr/jSNXvknL4VFNsTucR76EGBK1wm+OSbHbqU6wjskvX4B3
+ 6SgYANFc9HTNs+Q0XdFUsskQ2Ylg3airltFaVGHWvi2hzEoC9MtvP65D1AZWVgMrmlVzzyb9R
+ 6DJEXigTquAFx/6nUtjy3KD3W+8kPZLL5VbA2HZVwtlqOearjDuLz/IsNYCMfSV5mXC1JOlOt
+ bXr7XXkNMZxmXR0knyGznUxRHyxH8fN6LZpr7IPOxuydj6Q4jLyFBzhSLN6o6RNc5MtUj4B05
+ 7Um8q9bFKlj/fNiQHEkwE4Fst3wvVwOpB8ge7wuSSlz3mgrWSa8+9lMn8JDVEdKyf6FuM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com> writes:
-
-> Johannes, thanks for working on this problem!
+Am 05.09.19 um 10:24 schrieb Stephan Beyer:
+> Compiler heuristics for detection of potentially uninitialized variables
+> may change between compiler versions and enabling link-time optimization
+> may find new warnings.  Indeed, compiling with gcc 9.2.1 and enabled
+> link-time optimization feature resulted in a few hits that are fixed by
+> this patch in the most na=C3=AFve way.  This allows to compile git using=
+ the
+> DEVELOPER=3D1 switch (which sets -Werror) and using the -flto flag.
 >
-> In the previous discussion, there was a suggestion to change
-> '--stdin' to '--paths-file', where '--paths-file -' would mean stdin:
-> https://public-inbox.org/git/066cfd61-9700-e154-042f-fc9cffbd6346@web.de/
+> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+> ---
+>  builtin/am.c               | 2 +-
+>  builtin/pack-objects.c     | 2 +-
+>  bulk-checkin.c             | 2 ++
+>  fast-import.c              | 3 ++-
+>  t/helper/test-read-cache.c | 2 +-
+>  5 files changed, 7 insertions(+), 4 deletions(-)
 >
-> I believe that was a good suggestion for a few reasons:
-> 1) Supporting files in addition to stdin sounds reasonable for its cost.
-> 2) '--paths-file' will support files and stdin with the same "interface",
->    avoiding the possible need for another interface later.
-> 3) '--paths-file' sounds more self-documented then '--stdin'.
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 1aea657a7f..ab914fd46e 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -1266,7 +1266,7 @@ static int get_mail_commit_oid(struct object_id *c=
+ommit_id, const char *mail)
+>  static void get_commit_info(struct am_state *state, struct commit *comm=
+it)
+>  {
+>  	const char *buffer, *ident_line, *msg;
+> -	size_t ident_len;
+> +	size_t ident_len =3D 0;
+>  	struct ident_split id;
 >
-> Later, we intend to provide patches to extend the same feature to
-> multiple other commands, at least {add, checkout, commit, rm, stash},
-> and I'm merely trying to avoid possible design issues for this
-> larger-scale change.
+>  	buffer =3D logmsg_reencode(commit, NULL, get_commit_output_encoding())=
+;
+
+Further context:
+
+	ident_line =3D find_commit_header(buffer, "author", &ident_len);
+
+	if (split_ident_line(&id, ident_line, ident_len) < 0)
+		die(_("invalid ident line: %.*s"), (int)ident_len, ident_line);
+
+find_commit_header() can return NULL.  split_ident_line() won't handle
+that well.  So I think what's missing here is a NULL check.  If the
+compiler is smart enough then that should silence the initialization
+warning.
+
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 76ce906946..d0c03b0e9b 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1171,7 +1171,7 @@ static int add_object_entry(const struct object_id=
+ *oid, enum object_type type,
+>  {
+>  	struct packed_git *found_pack =3D NULL;
+>  	off_t found_offset =3D 0;
+> -	uint32_t index_pos;
+> +	uint32_t index_pos =3D 0;
 >
-> If you don't mind the suggestion but not willing to spend time
-> implementing it, we'd like to step in and contribute the remaining
-> work.
+>  	display_progress(progress_state, ++nr_seen);
+>
 
-Ahh, I completely forgot about the earlier exchange.  Thanks for a
-pointer.
+Further context:
 
-While I do like the idea of adding an option to take the pathspec,
-which you would usually give from the command line, from the
-standard input, as a standard technique to lift the command line
-length limit on various platforms, what I do not find right in the
-posted patch is that it conflates it with something orthogonal.
+	if (have_duplicate_entry(oid, exclude, &index_pos))
+		return 0;
 
-When you already have a set of paths you would want to give to the
-command, and when these paths may have wildcard letters in them, you
-would want to tell the command that you do not want wildcards in the
-pathspec to take effect.  That is a valid wish and we already have a
-standard solution for that (i.e. the "--literal-pathspecs" option).
+	if (!want_object_in_pack(oid, exclude, &found_pack, &found_offset)) {
+		/* The pack is missing an object, so it will not have closure */
+		if (write_bitmap_index) {
+			if (write_bitmap_index !=3D WRITE_BITMAP_QUIET)
+				warning(_(no_closure_warning));
+			write_bitmap_index =3D 0;
+		}
+		return 0;
+	}
 
-But it is orthogonal to how you feed these paths to the command.  I
-would not say "unrelated", in that there may be correlation between
-the cases where you would want to feed pathspec from the standard
-input and the cases where you would want these pathspec taken
-litearlly, but the choice is still "orthogonal".  
+	create_object_entry(oid, type, pack_name_hash(name),
+			    exclude, name && no_try_delta(name),
+			    index_pos, found_pack, found_offset);
 
-If we said "when feeding from the standard input, they are taken
-literally by default, but on the command line, the wildcards are
-expanded", that is bad enough---I do not think we want to hear any
-unnecessary "Git UI is inconsistent" noise raised from such a design
-choice.
+So we call have_duplicate_entry() and if it returns 0 then we might
+end up using index_pos.  So when does it return 0?
 
-The posted patch does not even do that.  It takes its input as
-literal pathspec and it is done unconditionally without any way to
-override it.
+static int have_duplicate_entry(const struct object_id *oid,
+				int exclude,
+				uint32_t *index_pos)
+{
+	struct object_entry *entry;
 
-If we introduce a new --paths-from-file and make it take only paths
-and never pathspecs (i.e. no wildcard expansion, a directory does
-not mean everything underneath it), that would be less worrisome wrt
-the UI inconsistency front (but we may need to commit to teach
-existing commands that take pathspec from the standard input the new
-option, too, so that all subcommands that can take some form of
-paths specification would work the same way with --paths-from-file).
+	entry =3D packlist_find(&to_pack, oid, index_pos);
+	if (!entry)
+		return 0;
 
-Or we can do --stdin (or --pathspec-from-file=-) that takes pathspecs,
-whose literal-ness is controlled by the '--literal-pathspecs' option.
+OK, it does that if packlist_find() returns NULL.  When does it do
+that?
+struct object_entry *packlist_find(struct packing_data *pdata,
+				   const struct object_id *oid,
+				   uint32_t *index_pos)
+{
+	uint32_t i;
+	int found;
 
-Thanks.
+	if (!pdata->index_size)
+		return NULL;
 
+	i =3D locate_object_entry_hash(pdata, oid, &found);
+
+	if (index_pos)
+		*index_pos =3D i;
+
+	if (!found)
+		return NULL;
+
+So if the packing list is empty then it returns NULL without setting
+index_pos.  Hmm.  It does set it in all other cases, no matter if oid is
+found or not.  Is it really a good idea to make that exception?  I
+suspect always setting index_pos here would silence the compiler as well
+and fix the issue closer to its root.
+
+But I may be missing something, this code looks complicated.
+
+> diff --git a/bulk-checkin.c b/bulk-checkin.c
+> index 39ee7d6107..87fa28c227 100644
+> --- a/bulk-checkin.c
+> +++ b/bulk-checkin.c
+> @@ -200,6 +200,8 @@ static int deflate_to_pack(struct bulk_checkin_state=
+ *state,
+>  	struct hashfile_checkpoint checkpoint;
+>  	struct pack_idx_entry *idx =3D NULL;
+>
+> +	checkpoint.offset =3D 0;
+> +
+>  	seekback =3D lseek(fd, 0, SEEK_CUR);
+>  	if (seekback =3D=3D (off_t) -1)
+>  		return error("cannot find the current offset");
+
+Omitting further context, even though it would help, but this reply is
+long enough already.  It seems the compiler got confused -- I can't see
+an execution path that would use an uninitialized offset.  If idx is
+NULL then the function is exited early, and if it's not then offset is
+initialized.  But perhaps I'm missing something.
+
+Anyway, my points are that simply initializing might not always be the
+best fix, and that more context would help reviewers of such a patch,
+but only if functions are reasonably short and it's not necessary to
+follow the rabbit into a call chain hole.
+
+Didn't check the other cases.
+
+Ren=C3=A9
