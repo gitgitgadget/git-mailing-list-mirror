@@ -2,103 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11C471F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 18:22:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63B301F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 18:39:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388739AbfIESW5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 14:22:57 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57828 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727764AbfIESW5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 14:22:57 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DAD2529630;
-        Thu,  5 Sep 2019 14:22:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7F+YPV44FC0GPVKdvb9MPfZTe+s=; b=WV/gtT
-        GK3mBp8zHuvPLOYEitzm+Tt6XOPTjLXWjyFprwWfFK4dytMKtXfJjc9PbyY5P+v4
-        kQE6loz+/qOsdMjFggLXk82mRX5IRd9fZ8nQ9bf98QDvEU+oKrFXK5KzMgplEs8F
-        O7Aohg+cGtANmqNYc6KxSPextIAXTwhSnfabc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rbip23nA5oXsBXIwign5goBKFkvs2iFM
-        cAHY15RduNyMjdF/hm+r0sgDeqpyOdQ8zrxQn5/Z93Zgb2ev7FO7kNjK17V0LBoS
-        W+ljxaFnzZtVKBoBPaWRlRG2bIp8sOduHHsNFm8wjtX95d/irNklFwYVGKQbtmWM
-        McunTyIH54U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D2C572962F;
-        Thu,  5 Sep 2019 14:22:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3D5702962E;
-        Thu,  5 Sep 2019 14:22:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Stephan Beyer <s-beyer@gmx.net>, Paul Tan <pyokagan@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Shawn O. Pearce" <spearce@spearce.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] Fix maybe-uninitialized warnings found by gcc 9 -flto
-References: <20190905082459.26816-1-s-beyer@gmx.net>
-        <xmqqd0ger5j7.fsf@gitster-ct.c.googlers.com>
-        <20190905180348.GC23663@sigill.intra.peff.net>
-Date:   Thu, 05 Sep 2019 11:22:53 -0700
-In-Reply-To: <20190905180348.GC23663@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 5 Sep 2019 14:03:48 -0400")
-Message-ID: <xmqq36har4aq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2D7915EC-D00A-11E9-A92B-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+        id S2388215AbfIESjb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 14:39:31 -0400
+Received: from mail-vs1-f73.google.com ([209.85.217.73]:33948 "EHLO
+        mail-vs1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732133AbfIESjb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 14:39:31 -0400
+Received: by mail-vs1-f73.google.com with SMTP id l24so481571vsq.1
+        for <git@vger.kernel.org>; Thu, 05 Sep 2019 11:39:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=vXUjuC6kDg53JsZ0nvgLgLwuBRYUVrn6QIDTUubsaYo=;
+        b=bVqW7/wjDfMSrUdV8vGb3sbNjzzkn056Lv+nwCRbDow1eLAZHobZm15iEyMEKkcRfp
+         bn/r9UeOVSs7LlShKD/AapvUA+v+YL7/ad/tH7I1fq1izar7ShESUDzbKZ5yW3B1V6JR
+         1rg20u8gROVRqIHkoNnlFLxBXXeYarZz+ZCZO+hHdyH9jU6n+q4vfdKDOTKHKF4lwMbz
+         79K7uoPn4bC4vRw4CkUABhqMaY8EjQJ4G0n8tyAigsjejiebY7SVAASj2pcTTDqAXK9u
+         fsmT243rKDgcLvoLLSq7HEV5vYfk6Q+UMuLNiLqLn9lcrjfemRqh1TOSERRGy9F8HRQl
+         4u9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=vXUjuC6kDg53JsZ0nvgLgLwuBRYUVrn6QIDTUubsaYo=;
+        b=N2y417ACd+K99necFkBIQHV3bmsqBiM1aKmcmPNn9OwakwKZsFUhE4zM4C9G59arxa
+         wpwsLDUI7Ia3mHiMwzTJ68PmB4GsW3Duqr5sTtprng2Xh5CrDEjLj3HsCYV0bKYugP0a
+         qKEFwGKhaHrm7z3lpPtTTC9z9ABwANEW2nxxIKPxwEmbjd7t7e0Dpsj/M3+qb4rPaxyO
+         7KzixjbXz5jU6utEdoSTe1U/skNxhUjTIb9fCwdrkdPv1iDRmQ4lysan+QmkzUgf6jY/
+         ENym1d8hjPeQg2wSliLBDaBlaNTkLR4I1yj+OuEbhJXrhOvbeG5tNOcbgQdQqJc7QkSL
+         +0QA==
+X-Gm-Message-State: APjAAAXhd81JKD78NKbcSgzY8PVzSNOKfQPX7UtgLx6qSXS6nJjFziUZ
+        BGWiFGnXCJz/NNUOZ44aTYwicpqmPqNp2tLIUqz8
+X-Google-Smtp-Source: APXvYqziuXAkSqKzCZH8jpw3se/+eFZy7Gm7BIy+Wvfa8qfycW0poYmxq+d4aiKz6ZJBr/MjO/ySbDmcKsq8iIbPbG96
+X-Received: by 2002:ac5:cdad:: with SMTP id l13mr2319377vka.30.1567708770016;
+ Thu, 05 Sep 2019 11:39:30 -0700 (PDT)
+Date:   Thu,  5 Sep 2019 11:39:26 -0700
+In-Reply-To: <20190905070153.GE21450@sigill.intra.peff.net>
+Message-Id: <20190905183926.137490-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20190905070153.GE21450@sigill.intra.peff.net>
+X-Mailer: git-send-email 2.23.0.162.g0b9fbb3734-goog
+Subject: Re: [PATCH] fetch-pack: write fetched refs to .promisor
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     peff@peff.net
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+> I'm not really opposed to what you're doing here, but I did recently
+> think of another possible use for .promisor files. So it seems like a
+> good time to bring it up, since presumably we'd have to choose one or
+> the other.
 
-> I said earlier that I wouldn't mind seeing "namelen = 0" here. But I
-> think there is a much more direct solution: keeping the assignment and
-> point of use closer together. That makes it more clear both to the
-> compiler and to a human when we expect the variable to be valid. In
-> fact, since it's only used once, we can drop the variable altogther. :)
+Thanks for bringing it up - yes, we should discuss this.
 
-Yeah, that sounds like a nice solution.
+> I noticed when playing with partial clones that the client may sometimes
+> pause for a while, chewing CPU. The culprit is is_promisor_object(),
+> which generates the list of known promisor objects by opening every
+> object we _do_ have to find out which ones they mention.
+> 
+> I know one of the original design features of the promisor pack was that
+> the client would _not_ keep a list of all of the objects it didn't have.
+> But I wonder if it would make sense to keep a cache of these "cut
+> points" in the partial clone. That's potentially smaller than the
+> complete set of objects (especially for tree-based partial cloning), and
+> it seems clear we're willing to store it in memory anyway.
 
-> diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
-> index 7e79b555de..244977a29b 100644
-> --- a/t/helper/test-read-cache.c
-> +++ b/t/helper/test-read-cache.c
-> @@ -4,11 +4,10 @@
->  
->  int cmd__read_cache(int argc, const char **argv)
->  {
-> -	int i, cnt = 1, namelen;
-> +	int i, cnt = 1;
->  	const char *name = NULL;
->  
->  	if (argc > 1 && skip_prefix(argv[1], "--print-and-refresh=", &name)) {
-> -		namelen = strlen(name);
->  		argc--;
->  		argv++;
->  	}
-> @@ -24,7 +23,7 @@ int cmd__read_cache(int argc, const char **argv)
->  
->  			refresh_index(&the_index, REFRESH_QUIET,
->  				      NULL, NULL, NULL);
-> -			pos = index_name_pos(&the_index, name, namelen);
-> +			pos = index_name_pos(&the_index, name, strlen(name));
->  			if (pos < 0)
->  				die("%s not in index", name);
->  			printf("%s is%s up to date\n", name,
+Well, before the current design was implemented, I had a design that had
+such a list of missing objects. :-) I couldn't find a writeup, but here
+is some preliminary code [1]. In that code, as far as I can tell, the
+server gives us the list directly during fetch and the client merges it
+with a repository-wide file called $GIT_DIR/objects/promisedblob, but we
+don't have to follow the design (we could lazily generate the file, have
+per-packfile promisedblob files, etc.).
+
+[1] https://public-inbox.org/git/cover.1499800530.git.jonathantanmy@google.com/
+
+> And if we do that, would the .promisor file for a pack be a good place
+> to store it?
+
+After looking at [1], it might be better in another place. If we want to
+preserve fast fetches, we still need another file to indicate that the
+pack is a promisor, so ".promisor" seems good for that. The presence or
+absence of the cutoff points is a separate issue and could go into a
+separate file, and it might be worth putting all cutoff points into a
+single per-repository file too.
