@@ -2,123 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB7201F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 19:39:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 487CA1F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 19:40:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389301AbfIETjz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 15:39:55 -0400
-Received: from mout.web.de ([212.227.15.4]:55679 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388174AbfIETjz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 15:39:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1567712379;
-        bh=L+TxzkJfMSmzirk7dIn3ie3u1ek2qo/GittT8wkILT0=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=ViWZKZQsFl1gpadf3Y8/p84mPA0j6nUdzOPZ5ypeZlin4uYepwJSzuKJZ67PehLIL
-         4j2YMhzvRUuXep04O3pth+Ob39djfPtarey7WLtzdcfgL/RPutndbyAJNkxyuIK3/v
-         7a0qic6ItKRQrl2/VOMjBuVJ6x79Dg4lc3Tb97jY=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LwU2B-1iDzgi0VQt-018HVo; Thu, 05
- Sep 2019 21:39:39 +0200
-Subject: Re: [PATCH] Fix maybe-uninitialized warnings found by gcc 9 -flto
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Stephan Beyer <s-beyer@gmx.net>,
-        Paul Tan <pyokagan@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-References: <20190905082459.26816-1-s-beyer@gmx.net>
- <6c6c4e71-d9e5-1ad4-74db-12c323da42f7@web.de>
- <20190905175304.GA23663@sigill.intra.peff.net>
- <b4f53049-ff50-8143-1653-d321cce6421c@web.de>
- <xmqqr24upmtm.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <8d90d803-8a4b-2656-550d-ccee5156b643@web.de>
-Date:   Thu, 5 Sep 2019 21:39:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2389775AbfIETkH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 15:40:07 -0400
+Received: from mail-pf1-f182.google.com ([209.85.210.182]:37673 "EHLO
+        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388174AbfIETkH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 15:40:07 -0400
+Received: by mail-pf1-f182.google.com with SMTP id y9so2508804pfl.4
+        for <git@vger.kernel.org>; Thu, 05 Sep 2019 12:40:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Z0AD9/px5BPXoDUfcOGM95b3eMv7j7rMo3CBiUXbrKc=;
+        b=bJbOX4w9Y2xhigwgF5qDA3fgp2a317vegaew3RQEtCaeDUS+KYwL2vfSWWejVTMXwA
+         BqwUvIzRED+FeqwZRGmJwHgn+NNJrZjm1vzOhgus5unm1itOrPzHnw+r7mScEHgrnkMB
+         nworeJuapjDKk1m5obqVNgt7nEAk+F/6eY4/4HpvGMN8Ahg6iozV2afFvWJUeyhniAds
+         cvDc1pDOocx/Hu9YGxDSUfUygvBveyZSBd+CSmQrP8whMWaIgNEH5kBPj0FVoY6jGuKD
+         uZIJ77WzIxQsx0QtGedpjpSEJfcbqop8ue+rrNvr89vxBgrosKIIUVPfeaNUv72B/Gzy
+         iQmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Z0AD9/px5BPXoDUfcOGM95b3eMv7j7rMo3CBiUXbrKc=;
+        b=cNQnij+L2xNUO9fk5CQRdpuOZEnWdiKVdmi/Whxlo7jCuYdZAyhHYOA0rLNHsPs9q9
+         CdHc8T4Wgt8pwcPdUpfmxCWpWD75LFb70CIkhXeH5QalPhP824ZhLNiLEgIUFKtNuryv
+         epFrKLY0jkBjYeWt+8G+vtPIZ1QS16xKUimFVg7mc8WJea+03PGOCzoH+LadXnyyD3EE
+         CMRoft4fG98rpX7J2uIU/+Q8Otxe7f71VaJYJMPxkJkBxbnsyRTERKa+/G/G0aNj/sJQ
+         VQIrM65qFgaQEE4G7vTz85/GsHFXH379t80yd5TcEjIwI63LtybzNamHBqnxQVZ/jyud
+         6mag==
+X-Gm-Message-State: APjAAAVSLBkrAV/V0jqG7HKGyGTg+GEN8SX8U3NgiRCH3NK6XNpc3av0
+        6A0EuTvoaoxDOiLWv15oka0Q/A8c8wY=
+X-Google-Smtp-Source: APXvYqxW+6J7w1Pl+Lbsb/R4nBshMn4lCzvUEsFnSNHbft4AbA/ectNktsLWXjGBXLd+tNpLtPOrcw==
+X-Received: by 2002:a62:f246:: with SMTP id y6mr5924520pfl.22.1567712405797;
+        Thu, 05 Sep 2019 12:40:05 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id r187sm7996103pfc.105.2019.09.05.12.40.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Sep 2019 12:40:05 -0700 (PDT)
+Date:   Thu, 5 Sep 2019 12:39:59 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Subject: Re: Git in Outreachy December 2019?
+Message-ID: <20190905193959.GA17913@google.com>
+References: <20190827051756.GA12795@sigill.intra.peff.net>
+ <20190904194114.GA31398@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <xmqqr24upmtm.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:dHAyfVz7p2VNKf/dkYDn6bkkjckI4LapsPpcG2aQh0QI7bz/6cx
- cdDfwWk5SzT1s+x9HZSCPbtJjBQ/wiEgXREpPf2bpx5KMcKCm+pOaNv5E/7cIeuTS8wW2XK
- x0fxe82KSoa5whtESBJPWIQWW4gX6PcRK5E/PcnTdZQcpLa1T8slVIDpMBYGvMWeEmDmN8E
- hyfRzDo+cEWF7w09BpOUA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XLSnAwJJ2UI=:SCOYiiGcHahf5/WysNSaL3
- SOObtYIbA9usGE6c4JTrRKQ1Q3R6pJLWLt/dp+BWtct4jnrS1FoeE8/CkAViL91WLq5KgNHlq
- FWupAAFC4JK3GhUiBfUiT4fW/NVdoqKQhEewrl6XG9AKy1WrGkGeO4yy1Q+Z3iiMG1zsbEyKG
- 0t3jxOr4v0X3B5eRZqfhVShCIVsT9zV4cXJQlXpvKPrxq4MNqfRV3T6RcxBStGz2dPBiYekK4
- zvdMkGrqrhqkc6/rWKBcApURpLnq0r3vWVwI97DI3TgTE2l1zQ0Dm52nNMoVlmLiIO00cF4xa
- iKtuF+KgKO7s/cyeKxiYT+lcdvUZtNILeLTBjji8z7HWzfCw3sffZRACB0lEyav+d1IHORFSx
- ORuaevfZFe6EvtAZzKnq8GPT115izTQISSitLGE5ab0TrQ3y03ivH81NgFdicKLnHt29dzkrQ
- g8EUEuaw7LbK0c858BUbiFMpqoC9UhHNJjlH8tn1w95XcN6AX3YzLUwWU49wjZaACnkewFxp7
- rB69cAJ/oCENgfHHFs6CGYdYBmt3rHH+yRG6ubHYsHU09ULpzCm62qu9OhouTM5/urjwHSStC
- dpx2h3u8hJdEkHP7FM40V/z/yRg9k4xqXs7gUSnHevpMdZJKp2hH69cTL0SidPhXzXN5TQgy+
- SdGQqpQen9cQGo/mlEfhYl6seTNJluUepbchvnYdN1H16Ep3eyYpcOcT1Vd00tfLInURFYwzR
- jKbd5wdbzea/pj2lJe2cEy3Ev8km6Q8+dw/H2IMfk7yUqIHCAkLQwvK7svkdrnpq1gkrjxGry
- zRoTTGmBZZIo7iNGoNGAAr+8NzuhI3auoyyc12BbKVCkLhq04OJBvhSxoSo21vGROLDYP9NsY
- KyxWUvr/VMXrSZru0RwVKZOH/EW/XwE5jD/DG4yCYiB0eSXWVn3IwqCSTxCn2JgIC7sp8PUPK
- dFOlAudjb1FYq/286jMWTn4mqDV6Igh1xE6xIIo7tJg/yuVAr2XkL5xMxAYP/0b4MtVnhDVcq
- OtYFgQOZ+QP+GSzMMzyXcUbkounOx+JA2T5b/S/TN/9gd61uNFJb/3JFKo4d5EXmk5Q7UkxDs
- soRRvmkKP2YceUf+PalEF1n45IkdQt33MFysZgqDoD6475faQ4OoSmdt7YYbKrb4dvBMK4vQd
- xtY2nLfzXaPTUcl6yiEFTFTbDlV2YRqQn4fD1juog5Lz2il5ekqHUVmwSVgZDr/zLLKl8=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190904194114.GA31398@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.09.19 um 21:25 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> Am 05.09.19 um 19:53 schrieb Jeff King:
->>>>> int cmd__read_cache(int argc, const char **argv)
->>>>> {
->>>>> -       int i, cnt =3D 1, namelen;
->>>>> +       int i, cnt =3D 1, namelen =3D 0;
->>>
->>> I actually saw this one the other day, because it triggered for me whe=
-n
->>> compiling with SANITIZE=3Daddress. AFAICT it's a false positive. "name=
-" is
->>> always NULL unless skip_prefix() returns true, in which case we always
->>> set "namelen". And we only look at "namelen" if "name" is non-NULL.
->>>
->>> This one doesn't even require LTO, because skip_prefix() is an inline
->>> function. I'm not sure why the compiler gets confused here.
->>
->> Yes, that's curious.
->>
->>> I don't mind
->>> initializing namelen to 0 to silence it, though (we already set name t=
-o
->>> NULL, so this would just match).
->>
->> Pushing the strlen() call into the loop and getting rid of namelen shou=
-ld
->> work as well -- and I'd be surprised if this had a measurable performan=
-ce
->> impact.
->
-> Yeah, we are making strlen() call on a constant "name" in a loop
-> over argv[].  I do not think it matters in this case, either.
+On Wed, Sep 04, 2019 at 03:41:15PM -0400, Jeff King wrote:
+> On Tue, Aug 27, 2019 at 01:17:57AM -0400, Jeff King wrote:
+> 
+> > Do we have interested mentors for the next round of Outreachy?
+> > 
+> > The deadline for Git to apply to the program is September 5th. The
+> > deadline for mentors to have submitted project descriptions is September
+> > 24th. Intern applications would start on October 1st.
+> > 
+> > If there are mentors who want to participate, I can handle the project
+> > application and can start asking around for funding.
+> 
+> Funding is still up in the air, but in the meantime I've tentatively
+> signed us up (we have until the 24th to have the funding committed).
+> Next we need mentors to submit projects, as well as first-time
+> contribution micro-projects.
 
-The loop count is either 1 or argv[1] interpreted as a number, i.e. it cou=
-ld
-be very high.  Its body consists of an index load and writing a number to =
-a
-file, though -- a strlen() call on the name of that file should go unnotic=
-ed
-amid that activity.  (I didn't measure it, though.)
+I'm interested to mentor too, but I haven't done anything like this -
+official mentoring, intern hosting, anything - so I will need to learn
+:)
 
-Ren=C3=A9
-
+ - Emily
