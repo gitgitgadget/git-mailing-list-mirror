@@ -2,130 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55BAC1F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 17:53:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59B241F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 17:56:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387715AbfIERxG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 13:53:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40724 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726097AbfIERxG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 13:53:06 -0400
-Received: (qmail 1001 invoked by uid 109); 5 Sep 2019 17:53:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Sep 2019 17:53:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29575 invoked by uid 111); 5 Sep 2019 17:54:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Sep 2019 13:54:49 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 5 Sep 2019 13:53:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Stephan Beyer <s-beyer@gmx.net>, Paul Tan <pyokagan@gmail.com>,
+        id S2387767AbfIER4T (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 13:56:19 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59046 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726097AbfIER4T (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 13:56:19 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5D7C08439E;
+        Thu,  5 Sep 2019 13:56:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Vc3qzOXJujVa3BO/aHrRQh0nIQE=; b=xZ7atD
+        6Q6mLYaaEdjlivyTeVCYDR13SG5zM5C2M6TJ03GPPH2sFQ8gj/EwUo2Xq2GP/ZGL
+        ebbYvT1mx3qHkgNIYeRN1VT7lQbxbuKg1AWtUbONvhEJ5shznlygWyTHfxXH05Ma
+        7CfEgFI9Yna3kURvUuHiHN0qbr8mGFqIpbq6w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oFqK+vmT0//na398CXuY7QFm7psDilnA
+        tajnkKzZf5tJsD5Eo8N2G1ZufhCVXOxxhTwy/TPjAw7lsEu9biSMvy2rx558U787
+        uZpd2/AYJqPKkAcPfhFQX7yGw5hwTb24cJQOkopL32fbZ/Cz4O4I8Z+RVO9oAE04
+        VfWRp/jZ78o=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4FCE58439D;
+        Thu,  5 Sep 2019 13:56:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 72FB28433E;
+        Thu,  5 Sep 2019 13:56:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stephan Beyer <s-beyer@gmx.net>
+Cc:     Paul Tan <pyokagan@gmail.com>, Jeff King <peff@peff.net>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Shawn O. Pearce" <spearce@spearce.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org
 Subject: Re: [PATCH] Fix maybe-uninitialized warnings found by gcc 9 -flto
-Message-ID: <20190905175304.GA23663@sigill.intra.peff.net>
 References: <20190905082459.26816-1-s-beyer@gmx.net>
- <6c6c4e71-d9e5-1ad4-74db-12c323da42f7@web.de>
+Date:   Thu, 05 Sep 2019 10:56:12 -0700
+In-Reply-To: <20190905082459.26816-1-s-beyer@gmx.net> (Stephan Beyer's message
+        of "Thu, 5 Sep 2019 10:24:59 +0200")
+Message-ID: <xmqqd0ger5j7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6c6c4e71-d9e5-1ad4-74db-12c323da42f7@web.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 73EE8CE0-D006-11E9-A27C-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 05, 2019 at 07:08:49PM +0200, René Scharfe wrote:
+Stephan Beyer <s-beyer@gmx.net> writes:
 
-> Anyway, my points are that simply initializing might not always be the
-> best fix, and that more context would help reviewers of such a patch,
-> but only if functions are reasonably short and it's not necessary to
-> follow the rabbit into a call chain hole.
+> diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
+> index 7e79b555de..ef0963e2f4 100644
+> --- a/t/helper/test-read-cache.c
+> +++ b/t/helper/test-read-cache.c
+> @@ -4,7 +4,7 @@
+>
+>  int cmd__read_cache(int argc, const char **argv)
+>  {
+> -	int i, cnt = 1, namelen;
+> +	int i, cnt = 1, namelen = 0;
+>  	const char *name = NULL;
+>
+>  	if (argc > 1 && skip_prefix(argv[1], "--print-and-refresh=", &name)) {
+		namelen = strlen(name);
 
-I started looking at these, too, and came to the same conclusion.  Some
-of these are pointing to real bugs, and just silencing the warnings
-misses the opportunity to find them.
+The above is the only assignment to namelen in this function, and
+namelen is used like so:
 
-I'll comment on the ones I did look at.
+		if (name) {
+			...
+			pos = index_name_pos(&the_index, name, namelen);
 
-> Further context:
-> 
-> 	ident_line = find_commit_header(buffer, "author", &ident_len);
-> 
-> 	if (split_ident_line(&id, ident_line, ident_len) < 0)
-> 		die(_("invalid ident line: %.*s"), (int)ident_len, ident_line);
-> 
-> find_commit_header() can return NULL.  split_ident_line() won't handle
-> that well.  So I think what's missing here is a NULL check.  If the
-> compiler is smart enough then that should silence the initialization
-> warning.
+So somebody does not realize that skip_prefix() returns true only
+when it touches name.  But skip_prefix() is inline and visible to
+the compiler, and it is quite clear that name is only touched when 
+the function returns non-zero.
 
-Yeah, this one is a segfault waiting to happen, I think, if the author
-line is missing.
+static inline int skip_prefix(const char *str, const char *prefix,
+			      const char **out)
+{
+	do {
+		if (!*prefix) {
+			*out = str;
+			return 1;
+		}
+	} while (*str++ == *prefix++);
+	return 0;
+}
 
-> > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> > index 76ce906946..d0c03b0e9b 100644
-> > --- a/builtin/pack-objects.c
-> > +++ b/builtin/pack-objects.c
-> > @@ -1171,7 +1171,7 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
-> >  {
-> >  	struct packed_git *found_pack = NULL;
-> >  	off_t found_offset = 0;
-> > -	uint32_t index_pos;
-> > +	uint32_t index_pos = 0;
-> [...]
-> So if the packing list is empty then it returns NULL without setting
-> index_pos.  Hmm.  It does set it in all other cases, no matter if oid is
-> found or not.  Is it really a good idea to make that exception?  I
-> suspect always setting index_pos here would silence the compiler as well
-> and fix the issue closer to its root.
-
-Yeah, this is a weird one. That index_pos is actually a position in the
-current hash table. And in the first object we see in pack-objects'
-input, we definitely _do_ end up with a nonsense index_pos, which then
-gets passed to packlist_alloc().
-
-But since we also need to grow the hash table during that allocation, we
-don't use index_pos at all. So setting index_pos to something known like
-"0" is kind of weird, in that we don't have a hash position at all (the
-table doesn't exist!). But it's probably the least bad thing. If we do
-that, it should happen in packlist_find().
-
-I have to agree this whole "passing around index_pos" thing looks
-complicated. It seems like we're just saving ourselves one hash lookup
-on insertion (and it's not even an expensive hash, since we're reusing
-the oid).
-
-I suspect the whole thing would also be a lot simpler using one of our
-existing hash implementations.
-
-> Didn't check the other cases.
-
-The only other one I looked at was:
-
->> int cmd__read_cache(int argc, const char **argv)
->> {
->>-       int i, cnt = 1, namelen;
->>+       int i, cnt = 1, namelen = 0;
-
-I actually saw this one the other day, because it triggered for me when
-compiling with SANITIZE=address. AFAICT it's a false positive. "name" is
-always NULL unless skip_prefix() returns true, in which case we always
-set "namelen". And we only look at "namelen" if "name" is non-NULL.
-
-This one doesn't even require LTO, because skip_prefix() is an inline
-function. I'm not sure why the compiler gets confused here. I don't mind
-initializing namelen to 0 to silence it, though (we already set name to
-NULL, so this would just match).
-
--Peff
+So it looks like it is another case of compiler getting confused.
