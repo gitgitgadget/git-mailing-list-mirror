@@ -2,85 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C27051F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 19:34:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E65761F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 19:35:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390741AbfIETeH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 15:34:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54229 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729806AbfIETeG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 15:34:06 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D6E12ADB5;
-        Thu,  5 Sep 2019 15:34:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XrjEcvOwkpQU2rautMFDgxhKGIw=; b=yhNzI5
-        B6eCUtVp+d4+nkEXDPd/n9hhvZLUAoc8Y0L5BeHFWnAZElkhUmYJGcVMwgaltkLc
-        8AjZshD7YoKwKbK5gNKmCX1TBjXVJ5DXF4nhLhHL91IEy7p2qnA+Hd3ok3ytknba
-        thsosq8h3N7pDGhq7eNJ7hKgtvbDXe5Fc2758=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oDKvcB20NI+ssuymRjsbSXnnag4YpgqI
-        SU4UDYSnwwnXrl24Odt14zOELcspw2+7jTCLgVfB0dbWIeaT0nXTKK+JO0u3B19C
-        calgFSGKzNxmo1t9FQ7fWA5TgqpQiFsy+UAsuzD8Mhliu3dAQuwlMqCJ/+qBr3IR
-        Zk69BFOA+t8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 763392ADB4;
-        Thu,  5 Sep 2019 15:34:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5C06A2ADAE;
-        Thu,  5 Sep 2019 15:34:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH] t: use LF variable defined in the test harness
-References: <xmqqwoeprsp1.fsf@gitster-ct.c.googlers.com>
-        <20190904002930.GA76383@syl.lan>
-        <xmqq7e6mr4iy.fsf@gitster-ct.c.googlers.com>
-        <20190905184716.GA12647@sigill.intra.peff.net>
-Date:   Thu, 05 Sep 2019 12:34:02 -0700
-In-Reply-To: <20190905184716.GA12647@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 5 Sep 2019 14:47:16 -0400")
-Message-ID: <xmqqmufipmfp.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2390762AbfIETfX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 15:35:23 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:41556 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726008AbfIETfW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 15:35:22 -0400
+Received: by mail-pf1-f196.google.com with SMTP id b13so2478114pfo.8
+        for <git@vger.kernel.org>; Thu, 05 Sep 2019 12:35:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=2P0W/EZ1KTaH3vgikbdG11Ze30p/CqRk3I2u3mms0N0=;
+        b=e/JkaYcQ4eGFWnNEtADtpotQ2HaankTium/MTSfjWbRgL0LM6Xcu1L5kx+VKP+BkVK
+         anXWtebf192ThzsKfM2MKCkA8/E+rgTBPZuKDrOGvVkZ67qkzdhtSOfibAGzaYeRTdrr
+         9IHA8SgqByiQCfKATwCGz/kk8tclaCcRJxq+jVS5A7YwjP1ICv5l7keEvXsD/Ha6Qmxl
+         qD1gPEJsKMedxQQp69eNAPszaGBfPulolJ0+aselc4r49jPsnLt6BZv0t+5a5TOcM5Gx
+         3ZpMR5Jy6kD+Op7s46Y/XBBSsXR31T5K+VCCOZdq+/bERDThqWWUHTSlEYTNaoOwIZW6
+         B6Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=2P0W/EZ1KTaH3vgikbdG11Ze30p/CqRk3I2u3mms0N0=;
+        b=YmDqIBW032uDMD7UBfPyX7rdteAN2v2f242t7V4ECOiyqW8nOvBEwBO7MaQHNBaftY
+         DDG+3G/uH0xz0y7FjRWHKzTXajMLEyEUQ6vPY1LM0ciEdqJyfBAjJNV69ShCuCuzOP80
+         HZH8yuKrmOoDDm50CTGjvAkHg+M+ZPsrh9xBZQ3FwSjS0Xb1SLwdQY1VEG1SRSfN/Ub/
+         3287VMrl0n8ZwMUb9iqhCgDxSny7E1Oza1buxxHv/3PbC9d90VZkElb1jd5TtQZ9ADtJ
+         QTc7CTJeqbMpWo5rCI5SwV1ln2XGEtegw+qBbW1c6Yw72dmWlEa5iNRv7T5eJyXsK/Pz
+         e4ig==
+X-Gm-Message-State: APjAAAWxwdsvRG+Dsi7oSyixnzGnH4xgleJxDB5txCXrJIGV7fovknLb
+        IHdA4FFNOteqXSTkzdy5Pk2Tz2ZDH4SzrDQ+mcs=
+X-Google-Smtp-Source: APXvYqxKI+1QH01pvxL6gvV3e1HN5+bdCQu5bXg4LoZ5YJqC7bX+7RkfbBXOGpbZMDukK4NtDqRhWoi2TEzxkPSvl48=
+X-Received: by 2002:a17:90a:8911:: with SMTP id u17mr5889714pjn.128.1567712122227;
+ Thu, 05 Sep 2019 12:35:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1E125C30-D014-11E9-9AA2-C28CBED8090B-77302942!pb-smtp1.pobox.com
+References: <CAN0heSr2zCQMM6wOM0UnD28qj_VygQ5CQHGHhMR9+H23snpt5Q@mail.gmail.com>
+ <cover.1567534373.git.martin.agren@gmail.com> <20190904032609.GD28836@sigill.intra.peff.net>
+In-Reply-To: <20190904032609.GD28836@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 5 Sep 2019 21:35:10 +0200
+Message-ID: <CAN0heSpbRvNG9okz5pqkHqDMB2BM5T+FzAbaK3sVwzGC6fjpPA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] asciidoctor-extensions: provide `<refmiscinfo/>`
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Todd Zullinger <tmz@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Thu, Sep 05, 2019 at 11:17:57AM -0700, Junio C Hamano wrote:
+On Wed, 4 Sep 2019 at 05:26, Jeff King <peff@peff.net> wrote:
 >
->> Somebody may want to go clean-up the use of various $sq and $SQ
->> locally defined by giving a unified $SQ in test-lib.sh, by the way.
+> On Tue, Sep 03, 2019 at 08:51:19PM +0200, Martin =C3=85gren wrote:
 >
-> Maybe good #leftoverbits material, since we may have Outreachy
-> applications coming up soon.
+> > When I posted v1, it turned into quite a thread [1] on AsciiDoc vs
+> > Asciidoctor vs Asciidoctor 2.0 and differences in rendering. (I am on
+> > Asciidoctor 1.5.5.)
+>
+> Yes, sadly I still can't format the docs at all with 2.0.10 (which is
+> what ships in Debian unstable).
+>
+> > do also think it makes sense to first make the "softer" switch to
+> > Asciidoctor-by-default and get that particular hurdle behind us. Then,
+> > once we're ok with dropping AsciiDoc entirely, we can do the switch to
+> > an Asciidoctor-only toolchain.
+>
+> Yeah, I do still like that as an endgame, but I like what you have here
+> as an intermediate step in the right direction.
 
-OK, then I'd refrain from doing it as a lunchtime hack myself ;-)
+Hmm, so this sounds like once I am happy with replacing AsciiDoc with
+Asciidoctor 1(.5.5), I should rather not propose a series "let's default
+to Asciidoctor!!!" but instead a slightly more careful "go with
+Asciidoctor, but document that we work badly with v2 and that the 2nd
+choice after Asciidoctor 1 should be AsciiDoc". Or do you see it
+differently? (I wonder which Asciidoctor-version Junio would be on..)
 
- * Find sq=, $sq and ${sq} case insensitively in t/.  If there is
-   any use of $SQ that does not want a single quote in it, abort
-   the whole thing.  Otherwise proceed.
-
- * Introduce an assignment SQ=\' in t/test-lib.sh, next to where LF
-   is assigned to.  Replace all uses you found in #1 with reference
-   to $SQ.
-
-#leftoverbits.
+Martin
