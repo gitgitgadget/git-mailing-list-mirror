@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A14F91F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 15:47:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 395421F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 15:47:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730937AbfIEPrn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 11:47:43 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:33280 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731868AbfIEPrm (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1732011AbfIEPrm (ORCPT <rfc822;e@80x24.org>);
         Thu, 5 Sep 2019 11:47:42 -0400
-Received: by mail-pf1-f193.google.com with SMTP id q10so2034911pfl.0
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 08:47:42 -0700 (PDT)
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:38562 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731659AbfIEPrm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 11:47:42 -0400
+Received: by mail-pl1-f196.google.com with SMTP id w11so1497412plp.5
+        for <git@vger.kernel.org>; Thu, 05 Sep 2019 08:47:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kGt7sArqWSytDm7iQxUDTJsRuu98o3F6VnKUnGwObRU=;
-        b=YZqQHGERjxWtdrXoi7qwNacr8uXjV2ZUow07seJRH0oSOmOIaykwD9s0KDNk8StFH+
-         GQnyL+vQwum//qW5ylUaKbs9xGLc6K4RpDtBs8GfPAQqH9F21KCertytNYSQ6EezGXuK
-         vKk6pewmIP0Dpgr+VvN0Qdf733FzKmraJUsZd0V6mHVTvEPyqa1WQTZAUycK0KXtBiC6
-         lPVZVvcMSW4OT90X6HdMz/TKh0ZG5GlieaCWRrj3oQu7HEARwEWwLQE4x18TcZIlOdSZ
-         S5mZH6k0+yPvanOMqqbcjyn683rlrkd6sq65mRBJy/kxbMVb1mQakOi1Z+7fdu9jT5Lx
-         FlwQ==
+        bh=rXuXc0aPQUkTYRwwPTL7J7KRk41J9ySRDKYOapXyoLI=;
+        b=QNb2mRH9CX3LFREnm0Im6M9ZMpdXuuvV8+/wGz9uXanzQ8ahfBGTqo1QGIIg/Fsh4e
+         AZa3PbSZWXAh7V4OKSbOqutwrBTWRIVNRNDhci+uFwKoTIxp+9TqKjh1KZpwBSd3usmX
+         NMP/KfiLT9wcMKvOKLg8LhlOefCMS+4Y/ax8Bp6I8SS6k1/a27bM7Qo2lipeoVzPRTjc
+         AZ8QTykmp5KMQOZGMZ+M0ZFzOS9rLX1dwUEsW0130DrFpBLIQGA2pPEs0SXxtNEVBqs4
+         XZInmNSrLAZods7dlksKQbtot/rc//0ju1jK2uOmxM4K7EGfYzDWYBajm8YNM4mdPDls
+         rvYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kGt7sArqWSytDm7iQxUDTJsRuu98o3F6VnKUnGwObRU=;
-        b=CNR2ZX0wil6Kilvq6DQmVpCeFp4Mm6Im6DdzWIUA0zU6arkHCSDkjskoReS1Jjy+ZM
-         vJq18Tj26fiOWymAHxwRSW26/RZv46iwEQmVb8FMldXB9ccHNxOj/qr56vegcs4iO3l2
-         BmpuE592awq+dnCuk9qJYvB1KLWuL3JNHjsIvfRJoTg1fB3wRCtMkp+LPctLZ6CDOoHX
-         8gC+3OJUcR3/X1V/NhBQ7Z4WgN/lDNY4+yjZJtA09Pai2Hsef45W9YXO3UZzwYVjfKho
-         QAlT3CNO2bobuqkppcRCFeb+fiuslbklD+EBDgwCMmJ0knt8yUIDMofM8Axe9FStBE0G
-         j9Rg==
-X-Gm-Message-State: APjAAAW7pB/lvNDTR0Jur9FPhBtXJsWM9Uqh5V2HCVVT1sgnLkPkT0ub
-        llseNbiBR2aPShVtBAWaMtzf/VyO
-X-Google-Smtp-Source: APXvYqxTQkKW5uWOJ8QmyoTby1s1wyM3MwJJ5dw/ndu7XHCKXSCIGmAEJZpue4tajcBIwtysbxmvEw==
-X-Received: by 2002:a17:90a:9105:: with SMTP id k5mr4724871pjo.9.1567698461739;
-        Thu, 05 Sep 2019 08:47:41 -0700 (PDT)
+        bh=rXuXc0aPQUkTYRwwPTL7J7KRk41J9ySRDKYOapXyoLI=;
+        b=S05vc9oMEXFQEVJzWBoSYb2v5djiPqZefPb9Migx/8Xqg/LzvmqdmRdC5n6vQawgzI
+         oAvdZUiIafOhMYTJLeaMUl0iQbmT7QQop5V0TO/eEQ9yURqFN8l353AzeAgzlkt2xJDb
+         ShNaLdlebwXD3wKI7q8n0v+b9zhCAnyPhAGI90owdajoH5QtPcM7StuL3y/woA4wAZ8B
+         M3jrmUOs18bEMBBuE88uTmB7ESChqlIl6UerOlW5DXW1cv5W/xTdHz4Y9PVKzcFmg1ob
+         pAx/zZ3eLWw0sOcLBwq/fVmSiAOXBXj3u4CWXnslC4TPHwr3UXdm1aDa9U4ixvfqzj3Q
+         PLLA==
+X-Gm-Message-State: APjAAAUM/DG6FaQc2Ef2Mok+OxgSK8wPzmTJ1uiCqDbVDv9yGULSig+k
+        I389c04zUnFPhDDiR7aYpB+tRSeW
+X-Google-Smtp-Source: APXvYqzrpMQ2rY5e9y4VGX5uq34X7WXVtsX2zobIBJYqQDpkvQsUfo6mKeU9LMD8Qw/4c4TNp3LGrg==
+X-Received: by 2002:a17:902:42a5:: with SMTP id h34mr4277651pld.266.1567698460855;
+        Thu, 05 Sep 2019 08:47:40 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id x16sm2339867pjn.12.2019.09.05.08.47.40
+        by smtp.gmail.com with ESMTPSA id x16sm2339867pjn.12.2019.09.05.08.47.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 05 Sep 2019 08:47:41 -0700 (PDT)
+        Thu, 05 Sep 2019 08:47:40 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
@@ -57,13 +57,12 @@ Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Samuel Lijin <sxlijin@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH v2 01/12] t7300: Add some testcases showing failure to clean specified pathspecs
-Date:   Thu,  5 Sep 2019 08:47:24 -0700
-Message-Id: <20190905154735.29784-2-newren@gmail.com>
+Subject: [RFC PATCH v2 00/12] Fix some git clean issues
+Date:   Thu,  5 Sep 2019 08:47:23 -0700
+Message-Id: <20190905154735.29784-1-newren@gmail.com>
 X-Mailer: git-send-email 2.22.1.11.g45a39ee867
-In-Reply-To: <20190905154735.29784-1-newren@gmail.com>
+In-Reply-To: <20190825185918.3909-1-szeder.dev@gmail.com>
 References: <20190825185918.3909-1-szeder.dev@gmail.com>
- <20190905154735.29784-1-newren@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -71,84 +70,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Someone brought me a testcase where multiple git-clean invocations were
-required to clean out unwanted files:
-  mkdir d{1,2}
-  touch d{1,2}/ut
-  touch d1/t && git add d1/t
-With this setup, the user would need to run
-  git clean -ffd */ut
-twice to delete both ut files.
+NOTE: This series builds on sg/clean-nested-repo-with-ignored, as it
+      (among other things) modifies his testcase from expect_failure
+      to expect_success.  Also, Peff is probably the only one who
+      remembers v1 (and even he may have forgotten it): v1 was posted
+      a year and a half ago.
 
-A little testing showed some interesting variants:
-  * If only one of those two ut files existed (either one), then only one
-    clean command would be necessary.
-  * If both directories had tracked files, then only one git clean would
-    be necessary to clean both files.
-  * If both directories had no tracked files then the clean command above
-    would never clean either of the untracked files despite the pathspec
-    explicitly calling both of them out.
+This patch series fixes a few issues with git-clean:
+  * Failure to clean when multiple pathspecs are specified, reported both
+    in April 2018[1] and again in May 2019[2].
+  * Failure to preserve both tracked and untracked files within a nested
+    Git repository reported a few weeks ago by SZEDER[3].
 
-A bisect showed that the failure to clean out the files started with
-commit cf424f5fd89b ("clean: respect pathspecs with "-d", 2014-03-10).
-However, that pointed to a separate issue: while the "-d" flag was used
-by the original user who showed me this problem, that flag should have
-been irrelevant to this problem.  Testing again without the "-d" flag
-showed that the same buggy behavior exists without using that flag, and
-has in fact existed since before cf424f5fd89b.
+[1] https://public-inbox.org/git/20180405173446.32372-4-newren@gmail.com/
+[2] https://public-inbox.org/git/20190531183651.10067-1-rafa.almas@gmail.com/
+[3] https://public-inbox.org/git/20190825185918.3909-1-szeder.dev@gmail.com/
 
-Add testcases showing that multiple untracked files within entirely
-untracked directories cannot be cleaned when specifying these files to
-git clean via pathspecs.
+I still never got answers to some questions in v1 of my RFC, so after
+considerable thought I eventually decided to:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t7300-clean.sh | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+  * Declare the existing documentation to be ambiguous and hard to
+    interpret correctly; modified the documentation to clearly
+    document 'correct behavior' with how different pieces interact.
+    
+  * Overrule four regression tests as having the wrong *expectation*,
+    and modify them to have a correct one.  That sounds like a
+    backward compatibility issue BUT: The tests were written to check
+    for issues that were orthogonal to the pieces that mattered in this
+    series and thus couldn't be viewed as actually having an opinion
+    on correct behavior on my issues; rather, they were simply
+    reinforcing existing (buggy) implementation results.
 
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index d01fd120ab..2c254c773c 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -691,6 +691,38 @@ test_expect_failure 'git clean -d skips nested repo containing ignored files' '
- 	test_path_is_file nested-repo-with-ignored-file/file
- '
- 
-+test_expect_failure 'git clean handles being told what to clean' '
-+	mkdir -p d1 d2 &&
-+	touch d1/ut d2/ut &&
-+	git clean -f */ut &&
-+	test_path_is_missing d1/ut &&
-+	test_path_is_missing d2/ut
-+'
-+
-+test_expect_failure 'git clean handles being told what to clean, with -d' '
-+	mkdir -p d1 d2 &&
-+	touch d1/ut d2/ut &&
-+	git clean -ffd */ut &&
-+	test_path_is_missing d1/ut &&
-+	test_path_is_missing d2/ut
-+'
-+
-+test_expect_failure 'git clean works if a glob is passed without -d' '
-+	mkdir -p d1 d2 &&
-+	touch d1/ut d2/ut &&
-+	git clean -f "*ut" &&
-+	test_path_is_missing d1/ut &&
-+	test_path_is_missing d2/ut
-+'
-+
-+test_expect_failure 'git clean works if a glob is passed with -d' '
-+	mkdir -p d1 d2 &&
-+	touch d1/ut d2/ut &&
-+	git clean -ffd "*ut" &&
-+	test_path_is_missing d1/ut &&
-+	test_path_is_missing d2/ut
-+'
-+
- test_expect_success MINGW 'handle clean & core.longpaths = false nicely' '
- 	test_config core.longpaths false &&
- 	a50=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
+  * Add a few tests which actually check relevant interactions of
+    parameters and setup, to make this area less ambiguous.  (Though
+    one of them was added by SZEDER before my patches, and I should
+    probably add a couple more tests...)
+
+Help from reviewers:
+
+The biggest area I need help from reviewers is to look at the commit
+messages for patches 9 and 10, to see if folks agree with my
+declaration of 'correct behavior' and my changes to the regression
+tests.  If those are good, this series can proceed.  If they aren't,
+and someone else can't provide an alternate easy-to-explain 'correct
+behavior' that we should implement and which is devoid of ugly edge
+cases for users, then this patch series may languish for another few
+years.
+
+Other notes:
+  * Patches 1-6 were included in v1 and have almost no changes (just one
+    fix pointed out by Peff).
+  * Patch 6's commit message has some additional RFC-related comments
+    and questions, one of which ties in with Patch 9.
+  * Patch 7 was added as per (old) conversation with Peff.
+  * Patch 9 & 10 are in most need of review (see above); each has
+    lengthy commit messages.
+  * It would be nice if someone knows whether the codepath edited in
+    Patch 12 is dead code.  If so, we could change that patch to just
+    drop that if-check block.  If it's not dead code, that patch fixes
+    what is probably a rare but ugly bug.
+
+Elijah Newren (12):
+  t7300: Add some testcases showing failure to clean specified pathspecs
+  dir: fix typo in comment
+  dir: fix off-by-one error in match_pathspec_item
+  dir: Directories should be checked for matching pathspecs too
+  dir: Make the DO_MATCH_SUBMODULE code reusable for a non-submodule
+    case
+  dir: If our pathspec might match files under a dir, recurse into it
+  dir: add commentary explaining match_pathspec_item's return value
+  git-clean.txt: do not claim we will delete files with -n/--dry-run
+  clean: disambiguate the definition of -d
+  clean: avoid removing untracked files in a nested git repository
+  clean: rewrap overly long line
+  clean: fix theoretical path corruption
+
+ Documentation/git-clean.txt | 16 +++++-----
+ builtin/clean.c             | 17 ++++++++--
+ dir.c                       | 63 +++++++++++++++++++++++++++----------
+ dir.h                       |  8 +++--
+ t/t7300-clean.sh            | 44 +++++++++++++++++++++++---
+ 5 files changed, 114 insertions(+), 34 deletions(-)
+
 -- 
 2.22.1.11.g45a39ee867
 
