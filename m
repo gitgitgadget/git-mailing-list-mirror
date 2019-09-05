@@ -2,93 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E835D1F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 18:57:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6597A1F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 19:01:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388789AbfIES5k (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 14:57:40 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58653 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732004AbfIES5j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 14:57:39 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D303284AD2;
-        Thu,  5 Sep 2019 14:57:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9IEVlc74EQ7QYerU7ILtzIjAqf8=; b=aUEGLp
-        nIpK7IfmggY3qPYxmFb3L1hgUtkEwk17EXLv65K4kUyxfUGJuOoB1p3Uxdd6mSb4
-        gipxm/z6pluLmBtGxhz9LPedZszLg5kzL/a+PE5yi2ARcSZhNbyo0dcOxYH+fqDP
-        Xi7Jb5diYnI++NFx0LRQXU2JtCQT/EY2q4Bdk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PCgxAtUAXAS/4aEw0haY1fY4N8By0sM7
-        U4Pv8rJFm3VlLprPo80gD2Yk+/Q5LELu6cKGMIc9ovC7d7ejZSmEIxdQRvUFSkgw
-        MtDqvgtrOAU458D8ukSZKvJVlWxTGQ736sfOLQMzLGsOC4hoKPNjTj3zmL1uohwK
-        ETld67CiN0I=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CB95484ACF;
-        Thu,  5 Sep 2019 14:57:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 015CC84ACC;
-        Thu,  5 Sep 2019 14:57:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
-        Jon Simons <jon@jonsimons.org>, git@vger.kernel.org,
-        me@ttaylorr.com, sunshine@sunshineco.com, stolee@gmail.com
-Subject: Re: [PATCH v3 1/2] list-objects-filter: only parse sparse OID when 'have_git_dir'
-References: <20190829231925.15223-1-jon@jonsimons.org>
-        <20190829231925.15223-2-jon@jonsimons.org>
-        <xmqqr252y199.fsf@gitster-ct.c.googlers.com>
-        <20190904045424.GA6488@sigill.intra.peff.net>
-Date:   Thu, 05 Sep 2019 11:57:32 -0700
-In-Reply-To: <20190904045424.GA6488@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 4 Sep 2019 00:54:24 -0400")
-Message-ID: <xmqqv9u6po4j.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2388870AbfIETBf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 15:01:35 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39831 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728258AbfIETBf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 15:01:35 -0400
+Received: by mail-wm1-f66.google.com with SMTP id q12so4331873wmj.4
+        for <git@vger.kernel.org>; Thu, 05 Sep 2019 12:01:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ebDxXi9tWZnceiI0g4zfeGXz/Sld6Bxduqqc80E3RbE=;
+        b=rUZliXDuaU5AAFgVXpew3WnbUbADhkUXdQxtR1+pBSfJ/DePdnU8123WdAK8ZYt1J8
+         HMCYw0+Ith3dM1UIr3XTk4ToAV+Xwdb0wN5qZmJHzu636xsd9h4USY3v6QCHtosgO2Vq
+         MyG3qDWeVTLtOz7aLEaxA2foC9dD6IRmKgvR0D/ZY2xdXnhYi0eqXLg/zt9MIq/2hRCH
+         VRku6MAmHiCalnrkf308Q7kZHUxrCAor37hqgQUqLuqZmLtqDs0gWch3vw7iG3QLgJ6g
+         D6WnwwdYJ0Op5gMEISoHsB9B32nYZIY1Jefs+IRL160Gujc0rRVRZ2qNi1h4Q1IOfniX
+         ILfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ebDxXi9tWZnceiI0g4zfeGXz/Sld6Bxduqqc80E3RbE=;
+        b=tzLnTzXO9lzif8RAKvEm5OAUFsA3pqWi4MW0X7jEqbrG6cwuQaPt5PvN+rnQuNQewg
+         Pw9q7p6aRAR4unUjKPuQuZgUQ8ithocfy+Em1hKncbZHyHode7XKxVArSmwro+/zv7dZ
+         d0AoqGnu/PYn36jOQAEf+Vd5DR15/Pr5fVKjI8HnsQp5KP4EsCDqPZ9nq96UIDCFi4P9
+         V3F6q29LY0hvIDnjaQVH6tvSDmVKqV4jDaQKAmhfOWoqBf/P25R69XTwGTrjt4ovEs56
+         moZRc0NcoJ8SUpSShKd4IFcP+mcNAZWccUp3dyUOUKZ5Eai7DVasVvI4J6Yfvez77PSm
+         lR2A==
+X-Gm-Message-State: APjAAAUggoPIt2kyk3IyrdFR9iJuO39VLq0GmCWX25GgTxpDBRlaRv4M
+        OG4Q7kdyavHURdboQM0EbsrYahgu
+X-Google-Smtp-Source: APXvYqwKPc4LeevUQqpeDlMPQqk+6och/c6V84ZAtmj6VoQwbXya2GOWtXwTTiw6J/XPIs/aA60MqQ==
+X-Received: by 2002:a1c:7d03:: with SMTP id y3mr4052314wmc.71.1567710093108;
+        Thu, 05 Sep 2019 12:01:33 -0700 (PDT)
+Received: from szeder.dev (x4db65166.dyn.telefonica.de. [77.182.81.102])
+        by smtp.gmail.com with ESMTPSA id b1sm3837862wmj.4.2019.09.05.12.01.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 05 Sep 2019 12:01:32 -0700 (PDT)
+Date:   Thu, 5 Sep 2019 21:01:26 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Rafael =?utf-8?B?QXNjZW5zw6Nv?= <rafa.almas@gmail.com>,
+        Samuel Lijin <sxlijin@gmail.com>
+Subject: Re: [RFC PATCH v2 00/12] Fix some git clean issues
+Message-ID: <20190905190126.GA32087@szeder.dev>
+References: <20190825185918.3909-1-szeder.dev@gmail.com>
+ <20190905154735.29784-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 05B3426C-D00F-11E9-94F4-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190905154735.29784-1-newren@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Sep 05, 2019 at 08:47:23AM -0700, Elijah Newren wrote:
+> This patch series fixes a few issues with git-clean:
 
-> So these patches are punting on the greater question of why we want to
-> parse so early, and are not making anything worse. AFAICT, "clone
-> --filter=sparse:oid" has never worked (even though our tests did cover
-> the underlying rev-list and pack-objects code paths).
-> ...
-> TBH, I'm not sure why the original is so eager to parse early. I guess
-> it allows:
->
->   - a dual use of the options parser; we can use it both to sanity-check
->     the options before sending them to a server, and to actually use the
->     filter ourselves.
->
->   - earlier detection maybe gives us a cleaner error path (e.g.,
->     rev-list can do its own error handling). But I'd think doing it when
->     we actually initialize the filter would be enough.
->
-> I.e., if we want to go all the way, I think this two-patch series could
-> basically be replaced with something like the (totally untested)
-> approach below, which just pushes the parsing closer to the
-> point-of-use.
->
-> Adding Jeff Hostetler to the cc, in case he recalls any reason not to
-> use that approach.
+>   * Failure to preserve both tracked and untracked files within a nested
+>     Git repository reported a few weeks ago by SZEDER[3].
 
+Wow, I didn't expect a 12 patch series to fix that issue...
 Thanks.
+
+> Elijah Newren (12):
+>   t7300: Add some testcases showing failure to clean specified pathspecs
+>   dir: fix typo in comment
+>   dir: fix off-by-one error in match_pathspec_item
+>   dir: Directories should be checked for matching pathspecs too
+>   dir: Make the DO_MATCH_SUBMODULE code reusable for a non-submodule
+>     case
+>   dir: If our pathspec might match files under a dir, recurse into it
+
+Nit: no capital letters after the '<area>:' prefix.
+
+>   dir: add commentary explaining match_pathspec_item's return value
+>   git-clean.txt: do not claim we will delete files with -n/--dry-run
+>   clean: disambiguate the definition of -d
+>   clean: avoid removing untracked files in a nested git repository
+>   clean: rewrap overly long line
+>   clean: fix theoretical path corruption
+> 
+>  Documentation/git-clean.txt | 16 +++++-----
+>  builtin/clean.c             | 17 ++++++++--
+>  dir.c                       | 63 +++++++++++++++++++++++++++----------
+>  dir.h                       |  8 +++--
+>  t/t7300-clean.sh            | 44 +++++++++++++++++++++++---
+>  5 files changed, 114 insertions(+), 34 deletions(-)
+> 
+> -- 
+> 2.22.1.11.g45a39ee867
+> 
