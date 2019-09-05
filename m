@@ -2,117 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 977591F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 18:52:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E835D1F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 18:57:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390534AbfIESwp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 14:52:45 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:39222 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731865AbfIESwp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 14:52:45 -0400
-Received: by mail-io1-f67.google.com with SMTP id d25so7135220iob.6
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 11:52:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5fPw1lr8Yc+PkLiBwcpTTHQmdBj1e80Mknc/pPy9ahM=;
-        b=htM14bwjK28kWtu4IBxAERZMZdYkEmuo5+EiaEluEC5W+QDnZB2GrEIH2Z9doIGRsS
-         +/uUIaYil0MRRPI3miYYoO+rTIr+9sXE5oRmfyJybyUXNDP98tIo7kQ0w773g/rPILlJ
-         aLI/uiRMnIMsvIj2pmzSitKnWvYolWFEn2IiRXVxxMYoij+qDBvRV9jMadjWyTt+iNJ9
-         D0zYJ7jAFoT4bSiuejVV3Rw0vKr4SETGy4rJsVPvKY4H0UfAcuSFCzLi7VLNXs1cdtex
-         OLTwlqtijcoN3wUP+2cMO6HGrVQQ56kIAaogPleq8FxbaUy47X5Q+lgSh8pMo4eeiW6g
-         M8+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5fPw1lr8Yc+PkLiBwcpTTHQmdBj1e80Mknc/pPy9ahM=;
-        b=BpCkxXcnHsEXr8llGRwjrC/Fnd87WoQeMtEGClY+TSHDNp3wTiGNfSUprlAadzmUOl
-         PQoqaqfqy0RkSWiyFJGbIsD9DP/PO7DKHfL29UqfQMvHaC9zImLb++hKuFgF86YQ8qB6
-         /g8WHdb+iozNkANhZMjU5uJQI6hjD2sq5Y+6/a9IVSnFUTvgiyilujTzzm2rycv74uco
-         3i+q9LBqw9hN53f9d63LyDL1wblpcgqdj2IrQwa2OQJ55mVYgFt16ytv7v59NQGudWkg
-         PQ3Net07UXsCi2FPsaopqZOtzqpC+X1lLoYe589XUWpOD+2eMj3s2eyj6RcT/lFH7SmE
-         kMIw==
-X-Gm-Message-State: APjAAAUw4KHlHnkugPt7Z76C7Hq5+Po4JDmneYRXQWdEsiWepApmZuKK
-        FoSASVGfJbENQ67EmoZC49Zr0A==
-X-Google-Smtp-Source: APXvYqwc0C3lhOq2sS6QpC6nYJX0DV88EcbxBMbgTp8+P/02KFIb7r7VppUg5cNLyqTSpbdJkEyqEQ==
-X-Received: by 2002:a5d:97cf:: with SMTP id k15mr5729049ios.151.1567709564681;
-        Thu, 05 Sep 2019 11:52:44 -0700 (PDT)
-Received: from localhost ([2601:401:c500:7dd8:47b:fba1:dd5f:7748])
-        by smtp.gmail.com with ESMTPSA id z20sm3200018iof.38.2019.09.05.11.52.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2019 11:52:44 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 14:52:43 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH] t: use LF variable defined in the test harness
-Message-ID: <20190905185243.GA50575@syl.local>
-References: <xmqqwoeprsp1.fsf@gitster-ct.c.googlers.com>
- <20190904002930.GA76383@syl.lan>
- <xmqq7e6mr4iy.fsf@gitster-ct.c.googlers.com>
+        id S2388789AbfIES5k (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 14:57:40 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58653 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732004AbfIES5j (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 14:57:39 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D303284AD2;
+        Thu,  5 Sep 2019 14:57:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9IEVlc74EQ7QYerU7ILtzIjAqf8=; b=aUEGLp
+        nIpK7IfmggY3qPYxmFb3L1hgUtkEwk17EXLv65K4kUyxfUGJuOoB1p3Uxdd6mSb4
+        gipxm/z6pluLmBtGxhz9LPedZszLg5kzL/a+PE5yi2ARcSZhNbyo0dcOxYH+fqDP
+        Xi7Jb5diYnI++NFx0LRQXU2JtCQT/EY2q4Bdk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PCgxAtUAXAS/4aEw0haY1fY4N8By0sM7
+        U4Pv8rJFm3VlLprPo80gD2Yk+/Q5LELu6cKGMIc9ovC7d7ejZSmEIxdQRvUFSkgw
+        MtDqvgtrOAU458D8ukSZKvJVlWxTGQ736sfOLQMzLGsOC4hoKPNjTj3zmL1uohwK
+        ETld67CiN0I=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CB95484ACF;
+        Thu,  5 Sep 2019 14:57:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 015CC84ACC;
+        Thu,  5 Sep 2019 14:57:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Jon Simons <jon@jonsimons.org>, git@vger.kernel.org,
+        me@ttaylorr.com, sunshine@sunshineco.com, stolee@gmail.com
+Subject: Re: [PATCH v3 1/2] list-objects-filter: only parse sparse OID when 'have_git_dir'
+References: <20190829231925.15223-1-jon@jonsimons.org>
+        <20190829231925.15223-2-jon@jonsimons.org>
+        <xmqqr252y199.fsf@gitster-ct.c.googlers.com>
+        <20190904045424.GA6488@sigill.intra.peff.net>
+Date:   Thu, 05 Sep 2019 11:57:32 -0700
+In-Reply-To: <20190904045424.GA6488@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 4 Sep 2019 00:54:24 -0400")
+Message-ID: <xmqqv9u6po4j.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7e6mr4iy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 05B3426C-D00F-11E9-94F4-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 05, 2019 at 11:17:57AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> >   - t/t3005: this script calls the variable '$new_line', but could be
-> >     renamed to LF and then removed in a second patch
->
-> It is worse than that, isn't it?
->
-> If it used $new_line, then it would probably have been a good idea
-> to somehow make a separate patch related to this one and make a
-> series about "use $LF from test-lib", but ever since its beginning
-> at 0f64bfa9 ("ls-files: fix pathspec display on error", 2011-08-01),
-> $new_line is assigned once but never used in the script.
+Jeff King <peff@peff.net> writes:
 
-Ah, thanks for catching it ;-). I think the patch below the scissors is
-totally right; there's obviously no need for a preparatory patch here
-other than the one you provided.
+> So these patches are punting on the greater question of why we want to
+> parse so early, and are not making anything worse. AFAICT, "clone
+> --filter=sparse:oid" has never worked (even though our tests did cover
+> the underlying rev-list and pack-objects code paths).
+> ...
+> TBH, I'm not sure why the original is so eager to parse early. I guess
+> it allows:
+>
+>   - a dual use of the options parser; we can use it both to sanity-check
+>     the options before sending them to a server, and to actually use the
+>     filter ourselves.
+>
+>   - earlier detection maybe gives us a cleaner error path (e.g.,
+>     rev-list can do its own error handling). But I'd think doing it when
+>     we actually initialize the filter would be enough.
+>
+> I.e., if we want to go all the way, I think this two-patch series could
+> basically be replaced with something like the (totally untested)
+> approach below, which just pushes the parsing closer to the
+> point-of-use.
+>
+> Adding Jeff Hostetler to the cc, in case he recalls any reason not to
+> use that approach.
 
-> Somebody may want to go clean-up the use of various $sq and $SQ
-> locally defined by giving a unified $SQ in test-lib.sh, by the way.
->
-> -- >8 --
-> Subject: t3005: remove unused variable
->
-> Since the beginning of the script, $new_line variable was never used.
-> Remove it.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  t/t3005-ls-files-relative.sh | 2 --
->  1 file changed, 2 deletions(-)
->
-> diff --git a/t/t3005-ls-files-relative.sh b/t/t3005-ls-files-relative.sh
-> index 209b4c7cd8..583e467683 100755
-> --- a/t/t3005-ls-files-relative.sh
-> +++ b/t/t3005-ls-files-relative.sh
-> @@ -7,8 +7,6 @@ This test runs git ls-files with various relative path arguments.
->
->  . ./test-lib.sh
->
-> -new_line='
-> -'
->  sq=\'
->
->  test_expect_success 'prepare' '
-
-Thanks,
-Taylor
+Thanks.
