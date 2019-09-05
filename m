@@ -2,108 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6597A1F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 19:01:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE9D31F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 19:09:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388870AbfIETBf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 15:01:35 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:39831 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728258AbfIETBf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 15:01:35 -0400
-Received: by mail-wm1-f66.google.com with SMTP id q12so4331873wmj.4
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 12:01:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ebDxXi9tWZnceiI0g4zfeGXz/Sld6Bxduqqc80E3RbE=;
-        b=rUZliXDuaU5AAFgVXpew3WnbUbADhkUXdQxtR1+pBSfJ/DePdnU8123WdAK8ZYt1J8
-         HMCYw0+Ith3dM1UIr3XTk4ToAV+Xwdb0wN5qZmJHzu636xsd9h4USY3v6QCHtosgO2Vq
-         MyG3qDWeVTLtOz7aLEaxA2foC9dD6IRmKgvR0D/ZY2xdXnhYi0eqXLg/zt9MIq/2hRCH
-         VRku6MAmHiCalnrkf308Q7kZHUxrCAor37hqgQUqLuqZmLtqDs0gWch3vw7iG3QLgJ6g
-         D6WnwwdYJ0Op5gMEISoHsB9B32nYZIY1Jefs+IRL160Gujc0rRVRZ2qNi1h4Q1IOfniX
-         ILfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ebDxXi9tWZnceiI0g4zfeGXz/Sld6Bxduqqc80E3RbE=;
-        b=tzLnTzXO9lzif8RAKvEm5OAUFsA3pqWi4MW0X7jEqbrG6cwuQaPt5PvN+rnQuNQewg
-         Pw9q7p6aRAR4unUjKPuQuZgUQ8ithocfy+Em1hKncbZHyHode7XKxVArSmwro+/zv7dZ
-         d0AoqGnu/PYn36jOQAEf+Vd5DR15/Pr5fVKjI8HnsQp5KP4EsCDqPZ9nq96UIDCFi4P9
-         V3F6q29LY0hvIDnjaQVH6tvSDmVKqV4jDaQKAmhfOWoqBf/P25R69XTwGTrjt4ovEs56
-         moZRc0NcoJ8SUpSShKd4IFcP+mcNAZWccUp3dyUOUKZ5Eai7DVasVvI4J6Yfvez77PSm
-         lR2A==
-X-Gm-Message-State: APjAAAUggoPIt2kyk3IyrdFR9iJuO39VLq0GmCWX25GgTxpDBRlaRv4M
-        OG4Q7kdyavHURdboQM0EbsrYahgu
-X-Google-Smtp-Source: APXvYqwKPc4LeevUQqpeDlMPQqk+6och/c6V84ZAtmj6VoQwbXya2GOWtXwTTiw6J/XPIs/aA60MqQ==
-X-Received: by 2002:a1c:7d03:: with SMTP id y3mr4052314wmc.71.1567710093108;
-        Thu, 05 Sep 2019 12:01:33 -0700 (PDT)
-Received: from szeder.dev (x4db65166.dyn.telefonica.de. [77.182.81.102])
-        by smtp.gmail.com with ESMTPSA id b1sm3837862wmj.4.2019.09.05.12.01.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Sep 2019 12:01:32 -0700 (PDT)
-Date:   Thu, 5 Sep 2019 21:01:26 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Rafael =?utf-8?B?QXNjZW5zw6Nv?= <rafa.almas@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>
-Subject: Re: [RFC PATCH v2 00/12] Fix some git clean issues
-Message-ID: <20190905190126.GA32087@szeder.dev>
-References: <20190825185918.3909-1-szeder.dev@gmail.com>
- <20190905154735.29784-1-newren@gmail.com>
+        id S2387413AbfIETJ4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 15:09:56 -0400
+Received: from mout.web.de ([212.227.15.3]:41891 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731206AbfIETJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 15:09:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1567710582;
+        bh=GxhL6kgu1cl5uZ/RDXX4QPaDfnXoiq1D/7brbm266mw=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=PIHGapfcgCRlNNhRpiFLV4pC2Hz7dG5xG9etK/EAlExLXWUbBB7fUyTy1kLntyY+h
+         O/UCGiEqkf0ebZFVfUiwWvxo5vQH5Hk4rfR4WVp/hUoSrpX8gyzyz5XsutA6zeiJtZ
+         RZBoPDWe+6o1n1wGdyhPLJSyWcz7KMjoHW6IdGl4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MRUC0-1hhi98151U-00SdlA; Thu, 05
+ Sep 2019 21:09:42 +0200
+Subject: Re: [PATCH] Fix maybe-uninitialized warnings found by gcc 9 -flto
+To:     Jeff King <peff@peff.net>
+Cc:     Stephan Beyer <s-beyer@gmx.net>, Paul Tan <pyokagan@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <20190905082459.26816-1-s-beyer@gmx.net>
+ <6c6c4e71-d9e5-1ad4-74db-12c323da42f7@web.de>
+ <20190905175304.GA23663@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <b4f53049-ff50-8143-1653-d321cce6421c@web.de>
+Date:   Thu, 5 Sep 2019 21:09:27 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <20190905175304.GA23663@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190905154735.29784-1-newren@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:2nN/NGguPhahSpkm7HmO4dJrs2koVYpoWUzpjQPNHvrnOMQBfyi
+ 2tuBMbC2Ur57nxWNjeVoFBLbMd1zSN387tY6jZej67kbUdF2klR037lRRobNxNPpJLMcyyR
+ l266NuG6mdqDppPiOJkeSIu63zzO/AT62qVOIkvvgIDsUBjMgdqN/Va8Lz66ACxrR0qQohX
+ wk9hi90chFcwgfLLH8Q6A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vkL6gtdE/6w=:nNgaDUJa8+/U0a31ir8xvb
+ xzbktB+pxu3sMK+zjY/9qg7O9AWkV68KeviD/4aa7kXsOOSCbUuEF3ahwGKQ0NB49rDJA6h1Y
+ fP6cjR6Sb0HuKNdNy3IW56vTppg+W8XPejScjGJotqB1zZPbN/1tbqO7RljU5RTbALwA6Bo6M
+ JWU+kpXbSERvIdzxlKle4RrOPeB+R9yWY7q3G3FKnNPAY/XP4UIiv6tW87eZdZ/x1A6xEGv1U
+ p+eqefvBvTx+oSdhLsvQn3P7x5bnwAJuDWouqDdCJD8Dm3K+RkcGh1YxEsx6T+EinauIDJ0AV
+ sZofRz4NBijLCYZQu9chRv9Uc5EJhvIMgkEE7JbFRM45cC9pmKNOBQpYjtzmE8RChTmDUPZ+7
+ iS5gBmcYnE8qTrmYZLvyKw9Ac+zZx14tS7+bpw3OJ6SM1cz4FQBYgjarF6ZcUAy8wGz0F6THD
+ 1avxWsNRj6PvhPJ2qpBncNVjh+AY6vdhjdelS8BBt+p3AT5yeO9QK8IpDTkp87pL3VwJ1knyZ
+ LQ6JWpffp5LGY4OkSULghqF51+f7dJc3n7FAXgxUMFlVYGoEm0ADKtL5E6r66WMccBfE8jOQr
+ zYftix0YCEsMbg7OEflQKsRf4IGjTNLhqty5izVkOG0XpA+/3iDzNw7nB30MeMK1BwaR+6uOv
+ NN/Yk/S4d3KJOPzCOO/xVi8i0B8rqmyvh0PbHgNZu9DtUJ6xSareP40SpLRxleKHxfn/FEwGT
+ 5kBVyxItkV/Z8+T23YtSp8L1QEu0z4cs9FNzBF9dn6WtWGOabsMl0m1g9nEi7ASGJb1dxlNtl
+ qkQ+Hr7pfYpORAV/eLVXqXtF3eeV+46QpIOLqgcioCrNC/oZOUpJPpO0KrhBsGvwU66P5iDWP
+ aoalxKKvX+wzKmD4iwz92YvBWGKeDSMjlzAMX8RQNvNQju/rcLtbc+x/WEbyZtqk7gSOOryuW
+ XvvfU9/9XxB8bOiYB6mkrquqL/QV8tVn/TVEKvT3erH0tpGO43Kv26fAjPx5fw43MIu3O8IqW
+ HIdN9rvDKTd/5w7z384xBnlTrsSDnOfcACP7Il5ExAV+I8jdTUWHkXUK6HMEO3yYvuGXKg3F5
+ F6XSAiqo66aat90UlN30Elxj5HyKUT2P4tXNiOHS5LZRScFeLGhWIx7lTiIK8GuKl9APIsBHs
+ BnpLaxCc74hm0gAL/rZg+2Cep2vs7cCklVOyrkSKZHfPkh0e9QwdcbhRgh1Wo+QP+vgAU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 05, 2019 at 08:47:23AM -0700, Elijah Newren wrote:
-> This patch series fixes a few issues with git-clean:
+Am 05.09.19 um 19:53 schrieb Jeff King:
+>>> int cmd__read_cache(int argc, const char **argv)
+>>> {
+>>> -       int i, cnt =3D 1, namelen;
+>>> +       int i, cnt =3D 1, namelen =3D 0;
+>
+> I actually saw this one the other day, because it triggered for me when
+> compiling with SANITIZE=3Daddress. AFAICT it's a false positive. "name" =
+is
+> always NULL unless skip_prefix() returns true, in which case we always
+> set "namelen". And we only look at "namelen" if "name" is non-NULL.
+>
+> This one doesn't even require LTO, because skip_prefix() is an inline
+> function. I'm not sure why the compiler gets confused here.
 
->   * Failure to preserve both tracked and untracked files within a nested
->     Git repository reported a few weeks ago by SZEDER[3].
+Yes, that's curious.
 
-Wow, I didn't expect a 12 patch series to fix that issue...
-Thanks.
+> I don't mind
+> initializing namelen to 0 to silence it, though (we already set name to
+> NULL, so this would just match).
 
-> Elijah Newren (12):
->   t7300: Add some testcases showing failure to clean specified pathspecs
->   dir: fix typo in comment
->   dir: fix off-by-one error in match_pathspec_item
->   dir: Directories should be checked for matching pathspecs too
->   dir: Make the DO_MATCH_SUBMODULE code reusable for a non-submodule
->     case
->   dir: If our pathspec might match files under a dir, recurse into it
+Pushing the strlen() call into the loop and getting rid of namelen should
+work as well -- and I'd be surprised if this had a measurable performance
+impact.
 
-Nit: no capital letters after the '<area>:' prefix.
-
->   dir: add commentary explaining match_pathspec_item's return value
->   git-clean.txt: do not claim we will delete files with -n/--dry-run
->   clean: disambiguate the definition of -d
->   clean: avoid removing untracked files in a nested git repository
->   clean: rewrap overly long line
->   clean: fix theoretical path corruption
-> 
->  Documentation/git-clean.txt | 16 +++++-----
->  builtin/clean.c             | 17 ++++++++--
->  dir.c                       | 63 +++++++++++++++++++++++++++----------
->  dir.h                       |  8 +++--
->  t/t7300-clean.sh            | 44 +++++++++++++++++++++++---
->  5 files changed, 114 insertions(+), 34 deletions(-)
-> 
-> -- 
-> 2.22.1.11.g45a39ee867
-> 
+Ren=C3=A9
