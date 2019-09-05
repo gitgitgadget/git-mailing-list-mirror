@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 284B21F461
-	for <e@80x24.org>; Thu,  5 Sep 2019 15:47:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FAC01F461
+	for <e@80x24.org>; Thu,  5 Sep 2019 15:47:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388218AbfIEPrw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Sep 2019 11:47:52 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:44484 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733016AbfIEPrv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Sep 2019 11:47:51 -0400
-Received: by mail-pf1-f193.google.com with SMTP id q21so1999181pfn.11
-        for <git@vger.kernel.org>; Thu, 05 Sep 2019 08:47:51 -0700 (PDT)
+        id S2388823AbfIEPrx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Sep 2019 11:47:53 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:44303 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733082AbfIEPru (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Sep 2019 11:47:50 -0400
+Received: by mail-pg1-f195.google.com with SMTP id i18so1622498pgl.11
+        for <git@vger.kernel.org>; Thu, 05 Sep 2019 08:47:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Yafn+37hmpZyxStW4G5RncCd900oBQ0qx42ECk7SDas=;
-        b=SX6hyarSmtz73puKXLQ6TyKNAcelAmN58uuUkrlVSqPYQFeGrjUXCqE1IrWkqzZzLs
-         it+UxK7HlLcgGo6c8DGYigfCApQ/+l1i3w2ANG56IC/dLq18WSVSyDNxl4DgzISPrOsT
-         TeuFIDJrJKKYQnIaQkrPvOoZO5QZ45FWE4g7efsOdSLOIeK/iwPohIcKO3gqtVPjim85
-         E5w/j1sedzoc6TTxmstuVehrxLFenG+Cshwzvqjy2nBCz8EfzoE4H/5W40fNE/2K2mSw
-         yfS6H0Hg5I4RgiQsvMmc95Fi9reaqPy0jG2W2ToBc/8HBn5UPbgDsOYaDR+ZT+OtBBb/
-         MT4g==
+        bh=ZJs66Nc6ZSu+I06JJCDfYR6cRcSXb2PAkvEW0Ts4on8=;
+        b=CCFkIs6rX4VgvaSLPdL/faCJ7uuop3+doIvjsQNH2eTf4ER6nxVObZkqP/NeSv2us5
+         vkCzDkH6zsQHzAvtD7dJ4B1k+ertr9aUq5enW07FNOx6vfGTVBqO5GejU7rnNnd470FK
+         0zgNEQ9KEj/WV1pZ8brLl03ErdEAqnKtzYCVzoMHEF3dsUEj4s/qKyH1Qx+vwM2QEBt8
+         OzI3o4CQarQJr2T+GQOfgIzCYku9sE1oF07I4oi4kzkMJ1KrmIkGEUbVNZx25OgukuYB
+         kAAHL0+mOVUce3DoI7WMrLTiuGRphBK/eTjwqratBWlTkBs7Fu8PJO8Xzy9UjdSRBga/
+         bVEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Yafn+37hmpZyxStW4G5RncCd900oBQ0qx42ECk7SDas=;
-        b=sfDJR+zh+kJZ4rDYUgyq6RI2EXcD6S/bX/ZQFKEpz1KywT0XGwUBP9g/nxRzSZ3+8y
-         n9MgvZDaElH91i7Wpc2NZcG9nKhzom06jD4C2S7xY4tm+dMZgp/mD0teyWUMuPK02avM
-         iXOsF2Sz0W2V1OuIQWC+QNNNdyhDO3HbUnuE3IupcliqJbFjlqI/IrlL/1zfIaZ8crqL
-         6M8HrngQU3BUfAnMi00Wzi712JoAacnU7bj17fnwg9eA1dgq2/D/hPVuEDusfTKkRLBw
-         +EhY5gI2uKTJuKgGydm6519V1/cay0dS48eKP8Lck/0DZWv5kMm+BgJ1Tjig51G/AW4E
-         RWZQ==
-X-Gm-Message-State: APjAAAVxUdG3EiQb/bAyTQLn6Is5x3xF07R5V9dBp/xefNVCPmo8yKsa
-        4hVcqjnX3eHkhRSg/fqlmy7ZPFoR
-X-Google-Smtp-Source: APXvYqxkMPxLYmiQU69Mnu4nykXu2sNTl0djjnRqAztSDt2lEoc1rJbvDmmtOjX7zqhfEZal+n6u3A==
-X-Received: by 2002:a62:ee0a:: with SMTP id e10mr4731756pfi.197.1567698470733;
-        Thu, 05 Sep 2019 08:47:50 -0700 (PDT)
+        bh=ZJs66Nc6ZSu+I06JJCDfYR6cRcSXb2PAkvEW0Ts4on8=;
+        b=LdTAaQqvYP7CDn0SoFsqaO/PgdkgEsmN1G+lpnk/ao3BEVGmh4ncHtuiZA3UoLIiUV
+         lU45iLeDtTWB1U2ysGgC3T0geNn3Ixr0qUM7KRUzGvZZ3ESCyUujQ6+30VQep1pNraOm
+         8mgtne6NZGJBnmYv0gbPzkbHj6OLTAcnri6XfKiTVnEJHNETx/cJeByWjFsGNQP/ZGaZ
+         4Tkjnf0BhhbyAfdPwPrQEFRfXX23UArADtmE3U4vQg+b1DPGgMJoKC5S7hWbfyDybR5H
+         F7ORG183FJgSNNtb6FZp8tvKvDy7+IUlTqXEpfbhRcyV51Uuo/0kh8C5iiX9kEKxwWBy
+         +kWw==
+X-Gm-Message-State: APjAAAXxe2yNcmTnxYBL+mabVA3zIHzv0NjtwEwFIHZIn3vKglQdU7Wm
+        6MMcxSFAZ9KOyh5fU+VuKdn6Weq4
+X-Google-Smtp-Source: APXvYqyIHsc7RmuCmZ5vRJuy5KvoOC1bO7zGHG1XAaWrQIduSSAJO/x5+N27ecm/9gHM8ARnxGUUew==
+X-Received: by 2002:a63:1:: with SMTP id 1mr3753736pga.162.1567698469645;
+        Thu, 05 Sep 2019 08:47:49 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id x16sm2339867pjn.12.2019.09.05.08.47.49
+        by smtp.gmail.com with ESMTPSA id x16sm2339867pjn.12.2019.09.05.08.47.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 05 Sep 2019 08:47:50 -0700 (PDT)
+        Thu, 05 Sep 2019 08:47:49 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
@@ -57,9 +57,9 @@ Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Samuel Lijin <sxlijin@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH v2 10/12] clean: avoid removing untracked files in a nested git repository
-Date:   Thu,  5 Sep 2019 08:47:33 -0700
-Message-Id: <20190905154735.29784-11-newren@gmail.com>
+Subject: [RFC PATCH v2 09/12] clean: disambiguate the definition of -d
+Date:   Thu,  5 Sep 2019 08:47:32 -0700
+Message-Id: <20190905154735.29784-10-newren@gmail.com>
 X-Mailer: git-send-email 2.22.1.11.g45a39ee867
 In-Reply-To: <20190905154735.29784-1-newren@gmail.com>
 References: <20190825185918.3909-1-szeder.dev@gmail.com>
@@ -71,213 +71,152 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Users expect files in a nested git repository to be left alone unless
-sufficiently forced (with two -f's).  Unfortunately, in certain
-circumstances, git would delete both tracked (and possibly dirty) files
-and untracked files within a nested repository.  To explain how this
-happens, let's contrast a couple cases.  First, take the following
-example setup (which assumes we are already within a git repo):
+The -d flag pre-dated git-clean's ability to have paths specified.  As
+such, the default for git-clean was to only remove untracked files in
+the current directory, and -d existed to allow it to recurse into
+subdirectories.
 
-   git init nested
-   cd nested
-   >tracked
-   git add tracked
-   git commit -m init
-   >untracked
-   cd ..
+The interaction of paths and the -d option appears to not have been
+carefully considered, as evidenced by numerous bugs and a dearth of
+tests covering such pairings in the testsuite.  The definition turns out
+to be important, so let's look at some of the various ways one could
+interpret the -d option:
 
-In this setup, everything works as expected; running 'git clean -fd'
-will result in fill_directory() returning the following paths:
-   nested/
-   nested/tracked
-   nested/untracked
-and then correct_untracked_entries() would notice this can be compressed
-to
-   nested/
-and then since "nested/" is a directory, we would call
-remove_dirs("nested/", ...), which would
-check is_nonbare_repository_dir() and then decide to skip it.
+  A) Without -d, only look in subdirectories which contain tracked
+     files under them; with -d, also look in subdirectories which
+     are untracked for files to clean.
 
-However, if someone also creates an ignored file:
-   >nested/ignored
-then running 'git clean -fd' would result in fill_directory() returning
-the same paths:
-   nested/
-   nested/tracked
-   nested/untracked
-but correct_untracked_entries() will notice that we had ignored entries
-under nested/ and thus simplify this list to
-   nested/tracked
-   nested/untracked
-Since these are not directories, we do not call remove_dirs() which was
-the only place that had the is_nonbare_repository_dir() safety check --
-resulting in us deleting both the untracked file and the tracked (and
-possibly dirty) file.
+  B) Without specified paths from the user for us to delete, we need to
+     have some kind of default, so...without -d, only look in
+     subdirectories which contain tracked files under them; with -d,
+     also look in subdirectories which are untracked for files to clean.
 
-One possible fix for this issue would be walking the parent directories
-of each path and checking if they represent nonbare repositories, but
-that would be wasteful.  Even if we added caching of some sort, it's
-still a waste because we should have been able to check that "nested/"
-represented a nonbare repository before even descending into it in the
-first place.  Add a DIR_SKIP_NESTED_GIT flag to dir_struct.flags and use
-it to prevent fill_directory() and friends from descending into nested
-git repos.
+The important distinction here is that choice B says that the presence
+or absence of '-d' is irrelevant if paths are specified.  The logic
+behind option B is that if a user explicitly asked us to clean a
+specified pathspec, then we should clean anything that matches that
+pathspec.  Some examples may clarify.  Should
 
-With this change, we also modify two regression tests added in commit
-91479b9c72f1 ("t7300: add tests to document behavior of clean and nested
-git", 2015-06-15).  That commit, nor its series, nor the six previous
-iterations of that series on the mailing list discussed why those tests
-coded the expectation they did.  In fact, it appears their purpose was
-simply to test _existing_ behavior to make sure that the performance
-changes didn't change the behavior.  However, these two tests directly
-contradicted the manpage's claims that two -f's were required to delete
-files/directories under a nested git repository.  While one could argue
-that the user gave an explicit path which matched files/directories that
-were within a nested repository, there's a slippery slope that becomes
-very difficult for users to understand once you go down that route (e.g.
-what if they specified "git clean -f -d '*.c'"?)  It would also be hard
-to explain what the exact behavior was; avoid such problems by making it
-really simple.
+   git clean -f untracked_dir/file
 
-Also, clean up some grammar errors describing this functionality in the
-git-clean manpage.
+remove untracked_dir/file or not?  It seems crazy not to, but a strict
+reading of option A says it shouldn't be removed.  How about
 
-Finally, there is one somewhat related bug which this patch does not
-fix, coming from the opposite angle.  If the user runs
-   git clean -ffd
-to force deletion of untracked nested repositories, and within an
-untracked nested repo the user has ignored files (according to the inner
-OR outer repositories' .gitignore), then not only will those ignored
-files be left alone but the .git/ subdirectory of the nested repo will
-be left alone too.  I am not completely sure if this should be
-considered a bug (though it seems like it since the lack of the
-untracked file would result in the .git/ subdirectory being deleted),
-but in any event it is very minor compared to accidentally deleting user
-data and I did not dive into it.
+   git clean -f untracked_dir/file1 tracked_dir/file2
+
+or
+
+   git clean -f untracked_dir_1/file1 untracked_dir_2/file2
+
+?  Should it remove either or both of these files?  Should it require
+multiple runs to remove both the files listed?  (If this sounds like a
+crazy question to even ask, see the commit message of "t7300: Add some
+testcases showing failure to clean specified pathspecs" added earlier in
+this patch series.)  What if -ffd were used instead of -f -- should that
+allow these to be removed?  Should it take multiple invocations with
+-ffd?  What if a glob (such as '*tracked*') were used instead of
+spelling out the directory names?  What if the filenames involved globs,
+such as
+
+   git clean -f '*.o'
+
+or
+
+   git clean -f '*/*.o'
+
+?
+
+The current documentation actually suggests a definition that is
+slightly different than choice A, and the implementation prior to this
+series provided something radically different than either choices A or
+B. (The implementation, though, was clearly just buggy).  There may be
+other choices as well.  However, for almost any given choice of
+definition for -d that I can think of, some of the examples above will
+appear buggy to the user.  The only case that doesn't have negative
+surprises is choice B: treat a user-specified path as a request to clean
+all untracked files which match that path specification, including
+recursing into any untracked directories.
+
+Change the documentation and basic implementation to use this
+definition.
+
+There were two regression tests that indirectly depended on the current
+implementation, but neither was about subdirectory handling.  These two
+tests were introduced in commit 5b7570cfb41c ("git-clean: add tests for
+relative path", 2008-03-07) which was solely created to add coverage for
+the changes in commit fb328947c8e ("git-clean: correct printing relative
+path", 2008-03-07).  Both tests specified a directory that happened to
+have an untracked subdirectory, but both were only checking that the
+resulting printout of a file that was removed was shown with a relative
+path.  Update these tests appropriately.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-clean.txt |  6 +++---
- builtin/clean.c             |  2 ++
- dir.c                       | 10 ++++++++++
- dir.h                       |  3 ++-
- t/t7300-clean.sh            | 10 +++++-----
- 5 files changed, 22 insertions(+), 9 deletions(-)
+ Documentation/git-clean.txt | 10 ++++++----
+ builtin/clean.c             |  8 ++++++++
+ t/t7300-clean.sh            |  2 ++
+ 3 files changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index 3ab749b921..ba31d8d166 100644
+index e84ffc9396..3ab749b921 100644
 --- a/Documentation/git-clean.txt
 +++ b/Documentation/git-clean.txt
-@@ -37,9 +37,9 @@ OPTIONS
- --force::
- 	If the Git configuration variable clean.requireForce is not set
- 	to false, 'git clean' will refuse to delete files or directories
--	unless given -f or -i. Git will refuse to delete directories
--	with .git sub directory or file unless a second -f
--	is given.
-+	unless given -f or -i.  Git will refuse to modify untracked
-+	nested git repositories (directories with a .git subdirectory)
-+	unless a second -f is given.
+@@ -26,10 +26,12 @@ are affected.
+ OPTIONS
+ -------
+ -d::
+-	Remove untracked directories in addition to untracked files.
+-	If an untracked directory is managed by a different Git
+-	repository, it is not removed by default.  Use -f option twice
+-	if you really want to remove such a directory.
++	Normally, when no <path> is specified, git clean will not
++	recurse into untracked directories to avoid removing too much.
++	Specify -d to have it recurse into such directories as well.
++	If any paths are specified, -d is irrelevant; all untracked
++	files matching the specified paths (with exceptions for nested
++	git directories mentioned under `--force`) will be removed.
  
- -i::
- --interactive::
+ -f::
+ --force::
 diff --git a/builtin/clean.c b/builtin/clean.c
-index 68d70e41c0..3a7a63ae71 100644
+index d5579da716..68d70e41c0 100644
 --- a/builtin/clean.c
 +++ b/builtin/clean.c
-@@ -946,6 +946,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 
- 	if (force > 1)
- 		rm_flags = 0;
-+	else
-+		dir.flags |= DIR_SKIP_NESTED_GIT;
+@@ -949,6 +949,14 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
  
  	dir.flags |= DIR_SHOW_OTHER_DIRECTORIES;
  
-diff --git a/dir.c b/dir.c
-index 3b2fe1701c..7ff79170fc 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1451,6 +1451,16 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 		return path_none;
- 
- 	case index_nonexistent:
-+		if (dir->flags & DIR_SKIP_NESTED_GIT) {
-+			int nested_repo;
-+			struct strbuf sb = STRBUF_INIT;
-+			strbuf_addstr(&sb, dirname);
-+			nested_repo = is_nonbare_repository_dir(&sb);
-+			strbuf_release(&sb);
-+			if (nested_repo)
-+				return path_none;
-+		}
++	if (argc) {
++		/*
++		 * Remaining args implies pathspecs specified, and we should
++		 * recurse within those.
++		 */
++		remove_directories = 1;
++	}
 +
- 		if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
- 			break;
- 		if (exclude &&
-diff --git a/dir.h b/dir.h
-index 46c238ab49..739aea7c96 100644
---- a/dir.h
-+++ b/dir.h
-@@ -156,7 +156,8 @@ struct dir_struct {
- 		DIR_SHOW_IGNORED_TOO = 1<<5,
- 		DIR_COLLECT_KILLED_ONLY = 1<<6,
- 		DIR_KEEP_UNTRACKED_CONTENTS = 1<<7,
--		DIR_SHOW_IGNORED_TOO_MODE_MATCHING = 1<<8
-+		DIR_SHOW_IGNORED_TOO_MODE_MATCHING = 1<<8,
-+		DIR_SKIP_NESTED_GIT = 1<<9
- 	} flags;
- 	struct dir_entry **entries;
- 	struct dir_entry **ignored;
+ 	if (remove_directories)
+ 		dir.flags |= DIR_SHOW_IGNORED_TOO | DIR_KEEP_UNTRACKED_CONTENTS;
+ 
 diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 530dfdab34..6e6d24c1c3 100755
+index d83aeb7dc2..530dfdab34 100755
 --- a/t/t7300-clean.sh
 +++ b/t/t7300-clean.sh
-@@ -549,7 +549,7 @@ test_expect_failure 'nested (non-empty) bare repositories should be cleaned even
- 	test_path_is_missing strange_bare
- '
- 
--test_expect_success 'giving path in nested git work tree will remove it' '
-+test_expect_success 'giving path in nested git work tree will NOT remove it' '
- 	rm -fr repo &&
- 	mkdir repo &&
- 	(
-@@ -561,7 +561,7 @@ test_expect_success 'giving path in nested git work tree will remove it' '
- 	git clean -f -d repo/bar/baz &&
- 	test_path_is_file repo/.git/HEAD &&
- 	test_path_is_dir repo/bar/ &&
--	test_path_is_missing repo/bar/baz
-+	test_path_is_file repo/bar/baz/hello.world
- '
- 
- test_expect_success 'giving path to nested .git will not remove it' '
-@@ -579,7 +579,7 @@ test_expect_success 'giving path to nested .git will not remove it' '
- 	test_path_is_dir untracked/
- '
- 
--test_expect_success 'giving path to nested .git/ will remove contents' '
-+test_expect_success 'giving path to nested .git/ will NOT remove contents' '
- 	rm -fr repo untracked &&
- 	mkdir repo untracked &&
- 	(
-@@ -589,7 +589,7 @@ test_expect_success 'giving path to nested .git/ will remove contents' '
+@@ -117,6 +117,7 @@ test_expect_success C_LOCALE_OUTPUT 'git clean with relative prefix' '
+ 	would_clean=$(
+ 		cd docs &&
+ 		git clean -n ../src |
++		grep part3 |
+ 		sed -n -e "s|^Would remove ||p"
  	) &&
- 	git clean -f -d repo/.git/ &&
- 	test_path_is_dir repo/.git &&
--	test_dir_is_empty repo/.git &&
-+	test_path_is_file repo/.git/HEAD &&
- 	test_path_is_dir untracked/
- '
- 
-@@ -671,7 +671,7 @@ test_expect_success 'git clean -d skips untracked dirs containing ignored files'
- 	test_path_is_missing foo/b/bb
- '
- 
--test_expect_failure 'git clean -d skips nested repo containing ignored files' '
-+test_expect_success 'git clean -d skips nested repo containing ignored files' '
- 	test_when_finished "rm -rf nested-repo-with-ignored-file" &&
- 
- 	git init nested-repo-with-ignored-file &&
+ 	verbose test "$would_clean" = ../src/part3.c
+@@ -129,6 +130,7 @@ test_expect_success C_LOCALE_OUTPUT 'git clean with absolute path' '
+ 	would_clean=$(
+ 		cd docs &&
+ 		git clean -n "$(pwd)/../src" |
++		grep part3 |
+ 		sed -n -e "s|^Would remove ||p"
+ 	) &&
+ 	verbose test "$would_clean" = ../src/part3.c
 -- 
 2.22.1.11.g45a39ee867
 
