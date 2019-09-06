@@ -2,71 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A23B51F461
-	for <e@80x24.org>; Fri,  6 Sep 2019 19:16:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D02EA1F461
+	for <e@80x24.org>; Fri,  6 Sep 2019 20:07:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389416AbfIFTQX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Sep 2019 15:16:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42420 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727768AbfIFTQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Sep 2019 15:16:23 -0400
-Received: (qmail 22573 invoked by uid 109); 6 Sep 2019 19:16:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 06 Sep 2019 19:16:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6649 invoked by uid 111); 6 Sep 2019 19:18:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 06 Sep 2019 15:18:09 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 6 Sep 2019 15:16:22 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, avarab@gmail.com, garimasigit@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] fetch: add fetch.writeCommitGraph config setting
-Message-ID: <20190906191622.GA7096@sigill.intra.peff.net>
-References: <pull.328.git.gitgitgadget@gmail.com>
- <49f877c85ca2be5bb76d9082ee4aa26e26111a14.1567477320.git.gitgitgadget@gmail.com>
- <20190904030829.GB28836@sigill.intra.peff.net>
- <xmqqa7bipjil.fsf@gitster-ct.c.googlers.com>
- <a697c4de-e269-c330-ece2-8ac7007e6c55@gmail.com>
- <20190906175628.GH23181@sigill.intra.peff.net>
- <xmqq1rwtnv03.fsf@gitster-ct.c.googlers.com>
+        id S2394372AbfIFUHU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Sep 2019 16:07:20 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:40780 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730769AbfIFUHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Sep 2019 16:07:20 -0400
+Received: from [92.7.169.237] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1i6KVo-0006Ao-Cl; Fri, 06 Sep 2019 21:07:17 +0100
+Subject: Re: [PATCH 1/2] git-gui: warn if the commit message contains lines
+ longer than the set limit
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Pratyush Yadav <me@yadavpratyush.com>
+References: <7da71d89f9fa987eca2e25974e4cec382c146e44.1567627609.git.bert.wesarg@googlemail.com>
+ <CAPig+cSL0fpc5cVgO1soAksD2b5xadkDLG+JxiDCi5s95VRU_A@mail.gmail.com>
+ <CAKPyHN3=hh7DCoyEKB9DOf=t=v=Y1bX1xVx9r6Lxy=WQb9JC-A@mail.gmail.com>
+ <20190904224821.mgh4srhc22grkraz@yadavpratyush.com>
+ <CAGr--=J1YmMbud4tcZjAZ06m0CmRbAqQTzs+FTgeJkJp4d2FzQ@mail.gmail.com>
+ <CAKPyHN1VeK4bR3Dn5yjrs2UwT5XGKOPU_FHaMBsP+riM-bjeWA@mail.gmail.com>
+ <CAGr--=JpsgESv8W90-iT11VCAD3xQYipN3+Tt7cNyeZrsvhP_Q@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <ed572a47-b3d1-028f-0576-aac6c922671e@iee.email>
+Date:   Fri, 6 Sep 2019 21:07:15 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1rwtnv03.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <CAGr--=JpsgESv8W90-iT11VCAD3xQYipN3+Tt7cNyeZrsvhP_Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 06, 2019 at 11:24:12AM -0700, Junio C Hamano wrote:
+Hi Birger,
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Sure, but wouldn't that similarly apply to fetching? What is it that
-> > makes bursts of pushes more likely than bursts of fetches?
-> 
-> Because people tend to use a repository as a gathering point?  You
-> may periodically fetch from and push to a repository, and you may
-> even do so at the same interval, but simply because there are more
-> "other" people than you alone as a single developer in the project,
-> your fetch tends to grab work from more people than yoru push that
-> publish your work alone?
+On 06/09/2019 15:08, Birger Skogeng Pedersen wrote:
+> Hi Bert,
+>
+>
+> We should probably distinguish between what is wrapped in git-gui
+> (i.e. purely visual), and what is actually wrapped in the commit
+> message.
+> I believe the former is referred to as "soft wrap", while the latter
+> is "hard wrap".
+>
+>
+> On Thu, Sep 5, 2019 at 7:46 PM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+>> Please exclude the first line, i.e., the subject. This should not be
+>> wrapped at all.
+> I think all lines should be soft wrapped. Scrolling sideways is just
+> not something I'd want to do in the gui.
+>
+> How about we soft wrap all lines (in gui). But when the commit is
+> created, the actual hard wrap (newline characters) happens only on
+> lines other than the first one?
 
-I suppose so. But I think the "stock git without any other job
-infrastructure" case would still benefit. How do we know when the burst
-is done? We'd effectively be relying on auto-gc to do that, but "enough
-packs to merit gc" and "burst is done, now is a good time to update the
-commit graph" are two different metrics.
+Not sure if I parsed this correctly, but I'd want a WYSIWYG approach 
+that if we wrap on the display it will be wrapped (newline char) in the 
+commit. It sounded as if you were proposing a soft wrap visually, but 
+not doing the same for the commit.
 
--Peff
+Personally, I've had both feelings with the gui. I like that the 'hard' 
+visual char limit is there that encourages me to wrap my messages.
+But at the same time if I'm typing on a flow then it's annoying that 
+there wasn't any auto wrap.
+
+The other problem is if one is amending a commit and I need to add a few 
+word mid paragraph, the manual re-flowing and manual wrapping can be 
+annoying.
+
+I suspect there is a moderately happy medium between the two, perhaps 
+with an autowrap key (per paragraph) being available.
+
+I also had it in my head that some parts of Git do allow more than a 
+single line headers, or at least can cope with a run-on second line 
+before the blank line that flags the start of the message proper. (I may 
+be wrong...)
+> But then again, the user might get frustrated when the resulting
+> commit message looks different than what it appeared in git-gui.
+>
+> Honestly I'd prefer just wrap the first line as well. If the user gets
+> frustrated that the first line gets wrapped there are two options:
+> - Refrain from writing such a long line
+> - Disable word wrapping (it should be configurable, like you said)
+Configurable wrapping point - yes, would be nice (a feeling of control, 
+that I'd probably never change ;-).
+>
+> Thoughts?
+>
+>
+>
+> Birger
+Philip
