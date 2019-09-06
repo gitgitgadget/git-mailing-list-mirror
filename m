@@ -8,64 +8,62 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A1E51F461
-	for <e@80x24.org>; Fri,  6 Sep 2019 16:48:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02F7F1F461
+	for <e@80x24.org>; Fri,  6 Sep 2019 16:48:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405919AbfIFQsS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Sep 2019 12:48:18 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:43108 "EHLO
+        id S2405921AbfIFQsX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Sep 2019 12:48:23 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:33529 "EHLO
         mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726687AbfIFQsS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Sep 2019 12:48:18 -0400
-Received: by mail-pl1-f194.google.com with SMTP id 4so3406192pld.10
-        for <git@vger.kernel.org>; Fri, 06 Sep 2019 09:48:17 -0700 (PDT)
+        with ESMTP id S1726687AbfIFQsX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Sep 2019 12:48:23 -0400
+Received: by mail-pl1-f194.google.com with SMTP id t11so3432579plo.0
+        for <git@vger.kernel.org>; Fri, 06 Sep 2019 09:48:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=U7Ec0BvIr3abaK3i3i0yN2W34qywUXYKD1T5INTBTUU=;
-        b=XgK3AUYb2+1jLkDHqN1JhXJED3R3eA+5uKXAT8/qigpliOTIKpLrMCUM0OaLaZrRoq
-         2eqLiOnkUjgN0353CXmgbuMxkLfeUqjks0r/J9EV6eadtV/5RKOvP0EhEl71LRCvNluy
-         zBfZWd2p0ON3m+CrMFQL3AHu7mWB6yoN9tw6P82YPe+FSGz9iKasQotYEUns3pjfxe+n
-         Bj2WnPKcUHaPkk+zMF+Fk6Ks0CBjFXYJTbhujfte9Gouozi0ZmWtb131Nvyi9Z+4Bh27
-         smIaKQG7DWhuM3bbi25PHl6p00Uizh/n7VCxHK5AS71YPIi3rrwV2UgRdxzw0hMiHrhl
-         ezDQ==
+        bh=Uj/qftR6yrt0IHyj4Tt2gi6sDPHKmKVoVwBx/EgDmIE=;
+        b=DkJjA5uQKSHWnSu5mPnM3WOyfZdkk3eheFET40iSeg/pc4mpt6GFU4ud7/XX47pAtM
+         S+k3a/RwxIT7mEz/rNvI2Ifq/pNxJDK7kWxSjMJJe9L1YeFWYtctVtQzRUbmxa1yDXkI
+         s5qiD8fyveGQuYIIrFcfaPtZoWw+R12mNkxa4TSMmRLmldTjVrvGoEJep6s2Tm45elsX
+         4b0WmEl/sCjZe8sZpjulqh9YrJYT+vXIkgclZqCoQn/9XKpCsTtqfTQW/rCiyDS3mdwL
+         9tLxe7NI4/TLcilFGKy6jgtydJdwh7gJ3kHeABLZ1yp/qv/V5btWlMW7ucnal5gsarYj
+         gtCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=U7Ec0BvIr3abaK3i3i0yN2W34qywUXYKD1T5INTBTUU=;
-        b=poU2ZoBXoDEXIlQjOfnwh1/aFN/4aew2+JDYXUHgTiEtQmTVaAtbRZIYht1VBHMxJW
-         TVeqmY6I2sQSUtObHuLdIctkvejjPIDUCYYEzqH8vuCyaw71HggV9ggmU4yoP9CaID7L
-         q3nu4pnrUJ1pqav0+1kKpepUPbVqFjtAcXhZDLtgJpwQaynebA6Z4xtSa74S7/ZLRZdS
-         b56OO4C5aPbaRyI+mSzcDxtBdAtyqqNIWKxEkuJejAduC+KY1QGMpPEmYbUTkwWHQPCq
-         Y1pptKaFsp4AfvkunpSpdYdlvKzBMFK38LRxGnlDbp9NfgOFbit+lXCGKitOSGwsB62T
-         1pQw==
-X-Gm-Message-State: APjAAAX91vDX6qN2jE17cRGrWFmknMZ+GGr0Q1VzN6vEjMpngGirbWuC
-        mP/s+1p/wf6I8VoVzLIanx6+sLpq
-X-Google-Smtp-Source: APXvYqzW8uh2SSIxFqTQkANNyFYFmxBjOj8P+qgh7oveanwQQjsBXFWThReexP476V05TSwTTXwSKg==
-X-Received: by 2002:a17:902:d898:: with SMTP id b24mr10566962plz.7.1567788496617;
-        Fri, 06 Sep 2019 09:48:16 -0700 (PDT)
+        bh=Uj/qftR6yrt0IHyj4Tt2gi6sDPHKmKVoVwBx/EgDmIE=;
+        b=tuqloy7Gy5HK3U181KJN2HYx1Px5KKI0S2ZReoIR0HvNuqfCACoDwTuTg92mUsdDa1
+         m5jpReBr9gVJdwh5Dd4flukRjVre9Vp5spFxKrNc/U43StCXls4QGd5Js+JPFRGpGMCr
+         u2VWJ4yzFvaMZUhuuZYph4WqdfyVRuDtMFBvkTGzlOr3yQYeWYO1RG/24yLfsPYUBlzs
+         MjZJ7whYhNDQx6hKtuL/lpUDc+LokiWlKKtyIGFURg0i/PBggYjHCN8F1jvsL0pere21
+         g/31HtTwerodVBcA3HDcWiVsQqC7XBNvm9OmnvGbDZIzJMEP8Q/VeTeIEytv/4XwyUj3
+         Vu7g==
+X-Gm-Message-State: APjAAAVwGPIJU9k0IwhiVnW9oDexB8ckZRBLaTvJfw2AhkPNd+0U7oTE
+        ZgpNWGc2CXPjQC9EOY+QXPA=
+X-Google-Smtp-Source: APXvYqzdeOG21b97dhNeGgLDB3V24SwuJUifnk5bRYIdt8Wle6O4wLNXI7mPOaBOi5NYwkMjy3h6zQ==
+X-Received: by 2002:a17:902:6b43:: with SMTP id g3mr10243213plt.124.1567788502473;
+        Fri, 06 Sep 2019 09:48:22 -0700 (PDT)
 Received: from ?IPv6:2603:3023:803:400:4c28:4024:4b1c:1fde? ([2603:3023:803:400:4c28:4024:4b1c:1fde])
-        by smtp.gmail.com with ESMTPSA id k64sm12583666pge.65.2019.09.06.09.48.12
+        by smtp.gmail.com with ESMTPSA id s1sm13188859pjs.31.2019.09.06.09.48.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Sep 2019 09:48:16 -0700 (PDT)
-Subject: Re: [RFC PATCH 1/1] commit-graph.c: die on un-parseable commits
-To:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <cover.1567563244.git.me@ttaylorr.com>
- <34e4ec793cb0d321d16b88777cd2db64ed7b772e.1567563244.git.me@ttaylorr.com>
- <20190904030456.GA28836@sigill.intra.peff.net>
- <20190904211847.GA20904@syl.local>
- <20190905064723.GC21450@sigill.intra.peff.net>
+        Fri, 06 Sep 2019 09:48:21 -0700 (PDT)
+Subject: Re: [PATCH 1/3] t/t5318: introduce failing 'git commit-graph write'
+ tests
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net
+References: <cover.1567720960.git.me@ttaylorr.com>
+ <042a8ba8b2a98c269f9cd1a8e88488b80d686f0d.1567720960.git.me@ttaylorr.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <36bf0064-b563-74ed-4ae5-01745ced5d2e@gmail.com>
-Date:   Fri, 6 Sep 2019 12:48:05 -0400
+Message-ID: <6035f5bf-3d09-f454-f9f6-c882bc0604c9@gmail.com>
+Date:   Fri, 6 Sep 2019 12:48:11 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
  Thunderbird/69.0
 MIME-Version: 1.0
-In-Reply-To: <20190905064723.GC21450@sigill.intra.peff.net>
+In-Reply-To: <042a8ba8b2a98c269f9cd1a8e88488b80d686f0d.1567720960.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -74,180 +72,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/5/2019 2:47 AM, Jeff King wrote:
-> On Wed, Sep 04, 2019 at 05:18:47PM -0400, Taylor Blau wrote:
+On 9/5/2019 6:04 PM, Taylor Blau wrote:
+> When invoking 'git commit-graph' in a corrupt repository, one can cause
+> a segfault when ancestral commits are corrupt in one way or another.
+> This is due to two function calls in the 'commit-graph.c' code that may
+> return NULL, but are not checked for NULL-ness before dereferencing.
 > 
->> All of this makes sense to me, so I'm wondering what part(s) of this you
->> feel are worth addressing in this first patch series. Presumably, there
->> is a longer series that we _could_ write which would introduce a new
->> 'corrupt' field and then check for it here.
->>
->> But, I'm hesitant to write those patches, since I only have this one
->> call-site in mind. If we introduce 'corrupt', I feel it would be best to
->> use it uniformly, instead of only checking it here, and relying on other
->> bespoke mechanisms to detect corruption elsewhere.
->>
->> So, I'm content to write the pseudo-code you provided above (which is to
->> say, call and check both 'parse_commit_no_graph', _and_
->> 'get_commit_tree_oid'), because I think that it's expedient, and fix the
->> issue which I'm pointing out here.
+> Before fixing the bug, introduce two failing tests that demonstrate the
+> problem. The first test corrupts an ancestral commit's parent to point
+> to a non-existent object. The second test instead corrupts an ancestral
+> tree by removing the 'tree' information entirely from the commit. Both
+> of these cases cause segfaults, each at different lines.
+
+Thanks for the tests! And marking them as "test_expect_failure" avoids
+issues with 'git bisect' in the future.
+
+-Stolee	
+
 > 
-> I'd actually be willing to just take the patch you have here, and
-> consider the "parsed but we saw an error" thing as an oddity of the
-> object code.  IOW, we shouldn't _have_ to be double-checking here.
-> Looking for an error return from parse_commit() should really be all a
-> caller needs to do. Once that's fixed, then your code would just be
-> doing the right thing.
-> 
-> That said, there's another unhandled case, I think: lookup_tree() might
-> return NULL (if somebody previously saw that oid as a non-tree), and
-> parse_commit() wouldn't even notice and return an error!
-> 
-> IMHO that's also something that parse_commit() should be returning an
-> error for. And it's probably a lot easier to trigger versus the "parsed
-> earlier but corrupted" thing.
-> 
-> So it might be worth doing the NULL tree check here in the meantime. I
-> dunno.
-> 
-> Below is a sketch of what I'm thinking parse_commit() should do:
-> 
->   - remember when an earlier parse returned an error, so we can repeat
->     that error (this requires some unfortunate bit-field adjusting)
-> 
->   - notice a lookup_tree failure
-> 
->   - likewise, notice a lookup_parent failure
-> 
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
 > ---
-> diff --git a/commit.c b/commit.c
-> index a98de16e3d..7e415932b7 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -391,7 +391,9 @@ const void *detach_commit_buffer(struct commit *commit, unsigned long *sizep)
->  	return ret;
->  }
+>  t/t5318-commit-graph.sh | 43 +++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 43 insertions(+)
+> 
+> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+> index ab3eccf0fa..c855f81930 100755
+> --- a/t/t5318-commit-graph.sh
+> +++ b/t/t5318-commit-graph.sh
+> @@ -585,4 +585,47 @@ test_expect_success 'get_commit_tree_in_graph works for non-the_repository' '
+>  	test_cmp expect actual
+>  '
 >  
-> -int parse_commit_buffer(struct repository *r, struct commit *item, const void *buffer, unsigned long size, int check_graph)
-> +static int parse_commit_buffer_1(struct repository *r, struct commit *item,
-> +				 const void *buffer, unsigned long size,
-> +				 int check_graph)
->  {
->  	const char *tail = buffer;
->  	const char *bufptr = buffer;
-> @@ -401,9 +403,6 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
->  	const int tree_entry_len = the_hash_algo->hexsz + 5;
->  	const int parent_entry_len = the_hash_algo->hexsz + 7;
->  
-> -	if (item->object.parsed)
-> -		return 0;
-> -	item->object.parsed = 1;
->  	tail += size;
->  	if (tail <= bufptr + tree_entry_len + 1 || memcmp(bufptr, "tree ", 5) ||
->  			bufptr[tree_entry_len] != '\n')
-> @@ -412,6 +411,10 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
->  		return error("bad tree pointer in commit %s",
->  			     oid_to_hex(&item->object.oid));
->  	set_commit_tree(item, lookup_tree(r, &parent));
-> +	if (!item->maybe_tree)
-> +		return error("bad tree pointer %s in commit %s",
-> +			     oid_to_hex(&parent),
-> +			     oid_to_hex(&item->object.oid));
->  	bufptr += tree_entry_len + 1; /* "tree " + "hex sha1" + "\n" */
->  	pptr = &item->parents;
->  
-> @@ -431,15 +434,19 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
->  		if (graft && (graft->nr_parent < 0 || grafts_replace_parents))
->  			continue;
->  		new_parent = lookup_commit(r, &parent);
-> -		if (new_parent)
-> -			pptr = &commit_list_insert(new_parent, pptr)->next;
-> +		if (!new_parent)
-> +			return error("bad parent %s in commit %s",
-> +				     oid_to_hex(&parent),
-> +				     oid_to_hex(&item->object.oid));
-> +		pptr = &commit_list_insert(new_parent, pptr)->next;
->  	}
->  	if (graft) {
->  		int i;
->  		struct commit *new_parent;
->  		for (i = 0; i < graft->nr_parent; i++) {
->  			new_parent = lookup_commit(r,
->  						   &graft->parent[i]);
-> +			/* Here we ignore bogus grafts. Also should be an error? */
->  			if (!new_parent)
->  				continue;
->  			pptr = &commit_list_insert(new_parent, pptr)->next;
-> @@ -453,6 +460,23 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
->  	return 0;
->  }
->  
-> +int parse_commit_buffer(struct repository *r, struct commit *item,
-> +			const void *buffer, unsigned long size,
-> +			int check_graph)
-> +{
-> +	int ret;
+> +test_expect_failure 'corrupt commit-graph write (broken parent)' '
+> +	rm -rf repo &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		empty="$(git mktree </dev/null)" &&
+> +		cat >broken <<-EOF &&
+> +		tree $empty
+> +		parent 0000000000000000000000000000000000000000
+> +		author whatever <whatever@example.com> 1234 -0000
+> +		committer whatever <whatever@example.com> 1234 -0000
 > +
-> +	if (item->object.parsed)
-> +		return item->object.corrupt ? -1 : 0;
-> +	item->object.parsed = 1;
+> +		broken commit
+> +		EOF
+> +		broken="$(git hash-object -w -t commit --literally broken)" &&
+> +		git commit-tree -p "$broken" -m "good commit" "$empty" >good &&
+> +		test_must_fail git commit-graph write --stdin-commits \
+> +			<good 2>test_err &&
+> +		test_i18ngrep "unable to parse commit" test_err
+> +	)
+> +'
 > +
-> +	ret = parse_commit_buffer_1(r, item, buffer, size, check_graph);
-> +	if (ret < 0)
-> +		item->object.corrupt = 1;
+> +test_expect_failure 'corrupt commit-graph write (missing tree)' '
+> +	rm -rf repo &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		tree="$(git mktree </dev/null)" &&
+> +		cat >broken <<-EOF &&
+> +		parent 0000000000000000000000000000000000000000
+> +		author whatever <whatever@example.com> 1234 -0000
+> +		committer whatever <whatever@example.com> 1234 -0000
 > +
-> +	return ret;
-> +}
+> +		broken commit
+> +		EOF
+> +		broken="$(git hash-object -w -t commit --literally broken)" &&
+> +		git commit-tree -p "$broken" -m "good" "$tree" >good &&
+> +		test_must_fail git commit-graph write --stdin-commits \
+> +			<good 2>test_err &&
+> +		test_i18ngrep "unable to get tree for" test_err
+> +	)
+> +'
 > +
->  int repo_parse_commit_internal(struct repository *r,
->  			       struct commit *item,
->  			       int quiet_on_missing,
-> diff --git a/object.h b/object.h
-> index 0120892bbd..b83d3964ad 100644
-> --- a/object.h
-> +++ b/object.h
-> @@ -59,7 +59,7 @@ struct object_array {
->  
->  /*
->   * object flag allocation:
-> - * revision.h:               0---------10                              25----28
-> + * revision.h:               0---------10                              24----27
->   * fetch-pack.c:             01
->   * negotiator/default.c:       2--5
->   * walker.c:                 0-2
-> @@ -78,13 +78,14 @@ struct object_array {
->   * builtin/show-branch.c:    0-------------------------------------------26
->   * builtin/unpack-objects.c:                                 2021
->   */
-> -#define FLAG_BITS  29
-> +#define FLAG_BITS  28
->  
->  /*
->   * The object type is stored in 3 bits.
->   */
->  struct object {
->  	unsigned parsed : 1;
-> +	unsigned corrupt : 1;
->  	unsigned type : TYPE_BITS;
->  	unsigned flags : FLAG_BITS;
->  	struct object_id oid;
-> diff --git a/revision.h b/revision.h
-> index 4134dc6029..5c0b831b37 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -33,7 +33,7 @@
->  #define ALL_REV_FLAGS	(((1u<<11)-1) | NOT_USER_GIVEN | TRACK_LINEAR)
->  
->  #define TOPO_WALK_EXPLORED	(1u<<27)
-> -#define TOPO_WALK_INDEGREE	(1u<<28)
-> +#define TOPO_WALK_INDEGREE	(1u<<24)
-
-As an aside, these flag bit modifications look fine, but would need to
-be explained. I'm guessing that since you are adding a bit of data
-to struct object you want to avoid increasing the struct size across
-a 32-bit boundary. Are we sure that bit 24 is not used anywhere else?
-(My search for "1u<<24" found nothing, and "1 << 24" found a bit in
-the cache-entry flags, so this seems safe.)
-
-Thanks,
--Stolee
+>  test_done
+> 
