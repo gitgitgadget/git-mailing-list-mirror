@@ -8,49 +8,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F2111F461
-	for <e@80x24.org>; Fri,  6 Sep 2019 17:19:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8BAE1F4B7
+	for <e@80x24.org>; Fri,  6 Sep 2019 17:20:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395164AbfIFRT2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Sep 2019 13:19:28 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:36281 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391459AbfIFRT2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Sep 2019 13:19:28 -0400
-Received: by mail-pg1-f193.google.com with SMTP id l21so3854224pgm.3
-        for <git@vger.kernel.org>; Fri, 06 Sep 2019 10:19:27 -0700 (PDT)
+        id S1731974AbfIFRU6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Sep 2019 13:20:58 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:40219 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729928AbfIFRU6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Sep 2019 13:20:58 -0400
+Received: by mail-pf1-f193.google.com with SMTP id x127so4928681pfb.7
+        for <git@vger.kernel.org>; Fri, 06 Sep 2019 10:20:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=q1nHVYw2/gw+ZjPKYLrFKTzWOEShow7VqpSw4hTzjRY=;
-        b=vd8LHMkJbUPS0aVO/i3yG8MbQl3AWDWZbrVQ1lcMPC6Vfs1F5GW1j7AlKnpyigcY86
-         DAer5kWNP7Ivo4LM0jtHu4JLZkkZkZXYy+nFpgPxpuz0nLovVaNBQwVxEt/3MAeoOOhM
-         aWkYBP1jwzuRSeceNBswQRQMHbyJ7ohzcxqF6LKoxH887AFS9mtQ5zloFV6VvHaZhxAs
-         F9TIb2I3EnLJcphr59mQF6xxakRNDrxd6zJkfDVa5rH1UHwlFZZB+hrBk8dQLu5I0eT0
-         uFULQYKiyu9fm2e5AuU4XQ8pw1EXgU1RNPWhD3ypBUo0MOGLDnpNsQM+kECN0Mis3cZp
-         /W6w==
+        bh=NjjmndiEQuKH9Nihezw5bmD3d9lIlwmN4DGneZL+XEU=;
+        b=qo9F0yRStroajaEN9SEJ2q4oAyCU+Pw373isBeVVEGMy7TJNAeAFrWjJMLL9HYx7ns
+         nvbnyDo5NWkHKKjg+gJHU5n8Vj553OfuCBMcuKuLARjamN2O+kEV0EQv68lPa5IabzmL
+         O4K/pjltxQ6/rp0hrYJ/2nCBcpe05mDvWouA54ZUemnJFiFtnhErRlRJHP8jxf4pdYSm
+         FNNMPMRrJ/VQ7rA4bMtl0zdsrUXmZ+xHAptYHeIlVCFrEQXjeqeMYRkoCK73o0w91LoG
+         N2bjHnYcsVITnuoDKDJTHZ9fQ/7WNoVW+H93ICDQRdcpAc3d7dM/nYWikPGxWbZsoVok
+         T7aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=q1nHVYw2/gw+ZjPKYLrFKTzWOEShow7VqpSw4hTzjRY=;
-        b=ITcon6DH2rkBL0e7kf1BqjbZo32ZTtEw0La974cXg89+QxC7/fOz6ek6KACqIUoA9y
-         aphrGafClsh4XYAqCLgRh8MFZBZQXzTFUPOaTdL65UcLbFsrn5KVU0NMTYsl+xCVLPFE
-         9JWBA9+6guUG2Xm4ktx4fEGOFawuKSzh4sO3hOCJxC5DAxceR6CvBSsY9YIBAs5x6hRz
-         A6By7LxMgKmLR98SWqONOuKJu7miuAOwJOqQHDy9LHsn+Koy4fum7iFrn/rOy+QE8gul
-         HVWPFyQsUNX6Sg+Kv1olvzhMS8nQPQJEFsEr1nPkQbwNumKeZjodV0JfVDkhYDiPexpt
-         Au0w==
-X-Gm-Message-State: APjAAAXxTaLsl3xxaBbuqjX4Z+JZHxwx2LCQOd5OehcHcW4X7dT3PuCy
-        ai7CDsS98QyJcdpr6XKfon3HRWsL
-X-Google-Smtp-Source: APXvYqyKC+L1d0+l85abjpU0wmmimtCghSpXED4+BK+SnS8bOYZg01jdgGaDk5E8tYyLCLLH4s5XOg==
-X-Received: by 2002:a17:90a:d795:: with SMTP id z21mr7293778pju.12.1567790367051;
-        Fri, 06 Sep 2019 10:19:27 -0700 (PDT)
+        bh=NjjmndiEQuKH9Nihezw5bmD3d9lIlwmN4DGneZL+XEU=;
+        b=KHOsTkbuhW8nHk8araclAwkVhStyNt1NRSJg5wv84cdIHApbpHNcA8gh4j/zMsoREr
+         Dk+tIKidXvwZo8YWUf1yfNt8cQkEqGNpbdcZgC47jE59ArydujIKvbYLhX+0Av+i8j4H
+         jKhcPCK/DLkMxXBlHB1YoEZ+CFR89GHdQ+jQz8J2DfVB/cOsW7O9ZQApgUlP5yJ2cqa7
+         uUDFA4sLikPAKUmJ9YTTZVlugB7gq+XrrQ7f4Wn73vL9y5cq6gCcQ4rOjwwbl1Ney3f+
+         EW0S/DY68RhKfiWc5LtMKSR4Cn6Qyxl8KWTXxoXF4zvZ61USnRR9dauETC82h22L6a90
+         iabg==
+X-Gm-Message-State: APjAAAUcDFv3+ZSje40EHVO5UuomoU4ojQUaQTP0dg0uNG3CKXytVcrl
+        poSjtIQgpJd8jUhEOOOysHBvUhXU
+X-Google-Smtp-Source: APXvYqyKYS0J0CZtI0IuUe8UAiZnqaWqonCsRwXDQoEUlVr6lC+DWTD5e/LXR0lRDLI7uQbwcoXC6g==
+X-Received: by 2002:a65:41c6:: with SMTP id b6mr8844377pgq.269.1567790457347;
+        Fri, 06 Sep 2019 10:20:57 -0700 (PDT)
 Received: from ?IPv6:2603:3023:803:400:4c28:4024:4b1c:1fde? ([2603:3023:803:400:4c28:4024:4b1c:1fde])
-        by smtp.gmail.com with ESMTPSA id e24sm6937119pgk.21.2019.09.06.10.19.25
+        by smtp.gmail.com with ESMTPSA id f23sm6028432pfn.22.2019.09.06.10.20.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Sep 2019 10:19:26 -0700 (PDT)
+        Fri, 06 Sep 2019 10:20:56 -0700 (PDT)
 Subject: Re: [RFC PATCH 1/1] commit-graph.c: die on un-parseable commits
 To:     Jeff King <peff@peff.net>
 Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
@@ -63,8 +63,8 @@ References: <cover.1567563244.git.me@ttaylorr.com>
  <36bf0064-b563-74ed-4ae5-01745ced5d2e@gmail.com>
  <20190906170417.GA23181@sigill.intra.peff.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b1121a33-691a-e3ff-a212-48c0d7deae1b@gmail.com>
-Date:   Fri, 6 Sep 2019 13:19:21 -0400
+Message-ID: <8a77647b-a924-fd51-f0c8-b30ef0dbc3b4@gmail.com>
+Date:   Fri, 6 Sep 2019 13:20:48 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
  Thunderbird/69.0
 MIME-Version: 1.0
@@ -108,7 +108,30 @@ On 9/6/2019 1:04 PM, Jeff King wrote:
 > _supposed_ to be the source of truth, though of course there's no
 > compiler-level checking. (One aside: is there a reason TOPO_WALK_* isn't
 > part of ALL_REV_FLAGS?).
+> 
+> And yes, the goal was to keep things to the 32-bit boundary. But in the
+> course of this, I discovered something interesting: 64-bit systems are
+> now padding this up to the 8-byte boundary!
+> 
+> The culprit is the switch of GIT_MAX_RAWSZ for sha256. Before then, our
+> object_id was 20 bytes for sha1. Adding 4 bytes of flags still left us
+> at 24 bytes, which is both 4- and 8-byte aligned.
+> 
+> With the switch to sha256, object_id is now 32 bytes. Adding 4 bytes
+> takes us to 36, and then 8-byte aligning the struct takes us to 40
+> bytes, with 4 bytes of wasted padding.
+> 
+> I'm sorely tempted to use this as an opportunity to move commit->index
+> into "struct object". That would actually shrink commit object sizes by
+> 4 bytes, and would let all object types do the commit-slab trick to
+> store object data with constant-time lookup. This would make it possible
+> to migrate some uses of flags to per-operation bitfields (so e.g., two
+> traversals would have their _own_ flag data, and wouldn't risk stomping
+> on each other's bits).
 
-This was an oversight on my part. Sorry.
+This reminds me that I'm hoping to eventually get around to moving
+"generation" into a commit slab. That would reduce the space for people
+still working without a commit-graph, and would allow updating to
+generation number v2 (which needs 64 bits of data).
 
 -Stolee
