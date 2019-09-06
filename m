@@ -2,199 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	SPOOFED_FREEMAIL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99E371F461
-	for <e@80x24.org>; Fri,  6 Sep 2019 12:39:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C5C01F461
+	for <e@80x24.org>; Fri,  6 Sep 2019 13:38:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390283AbfIFMjg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Sep 2019 08:39:36 -0400
-Received: from mout.gmx.net ([212.227.15.15]:52593 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728507AbfIFMjf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Sep 2019 08:39:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1567773559;
-        bh=dc7Y1q15G/Sua3n0NwTmn9qd+EWYp8c+MCKU0+H17WE=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=epQQDQnzNw9e0uERCXX/0EzkI7gR/QW8tW8wyYBBvH0VInR5Il1QtH7ovEo7Yl3Me
-         I+6IToiu0OZNFiaQX9B2Qtl7KtpswnLha0b+gydQm0GcQz86+ESYM+wi9RZxnUNkY6
-         LXGoztcmo47+4WFq4lUXOjduWcwgCaozB+bTZXDg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.178.50] ([88.71.176.248]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MaIPo-1hql2M3SC8-00JqoJ; Fri, 06
- Sep 2019 14:39:19 +0200
-Subject: Re: [PATCH v2 1/4] am: fail if no author line is given in --rebasing
- mode
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Paul Tan <pyokagan@gmail.com>, Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Shawn O. Pearce" <spearce@spearce.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-References: <20190905224833.24913-1-s-beyer@gmx.net>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Openpgp: preference=signencrypt
-Autocrypt: addr=s-beyer@gmx.net; prefer-encrypt=mutual; keydata=
- LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUVFOQkZJN0NUOEJJQUNX
- RlhtNmdSM1BPMkJoaDZXZ1Bvd1FNZEZWcHc4cDlybjE3d0k0K3N3TWVxSmxrSklnClBETlFi
- UXRPcGRGeUJYVzY4cHVDMXI1NjlNZnNhSldXYkluZGh3NVpwdTJ2djdjVXlOajlrUXR1dG10
- Zk1TcWYKdXRSZVAxZDNINmhzOWJSSGJvWkVqeXZqc0VTV0xYM3FFak9uRTYyVmNHMUpnNS9t
- dlFkOFRIZ3pwdDFlS0tSSAp3Vm1oY3JDRTV6a1l1YzNoZzdXdk5xNm96Vm9DbUpsYU9Qb3Zz
- NWw4UThUaHc1elQzL2hnY2QyeEFlODRIUEtJCkFBajVsSjZRU0l3bWYxcWROSVRvZCtLUGdl
- YnYwL3pBZ21vYUFRSW1LamdmelFMZk56WHI1TDJoNHNsaElPU0sKR0EzWnl2SXFqRGRnNmM1
- bFVWeFRKNDRaQkRFLzMvZEtTVG0zVW5MZjJDOTI2SGZUZGQ2ZHQ1T08yLzd5b3YxdApjWWc3
- K0t2VzV2ZWJMS0drbHhjRjhqdFMvSE9zOWxjQkJZeEg4WC9YL1N5YWc3QzIxckhGWE13aFZF
- QTlycmZVCkNFaFYyOXgwUGU5THFwRTd4ZGpIK1FXVlMrY1RHKzhHaGtGN0FuWUtpSXo4L29K
- VjQ1S2hTTjRrTXhPTFdZRSsKazJYd2VEOWhUTjQxMVJOd0FUS3ZJemlieElyV2xYVEVRbWJ3
- elMvUldDRXhTWTdSdHlUTVBIc1BZdDhzRmNzKwozVUFNZHNmdlF0cmtBdXZQY3BTYS9VS0FC
- SEF2a1VOeStvSkZqRmRUdEtrYy9oajk0UEVBQlJvbFlYUTFWRXFECjh2b1dKQ1lQUXlCUVl6
- RTZ0RzMxZFBnWFhzK25xdVhuSnBIRzJKS0lJWktXamJXcmVBSTFaQ2hCSThCOTFXbjIKdWpV
- VjVzdXRBbnk4VmtZY3BNQklwNVdVUVg1VDdxdE8wSUhsYmJ2RzVOZHllQ2tqMkI4Ly9LemZQ
- K0pqc3hqRwpHMzc1Uk9PdS81eC92eXhKZlp2SmUxcDRQRnNnVWF1MFRZbHExR2JuODFHSVMw
- MjU5NWtUSTdrVzdMcERMVG1xCnY2MEdYSWpKQWN1RFJQbWZyZktXSDhZNXk2VHVDMnZFVVpH
- TzVsR0dwV2NLM21HRGRpd1dCNlpYRmhJVGF3YUEKQWxWaHhCVUppZ2JQLyttaG00M1ozUzRC
- N1VqYVpsZGp6QjZuS3QzNzVQL28zYjU2NkdLaG5aVmh4S3ZvQXNoagorU3c4Vml5ZTlZb0ZC
- c3VSeTNndk92VW9MSGtic0JrS0ZncmM0RElXN1BHWVBOdmZVbW5VSXNFbFZYdlVsMWxjCjJG
- SWxYSnJhZDNzNlFMNW0rK0pJblZrWU5Mc2o0OVZpb2JMaUxBdk9Wd2ovN0JHQS9ralJEUXp0
- OGQrZzgrWVIKQnYwNHQ3Vkp3ZWU5SFp1cGFwUGdyb3JzL3hsL2NwSFVFcXEzSFdDSm5ucXpt
- MVJqbnpMZ2JwZVRjQjVBazFndgpKTDZmN05LMXYva0RucVl2a3B4K2YvUDJtNGhKdTVhTTE4
- ODJzWmc2NlF3WDFrREw5WklRbFladFFUOElmN1gvCmV5eGZVZG9WQUpEQThIcFM0NlEyTHp3
- WkVqZXFYYzkzTjNMSmxIZFQxcm1OZERDanhtd1BSUWllUW5TRTRRcmwKU05qWHducXl1M00z
- Vk43ajNNQ1hJMUdWNVUwQ3VvZVd1RGdpUnMzQ0ZqZTgxS25mL0RuYy9jL2RuNmpoeVR2aQpR
- a0NMY1hxUDY3Q0l1T2xVd3gzMU1iNWJpQ3IwL0R5YjVmVXBBQkVCQUFHMEgxTjBaWEJvWVc0
- Z1FtVjVaWElnClBITXRZbVY1WlhKQVoyMTRMbTVsZEQ2SkJHQUVFd0VDQUVvb0dtaDBkSEE2
- THk5d2EzRnpMbTVsZEM5K2MySmwKZVdWeUwyOXdaVzV3WjNBdmNHOXNhV041THdJYkF3SWVB
- UUlYZ0FVQ1Vqc1pYQVVMQ1FnSEF3VVZDZ2tJQ3dVVwpBZ01CQUFBS0NSQStEK3phekFwOE80
- LzlILzkyREltWFBiUkdSVFBjV2dOR0tKNHRBUWxWQm00eUZPQUtoTVlOCi9zcDRIME5FZlp2
- L2ZXMXZtV3FnNlZpbjRLNngxVmhkT205MVFCOE00UThtdzVtbWVneFhNZXdMZjJteUVHamYK
- WEt1STh2OTE3TGhkOFdvT1MydUhyOFZxVldWRGZKRzZXR3VoR3NxcTJtcnVhWk41ZzZMaDNO
- U2QybW9heDUxRAprYTYvam4yOW45KzluNWpHQzV2eDNnTHRuSnE5dmlNbk9OVGdEZVpUcUVL
- NmVxU1ZkMWIrNnp4TStRc0hzVFI0CklzcHNDcWgzbWxsTTdZL2Ntc0o1dWdsZHZURXhsem43
- VkloV1FBanowc2xvbFZHTlFSN2krcmNRK3BjRFJGS2EKOWJHU0xxR3lhdEUrdVlLWVJtdldJ
- bi9zT1FOU21MN2RXZzRiTW5wS0Njb0FBeHd6RFlQay94Sm1PSlU4QjFPQwpPMXo5b2pKZDha
- a0YwRTlVRmswOW42ajYyVDZZWEZaemo1dFRJUU5iNW5IUVRiRFBSZWZESXMxYTBycDBNNHN4
- CjRLZzJzZVVQZVFZVXBEV29YR3pYTHZ5ajRkMHlyWU9wUmpEb0ZJdE1oMCtndmhJd1Q0NGNv
- aHpUUW1vZEQzVHcKSUZZbDRKOWlrTFI4SmdvRzBHeEo4ZkpnN2tyenlnNS9MOWlMMDBvZjdZ
- ZVJuZktWTytyK05BUGk5Zld1Nm1ZRwpGaXZGQnRXYTh2Qzk4WHlWT2NUYXhvTzVSaC9WTUxm
- OUdFTG52VWdjSEpQZVgyK0FVbkxIcjBnZ3NIdFgvK2cxCkxIRVEwMFBQdUVjTkZSODNmZWlr
- L3FoMXVIQlhDSjIzYWJIaHVVR1Z0RXljeEY4ZWFZQ1VIYUh2VS9ldnlDSGUKeElRZWhKc2du
- NkkzWHJURTFzMWVDSXEwRS9kdDAyQXd2cHhDUFkxRXk3UkljM0ppTE1oNVh0elp2dGtsTFRy
- UAppREp6ekRXTll2V0RoRUJnWGM2alJteDk3VjdJZGZGbUI0K2pGR28yL1QxdlhMdElURmlO
- SGFTT20xdWFMM1dtCkI0OWk3UVFqZVVtQVd6UE1WNE52UjJWbnNiQmdHQ2Z0cHh4REcxdmh5
- U01TT2M3QUdXa2NtQnVKamxqcE1zVnMKSkVBaTdGVnBQUnBGcE9VdDdkcmNLSnd2aHZsV1dE
- eDhCQlhXcHNDN0pybElvRzJNZHpNNFRDa0o4Tk5wZUNCRgo1RXJmdHZDZzNvcjFFYVBHeGFk
- NUJsVUlUS0ZXM01ZbXhXbHo5cURHQ1E1Vm9jY3IrUkt4aGwycS9HVnhKTVRECi9JWHZ0VGNt
- OTFQWXp2ZW44Sy9KaUs1SjhNdVFpQ29RLzc5Y2VCYTM4NjZhN1dlUkMvdGlEZEtWcDBnamlS
- M1YKenhua0hYNU9Ud1ZLMkR6amZiTG11NC9LVVowUzNTNzkxdGRlbENRNzFhZk9DYUVRUmQw
- TVo5L0MvS1RxTEtuYwpGdFhEUDFnd2pzbTViSTJoK1JBTVdjbDh1TFI5ZjJ6ZFo4NG5NT211
- TUsxU2wxeXl4Qlo4aG9xVlZNeEJTcnZlClZHeHB5cm9PT0xOTitIdDhiMjkzdVY2NWZ6eUJy
- U0dTcGN6TUx2cTBYOTcxYmU5cnZGNlZaUUtDaEp3N25lV1IKWk1vQ3BiSnE0R0NNakhEdzlp
- Ymw0OWxrOUVWNytUelRiV0thVktvYzFyUmZCMzVyVUtMUWhPNGR2UlA2aFFNTwpwNUlzVHBM
- bWFXOERVUTZJSThJTTg5VEtTaDRQWStCSzZDR0MwKzF6clhPdTZDSW51UVFOQkZJN0NUOEJJ
- QURiCmtnOS9lVnVOeXdMR2RxVmpiV1NmOXdOV0ovWFBiZDY1MFlaRE5nUlNhNVE0NW1YZHhp
- WFdEL2pRRnhRcy9iRVIKU2hCTWdYOEVGMkVVUHpmRW9jY3B2MGMvZks0cGJwT0xseGVDcE04
- K3dZT3lSOWszRHNyZWtVa1FJaHlRcEZZVApZR0V3Zjg0TVBpT1pBSmVRYUtIVGRWMldZWjdl
- eDFqQXVRN1ZxOWZldUdBV1ZwUFAwN2hEa0JTQkVhbHZHZ2RPCmg1S3NJQVBybVBmRU5XM1ZD
- azhSVlNWdWIrUmRhZTdMMHBvU0VzSFhGRzlGR0ZRQlAzSGFUaFlOdk14MlR4R24KYnVQVy83
- am9TY0I2Y0tvZVkzY0ptRjdUOEtzR2dvaUcveTVjZWpNL3R1dmVJZ2VPUXZnUUQ4U0FKcCtt
- THBDMApqYk5UZGxsN1NET2ZXSXkwbm5OQ3ZFMGQ5ejhMbTZORDZvVEo0UCtURFpPbkpjbG1O
- Nkl5alNxT0E2ZHM3M0VkCjV0dlpiVll0VUJzN2QwY0NjOU1aNnBzZlJ1N1VnWVZpdE54VWND
- b2l3ZS9UOTc1NFl6a0I1SzZzeWZqL21OQjgKMDdNaXBRMTJuS3hMUXN5YjJuVlhmWnpIS1RZ
- RjJ1Z0t1MTNMM3k3ajZPYzdkTlY2QlVnS0pSaXRrUkFRN202cgplYldCVWJ4Q1VZRS9UbmxR
- cDlsNlhDVFNMV3FPNVI0R0JjRzJ1c091TEhDRU81dzdiVHBoSitGODgzKzZpYWM1CldpYVQ4
- bldZL2xTWGdvTEhwN1NTbk0xRU5BMlJSUmZYeUFrYUJ0YThIVGw3dkpDK2ptS251aHI1NUpZ
- d25NZzIKWXltOHVQNGlVLzcvMGlRa2Z6TmNPQk1JOURSZXJ0VjdEdHhBOHRtY1h0L1J3d2xM
- SkdIQUozTGc5dFNEYU9Nbwo3eUEydnZaVlkzcWlXRkJHeE41dVRBT2hHZHVPT2YwQ3VRd1JG
- b2ZuY1NkYjh5Y1BUSWVHTkxLcUo0Vk0wUHlICmNNcGtxUHpnc2FMTzZOT3NiZ1REcXZGU0N3
- VWcxdThWTUNJWWJXazd3eUg5Qnd5WVNNMGU3NURPcmJYSVFtSksKSWNWZlpEdmRqSVVaVGU1
- eXFpNWFMMkNJZkN4M0JKWTRFN21PZlBmT0Q0bmhUS1VONG9ZaXRVVmRWVlQwcEhtOApXclZM
- QWltTFRtUXVTT3RrRUJlRkN0eTRtWlpPdTU1Zkh2ZG1ZWTFVQXVLUHlNeExDaGJ0SXIxdDZE
- RTEwcUVZCktWR1RmUEpJc2dub3JxRTRiWGwzK2UzSjArWEtoeTdzbkNZNlZCQ2pNZkFMRDNu
- RDNXNktoc0JVeForWVZjMFMKVGlkSzB2ekF3Y0lJWWQxMDNMNEVkdXp4dGxLeG52QjdsMndG
- VUt5cW5DZGxsMnZrRXZUNkpSS0VOK0dLZ3cwOAozelExRzBYOEJKL3hNVDZsZXV2WGs2ckpX
- RHpBRk9iRndUT2dMSlR6R1VvYnUwK01xeEZMRUJPdmhtU3pkNHljCjRpbjMxY0t3Nnd5ODBp
- OEd3U0JSb2VqSSt1OWJqZGxIWXBENG1mdzdGRSsrQ1IrWXFadnJac2Foek8zUkx3WUsKVE1m
- cnByNUlhaWlDLzNFcmE3ZG1icytrdHFWR3Y0NTN1c0tzRnFvVDJpaXo4RGx0eHF6WXNTKy9h
- V3Q2N2JQRwo3TG5wdDl5alRLOHRnNE42dTFUdnl3dGMvejIvNUR2TjJBdlM1UG5LNkZaMU40
- V2pmTmd5NHhUL1F2QzJkb3VZCkNwZDRkakx2NU43UUhBdHY4WlNkQUJFQkFBR0pCRWdFR0FF
- Q0FESUZBbEk3Q1Q4b0dtaDBkSEE2THk5d2EzRnoKTG01bGRDOStjMkpsZVdWeUwyOXdaVzV3
- WjNBdmNHOXNhV041THdJYkRBQUtDUkErRCt6YXpBcDhPNDcwSC80bwpPWlZPQU5ROUw5SmpO
- LzU1RFArYUdoL3BoU1JHbmpWUWR5TXVEZzdYaFlEYkd5SGJESExoSlVCUEVMNU9PUG90CmRK
- Z3lZZFZsRTFoRktZRC9Mb0tiYWZDeUJDcE10VnNKTjhtRkxONWE0TjVnR05RUzNXUklaSG1i
- Y0YxaFA4cm0KSDdPWEtkNUVUb1VCS1FxTm1uZWc5WHJlTm5DWTZKUXFtWVhtS0RLazdWVFhN
- QUhQWVRmcjZuZjJzdS80bzNYVwp4aktSWHFGWDdsT1lRZEhZT1FyUzhMQU5qT0QreDBPelh4
- Q3ZhemJXdFpyZEl2MVV2NmNKWW1mZ2VwWk5HbS9TCi8xemdtV20ybjltNjYrNk9qSU4xWDdo
- dFNYQTlmcGtKbUIxcDZHeENEaTJkL3dtaUJuMmVJNXdFL21MOEQ2UEcKVEZGTGlOcTRXMUgv
- WXB5VkVaNUhWZTNjQzV5MnY4L1VPZWlOYWNVN1MvK1h6dnZpMDVPZWJxdUNBQTZ1SzlQTgpt
- Q24zZFI1K2RYWjRHdzY3QitTVEcrdWxlWnFSZ1NnTWpkN2tiNzlGMy9NczFKakgrMkl0NVVt
- enlsR0VTanpGCmpBZExBRjhPSzdQTGhzeHU2TFZrelZPTTIvRklIdGRsNmxmcVMzL1Y1b0p6
- cEozR2lQTERXOCtXTkxhemJBRHQKaXpFV2RKcXlaOEsxWFVMSHRoem93enFMUXNWWXBIWFpR
- VU8xb2kzYTVGTEcvckdOUlVGZXQrN0VzUlFNOGFDRgpRQ1FRbDY5RnhNYk41bUpabldGSWgz
- TDVmK1FSM0hUajlFZXVCTGVLWnZMSFJhWThpSVBpdVYxc25LMmdqSHl1Ckp2RjYvempaSDNN
- YzE4cXJlYzdOWStmZEk1QncwMVhyeWZwZVkwT2p4K3VHck5qdCtNS2NIL3FSeEJlWEl3WWoK
- UWJxNjZhSXhJWTNBR0xkWDhFNHVwd2V2SnRYT0xrK2dBTmk1c0tqeTdzV2NMTEROdE9YVXNr
- Y0tPT0k0M2huVwp0d1FMNFVLTmVVTUZ4MTdUYWVWZDVQYWZTYlRXRVRWODkwejI2RXpxZmhm
- N29ZSGtRSGs4TmtKakZSYTF2MWRsCmh6eTI0U01ESVBZQi9iVVZPN3c3NFNUU0g1b3hIRE0r
- cEI4YmZlOEFaU3hMWkhCdEFockZHTFk1NEE0YnNiM3YKKzJkd3d0a2RRNlJ4WDZuNVFpY29B
- bVpFZGRJNTFSd2lRdzRneWRTVG1iL2hhUDdCOVZyWlVOdW9aSXdWSGpldgpRZkV4Sm5aVUVE
- NEJCb3lPaDI4NzdJUEFDRFRwNVIwZTNnTDB2cE5aaHorYm5jZmQ4MlhzbnQ3T0tnM3dLTEds
- ClVzYjBJcXNTRmZ1MHFzejNJV2JvRmlaZk5yNGROcVFCeXJYUFFodXphWXlhUGExelhqazJM
- L3BKTGNOZjBzaEEKMkZiNGoxTjJ6b2NjMHlIWmp5ZWNSTUZBbyswWGU5MDkrRGRadXdqbmZ1
- SFhmYTZDckZsaGlpTlBtUHNJWG14bgpmTHVqWjVHZ3JxWTRVYXIzejNmNnZiNTVJM0srNTFu
- b3ZsNTdxYktuTHdGQWRRaFpHVjM3dDBpRkRsY01EcnZqCldGWVd3NzFQUUtaZmFuWkN6eWNR
- NFF1bi9GckR5d3NCckJxY0M1NmkrTHBWek11YzNYZmhpU0tHb2UrWXhFY2YKTmNuMWZIZGRy
- enpxaUVUQlhCQlNwSVJBUG14K0NCVUJWeXBRaXdBSG1lUTA0cC9icXYyTVNFTkpqeHhvam85
- QQpwUTcwK1I4SUV2dVhoMnJKVExlTQo9LzRnMwotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBC
- TE9DSy0tLS0tCg==
-Message-ID: <ef73e7ac-4a72-4fb2-088a-be424fa56af1@gmx.net>
-Date:   Fri, 6 Sep 2019 14:39:17 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S2391867AbfIFNiv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Sep 2019 09:38:51 -0400
+Received: from mail-lj1-f182.google.com ([209.85.208.182]:35883 "EHLO
+        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731823AbfIFNiv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Sep 2019 09:38:51 -0400
+Received: by mail-lj1-f182.google.com with SMTP id l20so6053732ljj.3
+        for <git@vger.kernel.org>; Fri, 06 Sep 2019 06:38:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=KFXs8XSP9meV7anb6pmqisWelRBoNfY869mc5QrAo6c=;
+        b=kmq1j/Gb2RyDx2iUbZSLHen8injtHBFPlsvASSuk52OOpakTu5HeelcLHLWz+BDQha
+         IVixtC/nWOeaQ2jCO1dOhIJjSnsfMqDgj4DBtNLNYt9x7jojTxnxVPPDRtLQd+a13LzX
+         IM7adfGR57WlVwMAruzDNBueCTg83pOJfcGwh+z6iVKezL6s63h8QtMoq6T7KSoXjCiv
+         X4ajNZgWsEac69f+OdqVgxyf+nX90kWo9PCfLN9+qC6OgceKNoQvdR/4F8xvHZ0lGxjj
+         57gzcXaGaEAlpbWa8A0LLdtoqaX1z62lEwlZztNW/VIIhNu+StnGt6n4l/L3JanWNee4
+         ocdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=KFXs8XSP9meV7anb6pmqisWelRBoNfY869mc5QrAo6c=;
+        b=MJloJYLq+pjfUlF4bAesg+MHZor1dwmFA8Po6z8QFTKzxZ+HPZJZD2n/DXNDy1KKc3
+         SR8704/1DB6gKiDueAHd7xEZYKx5TrXMp2ooyYJHR5bJzLICX3MGimRfYobk0CcBBv3z
+         fJuUWkxQ0zSse6diAtYpbncBFJPImgQ/cdqTIsXlPpsqpgiK10UWV+3JWTh5+JKrsREJ
+         /q4KeOmE2ScyObxINkaEdWiPpgfr5ft9tqsjbKwqVuLDrfJ6f/ehxMqs+F5P7FohV+OA
+         qGQvG/f7w9+2u1HRmPsl5xGA5qXbGM3t4wyzKYo7wXF7QtVL0UTfqfE0/YI1ae8kOTtE
+         b1FQ==
+X-Gm-Message-State: APjAAAVkv/7auB3Cqg4XmZJw35szYVLmVBNX2YQgOgXklhq5yZ98qEeK
+        5wHRmDXM3J+42FbIys6xFI40pILUb/qEwCSKtolp1BBN
+X-Google-Smtp-Source: APXvYqy2fuj8qlhMMNSa9Lcq5Okdp4RHhL1eXTdEx2JvtAAR3GtpwxZhvTfPaFCQLvPfw+/VS9ytfw2aZzSu6j0mYQg=
+X-Received: by 2002:a2e:8942:: with SMTP id b2mr5842526ljk.38.1567777128698;
+ Fri, 06 Sep 2019 06:38:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190905224833.24913-1-s-beyer@gmx.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:oEU06hKOI849OgqJYJPjo7YSmZznW+5mUG4o9FoqYf6DLQ9oAWX
- k+AFZKG+Z6V7IG51mBRx4prcJVoXdi+i1wmoejbbvlZx1pOaHvaNmiKIWisr3iusoPUOAJD
- PovKkYn8nDLLr9IAg7uF/xFqyWQAT50VmDj59lVYBWXgs6Chg4ViTFtWT4rna7qAxwYeAbh
- Tl1HJp43zLNarbIdFxJYg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:b+CH0E3HATs=:fhIYMZx2h6hi/A12QfdvIu
- aaEOESHtluKH/Bk3u9h8FHmtDBfOD8Yikz27WXWBa47GNCPV3/Z7f0KJIjQY5AmBEoKDC5DLJ
- 8oUnkzBgNImLQoC2gOVniDpdubMdX7bIQxpi9snZ+G/B9E/KnEQFtRn49JcC/IFbbV3WqLSLA
- JAXr1wtv5bMJEPjD8f+pIO41IBePEmHz9nOK6J1WQhpsXM6dmW+lkAvaGoFJ3yUUbN3L0Tbz+
- Uhq/2JRnuLumtT3j5DuJp8RKxQFjxQbYvGz2pw410npiEy8S9GwhPc8XF2/MV7skXYVIjyfsh
- V8s4YCM/v1QobCsE+Jx81La62yHL+5Zwj2Pe13jdWi2KgRLwHuNRfCX2un000J/uL7t1Jg8xC
- vrxGi5NJhaiDayMmiyBpoHYQYBv70s3Wo3v/fbqSv2ps+UjFOMfclgUUB1zrPXk2C9Q3w7nm2
- DSg4Zv2/g47ybkpZw9gi5JJMu3HXUfMjwzzZ5yGxBmaNkqioRyqja5HxMLkG+gT5ynZh02Lb/
- Hrc2s1W9OtIgdgs9uXEwb4bHihDweSxPBcYqnXhC/YjgjIxTjf6RTLPc/SrM54jbuoPwTcON+
- q4eGaJXlbgZCI9zlqtR6hUMVhcQWkXltrvknL5Oh7jM+XfgWMRUnelXWkuyZ9pb8pohedL+1Y
- 7G9C9dVXeNUo80I1m4ro54oz0EVawwAF4LKtrhV4vRq4ZB9KhQ4Cnpiq29IbJ0B69HRqPrcrk
- 3SlTW0ZrV8Y4SEBgG6e9nGlyBJLx4JaUNspV4HQNGM80+dnP83pQLvCrFLOctIxOijEPN18jt
- FyEqxCjnL8XNJNb4y/4uWczZ6DXlusN2VvmBa+W4RW4qoyGkliXPyjVXaQF3SWu1Cyl4P+Ljx
- w7qnjzuADpbCJAwim3k9Ex/J1APv9VlHzOVNjf8bmHQWDL9Oo5PRpjwNsEZEbvRm1brWy7xe7
- QkuDg7aGFdUF0vwjL4xakh+LhXI0ry6SSavIZ5IWhe42dxUKWViUAOT/JxpSvWdgtBI5g/aIC
- WVMm3uFJSSOrIvEZHkVYojVblkF6yVaXqXjyfe6vQlDMwCUXM+tnbTkcYCYjxENsYg5Nh61ss
- rMJ2+pji4kUet52hVOb9T812XInPhwxxBzA7E/Tyycq8J5fOfjSmfnxjuOU0PHs4AH1mo9is8
- RpjiRMJNCVhZAwfB82Bak5+rYA7BkiQ7xfqnTuEIaQInEok4bjcOEUqgpKT7WviXhFlytLQ2h
- 0dF9qgTfning9GAQz
+X-Google-Sender-Delegation: rcdailey@gmail.com
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Fri, 6 Sep 2019 08:38:36 -0500
+X-Google-Sender-Auth: Q1PGC9EjF-BJ1A7y6oyJhQOOHmk
+Message-ID: <CAHd499D+yjZiASCC4Kxw--dCY9hboQCzkgMFiy3PaqaN2qZC3A@mail.gmail.com>
+Subject: Feature Suggestion: Conflict resolution for submodules
+To:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+I've observed that when merging a branch, and there's a submodule
+conflict, sometimes Git will prompt a suggested resolution like so:
 
-just to make it also clear in this thread: you can ignore this patch
-series in favor of the better patch series by Peff [1] that has found
-its way to the mailing list at the same time.
+```
+Failed to merge submodule Core (not fast-forward)
+Found a possible merge resolution for the submodule:
 
-1.
-https://public-inbox.org/git/20190905224859.GA28660@sigill.intra.peff.net/
+If this is correct simply add it to the index for example
+by using:
 
-Stephan
+  git update-index --cacheinfo 160000
+18c7a8e26fa78075d0f840526d0b830103c6072f "Core"
+
+which will accept this suggestion.
+```
+
+When I run `git mergetool`, I get this prompt:
+
+```
+Submodule merge conflict for 'Core':
+  {local}: submodule commit 6075077b3f2f213d312edd8286ed203b5e1232e2
+  {remote}: submodule commit 565999a437e64cc83554da83a1d124f54daf9257
+Use (l)ocal or (r)emote, or (a)bort?
+```
+
+I think it would be great if there was a 4th option added here, that
+really just served as a vanity command for the aforementioned `git
+update-index` command. For example:
+
+```
+Submodule merge conflict for 'Core':
+  {local}: submodule commit 6075077b3f2f213d312edd8286ed203b5e1232e2
+  {remote}: submodule commit 565999a437e64cc83554da83a1d124f54daf9257
+  {suggested}: submodule commit 18c7a8e26fa78075d0f840526d0b830103c6072f
+Use (l)ocal or (r)emote, (s)uggested, or (a)bort?
+```
+
+Typing `s` would execute this command, basically:
+
+```
+git update-index --cacheinfo 160000
+18c7a8e26fa78075d0f840526d0b830103c6072f "Core"
+```
+
+My reason for recommending this is that there's no real convenient way
+to accept the suggested resolution for the submodule. The only real
+feasible way to use the suggestiong is to copy & paste the whole line
+in the terminal, which is clunky.
+
+I'd love to hear from the community to see what you all think about
+this idea. Thanks for reading.
