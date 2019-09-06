@@ -4,178 +4,100 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAE321F461
-	for <e@80x24.org>; Fri,  6 Sep 2019 10:27:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CC7D1F461
+	for <e@80x24.org>; Fri,  6 Sep 2019 10:58:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389180AbfIFK11 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Sep 2019 06:27:27 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:33632 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387772AbfIFK10 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Sep 2019 06:27:26 -0400
-Received: by mail-wm1-f67.google.com with SMTP id r17so7081764wme.0
-        for <git@vger.kernel.org>; Fri, 06 Sep 2019 03:27:24 -0700 (PDT)
+        id S2392127AbfIFK6a (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Sep 2019 06:58:30 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51277 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731628AbfIFK6a (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Sep 2019 06:58:30 -0400
+Received: by mail-wm1-f68.google.com with SMTP id k1so6044540wmi.1
+        for <git@vger.kernel.org>; Fri, 06 Sep 2019 03:58:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DdpUluQ7otSKvz5ySmBT5xD7ShlSzubvLQOUscXaJIw=;
-        b=dz/0rqurqUdnmSCXNmTapmwvjCmDjuR/KUAL/+VCnZrhBW0J6tkL4HPdz1At0CA9tV
-         broc0hGeKJyAfjEIfsPwSENnsk5ekCwr3yL8vYqJWCtntWo4em5DMSaUA+G4NZaIR/aM
-         qJhOnkkkvNKZAnyQ+E5KsKNEAEhCA5RwexdEbK7Sb7dOtVtGe4o2VeSdVwwrqysvPehr
-         ai3IEEXP9dPcr3xDmd/vVAexKde1hhR+DJlI0OeR3ZcoQwdD2/KEw3PXvfIVgURdoHub
-         9nhVBpPRJ4mS0jTy8cGZkfIKlNs/+kXWpBAvrZEeWsjrRlbWWlDTCp495PUHXeerbxmK
-         R4Cw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=qkqc8swoaZQvU/+1Wc8V8vEhdSXxDEpP/Yakb0SsMPE=;
+        b=ihcm0ZLu23xvb1CR6OoYQYkR2gm+rU0jtDC0WI4CAmVux5nowZ6j9eK67gq18zAVnR
+         PVkWnkTedfz+R+WLP9zFEvAeLnTVvcUls+94iFKAkp+S42N8YHlnQrfYiuGQNGqK6H6a
+         Hwt4R7lMmqRo2bxYBBTACpZE5HZC2OYAfZpt3jHQJtZXkVinj230vQLcxKmcxNTay5Jx
+         7vW0KWFHIgSqHF26ZdFqP9Bk4H8j+M/Bq+0KWTCS9XfH/pnkM+5fCbGRNfoJBJRVRRLw
+         A5uMvbicRk78iQVbhFA8WnD4ho9xGpEtue8faq8I4GbOXZAh0rvsbMBC2hhKALwRhZG2
+         X7HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DdpUluQ7otSKvz5ySmBT5xD7ShlSzubvLQOUscXaJIw=;
-        b=pIlTiTj1u0P7BiOQhfMRUVzEJNbboTZ6Hw3q1y6m6YRtI0m2vBE7PQgf2q/BxADBBH
-         bZ0Cu0jlZrr2OjpTH1UuhQes2uTuisTCgfRIjJN5JZHRUMlZqJ/KmBrHPkXrW+YooB6M
-         svCu6A1WAXZ1Qw4RSLjkvVKMubjo+CCyB3Tzz5o/hIVwV785hQr9XAQ8PS6JwPHh/Wzu
-         Jdw8hpBg0gOp6vvsUtUOpJHGzGRmmajdluD2Tb6Jqsj2uJKrsdTbvAZQBqhZ6u+NBg8i
-         S0QrAjs0wXcjVO9/LBfDZcYZoVUqFAt3mgstsu4Kekzq2O4h7+LetMWKku5fSjxDQhVP
-         TZDA==
-X-Gm-Message-State: APjAAAVJUEwp5lbZ/+0OLCTOadOZVfupzNY1orJ/LqW7WIh+deFSA8Cw
-        9ByXtEGTIN8K56jj1RUqDC0=
-X-Google-Smtp-Source: APXvYqwg+05ftNBR0RPb1w6lYxh10wW2opw/oUhkKbUKV5PeOyAZ1PJHgDtu7Fhq5MH8/iWpj+jfIw==
-X-Received: by 2002:a1c:544e:: with SMTP id p14mr6404612wmi.72.1567765643879;
-        Fri, 06 Sep 2019 03:27:23 -0700 (PDT)
-Received: from localhost.localdomain (x4db936a8.dyn.telefonica.de. [77.185.54.168])
-        by smtp.gmail.com with ESMTPSA id e3sm6753127wrh.12.2019.09.06.03.27.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 06 Sep 2019 03:27:23 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=qkqc8swoaZQvU/+1Wc8V8vEhdSXxDEpP/Yakb0SsMPE=;
+        b=VedD9jC+fMt2PFi+NyYuSsT3slacbxKVq5IdA74F25oCxCDV5jGrBCMb19c1KPCnfL
+         34d0SBKBlaad1VvXKFOKdoxBBHpl5xyp6Xg+JURS4Kg/BBC0EWk3kd2okSsVMOBZGayr
+         UQoMfrRo9YBgSTiduGr21QJRatOV5QblpEhWZ/n5abCkPY8xGzbQmgvFkBFf/jvW9/e8
+         WYz61ifcuta9L2tT/5hgqh6fIJmiHNkc1guBv8DFYuKRcEmmRRLjfqtctv+r0B5hmFtF
+         NpaugwepPSkUPIeWcWqVJM/CtFjRZdRh3pNe/y+4oMu93wl9lYRUVZ4AOkU5/Oug9P8Z
+         73ew==
+X-Gm-Message-State: APjAAAVUeE54Zt54UHYJhominD39Ea+dBFuILkizPfNWTYCPtRUoQBf9
+        XsfgHlTNsbwj2zc8+CAEPv0=
+X-Google-Smtp-Source: APXvYqxRxK8d5G0jFKKDcP5nqvFK5ZxWkTZ09jP3eodCL8z13LOx40YqQQeEJa9XTQq8mgDDIAEjRg==
+X-Received: by 2002:a7b:c7cc:: with SMTP id z12mr6641002wmk.80.1567767508279;
+        Fri, 06 Sep 2019 03:58:28 -0700 (PDT)
+Received: from szeder.dev (x4db936a8.dyn.telefonica.de. [77.185.54.168])
+        by smtp.gmail.com with ESMTPSA id g73sm8188433wme.10.2019.09.06.03.58.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 06 Sep 2019 03:58:27 -0700 (PDT)
+Date:   Fri, 6 Sep 2019 12:58:25 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Luke Diamand <luke@diamand.org>,
-        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] ci: install P4 from package to fix build error
-Date:   Fri,  6 Sep 2019 12:27:11 +0200
-Message-Id: <20190906102711.6401-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.23.0.331.g4e51dcdf11
+        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] ci: install P4 from package to fix build error
+Message-ID: <20190906105825.GD32087@szeder.dev>
+References: <20190906102711.6401-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190906102711.6401-1-szeder.dev@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To test 'git-p4' in the Linux Clang and GCC build jobs we used to
-install the 'p4' and 'p4d' binaries by directly downloading those
-binaries from a Perforce filehost.  This has worked just fine ever
-since we started using Travis CI [1], but during the last day or so
-that filehost appeared to be gone: while its hostname still resolves,
-the host doesn't seem to reply to any download request, it doesn't
-even refuse the connection, and eventually our build jobs time out
-[2].
+On Fri, Sep 06, 2019 at 12:27:11PM +0200, SZEDER Gábor wrote:
+> To test 'git-p4' in the Linux Clang and GCC build jobs we used to
+> install the 'p4' and 'p4d' binaries by directly downloading those
+> binaries from a Perforce filehost.  This has worked just fine ever
+> since we started using Travis CI [1], but during the last day or so
+> that filehost appeared to be gone: while its hostname still resolves,
+> the host doesn't seem to reply to any download request, it doesn't
+> even refuse the connection, and eventually our build jobs time out
+> [2].
+> 
+> Now, this might be just a temporary glitch, but I'm afraid that it
+> isn't.
 
-Now, this might be just a temporary glitch, but I'm afraid that it
-isn't.  The "Helix Core Server Administrator Guide" [3] describes two
-ways to install these binaries on Linux, and none of them mentions the
-filehost that we've been downloading from in the past:
+Well, now would you believe it, while I was testing this patch (I even
+made a gitgitgadget PR to run it on Azure Pipelines! :) and touching
+up its log message the good old Perforce filehost sprang back to life,
+and the CI build jobs now succeed again even without this patch.
 
-  - non-package installation: open the website's download page in your
-    web browser, select OS and platform, click on the download link,
-    and eventually you get a .tar.gz archive containing, among other
-    things, the necessary 'p4' and 'p4d' binaries.
+> Let's install P4 from the package repository, because this approach
+> seems to be simpler and more future proof.
+> 
+> Note that we used to install an old P4 version (2016.2) in the Linux
+> build jobs, but with this change we'll install the most recent version
+> available in the Perforce package repository (currently 2019.1).
 
-    Although we could use the URL of this archive to download it in
-    our CI scripts with 'wget', nobody said that that URL remains
-    stable, and we would still need to extract the archive and copy
-    the binaries to $PATH.
-
-  - package installation for various distros, including Ubuntu 16.04
-    (i.e. the Ubuntu version used both in our Travis CI and Azure
-    Pipelines builds): add a package repository and its pubkey,
-    'apt-get update && apt-get install', and ready to go.
-
-Let's install P4 from the package repository, because this approach
-seems to be simpler and more future proof.
-
-Note that we used to install an old P4 version (2016.2) in the Linux
-build jobs, but with this change we'll install the most recent version
-available in the Perforce package repository (currently 2019.1).
-
-[1] 522354d70f (Add Travis CI support, 2015-11-27).
-[2] https://travis-ci.org/git/git/jobs/581429927#L422
-[3] https://www.perforce.com/manuals/p4sag/Content/P4SAG/chapter.install.html
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- ci/install-dependencies.sh | 14 +++++---------
- ci/lib.sh                  |  8 +++-----
- 2 files changed, 8 insertions(+), 14 deletions(-)
-
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 8cc72503cb..0df48365dc 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -5,27 +5,23 @@
- 
- . ${0%/*}/lib.sh
- 
--P4WHENCE=http://filehost.perforce.com/perforce/r$LINUX_P4_VERSION
- LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
- 
- case "$jobname" in
- linux-clang|linux-gcc)
-+	wget -qO - https://package.perforce.com/perforce.pubkey | sudo apt-key add -
-+	echo "deb http://package.perforce.com/apt/ubuntu xenial release" >perforce.list
-+	sudo mv perforce.list /etc/apt/sources.list.d/
- 	sudo apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
- 	sudo apt-get -q update
--	sudo apt-get -q -y install language-pack-is libsvn-perl apache2
-+	sudo apt-get -q -y install language-pack-is libsvn-perl apache2 \
-+		helix-p4d
- 	case "$jobname" in
- 	linux-gcc)
- 		sudo apt-get -q -y install gcc-8
- 		;;
- 	esac
- 
--	mkdir --parents "$P4_PATH"
--	pushd "$P4_PATH"
--		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4d"
--		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4"
--		chmod u+x p4d
--		chmod u+x p4
--	popd
- 	mkdir --parents "$GIT_LFS_PATH"
- 	pushd "$GIT_LFS_PATH"
- 		wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 44db2d5cbb..efcccfee6f 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -162,17 +162,15 @@ linux-clang|linux-gcc)
- 
- 	export GIT_TEST_HTTPD=YesPlease
- 
--	# The Linux build installs the defined dependency versions below.
--	# The OS X build installs much more recent versions, whichever
-+	# The Linux build installs the defined dependency version below.
-+	# The OS X build installs much more recent version, whichever
- 	# were recorded in the Homebrew database upon creating the OS X
- 	# image.
- 	# Keep that in mind when you encounter a broken OS X build!
--	export LINUX_P4_VERSION="16.2"
- 	export LINUX_GIT_LFS_VERSION="1.5.2"
- 
--	P4_PATH="$HOME/custom/p4"
- 	GIT_LFS_PATH="$HOME/custom/git-lfs"
--	export PATH="$GIT_LFS_PATH:$P4_PATH:$PATH"
-+	export PATH="$GIT_LFS_PATH:$PATH"
- 	;;
- osx-clang|osx-gcc)
- 	if [ "$jobname" = osx-gcc ]
--- 
-2.23.0.331.g4e51dcdf11
+So I'm not quite sure whether we really want this patch.  It depends
+on how important it is to test 'git-p4' with an old P4 version, but I
+don't really have an opinion on that.
 
