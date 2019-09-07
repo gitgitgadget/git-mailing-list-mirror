@@ -7,129 +7,130 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB39D1F461
-	for <e@80x24.org>; Sat,  7 Sep 2019 18:55:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6FF71F461
+	for <e@80x24.org>; Sat,  7 Sep 2019 18:56:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394471AbfIGSzB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Sep 2019 14:55:01 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:36438 "EHLO
+        id S2391629AbfIGS4i (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Sep 2019 14:56:38 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:42574 "EHLO
         mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393429AbfIGSzA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Sep 2019 14:55:00 -0400
-Received: by mail-io1-f66.google.com with SMTP id b136so20240532iof.3
-        for <git@vger.kernel.org>; Sat, 07 Sep 2019 11:55:00 -0700 (PDT)
+        with ESMTP id S1726875AbfIGS4i (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Sep 2019 14:56:38 -0400
+Received: by mail-io1-f66.google.com with SMTP id n197so20175244iod.9
+        for <git@vger.kernel.org>; Sat, 07 Sep 2019 11:56:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=tPrZiqbBzn1mUOfdPUvgejzuvcTgDgHGHv1b9LfHni8=;
-        b=BMkuc9cSKhclvOYl1EFMvpXnrnxPwLavc0ys3Dqcsh9meW/hIaweYwcksod5YOTS/S
-         sZbnUujwmi/qCLq9noYTmtk3KzN+OXRbfdWNq1/D/2aQkVBKBiVqYbhs5fkLsbDs0pUC
-         gWApOYukHpKQZqs2O4v1kogc9A2RrjxdQmmim/E6lhNTOtROrDCplJPGSYY1DGtABKOn
-         VkhAmSUZHMF1ygEPqcxN1UNY6KbmLZsBrI5cKIYxHYkplSz8BmWjsDJ6A73RViLyAuY8
-         bNTodY4o+auBg41LvB/p3oPRZJavCUgC79BLpSWhP2eZPvZ6NkvTuLcl9BxXENp9UfSj
-         FSjQ==
+         :content-disposition:in-reply-to:user-agent;
+        bh=QtFt2HsOxyVy4i6IN6epAuTkb6jWhv0tla72LSk7AMY=;
+        b=hVY/NNZY813hCMEXX2BvKM8qXoV1JmJvMlfLX+3wOkGQTFlYU3/wB3ioaN77zk5UHm
+         9P2mgT0IF+gS6vhfsiAzvNcPyHdeXxR1Q3vW3XopCT4xbmvoa4w/WasRTZ0EJaiiTxBL
+         E63bp7QJx3Z+hZiEzz16N3o3YEt0GTb6k5l7derY+QCSwXXD83H8fVqPNa8RBZKaQ+Qz
+         zCozNSLuQLvU2YI+FWO7xwzBhEHYxL2La8wNMLX5xR/OX1lGh2IDihld5gxvJszHcWz4
+         bN7jaetM4SFyq4MVt42+2iAWoMaqg1H5vOb08J7oRz67K94WYhcevoJcVwvkOxOrOm/q
+         6QWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=tPrZiqbBzn1mUOfdPUvgejzuvcTgDgHGHv1b9LfHni8=;
-        b=eqmUQZg1ylRRuRaJgFoCDQKJB/U73u50ySFkRNSriwsW7y6yEgplbeJgS/cmRCGBRJ
-         yEE6Wi7+luRgbvPvDJWMo557LbG7L7Pp4aRUYAzU13pOMfc59pkAiY62QnQTPOi/Q5G9
-         1Zod6k1nuXaB621UBKq0bI0y6Fq+U5k43KskmDBBpEGz/fhxl4c8CrQctBjLZoDvBW0+
-         3p3vEBsZpBmlj4QdyVi6keEmE89dN2uv8g6baHMccJNXdBAH4YwF1p+uTQUt5kMv719B
-         /BlBFaK4lEbZqt2xYOaOTKrO80JYgupBzq3Kz9LU4NdwZ5ntZ3QWayZVSdjxaevm/DtG
-         0Svw==
-X-Gm-Message-State: APjAAAW+VGVVT04ZmIdIHxPtbYcyus7xBUNCkVgcodxDeF2AUncj/5Cx
-        qfoRwtzFsKUKmVGWNULLs0K4vw==
-X-Google-Smtp-Source: APXvYqyniAd426hfgRlPYamjJvjtCGWQmd6LwOkOXRn9b4ZWyG89N9K+7SooRzu3z6y3SKUnUifYNQ==
-X-Received: by 2002:a5e:8f42:: with SMTP id x2mr11296898iop.112.1567882499837;
-        Sat, 07 Sep 2019 11:54:59 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=QtFt2HsOxyVy4i6IN6epAuTkb6jWhv0tla72LSk7AMY=;
+        b=ItCr8GzfTBRxscCt4UxyHcjGSeeIyaEssYNeZKJKhXtnf3jZtVWNfJ5YIPICAovaU3
+         zUb470MDzM5cJSloDOL18XxNSIV7LaG4G2goG47q9OkHaqwV4EtSND7ONdqmnwGH1LZU
+         YixFYLoxRxhODpkSl0a7onewxh5WN/M0qB51R/lsqCdD0etd3R6O+MEzkK6087QDj0w7
+         NCrTczrssSGKNZf/tnBYiqBG5wfjXaEZbpUiwv23v7yqeviA1+fNMiGqyI07H8FzXqiR
+         o/3bW/GOcjXCnJc2Es0zhOSlqkD+4i7K653Maig8TfS7wTXN6/3kHWFR4X8hJ1yv9CdF
+         99+A==
+X-Gm-Message-State: APjAAAVB4PoQVL1h1NEKZkeRq8Jj0vUaG1t3Ozwn0fDTq7ay9EZX9XRz
+        GPC1TGSTIyiCpi6BKH0RQxNh9g==
+X-Google-Smtp-Source: APXvYqySkCcLsYPx0tZRDjCHwnxuApj2+7d1FkfxyMiekT+oZmP0BT6OIO2KwO9EIV+kJRmlCzOgVA==
+X-Received: by 2002:a5d:9bda:: with SMTP id d26mr7413084ion.88.1567882597790;
+        Sat, 07 Sep 2019 11:56:37 -0700 (PDT)
 Received: from localhost ([206.121.37.170])
-        by smtp.gmail.com with ESMTPSA id j11sm7088022ioa.55.2019.09.07.11.54.58
+        by smtp.gmail.com with ESMTPSA id p20sm15925353iod.43.2019.09.07.11.56.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Sep 2019 11:54:59 -0700 (PDT)
-Date:   Sat, 7 Sep 2019 14:54:58 -0400
+        Sat, 07 Sep 2019 11:56:37 -0700 (PDT)
+Date:   Sat, 7 Sep 2019 14:56:36 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 1/2] commit-graph: don't show progress percentages while
- expanding reachable commits
-Message-ID: <20190907185458.GA32028@syl.local>
+Subject: Re: [PATCH 2/2] commit-graph: turn off save_commit_buffer
+Message-ID: <20190907185636.GB32028@syl.local>
 References: <20190907045848.GA24515@sigill.intra.peff.net>
- <20190907050132.GA23904@sigill.intra.peff.net>
- <20190907103407.GF32087@szeder.dev>
+ <20190907050439.GB23904@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190907103407.GF32087@szeder.dev>
+In-Reply-To: <20190907050439.GB23904@sigill.intra.peff.net>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 07, 2019 at 12:34:07PM +0200, SZEDER Gábor wrote:
-> On Sat, Sep 07, 2019 at 01:01:33AM -0400, Jeff King wrote:
-> > From: SZEDER Gábor <szeder.dev@gmail.com>
-> >
-> > Commit 49bbc57a57 (commit-graph write: emit a percentage for all
-> > progress, 2019-01-19) was a bit overeager when it added progress
-> > percentages to the "Expanding reachable commits in commit graph" phase
-> > as well, because most of the time the number of commits that phase has
-> > to iterate over is not known in advance and grows significantly, and,
-> > consequently, we end up with nonsensical numbers:
-> >
-> >   $ git commit-graph write --reachable
-> >   Expanding reachable commits in commit graph: 138606% (824706/595), done.
-> >   [...]
-> >
-> >   $ git rev-parse v5.0 | git commit-graph write --stdin-commits
-> >   Expanding reachable commits in commit graph: 81264400% (812644/1), done.
-> >   [...]
-> >
-> > Even worse, because the percentage grows so quickly, the progress code
-> > outputs much more often than it should (because it ticks every second,
-> > or every 1%), slowing the whole process down. My time for "git
-> > commit-graph write --reachable" on linux.git went from 13.463s to
-> > 12.521s with this patch, ~7% savings.
+On Sat, Sep 07, 2019 at 01:04:40AM -0400, Jeff King wrote:
+> The commit-graph tool may read a lot of commits, but it only cares about
+> parsing their metadata (parents, trees, etc) and doesn't ever show the
+> messages to the user. And so it should not need save_commit_buffer,
+> which is meant for holding onto the object data of parsed commits so
+> that we can show them later. In fact, it's quite harmful to do so.
+> According to massif, the max heap of "git commit-graph write
+> --reachable" in linux.git before/after this patch (removing the commit
+> graph file in between) goes from ~1.1GB to ~270MB.
 >
-> Oh, interesting.
+> Which isn't surprising, since the difference is about the sum of the
+> uncompressed sizes of all commits in the repository, and this was
+> equivalent to leaking them.
 >
-> > Therefore, don't show progress percentages in the "Expanding reachable
-> > commits in commit graph" phase.
-> >
-> > Note that the current code does sometimes do the right thing, if we
-> > picked up all commits initially (e.g., omitting "--reachable" in a
-> > fully-packed repository would get the correct count without any parent
-> > traversal). So it may be possible to come up with a way to tell when we
-> > could use a percentage here. But in the meantime, let's make sure we
-> > robustly avoid printing nonsense.
-> >
-> > Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> > Signed-off-by: Jeff King <peff@peff.net>
-> > ---
-> > Compared to the original from:
-> >
-> >   https://public-inbox.org/git/20190322102817.19708-1-szeder.dev@gmail.com/
-> >
-> > I rebased it to handle code movement, added in the timing data, and
-> > tried to summarize the discussion from the thread.
+> This obviously helps if you're under memory pressure, but even without
+> it, things go faster. My before/after times for that command (without
+> massif) went from 12.521s to 11.874s, a speedup of ~5%.
 >
-> Thanks for resurrecting this patch and for the summary paragraph.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> We didn't actually notice this on linux.git, but rather on a repository
+> with 130 million commits (don't ask). With this patch, I was able to
+> generate the commit-graph file with a peak heap of ~25GB, which is ~200
+> bytes per commit.
+>
+> I'll bet we could do better with some effort, but obviously this case
+> was just pathological. For most cases this should be cheaper than a
+> normal repack (which probably spends that much memory on each object,
+> not just commits).
+>
+>  builtin/commit-graph.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+> index 57863619b7..052696f1af 100644
+> --- a/builtin/commit-graph.c
+> +++ b/builtin/commit-graph.c
+> @@ -251,6 +251,8 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
+>  			     builtin_commit_graph_usage,
+>  			     PARSE_OPT_STOP_AT_NON_OPTION);
+>
+> +	save_commit_buffer = 0;
+> +
 
-Thanks from me, as well. I noticed that we had achieved three billion
-percent progress on the repository that brought this to our attention,
-but didn't notice that you had already written these patches.
+This looks exactly right to me. We had discussed a little bit off-list
+about where you might place this line, but I think that the spot you
+picked is perfect: as late as possible.
 
-So, I am glad that they are getting the attribution that they deserve.
-Thanks again both.
+Thankfully, the option parsing code here doesn't load any commits
+(though even if it did, I don't think that turning on/off
+'save_commit_buffer' would really make much of a difference).
+
+So, the patch here looks obviously correct, and I don't think it needs a
+test or anything like that... besides: what is there to test? :).
+
+>  	if (argc > 0) {
+>  		if (!strcmp(argv[0], "read"))
+>  			return graph_read(argc, argv);
+> --
+> 2.23.0.474.gb1abd76f7a
 
 Thanks,
 Taylor
