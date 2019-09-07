@@ -2,77 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FORGED_MSGID_YAHOO,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A94D41F461
-	for <e@80x24.org>; Sat,  7 Sep 2019 23:39:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 340051F461
+	for <e@80x24.org>; Sat,  7 Sep 2019 23:42:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395307AbfIGXjw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Sep 2019 19:39:52 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:39593 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726881AbfIGXjw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Sep 2019 19:39:52 -0400
-Received: by mail-io1-f66.google.com with SMTP id d25so20927143iob.6
-        for <git@vger.kernel.org>; Sat, 07 Sep 2019 16:39:52 -0700 (PDT)
+        id S2395308AbfIGXmM (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Sep 2019 19:42:12 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:41619 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393301AbfIGXmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Sep 2019 19:42:12 -0400
+Received: by mail-oi1-f196.google.com with SMTP id h4so7888839oih.8
+        for <git@vger.kernel.org>; Sat, 07 Sep 2019 16:42:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Z40OCI5AF5soxxh1mTcg3Z7W/SKOzzunxNmGvEfLb8g=;
-        b=YUyjpPhUbCTz1B8rC8mAYfpJnAfMtvEruCHDEFi/83heM6Ylk91h0e6SmuIpk4BupI
-         0B4Ydk6qgJfojrdBitSgwp1bFDpARHmQbKVq5MIt1zuBnAgjm63rYG89hMah9VvgpLJv
-         VSHXq/C6dKllZQNZCAM7rUOKZZXEiP7JGkeZrVISskdxj1/KUKhWlGqit8htuGpF+9hm
-         +zc3M5oPGOtHPFgCFQZJis4Oeg5z+rJAM7t7NMuHuHyIWpA2PfMnR8srrFVGQjBPDm+U
-         QSRKPZpjm4v9arAw7SXDe1Ntvo/C9pMpVYRJR6iUjrDhtJt3KREcitMI5527fBYoNZK9
-         XQRA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=7+qp0Bn2pzFNKO1qjbeItt9AVicjZ9JMic6etUmGchc=;
+        b=X/jK9Br1JhctrAv8MVUF2rQEJPIGCY40pKlsvB5Sp9E9r78w5vtvaMfzOfWssA9h0m
+         aRZr1PXkcbFBmQa00T4cqInLE+vNZZT32Ofu3SzVVvbaU40lOjkjzB26f2FDLeO+m2Ro
+         CwYanU7lMOIHYc+9aJDTSBCfW7vX8TpnHw6el9eRAOwOwKywjQ/1SzEN/EJI56ZB5Yeo
+         OaubKog1KXsHjl+OTdNjkIc5GePqT8vKqVrD8m0YbxvC9NeVZpsQIFduh9XCu1bR9Lir
+         MlqWP6qfNCrA0lDp22E7CKyfWr5T1QRvpOsxjyq+tsDc9F0iLj7mYEGKQcjFvCx/DIXD
+         a3UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Z40OCI5AF5soxxh1mTcg3Z7W/SKOzzunxNmGvEfLb8g=;
-        b=OYn2xr/ykrUr+0jsMjSqDHkGlzEryB2aKES7CVkyaJHAJwF1WrbJF4oE7KPFRexoSP
-         NibAPOaYfpOoLR5tVsJ8sPkeqe+cDxFs9gGPqKkw7IEmPOTOUP1UB2R7UZyAGAbKB1Z1
-         O3FrazU0i1toNxgeVwspw3WgHKNpQKKk2zMeyg89gNkwKlwc1mH4jhTelLQrKsb8aqhu
-         PclP0Y/eRlp8uAwUT+6MSPmKercPvG0Zxk0sNzXhYzSZ3uVF1du53v81Gpoagnjznb9X
-         wubBAfvX8NVofYpT5K6DEaWoQOZP3rP5SGTyoTEVv4SUyPG8I5Ls1PwxqITiUC/sVd9G
-         BvGg==
-X-Gm-Message-State: APjAAAUto37iaK/D2xpUXdC4GKpM2xX/ZeiKPK22053hFXwIaKuKGHH9
-        8FHHi13rXN37odIlIPPITwL3AlOomuU=
-X-Google-Smtp-Source: APXvYqyoOmVY+vvbhYi8I2tyus2Opkv3ceboieCUfveenNkHVkJb0KKXZqeUHu4TI9jdTQWf+UyFRQ==
-X-Received: by 2002:a6b:bc47:: with SMTP id m68mr19374572iof.70.1567899591551;
-        Sat, 07 Sep 2019 16:39:51 -0700 (PDT)
-Received: from localhost ([206.121.37.170])
-        by smtp.gmail.com with ESMTPSA id u3sm8383439iog.36.2019.09.07.16.39.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Sep 2019 16:39:50 -0700 (PDT)
-Date:   Sat, 7 Sep 2019 19:39:49 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Eric Freese <ericdfreese@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/1] for-each-ref: add '--no-symbolic' option
-Message-ID: <20190907233949.GA43535@syl.local>
-References: <20190907213646.21231-1-ericdfreese@gmail.com>
- <20190907213646.21231-2-ericdfreese@gmail.com>
- <20190907232821.GA42449@syl.local>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=7+qp0Bn2pzFNKO1qjbeItt9AVicjZ9JMic6etUmGchc=;
+        b=A3ZlGjsCECR+E0LxrTlWen81EcKtikqDpZIdGaN7gbtj67HQhPvfb4DxrL9hPmGAC7
+         eIW3lL+ejU0oMJ2JXU1yxCPr2QO3ozUIvgHu7wGhjgkCW7RMhPjeO97uUuvp/zBi2zbq
+         +4/HXEOSlKflRrm2IDSfvClWUi0zvlt0LKUyqWCTCeja7wWWPGJyqJ2QC5Fr4TXmAAq7
+         k2myl2wuQrsHom5S6O9gepS2u2TBdTc4Gawq/idgAMggXcxuAQc4uLq7miycgFN3xQXS
+         n/lEj3PMU3+05TQOLnjw9BHT959vCHY5AF1I4FartIycS8u0lsCMR+clsqk7ZpI5ltAn
+         nizA==
+X-Gm-Message-State: APjAAAX4V7ZDBYvdhtSXiBhhIRA2uMNvpXM/x+BKJP8i3acX8cPgkDCt
+        3pgfMIyUXRLQSIh1vTD4ofA=
+X-Google-Smtp-Source: APXvYqyI4u6cz/blgp3Q91TKOeY+p/ZKoKmqg8ak11Hq3qanuoG0jZjgRCqGO0oiZBScb8fApuTJJg==
+X-Received: by 2002:aca:cc96:: with SMTP id c144mr12582231oig.72.1567899731183;
+        Sat, 07 Sep 2019 16:42:11 -0700 (PDT)
+Received: from localhost.localdomain ([2600:1700:8a10:1290:ccab:112b:24b3:bd34])
+        by smtp.gmail.com with ESMTPSA id v132sm3639554oif.34.2019.09.07.16.42.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 07 Sep 2019 16:42:10 -0700 (PDT)
+From:   Warren He <pickydaemon@gmail.com>
+X-Google-Original-From: Warren He <wh109@yahoo.com>
+To:     me@ttaylorr.com, gitster@pobox.com, sandals@crustytoothpaste.net
+Cc:     git@vger.kernel.org, pickydaemon@gmail.com, wh109@yahoo.com
+Subject: Re: [PATCH] rebase: introduce --update-branches option
+Date:   Sat,  7 Sep 2019 16:41:46 -0700
+Message-Id: <20190907234146.1473-1-wh109@yahoo.com>
+X-Mailer: git-send-email 2.23.0.windows.1
+In-Reply-To: <20190903013959.GA40029@syl.lan>
+References: <20190903013959.GA40029@syl.lan>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190907232821.GA42449@syl.local>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 07, 2019 at 07:28:21PM -0400, Taylor Blau wrote:
-> ...
+Brian, thanks for looking. The only thing I can come up with to say about having
+lots of refs is that at least that part of this isn't brand new code. The part
+that collects ref info uses the same routines as `git log --decorate`. Do you
+recall how long that took in the repository with 80,000 refs?
 
-Oh, great. I was pretty sure that vger accidentally ate my last mail,
-but I guess not. Sorry for the re-send.
+Junio, thanks for eyeballing. Let me know if some style violations remain.
 
-Thanks,
-Taylor
+Taylor, thanks for coming up with a way to configure branches to be excluded. I
+haven't worked on implementing that yet. Let's continue to watch for feedback if
+people will desire this kind of control.
+
+Using `exec git branch -f` is further discussed in the review, where there are
+arguments for introducing a new todo command. I'll add some comments there when
+I post a new patch set. But if someone's in favor of accepting a version of this
+without that change, with the potential harm from this feature being low enough,
+I'm not opposed to that either.
