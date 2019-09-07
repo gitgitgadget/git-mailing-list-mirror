@@ -7,109 +7,111 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B72691F461
-	for <e@80x24.org>; Sat,  7 Sep 2019 16:53:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF6191F461
+	for <e@80x24.org>; Sat,  7 Sep 2019 17:08:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403900AbfIGQxM (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Sep 2019 12:53:12 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58572 "EHLO
+        id S2395108AbfIGRIE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Sep 2019 13:08:04 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58580 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726669AbfIGQxM (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 7 Sep 2019 12:53:12 -0400
+        by vger.kernel.org with ESMTP id S2387994AbfIGRIE (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 7 Sep 2019 13:08:04 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:6959:e43b:5cf6:a465])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A39356074C;
-        Sat,  7 Sep 2019 16:53:09 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0428D6074C;
+        Sat,  7 Sep 2019 17:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1567875190;
-        bh=uXt4t6mbyWf3v1wlLubv+WYFUlqeGpHBuFOd1Z99y7E=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=DjdYLcirSMEcfII5bpEzUIU3G3o0bKPEfYbfq0IV46FgsVWR64qb4mG3aZ4LerUcs
-         UFsAga36e9IB9GY5Uyd5k7uenFZHNEp2Etp5R5qCw+J/AFvizpvB3ga9eFZXGeHoBa
-         e3jmCNGnCANcgMfCF/fQvqNlbVn5OwS87wswKN4WPr136t1aeqt4NVVuccflXVrIxh
-         DvhiK6VxDvZMJv3fV4HicyaCJd5R6GlXHdfXw1pVGGu/bVGFw/7C3itqaVJUSOyAqW
-         Vqg/iljf/29Tjvy7X3zIejo1jQ8EKkb8Y2+aUZs2BKWKWLBUUPXC1O3eV2/+p16aQs
-         qDyToZFfB7tnTCH4112wPdWunx8xbRAGujtYmylazoUiWPHEYKcVM8BH18kHljOKfU
-         IOkNb/jf48i2EmO/zTIa8QEJxyhjY4bh6rYnR5PcicyJPY4KXeRN3pG41M2hSX6AFB
-         VJVxweF6FNLDc7QR1U5bUEG7S65p6j0XW22yN6bYH5fSadLxGyh
-Date:   Sat, 7 Sep 2019 16:53:02 +0000
+        s=default; t=1567876081;
+        bh=sPJOfyaNuOaB0UQW8YFq8vd8f67i3n2JbpSgMjSTF+k=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=V/ZemjvMkBpFf/8ePvS+knSGQ4UnDm75EAN+2oPoOPEi0t24ZsQfY4JzxGxpK9/Kq
+         3g0TRslR9AKIIFhxPyc+D+2Asu/4TXYR/VH91k/BF5BNEqI21iEh/EyNotmZfFcOeQ
+         LZW9bej8aDWHuIjRbc3oWZyKyWURfiwuNRWWEZ0LZuDoPAUrPNGfzVBSicoOPLBx+H
+         vLmMhtoSSozeZGZXI8us69i3zYD0at7qkIRfdyEYD3eXb5kpn8NJV+SPhOBZunpF63
+         1llMzxMLWvE44O50MzY2aADLzD4meADFzCS17icPTUqhbU/w6kipSj2xgAHnjfYsp1
+         hSFgT5ybApJon0hUkcfbVmZ3x4+81OysEQsTorLYqqhz9vmOFKk3IM54vz7aCp3gYN
+         s4hcmRROs23ezyItn68VS9ndkcydJosFV/DOimYrRsZdE1N491MGb0Iy72gALJ6d1E
+         dgPUtZYOoVSht8s66s/O0R+OnINwqg2FkqaULodC3unmhkqdfQu
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+To:     <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/2] asciidoctor-extensions: provide `<refmiscinfo/>`
-Message-ID: <20190907165302.GK11334@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <CAN0heSr2zCQMM6wOM0UnD28qj_VygQ5CQHGHhMR9+H23snpt5Q@mail.gmail.com>
- <cover.1567534373.git.martin.agren@gmail.com>
- <20190904032609.GD28836@sigill.intra.peff.net>
- <20190906232947.GJ11334@genre.crustytoothpaste.net>
- <20190907044021.GA24463@sigill.intra.peff.net>
+Subject: [PATCH] Documentation: fix build with Asciidoctor 2
+Date:   Sat,  7 Sep 2019 17:07:46 +0000
+Message-Id: <20190907170746.273984-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.23.0.162.g0b9fbb3734
+In-Reply-To: <20190906232947.GJ11334@genre.crustytoothpaste.net>
+References: <20190906232947.GJ11334@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ZG5hGh9V5E9QzVHS"
-Content-Disposition: inline
-In-Reply-To: <20190907044021.GA24463@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Our documentation toolchain has traditionally been built around DocBook
+4.5.  This version of DocBook is the last DTD-based version of DocBook.
+In 2009, DocBook 5 was introduced using namespaces and its syntax is
+expressed in RELAX-NG, which is more expressive and allows a wider
+variety of syntax forms.
 
---ZG5hGh9V5E9QzVHS
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Asciidoctor, one of the alternatives for building our documentation,
+dropped support for DocBook 4.5 in its recent 2.0 release and now only
+supports DocBook 5.  This would not be a problem but for the fact that
+we use xmlto, which is still stuck in the DocBook 4.5 era.
 
-On 2019-09-07 at 04:40:22, Jeff King wrote:
-> On Fri, Sep 06, 2019 at 11:29:47PM +0000, brian m. carlson wrote:
-> > I'll look into this.  I requested the upgrade in sid.
-> >=20
-> > If it's the lack of DocBook 4.5 support, then I'll probably need to
-> > patch xmlto for that.  DocBook 5 has been around for a decade now, so
-> > it's time for xmlto to support it properly.
->=20
-> Yes, it's the docbook45 thing. Switching to docbook5 lets asciidoc run,
-> but then xmlto chokes.
+xmlto performs DTD validation as part of the build process.  This is not
+problematic for DocBook 4.5, which has a valid DTD, but it clearly
+cannot work for DocBook 5, since no DTD can adequately express its full
+syntax.  In addition, even if xmlto did support RELAX-NG validation,
+that wouldn't be sufficient because it uses the libxml2-based xmllint to
+do so, which has known problems with validating interleaves in RELAX-NG.
 
-I already have a patch for Git to fix this.  I'll send it out this weekend.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Fortunately, there's an easy way forward: ask Asciidoctor to use its
+DocBook 5 backend and tell xmlto to skip validation.  Asciidoctor has
+supported DocBook 5 since v0.1.4 in 2013 and xmlto has supported
+skipping validation for probably longer than that.
 
---ZG5hGh9V5E9QzVHS
-Content-Type: application/pgp-signature; name="signature.asc"
+xmlto will still use the non-namespaced DocBook XSL stylesheets (which
+are designed for DocBook 4.5) for building the documentation instead of
+the namespaced ones (which are designed for DocBook 5).  This isn't
+really a problem, since both forms are built from the same source and
+can handle both versions, but it does mean that an ugly message about
+the stylesheets stripping the namespace will be printed to standard
+error.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+Overall, however, this message is a relatively minor price to pay and it
+means that we can continue to use the aging xmlto to drive our build
+process, while still supporting newer tooling like Asciidoctor 2.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1z4G0ACgkQv1NdgR9S
-9oviaw//TtITkNoqW5E1TdNqyUjrEY0RdQvGmZQEDP3jZmU9PpPkQFtdizbcXBHa
-+j5Nr8OAb4w2wE1w85PeFXsoDpE7LwoXbk8cL2oo9h4S8ISdugwOVNQU0HotyJ2H
-ivyNdogqyyG6CqU4cndMAhEd9s3gPoUoM0BsuEpU4uu2QYZ7jB/S8KgkLRN4aja0
-N+V8hI/8splD6gpf0OMBbQhH1I4JJ1WyGfMHFbNuz4sPuKMxVCEsKOwcSSKDHwiu
-XlV25yYJCjWP7FKf+IR+QcGB5I5APkIE4MOFJlxxN/UMoopmprKlfCLy1kLRaN9E
-NTj4PL9BXodN5O1pJ95NiU0C6sSB9DNebVXPKwJhiJiu0rH+x0L/O//1duqW/1Gh
-Dc3dOidC4kbMVQgEGer1f32JvER3Hh2MQozyC7Jw4mI7AEcvINEbPJT5uQMihPnG
-HDDB+/bwFQdwRW1xgZrYijqnRlw3MH4RvDNrlfw6ZMYO6E5jEwG34JHV9+/OTLoi
-yug1V6KgcD79H7TKsS3+3NdEdrpqXrHXE0RqOwHFBrtWzn+iD/p1G4Fq+njnY/Kk
-I7P2fpmmv4mkeflBlGLwdUTJ/4M9goIYr98o/gEwlPIveRZZM3tX2WLSlQorQYKQ
-ZoUfswf262hF2iJROUI4r4X2iIAN3iVxI5lGL5ZOHVlTJdrFwN4=
-=ctNl
------END PGP SIGNATURE-----
+The differences in output between AsciiDoc 8.6.10 on master and
+Asciidoctor 2.0.10 with this patch are, with one exception, all due to
+whitespace, wrapping, or quoting and do not affect substantive content.
 
---ZG5hGh9V5E9QzVHS--
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ Documentation/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 76f2ecfc1b..485f365cbf 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -197,11 +197,12 @@ ifdef USE_ASCIIDOCTOR
+ ASCIIDOC = asciidoctor
+ ASCIIDOC_CONF =
+ ASCIIDOC_HTML = xhtml5
+-ASCIIDOC_DOCBOOK = docbook45
++ASCIIDOC_DOCBOOK = docbook5
+ ASCIIDOC_EXTRA += -acompat-mode -atabsize=8
+ ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions
+ ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
+ DBLATEX_COMMON =
++XMLTO_EXTRA += --skip-validation
+ endif
+ 
+ SHELL_PATH ?= $(SHELL)
