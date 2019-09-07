@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F9631F4B7
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9B641F461
 	for <e@80x24.org>; Sat,  7 Sep 2019 14:13:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391442AbfIGONS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Sep 2019 10:13:18 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:35147 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388458AbfIGONS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Sep 2019 10:13:18 -0400
-Received: by mail-lf1-f65.google.com with SMTP id w6so7288310lfl.2
-        for <git@vger.kernel.org>; Sat, 07 Sep 2019 07:13:16 -0700 (PDT)
+        id S2404263AbfIGONV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Sep 2019 10:13:21 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:44547 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388458AbfIGONV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Sep 2019 10:13:21 -0400
+Received: by mail-lj1-f196.google.com with SMTP id u14so8573599ljj.11
+        for <git@vger.kernel.org>; Sat, 07 Sep 2019 07:13:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qEDo+fkeB8xz3wuIY3GGDmQBiU7awWjJY5+uX6Ymb/I=;
-        b=kTcvXF1M2gskpJFd7i7BbSQCvr7YGBYJUyoIm765s8PwPF19swqe9q48MEpeQO+6ie
-         FzvxSRqs4okRyKmvtwktEov16lpajOGwcMNo5uDHNCbhG/IzLqnwy7H8E1QuPjlfM+Lw
-         PWX85LA/Bec7pMmRjVyZ4gJuO8zfnh47kz4I8ivlrK67XcDZkR9DmJh6LCN/WoH4JiGe
-         m/kKlUHrcT2Sq0WzA1lJcDh/UzxX22ytD95cD5A6x1atWOlKW+wcCVVf2oF0+hpMNVB8
-         hS8Xj0qru/lHQUbMGCZ7IGa9yKchfSI32loc3lnxldyPMdYEljkbQhRuqYfhZ/tDdVDQ
-         iOZg==
+        bh=d6grHpI70/UKtx1Rboa/FrQpwxna6BwVuJvqTaEr83U=;
+        b=Q+aP0AIFrY/xzPO5m9M5xGkY73s3f+ACEeNFlAPEu6WmM8xeX3NJl4tZsfuKQGvDhC
+         2hB525wf+JOQoFUJ4/kCtH1nJ8BjT9eNL3gFK/OXmcG+Xmlpi8ZQRE/4lkW0O/7nxVpc
+         KernzExaZ26vEQwbNJQSB+WFDkHvRg3AJe4nn5+A+hTn6//UrQ6wlr31HKczn4MtXO6c
+         0aDLN6csGSh5A25us92EBsOcy0pM3WfgqKIrivK2s1XvA4XjIOvzbgno0fOW8oCcvurx
+         yKIG7Be3YeTzszAo/6HXtfmXjM9lzlxHWUiJBTxJxAADTVviCC1KUBrNQJqmznz96tPM
+         viUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qEDo+fkeB8xz3wuIY3GGDmQBiU7awWjJY5+uX6Ymb/I=;
-        b=ca3OOEPWxX6Q3Lf/X3TTn+Cj/9dO+sJSXPiP1V7yAO6FokSVDLUMWPXKtSOrb6wHnv
-         WXWJTrDVE6OszTFe77y0D13Wp5jizU16c3XAcLaGBm92PhvstL/e2A215rtvQt92s5J7
-         hykONDGNlOUgbRbuRYl/AsG0wSZfq+9wWXzTBmf7KPq2Eh3zPtc7ayZaCB+UDqnm/hm3
-         mpEFNNa8Cf+57t7CdlNX/xV8EaIbqzR6CAP32iiLJoI8tUYN73QNnvTSc70Kp5/jkeDC
-         KoeAkhsh5uD752xV3u+2EA7434wPVf2t59i7XT6WrvAn4rODEaybYjdsmjqmkChD7UMO
-         kicw==
-X-Gm-Message-State: APjAAAV41VFxzoLY13KMV/wodZ+isjtjitxcX7QhNUN4vin1+2FAzH1S
-        XHokXnGOK7GgdGejnue8ySVmwlZ1
-X-Google-Smtp-Source: APXvYqxY1oOFYaqmNgSi+Bq5/heCcpeLRfO6lncMgnJi38Zo9+kXWlUtolNnI4yzrA+bhk51iGOZnw==
-X-Received: by 2002:ac2:51ce:: with SMTP id u14mr9402022lfm.72.1567865595025;
-        Sat, 07 Sep 2019 07:13:15 -0700 (PDT)
+        bh=d6grHpI70/UKtx1Rboa/FrQpwxna6BwVuJvqTaEr83U=;
+        b=EOUBbNdcFKBL3/kxBLnKm4BZK6EYVQT18ZDolJTwKx7wqWqTAPtfpcfHmINxPwx46n
+         kCgOuDcFExK10xJvUj/rffQ6jLoREagBDOZ9MkjeaKziW4qTwUf6Ui4wfF/1xdS4RZkP
+         5uRUU+5SEhf0ofOpgBc/2AySOeqoAUBXti0kCt/43BWTcF0vnWb5SQOYXgegrDX5Qlz3
+         sHBmNAqSC4WItMV7FhgV4ofV7GvQyb1DiH5AMhon6FSNzbf8Y6yHcTKMq/LB311QmEna
+         2Igp/xW6NwT/GLtXO3z/TQp3bVeYM4L9pG3Txei7VW2Po+ajDtR9LiB6/dDr17MgR2/e
+         vbZQ==
+X-Gm-Message-State: APjAAAVnkIoYwM2mqmmcTiBdDNbNs6nBdPGKbbP9QTrq3y9aUTirIOUn
+        ncTFulIu+0vxjAMUESyDjSo190+D
+X-Google-Smtp-Source: APXvYqyDzWuZxsaCe2JBQ7P41V+B0s6UiwU+CCbgFqn0Y8oMig+lsUtijaa9xM7MiPGpZL/6AcmBHg==
+X-Received: by 2002:a2e:9549:: with SMTP id t9mr5299259ljh.189.1567865598542;
+        Sat, 07 Sep 2019 07:13:18 -0700 (PDT)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id u10sm1741316lfk.34.2019.09.07.07.13.14
+        by smtp.gmail.com with ESMTPSA id u10sm1741316lfk.34.2019.09.07.07.13.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Sep 2019 07:13:14 -0700 (PDT)
+        Sat, 07 Sep 2019 07:13:17 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>
-Subject: [PATCH 1/7] Documentation: wrap blocks with "--"
-Date:   Sat,  7 Sep 2019 16:12:47 +0200
-Message-Id: <4c6e89fbeb3b76ec1cd8d12d00da2e8d9c77f6bd.1567707999.git.martin.agren@gmail.com>
+Subject: [PATCH 3/7] Documentation: wrap config listings in "----"
+Date:   Sat,  7 Sep 2019 16:12:49 +0200
+Message-Id: <2a8cc66dff38f3e5bf9220a06440382ae2641fea.1567707999.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <cover.1567707999.git.martin.agren@gmail.com>
 References: <cover.1567707999.git.martin.agren@gmail.com>
@@ -67,120 +67,241 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The documentation for each of these options contains a list. After the
-list, AsciiDoc interprets the continuation as a continuation of the
-*list*, not as a continution of the larger block. As a result, we get
-too much indentation. Wrap the entire blocks in "--" to fix this. With
-Asciidoctor, this commit is a no-op, and the two programs now render
-these identically.
+The indented lines in these example config-file listings are indented
+differently by AsciiDoc and Asciidoctor.
 
-These two files share the same problem and indeed, they both document
-`--untracked-files` in quite similar ways. I haven't checked to what
-extent that is intentional or warranted, and to what extent they have
-simply drifted apart. I consider such an investigation and possible
-cleanup as out of scope for this commit and this patch series.
+Fix this by marking the example config-files as code listings by
+wrapping them in "----". Because this gives us some extra indentation,
+we can remove the one that we have been carrying explicitly. That is,
+drop the first tab of indentation on each line.
+
+With AsciiDoc, this results in identical rendering before and after this
+commit. Asciidoctor now renders this the same as AsciiDoc does.
+
+git-config.txt pretty consistently uses twelve dashes rather than the
+minimum four to spell "----". Let's stick to the file-local convention
+there.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/git-commit.txt |  8 +++++---
- Documentation/git-status.txt | 18 +++++++++++-------
- 2 files changed, 16 insertions(+), 10 deletions(-)
+ Documentation/config.txt         | 84 ++++++++++++++++----------------
+ Documentation/git-config.txt     | 56 +++++++++++----------
+ Documentation/git-send-email.txt | 12 +++--
+ Documentation/gitmodules.txt     | 15 +++---
+ 4 files changed, 87 insertions(+), 80 deletions(-)
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index a85c2c2a4c..e43dad26f5 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -282,18 +282,20 @@ FROM UPSTREAM REBASE" section in linkgit:git-rebase[1].)
- --untracked-files[=<mode>]::
- 	Show untracked files.
- +
-+--
- The mode parameter is optional (defaults to 'all'), and is used to
- specify the handling of untracked files; when -u is not used, the
- default is 'normal', i.e. show untracked files and directories.
--+
-+
- The possible options are:
--+
-+
- 	- 'no'     - Show no untracked files
- 	- 'normal' - Shows untracked files and directories
- 	- 'all'    - Also shows individual files in untracked directories.
--+
-+
- The default can be changed using the status.showUntrackedFiles
- configuration variable documented in linkgit:git-config[1].
-+--
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 7e2a6f61f5..f7cd0ae584 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -164,47 +164,49 @@ to either specify only the realpath version, or both versions.
+ Example
+ ~~~~~~~
  
- -v::
- --verbose::
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index d4e8f24f0c..7731b45f07 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -59,16 +59,17 @@ This is optional and defaults to the original version 'v1' format.
- --untracked-files[=<mode>]::
- 	Show untracked files.
- +
-+--
- The mode parameter is used to specify the handling of untracked files.
- It is optional: it defaults to 'all', and if specified, it must be
- stuck to the option (e.g. `-uno`, but not `-u no`).
--+
+-	# Core variables
+-	[core]
+-		; Don't trust file modes
+-		filemode = false
+-
+-	# Our diff algorithm
+-	[diff]
+-		external = /usr/local/bin/diff-wrapper
+-		renames = true
+-
+-	[branch "devel"]
+-		remote = origin
+-		merge = refs/heads/devel
+-
+-	# Proxy settings
+-	[core]
+-		gitProxy="ssh" for "kernel.org"
+-		gitProxy=default-proxy ; for the rest
+-
+-	[include]
+-		path = /path/to/foo.inc ; include by absolute path
+-		path = foo.inc ; find "foo.inc" relative to the current file
+-		path = ~/foo.inc ; find "foo.inc" in your `$HOME` directory
+-
+-	; include if $GIT_DIR is /path/to/foo/.git
+-	[includeIf "gitdir:/path/to/foo/.git"]
+-		path = /path/to/foo.inc
+-
+-	; include for all repositories inside /path/to/group
+-	[includeIf "gitdir:/path/to/group/"]
+-		path = /path/to/foo.inc
+-
+-	; include for all repositories inside $HOME/to/group
+-	[includeIf "gitdir:~/to/group/"]
+-		path = /path/to/foo.inc
+-
+-	; relative paths are always relative to the including
+-	; file (if the condition is true); their location is not
+-	; affected by the condition
+-	[includeIf "gitdir:/path/to/group/"]
+-		path = foo.inc
++----
++# Core variables
++[core]
++	; Don't trust file modes
++	filemode = false
 +
- The possible options are:
--+
++# Our diff algorithm
++[diff]
++	external = /usr/local/bin/diff-wrapper
++	renames = true
 +
- 	- 'no'     - Show no untracked files.
- 	- 'normal' - Shows untracked files and directories.
- 	- 'all'    - Also shows individual files in untracked directories.
--+
++[branch "devel"]
++	remote = origin
++	merge = refs/heads/devel
 +
- When `-u` option is not used, untracked files and directories are
- shown (i.e. the same as specifying `normal`), to help you avoid
- forgetting to add newly created files.  Because it takes extra work
-@@ -78,9 +79,10 @@ Consider enabling untracked cache and split index if supported (see
- `git update-index --untracked-cache` and `git update-index
- --split-index`), Otherwise you can use `no` to have `git status`
- return more quickly without showing untracked files.
--+
++# Proxy settings
++[core]
++	gitProxy="ssh" for "kernel.org"
++	gitProxy=default-proxy ; for the rest
 +
- The default can be changed using the status.showUntrackedFiles
- configuration variable documented in linkgit:git-config[1].
-+--
++[include]
++	path = /path/to/foo.inc ; include by absolute path
++	path = foo.inc ; find "foo.inc" relative to the current file
++	path = ~/foo.inc ; find "foo.inc" in your `$HOME` directory
++
++; include if $GIT_DIR is /path/to/foo/.git
++[includeIf "gitdir:/path/to/foo/.git"]
++	path = /path/to/foo.inc
++
++; include for all repositories inside /path/to/group
++[includeIf "gitdir:/path/to/group/"]
++	path = /path/to/foo.inc
++
++; include for all repositories inside $HOME/to/group
++[includeIf "gitdir:~/to/group/"]
++	path = /path/to/foo.inc
++
++; relative paths are always relative to the including
++; file (if the condition is true); their location is not
++; affected by the condition
++[includeIf "gitdir:/path/to/group/"]
++	path = foo.inc
++----
  
- --ignore-submodules[=<when>]::
- 	Ignore changes to submodules when looking for changes. <when> can be
-@@ -100,11 +102,12 @@ configuration variable documented in linkgit:git-config[1].
- --ignored[=<mode>]::
- 	Show ignored files as well.
- +
-+--
- The mode parameter is used to specify the handling of ignored files.
- It is optional: it defaults to 'traditional'.
--+
-+
- The possible options are:
--+
-+
- 	- 'traditional' - Shows ignored files and directories, unless
- 			  --untracked-files=all is specified, in which case
- 			  individual files in ignored directories are
-@@ -112,12 +115,13 @@ The possible options are:
- 	- 'no'	        - Show no ignored files.
- 	- 'matching'    - Shows ignored files and directories matching an
- 			  ignore pattern.
--+
-+
- When 'matching' mode is specified, paths that explicitly match an
- ignored pattern are shown. If a directory matches an ignore pattern,
- then it is shown, but not paths contained in the ignored directory. If
- a directory does not match an ignore pattern, but all contents are
- ignored, then the directory is not shown, but all contents are shown.
-+--
+ Values
+ ~~~~~~
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index ff9310f958..899e92a1c9 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -339,33 +339,35 @@ EXAMPLES
  
- -z::
- 	Terminate entries with NUL, instead of LF.  This implies
+ Given a .git/config like this:
+ 
+-	#
+-	# This is the config file, and
+-	# a '#' or ';' character indicates
+-	# a comment
+-	#
+-
+-	; core variables
+-	[core]
+-		; Don't trust file modes
+-		filemode = false
+-
+-	; Our diff algorithm
+-	[diff]
+-		external = /usr/local/bin/diff-wrapper
+-		renames = true
+-
+-	; Proxy settings
+-	[core]
+-		gitproxy=proxy-command for kernel.org
+-		gitproxy=default-proxy ; for all the rest
+-
+-	; HTTP
+-	[http]
+-		sslVerify
+-	[http "https://weak.example.com"]
+-		sslVerify = false
+-		cookieFile = /tmp/cookie.txt
++------------
++#
++# This is the config file, and
++# a '#' or ';' character indicates
++# a comment
++#
++
++; core variables
++[core]
++	; Don't trust file modes
++	filemode = false
++
++; Our diff algorithm
++[diff]
++	external = /usr/local/bin/diff-wrapper
++	renames = true
++
++; Proxy settings
++[core]
++	gitproxy=proxy-command for kernel.org
++	gitproxy=default-proxy ; for all the rest
++
++; HTTP
++[http]
++	sslVerify
++[http "https://weak.example.com"]
++	sslVerify = false
++	cookieFile = /tmp/cookie.txt
++------------
+ 
+ you can set the filemode to true with
+ 
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 504ae7fe76..b2909a3dc5 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -478,11 +478,13 @@ Use gmail as the smtp server
+ To use 'git send-email' to send your patches through the GMail SMTP server,
+ edit ~/.gitconfig to specify your account settings:
+ 
+-	[sendemail]
+-		smtpEncryption = tls
+-		smtpServer = smtp.gmail.com
+-		smtpUser = yourname@gmail.com
+-		smtpServerPort = 587
++----
++[sendemail]
++	smtpEncryption = tls
++	smtpServer = smtp.gmail.com
++	smtpUser = yourname@gmail.com
++	smtpServerPort = 587
++----
+ 
+ If you have multifactor authentication setup on your gmail account, you will
+ need to generate an app-specific password for use with 'git send-email'. Visit
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+index a66e95b70c..08c7b8a722 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -105,14 +105,15 @@ EXAMPLES
+ 
+ Consider the following .gitmodules file:
+ 
+-	[submodule "libfoo"]
+-		path = include/foo
+-		url = git://foo.com/git/lib.git
+-
+-	[submodule "libbar"]
+-		path = include/bar
+-		url = git://bar.com/git/lib.git
++----
++[submodule "libfoo"]
++	path = include/foo
++	url = git://foo.com/git/lib.git
+ 
++[submodule "libbar"]
++	path = include/bar
++	url = git://bar.com/git/lib.git
++----
+ 
+ This defines two submodules, `libfoo` and `libbar`. These are expected to
+ be checked out in the paths `include/foo` and `include/bar`, and for both
 -- 
 2.23.0
 
