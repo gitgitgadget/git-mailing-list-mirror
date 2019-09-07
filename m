@@ -2,80 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3C001F461
-	for <e@80x24.org>; Sat,  7 Sep 2019 06:45:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 887961F461
+	for <e@80x24.org>; Sat,  7 Sep 2019 10:14:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404318AbfIGGpK (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Sep 2019 02:45:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42824 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2392638AbfIGGpK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Sep 2019 02:45:10 -0400
-Received: (qmail 28418 invoked by uid 109); 7 Sep 2019 06:45:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 07 Sep 2019 06:45:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9898 invoked by uid 111); 7 Sep 2019 06:46:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 07 Sep 2019 02:46:56 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 7 Sep 2019 02:45:08 -0400
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Todd Zullinger <tmz@pobox.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/2] asciidoctor-extensions: provide `<refmiscinfo/>`
-Message-ID: <20190907064508.GC28860@sigill.intra.peff.net>
-References: <CAN0heSr2zCQMM6wOM0UnD28qj_VygQ5CQHGHhMR9+H23snpt5Q@mail.gmail.com>
- <cover.1567534373.git.martin.agren@gmail.com>
- <20190904032609.GD28836@sigill.intra.peff.net>
- <CAN0heSpbRvNG9okz5pqkHqDMB2BM5T+FzAbaK3sVwzGC6fjpPA@mail.gmail.com>
+        id S1731128AbfIGKOI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Sep 2019 06:14:08 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:35734 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729590AbfIGKOH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Sep 2019 06:14:07 -0400
+Received: by mail-io1-f65.google.com with SMTP id f4so17807821ion.2
+        for <git@vger.kernel.org>; Sat, 07 Sep 2019 03:14:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dI0C5wsa2Zn7oxO3Zr+Qg4u6eHuJcEVYPFF74Wsiq/w=;
+        b=KrC3OkHmpuozExu5tKUl9bzVl094dzSA3+Kzaz3DBSxjDhkhJoCGifyuhxHrfGAXns
+         rETjqLC3RYfueLbOFUxcXqU+qO8c3JBvuFEqN0/hvWcP8sULTnyhT+og9RwDgJj03fo3
+         k4s+u5LD06uwmLorxgFhbb79+9lJDXSMoX/IKMigFWxPM0v3/6Q60GfZxwifnCIE6Mwc
+         KGlQMecps5P6a/cI8RK4PsCyy+MD14BvRXO25lDH+/zWQ4blKkvphudD/rf0pRrH32Zm
+         ql7bIspGssKT2ZJIiR9++P/OytNcfibXEUz7Q2D3htCzTFP2FjbNROQZ1jL9WpuIyt1O
+         cPlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dI0C5wsa2Zn7oxO3Zr+Qg4u6eHuJcEVYPFF74Wsiq/w=;
+        b=thVdoMyQAT3dmhfTMFxPOP32eEu3kGW0O49xYfuh173DMSAOrIzhVEZQeTnyq6m/tf
+         ekNh/HH6ff3mfeGq2DsuhDfqBjkBmDpDsSYylGQFhjuIRr8yhvzxKAVmbthm8UI0V2aJ
+         pa8qHApKo+9ga1Bvgcs7XUxw6+050U4I3NNXYVOtSB6qsy+B5QN1FXj3aM0a5MTBC1Qz
+         XiPYhxbM7ccizDQaCo8ZL5dakvLbUcve+YoItNTUK54FXCkS+kX8YGKQxh2fuLq5ApGz
+         mtl6xXH8l5qa7tGckLH8FaLGC4TsaycD+DVZJgAEvOU8HFDDLDSIrBiPPKMCtdox7Xhp
+         tEqw==
+X-Gm-Message-State: APjAAAXV8y8ehI0twvcPVaZ+Go5f/ako6d5I0lPyZfqVTl/DIe8Q1C61
+        pzHTJh8NTN8MFZLfGkdfiQGLr9++s1g7kNkZ0Sw=
+X-Google-Smtp-Source: APXvYqxMsf/g1oUZaqfMm3KUxpXaxO7fjmecPL80Ke5eB7jaCxt2ZzNfu5nrYULUteC0Bb6iYnZsSH63m3uXvrCxlNk=
+X-Received: by 2002:a02:c7c8:: with SMTP id s8mr15182512jao.121.1567851246715;
+ Sat, 07 Sep 2019 03:14:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSpbRvNG9okz5pqkHqDMB2BM5T+FzAbaK3sVwzGC6fjpPA@mail.gmail.com>
+References: <20190827051756.GA12795@sigill.intra.peff.net> <20190904194114.GA31398@sigill.intra.peff.net>
+ <20190905193959.GA17913@google.com> <CAPUEspgyLHSwLBn2EkFyfxuU9KTx+CURTvjmenz2edw-htRxBA@mail.gmail.com>
+ <20190907063958.GB28860@sigill.intra.peff.net>
+In-Reply-To: <20190907063958.GB28860@sigill.intra.peff.net>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Sat, 7 Sep 2019 03:13:55 -0700
+Message-ID: <CAPUEspgY23L-bjojL1yEftW6WWddZf1ORY+rowxSTYx2c+c=xQ@mail.gmail.com>
+Subject: Re: Git in Outreachy December 2019?
+To:     Jeff King <peff@peff.net>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 05, 2019 at 09:35:10PM +0200, Martin Ågren wrote:
+On Fri, Sep 6, 2019 at 11:40 PM Jeff King <peff@peff.net> wrote:
+>
+> I just wrote a response to Emily, but I think a lot of it applies to
+> you, as well.
 
-> > > do also think it makes sense to first make the "softer" switch to
-> > > Asciidoctor-by-default and get that particular hurdle behind us. Then,
-> > > once we're ok with dropping AsciiDoc entirely, we can do the switch to
-> > > an Asciidoctor-only toolchain.
-> >
-> > Yeah, I do still like that as an endgame, but I like what you have here
-> > as an intermediate step in the right direction.
-> 
-> Hmm, so this sounds like once I am happy with replacing AsciiDoc with
-> Asciidoctor 1(.5.5), I should rather not propose a series "let's default
-> to Asciidoctor!!!" but instead a slightly more careful "go with
-> Asciidoctor, but document that we work badly with v2 and that the 2nd
-> choice after Asciidoctor 1 should be AsciiDoc". Or do you see it
-> differently? (I wonder which Asciidoctor-version Junio would be on..)
+With the exception of course that Emily can definitely write better
+code than my attempted hacks
 
-Yeah, that seems reasonable.
+> In particular, I think both of you are a bit newer to the project than
+> most of the other people who have mentored in the past. In some ways
+> that may be a good thing, as it likely makes it easier to see things
+> from the intern's perspective. :) But it may also introduce some
+> complications if you're working in an area of the code you're not
+> familiar with. Co-mentoring may help with that.
 
-TBH, if making things in the middle step work turns out to be too hard,
-I'm not entirely opposed to a hard switch.
+agree, and glad to help any way I can, specially if I can help offset
+some of the boring work required that would free resources somewhere
+else; then again by replying to Emily, I didn't meant we were both in
+the same level both technically and resource wise (after all she wrote
+the documentation on how to contribute and I only found a silly bug on
+her code that will prevent really obsolete systems to compile and
+didn't even wrote the patch)
 
-The "does not work with 2.0" thing has to be a temporary step, though, I
-think, since using the older versions will get harder and harder as time
-goes on. I think it's OK to take such a temporary step as long as we
-understand where it leads (and presumably its to directly generating the
-roff with asciidoctor). The middle step of having asciidoctor+xmlto
-helps us understand and isolate which changes are responsible for which
-parts of the output.
-
--Peff
+Carlo
