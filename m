@@ -8,58 +8,59 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 197751F461
-	for <e@80x24.org>; Sat,  7 Sep 2019 23:44:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8BC81F461
+	for <e@80x24.org>; Sat,  7 Sep 2019 23:44:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393329AbfIGXob (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Sep 2019 19:44:31 -0400
-Received: from mail-oi1-f180.google.com ([209.85.167.180]:44574 "EHLO
-        mail-oi1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727188AbfIGXoa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Sep 2019 19:44:30 -0400
-Received: by mail-oi1-f180.google.com with SMTP id w6so7893838oie.11
-        for <git@vger.kernel.org>; Sat, 07 Sep 2019 16:44:29 -0700 (PDT)
+        id S2395307AbfIGXoh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Sep 2019 19:44:37 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:40033 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727188AbfIGXoh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Sep 2019 19:44:37 -0400
+Received: by mail-ot1-f67.google.com with SMTP id y39so9168670ota.7
+        for <git@vger.kernel.org>; Sat, 07 Sep 2019 16:44:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zMuy3kfRQhiYvtGu0LMM/RS5Eowd2kC0YE1sM/bzngU=;
-        b=VeQho/AFweL26eIQC4SlegAr5eXJ5vBn+lG7yfUNCXF6NqKuYyPDpJfnvp2bkqyy3h
-         STSQACUVN2inJma9HIkzNXMYWSl34IsmljVDOxMtKtd9+0FazU2RoOL3YEucEDB98AJN
-         qoMNs1gSB0QZAFA+meiP5bYv+GkfO+O98Tyj/7AjVNkwdNDPXHtQYQSO0q5aZ5qTHejG
-         73PnQkdlc5rPcB/QyYDK/DOUM/AZ4+/fCU8TuTBtcw/MVqv2o1hfJbB958xDVz8Co9my
-         pWb4Y6keVcNW1cwYky7kUJB0faqAQiELIPH/Fdh3zilqk3E54dEtHDKmbiNmBzcF7GxZ
-         7IHg==
+        bh=OmVWpkNwSTH7XRWHOLwC74yUis34VVRNV4FUMqXwO1o=;
+        b=NMUu+kjnn7QlbllgHHhIVDbcEjadMLNI6VQLYzli3WnbCPcbgCWIlBNTbmoCDCrHay
+         9/BZBBNOObZDWLJpJzJnpUP396t4Da4qEbw3JYnLIFOoVIZm5F8g7I3fvwt6dNLSC7Zj
+         WxBe8Ba8fifv1K8eZm52pTCjWQIw2GgPfeRXNvfn6HQuST1PX5vZuJ6EmZJ1Frg/EIdI
+         IkOcDvaRS5ilVU9UNnarzTK+K2KSV+iBnBQZ+inCdZ5vPvdZ1smmVpHCb2jMl81I4Xqq
+         vBM9E5vLAus3vOYI0XBoquJ6hx0/haZEAu2wiiROL4FlnyLTcb6mgpfZGsqBclTVki1T
+         ZZ4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zMuy3kfRQhiYvtGu0LMM/RS5Eowd2kC0YE1sM/bzngU=;
-        b=qwwUctmhKjZmP6WDMLshW5b3JGKC6oX/JA7j4Nz6EGx82Z0EfOm/yZPrQuy1OsPV8P
-         TPcH+Uu6fpvh7XF0+PlHleKG066IHqFjOVIl0IbjJ2YKPKDLJwN/Uz9oawkFsbX0gDSW
-         3LCWu4ssx0uvfMyHjOxzrJNKICTJFWnYRzzjPq2BJTJ5J9hynXFV6UdGBSj7HT0KdV3B
-         cUnGczRjgZkNZehfnitraFkVBXZRu+OH0bE8A88gJXxr4LmtyZGUAjvhEAOfCeS2mGeu
-         SMhjnPYG1WyGjLqBpln7yVDvV9dmYwIUjbFnbZ/EdUS1kA3gSvtn6JCUNuYFOHnWzR59
-         BEGg==
-X-Gm-Message-State: APjAAAXxeTA9oPnZx636lcxfFAE6k1LYDiJ/+qVAgFYAh/Z84/0An/+D
-        5dDG1K6v1yA7UEHio75V3o0=
-X-Google-Smtp-Source: APXvYqy5TJdte556H2jPD4snN7K37AGjWkkI0zQX5j+mH1OIwHLzcJE7t+A2CTqGvQGhOph8Hblkkg==
-X-Received: by 2002:aca:de55:: with SMTP id v82mr12549907oig.56.1567899869316;
-        Sat, 07 Sep 2019 16:44:29 -0700 (PDT)
+        bh=OmVWpkNwSTH7XRWHOLwC74yUis34VVRNV4FUMqXwO1o=;
+        b=ju0qunPVolMSOLM3t4SXNze8BXYBvVNIlGO5XwWgG0Fp0OXgUWwnzaJTT0FqW0c5yf
+         Qu2yhWJacYhMdoAx8NMaeumDq6fVhGfpTGm+ZgeL5qN3qDXcdYiNlvLf1uGlPcyVIsCS
+         3NTmCS1Oo0bqUWHHMbyk85hHfAxTjntqmY4tIhTUiW7olRubWG+dklpoRXtXZBxbf4gE
+         SgWs/bUYy5bkYYNylCkMjX9tBRPrN/FBoQpD4omi/BEA20LWQS90lWWrAILsbUU04P5X
+         GLv4P384Jd5ONC59IEDMcK/QMWWNOynMTW15kUWbyP1IAweRrAY/WeeS5Gr6I4/YooXh
+         18aA==
+X-Gm-Message-State: APjAAAVJeQQptANiniDVPcdW56J/TCBN7ALt9rcjM6EUbrKcanUI4Qsn
+        IRfPFm5x5ukGRU5XK9uytZc=
+X-Google-Smtp-Source: APXvYqx+j8sgdR9J/AJjykP5UHq0AI8qsgPxLLJR7iMRCqtH+qN5pwZZgv1PLH5DNnaf7ivbmBLAuQ==
+X-Received: by 2002:a05:6830:14c2:: with SMTP id t2mr13654204otq.195.1567899875575;
+        Sat, 07 Sep 2019 16:44:35 -0700 (PDT)
 Received: from localhost.localdomain ([2600:1700:8a10:1290:ccab:112b:24b3:bd34])
-        by smtp.gmail.com with ESMTPSA id 13sm3912081otv.14.2019.09.07.16.44.28
+        by smtp.gmail.com with ESMTPSA id 13sm3912081otv.14.2019.09.07.16.44.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 07 Sep 2019 16:44:28 -0700 (PDT)
+        Sat, 07 Sep 2019 16:44:35 -0700 (PDT)
 From:   Warren He <pickydaemon@gmail.com>
 X-Google-Original-From: Warren He <wh109@yahoo.com>
 To:     johannes.schindelin@gmx.de
 Cc:     git@vger.kernel.org, pickydaemon@gmail.com, wh109@yahoo.com
 Subject: [PATCH v2] rebase: introduce --update-branches option
-Date:   Sat,  7 Sep 2019 16:44:12 -0700
-Message-Id: <20190907234413.1591-1-wh109@yahoo.com>
+Date:   Sat,  7 Sep 2019 16:44:13 -0700
+Message-Id: <20190907234413.1591-2-wh109@yahoo.com>
 X-Mailer: git-send-email 2.23.0.windows.1
-In-Reply-To: <nycvar.QRO.7.76.6.1909031345330.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <20190907234413.1591-1-wh109@yahoo.com>
 References: <nycvar.QRO.7.76.6.1909031345330.46@tvgsbejvaqbjf.bet>
+ <20190907234413.1591-1-wh109@yahoo.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -67,163 +68,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Everyone in this thread, thanks for your support and encouragement.
+Rebasing normally updates the current branch to the rewritten version.
+If any other branches point to commits rewritten along the way, those
+remain untouched. This commit adds an `--update-branches` option, which
+instructs the command to update any such branches that it encounters to
+point to the rewritten versions of those commits.
 
-Johannes, thanks for reviewing.
-
-> Maybe `s/reapplied/rebased/`?
-
-Ok. I've changed most occurrences, except in Documentation/git-rebase.txt, where
-the term 'reapplied' is already in use.
-
-> drop this hunk and only keep the next one.
-
-I didn't know that. (Actually, assume this for most of these responses.)
-Dropped, thanks.
-
-> It should not really imply `--interactive`, but `--rebase-merges`.
-
-`imply_interactive` doesn't fully switch on `--interactive`, i.e., causing the
-editor to open. It only selects the backend, which I think we're saying is the
-right thing. I've dropped the `-i` from the test description.
-
-And we don't really have to imply --rebase-merges, in case someone would prefer
-to linearize things, which who knows? Running that non-rebase-merges command in
-the example scenario from my original post should give something like this:
-
-```
- A - B              (master)
-       \
-         F          (feat-f)
-           \ 
-             E      (feat-e)
-               \
-                 H  (my-dev)
-```
-
-So for now I haven't moved the implementation into `make_script_with_merges`.
-
-> This loads also tags, correct? I am fairly certain that we don't want to
-> update tags here, but maybe the check for `DECORATION_REF_LOCAL` later
-> on already ensures that?
-
-Right on both points. This isn't as efficient as possible, since we're wasting
-the work of loading tags and remote refs. Currently I don't know if the
-performance is worth the maintainability cost of replicating most of the
-`load_ref_decorations` and `get_name_decoration` family of functions and global
-variables though.
-
-> How about using `is_pick_or_similar()` instead?
-
-That's the function I need. Although I'm not aware of anything that generates
-`edit` or `reword` commands before we'll call `todo_list_add_branch_updates`. I
-ended up not needing further logic with `is_fixup`. See below for the new
-handling of fixup chains.
-
-> Please use C-style /* ... */ comments, Git insists on not using
-> C++-style // comments.
-
-Thanks for pointing that out. Changed.
-
-> your code is careful to take care of the scenario where
-> multiple local branches point to the pre-rebase `HEAD`. Good. Maybe you
-> want to test for that in the regression test, too?
-
-Ah, yes I do. It is added, with `my-hotfixes` = `HEAD` -> `my-dev` in the test.
-
-> However, you have two `if` conditions that both guard the same
-> operation: `continue`. How about combining the combinations? It's like
-> saying: under these circumstances, we skip adding a command.
-
-Ok. Combined.
-
-> [several ways to simplify how we build todo items]
-
-I had only looked at how `todo_list_add_exec_commands` works. Let's try doing it
-with a full `struct todo_list` and `parse_insn_line`. Thanks for posting these
-suggestions.
-
-> [handling `fixup`/`squash` chains]
-
-I've moved `todo_list_add_branch_updates` to run before
-`todo_list_rearrange_squash`. The rearranging pulls fixups out, causing the
-branch update to "fall" onto the items before, and reinserts them between a
-commit and its branch update, casing them to be included in the updated branch.
-which is my opinion of the right thing to do. I've added a test about this with
-the following scenario:
-
-```
- A - B  (master)
-   \
-     I - J - fixup! I                 (fixup-early)
-		      \
-			K - fixup! J  (fixup-late)
-```
-
-which results in the following todo list with `--autosquash`:
-
-```
-pick 9eadc32 I
-fixup 265fa32 fixup! I
-pick a0754fc J
-fixup e7d1999 fixup! J
-exec git branch -f fixup-early
-pick c8bc4af K
-```
-
-> I'd like to suggest [`test_cmp_rev`] instead
-
-I've updated the test to use `test_cmp_rev`. It's not with your suggested
-invocation though. We don't update the `C` tag. I've referred to the rebased `C`
-with `test_cmp_rev linear-early HEAD^` and similar for the other checks.
-
-* * *
-
-And then there's the discussion about using `exec git branch -f`. To summarize
-the issues collected from the entire thread:
-
-1. the changes aren't atomically applied at the end of the rebase
-2. it fails when the branch is checked out in a worktree
-3. it clobbers the branch if anything else updates it during the rebase
-4. the way we prepare the unprefixed branch doesn't work right some exotic cases
-5. the reflog message it leaves is uninformative
-
-For #4, I think we've lucked out actually. The `load_ref_decorations` routine we
-use determines that a ref is `DECORATION_REF_LOCAL` under the condition
-`starts_with(refname, "refs/heads/")` (log-tree.c:114, add_ref_decoration), so
-`prettify_refname` will find the prefix and skip it. But that's an invariant
-maintained by two pieces of code pretty far away from each other.
-
-For #5, for the convenience of readers, the reflog entry it leaves looks like this:
-
-```
-00873f2 feat-e@{0}: branch: Reset to HEAD
-```
-
-Not great.
-
-I haven't made any changes to this yet, but I've thought about what I want. My
-favorite so far is to add a new todo command that just does everything right. It
-would make a temparary ref `refs/rewritten-heads/xxx` (or something), and update
-`refs/heads/xxx` at the end.
-
-I agree that requiring a separate update-ref step at the end of the todo list is
-unfriendly. Manually putting in some branch update commands and then realizing
-that they weren't applied would be extremely frustrating. I don't see the option
-of using existing tools as the easiest-to-use solution.
-
-I'm reluctant to combine this with the existing `label` command. So far it
-sounds like we generally want to be more willing to skip branch updates while
-performing the rebase, with aforementioned scenarios where something else
-updates the branch before we do, or if the branch becomes checked out in a
-worktree. We don't want to mess up the structure of a `rebase -r` as a result of
-skipping some branch updates. I think it would be conceptually simpler and
-implementation-wise less tricky if we didn't combine it with the `label` and
-`reset` system.
-
-Warren He (1):
-  rebase: introduce --update-branches option
-
+Signed-off-by: Warren He <wh109@yahoo.com>
+---
  Documentation/git-rebase.txt      |  9 ++++
  builtin/rebase.c                  | 11 ++++-
  sequencer.c                       | 58 +++++++++++++++++++++++-
@@ -232,6 +84,297 @@ Warren He (1):
  5 files changed, 173 insertions(+), 5 deletions(-)
  create mode 100755 t/t3431-rebase-update-branches.sh
 
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 6156609..b650a8f 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -246,6 +246,13 @@ leave out at most one of A and B, in which case it defaults to HEAD.
+ +
+ See also INCOMPATIBLE OPTIONS below.
+ 
++--update-branches::
++	If there are branch refs that point to commits that will be
++	reapplied, add shell commands to the todo list to update those
++	refs to point to the commits in the final history.
+++
++See also INCOMPATIBLE OPTIONS below.
++
+ --allow-empty-message::
+ 	By default, rebasing commits with an empty message will fail.
+ 	This option overrides that behavior, allowing commits with empty
+@@ -535,6 +542,7 @@ are incompatible with the following options:
+  * --interactive
+  * --exec
+  * --keep-empty
++ * --update-branches
+  * --edit-todo
+  * --root when used in combination with --onto
+ 
+@@ -543,6 +551,7 @@ In addition, the following pairs of options are incompatible:
+  * --preserve-merges and --interactive
+  * --preserve-merges and --signoff
+  * --preserve-merges and --rebase-merges
++ * --preserve-merges and --update-branches
+  * --rebase-merges and --strategy
+  * --rebase-merges and --strategy-option
+ 
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 670096c..ab2308c 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -78,6 +78,7 @@ struct rebase_options {
+ 	int signoff;
+ 	int allow_rerere_autoupdate;
+ 	int keep_empty;
++	int update_branches;
+ 	int autosquash;
+ 	char *gpg_sign_opt;
+ 	int autostash;
+@@ -349,8 +350,8 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+ 
+ 		split_exec_commands(opts->cmd, &commands);
+ 		ret = complete_action(the_repository, &replay, flags,
+-			shortrevisions, opts->onto_name, opts->onto, head_hash,
+-			&commands, opts->autosquash, &todo_list);
++			shortrevisions, opts->onto_name, opts->onto, opts->head_name,
++			head_hash, &commands, opts->autosquash, &todo_list);
+ 	}
+ 
+ 	string_list_clear(&commands, 0);
+@@ -375,6 +376,7 @@ static int run_rebase_interactive(struct rebase_options *opts,
+ 	flags |= opts->rebase_merges ? TODO_LIST_REBASE_MERGES : 0;
+ 	flags |= opts->rebase_cousins > 0 ? TODO_LIST_REBASE_COUSINS : 0;
+ 	flags |= command == ACTION_SHORTEN_OIDS ? TODO_LIST_SHORTEN_IDS : 0;
++	flags |= opts->update_branches ? TODO_LIST_UPDATE_BRANCHES : 0;
+ 
+ 	switch (command) {
+ 	case ACTION_NONE: {
+@@ -1453,6 +1455,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		OPT_RERERE_AUTOUPDATE(&options.allow_rerere_autoupdate),
+ 		OPT_BOOL('k', "keep-empty", &options.keep_empty,
+ 			 N_("preserve empty commits during rebase")),
++		OPT_BOOL(0, "update-branches", &options.update_branches,
++			 N_("update branches that point to rebased commits")),
+ 		OPT_BOOL(0, "autosquash", &options.autosquash,
+ 			 N_("move commits that begin with "
+ 			    "squash!/fixup! under -i")),
+@@ -1710,6 +1714,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	if (options.keep_empty)
+ 		imply_interactive(&options, "--keep-empty");
+ 
++	if (options.update_branches)
++		imply_interactive(&options, "--update-branches");
++
+ 	if (gpg_sign) {
+ 		free(options.gpg_sign_opt);
+ 		options.gpg_sign_opt = xstrfmt("-S%s", gpg_sign);
+diff --git a/sequencer.c b/sequencer.c
+index 34ebf8e..0fe8452 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4901,6 +4901,59 @@ void todo_list_add_exec_commands(struct todo_list *todo_list,
+ 	todo_list->alloc = alloc;
+ }
+ 
++/*
++ * Add commands to update branch refs after the todo list would pick a commit
++ * that a branch ref points to.
++ */
++static void todo_list_add_branch_updates(struct repository *r,
++					 struct todo_list *todo_list,
++					 const char *head_name)
++{
++	struct strbuf *buf = &todo_list->buf;
++	/* watch out: items in here point into todo_list's buf, not its own */
++	struct todo_list new_list = TODO_LIST_INIT;
++	int i;
++
++	load_ref_decorations(NULL, 0);
++
++	for (i = 0; i < todo_list->nr; i++) {
++		const struct todo_item *item = todo_list->items + i;
++		enum todo_command command = item->command;
++		const struct name_decoration *decoration;
++
++		*append_new_todo(&new_list) = todo_list->items[i];
++
++		if (!(is_pick_or_similar(command) || command == TODO_MERGE))
++			continue;
++
++		decoration = get_name_decoration(&item->commit->object);
++		for (; decoration; decoration = decoration->next) {
++			size_t base_offset;
++
++			/*
++			 * (i)  skip other refs like tags and remote refs
++			 * (ii) rebase itself will update the current branch
++			 *      for us
++			 */
++			if (decoration->type != DECORATION_REF_LOCAL ||
++			    !strcmp(decoration->name, head_name))
++				continue;
++
++			base_offset = buf->len;
++			strbuf_addf(buf, "exec git branch -f %s\n",
++				    prettify_refname(decoration->name));
++			parse_insn_line(r, append_new_todo(&new_list), buf->buf,
++					buf->buf + base_offset,
++					buf->buf + buf->len - 1);
++		}
++	}
++
++	SWAP(new_list.items, todo_list->items);
++	SWAP(new_list.nr, todo_list->nr);
++	SWAP(new_list.alloc, todo_list->alloc);
++	todo_list_release(&new_list);
++}
++
+ static void todo_list_to_strbuf(struct repository *r, struct todo_list *todo_list,
+ 				struct strbuf *buf, int num, unsigned flags)
+ {
+@@ -5051,7 +5104,7 @@ static int skip_unnecessary_picks(struct repository *r,
+ 
+ int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
+ 		    const char *shortrevisions, const char *onto_name,
+-		    struct commit *onto, const char *orig_head,
++		    struct commit *onto, const char *head_name, const char *orig_head,
+ 		    struct string_list *commands, unsigned autosquash,
+ 		    struct todo_list *todo_list)
+ {
+@@ -5070,6 +5123,9 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 		item->arg_len = item->arg_offset = item->flags = item->offset_in_buf = 0;
+ 	}
+ 
++	if (flags & TODO_LIST_UPDATE_BRANCHES)
++		todo_list_add_branch_updates(r, todo_list, head_name);
++
+ 	if (autosquash && todo_list_rearrange_squash(todo_list))
+ 		return -1;
+ 
+diff --git a/sequencer.h b/sequencer.h
+index 6704acb..69c6f71 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -143,6 +143,7 @@ int sequencer_remove_state(struct replay_opts *opts);
+  */
+ #define TODO_LIST_REBASE_COUSINS (1U << 4)
+ #define TODO_LIST_APPEND_TODO_HELP (1U << 5)
++#define TODO_LIST_UPDATE_BRANCHES (1U << 6)
+ 
+ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+ 			  const char **argv, unsigned flags);
+@@ -152,8 +153,9 @@ void todo_list_add_exec_commands(struct todo_list *todo_list,
+ int check_todo_list_from_file(struct repository *r);
+ int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
+ 		    const char *shortrevisions, const char *onto_name,
+-		    struct commit *onto, const char *orig_head, struct string_list *commands,
+-		    unsigned autosquash, struct todo_list *todo_list);
++		    struct commit *onto, const char *head_name, const char *orig_head,
++		    struct string_list *commands, unsigned autosquash,
++		    struct todo_list *todo_list);
+ int todo_list_rearrange_squash(struct todo_list *todo_list);
+ 
+ /*
+diff --git a/t/t3431-rebase-update-branches.sh b/t/t3431-rebase-update-branches.sh
+new file mode 100755
+index 0000000..b57b64a
+--- /dev/null
++++ b/t/t3431-rebase-update-branches.sh
+@@ -0,0 +1,94 @@
++#!/bin/sh
++
++test_description='git rebase --update-branches
++
++This test runs git rebase, updating branch refs that point to commits
++that are rebased.
++
++Initial setup:
++
++ A - B  (master)
++  |\
++  |  C      (linear-early)
++  |    \
++  |      D  (linear-late)
++  |\
++  |  E          (feat-e)
++  |\   \
++  |  F  |       (feat-f)
++  |    \|
++  |      G      (interim)
++  |        \
++  |          H  (my-dev, my-hotfixes)
++   \
++     I - J - fixup! I                 (fixup-early)
++		      \
++			K - fixup! J  (fixup-late)
++'
++. ./test-lib.sh
++
++test_expect_success 'set up common' '
++	test_commit A &&
++	test_commit B
++'
++
++test_expect_success 'set up linear' '
++	git checkout -b linear-early A &&
++	test_commit C &&
++	git checkout -b linear-late &&
++	test_commit D
++'
++
++test_expect_success 'smoketest linear' '
++	git rebase --update-branches master
++'
++
++test_expect_success 'check linear' '
++	test_cmp_rev linear-early HEAD^
++'
++
++test_expect_success 'set up merge' '
++	git checkout -b feat-e A &&
++	test_commit E &&
++	git checkout -b feat-f A &&
++	test_commit F &&
++	git checkout -b interim &&
++	test_merge G feat-e &&
++	git checkout -b my-dev &&
++	test_commit H &&
++	git branch my-hotfixes
++'
++
++test_expect_success 'smoketest merge' '
++	git rebase -r --update-branches master
++'
++
++test_expect_success 'check merge' '
++	test_cmp_rev feat-e HEAD^^2 &&
++	test_cmp_rev feat-f HEAD^^ &&
++	test_cmp_rev interim HEAD^ &&
++	test_cmp_rev my-hotfixes HEAD
++'
++
++test_expect_success 'set up fixup' '
++	git checkout -b fixup-early A &&
++	test_commit I &&
++	test_commit J &&
++	test_commit "fixup! I" I.t II fixup-I &&
++	git checkout -b fixup-late &&
++	test_commit K &&
++	test_commit "fixup! J" J.t JJ fixup-J
++'
++
++test_expect_success 'smoketest fixup' '
++	git rebase -i --autosquash --update-branches master
++'
++
++test_expect_success 'check fixup' '
++	test_cmp_rev fixup-early HEAD^ &&
++	test_cmp_rev fixup-early^:I.t fixup-I:I.t &&
++	test_cmp_rev fixup-early:J.t fixup-J:J.t &&
++	test_cmp_rev HEAD:K.t K:K.t
++'
++
++test_done
 -- 
 2.7.4
 
