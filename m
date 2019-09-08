@@ -2,135 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CE9C1F461
-	for <e@80x24.org>; Sun,  8 Sep 2019 17:18:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 241D21F461
+	for <e@80x24.org>; Sun,  8 Sep 2019 17:58:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730311AbfIHRSR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Sep 2019 13:18:17 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58590 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729996AbfIHRSQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Sep 2019 13:18:16 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:2895:5875:49cb:eb31])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7FE9D60459;
-        Sun,  8 Sep 2019 17:18:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1567963094;
-        bh=bQKA22k4v4+gNkQk9QMJsZUlR0zcwjMnTST1IX5V+Qs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=o+F3lWbqoLT5Fk0WxC675wPcIXonV9ciXhd6cZXnJG1htmSmvKOGFcAJjIYJkDwmi
-         1oP5lAUlWYQN1x3fYQluDxYYPRdPV2Ktp1/raFLtzz3xcd96nzO8tMwY3F4lFV1qW8
-         EQ5mTVu2QLcqjkoYbLfS2aIHcWjWAq8s+h6uCWyNTYYsNs4Roniz9dSxSrX0cojPiC
-         BPuhhM/J57/AUcTilxgFXVNLID8aP25FVVo633WaD6QfK2uLtA+sX0yIj66y5ikEMb
-         xZwrAIRv3D2+dRO1k7K6PpURehwXZKTb1/nTE3XfFgM+5kNypNTFt12Y04geYWi6aq
-         OaF1xEZRF3wSsyRHLfXctpGhRVQxoBzUwbPQVK2ZNGScJXzkJu5plgmY+5WtGE5Grh
-         R7RHhpNvKefVychCa/JQUwqrOI5feJVTGd0REIkGnCca55zP3tXqA13V4YH1vwhqiF
-         8YFKeg3kGIGWpVyQu5lgmi/Brsylv56z1BxdHieQN2ytEujErEM
-Date:   Sun, 8 Sep 2019 17:18:07 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: fix build with Asciidoctor 2
-Message-ID: <20190908171807.GL11334@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190906232947.GJ11334@genre.crustytoothpaste.net>
- <20190907170746.273984-1-sandals@crustytoothpaste.net>
- <20190908104833.GE15641@sigill.intra.peff.net>
+        id S1730694AbfIHR65 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Sep 2019 13:58:57 -0400
+Received: from mout.web.de ([212.227.15.3]:53469 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730561AbfIHR64 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Sep 2019 13:58:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1567965524;
+        bh=SqH7A+iScGS6JOCLx4L2PQmkiov2Pse6dNpzLJiBrkk=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=sYVCPLl1PPgN0/nZlA2oKzp2FdBLSww42aNrWd1Gsy0UtsGaxX6ueP3kwqqFvYPjP
+         VpAr1MXRInfkhArQbogyuT86wFYFSimA0lquUB3Wgo+NFlyknURaojxv6JcYPAu3bl
+         ry2IY/pwQr3jBhnYSvFAcsZUKSLEhmcoJstFwgwA=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lba5z-1ia4tT2Wc7-00lH1y; Sun, 08
+ Sep 2019 19:58:44 +0200
+Subject: [PATCH 1/2] log: test --decorate-refs-exclude with
+ --simplify-by-decoration
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?=c3=89tienne_SERVAIS?= <etienne.servais@voucoux.fr>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?Rafael_Ascens=c3=a3o?= <rafa.almas@gmail.com>
+References: <D941A96E-E5A8-4C86-A200-0BECA30216D1@voucoux.fr>
+ <37283d4e-3f79-a6b1-425a-f90704fbcce2@web.de>
+ <xmqq36ijl6qu.fsf@gitster-ct.c.googlers.com>
+ <5de287e9-a8e8-780a-7d39-2229b61914ca@web.de>
+ <xmqqh86zjmcg.fsf@gitster-ct.c.googlers.com>
+ <64bc5556-b098-7991-b7c2-3483277bb73c@web.de>
+ <xmqqwofuia0x.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <ea3fed37-a465-6a26-1035-6885015261b7@web.de>
+Date:   Sun, 8 Sep 2019 19:58:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="lHuqAdgBYNjQz/wy"
-Content-Disposition: inline
-In-Reply-To: <20190908104833.GE15641@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <xmqqwofuia0x.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:vIb7Vn1vDPRe6qZHruw2RWutkrjqI2CTilkEsOUE4yJ/vqQGnIb
+ BPVMZz3wjqQQigZSLZIYcZjMfhS+xvzEx5UT3thP9Zcl/ZCRrx0kCobHQIVRZshsXl22DRz
+ OsCXdz9vVcx1PDU78nWS0an1PCqwXQwvOJnfkmGqlU1/hdKTg1rFzqSiHA+1W6F6VveCH+V
+ O5efXuRoMWUZvq9ymasVg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bA6yjr+t9UA=:KrfK23P26XZMGQgpwnet3E
+ P5kJeyeiBPgtVdD1/evQaHZ40ml8mxcWRplWTXF8PAcQRrAc4JMT87WKbIuKA7kmlMhkA3KeP
+ vFhK0dqpkl4lrJAPIhux5ESuPfTgwKAK4LBz7Aojo87Os6nxLn08Lq6GzDYZfpJJQUCgR2MPR
+ 6oNJVa0Vn/0RIoKcMMNoyqTm4JvezYh28uIQrsZxeRmSlfiyBe2+s9B8iIzejAHzdv4TYFa1v
+ eM5rqRKxkNJ27Fw3C68RYKsJ2qiANHMHUn9SW0f7Z4SLw6W7MFzGIsDXez6oBQxvyGvQOViDE
+ SRrTU6MeUcVOrYg/s/CdKyVUGBLMfnnpXK7KT1ZmfTZWfDjjnVvUetCdSqeWZXfuiLeyN/hil
+ AsB7+D+t7yvznBsywwzf1IrpxNjnc+mY1u3CNpoQFNWDkkVSz72IHqm44k9mm02sFYLXDgHOU
+ OYRokZsLu9U+uuDxN1dK+a15VzE+p5f+9hwG83A4ehzBkqRErqQ+7Q6o+Jhznkpm8wSI6hGdH
+ QkhSKCj/gHSQoeVep7G2DxRodK6LpmWnD2ihR+mHwsyKJOnMPRDt9pFAW1nhhQiVsgMOYbTdv
+ 0aow8glLap3EIJComW/DcXgqJKy8N0sa9tdA8fD2fl0bQve6Gbc4SAJWh+RkO8RvK+32vw2oa
+ eaC74uJXScl26fqGRdU2rDjbAN0ckms3UCrypTcdxRy8hvfKexH/tcZgS662LhYJ08ehhRH+m
+ VW9KX9HEcpHBuND9yL6lXs8aRYiucQDqLbB2KD2zxrpKODUjZsuXy2vri3Kdo6ftSsdd3YFRN
+ KuGzmSX7irU13y/ygmB24I+M2d549icdpAkv0gdHjX5or8qvh8yn7OR314PpunYTEI9BvPvRg
+ GiZjK6WjzCI+KW1vPBdQmjWHKI5z/CbQtHlyJwMS8sAnqWg4s5858nZJ46/jkGlezqskWj6aR
+ 86XYT7zJxIpwDQZvkqhJ5DtFFtkDm51xLJnVApV1cQdzp2j27PaCUMNEqKQM+GUB5xKtFHaZ+
+ 3KwkpCWdICXD+2HOLvNP1oOvnVC8VmNB3vc2VHkBOpOWWmPyTkmpWNSvPyiROe+7Zrg/sMXa5
+ K5Hb4AfL7F0ObrLtFU+Q0oJPysgoEU6HPij1nBNUuCTV03gPZjiQDlIyHY1oGrOYvK6OQYA+T
+ bFabONFpFgoD7/Kd/gk+VeyueFHRSCd7uFI8+WbfE3CZzgNoRd/OwQkGT9thr4gDMdL/Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Demonstrate that a decoration filter given with --decorate-refs-exclude
+is inadvertently overruled by --simplify-by-decoration.
 
---lHuqAdgBYNjQz/wy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Reported-by: =C3=89tienne SERVAIS <etienne.servais@voucoux.fr>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/t4202-log.sh | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-On 2019-09-08 at 10:48:33, Jeff King wrote:
-> Some of them seem bad, though:
->=20
->   --- a/745f6812895b31c02b29bdfe4ae8e5498f776c26-asciidoctor/home/peff/sh=
-are/man/man1/git-am.1
->   +++ b/303729d86b69657777222bf4b3a6f95932e12648-asciidoctor/home/peff/sh=
-are/man/man1/git-am.1
->   [...]
->   @@ -175,10 +201,10 @@ DISCUSSION
->=20
->           to process. Upon seeing the first patch that does not apply, it=
- aborts
->           in the middle. You can recover from this in one of two ways:
->   =20
->   -        1. skip the current patch by re-running the command with the -=
--skip
->   +        1.  skip the current patch by re-running the command with the =
---skip
->               option.
->   =20
->   -        2. hand resolve the conflict in the working directory, and upd=
-ate the
->   +        2.  hand resolve the conflict in the working directory, and up=
-date the
->               index file to bring it into a state that the patch should h=
-ave
->               produced. Then run the command with the --continue option.
->=20
-> I tricked doc-diff into doing a comparison against 1.5.5 without the
-> patch and 2.0.10 with the patch, and the diff is similar.
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index c20209324c..01c95d1375 100755
+=2D-- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -837,6 +837,21 @@ test_expect_success 'decorate-refs and decorate-refs-=
+exclude' '
+ 	test_cmp expect.decorate actual
+ '
 
-I see the same thing in doc-diff, but this issue doesn't appear to
-actually render in the manual pages themselves, even with MANWIDTH=3D80.
-I'm not sure why, but it doesn't seem to misrender in the actual man
-output.
-
-I also tried with the DocBook 5 (docbook-xsl-ns) stylesheets, but that
-doesn't appear to make a difference in doc-diff.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---lHuqAdgBYNjQz/wy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl11N84ACgkQv1NdgR9S
-9osx/w//WhBJC6iSfwY/Tc67en7LPGDxxJPJmLhVklna9DLKMIg5ULLTJVjN6GTk
-qVdOGbWLIGd5K0ofpAyZ1Mpri+/bNS99XVopvKRnvg0KSPkKuUuRFWBaSwQFeqan
-XYMPtJ1GbqtR20jwgBaxHSnArumS8TeRlX8VlrJ02i/GrVKMyPm9UWCRlqfhh6PB
-u3zrolg7BbdCfPqsviFf2MztL3JvFE+Ji8DA+3epXKjYnxO1uPUTUuRuIANzTnqI
-TP9U/paaY6I69RlTjN6fzznGGX3MI06aVF9r6MtcyDl5yIRI4iCsQFNbfwsS8Ggv
-CCp0fbIkO9q19xMIS8RAg9rzgFAyi23we6OTAppQ+nXlESeqdQ0agO3KZM3WMPD8
-llJ/pHvbV/Rf9OUKfjmU/ZifpSNy0RTLhBcciYn8JwAENpikrNU+IpyWtffg18BV
-zpgaGZ3GF7Dk0eFJCtK5OO/HY3Y+mx2g2k7II5royCP5tJbPvtHEHCYKBC6kcl3I
-OOjQ4RB2gJ8cMpWHV5OTgNfL6pGoWkyo6HPXK9u52jDOTpTeohu37/ExnLJNCzTk
-QyHboiiqNkiGB+7sUHxi5DPsV4KZfD5JTBbGMUKKVmbZkl7MH4QdlfUYX5IzO9Oo
-quJTwnB570y01mTOqL25ElGZ60zKNBY7hEF4ouwukJyWF6dml84=
-=Nfck
------END PGP SIGNATURE-----
-
---lHuqAdgBYNjQz/wy--
++test_expect_failure 'decorate-refs-exclude and simplify-by-decoration' '
++	cat >expect.decorate <<-\EOF &&
++	Merge-tag-reach (HEAD -> master)
++	reach (tag: reach, reach)
++	seventh (tag: seventh)
++	Merge-branch-tangle
++	Merge-branch-side-early-part-into-tangle (tangle)
++	tangle-a (tag: tangle-a)
++	EOF
++	git log -n6 --decorate=3Dshort --pretty=3D"tformat:%f%d" \
++		--decorate-refs-exclude=3D"*octopus*" \
++		--simplify-by-decoration >actual &&
++	test_cmp expect.decorate actual
++'
++
+ test_expect_success 'log.decorate config parsing' '
+ 	git log --oneline --decorate=3Dfull >expect.full &&
+ 	git log --oneline --decorate=3Dshort >expect.short &&
+=2D-
+2.23.0
