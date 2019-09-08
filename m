@@ -2,61 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93AAB1F461
-	for <e@80x24.org>; Sun,  8 Sep 2019 10:48:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A1A51F461
+	for <e@80x24.org>; Sun,  8 Sep 2019 14:13:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728608AbfIHKse (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Sep 2019 06:48:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43332 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728514AbfIHKse (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Sep 2019 06:48:34 -0400
-Received: (qmail 17819 invoked by uid 109); 8 Sep 2019 10:48:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 08 Sep 2019 10:48:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 499 invoked by uid 111); 8 Sep 2019 10:50:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 08 Sep 2019 06:50:23 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 8 Sep 2019 06:48:33 -0400
-From:   Jeff King <peff@peff.net>
+        id S1728932AbfIHONR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Sep 2019 10:13:17 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36338 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725921AbfIHONR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Sep 2019 10:13:17 -0400
+Received: by mail-wm1-f65.google.com with SMTP id p13so11808123wmh.1
+        for <git@vger.kernel.org>; Sun, 08 Sep 2019 07:13:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1phCB0JsfeGWixTLxhvburIhJ80mpXjlk3+GOcyl2h4=;
+        b=BTypbxIMjADzVWMPvqiX0jSynztORfQ3FWC5yHEztlItlPGg35A8m6LcycLDeFCvZU
+         JtsBe34lQjBPOG0qQd+gBOc6ouQQG3AFEvYKQIzQKCQARTt7ZADTKU8gO/bJmaDuGikg
+         8o0r+9JvAZbDidVxkV9FizAfqh7y2TF8k2hNykMgNBnrryJ0HwQTXRpKmtwjl1Ff6hCB
+         xP7tNpJSS/tVBhjEdc3G1DK0SnikyepiEQ3ZRz8VESb3c5r47aEKu9OJByo3xsttThyM
+         Q0ibyjJ1pioIXQETlIbRr+mwkSJUFPbwlkcTcknZJLzwtNMtmKZu2iQNd+GfODGtpKXk
+         tMNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1phCB0JsfeGWixTLxhvburIhJ80mpXjlk3+GOcyl2h4=;
+        b=KO8jDwLUmH6zmRUnJyziMxClqfKzWsKhDTriJ0o+If/5ymB0ArqcWsedHsw6XC0fuI
+         t7iquX4wghKjQDPR5lAUxr7CNs2eSXL/F90RIAKwzkt4zxFg7X7KbSk3ffFTV/toW0WR
+         nHOh8zz/51RZ0dtxqtBAA9/B5eRon58hKzxzm6IUKIYZ/Jv5FPQ9JBv1+PfTFK4AbWMS
+         rBcNCRIfbnLTHP3I2/0x5SbrUMYeJ6hlR0xp5Zl7hqfMOiD1MKcqEcEZCvvJD5ktK6+w
+         u80NIJ0/QPbCiPv/Pby2lUptH9Ey0SacE0QIRLQBFpPyTqdJ3Z2T/5FIeN9KZ3UMQ1Qb
+         QRqw==
+X-Gm-Message-State: APjAAAXnYmdt+gX744k4KQk7pLgerBOYP8/XL5kdP9pMxvc3ft2zxdH7
+        QJq35FVkAUs9LUp92InjPBg=
+X-Google-Smtp-Source: APXvYqyvEtwwvuqGQUyBwgkSu47h6WBtcLLrS3RqFd7pdHHaL2DmZ2bFr1/kryCATc3Pv8c0aYs8ug==
+X-Received: by 2002:a1c:1a4b:: with SMTP id a72mr15068478wma.44.1567951994787;
+        Sun, 08 Sep 2019 07:13:14 -0700 (PDT)
+Received: from szeder.dev (x4dbd3a66.dyn.telefonica.de. [77.189.58.102])
+        by smtp.gmail.com with ESMTPSA id z11sm8637114wrg.17.2019.09.08.07.13.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 08 Sep 2019 07:13:14 -0700 (PDT)
+Date:   Sun, 8 Sep 2019 16:13:08 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org,
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Documentation: fix build with Asciidoctor 2
-Message-ID: <20190908104833.GE15641@sigill.intra.peff.net>
+Message-ID: <20190908141308.GA7255@szeder.dev>
 References: <20190906232947.GJ11334@genre.crustytoothpaste.net>
  <20190907170746.273984-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20190907170746.273984-1-sandals@crustytoothpaste.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Sat, Sep 07, 2019 at 05:07:46PM +0000, brian m. carlson wrote:
-
 > Our documentation toolchain has traditionally been built around DocBook
 > 4.5.  This version of DocBook is the last DTD-based version of DocBook.
 > In 2009, DocBook 5 was introduced using namespaces and its syntax is
 > expressed in RELAX-NG, which is more expressive and allows a wider
 > variety of syntax forms.
-
-Wow, this patch turned out to be much simpler than I had feared. And the
-explanation turned out to be much longer and more interesting than I
-expected. :) Thanks for writing it all down.
-
-The patch worked well for me.
-
+> 
+> Asciidoctor, one of the alternatives for building our documentation,
+> dropped support for DocBook 4.5 in its recent 2.0 release and now only
+> supports DocBook 5.  This would not be a problem but for the fact that
+> we use xmlto, which is still stuck in the DocBook 4.5 era.
+> 
+> xmlto performs DTD validation as part of the build process.  This is not
+> problematic for DocBook 4.5, which has a valid DTD, but it clearly
+> cannot work for DocBook 5, since no DTD can adequately express its full
+> syntax.  In addition, even if xmlto did support RELAX-NG validation,
+> that wouldn't be sufficient because it uses the libxml2-based xmllint to
+> do so, which has known problems with validating interleaves in RELAX-NG.
+> 
 > Fortunately, there's an easy way forward: ask Asciidoctor to use its
 > DocBook 5 backend and tell xmlto to skip validation.  Asciidoctor has
 > supported DocBook 5 since v0.1.4 in 2013 and xmlto has supported
@@ -70,55 +102,47 @@ The patch worked well for me.
 > the stylesheets stripping the namespace will be printed to standard
 > error.
 
-So I think this does introduce the ugly namespace message even for
-people who are using older versions of asciidoctor that understand
-docbook45. But it's probably sensible to keep all of our asciidoctor
-builds using the same technique. We have enough trouble tracking the
-minor differences between the variants as it is.
+These messages from 'xmlto' look like these, and there are a lot of
+them:
 
-> The differences in output between AsciiDoc 8.6.10 on master and
-> Asciidoctor 2.0.10 with this patch are, with one exception, all due to
-> whitespace, wrapping, or quoting and do not affect substantive content.
+  Note: namesp. cut : stripped namespace before processing      Git User Manual
+  Note: namesp. cut : stripped namespace before processing      git-sh-setup(1)
+  Note: namesp. cut : stripped namespace before processing      git-get-tar-commit-id(1)
 
-We know already there are a lot of differences between asciidoc and
-asciidoctor here. What's more interesting to me is how it changes the
-output between two versions of asciidoctor. Of course we can't check for
-2.0.10, because it doesn't build at all. But I did do a "doc-diff"
-with and without this patch using 1.5.5. There are quite a few
-whitespace changes. Some of them seem good or at least neutral, like:
+Unfortunately, these messages to standard error cause our CI builds to
+fail [1].
 
-  --- a/745f6812895b31c02b29bdfe4ae8e5498f776c26-asciidoctor/home/peff/share/man/man1/git-add.1
-  +++ b/303729d86b69657777222bf4b3a6f95932e12648-asciidoctor/home/peff/share/man/man1/git-add.1
-  [...]
-  @@ -43,6 +43,7 @@ DESCRIPTION
+In the Documentation build job we check that there was nothing printed
+to standard error during 'make doc', in order to catch warnings that
+are potential signs of a mis-rendered documentation, but do not cause
+any asciidoc/asciidoctor/xmlto commands (and thus 'make doc') to fail.
 
-   OPTIONS
-          <pathspec>...
-  +
-              Files to add content from. Fileglobs (e.g.  *.c) can be given to
-              add all matching files. Also a leading directory name (e.g.  dir to
-              add dir/file1 and dir/file2) can be given to update the index to
+Now, a few recent messages to standard error that indeed were signs of
+mis-rendered docs [2] looked like this:
 
-Some of them seem bad, though:
+  asciidoctor: WARNING: api-config.txt: line 232: unterminated listing block
 
-  --- a/745f6812895b31c02b29bdfe4ae8e5498f776c26-asciidoctor/home/peff/share/man/man1/git-am.1
-  +++ b/303729d86b69657777222bf4b3a6f95932e12648-asciidoctor/home/peff/share/man/man1/git-am.1
-  [...]
-  @@ -175,10 +201,10 @@ DISCUSSION
+i.e. they came from Asciidoctor and were all-caps warnings.
 
-          to process. Upon seeing the first patch that does not apply, it aborts
-          in the middle. You can recover from this in one of two ways:
-   
-  -        1. skip the current patch by re-running the command with the --skip
-  +        1.  skip the current patch by re-running the command with the --skip
-              option.
-   
-  -        2. hand resolve the conflict in the working directory, and update the
-  +        2.  hand resolve the conflict in the working directory, and update the
-              index file to bring it into a state that the patch should have
-              produced. Then run the command with the --continue option.
+OTOH, these "stripped namespace" messages come from 'xmlto', are not
+warnings but have that "Note:" prefix, and, trusting that you did
+check the results thoroughly, are apparently not a sign of any
+rendering issues.  So I think it's safe to ignore them and this patch
+should strip them from 'make doc's output in
+'ci/test-documentation.sh'.
 
-I tricked doc-diff into doing a comparison against 1.5.5 without the
-patch and 2.0.10 with the patch, and the diff is similar.
+Related: after this patch we might want to update the CI builds to use
+Asciidoctor 2 instead of sticking with 1.5.8.
 
--Peff
+
+[1] With Asciidoctor 1.5.8:
+
+      https://travis-ci.org/szeder/git/jobs/582294090#L2085
+
+    With an additional patch on top to use Asciidoctor 2:
+
+      https://travis-ci.org/szeder/git/jobs/582294243#L2066
+
+[2] See 'git log -3 b373e4d29b'
+
+
