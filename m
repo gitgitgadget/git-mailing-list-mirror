@@ -2,85 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E72A91F4B7
-	for <e@80x24.org>; Sun,  8 Sep 2019 07:49:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A6A01F4B7
+	for <e@80x24.org>; Sun,  8 Sep 2019 09:46:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726282AbfIHHty (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Sep 2019 03:49:54 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:47476 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726002AbfIHHty (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Sep 2019 03:49:54 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 2D6941F461;
-        Sun,  8 Sep 2019 07:49:54 +0000 (UTC)
-Date:   Sun, 8 Sep 2019 07:49:53 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [RFC 04/11] coccicheck: detect hashmap_entry.hash assignment
-Message-ID: <20190908074953.kux7zz4y7iolqko4@whir>
-References: <20190826024332.3403-1-e@80x24.org>
- <20190826024332.3403-5-e@80x24.org>
+        id S1727979AbfIHJo3 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Sep 2019 05:44:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43292 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727207AbfIHJo2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Sep 2019 05:44:28 -0400
+Received: (qmail 17120 invoked by uid 109); 8 Sep 2019 09:44:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 08 Sep 2019 09:44:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32701 invoked by uid 111); 8 Sep 2019 09:46:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 08 Sep 2019 05:46:17 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sun, 8 Sep 2019 05:44:27 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Eric Freese <ericdfreese@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/1] for-each-ref: add '--no-symbolic' option
+Message-ID: <20190908094427.GA15641@sigill.intra.peff.net>
+References: <20190907213646.21231-1-ericdfreese@gmail.com>
+ <20190907213646.21231-2-ericdfreese@gmail.com>
+ <20190907232821.GA42449@syl.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190826024332.3403-5-e@80x24.org>
+In-Reply-To: <20190907232821.GA42449@syl.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> wrote:
-> By renaming the "hash" field to "_hash", it's easy to spot
-> improper initialization of hashmap_entry structs which
-> can leave "hashmap_entry.next" uninitialized.
+On Sat, Sep 07, 2019 at 07:28:21PM -0400, Taylor Blau wrote:
 
-Junio, I'm planning to reroll this series.
-(Sorry for not following up sooner)
+> > diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> > index 465153e853..b71ab2f135 100644
+> > --- a/builtin/for-each-ref.c
+> > +++ b/builtin/for-each-ref.c
+> > @@ -18,7 +18,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+> >  {
+> >  	int i;
+> >  	struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
+> > -	int maxcount = 0, icase = 0;
+> > +	int maxcount = 0, icase = 0, nosym = 0;
+> 
+> I'm a little timid around a single-bit value prefixed with 'no'. Maybe
+> it would be clearer as:
+> 
+>   int sym = 1;
+> 
+> ...instead of the negated form. Of course, the rest of the readers of
+> this variable would have to be updated, too, but involving fewer
+> negations seems like it would only improve the clarity.
 
-Would you prefer I drop 04/11 "hashmap_entry: detect improper initialization"
-in favor of the following?  Thanks.
+In general, it is nice to avoid negations in the variable names, so you
+don't end up with double negations like "if (!no_symrefs)". However, it
+can be tricky because of zero-initialization. Ultimately this flag ends
+up in "struct ref_filter", and the default initialization of that struct
+would set it to false, which is what we want.
 
----------8<--------
-Subject: [PATCH 4/11] coccicheck: detect hashmap_entry.hash assignment
+So either we end up flipping the variable when we assign to the struct,
+or we have to start providing a more detailed initializer for the
+struct (and switch all callsites to start using it).
 
-Assigning hashmap_entry.hash manually leaves hashmap_entry.next
-uninitialized, which can be dangerous once the hashmap_entry is
-inserted into a hashmap.   Detect those assignments and use
-hashmap_entry_init, instead.
+> Applying your patch shows that I can write the following:
+> 
+>   $ git for-each-ref --no-no-symbolic
+> 
+> Which is likely unintended. There are two ways that you can go about
+> this:
+> 
+>   - write this as 'OPT_BOOL(0, "symbolic", ...)', to make sure that the
+>     option you _actually_ want is the one generated by the complement,
+>     not the complement's complement.
+> 
+>   - or, pass 'PARSE_OPT_NONEG' to tell the parse-options API not to
+>     generate the complement in the first place.
+> 
+> I'd lean towards the former, at the peril of having a meaningless
+> default option (i.e., passing '--symbolic' is wasteful, since
+> '--symbolic' is implied by its default value). But, there are certainly
+> counter-examples, which you can find with
+> 
+>   $ git grep 'OPT_BOOL(.*\"no-'
+> 
+> So, I'd be curious to hear about the thoughts of others.
 
-Signed-off-by: Eric Wong <e@80x24.org>
----
- contrib/coccinelle/hashmap.cocci | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
- create mode 100644 contrib/coccinelle/hashmap.cocci
+This has been discussed off and on over the years, which is why you'll
+find both types of solution in the code base. :) Less important than
+making sure "--no-no-symbolic" does not work is making sure that
+"--symbolic" _does_ work. You're right that it's usually pointless, but
+it can be used to countermand an earlier --no-symbolic.
 
-diff --git a/contrib/coccinelle/hashmap.cocci b/contrib/coccinelle/hashmap.cocci
-new file mode 100644
-index 0000000000..d69e120ccf
---- /dev/null
-+++ b/contrib/coccinelle/hashmap.cocci
-@@ -0,0 +1,16 @@
-+@ hashmap_entry_init_usage @
-+expression E;
-+struct hashmap_entry HME;
-+@@
-+- HME.hash = E;
-++ hashmap_entry_init(&HME, E);
-+
-+@@
-+identifier f !~ "^hashmap_entry_init$";
-+expression E;
-+struct hashmap_entry *HMEP;
-+@@
-+  f(...) {<...
-+- HMEP->hash = E;
-++ hashmap_entry_init(HMEP, E);
-+  ...>}
+And in fact this _does_ work due to 0f1930c587 (parse-options: allow
+positivation of options starting, with no-, 2012-02-25).
+
+Another advantage of using the "no-" form is that the "-h" usage message
+will show it rather than its positive counterpart.
+
+The "no-no" form is a weird artifact of the parsing. It's probably not
+_hurting_ anybody, since you don't see it unless you try to use it.
+There was patch a while ago to disallow these:
+
+  https://public-inbox.org/git/20170419090820.20279-1-jacob.e.keller@intel.com/
+
+but ultimately we never did anything. If we do want to disable these, I
+think I'd rather do it centrally like that, rather than having to
+specify NONEG in the individual options.
+
+> > +test_expect_success 'filtering with --no-symbolic' '
+> > +	git symbolic-ref refs/symbolic refs/heads/master &&
+> > +	git for-each-ref --format="%(refname)" --no-symbolic >actual &&
+> > +	test_must_fail grep refs/symbolic actual
+> 
+> This style is uncommon, and instead it is preferred to write:
+> 
+>   ! grep refs/symbolic actual
+> 
+> Since 'test_must_fail' also catches segfaults, whereas '!' does not.
+> Since we'd like this test to fail if/when grep segfaults, use of the
+> later is preferred here.
+
+Your suggestion is correct, but I'm not sure I follow the reasoning.
+Using "!" would cause us _not_ to notice a segfault, whereas
+test_must_fail would. For non-git tools we prefer to use the simpler
+"!", because should be able to safely assume they do not segfault or die
+by signal.
+
+-Peff
