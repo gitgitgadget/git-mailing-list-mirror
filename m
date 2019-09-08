@@ -7,135 +7,148 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A6A01F4B7
-	for <e@80x24.org>; Sun,  8 Sep 2019 09:46:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A9611F461
+	for <e@80x24.org>; Sun,  8 Sep 2019 10:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727979AbfIHJo3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Sep 2019 05:44:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43292 "HELO cloud.peff.net"
+        id S1728062AbfIHKFp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Sep 2019 06:05:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43302 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727207AbfIHJo2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Sep 2019 05:44:28 -0400
-Received: (qmail 17120 invoked by uid 109); 8 Sep 2019 09:44:28 -0000
+        id S1727018AbfIHKFp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Sep 2019 06:05:45 -0400
+Received: (qmail 17330 invoked by uid 109); 8 Sep 2019 10:05:44 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 08 Sep 2019 09:44:28 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 08 Sep 2019 10:05:44 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32701 invoked by uid 111); 8 Sep 2019 09:46:17 -0000
+Received: (qmail 32755 invoked by uid 111); 8 Sep 2019 10:07:34 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 08 Sep 2019 05:46:17 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 08 Sep 2019 06:07:34 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 8 Sep 2019 05:44:27 -0400
+Date:   Sun, 8 Sep 2019 06:05:44 -0400
 From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Eric Freese <ericdfreese@gmail.com>, git@vger.kernel.org
+To:     Eric Freese <ericdfreese@gmail.com>
+Cc:     git@vger.kernel.org
 Subject: Re: [RFC PATCH 1/1] for-each-ref: add '--no-symbolic' option
-Message-ID: <20190908094427.GA15641@sigill.intra.peff.net>
+Message-ID: <20190908100543.GB15641@sigill.intra.peff.net>
 References: <20190907213646.21231-1-ericdfreese@gmail.com>
  <20190907213646.21231-2-ericdfreese@gmail.com>
- <20190907232821.GA42449@syl.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190907232821.GA42449@syl.local>
+In-Reply-To: <20190907213646.21231-2-ericdfreese@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 07, 2019 at 07:28:21PM -0400, Taylor Blau wrote:
+On Sat, Sep 07, 2019 at 03:36:46PM -0600, Eric Freese wrote:
 
-> > diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-> > index 465153e853..b71ab2f135 100644
-> > --- a/builtin/for-each-ref.c
-> > +++ b/builtin/for-each-ref.c
-> > @@ -18,7 +18,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
-> >  {
-> >  	int i;
-> >  	struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
-> > -	int maxcount = 0, icase = 0;
-> > +	int maxcount = 0, icase = 0, nosym = 0;
+> Using the new flag will omit symbolic refs from the output.
 > 
-> I'm a little timid around a single-bit value prefixed with 'no'. Maybe
-> it would be clearer as:
-> 
->   int sym = 1;
-> 
-> ...instead of the negated form. Of course, the rest of the readers of
-> this variable would have to be updated, too, but involving fewer
-> negations seems like it would only improve the clarity.
+> Without this flag, it is possible to get this behavior by using the
+> `%(symref)` formatting field name and piping output through grep to
+> include only those refs that do not output a value for `%(symref)`, but
+> having this flag is more elegant and intention revealing.
 
-In general, it is nice to avoid negations in the variable names, so you
-don't end up with double negations like "if (!no_symrefs)". However, it
-can be tricky because of zero-initialization. Ultimately this flag ends
-up in "struct ref_filter", and the default initialization of that struct
-would set it to false, which is what we want.
+This seems like a reasonable addition to me. As you note, it can be done
+by post-processing the result, but it can get a little clumsy.
 
-So either we end up flipping the variable when we assign to the struct,
-or we have to start providing a more detailed initializer for the
-struct (and switch all callsites to start using it).
+Just letting my mind wander for a moment, a more general solution would
+be providing some mechanism by which you could ask for-each-ref to omit
+results based on their expansions. E.g., you might want to ask for only
+refs for which %(taggerdate) is non-empty (i.e., just the annotated
+tags).
 
-> Applying your patch shows that I can write the following:
-> 
->   $ git for-each-ref --no-no-symbolic
-> 
-> Which is likely unintended. There are two ways that you can go about
-> this:
-> 
->   - write this as 'OPT_BOOL(0, "symbolic", ...)', to make sure that the
->     option you _actually_ want is the one generated by the complement,
->     not the complement's complement.
-> 
->   - or, pass 'PARSE_OPT_NONEG' to tell the parse-options API not to
->     generate the complement in the first place.
-> 
-> I'd lean towards the former, at the peril of having a meaningless
-> default option (i.e., passing '--symbolic' is wasteful, since
-> '--symbolic' is implied by its default value). But, there are certainly
-> counter-examples, which you can find with
-> 
->   $ git grep 'OPT_BOOL(.*\"no-'
-> 
-> So, I'd be curious to hear about the thoughts of others.
+But that opens a can of worms. How do we negate it? You want to omit
+non-empty %(symref) here, but my tag example would only show non-empty
+%(taggerdate). Howe do we combine options ("non-symrefs that point to
+commits")? How do we express more complex logic, like string matching or
+numeric comparison?
 
-This has been discussed off and on over the years, which is why you'll
-find both types of solution in the code base. :) Less important than
-making sure "--no-no-symbolic" does not work is making sure that
-"--symbolic" _does_ work. You're right that it's usually pointless, but
-it can be used to countermand an earlier --no-symbolic.
+It's a slippery slope that ends in embedding a Turing complete language. :)
+And you can already do these complex things in the language of your
+choice by post-processing the output. The one advantage to doing it
+inside for-each-ref is that we may save some work by filtering early.
+This probably matters more for other tools like cat-file (where I might
+want to say "print all the blobs", but I can't do so without a
+multi-process pipeline that accesses each object twice), but we'd
+eventually like to unify the formatting languages of all tools.
 
-And in fact this _does_ work due to 0f1930c587 (parse-options: allow
-positivation of options starting, with no-, 2012-02-25).
+So in my mind there's an endgame we'd like to eventually reach where
+the option added by your patch isn't needed anymore. But we're a long
+way from that. And it's not entirely clear where we'd draw the line
+anyway. So in the meantime, this seems like a useful thing, and it
+wouldn't be a burden to carry it even if we eventually added
+"--omit=%(symref)" or something.
 
-Another advantage of using the "no-" form is that the "-h" usage message
-will show it rather than its positive counterpart.
+> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> index 6dcd39f6f6..be19111510 100644
+> --- a/Documentation/git-for-each-ref.txt
+> +++ b/Documentation/git-for-each-ref.txt
+> @@ -95,6 +95,9 @@ OPTIONS
+>  --ignore-case::
+>  	Sorting and filtering refs are case insensitive.
+>  
+> +--no-symbolic::
+> +	Only list refs that are not symbolic.
+> +
 
-The "no-no" form is a weird artifact of the parsing. It's probably not
-_hurting_ anybody, since you don't see it unless you try to use it.
-There was patch a while ago to disallow these:
+I wonder if "symbolic" might be too vague here. Would "--no-symref" be a
+better name?
 
-  https://public-inbox.org/git/20170419090820.20279-1-jacob.e.keller@intel.com/
+I responded separately to Taylor's questions about negation, but one
+thing I didn't bring up there: another option to avoid it is to specify
+the action positively. E.g., "--ignore-symrefs" or similar. I could go
+either way on that.
 
-but ultimately we never did anything. If we do want to disable these, I
-think I'd rather do it centrally like that, rather than having to
-specify NONEG in the individual options.
+> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> index 465153e853..b71ab2f135 100644
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -18,7 +18,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+>  {
+>  	int i;
+>  	struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
+> -	int maxcount = 0, icase = 0;
+> +	int maxcount = 0, icase = 0, nosym = 0;
 
-> > +test_expect_success 'filtering with --no-symbolic' '
-> > +	git symbolic-ref refs/symbolic refs/heads/master &&
-> > +	git for-each-ref --format="%(refname)" --no-symbolic >actual &&
-> > +	test_must_fail grep refs/symbolic actual
-> 
-> This style is uncommon, and instead it is preferred to write:
-> 
->   ! grep refs/symbolic actual
-> 
-> Since 'test_must_fail' also catches segfaults, whereas '!' does not.
-> Since we'd like this test to fail if/when grep segfaults, use of the
-> later is preferred here.
+Likewise, maybe worth writing out "symref" here (and in the struct
+option)? But...
 
-Your suggestion is correct, but I'm not sure I follow the reasoning.
-Using "!" would cause us _not_ to notice a segfault, whereas
-test_must_fail would. For non-git tools we prefer to use the simpler
-"!", because should be able to safely assume they do not segfault or die
-by signal.
+> @@ -46,6 +46,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+>  		OPT_CONTAINS(&filter.with_commit, N_("print only refs which contain the commit")),
+>  		OPT_NO_CONTAINS(&filter.no_commit, N_("print only refs which don't contain the commit")),
+>  		OPT_BOOL(0, "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
+> +		OPT_BOOL(0, "no-symbolic", &nosym, N_("exclude symbolic refs")),
+
+I think you could just write directly to &filter.no_symbolic here,
+dropping nosym entirely. But I guess ignore-case directly above set a
+bad example. ;)
+
+> diff --git a/ref-filter.c b/ref-filter.c
+> index f27cfc8c3e..01beb279dc 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -2093,6 +2093,10 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+>  		return 0;
+>  	}
+>  
+> +	if (filter->no_symbolic && flag & REF_ISSYMREF) {
+> +		return 0;
+> +	}
+> +
+
+Ooh, here we avoid the double negation of "if (!filter->no_symbolic)"
+with an early return. :) (Nothing wrong with that, just an amusing
+outcome given the discussion elsewhere in the thread).
+
+> [...]
+
+The rest of the patch looked OK, aside from other review comments. The
+whole thing looks cleanly done. I don't have a strong opinion on adding
+the feature to branch/tag. We've only ever promised that HEAD and
+refs/remotes/.../HEAD work as symrefs, though of course they do work
+anywhere in the namespace, and I imagine people have taken advantage of
+that. So I don't know how useful the option would be in other contexts.
 
 -Peff
