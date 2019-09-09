@@ -2,82 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD1E01F463
-	for <e@80x24.org>; Mon,  9 Sep 2019 23:21:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1627C1F463
+	for <e@80x24.org>; Mon,  9 Sep 2019 23:47:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388050AbfIIXVF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Sep 2019 19:21:05 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:44554 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726474AbfIIXVF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Sep 2019 19:21:05 -0400
-Received: by mail-wr1-f41.google.com with SMTP id k6so4233848wrn.11
-        for <git@vger.kernel.org>; Mon, 09 Sep 2019 16:21:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=JKZ6J1eFVWT6lvSDUxLqtsCMEiwve4lUnOLLCWQd4v8=;
-        b=qoaiCoSaWuqGOzSWMBHuWFZ/JGd2knmKXqDeCWSl2fGIFmDTdB6TXVMF9p5dHnd3HJ
-         TcI0hmQitkGJejX1b/X7kkEuQeT+9+326ycM9f2vFBZsXzt+1jKKdRzZhA0NhCDMTxYT
-         AerPTdB0RWFUmS0QXgNejC2hVikt8lTgP8BH21Ph99dvo3He39xwwaPS/8ebRkmJ8UCz
-         OvFN7pvOkjavTzRcaaGNTBKml9uGsli7qrKSk5tXDe1c7jb6wHZDdoHfQL9qi4xl0kX0
-         USOGMxrUMwO1MXa+K7lryjGpoEvNurIFqhTYCTAc6tv+Awka3kCFC6/jH/TT2SScC0tO
-         WtWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=JKZ6J1eFVWT6lvSDUxLqtsCMEiwve4lUnOLLCWQd4v8=;
-        b=lf5VC+GEV0GAKr4jgiCOEIn4ADL9N+QyJxpkxXWSmYzDzIlhs61PD/NIKtOj1P/Cu9
-         yq/mJ/RkdW4IyuDgi8xSD8ZXiwD3YzJA7pZ2UVFioQY5zGS43gurhQELrrIQvJQkWeiV
-         Qa++U2z1Zc/Aqj2EzM6OgNLTqXip65DqEGyVgWMfNKeaxtNgtHx0q1Fsaffo7OUYVKCQ
-         CCZP5epofk7QPxO/OJ9uw/XRuEcFkx5Cfej7jFImpfpKPKG4tZWdkKRihmPyTGEzrb9U
-         xf2pX/cRYXX8fUgLA5DzAWBu8IWW0rSimQWNE49i7Zy1fxYCDsXQ/TRmhGHpKFtyqEai
-         XGzg==
-X-Gm-Message-State: APjAAAWli312h2/JzyTwcvfHzMzSDRRp6S0AEx35ie58pM2VXug56XU4
-        oQ1A8iRsvuWcfaSaiuJKFlVYJmGA
-X-Google-Smtp-Source: APXvYqwVKgHgicxRPrHZsRYQwxHWD8E9P+8ZbsWuoEBZ3L56VapcY99wjW5ibzZOif84YXUtQGNYlA==
-X-Received: by 2002:adf:fcc1:: with SMTP id f1mr21448194wrs.308.1568071263200;
-        Mon, 09 Sep 2019 16:21:03 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o12sm890175wmh.43.2019.09.09.16.21.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Sep 2019 16:21:02 -0700 (PDT)
-Date:   Mon, 09 Sep 2019 16:21:02 -0700 (PDT)
-X-Google-Original-Date: Mon, 09 Sep 2019 23:21:00 GMT
-Message-Id: <pull.330.git.gitgitgadget@gmail.com>
-From:   "Cameron Steffen via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] doc: small formatting fix
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1730889AbfIIXr0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Sep 2019 19:47:26 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58624 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729118AbfIIXr0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 9 Sep 2019 19:47:26 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:9d62:8fc3:cc7d:8629])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4364860448;
+        Mon,  9 Sep 2019 23:47:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1568072842;
+        bh=682M10F7P8LNvgKkCqn6jaehN7mO6m/HsfGxPIgOntw=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=ZRu9nxAm3ZawTqrzZI/EJwGEhfWA4CVfYLk5lxzWtok7Cy5AIBcxxKvd9dhyWVHet
+         54NTeHFlaETT00d+8gJki842cZfiUvFq65MkA0oFjUnp2f3zgNDNX5MAcgiCNFiZvt
+         OXEFXZ1qFoYkPAqpYad/q7/gAS0InkVDHDghcDDqKjz7OWw617Wg3/NKpGTFnCap6j
+         ZrZ0//cWhJTY5LB4O7tMygRfDAG1hyMfNUUwZZaHl87pO5YLIco0vcdBNg9hcr5Opc
+         ZD5KvXJ/nDu5t8WY3z2zu6FNwZXlGFnSZOGWmnxOTgflbNrk4iPCQ2P1QF8KRyU/0P
+         or5XpHRMcGgSSp5AbDMJMiLGVoJh16EU8x7WB7m4Z8P6Qp6/E0mTY8lchXW1jd2Dpg
+         eO22Cls6EuGNmZjfSccF8cTlUGvOtUVn40jdtkl/IIgh9zeKut3JZ/a5Zm61Y8PguI
+         xrJiWksxpjDj6SlSJmCOwtvGy9M25lPpWCQglaqlMgvzK+5xeH6
+Date:   Mon, 9 Sep 2019 23:47:16 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2019, #01; Sat, 7)
+Message-ID: <20190909234715.GO11334@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqd0gcm2zm.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="UFMLoheMaWcIEZAi"
+Content-Disposition: inline
+In-Reply-To: <xmqqd0gcm2zm.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Edit: I need permission to submit please
 
-Cameron Steffen (1):
-  doc: small formatting fix
+--UFMLoheMaWcIEZAi
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- Documentation/pretty-formats.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 2019-09-07 at 17:26:53, Junio C Hamano wrote:
+> * bc/object-id-part17 (2019-08-19) 26 commits
+>  - midx: switch to using the_hash_algo
+>  - builtin/show-index: replace sha1_to_hex
+>  - rerere: replace sha1_to_hex
+>  - builtin/receive-pack: replace sha1_to_hex
+>  - builtin/index-pack: replace sha1_to_hex
+>  - packfile: replace sha1_to_hex
+>  - wt-status: convert struct wt_status to object_id
+>  - cache: remove null_sha1
+>  - builtin/worktree: switch null_sha1 to null_oid
+>  - builtin/repack: write object IDs of the proper length
+>  - pack-write: use hash_to_hex when writing checksums
+>  - sequencer: convert to use the_hash_algo
+>  - bisect: switch to using the_hash_algo
+>  - sha1-lookup: switch hard-coded constants to the_hash_algo
+>  - config: use the_hash_algo in abbrev comparison
+>  - combine-diff: replace GIT_SHA1_HEXSZ with the_hash_algo
+>  - bundle: switch to use the_hash_algo
+>  - connected: switch GIT_SHA1_HEXSZ to the_hash_algo
+>  - show-index: switch hard-coded constants to the_hash_algo
+>  - blame: remove needless comparison with GIT_SHA1_HEXSZ
+>  - builtin/rev-parse: switch to use the_hash_algo
+>  - builtin/blame: switch uses of GIT_SHA1_HEXSZ to the_hash_algo
+>  - builtin/receive-pack: switch to use the_hash_algo
+>  - fetch-pack: use parse_oid_hex
+>  - patch-id: convert to use the_hash_algo
+>  - builtin/replace: make hash size independent
+>=20
+>  Preparation for SHA-256 upgrade continues.
+>=20
+>  Looked mostly OK, with a possible update.
+>  cf. <20190820223606.GJ365197@genre.crustytoothpaste.net>
 
+Just to update on the status of this, I wasn't planning on a reroll,
+although I'm happy to do so if folks have feedback.  Opinions for or
+against the current state are welcome.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-base-commit: 75b2f01a0f642b39b0f29b6218515df9b5eb798e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-330%2Fcamsteffen%2Fpatch-1-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-330/camsteffen/patch-1-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/330
--- 
-gitgitgadget
+--UFMLoheMaWcIEZAi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl125IMACgkQv1NdgR9S
+9ouDkhAAi2WdhbTLakj17jO9jWbsELkDme3DFzPcrX0mxOYbMMvt7HW423E/h8dS
+6W/5GLIHzbNHEuZYCCg3aNpIXYSeFthTTbBQjQr9PypDW0biGYMcXbrsFcuiQQeD
+Y7LfQzgNE5O9UclwPsg537woDz68uTSf9JKqw+jTwp0WnZc9rYEVqSwDR9YJU4PX
+wTJBqMOGY44cR8cvG3fYw/ofWQMMHkabMbAOlVzlbpxcgvy2cx5t4aNSGzm38IaY
+y5xmvAbx1w5yzpqMyxGP7UoglmJAOH0rQzYyeoy4QCmzsuGqzh4oF0dp6ivc+2gk
+NkRk35Q9uv0I6vPm551u3Ofv6HcsUbK5ZKjbGvT0lp4ss1mFSjTz2U0Y1lIlRL4u
+iF+2dyRlccFS0HO1lJ2CGJpkORswPlYlP6eN8YZclsUeZ4MOpiVKvIrWj6snTZGU
+aY4evKRXrXUEwYo38hlU0oVmkC0b/lC5Kf10ckFKdGOEjxy1QKshHhQB62mRRsTE
+f38+ez5XEAtlmyrfsN7cp5Aj2ICINsthtCKkAuECc6RdSNAuf92m4+XXQtcOK7qg
+Uw3Q0dX3y4TMHN9YKlDDy4AH8Bv6Mw+FMRa69MZJ/jylUl6NqUdWefWANH6iy38D
+NieCIfGDhQzqAVwKZAkBBMrNQYR6DhPRlF/w5++APPAb/OPKH4Y=
+=7MKH
+-----END PGP SIGNATURE-----
+
+--UFMLoheMaWcIEZAi--
