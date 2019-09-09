@@ -7,83 +7,76 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 488A91F461
-	for <e@80x24.org>; Mon,  9 Sep 2019 17:00:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8F0D1F461
+	for <e@80x24.org>; Mon,  9 Sep 2019 17:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727942AbfIIRAE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Sep 2019 13:00:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44298 "HELO cloud.peff.net"
+        id S2405371AbfIIREF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Sep 2019 13:04:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44310 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727040AbfIIRAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Sep 2019 13:00:04 -0400
-Received: (qmail 20411 invoked by uid 109); 9 Sep 2019 17:00:04 -0000
+        id S1727295AbfIIREF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Sep 2019 13:04:05 -0400
+Received: (qmail 20449 invoked by uid 109); 9 Sep 2019 17:04:05 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 09 Sep 2019 17:00:04 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 09 Sep 2019 17:04:05 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10441 invoked by uid 111); 9 Sep 2019 17:01:56 -0000
+Received: (qmail 10508 invoked by uid 111); 9 Sep 2019 17:05:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Sep 2019 13:01:56 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Sep 2019 13:05:57 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 9 Sep 2019 13:00:03 -0400
+Date:   Mon, 9 Sep 2019 13:04:04 -0400
 From:   Jeff King <peff@peff.net>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git in Outreachy December 2019?
-Message-ID: <20190909170002.GA30399@sigill.intra.peff.net>
-References: <20190827051756.GA12795@sigill.intra.peff.net>
- <20190904194114.GA31398@sigill.intra.peff.net>
- <20190908145610.3ho2wo5qqiw3u4lz@yadavpratyush.com>
+To:     Douglas Graham <douglas.graham@ericsson.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: O_NONBLOCK: should I blame git or ssh?
+Message-ID: <20190909170403.GB30399@sigill.intra.peff.net>
+References: <BN8PR15MB302515278334F3BD7B63D519F0B50@BN8PR15MB3025.namprd15.prod.outlook.com>
+ <20190908102839.GC15641@sigill.intra.peff.net>
+ <BN8PR15MB302520248BB1AD49B28C3AB3F0B40@BN8PR15MB3025.namprd15.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190908145610.3ho2wo5qqiw3u4lz@yadavpratyush.com>
+In-Reply-To: <BN8PR15MB302520248BB1AD49B28C3AB3F0B40@BN8PR15MB3025.namprd15.prod.outlook.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 08, 2019 at 08:26:10PM +0530, Pratyush Yadav wrote:
+On Sun, Sep 08, 2019 at 02:18:15PM +0000, Douglas Graham wrote:
 
-> I'd like to put out a proposal regarding first contributions and micro 
-> projects.
+> When I collected that strace output, I had stdout redirected to a pipe to my
+> workaround program, but I did not redirect stderr.  So ssh made stdout non-blocking,
+> but since stderr was still connected to my terminal, it didn't touch that. But when
+> this build is run under Jenkins, both stdout and stderr are connected to a pipe that
+> Jenkins creates to collect output from the build. I assume that when git runs ssh, it
+> does not redirect ssh's stderr to its own pipe, it only redirects stdout. So I think
+> ssh will be messing with both pipes when this build is run under Jenkins.
+
+OK, that makes sense.
+
+> Now that I have a fairly good understanding of what's happening, I think I can work
+> around this occasional error by redirecting git's stderr to a file or something like
+> that, but it's taken us a long time to figure this out, so I wonder if a more permanent
+> fix shouldn't be implement, so others don't run into the same problem.  A google for
+> "make: write error" indicates that we're not the first to have this problem with
+> parallel builds, although in the other cases I've found, a specific version of the
+> Linux kernel was being blamed.  Maybe that was a different problem.
 > 
-> I have a small list of small isolated features and bug fixes that
-> _I think_ git-gui would benefit with. And other people using it can 
-> probably add their pet peeves and issues as well. My question is, are 
-> these something new contributors should try to work on as an 
-> introduction to the community? Since most of these features and fixes 
-> are small and isolated, they should be pretty easy to work on. And I 
-> think people generally find UI apps a little easier to work on.
-> 
-> But I'll play the devil's advocate on my proposal and point out some 
-> problems/flaws:
-> - Git-gui is written in Tcl, and git in C (and other languages too, but 
->   not Tcl). That means while people do get a feel of the community and 
->   general workflow, they don't necessarily get a feel of the actual git 
->   internal codebase.
-> - Since I don't see a git-gui related project worth being into the 
->   Outreachy program, it essentially means they will likely not work on 
->   anything related to their project.
-> - Git-gui is essentially a wrapper on top of git, so people won't get 
->   exposure to the git internals.
-> 
-> I'd like to hear your and the rest of the community's thoughts about 
-> this proposal, and whether it will be a good idea or not.
+> I guess git could workaround this by redirecting stderr, but the real problem is probably
+> with ssh, although it's not clear to me what it should do differently. It does some
+> somehow backwards to me that that it only makes a descriptor non-blocking if it doesn't
+> refer to a TTY, but it does the same thing in at least three different places so I guess
+> that's  not a mistake.
 
-Right, I came up with similar devil's advocate arguments. :) I'm not
-totally opposed, because part of the point of these microprojects just
-getting people familiar with interacting with the community and
-submitting a patch. They're not always in the same area the intern
-intends to work, just because there's not always a trivial problem to be
-solved there.
+Where would git redirect the stderr to? We definitely want to make sure
+it goes to our original stderr, since it can have useful content for the
+user to see. We could make a new pipe and then pump the output back to
+our original stderr. But besides being complex, that fools the
+downstream programs about whether stderr is a tty (I don't know whether
+ssh cares, but certainly git itself uses that to decide on some elements
+of the output, mostly progress meters).
 
-So we do look at it mostly as a "can you do this basic test" test, and
-not necessarily as a prelude to the project.
-
-But it would be nice if it were at least in the same _language_ that the
-ultimate project will be done in. Because we're evaluating the
-applicant's ability to write code in that language, too.
-
-So I dunno. I am on the fence.
+So I think it would make more sense to talk to ssh folks about why this
+momentary O_NONBLOCK setting happens, and if it can be avoided.
 
 -Peff
