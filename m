@@ -2,140 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD6DC1F463
-	for <e@80x24.org>; Mon,  9 Sep 2019 18:58:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B246A1F463
+	for <e@80x24.org>; Mon,  9 Sep 2019 19:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732594AbfIIS6t (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Sep 2019 14:58:49 -0400
-Received: from mout.gmx.net ([212.227.17.20]:56153 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732524AbfIIS6t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Sep 2019 14:58:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1568055527;
-        bh=O7jAuCxElHg0XibVH63X4TwCC5OuY0bhulS4wEDP350=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=SL0EJQZxrcEWK5Soi6+UP2xr5oSqzfrfafOP8I3cDkp7ko0lIod8Hyw/lL5CAQz/w
-         bybavDjrY+HSR9Z59Pb/2wN/VApgu9+1dlwvnhUU42GLH14fQA5GMFuYHDbGo3F3Yj
-         wU7IAPndsDotmSs39gtVpv5OPWPzSa/ycKvjpWu4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MplXp-1iUdGk2uWj-00q71e; Mon, 09
- Sep 2019 20:58:47 +0200
-Date:   Mon, 9 Sep 2019 20:58:31 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] compat/*.[ch]: remove extern from function declarations
- using spatch
-In-Reply-To: <20190905032317.GA1381@archbookpro.localdomain>
-Message-ID: <nycvar.QRO.7.76.6.1909092058020.5377@tvgsbejvaqbjf.bet>
-References: <cover.1567595331.git.liu.denton@gmail.com> <3c08556231576d8dfe496b87ae8cdcb87c00df24.1567595331.git.liu.denton@gmail.com> <nycvar.QRO.7.76.6.1909042342220.5377@tvgsbejvaqbjf.bet> <20190905032317.GA1381@archbookpro.localdomain>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dmtwX/qcDdonMqkKpK0s9cK9svsrqjeiVpGFjoKUmNCmTCuKJyY
- b38PgsqGD0gg0cw5XpI44DFTY41rzc5DhCk/qydtNsAAarpR5d2/aUtWtEIfZJ8q0+9lHRT
- u6z0L92cmAJpjE/ayweJtRe409U8+7Eyc5jKcm2rY+FWEmH2rekpw9fx7hE/88Ej288MZ4K
- AJmtMiuwLfv2EQYBEjp8Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QHk05HpnFhU=:ti1kA2T4RRUc5Kgal28a2N
- 43JKcl9g4Z516Z/59VJ4QAZcbc3Kn+SLfqby0SoujQ/smX2xkLSZjwTVNOmYRc3ZXUSk1ezEF
- e9Mk741HnoiE8KPj86Yh0FSecw+p+TkziGYW7SNbuwgPlydxtnTZpDlQdP/AVwOulbk3gpxs8
- MeG6ZAwrl/EitBGWK72ndJlQR4VwHVtOFbYzXk2dT2HligVmkrgbKtwREgNL/PembscNsqNma
- repQ8+l0BBSdqRjJlyZU2OBHX6UBO+kIebDyja+syKLiAYPKER6eX0QYV3peFIofZk6byIKR9
- TZT1tuo6JRmWb7OV+bTaLAIODm4RJQ7wUNQYwbFvRQnbkqfJPSZw0LbYsbISO6EHHXkdDou+6
- Kbdq87ebYqYwQ+fJw2k6hTcv3HQG0KTA8lAZjMPptNOzjcS023aQfYEnqNyWMlSH7TxTWe/E5
- 9DPP1wlfixjBk6m8Q/JH6wtEOH4Bv8NMQC/xFPHDY+umYa7Eyrnn9O6gQ1u9sTmfe0sZV23RH
- g1tqMKiMO7BBImp3SCfRR5CN6JvoaydBuM0DxAAZrOvTlbiUey1wGvrcOAXwDa6mI7mvEoDrS
- I71Y94Q1uyVB1MJodEK9tm80oCkfe/g/PiTeZROKNAGWinZiULOS8Rk6bLcSzCYYTyitz31bH
- mpgwXKL0xRLrW2RAP+wKNlMyKEk10yqFlQ8ffEnWyUvtHiV+qy2DirR1Bgu6MqqoBIZCKJAas
- 706PSqKMapyf/OtLiA0oMuoelxNn3Z67kEe5MEvFj1uLypDb7brBZmeK5USH5KL5TMzuvhoIl
- XI7s9kXHjC0bJ4QDCe7gl//TLp7WONmjEFk1OoTMXZ3B/la9uqoZFrFy7LomRrCcjfn3T8ogv
- IEXEUTAexKXm9tkM1O24in7y5EWsFF5SmJat0NZWJZMPGYhIY40FkXktu541jyxiK+1/R6mpx
- CqCCE5Q7IEpvw0zmYxVe9h8Iqe4jSxvtEq5BHR7SZYX/i+K/PjZQCf8DRtn9rF7Vvtm1uBdmU
- RCRCg6V1fFGn/nDxvBkReMfLKOdZmLq9OOURHAqYoSKdN4Xr+Q/47WW2IRkU63AxSx93pI6OQ
- faQ+eMwJDTVuovx80c1AwZs+yteIAgq2UoMCIhnL1y75RfxJGoPU1nz/AnjddPZOGm2VjXmcp
- +44JpcPFkCBUjGsZtmfd1QPv8QtdUTEz99BZJH3pTvvWTeSuoOoutQt+fM3g5Y72gnOyRETho
- +ATL35PQDAQiGOk7j
-Content-Transfer-Encoding: quoted-printable
+        id S1730631AbfIITBe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Sep 2019 15:01:34 -0400
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:47677 "EHLO
+        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727122AbfIITBe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Sep 2019 15:01:34 -0400
+Received: by mail-qt1-f201.google.com with SMTP id v16so16911383qtp.14
+        for <git@vger.kernel.org>; Mon, 09 Sep 2019 12:01:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=gf9Y+WeFYcIkcM0S55HwSzsj6Ssoc7wTt8BSi3qAUs4=;
+        b=uF4YZjrHC+1QXoAQ5/QsK6VoYKps8RbsaCIP9QlsY0UDPtUvkvNxqBfmbd2RcCBCnS
+         EfAYXsmWhi3tjwp9GvDGZ5yfpLtjqnC4TMl3oPYVA/jiHd7VczshhwPOJcd6G/p9A/l4
+         KyfFsk+X9XM3YLlYOQmV5auoUo5xE4Qhin//ZcHs7Cl7eKiu+MupoFxezjfa4L6c7h3E
+         /kjdCV2Z8qmUGFN44URgoyOOwVxg5tVKf+BC+bkm/1YU+Ba71ADAvSUBmjFcJF5oPxa3
+         M3G4ii+5o7l7tOGAFNdP7ZIFPLGp4Pr9vGHDMsye8KGPPhfLFoXOCj/z9OrU0yla/fNw
+         Ejpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=gf9Y+WeFYcIkcM0S55HwSzsj6Ssoc7wTt8BSi3qAUs4=;
+        b=FJF0iNiNlSw582LCpwxXVl/RwI0m8/GDlCE6+YZxWWi2K2yOE6AgC3XdHqoWpymQ0V
+         fkjUkRMNibYL/4MVM8JKetwUnEFDcw0SC8p0jzDGXABqz8B4pnPPbnIx4QkF0o/9SMtq
+         Kc9Mey1Rd0PUiQFcZpEivTgsJNEghJhYd2BV8S9uJGVe+m2aDH+7Q7TqArkufbHGjw43
+         pgtHeRp+rOXKXNOFXbh7F2YXFBw5YA/b80dXslm0ZcNSXDLnW/o5CDIP5OUUCa4sjl//
+         z8hdVJjKCDnXuyH71w0UGVgMY8qV2T7XAiNCYxQ6POUFjip0NHyrn0hBU63czysRfpXE
+         ZVrg==
+X-Gm-Message-State: APjAAAUZ985YBbTmBrSg5tmGkooscvzMyhjn300VQypbrgfk8NHLPusj
+        AJjeYPzVt17ClcEIcjT7sy9rM26yGPUFmcUpPQfmt5IBtXuOu1m/RkDa+Inl1Kmvf3g8dYWDdeg
+        hT5ThlMT7Pq1pYe9nDjzWw0YSkTtY3qSJHOFiT0k9shphrJXUPHdRT6DhMgsrVoo/TMuSpdFVlE
+        Oq
+X-Google-Smtp-Source: APXvYqx7+D8G9oPc9Lrfg2X0upa0sPbgtdP07DAPEOj3ybZeGDksO+M/pNBZxa5HHnwCUMy7V5DIIb7I/x/pphYRBiJq
+X-Received: by 2002:ac8:490e:: with SMTP id e14mr25339728qtq.375.1568055693495;
+ Mon, 09 Sep 2019 12:01:33 -0700 (PDT)
+Date:   Mon,  9 Sep 2019 12:01:30 -0700
+In-Reply-To: <20190903194247.217964-1-jonathantanmy@google.com>
+Message-Id: <20190909190130.146613-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20190903194247.217964-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.23.0.162.g0b9fbb3734-goog
+Subject: [PATCH v2] cache-tree: do not lazy-fetch merge tree
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com,
+        gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+When cherry-picking (for example), new trees may be constructed. During
+this process, Git constructs the new tree in a struct strbuf, computes
+the OID of the new tree, and checks if the new OID already exists on
+disk. However, in a partial clone, the disk check causes a lazy fetch to
+occur, which is both unnecessary (because we have the tree in the struct
+strbuf) and likely to fail (because the remote probably doesn't have
+this tree).
 
-On Wed, 4 Sep 2019, Denton Liu wrote:
+Do not lazy fetch in this situation.
 
-> On Wed, Sep 04, 2019 at 11:43:06PM +0200, Johannes Schindelin wrote:
-> >
-> > On Wed, 4 Sep 2019, Denton Liu wrote:
-> >
-> > > In 554544276a (*.[ch]: remove extern from function declarations usin=
-g
-> > > spatch, 2019-04-29), we removed externs from function declarations u=
-sing
-> > > spatch but we intentionally excluded files under compat/ since some =
-are
-> > > directly copied from an upstream and we should avoid churning them s=
-o
-> > > that manually merging future updates will be simpler.
-> > >
-> > > In the last commit, we determined the files which taken from an upst=
-ream
-> > > so we can exclude them and run spatch on the remainder.
-> > >
-> > > This was the Coccinelle patch used:
-> > >
-> > > 	@@
-> > > 	type T;
-> > > 	identifier f;
-> > > 	@@
-> > > 	- extern
-> > > 	  T f(...);
-> > >
-> > > and it was run with:
-> > >
-> > > 	$ git ls-files compat/\*\*.{c,h} |
-> > > 		xargs spatch --sp-file contrib/coccinelle/noextern.cocci --in-plac=
-e
-> > > 	$ git checkout -- \
-> > > 		compat/regex/ \
-> > > 		compat/inet_ntop.c \
-> > > 		compat/inet_pton.c \
-> > > 		compat/nedmalloc/ \
-> > > 		compat/obstack.{c,h} \
-> > > 		compat/poll/
-> > >
-> > > Coccinelle has some trouble dealing with `__attribute__` and varargs=
- so
-> > > we ran the following to ensure that no remaining changes were left
-> > > behind:
-> > >
-> > > 	$ git ls-files compat/\*\*.{c,h} |
-> > > 		xargs sed -i'' -e 's/^\(\s*\)extern \([^(]*([^*]\)/\1\2/'
-> > > 	$ git checkout -- \
-> > > 		compat/regex/ \
-> > > 		compat/inet_ntop.c \
-> > > 		compat/inet_pton.c \
-> > > 		compat/nedmalloc/ \
-> > > 		compat/obstack.{c,h} \
-> > > 		compat/poll/
-> >
-> > I wonder whether we want to make this part of the (slightly misnamed)
-> > "Static Analysis" job in our CI.
->
-> Do you mean running cocci on all of our source files as opposed to just
-> the files we compile? These two patches are part of an experimental (and
-> unsubmitted) patchset that does exactly that. Seeing that there's
-> interest, I'll try to send it in soon.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+As requested in What's Cooking [1], here's a patch with an updated
+commit message. Otherwise, the patch is exactly the same.
 
-I look forward to it!
-Dscho
+[1] https://public-inbox.org/git/xmqqd0gcm2zm.fsf@gitster-ct.c.googlers.com/
+---
+ cache-tree.c             |  2 +-
+ t/t0410-partial-clone.sh | 14 ++++++++++++++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/cache-tree.c b/cache-tree.c
+index c22161f987..9e596893bc 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -407,7 +407,7 @@ static int update_one(struct cache_tree *it,
+ 	if (repair) {
+ 		struct object_id oid;
+ 		hash_object_file(buffer.buf, buffer.len, tree_type, &oid);
+-		if (has_object_file(&oid))
++		if (has_object_file_with_flags(&oid, OBJECT_INFO_SKIP_FETCH_OBJECT))
+ 			oidcpy(&it->oid, &oid);
+ 		else
+ 			to_invalidate = 1;
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 6415063980..3e434b6a81 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -492,6 +492,20 @@ test_expect_success 'gc stops traversal when a missing but promised object is re
+ 	! grep "$TREE_HASH" out
+ '
+ 
++test_expect_success 'do not fetch when checking existence of tree we construct ourselves' '
++	rm -rf repo &&
++	test_create_repo repo &&
++	test_commit -C repo base &&
++	test_commit -C repo side1 &&
++	git -C repo checkout base &&
++	test_commit -C repo side2 &&
++
++	git -C repo config core.repositoryformatversion 1 &&
++	git -C repo config extensions.partialclone "arbitrary string" &&
++
++	git -C repo cherry-pick side1
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+ 
+-- 
+2.23.0.162.g0b9fbb3734-goog
+
