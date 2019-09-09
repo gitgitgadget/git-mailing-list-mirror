@@ -2,124 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD81A1F463
-	for <e@80x24.org>; Mon,  9 Sep 2019 22:51:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A41991F463
+	for <e@80x24.org>; Mon,  9 Sep 2019 23:21:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727958AbfIIWvY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Sep 2019 18:51:24 -0400
-Received: from mout.gmx.net ([212.227.17.20]:47231 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726231AbfIIWvX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Sep 2019 18:51:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1568069477;
-        bh=mlXWbkfmwDBBua143r/Ms8m3MSjrYn5bTJuOe/XsAEw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=c4QVKOmnU4VTUAUgHztx8DoENBBs7XfXjsDxRNPE7oSFvPKT//7mGNJpF/MrL18Ff
-         EhumJrl5pQhxdGfoH0itb6tC8FvdklRK0ZVRzNFtrWTTkFcYW/cDf28AIrJpOLuRN/
-         rxuuhZykfvNuJ+s5tvuHc6xHfnjWc8a++m/f6h0Y=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LinyL-1ihtiS0fSX-00cyeB; Tue, 10
- Sep 2019 00:51:17 +0200
-Date:   Tue, 10 Sep 2019 00:51:01 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Luke Diamand <luke@diamand.org>,
-        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] ci: install P4 from package to fix build error
-In-Reply-To: <20190906105825.GD32087@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1909100049180.5377@tvgsbejvaqbjf.bet>
-References: <20190906102711.6401-1-szeder.dev@gmail.com> <20190906105825.GD32087@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2389605AbfIIXVG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Sep 2019 19:21:06 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42141 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729890AbfIIXVF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Sep 2019 19:21:05 -0400
+Received: by mail-wr1-f66.google.com with SMTP id q14so16355321wrm.9
+        for <git@vger.kernel.org>; Mon, 09 Sep 2019 16:21:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=XlHMLn6UEFGZU1p0hvcM1rwClK76NlMTN+T/jzQstug=;
+        b=d6WCdqoFwDDn3aPGzLJgrwxtgHHuHAfTtmOiJtVIRTq0qAxWIosR5ZGxvUH6wqeb6T
+         k3yuilMOlcmxFigKJKtWg0DRHmvfDl0jNGLW0vW7fXuRncAwKvQS2t2iDUIVGq+Ido0/
+         h/kvy/V5ohG/j+SStwfrp4Xlq+KrGnKM76LVXBURzFhBoilmAy9pjJF49S1cJfqdwqJ1
+         rXtuEAotJ4Gat5kucqV58sAToCV9NqZlyoyEXrmbivExUWg+f3/xOKRzIBr9yPB3vG1N
+         ehCFFm26HEva34JKpI+LPsgvh1YYeG1CZzPjxBvASpYvoRjRQLQI/2e4fTXRAf4bCVry
+         fD0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=XlHMLn6UEFGZU1p0hvcM1rwClK76NlMTN+T/jzQstug=;
+        b=gZ00xBTDz/z+AdQGJ5NxGnthk4LBU4Gqn5Waes0h4lJ3EvAaI4oUnQjl8qk8JQJKiI
+         zvJKGhH8KEWVFdK21YJTz34useuiYEAzj1DLhkfmJiThzvTCwjSV5ugJPABa8451whew
+         163OhPRNp+t6+EYaYa4s0/AYbZzyA/EkwRUJhRo2Se6WtU+fTeMvzd8yKOllJt2Ce5Jj
+         a0g8lVKnT3DKYUVjrjABFCyoMK42uawN6SoNiSimayC4jQ+wn1O+uysLFSnfs6d8hi9M
+         1/Lv/0z1wug8Fuz1dUl8lDgUd+/M/BTv1/f+at9xU+1E3xm/zMeNTI1t5qipe83bqtsP
+         oSaA==
+X-Gm-Message-State: APjAAAXsfR077lE/3mCxpebiuzIV5oblMNykYTx1yMqP1tkwjXX3nxCc
+        tV6apvCKsgI497Ug0bQ7YBpEP3lu
+X-Google-Smtp-Source: APXvYqwJEb7/oPkbNrTwNu1kbfwEz7QTmZKzyqqYEGuUsVlxYQFgjgnOlAVAk2WUjieSmrqH3WCf/Q==
+X-Received: by 2002:a5d:62c7:: with SMTP id o7mr21486813wrv.197.1568071263890;
+        Mon, 09 Sep 2019 16:21:03 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 189sm1685824wma.6.2019.09.09.16.21.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Sep 2019 16:21:03 -0700 (PDT)
+Date:   Mon, 09 Sep 2019 16:21:03 -0700 (PDT)
+X-Google-Original-Date: Mon, 09 Sep 2019 23:21:01 GMT
+Message-Id: <5248e3332c90e91c1c6a911090d331f005789014.1568071262.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.330.git.gitgitgadget@gmail.com>
+References: <pull.330.git.gitgitgadget@gmail.com>
+From:   "Cameron Steffen via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 1/1] doc: small formatting fix
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1678146039-1568069477=:5377"
-X-Provags-ID: V03:K1:DAyO+cvYglMQB3hsAU36qcGXEWoKr8vrtgoDYJFie4BYFMcKq99
- zu9B7y8ywbs0iQGqdDAz2FmOSlGq8lMXYTFd7SfInzlEYlj2ULVjlD8Rq9j2wygIm2NmAI+
- CPPugcESVmdHovsI0HufwK/nq0yNmOhROsESN4qSXygGyofe6lwRrjPrSUr7U7eZp9LUw8x
- gUkQPSQqCjIFNSwRNXZzA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ouZD6KOiSNA=:kGcjIRgRvkjau7fDiY1kDr
- ryf00V+P87RJCPqfviOIhdj0oO98G20GB7dT180onV66vOr+2H3XHMzx8aWD9KorfJLy9yD4E
- ivqF2fX4JI5LAECsU5e2eyaBmlkQPQkswoxLZ8+RRKebC7HItpRyECDfzRR+c17k6rnrqq2xX
- vGBqKXtIaG+IKZgdOY+a3pDp6iTbIhB8DtnwqgUjFGrYAt034uwC5FF4+q6HwWBnCnJAjNxnu
- Uh42kjBVLgg9qg7MMTu1qhor+ihSRXusMGAwJHhKaQx+yFNppmZuC+UBSot5dHLQqi5K6SyHL
- QV/zK7FmvALaUoAxJMYWpOHQ5SHVKTYtkIoXRenBUTY7FefEG1d6i3XnG1LfURT4Ogp+KCKaK
- VLMWVsjciEcKY8txRoF0WiXxnJqCqxDoxMU0jwImbMpIr7F0GGS2L7L0poXAx/HDOkFye7y2C
- Xtuz7CZiTUHgbFws3pkP7SYAwdJhocbiNE85I/M3cNXw5OOY9UwvrbtmnJE2eMDC3peoO1rXl
- ime+8nryrK9B8tITVbZO2cOIyDmm3aF+Q6LB0mkz3e5SN4RCjtKSQ39ax99YDtYljMavDmWnz
- IMZUeGcMXguw8N6YvosCDVk0hxZaZ/8VWfSH65lP6fqB2hhYueXl9hR7p7unAdvA6TVdt2FO/
- GG0ervcbdzr/2lspDY7cT99E11Dwtu1NxEqDZWAtrJUjVzX/id6quBhCFSN7NTIANuYMFQF8E
- zy7gai0Xw7O17h9mxQaHUDUm96oQSR6EIChu6XSyucVjY0bIvskw5aUga6A58uMggIRA1x9Uw
- aHMUIAaVV4twzu7xooOWiozPDTfx824x2SlOUIv3+jB3v0kPLHvnP8sYqRytWLEEoCupJ6d1S
- glsM/zdIGYx5oMa0JX+raoeTX5vL2xpb+S852SUxt4tNGIQWwl2SSUY8T2c8gH4p5nrPdK/Dq
- OWQe+xq/+V7B+bdaifZlJy/vFAOIMe22eSOhymckRqGzgejMyVc5zh2WMi9FRqIISzicYkXAK
- tze8XzGIpseRrieK8VCd3khnDzj/Wj4ptjU4XFuEZJ+56hkQG1lKAcOANbFA9mhZqcy7nLyWV
- CDfHGP7TiXCucH343MAnxh8f/uNN67gQndd45K2tZRHjwS26K+XBILxOMZPW81g4TNkJkw8mf
- JqMgFyc4qCKrFCfgB7lY6Yb/cj0ZI/0vywdo6Ab/1ZTwOzN70eUuVJr2JcWeBTT+kxZghnndt
- eLWgAqTNGmflZwwaP
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Cameron Steffen <cam.steffen94@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: Cameron Steffen <cam.steffen94@gmail.com>
 
---8323328-1678146039-1568069477=:5377
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+move an incorrectly placed backtick
 
-Hi,
+Signed-off-by: Cameron Steffen <cam.steffen94@gmail.com>
+---
+ Documentation/pretty-formats.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-On Fri, 6 Sep 2019, SZEDER G=C3=A1bor wrote:
-
-> On Fri, Sep 06, 2019 at 12:27:11PM +0200, SZEDER G=C3=A1bor wrote:
-> > To test 'git-p4' in the Linux Clang and GCC build jobs we used to
-> > install the 'p4' and 'p4d' binaries by directly downloading those
-> > binaries from a Perforce filehost.  This has worked just fine ever
-> > since we started using Travis CI [1], but during the last day or so
-> > that filehost appeared to be gone: while its hostname still resolves,
-> > the host doesn't seem to reply to any download request, it doesn't
-> > even refuse the connection, and eventually our build jobs time out
-> > [2].
-> >
-> > Now, this might be just a temporary glitch, but I'm afraid that it
-> > isn't.
->
-> Well, now would you believe it, while I was testing this patch (I even
-> made a gitgitgadget PR to run it on Azure Pipelines! :) and touching
-> up its log message the good old Perforce filehost sprang back to life,
-> and the CI build jobs now succeed again even without this patch.
-
-Sorry for being so slow with granting you access to GitGitGadget. FWIW
-_anybody_ who already was granted access can issue `/allow` commands, it
-is not just me.
-
-> > Let's install P4 from the package repository, because this approach
-> > seems to be simpler and more future proof.
-> >
-> > Note that we used to install an old P4 version (2016.2) in the Linux
-> > build jobs, but with this change we'll install the most recent version
-> > available in the Perforce package repository (currently 2019.1).
->
-> So I'm not quite sure whether we really want this patch.  It depends
-> on how important it is to test 'git-p4' with an old P4 version, but I
-> don't really have an opinion on that.
-
-I'd rather have that patch. It seems to be a much better idea to use the
-package management system than to rely on one host, especially when said
-host already displayed hiccups.
-
-Ciao,
-Dscho
-
---8323328-1678146039-1568069477=:5377--
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 079598307a..b87e2e83e6 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -208,7 +208,7 @@ endif::git-rev-list[]
+ '%GP':: show the fingerprint of the primary key whose subkey was used
+ 	to sign a signed commit
+ '%gD':: reflog selector, e.g., `refs/stash@{1}` or `refs/stash@{2
+-	minutes ago`}; the format follows the rules described for the
++	minutes ago}`; the format follows the rules described for the
+ 	`-g` option. The portion before the `@` is the refname as
+ 	given on the command line (so `git log -g refs/heads/master`
+ 	would yield `refs/heads/master@{0}`).
+-- 
+gitgitgadget
