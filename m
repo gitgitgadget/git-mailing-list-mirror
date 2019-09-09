@@ -2,198 +2,206 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DB2D1F461
-	for <e@80x24.org>; Mon,  9 Sep 2019 14:05:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F9911F461
+	for <e@80x24.org>; Mon,  9 Sep 2019 14:13:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405166AbfIIOFt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Sep 2019 10:05:49 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:33772 "EHLO mx1.redhat.com"
+        id S2405241AbfIIONk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Sep 2019 10:13:40 -0400
+Received: from mout.gmx.net ([212.227.15.19]:39051 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405119AbfIIOFs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Sep 2019 10:05:48 -0400
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 0D76F309276B;
-        Mon,  9 Sep 2019 14:05:48 +0000 (UTC)
-Received: from [10.3.116.234] (ovpn-116-234.phx2.redhat.com [10.3.116.234])
-        by smtp.corp.redhat.com (Postfix) with ESMTPS id D7E326012A;
-        Mon,  9 Sep 2019 14:05:46 +0000 (UTC)
-Subject: Re: [Qemu-devel] [PATCH v6 0/4] 9p: Fix file ID collisions
-To:     Christian Schoenebeck <qemu_oss@crudebyte.com>,
-        qemu-devel@nongnu.org, git@vger.kernel.org
-Cc:     berrange@redhat.com, stefanha@gmail.com,
-        Greg Kurz <groug@kaod.org>, dgilbert@redhat.com,
-        antonios.motakis@huawei.com
-References: <cover.1566503584.git.qemu_oss@crudebyte.com>
- <46fe6c73-961f-d72a-77de-88491b6f223c@redhat.com> <4642438.ai5u8AxThJ@silver>
- <1897173.eDCz7oYxVq@silver>
-From:   Eric Blake <eblake@redhat.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=eblake@redhat.com; keydata=
- xsBNBEvHyWwBCACw7DwsQIh0kAbUXyqhfiKAKOTVu6OiMGffw2w90Ggrp4bdVKmCaEXlrVLU
- xphBM8mb+wsFkU+pq9YR621WXo9REYVIl0FxKeQo9dyQBZ/XvmUMka4NOmHtFg74nvkpJFCD
- TUNzmqfcjdKhfFV0d7P/ixKQeZr2WP1xMcjmAQY5YvQ2lUoHP43m8TtpB1LkjyYBCodd+LkV
- GmCx2Bop1LSblbvbrOm2bKpZdBPjncRNob73eTpIXEutvEaHH72LzpzksfcKM+M18cyRH+nP
- sAd98xIbVjm3Jm4k4d5oQyE2HwOur+trk2EcxTgdp17QapuWPwMfhaNq3runaX7x34zhABEB
- AAHNHkVyaWMgQmxha2UgPGVibGFrZUByZWRoYXQuY29tPsLAegQTAQgAJAIbAwULCQgHAwUV
- CgkICwUWAgMBAAIeAQIXgAUCS8fL9QIZAQAKCRCnoWtKJSdDahBHCACbl/5FGkUqJ89GAjeX
- RjpAeJtdKhujir0iS4CMSIng7fCiGZ0fNJCpL5RpViSo03Q7l37ss+No+dJI8KtAp6ID+PMz
- wTJe5Egtv/KGUKSDvOLYJ9WIIbftEObekP+GBpWP2+KbpADsc7EsNd70sYxExD3liwVJYqLc
- Rw7so1PEIFp+Ni9A1DrBR5NaJBnno2PHzHPTS9nmZVYm/4I32qkLXOcdX0XElO8VPDoVobG6
- gELf4v/vIImdmxLh/w5WctUpBhWWIfQDvSOW2VZDOihm7pzhQodr3QP/GDLfpK6wI7exeu3P
- pfPtqwa06s1pae3ad13mZGzkBdNKs1HEm8x6zsBNBEvHyWwBCADGkMFzFjmmyqAEn5D+Mt4P
- zPdO8NatsDw8Qit3Rmzu+kUygxyYbz52ZO40WUu7EgQ5kDTOeRPnTOd7awWDQcl1gGBXgrkR
- pAlQ0l0ReO57Q0eglFydLMi5bkwYhfY+TwDPMh3aOP5qBXkm4qIYSsxb8A+i00P72AqFb9Q7
- 3weG/flxSPApLYQE5qWGSXjOkXJv42NGS6o6gd4RmD6Ap5e8ACo1lSMPfTpGzXlt4aRkBfvb
- NCfNsQikLZzFYDLbQgKBA33BDeV6vNJ9Cj0SgEGOkYyed4I6AbU0kIy1hHAm1r6+sAnEdIKj
- cHi3xWH/UPrZW5flM8Kqo14OTDkI9EtlABEBAAHCwF8EGAEIAAkFAkvHyWwCGwwACgkQp6Fr
- SiUnQ2q03wgAmRFGDeXzc58NX0NrDijUu0zx3Lns/qZ9VrkSWbNZBFjpWKaeL1fdVeE4TDGm
- I5mRRIsStjQzc2R9b+2VBUhlAqY1nAiBDv0Qnt+9cLiuEICeUwlyl42YdwpmY0ELcy5+u6wz
- mK/jxrYOpzXKDwLq5k4X+hmGuSNWWAN3gHiJqmJZPkhFPUIozZUCeEc76pS/IUN72NfprZmF
- Dp6/QDjDFtfS39bHSWXKVZUbqaMPqlj/z6Ugk027/3GUjHHr8WkeL1ezWepYDY7WSoXwfoAL
- 2UXYsMAr/uUncSKlfjvArhsej0S4zbqim2ZY6S8aRWw94J3bSvJR+Nwbs34GPTD4Pg==
-Organization: Red Hat, Inc.
-Message-ID: <305577c2-709a-b632-4056-6582771176ac@redhat.com>
-Date:   Mon, 9 Sep 2019 09:05:45 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2405208AbfIIONk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Sep 2019 10:13:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1568038412;
+        bh=6y3srjZK7eDZvt1E/VrcgCHzt3Yh0S+tjICh5xYRxeA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=fZXVdIwfYC/Ag1XNuEK++HR6qJY720tPgFMWz3R4y2rDqaR+mmDPOXPz5h2diMtFa
+         KFKxYLlESt7FaamIbJwACMKV3Hcbugy5vYO7qIdR03QICiY+33vUi/rCLEHjrKnfnj
+         r/Hcm7HtR5iYQo+MaPBSKqhgTaqn7+MVmYxqMhC0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M09BU-1iQ5Fw2Dm8-00uIce; Mon, 09
+ Sep 2019 16:13:32 +0200
+Date:   Mon, 9 Sep 2019 16:13:16 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     phillip.wood@dunelm.org.uk
+cc:     Warren He <pickydaemon@gmail.com>, git@vger.kernel.org,
+        wh109@yahoo.com
+Subject: Re: [PATCH v2] rebase: introduce --update-branches option
+In-Reply-To: <31a37eb1-8a75-40f7-7d1c-a8b7b9d75f92@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1909091605540.5377@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1909031345330.46@tvgsbejvaqbjf.bet> <20190907234413.1591-1-wh109@yahoo.com> <31a37eb1-8a75-40f7-7d1c-a8b7b9d75f92@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <1897173.eDCz7oYxVq@silver>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="wvWU7xN1BqAkLvUvjk9gvXi0xIYinyJLI"
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.47]); Mon, 09 Sep 2019 14:05:48 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:EhleZp/9ZDDBrihROX8u8U5ESjt2ZW8ujBJv2QH5Wrzulp+i9+j
+ hKPDkHCMhxadLrtYVZokYy/Ri2nPhuS2Ohszf5FNVzrQM6WGTMBZENcYv8q9VSW1u4AQh0K
+ czotUb02TaRjnoetEc6L2gO58YAvgCvIMi5z1OWBGGknfEG64Ld1hREBW7jIp09kK4Abgo0
+ hSukQpuHinIeI0vYY0TsA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:MUyZOIz5hyY=:kHtA5WTrcLMherGxVLRIJL
+ KSv5QzKhkLImrshuCmyQj5qlA73sIiZjz8erYYIE4adgmTkRl1j5swxNJuytMRZySJZP2TRkU
+ U1CnPO8m5gyhl5zK4pIpTxYtWJSpLPCEudk5aUatxmdTWCakG3gC5uastzKg6KWGvr/6/Y2fy
+ u9Msomp6Vf4WDTG398Ks5ogerHEaWEvGEQzHEclrJeu1N7eKzOsoUXfKPh7Y7n9hiUPZT+df9
+ KOHhL5DUZ4HlcXSrYyLwHYPxzeqbnK6+R8nyvBoKNKV3A12Zuff75z3NQvrjlF3lVKXH+hsLx
+ cIRxg7sOWAYlLWutZM1Kg4QlFl4uCCfd6thxrX89Ylj2K/4sxhc/efnXlYfcbvKgi5ArF7ouY
+ QDWGM8JfMuTK3F6GlewbDatu53lGvhBQW3FMgN8nfhT4j/nqw2iLWcWXLZ30xhaiQLRWPE9uC
+ 6gCdSF0ew5dsi9+n5W5iOmgTWAwfRAipRsF3zXtnVu95WWWhOTjkERQ7RitAWUuw1NXG63spu
+ z1WbIlD263gDGwdb7DprHRx1MFU/7n5KF9PUmWEPYYNtE/ctLwnTeHTmVqN/4A/CJ4jQ2jLuJ
+ 2fjREDQUw+jp6Mzxg0PsyMWlgvmzfAGBopIFpt+Z1ox2EcrRcYc7j/aZs6SAS2n3aSG+SkK6N
+ iOnbPm1mx57LB8MMtdsnf/Xu8ecoCln2+oHB8b02wVt8KRISSmm6amaCpcIXOCLmFvo8o8xY3
+ 2c8+c6QqjN5MFNE0RA0FmA93IdmzSMR8b6QHFIIj2W08vglUP6WC3xwIti8t7ajC7/ovA82aG
+ YA22r6XmLQy+qgYEnWw+GENgvCTsGEMmgNncU9NsUrNEtfXxjV4gr2fk0tVnd95leUWqrSn3c
+ LwiLYzxNbm8YaRpZlD4Z1ZM5yC5OBmdO+OKmBKEp4wsJ6Ciiekvm18UWNQPak7GLabL5R/cOQ
+ m9laU862cCT4p/uATxnXF+V7zvEEnbuGmsWCjwIUivrkwy5TH8IOfXpbel7X/qhO87GQx5ypA
+ 2xSgMuOMOk4SGSpLsPVV+FwlAF2Jik4IDc60FR0wL2u18hqMwgGwTWgDL3Q0fVAB91QLtym/s
+ pq59pezL6L9/QDyzz2DnxlmsSXqshT2R47KeRYUWJzDqdYcHos2c9ED/HSSbTZLJv9RBWWkSn
+ P5s40fBA52IabraZMHYLskLfjrwIcBM2D8DZHlkWCBXU1tNWqvmtCVpwa2EoaD5bOsU9E9s+A
+ D0H2nICKfjxpD9F0o
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---wvWU7xN1BqAkLvUvjk9gvXi0xIYinyJLI
-Content-Type: multipart/mixed; boundary="cYyG1Jpt5qBg3s28Mfvxz3Obv4rkwvX4C";
- protected-headers="v1"
-From: Eric Blake <eblake@redhat.com>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org,
- git@vger.kernel.org
-Cc: berrange@redhat.com, stefanha@gmail.com, Greg Kurz <groug@kaod.org>,
- dgilbert@redhat.com, antonios.motakis@huawei.com
-Message-ID: <305577c2-709a-b632-4056-6582771176ac@redhat.com>
-Subject: Re: [Qemu-devel] [PATCH v6 0/4] 9p: Fix file ID collisions
-References: <cover.1566503584.git.qemu_oss@crudebyte.com>
- <46fe6c73-961f-d72a-77de-88491b6f223c@redhat.com> <4642438.ai5u8AxThJ@silver>
- <1897173.eDCz7oYxVq@silver>
-In-Reply-To: <1897173.eDCz7oYxVq@silver>
+Hi,
 
---cYyG1Jpt5qBg3s28Mfvxz3Obv4rkwvX4C
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+On Mon, 9 Sep 2019, Phillip Wood wrote:
 
-[adding git list]
+> On 08/09/2019 00:44, Warren He wrote:
+> > Everyone in this thread, thanks for your support and encouragement.
+> > [...]
+> > > It should not really imply `--interactive`, but `--rebase-merges`.
+> >
+> > `imply_interactive` doesn't fully switch on `--interactive`, i.e., cau=
+sing
+> > the
+> > editor to open. It only selects the backend, which I think we're sayin=
+g is
+> > the
+> > right thing. I've dropped the `-i` from the test description.
+> >
+> > And we don't really have to imply --rebase-merges, in case someone wou=
+ld
+> > prefer
+> > to linearize things, which who knows? Running that non-rebase-merges c=
+ommand
+> > in
+> > the example scenario from my original post should give something like =
+this:
+>
+> I think it would probably be less confusing to default to preserving mer=
+ges
 
-On 9/5/19 7:25 AM, Christian Schoenebeck wrote:
+s/preserving/rebasing/?
 
->>>>> How are you sending patches ? With git send-email ? If so, maybe yo=
-u
->>>>> can
->>>>> pass something like --from=3D'"Christian Schoenebeck"
->>>>> <qemu_oss@crudebyte.com>'. Since this is a different string, git wi=
-ll
->>>>> assume you're sending someone else's patch : it will automatically =
-add
->>>>> an
->>>>> extra From: made out of the commit Author as recorded in the git tr=
-ee.
->>>
->>> I think it is probably as simple as a 'git config' command to tell gi=
-t
->>> to always put a 'From:' in the body of self-authored patches when usi=
-ng
->>> git format-patch; however, as I don't suffer from munged emails, I
->>> haven't actually tested what that setting would be.
->=20
-> Well, I tried that Eric. The expected solution would be enabling this g=
-it=20
-> setting:
->=20
-> git config [--global] format.from true
-> https://git-scm.com/docs/git-config#Documentation/git-config.txt-format=
-from
->=20
-> But as you can already read from the manual, the overall behaviour of g=
-it=20
-> regarding a separate "From:" line in the email body was intended solely=
- for=20
-> the use case sender !=3D author. So in practice (at least in my git ver=
-sion) git=20
-> always makes a raw string comparison between sender (name and email) st=
-ring=20
-> and author string and only adds the separate From: line to the body if =
-they=20
-> differ.
->=20
-> Hence also "git format-patch --from=3D" only works here if you use a di=
-fferent=20
-> author string (name and email) there, otherwise on a perfect string mat=
-ch it=20
-> is simply ignored and you end up with only one "From:" in the email hea=
-der.
+> and having an option to turn that off - people are going to be surprised=
+ if
+> their history is linearized.
 
-git folks:
+I don't think it makes any sense to linearize the history while updating
+branches, as the commits will be all jumbled up. Imagine this history:
 
-How hard would it be to improve 'git format-patch'/'git send-email' to
-have an option to ALWAYS output a From: line in the body, even when the
-sender is the author, for the case of a mailing list that munges the
-mail headers due to DMARC/DKIM reasons?
+	- A - B - C - D -
+	    \       /
+	      E - F
 
->=20
-> So eventually I added one extra character in my name for now and remove=
-d it=20
-> manually in the dumped emails subsequently (see today's
-> "[PATCH v7 0/3] 9p: Fix file ID collisions").
->=20
-> Besides that direct string comparison restriction; git also seems to ha=
-ve a=20
-> bug here. Because even if you have sender !=3D author, then git falsely=
- uses=20
-> author as sender of the cover letter, whereas the emails of the individ=
-ual=20
-> patches are encoded correctly.
+Typically, it does not elicit any "bug" reports, but this can easily be
+linearized to
 
-At any rate, I'm glad that you have figured out a workaround, even if
-painful, while we wait for git to provide what we really need.
+	- A' - B' - E' - C' - F' -
 
+In my mind, it makes no sense to update any local branches that pointed
+to C and F to point to C' and F', respectively.
 
---=20
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.           +1-919-301-3226
-Virtualization:  qemu.org | libvirt.org
+> [...]
+> > * * *
+> >
+> > And then there's the discussion about using `exec git branch -f`. To
+> > summarize
+> > the issues collected from the entire thread:
+> >
+> > 1. the changes aren't atomically applied at the end of the rebase
+> > 2. it fails when the branch is checked out in a worktree
+> > 3. it clobbers the branch if anything else updates it during the rebas=
+e
+> > 4. the way we prepare the unprefixed branch doesn't work right some ex=
+otic
+> > cases
+> > 5. the reflog message it leaves is uninformative
+> >
+> > For #4, I think we've lucked out actually. The `load_ref_decorations`
+> > routine we
+> > use determines that a ref is `DECORATION_REF_LOCAL` under the conditio=
+n
+> > `starts_with(refname, "refs/heads/")` (log-tree.c:114, add_ref_decorat=
+ion),
+> > so
+> > `prettify_refname` will find the prefix and skip it. But that's an inv=
+ariant
+> > maintained by two pieces of code pretty far away from each other.
+> >
+> > For #5, for the convenience of readers, the reflog entry it leaves loo=
+ks
+> > like this:
+> >
+> > ```
+> > 00873f2 feat-e@{0}: branch: Reset to HEAD
+> > ```
+> >
+> > Not great.
+> >
+> > I haven't made any changes to this yet, but I've thought about what I =
+want.
+> > My
+> > favorite so far is to add a new todo command that just does everything
+> > right. It
+> > would make a temparary ref `refs/rewritten-heads/xxx` (or something), =
+and
+> > update
+> > `refs/heads/xxx` at the end.
+>
+> I think that's the best way to do it. If we had a command like 'branch
+> <branch-name>' that creates a ref to remember the current HEAD and saves=
+ the
+> current branch head. Then at the end rebase can update the branches to p=
+oint
+> to the saved commits if the branch is unchanged. If the rebase is aborte=
+d then
+> we don't end up with some branches updated and others not.
 
+I'd avoid cluttering the space with more commands. For `branch`, for
+example, the natural short command would be `b`, but that already means
+`break`.
 
---cYyG1Jpt5qBg3s28Mfvxz3Obv4rkwvX4C--
+In contrast, I would think that
 
---wvWU7xN1BqAkLvUvjk9gvXi0xIYinyJLI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+	label --update-branch my-side-track
 
------BEGIN PGP SIGNATURE-----
+would make for a nicer read than
 
-iQEzBAEBCAAdFiEEccLMIrHEYCkn0vOqp6FrSiUnQ2oFAl12XDkACgkQp6FrSiUn
-Q2q+XAf/SLPHaKyItKzebFFgN27LBaNaMsQnMU6KP+MJe0Ql+5wh4MfUy2ptof5z
-UtO5Kk+N16hsvnWt1TVE3jqhuu3R3A03rR2TdRVX4wMzoa/ZQfiqf8WuhRrcabFB
-FYpGmrKnEBHI9Gj846dGWoCLllMLKNr3f8+zuj3svlQ3ZYPO5RFnxhcJt0NNhszX
-mdQNGZknfFBZQsM2ZDSTxqM6Q+knlLl9n9EfLvYhlzQNiSQc0XoA8Yi4E20fjsYy
-Z4+Lpo/3kWlYZ1trJ4qzOzyggMaMY3OfKZzoyNJA3qnQZHTY4bjo8KnXDcZHLiFN
-48RcKLeWLXGeaH9xfDVpyXwd3J0ndA==
-=8FdN
------END PGP SIGNATURE-----
+	label my-side-track
+	branch my-side-track
 
---wvWU7xN1BqAkLvUvjk9gvXi0xIYinyJLI--
+Of course, it would be a lot harder to bring back the safety of `git
+update-ref`'s `<old-revision>` safe-guard, in either forms.
+
+And of course, the first form would _require_ the logic to be moved to
+`make_script_with_merges()` because we could not otherwise guarantee
+that the labels corresponding to local branch names aren't already in
+use, for different commits.
+
+> Side Note
+>   I'd avoid creating another worktree local ref refs/rewritten-heads/.
+>   Either store them under refs/rewritten/ or refs/worktree/
+
+Yep.
+
+Ciao,
+Dscho
