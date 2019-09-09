@@ -2,128 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B246A1F463
-	for <e@80x24.org>; Mon,  9 Sep 2019 19:01:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B8F91F463
+	for <e@80x24.org>; Mon,  9 Sep 2019 19:24:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730631AbfIITBe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Sep 2019 15:01:34 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:47677 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727122AbfIITBe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Sep 2019 15:01:34 -0400
-Received: by mail-qt1-f201.google.com with SMTP id v16so16911383qtp.14
-        for <git@vger.kernel.org>; Mon, 09 Sep 2019 12:01:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=gf9Y+WeFYcIkcM0S55HwSzsj6Ssoc7wTt8BSi3qAUs4=;
-        b=uF4YZjrHC+1QXoAQ5/QsK6VoYKps8RbsaCIP9QlsY0UDPtUvkvNxqBfmbd2RcCBCnS
-         EfAYXsmWhi3tjwp9GvDGZ5yfpLtjqnC4TMl3oPYVA/jiHd7VczshhwPOJcd6G/p9A/l4
-         KyfFsk+X9XM3YLlYOQmV5auoUo5xE4Qhin//ZcHs7Cl7eKiu+MupoFxezjfa4L6c7h3E
-         /kjdCV2Z8qmUGFN44URgoyOOwVxg5tVKf+BC+bkm/1YU+Ba71ADAvSUBmjFcJF5oPxa3
-         M3G4ii+5o7l7tOGAFNdP7ZIFPLGp4Pr9vGHDMsye8KGPPhfLFoXOCj/z9OrU0yla/fNw
-         Ejpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=gf9Y+WeFYcIkcM0S55HwSzsj6Ssoc7wTt8BSi3qAUs4=;
-        b=FJF0iNiNlSw582LCpwxXVl/RwI0m8/GDlCE6+YZxWWi2K2yOE6AgC3XdHqoWpymQ0V
-         fkjUkRMNibYL/4MVM8JKetwUnEFDcw0SC8p0jzDGXABqz8B4pnPPbnIx4QkF0o/9SMtq
-         Kc9Mey1Rd0PUiQFcZpEivTgsJNEghJhYd2BV8S9uJGVe+m2aDH+7Q7TqArkufbHGjw43
-         pgtHeRp+rOXKXNOFXbh7F2YXFBw5YA/b80dXslm0ZcNSXDLnW/o5CDIP5OUUCa4sjl//
-         z8hdVJjKCDnXuyH71w0UGVgMY8qV2T7XAiNCYxQ6POUFjip0NHyrn0hBU63czysRfpXE
-         ZVrg==
-X-Gm-Message-State: APjAAAUZ985YBbTmBrSg5tmGkooscvzMyhjn300VQypbrgfk8NHLPusj
-        AJjeYPzVt17ClcEIcjT7sy9rM26yGPUFmcUpPQfmt5IBtXuOu1m/RkDa+Inl1Kmvf3g8dYWDdeg
-        hT5ThlMT7Pq1pYe9nDjzWw0YSkTtY3qSJHOFiT0k9shphrJXUPHdRT6DhMgsrVoo/TMuSpdFVlE
-        Oq
-X-Google-Smtp-Source: APXvYqx7+D8G9oPc9Lrfg2X0upa0sPbgtdP07DAPEOj3ybZeGDksO+M/pNBZxa5HHnwCUMy7V5DIIb7I/x/pphYRBiJq
-X-Received: by 2002:ac8:490e:: with SMTP id e14mr25339728qtq.375.1568055693495;
- Mon, 09 Sep 2019 12:01:33 -0700 (PDT)
-Date:   Mon,  9 Sep 2019 12:01:30 -0700
-In-Reply-To: <20190903194247.217964-1-jonathantanmy@google.com>
-Message-Id: <20190909190130.146613-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190903194247.217964-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.23.0.162.g0b9fbb3734-goog
-Subject: [PATCH v2] cache-tree: do not lazy-fetch merge tree
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com,
-        gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        id S2387862AbfIITYu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Sep 2019 15:24:50 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57223 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729060AbfIITYu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Sep 2019 15:24:50 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5AF9B2ABE2;
+        Mon,  9 Sep 2019 15:24:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=axl7Yk8ubMHXMTN+ghUcxbDWpY4=; b=hvYkym
+        obQrpltM5/TKfDE7SksffzrHq4DAZ6IY1GZzjFPYvTWw2kieqSA8IaUs+CbxiR65
+        9E1c5fpF2g6n6tzdqCvhMQfbmWUvEBD2xDu82OsX5os9f4uD9Nj3gD6Dsiw1UBgH
+        kTziBG2tY+Nlf6m40H0sWNXaiAnFQWmiRI1UI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eJzETfjvib4ficTVbbI/0HBkixVgFUNU
+        hGBv8QUa3+LCgNjh2PRp+niZwCN34sX0KWtc7btn8Kw2Kcw8JwZObWs6837kWePZ
+        b6dfgY1D2wZ3CUCtRP8puvT+jRVerXYxV/LTrQQ0tLJwxKLJlttKxraWXYZy4D0F
+        VIYbJGnAwPs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4D4CD2ABE1;
+        Mon,  9 Sep 2019 15:24:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6CEB62ABE0;
+        Mon,  9 Sep 2019 15:24:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        martin.agren@gmail.com, newren@gmail.com, t.gummerer@gmail.com
+Subject: Re: [PATCH v4 0/6] rebase -i: support more options
+References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
+        <20190907115034.14933-1-rohit.ashiwal265@gmail.com>
+        <xmqq8sqxl557.fsf@gitster-ct.c.googlers.com>
+        <d16a2c76-32c0-1080-a2de-00803ff84962@gmail.com>
+Date:   Mon, 09 Sep 2019 12:24:46 -0700
+In-Reply-To: <d16a2c76-32c0-1080-a2de-00803ff84962@gmail.com> (Phillip Wood's
+        message of "Mon, 9 Sep 2019 19:51:22 +0100")
+Message-ID: <xmqq1rwpjmrl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7C5D2650-D337-11E9-B598-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When cherry-picking (for example), new trees may be constructed. During
-this process, Git constructs the new tree in a struct strbuf, computes
-the OID of the new tree, and checks if the new OID already exists on
-disk. However, in a partial clone, the disk check causes a lazy fetch to
-occur, which is both unnecessary (because we have the tree in the struct
-strbuf) and likely to fail (because the remote probably doesn't have
-this tree).
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Do not lazy fetch in this situation.
+> Yes I had assumed that the cherry pick would become the first patch of
+> this series and be dropped from pw/rebase-i-show-HEAD-to-reword.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-As requested in What's Cooking [1], here's a patch with an updated
-commit message. Otherwise, the patch is exactly the same.
+Ah, such an arrangement would have made a log more sense, indeed.
 
-[1] https://public-inbox.org/git/xmqqd0gcm2zm.fsf@gitster-ct.c.googlers.com/
----
- cache-tree.c             |  2 +-
- t/t0410-partial-clone.sh | 14 ++++++++++++++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+> As pw/rebase-i-show-HEAD-to-reword is slated for next perhaps these
+> could build on that. The first patch needs am -3 to apply to that
+> branch but the result looks ok and the rest apply as is.
 
-diff --git a/cache-tree.c b/cache-tree.c
-index c22161f987..9e596893bc 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -407,7 +407,7 @@ static int update_one(struct cache_tree *it,
- 	if (repair) {
- 		struct object_id oid;
- 		hash_object_file(buffer.buf, buffer.len, tree_type, &oid);
--		if (has_object_file(&oid))
-+		if (has_object_file_with_flags(&oid, OBJECT_INFO_SKIP_FETCH_OBJECT))
- 			oidcpy(&it->oid, &oid);
- 		else
- 			to_invalidate = 1;
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 6415063980..3e434b6a81 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -492,6 +492,20 @@ test_expect_success 'gc stops traversal when a missing but promised object is re
- 	! grep "$TREE_HASH" out
- '
- 
-+test_expect_success 'do not fetch when checking existence of tree we construct ourselves' '
-+	rm -rf repo &&
-+	test_create_repo repo &&
-+	test_commit -C repo base &&
-+	test_commit -C repo side1 &&
-+	git -C repo checkout base &&
-+	test_commit -C repo side2 &&
-+
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialclone "arbitrary string" &&
-+
-+	git -C repo cherry-pick side1
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
--- 
-2.23.0.162.g0b9fbb3734-goog
+As this is more or less "new feature" series, I do not mind too much
+to make it depend on another topic in flight that is getting solid.
 
+Thanks for helping.
