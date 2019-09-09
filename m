@@ -2,120 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B04831F463
-	for <e@80x24.org>; Mon,  9 Sep 2019 20:29:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CCE61F463
+	for <e@80x24.org>; Mon,  9 Sep 2019 21:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391556AbfIIU3x (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Sep 2019 16:29:53 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52409 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731865AbfIIU3x (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Sep 2019 16:29:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1568060986;
-        bh=h5O2A6iKOlaniqqH/cTbOjtMXCKuJcOYU33GNmOoK+Q=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Oa1MIW/i8uuAZaS/5nYJjIlauHaHi2vor1S1vfgNO2UUlNymy1OLxdNul/Fp5oiF8
-         7mJgnjYm1GZtm10GteeYM8tKiSyAN8PrqKsI6nb1qDPBfpkZGk20PX/90anTCBHKq6
-         IaeAyft8lp+ECcilbbkLENGOaN+N6ofd9GnNLUxQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LlYrb-1if6U912hT-00bN0d; Mon, 09
- Sep 2019 22:29:46 +0200
-Date:   Mon, 9 Sep 2019 22:29:30 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 17/16] t3427: accelerate this test by using fast-export
- and fast-import
-In-Reply-To: <20190904214048.29331-1-newren@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1909092229040.5377@tvgsbejvaqbjf.bet>
-References: <pull.294.v2.git.gitgitgadget@gmail.com> <20190904214048.29331-1-newren@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1731688AbfIIVF7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Sep 2019 17:05:59 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63661 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726804AbfIIVF7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Sep 2019 17:05:59 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A0C3D9400C;
+        Mon,  9 Sep 2019 17:05:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BdvnrI+kUMJvjHX0en8gpRIKoEs=; b=ESo7et
+        ue7s0ngX0VaHyh/Qt7a1RCZnyhLnEus+feftYw/dSq1lkF4ipUekEWDQEw1d3nRP
+        NuS5OaNKpK0uH7BlX6g8TQEWbB5uheqt/uUtE85I0x96v36bzOE3kNwchQtdtjiD
+        Ryzu25wPvbzAIR1dE7J9Mk7/L3nS6NeKm6o34=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=EHLdCl63IqnpPiYCiI6M/PRJFHgu1sfD
+        cpCSKG93B9Vq7jEaugh1d4YwNTjqqlad8xu2Jr9RvVsrNThckcJlQULvPbSlE5l3
+        xjei9gpnXOYQngWKdH2GARKIfB6wv0N4Wn7S0KGS/oY4oTSFlDSspixRDzOt9Leu
+        xLWCxSbBQm0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 990C79400B;
+        Mon,  9 Sep 2019 17:05:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C123094008;
+        Mon,  9 Sep 2019 17:05:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com
+Subject: Re: [PATCH v2] cache-tree: do not lazy-fetch merge tree
+References: <20190903194247.217964-1-jonathantanmy@google.com>
+        <20190909190130.146613-1-jonathantanmy@google.com>
+        <xmqqsgp5i6s1.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 09 Sep 2019 14:05:53 -0700
+In-Reply-To: <xmqqsgp5i6s1.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 09 Sep 2019 12:55:26 -0700")
+Message-ID: <xmqqef0pi3im.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:TXvm4qnbfDXMWwtx9b/wJOqlv7HfFqXXaRocur7x8RQxDmRqBpL
- +FruVAoQsnXTRX3rrwiR522RIbH8+Jzh1UjanlPAuq295MgxUXqK+LBq6x6x37soAF9ICrZ
- kSgxOIPa1AgmFASVMKBGZrNU9wSIJ8tP4yL+BVk8QqX4Mxw3SnKO5VUA8Mb8R0oZAxT05wW
- DOqA1M40tRB8Nlq/JJTgw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:CXrD+m2cKHE=:YTg94KG5vxEusLyiYQN0bz
- UW7PorP/SHYIk5qYhC1BrQVP3QuoPg4SHpOeAUV2v4UJpE0e3+WW17iQwN9d8bnLyv12NyADL
- neZS9gKnIzP+8fQ94Z5HKAMPrP/DWM4JfXHsyX3Hpr6AcBWRH1AVlYvSgnwP7kSjy+s9csASs
- oz0pJ0tZN9r2BzccBCQDqD4U5hbunE5OqwYa/02UHZGc8IBluCqUtpMqlhtkZ1uQbg3GQ8Lsg
- ND7wjr97QwGHJF9vBnGBTFRc+L59n6yigqvmo2hWweUzoGeQAAqL7PTVNzdnS4qZIONdPy5B8
- 4MtKfvDVGY4gMPVLIVK6qAEZqM2xWv+gv6ODqwoTt725JoTYIe4j2JzbsRdEDNAULeU0tQ2/d
- ZvUuAfd4206b7rSNOHmWHHzhKNavwtkpPbnHXUFlfL3KF3k8tw/8UxqgJYO8EcTr0FOJXZ0O9
- pr5Y+qHE4qn5UKVEWWDkTT6A/4qtMvh/daLr/rk2ybsYZ+nRTtxdU1od80Ybcu9yHtdaXl8rQ
- rpBTvh2b62X7Ea/iaq1kIgmyY1L8F3PeuXQ/SNgNb4bPPdk8X6iHxxLtwzePV2Dy0TDGHTvRn
- eb1DrkiZGCloXMGXHO8DBkTmOjnKhOIdaBZhqszEKTLLDeK/XNcaOc2jccYQNY0JZT84ZyrCH
- hNOScCiyNKUy7aes0eYn1pfG9wwNZrUFIwrZg6bUsWzLAbva4IPyz2v7n3SoTwGCrlXk+uinB
- +SWSlTVN1xIyMQVz5JQciC8gFETTXWKVB6jdfq9q6t4ob/mYxybMGU+q8E3rl5atgb+MovJwF
- PzG8HpCW+uQl21z+6AhCQwxHwMrrYsm0JtWJo1kUFYTMNJQb5CiIOix02479qnJitMQrr8h1H
- E4+Trz0TJ5gaPcVFli0QsOpyS8ht1g6zb/roGIeE0jhN1ntRuuaxHgVvdz+hBGgiwsz2dTuUP
- afp09YAHXzdylrQAcvm1q0YmZu3AzGL8Mpf30Ilrzp28pqXRWwg7PSNaU76whLx47naW25Kxn
- azWCEK8pVvO8lrpWmpSZRJ2EA+dQkj1VD61wr1dwST236V4soIXlP4ZjdYDS17zxuoOb4hAnE
- g0ijsOpYslX+kCWo3b5EFyEYEz+i4c5JRSw3hzd0P/RmI9N5/Hg0JODdfaoOa130YX5Hkf/yd
- /6DbGomO84U64NQm3AILBmcl7Sm8fHXn31s3eUoUY5QOpWzmMYUVuwIk3w7u1/eZarLCqVkjL
- 5JLOpGRg0nZeM8Z+c
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9D60A51C-D345-11E9-8650-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Wed, 4 Sep 2019, Elijah Newren wrote:
+> Isn't that what is going on?  I thought I dug up the original that
+> introduced the has_object_file() call to this codepath to make sure
+> we understand why we make the check (and I expected the person who
+> is proposing this change to do the same and record the finding in
+> the proposed log message).
+>
+> I am running out of time today, and will revisit later this week
+> (I'll be down for at least two days starting tomorrow, by the way).
 
-> fast-export and fast-import can easily handle the simple rewrite that
-> was being done by filter-branch, and should be faster on systems with a
-> slow fork.  Measuring the overall time taken for all of t3427 (not just
-> the difference between filter-branch and fast-export/fast-import) shows
-> a speedup of about 5% on Linux and 11% on Mac.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
-> This patch is meant to be added onto the end of js/rebase-r-strategy; an
-> earlier version of this patch conflicted js/rebase-r-strategy so now I'm
-> basing on top of that series.  The speedup is also less impressive now
-> that there is only one filter-branch invocation being replaced instead o=
-f
-> a handful.  Still a nice speedup, though.
+Here is what I came up with.
 
-ACK!
+    The cache-tree datastructure is used to speed up the comparison
+    between the HEAD and the index, and when the index is updated by
+    a cherry-pick (for example), a tree object that would represent
+    the paths in the index in a directory is constructed in-core, to
+    see if such a tree object exists already in the object store.
 
-Thanks,
-Dscho
+    When the lazy-fetch mechanism was introduced, we converted this
+    "does the tree exist?" check into an "if it does not, and if we
+    lazily cloned, see if the remote has it" call by mistake.  Since
+    the whole point of this check is to repair the cache-tree by
+    recording an already existing tree object opportunistically, we
+    shouldn't even try to fetch one from the remote.
 
->
->  t/t3427-rebase-subtree.sh | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
-> index 39e348de16..bec48e6a1f 100755
-> --- a/t/t3427-rebase-subtree.sh
-> +++ b/t/t3427-rebase-subtree.sh
-> @@ -59,7 +59,10 @@ test_expect_success 'setup' '
->  	test_commit files_subtree/master5 &&
->
->  	git checkout -b to-rebase &&
-> -	git filter-branch --prune-empty -f --subdirectory-filter files_subtree=
- &&
-> +	git fast-export --no-data HEAD -- files_subtree/ |
-> +		sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" |
-> +		git fast-import --force --quiet &&
-> +	git reset --hard &&
->  	git commit -m "Empty commit" --allow-empty
->  '
->
-> --
-> 2.22.0.19.ga495766805
->
->
+    Pass the OBJECT_INFO_SKIP_FETCH_OBJECT flag to make sure we only
+    check for existence in the local object store without triggering the
+    lazy fetch mechanism.
+
