@@ -2,93 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D9501F463
-	for <e@80x24.org>; Tue, 10 Sep 2019 18:44:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AD221F463
+	for <e@80x24.org>; Tue, 10 Sep 2019 19:09:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727020AbfIJSoY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Sep 2019 14:44:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45736 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726449AbfIJSoY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Sep 2019 14:44:24 -0400
-Received: (qmail 1917 invoked by uid 109); 10 Sep 2019 18:44:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Sep 2019 18:44:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18450 invoked by uid 111); 10 Sep 2019 18:46:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 10 Sep 2019 14:46:18 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 10 Sep 2019 14:44:22 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: fix build with Asciidoctor 2
-Message-ID: <20190910184422.GA17446@sigill.intra.peff.net>
-References: <20190906232947.GJ11334@genre.crustytoothpaste.net>
- <20190907170746.273984-1-sandals@crustytoothpaste.net>
- <20190908104833.GE15641@sigill.intra.peff.net>
- <20190908171807.GL11334@genre.crustytoothpaste.net>
- <20190908212122.GA8514@sigill.intra.peff.net>
- <20190908222423.GN11334@genre.crustytoothpaste.net>
+        id S1727674AbfIJTJX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Sep 2019 15:09:23 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:42101 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725978AbfIJTJX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Sep 2019 15:09:23 -0400
+Received: by mail-pf1-f196.google.com with SMTP id w22so12091562pfi.9
+        for <git@vger.kernel.org>; Tue, 10 Sep 2019 12:09:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=Jlnr1yHhqw2O+GRhLuH/CEt/T1tyqPFdaAKNsaapZt4=;
+        b=GhuueACcekVliLviiT8wGwPwRQMeq+tTx3cMWlBHqZI4kMCMzsWF7JonZCbUNwv/qQ
+         PFLqldtAKqhtPitBpP+ndeW0sB0QL5Pk1L4azUjmd0ddxDnGshjjSk++vq43oslTzzqU
+         BQ/FuGToG/MXB6ZbaI4OEP0y/wWKaMVYr11vRgOVSyRUuPY2KZGy/WeWQT3DH+WFCCGx
+         FyLlCUYdKp9a2FTkibOYliGjWQ2+tAO5E1yKpGed++J6TDjvGbJzky3oFrvsnIbC271Q
+         J5Mu7EYNknjRmtCdMg5GMkXj8y5dTRRtXyZGePC3yK43k9haAwS0/WHWamiz2G+Bl7O0
+         feaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=Jlnr1yHhqw2O+GRhLuH/CEt/T1tyqPFdaAKNsaapZt4=;
+        b=NdA69qD+1HdEISTPHFkK9JHoAmaaGM1mrpVS4Oa3zFP0sJpACHlC2bEJpKSPkQjvLc
+         jfa3bxLeQfzyMlt4TeSqXSVwt0DAT5MmxQwzKrfYcTTtXq5EU49z9rVAv/OQYeoLLcwF
+         l0viokHwaDZ74WbjskUn5Yc/ccXAn1uswTuXvHgAajW04JHzJfgHhm0ZAL8hvlufb/+M
+         IHAd5fdKq8VPTqDF4FNQp9pcE/DQjueTRcR/C7EQVnQ0ScZW/icFA6ps0pEnYuLqVHS6
+         0PDZnBZfBmlWM1ByOL3YcBB94xD2RYXfD8PmaBqx5uV+icry16geErcTzVIDFF3YM8hy
+         2d8Q==
+X-Gm-Message-State: APjAAAVq4HFojLBEGxV3NLh0o0qQfvn9/H+FOhAWO8P2eMyrI2X4p1UR
+        UJqen0kOAeTOFgReZDYY6/d9B5zrSDQ=
+X-Google-Smtp-Source: APXvYqyhtLCVQCE7cpX9bo/4rCP618HTCShLRL+iQBcsEbKnvpV5HFRvTHcuDDUVUCsQlND/Pqey5Q==
+X-Received: by 2002:a65:41c6:: with SMTP id b6mr29185119pgq.269.1568142561815;
+        Tue, 10 Sep 2019 12:09:21 -0700 (PDT)
+Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.138])
+        by smtp.gmail.com with ESMTPSA id 33sm16230983pgy.22.2019.09.10.12.09.20
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Sep 2019 12:09:20 -0700 (PDT)
+Date:   Tue, 10 Sep 2019 12:09:18 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH] git-submodule.txt: fix AsciiDoc formatting error
+Message-ID: <796a25ee1e9a9c0421d42ab6644e81d23a9bd99b.1568142486.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190908222423.GN11334@genre.crustytoothpaste.net>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 08, 2019 at 10:24:24PM +0000, brian m. carlson wrote:
+In b57e8119e6 (submodule: teach set-branch subcommand, 2019-02-08), the
+`set-branch` subcommand was added for submodules. When the documentation
+was written, the syntax for a "index term" in AsciiDoc was
+accidentally used. This caused the documentation to be rendered as
 
-> Trying again, I'm able to reproduce this.  I found the cause, which is
-> in the stylesheets.  XSLT stylesheets have the ability to specify
-> elements from which whitespace should be stripped (using the
-> xsl:strip-space directive).  In the DocBook stylesheets, listitem is
-> specified as such an element, so the whitespace there should be
-> stripped.
-> 
-> However, in DocBook 5, our elements are in a namespace.  Therefore, the
-> unnamespaced stylesheets specify only "listitem", not "d:listitem", like
-> the namespaced stylesheets do.  Because this happens right after the
-> tree has been constructed "but before it is otherwise processed by XSLT"
-> and isn't affected by the EXSLT extension that allows re-parsing the
-> modified tree, then we end up with the whitespace that we don't want.
+	set-branch -d|--default)|(-b|--branch <branch> [--] <path>
 
-First off, thank you again for your explanations. I dread digging into
-how anything related to docbook or xml works, so having you serve it up
-on a silver platter is a delight. :)
+instead of
 
-> 2. We can force xmlto to use a custom stylesheet with "-x" that merely
-> imports the DocBook 5 stylesheets using a URL.  If the user has the
-> DocBook 5 stylesheets installed and XML catalogs configured (the default
-> on Linux distributions), then everything will just work and the system
-> will resolve it to the local copy.  If, however, things are not properly
-> configured, this will result in multiple network downloads for each
-> manual page.
+	set-branch (-d|--default)|(-b|--branch <branch>) [--] <path>
 
-Isn't this already the case just with the docbook DTDs? I.e., if you
-don't have a catalog entry, it is up to the tool (xmlto in this case) to
-either fail or try to fetch it. That seems like the best we can do. And
-as you note, this typically just works out of the box on modern
-installs. Of course people may want to build on non-modern ones, but
-IMHO we should probably be more aggressive about dropping legacy support
-in the documentation and pointing people to the pre-formatted pages.
+Remove surrounding parentheses so that the "index term" syntax is not
+triggered (and because it looks nicer without them anyway ;) ).
 
-> My personal preference is #2; I think that seems like the best choice
-> forward.  XML catalogs are well understood and well configured on Linux
-> distributions.  Homebrew supports them adequately, but you have to add
-> an environment variable to your shell configuration to enable them.  Of
-> course, if you're doing _anything_ with XML, you'll have them enabled.
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ Documentation/git-submodule.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Yeah, agreed.
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 0ed5c24dc1..e349442f4c 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -173,7 +173,7 @@ submodule with the `--init` option.
+ If `--recursive` is specified, this command will recurse into the
+ registered submodules, and update any nested submodules within.
+ --
+-set-branch ((-d|--default)|(-b|--branch <branch>)) [--] <path>::
++set-branch (-d|--default)|(-b|--branch <branch>) [--] <path>::
+ 	Sets the default remote tracking branch for the submodule. The
+ 	`--branch` option allows the remote branch to be specified. The
+ 	`--default` option removes the submodule.<name>.branch configuration
+-- 
+2.23.0.163.g796a25ee1e
 
--Peff
