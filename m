@@ -2,170 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A5251F463
-	for <e@80x24.org>; Tue, 10 Sep 2019 08:54:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73B1D1F463
+	for <e@80x24.org>; Tue, 10 Sep 2019 12:09:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726403AbfIJIyu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Sep 2019 04:54:50 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:33860 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726129AbfIJIyu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Sep 2019 04:54:50 -0400
-Received: by mail-pl1-f194.google.com with SMTP id d3so8286422plr.1
-        for <git@vger.kernel.org>; Tue, 10 Sep 2019 01:54:49 -0700 (PDT)
+        id S1731920AbfIJMJG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Sep 2019 08:09:06 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44139 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726060AbfIJMJG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Sep 2019 08:09:06 -0400
+Received: by mail-wr1-f65.google.com with SMTP id k6so7554803wrn.11
+        for <git@vger.kernel.org>; Tue, 10 Sep 2019 05:09:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=GSg5t1Rr39c+ekfx7izseX4SoaarfuekmBpFhdHmAWk=;
-        b=U39U0Ja4MoC807R0ZSR3Cav1PU1OueuX3OB1ZKPl0cwiIMemxVXVgZFu81ShHxUkkr
-         7a9ELQqQ7Io1dya2pHS2ZQ6S23H7gvhhw6T/5RGty7s3dGWoazce5eVIfa+F+7cOH8x8
-         HVwO6d9MDZV/bLzGKukuSkYoGZLAGdyLJCCdNZpmO5dLHOdbTXuhsuVyXVDsaoqAYMxV
-         eCGeZy1wJdWQcm8dXRWiQIwZUk5b9Jtnq6bSVPTid+Z1WFjrAZ+10bu6ab9TslGKva5j
-         FgGClm4JqigzjvpOZUwwtf+9qVqmz3w3zJpwznMmQPs6ITGprg+T8zmYHE1evNMZyRpm
-         J5rQ==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=aG9wWHHM0hFjteFmiJz14453HW38Wq/7jDrImKxh53Q=;
+        b=GtI2aVE+SEPSWVKVlYnmIpDhL20bwpfLIhMEC13xo/Yo5/Wbf6Da6XdOHXt3WbxtcZ
+         1kJHsdn+Q2wMcGBBM1TSJBc6dNCm5Cl8pXHFhnm4b01pRF58JHo3Rj7kPoPYAwWRbMe/
+         KwQ4K+uIFX7Ojsn2ym8XsoT02W75d9yRc5cdJIrUgCQYqrvLjDHIAhk65uf4WsbqxBT8
+         WQ4kcxscoU6WHq2ihCsRSmh2ux2+Sl1A2NjOnoSFsNtnsBT5l7bIFI0i1s0rAeJc8s+S
+         O9eE/bDDTylqRXtup3g9VQoNwXteA18YbEWlX5xpuKhuKwQpvFu9pIhfnNdJMp6CzdQg
+         VBjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GSg5t1Rr39c+ekfx7izseX4SoaarfuekmBpFhdHmAWk=;
-        b=s17w5cwEdD6DOHN0iZk7dCDiEmu8x6cBGH3BQrfQc3BpX+qYqVF6l7l36WZM+hcIEW
-         woMjHl0Hv/FBhfj5BZLeDm0bXV6+52EjcKIg5Dxrniuc/upcRNsZRi8XCMOn3n41qfvW
-         wNAPzFtU/M6gJvmTS5QpXhFuD5kMKeStexAAfb5qx/1zHQJr0WrWgaHE/5PmQsuKOqmc
-         EWoaoNhzTdyBKePAkHCnXcYjOGBFQPjer21ynLrSeV3wrTbCwQXnZeQRaTUpAGg2vU22
-         sSYxGL0EMjV5cUwdlRGqkhftllwQFrqxRdcIhDNs0RCbzVD5rINWfskD4Xd2bltdQqxU
-         O0NA==
-X-Gm-Message-State: APjAAAUtkFYrEXRLHHUltFcF0FsIzL3QQbHfxX5LzllW8f7J0rTK3VS0
-        0AyRVhEZewZfw3qq4RakD+g=
-X-Google-Smtp-Source: APXvYqy61H+w56vWaKdBAM3Dg+zhuMyKKAUbpaNAUtZYYLUr2YuP+qUAZmWCy5ADmvYKVRZAdEBOvA==
-X-Received: by 2002:a17:902:7405:: with SMTP id g5mr1076293pll.15.1568105689187;
-        Tue, 10 Sep 2019 01:54:49 -0700 (PDT)
-Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
-        by smtp.gmail.com with ESMTPSA id r28sm33006303pfg.62.2019.09.10.01.54.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Sep 2019 01:54:48 -0700 (PDT)
-Date:   Tue, 10 Sep 2019 01:54:46 -0700
-From:   David Aguilar <davvid@gmail.com>
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Pratyush Yadav <me@yadavpratyush.com>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Git List <git@vger.kernel.org>, David <bouncingcats@gmail.com>
-Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
-Message-ID: <20190910085446.GB32239@gmail.com>
-References: <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
- <CAGr--=JyJHTxtQWSnU7ivQ79qXcg7o4N142+5FSdre851xss6A@mail.gmail.com>
- <CAKPyHN3S-jLWmfHUyH9mCBPjHCEaBCbrkVQEKFqHv59U37=Kyg@mail.gmail.com>
- <CAKPyHN08Z_9oByA8ruKwwXRcAfYPU95JaMb=pqQWwGwPVG=_og@mail.gmail.com>
- <CAGr--=Jn87r_ySYkZmtqUBA40+fwdn0MbuN6_LNDO4mOWyoKTg@mail.gmail.com>
- <20190903124541.2p5hmknolh2dwqh5@yadavpratyush.com>
- <971bbc44-d3d4-552d-d18e-58a2315c6183@kdbg.org>
- <20190904174103.nrntgwv6zdqyjqsh@yadavpratyush.com>
- <8a726eea-f461-db90-7e36-70b708ff8915@kdbg.org>
- <CAKPyHN3+Sr2QJGR7Sw02x0A9OXshVUQofqH=ShXDivmqP5X7vw@mail.gmail.com>
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=aG9wWHHM0hFjteFmiJz14453HW38Wq/7jDrImKxh53Q=;
+        b=bqJ9z2bu13FGz9EkPQqXzkK9mUiBjkCoB0ZBlEiZF75SSjRh+zCAalfxJxXZWfpApI
+         j/zyFIN0ASXB/C9mud4PS6SlupHZh44vxa3UhyzFDfXKy0uLdy5Py1Y6z5yhHGmvS9V9
+         H6cxnGUGcqYACJtyAfe61q1NG/HFNiGZLgzrRIgJjZ+5j8I8WCJ/JvBB3+MISBCFvVVz
+         GtFo6l2vkXyrYo146qgvF75EWfXtTt+PTXIDCqBGkt/WLSsFfcJk5Cq4aIyVZs3JYcRd
+         F/MXYIhKv3PxSqozQKamEXSaHW8GMIi7pwvjzjcX37eOcVLzMvmO4oXI6z7kMe9ie1d4
+         IyUg==
+X-Gm-Message-State: APjAAAU1vvOo8T05U4kqiM1LQy9m5QNq3meXOvqyJ5GjUkJViLvwmser
+        Fu8RGu/l/26la/kxV6t+lbw=
+X-Google-Smtp-Source: APXvYqw5iUQ53DwXC2197blv08hIay9yzR+gO8vbvQp9Ed+xrW8Wf6Hbd3uSeQbUagmtOqSJfO7rHg==
+X-Received: by 2002:adf:dbc6:: with SMTP id e6mr9610240wrj.149.1568117343126;
+        Tue, 10 Sep 2019 05:09:03 -0700 (PDT)
+Received: from szeder.dev (x4dbe1e6e.dyn.telefonica.de. [77.190.30.110])
+        by smtp.gmail.com with ESMTPSA id u22sm33745355wru.72.2019.09.10.05.09.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Sep 2019 05:09:02 -0700 (PDT)
+Date:   Tue, 10 Sep 2019 14:08:59 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] upload-pack: fix race condition in error messages
+Message-ID: <20190910120859.GG32087@szeder.dev>
+References: <20190828153944.GA29715@sigill.intra.peff.net>
+ <20190828161552.GE8571@szeder.dev>
+ <4d5773f9-4637-d8a3-d683-82624950f319@gmail.com>
+ <20190829141307.GE1797@sigill.intra.peff.net>
+ <131dfa37-0f65-f0c3-6f30-5b6eca12d9c0@gmail.com>
+ <20190829143805.GB1746@sigill.intra.peff.net>
+ <20190829215818.GG8571@szeder.dev>
+ <20190829220630.GH8571@szeder.dev>
+ <20190830121005.GI8571@szeder.dev>
+ <20190904050441.GB6488@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAKPyHN3+Sr2QJGR7Sw02x0A9OXshVUQofqH=ShXDivmqP5X7vw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190904050441.GB6488@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 04, 2019 at 09:03:02PM +0200, Bert Wesarg wrote:
-> On Wed, Sep 4, 2019 at 8:52 PM Johannes Sixt <j6t@kdbg.org> wrote:
-> >
-> > Am 04.09.19 um 19:46 schrieb Pratyush Yadav:
-> > > On 04/09/19 08:24AM, Johannes Sixt wrote:
-> > >> That is worth a try. The check box title offers a natural hotkey then:
-> > >> "_A_mend last commit", Alt-a.
-> > >
-> > > Right now, the binding proposed is Ctrl-e.  My mental model for the key
-> > > bindings as of now is having the "actions" bound to Ctrl, and bindings
-> > > that move you around in the UI bound to Alt.  So it makes more sense to
-> > > me to have a "amend toggle" bound to Ctrl.  Maybe that's just me though.
-> > > Anyone else care to chime in?
-> >
-> > "Amend last commit" is NOT an action. It switches a state.
-> >
-> > It is common in Windows GUIs that every control, including menu items,
-> > has a hotkey associated, the underlined letter in the caption, and the
-> > hotkey to access that UI control is Alt+that letter. It's not
-> > necessarily a matter of moving around.
-> >
-> > And, BTW, this hotkey thing is also the case on my Linux desktop
-> > (KDE-based).
-> >
-> > But of course, git-gui is different and totally off track here. It has
-> > *zero* controls marked for hotkey-accessibility. I was just hoping to
-> > spark an effort to make some of the controls marked and hotkey-accessible.
+On Wed, Sep 04, 2019 at 01:04:42AM -0400, Jeff King wrote:
+> On Fri, Aug 30, 2019 at 02:10:05PM +0200, SZEDER Gábor wrote:
 > 
-> I'm in favor of making this a checkbox, also in the menu. As all menu
-> entries have currently a CTRL+ binding assigned, I think this one
-> should have one too. As CTRL+A is taken, and the proposal is CTRL+E, I
-> would be fine with this. If the menus and the UX elements also honors
-> mnemonic now or in the future, I don't think they need to match the
-> CTRL+ binding. Thus if this gets Alt+A I'm fine with this too.
+> > On Fri, Aug 30, 2019 at 12:06:30AM +0200, SZEDER Gábor wrote:
+> > > On Thu, Aug 29, 2019 at 11:58:18PM +0200, SZEDER Gábor wrote:
+> > > > On Thu, Aug 29, 2019 at 10:38:05AM -0400, Jeff King wrote:
+> > > > > So any fixes there have to happen on the client side. I am still
+> > > > > confused about why the client is writing in this case, per the argument
+> > > > > in 014ade7484 (upload-pack: send ERR packet for non-tip objects,
+> > > > > 2019-04-13). It would be nice to use GIT_TRACE_PACKET to see what it's
+> > > > > trying to write, but I still haven't been able to reproduce the issue.
+> > > > 
+> > > > It's the "done" line:
+> > > > 
+> > > >   + cat trace-packet
+> > [...]
+> > > >   packet:  upload-pack> 0000
+> > > >   packet:        fetch> done
+> > > > 
+> > > > In the avarage successful run that "fetch> done" pkt-line is
+> > > > immediately after the "fetch> 0000".
 > 
-> Bert
+> Thanks for all of your persistent digging on this.
+
+Yeah, I can be easily distracted by an interesting looking bug... was
+told it's a character flaw ;)
+
+> I had forgotten about
+> the "done" packet, but it explains all of the symptoms we've seen.
 > 
-> >
-> > -- Hannes
+> > So instead of immediately die()int after write_in_full() returned an
+> > error, fetch should first try to read all incoming packets in the hope
+> > that the remote did send an ERR packet before it died, and then die
+> > with the error in that packet, or fall back to the current generic
+> > error message if there is no ERR packet (e.g. remote segfaulted or
+> > something similarly horrible).  This fixes the test failure with that
+> > strategically-placed sleep() in 'fetch-pack.c'.
+> > 
+> >   https://travis-ci.org/szeder/git/jobs/578778749#L2689
+> > 
+> > Alas, passing a 'reader' to a function called send_request() doesn't
+> > look quite right, does it...  And I'm not sure about the stateless
+> > communication, it still uses write_or_die().
+> 
+> And thank you for putting this patch together. I had taken a stab at it
+> a while ago, but got discouraged by figuring out at which layer to add
+> the "reader" info (I had envisioned it much lower in packet_write(), but
+> it is clear from your patch that fetch-pack does most of its own
+> writing).
+> 
+> I agree passing around the reader is a bit weird;
 
-git-gui might not be so focused on providing a fast way to launch a
-visual $EDITOR, but Ctrl+E is the hotkey we use everywhere in git-cola
-when lauching external editors on selected files.  Sometimes it's the
-"hot" action so even "Enter" gets that action, but it's worth
-considering if we ever want git-gui's status widget to be able to launch
-editors.
+I considered renaming send_request() so that 'reader' won't look that
+out of place among its parameters, but all my ideas were ridiculous,
+e.g. send_request_and_process_ERR_pkt_on_error()...
 
-We also let Ctrl+Enter launch the default xdg-open action on the
-selected file (e.g. image files go to the default image editing program,
-html files to a browser, etc).
+> I wonder if we should
+> be representing the full-duplex connection more clearly as a single
+> struct. But I suspect that creates other headaches, and what you have
+> here doesn't look _too_ bad. As you note, it probably doesn't cover all
+> code paths, but it at least fixes some of them, and gives us a template
+> for addressing the others.
+> 
+> >  	} else {
+> > -		if (write_in_full(fd, buf->buf, buf->len) < 0)
+> > +		if (write_in_full(fd, buf->buf, buf->len) < 0) {
+> > +			int save_errno = errno;
+> > +			/*
+> > +			 * Read everything the remote has sent to us.
+> > +			 * If there is an ERR packet, then the loop die()s
+> > +			 * with the received error message.
+> > +			 * If we reach EOF without seeing an ERR, then die()
+> > +			 * with a generic error message, most likely "Broken
+> > +			 * pipe".
+> > +			 */
+> > +			while (packet_reader_read(reader) != PACKET_READ_EOF);
+> > +			errno = save_errno;
+> >  			die_errno(_("unable to write to remote"));
+> > +		}
+> 
+> One unfortunate thing here is that we could block indefinitely in
+> packet_reader_read(). That shouldn't happen, I don't think, but since
+> this is an error case where we've been cutoff, anything's possible.
 
-While we're on the topic of hotkeys, some valuable hotkeys for an
-English-centric keyboard are {J,K,L} because of the home row.
+Yeah, when we use different file descriptors for reading and writing,
+then any error on the writing fd doesn't necessarily mean that there
+is on an error on the reading fd as well.  I mean, we could get an
+EBADF or EFAULT as well, but those would rather indicate a bug in Git
+than an error with the connection itself.
 
-In web browsers, Ctrl-L is a very common hotkey for focusing the URL
-input, so we stole that same hotkey for the "git log <...>" input
-in the git-dag tool.  In that tool the arguments to "log" are very
-much like a URL from the input perspective, so it's nice to be able
-to use a familiar and convenient hotkey for that purpose.  The placement
-of the input field[1] is also at the top of that tool, just like in a web
-browser.
+I wondered whether we could avoid blocking indefinitely by looking for
+an ERR packet only if the write() resulted in ECONNRESET or EPIPE,
+i.e. that indicate a connection error.  I suppose 'git upload-pack'
+(or an alternative implementation) could be buggy and could
+inadvertently close() the other end of the fd that fetch-pack writes
+to but not the fd where it reads from, so the write() would get
+ECONNRESET, but then packet_reader_read() could still hang on the
+still open read fd.  I'm not sure whether it's worth worrying about; I
+mean a buggy 'git upload-pack' can do all kinds of weird things that
+would lead to a hang.
 
-[1] https://git-cola.github.io/images/dag.png
+Anyway, after write_in_full() returns with error we could first print
+an error message with error_errno() and then go on to look for an ERR
+packet.  So even if packet_reader_read() hangs, at least there will be
+an error message for the user to see.  It wouldn't help automation,
+though.
 
-Ctrl-L is also used to focus the "Commit summary" line edit for the main
-git-cola commit message editor.  That seems like the most sensible
-"main" behavior for the main commit GUI.  Maybe git-gui can do that too.
+> We maybe could get away with using non-blocking I/O. We're looking for
+> an ERR packet the other side sent us _before_ it hung up, so in theory
+> we've have received the data before any FIN packet (or EOF on a pipe).
+> But I'm wary of introducing new races there.
+> 
+> It might be enough to put in an actual timer, waiting for an ERR packet,
+> EOF, or something like 5 seconds. Or maybe I'm just being overly
+> paranoid.
 
-Ctrl-J is kinda like "down" in vim, and so we let that focus the "diff"
-widget which is typically "down" below the status and commit widgets in
-cola[2].
+I think the timeout would be the safest bet, but then we would have to
+pass that timeout parameter through a couple of a function calls...
 
-[2] https://git-cola.github.io/images/screenshot-dark-linux.png
-
-Ctrl-K focuses the status widget because it's "up".  Also, K and L are
-adjacent on the keyboard, and they are also adjacent visually in the UI
-so there's a visual and muscle memory pairing there between the Status
-and Commit widgets.
-
-The JKL hotkeys are nice to have in addition to the numeric hotkeys
-because they're so convenient.  In some cases (like when the diff widget
-is focused) we allow Alt-{J,K} to jump down/up (next/prev) between the
-files in the status widget, otherwise regular {J,K} can be used if it
-has focus.
-
-Thanks for at least trying to keep some parity with git-cola's hotkeys.
-It's not completely possible in all situations, but it's good to at
-least share notes on how we use the GUI.
--- 
-David
