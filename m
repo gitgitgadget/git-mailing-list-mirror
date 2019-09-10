@@ -2,52 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 554211F463
-	for <e@80x24.org>; Tue, 10 Sep 2019 20:26:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59D9A1F463
+	for <e@80x24.org>; Tue, 10 Sep 2019 20:28:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726149AbfIJU04 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Sep 2019 16:26:56 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:4290 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725957AbfIJU04 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Sep 2019 16:26:56 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 46Sc5B1LY4z5tlD;
-        Tue, 10 Sep 2019 22:26:54 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id A7C131D27;
-        Tue, 10 Sep 2019 22:26:53 +0200 (CEST)
-Subject: Re: [PATCH v3 0/4] git-gui: Add ability to revert selected hunks and
- lines
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Bert Wesarg <bert.wesarg@googlemail.com>
-References: <20190819214110.26461-1-me@yadavpratyush.com>
- <20190828215725.13376-1-me@yadavpratyush.com>
- <20190910192107.umew74b4mj2vyrd4@yadavpratyush.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <4c60ce63-5eea-42b3-aef2-92dd04b1f34c@kdbg.org>
-Date:   Tue, 10 Sep 2019 22:26:53 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1726157AbfIJU23 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Sep 2019 16:28:29 -0400
+Received: from relay2-d.mail.gandi.net ([217.70.183.194]:49441 "EHLO
+        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725965AbfIJU23 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Sep 2019 16:28:29 -0400
+X-Originating-IP: 1.186.12.58
+Received: from localhost (unknown [1.186.12.58])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 87E3E40006;
+        Tue, 10 Sep 2019 20:28:26 +0000 (UTC)
+Date:   Wed, 11 Sep 2019 01:58:23 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     git@vger.kernel.org, Birger Skogeng Pedersen <birger.sp@gmail.com>
+Subject: Re: [PATCH 2/2] git-gui: add horizontal scrollbar to commit buffer
+Message-ID: <20190910202823.hifl7mivwm6yaewy@yadavpratyush.com>
+References: <7da71d89f9fa987eca2e25974e4cec382c146e44.1567627609.git.bert.wesarg@googlemail.com>
+ <62ef03a2938ac0d2158b1c3201c7f10e52e30ecb.1567627609.git.bert.wesarg@googlemail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190910192107.umew74b4mj2vyrd4@yadavpratyush.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <62ef03a2938ac0d2158b1c3201c7f10e52e30ecb.1567627609.git.bert.wesarg@googlemail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.09.19 um 21:21 schrieb Pratyush Yadav:
-> If there are no further objections with the series, I will merge it in.
+On 04/09/19 10:10PM, Bert Wesarg wrote:
+> While the commit message widget has a configurable fixed width, it
+> nevertheless allows to write commit messages which exceed this limit.
+> Though it does not show this content because there is not scrollbar for
 
-No objections. I use it in production.
+Like we discussed before, it does show the content, you just have to 
+scroll by keyboard, and can't scroll by mouse. So maybe reword this?
 
--- Hannes
+> this widget. No it is.
+
+I pulled from your GitHub since you seem to have fixed this typo there.
+
+> There seems to be a bug in at least up to Tcl/Tk 8.6.8, which does not
+> update the horizontal scrollbar if one removes the whole content at once.
+> 
+> Suggested-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> ---
+>  git-gui.sh | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+> 
+> diff --git a/git-gui.sh b/git-gui.sh
+> index a491085..fa9c0d2 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -3363,14 +3363,20 @@ ttext $ui_comm -background white -foreground black \
+>  	-relief sunken \
+>  	-width $repo_config(gui.commitmsgwidth) -height 9 -wrap none \
+>  	-font font_diff \
+> +	-xscrollcommand {.vpane.lower.commarea.buffer.frame.sbx set} \
+>  	-yscrollcommand {.vpane.lower.commarea.buffer.frame.sby set}
+> +${NS}::scrollbar .vpane.lower.commarea.buffer.frame.sbx \
+> +	-orient horizontal \
+> +	-command [list $ui_comm xview]
+>  ${NS}::scrollbar .vpane.lower.commarea.buffer.frame.sby \
+> +	-orient vertical \
+>  	-command [list $ui_comm yview]
+>  
+> +pack .vpane.lower.commarea.buffer.frame.sbx -side bottom -fill x
+>  pack .vpane.lower.commarea.buffer.frame.sby -side right -fill y
+> -pack $ui_comm -side left -fill y
+> +pack $ui_comm -side left -fill both -expand 1
+
+Dropping this change does not seem to make a difference. The commit 
+message buffer expands on resize even without it. Can you please explain 
+why you did this?
+
+>  pack .vpane.lower.commarea.buffer.header -side top -fill x
+> -pack .vpane.lower.commarea.buffer.frame -side left -fill y
+> +pack .vpane.lower.commarea.buffer.frame -side bottom -fill both -expand 1
+
+I'm not too familiar with pack, but why did you change the side from 
+left to bottom? I tested by changing it back to left and didn't notice 
+any difference.
+
+>  pack .vpane.lower.commarea.buffer -side left -fill y
+>  
+>  # -- Commit Message Buffer Context Menu
+
+Other than these couple of minor things, the patch LGTM. Thanks.
+
+-- 
+Regards,
+Pratyush Yadav
