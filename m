@@ -8,89 +8,111 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B88721F463
-	for <e@80x24.org>; Tue, 10 Sep 2019 07:44:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC62C1F463
+	for <e@80x24.org>; Tue, 10 Sep 2019 07:44:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730046AbfIJHo3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Sep 2019 03:44:29 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:37846 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726008AbfIJHo3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Sep 2019 03:44:29 -0400
-Received: by mail-pf1-f196.google.com with SMTP id y5so8295918pfo.4
-        for <git@vger.kernel.org>; Tue, 10 Sep 2019 00:44:29 -0700 (PDT)
+        id S2388993AbfIJHod (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Sep 2019 03:44:33 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:35573 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726008AbfIJHod (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Sep 2019 03:44:33 -0400
+Received: by mail-pl1-f195.google.com with SMTP id s17so3241062plp.2
+        for <git@vger.kernel.org>; Tue, 10 Sep 2019 00:44:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=D0dNEkv5lwR4INSA0XiYWRJ7dSvbi79p6oQmSoEZF/0=;
-        b=QU6oH0ZvhqIoesJNpyA6M5t6cIi0Tj6qBaHvjYu8cxiXXrdVtwiiy5aQIFb8RkkyeS
-         j0xSznuCoCj4Km92nGspA5NZca8krGiabGPf4jJTEY5y+F2Q1wKf3ObdAKs9DtiVB3SI
-         dj2cg5yYA4w3cd0U8p+pG1REP6eo62JESlTg91D3y1dgmoSBJopxytSOjTW1TdmVIU0r
-         yuHS2Y1caWkWdNQGxbDIdcNSEFwAhqf/MUg05noNP+f3N8uQ2G9MHwQ332PrsaB6Toq6
-         qRjPHXQsQpl2ztYgQDwLdDBDeadX5fCsIiGIc/hG3q+P2M2uGQnQJnsoFDGRZ7b14ViZ
-         le1g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=S4NG5j9KAcaoM1VFVBcKFQar2bebZwV/TLyADZSdvVw=;
+        b=AMx20FdFkJkr6bm+z7fUi3KL9aKyyj3B4eKT3KyLVHKCPAN2hmip042FAQU4VTOFnF
+         3NaKwG+wb/jWnUt1g7p7DslEKzb0N4c27HCryJ3k7mg7RugZ1bn3GepAnb+p4uR2j+0V
+         gAQBKOkNFCEoNUU+dBKseuD8N1yTqGA4npwQYdb0lH2JJKXzRBbo5N5N3OBpaUgjVsm9
+         nvpALkqS9AfB/wP/qK0lz2HGX6IhOD2UOewV3zo98iSKNLLgK1tsFKfzcrpLiUAt46Ug
+         IQwYbfYRo532jmNzKu3QaXz3mMAdVfp77cz21qlWibLIv62QMG22Iax82RpXqPJFhfzf
+         dVXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=D0dNEkv5lwR4INSA0XiYWRJ7dSvbi79p6oQmSoEZF/0=;
-        b=K4zfoW5LLXmuemVMqKjkWov/XvS/NzTr31BjDtL/4b1gyuTH57auV7vSl9OVIIc+Hy
-         hbCoxOYcyirQMKt4C3cMSAcDZLy74FiV/b7oVbmfWVhgbcsl15K6jZ/m9c4+tyMp3brI
-         k/A+xv9kjmUDls7sTo2kKpy6TkT+H4tJa2kfEXQP8KsVACixWqw2Va5ik77giVSzGg3k
-         vuG6/fYNVPtpgor9u74RE+HLaQnLPzDW75+oxonEZ3MTN4d7T2c02K0Oox+V5TDxbVyU
-         px3Oz6Niwugh1UEIs/ggws6OeXCw+rjQOJpQwOiOIH00Qyu0Ps9vursm3bte69oz73Ia
-         fT9g==
-X-Gm-Message-State: APjAAAV7MBVuHYi6gQ4kskZ99Doxl99WH3biwJqOnvQLXjrN61RmJPXn
-        UUL0o0i2CvOxXaQq1X2mg4eJA+p3kBM=
-X-Google-Smtp-Source: APXvYqxbQsTZAubpSBaSkvYoxrQKfNVnPHjqsXfiM6lGr1JHeZXBDsNiB9EWqvCG4oNaZzcK1iUE8A==
-X-Received: by 2002:a63:2887:: with SMTP id o129mr25894304pgo.179.1568101468444;
-        Tue, 10 Sep 2019 00:44:28 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=S4NG5j9KAcaoM1VFVBcKFQar2bebZwV/TLyADZSdvVw=;
+        b=j+3DeT03Lj0qyhuI5uziOFwkx3+1SYxqeoDJsBblByxfVfG1zvW3g72W2Jk2hrR3qn
+         BO8B02UETK1hI6MDx1YSzNHOvUfMDsgPyf38Zmt3KjddGyE04BJV+941H5WvmFJYhd/E
+         dbxta/xaeAWnTqWN6+MBUQDi8HyIVqO47HKC0cLF3xt8yI9n+dNLt+JNI0TQdFoDVX6M
+         frchoNRM+Bg6Y1VoEeKLaX4fBs/F5qwnZ4CF6fjWCC8OIw4Wv+F0qFcAOyswrD+yDjLi
+         ugK0AhBeQReRO/3Gbo/EL7lRIYTv/88W5miQdyLRhP1gq1Uef9gsjs7bLS6xXjJrgaLk
+         33Tg==
+X-Gm-Message-State: APjAAAXsMDTqcL4UnjOB3orU5EI6ioN+vOIT596ckFwwYbHZp4WEhlb4
+        VPulDHY15dhZ7r/ICW9tiRqaDZSG9lw=
+X-Google-Smtp-Source: APXvYqzFSNDkWIk089Jkg3fqmk/I4AMfzkKZAHT29d7Ff4XtfD7Kh0Ry2yvmCXsHtcLIobemgqrr1g==
+X-Received: by 2002:a17:902:b48f:: with SMTP id y15mr16310739plr.100.1568101470933;
+        Tue, 10 Sep 2019 00:44:30 -0700 (PDT)
 Received: from archbookpro.localdomain ([2601:646:280:1b30::6486])
-        by smtp.gmail.com with ESMTPSA id a18sm15011729pgl.44.2019.09.10.00.44.26
+        by smtp.gmail.com with ESMTPSA id s186sm23167975pfb.126.2019.09.10.00.44.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Sep 2019 00:44:27 -0700 (PDT)
-Date:   Tue, 10 Sep 2019 00:44:25 -0700
+        Tue, 10 Sep 2019 00:44:30 -0700 (PDT)
+Date:   Tue, 10 Sep 2019 00:44:28 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/2] Makefile: run coccicheck on all non-upstream sources
-Message-ID: <cover.1568101393.git.liu.denton@gmail.com>
+Subject: [PATCH 1/2] Makefile: define UPSTREAM_SOURCES
+Message-ID: <bc3cd4637a52183fe9878b13ed761380cde76232.1568101393.git.liu.denton@gmail.com>
+References: <cover.1568101393.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <cover.1568101393.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before, when we ran coccicheck, it would only run on files that are
-currently being compiled. However, this leaves us with a blindspot where
-Windows-only sources are not checked since Coccinelle does not run on
-Windows.
+After looking through the source files in compat/ and investigating the
+files' content and/or its Git history, I've determined the list of files
+that were copied from an upstream. Place the names of these files into
+the UPSTREAM_SOURCES variable in the Makefile.
 
-This patchset addresses this by making the "coccicheck" target run
-against all source files in the repository, except for source files that
-are pulled from some upstream source.
+In addition, add the sha1collisiondetection/ and sha1dc/ sources as well
+since they are also imported from upstream.
 
-This patchset should serve as a continuation of the original discussion
-about running coccicheck on all sources[1].
+In a future commit, this variable will be used to determine which files
+are excluded when running the "coccicheck" target.
 
-These patches depend on "ds/midx-expire-repack" and "dl/compat-cleanup".
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ Makefile | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-[1]: https://public-inbox.org/git/nycvar.QRO.7.76.6.1905031127170.45@tvgsbejvaqbjf.bet/
-
-
-Denton Liu (2):
-  Makefile: define UPSTREAM_SOURCES
-  Makefile: run coccicheck on more source files
-
- Makefile | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
-
+diff --git a/Makefile b/Makefile
+index ad71ae1219..708df2c289 100644
+--- a/Makefile
++++ b/Makefile
+@@ -598,6 +598,7 @@ SCRIPT_SH =
+ SCRIPT_LIB =
+ TEST_BUILTINS_OBJS =
+ TEST_PROGRAMS_NEED_X =
++UPSTREAM_SOURCES =
+ 
+ # Having this variable in your environment would break pipelines because
+ # you cause "cd" to echo its destination to stdout.  It can also take
+@@ -1146,6 +1147,15 @@ BUILTIN_OBJS += builtin/verify-tag.o
+ BUILTIN_OBJS += builtin/worktree.o
+ BUILTIN_OBJS += builtin/write-tree.o
+ 
++UPSTREAM_SOURCES += compat/inet_ntop.c
++UPSTREAM_SOURCES += compat/inet_pton.c
++UPSTREAM_SOURCES += compat/obstack.%
++UPSTREAM_SOURCES += compat/nedmalloc/%
++UPSTREAM_SOURCES += compat/poll/%
++UPSTREAM_SOURCES += compat/regex/%
++UPSTREAM_SOURCES += sha1collisiondetection/%
++UPSTREAM_SOURCES += sha1dc/%
++
+ GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB)
+ EXTLIBS =
+ 
 -- 
 2.23.0.248.g3a9dd8fb08
 
