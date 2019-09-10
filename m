@@ -2,101 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AD221F463
-	for <e@80x24.org>; Tue, 10 Sep 2019 19:09:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77D021F464
+	for <e@80x24.org>; Tue, 10 Sep 2019 19:12:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727674AbfIJTJX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Sep 2019 15:09:23 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:42101 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725978AbfIJTJX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Sep 2019 15:09:23 -0400
-Received: by mail-pf1-f196.google.com with SMTP id w22so12091562pfi.9
-        for <git@vger.kernel.org>; Tue, 10 Sep 2019 12:09:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=Jlnr1yHhqw2O+GRhLuH/CEt/T1tyqPFdaAKNsaapZt4=;
-        b=GhuueACcekVliLviiT8wGwPwRQMeq+tTx3cMWlBHqZI4kMCMzsWF7JonZCbUNwv/qQ
-         PFLqldtAKqhtPitBpP+ndeW0sB0QL5Pk1L4azUjmd0ddxDnGshjjSk++vq43oslTzzqU
-         BQ/FuGToG/MXB6ZbaI4OEP0y/wWKaMVYr11vRgOVSyRUuPY2KZGy/WeWQT3DH+WFCCGx
-         FyLlCUYdKp9a2FTkibOYliGjWQ2+tAO5E1yKpGed++J6TDjvGbJzky3oFrvsnIbC271Q
-         J5Mu7EYNknjRmtCdMg5GMkXj8y5dTRRtXyZGePC3yK43k9haAwS0/WHWamiz2G+Bl7O0
-         feaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=Jlnr1yHhqw2O+GRhLuH/CEt/T1tyqPFdaAKNsaapZt4=;
-        b=NdA69qD+1HdEISTPHFkK9JHoAmaaGM1mrpVS4Oa3zFP0sJpACHlC2bEJpKSPkQjvLc
-         jfa3bxLeQfzyMlt4TeSqXSVwt0DAT5MmxQwzKrfYcTTtXq5EU49z9rVAv/OQYeoLLcwF
-         l0viokHwaDZ74WbjskUn5Yc/ccXAn1uswTuXvHgAajW04JHzJfgHhm0ZAL8hvlufb/+M
-         IHAd5fdKq8VPTqDF4FNQp9pcE/DQjueTRcR/C7EQVnQ0ScZW/icFA6ps0pEnYuLqVHS6
-         0PDZnBZfBmlWM1ByOL3YcBB94xD2RYXfD8PmaBqx5uV+icry16geErcTzVIDFF3YM8hy
-         2d8Q==
-X-Gm-Message-State: APjAAAVq4HFojLBEGxV3NLh0o0qQfvn9/H+FOhAWO8P2eMyrI2X4p1UR
-        UJqen0kOAeTOFgReZDYY6/d9B5zrSDQ=
-X-Google-Smtp-Source: APXvYqyhtLCVQCE7cpX9bo/4rCP618HTCShLRL+iQBcsEbKnvpV5HFRvTHcuDDUVUCsQlND/Pqey5Q==
-X-Received: by 2002:a65:41c6:: with SMTP id b6mr29185119pgq.269.1568142561815;
-        Tue, 10 Sep 2019 12:09:21 -0700 (PDT)
-Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id 33sm16230983pgy.22.2019.09.10.12.09.20
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Sep 2019 12:09:20 -0700 (PDT)
-Date:   Tue, 10 Sep 2019 12:09:18 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH] git-submodule.txt: fix AsciiDoc formatting error
-Message-ID: <796a25ee1e9a9c0421d42ab6644e81d23a9bd99b.1568142486.git.liu.denton@gmail.com>
+        id S1726626AbfIJTMX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Sep 2019 15:12:23 -0400
+Received: from relay5-d.mail.gandi.net ([217.70.183.197]:44065 "EHLO
+        relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725263AbfIJTMX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Sep 2019 15:12:23 -0400
+X-Originating-IP: 1.186.12.58
+Received: from localhost (unknown [1.186.12.58])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id 299E01C0004;
+        Tue, 10 Sep 2019 19:12:19 +0000 (UTC)
+Date:   Wed, 11 Sep 2019 00:42:18 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v5] git-gui: Add hotkeys to set widget focus
+Message-ID: <20190910191217.qgb23x5tvaajppfh@yadavpratyush.com>
+References: <20190903214942.ubcbdgtphpwnaxs6@yadavpratyush.com>
+ <20190904143055.11400-1-birger.sp@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20190904143055.11400-1-birger.sp@gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In b57e8119e6 (submodule: teach set-branch subcommand, 2019-02-08), the
-`set-branch` subcommand was added for submodules. When the documentation
-was written, the syntax for a "index term" in AsciiDoc was
-accidentally used. This caused the documentation to be rendered as
++Cc j6t
 
-	set-branch -d|--default)|(-b|--branch <branch> [--] <path>
+This patch LGTM, but I'm not sure how to resolve the keybindings 
+problem. Junio suggested we have configurable keybindings, and I agree 
+with him, but until we do, something has to be agreed upon. And we also 
+need to come up with a reasonable default.
 
-instead of
+So, I don't have any preferences for either using Alt+3 for the commit 
+message buffer, or Alt+4. Unless someone has objections, I'll go with 
+Alt+3 for the commit message buffer, and Alt+4 for the diff.
 
-	set-branch (-d|--default)|(-b|--branch <branch>) [--] <path>
+Thanks for the patch Birger. I'll change the keybindings locally before 
+pushing out, no need to send a re-roll for something so trivial.
 
-Remove surrounding parentheses so that the "index term" syntax is not
-triggered (and because it looks nicer without them anyway ;) ).
+On 04/09/19 04:30PM, Birger Skogeng Pedersen wrote:
+> The user cannot change focus between the list of files, the diff view and
+> the commit message widgets without using the mouse (clicking either of
+> the four widgets).
+> 
+> With this patch, the user may set ui focus to the previously selected path
+> in either the "Unstaged Changes" or "Staged Changes" widgets, using
+> ALT+1 or ALT+2.
+> 
+> The user may also set the ui focus to the diff view widget with
+> ALT+3, or to the commit message widget with ALT+4.
+> 
+> This enables the user to select/unselect files, view the diff and create a
+> commit in git-gui using keyboard-only.
+> 
+> Signed-off-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
+> ---
+>  git-gui.sh | 32 +++++++++++++++++++++++++++++++-
+>  1 file changed, 31 insertions(+), 1 deletion(-)
+> 
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 5bc21b8..5dae8da 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -2495,7 +2495,7 @@ proc force_first_diff {after} {
+>  
+>  proc toggle_or_diff {mode w args} {
+>  	global file_states file_lists current_diff_path ui_index ui_workdir
+> -	global last_clicked selected_paths
+> +	global last_clicked selected_paths file_lists_last_clicked
+>  
+>  	if {$mode eq "click"} {
+>  		foreach {x y} $args break
+> @@ -2527,6 +2527,8 @@ proc toggle_or_diff {mode w args} {
+>  	$ui_index tag remove in_sel 0.0 end
+>  	$ui_workdir tag remove in_sel 0.0 end
+>  
+> +	set file_lists_last_clicked($w) $path
+> +
+>  	# Determine the state of the file
+>  	if {[info exists file_states($path)]} {
+>  		set state [lindex $file_states($path) 0]
+> @@ -2640,6 +2642,26 @@ proc show_less_context {} {
+>  	}
+>  }
+>  
+> +proc focus_widget {widget} {
+> +	global file_lists last_clicked selected_paths
+> +	global file_lists_last_clicked
+> +
+> +	if {[llength $file_lists($widget)] > 0} {
+> +		set path $file_lists_last_clicked($widget)
+> +		set index [lsearch -sorted -exact $file_lists($widget) $path]
+> +		if {$index < 0} {
+> +			set index 0
+> +			set path [lindex $file_lists($widget) $index]
+> +		}
+> +
+> +		focus $widget
+> +		set last_clicked [list $widget [expr $index + 1]]
+> +		array unset selected_paths
+> +		set selected_paths($path) 1
+> +		show_diff $path $widget
+> +	}
+> +}
+> +
+>  ######################################################################
+>  ##
+>  ## ui construction
+> @@ -3852,6 +3874,14 @@ foreach i [list $ui_index $ui_workdir] {
+>  }
+>  unset i
+>  
+> +bind .   <Alt-Key-1> {focus_widget $::ui_workdir}
+> +bind .   <Alt-Key-2> {focus_widget $::ui_index}
+> +bind .   <Alt-Key-3> {focus $::ui_diff}
+> +bind .   <Alt-Key-4> {focus $::ui_comm}
+> +
+> +set file_lists_last_clicked($ui_index) {}
+> +set file_lists_last_clicked($ui_workdir) {}
+> +
+>  set file_lists($ui_index) [list]
+>  set file_lists($ui_workdir) [list]
+>  
+> -- 
+> 2.21.0.windows.1
+> 
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/git-submodule.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 0ed5c24dc1..e349442f4c 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -173,7 +173,7 @@ submodule with the `--init` option.
- If `--recursive` is specified, this command will recurse into the
- registered submodules, and update any nested submodules within.
- --
--set-branch ((-d|--default)|(-b|--branch <branch>)) [--] <path>::
-+set-branch (-d|--default)|(-b|--branch <branch>) [--] <path>::
- 	Sets the default remote tracking branch for the submodule. The
- 	`--branch` option allows the remote branch to be specified. The
- 	`--default` option removes the submodule.<name>.branch configuration
 -- 
-2.23.0.163.g796a25ee1e
-
+Regards,
+Pratyush Yadav
