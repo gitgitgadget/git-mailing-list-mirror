@@ -3,99 +3,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E71641F463
-	for <e@80x24.org>; Tue, 10 Sep 2019 00:19:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 321961F463
+	for <e@80x24.org>; Tue, 10 Sep 2019 00:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390518AbfIJATD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Sep 2019 20:19:03 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:41733 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727351AbfIJATC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Sep 2019 20:19:02 -0400
-Received: by mail-pg1-f195.google.com with SMTP id x15so8802033pgg.8
-        for <git@vger.kernel.org>; Mon, 09 Sep 2019 17:19:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=kivSZDnPH+h6FBkJsFjIusILNS4v53IEA+zkb1IW2RU=;
-        b=hYA0Zj428Zr50Nust68LxZhTYvuU5bT2G1ZwkZzqom4J+iENTyjp8nL/6H5y76xm5d
-         1XYecRCQuGRLhOyAR02Vpy9abAeeNOSmgYr4maV8/zYmuh2nk8Q38u3SGX2CpJe3AjZ+
-         iLyBWNv1Kievrp8BlwYQgTfClpRqyrZm/nEx0Iy2xUkoI/YMcWd9/tU18AzDqPQxuPMh
-         Uqmh9mL9aVjdkDiE/sgjtJSdAGYqvgk1cdHXqV09TiKSPS+DBhwizNsl8Dbn0zDhtPRd
-         BvOZVqnoGXwuqS16DE+cGfqGNt3/qKopB2YZjWvr10MOhZbTBNPih1whZYdYkt8I/rZM
-         Pr+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kivSZDnPH+h6FBkJsFjIusILNS4v53IEA+zkb1IW2RU=;
-        b=JRsnpL3lAoVBQaW687ncgPznCJ474mpDZcNm6o7c3NkCzno95vXiYzpQkV/EYdLSOd
-         4+jVhNgpH3vfpFrP3mMW3d0vpze4AxsxW3BgYIySBkSTSy+Wjz5ZTl9osiTIq+0nl2X1
-         wOlMgMDMGFO6ShrvZo3CMn5jsirIn1r6JO/tX3w0aHrZB/rNrldLO/09llv37sByKy+r
-         EP/AuwwcWr7nNFh8mQexYnR35A+O2YR/Rzo0fcOMils+69Qe2EPJ4oI6Hy2KOqKRhdNk
-         XVfjFzGG4wEvLUyMqVCtOQPf98jABUChIAaf5+ijWmHUwLej68eSQ9YhQd6bQAP3HBQw
-         4PIQ==
-X-Gm-Message-State: APjAAAVE8yqRht62CDmFYS2+ZgtXxCcaQ7MotNYMwgWMuHSwu90jM+QT
-        7HtQ3BFc5wj88TSEGEMSA2U=
-X-Google-Smtp-Source: APXvYqzejdgqIw+IhEBy3rljqti8wwn8YwZRUkNom7/YlMmcu4pkCU9Ke/tWJRd04TDCU8bqzuGxtg==
-X-Received: by 2002:a63:f505:: with SMTP id w5mr24408593pgh.217.1568074741920;
-        Mon, 09 Sep 2019 17:19:01 -0700 (PDT)
-Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.137])
-        by smtp.gmail.com with ESMTPSA id q186sm24954633pfb.47.2019.09.09.17.19.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Sep 2019 17:19:01 -0700 (PDT)
-Date:   Mon, 9 Sep 2019 17:18:58 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S2390523AbfIJATt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Sep 2019 20:19:49 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65106 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732404AbfIJATt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Sep 2019 20:19:49 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EEAB32DC54;
+        Mon,  9 Sep 2019 20:19:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wy6G6F0EHCYFk7qNBet4CEcSlZA=; b=EDUgM8
+        8+WCaDNg1Sb2lcd3VtXgGHvwEcCDFnk6mOGHZMCKVz+9prP42xeeo6x7kAEPF7Ux
+        3evXMpQ/LvzNTpqyDBZji65bdA06p2IyjT58mAcqCrfTaHxJMjmAlmeOEp7E1N1E
+        9/R4h5yeHYyvG06q5FvWe3M2PxCDz4LAl2R4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lM7x3yBOXXj2L3TjACYvcEywPsgIn6UC
+        b7O+DdeoWwq25v2NKPYyBGA4oFCTGxGP9jVV1/OSY9XjiFD9/qc5Eq7T4xl/CRQW
+        pPUdh00r75Y+y/uw7OBdjzzO5VaMzlfWCY7D7csoVF8xh3J3pG5I3ts2UrLW/9Gf
+        oRLBHRa7rec=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E5E5D2DC53;
+        Mon,  9 Sep 2019 20:19:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 56FA82DC52;
+        Mon,  9 Sep 2019 20:19:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Sep 2019, #01; Sat, 7)
-Message-ID: <20190910001858.GA63889@dentonliu-ltm.internal.salesforce.com>
 References: <xmqqd0gcm2zm.fsf@gitster-ct.c.googlers.com>
- <20190909185829.GA88988@dentonliu-ltm.internal.salesforce.com>
- <xmqqo8zti6oy.fsf@gitster-ct.c.googlers.com>
+        <20190909234715.GO11334@genre.crustytoothpaste.net>
+Date:   Mon, 09 Sep 2019 17:19:45 -0700
+In-Reply-To: <20190909234715.GO11334@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Mon, 9 Sep 2019 23:47:16 +0000")
+Message-ID: <xmqq1rwphuji.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo8zti6oy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: B1BC685A-D360-11E9-BA60-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 09, 2019 at 12:57:17PM -0700, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> > Hi Junio,
-> >
-> > On Sat, Sep 07, 2019 at 10:26:53AM -0700, Junio C Hamano wrote:
-> >> * dl/complete-cherry-pick-revert-skip (2019-08-27) 3 commits
-> >>  - status: mention --skip for revert and cherry-pick
-> >>  - completion: add --skip for cherry-pick and revert
-> >>  - completion: merge options for cherry-pick and revert
-> >> 
-> >>  The command line completion support (in contrib/) learned about the
-> >>  "--skip" option of "git revert" and "git cherry-pick".
-> >> 
-> >>  Will merge to 'next'.
-> >
-> > Did we end up deciding whether or not we were going to drop "status:
-> > mention --skip for revert and cherry-pick"?
-> 
-> If you are not convinced it is a good idea, we can easily drop it
-> (and I do not mind dropping it---I am not convinced it is a good
-> idea myself).
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-In that case, let's not drop it. The original impetus for this idea came
-from cherry-picking a range of commits where one of the commits in the
-range patched a file that didn't exist on the target branch, so in this
-case skipping was the right course of action.
+> On 2019-09-07 at 17:26:53, Junio C Hamano wrote:
+>> * bc/object-id-part17 (2019-08-19) 26 commits
+>>  - midx: switch to using the_hash_algo
+>>  ...
+>>  - builtin/replace: make hash size independent
+>> 
+>>  Preparation for SHA-256 upgrade continues.
+>> 
+>>  Looked mostly OK, with a possible update.
+>>  cf. <20190820223606.GJ365197@genre.crustytoothpaste.net>
+>
+> Just to update on the status of this, I wasn't planning on a reroll,
+> although I'm happy to do so if folks have feedback.  Opinions for or
+> against the current state are welcome.
 
-In any case, I believe that giving the user more information in this
-case is, at worst, neutral.
+FWIW, I am quite pleased with these and deeply appreciate the work
+you've been doing on this topic.
+
+Thanks.
