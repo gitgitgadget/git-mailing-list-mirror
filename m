@@ -2,84 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA2981F463
-	for <e@80x24.org>; Tue, 10 Sep 2019 16:35:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4B7E1F463
+	for <e@80x24.org>; Tue, 10 Sep 2019 16:50:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436876AbfIJQfn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Sep 2019 12:35:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45534 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2436803AbfIJQfn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Sep 2019 12:35:43 -0400
-Received: (qmail 498 invoked by uid 109); 10 Sep 2019 16:35:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Sep 2019 16:35:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16920 invoked by uid 111); 10 Sep 2019 16:37:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 10 Sep 2019 12:37:37 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 10 Sep 2019 12:35:42 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Freese <ericdfreese@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/1] for-each-ref: do not output empty lines
-Message-ID: <20190910163541.GA13873@sigill.intra.peff.net>
-References: <20190910051705.2765-1-ericdfreese@gmail.com>
- <20190910051705.2765-2-ericdfreese@gmail.com>
- <xmqqpnk8heow.fsf@gitster-ct.c.googlers.com>
+        id S2436947AbfIJQup (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Sep 2019 12:50:45 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:51508 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2436944AbfIJQuo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Sep 2019 12:50:44 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 46SWHk3ryCz5tlD;
+        Tue, 10 Sep 2019 18:50:42 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id A5EE61D27;
+        Tue, 10 Sep 2019 18:50:41 +0200 (CEST)
+Subject: Re: [PATCH 1/2] git-gui: warn if the commit message contains lines
+ longer than the set limit
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     git@vger.kernel.org, me@yadavpratyush.com,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>
+References: <7da71d89f9fa987eca2e25974e4cec382c146e44.1567627609.git.bert.wesarg@googlemail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <01e3c41d-af69-f9b3-31e6-12192e566f92@kdbg.org>
+Date:   Tue, 10 Sep 2019 18:50:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <7da71d89f9fa987eca2e25974e4cec382c146e44.1567627609.git.bert.wesarg@googlemail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqpnk8heow.fsf@gitster-ct.c.googlers.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 09, 2019 at 11:02:07PM -0700, Junio C Hamano wrote:
+Am 04.09.19 um 22:10 schrieb Bert Wesarg:
+> The commit message widget does not wrap the next and has a configurable
+> fixed width to avoid creating too wide commit messages. Though this was
+> only enforced in the GUI. Now we also check the commit message at commit
+> time for long lines and ask the author for confirmation if it exceeds the
+> configured line length.
+> 
+> Needs Tcl 8.6 because of `lmap`.
+> 
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> ---
+>  git-gui.sh     |  4 ++--
+>  lib/commit.tcl | 10 ++++++++++
+>  2 files changed, 12 insertions(+), 2 deletions(-)
+> 
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 5bc21b8..a491085 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
+>  ##
+>  ## Tcl/Tk sanity check
+>  
+> -if {[catch {package require Tcl 8.4} err]
+> - || [catch {package require Tk  8.4} err]
+> +if {[catch {package require Tcl 8.6} err]
+> + || [catch {package require Tk  8.6} err]
+>  } {
+>  	catch {wm withdraw .}
+>  	tk_messageBox \
+> diff --git a/lib/commit.tcl b/lib/commit.tcl
+> index 83620b7..fa9760b 100644
+> --- a/lib/commit.tcl
+> +++ b/lib/commit.tcl
+> @@ -215,6 +215,16 @@ A good commit message has the following format:
+>  		unlock_index
+>  		return
+>  	}
+> +	if {[tcl::mathfunc::max {*}[lmap x [split $msg "\n"] {string length $x}]] >= $repo_config(gui.commitmsgwidth) \
 
-> Eric Freese <ericdfreese@gmail.com> writes:
-> 
-> > If the format string expands to an empty string for a given ref, do not
-> > print the empty line.
-> >
-> > This is helpful when wanting to print only certain kinds of refs that
-> > you can't already filter for.
-> 
-> We tend to prefer stating the reason why we want to do so first and
-> then give a command to the codebase to "become like so".  Here is to
-> illustrate how you would do it:
-> 
->     The custom format specifier "--format=<format>" can be used to
->     tell the for-each-ref command to say nothing for certain kind of
->     refs, e.g.
-> 
->        --format="%(if)%(symref)%(then)%(else)%(refname)%(end)"
-> 
->     may be used to show the refname only for refs that are not
->     symbolic refs.  Except that the command still would show one
->     blank line per each symbolic ref, which is fairly useless.
-> 
->     Introduce the `--omit-empty-lines` option to squelch these
->     useless lines from the output.
+This has an off-by-one error: When I fill the edit box to the limit, but
+not beyond it, I get the warning popup. I guess this should be '>', not
+'>='.
 
-Your proposed commit message (and the suggested code below) have a
-command-line option, but Eric's patch does it by default. Which do we
-want? :)
+> +	    && [ask_popup "Commit message contains lines longer than $repo_config(gui.commitmsgwidth) characters.
+> +
+> +You may change this limit in the options.
+> +
+> +Continue to commit?
+> +"] ne yes} {
+> +		unlock_index
+> +		return
+> +	}
+>  
+>  	# -- Build the message file.
+>  	#
+> 
 
-I'm inclined to say that this new behavior should be the default; even
-though it's technically a compatibility change, I find it hard to
-imagine people would see it as a regression.
-
-But we could also introduce "--omit-empty-lines", and then flip the
-default. That gives an escape hatch of "--no-omit-empty-lines", at the
-minor cost of having to carry an option that we assume nobody would ever
-use.
-
--Peff
+-- Hannes
