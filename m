@@ -2,126 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,
+	SPF_NONE shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 900B41F463
-	for <e@80x24.org>; Tue, 10 Sep 2019 14:18:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E553B1F463
+	for <e@80x24.org>; Tue, 10 Sep 2019 14:21:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732449AbfIJOSd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Sep 2019 10:18:33 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:42596 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726060AbfIJOSd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Sep 2019 10:18:33 -0400
-Received: by mail-wr1-f66.google.com with SMTP id q14so20614554wrm.9
-        for <git@vger.kernel.org>; Tue, 10 Sep 2019 07:18:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fP967KRD/aKtdS8MeL+V8+MOK7Jo2pXuQW+lNDG75PA=;
-        b=CcJo5HGQDBtjLrupQrPNTMAo0WlfG6OANmdpl8X0dyNwqCJOkUgFTSqChI9YAdnFQ8
-         +Y4Ap+LgdM+Dj8w7dl832iR7gyk4kxqPYekl0E6aTrF+SS9aEvCbr3CzC0a2SUSI354m
-         Y8+lLWo7qK9IJvLnKO18pxMYuZC0NEwhNjzI1kqPokKtYVBs0wyb77+wn2cK8FItwbp4
-         bhlSxBGJbxI019jGGTW2SysOGqgRpqcUgk1Zq0GG0PCoFLkV2QdLhXXZ/HOrQBdpV4UG
-         xxUGsJkAOqW4TpjuNVwIImFrM0ZgDUCVb5DMhp4psdeGWOIEcxpt0vXVdPbvpWua1C3T
-         sc2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fP967KRD/aKtdS8MeL+V8+MOK7Jo2pXuQW+lNDG75PA=;
-        b=cm0nAfE+mGTSKkckxtB9zCQuzhu6pa+PUmj16GVJPLmSjJGkPIj50fXm5AAvnGGA22
-         hdZsLEsudR00y9K0ettAkJ526bhFffyGLqla9XEIgca4BpV57nV/1MjC5jmNaVQCMZcE
-         YqafVoas1LCVeP5VdI+A6djaF0PeZQsLh4W1HE91aDrmvea6S0Qukj/GIJyAquWGMKXy
-         0RI0FZcQ+HYFx7m/qtXX/IJzCy+5ZMl32naM65gGotmvME56G3xZw3XFaBTy+w4KtEyk
-         pPGB3lItodeeHtReruqLvNuVHQ2xLRUdXJG4hwk5Hl1LykSiWw0U4cVTqg5NQNYLsHNU
-         tmuA==
-X-Gm-Message-State: APjAAAWgwf5gF8MeD+OuotEPaqVqhJOiBbg2S2ANojuRGP0e7kzbS9e4
-        iXm/ZT8pTFmfPZtHam9Rvmo=
-X-Google-Smtp-Source: APXvYqysWyVC87rrKO/Ibf1t78g5qftbzI9txWxH+Kv1t7mMNn91CEmc1nqlB8SC/Jnm8ZwpVFqQ4g==
-X-Received: by 2002:adf:e612:: with SMTP id p18mr7093842wrm.218.1568125111914;
-        Tue, 10 Sep 2019 07:18:31 -0700 (PDT)
-Received: from szeder.dev (x4dbe1e6e.dyn.telefonica.de. [77.190.30.110])
-        by smtp.gmail.com with ESMTPSA id a6sm9366646wrr.85.2019.09.10.07.18.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Sep 2019 07:18:30 -0700 (PDT)
-Date:   Tue, 10 Sep 2019 16:18:28 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Makefile: run coccicheck on more source files
-Message-ID: <20190910141828.GK32087@szeder.dev>
-References: <cover.1568101393.git.liu.denton@gmail.com>
- <f62b0c7d1774cefc66e519430515eeb64acad1e0.1568101393.git.liu.denton@gmail.com>
+        id S1732925AbfIJOV5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Sep 2019 10:21:57 -0400
+Received: from blade-b3-vm-relay.servers.aueb.gr ([195.251.255.106]:48360 "EHLO
+        blade-b3-vm-relay.servers.aueb.gr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730779AbfIJOV4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 10 Sep 2019 10:21:56 -0400
+X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Sep 2019 10:21:55 EDT
+Received: from blade-a1-vm-smtp.servers.aueb.gr (blade-a1-vm-smtp.servers.aueb.gr [195.251.255.217])
+        by blade-b3-vm-relay.servers.aueb.gr (Postfix) with ESMTP id 42588806
+        for <git@vger.kernel.org>; Tue, 10 Sep 2019 17:14:54 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aueb.gr; s=201901;
+        t=1568124894; bh=fdKU3QR0GtVdSyOS1iiTmjIv/SAbQauCudQvWDch3hk=;
+        h=To:From:Subject:Date:From;
+        b=AVJmtM7UrWk+Myt1dJzGxGnCIMQ/i+SlzYXyIeiFkRWl7Wpw8dTqn1rYcpUlWBimF
+         iq7UAyjU6b3l+19DxHxcyaeZ5HhuYs1DMH0NDx8uUhEqKW578YSmwgROVdlfOrVDl2
+         lVrbOkUPGrAXeHfJlOBsU89A5EMtQ+zCLvMptjbeNriAP4SJWeRJlYXmGAB09/beVE
+         2h+vszq0bblbXHcqzPdPdhK8KZLYSFJdu3b/1c9dO73pSwb6lCYWT4gnlMiKEVXzuR
+         9aXvsFI2i7069d1SeexljtaLrSKWl40jEXTmHaxPmKWMNStmlosTSXDXuMnvcdA1FU
+         crhs8LVS/0ijA==
+Received: from [172.17.186.49] (unknown [147.67.241.226])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: dds)
+        by blade-a1-vm-smtp.servers.aueb.gr (Postfix) with ESMTPSA id 1541A606
+        for <git@vger.kernel.org>; Tue, 10 Sep 2019 17:14:53 +0300 (EEST)
+To:     git@vger.kernel.org
+From:   Diomidis Spinellis <dds@aueb.gr>
+Subject: Patching Git to handle dates before the Unix epoch
+Phone:  +30 210 8203621
+Message-ID: <c12e3505-7a02-3eaf-7d71-57a3b4df28d1@aueb.gr>
+Date:   Tue, 10 Sep 2019 17:14:53 +0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f62b0c7d1774cefc66e519430515eeb64acad1e0.1568101393.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: el
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 10, 2019 at 12:44:31AM -0700, Denton Liu wrote:
-> Make the "coccicheck" target run on all C sources except for those that
-> are taken from some upstream. We don't want to patch these files since
-> we want them to be as close to upstream as possible so that it'll be
-> easier to pull in upstream updates.
+As people use Git to create synthetic commits of code written in the 
+past [1,2] it becomes important to handle dates before the Unix epoch 
+(1/1/1970).  I see that modern C libraries, Unix kernels, and tools can 
+handle such dates.  However Git seems to mishandle such dates in several 
+places, such as in date.c [3,4].  I'm planning to work on a fix, but 
+before I embark on this I have a few questions.
 
-> diff --git a/Makefile b/Makefile
-> index 708df2c289..d468b7c9c4 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2802,12 +2802,8 @@ check: command-list.h
->  		exit 1; \
->  	fi
->  
-> -C_SOURCES = $(patsubst %.o,%.c,$(C_OBJ))
-> -ifdef DC_SHA1_SUBMODULE
-> -COCCI_SOURCES = $(filter-out sha1collisiondetection/%,$(C_SOURCES))
-> -else
-> -COCCI_SOURCES = $(filter-out sha1dc/%,$(C_SOURCES))
-> -endif
-> +FIND_C_SOURCES = $(filter %.c,$(shell $(FIND_SOURCE_FILES)))
+- Do you see any reasons that may prevent the acceptance of such a patch?
+- Can you think of any non-obvious issues (e.g. backward compatibility, 
+switch to the Gregorian calendar) I should be aware of?
+- Should I submit changes as a bug fix on the maint branch or as a new 
+feature on master?
 
-Hrm, so this uses FIND_SOURCE_FILES, which first attempts to run 'git
-ls-files' and if that fails it falls back to run 'find'.
+[1] https://github.com/dspinellis/unix-history-repo (original dates)
+[2] https://github.com/chrislgarry/Apollo-11 (wrong dates)
+[3] https://github.com/git/git/blob/master/date.c#L21
+[4] https://github.com/git/git/blob/master/date.c#L776
 
-Unfortunately, the output of the two slightly differ: 'git ls-files'
-prints 'abspath.c advice.c alias.c ...' why 'find' prints
-'./upload-pack.c ./unpack-trees.c ./gpg-interface.c ...'.  Now, while
-the order of files doesn't matter, the './' prefix does, because:
-
-> +COCCI_SOURCES = $(filter-out $(UPSTREAM_SOURCES),$(FIND_C_SOURCES))
-
-Here the paths/patterns in UPSTREAM_SOURCES don't have that './'
-prefix, and thus won't match and won't filter out any of the upstream
-files that they are supposed to.  IOW, if someone runs 'make
-coccicheck' on a system without Git installed, then Coccinelle will
-check all upstream sources as well, and will e.g. suggest using
-COPY_ARRAY in 'compat/regex/regexec.c'.
-
-Now, running 'make coccicheck' on a git.git clone without Git
-installed might look like quite a pathological case on the first
-sight, but I would argue that it is not that pathological: e.g.
-consider someone running the recent Coccinelle version in a small-ish
-Docker image containing just enough to run 'make coccicheck', but not
-Git.  (yeah, you guessed right, I am that someone ;)
-
-I don't know how to convince 'find' to omit that './' prefix from each
-listed file, and in a portable way at that.  Piping its output through
-'sed' or even 'cut' easily takes care of it, though.
-
->  %.cocci.patch: %.cocci $(COCCI_SOURCES)
->  	@echo '    ' SPATCH $<; \
-> -- 
-> 2.23.0.248.g3a9dd8fb08
-> 
+Diomidis Spinellis - https://www.spinellis.gr
