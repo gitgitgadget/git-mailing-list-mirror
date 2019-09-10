@@ -8,101 +8,89 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE7971F463
-	for <e@80x24.org>; Tue, 10 Sep 2019 06:39:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B88721F463
+	for <e@80x24.org>; Tue, 10 Sep 2019 07:44:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403891AbfIJGji (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Sep 2019 02:39:38 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37070 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403860AbfIJGjh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Sep 2019 02:39:37 -0400
-Received: by mail-wr1-f68.google.com with SMTP id i1so17048892wro.4
-        for <git@vger.kernel.org>; Mon, 09 Sep 2019 23:39:36 -0700 (PDT)
+        id S1730046AbfIJHo3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Sep 2019 03:44:29 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:37846 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726008AbfIJHo3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Sep 2019 03:44:29 -0400
+Received: by mail-pf1-f196.google.com with SMTP id y5so8295918pfo.4
+        for <git@vger.kernel.org>; Tue, 10 Sep 2019 00:44:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=n3cOxkkpbVT2W9WmXH7VKafoQ1pZ7DKAr49UHiKBAow=;
-        b=irrtXa2KHT7O21saEQppY9+OS7d12Su2ZFi8KdfVdO3yNpjRYA1A0BK+/vfWbuE5zs
-         zgAwtAPQ5etj8Jgc5ZeX83f/+9O1DmDY6cGDmJhyxtYo1n82hMQa6JfW8FcEJ1lqdUZZ
-         1ybsoeeg9ngFEhZPOhN9N847ole+n/5F/avkXWvyVIIqSomFQmQs8OkBrgO68Z+Wc5SY
-         DqsP4V7B+9ye2eHfGL2YVq51qCQ2nX/UopSMLvMpjE9nXT7qD+G+Kbdz3rpusGNiZyTD
-         uFC88nvVhdta2SEDElGo4+cD1UCAYFYwK8yKLTTqZqV2BrN2xJTcAYgaUKCv83UzJ/3v
-         RX/g==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=D0dNEkv5lwR4INSA0XiYWRJ7dSvbi79p6oQmSoEZF/0=;
+        b=QU6oH0ZvhqIoesJNpyA6M5t6cIi0Tj6qBaHvjYu8cxiXXrdVtwiiy5aQIFb8RkkyeS
+         j0xSznuCoCj4Km92nGspA5NZca8krGiabGPf4jJTEY5y+F2Q1wKf3ObdAKs9DtiVB3SI
+         dj2cg5yYA4w3cd0U8p+pG1REP6eo62JESlTg91D3y1dgmoSBJopxytSOjTW1TdmVIU0r
+         yuHS2Y1caWkWdNQGxbDIdcNSEFwAhqf/MUg05noNP+f3N8uQ2G9MHwQ332PrsaB6Toq6
+         qRjPHXQsQpl2ztYgQDwLdDBDeadX5fCsIiGIc/hG3q+P2M2uGQnQJnsoFDGRZ7b14ViZ
+         le1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=n3cOxkkpbVT2W9WmXH7VKafoQ1pZ7DKAr49UHiKBAow=;
-        b=R44w3Chl/sc3iRQyc7SrNJ0SFtQLCxzbiRLR36FKmYhhHgua5r00F4giJ6mlK8ruJG
-         lkJkPNmdnUxLoFHQRRKr2nvvEthndAjoXbioZA7SID2od+A0wSR1ZtmJCaJciFDME9el
-         FPQOAcz+zB8mlxEmysIErAdglWbvNxNGT3JGWQQ7oHNO4ZoVV0UIsudBJaOLaXRnWH2E
-         sGe0HgyHVSqoYG017Qlp9+B2bskTGIBTSalSkIojzKG21WQuIZR4Bk/w9YLKtOBLqrDz
-         U0O5u/ng2ZQlNrfvE2vyKEB3sZwmc16dFfV0mbG8kMRwDrvMk8NIszPzUcvi3rL4uQY2
-         nvQw==
-X-Gm-Message-State: APjAAAVqtn0ZG3PbAxboSFrr/Oi9Ivw45emY76+ZSaGyG8fDwR/x1Vjw
-        +OSbJxLgi5SLeR2vzsDjHtFzDYv6
-X-Google-Smtp-Source: APXvYqyx+dObxMrhFzOkWTCGk7LW1VgvcGQQQLpAfEqgK/FqLqXFPqT5ekpA6q/NvEfIqo2EsZdcDQ==
-X-Received: by 2002:adf:a382:: with SMTP id l2mr23052033wrb.194.1568097575444;
-        Mon, 09 Sep 2019 23:39:35 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s22sm1561323wmc.7.2019.09.09.23.39.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Sep 2019 23:39:35 -0700 (PDT)
-Date:   Mon, 09 Sep 2019 23:39:35 -0700 (PDT)
-X-Google-Original-Date: Tue, 10 Sep 2019 06:39:33 GMT
-Message-Id: <2743caa22e60c5ddc04d388f21a04500d7bcac1f.1568097573.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.335.git.gitgitgadget@gmail.com>
-References: <pull.335.git.gitgitgadget@gmail.com>
-From:   "Dominic Winkler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] Fix perl error "unescaped left brace in regex" for
- paranoid update hook
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=D0dNEkv5lwR4INSA0XiYWRJ7dSvbi79p6oQmSoEZF/0=;
+        b=K4zfoW5LLXmuemVMqKjkWov/XvS/NzTr31BjDtL/4b1gyuTH57auV7vSl9OVIIc+Hy
+         hbCoxOYcyirQMKt4C3cMSAcDZLy74FiV/b7oVbmfWVhgbcsl15K6jZ/m9c4+tyMp3brI
+         k/A+xv9kjmUDls7sTo2kKpy6TkT+H4tJa2kfEXQP8KsVACixWqw2Va5ik77giVSzGg3k
+         vuG6/fYNVPtpgor9u74RE+HLaQnLPzDW75+oxonEZ3MTN4d7T2c02K0Oox+V5TDxbVyU
+         px3Oz6Niwugh1UEIs/ggws6OeXCw+rjQOJpQwOiOIH00Qyu0Ps9vursm3bte69oz73Ia
+         fT9g==
+X-Gm-Message-State: APjAAAV7MBVuHYi6gQ4kskZ99Doxl99WH3biwJqOnvQLXjrN61RmJPXn
+        UUL0o0i2CvOxXaQq1X2mg4eJA+p3kBM=
+X-Google-Smtp-Source: APXvYqxbQsTZAubpSBaSkvYoxrQKfNVnPHjqsXfiM6lGr1JHeZXBDsNiB9EWqvCG4oNaZzcK1iUE8A==
+X-Received: by 2002:a63:2887:: with SMTP id o129mr25894304pgo.179.1568101468444;
+        Tue, 10 Sep 2019 00:44:28 -0700 (PDT)
+Received: from archbookpro.localdomain ([2601:646:280:1b30::6486])
+        by smtp.gmail.com with ESMTPSA id a18sm15011729pgl.44.2019.09.10.00.44.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Sep 2019 00:44:27 -0700 (PDT)
+Date:   Tue, 10 Sep 2019 00:44:25 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] Makefile: run coccicheck on all non-upstream sources
+Message-ID: <cover.1568101393.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Dominic Winkler <d.winkler@flexarts.at>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Dominic Winkler <d.winkler@flexarts.at>
+Before, when we ran coccicheck, it would only run on files that are
+currently being compiled. However, this leaves us with a blindspot where
+Windows-only sources are not checked since Coccinelle does not run on
+Windows.
 
-A literal "{" should now be escaped in a pattern starting from perl
-versions >= v5.26. In perl v5.22, using a literal { in a regular
-expression was deprecated, and will emit a warning if it isn't escaped: \{.
-In v5.26, this won't just warn, it'll cause a syntax error.
+This patchset addresses this by making the "coccicheck" target run
+against all source files in the repository, except for source files that
+are pulled from some upstream source.
 
-(see https://metacpan.org/pod/release/RJBS/perl-5.22.0/pod/perldelta.pod)
+This patchset should serve as a continuation of the original discussion
+about running coccicheck on all sources[1].
 
-Signed-off-by: Dominic Winkler <d.winkler@flexarts.at>
----
- contrib/hooks/update-paranoid | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+These patches depend on "ds/midx-expire-repack" and "dl/compat-cleanup".
 
-diff --git a/contrib/hooks/update-paranoid b/contrib/hooks/update-paranoid
-index d18b317b2f..fc0a242a4e 100755
---- a/contrib/hooks/update-paranoid
-+++ b/contrib/hooks/update-paranoid
-@@ -302,13 +302,13 @@ $op = 'U' if ($op eq 'R'
- 
- RULE:
- 	foreach (@$rules) {
--		while (/\${user\.([a-z][a-zA-Z0-9]+)}/) {
-+		while (/\$\{user\.([a-z][a-zA-Z0-9]+)}/) {
- 			my $k = lc $1;
- 			my $v = $data{"user.$k"};
- 			next RULE unless defined $v;
- 			next RULE if @$v != 1;
- 			next RULE unless defined $v->[0];
--			s/\${user\.$k}/$v->[0]/g;
-+			s/\$\{user\.$k}/$v->[0]/g;
- 		}
- 
- 		if (/^([AMD ]+)\s+of\s+([^\s]+)\s+for\s+([^\s]+)\s+diff\s+([^\s]+)$/) {
+[1]: https://public-inbox.org/git/nycvar.QRO.7.76.6.1905031127170.45@tvgsbejvaqbjf.bet/
+
+
+Denton Liu (2):
+  Makefile: define UPSTREAM_SOURCES
+  Makefile: run coccicheck on more source files
+
+ Makefile | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
+
 -- 
-gitgitgadget
+2.23.0.248.g3a9dd8fb08
+
