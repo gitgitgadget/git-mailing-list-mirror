@@ -8,111 +8,119 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B6F71F463
-	for <e@80x24.org>; Wed, 11 Sep 2019 21:24:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5EE51F463
+	for <e@80x24.org>; Wed, 11 Sep 2019 21:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727873AbfIKVYx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Sep 2019 17:24:53 -0400
-Received: from mout.gmx.net ([212.227.17.22]:48739 "EHLO mout.gmx.net"
+        id S1728317AbfIKV2p (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Sep 2019 17:28:45 -0400
+Received: from mout.gmx.net ([212.227.15.19]:47525 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726761AbfIKVYx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Sep 2019 17:24:53 -0400
+        id S1727873AbfIKV2p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Sep 2019 17:28:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1568237086;
-        bh=f0+QluOBrsiCIXel24G2pRxkEyV9G/+67L/tofZhfX0=;
+        s=badeba3b8450; t=1568237320;
+        bh=GNfcqMa8UxaxTIugd0yl4e35r8yAx/xWVj8d2+n6fBo=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ga7yegqY8Q3hx0bEEln7O/SkltZUnYPNW7LZ2UQ3ubZ9S1rkhOd3EO/3NU3L3TycJ
-         kmoBpbVDZ3CYE6ZHu2iItNqi4uESIPgr+M32hdjUadzYu8F7BydyHrGsn+AAOVPqhM
-         /d1JoBNdeuG8wTvQNaURKgsNI8BBwYBpoPRsmu54=
+        b=TVRBj2hEZEGHrDBBkdAPw81cdJmGUuMRCOVsUlznqJ2xu2FSRw5PpHuIp0gCQKiwM
+         j6gvU2UpUFmPpVPXXRTqFcnlpc/2Cx5tlPioKlnyfgaQMNiUpKDXF9tv7jgTsew7aJ
+         aEUJral9N3QENbDtvF90qbQe3gu54HuYauxIvBBI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N2mFY-1iFtvW1u4S-0137a9; Wed, 11
- Sep 2019 23:24:46 +0200
-Date:   Wed, 11 Sep 2019 23:24:32 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M54L0-1iKtvi1KZS-00zGIo; Wed, 11
+ Sep 2019 23:28:40 +0200
+Date:   Wed, 11 Sep 2019 23:28:26 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Cameron Steffen via GitGitGadget <gitgitgadget@gmail.com>
+To:     Dominic Winkler via GitGitGadget <gitgitgadget@gmail.com>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Cameron Steffen <cam.steffen94@gmail.com>
-Subject: Re: [PATCH 1/1] doc: small formatting fix
-In-Reply-To: <5248e3332c90e91c1c6a911090d331f005789014.1568071262.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1909112322220.5377@tvgsbejvaqbjf.bet>
-References: <pull.330.git.gitgitgadget@gmail.com> <5248e3332c90e91c1c6a911090d331f005789014.1568071262.git.gitgitgadget@gmail.com>
+        Dominic Winkler <d.winkler@flexarts.at>
+Subject: Re: [PATCH 1/1] Fix perl error "unescaped left brace in regex" for
+ paranoid update hook
+In-Reply-To: <2743caa22e60c5ddc04d388f21a04500d7bcac1f.1568097573.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1909112326490.5377@tvgsbejvaqbjf.bet>
+References: <pull.335.git.gitgitgadget@gmail.com> <2743caa22e60c5ddc04d388f21a04500d7bcac1f.1568097573.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:mEBmNXacNcVyt3D/SBgpk8A9lj99tx2PG/u8ki+WupuPj1JWBHd
- y32gr+l7jXyaFq12foiHTzJlcPEP3eOdT4mtymzBb9DD0j3xwiHmNUysNwsk666ZNvocn+t
- vz7WLQSdzlzd/cV2pxe8LimDxmxQKCOKBz9ATcgDGg7G4eKNHfRScn07s8SG6xmleszqsYn
- uf2HuolBL3nZL4dJI6etg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ncty1374BrU=:qPKq8GRJ77kILiyCDJ3g1k
- w9D8BvfzsaVFkwCFPlAwldwz1ljmuMPbVaQm2JlL6/M6CE11rKI60sN64/pyRW7YZkltU3Lov
- 6czLiwzWwaG2ub/vWUyq7iUB1KfdIxjUf8QeGCh62zwfYmfndoCSrby+6Ug5JmAIC47L7Wz6w
- nqQjdPLLg3eukBrYS6fX1ttLhGYsYyn9ylSkJcdfEKBdnSa7lHw/CDsF+lcbY6MM81he8FQZp
- Wy5UV6RCcUVT9Uapon2IP5BQ1Jf3A2zjwXeL9ZdMPO0iWyIGy0d+l6CkN8GX6KW5vYDV3GePx
- cV6x2knjY31czAQsri3aFoY7Aj05NxHwaVOY9fVBtT9ehON2Z4S3SnoUp1z/bSjHNKPvSQUsu
- xui0/Gs83eCqmNw6jsBUmHnBVHOHvvR6eD3SjKRxJ1PMaTEnlZ2zpDlRw3wX2xrdFuj3f9ctQ
- cWAA7XTXBAx/9585ZAaboP93riex+F4FT4rqCb+z339piZrdOT6/omlXgBN6uAt8ZoJQ3MQGH
- NzSjPOVfRgPkqXVHtvnwt1FW7457ab3ZUtEyspo3YDQBLclRVhxxcRN9qenZw+VfvL5i9CPw0
- EQc4+YoBpE6wt0gZvvwt5n4q51mwR+BEFrZ9EVDUStVK8wBbFEiU+Yx6uo1ojgWv7h9cZOMBp
- TajFFyPViM4JjRDbjntaRY52RaGX95iUw/V3oI0un/Vu19tcNTyY9zHtRPo2/AenRQsIqDG1k
- ylW5SGCONbpclRlABuZn6boU3qoJCwNtpbc4qpUp3wHr3b/ZO9YENr4gDHByCMXNWgpwORb08
- MVxCoIkzD8gCW73Dq0bDtqbiUqw990rRCwy4YcDr1BOUsv7QGFuDq6PPxeiKtP89zdv4dCMTB
- 12YI4TxsfmfaaqnCYcDA4cCx+NtMHaBm81df5T8ZoPnpYLL1/NgEH7nQmg0n+YDlHgLLrVbbC
- wnUs9XFGao1SkufF6+ykUw/upTTMiRya7ghDfnY5i1J02LS7NfbX3RwRa6RJumCKmeL3VZNb6
- oYWgBP153v4c1+AfAyW9t+FNUMtLrIrbDmQj26LOtHQ6Cxd2rvJegidL3WmPfQClbVih+GHCL
- RMNlbff7r78zYG9fJJ8wIlRDMiHyFZu3WE9iWxNIsjl2eMfgUfWnys+DVhL5CVnARYUGj+6Vy
- Uf4sqzG0qsgPIZTv85SNHf9idxyiQLBs4KbrjsKx3DTRSLABnvJTtQzsIZkao76CvkemtNP0U
- 5kmmzBJzWwclH16kB
+X-Provags-ID: V03:K1:blqDdOdb91W+43vuxDPe6+srCHVVOYI6rhuO7TEw9DC8HQVZ1Wm
+ 5WVCSe8LBCqkW+Q4pCDjUO0c3i3xGrSJRCpls1fxcWcbYIT92fI8WZHIAeyunq861M9Ao5e
+ +/BVgea6mQx7JBHXK7khFdxRdyoyTnluOFQmfYHDXZhPGt/rB9/6XDkUPY40L6znMWEEpMH
+ IxasF6Q8jMMv4QWibY6tw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OmELSEXMEnY=:HajLpOmT+73ibqQVNGTTAV
+ Opb4XwqrfuqwNuyszBIYemSLR3F/yZyHZSDdTIUjlKPsmmr3EPEoWfStnmJcVcjHHu737W7T0
+ PbU9mjISHewVQUW+P2RddXAou04vuAjCbOUnSH3FbTQO7w0P+Zh4MZ+hBWrnXqPQOXf4s8HAz
+ YVaKrCGOU5nHAsumktdEKAe2YXOCuoSFeS/CF6t0jqXo/PtQvikVnHZdFodQMQvZ0gbAI9HcZ
+ krMd1ihOePV6hNPxo6y/kigx7a/eWk/hI0Ob8M/7dIRJEJxrDR8cF1DStVQczCMIzXXTub7V+
+ lLrRfWuRR4I4MyZx53lptGRnZ7i1ACOaqHqr9clPG0LvVvkYzq5AHIPpvz1/uKpfl5ZCqY+gv
+ 09S3F/Y5vRw7Z+fklmYvf8huIrdTYkL+uvfawiTxpKCsoMHndcl7cUoWwgCt3bJ820nTHP6eW
+ ZTVxwX7gOkgBW19pNgYiE8sBI2zjcqAUTI6SKlvfHlNvwEicf0Wr7kgDuXc2UiaC+Uz79YbuJ
+ +J18bgDhfeEvZIYoM67q9ZcTpsPc61U5CA6L9hj19F71w65Q0FQuQ3xsTVL+XI+u3hLNVAfC8
+ TwYEmRuzGk92V4SBW7Z11/CL3eSLizJNjvO9UC2DIiz+WWzEYOoI7b/n2Fvrx0e0xewYjx55U
+ AVlkOQ++I4UWenSuHXfxVdSJng3dSsaX/OmHBiaeO+iGVYu9AYq9Dzvw+M1njBOB2bQKdshVG
+ BBn47E905x3l3cg7vz+b2cSeY7A03hW/uOo7RzIlwrvZXqCAWEs1/eeXUbHXlecJ4Z+/kMsJk
+ Atjpr0ErN0/1LX/Qnc0aawbgmlDY0jxiE2CNPZjlOlj33o7iC2OXrcTzjq3MSZ5EkPDAVEcD8
+ hUORBURkvE/oAB2b/rxhiwM+odqyzjrTZ6Y2qMaXfn8zur685OnWLXWzBfG3q4UNClJMegyN0
+ T525LXQY2hFGCqlnObtyiKkYRYXDzPZ/L4uHef2FOWf39qmiZ6QExwQ3TPjX4eZehB4pfOcBf
+ g/3OWYpSQaM1fQ8pbKHUeLEt4+m5r/gZs54ZZQuuHZKOP2UPE77GpGRevMk5tNtCICpCY3hrB
+ 8DJZnb4Mp6+sDWyAaWXIF1YTI7+BVSsZyYDMOA+hsM+bN2XBKSWoG7vBpQ5GldcDbWDqnj2Zk
+ O6vFFWcA1EQIVBCSiUbyBsbGX/wlLvO5U3ya/GzUpxWHVp2gM9QThbC029HUy52tkG8s57Opv
+ A7fGE3U3tBRokG3IQ
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Cameron,
+Hi Dominic,
 
-On Mon, 9 Sep 2019, Cameron Steffen via GitGitGadget wrote:
+all looks good, with one exception: the Subject should start with
+`<area>:`, i.e. in this instance something like this would be better:
 
-> From: Cameron Steffen <cam.steffen94@gmail.com>
->
-> move an incorrectly placed backtick
-
-This sentence is incomplete, and does not really explain _why_ the
-backtick needs to be moved. Something like this would be much clearer:
-
-	Most likely by mistake, the closing curly brace was added
-	_after_ the backtick instead of _before_ it. This breaks the
-	formatting. Let's fix that.
-
-The patch looks good, though.
-
-To send another iteration of this patch, amend your commit locally,
-force-push, and issue another `/submit`.
+contrib/hooks: escape left brace in regex in the paranoid update hook
 
 Ciao,
 Johannes
 
+On Mon, 9 Sep 2019, Dominic Winkler via GitGitGadget wrote:
+
+> From: Dominic Winkler <d.winkler@flexarts.at>
 >
-> Signed-off-by: Cameron Steffen <cam.steffen94@gmail.com>
+> A literal "{" should now be escaped in a pattern starting from perl
+> versions >=3D v5.26. In perl v5.22, using a literal { in a regular
+> expression was deprecated, and will emit a warning if it isn't escaped: =
+\{.
+> In v5.26, this won't just warn, it'll cause a syntax error.
+>
+> (see https://metacpan.org/pod/release/RJBS/perl-5.22.0/pod/perldelta.pod=
+)
+>
+> Signed-off-by: Dominic Winkler <d.winkler@flexarts.at>
 > ---
->  Documentation/pretty-formats.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  contrib/hooks/update-paranoid | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-for=
-mats.txt
-> index 079598307a..b87e2e83e6 100644
-> --- a/Documentation/pretty-formats.txt
-> +++ b/Documentation/pretty-formats.txt
-> @@ -208,7 +208,7 @@ endif::git-rev-list[]
->  '%GP':: show the fingerprint of the primary key whose subkey was used
->  	to sign a signed commit
->  '%gD':: reflog selector, e.g., `refs/stash@{1}` or `refs/stash@{2
-> -	minutes ago`}; the format follows the rules described for the
-> +	minutes ago}`; the format follows the rules described for the
->  	`-g` option. The portion before the `@` is the refname as
->  	given on the command line (so `git log -g refs/heads/master`
->  	would yield `refs/heads/master@{0}`).
+> diff --git a/contrib/hooks/update-paranoid b/contrib/hooks/update-parano=
+id
+> index d18b317b2f..fc0a242a4e 100755
+> --- a/contrib/hooks/update-paranoid
+> +++ b/contrib/hooks/update-paranoid
+> @@ -302,13 +302,13 @@ $op =3D 'U' if ($op eq 'R'
+>
+>  RULE:
+>  	foreach (@$rules) {
+> -		while (/\${user\.([a-z][a-zA-Z0-9]+)}/) {
+> +		while (/\$\{user\.([a-z][a-zA-Z0-9]+)}/) {
+>  			my $k =3D lc $1;
+>  			my $v =3D $data{"user.$k"};
+>  			next RULE unless defined $v;
+>  			next RULE if @$v !=3D 1;
+>  			next RULE unless defined $v->[0];
+> -			s/\${user\.$k}/$v->[0]/g;
+> +			s/\$\{user\.$k}/$v->[0]/g;
+>  		}
+>
+>  		if (/^([AMD ]+)\s+of\s+([^\s]+)\s+for\s+([^\s]+)\s+diff\s+([^\s]+)$/)=
+ {
 > --
 > gitgitgadget
 >
