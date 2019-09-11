@@ -2,96 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F267D1F463
-	for <e@80x24.org>; Wed, 11 Sep 2019 08:11:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBC061F463
+	for <e@80x24.org>; Wed, 11 Sep 2019 10:30:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727234AbfIKILU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Sep 2019 04:11:20 -0400
-Received: from mail-io1-f52.google.com ([209.85.166.52]:36329 "EHLO
-        mail-io1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726341AbfIKILT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Sep 2019 04:11:19 -0400
-Received: by mail-io1-f52.google.com with SMTP id b136so43863605iof.3
-        for <git@vger.kernel.org>; Wed, 11 Sep 2019 01:11:19 -0700 (PDT)
+        id S1727599AbfIKKaD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Sep 2019 06:30:03 -0400
+Received: from mail-lf1-f45.google.com ([209.85.167.45]:45686 "EHLO
+        mail-lf1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727504AbfIKKaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Sep 2019 06:30:03 -0400
+Received: by mail-lf1-f45.google.com with SMTP id r134so15994835lff.12
+        for <git@vger.kernel.org>; Wed, 11 Sep 2019 03:30:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=qotilabs-com.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=nxE2lhIj5zRIQSROOEQmOOILukX7U13+NJUX15PRscc=;
-        b=qmDi9FCFwcRSNwHupC50LgAdwiLtdqrrcV5zxcgMuYt6vRpb1+leySwifUmIx1oA9p
-         iSa96ZKHg1ugZ+TYzBxXlppc1MQswUSPmD64uh19uNdwybHeNyAXnw0OAQcyKfS4V2iI
-         BTzYajh9zY8kWTCDi5rxHayPxZdj5rciT820d6StmVLZtBZuNFs2pJ1HpmmKzMSbZq3j
-         OOapO5dMWLj2OcRgbcRuaIZ/poCbITLO4K8aYYjdJvS4Kb2y/NwPWdYeADhK0/HmjR7Q
-         TGWK1lw0+KGAISTjeVs1qiIKt/HpgXOy83ZiCa/5LLcf4sxcFVZf3giIYbvmu8qUqHiA
-         HnFQ==
+         :cc;
+        bh=a0Iz5cuzYpzgX6MHQMLFGh+0XyNvEAJNGvl52aT9GOg=;
+        b=RJKnayCDoK3mK4XaNjs6pfWExUkJYerfAmwz36dudBinzlJUmt8egF+cVMUkAIEPR9
+         vkUadS53zAvYQjaH53Rt0Wh8fH3XJfCJcPQRcPgVuAprP99KpsFpw6GJo5GhLGy4pQGe
+         eKzmdguDm1d4x/ejNJAWG80+nOBvEEUWtonD95lzlF5smVLEoPSiEEkoZn9nbbwoTgOd
+         j/9hgic+MJNAnlB/20f1BhAu9l55ig4xk9lJZoZ3n+l+pqUUtUDmlwM5JHtR5upyuP1e
+         40ZhyudKBvUYAv829NvZ0jq5Jjm8QJCRnovnN81SSBg399jhoxR+Ogo7Xxt84TCzn0cR
+         GCRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=nxE2lhIj5zRIQSROOEQmOOILukX7U13+NJUX15PRscc=;
-        b=F0vpFFxmAAoOxbkXC2sJj0m8wccAIfWm9Wj6wy+dyQcUaxgcR3+tVAiORVQMeblmyT
-         evixcjI1YbLijCKy+4aoKS026hSRKaKkJim8THkBFjDjz29+uqsbMyhN81AzCmvrjyVu
-         rfayTBnzGhiac+i+nVYi6eV54FOH4jvR0XwUe8WhJuZ5CZY9W/CVkOHKimHcw28eQPxp
-         i58CmOrYXTFvAkbBDBnhfJeyZFbI0gZIX5NMsTIH9aHyL6PCCtz6LeQykDripNXVm7bK
-         6ck3PufBpn1iASuVF7G9un8t1gWefpEMvS7fXM6CakFjmtrMDj/02Ea2s+JdbfeiJ0bY
-         p3Yg==
-X-Gm-Message-State: APjAAAW3a8cEzXe/MQRtwhAQfJ9dfyP7WrS9Ri2szVwIGwHy8bIMCDSq
-        uUHcY/YyjFLHO3BEf5ZJKYn6qfKLPmsZbHcsHeUk17v95mA=
-X-Google-Smtp-Source: APXvYqw/SZfOf+A8/TmMV1Gs9X5PqHFIfp5/BtiRvQegtzPMVKBnWmQbwTso4/p+cbZVMpA8SJS4y9APcF/MggyUbfc=
-X-Received: by 2002:a02:93e5:: with SMTP id z92mr14560288jah.8.1568189478861;
- Wed, 11 Sep 2019 01:11:18 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=a0Iz5cuzYpzgX6MHQMLFGh+0XyNvEAJNGvl52aT9GOg=;
+        b=ggIze1teY6MUu9lN2R4rvewxm4lvD/WQXrI4Du4f8Kw554oDdeOLT3gMhsxwzwMJfV
+         mzjaAh/1XN0915mh57o4OyazsbTptkM6JOlw2T9POvTdlQaARpS3qM903nzT2DQCmPVf
+         Cr2130rhzs60xhmxcPrSAyjVV/6auXLTVANdYNE0CDt+U1ziW5cH9PVahOd5VOmE5R5O
+         BBiZ8cavBXVWodCrSHRTjjyEq3ID1Ly9nX3x6LtaPYWkU3v5FL6hJ6LtmvJlppW+7mf/
+         eHLvuU501o7p5hZIwVsaA+sddEoeXI+fqU6++pl1CvgfprjHEKUmGhnMYVICxecZJiwI
+         ZwZw==
+X-Gm-Message-State: APjAAAWgoERFzKV2AWkVvDFZn7ueojj8rAiyBM4b5LzSbOOHwaXmFl49
+        y1f3ixlXjIE0ZAu0cDgKoAsPr0TimTW039jdRgg=
+X-Google-Smtp-Source: APXvYqycWo/EAXgyhAX70DQGfP+4iu9gVwnJnDxweO2vY87HBVy5HA4FH4lFHqbmYqYTytnujjIAVphKbeZ38VCJreA=
+X-Received: by 2002:ac2:44c8:: with SMTP id d8mr1200245lfm.101.1568197801359;
+ Wed, 11 Sep 2019 03:30:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <CA+oNJz+N_b6Gq-gVu0ZnGbL_ppdu0LDSfqPJjsV8QAghrS1Rkg@mail.gmail.com>
-In-Reply-To: <CA+oNJz+N_b6Gq-gVu0ZnGbL_ppdu0LDSfqPJjsV8QAghrS1Rkg@mail.gmail.com>
-From:   Bogdan Butnaru <bbutnaru@qotilabs.com>
-Date:   Wed, 11 Sep 2019 10:11:03 +0200
-Message-ID: <CA+oNJzKoQ-PmwY=p2W5HhCk1qn-BCwAKMZzZUn_7p2GVi-r9=w@mail.gmail.com>
-Subject: =?UTF-8?B?RndkOiBQYXRoIGluc3RlYWQgb2YgcGF0aHNwZWMgZm9yIOKAnGdpdCBjaGVja291dCA8dA==?=
-        =?UTF-8?B?cmVlLWlzaD4gWy0tXSA8cGF0aHNwZWM+4oCd?=
-To:     git@vger.kernel.org
+References: <CAKPyHN3Zvf6gtKAq03s8AsguaOFG=g2huGRCTWmBVWioDBqFWw@mail.gmail.com>
+ <CAGr--=JyJHTxtQWSnU7ivQ79qXcg7o4N142+5FSdre851xss6A@mail.gmail.com>
+ <CAKPyHN3S-jLWmfHUyH9mCBPjHCEaBCbrkVQEKFqHv59U37=Kyg@mail.gmail.com>
+ <CAKPyHN08Z_9oByA8ruKwwXRcAfYPU95JaMb=pqQWwGwPVG=_og@mail.gmail.com>
+ <CAGr--=Jn87r_ySYkZmtqUBA40+fwdn0MbuN6_LNDO4mOWyoKTg@mail.gmail.com>
+ <20190903124541.2p5hmknolh2dwqh5@yadavpratyush.com> <971bbc44-d3d4-552d-d18e-58a2315c6183@kdbg.org>
+ <20190904174103.nrntgwv6zdqyjqsh@yadavpratyush.com> <8a726eea-f461-db90-7e36-70b708ff8915@kdbg.org>
+ <CAKPyHN3+Sr2QJGR7Sw02x0A9OXshVUQofqH=ShXDivmqP5X7vw@mail.gmail.com> <20190910085446.GB32239@gmail.com>
+In-Reply-To: <20190910085446.GB32239@gmail.com>
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
+Date:   Wed, 11 Sep 2019 12:27:30 +0200
+Message-ID: <CAGr--=Jdj+kJmV7z3vhYW+s129+0+KgbNYw8NFPmSASRYMTdbg@mail.gmail.com>
+Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
+Hi Pratyush,
 
-Not sure if I=E2=80=99m doing something wrong here, but it seems that when
-calling =E2=80=9Cgit checkout <tree-ish> [--] <pathspec>=E2=80=9D, the last=
- argument
-is not interpreted correctly.
+I'm hoping this will be merged, even without changing the radio
+selectors to a checkbox(?). The patch from Bert resolves the issue I
+raised about wanting the hotkey.
+What do you think?
 
-I have a repository that contains a multi-module Maven project, and as
-such it contains several =E2=80=9Cpom.xml=E2=80=9D files, one in the root d=
-irectory
-and a few others in sub-directories. If I understand correctly the
-documentation, calling =E2=80=9Cgit checkout 0123abcdef -- :/**pom.xml=E2=
-=80=9D=E2=80=AFshould
-checkout (to the working tree and the index) all files named =E2=80=9Cpom.x=
-ml=E2=80=9D
-from revision 0123abcdef. As of version 2.23.0.windows.1 it only
-checks out the =E2=80=9Cpom.xml=E2=80=9D file from the root of the reposito=
-ry.
-
-However, if I run =E2=80=9Cgit checkout --patch 0123abcdef -- :/**pom.xml=
-=E2=80=9D,
-then during the interactive process I am asked about changes from all
-=E2=80=9Cpom.xml=E2=80=9D files, everywhere in the directory hierarchy. (Th=
-e short
-form =E2=80=9C-p=E2=80=9D also works.) If I just type =E2=80=9Ca=E2=80=9D a=
-t every prompt, I get what
-I expected from the first command, i.e. all matching files in the
-given revision.
-
-(I just tested that version now because it=E2=80=99s the newest I can find.
-But the issue happens since at least 2.20, probably earlier.)
-
-Cheers,
-=E2=80=94Bogdan Butnaru
+Birger
