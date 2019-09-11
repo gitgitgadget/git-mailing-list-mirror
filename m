@@ -2,249 +2,249 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09E2B1F463
-	for <e@80x24.org>; Wed, 11 Sep 2019 20:15:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1A2F1F463
+	for <e@80x24.org>; Wed, 11 Sep 2019 20:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729029AbfIKUPF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Sep 2019 16:15:05 -0400
-Received: from relay11.mail.gandi.net ([217.70.178.231]:46969 "EHLO
-        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728808AbfIKUPF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Sep 2019 16:15:05 -0400
-Received: from localhost (unknown [1.186.12.58])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 9C1A7100002;
-        Wed, 11 Sep 2019 20:15:02 +0000 (UTC)
-Date:   Thu, 12 Sep 2019 01:45:00 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] git-gui: convert new/amend commit radiobutton to
- checketton
-Message-ID: <20190911201500.6utotzdrwsp6qoe3@yadavpratyush.com>
-References: <ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com>
+        id S1729030AbfIKU2t (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Sep 2019 16:28:49 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:32936 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728808AbfIKU2s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Sep 2019 16:28:48 -0400
+Received: by mail-qt1-f193.google.com with SMTP id r5so26983270qtd.0
+        for <git@vger.kernel.org>; Wed, 11 Sep 2019 13:28:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=L/F+veVJWO91GtrCkgJIsYP+Tf7UDx1NLsCNw9Td/AY=;
+        b=vKhCKyDAjkwZpMnUJYBqOiLtY2aCDQku2jD5Y/XqSwC9VqQsR2PPXL0CLJ9Hbhc+7f
+         bRwx5ryWj2nGGqunuajOlMkxvLvThDeyovPowDaLZySWFvlSShl08SkEct3CA8IatLZW
+         uypQoL8m9aH2jouF08Vg/037HxeWnbfvmo8rdOtkuqAQe8ALYy60zbH9lUdoZG1IPf+8
+         C3Ej8RcGJeGg/lxa9xHeuQI2O/jTBApmURjRv1ooMukAdzbof+1rbOWc01/8/6UI8dD7
+         xMS6LhUlvzqU3axtMeLjOZOvtD1fKHRWOj4cSTk+Nvku4mxm5uOIbsqGsEFmFcZo77pg
+         9IJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=L/F+veVJWO91GtrCkgJIsYP+Tf7UDx1NLsCNw9Td/AY=;
+        b=eDipDd6jvusBaCYJk+Y2KC5HzQ272zjhvWpq3uHCglxCMmZNRFozkyf5TZF8b40wFx
+         nE7BuXeX+b3h6O1mIXDReNE0Kw08hm+G5aEHQdSNoJfXUyC+vmgeFs6Eo0CiT2XIKQmy
+         8N3Z/N0Ru85emaUefZf3Wfv7xX8KKZ8Kc1YiFozjJ4Ej3mcU7WgRNLbGhdE8BjX9jcZV
+         Dy/2NNi+G+uARQTo86+NWgfthvTcDZKnGd2xOInymOSOcs7moUCTBmCYoJCVf+9V6iIO
+         rdga9oZCd/acjKjI64VWJxSB7Y9gy/L0OzSqiIvP+cB8GWDPLmTZANllQR06yKktPEXN
+         9vwQ==
+X-Gm-Message-State: APjAAAVzYiFlOucWRMuY23t2ErJJkX1C35/gtJPHJbGVGbcgJ+VP8bhd
+        1tIt5qv4uCWHfDzC4ADSKPg=
+X-Google-Smtp-Source: APXvYqzs00CNioyWgeV2jD9WKQUTLKlS1Z/uQVmJePCkzdZLTp2GMnfc2uM2u1LHHbHnU5ZHFBoTQg==
+X-Received: by 2002:ac8:3482:: with SMTP id w2mr4676899qtb.379.1568233727372;
+        Wed, 11 Sep 2019 13:28:47 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:4d96:7f18:9479:c2b0? ([2001:4898:a800:1010:fecb:7f18:9479:c2b0])
+        by smtp.gmail.com with ESMTPSA id i23sm9495077qkl.107.2019.09.11.13.28.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Sep 2019 13:28:46 -0700 (PDT)
+Subject: Re: [PATCH 2/9] sparse-checkout: create 'init' subcommand
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.316.git.gitgitgadget@gmail.com>
+ <e6e982e5a6e4517d97a7a404384057110f3a151d.1566313865.git.gitgitgadget@gmail.com>
+ <CABPp-BEmwSwg4tgJg6nVG8a3Hpn_g-=ZjApZF4EiJO+qVgu4uw@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <ab98c292-a1b1-ff47-2e8e-f74b7ade2b94@gmail.com>
+Date:   Wed, 11 Sep 2019 16:28:45 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
+ Thunderbird/69.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <CABPp-BEmwSwg4tgJg6nVG8a3Hpn_g-=ZjApZF4EiJO+qVgu4uw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Typo in the subject. s/checketton/checkbutton/
-
-On 05/09/19 10:09PM, Bert Wesarg wrote:
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-> ---
->  git-gui.sh          | 36 +++++++++---------------------------
->  lib/checkout_op.tcl |  6 +++---
->  lib/commit.tcl      |  4 ++--
->  lib/index.tcl       |  8 ++++----
->  4 files changed, 18 insertions(+), 36 deletions(-)
+On 8/23/2019 7:02 PM, Elijah Newren wrote:
+> On Tue, Aug 20, 2019 at 8:13 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> +static int sc_read_tree(void)
+>> +{
+>> +       struct argv_array argv = ARGV_ARRAY_INIT;
+>> +       int result = 0;
+>> +       argv_array_pushl(&argv, "read-tree", "-m", "-u", "HEAD", NULL);
+>> +
+>> +       if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
+>> +               error(_("failed to update index with new sparse-checkout paths"));
+>> +               result = 1;
+>> +       }
 > 
-> diff --git a/git-gui.sh b/git-gui.sh
-> index 5bc21b8..80a07d5 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -1341,6 +1341,7 @@ set HEAD {}
->  set PARENT {}
->  set MERGE_HEAD [list]
->  set commit_type {}
-> +set commit_type_is_amend 0
->  set empty_tree {}
->  set current_branch {}
->  set is_detached 0
-> @@ -1348,7 +1349,6 @@ set current_diff_path {}
->  set is_3way_diff 0
->  set is_submodule_diff 0
->  set is_conflict_diff 0
-> -set selected_commit_type new
->  set diff_empty_count 0
->  
->  set nullid "0000000000000000000000000000000000000000"
-> @@ -1435,7 +1435,7 @@ proc PARENT {} {
->  }
->  
->  proc force_amend {} {
-> -	global selected_commit_type
-> +	global commit_type_is_amend
->  	global HEAD PARENT MERGE_HEAD commit_type
->  
->  	repository_state newType newHEAD newMERGE_HEAD
-> @@ -1444,7 +1444,7 @@ proc force_amend {} {
->  	set MERGE_HEAD $newMERGE_HEAD
->  	set commit_type $newType
->  
-> -	set selected_commit_type amend
-> +	set commit_type_is_amend 1
+> `git read-tree -m -u HEAD` will fail if the index has any higher stage
+> entries in it, even if those higher stage entries correspond to files
+> which are included in the sparseness patterns and thus would not need
+> an update.  It might be nice if we can find a way to provide a better
+> error message, and/or implement the read-tree -m -u HEAD internally in
+> a way that will allow us to not fail if the conflicted files are
+> included in the sparse set.
 
-Why do we need a separate variable for this? Why not just check 
-commit_type to know whether it is an amend or not? My guess after 
-reading the patch is that we need to associate a variable with the 
-checkbutton to decide its state, and since there are multiple types of 
-amend that commit_type can be (amend, amend-initial, amend-merge), it is 
-not easy to use it directly. Am I guessing correctly?
+I agree that this is not the _best_ thing to do, but it does mimic the
+current recommendation for a user interacting with sparse-checkout.
 
->  	do_select_commit_type
->  }
->  
-> @@ -2828,19 +2828,10 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
->  	menu .mbar.commit
->  
->  	if {![is_enabled nocommit]} {
-> -		.mbar.commit add radiobutton \
-> -			-label [mc "New Commit"] \
-> -			-command do_select_commit_type \
-> -			-variable selected_commit_type \
-> -			-value new
-> -		lappend disable_on_lock \
-> -			[list .mbar.commit entryconf [.mbar.commit index last] -state]
-> -
-> -		.mbar.commit add radiobutton \
-> +		.mbar.commit add checkbutton \
->  			-label [mc "Amend Last Commit"] \
-> -			-command do_select_commit_type \
-> -			-variable selected_commit_type \
-> -			-value amend
-> +			-variable commit_type_is_amend \
-> +			-command do_select_commit_type
->  		lappend disable_on_lock \
->  			[list .mbar.commit entryconf [.mbar.commit index last] -state]
->  
-> @@ -3313,18 +3304,10 @@ set ui_comm .vpane.lower.commarea.buffer.frame.t
->  set ui_coml .vpane.lower.commarea.buffer.header.l
->  
->  if {![is_enabled nocommit]} {
-> -	${NS}::radiobutton .vpane.lower.commarea.buffer.header.new \
-> -		-text [mc "New Commit"] \
-> -		-command do_select_commit_type \
-> -		-variable selected_commit_type \
-> -		-value new
-> -	lappend disable_on_lock \
-> -		[list .vpane.lower.commarea.buffer.header.new conf -state]
-> -	${NS}::radiobutton .vpane.lower.commarea.buffer.header.amend \
-> +	${NS}::checkbutton .vpane.lower.commarea.buffer.header.amend \
->  		-text [mc "Amend Last Commit"] \
-> -		-command do_select_commit_type \
-> -		-variable selected_commit_type \
-> -		-value amend
-> +		-variable commit_type_is_amend \
-> +		-command do_select_commit_type
->  	lappend disable_on_lock \
->  		[list .vpane.lower.commarea.buffer.header.amend conf -state]
->  }
-> @@ -3349,7 +3332,6 @@ pack $ui_coml -side left -fill x
->  
->  if {![is_enabled nocommit]} {
->  	pack .vpane.lower.commarea.buffer.header.amend -side right
-> -	pack .vpane.lower.commarea.buffer.header.new -side right
->  }
->  
->  textframe .vpane.lower.commarea.buffer.frame
-> diff --git a/lib/checkout_op.tcl b/lib/checkout_op.tcl
-> index 9e7412c..a522829 100644
-> --- a/lib/checkout_op.tcl
-> +++ b/lib/checkout_op.tcl
-> @@ -389,7 +389,7 @@ $err
->  }
->  
->  method _after_readtree {} {
-> -	global selected_commit_type commit_type HEAD MERGE_HEAD PARENT
-> +	global commit_type HEAD MERGE_HEAD PARENT
+I'll rename this helper to something like "update_working_directory()"
+so it can be swapped with a different implementation later, after we
+work out those usability kinks.
 
-This cleans up an unused variable declaration. Nice.
+The other thing that is needed here: allow reverting the sparse-checkout
+settings if this fails. I'll isolate that to a new commit so we can
+examine that behavior carefully.
 
->  	global current_branch is_detached
->  	global ui_comm
->  
-> @@ -490,12 +490,12 @@ method _update_repo_state {} {
->  	#    amend mode our file lists are accurate and we can avoid
->  	#    the rescan.
->  	#
-> -	global selected_commit_type commit_type HEAD MERGE_HEAD PARENT
-> +	global commit_type_is_amend commit_type HEAD MERGE_HEAD PARENT
->  	global ui_comm
->  
->  	unlock_index
->  	set name [_name $this]
-> -	set selected_commit_type new
-> +	set commit_type_is_amend 0
->  	if {[string match amend* $commit_type]} {
->  		$ui_comm delete 0.0 end
->  		$ui_comm edit reset
-> diff --git a/lib/commit.tcl b/lib/commit.tcl
-> index 83620b7..384f18f 100644
-> --- a/lib/commit.tcl
-> +++ b/lib/commit.tcl
-> @@ -327,7 +327,7 @@ proc commit_writetree {curHEAD msg_p} {
->  proc commit_committree {fd_wt curHEAD msg_p} {
->  	global HEAD PARENT MERGE_HEAD commit_type commit_author
->  	global current_branch
-> -	global ui_comm selected_commit_type
-> +	global ui_comm commit_type_is_amend
->  	global file_states selected_paths rescan_active
->  	global repo_config
->  	global env
-> @@ -461,8 +461,8 @@ A rescan will be automatically started now.
->  
->  	# -- Update in memory status
->  	#
-> -	set selected_commit_type new
->  	set commit_type normal
-> +	set commit_type_is_amend 0
->  	set HEAD $cmt_id
->  	set PARENT $cmt_id
->  	set MERGE_HEAD [list]
-> diff --git a/lib/index.tcl b/lib/index.tcl
-> index b588db1..e07b7a3 100644
-> --- a/lib/index.tcl
-> +++ b/lib/index.tcl
-> @@ -466,19 +466,19 @@ proc do_revert_selection {} {
->  }
->  
->  proc do_select_commit_type {} {
-> -	global commit_type selected_commit_type
-> +	global commit_type commit_type_is_amend
->  
-> -	if {$selected_commit_type eq {new}
-> +	if {$commit_type_is_amend == 0
->  		&& [string match amend* $commit_type]} {
->  		create_new_commit
-> -	} elseif {$selected_commit_type eq {amend}
-> +	} elseif {$commit_type_is_amend == 1
->  		&& ![string match amend* $commit_type]} {
+> 
+>> +
+>> +       argv_array_clear(&argv);
+>> +       return result;
+>> +}
+>> +
+>> +static int sc_enable_config(void)
+>> +{
+>> +       struct argv_array argv = ARGV_ARRAY_INIT;
+>> +       int result = 0;
+>> +       argv_array_pushl(&argv, "config", "--add", "core.sparseCheckout", "true", NULL);
+> > Why --add?  That seems really odd to me.
 
-Not exactly related to your change, but shouldn't these "string match 
-amend*" in the two ifs be assertions instead of checks? If 
-$commit_type_is_amend == 0, then $commit_type should _always_ be amend*, 
-and if $commit_type_is_amend == 1, then $commit_type should _never_ be 
-amend*. 
+Yeah, that's a mistake. Good find.
 
-I don't see assertions being used anywhere, but I suppose we should look 
-into them in the future. It would be great if you can start using 
-something like that here, but I'm fine with keeping this like it is 
-right now too.
+> 
+> This should also have "--worktree".  And this function should either
+> set extensions.worktreeConfig to true or die if it isn't already set;
+> not sure which.  There's some UI and documentation stuff to figure out
+> here...
 
->  		load_last_commit
->  
->  		# The amend request was rejected...
->  		#
->  		if {![string match amend* $commit_type]} {
-> -			set selected_commit_type new
-> +			set commit_type_is_amend 0
->  		}
->  	}
->  }
+I was planning to switch my `git config` subcommand to use in-process
+methods, but I'm struggling to find a way to ensure we follow the
+`--worktree` option. It likely would work if extensions.worktreeConfig
+was enabled when the process starts, but adding it in-process likely
+causes a problem.
 
-I tested it on my setup and it works fine. Thanks.
+> 
+>> +
+>> +       if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
+>> +               error(_("failed to enable core.sparseCheckout"));
+>> +               result = 1;
+>> +       }
+>> +
+>> +       argv_array_clear(&argv);
+>> +       return result;
+>> +}
+>> +
+>> +static int delete_directory(const struct object_id *oid, struct strbuf *base,
+>> +               const char *pathname, unsigned mode, int stage, void *context)
+>> +{
+>> +       struct strbuf dirname = STRBUF_INIT;
+>> +       struct stat sb;
+>> +
+>> +       strbuf_addstr(&dirname, the_repository->worktree);
+>> +       strbuf_addch(&dirname, '/');
+>> +       strbuf_addstr(&dirname, pathname);
+>> +
+>> +       if (stat(dirname.buf, &sb) || !(sb.st_mode & S_IFDIR))
+>> +               return 0;
+>> +
+>> +       if (remove_dir_recursively(&dirname, 0))
+> 
+> flags = 0 implies not REMOVE_DIR_EMPTY_ONLY.  I'm not familiar with
+> remove_dir_recursively(), but won't this delete everything...including
+> untracked files?  If so, that sounds like a bug.
+This whole thing isn't needed any more, since read-tree does the right
+thing.
 
--- 
-Regards,
-Pratyush Yadav
+> 
+>> +               warning(_("failed to remove directory '%s'"),
+>> +                       dirname.buf);
+>> +
+>> +       strbuf_release(&dirname);
+>> +       return 0;
+>> +}
+>> +
+>> +static int sparse_checkout_init(int argc, const char **argv)
+>> +{
+>> +       struct tree *t;
+>> +       struct object_id oid;
+>> +       struct exclude_list el;
+>> +       static struct pathspec pathspec;
+>> +       char *sparse_filename;
+>> +       FILE *fp;
+>> +       int res;
+>> +
+>> +       if (sc_enable_config())
+>> +               return 1;
+>> +
+>> +       memset(&el, 0, sizeof(el));
+>> +
+>> +       sparse_filename = get_sparse_checkout_filename();
+>> +       res = add_excludes_from_file_to_list(sparse_filename, "", 0, &el, NULL);
+> 
+> But 'el' isn't used again?  Why are we getting the list of files from
+> sparse_filename then?
+
+This is the only way I could think to check that the sparse-checkout file parses well without just doing the file open myself. Maybe we only need to check if the file exists (and is not empty).
+
+>> +
+>> +       /* If we already have a sparse-checkout file, use it. */
+>> +       if (res >= 0) {
+>> +               free(sparse_filename);
+>> +               goto reset_dir;
+>> +       }
+>> +
+>> +       /* initial mode: all blobs at root */
+>> +       fp = fopen(sparse_filename, "w");
+>> +       free(sparse_filename);
+>> +       fprintf(fp, "/*\n!/*/*\n");
+>> +       fclose(fp);
+> 
+> Makes sense.
+> 
+>> +
+>> +       /* remove all directories in the root, if tracked by Git */
+>> +       if (get_oid("HEAD", &oid)) {
+>> +               /* assume we are in a fresh repo */
+>> +               return 0;
+>> +       }
+>> +
+>> +       t = parse_tree_indirect(&oid);
+>> +
+>> +       parse_pathspec(&pathspec, PATHSPEC_ALL_MAGIC &
+>> +                                 ~(PATHSPEC_FROMTOP | PATHSPEC_LITERAL),
+>> +                      PATHSPEC_PREFER_CWD,
+>> +                      "", NULL);
+>> +
+>> +       if (read_tree_recursive(the_repository, t, "", 0, 0, &pathspec,
+>> +                               delete_directory, NULL))
+>> +               return 1;
+> 
+> Since this is only needed on Windows, as per your commit message,
+> should it be #ifdef'd?  Or is this actually a bug that should be fixed
+> in "git read-tree -mu HEAD"?
+
+(this will not be needed, but thanks!)
+ 
+>> +
+>> +reset_dir:
+>> +       return sc_read_tree();
+>> +}
+>> +
+> 
+> The rest looks fine.
+
+Thanks,
+-Stolee
+
