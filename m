@@ -2,93 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16C4C1F463
-	for <e@80x24.org>; Wed, 11 Sep 2019 06:51:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F267D1F463
+	for <e@80x24.org>; Wed, 11 Sep 2019 08:11:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726899AbfIKGvl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Sep 2019 02:51:41 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:42525 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726390AbfIKGvl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Sep 2019 02:51:41 -0400
-Received: by mail-lf1-f67.google.com with SMTP id c195so650457lfg.9
-        for <git@vger.kernel.org>; Tue, 10 Sep 2019 23:51:39 -0700 (PDT)
+        id S1727234AbfIKILU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Sep 2019 04:11:20 -0400
+Received: from mail-io1-f52.google.com ([209.85.166.52]:36329 "EHLO
+        mail-io1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726341AbfIKILT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Sep 2019 04:11:19 -0400
+Received: by mail-io1-f52.google.com with SMTP id b136so43863605iof.3
+        for <git@vger.kernel.org>; Wed, 11 Sep 2019 01:11:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=qotilabs-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9y+tlY8DBQXqD9HEUU9DX80uJAbIk+qANPCg+AD58HY=;
-        b=vgJxocDSvFxV0Z3fXHaXAw0G+cgRFHwCEW7bIi33gDcPCJzUqUjCSmDVUViDBY5i0o
-         6tv1A+28g7JsH10bdpL83r2JDXOjbE8u8e3g05Ltzzh0oHSBfz/+h/pBGsBIRFPIPVmc
-         MUc7r6pXBfDraABjTS0nw7OcTcLnGRt67XEn3pmW7EtI+aCLXbTJ7AnsGKt2SyIuw+S2
-         hcPtuPT22uj3Khk16p3P+TCg2o3y1SK43n4D7dFprl+CCHLVfxed3Yqk0wk2Nh25W7zd
-         hpW4PWbcsfQTvIAzhmGJRN/PW4+QyhUp/KH6wuW9TyI1CvOZEFAersy+u/z6G4osUX+7
-         I08w==
+         :content-transfer-encoding;
+        bh=nxE2lhIj5zRIQSROOEQmOOILukX7U13+NJUX15PRscc=;
+        b=qmDi9FCFwcRSNwHupC50LgAdwiLtdqrrcV5zxcgMuYt6vRpb1+leySwifUmIx1oA9p
+         iSa96ZKHg1ugZ+TYzBxXlppc1MQswUSPmD64uh19uNdwybHeNyAXnw0OAQcyKfS4V2iI
+         BTzYajh9zY8kWTCDi5rxHayPxZdj5rciT820d6StmVLZtBZuNFs2pJ1HpmmKzMSbZq3j
+         OOapO5dMWLj2OcRgbcRuaIZ/poCbITLO4K8aYYjdJvS4Kb2y/NwPWdYeADhK0/HmjR7Q
+         TGWK1lw0+KGAISTjeVs1qiIKt/HpgXOy83ZiCa/5LLcf4sxcFVZf3giIYbvmu8qUqHiA
+         HnFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9y+tlY8DBQXqD9HEUU9DX80uJAbIk+qANPCg+AD58HY=;
-        b=ghLJgfBubfZ3KvUmNkaU+BlmK9D9njrb+PNqQ+BsRWG1uXFk28D9vBZXkTyBj+BJX5
-         Ug/kyLPV9XWyyYGyFL4EYlz1nAudX6zA3gFNudqTQkgvGMZfuzUSBzWyAhXRdhJ76k2u
-         jYehBGm+YvUzMeUOHDoBPnH7kBHs7jRtfj96JLNH595jwky2jU4hf6QlqYS4UMX79ofZ
-         u0tOFKf5OgyVgZ2y58jobMUyQ5TV6aYV3zUxUoVPuG+xFcjqhAC8rutPAWKVRdb2bWPE
-         ggGcDBI2LMT6H2iufH6Ykm4EMbMIK27lLP6jZRFhbVXxpdEpJ18DXmS+ZfHUDtKckYVZ
-         PouQ==
-X-Gm-Message-State: APjAAAXXMQyiJa6cFIoeAX3npM7g1BmgXU0S3aa9VlqDvvdOes/GQpaq
-        FpVWfaa7V0yK/7Pg+LJJT/tJR4n7mMdBqk9knt0=
-X-Google-Smtp-Source: APXvYqzEuHcikiTkggHBeCE3Oxklb0XrN4gkpNIrwJ2cgt2hYIJnOjP40VnmB1WRwly96znhSg7QIhMm//SDnECgtLE=
-X-Received: by 2002:ac2:43b8:: with SMTP id t24mr4024969lfl.24.1568184699155;
- Tue, 10 Sep 2019 23:51:39 -0700 (PDT)
+         :message-id:subject:to:content-transfer-encoding;
+        bh=nxE2lhIj5zRIQSROOEQmOOILukX7U13+NJUX15PRscc=;
+        b=F0vpFFxmAAoOxbkXC2sJj0m8wccAIfWm9Wj6wy+dyQcUaxgcR3+tVAiORVQMeblmyT
+         evixcjI1YbLijCKy+4aoKS026hSRKaKkJim8THkBFjDjz29+uqsbMyhN81AzCmvrjyVu
+         rfayTBnzGhiac+i+nVYi6eV54FOH4jvR0XwUe8WhJuZ5CZY9W/CVkOHKimHcw28eQPxp
+         i58CmOrYXTFvAkbBDBnhfJeyZFbI0gZIX5NMsTIH9aHyL6PCCtz6LeQykDripNXVm7bK
+         6ck3PufBpn1iASuVF7G9un8t1gWefpEMvS7fXM6CakFjmtrMDj/02Ea2s+JdbfeiJ0bY
+         p3Yg==
+X-Gm-Message-State: APjAAAW3a8cEzXe/MQRtwhAQfJ9dfyP7WrS9Ri2szVwIGwHy8bIMCDSq
+        uUHcY/YyjFLHO3BEf5ZJKYn6qfKLPmsZbHcsHeUk17v95mA=
+X-Google-Smtp-Source: APXvYqw/SZfOf+A8/TmMV1Gs9X5PqHFIfp5/BtiRvQegtzPMVKBnWmQbwTso4/p+cbZVMpA8SJS4y9APcF/MggyUbfc=
+X-Received: by 2002:a02:93e5:: with SMTP id z92mr14560288jah.8.1568189478861;
+ Wed, 11 Sep 2019 01:11:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190903214942.ubcbdgtphpwnaxs6@yadavpratyush.com>
- <20190904143055.11400-1-birger.sp@gmail.com> <20190910191217.qgb23x5tvaajppfh@yadavpratyush.com>
-In-Reply-To: <20190910191217.qgb23x5tvaajppfh@yadavpratyush.com>
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-Date:   Wed, 11 Sep 2019 08:49:08 +0200
-Message-ID: <CAGr--=+9t1m-8LdVnnhkUFS0LMss0WecUjjtR=s_b98qB9qKeA@mail.gmail.com>
-Subject: Re: [PATCH v5] git-gui: Add hotkeys to set widget focus
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        davvid@gmail.com, Bert Wesarg <bert.wesarg@googlemail.com>
+References: <CA+oNJz+N_b6Gq-gVu0ZnGbL_ppdu0LDSfqPJjsV8QAghrS1Rkg@mail.gmail.com>
+In-Reply-To: <CA+oNJz+N_b6Gq-gVu0ZnGbL_ppdu0LDSfqPJjsV8QAghrS1Rkg@mail.gmail.com>
+From:   Bogdan Butnaru <bbutnaru@qotilabs.com>
+Date:   Wed, 11 Sep 2019 10:11:03 +0200
+Message-ID: <CA+oNJzKoQ-PmwY=p2W5HhCk1qn-BCwAKMZzZUn_7p2GVi-r9=w@mail.gmail.com>
+Subject: =?UTF-8?B?RndkOiBQYXRoIGluc3RlYWQgb2YgcGF0aHNwZWMgZm9yIOKAnGdpdCBjaGVja291dCA8dA==?=
+        =?UTF-8?B?cmVlLWlzaD4gWy0tXSA8cGF0aHNwZWM+4oCd?=
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pratyush,
+Hello!
 
-On Tue, Sep 10, 2019 at 9:12 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> This patch LGTM, but I'm not sure how to resolve the keybindings
-> problem. Junio suggested we have configurable keybindings, and I agree
-> with him, but until we do, something has to be agreed upon. And we also
-> need to come up with a reasonable default.
->
-> So, I don't have any preferences for either using Alt+3 for the commit
-> message buffer, or Alt+4. Unless someone has objections, I'll go with
-> Alt+3 for the commit message buffer, and Alt+4 for the diff.
+Not sure if I=E2=80=99m doing something wrong here, but it seems that when
+calling =E2=80=9Cgit checkout <tree-ish> [--] <pathspec>=E2=80=9D, the last=
+ argument
+is not interpreted correctly.
 
-I honestly don't quite follow the argumentation to use Alt+3 for the
-commit message widget. Is Alt+4 (really) too awkward? And if it is,
-how is Alt+3 better?
-If you want to see it merged now (which I do, too), I propose we leave
-it at Alt+3 for the diff, and Alt+4 for the commit message buffer.
+I have a repository that contains a multi-module Maven project, and as
+such it contains several =E2=80=9Cpom.xml=E2=80=9D files, one in the root d=
+irectory
+and a few others in sub-directories. If I understand correctly the
+documentation, calling =E2=80=9Cgit checkout 0123abcdef -- :/**pom.xml=E2=
+=80=9D=E2=80=AFshould
+checkout (to the working tree and the index) all files named =E2=80=9Cpom.x=
+ml=E2=80=9D
+from revision 0123abcdef. As of version 2.23.0.windows.1 it only
+checks out the =E2=80=9Cpom.xml=E2=80=9D file from the root of the reposito=
+ry.
 
-As David A. mentioned in his email[1], git-cola utilizes CTRL+J/K/L
-for navigation, maybe we should consider(?):
-Alt+i: focus unstaged
-Alt+j: focus staged
-Alt+k: focus commit widget
-Alt+l: focus diff view
+However, if I run =E2=80=9Cgit checkout --patch 0123abcdef -- :/**pom.xml=
+=E2=80=9D,
+then during the interactive process I am asked about changes from all
+=E2=80=9Cpom.xml=E2=80=9D files, everywhere in the directory hierarchy. (Th=
+e short
+form =E2=80=9C-p=E2=80=9D also works.) If I just type =E2=80=9Ca=E2=80=9D a=
+t every prompt, I get what
+I expected from the first command, i.e. all matching files in the
+given revision.
 
-[1] https://public-inbox.org/git/20190910085446.GB32239@gmail.com/#t
+(I just tested that version now because it=E2=80=99s the newest I can find.
+But the issue happens since at least 2.20, probably earlier.)
 
-Best regards,
-Birger
+Cheers,
+=E2=80=94Bogdan Butnaru
