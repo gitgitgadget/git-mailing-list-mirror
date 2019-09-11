@@ -2,88 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EDCE1F463
-	for <e@80x24.org>; Wed, 11 Sep 2019 20:30:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAFE31F463
+	for <e@80x24.org>; Wed, 11 Sep 2019 20:55:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730557AbfIKUaM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Sep 2019 16:30:12 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:36692 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728808AbfIKUaM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Sep 2019 16:30:12 -0400
-Received: by mail-pf1-f195.google.com with SMTP id y22so14449877pfr.3
-        for <git@vger.kernel.org>; Wed, 11 Sep 2019 13:30:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ll9TtoT2+d/b60TBJ/NNuSejv1jwqNQS2TlhYVGXdS8=;
-        b=ALy0nk7OlguWn+RxbiCQ9wQamz3LsGV5hVTO2uJnIbe50GIZPhG6eWeB1oQVuO3fgz
-         MwHh5Yi42itETtPZ3adDhRX/QB09uzekYiXo3u4Ljki9NgYeUShVc1SjLhA6TftAB79r
-         CSnqOoZWBcd+zuBzLU8RBajMmFh/4Ypb8RMCvs90oBuXWjVBDQpH3DdIzy8svxpEpU1N
-         BfXydjpbTTRJXL78c+KDdkx579pDYpxdC3EG3hX3XmpJqUqQr+mCn6C4qxrR2/dYz9nK
-         7nVu6QRBT1n8OLEHRR7ycFY3OtTrNY6zKSuOCW4U5KXW9/N0BnKYpUOxdQzrhFyVb0je
-         sXaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ll9TtoT2+d/b60TBJ/NNuSejv1jwqNQS2TlhYVGXdS8=;
-        b=JkueuA77xWs6V+LMIRGF8dRUn8pO3qHhKew02VSmW5u5tz7fiCf9mvQFxuOCkM3l7z
-         olJvPhRh2p2588HE1rEkAd/XkWyKheCnYPkTw8p7dPQKWypX336a5l49mroYh2BQTZpt
-         f52WRO35f3QYRTrBPAdSZA8irruIfbqln2+1hsCF+25sNLarVicwl7UV2gcBMbZ/Gpvl
-         AYQiVHmFZq+MeLzzR3dEMx77m1POFvmBAD0KuLk8qz7CDUvKn49NTWRLbgewbY7UG+Ah
-         3l1NC9P3rAFMVqLIxtccbFDZJxKORBSFz+8lniPJs6DlwhfOxPXJuxIQZLmuxAhvtx3x
-         mPsw==
-X-Gm-Message-State: APjAAAUj1a+LKAAAGf1Rd1HxsiZYn2DPvMhh0ByovAiNN/XB/g47wezp
-        mFbm9oPUPva78xp6ePv0lLk=
-X-Google-Smtp-Source: APXvYqz7YKXtZeDtYM4NVPonFtAtm97n+emWTfyUqhHFTAEORCd5r1g/RWEHlKS5V/di081Rkxpexw==
-X-Received: by 2002:a63:3805:: with SMTP id f5mr34387745pga.272.1568233811167;
-        Wed, 11 Sep 2019 13:30:11 -0700 (PDT)
-Received: from [172.20.136.14] ([167.220.152.142])
-        by smtp.gmail.com with ESMTPSA id v66sm27183219pfv.79.2019.09.11.13.30.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Sep 2019 13:30:10 -0700 (PDT)
-Subject: Re: [PATCH 0/1] multi-pack-index: add --no-progress
-To:     William Baker via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     williamtbakeremail@gmail.com, jeffhost@microsoft.com,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.337.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <0dce74c7-4df8-6c6d-2a3a-2a23c1e89b42@gmail.com>
-Date:   Wed, 11 Sep 2019 16:30:09 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        id S1729541AbfIKUzo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Sep 2019 16:55:44 -0400
+Received: from relay9-d.mail.gandi.net ([217.70.183.199]:39223 "EHLO
+        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728412AbfIKUzn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Sep 2019 16:55:43 -0400
+X-Originating-IP: 1.186.12.58
+Received: from localhost (unknown [1.186.12.58])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 225FEFF804;
+        Wed, 11 Sep 2019 20:55:40 +0000 (UTC)
+Date:   Thu, 12 Sep 2019 02:25:39 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     git@vger.kernel.org, Birger Skogeng Pedersen <birger.sp@gmail.com>
+Subject: Re: [PATCH 2/2] git-gui: add hotkey to toggle "Amend Last Commit"
+ check button/menu
+Message-ID: <20190911205539.vb6asqcc22nzgdqa@yadavpratyush.com>
+References: <ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com>
+ <b82a00441ff1a6a9cea3fd235c1c33729ec31b71.1567713659.git.bert.wesarg@googlemail.com>
 MIME-Version: 1.0
-In-Reply-To: <pull.337.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b82a00441ff1a6a9cea3fd235c1c33729ec31b71.1567713659.git.bert.wesarg@googlemail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/11/2019 11:37 AM, William Baker via GitGitGadget wrote:
-> Hello Git contributors!
+Birger,
+
+Please ignore the two emails I sent about basing your work on top of 
+Bert's. I see that you have already done so (or maybe Bert did it, I 
+don't know), and I was reading an older version of the patch.
+
+On 05/09/19 10:09PM, Bert Wesarg wrote:
+> From: Birger Skogeng Pedersen <birger.sp@gmail.com>
 > 
-> My name is William Baker and I work at Microsoft. Over the past few years
-> I've worked closely with the Microsoft team contributing to the git
-> ecosystem and I'm excited to start working with the community.
+> Selecting whether to "Amend Last Commit" or not does not have a hotkey.
+> 
+> With this patch, the user may toggle between the two options with
+> CTRL/CMD+e.
+> 
+> Signed-off-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
+> Rebased-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> ---
+>  git-gui.sh | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 80a07d5..8b776dd 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -2640,6 +2640,12 @@ proc show_less_context {} {
+>  	}
+>  }
+>  
+> +proc toggle_commit_type {} {
+> +	global commit_type_is_amend
+> +	set commit_type_is_amend [expr !$commit_type_is_amend]
+> +	do_select_commit_type
+> +}
 
-William is being modest. He joined our team from the Windows org due to
-his extremely impactful work in the VFS for Git client, especially around
-the file system virtualization areas. While he started with the filesystem,
-he also delivered important features around managing the very large object
-store, so he is not new to some of Git's deepest internals at scale.
+Ah! So we had almost exactly the same thought process. This is pretty 
+much what I suggested in my other email ;)
 
-Thanks,
--Stolee 
+> +
+>  ######################################################################
+>  ##
+>  ## ui construction
+> @@ -2830,6 +2836,7 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
+>  	if {![is_enabled nocommit]} {
+>  		.mbar.commit add checkbutton \
+>  			-label [mc "Amend Last Commit"] \
+> +			-accelerator $M1T-E \
+>  			-variable commit_type_is_amend \
+>  			-command do_select_commit_type
+>  		lappend disable_on_lock \
+> @@ -3825,6 +3832,7 @@ bind .   <$M1B-Key-equal> {show_more_context;break}
+>  bind .   <$M1B-Key-plus> {show_more_context;break}
+>  bind .   <$M1B-Key-KP_Add> {show_more_context;break}
+>  bind .   <$M1B-Key-Return> do_commit
+> +bind .   <$M1B-Key-e> toggle_commit_type
+
+Nitpick: Please move this up with the binds for other letters (u, j, 
+etc)
+
+Also, I notice that the bindings for other letters have the same 
+function bound for both small and capital letters (IOW, same behavior 
+with shift held and released).
+
+I don't necessarily think that is a great idea. It is a pretty common 
+pattern to have, say Ctrl+a, do something, and Ctrl+Shift+a, do 
+something else. Just want to pick your brain on whether you think we 
+should do the same thing for both Ctrl+e and for Ctrl+E (aka 
+Ctrl+Shift+e), or just bind it to Ctrl+e, and leave Ctrl+E for something 
+else.
+
+>  foreach i [list $ui_index $ui_workdir] {
+>  	bind $i <Button-1>       { toggle_or_diff click %W %x %y; break }
+>  	bind $i <$M1B-Button-1>  { add_one_to_selection %W %x %y; break }
+
+Overall, the patch LGTM apart from a couple of nitpicks above. Thanks.
+
+-- 
+Regards,
+Pratyush Yadav
