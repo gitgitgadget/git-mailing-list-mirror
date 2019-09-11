@@ -8,98 +8,102 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D74111F463
-	for <e@80x24.org>; Wed, 11 Sep 2019 21:47:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39D061F463
+	for <e@80x24.org>; Wed, 11 Sep 2019 21:47:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728832AbfIKVr0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Sep 2019 17:47:26 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:53507 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726952AbfIKVrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1728828AbfIKVrZ (ORCPT <rfc822;e@80x24.org>);
         Wed, 11 Sep 2019 17:47:25 -0400
-Received: by mail-wm1-f68.google.com with SMTP id q18so5148838wmq.3
-        for <git@vger.kernel.org>; Wed, 11 Sep 2019 14:47:22 -0700 (PDT)
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41570 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728821AbfIKVrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Sep 2019 17:47:25 -0400
+Received: by mail-wr1-f66.google.com with SMTP id h7so25199557wrw.8
+        for <git@vger.kernel.org>; Wed, 11 Sep 2019 14:47:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=uIFTGJ+pG9/qgUAgI/ZQw5/QAQF191zuCgSHXPg0LUo=;
-        b=TohFNY/Pjs1eIwEpU6gwIkYMrl858BdNudPESQUp3TGXvOghYwjtno4zx2HHfMExIu
-         L//Y57nTHqcAKIXVUPJau6vvNjPa37hO0q3F9gVvJimwVP2qlZI4ekZSPeNtfHTMStHQ
-         NmACBKwV4d1Un9qO3qRYlvWgxAG1XwCdFH8LQ10WGvVw2tRohIa8ud+x7Fs26ndMC7KE
-         ishJ7C85qEQ0FJTxt0I7muJHHnQfbinJ6WKQ5zMwN/H1PjaogduH2wJkAzDACnTeZkrw
-         ZPskiomFeFv2Rz1Rez7PRhpSYohQlLRQsqXgHe6EL7B8ofxqtNgf91udAY7ViRxYUCgo
-         r6sQ==
+        bh=n3cOxkkpbVT2W9WmXH7VKafoQ1pZ7DKAr49UHiKBAow=;
+        b=a2cPtPZCLKcMH8ICSOQIEfX6kcF5yLlMewYTbQS2bDA/1Cdg8GRl8Amt0VDo2qhdRb
+         Q/5uwbvdpPoWH4uTsOr4YLjwU1BQxyZqdJ4gRBbVpmob4s+ltrgyh0Gky3fwAoDu9tsj
+         rshQxu8bz9PgM1J4YPEKg9Uj7KugISnMY/3FSoXUwZ0tdUk32HGwXmseS4lFViJk06x3
+         fpwEaRaLOWPRdIl09ff9AhvtmAltjKASyUzDMMWEOz4aX6I+RH2WCUwxeyqh4CtFZ/AT
+         ain3lthI+ECJUBLdGC3cZ3Tf/tH0lm+U38QAB0LHiBHmT5q873d0fSz+W7+MuBqrGIfT
+         89Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uIFTGJ+pG9/qgUAgI/ZQw5/QAQF191zuCgSHXPg0LUo=;
-        b=WBI6imNR449kiT+ENrwLi7/JyiujsP0NwpgsNvqVkVGhQVAAOYRGghISPY2Y+1iqlc
-         V5lJ3L+Mu67ddM3Ij2eg15n0Zebl+G9M3XWfbNwSE3jrjdu6eLCJhZUzXVk0g7h2fkK1
-         jUVWe1ZjLeiUCrrDVd8sP83OXgsRwHbYaoPrx8qdqEfdCQCCM9gDOertEDqSHrY2xwTz
-         SVrGmG/ypJ0KWcUWDBtnRtSyxr5QMbe62ynX5oLsB+NTIiDv2Ormpghtf6iEFNtdvbBl
-         GkcIV9o3CROEvWTIQqgN7VggluBBHmqvaNWm0uQmuAEwquPwb2OPC+5KZ2pO8sAKxSxt
-         5S1A==
-X-Gm-Message-State: APjAAAXo44BsL2wRaFfEVNWyRNUct8KCQtC4fMiMUfCqw3CulZv1AMhW
-        iF8y3CJVOs72Os23+hxw3D16vekR
-X-Google-Smtp-Source: APXvYqzLu2AuAQQD46DJ0iEr9ledXcCO3DVUsCXIfeC0QcIW7wzXpd20lwLInlYDbOXIT4j1AKy1Kg==
-X-Received: by 2002:a1c:770c:: with SMTP id t12mr5444430wmi.91.1568238441770;
-        Wed, 11 Sep 2019 14:47:21 -0700 (PDT)
+        bh=n3cOxkkpbVT2W9WmXH7VKafoQ1pZ7DKAr49UHiKBAow=;
+        b=nrsuClXms03o8vYuqRoG2Sllb9wSw6kS6lVajeDDVlrEctjbtpf0aLWIfcdu7PH2EN
+         94g1z/KcmawMt3LM+iv7QiO04HxVSl5gVg6Ea2spBYq4UcFeWIOR7BFnmHd30LCtvnvF
+         fD+MlCwkY0XaWTrKUOCWqsFjlJzWHmITQWIwZMbZeWXyEg0UycJdvTTVU6aVC2qJSokR
+         C1J4awBf/M55PCrGt4/1/cS6Mu8JsGOUPY8iLOd5cqBQr88TyvBr8OKdkhpF4EsOTGIB
+         Oxp1cNaAwf67kfn1ZnoNjTK4I2P8bZe07jAM3GsjiRyEF6ffNGtCpynOAL+K+yxCp3X1
+         ujww==
+X-Gm-Message-State: APjAAAUGLXm6/heYZeBYqxwhqeD3GPkWBKDQF1hc9EiGAkzjkIqmqeGD
+        mi/g1x7tTDPqhBVNfgxVSc+D8oXR
+X-Google-Smtp-Source: APXvYqwa/MpOg4wKdaaGlie7RdF+Qllu+SsOoWiE87FHV1oLMQN7QuL29WFz2rKLCHls1qICuz0sfw==
+X-Received: by 2002:adf:f801:: with SMTP id s1mr2832869wrp.320.1568238442486;
+        Wed, 11 Sep 2019 14:47:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q25sm4669206wmj.22.2019.09.11.14.47.21
+        by smtp.gmail.com with ESMTPSA id i73sm4190907wmg.33.2019.09.11.14.47.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Sep 2019 14:47:21 -0700 (PDT)
-Date:   Wed, 11 Sep 2019 14:47:21 -0700 (PDT)
-X-Google-Original-Date: Wed, 11 Sep 2019 21:47:19 GMT
-Message-Id: <pull.335.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.335.git.gitgitgadget@gmail.com>
+        Wed, 11 Sep 2019 14:47:22 -0700 (PDT)
+Date:   Wed, 11 Sep 2019 14:47:22 -0700 (PDT)
+X-Google-Original-Date: Wed, 11 Sep 2019 21:47:20 GMT
+Message-Id: <0d762cfb503fef081af9aa3cb0fe373863237745.1568238440.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.335.v2.git.gitgitgadget@gmail.com>
 References: <pull.335.git.gitgitgadget@gmail.com>
+        <pull.335.v2.git.gitgitgadget@gmail.com>
 From:   "Dominic Winkler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/1] Fix perl error "unescaped left brace in regex" for paranoid update hook
+Subject: [PATCH v2 1/1] contrib/hooks: escape left brace in regex in the
+ paranoid update hook
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Dominic Winkler <d.winkler@flexarts.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A literal "{" should now be escaped in a pattern starting from perl versions
->= v5.26. In perl v5.22, using a literal { in a regular expression was
-deprecated, and will emit a warning if it isn't escaped: {. In v5.26, this
-won't just warn, it'll cause a syntax error.
+From: Dominic Winkler <d.winkler@flexarts.at>
+
+A literal "{" should now be escaped in a pattern starting from perl
+versions >= v5.26. In perl v5.22, using a literal { in a regular
+expression was deprecated, and will emit a warning if it isn't escaped: \{.
+In v5.26, this won't just warn, it'll cause a syntax error.
 
 (see https://metacpan.org/pod/release/RJBS/perl-5.22.0/pod/perldelta.pod)
 
-Signed-off-by: Dominic Winkler d.winkler@flexarts.at [d.winkler@flexarts.at]
-
-Dominic Winkler (1):
-  contrib/hooks: escape left brace in regex in the paranoid update hook
-
+Signed-off-by: Dominic Winkler <d.winkler@flexarts.at>
+---
  contrib/hooks/update-paranoid | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-
-base-commit: 5fa0f5238b0cd46cfe7f6fa76c3f526ea98148d9
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-335%2Fflexarts%2Fmaint-update-paranoid-perlv5.26-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-335/flexarts/maint-update-paranoid-perlv5.26-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/335
-
-Range-diff vs v1:
-
- 1:  2743caa22e ! 1:  0d762cfb50 Fix perl error "unescaped left brace in regex" for paranoid update hook
-     @@ -1,6 +1,6 @@
-      Author: Dominic Winkler <d.winkler@flexarts.at>
-      
-     -    Fix perl error "unescaped left brace in regex" for paranoid update hook
-     +    contrib/hooks: escape left brace in regex in the paranoid update hook
-      
-          A literal "{" should now be escaped in a pattern starting from perl
-          versions >= v5.26. In perl v5.22, using a literal { in a regular
-
+diff --git a/contrib/hooks/update-paranoid b/contrib/hooks/update-paranoid
+index d18b317b2f..fc0a242a4e 100755
+--- a/contrib/hooks/update-paranoid
++++ b/contrib/hooks/update-paranoid
+@@ -302,13 +302,13 @@ $op = 'U' if ($op eq 'R'
+ 
+ RULE:
+ 	foreach (@$rules) {
+-		while (/\${user\.([a-z][a-zA-Z0-9]+)}/) {
++		while (/\$\{user\.([a-z][a-zA-Z0-9]+)}/) {
+ 			my $k = lc $1;
+ 			my $v = $data{"user.$k"};
+ 			next RULE unless defined $v;
+ 			next RULE if @$v != 1;
+ 			next RULE unless defined $v->[0];
+-			s/\${user\.$k}/$v->[0]/g;
++			s/\$\{user\.$k}/$v->[0]/g;
+ 		}
+ 
+ 		if (/^([AMD ]+)\s+of\s+([^\s]+)\s+for\s+([^\s]+)\s+diff\s+([^\s]+)$/) {
 -- 
 gitgitgadget
