@@ -2,92 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE63D1F463
-	for <e@80x24.org>; Wed, 11 Sep 2019 17:05:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA131F463
+	for <e@80x24.org>; Wed, 11 Sep 2019 17:48:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729278AbfIKRFU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Sep 2019 13:05:20 -0400
-Received: from mx2a.mailbox.org ([80.241.60.219]:48451 "EHLO mx2a.mailbox.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728937AbfIKRFU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Sep 2019 13:05:20 -0400
-X-Greylist: delayed 408 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Sep 2019 13:05:19 EDT
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:105:465:1:1:0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by mx2.mailbox.org (Postfix) with ESMTPS id B4764A192E;
-        Wed, 11 Sep 2019 18:58:30 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-Received: from smtp1.mailbox.org ([80.241.60.240])
-        by gerste.heinlein-support.de (gerste.heinlein-support.de [91.198.250.173]) (amavisd-new, port 10030)
-        with ESMTP id GubxAFtftA-U; Wed, 11 Sep 2019 18:58:27 +0200 (CEST)
-Subject: Re: git-send-email does not use conditional configuration
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-References: <CANTPZbbLNJPEEeG8BgdDEVYS=gudz4SvqGe==28EQHXDXUxuwQ@mail.gmail.com>
- <20190911140833.GA13916@sigill.intra.peff.net>
-From:   Konstantinos Dalamagkidis <konstantinos@dalamagkidis.info>
-Message-ID: <d4717b7f-b7a4-208b-6b83-7993b6bd7886@dalamagkidis.info>
-Date:   Wed, 11 Sep 2019 18:58:26 +0200
+        id S1729714AbfIKRsX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Sep 2019 13:48:23 -0400
+Received: from relay6-d.mail.gandi.net ([217.70.183.198]:49271 "EHLO
+        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729646AbfIKRsX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Sep 2019 13:48:23 -0400
+X-Originating-IP: 1.186.12.58
+Received: from localhost (unknown [1.186.12.58])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id C0E31C0004;
+        Wed, 11 Sep 2019 17:48:20 +0000 (UTC)
+Date:   Wed, 11 Sep 2019 23:18:13 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        davvid@gmail.com, Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH v5] git-gui: Add hotkeys to set widget focus
+Message-ID: <20190911174813.3v2f4s7wxolkkyef@yadavpratyush.com>
+References: <20190903214942.ubcbdgtphpwnaxs6@yadavpratyush.com>
+ <20190904143055.11400-1-birger.sp@gmail.com>
+ <20190910191217.qgb23x5tvaajppfh@yadavpratyush.com>
+ <CAGr--=+9t1m-8LdVnnhkUFS0LMss0WecUjjtR=s_b98qB9qKeA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190911140833.GA13916@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGr--=+9t1m-8LdVnnhkUFS0LMss0WecUjjtR=s_b98qB9qKeA@mail.gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/11/19 4:08 PM, Jeff King wrote:
-> On Wed, Sep 11, 2019 at 08:14:45AM +0200, Konstantinos Dalamagkidis wrote:
+On 11/09/19 08:49AM, Birger Skogeng Pedersen wrote:
+> Hi Pratyush,
 > 
->> In my git configuration, I have an includeif section for work
->> related repositories that configures the user and sendemail
->> sections.
+> On Tue, Sep 10, 2019 at 9:12 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> > This patch LGTM, but I'm not sure how to resolve the keybindings
+> > problem. Junio suggested we have configurable keybindings, and I agree
+> > with him, but until we do, something has to be agreed upon. And we also
+> > need to come up with a reasonable default.
+> >
+> > So, I don't have any preferences for either using Alt+3 for the commit
+> > message buffer, or Alt+4. Unless someone has objections, I'll go with
+> > Alt+3 for the commit message buffer, and Alt+4 for the diff.
 > 
-> What kind of includeIf are you using? Does it work with an
-> unconditional include? This seems to work for me:
-> 
->    $ git config --global include.path one
->    $ git config --file ~/one sendemail.smtpserver one.example.com
->    $ git send-email --dry-run -1 --to nobody | grep ^Server
->    Server: one.example.com
-> 
->    $ git config --global includeIf.gitdir:$PWD/.path two
->    $ git config --file ~/two sendemail.smtpserver two.example.com
->    $ git send-email --dry-run -1 --to nobody | grep ^Server
->    Server: two.example.com
-> 
-> I.e. both unconditional and gitdir includes work for me. If you do
-> something similar, what output do you get?
+> I honestly don't quite follow the argumentation to use Alt+3 for the
+> commit message widget. Is Alt+4 (really) too awkward? And if it is,
+> how is Alt+3 better?
 
-I am using "includeIf.gitdir:/work". I tried to reproduce it at my home 
-workstation where I have the exact same configuration, but in the 
-beginning I couldn't. Then I realized, that at work the /work folder is 
-actually a symlink to a different directory. When I did the same at 
-home, I could reproduce the issue:
+It isn't really much more than personal preference.
 
-% pwd
-/work/repo
-% git send-email --dry-run -1 --to nobody | grep ^From
-From: Konstantinos Dalamagkidis <work-email@example.com>
-% cd ../repo-symlink
-% git send-email --dry-run -1 --to nobody | grep ^From
-From: Konstantinos Dalamagkidis <personal-email@example.com>
-% realpath .
-/home/dalamagkidis/tmp/repo
+> If you want to see it merged now (which I do, too), I propose we leave
+> it at Alt+3 for the diff, and Alt+4 for the commit message buffer.
 
-It appears that git-config and git-send-email parse the gitdir slightly 
-differently when it comes to symlinks. More specifically git-send-email 
-uses the realpath of the repository to determine which configuration to 
-use. It also explains why nobody came across this problem before.
+Since this entire debate essentially boils down to personal preference, 
+there is no clear answer. So I'll just go with the author's 
+implementation.
 
+Do note that I fixed a small nitpick locally. Changed the subject from 
+"git-gui: Add..." to "git-gui: add...".
+ 
+> As David A. mentioned in his email[1], git-cola utilizes CTRL+J/K/L
+> for navigation, maybe we should consider(?):
+> Alt+i: focus unstaged
+> Alt+j: focus staged
+> Alt+k: focus commit widget
+> Alt+l: focus diff view
 
-Rgds
-Konstantinos
+David's suggestion was to try to use the vim keys, which are h,j,k,l, 
+and not i,j,k,l. Also, in git-cola (I learned this from reading his 
+email, I don't use git-cola myself), Ctrl+j is for focussing on the 
+lower part of the UI, which is their diff viewer. j is used for moving 
+down in vim. Ctrl+k focusses on the status widget, which is in the upper 
+part of the UI. k is used for moving up in vim.
+
+But we can't do something similar with git-gui. Why would Alt+k make 
+more sense when bound to diff instead of the unstaged changes widget? 
+Both are in the upper part of the UI. Similar argument for why Alt+j 
+would make more sense bound to commit message buffer instead of the 
+staged changes widget? Both are in the lower part of the UI. And you 
+can't fit h or l in this similar analogy, because they don't make sense 
+to me at all.
+
+I realise that the bindings I mentioned are not what you proposed, but 
+they are more in line with the vim keys.
+
+My point being, it is not simple to bind our 4 widgets to 4 directional 
+keys, unlike in git-cola where you only have an up and down.
+
+So I don't see any reasonable bindings what would work with the 4 vim 
+directional keys: h,j,k,l. Maybe I'm missing something?
+
+-- 
+Regards,
+Pratyush Yadav
