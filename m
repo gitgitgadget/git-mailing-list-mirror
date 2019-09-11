@@ -2,139 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FD3A1F463
-	for <e@80x24.org>; Wed, 11 Sep 2019 17:52:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BF331F463
+	for <e@80x24.org>; Wed, 11 Sep 2019 18:05:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729692AbfIKRwH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Sep 2019 13:52:07 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:52197 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729622AbfIKRwH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Sep 2019 13:52:07 -0400
-Received: by mail-wm1-f67.google.com with SMTP id 7so4523836wme.1
-        for <git@vger.kernel.org>; Wed, 11 Sep 2019 10:52:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uBEiDXE8dlJLwtnPT6Z40698FXUSV50jK6BrT51U3ZY=;
-        b=BeI3JECT4uHNJvQ//66hqwm4TwqkYmRe3IpAIkpPa7fjj2fsl0sJcLQjxSb/W8t/2x
-         fyy+J6FL4052d478ldNVGiHuvEp14hi0tAdKjHdVDqrpW0J7yMQdZoTlP5DgF8hlSMYO
-         jsfyt1c1AphTUh/Z2s1pGpLemaAanp7fBg93MY/SiLHGf1GALxvA0IWcrSNfwU0vLp3P
-         cYYO0rY4u+MkLMFeQ6Xs9qFf/JFClkKinOsmNaMU31ERyWysKqxMscSSdqRsjgejEy8W
-         1N/UBmlei1aI9GxWj8uo+ZYv4KahDLPwYFE50vtRK2anozEEItKGP6uQtIGKePnsXqHe
-         QHiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uBEiDXE8dlJLwtnPT6Z40698FXUSV50jK6BrT51U3ZY=;
-        b=i4Wt7cppJAPmGx49LxsQyh7793LbKtzED4lEH47kzqGfBszegKVUcOpP5E2o3J+HV5
-         6nZsbHQB4qK6Nxw3T1EdupPMsne+37brrFINYlCzWULYtAQTC94zYGtQssx+gkliU23h
-         DFM0TNJ9BCFQU1aZqc6fQpBTLAmqnor5T+UTZy8/iI58f7VFEofsgMsqpKBolB73feBE
-         rCnU9DJinNIVlgQ9pdtP/3pbVj5jqg/nNlQ+AAgcsvqdcz0Uk/jHEC6uTCoGhDP52rXL
-         qlcVO4HBAjnLuaTJPUgoTxPzcDJkgUyApPPJDG8i5HsiwfH2uV8T3+QzNzM31OOMGXqk
-         9gOA==
-X-Gm-Message-State: APjAAAVMRFFeEPgN/2GyiN7Ct/hMwKwqL3KOwrs8inSjrwuojsT0j6he
-        iXdulRDN8zNsiBfarbsfqfo=
-X-Google-Smtp-Source: APXvYqy4gjHCZBF/PSIT7nJNv/TJ6xrzERI/Rr8g0fRctlhxiIn/9bhC6fYKSeLNjjsZhMWOFLzi+g==
-X-Received: by 2002:a1c:6c09:: with SMTP id h9mr4629657wmc.36.1568224324823;
-        Wed, 11 Sep 2019 10:52:04 -0700 (PDT)
-Received: from localhost ([95.148.214.9])
-        by smtp.gmail.com with ESMTPSA id d18sm27242266wra.91.2019.09.11.10.52.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Sep 2019 10:52:02 -0700 (PDT)
-Date:   Wed, 11 Sep 2019 18:52:01 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Joel Teichroeb <joel@teichroeb.net>, Jeff King <peff@peff.net>,
-        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v3 1/3] factor out refresh_and_write_cache function
-Message-ID: <20190911175201.GA11444@cat>
-References: <20190829182748.43802-1-t.gummerer@gmail.com>
- <20190903191041.10470-1-t.gummerer@gmail.com>
- <20190903191041.10470-2-t.gummerer@gmail.com>
- <xmqqwoemo131.fsf@gitster-ct.c.googlers.com>
- <20190906141812.GA128436@cat>
- <nycvar.QRO.7.76.6.1909111155540.5377@tvgsbejvaqbjf.bet>
+        id S1729744AbfIKSFD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Sep 2019 14:05:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46794 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729145AbfIKSFD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Sep 2019 14:05:03 -0400
+Received: (qmail 16534 invoked by uid 109); 11 Sep 2019 18:05:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 11 Sep 2019 18:05:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27023 invoked by uid 111); 11 Sep 2019 18:07:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Sep 2019 14:07:00 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 11 Sep 2019 14:05:01 -0400
+From:   Jeff King <peff@peff.net>
+To:     Konstantinos Dalamagkidis <konstantinos@dalamagkidis.info>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Git.pm normalizes $GIT_DIR, was Re: git-send-email does not use
+ conditional configuration
+Message-ID: <20190911180501.GA26087@sigill.intra.peff.net>
+References: <CANTPZbbLNJPEEeG8BgdDEVYS=gudz4SvqGe==28EQHXDXUxuwQ@mail.gmail.com>
+ <20190911140833.GA13916@sigill.intra.peff.net>
+ <d4717b7f-b7a4-208b-6b83-7993b6bd7886@dalamagkidis.info>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1909111155540.5377@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d4717b7f-b7a4-208b-6b83-7993b6bd7886@dalamagkidis.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/11, Johannes Schindelin wrote:
-> Hi Thomas,
-> 
-> On Fri, 6 Sep 2019, Thomas Gummerer wrote:
-> > Oops, I didn't realize there was another series in flight that also
-> > introduces 'repo_refresh_and_write_index'.  Probably should have done
-> > a test merge of this with pu.
-> 
-> Yep, our patches clash. I would not mind placing my patch series on top
-> of yours, provided that you can make a few changes that I need ;-)
+On Wed, Sep 11, 2019 at 06:58:26PM +0200, Konstantinos Dalamagkidis wrote:
 
-Sounds good.  Looking ahead further I don't mind these changes at all!
+> I am using "includeIf.gitdir:/work". I tried to reproduce it at my home
+> workstation where I have the exact same configuration, but in the beginning
+> I couldn't. Then I realized, that at work the /work folder is actually a
+> symlink to a different directory. When I did the same at home, I could
+> reproduce the issue:
+> 
+> % pwd
+> /work/repo
+> % git send-email --dry-run -1 --to nobody | grep ^From
+> From: Konstantinos Dalamagkidis <work-email@example.com>
+> % cd ../repo-symlink
+> % git send-email --dry-run -1 --to nobody | grep ^From
+> From: Konstantinos Dalamagkidis <personal-email@example.com>
+> % realpath .
+> /home/dalamagkidis/tmp/repo
+> 
+> It appears that git-config and git-send-email parse the gitdir slightly
+> differently when it comes to symlinks. More specifically git-send-email uses
+> the realpath of the repository to determine which configuration to use. It
+> also explains why nobody came across this problem before.
 
-> > Right, and if gentle is set to false, it avoids writing the index,
-> > which seems fine from my perspective.
-> 
-> This also suggests that it would make sense to avoid
-> `LOCK_DIE_ON_ERROR`, _in particular_ because this is supposed to be a
-> library function, not just a helper function for a one-shot built-in
-> (don't you like how this idea "it is okay to use exit() to clean up
-> after us, we don't care" comes back to bite us?).
+Ah, that's interesting. In both cases it's git-config who is doing the
+path comparison. And it should be happy with either form due to
+0624c63ce6 (config: match both symlink & realpath versions in
+IncludeIf.gitdir:*, 2017-05-16).
 
-Yup, returning an error for this definitely makes sense, especially
-for future proofing.
+But if send-email is normalizing the path and setting $GIT_DIR before we
+even hit git-config, then that would fool it (git-config never even sees
+the symlinked path). And that seems to be the case, which is due to the
+Git.pm perl module. Running:
 
-> > >  - This version allows to pass pathspec, seen and header_msg, while
-> > >    the one in builtin-add-i cannot limit the part of the index
-> > >    getting refreshed with pathspec.  It wouldn't be a brain surgery
-> > >    to use this version and adjust the caller (there only is one) in
-> > >    the builtin-add-i topic.
-> >
-> > 'pathspec', 'seen' and 'header_msg' are not used in my version either,
-> > I just implemented it for completeness and compatibility.  So I'd be
-> > fine to do without them.
-> 
-> Oh, why not keep them? I'd rather keep them and adjust the caller in
-> `builtin-add-i`.
+  git init repo
+  ln -s repo link
+  cd link
+  git config alias.env '!echo $GIT_DIR'
+  perl -MGit -le '
+    my $repo = Git->repository();
+    print "env=", $repo->command(qw(env));
+    print "resolved=", $repo->command(qw(rev-parse --git-dir));
+  '
 
-Great, I'm happy to keep them.
+gives me:
 
-> > There's two more differences between the versions:
-> >
-> >  - The version in my series allows passing in write_flags to be passed
-> >    to write_locked_index, which is required to convert the callers in
-> >    builtin/merge.c.
-> 
-> I can always pass in 0 as `write_flags`.
-> 
-> >  - Dscho's version also calls 'repo_read_index_preload()', which I
-> >    don't do in mine.  Some callers don't need to do that, so I think it
-> >    would be nice to keep that outside of the
-> >    'repo_refresh_and_write_index()' function.
-> 
-> Agreed.
-> 
-> > I can think of a few ways forward here:
-> >
-> >  - I incorporate features that are needed for the builtin-add-i series
-> >    here, and that is rebased on top of this series.
-> 
-> I'd prefer this way forward. The `builtin-add-i` patch series is
-> evolving more slowly than yours.
+  env=/home/peff/tmp/repo/.git
+  resolved=/home/peff/tmp/repo/.git
 
-Great!  I'll send an updated version of my series soon.  Thanks!
+I'd argue that Git.pm probably shouldn't be setting $GIT_DIR at all when
+we've auto-discovered the repo from the current directory (instead all
+of the sub-programs should just do their own auto-discovery). But even
+if we feed the constructor another repository path, it probably should
+be keeping what it puts in $GIT_DIR as close to what it was original
+given.
+
+I'll admit I'm slightly afraid to touch Git.pm at all, though. It's old,
+rarely touched code that I suspect has poor test coverage. But I'll cc
+Ævar, who was the most recent brave person. ;)
+
+-Peff
