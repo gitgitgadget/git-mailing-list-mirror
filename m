@@ -2,168 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D0C81F463
-	for <e@80x24.org>; Wed, 11 Sep 2019 18:21:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8C781F463
+	for <e@80x24.org>; Wed, 11 Sep 2019 18:34:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729895AbfIKSVS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Sep 2019 14:21:18 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38563 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729758AbfIKSVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Sep 2019 14:21:18 -0400
-Received: by mail-wr1-f67.google.com with SMTP id l11so25652247wrx.5
-        for <git@vger.kernel.org>; Wed, 11 Sep 2019 11:21:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yw34tZuxF7paVqcDxC9Kwa7pJwDI8PLzsYdCvILdBKk=;
-        b=dzn81nZJsKveB55zTH0HjWj+RLpLLjOi/Pr2ZPSX3T6EwtSjTQnKxIdR45czN+Eh1x
-         O2e7saY8AjqioQkDFZWbIJ5MUUsY1lgbqtDbmjnavmPSmFStwS1iu4ykR5hb1gLem/6V
-         8LIsOCCHpPSESif527RuIa9AxbJ5UmNQVEb5mUvBHvVsR++cDTUSWbm2AmMC2Bt9BzBN
-         imoI0KkCR1yZcBexjhriNKkd5sOKoJ0/LkS8YMj3xkbeIISo84m1LpllyP2f24FSs0th
-         SaH9vSktZFT/GJ3NAJxShijHoZRtHjASWc/n3jTcV5b+w2idu7DP24eIspz+Nl9rIjR8
-         amyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yw34tZuxF7paVqcDxC9Kwa7pJwDI8PLzsYdCvILdBKk=;
-        b=tLZB72CxqJ8mQC54kEXeJT0KPf51BStHDJC/S9F4E2H/t3bXlhQUPkXSrBPzlGi6L4
-         LRgiIQCthL/oC8mU2mmJm7IJGCihYlOT9gPKxXjcLscK4EsR7hjEK2PiCH1q7onZdH48
-         TABJzrss2mdjCeIOO0+DMKST5Xyk4DivYmRmC9uCqDvOK8VmnQxFd4F3e5Nb60Re2ysv
-         qhpWEyWONlaI3f96sWlZUg4AuYXkgBMC3gFfMNuY4pxdp1Q3goEs2RDHddeanGD9W5hb
-         Yl2lyGAzX5FsobZkVZnRgP1yVzfBZ866LiOlZNGGipzKgCh1bIjb+CRCpXjoJw+c2qY3
-         NxHw==
-X-Gm-Message-State: APjAAAVBQ8RUnHC0mS2EcdAaosFY7S5kyZmgGPWsZ8Z5WfgJhQ0GI2t0
-        7r1m3xSQwKpaUzZL3+oU/6z9CHNH
-X-Google-Smtp-Source: APXvYqyfZrBqzWzQVUgwh/+Ab6OHifY9pD+JRrCE4eWS6HKt5acwN+iq/FC274yCWZsBeBnbtxCQSw==
-X-Received: by 2002:a5d:6647:: with SMTP id f7mr32006774wrw.170.1568226075833;
-        Wed, 11 Sep 2019 11:21:15 -0700 (PDT)
-Received: from localhost ([95.148.214.9])
-        by smtp.gmail.com with ESMTPSA id l62sm6185935wml.13.2019.09.11.11.21.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Sep 2019 11:21:15 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Joel Teichroeb <joel@teichroeb.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v4 3/3] stash: make sure to write refreshed cache
-Date:   Wed, 11 Sep 2019 19:20:27 +0100
-Message-Id: <20190911182027.41284-4-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.23.0.rc2.194.ge5444969c9
-In-Reply-To: <20190911182027.41284-1-t.gummerer@gmail.com>
-References: <20190903191041.10470-1-t.gummerer@gmail.com>
- <20190911182027.41284-1-t.gummerer@gmail.com>
+        id S1730093AbfIKSeb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Sep 2019 14:34:31 -0400
+Received: from relay11.mail.gandi.net ([217.70.178.231]:42561 "EHLO
+        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727575AbfIKSea (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Sep 2019 14:34:30 -0400
+Received: from localhost (unknown [1.186.12.58])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay11.mail.gandi.net (Postfix) with ESMTPSA id D92DF100005;
+        Wed, 11 Sep 2019 18:34:27 +0000 (UTC)
+Date:   Thu, 12 Sep 2019 00:04:20 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: feature request, git-gui: add hotkey to toggle amend/new
+Message-ID: <20190911183419.jea27ctvcdl5olp3@yadavpratyush.com>
+References: <CAKPyHN3S-jLWmfHUyH9mCBPjHCEaBCbrkVQEKFqHv59U37=Kyg@mail.gmail.com>
+ <CAKPyHN08Z_9oByA8ruKwwXRcAfYPU95JaMb=pqQWwGwPVG=_og@mail.gmail.com>
+ <CAGr--=Jn87r_ySYkZmtqUBA40+fwdn0MbuN6_LNDO4mOWyoKTg@mail.gmail.com>
+ <20190903124541.2p5hmknolh2dwqh5@yadavpratyush.com>
+ <971bbc44-d3d4-552d-d18e-58a2315c6183@kdbg.org>
+ <20190904174103.nrntgwv6zdqyjqsh@yadavpratyush.com>
+ <8a726eea-f461-db90-7e36-70b708ff8915@kdbg.org>
+ <CAKPyHN3+Sr2QJGR7Sw02x0A9OXshVUQofqH=ShXDivmqP5X7vw@mail.gmail.com>
+ <20190910085446.GB32239@gmail.com>
+ <CAGr--=Jdj+kJmV7z3vhYW+s129+0+KgbNYw8NFPmSASRYMTdbg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGr--=Jdj+kJmV7z3vhYW+s129+0+KgbNYw8NFPmSASRYMTdbg@mail.gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When converting stash into C, calls to 'git update-index --refresh'
-were replaced with the 'refresh_cache()' function.  That is fine as
-long as the index is only needed in-core, and not re-read from disk.
+On 11/09/19 12:27PM, Birger Skogeng Pedersen wrote:
+> Hi Pratyush,
+> 
+> I'm hoping this will be merged, even without changing the radio
+> selectors to a checkbox(?). The patch from Bert resolves the issue I
+> raised about wanting the hotkey.
+> What do you think?
 
-However in many cases we do actually need the refreshed index to be
-written to disk, for example 'merge_recursive_generic()' discards the
-in-core index before re-reading it from disk, and in the case of 'apply
---quiet', the 'refresh_cache()' we currently have is pointless without
-writing the index to disk.
+What do you mean by "this"? I am guessing you mean [0].
 
-Always write the index after refreshing it to ensure there are no
-regressions in this compared to the scripted stash.  In the future we
-can consider avoiding the write where possible after making sure none
-of the subsequent calls actually need the refreshed cache, and it is
-not expected to be refreshed after stash exits or it is written
-somewhere else already.
+I'm afraid that patch conflicts with Bert's change [1] to using a 
+checkbox. Since both patches are in flight, it makes more sense to base 
+your work off his. If I merge your patch now, I'll have to revert it as 
+soon as it is time to merge Bert's, and then rework your patch.
 
-Reported-by: Jeff King <peff@peff.net>
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- builtin/stash.c  | 11 +++++++----
- t/t3903-stash.sh | 16 ++++++++++++++++
- 2 files changed, 23 insertions(+), 4 deletions(-)
+Also, after Bert's patch, the toggling becomes much simpler. All you'd 
+have to do is something like:
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index b5a301f24d..ab30d1e920 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -396,7 +396,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 	const struct object_id *bases[1];
- 
- 	read_cache_preload(NULL);
--	if (refresh_cache(REFRESH_QUIET))
-+	if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
- 		return -1;
- 
- 	if (write_cache_as_tree(&c_tree, 0, NULL))
-@@ -485,7 +485,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 	}
- 
- 	if (quiet) {
--		if (refresh_cache(REFRESH_QUIET))
-+		if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
- 			warning("could not refresh index");
- 	} else {
- 		struct child_process cp = CHILD_PROCESS_INIT;
-@@ -1129,7 +1129,10 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
- 	prepare_fallback_ident("git stash", "git@stash");
- 
- 	read_cache_preload(NULL);
--	refresh_cache(REFRESH_QUIET);
-+	if (refresh_and_write_cache(REFRESH_QUIET, 0, 0) < 0) {
-+		ret = -1;
-+		goto done;
-+	}
- 
- 	if (get_oid("HEAD", &info->b_commit)) {
- 		if (!quiet)
-@@ -1290,7 +1293,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
- 		free(ps_matched);
- 	}
- 
--	if (refresh_cache(REFRESH_QUIET)) {
-+	if (refresh_and_write_cache(REFRESH_QUIET, 0, 0)) {
- 		ret = -1;
- 		goto done;
- 	}
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index b8e337893f..392954d6dd 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1241,4 +1241,20 @@ test_expect_success 'stash --keep-index with file deleted in index does not resu
- 	test_path_is_missing to-remove
- '
- 
-+test_expect_success 'stash apply should succeed with unmodified file' '
-+	echo base >file &&
-+	git add file &&
-+	git commit -m base &&
-+
-+	# now stash a modification
-+	echo modified >file &&
-+	git stash &&
-+
-+	# make the file stat dirty
-+	cp file other &&
-+	mv other file &&
-+
-+	git stash apply
-+'
-+
- test_done
+  bind . <$M1B-Key-e> {
+	# Toggle commit type.
+	set commit_type_is_amend [expr {!$commit_type_is_amend}]
+	do_select_commit_type
+  }
+
+Maybe a cleaner way is possible, but this is what I could come up with 
+for toggling a boolean.
+
+So can you please send a re-roll based on Bert's patch? I took a quick 
+glance at it, and it seems mostly correct. I have a couple of comments, 
+so some things might change based on the discussion, but I don't think 
+it should affect your change too much.
+
+[0] https://public-inbox.org/git/20190904175943.11924-1-birger.sp@gmail.com/
+[1] https://public-inbox.org/git/ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com/
+
 -- 
-2.23.0.rc2.194.ge5444969c9
-
+Regards,
+Pratyush Yadav
