@@ -2,109 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4938B1F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 21:42:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6C221F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 22:12:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728521AbfILVmJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 17:42:09 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50380 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726074AbfILVmJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 17:42:09 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2ED757AE63;
-        Thu, 12 Sep 2019 17:42:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=k8OcKsLRyno7UCxZehGvruRgX/4=; b=GnrpDq
-        wNiTZLiP2JV+46MFDpXkcbSoIk56XbFXZJnh30kLq/uNAKq6AG20qcC6hiMfv0ST
-        djwFz2ABefSpXwxoeuGIts7hwB1ylFtpuW+IxoV5f0D/jLBBJRru++cwqgzh0WXC
-        1kbtPUb6om7XaLgqTM8X7QpxUT2fA5PoD4ido=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gslOlto0IGA4a/kEJdUW5ir5LmU/eRTq
-        AbXK/gUQzttef1kL8c8gSyy9w4OP+VQ8aBXPB0F0+c0wSHwseT/WlvaaqMXNu/jR
-        m7fLSkGGY9iZEyWPO3QMaB7u+lJ7nJDIMs7GQZjkham5pYsaDZkF2xS3E9ZVnkCh
-        dn+ZkmvVH9s=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 27B737AE60;
-        Thu, 12 Sep 2019 17:42:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 557D57AE5F;
-        Thu, 12 Sep 2019 17:42:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/3] Makefile: define THIRD_PARTY_SOURCES
-References: <cover.1568101393.git.liu.denton@gmail.com>
-        <cover.1568309119.git.liu.denton@gmail.com>
-        <3878cb2598c677d139c8734b61772d0cdcfdb935.1568309119.git.liu.denton@gmail.com>
-Date:   Thu, 12 Sep 2019 14:42:02 -0700
-In-Reply-To: <3878cb2598c677d139c8734b61772d0cdcfdb935.1568309119.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Thu, 12 Sep 2019 10:28:30 -0700")
-Message-ID: <xmqq5zlxfaz9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1727703AbfILWMt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 18:12:49 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:34612 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727220AbfILWMs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 18:12:48 -0400
+Received: by mail-pg1-f196.google.com with SMTP id n9so14204162pgc.1
+        for <git@vger.kernel.org>; Thu, 12 Sep 2019 15:12:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Ptim27PnuEyvXFrP5tqSJumVkwythLTogNUrEYUqxs4=;
+        b=eG73lbzGunBqmyaZP67VmFG8wvh7SaHP/pevgoLj+s0jhbETM2PvSalazFxDuS2vUC
+         l3CQz2N5e5dP1cCzMs7227v88UsOzQSkDbdogA9VIQT/2SSqeP4+M23CnH7uQBOteNdM
+         t750sMyUg6l6qiKv3A73I95t6hLrbUS/dxWXLTE7NXrb3EuqySD2qwAy0ez4aLDfKsfL
+         zZtEXgcznXKVxwKyGvz2mtW3L3HWYuW0igjg/dU+osKNZVIivnvXdp1MspeKVS2YiDeH
+         qHNh5XNLBtCxUDOylup72opDe+/WvSh9KlaarU5wMcfevmnwxPMW/6JgAO1nK30up4x3
+         q7nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Ptim27PnuEyvXFrP5tqSJumVkwythLTogNUrEYUqxs4=;
+        b=JPr4mvNcRayrXwERs/wRPwcWPHAPbHMCAO+rlbvILO9NDqXpcZhwYh01qXw+d2kYrx
+         8IvTSmodrYeUXdqU2SFOY6asYGvzpJHS3gokrFvJ2LXIuWcRXKhT4ObKfVFrHDOTD/0K
+         y0hw8btVoyFymtUEvGXXh/yBzhJM5gjeR3XFVozbB4wbB0LZ7H4BrgssdPg45i5nm1vq
+         Qr2EuvvmvtPD7vFMJaBDzpPOx9i8xhIAuS3vAl1TD1WPdrPas3HmTK58LJ6vVQ7lZLeN
+         Sze0C8gsrQ45ufYRlRt3zSJ83nHNjmvZBem6StCyI2+WVj2uOrkHodB2W0BjvzMQt8uR
+         Bbuw==
+X-Gm-Message-State: APjAAAWSXsO5Z3BI7Eg5Kx1t/B6Zx3VnNvmzRsi8x25aoL9/xoxXG2VA
+        E1gZBShY+8gvwBtHej2jMj8pHqa/BWQ=
+X-Google-Smtp-Source: APXvYqx/BkrXFiZzCHq362N7Qqq5x0ttXA5w9IcCOOt1rqiP0eq+X8Db+KAOrfVRcIen7Qf22f6Sbg==
+X-Received: by 2002:a63:2943:: with SMTP id p64mr2823945pgp.98.1568326367449;
+        Thu, 12 Sep 2019 15:12:47 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id y13sm24358188pfn.73.2019.09.12.15.12.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 12 Sep 2019 15:12:46 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Samuel Lijin <sxlijin@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH v3 01/12] t7300: add testcases showing failure to clean specified pathspecs
+Date:   Thu, 12 Sep 2019 15:12:29 -0700
+Message-Id: <20190912221240.18057-2-newren@gmail.com>
+X-Mailer: git-send-email 2.23.0.173.gad11b3a635.dirty
+In-Reply-To: <20190912221240.18057-1-newren@gmail.com>
+References: <20190905154735.29784-1-newren@gmail.com>
+ <20190912221240.18057-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 292D2EC8-D5A6-11E9-9ECC-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Someone brought me a testcase where multiple git-clean invocations were
+required to clean out unwanted files:
+  mkdir d{1,2}
+  touch d{1,2}/ut
+  touch d1/t && git add d1/t
+With this setup, the user would need to run
+  git clean -ffd */ut
+twice to delete both ut files.
 
-> After looking through the source files in compat/ and investigating the
-> files' content and/or its Git history, I've determined the list of files
-> that were copied from a third-party source. Place the names of these
-> files into the THIRD_PARTY_SOURCES variable in the Makefile.
+A little testing showed some interesting variants:
+  * If only one of those two ut files existed (either one), then only one
+    clean command would be necessary.
+  * If both directories had tracked files, then only one git clean would
+    be necessary to clean both files.
+  * If both directories had no tracked files then the clean command above
+    would never clean either of the untracked files despite the pathspec
+    explicitly calling both of them out.
 
-Please make sure readers won't get fooled into thinking these are
-filenames.  They are meant to be used in $(filter-out) as patterns
-to match the names of third-party source files.
+A bisect showed that the failure to clean out the files started with
+commit cf424f5fd89b ("clean: respect pathspecs with "-d", 2014-03-10).
+However, that pointed to a separate issue: while the "-d" flag was used
+by the original user who showed me this problem, that flag should have
+been irrelevant to this problem.  Testing again without the "-d" flag
+showed that the same buggy behavior exists without using that flag, and
+has in fact existed since before cf424f5fd89b.
 
-Also, the paragraph before that talks about "I did this", but
-claiming credit is much less important than why we are doing this in
-the first place, which you forgot to say (perhaps because you were
-too deeply into the task and the motivation was too obvious to you).
+Add testcases showing that multiple untracked files within entirely
+untracked directories cannot be cleaned when specifying these files to
+git clean via pathspecs.
 
-So, if I were doing this patch, I'd justify the whole thing as such:
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/t7300-clean.sh | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-	Some files in our codebase are borrowed from other projects,
-	and minimally updated to suit our own needs.  We'd sometimes
-	need to tell our own sources and these third-party sources
-	apart for management purposes (e.g. we may want to be less
-	strict about coding style and other issues on third-party
-	files).
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index d01fd120ab..2c254c773c 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -691,6 +691,38 @@ test_expect_failure 'git clean -d skips nested repo containing ignored files' '
+ 	test_path_is_file nested-repo-with-ignored-file/file
+ '
+ 
++test_expect_failure 'git clean handles being told what to clean' '
++	mkdir -p d1 d2 &&
++	touch d1/ut d2/ut &&
++	git clean -f */ut &&
++	test_path_is_missing d1/ut &&
++	test_path_is_missing d2/ut
++'
++
++test_expect_failure 'git clean handles being told what to clean, with -d' '
++	mkdir -p d1 d2 &&
++	touch d1/ut d2/ut &&
++	git clean -ffd */ut &&
++	test_path_is_missing d1/ut &&
++	test_path_is_missing d2/ut
++'
++
++test_expect_failure 'git clean works if a glob is passed without -d' '
++	mkdir -p d1 d2 &&
++	touch d1/ut d2/ut &&
++	git clean -f "*ut" &&
++	test_path_is_missing d1/ut &&
++	test_path_is_missing d2/ut
++'
++
++test_expect_failure 'git clean works if a glob is passed with -d' '
++	mkdir -p d1 d2 &&
++	touch d1/ut d2/ut &&
++	git clean -ffd "*ut" &&
++	test_path_is_missing d1/ut &&
++	test_path_is_missing d2/ut
++'
++
+ test_expect_success MINGW 'handle clean & core.longpaths = false nicely' '
+ 	test_config core.longpaths false &&
+ 	a50=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
+-- 
+2.23.0.173.gad11b3a635.dirty
 
-	Define the $(MAKE) variable THIRD_PARTY_SOURCES that can be
-	used to match names of third-party sources.
-
-
->  
-> +THIRD_PARTY_SOURCES += compat/inet_ntop.c
-> +THIRD_PARTY_SOURCES += compat/inet_pton.c
-> +THIRD_PARTY_SOURCES += compat/obstack.%
-> +THIRD_PARTY_SOURCES += compat/nedmalloc/%
-> +THIRD_PARTY_SOURCES += compat/poll/%
-> +THIRD_PARTY_SOURCES += compat/regex/%
-> +THIRD_PARTY_SOURCES += sha1collisiondetection/%
-> +THIRD_PARTY_SOURCES += sha1dc/%
-
-Before this block, please explain that this is meant to be a list of
-patterns suitable for $(filter-out) and friends in a comment.
-
-Thanks.
