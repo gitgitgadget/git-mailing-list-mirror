@@ -8,170 +8,119 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00FC21F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 08:54:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAFC01F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 08:57:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730396AbfILIyk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 04:54:40 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54367 "EHLO mout.gmx.net"
+        id S1730485AbfILI5H (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 04:57:07 -0400
+Received: from mout.gmx.net ([212.227.17.21]:37433 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730268AbfILIyj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 04:54:39 -0400
+        id S1725940AbfILI5H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 04:57:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1568278472;
-        bh=NcW8eIjsSlEhJU8SpUZK055A+GdcJ8Q/ks3SIlTbh98=;
+        s=badeba3b8450; t=1568278622;
+        bh=9W4/j1JgSzqWEtWNP8/Jo0nQ0n61sD7AsfRqkvZSEvc=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=W1k3FbU/XyU1MmFno4fuzB2c90k5DEecYkH8TGZB0oGNNEXkfEqwPyVJ5ZUgY71ZS
-         n2dGQIrTjkAg/rsVQIji+C4PjLbqtG15fPx3+Ho04pCclNFOkv8RvWKF+DQJFXrFF7
-         REiMQrAIKb8UeMgSd6HjWh48CJ2qhMlLoLmp/KXs=
+        b=Z+1YLl2zhsJa2rEs5Xx6VAFH/94kRw1KE7YUFtPPiu0F5aGlvw1ssCBZDMY9p1UHX
+         IB/nxdLC7MZNndeUx0ivtRW4OOetFwZNQsdpSU6EQJvOTSEiukcLN+wYBifzQrBWTF
+         lbmKuuO4Xn5z58042sw3oTgH48F38D9pKXnSHYG4=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MiacH-1ie6al1Xbb-00fmFC; Thu, 12
- Sep 2019 10:54:32 +0200
-Date:   Thu, 12 Sep 2019 10:54:15 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MuUnK-1iPasW2xKE-00rcTL; Thu, 12
+ Sep 2019 10:57:02 +0200
+Date:   Thu, 12 Sep 2019 10:56:46 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Max Rothman <max.r.rothman@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] completion: add missing completions for log, diff,
- show
-In-Reply-To: <CAFA_24JW_oRXB+40M2wKtEDQeC5VYjTC0D9GLEm5oa5E_dGtSg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1909121053070.47@tvgsbejvaqbjf.bet>
-References: <0102015f985d387e-f50183c4-4b49-4a9f-b365-2a86ba24bbed-000000@eu-west-1.amazonses.com> <0102016bb065bf5e-005b0752-2594-45d5-a01a-12d0c5e24b70-000000@eu-west-1.amazonses.com> <CAFA_24J8Ry5LhRX5O82eJDtrqjEodDFTEniZNw06fKEWvwvYMA@mail.gmail.com>
- <CAFA_24JW_oRXB+40M2wKtEDQeC5VYjTC0D9GLEm5oa5E_dGtSg@mail.gmail.com>
+To:     Dominic Winkler via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Dominic Winkler <d.winkler@flexarts.at>
+Subject: Re: [PATCH v2 1/1] contrib/hooks: escape left brace in regex in the
+ paranoid update hook
+In-Reply-To: <0d762cfb503fef081af9aa3cb0fe373863237745.1568238440.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1909121055580.47@tvgsbejvaqbjf.bet>
+References: <pull.335.git.gitgitgadget@gmail.com>        <pull.335.v2.git.gitgitgadget@gmail.com> <0d762cfb503fef081af9aa3cb0fe373863237745.1568238440.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:xglikgC9761frkOMAZzyO5uRJn+pYgqSxRNvSwlm1tcL6pjkrIX
- zrXCwf6izRLsN1XJhWBx5kdqB0Ua49SniLO8ZcJ15YC9FiI0HNBvon5QYUWDGDgCuI+wvEb
- LxDcTCJ9AVOBzubJ2fhDrav9pv5X0ew1lxloZHZmzIswJ3KPBXXRsMKcoHyefDRFdt4a72r
- QfIK79pGk58woGwMiDm0g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:AllltqRrIN0=:l8v/haKrc31xVj1hTDLctg
- LIcmljXTKqWI1w05l/iQ0ONVVT8ac6wBXXA/6e6c/f265WwONE2KuPtp7c2KoSJuDHEDSuiYE
- b1CuVY99mF/xQmaOAxIcx0v1TzD28JVKhdrkVKRQYaWbJkKSOwMOyrWzAXqpK8LCCtymOCCf9
- nGgd61eS6uAUGR8gP1LPpF0rk8+JVyIHP2m0dN2PxoCBjMXkYd2axNlVI656/rHp5JeAVdV2a
- J8rVAnPYkllztBELxH0BDcwt1jWtUjCvXhYFq/by8B/bYjdwy0HMPAaQls05fiqvtHMNaLIDw
- w/nuTu8iNHgxdDzS0pl0srE1DptytzPxb6M4+X0oggSbyvfd4VTMSQJbNOcWILMjfs0SPH72J
- gYV2fnBvpylZVJ9SmUgdQMWFzwmehUrZQikPv7ALAE4xJH695mRWqmGpurHusMt0P2bPScv73
- 1VQ0Qk4QaSTTQ/lJoZpptwyGKO9yXYSQZYoNbk9IcjbJcBE4dMQjxfn27TE4eAhTopwDsEvCP
- G25iuefKDgkWBcDIE9SKdVxg4WhIsPRJhDhMF6xzwfNHXjfxMfzTtvV3+BBIOsMGh4xriZPHU
- Z4DiQeR2TJddAjwpY1lo7muPCrd5IIfcqGXrKq/yjmDjXWxY++XHw79iSdn8Hvlyfv7+vls7s
- 3F6XphaZlukbq9+8fFE7EYn3Xgy6kXX8Y1ouPnxEJL++9QvgMJeJ6qVSRrgq3G/HT5dKL/XEI
- UmE9pesI4FY86jqA7TNxTdOid/W4TgNj1xFQx0/giMW+MXYP6LraDFUuS8gz8fMBm0caJr3BN
- YE5NZGnlpg5ViKxEPeAHUZpu+5q1iGsNvxl8N7dyMWuczXCycB+kojaNckyvEgyjjytRmbVhQ
- A7D22hsvuHenHJaEgeBji06a0DbGqoy56uFrfVnBE2mmcRyOfgp6U3JFP9lvpdzII/uAoRfPZ
- v6dQsmgGzvLDFz47aG7IeJ5fq1uU0J4xnhWdsXqnmKb85h9smyui6MQy9cce0fwDVkLziMI7o
- DGjDWBSV5pNM2JkYpttmoJO2TcY5mFJVZAzf1i1eTVd3BPaUZPRFl2Wv3XiNfTY8KW5s7rCts
- pAZZarRHbtJ/vuZwpvrgkNERIGBS8QxxQBoItrKc1KQT045iAqWEuAdqEwlP+Pn9j/n/3grOz
- PIdRcD3tUR2EmhS0igP9lq4NAhsTjyzaNpUG0+RIMqpOy1ImGQPxItbOqt2u1VJGJgmYu5S3y
- 4cBqAkIYFkH1W1Uap
+X-Provags-ID: V03:K1:cxyU4I4nj7nueED79W9EC0PazewIWzeCX9v5znSuq6kuH5WayUy
+ Xyx/BJDD45i4nUwsyO7mWcQzdhYDgtf3xlwA4JIxeQ1+Sn79VtripmWSNGd2UpSAFzmWYjH
+ 0FIqAw1GhuRBKenP7kSdqIdg5s0hnGagMtppMVLyLzifkYHaQiD6cSwj2Z1urxj7k7cqToL
+ vr9iin9Bo8rWqdnGVO3Lg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:pGhHjXwkPoY=:Zlek3kqsU5sKw7HWq87G0H
+ 0y3cP7ykjH1uQWvnrHEQCg06f9GStLi5S0H3axUo8rcU9Z2jLXXxOqF7k51RCL9GNxzOSVasX
+ pVDFJmmvDogmQNIWhfpBiieUELyxyg/6FiDbaSXpNcOfCUD3SK30L+iVNly23pEfriw+4+5cy
+ 1ZrDu0wm1WIxFjocPvjQQU4ZiRq0XtUuVvKdH2+CUsENaa08PkKa5Cp+f/pmdzuHb0xVTnNt3
+ lo6CWhcl7+VZmESaMORrJ6/pJtsPRsUq5QWNRAgc9kU54KVnvftSHzbNSXif+nI7qGz4/apZl
+ 4/bDUARW1YH8BHX9DYSqH7yl1mVGS7PNWGTdU0ELY2QuOCVWwQm9fjoGGE9s6XhbCfUpKuk+E
+ rJdHUOphgNW1pU0ZyoDdJWOF1wGAXE9JBLIGrc3SZbGGHKhMdYhw4ptyoaKBKuD2oPUa/GcRi
+ ti3CcNP6EyRiU+dAHVIycOk4o7//8wdJySWvulCFSqqNeUO/yXma0QbZmD0MxLiKa+OLfMrSZ
+ Voaog26bwXtdfiecife8hUIkDG66LhsVkcNqLt+Mj0LUFPuH6R+UD7mBs69a9XwYvbsIStWpy
+ +3EJIPlTo8Dtmktds4KTdo3CUSzQqfj/WlYVZ46/GwN5l3jAUKOGar06kAOMrue89fxvlQ574
+ eVnFZRklG1+3sfm34YbG0cRNceJy6vk6llk4D/+r8JkEnD6j4onRB2sZwzfsShJmJpwt8hUfS
+ l3DJ5/ESkFwHxuzHBNohQZOxamHy/hE20HSOqTd6oA6dP/IdWn/CUAGZ7PTATYjrAncUm1Ehs
+ G+kfymM2o/WO9cm7bdd5QmvtfwbTfkQ/1S1gAFQzN69WPDrWkeK3gNYn9S94bFJTwGMVsbx1j
+ AvE29YHiSwNyvCmGfbCyxZwmtxMm9b/bn3Xcv8DLJqsYkvdIUM6rbCwcJ+lWnzqqa7mqixvAx
+ 70ttGvLyG93KSnCdI3TtufKLitRv2fB20QYIYWqBX5DGD6gZ9mLQOH087po533ndz5eIyKmkP
+ GafEppnq7gRMftx0A7Gqu1BtQfIAGFbG5TAzX6gJ3fHCAYfY3AKVKIHt/tNs2ysDJ7ERKKm4o
+ NidNRyrcYB6StNByE/BcRlsX3gSzfNr6/Y7wq9Ft0yyjoeIf3Tz7isp94309vOTaNf1QJZoyw
+ GHWLX9A5Ps8OAawv2LJfUyl81iSPDigOQRKXi1wioyLFKG0rhe9+IXj0P5Ex3Ggj+u3DXyTBh
+ NEsyvrC5RPt+wSmWa
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Max,
+Hi Dominic,
 
-The patch looks good to me!
+On Wed, 11 Sep 2019, Dominic Winkler via GitGitGadget wrote:
 
-Thanks,
+> From: Dominic Winkler <d.winkler@flexarts.at>
+>
+> A literal "{" should now be escaped in a pattern starting from perl
+> versions >=3D v5.26. In perl v5.22, using a literal { in a regular
+> expression was deprecated, and will emit a warning if it isn't escaped: =
+\{.
+> In v5.26, this won't just warn, it'll cause a syntax error.
+>
+> (see https://metacpan.org/pod/release/RJBS/perl-5.22.0/pod/perldelta.pod=
+)
+>
+> Signed-off-by: Dominic Winkler <d.winkler@flexarts.at>
+
+Thank you for addressing my concern so promptly. I am far from a Perl
+expert, so take this with a train of salt: the patch now looks good to
+me!
+
+Ciao,
 Johannes
 
-On Wed, 11 Sep 2019, Max Rothman wrote:
-
-> On Thu, Aug 1, 2019 at 8:54 PM Max Rothman <max.r.rothman@gmail.com> wro=
-te:
-> >
-> > On Thu, Aug 1, 2019 at 8:50 PM Max Rothman <max.r.rothman@gmail.com> w=
-rote:
-> > >
-> > > The bash completion script knows some options to "git log" and
-> > > "git show" only in the positive form, (e.g. "--abbrev-commit"), but =
-not
-> > > in their negative form (e.g. "--no-abbrev-commit"). Add them.
-> > >
-> > > Also, the bash completion script is missing some other options to
-> > > "git diff", and "git show" (and thus, all other commands that take
-> > > "git diff"'s options). Add them. Of note, since "--indent-heuristic"=
- is
-> > > no longer experimental, add that too.
-> > >
-> > > Signed-off-by: Max Rothman <max.r.rothman@gmail.com>
-> > > ---
-> > >  contrib/completion/git-completion.bash | 18 ++++++++++++++----
-> > >  1 file changed, 14 insertions(+), 4 deletions(-)
-> > >
-> > > diff --git a/contrib/completion/git-completion.bash b/contrib/comple=
-tion/git-completion.bash
-> > > index 9f71bcde967bc..b6d18710135ec 100644
-> > > --- a/contrib/completion/git-completion.bash
-> > > +++ b/contrib/completion/git-completion.bash
-> > > @@ -1474,6 +1474,8 @@ __git_diff_common_options=3D"--stat --numstat =
---shortstat --summary
-> > >                         --dirstat-by-file=3D --cumulative
-> > >                         --diff-algorithm=3D
-> > >                         --submodule --submodule=3D --ignore-submodul=
-es
-> > > +                       --indent-heuristic --no-indent-heuristic
-> > > +                       --textconv --no-textconv
-> > >  "
-> > >
-> > >  _git_diff ()
-> > > @@ -1782,6 +1784,10 @@ _git_log ()
-> > >                 __gitcomp "$__git_diff_submodule_formats" "" "${cur#=
-#--submodule=3D}"
-> > >                 return
-> > >                 ;;
-> > > +       --no-walk=3D*)
-> > > +               __gitcomp "sorted unsorted" "" "${cur##--no-walk=3D}=
-"
-> > > +               return
-> > > +               ;;
-> > >         --*)
-> > >                 __gitcomp "
-> > >                         $__git_log_common_options
-> > > @@ -1789,16 +1795,19 @@ _git_log ()
-> > >                         $__git_log_gitk_options
-> > >                         --root --topo-order --date-order --reverse
-> > >                         --follow --full-diff
-> > > -                       --abbrev-commit --abbrev=3D
-> > > +                       --abbrev-commit --no-abbrev-commit --abbrev=
-=3D
-> > >                         --relative-date --date=3D
-> > >                         --pretty=3D --format=3D --oneline
-> > >                         --show-signature
-> > >                         --cherry-mark
-> > >                         --cherry-pick
-> > >                         --graph
-> > > -                       --decorate --decorate=3D
-> > > +                       --decorate --decorate=3D --no-decorate
-> > >                         --walk-reflogs
-> > > +                       --no-walk --no-walk=3D --do-walk
-> > >                         --parents --children
-> > > +                       --expand-tabs --expand-tabs=3D --no-expand-t=
-abs
-> > > +                       --patch
-> > >                         $merge
-> > >                         $__git_diff_common_options
-> > >                         --pickaxe-all --pickaxe-regex
-> > > @@ -2525,8 +2534,9 @@ _git_show ()
-> > >                 return
-> > >                 ;;
-> > >         --*)
-> > > -               __gitcomp "--pretty=3D --format=3D --abbrev-commit -=
--oneline
-> > > -                       --show-signature
-> > > +               __gitcomp "--pretty=3D --format=3D --abbrev-commit -=
--no-abbrev-commit
-> > > +                       --oneline --show-signature --patch
-> > > +                       --expand-tabs --expand-tabs=3D --no-expand-t=
-abs
-> > >                         $__git_diff_common_options
-> > >                         "
-> > >                 return
-> > >
-> > > --
-> > > https://github.com/git/git/pull/426
-> > >
+> ---
+>  contrib/hooks/update-paranoid | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/contrib/hooks/update-paranoid b/contrib/hooks/update-parano=
+id
+> index d18b317b2f..fc0a242a4e 100755
+> --- a/contrib/hooks/update-paranoid
+> +++ b/contrib/hooks/update-paranoid
+> @@ -302,13 +302,13 @@ $op =3D 'U' if ($op eq 'R'
+>
+>  RULE:
+>  	foreach (@$rules) {
+> -		while (/\${user\.([a-z][a-zA-Z0-9]+)}/) {
+> +		while (/\$\{user\.([a-z][a-zA-Z0-9]+)}/) {
+>  			my $k =3D lc $1;
+>  			my $v =3D $data{"user.$k"};
+>  			next RULE unless defined $v;
+>  			next RULE if @$v !=3D 1;
+>  			next RULE unless defined $v->[0];
+> -			s/\${user\.$k}/$v->[0]/g;
+> +			s/\$\{user\.$k}/$v->[0]/g;
+>  		}
+>
+>  		if (/^([AMD ]+)\s+of\s+([^\s]+)\s+for\s+([^\s]+)\s+diff\s+([^\s]+)$/)=
+ {
+> --
+> gitgitgadget
 >
