@@ -3,249 +3,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7934A1F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 19:44:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27C1C1F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 19:47:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726524AbfILToZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 15:44:25 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:34654 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725972AbfILToZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 15:44:25 -0400
-Received: by mail-wm1-f66.google.com with SMTP id y135so190152wmc.1
-        for <git@vger.kernel.org>; Thu, 12 Sep 2019 12:44:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8veRIwQGRcFqztwPisQG4rzz7bfXIhiQZaUzawuY/BM=;
-        b=o7mcOcqbIr78022aCZ6mZbNwuMFP1lchcWxZ4uUSY9Q1z24suvSIB8YANj5Vv73usc
-         G2SjwaFzc+gTB+F4A64W32G7UYPtYpsDB9UF+uJJa/VTtSi+6VEwETLeQ8UmmnsXbQzy
-         ULNzMqniiVN7fgmIc3q99tmLciERXqJAx192fI/5jz2cY2oEBvN94Fgma9ydxa7vcKuJ
-         SI9zqrkpkQfMbf+9kkkaIsgE4ksahmuHG+CVTBIr+finxpnukVeoKmdLz6Z684upXFzC
-         xNtpOK44m9lfM4aPmNZdS/DLR5DQb0XUsXi7CeRfg1fFkpGHULb3N2Cs3GfpcDN6SkvO
-         ZkbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8veRIwQGRcFqztwPisQG4rzz7bfXIhiQZaUzawuY/BM=;
-        b=ULNg1LDkqK2kh597IumZ/1XpCKL6W8aHs8Ni45XAblCTSnBY6VFCJhcoShlo9Q2s7+
-         U4Vd+QrAoRuVz1xdkBSlVv1ftmO9Fa3F6xVf0nIMsd/W1GER2EN/1zJODWjPJjp36C3b
-         Xot2nAflFtfRKuO2QxZk2SndQxgQeaabXIboOisMjUfH6L+ymV4EhUHC7sCfJIWYUIez
-         viUWdnAkMlCbHbp0yG+AlIUpzRg68Um7ua24oSW9Wuv3ErZ61lzW0T3dZB8xYvhJcaxZ
-         XsZeISxECpnm3ALnrbjSabB+B2QF/VKGDRqPDDuGzlE2thQLL91ACO1InC/P0+sI2/z/
-         NJkA==
-X-Gm-Message-State: APjAAAVc+0HpXHXjHhRAcPUvifGspoNb0QcHsfzFVXx3iBOqFlbAwvuP
-        fzI7ZXgHlMF4jfXFTk+uog==
-X-Google-Smtp-Source: APXvYqzmqp8hF6d9xdsKxPojHeXx7fTK6eysbEGPhwc7+ObyOETa6fjfgwuDBh9NCC7JED/71tpDWg==
-X-Received: by 2002:a1c:c013:: with SMTP id q19mr188749wmf.87.1568317460686;
-        Thu, 12 Sep 2019 12:44:20 -0700 (PDT)
-Received: from localhost ([2a02:810a:8c80:d2c:4d89:574b:af6e:1a3])
-        by smtp.gmail.com with ESMTPSA id d28sm31172707wrb.95.2019.09.12.12.44.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 12 Sep 2019 12:44:20 -0700 (PDT)
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-To:     git@vger.kernel.org
-Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
-        Pratyush Yadav <me@yadavpratyush.com>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>
-Subject: [PATCH] git-gui: convert new/amend commit radiobutton to checketton
-Date:   Thu, 12 Sep 2019 21:44:19 +0200
-Message-Id: <41ebf78fbe8af587c739c08aa6f20cf76c602775.1568317431.git.bert.wesarg@googlemail.com>
-X-Mailer: git-send-email 2.21.0.789.ga095d9d866
+        id S1726822AbfILTrN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 15:47:13 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63096 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726553AbfILTrN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 15:47:13 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ABC58259BF;
+        Thu, 12 Sep 2019 15:47:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=TbbxEllwzaHBUFjvfuygHXtMkmg=; b=ulOroe
+        8h1OLl+Jm83lOmKPiNqsayGtJ1DFHDhha2hYhE/slBiCIV5PN4fpUGPpZzFOE17q
+        dBsqsl5v1Dg2p+71/EBncAAYvBFlgWwhOG7ziuWc59y7eLaXtuQUguGMU2/+Y4WN
+        n3ychkUiDeDyeKXkIEoaagZVYhXszrAhg6Gns=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=owy228APXoaX3Rk9320ll2XmgeWiouF6
+        lHOSdrznMd8iOKXOdTI/Sk8iE2whol1Vy475aNWPdVOf9vUd4uG1L8xXQfnhpY/L
+        NQnurZXxnQ+FDG11GQkGqsAy0FI6UuPbdSwY9oYeHiZOtxCJEkLTxpjlnAutHaSX
+        FBL7NV8LC+s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A31E9259BE;
+        Thu, 12 Sep 2019 15:47:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0719F259BD;
+        Thu, 12 Sep 2019 15:47:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Max Rothman <max.r.rothman@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] completion: add missing completions for log, diff, show
+References: <0102015f985d387e-f50183c4-4b49-4a9f-b365-2a86ba24bbed-000000@eu-west-1.amazonses.com>
+        <0102016bb065bf5e-005b0752-2594-45d5-a01a-12d0c5e24b70-000000@eu-west-1.amazonses.com>
+        <CAFA_24J8Ry5LhRX5O82eJDtrqjEodDFTEniZNw06fKEWvwvYMA@mail.gmail.com>
+        <CAFA_24JW_oRXB+40M2wKtEDQeC5VYjTC0D9GLEm5oa5E_dGtSg@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1909121053070.47@tvgsbejvaqbjf.bet>
+Date:   Thu, 12 Sep 2019 12:47:08 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1909121053070.47@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 12 Sep 2019 10:54:15 +0200 (CEST)")
+Message-ID: <xmqqpnk5fgar.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1BD87F4E-D596-11E9-BD0E-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Its a bi-state anyway and also safes one line in the menu.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- git-gui.sh          | 36 +++++++++---------------------------
- lib/checkout_op.tcl |  6 +++---
- lib/commit.tcl      |  4 ++--
- lib/index.tcl       |  8 ++++----
- 4 files changed, 18 insertions(+), 36 deletions(-)
+> Hi Max,
+>
+> The patch looks good to me!
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 5bc21b8..80a07d5 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1341,6 +1341,7 @@ set HEAD {}
- set PARENT {}
- set MERGE_HEAD [list]
- set commit_type {}
-+set commit_type_is_amend 0
- set empty_tree {}
- set current_branch {}
- set is_detached 0
-@@ -1348,7 +1349,6 @@ set current_diff_path {}
- set is_3way_diff 0
- set is_submodule_diff 0
- set is_conflict_diff 0
--set selected_commit_type new
- set diff_empty_count 0
- 
- set nullid "0000000000000000000000000000000000000000"
-@@ -1435,7 +1435,7 @@ proc PARENT {} {
- }
- 
- proc force_amend {} {
--	global selected_commit_type
-+	global commit_type_is_amend
- 	global HEAD PARENT MERGE_HEAD commit_type
- 
- 	repository_state newType newHEAD newMERGE_HEAD
-@@ -1444,7 +1444,7 @@ proc force_amend {} {
- 	set MERGE_HEAD $newMERGE_HEAD
- 	set commit_type $newType
- 
--	set selected_commit_type amend
-+	set commit_type_is_amend 1
- 	do_select_commit_type
- }
- 
-@@ -2828,19 +2828,10 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
- 	menu .mbar.commit
- 
- 	if {![is_enabled nocommit]} {
--		.mbar.commit add radiobutton \
--			-label [mc "New Commit"] \
--			-command do_select_commit_type \
--			-variable selected_commit_type \
--			-value new
--		lappend disable_on_lock \
--			[list .mbar.commit entryconf [.mbar.commit index last] -state]
--
--		.mbar.commit add radiobutton \
-+		.mbar.commit add checkbutton \
- 			-label [mc "Amend Last Commit"] \
--			-command do_select_commit_type \
--			-variable selected_commit_type \
--			-value amend
-+			-variable commit_type_is_amend \
-+			-command do_select_commit_type
- 		lappend disable_on_lock \
- 			[list .mbar.commit entryconf [.mbar.commit index last] -state]
- 
-@@ -3313,18 +3304,10 @@ set ui_comm .vpane.lower.commarea.buffer.frame.t
- set ui_coml .vpane.lower.commarea.buffer.header.l
- 
- if {![is_enabled nocommit]} {
--	${NS}::radiobutton .vpane.lower.commarea.buffer.header.new \
--		-text [mc "New Commit"] \
--		-command do_select_commit_type \
--		-variable selected_commit_type \
--		-value new
--	lappend disable_on_lock \
--		[list .vpane.lower.commarea.buffer.header.new conf -state]
--	${NS}::radiobutton .vpane.lower.commarea.buffer.header.amend \
-+	${NS}::checkbutton .vpane.lower.commarea.buffer.header.amend \
- 		-text [mc "Amend Last Commit"] \
--		-command do_select_commit_type \
--		-variable selected_commit_type \
--		-value amend
-+		-variable commit_type_is_amend \
-+		-command do_select_commit_type
- 	lappend disable_on_lock \
- 		[list .vpane.lower.commarea.buffer.header.amend conf -state]
- }
-@@ -3349,7 +3332,6 @@ pack $ui_coml -side left -fill x
- 
- if {![is_enabled nocommit]} {
- 	pack .vpane.lower.commarea.buffer.header.amend -side right
--	pack .vpane.lower.commarea.buffer.header.new -side right
- }
- 
- textframe .vpane.lower.commarea.buffer.frame
-diff --git a/lib/checkout_op.tcl b/lib/checkout_op.tcl
-index 9e7412c..a522829 100644
---- a/lib/checkout_op.tcl
-+++ b/lib/checkout_op.tcl
-@@ -389,7 +389,7 @@ $err
- }
- 
- method _after_readtree {} {
--	global selected_commit_type commit_type HEAD MERGE_HEAD PARENT
-+	global commit_type HEAD MERGE_HEAD PARENT
- 	global current_branch is_detached
- 	global ui_comm
- 
-@@ -490,12 +490,12 @@ method _update_repo_state {} {
- 	#    amend mode our file lists are accurate and we can avoid
- 	#    the rescan.
- 	#
--	global selected_commit_type commit_type HEAD MERGE_HEAD PARENT
-+	global commit_type_is_amend commit_type HEAD MERGE_HEAD PARENT
- 	global ui_comm
- 
- 	unlock_index
- 	set name [_name $this]
--	set selected_commit_type new
-+	set commit_type_is_amend 0
- 	if {[string match amend* $commit_type]} {
- 		$ui_comm delete 0.0 end
- 		$ui_comm edit reset
-diff --git a/lib/commit.tcl b/lib/commit.tcl
-index 83620b7..384f18f 100644
---- a/lib/commit.tcl
-+++ b/lib/commit.tcl
-@@ -327,7 +327,7 @@ proc commit_writetree {curHEAD msg_p} {
- proc commit_committree {fd_wt curHEAD msg_p} {
- 	global HEAD PARENT MERGE_HEAD commit_type commit_author
- 	global current_branch
--	global ui_comm selected_commit_type
-+	global ui_comm commit_type_is_amend
- 	global file_states selected_paths rescan_active
- 	global repo_config
- 	global env
-@@ -461,8 +461,8 @@ A rescan will be automatically started now.
- 
- 	# -- Update in memory status
- 	#
--	set selected_commit_type new
- 	set commit_type normal
-+	set commit_type_is_amend 0
- 	set HEAD $cmt_id
- 	set PARENT $cmt_id
- 	set MERGE_HEAD [list]
-diff --git a/lib/index.tcl b/lib/index.tcl
-index b588db1..e07b7a3 100644
---- a/lib/index.tcl
-+++ b/lib/index.tcl
-@@ -466,19 +466,19 @@ proc do_revert_selection {} {
- }
- 
- proc do_select_commit_type {} {
--	global commit_type selected_commit_type
-+	global commit_type commit_type_is_amend
- 
--	if {$selected_commit_type eq {new}
-+	if {$commit_type_is_amend == 0
- 		&& [string match amend* $commit_type]} {
- 		create_new_commit
--	} elseif {$selected_commit_type eq {amend}
-+	} elseif {$commit_type_is_amend == 1
- 		&& ![string match amend* $commit_type]} {
- 		load_last_commit
- 
- 		# The amend request was rejected...
- 		#
- 		if {![string match amend* $commit_type]} {
--			set selected_commit_type new
-+			set commit_type_is_amend 0
- 		}
- 	}
- }
--- 
-2.21.0.789.ga095d9d866
-
+Thanks, both.  Will queue.
