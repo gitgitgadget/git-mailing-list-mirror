@@ -2,108 +2,250 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94CED1F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 19:44:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7934A1F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 19:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726313AbfILToA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 15:44:00 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:40101 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725972AbfILToA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 15:44:00 -0400
-Received: by mail-pf1-f194.google.com with SMTP id x127so16608587pfb.7
-        for <git@vger.kernel.org>; Thu, 12 Sep 2019 12:43:59 -0700 (PDT)
+        id S1726524AbfILToZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 15:44:25 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:34654 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725972AbfILToZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 15:44:25 -0400
+Received: by mail-wm1-f66.google.com with SMTP id y135so190152wmc.1
+        for <git@vger.kernel.org>; Thu, 12 Sep 2019 12:44:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=PuxrZCshsJn0K4a8+y9RZiLsGUxqZYYjB/oMeXHB74g=;
-        b=REu8acFCRoQTiblG0ngK2VCCFLN1VpsdPDtfbKoLoIvirWB9EpV8YSW98sVWisko6X
-         qL+n18eb5XrxOy7sxK5iGmVnQ3R5JSv8udFNa4liOptwWiUdc4NE1BGsDQCNQW34VlwL
-         Oa3Dd+y1FbGSg4N+MaGzPrvEQKfXWBaj3qbdunuJ25VVgLZ1EB/c5VPm8mWI4OOvYyPa
-         Nb+0UTIMvDBwwkq8McND4c3IEYonb8WJlam9UANrPhhsDcW0YXyPQxQ+IePUS7+W1uCL
-         LrI9DDo0P+iqWOD0XrfNO0oURO2u6kIQDmVNwKuOROyKrQXTgjJdFkWsqaPTPTxDcpUy
-         OBpA==
+        d=googlemail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8veRIwQGRcFqztwPisQG4rzz7bfXIhiQZaUzawuY/BM=;
+        b=o7mcOcqbIr78022aCZ6mZbNwuMFP1lchcWxZ4uUSY9Q1z24suvSIB8YANj5Vv73usc
+         G2SjwaFzc+gTB+F4A64W32G7UYPtYpsDB9UF+uJJa/VTtSi+6VEwETLeQ8UmmnsXbQzy
+         ULNzMqniiVN7fgmIc3q99tmLciERXqJAx192fI/5jz2cY2oEBvN94Fgma9ydxa7vcKuJ
+         SI9zqrkpkQfMbf+9kkkaIsgE4ksahmuHG+CVTBIr+finxpnukVeoKmdLz6Z684upXFzC
+         xNtpOK44m9lfM4aPmNZdS/DLR5DQb0XUsXi7CeRfg1fFkpGHULb3N2Cs3GfpcDN6SkvO
+         ZkbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PuxrZCshsJn0K4a8+y9RZiLsGUxqZYYjB/oMeXHB74g=;
-        b=osmET/Dx+aAS2GzaZvWSJHP9kQO1Z/bAw0R7if30hzrcbGWVcqTUzJF9LPhx2LjGm6
-         ct7zj18MLA7U5nOgxRaRJt/Sns0unRTXMmo5ttprimijMF6W0Z75o8pGiurKVYayaqkh
-         mLR9+FzF1Dg3bGsEdSjsjV4LNY7onbENdhCdjfvcMwARqXuk8VISOocUH8ej+Ls2CXU6
-         WpCaRHCdkiCaPdPU7aSYn1H3qRWSHKSG1v/KR8OB7zwfDKt30c5VK+t0IftcBI9f996y
-         x6hrnTFK/m5EChRrOxr2cmhUSjs4P+MvE4xVRn7nMRAiotB6rpndaS2a2r+qKlicvuJL
-         aKVQ==
-X-Gm-Message-State: APjAAAVKG6JVFtmB5DIrf5/8MktH97nVoKXlUyrb1ZByL8zpidWX1YDa
-        Lkz+AeHr0czcf2sfudYtMMbAEpGyQm0=
-X-Google-Smtp-Source: APXvYqw7eZC0TKTqLsXXUCo50DJgeFen1WgXnYMe3B7cAShc6uS6TyE9xJKeNLX3Mphc/1+TZxO02Q==
-X-Received: by 2002:a17:90a:e57:: with SMTP id p23mr392510pja.126.1568317439300;
-        Thu, 12 Sep 2019 12:43:59 -0700 (PDT)
-Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.55])
-        by smtp.gmail.com with ESMTPSA id s1sm95867pjs.31.2019.09.12.12.43.58
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Sep 2019 12:43:58 -0700 (PDT)
-Date:   Thu, 12 Sep 2019 12:43:57 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 2/2] completion: teach archive to use __gitcomp_builtin
-Message-ID: <39d6091ce636b2d732d589b55e7686796694e994.1568317093.git.liu.denton@gmail.com>
-References: <cover.1568317093.git.liu.denton@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8veRIwQGRcFqztwPisQG4rzz7bfXIhiQZaUzawuY/BM=;
+        b=ULNg1LDkqK2kh597IumZ/1XpCKL6W8aHs8Ni45XAblCTSnBY6VFCJhcoShlo9Q2s7+
+         U4Vd+QrAoRuVz1xdkBSlVv1ftmO9Fa3F6xVf0nIMsd/W1GER2EN/1zJODWjPJjp36C3b
+         Xot2nAflFtfRKuO2QxZk2SndQxgQeaabXIboOisMjUfH6L+ymV4EhUHC7sCfJIWYUIez
+         viUWdnAkMlCbHbp0yG+AlIUpzRg68Um7ua24oSW9Wuv3ErZ61lzW0T3dZB8xYvhJcaxZ
+         XsZeISxECpnm3ALnrbjSabB+B2QF/VKGDRqPDDuGzlE2thQLL91ACO1InC/P0+sI2/z/
+         NJkA==
+X-Gm-Message-State: APjAAAVc+0HpXHXjHhRAcPUvifGspoNb0QcHsfzFVXx3iBOqFlbAwvuP
+        fzI7ZXgHlMF4jfXFTk+uog==
+X-Google-Smtp-Source: APXvYqzmqp8hF6d9xdsKxPojHeXx7fTK6eysbEGPhwc7+ObyOETa6fjfgwuDBh9NCC7JED/71tpDWg==
+X-Received: by 2002:a1c:c013:: with SMTP id q19mr188749wmf.87.1568317460686;
+        Thu, 12 Sep 2019 12:44:20 -0700 (PDT)
+Received: from localhost ([2a02:810a:8c80:d2c:4d89:574b:af6e:1a3])
+        by smtp.gmail.com with ESMTPSA id d28sm31172707wrb.95.2019.09.12.12.44.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 12 Sep 2019 12:44:20 -0700 (PDT)
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+To:     git@vger.kernel.org
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>
+Subject: [PATCH] git-gui: convert new/amend commit radiobutton to checketton
+Date:   Thu, 12 Sep 2019 21:44:19 +0200
+Message-Id: <41ebf78fbe8af587c739c08aa6f20cf76c602775.1568317431.git.bert.wesarg@googlemail.com>
+X-Mailer: git-send-email 2.21.0.789.ga095d9d866
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1568317093.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, _git_archive() uses a hardcoded list of options for its
-completion. However, we can use __gitcomp_builtin() to get a dynamically
-generated list of completions instead.
+Its a bi-state anyway and also safes one line in the menu.
 
-Teach _git_archive() to use __gitcomp_builtin() so that newly
-implemented options in archive will be automatically completed without
-any mucking around in git-completion.bash. While we're at it, teach it
-to complete the missing `--worktree-attributes` option as well.
-
-Unfortunately, since some args are passed through from cmd_archive() to
-write_archive() (which calls parse_archive_args()), there's no way that a
-`--git-completion-helper` arg can end up reaching parse_archive_args()
-since the first call to parse_options() will end up calling exit(0). As
-a result, we have to carry the options supported by write_archive() in
-the hardcoded string.
-
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 ---
- contrib/completion/git-completion.bash | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ git-gui.sh          | 36 +++++++++---------------------------
+ lib/checkout_op.tcl |  6 +++---
+ lib/commit.tcl      |  4 ++--
+ lib/index.tcl       |  8 ++++----
+ 4 files changed, 18 insertions(+), 36 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 365edff639..7b1ab46f0b 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1250,10 +1250,7 @@ _git_archive ()
- 		return
- 		;;
- 	--*)
--		__gitcomp "
--			--format= --list --verbose
--			--prefix= --remote= --exec= --output
--			"
-+		__gitcomp_builtin archive "--format= --list --verbose --prefix= --worktree-attributes"
- 		return
- 		;;
- 	esac
+diff --git a/git-gui.sh b/git-gui.sh
+index 5bc21b8..80a07d5 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1341,6 +1341,7 @@ set HEAD {}
+ set PARENT {}
+ set MERGE_HEAD [list]
+ set commit_type {}
++set commit_type_is_amend 0
+ set empty_tree {}
+ set current_branch {}
+ set is_detached 0
+@@ -1348,7 +1349,6 @@ set current_diff_path {}
+ set is_3way_diff 0
+ set is_submodule_diff 0
+ set is_conflict_diff 0
+-set selected_commit_type new
+ set diff_empty_count 0
+ 
+ set nullid "0000000000000000000000000000000000000000"
+@@ -1435,7 +1435,7 @@ proc PARENT {} {
+ }
+ 
+ proc force_amend {} {
+-	global selected_commit_type
++	global commit_type_is_amend
+ 	global HEAD PARENT MERGE_HEAD commit_type
+ 
+ 	repository_state newType newHEAD newMERGE_HEAD
+@@ -1444,7 +1444,7 @@ proc force_amend {} {
+ 	set MERGE_HEAD $newMERGE_HEAD
+ 	set commit_type $newType
+ 
+-	set selected_commit_type amend
++	set commit_type_is_amend 1
+ 	do_select_commit_type
+ }
+ 
+@@ -2828,19 +2828,10 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
+ 	menu .mbar.commit
+ 
+ 	if {![is_enabled nocommit]} {
+-		.mbar.commit add radiobutton \
+-			-label [mc "New Commit"] \
+-			-command do_select_commit_type \
+-			-variable selected_commit_type \
+-			-value new
+-		lappend disable_on_lock \
+-			[list .mbar.commit entryconf [.mbar.commit index last] -state]
+-
+-		.mbar.commit add radiobutton \
++		.mbar.commit add checkbutton \
+ 			-label [mc "Amend Last Commit"] \
+-			-command do_select_commit_type \
+-			-variable selected_commit_type \
+-			-value amend
++			-variable commit_type_is_amend \
++			-command do_select_commit_type
+ 		lappend disable_on_lock \
+ 			[list .mbar.commit entryconf [.mbar.commit index last] -state]
+ 
+@@ -3313,18 +3304,10 @@ set ui_comm .vpane.lower.commarea.buffer.frame.t
+ set ui_coml .vpane.lower.commarea.buffer.header.l
+ 
+ if {![is_enabled nocommit]} {
+-	${NS}::radiobutton .vpane.lower.commarea.buffer.header.new \
+-		-text [mc "New Commit"] \
+-		-command do_select_commit_type \
+-		-variable selected_commit_type \
+-		-value new
+-	lappend disable_on_lock \
+-		[list .vpane.lower.commarea.buffer.header.new conf -state]
+-	${NS}::radiobutton .vpane.lower.commarea.buffer.header.amend \
++	${NS}::checkbutton .vpane.lower.commarea.buffer.header.amend \
+ 		-text [mc "Amend Last Commit"] \
+-		-command do_select_commit_type \
+-		-variable selected_commit_type \
+-		-value amend
++		-variable commit_type_is_amend \
++		-command do_select_commit_type
+ 	lappend disable_on_lock \
+ 		[list .vpane.lower.commarea.buffer.header.amend conf -state]
+ }
+@@ -3349,7 +3332,6 @@ pack $ui_coml -side left -fill x
+ 
+ if {![is_enabled nocommit]} {
+ 	pack .vpane.lower.commarea.buffer.header.amend -side right
+-	pack .vpane.lower.commarea.buffer.header.new -side right
+ }
+ 
+ textframe .vpane.lower.commarea.buffer.frame
+diff --git a/lib/checkout_op.tcl b/lib/checkout_op.tcl
+index 9e7412c..a522829 100644
+--- a/lib/checkout_op.tcl
++++ b/lib/checkout_op.tcl
+@@ -389,7 +389,7 @@ $err
+ }
+ 
+ method _after_readtree {} {
+-	global selected_commit_type commit_type HEAD MERGE_HEAD PARENT
++	global commit_type HEAD MERGE_HEAD PARENT
+ 	global current_branch is_detached
+ 	global ui_comm
+ 
+@@ -490,12 +490,12 @@ method _update_repo_state {} {
+ 	#    amend mode our file lists are accurate and we can avoid
+ 	#    the rescan.
+ 	#
+-	global selected_commit_type commit_type HEAD MERGE_HEAD PARENT
++	global commit_type_is_amend commit_type HEAD MERGE_HEAD PARENT
+ 	global ui_comm
+ 
+ 	unlock_index
+ 	set name [_name $this]
+-	set selected_commit_type new
++	set commit_type_is_amend 0
+ 	if {[string match amend* $commit_type]} {
+ 		$ui_comm delete 0.0 end
+ 		$ui_comm edit reset
+diff --git a/lib/commit.tcl b/lib/commit.tcl
+index 83620b7..384f18f 100644
+--- a/lib/commit.tcl
++++ b/lib/commit.tcl
+@@ -327,7 +327,7 @@ proc commit_writetree {curHEAD msg_p} {
+ proc commit_committree {fd_wt curHEAD msg_p} {
+ 	global HEAD PARENT MERGE_HEAD commit_type commit_author
+ 	global current_branch
+-	global ui_comm selected_commit_type
++	global ui_comm commit_type_is_amend
+ 	global file_states selected_paths rescan_active
+ 	global repo_config
+ 	global env
+@@ -461,8 +461,8 @@ A rescan will be automatically started now.
+ 
+ 	# -- Update in memory status
+ 	#
+-	set selected_commit_type new
+ 	set commit_type normal
++	set commit_type_is_amend 0
+ 	set HEAD $cmt_id
+ 	set PARENT $cmt_id
+ 	set MERGE_HEAD [list]
+diff --git a/lib/index.tcl b/lib/index.tcl
+index b588db1..e07b7a3 100644
+--- a/lib/index.tcl
++++ b/lib/index.tcl
+@@ -466,19 +466,19 @@ proc do_revert_selection {} {
+ }
+ 
+ proc do_select_commit_type {} {
+-	global commit_type selected_commit_type
++	global commit_type commit_type_is_amend
+ 
+-	if {$selected_commit_type eq {new}
++	if {$commit_type_is_amend == 0
+ 		&& [string match amend* $commit_type]} {
+ 		create_new_commit
+-	} elseif {$selected_commit_type eq {amend}
++	} elseif {$commit_type_is_amend == 1
+ 		&& ![string match amend* $commit_type]} {
+ 		load_last_commit
+ 
+ 		# The amend request was rejected...
+ 		#
+ 		if {![string match amend* $commit_type]} {
+-			set selected_commit_type new
++			set commit_type_is_amend 0
+ 		}
+ 	}
+ }
 -- 
-2.23.0.37.g745f681289
+2.21.0.789.ga095d9d866
 
