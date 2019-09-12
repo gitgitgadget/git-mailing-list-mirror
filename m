@@ -8,75 +8,75 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E127B1F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 11:27:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CABFD1F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 11:29:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731253AbfILL1P (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 07:27:15 -0400
-Received: from mout.gmx.net ([212.227.17.20]:33353 "EHLO mout.gmx.net"
+        id S1731209AbfILL3C (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 07:29:02 -0400
+Received: from mout.gmx.net ([212.227.15.18]:41635 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731140AbfILL1P (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 07:27:15 -0400
+        id S1728298AbfILL3B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 07:29:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1568287634;
-        bh=pR2TY+8mLP70G/7MiB94b913bTdSKe76F0FjmmJUhaI=;
+        s=badeba3b8450; t=1568287739;
+        bh=0djt6PfaTTe9pH5wOoe/NsnyTDEtKVUpP/Wmb3QFejE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=UGNvfweskD9uC5yTdQEdlrCWEOx9YplqwRsj8Qc4iku94hbxyH6GGDb0DXl3N3KmO
-         mKu2xsc5dxUcco9c3LhOH1nhbjS0Of69FgspzsdiWfWfXQ7pSlsNW+WlbDtHWuWp7n
-         91h75xaHb/WF/Iv3oX0kDTFgzwmQzLjF5z7kDjWc=
+        b=TMqM0FKHTcsg1KpeZisPjDO1TeVUJeShglANuIcZpyL7DayOQKL+fmxxOPAIGmg3E
+         jfcU/Krxzk4r+J5ccB/82GD7gNMxZcv44ey46OjsbJmFHcMLxviOkFT/raERRu45Yr
+         8wc1ZEENsdzW3BwxgpikKvs8Yp0Bztxs8u/1EJZA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MG9g4-1hu3O13tpU-00GWsW; Thu, 12
- Sep 2019 13:27:14 +0200
-Date:   Thu, 12 Sep 2019 13:26:57 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MTCDO-1hiYvN13QM-00S5di; Thu, 12
+ Sep 2019 13:28:59 +0200
+Date:   Thu, 12 Sep 2019 13:28:43 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Eugen Konkov <kes-kes@yandex.ru>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: error: could not read '.git/rebase-apply/head-name': No such
- file or directory
-In-Reply-To: <386490889.20190912101245@yandex.ru>
-Message-ID: <nycvar.QRO.7.76.6.1909121326310.47@tvgsbejvaqbjf.bet>
-References: <386490889.20190912101245@yandex.ru>
+To:     "Castro Alvarez, Sebastian" <s.castro.alvarez@rug.nl>
+cc:     git@vger.kernel.org
+Subject: Re: could not fork child process rebasing required
+In-Reply-To: <CAMr8YN7aa9yK3TSqVhQjn2DG7vU_zJs9SHvznPefay+Mxs_Qsg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1909121327450.47@tvgsbejvaqbjf.bet>
+References: <CAMr8YN58q94bnBkdfxrBR-Vw5Mk4akHzn4c1k2HjMQCXKWdWsA@mail.gmail.com> <nycvar.QRO.7.76.6.1909121044250.47@tvgsbejvaqbjf.bet> <CAMr8YN7aa9yK3TSqVhQjn2DG7vU_zJs9SHvznPefay+Mxs_Qsg@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:M+EHers/Sz8pFMqEy3Nv/3YbBZkPTIKV8Keo261yO9BBvUk+RNL
- 253ZnqfyEnLzwUEQWNNXC0hLlOLkhpiG9/ePVQMQX1WAS90y7CYdtyQwnABy344YQZegJpE
- 0b/x0KXgGU0xj5VFz5Y526VPUJfGEJRyE4q0Tkhxn5/O0nkhT5E93jZ1yg+w4lY641WqChQ
- FkB3aAzHP2m7fkB8A216g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:h3upIbS+EH4=:HVsIhx5rFB4bKXmdzIWw44
- vrknwk06RT8g8ZuyLmru8WKWfxpAdfV0DSTEIww6SLVsT+GN5T4yOjLMHZAWXmVK95uAmBETn
- XvU21q4iGHg+XYP0mR91c08b576R0rwwzS42GZ91gfPfWQARIxwuqSaCTTN/xxpc/Wy/P5AR9
- lIfu/T1IhMkgPpXQAX5aOefKqJ18avkQDdzzy5P2PbA9JX/NXxxNMs84uxydJiKqJCwSYO04t
- a/E2tQXrv0t7fpo1WSZOJVcbI5Pu8d5l9cp6kX6YSLFBsUbaPXmB1dRUbgfYE0zo7KTkmF1w8
- KxN695dLgQuUD0Bd+InCmjXDJO/vz6vPwapNAUVKZ7ldXMz46SDk/8q2nbuqF9NlUlEmdZ1wO
- X7VJ7cSz1y4ih7XrzZ0WMo+vvc92vlekU4UF/UawIjIIeEW7WTPSd1KWjmH6m/l4rU/mvuOuI
- FY/fwkHwWPFDIT/+4gvP/jqHSmRgOTe7YszVnGeVPUJ7RHdvZKufUWXF3pVeRDLiQGED3S4nh
- f++E8lJvrqaZ2atVaSbVLUOD1rbFphzQrAa5IcFg9LGxn4I7/VzlN41i1DJPFffus5ODKTSfL
- A09M3/PQVJavqBa2Gg/BFXWxwP15GFHVN4vZjdp55PW3A5+zFbRylmbLDDH5POxzCILXfmFza
- UWIz2cdivuIyoG+79jy6R9Ngu89uPjcGkmk+pdzoXWjaQKM8j8bXiF+z9EJ6WxkDf7fOjjQkU
- LKJ+gsBg3GjEjZ21pbL7aRtF42/FDdC0dI3zfApm2kgG35EycafBMMdmLUR89hQUDdm8s9614
- nLtkoT7VM1TyJ5zr/Lc0a2sscE5mnFXT9ygu+/QyLuO/i5LDMXTH7r2OImJz/jQmhVJsFl9z1
- yQ674mom1n0+leOmK7pgtB50BxIf34kLdnTANYCQNMx1lpZTKO3byvJtiBmsYDKP8C/VAq36B
- B4svjVjRmgsv6Wsf7FX7BkB7890JDUzM0NrWFIlJqeUVIlULq8SkYyBoy6puln9dqTEnnbqbL
- vOMkSzJqXrUG5h4Yd9Mhk++G8zD2MKWqOuH5TmQCR/Ii7qp+v8+kV6cqMgEc+4vYsXfaKI0IU
- SBz8pWfNoBiSpCT0tWIP1+2mlPuB8ib33U3TGadwvUEo5r74d2YmY8YMp6xREF/uR51KmEFDr
- yZ0y1rLBLasqjXK1fyWM/xrvPOPeSuHhz34LWfc/vXNNQU2zwsLrW5hoIhnQ7EUSRs2FY4U4u
- uOmsxcbIn9T6QAxnl8jKKB6TOlYKUsTgSD2OrOgnPzTE9p2+B8CcwA8XLMvI=
+X-Provags-ID: V03:K1:eQN1QnDnLFsRi00M632x3hjd2Ml8uvrQUucQfeoaqTqSM6nh2YO
+ ZuzXzXDnETFPxRCiWTbMsvaLNil/lzgSOjW+AjKmI4c9kvgVqRDIba8ysT2uSpPfoVOTSvq
+ ewOKTmrU7EkUxNNCZHc0B+49GRUrHplhDXwWzzHD3Qk1GgkuBmxMz0VfkzIoWco8VqzIs/c
+ CYiTohk577wTeLjNve/0Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ZSRZXzvsmek=:MbeT9PqfkYMNeCgWFpnAYF
+ bAQuJ4hpdc2JisNhj6OuKbOkuy6L7D1JsJ25SwDbmxFfI/MrQiNnS8+prsWlpw4ID+3CMasIK
+ i4Bi7rS7pPjHrAOwsobL44c2gWMdjlb3ID1gjzioIj2ioghRM4D4P+CZgEflWJpiqnK/CZCLz
+ 3SINWuW+KlF2fTGBWtxe49/tvYJ3O/HsfM10U/uV8cbG6v5IT0dcyB8RAfBbOdDB9/MNlw0j0
+ mHinJ4kNaFfd8ojtj7dKOZD39mNFkMEuUbabwSY9ZIjHLQ2vYuH2r+UwXYGuZ7LjrQ6Zgbemt
+ LZL0dJThTSHt1CW89mE7X1Nl3aAEoT7FtzzZINZ8oLlLKIP83tO/JZsqpQBqc5edZAute3KkZ
+ JH1AuHpcS7LuKnUBIiDaBuojRais56+bsb/3Knw5agDZGVRY4a90Qj2Y5doiAPIJHuEWWY8M6
+ IBLz6AA/ucjsQzufknOuS9k36IcgqJ/Dn3IAW/VyHFfz3M+6FV4OzGAj7Bl6Z3AnaGpp/8Jut
+ umblvd+YcjK5yFp8xrNa/YveyHjfKiFbHpZz6uzZypErLuAVlAaI/6dopQdRlbILHT6MZg0Fh
+ n2FWNomuJRStdJsL/xkPO8jWx3MblXwu0WIScbwOfnoezNdEPDfRP/zVI0Vi1I13Lt3tw1/05
+ Xl66ssFvGTYvQ3HCabpWN5vIJ2LU5xzTtW5R/Z1v1fpgeeP18FmUy8ytUYJ4NrDsOzL7zwiL4
+ NqWenxoSNMn0r5rOEbQ20iF+C/p0U1x5Kg492/5uLtYdSu5b9YzgtIkFZWTQYOiurIPTCJszD
+ NJ9olW/35mcmxiNWHgK1PQBG+Vx+FOqUH+3y1h8H5+kEx7k6VgrIDcbBCnWm5M3v+B54ma6j9
+ VTq7c+JQbr1lRMm518IC2vAnTJkKNNQfw+OVkiUp0lUzkeYKXQbvenxG+KwWzoshv8sY9RaTl
+ Aaw2ZUmIaydmKDib191NX84qt1cKpi3qCYx/GMLndxcpPe7nWw1wIK8M3Ghzn+G0ZyLSxeOjX
+ T7gTbCHweLeO2TVSg8djVzkOzCk5+16g8uuRBmUU9DlCunGWdfuNoQL7VQ/7say8oCr72bR9J
+ uV/aMwCfsOG9Pb4lYH6ncMLUfE3enC4KkD+MLxUv7frEkm6VRxEhWSHQf5DIFC0U7ovcJ5JDc
+ 1o0OAMx2m3RGk9bXYvG17pBbe6XPZ8ZpBJ5fNBW6ZO8MFlAnrmdx784ZHhRNo68epPe5b/Xe5
+ oAU2O3wmy2ZtcdPmuG0+lRX6nuHhNJdmCdBrA3Re1r7U4dNufEoVaYeHuYmI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eugen,
+Hi Sebastian,
 
-On Thu, 12 Sep 2019, Eugen Konkov wrote:
+On Thu, 12 Sep 2019, Castro Alvarez, Sebastian wrote:
 
-> $ git --version
-> git version 2.20.1
+> I have tried with both versions 32-bit and 64-bit, none of them work
+> for me, I still get the same error. :(
 
-First thing to try is whether Git v2.23.0 still exposes that bug.
+The most common reason for this, then, would be an overzealous
+anti-malware.
 
 Ciao,
 Johannes
