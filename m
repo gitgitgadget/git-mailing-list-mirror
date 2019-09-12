@@ -2,74 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B39C1F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 14:03:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80A9A1F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 14:10:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732407AbfILODe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 10:03:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47864 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1731816AbfILODe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 10:03:34 -0400
-Received: (qmail 13560 invoked by uid 109); 12 Sep 2019 14:03:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 12 Sep 2019 14:03:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7999 invoked by uid 111); 12 Sep 2019 14:05:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Sep 2019 10:05:33 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 12 Sep 2019 10:03:33 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] upload-pack: disable commit graph more gently for
- shallow traversal
-Message-ID: <20190912140332.GD23031@sigill.intra.peff.net>
-References: <20190912000414.GA31334@sigill.intra.peff.net>
- <20190912001846.GA31370@sigill.intra.peff.net>
- <20190912020848.GB76228@syl.lan>
+        id S1732529AbfILOKw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 10:10:52 -0400
+Received: from mail-io1-f45.google.com ([209.85.166.45]:45544 "EHLO
+        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731455AbfILOKw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 10:10:52 -0400
+Received: by mail-io1-f45.google.com with SMTP id f12so54826229iog.12
+        for <git@vger.kernel.org>; Thu, 12 Sep 2019 07:10:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rug-nl.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mox9iqNVe+LZx/tXZ0r8RmtTIYb5LOvNdHc/JwsaZUk=;
+        b=Li+WETLPGy+z/1x6+uAkxBSqgHmVBgHbyiYlkxIXOcCOBzNadiqt1VmLF9+A82KiFp
+         epsjP7PgN+1gRkQLSa0R/J7gTVTX8a9Crc/ABdu1sWqh7xRGmYRK3wfeoUVVCeWDnAjV
+         OIL4AS66hjU76JagBfwddrFoS+4bNuI7Yw+ud7NCmvyKI3cUErrVjfII1psyB046Kkvy
+         k92xDatUVGKH16/w5xSSRUu5uBtvwDyjW4Vb3HQpcJmUOuGt3KtJbyOcVntR4Waq4KhU
+         y18xZja+5zzaJPauWbiSaMcgFYsriRm2MCF0KGVT3O+NUOMDbBjLrXwaXyt5775DKoQG
+         7rBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mox9iqNVe+LZx/tXZ0r8RmtTIYb5LOvNdHc/JwsaZUk=;
+        b=iUnWP5pPypaTjdFoeL23+SR4GbR2pwXzN1GdbKX+zfc1Z1hPauikRQTjG4BhU2qTV5
+         q3x2WDeQo8tWRup2TKJ4kxSMYM11J4KlINwZQ4W/Q/rfh+kAj+Kk8QMEZTxVr8BR6trl
+         wG0sP/Hh05hrIx82Qvvlfr7cjZpQwo2nrCfyH44puL+DDNH1rXgIa/a/xvGOW2WgsUnk
+         komxHz01WUnvn3OzujgTq5FxbIJ1GCV5ruA5qyVBj6YCzGlo7sfU0XaYixpiuo9+Ra81
+         atuaTw7ZKOqCJpEQg1e2m0ZnFR+lXkZc4dmIEVjxVCwvD3k3m9ItdJpG1+BZT6RbJ9hV
+         X4Gw==
+X-Gm-Message-State: APjAAAWDYdfB2DAcDm7/RcfDJylQNh986zLFaPCI9vR6L91viD2E9N6m
+        MTL6Vss2fnORXPazf6vJ8/t9f9TXrgHPGOM1BgfsdA==
+X-Google-Smtp-Source: APXvYqyKCSIgTEs5bH32ly+LsR337Ki1ti8EWRMEKPph4azJqTU+cXeVvRtOI+AMcIM4MktSzv1WaRhZ4DIho3/OehY=
+X-Received: by 2002:a02:a792:: with SMTP id e18mr648270jaj.125.1568297451309;
+ Thu, 12 Sep 2019 07:10:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190912020848.GB76228@syl.lan>
+References: <CAMr8YN58q94bnBkdfxrBR-Vw5Mk4akHzn4c1k2HjMQCXKWdWsA@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1909121044250.47@tvgsbejvaqbjf.bet> <CAMr8YN7aa9yK3TSqVhQjn2DG7vU_zJs9SHvznPefay+Mxs_Qsg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1909121327450.47@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1909121327450.47@tvgsbejvaqbjf.bet>
+From:   "Castro Alvarez, Sebastian" <s.castro.alvarez@rug.nl>
+Date:   Thu, 12 Sep 2019 16:10:40 +0200
+Message-ID: <CAMr8YN5ifdsjbwszeXXwJZYZs=diEpj5xaLzPV9HbVwGam4=9g@mail.gmail.com>
+Subject: Re: could not fork child process rebasing required
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 11, 2019 at 10:08:48PM -0400, Taylor Blau wrote:
+Hi Johannes,
 
-> > The test suite passes with my patch both with and without
-> > GIT_TEST_COMMIT_GRAPH=1. But to my surprise, it also passes if I delete
-> > the close_commit_graph() line added by 829a321569!
-> >
-> > So it's not clear to me whether this whole thing is truly unnecessary
-> > (and Stolee was just being overly cautious because the code is related
-> > to shallow-ness, even though it is OK doing a true-parent traversal
-> > itself), or if we just don't have good test coverage for the case that
-> > requires it.
-> >
-> > If it _is_ necessary, I'm a little worried there are other problems
-> > lurking. The whole issue is that we've seen and parsed some commits
-> > before we get to this shallow deepen-since code-path. So just disabling
-> > commit-graphs isn't enough. Even without them, we might have parsed some
-> > commits the old-fashioned way and filled in their parent pointers. Is
-> > that a problem?
-> 
-> I am, too, but I don't think we should hold this patch up which is
-> obviously improving the situation in the meantime while we figure that
-> out.
+I will try to check for this. Thanks a lot!
+best,
+Sebastian
 
-Yeah, I'd agree here, unless we determine quickly that we do need the
-bigger fix, and somebody with a bit more knowledge of this shallow code
-offers a fix. I believe my patch is a strict improvement, and puts the
-commit-graph code path on par with the regular one.
+On Thu, Sep 12, 2019 at 1:29 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Sebastian,
+>
+> On Thu, 12 Sep 2019, Castro Alvarez, Sebastian wrote:
+>
+> > I have tried with both versions 32-bit and 64-bit, none of them work
+> > for me, I still get the same error. :(
+>
+> The most common reason for this, then, would be an overzealous
+> anti-malware.
+>
+> Ciao,
+> Johannes
 
--Peff
+
+
+-- 
+Sebastian Castro Alvarez
+PhD student
+Department of Psychometrics & Statistics
+Heymans Institute for Psychological Research
+University of Groningen
+https://www.rug.nl/staff/s.castro.alvarez/
