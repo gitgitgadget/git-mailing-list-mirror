@@ -2,113 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E5F31F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 19:20:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0E6D1F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 19:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726686AbfILTUw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 15:20:52 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:40243 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726203AbfILTUv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 15:20:51 -0400
-Received: by mail-wr1-f66.google.com with SMTP id l3so6914785wru.7
-        for <git@vger.kernel.org>; Thu, 12 Sep 2019 12:20:50 -0700 (PDT)
+        id S1727477AbfILT0e (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 15:26:34 -0400
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:33880 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726735AbfILT0e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 15:26:34 -0400
+Received: by mail-vs1-f68.google.com with SMTP id g14so11463092vsp.1
+        for <git@vger.kernel.org>; Thu, 12 Sep 2019 12:26:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0BdkdGSGpgYSJHNdvd9LKF7DOSnrQahjBcS9/x/ilOk=;
-        b=XJp1K0VxjuyJBMfLJfXrbewpjjmGdISnlkeKncHfeAc3JIqR6TeStI640Wmq1Wgq4S
-         fb1Fo/DWGi6Inq7oK4gjkdpg0KE3qwZtbF3i3td4Ia6l1BIMQ3ABiLs7ZD7b/3s7hIO4
-         9Qhwb5Re1vY94C/feobwtftjKqdIdE0WV708YtDzvnXSEkePHqhlX2aFshxWjuB88KfS
-         G/j+WHcI85eYHu5eqAX8kWBYeW/Kj6XahykWHQN2qBkHW0Ww/MLQfr3z/mAmiskMfLqC
-         tZ32PT380bMua7D3I3CuZqNRxCzwOzyt3PzT3dVjwSeMP2j9GNhZ8iZslUk5g4Kgd+SS
-         ZrcQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ncddy0qnsjP+sb2gYGL72x+CI4p25dDlu6eKdXIBtAA=;
+        b=NoU0s/26kqSafhI0NL+wRzhHadF37RM6zX+yFHK6w4H66QjR4h3a8z/rfEx9hQKCAQ
+         vNRJoU7K5QQOFeknpNd0aoT19M0yaYktq2pr5tYldQXZgaKyCbioANi0L4yFOSfmYt1j
+         rVJQUxQ5sFnXvhZGrDLfdxB2+iUjCvCuTSp/9Wk2zAuOw1sISg+QFusH9ruaY+imom88
+         Gf/FIQlHBa3Txr4KbZPv9JllrusKssSH4jK04S86p/Lr5BhZx5CKB5Prn6pV57KbGCcg
+         R9odBlyL3yukICI6Jr9mbR9/77JHz+txXeBq7SM63rh+HWxkNGFcyEcb/I1m9n+qgiwb
+         ojgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0BdkdGSGpgYSJHNdvd9LKF7DOSnrQahjBcS9/x/ilOk=;
-        b=tNwhwMDWf5+x37QCnO06Cm/rI0GQRr+zroJwkPMHYtVifkFpP4JNCE/dl9rx+7Woy0
-         J3heIRFOzFXp96jcdKkXWmpaHb0KOnvCynJYH+7kajPXHlOH5VezMlOcMVEyT1s23hxE
-         lf0jVqRLUaAgLKErHt3jK+ZJ0lLenw4W7ev8zGaFT3VQpiuIkWb/IXSSFjsxX8IOimkW
-         nRqUdRyei44Xr06PvzaDmslmJIK4cgGBrKsVSRKlmJRyS//Yvisw7OhJnl06HCQKUod5
-         WVnY2rptQJdVL8ZEz77S1MAFD+722DnI9vPyyAphCzniY/y/TiwRiMJ244+HvEuG8+7B
-         5Wcg==
-X-Gm-Message-State: APjAAAWHntOQXdcv8YeGwuL7FkbSwdnL3T+I6Q9UwdrNNV5hOJfh7egn
-        srJRH4IiqV9j4CHoL4Fl2w==
-X-Google-Smtp-Source: APXvYqx+vKokyXhpOkPDxQlwgE7Z9B9uIaOek+vJe/DvTFS2Z7cCAY+afyzFO6rSMEles6VVxtk5mA==
-X-Received: by 2002:a05:6000:1081:: with SMTP id y1mr35993014wrw.53.1568316049150;
-        Thu, 12 Sep 2019 12:20:49 -0700 (PDT)
-Received: from localhost ([2a02:810a:8c80:d2c:4d89:574b:af6e:1a3])
-        by smtp.gmail.com with ESMTPSA id y12sm17061473wrn.74.2019.09.12.12.20.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 12 Sep 2019 12:20:48 -0700 (PDT)
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-To:     git@vger.kernel.org
-Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
-        Pratyush Yadav <me@yadavpratyush.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>
-Subject: [PATCH] git-gui: add horizontal scrollbar to commit buffer
-Date:   Thu, 12 Sep 2019 21:20:47 +0200
-Message-Id: <f9bf70bfae825228a7afee705babc1915b579072.1568315704.git.bert.wesarg@googlemail.com>
-X-Mailer: git-send-email 2.21.0.789.ga095d9d866
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ncddy0qnsjP+sb2gYGL72x+CI4p25dDlu6eKdXIBtAA=;
+        b=r61Aoxw4zMfXtQ27z8aiv+2yaYt1F/8E2rxcCGWUY7iVlUYpgpHveDAtam2qjqe3xC
+         tp+V8gs72vSsiLQE2o5shdb8/OFK8yVHWx58uSyND539SizA2ecY8n30SEPlo4Max5D5
+         H7T5bJAa8Iy8EMdDC7ujogx0/0weF9SSAwVrgk9irtgpgjZgN+tZjyBeyOARgA0hubNw
+         StEk0Al1Jk4tEJQBb4B88gfsB9zLifYOpV2rtFEs7xQQqd+MkzF5Aetz19wNBcy0wIx4
+         stVGCJ5GLGnyunrpNmYm3Dm0eLMS5sZ2pdCAIadLRLJeZwBPzPiUiIl8ItlLwpZGPgD0
+         uMsA==
+X-Gm-Message-State: APjAAAWna29LkUYf0prdM0TD6dEYj7Bz6J/1usjYI2HAUf6EIdbRTNp6
+        Fn0p2LRlb4uUgGlXfeonrZ2rsKGSYHWBybZLe4M=
+X-Google-Smtp-Source: APXvYqyamnj9+PwVIuuNqrPYvACECLnKg0Sp96mwl3K1Eupj2osgo3QdaRW9jLiZ3hWh7UflfSgmZI8EAUQKESIoJ5A=
+X-Received: by 2002:a67:2e43:: with SMTP id u64mr24551063vsu.75.1568316393668;
+ Thu, 12 Sep 2019 12:26:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <7da71d89f9fa987eca2e25974e4cec382c146e44.1567627609.git.bert.wesarg@googlemail.com>
+ <01e3c41d-af69-f9b3-31e6-12192e566f92@kdbg.org>
+In-Reply-To: <01e3c41d-af69-f9b3-31e6-12192e566f92@kdbg.org>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Thu, 12 Sep 2019 21:26:22 +0200
+Message-ID: <CAKPyHN0gX087_-tn=Q7gt7dJJaFg5idgz-E8zfTfRQxkCZb57A@mail.gmail.com>
+Subject: Re: [PATCH 1/2] git-gui: warn if the commit message contains lines
+ longer than the set limit
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While the commit message widget has a configurable fixed width, it
-nevertheless allowed to write commit messages which exceeded this limit.
-Though there is no visual clue, that there is scrolling going on. Now
-there is a horizontal scrollbar.
+On Tue, Sep 10, 2019 at 6:50 PM Johannes Sixt <j6t@kdbg.org> wrote:
+>
+> Am 04.09.19 um 22:10 schrieb Bert Wesarg:
+> > The commit message widget does not wrap the next and has a configurable
+> > fixed width to avoid creating too wide commit messages. Though this was
+> > only enforced in the GUI. Now we also check the commit message at commit
+> > time for long lines and ask the author for confirmation if it exceeds the
+> > configured line length.
+> >
+> > Needs Tcl 8.6 because of `lmap`.
+> >
+> > Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> > ---
+> >  git-gui.sh     |  4 ++--
+> >  lib/commit.tcl | 10 ++++++++++
+> >  2 files changed, 12 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/git-gui.sh b/git-gui.sh
+> > index 5bc21b8..a491085 100755
+> > --- a/git-gui.sh
+> > +++ b/git-gui.sh
+> > @@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
+> >  ##
+> >  ## Tcl/Tk sanity check
+> >
+> > -if {[catch {package require Tcl 8.4} err]
+> > - || [catch {package require Tk  8.4} err]
+> > +if {[catch {package require Tcl 8.6} err]
+> > + || [catch {package require Tk  8.6} err]
+> >  } {
+> >       catch {wm withdraw .}
+> >       tk_messageBox \
+> > diff --git a/lib/commit.tcl b/lib/commit.tcl
+> > index 83620b7..fa9760b 100644
+> > --- a/lib/commit.tcl
+> > +++ b/lib/commit.tcl
+> > @@ -215,6 +215,16 @@ A good commit message has the following format:
+> >               unlock_index
+> >               return
+> >       }
+> > +     if {[tcl::mathfunc::max {*}[lmap x [split $msg "\n"] {string length $x}]] >= $repo_config(gui.commitmsgwidth) \
+>
+> This has an off-by-one error: When I fill the edit box to the limit, but
+> not beyond it, I get the warning popup. I guess this should be '>', not
+> '>='.
 
-There seems to be a bug in at least Tcl/Tk up to version 8.6.8, which
-does not update the horizontal scrollbar if one removes the whole
-content at once.
+Thanks. As Pratyush wont pull this one, I separated it and keep it in
+a branch in my fork:
 
-Suggested-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- git-gui.sh | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+https://github.com/bertwesarg/git-gui/tree/bw/warn-wide-commit-message
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 5bc21b8..032ebd6 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -3363,14 +3363,20 @@ ttext $ui_comm -background white -foreground black \
- 	-relief sunken \
- 	-width $repo_config(gui.commitmsgwidth) -height 9 -wrap none \
- 	-font font_diff \
-+	-xscrollcommand {.vpane.lower.commarea.buffer.frame.sbx set} \
- 	-yscrollcommand {.vpane.lower.commarea.buffer.frame.sby set}
-+${NS}::scrollbar .vpane.lower.commarea.buffer.frame.sbx \
-+	-orient horizontal \
-+	-command [list $ui_comm xview]
- ${NS}::scrollbar .vpane.lower.commarea.buffer.frame.sby \
-+	-orient vertical \
- 	-command [list $ui_comm yview]
- 
-+pack .vpane.lower.commarea.buffer.frame.sbx -side bottom -fill x
- pack .vpane.lower.commarea.buffer.frame.sby -side right -fill y
--pack $ui_comm -side left -fill y
-+pack $ui_comm -side left -fill both -expand 1
- pack .vpane.lower.commarea.buffer.header -side top -fill x
--pack .vpane.lower.commarea.buffer.frame -side left -fill y
-+pack .vpane.lower.commarea.buffer.frame -side bottom -fill both -expand 1
- pack .vpane.lower.commarea.buffer -side left -fill y
- 
- # -- Commit Message Buffer Context Menu
--- 
-2.21.0.789.ga095d9d866
+Bert
 
+>
+> > +         && [ask_popup "Commit message contains lines longer than $repo_config(gui.commitmsgwidth) characters.
+> > +
+> > +You may change this limit in the options.
+> > +
+> > +Continue to commit?
+> > +"] ne yes} {
+> > +             unlock_index
+> > +             return
+> > +     }
+> >
+> >       # -- Build the message file.
+> >       #
+> >
+>
+> -- Hannes
