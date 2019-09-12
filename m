@@ -2,99 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E77B1F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 08:50:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00FC21F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 08:54:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730469AbfILIuL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 04:50:11 -0400
-Received: from mail-io1-f50.google.com ([209.85.166.50]:33523 "EHLO
-        mail-io1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726159AbfILIuL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 04:50:11 -0400
-Received: by mail-io1-f50.google.com with SMTP id m11so52708329ioo.0
-        for <git@vger.kernel.org>; Thu, 12 Sep 2019 01:50:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rug-nl.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=69jyrLBnIkNE3/C1IIMRZT4fBAUHDquS2Kdwg7BeGsg=;
-        b=Jhpc8lntnyjW9EAm02+x6/x+xh072kGwANW//pt+96SKX/1id7kXsdXtT4Gibb3gPN
-         O1fA7SEtLUkBZLj+EIydzzGkq4nmS9uqt5AEGobopo6dfZgfuBdE5LFKHk5iAT6IKhCy
-         KF2jqMkzSfyEJLXmyxh7KMFRbjBS3fYI4eGzbs7U00z8DvhyYtQ3fz+x/JoybEj8dlCO
-         GCJy1vgg37QNcuNjIN5VkAeKFDMzmEbByN6JfYvtwIAJgbhYRCgj077q+Nt8SmeX+cKJ
-         V5vsrFu5LX3IS8LeL35YmVfa2q1CL63PO6INn7CVGCwTDOSTO0k/ERO3CcxQp04+Hdyq
-         CfOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=69jyrLBnIkNE3/C1IIMRZT4fBAUHDquS2Kdwg7BeGsg=;
-        b=EiLxgSTpqzVyrktUuCn2p9aYjiM9vXK2BEO1YoUFUfIQ8U83EO+DIdZ7hQ4SDd7Mln
-         NtS/F81HfcyAhqsL10tqbEIPWEpJe7BrbE+SZU497uczwjoFSIEyh3UqsDaOryzSiH5+
-         PwaYo4OBXZsIZfI63zk9X0kolwT+4H9nTjxEydELtFLlexC5lfZFeAxCGUMCTM9z4oE2
-         hyJkiPDoARsaqj/OU6EjUUe02hlr6jb2JASZq7lPqbgVwNo4OkU8ABEtol50PB8vaWAM
-         7Bjo3A8c/D6Xc+HMxySBXTn6NdgRlxe97ya9cpncWvKWYZPYQwH3VZFV8VSbwVvzJKXy
-         FQCA==
-X-Gm-Message-State: APjAAAW92wLPdUxNaioHTUKwUzlZeNm0FTiK0Kr0J12WUUj3rYcoI/kI
-        P8ng8ey/UOXiBvQj7X8ERMnau6LINu71gZb+sXfztw+asmE=
-X-Google-Smtp-Source: APXvYqzAkVQbjHXefMmLfLlkQq2t3+MUlkV8HCtog2oGqM6WDCAiua5t8C+E4UG7KB4PiheZgS+FKd7CyjIGEmoNw2A=
-X-Received: by 2002:a6b:4a11:: with SMTP id w17mr2920670iob.21.1568278210524;
- Thu, 12 Sep 2019 01:50:10 -0700 (PDT)
+        id S1730396AbfILIyk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 04:54:40 -0400
+Received: from mout.gmx.net ([212.227.15.18]:54367 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730268AbfILIyj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 04:54:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1568278472;
+        bh=NcW8eIjsSlEhJU8SpUZK055A+GdcJ8Q/ks3SIlTbh98=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=W1k3FbU/XyU1MmFno4fuzB2c90k5DEecYkH8TGZB0oGNNEXkfEqwPyVJ5ZUgY71ZS
+         n2dGQIrTjkAg/rsVQIji+C4PjLbqtG15fPx3+Ho04pCclNFOkv8RvWKF+DQJFXrFF7
+         REiMQrAIKb8UeMgSd6HjWh48CJ2qhMlLoLmp/KXs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MiacH-1ie6al1Xbb-00fmFC; Thu, 12
+ Sep 2019 10:54:32 +0200
+Date:   Thu, 12 Sep 2019 10:54:15 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Max Rothman <max.r.rothman@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] completion: add missing completions for log, diff,
+ show
+In-Reply-To: <CAFA_24JW_oRXB+40M2wKtEDQeC5VYjTC0D9GLEm5oa5E_dGtSg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1909121053070.47@tvgsbejvaqbjf.bet>
+References: <0102015f985d387e-f50183c4-4b49-4a9f-b365-2a86ba24bbed-000000@eu-west-1.amazonses.com> <0102016bb065bf5e-005b0752-2594-45d5-a01a-12d0c5e24b70-000000@eu-west-1.amazonses.com> <CAFA_24J8Ry5LhRX5O82eJDtrqjEodDFTEniZNw06fKEWvwvYMA@mail.gmail.com>
+ <CAFA_24JW_oRXB+40M2wKtEDQeC5VYjTC0D9GLEm5oa5E_dGtSg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CAMr8YN58q94bnBkdfxrBR-Vw5Mk4akHzn4c1k2HjMQCXKWdWsA@mail.gmail.com>
- <nycvar.QRO.7.76.6.1909121044250.47@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1909121044250.47@tvgsbejvaqbjf.bet>
-From:   "Castro Alvarez, Sebastian" <s.castro.alvarez@rug.nl>
-Date:   Thu, 12 Sep 2019 10:49:59 +0200
-Message-ID: <CAMr8YN7aa9yK3TSqVhQjn2DG7vU_zJs9SHvznPefay+Mxs_Qsg@mail.gmail.com>
-Subject: Re: could not fork child process rebasing required
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:xglikgC9761frkOMAZzyO5uRJn+pYgqSxRNvSwlm1tcL6pjkrIX
+ zrXCwf6izRLsN1XJhWBx5kdqB0Ua49SniLO8ZcJ15YC9FiI0HNBvon5QYUWDGDgCuI+wvEb
+ LxDcTCJ9AVOBzubJ2fhDrav9pv5X0ew1lxloZHZmzIswJ3KPBXXRsMKcoHyefDRFdt4a72r
+ QfIK79pGk58woGwMiDm0g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:AllltqRrIN0=:l8v/haKrc31xVj1hTDLctg
+ LIcmljXTKqWI1w05l/iQ0ONVVT8ac6wBXXA/6e6c/f265WwONE2KuPtp7c2KoSJuDHEDSuiYE
+ b1CuVY99mF/xQmaOAxIcx0v1TzD28JVKhdrkVKRQYaWbJkKSOwMOyrWzAXqpK8LCCtymOCCf9
+ nGgd61eS6uAUGR8gP1LPpF0rk8+JVyIHP2m0dN2PxoCBjMXkYd2axNlVI656/rHp5JeAVdV2a
+ J8rVAnPYkllztBELxH0BDcwt1jWtUjCvXhYFq/by8B/bYjdwy0HMPAaQls05fiqvtHMNaLIDw
+ w/nuTu8iNHgxdDzS0pl0srE1DptytzPxb6M4+X0oggSbyvfd4VTMSQJbNOcWILMjfs0SPH72J
+ gYV2fnBvpylZVJ9SmUgdQMWFzwmehUrZQikPv7ALAE4xJH695mRWqmGpurHusMt0P2bPScv73
+ 1VQ0Qk4QaSTTQ/lJoZpptwyGKO9yXYSQZYoNbk9IcjbJcBE4dMQjxfn27TE4eAhTopwDsEvCP
+ G25iuefKDgkWBcDIE9SKdVxg4WhIsPRJhDhMF6xzwfNHXjfxMfzTtvV3+BBIOsMGh4xriZPHU
+ Z4DiQeR2TJddAjwpY1lo7muPCrd5IIfcqGXrKq/yjmDjXWxY++XHw79iSdn8Hvlyfv7+vls7s
+ 3F6XphaZlukbq9+8fFE7EYn3Xgy6kXX8Y1ouPnxEJL++9QvgMJeJ6qVSRrgq3G/HT5dKL/XEI
+ UmE9pesI4FY86jqA7TNxTdOid/W4TgNj1xFQx0/giMW+MXYP6LraDFUuS8gz8fMBm0caJr3BN
+ YE5NZGnlpg5ViKxEPeAHUZpu+5q1iGsNvxl8N7dyMWuczXCycB+kojaNckyvEgyjjytRmbVhQ
+ A7D22hsvuHenHJaEgeBji06a0DbGqoy56uFrfVnBE2mmcRyOfgp6U3JFP9lvpdzII/uAoRfPZ
+ v6dQsmgGzvLDFz47aG7IeJ5fq1uU0J4xnhWdsXqnmKb85h9smyui6MQy9cce0fwDVkLziMI7o
+ DGjDWBSV5pNM2JkYpttmoJO2TcY5mFJVZAzf1i1eTVd3BPaUZPRFl2Wv3XiNfTY8KW5s7rCts
+ pAZZarRHbtJ/vuZwpvrgkNERIGBS8QxxQBoItrKc1KQT045iAqWEuAdqEwlP+Pn9j/n/3grOz
+ PIdRcD3tUR2EmhS0igP9lq4NAhsTjyzaNpUG0+RIMqpOy1ImGQPxItbOqt2u1VJGJgmYu5S3y
+ 4cBqAkIYFkH1W1Uap
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Hi Max,
 
-I have tried with both versions 32-bit and 64-bit, none of them work
-for me, I still get the same error. :(
+The patch looks good to me!
 
-best,
-Sebastian
+Thanks,
+Johannes
 
-On Thu, Sep 12, 2019 at 10:45 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Sebastian,
->
-> On Wed, 11 Sep 2019, Castro Alvarez, Sebastian wrote:
->
-> > I have recently updated my computer to W10. So, I reinstalled the
-> > newest version of Git, and it is not working. It gives the following
-> > error:
+On Wed, 11 Sep 2019, Max Rothman wrote:
+
+> On Thu, Aug 1, 2019 at 8:54 PM Max Rothman <max.r.rothman@gmail.com> wro=
+te:
 > >
-> > Error: Could not fork child process: Resource temporarily unavailable (-1).
-> > DLL rebasing may be required; see 'rebaseall / rebase --help'.
+> > On Thu, Aug 1, 2019 at 8:50 PM Max Rothman <max.r.rothman@gmail.com> w=
+rote:
+> > >
+> > > The bash completion script knows some options to "git log" and
+> > > "git show" only in the positive form, (e.g. "--abbrev-commit"), but =
+not
+> > > in their negative form (e.g. "--no-abbrev-commit"). Add them.
+> > >
+> > > Also, the bash completion script is missing some other options to
+> > > "git diff", and "git show" (and thus, all other commands that take
+> > > "git diff"'s options). Add them. Of note, since "--indent-heuristic"=
+ is
+> > > no longer experimental, add that too.
+> > >
+> > > Signed-off-by: Max Rothman <max.r.rothman@gmail.com>
+> > > ---
+> > >  contrib/completion/git-completion.bash | 18 ++++++++++++++----
+> > >  1 file changed, 14 insertions(+), 4 deletions(-)
+> > >
+> > > diff --git a/contrib/completion/git-completion.bash b/contrib/comple=
+tion/git-completion.bash
+> > > index 9f71bcde967bc..b6d18710135ec 100644
+> > > --- a/contrib/completion/git-completion.bash
+> > > +++ b/contrib/completion/git-completion.bash
+> > > @@ -1474,6 +1474,8 @@ __git_diff_common_options=3D"--stat --numstat =
+--shortstat --summary
+> > >                         --dirstat-by-file=3D --cumulative
+> > >                         --diff-algorithm=3D
+> > >                         --submodule --submodule=3D --ignore-submodul=
+es
+> > > +                       --indent-heuristic --no-indent-heuristic
+> > > +                       --textconv --no-textconv
+> > >  "
+> > >
+> > >  _git_diff ()
+> > > @@ -1782,6 +1784,10 @@ _git_log ()
+> > >                 __gitcomp "$__git_diff_submodule_formats" "" "${cur#=
+#--submodule=3D}"
+> > >                 return
+> > >                 ;;
+> > > +       --no-walk=3D*)
+> > > +               __gitcomp "sorted unsorted" "" "${cur##--no-walk=3D}=
+"
+> > > +               return
+> > > +               ;;
+> > >         --*)
+> > >                 __gitcomp "
+> > >                         $__git_log_common_options
+> > > @@ -1789,16 +1795,19 @@ _git_log ()
+> > >                         $__git_log_gitk_options
+> > >                         --root --topo-order --date-order --reverse
+> > >                         --follow --full-diff
+> > > -                       --abbrev-commit --abbrev=3D
+> > > +                       --abbrev-commit --no-abbrev-commit --abbrev=
+=3D
+> > >                         --relative-date --date=3D
+> > >                         --pretty=3D --format=3D --oneline
+> > >                         --show-signature
+> > >                         --cherry-mark
+> > >                         --cherry-pick
+> > >                         --graph
+> > > -                       --decorate --decorate=3D
+> > > +                       --decorate --decorate=3D --no-decorate
+> > >                         --walk-reflogs
+> > > +                       --no-walk --no-walk=3D --do-walk
+> > >                         --parents --children
+> > > +                       --expand-tabs --expand-tabs=3D --no-expand-t=
+abs
+> > > +                       --patch
+> > >                         $merge
+> > >                         $__git_diff_common_options
+> > >                         --pickaxe-all --pickaxe-regex
+> > > @@ -2525,8 +2534,9 @@ _git_show ()
+> > >                 return
+> > >                 ;;
+> > >         --*)
+> > > -               __gitcomp "--pretty=3D --format=3D --abbrev-commit -=
+-oneline
+> > > -                       --show-signature
+> > > +               __gitcomp "--pretty=3D --format=3D --abbrev-commit -=
+-no-abbrev-commit
+> > > +                       --oneline --show-signature --patch
+> > > +                       --expand-tabs --expand-tabs=3D --no-expand-t=
+abs
+> > >                         $__git_diff_common_options
+> > >                         "
+> > >                 return
+> > >
+> > > --
+> > > https://github.com/git/git/pull/426
+> > >
 >
-> This sounds as if you tried to install the 32-bit version of Git for
-> Windows? If so, please install the 64-bit version instead.
->
-> Ciao,
-> Johannes
-
-
-
--- 
-Sebastian Castro Alvarez
-PhD student
-Department of Psychometrics & Statistics
-Heymans Institute for Psychological Research
-University of Groningen
-https://www.rug.nl/staff/s.castro.alvarez/
