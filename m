@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72F501F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 22:12:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7692F1F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 22:12:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729472AbfILWMx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 18:12:53 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:45680 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729438AbfILWMv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 18:12:51 -0400
-Received: by mail-pl1-f193.google.com with SMTP id x3so12345509plr.12
-        for <git@vger.kernel.org>; Thu, 12 Sep 2019 15:12:51 -0700 (PDT)
+        id S1729508AbfILWM6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 18:12:58 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:38177 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729476AbfILWMy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 18:12:54 -0400
+Received: by mail-pf1-f193.google.com with SMTP id h195so16838515pfe.5
+        for <git@vger.kernel.org>; Thu, 12 Sep 2019 15:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=i5mQ7jGVi1GSepIUqmAEyMSklEa2/GbTtq0381ie0A4=;
-        b=KoQZ9eMIHOce9Z9/vChMex7Yclxd2Ee3hBTfQ7Ku+09XhIaZ/V9UVL/OLnir7vrceG
-         lXFNbBH9l+0z5s+3NjeJx3oU4SdfWV8DgYbwUgw9W3WvrCWa8/jP3qBae9MJwRzhZ2ac
-         viguNPwFwU/RSQOC2ow75/quBX3Xvq34/8z2ysTWUvUSeQLrKe2i7R4ixPYLgQSMY4m/
-         FOqmdHNMvSQ3Q4WzeDi9jPxgQvV1SApXJlEi7eOf4wdkIyyfeSFz1wHRw9T9KYbqMn9l
-         I+ue23fyXysXewCXapetFTSO6C8PIKuv52Nptg2jPjvtLM0g5wtxmcjsyOIcUP2gD5GW
-         ZGhQ==
+        bh=RhH5+WN9W8rQGx537TUhBIbRaNxG3235PEiKSbH2HZ8=;
+        b=ouzSwwHuzS0EBdMGU0uUcw936k2cpDPWuoKDNfo7kFDfGRQfhJjuwxYtDd6JbMFArq
+         I+vKunef7AVtSO/702pwwRozKQxv++L1J4pbNfazdwrxnzCEOwPoiS2Pf9qKYGFIRg8m
+         dTDNRaGx428T9Z7RGtICCvF3ebHaDSE3bXAcg5B1Zg4GSMwDWZkfJn92bACu4fg9VdJ6
+         Z8p7W7cOPCNDATPCDC1tFJoMOaFU5X+jQWH44reMxAt0aBXjAl0d9k3JatO11HpznE6b
+         /xEC8i8j1SoU6kgnJBl0HlxbyhRS+OntWU1Ra6Et8k3B4QF+GR7n+HiEkp1+bQI2KGzB
+         qaMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=i5mQ7jGVi1GSepIUqmAEyMSklEa2/GbTtq0381ie0A4=;
-        b=THMJbKWa1QaAw7eSn8f8pz7nupgxBfnqWUe9F7Uz+PfR7SyFXHsFknbUE/EVfnvUf7
-         2EYD3sYX+mP7mJaswTS0+Vb8xQNVFndIITCIE3Jb6n61KXn+g1VNKfbj+E6xTJSIEoLz
-         vVU8WEKcjX/Ii6zxdvDuLG401JIRphDDJ+GkZIe2AL78LrsHiQdJ8YqRLkSOq49kveAy
-         35mTUs4/xDz+5NiujWWc0ysdjqS2HaGeUgp+rSkzmiWSlGKSwXem1IQ0JOvjzMrsLeZ3
-         JDD/bsWpP0Sc5hUANDFaO8VQGJpml+95lD2K6Q0ejhO1ezdpjEclcgSfyf3P9QjOPyRv
-         OxoA==
-X-Gm-Message-State: APjAAAX0QXiwF4UPuE0/+Kep0/IpIQVpd1Kt9hWo3va5CC29WUk9H+TS
-        pLJjwpJgYddxv5LYDQGLfW7ShM5FpBg=
-X-Google-Smtp-Source: APXvYqz45ADHPQZpUPTZlwUcMtVz7erf1NhuTQ/i9m5MaWetvFNGUwaoACOLh1HZnKGUx58fbEQpqw==
-X-Received: by 2002:a17:902:6f0f:: with SMTP id w15mr23966462plk.200.1568326370502;
-        Thu, 12 Sep 2019 15:12:50 -0700 (PDT)
+        bh=RhH5+WN9W8rQGx537TUhBIbRaNxG3235PEiKSbH2HZ8=;
+        b=Ub/fCta0xtjQk8mOXXsMEu8D86hAaoood1GV/bU9leAAmHVk1Y4xv/Ue+3Q89y3MgY
+         +pH2WaXKrLCU1Z7HZ6cpVXB/VnIfZ1/HKD51CT33sjmRVl3WOppiaJ19FhCv0lZ1wzIF
+         c05FdU/olxQl9D5Ihd0eYucNPNOgcmnvI89ZA/EMovBq4eCMWZ3lh2rUheEEdjr5L2lM
+         XRV2lCTa5HYJBxy0iMpY+KlcNgXlmhZyMsBmXdgrebiVTTrtZaAHm3lqaPpbjS2rlW/o
+         qnoTi0GWue3KmInKRreMwtaPU50j/tL10D8LOUtkwN3gLBhe6Ksm2lB/Qwojo73yMgMy
+         vkVw==
+X-Gm-Message-State: APjAAAVOwtons/eiexlS1tBBqqiuj21BfIGrjZVv6OYJXhPjUDQCZvZ4
+        R36FYt4U4qOPekB4lsE0G80rmOA716k=
+X-Google-Smtp-Source: APXvYqwadkSL81QecAUTJRgioPiVRbvGaChgRPJsTQiypo+8ir0Es9uct3gwMdmE7VUeS5n5DcQ1Tw==
+X-Received: by 2002:aa7:9735:: with SMTP id k21mr53305645pfg.174.1568326373538;
+        Thu, 12 Sep 2019 15:12:53 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id y13sm24358188pfn.73.2019.09.12.15.12.49
+        by smtp.gmail.com with ESMTPSA id y13sm24358188pfn.73.2019.09.12.15.12.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 Sep 2019 15:12:50 -0700 (PDT)
+        Thu, 12 Sep 2019 15:12:52 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Samuel Lijin <sxlijin@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 04/12] dir: also check directories for matching pathspecs
-Date:   Thu, 12 Sep 2019 15:12:32 -0700
-Message-Id: <20190912221240.18057-5-newren@gmail.com>
+Subject: [PATCH v3 07/12] dir: add commentary explaining match_pathspec_item's return value
+Date:   Thu, 12 Sep 2019 15:12:35 -0700
+Message-Id: <20190912221240.18057-8-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.173.gad11b3a635.dirty
 In-Reply-To: <20190912221240.18057-1-newren@gmail.com>
 References: <20190905154735.29784-1-newren@gmail.com>
@@ -71,76 +71,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Even if a directory doesn't match a pathspec, it is possible, depending
-on the precise pathspecs, that some file underneath it might.  So we
-special case and recurse into the directory for such situations.  However,
-we previously always added any untracked directory that we recursed into
-to the list of untracked paths, regardless of whether the directory
-itself matched the pathspec.
-
-For the case of git-clean and a set of pathspecs of "dir/file" and "more",
-this caused a problem because we'd end up with dir entries for both of
-  "dir"
-  "dir/file"
-Then correct_untracked_entries() would try to helpfully prune duplicates
-for us by removing "dir/file" since it's under "dir", leaving us with
-  "dir"
-Since the original pathspec only had "dir/file", the only entry left
-doesn't match and leaves nothing to be removed.  (Note that if only one
-pathspec was specified, e.g. only "dir/file", then the common_prefix_len
-optimizations in fill_directory would cause us to bypass this problem,
-making it appear in simple tests that we could correctly remove manually
-specified pathspecs.)
-
-Fix this by actually checking whether the directory we are about to add
-to the list of dir entries actually matches the pathspec; only do this
-matching check after we have already returned from recursing into the
-directory.
+The way match_pathspec_item() handles names and pathspecs with trailing
+slash characters, in conjunction with special options like
+DO_MATCH_DIRECTORY and DO_MATCH_LEADING_PATHSPEC were non-obvious, and
+broken until this patch series.  Add a table in a comment explaining the
+intent of how these work.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- dir.c            | 5 +++++
- t/t7300-clean.sh | 4 ++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ dir.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index bf1a74799e..76a3c3894b 100644
+index 47c0a99cb5..3b2fe1701c 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -1951,6 +1951,11 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 							 check_only, stop_at_first_file, pathspec);
- 			if (subdir_state > dir_state)
- 				dir_state = subdir_state;
-+
-+			if (!match_pathspec(istate, pathspec, path.buf, path.len,
-+					    0 /* prefix */, NULL,
-+					    0 /* do NOT special case dirs */))
-+				state = path_none;
- 		}
+@@ -276,16 +276,27 @@ static int do_read_blob(const struct object_id *oid, struct oid_stat *oid_stat,
+ #define DO_MATCH_LEADING_PATHSPEC (1<<2)
  
- 		if (check_only) {
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 2c254c773c..12617158db 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -699,7 +699,7 @@ test_expect_failure 'git clean handles being told what to clean' '
- 	test_path_is_missing d2/ut
- '
+ /*
+- * Does 'match' match the given name?
+- * A match is found if
++ * Does the given pathspec match the given name?  A match is found if
+  *
+- * (1) the 'match' string is leading directory of 'name', or
+- * (2) the 'match' string is a wildcard and matches 'name', or
+- * (3) the 'match' string is exactly the same as 'name'.
++ * (1) the pathspec string is leading directory of 'name' ("RECURSIVELY"), or
++ * (2) the pathspec string has a leading part matching 'name' ("LEADING"), or
++ * (3) the pathspec string is a wildcard and matches 'name' ("WILDCARD"), or
++ * (4) the pathspec string is exactly the same as 'name' ("EXACT").
+  *
+- * and the return value tells which case it was.
++ * Return value tells which case it was (1-4), or 0 when there is no match.
+  *
+- * It returns 0 when there is no match.
++ * It may be instructive to look at a small table of concrete examples
++ * to understand the differences between 1, 2, and 4:
++ *
++ *                              Pathspecs
++ *                |    a/b    |   a/b/    |   a/b/c
++ *          ------+-----------+-----------+------------
++ *          a/b   |  EXACT    |  EXACT[1] | LEADING[2]
++ *  Names   a/b/  | RECURSIVE |   EXACT   | LEADING[2]
++ *          a/b/c | RECURSIVE | RECURSIVE |   EXACT
++ *
++ * [1] Only if DO_MATCH_DIRECTORY is passed; otherwise, this is NOT a match.
++ * [2] Only if DO_MATCH_LEADING_PATHSPEC is passed; otherwise, not a match.
+  */
+ static int match_pathspec_item(const struct index_state *istate,
+ 			       const struct pathspec_item *item, int prefix,
+@@ -353,7 +364,7 @@ static int match_pathspec_item(const struct index_state *istate,
+ 			 item->nowildcard_len - prefix))
+ 		return MATCHED_FNMATCH;
  
--test_expect_failure 'git clean handles being told what to clean, with -d' '
-+test_expect_success 'git clean handles being told what to clean, with -d' '
- 	mkdir -p d1 d2 &&
- 	touch d1/ut d2/ut &&
- 	git clean -ffd */ut &&
-@@ -715,7 +715,7 @@ test_expect_failure 'git clean works if a glob is passed without -d' '
- 	test_path_is_missing d2/ut
- '
- 
--test_expect_failure 'git clean works if a glob is passed with -d' '
-+test_expect_success 'git clean works if a glob is passed with -d' '
- 	mkdir -p d1 d2 &&
- 	touch d1/ut d2/ut &&
- 	git clean -ffd "*ut" &&
+-	/* Perform checks to see if "name" is a super set of the pathspec */
++	/* Perform checks to see if "name" is a leading string of the pathspec */
+ 	if (flags & DO_MATCH_LEADING_PATHSPEC) {
+ 		/* name is a literal prefix of the pathspec */
+ 		int offset = name[namelen-1] == '/' ? 1 : 0;
 -- 
 2.23.0.173.gad11b3a635.dirty
 
