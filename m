@@ -2,135 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0E6D1F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 19:26:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF1631F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 19:28:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727477AbfILT0e (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 15:26:34 -0400
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:33880 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726735AbfILT0e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 15:26:34 -0400
-Received: by mail-vs1-f68.google.com with SMTP id g14so11463092vsp.1
-        for <git@vger.kernel.org>; Thu, 12 Sep 2019 12:26:34 -0700 (PDT)
+        id S1727755AbfILT2B (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 15:28:01 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:44380 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727748AbfILT2B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 15:28:01 -0400
+Received: by mail-qt1-f193.google.com with SMTP id u40so30985282qth.11
+        for <git@vger.kernel.org>; Thu, 12 Sep 2019 12:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ncddy0qnsjP+sb2gYGL72x+CI4p25dDlu6eKdXIBtAA=;
-        b=NoU0s/26kqSafhI0NL+wRzhHadF37RM6zX+yFHK6w4H66QjR4h3a8z/rfEx9hQKCAQ
-         vNRJoU7K5QQOFeknpNd0aoT19M0yaYktq2pr5tYldQXZgaKyCbioANi0L4yFOSfmYt1j
-         rVJQUxQ5sFnXvhZGrDLfdxB2+iUjCvCuTSp/9Wk2zAuOw1sISg+QFusH9ruaY+imom88
-         Gf/FIQlHBa3Txr4KbZPv9JllrusKssSH4jK04S86p/Lr5BhZx5CKB5Prn6pV57KbGCcg
-         R9odBlyL3yukICI6Jr9mbR9/77JHz+txXeBq7SM63rh+HWxkNGFcyEcb/I1m9n+qgiwb
-         ojgw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=qtKmiqOhKByWhhazW6GbgsTwyRKvEnRKZOXjEByQL0I=;
+        b=eCRYs4XbCwSAOyraK8Jgh3eM7Elx76VIh9yp0r8/tMJSH+kqoVMr4u2Ns3crtctqjV
+         YlujH3c1WsDOkrLhBo8MF5gYVs6wWrlOYQNXuvCzsDDSTscQJRCnQP/+kkHC2J0BnopK
+         5SOZPLUPXAErcYiNI3tcGe9O/hzVjAS2XD86aut6gY07E9lxiEc/0WBHZUzwm4730grK
+         KkAXyiYXgViuJIZYABbAi35Smbs7XrKa2cwFO0Luyyx9VdkoxbpwaWM2Kq4qH86g4s1p
+         tBIoOLWkfp/etMbDMFqksUYYs7xgL4iK+d/Ec7CQ4sE70wKK7V2xJV/JDtSNAFhynZSy
+         N52g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ncddy0qnsjP+sb2gYGL72x+CI4p25dDlu6eKdXIBtAA=;
-        b=r61Aoxw4zMfXtQ27z8aiv+2yaYt1F/8E2rxcCGWUY7iVlUYpgpHveDAtam2qjqe3xC
-         tp+V8gs72vSsiLQE2o5shdb8/OFK8yVHWx58uSyND539SizA2ecY8n30SEPlo4Max5D5
-         H7T5bJAa8Iy8EMdDC7ujogx0/0weF9SSAwVrgk9irtgpgjZgN+tZjyBeyOARgA0hubNw
-         StEk0Al1Jk4tEJQBb4B88gfsB9zLifYOpV2rtFEs7xQQqd+MkzF5Aetz19wNBcy0wIx4
-         stVGCJ5GLGnyunrpNmYm3Dm0eLMS5sZ2pdCAIadLRLJeZwBPzPiUiIl8ItlLwpZGPgD0
-         uMsA==
-X-Gm-Message-State: APjAAAWna29LkUYf0prdM0TD6dEYj7Bz6J/1usjYI2HAUf6EIdbRTNp6
-        Fn0p2LRlb4uUgGlXfeonrZ2rsKGSYHWBybZLe4M=
-X-Google-Smtp-Source: APXvYqyamnj9+PwVIuuNqrPYvACECLnKg0Sp96mwl3K1Eupj2osgo3QdaRW9jLiZ3hWh7UflfSgmZI8EAUQKESIoJ5A=
-X-Received: by 2002:a67:2e43:: with SMTP id u64mr24551063vsu.75.1568316393668;
- Thu, 12 Sep 2019 12:26:33 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=qtKmiqOhKByWhhazW6GbgsTwyRKvEnRKZOXjEByQL0I=;
+        b=Vu98vvg3nPAZN9BtdmeJ+Rv9Fy+UgZvPHuryGc0+uvr9hCPPN7xz8+ppTh+JR3xaCp
+         SlRTq3lhya4o1jpS6q0bzV760ystWotWAtKA1WNbEceOmiaVWMPUmA+ReDFHbGRsPtGH
+         9JsJYIiDbmoLubKbcRZBhgiNke74NWTVjpQ/D0KJHy+yqgOJrYTqMlEoWOSNWFR497LR
+         N8Pq1dSnga6A+yaV8phQK1tt2RLuNh1pEbOtKy4P4ZJEPaOhkWmUlMGBjmVSNJro6TWk
+         1U7W8tUs5nbofsMLvwJSY7/jQXMeXQonqOiVbAQSel5/Lh4DYIa86eUEE8WTSE1WKdhg
+         PINQ==
+X-Gm-Message-State: APjAAAUxyG3VZGqwZCjuYE7hqbImxeYeOgLoT2PF2/1z8BIQSkCrOZCo
+        AhbD1T4N9lgWQFOWS5HgzDE=
+X-Google-Smtp-Source: APXvYqyCF/XqREpGDKXvI9IYmITbpNgxb8lPa0Rf1R6brgioORA76DiaEOWDwYvN5pHS74Pxqm8png==
+X-Received: by 2002:ac8:2d0f:: with SMTP id n15mr29626676qta.305.1568316479948;
+        Thu, 12 Sep 2019 12:27:59 -0700 (PDT)
+Received: from ?IPv6:2001:4898:4070:37:3977:64ab:d1ea:251b? ([2001:4898:a800:1012:c20b:64ab:d1ea:251b])
+        by smtp.gmail.com with ESMTPSA id c126sm11092583qkd.13.2019.09.12.12.27.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Sep 2019 12:27:59 -0700 (PDT)
+Subject: Re: [PATCH] upload-pack: disable commit graph more gently for shallow
+ traversal
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+References: <20190912000414.GA31334@sigill.intra.peff.net>
+ <fdb81ce0-20ee-5880-2a6c-0c8b3f1739b9@gmail.com>
+ <20190912142306.GE23031@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <875aea73-eebd-fd8a-4d4b-c3b9df027a04@gmail.com>
+Date:   Thu, 12 Sep 2019 15:27:58 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
+ Thunderbird/69.0
 MIME-Version: 1.0
-References: <7da71d89f9fa987eca2e25974e4cec382c146e44.1567627609.git.bert.wesarg@googlemail.com>
- <01e3c41d-af69-f9b3-31e6-12192e566f92@kdbg.org>
-In-Reply-To: <01e3c41d-af69-f9b3-31e6-12192e566f92@kdbg.org>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Thu, 12 Sep 2019 21:26:22 +0200
-Message-ID: <CAKPyHN0gX087_-tn=Q7gt7dJJaFg5idgz-E8zfTfRQxkCZb57A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] git-gui: warn if the commit message contains lines
- longer than the set limit
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Pratyush Yadav <me@yadavpratyush.com>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190912142306.GE23031@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 10, 2019 at 6:50 PM Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Am 04.09.19 um 22:10 schrieb Bert Wesarg:
-> > The commit message widget does not wrap the next and has a configurable
-> > fixed width to avoid creating too wide commit messages. Though this was
-> > only enforced in the GUI. Now we also check the commit message at commit
-> > time for long lines and ask the author for confirmation if it exceeds the
-> > configured line length.
-> >
-> > Needs Tcl 8.6 because of `lmap`.
-> >
-> > Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-> > ---
-> >  git-gui.sh     |  4 ++--
-> >  lib/commit.tcl | 10 ++++++++++
-> >  2 files changed, 12 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/git-gui.sh b/git-gui.sh
-> > index 5bc21b8..a491085 100755
-> > --- a/git-gui.sh
-> > +++ b/git-gui.sh
-> > @@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
-> >  ##
-> >  ## Tcl/Tk sanity check
-> >
-> > -if {[catch {package require Tcl 8.4} err]
-> > - || [catch {package require Tk  8.4} err]
-> > +if {[catch {package require Tcl 8.6} err]
-> > + || [catch {package require Tk  8.6} err]
-> >  } {
-> >       catch {wm withdraw .}
-> >       tk_messageBox \
-> > diff --git a/lib/commit.tcl b/lib/commit.tcl
-> > index 83620b7..fa9760b 100644
-> > --- a/lib/commit.tcl
-> > +++ b/lib/commit.tcl
-> > @@ -215,6 +215,16 @@ A good commit message has the following format:
-> >               unlock_index
-> >               return
-> >       }
-> > +     if {[tcl::mathfunc::max {*}[lmap x [split $msg "\n"] {string length $x}]] >= $repo_config(gui.commitmsgwidth) \
->
-> This has an off-by-one error: When I fill the edit box to the limit, but
-> not beyond it, I get the warning popup. I guess this should be '>', not
-> '>='.
+On 9/12/2019 10:23 AM, Jeff King wrote:
+> On Thu, Sep 12, 2019 at 08:23:49AM -0400, Derrick Stolee wrote:
+> 
+>>> That creates an interesting problem for commits that have _already_ been
+>>> parsed using the commit graph. Their commit->object.parsed flag is set,
+>>> their commit->graph_pos is set, but their commit->maybe_tree may still
+>>> be NULL. When somebody later calls repo_get_commit_tree(), we see that
+>>> we haven't loaded the tree oid yet and try to get it from the commit
+>>> graph. But since it has been freed, we segfault!
+>>
+>> OOPS! That is certainly a bad thing. I'm glad you found it, but I
+>> am sorry for how you (probably) found it.
+> 
+> Heh. I'll admit it was quite a slog of debugging, but _most_ of that was
+> figuring out in which circumstance we'd have actually parsed the object.
+> Finding the problematic end state was pretty easy from a coredump. :)
+> 
+>>> diff --git a/commit-graph.c b/commit-graph.c
+>>> index 9b02d2c426..bc5dd5913f 100644
+>>> --- a/commit-graph.c
+>>> +++ b/commit-graph.c
+>>> @@ -41,6 +41,8 @@
+>>>  #define GRAPH_MIN_SIZE (GRAPH_HEADER_SIZE + 4 * GRAPH_CHUNKLOOKUP_WIDTH \
+>>>  			+ GRAPH_FANOUT_SIZE + the_hash_algo->rawsz)
+>>>  
+>>> +static int commit_graph_disabled;
+>>
+>> Should we be putting this inside the repository struct instead?
+> 
+> Probably. The only caller will just pass the_repository, but it doesn't
+> hurt to scope it down now.
+> 
+> It could potentially go into the commit_graph itself, but it looks like
+> with the incremental work we may have multiple such structs. It could
+> also go into raw_object_store, but I think conceptually it's a
+> repo-level thing.
+> 
+> So I put it straight into "struct repository".
+> 
+>> Your patch does not seem to actually cover the "I've already parsed some commits"
+>> case, as you are only preventing the commit-graph from being prepared. Instead,
+>> we need to have a short-circuit inside parse_commit() to avoid future parsing
+>> from the commit-graph file.
+> 
+> Maybe I was too clever, then. :)
+> 
+> I didn't want to have to sprinkle "are we disabled" in parse_commit(),
+> etc. But any such uses of the commit graph have to do:
+> 
+>   if (!prepare_commit_graph(r))
+> 	return;
+> 
+> to lazy-load it. So the logic to prepare becomes (roughly):
+> 
+>   if (disabled)
+> 	return 0;
+>   if (already_loaded)
+> 	return 1;
+>   return actually_load() ? 1 : 0;
+> 
+> and "disabled" takes precedence.
+> 
+> I've added this comment in prepare_commit_graph():
+> 
+>         /*
+>          * This must come before the "already attempted?" check below, because
+>          * we want to disable even an already-loaded graph file.
+>          */
+>         if (r->commit_graph_disabled)
+>                 return 0;
+> 
+>         if (r->objects->commit_graph_attempted)
+>                 return !!r->objects->commit_graph;
+>         r->objects->commit_graph_attempted = 1;
+> 
+> Does that make more sense?
 
-Thanks. As Pratyush wont pull this one, I separated it and keep it in
-a branch in my fork:
+Ah. That does make sense. I now see the connection between parsing and this
+change.
 
-https://github.com/bertwesarg/git-gui/tree/bw/warn-wide-commit-message
+> Unrelated, but I also notice the top of prepare_commit_graph() has:
+> 
+>         if (git_env_bool(GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD, 0))
+>                 die("dying as requested by the '%s' variable on commit-graph load!",
+>                     GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD);
+> 
+> as the very first thing. Meaning we're calling getenv() as part of every
+> single parse_commit(), rather than just once per process. Seems like an
+> easy efficiency win.
 
-Bert
+Absolutely. Move this to after the "have we attempted already?" condition.
 
->
-> > +         && [ask_popup "Commit message contains lines longer than $repo_config(gui.commitmsgwidth) characters.
-> > +
-> > +You may change this limit in the options.
-> > +
-> > +Continue to commit?
-> > +"] ne yes} {
-> > +             unlock_index
-> > +             return
-> > +     }
-> >
-> >       # -- Build the message file.
-> >       #
-> >
->
-> -- Hannes
+Thanks,
+-Stolee
+
