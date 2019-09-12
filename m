@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CB9B1F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 22:13:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 057B71F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 22:13:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729497AbfILWM6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 18:12:58 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:45683 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729466AbfILWM5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 18:12:57 -0400
-Received: by mail-pl1-f193.google.com with SMTP id x3so12345551plr.12
-        for <git@vger.kernel.org>; Thu, 12 Sep 2019 15:12:55 -0700 (PDT)
+        id S1729528AbfILWND (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 18:13:03 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:41916 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726429AbfILWNB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 18:13:01 -0400
+Received: by mail-pg1-f196.google.com with SMTP id x15so14182455pgg.8
+        for <git@vger.kernel.org>; Thu, 12 Sep 2019 15:13:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=jlWj364C5MMPXXkhDN0K0cb5eWZpc+asn3Q1cJaUPW4=;
-        b=oTMhiWo1PolHXJPqMUTnCToi15mk8CBmbamIONzTlRjer6HbNbUTpyTFnZ8nasduHr
-         B9ix1UYlaU7tO4xC+PR5OLIlhCVlyv+mJnzVT0qLwD0kcWY04EpSQw6TAeI1ZO7vIqgD
-         LEo6+EGaIscyByW+018aKLMczvrBY3YkOfA4JgdeaPF+cr5tpkcR7WLgeGpMKclwnqmq
-         7Lnx8LxmrGLiDipjFyvrsnToxxTBFdMerRceJi4bMzMECcdguE0PtLYLjstj2lo4UHfm
-         vLHCDDsHIKMty1abvGzgO+Qs0F6G0VxDEsMOVwmL4SAwiLghU67peBsiWzpdnImlIpi6
-         R4OA==
+        bh=igmfjUOmRTQ0bbabiNW7zPoaRx1PSvAemn0vlQ+CkVE=;
+        b=W2ptSbJqsEfPOsao9CtBuapM1+zX4cskatn+Y9uEXvrcX11OM2W+GbHXqWKdOmo7dT
+         e2/tFjvJm+kzW4bY3o+ciqe/WT2HrxJu4CE27q0C/FFiY470WtyN3jSesHlTLfnlwVc0
+         p8NFkXIFgmy3GkDe3WgOgeObz6kTbkGEv/m9aVgaNWnVKNi4E7hRzu5p+koSNeAlCDVO
+         1UFVWCFFyn9iQhgFoPGkFGkaT+ms1hdw8sF3yaCEW3ZkSQULpDdYq7DC9u0sIWp6NkPj
+         FQ8S74IQOZAVSKDREFMS3rcMgLEpBi1f917WamGL7Z3S2JCgJZ1HkVOR/s741BLzdi3i
+         uU4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=jlWj364C5MMPXXkhDN0K0cb5eWZpc+asn3Q1cJaUPW4=;
-        b=JR+WYGiPQV5vKw/mABmy1toNruSpCLi1q4g9+HcuWzN4bpmiNHm51peW93heF0Aqzk
-         lFgTxGabrdYgYCbcVISjSvrShbwQC8KKS7Si5lnahlvmkMSH7FPo8fGKibX8VWBvFFMa
-         lrlPwBl/4AfGk+ZF+y55TOUYHUKRjc4FHjhR2BYYCbEVrJi39NVnit3XJT0/fkZfOhMI
-         nkYId/4/fo6VBp3YiNHIRHM92gd2gve8iJ/pY/2Jd5ZnzcFuMTNwk91avmrdH3IWcZVa
-         MQ/yGsd7l8lD5KzY0rnU5x1RQnaXHfoap4vB4hhdb3YozqKFlBPG5xNa5h8/C8aD8c6b
-         eusw==
-X-Gm-Message-State: APjAAAVjjm2TpXrqB9JmCQa99gz0QwfQOx6QPGvwZq/z0r3Iis24V5qv
-        zUFnJh/pnuEpLqFYw5mJ5qIbHdheVRo=
-X-Google-Smtp-Source: APXvYqzDZOWckKv7yjIyzV41L9+DdK+DveAo//dL0UnxzSr52Rvu1hHnqiP89R2LpWVa4aqG+OV2JA==
-X-Received: by 2002:a17:902:d898:: with SMTP id b24mr47127711plz.7.1568326374570;
-        Thu, 12 Sep 2019 15:12:54 -0700 (PDT)
+        bh=igmfjUOmRTQ0bbabiNW7zPoaRx1PSvAemn0vlQ+CkVE=;
+        b=X42AtItHv2yfYdqunJO9HWCHIrL3v4ItNKsxHq6MMMvgxXjeg+SPYhuBk96rRlvKHR
+         EXKXtaizF6WnBlR1mfkAYy+kJrNi5AS8aEF1W1RVGxk6cvCR0I5/SyUXSDR5veVfHM3O
+         1kebRLmzQhZDwmv6JWySg+HnepC/hOn5N0YaEhWkQLnV903xw57M8YH8jkSm9YPBfL30
+         9IVWukuYyvK9Tj5HVfIUfjx9oWzcbKtQ/PLDBUfLJh33HWwnSvFlbgJWoUosfKZVQKFV
+         vxx1T0CI3p/+iXZ8dtmcZwEtZqcyPCEa6HPXh3ZhMC9i8V+hCairvSJXd9+lKuBqg45L
+         KFrw==
+X-Gm-Message-State: APjAAAWwoZpsSFyL+XB/JxXT2vMGbTDiGtH6TD5/LV6+b/h1Zj187raS
+        HiUAS+tBq2q6ug8aOtbAMcrPCMoSPlU=
+X-Google-Smtp-Source: APXvYqzHMAJbwRXwKUYSc7l19/BebzYUh1u0Ru9rOVfxdQZ3/3gyC9S8D6SvMrJ+vREejz9ihCe5lg==
+X-Received: by 2002:a63:c0d:: with SMTP id b13mr39969220pgl.420.1568326378986;
+        Thu, 12 Sep 2019 15:12:58 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id y13sm24358188pfn.73.2019.09.12.15.12.53
+        by smtp.gmail.com with ESMTPSA id y13sm24358188pfn.73.2019.09.12.15.12.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 Sep 2019 15:12:53 -0700 (PDT)
+        Thu, 12 Sep 2019 15:12:58 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Samuel Lijin <sxlijin@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 08/12] git-clean.txt: do not claim we will delete files with -n/--dry-run
-Date:   Thu, 12 Sep 2019 15:12:36 -0700
-Message-Id: <20190912221240.18057-9-newren@gmail.com>
+Subject: [PATCH v3 12/12] clean: fix theoretical path corruption
+Date:   Thu, 12 Sep 2019 15:12:40 -0700
+Message-Id: <20190912221240.18057-13-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.173.gad11b3a635.dirty
 In-Reply-To: <20190912221240.18057-1-newren@gmail.com>
 References: <20190905154735.29784-1-newren@gmail.com>
@@ -71,27 +71,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It appears that the wrong option got included in the list of what will
-cause git-clean to actually take action.  Correct the list.
+cmd_clean() had the following code structure:
+
+    struct strbuf abs_path = STRBUF_INIT;
+    for_each_string_list_item(item, &del_list) {
+        strbuf_addstr(&abs_path, prefix);
+        strbuf_addstr(&abs_path, item->string);
+        PROCESS(&abs_path);
+        strbuf_reset(&abs_path);
+    }
+
+where I've elided a bunch of unnecessary details and PROCESS(&abs_path)
+represents a big chunk of code rather than an actual function call.  One
+piece of PROCESS was:
+
+    if (lstat(abs_path.buf, &st))
+        continue;
+
+which would cause the strbuf_reset() to be missed -- meaning that the
+next path to be handled would have two paths concatenated.  This path
+used to use die_errno() instead of continue prior to commit 396049e5fb62
+("git-clean: refactor git-clean into two phases", 2013-06-25), but my
+understanding of how correct_untracked_entries() works is that it will
+prevent both dir/ and dir/file from being in the list to clean so this
+should be dead code and the die_errno() should be safe.  But I hesitate
+to remove it since I am not certain.
+
+However, we can fix both this bug and possible similar future bugs by
+simply moving the strbuf_reset(&abs_path) to the beginning of the loop.
+It'll result in N calls to strbuf_reset() instead of N-1, but that's a
+small price to pay to avoid sneaky bugs like this.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-clean.txt | 2 +-
+ builtin/clean.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index db876f7dde..e84ffc9396 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -35,7 +35,7 @@ OPTIONS
- --force::
- 	If the Git configuration variable clean.requireForce is not set
- 	to false, 'git clean' will refuse to delete files or directories
--	unless given -f, -n or -i. Git will refuse to delete directories
-+	unless given -f or -i. Git will refuse to delete directories
- 	with .git sub directory or file unless a second -f
- 	is given.
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 6030842f3a..4cf2399f59 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -1018,6 +1018,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	for_each_string_list_item(item, &del_list) {
+ 		struct stat st;
  
++		strbuf_reset(&abs_path);
+ 		if (prefix)
+ 			strbuf_addstr(&abs_path, prefix);
+ 
+@@ -1051,7 +1052,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
+ 			}
+ 		}
+-		strbuf_reset(&abs_path);
+ 	}
+ 
+ 	strbuf_release(&abs_path);
 -- 
 2.23.0.173.gad11b3a635.dirty
 
