@@ -2,94 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80A9A1F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 14:10:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25FC41F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 14:23:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732529AbfILOKw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 10:10:52 -0400
-Received: from mail-io1-f45.google.com ([209.85.166.45]:45544 "EHLO
-        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731455AbfILOKw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 10:10:52 -0400
-Received: by mail-io1-f45.google.com with SMTP id f12so54826229iog.12
-        for <git@vger.kernel.org>; Thu, 12 Sep 2019 07:10:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rug-nl.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mox9iqNVe+LZx/tXZ0r8RmtTIYb5LOvNdHc/JwsaZUk=;
-        b=Li+WETLPGy+z/1x6+uAkxBSqgHmVBgHbyiYlkxIXOcCOBzNadiqt1VmLF9+A82KiFp
-         epsjP7PgN+1gRkQLSa0R/J7gTVTX8a9Crc/ABdu1sWqh7xRGmYRK3wfeoUVVCeWDnAjV
-         OIL4AS66hjU76JagBfwddrFoS+4bNuI7Yw+ud7NCmvyKI3cUErrVjfII1psyB046Kkvy
-         k92xDatUVGKH16/w5xSSRUu5uBtvwDyjW4Vb3HQpcJmUOuGt3KtJbyOcVntR4Waq4KhU
-         y18xZja+5zzaJPauWbiSaMcgFYsriRm2MCF0KGVT3O+NUOMDbBjLrXwaXyt5775DKoQG
-         7rBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mox9iqNVe+LZx/tXZ0r8RmtTIYb5LOvNdHc/JwsaZUk=;
-        b=iUnWP5pPypaTjdFoeL23+SR4GbR2pwXzN1GdbKX+zfc1Z1hPauikRQTjG4BhU2qTV5
-         q3x2WDeQo8tWRup2TKJ4kxSMYM11J4KlINwZQ4W/Q/rfh+kAj+Kk8QMEZTxVr8BR6trl
-         wG0sP/Hh05hrIx82Qvvlfr7cjZpQwo2nrCfyH44puL+DDNH1rXgIa/a/xvGOW2WgsUnk
-         komxHz01WUnvn3OzujgTq5FxbIJ1GCV5ruA5qyVBj6YCzGlo7sfU0XaYixpiuo9+Ra81
-         atuaTw7ZKOqCJpEQg1e2m0ZnFR+lXkZc4dmIEVjxVCwvD3k3m9ItdJpG1+BZT6RbJ9hV
-         X4Gw==
-X-Gm-Message-State: APjAAAWDYdfB2DAcDm7/RcfDJylQNh986zLFaPCI9vR6L91viD2E9N6m
-        MTL6Vss2fnORXPazf6vJ8/t9f9TXrgHPGOM1BgfsdA==
-X-Google-Smtp-Source: APXvYqyKCSIgTEs5bH32ly+LsR337Ki1ti8EWRMEKPph4azJqTU+cXeVvRtOI+AMcIM4MktSzv1WaRhZ4DIho3/OehY=
-X-Received: by 2002:a02:a792:: with SMTP id e18mr648270jaj.125.1568297451309;
- Thu, 12 Sep 2019 07:10:51 -0700 (PDT)
+        id S1732518AbfILOXI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 10:23:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47890 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1732444AbfILOXH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 10:23:07 -0400
+Received: (qmail 13808 invoked by uid 109); 12 Sep 2019 14:23:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 12 Sep 2019 14:23:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8103 invoked by uid 111); 12 Sep 2019 14:25:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Sep 2019 10:25:07 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 12 Sep 2019 10:23:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] upload-pack: disable commit graph more gently for
+ shallow traversal
+Message-ID: <20190912142306.GE23031@sigill.intra.peff.net>
+References: <20190912000414.GA31334@sigill.intra.peff.net>
+ <fdb81ce0-20ee-5880-2a6c-0c8b3f1739b9@gmail.com>
 MIME-Version: 1.0
-References: <CAMr8YN58q94bnBkdfxrBR-Vw5Mk4akHzn4c1k2HjMQCXKWdWsA@mail.gmail.com>
- <nycvar.QRO.7.76.6.1909121044250.47@tvgsbejvaqbjf.bet> <CAMr8YN7aa9yK3TSqVhQjn2DG7vU_zJs9SHvznPefay+Mxs_Qsg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1909121327450.47@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1909121327450.47@tvgsbejvaqbjf.bet>
-From:   "Castro Alvarez, Sebastian" <s.castro.alvarez@rug.nl>
-Date:   Thu, 12 Sep 2019 16:10:40 +0200
-Message-ID: <CAMr8YN5ifdsjbwszeXXwJZYZs=diEpj5xaLzPV9HbVwGam4=9g@mail.gmail.com>
-Subject: Re: could not fork child process rebasing required
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fdb81ce0-20ee-5880-2a6c-0c8b3f1739b9@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On Thu, Sep 12, 2019 at 08:23:49AM -0400, Derrick Stolee wrote:
 
-I will try to check for this. Thanks a lot!
-best,
-Sebastian
+> > That creates an interesting problem for commits that have _already_ been
+> > parsed using the commit graph. Their commit->object.parsed flag is set,
+> > their commit->graph_pos is set, but their commit->maybe_tree may still
+> > be NULL. When somebody later calls repo_get_commit_tree(), we see that
+> > we haven't loaded the tree oid yet and try to get it from the commit
+> > graph. But since it has been freed, we segfault!
+> 
+> OOPS! That is certainly a bad thing. I'm glad you found it, but I
+> am sorry for how you (probably) found it.
 
-On Thu, Sep 12, 2019 at 1:29 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Sebastian,
->
-> On Thu, 12 Sep 2019, Castro Alvarez, Sebastian wrote:
->
-> > I have tried with both versions 32-bit and 64-bit, none of them work
-> > for me, I still get the same error. :(
->
-> The most common reason for this, then, would be an overzealous
-> anti-malware.
->
-> Ciao,
-> Johannes
+Heh. I'll admit it was quite a slog of debugging, but _most_ of that was
+figuring out in which circumstance we'd have actually parsed the object.
+Finding the problematic end state was pretty easy from a coredump. :)
 
+> > diff --git a/commit-graph.c b/commit-graph.c
+> > index 9b02d2c426..bc5dd5913f 100644
+> > --- a/commit-graph.c
+> > +++ b/commit-graph.c
+> > @@ -41,6 +41,8 @@
+> >  #define GRAPH_MIN_SIZE (GRAPH_HEADER_SIZE + 4 * GRAPH_CHUNKLOOKUP_WIDTH \
+> >  			+ GRAPH_FANOUT_SIZE + the_hash_algo->rawsz)
+> >  
+> > +static int commit_graph_disabled;
+> 
+> Should we be putting this inside the repository struct instead?
 
+Probably. The only caller will just pass the_repository, but it doesn't
+hurt to scope it down now.
 
--- 
-Sebastian Castro Alvarez
-PhD student
-Department of Psychometrics & Statistics
-Heymans Institute for Psychological Research
-University of Groningen
-https://www.rug.nl/staff/s.castro.alvarez/
+It could potentially go into the commit_graph itself, but it looks like
+with the incremental work we may have multiple such structs. It could
+also go into raw_object_store, but I think conceptually it's a
+repo-level thing.
+
+So I put it straight into "struct repository".
+
+> Your patch does not seem to actually cover the "I've already parsed some commits"
+> case, as you are only preventing the commit-graph from being prepared. Instead,
+> we need to have a short-circuit inside parse_commit() to avoid future parsing
+> from the commit-graph file.
+
+Maybe I was too clever, then. :)
+
+I didn't want to have to sprinkle "are we disabled" in parse_commit(),
+etc. But any such uses of the commit graph have to do:
+
+  if (!prepare_commit_graph(r))
+	return;
+
+to lazy-load it. So the logic to prepare becomes (roughly):
+
+  if (disabled)
+	return 0;
+  if (already_loaded)
+	return 1;
+  return actually_load() ? 1 : 0;
+
+and "disabled" takes precedence.
+
+I've added this comment in prepare_commit_graph():
+
+        /*
+         * This must come before the "already attempted?" check below, because
+         * we want to disable even an already-loaded graph file.
+         */
+        if (r->commit_graph_disabled)
+                return 0;
+
+        if (r->objects->commit_graph_attempted)
+                return !!r->objects->commit_graph;
+        r->objects->commit_graph_attempted = 1;
+
+Does that make more sense?
+
+Unrelated, but I also notice the top of prepare_commit_graph() has:
+
+        if (git_env_bool(GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD, 0))
+                die("dying as requested by the '%s' variable on commit-graph load!",
+                    GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD);
+
+as the very first thing. Meaning we're calling getenv() as part of every
+single parse_commit(), rather than just once per process. Seems like an
+easy efficiency win.
+
+-Peff
