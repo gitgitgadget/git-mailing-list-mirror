@@ -7,104 +7,241 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4E8E1F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 04:11:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F37A71F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 04:11:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725940AbfILELG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 00:11:06 -0400
-Received: from omta016.useast.a.cloudfilter.net ([34.195.253.207]:52901 "EHLO
-        omta016.useast.a.cloudfilter.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725765AbfILELG (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 12 Sep 2019 00:11:06 -0400
-Received: from cxr.smtp.a.cloudfilter.net ([10.0.17.210])
+        id S1725972AbfILELH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 00:11:07 -0400
+Received: from omta015.useast.a.cloudfilter.net ([34.195.253.206]:46123 "EHLO
+        omta015.useast.a.cloudfilter.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725794AbfILELH (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 12 Sep 2019 00:11:07 -0400
+Received: from cxr.smtp.a.cloudfilter.net ([10.0.17.147])
         by cmsmtp with ESMTP
-        id 7zY8iKbGzLe2C8GRliMz4k; Thu, 12 Sep 2019 04:11:05 +0000
+        id 87BLiLEvVLe2C8GRliMz4n; Thu, 12 Sep 2019 04:11:05 +0000
 Received: from thunderbird.smith.home ([68.231.71.156])
         by cmsmtp with ESMTPSA
-        id 8GRiioeTWQvl08GRkiSmsO; Thu, 12 Sep 2019 04:11:05 +0000
+        id 8GRiis8U8AqrF8GRjijY2N; Thu, 12 Sep 2019 04:11:05 +0000
 Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
-X-Authority-Analysis: v=2.3 cv=dvOl9Go4 c=1 sm=1 tr=0
+X-Authority-Analysis: v=2.3 cv=BdimLYl2 c=1 sm=1 tr=0
  a=3BwGCz7hYCwPRAPwzRnSaA==:117 a=3BwGCz7hYCwPRAPwzRnSaA==:17
- a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=J70Eh1EUuV4A:10 a=5rxgeBVgAAAA:8
- a=vZxbLtyPAAAA:8 a=TUJdDHLZC0J5mYqbSrQA:9 a=PwKx63F5tFurRwaNxrlG:22
- a=YIznc7gRMHvxYRuyG5Sm:22
+ a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=J70Eh1EUuV4A:10 a=kviXuzpPAAAA:8
+ a=SgNXyPVP_kuMGiK11z4A:9 a=qrIFiuKZe2vaD64auk6j:22
 Received: from thunderbird.smith.home (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 453C5B80236;
+        by thunderbird.smith.home (Postfix) with ESMTP id 59921B81A82;
         Wed, 11 Sep 2019 21:11:02 -0700 (MST)
 From:   "Stephen P. Smith" <ischis2@cox.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/2] Date test code clean-up
-Date:   Wed, 11 Sep 2019 21:11:00 -0700
-Message-Id: <20190912041102.16266-1-ischis2@cox.net>
+Subject: [PATCH v2 1/2] Quit passing 'now' to date code
+Date:   Wed, 11 Sep 2019 21:11:01 -0700
+Message-Id: <20190912041102.16266-2-ischis2@cox.net>
 X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20190909014711.3894-1-ischis2@cox.net>
+In-Reply-To: <20190912041102.16266-1-ischis2@cox.net>
 References: <20190909014711.3894-1-ischis2@cox.net>
+ <20190912041102.16266-1-ischis2@cox.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfI5gi76S2drm/XgV/Ui4udRXDtUPJ1CUvQoQZFokMApwFmtOSakjS3PkkwSlJ2Pd1I1+T+vEbre7ziwCIz1bWPg6IdSZqVaGZFmwLAqOo9MyNZZhzIsl
- VnrqutzxKaM/H7NIgw2cxSRpURLLNmkptltQco+HXkwqw7SnxdXkFcvKYYrf7LIq5bQzuCMztjuGRxrN2V/2fI46t4HEaAvbB9xCH7SnkGE+XtqhmxAuqUns
+X-CMAE-Envelope: MS4wfBct3j+FzZ++f5tcO1giIj7kGpe1EzTSEbCqpuvDOJmCBO/oVUF67jmfnnODkRIb8xWbmKD1HUwn99iTmwdzvUPfypjrGI98CM7NpaSWL7nTVKwTIOrn
+ c5kkchWmf/0IxEeh7nayaQL2l7tvcxExOvu5jyxG76lmBi7loV6I0E/icR9+3vvCPBYZrTraGwCqj0q1OU3dAfgByFkbPlvlFaITeiHgwZZXhf5FQMsnFzl5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As part of a previous patch submission[1], a cleanup patch was
-suggested to remove a now unnecessary passing of a date environment
-variable to the production code.
+Commit b841d4ff43 (Add `human` format to test-tool, 2019-01-28) added
+a get_time() function which allows $GIT_TEST_DATE_NOW in the
+environment to override the current time. So we no longer need to
+interpret that variable in cmd__date().
 
-While the two patches in the set could easily be submitted as a single
-patch, I split the removal of the getenv() call into a second
-patch. I did that to make the comment about the initialization of `x`
-more localized to the change.
+Therefore, we can stop passing the "now" parameter down through the
+date functions, since nobody uses them. Note that we do need to make
+sure all of the previous callers that took a "now" parameter are
+correctly using get_time().
 
-[1] https://public-inbox.org/git/xmqq5zuge2y7.fsf@gitster-ct.c.googlers.com
-
-Range Diff:
-1:  f4170ad553 ! 1:  e2b8322d58 Quit passing 'now' to date code
-    @@ Metadata
-      ## Commit message ##
-         Quit passing 'now' to date code
-     
-    -    As part of a previous patch set, the get_time() function was added to
-    -    date.c eliminating the need to pass a `now` parameter from the test
-    -    code.
-    +    Commit b841d4ff43 (Add `human` format to test-tool, 2019-01-28) added
-    +    a get_time() function which allows $GIT_TEST_DATE_NOW in the
-    +    environment to override the current time. So we no longer need to
-    +    interpret that variable in cmd__date().
-     
-    -    This patch removes the unneeded `now` parameter.
-    +    Therefore, we can stop passing the "now" parameter down through the
-    +    date functions, since nobody uses them. Note that we do need to make
-    +    sure all of the previous callers that took a "now" parameter are
-    +    correctly using get_time().
-     
-      ## cache.h ##
-     @@ cache.h: struct date_mode {
-2:  3c7c4f1f55 ! 2:  18ec5b3b3d test_date.c: Remove reference to GIT_TEST_DATE_NOW
-    @@ Commit message
-         test_date.c: Remove reference to GIT_TEST_DATE_NOW
-     
-         Remove the reference to the GIT_TEST_DATE_NOW which is done in date.c.
-    -    The intialization of variable x with the value from GIT_TEST_DATE_NOW
-    -    is unneeded since x is initalized by skip_prefix().
-    +    We can't get rid of the "x" variable, since it serves as a generic
-    +    scratch variable for parsing later in the function.
-     
-      ## t/helper/test-date.c ##
-     @@ t/helper/test-date.c: static void getnanos(const char **argv)
-
-
-Stephen P. Smith (2):
-  Quit passing 'now' to date code
-  test_date.c: Remove reference to GIT_TEST_DATE_NOW
-
+Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+---
  cache.h              |  5 ++---
  date.c               | 27 +++++++++++++--------------
- t/helper/test-date.c | 27 +++++++++------------------
- 3 files changed, 24 insertions(+), 35 deletions(-)
+ t/helper/test-date.c | 26 +++++++++-----------------
+ 3 files changed, 24 insertions(+), 34 deletions(-)
 
+diff --git a/cache.h b/cache.h
+index b1da1ab08f..48d4287aa7 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1516,8 +1516,7 @@ struct date_mode {
+ struct date_mode *date_mode_from_type(enum date_mode_type type);
+ 
+ const char *show_date(timestamp_t time, int timezone, const struct date_mode *mode);
+-void show_date_relative(timestamp_t time, const struct timeval *now,
+-			struct strbuf *timebuf);
++void show_date_relative(timestamp_t time, struct strbuf *timebuf);
+ void show_date_human(timestamp_t time, int tz, const struct timeval *now,
+ 			struct strbuf *timebuf);
+ int parse_date(const char *date, struct strbuf *out);
+@@ -1526,7 +1525,7 @@ int parse_expiry_date(const char *date, timestamp_t *timestamp);
+ void datestamp(struct strbuf *out);
+ #define approxidate(s) approxidate_careful((s), NULL)
+ timestamp_t approxidate_careful(const char *, int *);
+-timestamp_t approxidate_relative(const char *date, const struct timeval *now);
++timestamp_t approxidate_relative(const char *date);
+ void parse_date_format(const char *format, struct date_mode *mode);
+ int date_overflows(timestamp_t date);
+ 
+diff --git a/date.c b/date.c
+index 8126146c50..041db7db4e 100644
+--- a/date.c
++++ b/date.c
+@@ -128,16 +128,17 @@ static void get_time(struct timeval *now)
+ 		gettimeofday(now, NULL);
+ }
+ 
+-void show_date_relative(timestamp_t time,
+-			const struct timeval *now,
+-			struct strbuf *timebuf)
++void show_date_relative(timestamp_t time, struct strbuf *timebuf)
+ {
++	struct timeval now;
+ 	timestamp_t diff;
+-	if (now->tv_sec < time) {
++
++	get_time(&now);
++	if (now.tv_sec < time) {
+ 		strbuf_addstr(timebuf, _("in the future"));
+ 		return;
+ 	}
+-	diff = now->tv_sec - time;
++	diff = now.tv_sec - time;
+ 	if (diff < 90) {
+ 		strbuf_addf(timebuf,
+ 			 Q_("%"PRItime" second ago", "%"PRItime" seconds ago", diff), diff);
+@@ -240,9 +241,7 @@ static void show_date_normal(struct strbuf *buf, timestamp_t time, struct tm *tm
+ 
+ 	/* Show "today" times as just relative times */
+ 	if (hide.wday) {
+-		struct timeval now;
+-		get_time(&now);
+-		show_date_relative(time, &now, buf);
++		show_date_relative(time, buf);
+ 		return;
+ 	}
+ 
+@@ -313,11 +312,8 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
+ 	}
+ 
+ 	if (mode->type == DATE_RELATIVE) {
+-		struct timeval now;
+-
+ 		strbuf_reset(&timebuf);
+-		get_time(&now);
+-		show_date_relative(time, &now, &timebuf);
++		show_date_relative(time, &timebuf);
+ 		return timebuf.buf;
+ 	}
+ 
+@@ -1288,15 +1284,18 @@ static timestamp_t approxidate_str(const char *date,
+ 	return (timestamp_t)update_tm(&tm, &now, 0);
+ }
+ 
+-timestamp_t approxidate_relative(const char *date, const struct timeval *tv)
++timestamp_t approxidate_relative(const char *date)
+ {
++	struct timeval tv;
+ 	timestamp_t timestamp;
+ 	int offset;
+ 	int errors = 0;
+ 
+ 	if (!parse_date_basic(date, &timestamp, &offset))
+ 		return timestamp;
+-	return approxidate_str(date, tv, &errors);
++
++	get_time(&tv);
++	return approxidate_str(date, (const struct timeval *) &tv, &errors);
+ }
+ 
+ timestamp_t approxidate_careful(const char *date, int *error_ret)
+diff --git a/t/helper/test-date.c b/t/helper/test-date.c
+index 585347ea48..deb5869343 100644
+--- a/t/helper/test-date.c
++++ b/t/helper/test-date.c
+@@ -12,13 +12,13 @@ static const char *usage_msg = "\n"
+ "  test-tool date is64bit\n"
+ "  test-tool date time_t-is64bit\n";
+ 
+-static void show_relative_dates(const char **argv, struct timeval *now)
++static void show_relative_dates(const char **argv)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+ 	for (; *argv; argv++) {
+ 		time_t t = atoi(*argv);
+-		show_date_relative(t, now, &buf);
++		show_date_relative(t, &buf);
+ 		printf("%s -> %s\n", *argv, buf.buf);
+ 	}
+ 	strbuf_release(&buf);
+@@ -74,20 +74,20 @@ static void parse_dates(const char **argv)
+ 	strbuf_release(&result);
+ }
+ 
+-static void parse_approxidate(const char **argv, struct timeval *now)
++static void parse_approxidate(const char **argv)
+ {
+ 	for (; *argv; argv++) {
+ 		timestamp_t t;
+-		t = approxidate_relative(*argv, now);
++		t = approxidate_relative(*argv);
+ 		printf("%s -> %s\n", *argv, show_date(t, 0, DATE_MODE(ISO8601)));
+ 	}
+ }
+ 
+-static void parse_approx_timestamp(const char **argv, struct timeval *now)
++static void parse_approx_timestamp(const char **argv)
+ {
+ 	for (; *argv; argv++) {
+ 		timestamp_t t;
+-		t = approxidate_relative(*argv, now);
++		t = approxidate_relative(*argv);
+ 		printf("%s -> %"PRItime"\n", *argv, t);
+ 	}
+ }
+@@ -103,22 +103,14 @@ static void getnanos(const char **argv)
+ 
+ int cmd__date(int argc, const char **argv)
+ {
+-	struct timeval now;
+ 	const char *x;
+-
+ 	x = getenv("GIT_TEST_DATE_NOW");
+-	if (x) {
+-		now.tv_sec = atoi(x);
+-		now.tv_usec = 0;
+-	}
+-	else
+-		gettimeofday(&now, NULL);
+ 
+ 	argv++;
+ 	if (!*argv)
+ 		usage(usage_msg);
+ 	if (!strcmp(*argv, "relative"))
+-		show_relative_dates(argv+1, &now);
++		show_relative_dates(argv+1);
+ 	else if (!strcmp(*argv, "human"))
+ 		show_human_dates(argv+1);
+ 	else if (skip_prefix(*argv, "show:", &x))
+@@ -126,9 +118,9 @@ int cmd__date(int argc, const char **argv)
+ 	else if (!strcmp(*argv, "parse"))
+ 		parse_dates(argv+1);
+ 	else if (!strcmp(*argv, "approxidate"))
+-		parse_approxidate(argv+1, &now);
++		parse_approxidate(argv+1);
+ 	else if (!strcmp(*argv, "timestamp"))
+-		parse_approx_timestamp(argv+1, &now);
++		parse_approx_timestamp(argv+1);
+ 	else if (!strcmp(*argv, "getnanos"))
+ 		getnanos(argv+1);
+ 	else if (!strcmp(*argv, "is64bit"))
 -- 
 2.23.0
 
