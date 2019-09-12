@@ -2,69 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7A381F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 14:56:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47ADF1F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 16:29:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732807AbfILO4k (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 10:56:40 -0400
-Received: from sym2.noone.org ([178.63.92.236]:49378 "EHLO sym2.noone.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732727AbfILO4j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 10:56:39 -0400
-Received: by sym2.noone.org (Postfix, from userid 1002)
-        id 46ThgB2XNgzvjcX; Thu, 12 Sep 2019 16:56:38 +0200 (CEST)
-From:   Tobias Klauser <tklauser@distanz.ch>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2] git-svn: trim leading and trailing whitespaces in author name
-Date:   Thu, 12 Sep 2019 16:56:38 +0200
-Message-Id: <20190912145638.32192-1-tklauser@distanz.ch>
-X-Mailer: git-send-email 2.11.0
+        id S1733215AbfILQ3a (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 12:29:30 -0400
+Received: from relay9-d.mail.gandi.net ([217.70.183.199]:57843 "EHLO
+        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732781AbfILQ3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 12:29:30 -0400
+X-Originating-IP: 1.186.12.58
+Received: from localhost (unknown [1.186.12.58])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id E093DFF80F;
+        Thu, 12 Sep 2019 16:29:27 +0000 (UTC)
+Date:   Thu, 12 Sep 2019 21:59:25 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] git-gui: add hotkey to toggle "Amend Last Commit"
+ check button/menu
+Message-ID: <20190912162924.phb5o2ppovnxa7nn@yadavpratyush.com>
+References: <ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com>
+ <b82a00441ff1a6a9cea3fd235c1c33729ec31b71.1567713659.git.bert.wesarg@googlemail.com>
+ <20190911205539.vb6asqcc22nzgdqa@yadavpratyush.com>
+ <CAGr--=Jz9xN6NMmiXjHeq9wZsYUx4eqfQrWjjVMkj3J1YCG_8g@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGr--=Jz9xN6NMmiXjHeq9wZsYUx4eqfQrWjjVMkj3J1YCG_8g@mail.gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In some cases, the svn author names might contain leading or trailing
-whitespaces, leading to messages such as:
+On 12/09/19 08:05AM, Birger Skogeng Pedersen wrote:
+> Hi Pratyush,
+> 
+> On Wed, Sep 11, 2019 at 10:55 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> > Also, I notice that the bindings for other letters have the same
+> > function bound for both small and capital letters (IOW, same behavior
+> > with shift held and released).
+> >
+> > I don't necessarily think that is a great idea. It is a pretty common
+> > pattern to have, say Ctrl+a, do something, and Ctrl+Shift+a, do
+> > something else. Just want to pick your brain on whether you think we
+> > should do the same thing for both Ctrl+e and for Ctrl+E (aka
+> > Ctrl+Shift+e), or just bind it to Ctrl+e, and leave Ctrl+E for something
+> > else.
+> 
+> I just tested what happens when you press Ctrl+e while Caps Lock is
+> enabled; the Ctrl+e binding is not invoked. That's probably why other
+> key bindings have the same function bound for both lower- and
+> upper-case letters, to have the same behaviour with/without Caps Lock
+> enabled. With that in mind, we should probably bind Ctrl+E aswell.
 
-  Author: user1
-   not defined in authors.txt
+Nice catch! Makes sense to have the same behaviour for both caps lock 
+enabled and disabled.
 
-(the trailing newline leads to the line break). The user "user1" is
-defined in authors.txt though, e.g.
+> 
+> Should I create and send a new patch?
 
-  user1 = User <user1@example.com>
+Yes, please do.
 
-Fix this by trimming the author name retreived from svn before using it
-in check_author.
-
-Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
----
-v2:
- - move whitespace trimming below defined'ness check as per Eric Sunshine's
-   review comment
-
- perl/Git/SVN.pm | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 76b29659057d..d8c07419f51c 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -1494,6 +1494,7 @@ sub check_author {
- 	if (!defined $author || length $author == 0) {
- 		$author = '(no author)';
- 	}
-+	$author =~ s/^\s+|\s+$//g;
- 	if (!defined $::users{$author}) {
- 		if (defined $::_authors_prog) {
- 			$::users{$author} = call_authors_prog($author);
 -- 
-2.23.0.dirty
-
+Regards,
+Pratyush Yadav
