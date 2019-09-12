@@ -7,115 +7,155 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E532F1F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 00:18:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAD6F1F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 01:11:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727477AbfILASr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Sep 2019 20:18:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47336 "HELO cloud.peff.net"
+        id S1727839AbfILBLj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Sep 2019 21:11:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47352 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726761AbfILASr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Sep 2019 20:18:47 -0400
-Received: (qmail 25192 invoked by uid 109); 12 Sep 2019 00:18:47 -0000
+        id S1726761AbfILBLj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Sep 2019 21:11:39 -0400
+Received: (qmail 26789 invoked by uid 109); 12 Sep 2019 01:11:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 12 Sep 2019 00:18:47 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 12 Sep 2019 01:11:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3125 invoked by uid 111); 12 Sep 2019 00:20:45 -0000
+Received: (qmail 3229 invoked by uid 111); 12 Sep 2019 01:13:37 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Sep 2019 20:20:45 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Sep 2019 21:13:37 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 11 Sep 2019 20:18:46 -0400
+Date:   Wed, 11 Sep 2019 21:11:37 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>,
         Derrick Stolee <dstolee@microsoft.com>,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] upload-pack: disable commit graph more gently for
- shallow traversal
-Message-ID: <20190912001846.GA31370@sigill.intra.peff.net>
+Subject: [PATCH] list-objects: don't queue root trees unless
+ revs->tree_objects is set
+Message-ID: <20190912011137.GA23412@sigill.intra.peff.net>
 References: <20190912000414.GA31334@sigill.intra.peff.net>
+ <20190912001846.GA31370@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190912000414.GA31334@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190912001846.GA31370@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 11, 2019 at 08:04:14PM -0400, Jeff King wrote:
+On Wed, Sep 11, 2019 at 08:18:46PM -0400, Jeff King wrote:
 
-> When the client has asked for certain shallow options like
-> "deepen-since", we do a custom rev-list walk that pretends to be
-> shallow. Before doing so, we have to disable the commit-graph, since it
-> is not compatible with the shallow view of the repository. That's
-> handled by 829a321569 (commit-graph: close_commit_graph before shallow
-> walk, 2018-08-20). That commit literally closes and frees our
-> repo->objects->commit_graph struct.
+> > That creates an interesting problem for commits that have _already_ been
+> > parsed using the commit graph. Their commit->object.parsed flag is set,
+> > their commit->graph_pos is set, but their commit->maybe_tree may still
+> > be NULL. When somebody later calls repo_get_commit_tree(), we see that
+> > we haven't loaded the tree oid yet and try to get it from the commit
+> > graph. But since it has been freed, we segfault!
+> 
+> I was surprised we ever called repo_get_commit_tree() at all, since
+> we're literally just traversing commits here. It looks like
+> list-objects.c is very happy to queue pending trees for each commit,
+> even if we're just going to throw them away when we get to
+> process_tree()! I wonder if could be checking revs->tree_objects here
+> and saving ourselves some work.
 
-A few notes and curiosities on my patch and this general area.
+Indeed, this seems to help quite a bit in the commit-graph case. I think
+it's worth doing (and is independent of the other patch).
 
-The test suite passes with my patch both with and without
-GIT_TEST_COMMIT_GRAPH=1. But to my surprise, it also passes if I delete
-the close_commit_graph() line added by 829a321569!
+-- >8 --
+Subject: list-objects: don't queue root trees unless revs->tree_objects is set
 
-So it's not clear to me whether this whole thing is truly unnecessary
-(and Stolee was just being overly cautious because the code is related
-to shallow-ness, even though it is OK doing a true-parent traversal
-itself), or if we just don't have good test coverage for the case that
-requires it.
+When traverse_commit_list() processes each commit, it queues the
+commit's root tree in the pending array. Then, after all commits are
+processed, it calls traverse_trees_and_blobs() to walk over the pending
+list, calling process_tree() on each. But if revs->tree_objects is not
+set, process_tree() just exists immediately!
 
-If it _is_ necessary, I'm a little worried there are other problems
-lurking. The whole issue is that we've seen and parsed some commits
-before we get to this shallow deepen-since code-path. So just disabling
-commit-graphs isn't enough. Even without them, we might have parsed some
-commits the old-fashioned way and filled in their parent pointers. Is
-that a problem?
+We can save ourselves some work by not even bothering to queue these
+trees in the first place. There are a few subtle points to make:
 
-If so, then I think we either have to "unparse" all of the existing
-in-memory commits, or call out to a rev-list process with a fresh memory
-space.
+  - we also detect commits with a NULL tree pointer here. But this isn't
+    an interesting check for broken commits, since the lookup_tree()
+    we'd have done during commit parsing doesn't actually check that we
+    have the tree on disk. So we're not losing any robustness.
 
-One especially interesting bit is this:
+  - besides queueing, we also set the NOT_USER_GIVEN flag on the tree
+    object. This is used by the traverse_commit_list_filtered() variant.
+    But if we're not exploring trees, then we won't actually care about
+    this flag, which is used only inside process_tree() code-paths.
 
-> +#  - we must use protocol v2, because it handles the "have" negotiation before
-> +#    processing the shallow direectives
+  - queueing trees eventually leads to us queueing blobs, too. But we
+    don't need to check revs->blob_objects here. Even in the current
+    code, we still wouldn't find those blobs, because we'd never open up
+    the tree objects to list their contents.
 
-In the v0 protocol, we handle shallows at the end of receive_needs(). So
-it happens before we call into get_common_commits(), which may do
-further traversal. That makes it much more likely for the shallow code
-to see a "clean" slate. Should v2 be ordering things in the same way?
-But then would the have negotiation see the shallow parents? If so, is
-that good or bad?
+  - the user-visible impact to the caller is minimal. The pending trees
+    are all cleared by the time the function returns anyway, by
+    traverse_trees_and_blobs(). We do call a show_commit() callback,
+    which technically could be looking at revs->pending during the
+    callback. But it seems like a rather unlikely thing to do (if you
+    want the tree of the current commit, then accessing the tree struct
+    member is a lot simpler).
 
-I'm pretty ignorant of how the shallow bits of upload-pack are supposed
-to work.
+So this should be safe to do. Let's look at the benefits:
 
-> That creates an interesting problem for commits that have _already_ been
-> parsed using the commit graph. Their commit->object.parsed flag is set,
-> their commit->graph_pos is set, but their commit->maybe_tree may still
-> be NULL. When somebody later calls repo_get_commit_tree(), we see that
-> we haven't loaded the tree oid yet and try to get it from the commit
-> graph. But since it has been freed, we segfault!
+  [before]
+  Benchmark #1: git -C linux rev-list HEAD >/dev/null
+    Time (mean ± σ):      7.651 s ±  0.021 s    [User: 7.399 s, System: 0.252 s]
+    Range (min … max):    7.607 s …  7.683 s    10 runs
 
-I was surprised we ever called repo_get_commit_tree() at all, since
-we're literally just traversing commits here. It looks like
-list-objects.c is very happy to queue pending trees for each commit,
-even if we're just going to throw them away when we get to
-process_tree()! I wonder if could be checking revs->tree_objects here
-and saving ourselves some work.
+  [after]
+  Benchmark #1: git -C linux rev-list HEAD >/dev/null
+    Time (mean ± σ):      7.593 s ±  0.023 s    [User: 7.329 s, System: 0.264 s]
+    Range (min … max):    7.565 s …  7.634 s    10 runs
 
-> The new test in t5500 triggers this segfault, but see the comments there
-> for how horribly intimate it has to be with how both upload-pack and
-> commit graphs work.
+Not too impressive, but then we're really just avoiding sticking a
+pointer into a growable array. But still, I'll take a free 0.75%
+speedup.
 
-This bug was triggered by a real world case. I'm not entirely clear what
-the client-side state was; I had to reverse engineer the whole thing out
-of the server-side coredump. The test here is my attempt to cut it down
-to a minimum. I don't like having to manually generate the upload-pack
-input, but I had trouble finding a fetch command that would trigger it.
-And anyway, given how weirdly specific the requirements are for
-generating this case, it seemed sensible to me to keep the input close
-to the source of the problem.
+Let's try it after running "git commit-graph write":
 
--Peff
+  [before]
+  Benchmark #1: git -C linux rev-list HEAD >/dev/null
+    Time (mean ± σ):      1.458 s ±  0.011 s    [User: 1.199 s, System: 0.259 s]
+    Range (min … max):    1.447 s …  1.481 s    10 runs
+
+  [after]
+  Benchmark #1: git -C linux rev-list HEAD >/dev/null
+    Time (mean ± σ):      1.126 s ±  0.023 s    [User: 896.5 ms, System: 229.0 ms]
+    Range (min … max):    1.106 s …  1.181 s    10 runs
+
+Now that's more like it. We saved over 22% of the total time. Part of
+that is because the runtime is shorter overall, but the absolute
+improvement is also much larger. What's going on?
+
+When we fill in a commit struct using the commit graph, we don't bother
+to set the tree pointer, and instead lazy-load it when somebody calls
+get_commit_tree(). So we're not only skipping the pointer write to the
+pending queue, but we're skipping the lazy-load of the tree entirely.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ list-objects.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/list-objects.c b/list-objects.c
+index b5651ddd5b..c837bcaca8 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -370,7 +370,9 @@ static void do_traverse(struct traversal_context *ctx)
+ 		 * an uninteresting boundary commit may not have its tree
+ 		 * parsed yet, but we are not going to show them anyway
+ 		 */
+-		if (get_commit_tree(commit)) {
++		if (!ctx->revs->tree_objects)
++			; /* do not bother loading tree */
++		else if (get_commit_tree(commit)) {
+ 			struct tree *tree = get_commit_tree(commit);
+ 			tree->object.flags |= NOT_USER_GIVEN;
+ 			add_pending_tree(ctx->revs, tree);
+-- 
+2.23.0.663.gbe3d117559
+
