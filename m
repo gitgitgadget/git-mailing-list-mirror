@@ -2,246 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F37A71F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 04:11:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C836C1F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 06:08:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725972AbfILELH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 00:11:07 -0400
-Received: from omta015.useast.a.cloudfilter.net ([34.195.253.206]:46123 "EHLO
-        omta015.useast.a.cloudfilter.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725794AbfILELH (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 12 Sep 2019 00:11:07 -0400
-Received: from cxr.smtp.a.cloudfilter.net ([10.0.17.147])
-        by cmsmtp with ESMTP
-        id 87BLiLEvVLe2C8GRliMz4n; Thu, 12 Sep 2019 04:11:05 +0000
-Received: from thunderbird.smith.home ([68.231.71.156])
-        by cmsmtp with ESMTPSA
-        id 8GRiis8U8AqrF8GRjijY2N; Thu, 12 Sep 2019 04:11:05 +0000
-Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
-X-Authority-Analysis: v=2.3 cv=BdimLYl2 c=1 sm=1 tr=0
- a=3BwGCz7hYCwPRAPwzRnSaA==:117 a=3BwGCz7hYCwPRAPwzRnSaA==:17
- a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=J70Eh1EUuV4A:10 a=kviXuzpPAAAA:8
- a=SgNXyPVP_kuMGiK11z4A:9 a=qrIFiuKZe2vaD64auk6j:22
-Received: from thunderbird.smith.home (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 59921B81A82;
-        Wed, 11 Sep 2019 21:11:02 -0700 (MST)
-From:   "Stephen P. Smith" <ischis2@cox.net>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/2] Quit passing 'now' to date code
-Date:   Wed, 11 Sep 2019 21:11:01 -0700
-Message-Id: <20190912041102.16266-2-ischis2@cox.net>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20190912041102.16266-1-ischis2@cox.net>
-References: <20190909014711.3894-1-ischis2@cox.net>
- <20190912041102.16266-1-ischis2@cox.net>
+        id S1728462AbfILGI3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 02:08:29 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:43559 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725765AbfILGI2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 02:08:28 -0400
+Received: by mail-lj1-f196.google.com with SMTP id d5so22398660lja.10
+        for <git@vger.kernel.org>; Wed, 11 Sep 2019 23:08:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9AA6YEXRNSzpP4Y4u2W9kTJxHTv3O+/acCvNW0zREik=;
+        b=W+DbPrWJzoMslPzb/vBjkejJhS6Iy2qvcgMYWQPPRzhUWNvwZ/KSNCg3Xo5NDMIo68
+         yFq9izzH+KOEwmQhKCPuU2Wm468Iv6TTcCK4OPI7BXx7roD7D+vante6DUTdNXCyAbm2
+         OFyIQi0CbXtGdVPJWq4CapNxkIq69IrStz/VjxzV7c68Yab2IBHT4IW/OsYMF4aWXvtk
+         DHL5vDezSC5VHklXsfFLu4/pZKhSUeDL7qdKI3f20G4CsWiuu8GPtQWz13+A1u6eQ80d
+         AXhS+FEXPbVq+30yyCEZSFl8m35gthbJRtJ35Enae6WGTk2KMcYDxGtklDI65wtrlV6e
+         rMAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9AA6YEXRNSzpP4Y4u2W9kTJxHTv3O+/acCvNW0zREik=;
+        b=JwVwTR4plOBfyAeMd5SeAmMbquERq8iNSEar6jEI+UEK4cEDuMM9QxA1i4YBfm/sXY
+         P/lMSA5WB2GJE8RyHWWrNUC97GU9+eUZFaX0hB97ABpvVHEQDZWIGSyQVUaGOzrfJPt9
+         zP/QA9JbqOpdaZ61d0CoF+zr1nw9tPhyCV4VrJDuZ+vRAqHCjcoG00iQoBkRIa/6SNfI
+         4G5mc9+MOCUksXRUY7pbGDS1biUfzZb0E28vZggoYP8qDLrcNGDqiNiLmrE8LUQggbRJ
+         l/KhMxOjjiOOEUDi3vPyWFejQkzSAH2nDiWkBwqx+/tKpDni90Eq0leaJS6X5rexkNZo
+         8Nyw==
+X-Gm-Message-State: APjAAAWdzyMCMFoX0JNPuueAGObLyeYT69Bx9t+Fi+jiW0r5sYG7JhtU
+        sWwpUMsC7z5mCLZ4xvJPqTx8++i/uTofJi4LyFM=
+X-Google-Smtp-Source: APXvYqyZ/XVyijgFm0tu1HkGvZLUThvb4EvwuUCIPmSK5Wa5P0eC4zLYujxqkZgBy0Xp6m1whyxJ0d0zsCWIihVOOk8=
+X-Received: by 2002:a2e:8785:: with SMTP id n5mr21380881lji.210.1568268506617;
+ Wed, 11 Sep 2019 23:08:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfBct3j+FzZ++f5tcO1giIj7kGpe1EzTSEbCqpuvDOJmCBO/oVUF67jmfnnODkRIb8xWbmKD1HUwn99iTmwdzvUPfypjrGI98CM7NpaSWL7nTVKwTIOrn
- c5kkchWmf/0IxEeh7nayaQL2l7tvcxExOvu5jyxG76lmBi7loV6I0E/icR9+3vvCPBYZrTraGwCqj0q1OU3dAfgByFkbPlvlFaITeiHgwZZXhf5FQMsnFzl5
+References: <ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com>
+ <b82a00441ff1a6a9cea3fd235c1c33729ec31b71.1567713659.git.bert.wesarg@googlemail.com>
+ <20190911205539.vb6asqcc22nzgdqa@yadavpratyush.com>
+In-Reply-To: <20190911205539.vb6asqcc22nzgdqa@yadavpratyush.com>
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
+Date:   Thu, 12 Sep 2019 08:05:55 +0200
+Message-ID: <CAGr--=Jz9xN6NMmiXjHeq9wZsYUx4eqfQrWjjVMkj3J1YCG_8g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] git-gui: add hotkey to toggle "Amend Last Commit"
+ check button/menu
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit b841d4ff43 (Add `human` format to test-tool, 2019-01-28) added
-a get_time() function which allows $GIT_TEST_DATE_NOW in the
-environment to override the current time. So we no longer need to
-interpret that variable in cmd__date().
+Hi Pratyush,
 
-Therefore, we can stop passing the "now" parameter down through the
-date functions, since nobody uses them. Note that we do need to make
-sure all of the previous callers that took a "now" parameter are
-correctly using get_time().
+On Wed, Sep 11, 2019 at 10:55 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> Also, I notice that the bindings for other letters have the same
+> function bound for both small and capital letters (IOW, same behavior
+> with shift held and released).
+>
+> I don't necessarily think that is a great idea. It is a pretty common
+> pattern to have, say Ctrl+a, do something, and Ctrl+Shift+a, do
+> something else. Just want to pick your brain on whether you think we
+> should do the same thing for both Ctrl+e and for Ctrl+E (aka
+> Ctrl+Shift+e), or just bind it to Ctrl+e, and leave Ctrl+E for something
+> else.
 
-Signed-off-by: Stephen P. Smith <ischis2@cox.net>
----
- cache.h              |  5 ++---
- date.c               | 27 +++++++++++++--------------
- t/helper/test-date.c | 26 +++++++++-----------------
- 3 files changed, 24 insertions(+), 34 deletions(-)
+I just tested what happens when you press Ctrl+e while Caps Lock is
+enabled; the Ctrl+e binding is not invoked. That's probably why other
+key bindings have the same function bound for both lower- and
+upper-case letters, to have the same behaviour with/without Caps Lock
+enabled. With that in mind, we should probably bind Ctrl+E aswell.
 
-diff --git a/cache.h b/cache.h
-index b1da1ab08f..48d4287aa7 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1516,8 +1516,7 @@ struct date_mode {
- struct date_mode *date_mode_from_type(enum date_mode_type type);
- 
- const char *show_date(timestamp_t time, int timezone, const struct date_mode *mode);
--void show_date_relative(timestamp_t time, const struct timeval *now,
--			struct strbuf *timebuf);
-+void show_date_relative(timestamp_t time, struct strbuf *timebuf);
- void show_date_human(timestamp_t time, int tz, const struct timeval *now,
- 			struct strbuf *timebuf);
- int parse_date(const char *date, struct strbuf *out);
-@@ -1526,7 +1525,7 @@ int parse_expiry_date(const char *date, timestamp_t *timestamp);
- void datestamp(struct strbuf *out);
- #define approxidate(s) approxidate_careful((s), NULL)
- timestamp_t approxidate_careful(const char *, int *);
--timestamp_t approxidate_relative(const char *date, const struct timeval *now);
-+timestamp_t approxidate_relative(const char *date);
- void parse_date_format(const char *format, struct date_mode *mode);
- int date_overflows(timestamp_t date);
- 
-diff --git a/date.c b/date.c
-index 8126146c50..041db7db4e 100644
---- a/date.c
-+++ b/date.c
-@@ -128,16 +128,17 @@ static void get_time(struct timeval *now)
- 		gettimeofday(now, NULL);
- }
- 
--void show_date_relative(timestamp_t time,
--			const struct timeval *now,
--			struct strbuf *timebuf)
-+void show_date_relative(timestamp_t time, struct strbuf *timebuf)
- {
-+	struct timeval now;
- 	timestamp_t diff;
--	if (now->tv_sec < time) {
-+
-+	get_time(&now);
-+	if (now.tv_sec < time) {
- 		strbuf_addstr(timebuf, _("in the future"));
- 		return;
- 	}
--	diff = now->tv_sec - time;
-+	diff = now.tv_sec - time;
- 	if (diff < 90) {
- 		strbuf_addf(timebuf,
- 			 Q_("%"PRItime" second ago", "%"PRItime" seconds ago", diff), diff);
-@@ -240,9 +241,7 @@ static void show_date_normal(struct strbuf *buf, timestamp_t time, struct tm *tm
- 
- 	/* Show "today" times as just relative times */
- 	if (hide.wday) {
--		struct timeval now;
--		get_time(&now);
--		show_date_relative(time, &now, buf);
-+		show_date_relative(time, buf);
- 		return;
- 	}
- 
-@@ -313,11 +312,8 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
- 	}
- 
- 	if (mode->type == DATE_RELATIVE) {
--		struct timeval now;
--
- 		strbuf_reset(&timebuf);
--		get_time(&now);
--		show_date_relative(time, &now, &timebuf);
-+		show_date_relative(time, &timebuf);
- 		return timebuf.buf;
- 	}
- 
-@@ -1288,15 +1284,18 @@ static timestamp_t approxidate_str(const char *date,
- 	return (timestamp_t)update_tm(&tm, &now, 0);
- }
- 
--timestamp_t approxidate_relative(const char *date, const struct timeval *tv)
-+timestamp_t approxidate_relative(const char *date)
- {
-+	struct timeval tv;
- 	timestamp_t timestamp;
- 	int offset;
- 	int errors = 0;
- 
- 	if (!parse_date_basic(date, &timestamp, &offset))
- 		return timestamp;
--	return approxidate_str(date, tv, &errors);
-+
-+	get_time(&tv);
-+	return approxidate_str(date, (const struct timeval *) &tv, &errors);
- }
- 
- timestamp_t approxidate_careful(const char *date, int *error_ret)
-diff --git a/t/helper/test-date.c b/t/helper/test-date.c
-index 585347ea48..deb5869343 100644
---- a/t/helper/test-date.c
-+++ b/t/helper/test-date.c
-@@ -12,13 +12,13 @@ static const char *usage_msg = "\n"
- "  test-tool date is64bit\n"
- "  test-tool date time_t-is64bit\n";
- 
--static void show_relative_dates(const char **argv, struct timeval *now)
-+static void show_relative_dates(const char **argv)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	for (; *argv; argv++) {
- 		time_t t = atoi(*argv);
--		show_date_relative(t, now, &buf);
-+		show_date_relative(t, &buf);
- 		printf("%s -> %s\n", *argv, buf.buf);
- 	}
- 	strbuf_release(&buf);
-@@ -74,20 +74,20 @@ static void parse_dates(const char **argv)
- 	strbuf_release(&result);
- }
- 
--static void parse_approxidate(const char **argv, struct timeval *now)
-+static void parse_approxidate(const char **argv)
- {
- 	for (; *argv; argv++) {
- 		timestamp_t t;
--		t = approxidate_relative(*argv, now);
-+		t = approxidate_relative(*argv);
- 		printf("%s -> %s\n", *argv, show_date(t, 0, DATE_MODE(ISO8601)));
- 	}
- }
- 
--static void parse_approx_timestamp(const char **argv, struct timeval *now)
-+static void parse_approx_timestamp(const char **argv)
- {
- 	for (; *argv; argv++) {
- 		timestamp_t t;
--		t = approxidate_relative(*argv, now);
-+		t = approxidate_relative(*argv);
- 		printf("%s -> %"PRItime"\n", *argv, t);
- 	}
- }
-@@ -103,22 +103,14 @@ static void getnanos(const char **argv)
- 
- int cmd__date(int argc, const char **argv)
- {
--	struct timeval now;
- 	const char *x;
--
- 	x = getenv("GIT_TEST_DATE_NOW");
--	if (x) {
--		now.tv_sec = atoi(x);
--		now.tv_usec = 0;
--	}
--	else
--		gettimeofday(&now, NULL);
- 
- 	argv++;
- 	if (!*argv)
- 		usage(usage_msg);
- 	if (!strcmp(*argv, "relative"))
--		show_relative_dates(argv+1, &now);
-+		show_relative_dates(argv+1);
- 	else if (!strcmp(*argv, "human"))
- 		show_human_dates(argv+1);
- 	else if (skip_prefix(*argv, "show:", &x))
-@@ -126,9 +118,9 @@ int cmd__date(int argc, const char **argv)
- 	else if (!strcmp(*argv, "parse"))
- 		parse_dates(argv+1);
- 	else if (!strcmp(*argv, "approxidate"))
--		parse_approxidate(argv+1, &now);
-+		parse_approxidate(argv+1);
- 	else if (!strcmp(*argv, "timestamp"))
--		parse_approx_timestamp(argv+1, &now);
-+		parse_approx_timestamp(argv+1);
- 	else if (!strcmp(*argv, "getnanos"))
- 		getnanos(argv+1);
- 	else if (!strcmp(*argv, "is64bit"))
--- 
-2.23.0
+Should I create and send a new patch?
 
+Birger
