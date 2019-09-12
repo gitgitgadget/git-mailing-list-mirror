@@ -7,176 +7,126 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 050211F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 20:17:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3ED2C1F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 20:41:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726475AbfILURJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 16:17:09 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57203 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726017AbfILURI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 16:17:08 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 82617273DE;
-        Thu, 12 Sep 2019 16:17:06 -0400 (EDT)
+        id S1727725AbfILUlF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 16:41:05 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50302 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727702AbfILUlF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 16:41:05 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9F1F28BCCC;
+        Thu, 12 Sep 2019 16:41:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pJkwfiwPUIoSxdU3hTmbLsmVXms=; b=XKwHVd
-        DW9qB1mYmLAjZ1oJ3x9INJTIxzrzfG49S+RG1tENo3wUs6+1SH3bqhyFlc7dLKr5
-        TQQ+yPhNlhIzqrqrcJCpZ442MZ4QhHbZX35gVr/cDSfNnTsV0uQ+0bmbysYHAbvV
-        6i1R6d3n7k8f63gU0rwZiOIkI7qKYgD0OnZJQ=
+        :content-type; s=sasl; bh=kOPdYJpGpJs4oZ6+RqEdH+JLs/8=; b=vUsGk1
+        Xd2YHmPcVirsZrxg3VEEB8fNBkMH2pAzSyNvz27UyKmCwilWJo7CZ3/VpEhv187w
+        m8hHCB2ZfmcC7r4dcViRaihLWaQaoETpGvNrHwIqCoKBGxfdsZHGxCOIxS9vGihU
+        hENIfKlkNwCbq4+dP7M/mmGKjtK47S2zli0Pk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=apWe1lGJZRX+qCo3AtU9n+E/DwThVS+o
-        autu2d0V0WAZgmWWoj1/t2VNDSk2ifUX9WPVgV3gSlGETiJm/qvmi5SrtdkXgAGG
-        v3kVgOfbQd/xTP45+cpYnsVux+c4/KBYTrLzepf3s4dbcGKVVlv0lTCYvkx1ZXcb
-        7rcC1AipiOU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 72F99273DD;
-        Thu, 12 Sep 2019 16:17:06 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=gCEiB4gTw0wnC+fPGtffZqN2iqV2xRTA
+        eAWkqPceXRbNl6PfGXKr7z3Ue7G5j12RrXLMf7Ar4CTpEIL0DJoMeVAHAQbVngS1
+        lymLhBu4Y/vtlcL6WAY1qBgioi5VuOGOO0GOn06kr1cA9e3ORf03ARXbm7faSGbx
+        70+G4fiXjlU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 965658BCCB;
+        Thu, 12 Sep 2019 16:41:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A6F6D273DC;
-        Thu, 12 Sep 2019 16:17:05 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BFB158BCC8;
+        Thu, 12 Sep 2019 16:40:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "William Baker via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, williamtbakeremail@gmail.com,
-        stolee@gmail.com, jeffhost@microsoft.com,
-        William Baker <William.Baker@microsoft.com>
-Subject: Re: [PATCH 1/1] multi-pack-index: add --no-progress Add --no-progress option to git multi-pack-index. The progress feature was added in 144d703 ("multi-pack-index: report progress during 'verify'", 2018-09-13) but the ability to opt-out was overlooked.
-References: <pull.337.git.gitgitgadget@gmail.com>
-        <0821a8073a48067ecd9ce08226656fa04d803f6b.1568216234.git.gitgitgadget@gmail.com>
-Date:   Thu, 12 Sep 2019 13:17:04 -0700
-In-Reply-To: <0821a8073a48067ecd9ce08226656fa04d803f6b.1568216234.git.gitgitgadget@gmail.com>
-        (William Baker via GitGitGadget's message of "Wed, 11 Sep 2019
-        08:37:15 -0700 (PDT)")
-Message-ID: <xmqqlfutfewv.fsf@gitster-ct.c.googlers.com>
+To:     "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Garima Singh <garima.singh@microsoft.com>
+Subject: Re: [PATCH v2 1/1] commit-graph: add --[no-]progress to write and verify.
+References: <pull.315.git.gitgitgadget@gmail.com>
+        <pull.315.v2.git.gitgitgadget@gmail.com>
+        <47cc99bd151db67fe2ee0f91bb98b3eb7e55786d.1566836997.git.gitgitgadget@gmail.com>
+Date:   Thu, 12 Sep 2019 13:40:55 -0700
+In-Reply-To: <47cc99bd151db67fe2ee0f91bb98b3eb7e55786d.1566836997.git.gitgitgadget@gmail.com>
+        (Garima Singh via GitGitGadget's message of "Mon, 26 Aug 2019 09:29:58
+        -0700 (PDT)")
+Message-ID: <xmqqef0lfdt4.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4A2416E8-D59A-11E9-AB5D-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 9FBC172E-D59D-11E9-9B42-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"William Baker via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
+> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
+> index eb5e7865f0..ca0b1a683f 100644
+> --- a/Documentation/git-commit-graph.txt
+> +++ b/Documentation/git-commit-graph.txt
+> @@ -10,8 +10,8 @@ SYNOPSIS
+>  --------
 >  [verse]
-> -'git multi-pack-index' [--object-dir=<dir>] <subcommand>
-> +'git multi-pack-index' [--object-dir=<dir>] <subcommand> [--[no-]progress]
+>  'git commit-graph read' [--object-dir <dir>]
+> -'git commit-graph verify' [--object-dir <dir>] [--shallow]
+> -'git commit-graph write' <options> [--object-dir <dir>]
+> +'git commit-graph verify' [--object-dir <dir>] [--shallow] [--[no-]progress]
+> +'git commit-graph write' <options> [--object-dir <dir>] [--[no-]progress]
 
-I am wondering what the reasoning behind having this new one *after*
-the subcommand while the existing one *before* is.  Isn't the
---[no-]progress option supported by all subcommands of the
-multi-pack-index command, just like the --object-dir=<dir> option
-is?
+This is not a problem with this patch, but it is disturbing to see
+<options> and other concrete "--option" listed explicitly.  It could
+be that "--object-dir <dir>" is so important an option that deserves
+to be singled out while other random options can be left to individual
+option's description, but in that case, would "--progress" be equally
+important (if anything, as an option that is purely about appearance,
+I would expect it to be with a lot lower importance)?
 
-If there is no reason that explains why one must come before and the
-other must come after the subcommand, we are then adding another
-thing the end-users or scriptors need to memorize, which is not
-ideal.
+I guess with a preparatory clean-up patch to deal with the <options>
+part, the result of applying this patch would not look so bad.
+Perhaps renaming <options> to <write-specific-options> and moving it
+to the end of the line might be sufficient.  I dunno.  At least we'd
+need to make sure that it is clear to readers what options are
+allowed where we wrote <options> above.
 
+> @@ -29,6 +29,9 @@ OPTIONS
+>  	commit-graph file is expected to be in the `<dir>/info` directory and
+>  	the packfiles are expected to be in `<dir>/pack`.
+>  
 > +--[no-]progress::
 > +	Turn progress on/off explicitly. If neither is specified, progress is 
+
+Trailing whitespace.
+
 > +	shown if standard error is connected to a terminal.
+>   ...
+> +	if (opts.progress)
+> +		flags |= COMMIT_GRAPH_WRITE_PROGRESS;
+> +	
 
-Sounds sensible.
+Trailing whitespace.
 
-> diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-> index b1ea1a6aa1..f8b2a74179 100644
-> --- a/builtin/multi-pack-index.c
-> +++ b/builtin/multi-pack-index.c
-> @@ -6,34 +6,41 @@
->  #include "trace2.h"
+> diff --git a/commit-graph.c b/commit-graph.c
+> index f2888c203b..2802f2ade6 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -1992,8 +1992,10 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
+>  	if (verify_commit_graph_error & ~VERIFY_COMMIT_GRAPH_ERROR_HASH)
+>  		return verify_commit_graph_error;
 >  
->  static char const * const builtin_multi_pack_index_usage[] = {
-> -	N_("git multi-pack-index [--object-dir=<dir>] (write|verify|expire|repack --batch-size=<size>)"),
-> +	N_("git multi-pack-index [--object-dir=<dir>] (write|verify|expire|repack --batch-size=<size>) [--[no-]progress]"),
->  	NULL
->  };
-
-The same comment as the SYNOPSIS part.
-
->  static struct opts_multi_pack_index {
->  	const char *object_dir;
->  	unsigned long batch_size;
-> +	int progress;
->  } opts;
->  
->  int cmd_multi_pack_index(int argc, const char **argv,
->  			 const char *prefix)
->  {
-> +	unsigned flags = 0;
+> -	progress = start_progress(_("Verifying commits in commit graph"),
+> -				  g->num_commits);
+> +	if (flags & COMMIT_GRAPH_WRITE_PROGRESS)
+> +		progress = start_progress(_("Verifying commits in commit graph"),
+> +					g->num_commits);
 > +
->  	static struct option builtin_multi_pack_index_options[] = {
->  		OPT_FILENAME(0, "object-dir", &opts.object_dir,
->  		  N_("object directory containing set of packfile and pack-index pairs")),
->  		OPT_MAGNITUDE(0, "batch-size", &opts.batch_size,
->  		  N_("during repack, collect pack-files of smaller size into a batch that is larger than this size")),
-> +		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
->  		OPT_END(),
->  	};
 
-Seeing that all the options that made me curious (see above) are
-defined here for all subcommands, I suspect that "technically",
-all options must come before the <subcommand> (side note: I know
-parse-options may reorder commands after options, but in the
-documentation and usage, we strongly discourage users from relying
-on the reordering and always show "global --options, subcommand, and
-then subcommand --options" order).  I also see in the code that
-handles opts.batch_size that there is a workaround for this inverted
-code structure to make sure subcommands other than repack does not
-allow --batch-size option specified.
-
-Unless and until we get rid of the "git multi-pack-index" as a
-separate command (side note: when it happens, we;'d call the
-underlying midx API functions directly from appropriate places in
-the codepaths like "gc"), we probably would want to correct the use
-of parse_options() API in the implementation of this command before
-adding any new option or subcommand.
-
-> @@ -47,14 +54,15 @@ int cmd_multi_pack_index(int argc, const char **argv,
->  	trace2_cmd_mode(argv[0]);
->  
->  	if (!strcmp(argv[0], "repack"))
-> -		return midx_repack(the_repository, opts.object_dir, (size_t)opts.batch_size);
-> +		return midx_repack(the_repository, opts.object_dir, 
-> +			(size_t)opts.batch_size, flags);
->  	if (opts.batch_size)
->  		die(_("--batch-size option is only for 'repack' subcommand"));
->  
->  	if (!strcmp(argv[0], "write"))
->  		return write_midx_file(opts.object_dir);
->  	if (!strcmp(argv[0], "verify"))
-> -		return verify_midx_file(the_repository, opts.object_dir);
-> +		return verify_midx_file(the_repository, opts.object_dir, flags);
->  	if (!strcmp(argv[0], "expire"))
->  		return expire_midx_packs(the_repository, opts.object_dir);
-
-We can see that the new option only affects "verify", even though
-the SYNOPSIS and usage text pretends that everybody understands and
-reacts to it.  Shouldn't it be documented just like how --batch-size
-is documented that it is understood only by "repack"?
-
-If the mid-term aspiration of this patch is to later enhance other
-subcommands to also understand the progress output or verbosity
-option (and if the excuse given as a response to the above analysis
-is "this is just a first step, more will come later"), the instead
-of adding a "unsigned flag" local variable to the function, it would
-probably make much more sense to
-
- (1) make struct opts_multi_pack_index as a part of the public API
-     between cmd_multi_pack_index() and midx.c and document it in
-     midx.h;
-
- (2) instead of passing opts.object_dir to existing command
-     implementations, pass &opts, the pointer to the whole
-     structure;
-
- (3) add a new field "unsigned progress" to the structure, and teach
-     the command line parser to flip it upon seeing "--[no-]progress".
+This is correct, but it feels funny that it is sufficient to
+castrate start_progress() and we do not have to muck with existing
+calls to show and stop progress output.  We rely on progress being
+NULL for that to work, and existing code initializes the variable
+to NULL, so we are OK.
