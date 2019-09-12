@@ -8,54 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A095C1F463
-	for <e@80x24.org>; Thu, 12 Sep 2019 19:36:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26CBF1F463
+	for <e@80x24.org>; Thu, 12 Sep 2019 19:39:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726329AbfILTgB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 15:36:01 -0400
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:39305 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726139AbfILTgB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 15:36:01 -0400
-Received: by mail-vs1-f68.google.com with SMTP id y62so17005613vsb.6
-        for <git@vger.kernel.org>; Thu, 12 Sep 2019 12:35:59 -0700 (PDT)
+        id S1726119AbfILTjs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Sep 2019 15:39:48 -0400
+Received: from mail-vk1-f195.google.com ([209.85.221.195]:45983 "EHLO
+        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726067AbfILTjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Sep 2019 15:39:48 -0400
+Received: by mail-vk1-f195.google.com with SMTP id u192so5416428vkb.12
+        for <git@vger.kernel.org>; Thu, 12 Sep 2019 12:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=NmUa4r9mcXefPxqIzDIvUpA2ZWYGTV0R0b6Q78RmVn8=;
-        b=q24KQKLRfX5LnJDRWowjZHUxpBQqWN/gFcusEpCSbctoZh837WlQSMXMO+HzTmf9vg
-         e740jgPPNE7TUj5S3a1DIi6iDxSZw5YIsBzqKBr+/mVqvDtWWZNGPNx9qRt4jQ2+eesr
-         EQHTBS4iH8ndpeH5NvmRwlXfHWM1zk0DXJPrt3+qNcko3zE3679d+Hx7LF/Z0uiWRnfU
-         HsGMBLxiDhd4wgQb1iVH0uLm0NCc8GRU4S6p5BxB9HQU2awBQCRmLBNL8q0XnLxNrMsU
-         HcydW9LXEQ/4eSFrZqFnZ/82m5WDs6sVurHAHMye0kWdBd+2KBEjOpgSayHOv4vb+CeE
-         CCBQ==
+        bh=sU4r+9BP/bDR+WSJV8e9bFh1EnYR4pMMMQQqvakXs/4=;
+        b=rYiUfhfw53kMwFPyFdpCdUXxfekF/T61cgsAx/mr7T0YZp775UEx+6uTy+haf5+gT0
+         Nmgh4BZyFuI21w0bAvSXz5Rk1afugL80/IAPQsLYzZvFlsb7J0Dun4oQfJZVIsfCUhWV
+         eaKFtjVMOneN8HzsNfFnR0wSCp9gL2uXjLc2hesHZBme7YOlvymDvw8WiFsr3DgRckOT
+         z3WmiCXc1+1Jux7Ti221hw1/q3kgqjBeEzV+MC4Y9Eu+AOMigPELbTPOFqxFRVCaHqqv
+         iFC7NkRQ5uXSMRr8PvkYIfeC8J7Ft+MzZmXPz1oZwDb4F+qOxVVqRCfDNP5a+WpRCoTJ
+         Hx9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=NmUa4r9mcXefPxqIzDIvUpA2ZWYGTV0R0b6Q78RmVn8=;
-        b=AMvt9Jf6Brwo5HaUqNx80nyQH9LDPHdOxnQrtkwjPSCNENNRs/Mx1enpjotFFNFOk3
-         T7o1PG0FBfkkV8ndcHCLCnM+RPPoWriErfIA044K8fZ6a6GBUR3bqIhcbBtPzISHFvI9
-         lI3q//w9nxkoI4EiIpNZrWsiorim+akfZ2xR9x+QtMgMU7Lyq8jT+TrU6pE87+VRAJEw
-         cb/eflWdCi68ZJUeXA6MMLedIV1yL0xRPc/KVFhHYh0PyvAnYOJgGDUHepuLps4YTvVs
-         Y9fE7hQCjV8OpjI48s5ptrVQun6ccwXj6shsTAr9VAPuSBjYhbRKZtDZSAWiEWYoMeyK
-         l+Uw==
-X-Gm-Message-State: APjAAAWA2nWZIFN208jcd5E20ToksNJs26TjYkhuzwNmYoMQeaNHQJ9O
-        Dqdv8yJQL9jSbnTqM7rzuZ7W7fr/GI+t+sJOTHfVYkEeeMI=
-X-Google-Smtp-Source: APXvYqyRUF/F7PRBaGrcfSVb3A15ms/Jtchi+zp1iX2fpwC3nRO8NNNjzVhSt0NPExDK3pyHd/mmpy2kR0rv4YRet14=
-X-Received: by 2002:a67:c408:: with SMTP id c8mr19490160vsk.63.1568316958765;
- Thu, 12 Sep 2019 12:35:58 -0700 (PDT)
+        bh=sU4r+9BP/bDR+WSJV8e9bFh1EnYR4pMMMQQqvakXs/4=;
+        b=fTlbd3imUe1wQcNpg3oWA1Gk+w524Xf5+AORp80rkkoyqFfS8dkA+U/mPNWcRluwLX
+         06JSqwiJTa2cTzSpN5H84nlj7eccFZFrYTAAoTX/A9LIJtNGbHzJxrf2fCwcLQRpUw9D
+         3y5PziUhzf0vSEis0u+PUa5/WOx84NytQnEX/0veRZqgns2vuaWl/fA/XKdTeGvqcyp2
+         VYYk/CVw6S3VRgKCKX4n4HTPpiqr+q0eXEng91gzLsKK+V1hfVuppO1Pxbew/6VFQnnc
+         Ln1UDKFTBLTy25NqlBS2bZdYQ+lIaEnjovXDa/YL8GfjIejLMlj+hPuC5XoZRNQP5v64
+         YOhw==
+X-Gm-Message-State: APjAAAUjQkdH6ronoEwOFRWALwBvIXILjmSlTrsl/e5wgk/h+rFSCBpG
+        kZ0lMi1WvWflePD9ZlBOyJIV5AuzZpxqmPHfzRI=
+X-Google-Smtp-Source: APXvYqxxxWiPsQNBja/YMAnfuNVmnBzdVVgcjzVN02DrqIp7syMPEDT70rp2uojNcxcCTJfoNFle5kJC0WHB9uTV/2w=
+X-Received: by 2002:a1f:a24b:: with SMTP id l72mr627765vke.21.1568317186563;
+ Thu, 12 Sep 2019 12:39:46 -0700 (PDT)
 MIME-Version: 1.0
 References: <ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com>
  <20190911201500.6utotzdrwsp6qoe3@yadavpratyush.com>
 In-Reply-To: <20190911201500.6utotzdrwsp6qoe3@yadavpratyush.com>
 From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Thu, 12 Sep 2019 21:35:47 +0200
-Message-ID: <CAKPyHN1YNWbZoJNTnGN4_Du+3Scf0bEpAYJyR_mB8X2fkfAwLg@mail.gmail.com>
+Date:   Thu, 12 Sep 2019 21:39:35 +0200
+Message-ID: <CAKPyHN1FWPuvpwGxe5V79+VcaPzV8CpPu1pyQ1fekswuBrR6Cg@mail.gmail.com>
 Subject: Re: [PATCH 1/2] git-gui: convert new/amend commit radiobutton to checketton
 To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -64,7 +65,13 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Sep 11, 2019 at 10:15 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
 >
-> Typo in the subject. s/checketton/checkbutton/
+> Typo in the subject. s/checketton/checkbutton/\
+
+Will re-roll and drop the actual keybinding patch, so that Birger can
+resend his part,
+
+Bert
+
 >
 > On 05/09/19 10:09PM, Bert Wesarg wrote:
 > > Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
@@ -253,15 +260,6 @@ On Wed, Sep 11, 2019 at 10:15 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
 > and if $commit_type_is_amend == 1, then $commit_type should _never_ be
 > amend*.
 >
-
-AFAIU this now is, that the former 'selected_commit_type' was also
-used as a request for the commit type, you set it to the desired one,
-than call do_select_commit_type, it will than check if a state change
-actually happen, and if it was to request an amend, which may also
-fail, it goes back to !amend.
-
-Thus its not an assert.
-
 > I don't see assertions being used anywhere, but I suppose we should look
 > into them in the future. It would be great if you can start using
 > something like that here, but I'm fine with keeping this like it is
