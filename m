@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 625781F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 13:02:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BEF71F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 13:02:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388195AbfIMNCz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 09:02:55 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:43926 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388176AbfIMNCz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Sep 2019 09:02:55 -0400
-Received: by mail-ed1-f65.google.com with SMTP id c19so26921581edy.10
-        for <git@vger.kernel.org>; Fri, 13 Sep 2019 06:02:54 -0700 (PDT)
+        id S2388205AbfIMNC5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 09:02:57 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:43933 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388196AbfIMNC4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 09:02:56 -0400
+Received: by mail-ed1-f68.google.com with SMTP id c19so26921650edy.10
+        for <git@vger.kernel.org>; Fri, 13 Sep 2019 06:02:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nbIYPYfvlZmjFMk31c6i2QEUyWC7Lyz7Rjql2VovRmI=;
-        b=SfgsLQNOYhaf9jgQ8sXtJE4w18WxWiwJuvf9NlbVahyBXcFAK8dAab0plOXEn2RT+4
-         HvWHyt1wm8ZmdmD9jCi4CUAZoPWPNk5pu3mfnkAwQiZMaOEL6f0bFkNgEdLbeKTtLsWI
-         zRwA/dmDfPWhqt3dHflnpDXWMAeuQBv63qPv95I0pCHQ7H9K04XidS/8ykxJ0LSdzZfs
-         kV+BxvJ9O3PxQXXnn0teeoa97VLC4hlWRylPlQHBiTu+xCLZEsor4yV0JASNFw66TjQq
-         BLeaY6/BAcgxZDbzGGbV75yJKAJD6K7HPK2IotoXh4KacqkP4/m4ti2hFzwRz8pfdMX9
-         ZoAw==
+        bh=feuJkzJI/SWfV7q4mtYOBaQBB5fBDWpeiqXQ3Lw+ILY=;
+        b=HE8xia3O13wOYxUZ9JcjjJX4GdGkg0SFvzSielw3m0z4XbqpKFxlYX7wDB2/sTuh2P
+         20hVR5N5A2rZwRkouSDKjZmYMK9d6SbeFvJhNYvOrAnAgGPS7Shi/MXymNl3PqzSLewv
+         MMucDrAbTngey2oQBeC2sm4KlpP32XGqRpmOgZ+4T13y+W4mO24FTjGipZiOJRzUFsBB
+         6WFpOQY7K22jC8a4okmz3brGml/UDmL/3eK51WOlDg4v81XTSuR7/YiD6NDbNElzBhHY
+         MjO/ah0vRHc1mzFzP7mndTifpiU/tAUZ10yGfEZUNtiAExznjEJ1Sz6zEeIwyJHzXWFj
+         Zyiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nbIYPYfvlZmjFMk31c6i2QEUyWC7Lyz7Rjql2VovRmI=;
-        b=q5myxXErhCqgOiz91iR7/O30Sn+PRRemL4FQ7Vca4JlnY7nUvl1ka1l1LeIOpTP/l3
-         JbZpznytiGgbEuFn3keMclI10FhNKrDtpUeLom7dYn12fXOJUrgXcvJ2UhyvUGHQ/BqY
-         pK13zUJiP9qpQoikohh25JI7tMWc4Qs2l6nk2OW2NS2nqUn7JPWcROa2aaLCXDqi1w5n
-         yw0F+MOnwhjGSrAq9vtV+JSFg1fX8/wUy6obQWRBN98zYhrx4wrYqMpADUT61o+umhUu
-         j1hPw6XzSOoFhvfOonY4OPxjFVpGijv8grV2RZMfCD9Xpj2tBXxlXLmiyruckLBz1krs
-         feYQ==
-X-Gm-Message-State: APjAAAVF011VpzCo+CAWfozeO9uoJj2J/JRaSkA5PJB6RIHY27fgGZi2
-        gJIaJZr7PWXSrG6PtpD+nslRjLMZ
-X-Google-Smtp-Source: APXvYqxZiErAo4ui1dXbzWNTXD4Z0xeD5GDR6R+aDLo6zLJLDBPeckf+yuI92NOVi/ldTakIaTQIlQ==
-X-Received: by 2002:a17:906:79ca:: with SMTP id m10mr3712986ejo.292.1568379773221;
-        Fri, 13 Sep 2019 06:02:53 -0700 (PDT)
+        bh=feuJkzJI/SWfV7q4mtYOBaQBB5fBDWpeiqXQ3Lw+ILY=;
+        b=WlpR0Cmzahk95nole7IBESQV5M2Bq1Nm84Gh+X34+PIJRY9Yaw/QkViU4UOfU0FIhy
+         6MwfNnnTQsBP/WCCXrsZ7QJADjvp9380LwP0/m+DOIEv8fDgDyPshIylyBHl+mcX2/ST
+         B6WRYiTkjeXXACo6oxd3hIE+BWd2siy2HSCRYXoXNWuJ5qr8Wtg+rB8IwlfQ2J0D5o7S
+         AIfjcK68aWcpcRzYIbPRK+hUshVLuJO76jgySrBl4bh1fHpKsWydCj9LMiTvkVWiy/6s
+         vRFcK0tzUvsFdyv6UNvyJfrJij9xbI/z3uetu+zNIuSdKdo1XsSgF1BTcmlHHcYiDpBf
+         8qoQ==
+X-Gm-Message-State: APjAAAWYtU5KoYSDR7A7SsOeLEW47oo6sK7+4GXLFxcgWUJb4Rrr+Pcq
+        Y2L3N+M8XkPs/oF/uYOQcr3HpLgj
+X-Google-Smtp-Source: APXvYqzqT5yrIV/zzlA42J9tsaW9je/oRwi9maOjoMX6sWsdQIBoB+z7KeHzkImuO8BP3u8QZfK25Q==
+X-Received: by 2002:a50:9734:: with SMTP id c49mr48057458edb.93.1568379774506;
+        Fri, 13 Sep 2019 06:02:54 -0700 (PDT)
 Received: from ubuntu-N150ZU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id c14sm2846570ejx.31.2019.09.13.06.02.52
+        by smtp.gmail.com with ESMTPSA id c14sm2846570ejx.31.2019.09.13.06.02.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Sep 2019 06:02:52 -0700 (PDT)
+        Fri, 13 Sep 2019 06:02:53 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [RFC PATCH 06/10] pack-bitmap: introduce bitmap_walk_contains()
-Date:   Fri, 13 Sep 2019 15:02:22 +0200
-Message-Id: <20190913130226.7449-7-chriscool@tuxfamily.org>
+Subject: [RFC PATCH 07/10] csum-file: introduce hashfile_total()
+Date:   Fri, 13 Sep 2019 15:02:23 +0200
+Message-Id: <20190913130226.7449-8-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.23.0.46.gd213b4aca1.dirty
 In-Reply-To: <20190913130226.7449-1-chriscool@tuxfamily.org>
 References: <20190913130226.7449-1-chriscool@tuxfamily.org>
@@ -71,60 +71,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-We will use this helper function in a following patch to
-tell us if an object is packed.
+We will need this helper function in a following patch
+to give us total number of bytes fed to the hashfile so far.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- pack-bitmap.c | 12 ++++++++++++
- pack-bitmap.h |  3 +++
- 2 files changed, 15 insertions(+)
+ csum-file.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index b2422fed8f..1833971dc7 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -828,6 +828,18 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 	return 0;
- }
+diff --git a/csum-file.h b/csum-file.h
+index a98b1eee53..f9cbd317fb 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -42,6 +42,15 @@ void hashflush(struct hashfile *f);
+ void crc32_begin(struct hashfile *);
+ uint32_t crc32_end(struct hashfile *);
  
-+int bitmap_walk_contains(struct bitmap_index *bitmap_git,
-+			 struct bitmap *bitmap, const struct object_id *oid)
++/*
++ * Returns the total number of bytes fed to the hashfile so far (including ones
++ * that have not been written out to the descriptor yet).
++ */
++static inline off_t hashfile_total(struct hashfile *f)
 +{
-+	int idx;
-+
-+	if (!bitmap)
-+		return 0;
-+
-+	idx = bitmap_position(bitmap_git, oid);
-+	return idx >= 0 && bitmap_get(bitmap, idx);
++	return f->total + f->offset;
 +}
 +
- void traverse_bitmap_commit_list(struct bitmap_index *bitmap_git,
- 				 show_reachable_fn show_reachable)
+ static inline void hashwrite_u8(struct hashfile *f, uint8_t data)
  {
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 00de3ec8e4..5425767f0f 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -3,6 +3,7 @@
- 
- #include "ewah/ewok.h"
- #include "khash.h"
-+#include "pack.h"
- #include "pack-objects.h"
- 
- struct commit;
-@@ -53,6 +54,8 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
- int rebuild_existing_bitmaps(struct bitmap_index *, struct packing_data *mapping,
- 			     kh_oid_map_t *reused_bitmaps, int show_progress);
- void free_bitmap_index(struct bitmap_index *);
-+int bitmap_walk_contains(struct bitmap_index *,
-+			 struct bitmap *bitmap, const struct object_id *oid);
- 
- /*
-  * After a traversal has been performed by prepare_bitmap_walk(), this can be
+ 	hashwrite(f, &data, sizeof(data));
 -- 
 2.23.0.46.gd213b4aca1.dirty
 
