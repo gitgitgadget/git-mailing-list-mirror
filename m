@@ -2,113 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81ACA1F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 22:11:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C6CA1F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 22:20:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403952AbfIMWLY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 18:11:24 -0400
-Received: from relay2-d.mail.gandi.net ([217.70.183.194]:58887 "EHLO
-        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403902AbfIMWLY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Sep 2019 18:11:24 -0400
-X-Originating-IP: 1.186.12.20
-Received: from localhost (unknown [1.186.12.20])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id EB85840002;
-        Fri, 13 Sep 2019 22:11:21 +0000 (UTC)
-Date:   Sat, 14 Sep 2019 03:41:19 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Bert Wesarg <bert.wesarg@googlemail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] git-gui: add hotkey to toggle "Amend Last Commit"
-Message-ID: <20190913221119.552477ff3cl2q5pc@yadavpratyush.com>
-References: <20190913143740.5zkrclivsvyj6k2o@yadavpratyush.com>
- <20190913211152.8860-1-birger.sp@gmail.com>
- <CAGr--=JhBYmYCJNNm8DyL+MKU0V0V-cwzH4WABX-dvE+uXNwDw@mail.gmail.com>
+        id S2404020AbfIMWUw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 18:20:52 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58676 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2390255AbfIMWUw (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 13 Sep 2019 18:20:52 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:d92:edb:bada:18ab])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A46C46042C;
+        Fri, 13 Sep 2019 22:20:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1568413249;
+        bh=4LFF/Q54FMzeXQnbnhKKlzfkNOM+PWTYu2YniHUNqwE=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Ap/QVpcXu8DQnmTuf/CfWxvmU2a/qZBwO19yOKTJRZbOP3Q98gjJ8vFjucKvaBY5G
+         F8a//SXC9qVj5OdF3290mn0wXks6vUcmOAkF1jJ8u5WtW9hkgLDEtfuKRLNm8JJOIm
+         HCq7cvcN+3EnLAINHeE+odk4EOiOkLfA1fRCEyr5Jx13NXHqcrYbsElOxma6dIfnc8
+         0soYKd2AflcDt1C7YrWkPyz0MHKFB+I4CnfdlMrRH1tTBSXmubfBoPNI7ntxbGReC3
+         UnDFCXBIb1nLnjJI0nDWeiQhS5tpKYw2igIzsCo9SuXNLvcE6btmT8AFP5bOECz5Hh
+         AS4ctJ2Qh3RlstuIIkkWBgCY3pZVmq/7syjrDHOMsrdj5gTW9gNQ/Lb3Ocz9nYB6dj
+         5SPbsPX3B+crIEgSp77Mo5qOmHqgAlYw8PkgAWdt7jTKMykZ5xToxEmqLz9Rcr7Jcs
+         1k3D3usMyMvVAODRYIxfO1UM0AQus/TnNntNqmwIQpV3dd3kZqe
+Date:   Fri, 13 Sep 2019 22:20:44 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Siddharth Chandrasekaran <siddharth@embedjournal.com>
+Cc:     gitster <gitster@pobox.com>, git <git@vger.kernel.org>
+Subject: Re: git-am fails for emails with UTF8 characters in email header
+Message-ID: <20190913222044.GR11334@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Siddharth Chandrasekaran <siddharth@embedjournal.com>,
+        gitster <gitster@pobox.com>, git <git@vger.kernel.org>
+References: <16d2c3ccc40.b3c71baf1200589.723645117669598677@embedjournal.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="soWJpSPh+l8Y6Fy7"
 Content-Disposition: inline
-In-Reply-To: <CAGr--=JhBYmYCJNNm8DyL+MKU0V0V-cwzH4WABX-dvE+uXNwDw@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <16d2c3ccc40.b3c71baf1200589.723645117669598677@embedjournal.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-+Cc Junio so you know what development model I'm using, and comment with 
-your thoughts (if you want to).
+--soWJpSPh+l8Y6Fy7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 13/09/19 11:32PM, Birger Skogeng Pedersen wrote:
-> On Fri, Sep 13, 2019 at 4:37 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> > Hi Birger,
-> >
-> > I'm afraid you are working on an older version of this patch. You should
-> > be re-rolling [0], which works well with Bert's "amend check button"
-> > change.
-> >
-> > [0] https://public-inbox.org/git/b82a00441ff1a6a9cea3fd235c1c33729ec31b71.1567713659.git.bert.wesarg@googlemail.com/
-> 
-> Forgive me, I get a little bit confused. Should my patch be based on
-> "next" or "master" branch?
+On 2019-09-13 at 20:07:24, Siddharth Chandrasekaran wrote:
+> Hi Junio,
+>=20
+> My email server (zoho) puts leading UTF-8 non-breaking spaces ("\xC2\xA0")
+> when folding long mail headers. Due to this, git-am is failing as it expe=
+cts
+> only '\t' or ' ' characters.
+>=20
+> RFC2822 [1] on page 7 states:
+>=20
+> > The general rule is that wherever this standard allows for folding white
+> > space (not simply WSP characters), a CRLF may be inserted before any WS=
+P.
+>=20
+> It appears the RFC isn't too strict about ASCII only headers (correct me =
+if I'm
+> wrong here); ergo, if the mail file is in UTF-8, isn't logical to expect =
+UTF-8
+> whitespace characters also to be allowed in the fold/unfold of headers?
 
-For git-gui, ignore "next" for now. I considered using a model similar 
-to Git where patches first get queued to "next" (or "pu" depending on 
-how finished they are). And then after some time letting people use 
-them, they are merged to "master" which eventually goes in the release. 
-But this seems to be too complicated to me without any clear benefit.
+RFC 5322 (the email specification) doesn't allow non-ASCII characters
+anywhere in the header of an email.  RFC 6532, which allows UTF-8 in
+header fields if the message is transported via SMTP using the SMTPUTF8
+extension, doesn't allow UTF-8 characters to appear in the WSP
+production, and therefore doesn't allow them as folding whitespace.
+Only space and tab are permitted in WSP.
 
-I think for now using just "master" for git-gui should be fine, since I 
-won't directly release git-gui. Instead I'll periodically ask Junio to 
-pull changes from my master. This will be our "release". So essentially 
-my "master" for now acts as a place for people involved in development 
-to test out all the changes, and then the rest of the world gets the new 
-version along with Git's release.
+It appears that your mail server is broken, and it would probably be
+best to get it fixed instead of trying to get git-am to work with it.
+There are servers which reject messages which are malformed, and even if
+your mail gets delivered, there are a bunch of mail clients which will
+mishandle it.
 
-(Junio, you have done this for much longer than I have, so is there a 
-major problem with my workflow?)
+> I was able to get git-am to work with modifications to read_one_header_li=
+ne()
+> in mailinfo.c need your view on whether a patch is necessary for this. If=
+ so, I can
+> send a patch for this.
 
-If all this seems too complicated, just work on top of my "master". The 
-rest of it is mostly my problem.
+I don't think such a patch would be a good idea.  I definitely think we
+should support SMTPUTF8 and internationalized email, but this particular
+issue isn't such a case.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-> Also, is it an issue that this patch won't work unless you merge
-> Bert's 1/2 patch[0]?
+--soWJpSPh+l8Y6Fy7
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Your patch is dependent on Bert's patch. This means I will have to merge 
-his patch first, and then yours. And that makes complete sense. That's 
-how dependent changes should work. So no, it is not an issue that this 
-patch won't work unless I merge Bert's patch first.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
 
-So while my advice above was to work on top of "master", that does not 
-apply in this case since your patch is dependent on someone's patch 
-which isn't in master yet. So in this specific case, you should base 
-your patch on top of Bert's. Otherwise there are two problems:
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl18FjsACgkQv1NdgR9S
+9otHHQ/9FzvyEo7b7c2DYVjgkkuQXDJVB2FEiocn65aKq0pFHOun0I988WQONmYx
+JIXkoqBvgYw4PkjgnSvJMIwMv1Ai4lx+JHskY8i4n3Mc9FXhUEhzm3iDXj7+6NVG
+bme39MaYJ1YgP8DyKkxYyRidu6neybd7N4KKIQzCy4OlJzg34vFCzdH77zMGB/Sx
+2eXhJj4joM2erPyijg6+zx7hb3y/MX109P+i1fB2Coj/xSUfCv7nBifzYdqIXgR4
+eEt0tLIT7PTPOC41rlq957beaet6/dKc9Ws01ZuDN85MBqQNXNSx6lI6mo22i9UB
+cPLRHk2CBA8B5CL3ObmzMUXTS/s7ZSyTIQvlgBv/UM/ffS1ppnNRz7SWWg6mKjnd
+3nxcbrWhrWT6v+GncXS1dbWrl57NPPoWDVeFbdeqQr3ZAWwDYP1d9kv6WwkzJf5t
+rWsUPCtaR47trWv9vPVvDni1AbeLDbkSvLRgl00PwsfxSqhYhOCt7NhjVpvvB+oc
+9hEobfqyil6LXaZHCVLZmXCgkgLt30AqPIzm+7ESFwYY67X4uwCsSdbFrRXsEq93
+BvygLalsAIz2G5KiBhuKzCmusgoZukONy53euS155J7S4bOJ19Zm+4crexqt23AS
+nxiuT/U0C7Dx85XsAgis5ikZ2BH+vivxxXpeN/akDrmbj+hx70o=
+=Ge5q
+-----END PGP SIGNATURE-----
 
-- Your patch in and of itself makes little sense, it probably would 
-  crash or do some unexpected stuff. This hurts people doing a bisect, 
-  where if they land on your patch stuff is broken, and they have to 
-  manually move a commit up or down to continue.
-
-- Your patch will textually conflict with Bert's. That means I'd first 
-  merge Bert's patch since yours doesn't work without his. But then when 
-  I merge yours, I'd get a nasty merge conflict that is not easy to 
-  resolve and leaves chances for a subtle bug.
-
-> Your feedback cannot be too specific, I want to learn how to do this
-> properly :-)
-
-I'm not sure how well I explained this, so feel free to ask more 
-questions if I didn't explain something properly :).
- 
-> [0] https://public-inbox.org/git/ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com/
-
--- 
-Regards,
-Pratyush Yadav
+--soWJpSPh+l8Y6Fy7--
