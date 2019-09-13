@@ -7,72 +7,159 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13D6E1F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 04:48:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BDB01F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 05:06:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727136AbfIMEsa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 00:48:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48896 "HELO cloud.peff.net"
+        id S1727104AbfIMFGg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 01:06:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48904 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726781AbfIMEs3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Sep 2019 00:48:29 -0400
-Received: (qmail 23810 invoked by uid 109); 13 Sep 2019 04:48:30 -0000
+        id S1726509AbfIMFGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 01:06:36 -0400
+Received: (qmail 24330 invoked by uid 109); 13 Sep 2019 05:06:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Sep 2019 04:48:30 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Sep 2019 05:06:36 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14455 invoked by uid 111); 13 Sep 2019 04:50:30 -0000
+Received: (qmail 14561 invoked by uid 111); 13 Sep 2019 05:08:36 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Sep 2019 00:50:30 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Sep 2019 01:08:36 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 13 Sep 2019 00:48:28 -0400
+Date:   Fri, 13 Sep 2019 01:06:35 -0400
 From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/7] Fix more AsciiDoc/tor differences
-Message-ID: <20190913044828.GA21172@sigill.intra.peff.net>
-References: <cover.1567707999.git.martin.agren@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Documentation: fix build with Asciidoctor 2
+Message-ID: <20190913050634.GB21172@sigill.intra.peff.net>
+References: <20190906232947.GJ11334@genre.crustytoothpaste.net>
+ <20190913015240.686522-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1567707999.git.martin.agren@gmail.com>
+In-Reply-To: <20190913015240.686522-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 07, 2019 at 04:12:46PM +0200, Martin Ågren wrote:
+On Fri, Sep 13, 2019 at 01:52:40AM +0000, brian m. carlson wrote:
 
-> This series roughly halves the line count of `./doc-diff --from-asciidoc
-> --to-asciidoctor --cut-header-footer HEAD HEAD`. Together with my recent
-> (independent) mini-series [1], I claim that Asciidoctor 1.5.5 now
-> processes the manpages better than AsciiDoc 8.6.10 does.
+> We also need to teach xmlto how to use the namespaced DocBook XSLT
+> stylesheets instead of the non-namespaced ones it usually uses.
+> Normally these stylesheets are interchangeable, but the non-namespaced
+> ones have a bug that causes them not to strip whitespace automatically
+> from certain elements when namespaces are in use.  This results in
+> additional whitespace at the beginning of list elements, which is
+> jarring and unsightly.
 
-I looked these over, both source and rendered output (both with asciidoc
-and with asciidoctor 2.0.10), and they all look good to me.
+Thanks, this fixed most of the rendering problems I saw from the earlier
+patch.
 
-I think the delimited literal blocks are _slightly_ less pretty than the
-indented ones, but this is the solution we've been using for cross-tool
-compatibility (and I think it's intentional in asciidoctor to deprecate
-the indented blocks, because there are just too many corner cases). The
-delimited ones are also easier to write correctly.
+> We can do this by passing a custom stylesheet with the -x option that
+> simply imports the namespaced stylesheets via a URL.  Any system with
+> support for XML catalogs will automatically look this URL up and
+> reference a local copy instead without us having to know where this
+> local copy is located.  We know that anyone using xmlto will already
+> have catalogs set up properly since the DocBook 4.5 DTD used during
+> validation is also looked up via catalogs.  All major Linux
+> distributions distribute the necessary stylesheets and have built-in
+> catalog support, and Homebrew does as well, albeit with a requirement to
+> set an environment variable to enable catalog support.
 
-> Patch 6/7 actually changes the rendering with both engines, so that they
-> look nice and the same. The other patches are all no-ops with one engine
-> while fixing things with the other -- they all improve the situation
-> with Asciidoctor (which is what I care most about) except patch 1/7
-> which goes the other way (it reduces the doc-diff, which helps).
+This did give me one minor hiccup: I had the debian docbook-xsl package
+installed, but not docbook-xsl-ns. The error message was pretty standard
+for XML: obvious if you know what catalogs are, and utterly confusing
+otherwise. :)
 
-Yeah, I agree that the change in 6/7 is an improvement (and 1/7 is an
-obvious bugfix looking at the doc-diff using just asciidoc).
+Everything worked fine after installing docbook-xsl-ns. I wonder if
+could/should provide some guidance somewhere (maybe in INSTALL, which
+discusses some catalog issues?).
 
-> Patch 7/7 has an element of black magic to it. I wouldn't be too
-> surprised if I've managed to appease my particular versions of these
-> tools while not fixing -- or maybe even breaking? -- some other versions
-> [that people actually use]. That's where I think a quick test would be
-> the most valuable.
+> Finally, we need to filter out some messages from other stylesheets that
+> when invoking dblatex in the CI job.  This tool strips namespaces much
 
-I can confirm that asciidoctor 2.0.10 has the same bogus output there
-before your patches, and that 7/7 fixes it.
+s/that/that occur/ or something?
+
+> like the unnamespaced DocBook stylesheets and prints similar messages.
+> If we permit these messages to be printed to standard error, our
+> documentation CI job will because we check standard error for unexpected
+
+s/will/will fail/?
+
+> ---
+>  Documentation/Makefile    | 4 +++-
+>  Documentation/manpage.xsl | 3 +++
+>  ci/test-documentation.sh  | 2 ++
+>  3 files changed, 8 insertions(+), 1 deletion(-)
+>  create mode 100644 Documentation/manpage.xsl
+
+Running with this patch on asciidoctor 2.0.10, plus Martin's recent
+literal-block cleanups, plus his refmiscinfo fix, I get pretty decent
+output from:
+
+  ./doc-diff --from-asciidoc --to-asciidoctor origin HEAD
+
+The header/footer are still a little funny (but I think Martin said that
+he needs to update the refmiscinfo patches for later versions of
+asciidoctor, which is probably what's going on here):
+
+  --- a/f1d4a28250629ae469fc5dd59ab843cb2fd68e12-asciidoc/home/peff/share/man/man1/git-add.1
+  +++ b/6c08635fd1d38c83d3765ff05fabbfbd25ef4943-asciidoctor/home/peff/share/man/man1/git-add.1
+  @@ -1,4 +1,4 @@
+  -GIT-ADD(1)                        Git Manual                        GIT-ADD(1)
+  +GIT-ADD(1)                                                          GIT-ADD(1)
+   
+   NAME
+          git-add - Add file contents to the index
+  @@ -356,4 +356,4 @@ SEE ALSO
+   GIT
+          Part of the git(1) suite
+   
+  -Git omitted                       01/01/1970                        GIT-ADD(1)
+  +  omitted                         1970-01-01                        GIT-ADD(1)
+
+
+One curiosity is that any ``smart-quotes'' now get two spaces between them
+and the period of the last sentence (whereas in asciidoc they got only
+one):
+
+  -           <start> and <end> are optional. “-L <start>” or “-L <start>,” spans
+  -           from <start> to end of file. “-L ,<end>” spans from start of file
+  -           to <end>.
+  +           <start> and <end> are optional.  “-L <start>” or “-L <start>,”
+  +           spans from <start> to end of file.  “-L ,<end>” spans from start of
+  +           file to <end>.
+
+I don't think this is a big deal, but I think most of these should
+actually be backticks these days (the text above is from
+git-annotate.txt, which hasn't been touched in quite a while).
+
+There are other miscellaneous indentation fixes. Most of them look
+better in asciidoctor, IMHO. For example, some lists now wrap more
+neatly (it looks like it's usually lists after an indented listing
+block? Maybe a continuation thing?):
+
+  -           1. This step and the next one could be combined into a single step
+  -           with "checkout -b my2.6.14 v2.6.14".
+  +            1. This step and the next one could be combined into a single
+  +               step with "checkout -b my2.6.14 v2.6.14".
+
+Another curiosity is that single-quote `smart-quotes' are rendered as
+real smart-quotes by asciidoctor:
+
+  -           The following features from ‘svn log’ are supported:
+  +           The following features from “svn log” are supported:
+
+The only other case I found was this one, where I think the asciidoctor
+version is better (the source has literal backticks, so there shouldn't
+be a visible quote; I'm guessing asciidoc got confused by the apostrophe
+in "variable's"):
+
+  -           The ‘merge.*.driver` variable’s value is used to construct a
+  +           The merge.*.driver variable’s value is used to construct a command
+
+So overall, I think we're getting very close to parity.
 
 -Peff
