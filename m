@@ -2,92 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDB6E1F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 17:38:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 693FD1F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 17:47:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387936AbfIMRi1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 13:38:27 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54232 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387815AbfIMRi0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Sep 2019 13:38:26 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8EC032F058;
-        Fri, 13 Sep 2019 13:38:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=PYHfxkrVr5rB
-        6Km7F2Ny3UAcWGg=; b=lWh/ifwINh4+TaLTV6zBHk3NZjXYAveCGdLHryRddJmU
-        oG+yoJvCrVx3YiTX0K+d0AyMcD+uLuYeIaAKXTraGNtLtfRJvU2K+uukJeMO5HUx
-        Y8cNRirlh21kYRSCmrf+4d/EtUu780cG7LHCiO0XcN5pv11wRcfEKXSmlPLwlYI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=J8F8qz
-        2cxisbTWE7tbI/ELsEBHLjdx00iWxasNJZplKf1KfqYpZZ0yVny2pQCNKzGYDx0c
-        dqdXzYmOzY/f1gLvhl3ZO4/NSTcpbbyipkoSpFhOUgcnXwrE1UTg9MuT/PeC4rAv
-        dUVFxvioxIiH85Wqr+rrVnlS/k7CMWVFX11Dk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 875022F057;
-        Fri, 13 Sep 2019 13:38:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E47992F056;
-        Fri, 13 Sep 2019 13:38:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 3/3] Makefile: run coccicheck on more source files
-In-Reply-To: <20190913114952.GO32087@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message of
-        "Fri, 13 Sep 2019 13:49:52 +0200")
-References: <cover.1568101393.git.liu.denton@gmail.com>
-        <cover.1568309119.git.liu.denton@gmail.com>
-        <89b7e17469e19c9dca8afa729ec1a70f4e06a2b7.1568309119.git.liu.denton@gmail.com>
-        <xmqqtv9hfjdn.fsf@gitster-ct.c.googlers.com>
-        <20190913114952.GO32087@szeder.dev>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-Date:   Fri, 13 Sep 2019 10:38:22 -0700
-Message-ID: <xmqqo8zodrld.fsf@gitster-ct.c.googlers.com>
+        id S1729769AbfIMRrt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 13:47:49 -0400
+Received: from relay5-d.mail.gandi.net ([217.70.183.197]:37325 "EHLO
+        relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729557AbfIMRrt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 13:47:49 -0400
+X-Originating-IP: 1.186.12.20
+Received: from localhost (unknown [1.186.12.20])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id 4D8C71C0005;
+        Fri, 13 Sep 2019 17:47:46 +0000 (UTC)
+Date:   Fri, 13 Sep 2019 23:17:43 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Marc Branchaud <marcnarc@xiplink.com>,
+        Bert Wesarg <bert.wesarg@googlemail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] git-gui: add hotkey to toggle "Amend Last Commit"
+ check button/menu
+Message-ID: <20190913174743.x2kdfotq2fnuift7@yadavpratyush.com>
+References: <ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com>
+ <b82a00441ff1a6a9cea3fd235c1c33729ec31b71.1567713659.git.bert.wesarg@googlemail.com>
+ <20190911205539.vb6asqcc22nzgdqa@yadavpratyush.com>
+ <CAGr--=Jz9xN6NMmiXjHeq9wZsYUx4eqfQrWjjVMkj3J1YCG_8g@mail.gmail.com>
+ <20190912162924.phb5o2ppovnxa7nn@yadavpratyush.com>
+ <db01db41-eff0-fb56-161a-ba26d1b18f55@xiplink.com>
+ <56a6fbf8-4486-6bad-f847-793bb6b4e070@iee.email>
+ <CAGr--=JDKrYT=Z8iwPVRy58OB9teH7bHXrYSZHqYHhJ=5wrJzQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 49255B40-D64D-11E9-B5A6-C28CBED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGr--=JDKrYT=Z8iwPVRy58OB9teH7bHXrYSZHqYHhJ=5wrJzQ@mail.gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+On 13/09/19 09:50AM, Birger Skogeng Pedersen wrote:
+> Hi Marc and Philip,
+> 
+> 
+> On 12/09/2019 22:34, Marc Branchaud wrote:
+> > I disagree!  Who expects anything to work properly when capslock is on?
+> 
+> Me :-)
+> 
+> 
+> On Fri, Sep 13, 2019 at 12:23 AM Philip Oakley <philipoakley@iee.email> wrote:
+> > I'd tend to agree. In other areas the use of shift is often used as the
+> > complement of the unshifted action, so it does feel 'odd'. Thus it could
+> > be used directly as the bool for amend or direct commit.
+> >
+> > This all assumes that Caps Lock is equivalent to having the shift on,
+> > rather than being a special extra key.
+> 
+> It seems all the Ctrl+(lowercase character) hotkeys in git-gui have an
+> equivalent Ctrl+(uppercase character).
+> So for this feature, we should keep the Ctrl+E bind aswell as the
+> Ctrl+e bind. If nothing else, to keep it consistent with the rest of
+> the hotkey bindings.
 
->> Using a procedure whose output is fed to xargs has an advantage that
->> a platform with very short command line limit can still work with
->> many source files, but the way you create and use COCCI_SOURCES in
->> this patch would defeat that advantage anyway,
->
-> COCCI_SOURCES is only used as an input to 'xargs', so that advantage
-> is not defeated.
+I agree with this that we should keep it consistent with the rest of the 
+bindings for now...
 
-It is passed as a command line argument to "echo", that pipes to
-xargs; I would not say it is taking advantage of "xargs" to lift the
-command line length limit, as it first needs to convince the shell
-to feed all of them to the "echo" that is upstream of "xargs".
+> But honestly, (as Marc pointed out) it is a quite weird that
+> Ctrl+Shift+(character) has the excact same function as
+> Ctrl+(character). Perhaps we should find another way to bind the
+> hotkeys, where the state of Caps Lock doesn't matter? If possible.
 
-As you mentioned elsewhere, LIB_H already uses the same approach as
-I outlined in the message you are responding to (i.e. "don't define
-a procedure to produce lines to the standard output in a $(MAKE)
-variable--instead make the variable to hold the list itself"), so I
-suspect that we are almost on the same page?
+...but I'd love to see this happen. To me shift is a modifier. No matter 
+whether Caps Lock is pressed or not, it should not do the shift-modified 
+behavior (that's just me, maybe other people think differently).
 
+AFAIK, Tk does not provide any direct way to find out whether shift is 
+pressed (correct me if I'm wrong). What you instead have to do is some 
+bit arithmetic on the number passed to the "Key" event via the "%s" 
+substitution. Source: [0]. We can probably have a bind_alpha procedure 
+that takes two arguments: what to run when shift is pressed and what to 
+run when it isn't.
 
+This, of course, would be incompatible with the current behavior, but do 
+people even keep the Caps Lock on? I personally use it so rarely I have 
+my Caps Lock bound to Escape because I might as well use that key for 
+something I use more often.
+
+[0] https://blog.tcl.tk/4238
+
+-- 
+Regards,
+Pratyush Yadav
