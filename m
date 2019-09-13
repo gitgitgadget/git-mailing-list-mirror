@@ -2,172 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 747031F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 18:45:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 031411F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 18:53:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389368AbfIMSpd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 14:45:33 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:44581 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388709AbfIMSpd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Sep 2019 14:45:33 -0400
-Received: by mail-pg1-f196.google.com with SMTP id i18so15664088pgl.11
-        for <git@vger.kernel.org>; Fri, 13 Sep 2019 11:45:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=OBqyxtu8b4/GLR3vPjv3vdu97TmceaxE7WAVWz2wu/g=;
-        b=XxXqKyt7F3YtBMRxstA92lO642Y4tAWNf4KaWv9GFWpabSlbOoxELHdkfp5C4sbt27
-         08SF2mtyUPPSxXynfk9RrRSkywq9AzIcdpx/69qPzs7Ljm5PRvTnc1Uwo5OxUFXJdCxS
-         V1Z1j5ecX0fRSRXALse66rUAVWGC1U+TIQBz91TnHwF7JAgHJH6BNLbVrb91qKjegBXO
-         aMUCCRVOSM5cd6HEnrz1lBGjiLIXAkkzfNiahQOSh9eBevVj0arY3Sz+MSK8B9hzV84N
-         9feGk/uIqcdbaxfVgXTupCZRkf5PiZQxBgehyWBs7KbXF9hjkV1+iTcOEuefEf+mtkKw
-         HEtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=OBqyxtu8b4/GLR3vPjv3vdu97TmceaxE7WAVWz2wu/g=;
-        b=ivtxTGUjCTDpM8jlLeup+iE0ww7KlllRHM4Y/94mkOeeF3mLuwiA8wUEc+SoWy1x/J
-         zxPgnhbjw7n6EW2eC13Tv7fl/OwKmTJpU05KtM1BF4YcusxWX/FLE0nXOktol0kRUnBh
-         tI/ZXQPKOuwR7sGlHVcHg8a/Cpk6YFExlHDqs1OT8IYC8U00pqWcPIILDzEEEw1vwSwj
-         GVdC1yPM6Lf+yRfZQGiNjn9EmWpUIApYLNrTKlVdlEkE/Vcvxjcjg74ihvFiKMQY8TX2
-         X5NkaKzTDKtOt3DqVs9UroQ43MSTCjBvYRKPRGa9GpJKAoCfp+KSjLdFXWuFA5U+1w3k
-         B/rQ==
-X-Gm-Message-State: APjAAAX/IKiHI2yd1LvWHW+mxeDqXUt0A2TWRmZt5HkSxFCWVwQRvTIT
-        xDpm6Tsq/ifKJOsUFxGVFd4=
-X-Google-Smtp-Source: APXvYqzz96qan17dCTId7x+PUaFgWJLAFn9wc7s5edhPcj9NcocCrIiWbecRFR/S5gy1ZkrWkaBYZw==
-X-Received: by 2002:a17:90a:24a1:: with SMTP id i30mr7225340pje.128.1568400330731;
-        Fri, 13 Sep 2019 11:45:30 -0700 (PDT)
-Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:2:8e2:7a1d:3741:e8a7])
-        by smtp.gmail.com with ESMTPSA id n66sm47883661pfn.90.2019.09.13.11.45.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Sep 2019 11:45:29 -0700 (PDT)
-Subject: Re: [PATCH 1/1] multi-pack-index: add --no-progress Add --no-progress
- option to git multi-pack-index. The progress feature was added in 144d703
- ("multi-pack-index: report progress during 'verify'", 2018-09-13) but the
- ability to opt-out was overlooked.
-To:     Junio C Hamano <gitster@pobox.com>,
-        William Baker via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, jeffhost@microsoft.com,
-        William Baker <William.Baker@microsoft.com>
-References: <pull.337.git.gitgitgadget@gmail.com>
- <0821a8073a48067ecd9ce08226656fa04d803f6b.1568216234.git.gitgitgadget@gmail.com>
- <xmqqlfutfewv.fsf@gitster-ct.c.googlers.com>
-From:   William Baker <williamtbakeremail@gmail.com>
-Message-ID: <24c1a9aa-c83b-a984-8821-ecc51a4bc0e2@gmail.com>
-Date:   Fri, 13 Sep 2019 11:45:29 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:68.0)
- Gecko/20100101 Thunderbird/68.0
+        id S2390037AbfIMSxP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 14:53:15 -0400
+Received: from relay6-d.mail.gandi.net ([217.70.183.198]:33623 "EHLO
+        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389927AbfIMSxP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 14:53:15 -0400
+X-Originating-IP: 1.186.12.20
+Received: from localhost (unknown [1.186.12.20])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id F3F73C0008;
+        Fri, 13 Sep 2019 18:53:11 +0000 (UTC)
+Date:   Sat, 14 Sep 2019 00:23:09 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>
+Subject: Re: [PATCH] git-gui: add horizontal scrollbar to commit buffer
+Message-ID: <20190913185309.m766nxjo6wby47hf@yadavpratyush.com>
+References: <f9bf70bfae825228a7afee705babc1915b579072.1568315704.git.bert.wesarg@googlemail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqlfutfewv.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f9bf70bfae825228a7afee705babc1915b579072.1568315704.git.bert.wesarg@googlemail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Can you please add a version number when you send re-rolls the next time 
+around. Something like "[PATCH v2] subject...". Makes it easier for me 
+to keep track of things when there are multiple re-rolls of multiple 
+patches.
 
-Thanks for the review!
+You can do this by passing "-v2" (or "-v3", "-v4", etc) to 
+git-send-email or git-format-patch.
 
-On 9/12/19 1:17 PM, Junio C Hamano wrote:
+You missed two quick questions I had in the last version. I'll ask them 
+again below. Other than those two, LGTM. Thanks.
 
->> +'git multi-pack-index' [--object-dir=<dir>] <subcommand> [--[no-]progress]
+On 12/09/19 09:20PM, Bert Wesarg wrote:
+> While the commit message widget has a configurable fixed width, it
+> nevertheless allowed to write commit messages which exceeded this limit.
+> Though there is no visual clue, that there is scrolling going on. Now
+> there is a horizontal scrollbar.
+
+Looks much better!
+ 
+> There seems to be a bug in at least Tcl/Tk up to version 8.6.8, which
+> does not update the horizontal scrollbar if one removes the whole
+> content at once.
 > 
-> I am wondering what the reasoning behind having this new one *after*
-> the subcommand while the existing one *before* is.  Isn't the
-> --[no-]progress option supported by all subcommands of the
-> multi-pack-index command, just like the --object-dir=<dir> option
-> is?
+> Suggested-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> ---
+>  git-gui.sh | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 > 
-> always show "global --options, subcommand, and then subcommand --options" order).
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 5bc21b8..032ebd6 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -3363,14 +3363,20 @@ ttext $ui_comm -background white -foreground black \
+>  	-relief sunken \
+>  	-width $repo_config(gui.commitmsgwidth) -height 9 -wrap none \
+>  	-font font_diff \
+> +	-xscrollcommand {.vpane.lower.commarea.buffer.frame.sbx set} \
+>  	-yscrollcommand {.vpane.lower.commarea.buffer.frame.sby set}
+> +${NS}::scrollbar .vpane.lower.commarea.buffer.frame.sbx \
+> +	-orient horizontal \
+> +	-command [list $ui_comm xview]
+>  ${NS}::scrollbar .vpane.lower.commarea.buffer.frame.sby \
+> +	-orient vertical \
+>  	-command [list $ui_comm yview]
+>  
+> +pack .vpane.lower.commarea.buffer.frame.sbx -side bottom -fill x
+>  pack .vpane.lower.commarea.buffer.frame.sby -side right -fill y
+> -pack $ui_comm -side left -fill y
+> +pack $ui_comm -side left -fill both -expand 1
 
-Thanks for calling this out.  I didn't have a specific reason for making this
-option appear after the subcommand.  I tried looking at other commands as
-examples and I missed that there's a specific ordering based on the type
-of the option.  I will clean this up in the next patch. 
+If I remove this change, the behavior does not seem to change, and the 
+commit message buffer still expands. So what exactly does this change 
+do?
 
-> I also see in the code that
-> handles opts.batch_size that there is a workaround for this inverted
-> code structure to make sure subcommands other than repack does not
-> allow --batch-size option specified.
+>  pack .vpane.lower.commarea.buffer.header -side top -fill x
+> -pack .vpane.lower.commarea.buffer.frame -side left -fill y
+> +pack .vpane.lower.commarea.buffer.frame -side bottom -fill both -expand 1
 
-> we probably would want to correct the use
-> of parse_options() API in the implementation of this command before
-> adding any new option or subcommand.
+I'm not too familiar with pack, but why change the side from left to 
+bottom? I tested by changing it back to left and it doesn't seem to make 
+a difference.
 
-To confirm I understand, is the recommendation that
-cmd_multi_pack_index be updated to only parse "batch-size" for the repack
-subcommand (i.e. use PARSE_OPT_STOP_AT_NON_OPTION to parse all of the common
-options, and then only parse "batch-size" when the repack subcommand is running)?
-
-
->> @@ -47,14 +54,15 @@ int cmd_multi_pack_index(int argc, const char **argv,
->>  	trace2_cmd_mode(argv[0]);
->>  
->>  	if (!strcmp(argv[0], "repack"))
->> -		return midx_repack(the_repository, opts.object_dir, (size_t)opts.batch_size);
->> +		return midx_repack(the_repository, opts.object_dir, 
->> +			(size_t)opts.batch_size, flags);
->>  	if (opts.batch_size)
->>  		die(_("--batch-size option is only for 'repack' subcommand"));
->>  
->>  	if (!strcmp(argv[0], "write"))
->>  		return write_midx_file(opts.object_dir);
->>  	if (!strcmp(argv[0], "verify"))
->> -		return verify_midx_file(the_repository, opts.object_dir);
->> +		return verify_midx_file(the_repository, opts.object_dir, flags);
->>  	if (!strcmp(argv[0], "expire"))
->>  		return expire_midx_packs(the_repository, opts.object_dir);
-> 
-
-> We can see that the new option only affects "verify", even though
-> the SYNOPSIS and usage text pretends that everybody understands and
-> reacts to it.  Shouldn't it be documented just like how --batch-size
-> is documented that it is understood only by "repack"?
-> 
-> If the mid-term aspiration of this patch is to later enhance other
-> subcommands to also understand the progress output or verbosity
-> option (and if the excuse given as a response to the above analysis
-> is "this is just a first step, more will come later")
-
-Yep this was my thinking.  Today "repack" and "verify" are the only subcommands
-that have any progress output but as the other subcommands learn how to provide
-progress the [--[no-]progress] option can be used to control it. 
-
-> instead of adding a "unsigned flag" local variable to the function, it would
-> probably make much more sense to
-> 
->  (1) make struct opts_multi_pack_index as a part of the public API
->      between cmd_multi_pack_index() and midx.c and document it in
->      midx.h;
-> 
->  (2) instead of passing opts.object_dir to existing command
->      implementations, pass &opts, the pointer to the whole
->      structure;
-> 
->  (3) add a new field "unsigned progress" to the structure, and teach
->      the command line parser to flip it upon seeing "--[no-]progress".
+>  pack .vpane.lower.commarea.buffer -side left -fill y
+>  
+>  # -- Commit Message Buffer Context Menu
+> -- 
+> 2.21.0.789.ga095d9d866
 > 
 
-Thanks for this suggestion I'll use this approach in the next patch.
-
-One small point to clarify, in the current struct I'm using an int for 
-"progress" because OPT_BOOL expects an int*.  Do you have any concerns with
-keeping "progress" as an int in the public struct, or would you rather 
-cmd_multi_pack_index parse an int internally and use it to populate the
-public struct?
-
-Thanks!
-William
+-- 
+Regards,
+Pratyush Yadav
