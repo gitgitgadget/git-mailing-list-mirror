@@ -2,220 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 364AE1F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 21:04:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D61651F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 21:06:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730990AbfIMVEA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 17:04:00 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53035 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726558AbfIMVEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Sep 2019 17:04:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1568408637;
-        bh=5lK0gYfD7rv0NL7j/S7ioUAOPZCZvZPV+mTOIRl49no=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ar7vYvUZR3Qu8zYkPJy9pF6GE0QNDDbdWLVdH1D6JbkssuytLnLqky+RQfqGsAV4A
-         /Nv8Ah2KFxg6wOEE9xsrHc/+BghfcnWh5/jBf0T4UV/TS6Fy4v1jN/+EdBSvc1wdq9
-         RqPXlFDQfzAE8jrs9+5dFSaXiTLRfUnvXVjXuFd4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MUGiJ-1hjPmo0e7H-00RIIn; Fri, 13
- Sep 2019 23:03:57 +0200
-Date:   Fri, 13 Sep 2019 23:03:42 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Max Rothman <max.r.rothman@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] completion: add missing completions for log, diff,
- show
-In-Reply-To: <CAFA_24L5S1_AS1OzPYf50iXwEupi0Bus827-NWoUpka-avNo_w@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1909132300130.47@tvgsbejvaqbjf.bet>
-References: <0102015f985d387e-f50183c4-4b49-4a9f-b365-2a86ba24bbed-000000@eu-west-1.amazonses.com> <0102016bb065bf5e-005b0752-2594-45d5-a01a-12d0c5e24b70-000000@eu-west-1.amazonses.com> <CAFA_24J8Ry5LhRX5O82eJDtrqjEodDFTEniZNw06fKEWvwvYMA@mail.gmail.com>
- <CAFA_24JW_oRXB+40M2wKtEDQeC5VYjTC0D9GLEm5oa5E_dGtSg@mail.gmail.com> <nycvar.QRO.7.76.6.1909121053070.47@tvgsbejvaqbjf.bet> <CAFA_24L5S1_AS1OzPYf50iXwEupi0Bus827-NWoUpka-avNo_w@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1731229AbfIMVG0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 17:06:26 -0400
+Received: from relay6-d.mail.gandi.net ([217.70.183.198]:35451 "EHLO
+        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731105AbfIMVGZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 17:06:25 -0400
+X-Originating-IP: 1.186.12.20
+Received: from localhost (unknown [1.186.12.20])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 82491C0002;
+        Fri, 13 Sep 2019 21:06:23 +0000 (UTC)
+Date:   Sat, 14 Sep 2019 02:36:21 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     Allan Ford <allan.ford17@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Git Gui - enhancement suggestion - Can a double =?utf-8?Q?cli?=
+ =?utf-8?Q?ck_on_the_file_name_in_the_=E2=80=9Cunstaged=E2=80=9D_area_move?=
+ =?utf-8?B?IHRoZSBpdGVtIHRvIOKAnHN0YWdlZCBjaGFuZ2Vz4oCd?=
+Message-ID: <20190913210621.tzeq73vpi7iaapd3@yadavpratyush.com>
+References: <CAL-6oQorDOzAr4sDoddoAQv3hzAgUMx7K+V=bMcvScv8G=7oqg@mail.gmail.com>
+ <20190913143229.5yop5oaascgavynl@yadavpratyush.com>
+ <CAKPyHN0=AHzr1V35PDzsq02aeGK1e54CxTeunED_u6GRUygkuA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-505128465-1568408638=:47"
-X-Provags-ID: V03:K1:bVJQwQsgeXaey0UD+0IzkzwIYAq54WgehoIWtuEMI7LNkhkPHwI
- LS5BMKwLfoABB4Vj1fb05Q+vyTWnUjn6XHBDDl9w14o1vLthD2C/P6B265MMgn1JQbXFLK2
- uFJxhRUGYJTlw8Bt8+ho+o46F+4+OXSEnYIB67aC3yadoS9uv1PzbtPV599S/gZ8VsCPsIv
- XgQpxQKYSYXpWFr6qPkWA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:71uqH5k2sDE=:rJR0hbppeKRVxcbVSUjOXY
- bbvfDjdfcdkdSLeHUoKdI7IN+iCk5Lfd8dWL3rExKxJw1k2u0r0bKhRz4EFhfoDvUexJ70nZV
- mK7NVLf4R0RaSant8/FJyRJRiCt2csPjxP1ZVPVqqTIFEoWitWmiT73HeZjJFcwGqlmvCDbJ+
- 2CvszUNpDWh+xDBExVdsR9biPGm9y7gbAol6lEyQNhzcd8NLyYhU8L7VWeDbM+N9pPi02Cbst
- ZotYzG2V33pM/TWD0CdzO4aMdsrDynBENV0MWPiZRPVLFy9LQjrcf7zfH/mHH0/5ogOgXr9aj
- szcXMTpKm8DvFtyWgushFIFMOKz3D8TXs2cn53FrRNG5D6wEaXjtoi122uRD7sBP4wXo1JHlW
- u0lb/vmTpWcT7U2OpyYHypXmL3zjBYyaowg8O0S+96ngTqo1tv9K2TCcIww80m9H+rBbSn+8o
- pkhNjOo+PUyFmRnKPogo3o0SI9PtgQl4DOXL+uNe7MrCLnKs2dQtUsn8xZdPjIrXFrGyeLIxR
- k8Us+W+Ng36EhN63okp1A6Y1BpXZVzeNAT0sSKHYbzBggYmZ4/Z2CtamvPfH58HIABd4KcH4k
- wbajdap+x/ZnpZijc0Wl1/3YswnDdJuc05+ubU3VQFy4d7bbMcWgElA8Om4OsQea6sv+DXIgH
- IF6IPOUTjPDxH8pHtPKdUejnoODts8kvCy6NY79Ces2GmL36m3g4wrt0n0C8YuIR5dDpVfQzf
- 0IvAUs3UE+afQ9mrKIEMJJiZFljUwjhtDa4dLTuuACAQRoML2aVoGFfldITWq5vladB4fiIu6
- TTBO5WqPIMLsS/YtaFdZYF+qGTCAEGKdrwNh1hf9aFDtAeAbkvSU4Dq6sXnZc86hLmaAA1yEk
- wDcWJOS7oplK971864mqBlNaUGayqrcBGPktAjxxhuBKrPugNYWNwoEmbwO2eEBAg1bDVoNpA
- FfWR1+VFqIPQIeBWCgTCbkIafpZQZoy8NBpe4FTDFz8AhVcRFkI3BUeBbsnunoi7eLGdZKOYM
- vUVJ+SUJUiVC2dv87PumzXLMOFxnI8y2RBsQ8I2SM4LAuDh1JU1IQF0rVNZ0id+CBvQexeZY3
- Qb6kUefR5PiuX0peas+9ODM5xg7oRTv0obQeTbmcnO8S3yOL6XBWQVdqomAMLd7K6qfm+dt1S
- BtotZugApTDvJG6oLw8Oyl6Cx445WBxs5mguNXIC4zBMYa99sU4t2OEOsE8Gi20C1Y3r4vqA1
- zJiCjBJmoD9pMj0y3TrHGDWZagqpUJqj9q/5i3P4likDk8AcrqPDkLHRfQck=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKPyHN0=AHzr1V35PDzsq02aeGK1e54CxTeunED_u6GRUygkuA@mail.gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-505128465-1568408638=:47
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Max,
-
-[your reply did not make it to the Git mailing list because it drops
-anything with an HTML part]
-
-On Thu, 12 Sep 2019, Max Rothman wrote:
-
-> Great! What=E2=80=99s the path for getting this merged?
-
-Usually it will be picked up into the `pu` branch first, then advance to
-`next`, and then to `master`. Once it is in `master`, it will be part of
-the then-next official version ending in `.0`.
-
-You can also read about the state of your patch (once it has been picked
-up) in the bi-weekly "What's cooking" mails. If you're not subscribed,
-you can look at the current version on the web:
-https://github.com/git/git/blob/todo/whats-cooking.txt
-
-Ciao,
-Johannes
-
->
-> On Thu, Sep 12, 2019 at 4:54 AM Johannes Schindelin <
-> Johannes.Schindelin@gmx.de> wrote:
->
-> > Hi Max,
+On 13/09/19 10:27PM, Bert Wesarg wrote:
+> On Fri, Sep 13, 2019 at 4:32 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
 > >
-> > The patch looks good to me!
-> >
-> > Thanks,
-> > Johannes
-> >
-> > On Wed, 11 Sep 2019, Max Rothman wrote:
-> >
-> > > On Thu, Aug 1, 2019 at 8:54 PM Max Rothman <max.r.rothman@gmail.com>
-> > wrote:
-> > > >
-> > > > On Thu, Aug 1, 2019 at 8:50 PM Max Rothman <max.r.rothman@gmail.co=
-m>
-> > wrote:
-> > > > >
-> > > > > The bash completion script knows some options to "git log" and
-> > > > > "git show" only in the positive form, (e.g. "--abbrev-commit"), =
-but
-> > not
-> > > > > in their negative form (e.g. "--no-abbrev-commit"). Add them.
-> > > > >
-> > > > > Also, the bash completion script is missing some other options t=
-o
-> > > > > "git diff", and "git show" (and thus, all other commands that ta=
-ke
-> > > > > "git diff"'s options). Add them. Of note, since "--indent-heuris=
-tic"
-> > is
-> > > > > no longer experimental, add that too.
-> > > > >
-> > > > > Signed-off-by: Max Rothman <max.r.rothman@gmail.com>
-> > > > > ---
-> > > > >  contrib/completion/git-completion.bash | 18 ++++++++++++++----
-> > > > >  1 file changed, 14 insertions(+), 4 deletions(-)
-> > > > >
-> > > > > diff --git a/contrib/completion/git-completion.bash
-> > b/contrib/completion/git-completion.bash
-> > > > > index 9f71bcde967bc..b6d18710135ec 100644
-> > > > > --- a/contrib/completion/git-completion.bash
-> > > > > +++ b/contrib/completion/git-completion.bash
-> > > > > @@ -1474,6 +1474,8 @@ __git_diff_common_options=3D"--stat --nums=
-tat
-> > --shortstat --summary
-> > > > >                         --dirstat-by-file=3D --cumulative
-> > > > >                         --diff-algorithm=3D
-> > > > >                         --submodule --submodule=3D --ignore-subm=
-odules
-> > > > > +                       --indent-heuristic --no-indent-heuristic
-> > > > > +                       --textconv --no-textconv
-> > > > >  "
-> > > > >
-> > > > >  _git_diff ()
-> > > > > @@ -1782,6 +1784,10 @@ _git_log ()
-> > > > >                 __gitcomp "$__git_diff_submodule_formats" ""
-> > "${cur##--submodule=3D}"
-> > > > >                 return
-> > > > >                 ;;
-> > > > > +       --no-walk=3D*)
-> > > > > +               __gitcomp "sorted unsorted" "" "${cur##--no-walk=
-=3D}"
-> > > > > +               return
-> > > > > +               ;;
-> > > > >         --*)
-> > > > >                 __gitcomp "
-> > > > >                         $__git_log_common_options
-> > > > > @@ -1789,16 +1795,19 @@ _git_log ()
-> > > > >                         $__git_log_gitk_options
-> > > > >                         --root --topo-order --date-order --rever=
-se
-> > > > >                         --follow --full-diff
-> > > > > -                       --abbrev-commit --abbrev=3D
-> > > > > +                       --abbrev-commit --no-abbrev-commit --abb=
-rev=3D
-> > > > >                         --relative-date --date=3D
-> > > > >                         --pretty=3D --format=3D --oneline
-> > > > >                         --show-signature
-> > > > >                         --cherry-mark
-> > > > >                         --cherry-pick
-> > > > >                         --graph
-> > > > > -                       --decorate --decorate=3D
-> > > > > +                       --decorate --decorate=3D --no-decorate
-> > > > >                         --walk-reflogs
-> > > > > +                       --no-walk --no-walk=3D --do-walk
-> > > > >                         --parents --children
-> > > > > +                       --expand-tabs --expand-tabs=3D --no-expa=
-nd-tabs
-> > > > > +                       --patch
-> > > > >                         $merge
-> > > > >                         $__git_diff_common_options
-> > > > >                         --pickaxe-all --pickaxe-regex
-> > > > > @@ -2525,8 +2534,9 @@ _git_show ()
-> > > > >                 return
-> > > > >                 ;;
-> > > > >         --*)
-> > > > > -               __gitcomp "--pretty=3D --format=3D --abbrev-comm=
-it
-> > --oneline
-> > > > > -                       --show-signature
-> > > > > +               __gitcomp "--pretty=3D --format=3D --abbrev-comm=
-it
-> > --no-abbrev-commit
-> > > > > +                       --oneline --show-signature --patch
-> > > > > +                       --expand-tabs --expand-tabs=3D --no-expa=
-nd-tabs
-> > > > >                         $__git_diff_common_options
-> > > > >                         "
-> > > > >                 return
-> > > > >
-> > > > > --
-> > > > > https://github.com/git/git/pull/426
-> > > > >
+> > On 13/09/19 12:24PM, Allan Ford wrote:
+> > > Dear Git Authors,
 > > >
+> > > Not a bug, but a suggestion consideration for “Git Gui”
+> > >
+> > > Can a double click on the file name in the “unstaged” area move the
+> > > item to “staged changes” .. (rather than having to click on the small
+> > > icon to the left of the file name?)
 > >
->
+> > It has been something on my radar for some time. Shouldn't be something
+> > too difficult to do.
+> >
+> > While I like the idea in general, I have a question that I'd like to ask
+> > other git-gui users:
+> 
+> I miss a general problem description: Whats wrong with the
+> single-click on the icon to begin with?
 
---8323328-505128465-1568408638=:47--
+The way I see it, there are two parts.
+
+Objectively, it is harder to click the icon than it is to click anywhere 
+on the entire row. The small size of the icon adds to the problem.
+
+Subjectively, I personally came from using Atom for quite a while, and 
+it staged the file on double click. I think some other editors do this 
+too. So, I was used to that way of doing things, and had to adapt to the 
+git-gui way.
+ 
+> I consider adding a second way as not not acceptable. I also consider
+> double-click on a file in a GUI an "open" action. But in git-gui, this
+> "open" action (showing the diff) is already done with a single-click.
+
+Well, that's the other point of view, and it makes sense too. As I was 
+afraid, this seems to be a personal preference problem and it will be 
+difficult to reach agreement. And I'm generally inclined to keep things 
+like they are rather than making drastic changes with debatable benefit.
+
+> From my point of view, it can stay as is.
+
+How about something in the middle? How about larger icon sizes? Will 
+that help your workflow Allan?
+
+> >
+> > If we implement something like this, what happens when you single-click
+> > on the icon? Do we treat that as a stage/unstage command? If we keep the
+> > legacy behaviour of single-click on the icon stages/unstages, then a
+> > part of the row is single-click and the rest double-click.
+> >
+> > If we make an entire row of the stage/unstage widget double click, it
+> > messes with people who are already used to it.
+> >
+> > Is partial single and partial double click behaviour acceptable? Or
+> > should we make the entire row double click only? Or something else that
+> > I missed?
+
+-- 
+Regards,
+Pratyush Yadav
