@@ -2,107 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ECA61F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 20:16:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF4D11F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 20:19:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389395AbfIMUQd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 16:16:33 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:34942 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389362AbfIMUQc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Sep 2019 16:16:32 -0400
-Received: by mail-wr1-f66.google.com with SMTP id g7so33334660wrx.2
-        for <git@vger.kernel.org>; Fri, 13 Sep 2019 13:16:31 -0700 (PDT)
+        id S2389632AbfIMUT6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 16:19:58 -0400
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:37776 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728788AbfIMUT5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 16:19:57 -0400
+Received: by mail-vs1-f68.google.com with SMTP id p13so4254766vsr.4
+        for <git@vger.kernel.org>; Fri, 13 Sep 2019 13:19:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FA1IsDxJ9fZhcNzFTpw8b5J098ZtSWj1LArltBBwnl8=;
-        b=uhMoL05G+B9ZnmRFLDml8CmXiAkl7mO6rOZ8GqJs3uh3T5mWUGM6Eug6LZb5k2QRVd
-         yavgxE+TGJelT0eXywE9U9Qvl+8KvFt8jmt2BYTn7A8aMocqlb+uIzloQpbYJ1WmNBWf
-         mZPp3CY2mjt1GhlnqE7QvvKeuHOXG7aAmfJY8jt/+bkvILTOo3bBgH3Mf/hO/313D3WH
-         mVLXd4HpRIBSIvGYE427F3nIZ+2I3ID5qNcFBf182Ye7mn1ClosQqN59dpUpOKjutFmo
-         ux93kOpSfngxxU6fHKQLqH96z7dDDCfhEKCwvRT+E79SyM4DjZJBRzIFCWN0ThKHkjJZ
-         1Gvg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HIohkNgy89lnhbWqvIsrNo+Xxp8tivzey2mbUuqBaWc=;
+        b=BVTiiue4OXcE/d8qLl0Cik6rk6xg4F6x9h1+jT0OPMgEvsLYwkdRMfALFHNdc0tIoN
+         TXsyEJJOOkxOZcH+PnEIcfdItuyr800c/F/v1En9O3FAXQdtyNOH0wmR0yrJTv+g1tvc
+         9sXSJfO1QKsO/ohUcY3WV8/LgghFZJ3GGXjfmB2TKKAtMRgySN4msym1l7XE7tze9d85
+         bf+0xM6ivmOZzESVj3ErpZ9wtUqvHlJpRj6NXNc2lfvfv0USbK38JrUcpcdbgUUpAAiu
+         aiJAZEY3D7Smiacixu5zVxguKoPk0hKvC25tFYcu73IL1tdSHR31wsDys9e0AYGwopcL
+         yDmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FA1IsDxJ9fZhcNzFTpw8b5J098ZtSWj1LArltBBwnl8=;
-        b=rbBZbXOEGZAlEMrCQHlBKQYctxIAkf9zFyCZThroeQnKLwMzZs4ObKolOPKgcOgoqS
-         vbEHTr0fEpNdDDHNsnFis7G4DdEaj3zRPA9/hcT0ocXBOeklJg9qJqGs9J0+S6bHrJJO
-         J2ASccvat5ngpxoqx6L5U9b3zv6nys7HpHCX89JjwH3kqX7njZ5JUAJHQbMdjHDKXMFp
-         tms5JPlVcJDGH1uc8Bi0+JBHo/kv4wixt1R8iSlgO/+UhMSMIqN8FyEbJ8HBjYoj5f8I
-         IQaX3bYpjhvaQfsJ6jIlLyH/xyG5mkhb+ITcwOPfeE/MkMiE0wRNwQ1RBQnPgcW9oDFw
-         UKaA==
-X-Gm-Message-State: APjAAAUp1EaYfoBv2FEDgfvOCpEInbT37CCzDhBha36aU5n9p94idhid
-        fVpfp+qU1/osS+MQOSMGs6cm
-X-Google-Smtp-Source: APXvYqylx+dVLGFNCisat4FDrQl49lT5ySyOZMEby4bsnIAR53OzbhPMiELyNd5KNYm2DW/EHhgj/A==
-X-Received: by 2002:a5d:6088:: with SMTP id w8mr1294189wrt.31.1568405790269;
-        Fri, 13 Sep 2019 13:16:30 -0700 (PDT)
-Received: from localhost ([2a02:810a:8c80:d2c:4d89:574b:af6e:1a3])
-        by smtp.gmail.com with ESMTPSA id h17sm5915430wme.6.2019.09.13.13.16.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 13 Sep 2019 13:16:29 -0700 (PDT)
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-To:     git@vger.kernel.org
-Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
-        Pratyush Yadav <me@yadavpratyush.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>
-Subject: [PATCH v4] git-gui: add horizontal scrollbar to commit buffer
-Date:   Fri, 13 Sep 2019 22:16:28 +0200
-Message-Id: <20b0d8599099a412833af93f85e414fdc495dd76.1568405611.git.bert.wesarg@googlemail.com>
-X-Mailer: git-send-email 2.21.0.789.ga095d9d866
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HIohkNgy89lnhbWqvIsrNo+Xxp8tivzey2mbUuqBaWc=;
+        b=iHYNmIcZ2TJ13LBPM3vsfhqlDhpEvPiqkkBb90elNgiuCA475sfv16u7R7c4qV8FQ4
+         /buJrR9EwW9/QNCKKkRY1KIBHI8iaVfd8kHyNBtFF/HPTJpvmi62UDkIrn17uwQnJ5W2
+         zhRGcqsaQHJpcU8HeMh6nI8YFAa2ZS3PttMrZ3oe3Vk8ynx0t7Ga1ZnQrYX8HI3iZRXk
+         fKDDJ/GgXDFpyaXTlLU7F6F5hq4pBIFwWvy5mVFCk8JHvrItvfXsRu/jopk0ZDltZc9O
+         M2/8htYVa8HUt85f3uCdzmaNGeza88/EgaashCB2EPS9dC/z+aMsDeowuEASFAOEZWNv
+         feFA==
+X-Gm-Message-State: APjAAAU4deV8IAEwEzDJlYr/nM5VgCRaZA0CufvuRnwbArZQSxL6TDY1
+        /vQFmXC8ynGNAZgvKtb2NZRLxEkYPsc6cNyEGsQ=
+X-Google-Smtp-Source: APXvYqy37IN3p/gVHxvwuNy+HVkhLkSVlhPsSiT9n3KrWprkfE8L/4bddsdR4rn7n23mlutC1tW3J690xW5s/kxoxaI=
+X-Received: by 2002:a67:c991:: with SMTP id y17mr12111355vsk.85.1568405996848;
+ Fri, 13 Sep 2019 13:19:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <b3f1cd2b-7462-89fd-ff2d-9e53da286027@iee.email>
+ <a2026a3d310f90b70a191e2c24106d600195d2b1.1568354429.git.bert.wesarg@googlemail.com>
+ <20190913194911.3vwki4wa4jd3capr@yadavpratyush.com>
+In-Reply-To: <20190913194911.3vwki4wa4jd3capr@yadavpratyush.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Fri, 13 Sep 2019 22:19:45 +0200
+Message-ID: <CAKPyHN0pSpX6-5TTNZWNshMKa2Bfj3_tujn=HbLNSzBmeRfrYw@mail.gmail.com>
+Subject: Re: [PATCH] git-gui: convert new/amend commit radiobutton to checketton
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While the commit message widget has a configurable fixed width, it
-nevertheless allowed to write commit messages which exceeded this limit.
-Though there is no visual clue, that there is scrolling going on. Now
-there is a horizontal scrollbar.
+On Fri, Sep 13, 2019 at 9:49 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+>
+> You missed fixing the typo in the subject. s/checketton/checkbutton/.
+> But no need to send a re-roll for that. I can fix it locally.
 
-There seems to be a bug in at least Tcl/Tk up to version 8.6.8, which
-does not update the horizontal scrollbar if one removes the whole
-content at once.
+thanks, I also fixed that locally, but again, it slipped thru in the
+patch mail. Still don't know why this happened.
 
-Suggested-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- git-gui.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
+Best,
+Bert
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 5bc21b8..ad962d4 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -3363,10 +3363,16 @@ ttext $ui_comm -background white -foreground black \
- 	-relief sunken \
- 	-width $repo_config(gui.commitmsgwidth) -height 9 -wrap none \
- 	-font font_diff \
-+	-xscrollcommand {.vpane.lower.commarea.buffer.frame.sbx set} \
- 	-yscrollcommand {.vpane.lower.commarea.buffer.frame.sby set}
-+${NS}::scrollbar .vpane.lower.commarea.buffer.frame.sbx \
-+	-orient horizontal \
-+	-command [list $ui_comm xview]
- ${NS}::scrollbar .vpane.lower.commarea.buffer.frame.sby \
-+	-orient vertical \
- 	-command [list $ui_comm yview]
- 
-+pack .vpane.lower.commarea.buffer.frame.sbx -side bottom -fill x
- pack .vpane.lower.commarea.buffer.frame.sby -side right -fill y
- pack $ui_comm -side left -fill y
- pack .vpane.lower.commarea.buffer.header -side top -fill x
--- 
-2.21.0.789.ga095d9d866
-
+>
+> Other than that, LGTM. Thanks, will queue.
+>
+> On 13/09/19 08:02AM, Bert Wesarg wrote:
+> > Its a bi-state anyway and also saves one line in the menu.
+> >
+> > Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>
+> --
+> Regards,
+> Pratyush Yadav
