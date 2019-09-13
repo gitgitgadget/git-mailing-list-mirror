@@ -2,117 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0F5F1F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 21:38:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 229F31F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 21:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389714AbfIMViB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 17:38:01 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63382 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387554AbfIMViB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Sep 2019 17:38:01 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF1772F01A;
-        Fri, 13 Sep 2019 17:37:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hlw/q5TKtUstpRP8PS9eqWLIkh8=; b=c8PELE
-        jQYBuhzRJMPmmSIDXM+W+VPcDn434yJ76IThi+E7C5aXZvxKzw8XwBkUUuMIKWaE
-        Sa9IuSPA9PXoHThj0xHBcJZMhnlPXgDjJDWw+sygDXqG8Pem9sE+9rpFnCzqYQhU
-        KDT/C9+rEfsQLhSpck9kWLCpFV5o1A99sBdNs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PTA69x6139h2yd3GxUQYdB/4j6dbdYeH
-        CkxuAaIm0U6VOxdqWCFQHfFFTN4RU/r3KeTKOdhn4+IN8VLkuY1bWxrSvpf+YGMM
-        dLgu5ffWJ88uG9QYLR9nlsnOhTU1+FSnkt6Y/PJXUz4O7ah2OANngJL7REuvyaUj
-        QwqNo2ghNT4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C69D92F019;
-        Fri, 13 Sep 2019 17:37:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3991E2F018;
-        Fri, 13 Sep 2019 17:37:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [RFC PATCH 08/10] pack-objects: introduce pack.allowPackReuse
-References: <20190913130226.7449-1-chriscool@tuxfamily.org>
-        <20190913130226.7449-9-chriscool@tuxfamily.org>
-Date:   Fri, 13 Sep 2019 14:37:54 -0700
-In-Reply-To: <20190913130226.7449-9-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Fri, 13 Sep 2019 15:02:24 +0200")
-Message-ID: <xmqqd0g3dgi5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2389855AbfIMViX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 17:38:23 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:39146 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389717AbfIMViX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 17:38:23 -0400
+Received: by mail-pl1-f194.google.com with SMTP id bd8so13790534plb.6
+        for <git@vger.kernel.org>; Fri, 13 Sep 2019 14:38:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=mr6JDPSyvTp4CCz6YS3AlxGHtbBjfJkXUrzDG01qBaY=;
+        b=dpMsH89URzri7lC21+HLOg37NIwfbEbUThkJrg1xHP71wdLZ72BxAknlIuYU8k3qH4
+         0vjm4Gtpw4WMF6xwApOTK9MBFtpzUbT20D1GXe4E1W0yDgNJRchbtIKEf9LRPQcVMt7b
+         Iq5Iamgf22MCPxB3KoNLvgya9vhn4KCGJ1fW9JhUl5PY/Eoxh3/UWvybVx0P1w/wSQ2Z
+         +EZRx9MATBwU7mf8BvdzvcXjHfGx1FgOuzZ+38qv80ypHoK0BqGf9nlxpRXBwdyX2Nk4
+         wmaI3oBPVz1ZdcpvWfqyO4Y4DFM3/Cu5O/2fshJ0KzslMi8nIENsS+4kdjQ9Fz3zri3J
+         8OmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=mr6JDPSyvTp4CCz6YS3AlxGHtbBjfJkXUrzDG01qBaY=;
+        b=UKkS5I2uR9oO5LMxkifwr08XpLE+5lbxqbY9uBHMQTdJRDiaUnRgvwdE6vuNVAKT/V
+         xiG7G++UQkniWcMa9qXSOaw0+cWxVokPBXxbuhlJxduOkg9+vsuynU+AJYG2tw58DRnf
+         xrjHLfFJMaOi4aRlp2brN+I/vJPdHwv1pyJJpwy62PUd/Zdh+R5NLe/PhvI7RIUh1sd3
+         vHw6nyGJa+XmUsOAfy+CVVCnspNmd3Tfkyv7UdBjrPubRfPDvXRTnPjjSQdXQYaBLoOW
+         hQU4ZbT0BTK6cQzFs9IOTzOjo3x2cjjLbdd5+7OHloi4M1czPsim8oKbg9eTlY+ni6Zd
+         Qvzw==
+X-Gm-Message-State: APjAAAVkph1tJ7hG+pGr8YhRGvb6Awca6/UappVooDmAIs103GH/1Rcv
+        3hiD24UEtsLKioKStrBnhJMhgYgFD18=
+X-Google-Smtp-Source: APXvYqzPSggB3UrwoizSneYi6q/RXwi1oKNUUB+TTg1A/rUVIXi10c8rJ50wCVo1DzR3iTo7czc6qg==
+X-Received: by 2002:a17:902:860b:: with SMTP id f11mr50901417plo.48.1568410701840;
+        Fri, 13 Sep 2019 14:38:21 -0700 (PDT)
+Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.138])
+        by smtp.gmail.com with ESMTPSA id k10sm18932840pga.9.2019.09.13.14.38.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 13 Sep 2019 14:38:20 -0700 (PDT)
+Date:   Fri, 13 Sep 2019 14:38:18 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 3/3] Makefile: run coccicheck on more source files
+Message-ID: <20190913213818.GA88412@dentonliu-ltm.internal.salesforce.com>
+References: <cover.1568101393.git.liu.denton@gmail.com>
+ <cover.1568309119.git.liu.denton@gmail.com>
+ <89b7e17469e19c9dca8afa729ec1a70f4e06a2b7.1568309119.git.liu.denton@gmail.com>
+ <xmqqtv9hfjdn.fsf@gitster-ct.c.googlers.com>
+ <20190913114952.GO32087@szeder.dev>
+ <20190913171401.GA63368@dentonliu-ltm.internal.salesforce.com>
+ <20190913180014.GQ32087@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BF1BC6B0-D66E-11E9-A75B-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190913180014.GQ32087@szeder.dev>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Fri, Sep 13, 2019 at 08:00:14PM +0200, SZEDER Gábor wrote:
+> On Fri, Sep 13, 2019 at 10:14:01AM -0700, Denton Liu wrote:
+> > On Fri, Sep 13, 2019 at 01:49:52PM +0200, SZEDER Gábor wrote:
+> > > On Thu, Sep 12, 2019 at 11:40:36AM -0700, Junio C Hamano wrote:
+> > > > Denton Liu <liu.denton@gmail.com> writes:
+> > > > 
+> > > > > +FIND_C_SOURCES = $(filter %.c,$(shell $(FIND_SOURCE_FILES)))
+> > > > > +COCCI_SOURCES = $(filter-out $(THIRD_PARTY_SOURCES),$(FIND_C_SOURCES))
+> > > > 
+> > > > The former is somewhat misnamed.  FIND_SOURCE_FILES is *not* a list
+> > > > of source files---it is a procedure to list source files to its
+> > > > standard output.  FIND_C_SOUCRES sounds as if it is a similar
+> > > > procedure, which would be implemented much like
+> > > > 
+> > > > 	FIND_C_SOURCES = $(FIND_SOURCE_FILES) | sed -n -e '/\.c$/p'
+> > > > 
+> > > > but that is not what you did and that is not what you want to have.
+> > > > Perhaps call it FOUND_C_SOURCES?
+> > > > 
+> > > > I wonder if we can get rid of FIND_SOURCE_FILES that is a mere
+> > > > procedure and replace its use with a true list of source files.
+> > > > Would it make the result more pleasant to work with?
+> > > > 
+> > > > Perhaps something like the attached patch, (which would come before
+> > > > this entire thing as a clean-up, and removing the need for 2/3)?
+> > > > 
+> > > > I dunno.
+> > > > 
+> > > > Using a procedure whose output is fed to xargs has an advantage that
+> > > > a platform with very short command line limit can still work with
+> > > > many source files, but the way you create and use COCCI_SOURCES in
+> > > > this patch would defeat that advantage anyway,
+> > > 
+> > > COCCI_SOURCES is only used as an input to 'xargs', so that advantage
+> > > is not defeated.
+> > 
+> > I think it still does matter; the relevant snippet is as follows:
+> > 
+> > 	if ! echo $(COCCI_SOURCES) | xargs $$limit \
+> > 		$(SPATCH) --sp-file $< $(SPATCH_FLAGS) \
+> > 		>$@+ 2>$@.log; \
+> > 
+> > which means that a really big COCCI_SOURCES could exceed the limit.
+> 
+> Oh, you're both right.
+> 
+> > That being said, COCCI_SOURCES should be smaller than the future
+> > SOURCE_FILES variable since we're only taking %.c files (and filtering
+> > out some of them too!).
+> 
+> We could also argue that Coccinelle only runs on platforms that have a
+> reasonably large command line arg limit, and the number of our source
+> files is way below that, so it won't matter in the foreseeable future.
 
-> From: Jeff King <peff@peff.net>
->
-> Let's make it possible to configure if we want pack reuse or not.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  builtin/pack-objects.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index c11b2ea8d4..1664969c97 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -96,6 +96,7 @@ static off_t reuse_packfile_offset;
->  
->  static int use_bitmap_index_default = 1;
->  static int use_bitmap_index = -1;
-> +static int allow_pack_reuse = 1;
->  static enum {
->  	WRITE_BITMAP_FALSE = 0,
->  	WRITE_BITMAP_QUIET,
-> @@ -2719,6 +2720,10 @@ static int git_pack_config(const char *k, const char *v, void *cb)
->  		sparse = git_config_bool(k, v);
->  		return 0;
->  	}
-> +	if (!strcmp(k, "pack.allowpackreuse")) {
-> +		allow_pack_reuse = git_config_bool(k, v);
-> +		return 0;
-> +	}
->  	if (!strcmp(k, "pack.threads")) {
->  		delta_search_threads = git_config_int(k, v);
->  		if (delta_search_threads < 0)
-> @@ -3063,7 +3068,8 @@ static int get_object_list_from_bitmap(struct rev_info *revs)
->  	if (!(bitmap_git = prepare_bitmap_walk(revs)))
->  		return -1;
->  
-> -	if (pack_options_allow_reuse() &&
-> +	if (allow_pack_reuse &&
-> +	    pack_options_allow_reuse() &&
+Good point.
 
-It somehow looks strange to have this code check for both
-allow_pack_reuse and pack_options_allow_reuse().  I would have
-expected that the referene to the new variable to be contained in
-the existing helper function, so that any future code that wants to
-ask "are we allowed to reuse?" would get the same answer from the
-helper consistently, without having to check the new variable.
+> 
+> (Furthermore, 'echo' is often a shell builtin command, and I don't
+> think that the platform's argument size limit applies to them.  At
+> least the 'echo' of dash, Bash, ksh, ksh93, mksh, and BusyBox sh can
+> deal with at least 10 million arguments; the platform limit is
+> somewhere around 147k)
+> 
+> > > > diff --git a/Makefile b/Makefile
+> > > > index f9255344ae..9dddd0e88c 100644
+> > > > --- a/Makefile
+> > > > +++ b/Makefile
+> > > > @@ -2584,7 +2584,7 @@ perl/build/man/man3/Git.3pm: perl/Git.pm
+> > > >  	$(QUIET_GEN)mkdir -p $(dir $@) && \
+> > > >  	pod2man $< $@
+> > > >  
+> > > > -FIND_SOURCE_FILES = ( \
+> > > > +SOURCE_FILES = $(patsubst ./%,%,$(shell \
+> > > >  	git ls-files \
+> > > >  		'*.[hcS]' \
+> > > >  		'*.sh' \
+> > > > @@ -2599,19 +2599,19 @@ FIND_SOURCE_FILES = ( \
+> > > >  		-o \( -name 'trash*' -type d -prune \) \
+> > > >  		-o \( -name '*.[hcS]' -type f -print \) \
+> > > >  		-o \( -name '*.sh' -type f -print \) \
+> > > > -	)
+> > > > +	))
+> > > >  
+> > > >  $(ETAGS_TARGET): FORCE
+> > > >  	$(RM) $(ETAGS_TARGET)
+> > > > -	$(FIND_SOURCE_FILES) | xargs etags -a -o $(ETAGS_TARGET)
+> > > > +	etags -a -o $(ETAGS_TARGET) $(SOURCE_FILES)
+> > > >  
+> > > >  tags: FORCE
+> > > >  	$(RM) tags
+> > > > -	$(FIND_SOURCE_FILES) | xargs ctags -a
+> > > > +	ctags -a $(SOURCE_FILES)
+> > > >  
+> > > >  cscope:
+> > > >  	$(RM) cscope*
+> > > > -	$(FIND_SOURCE_FILES) | xargs cscope -b
+> > > > +	cscope -b $(SOURCE_FILES)
+> 
+> Here, however, the list of source files is passed as argument to
+> non-builtin commands, that also might be used on
+> cmdline-arg-limit-challenged platforms.
+> 
 
->  	    !reuse_partial_packfile_from_bitmap(
->  			bitmap_git,
->  			&reuse_packfile,
+After doing a bit of research, I think that I agree with you. It seems
+like the max command-line length for CMD on Windows is 8191 characters.
+
+However, after running the following,
+
+	$ git ls-files '*.[hcS]' '*.sh' ':!*[tp][0-9][0-9][0-9][0-9]*' ':!contrib' | wc -c
+	   12779
+
+we can see that the command-line length would definitely exceed the max
+length so xargs would be required. As a result, we should probably just
+keep the existing xargs invocations.
