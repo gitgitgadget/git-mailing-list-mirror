@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EACC1F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 13:02:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 625781F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 13:02:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388202AbfIMNC4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 09:02:56 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:35037 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388177AbfIMNCz (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2388195AbfIMNCz (ORCPT <rfc822;e@80x24.org>);
         Fri, 13 Sep 2019 09:02:55 -0400
-Received: by mail-ed1-f66.google.com with SMTP id f24so9363802edv.2
-        for <git@vger.kernel.org>; Fri, 13 Sep 2019 06:02:53 -0700 (PDT)
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:43926 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388176AbfIMNCz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 09:02:55 -0400
+Received: by mail-ed1-f65.google.com with SMTP id c19so26921581edy.10
+        for <git@vger.kernel.org>; Fri, 13 Sep 2019 06:02:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=c435ouO4rFUck2s9Wz+ve8vT5VdFElRswz0pkOdLSpY=;
-        b=J1GEaYNcl6o2CkCnW0OvJ0FPS67AYLFo/8XffmOHVcXK7HZuxBLEZdeSxHXSqXbDlV
-         GBseJjERoyv6N6UnsY5XGrSAyIWbYZaILaZT9AkFKVG3Tdu9LjtLPhkZtb8jufvXMIl1
-         HkukT3El5hVXY9BDGTZLhG3PiNI36iA/5jWoXLI6WvNscig6AiN6LJEHpR7mwWwoHu3p
-         PeakTTC3QCYksZwZkigSFyH1Ao+m8GXaBczvaFTjMbtJvVX+Knz8UtslegPWlyEB+SeQ
-         TtdWODYQr1x3ddDot5vevyJ/bh2fqvvW2d6RYZNgxXaBq+1P0S1kGF6PjUWoyFwftteH
-         8wxA==
+        bh=nbIYPYfvlZmjFMk31c6i2QEUyWC7Lyz7Rjql2VovRmI=;
+        b=SfgsLQNOYhaf9jgQ8sXtJE4w18WxWiwJuvf9NlbVahyBXcFAK8dAab0plOXEn2RT+4
+         HvWHyt1wm8ZmdmD9jCi4CUAZoPWPNk5pu3mfnkAwQiZMaOEL6f0bFkNgEdLbeKTtLsWI
+         zRwA/dmDfPWhqt3dHflnpDXWMAeuQBv63qPv95I0pCHQ7H9K04XidS/8ykxJ0LSdzZfs
+         kV+BxvJ9O3PxQXXnn0teeoa97VLC4hlWRylPlQHBiTu+xCLZEsor4yV0JASNFw66TjQq
+         BLeaY6/BAcgxZDbzGGbV75yJKAJD6K7HPK2IotoXh4KacqkP4/m4ti2hFzwRz8pfdMX9
+         ZoAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=c435ouO4rFUck2s9Wz+ve8vT5VdFElRswz0pkOdLSpY=;
-        b=ElyEox5SAJ3vMoxgS/VeZLTBcU6xt5A2sHCb9IbqE8a01S1Gimu4RGb8JMMeAKb1L2
-         AofwtYr7KF/en392tuHSiXC+EQW66qtPGSLpVPfyfjLgUPCcoMHwEa+qv5ofJr2vlh2a
-         XQcWUetZ4olTQ64rEJBi5q96Ir+5cb8mI7qng/RGm2CIMDZmFqw3/E5VCzrP4qvoIMWc
-         mDBfzXi+OAoy9dNoRPy2N3vJcfTPZr6BKbUroaX7DcT6tdii/De4d+MJLvEB+oxjzseO
-         5V/azHrLlnbrDaWCjp/EMuFRmizxfN5doVJOJKHbPAiXRoO6osL1O9I4vW0Zac8AMLcK
-         ZPbg==
-X-Gm-Message-State: APjAAAVlBEYj0nyBh+Tc9PI9jFFgk/ZhZ4h+OGHvXxgb9i2iodfCtXoP
-        tkOjO9rLuZASCjckTfmHFKYHJXOZ
-X-Google-Smtp-Source: APXvYqxklacZmwB/wR8cASkj0KDH7/wwymVQnIW/EQ9Azpzyvpm1D2N4AJHHlqNYb2r4dvwxHdV++w==
-X-Received: by 2002:a50:e806:: with SMTP id e6mr46388012edn.162.1568379772071;
-        Fri, 13 Sep 2019 06:02:52 -0700 (PDT)
+        bh=nbIYPYfvlZmjFMk31c6i2QEUyWC7Lyz7Rjql2VovRmI=;
+        b=q5myxXErhCqgOiz91iR7/O30Sn+PRRemL4FQ7Vca4JlnY7nUvl1ka1l1LeIOpTP/l3
+         JbZpznytiGgbEuFn3keMclI10FhNKrDtpUeLom7dYn12fXOJUrgXcvJ2UhyvUGHQ/BqY
+         pK13zUJiP9qpQoikohh25JI7tMWc4Qs2l6nk2OW2NS2nqUn7JPWcROa2aaLCXDqi1w5n
+         yw0F+MOnwhjGSrAq9vtV+JSFg1fX8/wUy6obQWRBN98zYhrx4wrYqMpADUT61o+umhUu
+         j1hPw6XzSOoFhvfOonY4OPxjFVpGijv8grV2RZMfCD9Xpj2tBXxlXLmiyruckLBz1krs
+         feYQ==
+X-Gm-Message-State: APjAAAVF011VpzCo+CAWfozeO9uoJj2J/JRaSkA5PJB6RIHY27fgGZi2
+        gJIaJZr7PWXSrG6PtpD+nslRjLMZ
+X-Google-Smtp-Source: APXvYqxZiErAo4ui1dXbzWNTXD4Z0xeD5GDR6R+aDLo6zLJLDBPeckf+yuI92NOVi/ldTakIaTQIlQ==
+X-Received: by 2002:a17:906:79ca:: with SMTP id m10mr3712986ejo.292.1568379773221;
+        Fri, 13 Sep 2019 06:02:53 -0700 (PDT)
 Received: from ubuntu-N150ZU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id c14sm2846570ejx.31.2019.09.13.06.02.51
+        by smtp.gmail.com with ESMTPSA id c14sm2846570ejx.31.2019.09.13.06.02.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Sep 2019 06:02:51 -0700 (PDT)
+        Fri, 13 Sep 2019 06:02:52 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [RFC PATCH 04/10] ewah/bitmap: always allocate 2 more words
-Date:   Fri, 13 Sep 2019 15:02:20 +0200
-Message-Id: <20190913130226.7449-5-chriscool@tuxfamily.org>
+Subject: [RFC PATCH 06/10] pack-bitmap: introduce bitmap_walk_contains()
+Date:   Fri, 13 Sep 2019 15:02:22 +0200
+Message-Id: <20190913130226.7449-7-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.23.0.46.gd213b4aca1.dirty
 In-Reply-To: <20190913130226.7449-1-chriscool@tuxfamily.org>
 References: <20190913130226.7449-1-chriscool@tuxfamily.org>
@@ -71,31 +71,60 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-In a following patch we will allocate a variable number
-of words in some bitmaps. When iterating over the words we
-will need a mark to tell us when to stop iterating. Let's
-always allocate 2 more words, that will always contain 0,
-as that mark.
+We will use this helper function in a following patch to
+tell us if an object is packed.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- ewah/bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pack-bitmap.c | 12 ++++++++++++
+ pack-bitmap.h |  3 +++
+ 2 files changed, 15 insertions(+)
 
-diff --git a/ewah/bitmap.c b/ewah/bitmap.c
-index 143dc71419..eac05485f1 100644
---- a/ewah/bitmap.c
-+++ b/ewah/bitmap.c
-@@ -41,7 +41,7 @@ void bitmap_set(struct bitmap *self, size_t pos)
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index b2422fed8f..1833971dc7 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -828,6 +828,18 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 	return 0;
+ }
  
- 	if (block >= self->word_alloc) {
- 		size_t old_size = self->word_alloc;
--		self->word_alloc = block * 2;
-+		self->word_alloc = (block + 1) * 2;
- 		REALLOC_ARRAY(self->words, self->word_alloc);
- 		memset(self->words + old_size, 0x0,
- 			(self->word_alloc - old_size) * sizeof(eword_t));
++int bitmap_walk_contains(struct bitmap_index *bitmap_git,
++			 struct bitmap *bitmap, const struct object_id *oid)
++{
++	int idx;
++
++	if (!bitmap)
++		return 0;
++
++	idx = bitmap_position(bitmap_git, oid);
++	return idx >= 0 && bitmap_get(bitmap, idx);
++}
++
+ void traverse_bitmap_commit_list(struct bitmap_index *bitmap_git,
+ 				 show_reachable_fn show_reachable)
+ {
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 00de3ec8e4..5425767f0f 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -3,6 +3,7 @@
+ 
+ #include "ewah/ewok.h"
+ #include "khash.h"
++#include "pack.h"
+ #include "pack-objects.h"
+ 
+ struct commit;
+@@ -53,6 +54,8 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
+ int rebuild_existing_bitmaps(struct bitmap_index *, struct packing_data *mapping,
+ 			     kh_oid_map_t *reused_bitmaps, int show_progress);
+ void free_bitmap_index(struct bitmap_index *);
++int bitmap_walk_contains(struct bitmap_index *,
++			 struct bitmap *bitmap, const struct object_id *oid);
+ 
+ /*
+  * After a traversal has been performed by prepare_bitmap_walk(), this can be
 -- 
 2.23.0.46.gd213b4aca1.dirty
 
