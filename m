@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C2001F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 13:03:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45FF71F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 13:02:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388220AbfIMNC7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 09:02:59 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:33166 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388187AbfIMNC4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Sep 2019 09:02:56 -0400
-Received: by mail-ed1-f68.google.com with SMTP id o9so27029269edq.0
-        for <git@vger.kernel.org>; Fri, 13 Sep 2019 06:02:53 -0700 (PDT)
+        id S2388191AbfIMNCz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 09:02:55 -0400
+Received: from mail-ed1-f47.google.com ([209.85.208.47]:44050 "EHLO
+        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387714AbfIMNCz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 09:02:55 -0400
+Received: by mail-ed1-f47.google.com with SMTP id p2so25761883edx.11
+        for <git@vger.kernel.org>; Fri, 13 Sep 2019 06:02:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TAPD2AriovQ0IcJpCJVxop9CRVM9q4TT+plx+M33Ipk=;
-        b=ecdv582RfjSCGFow9VJ5K46PwKUlwxiVw+/xUk88i6FzPHO2iy5NE0D2ld7kyS9TtH
-         kLcpklZ7eCR6Lo+OA5CluUBhT1aISVXNbxMGrYryqLaQgVKl5qnyQQWJiolCB6d29zLV
-         AR8Bn+W2FRFOh88cgCyR8N3KqsPN+EpPOUv/xDud4MJcXURx/NUX7m5+0qgsM3TnaaC6
-         9U/Lf82A9dfg79unERr4bf3krNDIURxctU1/+34KaaulnyQBKifG0iYywyE/eFjrGx6J
-         JQN1eOY7BD8JuyHmrl2eaevzqvQArKzSyHcdyVlP8vVladR3xYVpywZE7qmvWxU9/Lcm
-         hKsA==
+        bh=QYPNFBHT1ek2V+d9R1QZYL+nVum/w0iFSuFz73KLjMc=;
+        b=pVCw3wRo53TVcAjP+9CCJ1wiabVYIbBXqmDlgXW6j2USN0tn/xZAaNwzhti59afTuX
+         DGJ66sClPjGTgkwlz2OsyJDHzlKGSpxrDN32POrCn+BGurX1BlHX0fSBtuhMdcxsh3Ht
+         lPLGsWdfIsgu7oCDL2NvMCF4g6sEZhANPtGDBYALJhFOQDE/UiOWI3iIO+2rUDGa9snA
+         Kx+9DRERBQf/YDBB4jpXxDWc3bIkaegTqTeVCFHTtM84XVeGxu+RUPry/Kb7//NyT07H
+         aFXQMRpp+XSkTl2TgR5U5lomrFvHyAGxuym8Ks0ws7ygzYJS3FaAsKzLK29GCha3bci9
+         i8kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TAPD2AriovQ0IcJpCJVxop9CRVM9q4TT+plx+M33Ipk=;
-        b=HFFRKFutJI27ThpoLLQyoCpYaJ70ng7o0E4MilJPVBzE5gvJGcnEwvvvf5K7t67l3j
-         iIZyxDq/9C3QNvWNtbj/pI+cx/R/BcA4zKndsUYlvBNsFZInWZwZzLxz0x/gJQHbSi+P
-         lw6KBkDt9QFpmxEztvjFnVuDrZgV3navT2vXduIjFTYTooDhwpaKA5CCzzp17V8dqFVd
-         HyWuObncNlYEEAfR013DDDKMLV0x5rPiB9rx+7e1igFFnhyuDr/HCFAY+QiZUg50KUdX
-         iyJxnwj4laOuxGKpfdUt6brtke8vQV/4ShCFrmnicpv6Zh+rQdU3IO/I9GELHcjr7iR3
-         uyow==
-X-Gm-Message-State: APjAAAURZ6/OaOcx68Sj6TPiddrH3LIOxBhPOxyvqDNq28lmfjf96+4G
-        IArQV4I+1mUrjWRlvIO/oM1WUk6V
-X-Google-Smtp-Source: APXvYqwlHMYAe9yCDUzP1vlctXuf2NRIYD/3UNfRWuVg9YNDf4LNcikymac9L/gHl+N+tieUvwbUbA==
-X-Received: by 2002:a50:baab:: with SMTP id x40mr22135084ede.60.1568379772659;
-        Fri, 13 Sep 2019 06:02:52 -0700 (PDT)
+        bh=QYPNFBHT1ek2V+d9R1QZYL+nVum/w0iFSuFz73KLjMc=;
+        b=Ea6Yppk49QOV7tSfBvI2aqy9uSki/Ll6UoCT9zXZx3XjaKA6CUQ2dWMxqstZTdBxZG
+         MgGN3SsF6bDu4P2ALkaQ4Q9bm6uja3243VMnhDqP5SslaLdQVoU3D1KgnXTJcNj54x9G
+         XQAlypG1VYun2sKnhzXM0xh1rpWaqKP0QhBEd+Ng3KdR9X+4sab9MhoXUP7d6Hkm80CG
+         X10WmMP6KoP/CH2SfnfULaCTkPjGqp5rPKn8kD3ojINMKy/v/fcB8k+XoA1OpmT76ZRx
+         uyjGSl4TguYAZ9R4Hk3kr3K9nvQGgMdf8LSmsjPxb3HOvTs7w+Utrb4dEllMhizoXaex
+         nfLg==
+X-Gm-Message-State: APjAAAVjf2vPY8eDmsZofoM/BbfOH73evNZnpYdJCbW1D96Yg7bVksGA
+        hipEp+AV01m+6lFWwqTOoa9YHbLG
+X-Google-Smtp-Source: APXvYqwDLXWjGbTdZyU0irINPjhWWGTNAG3zTad5ema2lcOqdx6TRP19wVaYPsc4KgY+xySjzHOJdA==
+X-Received: by 2002:a17:906:d9d9:: with SMTP id qk25mr40536479ejb.275.1568379771429;
+        Fri, 13 Sep 2019 06:02:51 -0700 (PDT)
 Received: from ubuntu-N150ZU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id c14sm2846570ejx.31.2019.09.13.06.02.52
+        by smtp.gmail.com with ESMTPSA id c14sm2846570ejx.31.2019.09.13.06.02.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Sep 2019 06:02:52 -0700 (PDT)
+        Fri, 13 Sep 2019 06:02:50 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [RFC PATCH 05/10] pack-bitmap: don't rely on bitmap_git->reuse_objects
-Date:   Fri, 13 Sep 2019 15:02:21 +0200
-Message-Id: <20190913130226.7449-6-chriscool@tuxfamily.org>
+Subject: [RFC PATCH 03/10] ewah/bitmap: introduce bitmap_word_alloc()
+Date:   Fri, 13 Sep 2019 15:02:19 +0200
+Message-Id: <20190913130226.7449-4-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.23.0.46.gd213b4aca1.dirty
 In-Reply-To: <20190913130226.7449-1-chriscool@tuxfamily.org>
 References: <20190913130226.7449-1-chriscool@tuxfamily.org>
@@ -71,70 +71,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-As we now allocate 2 more words than necessary for each
-bitmap to serve as marks telling us that we can stop
-iterating over the words, we don't need to rely on
-bitmap_git->reuse_objects to stop iterating over the words.
+In a following patch we will need to allocate a variable
+number of bitmap words, instead of always 32, so let's add
+bitmap_word_alloc() for this purpose.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- pack-bitmap.c | 18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ ewah/bitmap.c | 11 ++++++++---
+ ewah/ewok.h   |  1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index ed2befaac6..b2422fed8f 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -622,7 +622,7 @@ static void show_objects_for_type(
- 	enum object_type object_type,
- 	show_reachable_fn show_reach)
+diff --git a/ewah/bitmap.c b/ewah/bitmap.c
+index 52f1178db4..143dc71419 100644
+--- a/ewah/bitmap.c
++++ b/ewah/bitmap.c
+@@ -22,14 +22,19 @@
+ #define EWAH_MASK(x) ((eword_t)1 << (x % BITS_IN_EWORD))
+ #define EWAH_BLOCK(x) (x / BITS_IN_EWORD)
+ 
+-struct bitmap *bitmap_new(void)
++struct bitmap *bitmap_word_alloc(size_t word_alloc)
  {
--	size_t pos = 0, i = 0;
-+	size_t i = 0;
- 	uint32_t offset;
- 
- 	struct ewah_iterator it;
-@@ -630,13 +630,15 @@ static void show_objects_for_type(
- 
- 	struct bitmap *objects = bitmap_git->result;
- 
--	if (bitmap_git->reuse_objects == bitmap_git->pack->num_objects)
--		return;
--
- 	ewah_iterator_init(&it, type_filter);
- 
--	while (i < objects->word_alloc && ewah_iterator_next(&filter, &it)) {
-+	for (i = 0; i < objects->word_alloc &&
-+			ewah_iterator_next(&filter, &it); i++) {
- 		eword_t word = objects->words[i] & filter;
-+		size_t pos = (i * BITS_IN_EWORD);
-+
-+		if (!word)
-+			continue;
- 
- 		for (offset = 0; offset < BITS_IN_EWORD; ++offset) {
- 			struct object_id oid;
-@@ -648,9 +650,6 @@ static void show_objects_for_type(
- 
- 			offset += ewah_bit_ctz64(word >> offset);
- 
--			if (pos + offset < bitmap_git->reuse_objects)
--				continue;
--
- 			entry = &bitmap_git->pack->revindex[pos + offset];
- 			nth_packed_object_oid(&oid, bitmap_git->pack, entry->nr);
- 
-@@ -659,9 +658,6 @@ static void show_objects_for_type(
- 
- 			show_reach(&oid, object_type, 0, hash, bitmap_git->pack, entry->offset);
- 		}
--
--		pos += BITS_IN_EWORD;
--		i++;
- 	}
+ 	struct bitmap *bitmap = xmalloc(sizeof(struct bitmap));
+-	bitmap->words = xcalloc(32, sizeof(eword_t));
+-	bitmap->word_alloc = 32;
++	bitmap->words = xcalloc(word_alloc, sizeof(eword_t));
++	bitmap->word_alloc = word_alloc;
+ 	return bitmap;
  }
  
++struct bitmap *bitmap_new(void)
++{
++	return bitmap_word_alloc(32);
++}
++
+ void bitmap_set(struct bitmap *self, size_t pos)
+ {
+ 	size_t block = EWAH_BLOCK(pos);
+diff --git a/ewah/ewok.h b/ewah/ewok.h
+index 84b2a29faa..1b98b57c8b 100644
+--- a/ewah/ewok.h
++++ b/ewah/ewok.h
+@@ -172,6 +172,7 @@ struct bitmap {
+ };
+ 
+ struct bitmap *bitmap_new(void);
++struct bitmap *bitmap_word_alloc(size_t word_alloc);
+ void bitmap_set(struct bitmap *self, size_t pos);
+ int bitmap_get(struct bitmap *self, size_t pos);
+ void bitmap_reset(struct bitmap *self);
 -- 
 2.23.0.46.gd213b4aca1.dirty
 
