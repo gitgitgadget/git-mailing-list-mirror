@@ -2,116 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB0401F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 21:12:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F6EE1F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 21:32:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389688AbfIMVMx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 17:12:53 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:33146 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388430AbfIMVMx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Sep 2019 17:12:53 -0400
-Received: by mail-lf1-f68.google.com with SMTP id d10so23148596lfi.0
-        for <git@vger.kernel.org>; Fri, 13 Sep 2019 14:12:52 -0700 (PDT)
+        id S2389717AbfIMVco (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 17:32:44 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:47044 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388719AbfIMVco (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 17:32:44 -0400
+Received: by mail-lj1-f193.google.com with SMTP id e17so28395984ljf.13
+        for <git@vger.kernel.org>; Fri, 13 Sep 2019 14:32:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=i0iiBfw1LS4x8/ALg7UcBqHaxr3ejNsOkfoTy8xfGRs=;
-        b=VpGuTc/C27PGLsMWwzV/nQ2WJdRNXf0KghC96nOoIFM4mx8HI11wSf0P6hZJ1s43bX
-         bnRt522USStfyZHOKkwEpZJzsxfRXAuW0QDN30+auonkkbGiEOV/x+JJb7wr3o4bLLuJ
-         lPLdAJPKg+Ldc0rN+jN37eP7wtktz6KSyj0HZdacHpvCF7SIl132BFnk5Q8cGIKB9DWY
-         QoIBdUoWp50e5Dcsao08iiqIk9vcnYMVNjg5HVkWFve0tEiy8/Oklti6C69OGCN3jhOh
-         g/qWTInZO4MMDx+CZJ/IGKdIRbjR/NrNJv9746ZmJ6oaJXmdrPxIUQeswfJZSeCXx1M0
-         mUIg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8fvKXWhCzTaasEYDSef7rZcH/lxO3cQgWiiugBwz0+U=;
+        b=tu9zn58yStLtYromjPGYMK+DjSQf7vPx5qHGHe4W6Wo0TPirRaTOUJye30BZnMWe0r
+         ZH191X+nL+DnMPFiBRpr7JHNsCOn7nkxGUIiIlfAGQjBmr01qUpWbtKw/jw5NtK5xwXo
+         Icb/KYjFho2y9b0UqJlQ+oMihVlxfMjCiq36q7HvlrnGD/zkqwyYHKdoMziR8FVf0TSW
+         PEji6sjEuEvC1o4l01TGoU2dCLokE3xEMxKI8Yn73P7ofyrb5r4bWcVrdnYUO46Gh9J8
+         cV+ZdeQcJa/KZQbuqC0sOOvFEii7Z5u1rXPQ+LRBxqCibK/P1pgBHNyM5SIy91y4Sfew
+         6hLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=i0iiBfw1LS4x8/ALg7UcBqHaxr3ejNsOkfoTy8xfGRs=;
-        b=kzjc2k9caaqLEoUWKPxTdHkBV/Fv/yivzrQ4MreUvN5DUi6f3TaPejqr/uwaJqL6WJ
-         zSLNwjY3YUOj3jQpp+Hw5MeKkW0dkPnM7vJjAgrnlhBKe3hRFp7emnm/PtyZTO4D0ABP
-         LFKRs61c9x2HcEzOmoEgh2yS4tWDdmzh0fQfpEY1+56oBhIZx1PerPbPAvhN60oJqLvN
-         eiARR3Rn3t+LfAGpRFOQiFi4Z9KKP4X9nFxwlqZbH3RA6QleVVwP+NMNKsXMFxkz543o
-         dLDpPh25zwwkZibsELlACYZ+zu3IOmX10sdyya4qQw1V784Wbl+IJbES+2rB66S01lDv
-         7YCA==
-X-Gm-Message-State: APjAAAUoxruc7Apz58PLymh9P1AsEZp5t0K1bB/43pEE95eLHuRLCL/d
-        Kg0Z11yVPP1mqcEMxsywgz5jZ6tjnDk2rg==
-X-Google-Smtp-Source: APXvYqykC/Au3BrCVKGzj8N82bz5GBcXpQZKeIGNuTB3L0RQ+NW3JOSuTSOsJ07uggrCdFp00cJrLg==
-X-Received: by 2002:a19:7715:: with SMTP id s21mr31100412lfc.98.1568409171462;
-        Fri, 13 Sep 2019 14:12:51 -0700 (PDT)
-Received: from localhost.localdomain (static243-191-189.mimer.net. [83.243.191.189])
-        by smtp.gmail.com with ESMTPSA id l7sm5508lji.46.2019.09.13.14.12.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Sep 2019 14:12:51 -0700 (PDT)
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-To:     me@yadavpratyush.com
-Cc:     git@vger.kernel.org, Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH v4] git-gui: add hotkey to toggle "Amend Last Commit"
-Date:   Fri, 13 Sep 2019 23:11:52 +0200
-Message-Id: <20190913211152.8860-1-birger.sp@gmail.com>
-X-Mailer: git-send-email 2.21.0.windows.1
-In-Reply-To: <20190913143740.5zkrclivsvyj6k2o@yadavpratyush.com>
-References: <20190913143740.5zkrclivsvyj6k2o@yadavpratyush.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8fvKXWhCzTaasEYDSef7rZcH/lxO3cQgWiiugBwz0+U=;
+        b=hMS7ijWNbGMk9i3qIncXT3KumyieZu2uGge6Z/9v7WY1IPvCbxQB2F8EXXpOxeZsJT
+         U1SPM40sbj8DBRw5rzJY6i4TRIF81Ke5Ydz5Y3HU9JwgrAVmm9PYCuKPUje5a/q6ityo
+         g25Vkwi5dGvOB5+KbmhY8Y0LvYGnTtoBH+yZ+sV3I878SynFbpIahBY6vz8oGunqz7Sv
+         CCvL4lrupuILSWndm+1hbcCxVWgQUYGvaAHOdXKzVsv/AlxuD7KYovKsxdrkVUdRTdpI
+         tIkg7KbEYwP3so5QJn/X+IYlRbz48pVLmJydYycZNiMSuf6N0d57Mr99WCH71xwOw+Oe
+         wF4g==
+X-Gm-Message-State: APjAAAUlqB+j8ljr9lcm0zAVsaB6zCWUgFAn7y4O8hn7uvgP5Ap0ihqt
+        gr6/5ODZHjYGXkGtokdebqw4R7JCUp1/9lKQoKo=
+X-Google-Smtp-Source: APXvYqw3/DqXZPI3J1CEhDDOhPEN9jRCMra+wRik1lhW+av07g5ssM79r7sjW/JITtp8abbFwaiCvUad2mGo8g0Zi3Y=
+X-Received: by 2002:a2e:95d0:: with SMTP id y16mr13622715ljh.166.1568410361331;
+ Fri, 13 Sep 2019 14:32:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190913143740.5zkrclivsvyj6k2o@yadavpratyush.com> <20190913211152.8860-1-birger.sp@gmail.com>
+In-Reply-To: <20190913211152.8860-1-birger.sp@gmail.com>
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
+Date:   Fri, 13 Sep 2019 23:32:28 +0200
+Message-ID: <CAGr--=JhBYmYCJNNm8DyL+MKU0V0V-cwzH4WABX-dvE+uXNwDw@mail.gmail.com>
+Subject: Re: [PATCH v4] git-gui: add hotkey to toggle "Amend Last Commit"
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Bert Wesarg <bert.wesarg@googlemail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Selecting whether to "Amend Last Commit" or not does not have a hotkey.
+On Fri, Sep 13, 2019 at 4:37 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> Hi Birger,
+>
+> I'm afraid you are working on an older version of this patch. You should
+> be re-rolling [0], which works well with Bert's "amend check button"
+> change.
+>
+> [0] https://public-inbox.org/git/b82a00441ff1a6a9cea3fd235c1c33729ec31b71.1567713659.git.bert.wesarg@googlemail.com/
 
-With this patch, the user may toggle between the two options with
-CTRL/CMD+e.
+Forgive me, I get a little bit confused. Should my patch be based on
+"next" or "master" branch?
+Also, is it an issue that this patch won't work unless you merge
+Bert's 1/2 patch[0]?
+Your feedback cannot be too specific, I want to learn how to do this
+properly :-)
 
-Signed-off-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
-Rebased-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- git-gui.sh | 9 +++++++++
- 1 file changed, 9 insertions(+)
+[0] https://public-inbox.org/git/ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com/
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 5bc21b8..d6e4631 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2640,6 +2640,12 @@ proc show_less_context {} {
- 	}
- }
- 
-+proc toggle_commit_type {} {
-+	global commit_type_is_amend
-+	set commit_type_is_amend [expr !$commit_type_is_amend]
-+	do_select_commit_type
-+}
-+
- ######################################################################
- ##
- ## ui construction
-@@ -2830,6 +2836,7 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
- 	if {![is_enabled nocommit]} {
- 		.mbar.commit add radiobutton \
- 			-label [mc "New Commit"] \
-+			-accelerator $M1T-E \
- 			-command do_select_commit_type \
- 			-variable selected_commit_type \
- 			-value new
-@@ -3837,6 +3844,8 @@ bind .   <$M1B-Key-j> do_revert_selection
- bind .   <$M1B-Key-J> do_revert_selection
- bind .   <$M1B-Key-i> do_add_all
- bind .   <$M1B-Key-I> do_add_all
-+bind .   <$M1B-Key-e> toggle_commit_type
-+bind .   <$M1B-Key-E> toggle_commit_type
- bind .   <$M1B-Key-minus> {show_less_context;break}
- bind .   <$M1B-Key-KP_Subtract> {show_less_context;break}
- bind .   <$M1B-Key-equal> {show_more_context;break}
--- 
-2.21.0.windows.1
 
+Birger
