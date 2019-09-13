@@ -2,77 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F5701F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 02:54:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13D6E1F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 04:48:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726532AbfIMCyX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Sep 2019 22:54:23 -0400
-Received: from mail-qt1-f180.google.com ([209.85.160.180]:40531 "EHLO
-        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726188AbfIMCyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Sep 2019 22:54:23 -0400
-Received: by mail-qt1-f180.google.com with SMTP id x5so456243qtr.7
-        for <git@vger.kernel.org>; Thu, 12 Sep 2019 19:54:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=XlWqm7saSbHKbFACtJIuroEcZik7hvB6K7c5YL1JL6U=;
-        b=QS2O4HPYlcwSokT+673c5czny2kx+uaqu/Tl4u8yD+bGtGG1Qyn2mhgLAV/O/T6M76
-         HNtghq2hYalPe4DPXptRJjYARI4jl6OjL7tI5yaFCL1t6X3pOkXUYptsXXy1VNKk7FPn
-         /43d85s9ip+kU4BfEyGbjFQqEC+E0drtsi4wNEODEPCQzt19xa6UA7ikTtnrb2QdKkIl
-         0GxGWI1I+nyFTX1qzu3JFhb9doQV1sOF0FZ0bIf5HjXR2ZzLF3I+7wtgFVzAAlhSqIeE
-         upcBuVUeMn4ZbFXBAjDXkr2gGdUDuz5VgRe+VPaPwMolvvaCGzhuWOnTe9DMetkcNGTh
-         rPyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=XlWqm7saSbHKbFACtJIuroEcZik7hvB6K7c5YL1JL6U=;
-        b=mpUWiXXBeC9nzEt1yj2jKqMB7iEXc40MDpjp2btTb2gbkT48/zLxTSB+RbNNFa5SFh
-         e2ni/Y/Ta3HG5gd4QFNgzbx3iQ/Kabcbdv5PmWK0CGzr2XV4m/voUYIxE1G/JbBfgYxK
-         kGcu/NjfUvQpxGhUJX87s8BSCFiF85oRZzRvCjUi/YwElDaV/gBW2oAyX+7zwakoKeD+
-         BnzxEpnmrRv3LPKFyvWO/ZjCBADhgykHyXfC5shxvIZH3FewYHeVeok95jWYukdJIiSU
-         dVV7HcG8MeEk6kVo6v77l/gRwttXsW3ldKVo+ul5hVgrJMjo/mwS2ki+T83W77SI54lN
-         jM8w==
-X-Gm-Message-State: APjAAAWrydjOiGEefX5ncWurDxKtNtgvPnrPNAXbkiqrKIU3YDE4/9IQ
-        2oBUk3S21DDFD55elBFP8eQ40x5RggzLHgvnaGoKQpc3
-X-Google-Smtp-Source: APXvYqxhXVJc3FiPIWO7e1CqD291Cq3Ay21iCuJY8/ms6IuT2q6AjaNmbyJVwoGTMP2kTuM5kqYzAaEaQL0QfsWlDJI=
-X-Received: by 2002:a0c:8aa1:: with SMTP id 30mr1787242qvv.93.1568343261631;
- Thu, 12 Sep 2019 19:54:21 -0700 (PDT)
+        id S1727136AbfIMEsa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 00:48:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48896 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726781AbfIMEs3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 00:48:29 -0400
+Received: (qmail 23810 invoked by uid 109); 13 Sep 2019 04:48:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Sep 2019 04:48:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14455 invoked by uid 111); 13 Sep 2019 04:50:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Sep 2019 00:50:30 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 13 Sep 2019 00:48:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/7] Fix more AsciiDoc/tor differences
+Message-ID: <20190913044828.GA21172@sigill.intra.peff.net>
+References: <cover.1567707999.git.martin.agren@gmail.com>
 MIME-Version: 1.0
-From:   Allan Ford <allan.ford17@gmail.com>
-Date:   Fri, 13 Sep 2019 12:24:10 +0930
-Message-ID: <CAL-6oQorDOzAr4sDoddoAQv3hzAgUMx7K+V=bMcvScv8G=7oqg@mail.gmail.com>
-Subject: =?UTF-8?Q?Git_Gui_=2D_enhancement_suggestion_=2D_Can_a_double_clic?=
-        =?UTF-8?Q?k_on_the_file_name_in_the_=E2=80=9Cunstaged=E2=80=9D_area_move_the_item_?=
-        =?UTF-8?Q?to_=E2=80=9Cstaged_changes=E2=80=9D?=
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1567707999.git.martin.agren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git Authors,
+On Sat, Sep 07, 2019 at 04:12:46PM +0200, Martin Ågren wrote:
 
+> This series roughly halves the line count of `./doc-diff --from-asciidoc
+> --to-asciidoctor --cut-header-footer HEAD HEAD`. Together with my recent
+> (independent) mini-series [1], I claim that Asciidoctor 1.5.5 now
+> processes the manpages better than AsciiDoc 8.6.10 does.
 
+I looked these over, both source and rendered output (both with asciidoc
+and with asciidoctor 2.0.10), and they all look good to me.
 
-Not a bug, but a suggestion consideration for =E2=80=9CGit Gui=E2=80=9D
+I think the delimited literal blocks are _slightly_ less pretty than the
+indented ones, but this is the solution we've been using for cross-tool
+compatibility (and I think it's intentional in asciidoctor to deprecate
+the indented blocks, because there are just too many corner cases). The
+delimited ones are also easier to write correctly.
 
+> Patch 6/7 actually changes the rendering with both engines, so that they
+> look nice and the same. The other patches are all no-ops with one engine
+> while fixing things with the other -- they all improve the situation
+> with Asciidoctor (which is what I care most about) except patch 1/7
+> which goes the other way (it reduces the doc-diff, which helps).
 
-Can a double click on the file name in the =E2=80=9Cunstaged=E2=80=9D area =
-move the
-item to =E2=80=9Cstaged changes=E2=80=9D .. (rather than having to click on=
- the small
-icon to the left of the file name?)
+Yeah, I agree that the change in 6/7 is an improvement (and 1/7 is an
+obvious bugfix looking at the doc-diff using just asciidoc).
 
+> Patch 7/7 has an element of black magic to it. I wouldn't be too
+> surprised if I've managed to appease my particular versions of these
+> tools while not fixing -- or maybe even breaking? -- some other versions
+> [that people actually use]. That's where I think a quick test would be
+> the most valuable.
 
-cheers, Allan
+I can confirm that asciidoctor 2.0.10 has the same bogus output there
+before your patches, and that 7/7 fixes it.
+
+-Peff
