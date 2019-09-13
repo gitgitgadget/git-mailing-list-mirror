@@ -2,134 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C6CA1F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 22:20:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 625301F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 22:29:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404020AbfIMWUw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 18:20:52 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58676 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390255AbfIMWUw (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 13 Sep 2019 18:20:52 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:d92:edb:bada:18ab])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S2404053AbfIMW3I (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 18:29:08 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55198 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404009AbfIMW3I (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 18:29:08 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3AAFB770AB;
+        Fri, 13 Sep 2019 18:29:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XoejsZ7p8wGY7UX8m04emyRzvSA=; b=cymPaO
+        R0ZN5opKVEmEG9Dh/DDxFt7ySHOIeJ1ZQpB6F32R2H0who5CYuUpoPAtbfIdQk1T
+        akv2aSwR3nV4lLLjP/Qcc6bAqCBMgvPjLJPNhz2bPqgwWRZNPLikyXU4hXVlpzA3
+        xdMZQ/CHbKGRPsqQrPp8MC9BG1tT2RdQoVpq0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jyH9Hrphnr3MFW0IiUXIKbBAW7y0UXvu
+        gNCQ7mLR/wXkJF9zMble2JsamhojWm/DzzubV/5WBqqb8KRvIxIFkytWGe3gdPMv
+        OLhZBRdV2Tdfju4qKwnOI9s7tJLGcO8BN3sCOryVY/xA0ibxKqYqrmXMSehg7oc6
+        yiQI+6bcIVA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 27300770A9;
+        Fri, 13 Sep 2019 18:29:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A46C46042C;
-        Fri, 13 Sep 2019 22:20:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1568413249;
-        bh=4LFF/Q54FMzeXQnbnhKKlzfkNOM+PWTYu2YniHUNqwE=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Ap/QVpcXu8DQnmTuf/CfWxvmU2a/qZBwO19yOKTJRZbOP3Q98gjJ8vFjucKvaBY5G
-         F8a//SXC9qVj5OdF3290mn0wXks6vUcmOAkF1jJ8u5WtW9hkgLDEtfuKRLNm8JJOIm
-         HCq7cvcN+3EnLAINHeE+odk4EOiOkLfA1fRCEyr5Jx13NXHqcrYbsElOxma6dIfnc8
-         0soYKd2AflcDt1C7YrWkPyz0MHKFB+I4CnfdlMrRH1tTBSXmubfBoPNI7ntxbGReC3
-         UnDFCXBIb1nLnjJI0nDWeiQhS5tpKYw2igIzsCo9SuXNLvcE6btmT8AFP5bOECz5Hh
-         AS4ctJ2Qh3RlstuIIkkWBgCY3pZVmq/7syjrDHOMsrdj5gTW9gNQ/Lb3Ocz9nYB6dj
-         5SPbsPX3B+crIEgSp77Mo5qOmHqgAlYw8PkgAWdt7jTKMykZ5xToxEmqLz9Rcr7Jcs
-         1k3D3usMyMvVAODRYIxfO1UM0AQus/TnNntNqmwIQpV3dd3kZqe
-Date:   Fri, 13 Sep 2019 22:20:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Siddharth Chandrasekaran <siddharth@embedjournal.com>
-Cc:     gitster <gitster@pobox.com>, git <git@vger.kernel.org>
-Subject: Re: git-am fails for emails with UTF8 characters in email header
-Message-ID: <20190913222044.GR11334@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Siddharth Chandrasekaran <siddharth@embedjournal.com>,
-        gitster <gitster@pobox.com>, git <git@vger.kernel.org>
-References: <16d2c3ccc40.b3c71baf1200589.723645117669598677@embedjournal.com>
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BA168770A7;
+        Fri, 13 Sep 2019 18:29:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [RFC PATCH 10/10] pack-objects: improve partial packfile reuse
+References: <20190913130226.7449-1-chriscool@tuxfamily.org>
+        <20190913130226.7449-11-chriscool@tuxfamily.org>
+Date:   Fri, 13 Sep 2019 15:29:00 -0700
+In-Reply-To: <20190913130226.7449-11-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Fri, 13 Sep 2019 15:02:26 +0200")
+Message-ID: <xmqq7e6bde4z.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="soWJpSPh+l8Y6Fy7"
-Content-Disposition: inline
-In-Reply-To: <16d2c3ccc40.b3c71baf1200589.723645117669598677@embedjournal.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: E37F2946-D675-11E9-BF98-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Christian Couder <christian.couder@gmail.com> writes:
 
---soWJpSPh+l8Y6Fy7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +/*
+> + * Record the offsets needed in our reused packfile chunks due to
+> + * "gaps" where we omitted some objects.
+> + */
 
-On 2019-09-13 at 20:07:24, Siddharth Chandrasekaran wrote:
-> Hi Junio,
->=20
-> My email server (zoho) puts leading UTF-8 non-breaking spaces ("\xC2\xA0")
-> when folding long mail headers. Due to this, git-am is failing as it expe=
-cts
-> only '\t' or ' ' characters.
->=20
-> RFC2822 [1] on page 7 states:
->=20
-> > The general rule is that wherever this standard allows for folding white
-> > space (not simply WSP characters), a CRLF may be inserted before any WS=
-P.
->=20
-> It appears the RFC isn't too strict about ASCII only headers (correct me =
-if I'm
-> wrong here); ergo, if the mail file is in UTF-8, isn't logical to expect =
-UTF-8
-> whitespace characters also to be allowed in the fold/unfold of headers?
+The meaning of 'start' and 'offset' is unclear from the first
+reading.  Is it "starting offset" and "for how many bytes the region
+lasts"?  If so, 'offset', which is usually a location (unless you
+always measure from the beginning, in which case you could say it
+names the byte-size of a region), may be a misnomer (side note: I'll
+pretend that I haven't realized the 'offset' may be the end offset
+of a region for now---this is a good illustration why a better
+comment should be here anyway ;-).
 
-RFC 5322 (the email specification) doesn't allow non-ASCII characters
-anywhere in the header of an email.  RFC 6532, which allows UTF-8 in
-header fields if the message is transported via SMTP using the SMTPUTF8
-extension, doesn't allow UTF-8 characters to appear in the WSP
-production, and therefore doesn't allow them as folding whitespace.
-Only space and tab are permitted in WSP.
+> +static struct reused_chunk {
+> +	off_t start;
+> +	off_t offset;
+> +} *reused_chunks;
+> +static int reused_chunks_nr;
+> +static int reused_chunks_alloc;
+> +
+> +static void record_reused_object(off_t where, off_t offset)
 
-It appears that your mail server is broken, and it would probably be
-best to get it fixed instead of trying to get git-am to work with it.
-There are servers which reject messages which are malformed, and even if
-your mail gets delivered, there are a bunch of mail clients which will
-mishandle it.
+And here, 'start' is called 'where'; either is a good word for a
+location; we'd want to pick either one to be consistent, perhaps?
 
-> I was able to get git-am to work with modifications to read_one_header_li=
-ne()
-> in mailinfo.c need your view on whether a patch is necessary for this. If=
- so, I can
-> send a patch for this.
+>  {
+> -	unsigned char buffer[8192];
+> -	off_t to_write, total;
+> -	int fd;
+> +	if (reused_chunks_nr && reused_chunks[reused_chunks_nr-1].offset == offset)
+> +		return;
 
-I don't think such a patch would be a good idea.  I definitely think we
-should support SMTPUTF8 and internationalized email, but this particular
-issue isn't such a case.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+The reason why the above code works is because this function will
+always be called in the ascending order of the 'offset'?
 
---soWJpSPh+l8Y6Fy7
-Content-Type: application/pgp-signature; name="signature.asc"
+Hmmm, perhaps 'offset' is not a region-size after all.  Is it the
+end offset, as opposed to 'start' which is the starting offset, and
+the two offsets sandwitch a region?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+> -	if (!is_pack_valid(reuse_packfile))
+> -		die(_("packfile is invalid: %s"), reuse_packfile->pack_name);
+> +	ALLOC_GROW(reused_chunks, reused_chunks_nr + 1,
+> +		   reused_chunks_alloc);
+> +	reused_chunks[reused_chunks_nr].start = where;
+> +	reused_chunks[reused_chunks_nr].offset = offset;
+> +	reused_chunks_nr++;
+> +}
+>  
+> -	fd = git_open(reuse_packfile->pack_name);
+> -	if (fd < 0)
+> -		die_errno(_("unable to open packfile for reuse: %s"),
+> -			  reuse_packfile->pack_name);
+> +/*
+> + * Binary search to find the chunk that "where" is in. Note
+> + * that we're not looking for an exact match, just the first
+> + * chunk that contains it (which implicitly ends at the start
+> + * of the next chunk.
+> + */
+> +static off_t find_reused_offset(off_t where)
+> +{
+> +	int lo = 0, hi = reused_chunks_nr;
+> +	while (lo < hi) {
+> +		int mi = lo + ((hi - lo) / 2);
+> +		if (where == reused_chunks[mi].start)
+> +			return reused_chunks[mi].offset;
+> +		if (where < reused_chunks[mi].start)
+> +			hi = mi;
+> +		else
+> +			lo = mi + 1;
+> +	}
+>  
+> -	if (lseek(fd, sizeof(struct pack_header), SEEK_SET) == -1)
+> -		die_errno(_("unable to seek in reused packfile"));
+> +	/*
+> +	 * The first chunk starts at zero, so we can't have gone below
+> +	 * there.
+> +	 */
+> +	assert(lo);
+> +	return reused_chunks[lo-1].offset;
+> +}
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl18FjsACgkQv1NdgR9S
-9otHHQ/9FzvyEo7b7c2DYVjgkkuQXDJVB2FEiocn65aKq0pFHOun0I988WQONmYx
-JIXkoqBvgYw4PkjgnSvJMIwMv1Ai4lx+JHskY8i4n3Mc9FXhUEhzm3iDXj7+6NVG
-bme39MaYJ1YgP8DyKkxYyRidu6neybd7N4KKIQzCy4OlJzg34vFCzdH77zMGB/Sx
-2eXhJj4joM2erPyijg6+zx7hb3y/MX109P+i1fB2Coj/xSUfCv7nBifzYdqIXgR4
-eEt0tLIT7PTPOC41rlq957beaet6/dKc9Ws01ZuDN85MBqQNXNSx6lI6mo22i9UB
-cPLRHk2CBA8B5CL3ObmzMUXTS/s7ZSyTIQvlgBv/UM/ffS1ppnNRz7SWWg6mKjnd
-3nxcbrWhrWT6v+GncXS1dbWrl57NPPoWDVeFbdeqQr3ZAWwDYP1d9kv6WwkzJf5t
-rWsUPCtaR47trWv9vPVvDni1AbeLDbkSvLRgl00PwsfxSqhYhOCt7NhjVpvvB+oc
-9hEobfqyil6LXaZHCVLZmXCgkgLt30AqPIzm+7ESFwYY67X4uwCsSdbFrRXsEq93
-BvygLalsAIz2G5KiBhuKzCmusgoZukONy53euS155J7S4bOJ19Zm+4crexqt23AS
-nxiuT/U0C7Dx85XsAgis5ikZ2BH+vivxxXpeN/akDrmbj+hx70o=
-=Ge5q
------END PGP SIGNATURE-----
+This comment has nothing to do with the change, but the way the
+patch is presented is quite hard to follow, in that the preimage or
+the common context lines do not help understand what the new code is
+doing at all ;-)
 
---soWJpSPh+l8Y6Fy7--
+I'll come back to the remainder of the patch later.  Thanks.
