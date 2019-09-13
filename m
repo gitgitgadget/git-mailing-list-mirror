@@ -2,106 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26BBF1F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 22:01:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E2D21F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 22:09:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403961AbfIMWBm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 18:01:42 -0400
-Received: from smtp76.ord1d.emailsrvr.com ([184.106.54.76]:48710 "EHLO
-        smtp76.ord1d.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390241AbfIMWBl (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 13 Sep 2019 18:01:41 -0400
-X-Greylist: delayed 503 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Sep 2019 18:01:41 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=g001.emailsrvr.com;
-        s=20190322-9u7zjiwi; t=1568411597;
-        bh=2CSzLefJyYmzfQCHN8qoK/t+3uv3/dMlailZ8nJ7JtM=;
-        h=Subject:To:From:Date:From;
-        b=i0PxtDAPIJlj04JXRogsiyGBVkf1v5f8Kha5BRWtLFCT9KXcOVgnP14PnAlrCTEux
-         XKeQa9SwaTW8JxW9xvGNgO/z6lSmmvNpbvPZqBKH1gYMTuszQ6XBHWbCm0l+yA+f/7
-         qtIyXrDZEuvGpbE+E1pOBThwxDIVtIzTzW52t/CE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xiplink.com;
-        s=20181102-2c3qeqyt; t=1568411597;
-        bh=2CSzLefJyYmzfQCHN8qoK/t+3uv3/dMlailZ8nJ7JtM=;
-        h=Subject:To:From:Date:From;
-        b=e4YjO3C/s5vHW6txLPPzGM5BTHbq1SuunAayGtjoh00HUNQ4JyfarqktL5/QhToaY
-         rl64CVzNJfrgqBGpvlefOGJrtV/YenzL159nmAdYWUlHN4HKLpQCSctuJDDCFvJWO0
-         BeLzBppQvPe8K6r8bNOvH24dpSZ5nx6LrhbQJeLg=
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp10.relay.ord1d.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 6AF2CA01B7;
-        Fri, 13 Sep 2019 17:53:17 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-        (using TLSv1.2 with cipher AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Fri, 13 Sep 2019 17:53:17 -0400
-Subject: =?UTF-8?Q?Re=3a_Git_Gui_-_enhancement_suggestion_-_Can_a_double_cli?=
- =?UTF-8?Q?ck_on_the_file_name_in_the_=e2=80=9cunstaged=e2=80=9d_area_move_t?=
- =?UTF-8?Q?he_item_to_=e2=80=9cstaged_changes=e2=80=9d?=
-To:     Pratyush Yadav <me@yadavpratyush.com>,
-        Allan Ford <allan.ford17@gmail.com>
-Cc:     git@vger.kernel.org
-References: <CAL-6oQorDOzAr4sDoddoAQv3hzAgUMx7K+V=bMcvScv8G=7oqg@mail.gmail.com>
- <20190913143229.5yop5oaascgavynl@yadavpratyush.com>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <3fac912d-9e3c-bf19-e1e5-2691a835b151@xiplink.com>
-Date:   Fri, 13 Sep 2019 17:53:17 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1731105AbfIMWJF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 18:09:05 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:44802 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725747AbfIMWJF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 18:09:05 -0400
+Received: by mail-pg1-f193.google.com with SMTP id i18so15934851pgl.11
+        for <git@vger.kernel.org>; Fri, 13 Sep 2019 15:09:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=P0ReMnA5kgYXKuYLHkzcH2ZaRGeRpLDTwKRKk/R1KdM=;
+        b=NWbqxpPMjZjPiRrl3pf4xXc9EbZxZQ6h8D5bbMm6zIYwJ4ZlE4fRJx0/lPd/GbyRKr
+         XJv93Kt8JUI0k4afuTAlOCdfK7unr4BtdlesJQE79dPXlkdsQwWxdUfd1YMdkSi7cMgb
+         oe7lbWtCe6y+EdBnX+r2NaiVbmSKmyVgSQDx/6Lou/uGQCggQLfTM7llOsrshsXH2ZU/
+         2oSQ/8XIiILBiH69WARyb93RpPa1KemD/yPI7yrKf4jjCrxCLl+baDAqAeaCAr0SdvQ9
+         a2YOTYnY5EoNmRrRYId9KCKfX40Te/eEV2ET06xqKYY0abdPDhAf6f2c5ttEVH1JGpbu
+         UZ7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=P0ReMnA5kgYXKuYLHkzcH2ZaRGeRpLDTwKRKk/R1KdM=;
+        b=axFFb3p/DkBCnBRsSRZG4f0M9BehibnejZn5tDNfO3uI+ft0m34BQ4IFYDNqnNlkpx
+         YT9rn4JzUsWevYhBlbsStCCwmiHKCtysgXX+Wqz/YjP3XgFmXL/qoAMDkqmuYvFRyNNh
+         J4IVZDoRUKP7vIlt+EIl2mYQMBF7Qk9lUOHJey6xpIPGS1G4KHTmi9D1bQin7IadAIwY
+         yZ9oUbLU+UBdgtvXqf09t63WdQt62vxZrJGySP6O0loA4VEgJDkZ8AWgnT+8T1BvinC2
+         DMSCAvXE12kucH9b1R/faisom90aaVz1nvrHJmDCuAbWEv9r4ph9jn/EGZUMoIvs1lEp
+         VhAg==
+X-Gm-Message-State: APjAAAVaJ3GYFNtjMb2gOeF3us+UXcWBfzlbVJe/ndBAwonjKq/BiVau
+        /yAWifBQHLaNkwuc/UDyTzLu7q3yuTE=
+X-Google-Smtp-Source: APXvYqzJZQ6GhwVnhHBVdWN0+x0g34um8Pn06y2zHGZRhb8VzgfsQO2UoBNnZ4jEeh/0H+Pgnu9kbg==
+X-Received: by 2002:a17:90a:3301:: with SMTP id m1mr7893149pjb.27.1568412544830;
+        Fri, 13 Sep 2019 15:09:04 -0700 (PDT)
+Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.138])
+        by smtp.gmail.com with ESMTPSA id w13sm30377529pfi.30.2019.09.13.15.09.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 13 Sep 2019 15:09:03 -0700 (PDT)
+Date:   Fri, 13 Sep 2019 15:09:02 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] git-submodule.txt: fix AsciiDoc formatting error
+Message-ID: <20190913220902.GA93452@dentonliu-ltm.internal.salesforce.com>
+References: <796a25ee1e9a9c0421d42ab6644e81d23a9bd99b.1568142486.git.liu.denton@gmail.com>
+ <xmqqk1acdqf8.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <20190913143229.5yop5oaascgavynl@yadavpratyush.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqk1acdqf8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-09-13 10:32 a.m., Pratyush Yadav wrote:
-> On 13/09/19 12:24PM, Allan Ford wrote:
->> Dear Git Authors,
->>
->> Not a bug, but a suggestion consideration for “Git Gui”
->>
->> Can a double click on the file name in the “unstaged” area move the
->> item to “staged changes” .. (rather than having to click on the small
->> icon to the left of the file name?)
+On Fri, Sep 13, 2019 at 11:03:39AM -0700, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
 > 
-> It has been something on my radar for some time. Shouldn't be something
-> too difficult to do.
+> > Remove surrounding parentheses so that the "index term" syntax is not
+> > triggered (and because it looks nicer without them anyway ;) ).
 > 
-> While I like the idea in general, I have a question that I'd like to ask
-> other git-gui users:
+> "Correct" always trumps "nicer", though ;-)
 > 
-> If we implement something like this, what happens when you single-click
-> on the icon? Do we treat that as a stage/unstage command? If we keep the
-> legacy behaviour of single-click on the icon stages/unstages, then a
-> part of the row is single-click and the rest double-click.
+> The $USAGE string in the script describes the available options to
+> this subcommand like so:
 > 
-> If we make an entire row of the stage/unstage widget double click, it
-> messes with people who are already used to it.
+>     or: $dashless [--quiet] set-branch (--default|--branch <branch>) [--] <path>
 > 
-> Is partial single and partial double click behaviour acceptable? Or
-> should we make the entire row double click only? Or something else that
-> I missed?
+> which is, "you can give either --default or --branch <branch>, but
+> not both".  What the original, if there were no special meaning in
+> double-paren, meant to say seems to (almost) match that.
+> 
+> > -set-branch ((-d|--default)|(-b|--branch <branch>)) [--] <path>::
+> 
+> I say "almost", as it gives a wrong impression that you can give
+> "-b" without "<branch>" X-<.
+> 
+> Now what does the updated text say to us?
+> 
+> > +set-branch (-d|--default)|(-b|--branch <branch>) [--] <path>::
+> 
+> I think the attempt to cram the short-form is unnecessarily
+> cluttering and making the result incorrect.  How about doing
+> something like this instead?
+> 
+>  Documentation/git-submodule.txt | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+> index 0ed5c24dc1..816baa7dd0 100644
+> --- a/Documentation/git-submodule.txt
+> +++ b/Documentation/git-submodule.txt
+> @@ -173,10 +173,12 @@ submodule with the `--init` option.
+>  If `--recursive` is specified, this command will recurse into the
+>  registered submodules, and update any nested submodules within.
+>  --
+> -set-branch ((-d|--default)|(-b|--branch <branch>)) [--] <path>::
+> +set-branch (--default|--branch <branch>) [--] <path>::
+>  	Sets the default remote tracking branch for the submodule. The
+> -	`--branch` option allows the remote branch to be specified. The
+> -	`--default` option removes the submodule.<name>.branch configuration
+> +	`--branch` option (or its short-form, `-b <branch>`)
+> +	allows the remote branch to be specified. The
+> +	`--default` option (or its short-form, `-d`)
+> +	removes the submodule.<name>.branch configuration
+>  	key, which causes the tracking branch to default to 'master'.
+>  
+>  summary [--cached|--files] [(-n|--summary-limit) <n>] [commit] [--] [<path>...]::
 
-I've always felt this was a bit of user-experience failure on git-gui's 
-part.  Single-click should not behave differently just because you click 
-the icon.  I've seen many new git-gui users find this (mildly) confusing.
+Hmm, I don't really like this since with every other subcommand, the
+short-forms are in the command summary so it's obvious to the reader
+in a quick glance which options are available. With this change, a
+reader would have to not only read the summary line but also scan the
+blurb below.
 
-I'd be happy if the click behavior was consistent across the entire row: 
-single-click to select, double-click to stage/unstage, and there's 
-nothing special about clicking the icon.  I personally don't think it 
-would be hard to adjust to that.
+In the context line above, we see `[(-n|--summary-limit) <n>]` as a
+possible way of notating a short and long option with argument. What do
+you think about the following potential output?
 
-I guarantee you that if double-click support is added while preserving 
-the icon-single-click, users will get tripped up when they double-click 
-the icon and accidentally stage two files.
+	set-branch (-d|--default)|((-b|--branch) <branch>) [--] <path>::
 
-		M.
-
+Of course, we reintroduce the double paren problem but I can dig into
+asciidoc syntax and figure out how to escape it properly.
