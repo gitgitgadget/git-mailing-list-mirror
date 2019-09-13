@@ -2,110 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D91C91F463
-	for <e@80x24.org>; Fri, 13 Sep 2019 14:01:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65D561F463
+	for <e@80x24.org>; Fri, 13 Sep 2019 14:06:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388333AbfIMOBq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 10:01:46 -0400
-Received: from smtp115.iad3b.emailsrvr.com ([146.20.161.115]:50527 "EHLO
-        smtp115.iad3b.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388084AbfIMOBp (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 13 Sep 2019 10:01:45 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Sep 2019 10:01:45 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=g001.emailsrvr.com;
-        s=20190322-9u7zjiwi; t=1568382905;
-        bh=73R0SABEPM06S4TzsUlDYgRWHpbvGy1Op65UdpKzU1w=;
-        h=Subject:To:From:Date:From;
-        b=bPeEgjt7uy7/zxDONcc2wpIRddrQIWVCO1f9Q6OwdqYU4vMZGY+cg3G5mmfwhQo9u
-         J9GRJOlQph4LcbQj3PhfbQUa0yI0he1PioQpQzCmXG0DA8f+0730gS8xsVPpPxE8R9
-         YnBd/CHBV/cTR2jCw4X/Y09V3mnJHey0l8xDWG1Y=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xiplink.com;
-        s=20181102-2c3qeqyt; t=1568382905;
-        bh=73R0SABEPM06S4TzsUlDYgRWHpbvGy1Op65UdpKzU1w=;
-        h=Subject:To:From:Date:From;
-        b=XaUEBrkILj07iLDGzO4ht8WJrZQ+POpoc5mr4nv+ZfrzalB/q33ix+Flw/ArdkxMK
-         3sea3+yx1Tg6hCh/q9Kd9ehNa4VqqyXdjbs3oQrmyYV9b1oM9cM/LM6iiOvDBtVGwv
-         CvAf5wy1Up9jKucvKAtd2gO9nTeaOGt5wmz9vULk=
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp7.relay.iad3b.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 4CC32601AE;
-        Fri, 13 Sep 2019 09:55:05 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-        (using TLSv1.2 with cipher AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Fri, 13 Sep 2019 09:55:05 -0400
-Subject: Re: [PATCH 2/2] git-gui: add hotkey to toggle "Amend Last Commit"
- check button/menu
-To:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Bert Wesarg <bert.wesarg@googlemail.com>,
-        Git List <git@vger.kernel.org>
-References: <ab1f68cc8552e405c9d04622be1e728ab81bda17.1567713659.git.bert.wesarg@googlemail.com>
- <b82a00441ff1a6a9cea3fd235c1c33729ec31b71.1567713659.git.bert.wesarg@googlemail.com>
- <20190911205539.vb6asqcc22nzgdqa@yadavpratyush.com>
- <CAGr--=Jz9xN6NMmiXjHeq9wZsYUx4eqfQrWjjVMkj3J1YCG_8g@mail.gmail.com>
- <20190912162924.phb5o2ppovnxa7nn@yadavpratyush.com>
- <db01db41-eff0-fb56-161a-ba26d1b18f55@xiplink.com>
- <56a6fbf8-4486-6bad-f847-793bb6b4e070@iee.email>
- <CAGr--=JDKrYT=Z8iwPVRy58OB9teH7bHXrYSZHqYHhJ=5wrJzQ@mail.gmail.com>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <aabc98d9-52c4-45f5-fd8b-0d7ee530f263@xiplink.com>
-Date:   Fri, 13 Sep 2019 09:55:05 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2388796AbfIMOGb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 10:06:31 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:33787 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388084AbfIMOGb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 10:06:31 -0400
+Received: by mail-lf1-f68.google.com with SMTP id d10so22239258lfi.0
+        for <git@vger.kernel.org>; Fri, 13 Sep 2019 07:06:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cytRWrFkEymoxrvU4Opr8X4kylMVyQGu4MiMlhfFHlk=;
+        b=SFHPK/bmnT8DqxvsFIv4MJ6kPT1N5/9L8W7pQbuTM1WgQTOvipLokrjkvnZfidl9yx
+         7Uy8t7Eeu0vXdQh4cgbEQz/1HZZ2JWgnxL7sNnDYBAkKczYUkxs8pXTLczo/+pLCMf9T
+         xeuRdO8z5Ot7J/LKV3hRAv9F4dG49V3B3BS3xbJdJYGUL4Ab8QYp7ffc5yE6qaH/dqe7
+         +qcl6XFJP7CpLC5qdthcVnT6zR0J25BzX/JkcsDJRapauYm4ygoIlCb95MqFT3zD1NaO
+         zy/gWY7ei2+fd2qgHU5pNAXq+A4rC4o8JdhG/89Luy0vJ0e8hioPl+OAxQOOAJuYDYeW
+         vzbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cytRWrFkEymoxrvU4Opr8X4kylMVyQGu4MiMlhfFHlk=;
+        b=E1krNd26LLTYJTxUJklJDFAmkZ2Xn02zZ9y/H+3FtOMX31aA/jFNJ2AfVo3pwBmo8j
+         R9+MXXS9OYMjXYwGq0d1BAPeyQ9F0khK8bFfJB109EX10fXyrNSkJU6QwpRqdbmQIzKr
+         dql2JcQlEWwPLlFcagQE+ZKMVKz71VUKBXY2tjfh8AW0TpZNZVR9sxj4l6u3vwR7LabZ
+         JUfaHzSbjphN6tezVsz6FnDWvbL/NLPJykXhhfK5xiKORtfK//hDnwV/0UDjTqq589+g
+         aC4//YualZWL6uIlkCgq368OfuhyNolB6xAUquVayMZS4WUWfpXsD/LQwrpMNybgram5
+         ZQBw==
+X-Gm-Message-State: APjAAAV8ZUU2vmEEyHJ1vcQR05tSlgnL6My/nkEEyX6v5W1myuMGZ/1D
+        7/sGBnfEttyVburYXocYCvGNjNgC2LnVO+LUero=
+X-Google-Smtp-Source: APXvYqy/vONLbhKl6lwbT+LKdRtnlrMKtwP7x8sWnGesvnmZj8+aJTbrlfrpRK3kmx+WPjP88/mYFYH7o4igOtbv1rE=
+X-Received: by 2002:a19:f11c:: with SMTP id p28mr30814050lfh.44.1568383588718;
+ Fri, 13 Sep 2019 07:06:28 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAGr--=JDKrYT=Z8iwPVRy58OB9teH7bHXrYSZHqYHhJ=5wrJzQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190806014935.GA26909@google.com> <20190806132052.GB18442@sigill.intra.peff.net>
+ <20190806204925.GA196191@google.com> <885DEEA4-154B-4990-945D-19DABC87C627@jramsay.com.au>
+In-Reply-To: <885DEEA4-154B-4990-945D-19DABC87C627@jramsay.com.au>
+From:   pedro rijo <pedrorijo91@gmail.com>
+Date:   Fri, 13 Sep 2019 15:05:52 +0100
+Message-ID: <CAPMsMoAwfp+jv9h7xAD9PbqV+cU4njyf7Tex6HUCznqjb5hi_w@mail.gmail.com>
+Subject: Re: RFC - Git Developer Blog
+To:     James Ramsay <james@jramsay.com.au>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, Jeff King <peff@peff.net>,
+        Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-09-13 3:50 a.m., Birger Skogeng Pedersen wrote:
-> Hi Marc and Philip,
-> 
-> 
-> On 12/09/2019 22:34, Marc Branchaud wrote:
->> I disagree!  Who expects anything to work properly when capslock is on?
-> 
-> Me :-)
+Just a minor question: since we have git-scm, pro-git, and git
+translations in github, why not keep in the same place, under the same
+organization? I just find it easier to find than having repos
+scattered across different git hosting services
 
-Fair enough, though I imagine you have a pretty narrow definition of 
-"anything".  :)
+James Ramsay <james@jramsay.com.au> escreveu no dia sexta, 13/09/2019
+=C3=A0(s) 14:34:
+>
+> On 6 Aug 2019, at 16:49, Emily Shaffer wrote:
+>
+> > On Tue, Aug 06, 2019 at 09:20:52AM -0400, Jeff King wrote:
+> >> On Mon, Aug 05, 2019 at 06:49:35PM -0700, Emily Shaffer wrote:
+> >>
+> >>> Are folks interested in writing and reviewing this kind of content?
+> >>> Any
+> >>> ideas for where we may be able to host (maybe git-scm)?
+> >>
+> >> I think it would make sense to have blog.git-scm.com (and .org) with
+> >> this content. I'd be happy to deal with the technical side of setting
+> >> the name up. I think it should live in a different repository than
+> >> the
+> >> main site, though (which is an overly-messy Rails app).
+> >
+> > I'd certainly be happy with that setup if others agree, although the
+> > incorporation with Git Rev News sounds interesting too (I'll reply to
+> > that post also).
+> >
+>
+> As volunteered yesterday at the Virtual Contributors' Summit, I have
+> created a project on GitLab to start working on this
+> https://gitlab.com/git-scm/blog. I hope to have a basic text centric
+> implementation for feedback in the next few weeks. For now, all I've
+> created is merge request with an empty Hugo site and automated deploys.
+>
+> Those who would like to be added as maintainers, you should be able to
+> Request Access using the link near the project name.
+>
+> Peff, you mentioned Jason might have some designs or ideas with regards
+> visuals. I'm happy to be put in touch directly or collaborate here.
+>
 
-> On Fri, Sep 13, 2019 at 12:23 AM Philip Oakley <philipoakley@iee.email> wrote:
->> I'd tend to agree. In other areas the use of shift is often used as the
->> complement of the unshifted action, so it does feel 'odd'. Thus it could
->> be used directly as the bool for amend or direct commit.
->>
->> This all assumes that Caps Lock is equivalent to having the shift on,
->> rather than being a special extra key.
-> 
-> It seems all the Ctrl+(lowercase character) hotkeys in git-gui have an
-> equivalent Ctrl+(uppercase character).
-> So for this feature, we should keep the Ctrl+E bind aswell as the
-> Ctrl+e bind. If nothing else, to keep it consistent with the rest of
-> the hotkey bindings.
 
-Ah, OK.  I agree that keeping git-gui internally consistent trumps the 
-other considerations.
+--=20
+Obrigado,
 
-		M.
-
-
-> But honestly, (as Marc pointed out) it is a quite weird that
-> Ctrl+Shift+(character) has the excact same function as
-> Ctrl+(character). Perhaps we should find another way to bind the
-> hotkeys, where the state of Caps Lock doesn't matter? If possible.
-> 
-> 
-> Birger
-> 
+Pedro Rijo
