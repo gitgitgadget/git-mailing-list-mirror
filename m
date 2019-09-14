@@ -2,108 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC5961F463
-	for <e@80x24.org>; Sat, 14 Sep 2019 09:18:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF34F1F463
+	for <e@80x24.org>; Sat, 14 Sep 2019 12:24:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727685AbfINJSu (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Sep 2019 05:18:50 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:35320 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727551AbfINJSu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Sep 2019 05:18:50 -0400
-Received: by mail-lj1-f195.google.com with SMTP id q22so24702600ljj.2
-        for <git@vger.kernel.org>; Sat, 14 Sep 2019 02:18:48 -0700 (PDT)
+        id S1730410AbfINMYs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Sep 2019 08:24:48 -0400
+Received: from mail-lj1-f173.google.com ([209.85.208.173]:32937 "EHLO
+        mail-lj1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730286AbfINMYr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Sep 2019 08:24:47 -0400
+Received: by mail-lj1-f173.google.com with SMTP id a22so29571919ljd.0
+        for <git@vger.kernel.org>; Sat, 14 Sep 2019 05:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ss5vy8RCU4V/W4z0W8awGhphA9OMZdSkV8/LTKscrXU=;
-        b=WuwBg67ov16LCEyeLizyJcr7pIzD8yNmArbsebsW6XWcOls1A6bOie69Rt98eG23ha
-         gGqM/lPFW1/8yzF+51J+MFNcRSrR3qI+BPMJI9M0icp7xRw/NvwAF1Id25pmTvzR/SRF
-         0hBzOYwCBjOhaP56Y1uCjwzags7cXAwtZ34XekhlJ7z4fw/N5/HZYUfoQZdLkY2sKYss
-         Vqh7sQCUQaLptz0J0pB/QOukrWRTxVG5gER2vOvPy//aTQX2KYp0O2JUi0LyRzdG73ao
-         AFt7StQALGQuJDFb3VAfJeBwl16FMBXWFf66UcR20qFHD7d4R20RfDnDcO23y6iqAUlm
-         L3TQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=TsnFoVPDl4uUlX8pRK+nlOVoo4qUBF6KW5w/9Etyo8M=;
+        b=lLdnVTIAvhDGAWjAZcqi1v6SBPh2Kdsg0qttoaCdfx8b+P6xEkzChbh2pKobFCHCZy
+         8gzVnb5M8BZjAilgowBvSh+3s0F9XNj4itKbyzqb0RvUpeAh3bJ7cM4SEd08enWfhw2w
+         NtzVYDAdcA+AqHa8fgrfyB3REePC0gDskDoL9rGM1H0CKdyixSkOOpeLUOfgG8wxi6Us
+         4wswhizPQifrzgQkNUaI4v72Wqwql2f5548ODe2C1X28IfaQuvhmG2NEZ1BwMxf12ppU
+         qEcuDh9A4RaVglF24zEGe1Jby6YkkYDSoS09PiFMNdHJqjW2apa+8OjzwiZQF9wKD8kV
+         61Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ss5vy8RCU4V/W4z0W8awGhphA9OMZdSkV8/LTKscrXU=;
-        b=Pu1gXef5AWnHT6OFoXVaSoCTinkeGGe1nBm2w9vG5+zhD2x5PUQit+HbCirjcf1xW1
-         pCS4KHAKtWc7k/26l3la5ZqZHoRf0fxvoZEU7jVfPu0MqCsC08f4iZLnfpKJhGBk/yAK
-         0tLU+VOuVlaAhs5LCipVkH9hEaAefWG9L4lD3shngOD+z4vATU+Pd25Lq7XznaqSPOCN
-         vD/ez/VQfwbLNPISFQJcM7ssZg+EztSOYuyIrCOphWvu+OpLWrNikS71VKl7d1nudFNu
-         atcSr1HZ1+vl5BibIiN4Xnj5Q+PWLSST+QuMOgVGp/552zHGkYvEijfGCr6vFS6iAg6o
-         uj7g==
-X-Gm-Message-State: APjAAAWABEWqxkA7HUZ1Q1WPmluFfY79xbOq2H1s7dYuhPIryjtzzkQP
-        dyZaY3vZA6ChQ9wxNKb4YUlabAgttLYDHQ==
-X-Google-Smtp-Source: APXvYqx0rcPGoWm9Yaj2Po1UwXnqRAZuAVoFS1PBp5YHbjcerid1GmphgkpToRJRgPWMn8ZLDS24QA==
-X-Received: by 2002:a2e:8012:: with SMTP id j18mr32744034ljg.36.1568452728070;
-        Sat, 14 Sep 2019 02:18:48 -0700 (PDT)
-Received: from localhost.localdomain (static243-191-189.mimer.net. [83.243.191.189])
-        by smtp.gmail.com with ESMTPSA id f22sm7518007lfa.41.2019.09.14.02.18.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 14 Sep 2019 02:18:47 -0700 (PDT)
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-To:     me@yadavpratyush.com
-Cc:     git@vger.kernel.org, Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH v5] git-gui: add hotkey to toggle "Amend Last Commit"
-Date:   Sat, 14 Sep 2019 11:18:35 +0200
-Message-Id: <20190914091835.11236-1-birger.sp@gmail.com>
-X-Mailer: git-send-email 2.21.0.windows.1
-In-Reply-To: <CAGr--=LmC2VwGCdfRuv_G2mXTt2H8XMDGsLnHU_2oHGhvbdNsg@mail.gmail.com>
-References: <CAGr--=LmC2VwGCdfRuv_G2mXTt2H8XMDGsLnHU_2oHGhvbdNsg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=TsnFoVPDl4uUlX8pRK+nlOVoo4qUBF6KW5w/9Etyo8M=;
+        b=SGtAvL7/D2dWaD5A7mi0TmaerbUFkWFDdsDyO/O1J11CLUQLVwSk+OAlB+vHxPNNnP
+         3ipJszEf5UqAI+RB/OBwrTtEQMI+3tywH1KgWQ5+Y36wXLArF1bSoD6d5gLU5/VsCr/Y
+         EvGDPx4/nSaoielCAsvjWWuC5mgFvenYHz0enu62OKEOZxIq+1PK8AfpscI+fNqevNQN
+         H7Yeh5Fp41b7nyggFaQ0MmmUmJS6derrIcTtwAxI9V2b6qI+pUFNxZ3IOKz+/qZ8hZ7X
+         MwUth9qj3mOyExwZPhzeuXtJNICeNi4/UIKr5aSugAwi24RIHcfyAzryaReEzGtKeogG
+         v/1A==
+X-Gm-Message-State: APjAAAV6eAQHYpAOtNbducGjlMkoTDE9jAbIjw6jhYh2fziuclw5EmhU
+        /RcNW5CI6XEtX+wMPJ0zdUDWX1Rf42h64CNdn118LA4mb+M=
+X-Google-Smtp-Source: APXvYqxR5+63ERQgPH6b9Im1aWtXI5Wx9S3/qaFL+mewSEoQ2dUnGZZKV3sDxNKGvCESgKICy1xbYvLDeA79POT8UZY=
+X-Received: by 2002:a2e:81d1:: with SMTP id s17mr27565775ljg.94.1568463884811;
+ Sat, 14 Sep 2019 05:24:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
+Date:   Sat, 14 Sep 2019 14:24:34 +0200
+Message-ID: <CAGr--=KMJmYtVaATFkOPcboAdkLvpZFbWAo4QAE0-uC6RL4Lqg@mail.gmail.com>
+Subject: git-gui: automatically move focus to staged file before typing commit message?
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Selecting whether to "Amend Last Commit" or not does not have a hotkey.
+Hi everyone,
 
-With this patch, the user may toggle between the two options with
-CTRL/CMD+e.
 
-Signed-off-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
-Rebased-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- git-gui.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+I personally prefer to have the changes I am about to commit visible
+in the diff view, while I write my commit message. So usually I do
+this:
+1. Stage the file(s) I've been working on.
+2. Select a file I just staged, so I can see the changes in the diff widget.
+3. Jump to the "Commit Message" widget to type up my commit message.
+Basically, I would like to be able to skip step 2. When the user
+stages the last file in the "Unstaged Changes" widget, no file is
+selected and the diff view becomes blank. When this is the case, I
+would prefer that git-gui automatically selects one of the staged
+files and shows it in the diff widget before I type up my commit
+message. Naturally, this automatic selection should **only** happen
+when the user chooses focus the "Commit Message" widget.
 
-diff --git a/git-gui.sh b/git-gui.sh
-index c7d9103..790adf1 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2664,6 +2664,12 @@ proc focus_widget {widget} {
- 	}
- }
- 
-+proc toggle_commit_type {} {
-+	global commit_type_is_amend
-+	set commit_type_is_amend [expr !$commit_type_is_amend]
-+	do_select_commit_type
-+}
-+
- ######################################################################
- ##
- ## ui construction
-@@ -3892,6 +3898,8 @@ bind .   <$M1B-Key-j> do_revert_selection
- bind .   <$M1B-Key-J> do_revert_selection
- bind .   <$M1B-Key-i> do_add_all
- bind .   <$M1B-Key-I> do_add_all
-+bind .   <$M1B-Key-e> toggle_commit_type
-+bind .   <$M1B-Key-E> toggle_commit_type
- bind .   <$M1B-Key-minus> {show_less_context;break}
- bind .   <$M1B-Key-KP_Subtract> {show_less_context;break}
- bind .   <$M1B-Key-equal> {show_more_context;break}
--- 
-2.21.0.windows.1
+I propose:
+(When the user focuses the "Commit Message" widget, if no file is
+currently selected (i.e. diff widget shows no text))
+automatically select the first file listed in the "Staged Changes"
+widget so the changes of that file show up in the diff widget.
 
+Thoughts?
+
+
+Best regards,
+Birger S Pedersen
