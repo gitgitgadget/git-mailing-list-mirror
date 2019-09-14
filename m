@@ -8,52 +8,53 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 110AE1F463
-	for <e@80x24.org>; Sat, 14 Sep 2019 00:26:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CAEE1F463
+	for <e@80x24.org>; Sat, 14 Sep 2019 00:26:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389208AbfINA0E (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 20:26:04 -0400
-Received: from mail-qt1-f202.google.com ([209.85.160.202]:34111 "EHLO
-        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388921AbfINA0E (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Sep 2019 20:26:04 -0400
-Received: by mail-qt1-f202.google.com with SMTP id f19so33595770qtq.1
-        for <git@vger.kernel.org>; Fri, 13 Sep 2019 17:26:03 -0700 (PDT)
+        id S2389243AbfINA0G (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 20:26:06 -0400
+Received: from mail-yw1-f73.google.com ([209.85.161.73]:53744 "EHLO
+        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388921AbfINA0G (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 20:26:06 -0400
+Received: by mail-yw1-f73.google.com with SMTP id x198so16892994ywg.20
+        for <git@vger.kernel.org>; Fri, 13 Sep 2019 17:26:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=M5FQ0tdW10JGWo2qBWST/Dn2Qy4HYj+CrtJB01fomew=;
-        b=NtHeQqYSIfMjfh04gN22bJnS32zJxtcQri2gbqcnVZ0jWbgzcrWaaow9N3qjK31ZKx
-         pPnuMOyJJS9z2COFaaTR8sZna27ISa8TVftj2WzFdcQVTsoGmfYOucgJBj/nx/Ki/4W1
-         5u/X05Vjv6uq7r/50yh1c+HWXNBK7M7XmaV9OMYeY+G6RTLb3DI5uGHJOd5sl/pv1Inx
-         kjHpog35rl39894iexZ4BG7OzeYmgYUQCVxnO4MhTWQaImkMTmj652xUQrvcOt2EvctZ
-         hqBorOh2TyAzWhs3MIqIJTFirVhT2JkBlibyhTOKNE9Hv9U2afO1kLBKWCp1TIZxGefa
-         ZiCw==
+        bh=6b1C42YvL9wG9RGJeCyzR9B8B/irrmKx1OFJgRPpUFo=;
+        b=CJ+nUzTL9BZ0KZTGqg6u7tD70CqiWvTR9s7ALBLTptH/YeqY9HhLzTkP4CBTkyIaBF
+         PG+tvYntiwsmdWH6jU6JPMhGUjp1hZRespcrR7y2BrsMn+lW4vUNUJYqGWx8LsX/qZNZ
+         bNlptKmTjb96MwBa9mmfOdlLqjtHWwiiYtv/VLVyxWTwzP+7QgumdrKrC9K1PNVmw4+W
+         PCwvNpHSiUTeypVYXTRjyNA7fYcFS8grZBop5LTR0Bv6VHOdPOQ9yM7m4ixiGtf1DjXX
+         7hmLS6d4juq5f0hjvEB1dZ3pZIj1vBXayQg4fLoylhmxoPKSOR/EO1Akwl/FIGPP6pyS
+         QlSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=M5FQ0tdW10JGWo2qBWST/Dn2Qy4HYj+CrtJB01fomew=;
-        b=GBixXvT57QRC5T453+7QnT/DqrxaKP2e/EzU4bPPBHXUfpDivkdMXhbJe+sJDg+1rz
-         EPeUS++jH2kG+CUHyZF0uTE/lAulpKhvct8YVIfLA4ugYY44+I+pznMIzr83QvDjrEn6
-         8zUVHhoO4pZ6Y6hIgagwKnN2OM3fKeTqfWmsT29LeLT7tZhv8aGlQdurgPNIdI84Qx2I
-         vMA4jkBj7Xa8Gn4L18DJb0vkR2ca1UeG7dJpYguu0phfOhOgr0/e2sskx38RUKuWTzRQ
-         VgX3vzQruPvKdHmSJoyzQLS1YKAJbSHsPz78gzD8IC8yp02lV8TnXPa/n13K9kr+20Ft
-         pjfw==
-X-Gm-Message-State: APjAAAWwTt9LxE0QIm3FZL3NGzxjq8kLixfUg6lKJOiAomkKQRT/Zv4M
-        pT7aT9tqAzix9j2mUBjy4CjtSdDy+BiPdde7fzdS1k1kEqJOMQ821icrxnvt+iodrwd3O5BSIdg
-        KehYVcTVpM1tNUh3cNGwBGPHi1/KR+Mvm/bF1AqjakskyNa8uf3WPQdaZLrvBxPE=
-X-Google-Smtp-Source: APXvYqzIffCfimCQ7vcqtSsq5HnEbjLEA0VCf8x5E9Pw9ZcNaDlmE3dmtHc9TwmfNE3KYZvAz/fG+alzOTEWAQ==
-X-Received: by 2002:a05:620a:1467:: with SMTP id j7mr6888566qkl.434.1568420762928;
- Fri, 13 Sep 2019 17:26:02 -0700 (PDT)
-Date:   Fri, 13 Sep 2019 17:25:57 -0700
-In-Reply-To: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
-Message-Id: <cover.1568419818.git.steadmon@google.com>
+        bh=6b1C42YvL9wG9RGJeCyzR9B8B/irrmKx1OFJgRPpUFo=;
+        b=oXOzZ8UatT/69Hg4/O6poONw684vpJc3XBxTSdN2JRLvmvWuK0CtfZ14+tc9twBigU
+         aumPJXiXlpmk9IE8dtDEJN+BhiqfnkzQwVcrsAJn6V43vU6bxQAGSpf7dyf5locws+5W
+         zHWMJJCjvuZtAaS05mwglm4z8tX10xVcyUGHcxY+WXX/Tmr6fC6BUKlsrQVRYeJoL0zc
+         KA8CBlL1HGI8Rk1RZES4Ahn1M/95qrtG/SKXrubHtC/zK9/jYtKiiMfpBX6pHBVM+rDv
+         V80aY0tzmMWIWyPETr4sS6meSBOmh0+XycUvpGBlQEy/inXjIo3HyGixw+vbvymllfgM
+         GKBQ==
+X-Gm-Message-State: APjAAAU2iOCnrdG+qGtUyfcfHVZvo5XBLZjPjVIOuUd8Wlz1XNym56xy
+        VxPNN879U8sIOiaSQf/Jb8C5m7cYZ8YS8JTTCGrqvAJKiNZOBjs66sK/l6Ij//+diYyoL5Qeecr
+        31oaFYrBWh1kPDNPKWCspHt79/JwHW37K9Zzhe9vpQZN1gfCF9M7Tr9fv+uV/iVs=
+X-Google-Smtp-Source: APXvYqyTOWcOecKzA7cQ5WzaKAttkB847PNUYfhp7C4IJB2f/baA+o7S7Q8JoGaXU45iKtjpQX1GD+LLcj6/sw==
+X-Received: by 2002:a81:794f:: with SMTP id u76mr8338698ywc.467.1568420765477;
+ Fri, 13 Sep 2019 17:26:05 -0700 (PDT)
+Date:   Fri, 13 Sep 2019 17:25:58 -0700
+In-Reply-To: <cover.1568419818.git.steadmon@google.com>
+Message-Id: <eacffe250d2029f190d04144c9242ae25b8fb094.1568419818.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
+ <cover.1568419818.git.steadmon@google.com>
 X-Mailer: git-send-email 2.23.0.237.gc6a4ce50a0-goog
-Subject: [RFC PATCH v3 0/3] trace2: don't overload target directories
+Subject: [RFC PATCH v3 1/3] docs: mention trace2 target-dir mode in git-config
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Cc:     stolee@gmail.com, git@jeffhostetler.com, szeder.dev@gmail.com
@@ -63,91 +64,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is still RFC, as I still haven't done performance testing yet. I'm
-mainly looking for feedback right now on patch 3/3, which extends the
-tr2_dst API with an optional function to write a custom message into the
-overload sentinel file.
+Move the description of trace2's target-directory behavior into the
+shared trace2-target-values file so that it is included in both the
+git-config and api-trace2 docs. Leave the SID discussion only in
+api-trace2 since it's a technical detail.
 
-Changes since V2:
-* Added a new patch (3/3) that allows the different trace2 targets to
-  write custom messages to the overload sentinel file.
-* Added a new "overload" trace2 event type.
-* Bumped up the trace2 event format version.
-* Moved the test from t0210 to t0212, so that we can test the custom
-  writer for the event target at the same time.
-* Removed some unnecessary sanity-checking in the test.
-* Fixed a coccicheck complaint about strbuf_addbuf.
-* Used hardcoded file modes to be consistent with the rest of the
-  project.
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ Documentation/technical/api-trace2.txt | 7 +++----
+ Documentation/trace2-target-values.txt | 4 +++-
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-Josh Steadmon (3):
-  docs: mention trace2 target-dir mode in git-config
-  trace2: don't overload target directories
-  trace2: write overload message to sentinel files
-
- Documentation/config/trace2.txt        |   6 ++
- Documentation/technical/api-trace2.txt |  24 +++--
- Documentation/trace2-target-values.txt |   4 +-
- t/t0212-trace2-event.sh                |  17 ++++
- trace2/tr2_dst.c                       | 118 +++++++++++++++++++++++++
- trace2/tr2_dst.h                       |   3 +
- trace2/tr2_sysenv.c                    |   3 +
- trace2/tr2_sysenv.h                    |   2 +
- trace2/tr2_tgt_event.c                 |  21 ++++-
- trace2/tr2_tgt_normal.c                |   2 +-
- trace2/tr2_tgt_perf.c                  |   2 +-
- 11 files changed, 191 insertions(+), 11 deletions(-)
-
-Range-diff against v2:
-1:  65e05a3db5 = 1:  eacffe250d docs: mention trace2 target-dir mode in git-config
-2:  f897a11068 ! 2:  bf20ec8ea2 trace2: don't overload target directories
-    @@ Documentation/config/trace2.txt: trace2.destinationDebug::
-     +	write a sentinel file that will block further tracing to this
-     +	directory. Defaults to 0, which disables this check.
-     
-    - ## t/t0210-trace2-normal.sh ##
-    -@@ t/t0210-trace2-normal.sh: test_expect_success 'using global config with include' '
-    + ## t/t0212-trace2-event.sh ##
-    +@@ t/t0212-trace2-event.sh: test_expect_success JSON_PP 'using global config, event stream, error event' '
-      	test_cmp expect actual
-      '
-      
-    @@ t/t0210-trace2-normal.sh: test_expect_success 'using global config with include'
-     +		test_seq $GIT_TRACE2_MAX_FILES >../expected_filenames.txt &&
-     +		xargs touch <../expected_filenames.txt &&
-     +		cd .. &&
-    -+		ls trace_target_dir >first_ls_output.txt &&
-    -+		test_cmp expected_filenames.txt first_ls_output.txt &&
-    -+		GIT_TRACE2="$(pwd)/trace_target_dir" test-tool trace2 001return 0
-    ++		GIT_TRACE2_EVENT="$(pwd)/trace_target_dir" test-tool trace2 001return 0
-     +	) &&
-     +	echo git-trace2-overload >>expected_filenames.txt &&
-    -+	ls trace_target_dir >second_ls_output.txt &&
-    -+	test_cmp expected_filenames.txt second_ls_output.txt
-    ++	ls trace_target_dir >ls_output.txt &&
-    ++	test_cmp expected_filenames.txt ls_output.txt
-     +'
-     +
-      test_done
-    @@ trace2/tr2_dst.c: void tr2_dst_trace_disable(struct tr2_dst *dst)
-     +	}
-     +
-     +	/* check sentinel */
-    -+	strbuf_addstr(&sentinel_path, path.buf);
-    ++	strbuf_addbuf(&sentinel_path, &path);
-     +	strbuf_addstr(&sentinel_path, OVERLOAD_SENTINEL_NAME);
-     +	if (!stat(sentinel_path.buf, &statbuf)) {
-     +		ret = 1;
-    @@ trace2/tr2_dst.c: void tr2_dst_trace_disable(struct tr2_dst *dst)
-     +		closedir(dirp);
-     +
-     +	if (file_count >= tr2env_max_files) {
-    -+		creat(sentinel_path.buf, S_IRUSR | S_IWUSR);
-    ++		creat(sentinel_path.buf, 0666);
-     +		ret = 1;
-     +		goto cleanup;
-     +	}
--:  ---------- > 3:  bab45cb735 trace2: write overload message to sentinel files
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index 71eb081fed..80ffceada0 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -142,10 +142,9 @@ system or global config value to one of the following:
+ 
+ include::../trace2-target-values.txt[]
+ 
+-If the target already exists and is a directory, the traces will be
+-written to files (one per process) underneath the given directory. They
+-will be named according to the last component of the SID (optionally
+-followed by a counter to avoid filename collisions).
++When trace files are written to a target directory, they will be named according
++to the last component of the SID (optionally followed by a counter to avoid
++filename collisions).
+ 
+ == Trace2 API
+ 
+diff --git a/Documentation/trace2-target-values.txt b/Documentation/trace2-target-values.txt
+index 27d3c64e66..3985b6d3c2 100644
+--- a/Documentation/trace2-target-values.txt
++++ b/Documentation/trace2-target-values.txt
+@@ -2,7 +2,9 @@
+ * `0` or `false` - Disables the target.
+ * `1` or `true` - Writes to `STDERR`.
+ * `[2-9]` - Writes to the already opened file descriptor.
+-* `<absolute-pathname>` - Writes to the file in append mode.
++* `<absolute-pathname>` - Writes to the file in append mode. If the target
++already exists and is a directory, the traces will be written to files (one
++per process) underneath the given directory.
+ * `af_unix:[<socket_type>:]<absolute-pathname>` - Write to a
+ Unix DomainSocket (on platforms that support them).  Socket
+ type can be either `stream` or `dgram`; if omitted Git will
 -- 
 2.23.0.237.gc6a4ce50a0-goog
 
