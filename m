@@ -2,95 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B01361F463
-	for <e@80x24.org>; Sat, 14 Sep 2019 12:49:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29F091F463
+	for <e@80x24.org>; Sat, 14 Sep 2019 13:58:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388356AbfINMtq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Sep 2019 08:49:46 -0400
-Received: from mail-wm1-f50.google.com ([209.85.128.50]:50193 "EHLO
-        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388351AbfINMtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Sep 2019 08:49:46 -0400
-Received: by mail-wm1-f50.google.com with SMTP id c10so5375475wmc.0
-        for <git@vger.kernel.org>; Sat, 14 Sep 2019 05:49:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=Ve0P3hfwDx6REHSOCBFhrm4WuOtsCz4P4F3mpCMiBJY=;
-        b=N71uSNKJBV5xpFMtBOORF7rdCZTVMxGiVTsLrVOoFHpN+67YFz8tYdHGUN21S32ftV
-         BE/0gB8Z3zUPYBz7EMVSxZanbexFa6sYxS7S1sIZIPKg9Oat1d7bxMT4q0ABpWre819E
-         dfyKX78nwyzzlrp+MnAWigZQqgs1db0j84BH1GfliLUMlqI0pJy32O/9nWivZZg4xYTg
-         Ucm21xW+dNXPVcaeokh6MZ7vRDsgs+k7dcOIv5dq7kMYjpVpHaaRzBVjcXc/+k7JdGIt
-         jDBNVyGyTwg4s8MfA4sb+XG2FxuOaf9BhsSaPD+V1pNPv7nGAZrHC2CeFxXltNYgqFnJ
-         Np9w==
+        id S2389032AbfINN6k (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Sep 2019 09:58:40 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:42267 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388942AbfINN6j (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Sep 2019 09:58:39 -0400
+Received: by mail-pl1-f194.google.com with SMTP id e5so3487270pls.9
+        for <git@vger.kernel.org>; Sat, 14 Sep 2019 06:58:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=Ve0P3hfwDx6REHSOCBFhrm4WuOtsCz4P4F3mpCMiBJY=;
-        b=X9L5tzxSCc52AN6xDqX0+33fSc21s88iaIqoJUNacfz/GdugZudbRiG1ofZ2yfpuOF
-         bkggdKN/iY/ik7gwQ7H8gxdUg3zaDTzn9pt9NJ6YvYCFDsczMprxK9cd9uC2qF5UdZCk
-         ydzDsFBZ+Tkx1m5NFoHuq3rWw+l8l9SQb3J9Yz3kqEmrgjML/zhlxT9+xEMEIVx9RTqI
-         I4yHjQElrJ7+rRSo9txFxZB11kS2K2F8ngjytGVbLSU4xh3qP1sTsObf9xYMqDY0eQSa
-         T7TxnE0z9wlTYsddQJUgiz9prZKb4eTVJl4jPuXwgpPJo4sFnWzyWT2SLDRTayVs7mrQ
-         dBJA==
-X-Gm-Message-State: APjAAAXMWLptG48PCmA/cLrkpBQ8HdpVOMLOW4/lEBwFee7V/Yspt8t4
-        9/3QwuM9kz1uEjquLhqfF1JMq2qUNqc=
-X-Google-Smtp-Source: APXvYqwZ4sggkEu9wyIJsRI6zieFD3WdtyF8dJyOrkHPfk6b2JZT6jyOyg3XmxMlGzz0NBrU9dbvzA==
-X-Received: by 2002:a1c:1b58:: with SMTP id b85mr7515477wmb.95.1568465384353;
-        Sat, 14 Sep 2019 05:49:44 -0700 (PDT)
-Received: from ?IPv6:2a01:e35:2f1a:f160:5d34:95e:5d6e:ddbb? ([2a01:e35:2f1a:f160:5d34:95e:5d6e:ddbb])
-        by smtp.gmail.com with ESMTPSA id y72sm7695173wmc.26.2019.09.14.05.49.43
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 14 Sep 2019 05:49:43 -0700 (PDT)
-To:     git@vger.kernel.org
-From:   Audric GUERIN <audric.guerin@gmail.com>
-Subject: Git versioning policy - PatchMyPC compatibility on Windows
-Message-ID: <c760038f-7c50-73df-5187-a186868c995b@gmail.com>
-Date:   Sat, 14 Sep 2019 14:49:40 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
+        h=x-gm-message-state:date:subject:in-reply-to:cc:from:to:message-id
+         :mime-version:content-transfer-encoding;
+        bh=aHV4YDbBVq+ZTYNOiJhL+ML1acL+SRcueLSm4p0haP8=;
+        b=G+uINyCGmZZT0Zt79cRPXUXmXYMVBij909eHunjGpeU6G0byhKjHk3RHDClnO/kEn3
+         FUvmfS9E9UaOjLe/lRMluKK19Z7S9RzrSpqBLvisZVvmEOutfZXlFMKKaHdIgP3KXe1N
+         WuLyMiMeEwiOExJ1ZLH7zl/gplyA54bYUfYGtq1KwH+6/HDJj91nyFSsbNziEBSyOXkX
+         Fr/tAj/HUPQz3bTosorYYnT80Z1jP6A9ztj6UCO22LnTnBCYoOgSmIlvxoMURiFF38AK
+         fuJIDEYFpjPP0eikSFRkz9P7Eymb5lJfD++1MlMz3JNg7jb4E0aLDSmQPUtK4unxHUoN
+         wD9Q==
+X-Gm-Message-State: APjAAAVTP01LIXba9nJ/CQ/FNuejQSelBupaNvxwUGYpAn9QwRufY2J+
+        fKbLrfXmCAO9r4ASndKw4SvtzQ==
+X-Google-Smtp-Source: APXvYqypJwXPuk+jsN5ceNpm3YAgheUNd0F0btaLzBR+p0h+t/MyiS7OtwEQLXTzskJo8ktjstbR/g==
+X-Received: by 2002:a17:902:d888:: with SMTP id b8mr52732095plz.272.1568469517479;
+        Sat, 14 Sep 2019 06:58:37 -0700 (PDT)
+Received: from localhost (amx-tls3.starhub.net.sg. [203.116.164.13])
+        by smtp.gmail.com with ESMTPSA id u1sm23487977pgi.28.2019.09.14.06.58.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Sep 2019 06:58:37 -0700 (PDT)
+Date:   Sat, 14 Sep 2019 06:58:37 -0700 (PDT)
+X-Google-Original-Date: Sat, 14 Sep 2019 06:35:40 PDT (-0700)
+Subject:     Re: pd/fetch-jobs, was Re: What's cooking in git.git (Sep 2019, #01; Sat, 7)
+In-Reply-To: <xmqq8sqtgzp9.fsf@gitster-ct.c.googlers.com>
+CC:     Johannes.Schindelin@gmx.de, git@vger.kernel.org
+From:   Palmer Dabbelt <palmer@sifive.com>
+To:     gitster@pobox.com
+Message-ID: <mhng-2c9b8fd0-22e7-4679-9d9b-f8128881fada@palmer-si-x1e>
+Mime-Version: 1.0 (MHng)
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, 12 Sep 2019 11:02:42 PDT (-0700), gitster@pobox.com wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>>> * pd/fetch-jobs (2019-08-13) 5 commits
+>>>  . fetch: make --jobs control submodules and remotes
+>>>  . fetch: add the --submodule-fetch-jobs option
+>>>  . fetch: add the fetch.jobs config key
+>>>  . fetch: add the "--fetch-jobs" option
+>>>  . fetch: rename max_children to max_children_for_submodules
+>>>
+>>>  "git fetch --jobs" is getting taught to also run fetch jobs in
+>>>  parallel when fetching from multiple remote repositories.
+>>>
+>>>  Comments?
+>>
+>> I still stand by my suggestion that it is undesirable (and makes the
+>> code much more complicated than necessary) to end up with three options.
+>> Having only `--jobs=<n>` would be the ideal solution.
+>
+> I think exposing "--jobs" as the primary UI element is a good longer
+> term goal; the approach taken in the intermediate step would be a
+> necessary one for backward compatibility.
+>
+> I stopped carrying it in 'pu' some weeks ago (I suspect it had some
+> interactions with other topics in flight, by causing either test
+> failures or textual conflicts).  Perhaps somebody interested enough
+> in the topic can resurrect it.
 
-I use PatchMyPC to keep all my applications up to date on Windows but 
-there is one application that is never properly detected as up to 
-date... and it is Git as you guessed.
+Sorry, I'm somewhat new to the git development process.  I'm happy to re-spin 
+the patch set, I'm just not sure what do to here.  It looks like there are some 
+test failures when I rebase to the latest master, which I'm happy to fix.  Just 
+let me know if I should:
 
-According to Justin Chalfant, Director of Engineering of PatchMyPC, Git 
-version "number" / identifier is not "standard".
-https://patchmypc.com/forum/index.php?topic=3032.msg8211#msg8211
-
-PatchMyPC seems not to like that:
-Git version identifier = version number + platform specific identifier
-
-command "git version" currently returns:
-git version 2.23.0.windows.1
-
-git executables (like git-cmd.exe for instance) displays this "File 
-version" on Windows:
-2.23.0.1
-
-What are your thoughts? And can you answer to Justin Chalfant on 
-PatchMyPC forum?
-
-Regards,
-
-Audric GUERIN
-
+* Send all 5 patches, under the assumption that the last one will not get 
+  merged until some time later.
+* Send just the first 4 patches, holding onto the last one for later.
+* Send just a single patch, which wouldn't add the --fetch-jobs and 
+  --submodule-fetch-jobs arguments.
