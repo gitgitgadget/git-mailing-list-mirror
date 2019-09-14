@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F0331F463
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6391A1F463
 	for <e@80x24.org>; Sat, 14 Sep 2019 00:26:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390303AbfINA0K (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Sep 2019 20:26:10 -0400
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:39907 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389329AbfINA0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Sep 2019 20:26:10 -0400
-Received: by mail-pl1-f202.google.com with SMTP id d11so17361584plo.6
-        for <git@vger.kernel.org>; Fri, 13 Sep 2019 17:26:09 -0700 (PDT)
+        id S2390333AbfINA0P (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Sep 2019 20:26:15 -0400
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:36615 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388132AbfINA0O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Sep 2019 20:26:14 -0400
+Received: by mail-pg1-f201.google.com with SMTP id d19so18010956pgh.3
+        for <git@vger.kernel.org>; Fri, 13 Sep 2019 17:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=c/bJLwwvqxyjaO0SVJCh6eW1+SYv8Mf4syUbYpEhCbo=;
-        b=RWY4vqP5YSd/+ksTbhM7ttun/yppXEzWkGlcPjVsDa12A2jUzsFCnF+J+0QzzMD5Bq
-         LzXjwE/toUaPwztZsSnL7eJ4tWOaoctaAfvvhWDr4U5QM0p2QkRLKYORjcYZkUY5pdzB
-         H9ACT3fSTsyw202RQERobRZ/Cz0Kg2DiQZy9XUVEPy1kyn0BENRHFaTH43S4Hm4T5UOq
-         IyB3MLDnAjOX8v1kJjoI85p4o/X4NPOidIxVotfQzTWiP9AMhB5Rz1PwKesxia58vi94
-         hsjkuc2iKU5K0GJXYUMYum34WtI6K3ADRMrlpoE2GlcyRu05R/eKCGJ8S9JO8/OzhSsp
-         pOWA==
+        bh=bxEOdKAPl+S24xHe/pK5xLJ8rDBATODqiTx/u86y1K8=;
+        b=jwXGxnmWQJIF2W8bgvvq54UQajsUG2aH1mR/2bUNvvFMTVB4wyttvMasGbc3OWFAxc
+         d36pSEDvhemGeyr4lQNrkii8peKR08oQALNE7oSqN6QlpxYGi2n1oxE3eIAjn8yuGLMw
+         nKKwnlU7lvdqoBTpCLlkIwFVJukKXK59bp3BJWH/ValTIPkjnkTbwbIRQ80fYTNz9b68
+         9aaDXTfAu9+cZ/yjYfCZVXgyQS5vAl2FMzVpDIj0BdbLf1R1PjRrld3ndmjFNHaYpv1O
+         jq40anoGutQs4wnZPPa//2YNHZa3ZuvUwPJUypBjR2xQDac/6VX9XD5Emxd2onQ/UQqr
+         Zalg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=c/bJLwwvqxyjaO0SVJCh6eW1+SYv8Mf4syUbYpEhCbo=;
-        b=Lbk3Iup1zwQX0EGAoIH5lqBr5eqcAjwaTb0aUhkwrpsTuGT624ZVNRNpdm/viFueHT
-         +QRviPFKGQssUP6Z4ZBwQVjZmsO6+xxjrZY6PuNveTzfl7HtNUbZVl7X8EJ/g6Np/Zsl
-         fG37SrbgcJQr/AAoTxdA/Z7+zImkIX57JGISTYLx/vwMSAxM7Bk2tY9e/yK/0vJY6Dsj
-         qFkvggW0Hd1ctp9s1mZJhap2c8KbCYZwfxfU0PPvNAIm6vHA37rMbxUY+bKxEoSzzx5G
-         nJCFV4OCR8fnK0HZA2lrzcZeC0tC+WFgbceb84rq0lljhQgeIkZHGRVcMbB+iLETfe9M
-         AcTw==
-X-Gm-Message-State: APjAAAUyoI9EnogoVK0ZTKFYzOy257hnj4syLHls6ARk+/A2ipWO3iYd
-        ZZkAGn8sD+osT9toWaHtyiDNUwV5rIr/zefOJTu2EqGtGTdNf/quUWGU/IgnxMnK31NaAShtej3
-        2FRyUeSobArViyWUC65vt2NkcIJJD6CKf7FFbpB4a8ouhd/rcXC+Se8FjEdChoGA=
-X-Google-Smtp-Source: APXvYqxhO9fgk89zT4sGUPBK7qoFeY00FPigRuwrVu6CcLiLu2JlFbGflKaVl38C50jpLnC0tXhcqNh7dZKUfg==
-X-Received: by 2002:a63:ee08:: with SMTP id e8mr46506155pgi.70.1568420768961;
- Fri, 13 Sep 2019 17:26:08 -0700 (PDT)
-Date:   Fri, 13 Sep 2019 17:25:59 -0700
+        bh=bxEOdKAPl+S24xHe/pK5xLJ8rDBATODqiTx/u86y1K8=;
+        b=TPOjM4u73D+Oj6HxAwV4fdp6pDHFDKztxOKNV3DtBKL2vjxutQ1lG/GF4RGU9JBpZw
+         KVRvI/9PKlVfVYN4SgLOPHRQrlbRHj3znQcdblo7CNko9BmDjqmrNTC15KILrzko/yZw
+         wodQLl+Z1sySKfiFyJGJ1MYoFFBlxlhgiyJLIDiQOmGJ27nf7k5A4DwrYShqqJQ2EvRL
+         acT2yyPDNriTrMfvdBVpO4Xug8qimgI61u0J8h9rV4awSRb2S+RMMFKvFWQ5Ny17zUqc
+         L3tP4DGN/rdO20lHkMWDKz2r6znquGI5RBS12AXJvcY0FZA1JSlTTrzaAaYyJ2jCyHfr
+         8hqQ==
+X-Gm-Message-State: APjAAAUnr+LHHFqUIkhd350Ss0z8IGxNijN+5mgOWF3TbItq2fd488kk
+        ZFJmDTvisiuaigVADHMlFj0dmHO6QON498g603K29U4bhqNkcS5CCaVIz+YQBq+WV6Wl8nyRc0H
+        TEQAe+h7IP0IK5LCR9ozL2Eg0iVKl4IaGC1UIJlTsfmkpCZK6c5L5SIIoizKuq1c=
+X-Google-Smtp-Source: APXvYqwR1eEFWZchXQVTc8o4LeZC2jhI2tgUtB+ThP7PO54x10kZgopLZkbiUyG8eg6bsJXXFB9OsGHym6YO8A==
+X-Received: by 2002:a65:4505:: with SMTP id n5mr41274713pgq.301.1568420771538;
+ Fri, 13 Sep 2019 17:26:11 -0700 (PDT)
+Date:   Fri, 13 Sep 2019 17:26:00 -0700
 In-Reply-To: <cover.1568419818.git.steadmon@google.com>
-Message-Id: <bf20ec8ea25ae80ee32d2867fa168c94fbe07d29.1568419818.git.steadmon@google.com>
+Message-Id: <bab45cb735ad658e6c838a9b2bdb9a8c74b9d179.1568419818.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
  <cover.1568419818.git.steadmon@google.com>
 X-Mailer: git-send-email 2.23.0.237.gc6a4ce50a0-goog
-Subject: [RFC PATCH v3 2/3] trace2: don't overload target directories
+Subject: [RFC PATCH v3 3/3] trace2: write overload message to sentinel files
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Cc:     stolee@gmail.com, git@jeffhostetler.com, szeder.dev@gmail.com
@@ -64,228 +64,224 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-trace2 can write files into a target directory. With heavy usage, this
-directory can fill up with files, causing difficulty for
-trace-processing systems.
+Add a new "overload" event type for trace2 event destinations. Write
+this event into the sentinel file created by the trace2.maxFiles
+feature. Bump up the event format version since we've added a new event
+type.
 
-This patch adds a config option (trace2.maxFiles) to set a maximum
-number of files that trace2 will write to a target directory. The
-following behavior is enabled when the maxFiles is set to a positive
-integer:
-  When trace2 would write a file to a target directory, first check
-  whether or not the directory is overloaded. A directory is overloaded
-  if there is a sentinel file declaring an overload, or if the number of
-  files exceeds trace2.maxFiles. If the latter, create a sentinel file
-  to speed up later overload checks.
-
-The assumption is that a separate trace-processing system is dealing
-with the generated traces; once it processes and removes the sentinel
-file, it should be safe to generate new trace files again.
-
-The default value for trace2.maxFiles is zero, which disables the
-overload check.
-
-The config can also be overridden with a new environment variable:
-GIT_TRACE2_MAX_FILES.
-
-Potential future work:
-* Write a message into the sentinel file (should match the requested
-  trace2 output format).
-* Add a performance test to make sure that contention between multiple
-  processes all writing to the same target directory does not become an
-  issue.
+Writing this message into the sentinel file is useful for tracking how
+often the overload protection feature is triggered in practice.
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- Documentation/config/trace2.txt |  6 +++
- t/t0212-trace2-event.sh         | 17 +++++++
- trace2/tr2_dst.c                | 86 +++++++++++++++++++++++++++++++++
- trace2/tr2_sysenv.c             |  3 ++
- trace2/tr2_sysenv.h             |  2 +
- 5 files changed, 114 insertions(+)
+ Documentation/technical/api-trace2.txt | 17 ++++++++++--
+ trace2/tr2_dst.c                       | 38 ++++++++++++++++++++++++--
+ trace2/tr2_dst.h                       |  3 ++
+ trace2/tr2_tgt_event.c                 | 21 ++++++++++++--
+ trace2/tr2_tgt_normal.c                |  2 +-
+ trace2/tr2_tgt_perf.c                  |  2 +-
+ 6 files changed, 74 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/config/trace2.txt b/Documentation/config/trace2.txt
-index 2edbfb02fe..4ce0b9a6d1 100644
---- a/Documentation/config/trace2.txt
-+++ b/Documentation/config/trace2.txt
-@@ -54,3 +54,9 @@ trace2.destinationDebug::
- 	By default, these errors are suppressed and tracing is
- 	silently disabled.  May be overridden by the
- 	`GIT_TRACE2_DST_DEBUG` environment variable.
-+
-+trace2.maxFiles::
-+	Integer.  When writing trace files to a target directory, do not
-+	write additional traces if we would exceed this many files. Instead,
-+	write a sentinel file that will block further tracing to this
-+	directory. Defaults to 0, which disables this check.
-diff --git a/t/t0212-trace2-event.sh b/t/t0212-trace2-event.sh
-index ff5b9cc729..2ff97e72da 100755
---- a/t/t0212-trace2-event.sh
-+++ b/t/t0212-trace2-event.sh
-@@ -265,4 +265,21 @@ test_expect_success JSON_PP 'using global config, event stream, error event' '
- 	test_cmp expect actual
- '
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index 80ffceada0..ef26e47805 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -128,7 +128,7 @@ yields
  
-+test_expect_success "don't overload target directory" '
-+	mkdir trace_target_dir &&
-+	test_when_finished "rm -r trace_target_dir" &&
-+	(
-+		GIT_TRACE2_MAX_FILES=5 &&
-+		export GIT_TRACE2_MAX_FILES &&
-+		cd trace_target_dir &&
-+		test_seq $GIT_TRACE2_MAX_FILES >../expected_filenames.txt &&
-+		xargs touch <../expected_filenames.txt &&
-+		cd .. &&
-+		GIT_TRACE2_EVENT="$(pwd)/trace_target_dir" test-tool trace2 001return 0
-+	) &&
-+	echo git-trace2-overload >>expected_filenames.txt &&
-+	ls trace_target_dir >ls_output.txt &&
-+	test_cmp expected_filenames.txt ls_output.txt
-+'
+ ------------
+ $ cat ~/log.event
+-{"event":"version","sid":"sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.620713Z","file":"common-main.c","line":38,"evt":"1","exe":"2.20.1.155.g426c96fcdb"}
++{"event":"version","sid":"sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.620713Z","file":"common-main.c","line":38,"evt":"2","exe":"2.20.1.155.g426c96fcdb"}
+ {"event":"start","sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.621027Z","file":"common-main.c","line":39,"t_abs":0.001173,"argv":["git","version"]}
+ {"event":"cmd_name","sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.621122Z","file":"git.c","line":432,"name":"version","hierarchy":"version"}
+ {"event":"exit","sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.621236Z","file":"git.c","line":662,"t_abs":0.001227,"code":0}
+@@ -610,11 +610,24 @@ only present on the "start" and "atexit" events.
+ {
+ 	"event":"version",
+ 	...
+-	"evt":"1",		       # EVENT format version
++	"evt":"2",		       # EVENT format version
+ 	"exe":"2.20.1.155.g426c96fcdb" # git version
+ }
+ ------------
+ 
++`"overload"`::
++	This event is created in a sentinel file if we are overloading a target
++	trace directory (see the trace2.maxFiles config option).
+++
++------------
++{
++	"event":"overload",
++	...
++	"dir":"/trace/target/dir/", # The configured trace2 target directory
++	"evt":"2",		    # EVENT format version
++}
++------------
 +
- test_done
+ `"start"`::
+ 	This event contains the complete argv received by main().
+ +
 diff --git a/trace2/tr2_dst.c b/trace2/tr2_dst.c
-index 5dda0ca1cd..414053d550 100644
+index 414053d550..b72be57635 100644
 --- a/trace2/tr2_dst.c
 +++ b/trace2/tr2_dst.c
-@@ -1,3 +1,5 @@
-+#include <dirent.h>
-+
- #include "cache.h"
- #include "trace2/tr2_dst.h"
- #include "trace2/tr2_sid.h"
-@@ -8,6 +10,19 @@
-  */
- #define MAX_AUTO_ATTEMPTS 10
- 
-+/*
-+ * Sentinel file used to detect when we're overloading a directory with too many
-+ * trace files.
-+ */
-+#define OVERLOAD_SENTINEL_NAME "git-trace2-overload"
-+
-+/*
-+ * When set to zero, disables directory overload checking. Otherwise, controls
-+ * how many files we can write to a directory before entering overload mode.
-+ * This can be overridden via the TR2_SYSENV_MAX_FILES setting.
-+ */
-+static int tr2env_max_files = 0;
-+
- static int tr2_dst_want_warning(void)
- {
- 	static int tr2env_dst_debug = -1;
-@@ -32,6 +47,67 @@ void tr2_dst_trace_disable(struct tr2_dst *dst)
+@@ -47,6 +47,38 @@ void tr2_dst_trace_disable(struct tr2_dst *dst)
  	dst->need_close = 0;
  }
  
 +/*
-+ * Check to make sure we're not overloading the target directory with too many
-+ * files. First get the threshold (if present) from the config or envvar. If
-+ * it's zero or unset, disable this check.  Next check for the presence of a
-+ * sentinel file, then check file count. If we are overloaded, create the
-+ * sentinel file if it doesn't already exist.
-+ *
-+ * We expect that some trace processing system is gradually collecting files
-+ * from the target directory; after it removes the sentinel file we'll start
-+ * writing traces again.
++ * Create a sentinel file to note that we don't want to create new trace files
++ * in this location. The form of the sentinel file may vary based on the
++ * destination type; the default is to create an empty file, but destination
++ * types can override this by providing an overload_writer function that accepts
++ * the filename, line number, and target path.
 + */
-+static int tr2_dst_overloaded(const char *tgt_prefix)
++static void tr2_create_sentinel(struct tr2_dst *dst, const char *dir,
++				const char *sentinel_path)
 +{
-+	int file_count = 0, max_files = 0, ret = 0;
-+	const char *max_files_var;
-+	DIR *dirp;
-+	struct strbuf path = STRBUF_INIT, sentinel_path = STRBUF_INIT;
-+	struct stat statbuf;
++	int fd;
 +
-+	strbuf_addstr(&path, tgt_prefix);
-+	if (!is_dir_sep(path.buf[path.len - 1])) {
-+		strbuf_addch(&path, '/');
-+	}
++	if (dst->overload_writer) {
++		fd = open(sentinel_path, O_WRONLY | O_CREAT | O_EXCL, 0666);
++		if (fd != -1) {
++			dst->fd = fd;
++			/*
++			 * I don't think it's particularly useful to include the
++			 * file and line here, but we expect all trace messages
++			 * (at least for "event" destinations) to include them.
++			 * So I'm adding these for consistency's sake.
++			 */
++			dst->overload_writer(__FILE__, __LINE__, dir);
++			tr2_dst_trace_disable(dst);
++		}
++	} else
++		fd = creat(sentinel_path, 0666);
 +
-+	/* Get the config or envvar and decide if we should continue this check */
-+	max_files_var = tr2_sysenv_get(TR2_SYSENV_MAX_FILES);
-+	if (max_files_var && *max_files_var && ((max_files = atoi(max_files_var)) >= 0))
-+		tr2env_max_files = max_files;
-+
-+	if (!tr2env_max_files) {
-+		ret = 0;
-+		goto cleanup;
-+	}
-+
-+	/* check sentinel */
-+	strbuf_addbuf(&sentinel_path, &path);
-+	strbuf_addstr(&sentinel_path, OVERLOAD_SENTINEL_NAME);
-+	if (!stat(sentinel_path.buf, &statbuf)) {
-+		ret = 1;
-+		goto cleanup;
-+	}
-+
-+	/* check file count */
-+	dirp = opendir(path.buf);
-+	while (file_count < tr2env_max_files && dirp && readdir(dirp))
-+		file_count++;
-+	if (dirp)
-+		closedir(dirp);
-+
-+	if (file_count >= tr2env_max_files) {
-+		creat(sentinel_path.buf, 0666);
-+		ret = 1;
-+		goto cleanup;
-+	}
-+
-+cleanup:
-+	strbuf_release(&path);
-+	strbuf_release(&sentinel_path);
-+	return ret;
++	if (fd != -1)
++		close(fd);
 +}
 +
- static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
+ /*
+  * Check to make sure we're not overloading the target directory with too many
+  * files. First get the threshold (if present) from the config or envvar. If
+@@ -58,7 +90,7 @@ void tr2_dst_trace_disable(struct tr2_dst *dst)
+  * from the target directory; after it removes the sentinel file we'll start
+  * writing traces again.
+  */
+-static int tr2_dst_overloaded(const char *tgt_prefix)
++static int tr2_dst_overloaded(struct tr2_dst *dst, const char *tgt_prefix)
  {
- 	int fd;
-@@ -50,6 +126,16 @@ static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
+ 	int file_count = 0, max_files = 0, ret = 0;
+ 	const char *max_files_var;
+@@ -97,7 +129,7 @@ static int tr2_dst_overloaded(const char *tgt_prefix)
+ 		closedir(dirp);
+ 
+ 	if (file_count >= tr2env_max_files) {
+-		creat(sentinel_path.buf, 0666);
++		tr2_create_sentinel(dst, path.buf, sentinel_path.buf);
+ 		ret = 1;
+ 		goto cleanup;
+ 	}
+@@ -126,7 +158,7 @@ static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
  	strbuf_addstr(&path, sid);
  	base_path_len = path.len;
  
-+	if (tr2_dst_overloaded(tgt_prefix)) {
-+		strbuf_release(&path);
-+		if (tr2_dst_want_warning())
-+			warning("trace2: not opening %s trace file due to too "
-+				"many files in target directory %s",
-+				tr2_sysenv_display_name(dst->sysenv_var),
-+				tgt_prefix);
-+		return 0;
-+	}
-+
- 	for (attempt_count = 0; attempt_count < MAX_AUTO_ATTEMPTS; attempt_count++) {
- 		if (attempt_count > 0) {
- 			strbuf_setlen(&path, base_path_len);
-diff --git a/trace2/tr2_sysenv.c b/trace2/tr2_sysenv.c
-index 5958cfc424..3c3792eca2 100644
---- a/trace2/tr2_sysenv.c
-+++ b/trace2/tr2_sysenv.c
-@@ -49,6 +49,9 @@ static struct tr2_sysenv_entry tr2_sysenv_settings[] = {
- 				       "trace2.perftarget" },
- 	[TR2_SYSENV_PERF_BRIEF]    = { "GIT_TRACE2_PERF_BRIEF",
- 				       "trace2.perfbrief" },
-+
-+	[TR2_SYSENV_MAX_FILES]     = { "GIT_TRACE2_MAX_FILES",
-+				       "trace2.maxfiles" },
- };
- /* clang-format on */
+-	if (tr2_dst_overloaded(tgt_prefix)) {
++	if (tr2_dst_overloaded(dst, tgt_prefix)) {
+ 		strbuf_release(&path);
+ 		if (tr2_dst_want_warning())
+ 			warning("trace2: not opening %s trace file due to too "
+diff --git a/trace2/tr2_dst.h b/trace2/tr2_dst.h
+index 3adf3bac13..dd09a9541c 100644
+--- a/trace2/tr2_dst.h
++++ b/trace2/tr2_dst.h
+@@ -4,11 +4,14 @@
+ struct strbuf;
+ #include "trace2/tr2_sysenv.h"
  
-diff --git a/trace2/tr2_sysenv.h b/trace2/tr2_sysenv.h
-index 8dd82a7a56..d4364a7b85 100644
---- a/trace2/tr2_sysenv.h
-+++ b/trace2/tr2_sysenv.h
-@@ -24,6 +24,8 @@ enum tr2_sysenv_variable {
- 	TR2_SYSENV_PERF,
- 	TR2_SYSENV_PERF_BRIEF,
- 
-+	TR2_SYSENV_MAX_FILES,
++typedef void(tr2_dst_overload_writer_t)(const char *file, int line, const char *dir);
 +
- 	TR2_SYSENV_MUST_BE_LAST
+ struct tr2_dst {
+ 	enum tr2_sysenv_variable sysenv_var;
+ 	int fd;
+ 	unsigned int initialized : 1;
+ 	unsigned int need_close : 1;
++	tr2_dst_overload_writer_t *overload_writer;
  };
  
+ /*
+diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+index c2852d1bd2..68cb26fc67 100644
+--- a/trace2/tr2_tgt_event.c
++++ b/trace2/tr2_tgt_event.c
+@@ -10,7 +10,9 @@
+ #include "trace2/tr2_tgt.h"
+ #include "trace2/tr2_tls.h"
+ 
+-static struct tr2_dst tr2dst_event = { TR2_SYSENV_EVENT, 0, 0, 0 };
++static void fn_overload_fl(const char *file, int line, const char *dir);
++
++static struct tr2_dst tr2dst_event = { TR2_SYSENV_EVENT, 0, 0, 0, fn_overload_fl };
+ 
+ /*
+  * The version number of the JSON data generated by the EVENT target
+@@ -19,7 +21,7 @@ static struct tr2_dst tr2dst_event = { TR2_SYSENV_EVENT, 0, 0, 0 };
+  * to update this if you just add another call to one of the existing
+  * TRACE2 API methods.
+  */
+-#define TR2_EVENT_VERSION "1"
++#define TR2_EVENT_VERSION "2"
+ 
+ /*
+  * Region nesting limit for messages written to the event target.
+@@ -107,6 +109,21 @@ static void event_fmt_prepare(const char *event_name, const char *file,
+ 		jw_object_intmax(jw, "repo", repo->trace2_repo_id);
+ }
+ 
++static void fn_overload_fl(const char *file, int line, const char *dir)
++{
++	const char *event_name = "overload";
++	struct json_writer jw = JSON_WRITER_INIT;
++
++	jw_object_begin(&jw, 0);
++	event_fmt_prepare(event_name, file, line, NULL, &jw);
++	jw_object_string(&jw, "dir", dir);
++	jw_object_string(&jw, "evt", TR2_EVENT_VERSION);
++	jw_end(&jw);
++
++	tr2_dst_write_line(&tr2dst_event, &jw.json);
++	jw_release(&jw);
++}
++
+ static void fn_version_fl(const char *file, int line)
+ {
+ 	const char *event_name = "version";
+diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
+index 00b116d797..ffca0d3811 100644
+--- a/trace2/tr2_tgt_normal.c
++++ b/trace2/tr2_tgt_normal.c
+@@ -9,7 +9,7 @@
+ #include "trace2/tr2_tgt.h"
+ #include "trace2/tr2_tls.h"
+ 
+-static struct tr2_dst tr2dst_normal = { TR2_SYSENV_NORMAL, 0, 0, 0 };
++static struct tr2_dst tr2dst_normal = { TR2_SYSENV_NORMAL, 0, 0, 0, NULL };
+ 
+ /*
+  * Use the TR2_SYSENV_NORMAL_BRIEF setting to omit the "<time> <file>:<line>"
+diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+index ea0cbbe13e..0a91e8a1f6 100644
+--- a/trace2/tr2_tgt_perf.c
++++ b/trace2/tr2_tgt_perf.c
+@@ -11,7 +11,7 @@
+ #include "trace2/tr2_tgt.h"
+ #include "trace2/tr2_tls.h"
+ 
+-static struct tr2_dst tr2dst_perf = { TR2_SYSENV_PERF, 0, 0, 0 };
++static struct tr2_dst tr2dst_perf = { TR2_SYSENV_PERF, 0, 0, 0, NULL };
+ 
+ /*
+  * Use TR2_SYSENV_PERF_BRIEF to omit the "<time> <file>:<line>"
 -- 
 2.23.0.237.gc6a4ce50a0-goog
 
