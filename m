@@ -2,85 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF34F1F463
-	for <e@80x24.org>; Sat, 14 Sep 2019 12:24:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B01361F463
+	for <e@80x24.org>; Sat, 14 Sep 2019 12:49:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730410AbfINMYs (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Sep 2019 08:24:48 -0400
-Received: from mail-lj1-f173.google.com ([209.85.208.173]:32937 "EHLO
-        mail-lj1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730286AbfINMYr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Sep 2019 08:24:47 -0400
-Received: by mail-lj1-f173.google.com with SMTP id a22so29571919ljd.0
-        for <git@vger.kernel.org>; Sat, 14 Sep 2019 05:24:46 -0700 (PDT)
+        id S2388356AbfINMtq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Sep 2019 08:49:46 -0400
+Received: from mail-wm1-f50.google.com ([209.85.128.50]:50193 "EHLO
+        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388351AbfINMtq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Sep 2019 08:49:46 -0400
+Received: by mail-wm1-f50.google.com with SMTP id c10so5375475wmc.0
+        for <git@vger.kernel.org>; Sat, 14 Sep 2019 05:49:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=TsnFoVPDl4uUlX8pRK+nlOVoo4qUBF6KW5w/9Etyo8M=;
-        b=lLdnVTIAvhDGAWjAZcqi1v6SBPh2Kdsg0qttoaCdfx8b+P6xEkzChbh2pKobFCHCZy
-         8gzVnb5M8BZjAilgowBvSh+3s0F9XNj4itKbyzqb0RvUpeAh3bJ7cM4SEd08enWfhw2w
-         NtzVYDAdcA+AqHa8fgrfyB3REePC0gDskDoL9rGM1H0CKdyixSkOOpeLUOfgG8wxi6Us
-         4wswhizPQifrzgQkNUaI4v72Wqwql2f5548ODe2C1X28IfaQuvhmG2NEZ1BwMxf12ppU
-         qEcuDh9A4RaVglF24zEGe1Jby6YkkYDSoS09PiFMNdHJqjW2apa+8OjzwiZQF9wKD8kV
-         61Zg==
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=Ve0P3hfwDx6REHSOCBFhrm4WuOtsCz4P4F3mpCMiBJY=;
+        b=N71uSNKJBV5xpFMtBOORF7rdCZTVMxGiVTsLrVOoFHpN+67YFz8tYdHGUN21S32ftV
+         BE/0gB8Z3zUPYBz7EMVSxZanbexFa6sYxS7S1sIZIPKg9Oat1d7bxMT4q0ABpWre819E
+         dfyKX78nwyzzlrp+MnAWigZQqgs1db0j84BH1GfliLUMlqI0pJy32O/9nWivZZg4xYTg
+         Ucm21xW+dNXPVcaeokh6MZ7vRDsgs+k7dcOIv5dq7kMYjpVpHaaRzBVjcXc/+k7JdGIt
+         jDBNVyGyTwg4s8MfA4sb+XG2FxuOaf9BhsSaPD+V1pNPv7nGAZrHC2CeFxXltNYgqFnJ
+         Np9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=TsnFoVPDl4uUlX8pRK+nlOVoo4qUBF6KW5w/9Etyo8M=;
-        b=SGtAvL7/D2dWaD5A7mi0TmaerbUFkWFDdsDyO/O1J11CLUQLVwSk+OAlB+vHxPNNnP
-         3ipJszEf5UqAI+RB/OBwrTtEQMI+3tywH1KgWQ5+Y36wXLArF1bSoD6d5gLU5/VsCr/Y
-         EvGDPx4/nSaoielCAsvjWWuC5mgFvenYHz0enu62OKEOZxIq+1PK8AfpscI+fNqevNQN
-         H7Yeh5Fp41b7nyggFaQ0MmmUmJS6derrIcTtwAxI9V2b6qI+pUFNxZ3IOKz+/qZ8hZ7X
-         MwUth9qj3mOyExwZPhzeuXtJNICeNi4/UIKr5aSugAwi24RIHcfyAzryaReEzGtKeogG
-         v/1A==
-X-Gm-Message-State: APjAAAV6eAQHYpAOtNbducGjlMkoTDE9jAbIjw6jhYh2fziuclw5EmhU
-        /RcNW5CI6XEtX+wMPJ0zdUDWX1Rf42h64CNdn118LA4mb+M=
-X-Google-Smtp-Source: APXvYqxR5+63ERQgPH6b9Im1aWtXI5Wx9S3/qaFL+mewSEoQ2dUnGZZKV3sDxNKGvCESgKICy1xbYvLDeA79POT8UZY=
-X-Received: by 2002:a2e:81d1:: with SMTP id s17mr27565775ljg.94.1568463884811;
- Sat, 14 Sep 2019 05:24:44 -0700 (PDT)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=Ve0P3hfwDx6REHSOCBFhrm4WuOtsCz4P4F3mpCMiBJY=;
+        b=X9L5tzxSCc52AN6xDqX0+33fSc21s88iaIqoJUNacfz/GdugZudbRiG1ofZ2yfpuOF
+         bkggdKN/iY/ik7gwQ7H8gxdUg3zaDTzn9pt9NJ6YvYCFDsczMprxK9cd9uC2qF5UdZCk
+         ydzDsFBZ+Tkx1m5NFoHuq3rWw+l8l9SQb3J9Yz3kqEmrgjML/zhlxT9+xEMEIVx9RTqI
+         I4yHjQElrJ7+rRSo9txFxZB11kS2K2F8ngjytGVbLSU4xh3qP1sTsObf9xYMqDY0eQSa
+         T7TxnE0z9wlTYsddQJUgiz9prZKb4eTVJl4jPuXwgpPJo4sFnWzyWT2SLDRTayVs7mrQ
+         dBJA==
+X-Gm-Message-State: APjAAAXMWLptG48PCmA/cLrkpBQ8HdpVOMLOW4/lEBwFee7V/Yspt8t4
+        9/3QwuM9kz1uEjquLhqfF1JMq2qUNqc=
+X-Google-Smtp-Source: APXvYqwZ4sggkEu9wyIJsRI6zieFD3WdtyF8dJyOrkHPfk6b2JZT6jyOyg3XmxMlGzz0NBrU9dbvzA==
+X-Received: by 2002:a1c:1b58:: with SMTP id b85mr7515477wmb.95.1568465384353;
+        Sat, 14 Sep 2019 05:49:44 -0700 (PDT)
+Received: from ?IPv6:2a01:e35:2f1a:f160:5d34:95e:5d6e:ddbb? ([2a01:e35:2f1a:f160:5d34:95e:5d6e:ddbb])
+        by smtp.gmail.com with ESMTPSA id y72sm7695173wmc.26.2019.09.14.05.49.43
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 14 Sep 2019 05:49:43 -0700 (PDT)
+To:     git@vger.kernel.org
+From:   Audric GUERIN <audric.guerin@gmail.com>
+Subject: Git versioning policy - PatchMyPC compatibility on Windows
+Message-ID: <c760038f-7c50-73df-5187-a186868c995b@gmail.com>
+Date:   Sat, 14 Sep 2019 14:49:40 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-Date:   Sat, 14 Sep 2019 14:24:34 +0200
-Message-ID: <CAGr--=KMJmYtVaATFkOPcboAdkLvpZFbWAo4QAE0-uC6RL4Lqg@mail.gmail.com>
-Subject: git-gui: automatically move focus to staged file before typing commit message?
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+Hi,
 
+I use PatchMyPC to keep all my applications up to date on Windows but 
+there is one application that is never properly detected as up to 
+date... and it is Git as you guessed.
 
-I personally prefer to have the changes I am about to commit visible
-in the diff view, while I write my commit message. So usually I do
-this:
-1. Stage the file(s) I've been working on.
-2. Select a file I just staged, so I can see the changes in the diff widget.
-3. Jump to the "Commit Message" widget to type up my commit message.
-Basically, I would like to be able to skip step 2. When the user
-stages the last file in the "Unstaged Changes" widget, no file is
-selected and the diff view becomes blank. When this is the case, I
-would prefer that git-gui automatically selects one of the staged
-files and shows it in the diff widget before I type up my commit
-message. Naturally, this automatic selection should **only** happen
-when the user chooses focus the "Commit Message" widget.
+According to Justin Chalfant, Director of Engineering of PatchMyPC, Git 
+version "number" / identifier is not "standard".
+https://patchmypc.com/forum/index.php?topic=3032.msg8211#msg8211
 
-I propose:
-(When the user focuses the "Commit Message" widget, if no file is
-currently selected (i.e. diff widget shows no text))
-automatically select the first file listed in the "Staged Changes"
-widget so the changes of that file show up in the diff widget.
+PatchMyPC seems not to like that:
+Git version identifier = version number + platform specific identifier
 
-Thoughts?
+command "git version" currently returns:
+git version 2.23.0.windows.1
 
+git executables (like git-cmd.exe for instance) displays this "File 
+version" on Windows:
+2.23.0.1
 
-Best regards,
-Birger S Pedersen
+What are your thoughts? And can you answer to Justin Chalfant on 
+PatchMyPC forum?
+
+Regards,
+
+Audric GUERIN
+
