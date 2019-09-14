@@ -2,73 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A1311F463
-	for <e@80x24.org>; Sat, 14 Sep 2019 16:07:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 417C21F463
+	for <e@80x24.org>; Sat, 14 Sep 2019 16:07:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727143AbfINQHN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Sep 2019 12:07:13 -0400
-Received: from mail-vs1-f47.google.com ([209.85.217.47]:45149 "EHLO
-        mail-vs1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725805AbfINQHM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Sep 2019 12:07:12 -0400
-Received: by mail-vs1-f47.google.com with SMTP id s3so20605895vsi.12
-        for <git@vger.kernel.org>; Sat, 14 Sep 2019 09:07:10 -0700 (PDT)
+        id S1727166AbfINQHQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Sep 2019 12:07:16 -0400
+Received: from mail-io1-f52.google.com ([209.85.166.52]:45398 "EHLO
+        mail-io1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725805AbfINQHP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Sep 2019 12:07:15 -0400
+Received: by mail-io1-f52.google.com with SMTP id f12so69296764iog.12
+        for <git@vger.kernel.org>; Sat, 14 Sep 2019 09:07:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=schmidt-cisternas-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=+b7kgTxaar3EPDzljCi3MNizv4V6jyzAlfogiAvqsDg=;
-        b=FDrLSx0D859BgBmINS/6rtK1EObMbBUiy2jr36Hrf/A6Tf7f+H5u2AYG2fvPqfJ1sh
-         QeryMWWll20Oa9FcBy1qnyEO1PTHrZV4gElC1vNfEX6zb++jEAoSD0VLzMypf0OsWTeb
-         Bk/iqtLMuFrF75MllCpAgmktwQXa6ZNby0yD4+afk1WTScMh6ZgzN3f7HlS1i8qFruQt
-         AAvruCZ1TvGFDy+89QflRtXwb/8gdZOgfbw1QW4QMatv1wYveSEbKWjGIz8N80hSYhuH
-         s4JUpa+ArG4ZoRwEbd0jLs9V0Ebgo43veSJ+bFd8mVdaUWhjHeLL5ayM199+tEI8GKwK
-         SMXw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=RcqmBBQsseRGNuKjXM2Fc4HHZr6rv4AIM5n4DUUbgfY=;
+        b=f56oORNrDc1SNo9RmBOpx/Gcf3YYNIr0JiM42Kusbrk5V1s9AmOpganRXeNavleYoX
+         O/KAG224NU0U8HwkbLfXWjEHCNwHK9ZgLUpUFnGiJ7B44LJIc5AtR0Madsdzl93gn6oe
+         3rt/rsGcP3xe/NvMbtj0zq9Ds59YBWlvRe0wD6hZOxb8Dn/gnwOE6PRCjcWj7O1tnbum
+         QVjAfzvwMlfEvyMTppOdZd2PqWLpPxol+lsUC/flPSLgsv+VzKvzid2aOoXCmb8zjtph
+         ZOQwtG8pjdSHVkhjlqr9kprqWJ3IvNb7+iRp5DmKrLcz4kYzRWA7pbMvRaAMVwewRRq/
+         EVWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=+b7kgTxaar3EPDzljCi3MNizv4V6jyzAlfogiAvqsDg=;
-        b=R168vwImO9MvV8ZR1fllWdkdp5WwOC5eNkqChcXXVtweUgVx1gz6SWGYZESavQCq9M
-         N3XWuJf5b4dPLPR+DDIyayYNudLLAv11zrGzB2zcKFgxhlVByDScHy6zAEmXoZNvnVZr
-         1DwIbXI1oAte8bl4SMuoRMmE1U3MfXlPgCuAvlClL5EBrJL1DXfgE+0QkKGZOw2eDVE5
-         uWMKscZk3/soxJoCFgDlY1gDsXAujVn09UcGNTf//4v460BrDgjkAqmKERSGK2fO10XV
-         FSaJnFpqwIm5R10xM7NJG0v8UCXLw5CvFtxHP2L1+9ljgimIoJLbl3UMaTPzK1ivt/jH
-         ozXA==
-X-Gm-Message-State: APjAAAU+45edzS/oR2inRp0EVjv0bG5N5/ri437x+oHZf3koH5azL90p
-        Fw8SJI99zTEqvRJjFNlla3IDT+oIQ8vdGqZfX49R457QXvE=
-X-Google-Smtp-Source: APXvYqyMT1RP/1MZLcfiXn9SSHSr+/VMnqLfoQYXLeAJymLSLatot8whvDe0NGAofJ3ifweWUQX+8Sf9DJKaX0/mxig=
-X-Received: by 2002:a67:fc42:: with SMTP id p2mr84602vsq.34.1568477230090;
- Sat, 14 Sep 2019 09:07:10 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=RcqmBBQsseRGNuKjXM2Fc4HHZr6rv4AIM5n4DUUbgfY=;
+        b=tTXS2tD1DkaubuC6UNQUdlJ5MwvLSaVSp+BptrJcn+Cj0CDpEFKuZHj6LVMcQSzdCy
+         Ks9+9o6pJFF17OIekdIoiHxfLa2XBokWyKjJOtwY+mrb5XQ2wY6Ol794bINsHsIajNie
+         0il9/JPCvMqdKgZF+KPDmXNXCXBeqM8FivTNRzkn7k0wIZZoraWOuCGmQ8IbJMNDH20v
+         KGJRqWcpWoall0c6XG+qsVaQHQKUpNjt/7vMyJcEgyrms3obxRlEk/xuqkdIYx6jAyGf
+         /HvY7Y894RS/GnImhJLEYFVAihGOdjBSzam+z2+8ySUw21uTWlgdvNk8/GUk2UM5dAto
+         C1aA==
+X-Gm-Message-State: APjAAAVXbT9AOsvPDb2Dcu2SVu2pxJ6bZht5/9pfKj76hZK8hU6xaZSq
+        +OQ/yAcNbFLy9v7QmPgFAfH08+pZUFdi4nuVOVZOtQ==
+X-Google-Smtp-Source: APXvYqyWiCBQwuREbj+SVpNf5rtHLI7b9rg6Z1bCPMcMJ4IYZvCeXzdY+FMFx1L0ur5sAm3A84+e+reaxoldxbIpftk=
+X-Received: by 2002:a6b:3bc5:: with SMTP id i188mr7244761ioa.113.1568477233673;
+ Sat, 14 Sep 2019 09:07:13 -0700 (PDT)
 MIME-Version: 1.0
-From:   Robert Schmidt-Cisternas <robert@schmidt-cisternas.net>
-Date:   Sat, 14 Sep 2019 18:07:00 +0200
-Message-ID: <CAEq5TVWLxpc2a4fCch=DZfOgDWjKiu6gv0cfVHC3Wdy9581aSg@mail.gmail.com>
-Subject: GIT_OBJECT_DIRECTORY ignored when cloning submodules
-To:     git@vger.kernel.org
+References: <CAL-6oQorDOzAr4sDoddoAQv3hzAgUMx7K+V=bMcvScv8G=7oqg@mail.gmail.com>
+ <20190913143229.5yop5oaascgavynl@yadavpratyush.com> <CAKPyHN0=AHzr1V35PDzsq02aeGK1e54CxTeunED_u6GRUygkuA@mail.gmail.com>
+In-Reply-To: <CAKPyHN0=AHzr1V35PDzsq02aeGK1e54CxTeunED_u6GRUygkuA@mail.gmail.com>
+From:   David <bouncingcats@gmail.com>
+Date:   Sun, 15 Sep 2019 02:07:02 +1000
+Message-ID: <CAMPXz=qWmHGpDrGVpg1gwEBQsg5pujY-Ghg8icyaPoiMNCXssg@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_Git_Gui_=2D_enhancement_suggestion_=2D_Can_a_double_?=
+        =?UTF-8?Q?click_on_the_file_name_in_the_=E2=80=9Cunstaged=E2=80=9D_area_move_the_i?=
+        =?UTF-8?Q?tem_to_=E2=80=9Cstaged_changes=E2=80=9D?=
+To:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Sat, 14 Sep 2019 at 06:51, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+> On Fri, Sep 13, 2019 at 4:32 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> > On 13/09/19 12:24PM, Allan Ford wrote:
+>
+> I miss a general problem description: Whats wrong with the
+> single-click on the icon to begin with?
 
-In the pursuit of optimizing meta-repo workflows, I wanted to use
-GIT_OBJECT_DIRECTORY to specify a single objects directory used by all
-repos and submodules on a workstation.
+No problem here, but see my other message for further thoughts.
 
-The idea being that many metarepos will contain similar sets of
-submodules, and objects can be reused, thus potentially saving massive
-amounts of disk space and network traffic.
+> I consider adding a second way as not not acceptable. I also consider
+> double-click on a file in a GUI an "open" action.
 
-However, when cloning a repo with submodules, the variable is cleared
-when the submodules are cloned recursively.
+Yes!
 
-Is this a bug, or intentional?
+In fact, I've often fantasized how useful it would be that if I double
+clicked on that file name in the unstaged pane or the staged pane,
+then that would open the file for editing in my preferred/configured editor.
 
-Thanks,
-Robert Schmidt
+Now for me *that* would be a very frequently used improvement!
+
+I wonder what other readers think about this idea?
