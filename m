@@ -8,49 +8,53 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 478CD1F463
-	for <e@80x24.org>; Sun, 15 Sep 2019 21:18:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 023E31F463
+	for <e@80x24.org>; Sun, 15 Sep 2019 21:18:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727152AbfIOVSH (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Sep 2019 17:18:07 -0400
-Received: from mail-qt1-f202.google.com ([209.85.160.202]:42535 "EHLO
-        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725270AbfIOVSH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Sep 2019 17:18:07 -0400
-Received: by mail-qt1-f202.google.com with SMTP id w9so3321739qto.9
-        for <git@vger.kernel.org>; Sun, 15 Sep 2019 14:18:07 -0700 (PDT)
+        id S1728285AbfIOVSM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Sep 2019 17:18:12 -0400
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:43880 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725270AbfIOVSL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Sep 2019 17:18:11 -0400
+Received: by mail-pf1-f201.google.com with SMTP id i187so25916643pfc.10
+        for <git@vger.kernel.org>; Sun, 15 Sep 2019 14:18:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=+Hj1ZjI+MDT58cvzbLHwL4iSazYyuCo0S7e1bRygcs0=;
-        b=onIz0hzu0AM5ZclxO/3cJZU9vZI9MYxjal5oaL8R1c7tb5mWg1KiYV/JeMCiwSYivE
-         RYtSYn/cYjnX4a5jacEUsqH8Zg2feZ3ZhTDjKLujnRsfFbBpiS62KvtXMVWUdAE/NjL3
-         JXOHm/Ig80UQ4wb+3uGyRUG/W5sBTnI2l1+w3GjjPHx3IEIHOfO/cH8/lbuRs5iAQiSt
-         PMAS7t1tpymTAFbyzTQ6V0rYXjKUAKTr/qZBnhv9I/jKXAjMV3Fp6BPz92h8A6/Ayb04
-         aeO1sb7+VmRxLt4advHreBCYEyrB7yB7p52hEhUTuG+fq5Yqo4+jHBi1v8MZUMbVtC3g
-         F2Vw==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=B+jbNfNDEn8WNuC1kmwwIo0As6Y02BCnOkRJaf2GPgU=;
+        b=uDKVCfs8wzt1IBIUPtGacoRA4sEGcAoWglqHQX/SOxfdT6wMRAUNbTZ2kqCCuML4l4
+         VPQSREWoRvIcxlErkh4sTld/iXhCHuVPlk5clfMmncnyxTV4ObzJGWlf0p6OTQ/h2kfE
+         slyMjqPHl0ZSCP2diZCB/QvH5Vl5ZFs4g34CuCMm5wh4DRpsA6v62SuAKtmKPWlu4szI
+         JM7HaltvG2Duh5JFpJRj6hfGwB5Vyn4rFLVsGLXAD9hsOp6Jy/cxsIEjci8z2QROyR7F
+         c5rV4Ofi0ZU+jswPk7+fVjCzYi1F03VYT0VdKPQEsgNjy38TRPuVDRauWuj6uvwE9ow3
+         R2dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=+Hj1ZjI+MDT58cvzbLHwL4iSazYyuCo0S7e1bRygcs0=;
-        b=kl92Hxf0vxTlsS+u/UkVywkeTJUTpGnaKE0ayyS6sf8dbtAeL3srlTSSmfM6UC0RG2
-         UipUqbPiMFCWq1cPl/0QyL8kzjpTMySWNyzGa7wtQMTlk1SU1i7WoJLKAs3WPBs8F7Kq
-         N4RxlVmVTZhEqs5yirGvq+oeEjR6OJ9RtAYILloCeEjo96OI7kwNL1hIMymFFSAYfhdu
-         jfQ9oTHkyYFCpJK5zIkZxr9QHQ8DlEiFdTaqFw9RamvUb0tNJ2beVMIDpqpkvaanZZbB
-         1hSRpeaZWdeyb80LnY4QUAX0QAYqIC4Oi41l09KfNZqK+VP1GTr9hP8EJtzKEJcBE0+y
-         8/uQ==
-X-Gm-Message-State: APjAAAXOrZlc0uO4cwMRYlcZU3/WzWfxp1HL/bMEgRrDoXJLXHtkWfEO
-        rVe3cAWqzf82xGYiFADm08abCKI7uJIeO0iK48CHm61oJ5b1eH0E0nZsYPE7zIRYANLIa02a7Gu
-        xKgwlcfIh/Fr4br/0CFkh/yziwVweLYw+B1dfOeHIaAe2fL60sA8OAX2gzYl0ymsbn5Yqc6ViIw
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=B+jbNfNDEn8WNuC1kmwwIo0As6Y02BCnOkRJaf2GPgU=;
+        b=oeqnQK6+a5sc6TsF40RzQorhTfGuBVJLymTWSPJUowHYFoSJ+j2pcKYmENrBDMJeKY
+         GiLhmPUdD4CGq9KbV3xLUtiD/4clhXVrw0u9eG0/UDtT0iq8gVQLC80S7/3xPZrge3B2
+         9Yriy9IpMXOmzqMbfFjpuZHS4VwhwNAqTPh5SLiKI3FmnT0ZR+i/a9yUcfYlU8CaTv6d
+         IUGd8AnStIiryYUym9Bu08Ji8LkJfuCs8lsqhqb/Vytw6FIOyEuosq4yPmc/CClt0IFq
+         XDUgVG1M4/brNMryVD6CBW1tc+Iaq1Xa4tCfPax4uZzfDOaXqF0YjxETEIyfNbmYlHZE
+         J5iw==
+X-Gm-Message-State: APjAAAX5hdKinYAl0gWY63a/J3J/t9LP8Tc1g2IeZ8F0FNWrnUmehJGF
+        PIE13VrwIOb6VO4jzV9dM5G8VMDV0EWCOo8vFoU5zEULH4oE/C6RxYM2nGhEunOtzshi8JFo01F
+        AFuMrifKs+1ZZ32asIcoRtqxyq4tJ382mLVs4gKd2mBfSatuX6ZBGeN0/Qj3HakAG7NgAtqDJBg
         ==
-X-Google-Smtp-Source: APXvYqy1I0T2RznoZBIAZHz1ZycW5zp0FNQ2BqBgFJcTQhQ0sGTItLuIl2RAtobbXZlg1MiPJkKBkUa+QnWhSe+HluQ=
-X-Received: by 2002:a0c:fe82:: with SMTP id d2mr39629341qvs.123.1568582286294;
- Sun, 15 Sep 2019 14:18:06 -0700 (PDT)
-Date:   Sun, 15 Sep 2019 14:18:01 -0700
-Message-Id: <20190915211802.207715-1-masayasuzuki@google.com>
+X-Google-Smtp-Source: APXvYqwysX0CikywjwAt6kFgVJ2RpPqI6qEU58p8Co13l8cL7lHGqDdpzxECuQsWxKm6yfxmxteu3/cZICKao6wXDBQ=
+X-Received: by 2002:a63:ed08:: with SMTP id d8mr2441700pgi.239.1568582290544;
+ Sun, 15 Sep 2019 14:18:10 -0700 (PDT)
+Date:   Sun, 15 Sep 2019 14:18:02 -0700
+In-Reply-To: <20190915211802.207715-1-masayasuzuki@google.com>
+Message-Id: <20190915211802.207715-2-masayasuzuki@google.com>
 Mime-Version: 1.0
+References: <20190915211802.207715-1-masayasuzuki@google.com>
 X-Mailer: git-send-email 2.23.0.237.gc6a4ce50a0-goog
-Subject: [PATCH 0/1] fetch: Cache the want OIDs for faster lookup
+Subject: [PATCH 1/1] fetch: Cache the want OIDs for faster lookup
 From:   Masaya Suzuki <masayasuzuki@google.com>
 To:     git@vger.kernel.org
 Cc:     Masaya Suzuki <masayasuzuki@google.com>
@@ -60,29 +64,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When mirroring a repository with a lot of refs, there is a case where the client
-takes a long time to calculate the want OIDs. This is observable with Chromium's
-repository for example.
+During git-fetch, the client checks if the advertised tags' OIDs are
+already in the fetch request's want OID set. This check is done in a
+linear scan. For a repository that has a lot of refs, repeating this
+scan takes 15+ minutes. In order to speed this up, create a oid_set for
+other refs' OIDs.
 
-$ mkdir testing
-$ cd testing
-$ git init . --bare
-$ git remote add origin master https://chromium.googlesource.com/chromium/src --mirror=fetch
-$ git fetch origin
-
-With the commands above, it takes a long time before sending a fetch request. I
-stopped the command after 15 minutes.
-
-Debugging this, it seems most of the time is spent on iterating the want refs to
-see OIDs are included there. This patch speeds up this process by using oid_set.
-Now the client can send a fetch request almost immediately.
-
-Masaya Suzuki (1):
-  fetch: Cache the want OIDs for faster lookup
-
+Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
+---
  builtin/fetch.c | 18 ++++++++++--------
  1 file changed, 10 insertions(+), 8 deletions(-)
 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 54d6b01892..51a276dfaa 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -7,6 +7,7 @@
+ #include "refs.h"
+ #include "refspec.h"
+ #include "object-store.h"
++#include "oidset.h"
+ #include "commit.h"
+ #include "builtin.h"
+ #include "string-list.h"
+@@ -243,15 +244,13 @@ static void add_merge_config(struct ref **head,
+ 	}
+ }
+ 
+-static int will_fetch(struct ref **head, const unsigned char *sha1)
++static void create_fetch_oidset(struct ref **head, struct oidset *out)
+ {
+ 	struct ref *rm = *head;
+ 	while (rm) {
+-		if (hasheq(rm->old_oid.hash, sha1))
+-			return 1;
++		oidset_insert(out, &rm->old_oid);
+ 		rm = rm->next;
+ 	}
+-	return 0;
+ }
+ 
+ struct refname_hash_entry {
+@@ -317,6 +316,7 @@ static void find_non_local_tags(const struct ref *refs,
+ {
+ 	struct hashmap existing_refs;
+ 	struct hashmap remote_refs;
++	struct oidset fetch_oids = OIDSET_INIT;
+ 	struct string_list remote_refs_list = STRING_LIST_INIT_NODUP;
+ 	struct string_list_item *remote_ref_item;
+ 	const struct ref *ref;
+@@ -324,6 +324,7 @@ static void find_non_local_tags(const struct ref *refs,
+ 
+ 	refname_hash_init(&existing_refs);
+ 	refname_hash_init(&remote_refs);
++	create_fetch_oidset(head, &fetch_oids);
+ 
+ 	for_each_ref(add_one_refname, &existing_refs);
+ 	for (ref = refs; ref; ref = ref->next) {
+@@ -340,9 +341,9 @@ static void find_non_local_tags(const struct ref *refs,
+ 			if (item &&
+ 			    !has_object_file_with_flags(&ref->old_oid,
+ 							OBJECT_INFO_QUICK) &&
+-			    !will_fetch(head, ref->old_oid.hash) &&
++			    !oidset_contains(&fetch_oids, &ref->old_oid) &&
+ 			    !has_object_file_with_flags(&item->oid, OBJECT_INFO_QUICK) &&
+-			    !will_fetch(head, item->oid.hash))
++			    !oidset_contains(&fetch_oids, &item->oid))
+ 				clear_item(item);
+ 			item = NULL;
+ 			continue;
+@@ -356,7 +357,7 @@ static void find_non_local_tags(const struct ref *refs,
+ 		 */
+ 		if (item &&
+ 		    !has_object_file_with_flags(&item->oid, OBJECT_INFO_QUICK) &&
+-		    !will_fetch(head, item->oid.hash))
++		    !oidset_contains(&fetch_oids, &item->oid))
+ 			clear_item(item);
+ 
+ 		item = NULL;
+@@ -377,7 +378,7 @@ static void find_non_local_tags(const struct ref *refs,
+ 	 */
+ 	if (item &&
+ 	    !has_object_file_with_flags(&item->oid, OBJECT_INFO_QUICK) &&
+-	    !will_fetch(head, item->oid.hash))
++	    !oidset_contains(&fetch_oids, &item->oid))
+ 		clear_item(item);
+ 
+ 	/*
+@@ -404,6 +405,7 @@ static void find_non_local_tags(const struct ref *refs,
+ 	}
+ 	hashmap_free(&remote_refs, 1);
+ 	string_list_clear(&remote_refs_list, 0);
++	oidset_clear(&fetch_oids);
+ }
+ 
+ static struct ref *get_ref_map(struct remote *remote,
 -- 
 2.23.0.237.gc6a4ce50a0-goog
 
