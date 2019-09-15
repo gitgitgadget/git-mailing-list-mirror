@@ -2,129 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52E7A1F463
-	for <e@80x24.org>; Sun, 15 Sep 2019 21:26:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4486C1F463
+	for <e@80x24.org>; Sun, 15 Sep 2019 21:51:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726327AbfIOV03 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Sep 2019 17:26:29 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58726 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725270AbfIOV03 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 15 Sep 2019 17:26:29 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:4d4d:a9ce:2c0a:3d66])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 17FB66074C;
-        Sun, 15 Sep 2019 21:26:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1568582787;
-        bh=E1PiwJxAxvVpSRDMXDgUhA4QBGoLBBvSCl+kJpoNzXI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=ymnWf6tTtGb9k17bFff94D9iui+2GJ1SaSlj2yXOiw8F1zLpbE5tBrxjtKmmUZYfI
-         7dddSkqVaYQa12sL1tTT34RQF9yCaim6YK2QmXLKP3lz/2S+xNliCf/4G8tR7VUl5G
-         WfWjO5KB65mzoQhYbfhWDKilXJejkPPYllaDwqKqLEL9g/C2PTLWEfoEo3QUu+Ppch
-         cIBBpQ8zfvlvXLISN3gykHEQ8AaOrJDPdo37hhwpCIWMCsNy+/BBZWkVHL4Ah+2bUa
-         z8sMspofn25tlQnr2uljHtxToNvQ5UK4d7Ek6liQ3rJ1JYLq7SFO8jq9B6sYmAjgz1
-         upEh3uhVdmLUHE8PYEc1IQlccxz6GKmvEpCzmg4OqDuZ5e7R7Q61vnt9lwwtPBEue+
-         cO4uwaU9YGQQpU9rC/IPDHNGEupFIOcGvyJE6LhavgUP9oMUJ7mB6MUyMOXhiBN6w7
-         XyNrmDdZuxhrKGKKMOyuN+CH10fs6BnVJNkuu3wuXsIWEUV25Gn
-Date:   Sun, 15 Sep 2019 21:26:21 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Documentation: fix build with Asciidoctor 2
-Message-ID: <20190915212621.GV11334@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190906232947.GJ11334@genre.crustytoothpaste.net>
- <20190914194919.748935-1-sandals@crustytoothpaste.net>
- <20190915095952.GA6190@szeder.dev>
+        id S1726777AbfIOVvP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Sep 2019 17:51:15 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:33031 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725775AbfIOVvP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Sep 2019 17:51:15 -0400
+Received: by mail-qt1-f195.google.com with SMTP id r5so40912391qtd.0
+        for <git@vger.kernel.org>; Sun, 15 Sep 2019 14:51:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3qOCK0F/FevAYkbmIuh86FHYFI5bMC+c0F/HWQCu3tY=;
+        b=Ag2IU2GILm9k4/8nrLn2xaO+APz7/0wIzwQndf+YkV/USU2355Y8B4ejS4Rj+pZZMG
+         r48gV4m8Bkg1/KqRHfGg3C8tOwDI+FAHxDib6Y3k07ebQbbcyETQiEG5R6eE+v8wCVwz
+         6NGIoW8xTksbcv2h6wcE8GyCguCC5rcs/HSR4UFkF6YWOpWCCC1xriS0cQaH8SXdjVj2
+         orMFtN9UAhH5cqZCOKgZHfiyGKd2DnX/hIJKLHhTQfpPLdSDrNdx2ZHplOHZvD6yG0xL
+         9JLUYTAfYBcFJs51SFhS9G3UX4J3GGl1VSOHbUwGrvsxwQhmgdKZcA59Tj+y42HZX0sG
+         oKVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3qOCK0F/FevAYkbmIuh86FHYFI5bMC+c0F/HWQCu3tY=;
+        b=U361ozraOlOSrAOf66ai98hchrGuJ/hZ1im8CmB/V7XRBPxgPHRi21D2WZ6VjYdcWz
+         a2N71xKu3e7gS+DireDlLNNS0EyA/I7zn75VLjBlq/XK4IOAwkBauM/tAk7cFHCY/EHu
+         zm40VyCbaj7NWyZwK1uEmuV4syT7t5RCvG9MgdxyhzqRBmFTsLpa28r7/vS8G+g/pl9Q
+         4Iti+9E52QCdZYnxnjZ9FMhEf4KliKAU8M6PrTJ3jXT0J+s/VewMT9OsKsQU76V/gYFR
+         TJXV0KqEFhtq6jcYDl+x+7PkMupXxfSFNzxETIlH3BxbzDMhuXBZd8ARCFtMxDW/8GQb
+         VaQA==
+X-Gm-Message-State: APjAAAXuXefmAs4r2rphNULe1bmcDGLLT9G8N3yrJySo9h4pfGCHfqkR
+        /gYbyrHTfgpyNMcQQfqUyJe4ylQuDjUtOx0sgwbHqMpY
+X-Google-Smtp-Source: APXvYqxA2jzf3ZzhQnSHVw2cY0+SOKAINGdHgjC/nWjWkvAfzB+Mref190kNGwE/ixVYD9/X0MOLYhJH0YCSGGNjRj8=
+X-Received: by 2002:ac8:1c2d:: with SMTP id a42mr13951304qtk.91.1568584273297;
+ Sun, 15 Sep 2019 14:51:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ptMYGWplstB9CqWP"
-Content-Disposition: inline
-In-Reply-To: <20190915095952.GA6190@szeder.dev>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20190707055132.103736-1-masayasuzuki@google.com>
+ <20190709125620.GA18175@sigill.intra.peff.net> <CAJB1erXRg4S-vzRZwA-Q5cXAPayRE0dAjFjjkNQ9CoKiXF=7EQ@mail.gmail.com>
+ <20190722210037.GA31664@sigill.intra.peff.net> <xmqqsgpnj3hv.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsgpnj3hv.fsf@gitster-ct.c.googlers.com>
+From:   Masaya Suzuki <masayasuzuki@google.com>
+Date:   Sun, 15 Sep 2019 14:50:59 -0700
+Message-ID: <CAJB1erXHWKu35_7EJ7tK7X4jkzcWA6KR8LqNdR8Mf=hY+rWK+w@mail.gmail.com>
+Subject: Re: [PATCH] credential: add nocache option to the credentials API
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Aug 26, 2019 at 9:28 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Jeff King <peff@peff.net> writes:
+>
+> > I was thinking that Git itself could treat "ttl=0" specially, the same
+> > as your nocache, and avoid passing it along to any helpers during the
+> > approve stage. That would make it exactly equivalent to your patch
+> > (modulo the name change).
+> > ...
+> > And as you noted above, if we don't suppress the helper calls inside
+> > Git, then every matching storage helper needs to learn about "nocache"
+> > (or "ttl") before it will do any good.
+>
+> I was waiting for this discussion to settle and then the discussion
+> seems to have petered out.  Any interest to following the "ttl with
+> special casing value 0 as 'nocache'" idea thru from either two of
+> you, or should I take the patch as is in the meantime?
 
---ptMYGWplstB9CqWP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Sorry for the late reply. I think about this again. I imagine that, if
+I would like to have credentials with an expiration and I want to have
+them managed by other helpers, it's probably better to use an absolute
+timestamp instead of duration. The second call to the helpers is done
+after the remote call. For the helpers that store TTL-ed credentials,
+they cannot tell the start time of the TTL in the second call. This
+makes it hard to cache the short-lived credentials safely because some
+time has spent during the remote call and the actual TTL is shorter
+than ttl=N option. From this, instead of adding ttl=DURATION, it might
+be better to have expires_at=TIMESTAMP.
 
-On 2019-09-15 at 09:59:52, SZEDER G=C3=A1bor wrote:
-> On Sat, Sep 14, 2019 at 07:49:19PM +0000, brian m. carlson wrote:
-> >  	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
-> >  	gem install --version 1.5.8 asciidoctor
->=20
-> So, since the documentation can now be built with Asciidoctor v2, is
-> it already time to remove this '--version 1.5.8'?
-
-I think Martin was going to send in some more patches before we did
-that.
-
-> > diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-> > index d49089832d..b3e76ef863 100755
-> > --- a/ci/test-documentation.sh
-> > +++ b/ci/test-documentation.sh
-> > @@ -8,6 +8,8 @@
-> >  filter_log () {
-> >  	sed -e '/^GIT_VERSION =3D /d' \
-> >  	    -e '/^    \* new asciidoc flags$/d' \
-> > +	    -e '/stripped namespace before processing/d' \
-> > +	    -e '/Attributed.*IDs for element/d' \
->=20
-> I haven't seen this latter message in the CI builds, neither with
-> Asciidoctor v1.5.8 nor with v2.  Do we really need this filter, then?
-> Where does this message come from?
-
-I see it and it definitely fails on my system without it.  It comes from
-libxslt, which has been patched in Debian to produce deterministic IDs.
-I suspect we may not have seen it on Ubuntu systems because they are
-running 16.04, which is likely older than the patch.  If Travis updates
-to 18.04, we may be more likely to have a problem.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---ptMYGWplstB9CqWP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1+rH0ACgkQv1NdgR9S
-9oscihAAh2l2fbWX43oKAL6wFFUuez0HWZ7fRkgAUm/WFLwcfFdeRtDhR+7qXIhr
-CKwLz/gGZ69dMVRFwWT8/Y55BZQJltBZg5EQ85H74WqwOf0ST5gjr0Oxd8Ef+FH7
-1M71bx8hT91IPqaSJPluoAAuMWvH4mbxTj1ii1/dmijZ1c7oBRq2DpuCTO1h3mGO
-8ROI3nHFDiYUzmXa002uSj/h0siUqXHCoMCM7x7ZI/M0zs2o7VJV1xa0Gl8eEv2J
-Kj3Q8q+lTbQjgoDAUoLp/EyFz0Zag8/ozNDIG5LA1VAvgIxA8PKwxb9+SD/D6gmm
-OKinZ/NfKyq74GAYFQb0CnvGAZRzBfcIa6i/vuGwRO3VOd9f7j7APIw/9lGhf951
-yklUMKKatwrNsKwmRElA0jS+APz+c8nAcqGpubQYjJE5QiJuYB2KrPDjYwsgKZzC
-kW0F7xgJ2z1qvtT8MPrRLDYm7fdezI6MQlop8i1vu7wGZtEu+JSehpN94fq9tOEl
-pzfkT0MnS7pWWDNiEoYY+v/As9LSk1v0IiI0FRx99GwQuDavESrllOGzYd/l2JfM
-lZ+CZ88JGqIbt15cHd8R4sPFSE29LxXvlyqM+0aByB7za8y4fsChJGb0AwfUSFRJ
-kCzKpnwQ9zpyq4yiveLXtueFOxY2YJr1lwKSExx0JsbOVsuVQHQ=
-=LFhR
------END PGP SIGNATURE-----
-
---ptMYGWplstB9CqWP--
+Maybe my observation is not an issue. I don't know. For now, adding
+nocache seems a safer action for me, so I vote for taking nocache
+patch as-is in the meantime. If there's somebody who wants to receive
+TTL or expiration timestamp, they can decide what's actually needed
+later.
