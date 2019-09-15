@@ -8,98 +8,131 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8850D1F463
-	for <e@80x24.org>; Sun, 15 Sep 2019 12:08:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04BE71F463
+	for <e@80x24.org>; Sun, 15 Sep 2019 12:11:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730163AbfIOMDp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Sep 2019 08:03:45 -0400
-Received: from mout.web.de ([212.227.15.4]:41457 "EHLO mout.web.de"
+        id S1727068AbfIOMKf (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Sep 2019 08:10:35 -0400
+Received: from mout.web.de ([212.227.15.14]:40023 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726246AbfIOMDo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Sep 2019 08:03:44 -0400
+        id S1726246AbfIOMKf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Sep 2019 08:10:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1568549021;
-        bh=JQC5r/L9XntOooLcFW42LxU9axx2HICqrrQXyxoOjH8=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=q3UxTjOuEaplVWVGNHqaw1xEvnjYrEDh8R2VJCHI+zLMJrFmj4ZFSfDOekCbf5JGZ
-         tarpfdoXcYmVLrOnlA0nmGTOCYGXIbVVZbm5r1RWvLM9j4SXqmGxCUcSegTHipDEB5
-         i2xE+4dKOc1Xsfr8O1jiVfI7Wm/RY8a24soZIklU=
+        s=dbaedf251592; t=1568549429;
+        bh=Uuk1XGM3MjF62S3fCRcR5YHVivNITIyAeGoRU+lvrZc=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=GnYcxpCd9Qnt5f1FUc+YxVRJf9oW6unQr0tsPgJx+6hc+3E/Gkt+6kcl0H6Oohxr7
+         2/bZVMav3goVUT1GBIAxYraSonjHKdDLG9an93AfvH+/lrvK4x01N6itW2RkjZCHtF
+         0I7pi4cFk+6JGSkHkqZCKRsW6YsO+rYRTN8CIq2M=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MW6Ib-1hcnBM0ydN-00XJ0R; Sun, 15
- Sep 2019 14:03:41 +0200
-X-Mozilla-News-Host: news://nntp.public-inbox.org:119
+Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MX0lw-1hdd9V0fJs-00VyBg; Sun, 15
+ Sep 2019 14:10:29 +0200
+Subject: [PATCH 2/2] sha1-name: check for overflow of N in "foo^N" and "foo~N"
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 1/2] rev-parse: demonstrate overflow of N for "foo^N" and
- "foo~N"
-Message-ID: <c43610f2-a51f-7333-a200-a76930a0b705@web.de>
-Date:   Sun, 15 Sep 2019 14:03:25 +0200
+References: <c43610f2-a51f-7333-a200-a76930a0b705@web.de>
+Message-ID: <2be6e3ee-209e-9cd1-eb43-284f9a8462b3@web.de>
+Date:   Sun, 15 Sep 2019 14:10:28 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <c43610f2-a51f-7333-a200-a76930a0b705@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:oQ6WVmtw/tJEe7Gm9m7FUXyPcfqTEb8Z0MfYsvcjsYqMyo/X+Hi
- nwVGr3A7fwxjSB5KUc9UPIYBSlniyBvq04oFRMBfWxFfdOEJDSKZnn/1Xiy6ru7nxE1kINS
- NH4YNYVJlPc6f16wlvimWRNnCo5fymIsHldi4DROwDL7p4tOGYHrK7cu3Dulj5HYQ/j67W+
- qsEZpa30y7RI1pxPvS0lA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:sdwLIodKwBc=:naaeTL7AML2eBOzfHeenn7
- dSe66/1E7cZNEK10qtCwgzZ3/kP32bwAGHfRPN4sMu2902RyHSL3sBKSAIi0oGOZJVq1ZinrL
- fSCG7ttHB2+2B99cCox6HWQZilKwy8Lr+JBki4DqpFggXRw+V9EHMARaqRjcfc2tuTWcipY+a
- j0DAEVrgLmcbtVzGKWqVqFVTBjouBOGDug3xB54R18+/rHY3Gasz0E3/5LqVyfccvbuMiqlRu
- oCbn1lgVBc7TFDto4nqKk8i7ne6U17IoL/gbDobFyfdrG4Ygd6aD8gjdSCanQOA2ZGChkLWX7
- jG9XRg8isyOl6nhmvR6ugNPb9KuZmP5aamrUdsdV8OF8Yxxpf2+LCesdxfkVMQvbbn1UBgjAy
- 6xVZWqDXhNcib3JH2+vt2YiUQQh9RYeT7NCDYRguNkxWC68v1RNKHijjV4DnWu166TvdjzSZW
- M7dj0GsPLB0JAke3UmrjWjot+H16y/5DQhPpcZnm295DY4xhvT0nsubxhAAYhdc3VZ3+Cl9j1
- gSDakJIj4pZ1OBe81BF/bkDPOfIOc6NPgiqeo687qKlkksdXDgvBDz0AjdKUtJyLWJvYYC1NM
- DDas6jOiWdnXH4TzTLZ9QNgR2x6TvlUzcCICh89F6IHFv4Y8ye7Rd5QsejnG3BN6HVaMJ8TmE
- Z9X/HjXcELnxalOk2hpm9qNzoBTX/+lX5KVi47VmbjOWm2+599T01Cqc6zf3j6gJ46U3BkXmP
- d1xtqAN1G7tEjMkiLgpdwjjEiR9lbteBfdW2E2FYQjBIIqLl29GwRmXKfvuKPTVl4Mp+h1BRF
- M1pXIaBQHZI0xmRpVxdzFi7TWmFg+pNAdtDIdsCr99A8ffKLoLb5FRZmJXqBxB16KMGEcDa3Z
- 3qfhwP5tpNq0xSnO+eNuyx25jHL5v7IROqlFiJsbMVkHI9EovJspunGVdLZNqsulB7b5pNudl
- P02LT9Vw/2+Q5AD+jtYRw0N7ARvnbq429RFWSchqlwWviJhdJfwBpPOF0TNCsE1OjLt2p02qk
- TJX08ATiM6G0R7FzZ50JuQBnFBDhdizbo0rmsRYI90SqY4o7BTsbUIyPcbu6jd/0xlG10IZ46
- RTNORCRDSmWiwLoKX+JYSEYJNPZvhbtfIdldC6HCDdr5/4cGXy3xPegwgI54o5VHZe/s65w0H
- ajMMfSpFMY9jot6jUuw96eaJUUu0mxPOOb5dZjSXb0FGy52jNqCvHVAsvh6kvBSlQCtjeA9LG
- vFHkixSEqxGAqzBTc0/sXorZlKyQIAv0W6aDaUA==
+X-Provags-ID: V03:K1:8LXRZMzShaYKzIvxvak4e1y5DnmJveonTkuS4LMSz/lmy5cTvo9
+ +wFCQqWVBdz7NPmzud/xe716OCnblMnOEvdINY5liLPurCsZOjJNo/NAtHb2PtWIKIEamp9
+ qM9+sXql75q6sI+RJD8+1u5kjfBArUtOQlpLWU157eUd1W3ipUxiadCqX2EgCT1/pF1NxG4
+ yap/aDBROmzZNkNJ04k9A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:si9nco26QqQ=:/PKy4xKZs7FsbRjFlDA4b4
+ JhFVoE73GyVZ1oAa398eNCZtMdXI76ZBn8iM5Wa7lulPJdKluM1vOuzK/4iqL1dYZJdON4Ld0
+ CurjUiVSBJI9udB707LdOWGYVsJrpAvIT8oh7Qc/c6wOSbAdNPo/563no3rMBriYmN63O9SX7
+ OGRB5PLEkU8cPgvSd/B00+pxM0r1e4gftUc2PBrLzSUyvJEoD2yezuA7OaRuJ/FSVYaTj5U/O
+ fRWQmVMKNH8ADU8E1PZBTzxodiH/nsaDkhlqCHuHe/XyKujJMdP9BAIQ4DIBP0eutvQmxBJd9
+ 76QzzF40kykWHTUarq9H1MdNqkSqRDXSYj5q+tvHeg+Q9UCXj1c4awcx04hzGaBt+psYg3BM1
+ 3MfwLUlIHvy2eN2pxQvFrRV2UFcAoylszrGluK3vqBsxkcokubCOwMSaX9zcNzHMrJnIT4w3o
+ XuIjCgWQpQBwhKcTHwBfUWhb2q+qT/XbtTHwtI2NOOShQlrKnsH23vIGEl2CIkBaarbuRqUe7
+ WdZZd5tGcqPIsZ0WWAUKT73zLYI7yFb2AH/wJlVeCHPp1JW8DCJF7c2vSHKf0fK88nr5CspTb
+ O+BQlSqSdCYHV+qx1Esf1OUiNMGrUeK0u7JEAxPLIIWv1zgVO6f2YKM3iV7SKVE2AWNdFVbLb
+ faEEdb7laQvbhob89ffh9X4vRVNo8k5oBAxIwqSjFbt7zAnfMjd4VZM2ehsR6jkoe4gJCt1nG
+ PRzHj3Koc0XTio8NHHiMFYNzh/Q89qlWiADzKudvsBvClwmsTIwc1xmICFHgSGc7i7k6Rzs7V
+ /eFWKaJtJkplo/9FURsqBhRh/MxJgOzVACLvXWLKtgkdrTPwKBkLonob5+9/Ow7WPGVm3js5z
+ xq6/HyXxOuz+f3n7XluUq6iwD8hXZHIAiBPIj8zUOvQhF759OeM5EJFEH45u3YiY8R4L75qCc
+ DyzSv/M2UNhVp+/Jv7X4hAOCG8P5caj2Z074ISv8s2gEEmuFg1XVKsVaDkIhAHWS1rynAa3r6
+ iZzx+EE7B90RWvQNFWNuZKXKSJk3Z9BmScYY1suGokPI8e+jj5cL8qcJ0xjS1Z903X7stIdgY
+ jsEOu0sG8xBhHZmbCo3Lh0m8yJwm+HsDX4hzILQT5IsA8j3NCYO2tb8dJkLXPvNUgLzwEajvy
+ WeGYOnnLyqSQwAZv9Rns3kapauADKSL3QOFMqJPLZ00sEGyfIWJj6pPHvyYdZTbLz68rRYcou
+ 84wFrbPldNlg1uIfJw/CSoHgdZP/EMZ92ubW61w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the number gets too high for an int, weird things may happen, as
-signed overflows are undefined.  Add a test to show this; rev-parse
-"sucessfully" interprets 100000000000000000000000000000000 to be the
-same as 0, at least on x64 with GCC 9.2.1 and Clang 8.0.1, which is
-obviously bogus.
+Reject values that don't fit into an int, as get_parent() and
+get_nth_ancestor() cannot handle them.  That's better than potentially
+returning a random object.
+
+If this restriction turns out to be too tight then we can switch to a
+wider data type, but we'd still have to check for overflow.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- t/t1506-rev-parse-diagnosis.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sha1-name.c                    | 15 ++++++++++++---
+ t/t1506-rev-parse-diagnosis.sh |  4 ++--
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
+diff --git a/sha1-name.c b/sha1-name.c
+index c665e3f96d..7a047e9e2b 100644
+=2D-- a/sha1-name.c
++++ b/sha1-name.c
+@@ -1160,13 +1160,22 @@ static enum get_oid_result get_oid_1(struct reposi=
+tory *r,
+ 	}
+
+ 	if (has_suffix) {
+-		int num =3D 0;
++		unsigned int num =3D 0;
+ 		int len1 =3D cp - name;
+ 		cp++;
+-		while (cp < name + len)
+-			num =3D num * 10 + *cp++ - '0';
++		while (cp < name + len) {
++			unsigned int digit =3D *cp++ - '0';
++			if (unsigned_mult_overflows(num, 10))
++				return MISSING_OBJECT;
++			num *=3D 10;
++			if (unsigned_add_overflows(num, digit))
++				return MISSING_OBJECT;
++			num +=3D digit;
++		}
+ 		if (!num && len1 =3D=3D len - 1)
+ 			num =3D 1;
++		else if (num > INT_MAX)
++			return MISSING_OBJECT;
+ 		if (has_suffix =3D=3D '^')
+ 			return get_parent(r, name, len1, oid, num);
+ 		/* else if (has_suffix =3D=3D '~') -- goes without saying */
 diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.=
 sh
-index 4ee009da66..5c4df47401 100755
+index 5c4df47401..6a938b205b 100755
 =2D-- a/t/t1506-rev-parse-diagnosis.sh
 +++ b/t/t1506-rev-parse-diagnosis.sh
-@@ -215,4 +215,12 @@ test_expect_success 'arg before dashdash must be a re=
-vision (ambiguous)' '
+@@ -215,11 +215,11 @@ test_expect_success 'arg before dashdash must be a r=
+evision (ambiguous)' '
  	test_cmp expect actual
  '
 
-+test_expect_failure 'reject Nth parent if N is too high' '
-+	test_must_fail git rev-parse HEAD^100000000000000000000000000000000
-+'
-+
-+test_expect_failure 'reject Nth ancestor if N is too high' '
-+	test_must_fail git rev-parse HEAD~100000000000000000000000000000000
-+'
-+
- test_done
+-test_expect_failure 'reject Nth parent if N is too high' '
++test_expect_success 'reject Nth parent if N is too high' '
+ 	test_must_fail git rev-parse HEAD^100000000000000000000000000000000
+ '
+
+-test_expect_failure 'reject Nth ancestor if N is too high' '
++test_expect_success 'reject Nth ancestor if N is too high' '
+ 	test_must_fail git rev-parse HEAD~100000000000000000000000000000000
+ '
+
 =2D-
 2.23.0
-
