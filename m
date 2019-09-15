@@ -2,98 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4486C1F463
-	for <e@80x24.org>; Sun, 15 Sep 2019 21:51:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71FF31F464
+	for <e@80x24.org>; Sun, 15 Sep 2019 22:06:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726777AbfIOVvP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Sep 2019 17:51:15 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:33031 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725775AbfIOVvP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Sep 2019 17:51:15 -0400
-Received: by mail-qt1-f195.google.com with SMTP id r5so40912391qtd.0
-        for <git@vger.kernel.org>; Sun, 15 Sep 2019 14:51:14 -0700 (PDT)
+        id S1727118AbfIOWGB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Sep 2019 18:06:01 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:40498 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725775AbfIOWGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Sep 2019 18:06:00 -0400
+Received: by mail-wm1-f67.google.com with SMTP id m3so8026654wmc.5
+        for <git@vger.kernel.org>; Sun, 15 Sep 2019 15:05:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3qOCK0F/FevAYkbmIuh86FHYFI5bMC+c0F/HWQCu3tY=;
-        b=Ag2IU2GILm9k4/8nrLn2xaO+APz7/0wIzwQndf+YkV/USU2355Y8B4ejS4Rj+pZZMG
-         r48gV4m8Bkg1/KqRHfGg3C8tOwDI+FAHxDib6Y3k07ebQbbcyETQiEG5R6eE+v8wCVwz
-         6NGIoW8xTksbcv2h6wcE8GyCguCC5rcs/HSR4UFkF6YWOpWCCC1xriS0cQaH8SXdjVj2
-         orMFtN9UAhH5cqZCOKgZHfiyGKd2DnX/hIJKLHhTQfpPLdSDrNdx2ZHplOHZvD6yG0xL
-         9JLUYTAfYBcFJs51SFhS9G3UX4J3GGl1VSOHbUwGrvsxwQhmgdKZcA59Tj+y42HZX0sG
-         oKVg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XDemCzR/cxm+pj+GxJOZq1rT0rwtMk29B3M7LR9jSfo=;
+        b=JsYrIUrNOXUgA4jgMp0zh+wT7HyUHlGwO9PCj9SuynKFyQBHArPQt0R7VnYeHG25E0
+         ZvYWrvWFZJozfb4hdb7lFiNBUZd1yEe8wwYpCj35vevSTLSy48goOqX9s5v/imEwsI59
+         m/TSbuOavKePXfHZ99Zn3tO3hEjsclFgQrLaWzFbJuEkaCWJCHusWFJRx5v8cQWwObwo
+         cqxQZVsoZ4YxKlwrIh4AzTUK/5J53m7l7A5siDMRabvFIiO0suj0Pihig5kGz01orDH1
+         ZL3VIC35mzcqN8PhlT6m54JIgUtzfNEFSq6jzFrnl1DE9PjFH9yqkSO2j3NqGbQiYPWj
+         puXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3qOCK0F/FevAYkbmIuh86FHYFI5bMC+c0F/HWQCu3tY=;
-        b=U361ozraOlOSrAOf66ai98hchrGuJ/hZ1im8CmB/V7XRBPxgPHRi21D2WZ6VjYdcWz
-         a2N71xKu3e7gS+DireDlLNNS0EyA/I7zn75VLjBlq/XK4IOAwkBauM/tAk7cFHCY/EHu
-         zm40VyCbaj7NWyZwK1uEmuV4syT7t5RCvG9MgdxyhzqRBmFTsLpa28r7/vS8G+g/pl9Q
-         4Iti+9E52QCdZYnxnjZ9FMhEf4KliKAU8M6PrTJ3jXT0J+s/VewMT9OsKsQU76V/gYFR
-         TJXV0KqEFhtq6jcYDl+x+7PkMupXxfSFNzxETIlH3BxbzDMhuXBZd8ARCFtMxDW/8GQb
-         VaQA==
-X-Gm-Message-State: APjAAAXuXefmAs4r2rphNULe1bmcDGLLT9G8N3yrJySo9h4pfGCHfqkR
-        /gYbyrHTfgpyNMcQQfqUyJe4ylQuDjUtOx0sgwbHqMpY
-X-Google-Smtp-Source: APXvYqxA2jzf3ZzhQnSHVw2cY0+SOKAINGdHgjC/nWjWkvAfzB+Mref190kNGwE/ixVYD9/X0MOLYhJH0YCSGGNjRj8=
-X-Received: by 2002:ac8:1c2d:: with SMTP id a42mr13951304qtk.91.1568584273297;
- Sun, 15 Sep 2019 14:51:13 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XDemCzR/cxm+pj+GxJOZq1rT0rwtMk29B3M7LR9jSfo=;
+        b=OmGMawlX36Bt5z/ydSubUDiDIoYe9EmLGLEdxEIwI/iZuJWnkbzOrV1/ciEj+9yBY4
+         8gVtfoftja9nSartqdHUQbWB1pCprrGMAV5xn8GCasMFYKwj7FGY3ARYdCRh1JObkqcP
+         mYNsW6l16Ll4PLsJtZ9GaRaYP1XX2sdpEXR7axvj3YApDmP0NpLkNMrxJuh8/d0l7D8y
+         9x/pG/VE3LrGFAAxZnYj+KWenG/tgGTc//BVSYS9xXhK4kyW1Twn64pZ0oC350iWlsDg
+         ce+HBIAVH2dm0g6hgV/7VnVpb9W91CppJXspxezJzWNQpwBBiPtQghqK+6xmrzC3P4wC
+         A1pw==
+X-Gm-Message-State: APjAAAWhG/aoYRRhkHbPNILIJ1KZ8STQCg509exaQPUpRUN1+YmQZz4V
+        wsBR83SaEj7FDBCOLhYnkcToJkDB
+X-Google-Smtp-Source: APXvYqyjw7UuoeX0WOIYqCsrISAG5neXye2OJp3ns0g3PMJSRKGpVp4QAH8KS0A2am7SP6Peo9kjyQ==
+X-Received: by 2002:a1c:f009:: with SMTP id a9mr11413975wmb.151.1568585159006;
+        Sun, 15 Sep 2019 15:05:59 -0700 (PDT)
+Received: from szeder.dev (x4dbd3c27.dyn.telefonica.de. [77.189.60.39])
+        by smtp.gmail.com with ESMTPSA id a190sm10114042wme.8.2019.09.15.15.05.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 15 Sep 2019 15:05:58 -0700 (PDT)
+Date:   Mon, 16 Sep 2019 00:05:55 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] Documentation: fix build with Asciidoctor 2
+Message-ID: <20190915220555.GB6190@szeder.dev>
+References: <20190906232947.GJ11334@genre.crustytoothpaste.net>
+ <20190914194919.748935-1-sandals@crustytoothpaste.net>
+ <20190915095952.GA6190@szeder.dev>
+ <20190915212621.GV11334@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-References: <20190707055132.103736-1-masayasuzuki@google.com>
- <20190709125620.GA18175@sigill.intra.peff.net> <CAJB1erXRg4S-vzRZwA-Q5cXAPayRE0dAjFjjkNQ9CoKiXF=7EQ@mail.gmail.com>
- <20190722210037.GA31664@sigill.intra.peff.net> <xmqqsgpnj3hv.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqsgpnj3hv.fsf@gitster-ct.c.googlers.com>
-From:   Masaya Suzuki <masayasuzuki@google.com>
-Date:   Sun, 15 Sep 2019 14:50:59 -0700
-Message-ID: <CAJB1erXHWKu35_7EJ7tK7X4jkzcWA6KR8LqNdR8Mf=hY+rWK+w@mail.gmail.com>
-Subject: Re: [PATCH] credential: add nocache option to the credentials API
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190915212621.GV11334@genre.crustytoothpaste.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 26, 2019 at 9:28 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Jeff King <peff@peff.net> writes:
->
-> > I was thinking that Git itself could treat "ttl=0" specially, the same
-> > as your nocache, and avoid passing it along to any helpers during the
-> > approve stage. That would make it exactly equivalent to your patch
-> > (modulo the name change).
-> > ...
-> > And as you noted above, if we don't suppress the helper calls inside
-> > Git, then every matching storage helper needs to learn about "nocache"
-> > (or "ttl") before it will do any good.
->
-> I was waiting for this discussion to settle and then the discussion
-> seems to have petered out.  Any interest to following the "ttl with
-> special casing value 0 as 'nocache'" idea thru from either two of
-> you, or should I take the patch as is in the meantime?
+On Sun, Sep 15, 2019 at 09:26:21PM +0000, brian m. carlson wrote:
+> > > diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
+> > > index d49089832d..b3e76ef863 100755
+> > > --- a/ci/test-documentation.sh
+> > > +++ b/ci/test-documentation.sh
+> > > @@ -8,6 +8,8 @@
+> > >  filter_log () {
+> > >  	sed -e '/^GIT_VERSION = /d' \
+> > >  	    -e '/^    \* new asciidoc flags$/d' \
+> > > +	    -e '/stripped namespace before processing/d' \
+> > > +	    -e '/Attributed.*IDs for element/d' \
+> > 
+> > I haven't seen this latter message in the CI builds, neither with
+> > Asciidoctor v1.5.8 nor with v2.  Do we really need this filter, then?
+> > Where does this message come from?
+> 
+> I see it and it definitely fails on my system without it.  It comes from
+> libxslt, which has been patched in Debian to produce deterministic IDs.
+> I suspect we may not have seen it on Ubuntu systems because they are
+> running 16.04, which is likely older than the patch.  If Travis updates
+> to 18.04, we may be more likely to have a problem.
 
-Sorry for the late reply. I think about this again. I imagine that, if
-I would like to have credentials with an expiration and I want to have
-them managed by other helpers, it's probably better to use an absolute
-timestamp instead of duration. The second call to the helpers is done
-after the remote call. For the helpers that store TTL-ed credentials,
-they cannot tell the start time of the TTL in the second call. This
-makes it hard to cache the short-lived credentials safely because some
-time has spent during the remote call and the actual TTL is shorter
-than ttl=N option. From this, instead of adding ttl=DURATION, it might
-be better to have expires_at=TIMESTAMP.
+Thanks.  Indeed, I kicked off a Travis CI build using their Ubuntu
+18.04 image, and that "Attributed..." message was there.
 
-Maybe my observation is not an issue. I don't know. For now, adding
-nocache seems a safer action for me, so I vote for taking nocache
-patch as-is in the meantime. If there's somebody who wants to receive
-TTL or expiration timestamp, they can decide what's actually needed
-later.
+I think this future-proofing is a good idea, but I also think that
+this should be clarified in the commit message.
+
