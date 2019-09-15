@@ -2,219 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80B741F463
-	for <e@80x24.org>; Sun, 15 Sep 2019 10:00:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8850D1F463
+	for <e@80x24.org>; Sun, 15 Sep 2019 12:08:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726147AbfIOKAI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Sep 2019 06:00:08 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41414 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725497AbfIOKAI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Sep 2019 06:00:08 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h7so34938473wrw.8
-        for <git@vger.kernel.org>; Sun, 15 Sep 2019 03:00:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fz3PJ3nnyQ4+LwWZnIfsoj+ytkKwr5eiQUcfFbZkw3Q=;
-        b=UdPDu5/9GrSwotrgfSZhDNfJSVQQnKWW+eEoZuSSfq4pLLovktvizSDI5cWDkDEb8m
-         55pR/UVE9gSvf7/IyJ0aZtEBVeCa1ruMrr30zk8UG8wQjr2FHLPW5USj+3lx6dX5DMlS
-         PwYgyMt4z/gbmOhCLxCvLzJr3fiCmFpKMg2W8WuP510HLzrrKL9D61ckswt1+/2l9ebM
-         EA0s7iwnatY5GNQTEQ1vtSrNq6RnN8UMmRdDT3kLjkj6wD3xXm7UJt16CoaApUzlWgTY
-         /v+C8BZ96kINWOAyXzjDJJEUzaQ4ToMycJ2mPT5JDb70bQm+l2eptOGou0BwTC0vGWgS
-         ryWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fz3PJ3nnyQ4+LwWZnIfsoj+ytkKwr5eiQUcfFbZkw3Q=;
-        b=fKS8NZiFfq0YUKhtqo7ZeUQsSLNnXnrSPvnHfzYaqlrWeCPlPVAhy4H1n+jcZ1sWwh
-         JZCtfczLAp8mKPR4GkuFbqg6NGkHIUCB7tMn+XmvINMehSQc1XP0xfHFfa/O/C3l0UZL
-         gIMqB4QTsTw5iSIExls44XSwpTj1LPRWYECXR6ASdXHKZYTdLZ9hlGuedoj8Dn8NQWuq
-         vDiAA7eAkN0T1SREKS2CH4oJkPLG7/A/9v8TmU//7i5Owt66AvdLq/IKWeN8vzc0zvTD
-         FEPjU3Wetrnnr9N7BHtZFi6UeEPAhBB5OuBbB2I4GMvDHRpalDTJSNXyVoWWgAv11kRf
-         nMWA==
-X-Gm-Message-State: APjAAAXPhfz5awzERIUVvtFp5d591Y/e/H+t6KWlEeNjNa05i6juXcGZ
-        TBXnM4loZ0ZHMdPg812mi/4=
-X-Google-Smtp-Source: APXvYqygck5D70MEDIdGml6FLKxcRJxHIN9Qp0jfnjt3tWKQveWopoMU6DGdrk/E7lEY8LArXxU/ZA==
-X-Received: by 2002:a5d:4247:: with SMTP id s7mr14825386wrr.110.1568541605076;
-        Sun, 15 Sep 2019 03:00:05 -0700 (PDT)
-Received: from szeder.dev (x4dbd3c27.dyn.telefonica.de. [77.189.60.39])
-        by smtp.gmail.com with ESMTPSA id c6sm56857178wrb.60.2019.09.15.03.00.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 15 Sep 2019 03:00:04 -0700 (PDT)
-Date:   Sun, 15 Sep 2019 11:59:52 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Documentation: fix build with Asciidoctor 2
-Message-ID: <20190915095952.GA6190@szeder.dev>
-References: <20190906232947.GJ11334@genre.crustytoothpaste.net>
- <20190914194919.748935-1-sandals@crustytoothpaste.net>
+        id S1730163AbfIOMDp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Sep 2019 08:03:45 -0400
+Received: from mout.web.de ([212.227.15.4]:41457 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726246AbfIOMDo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Sep 2019 08:03:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1568549021;
+        bh=JQC5r/L9XntOooLcFW42LxU9axx2HICqrrQXyxoOjH8=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=q3UxTjOuEaplVWVGNHqaw1xEvnjYrEDh8R2VJCHI+zLMJrFmj4ZFSfDOekCbf5JGZ
+         tarpfdoXcYmVLrOnlA0nmGTOCYGXIbVVZbm5r1RWvLM9j4SXqmGxCUcSegTHipDEB5
+         i2xE+4dKOc1Xsfr8O1jiVfI7Wm/RY8a24soZIklU=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MW6Ib-1hcnBM0ydN-00XJ0R; Sun, 15
+ Sep 2019 14:03:41 +0200
+X-Mozilla-News-Host: news://nntp.public-inbox.org:119
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 1/2] rev-parse: demonstrate overflow of N for "foo^N" and
+ "foo~N"
+Message-ID: <c43610f2-a51f-7333-a200-a76930a0b705@web.de>
+Date:   Sun, 15 Sep 2019 14:03:25 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190914194919.748935-1-sandals@crustytoothpaste.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:oQ6WVmtw/tJEe7Gm9m7FUXyPcfqTEb8Z0MfYsvcjsYqMyo/X+Hi
+ nwVGr3A7fwxjSB5KUc9UPIYBSlniyBvq04oFRMBfWxFfdOEJDSKZnn/1Xiy6ru7nxE1kINS
+ NH4YNYVJlPc6f16wlvimWRNnCo5fymIsHldi4DROwDL7p4tOGYHrK7cu3Dulj5HYQ/j67W+
+ qsEZpa30y7RI1pxPvS0lA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sdwLIodKwBc=:naaeTL7AML2eBOzfHeenn7
+ dSe66/1E7cZNEK10qtCwgzZ3/kP32bwAGHfRPN4sMu2902RyHSL3sBKSAIi0oGOZJVq1ZinrL
+ fSCG7ttHB2+2B99cCox6HWQZilKwy8Lr+JBki4DqpFggXRw+V9EHMARaqRjcfc2tuTWcipY+a
+ j0DAEVrgLmcbtVzGKWqVqFVTBjouBOGDug3xB54R18+/rHY3Gasz0E3/5LqVyfccvbuMiqlRu
+ oCbn1lgVBc7TFDto4nqKk8i7ne6U17IoL/gbDobFyfdrG4Ygd6aD8gjdSCanQOA2ZGChkLWX7
+ jG9XRg8isyOl6nhmvR6ugNPb9KuZmP5aamrUdsdV8OF8Yxxpf2+LCesdxfkVMQvbbn1UBgjAy
+ 6xVZWqDXhNcib3JH2+vt2YiUQQh9RYeT7NCDYRguNkxWC68v1RNKHijjV4DnWu166TvdjzSZW
+ M7dj0GsPLB0JAke3UmrjWjot+H16y/5DQhPpcZnm295DY4xhvT0nsubxhAAYhdc3VZ3+Cl9j1
+ gSDakJIj4pZ1OBe81BF/bkDPOfIOc6NPgiqeo687qKlkksdXDgvBDz0AjdKUtJyLWJvYYC1NM
+ DDas6jOiWdnXH4TzTLZ9QNgR2x6TvlUzcCICh89F6IHFv4Y8ye7Rd5QsejnG3BN6HVaMJ8TmE
+ Z9X/HjXcELnxalOk2hpm9qNzoBTX/+lX5KVi47VmbjOWm2+599T01Cqc6zf3j6gJ46U3BkXmP
+ d1xtqAN1G7tEjMkiLgpdwjjEiR9lbteBfdW2E2FYQjBIIqLl29GwRmXKfvuKPTVl4Mp+h1BRF
+ M1pXIaBQHZI0xmRpVxdzFi7TWmFg+pNAdtDIdsCr99A8ffKLoLb5FRZmJXqBxB16KMGEcDa3Z
+ 3qfhwP5tpNq0xSnO+eNuyx25jHL5v7IROqlFiJsbMVkHI9EovJspunGVdLZNqsulB7b5pNudl
+ P02LT9Vw/2+Q5AD+jtYRw0N7ARvnbq429RFWSchqlwWviJhdJfwBpPOF0TNCsE1OjLt2p02qk
+ TJX08ATiM6G0R7FzZ50JuQBnFBDhdizbo0rmsRYI90SqY4o7BTsbUIyPcbu6jd/0xlG10IZ46
+ RTNORCRDSmWiwLoKX+JYSEYJNPZvhbtfIdldC6HCDdr5/4cGXy3xPegwgI54o5VHZe/s65w0H
+ ajMMfSpFMY9jot6jUuw96eaJUUu0mxPOOb5dZjSXb0FGy52jNqCvHVAsvh6kvBSlQCtjeA9LG
+ vFHkixSEqxGAqzBTc0/sXorZlKyQIAv0W6aDaUA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 14, 2019 at 07:49:19PM +0000, brian m. carlson wrote:
-> Our documentation toolchain has traditionally been built around DocBook
-> 4.5.  This version of DocBook is the last DTD-based version of DocBook.
-> In 2009, DocBook 5 was introduced using namespaces and its syntax is
-> expressed in RELAX NG, which is more expressive and allows a wider
-> variety of syntax forms.
-> 
-> Asciidoctor, one of the alternatives for building our documentation,
-> moved support for DocBook 4.5 out of core in its recent 2.0 release and
-> now only supports DocBook 5 in the main release.  The DocBoook 4.5
-> converter is still available as a separate component, but this is not
-> available in most distro packages.  This would not be a problem but for
-> the fact that we use xmlto, which is still stuck in the DocBook 4.5 era.
-> 
-> xmlto performs DTD validation as part of the build process.  This is not
-> problematic for DocBook 4.5, which has a valid DTD, but it clearly
-> cannot work for DocBook 5, since no DTD can adequately express its full
-> syntax.  In addition, even if xmlto did support RELAX NG validation,
-> that wouldn't be sufficient because it uses the libxml2-based xmllint to
-> do so, which has known problems with validating interleaves in RELAX NG.
-> 
-> Fortunately, there's an easy way forward: ask Asciidoctor to use its
-> DocBook 5 backend and tell xmlto to skip validation.  Asciidoctor has
-> supported DocBook 5 since v0.1.4 in 2013 and xmlto has supported
-> skipping validation for probably longer than that.
-> 
-> We also need to teach xmlto how to use the namespaced DocBook XSLT
-> stylesheets instead of the non-namespaced ones it usually uses.
-> Normally these stylesheets are interchangeable, but the non-namespaced
-> ones have a bug that causes them not to strip whitespace automatically
-> from certain elements when namespaces are in use.  This results in
-> additional whitespace at the beginning of list elements, which is
-> jarring and unsightly.
-> 
-> We can do this by passing a custom stylesheet with the -x option that
-> simply imports the namespaced stylesheets via a URL.  Any system with
-> support for XML catalogs will automatically look this URL up and
-> reference a local copy instead without us having to know where this
-> local copy is located.  We know that anyone using xmlto will already
-> have catalogs set up properly since the DocBook 4.5 DTD used during
-> validation is also looked up via catalogs.  All major Linux
-> distributions distribute the necessary stylesheets and have built-in
-> catalog support, and Homebrew does as well, albeit with a requirement to
-> set an environment variable to enable catalog support.
-> 
-> On the off chance that someone lacks support for catalogs, it is
-> possible for xmlto (via xmllint) to download the stylesheets from the
-> URLs in question, although this will likely perform poorly enough to
-> attract attention.  People still have the option of using the prebuilt
-> documentation that we ship, so happily this should not be an impediment.
-> 
-> Finally, we need to filter out some messages from other stylesheets that
-> occur when invoking dblatex in the CI job.  This tool strips namespaces
-> much like the unnamespaced DocBook stylesheets and prints similar
-> messages.  If we permit these messages to be printed to standard error,
-> our documentation CI job will fail because we check standard error for
-> unexpected output.  Due to dblatex's reliance on Python 2, we may need
-> to revisit its use in the future, in which case this problem may go
-> away, but this can be delayed until a future patch.
-> 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+If the number gets too high for an int, weird things may happen, as
+signed overflows are undefined.  Add a test to show this; rev-parse
+"sucessfully" interprets 100000000000000000000000000000000 to be the
+same as 0, at least on x64 with GCC 9.2.1 and Clang 8.0.1, which is
+obviously bogus.
 
->  Documentation/Makefile     | 4 +++-
->  Documentation/manpage.xsl  | 3 +++
->  azure-pipelines.yml        | 2 +-
->  ci/install-dependencies.sh | 2 +-
->  ci/test-documentation.sh   | 2 ++
->  5 files changed, 10 insertions(+), 3 deletions(-)
->  create mode 100644 Documentation/manpage.xsl
-> 
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 76f2ecfc1b..d94f47c5c9 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -197,11 +197,13 @@ ifdef USE_ASCIIDOCTOR
->  ASCIIDOC = asciidoctor
->  ASCIIDOC_CONF =
->  ASCIIDOC_HTML = xhtml5
-> -ASCIIDOC_DOCBOOK = docbook45
-> +ASCIIDOC_DOCBOOK = docbook5
->  ASCIIDOC_EXTRA += -acompat-mode -atabsize=8
->  ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions
->  ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
->  DBLATEX_COMMON =
-> +XMLTO_EXTRA += --skip-validation
-> +XMLTO_EXTRA += -x manpage.xsl
->  endif
->  
->  SHELL_PATH ?= $(SHELL)
-> diff --git a/Documentation/manpage.xsl b/Documentation/manpage.xsl
-> new file mode 100644
-> index 0000000000..ef64bab17a
-> --- /dev/null
-> +++ b/Documentation/manpage.xsl
-> @@ -0,0 +1,3 @@
-> +<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-> +	<xsl:import href="http://docbook.sourceforge.net/release/xsl-ns/current/manpages/docbook.xsl" />
-> +</xsl:stylesheet>
-> diff --git a/azure-pipelines.yml b/azure-pipelines.yml
-> index c329b7218b..34031b182a 100644
-> --- a/azure-pipelines.yml
-> +++ b/azure-pipelines.yml
-> @@ -374,7 +374,7 @@ jobs:
->         test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
->  
->         sudo apt-get update &&
-> -       sudo apt-get install -y asciidoc xmlto asciidoctor &&
-> +       sudo apt-get install -y asciidoc xmlto asciidoctor docbook-xsl-ns &&
->  
->         export ALREADY_HAVE_ASCIIDOCTOR=yes. &&
->         export jobname=Documentation &&
-> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> index 8cc72503cb..a76f348484 100755
-> --- a/ci/install-dependencies.sh
-> +++ b/ci/install-dependencies.sh
-> @@ -53,7 +53,7 @@ StaticAnalysis)
->  	;;
->  Documentation)
->  	sudo apt-get -q update
-> -	sudo apt-get -q -y install asciidoc xmlto
-> +	sudo apt-get -q -y install asciidoc xmlto docbook-xsl-ns
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/t1506-rev-parse-diagnosis.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Ok, with this package installed the build passed on Travis CI.
+diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.=
+sh
+index 4ee009da66..5c4df47401 100755
+=2D-- a/t/t1506-rev-parse-diagnosis.sh
++++ b/t/t1506-rev-parse-diagnosis.sh
+@@ -215,4 +215,12 @@ test_expect_success 'arg before dashdash must be a re=
+vision (ambiguous)' '
+ 	test_cmp expect actual
+ '
 
->  	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
->  	gem install --version 1.5.8 asciidoctor
++test_expect_failure 'reject Nth parent if N is too high' '
++	test_must_fail git rev-parse HEAD^100000000000000000000000000000000
++'
++
++test_expect_failure 'reject Nth ancestor if N is too high' '
++	test_must_fail git rev-parse HEAD~100000000000000000000000000000000
++'
++
+ test_done
+=2D-
+2.23.0
 
-So, since the documentation can now be built with Asciidoctor v2, is
-it already time to remove this '--version 1.5.8'?
-
-> diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-> index d49089832d..b3e76ef863 100755
-> --- a/ci/test-documentation.sh
-> +++ b/ci/test-documentation.sh
-> @@ -8,6 +8,8 @@
->  filter_log () {
->  	sed -e '/^GIT_VERSION = /d' \
->  	    -e '/^    \* new asciidoc flags$/d' \
-> +	    -e '/stripped namespace before processing/d' \
-> +	    -e '/Attributed.*IDs for element/d' \
-
-I haven't seen this latter message in the CI builds, neither with
-Asciidoctor v1.5.8 nor with v2.  Do we really need this filter, then?
-Where does this message come from?
-
->  	    "$1"
->  }
->  
