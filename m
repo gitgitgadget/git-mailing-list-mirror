@@ -7,199 +7,124 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C69A1F463
-	for <e@80x24.org>; Sun, 15 Sep 2019 22:43:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99DF11F463
+	for <e@80x24.org>; Sun, 15 Sep 2019 22:57:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727509AbfIOWnq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Sep 2019 18:43:46 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58744 "EHLO
+        id S1727752AbfIOW5l (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Sep 2019 18:57:41 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58748 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726024AbfIOWnq (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 15 Sep 2019 18:43:46 -0400
+        by vger.kernel.org with ESMTP id S1727492AbfIOW5l (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 15 Sep 2019 18:57:41 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:4d4d:a9ce:2c0a:3d66])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6F1BF6074C;
-        Sun, 15 Sep 2019 22:43:40 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 178FE6074C;
+        Sun, 15 Sep 2019 22:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1568587420;
-        bh=JE2T5WIMoWWnbabV0ijpYBIzB6hVQ+v0lsqsiSYexBE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=1EkmfCdYN/fBawobbPWaqP6vhEZYpwAzJuRDjcaUOW4fwP7REdqAL0lWqqe51HU+0
-         JajXuP2sYNIJ28kP7qQaequ9Z7ndW91QtivjGC2EVi6DLmdATffd/YFW8bcolYJcgi
-         fhp3aHwMbY1sg/6fIeW/J+D9nJObjjJlbnAy4aRZIlAKsbCuZe7DvwsX4PnbYRIAbc
-         kgjmUKs1jhr1aStyQt1+Hv5cTz2x1Urgzmky5TdzaHWuY7zX6FIlvPBW+HQEwo5wjZ
-         eahifgkFTzZsM13oAi4SdF6oHYhMwJwCTnjObxUFt3VE4wwPcZOdCl4E9KePSnFg3k
-         MsOC/sa8W6ikXW4LFFRxOBQSUZP7Ad8Tecl0xYgXa1xXO2tHAnuj8Fq0bNdXC4Laen
-         w2MJT0v20QROjTKSKnQCQVmPzjFaofc5icAZ+0dYWsn6di+F7XOum8VQC8RKeQq/hz
-         4qik23GoY+w4wd8AmKBuPKjvZI3dKocrD9Iqs58KeirLZTJlcKL
+        s=default; t=1568588259;
+        bh=QYGagjbX0H7XqTLIdLlIl8GX6KosiLdhZJbTBZLH7f4=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=LMhXN5BlrpXtVmCvhEwb0gX4iyM7/WVnrzSHjD3aelMo2pfAEkbO04vo+y1co1H+r
+         Zau7HlwvlLDH4WJ1QhXXzpsg2ViaU5E/m4lkkGD82qw6AO06thyqu97VhpKf0Aup7G
+         Qr1h4CPB531wI3sKykhO82GCWIN7pQVorWS3mC+Vsit3TrNubVoXodHHHhbFsxJ6CU
+         9XCOpBTRrR7EkJHpy1s0gfS8YFpr8SQIekLNMVx7DxX2rzDtf7fsUt2DE/6oRMdzsn
+         0z4pHy6TlOwM8lJmXCxXxJrJVnyD2r4MyVNKy4k+ik2oPzYm9zIxN4E84qnPB3uf0G
+         F20HNWPkNqMDPaGGtnHttk+XkTvaly56kJLrdzHrtTz0CzE3ovxu3x1tRF97M79SJH
+         AvNGvXvYLm5+3CZDKUYOqy3P+H7bdOlB6RZ9KBHs9Cx9ajNgT8TTBHHGqsj9UScdjt
+         6n6su+h1mCLDkCxlWNECt97B/HwwQbnAod16QG4j8oSdDWGQGO4
+Date:   Sun, 15 Sep 2019 22:57:34 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4] Documentation: fix build with Asciidoctor 2
-Date:   Sun, 15 Sep 2019 22:43:32 +0000
-Message-Id: <20190915224332.103930-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.23.0.351.gc4317032e6
-In-Reply-To: <20190906232947.GJ11334@genre.crustytoothpaste.net>
-References: <20190906232947.GJ11334@genre.crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] doc: provide guidance on user.name format
+Message-ID: <20190915225733.GX11334@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20190914210219.753136-1-sandals@crustytoothpaste.net>
+ <xmqqtv9db3vk.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="0k4Rxg87Lb8yV0u3"
+Content-Disposition: inline
+In-Reply-To: <xmqqtv9db3vk.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our documentation toolchain has traditionally been built around DocBook
-4.5.  This version of DocBook is the last DTD-based version of DocBook.
-In 2009, DocBook 5 was introduced using namespaces and its syntax is
-expressed in RELAX NG, which is more expressive and allows a wider
-variety of syntax forms.
 
-Asciidoctor, one of the alternatives for building our documentation,
-moved support for DocBook 4.5 out of core in its recent 2.0 release and
-now only supports DocBook 5 in the main release.  The DocBoook 4.5
-converter is still available as a separate component, but this is not
-available in most distro packages.  This would not be a problem but for
-the fact that we use xmlto, which is still stuck in the DocBook 4.5 era.
+--0k4Rxg87Lb8yV0u3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-xmlto performs DTD validation as part of the build process.  This is not
-problematic for DocBook 4.5, which has a valid DTD, but it clearly
-cannot work for DocBook 5, since no DTD can adequately express its full
-syntax.  In addition, even if xmlto did support RELAX NG validation,
-that wouldn't be sufficient because it uses the libxml2-based xmllint to
-do so, which has known problems with validating interleaves in RELAX NG.
+On 2019-09-15 at 22:18:07, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> > diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-comm=
+it-tree.txt
+> > index 4b90b9c12a..34a8496b0e 100644
+> > --- a/Documentation/git-commit-tree.txt
+> > +++ b/Documentation/git-commit-tree.txt
+> > @@ -92,6 +92,12 @@ if set:
+> > =20
+> >  (nb "<", ">" and "\n"s are stripped)
+> > =20
+> > +The author and committer names are by convention some form of a person=
+al name,
+> > +as opposed to a username, although Git does not enforce or require any
+> > +particular form.
+>=20
+> I have a lot of trouble with 'username' in the context of this
+> paragraph.
+>=20
+> After all, you are describing the name appropriate to be set as the
+> value of the user.name configuration, and you are trying to stress
+> that the name used there is different from and has nothing to do
+> with the name machines use to identify the user.  In the paragraph
+> that follows this new paragraph, there is a reference to "system
+> user name", which is still not great but probably better than
+> "username" above.  Perhaps there is a term that is distinct enough
+> from "user name" that is commonly used I am forgetting?  I am almost
+> tempted to say "user id", but there must be even better phrases.  I
+> dunno.
 
-Fortunately, there's an easy way forward: ask Asciidoctor to use its
-DocBook 5 backend and tell xmlto to skip validation.  Asciidoctor has
-supported DocBook 5 since v0.1.4 in 2013 and xmlto has supported
-skipping validation for probably longer than that.
+I wonder if we should just omit that aside, then, since I'm not sure of
+a less ambiguous term for "how I identify myself to a computer".  I think
+describing the convention as "some form of a personal name" is probably
+sufficient to tell people what we suggest they do.
 
-We also need to teach xmlto how to use the namespaced DocBook XSLT
-stylesheets instead of the non-namespaced ones it usually uses.
-Normally these stylesheets are interchangeable, but the non-namespaced
-ones have a bug that causes them not to strip whitespace automatically
-from certain elements when namespaces are in use.  This results in
-additional whitespace at the beginning of list elements, which is
-jarring and unsightly.
+My first draft of that sentence didn't include the part within the
+commas at all.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-We can do this by passing a custom stylesheet with the -x option that
-simply imports the namespaced stylesheets via a URL.  Any system with
-support for XML catalogs will automatically look this URL up and
-reference a local copy instead without us having to know where this
-local copy is located.  We know that anyone using xmlto will already
-have catalogs set up properly since the DocBook 4.5 DTD used during
-validation is also looked up via catalogs.  All major Linux
-distributions distribute the necessary stylesheets and have built-in
-catalog support, and Homebrew does as well, albeit with a requirement to
-set an environment variable to enable catalog support.
+--0k4Rxg87Lb8yV0u3
+Content-Type: application/pgp-signature; name="signature.asc"
 
-On the off chance that someone lacks support for catalogs, it is
-possible for xmlto (via xmllint) to download the stylesheets from the
-URLs in question, although this will likely perform poorly enough to
-attract attention.  People still have the option of using the prebuilt
-documentation that we ship, so happily this should not be an impediment.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
 
-Finally, we need to filter out some messages from other stylesheets that
-occur when invoking dblatex in the CI job.  This tool strips namespaces
-much like the unnamespaced DocBook stylesheets and prints similar
-messages.  If we permit these messages to be printed to standard error,
-our documentation CI job will fail because we check standard error for
-unexpected output.  Due to dblatex's reliance on Python 2, we may need
-to revisit its use in the future, in which case this problem may go
-away, but this can be delayed until a future patch.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1+wd0ACgkQv1NdgR9S
+9ouNsxAAi7l0bL6bxQ9XDuOu1UHbtMAmATljvD4Jxb49jjE+3FUBbz5Z8sWFlFjL
+TMY8AssfMiBylkp3KO0N4bouOPdbCoK6aYDl1cX1vDovm+fMeOz6zsiofmNblO/1
+VFPfBuexpQElk4r6I2zZh+Qjo0w+DGQoPR5vasvPiGNi5io4MWpjbt1aua4+lYmj
+/uECUqmFnGaOW6MD2Jz0OZN2/CsZiowNa1cDSA0uBNWL/mtn1yBda+1pAHs/FBAs
+sBhTH4niQX9RFOVNf15tRXQ6FesJL86hNonfeSGLgn/A1uYcTSMEld5tmvELvccp
+BbA6qYp18/2pam0WMC9VFzILF0oU0H028RwPvO9QntVlVunVhLZjI27Sp1wnY+BG
+6lxYP8XrAFkZYQRKiBLzjuezvOxaKmggSa3FXjlaqRsSzbMByTkbsPNUOKBnxMhw
+dHENONj+sVLdX4icLFCw4WV4Ujeve3uSaBwIFEb4xXNXddA61H8zDP8TRrsXdI8r
+fu0JNz58t2WPveLLYM1luJcXPW6ebx+VdtakEN2utRgoxDmMbE6E9dq0MWRZtiih
+jzt5O9YHrh0mAZ9nX1QBsvSk1leXY6E7Q/HlfyoyezBdBcswqG8fbOz29ezTQ9/9
+KKwBsWTYtateWsYsXki2k2dUqDIFEi6HZvpe/SzlUsDMgjzUiVM=
+=gmBW
+-----END PGP SIGNATURE-----
 
-The final message we filter is due to libxslt on modern Debian and
-Ubuntu.  The patch which they use to implement reproducible ID
-generation also prints messages about the ID generation.  While this
-doesn't affect our current CI images since they use Ubuntu 16.04 which
-lacks this patch, if we upgrade to Ubuntu 18.04 or a modern Debian,
-these messages will appear and, like the above messages, cause a CI
-failure.
-
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
-Changes since v3:
-* Further expanded the commit message to include information about
-  libxslt.  It is now just over a hundred words away from classification
-  as "sudden nonfiction".
-
- Documentation/Makefile     | 4 +++-
- Documentation/manpage.xsl  | 3 +++
- azure-pipelines.yml        | 2 +-
- ci/install-dependencies.sh | 2 +-
- ci/test-documentation.sh   | 2 ++
- 5 files changed, 10 insertions(+), 3 deletions(-)
- create mode 100644 Documentation/manpage.xsl
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 76f2ecfc1b..d94f47c5c9 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -197,11 +197,13 @@ ifdef USE_ASCIIDOCTOR
- ASCIIDOC = asciidoctor
- ASCIIDOC_CONF =
- ASCIIDOC_HTML = xhtml5
--ASCIIDOC_DOCBOOK = docbook45
-+ASCIIDOC_DOCBOOK = docbook5
- ASCIIDOC_EXTRA += -acompat-mode -atabsize=8
- ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions
- ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
- DBLATEX_COMMON =
-+XMLTO_EXTRA += --skip-validation
-+XMLTO_EXTRA += -x manpage.xsl
- endif
- 
- SHELL_PATH ?= $(SHELL)
-diff --git a/Documentation/manpage.xsl b/Documentation/manpage.xsl
-new file mode 100644
-index 0000000000..ef64bab17a
---- /dev/null
-+++ b/Documentation/manpage.xsl
-@@ -0,0 +1,3 @@
-+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-+	<xsl:import href="http://docbook.sourceforge.net/release/xsl-ns/current/manpages/docbook.xsl" />
-+</xsl:stylesheet>
-diff --git a/azure-pipelines.yml b/azure-pipelines.yml
-index c329b7218b..34031b182a 100644
---- a/azure-pipelines.yml
-+++ b/azure-pipelines.yml
-@@ -374,7 +374,7 @@ jobs:
-        test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
- 
-        sudo apt-get update &&
--       sudo apt-get install -y asciidoc xmlto asciidoctor &&
-+       sudo apt-get install -y asciidoc xmlto asciidoctor docbook-xsl-ns &&
- 
-        export ALREADY_HAVE_ASCIIDOCTOR=yes. &&
-        export jobname=Documentation &&
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 8cc72503cb..a76f348484 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -53,7 +53,7 @@ StaticAnalysis)
- 	;;
- Documentation)
- 	sudo apt-get -q update
--	sudo apt-get -q -y install asciidoc xmlto
-+	sudo apt-get -q -y install asciidoc xmlto docbook-xsl-ns
- 
- 	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
- 	gem install --version 1.5.8 asciidoctor
-diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-index d49089832d..b3e76ef863 100755
---- a/ci/test-documentation.sh
-+++ b/ci/test-documentation.sh
-@@ -8,6 +8,8 @@
- filter_log () {
- 	sed -e '/^GIT_VERSION = /d' \
- 	    -e '/^    \* new asciidoc flags$/d' \
-+	    -e '/stripped namespace before processing/d' \
-+	    -e '/Attributed.*IDs for element/d' \
- 	    "$1"
- }
- 
+--0k4Rxg87Lb8yV0u3--
