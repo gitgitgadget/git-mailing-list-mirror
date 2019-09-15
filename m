@@ -8,104 +8,92 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34D671F463
-	for <e@80x24.org>; Sun, 15 Sep 2019 03:43:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88C4A1F463
+	for <e@80x24.org>; Sun, 15 Sep 2019 07:58:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726522AbfIODnG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Sep 2019 23:43:06 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:35358 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726439AbfIODnG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Sep 2019 23:43:06 -0400
-Received: by mail-io1-f68.google.com with SMTP id f4so70527584ion.2
-        for <git@vger.kernel.org>; Sat, 14 Sep 2019 20:43:05 -0700 (PDT)
+        id S1725865AbfIOHzm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Sep 2019 03:55:42 -0400
+Received: from mail-lf1-f50.google.com ([209.85.167.50]:35131 "EHLO
+        mail-lf1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725773AbfIOHzm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Sep 2019 03:55:42 -0400
+Received: by mail-lf1-f50.google.com with SMTP id w6so25093370lfl.2
+        for <git@vger.kernel.org>; Sun, 15 Sep 2019 00:55:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=v56F0uFcSHzzoztlVLoBvjneBXo+6oFpxC3Tj0r/xyU=;
-        b=PCG/nCFTqwTHtJ6jnhd0YXvVSYC2qSR7isoAgLErzv7zbg5r2VNNgDDix266u0IJCT
-         LYKOZ2LdyBsx+B8iJkDqkEP2SS/+y53am0M4iOQM/0vjtT6AJ4AcNeVhH7Jf5BWX0xA7
-         WFwm244+rP1RtM++LkiAHcQbwkp/XMvCuxJDu08KkZpkpk4hDfeRxp2TUiryr3Um57S5
-         uMvLeBWczby41yXG8RbOYPJvG1NKhQF7hXe5Pb0mUhaNMP+xql+DE9/ZjKIZunRy7LPP
-         /j8MBEbAcTW0Ga82G20Wf+kQnWF+V2SS+yuFccF61I1bQrgfoQaJgaVOouUDtpC3l4ga
-         x/nA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LxwsF+Bfx13NPF00cGoHvemRfDr0j6VV0yMvJclaIe8=;
+        b=HW+VHHk3EgaiRMZWOAjMY3rd2Nl7uUj61wDtdS6GOwNZK8E6FJCGPLRoBjtAOxPTDW
+         HYv2zG/4AHt9fxg43V61rgFBkuOy1WwVZZa4PzJsOZL/nh0K5fr3UUTjbyR0JVvAeX86
+         /BAbTqNirTG9PGhnUtZwsURn6O5HbBzSLgKwMk/lCcDbjBc966j/Mp9qp42XXyCRC4pu
+         qpWxHF2Kz4ZX8O9mMX/hdn8d6wLh/647mO3T3h0iTbVtMPgoqP+FXsaAupigTHYsUaCm
+         Y/2TBr6ZSt4FSO1IWZrM16iXC3jtoiFnuQ3s5d+KT8nrtkJ/CureVQujYSA6Nd5+L3Fh
+         befw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=v56F0uFcSHzzoztlVLoBvjneBXo+6oFpxC3Tj0r/xyU=;
-        b=XvE13kO0WLQ+MRZBCM1be5ybmHpH3/AOJ/TYKJX0OR1P+z8V3cnn96SVNvvvYhGbBh
-         VOuZYqByopoAscUPT9KxN3fks5JH30haLEVXzQjXAox/pfZ3/q6sY55HM9ieyUGXxmLt
-         KKEqJezXSImjuVVtg+7Chv3nxee2GMoZ31aToRcU9zt27fZ5XGGOHKpgIlt3dEuUobLk
-         TbtVEC1Eq7BMEH55YtpUeenwhwHoxwEJqurn+jkqUVWud043oDyI19UesLldImbe8e2B
-         NnKdQ58vsglyKkPpJhzXjdRl3GnEE6NeI/MHWGHr6bG0O5KDYRrBnsEeoHIeLWC/0lgK
-         9f3A==
-X-Gm-Message-State: APjAAAX77JdcAlfzGlFG1p2joSB6RqmkAmVnrr7erASgVL7xPpJdop6f
-        I6Tq1IWeaR4lDZe3m4NGRqh9P1E/SMEOH0jFSSU4HMzb
-X-Google-Smtp-Source: APXvYqyWPIg2Jkf8BT2PWIK1z6Nj4Krgg0PIq1ziT9gOVkDuThvq8Cd2Ts0H/jEZRur0YDboGIAq1FOwT98m8/9IWSM=
-X-Received: by 2002:a5d:9b06:: with SMTP id y6mr9498307ion.77.1568518984931;
- Sat, 14 Sep 2019 20:43:04 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=LxwsF+Bfx13NPF00cGoHvemRfDr0j6VV0yMvJclaIe8=;
+        b=T6gdB97lANTF0CkFwaFa9JHp8pumA45hU0W7O3ZP66AARWbhGzHOSJPJoA1YY7ASSW
+         YLc7T+jA3YvhlVaikIGjcBjdLyT5MXcSyGMI7HFLll13hNuOij8Rm9y22RKAzGZkkSpU
+         ntF4WBElTalhwk9Qeb1KhDfUIs3C6/jCBt1HNqxhC2ZmfnRkksVcBc3/xXy2bIf/Vcgd
+         EPlPIYY+RAxBiJ0C2PESh+HLmtCpnBI0GbKZHpnIhj6u3pa4qSJ4TeMK1OqEgklqq/SW
+         JJI62MgbntP3Ca1euNE9we1kCOAmDhOBhbJ/mO3eZDxnMzFTIGe7LsUk5Gy1wJYmEl0e
+         cBIg==
+X-Gm-Message-State: APjAAAW3Cgl9S2+fsWG+nTXQIBoEQFLP1zwbmcgxf3jYQTujXTpDdGYm
+        vn9e3pu170EoUUOrjM68Za/nw5f/SUWf4V882NmwJ7s4LdK/jQ==
+X-Google-Smtp-Source: APXvYqwV52/+9vFv46P3kLvc5GzQLW8LH0+0pqX5pZk9d5KEcoPioAK9CfS3HC429aeMr5+53Bidq4zJLYh/IAetbg0=
+X-Received: by 2002:a19:f801:: with SMTP id a1mr5880847lff.166.1568534140094;
+ Sun, 15 Sep 2019 00:55:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAL-6oQorDOzAr4sDoddoAQv3hzAgUMx7K+V=bMcvScv8G=7oqg@mail.gmail.com>
- <20190913143229.5yop5oaascgavynl@yadavpratyush.com> <3fac912d-9e3c-bf19-e1e5-2691a835b151@xiplink.com>
- <CAMPXz=pNFpg7B0uYCBWvKwOqG8VZWfOxvf+8mZ9qc7w6DkF=+w@mail.gmail.com> <20190914212357.cg7t5cufqwd3wj66@yadavpratyush.com>
-In-Reply-To: <20190914212357.cg7t5cufqwd3wj66@yadavpratyush.com>
-From:   David <bouncingcats@gmail.com>
-Date:   Sun, 15 Sep 2019 13:42:53 +1000
-Message-ID: <CAMPXz=o_kxpKicfV6nurkU7j4nHXka2Xk1B2Qeosrjn-UB+btQ@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_Git_Gui_=2D_enhancement_suggestion_=2D_Can_a_double_?=
-        =?UTF-8?Q?click_on_the_file_name_in_the_=E2=80=9Cunstaged=E2=80=9D_area_move_the_i?=
-        =?UTF-8?Q?tem_to_=E2=80=9Cstaged_changes=E2=80=9D?=
-To:     git list <git@vger.kernel.org>
+References: <CAGr--=KMJmYtVaATFkOPcboAdkLvpZFbWAo4QAE0-uC6RL4Lqg@mail.gmail.com>
+ <20190914211509.sjy6lh2rlcl32lj5@yadavpratyush.com> <20190914212732.plymb3vnz3dv4rmc@yadavpratyush.com>
+In-Reply-To: <20190914212732.plymb3vnz3dv4rmc@yadavpratyush.com>
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
+Date:   Sun, 15 Sep 2019 09:55:28 +0200
+Message-ID: <CAGr--=LmhE9m9V4Dq8Zt0aXqdThzrNnWSnxWawVZiLYTKbL2ig@mail.gmail.com>
+Subject: Re: git-gui: automatically move focus to staged file before typing
+ commit message?
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 15 Sep 2019 at 07:24, Pratyush Yadav <me@yadavpratyush.com> wrote:
-> On 15/09/19 01:57AM, David wrote:
+Hi Pratyush,
 
-> > I can't say it strongly enough. Please do not change stage/unstage
-> > to require double-click. This would be most unwelcome here, unless it
-> > comes with a configuration option to preserve the old behaviour.
-> >
-> > Maybe the actual problem is that the present icon (perhaps surprisingly)
-> > has the behaviour of a blank check-box that relocates. I don't wish for
-> > any change, but if the desire for change is irresistable then the
-> > simplest solution is for the icon (that appears to the left of filenames
-> > in the unstaged pane) to be replaced with blank check box that
-> > behaves exactly as the current icon does. That is:
-> > When clicked, it becomes a checked-box alongside the filename in
-> > the staged area. And if that staged-checked-box is clicked, it reverts to
-> > an unchecked-box (instead of the icon) in the unstaged pane.
+On Sat, Sep 14, 2019 at 11:15 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> Why should it only happen when the commit message widget is selected?
+> What's wrong with directly switching focus when all the files are
+> staged?
 >
-> Hmm, I like this idea. But right now the icons also show the state of
-> the file (modified, added, etc.), so if you switch them to a checkbox
-> you lose that information. Are you and other people willing to lose that
-> information.
->
-> Though I've personally never been a huge fan of those icons. They never
-> really managed to convey too much meaning to me. So I won't mind
-> changing them to something like the single-letter git-status status
-> flags. This also gives us a bit of consistency with git-status's flags,
-> so people used to the command line will recognize them instantly.
-> Thoughts?
+> What I have in mind is once there are no more files to stage, the focus
+> directly goes to the staged files section, and the first staged file
+> gets selected. Then if you want you can type in the commit message. And
+> conversely, when unstaging things, once all files are unstaged, the
+> focus goes directly to the unstaged files section.
 
-Ah, this is hilarious and embarassing. It confirms what I wrote in my other
-message:
-  Some days I have good ideas, other days my ideas
-  have flaws that I missed, so I like to discuss first.
+Your questions are fair. My reasoning: I imagine it could be a bit
+frustrating that the focus automatically goes away from the "Unstaged
+Changes" widget, when the user actually isn't done doing changes.
 
-ie, Some days I'm an idiot! I completely forgot about those other icons!
-I like them! In particular, the one that indicates removed files, and
-the special one that indicates when a committed file has been replaced
-by a symlink, or vice versa, are very valuable to me.
+For instance (as a user);
+- Do some changes
+- Stage the changes (no more unstaged changes in the repo)
+- Realize that you forgot something, jump back to the IDE and make
+some more changes
+- Jump back again to git-gui, hit refresh
+In this scenario, I imagine the user would want to have focus kept on
+the "Unstaged Changes" widget. Even if it became empty with files
+before.
 
-I don't really want any of this to change. I only suggested the change
-because I didn't want to appear totally negative. So I tried to come up
-with an alternative suggestion. But it was a dumb proposal.
+When the user focus the "Commit Message" widget, the user is kinda
+stating "I'm done staging stuff for now". And when that happens, it
+really doesn't make sense to show a blank diff any more.
 
-So dumb in fact that I'm now arguing against it :(
-Oh well :D
-Anyway, I'm a fan of those icons, please don't change them.
+I hope that made sense.
+
+Birger
