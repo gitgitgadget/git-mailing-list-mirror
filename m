@@ -2,126 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F5931F463
-	for <e@80x24.org>; Sun, 15 Sep 2019 16:52:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6931D1F4B9
+	for <e@80x24.org>; Sun, 15 Sep 2019 16:55:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726039AbfIOQv6 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Sep 2019 12:51:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50780 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725904AbfIOQv6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Sep 2019 12:51:58 -0400
-Received: (qmail 402 invoked by uid 109); 15 Sep 2019 16:51:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 15 Sep 2019 16:51:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32088 invoked by uid 111); 15 Sep 2019 16:54:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 15 Sep 2019 12:54:03 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 15 Sep 2019 12:51:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jon Simons <jon@jonsimons.org>, git@vger.kernel.org,
-        me@ttaylorr.com, sunshine@sunshineco.com, stolee@gmail.com
-Subject: [PATCH 4/3] list-objects-filter: use empty string instead of NULL
- for sparse "base"
-Message-ID: <20190915165156.GA28436@sigill.intra.peff.net>
-References: <20190829231925.15223-1-jon@jonsimons.org>
- <20190829231925.15223-2-jon@jonsimons.org>
- <xmqqr252y199.fsf@gitster-ct.c.googlers.com>
- <20190904045424.GA6488@sigill.intra.peff.net>
- <xmqqv9u6po4j.fsf@gitster-ct.c.googlers.com>
- <f32d2e8c-abec-0ec1-daa7-4c10470c5553@jeffhostetler.com>
- <20190909170823.GA30470@sigill.intra.peff.net>
- <20190915010942.GA19787@sigill.intra.peff.net>
+        id S1727194AbfIOQzf (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Sep 2019 12:55:35 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:22092 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726024AbfIOQzf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Sep 2019 12:55:35 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 46Wb9018xHz5tl9;
+        Sun, 15 Sep 2019 18:55:31 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 266994AA2;
+        Sun, 15 Sep 2019 18:55:30 +0200 (CEST)
+To:     Git Mailing List <git@vger.kernel.org>
+From:   Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 1/2] diff, log doc: say "patch text" instead of "patches"
+Message-ID: <fac55175-dc1e-addf-194b-97aaf6a33e3b@kdbg.org>
+Date:   Sun, 15 Sep 2019 18:55:30 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190915010942.GA19787@sigill.intra.peff.net>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 14, 2019 at 09:09:42PM -0400, Jeff King wrote:
+A poster on Stackoverflow was confused that the documentation of git-log
+promised to generate "patches" or "patch files" with -p, but there were
+none to be found. Rewrite the corresponding paragraph to talk about
+"patch text" to avoid the confusion.
 
-> On Mon, Sep 09, 2019 at 01:08:24PM -0400, Jeff King wrote:
-> 
-> > I'll work up what I sent earlier into a real patch, and include some of
-> > this discussion.
-> 
-> Here it is. I pulled Jon's tests out into their own patch (mostly
-> because it makes it easier to give credit). Then patch 2 is my fix, and
-> patch 3 is the message fixups he had done.
-> 
-> This replaces what's queued in js/partial-clone-sparse-blob.
-> 
->   [1/3]: t5616: test cloning/fetching with sparse:oid=<oid> filter
->   [2/3]: list-objects-filter: delay parsing of sparse oid
->   [3/3]: list-objects-filter: give a more specific error sparse parsing error
+Shorten the language to say "X does Y" in place of "X does not Z, but Y".
 
-And here's a bonus patch that I found while running under ASan/UBSan
-(since I wanted to double-check the memory handling of patch 2 when
-merged with 'next').
+Cross-reference the referred-to commands like the rest of the file does.
 
--- >8 --
-Subject: list-objects-filter: use empty string instead of NULL for sparse "base"
+Mention porcelain commands before plumbing commands because I guess that
+the paragraph is read more frequently in their context.
 
-We use add_excludes_from_blob_to_list() to parse a sparse blob. Since
-we don't have a base path, we pass NULL and 0 for the base and baselen,
-respectively. But the rest of the exclude code passes a literal empty
-string instead of NULL for this case. And indeed, we eventually end up
-with match_pathname() calling fspathncmp(), which then calls the system
-strncmp(path, base, baselen).
-
-This works on many platforms, which notice that baselen is 0 and do not
-look at the bytes of "base" at all. But it does violate the C standard,
-and building with SANITIZE=undefined will complain. You can also see it
-by instrumenting fspathncmp like this:
-
-	diff --git a/dir.c b/dir.c
-	index d021c908e5..4bb3d3ec96 100644
-	--- a/dir.c
-	+++ b/dir.c
-	@@ -71,6 +71,8 @@ int fspathcmp(const char *a, const char *b)
-
-	 int fspathncmp(const char *a, const char *b, size_t count)
-	 {
-	+	if (!a || !b)
-	+		BUG("null fspathncmp arguments");
-	 	return ignore_case ? strncasecmp(a, b, count) : strncmp(a, b, count);
-	 }
-
-We could perhaps be more defensive in match_pathname(), but even if we
-did so, it makes sense for this code to match the rest of the exclude
-callers.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- list-objects-filter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ I do not have the toolchain to check that a correct result is produced.
 
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index 50f0c6d07b..83c788e8b5 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -472,7 +472,7 @@ static void *filter_sparse_oid__init(
- 		die(_("unable to access sparse blob in '%s'"),
- 		    filter_options->sparse_oid_name);
- 	d->omits = omitted;
--	if (add_excludes_from_blob_to_list(&sparse_oid, NULL, 0, &d->el) < 0)
-+	if (add_excludes_from_blob_to_list(&sparse_oid, "", 0, &d->el) < 0)
- 		die(_("unable to parse sparse filter data in %s"),
- 		    oid_to_hex(&sparse_oid));
+ Documentation/diff-generate-patch.txt | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
+index f10ca410ad..c6bbb2ac22 100644
+--- a/Documentation/diff-generate-patch.txt
++++ b/Documentation/diff-generate-patch.txt
+@@ -1,11 +1,12 @@
+-Generating patches with -p
+---------------------------
+-
+-When "git-diff-index", "git-diff-tree", or "git-diff-files" are run
+-with a `-p` option, "git diff" without the `--raw` option, or
+-"git log" with the "-p" option, they
+-do not produce the output described above; instead they produce a
+-patch file.  You can customize the creation of such patches via the
++Generating patch text with -p
++-----------------------------
++
++Running
++linkgit:git-diff[1] without the `--raw` option,
++or linkgit:git-log[1], linkgit:git-diff-index[1], linkgit:git-diff-tree[1],
++or linkgit:git-diff-files[1] with the `-p` option
++produces patch text instead of the usual output.
++You can customize the creation of patch text via the
+ `GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables.
  
+ What the -p option produces is slightly different from the traditional
 -- 
-2.23.0.667.gcccf1fbb03
-
+2.23.0.93.g91d3f15def
