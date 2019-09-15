@@ -2,87 +2,266 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB2411F463
-	for <e@80x24.org>; Sun, 15 Sep 2019 16:12:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8519C1F463
+	for <e@80x24.org>; Sun, 15 Sep 2019 16:12:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731892AbfIOQMY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Sep 2019 12:12:24 -0400
-Received: from mout.web.de ([212.227.15.3]:59993 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726147AbfIOQMY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Sep 2019 12:12:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1568563934;
-        bh=CHTjIIadRFyxV5a3ougaA7faaWMFbITfGsnZAP4FIaE=;
-        h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
-        b=M7zhRegIBxW+eJpP7TQqqBA75twf5eYrRkx/iH3iepGAAPoZA7THB2RXtTDkE0kNq
-         hJ/ZEL0P+83TZLvi3aZWtKGYlb/sy5MFP7GNAA7mxpVCvuBLicdz16tTpxZ3HjSjqr
-         VDoAjnhz159SFv08T9bPjWcXFvrB7GWOfLxIFSiI=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MLlCd-1i9G173DrH-000vZ2; Sun, 15
- Sep 2019 18:12:14 +0200
-Subject: Re: [PATCH 2/2] sha1-name: check for overflow of N in "foo^N" and
- "foo~N"
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <c43610f2-a51f-7333-a200-a76930a0b705@web.de>
- <2be6e3ee-209e-9cd1-eb43-284f9a8462b3@web.de>
- <20190915151513.GU11334@genre.crustytoothpaste.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <651e7bdb-c2e8-e607-d78d-5292b3509a8d@web.de>
-Date:   Sun, 15 Sep 2019 18:12:13 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2387646AbfIOQMq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Sep 2019 12:12:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50754 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726147AbfIOQMq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Sep 2019 12:12:46 -0400
+Received: (qmail 32734 invoked by uid 109); 15 Sep 2019 16:12:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 15 Sep 2019 16:12:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31991 invoked by uid 111); 15 Sep 2019 16:14:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 15 Sep 2019 12:14:50 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sun, 15 Sep 2019 12:12:44 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jon Simons <jon@jonsimons.org>, git@vger.kernel.org,
+        me@ttaylorr.com, sunshine@sunshineco.com, stolee@gmail.com
+Subject: Re: [PATCH 2/3] list-objects-filter: delay parsing of sparse oid
+Message-ID: <20190915161244.GA2826@sigill.intra.peff.net>
+References: <20190915010942.GA19787@sigill.intra.peff.net>
+ <20190915011319.GB11208@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20190915151513.GU11334@genre.crustytoothpaste.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:cuXvEb1AG26CVjIld6mxzVN3I+BUWbUXMKDzRQFTeu+7g/yriM/
- D8mwAf+EhR6PrJhzsodvTrssRk3ZgUJfcMV1DewNdaB4IA5yfdkiMPA3Fm7INbT3TWmt5RG
- DCUKkAzNA0Xqhmfe9s+8xCint0xMfjaRt/pV16S/SkFG93e2SS6twjB2PWqU66Ti+uBicch
- e4KlxNrl71qr+J51IVqvg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1UrBQcF2q0w=:YJOWZjKEMUoDN/kDT9yVHm
- PClFETRZLze8GGeBQZQ3rxkgJ/R0JIDUZ1yXdDsN+tqMRWlNYY8ABPVoRKoF8M0CrKcqnOwbk
- wRYzSMo/ojWav7Cu97TSETB3nejbvHMtHsj9oXlqWLubPp0f+CYekRsQInFGmXprHSQrzJW6m
- fh6pAuMCFpLazMNijfJ8Wxd/bbTqKx0pkOY4ghcch7tDMOm7L9d0vtrYZIslGxru0OqrpWxF3
- Nx5tQuGRRUj5iKkY+h/Hp9dItmQvtJwvv3tZ2jGvXqDt8D+t0mVgo5FCKI/F17pQSp6qSk2hW
- 0Ft/mouRvJz4mKJLQMxSaD/Bh7oHNCu3Rppv+JyITJ2hsbEJXTDg1GZLXk2eQx5OOw6Ffx0wr
- vJayJVv+WeBWjceTJF91YwriRH+WKploD+NjIXS3GH5fREcNlLsDqDZfWUEK1AbvI4EiRiH4q
- rpXFPZyBaRGw2SU1S7fPLGhXzhnkGdflgHDsTkKGIjhvHPjdfJd0BCLBZTqOD4Zrl3yMt/GUC
- 3281w3hnxQiS9Tg/eQdgSPM1hI8h9OmAm+ArdzCH5XgQe9h4fGBZJ1ctf4pRyRvoOt9iJuX4R
- wjDXLg8gjhLC5Bf/AqN+3hDzyd3LHQoUpxYECrFPB+aMUSfKTLAPUM+2JDu5R/gwxTax4KzCE
- Dwo/fNSEuK5m1tl8wzu+QiTGxPuF2WUPHe4v99b1U5q+drZbV82zNbvipJzfn8ySgFwwQUUhG
- /Zpquk5lNYEGhHNEfoB/0vW5CJ2AQwaO9fi061vXKhKpPENkXkZxnPvfuXXSuoTxp9R/u1Zp0
- fgKrFmaJhz9GedT0PnDtYt3JMVM7p+knWIoPleC1QcJLtED8XX5teIG5u/4ebrL3Ihx+F4n//
- LvovcTLtP30ZajZMB5tRSDyaKd/0S9VmVEAQrJJ794qpr5cBl/L3XiJB7GeVEzC1kZjEtP5RV
- 2kXpSUi7aQ54IUkzBNdsqrbx2+xh7ktPazOH2o7xwVw714gdWQcEbMS7kPFAXXYZp8UfdvBzC
- SW5xjUVBgGgFv19DdoqfKhLx9GcmLYcJl2fsC2jj/RyXc53DrvIGW61py8EizIJWoAYGQQzXG
- 7XZcfU1hCkJY6zVDb5Ca40POGjDc3LEHxR1f6E1uW6ObMEelHjWpIG3TOgrDSK9pzgMlnscEK
- uTPI5mo4CBDioINOPqN4Gdg4DoS92s/jjARoKfBSDQmRhywcxtNbpnw4PJ01IMnwoFXw5X11M
- nJaZP6nOE6JyhaoKidOFuqlaxmrcqxvCAGX8fNQ==
+Content-Disposition: inline
+In-Reply-To: <20190915011319.GB11208@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.09.19 um 17:15 schrieb brian m. carlson:
-> This approach seems reasonable.  I must admit some curiosity as to how
-> you discovered this issue, though.  Did you have a cat assisting you in
-> typing revisions?
+On Sat, Sep 14, 2019 at 09:13:19PM -0400, Jeff King wrote:
 
-Found it by reading the code, but I'm not sure anymore what I was
-actually looking for.
+> --- a/list-objects-filter-options.c
+> +++ b/list-objects-filter-options.c
+> @@ -63,17 +63,8 @@ static int gently_parse_list_objects_filter(
+>  		return 0;
+>  
+>  	} else if (skip_prefix(arg, "sparse:oid=", &v0)) {
+> -		struct object_context oc;
+> -		struct object_id sparse_oid;
+> -
+> -		/*
+> -		 * Try to parse <oid-expression> into an OID for the current
+> -		 * command, but DO NOT complain if we don't have the blob or
+> -		 * ref locally.
+> -		 */
+> -		if (!get_oid_with_context(the_repository, v0, GET_OID_BLOB,
+> -					  &sparse_oid, &oc))
+> -			filter_options->sparse_oid_value = oiddup(&sparse_oid);
+> +		/* v0 points into filter_options->filter_spec; no allocation needed */
+> +		filter_options->sparse_oid_name = v0;
 
-Would a fuzzer (or a cat) be able to catch that?  The function is
-happily eating extra digits -- it's not crashing for me.
+Looks like this comment is no longer true after merging with
+md/list-objects-filter-combo, which is in 'next'.
 
-Ren=C3=A9
+We can obviously deal with it during the merge, but it probably makes
+sense to just be more defensive from the start. Here's a revised version
+of patch 2, with these changes:
+
+    diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+    index 43f41f446c..adbea552a0 100644
+    --- a/list-objects-filter-options.c
+    +++ b/list-objects-filter-options.c
+    @@ -63,8 +63,7 @@ static int gently_parse_list_objects_filter(
+     		return 0;
+     
+     	} else if (skip_prefix(arg, "sparse:oid=", &v0)) {
+    -		/* v0 points into filter_options->filter_spec; no allocation needed */
+    -		filter_options->sparse_oid_name = v0;
+    +		filter_options->sparse_oid_name = xstrdup(v0);
+     		filter_options->choice = LOFC_SPARSE_OID;
+     		return 0;
+     
+    @@ -129,6 +128,7 @@ void list_objects_filter_release(
+     	struct list_objects_filter_options *filter_options)
+     {
+     	free(filter_options->filter_spec);
+    +	free(filter_options->sparse_oid_name);
+     	memset(filter_options, 0, sizeof(*filter_options));
+     }
+     
+    diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+    index a819e42ffb..20b9d1e587 100644
+    --- a/list-objects-filter-options.h
+    +++ b/list-objects-filter-options.h
+    @@ -42,7 +42,7 @@ struct list_objects_filter_options {
+     	 * choice-specific; not all values will be defined for any given
+     	 * choice.
+     	 */
+    -	const char *sparse_oid_name;
+    +	char *sparse_oid_name;
+     	unsigned long blob_limit_value;
+     	unsigned long tree_exclude_depth;
+     };
+
+-- >8 --
+Subject: [PATCH] list-objects-filter: delay parsing of sparse oid
+
+The list-objects-filter code has two steps to its initialization:
+
+  1. parse_list_objects_filter() makes sure the spec is a filter we know
+     about and is syntactically correct. This step is done by "rev-list"
+     or "upload-pack" that is going to apply a filter, but also by "git
+     clone" or "git fetch" before they send the spec across the wire.
+
+  2. list_objects_filter__init() runs the type-specific initialization
+     (using function pointers established in step 1). This happens at
+     the start of traverse_commit_list_filtered(), when we're about to
+     actually use the filter.
+
+It's a good idea to parse as much as we can in step 1, in order to catch
+problems early (e.g., a blob size limit that isn't a number). But one
+thing we _shouldn't_ do is resolve any oids at that step (e.g., for
+sparse-file contents specified by oid). In the case of a fetch, the oid
+has to be resolved on the remote side.
+
+The current code does resolve the oid during the parse phase, but
+ignores any error (which we must do, because we might just be sending
+the spec across the wire). This leads to two bugs:
+
+  - if we're not in a repository (e.g., because it's git-clone parsing
+    the spec), then we trigger a BUG() trying to resolve the name
+
+  - if we did hit the error case, we still have to notice that later and
+    bail. The code path in rev-list handles this, but the one in
+    upload-pack does not, leading to a segfault.
+
+We can fix both by moving the oid resolution into the sparse-oid init
+function. At that point we know we have a repository (because we're
+about to traverse), and handling the error there fixes the segfault.
+
+As a bonus, we can drop the NULL sparse_oid_value check in rev-list,
+since this is now handled in the sparse-oid-filter init function.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/rev-list.c            |  4 ----
+ list-objects-filter-options.c | 14 ++------------
+ list-objects-filter-options.h |  2 +-
+ list-objects-filter.c         | 11 +++++++++--
+ t/t5616-partial-clone.sh      |  4 ++--
+ 5 files changed, 14 insertions(+), 21 deletions(-)
+
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 301ccb970b..74dbfad73d 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -471,10 +471,6 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 			parse_list_objects_filter(&filter_options, arg);
+ 			if (filter_options.choice && !revs.blob_objects)
+ 				die(_("object filtering requires --objects"));
+-			if (filter_options.choice == LOFC_SPARSE_OID &&
+-			    !filter_options.sparse_oid_value)
+-				die(_("invalid sparse value '%s'"),
+-				    filter_options.filter_spec);
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, ("--no-" CL_ARG__FILTER))) {
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index 1cb20c659c..adbea552a0 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -63,17 +63,7 @@ static int gently_parse_list_objects_filter(
+ 		return 0;
+ 
+ 	} else if (skip_prefix(arg, "sparse:oid=", &v0)) {
+-		struct object_context oc;
+-		struct object_id sparse_oid;
+-
+-		/*
+-		 * Try to parse <oid-expression> into an OID for the current
+-		 * command, but DO NOT complain if we don't have the blob or
+-		 * ref locally.
+-		 */
+-		if (!get_oid_with_context(the_repository, v0, GET_OID_BLOB,
+-					  &sparse_oid, &oc))
+-			filter_options->sparse_oid_value = oiddup(&sparse_oid);
++		filter_options->sparse_oid_name = xstrdup(v0);
+ 		filter_options->choice = LOFC_SPARSE_OID;
+ 		return 0;
+ 
+@@ -138,7 +128,7 @@ void list_objects_filter_release(
+ 	struct list_objects_filter_options *filter_options)
+ {
+ 	free(filter_options->filter_spec);
+-	free(filter_options->sparse_oid_value);
++	free(filter_options->sparse_oid_name);
+ 	memset(filter_options, 0, sizeof(*filter_options));
+ }
+ 
+diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+index c54f0000fb..20b9d1e587 100644
+--- a/list-objects-filter-options.h
++++ b/list-objects-filter-options.h
+@@ -42,7 +42,7 @@ struct list_objects_filter_options {
+ 	 * choice-specific; not all values will be defined for any given
+ 	 * choice.
+ 	 */
+-	struct object_id *sparse_oid_value;
++	char *sparse_oid_name;
+ 	unsigned long blob_limit_value;
+ 	unsigned long tree_exclude_depth;
+ };
+diff --git a/list-objects-filter.c b/list-objects-filter.c
+index 36e1f774bc..d2cdc03a73 100644
+--- a/list-objects-filter.c
++++ b/list-objects-filter.c
+@@ -463,9 +463,16 @@ static void *filter_sparse_oid__init(
+ 	filter_free_fn *filter_free_fn)
+ {
+ 	struct filter_sparse_data *d = xcalloc(1, sizeof(*d));
++	struct object_context oc;
++	struct object_id sparse_oid;
++
++	if (get_oid_with_context(the_repository,
++				 filter_options->sparse_oid_name,
++				 GET_OID_BLOB, &sparse_oid, &oc))
++		die("unable to access sparse blob in '%s'",
++		    filter_options->sparse_oid_name);
+ 	d->omits = omitted;
+-	if (add_excludes_from_blob_to_list(filter_options->sparse_oid_value,
+-					   NULL, 0, &d->el) < 0)
++	if (add_excludes_from_blob_to_list(&sparse_oid, NULL, 0, &d->el) < 0)
+ 		die("could not load filter specification");
+ 
+ 	ALLOC_GROW(d->array_frame, d->nr + 1, d->alloc);
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 0bdbc819f1..84365b802a 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -252,7 +252,7 @@ test_expect_success 'setup src repo for sparse filter' '
+ 	git -C sparse-src commit -m "add sparse checkout files"
+ '
+ 
+-test_expect_failure 'partial clone with sparse filter succeeds' '
++test_expect_success 'partial clone with sparse filter succeeds' '
+ 	rm -rf dst.git &&
+ 	git clone --no-local --bare \
+ 		  --filter=sparse:oid=master:only-one \
+@@ -265,7 +265,7 @@ test_expect_failure 'partial clone with sparse filter succeeds' '
+ 	)
+ '
+ 
+-test_expect_failure 'partial clone with unresolvable sparse filter fails cleanly' '
++test_expect_success 'partial clone with unresolvable sparse filter fails cleanly' '
+ 	rm -rf dst.git &&
+ 	test_must_fail git clone --no-local --bare \
+ 				 --filter=sparse:oid=master:no-such-name \
+-- 
+2.23.0.667.gcccf1fbb03
+
