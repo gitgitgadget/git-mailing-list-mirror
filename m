@@ -2,163 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 023E31F463
-	for <e@80x24.org>; Sun, 15 Sep 2019 21:18:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52E7A1F463
+	for <e@80x24.org>; Sun, 15 Sep 2019 21:26:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728285AbfIOVSM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Sep 2019 17:18:12 -0400
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:43880 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725270AbfIOVSL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Sep 2019 17:18:11 -0400
-Received: by mail-pf1-f201.google.com with SMTP id i187so25916643pfc.10
-        for <git@vger.kernel.org>; Sun, 15 Sep 2019 14:18:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=B+jbNfNDEn8WNuC1kmwwIo0As6Y02BCnOkRJaf2GPgU=;
-        b=uDKVCfs8wzt1IBIUPtGacoRA4sEGcAoWglqHQX/SOxfdT6wMRAUNbTZ2kqCCuML4l4
-         VPQSREWoRvIcxlErkh4sTld/iXhCHuVPlk5clfMmncnyxTV4ObzJGWlf0p6OTQ/h2kfE
-         slyMjqPHl0ZSCP2diZCB/QvH5Vl5ZFs4g34CuCMm5wh4DRpsA6v62SuAKtmKPWlu4szI
-         JM7HaltvG2Duh5JFpJRj6hfGwB5Vyn4rFLVsGLXAD9hsOp6Jy/cxsIEjci8z2QROyR7F
-         c5rV4Ofi0ZU+jswPk7+fVjCzYi1F03VYT0VdKPQEsgNjy38TRPuVDRauWuj6uvwE9ow3
-         R2dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=B+jbNfNDEn8WNuC1kmwwIo0As6Y02BCnOkRJaf2GPgU=;
-        b=oeqnQK6+a5sc6TsF40RzQorhTfGuBVJLymTWSPJUowHYFoSJ+j2pcKYmENrBDMJeKY
-         GiLhmPUdD4CGq9KbV3xLUtiD/4clhXVrw0u9eG0/UDtT0iq8gVQLC80S7/3xPZrge3B2
-         9Yriy9IpMXOmzqMbfFjpuZHS4VwhwNAqTPh5SLiKI3FmnT0ZR+i/a9yUcfYlU8CaTv6d
-         IUGd8AnStIiryYUym9Bu08Ji8LkJfuCs8lsqhqb/Vytw6FIOyEuosq4yPmc/CClt0IFq
-         XDUgVG1M4/brNMryVD6CBW1tc+Iaq1Xa4tCfPax4uZzfDOaXqF0YjxETEIyfNbmYlHZE
-         J5iw==
-X-Gm-Message-State: APjAAAX5hdKinYAl0gWY63a/J3J/t9LP8Tc1g2IeZ8F0FNWrnUmehJGF
-        PIE13VrwIOb6VO4jzV9dM5G8VMDV0EWCOo8vFoU5zEULH4oE/C6RxYM2nGhEunOtzshi8JFo01F
-        AFuMrifKs+1ZZ32asIcoRtqxyq4tJ382mLVs4gKd2mBfSatuX6ZBGeN0/Qj3HakAG7NgAtqDJBg
-        ==
-X-Google-Smtp-Source: APXvYqwysX0CikywjwAt6kFgVJ2RpPqI6qEU58p8Co13l8cL7lHGqDdpzxECuQsWxKm6yfxmxteu3/cZICKao6wXDBQ=
-X-Received: by 2002:a63:ed08:: with SMTP id d8mr2441700pgi.239.1568582290544;
- Sun, 15 Sep 2019 14:18:10 -0700 (PDT)
-Date:   Sun, 15 Sep 2019 14:18:02 -0700
-In-Reply-To: <20190915211802.207715-1-masayasuzuki@google.com>
-Message-Id: <20190915211802.207715-2-masayasuzuki@google.com>
-Mime-Version: 1.0
-References: <20190915211802.207715-1-masayasuzuki@google.com>
-X-Mailer: git-send-email 2.23.0.237.gc6a4ce50a0-goog
-Subject: [PATCH 1/1] fetch: Cache the want OIDs for faster lookup
-From:   Masaya Suzuki <masayasuzuki@google.com>
-To:     git@vger.kernel.org
-Cc:     Masaya Suzuki <masayasuzuki@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726327AbfIOV03 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Sep 2019 17:26:29 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58726 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725270AbfIOV03 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 15 Sep 2019 17:26:29 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:4d4d:a9ce:2c0a:3d66])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 17FB66074C;
+        Sun, 15 Sep 2019 21:26:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1568582787;
+        bh=E1PiwJxAxvVpSRDMXDgUhA4QBGoLBBvSCl+kJpoNzXI=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=ymnWf6tTtGb9k17bFff94D9iui+2GJ1SaSlj2yXOiw8F1zLpbE5tBrxjtKmmUZYfI
+         7dddSkqVaYQa12sL1tTT34RQF9yCaim6YK2QmXLKP3lz/2S+xNliCf/4G8tR7VUl5G
+         WfWjO5KB65mzoQhYbfhWDKilXJejkPPYllaDwqKqLEL9g/C2PTLWEfoEo3QUu+Ppch
+         cIBBpQ8zfvlvXLISN3gykHEQ8AaOrJDPdo37hhwpCIWMCsNy+/BBZWkVHL4Ah+2bUa
+         z8sMspofn25tlQnr2uljHtxToNvQ5UK4d7Ek6liQ3rJ1JYLq7SFO8jq9B6sYmAjgz1
+         upEh3uhVdmLUHE8PYEc1IQlccxz6GKmvEpCzmg4OqDuZ5e7R7Q61vnt9lwwtPBEue+
+         cO4uwaU9YGQQpU9rC/IPDHNGEupFIOcGvyJE6LhavgUP9oMUJ7mB6MUyMOXhiBN6w7
+         XyNrmDdZuxhrKGKKMOyuN+CH10fs6BnVJNkuu3wuXsIWEUV25Gn
+Date:   Sun, 15 Sep 2019 21:26:21 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] Documentation: fix build with Asciidoctor 2
+Message-ID: <20190915212621.GV11334@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20190906232947.GJ11334@genre.crustytoothpaste.net>
+ <20190914194919.748935-1-sandals@crustytoothpaste.net>
+ <20190915095952.GA6190@szeder.dev>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ptMYGWplstB9CqWP"
+Content-Disposition: inline
+In-Reply-To: <20190915095952.GA6190@szeder.dev>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-During git-fetch, the client checks if the advertised tags' OIDs are
-already in the fetch request's want OID set. This check is done in a
-linear scan. For a repository that has a lot of refs, repeating this
-scan takes 15+ minutes. In order to speed this up, create a oid_set for
-other refs' OIDs.
 
-Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
----
- builtin/fetch.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+--ptMYGWplstB9CqWP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 54d6b01892..51a276dfaa 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -7,6 +7,7 @@
- #include "refs.h"
- #include "refspec.h"
- #include "object-store.h"
-+#include "oidset.h"
- #include "commit.h"
- #include "builtin.h"
- #include "string-list.h"
-@@ -243,15 +244,13 @@ static void add_merge_config(struct ref **head,
- 	}
- }
- 
--static int will_fetch(struct ref **head, const unsigned char *sha1)
-+static void create_fetch_oidset(struct ref **head, struct oidset *out)
- {
- 	struct ref *rm = *head;
- 	while (rm) {
--		if (hasheq(rm->old_oid.hash, sha1))
--			return 1;
-+		oidset_insert(out, &rm->old_oid);
- 		rm = rm->next;
- 	}
--	return 0;
- }
- 
- struct refname_hash_entry {
-@@ -317,6 +316,7 @@ static void find_non_local_tags(const struct ref *refs,
- {
- 	struct hashmap existing_refs;
- 	struct hashmap remote_refs;
-+	struct oidset fetch_oids = OIDSET_INIT;
- 	struct string_list remote_refs_list = STRING_LIST_INIT_NODUP;
- 	struct string_list_item *remote_ref_item;
- 	const struct ref *ref;
-@@ -324,6 +324,7 @@ static void find_non_local_tags(const struct ref *refs,
- 
- 	refname_hash_init(&existing_refs);
- 	refname_hash_init(&remote_refs);
-+	create_fetch_oidset(head, &fetch_oids);
- 
- 	for_each_ref(add_one_refname, &existing_refs);
- 	for (ref = refs; ref; ref = ref->next) {
-@@ -340,9 +341,9 @@ static void find_non_local_tags(const struct ref *refs,
- 			if (item &&
- 			    !has_object_file_with_flags(&ref->old_oid,
- 							OBJECT_INFO_QUICK) &&
--			    !will_fetch(head, ref->old_oid.hash) &&
-+			    !oidset_contains(&fetch_oids, &ref->old_oid) &&
- 			    !has_object_file_with_flags(&item->oid, OBJECT_INFO_QUICK) &&
--			    !will_fetch(head, item->oid.hash))
-+			    !oidset_contains(&fetch_oids, &item->oid))
- 				clear_item(item);
- 			item = NULL;
- 			continue;
-@@ -356,7 +357,7 @@ static void find_non_local_tags(const struct ref *refs,
- 		 */
- 		if (item &&
- 		    !has_object_file_with_flags(&item->oid, OBJECT_INFO_QUICK) &&
--		    !will_fetch(head, item->oid.hash))
-+		    !oidset_contains(&fetch_oids, &item->oid))
- 			clear_item(item);
- 
- 		item = NULL;
-@@ -377,7 +378,7 @@ static void find_non_local_tags(const struct ref *refs,
- 	 */
- 	if (item &&
- 	    !has_object_file_with_flags(&item->oid, OBJECT_INFO_QUICK) &&
--	    !will_fetch(head, item->oid.hash))
-+	    !oidset_contains(&fetch_oids, &item->oid))
- 		clear_item(item);
- 
- 	/*
-@@ -404,6 +405,7 @@ static void find_non_local_tags(const struct ref *refs,
- 	}
- 	hashmap_free(&remote_refs, 1);
- 	string_list_clear(&remote_refs_list, 0);
-+	oidset_clear(&fetch_oids);
- }
- 
- static struct ref *get_ref_map(struct remote *remote,
--- 
-2.23.0.237.gc6a4ce50a0-goog
+On 2019-09-15 at 09:59:52, SZEDER G=C3=A1bor wrote:
+> On Sat, Sep 14, 2019 at 07:49:19PM +0000, brian m. carlson wrote:
+> >  	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
+> >  	gem install --version 1.5.8 asciidoctor
+>=20
+> So, since the documentation can now be built with Asciidoctor v2, is
+> it already time to remove this '--version 1.5.8'?
 
+I think Martin was going to send in some more patches before we did
+that.
+
+> > diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
+> > index d49089832d..b3e76ef863 100755
+> > --- a/ci/test-documentation.sh
+> > +++ b/ci/test-documentation.sh
+> > @@ -8,6 +8,8 @@
+> >  filter_log () {
+> >  	sed -e '/^GIT_VERSION =3D /d' \
+> >  	    -e '/^    \* new asciidoc flags$/d' \
+> > +	    -e '/stripped namespace before processing/d' \
+> > +	    -e '/Attributed.*IDs for element/d' \
+>=20
+> I haven't seen this latter message in the CI builds, neither with
+> Asciidoctor v1.5.8 nor with v2.  Do we really need this filter, then?
+> Where does this message come from?
+
+I see it and it definitely fails on my system without it.  It comes from
+libxslt, which has been patched in Debian to produce deterministic IDs.
+I suspect we may not have seen it on Ubuntu systems because they are
+running 16.04, which is likely older than the patch.  If Travis updates
+to 18.04, we may be more likely to have a problem.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--ptMYGWplstB9CqWP
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1+rH0ACgkQv1NdgR9S
+9oscihAAh2l2fbWX43oKAL6wFFUuez0HWZ7fRkgAUm/WFLwcfFdeRtDhR+7qXIhr
+CKwLz/gGZ69dMVRFwWT8/Y55BZQJltBZg5EQ85H74WqwOf0ST5gjr0Oxd8Ef+FH7
+1M71bx8hT91IPqaSJPluoAAuMWvH4mbxTj1ii1/dmijZ1c7oBRq2DpuCTO1h3mGO
+8ROI3nHFDiYUzmXa002uSj/h0siUqXHCoMCM7x7ZI/M0zs2o7VJV1xa0Gl8eEv2J
+Kj3Q8q+lTbQjgoDAUoLp/EyFz0Zag8/ozNDIG5LA1VAvgIxA8PKwxb9+SD/D6gmm
+OKinZ/NfKyq74GAYFQb0CnvGAZRzBfcIa6i/vuGwRO3VOd9f7j7APIw/9lGhf951
+yklUMKKatwrNsKwmRElA0jS+APz+c8nAcqGpubQYjJE5QiJuYB2KrPDjYwsgKZzC
+kW0F7xgJ2z1qvtT8MPrRLDYm7fdezI6MQlop8i1vu7wGZtEu+JSehpN94fq9tOEl
+pzfkT0MnS7pWWDNiEoYY+v/As9LSk1v0IiI0FRx99GwQuDavESrllOGzYd/l2JfM
+lZ+CZ88JGqIbt15cHd8R4sPFSE29LxXvlyqM+0aByB7za8y4fsChJGb0AwfUSFRJ
+kCzKpnwQ9zpyq4yiveLXtueFOxY2YJr1lwKSExx0JsbOVsuVQHQ=
+=LFhR
+-----END PGP SIGNATURE-----
+
+--ptMYGWplstB9CqWP--
