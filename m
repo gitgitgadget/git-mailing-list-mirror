@@ -2,132 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC6421F463
-	for <e@80x24.org>; Sun, 15 Sep 2019 22:14:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 529AE1F463
+	for <e@80x24.org>; Sun, 15 Sep 2019 22:18:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726655AbfIOWO2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Sep 2019 18:14:28 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58736 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726057AbfIOWO2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 15 Sep 2019 18:14:28 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:4d4d:a9ce:2c0a:3d66])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1727298AbfIOWSP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Sep 2019 18:18:15 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55356 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726057AbfIOWSO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Sep 2019 18:18:14 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A79E488540;
+        Sun, 15 Sep 2019 18:18:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=CfLVgRWK03p75xay3nhw4LmIVT4=; b=T48RS5
+        upjsrMypNbwaDFXDGaIRroIWJ+vUajgq9RKGvnKeeAMkhDuAstZAZVksJPc2IsC1
+        EBO6Rnum2apSYEo7c+WnqlMpnwYp5Y3qChJA7JurkO6WDNqpPlEYz4JybEP7TrIb
+        4oIQfq14AezSBpb+MxsNUJ6X2wckrU79x/cSY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QKj+3cT01LcTNHM/v0Nrc2JVoHW7oyZy
+        qhqk7rBRcsYXQKxOYv5ps94k9YPjZyaMmSM3sqgjAX1AkHBeG4kRKbY1ZYAF03VE
+        qWoLhi2mnbugChE2iafqZNVpQmETvxYefZOL3zAvfzX9D6Nsvz4yRvGKnLaC3mds
+        Hb36ghaR0GA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9ECBC8853F;
+        Sun, 15 Sep 2019 18:18:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CAB206074C;
-        Sun, 15 Sep 2019 22:14:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1568585665;
-        bh=9+sy7Jd3LoqBbfzgCRW8sVqwW1ELSB1RkEB/d7mepfc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=PXUzGXGnKV5ZJpf6i8b0qm5jdDCLuHcV5eaiMPQKdCPRgrhbyL4tmMylOj2IDXvXe
-         FUzRkxYU24nhzSL0E4Nw3Fb31KmCvGmSiXQ4HNqvSJ83cnUdiEXku2G164Hdvp4s4i
-         GuqBArQzFjkE3mqlouTtZeIrwmos+BOqqjS+VK309wLnwuLgPwPavjFlzywQg8I78M
-         rqYVQJKoX1kprg5ukxg8UlEtLIu8Y0ctu6xMZmhfHT6fVp5cjQJmqg3sA2xjyR2n+g
-         yCUC2Wtfj0j6vsraZicRXRRVatAxFO91TmQGOeRfgF+48aaHkSMvKWU5vDpcZdO35q
-         7aIZnsl4sh5pss/cc2MSkNe4/29mZ1MI/+JpOgkZh/vrE+VyJhZuOoGldIObSlOoYT
-         LfvJZhKltWUngvEQVKgBB2AsKwUG2khXOtFWFPI0QpZNdovWLauAoEOpnQBbUybdsF
-         tdHUyGD6/6pbLaG58pSace0KzQOAlR8Ly+sVCwbmgeFEX59YHoY
-Date:   Sun, 15 Sep 2019 22:14:20 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Documentation: fix build with Asciidoctor 2
-Message-ID: <20190915221420.GW11334@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190906232947.GJ11334@genre.crustytoothpaste.net>
- <20190914194919.748935-1-sandals@crustytoothpaste.net>
- <20190915095952.GA6190@szeder.dev>
- <20190915212621.GV11334@genre.crustytoothpaste.net>
- <20190915220555.GB6190@szeder.dev>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CB82C8853E;
+        Sun, 15 Sep 2019 18:18:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [PATCH] doc: provide guidance on user.name format
+References: <20190914210219.753136-1-sandals@crustytoothpaste.net>
+Date:   Sun, 15 Sep 2019 15:18:07 -0700
+In-Reply-To: <20190914210219.753136-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Sat, 14 Sep 2019 21:02:19 +0000")
+Message-ID: <xmqqtv9db3vk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Zqkt5x/gGOIVPcL0"
-Content-Disposition: inline
-In-Reply-To: <20190915220555.GB6190@szeder.dev>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: B3255F4E-D806-11E9-81A2-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---Zqkt5x/gGOIVPcL0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Users may or may not read the documentation, but at least we've done our
+> best at providing them helpful information should they choose to do so.
 
-On 2019-09-15 at 22:05:55, SZEDER G=C3=A1bor wrote:
-> On Sun, Sep 15, 2019 at 09:26:21PM +0000, brian m. carlson wrote:
-> > > > diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-> > > > index d49089832d..b3e76ef863 100755
-> > > > --- a/ci/test-documentation.sh
-> > > > +++ b/ci/test-documentation.sh
-> > > > @@ -8,6 +8,8 @@
-> > > >  filter_log () {
-> > > >  	sed -e '/^GIT_VERSION =3D /d' \
-> > > >  	    -e '/^    \* new asciidoc flags$/d' \
-> > > > +	    -e '/stripped namespace before processing/d' \
-> > > > +	    -e '/Attributed.*IDs for element/d' \
-> > >=20
-> > > I haven't seen this latter message in the CI builds, neither with
-> > > Asciidoctor v1.5.8 nor with v2.  Do we really need this filter, then?
-> > > Where does this message come from?
-> >=20
-> > I see it and it definitely fails on my system without it.  It comes from
-> > libxslt, which has been patched in Debian to produce deterministic IDs.
-> > I suspect we may not have seen it on Ubuntu systems because they are
-> > running 16.04, which is likely older than the patch.  If Travis updates
-> > to 18.04, we may be more likely to have a problem.
->=20
-> Thanks.  Indeed, I kicked off a Travis CI build using their Ubuntu
-> 18.04 image, and that "Attributed..." message was there.
->=20
-> I think this future-proofing is a good idea, but I also think that
-> this should be clarified in the commit message.
+Good.
 
-I can do that.  I just noticed it failed on my laptop and added it,
-assuming it was the stylesheets.  I had to search Google for the output
-to find out that it was libxslt.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+>  Documentation/git-commit-tree.txt | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
+> index 4b90b9c12a..34a8496b0e 100644
+> --- a/Documentation/git-commit-tree.txt
+> +++ b/Documentation/git-commit-tree.txt
+> @@ -92,6 +92,12 @@ if set:
+>  
+>  (nb "<", ">" and "\n"s are stripped)
+>  
+> +The author and committer names are by convention some form of a personal name,
+> +as opposed to a username, although Git does not enforce or require any
+> +particular form.
 
---Zqkt5x/gGOIVPcL0
-Content-Type: application/pgp-signature; name="signature.asc"
+I have a lot of trouble with 'username' in the context of this
+paragraph.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+After all, you are describing the name appropriate to be set as the
+value of the user.name configuration, and you are trying to stress
+that the name used there is different from and has nothing to do
+with the name machines use to identify the user.  In the paragraph
+that follows this new paragraph, there is a reference to "system
+user name", which is still not great but probably better than
+"username" above.  Perhaps there is a term that is distinct enough
+from "user name" that is commonly used I am forgetting?  I am almost
+tempted to say "user id", but there must be even better phrases.  I
+dunno.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1+t7wACgkQv1NdgR9S
-9ovvow/8CQWgxWXO7VHasorTESJnPPQ/J1EGPfhFymrPMK17ePP4eSY84LNfur2R
-QJHN4ErB+eQoRYR2sIf4/q6MWn4AUo0iHGvdiSr2oYdzzYfyp5xu5xXXVxU2eGOk
-nlA34Z5yRnAfdJf7X/XTQZaQT6Pe4ydlK0ka/HiWnENk68zzgB/CUHYEgiGzqFRc
-jvor9RBo7p+XP0UJjvqyhQcqVwNQTWD25bRh8OnbPjKxwhmodxhSDdMW7ivOHbbU
-Bd5BlWiiN82BZGcGSLvV8TuPJrDFp5VPQq3IVK/ovFdxnJQAjcrRU7YGggnCbwH/
-rrWP5IWVHdvfXcq37mFv/3a0NkT1sO+iZFx8YVQ1NEoJixDFwpwRQHqKwmim4QqD
-m7fOD7gzjOYggXm5eF8h+IP6aDC2zVLSxHT2ZZ7rvEBMI6+e/OBAgWSl/ZZ22pVN
-ato237yxTUcjRhhBb/U6ZaJI5CvlzwThcSlt8l44K1L8mVh2lRmSFcYUDFOG1ieO
-i0s5fZhKshR3z6FZ+bcGGIcM93NDMeqDXK612tiWFO7NE5Qap906s/TYDKAT0iIj
-nYuQl4JQekCsmTU6h+x4J+9Y8s343Im7SiPZ9hF2So9xDk2pr7Jc/CCOZp5OOELt
-KY8hC2kwG/BnLTV9n/xpj8oD54xUQH8yeGmfdFCxRy7mFWypY8k=
-=1BmI
------END PGP SIGNATURE-----
+> Arbitrary Unicode may be used, subject to the constraints
+> +listed above. This name has no effect on authentication; for that, see the
+> +`credential.username` variable in linkgit::git-config[1].
+> +
+>  In case (some of) these environment variables are not set, the information
+>  is taken from the configuration items user.name and user.email, or, if not
+>  present, the environment variable EMAIL, or, if that is not set,
 
---Zqkt5x/gGOIVPcL0--
+Thanks.
+
