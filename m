@@ -7,29 +7,31 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6931D1F4B9
-	for <e@80x24.org>; Sun, 15 Sep 2019 16:55:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3EA11F463
+	for <e@80x24.org>; Sun, 15 Sep 2019 16:57:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727194AbfIOQzf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Sep 2019 12:55:35 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:22092 "EHLO bsmtp.bon.at"
+        id S1725788AbfIOQ5v (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Sep 2019 12:57:51 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:25293 "EHLO bsmtp.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726024AbfIOQzf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Sep 2019 12:55:35 -0400
+        id S1725270AbfIOQ5u (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Sep 2019 12:57:50 -0400
 Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 46Wb9018xHz5tl9;
-        Sun, 15 Sep 2019 18:55:31 +0200 (CEST)
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 46WbCc74wTz5tlB;
+        Sun, 15 Sep 2019 18:57:48 +0200 (CEST)
 Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 266994AA2;
-        Sun, 15 Sep 2019 18:55:30 +0200 (CEST)
-To:     Git Mailing List <git@vger.kernel.org>
+        by dx.site (Postfix) with ESMTP id A9E2E4AA2;
+        Sun, 15 Sep 2019 18:57:48 +0200 (CEST)
+Subject: [PATCH 2/2] diff, log doc: small grammer, format, and language fixes
 From:   Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 1/2] diff, log doc: say "patch text" instead of "patches"
-Message-ID: <fac55175-dc1e-addf-194b-97aaf6a33e3b@kdbg.org>
-Date:   Sun, 15 Sep 2019 18:55:30 +0200
+To:     Git Mailing List <git@vger.kernel.org>
+References: <fac55175-dc1e-addf-194b-97aaf6a33e3b@kdbg.org>
+Message-ID: <4e9892b1-9d9e-f088-9e56-70f3b02fc9e1@kdbg.org>
+Date:   Sun, 15 Sep 2019 18:57:48 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <fac55175-dc1e-addf-194b-97aaf6a33e3b@kdbg.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -38,49 +40,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A poster on Stackoverflow was confused that the documentation of git-log
-promised to generate "patches" or "patch files" with -p, but there were
-none to be found. Rewrite the corresponding paragraph to talk about
-"patch text" to avoid the confusion.
+- Replace "SHA-1" by "object name", the modern name for hashes.
 
-Shorten the language to say "X does Y" in place of "X does not Z, but Y".
+- Correct a few grammar weaknesses.
 
-Cross-reference the referred-to commands like the rest of the file does.
-
-Mention porcelain commands before plumbing commands because I guess that
-the paragraph is read more frequently in their context.
+- Do not accidentally format a phrase in teletype font where quotes are
+  intended.
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
  I do not have the toolchain to check that a correct result is produced.
 
- Documentation/diff-generate-patch.txt | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ Documentation/diff-generate-patch.txt | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
-index f10ca410ad..c6bbb2ac22 100644
+index c6bbb2ac22..ece1a2b66e 100644
 --- a/Documentation/diff-generate-patch.txt
 +++ b/Documentation/diff-generate-patch.txt
-@@ -1,11 +1,12 @@
--Generating patches with -p
----------------------------
--
--When "git-diff-index", "git-diff-tree", or "git-diff-files" are run
--with a `-p` option, "git diff" without the `--raw` option, or
--"git log" with the "-p" option, they
--do not produce the output described above; instead they produce a
--patch file.  You can customize the creation of such patches via the
-+Generating patch text with -p
-+-----------------------------
-+
-+Running
-+linkgit:git-diff[1] without the `--raw` option,
-+or linkgit:git-log[1], linkgit:git-diff-index[1], linkgit:git-diff-tree[1],
-+or linkgit:git-diff-files[1] with the `-p` option
-+produces patch text instead of the usual output.
-+You can customize the creation of patch text via the
- `GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables.
+@@ -50,7 +50,7 @@ similarity index value of 100% is thus reserved for two equal
+ files, while 100% dissimilarity means that no line from the old
+ file made it into the new one.
+ +
+-The index line includes the SHA-1 checksum before and after the change.
++The index line includes the blob object names before and after the change.
+ The <mode> is included if the file mode does not change; otherwise,
+ separate lines indicate the old and the new mode.
  
- What the -p option produces is slightly different from the traditional
+@@ -71,7 +71,7 @@ separate lines indicate the old and the new mode.
+       rename to a
+ 
+ 
+-combined diff format
++Combined diff format
+ --------------------
+ 
+ Any diff-generating command can take the `-c` or `--cc` option to
+@@ -81,7 +81,7 @@ linkgit:git-show[1]. Note also that you can give the `-m` option to any
+ of these commands to force generation of diffs with individual parents
+ of a merge.
+ 
+-A 'combined diff' format looks like this:
++A "combined diff" format looks like this:
+ 
+ ------------
+ diff --combined describe.c
+@@ -114,11 +114,11 @@ index fabadb8,cc95eb0..4866510
+ ------------
+ 
+ 1.   It is preceded with a "git diff" header, that looks like
+-     this (when `-c` option is used):
++     this (when the `-c` option is used):
+ 
+        diff --combined file
+ +
+-or like this (when `--cc` option is used):
++or like this (when the `--cc` option is used):
+ 
+        diff --cc file
+ 
+@@ -161,7 +161,7 @@ parents.
+ 4.   Chunk header format is modified to prevent people from
+      accidentally feeding it to `patch -p1`. Combined diff format
+      was created for review of merge commit changes, and was not
+-     meant for apply. The change is similar to the change in the
++     meant to be applied. The change is similar to the change in the
+      extended 'index' header:
+ 
+        @@@ <from-file-range> <from-file-range> <to-file-range> @@@
 -- 
 2.23.0.93.g91d3f15def
