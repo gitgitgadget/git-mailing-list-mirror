@@ -2,91 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BB6B1F463
-	for <e@80x24.org>; Mon, 16 Sep 2019 18:01:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42A7A1F463
+	for <e@80x24.org>; Mon, 16 Sep 2019 18:03:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389294AbfIPSBE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Sep 2019 14:01:04 -0400
-Received: from relay6-d.mail.gandi.net ([217.70.183.198]:44103 "EHLO
-        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727039AbfIPSBE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Sep 2019 14:01:04 -0400
-X-Originating-IP: 1.186.12.28
-Received: from localhost (unknown [1.186.12.28])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 38794C000C;
-        Mon, 16 Sep 2019 18:01:01 +0000 (UTC)
-Date:   Mon, 16 Sep 2019 23:31:00 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: git-gui: automatically move focus to staged file before typing
- commit message?
-Message-ID: <20190916180059.aifw5r4c4k5o5hur@yadavpratyush.com>
-References: <CAGr--=KMJmYtVaATFkOPcboAdkLvpZFbWAo4QAE0-uC6RL4Lqg@mail.gmail.com>
- <20190914211509.sjy6lh2rlcl32lj5@yadavpratyush.com>
- <20190914212732.plymb3vnz3dv4rmc@yadavpratyush.com>
- <CAGr--=LmhE9m9V4Dq8Zt0aXqdThzrNnWSnxWawVZiLYTKbL2ig@mail.gmail.com>
+        id S2389658AbfIPSDd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Sep 2019 14:03:33 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55970 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726872AbfIPSDd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Sep 2019 14:03:33 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A1A60921CF;
+        Mon, 16 Sep 2019 14:03:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2HFH1wVk7ImmvOAs6uxMnIXt5fY=; b=PZONr2
+        lxSBjK0I+p4oWE/6lXJOJIMLWQB12j/U7CEENUeA7zo8YXJQhDVUmWcAaRguR/gb
+        tj68tKJU68Zd8N8bLU/BIRUyJvVVvCHzyuACH6fv1JBGqNt3UunwxHwl4KE+oEj1
+        KLjiKY1cFbyhbXLR5Q91ZOnVPWnkksJMKjTYk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Hgm/wVCUKh/XACqtptlOuJY9PCcnLXIQ
+        iiaoHF7eM2mXSUTBOQeAhwhen+43N9alsGpQ2bW6Dg2AA3BlfsJOWu53R6DOh/wm
+        QvDSY0HsZGtaW5RcRceDiwkHiXzCnCVxMjLnvlNOkDuqcUE51rj1qJ2D5nov065s
+        S/2oP5QMDp8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 99BE4921CE;
+        Mon, 16 Sep 2019 14:03:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C906D921CC;
+        Mon, 16 Sep 2019 14:03:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Robert Schmidt-Cisternas <robert@schmidt-cisternas.net>
+Cc:     git@vger.kernel.org
+Subject: Re: GIT_OBJECT_DIRECTORY ignored when cloning submodules
+References: <CAEq5TVWLxpc2a4fCch=DZfOgDWjKiu6gv0cfVHC3Wdy9581aSg@mail.gmail.com>
+Date:   Mon, 16 Sep 2019 11:03:27 -0700
+In-Reply-To: <CAEq5TVWLxpc2a4fCch=DZfOgDWjKiu6gv0cfVHC3Wdy9581aSg@mail.gmail.com>
+        (Robert Schmidt-Cisternas's message of "Sat, 14 Sep 2019 18:07:00
+        +0200")
+Message-ID: <xmqq8sqoazkg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGr--=LmhE9m9V4Dq8Zt0aXqdThzrNnWSnxWawVZiLYTKbL2ig@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+Content-Type: text/plain
+X-Pobox-Relay-ID: 49F6AC2A-D8AC-11E9-8700-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15/09/19 09:55AM, Birger Skogeng Pedersen wrote:
-> Hi Pratyush,
-> 
-> On Sat, Sep 14, 2019 at 11:15 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> > Why should it only happen when the commit message widget is selected?
-> > What's wrong with directly switching focus when all the files are
-> > staged?
-> >
-> > What I have in mind is once there are no more files to stage, the focus
-> > directly goes to the staged files section, and the first staged file
-> > gets selected. Then if you want you can type in the commit message. And
-> > conversely, when unstaging things, once all files are unstaged, the
-> > focus goes directly to the unstaged files section.
-> 
-> Your questions are fair. My reasoning: I imagine it could be a bit
-> frustrating that the focus automatically goes away from the "Unstaged
-> Changes" widget, when the user actually isn't done doing changes.
+Robert Schmidt-Cisternas <robert@schmidt-cisternas.net> writes:
 
-I suppose a similar argument can be made against your suggestion though. 
-When a user clicks on the commit message buffer, they did one thing: 
-click on the buffer. They did not click on any diff. So, wouldn't it be 
-disorienting for them if their action of clicking the commit message 
-buffer also switches the diff view?
+> However, when cloning a repo with submodules, the variable is cleared
 
-I'm not arguing in favour or against your suggestion, I just want to 
-consider all angles/viewpoints before going forward.
- 
-> For instance (as a user);
-> - Do some changes
-> - Stage the changes (no more unstaged changes in the repo)
-> - Realize that you forgot something, jump back to the IDE and make
-> some more changes
-> - Jump back again to git-gui, hit refresh
-> In this scenario, I imagine the user would want to have focus kept on
-> the "Unstaged Changes" widget. Even if it became empty with files
-> before.
-> 
-> When the user focus the "Commit Message" widget, the user is kinda
-> stating "I'm done staging stuff for now". And when that happens, it
-> really doesn't make sense to show a blank diff any more.
+GIT_OBJECT_DIRECTORY applies to the source object store, not the
+target object store---clearing is very much intentional, I think.
 
-Makes sense. But I'm not sure if this would be beneficial to other 
-git-gui users. I'd like to hear about what other people think about this 
-change.
-
--- 
-Regards,
-Pratyush Yadav
+An operation like clone, fetch and push can involve two object
+stores (iow, you can do them between two repositories on the same
+machine using local transport), and allowing both sides to use the
+same GIT_OBJECT_DIRECTORY would probably not make much sense.
