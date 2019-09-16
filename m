@@ -8,69 +8,69 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A33F1F463
-	for <e@80x24.org>; Mon, 16 Sep 2019 12:50:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9D6D1F463
+	for <e@80x24.org>; Mon, 16 Sep 2019 14:10:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732735AbfIPMuW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Sep 2019 08:50:22 -0400
-Received: from mail-wm1-f43.google.com ([209.85.128.43]:39323 "EHLO
-        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727743AbfIPMuW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Sep 2019 08:50:22 -0400
-Received: by mail-wm1-f43.google.com with SMTP id v17so9688161wml.4
-        for <git@vger.kernel.org>; Mon, 16 Sep 2019 05:50:21 -0700 (PDT)
+        id S2388530AbfIPOKC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Sep 2019 10:10:02 -0400
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:34791 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728149AbfIPOKB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Sep 2019 10:10:01 -0400
+Received: by mail-wr1-f41.google.com with SMTP id a11so29293592wrx.1
+        for <git@vger.kernel.org>; Mon, 16 Sep 2019 07:10:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=9Vm48RrKrckK1KgyZ0KdJtGi/xr1xyI33OTM5uOWyfo=;
-        b=Ufo0zDFKmRvBwS5m9UPla3KpGkJDj5ZlgXMMt3Fc16Jj9kq8qx20ikSgYZAaZDU/Qp
-         KALCsdHU4vCLCvaaEes0OowdPfpJh70ychPZeiGgIMtMor5mBE9O7D6Sy82q5k+ATEGo
-         CnVCZRzOmAHdO5BakpECsGtpsnogUJlRALnBZ7g76VcSoMqgmoIJvT/yXDJL031qlyk4
-         F3JQEUAoI/Gu1PEq3WcRgY9n9ewDbaKBN9S0Z00EbYLVgJ4/GV87W71raqkqEmAYEDyh
-         39bCn6yZCJq7ZF/loW9xw/skCM7ntbsWIOYXfShifdt3kObd9FD1Mavg519dsYhNm/SS
-         yeYQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=WUHha3OHwG0rwh7/GaVaxyQgJw8hkisCQOpYrqBRsYI=;
+        b=kJQVxEgZ9WWFiqP2xLmO4bzaqBgDlYLmlOd5TuxSiFm3cmprJ+RGzwnJ5GzE+ZxiGi
+         /Y6Bci0ofg5gTJWIbkCOt773Qo1BtfXS5HfFUCHkmcu1DdUHfinrzrVE7j74wTBajo31
+         0E3sfbr5LuJtiAm1MNEbQlzLJYUi1xELYWX0KK8W5uJnqVHnD6KBZNX4rZ1XrPrIxzZh
+         UJ+dLe1CZTD1Ohyqtc0A00xko1cuWUGKz0pQ7iEEw4l2qqt97YRGVbwyd5kIWAl7SQCR
+         4L7Jfdx2dijoQ3FM6w8pPt6BM4Q3qGm3MMggJR67Djz5gGMrROUk3znEC3nC/eRgf2xv
+         VqRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=9Vm48RrKrckK1KgyZ0KdJtGi/xr1xyI33OTM5uOWyfo=;
-        b=duLSXp6ZVC2M5t8TXN79w6kZ0oP+79rfVBOx7laMtceTAAY6pyqTIScXodAqKxnIqb
-         gBdkpX3irvyBNGx4XZLnkSYnb2/RgqXogNlxOOtJYsHS5VZnNhOG24LIRlSpEBlmMV+I
-         uQQAq1hR4JSK/G/edY3eyKxRJtj+r/1mdU9NJLa6sCfmVTCEzMmI43zL5A+PbYvXotoT
-         xetFKjbb4v4loRhb95OCvHwf/4+Tpmuumyf1KMfRE9YeKt1gVBYwgMvdqVMPG+v4yd/2
-         bSZy8M8pZ4LebUuRA2j2khycY4RyZvgaiaoeJiVq188V7PkSuRQZocidUAM4vxKsbuaT
-         tUvA==
-X-Gm-Message-State: APjAAAXpGUkXDo/D9YTcXGcOd/qbBEWcl4eRBULr3yf2D16vbDoB3c2t
-        kbLahgO1FgW3Px4b1BCKTROICECxOz4=
-X-Google-Smtp-Source: APXvYqxFV4Lw/FqwXYuzZExFizfvJtC9cvVSfHbeMgPvBhYfhIf2sq3DpFBP35zl+2XSk4P5EybuRA==
-X-Received: by 2002:a1c:4945:: with SMTP id w66mr8443600wma.40.1568638220146;
-        Mon, 16 Sep 2019 05:50:20 -0700 (PDT)
-Received: from [10.10.11.24] ([85.132.78.78])
-        by smtp.gmail.com with ESMTPSA id c10sm49218707wrf.58.2019.09.16.05.50.18
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Sep 2019 05:50:19 -0700 (PDT)
-To:     git@vger.kernel.org
-From:   Alicenab <alibutlow@gmail.com>
-Subject: Git documentation in Azerbaijan language
-Message-ID: <20a404f4-929e-fb87-4ae5-b0e8707b15c7@gmail.com>
-Date:   Mon, 16 Sep 2019 16:50:17 +0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=WUHha3OHwG0rwh7/GaVaxyQgJw8hkisCQOpYrqBRsYI=;
+        b=VrMucMqcKD2ZRa1dcaBdW6Y/95o3EFw+AxSWMcPwSO8CZ/p9Kt5EA1TzzsbB6dn497
+         +If/stvanq6OpEnbNGegCSc4kLUUhKlQ0JZdwYFF+daO2WBOXzDx6HAE0/Cg0HDs+9Jo
+         KPt9QbvxMCBBmxE1YUYs64vZBHQlVL5mNatb4e6TE2bE9IK7Ohbo/PGweb6K9FAkWaKT
+         NslCOCdXHjdh6oRkgr1pcQiN7RY9dyg1eYNfM5v/1iN+gt/84OFhpdRZPdJRoCANGzS2
+         cA8hKW9FyjyUeqm+WBssqlKMoh7ioZKBKHkgoSxRrXDmuhQyoReSR4PcZVQnor4qT8UM
+         K2jw==
+X-Gm-Message-State: APjAAAUXzc6Sku6tU9RdQnQPaH90Rho/TYmykda5oQvrKBjkaoQd8UqL
+        qDNn68pilBBYonRcS04BuGVOH2xD1GzsL1r80qGN7Q==
+X-Google-Smtp-Source: APXvYqwfDlMbFnJd0nlrnTF4d30E+4bCTHlXmIfP7plD535sQKvQh8/q/0kjV1mJmyTcr+9gunT474Dh+haaG5Hcy6Y=
+X-Received: by 2002:adf:e2d0:: with SMTP id d16mr21379355wrj.245.1568642998621;
+ Mon, 16 Sep 2019 07:09:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+From:   Klaus Sembritzki <klausem@gmail.com>
+Date:   Mon, 16 Sep 2019 16:09:46 +0200
+Message-ID: <CADMnYXC7W-6n+A=1C11yzD5OnbQ_-Ac-H7canT-kdCPZpTWn0w@mail.gmail.com>
+Subject: Promoting Ethnics-Ess-Nix, a friends-based search-engine
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-As far as I know Git documentation does not have Azerbaijan language 
-translation. I have started to work around it. Are you open for this 
-commitment?
+Dear all,
 
-Best regards
-Ali
+We texted a README.md on a new project hosted on GitHub, promoting but
+not yet implementing a "friends-based search-engine", hosting the
+complete WWW in the future, thereby reshaping GIT and HG also. Now we
+figured we'd like to advertise the project to you directly.
+
+https://github.com/ksemb/Ethnics-Ess-Nix-friends-based-search-engine
+
+Please note that appropriateness is triple-solved to be necessity,
+constrained to knowledge and feasibility, making this a perfectly-fine
+email.
+
+This is the first wave of a propaganda-war, false from injust-people
+gets us extinct in the long run.
+
+Cheers,
+The GCHQ
