@@ -2,96 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5E0F1F464
-	for <e@80x24.org>; Mon, 16 Sep 2019 17:16:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65A7E1F463
+	for <e@80x24.org>; Mon, 16 Sep 2019 17:18:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731721AbfIPRQ1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Sep 2019 13:16:27 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:32907 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729526AbfIPRQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Sep 2019 13:16:27 -0400
-Received: by mail-wr1-f65.google.com with SMTP id b9so306989wrs.0
-        for <git@vger.kernel.org>; Mon, 16 Sep 2019 10:16:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=5Nh4rrCoHvcjcokN2aETWxTOSGyI7rcy0VdDqRs3Cks=;
-        b=WWseID7Ra53NqgMlEuDV93oliLPx326OdMixDSTvyhd1+uhT+/pssUhNfYZPPQy0Bz
-         g/qgMgHdrCF77u4FD6uCuheUcem058OnQT7OKduUd7ZrbHbCnbnSc9X4YoudbUbTjD8n
-         RySBnD8PRCxgLsZKLqEukofuQl6crOLOS/DfI7EU9u9wgzdSPxVWsW0XuC+6kWcksnEI
-         BOF84hdhwtEJlV0nPnVaTHLgB9QQujlTLvNGJqXyR9BexInyssIMnX7TV363MuZGN5UA
-         3YvZzba0PyB2k22oxHV2Cyh/JvpVr0Jd4fuLkbuKJpT5elJ+JW9Xf+tZyUS0hk9KqmTx
-         o3ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=5Nh4rrCoHvcjcokN2aETWxTOSGyI7rcy0VdDqRs3Cks=;
-        b=j5iZ1hvgbCoSKIGeEScljATVi6JDaOzY5VzqZVq0eNVS8gq1B7dsR42RFpY06fhTM8
-         7tx2M+4rwOe67DtDDy5jkaIUzoSqAlOFhsfOxvDGxoEOpmIIL6UpprcPq9/oi0MdhI+F
-         5me3nCXGuNwI3lDtauun/OsoubXtRMk05+JIBjuFgPVe/p39DJe/TZBD8Af586Iae2hd
-         ShUfGhrKAeUQFqhOi9HNuz1xwKubQQJov9JL5bBwHGlrSFAcXAh+X9YCkcqHkTo+cllk
-         0ffs57kvzL90BB6a+zej89Hgo5EEJFsIYBU3GoYCQmHyn8hnAhIZiSfWx7kNZ/GzcKhD
-         hKpw==
-X-Gm-Message-State: APjAAAUZJzDDeZQU9wJ3Vil1FOBktv/tNWQUcS4J7562rOOYhgF8nneJ
-        83aG5JHQkuzdHEcs9RuO/nw6f1qB5MS51U3eD/O9pRIW
-X-Google-Smtp-Source: APXvYqymK377groDuTCc8wLvSfbhI29dFip/Z5Lykuru7iARsryeAOJgs1U1uy6pknBiewM4O+nGr/GIRtgQzYgNoOo=
-X-Received: by 2002:adf:f112:: with SMTP id r18mr755500wro.88.1568654184673;
- Mon, 16 Sep 2019 10:16:24 -0700 (PDT)
+        id S1729297AbfIPRSz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Sep 2019 13:18:55 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61912 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727593AbfIPRSz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Sep 2019 13:18:55 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CDA7A25F5B;
+        Mon, 16 Sep 2019 13:18:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=DNT05+lNHPgjPBz4PEGli/WhkBs=; b=gvd4ox
+        zhAfSKnGktiQu5OpQB0ragoVEXx/ill7EU71vGorSo0LIfHQq6fhay+kaEkB/2rg
+        zWty2taubZwV3je44kOE3Nzfbimwit3uxDGlzLo+K7k4yzfFdPTdJRfZczAbXu7z
+        eOU2zhO46o6x/6iGV3o0yppNW6SD5Hs4LeUeI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Nd1JGs0pXFeJXwYQvn+9k/MYVdzrm1NV
+        /u7JUXZBejT8q/RRYXUNlgkmGOn+1D2dkiiFVVILEI/yOk4ZgGaBSQlvG6ZhOGAs
+        qxDEOTnzl2Tb+sDGyqGWnxUVMRopo5QBmkr1m88UmxyiPEQJRCoBO7kG+pYmsPEH
+        UVWht1Ct3Qg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C542425F5A;
+        Mon, 16 Sep 2019 13:18:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F077425F59;
+        Mon, 16 Sep 2019 13:18:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Paul Mackerras <paulus@ozlabs.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [GIT PULL] gitk update
+References: <20190915233328.GD9560@blackberry>
+Date:   Mon, 16 Sep 2019 10:18:50 -0700
+In-Reply-To: <20190915233328.GD9560@blackberry> (Paul Mackerras's message of
+        "Mon, 16 Sep 2019 09:33:28 +1000")
+Message-ID: <xmqqpnk0b1mt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CADMnYXC7W-6n+A=1C11yzD5OnbQ_-Ac-H7canT-kdCPZpTWn0w@mail.gmail.com>
-In-Reply-To: <CADMnYXC7W-6n+A=1C11yzD5OnbQ_-Ac-H7canT-kdCPZpTWn0w@mail.gmail.com>
-From:   Klaus Sembritzki <klausem@gmail.com>
-Date:   Mon, 16 Sep 2019 19:16:12 +0200
-Message-ID: <CADMnYXDWwq2DN59qnkS_P31S+-NJZTzj2TMzps5KKQ7McxpO1Q@mail.gmail.com>
-Subject: Re: Promoting Ethnics-Ess-Nix, a friends-based search-engine
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0DD8DFFC-D8A6-11E9-95CE-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+Paul Mackerras <paulus@ozlabs.org> writes:
 
-We know that this is for a technical-savvy audience, but as we are all
-people with a soul, here comes a combination of both, the logical and
-the emotional first waves of the GCHQ-propaganda-war.
+> Hi Junio,
+>
+> Whenever it's convenient, please do a pull from my gitk repository at
+> git://ozlabs.org/~paulus/gitk.git to get four commits updating gitk.
+>
+> Thanks,
+> Paul.
 
-First waves of the GCHQ-propaganda-war:
-
-- Logic: This is the first wave of a propaganda-war, false from
-injust-people gets us extinct in the long run.
-- Emotions: We are precious, no pretentiousness, abuse, scare and
-disgust. Everything where it belongs.
-
-Cheers,
-The GCHQ
-
-On Mon, Sep 16, 2019 at 4:09 PM Klaus Sembritzki <klausem@gmail.com> wrote:
->
-> Dear all,
->
-> We texted a README.md on a new project hosted on GitHub, promoting but
-> not yet implementing a "friends-based search-engine", hosting the
-> complete WWW in the future, thereby reshaping GIT and HG also. Now we
-> figured we'd like to advertise the project to you directly.
->
-> https://github.com/ksemb/Ethnics-Ess-Nix-friends-based-search-engine
->
-> Please note that appropriateness is triple-solved to be necessity,
-> constrained to knowledge and feasibility, making this a perfectly-fine
-> email.
->
-> This is the first wave of a propaganda-war, false from injust-people
-> gets us extinct in the long run.
->
-> Cheers,
-> The GCHQ
+Will do.  Thanks.
