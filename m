@@ -2,106 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4DC01F463
-	for <e@80x24.org>; Mon, 16 Sep 2019 10:45:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE0421F463
+	for <e@80x24.org>; Mon, 16 Sep 2019 10:48:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728365AbfIPKpN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Sep 2019 06:45:13 -0400
-Received: from relay7-d.mail.gandi.net ([217.70.183.200]:43991 "EHLO
-        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732370AbfIPKpM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Sep 2019 06:45:12 -0400
-X-Originating-IP: 1.186.12.28
-Received: from localhost (unknown [1.186.12.28])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id 622F320016;
-        Mon, 16 Sep 2019 10:45:08 +0000 (UTC)
-Date:   Mon, 16 Sep 2019 16:15:05 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Stefanie Leisestreichler <stefanie.leisestreichler@peter-speer.de>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Git diff|status against remote repo
-Message-ID: <20190916104505.cykdm2edrz7wy3fm@yadavpratyush.com>
-References: <3218b394-4dcf-0b99-c561-b1811f0be3d6@peter-speer.de>
+        id S1728347AbfIPKsC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Sep 2019 06:48:02 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:41111 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725826AbfIPKsC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Sep 2019 06:48:02 -0400
+Received: by mail-pf1-f194.google.com with SMTP id q7so1214961pfh.8
+        for <git@vger.kernel.org>; Mon, 16 Sep 2019 03:48:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/ugBBNV38DUKDm0oZCB84etJ2Esj88C+7xjkjH2mV0k=;
+        b=trmeeiYKISM4Zxkm/hSH99iW69btf9QPGf5eWwN7LHVrTxJpdXbHB14agemuQ371TZ
+         wP5n0PiYGrIAGvUsQnx/ZbWAJDbLjwc/FuHVPEOM6N4dex7ESjVscOFeEKu5irC1FWJh
+         m6PiS6xXlQyK26iVAsFQqwkrhOK4xMIHrZBKkCvch5EONajmqAcHYeCb9vbOa+p2Zx7i
+         Mzm9WlOMh7ZvtBzY4n4MRhVUioxyABF+SbdSykYGNhkgdCjFWGfPHtE1ZApZIv2BCJYc
+         V9SYWwaDpzxrsC9qKWn/qS12AMfy34tOHXkwBXji6F+8n2Xmj92ZnX3EBDBArpytAw8v
+         npkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/ugBBNV38DUKDm0oZCB84etJ2Esj88C+7xjkjH2mV0k=;
+        b=hH9Bp/EFBi5c70hh81A+ZEA2OcIESv1JCw3CJ8yMlVLWgbkPNHha7q1UD91B8rF0U5
+         +FH08bgLVK9jarLkfgGLye4aSezNejq2LD97X0//sVtSBfgRFs5W39IjL5ED8QmPHmDR
+         bgDNtq99GAohPPFw+yv4a8H12RN+JNfa+g5R58XOTMzXJeo9jjAmV04xiWeKwOkjJSZr
+         NFt6n/Zr4ZzK/uzMVYtQcHceOh9uq8vtOjmJtF7J9QKGaQ7pjy+mo1pSe5FdD7mhVuYp
+         qQQ6hgLC8I1ZmPDHFLNtcz+coamkO+Oodl7GIW4FDE0EPLlibdKQbtqdBGDwckyKaUcg
+         93Eg==
+X-Gm-Message-State: APjAAAVDBBngu7zUIaCchE1BjxfjdRB3ey5aFZ24Yw8dud4MLMQ4cN39
+        Pq7lkn5FGLA4nzoIL9QMMl1APxmtXSoFCAELHy2hjnRt
+X-Google-Smtp-Source: APXvYqxaNi0ItQS1xwjkxVPYKxT5Tt3gK1Bp6ePPN3JacuMQm1RJiyg6IOcnlCIMaFRECvUvW54rAYr6CvAJrnKCZIc=
+X-Received: by 2002:a65:4841:: with SMTP id i1mr55775171pgs.316.1568630881869;
+ Mon, 16 Sep 2019 03:48:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3218b394-4dcf-0b99-c561-b1811f0be3d6@peter-speer.de>
-User-Agent: NeoMutt/20180716
+References: <20190906232947.GJ11334@genre.crustytoothpaste.net>
+ <20190913015240.686522-1-sandals@crustytoothpaste.net> <20190913050634.GB21172@sigill.intra.peff.net>
+In-Reply-To: <20190913050634.GB21172@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Mon, 16 Sep 2019 12:47:46 +0200
+Message-ID: <CAN0heSqcKR_HV3jt2vVU2iafA77cqTyjFaTmiyXaHChmmUBhgg@mail.gmail.com>
+Subject: Re: [PATCH v2] Documentation: fix build with Asciidoctor 2
+To:     Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/09/19 11:02AM, Stefanie Leisestreichler wrote:
-> Hi.
-> 
-> I am far from being a pro in git.
-> There is something I do not understand.
-> 
-> This is my git config:
-> [core]
->         repositoryformatversion = 0
->         filemode = true
->         bare = false
->         logallrefupdates = true
-> [remote "origin"]
->         url = ssh://git@192.168.2.2:/home/git/PROJECT.git
->         fetch = +refs/heads/*:refs/remotes/origin/*
-> [branch "master"]
->         remote = origin
->         merge = refs/heads/master
-> [branch "develop"]
->         remote = origin
->         merge = refs/heads/develop
-> 
-> I have a local repo called "develop" also on each involved dev machine.
-> 
-> Developer A has made changes on nearly each file of the project by changing
-> the namespace and locally commited those changes to his local branch
-> "develop". After that he did a git push.
-> 
-> On a not involved machine M I did a git clone
-> ssh://git@192.168.2.2:/home/git/PROJECT.git and after that I did a "git
-> checkout develop" which was followed by a message like "Branch develop is
-> following remote branch develop from origin". I can see all the changes
-> Developer A has made.
-> 
-> On my machine DEV I am on my local branch develop. Since I did not pull or
-> merge from origin already, I am not able to see any of those changes
-> developer A has made. So far so good. But I would expect, that git status
-> (which results in "On branch develop. Your branch is up to date with
-> origin/develop) or "git diff origin/develop develop" or "git diff
-> origin/develop...develop" (both no output at all) would give me a hint that
-> I am x commits behind origin/master or (git diff) will show me the changes
-> Developer A committed to the Repro. But nothing...
-> 
-> What am I doing wrong?
+On Fri, 13 Sep 2019 at 07:06, Jeff King <peff@peff.net> wrote:
+>
+> On Fri, Sep 13, 2019 at 01:52:40AM +0000, brian m. carlson wrote:
+>
+>
+> >  Documentation/Makefile    | 4 +++-
+> >  Documentation/manpage.xsl | 3 +++
+> >  ci/test-documentation.sh  | 2 ++
+> >  3 files changed, 8 insertions(+), 1 deletion(-)
+> >  create mode 100644 Documentation/manpage.xsl
+>
+> Running with this patch on asciidoctor 2.0.10, plus Martin's recent
+> literal-block cleanups, plus his refmiscinfo fix, I get pretty decent
+> output from:
+>
+>   ./doc-diff --from-asciidoc --to-asciidoctor origin HEAD
+>
+> The header/footer are still a little funny (but I think Martin said that
+> he needs to update the refmiscinfo patches for later versions of
+> asciidoctor, which is probably what's going on here):
+>
+>   --- a/f1d4a28250629ae469fc5dd59ab843cb2fd68e12-asciidoc/home/peff/share/man/man1/git-add.1
+>   +++ b/6c08635fd1d38c83d3765ff05fabbfbd25ef4943-asciidoctor/home/peff/share/man/man1/git-add.1
+>   @@ -1,4 +1,4 @@
+>   -GIT-ADD(1)                        Git Manual                        GIT-ADD(1)
+>   +GIT-ADD(1)                                                          GIT-ADD(1)
+>
+>    NAME
+>           git-add - Add file contents to the index
+>   @@ -356,4 +356,4 @@ SEE ALSO
+>    GIT
+>           Part of the git(1) suite
+>
+>   -Git omitted                       01/01/1970                        GIT-ADD(1)
+>   +  omitted                         1970-01-01                        GIT-ADD(1)
 
-You haven't gotten the new commits from origin, so your local repo can't 
-know how ahead/behind it is from its remote version.
+Yeah, I should be able to post v3 of my refmiscinfo-series this evening,
+which should fix this, so that the only difference that remains here is
+how the date is formatted.
 
-Run `git fetch origin`.
-
-Now if you run `git status`, it should show you that you are X commits 
-behind origin.
-
-`git pull` does two things: `git fetch` and `git merge`. fetch 
-"downloads" all the commits from remote, and merge then puts them in 
-your local branch. So if you do a `git pull`, developer A's changes are 
-now merged into your tree. But if you only do a fetch, origin/master 
-gets updated, but not your local master. So now status can know how far 
-you are behind, but your local branch is not changed yet.
-
-Once you are ready to finally get those changes in your local branch, 
-run `git merge origin/master`.
-
--- 
-Regards,
-Pratyush Yadav
+Martin
