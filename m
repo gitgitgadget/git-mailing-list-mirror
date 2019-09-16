@@ -2,86 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66D6C1F463
-	for <e@80x24.org>; Mon, 16 Sep 2019 20:40:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70D6A1F463
+	for <e@80x24.org>; Mon, 16 Sep 2019 20:46:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730600AbfIPUki (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Sep 2019 16:40:38 -0400
-Received: from mail-pf1-f181.google.com ([209.85.210.181]:32805 "EHLO
-        mail-pf1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729410AbfIPUki (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Sep 2019 16:40:38 -0400
-Received: by mail-pf1-f181.google.com with SMTP id q10so651409pfl.0
-        for <git@vger.kernel.org>; Mon, 16 Sep 2019 13:40:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sifive.com; s=google;
-        h=date:subject:in-reply-to:cc:from:to:message-id:mime-version
-         :content-transfer-encoding;
-        bh=nFS81jg7/h9+4PusAqPzPRnrTYaqLvkbYIRlEVqVdSk=;
-        b=VrwUZRFGGA3GLOBkW2zj7zFn2zQS6BZl5ZW101weW9ih/N9a+wJjW38KafF0LB9TIm
-         ylmeE6ULYjmwMIfdNQrQ/GteNESuw0FM9NzgzbGIoWeBQul+6HZ8qhdvB4p75TBXsPZj
-         HUBgzOpdQdWl+A1Ttov/cCJcHFTGCXBQcSxXQMym9iZaL953zHZOWxCoyuQ85qSY4x7/
-         DDvFsR71+lKkGeHOkzMf2RvEvgCsF5oIoATHc0HO6gcLXJr8dxyZLW3C6+u2ycdaYJOC
-         gL5Ef8x3AbXQE2mZz+LwRcsow4bzcGzQLyluUyl5/wpwkrZHbqWlQS5O4Xs80ay5ERLq
-         VHeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:subject:in-reply-to:cc:from:to:message-id
-         :mime-version:content-transfer-encoding;
-        bh=nFS81jg7/h9+4PusAqPzPRnrTYaqLvkbYIRlEVqVdSk=;
-        b=JBXmmE/wccXo8qocnAR1KZWcmM2xo1iUmalQPUIW9f3XFc5LXO/wrjf1/+k8MT0BUG
-         vhRA3S+DgWQIdrq7iITRWJwBUmLYxw9Sj3CAdWzyH5if84cnAXOEU/0Hsnwtsa3fvrUO
-         2dNT+91H/Jc2YxraomfnPJsAzsSQy5R/iVmveGgw8dwq1GJPcl9D21ZWJ9wqbnP8HhTR
-         kD2gL+1car13i7H0kC0dhzZepidE+qiZ9cWqXEwM8cZNwSvyTDq92CGeaQTxN1t4Dd5i
-         sism0IekeIIughgbh7X1Qxm9YdS30W4CivJ+2TPepp0qrgw/gej/w4S2vSycXK7TmDjj
-         4Kig==
-X-Gm-Message-State: APjAAAV3sE/S23jmee3pmPhTQwNFmBCQBp/3eCU1nv58aUwu9dM5y5z/
-        vVhpLjCP89gYvewCLHDvI7eBXA==
-X-Google-Smtp-Source: APXvYqxr+H63hlBn3XAHsI+or5wK4Pk0+yt7nIWKJhSie03T62zjnUu8PFYdzxfxkOX0GIR0u5UwYw==
-X-Received: by 2002:aa7:9d8d:: with SMTP id f13mr293832pfq.196.1568666437160;
-        Mon, 16 Sep 2019 13:40:37 -0700 (PDT)
-Received: from localhost ([12.206.222.5])
-        by smtp.gmail.com with ESMTPSA id v3sm6051859pfn.18.2019.09.16.13.40.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Sep 2019 13:40:36 -0700 (PDT)
-Date:   Mon, 16 Sep 2019 13:40:36 -0700 (PDT)
-X-Google-Original-Date: Mon, 16 Sep 2019 13:38:05 PDT (-0700)
-Subject:     Re: pd/fetch-jobs, was Re: What's cooking in git.git (Sep 2019, #01; Sat, 7)
-In-Reply-To: <xmqqh85cb0hr.fsf@gitster-ct.c.googlers.com>
-CC:     Johannes.Schindelin@gmx.de, git@vger.kernel.org
-From:   Palmer Dabbelt <palmer@sifive.com>
-To:     gitster@pobox.com
-Message-ID: <mhng-98edf120-10e7-4944-bfee-fd984047a6b6@palmer-si-x1c4>
-Mime-Version: 1.0 (MHng)
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        id S1728189AbfIPUqY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Sep 2019 16:46:24 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:46907 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727307AbfIPUqY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Sep 2019 16:46:24 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 46XJDt4xl8z5tlC;
+        Mon, 16 Sep 2019 22:46:22 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id BEFEC10A;
+        Mon, 16 Sep 2019 22:46:21 +0200 (CEST)
+Subject: [PATCH v2 1/2] diff, log doc: say "patch text" instead of "patches"
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <fac55175-dc1e-addf-194b-97aaf6a33e3b@kdbg.org>
+ <CAN0heSoaYf0_2FhKQNnswLvFppu=dyBcKGYB_Jd=uF70yjNiCQ@mail.gmail.com>
+ <xmqqv9ts9fox.fsf@gitster-ct.c.googlers.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <76602d23-f2b2-4a15-21ad-7bd91a4b5e44@kdbg.org>
+Date:   Mon, 16 Sep 2019 22:46:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqv9ts9fox.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 16 Sep 2019 10:43:28 PDT (-0700), gitster@pobox.com wrote:
-> Palmer Dabbelt <palmer@sifive.com> writes:
->
->> ...  It looks
->> like there are some test failures when I rebase to the latest master,
->> which I'm happy to fix.  Just let me know if I should:
->
->> * Send just the first 4 patches, holding onto the last one for later.
->> ...
->> * Send just a single patch, which wouldn't add the --fetch-jobs and
->> --submodule-fetch-jobs arguments.
->
-> It is either one of these two, I would say.  I am personally much
-> more comfotable with the usual "backward incompatibility migration"
-> form (i.e. the former), but apparently I am nto the only person on
-> the list so ... ;-)
+Am 16.09.19 um 21:58 schrieb Junio C Hamano:
+> I wonder if the result becomes even clearer if we dropped "instead
+> of the usual output".  It is a given that presence of an option
+> would change the behaviour, so "instead of the usual" does not add
+> any value in the context of the explanation we are giving.
 
-OK, well, just dropping the last patch causes the tests to pass when rebased on 
-master, so I'll send that out as it's easier for me.  Is there a policy for 
-deprecation timelines?
+Agreed.
+
+> Also I question the value of the "running git diff without --raw
+> option" sentence; "diff --stat" is also a way to suppress the patch
+> text and see only the overview; I know it is not a new problem this
+> patch introduces, but the objective of this patch is clarify about
+> the generation of output in patch format, so...
+
+You have a point here, too.
+
+Below is v2 of just patch 1/2. 2/2 remains unchanged. I've added
+git-show to the enumeration.
+
+--- 8< ---
+diff, log doc: say "patch text" instead of "patches"
+
+A poster on Stackoverflow was confused that the documentation of git-log
+promised to generate "patches" or "patch files" with -p, but there were
+none to be found. Rewrite the corresponding paragraph to talk about
+"patch text" to avoid the confusion.
+
+Shorten the language to say "X does Y" in place of "X does not Z, but Y".
+
+Cross-reference the referred-to commands like the rest of the file does.
+
+Enumerate git-show because it includes the description as well.
+
+Mention porcelain commands before plumbing commands because I guess that
+the paragraph is read more frequently in their context.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ Documentation/diff-generate-patch.txt | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
+index f10ca410ad..c482c94e6b 100644
+--- a/Documentation/diff-generate-patch.txt
++++ b/Documentation/diff-generate-patch.txt
+@@ -1,11 +1,15 @@
+-Generating patches with -p
+---------------------------
+-
+-When "git-diff-index", "git-diff-tree", or "git-diff-files" are run
+-with a `-p` option, "git diff" without the `--raw` option, or
+-"git log" with the "-p" option, they
+-do not produce the output described above; instead they produce a
+-patch file.  You can customize the creation of such patches via the
++Generating patch text with -p
++-----------------------------
++
++Running
++linkgit:git-diff[1],
++linkgit:git-log[1],
++linkgit:git-show[1],
++linkgit:git-diff-index[1],
++linkgit:git-diff-tree[1], or
++linkgit:git-diff-files[1]
++with the `-p` option produces patch text.
++You can customize the creation of patch text via the
+ `GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables.
+ 
+ What the -p option produces is slightly different from the traditional
+-- 
+2.23.0.95.gcfbaf7d16f
