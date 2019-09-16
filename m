@@ -2,73 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3B781F463
-	for <e@80x24.org>; Mon, 16 Sep 2019 17:19:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 069FD1F463
+	for <e@80x24.org>; Mon, 16 Sep 2019 17:35:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727987AbfIPRT5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Sep 2019 13:19:57 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:38103 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727593AbfIPRT5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Sep 2019 13:19:57 -0400
-Received: by mail-pg1-f195.google.com with SMTP id x10so372348pgi.5
-        for <git@vger.kernel.org>; Mon, 16 Sep 2019 10:19:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=R6+HkIwVuMC6wvVBzuEUkjpNLRrmen9S46iLkGrAwx0=;
-        b=mEiRw5yFU6j5EFzrKQsxpxRLpLvQPdX6L8yAX57n03cku9djxKeB4rpAqTXQILs1+G
-         JvWdd5dKi0U9HtDpfZHd3P3i1IvQx4y90/rPPMbpESUs5FJxnbH8Cid3Cp3FCXbubLT/
-         +yMRMHvCf1umhfjEx0G9ELrZKSBsjAAsltq8vPmmGf0naTen7JBYu70VZq8bsmHcskZo
-         Rt5p1u5j28pw72h7V9KlXl3KiqOXM6Cdbdac8EZmd1LLzinO5JJIdFQWmNsJ0xORqoXU
-         r9riJHcjKya29uTcMrgxeNS0Wj6X/f7S5uFyR/G3Sv2CNmOhwl7l7XfO3LUSeyb13g12
-         atNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=R6+HkIwVuMC6wvVBzuEUkjpNLRrmen9S46iLkGrAwx0=;
-        b=lKl2zcqiR6W3dMI+GWOTXPBIsoiKymUQUhawY9ziHej5iMxRTN+GR2Qft/nwgSuh47
-         pc0yuZxj+zPHZm7rRf4Bc5MgdDG8X52o6a792jQnXjOm0Rf+e+soVluY55fjnTKznLvQ
-         woADStyRIv8XU0htXeYMyKvnmyNSRJsIt+/uz4NcclcqtvTsvUHZrJw7du4YDz0jAoqA
-         uVOeFH2ghT9W5E4OKwoMwp14aDcwnoe4jAr7AStNLx4SJqsE9m9ciFAjnhETXG10L6E+
-         l86Geo8TOivlgsW3xaaxYLei8Etrw75ESb5jLRYbgZMsHj9sqqA8ODJlWiIiodoRY9G5
-         8EyQ==
-X-Gm-Message-State: APjAAAWZZ+BF4uRvNo9roCGtKuElRpnVkF197ZVKUmaMwwqa3ntSVvh6
-        8I3uJGfa4y3BKStH7sCm4Iw5x+QtV93wcEZrsSQmOkjt
-X-Google-Smtp-Source: APXvYqx2kLdShN+UQ0e5rw6JkR9xNywT5obFOTg4jWycL/Q1e1VJnxYfJH0e1+5M0uWqLlwJb6KsaWXrnSZTnbYyjhE=
-X-Received: by 2002:a65:4841:: with SMTP id i1mr214724pgs.316.1568654395627;
- Mon, 16 Sep 2019 10:19:55 -0700 (PDT)
+        id S1730916AbfIPRfq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Sep 2019 13:35:46 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65423 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726857AbfIPRfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Sep 2019 13:35:45 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 780FB91F80;
+        Mon, 16 Sep 2019 13:35:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xvAjGYYAFSvF7ay+7xd9o1YrBx8=; b=fgL07o
+        hnW4d2B5Fh7H+KV8XfFtBYlFOk8UEarCdeRCh/wug1P/9bKnK0IM5AZLvIzyZFgf
+        VdJ6FNQziaYra/JBaE1Acp+++BGNRXQGBN9EnWr/jwhwXH0qX3vUUShznhAn8Hkj
+        7ReFzCofTGgT9Fo6T5iGt0SxUq6ZLMEjWikbM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dku52J137OAIKCONIMVbbz8nbi8huSkd
+        HcAWH8gC5P2tRDWwLxCzwj8UtKhSIWcm9MDOypjF6VGbSYZCIIcRjFoj3eQaA486
+        z/buVKBwEo5D+73Q6TRs6tsX0UFZORpSlWak8DyKsB06WTQH97Bb9Q2jnlocGRud
+        R2j72ZYUHd0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 70F1191F7F;
+        Mon, 16 Sep 2019 13:35:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9539F91F7E;
+        Mon, 16 Sep 2019 13:35:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
+Subject: Re: diff.renames not working?
+References: <CAHd499BT35jvPtsuD9gfJB0HJ=NxtzyQOaiD7-=sHJbFYhphpg@mail.gmail.com>
+        <20190914033017.GA30458@sigill.intra.peff.net>
+Date:   Mon, 16 Sep 2019 10:35:40 -0700
+In-Reply-To: <20190914033017.GA30458@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 13 Sep 2019 23:30:17 -0400")
+Message-ID: <xmqqlfuob0ur.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <fac55175-dc1e-addf-194b-97aaf6a33e3b@kdbg.org>
-In-Reply-To: <fac55175-dc1e-addf-194b-97aaf6a33e3b@kdbg.org>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 16 Sep 2019 19:19:44 +0200
-Message-ID: <CAN0heSoaYf0_2FhKQNnswLvFppu=dyBcKGYB_Jd=uF70yjNiCQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] diff, log doc: say "patch text" instead of "patches"
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 683A7756-D8A8-11E9-95A5-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 15 Sep 2019 at 21:26, Johannes Sixt <j6t@kdbg.org> wrote:
->  I do not have the toolchain to check that a correct result is produced.
+Jeff King <peff@peff.net> writes:
 
-But I do. I've tested this patch and 2/2 with AsciiDoc 8.6.10 and
-Asciidoctor 1.5.5, as well as with Asciidoctor 2.0.10 (on top of brian's
-recent patch so that it builds to begin with). They all render this
-nicely.
+>   - a way to independently specify the source pathspec and the
+>     output-limiting pathspec. This is a cheaper version of the one
+>     above, where you could look at a subset of the tree a sources, but
+>     limit the set of shown paths even further. It's not conceptually
+>     that difficult, but syntactically it gets weird since you have two
+>     lists of pathspecs on the command-line.
 
-Both of these patches seem like good changes to me.
+Yes, the pathspec has always been input limiter and I think we have
+discussed adding separate output limiter from time to time, but
+nothing has happened.
 
-Martin
+Back in the scripted porcelain days, it would conceptually have been
+simpler and cleaner, as you probably would run "diff-tree --raw"
+with no (or "input") pathspec, filter its output with "output"
+pathspec, and then convert the raw diff to a patch ( we used to have
+such a filter, before we gave the -p option to all three "diff"
+family backends).
+
+Introducing an option to say "Pretend as if the system supported
+output pathspec, and use the pathspec as such, without any input
+pathspec" feels like a dirty hack compared to conceptual purity of
+having two separate sets, and having to run without any input
+pathspec may not be usable in truly large project, but I suspect it
+may be good enough for most people (i.e. your "first one" that
+wouldn't be too hard).  I am not sure if I like it, though X-<.
+
+>> ```
+>> git diff --follow master...topic -- ZPay/ZPayClient.hpp
+>> ```
+>
+> So yes, that does work, and is why I added the "(clean)" qualifier
+> above. It behaves like the "-C -C -C" I proposed. But the fact that it
+> does so is entirely accidental. What happens is this:
+
+I am kinda surprised that "diff" gets affected by "--follow" (I knew
+that the command line parser would take that option meant for "log"
+family without complaining) at all.
