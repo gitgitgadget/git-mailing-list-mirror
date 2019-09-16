@@ -2,163 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89CC41F463
-	for <e@80x24.org>; Mon, 16 Sep 2019 18:42:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B97361F463
+	for <e@80x24.org>; Mon, 16 Sep 2019 19:00:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729997AbfIPSmP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Sep 2019 14:42:15 -0400
-Received: from mail-pg1-f170.google.com ([209.85.215.170]:39374 "EHLO
-        mail-pg1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727505AbfIPSmP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Sep 2019 14:42:15 -0400
-Received: by mail-pg1-f170.google.com with SMTP id u17so490781pgi.6
-        for <git@vger.kernel.org>; Mon, 16 Sep 2019 11:42:14 -0700 (PDT)
+        id S1727947AbfIPTAu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Sep 2019 15:00:50 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:40355 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725912AbfIPTAt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Sep 2019 15:00:49 -0400
+Received: by mail-lf1-f67.google.com with SMTP id d17so818166lfa.7
+        for <git@vger.kernel.org>; Mon, 16 Sep 2019 12:00:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=u9iBlmMC1RVFIRI7X2jxwNgxo3mwZX4dUo5QqD/tI5A=;
-        b=vPUrHs0itdtv5Mk85nQ4vRHSUYZ5RC+EoezUEDzjehVUQW70pMviXRJlcHEPLUwbC1
-         2GhK38e5DvQhPi7UVpxh1vjsZhndzrKvIvpw93t/PV+7kVxOMHMfL896MtakKWPB3wuT
-         ACQfRfct3TesgZMjf13b5yL8gtV11LBn/QH51mymSUzhrxYiZmVZHA+EUAfg4Hw+1bn+
-         ze/iZ2Y06fML83OkF/rau+aZ6DXbq7H548zYJe4UzjsV0Ov3OBerSA5gbC5yr5DWO1OT
-         glfpJ075z90VTg+6E0kruUY4yKgvoelN4s9llUnK76F+exGHdODZgsI/vkjPIsIFMvxV
-         4SjA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=lz7VnqyePRz1aAOKkeeJeZ97fxwpxMJVc7ZqLhuxH3g=;
+        b=QaKiJTpy7h2ply8PG+KuimmlpmyPBEGPe7Li6YMTSDePbmZ6Vze9ItqvkYg783oWal
+         8ccBm1/vNukYd4lJsQOPKrxu3K8Pf6oH603896qScqgavKNX+1x+6dyO2Okk7rUim6If
+         OseGTqp7Z+vZCPZ2roBhb1c+kbTHHVd9BFx1sJUQnAL91g2+ZUE86TNyDgxnj5iAd8Ei
+         qMzBP+uT5EfAUuM0s1NlwjCrBSwQJKVozp70bNaiB8nFU2e+83h3STvQWhCGR1sC5Vey
+         HYyoKgFUfu0hLaGpl1cXyL37zQ9g9TP/KvhYWZarfb+UtPcVmq7FRpTsJhW7XkP69/F5
+         uQSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=u9iBlmMC1RVFIRI7X2jxwNgxo3mwZX4dUo5QqD/tI5A=;
-        b=N6mR6Ig7yzKYypR5T00EiTCPmAFScS+AfZDEZp+RyiZQ7XhQX6Uy5gC94pt/Sbym6B
-         xJZFzqf3KorRUiqzdHr2Cfqs/kHYiEHWxeyEoXTuKK9YywS4HAVsQ5X/RZndTUsRwniX
-         TWBW/avvytsHqF/u5C3g0M+eXEspCE0eyZlA5RKkV7xg33YJYBWwI4GmFze4+GbSsKm9
-         B5dvZ/+JW7edzs3I7iawfvQe/e8hX3roIePDAUBv4qg+qiu77suHlzWlTudTayTDsXcW
-         KShUDqcVgChcJfvAOxyZOWaQUwDuSH9Gdl7NtvLFTnlQyFRFy9177EMoWyPweuJaGk8T
-         3pjQ==
-X-Gm-Message-State: APjAAAVhUwUX8gTAtz59fknHpMlGsZrmmUjs83KmyWFMhks/dfnf7kGU
-        L2dO5UXsqjLNnsi3jhz2D7fOkDD5o9w9ig==
-X-Google-Smtp-Source: APXvYqw6G/7lt76p10/PyA3H+JfJHi2J+b5iHT4iz+r4k8kUSUhD2ZhJpY8XBRMSUH6UezwQ2VaHMA==
-X-Received: by 2002:a17:90a:fa0c:: with SMTP id cm12mr586292pjb.137.1568659333693;
-        Mon, 16 Sep 2019 11:42:13 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id 185sm39689507pfd.125.2019.09.16.11.42.12
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=lz7VnqyePRz1aAOKkeeJeZ97fxwpxMJVc7ZqLhuxH3g=;
+        b=XfXIezTHhwhw1coGzE765d1/JCKasaKxomlOcReS/ybuzujHGdFSwnny6kA9XaZpq2
+         1slpWY5849CwZ7VbKKPsdBKv4x1fvhNVU0lollUuH4TK+s1ohiYy+Bgs1uL9IVot7nYO
+         NldYuvRnkMc0MklLxJwJZstRCEVpSCvmPZtF+hQEkPH2A+vMSY9XiWBdDT2c6DezVLqh
+         hdt+ukGl0Y/q7yJnK1qk7pIEpDrf9RV9iXkuH6eq+ewpzMufh7hy2OgCsuPvEgZalgXo
+         UEOTaFxNTy82aRRx2+OvLbXxhZ24rI9Go1wbZ8IwRnlhSHIIUQktexAb1xrW+Ciz1IQf
+         GABQ==
+X-Gm-Message-State: APjAAAUO7130ehdYJV40O3yJZ19Tbj02se5H+HHlZpqpIYP+bisQpwnY
+        oj8FoUaan/iTaUZXapzUDsBrtyoW
+X-Google-Smtp-Source: APXvYqxr/V9LmcBYNYptQHnmezbBRHIKaRoo9inIyvYX5VfFROvggA8IQSHh3iJaq6GNmv9QYS7CRA==
+X-Received: by 2002:ac2:558e:: with SMTP id v14mr467807lfg.161.1568660446986;
+        Mon, 16 Sep 2019 12:00:46 -0700 (PDT)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id j28sm9127608lfh.57.2019.09.16.12.00.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Sep 2019 11:42:12 -0700 (PDT)
-Date:   Mon, 16 Sep 2019 11:42:08 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: Git in Outreachy December 2019?
-Message-ID: <20190916184208.GB17913@google.com>
-References: <20190827051756.GA12795@sigill.intra.peff.net>
- <20190913200317.68440-1-jonathantanmy@google.com>
- <20190913205148.GA8799@sigill.intra.peff.net>
+        Mon, 16 Sep 2019 12:00:45 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Todd Zullinger <tmz@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/3] asciidoctor-extensions: provide `<refmiscinfo/>`
+Date:   Mon, 16 Sep 2019 21:00:25 +0200
+Message-Id: <cover.1568658269.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <cover.1567534373.git.martin.agren@gmail.com>
+References: <cover.1567534373.git.martin.agren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190913205148.GA8799@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 13, 2019 at 04:51:49PM -0400, Jeff King wrote:
-> On Fri, Sep 13, 2019 at 01:03:17PM -0700, Jonathan Tan wrote:
-> 
-> > > Do we have interested mentors for the next round of Outreachy?
-> > > 
-> > > The deadline for Git to apply to the program is September 5th. The
-> > > deadline for mentors to have submitted project descriptions is September
-> > > 24th. Intern applications would start on October 1st.
-> > > 
-> > > If there are mentors who want to participate, I can handle the project
-> > > application and can start asking around for funding.
-> > 
-> > I probably should have replied earlier, but if Git has applied to the
-> > program, feel free to include me as a mentor.
-> 
-> Great!  See my followup here:
-> 
->   https://public-inbox.org/git/20190904194114.GA31398@sigill.intra.peff.net/
-> 
-> Prospective mentors need to sign up on that site, and should propose a
-> project they'd be willing to mentor.
-> 
-> > There was a discussion about mentors/co-mentors possibly working in a
-> > part of a codebase that they are not familiar with [1] - firstly, I
-> > think that's possible and even likely for most of us. :-) If any
-> > question arises, maybe it would be sufficient for the mentors to just
-> > help formulate the question (or pose the question themselves) to the
-> > mailing list. If "[Outreachy]" appears in the subject, I'll make it a
-> > higher priority for myself to answer those.
-> 
-> I do think it's OK for mentors to not be intimately familiar with the
-> part of the code that is being touched, as long as the project is simple
-> enough that they can pick up the technical details easily as-needed. A
-> lot of what mentors will help mentees with is the overall process (both
-> Git-specific parts, but also more general development issues). But I
-> think the proposed projects do need to be feasible.
-> 
-> I'm happy to discuss possible projects if anybody has an idea but isn't
-> sure how to develop it into a proposal.
+Here's v3 of ma/asciidoctor-refmiscinfo to align the headers and footers
+of Asciidoctor-rendered manpages with those from AsciiDoc. Patch 1 is
+new.
 
-Hi Peff,
+It turns out that with newer (>=1.5.7) versions of Asciidoctor, we get
+default values of these refmiscinfo attributes put into the xml. The
+hack in patch 2/3 (previously patch 1/2) happened to inject these
+attributes after the default ones and it seems like the earlier ones
+happen to win when xmlto processes the xml. This explains what Peff
+noticed in [1], where the attribute values introduced by the hacky patch
+2 are effectively ignored and blank values are used instead.
 
-Jonathan Tan, Jonathan Nieder, Josh Steadmon and I met on Friday to talk
-about projects and we came up with a trimmed list; not sure what more
-needs to be done to make them into fully-fledged proposals.
+Rather than trying to game the order of those attributes, I decided to
+do a patch 1 which uses a saner way of providing these attributes to
+Asciidoctor. This allowed me to reframe patch 2 from "fix all of these
+attributes with Asciidoctor" to "fix some of them with some Asciidoctor
+versions".
 
-For starter microprojects, we came up with:
+My test results:
 
- - cleanup a test script (although we need to identify particularly
-   which ones and what counts as "clean")
- - moving doc from documentation/technical/api-* to comments in the
-   appropriate header instead
- - teach a command which currently handles its own argv how to use
-   parse-options instead
- - add a user.timezone option which Git can use if present rather than
-   checking system local time
+  AsciiDoc (8.6.10): Each patch in this series is a no-op.
 
-For the longer projects, we came up with a few more:
+  Asciidoctor 1.5.5 and 1.5.6: Patch 1/3 is a no-op. Patch 2/3 fixes the
+  header/footer to be as with AsciiDoc, except for how the date is
+  rendered.
 
- - find places where we can pass in the_repository as arg instead of
-   using global the_repository
- - convert sh/pl commands to C, including:
-   - git-submodules.sh
-   - git-bisect.sh
-   - rebase --preserve-merges
-   - add -i
-   (We were afraid this might be too boring, though.)
- - reduce/eliminate use of fetch_if_missing global
- - create a better difftool/mergetool for format of choice (this one
-   ends up existing outside of the Git codebase, but still may be pretty
-   adjacent and big impact)
- - training wheels/intro/tutorial mode? (We thought it may be useful to
-   make available a very basic "I just want to make a single PR and not
-   learn graph theory" mode, toggled by config switch)
- - "did you mean?" for common use cases, e.g. commit with a dirty
-   working tree and no staged files - either offer a hint or offer a
-   prompt to continue ("Stage changed files and commit? [Y/n]")
- - new `git partial-clone` command to interactively set a filter,
-   configure other partial clone settings
- - add progress bars in various situations
- - add a TUI to deal more easily with the mailing list. Jonathan Tan has
-   a strong idea of what this TUI would do... This one would also end up
-   external but adjacent to the Git codebase.
- - try and make progress towards running many tests from a single test
-   file in parallel - maybe this is too big, I'm not sure if we know how
-   many of our tests are order-dependent within a file for now...
+  Aciidoctor 1.5.7 and 2.0.10 [2]: Patch 1/3 fixes the header/footer
+  partially -- the version number is still missing. Patch 2/3 fixes the
+  version number, after which the header/footer are just as with
+  AsciiDoc, except for how the date is rendered.
 
-It might make sense to only focus on scoping the ones we feel most
-interested in. We came up with a pretty big list because we had some
-other programs in mind, so I suppose it's not necessary to develop all
-of them for this program.
+  So in short, "all" versions of Asciidoctor now render the headers and
+  footers like AsciiDoc does, except for the date formatting.
 
- - Emily
+[1] https://public-inbox.org/git/20190913050634.GB21172@sigill.intra.peff.net/
+
+[2] The tests with 2.0.10 were done on top of brian's recent patch to
+build at all with Asciidoctor 2:
+https://public-inbox.org/git/20190915224332.103930-1-sandals@crustytoothpaste.net/
+
+Martin Ågren (3):
+  Doc/Makefile: give mansource/-version/-manual attributes
+  asciidoctor-extensions: provide `<refmiscinfo/>`
+  doc-diff: replace --cut-header-footer with --cut-footer
+
+ Documentation/Makefile                  |  3 ++-
+ Documentation/asciidoc.conf             |  6 +++---
+ Documentation/asciidoctor-extensions.rb | 17 +++++++++++++++++
+ Documentation/doc-diff                  | 17 ++++++++---------
+ 4 files changed, 30 insertions(+), 13 deletions(-)
+
+-- 
+2.23.0
+
