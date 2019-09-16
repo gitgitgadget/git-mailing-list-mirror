@@ -2,108 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19BB61F463
-	for <e@80x24.org>; Mon, 16 Sep 2019 18:07:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 294251F463
+	for <e@80x24.org>; Mon, 16 Sep 2019 18:19:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389956AbfIPSHu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Sep 2019 14:07:50 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:38758 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389924AbfIPSHu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Sep 2019 14:07:50 -0400
-Received: by mail-pg1-f195.google.com with SMTP id x10so443634pgi.5
-        for <git@vger.kernel.org>; Mon, 16 Sep 2019 11:07:49 -0700 (PDT)
+        id S2390307AbfIPSTW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Sep 2019 14:19:22 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36519 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390280AbfIPSTW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Sep 2019 14:19:22 -0400
+Received: by mail-pf1-f193.google.com with SMTP id y22so418431pfr.3
+        for <git@vger.kernel.org>; Mon, 16 Sep 2019 11:19:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mGDT8eB8YwrzwfAa7vwBrQjsu6O3sqK76pGWIj+jrBY=;
-        b=mD2MiOiDEe/cHD3lUuMyrnOjNHFJpsR1r8fy5+VYE2tBe0L1fYsy3pzxCdWCPgzb0Y
-         yD+m1Q31kVkOHT+teAYicVkxN4r6WO1r8JLp8H7+uCRu+3n1oxkvUr+zCFBDDQNZDYIy
-         P0Vr2T/R8bLSLeU6Og+zmCR+kSRVcsUOZERIi8x8Sn6JQHpzvCuQ7vLz6ZNwOSOWmlck
-         uOmiJ8DkmqMKIkbGxPs4AnYTYoEl0oXpvEiKUJubcSLO1H0cnRbYlmvY5xwIaRd1w6xr
-         AwbcG/TPXUy+iyc/+s9PQADwaFHMk1M1VRiU6S1xugtx360ErdI+Ti5yPKrXAwN+P0CJ
-         mDkw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=c8zM1FmpMc/C66CtzhNaS/GkJqxg7JiSAiutaO0KKBw=;
+        b=M5kkHiitmsM0sKJUP9ZtbjfbasvpxImHjnDpnhXJpw65qRCMVef37fRjREW7T841vt
+         T74bt83dsUQLofSg7GL6rCJ/YxMbEXX4d0Fhey7zxvfjIFNFVl6hzRaSNpwRf92ERWra
+         feNMfLusTatr7nASk7V1+aW5hTdjsY0zUJscOrr/8C4G5jQW6x0JhCl4SS2izIVXrk43
+         WuHXxAO0mu12+8M1XMzjD7LZWDTzsJOd+FbYUF3bRynmv0CvsWAAHdZ01XhcJ0nRoKJE
+         Pj+PwX7ZXJACbKjiplkCFyO2KdhH642Bj/KXJDAS14IMfmI66BWuEdUPjjBNEFZNf69i
+         /sOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=mGDT8eB8YwrzwfAa7vwBrQjsu6O3sqK76pGWIj+jrBY=;
-        b=LyD7U+iGr+VrqcAVDJUksj6ABw0unsnwONyqEkdX9oZZhsN13vnYe96UnjvAnHPUFC
-         aoEYI2Pllb3Tud//DM0Z9sfCK2Vf5wzJASNgZIIp7cMSiocJtX9T04qdyHHrySk+eanY
-         Apn0Ef28ZNuRbny2iEFTWxcVwEQLxLxXtjP4NSKSCzuxqCYo7u00DHi6dykSU2CGSDcW
-         4FWKaVjxBE8YzuUBiqON8o/VreSvOVUV/NDZPAcvpeijdZrX5zNBs8A2GrSfbgDdb7V0
-         UU1rXKMycOlrAg4zerov6sVlRvnSAYnlPICaDSNOJVXGJHSrpFQS0K1JBcutbZjitk44
-         p1BQ==
-X-Gm-Message-State: APjAAAUEShoVR41+4XCUBaUj5i0xBk7AFKyiFJeRp3UTA4kW6FiC9x38
-        NvRJ+JnxOI4qFSLqwfGZfvRCXw==
-X-Google-Smtp-Source: APXvYqwRYTSl20lLayKR9bjZfy2asUOo7ogw11oJV3bnDoeUFgnwIcpf3r+0ndam+VcDWljT9yr09Q==
-X-Received: by 2002:a65:608e:: with SMTP id t14mr343837pgu.373.1568657268752;
-        Mon, 16 Sep 2019 11:07:48 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:ece8:7fe:c1f1:a20f])
-        by smtp.gmail.com with ESMTPSA id g202sm51457350pfb.155.2019.09.16.11.07.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Sep 2019 11:07:47 -0700 (PDT)
-Date:   Mon, 16 Sep 2019 11:07:43 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, szeder.dev@gmail.com
-Subject: Re: [RFC PATCH v3 3/3] trace2: write overload message to sentinel
- files
-Message-ID: <20190916180743.GA11295@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        git@jeffhostetler.com, szeder.dev@gmail.com
-References: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
- <cover.1568419818.git.steadmon@google.com>
- <bab45cb735ad658e6c838a9b2bdb9a8c74b9d179.1568419818.git.steadmon@google.com>
- <2bb4edc6-f35c-e1e2-7957-17fd994707a0@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=c8zM1FmpMc/C66CtzhNaS/GkJqxg7JiSAiutaO0KKBw=;
+        b=oCLyJoOK7RrThIEkqPI8Xb1CL5xOUd7TcKrRvSNW+j+weUGbHOPUb448Y6cHlgH1zg
+         qKPTH5lNB500kXYMLwQT/eSrRrne1ZdHZtoPKLChjc7vYtsgu5+Xv3+MAxiX4PEaaV+5
+         xJesQ1UF32GZm3AFIMbji5ZGGMpIAOKk42FF9NKlWsbFnFvp0Qd4B/dnFd2hYpE9Xl3J
+         zukzW3QAl+4n19V01YZwOkvET+nJBmer4rLa7DZuMv5Tj+rgSXOau44huoUScSj4ELQT
+         h40N7GIdR0QMA2UdgJdkYsQuAz3OZtu/xg6eyOML2g0KlKuidqaJA3m3o771XubUPjGz
+         l5bQ==
+X-Gm-Message-State: APjAAAVRiy2qPbzyQyOJmkIvHVbsu1gJ0yUvXFaMt44WvqTuHRUs9Zpv
+        cZRmuE/QVpkrEgCrGrednU1cBKxHwP4=
+X-Google-Smtp-Source: APXvYqzbfZ0X6K9Kh/owC3ymgdxJyzOlgd/9hHHmaBT1pUZfg3jfh38xbXZP56qbpcOPqPrVNbFL1w==
+X-Received: by 2002:aa7:8a17:: with SMTP id m23mr638856pfa.255.1568657960909;
+        Mon, 16 Sep 2019 11:19:20 -0700 (PDT)
+Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.54])
+        by smtp.gmail.com with ESMTPSA id e189sm35876080pgc.15.2019.09.16.11.19.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 Sep 2019 11:19:19 -0700 (PDT)
+Date:   Mon, 16 Sep 2019 11:19:17 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2] git-submodule.txt: fix AsciiDoc formatting error
+Message-ID: <2ae16375ba185bcaceb2ba3e8843db495f0044a6.1568657575.git.liu.denton@gmail.com>
+References: <796a25ee1e9a9c0421d42ab6644e81d23a9bd99b.1568142486.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2bb4edc6-f35c-e1e2-7957-17fd994707a0@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <796a25ee1e9a9c0421d42ab6644e81d23a9bd99b.1568142486.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019.09.16 08:07, Derrick Stolee wrote:
-> On 9/13/2019 8:26 PM, Josh Steadmon wrote:
-> > Add a new "overload" event type for trace2 event destinations. Write
-> > this event into the sentinel file created by the trace2.maxFiles
-> > feature. Bump up the event format version since we've added a new event
-> > type.
-> > 
-> > Writing this message into the sentinel file is useful for tracking how
-> > often the overload protection feature is triggered in practice.
-> 
-> Putting meaningful data into the sentinel file is valuable. It's
-> important to know a bit about when and why this happened. A user
-> would be able to inspect the modified time, and the directory info
-> you include is unnecessary. The data you include is only for the
-> log aggregator to keep valuable data around overloads.
->  
-> > +`"overload"`::
-> > +	This event is created in a sentinel file if we are overloading a target
-> > +	trace directory (see the trace2.maxFiles config option).
-> > ++
-> > +------------
-> > +{
-> > +	"event":"overload",
-> > +	...
-> > +	"dir":"/trace/target/dir/", # The configured trace2 target directory
-> > +	"evt":"2",		    # EVENT format version
-> > +}
-> That said, do we really need to resort to a new event format and
-> event type? Could we instead use the "data" event with a key
-> "overload" and put the target dir in the value?
+In b57e8119e6 (submodule: teach set-branch subcommand, 2019-02-08), the
+`set-branch` subcommand was added for submodules. When the documentation
+was written, the syntax for a "index term" in AsciiDoc was
+accidentally used. This caused the documentation to be rendered as
 
-Yeah, that sounds reasonable. Thanks for the suggestion.
+	set-branch -d|--default)|(-b|--branch <branch> [--] <path>
+
+instead of
+
+	set-branch ((-d|--default)|(-b|--branch <branch>)) [--] <path>
+
+In addition to this, the original documentation was possibly confusing
+as it made it seem as if the `-b` option didn't accept a `<branch>`
+argument.
+
+Break `--default` and `--branch` into their own separate invocations to
+make it obvious that these options are mutually exclusive. Also, this
+removes the surrounding parentheses so that the "index term" syntax is
+not triggered.
+
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+
+Thanks for reviewing, Junio.
+
+I thought about it over the weekend and I hope that this is a good
+compromise.
+
+I looked through other options in the documentation and I couldn't find
+any other places where a short-form was documented in the body instead
+of in the summary line so I didn't want to introduce that with this
+commit. I feel like it would be unfamiliar to someone who's used to
+reading other Git documentation.
+
+Also, I opted to separate the the options onto their own lines because
+this makes it obvious that these two arguments are incompatible.
+Hopefully, this assuages your concerns.
+
+Range-diff against v1:
+1:  796a25ee1e ! 1:  2ae16375ba git-submodule.txt: fix AsciiDoc formatting error
+    @@ Commit message
+     
+         instead of
+     
+    -            set-branch (-d|--default)|(-b|--branch <branch>) [--] <path>
+    +            set-branch ((-d|--default)|(-b|--branch <branch>)) [--] <path>
+     
+    -    Remove surrounding parentheses so that the "index term" syntax is not
+    -    triggered (and because it looks nicer without them anyway ;) ).
+    +    In addition to this, the original documentation was possibly confusing
+    +    as it made it seem as if the `-b` option didn't accept a `<branch>`
+    +    argument.
+    +
+    +    Break `--default` and `--branch` into their own separate invocations to
+    +    make it obvious that these options are mutually exclusive. Also, this
+    +    removes the surrounding parentheses so that the "index term" syntax is
+    +    not triggered.
+     
+         Signed-off-by: Denton Liu <liu.denton@gmail.com>
+     
+    @@ Documentation/git-submodule.txt: submodule with the `--init` option.
+      registered submodules, and update any nested submodules within.
+      --
+     -set-branch ((-d|--default)|(-b|--branch <branch>)) [--] <path>::
+    -+set-branch (-d|--default)|(-b|--branch <branch>) [--] <path>::
+    ++set-branch (-b|--branch) <branch> [--] <path>::
+    ++set-branch (-d|--default) [--] <path>::
+      	Sets the default remote tracking branch for the submodule. The
+      	`--branch` option allows the remote branch to be specified. The
+      	`--default` option removes the submodule.<name>.branch configuration
+
+ Documentation/git-submodule.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 0ed5c24dc1..1f46380af2 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -173,7 +173,8 @@ submodule with the `--init` option.
+ If `--recursive` is specified, this command will recurse into the
+ registered submodules, and update any nested submodules within.
+ --
+-set-branch ((-d|--default)|(-b|--branch <branch>)) [--] <path>::
++set-branch (-b|--branch) <branch> [--] <path>::
++set-branch (-d|--default) [--] <path>::
+ 	Sets the default remote tracking branch for the submodule. The
+ 	`--branch` option allows the remote branch to be specified. The
+ 	`--default` option removes the submodule.<name>.branch configuration
+-- 
+2.23.0
+
