@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8594E1F463
-	for <e@80x24.org>; Mon, 16 Sep 2019 20:56:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 406161F463
+	for <e@80x24.org>; Mon, 16 Sep 2019 20:57:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388422AbfIPU4l (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Sep 2019 16:56:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60257 "EHLO
+        id S2388457AbfIPU5S (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Sep 2019 16:57:18 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55548 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726024AbfIPU4l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Sep 2019 16:56:41 -0400
+        with ESMTP id S1726024AbfIPU5S (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Sep 2019 16:57:18 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E1A729000;
-        Mon, 16 Sep 2019 16:56:39 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3EC9F29011;
+        Mon, 16 Sep 2019 16:57:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jOqzRwGN9STze8vKFBO74I/K7yQ=; b=NJQPji
-        TmoxnkvBnbsC87ZcJ8yLDvOOw/hchLwUqCMhk1Tjs4PcTi0oQ8TI/UX2bHRmErhb
-        TJz+wSbrYP3iRLZ6Ze5ipY9KrfjyXEWjAjCgpXEORq99em3PRwbNh8K96aVeD7Ba
-        bMsmnV5J4IUj0s2+TOSsXU4ILh+kF+KJe0LIU=
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=yoAAGthy6AwFqZ93lDbBa306b+Q=; b=RsCnHc
+        lAmH2ioLbyXnylNqBonrWkh49LOrhyge0iBIPO0oDrxauND/nz9H+SMPh3JWMDoc
+        KeiYmivd070Rrn6XWU77VE9oeKb0SnnftCgLKiyikvmfGW9pZr4U9IpRVq4rr3jB
+        ng6rUDNUlUmx9p5wmlg8ZWxgT9ctBARlR9AmY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Qok01WSPWEKjeCgT1vILx/trZPdMaDHp
-        64lWZqgd3unSmDr5tcapyZFqnj+Q+EPWEHuzVStQ5h4kcZa97SkcQ4q5b5a21flR
-        gJ0sc6I3yF0zsIGd3dAscLslPlfeLsZ+99pgG1b3c1lFWzc3z1NYoIbJXwhrNHQv
-        5yMUOmLJXSc=
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xWE3JLl4eagmcD/P1W2HQtDOBEfVvWXl
+        rX+FGRcELUqZbG5iaX50F/McPuEUeD2NbQTw3b9azQrYeKuZ8L3eBuEzmCMV7Cco
+        wqXW6ZRQRUMARiEUMlDUc1vMczge2NRyQqShjbb0AliuzqDqN89L2lMBOFBIHsun
+        IK91ey3uf4A=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5650728FFF;
-        Mon, 16 Sep 2019 16:56:39 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33B2B2900F;
+        Mon, 16 Sep 2019 16:57:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B71DA28FFE;
-        Mon, 16 Sep 2019 16:56:38 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 77DB02900E;
+        Mon, 16 Sep 2019 16:57:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Denton Liu <liu.denton@gmail.com>
@@ -48,40 +48,20 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 2/4] Makefile: define THIRD_PARTY_SOURCES
+Subject: Re: [PATCH v3 0/4] Makefile: run coccicheck on all non-upstream sources
+In-Reply-To: <cover.1568661443.git.liu.denton@gmail.com> (Denton Liu's message
+        of "Mon, 16 Sep 2019 12:23:03 -0700")
 References: <cover.1568309119.git.liu.denton@gmail.com>
         <cover.1568661443.git.liu.denton@gmail.com>
-        <a7c855a973db9067c2e30569d86f9b2b2147c6b3.1568661443.git.liu.denton@gmail.com>
-Date:   Mon, 16 Sep 2019 13:56:37 -0700
-In-Reply-To: <a7c855a973db9067c2e30569d86f9b2b2147c6b3.1568661443.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Mon, 16 Sep 2019 12:23:11 -0700")
-Message-ID: <xmqqmuf49cze.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+Date:   Mon, 16 Sep 2019 13:57:14 -0700
+Message-ID: <xmqqh85c9cyd.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7A3F2C78-D8C4-11E9-A63C-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 9025BB56-D8C4-11E9-A426-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
-
-> +# THIRD_PARTY_SOURCES is a list of patterns compatible with
-> +# the $(filter) and $(filter-out) family of functions
-
-That defines the format, but does it convey what they want to
-achieve to the readers?  "... to catch the list of source files
-we borrowed from elsewhere" or something, perhaps?
-
-> +THIRD_PARTY_SOURCES += compat/inet_ntop.c
-> +THIRD_PARTY_SOURCES += compat/inet_pton.c
-> +THIRD_PARTY_SOURCES += compat/obstack.%
-> +THIRD_PARTY_SOURCES += compat/nedmalloc/%
-> +THIRD_PARTY_SOURCES += compat/poll/%
-> +THIRD_PARTY_SOURCES += compat/regex/%
-> +THIRD_PARTY_SOURCES += sha1collisiondetection/%
-> +THIRD_PARTY_SOURCES += sha1dc/%
-> +
->  GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB)
->  EXTLIBS =
+Queued; thanks.
