@@ -8,113 +8,101 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3C5B1F463
-	for <e@80x24.org>; Mon, 16 Sep 2019 22:15:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3AF61F463
+	for <e@80x24.org>; Mon, 16 Sep 2019 22:36:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729545AbfIPWPG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Sep 2019 18:15:06 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38557 "EHLO
+        id S1728725AbfIPWgM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Sep 2019 18:36:12 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39657 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727999AbfIPWPG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Sep 2019 18:15:06 -0400
-Received: by mail-wr1-f66.google.com with SMTP id l11so1024132wrx.5
-        for <git@vger.kernel.org>; Mon, 16 Sep 2019 15:15:04 -0700 (PDT)
+        with ESMTP id S1728123AbfIPWgM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Sep 2019 18:36:12 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r3so1052776wrj.6
+        for <git@vger.kernel.org>; Mon, 16 Sep 2019 15:36:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=/zI7PuKaq42/GjUQdvZ4hQT84cIA3RChIn0XcMg0eFc=;
-        b=Uk6xX3avm8RI+MaovaVht11eNNQZnmAlU40NG3fa+xHZZIpJz9oK1JSEJ/AEIWjI0y
-         StnQ7pa0VdqiUyVo0qpyH/BCnYs/nC3hy6K7dS2Ul1rA3vZWpwiyV099630DcOfQWy+7
-         wt9+Mix9dG8bsEr2aEt+f6YDJY9mhIucfudrGxndGBA3RYXKkC5wYuM4vQcciaICX1Tc
-         LVTBWZb+TpG1jYkX8zDo0UUHzl+Hd9Pi8KJYJHOmNurqGRAVHQfTwst0sdyOj6J0YPQE
-         UXEOHfEzGr1WzZGMOilCbu8mKQSp3i27YeTmVxzNEgqerq51zQMi+zQkQISg9zeN5uiQ
-         apuw==
+        bh=bqWe/Aj6u284E6jwEzxZYxMcTqXtn5vESOHsV0TSrj0=;
+        b=SRZSLqVtrsk/ErzCjLCgGKZUa//CNmAonLxXUNMHtPlKoPIWdv8lobqwQgqNdYNI3x
+         IrB5MWdmBCytlwBn9Sy5+zTmm4yR2pCjjxYu7oeoszHWJqOIsR1S/PtE7V1dli0bluuz
+         fj+Usto47BQa/Y1CzZkDUMC2yxwqyGsvoKp0gUldSJcd+1lI+BZKIZaO1FPOADWXWUsX
+         /4UBQUs1+gJk1DLDqrsIqViNjJnEmGmRoYYrBc614FLhblQVCXRGeMhJiahTRY0pQfMf
+         PCck4hWQxBs9h3VrQvJUFjTfT9PHZhSj9IWulcZfsPVchdQB4TSel5mhtiDdWjYMs8L+
+         FlZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/zI7PuKaq42/GjUQdvZ4hQT84cIA3RChIn0XcMg0eFc=;
-        b=rbhIP8j/cDaJ1u2hBSfc4hU/vKtfBqXYegDTBiSTonEKo8fU5zkmJulgTDE3cXB3mc
-         l1cumvybKcORvoV3JwcIE5PFW1MLrDICg72vrMmusTOGuDmEGM9V2m1mFBgw/dxCYagS
-         2lXfwXkU5MHMvnrfRksNvXD2FxgzFddpZ9KzNe+ErjqzGutiuNCPBsQ+0MGG3WogXSxs
-         oDDf1OZN2n/vbykQnDXL7zWeCflEZJD+jz5DzrewAxuwu0C/lWiXHV2ECT4/jsnV7Qm5
-         uUABsKuWLXa3D5aw4DQcFtjPA0v3gR+FQMOnar262NPzaJgO9/88tAGFQ4TxWXJet4v+
-         I+0w==
-X-Gm-Message-State: APjAAAXSPW3QJzASwqVRczXCzjJR0XbKJ5/jwHFeJnDEJ8YkDQe6xCdT
-        dd02uBDTqXO3h75OCCU5Egs=
-X-Google-Smtp-Source: APXvYqw6VA9kN58hp3Z7aQylPzzv3Re/cirEKA6cD1Xw1ZgGDkgFSOmc5wIJDXH/zGIAMjpbGk5lUA==
-X-Received: by 2002:a5d:4ac8:: with SMTP id y8mr451010wrs.98.1568672104380;
-        Mon, 16 Sep 2019 15:15:04 -0700 (PDT)
+        bh=bqWe/Aj6u284E6jwEzxZYxMcTqXtn5vESOHsV0TSrj0=;
+        b=aoWsEmc/2XHyGvNpQdfDWc4f+LkQLM16EpbXWD9tAscKFGauJRTwaPAG7yqR1XwqVX
+         ZoxPv7KAGp3JryfvmuxJKIwjynyn5G9j6t2OpY4lbj9ii1KF0lNwJ1z5XYYYVR/9MpV5
+         3BwDNNfoaDQMhsBVnS0YimrO3lU9A+QUW7sZgWMsRACkZrzL4TcveDVwz7780im3J6bG
+         cuGvk+QZnpMxr7Jq0DdjqeqlzkJb5zMtiUAh3UiGcGmYaWUWTjceRLYF/f32FFIn2x5o
+         SvdbaiKzwRhQ+bnGSmkP110gL+QLkC6wASnwrAheGtn5M7uvA6Nzg+h/sS9FCGmzk5lr
+         5gvw==
+X-Gm-Message-State: APjAAAVfmQ7sVU8VEnVkNitRugE905mbwAaxPrrTJjxl+SgyEnRdwSMw
+        T9UpH0v1wKJ15PDsb9jf4pE=
+X-Google-Smtp-Source: APXvYqw9LQFnb3fc50S64nQ6rcHyd261bCyDTBsx0yZVPlsmPjAkjGJNxZRRN6IZd16kuBItxy5RAQ==
+X-Received: by 2002:a5d:6049:: with SMTP id j9mr402903wrt.213.1568673370265;
+        Mon, 16 Sep 2019 15:36:10 -0700 (PDT)
 Received: from szeder.dev (x4db93de7.dyn.telefonica.de. [77.185.61.231])
-        by smtp.gmail.com with ESMTPSA id v9sm268761wmj.43.2019.09.16.15.15.03
+        by smtp.gmail.com with ESMTPSA id z9sm246628wrp.26.2019.09.16.15.36.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Sep 2019 15:15:03 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 00:15:01 +0200
+        Mon, 16 Sep 2019 15:36:09 -0700 (PDT)
+Date:   Tue, 17 Sep 2019 00:36:07 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: merge-recursive thinks symlink's child dirs are "real"
-Message-ID: <20190916221501.GD6190@szeder.dev>
-References: <20190916214707.190171-1-jonathantanmy@google.com>
+To:     Garima Singh via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Garima Singh <garima.singh@microsoft.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 1/1] commit-graph: add --[no-]progress to write and
+ verify.
+Message-ID: <20190916223607.GE6190@szeder.dev>
+References: <pull.315.git.gitgitgadget@gmail.com>
+ <pull.315.v2.git.gitgitgadget@gmail.com>
+ <47cc99bd151db67fe2ee0f91bb98b3eb7e55786d.1566836997.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190916214707.190171-1-jonathantanmy@google.com>
+In-Reply-To: <47cc99bd151db67fe2ee0f91bb98b3eb7e55786d.1566836997.git.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 16, 2019 at 02:47:07PM -0700, Jonathan Tan wrote:
-> This was raised by a coworker at $DAYJOB. I run the following script:
+On Mon, Aug 26, 2019 at 09:29:58AM -0700, Garima Singh via GitGitGadget wrote:
+> From: Garima Singh <garima.singh@microsoft.com>
 > 
->   $GIT init test && cd test
->   ln -s . foo
->   mkdir bar && touch bar/file
->   $GIT add foo bar/file
->   $GIT commit -m "foo symlink"
->   
->   $GIT checkout -b branch1
->   $GIT commit --allow-empty -m "empty commit"
->   
->   $GIT checkout master
->   $GIT rm foo
->   mkdir foo
->   (cd foo; ln -s ../bar bar)
->   $GIT add foo/bar
->   $GIT commit -m "replace foo symlink with real foo dir and foo/bar symlink"
->   
->   $GIT checkout branch1
->   $GIT cherry-pick master
-> 
-> The cherry-pick must be manually resolved, when I would expect it to
-> happen without needing user intervention.
-> 
-> You can see that at the point of the cherry-pick, in the working
-> directory, ./foo is a symlink and ./foo/bar is a directory. I traced the
-> code that ran during the cherry-pick to process_entry() in
-> merge-recursive.c. When processing "foo/bar", control flow correctly
-> reaches "Case B: Added in one", but the dir_in_way() invocation returns
-> true, since lstat() indeed reveals that "foo/bar" is a directory. If I
-> hardcode dir_in_way() to return false, then the cherry-pick happens
-> without needing user intervention. I checked with "ls-tree -r" and the
-> resulting tree is as I expect (foo is a real dir, foo/bar is a symlink).
-> 
-> Is this use case something that Git should be able to handle,
+> Add --[no-]progress to git commit-graph write and verify.
+> The progress feature was introduced in 7b0f229
+> ("commit-graph write: add progress output", 2018-09-17) but
+> the ability to opt-out was overlooked.
 
-FWIW, Git used to handle this case, but it broke with edd2faf52e
-(merge-recursive: Consolidate process_entry() and process_df_entry(),
-2011-08-11).
+> diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+> index 99f4ef4c19..4fc3fda9d6 100755
+> --- a/t/t5324-split-commit-graph.sh
+> +++ b/t/t5324-split-commit-graph.sh
+> @@ -319,7 +319,7 @@ test_expect_success 'add octopus merge' '
+>  	git merge commits/3 commits/4 &&
+>  	git branch merge/octopus &&
+>  	git commit-graph write --reachable --split &&
+> -	git commit-graph verify 2>err &&
+> +	git commit-graph verify --progress 2>err &&
 
-Cc-ing Elijah for insights...
+Why is it necessary to use '--progress' here?  It should not be
+necessary, because the commit message doesn't mention that it changed
+the default behavior of 'git commit-graph verify'...
 
-> and if
-> yes, is the correct solution to teach dir_in_way() that dirs reachable
-> from symlinks are not really in the way (presumably the implementation
-> would climb directories until we reach the root or we reach a filesystem
-> boundary, similar to what we do when we search for the .git directory)?
-> Also, my proposed solution would work in the specific use case outlined
-> in the script above, but can anyone think offhand of a case that it
-> would make worse?
+>  	test_line_count = 3 err &&
+
+Having said that, this test should not check the number of progress
+lines in the first place; see the recent discussion:
+
+https://public-inbox.org/git/ec14865f-98cb-5e1a-b580-8b6fddaa6217@gmail.com/
+
+>  	test_i18ngrep ! warning err &&
+>  	test_line_count = 3 $graphdir/commit-graph-chain
+> -- 
+> gitgitgadget
