@@ -2,116 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70D6A1F463
-	for <e@80x24.org>; Mon, 16 Sep 2019 20:46:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D35FF1F463
+	for <e@80x24.org>; Mon, 16 Sep 2019 20:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728189AbfIPUqY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Sep 2019 16:46:24 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:46907 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727307AbfIPUqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Sep 2019 16:46:24 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 46XJDt4xl8z5tlC;
-        Mon, 16 Sep 2019 22:46:22 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id BEFEC10A;
-        Mon, 16 Sep 2019 22:46:21 +0200 (CEST)
-Subject: [PATCH v2 1/2] diff, log doc: say "patch text" instead of "patches"
+        id S1728339AbfIPUyu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Sep 2019 16:54:50 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38361 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726074AbfIPUyu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Sep 2019 16:54:50 -0400
+Received: by mail-wr1-f66.google.com with SMTP id l11so861399wrx.5
+        for <git@vger.kernel.org>; Mon, 16 Sep 2019 13:54:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fYVRcwIJ/BKdEM0tNIThl7bCCiNLu/TWCEzZH56lEow=;
+        b=Zr+6eFelk0Dvm8CQy7dsI4vTdVABu1phv7xaT4IET1Wf3EYs+AMOjUCv/qQiWNwi/8
+         NaxUdC1o/wHuZ1NZf+quiBZezuvH0/kkz6kgb9r1XMGVQvJBlEa/L8wG/GsbGAX9qKTd
+         o6Jw6ERA2JV1BTkJM+sI9Ucs7IWDQXt34/EaEVHKjVEe77OlTp+OFuioyKeVizrYkZgv
+         4HmpjG8q52S87ToVHXtzs4ASwGRKijXLLsBHqyjG1MNWOjkeOqQiMTOXrMz7gWju7cQm
+         Y1JLM9QCvCDEXJwYnkowZAbGo+wKKZVt1YFgejfuLJPs5eFviAY87U0A+lAgdVxhCGq5
+         CLdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fYVRcwIJ/BKdEM0tNIThl7bCCiNLu/TWCEzZH56lEow=;
+        b=eCZVk5cHlbh8y90o5vFrJsHBFIjTG8pOPuL9ktI2Cfm1tr30SB/lQljLXtZZUlKodc
+         6TdzfSaOi67QZaFOOGNWX4NVZDP6QSIEDPiK/1zrKwloRZgwub2r1ifRpP38vsogDj6d
+         UquvpyK5fJLUfHrPUFehbw0VIvw8ZTBjFd1/slNemU8WKV4KOgLFIdy3Tm/OlvDXybf3
+         vx+OBhWnUtyi/z7NL3XwaYkEai9aasirgFZ2CG+4+tRMCgE1oPvODIrzQaMtZWRcOEcz
+         uHUXG3I3WL1tmL20DmlWtGIuPoAJxqliZb6L7Zqh0GAZMJTnUYr0D4S/1P+8d08azb/2
+         /yaQ==
+X-Gm-Message-State: APjAAAUnKwYW7nwa2RwPM0nx0V1oLKfhORTUHHe9Aq1CNDDxe2n8i/nH
+        7WUDFjDusorSYFCuRjL9xfE=
+X-Google-Smtp-Source: APXvYqx/OxJRB/Al/Q4NEw0u1+zmv+BnmTQxiXksBC9PJFc9laNU0HW7zOenKFL/dmMylVK/oCGJGw==
+X-Received: by 2002:a05:6000:50:: with SMTP id k16mr176993wrx.161.1568667287815;
+        Mon, 16 Sep 2019 13:54:47 -0700 (PDT)
+Received: from localhost.localdomain (x4db93de7.dyn.telefonica.de. [77.185.61.231])
+        by smtp.gmail.com with ESMTPSA id u22sm102944wru.72.2019.09.16.13.54.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 16 Sep 2019 13:54:47 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <fac55175-dc1e-addf-194b-97aaf6a33e3b@kdbg.org>
- <CAN0heSoaYf0_2FhKQNnswLvFppu=dyBcKGYB_Jd=uF70yjNiCQ@mail.gmail.com>
- <xmqqv9ts9fox.fsf@gitster-ct.c.googlers.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <76602d23-f2b2-4a15-21ad-7bd91a4b5e44@kdbg.org>
-Date:   Mon, 16 Sep 2019 22:46:21 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>, Charles Diza <chdiza@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 0/2] Revert "progress: use term_clear_line()"
+Date:   Mon, 16 Sep 2019 22:54:10 +0200
+Message-Id: <20190916205412.8602-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.23.0.331.g4e51dcdf11
+In-Reply-To: <20190822162907.GA17013@sigill.intra.peff.net>
+References: <20190822162907.GA17013@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <xmqqv9ts9fox.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 16.09.19 um 21:58 schrieb Junio C Hamano:
-> I wonder if the result becomes even clearer if we dropped "instead
-> of the usual output".  It is a given that presence of an option
-> would change the behaviour, so "instead of the usual" does not add
-> any value in the context of the explanation we are giving.
+On Thu, Aug 22, 2019 at 12:29:08PM -0400, Jeff King wrote:
+> On Thu, Aug 22, 2019 at 06:07:02PM +0200, SZEDER Gábor wrote:
+> 
+> > On Thu, Aug 22, 2019 at 10:20:08AM -0400, Charles Diza wrote:
+> > > By 2.22.1 at the latest (and continuing into 2.23.0) there is a
+> > > problem with the display of progress indication during `git pull`
+> > > (and possibly other commands, I don't know).
+> > > 
+> > > I'm on macOS, and this happens in both Terminal.app and iTerm2.app,
+> > > on both macOS 10.13.6 and 10.14.6:  In a standard 80-column wide
+> > > terminal window, cd into a git repo and do `git pull`.  The chances
+> > > are high (though not 100%) that one will see this:
+> > 
+> > I noticed this today when pushing to GitHub (I suppose they have very
+> > recently upgraded?) from Linux, so this is neither specific to 'git
+> > pull' nor to macOS.
+> > 
+> > I'm sure the culprits are commits cd1096b282 (pager: add a helper
+> > function to clear the last line in the terminal, 2019-06-24) and
+> > 5b12e3123b (progress: use term_clear_line(), 2019-06-24) with the
+> > added complication of communicating with a remote.
 
-Agreed.
+> > I'm not sure how to handle the situation.  A few ideas to consider:
 
-> Also I question the value of the "running git diff without --raw
-> option" sentence; "diff --stat" is also a way to suppress the patch
-> text and see only the overview; I know it is not a new problem this
-> patch introduces, but the objective of this patch is clarify about
-> the generation of output in patch format, so...
+> >   4. Revert, and go back to calculating how many spaces we need to
+> >      append to clear the previously displayed progress line, and hope
+> >      that we don't mess it up (or even if we do, it still won't be as
+> >      noticable as this).
+> > 
+> > I suppose this issue affects other git clients as well, so (1), (2),
+> > and (3) might not even be an option.
+> 
+> Yes on that final bit. We could always fall back to (4) if the terminal
+> information is not available, but given that the benefit is mostly in
+> simplifying the code, I don't know if it's worth carrying around _two_
+> solutions.
 
-You have a point here, too.
+Ok, so here is a patch to revert 5b12e3123b (progress: use
+term_clear_line(), 2019-06-24) with proper explanation.
 
-Below is v2 of just patch 1/2. 2/2 remains unchanged. I've added
-git-show to the enumeration.
+As a bonus there is a new test script exercising the progress display
+as well, in particular how it covers up the previous progress line, so
+we may have a bit more confidence in it.
 
---- 8< ---
-diff, log doc: say "patch text" instead of "patches"
 
-A poster on Stackoverflow was confused that the documentation of git-log
-promised to generate "patches" or "patch files" with -p, but there were
-none to be found. Rewrite the corresponding paragraph to talk about
-"patch text" to avoid the confusion.
+SZEDER Gábor (2):
+  Revert "progress: use term_clear_line()"
+  Test the progress display
 
-Shorten the language to say "X does Y" in place of "X does not Z, but Y".
+ Makefile                    |   1 +
+ progress.c                  |  61 ++++++--
+ t/helper/test-progress.c    |  81 ++++++++++
+ t/helper/test-tool.c        |   1 +
+ t/helper/test-tool.h        |   1 +
+ t/t0500-progress-display.sh | 286 ++++++++++++++++++++++++++++++++++++
+ t/t5541-http-push-smart.sh  |   6 +-
+ 7 files changed, 421 insertions(+), 16 deletions(-)
+ create mode 100644 t/helper/test-progress.c
+ create mode 100755 t/t0500-progress-display.sh
 
-Cross-reference the referred-to commands like the rest of the file does.
-
-Enumerate git-show because it includes the description as well.
-
-Mention porcelain commands before plumbing commands because I guess that
-the paragraph is read more frequently in their context.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- Documentation/diff-generate-patch.txt | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
-index f10ca410ad..c482c94e6b 100644
---- a/Documentation/diff-generate-patch.txt
-+++ b/Documentation/diff-generate-patch.txt
-@@ -1,11 +1,15 @@
--Generating patches with -p
----------------------------
--
--When "git-diff-index", "git-diff-tree", or "git-diff-files" are run
--with a `-p` option, "git diff" without the `--raw` option, or
--"git log" with the "-p" option, they
--do not produce the output described above; instead they produce a
--patch file.  You can customize the creation of such patches via the
-+Generating patch text with -p
-+-----------------------------
-+
-+Running
-+linkgit:git-diff[1],
-+linkgit:git-log[1],
-+linkgit:git-show[1],
-+linkgit:git-diff-index[1],
-+linkgit:git-diff-tree[1], or
-+linkgit:git-diff-files[1]
-+with the `-p` option produces patch text.
-+You can customize the creation of patch text via the
- `GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables.
- 
- What the -p option produces is slightly different from the traditional
 -- 
-2.23.0.95.gcfbaf7d16f
+2.23.0.331.g4e51dcdf11
+
