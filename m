@@ -2,84 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E55F1F463
-	for <e@80x24.org>; Tue, 17 Sep 2019 22:26:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D38A81F464
+	for <e@80x24.org>; Tue, 17 Sep 2019 22:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726044AbfIQWXW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 18:23:22 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54650 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725865AbfIQWXW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 18:23:22 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1AB7E330C3;
-        Tue, 17 Sep 2019 18:23:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0ylxOnPIN3FXtFvWof1+fr7hBNI=; b=ciu7H0
-        iKSfrSCzbsj5RqAUDUEE4EZOis1r1825iVYr476my8osW3B/+B+kaO7mXmhIzCWv
-        Ru/7YTxG0kZ7Ug+03xj9zAH0PEDF0GKP/aI9tKP4y/J/G7iHvDkuqOEABHaZw0/t
-        tSm4ihlTE+Oor1+9asmnw8by9HJWoxZvRxs9o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JvHNqtc+Q1ClQdc5lgoqzVtRAxtm4ggb
-        ROVe36f5+rlcKF5GD6Z9m/OyR/2J8JaBCNl3AipOVxx4MKsd8hAk7NIwj0t7tMoo
-        663qFmLJghdJ2qNGNa62lTFiClRXC8hes7E6IW8CdNPAdVTMm6tDJYO3Ct2NwtmS
-        q1D7e9RIj04=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 12D92330BF;
-        Tue, 17 Sep 2019 18:23:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 66DE43307C;
-        Tue, 17 Sep 2019 18:23:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, newren@gmail.com
+        id S1727427AbfIQWcn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 18:32:43 -0400
+Received: from mail-vk1-f201.google.com ([209.85.221.201]:50251 "EHLO
+        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725865AbfIQWcn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 18:32:43 -0400
+Received: by mail-vk1-f201.google.com with SMTP id f199so1900941vka.17
+        for <git@vger.kernel.org>; Tue, 17 Sep 2019 15:32:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=KNrk3EpmS1p1kW8VKH+Pg9Qs1vkX4VNmMpQ0eNxf+yY=;
+        b=obS56A3ynE9WOhYmgdw3TxLOIT0F3LnQ2EW0xaIFU7wT4l6ZsJ46vcD22hTQqbI6Q8
+         QB2T51q1Z45xVxSwrLH8dXeuLDKXfMardiO8K2tzZTIfKvhlaYPqjrFdfuO30ThBbOu2
+         p633BZxaOA2CfzY6a0md+Tf8BBCU2VbdR/TEi6lP3ta98+LDF4KWEXDkTuq/I2dfLZiD
+         7l3QqoYVfX0QYVN+f6d5cYXnaphxp2yIlAp4dtDtAOkA2/IOE7JfLZWtknDdJKVk86S6
+         7FMfmTrLM2b4cmMWENiL5r6LcTaEq9Au2Ms2myK3KwdmtcZvxQ6ZxI2NRzRIsQJIE5tQ
+         mMGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=KNrk3EpmS1p1kW8VKH+Pg9Qs1vkX4VNmMpQ0eNxf+yY=;
+        b=axuBla2LYcLUZwpnorzxMtaEnDZbMFm4W+oixu6GFEPm+Dj0FQLIMC7Yefzk5olhgn
+         S+Lb82cw3pH2QGV8ezC2Ml952wl9NVVC+Uv2pnBOPSFVG15dKpiK0ex2IQrCB2YdX5B/
+         KD1EC/ctIT+TpfHI6ZG2zdKURVxyA9WTQEcpqR37vH2o+VSR7mzcPoYtDhBBbC2a/CzI
+         W9pFAvn+YvmNuUCfuze2G7QXfezhcnf5W6KaC15pjsmIZgNz2xFIlG0lwKRV8Da8sFlv
+         vaMQpfSTyVYF8GT2cssNDo0BSH1bGRVl32Egmin0SM5XICFuvo/dU5v9tqcMeSYXlITc
+         ueoA==
+X-Gm-Message-State: APjAAAV5BSE7xSUh4CrFHXB1pXmcyTfez6zLOhb0R20WS5lLkFRMSzAi
+        r+IInnbzpKEa1QQVsFUtzITse1mBO0FChciX3WLV
+X-Google-Smtp-Source: APXvYqymS6vMv0r/xPj6Whmz5045gTNFuk8u/j1P+3qzTDD03oDXTxC3x7ww986ya0DoUjbui/vLwogkguh1d05vz25S
+X-Received: by 2002:ab0:6244:: with SMTP id p4mr777791uao.0.1568759561027;
+ Tue, 17 Sep 2019 15:32:41 -0700 (PDT)
+Date:   Tue, 17 Sep 2019 15:32:36 -0700
+In-Reply-To: <xmqqh85a7eax.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20190917223236.149613-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqh85a7eax.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.23.0.237.gc6a4ce50a0-goog
 Subject: Re: [RFC PATCH] merge-recursive: symlink's descendants not in way
-References: <CABPp-BHpXWF+1hKUTfn8s-y4MJZXz+jUVS_K10eKyD6PGwo=gg@mail.gmail.com>
-        <20190917215040.132503-1-jonathantanmy@google.com>
-Date:   Tue, 17 Sep 2019 15:23:18 -0700
-In-Reply-To: <20190917215040.132503-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Tue, 17 Sep 2019 14:50:40 -0700")
-Message-ID: <xmqqh85a7eax.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C0805CB8-D999-11E9-A166-C28CBED8090B-77302942!pb-smtp1.pobox.com
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, newren@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+> > When the working tree has:
+> >  - foo (symlink)
+> >  - foo/bar (directory)
+> 
+> Whoa, wait.  I assume, since this is about merge, the assumption is
+> that the working tree is clean with respect to the index, so 'foo'
+> is a symbolic link that is in the index.  Now, if foo is a symlink,
+> how can foo/bar (whether it is a directory or something else) exist,
+> which requires foo to be a directory in the first place?
 
-> When the working tree has:
->  - foo (symlink)
->  - foo/bar (directory)
+I was trying to be concise but I guess I omitted too much detail. This is
+what's happening:
 
-Whoa, wait.  I assume, since this is about merge, the assumption is
-that the working tree is clean with respect to the index, so 'foo'
-is a symbolic link that is in the index.  Now, if foo is a symlink,
-how can foo/bar (whether it is a directory or something else) exist,
-which requires foo to be a directory in the first place?
+Working tree:
+ - foo (symlink pointing to .)
+ - bar (directory)
+ - bar/file (file)
 
-> and the user merges a commit that deletes the foo symlink and instead
-> contains:
->  - foo (directory)
->  - foo/bar (file)
+And the new commit:
+ - foo (directory)
+ - foo/bar (file)
+ - bar (directory)
+ - bar/file (file)
 
-This side is possible.  If foo is a directory, then there can be
-foo/bar.  But I do not get the initial setup you start with.
+I'll update the commit message when I send out another version.
 
-In any case, if the working tree has 'foo' as a symlink, Git should
-not look at or get affected by what 'foo' points at.
+> In any case, if the working tree has 'foo' as a symlink, Git should
+> not look at or get affected by what 'foo' points at.
+
+Git should not, but it does - there is a call in process_entry() that calls
+lstat() on "foo/bar", which indeed reports that "foo/bar" is a directory. This
+patch adds a check that none of its ancestors are symlinks.
