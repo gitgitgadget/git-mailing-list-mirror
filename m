@@ -2,146 +2,222 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54D711F463
-	for <e@80x24.org>; Tue, 17 Sep 2019 20:50:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5A211F463
+	for <e@80x24.org>; Tue, 17 Sep 2019 21:50:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728821AbfIQUuz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 16:50:55 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42863 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726044AbfIQUuz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 16:50:55 -0400
-Received: by mail-pg1-f196.google.com with SMTP id z12so2619513pgp.9
-        for <git@vger.kernel.org>; Tue, 17 Sep 2019 13:50:54 -0700 (PDT)
+        id S1727075AbfIQVur (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 17:50:47 -0400
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:55131 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726998AbfIQVur (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 17:50:47 -0400
+Received: by mail-pg1-f202.google.com with SMTP id m17so2831139pgh.21
+        for <git@vger.kernel.org>; Tue, 17 Sep 2019 14:50:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/TjbFsGfeEq89M/rTVmP+kS1Lb2h7j2uKdoGylWjm0s=;
-        b=aljUbJnP4rtl99p8hvcLYFY6em06sEdQ1mCcWIBmAxItzvLEYA6KNisgJ2Q8wiUIMm
-         XDusxK23xuzwsRwjM+UPngvjHKdxcTZAU7zRqhHKStR4AabIdBiPdtDiNcUab5cAwVuC
-         JyBW7lnZFVLiQm21JeIxZofcMNVVHSO9Tslw+ExEAgStHmLMx8iw+AY/jog6q5KjpmQJ
-         9acWqcTKEG2U7rS/xyfOnt8tbtsjaXmQcpjKYJaa1qhlYzjm9GCKWdnahSNx2cUno89A
-         AQzXjNH49PAGmZ0C4Wq/gQxyZvVgbvawsSOs3RC/792w5C3ZwpeEfh+rQu0sjG8sXImk
-         NfRg==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=haJXfegwDxgKPBc9Lbzzssn82tbp7vkouOuJhrpb4x4=;
+        b=LCJ4pYxVthJGjI+Bhw05uXrE/ugKhRExfSfm0PIG6+BbUaqXFRShvg1ExpfiA/r8Cv
+         ZstDHplQL/uBBl+N65MVGwgCvyB+7sw7g0ik42uy9cYhHI7qgwWfh8+cGtwqi4d8n1s1
+         mzDX8xBKf3nQ1q2Z+SiwfaXylAP6n/QwKSoWP8mcUEVM2V70RUpf4fIpCbnhmm0PZB/o
+         JAIxwnCr0NGSC0IP8QF71bfrzE3k1g7ucLp3LrQU4GCSdppRfQnyOEbuINMlVqTu6DPI
+         ibhjMwx2oK8YAfiYJAh7ITUo0NH/7p43w7eAXvYhaxw29Fej4kpiRXDupP4A1OMqGIEt
+         Z/NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/TjbFsGfeEq89M/rTVmP+kS1Lb2h7j2uKdoGylWjm0s=;
-        b=Su2TcJqlRqrA0xAUBA+r0uNqPNXOe0YDV73GX/lcJf6Qhs09AHyWyn0XXFW8xa5bls
-         cwYaXFI8J7vXIzeFw1Ah+lpuMkM/CTNxM5dSloeEWujAuULPwXkyASewGdAqXdjs7E0H
-         bH+5JKG3TfyJBUzzb60CWWtXkWEZXRISHLcJW8QNfKJZ9nvbYCYBRNluMpaEeaBsEonK
-         pRrhtqWCKCt2Kx7eZpK4BdxUKam/kyGP9xtRBYRzNbVoMWo5odOH5HZay3HqfYirbb9g
-         Un/+qCruMnVpJr5phvpjCOLwoO93NJQTPkgXKJ+sK2NE6WKK+FnuuG0B10R2yy+QJOx2
-         j7VQ==
-X-Gm-Message-State: APjAAAVAiINIQhL81/6mcqZaM8d+lBvZWmE6M8VwWVgT8scQj8gWMIjq
-        itA/0Maup0tvaqQVgCI3Hj4=
-X-Google-Smtp-Source: APXvYqzx3rbogn1XkyhWorQzwJY4x3zsNnO338MiXNIh5HRxkJ2riIXpGVajNyDxFAfg31OaVC7y0A==
-X-Received: by 2002:aa7:998d:: with SMTP id k13mr314727pfh.134.1568753454273;
-        Tue, 17 Sep 2019 13:50:54 -0700 (PDT)
-Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.137])
-        by smtp.gmail.com with ESMTPSA id r186sm4999248pfr.40.2019.09.17.13.50.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Sep 2019 13:50:53 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 13:50:51 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [GIT PULL] git-gui pull request
-Message-ID: <20190917205051.GA63601@dentonliu-ltm.internal.salesforce.com>
-References: <20190917201334.hfbvuisdwkwgvwg5@yadavpratyush.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190917201334.hfbvuisdwkwgvwg5@yadavpratyush.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=haJXfegwDxgKPBc9Lbzzssn82tbp7vkouOuJhrpb4x4=;
+        b=EF5d4gOb4WugzcnJPiLrij9eYY2x4oCxYloIvNU83AsO3TSr+uBOKYfF/PWoeXYACE
+         VmbYHejZ2BtH3zyKiPp46399MQjCWQqkZY9w+01P9cU+Y/21O+40F2ZuCiaw4G7e3bgC
+         sHPsXkjA98nyMygg8fqqyEpxdoTYPTVzeJMCrpvN5o+FoJUzl/A37YcgflFO/DqJKKNm
+         pZ+cCCMX8Qco0Yi7le2HA9vYFayTwER0dzAf7iLM2NmVxLkPHit1+PL90FlIcwXmcSHZ
+         WX2BSMGg72KKLbroZnR2/ud1a/JrlPdEhhI1wm6xynCXbrjogUZV9ps4xtdrP2s0/S+1
+         NeKA==
+X-Gm-Message-State: APjAAAXAm9oxUIwI1T7x+sh9fF7zGCb5oT1oXXeFXwRthWfz7pUM6XFm
+        C59OMXtNG69a8wSgNmcHtqHfexpIBTjwYeG71DkE5TpW1pscsCWjphhZnPICU7odsddtFOCuka/
+        ofELmEBWGoy0OxQpRWaTuT/Iht8AoXRhF3zbxJBjljdvFKQtasav2FCXS7ZgsT8nbxG2vwP69h6
+        8O
+X-Google-Smtp-Source: APXvYqw9RuogSOGVF+3wucE47IZ9hBEBcMzP+zhLZC9OuNJHFnnNA4WDYYrqO1n0LQRfL5aZlrtcW6oY7/Bph3bgxfhm
+X-Received: by 2002:a63:4c64:: with SMTP id m36mr885740pgl.229.1568757045884;
+ Tue, 17 Sep 2019 14:50:45 -0700 (PDT)
+Date:   Tue, 17 Sep 2019 14:50:40 -0700
+In-Reply-To: <CABPp-BHpXWF+1hKUTfn8s-y4MJZXz+jUVS_K10eKyD6PGwo=gg@mail.gmail.com>
+Message-Id: <20190917215040.132503-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CABPp-BHpXWF+1hKUTfn8s-y4MJZXz+jUVS_K10eKyD6PGwo=gg@mail.gmail.com>
+X-Mailer: git-send-email 2.23.0.237.gc6a4ce50a0-goog
+Subject: [RFC PATCH] merge-recursive: symlink's descendants not in way
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, newren@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pratyush,
+When the working tree has:
+ - foo (symlink)
+ - foo/bar (directory)
 
-Since you're the maintainer now, you should submit a patch to
-Documentation/SubmittingPatches to change
+and the user merges a commit that deletes the foo symlink and instead
+contains:
+ - foo (directory)
+ - foo/bar (file)
 
-	- `git-gui/` comes from git-gui project, maintained by Pat Thoyts:
+the merge should happen without requiring user intervention. However,
+this does not happen.
 
-		git://repo.or.cz/git-gui.git
+In merge_trees(), process_entry() will be invoked first for "foo/bar",
+then "foo" (in reverse lexicographical order). process_entry() correctly
+reaches "Case B: Added in one", but dir_in_way() states that "bar" is
+already present as a directory, causing a directory/file conflict at the
+wrong point.
 
-to have your own information.
+Instead, teach dir_in_way() that directories under symlinks are not "in
+the way", so that symlinks are treated as regular files instead of
+directories containing other directories and files. Thus, the "else"
+branch will be followed instead: "foo/bar" will be added to the working
+tree, make_room_for_path() being indirectly called to unlink the "foo"
+symlink (just like if "foo" were a regular file instead). When
+process_entry() is subsequently invoked for "foo", process_entry() will
+reach "Case A: Deleted in one", and will handle it as "Add/delete" or
+"Modify/delete" appropriately (including reinstatement of the previously
+unlinked symlink with a new unique filename if necessary, again, just
+like if "foo" were a regular file instead).
 
-On Wed, Sep 18, 2019 at 01:43:34AM +0530, Pratyush Yadav wrote:
-> Hi Junio,
-> 
-> There were some topics and discussion related to git-gui in flight. Most 
-> of them have been stabilized, and merged in. So I think it's a good time 
-> to pull in those changes.
-> 
-> ---
-> The following changes since commit 
-> 5ab72271e16ac23c269f5019a74a7b1d65170e47:
-> 
->   Merge remote-tracking branch 'philoakley/dup-gui' (2017-03-18 15:35:09 +0000)
-> 
-> are available in the Git repository at:
-> 
->   https://github.com/prati0100/git-gui.git 
-> 
-> for you to fetch changes up to f7a8834ba4aa20ec750833cf8d30d9a9fed5eade:
-> 
->   Merge branch 'bp/amend-toggle-bind' (2019-09-14 23:23:12 +0530)
-> 
-> ----------------------------------------------------------------
-> Bert Wesarg (2):
->       git-gui: convert new/amend commit radiobutton to checkbutton
->       git-gui: add horizontal scrollbar to commit buffer
-> 
-> Birger Skogeng Pedersen (2):
->       git-gui: add hotkeys to set widget focus
->       git-gui: add hotkey to toggle "Amend Last Commit"
-> 
-> Pratyush Yadav (9):
->       git-gui: allow reverting selected lines
->       git-gui: allow reverting selected hunk
->       git-gui: return early when patch fails to apply
->       git-gui: allow undoing last revert
->       Merge branch 'bp/widget-focus-hotkeys'
->       Merge branch 'py/revert-hunks-lines'
->       Merge branch 'bw/amend-checkbutton'
->       Merge branch 'bw/commit-scrollbuffer'
->       Merge branch 'bp/amend-toggle-bind'
+Helped-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Thanks to Elijah for his help. Some of the commit message is based on
+his explanation [1].
 
-Seems like this list is missing
+I'm finding this relatively complicated, so I'm sending this as RFC. My
+main concern is that whether all callers of dir_in_way() are OK with its
+behavior change, and if yes, how to explain it. I suspect that this is
+correct because dir_in_way() should behave consistently for all its
+callers, but I might be wrong.
 
-	Pat Thoyts (1):
-		  Merge remote-tracking branch 'philoakley/dup-gui'
+The other thing is whether the commit message is clear enough. In
+particular, whether it needs more detail (I didn't mention the index,
+for example), or whether it should be more concise (for example, I
+thought of just stating that we treat symlinks as regular files and this
+would be backed up by the fact that I've updated the only part of
+merge-recursive.c that calls lstat() and then S_ISDIR).
 
-	Philip Oakley (4):
-		  git-gui: remove duplicate entries from .gitconfig's gui.recentrepo
-		  git gui: cope with duplicates in _get_recentrepo
-		  git gui: de-dup selected repo from recentrepo history
-		  git gui: allow for a long recentrepo list
+[1] https://public-inbox.org/git/CABPp-BHpXWF+1hKUTfn8s-y4MJZXz+jUVS_K10eKyD6PGwo=gg@mail.gmail.com/
+---
+ merge-recursive.c          | 40 +++++++++++++++++++++++++++++++++-----
+ t/t3030-merge-recursive.sh | 27 +++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+), 5 deletions(-)
 
-which should be in your PR but aren't in mainline Git yet.
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 6b812d67e3..a2029a4e94 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -747,7 +747,7 @@ static int dir_in_way(struct index_state *istate, const char *path,
+ {
+ 	int pos;
+ 	struct strbuf dirpath = STRBUF_INIT;
+-	struct stat st;
++	int ret = 0;
+ 
+ 	strbuf_addstr(&dirpath, path);
+ 	strbuf_addch(&dirpath, '/');
+@@ -758,13 +758,43 @@ static int dir_in_way(struct index_state *istate, const char *path,
+ 		pos = -1 - pos;
+ 	if (pos < istate->cache_nr &&
+ 	    !strncmp(dirpath.buf, istate->cache[pos]->name, dirpath.len)) {
+-		strbuf_release(&dirpath);
+-		return 1;
++		ret = 1;
++		goto cleanup;
+ 	}
+ 
++	if (check_working_copy) {
++		struct stat st;
++
++		strbuf_trim_trailing_dir_sep(&dirpath);
++		if (lstat(dirpath.buf, &st))
++			goto cleanup; /* doesn't exist, OK */
++		if (!S_ISDIR(st.st_mode))
++			goto cleanup; /* not directory, OK */
++		if (empty_ok && is_empty_dir(dirpath.buf))
++			goto cleanup;
++
++		/*
++		 * The given path is a directory, but this should not
++		 * be treated as "in the way" if one of this
++		 * directory's ancestors is a symlink. Check for this
++		 * case.
++		 */
++		while (1) {
++			char *slash = strrchr(dirpath.buf, '/');
++
++			if (!slash) {
++				ret = 1;
++				goto cleanup;
++			}
++			*slash = '\0';
++			if (!lstat(dirpath.buf, &st) && S_ISLNK(st.st_mode))
++				goto cleanup;
++		}
++	}
++
++cleanup:
+ 	strbuf_release(&dirpath);
+-	return check_working_copy && !lstat(path, &st) && S_ISDIR(st.st_mode) &&
+-		!(empty_ok && is_empty_dir(path));
++	return ret;
+ }
+ 
+ /*
+diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
+index ff641b348a..dfd617a845 100755
+--- a/t/t3030-merge-recursive.sh
++++ b/t/t3030-merge-recursive.sh
+@@ -452,6 +452,33 @@ test_expect_success 'merge-recursive d/f conflict result' '
+ 
+ '
+ 
++test_expect_success 'dir in working tree with symlink ancestor does not produce d/f conflict' '
++	git init sym &&
++	(
++		cd sym &&
++		ln -s . foo &&
++		mkdir bar &&
++		touch bar/file &&
++		git add foo bar/file &&
++		git commit -m "foo symlink" &&
++
++		git checkout -b branch1 &&
++		git commit --allow-empty -m "empty commit" &&
++
++		git checkout master &&
++		git rm foo &&
++		mkdir foo &&
++		touch foo/bar &&
++		git add foo/bar &&
++		git commit -m "replace foo symlink with real foo dir and foo/bar file" &&
++
++		git checkout branch1 &&
++
++		# Exercise to make sure that this works without errors
++		git cherry-pick master
++	)
++'
++
+ test_expect_success 'reset and 3-way merge' '
+ 
+ 	git reset --hard "$c2" &&
+-- 
+2.23.0.237.gc6a4ce50a0-goog
 
-> 
->  git-gui.sh          | 140 ++++++++++++++++++++++++++++++++++++++++------------
->  lib/checkout_op.tcl |   6 +--
->  lib/commit.tcl      |   4 +-
->  lib/diff.tcl        |  96 +++++++++++++++++++++++++++++------
->  lib/index.tcl       |   8 +--
->  5 files changed, 199 insertions(+), 55 deletions(-)
-> 
-> -- 
-> Regards,
-> Pratyush Yadav
