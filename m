@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F6F71F463
-	for <e@80x24.org>; Tue, 17 Sep 2019 16:35:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DC9E1F463
+	for <e@80x24.org>; Tue, 17 Sep 2019 16:35:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730545AbfIQQfa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 12:35:30 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:32858 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726462AbfIQQf3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 12:35:29 -0400
-Received: by mail-pl1-f193.google.com with SMTP id t11so1779541plo.0
-        for <git@vger.kernel.org>; Tue, 17 Sep 2019 09:35:28 -0700 (PDT)
+        id S1730533AbfIQQf0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 12:35:26 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:35485 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730520AbfIQQfY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 12:35:24 -0400
+Received: by mail-pl1-f194.google.com with SMTP id s17so1770529plp.2
+        for <git@vger.kernel.org>; Tue, 17 Sep 2019 09:35:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=e5M0BrMwX+MMcMx4dd9+eEsV4oPx5UvSOkSmcQK7tQo=;
-        b=BkCX9kZ8nnilaHPCdQKThpa3uonzf0TmxIsR/eiEU57oQ1dFnsNpFwXno9tfsbhXzB
-         sWqd+CKkmL7V6ydN9zK6I95yOC75+3qARgaThyg/jL/oQmx1iqYBftVgDq5pF8b02hF3
-         p7ZXGXLdKDIUp0lQuFtKZVwcbxNeP1CbozXq4Y6UDZGgKGE3oqtsv+AVtlFaiPmRMtoD
-         Sn5uo1m4zZb9r8Z69CM09MTxYGG3Odl6wCYVKmXl7n1eO7fNcrqWnCsRjzlGO0DuI5YP
-         NEIK7zj9AUWgnigVIIEBwRzJiQi7kCjMT34RFlKlKjpmXdjWQHxK038PGd89WyceuKil
-         YP3g==
+        bh=YiNPiKy43IT7Qv88TvuVOyIXRHfRqSANJK6OfCSrX1w=;
+        b=Oysog1uN+Anmmrvikmgz3VRuC970b8ujKT57i1eeeYKtkygJywR2DFmsktEU3M+zGR
+         bpimOacTDseQEzCMCgpcmA/rzzx6milx/YRtVVJVXU36nPxvXhZCC5WCHdyY+u/yVK+S
+         nISiXgqwXULgbYh/dLNMDLmLc6lKZfgdYzBYlDQfB5jZBxDHH+vPZxZEB2VfpCtMogYs
+         CKtU6A4KYxpaLUkh7NVU+atT2TWz4vHGXoedNdhDzBxAJLUaWGOy9qIqi9y3LrBBdltZ
+         7mW7mq3NDth8zRUNH6t7dIA5oHJ2Bz+fBHAB0qAZSiVUwlhXiJ6BC7DlYeMTD/6w5LQ/
+         J8TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=e5M0BrMwX+MMcMx4dd9+eEsV4oPx5UvSOkSmcQK7tQo=;
-        b=sL8Y4tqCtcOpiR3i7kgYTdOPL+YdWb/SoYHCcsBcAfsiuMgMxQhz0jymVtYSTUUx10
-         GjRH0OcuGyHin/Fk+VImdtbLFPciIBG2ow77II/6WkLTywu5JHZsq2Y1l3a2P7A4ct+/
-         Yp8jZ2eIAzM5W4NDoln81C+HtxN9p5BxehYkM4VEmz0zT1Pgt889msabVv6dYlUmTgVK
-         h37fhPHMBjCBjXwV6Pa7t+gufEPG7iOttNO2zXYjIpeG6ngbeIR+mg76gg5dznF2H2Jk
-         NCIS3zcKZrRWAHdqQANRwwNn78EhibeUuJNeYCoj7do7dy+Q8PJfaiAzfUxW0UlvfuZY
-         3nZw==
-X-Gm-Message-State: APjAAAU4nHt58vcaMlhXNfyS+ZAhHwMpDMNdaSNpxMc3gv16GOdUxEHG
-        8R+UkZDKq4dP0U9s5z9MYCHBMDOI4ek=
-X-Google-Smtp-Source: APXvYqyKzyvSJ5+YUw0vIFGg9shy3A4Kf9qnKYRryzslec/JfDyEhawcyBrpRFzNTqfWRObYkJI/tA==
-X-Received: by 2002:a17:902:690c:: with SMTP id j12mr4749477plk.132.1568738127410;
-        Tue, 17 Sep 2019 09:35:27 -0700 (PDT)
+        bh=YiNPiKy43IT7Qv88TvuVOyIXRHfRqSANJK6OfCSrX1w=;
+        b=VpFR4kMdx11wosTl4w4A/UyEuB+a2ipuagg7QBwYA7wCB6d6B4Vj5bKupjpU2nYrzm
+         2ooI9pn4CpUXx5NwIC+lOEDJPS/nrx2+jSr6R53pBc/p9w7BwDmth7w+wLoiH/SK3ICH
+         U2DoZOxP2tqjZ8tXZ9BmnwKXpOjG6YZmmdBCAm8PmVLF+LHT2gaHH8D59v+pp6I19E5N
+         vvDgd0ph3N22Q/GoAhOgvupYcj3jyWSP3kzAFlSYnvZMExEkckCGM9RD+631nxIQt468
+         HbDIkyvQyVJO33chqIjjglbpuVc5AQGwctDwLbs0jSZLReyDTwMivMYSt8aKRXXXY2UU
+         r6OA==
+X-Gm-Message-State: APjAAAXxc7dxUbibkeZ/Ldb5GX5Pqlem7838Q7+AN/2TVzja5bMNrn+2
+        C0ycRIgEd3IgfgOwdKoQBqq6g3pRleE=
+X-Google-Smtp-Source: APXvYqzRGh23/hd1gh+WCtbhd5xFDQDSqJ5Y+njGoUl/QK7IcKFO9jtK86/KXcthVvglP5MCCojkow==
+X-Received: by 2002:a17:902:8e84:: with SMTP id bg4mr4677086plb.43.1568738123639;
+        Tue, 17 Sep 2019 09:35:23 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id s5sm3202452pfe.52.2019.09.17.09.35.26
+        by smtp.gmail.com with ESMTPSA id s5sm3202452pfe.52.2019.09.17.09.35.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 17 Sep 2019 09:35:26 -0700 (PDT)
+        Tue, 17 Sep 2019 09:35:21 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Samuel Lijin <sxlijin@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 12/12] clean: fix theoretical path corruption
-Date:   Tue, 17 Sep 2019 09:35:04 -0700
-Message-Id: <20190917163504.14566-13-newren@gmail.com>
+Subject: [PATCH v4 09/12] clean: disambiguate the definition of -d
+Date:   Tue, 17 Sep 2019 09:35:01 -0700
+Message-Id: <20190917163504.14566-10-newren@gmail.com>
 X-Mailer: git-send-email 2.22.1.17.g6e632477f7
 In-Reply-To: <20190917163504.14566-1-newren@gmail.com>
 References: <20190912221240.18057-1-newren@gmail.com>
@@ -71,62 +71,152 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-cmd_clean() had the following code structure:
+The -d flag pre-dated git-clean's ability to have paths specified.  As
+such, the default for git-clean was to only remove untracked files in
+the current directory, and -d existed to allow it to recurse into
+subdirectories.
 
-    struct strbuf abs_path = STRBUF_INIT;
-    for_each_string_list_item(item, &del_list) {
-        strbuf_addstr(&abs_path, prefix);
-        strbuf_addstr(&abs_path, item->string);
-        PROCESS(&abs_path);
-        strbuf_reset(&abs_path);
-    }
+The interaction of paths and the -d option appears to not have been
+carefully considered, as evidenced by numerous bugs and a dearth of
+tests covering such pairings in the testsuite.  The definition turns out
+to be important, so let's look at some of the various ways one could
+interpret the -d option:
 
-where I've elided a bunch of unnecessary details and PROCESS(&abs_path)
-represents a big chunk of code rather than an actual function call.  One
-piece of PROCESS was:
+  A) Without -d, only look in subdirectories which contain tracked
+     files under them; with -d, also look in subdirectories which
+     are untracked for files to clean.
 
-    if (lstat(abs_path.buf, &st))
-        continue;
+  B) Without specified paths from the user for us to delete, we need to
+     have some kind of default, so...without -d, only look in
+     subdirectories which contain tracked files under them; with -d,
+     also look in subdirectories which are untracked for files to clean.
 
-which would cause the strbuf_reset() to be missed -- meaning that the
-next path to be handled would have two paths concatenated.  This path
-used to use die_errno() instead of continue prior to commit 396049e5fb62
-("git-clean: refactor git-clean into two phases", 2013-06-25), but my
-understanding of how correct_untracked_entries() works is that it will
-prevent both dir/ and dir/file from being in the list to clean so this
-should be dead code and the die_errno() should be safe.  But I hesitate
-to remove it since I am not certain.
+The important distinction here is that choice B says that the presence
+or absence of '-d' is irrelevant if paths are specified.  The logic
+behind option B is that if a user explicitly asked us to clean a
+specified pathspec, then we should clean anything that matches that
+pathspec.  Some examples may clarify.  Should
 
-However, we can fix both this bug and possible similar future bugs by
-simply moving the strbuf_reset(&abs_path) to the beginning of the loop.
-It'll result in N calls to strbuf_reset() instead of N-1, but that's a
-small price to pay to avoid sneaky bugs like this.
+   git clean -f untracked_dir/file
+
+remove untracked_dir/file or not?  It seems crazy not to, but a strict
+reading of option A says it shouldn't be removed.  How about
+
+   git clean -f untracked_dir/file1 tracked_dir/file2
+
+or
+
+   git clean -f untracked_dir_1/file1 untracked_dir_2/file2
+
+?  Should it remove either or both of these files?  Should it require
+multiple runs to remove both the files listed?  (If this sounds like a
+crazy question to even ask, see the commit message of "t7300: Add some
+testcases showing failure to clean specified pathspecs" added earlier in
+this patch series.)  What if -ffd were used instead of -f -- should that
+allow these to be removed?  Should it take multiple invocations with
+-ffd?  What if a glob (such as '*tracked*') were used instead of
+spelling out the directory names?  What if the filenames involved globs,
+such as
+
+   git clean -f '*.o'
+
+or
+
+   git clean -f '*/*.o'
+
+?
+
+The current documentation actually suggests a definition that is
+slightly different than choice A, and the implementation prior to this
+series provided something radically different than either choices A or
+B. (The implementation, though, was clearly just buggy).  There may be
+other choices as well.  However, for almost any given choice of
+definition for -d that I can think of, some of the examples above will
+appear buggy to the user.  The only case that doesn't have negative
+surprises is choice B: treat a user-specified path as a request to clean
+all untracked files which match that path specification, including
+recursing into any untracked directories.
+
+Change the documentation and basic implementation to use this
+definition.
+
+There were two regression tests that indirectly depended on the current
+implementation, but neither was about subdirectory handling.  These two
+tests were introduced in commit 5b7570cfb41c ("git-clean: add tests for
+relative path", 2008-03-07) which was solely created to add coverage for
+the changes in commit fb328947c8e ("git-clean: correct printing relative
+path", 2008-03-07).  Both tests specified a directory that happened to
+have an untracked subdirectory, but both were only checking that the
+resulting printout of a file that was removed was shown with a relative
+path.  Update these tests appropriately.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/clean.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/git-clean.txt | 10 ++++++----
+ builtin/clean.c             |  8 ++++++++
+ t/t7300-clean.sh            |  2 ++
+ 3 files changed, 16 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+index e84ffc9396..3ab749b921 100644
+--- a/Documentation/git-clean.txt
++++ b/Documentation/git-clean.txt
+@@ -26,10 +26,12 @@ are affected.
+ OPTIONS
+ -------
+ -d::
+-	Remove untracked directories in addition to untracked files.
+-	If an untracked directory is managed by a different Git
+-	repository, it is not removed by default.  Use -f option twice
+-	if you really want to remove such a directory.
++	Normally, when no <path> is specified, git clean will not
++	recurse into untracked directories to avoid removing too much.
++	Specify -d to have it recurse into such directories as well.
++	If any paths are specified, -d is irrelevant; all untracked
++	files matching the specified paths (with exceptions for nested
++	git directories mentioned under `--force`) will be removed.
+ 
+ -f::
+ --force::
 diff --git a/builtin/clean.c b/builtin/clean.c
-index 6030842f3a..4cf2399f59 100644
+index d5579da716..68d70e41c0 100644
 --- a/builtin/clean.c
 +++ b/builtin/clean.c
-@@ -1018,6 +1018,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	for_each_string_list_item(item, &del_list) {
- 		struct stat st;
+@@ -949,6 +949,14 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
  
-+		strbuf_reset(&abs_path);
- 		if (prefix)
- 			strbuf_addstr(&abs_path, prefix);
+ 	dir.flags |= DIR_SHOW_OTHER_DIRECTORIES;
  
-@@ -1051,7 +1052,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
- 			}
- 		}
--		strbuf_reset(&abs_path);
- 	}
++	if (argc) {
++		/*
++		 * Remaining args implies pathspecs specified, and we should
++		 * recurse within those.
++		 */
++		remove_directories = 1;
++	}
++
+ 	if (remove_directories)
+ 		dir.flags |= DIR_SHOW_IGNORED_TOO | DIR_KEEP_UNTRACKED_CONTENTS;
  
- 	strbuf_release(&abs_path);
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index d83aeb7dc2..530dfdab34 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -117,6 +117,7 @@ test_expect_success C_LOCALE_OUTPUT 'git clean with relative prefix' '
+ 	would_clean=$(
+ 		cd docs &&
+ 		git clean -n ../src |
++		grep part3 |
+ 		sed -n -e "s|^Would remove ||p"
+ 	) &&
+ 	verbose test "$would_clean" = ../src/part3.c
+@@ -129,6 +130,7 @@ test_expect_success C_LOCALE_OUTPUT 'git clean with absolute path' '
+ 	would_clean=$(
+ 		cd docs &&
+ 		git clean -n "$(pwd)/../src" |
++		grep part3 |
+ 		sed -n -e "s|^Would remove ||p"
+ 	) &&
+ 	verbose test "$would_clean" = ../src/part3.c
 -- 
 2.22.1.17.g6e632477f7.dirty
 
