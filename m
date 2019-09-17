@@ -2,97 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D38A81F464
-	for <e@80x24.org>; Tue, 17 Sep 2019 22:32:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 353F91F463
+	for <e@80x24.org>; Tue, 17 Sep 2019 22:35:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727427AbfIQWcn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 18:32:43 -0400
-Received: from mail-vk1-f201.google.com ([209.85.221.201]:50251 "EHLO
-        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725865AbfIQWcn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 18:32:43 -0400
-Received: by mail-vk1-f201.google.com with SMTP id f199so1900941vka.17
-        for <git@vger.kernel.org>; Tue, 17 Sep 2019 15:32:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=KNrk3EpmS1p1kW8VKH+Pg9Qs1vkX4VNmMpQ0eNxf+yY=;
-        b=obS56A3ynE9WOhYmgdw3TxLOIT0F3LnQ2EW0xaIFU7wT4l6ZsJ46vcD22hTQqbI6Q8
-         QB2T51q1Z45xVxSwrLH8dXeuLDKXfMardiO8K2tzZTIfKvhlaYPqjrFdfuO30ThBbOu2
-         p633BZxaOA2CfzY6a0md+Tf8BBCU2VbdR/TEi6lP3ta98+LDF4KWEXDkTuq/I2dfLZiD
-         7l3QqoYVfX0QYVN+f6d5cYXnaphxp2yIlAp4dtDtAOkA2/IOE7JfLZWtknDdJKVk86S6
-         7FMfmTrLM2b4cmMWENiL5r6LcTaEq9Au2Ms2myK3KwdmtcZvxQ6ZxI2NRzRIsQJIE5tQ
-         mMGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=KNrk3EpmS1p1kW8VKH+Pg9Qs1vkX4VNmMpQ0eNxf+yY=;
-        b=axuBla2LYcLUZwpnorzxMtaEnDZbMFm4W+oixu6GFEPm+Dj0FQLIMC7Yefzk5olhgn
-         S+Lb82cw3pH2QGV8ezC2Ml952wl9NVVC+Uv2pnBOPSFVG15dKpiK0ex2IQrCB2YdX5B/
-         KD1EC/ctIT+TpfHI6ZG2zdKURVxyA9WTQEcpqR37vH2o+VSR7mzcPoYtDhBBbC2a/CzI
-         W9pFAvn+YvmNuUCfuze2G7QXfezhcnf5W6KaC15pjsmIZgNz2xFIlG0lwKRV8Da8sFlv
-         vaMQpfSTyVYF8GT2cssNDo0BSH1bGRVl32Egmin0SM5XICFuvo/dU5v9tqcMeSYXlITc
-         ueoA==
-X-Gm-Message-State: APjAAAV5BSE7xSUh4CrFHXB1pXmcyTfez6zLOhb0R20WS5lLkFRMSzAi
-        r+IInnbzpKEa1QQVsFUtzITse1mBO0FChciX3WLV
-X-Google-Smtp-Source: APXvYqymS6vMv0r/xPj6Whmz5045gTNFuk8u/j1P+3qzTDD03oDXTxC3x7ww986ya0DoUjbui/vLwogkguh1d05vz25S
-X-Received: by 2002:ab0:6244:: with SMTP id p4mr777791uao.0.1568759561027;
- Tue, 17 Sep 2019 15:32:41 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 15:32:36 -0700
-In-Reply-To: <xmqqh85a7eax.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20190917223236.149613-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqh85a7eax.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.23.0.237.gc6a4ce50a0-goog
-Subject: Re: [RFC PATCH] merge-recursive: symlink's descendants not in way
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, newren@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1727680AbfIQWfN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 18:35:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58407 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726044AbfIQWfN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 18:35:13 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2B98331BE;
+        Tue, 17 Sep 2019 18:35:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=JuZN30AvcwDq
+        2oSUV7gEKyYK9O0=; b=s1OPPQOj+VXON1X2op+zKCs528uoJ/LmI5q6OeXatZXF
+        1B+lHqgn3SJp7yWERw4yVxSbSPimUGTIDbtt0MLKbTB+XR8wWbVKmEwggVyeG00u
+        EtdPqG+X+spawwCw6tBBeLa++yzClJh24pYQ/zHSAJVZuDNgzIPmwaGXnHW2ajc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=mZv9aW
+        90Xo9B4SnSnF4wK+HNc814b22yxVx0iWn90Of4oghOW/17q/Fz+wBemWVQqMNnMS
+        UyevWE241bouPrZ6Onp5ZQdvk36OsXYveYwYxQRpqmt1/QX2VgUHpFrBkBuOMtx3
+        8ACr37gpnCS8nUMDpJafrP7sx3S6a99BYx0Sc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A5097331BC;
+        Tue, 17 Sep 2019 18:35:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 74562331BA;
+        Tue, 17 Sep 2019 18:35:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Herv=C3=A9?= Beraud <herveberaud.pro@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Rewrite feature to render hg-to-git compatible with python2.x and 3.x
+References: <01020161b421939a-4ad52aaa-dda8-4250-9bce-71f0ede1a199-000000@eu-west-1.amazonses.com>
+        <0102016d3f74d202-d5b32dd4-0098-4ad0-8ac7-5fde254f7796-000000@eu-west-1.amazonses.com>
+Date:   Tue, 17 Sep 2019 15:35:05 -0700
+In-Reply-To: <0102016d3f74d202-d5b32dd4-0098-4ad0-8ac7-5fde254f7796-000000@eu-west-1.amazonses.com>
+        (=?utf-8?Q?=22Herv=C3=A9?= Beraud"'s message of "Tue, 17 Sep 2019 13:41:23
+ +0000")
+Message-ID: <xmqqd0fy7dra.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 65F123E8-D99B-11E9-BC42-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > When the working tree has:
-> >  - foo (symlink)
-> >  - foo/bar (directory)
-> 
-> Whoa, wait.  I assume, since this is about merge, the assumption is
-> that the working tree is clean with respect to the index, so 'foo'
-> is a symbolic link that is in the index.  Now, if foo is a symlink,
-> how can foo/bar (whether it is a directory or something else) exist,
-> which requires foo to be a directory in the first place?
+Herv=C3=A9 Beraud <herveberaud.pro@gmail.com> writes:
 
-I was trying to be concise but I guess I omitted too much detail. This is
-what's happening:
+> Rewrite features that are no longer supported (or recommended)
+> in Python 3 in the script so that it can be used with both
+> Python 2 and 3, namely:
+>
+> - print is not a statement; use print() function instead.
+> - dict.has_key(key) is no more; use "key in dict" instead.
+> - map(lambda ..., collection) is not liked; use list comprehension.
 
-Working tree:
- - foo (symlink pointing to .)
- - bar (directory)
- - bar/file (file)
+The first two are must haves (iow, without them the code would not
+work with Py3), but the last one sounds like a mere preference.  Is
+there some authoritative source we can quote (e.g. "PEPx says that
+we should prefer X over Y")?
 
-And the new commit:
- - foo (directory)
- - foo/bar (file)
- - bar (directory)
- - bar/file (file)
+> These changes introduce a syntaxe compatible with the both versions of
+> python.
+>
+> Python 2 is EOL at the end of 2019, the major part of distros
+> and systems now come with python 3  is the default version so
+> these address the situation to render this script compatible with
+> the latest versions of python.
 
-I'll update the commit message when I send out another version.
+The explanation looks vaguely familiar.  I would have placed the
+background first, and then description of what is done next, perhaps
+like:
 
-> In any case, if the working tree has 'foo' as a symlink, Git should
-> not look at or get affected by what 'foo' points at.
+    Python 2 is EOL at the end of 2019, many distros and systems now
+    come with python 3 as their default version.
 
-Git should not, but it does - there is a call in process_entry() that calls
-lstat() on "foo/bar", which indeed reports that "foo/bar" is a directory. This
-patch adds a check that none of its ancestors are symlinks.
+    Rewrite features that are no longer supported (or recommended)
+    in Python 3 in the script so that it can be used with both
+    Python 2 and 3, namely:
+
+    - print is not a statement; use print() function instead.
+    - dict.has_key(key) is no more; use "key in dict" instead.
+    - map(lambda ..., collection) is not liked; use list comprehension.
+
+to make it even easier to read without unnecessary repetition, but
+what you wrote is clear enough already.
+
+The patch text looked clearly done.  Nice.
