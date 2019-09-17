@@ -2,87 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 045F31F463
-	for <e@80x24.org>; Tue, 17 Sep 2019 19:22:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9893B1F463
+	for <e@80x24.org>; Tue, 17 Sep 2019 19:32:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730088AbfIQTWp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 15:22:45 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:42589 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725927AbfIQTWo (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 17 Sep 2019 15:22:44 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id 3A71421FE5;
-        Tue, 17 Sep 2019 15:22:44 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Tue, 17 Sep 2019 15:22:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jramsay.com.au;
-         h=from:to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-type; s=mesmtp; bh=XmpbAfNoQNbygASt2my8BSz
-        N1J6FDlUxfHN6857p2DU=; b=rJ1iYHarcXg0N5h128dJhOK0KXMTnTq8ReuNuL2
-        1A5jeXkqx60P1s3ygl7mkG6yVe7qtfwlXdjDEQO4YyXQFG9qEhgS+3wD2P7xipGB
-        z29qrkzSXJSqVy/j0klIyXRibhap6QuvauwZNtabN0i3jhseDHKaY0ya7Jfmlsqe
-        yhGU=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=XmpbAf
-        NoQNbygASt2my8BSzN1J6FDlUxfHN6857p2DU=; b=iXCAPN7X5Ilw/ddaEunKhQ
-        3Ss14GSUa5ZShbd99YTLfu5PyMd2Xp0oDW6F0erh+9z5KMKavv7qcRwGscT2/Qk/
-        KuekoSRB6nsycCaYEy8lmDHInF+HkkzEKwb2OSUBrdp63yhYfGyNl6HX+9+Ue2cJ
-        +FYT0N6eGFUFuQb9AYVTrWjud1/64OyX/2oDeUbZXARUJ50jXWKe6NeVEdR3Y3yY
-        r4kapmnf4jFxjO3VVpRluGQfBx5QxiEcjLJE/MW2Z6hZRuZzEaLzQsNhRFNd9s7N
-        I6B9mR+c0gvi7c3Kk1OXPkgZLSrCEqkqVd+7P0G/6U9Uu4cFYgeSvehj3jIalG/w
-        ==
-X-ME-Sender: <xms:gzKBXXWAG_SOs8Ev6rF_IYGDcl65Z0s2tNiERiQo12C1_gG5uGS2tA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudeigdduuddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhephffvufffoffkjghfgggtsehttdhmtdertddtnecuhfhrohhmpedflfgrmhgv
-    shcutfgrmhhsrgihfdcuoehjrghmvghssehjrhgrmhhsrgihrdgtohhmrdgruheqnecukf
-    hppeefkedrleeirddujeelrddvtddvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjrghm
-    vghssehjrhgrmhhsrgihrdgtohhmrdgruhenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:hDKBXT3FHygz9PC4hF-N8X4K_aW0EKqj7q--bKfUIXE7OOFw-DgT8g>
-    <xmx:hDKBXea1ohwrrgZ1tQHj8dZ63q-DCVmn6QEQ7OQjXPMkf6ax_oDyxg>
-    <xmx:hDKBXWogu5MPi1ZgftT_BuZDUSqe7r_5MPIj2dxmrxpBubGIAzlXMw>
-    <xmx:hDKBXehX4qlnMpEdolfLKL8gl1mGxStZyGKWzVGs48UXbM8y0BGv3w>
-Received: from [10.205.254.245] (unknown [38.96.179.202])
-        by mail.messagingengine.com (Postfix) with ESMTPA id B98B880064;
-        Tue, 17 Sep 2019 15:22:43 -0400 (EDT)
-From:   "James Ramsay" <james@jramsay.com.au>
-To:     "pedro rijo" <pedrorijo91@gmail.com>
-Cc:     "Git Users" <git@vger.kernel.org>
+        id S1726308AbfIQTcj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 15:32:39 -0400
+Received: from mail-pf1-f178.google.com ([209.85.210.178]:36483 "EHLO
+        mail-pf1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725865AbfIQTcj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 15:32:39 -0400
+Received: by mail-pf1-f178.google.com with SMTP id y22so2744369pfr.3
+        for <git@vger.kernel.org>; Tue, 17 Sep 2019 12:32:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=kNjuHHiKPntTgF7qga98dVqFqssA/FhZ94hjjgdP8Xw=;
+        b=GcAqe8M+rcl/th5RZs5GYRGAaD/Hy4D5Td4cxNQ6LhSGHEGt1NYN8wuOMp/1PNO4pQ
+         omajOmWDlEPSGzFV38Y2HgNtqh7xM40Ecvd3IkUbvlXvUmL+qV8cahbBBk8bNDFO8n2S
+         MhyA9JGs2q8Hq5G04bTG3f35c2bHGg9SArRpvG8BHhVe/kxt4AJu1F88spEFAM490EPB
+         ExD3h2ht6sjcyn+T+uhlPGD3avCs1UNhFtn+5N4SCqBfl/Agnivkxo18mNlBnIGM+IXu
+         aEJonZ9+K0ZCENOCWwdWboQq46nMMZlUz6uk/kUXe2KmgLzozXclI1dokZUhaemMxmSo
+         ynQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=kNjuHHiKPntTgF7qga98dVqFqssA/FhZ94hjjgdP8Xw=;
+        b=V3lKCDvmN2Nmn4te7ETRplEKJFuIyGPlLNTmjVgbonM1jGaaMAiT26FFRyGQQMErCl
+         EN0s6a0elQtJmsZBKC+uffd8YPPUiNPVUcYGUFf414bEIXKC4kQcww07gMgPq8hyDV0c
+         wu9V0OW6GGZ3sBPGOJVySNybw3iRIGjTJHkKTewlr8PKEwbQ3zI5nUXx7mWhL333bVB4
+         Vw7RCxYr0bPPxx3ggKx1rcUREkL+YZWxJuTQKTPR+aWvmCPAVaM2GEf8PuzGz3GBzXAU
+         H7JRUy57mLnyOiIV0b/1uuyNBZY2VavNHG86koQNgszzEBk76aGZTa7cWgWPbjlVFlGS
+         NgMg==
+X-Gm-Message-State: APjAAAVKX3Yzw8lJSnd9WeIucnu45Uva2cxslJah9bIsGhuv7KpgoOsq
+        9ni8JF/3iB/+UHTDNjqrLK928Q==
+X-Google-Smtp-Source: APXvYqzLsOGkcEBKRKfBPJExd4wo3QnOGyLivwBj2EAeDH3mr7O9oUQKv+rCKPK01iwtbd0/f7iUnA==
+X-Received: by 2002:a62:112:: with SMTP id 18mr6103541pfb.156.1568748757926;
+        Tue, 17 Sep 2019 12:32:37 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id y7sm3398685pfl.119.2019.09.17.12.32.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Sep 2019 12:32:37 -0700 (PDT)
+Date:   Tue, 17 Sep 2019 12:32:33 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     James Ramsay <james@jramsay.com.au>
+Cc:     pedro rijo <pedrorijo91@gmail.com>, Git Users <git@vger.kernel.org>
 Subject: Re: RFC - Git Developer Blog
-Date:   Tue, 17 Sep 2019 15:22:38 -0400
-X-Mailer: MailMate (1.12.5r5635)
-Message-ID: <45DA95BF-17D8-4238-9ECF-A4D1AC1A9634@jramsay.com.au>
-In-Reply-To: <CAPMsMoAwfp+jv9h7xAD9PbqV+cU4njyf7Tex6HUCznqjb5hi_w@mail.gmail.com>
+Message-ID: <20190917193233.GC17913@google.com>
 References: <20190806014935.GA26909@google.com>
  <20190806132052.GB18442@sigill.intra.peff.net>
  <20190806204925.GA196191@google.com>
  <885DEEA4-154B-4990-945D-19DABC87C627@jramsay.com.au>
  <CAPMsMoAwfp+jv9h7xAD9PbqV+cU4njyf7Tex6HUCznqjb5hi_w@mail.gmail.com>
+ <45DA95BF-17D8-4238-9ECF-A4D1AC1A9634@jramsay.com.au>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; markup=markdown
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <45DA95BF-17D8-4238-9ECF-A4D1AC1A9634@jramsay.com.au>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13 Sep 2019, at 10:05, pedro rijo wrote:
+On Tue, Sep 17, 2019 at 03:22:38PM -0400, James Ramsay wrote:
+> On 13 Sep 2019, at 10:05, pedro rijo wrote:
+> 
+> > Just a minor question: since we have git-scm, pro-git, and git
+> > translations in github, why not keep in the same place, under the same
+> > organization? I just find it easier to find than having repos
+> > scattered across different git hosting services
+> 
+> It wasn't a technical reason, but a matter of me (and my employer GitLab)
+> volunteering the time needed to get the blog project off the ground. In the
+> context of the Virtual Git Contributors' Summit, folks seemed happy with
+> using GitLab or any other service with a Git interface.
 
-> Just a minor question: since we have git-scm, pro-git, and git
-> translations in github, why not keep in the same place, under the same
-> organization? I just find it easier to find than having repos
-> scattered across different git hosting services
+I really appreciate you setting it up, James - the starting inertia is
+one of the trickier bits of something like this :)
 
-It wasn't a technical reason, but a matter of me (and my employer 
-GitLab) volunteering the time needed to get the blog project off the 
-ground. In the context of the Virtual Git Contributors' Summit, folks 
-seemed happy with using GitLab or any other service with a Git 
-interface.
+If we decide later down the road that we really feel the need to have
+the site, book, translations, etc all in one place I think it'll be
+pretty trivial to mirror/move/whatever. I'm just happy to have somewhere
+to start!
+
+ - Emily
