@@ -2,115 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EF541F463
-	for <e@80x24.org>; Tue, 17 Sep 2019 16:35:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93C911F463
+	for <e@80x24.org>; Tue, 17 Sep 2019 16:48:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730568AbfIQQfv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 12:35:51 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:34600 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730456AbfIQQfT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 12:35:19 -0400
-Received: by mail-pg1-f195.google.com with SMTP id n9so2318648pgc.1
-        for <git@vger.kernel.org>; Tue, 17 Sep 2019 09:35:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wXPd/arPbBc8IArv2/mU6ox4RrlUoFYC4oKDBsj3tU4=;
-        b=Ehbz2e4Qd/Oa379vmUkXXMfjFAQ/H1KDTziFWS5EtEO4+gdIoKce6/1v+8F0m4g3s+
-         nEeaAiExMM78UBgAMjpi8VyBrwsFIM0/KGPEs+EUCX0FU4FLOfV/vsSvG9ypOuUBg/vE
-         /7bfbVilMdTQrReOe14RdWWw0YnJLMLI8ljQND2zPk1pjhxtlwGmlmQ7iVllHBXOExDm
-         0rQt/2S89jcqJQmYvI4jh07zzPiEqUhb7I7El9yaAbr80AXPclRFQ136KhYFt5tvpfUi
-         hjJKronIgkgcotTrAtRiNWRHSL8f2lW7Lg+O7Wf9B/CLMRCGCE+FuTRPV/fuD/w7g/n4
-         71+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wXPd/arPbBc8IArv2/mU6ox4RrlUoFYC4oKDBsj3tU4=;
-        b=Svwb9+SMmJgpjNr803KXNttIJjLdEkiPSh/vAZEsH7eXykMGO2nkns9LnYufJp9UaD
-         JQh/cH+UqKlUEcZki/LaYnOkgMG7kv8tyeuhxi8X1MD/jP2q8OaoBXZqeCn11Ug8cO6C
-         cwVPhs60p3OM11n/zPMDmd9rniUwtvoSvS0/olfCyQfbgNwEJkLRh4V0Rg+q6KT0sq2a
-         ZreQBlgWZvWRhjrn4nLLSGLvD2f84hJhFuDnYy6S1HHSwxGfpmqohD6rkdF0Rub3+DZK
-         zu83o39lGljAMMIWMM13OqZhDo97QCus8R0LTEmf0TdqwFmaSIeH/GHIyu2NmizzT5wB
-         O9lg==
-X-Gm-Message-State: APjAAAUCUAjh2xqdE3sqJB5S3k/ZnJLvEq/sjHNLI5gjCcU8tbiNoM4Y
-        /+xYIVewAOuEemIzM5RvQeUA+8JTzC0=
-X-Google-Smtp-Source: APXvYqwzy51Jv3nAFOZse1+UXh0cAUcb9/DfismVrh3lwhYR4oVoA07AoSU1evXqcO4+Q1gfFvXXBA==
-X-Received: by 2002:a17:90a:dc81:: with SMTP id j1mr5792913pjv.92.1568738118211;
-        Tue, 17 Sep 2019 09:35:18 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id s5sm3202452pfe.52.2019.09.17.09.35.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 17 Sep 2019 09:35:16 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 05/12] dir: make the DO_MATCH_SUBMODULE code reusable for a non-submodule case
-Date:   Tue, 17 Sep 2019 09:34:57 -0700
-Message-Id: <20190917163504.14566-6-newren@gmail.com>
-X-Mailer: git-send-email 2.22.1.17.g6e632477f7
-In-Reply-To: <20190917163504.14566-1-newren@gmail.com>
-References: <20190912221240.18057-1-newren@gmail.com>
- <20190917163504.14566-1-newren@gmail.com>
+        id S1727200AbfIQQsF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 12:48:05 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61327 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725847AbfIQQsF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 12:48:05 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 62A812F27D;
+        Tue, 17 Sep 2019 12:48:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+y78HiQxXzinKlXwzqF/I/zWOlA=; b=Wz/9H1
+        DZJ2rjY7C3hYXN7b6l4GtBTztdDGrsD1gZD9FW55A7BT0znnMJMpxnBJCzSpCRoc
+        zdMancB8S1Z7H3G5ga+JhutRCkiytq/Z9h/7IYlJGJElv7MG7rFCia0ej+W1WIVN
+        KghjJ0S0kE13umMy0UbmXqsk3qNjRdgextRNw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OocCXG0GcLDvdEKaFipzl+fGmreTEveb
+        hw4IrX+i90gduXF29zLp/hg3ON9ekEtWGHpvxxF9ES//iCLF88xdvHWhSMCZkr7p
+        o44mJcOzmluWfex6USy1Nrv4uCevJLEL5cWEva/YnLbzxgwaEqw3HnqAHhPVpFHh
+        FnbH2bOBfJQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5AB442F27C;
+        Tue, 17 Sep 2019 12:48:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9F12A2F27B;
+        Tue, 17 Sep 2019 12:48:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Paul Mackerras <paulus@ozlabs.org>
+Subject: Re: [PATCH] gitk: rename zh_CN.po to zh_cn.po
+References: <6feff2e73e1c4ca838efcabe90e0978a4d88cb7d.1568710294.git.liu.denton@gmail.com>
+Date:   Tue, 17 Sep 2019 09:48:01 -0700
+In-Reply-To: <6feff2e73e1c4ca838efcabe90e0978a4d88cb7d.1568710294.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Tue, 17 Sep 2019 01:52:06 -0700")
+Message-ID: <xmqq36guamym.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: E9F975A4-D96A-11E9-B2BB-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The specific checks done in match_pathspec_item for the DO_MATCH_SUBMODULE
-case are useful for other cases which have nothing to do with submodules.
-Rename this constant; a subsequent commit will make use of this change.
+Denton Liu <liu.denton@gmail.com> writes:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- dir.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> When running make from a clean environment, all of the *.po files should
+> be converted into *.msg files. After that, when make is run without any
+> changes, make should not do anything.
+>
+> After beffae768a (gitk: Add Chinese (zh_CN) translation, 2017-03-11),
+> zh_CN.po was introduced. When make was run, a zh_cn.msg file was
+> generated (notice the lowercase). However, since make is case-sensitive,
+> it expects zh_CN.po to generate a zh_CN.msg file so make will keep
+> reattempting to generate a zh_CN.msg so successive make invocations
+> result in
+>
+>     Generating catalog po/zh_cn.msg
+>     msgfmt --statistics --tcl po/zh_cn.po -l zh_cn -d po/
+>     317 translated messages.
+>
+> happening continuously.
+>
+> Rename zh_CN.po to zh_cn.po so that when make generates the zh_cn.msg
+> file, it will realize that it was successfully generated and only run
+> once.
 
-diff --git a/dir.c b/dir.c
-index 76a3c3894b..b4d656192e 100644
---- a/dir.c
-+++ b/dir.c
-@@ -273,7 +273,7 @@ static int do_read_blob(const struct object_id *oid, struct oid_stat *oid_stat,
- 
- #define DO_MATCH_EXCLUDE   (1<<0)
- #define DO_MATCH_DIRECTORY (1<<1)
--#define DO_MATCH_SUBMODULE (1<<2)
-+#define DO_MATCH_LEADING_PATHSPEC (1<<2)
- 
- /*
-  * Does 'match' match the given name?
-@@ -354,7 +354,7 @@ static int match_pathspec_item(const struct index_state *istate,
- 		return MATCHED_FNMATCH;
- 
- 	/* Perform checks to see if "name" is a super set of the pathspec */
--	if (flags & DO_MATCH_SUBMODULE) {
-+	if (flags & DO_MATCH_LEADING_PATHSPEC) {
- 		/* name is a literal prefix of the pathspec */
- 		int offset = name[namelen-1] == '/' ? 1 : 0;
- 		if ((namelen < matchlen) &&
-@@ -498,7 +498,7 @@ int submodule_path_match(const struct index_state *istate,
- 					strlen(submodule_name),
- 					0, seen,
- 					DO_MATCH_DIRECTORY |
--					DO_MATCH_SUBMODULE);
-+					DO_MATCH_LEADING_PATHSPEC);
- 	return matched;
- }
- 
--- 
-2.22.1.17.g6e632477f7.dirty
+True, and it is not just that.  The install target would fail
+because it cannot find zh_CN.msg, I think.
 
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  po/{zh_CN.po => zh_cn.po} | 0
+>  1 file changed, 0 insertions(+), 0 deletions(-)
+>  rename po/{zh_CN.po => zh_cn.po} (100%)
+>
+> diff --git a/po/zh_CN.po b/po/zh_cn.po
+> similarity index 100%
+> rename from po/zh_CN.po
+> rename to po/zh_cn.po
+
+This would make this in line with pt_{pt,br}.po, existing locales
+with country code in them.
+
+Reviewed-by: Junio C Hamano <gitster@pobox.com>
