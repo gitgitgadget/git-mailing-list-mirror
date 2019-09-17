@@ -2,124 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6BC01F463
-	for <e@80x24.org>; Tue, 17 Sep 2019 22:51:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E9E41F463
+	for <e@80x24.org>; Tue, 17 Sep 2019 23:02:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728384AbfIQWvx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 18:51:53 -0400
-Received: from mail-pg1-f181.google.com ([209.85.215.181]:46331 "EHLO
-        mail-pg1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726500AbfIQWvw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 18:51:52 -0400
-Received: by mail-pg1-f181.google.com with SMTP id a3so2762209pgm.13
-        for <git@vger.kernel.org>; Tue, 17 Sep 2019 15:51:52 -0700 (PDT)
+        id S1728115AbfIQXCa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 19:02:30 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42788 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726201AbfIQXCa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 19:02:30 -0400
+Received: by mail-wr1-f66.google.com with SMTP id n14so3976664wrw.9
+        for <git@vger.kernel.org>; Tue, 17 Sep 2019 16:02:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Dg7TdMHVi7MulKGf+na3FqJUzIQnCFif6jbixNL2Crg=;
-        b=CiYD8Rj3fHecMu2368zPZg3Gt17QuCWLTKEY2iAcQES+ZmK7TYSbwQ5I7pUoggyAC+
-         PPg7hR5+aWJyh0+Wx98PuD/NjT/+sNAsHMl34/rz0/jMwyJen7AlJRcwn8iFdC4z57ZJ
-         f7VDiTPs9BaN+XWPB6ZVb8ApKFBYs7ormP3MDi+t7dXBDh5JN5L8uNJ3iJJ5Z/GYOIyK
-         Fm0C1AGn47L47pWmGSqu9ouwi6Koj1rDiLdrkY2MOzcU5JdZ5ReHdxRxM2Ive5Sfr6lL
-         1nbUQQpbGRY27J5ylulZXK+meifpphfEvJeDZmSfv1oQjSB1Xl1B2kaLzfKv2q5C0TCz
-         aHlw==
+        bh=Rqlyu9zH96hYtd1HEdJZ9ZxYClqQz8gPiZCylfSiedA=;
+        b=hZvsIXw2CmqIUI2CfY8IOsxprgIEw23vDrnlhzVMPflVH46VyW5REaQIOKo9hSxkUr
+         SJUu76a6jxTuFSqPDvijIfxTT0enn4WkTW7zW9rLotIgwHAVFTXextBHPeGdNhtuCW0Z
+         IFggD6yJJG4LKNqtL3+W45wGZhowRIisLwUoABvEkfEdi6KowMvZVQj+F3aCtglwvfBU
+         XdPRSJ5dZiit4mzn3M/8xFLpkMvSrRj/ezIECeUoVw8HDRBv4qZStGyyXjSj+B1EgVN9
+         zeZG6SqYTuEpF/Ekvsq0GPC9MJrww5ZpOYo3Dk88oLhyGNe03XbKPsMDDKexKH6hOI2V
+         tnPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Dg7TdMHVi7MulKGf+na3FqJUzIQnCFif6jbixNL2Crg=;
-        b=qeIvt2u7VFrso7c0c8ka5+QrZCZCm2yGQndhnvPOMu5NotTwlVpxea8cA005gbTXxE
-         nFJYaokTXWvmCSSurRa15ajQldMMlwi27eV4dZ6joNRrv9oSrgpTNGlviyQira4OVDas
-         5pXaLamDiLVDr00CFG3yxvdcuIQkTm5I8V29jerYyHfFjNNLg0i6VbVFxcY6zBW1A0yg
-         kE0zzbtcSzRIvcUsITJaWGve3wcG4OXPJU9oivVsyAib4R9y88Lo2XJ4UgouUUO++8O9
-         DGq4cAOKcREVKanO9pkZ/Se+8SLPvScVuKUB7rFNQsVDaC1uht6M90FAhduKia2u1AX/
-         BHjQ==
-X-Gm-Message-State: APjAAAVmGn30kT/S7pRbYKV9EP3GUHOhzmJr04EcwVvJGoar+brkj+lE
-        bo/Lxq+brE3uo4SQVTLH52cHPooHiZ8=
-X-Google-Smtp-Source: APXvYqwJ2DUKulzWtwp4XWIIbSCTIKufN+tb/1bJe5oecb6mEGcl0wlB9nGrphXGSIiOE11UsHiN4w==
-X-Received: by 2002:a17:90a:af8d:: with SMTP id w13mr468831pjq.141.1568760711725;
-        Tue, 17 Sep 2019 15:51:51 -0700 (PDT)
-Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.137])
-        by smtp.gmail.com with ESMTPSA id t8sm176096pjq.30.2019.09.17.15.51.50
+        bh=Rqlyu9zH96hYtd1HEdJZ9ZxYClqQz8gPiZCylfSiedA=;
+        b=bDeUs7dF8bpz1aHCePZcwXpXAaD0E/ePicUdqtHMCVGbxsDX+VZAxh48Da3v0lgrP/
+         DCEn/ghSSIB6faXd5mHMT3lEdXr7ka4BE243EH1O0YBBDx38rhkr7poD8muBKq/QmDUB
+         VnWvpbRqweRkacCswoWTvXD/B3WmPCzQYlUm93BAeXRJUZA2myWg/BhfKULZ6jKPaowL
+         UTe5LC1XidJs2hfsxpWCY+tkcldL6KeIPNKPf6bP/6aXyiz4DPCmA/Y2ng0LVyayXoDu
+         jpP1c5gQyIdJ9b27BWKBUE02hv0pi3tuU5JIhEn9xQCVfmdZ2709x6Dpe4vKa0knNKWD
+         gZuQ==
+X-Gm-Message-State: APjAAAWbV56UVL5Zt+3cR4hKkU7O3VjPAejne0IGfSudfU/SNPkqVsJA
+        C5R9pynSQBPgr5AJXmn3FL0=
+X-Google-Smtp-Source: APXvYqy0P4cqsUMvftxDBVuas8Dp+ClkO4SsPUfTJL/4MFp1vE+buRZg0cjGAn9tQ4LoSuAzufr53A==
+X-Received: by 2002:a5d:4d4f:: with SMTP id a15mr624218wru.267.1568761348067;
+        Tue, 17 Sep 2019 16:02:28 -0700 (PDT)
+Received: from szeder.dev (x4db91871.dyn.telefonica.de. [77.185.24.113])
+        by smtp.gmail.com with ESMTPSA id y186sm530719wmb.41.2019.09.17.16.02.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Sep 2019 15:51:50 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 15:51:48 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [GIT PULL] git-gui pull request
-Message-ID: <20190917225148.GA80152@dentonliu-ltm.internal.salesforce.com>
-References: <20190917201334.hfbvuisdwkwgvwg5@yadavpratyush.com>
- <20190917205051.GA63601@dentonliu-ltm.internal.salesforce.com>
+        Tue, 17 Sep 2019 16:02:27 -0700 (PDT)
+Date:   Wed, 18 Sep 2019 01:02:24 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, newren@gmail.com
+Subject: Re: [RFC PATCH] merge-recursive: symlink's descendants not in way
+Message-ID: <20190917230224.GB29845@szeder.dev>
+References: <CABPp-BHpXWF+1hKUTfn8s-y4MJZXz+jUVS_K10eKyD6PGwo=gg@mail.gmail.com>
+ <20190917215040.132503-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190917205051.GA63601@dentonliu-ltm.internal.salesforce.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20190917215040.132503-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 17, 2019 at 01:50:51PM -0700, Denton Liu wrote:
+On Tue, Sep 17, 2019 at 02:50:40PM -0700, Jonathan Tan wrote:
+> diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
+> index ff641b348a..dfd617a845 100755
+> --- a/t/t3030-merge-recursive.sh
+> +++ b/t/t3030-merge-recursive.sh
+> @@ -452,6 +452,33 @@ test_expect_success 'merge-recursive d/f conflict result' '
+>  
+>  '
+>  
+> +test_expect_success 'dir in working tree with symlink ancestor does not produce d/f conflict' '
 
-[...]
+This test needs the SYMLINKS prereq.
 
-> > ----------------------------------------------------------------
-> > Bert Wesarg (2):
-> >       git-gui: convert new/amend commit radiobutton to checkbutton
-> >       git-gui: add horizontal scrollbar to commit buffer
-> > 
-> > Birger Skogeng Pedersen (2):
-> >       git-gui: add hotkeys to set widget focus
-> >       git-gui: add hotkey to toggle "Amend Last Commit"
-> > 
-> > Pratyush Yadav (9):
-> >       git-gui: allow reverting selected lines
-> >       git-gui: allow reverting selected hunk
-> >       git-gui: return early when patch fails to apply
-> >       git-gui: allow undoing last revert
-> >       Merge branch 'bp/widget-focus-hotkeys'
-> >       Merge branch 'py/revert-hunks-lines'
-> >       Merge branch 'bw/amend-checkbutton'
-> >       Merge branch 'bw/commit-scrollbuffer'
-> >       Merge branch 'bp/amend-toggle-bind'
-> 
-> Seems like this list is missing
-> 
-> 	Pat Thoyts (1):
-> 		  Merge remote-tracking branch 'philoakley/dup-gui'
-> 
-> 	Philip Oakley (4):
-> 		  git-gui: remove duplicate entries from .gitconfig's gui.recentrepo
-> 		  git gui: cope with duplicates in _get_recentrepo
-> 		  git gui: de-dup selected repo from recentrepo history
-> 		  git gui: allow for a long recentrepo list
-> 
-> which should be in your PR but aren't in mainline Git yet.
+> +	git init sym &&
+> +	(
+> +		cd sym &&
+> +		ln -s . foo &&
+> +		mkdir bar &&
+> +		touch bar/file &&
 
-Sorry, my mistake. Turns out these were merged a couple of years ago in
-90dbf226ba (Merge branch 'js/msgfmt-on-windows' of ../git-gui into
-js/git-gui-msgfmt-on-windows, 2017-07-25).
+Nit: >bar/file (though because of the symlink this test won't be run
+on the most fork()-challenged platform).
 
+> +		git add foo bar/file &&
+> +		git commit -m "foo symlink" &&
+> +
+> +		git checkout -b branch1 &&
+> +		git commit --allow-empty -m "empty commit" &&
+> +
+> +		git checkout master &&
+> +		git rm foo &&
+> +		mkdir foo &&
+> +		touch foo/bar &&
+> +		git add foo/bar &&
+> +		git commit -m "replace foo symlink with real foo dir and foo/bar file" &&
+> +
+> +		git checkout branch1 &&
+> +
+> +		# Exercise to make sure that this works without errors
+> +		git cherry-pick master
+
+Working without errors is great, but I think this test should also
+check that the results are as expected, e.g. 'foo' is now a directory,
+etc.
+
+> +	)
+> +'
+> +
+>  test_expect_success 'reset and 3-way merge' '
+>  
+>  	git reset --hard "$c2" &&
+> -- 
+> 2.23.0.237.gc6a4ce50a0-goog
 > 
-> > 
-> >  git-gui.sh          | 140 ++++++++++++++++++++++++++++++++++++++++------------
-> >  lib/checkout_op.tcl |   6 +--
-> >  lib/commit.tcl      |   4 +-
-> >  lib/diff.tcl        |  96 +++++++++++++++++++++++++++++------
-> >  lib/index.tcl       |   8 +--
-> >  5 files changed, 199 insertions(+), 55 deletions(-)
-> > 
-> > -- 
-> > Regards,
-> > Pratyush Yadav
