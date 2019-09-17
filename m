@@ -2,128 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,UNPARSEABLE_RELAY shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C44791F463
-	for <e@80x24.org>; Tue, 17 Sep 2019 15:09:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52FD11F463
+	for <e@80x24.org>; Tue, 17 Sep 2019 15:10:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729117AbfIQPI7 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 17 Sep 2019 11:08:59 -0400
-Received: from smtppost.atos.net ([193.56.114.176]:31888 "EHLO
-        smtppost.atos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729079AbfIQPI7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 11:08:59 -0400
-X-Greylist: delayed 609 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Sep 2019 11:08:57 EDT
-Received: from mail1-ext.my-it-solutions.net (mail1-ext.my-it-solutions.net) by smarthost5.atos.net with smtp
-        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-         id 7a82_56ba_535c3138_fb05_4f5e_9df8_cf64c97d5e3f;
-        Tue, 17 Sep 2019 16:58:43 +0200
-Received: from mail1-int.my-it-solutions.net ([10.92.32.11])
-        by mail1-ext.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id x8HEwhJk026782
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-        for <git@vger.kernel.org>; Tue, 17 Sep 2019 16:58:43 +0200
-Received: from DEERLM99ETVMSX.ww931.my-it-solutions.net ([10.86.142.97])
-        by mail1-int.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id x8HEwhsw028316
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
-        for <git@vger.kernel.org>; Tue, 17 Sep 2019 16:58:43 +0200
-Received: from DEERLM99ETUMSX.ww931.my-it-solutions.net (10.86.142.96) by
- DEERLM99ETVMSX.ww931.my-it-solutions.net (10.86.142.97) with Microsoft SMTP
- Server (TLS) id 14.3.439.0; Tue, 17 Sep 2019 16:58:43 +0200
-Received: from EUR01-DB5-obe.outbound.protection.outlook.com (10.86.142.137)
- by hybridsmtp.it-solutions.atos.net (10.86.142.96) with Microsoft SMTP Server
- (TLS) id 14.3.439.0; Tue, 17 Sep 2019 16:58:42 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=m7ojBGns4CqwR/fCt/pUwy14o4C0j7t9nZ2kd44ckgEndKYN6XbU3bmbMCBLuYGjZEPj8Vhb8iGaUSS/VxKsx4vXNHVJIs1TDf7wZB8Bu+zfHI58LiXb2UW/pyP0K8ofmpSjzPPIxNTPx5H5tlYh+a36i3+xMOmEAbc/T/Zb/+VQRTxvZZ7zXCnZvra1ldqcbNOXh2p3wkWqu185XMwd6AzcRrtqbNO2qgbg19wehnMHFjJATywNauLwwMtQ104xEgTTGOJrCvM7Jgeu3egwnLkAYB7OpLUE23Jk08oI2WnW+JXHdpRiVgThxOlZrC1SVeB3+b4ayIoe9Ga7723LxA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7979AxMGwdxznVJOtidEyt6JJ6dqk68N8Px91J1faPM=;
- b=QswHcLpOqrXIZfoH9qJMW0Czwn3841dan/d3xQO3q9RXqi1+bRjarTwCEL9rZkIMVvd9WgVdqEpPlFvH7efx6akpD74m+YfK9y8P75Ioh6lY60mUqoOZMFF8LqNO0qNT2pyXMotSLlH2z5V2oozmo/CsHzz6MVQZ8k3h5+/FqQgn4OFNEhvybJYdu+xA5sDrkJd/WtIdod2oj7FNP6GtDzhKgfxaOKtZPFmZtuF06s+CG5GkGGTmy3TIPma83+GqrUzq65YneCvTJeFJ16b6zGUbjRJQI+Z0cw+0/bvoXiQuBRY2XUSqVFjvTGQeSJJFu4QvoxGzSnrVDdtsWHYZqg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atos.net; dmarc=pass action=none header.from=atos.net;
- dkim=pass header.d=atos.net; arc=none
-Received: from AM6PR02MB4950.eurprd02.prod.outlook.com (20.177.199.143) by
- AM6PR02MB5286.eurprd02.prod.outlook.com (20.178.91.77) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2263.23; Tue, 17 Sep 2019 14:58:41 +0000
-Received: from AM6PR02MB4950.eurprd02.prod.outlook.com
- ([fe80::f519:eb95:46ab:57e1]) by AM6PR02MB4950.eurprd02.prod.outlook.com
- ([fe80::f519:eb95:46ab:57e1%7]) with mapi id 15.20.2263.023; Tue, 17 Sep 2019
- 14:58:41 +0000
-From:   "CHIGOT, CLEMENT" <clement.chigot@atos.net>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH] contrib/svn-fe: fix shebang for svnrdump_sim.py
-Thread-Topic: [PATCH] contrib/svn-fe: fix shebang for svnrdump_sim.py
-Thread-Index: AQHVbWfjpf8qbjULekqkto+U7J2AFg==
-Date:   Tue, 17 Sep 2019 14:58:41 +0000
-Message-ID: <AM6PR02MB49509E34B4DC357582262193EA8F0@AM6PR02MB4950.eurprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=clement.chigot@atos.net; 
-x-originating-ip: [193.56.241.25]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 901a2a15-4764-4d90-d37c-08d73b7f873f
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600167)(711020)(4605104)(1401327)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);SRVR:AM6PR02MB5286;
-x-ms-traffictypediagnostic: AM6PR02MB5286:
-x-microsoft-antispam-prvs: <AM6PR02MB528646B64FAA9885D978F213EA8F0@AM6PR02MB5286.eurprd02.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:6108;
-x-forefront-prvs: 01630974C0
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(4636009)(136003)(396003)(366004)(376002)(346002)(39860400002)(189003)(199004)(2906002)(4744005)(52536014)(478600001)(5640700003)(2501003)(5660300002)(71200400001)(6436002)(71190400001)(99286004)(66946007)(9686003)(305945005)(7736002)(66476007)(256004)(76116006)(14444005)(3846002)(6116002)(91956017)(66556008)(25786009)(64756008)(66446008)(74316002)(14454004)(6916009)(102836004)(2351001)(476003)(486006)(26005)(86362001)(6506007)(8936002)(186003)(55016002)(33656002)(8676002)(66574012)(7696005)(81156014)(1730700003)(66066001)(81166006)(316002);DIR:OUT;SFP:1102;SCL:1;SRVR:AM6PR02MB5286;H:AM6PR02MB4950.eurprd02.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: atos.net does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: 8Y+YMr4FQLKB6P5hlaMMfSYGjEPzmw6GfOLnODHjKzILyEepXG5Kkf3eqUyHfFmDWqffz3nggVbJr/rRei1JE0+oemd1DCvT3oBNUrg8IO12UCU9w9HLE6ppTyxM7ZrdcEeegckT+G1BcH+prjvO3WJv0htjorehvz6Ry2Ar+eDc/p15W1ARn5WPCUZjWljrUpF066lWtFnbZGaX0itAfXU/7FXwMhpCjMjq2izoxWa7YyA0hnwFtqF0ZIRYfIVAboYAbnbs8pQV1UDfCHm0PnMw+qHompiBCnIsArPaW8BJBdzX1/1Wh05IpmU0mbZazasLXZWNzmbRY+DCQ5548yWz/4ESGbRYdhQyr9Eq0iqZKqVhl7O9iW5P6bCzxWN44iUzlfcRkFkd2ro3KlBex6pXHvVGeu6HDOAu8Jih6H4=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S1729162AbfIQPK5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 11:10:57 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45112 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728802AbfIQPK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 11:10:57 -0400
+Received: by mail-ed1-f65.google.com with SMTP id h33so3627075edh.12
+        for <git@vger.kernel.org>; Tue, 17 Sep 2019 08:10:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/gr4/enrqX6QME57yQVO1nkACDKPa9nlHjZSyBjOTZM=;
+        b=VNfLV5AXVWvFrwGH/zYmrBI0khoSupQusvpRqaaDeJr3k9vP31zman+Td+V7lJ4xZ2
+         v701zblih/ii9AtaWVJ5XC60liuvZ0v9rXrJfSg6XbCgldkFKlQihsKa87g528D9pryE
+         YTdwIlb5rapa3KkNUBW2aFR9vyKHsU9BbHUbZefGIghlm3RDv6fSmfaUVcf9vYArItRf
+         nv2S3uNpMHJrrvL5Plv2Id5hs09g8ZAHFf3+HUUed31uNNW+qfrrrharrVnSH//ONLa8
+         EORtX+pHuvsMxBXIsHGMtzzTUOxZIYYLaRysCjxkmEdL0NGz5Re5Kof4gx7ZE3qMPhRb
+         I1BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/gr4/enrqX6QME57yQVO1nkACDKPa9nlHjZSyBjOTZM=;
+        b=YbE87N19DIE6ZTdny9llxYorHK+mIOTL/+C6qTtETTz3TUXmAtfd7lHCTjoOk+65SZ
+         8s7xBUmZ9I689k6WbAQ5lIEUwPSnZbpPovECWds7IE7x8yL4g+ARZBah0gmu+sANyFNO
+         KE9zc66Y+5D45Cs/bOCGuY3mCvphuFlIKfJ4Gu0D40q7amCqfUWb3LgL9x/2TxP+ApoB
+         y1p5gVCtdk0tQgyrQrw2hh9RXwC+dsQlzTOIr3R7Eh9GWUvfBmI5v27EzY9x/O0eCVUI
+         PN3v0YJsJKeNT8h2BObc1TKq/MrxxT1GE+Xt+B2qarUxw1T0OHlLrpNrM55oG1xjY9Z9
+         BBXw==
+X-Gm-Message-State: APjAAAXi1H89pIkS4QZA6AnP2Cm301mC3SDyOJ9dEjn2qSzF/ncDsQAM
+        NdrlsdGQxOYEziNbxkYNjdwpS/hrtwSjLKUmUFeOADtX
+X-Google-Smtp-Source: APXvYqx1RfXPTrIRoc6t16oIfF7XxTyFyeahwVmmzSl/bQYpGM2IqiSiY9C9zjX7/hSGnjH55LdSwJFM5uEov+ols6c=
+X-Received: by 2002:a50:852c:: with SMTP id 41mr5016231edr.201.1568733055207;
+ Tue, 17 Sep 2019 08:10:55 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 901a2a15-4764-4d90-d37c-08d73b7f873f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Sep 2019 14:58:41.0927
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: WW0TpWuaoxvEJF0xLPIBYWzDZX8sE7stlrMZyaRxoVMvUKi5QQOiZxJ+1uPz5fob1JIR9mpH0oIYuDDjRWuyEw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR02MB5286
-X-OriginatorOrg: atos.net
+References: <20190827051756.GA12795@sigill.intra.peff.net> <20190913200317.68440-1-jonathantanmy@google.com>
+ <20190913205148.GA8799@sigill.intra.peff.net> <20190916184208.GB17913@google.com>
+ <nycvar.QRO.7.76.6.1909171158090.15067@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1909171158090.15067@tvgsbejvaqbjf.bet>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 17 Sep 2019 17:10:43 +0200
+Message-ID: <CAP8UFD38S_nV2NmjeadZ0J5ftJgBwghOZ+BNHZaNQ72nZmLtNA@mail.gmail.com>
+Subject: Re: Git in Outreachy December 2019?
+To:     Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The shebang for a python script should be "/usr/bin/env python" and not
-"/usr/bin/python". On some OSes like AIX, python default path is not under
-"/usr/bin" ("/opt/freeware/bin" for AIX).
+Hi Emily and Dscho,
 
-Note the main reason behind this change is that AIX rpm will add a
-dependency on "/usr/bin/python" instead of "/usr/bin/env".
+On Tue, Sep 17, 2019 at 1:28 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Mon, 16 Sep 2019, Emily Shaffer wrote:
+>
+> > Jonathan Tan, Jonathan Nieder, Josh Steadmon and I met on Friday to
+> > talk about projects and we came up with a trimmed list; not sure what
+> > more needs to be done to make them into fully-fledged proposals.
+>
+> Thank you for doing this!
 
-Signed-off-by: Clément Chigot <clement.chigot@atos.net>
----
- contrib/svn-fe/svnrdump_sim.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Yeah, great!
 
-diff --git a/contrib/svn-fe/svnrdump_sim.py b/contrib/svn-fe/svnrdump_sim.py
-index 11ac6f6927..50c6a4f89d 100755
---- a/contrib/svn-fe/svnrdump_sim.py
-+++ b/contrib/svn-fe/svnrdump_sim.py
-@@ -1,4 +1,4 @@
--#!/usr/bin/python
-+#!/usr/bin/env python
- """
- Simulates svnrdump by replaying an existing dump from a file, taking care
- of the specified revision range.
--- 
-2.17.1
+> > For starter microprojects, we came up with:
+> >
+> >  - cleanup a test script (although we need to identify particularly
+> >    which ones and what counts as "clean")
+> >  - moving doc from documentation/technical/api-* to comments in the
+> >    appropriate header instead
+> >  - teach a command which currently handles its own argv how to use
+> >    parse-options instead
+> >  - add a user.timezone option which Git can use if present rather than
+> >    checking system local time
+>
+> Nice projects, all. There are a couple more ideas on
+> https://github.com/gitgitgadget/git/issues, they could probably use some
+> tagging.
 
+Thanks! Maybe we should have a page with Outreachy microprojects on
+https://git.github.io/
 
-Clément Chigot
-ATOS Bull SAS
-1 rue de Provence - 38432 Échirolles - France
+I will see if I find the time to create one soon with the above information.
 
+> > For the longer projects, we came up with a few more:
+
+[...]
+
+> >    - git-bisect.sh
+>
+> That would be my top recommendation, especially given how much effort
+> Tanushree put in last winter to make this conversion to C so much more
+> achievable than before.
+
+I just added a project in the Outreachy system about it. I would have
+added the link but Outreachy asks to not share the link publicly. I am
+willing to co-mentor (or maybe mentor alone if no one else wants to
+co-mentor) it. Anyone willing to co-mentor can register on the
+outreachy website.
+
+Thanks for the other suggestions by the way.
+
+> Converting shell/Perl scripts into built-in C never looks as much fun as
+> open-ended projects with lots of playing around, but the advantage of
+> the former is that they can be easily structured, offer a lot of
+> opportunity for learning, and they are ultimately more rewarding because
+> the goals are much better defined than many other projects'.
+
+I agree. Outreachy also suggest avoiding projects that have to be
+discussed a lot or are not clear enough.
+
+> >  - reduce/eliminate use of fetch_if_missing global
+
+I like this one!
+
+> > It might make sense to only focus on scoping the ones we feel most
+> > interested in. We came up with a pretty big list because we had some
+> > other programs in mind, so I suppose it's not necessary to develop all
+> > of them for this program.
+
+I agree as I don't think we will have enough mentors or co-mentors for
+a big number of projects.
+
+Best,
+Christian.
