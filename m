@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B5781F463
-	for <e@80x24.org>; Tue, 17 Sep 2019 16:35:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA7721F463
+	for <e@80x24.org>; Tue, 17 Sep 2019 16:35:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730524AbfIQQfY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 12:35:24 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:46106 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730515AbfIQQfY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 12:35:24 -0400
-Received: by mail-pf1-f193.google.com with SMTP id q5so2457619pfg.13
-        for <git@vger.kernel.org>; Tue, 17 Sep 2019 09:35:22 -0700 (PDT)
+        id S1730544AbfIQQf1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 12:35:27 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:38374 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730516AbfIQQf1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 12:35:27 -0400
+Received: by mail-pl1-f193.google.com with SMTP id w10so1758740plq.5
+        for <git@vger.kernel.org>; Tue, 17 Sep 2019 09:35:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ek0x5MfYwm7QdAPY+CVI65wC+nhjmkOQAM5eZqgTwtQ=;
-        b=rnPYwAT6NrrbAb7QDFTfDLMFWCrXvqo59ykGaGQmuYCUgH1ioev1XP58wkbkVtYOn6
-         /v73KE+xkvotl6G5fYhTKwIVdhjszyUyMsB8Lm+ocIDccnReJlrI9uwzW7vZR/Lz3TiK
-         qoNKi1bENBhMvxgiZrtPQNUmotrTOATSlPyOpPpGCNoHKF2YZmGrrZPL4ZDFgxbdPIH3
-         pnPSwNZJLEpfsnNHdH0YQ4f1nnGocUvagDEyDvoXAm+srknIVbWW25yzQPWghzzmjX4E
-         9j0d6qeFNYI6QRDv3zWHKX+7rbezYlo8Td2fExRnxDVP6TwKx4mbWQ6B/xztvLS2Kgv3
-         oR0A==
+        bh=9ftdu4Exttq/BU8KT+sAjKDJL7vcMTvRzU802jLa+JY=;
+        b=GL9rJ/DkTVkps1KovdIQXvq22SRWBj2bR3999pULaPMH6F4900EWGJ5XkYvzLbt6Pa
+         25Qwb4b6+nfPGLmXtJfjFTS323lFrSXtaj2VSQyVWpBRWCAP71O5QHIFd9MRJaNbXnxC
+         kr0cPfghBRyR9VeZbsU5HkTPxM5Q81k8PVex479AuP8lct+2Bjw81VZc0MWldROj/VqO
+         4QEawdtoFxTa/ecHqY9hUwYFE4LISGUjPtqilnB1HyuzTf9OABQZTD9malHmVRu9Ee8v
+         TYCXPxB6TGwq/E6cSxn0WIYc6Ke5ZAQahREGCvkJxKxqRm5DC6fwan8ld0nymcj/i/Ne
+         va0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ek0x5MfYwm7QdAPY+CVI65wC+nhjmkOQAM5eZqgTwtQ=;
-        b=Hdh3HLiLCbPNQDOVCQH6sFwG31EXy2e2l8JcKkVXR0O7ayb/HXfhK+FjYb3JIEUCLh
-         +tU5NfxtD1W3HyxSJr3dISkDFoWHAPH9T/Nr2h4+dYUkuWhvQaKavdk7H/hUTZp6x2DC
-         BUYaP3Z0O/x1J526Vnau4//13/zEn6LGbXqt/Z5shslsUrcIAtmKv7YfsLn63lpy1Ruo
-         JNUPbnFvm4QlY01Dyo/QIDl43M8cULy1/PFjuCM2HbYDvUEGKABmy+wQCY29wh2q4ouB
-         FsYjoC0P/BiY947TwaDY7nQMZVFm00jHZDnqS7Lr7jCNheuUjleTip9ESlbei1keWO9S
-         4ztA==
-X-Gm-Message-State: APjAAAWbPA6QJemWwD2boDam07PuskbiiNDTm8kax0bonBy7rXhNs/T0
-        sUA/9gg4mNEhn7CoPMUW7n0FPliipMI=
-X-Google-Smtp-Source: APXvYqwMtyFPW1snyHPEmL6ROdfeFzoP8bJbLqVWXf9ouI5zqOOWYwSgwQDa+KUj6zgiVrAKtKRwKA==
-X-Received: by 2002:a17:90a:9dc1:: with SMTP id x1mr5815480pjv.98.1568738121542;
-        Tue, 17 Sep 2019 09:35:21 -0700 (PDT)
+        bh=9ftdu4Exttq/BU8KT+sAjKDJL7vcMTvRzU802jLa+JY=;
+        b=km/k0Q41VV5OmpeWvScynPUWDzBTzdtt+Z1InIt/Pqs1i9l/svWwchUMAkgi6XG3B+
+         OBHixBttaqz/ghwtksrQY1wIX0SlY2NVkRF+CGKlixZQQYLhmUjc0zYpzgGpJWzOJVtF
+         vZwJlDinhxmoTLd8p/LjjygHd+TLo57emg8HpB7gXCE/BQ3dD5MdbLuLZsNwsqHPuzmV
+         lQh18vpsv0oD0yjBqeeYZkq6u9amQJeKZKq88AmLm7ERWUuVBy0u1dgQ4rPCgH0SEzFd
+         22QbDcigecfahi0a39RQQNdu6S6sFwOhimWEVdDkohw+o9/+kzkXNDG2tv82nMWGpfBV
+         LbSA==
+X-Gm-Message-State: APjAAAXsmPoxJ9q396y3Dfb6OwE05bOi3wyAP/nEcqK/xAmHm4bkGOaT
+        Za8z//+U3d4VtKRhhWYuuitBQDygErc=
+X-Google-Smtp-Source: APXvYqwD/Y4pjbw2DMJY0MN2XDNunQftXS0Aq81sI5k42AlyYPx16OqpRa7WFV0f3ZJTnY55nV9dTQ==
+X-Received: by 2002:a17:902:9a82:: with SMTP id w2mr563143plp.210.1568738126304;
+        Tue, 17 Sep 2019 09:35:26 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id s5sm3202452pfe.52.2019.09.17.09.35.20
+        by smtp.gmail.com with ESMTPSA id s5sm3202452pfe.52.2019.09.17.09.35.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 17 Sep 2019 09:35:20 -0700 (PDT)
+        Tue, 17 Sep 2019 09:35:25 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Samuel Lijin <sxlijin@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 08/12] git-clean.txt: do not claim we will delete files with -n/--dry-run
-Date:   Tue, 17 Sep 2019 09:35:00 -0700
-Message-Id: <20190917163504.14566-9-newren@gmail.com>
+Subject: [PATCH v4 11/12] clean: rewrap overly long line
+Date:   Tue, 17 Sep 2019 09:35:03 -0700
+Message-Id: <20190917163504.14566-12-newren@gmail.com>
 X-Mailer: git-send-email 2.22.1.17.g6e632477f7
 In-Reply-To: <20190917163504.14566-1-newren@gmail.com>
 References: <20190912221240.18057-1-newren@gmail.com>
@@ -71,27 +71,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It appears that the wrong option got included in the list of what will
-cause git-clean to actually take action.  Correct the list.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-clean.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/clean.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index db876f7dde..e84ffc9396 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -35,7 +35,7 @@ OPTIONS
- --force::
- 	If the Git configuration variable clean.requireForce is not set
- 	to false, 'git clean' will refuse to delete files or directories
--	unless given -f, -n or -i. Git will refuse to delete directories
-+	unless given -f or -i. Git will refuse to delete directories
- 	with .git sub directory or file unless a second -f
- 	is given.
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 3a7a63ae71..6030842f3a 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -158,7 +158,8 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
  
+ 	*dir_gone = 1;
+ 
+-	if ((force_flag & REMOVE_DIR_KEEP_NESTED_GIT) && is_nonbare_repository_dir(path)) {
++	if ((force_flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
++	    is_nonbare_repository_dir(path)) {
+ 		if (!quiet) {
+ 			quote_path_relative(path->buf, prefix, &quoted);
+ 			printf(dry_run ?  _(msg_would_skip_git_dir) : _(msg_skip_git_dir),
 -- 
 2.22.1.17.g6e632477f7.dirty
 
