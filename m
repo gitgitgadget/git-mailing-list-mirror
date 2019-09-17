@@ -2,222 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5A211F463
-	for <e@80x24.org>; Tue, 17 Sep 2019 21:50:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D924D1F466
+	for <e@80x24.org>; Tue, 17 Sep 2019 22:14:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727075AbfIQVur (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 17:50:47 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:55131 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726998AbfIQVur (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 17:50:47 -0400
-Received: by mail-pg1-f202.google.com with SMTP id m17so2831139pgh.21
-        for <git@vger.kernel.org>; Tue, 17 Sep 2019 14:50:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=haJXfegwDxgKPBc9Lbzzssn82tbp7vkouOuJhrpb4x4=;
-        b=LCJ4pYxVthJGjI+Bhw05uXrE/ugKhRExfSfm0PIG6+BbUaqXFRShvg1ExpfiA/r8Cv
-         ZstDHplQL/uBBl+N65MVGwgCvyB+7sw7g0ik42uy9cYhHI7qgwWfh8+cGtwqi4d8n1s1
-         mzDX8xBKf3nQ1q2Z+SiwfaXylAP6n/QwKSoWP8mcUEVM2V70RUpf4fIpCbnhmm0PZB/o
-         JAIxwnCr0NGSC0IP8QF71bfrzE3k1g7ucLp3LrQU4GCSdppRfQnyOEbuINMlVqTu6DPI
-         ibhjMwx2oK8YAfiYJAh7ITUo0NH/7p43w7eAXvYhaxw29Fej4kpiRXDupP4A1OMqGIEt
-         Z/NA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=haJXfegwDxgKPBc9Lbzzssn82tbp7vkouOuJhrpb4x4=;
-        b=EF5d4gOb4WugzcnJPiLrij9eYY2x4oCxYloIvNU83AsO3TSr+uBOKYfF/PWoeXYACE
-         VmbYHejZ2BtH3zyKiPp46399MQjCWQqkZY9w+01P9cU+Y/21O+40F2ZuCiaw4G7e3bgC
-         sHPsXkjA98nyMygg8fqqyEpxdoTYPTVzeJMCrpvN5o+FoJUzl/A37YcgflFO/DqJKKNm
-         pZ+cCCMX8Qco0Yi7le2HA9vYFayTwER0dzAf7iLM2NmVxLkPHit1+PL90FlIcwXmcSHZ
-         WX2BSMGg72KKLbroZnR2/ud1a/JrlPdEhhI1wm6xynCXbrjogUZV9ps4xtdrP2s0/S+1
-         NeKA==
-X-Gm-Message-State: APjAAAXAm9oxUIwI1T7x+sh9fF7zGCb5oT1oXXeFXwRthWfz7pUM6XFm
-        C59OMXtNG69a8wSgNmcHtqHfexpIBTjwYeG71DkE5TpW1pscsCWjphhZnPICU7odsddtFOCuka/
-        ofELmEBWGoy0OxQpRWaTuT/Iht8AoXRhF3zbxJBjljdvFKQtasav2FCXS7ZgsT8nbxG2vwP69h6
-        8O
-X-Google-Smtp-Source: APXvYqw9RuogSOGVF+3wucE47IZ9hBEBcMzP+zhLZC9OuNJHFnnNA4WDYYrqO1n0LQRfL5aZlrtcW6oY7/Bph3bgxfhm
-X-Received: by 2002:a63:4c64:: with SMTP id m36mr885740pgl.229.1568757045884;
- Tue, 17 Sep 2019 14:50:45 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 14:50:40 -0700
-In-Reply-To: <CABPp-BHpXWF+1hKUTfn8s-y4MJZXz+jUVS_K10eKyD6PGwo=gg@mail.gmail.com>
-Message-Id: <20190917215040.132503-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <CABPp-BHpXWF+1hKUTfn8s-y4MJZXz+jUVS_K10eKyD6PGwo=gg@mail.gmail.com>
-X-Mailer: git-send-email 2.23.0.237.gc6a4ce50a0-goog
-Subject: [RFC PATCH] merge-recursive: symlink's descendants not in way
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, newren@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1727888AbfIQWOg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 18:14:36 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64324 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726982AbfIQWOf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 18:14:35 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CE52076E82;
+        Tue, 17 Sep 2019 18:14:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=RUMkc2Ab86npYvFNotCMKR1TTC4=; b=bepRAk
+        zvSS/nWJQxN6w9ujNLzuK/rQbu/2G6NMRr5OR31e/v/+p+aShQI3Tz2L4U+3zZBE
+        yIaSUKVMvJte7Q2qVGde424jeqrWuaDfH41Xw8EoXBUgAmXsg9OPQmP/C2f9dlE/
+        y9oA/qKKbk1ozB2i8B2QTLNTKsTemhUJSEoaI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eXPjVsytzOj0Q2nh6b3mqZy/9DJwrgRg
+        sgKKTjBO6vxTsLhPB0f3nYaStVJtQ9pErHrelcacy993wH83b0rdjTJNeRkHssIV
+        XCRPNJs5e973lUF9027iBnT8CqfAFbgUYua1hJ236v6K/qk6UFy1YnY87x3n1oNU
+        Op4Ragx4tCM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C6A5076E81;
+        Tue, 17 Sep 2019 18:14:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 00FFD76E79;
+        Tue, 17 Sep 2019 18:14:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Paul Mackerras <paulus@ozlabs.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH] gitk: rename zh_CN.po to zh_cn.po
+References: <6feff2e73e1c4ca838efcabe90e0978a4d88cb7d.1568710294.git.liu.denton@gmail.com>
+        <xmqq36guamym.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 17 Sep 2019 15:14:28 -0700
+In-Reply-To: <xmqq36guamym.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 17 Sep 2019 09:48:01 -0700")
+Message-ID: <xmqqlfum7epn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 858A499E-D998-11E9-B605-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the working tree has:
- - foo (symlink)
- - foo/bar (directory)
+Junio C Hamano <gitster@pobox.com> writes:
 
-and the user merges a commit that deletes the foo symlink and instead
-contains:
- - foo (directory)
- - foo/bar (file)
+> This would make this in line with pt_{pt,br}.po, existing locales
+> with country code in them.
+>
+> Reviewed-by: Junio C Hamano <gitster@pobox.com>
 
-the merge should happen without requiring user intervention. However,
-this does not happen.
+Paul, I've applied this to a clone of gitk locally and merged it
+(resutling in 2a4ac71ffb that should be reachable from 'master'), as
+it was breaking my "install" tests.
 
-In merge_trees(), process_entry() will be invoked first for "foo/bar",
-then "foo" (in reverse lexicographical order). process_entry() correctly
-reaches "Case B: Added in one", but dir_in_way() states that "bar" is
-already present as a directory, causing a directory/file conflict at the
-wrong point.
-
-Instead, teach dir_in_way() that directories under symlinks are not "in
-the way", so that symlinks are treated as regular files instead of
-directories containing other directories and files. Thus, the "else"
-branch will be followed instead: "foo/bar" will be added to the working
-tree, make_room_for_path() being indirectly called to unlink the "foo"
-symlink (just like if "foo" were a regular file instead). When
-process_entry() is subsequently invoked for "foo", process_entry() will
-reach "Case A: Deleted in one", and will handle it as "Add/delete" or
-"Modify/delete" appropriately (including reinstatement of the previously
-unlinked symlink with a new unique filename if necessary, again, just
-like if "foo" were a regular file instead).
-
-Helped-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Thanks to Elijah for his help. Some of the commit message is based on
-his explanation [1].
-
-I'm finding this relatively complicated, so I'm sending this as RFC. My
-main concern is that whether all callers of dir_in_way() are OK with its
-behavior change, and if yes, how to explain it. I suspect that this is
-correct because dir_in_way() should behave consistently for all its
-callers, but I might be wrong.
-
-The other thing is whether the commit message is clear enough. In
-particular, whether it needs more detail (I didn't mention the index,
-for example), or whether it should be more concise (for example, I
-thought of just stating that we treat symlinks as regular files and this
-would be backed up by the fact that I've updated the only part of
-merge-recursive.c that calls lstat() and then S_ISDIR).
-
-[1] https://public-inbox.org/git/CABPp-BHpXWF+1hKUTfn8s-y4MJZXz+jUVS_K10eKyD6PGwo=gg@mail.gmail.com/
----
- merge-recursive.c          | 40 +++++++++++++++++++++++++++++++++-----
- t/t3030-merge-recursive.sh | 27 +++++++++++++++++++++++++
- 2 files changed, 62 insertions(+), 5 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 6b812d67e3..a2029a4e94 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -747,7 +747,7 @@ static int dir_in_way(struct index_state *istate, const char *path,
- {
- 	int pos;
- 	struct strbuf dirpath = STRBUF_INIT;
--	struct stat st;
-+	int ret = 0;
- 
- 	strbuf_addstr(&dirpath, path);
- 	strbuf_addch(&dirpath, '/');
-@@ -758,13 +758,43 @@ static int dir_in_way(struct index_state *istate, const char *path,
- 		pos = -1 - pos;
- 	if (pos < istate->cache_nr &&
- 	    !strncmp(dirpath.buf, istate->cache[pos]->name, dirpath.len)) {
--		strbuf_release(&dirpath);
--		return 1;
-+		ret = 1;
-+		goto cleanup;
- 	}
- 
-+	if (check_working_copy) {
-+		struct stat st;
-+
-+		strbuf_trim_trailing_dir_sep(&dirpath);
-+		if (lstat(dirpath.buf, &st))
-+			goto cleanup; /* doesn't exist, OK */
-+		if (!S_ISDIR(st.st_mode))
-+			goto cleanup; /* not directory, OK */
-+		if (empty_ok && is_empty_dir(dirpath.buf))
-+			goto cleanup;
-+
-+		/*
-+		 * The given path is a directory, but this should not
-+		 * be treated as "in the way" if one of this
-+		 * directory's ancestors is a symlink. Check for this
-+		 * case.
-+		 */
-+		while (1) {
-+			char *slash = strrchr(dirpath.buf, '/');
-+
-+			if (!slash) {
-+				ret = 1;
-+				goto cleanup;
-+			}
-+			*slash = '\0';
-+			if (!lstat(dirpath.buf, &st) && S_ISLNK(st.st_mode))
-+				goto cleanup;
-+		}
-+	}
-+
-+cleanup:
- 	strbuf_release(&dirpath);
--	return check_working_copy && !lstat(path, &st) && S_ISDIR(st.st_mode) &&
--		!(empty_ok && is_empty_dir(path));
-+	return ret;
- }
- 
- /*
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index ff641b348a..dfd617a845 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -452,6 +452,33 @@ test_expect_success 'merge-recursive d/f conflict result' '
- 
- '
- 
-+test_expect_success 'dir in working tree with symlink ancestor does not produce d/f conflict' '
-+	git init sym &&
-+	(
-+		cd sym &&
-+		ln -s . foo &&
-+		mkdir bar &&
-+		touch bar/file &&
-+		git add foo bar/file &&
-+		git commit -m "foo symlink" &&
-+
-+		git checkout -b branch1 &&
-+		git commit --allow-empty -m "empty commit" &&
-+
-+		git checkout master &&
-+		git rm foo &&
-+		mkdir foo &&
-+		touch foo/bar &&
-+		git add foo/bar &&
-+		git commit -m "replace foo symlink with real foo dir and foo/bar file" &&
-+
-+		git checkout branch1 &&
-+
-+		# Exercise to make sure that this works without errors
-+		git cherry-pick master
-+	)
-+'
-+
- test_expect_success 'reset and 3-way merge' '
- 
- 	git reset --hard "$c2" &&
--- 
-2.23.0.237.gc6a4ce50a0-goog
-
+Thanks.
