@@ -2,181 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,UNPARSEABLE_RELAY
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D9FB1F463
-	for <e@80x24.org>; Tue, 17 Sep 2019 08:54:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BFEC1F463
+	for <e@80x24.org>; Tue, 17 Sep 2019 09:32:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726668AbfIQIxy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 04:53:54 -0400
-Received: from mail-wm1-f52.google.com ([209.85.128.52]:37674 "EHLO
-        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726693AbfIQIxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 04:53:30 -0400
-Received: by mail-wm1-f52.google.com with SMTP id r195so2111484wme.2
-        for <git@vger.kernel.org>; Tue, 17 Sep 2019 01:53:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IRNoG29OoMG9Ogrnctwhln6rSsaQRRVzVRi7gu0m9WE=;
-        b=eVVwW5DOGL95YlhzkB2pQOo0MUXND1nQAmIEf/DBR8ND8WCY5EeaW+ADCEBKiWu9JA
-         ffEiGF/HGxiZ7SYM0/01VcgnmBmKwhK9j0Dfr7KkKDL4iaZZLuZwHdsxF6KM/gNq9NDJ
-         daoLzum2Zj600WeJMtcFyAaWxwCa1Dy9STthmQvZ2Ce04Zt+2noIl7W/RYcO5VvNfvzC
-         KmT2+AR/iNxOo50yyBKXweZ+54KLtC9YMXSl22r2xY4Wg2HoqaKvquhnXksgeYCNYbcK
-         3DguewKeZczqDjdLBwkQn86lPR+gDUi5VdiPbORVDSiDGVBztT2Hck8RRB8camIg973d
-         LZjQ==
+        id S1727587AbfIQJcK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 05:32:10 -0400
+Received: from mail-pl1-f225.google.com ([209.85.214.225]:37840 "EHLO
+        mail-pl1-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727036AbfIQJcJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 05:32:09 -0400
+Received: by mail-pl1-f225.google.com with SMTP id b10so1274521plr.4
+        for <git@vger.kernel.org>; Tue, 17 Sep 2019 02:32:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IRNoG29OoMG9Ogrnctwhln6rSsaQRRVzVRi7gu0m9WE=;
-        b=APuHhx4pIfhAu5z6qCKxjyfYP1cigKBoOhF/5gpTS/1jVYYsJBSl6RNOqbdpBs6p5C
-         GXD0rdCCg9ADqvQlrWnk/h1chkJkoNaC5nSjhS43BflHtboUbXum/hYy6K408/Af4cYt
-         IzGnLLQeCTmcETGpn2oTZW5aM5tv79cDxMBNTR+Tv8VnsmIv6vCKuplDdIQlKy3iWYwO
-         nKLam+ioxlSIcYKrafhKzhY45I9Y9SAeQLWPK1O/g4BmFPSf8//Bpdy0aTXXaMT9rCYO
-         5yPu1oTGaotCj7j7WYHgkZLsXPDONNq+WpmdMM3xkxV4lRpiUXbeWYpjkwAfmKDcdQJd
-         9tzw==
-X-Gm-Message-State: APjAAAUbhFL7uDMRIoBUAqX3qXEZbl+h20OBPBd8ikAUB5g03GjmqTur
-        5foC1rLkI18H7puN2n+ExcE=
-X-Google-Smtp-Source: APXvYqwwdks74DQrVa9SaU2mCnC7eO8/p2TLi4BeuEBMvOlPMvatWFNyViWJRHl8yPBQlfazvdjh2Q==
-X-Received: by 2002:a1c:9889:: with SMTP id a131mr2594953wme.38.1568710407945;
-        Tue, 17 Sep 2019 01:53:27 -0700 (PDT)
-Received: from szeder.dev (x4db91871.dyn.telefonica.de. [77.185.24.113])
-        by smtp.gmail.com with ESMTPSA id q66sm2435312wme.39.2019.09.17.01.53.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Sep 2019 01:53:27 -0700 (PDT)
-Date:   Tue, 17 Sep 2019 10:53:25 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [BUG] t7030 is flaky
-Message-ID: <20190917085325.GG6190@szeder.dev>
-References: <20190916235149.GA96478@dentonliu-ltm.internal.salesforce.com>
+        h=x-gm-message-state:dkim-signature:from:to:date:subject:mime-version
+         :content-transfer-encoding:message-id;
+        bh=BTvsTFC6r5RXm1eJSOcaT1gFfHYps2Y4g8TMlDVBU+Y=;
+        b=spmFd/kPJQ0rA2Swl9odweZUMJQnyHeYdPoqSZ6FQRZ1/U0pQMLADNRTwwrd2N0Q3F
+         g7wEP7Wv7rJIUntMM1JmRGmJfRIkp8MP2cE8gHbvGn2ioTHO1Wo0cWYNbCplYSX1OHe4
+         8hKlxYwjAkZuk96fI9s+xQET6jv2CnagBAdBCDnEXArKV9FhOr9OyFzsHDDBmvEjcbyc
+         basm+9lgiAt4ZacPCYbAKUBanvsQ23pUCX3YmiBmcOiN6WKmMnN/wtm533bEcz0jbEy8
+         NSZILpL767MMhLUH+FxLmxn7Xrycs3350AcV6ZxcIaB4BGCFp0ROLQ2JESeN+hiko4bS
+         g/IQ==
+X-Gm-Message-State: APjAAAVdBhFzA1LOkc6aUCcKe0pfPnyUk2k8Ry5E219jy21oID6NVWCJ
+        cDtclZQQfAgQu6gZPn/67W5IJ3fzYkn/YvjjIT4tiAJqUBgXQnHujX5e0FFbYmh76Q==
+X-Google-Smtp-Source: APXvYqw9urRmQ3vqr23Hnyd58z+HybwsTbGVpJhYC71LdO2nXPSbs1Wm2uu3Fk1UvnN4TktKMdN+dQwrdOhv
+X-Received: by 2002:a17:902:9695:: with SMTP id n21mr2710658plp.310.1568712727231;
+        Tue, 17 Sep 2019 02:32:07 -0700 (PDT)
+Received: from daria.daz.cat (daria.daz.cat. [2403:5800:7100:2c00:cccc:ffff:feee:8001])
+        by smtp-relay.gmail.com with ESMTPS id a101sm142021pje.2.2019.09.17.02.32.06
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 17 Sep 2019 02:32:07 -0700 (PDT)
+X-Relaying-Domain: azabani.com
+Received: from daria.daz.cat (localhost [127.0.0.1])
+        by daria.daz.cat (OpenSMTPD) with ESMTP id 2731b0d8
+        for <git@vger.kernel.org>;
+        Tue, 17 Sep 2019 17:31:59 +0800 (AWST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=daria.daz.cat; h=from:to
+        :date:subject:mime-version:content-type
+        :content-transfer-encoding:message-id; s=ADFAF306CC552; bh=zHhvb
+        HeLnQi+1kCUePAbrQNBpCs=; b=NsSFfX4rYwiC2+UKQtdmIM0oQsDel5wURUlNg
+        haYq9S+FTb6EJc5zhqo2CtJr570fC0H1wtRKFbaGFRuktM/1h9qH34w6/XL6jpF2
+        Qp7U0rYgOm7mwaYrVemtMdGnNxpbhCHeY9NfqJVyP87R8CZ52LrHjJk3/yvjCX6B
+        fKWU1MLPiSTipMW0UcVDjQqGiM/qHWAQ0eLGLSBvlpZ3DapqAKOWvSwNoDOBUk8N
+        8xgNwQWwqYm5A3RmP33unXzuongQ5+apPeUe1DnSUtSNoCPMP6H5qukOv7wQtfw5
+        jlEFLp1vT+tLyA/33uOgY3d32SSId9Xs+K2ix1knNdYAEfzVR0TbyjH+P13IH3K1
+        a/82rQ0r5TSjxhGyBp9iSyYPBkZ8ya8v/jvKxJnS2okIlGI94/k+AXcQds5op4Gy
+        izhuQ876+4hXG5hFTxGeq7EiKLa7jsKKr5CIrV9BqTjOQcZhStiCf5te8Wql2BiI
+        /fktd0+hqikuBfNPfDO+j9uGPP9VRZd/8O+kh7uKGIHpFXEdXDZT6VQUN4+mjqbw
+        Z+qqn7coXhxKKUY7R5msrx1AwrUMr4fpMn9hR4B4ygRkrN4g7d0zauA/cV7FXScv
+        7Fr/1eJ9frHaBo48BIIbN5CQxLRH+T22FV6Nmk5wFsqIUE1LjhbJ1v5A8c1l9g00
+        +datk8=
+Received: from localhost (daria.daz.cat [local])
+        by daria.daz.cat (OpenSMTPD) with ESMTPA id 4c3c93ba
+        for <git@vger.kernel.org>;
+        Tue, 17 Sep 2019 17:31:59 +0800 (AWST)
+From:   Delan Azabani <delan@azabani.com>
+To:     git@vger.kernel.org
+Date:   Tue, 17 Sep 2019 18:30:00 +1000
+Subject: [PATCH] rm: accept -R and --recursive in addition to -r
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190916235149.GA96478@dentonliu-ltm.internal.salesforce.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Message-ID: <76f0d8e57866db57@daria.daz.cat>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Cc-ing brian, because I can vaguely remember (or misremember?) that
-he cares about GnuPG.]
+POSIX rm(1) accepts both -r and -R, so we accept -R here by analogy
+with that and with commands like cp(1) + ls(1) + grep(1), where on
+many or all platforms it’s the only way to recurse. For completeness
+with GNU coreutils, we also accept --recursive here.
 
-On Mon, Sep 16, 2019 at 04:51:49PM -0700, Denton Liu wrote:
-> I just wanted to report that t7030 is flaky. I first noticed this on
-> Szeder's Travis job[1]. I was also able to reproduce this on my Macbook
-> with gpg (GnuPG) 2.2.17 and git version 2.23.0.248.g3a9dd8fb08 (latest
-> master) by running `./t7030-verify-tag.sh --stress`.
+5c387428f10c2 introduces a mechanism that might have been nice to use
+here (OPTION_ALIAS), but I didn’t use it because we would need to add
+two different long options, and it’s primarily there to fix a problem
+that won’t happen anyway unless there are two similar long options.
 
-It's not only t7030, but verifying multiple signatures at once in
-macOS and GnuPG 2.2, i.e. these tests fail occasionally:
+Signed-off-by: Delan Azabani <delan@azabani.com>
+---
+ builtin/rm.c  |  3 ++-
+ t/t3600-rm.sh | 20 ++++++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
-  t7030-verify-tag.sh:
-    8 - verify multiple tags [2]
-    9 - verify multiple tags x509 [1]
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 19ce95a901..36c4cea256 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -242,7 +242,8 @@ static struct option builtin_rm_options[] = {
+ 	OPT__QUIET(&quiet, N_("do not list removed files")),
+ 	OPT_BOOL( 0 , "cached",         &index_only, N_("only remove from the index")),
+ 	OPT__FORCE(&force, N_("override the up-to-date check"), PARSE_OPT_NOCOMPLETE),
+-	OPT_BOOL('r', NULL,             &recursive,  N_("allow recursive removal")),
++	OPT_BOOL_F('R', NULL,           &recursive,  N_("allow recursive removal"), PARSE_OPT_HIDDEN),
++	OPT_BOOL('r', "recursive",      &recursive,  N_("allow recursive removal")),
+ 	OPT_BOOL( 0 , "ignore-unmatch", &ignore_unmatch,
+ 				N_("exit with a zero status even if nothing matched")),
+ 	OPT_END(),
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index 66282a720e..b2ddbba83c 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -212,6 +212,26 @@ test_expect_success 'Recursive with -r -f' '
+ 	test_path_is_missing frotz
+ '
+ 
++test_expect_success 'Recursive with -R' '
++	mkdir -p frotz &&
++	touch frotz/R &&
++	git add frotz &&
++	git commit -m R &&
++	git rm -R frotz &&
++	test_path_is_missing frotz/R &&
++	test_path_is_missing frotz
++'
++
++test_expect_success 'Recursive with --recursive' '
++	mkdir -p frotz &&
++	touch frotz/recursive &&
++	git add frotz &&
++	git commit -m recursive &&
++	git rm --recursive frotz &&
++	test_path_is_missing frotz/recursive &&
++	test_path_is_missing frotz
++'
++
+ test_expect_success 'Remove nonexistent file returns nonzero exit status' '
+ 	test_must_fail git rm nonexistent
+ '
+-- 
+2.19.2
 
-  t7004-tag.sh:
-    92 - verifying two signed tags in one command should succeed [3]
-         (nowadays it's the 94th test)
-
-Note that these are all about tags; as far as I can tell we have no
-tests that verify multiple signed commits at once.
-
-I tried to reproduce it on Linux, with GnuPG v1.4 and v2.2, no luck so
-far.
-
-> I'll try to investigate later but for now but at the bottom of this
-> email is the trace I obtained.
-> 
-> [1]: https://travis-ci.org/szeder/git-cooking-topics-for-travis-ci/jobs/518540359
-
-[2] https://travis-ci.org/szeder/git-cooking-topics-for-travis-ci/jobs/514969530#L3183
-[3] https://travis-ci.org/szeder/git-cooking-topics-for-travis-ci/jobs/487665767#L3891
-
-> expecting success of 7030.9 'verify multiple tags x509': 
-> 	tags="seventh-signed nineth-signed-x509" &&
-> 	for i in $tags
-> 	do
-> 		git verify-tag -v --raw $i || return 1
-> 	done >expect.stdout 2>expect.stderr.1 &&
-
-Sidenote: oh, look, a shell loop with its standard error redirected to
-a file.  Normally we shouldn't do that, because with '-x' tracing it
-records the trace output of the commands executed inside the loop as
-well.  Luckily, in this case it's not a big issue, because:
-
-> 	grep "^.GNUPG:." <expect.stderr.1 >expect.stderr &&
-
-this 'grep' throws away all that trace, so it doesn't interfere with
-the test's correctness.
-
-> 	git verify-tag -v --raw $tags >actual.stdout 2>actual.stderr.1 &&
-> 	grep "^.GNUPG:." <actual.stderr.1 >actual.stderr &&
-> 	test_cmp expect.stdout actual.stdout &&
-> 	test_cmp expect.stderr actual.stderr
-> 
-> ++ tags='seventh-signed nineth-signed-x509'
-> ++ grep '^.GNUPG:.'
-> ++ git verify-tag -v --raw seventh-signed nineth-signed-x509
-> ++ grep '^.GNUPG:.'
-> ++ test_cmp expect.stdout actual.stdout
-> ++ diff -u expect.stdout actual.stdout
-> ++ test_cmp expect.stderr actual.stderr
-> ++ diff -u expect.stderr actual.stderr
-> --- expect.stderr	2019-09-16 23:48:06.000000000 +0000
-> +++ actual.stderr	2019-09-16 23:48:06.000000000 +0000
-> @@ -8,7 +8,6 @@
->  [GNUPG:] TRUST_ULTIMATE 0 pgp
->  [GNUPG:] NEWSIG
->  [GNUPG:] VERIFICATION_COMPLIANCE_MODE 23
-> -[GNUPG:] PROGRESS starting_agent ? 0 0
->  [GNUPG:] GOODSIG F8BF62E0693D0694816377099909C779FA23FD65 /CN=C O Mitter/O=Example/SN=C O/GN=Mitter
->  [GNUPG:] VALIDSIG F8BF62E0693D0694816377099909C779FA23FD65 2019-09-16 20190916T234804 30000101T000000 0 0 1 8 00
->  [GNUPG:] TRUST_FULLY 0 shell
-
-This is interesting, I only remember these tests fail because the 'git
-verify-tag' command failed.  I thought that the error message shown by
-'git verify-tag' might give a hint about what went wrong, but
-'actual.stderr.1' (i.e. its original stderr) contains this:
-
-  [GNUPG:] NEWSIG committer@example.com
-  [GNUPG:] KEY_CONSIDERED 73D758744BE721698EC54E8713B6F51ECDDE430D 0
-  [GNUPG:] SIG_ID 2Eg0F1yiJ07HcOjvjO96x2wJvvs 2019-09-17 1568707912
-  [GNUPG:] KEY_CONSIDERED 73D758744BE721698EC54E8713B6F51ECDDE430D 0
-  [GNUPG:] GOODSIG 13B6F51ECDDE430D C O Mitter <committer@example.com>
-  [GNUPG:] VALIDSIG 73D758744BE721698EC54E8713B6F51ECDDE430D 2019-09-17 1568707912 0 4 0 17 2 00 73D758744BE721698EC54E8713B6F51ECDDE430D
-  [GNUPG:] KEY_CONSIDERED 73D758744BE721698EC54E8713B6F51ECDDE430D 0
-  [GNUPG:] TRUST_ULTIMATE 0 pgp
-  [GNUPG:] NEWSIG
-  [GNUPG:] VERIFICATION_COMPLIANCE_MODE 23
-  [GNUPG:] PROGRESS starting_agent ? 0 0
-  [GNUPG:] GOODSIG F8BF62E0693D0694816377099909C779FA23FD65 /CN=C O Mitter/O=Example/SN=C O/GN=Mitter
-  [GNUPG:] VALIDSIG F8BF62E0693D0694816377099909C779FA23FD65 2019-09-17 20190917T081152 30000101T000000 0 0 1 8 00
-  [GNUPG:] TRUST_FULLY 0 shell
-
-IOW no error message from 'git verify-tag' itself whatsoever, only
-output from GnuPG, which, to my untrained eyes, looks OK.
-
-> error: last command exited with $?=1
-> not ok 9 - verify multiple tags x509
-> #	
-> #		tags="seventh-signed nineth-signed-x509" &&
-> #		for i in $tags
-> #		do
-> #			git verify-tag -v --raw $i || return 1
-> #		done >expect.stdout 2>expect.stderr.1 &&
-> #		grep "^.GNUPG:." <expect.stderr.1 >expect.stderr &&
-> #		git verify-tag -v --raw $tags >actual.stdout 2>actual.stderr.1 &&
-> #		grep "^.GNUPG:." <actual.stderr.1 >actual.stderr &&
-> #		test_cmp expect.stdout actual.stdout &&
-> #		test_cmp expect.stderr actual.stderr
-> #	
