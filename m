@@ -2,74 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B02D1F463
-	for <e@80x24.org>; Tue, 17 Sep 2019 22:40:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F8EA1F463
+	for <e@80x24.org>; Tue, 17 Sep 2019 22:49:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727950AbfIQWkT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 18:40:19 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62954 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727930AbfIQWkT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 18:40:19 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1918F3321C;
-        Tue, 17 Sep 2019 18:40:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=t21fwHkKVO2jGJuCe08gaxFRHuo=; b=qRhhfu
-        0POUqRgWufUk9G95bLAyJ1gXsSZNDtj9XDYyqRkMb1bcs506GFsb7fdoLukm3IB2
-        sogN+TM8X/KxTDJIrg9W+hyZRsvqdZG1jmQyZY158gi3eGe6rPj2nzENJqU/r4ri
-        EQREGVTmH91pmAox8Kv7wtbMPPWu8OEeuUhJ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kftLC6aJcmIfVunpPvSpGANetgq96hZS
-        4iXyS/oMXqt1tzza95HGC4TbtKXO9EfctHSqLZ/Pxrb8i4h+f+Y7UBZmwQuUd5HE
-        r6QhfjdcUhgo87Jt4MQod7KJRUvt0z9exGMcGiJYs3UVg/EGux14rUMWeCjtVi9p
-        0jDqOUIwS1Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 116E33321B;
-        Tue, 17 Sep 2019 18:40:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 435A73321A;
-        Tue, 17 Sep 2019 18:40:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Herv=C3=A9?= Beraud <herveberaud.pro@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Rewrite feature to render hg-to-git compatible with python2.x and 3.x
-References: <01020161b421939a-4ad52aaa-dda8-4250-9bce-71f0ede1a199-000000@eu-west-1.amazonses.com>
-        <0102016d3f74d202-d5b32dd4-0098-4ad0-8ac7-5fde254f7796-000000@eu-west-1.amazonses.com>
-        <xmqqd0fy7dra.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 17 Sep 2019 15:40:15 -0700
-In-Reply-To: <xmqqd0fy7dra.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 17 Sep 2019 15:35:05 -0700")
-Message-ID: <xmqq4l1a7dio.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1E97CF14-D99C-11E9-AA52-C28CBED8090B-77302942!pb-smtp1.pobox.com
+        id S1728320AbfIQWtO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 18:49:14 -0400
+Received: from mail-pl1-f202.google.com ([209.85.214.202]:38523 "EHLO
+        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726500AbfIQWtO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 18:49:14 -0400
+Received: by mail-pl1-f202.google.com with SMTP id x5so3018474pln.5
+        for <git@vger.kernel.org>; Tue, 17 Sep 2019 15:49:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=nstejjy2vF5mrPcSfletdPJ/a7Wx72Hea0RixcOBZgM=;
+        b=XNkFjdotfYSuL1awPOlj6KoI+FCpjIvWiPsJmizBdkrPJoRDcpWFLSETpFNY2mGfeT
+         EGRl0jatw7+IhTgL9Zslp8OQC0gYecrczOGkd4959l8+A0e+uuCordWXd0SMw8ZqBHeE
+         WYta7rtM06skfwIsfwU5lYwMDaMYgpJk7paqIZehRTTEkuAoSIFRo9FvJdipSEsdRIZw
+         h0mSCgL6Uie6y8H3SECi1scneYUEw3TvYGKuzX3fJkbr9VnxgiCV4xs89Tpq4Ynebham
+         5iqRbjOyXj0GPmalEAWPUEnoYURL1w9L321/TyvYnNFljZFl6i0SWfatpp/+N1hQNxlL
+         ti7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=nstejjy2vF5mrPcSfletdPJ/a7Wx72Hea0RixcOBZgM=;
+        b=sFjuRW1ono/+jcLqBmYfVWCLJaBJgA2TvDPiwAPSmohUfLOx3zhHCToLnfQDDjQyW9
+         VGBY95l+Rbd2+L5UOFMEDBwVUr/gjUhdsCGzG3+J41QLxsv1IHIbKhQsjmPlwbhq3wlf
+         +vJf8COz9zbzn4StsNH0Bum6iE43pY4Tt/MuZWK9IPIkmAN4FwdbnsPCU/2zF90CSTAh
+         Qx5gfFPwx7re4hTaHtUG16wKpF7qCBH20RxVHz0jF4SAqLLFfcG40bJlL+4AlhkuRwAl
+         jmnNvbys16lMl0oPB7FoDW4VZ9Vsy/mrs6tliQpq/UVfHf8dZaVZ2coDcVRjuCeIQ/n/
+         dnKw==
+X-Gm-Message-State: APjAAAVFZ85yiTDjHlW5/Yvbky1uJUOm1RR6mFLgUTUT7MnVqLcCfmWm
+        D5lhZdQk8F3jMaQ3l6OLUGgcexuoc/Ec3wcZHlgh
+X-Google-Smtp-Source: APXvYqxfesWDE8n7Ed8+d4BFlVPZu2LoWVGrWwSUuLW07d2YbSbhOVksNGceUWg+kufsHbOAznT2sSbvcT7QOs/zHHm4
+X-Received: by 2002:a63:f907:: with SMTP id h7mr1162400pgi.418.1568760551923;
+ Tue, 17 Sep 2019 15:49:11 -0700 (PDT)
+Date:   Tue, 17 Sep 2019 15:49:08 -0700
+In-Reply-To: <xmqq8sqm7dmw.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20190917224909.123111-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqq8sqm7dmw.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.23.0.237.gc6a4ce50a0-goog
+Subject: Re: [RFC PATCH] merge-recursive: symlink's descendants not in way
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, newren@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+> Yeah, I recall having to add has_symlink_leading_path() long time
+> ago in different codepaths (including "apply").  It is not surprising
+> to see a similar glitch remaining in merge-recursive (it's a tricky
+> issue, and it's a tricky code).
 
-One more thing.
-
-> Subject: Re: [PATCH] Rewrite feature to render hg-to-git compatible with python2.x and 3.x
-
-Our commit titles typically begin with <area>: prefix, e.g.
-
-    Subject: hg-to-git: make it compatibile with both Python 3 and Python 2
-
-or something like that.
+Thanks for the pointer to has_symlink_leading_path() - I tried it and it
+seems to work too. I'll wait for more replies and send an updated
+version tomorrow.
