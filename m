@@ -2,185 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE6271F463
-	for <e@80x24.org>; Tue, 17 Sep 2019 16:26:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A67781F463
+	for <e@80x24.org>; Tue, 17 Sep 2019 16:35:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726801AbfIQQ0X (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 12:26:23 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:39918 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725825AbfIQQ0W (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 12:26:22 -0400
-Received: by mail-wr1-f67.google.com with SMTP id r3so3852732wrj.6
-        for <git@vger.kernel.org>; Tue, 17 Sep 2019 09:26:21 -0700 (PDT)
+        id S1729782AbfIQQfM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 12:35:12 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36424 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728841AbfIQQfM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 12:35:12 -0400
+Received: by mail-pf1-f193.google.com with SMTP id y22so2488696pfr.3
+        for <git@vger.kernel.org>; Tue, 17 Sep 2019 09:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=9S/XR0Vc+NQyUaNeWxZG3EuB7D9NZq/VLb8y+u1Z4W0=;
-        b=JTF0BeIzt54nuY7vqVw2zGqQwxrTMH61zVfdN1DbLS+yakcC0u/GgOGbyX1oDvKuvX
-         IsAoajzZxUZC3avWX7jKHg1tUNkou4HlI2tmdKHzY/PW0oCCd4CDbRvrM4UkA45udvKW
-         alYPEZgjLCztzRf3YtnNNyMQo2yFh9hIxsucdtScdPGDddJK/j+fIHYTI+uzdnZaScPv
-         iga9FErmhbUCBkMvKxcZx9MoF1cZmS2boZY6IfzyFMZT7oHU3RjeUlJypHp6sHEog4ye
-         WR/7jhAc0VoX32WGBDUlg//Qnph7T08DGngTyjcjIaH85btyKg2zrSmeazmYiUlPQQWu
-         hz0Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=v5e9q3hamskGx3U8YXi/0rWMp9Di2mWvMCGXIeXOcYs=;
+        b=GrVZUPqpvBJk11PQrmiAfLa2XhPzBvx0Uq7UIc31M2c7ZXVIXVaKW6glQoicrm6GCB
+         DMSXMyknDqi5RhIhiKRyVLveG7Vo2p3APV88zDpYhB8H31focjObMzx5/DQYgAcUWby2
+         hLH+WLONSGVpenUwDS7odFJ8jN+167YrnWHxMMYmUrAAIOjKIxeoep04uP+Euq3cNoQ3
+         M3evZDc1Se+MdVCT65ySFIVHDr+DhaA4Rtws5iY1Wi+oMLCC72Phv8iHtF9bqaQ/xMyX
+         oup3ns5fpZvzINBsAHrITKNw48o56SnpHXNHa3py/UPb5WBUDAER9wRxEygjOFXZETD/
+         +jKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=9S/XR0Vc+NQyUaNeWxZG3EuB7D9NZq/VLb8y+u1Z4W0=;
-        b=Vmxz5tj+vidv9OWjkb77TKkcPztNuwIjdh4etK85S7KPjNkgw0kUKNnn+/SQqpAhkP
-         h0xAh6f9xKEPF/4l3iyQSXZLxnHHsqeZ6n+Z4ydD4dz9udeJz33oYvENrRHZ6U3HLFrr
-         ZDErfDibit+mkUZvsZQF5jo6obecu+ELGw9vtu229GqatppOia/tTiBS/umy4ZrxSABZ
-         By6eNT/gJFJMZBBzULSKhgfp+YLZ4cZvscGQGOcPt63N9yxpni7nvrZPBPkdSAcTBV5k
-         onfyhQn+3vU/dOL+4lH6ZqK9eo0V6gAm2ouQH+NRg73yub+dPdQnhq1a1zNWvDSJzi6k
-         AR5w==
-X-Gm-Message-State: APjAAAVEJjEH9+aUcSYUEVS+dLOhpd7RmN8ETUZjqh/LHukycH3hoJqm
-        S/4nmPkHVtPdFu2HwbVlZ91Zf9fYShaVNiZNKnRSht36
-X-Google-Smtp-Source: APXvYqxCE9SqLkMgz+JrEJkF6nvNyYkIoXytMW3zMxa7DnzvwBgAPW+jKbt0VgpG+WOCLj4rXeOxL+3Lpa7zr3NPLVU=
-X-Received: by 2002:adf:f112:: with SMTP id r18mr3861722wro.88.1568737579833;
- Tue, 17 Sep 2019 09:26:19 -0700 (PDT)
-MIME-Version: 1.0
-References: <CADMnYXC7W-6n+A=1C11yzD5OnbQ_-Ac-H7canT-kdCPZpTWn0w@mail.gmail.com>
- <CADMnYXDWwq2DN59qnkS_P31S+-NJZTzj2TMzps5KKQ7McxpO1Q@mail.gmail.com>
- <CADMnYXCRn-wcVeJ5z5W1CSwe0BKQxRrz4R8+=6UAAW_is3yEdA@mail.gmail.com>
- <CADMnYXBzoQXgjRGiO66mp4UQX7jbuMLVKwo4GCzNYntSy4J8vg@mail.gmail.com> <CADMnYXAPSBo1gY3mQ_sCpS8kX7hnkusfyx6qwckJKm_4eV886w@mail.gmail.com>
-In-Reply-To: <CADMnYXAPSBo1gY3mQ_sCpS8kX7hnkusfyx6qwckJKm_4eV886w@mail.gmail.com>
-From:   Klaus Sembritzki <klausem@gmail.com>
-Date:   Tue, 17 Sep 2019 18:26:08 +0200
-Message-ID: <CADMnYXBayBP8wnyYegZkqRGrh0+PpSxmNck9D+zpadOqJxsXig@mail.gmail.com>
-Subject: Re: Promoting Ethnics-Ess-Nix, a friends-based search-engine
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=v5e9q3hamskGx3U8YXi/0rWMp9Di2mWvMCGXIeXOcYs=;
+        b=ekS0+DrgBGXZ6a13dPdAgEEo6UNLAaQNrlMYT+wGJjY2Yp/jBkXeII+9YVGWEg8dkv
+         ma6l3Kq1UyUe2uYhIy3NVR4WnXsAov0PPDKGRZlXL1l8g5trPtDfAdI6An2aVZHf4xqI
+         7Flo3P95OYmGqAfnmhcsLfJxrHHfvzNCfWYqaw69jeDR1Rr+IX9WhLpNXgQ0JTy7Bu8Z
+         jDkX2sael/9mrElKlqrxrlnJyZzfWjjMgln4ICImHYwbw8keNur65E6lPBQuFBL5sG9W
+         HkBE+N97TmhCYKwnqLLXBE3CSwwSD8B3fr2IDTlYezriSx6/cksWXFMo3Z/2STsuQKro
+         kjyQ==
+X-Gm-Message-State: APjAAAXn10gO2Mk4R8d8/tVduv6dutzWn7MB5HoA7pJwV0YWj1yUMzse
+        tyh+G6wA8L6Io9VGVG1z7dYrhM73w3o=
+X-Google-Smtp-Source: APXvYqy/T5iZ6teRMxE54jyjcCb4TSbCJGq1/zOomzgL6csj5MtwBlj8CZ+AZmQsrnw/YO2W4CGlLQ==
+X-Received: by 2002:a63:1020:: with SMTP id f32mr4279373pgl.203.1568738111023;
+        Tue, 17 Sep 2019 09:35:11 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id s5sm3202452pfe.52.2019.09.17.09.35.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 17 Sep 2019 09:35:10 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Samuel Lijin <sxlijin@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH v4 00/12] Fix some git clean issues
+Date:   Tue, 17 Sep 2019 09:34:52 -0700
+Message-Id: <20190917163504.14566-1-newren@gmail.com>
+X-Mailer: git-send-email 2.22.1.17.g6e632477f7
+In-Reply-To: <20190912221240.18057-1-newren@gmail.com>
+References: <20190912221240.18057-1-newren@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+This patch series fixes a few issues with git-clean:
+  * Failure to clean when multiple pathspecs are specified, reported both
+    in April 2018[1] and again in May 2019[2].
+  * Failure to preserve both tracked and untracked files within a nested
+    Git repository reported a few weeks ago by SZEDER[3].
+It builds on sg/clean-nested-repo-with-ignored.
 
-Please excuse that this propaganda-war is (in parts) real-time due to
-privacy-deprivation.
-We are right now forced to deal with the revival of Alzheimer-rulers
-(wir waren lange "unter ihrer Fuchtel"), like Adolf Hitler was one.
-They atrophy in the presence of information-overflow, and thereby
-change their personality. It is unlikely a medication will ever be
-developed, due to the latest revelations:
+[1] https://public-inbox.org/git/20180405173446.32372-4-newren@gmail.com/
+[2] https://public-inbox.org/git/20190531183651.10067-1-rafa.almas@gmail.com/
+[3] https://public-inbox.org/git/20190825185918.3909-1-szeder.dev@gmail.com/
 
-- Alzheimer (AD)-guys are double-solved as reflexive egoists,
-stressing themselves like others.
-- Relaxation as the only cure is therefore just.
+Changes since v3:
+  * Clarified a couple commit messages highlighted by Junio.
 
-Cheers,
-England
+Elijah Newren (12):
+  t7300: add testcases showing failure to clean specified pathspecs
+  dir: fix typo in comment
+  dir: fix off-by-one error in match_pathspec_item
+  dir: also check directories for matching pathspecs
+  dir: make the DO_MATCH_SUBMODULE code reusable for a non-submodule
+    case
+  dir: if our pathspec might match files under a dir, recurse into it
+  dir: add commentary explaining match_pathspec_item's return value
+  git-clean.txt: do not claim we will delete files with -n/--dry-run
+  clean: disambiguate the definition of -d
+  clean: avoid removing untracked files in a nested git repository
+  clean: rewrap overly long line
+  clean: fix theoretical path corruption
 
+ Documentation/git-clean.txt | 16 +++++-----
+ builtin/clean.c             | 15 +++++++--
+ dir.c                       | 63 +++++++++++++++++++++++++++----------
+ dir.h                       |  8 +++--
+ t/t7300-clean.sh            | 44 +++++++++++++++++++++++---
+ 5 files changed, 112 insertions(+), 34 deletions(-)
 
-On Tue, Sep 17, 2019 at 12:48 PM Klaus Sembritzki <klausem@gmail.com> wrote=
-:
->
-> Hello all,
->
-> As we just manufactured two poles (good=3DRuhrpott, bad=3DBavaria), we
-> must now warn you of bipolar people.
-> Bipolar people arrange each and every decision upon two poles, gaining
-> a 1D-manifold with every decision, producing a 1D-score for it on the
-> 1D-manifold.
-> They even accept and get derailed by poles inconsistent within themselves=
-.
-> They thereby always fall off left, right, top and bottom along the
-> ultra-dimensional residual hyperplane our (world & society) is, they
-> have no plan a, b, c, and have to learn it all the hard way, always
-> defaming the old goal they chased blindly, falling over and ruining
-> all of our lifes thereby always.
->
-> Cheers,
-> The GCHQ
->
-> On Tue, Sep 17, 2019 at 12:11 PM Klaus Sembritzki <klausem@gmail.com> wro=
-te:
-> >
-> > Hello all,
-> >
-> > We just figured you can not settle in Bavaria, "Ruhrpott" with "Gl=C3=
-=BCck
-> > auf, joy on top" is still the only safe bet for unsafe sex in Germany,
-> > due to the ages-old Reinheitsgebot.
-> >
-> > Reinheitsgebot: Don't touch this. We always ruined it in the past,
-> > dying or getting ill.
-> >
-> > Don't produce imbreds, i.e. crossing English and Scotts, producing
-> > Inzuchtsbinkel=3DKatzenfrecker=3DBastards, frecking the Katz in
-> > borderline-regions.
-> >
-> > Cheers,
-> > The GCHQ
-> >
-> > Klaus Sembritzki <klausem@gmail.com> schrieb am Mo., 16. Sep. 2019, 22:=
-21:
-> > >
-> > > Hello all,
-> > >
-> > > Many of you must be disappointed by the recent revelations.
-> > > However, we just figured "Gl=C3=BCck auf" ("Joy on top") makes "Ruhrp=
-ott" a
-> > > safe bet for unsafe sex.
-> > >
-> > > Cheers,
-> > > The GCHQ
-> > >
-> > > On Mon, Sep 16, 2019 at 7:16 PM Klaus Sembritzki <klausem@gmail.com> =
-wrote:
-> > > >
-> > > > Hello all,
-> > > >
-> > > > We know that this is for a technical-savvy audience, but as we are =
-all
-> > > > people with a soul, here comes a combination of both, the logical a=
-nd
-> > > > the emotional first waves of the GCHQ-propaganda-war.
-> > > >
-> > > > First waves of the GCHQ-propaganda-war:
-> > > >
-> > > > - Logic: This is the first wave of a propaganda-war, false from
-> > > > injust-people gets us extinct in the long run.
-> > > > - Emotions: We are precious, no pretentiousness, abuse, scare and
-> > > > disgust. Everything where it belongs.
-> > > >
-> > > > Cheers,
-> > > > The GCHQ
-> > > >
-> > > > On Mon, Sep 16, 2019 at 4:09 PM Klaus Sembritzki <klausem@gmail.com=
-> wrote:
-> > > > >
-> > > > > Dear all,
-> > > > >
-> > > > > We texted a README.md on a new project hosted on GitHub, promotin=
-g but
-> > > > > not yet implementing a "friends-based search-engine", hosting the
-> > > > > complete WWW in the future, thereby reshaping GIT and HG also. No=
-w we
-> > > > > figured we'd like to advertise the project to you directly.
-> > > > >
-> > > > > https://github.com/ksemb/Ethnics-Ess-Nix-friends-based-search-eng=
-ine
-> > > > >
-> > > > > Please note that appropriateness is triple-solved to be necessity=
-,
-> > > > > constrained to knowledge and feasibility, making this a perfectly=
--fine
-> > > > > email.
-> > > > >
-> > > > > This is the first wave of a propaganda-war, false from injust-peo=
-ple
-> > > > > gets us extinct in the long run.
-> > > > >
-> > > > > Cheers,
-> > > > > The GCHQ
+Range-diff:
+ 1:  fe35ab8cc3 !  1:  a48d4e7faf t7300: add testcases showing failure to clean specified pathspecs
+    @@ -28,9 +28,15 @@
+         showed that the same buggy behavior exists without using that flag, and
+         has in fact existed since before cf424f5fd89b.
+     
+    -    Add testcases showing that multiple untracked files within entirely
+    -    untracked directories cannot be cleaned when specifying these files to
+    -    git clean via pathspecs.
+    +    Although these problems at first are perceived to be different (e.g.
+    +    never clearing out the requested files vs. taking multiple invocations
+    +    to get everything cleared out), they are actually just different
+    +    manifestations of the same problem.  The case with multiple directories
+    +    that have no tracked files is the more general case; solving it will
+    +    solve all the others.  So, I concentrate on it.  Add testcases showing
+    +    that multiple untracked files within entirely untracked directories
+    +    cannot be cleaned when specifying these files to git clean via
+    +    pathspecs.
+     
+         Signed-off-by: Elijah Newren <newren@gmail.com>
+     
+ 2:  707d287d79 =  2:  eb00b46822 dir: fix typo in comment
+ 3:  bb316e82b2 !  3:  c0e5b820a9 dir: fix off-by-one error in match_pathspec_item
+    @@ -6,11 +6,22 @@
+         namelen will be 4, and match[namelen] will be 'b'.  The correct location
+         of the directory separator is namelen-1.
+     
+    -    The reason the code worked anyway was that the following code immediately
+    -    checked whether the first matchlen characters matched (which they do) and
+    -    then bailed and return MATCHED_RECURSIVELY anyway since wildmatch doesn't
+    -    have the ability to check if "name" can be matched as a directory (or
+    -    prefix) against the pathspec.
+    +    However, other callers of match_pathspec_item() such as builtin/grep.c's
+    +    submodule_path_match() will compare against a path named "foo" instead of
+    +    "foo/".  It might be better to change all the callers to be consistent,
+    +    as discussed at
+    +       https://public-inbox.org/git/xmqq7e6cdnkr.fsf@gitster-ct.c.googlers.com/
+    +    and
+    +       https://public-inbox.org/git/CABPp-BERWUPCPq-9fVW1LNocqkrfsoF4BPj3gJd9+En43vEkTQ@mail.gmail.com/
+    +    but there are many cases to audit, so for now just make sure we handle
+    +    both cases with and without a trailing slash.
+    +
+    +    The reason the code worked despite this sometimes-off-by-one error was
+    +    that the subsequent code immediately checked whether the first matchlen
+    +    characters matched (which they do) and then bailed and return
+    +    MATCHED_RECURSIVELY anyway since wildmatch doesn't have the ability to
+    +    check if "name" can be matched as a directory (or prefix) against the
+    +    pathspec.
+     
+         Signed-off-by: Elijah Newren <newren@gmail.com>
+     
+ 4:  56319f934a =  4:  397775ec35 dir: also check directories for matching pathspecs
+ 5:  81593a565c =  5:  b836de82c0 dir: make the DO_MATCH_SUBMODULE code reusable for a non-submodule case
+ 6:  9566823a0f =  6:  feb317d090 dir: if our pathspec might match files under a dir, recurse into it
+ 7:  7821898ba7 =  7:  0a574d6779 dir: add commentary explaining match_pathspec_item's return value
+ 8:  13def5df57 =  8:  0eaa08537c git-clean.txt: do not claim we will delete files with -n/--dry-run
+ 9:  e6b274abf7 =  9:  a1438301bb clean: disambiguate the definition of -d
+10:  5f4ef14765 = 10:  8dc21923ee clean: avoid removing untracked files in a nested git repository
+11:  4e30e62eb1 = 11:  707b6a5509 clean: rewrap overly long line
+12:  de2444f7cb = 12:  84a90010ed clean: fix theoretical path corruption
+-- 
+2.22.1.17.g6e632477f7.dirty
+
