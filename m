@@ -2,69 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C6D81F464
-	for <e@80x24.org>; Wed, 18 Sep 2019 20:09:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C4261F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 20:27:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390717AbfIRUJv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 16:09:51 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37704 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390709AbfIRUJu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 16:09:50 -0400
-Received: by mail-wr1-f68.google.com with SMTP id i1so715758wro.4
-        for <git@vger.kernel.org>; Wed, 18 Sep 2019 13:09:48 -0700 (PDT)
+        id S1731245AbfIRU1m (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 16:27:42 -0400
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:55861 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730892AbfIRU1m (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Sep 2019 16:27:42 -0400
+Received: by mail-pf1-f201.google.com with SMTP id w126so585964pfd.22
+        for <git@vger.kernel.org>; Wed, 18 Sep 2019 13:27:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=X8kgLUnfRSqBPxa2wbuAHHf0CJpAE90X3JzCEUaW2s0=;
-        b=rUzbfE0fp36buT1oZh3kFFmNJnThfn7dXZ1aO4+WLYTAFZsX8YbssQJgaegpavvASm
-         ooodCHLKMF8j1YuXtVk6WBj8EskRTqu0ryuGMQ3mO3DYC/QDV4CraobLh+ZLDf7S6lCK
-         zGZhBhet7GteSoJ4i/0Z/DbsgRDCIdtAhL9+yv8t9UF7RuRB++o//lKsr3RK0uy6xPPY
-         Hsray1mX4giU2QrAU3K4KIGDzh42BWUQ5dE+vTQFVlZBpgrKorzupiPZTjCsImQNx0h7
-         A4D3EW0vrrHclS168GVtMpMdm/tBCIxuWXKpisQjIN7HqzA6SOoKMbk++T+QD4/vJINq
-         hjpg==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=pjkR/nGYbrsW3q9roD475+fduZUc3sYM4QgLgtsbGoU=;
+        b=HM3jSd+Snbg5G9GZIr7jxBFAWC4pW4/4S85yegDZ64mCDB+ZqqLd/CY5nzx8Q82WDT
+         q61L47jBt9hDECmuvUgcZHwaipVXmFjukKBTQoOv8zoBYbLu9FlbT0D0rK+KGTavpKNN
+         h5UlisxnjECB2aMgYTh5auXx62D7t15ZKjF27AIHLj43R+R+poYX6V4gbhXFZlhtaTwU
+         Ax1HmpZjSRyhThjzMOAJZHHoFyRkHlfduP6Px+J8nU0cSgajVUvCcpkVTSj6/uUWT8FQ
+         9WqeFfjWkMkK8bLi53NAPsVcqOnDk4AG1V+dMWQhAlaH8mDscmQyyimpxlJNVpFiwd9K
+         4TLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=X8kgLUnfRSqBPxa2wbuAHHf0CJpAE90X3JzCEUaW2s0=;
-        b=bUnOFm91UeFfNP/9zVeHl7Wrc/O79bCqRnehUTXe+Fnn2FBF6JernuIgqY0wBniI34
-         MyvigJM9xh1SjaJh1n44Tj0v46ejxb1bcT0N9MVp8Iv/xU8i/gt8ShHVs6vovGhz6tsp
-         Q8bPJ+5w4VjjXOzj9pm/vCPoxh5dATED/+8tzI0+ajrQuH1YRhwPhjGldBWrqP5UD65H
-         n3N7bLJsbkRC/zfii3p7+ttJszpEWay5KsOFKj1nab+rKej8GzQ+E0nlO21hGu1SHiMI
-         fwKg831KnmbXOUY/uaDrwIGAFEW22V3yEXIae5uo1Wo8qP9GnlacahcL7X5Ta1y8IXy7
-         lkyA==
-X-Gm-Message-State: APjAAAXmkxor/DzulFPxjKJFTngKLwSg+lu89dw+1wEUS/7dETzh0Edp
-        vuk9yHLT7deiAi/f+5ni+5Ppxvvukvx6DHqeGLl0awto
-X-Google-Smtp-Source: APXvYqwHajqas4nTWpBp81rFDUblPH/93HeHSyFhYO7eKL6yiEEA7aaqlb3GD/DLfIufTgd6kfG+bbuhTFDuI0kegxY=
-X-Received: by 2002:adf:f112:: with SMTP id r18mr4609143wro.88.1568837386862;
- Wed, 18 Sep 2019 13:09:46 -0700 (PDT)
-MIME-Version: 1.0
-References: <CADMnYXC7W-6n+A=1C11yzD5OnbQ_-Ac-H7canT-kdCPZpTWn0w@mail.gmail.com>
- <CADMnYXDWwq2DN59qnkS_P31S+-NJZTzj2TMzps5KKQ7McxpO1Q@mail.gmail.com>
- <CADMnYXCRn-wcVeJ5z5W1CSwe0BKQxRrz4R8+=6UAAW_is3yEdA@mail.gmail.com>
- <CADMnYXBzoQXgjRGiO66mp4UQX7jbuMLVKwo4GCzNYntSy4J8vg@mail.gmail.com>
- <CADMnYXAPSBo1gY3mQ_sCpS8kX7hnkusfyx6qwckJKm_4eV886w@mail.gmail.com>
- <CADMnYXBayBP8wnyYegZkqRGrh0+PpSxmNck9D+zpadOqJxsXig@mail.gmail.com>
- <CADMnYXCC8vWNjHAWH32qD37cmQwfY1_0tgb2w5iW2pd=BKE9qg@mail.gmail.com>
- <CADMnYXDAefw6yfPEs=Bo+Oc-ZSD9f_kn5Kmj5P=w=QVROVGOXw@mail.gmail.com>
- <CADMnYXC3uyUCD_KTr6fTO0yHg5nov-hi-a8mua+cOROsnx5AMA@mail.gmail.com>
- <CADMnYXASX5Qn6CpRwumfciRW=PfciHDtHi4KeGzkhpaWHAPdqA@mail.gmail.com>
- <CADMnYXDQxVuSFMu3eZ=tPeXqMTUVofJG5aNANsaCGgCri+YZQg@mail.gmail.com>
- <CADMnYXAwTirFrVk544Y2_D421MFVLy56uyM+K29Te0Ja-MBBZw@mail.gmail.com> <CADMnYXC30digEGVtnWipcVQ_rJeN1_acK1j3xPqCOs4DOpr5uA@mail.gmail.com>
-In-Reply-To: <CADMnYXC30digEGVtnWipcVQ_rJeN1_acK1j3xPqCOs4DOpr5uA@mail.gmail.com>
-From:   Klaus Sembritzki <klausem@gmail.com>
-Date:   Wed, 18 Sep 2019 22:09:35 +0200
-Message-ID: <CADMnYXCxkEj9P0xG4Xj7GpfWVKL0978GKu9ESHmC6xnO8ozgKQ@mail.gmail.com>
-Subject: Re: Promoting Ethnics-Ess-Nix, a friends-based search-engine
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=pjkR/nGYbrsW3q9roD475+fduZUc3sYM4QgLgtsbGoU=;
+        b=NXxMf0CtE/kLNsZxlH6H0fmNgT5sLdLCl+S4nCPxdwvuRg2jD1Zg+I52ii6l6Gy3Zm
+         IFeMmkOuTkIchLB1SNPq1l7QzRipdUuHH+t+bISCYG/ygQsh5AV1Gtm9efoNLtYS+vqY
+         y7UZ6pZ+JcopvhP/X2RXrcRaikGdY9WUCyC9oW2cqZ7M4JfrG4R1L6wgHni7s8JH5Mi8
+         HF94scg4Qf2EIUgTKylLscr1OHM8NXfOw2Lp0KUkbj28di6c5Joa0PJrmISs5QGKqRvF
+         STVZRFSfqx5yg+mg2khqLarLL2wXaRWjrZjXGABrvhwNAcjNnMRZx6OKvdcloIgMaAuF
+         z7yA==
+X-Gm-Message-State: APjAAAUbFRVsIw9Q5MHa8sQ0y82c4tSa36Mi5PNT0Ej4E9z83nXP05OX
+        J3VfZVtK6zmfaAv/GxKRG5lEohI6kCZljG5BoaUq05Pghg0OyF8UX6SiK0p4ojqnt4dueaeD/xX
+        EmZqDwgQRX6Hi6geB2M0LPs4uPtbH4hWDBVYtYHb4ElDThLVR3lo6UQPGi+Y0N5XOFyjbdgq//v
+        RS
+X-Google-Smtp-Source: APXvYqxcM2PHp9J/QKix/Uxq4d6ZqZiHd+c7vRsrp0m/eXNmm6So5Z3VfXi+t7mvIOLptLHTxEQtyc5hqFTyjrDyRhwH
+X-Received: by 2002:a63:1521:: with SMTP id v33mr5772601pgl.9.1568838461107;
+ Wed, 18 Sep 2019 13:27:41 -0700 (PDT)
+Date:   Wed, 18 Sep 2019 13:27:38 -0700
+In-Reply-To: <https://public-inbox.org/git/20190917215040.132503-1-jonathantanmy@google.com/>
+Message-Id: <20190918202738.57273-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <https://public-inbox.org/git/20190917215040.132503-1-jonathantanmy@google.com/>
+X-Mailer: git-send-email 2.23.0.237.gc6a4ce50a0-goog
+Subject: [PATCH v2] merge-recursive: symlink's descendants not in way
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, newren@gmail.com,
+        gitster@pobox.com, szeder.dev@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -72,327 +66,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+When the working tree has:
+ - bar (directory)
+ - bar/file (file)
+ - foo (symlink to .)
 
-We built upon the idea of basing the future internet on 4 * SHA-256.
+(note that lstat() for "foo/bar" would tell us that it is a directory)
 
-Our goal was always to achieve a probability of 0 for a hack with probabili=
-ty 1.
-This is achieved by storing all files spread over the internet, using
-heterogeneous hashes.
+and the user merges a commit that deletes the foo symlink and instead
+contains:
+ - bar (directory, as above)
+ - bar/file (file, as above)
+ - foo (directory)
+ - foo/bar (file)
 
-This is mandatory, as the kernel of the problem is bad-guys getting
-you into trouble, and the solution-kernel is therefore good-guys
-bailing you out.
+the merge should happen without requiring user intervention. However,
+this does not happen.
 
-Cheers,
-Scotland
+This is because dir_in_way(), when checking the working tree, thinks
+that "foo/bar" is a directory. But a symlink should be treated much the
+same as a file: since dir_in_way() is only checking to see if there is a
+directory in the way, we don't want symlinks in leading paths to
+sometimes cause dir_in_way() to return true.
 
+Teach dir_in_way() to also check for symlinks in leading paths before
+reporting whether a directory is in the way.
 
-On Wed, Sep 18, 2019 at 5:00 PM Klaus Sembritzki <klausem@gmail.com> wrote:
->
-> Hello all,
->
-> Manipulating our data is hereby proven to be false, and perpetual
-> false is done by injust-people.
->
-> 4 * SHA-256 is on nail's head, which is the case for unstable, and
-> therefore false, actions.
->
-> Hacking 4 * SHA-256 is therefore false, manipulating our data in
-> general is therefore also false.
->
-> Cheers,
-> Klaus Sembritzki
->
->
-> On Wed, Sep 18, 2019 at 4:18 PM Klaus Sembritzki <klausem@gmail.com> wrot=
-e:
-> >
-> > Hello all,
-> >
-> > The new, theoretically unhackable internet, will be based on 4 * SHA-25=
-6.
-> >
-> > Cheers,
-> > Klaus Sembritzki
-> >
-> > On Wed, Sep 18, 2019 at 2:35 PM Klaus Sembritzki <klausem@gmail.com> wr=
-ote:
-> > >
-> > > Sehrgeerdete Damen und Herren,
-> > >
-> > > Innerbayrische Diskussionen lieferten die folgenden Einsichten.
-> > >
-> > > - Transitivity=3Dfreedom, meaning looking into the future, is exactly
-> > > what hell-creatures are incapable of doing.
-> > > - They cut themselves on paper.
-> > > - Die sin so blehd, die brechen sich den Finger im Orsch ooh.
-> > > - They are incapable of interpreting the weather-forecast.
-> > > - It is a binary thing.
-> > > - Either you have it, or not.
-> > > - Dann ist die Not gro=C3=9F.
-> > >
-> > > Viele Gr=C3=BC=C3=9Fe,
-> > > Bayern
-> > >
-> > > On Wed, Sep 18, 2019 at 6:20 AM Klaus Sembritzki <klausem@gmail.com> =
-wrote:
-> > > >
-> > > > Dear all,
-> > > >
-> > > > I now deviate from my original plan of giving you mostly the two fi=
-rst
-> > > > waves of propaganda-war, to work your way through shunning and driv=
-ing
-> > > > all hell-creatures into the desert.
-> > > >
-> > > > There exist different kinds of fully-converged hell-creatures, and =
-one
-> > > > of them causes my colleagues too much trouble right now: The
-> > > > show-off-intellect. Each class of fully-converged hell-species has =
-an
-> > > > F-contrast of so-called raciness-parameters, and these have, among
-> > > > other things, an intellect that can only solve useless problems, ju=
-st
-> > > > to show off to their colleagues.
-> > > >
-> > > > The problem could, in theory, have been resolved with only the firs=
-t
-> > > > two waves of propaganda-war, but these did sadly not suffice. The
-> > > > first two waves are each closed in the mathematical sense, but
-> > > > convincing a society, and yourself, typically requires also double-=
-,
-> > > > triple- or quadratic-solving, as is done in this message.
-> > > >
-> > > > Cheers,
-> > > > Klaus Sembritzki
-> > > >
-> > > >
-> > > > On Tue, Sep 17, 2019 at 10:42 PM Klaus Sembritzki <klausem@gmail.co=
-m> wrote:
-> > > > >
-> > > > > Dear all,
-> > > > >
-> > > > > Our bosses do not give us the necessary DNA-data or an equivalent=
-,
-> > > > > necessary for perfect convergence-KPIs (KPI=3Dsensor).
-> > > > > We therefore need a burn-in-phase, until you can apply the new
-> > > > > knowledge gained from these emails, and need to now shut-down par=
-ts of
-> > > > > the world so we can sleep.
-> > > > >
-> > > > > Cheers,
-> > > > > The GCHQ
-> > > > >
-> > > > > On Tue, Sep 17, 2019 at 9:04 PM Klaus Sembritzki <klausem@gmail.c=
-om> wrote:
-> > > > > >
-> > > > > > Dear all,
-> > > > > >
-> > > > > > The recent revelations require more information, to get through=
- the
-> > > > > > following weeks.
-> > > > > >
-> > > > > > 1. The world is segmented and mixed-up in heaven-people and
-> > > > > > fully-converged hell-creatures.
-> > > > > > 2. Hell-creatures have the community-constraint "I will never d=
-eprive
-> > > > > > myself of this weapon", meaning they never step down and never =
-stop
-> > > > > > harassing us.
-> > > > > > 3. Heaven-people have the community-constraint "Live and let li=
-ve".
-> > > > > > 4. Love, punishment and firing is in the air for hell-creatures=
-, due
-> > > > > > to reflexivity-problems. They love you for no reason, punish yo=
-u for
-> > > > > > somebody's evildoing and also fire you for it (Trump).
-> > > > > > 5. The government takes care of preventing food- and water-pois=
-oning,
-> > > > > > which is a speciality of the so-called asymmetric hell-creature=
-s.
-> > > > > > 6. Embarrassment fuils us all (heaven and hell), but they run r=
-ogue
-> > > > > > and kill you for it.
-> > > > > > 7. We therefore have to cap ("deckeln") their embarrassment.
-> > > > > > 8. The "nowhere to run"-problem, stemming from reflexivity, let=
-s them
-> > > > > > think you have "nowhere to run", when in fact it's them. They
-> > > > > > therefore completely overestimate their powers when they get tr=
-apped,
-> > > > > > and become kamikaze.
-> > > > > >
-> > > > > > Cheers,
-> > > > > > The GCHQ
-> > > > > >
-> > > > > > On Tue, Sep 17, 2019 at 7:19 PM Klaus Sembritzki <klausem@gmail=
-.com> wrote:
-> > > > > > >
-> > > > > > > Hello all,
-> > > > > > >
-> > > > > > > Discussions following our last email showed that Sippenhaft (=
-the
-> > > > > > > spatial component of law, multiplied with integrated guilt as=
- the
-> > > > > > > temporal component, for nonzero volume or "splash-damage" in =
-the worst
-> > > > > > > case) is necessary to justify the Alzheimer's-treatment.
-> > > > > > >
-> > > > > > > Mind that Vogelfreiheit (think "sniper" or "shutgun for birds=
-", "hat
-> > > > > > > einen Vogel oder eine Meise") is also necessary, in addition =
-to
-> > > > > > > "splash-damage =3D Sippenhaft * (temporally integrated guilt)=
-", in
-> > > > > > > general.
-> > > > > > >
-> > > > > > > Cheers,
-> > > > > > > England
-> > > > > > >
-> > > > > > > On Tue, Sep 17, 2019 at 6:26 PM Klaus Sembritzki <klausem@gma=
-il.com> wrote:
-> > > > > > > >
-> > > > > > > > Hello all,
-> > > > > > > >
-> > > > > > > > Please excuse that this propaganda-war is (in parts) real-t=
-ime due to
-> > > > > > > > privacy-deprivation.
-> > > > > > > > We are right now forced to deal with the revival of Alzheim=
-er-rulers
-> > > > > > > > (wir waren lange "unter ihrer Fuchtel"), like Adolf Hitler =
-was one.
-> > > > > > > > They atrophy in the presence of information-overflow, and t=
-hereby
-> > > > > > > > change their personality. It is unlikely a medication will =
-ever be
-> > > > > > > > developed, due to the latest revelations:
-> > > > > > > >
-> > > > > > > > - Alzheimer (AD)-guys are double-solved as reflexive egoist=
-s,
-> > > > > > > > stressing themselves like others.
-> > > > > > > > - Relaxation as the only cure is therefore just.
-> > > > > > > >
-> > > > > > > > Cheers,
-> > > > > > > > England
-> > > > > > > >
-> > > > > > > >
-> > > > > > > > On Tue, Sep 17, 2019 at 12:48 PM Klaus Sembritzki <klausem@=
-gmail.com> wrote:
-> > > > > > > > >
-> > > > > > > > > Hello all,
-> > > > > > > > >
-> > > > > > > > > As we just manufactured two poles (good=3DRuhrpott, bad=
-=3DBavaria), we
-> > > > > > > > > must now warn you of bipolar people.
-> > > > > > > > > Bipolar people arrange each and every decision upon two p=
-oles, gaining
-> > > > > > > > > a 1D-manifold with every decision, producing a 1D-score f=
-or it on the
-> > > > > > > > > 1D-manifold.
-> > > > > > > > > They even accept and get derailed by poles inconsistent w=
-ithin themselves.
-> > > > > > > > > They thereby always fall off left, right, top and bottom =
-along the
-> > > > > > > > > ultra-dimensional residual hyperplane our (world & societ=
-y) is, they
-> > > > > > > > > have no plan a, b, c, and have to learn it all the hard w=
-ay, always
-> > > > > > > > > defaming the old goal they chased blindly, falling over a=
-nd ruining
-> > > > > > > > > all of our lifes thereby always.
-> > > > > > > > >
-> > > > > > > > > Cheers,
-> > > > > > > > > The GCHQ
-> > > > > > > > >
-> > > > > > > > > On Tue, Sep 17, 2019 at 12:11 PM Klaus Sembritzki <klause=
-m@gmail.com> wrote:
-> > > > > > > > > >
-> > > > > > > > > > Hello all,
-> > > > > > > > > >
-> > > > > > > > > > We just figured you can not settle in Bavaria, "Ruhrpot=
-t" with "Gl=C3=BCck
-> > > > > > > > > > auf, joy on top" is still the only safe bet for unsafe =
-sex in Germany,
-> > > > > > > > > > due to the ages-old Reinheitsgebot.
-> > > > > > > > > >
-> > > > > > > > > > Reinheitsgebot: Don't touch this. We always ruined it i=
-n the past,
-> > > > > > > > > > dying or getting ill.
-> > > > > > > > > >
-> > > > > > > > > > Don't produce imbreds, i.e. crossing English and Scotts=
-, producing
-> > > > > > > > > > Inzuchtsbinkel=3DKatzenfrecker=3DBastards, frecking the=
- Katz in
-> > > > > > > > > > borderline-regions.
-> > > > > > > > > >
-> > > > > > > > > > Cheers,
-> > > > > > > > > > The GCHQ
-> > > > > > > > > >
-> > > > > > > > > > Klaus Sembritzki <klausem@gmail.com> schrieb am Mo., 16=
-. Sep. 2019, 22:21:
-> > > > > > > > > > >
-> > > > > > > > > > > Hello all,
-> > > > > > > > > > >
-> > > > > > > > > > > Many of you must be disappointed by the recent revela=
-tions.
-> > > > > > > > > > > However, we just figured "Gl=C3=BCck auf" ("Joy on to=
-p") makes "Ruhrpott" a
-> > > > > > > > > > > safe bet for unsafe sex.
-> > > > > > > > > > >
-> > > > > > > > > > > Cheers,
-> > > > > > > > > > > The GCHQ
-> > > > > > > > > > >
-> > > > > > > > > > > On Mon, Sep 16, 2019 at 7:16 PM Klaus Sembritzki <kla=
-usem@gmail.com> wrote:
-> > > > > > > > > > > >
-> > > > > > > > > > > > Hello all,
-> > > > > > > > > > > >
-> > > > > > > > > > > > We know that this is for a technical-savvy audience=
-, but as we are all
-> > > > > > > > > > > > people with a soul, here comes a combination of bot=
-h, the logical and
-> > > > > > > > > > > > the emotional first waves of the GCHQ-propaganda-wa=
-r.
-> > > > > > > > > > > >
-> > > > > > > > > > > > First waves of the GCHQ-propaganda-war:
-> > > > > > > > > > > >
-> > > > > > > > > > > > - Logic: This is the first wave of a propaganda-war=
-, false from
-> > > > > > > > > > > > injust-people gets us extinct in the long run.
-> > > > > > > > > > > > - Emotions: We are precious, no pretentiousness, ab=
-use, scare and
-> > > > > > > > > > > > disgust. Everything where it belongs.
-> > > > > > > > > > > >
-> > > > > > > > > > > > Cheers,
-> > > > > > > > > > > > The GCHQ
-> > > > > > > > > > > >
-> > > > > > > > > > > > On Mon, Sep 16, 2019 at 4:09 PM Klaus Sembritzki <k=
-lausem@gmail.com> wrote:
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > Dear all,
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > We texted a README.md on a new project hosted on =
-GitHub, promoting but
-> > > > > > > > > > > > > not yet implementing a "friends-based search-engi=
-ne", hosting the
-> > > > > > > > > > > > > complete WWW in the future, thereby reshaping GIT=
- and HG also. Now we
-> > > > > > > > > > > > > figured we'd like to advertise the project to you=
- directly.
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > https://github.com/ksemb/Ethnics-Ess-Nix-friends-=
-based-search-engine
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > Please note that appropriateness is triple-solved=
- to be necessity,
-> > > > > > > > > > > > > constrained to knowledge and feasibility, making =
-this a perfectly-fine
-> > > > > > > > > > > > > email.
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > This is the first wave of a propaganda-war, false=
- from injust-people
-> > > > > > > > > > > > > gets us extinct in the long run.
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > Cheers,
-> > > > > > > > > > > > > The GCHQ
+Helped-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Changes from v1:
+
+- Used has_symlink_leading_path(). This drastically shortens the diff.
+- Updated commit message following suggestions from Junio, Szeder G=C3=A1bo=
+r,
+  and Elijah Newren.
+- Updated test to add prereq and verification that the working tree
+  contains what we want.
+---
+ merge-recursive.c          |  3 ++-
+ t/t3030-merge-recursive.sh | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+), 1 deletion(-)
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 6b812d67e3..22a12cfeba 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -764,7 +764,8 @@ static int dir_in_way(struct index_state *istate, const=
+ char *path,
+=20
+ 	strbuf_release(&dirpath);
+ 	return check_working_copy && !lstat(path, &st) && S_ISDIR(st.st_mode) &&
+-		!(empty_ok && is_empty_dir(path));
++		!(empty_ok && is_empty_dir(path)) &&
++		!has_symlink_leading_path(path, strlen(path));
+ }
+=20
+ /*
+diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
+index ff641b348a..faa8892741 100755
+--- a/t/t3030-merge-recursive.sh
++++ b/t/t3030-merge-recursive.sh
+@@ -452,6 +452,34 @@ test_expect_success 'merge-recursive d/f conflict resu=
+lt' '
+=20
+ '
+=20
++test_expect_success SYMLINKS 'dir in working tree with symlink ancestor do=
+es not produce d/f conflict' '
++	git init sym &&
++	(
++		cd sym &&
++		ln -s . foo &&
++		mkdir bar &&
++		>bar/file &&
++		git add foo bar/file &&
++		git commit -m "foo symlink" &&
++
++		git checkout -b branch1 &&
++		git commit --allow-empty -m "empty commit" &&
++
++		git checkout master &&
++		git rm foo &&
++		mkdir foo &&
++		>foo/bar &&
++		git add foo/bar &&
++		git commit -m "replace foo symlink with real foo dir and foo/bar file" &=
+&
++
++		git checkout branch1 &&
++
++		git cherry-pick master &&
++		test_path_is_dir foo &&
++		test_path_is_file foo/bar
++	)
++'
++
+ test_expect_success 'reset and 3-way merge' '
+=20
+ 	git reset --hard "$c2" &&
+--=20
+2.23.0.237.gc6a4ce50a0-goog
+
