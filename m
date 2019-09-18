@@ -2,115 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E4621F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 19:55:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 302F51F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 20:02:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387678AbfIRTzX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 15:55:23 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62543 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731839AbfIRTzW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 15:55:22 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E9E7B811C7;
-        Wed, 18 Sep 2019 15:55:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2ZshfML1Zm4BNkxLSXfVhncLWao=; b=i8Da9O
-        JjoNkkwMxx4a1CvLXu49aivFgBmfHLLlvpCOSN4odUPgYi5MGJDeInIoNrsA4S0K
-        sDDs0vk67oT3WmiqiAgy0UwkZOdsK4AQOiqFj1f8rjF4dg5IMfbOmNjdKa3PF46G
-        G/Cx4XllTJYTrmQjnFOkUoH2A1YsYmXCduflI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AlnlRHzc28eVfdTjuUU96Zlcn6qa0rd9
-        qG5bij8ZPhNtd4IIV1/z5WRjPa3oCpQZNj9KEHEJqt6Ijlat0a47ITcF93AxndEM
-        Be5orGHXsGb/h/WNkbSTFzcr1Gr87ZIt7MYj2QW5B0aEWZo9ILf6uqMEBmZGiGrb
-        IoP2sX01wAE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E3809811C6;
-        Wed, 18 Sep 2019 15:55:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 11514811C4;
-        Wed, 18 Sep 2019 15:55:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC PATCH 0/3] grep: don't add subrepos to in-memory alternates
-References: <cover.1568771073.git.matheus.bernardino@usp.br>
-Date:   Wed, 18 Sep 2019 12:55:12 -0700
-In-Reply-To: <cover.1568771073.git.matheus.bernardino@usp.br> (Matheus
-        Tavares's message of "Tue, 17 Sep 2019 22:56:02 -0300")
-Message-ID: <xmqq36gt5qhr.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2389570AbfIRUCL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 16:02:11 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:43774 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389565AbfIRUCK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Sep 2019 16:02:10 -0400
+Received: by mail-qk1-f195.google.com with SMTP id h126so762329qke.10
+        for <git@vger.kernel.org>; Wed, 18 Sep 2019 13:02:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=gFW9z18oHwuj4s8FDdBeDVEBhXpEJCRfdUQnRSQMYFw=;
+        b=FgI1hoH6gc8NtUppgDmSX4q5RpdptfPIZtSzLZAiCVAYKwy7uemD1X1/Bi0akrV+VK
+         PamCyAri5C63g5qeWXipBrFIS+sk7SYhUwcmTBelSA1TEFGDPtxCudAQCJ24oTPE6Npd
+         HNqi1AfFYL3uy65AEu5TeizrXd5ZUPlQJ4Ri9zZFWSmwPKSnFGZ35dHEhl5d/ApQx3Su
+         MYEGIUt32VpJk6eDbatkNj4gUr2fIBPlR/7Tk7+zd14D8+8Rjy/jqe/kMdhq+0cr+PDL
+         vC/RhqIgoDZZAqiVrKwQBjW2sNamFHH4UQMze2toJI9bAyxYI3MdaSwUOfwmkvlcG5HQ
+         w/lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=gFW9z18oHwuj4s8FDdBeDVEBhXpEJCRfdUQnRSQMYFw=;
+        b=XqndEu46uZr3aOm+wZzD8+2GD1sd7gokN0jI/Zr8nKOc2PJjGxLf7gELoScsbb8YmV
+         VbhKRSmAZ4EnC6LXxibIFNzqEdcRKx6KTjkLaKaxcvgPfXZsvjqZ1FT7tbT79x/S1x8/
+         x9nK2wc/tkst5RJk/I/T3nMsgQZcGqP+jzYgm86aoPhWhF/kSb129oSzoD8q3RyLKdX8
+         +xrYI/1fouhN15gVckVdC3b4DxCOMAprDJ493Q5c123YVYMW032naNc1iGVj52QJsJC5
+         ocE2gaPcc70Wi5qqNw8A5K7JZetjPqA3Y5nl2YbPWzP36HG3WJYAqWpjabtvKEvSzzko
+         rllA==
+X-Gm-Message-State: APjAAAWFXw25aCXFZlM5Vhh07EUeas6e7klKs69ktI0P9P2kCUMJwjwv
+        X+RbA6Cq/UQ5RgaKpwODnig=
+X-Google-Smtp-Source: APXvYqwrtu37LDbvlqSTdgb2CtFyUkr3BaEGZouJAl+Xwnp8qTVsPPWLr4KAxOY051hFSDXazt8NYA==
+X-Received: by 2002:a37:4049:: with SMTP id n70mr6326477qka.326.1568836929750;
+        Wed, 18 Sep 2019 13:02:09 -0700 (PDT)
+Received: from [10.0.1.19] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id p199sm3380771qke.18.2019.09.18.13.02.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Sep 2019 13:02:09 -0700 (PDT)
+Subject: Re: [PATCH] sha1_name: simplify strbuf handling in
+ interpret_nth_prior_checkout()
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <582d8659-dd5e-440e-6f00-a59c7017dff6@web.de>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <9a7e07ea-dd88-b1f0-125a-bc0f2a6d1fe9@gmail.com>
+Date:   Wed, 18 Sep 2019 16:02:08 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3B6D7A28-DA4E-11E9-95C4-B0405B776F7B-77302942!pb-smtp20.pobox.com
+In-Reply-To: <582d8659-dd5e-440e-6f00-a59c7017dff6@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares <matheus.bernardino@usp.br> writes:
+On 9/18/2019 12:35 PM, René Scharfe wrote:
+> Pass the target strbuf to the callback function grab_nth_branch_switch()
+> by reference so that it can add the result string directly instead of
+> having it put the string into a temporary strbuf first.  This gets rid
+> of an extra allocation and a string copy.
+> 
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+> Patch formatted with --function-context for easier reviewing.
 
-> Make git-grep --recurse-submodules stop adding subrepos to the in-memory
-> alternates list and, instead, pass a reference to the subrepo struct
-> down to the threads.
+I appreciate this. I needed to look through the whole method to see that
+previously "buf" was used to take the resulting value on a successful
+parse.
 
-Nice.  This is done by updating all the codepaths used by grep to
-use the lower-level helper functions that can take a repository
-instance and/or an object store instance that is not the one tied to
-the top-level repository?  Quite nice.
+>  sha1-name.c | 11 ++++-------
+>  1 file changed, 4 insertions(+), 7 deletions(-)
+> 
+> diff --git a/sha1-name.c b/sha1-name.c
+> index c665e3f96d..85196929c7 100644
+> --- a/sha1-name.c
+> +++ b/sha1-name.c
+> @@ -1286,70 +1286,67 @@ static int get_oid_oneline(struct repository *r,
+> 
+>  struct grab_nth_branch_switch_cbdata {
+>  	int remaining;
+> -	struct strbuf buf;
+> +	struct strbuf *sb;
+>  };
+> 
+>  static int grab_nth_branch_switch(struct object_id *ooid, struct object_id *noid,
+>  				  const char *email, timestamp_t timestamp, int tz,
+>  				  const char *message, void *cb_data)
+>  {
+>  	struct grab_nth_branch_switch_cbdata *cb = cb_data;
+>  	const char *match = NULL, *target = NULL;
+>  	size_t len;
+> 
+>  	if (skip_prefix(message, "checkout: moving from ", &match))
+>  		target = strstr(match, " to ");
+> 
+>  	if (!match || !target)
+>  		return 0;
+>  	if (--(cb->remaining) == 0) {
+>  		len = target - match;
+> -		strbuf_reset(&cb->buf);
+> -		strbuf_add(&cb->buf, match, len);
+> +		strbuf_reset(cb->sb);
+> +		strbuf_add(cb->sb, match, len);
+>  		return 1; /* we are done */
 
-> - textconv cache is written to the_repository's object database even for
->   submodules. Should it perhaps be written to submodules' odb instead?
+It seems that now "buf" is still only being replaced on a successful parse, since
+this strbuf_reset and strbuf_add is happening only on a return 1, which terminates
+the refs_for_each... method.
 
-You mention "is written", but that is what happens upon a cache
-miss.  Before the code notices a cache miss, it must be checking if
-a cached result is available.  In which odb is it done?  Writing
-that follow the miss should happen to the same one, or the cache is
-not very effective.
+>  	}
+>  	return 0;
+>  }
+> 
+>  /*
+>   * Parse @{-N} syntax, return the number of characters parsed
+>   * if successful; otherwise signal an error with negative value.
+>   */
+>  static int interpret_nth_prior_checkout(struct repository *r,
+>  					const char *name, int namelen,
+>  					struct strbuf *buf)
+>  {
+>  	long nth;
+>  	int retval;
+>  	struct grab_nth_branch_switch_cbdata cb;
+>  	const char *brace;
+>  	char *num_end;
+> 
+>  	if (namelen < 4)
+>  		return -1;
+>  	if (name[0] != '@' || name[1] != '{' || name[2] != '-')
+>  		return -1;
+>  	brace = memchr(name, '}', namelen);
+>  	if (!brace)
+>  		return -1;
+>  	nth = strtol(name + 3, &num_end, 10);
+>  	if (num_end != brace)
+>  		return -1;
+>  	if (nth <= 0)
+>  		return -1;
+>  	cb.remaining = nth;
+> -	strbuf_init(&cb.buf, 20);
+> +	cb.sb = buf;
+> 
+>  	retval = refs_for_each_reflog_ent_reverse(get_main_ref_store(r),
+>  			"HEAD", grab_nth_branch_switch, &cb);
+>  	if (0 < retval) {
+> -		strbuf_reset(buf);
+> -		strbuf_addbuf(buf, &cb.buf);
+>  		retval = brace - name + 1;
+>  	} else
+>  		retval = 0;
+> 
+> -	strbuf_release(&cb.buf);
+>  	return retval;
+>  }
+> 
 
-Because you would want the cache to be effective, after running "git
-grep --recurse-submodules" from the top-level, when you chdir down
-to the submodule and say "git grep" to dig further, the answer to
-your question is most likely "yes".
+The reaction in this method appears correct, too.
 
-> - Considering the following call chain: grep_source_load_driver() >
->   userdiff_find_by_path() > git_check_attr() > collect_some_attrs() >
->   prepare_attr_stack() > bootstrap_attr_stack():
->
->   * The last function tries to read the attributes from the
->     .gitattributes and .git/info/attributes files of the_repository.
->     However, for paths inside the submodule, shouldn't it try to read
->     these files from the submodule?
+Thanks,
+-Stolee
 
-Yes, I think all of those would have worked correctly if we forked a
-separate "git grep" inside submodule repository, but in the rush to
-"do everything in process", many things like these are not done
-correctly.  As there is only one attribute cache IIUC, invalidating
-the whole cache for the top-level and replacing it with the one for
-a submodule, every time we cross the module boundary, would probably
-have a negative effect on the performance, and I am not sure what
-would happen if you run more than one threads working in different
-repositories (i.e. top-level and submodules).
-
->   * This function will also call: read_attr() > read_attr_from_index() >
->     read_blob_data_from_index() which might, in turn, call
->     read_object_file(). Shouldn't we pass the subrepo to it so that it
->     can call repo_read_object_file()? (Again, for paths inside the
->     submodule, read_object_file() won't be able to find the object as
->     we won't be adding to alternates anymore.)
-
-Ditto.
-
-Thanks.
