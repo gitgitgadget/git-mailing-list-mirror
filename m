@@ -2,165 +2,241 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 619741F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 16:35:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E38B1F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 16:56:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387609AbfIRQfp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 12:35:45 -0400
-Received: from mout.web.de ([212.227.15.3]:55109 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728713AbfIRQfp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 12:35:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1568824540;
-        bh=oKR8d/KdqPj/MV5ajntqehjrAVICAzYwnPIB86WqT1c=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=kcPUIH5pp47mn8V0bL2amv7SvUBCWVzDwRjeQgkU8KOazS4Z8pxCgmaEfzAAG2jDq
-         d2e4jn7ttma+O+RGvpWB+IO+QjdSFsbaOUjfkHa+mqE9hbPf++l3Moi7Fb7ftpT1uD
-         MqJ9wt0joceaLa2OKx+p6B0hE6d/aX+Y4dNvPt3s=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lo0M4-1hi8jE39Im-00fxDS; Wed, 18
- Sep 2019 18:35:40 +0200
-X-Mozilla-News-Host: news://nntp.public-inbox.org:119
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] sha1_name: simplify strbuf handling in
- interpret_nth_prior_checkout()
-Message-ID: <582d8659-dd5e-440e-6f00-a59c7017dff6@web.de>
-Date:   Wed, 18 Sep 2019 18:35:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1731169AbfIRQ4K (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 12:56:10 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:45985 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727305AbfIRQ4K (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Sep 2019 12:56:10 -0400
+Received: by mail-pf1-f194.google.com with SMTP id y72so340920pfb.12
+        for <git@vger.kernel.org>; Wed, 18 Sep 2019 09:56:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=VJw9UbFp93JEWwkNOmVnHbgkLTcuusnqfiwmmII7xw8=;
+        b=BxkavUCLo/TJoCtbUzXr5yrgkTVen0iyTmfNcpuJNurHMVhra6GZ9MuCYg4fygBcHt
+         hBu3WCpjfn1cAZo6PdZVAmiKwrp+dwzbkVd/iuO/AkX+5MjxY+PESSW5MzpOLULwHC6B
+         pW7aluCm5L5IoZFuJnjkKHhVYghQVhd1z6+HwmeD1AZKVQD7be1qX28/aT6R8DwQSqrb
+         Ec/Rd1CiS6YGkPvbtIlOWEl2EZAwKqRjrSRj1mDBScTGZAZ9a4DjvGwYbH2WO8mO/ze6
+         kBbRLMZBkCol2eR3cmSPe31K6QJzPwOZbDBlGorisRrXGU+L2Hh62cLLjTS5oS9zj+KO
+         0u7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=VJw9UbFp93JEWwkNOmVnHbgkLTcuusnqfiwmmII7xw8=;
+        b=B9qt8pEQ3pm9u/rQF4HqyhaUWAN34+eOnO7kFOz5WOvNnuid5SW0AeTJ5Sx4woFKfn
+         UF8oEXxdhcFRGY68UQR5lWmjUdoY3iTxhjdif5bNZywFc5VKOSDJKCR4UbJAI4hcQ5Hm
+         XEBXOIXATOEZrDzwkCh3niTvFG034/jb2oXQFJDWLHHXBxy52sYWEdp7/h0U9BCe2dct
+         3d6x5u4HzPfe9taV76BHcHhbxeksSECQ+cDQxww7x0Bnz6AwUKClQqNxXBLMDKUGaVNH
+         wqxCjWFi2Go425rAry7+YnEoDKKf7OdiYrzCyazTR+7M9h/HU+PbtM3LD1DwcFSZAOy9
+         O3Qw==
+X-Gm-Message-State: APjAAAVcI3qKAg8nSKp/QjxRwPXoS2JzWnsDFB65GvzQdN3L/Ny8TxVQ
+        2DNt8+YF5iwqvyngIOXYv70=
+X-Google-Smtp-Source: APXvYqz9oeDWmMfiU7JkZLB5c3gMcbv1TEoD4XgdnOQ0EJtK0ACkR+sOxVpEgp4pOv+dVCnXiKYJww==
+X-Received: by 2002:a63:c09:: with SMTP id b9mr4751732pgl.245.1568825769292;
+        Wed, 18 Sep 2019 09:56:09 -0700 (PDT)
+Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.54])
+        by smtp.gmail.com with ESMTPSA id a8sm9648804pfo.118.2019.09.18.09.56.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Sep 2019 09:56:08 -0700 (PDT)
+Date:   Wed, 18 Sep 2019 09:56:06 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: git-gui: missing some patches from git?
+Message-ID: <20190918165606.GA1133@dentonliu-ltm.internal.salesforce.com>
+References: <CAGr--=KXqFbivuXHPNecb3dBR_hx8QqWoR4pBGXy7uOiT+ESbg@mail.gmail.com>
+ <20190918092721.GA76617@archbookpro.localdomain>
+ <20190918151404.rqjohdderwxfqtdm@yadavpratyush.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:aSqgxJUsLgjM7RKn1fWVGuXwzZf5LCPyZgUCBrY073/cXgZARBs
- u8+l4OnbqNyEkRdPPqGvpPEWn9NXM4chK3oiSAtwi9VyUjLie/ArSXN3C9MJ6gI7Zh+7WW7
- 8ViedUd6HHfqCjGqKhaGIWJQXhy7DVGByECnwS/orN0L18Wt0ooBt83R/tgvvUj1CVxjHJy
- 1n2aOXy4SA8//9gRjBPQQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:EtfX413FD4o=:Hgosdb4UgXKHgINx4quYm8
- irfJ9gcmHIAJWnoerWdyRLM4CBhQRyk01QJdH68b1EDk7p6oCiSe+SPksdlsa6LZOM8GbI8M0
- SRJUPCVxMj8c902Ur17+InQW3LG9t+d0RN3FPm2/v0Rfq4YG/aYPBqobqpM1Q+94zeFu1m5eb
- 6wQqloozC5bO3NfPJ0oC4aRtojkLwCEm2rtTsADtVPP62TmNy7MkycUF3Crlgot1QdwF4SQI0
- pgJ9gWcrfgiy3a0g+CoWifS6DaYYm6IKphziwQNHsZZ1sMOFfGNf3fLMM2RMstn4rQU4miLzQ
- CUs8j2op7/K9iFnBCqq55PKadDGk1MIwRTCyxR1XaDNCquYOjX0OKplbWJ3f1hPZjWLTD16G+
- fUF5seruUQlJbnJow2H1Ed05tjACDsV2zm7I5MRnILedEiiNzem4eFFy5X6Uker6FZNMWviSa
- Fe3xgurmDm/HwZdieud15JnB14NiyHmJmqGy1263t1WLYfUiflkS8Xu4VF2Hg5QLOy8GolGDi
- B0F9l2VF+VtoKgy7qd+bxXjWVqLKEr8hmucD4zYvjrbWm7dzXhFcjEnfrfZ10/TnuWhyXxr/d
- lgSsoydDNym/msphZiCc9r3w5kzSoeKMp7PW+zfhSOVDcXOO/YdmvWwXXdoBZCWTr5NNNnyYD
- qdRHFishzN7b+u6DzsTGveYQ1pIZYbmRr1/KC58RR1RnxPvyImW5k43aaxlrVaydW5ybyMoI9
- Cvquj0RZ4p4/GYc22wjrxfxyAaxulfIcMx4qmIxzEWx2ba2eljQvZu78f3/0wEscveGrBcGru
- KbevygP1c+sRw/zk3NZ5FHX4H6k7hHYZkHkpPKsEVWzemq/i160ls2agigEBt9TJwyDwKZkN4
- /8ao60T0ha697UqFQ7XxGnpzPxh8jm8wwu7apMZocMX7YFP7aXYtQwnSw9m07+YxTNgb2pdaP
- NJCtSDVSe5XDBo7KbUCA1vbPljAMjq76u6eWN6bJEvessNcPEGzq3hh9KJedBlPVkq+B8Ew//
- QbuBLAw4uzYGYk90MXpNStK332iQuTMkZEUs5tO5/o8gUYj3WIXNe5IVZSuz3eU0h1YT81zpx
- GuU51TyHvSCS/WXEjqnTZAYhuLLUOQig9skEBHYrn9dG8R2zoHsu0uUxs13oDYBuuMQZHFU02
- LQPWMDXwYVqx/0IkA4Bb5drXFUHN9NerhJVxX86tRKuHyOEMe0/NsReRlb3tzxM6riDECeO1i
- A1yOMRMHXOA3f9sJv9WUldwkyhnIkcscsWc30iA==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190918151404.rqjohdderwxfqtdm@yadavpratyush.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pass the target strbuf to the callback function grab_nth_branch_switch()
-by reference so that it can add the result string directly instead of
-having it put the string into a temporary strbuf first.  This gets rid
-of an extra allocation and a string copy.
+On Wed, Sep 18, 2019 at 08:44:04PM +0530, Pratyush Yadav wrote:
+> On 18/09/19 02:27AM, Denton Liu wrote:
+> > On Wed, Sep 18, 2019 at 09:02:37AM +0200, Birger Skogeng Pedersen wrote:
+> > > Hi Pratyush,
+> > > 
+> > > 
+> > > I was comparing your git-gui repo[1] with the source code of
+> > > git/git-gui[2]. There seems to be a couple of things missing.
+> > > 
+> > > For example, I created a patch back in March 2018[3]. Junio pulled it
+> > > so the changes are really there in git/git-gui/git-gui.sh (see this[4]
+> > > line). This was while there was no git-gui maintainer. I guess the
+> > > change never got merged to git-gui, but directly to git.
+> > > 
+> > > Not sure what you should to about it, I just wanted to let you know.
+> 
+> This is something I've been aware of, but I have followed the strategy 
+> of ignoring the problem till someone complains. Well, that someone has 
+> now complained.
+> 
+> I'm not particularly comfortable with cross-tree/sub-tree merges, so 
+> I've been dreading doing this for a while. Guess now its time to get my 
+> hands dirty.
+> 
+> > > 
+> > > [1] https://github.com/prati0100/git-gui
+> > > [2] https://github.com/gitster/git/tree/master/git-gui
+> > > [3] https://public-inbox.org/git/20180302100148.23899-1-birgersp@gmail.com/
+> > > [4] https://github.com/gitster/git/blob/master/git-gui/git-gui.sh#L3885
+> > > 
+> > > 
+> > > Birger
+> > 
+> > As an exercise in writing throwaway scripts, I created this monstrosity.
+> > If you're interested in merging all of the git-gui branches that came
+> > from mainline back into git-gui's master, perhaps we could do something
+> > like this:
+> 
+> Ah! Thanks a lot for this. This reduces some of the work I've been 
+> dreading.
+> 
+> > 
+> > 	#!/bin/sh
+> > 
+> > 	branches=
+> > 	# note that all instances of "master" refer to git.git's "master"
+> > 	# also, 5ab7227 is the latest commit in Pat's git-gui repo
+> > 	for c in $(git rev-list --children master 5ab7227 | grep ^5ab7227 | cut -d' ' -f2-)
+> > 	do 
+> > 		merge_commit=$(git rev-list $c..master --ancestry-path --merges | tail -n1)
+> > 		branch_name=$(git show -s --format=%s $merge_commit | sed -e "s/Merge branch '\\([^']*\\)' of .*/\\1/")
+> > 
+> > 		#echo $branch_name: $(git rev-parse $merge_commit^2)
+> > 		git branch -f "$branch_name" $merge_commit^2
+> > 		branches="$branches $branch_name"
+> > 	done
+> > 	# this also assumes git-gui's master is checked out
+> > 	git merge $branches
+> 
+> Assuming I have git.git cloned in ../git (relative to git-gui.git), I 
+> ran:
+> 
+>   git pull -Xsubtree=git-gui ../git $branches
+> 
+> instead of:
+> 
+>   git merge $branches
+> 
+> because git-gui's tree doesn't have those commits and branches yet, so 
+> we can't merge straight away. This seems to have worked, but I thought 
+> I'd mention it in case it would cause some subtle problems.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Patch formatted with --function-context for easier reviewing.
+Did you run the big for loop in git.git to create the branches and then
+the `git pull` in git-gui? That should work.
 
- sha1-name.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+> 
+> > This script should resurrect all of the branches that were based on
+> > 5ab7227 from mainline's master. Then (assuming you have git-gui's
+> > master checked out), it should do a big octopus merge to bring all of
+> > the changes in.
+> > 
+> > We end up with the following branches being merged:
+> > 
+> > 	js/msgfmt-on-windows: 492595cfc70f97cd99d4c460db1ba01b73dab932
+> 
+> This branch is already in git-gui (with the exception of one commit. 
+> More on that below).
+> 
+> > 	tz/fsf-address-update: 63100874c1653dd6a137f74143eda322550eabc7
+> > 	jn/reproducible-build: 474642b4a47c74a1f277955d7387d1886546fa01
+> > 	ls/no-double-utf8-author-name: 331450f18a7fd298ddd6b85cc5e8ed9dba09f9da
+> > 	js/misc-git-gui-stuff: 76756d67061076c046973bff2089ad49f5dc2eb6
+> > 	bb/ssh-key-files: 6a47fa0efa342daa53c6386538fda313420351a5
+> > 	bp/bind-kp-enter: 146a6f1097f451c6b6d332916a515b7ce8c07e9a
+> > 	cb/ttk-style: f50d5055bf9bb2aa35e629d31943334afc4a9f10
+> > 	py/call-do-quit-before-exit: 5440eb0ea2651c45a0e46f2335ecbb8d1f42c584
+> > 
+> > Then perhaps you could do a request-pull and development could continue
+> > on your fork?
+> > 
+> > Not sure if this is even desirable but here's the script just in case it
+> > ends up useful. I had fun writing it.
+> 
+> Just to pick your brain: in what case would this not be desirable?
 
-diff --git a/sha1-name.c b/sha1-name.c
-index c665e3f96d..85196929c7 100644
-=2D-- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -1286,70 +1286,67 @@ static int get_oid_oneline(struct repository *r,
+I'm not 100% about the accuracy of the script. In particular,
 
- struct grab_nth_branch_switch_cbdata {
- 	int remaining;
--	struct strbuf buf;
-+	struct strbuf *sb;
- };
+	merge_commit=$(git rev-list $c..master --ancestry-path --merges | tail -n1)
 
- static int grab_nth_branch_switch(struct object_id *ooid, struct object_i=
-d *noid,
- 				  const char *email, timestamp_t timestamp, int tz,
- 				  const char *message, void *cb_data)
- {
- 	struct grab_nth_branch_switch_cbdata *cb =3D cb_data;
- 	const char *match =3D NULL, *target =3D NULL;
- 	size_t len;
+is super hacky and makes a lot of assumptions. It'd probably be best if
+someone else also takes a look.
 
- 	if (skip_prefix(message, "checkout: moving from ", &match))
- 		target =3D strstr(match, " to ");
+>  
+> > Also note that we end up missing two commits that made changes to
+> > git-gui/ under mainline git (not directly to the git-gui repo): 
+> > 
+> > 	* 7560f547e6 (treewide: correct several "up-to-date" to "up to date", 2017-08-23)
+> > 	* 00ddc9d13c (Fix build with core.autocrlf=true, 2017-05-09)
+> 
+> One more commit that is missing: 492595cfc7 (git-gui (MinGW): make use of MSys2's msgfmt, 2017-07-25)
+> 
+> This commit is comes from the merge of js/msgfmt-on-windows, which has 
+> all the commits from the merge 5ab7227 (Merge remote-tracking branch 'philoakley/dup-gui', 2017-03-18)
+> in git-gui.
+> 
+> While merging js/msgfmt-on-windows should get this commit into git-gui, 
+> I'd rather have it separate,
 
- 	if (!match || !target)
- 		return 0;
- 	if (--(cb->remaining) =3D=3D 0) {
- 		len =3D target - match;
--		strbuf_reset(&cb->buf);
--		strbuf_add(&cb->buf, match, len);
-+		strbuf_reset(cb->sb);
-+		strbuf_add(cb->sb, match, len);
- 		return 1; /* we are done */
- 	}
- 	return 0;
- }
+Any reason why you'd want to keep it separate?
 
- /*
-  * Parse @{-N} syntax, return the number of characters parsed
-  * if successful; otherwise signal an error with negative value.
-  */
- static int interpret_nth_prior_checkout(struct repository *r,
- 					const char *name, int namelen,
- 					struct strbuf *buf)
- {
- 	long nth;
- 	int retval;
- 	struct grab_nth_branch_switch_cbdata cb;
- 	const char *brace;
- 	char *num_end;
+I'm assuming you're referring to the commit that merges
+js/msgfmt-on-windows in:
 
- 	if (namelen < 4)
- 		return -1;
- 	if (name[0] !=3D '@' || name[1] !=3D '{' || name[2] !=3D '-')
- 		return -1;
- 	brace =3D memchr(name, '}', namelen);
- 	if (!brace)
- 		return -1;
- 	nth =3D strtol(name + 3, &num_end, 10);
- 	if (num_end !=3D brace)
- 		return -1;
- 	if (nth <=3D 0)
- 		return -1;
- 	cb.remaining =3D nth;
--	strbuf_init(&cb.buf, 20);
-+	cb.sb =3D buf;
+	commit 90dbf226ba3fae0d932ae4e42d8d3122a47766bc
+	Merge: 5800c63717 492595cfc7
+	Author: Junio C Hamano <gitster@pobox.com>
+	Date:   Jul 25 2017
 
- 	retval =3D refs_for_each_reflog_ent_reverse(get_main_ref_store(r),
- 			"HEAD", grab_nth_branch_switch, &cb);
- 	if (0 < retval) {
--		strbuf_reset(buf);
--		strbuf_addbuf(buf, &cb.buf);
- 		retval =3D brace - name + 1;
- 	} else
- 		retval =3D 0;
+		Merge branch 'js/msgfmt-on-windows' of ../git-gui into js/git-gui-msgfmt-on-windows
+		
+		* 'js/msgfmt-on-windows' of ../git-gui:
+		  git-gui (MinGW): make use of MSys2's msgfmt
+		  git gui: allow for a long recentrepo list
+		  git gui: de-dup selected repo from recentrepo history
+		  git gui: cope with duplicates in _get_recentrepo
+		  git-gui: remove duplicate entries from .gitconfig's gui.recentrepo
 
--	strbuf_release(&cb.buf);
- 	return retval;
- }
+Since js/msgfmt-on-windows is based on 5ab7227 (Merge remote-tracking
+branch 'philoakley/dup-gui', 2017-03-18), when it was merged into
+git.git's master, the merge brought in those other four commits by
+Philip Oakley since they weren't merged into git.git yet.
 
-=2D-
-2.23.0
+However, you're not going to be merging in the same list of commits if
+you merge into git-gui. You'll only end up merging in one commit: the
+missing 492595cfc7 (git-gui (MinGW): make use of MSys2's msgfmt,
+2017-07-25). This is because Philip's commits are already in the git-gui
+repo.
+
+> 
+> > 
+> > Hope any of this is useful to anyone,
+> 
+> It is very useful. Thanks :)
+
+Glad I could help!
+
+> 
+> -- 
+> Regards,
+> Pratyush Yadav
