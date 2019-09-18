@@ -2,101 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D4111F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 06:28:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAD241F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 07:02:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729887AbfIRG2Q (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 02:28:16 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:30932 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726185AbfIRG2P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 02:28:15 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 46Y95m41RNz5tlL;
-        Wed, 18 Sep 2019 08:28:12 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 86ACF10A;
-        Wed, 18 Sep 2019 08:28:11 +0200 (CEST)
-Subject: Re: [PATCH] ls-remote: create '--count' option
-To:     =?UTF-8?Q?Kamil_Doma=c5=84ski?= <kamil@domanski.co>
-References: <20190918001134.20776-1-kamil@domanski.co>
-From:   Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org
-Message-ID: <f643547f-54e0-fe4f-d8e5-95445431faf3@kdbg.org>
-Date:   Wed, 18 Sep 2019 08:28:11 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1728061AbfIRHCK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 03:02:10 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:43874 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726755AbfIRHCJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Sep 2019 03:02:09 -0400
+Received: by mail-io1-f67.google.com with SMTP id v2so13624940iob.10
+        for <git@vger.kernel.org>; Wed, 18 Sep 2019 00:02:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ugOUEYd4HfPX1bcDV8tPCwqEtK0iXnX0VISf+oUNPfY=;
+        b=eyFdOfiq4HJnnPHHy49+77iRnco10BTrzz2ONa6N8gZgepOr7EYoWf6MyRBSrQKQdA
+         Md/JQzlcp8EPec9t6LQtlUYmtGiv+N2UlEj4vjR/q0wiywS/Yqun+GTFz9VRo4V/fb2s
+         ycN6sc+dNK6aCx7SMhIzCn4orD677ZoOcYizGWA6b1Dwx75rMSl3xDQhHa6whymi/k4/
+         qMZhOfa4JDuNwsXFrXVJcWGNHXySbOFHMrmTlRrZGWs8w+Yao2pEEubhoxiwWYMmK9x4
+         BmM6NTb/M84MJVcks10/0e7E3kLcTrOYGoHgaPN+P+2zfY4UpA/UjI8rjM1pb5+FnbCb
+         0pQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ugOUEYd4HfPX1bcDV8tPCwqEtK0iXnX0VISf+oUNPfY=;
+        b=Is5OvtPfPkCnUHrAJxlDn1g5Wc2TUSfAswapd18cOEOG0o8WtYsnyvHcVhbEBczHkA
+         Z5Zw8TGrVQhQ4gHl9A1QP3lAcw4n33FFlKa7/K2hnhh3jWJ1HL8nd7WmcGUwVDmbEtpV
+         0+70btmnMaL+Y3LvE5foDuZUbdl1xIjlMFVrO2yk4n+LFzh3Tq6wrE9dmlMKJFhOzJTk
+         6bywmMFcQj3LYjColbyzO9i8lGSbV5Wv9v50fkAwoZy+r5uXEC55KQYw+zI0CyZC+c4t
+         f812XV1W03qMRFGbDRXMkGI3TSelI7h2nD6tm/nnytxzfL5Eg6plGMe0uZseT8J1E1EP
+         UEWg==
+X-Gm-Message-State: APjAAAU6ghnF75JYZlITEAtw5R5A8pQ/YnIKwKguUQuClB9YFbnanL7o
+        KRcjVqdpmeNoNcSpuBN6xKGwFT6g+oI=
+X-Google-Smtp-Source: APXvYqwUiXz/X0ET1YplRDlTURiHjWWymCwybtjyJzWg54a9DCYXMQ8P6arm+dkbSVBU+B3ZrIKLvQ==
+X-Received: by 2002:a02:698d:: with SMTP id e135mr3343762jac.128.1568790128323;
+        Wed, 18 Sep 2019 00:02:08 -0700 (PDT)
+Received: from viper.hsd1.ut.comcast.net ([2601:681:4100:375e:c6b3:1ff:fed3:9881])
+        by smtp.gmail.com with ESMTPSA id i26sm4850832ion.40.2019.09.18.00.02.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Sep 2019 00:02:07 -0700 (PDT)
+From:   Alex Henrie <alexhenrie24@gmail.com>
+To:     git@vger.kernel.org, gitster@pobox.com, Jens.Lehmann@web.de
+Cc:     Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH] doc: fix reference to --ignore-submodules
+Date:   Wed, 18 Sep 2019 01:02:04 -0600
+Message-Id: <20190918070204.100144-1-alexhenrie24@gmail.com>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-In-Reply-To: <20190918001134.20776-1-kamil@domanski.co>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 18.09.19 um 02:11 schrieb Kamil Domański:
-> Create a '--count' option for ls-remote, based on the one from
-> for-each-ref. This allows e.g. to return only the first result
-> from a sorted list of refs.
-> 
-> Signed-off-by: Kamil Domański <kamil@domanski.co>
-> ---
->  Documentation/git-ls-remote.txt | 11 ++++++++---
->  builtin/ls-remote.c             | 16 ++++++++++++----
->  t/t5512-ls-remote.sh            |  9 +++++++++
->  3 files changed, 29 insertions(+), 7 deletions(-)
-> 
-> diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-> index 0b057cbb10..5adc1d676e 100644
-> --- a/Documentation/git-ls-remote.txt
-> +++ b/Documentation/git-ls-remote.txt
-> @@ -9,9 +9,9 @@ git-ls-remote - List references in a remote repository
->  SYNOPSIS
->  --------
->  [verse]
-> -'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=<exec>]
-> -	      [-q | --quiet] [--exit-code] [--get-url] [--sort=<key>]
-> -	      [--symref] [<repository> [<refs>...]]
-> +'git ls-remote' [--count=<count>] [--heads] [--tags] [--refs]
-> +	      [--upload-pack=<exec>] [-q | --quiet] [--exit-code] [--get-url]
-> +	      [--sort=<key>] [--symref] [<repository> [<refs>...]]
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
+ Documentation/gitmodules.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-It is understandable that the new option is important to _you_, but it
-does not seem important enough that it must be the first in the list.
-Please add it between --symref and <repository>
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+index a66e95b70c..b7f5e39d4c 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -90,7 +90,7 @@ of the superproject, the setting there will override the one found in
+ .gitmodules.
+ 
+ Both settings can be overridden on the command line by using the
+-"--ignore-submodule" option. The 'git submodule' commands are not
++"--ignore-submodules" option. The 'git submodule' commands are not
+ affected by this setting.
+ --
+ 
+-- 
+2.23.0
 
->  
->  DESCRIPTION
->  -----------
-> @@ -21,6 +21,11 @@ commit IDs.
->  
->  OPTIONS
->  -------
-> +--count=<count>::
-> +	By default the command shows all refs that match
-> +	`<pattern>`.  This option makes it stop after showing
-> +	that many refs.
-
-Is the meaning of this option perhaps:
-
-    Stops after the specified count of refs have been listed.
-    If `--sort=<key>` is specified as well, refs are counted
-    after sorting; otherwise, it is unspecified which subset
-    of is listed.
-
-I do not know whether the "otherwise" part would be true (check it!),
-but I am pretty certain that the "If" part must be true, otherwise the
-option would be pointless.
-
-The comment about the ordering of this paragraph at the very beginning
-of the option list applies here, too, because the list is not sorted
-alphabetically.
-
--- Hannes
