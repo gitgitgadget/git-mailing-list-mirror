@@ -3,240 +3,262 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E38B1F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 16:56:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2C401F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 17:21:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731169AbfIRQ4K (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 12:56:10 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:45985 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727305AbfIRQ4K (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 12:56:10 -0400
-Received: by mail-pf1-f194.google.com with SMTP id y72so340920pfb.12
-        for <git@vger.kernel.org>; Wed, 18 Sep 2019 09:56:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VJw9UbFp93JEWwkNOmVnHbgkLTcuusnqfiwmmII7xw8=;
-        b=BxkavUCLo/TJoCtbUzXr5yrgkTVen0iyTmfNcpuJNurHMVhra6GZ9MuCYg4fygBcHt
-         hBu3WCpjfn1cAZo6PdZVAmiKwrp+dwzbkVd/iuO/AkX+5MjxY+PESSW5MzpOLULwHC6B
-         pW7aluCm5L5IoZFuJnjkKHhVYghQVhd1z6+HwmeD1AZKVQD7be1qX28/aT6R8DwQSqrb
-         Ec/Rd1CiS6YGkPvbtIlOWEl2EZAwKqRjrSRj1mDBScTGZAZ9a4DjvGwYbH2WO8mO/ze6
-         kBbRLMZBkCol2eR3cmSPe31K6QJzPwOZbDBlGorisRrXGU+L2Hh62cLLjTS5oS9zj+KO
-         0u7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VJw9UbFp93JEWwkNOmVnHbgkLTcuusnqfiwmmII7xw8=;
-        b=B9qt8pEQ3pm9u/rQF4HqyhaUWAN34+eOnO7kFOz5WOvNnuid5SW0AeTJ5Sx4woFKfn
-         UF8oEXxdhcFRGY68UQR5lWmjUdoY3iTxhjdif5bNZywFc5VKOSDJKCR4UbJAI4hcQ5Hm
-         XEBXOIXATOEZrDzwkCh3niTvFG034/jb2oXQFJDWLHHXBxy52sYWEdp7/h0U9BCe2dct
-         3d6x5u4HzPfe9taV76BHcHhbxeksSECQ+cDQxww7x0Bnz6AwUKClQqNxXBLMDKUGaVNH
-         wqxCjWFi2Go425rAry7+YnEoDKKf7OdiYrzCyazTR+7M9h/HU+PbtM3LD1DwcFSZAOy9
-         O3Qw==
-X-Gm-Message-State: APjAAAVcI3qKAg8nSKp/QjxRwPXoS2JzWnsDFB65GvzQdN3L/Ny8TxVQ
-        2DNt8+YF5iwqvyngIOXYv70=
-X-Google-Smtp-Source: APXvYqz9oeDWmMfiU7JkZLB5c3gMcbv1TEoD4XgdnOQ0EJtK0ACkR+sOxVpEgp4pOv+dVCnXiKYJww==
-X-Received: by 2002:a63:c09:: with SMTP id b9mr4751732pgl.245.1568825769292;
-        Wed, 18 Sep 2019 09:56:09 -0700 (PDT)
-Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id a8sm9648804pfo.118.2019.09.18.09.56.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Sep 2019 09:56:08 -0700 (PDT)
-Date:   Wed, 18 Sep 2019 09:56:06 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: git-gui: missing some patches from git?
-Message-ID: <20190918165606.GA1133@dentonliu-ltm.internal.salesforce.com>
-References: <CAGr--=KXqFbivuXHPNecb3dBR_hx8QqWoR4pBGXy7uOiT+ESbg@mail.gmail.com>
- <20190918092721.GA76617@archbookpro.localdomain>
- <20190918151404.rqjohdderwxfqtdm@yadavpratyush.com>
+        id S1730924AbfIRRVf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 13:21:35 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57376 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729669AbfIRRVe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Sep 2019 13:21:34 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 03C5B72CF8;
+        Wed, 18 Sep 2019 13:21:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Z1XFcYr/Jxjq
+        TcUAPkzhQoksju8=; b=ZzILy9TA+OtlhXtyy8w8gFf7L7sdc0ComsTpKlulgjc3
+        zmtJFY6YsTyZOEUd2IvbrY/+HYLuMVLs02OZNKQizWRpx0gcFGUaAz1V0iTDIk76
+        YZrisbakZiE15tzyMaSYUwQBq5nZYOwphhQggrQ8Z9nsDwhG8BMYopbWjLlClEQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=MsWHaQ
+        raaNEEZNsqkSvAzYKhTKdldJ4ktSBaNQdXhcL14c0yRYgkOGLlYOwbU3n9fxukdI
+        YeT4pQmHTNBWWxPVWCyVonBqCBOVSUBstwNkQAEBj5ndf2aAXWlr/QTQMpUZzmwk
+        WypPGgDrIjRDLPF5ZIHAElCGnA1kG6WgiN0TA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F111772CF7;
+        Wed, 18 Sep 2019 13:21:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 010B972CF2;
+        Wed, 18 Sep 2019 13:21:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Herv=C3=A9?= Beraud <herveberaud.pro@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] hg-to-git: make it compatible with both python3 and python2
+References: <0102016d3f74d202-d5b32dd4-0098-4ad0-8ac7-5fde254f7796-000000@eu-west-1.amazonses.com>
+        <0102016d43812db5-722fe301-48f7-4b46-93e4-67dc2992629a-000000@eu-west-1.amazonses.com>
+Date:   Wed, 18 Sep 2019 10:21:20 -0700
+In-Reply-To: <0102016d43812db5-722fe301-48f7-4b46-93e4-67dc2992629a-000000@eu-west-1.amazonses.com>
+        (=?utf-8?Q?=22Herv=C3=A9?= Beraud"'s message of "Wed, 18 Sep 2019 08:33:22
+ +0000")
+Message-ID: <xmqqsgot5xm7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190918151404.rqjohdderwxfqtdm@yadavpratyush.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BCAFF7B6-DA38-11E9-9180-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 18, 2019 at 08:44:04PM +0530, Pratyush Yadav wrote:
-> On 18/09/19 02:27AM, Denton Liu wrote:
-> > On Wed, Sep 18, 2019 at 09:02:37AM +0200, Birger Skogeng Pedersen wrote:
-> > > Hi Pratyush,
-> > > 
-> > > 
-> > > I was comparing your git-gui repo[1] with the source code of
-> > > git/git-gui[2]. There seems to be a couple of things missing.
-> > > 
-> > > For example, I created a patch back in March 2018[3]. Junio pulled it
-> > > so the changes are really there in git/git-gui/git-gui.sh (see this[4]
-> > > line). This was while there was no git-gui maintainer. I guess the
-> > > change never got merged to git-gui, but directly to git.
-> > > 
-> > > Not sure what you should to about it, I just wanted to let you know.
-> 
-> This is something I've been aware of, but I have followed the strategy 
-> of ignoring the problem till someone complains. Well, that someone has 
-> now complained.
-> 
-> I'm not particularly comfortable with cross-tree/sub-tree merges, so 
-> I've been dreading doing this for a while. Guess now its time to get my 
-> hands dirty.
-> 
-> > > 
-> > > [1] https://github.com/prati0100/git-gui
-> > > [2] https://github.com/gitster/git/tree/master/git-gui
-> > > [3] https://public-inbox.org/git/20180302100148.23899-1-birgersp@gmail.com/
-> > > [4] https://github.com/gitster/git/blob/master/git-gui/git-gui.sh#L3885
-> > > 
-> > > 
-> > > Birger
-> > 
-> > As an exercise in writing throwaway scripts, I created this monstrosity.
-> > If you're interested in merging all of the git-gui branches that came
-> > from mainline back into git-gui's master, perhaps we could do something
-> > like this:
-> 
-> Ah! Thanks a lot for this. This reduces some of the work I've been 
-> dreading.
-> 
-> > 
-> > 	#!/bin/sh
-> > 
-> > 	branches=
-> > 	# note that all instances of "master" refer to git.git's "master"
-> > 	# also, 5ab7227 is the latest commit in Pat's git-gui repo
-> > 	for c in $(git rev-list --children master 5ab7227 | grep ^5ab7227 | cut -d' ' -f2-)
-> > 	do 
-> > 		merge_commit=$(git rev-list $c..master --ancestry-path --merges | tail -n1)
-> > 		branch_name=$(git show -s --format=%s $merge_commit | sed -e "s/Merge branch '\\([^']*\\)' of .*/\\1/")
-> > 
-> > 		#echo $branch_name: $(git rev-parse $merge_commit^2)
-> > 		git branch -f "$branch_name" $merge_commit^2
-> > 		branches="$branches $branch_name"
-> > 	done
-> > 	# this also assumes git-gui's master is checked out
-> > 	git merge $branches
-> 
-> Assuming I have git.git cloned in ../git (relative to git-gui.git), I 
-> ran:
-> 
->   git pull -Xsubtree=git-gui ../git $branches
-> 
-> instead of:
-> 
->   git merge $branches
-> 
-> because git-gui's tree doesn't have those commits and branches yet, so 
-> we can't merge straight away. This seems to have worked, but I thought 
-> I'd mention it in case it would cause some subtle problems.
+Herv=C3=A9 Beraud <herveberaud.pro@gmail.com> writes:
 
-Did you run the big for loop in git.git to create the branches and then
-the `git pull` in git-gui? That should work.
+> Python 2 is EOL at the end of 2019, many distros
+> and systems now come with python 3 is the default version.
 
-> 
-> > This script should resurrect all of the branches that were based on
-> > 5ab7227 from mainline's master. Then (assuming you have git-gui's
-> > master checked out), it should do a big octopus merge to bring all of
-> > the changes in.
-> > 
-> > We end up with the following branches being merged:
-> > 
-> > 	js/msgfmt-on-windows: 492595cfc70f97cd99d4c460db1ba01b73dab932
-> 
-> This branch is already in git-gui (with the exception of one commit. 
-> More on that below).
-> 
-> > 	tz/fsf-address-update: 63100874c1653dd6a137f74143eda322550eabc7
-> > 	jn/reproducible-build: 474642b4a47c74a1f277955d7387d1886546fa01
-> > 	ls/no-double-utf8-author-name: 331450f18a7fd298ddd6b85cc5e8ed9dba09f9da
-> > 	js/misc-git-gui-stuff: 76756d67061076c046973bff2089ad49f5dc2eb6
-> > 	bb/ssh-key-files: 6a47fa0efa342daa53c6386538fda313420351a5
-> > 	bp/bind-kp-enter: 146a6f1097f451c6b6d332916a515b7ce8c07e9a
-> > 	cb/ttk-style: f50d5055bf9bb2aa35e629d31943334afc4a9f10
-> > 	py/call-do-quit-before-exit: 5440eb0ea2651c45a0e46f2335ecbb8d1f42c584
-> > 
-> > Then perhaps you could do a request-pull and development could continue
-> > on your fork?
-> > 
-> > Not sure if this is even desirable but here's the script just in case it
-> > ends up useful. I had fun writing it.
-> 
-> Just to pick your brain: in what case would this not be desirable?
+Grammo.  s/is the/as their/ or something like that to fix.
 
-I'm not 100% about the accuracy of the script. In particular,
+> These changes introduce a syntaxe compatible with the both versions of
+> python and so with the nearly future python standard.
+>
+> Introduced changes:
+> -------------------
 
-	merge_commit=$(git rev-list $c..master --ancestry-path --merges | tail -n1)
+Let's drop the above 5 lines.  A canonical form of log message for
+us is to begin with a brief background to make readers realize what
+is lacking in the current system (if needed -- and you've done a
+good job to make the readers realize that we need to make sure we
+work with Py3).  With readers' minds prepared to accept the need for
+a change, then you give orders to the codebase to "be like so" in
+imperative mood.  E.g.
 
-is super hacky and makes a lot of assumptions. It'd probably be best if
-someone else also takes a look.
+    	Rewrite features used in hg-to-git that are no longer
+    	supported in Python 3, in such a way that an updated code
+    	can still be usable with Python 2.
 
->  
-> > Also note that we end up missing two commits that made changes to
-> > git-gui/ under mainline git (not directly to the git-gui repo): 
-> > 
-> > 	* 7560f547e6 (treewide: correct several "up-to-date" to "up to date", 2017-08-23)
-> > 	* 00ddc9d13c (Fix build with core.autocrlf=true, 2017-05-09)
-> 
-> One more commit that is missing: 492595cfc7 (git-gui (MinGW): make use of MSys2's msgfmt, 2017-07-25)
-> 
-> This commit is comes from the merge of js/msgfmt-on-windows, which has 
-> all the commits from the merge 5ab7227 (Merge remote-tracking branch 'philoakley/dup-gui', 2017-03-18)
-> in git-gui.
-> 
-> While merging js/msgfmt-on-windows should get this commit into git-gui, 
-> I'd rather have it separate,
+	- print is not ...
+	- dict.has_key(key) is no more; ...
 
-Any reason why you'd want to keep it separate?
+You seem to have dropped the change from map() to list comprehention
+in this iteration.  I am not into Python deeply enough to care
+either way myself, and the original form with map() seems to work
+with Python3 (evaluating it seems to result in a map object, instead
+of a list, to lazily yield the values, but we are not printing the
+result of map() directly with print(), so it should be OK) so from
+my point of view, the fewer things we have to defend/justify, the
+better ;-)
 
-I'm assuming you're referring to the commit that merges
-js/msgfmt-on-windows in:
+Will queue.  Thanks.
 
-	commit 90dbf226ba3fae0d932ae4e42d8d3122a47766bc
-	Merge: 5800c63717 492595cfc7
-	Author: Junio C Hamano <gitster@pobox.com>
-	Date:   Jul 25 2017
-
-		Merge branch 'js/msgfmt-on-windows' of ../git-gui into js/git-gui-msgfmt-on-windows
-		
-		* 'js/msgfmt-on-windows' of ../git-gui:
-		  git-gui (MinGW): make use of MSys2's msgfmt
-		  git gui: allow for a long recentrepo list
-		  git gui: de-dup selected repo from recentrepo history
-		  git gui: cope with duplicates in _get_recentrepo
-		  git-gui: remove duplicate entries from .gitconfig's gui.recentrepo
-
-Since js/msgfmt-on-windows is based on 5ab7227 (Merge remote-tracking
-branch 'philoakley/dup-gui', 2017-03-18), when it was merged into
-git.git's master, the merge brought in those other four commits by
-Philip Oakley since they weren't merged into git.git yet.
-
-However, you're not going to be merging in the same list of commits if
-you merge into git-gui. You'll only end up merging in one commit: the
-missing 492595cfc7 (git-gui (MinGW): make use of MSys2's msgfmt,
-2017-07-25). This is because Philip's commits are already in the git-gui
-repo.
-
-> 
-> > 
-> > Hope any of this is useful to anyone,
-> 
-> It is very useful. Thanks :)
-
-Glad I could help!
-
-> 
-> -- 
-> Regards,
-> Pratyush Yadav
+> Rewriting features that are no longer supported (or recommended)
+> in Python 3 in the hg-to-git script.py so that it can be used with both
+> Python 2 and 3, namely:
+>
+> - print is not a statement; use print() function instead.
+> - dict.has_key(key) is no more; use "key in dict" instead.
+>
+> Signed-off-by: Herv=C3=A9 Beraud <herveberaud.pro@gmail.com>
+> ---
+>  contrib/hg-to-git/hg-to-git.py | 50 +++++++++++++++++-----------------
+>  1 file changed, 25 insertions(+), 25 deletions(-)
+>
+> diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-g=
+it.py
+> index de3f81667ed97..bb2822d4a5e17 100755
+> --- a/contrib/hg-to-git/hg-to-git.py
+> +++ b/contrib/hg-to-git/hg-to-git.py
+> @@ -42,7 +42,7 @@
+> =20
+>  def usage():
+> =20
+> -        print """\
+> +        print("""\
+>  %s: [OPTIONS] <hgprj>
+> =20
+>  options:
+> @@ -54,7 +54,7 @@ def usage():
+> =20
+>  required:
+>      hgprj:  name of the HG project to import (directory)
+> -""" % sys.argv[0]
+> +""" % sys.argv[0])
+> =20
+>  #---------------------------------------------------------------------=
+---------
+> =20
+> @@ -104,22 +104,22 @@ def getgitenv(user, date):
+>  if state:
+>      if os.path.exists(state):
+>          if verbose:
+> -            print 'State does exist, reading'
+> +            print('State does exist, reading')
+>          f =3D open(state, 'r')
+>          hgvers =3D pickle.load(f)
+>      else:
+> -        print 'State does not exist, first run'
+> +        print('State does not exist, first run')
+> =20
+>  sock =3D os.popen('hg tip --template "{rev}"')
+>  tip =3D sock.read()
+>  if sock.close():
+>      sys.exit(1)
+>  if verbose:
+> -    print 'tip is', tip
+> +    print('tip is', tip)
+> =20
+>  # Calculate the branches
+>  if verbose:
+> -    print 'analysing the branches...'
+> +    print('analysing the branches...')
+>  hgchildren["0"] =3D ()
+>  hgparents["0"] =3D (None, None)
+>  hgbranch["0"] =3D "master"
+> @@ -154,15 +154,15 @@ def getgitenv(user, date):
+>          else:
+>              hgbranch[str(cset)] =3D "branch-" + str(cset)
+> =20
+> -if not hgvers.has_key("0"):
+> -    print 'creating repository'
+> +if "0" not in hgvers:
+> +    print('creating repository')
+>      os.system('git init')
+> =20
+>  # loop through every hg changeset
+>  for cset in range(int(tip) + 1):
+> =20
+>      # incremental, already seen
+> -    if hgvers.has_key(str(cset)):
+> +    if str(cset) in hgvers:
+>          continue
+>      hgnewcsets +=3D 1
+> =20
+> @@ -180,27 +180,27 @@ def getgitenv(user, date):
+>      os.write(fdcomment, csetcomment)
+>      os.close(fdcomment)
+> =20
+> -    print '-----------------------------------------'
+> -    print 'cset:', cset
+> -    print 'branch:', hgbranch[str(cset)]
+> -    print 'user:', user
+> -    print 'date:', date
+> -    print 'comment:', csetcomment
+> +    print('-----------------------------------------')
+> +    print('cset:', cset)
+> +    print('branch:', hgbranch[str(cset)])
+> +    print('user:', user)
+> +    print('date:', date)
+> +    print('comment:', csetcomment)
+>      if parent:
+> -	print 'parent:', parent
+> +	print('parent:', parent)
+>      if mparent:
+> -        print 'mparent:', mparent
+> +        print('mparent:', mparent)
+>      if tag:
+> -        print 'tag:', tag
+> -    print '-----------------------------------------'
+> +        print('tag:', tag)
+> +    print('-----------------------------------------')
+> =20
+>      # checkout the parent if necessary
+>      if cset !=3D 0:
+>          if hgbranch[str(cset)] =3D=3D "branch-" + str(cset):
+> -            print 'creating new branch', hgbranch[str(cset)]
+> +            print('creating new branch', hgbranch[str(cset)])
+>              os.system('git checkout -b %s %s' % (hgbranch[str(cset)], =
+hgvers[parent]))
+>          else:
+> -            print 'checking out branch', hgbranch[str(cset)]
+> +            print('checking out branch', hgbranch[str(cset)])
+>              os.system('git checkout %s' % hgbranch[str(cset)])
+> =20
+>      # merge
+> @@ -209,7 +209,7 @@ def getgitenv(user, date):
+>              otherbranch =3D hgbranch[mparent]
+>          else:
+>              otherbranch =3D hgbranch[parent]
+> -        print 'merging', otherbranch, 'into', hgbranch[str(cset)]
+> +        print('merging', otherbranch, 'into', hgbranch[str(cset)])
+>          os.system(getgitenv(user, date) + 'git merge --no-commit -s ou=
+rs "" %s %s' % (hgbranch[str(cset)], otherbranch))
+> =20
+>      # remove everything except .git and .hg directories
+> @@ -233,12 +233,12 @@ def getgitenv(user, date):
+> =20
+>      # delete branch if not used anymore...
+>      if mparent and len(hgchildren[str(cset)]):
+> -        print "Deleting unused branch:", otherbranch
+> +        print("Deleting unused branch:", otherbranch)
+>          os.system('git branch -d %s' % otherbranch)
+> =20
+>      # retrieve and record the version
+>      vvv =3D os.popen('git show --quiet --pretty=3Dformat:%H').read()
+> -    print 'record', cset, '->', vvv
+> +    print('record', cset, '->', vvv)
+>      hgvers[str(cset)] =3D vvv
+> =20
+>  if hgnewcsets >=3D opt_nrepack and opt_nrepack !=3D -1:
+> @@ -247,7 +247,7 @@ def getgitenv(user, date):
+>  # write the state for incrementals
+>  if state:
+>      if verbose:
+> -        print 'Writing state'
+> +        print('Writing state')
+>      f =3D open(state, 'w')
+>      pickle.dump(hgvers, f)
+> =20
+>
+> --
+> https://github.com/git/git/pull/458
