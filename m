@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 238E71F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 01:56:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDCD81F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 01:56:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726604AbfIRB44 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Sep 2019 21:56:56 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:45695 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725884AbfIRB4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Sep 2019 21:56:55 -0400
-Received: by mail-qt1-f196.google.com with SMTP id c21so6916018qtj.12
-        for <git@vger.kernel.org>; Tue, 17 Sep 2019 18:56:54 -0700 (PDT)
+        id S1726619AbfIRB46 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Sep 2019 21:56:58 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:35599 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725884AbfIRB46 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Sep 2019 21:56:58 -0400
+Received: by mail-qt1-f195.google.com with SMTP id m15so6995058qtq.2
+        for <git@vger.kernel.org>; Tue, 17 Sep 2019 18:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4AJaOJ/bawB0fqCIqy53IcHyVuVsf3fRvXMAOuM42vY=;
-        b=uQqNapHRps+PuMPB1A/MDSm0wdkWikwdi+U7EO/7L5miiDdKFlocgXS2iMh0pHf2cH
-         wJSjHtQYnYl87haufSX479E41yHPlK2Vz+WCKhvGwjjzSVl+eWKR67pQwRgim/VlXXbv
-         iF89LMfQ/IUzHYxr/gBAbNxYRsTr2+hRwY+vmSLJg3ImOYMJBFZkoTwSkp7No/YQ1XTp
-         MwdjGf0d53jQ2TGERIwnsSv8tAahKvf937T+d/Hg+xkwMsVnWDhyJxPvEdEb5HjQJVyK
-         k7tToDosNkD1GOkx+GSWedbx23Hb82D9QqRG7qzXs6se9cdhFk5ZU3mC+93itAls+wre
-         6vcA==
+        bh=iIVBt7nEZcwYPDoW4oCe2Ord9VkUZbxJLJwC358oc3U=;
+        b=Qp9Wwoz5rVBKqrGnmnwNvtr2+kvENAG6Tw9Z9RD4gMbrLwkzVxdsi2SOGzDZDrcwPO
+         2hYVAOpzZy5PdBYdz3Rc84u64E80HiSg0LGaaEQNPZ/FG7kzVHrAH5z5xIgtENBIye+J
+         pJoqi8nzZslnPPX8GH+csIdep/PePHUFFbvtSdafv/0lIYZ/I/OD5D5BcNpbh/Tm0D7C
+         PZRBnhgKi8woLWTRwFILYHN00yNub3pEsDfy1zBf09Oex2thMhux6zE2FHp7h4DkIDjk
+         kSTXSe5oNrAMLMDfkqLyX+hMpcVdZpf/WWGPZXfJFKMNZ7D9C+SfIiJ3WbqjbCpSDHQt
+         Jg6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4AJaOJ/bawB0fqCIqy53IcHyVuVsf3fRvXMAOuM42vY=;
-        b=I5tOIU/10sIRs+FCThgl52xUOFzThYajOnS4urYoNWouULJdqHAJG77MTv850Ldj6t
-         gFCNvKB/PdqT1XhmlboilDi3/F1Rzxz/HA6mPcQP/gQFazgFpqWZejch6ZyWaHEax5hx
-         P1AZZTjXT62C2yJOv8FdcI4rzliXAIwiTMlENeil2jUpODWP8RaaKpg/4zPwzTqdTfug
-         lIQPvKEM0uc68SJoj0wYEFJQodtd/R7yNHj1zBsevyAseWY2uS1B9Z0Bqmp/wZuAHVmd
-         7JhtZJDVUjoX3esXQaqnganE8EqyKI76q4fR5A5lULz8KXE4uoiLDz4t2vGCl8F2Esn2
-         1gWQ==
-X-Gm-Message-State: APjAAAUL6HkoUoCIt87oATTYyjs3WdYVloNNs4kyhjE/aFka7E+Ns7im
-        2qZWC+Nv3A/utquiJNDp4B8ojZ7pYdg=
-X-Google-Smtp-Source: APXvYqzQDBNCvblY3F92zXk1/XxqRDh+cku+CJFJHFZxjmuQ/BMnkj2zkoR32XemViLxzIVHqd7x/Q==
-X-Received: by 2002:ac8:2a75:: with SMTP id l50mr1940481qtl.137.1568771813793;
-        Tue, 17 Sep 2019 18:56:53 -0700 (PDT)
+        bh=iIVBt7nEZcwYPDoW4oCe2Ord9VkUZbxJLJwC358oc3U=;
+        b=UySxCiKEhtoCRcozJovKdpaBCQLTxzZdyIO+v3rL4RerYpxiw/01k/p59OZyh4EmD9
+         0RNo0mvhlDAZv68204z0DMIbXMaWOcVyFBAY/CCTbkU5WBbelSVCXm08dFla3mJcr9P2
+         GJCqmtx9inDSpeYvQI51oGMJiupmxAKyWO/fXFfhE75FXiRuq82qFQyVY3I5XT1/8UNT
+         sT467rJT/Baa6p23cuJbGPr9kAAJPWRhut8iHUq42OwrF/I5XTj2962WY2ePk28LNkVY
+         Fg1zmAVK69SuK/vjoEaj+qi4r4TYbbG6cPTF24dFKCsX/A9n3XVGcLgcfW1Q51Lq7xag
+         /zmA==
+X-Gm-Message-State: APjAAAUVjm0x5lATE9r6QMfqO/CAo6Pae5loeiVClIXGhzU7ZaJB5noj
+        nfg6iB/OkKICacV8//Ke1hnVYyvpneA=
+X-Google-Smtp-Source: APXvYqyu3tq0ZxUkgylX2NApF3QSjTPs+zpWHriKjbKYxSYvaQNrhwW/pbHNIL6kn4sM5rJqcXGYHg==
+X-Received: by 2002:a05:6214:1463:: with SMTP id c3mr1481045qvy.48.1568771817002;
+        Tue, 17 Sep 2019 18:56:57 -0700 (PDT)
 Received: from mango.semfio.usp.br ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id j17sm2156371qki.99.2019.09.17.18.56.51
+        by smtp.gmail.com with ESMTPSA id j17sm2156371qki.99.2019.09.17.18.56.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Sep 2019 18:56:53 -0700 (PDT)
+        Tue, 17 Sep 2019 18:56:56 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [RFC PATCH 2/3] object: allow parse_object_or_die() to handle any repo
-Date:   Tue, 17 Sep 2019 22:56:04 -0300
-Message-Id: <e819ba8a81b11db597bb33e94da869c9ca10febb.1568771073.git.matheus.bernardino@usp.br>
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Brandon Williams <bwilliams.eng@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [RFC PATCH 3/3] grep: don't add submodules to the alternates list
+Date:   Tue, 17 Sep 2019 22:56:05 -0300
+Message-Id: <fc5f5fe95c10ac66d1234a025122c8866965021f.1568771073.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <cover.1568771073.git.matheus.bernardino@usp.br>
 References: <cover.1568771073.git.matheus.bernardino@usp.br>
@@ -69,190 +69,317 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-parse_object_or_die() was added before parse_object() learned to handle
-arbitrary repositories. Now that it did, let's also bring this behavior
-improvement to the former, adding a struct repository argument. Also
-adjust the callers and, while we are here, avoid using `oid_to_hex(oid)`
-for the third parameter as it's the default when NULL is given.
+When grepping with --recurse-submodules, the object directory of the
+submodule is added to the in-memory alternates list. This makes git need
+to watch out for more packfiles which might bring bad consequences for
+memory and performance.
 
-This will be used in the following patch, to allow git-grep to parse
-submodule's objects.
+Now that raw_object_store is a member of the struct repository, it's
+possible to use the submodules' instances directly, without the need to
+add its odbs to the alternates list. So let's instead pass the subrepo
+down to the threads and replace function calls which use
+the_repository by default for their more general counterparts. Also,
+submodule cleanup must be refactored as calling repo_clear() at the end
+of grep_submodules(), might free the subrepo's resources before threads
+have finished working on it. To do that, let's keep track of the
+workers progress and only call repo_clear() when it's safe to do so.
+
+This change will also help future patches to re-enable threads in
+non-worktree grep as less mutual exclusions will be needed. E.g.
+grep_submodule()'s call to parse_object_or_die() won't conflict with
+other calls to the same function by worker threads (as they should be
+referencing different 'struct repository's).
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- builtin/grep.c  |  4 ++--
- builtin/prune.c |  4 ++--
- bundle.c        | 13 ++++++++-----
- object.c        |  5 +++--
- object.h        |  4 +++-
- pack-bitmap.c   |  5 +++--
- reachable.c     |  4 ++--
- upload-pack.c   |  2 +-
- 8 files changed, 24 insertions(+), 17 deletions(-)
+ builtin/grep.c | 80 ++++++++++++++++++++++++++++++++++++--------------
+ grep.c         | 26 ++++++++--------
+ 2 files changed, 70 insertions(+), 36 deletions(-)
 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index 2699001fbd..73ef00c426 100644
+index 73ef00c426..0bb58c456b 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -455,7 +455,7 @@ static int grep_submodule(struct grep_opt *opt,
- 		unsigned long size;
- 		struct strbuf base = STRBUF_INIT;
+@@ -43,6 +43,15 @@ static pthread_t *threads;
+  */
+ struct work_item {
+ 	struct grep_source source;
++
++	/*
++	 * Each worker thread is initialized with a 'struct grep_opt *opt' where
++	 * opt->repo points to the_repository. But a work item may refeer to a
++	 * subrepo. So the repository relative to each task is also passed to
++	 * the assigned thread and its opt->repo is updated when retrieving the
++	 * task.
++	 */
++	struct repository *repo;
+ 	char done;
+ 	struct strbuf out;
+ };
+@@ -65,6 +74,13 @@ static int todo_done;
+ /* Has all work items been added? */
+ static int all_work_added;
  
--		object = parse_object_or_die(oid, oid_to_hex(oid));
-+		object = parse_object_or_die(the_repository, oid, NULL);
++/* Tracks the work progress in subrepos to correctly free them in the end */
++struct progress_in_subrepo {
++	struct repository subrepo;
++	int all_work_added;
++	int work_counter;
++};
++
+ /* This lock protects all the variables above. */
+ static pthread_mutex_t grep_mutex;
  
- 		grep_read_lock();
- 		data = read_object_with_reference(&subrepo,
-@@ -1037,7 +1037,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			break;
+@@ -93,6 +109,8 @@ static int skip_first_line;
+ 
+ static void add_work(struct grep_opt *opt, const struct grep_source *gs)
+ {
++	struct progress_in_subrepo *p;
++
+ 	grep_lock();
+ 
+ 	while ((todo_end+1) % ARRAY_SIZE(todo) == todo_done) {
+@@ -104,9 +122,15 @@ static void add_work(struct grep_opt *opt, const struct grep_source *gs)
+ 		grep_source_load_driver(&todo[todo_end].source,
+ 					opt->repo->index);
+ 	todo[todo_end].done = 0;
++	todo[todo_end].repo = opt->repo;
+ 	strbuf_reset(&todo[todo_end].out);
+ 	todo_end = (todo_end + 1) % ARRAY_SIZE(todo);
+ 
++	if (opt->repo != the_repository) {
++		p = container_of(opt->repo, struct progress_in_subrepo, subrepo);
++		p->work_counter++;
++	}
++
+ 	pthread_cond_signal(&cond_add);
+ 	grep_unlock();
+ }
+@@ -132,6 +156,7 @@ static struct work_item *get_work(void)
+ 
+ static void work_done(struct work_item *w)
+ {
++	struct progress_in_subrepo *p;
+ 	int old_done;
+ 
+ 	grep_lock();
+@@ -156,6 +181,17 @@ static void work_done(struct work_item *w)
+ 
+ 			write_or_die(1, p, len);
  		}
- 
--		object = parse_object_or_die(&oid, arg);
-+		object = parse_object_or_die(the_repository, &oid, arg);
- 		if (!seen_dashdash)
- 			verify_non_filename(prefix, arg);
- 		add_object_array_with_path(object, arg, &list, oc.mode, oc.path);
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 2b76872ad2..996defe284 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -154,8 +154,8 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 		const char *name = *argv++;
- 
- 		if (!get_oid(name, &oid)) {
--			struct object *object = parse_object_or_die(&oid,
--								    name);
-+			struct object *object =
-+				parse_object_or_die(the_repository, &oid, name);
- 			add_pending_object(&revs, object, "");
- 		}
- 		else
-diff --git a/bundle.c b/bundle.c
-index b5d21cd80f..67552786a5 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -315,14 +315,16 @@ static int compute_and_write_prerequisites(int bundle_fd,
- 		if (buf.len > 0 && buf.buf[0] == '-') {
- 			write_or_die(bundle_fd, buf.buf, buf.len);
- 			if (!get_oid_hex(buf.buf + 1, &oid)) {
--				struct object *object = parse_object_or_die(&oid,
--									    buf.buf);
-+				struct object *object =
-+					parse_object_or_die(the_repository,
-+							    &oid, buf.buf);
- 				object->flags |= UNINTERESTING;
- 				add_pending_object(revs, object, buf.buf);
- 			}
- 		} else if (!get_oid_hex(buf.buf, &oid)) {
--			struct object *object = parse_object_or_die(&oid,
--								    buf.buf);
-+			struct object *object =
-+				parse_object_or_die(the_repository,
-+						    &oid, buf.buf);
- 			object->flags |= SHOWN;
- 		}
++
++		if (w->repo != the_repository) {
++			p = container_of(w->repo, struct progress_in_subrepo,
++					 subrepo);
++			p->work_counter--;
++			if (p->work_counter == 0 && p->all_work_added) {
++				repo_clear(&p->subrepo);
++				free(p);
++			}
++		}
++
+ 		grep_source_clear(&w->source);
  	}
-@@ -406,7 +408,8 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- 				 * end up triggering "empty bundle"
- 				 * error.
- 				 */
--				obj = parse_object_or_die(&oid, e->name);
-+				obj = parse_object_or_die(the_repository, &oid,
-+							  e->name);
- 				obj->flags |= SHOWN;
- 				add_pending_object(revs, obj, e->name);
- 			}
-diff --git a/object.c b/object.c
-index 07bdd5b26e..54c4861f4c 100644
---- a/object.c
-+++ b/object.c
-@@ -237,10 +237,11 @@ struct object *parse_object_buffer(struct repository *r, const struct object_id
- 	return obj;
+ 
+@@ -179,6 +215,7 @@ static void *run(void *arg)
+ 			break;
+ 
+ 		opt->output_priv = w;
++		opt->repo = w->repo;
+ 		hit |= grep_source(opt, &w->source);
+ 		grep_source_clear_data(&w->source);
+ 		work_done(w);
+@@ -295,12 +332,14 @@ static int grep_cmd_config(const char *var, const char *value, void *cb)
+ 	return st;
  }
  
--struct object *parse_object_or_die(const struct object_id *oid,
-+struct object *parse_object_or_die(struct repository *r,
-+				   const struct object_id *oid,
- 				   const char *name)
+-static void *lock_and_read_oid_file(const struct object_id *oid, enum object_type *type, unsigned long *size)
++static void *lock_and_read_oid_file(struct repository *r,
++				    const struct object_id *oid,
++				    enum object_type *type, unsigned long *size)
  {
--	struct object *o = parse_object(the_repository, oid);
-+	struct object *o = parse_object(r, oid);
- 	if (o)
- 		return o;
+ 	void *data;
  
-diff --git a/object.h b/object.h
-index 0120892bbd..d8f02f53cd 100644
---- a/object.h
-+++ b/object.h
-@@ -134,7 +134,9 @@ struct object *parse_object(struct repository *r, const struct object_id *oid);
-  * "name" parameter is not NULL, it is included in the error message
-  * (otherwise, the hex object ID is given).
-  */
--struct object *parse_object_or_die(const struct object_id *oid, const char *name);
-+struct object *parse_object_or_die(struct repository *r,
-+				   const struct object_id *oid,
-+				   const char *name);
+ 	grep_read_lock();
+-	data = read_object_file(oid, type, size);
++	data = repo_read_object_file(r, oid, type, size);
+ 	grep_read_unlock();
+ 	return data;
+ }
+@@ -405,7 +444,8 @@ static int grep_submodule(struct grep_opt *opt,
+ 			  const struct object_id *oid,
+ 			  const char *filename, const char *path, int cached)
+ {
+-	struct repository subrepo;
++	struct progress_in_subrepo *p = xcalloc(1, sizeof(*p));
++	struct repository *subrepo = &p->subrepo;
+ 	struct repository *superproject = opt->repo;
+ 	const struct submodule *sub = submodule_from_path(superproject,
+ 							  &null_oid, path);
+@@ -422,31 +462,21 @@ static int grep_submodule(struct grep_opt *opt,
  
- /* Given the result of read_sha1_file(), returns the object after
-  * parsing it.  eaten_p indicates if the object has a borrowed copy
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index ed2befaac6..383b2351db 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -699,7 +699,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
- 		struct object *object = revs->pending.objects[i].item;
- 
- 		if (object->type == OBJ_NONE)
--			parse_object_or_die(&object->oid, NULL);
-+			parse_object_or_die(the_repository, &object->oid, NULL);
- 
- 		while (object->type == OBJ_TAG) {
- 			struct tag *tag = (struct tag *) object;
-@@ -711,7 +711,8 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
- 
- 			if (!tag->tagged)
- 				die("bad tag");
--			object = parse_object_or_die(&tag->tagged->oid, NULL);
-+			object = parse_object_or_die(the_repository,
-+						     &tag->tagged->oid, NULL);
- 		}
- 
- 		if (object->flags & UNINTERESTING)
-diff --git a/reachable.c b/reachable.c
-index 8f50235b28..7c5f7a0ba0 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -37,7 +37,7 @@ static int add_one_ref(const char *path, const struct object_id *oid,
+ 	if (!is_submodule_active(superproject, path)) {
+ 		grep_read_unlock();
++		free(p);
  		return 0;
  	}
  
--	object = parse_object_or_die(oid, path);
-+	object = parse_object_or_die(the_repository, oid, path);
- 	add_pending_object(revs, object, "");
+-	if (repo_submodule_init(&subrepo, superproject, sub)) {
++	if (repo_submodule_init(subrepo, superproject, sub)) {
+ 		grep_read_unlock();
++		free(p);
+ 		return 0;
+ 	}
+ 
+-	repo_read_gitmodules(&subrepo);
+-
+-	/*
+-	 * NEEDSWORK: This adds the submodule's object directory to the list of
+-	 * alternates for the single in-memory object store.  This has some bad
+-	 * consequences for memory (processed objects will never be freed) and
+-	 * performance (this increases the number of pack files git has to pay
+-	 * attention to, to the sum of the number of pack files in all the
+-	 * repositories processed so far).  This can be removed once the object
+-	 * store is no longer global and instead is a member of the repository
+-	 * object.
+-	 */
+-	add_to_alternates_memory(subrepo.objects->odb->path);
++	repo_read_gitmodules(subrepo);
+ 	grep_read_unlock();
+ 
+ 	memcpy(&subopt, opt, sizeof(subopt));
+-	subopt.repo = &subrepo;
++	subopt.repo = subrepo;
+ 
+ 	if (oid) {
+ 		struct object *object;
+@@ -455,10 +485,10 @@ static int grep_submodule(struct grep_opt *opt,
+ 		unsigned long size;
+ 		struct strbuf base = STRBUF_INIT;
+ 
+-		object = parse_object_or_die(the_repository, oid, NULL);
++		object = parse_object_or_die(subrepo, oid, NULL);
+ 
+ 		grep_read_lock();
+-		data = read_object_with_reference(&subrepo,
++		data = read_object_with_reference(subrepo,
+ 						  &object->oid, tree_type,
+ 						  &size, NULL);
+ 		grep_read_unlock();
+@@ -478,7 +508,13 @@ static int grep_submodule(struct grep_opt *opt,
+ 		hit = grep_cache(&subopt, pathspec, cached);
+ 	}
+ 
+-	repo_clear(&subrepo);
++	grep_lock();
++	p->all_work_added = 1;
++	if (p->work_counter == 0) {
++		repo_clear(&p->subrepo);
++		free(p);
++	}
++	grep_unlock();
+ 	return hit;
+ }
+ 
+@@ -587,7 +623,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ 			void *data;
+ 			unsigned long size;
+ 
+-			data = lock_and_read_oid_file(&entry.oid, &type, &size);
++			data = lock_and_read_oid_file(repo, &entry.oid, &type, &size);
+ 			if (!data)
+ 				die(_("unable to read tree (%s)"),
+ 				    oid_to_hex(&entry.oid));
+diff --git a/grep.c b/grep.c
+index cd952ef5d3..0b3f38aaae 100644
+--- a/grep.c
++++ b/grep.c
+@@ -10,9 +10,8 @@
+ #include "quote.h"
+ #include "help.h"
+ 
+-static int grep_source_load(struct grep_source *gs);
+-static int grep_source_is_binary(struct grep_source *gs,
+-				 struct index_state *istate);
++static int grep_source_load(struct repository *r, struct grep_source *gs);
++static int grep_source_is_binary(struct repository *r, struct grep_source *gs);
+ 
+ static struct grep_opt grep_defaults;
+ 
+@@ -1714,7 +1713,7 @@ static int fill_textconv_grep(struct repository *r,
+ 	size_t size;
+ 
+ 	if (!driver || !driver->textconv)
+-		return grep_source_load(gs);
++		return grep_source_load(r, gs);
+ 
+ 	/*
+ 	 * The textconv interface is intimately tied to diff_filespecs, so we
+@@ -1820,11 +1819,11 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 	if (!textconv) {
+ 		switch (opt->binary) {
+ 		case GREP_BINARY_DEFAULT:
+-			if (grep_source_is_binary(gs, opt->repo->index))
++			if (grep_source_is_binary(opt->repo, gs))
+ 				binary_match_only = 1;
+ 			break;
+ 		case GREP_BINARY_NOMATCH:
+-			if (grep_source_is_binary(gs, opt->repo->index))
++			if (grep_source_is_binary(opt->repo, gs))
+ 				return 0; /* Assume unmatch */
+ 			break;
+ 		case GREP_BINARY_TEXT:
+@@ -2105,12 +2104,12 @@ void grep_source_clear_data(struct grep_source *gs)
+ 	}
+ }
+ 
+-static int grep_source_load_oid(struct grep_source *gs)
++static int grep_source_load_oid(struct repository *r, struct grep_source *gs)
+ {
+ 	enum object_type type;
+ 
+ 	grep_read_lock();
+-	gs->buf = read_object_file(gs->identifier, &type, &gs->size);
++	gs->buf = repo_read_object_file(r, gs->identifier, &type, &gs->size);
+ 	grep_read_unlock();
+ 
+ 	if (!gs->buf)
+@@ -2154,7 +2153,7 @@ static int grep_source_load_file(struct grep_source *gs)
+ 	return 0;
+ }
+ 
+-static int grep_source_load(struct grep_source *gs)
++static int grep_source_load(struct repository *r, struct grep_source *gs)
+ {
+ 	if (gs->buf)
+ 		return 0;
+@@ -2163,7 +2162,7 @@ static int grep_source_load(struct grep_source *gs)
+ 	case GREP_SOURCE_FILE:
+ 		return grep_source_load_file(gs);
+ 	case GREP_SOURCE_OID:
+-		return grep_source_load_oid(gs);
++		return grep_source_load_oid(r, gs);
+ 	case GREP_SOURCE_BUF:
+ 		return gs->buf ? 0 : -1;
+ 	}
+@@ -2184,14 +2183,13 @@ void grep_source_load_driver(struct grep_source *gs,
+ 	grep_attr_unlock();
+ }
+ 
+-static int grep_source_is_binary(struct grep_source *gs,
+-				 struct index_state *istate)
++static int grep_source_is_binary(struct repository *r, struct grep_source *gs)
+ {
+-	grep_source_load_driver(gs, istate);
++	grep_source_load_driver(gs, r->index);
+ 	if (gs->driver->binary != -1)
+ 		return gs->driver->binary;
+ 
+-	if (!grep_source_load(gs))
++	if (!grep_source_load(r, gs))
+ 		return buffer_is_binary(gs->buf, gs->size);
  
  	return 0;
-@@ -86,7 +86,7 @@ static void add_recent_object(const struct object_id *oid,
- 	switch (type) {
- 	case OBJ_TAG:
- 	case OBJ_COMMIT:
--		obj = parse_object_or_die(oid, NULL);
-+		obj = parse_object_or_die(the_repository, oid, NULL);
- 		break;
- 	case OBJ_TREE:
- 		obj = (struct object *)lookup_tree(the_repository, oid);
-diff --git a/upload-pack.c b/upload-pack.c
-index 222cd3ad89..648ff3355b 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1220,7 +1220,7 @@ static int parse_want_ref(struct packet_writer *writer, const char *line,
- 		item = string_list_append(wanted_refs, arg);
- 		item->util = oiddup(&oid);
- 
--		o = parse_object_or_die(&oid, arg);
-+		o = parse_object_or_die(the_repository, &oid, arg);
- 		if (!(o->flags & WANTED)) {
- 			o->flags |= WANTED;
- 			add_object_array(o, NULL, want_obj);
 -- 
 2.23.0
 
