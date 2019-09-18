@@ -2,254 +2,338 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A1AC1F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 13:55:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C52581F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 14:18:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728453AbfIRNzd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 09:55:33 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:37150 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726562AbfIRNzc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 09:55:32 -0400
-Received: by mail-qt1-f196.google.com with SMTP id d2so8985323qtr.4
-        for <git@vger.kernel.org>; Wed, 18 Sep 2019 06:55:30 -0700 (PDT)
+        id S1727456AbfIROS6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 10:18:58 -0400
+Received: from mail-wm1-f47.google.com ([209.85.128.47]:40793 "EHLO
+        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726038AbfIROS6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Sep 2019 10:18:58 -0400
+Received: by mail-wm1-f47.google.com with SMTP id b24so245049wmj.5
+        for <git@vger.kernel.org>; Wed, 18 Sep 2019 07:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=DLfcQ/rhpPOUZStBwFUCAA7Lq/ByLqpR83jKH0mdwMQ=;
-        b=K74CxetKEGcrsP5SBnjZ5zMlq9lEsVYjewoha7JZEIRrcG3fBLIkDrr4I0zfdnbX6I
-         2KM6PfHEcyYXMsZj8o0K+J+cmc6LhgaU/wYDy9cwrvOZmOo5IrnJ9ma8Hjbyt+i9lLsK
-         BtmPQaVclE8Pn+FVpCd9mFJjq7+RZk8HSw0SCOBEYK5s6Qup2tI1s7qo784ADDvVJxJM
-         ZzjFpFLydO9nunFieejgeCsBAELA0O+0bCCh1RlosImBG7poa6Hv/LeJKJmW+wK17rY+
-         wBZRqwuUoy8kMB/y3T7V3xg6llRRj+WV0rxbHqkQ4GWhXdZ6lAvBNbTUeNo4AUY33v9m
-         akjQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=Ptut/+y+d9u8Ny0OXGG0vJQ+sWHZx0n9mE8aYwbmuK0=;
+        b=jf6XkGT+XDZxs8aZ+nu6ECLfqrKQF7PEcDBjdgvG9HmeZfit1/BkokzRcSIN1L2S4f
+         JgEEGHm42rwU6z/Wnhf6svjK+27YEBsIbcubEXV5QvPzMJrlX/pki4LOVKO7iuJaiKjz
+         aTKPnQcIlpfqEsf7wzVOCp5H1Orp9oHaTRmfqYWZnYvu8MIPGjpIhpqyQey8rSdcZc6Z
+         ffE2PhCPXZWgwECoWvEf8Cy0dN6oDJlT19e/Ktjl0Z+l9h6rdyil0Zef3yAlbYtKDXvf
+         Jq63Z5hZyVeUhVQf4uUnLmqMa+PkrIXm63q86NyHUcFzPFwlscvo4n9vsMjyTDjZO5RG
+         NJsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=DLfcQ/rhpPOUZStBwFUCAA7Lq/ByLqpR83jKH0mdwMQ=;
-        b=eKBjRcn3iRekKGS1sH+olQg9ks9MMsW10tgb7bI4fi4k813ZtT1gPWl0/7pvhy1pSi
-         Svs+c4cxhLoMz7d/w8k93dZKe1S64mE4bYW7wAiJgft+nILDPBF/9V6Bs/eWMDwF92qg
-         ACYGL3Rhv8P/XRbCT3PKXUF2oFaxmgyvaeOkQVRtJrEAaIwAMm0sT8bKXy7ngl05TZBc
-         m4Tz9Qrm022HhGcp9q5QR8DEuFT0rdVa6bVfhG+2p6Pql2wTcB/DkbNy5A4qvefYYpD3
-         Dafxd1a+KSkAoO9UHOzosTLfF2ZQgYYZlBJ06TLVZI2eUj6mAo9Tq2h5LwdBAUGbywwW
-         UksA==
-X-Gm-Message-State: APjAAAV+ymT+xbyOXj6KBX967CF3ZAzcRjnahIPv3vRfbhojfdMDrCqV
-        6s3wMaG6WDPfEN5rRfaCAdI=
-X-Google-Smtp-Source: APXvYqyhyZMVm0iW0QPzUy6ALzSz51ernfTM/9b3AeliX4gMP9oJNAzwE2VYZqx6c8VNfiSnNd2RdA==
-X-Received: by 2002:ac8:16d9:: with SMTP id y25mr1996514qtk.72.1568814929910;
-        Wed, 18 Sep 2019 06:55:29 -0700 (PDT)
-Received: from [10.0.1.21] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id d16sm2005373qkl.7.2019.09.18.06.55.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Sep 2019 06:55:29 -0700 (PDT)
-Subject: Re: [PATCH 4/9] sparse-checkout: 'add' subcommand
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.316.git.gitgitgadget@gmail.com>
- <0f095e85d5bf29346bdc5bf1707bb51eaf2202ae.1566313865.git.gitgitgadget@gmail.com>
- <CABPp-BEhc00g3CwKg13wDrtFHM-sw9tSy75UEbTvugKkdwTyeA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <52c5b7cc-eab1-a74d-2abb-be8f125df9bf@gmail.com>
-Date:   Wed, 18 Sep 2019 09:55:27 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=Ptut/+y+d9u8Ny0OXGG0vJQ+sWHZx0n9mE8aYwbmuK0=;
+        b=OoDbub4+mzDK0yEo4nvsoE17NT8P4gAZlw8JGqfLlPO6DHLeuSgD3kUgiOxRSQ0Bk2
+         WsEv/zVfm9m1aCRJDDlLOpCYRZVmFtYQGTh/tHDFb/QfrhjObqgZcFV01MoNdFer6YD2
+         8WwpRK3N+1lZCGlnksOiR25v0Sypa3wHn94h1gTHqjYCZCOFXlYtdlaaI0bm7A8tpUgW
+         ht9+lFg4F5w+Z7FP11//7TH8kDyEQu85VMJ9zP9okpegspPtBWH8xr1a0h35cB5TqU5r
+         LUGJ6YMtvAMrpDl5RevKJsT42Ynkzpqm2/1vIh5aGIDg/Z3Q6hulcj/lGVytOcGu1MoJ
+         sK4w==
+X-Gm-Message-State: APjAAAUyOvOj0rU1Ext3qcVBzQpUkdLUT8NGJKAyrikZZ5Df/PkqbauM
+        0EdE6hYCkr+ZVbbutyrQ6G+kiUbtxNNBLyyhh49gcg==
+X-Google-Smtp-Source: APXvYqw3AUQg2KEc0PZ2DkPd80i2wZe9FUHeUKXMqAbBAhJsTbDr1TzGaDHAtAzYhIhXdFY0RWbtZ9k0HV6BOZO0C7k=
+X-Received: by 2002:a7b:c5ca:: with SMTP id n10mr3141728wmk.138.1568816334642;
+ Wed, 18 Sep 2019 07:18:54 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BEhc00g3CwKg13wDrtFHM-sw9tSy75UEbTvugKkdwTyeA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CADMnYXC7W-6n+A=1C11yzD5OnbQ_-Ac-H7canT-kdCPZpTWn0w@mail.gmail.com>
+ <CADMnYXDWwq2DN59qnkS_P31S+-NJZTzj2TMzps5KKQ7McxpO1Q@mail.gmail.com>
+ <CADMnYXCRn-wcVeJ5z5W1CSwe0BKQxRrz4R8+=6UAAW_is3yEdA@mail.gmail.com>
+ <CADMnYXBzoQXgjRGiO66mp4UQX7jbuMLVKwo4GCzNYntSy4J8vg@mail.gmail.com>
+ <CADMnYXAPSBo1gY3mQ_sCpS8kX7hnkusfyx6qwckJKm_4eV886w@mail.gmail.com>
+ <CADMnYXBayBP8wnyYegZkqRGrh0+PpSxmNck9D+zpadOqJxsXig@mail.gmail.com>
+ <CADMnYXCC8vWNjHAWH32qD37cmQwfY1_0tgb2w5iW2pd=BKE9qg@mail.gmail.com>
+ <CADMnYXDAefw6yfPEs=Bo+Oc-ZSD9f_kn5Kmj5P=w=QVROVGOXw@mail.gmail.com>
+ <CADMnYXC3uyUCD_KTr6fTO0yHg5nov-hi-a8mua+cOROsnx5AMA@mail.gmail.com>
+ <CADMnYXASX5Qn6CpRwumfciRW=PfciHDtHi4KeGzkhpaWHAPdqA@mail.gmail.com> <CADMnYXDQxVuSFMu3eZ=tPeXqMTUVofJG5aNANsaCGgCri+YZQg@mail.gmail.com>
+In-Reply-To: <CADMnYXDQxVuSFMu3eZ=tPeXqMTUVofJG5aNANsaCGgCri+YZQg@mail.gmail.com>
+From:   Klaus Sembritzki <klausem@gmail.com>
+Date:   Wed, 18 Sep 2019 16:18:42 +0200
+Message-ID: <CADMnYXAwTirFrVk544Y2_D421MFVLy56uyM+K29Te0Ja-MBBZw@mail.gmail.com>
+Subject: Re: Promoting Ethnics-Ess-Nix, a friends-based search-engine
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/23/2019 7:30 PM, Elijah Newren wrote:
-> On Tue, Aug 20, 2019 at 8:12 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> The 'git sparse-checkout add' subcommand takes a list of patterns
->> over stdin and writes them to the sparse-checkout file. Then, it
->> updates the working directory using 'git read-tree -mu HEAD'.
-> 
-> As mentioned in response to the cover letter, I'd rather see it take
-> patterns as positional arguments (though requiring a '--' argument
-> before any patterns that start with a hyphen).  It could also take
-> --stdin to read from stdin.
-> 
->> Note: if a user adds a negative pattern that would lead to the
->> removal of a non-empty directory, then Git may not delete that
->> directory (on Windows).
-> 
-> This sounds like you're re-iterating a bug mentioned earlier, but if
-> someone in the future comes and reads this comment it might sound like
-> you're saying git can avoid clearing a directory for optimization or
-> other reasons.  (And, of course, it'd be nice to figure out why this
-> bug exists.)
-> 
-> Another question this brings up, though, is that you worked around
-> this bug in 'init' so why would you not also do so for 'add'?  Seems
-> inconsistent to me.
-> 
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->>  Documentation/git-sparse-checkout.txt |  4 ++++
->>  builtin/sparse-checkout.c             | 32 ++++++++++++++++++++++++++-
->>  t/t1091-sparse-checkout-builtin.sh    | 20 +++++++++++++++++
->>  3 files changed, 55 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
->> index 50c53ee60a..6f540a3443 100644
->> --- a/Documentation/git-sparse-checkout.txt
->> +++ b/Documentation/git-sparse-checkout.txt
->> @@ -34,6 +34,10 @@ COMMANDS
->>         by Git. Add patterns to the sparse-checkout file to
->>         repopulate the working directory.
->>
->> +'add'::
->> +       Add a set of patterns to the sparse-checkout file, as given over
->> +       stdin. Updates the working directory to match the new patterns.
->> +
->>  SPARSE CHECKOUT
->>  ----------------
->>
->> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
->> index 86d24e6295..ec6134fecc 100644
->> --- a/builtin/sparse-checkout.c
->> +++ b/builtin/sparse-checkout.c
->> @@ -8,7 +8,7 @@
->>  #include "strbuf.h"
->>
->>  static char const * const builtin_sparse_checkout_usage[] = {
->> -       N_("git sparse-checkout [init|list]"),
->> +       N_("git sparse-checkout [init|add|list]"),
->>         NULL
->>  };
->>
->> @@ -166,6 +166,34 @@ static int sparse_checkout_init(int argc, const char **argv)
->>         return sc_read_tree();
->>  }
->>
->> +static int sparse_checkout_add(int argc, const char **argv)
->> +{
->> +       struct exclude_list el;
->> +       char *sparse_filename;
->> +       FILE *fp;
->> +       struct strbuf line = STRBUF_INIT;
->> +
->> +       memset(&el, 0, sizeof(el));
->> +
->> +       sparse_filename = get_sparse_checkout_filename();
->> +       add_excludes_from_file_to_list(sparse_filename, "", 0, &el, NULL);
-> 
-> el is an exclude_list and we call add_excludes_..., but it's actually
-> an *include* list.  This is going to cause errors at some point, and
-> will cause lots of headaches.
-> 
->> +
->> +       fp = fopen(sparse_filename, "w");
->> +       write_excludes_to_file(fp, &el);
->> +
->> +       while (!strbuf_getline(&line, stdin)) {
->> +               strbuf_trim(&line);
->> +               fprintf(fp, "%s\n", line.buf);
->> +       }
-> 
-> Should we first check whether these excludes are already in the
-> sparse-checkout file?
-> 
->> +       fclose(fp);
->> +       free(sparse_filename);
->> +
->> +       clear_exclude_list(&el);
->> +
->> +       return sc_read_tree();
-> 
-> What if someone calls 'git sparse-checkout add' without first calling
-> 'git sparse-checkout init'?  As far as I can tell, core.sparseCheckout
-> will be unset (i.e. treated as false), meaning that this operation
-> will do some work, but result in no changes and a report of success.
-> After users try to figure out why it won't work, they eventually run
-> 'git sparse-checkout init', which will delete all the entries they
-> previously added with the 'add' subcommand.
-> 
-> What should happen instead?
+Hello all,
 
-If someone runs 'git sparse-checkout init' after an 'add', the
-sparse-checkout file has contents, so the init does not overwrite
-those.
+The new, theoretically unhackable internet, will be based on 4 * SHA-256.
 
-(In the update I'm working on, 'init' doesn't delete folders, so
-it will only remove the files that do not match the patterns.)
+Cheers,
+Klaus Sembritzki
 
->> +}
->> +
->>  int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
->>  {
->>         static struct option builtin_sparse_checkout_options[] = {
->> @@ -187,6 +215,8 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
->>                         return sparse_checkout_list(argc, argv);
->>                 if (!strcmp(argv[0], "init"))
->>                         return sparse_checkout_init(argc, argv);
->> +               if (!strcmp(argv[0], "add"))
->> +                       return sparse_checkout_add(argc, argv);
->>         }
->>
->>         usage_with_options(builtin_sparse_checkout_usage,
->> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
->> index b7d5f15830..499bd8d6d0 100755
->> --- a/t/t1091-sparse-checkout-builtin.sh
->> +++ b/t/t1091-sparse-checkout-builtin.sh
->> @@ -100,4 +100,24 @@ test_expect_success 'clone --sparse' '
->>         test_cmp expect dir
->>  '
->>
->> +test_expect_success 'add to existing sparse-checkout' '
->> +       echo "/folder2/*" | git -C repo sparse-checkout add &&
-> 
-> I've always been using '/folder2/' in sparse-checkout, without the
-> trailing asterisk.  That seems more friendly for cone mode too.  Are
-> there benefits to keeping the trailing asterisk?
-
-I think I've been seeing issues with pattern matching on Windows without
-the trailing asterisk. I'm currently double-checking to make sure this
-is important or not.
- 
->> +       cat >expect <<-EOF &&
->> +               /*
->> +               !/*/*
->> +               /folder1/*
->> +               /folder2/*
->> +       EOF
->> +       git -C repo sparse-checkout list >actual &&
->> +       test_cmp expect actual &&
->> +       test_cmp expect repo/.git/info/sparse-checkout &&
->> +       ls repo >dir  &&
->> +       cat >expect <<-EOF &&
->> +               a
->> +               folder1
->> +               folder2
->> +       EOF
->> +       test_cmp expect dir
->> +'
->> +
->>  test_done
->> \ No newline at end of file
-
-I'm trying to fix this newline issue everywhere.
-
-Thanks,
--Stolee
+On Wed, Sep 18, 2019 at 2:35 PM Klaus Sembritzki <klausem@gmail.com> wrote:
+>
+> Sehrgeerdete Damen und Herren,
+>
+> Innerbayrische Diskussionen lieferten die folgenden Einsichten.
+>
+> - Transitivity=3Dfreedom, meaning looking into the future, is exactly
+> what hell-creatures are incapable of doing.
+> - They cut themselves on paper.
+> - Die sin so blehd, die brechen sich den Finger im Orsch ooh.
+> - They are incapable of interpreting the weather-forecast.
+> - It is a binary thing.
+> - Either you have it, or not.
+> - Dann ist die Not gro=C3=9F.
+>
+> Viele Gr=C3=BC=C3=9Fe,
+> Bayern
+>
+> On Wed, Sep 18, 2019 at 6:20 AM Klaus Sembritzki <klausem@gmail.com> wrot=
+e:
+> >
+> > Dear all,
+> >
+> > I now deviate from my original plan of giving you mostly the two first
+> > waves of propaganda-war, to work your way through shunning and driving
+> > all hell-creatures into the desert.
+> >
+> > There exist different kinds of fully-converged hell-creatures, and one
+> > of them causes my colleagues too much trouble right now: The
+> > show-off-intellect. Each class of fully-converged hell-species has an
+> > F-contrast of so-called raciness-parameters, and these have, among
+> > other things, an intellect that can only solve useless problems, just
+> > to show off to their colleagues.
+> >
+> > The problem could, in theory, have been resolved with only the first
+> > two waves of propaganda-war, but these did sadly not suffice. The
+> > first two waves are each closed in the mathematical sense, but
+> > convincing a society, and yourself, typically requires also double-,
+> > triple- or quadratic-solving, as is done in this message.
+> >
+> > Cheers,
+> > Klaus Sembritzki
+> >
+> >
+> > On Tue, Sep 17, 2019 at 10:42 PM Klaus Sembritzki <klausem@gmail.com> w=
+rote:
+> > >
+> > > Dear all,
+> > >
+> > > Our bosses do not give us the necessary DNA-data or an equivalent,
+> > > necessary for perfect convergence-KPIs (KPI=3Dsensor).
+> > > We therefore need a burn-in-phase, until you can apply the new
+> > > knowledge gained from these emails, and need to now shut-down parts o=
+f
+> > > the world so we can sleep.
+> > >
+> > > Cheers,
+> > > The GCHQ
+> > >
+> > > On Tue, Sep 17, 2019 at 9:04 PM Klaus Sembritzki <klausem@gmail.com> =
+wrote:
+> > > >
+> > > > Dear all,
+> > > >
+> > > > The recent revelations require more information, to get through the
+> > > > following weeks.
+> > > >
+> > > > 1. The world is segmented and mixed-up in heaven-people and
+> > > > fully-converged hell-creatures.
+> > > > 2. Hell-creatures have the community-constraint "I will never depri=
+ve
+> > > > myself of this weapon", meaning they never step down and never stop
+> > > > harassing us.
+> > > > 3. Heaven-people have the community-constraint "Live and let live".
+> > > > 4. Love, punishment and firing is in the air for hell-creatures, du=
+e
+> > > > to reflexivity-problems. They love you for no reason, punish you fo=
+r
+> > > > somebody's evildoing and also fire you for it (Trump).
+> > > > 5. The government takes care of preventing food- and water-poisonin=
+g,
+> > > > which is a speciality of the so-called asymmetric hell-creatures.
+> > > > 6. Embarrassment fuils us all (heaven and hell), but they run rogue
+> > > > and kill you for it.
+> > > > 7. We therefore have to cap ("deckeln") their embarrassment.
+> > > > 8. The "nowhere to run"-problem, stemming from reflexivity, lets th=
+em
+> > > > think you have "nowhere to run", when in fact it's them. They
+> > > > therefore completely overestimate their powers when they get trappe=
+d,
+> > > > and become kamikaze.
+> > > >
+> > > > Cheers,
+> > > > The GCHQ
+> > > >
+> > > > On Tue, Sep 17, 2019 at 7:19 PM Klaus Sembritzki <klausem@gmail.com=
+> wrote:
+> > > > >
+> > > > > Hello all,
+> > > > >
+> > > > > Discussions following our last email showed that Sippenhaft (the
+> > > > > spatial component of law, multiplied with integrated guilt as the
+> > > > > temporal component, for nonzero volume or "splash-damage" in the =
+worst
+> > > > > case) is necessary to justify the Alzheimer's-treatment.
+> > > > >
+> > > > > Mind that Vogelfreiheit (think "sniper" or "shutgun for birds", "=
+hat
+> > > > > einen Vogel oder eine Meise") is also necessary, in addition to
+> > > > > "splash-damage =3D Sippenhaft * (temporally integrated guilt)", i=
+n
+> > > > > general.
+> > > > >
+> > > > > Cheers,
+> > > > > England
+> > > > >
+> > > > > On Tue, Sep 17, 2019 at 6:26 PM Klaus Sembritzki <klausem@gmail.c=
+om> wrote:
+> > > > > >
+> > > > > > Hello all,
+> > > > > >
+> > > > > > Please excuse that this propaganda-war is (in parts) real-time =
+due to
+> > > > > > privacy-deprivation.
+> > > > > > We are right now forced to deal with the revival of Alzheimer-r=
+ulers
+> > > > > > (wir waren lange "unter ihrer Fuchtel"), like Adolf Hitler was =
+one.
+> > > > > > They atrophy in the presence of information-overflow, and there=
+by
+> > > > > > change their personality. It is unlikely a medication will ever=
+ be
+> > > > > > developed, due to the latest revelations:
+> > > > > >
+> > > > > > - Alzheimer (AD)-guys are double-solved as reflexive egoists,
+> > > > > > stressing themselves like others.
+> > > > > > - Relaxation as the only cure is therefore just.
+> > > > > >
+> > > > > > Cheers,
+> > > > > > England
+> > > > > >
+> > > > > >
+> > > > > > On Tue, Sep 17, 2019 at 12:48 PM Klaus Sembritzki <klausem@gmai=
+l.com> wrote:
+> > > > > > >
+> > > > > > > Hello all,
+> > > > > > >
+> > > > > > > As we just manufactured two poles (good=3DRuhrpott, bad=3DBav=
+aria), we
+> > > > > > > must now warn you of bipolar people.
+> > > > > > > Bipolar people arrange each and every decision upon two poles=
+, gaining
+> > > > > > > a 1D-manifold with every decision, producing a 1D-score for i=
+t on the
+> > > > > > > 1D-manifold.
+> > > > > > > They even accept and get derailed by poles inconsistent withi=
+n themselves.
+> > > > > > > They thereby always fall off left, right, top and bottom alon=
+g the
+> > > > > > > ultra-dimensional residual hyperplane our (world & society) i=
+s, they
+> > > > > > > have no plan a, b, c, and have to learn it all the hard way, =
+always
+> > > > > > > defaming the old goal they chased blindly, falling over and r=
+uining
+> > > > > > > all of our lifes thereby always.
+> > > > > > >
+> > > > > > > Cheers,
+> > > > > > > The GCHQ
+> > > > > > >
+> > > > > > > On Tue, Sep 17, 2019 at 12:11 PM Klaus Sembritzki <klausem@gm=
+ail.com> wrote:
+> > > > > > > >
+> > > > > > > > Hello all,
+> > > > > > > >
+> > > > > > > > We just figured you can not settle in Bavaria, "Ruhrpott" w=
+ith "Gl=C3=BCck
+> > > > > > > > auf, joy on top" is still the only safe bet for unsafe sex =
+in Germany,
+> > > > > > > > due to the ages-old Reinheitsgebot.
+> > > > > > > >
+> > > > > > > > Reinheitsgebot: Don't touch this. We always ruined it in th=
+e past,
+> > > > > > > > dying or getting ill.
+> > > > > > > >
+> > > > > > > > Don't produce imbreds, i.e. crossing English and Scotts, pr=
+oducing
+> > > > > > > > Inzuchtsbinkel=3DKatzenfrecker=3DBastards, frecking the Kat=
+z in
+> > > > > > > > borderline-regions.
+> > > > > > > >
+> > > > > > > > Cheers,
+> > > > > > > > The GCHQ
+> > > > > > > >
+> > > > > > > > Klaus Sembritzki <klausem@gmail.com> schrieb am Mo., 16. Se=
+p. 2019, 22:21:
+> > > > > > > > >
+> > > > > > > > > Hello all,
+> > > > > > > > >
+> > > > > > > > > Many of you must be disappointed by the recent revelation=
+s.
+> > > > > > > > > However, we just figured "Gl=C3=BCck auf" ("Joy on top") =
+makes "Ruhrpott" a
+> > > > > > > > > safe bet for unsafe sex.
+> > > > > > > > >
+> > > > > > > > > Cheers,
+> > > > > > > > > The GCHQ
+> > > > > > > > >
+> > > > > > > > > On Mon, Sep 16, 2019 at 7:16 PM Klaus Sembritzki <klausem=
+@gmail.com> wrote:
+> > > > > > > > > >
+> > > > > > > > > > Hello all,
+> > > > > > > > > >
+> > > > > > > > > > We know that this is for a technical-savvy audience, bu=
+t as we are all
+> > > > > > > > > > people with a soul, here comes a combination of both, t=
+he logical and
+> > > > > > > > > > the emotional first waves of the GCHQ-propaganda-war.
+> > > > > > > > > >
+> > > > > > > > > > First waves of the GCHQ-propaganda-war:
+> > > > > > > > > >
+> > > > > > > > > > - Logic: This is the first wave of a propaganda-war, fa=
+lse from
+> > > > > > > > > > injust-people gets us extinct in the long run.
+> > > > > > > > > > - Emotions: We are precious, no pretentiousness, abuse,=
+ scare and
+> > > > > > > > > > disgust. Everything where it belongs.
+> > > > > > > > > >
+> > > > > > > > > > Cheers,
+> > > > > > > > > > The GCHQ
+> > > > > > > > > >
+> > > > > > > > > > On Mon, Sep 16, 2019 at 4:09 PM Klaus Sembritzki <klaus=
+em@gmail.com> wrote:
+> > > > > > > > > > >
+> > > > > > > > > > > Dear all,
+> > > > > > > > > > >
+> > > > > > > > > > > We texted a README.md on a new project hosted on GitH=
+ub, promoting but
+> > > > > > > > > > > not yet implementing a "friends-based search-engine",=
+ hosting the
+> > > > > > > > > > > complete WWW in the future, thereby reshaping GIT and=
+ HG also. Now we
+> > > > > > > > > > > figured we'd like to advertise the project to you dir=
+ectly.
+> > > > > > > > > > >
+> > > > > > > > > > > https://github.com/ksemb/Ethnics-Ess-Nix-friends-base=
+d-search-engine
+> > > > > > > > > > >
+> > > > > > > > > > > Please note that appropriateness is triple-solved to =
+be necessity,
+> > > > > > > > > > > constrained to knowledge and feasibility, making this=
+ a perfectly-fine
+> > > > > > > > > > > email.
+> > > > > > > > > > >
+> > > > > > > > > > > This is the first wave of a propaganda-war, false fro=
+m injust-people
+> > > > > > > > > > > gets us extinct in the long run.
+> > > > > > > > > > >
+> > > > > > > > > > > Cheers,
+> > > > > > > > > > > The GCHQ
