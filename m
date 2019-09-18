@@ -2,86 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAD241F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 07:02:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77F881F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 07:05:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728061AbfIRHCK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 03:02:10 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:43874 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726755AbfIRHCJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 03:02:09 -0400
-Received: by mail-io1-f67.google.com with SMTP id v2so13624940iob.10
-        for <git@vger.kernel.org>; Wed, 18 Sep 2019 00:02:09 -0700 (PDT)
+        id S1728097AbfIRHFZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 03:05:25 -0400
+Received: from mail-lj1-f180.google.com ([209.85.208.180]:44418 "EHLO
+        mail-lj1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725834AbfIRHFZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Sep 2019 03:05:25 -0400
+Received: by mail-lj1-f180.google.com with SMTP id m13so6005661ljj.11
+        for <git@vger.kernel.org>; Wed, 18 Sep 2019 00:05:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ugOUEYd4HfPX1bcDV8tPCwqEtK0iXnX0VISf+oUNPfY=;
-        b=eyFdOfiq4HJnnPHHy49+77iRnco10BTrzz2ONa6N8gZgepOr7EYoWf6MyRBSrQKQdA
-         Md/JQzlcp8EPec9t6LQtlUYmtGiv+N2UlEj4vjR/q0wiywS/Yqun+GTFz9VRo4V/fb2s
-         ycN6sc+dNK6aCx7SMhIzCn4orD677ZoOcYizGWA6b1Dwx75rMSl3xDQhHa6whymi/k4/
-         qMZhOfa4JDuNwsXFrXVJcWGNHXySbOFHMrmTlRrZGWs8w+Yao2pEEubhoxiwWYMmK9x4
-         BmM6NTb/M84MJVcks10/0e7E3kLcTrOYGoHgaPN+P+2zfY4UpA/UjI8rjM1pb5+FnbCb
-         0pQg==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=yIJVP6Nhv5pZQIM4MfCLixV7S0RlSAiMtG9fY3sQ7aE=;
+        b=QFOXMJZ8Ue9fB4KF1eDh8TuTYaffMumpXiDLvP71V1Y/ZpNyI6UtMjZp4XPrHSCi8x
+         XeeBavExJvO+jd3QgraJf/X1lU8yvYv5d7/gHT+jYpQiXJGpyupDOY5OGu1D3AALOaC9
+         3EctkbcdeMqhWIGyeLAFEdSmjjunOb9uuufy8CUR8dJXIY6SdmbTxuzZdDlQ5zev9vVp
+         CzmPFM9unlM4g/p4bdHixA7/Unz94f+BInPiYQ2bcGIspXXUqogUe6iZuAC7D1nYllEt
+         E5CIqUK4F9zdaBeaIyxl7u5CSM0GdbnRYkQeqyDzrXEfq5yY0YxfrBZYnvUNix0TtONL
+         5ksA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ugOUEYd4HfPX1bcDV8tPCwqEtK0iXnX0VISf+oUNPfY=;
-        b=Is5OvtPfPkCnUHrAJxlDn1g5Wc2TUSfAswapd18cOEOG0o8WtYsnyvHcVhbEBczHkA
-         Z5Zw8TGrVQhQ4gHl9A1QP3lAcw4n33FFlKa7/K2hnhh3jWJ1HL8nd7WmcGUwVDmbEtpV
-         0+70btmnMaL+Y3LvE5foDuZUbdl1xIjlMFVrO2yk4n+LFzh3Tq6wrE9dmlMKJFhOzJTk
-         6bywmMFcQj3LYjColbyzO9i8lGSbV5Wv9v50fkAwoZy+r5uXEC55KQYw+zI0CyZC+c4t
-         f812XV1W03qMRFGbDRXMkGI3TSelI7h2nD6tm/nnytxzfL5Eg6plGMe0uZseT8J1E1EP
-         UEWg==
-X-Gm-Message-State: APjAAAU6ghnF75JYZlITEAtw5R5A8pQ/YnIKwKguUQuClB9YFbnanL7o
-        KRcjVqdpmeNoNcSpuBN6xKGwFT6g+oI=
-X-Google-Smtp-Source: APXvYqwUiXz/X0ET1YplRDlTURiHjWWymCwybtjyJzWg54a9DCYXMQ8P6arm+dkbSVBU+B3ZrIKLvQ==
-X-Received: by 2002:a02:698d:: with SMTP id e135mr3343762jac.128.1568790128323;
-        Wed, 18 Sep 2019 00:02:08 -0700 (PDT)
-Received: from viper.hsd1.ut.comcast.net ([2601:681:4100:375e:c6b3:1ff:fed3:9881])
-        by smtp.gmail.com with ESMTPSA id i26sm4850832ion.40.2019.09.18.00.02.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Sep 2019 00:02:07 -0700 (PDT)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org, gitster@pobox.com, Jens.Lehmann@web.de
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH] doc: fix reference to --ignore-submodules
-Date:   Wed, 18 Sep 2019 01:02:04 -0600
-Message-Id: <20190918070204.100144-1-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.23.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=yIJVP6Nhv5pZQIM4MfCLixV7S0RlSAiMtG9fY3sQ7aE=;
+        b=L57Bb+NZpe7z2djZOXPJvM1k2ZKudgCo5wWpXMybBeWYe7lTL6U33OQi1IGSUAbTp3
+         hd6x98bxf82OjuAM6KsKGZIhoKTtV+nqj+9UMzSFJ3FeUmCm04Ioy1UK0ZAOETz/+j3G
+         9bIMwJwhtMj+0sha6AjqstUbuj3A2wFqW8Rkq0k6tlFqOIxfGoMH8UJ2M1PzExhYvWhY
+         ujTXrI6S0AlmLE6R0yTItThWZ5XYcvKD1lEY5GOoMOpEVNJriP9MUoESMrrkB/ZJROjK
+         GTP4DnaCEQgKjs4KTVJ+JytVcm0Ftz/SIIDvzFtOCWW5UXAbiHfUnWV+4rpUsk86QiTI
+         KHIA==
+X-Gm-Message-State: APjAAAWyI4cPrwLA0qlzes5Y7l6EKetAWYzK/PzOoRblsKzJECYM9yib
+        9xgHAqwrZiF8E60PlRUCwrkhQXwpVUKreGMErpcH6rw3C24=
+X-Google-Smtp-Source: APXvYqxUpCeZi02Iuu9S+YFrVqV+lL+zqJqZNMn4gZD6XR2lmU9g8vlEX1pS4hpJSUa2u4oN4tFJV4U0pu4BqhsNbQs=
+X-Received: by 2002:a2e:9c16:: with SMTP id s22mr1278324lji.70.1568790323134;
+ Wed, 18 Sep 2019 00:05:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
+Date:   Wed, 18 Sep 2019 09:02:37 +0200
+Message-ID: <CAGr--=KXqFbivuXHPNecb3dBR_hx8QqWoR4pBGXy7uOiT+ESbg@mail.gmail.com>
+Subject: git-gui: missing some patches from git?
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- Documentation/gitmodules.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi Pratyush,
 
-diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-index a66e95b70c..b7f5e39d4c 100644
---- a/Documentation/gitmodules.txt
-+++ b/Documentation/gitmodules.txt
-@@ -90,7 +90,7 @@ of the superproject, the setting there will override the one found in
- .gitmodules.
- 
- Both settings can be overridden on the command line by using the
--"--ignore-submodule" option. The 'git submodule' commands are not
-+"--ignore-submodules" option. The 'git submodule' commands are not
- affected by this setting.
- --
- 
--- 
-2.23.0
 
+I was comparing your git-gui repo[1] with the source code of
+git/git-gui[2]. There seems to be a couple of things missing.
+
+For example, I created a patch back in March 2018[3]. Junio pulled it
+so the changes are really there in git/git-gui/git-gui.sh (see this[4]
+line). This was while there was no git-gui maintainer. I guess the
+change never got merged to git-gui, but directly to git.
+
+Not sure what you should to about it, I just wanted to let you know.
+
+[1] https://github.com/prati0100/git-gui
+[2] https://github.com/gitster/git/tree/master/git-gui
+[3] https://public-inbox.org/git/20180302100148.23899-1-birgersp@gmail.com/
+[4] https://github.com/gitster/git/blob/master/git-gui/git-gui.sh#L3885
+
+
+Birger
