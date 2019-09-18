@@ -2,82 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C7911F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 10:30:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA90E1F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 11:27:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728408AbfIRKaO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 06:30:14 -0400
-Received: from mail-pf1-f171.google.com ([209.85.210.171]:33452 "EHLO
-        mail-pf1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725298AbfIRKaO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 06:30:14 -0400
-Received: by mail-pf1-f171.google.com with SMTP id q10so4141025pfl.0
-        for <git@vger.kernel.org>; Wed, 18 Sep 2019 03:30:14 -0700 (PDT)
+        id S1730156AbfIRL10 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 07:27:26 -0400
+Received: from mail-lf1-f49.google.com ([209.85.167.49]:42260 "EHLO
+        mail-lf1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726958AbfIRL10 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Sep 2019 07:27:26 -0400
+Received: by mail-lf1-f49.google.com with SMTP id c195so5401377lfg.9
+        for <git@vger.kernel.org>; Wed, 18 Sep 2019 04:27:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=sYBNUeh2rBWxEpIyB2CyUo/iag4wHahaRvymjJBR9es=;
-        b=Ii9zngTAxdwHj+dBtzP9pg8LH+BsnVZr2xl745B7bAG3FQXSr7ZaMWBQ/mu8C+XDlz
-         nktlyuuuWe9aCJriV51fZ+kcI/7ohfvVAKhWsBhf2gAV8sHSuKez4TmQURsx7KRR1SZd
-         BJ3Ka8r799fw0XVIzze+lN9L2PhTiWsoL5dow2UU8pzgbD2VOc6dNtlUr+5grCkew9cX
-         /OCSZKX3spfZF276JJ8zCqVrHMmYjSwuDsF9T7IbMy+XNZl4zg8+9VenWTvhgbAcKQ6u
-         JAeyLwIMIuE+1nmIZRb+qKi6Qc5GeF5UryFn4ePLtIkg5ItD89XRDnFzfpmYz5e1W/zZ
-         SIjg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Ak0kIudHJnoxcBHEhcpHYIOU1uszqjWN+zFvJXTKfLc=;
+        b=QwNMwjuao/CYmhqH2YqbxBrBGib9bts4+sjGzwtPSS2OPVZy/SCpneMqt3WA6TOl5e
+         qFlAMhNPBXFHVXSmLLR++t8qhsGTe1rJbU2s+23q9TsYZvakc2m2DdGqhvbRBOm4efKW
+         dvHhoQant3I2CQDyXOmHtQMPArB9JCGPZeP/HVDV1rTF9F7oDIalyFDAD2mu0zyRbl5q
+         VDqi5si621Vtwc2gtBB/z/b9otVXQJkrTSTqvqy6ScrNJl16HCgQaeIiGDXmqTNahpLj
+         kzruakk2gMpOfa4DvZh3OdDJ5S4FOXl5WY8a9M593WVqI1huLkOYgnHeg2zdF7XXeTET
+         vQwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=sYBNUeh2rBWxEpIyB2CyUo/iag4wHahaRvymjJBR9es=;
-        b=Fe5M2PQaeFogA9DEql7hpUtuzaXQ2N17gYtUdjwX42rxw4R+H5rv/IiIRp9mo7C0NM
-         GL5JpS3z76TtQyerIbP/2nvjHVuBijrnRKwgTa/h7wC3PDBbpiJ5TIHCR3/lBi+JFxFP
-         WAMJHzZaLWIcVSWPTZuO5hwhQAepMdwmFDHhzIZEG0cjIty9CKqVGzFVnpo3zv2yTvyf
-         i6Qh/enLmBndPLnLIuGyNtOejizjsRAEBNmIzGM7jj2JZoSHNZ/GBJ9YUOg3yqLmgYIn
-         2HJuujWoPqXu6mAuvyDFigeHp1Y4c5ojFJQBgJohZ3lmUtabEs3sWAMCW2GsHwAm9yxH
-         rT3g==
-X-Gm-Message-State: APjAAAVPVlbSEPm+RPoxpz7Ne+jmkAaxQT1kOGUU28yefBMWytLRZNLP
-        iQSGzsINXrQXQNbY0NSnIEvnjI4DJEI=
-X-Google-Smtp-Source: APXvYqw8GigndFxhaHW3hqY9bEHRIekkJ6n64gaG6MnjG4zTUNuLn7SXqDa/LrZF8aWc2gPwwwjZ/w==
-X-Received: by 2002:a63:2026:: with SMTP id g38mr3212699pgg.172.1568802612983;
-        Wed, 18 Sep 2019 03:30:12 -0700 (PDT)
-Received: from archbookpro.localdomain ([2601:646:280:1b30::6486])
-        by smtp.gmail.com with ESMTPSA id d14sm1812176pjx.8.2019.09.18.03.30.11
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Sep 2019 03:30:11 -0700 (PDT)
-Date:   Wed, 18 Sep 2019 03:30:09 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     git@vger.kernel.org
-Subject: [OFF-TOPIC] How to contribute to Git full-time?
-Message-ID: <20190918103009.GA113977@archbookpro.localdomain>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Ak0kIudHJnoxcBHEhcpHYIOU1uszqjWN+zFvJXTKfLc=;
+        b=juwVUJtQSY/YcqcEwkn/XB6+7o1Lef6ThnPL6FCQ3DRzmBB75OhCI6zu80d49Q7nSF
+         Q/QZA0uJeB13QflnXRTYTCxoQSx73mEAQRTe6Qvier/bydxa4AGVFyc7lzN2j/lLHesr
+         rvym83wm9POxLvugNJDsPbpY08jzh/cKQByCNLqYw28pG/xwa9mUjJhmyKkGSWvVltFV
+         RogIJQ8Q3JyPax9k4QRUuTGW2OBVjnuLWtTVYagWffMbifJKOLRfuS3FpnAIan/HPRZK
+         6L709SzvaEIUIb43vcPNu8QZ5FpzKD+mpR4Pr0FLZACdLr67up/VIJpt7uPXGDk5YdBK
+         VyZQ==
+X-Gm-Message-State: APjAAAXzXL+1MUslH/leQtLPbsie2/dJ6Ck/+mIHs+dOkLPD2rEAD29V
+        CG6O8UWnc/okmLT7L0wqjGeuO/scEMFbyP52Ud1IIv5nASg=
+X-Google-Smtp-Source: APXvYqzu/wwJuWDaueqYdmNz8vcvdpS0U6JGbrn8faRMoejh4d3VT2g/TvBNQOpMjsaadSNZUwaTulKikG2ctfJAXhg=
+X-Received: by 2002:a19:f801:: with SMTP id a1mr1688616lff.166.1568806044282;
+ Wed, 18 Sep 2019 04:27:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.12.1 (2019-06-15)
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
+Date:   Wed, 18 Sep 2019 13:24:40 +0200
+Message-ID: <CAGr--=KC=OPMJZB883MWys=J068cdZNHL=eOYK81fNBEv9MhvA@mail.gmail.com>
+Subject: git-gui: duplicated key binds?
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Sorry if this isn't the right place for this but I think that this is
-probably the best place to get in touch with fellow Git developers ;)]
+Hi,
 
-Hello all,
 
-It's hard to believe it but I'm going to be graduating university soon.
-Since I work on Git in my spare time for fun, I'd love it if I could do
-this work full-time.
+It looks to me like there are a lot of key binds duplicated in the
+git-gui source.
 
-I just wanted to seek a little bit of career advice from the people on
-the list that are sponsored by their employers to work on Git. What were
-some career decisions that led you here?
+For instance, Ctrl/Cmd+Enter are bound in two lines:
+bind $ui_comm <$M1B-Key-Return> {do_commit;break}
+and
+bind .   <$M1B-Key-Return> do_commit
 
-Thanks for letting me bother you,
+I guess the first one is specified to work in the commit message
+widget. The second one is for all widgets(?).
 
-Denton
+Also, I see that some binds are with the "all" tag, while most are
+with just a dot as tag.
+
+Is this a mistake (aka something I could write a patch for)? Or am I
+just missing something?
+
+[0] https://github.com/prati0100/git-gui/blob/master/git-gui.sh#L3835-L3928
+
+
+I propose:
+- replace "bind .   " with "bind all "
+- remove duplicated bind entries, if a key is bound to "all" then it
+shouldn't be bound with another tag
+
+
+Birger
