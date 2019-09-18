@@ -7,145 +7,110 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A00841F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 19:23:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E4621F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 19:55:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730960AbfIRTXZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 15:23:25 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58672 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728896AbfIRTXZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 15:23:25 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8B863740E1;
-        Wed, 18 Sep 2019 15:23:23 -0400 (EDT)
+        id S2387678AbfIRTzX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 15:55:23 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62543 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731839AbfIRTzW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Sep 2019 15:55:22 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E9E7B811C7;
+        Wed, 18 Sep 2019 15:55:17 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=n84BuIFzLcPLJoo+xH7oWAV3uXk=; b=rioF2/
-        1l5+hHXaPtNoIf9WUSENRZYgVxxIN1R+S7JAvShuOORPy9jDyoBVUXvLJo8WYoV0
-        QHnPRmxCP6r9gVPbr0c/M1pWCGH7H1Z5r7bnm6gPon0Nimy2rAbaDtMNY4ebMaan
-        1qLnFeVglMFZQUly1xdqYvFZzkRiIqe9H89CY=
+        :content-type; s=sasl; bh=2ZshfML1Zm4BNkxLSXfVhncLWao=; b=i8Da9O
+        JjoNkkwMxx4a1CvLXu49aivFgBmfHLLlvpCOSN4odUPgYi5MGJDeInIoNrsA4S0K
+        sDDs0vk67oT3WmiqiAgy0UwkZOdsK4AQOiqFj1f8rjF4dg5IMfbOmNjdKa3PF46G
+        G/Cx4XllTJYTrmQjnFOkUoH2A1YsYmXCduflI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=p5bR/VPlptRSlcOSMvUN8DTMLa2hyJoZ
-        B6W/JFKjjGCXiZz9PdjFCt2S2ulGKQhSjRcuKV0ajIZc4XT9XXVxdwLsGUuwUyqs
-        GMu/cSQiHHbo35wi6TVHSb+WYi7IQ4BVslTCjvu8pOIE4IOLXS455HXExmtW9GLO
-        GpwjXhyVtXQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 83D20740DF;
-        Wed, 18 Sep 2019 15:23:23 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=AlnlRHzc28eVfdTjuUU96Zlcn6qa0rd9
+        qG5bij8ZPhNtd4IIV1/z5WRjPa3oCpQZNj9KEHEJqt6Ijlat0a47ITcF93AxndEM
+        Be5orGHXsGb/h/WNkbSTFzcr1Gr87ZIt7MYj2QW5B0aEWZo9ILf6uqMEBmZGiGrb
+        IoP2sX01wAE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E3809811C6;
+        Wed, 18 Sep 2019 15:55:17 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B09C8740DA;
-        Wed, 18 Sep 2019 15:23:20 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 11514811C4;
+        Wed, 18 Sep 2019 15:55:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
-Subject: Re: [GIT PULL] git-gui pull request
-References: <20190917201334.hfbvuisdwkwgvwg5@yadavpratyush.com>
-        <20190917205051.GA63601@dentonliu-ltm.internal.salesforce.com>
-Date:   Wed, 18 Sep 2019 12:23:18 -0700
-In-Reply-To: <20190917205051.GA63601@dentonliu-ltm.internal.salesforce.com>
-        (Denton Liu's message of "Tue, 17 Sep 2019 13:50:51 -0700")
-Message-ID: <xmqq7e655ryx.fsf@gitster-ct.c.googlers.com>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC PATCH 0/3] grep: don't add subrepos to in-memory alternates
+References: <cover.1568771073.git.matheus.bernardino@usp.br>
+Date:   Wed, 18 Sep 2019 12:55:12 -0700
+In-Reply-To: <cover.1568771073.git.matheus.bernardino@usp.br> (Matheus
+        Tavares's message of "Tue, 17 Sep 2019 22:56:02 -0300")
+Message-ID: <xmqq36gt5qhr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C6635EB8-DA49-11E9-B710-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 3B6D7A28-DA4E-11E9-95C4-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Matheus Tavares <matheus.bernardino@usp.br> writes:
 
-> Hi Pratyush,
->
-> Since you're the maintainer now, you should submit a patch to
-> Documentation/SubmittingPatches to change
->
-> 	- `git-gui/` comes from git-gui project, maintained by Pat Thoyts:
->
-> 		git://repo.or.cz/git-gui.git
->
-> to have your own information.
+> Make git-grep --recurse-submodules stop adding subrepos to the in-memory
+> alternates list and, instead, pass a reference to the subrepo struct
+> down to the threads.
 
-There also is MaintNotes on the todo branch, which I'll take care
-of.
+Nice.  This is done by updating all the codepaths used by grep to
+use the lower-level helper functions that can take a repository
+instance and/or an object store instance that is not the one tied to
+the top-level repository?  Quite nice.
 
-FWIW, the following update to the draft release notes will be part
-of what I'll push out, together with the "Third batch" update to the
-master.
+> - textconv cache is written to the_repository's object database even for
+>   submodules. Should it perhaps be written to submodules' odb instead?
 
-diff --git a/Documentation/RelNotes/2.24.0.txt b/Documentation/RelNotes/2.24.0.txt
-index e123d2daa6..ff48d8582c 100644
---- a/Documentation/RelNotes/2.24.0.txt
-+++ b/Documentation/RelNotes/2.24.0.txt
-@@ -11,6 +11,9 @@ Backward compatibility note
- 
- UI, Workflows & Features
- 
-+ * We now have an active interim maintainer for the Git-Gui part of
-+   the system.  Praise and thank Pratyush Yadav for volunteering.
-+
-  * The command line parser learned "--end-of-options" notation; the
-    standard convention for scripters to have hardcoded set of options
-    first on the command line, and force the command to treat end-user
-@@ -28,6 +31,21 @@ UI, Workflows & Features
-  * Device-tree files learned their own userdiff patterns.
-    (merge 3c81760bc6 sb/userdiff-dts later to maint).
- 
-+ * "git rebase --rebase-merges" learned to drive different merge
-+   strategies and pass strategy specific options to them.
-+
-+ * A new "pre-merge-commit" hook has been introduced.
-+
-+ * Command line completion updates for "git -c var.name=val" have been
-+   added.
-+
-+ * The lazy clone machinery has been taught that there can be more
-+   than one promisor remote and consult them in order when downloading
-+   missing objects on demand.
-+
-+ * The list-objects-filter API (used to create a sparse/lazy clone)
-+   learned to take a combined filter specification.
-+
- 
- Performance, Internal Implementation, Development Support etc.
- 
-@@ -39,6 +57,20 @@ Performance, Internal Implementation, Development Support etc.
- 
-  * Further clean-up of the initialization code.
- 
-+ * xmalloc() used to have a mechanism to ditch memory and address
-+   space resources as the last resort upon seeing an allocation
-+   failure from the underlying malloc(), which made the code complex
-+   and thread-unsafe with dubious benefit, as major memory resource
-+   users already do limit their uses with various other mechanisms.
-+   It has been simplified away.
-+
-+ * Unnecessary full-tree diff in "git log -L" machinery has been
-+   optimized away.
-+
-+ * The http transport lacked some optimization the native transports
-+   learned to avoid unnecessary ref advertisement, which has been
-+   corrected.
-+
- 
- Fixes since v2.23
- -----------------
-@@ -99,6 +131,10 @@ Fixes since v2.23
-    subsequent steps.
-    (merge 2c65d90f75 bc/reread-attributes-during-rebase later to maint).
- 
-+ * Tell cURL library to use the same malloc() implementation, with the
-+   xmalloc() wrapper, as the rest of the system, for consistency.
-+   (merge 93b980e58f cb/curl-use-xmalloc later to maint).
-+
-  * Other code cleanup, docfix, build fix, etc.
-    (merge d1387d3895 en/fast-import-merge-doc later to maint).
-    (merge 1c24a54ea4 bm/repository-layout-typofix later to maint).
+You mention "is written", but that is what happens upon a cache
+miss.  Before the code notices a cache miss, it must be checking if
+a cached result is available.  In which odb is it done?  Writing
+that follow the miss should happen to the same one, or the cache is
+not very effective.
+
+Because you would want the cache to be effective, after running "git
+grep --recurse-submodules" from the top-level, when you chdir down
+to the submodule and say "git grep" to dig further, the answer to
+your question is most likely "yes".
+
+> - Considering the following call chain: grep_source_load_driver() >
+>   userdiff_find_by_path() > git_check_attr() > collect_some_attrs() >
+>   prepare_attr_stack() > bootstrap_attr_stack():
+>
+>   * The last function tries to read the attributes from the
+>     .gitattributes and .git/info/attributes files of the_repository.
+>     However, for paths inside the submodule, shouldn't it try to read
+>     these files from the submodule?
+
+Yes, I think all of those would have worked correctly if we forked a
+separate "git grep" inside submodule repository, but in the rush to
+"do everything in process", many things like these are not done
+correctly.  As there is only one attribute cache IIUC, invalidating
+the whole cache for the top-level and replacing it with the one for
+a submodule, every time we cross the module boundary, would probably
+have a negative effect on the performance, and I am not sure what
+would happen if you run more than one threads working in different
+repositories (i.e. top-level and submodules).
+
+>   * This function will also call: read_attr() > read_attr_from_index() >
+>     read_blob_data_from_index() which might, in turn, call
+>     read_object_file(). Shouldn't we pass the subrepo to it so that it
+>     can call repo_read_object_file()? (Again, for paths inside the
+>     submodule, read_object_file() won't be able to find the object as
+>     we won't be adding to alternates anymore.)
+
+Ditto.
+
+Thanks.
