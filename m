@@ -2,107 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5868E1F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 19:22:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A00841F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 19:23:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729553AbfIRTW2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 15:22:28 -0400
-Received: from relay11.mail.gandi.net ([217.70.178.231]:53583 "EHLO
-        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726794AbfIRTW1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 15:22:27 -0400
-Received: from localhost (unknown [1.186.12.28])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay11.mail.gandi.net (Postfix) with ESMTPSA id EE6FA100005;
-        Wed, 18 Sep 2019 19:22:24 +0000 (UTC)
-Date:   Thu, 19 Sep 2019 00:52:22 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: git-gui: missing some patches from git?
-Message-ID: <20190918192222.rqn3oqxfeu7bmnp5@yadavpratyush.com>
-References: <CAGr--=KXqFbivuXHPNecb3dBR_hx8QqWoR4pBGXy7uOiT+ESbg@mail.gmail.com>
- <20190918092721.GA76617@archbookpro.localdomain>
- <20190918151404.rqjohdderwxfqtdm@yadavpratyush.com>
- <xmqqblvh5wbr.fsf@gitster-ct.c.googlers.com>
+        id S1730960AbfIRTXZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 15:23:25 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58672 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728896AbfIRTXZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Sep 2019 15:23:25 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8B863740E1;
+        Wed, 18 Sep 2019 15:23:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=n84BuIFzLcPLJoo+xH7oWAV3uXk=; b=rioF2/
+        1l5+hHXaPtNoIf9WUSENRZYgVxxIN1R+S7JAvShuOORPy9jDyoBVUXvLJo8WYoV0
+        QHnPRmxCP6r9gVPbr0c/M1pWCGH7H1Z5r7bnm6gPon0Nimy2rAbaDtMNY4ebMaan
+        1qLnFeVglMFZQUly1xdqYvFZzkRiIqe9H89CY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=p5bR/VPlptRSlcOSMvUN8DTMLa2hyJoZ
+        B6W/JFKjjGCXiZz9PdjFCt2S2ulGKQhSjRcuKV0ajIZc4XT9XXVxdwLsGUuwUyqs
+        GMu/cSQiHHbo35wi6TVHSb+WYi7IQ4BVslTCjvu8pOIE4IOLXS455HXExmtW9GLO
+        GpwjXhyVtXQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 83D20740DF;
+        Wed, 18 Sep 2019 15:23:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B09C8740DA;
+        Wed, 18 Sep 2019 15:23:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
+Subject: Re: [GIT PULL] git-gui pull request
+References: <20190917201334.hfbvuisdwkwgvwg5@yadavpratyush.com>
+        <20190917205051.GA63601@dentonliu-ltm.internal.salesforce.com>
+Date:   Wed, 18 Sep 2019 12:23:18 -0700
+In-Reply-To: <20190917205051.GA63601@dentonliu-ltm.internal.salesforce.com>
+        (Denton Liu's message of "Tue, 17 Sep 2019 13:50:51 -0700")
+Message-ID: <xmqq7e655ryx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqblvh5wbr.fsf@gitster-ct.c.googlers.com>
-User-Agent: NeoMutt/20180716
+Content-Type: text/plain
+X-Pobox-Relay-ID: C6635EB8-DA49-11E9-B710-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 18/09/19 10:49AM, Junio C Hamano wrote:
-> Pratyush Yadav <me@yadavpratyush.com> writes:
-> 
-> > Assuming I have git.git cloned in ../git (relative to git-gui.git), I 
-> > ran:
-> >
-> >   git pull -Xsubtree=git-gui ../git $branches
-> >
-> > instead of:
-> >
-> >   git merge $branches
-> >
-> > because git-gui's tree doesn't have those commits and branches yet, so 
-> > we can't merge straight away. This seems to have worked, but I thought 
-> > I'd mention it in case it would cause some subtle problems.
-> 
-> I am not sure what your $branches above are referring to, but if you
+Denton Liu <liu.denton@gmail.com> writes:
 
-The $branches is from Denton's script (its in his email that I replied 
-to) that lists all the branches merged into git/git-gui that are not in 
-git-gui. So it should essentially be all the branches not in my tree 
-that should be.
-
-> run "git log" in the resulting git-gui repository and see any of the
-> commits that are about git and not git-gui, then it is not a subtle
-> but a grave problem.  The reason why git-gui and gitk are separate
-> projects is because they do not want to contaminate their history
-> with stuff that are not related to them (e.g. changes to "git
-> fast-export").
-
-No, I was only pulling in merges related to git-gui into my tree. I do 
-not intend to pull in any other changes.
- 
-> Taking one of the commits Denton found as an example:
-> 
-> >> 	js/misc-git-gui-stuff: 76756d67061076c046973bff2089ad49f5dc2eb6
-> 
-> (by the way, this can also be found by running
-> 
-> 	git log --first-parent --min-parents=2 master -- git-gui
-
-Yes, that is what I was doing. Denton's script just made the tedious 
-task of finding all those out easier.
-
-> in git itself; 02a5f25d956be187bc0 merged it in as its second
-> parent.  The second parents of these merges you would find are
-> candidates---you may already have some, and you may need to merge
-> others to your tree; there may be some that are direct updates to
-> git-gui/ part of my tree (which shouldn't have been done but
-> mistakes happen).
+> Hi Pratyush,
 >
-> You should be able to merge this (and all other git-gui topics
-> already in my tree Denton pointed out) to your 'master'.  If you
-> then make a trial merge of the result back into my tree with "git
-> merge -Xsubtree=git-gui", it should result in "already up to date",
-> i.e. a noop merge.
+> Since you're the maintainer now, you should submit a patch to
+> Documentation/SubmittingPatches to change
+>
+> 	- `git-gui/` comes from git-gui project, maintained by Pat Thoyts:
+>
+> 		git://repo.or.cz/git-gui.git
+>
+> to have your own information.
 
-Well, technically it won't be a noop merge because my master has some 
-changes that haven't been pulled by you yet, but I get the point. 
-Thanks. I'll test this out.
+There also is MaintNotes on the todo branch, which I'll take care
+of.
 
--- 
-Regards,
-Pratyush Yadav
+FWIW, the following update to the draft release notes will be part
+of what I'll push out, together with the "Third batch" update to the
+master.
+
+diff --git a/Documentation/RelNotes/2.24.0.txt b/Documentation/RelNotes/2.24.0.txt
+index e123d2daa6..ff48d8582c 100644
+--- a/Documentation/RelNotes/2.24.0.txt
++++ b/Documentation/RelNotes/2.24.0.txt
+@@ -11,6 +11,9 @@ Backward compatibility note
+ 
+ UI, Workflows & Features
+ 
++ * We now have an active interim maintainer for the Git-Gui part of
++   the system.  Praise and thank Pratyush Yadav for volunteering.
++
+  * The command line parser learned "--end-of-options" notation; the
+    standard convention for scripters to have hardcoded set of options
+    first on the command line, and force the command to treat end-user
+@@ -28,6 +31,21 @@ UI, Workflows & Features
+  * Device-tree files learned their own userdiff patterns.
+    (merge 3c81760bc6 sb/userdiff-dts later to maint).
+ 
++ * "git rebase --rebase-merges" learned to drive different merge
++   strategies and pass strategy specific options to them.
++
++ * A new "pre-merge-commit" hook has been introduced.
++
++ * Command line completion updates for "git -c var.name=val" have been
++   added.
++
++ * The lazy clone machinery has been taught that there can be more
++   than one promisor remote and consult them in order when downloading
++   missing objects on demand.
++
++ * The list-objects-filter API (used to create a sparse/lazy clone)
++   learned to take a combined filter specification.
++
+ 
+ Performance, Internal Implementation, Development Support etc.
+ 
+@@ -39,6 +57,20 @@ Performance, Internal Implementation, Development Support etc.
+ 
+  * Further clean-up of the initialization code.
+ 
++ * xmalloc() used to have a mechanism to ditch memory and address
++   space resources as the last resort upon seeing an allocation
++   failure from the underlying malloc(), which made the code complex
++   and thread-unsafe with dubious benefit, as major memory resource
++   users already do limit their uses with various other mechanisms.
++   It has been simplified away.
++
++ * Unnecessary full-tree diff in "git log -L" machinery has been
++   optimized away.
++
++ * The http transport lacked some optimization the native transports
++   learned to avoid unnecessary ref advertisement, which has been
++   corrected.
++
+ 
+ Fixes since v2.23
+ -----------------
+@@ -99,6 +131,10 @@ Fixes since v2.23
+    subsequent steps.
+    (merge 2c65d90f75 bc/reread-attributes-during-rebase later to maint).
+ 
++ * Tell cURL library to use the same malloc() implementation, with the
++   xmalloc() wrapper, as the rest of the system, for consistency.
++   (merge 93b980e58f cb/curl-use-xmalloc later to maint).
++
+  * Other code cleanup, docfix, build fix, etc.
+    (merge d1387d3895 en/fast-import-merge-doc later to maint).
+    (merge 1c24a54ea4 bm/repository-layout-typofix later to maint).
