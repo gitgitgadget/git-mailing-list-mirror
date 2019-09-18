@@ -2,78 +2,212 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77F881F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 07:05:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E8871F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 08:33:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728097AbfIRHFZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 03:05:25 -0400
-Received: from mail-lj1-f180.google.com ([209.85.208.180]:44418 "EHLO
-        mail-lj1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725834AbfIRHFZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 03:05:25 -0400
-Received: by mail-lj1-f180.google.com with SMTP id m13so6005661ljj.11
-        for <git@vger.kernel.org>; Wed, 18 Sep 2019 00:05:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=yIJVP6Nhv5pZQIM4MfCLixV7S0RlSAiMtG9fY3sQ7aE=;
-        b=QFOXMJZ8Ue9fB4KF1eDh8TuTYaffMumpXiDLvP71V1Y/ZpNyI6UtMjZp4XPrHSCi8x
-         XeeBavExJvO+jd3QgraJf/X1lU8yvYv5d7/gHT+jYpQiXJGpyupDOY5OGu1D3AALOaC9
-         3EctkbcdeMqhWIGyeLAFEdSmjjunOb9uuufy8CUR8dJXIY6SdmbTxuzZdDlQ5zev9vVp
-         CzmPFM9unlM4g/p4bdHixA7/Unz94f+BInPiYQ2bcGIspXXUqogUe6iZuAC7D1nYllEt
-         E5CIqUK4F9zdaBeaIyxl7u5CSM0GdbnRYkQeqyDzrXEfq5yY0YxfrBZYnvUNix0TtONL
-         5ksA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=yIJVP6Nhv5pZQIM4MfCLixV7S0RlSAiMtG9fY3sQ7aE=;
-        b=L57Bb+NZpe7z2djZOXPJvM1k2ZKudgCo5wWpXMybBeWYe7lTL6U33OQi1IGSUAbTp3
-         hd6x98bxf82OjuAM6KsKGZIhoKTtV+nqj+9UMzSFJ3FeUmCm04Ioy1UK0ZAOETz/+j3G
-         9bIMwJwhtMj+0sha6AjqstUbuj3A2wFqW8Rkq0k6tlFqOIxfGoMH8UJ2M1PzExhYvWhY
-         ujTXrI6S0AlmLE6R0yTItThWZ5XYcvKD1lEY5GOoMOpEVNJriP9MUoESMrrkB/ZJROjK
-         GTP4DnaCEQgKjs4KTVJ+JytVcm0Ftz/SIIDvzFtOCWW5UXAbiHfUnWV+4rpUsk86QiTI
-         KHIA==
-X-Gm-Message-State: APjAAAWyI4cPrwLA0qlzes5Y7l6EKetAWYzK/PzOoRblsKzJECYM9yib
-        9xgHAqwrZiF8E60PlRUCwrkhQXwpVUKreGMErpcH6rw3C24=
-X-Google-Smtp-Source: APXvYqxUpCeZi02Iuu9S+YFrVqV+lL+zqJqZNMn4gZD6XR2lmU9g8vlEX1pS4hpJSUa2u4oN4tFJV4U0pu4BqhsNbQs=
-X-Received: by 2002:a2e:9c16:: with SMTP id s22mr1278324lji.70.1568790323134;
- Wed, 18 Sep 2019 00:05:23 -0700 (PDT)
+        id S1730440AbfIRId0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 04:33:26 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:45964
+        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730405AbfIRIdY (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 18 Sep 2019 04:33:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1568795602;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=W7OKBwP1Bf/O2GP1JI6E7D4jM1bYq9fjuRnly9JQT7Q=;
+        b=Xb4zPiFhd/Vwx5cXLaMIrWR/9fwndnEllu9NfAkYFyac8t/5Ip/cNoAOJZ5o2GlG
+        scf4xh0u9zo2aonhxnfyUGkJR2vZqIixUNdDw9lt+geu7pEDRAnum5WosmewmxL4H9q
+        9LZyha9Djepjvp09lkjyyUCHJ85vc+GEzqJ0Ro9A=
+From:   =?UTF-8?Q?Herv=C3=A9_Beraud?= <herveberaud.pro@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <0102016d43812db5-722fe301-48f7-4b46-93e4-67dc2992629a-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102016d3f74d202-d5b32dd4-0098-4ad0-8ac7-5fde254f7796-000000@eu-west-1.amazonses.com>
+References: <0102016d3f74d202-d5b32dd4-0098-4ad0-8ac7-5fde254f7796-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v2] hg-to-git: make it compatible with both python3 and
+ python2
 MIME-Version: 1.0
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-Date:   Wed, 18 Sep 2019 09:02:37 +0200
-Message-ID: <CAGr--=KXqFbivuXHPNecb3dBR_hx8QqWoR4pBGXy7uOiT+ESbg@mail.gmail.com>
-Subject: git-gui: missing some patches from git?
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date:   Wed, 18 Sep 2019 08:33:22 +0000
+X-SES-Outgoing: 2019.09.18-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pratyush,
+Python 2 is EOL at the end of 2019, many distros
+and systems now come with python 3 is the default version.
 
+These changes introduce a syntaxe compatible with the both versions of
+python and so with the nearly future python standard.
 
-I was comparing your git-gui repo[1] with the source code of
-git/git-gui[2]. There seems to be a couple of things missing.
+Introduced changes:
+-------------------
 
-For example, I created a patch back in March 2018[3]. Junio pulled it
-so the changes are really there in git/git-gui/git-gui.sh (see this[4]
-line). This was while there was no git-gui maintainer. I guess the
-change never got merged to git-gui, but directly to git.
+Rewriting features that are no longer supported (or recommended)
+in Python 3 in the hg-to-git script.py so that it can be used with both
+Python 2 and 3, namely:
 
-Not sure what you should to about it, I just wanted to let you know.
+- print is not a statement; use print() function instead.
+- dict.has_key(key) is no more; use "key in dict" instead.
 
-[1] https://github.com/prati0100/git-gui
-[2] https://github.com/gitster/git/tree/master/git-gui
-[3] https://public-inbox.org/git/20180302100148.23899-1-birgersp@gmail.com/
-[4] https://github.com/gitster/git/blob/master/git-gui/git-gui.sh#L3885
+Signed-off-by: Herv=C3=A9 Beraud <herveberaud.pro@gmail.com>
+---
+ contrib/hg-to-git/hg-to-git.py | 50 +++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
+diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.p=
+y
+index de3f81667ed97..bb2822d4a5e17 100755
+--- a/contrib/hg-to-git/hg-to-git.py
++++ b/contrib/hg-to-git/hg-to-git.py
+@@ -42,7 +42,7 @@
+=20
+ def usage():
+=20
+-        print """\
++        print("""\
+ %s: [OPTIONS] <hgprj>
+=20
+ options:
+@@ -54,7 +54,7 @@ def usage():
+=20
+ required:
+     hgprj:  name of the HG project to import (directory)
+-""" % sys.argv[0]
++""" % sys.argv[0])
+=20
+ #-------------------------------------------------------------------------=
+-----
+=20
+@@ -104,22 +104,22 @@ def getgitenv(user, date):
+ if state:
+     if os.path.exists(state):
+         if verbose:
+-            print 'State does exist, reading'
++            print('State does exist, reading')
+         f =3D open(state, 'r')
+         hgvers =3D pickle.load(f)
+     else:
+-        print 'State does not exist, first run'
++        print('State does not exist, first run')
+=20
+ sock =3D os.popen('hg tip --template "{rev}"')
+ tip =3D sock.read()
+ if sock.close():
+     sys.exit(1)
+ if verbose:
+-    print 'tip is', tip
++    print('tip is', tip)
+=20
+ # Calculate the branches
+ if verbose:
+-    print 'analysing the branches...'
++    print('analysing the branches...')
+ hgchildren["0"] =3D ()
+ hgparents["0"] =3D (None, None)
+ hgbranch["0"] =3D "master"
+@@ -154,15 +154,15 @@ def getgitenv(user, date):
+         else:
+             hgbranch[str(cset)] =3D "branch-" + str(cset)
+=20
+-if not hgvers.has_key("0"):
+-    print 'creating repository'
++if "0" not in hgvers:
++    print('creating repository')
+     os.system('git init')
+=20
+ # loop through every hg changeset
+ for cset in range(int(tip) + 1):
+=20
+     # incremental, already seen
+-    if hgvers.has_key(str(cset)):
++    if str(cset) in hgvers:
+         continue
+     hgnewcsets +=3D 1
+=20
+@@ -180,27 +180,27 @@ def getgitenv(user, date):
+     os.write(fdcomment, csetcomment)
+     os.close(fdcomment)
+=20
+-    print '-----------------------------------------'
+-    print 'cset:', cset
+-    print 'branch:', hgbranch[str(cset)]
+-    print 'user:', user
+-    print 'date:', date
+-    print 'comment:', csetcomment
++    print('-----------------------------------------')
++    print('cset:', cset)
++    print('branch:', hgbranch[str(cset)])
++    print('user:', user)
++    print('date:', date)
++    print('comment:', csetcomment)
+     if parent:
+-=09print 'parent:', parent
++=09print('parent:', parent)
+     if mparent:
+-        print 'mparent:', mparent
++        print('mparent:', mparent)
+     if tag:
+-        print 'tag:', tag
+-    print '-----------------------------------------'
++        print('tag:', tag)
++    print('-----------------------------------------')
+=20
+     # checkout the parent if necessary
+     if cset !=3D 0:
+         if hgbranch[str(cset)] =3D=3D "branch-" + str(cset):
+-            print 'creating new branch', hgbranch[str(cset)]
++            print('creating new branch', hgbranch[str(cset)])
+             os.system('git checkout -b %s %s' % (hgbranch[str(cset)], hgve=
+rs[parent]))
+         else:
+-            print 'checking out branch', hgbranch[str(cset)]
++            print('checking out branch', hgbranch[str(cset)])
+             os.system('git checkout %s' % hgbranch[str(cset)])
+=20
+     # merge
+@@ -209,7 +209,7 @@ def getgitenv(user, date):
+             otherbranch =3D hgbranch[mparent]
+         else:
+             otherbranch =3D hgbranch[parent]
+-        print 'merging', otherbranch, 'into', hgbranch[str(cset)]
++        print('merging', otherbranch, 'into', hgbranch[str(cset)])
+         os.system(getgitenv(user, date) + 'git merge --no-commit -s ours "=
+" %s %s' % (hgbranch[str(cset)], otherbranch))
+=20
+     # remove everything except .git and .hg directories
+@@ -233,12 +233,12 @@ def getgitenv(user, date):
+=20
+     # delete branch if not used anymore...
+     if mparent and len(hgchildren[str(cset)]):
+-        print "Deleting unused branch:", otherbranch
++        print("Deleting unused branch:", otherbranch)
+         os.system('git branch -d %s' % otherbranch)
+=20
+     # retrieve and record the version
+     vvv =3D os.popen('git show --quiet --pretty=3Dformat:%H').read()
+-    print 'record', cset, '->', vvv
++    print('record', cset, '->', vvv)
+     hgvers[str(cset)] =3D vvv
+=20
+ if hgnewcsets >=3D opt_nrepack and opt_nrepack !=3D -1:
+@@ -247,7 +247,7 @@ def getgitenv(user, date):
+ # write the state for incrementals
+ if state:
+     if verbose:
+-        print 'Writing state'
++        print('Writing state')
+     f =3D open(state, 'w')
+     pickle.dump(hgvers, f)
+=20
 
-Birger
+--
+https://github.com/git/git/pull/458
