@@ -2,263 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2C401F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 17:21:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 776B41F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 17:23:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730924AbfIRRVf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 13:21:35 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57376 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729669AbfIRRVe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 13:21:34 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 03C5B72CF8;
-        Wed, 18 Sep 2019 13:21:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Z1XFcYr/Jxjq
-        TcUAPkzhQoksju8=; b=ZzILy9TA+OtlhXtyy8w8gFf7L7sdc0ComsTpKlulgjc3
-        zmtJFY6YsTyZOEUd2IvbrY/+HYLuMVLs02OZNKQizWRpx0gcFGUaAz1V0iTDIk76
-        YZrisbakZiE15tzyMaSYUwQBq5nZYOwphhQggrQ8Z9nsDwhG8BMYopbWjLlClEQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=MsWHaQ
-        raaNEEZNsqkSvAzYKhTKdldJ4ktSBaNQdXhcL14c0yRYgkOGLlYOwbU3n9fxukdI
-        YeT4pQmHTNBWWxPVWCyVonBqCBOVSUBstwNkQAEBj5ndf2aAXWlr/QTQMpUZzmwk
-        WypPGgDrIjRDLPF5ZIHAElCGnA1kG6WgiN0TA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id F111772CF7;
-        Wed, 18 Sep 2019 13:21:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 010B972CF2;
-        Wed, 18 Sep 2019 13:21:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Herv=C3=A9?= Beraud <herveberaud.pro@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] hg-to-git: make it compatible with both python3 and python2
-References: <0102016d3f74d202-d5b32dd4-0098-4ad0-8ac7-5fde254f7796-000000@eu-west-1.amazonses.com>
-        <0102016d43812db5-722fe301-48f7-4b46-93e4-67dc2992629a-000000@eu-west-1.amazonses.com>
-Date:   Wed, 18 Sep 2019 10:21:20 -0700
-In-Reply-To: <0102016d43812db5-722fe301-48f7-4b46-93e4-67dc2992629a-000000@eu-west-1.amazonses.com>
-        (=?utf-8?Q?=22Herv=C3=A9?= Beraud"'s message of "Wed, 18 Sep 2019 08:33:22
- +0000")
-Message-ID: <xmqqsgot5xm7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1729745AbfIRRXw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 13:23:52 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:41543 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728872AbfIRRXw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Sep 2019 13:23:52 -0400
+Received: by mail-qk1-f196.google.com with SMTP id p10so239285qkg.8
+        for <git@vger.kernel.org>; Wed, 18 Sep 2019 10:23:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mOH7802mfI2burxCXgTdcsEk9jSf/rCWbk8xB/8o+lY=;
+        b=De2jfJxTUf2L00S6FkTqeFCcBoTIgL6IX3eCLOympd/enU9EEwrEUJg0yzwuOuOUiM
+         Csj3gCkyPxAw0ZsaD6ip4Slyf6T5VXjfImt6+KtPsh8+SzEAvXL9kNHJM4Py0mVF3Fl3
+         TSDCfJWljFWBYgbJxLNDjIJa/QpLeNyxRji7bhMRtELpowFC3IwpK/lRp8SdCucEJ4Zz
+         kbw5jQJigkApuEHZHsXQq0cyxEZC4Pz35IfNu7+MTm2Q50ZGYRxEPfrX0P6EPslRxbRe
+         IkrjZixR/sYsf7IEam7GZL96GJZB2kQLpOzBnjs5x62a4+2nsO6VUXsk1kKXtugRwiln
+         bgZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=mOH7802mfI2burxCXgTdcsEk9jSf/rCWbk8xB/8o+lY=;
+        b=hoZJGQsZI9U/r41aSt3cXlEJoaf8m9//4dzG8FKgoQV5kM2l7DBMIq88Ori7BRenv5
+         Tt9e5ARKIN5f1il45kC0lzftuSk1RiO4HFQaaLlKgVXw9phmdLfaCCv51ZbR1arQDSEB
+         8ialRSiejeu4iFb/Izn7qE5fTZ8u/9937nsI1zYJI1zfzZ64yejifIhCmuc9DTWgdhOt
+         CLjikBiskSn1HiHidOz7wRZTkN679NuORjIu6+u85P14hvJ1GPdNisGuKFI5bbtGzOKK
+         5nGcn1Hbov5flUGlFJPWZ5pE/qBEi0Q775ZXvXhTMfjqJ5d0I8u4YtnwN9lFaajsW27N
+         +9Vg==
+X-Gm-Message-State: APjAAAUCM7fxhGwXlJDCMlKH7phzju9DxeoETvNzLXjSrXa6OI4kz9TP
+        O5m0PQSE4lcTiiuqWViw34c=
+X-Google-Smtp-Source: APXvYqy86fqQnv2mRHZDdb/YQ/ChJ2tuHZkPQBw96GQG8HLyHcMFvxgEAzqzFzJy+Htv0qGrZH0jcQ==
+X-Received: by 2002:a37:2e01:: with SMTP id u1mr5214469qkh.455.1568827431323;
+        Wed, 18 Sep 2019 10:23:51 -0700 (PDT)
+Received: from [10.0.1.19] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id w11sm3683292qtj.10.2019.09.18.10.23.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Sep 2019 10:23:50 -0700 (PDT)
+Subject: Re: [PATCH 4/9] sparse-checkout: 'add' subcommand
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.316.git.gitgitgadget@gmail.com>
+ <0f095e85d5bf29346bdc5bf1707bb51eaf2202ae.1566313865.git.gitgitgadget@gmail.com>
+ <CABPp-BEhc00g3CwKg13wDrtFHM-sw9tSy75UEbTvugKkdwTyeA@mail.gmail.com>
+ <52c5b7cc-eab1-a74d-2abb-be8f125df9bf@gmail.com>
+ <CABPp-BGcPkbLfDQDBMrG+5PK9o67kq62c1TPiEwLpwZQXcZTCg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d0bb29ef-6702-06b6-2369-a49817a0faa1@gmail.com>
+Date:   Wed, 18 Sep 2019 13:23:49 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
+ Thunderbird/69.0
 MIME-Version: 1.0
+In-Reply-To: <CABPp-BGcPkbLfDQDBMrG+5PK9o67kq62c1TPiEwLpwZQXcZTCg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: BCAFF7B6-DA38-11E9-9180-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Herv=C3=A9 Beraud <herveberaud.pro@gmail.com> writes:
+On 9/18/2019 10:56 AM, Elijah Newren wrote:
+> On Wed, Sep 18, 2019 at 6:55 AM Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> On 8/23/2019 7:30 PM, Elijah Newren wrote:
+>>> On Tue, Aug 20, 2019 at 8:12 AM Derrick Stolee via GitGitGadget
+>>> <gitgitgadget@gmail.com> wrote:
+>>>>
+> ...
+>>>> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+>>>> index b7d5f15830..499bd8d6d0 100755
+>>>> --- a/t/t1091-sparse-checkout-builtin.sh
+>>>> +++ b/t/t1091-sparse-checkout-builtin.sh
+>>>> @@ -100,4 +100,24 @@ test_expect_success 'clone --sparse' '
+>>>>         test_cmp expect dir
+>>>>  '
+>>>>
+>>>> +test_expect_success 'add to existing sparse-checkout' '
+>>>> +       echo "/folder2/*" | git -C repo sparse-checkout add &&
+>>>
+>>> I've always been using '/folder2/' in sparse-checkout, without the
+>>> trailing asterisk.  That seems more friendly for cone mode too.  Are
+>>> there benefits to keeping the trailing asterisk?
+>>
+>> I think I've been seeing issues with pattern matching on Windows without
+>> the trailing asterisk. I'm currently double-checking to make sure this
+>> is important or not.
+> 
+> Can you try with the en/clean-nested-with-ignored topic in pu to see
+> if that fixes those issues?
 
-> Python 2 is EOL at the end of 2019, many distros
-> and systems now come with python 3 is the default version.
+Merging with that branch was very difficult. There is a lot of unshared
+history between our branches.
 
-Grammo.  s/is the/as their/ or something like that to fix.
+Instead, I tried once more to dig into the strange issue on Windows, and
+it appears it is an issue with how the Git for Windows SDK modifies shell
+arguments with a "/".
 
-> These changes introduce a syntaxe compatible with the both versions of
-> python and so with the nearly future python standard.
->
-> Introduced changes:
-> -------------------
+When I ran `git sparse-checkout set "/folder1/*"` it worked.
 
-Let's drop the above 5 lines.  A canonical form of log message for
-us is to begin with a brief background to make readers realize what
-is lacking in the current system (if needed -- and you've done a
-good job to make the readers realize that we need to make sure we
-work with Py3).  With readers' minds prepared to accept the need for
-a change, then you give orders to the codebase to "be like so" in
-imperative mood.  E.g.
+When I run `git sparse-checkout set "/folder1/"`, the SDK completes that
+argument to "C:/git-sdk-64/folder1/" on my machine (something more
+complicated on the build machine). It's not actually a bug in the Git
+code, but something in the build and test environment.
 
-    	Rewrite features used in hg-to-git that are no longer
-    	supported in Python 3, in such a way that an updated code
-    	can still be usable with Python 2.
+I can get around it by testing the builtin without using these cone-like
+patterns. When using `git sparse-checkout set folder1 folder2` in cone
+mode, Git does the right thing.
 
-	- print is not ...
-	- dict.has_key(key) is no more; ...
+Sorry for the noise here.
 
-You seem to have dropped the change from map() to list comprehention
-in this iteration.  I am not into Python deeply enough to care
-either way myself, and the original form with map() seems to work
-with Python3 (evaluating it seems to result in a map object, instead
-of a list, to lazily yield the values, but we are not printing the
-result of map() directly with print(), so it should be OK) so from
-my point of view, the fewer things we have to defend/justify, the
-better ;-)
+-Stolee
 
-Will queue.  Thanks.
-
-> Rewriting features that are no longer supported (or recommended)
-> in Python 3 in the hg-to-git script.py so that it can be used with both
-> Python 2 and 3, namely:
->
-> - print is not a statement; use print() function instead.
-> - dict.has_key(key) is no more; use "key in dict" instead.
->
-> Signed-off-by: Herv=C3=A9 Beraud <herveberaud.pro@gmail.com>
-> ---
->  contrib/hg-to-git/hg-to-git.py | 50 +++++++++++++++++-----------------
->  1 file changed, 25 insertions(+), 25 deletions(-)
->
-> diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-g=
-it.py
-> index de3f81667ed97..bb2822d4a5e17 100755
-> --- a/contrib/hg-to-git/hg-to-git.py
-> +++ b/contrib/hg-to-git/hg-to-git.py
-> @@ -42,7 +42,7 @@
-> =20
->  def usage():
-> =20
-> -        print """\
-> +        print("""\
->  %s: [OPTIONS] <hgprj>
-> =20
->  options:
-> @@ -54,7 +54,7 @@ def usage():
-> =20
->  required:
->      hgprj:  name of the HG project to import (directory)
-> -""" % sys.argv[0]
-> +""" % sys.argv[0])
-> =20
->  #---------------------------------------------------------------------=
----------
-> =20
-> @@ -104,22 +104,22 @@ def getgitenv(user, date):
->  if state:
->      if os.path.exists(state):
->          if verbose:
-> -            print 'State does exist, reading'
-> +            print('State does exist, reading')
->          f =3D open(state, 'r')
->          hgvers =3D pickle.load(f)
->      else:
-> -        print 'State does not exist, first run'
-> +        print('State does not exist, first run')
-> =20
->  sock =3D os.popen('hg tip --template "{rev}"')
->  tip =3D sock.read()
->  if sock.close():
->      sys.exit(1)
->  if verbose:
-> -    print 'tip is', tip
-> +    print('tip is', tip)
-> =20
->  # Calculate the branches
->  if verbose:
-> -    print 'analysing the branches...'
-> +    print('analysing the branches...')
->  hgchildren["0"] =3D ()
->  hgparents["0"] =3D (None, None)
->  hgbranch["0"] =3D "master"
-> @@ -154,15 +154,15 @@ def getgitenv(user, date):
->          else:
->              hgbranch[str(cset)] =3D "branch-" + str(cset)
-> =20
-> -if not hgvers.has_key("0"):
-> -    print 'creating repository'
-> +if "0" not in hgvers:
-> +    print('creating repository')
->      os.system('git init')
-> =20
->  # loop through every hg changeset
->  for cset in range(int(tip) + 1):
-> =20
->      # incremental, already seen
-> -    if hgvers.has_key(str(cset)):
-> +    if str(cset) in hgvers:
->          continue
->      hgnewcsets +=3D 1
-> =20
-> @@ -180,27 +180,27 @@ def getgitenv(user, date):
->      os.write(fdcomment, csetcomment)
->      os.close(fdcomment)
-> =20
-> -    print '-----------------------------------------'
-> -    print 'cset:', cset
-> -    print 'branch:', hgbranch[str(cset)]
-> -    print 'user:', user
-> -    print 'date:', date
-> -    print 'comment:', csetcomment
-> +    print('-----------------------------------------')
-> +    print('cset:', cset)
-> +    print('branch:', hgbranch[str(cset)])
-> +    print('user:', user)
-> +    print('date:', date)
-> +    print('comment:', csetcomment)
->      if parent:
-> -	print 'parent:', parent
-> +	print('parent:', parent)
->      if mparent:
-> -        print 'mparent:', mparent
-> +        print('mparent:', mparent)
->      if tag:
-> -        print 'tag:', tag
-> -    print '-----------------------------------------'
-> +        print('tag:', tag)
-> +    print('-----------------------------------------')
-> =20
->      # checkout the parent if necessary
->      if cset !=3D 0:
->          if hgbranch[str(cset)] =3D=3D "branch-" + str(cset):
-> -            print 'creating new branch', hgbranch[str(cset)]
-> +            print('creating new branch', hgbranch[str(cset)])
->              os.system('git checkout -b %s %s' % (hgbranch[str(cset)], =
-hgvers[parent]))
->          else:
-> -            print 'checking out branch', hgbranch[str(cset)]
-> +            print('checking out branch', hgbranch[str(cset)])
->              os.system('git checkout %s' % hgbranch[str(cset)])
-> =20
->      # merge
-> @@ -209,7 +209,7 @@ def getgitenv(user, date):
->              otherbranch =3D hgbranch[mparent]
->          else:
->              otherbranch =3D hgbranch[parent]
-> -        print 'merging', otherbranch, 'into', hgbranch[str(cset)]
-> +        print('merging', otherbranch, 'into', hgbranch[str(cset)])
->          os.system(getgitenv(user, date) + 'git merge --no-commit -s ou=
-rs "" %s %s' % (hgbranch[str(cset)], otherbranch))
-> =20
->      # remove everything except .git and .hg directories
-> @@ -233,12 +233,12 @@ def getgitenv(user, date):
-> =20
->      # delete branch if not used anymore...
->      if mparent and len(hgchildren[str(cset)]):
-> -        print "Deleting unused branch:", otherbranch
-> +        print("Deleting unused branch:", otherbranch)
->          os.system('git branch -d %s' % otherbranch)
-> =20
->      # retrieve and record the version
->      vvv =3D os.popen('git show --quiet --pretty=3Dformat:%H').read()
-> -    print 'record', cset, '->', vvv
-> +    print('record', cset, '->', vvv)
->      hgvers[str(cset)] =3D vvv
-> =20
->  if hgnewcsets >=3D opt_nrepack and opt_nrepack !=3D -1:
-> @@ -247,7 +247,7 @@ def getgitenv(user, date):
->  # write the state for incrementals
->  if state:
->      if verbose:
-> -        print 'Writing state'
-> +        print('Writing state')
->      f =3D open(state, 'w')
->      pickle.dump(hgvers, f)
-> =20
->
-> --
-> https://github.com/git/git/pull/458
