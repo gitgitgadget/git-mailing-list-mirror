@@ -2,130 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_SBL,
+	URIBL_SBL_A shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 776B41F463
-	for <e@80x24.org>; Wed, 18 Sep 2019 17:23:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 563C91F463
+	for <e@80x24.org>; Wed, 18 Sep 2019 17:28:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729745AbfIRRXw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Sep 2019 13:23:52 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:41543 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728872AbfIRRXw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Sep 2019 13:23:52 -0400
-Received: by mail-qk1-f196.google.com with SMTP id p10so239285qkg.8
-        for <git@vger.kernel.org>; Wed, 18 Sep 2019 10:23:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=mOH7802mfI2burxCXgTdcsEk9jSf/rCWbk8xB/8o+lY=;
-        b=De2jfJxTUf2L00S6FkTqeFCcBoTIgL6IX3eCLOympd/enU9EEwrEUJg0yzwuOuOUiM
-         Csj3gCkyPxAw0ZsaD6ip4Slyf6T5VXjfImt6+KtPsh8+SzEAvXL9kNHJM4Py0mVF3Fl3
-         TSDCfJWljFWBYgbJxLNDjIJa/QpLeNyxRji7bhMRtELpowFC3IwpK/lRp8SdCucEJ4Zz
-         kbw5jQJigkApuEHZHsXQq0cyxEZC4Pz35IfNu7+MTm2Q50ZGYRxEPfrX0P6EPslRxbRe
-         IkrjZixR/sYsf7IEam7GZL96GJZB2kQLpOzBnjs5x62a4+2nsO6VUXsk1kKXtugRwiln
-         bgZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=mOH7802mfI2burxCXgTdcsEk9jSf/rCWbk8xB/8o+lY=;
-        b=hoZJGQsZI9U/r41aSt3cXlEJoaf8m9//4dzG8FKgoQV5kM2l7DBMIq88Ori7BRenv5
-         Tt9e5ARKIN5f1il45kC0lzftuSk1RiO4HFQaaLlKgVXw9phmdLfaCCv51ZbR1arQDSEB
-         8ialRSiejeu4iFb/Izn7qE5fTZ8u/9937nsI1zYJI1zfzZ64yejifIhCmuc9DTWgdhOt
-         CLjikBiskSn1HiHidOz7wRZTkN679NuORjIu6+u85P14hvJ1GPdNisGuKFI5bbtGzOKK
-         5nGcn1Hbov5flUGlFJPWZ5pE/qBEi0Q775ZXvXhTMfjqJ5d0I8u4YtnwN9lFaajsW27N
-         +9Vg==
-X-Gm-Message-State: APjAAAUCM7fxhGwXlJDCMlKH7phzju9DxeoETvNzLXjSrXa6OI4kz9TP
-        O5m0PQSE4lcTiiuqWViw34c=
-X-Google-Smtp-Source: APXvYqy86fqQnv2mRHZDdb/YQ/ChJ2tuHZkPQBw96GQG8HLyHcMFvxgEAzqzFzJy+Htv0qGrZH0jcQ==
-X-Received: by 2002:a37:2e01:: with SMTP id u1mr5214469qkh.455.1568827431323;
-        Wed, 18 Sep 2019 10:23:51 -0700 (PDT)
-Received: from [10.0.1.19] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id w11sm3683292qtj.10.2019.09.18.10.23.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Sep 2019 10:23:50 -0700 (PDT)
-Subject: Re: [PATCH 4/9] sparse-checkout: 'add' subcommand
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.316.git.gitgitgadget@gmail.com>
- <0f095e85d5bf29346bdc5bf1707bb51eaf2202ae.1566313865.git.gitgitgadget@gmail.com>
- <CABPp-BEhc00g3CwKg13wDrtFHM-sw9tSy75UEbTvugKkdwTyeA@mail.gmail.com>
- <52c5b7cc-eab1-a74d-2abb-be8f125df9bf@gmail.com>
- <CABPp-BGcPkbLfDQDBMrG+5PK9o67kq62c1TPiEwLpwZQXcZTCg@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d0bb29ef-6702-06b6-2369-a49817a0faa1@gmail.com>
-Date:   Wed, 18 Sep 2019 13:23:49 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        id S1730956AbfIRR2i (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Sep 2019 13:28:38 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57699 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726799AbfIRR2i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Sep 2019 13:28:38 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 58C6E7FC29;
+        Wed, 18 Sep 2019 13:28:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=uN7kr8EfPvHL
+        G11lqJC7QXvIRnE=; b=WO8FA6FP3V6PO81vV0i7xXPkFvn+L6LfATv7mq+sqOG2
+        rDzYGK2XvxzE+9bD/fVm8EdmefF+Q7/hpXERlx0nE0yVXG1Dp/JekHLc1rbOyndk
+        5xMTGr+k0wrq7Bm5vKcsktUnQC9uGnbcr7PqrKRLCleArp+VSqyV+IHL1jh6tbc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=vDWfS/
+        LWHQb94/3CtTYSIQNM78nuHk5xVcgYwDV/X4Xk++72wnZ+rcGT/nkRHuqHSSzJHK
+        1DlGrONY9AmaAFATO3clfhQOOltLzEJNnYBdyWrZJEhu6al311fWsNfGaEcdZ8F/
+        46fw9U/DIkxHbmEHPilE8spYZ420B4L6k9TA4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5191E7FC28;
+        Wed, 18 Sep 2019 13:28:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7F4C67FC25;
+        Wed, 18 Sep 2019 13:28:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Kamil =?utf-8?Q?Doma=C5=84ski?= <kamil@domanski.co>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] ls-remote: create '--count' option
+References: <20190918001134.20776-1-kamil@domanski.co>
+        <f643547f-54e0-fe4f-d8e5-95445431faf3@kdbg.org>
+Date:   Wed, 18 Sep 2019 10:28:28 -0700
+In-Reply-To: <f643547f-54e0-fe4f-d8e5-95445431faf3@kdbg.org> (Johannes Sixt's
+        message of "Wed, 18 Sep 2019 08:28:11 +0200")
+Message-ID: <xmqqo8zh5xab.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BGcPkbLfDQDBMrG+5PK9o67kq62c1TPiEwLpwZQXcZTCg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID: BB81FF1E-DA39-11E9-83FC-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/18/2019 10:56 AM, Elijah Newren wrote:
-> On Wed, Sep 18, 2019 at 6:55 AM Derrick Stolee <stolee@gmail.com> wrote:
->>
->> On 8/23/2019 7:30 PM, Elijah Newren wrote:
->>> On Tue, Aug 20, 2019 at 8:12 AM Derrick Stolee via GitGitGadget
->>> <gitgitgadget@gmail.com> wrote:
->>>>
-> ...
->>>> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
->>>> index b7d5f15830..499bd8d6d0 100755
->>>> --- a/t/t1091-sparse-checkout-builtin.sh
->>>> +++ b/t/t1091-sparse-checkout-builtin.sh
->>>> @@ -100,4 +100,24 @@ test_expect_success 'clone --sparse' '
->>>>         test_cmp expect dir
->>>>  '
->>>>
->>>> +test_expect_success 'add to existing sparse-checkout' '
->>>> +       echo "/folder2/*" | git -C repo sparse-checkout add &&
->>>
->>> I've always been using '/folder2/' in sparse-checkout, without the
->>> trailing asterisk.  That seems more friendly for cone mode too.  Are
->>> there benefits to keeping the trailing asterisk?
->>
->> I think I've been seeing issues with pattern matching on Windows without
->> the trailing asterisk. I'm currently double-checking to make sure this
->> is important or not.
-> 
-> Can you try with the en/clean-nested-with-ignored topic in pu to see
-> if that fixes those issues?
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Merging with that branch was very difficult. There is a lot of unshared
-history between our branches.
+> Am 18.09.19 um 02:11 schrieb Kamil Doma=C5=84ski:
+>> Create a '--count' option for ls-remote, based on the one from
+>> for-each-ref. This allows e.g. to return only the first result
+>> from a sorted list of refs.
+>>=20
+>> Signed-off-by: Kamil Doma=C5=84ski <kamil@domanski.co>
+>> ---
+>>  Documentation/git-ls-remote.txt | 11 ++++++++---
+>>  builtin/ls-remote.c             | 16 ++++++++++++----
+>>  t/t5512-ls-remote.sh            |  9 +++++++++
+>>  3 files changed, 29 insertions(+), 7 deletions(-)
+>>=20
+>> diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-re=
+mote.txt
+>> index 0b057cbb10..5adc1d676e 100644
+>> --- a/Documentation/git-ls-remote.txt
+>> +++ b/Documentation/git-ls-remote.txt
+>> @@ -9,9 +9,9 @@ git-ls-remote - List references in a remote repository
+>>  SYNOPSIS
+>>  --------
+>>  [verse]
+>> -'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=3D<exec>]
+>> -	      [-q | --quiet] [--exit-code] [--get-url] [--sort=3D<key>]
+>> -	      [--symref] [<repository> [<refs>...]]
+>> +'git ls-remote' [--count=3D<count>] [--heads] [--tags] [--refs]
+>> +	      [--upload-pack=3D<exec>] [-q | --quiet] [--exit-code] [--get-u=
+rl]
+>> +	      [--sort=3D<key>] [--symref] [<repository> [<refs>...]]
+>
+> It is understandable that the new option is important to _you_, but it
+> does not seem important enough that it must be the first in the list.
+> Please add it between --symref and <repository>
+>
+>> =20
+>>  DESCRIPTION
+>>  -----------
+>> @@ -21,6 +21,11 @@ commit IDs.
+>> =20
+>>  OPTIONS
+>>  -------
+>> +--count=3D<count>::
+>> +	By default the command shows all refs that match
+>> +	`<pattern>`.  This option makes it stop after showing
+>> +	that many refs.
+>
+> Is the meaning of this option perhaps:
+>
+>     Stops after the specified count of refs have been listed.
+>     If `--sort=3D<key>` is specified as well, refs are counted
+>     after sorting; otherwise, it is unspecified which subset
+>     of is listed.
+>
+> I do not know whether the "otherwise" part would be true (check it!),
+> but I am pretty certain that the "If" part must be true, otherwise the
+> option would be pointless.
+>
+> The comment about the ordering of this paragraph at the very beginning
+> of the option list applies here, too, because the list is not sorted
+> alphabetically.
 
-Instead, I tried once more to dig into the strange issue on Windows, and
-it appears it is an issue with how the Git for Windows SDK modifies shell
-arguments with a "/".
-
-When I ran `git sparse-checkout set "/folder1/*"` it worked.
-
-When I run `git sparse-checkout set "/folder1/"`, the SDK completes that
-argument to "C:/git-sdk-64/folder1/" on my machine (something more
-complicated on the build machine). It's not actually a bug in the Git
-code, but something in the build and test environment.
-
-I can get around it by testing the builtin without using these cone-like
-patterns. When using `git sparse-checkout set folder1 folder2` in cone
-mode, Git does the right thing.
-
-Sorry for the noise here.
-
--Stolee
-
+All sensible comments and suggestions.  I am not sure what's so hard
+to pipe the output to "head -n 20" or something like that, though.
