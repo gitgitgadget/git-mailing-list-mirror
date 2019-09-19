@@ -8,166 +8,126 @@ X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80B701F464
-	for <e@80x24.org>; Thu, 19 Sep 2019 20:43:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 539911F463
+	for <e@80x24.org>; Thu, 19 Sep 2019 20:46:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732373AbfISUn2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Sep 2019 16:43:28 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:35707 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730741AbfISUn2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Sep 2019 16:43:28 -0400
-Received: by mail-pl1-f195.google.com with SMTP id y10so842368plp.2
-        for <git@vger.kernel.org>; Thu, 19 Sep 2019 13:43:27 -0700 (PDT)
+        id S1732446AbfISUqe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Sep 2019 16:46:34 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:46164 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727273AbfISUqe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 16:46:34 -0400
+Received: by mail-pf1-f193.google.com with SMTP id q5so3033942pfg.13
+        for <git@vger.kernel.org>; Thu, 19 Sep 2019 13:46:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=LK5wD/i7gH9m3TPjxw5yGgd9fxHTn4leqAO5HTSWVcA=;
-        b=Xy+rrlci7zTMS4clrM2yjrJZKN1jHRtt5kZ6YevqNOu8HOl1XvAvCZP5bdzkmEOLEx
-         Q02kGK+KVGv/wbb1Q2zcjT2TOAHk1oBbhoolPVdOUMzQ9n+ybUPR3CgrBs6+4Ol8kihB
-         uWTMAgVQM55zrI78SYWfbnb9KQVtoCqz5Bt+0/jVfqi8dbHExqa6oaqWvkz6KN/ghDAy
-         JzIXEpEw9mtKVIEOK/l5cM+BdfHoFSnLyxOnxJM++chhkEpSDHh7nc77ADNAhCbnMOix
-         OtaDFF8MPiDdo4aTsmRLHylg4irDRju2GQG2w1NuYuLZrOwQNw09/ZKZbkfqc7A+OLOc
-         ZaQQ==
+        bh=fY5Tahfocuv9oRzOeBysdBeTUqiJJtx+/Z/pi9hWUlo=;
+        b=PBNjHoEQ1W13gczeaL/V74aBJZbRMBSiWuhZkPG5rzT9RlAWU34OZD7665BlkRibWg
+         arvgx8/n5ql9poSHG1HGhp0uL7CwK7OBf3bJTAztGR3hrMr6Lf4ETQOpTg9VbKIABIPU
+         edEZuSlPX9mZVLIIrO8bYibbyDtK1FDaJY1V3ZaCKF+d8WYsgvHSt/OlksiPMbaPzeFR
+         8A6GNkzcbQKxHhuLG5uBxiaK+QrtCR24Qu4B5lllxKefeCVflpKC0Wgc9Puze1oNZRbQ
+         IE9I9M/P16vTsVO2iJoQ4sOJJ+DQ+u3nbd57lBBWxpSxEQe19CABdiBhu4YQlePzqw8O
+         ObyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=LK5wD/i7gH9m3TPjxw5yGgd9fxHTn4leqAO5HTSWVcA=;
-        b=p8nfxAscg+8rkPT2L4cp2T3p/JmFoxCZ6iY5wlbnANx0T0lsW53muY47HBmzuTTVDu
-         19k6LrcuBuLzau6nLPhXyiqVw+zPhNW4kA31VkhOTc1THDiq0YS8dkhSV5/KFiaxkb2F
-         RsBn0G+Nok9BsJRx1NBNy1F7gLKpxAOZIUYMD8eciMz/JhSrZ5kWBCK2ikKshKe+t0J0
-         EAZsZ2spygdhvtMPqXedRN3RV7iWty2jJ0WlNl3Om1ommZQPMCGJMQ/Bgj4Af6rfdpL6
-         tkNWunh5Jnuy/qWE6DX9fP69xcqwxt6DDclDogS5SwItxUeaNJYq5Y6GduVpTgQLMglJ
-         /9sQ==
-X-Gm-Message-State: APjAAAV9/YmbOPcTzhUr6yiJ9iT6iKA1VA5INBZWdkEp2vjShdRFPYiP
-        kMu6Yi3NsceKx5Cdcy+94RERnw==
-X-Google-Smtp-Source: APXvYqxcTLACaBE5siC5PuWGIs/CP6LxeiioBc4iqtw9DJUXNUKoD1jxTMWY1qH2jXW8bW/avWkCnA==
-X-Received: by 2002:a17:902:9a05:: with SMTP id v5mr12359942plp.237.1568925806821;
-        Thu, 19 Sep 2019 13:43:26 -0700 (PDT)
+        bh=fY5Tahfocuv9oRzOeBysdBeTUqiJJtx+/Z/pi9hWUlo=;
+        b=Be3LIRcrm9taAOuqmYn6ozvBFO7nrydjpTvYMb2wQzgtgu9RGyaR7jawOrqpZcQiEp
+         tftt+eaExt+7+/20KMQ/GcgEbhURyZ4UU7Wd77zq4pjGsAv7gDiVas7tL1+S1Ndypl8Q
+         Es4PXVYzjtR4Ey21bVw4lKOyUNnuRY52u1fLIgtm21X3720o1sD7CNtwFsVMiQo6++Hq
+         Kn9IaQrVnfOZLuOgqM6XDR81t4cLbeFJIpQ+GUZAdhvaQEgcAzl8jJDZvUSOmdGqQ85a
+         TpUvJ2FnT0nNuxA+dxQjfQK98obeLdCnvvvDJGRUze9LKzPxXGp6TUETe+jtSaynqFir
+         l01Q==
+X-Gm-Message-State: APjAAAVqvfjRnvEvGoF1SEtefuDhZucdWdI1DAfa5s1SzqEMBgdtE+BJ
+        vMiSxICybMxYNyl7rqFJHb+J0w==
+X-Google-Smtp-Source: APXvYqzR6zEsyvHBiUrYV5U+3pnHATDVzO8LNd8xwL6j6WnIvJfkhV3lNQTgtgroM7TVDggzYttM8A==
+X-Received: by 2002:a17:90a:2766:: with SMTP id o93mr5662052pje.40.1568925992403;
+        Thu, 19 Sep 2019 13:46:32 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id u10sm11582567pfm.71.2019.09.19.13.43.25
+        by smtp.gmail.com with ESMTPSA id w189sm12895672pfw.101.2019.09.19.13.46.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Sep 2019 13:43:26 -0700 (PDT)
-Date:   Thu, 19 Sep 2019 13:43:21 -0700
+        Thu, 19 Sep 2019 13:46:31 -0700 (PDT)
+Date:   Thu, 19 Sep 2019 13:46:27 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "gitster@pobox.com" <gitster@pobox.com>, garimasigit@gmail.com
-Subject: Re: [DISCUSSION] Growing the Git community
-Message-ID: <20190919204321.GA116396@google.com>
-References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
- <20190919173423.GA70421@dentonliu-ltm.internal.salesforce.com>
+To:     Pedro Sousa <pedroteosousa@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] doc: MyFirstContribution: fix cmd placement instructions
+Message-ID: <20190919204627.GB116396@google.com>
+References: <20190919184634.8869-1-pedroteosousa@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190919173423.GA70421@dentonliu-ltm.internal.salesforce.com>
+In-Reply-To: <20190919184634.8869-1-pedroteosousa@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 19, 2019 at 10:34:23AM -0700, Denton Liu wrote:
-> Aside from getting the first email sent, most of my time learning to
-> contribute to Git stemmed from the fact that there's a lot of tribal
-> knowledge that's not really written down anywhere. Here are some of the
-> smaller things that confused me:
+Thanks for sending this. I guess I don't know the alphabet very well :)
 
-+1 to unwritten knowledge. I learned quite a lot from comments on my
-early reviews about utilities and patterns which I had no idea existed.
-I'd love to see more and better-organized documentation in Git project
-(in fact, that's one of my goals for this year - a contributor's manual,
-which was one of the topics discussed at the virtual summit).
-
-> Another discouraging thing when I was just starting out was sending a
-> out a patch and just getting radio silence (especially the first one, I
-> wasn't sure if it even sent out properly!). Perhaps in the main list, we
-> could get people to tag with [FIRST PATCH] or something when sending in
-> their first patch.
-> 
-> If the patch is not desired, then we should explain why it wasn't
-> desired instead of just leaving them hanging. I know Junio is too busy
-> to say "hey, I'm picking this patch up" to every single patchset, but if
-> a patch is desired, perhaps the rest of us could pick up the slack and
-> say, "hey, your patchset was picked up by Junio in his gitster repo on
-> this branch".
-
-I wonder how feasible it really is to expect people to review more/more
-quickly than they are today. It might be more realistic to try to temper
-folks' expectations in the new contributor documentation.
-
-This might also be a problem which starts to disappear as the number of
-contributors rises...
-
-> > 
-> > 4. Add an official Code of Conduct
-> > 
-> > So far, the community has had an unofficial policy of "be nice,
-> > as much as possible". We should add a Code of Conduct that is
-> > more explicit about the behavior we want to model. This was also
-> > discussed in the meeting with wide approval.
-> 
-> From what I've personally read and experienced, I don't think that an
-> official Code of Conduct is really warranted. Everyone I've interacted
-> with has been really kind. Perhaps a new contributor might interpret the
-> curtness of replies here as someone being rude but I quickly learned
-> that it's more out of necessity since everyone is busy.
-> 
-> From reading the mailing list archives, I know that in the past, there
-> have been some flamewars and some abrasive individuals but I think
-> that's a problem of the past.
-
-I disagree pretty strongly - I think that the fact that we did have
-problems in the past indicates that we're at risk for similar problems
-in the future.
-
-In my opinion, a code of conduct shouldn't be introduced to deal with
-behavior when it arises - that invites parties to feel that they're
-being targeted for behavior that "used to be okay". We introduce a CoC
-to protect ourselves in the future, and to maintain the pleasant
-community we have today.
-
-> I also see some drawbacks to implementing a CoC as well. First of all,
-> it just feels like unnecessary bureaucracy. Second, I think it'll
-> probably cause a stir like it did when the Linux kernel introduced it.
-> Of course, all that noise will die down eventually but I feel like it'll
-> bring the wrong kind of attention to Git.
-
-As a member of >1 groups which are prone to receiving harassment online,
-I don't find it unnecessary at all for there to be a path for me to
-escalate and resolve harassment I am the victim of.
-
-As for the stir in the Linux kernel, I find it interesting that most of
-the attempts to revert the CoC came via Github PRs - which the kernel
-does not use. Another way of saying that is that most of those attempts
-came from people who did not regularly contribute to the kernel, and did
-not care enough about contributing to it in the future to discover the
-correct contribution process.
-
-I realize I'm taking a hard line here, but I'm not sure how "Git wants
-to protect its contributors from harassment" is the "wrong" kind of
-attention. If I weren't contributing to Git actively and I saw that
-news, I would feel inspired and optimistic (again, speaking as a member
-of groups which are often harassed online and in tech).
-
-> (Then again, maybe it'll attract more contributors in the process, who
-> knows.)
-
-
-I totally understand where you're coming from, Denton, that it's not a
-problem now and so it may not be worth the effort+press. But I wonder
-how many folks we're missing out on patches from because they don't
-think they will have recourse if they find the community to be
-toxic/unwelcoming to them? We really don't have a way to know. I'm
-worried that we're restricting the community to those who either
-feel it's unlikely that they'll be targeted, or feel they can weather
-harassment if they receive it - which narrows the diversity of our
-contributor base by quite a lot.
+A different color we could paint the bikeshed would be to write "add a
+new line for `psuh` immediately after it" in these places instead. But I
+have no preference whatsoever.
 
  - Emily
+
+Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+
+On Thu, Sep 19, 2019 at 03:46:34PM -0300, Pedro Sousa wrote:
+> Using the pull command instead of push is more accurate when giving
+> instructions on placing the psuh command in alphabetical order.
+> 
+> Signed-off-by: Pedro Sousa <pedroteosousa@gmail.com>
+> ---
+>  Documentation/MyFirstContribution.txt | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+> index f867037..fb15af8 100644
+> --- a/Documentation/MyFirstContribution.txt
+> +++ b/Documentation/MyFirstContribution.txt
+> @@ -97,7 +97,7 @@ int cmd_psuh(int argc, const char **argv, const char *prefix)
+>  ----
+>  
+>  We'll also need to add the declaration of psuh; open up `builtin.h`, find the
+> -declaration for `cmd_push`, and add a new line for `psuh` immediately before it,
+> +declaration for `cmd_pull`, and add a new line for `psuh` immediately before it,
+>  in order to keep the declarations sorted:
+>  
+>  ----
+> @@ -123,7 +123,7 @@ int cmd_psuh(int argc, const char **argv, const char *prefix)
+>  }
+>  ----
+>  
+> -Let's try to build it.  Open `Makefile`, find where `builtin/push.o` is added
+> +Let's try to build it.  Open `Makefile`, find where `builtin/pull.o` is added
+>  to `BUILTIN_OBJS`, and add `builtin/psuh.o` in the same way next to it in
+>  alphabetical order. Once you've done so, move to the top-level directory and
+>  build simply with `make`. Also add the `DEVELOPER=1` variable to turn on
+> @@ -149,7 +149,7 @@ a `cmd_struct` to the `commands[]` array. `struct cmd_struct` takes a string
+>  with the command name, a function pointer to the command implementation, and a
+>  setup option flag. For now, let's keep mimicking `push`. Find the line where
+>  `cmd_push` is registered, copy it, and modify it for `cmd_psuh`, placing the new
+> -line in alphabetical order.
+> +line in alphabetical order (immediately before `cmd_pull`).
+>  
+>  The options are documented in `builtin.h` under "Adding a new built-in." Since
+>  we hope to print some data about the user's current workspace context later,
+> @@ -167,7 +167,7 @@ Check it out! You've got a command! Nice work! Let's commit this.
+>  
+>  `git status` reveals modified `Makefile`, `builtin.h`, and `git.c` as well as
+>  untracked `builtin/psuh.c` and `git-psuh`. First, let's take care of the binary,
+> -which should be ignored. Open `.gitignore` in your editor, find `/git-push`, and
+> +which should be ignored. Open `.gitignore` in your editor, find `/git-pull`, and
+>  add an entry for your new command in alphabetical order:
+>  
+>  ----
+> -- 
+> 2.9.3
+> 
