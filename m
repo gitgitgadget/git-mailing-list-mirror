@@ -8,56 +8,58 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97CE61F463
-	for <e@80x24.org>; Thu, 19 Sep 2019 21:47:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F75B1F463
+	for <e@80x24.org>; Thu, 19 Sep 2019 21:47:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403799AbfISVrV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Sep 2019 17:47:21 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:54691 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393079AbfISVrV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Sep 2019 17:47:21 -0400
-Received: by mail-wm1-f66.google.com with SMTP id p7so44516wmp.4
-        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:19 -0700 (PDT)
+        id S2404753AbfISVrX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Sep 2019 17:47:23 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33562 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389341AbfISVrW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 17:47:22 -0400
+Received: by mail-wr1-f65.google.com with SMTP id b9so4713757wrs.0
+        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jVW+3/NusNpkHNjpyUYCq7dkeZZKicdNKaX4zQmObfo=;
-        b=eTr8SoxY65XxNpUygBySvrHR/blC45ndRKvGzLlIWHmdodju1QX+dLVLyAoElyusyd
-         LXcJkLaZIIhnjVkaiEaFwMfoMd3Sm8mdZ/5G3cogACKkwhyg1sM5ZPdwBpR5KUG3b0+X
-         N1bRhWmgma7CYFR3EQ0DgbPjGmKIZNfacHQCuZZC7cEhNY5xlTyoMi3HAs31uG9oybd0
-         rkW/uDmEiZ4G2nTVGF8NZgNG9wBNwBb4tIvMAQcFYXK/n6N8Eqk5ITHN90aQ6GK8jkc+
-         l8H9tLw3qaRCyVT1zcu3ViOb0TrFJ3JqGyL0aQp8ZG2xbIGZjLWOVvDLQbi8hkbP77PS
-         iRBQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=DuD3G6Wnstjdqq/ZU3fbCUz147/UNOC45pou1uLCWgE=;
+        b=Fxn5I5TrkskelU7F+QwSq7VnMiMw8ko+4zPCPlIOTBcbIFIxWnlfN4gW5H42iKDk4Y
+         u0lZkbcP7nJo27BFRavby4BDb0iW18OEY6gU/QFW9vzrETGm/i7C434BvZQaFrW99xLt
+         kJkpkxt+P/Rbwvs9ZGj3QYeW0rU8968pGPIWdlH6IrbKS6JAT3m/+jO/dNSsFpSCX34o
+         d1ldwNAq2f7cugZZ7xOQfWGHsVvR/xUYIQ9Z60wCzmeazVzcqKtnno0MZh/oxMMALY5c
+         T7bkfR3mNN2WBL50AeFHOtYAEpPvqC+vSVwNcrNjNL8MfG813VT7BhTB+Q5e54+Bqm6e
+         +WgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jVW+3/NusNpkHNjpyUYCq7dkeZZKicdNKaX4zQmObfo=;
-        b=h2WqXL8e3qIAFbQmD1kSUncVeKNoYAkYhBKQi5gPpGWLtTC6x4xXXU7TygqotO+kGh
-         LfWE+H2wOukQlw5Zdu6PdBsNzGvS1ewP8Tio1GAG0Q/j8r0k49ltXpF0CcWPXAARue8W
-         Y1IgnSoRY6k9FoTqF7VjnahdIHNHO2Q4kOwfP3N0ZAmjF+24ATOHNXSnGtQEEQOCSSNa
-         2nnAXPH/D3Eongjt22pn1OyVUlUb81b4jc2Oy2ye/JCOQ2aAjIfGlfL8JWm8vawb2uNi
-         +ag6eieyJxzoUYhH11D0Rh9jYJQbN5SR12yqS+gvhs9nKqk7ZXbT06y11JyPM934CK32
-         28Sw==
-X-Gm-Message-State: APjAAAU8GWouVDUim9Rf0WuJA+FkHY/s9a1zLZNRcAo0sDFF9exOj7js
-        bgXGsbCs59ZXFniPQhuvqZI=
-X-Google-Smtp-Source: APXvYqxj/+AJmligpBOXqZTxE4zMn1gKEZ/6qF17SjgiFg7npjNP9RKwssxJRyLRIXoYExv+4erSOQ==
-X-Received: by 2002:a1c:cfc9:: with SMTP id f192mr18699wmg.85.1568929639184;
-        Thu, 19 Sep 2019 14:47:19 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=DuD3G6Wnstjdqq/ZU3fbCUz147/UNOC45pou1uLCWgE=;
+        b=lXHH2FN2j/8LqTyNIFE3jN73qce8M5whiFVj1ZLYC3FYTx6+vgWJy1f1as1uafLq4b
+         j42ZOLEd59YF71PCkhiSfNg+fTjdPKBNSxr+bGSqNuwQS4fLtY2GxZJjhcB9DiV6SbWn
+         7eN+mMF4OKa76l+tO+uEYNnhDGsHBTJUDaltjCLmLTss7Fl4+FIhmreJ73Q0PsYwXuS4
+         /8SdTCA6W4c/c+Pvxb0hhqxuQ5oE5xRJfY2XOfdp4zb/GE9+UJ7t+8WyP14EZL7IF6vk
+         OwLCzfCMP3Ko5nyJyyW0J1pCBu3vW/yQOUeRAW3RtjgkBqcOuUNB39FXCuFyiuNg0IH9
+         vi8g==
+X-Gm-Message-State: APjAAAVBXUeuFeCKWa3PuqoanervdURkpi976ttrm0PAuIXuqXcCrlnp
+        9UNRlH9DlEYTGnGgvtAwG5g=
+X-Google-Smtp-Source: APXvYqyOnIiy1CwBUW69iLzsYej8yOig4qiawfg42unKtt3uBjQ8M6E2ZoANZBqr8Iep0snaq6ESlQ==
+X-Received: by 2002:a5d:424c:: with SMTP id s12mr8399960wrr.221.1568929640321;
+        Thu, 19 Sep 2019 14:47:20 -0700 (PDT)
 Received: from localhost.localdomain (x4db63806.dyn.telefonica.de. [77.182.56.6])
-        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.17
+        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 Sep 2019 14:47:18 -0700 (PDT)
+        Thu, 19 Sep 2019 14:47:19 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 00/15] name-rev: eliminate recursion
-Date:   Thu, 19 Sep 2019 23:46:55 +0200
-Message-Id: <20190919214712.7348-1-szeder.dev@gmail.com>
+Subject: [PATCH 01/15] t6120-describe: correct test repo history graph in comment
+Date:   Thu, 19 Sep 2019 23:46:56 +0200
+Message-Id: <20190919214712.7348-2-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.23.0.331.g4e51dcdf11
+In-Reply-To: <20190919214712.7348-1-szeder.dev@gmail.com>
+References: <20190919214712.7348-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,44 +68,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'git name-rev' is implemented using a recursive algorithm, and,
-consequently, it can segfault in deep histories (e.g. WebKit), and
-thanks to a test case demonstrating this limitation every test run
-results in a dmesg entry logging the segfaulting git process.
+At the top of 't6120-describe.sh' an ASCII graph illustrates the
+repository's history used in this test script.  This graph is a bit
+misleading, because it swapped the second merge commit's first and
+second parents.
 
-This patch series eliminates the recursion.
+When describing/naming a commit it does make a difference which parent
+is the first and which is the second/Nth, so update this graph to
+accurately represent that second merge.
 
-Patches 1-5 and 14-15 are while-at-it cleanups I noticed on the way,
-and patch 6 improves test coverage.
+While at it, move this history graph from the 'test_description'
+variable to a regular comment.
 
-Patches 7-11 are preparatory refactorings that are supposed to make
-this series easier to follow, and make patch 12, the one finally
-eliminating the recursion, somewhat shorter, and even much shorter
-when viewed with '--ignore-all-space'.  Patch 13 cleans up after those
-preparatory steps.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/t6120-describe.sh | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-SZEDER Gábor (15):
-  t6120-describe: correct test repo history graph in comment
-  t6120-describe: modernize the 'check_describe' helper
-  name-rev: use strip_suffix() in get_rev_name()
-  name-rev: avoid unnecessary cast in name_ref()
-  name-rev: use sizeof(*ptr) instead of sizeof(type) in allocation
-  t6120: add a test to cover inner conditions in 'git name-rev's
-    name_rev()
-  name-rev: extract creating/updating a 'struct name_rev' into a helper
-  name-rev: pull out deref handling from the recursion
-  name-rev: restructure parsing commits and applying date cutoff
-  name-rev: restructure creating/updating 'struct rev_name' instances
-  name-rev: drop name_rev()'s 'generation' and 'distance' parameters
-  name-rev: eliminate recursion in name_rev()
-  name-rev: cleanup name_ref()
-  name-rev: plug a memory leak in name_rev()
-  name-rev: plug a memory leak in name_rev() in the deref case
-
- builtin/name-rev.c  | 140 ++++++++++++++++++++++++++++----------------
- t/t6120-describe.sh |  72 ++++++++++++++++++-----
- 2 files changed, 147 insertions(+), 65 deletions(-)
-
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 2b883d8174..0bf7e0c8bc 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -1,15 +1,14 @@
+ #!/bin/sh
+ 
+-test_description='test describe
++test_description='test describe'
++
++#       ,---o----o----o-----.
++#      /   D,R   e           \
++#  o--o-----o-------------o---o----x
++#      \    B            /
++#       `---o----o----o-'
++#                A    c
+ 
+-                       B
+-        .--------------o----o----o----x
+-       /                   /    /
+- o----o----o----o----o----.    /
+-       \        A    c        /
+-        .------------o---o---o
+-                   D,R   e
+-'
+ . ./test-lib.sh
+ 
+ check_describe () {
 -- 
 2.23.0.331.g4e51dcdf11
 
