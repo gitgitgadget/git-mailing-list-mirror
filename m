@@ -2,99 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4104B1F463
-	for <e@80x24.org>; Thu, 19 Sep 2019 18:33:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59CCD1F463
+	for <e@80x24.org>; Thu, 19 Sep 2019 18:40:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392032AbfISSdD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Sep 2019 14:33:03 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:59147 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731022AbfISSdD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Sep 2019 14:33:03 -0400
-X-Originating-IP: 1.186.12.28
-Received: from localhost (unknown [1.186.12.28])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id A8C93E0003;
-        Thu, 19 Sep 2019 18:33:00 +0000 (UTC)
-Date:   Fri, 20 Sep 2019 00:02:58 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: git-gui: missing some patches from git?
-Message-ID: <20190919183258.g7ae4u5nzuzwgu7b@yadavpratyush.com>
-References: <CAGr--=KXqFbivuXHPNecb3dBR_hx8QqWoR4pBGXy7uOiT+ESbg@mail.gmail.com>
- <20190918092721.GA76617@archbookpro.localdomain>
- <20190918151404.rqjohdderwxfqtdm@yadavpratyush.com>
- <xmqqblvh5wbr.fsf@gitster-ct.c.googlers.com>
+        id S1732536AbfISSkK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Sep 2019 14:40:10 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:59330 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732030AbfISSkK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 14:40:10 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 46Z5Hq4517z5tlF;
+        Thu, 19 Sep 2019 20:40:07 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id C7A8110A;
+        Thu, 19 Sep 2019 20:40:06 +0200 (CEST)
+From:   Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] ls-remote: create '--count' option
+To:     =?UTF-8?Q?Kamil_Doma=c5=84ski?= <kamil@domanski.co>
+Cc:     git@vger.kernel.org
+References: <20190918001134.20776-1-kamil@domanski.co>
+ <f643547f-54e0-fe4f-d8e5-95445431faf3@kdbg.org>
+ <21455bdb-431e-2842-0618-2f36a18bb60e@domanski.co>
+Message-ID: <c839c38e-00ac-a1de-a246-8e92f16cfb4a@kdbg.org>
+Date:   Thu, 19 Sep 2019 20:40:06 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqblvh5wbr.fsf@gitster-ct.c.googlers.com>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <21455bdb-431e-2842-0618-2f36a18bb60e@domanski.co>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Am 18.09.19 um 23:44 schrieb Kamil Domański:
+> On 9/18/19 8:28 AM, Johannes Sixt wrote:
+>> Am 18.09.19 um 02:11 schrieb Kamil Domański:
+>>>     DESCRIPTION
+>>>   -----------
+>>> @@ -21,6 +21,11 @@ commit IDs.
+>>>     OPTIONS
+>>>   -------
+>>> +--count=<count>::
+>>> +    By default the command shows all refs that match
+>>> +    `<pattern>`.  This option makes it stop after showing
+>>> +    that many refs.
+>> Is the meaning of this option perhaps:
+>>
+>>      Stops after the specified count of refs have been listed.
+>>      If `--sort=<key>` is specified as well, refs are counted
+>>      after sorting; otherwise, it is unspecified which subset
+>>      of is listed.
+> 
+> Similarly, I merely copied the description used by 'for-each-ref'. I
+> like your version as well, since it clarifies the relation to sorting.
+> Should the description for 'for-each-ref' be changed as well then?
 
-On 18/09/19 10:49AM, Junio C Hamano wrote:
-> Pratyush Yadav <me@yadavpratyush.com> writes:
-> You should be able to merge this (and all other git-gui topics
-> already in my tree Denton pointed out) to your 'master'.  If you
-> then make a trial merge of the result back into my tree with "git
-> merge -Xsubtree=git-gui", it should result in "already up to date",
-> i.e. a noop merge.
+I am neutral. If you do it, then it should not happen in the same patch
+as this change.
 
-I pulled all the changes into git-gui. I had to manually backport two 
-commits:
+> ... it appears that 'for-each-ref' defaults to sorting
+> by 'refname' (through ref_default_sorting() ) if no alternative sorting
+> is provided, while 'ls-remote' does no such defaulting. Do you figure it
+> would be a good idea to add another patch which would introduce a
+> similar default in 'ls-remote'?
 
-  * 7560f547e6 (treewide: correct several "up-to-date" to "up to date", * 2017-08-23)
-  * 00ddc9d13c (Fix build with core.autocrlf=true, 2017-05-09)
+I don't think so. I would think that in the case of ls-remote it is
+preferable to stream refs to the output as soon as they are received
+from the remote. If refs must be sorted, it would have to wait until the
+remote has sent all refs before it can do anything.
 
-because they touched other parts of git, that were not in git-gui.
+That said, Junio's question remains open: why is piping though head -n
+not good enough?
 
-I then did a trial merge into your 'master', and running a diff, 
-git.git's version of git-gui is identical to mine. So everything seems 
-to be correct.
-
-Instead of doing this on my master, I did it on a separate branch just 
-to be sure I don't mess something up. You can find it on 
-https://github.com/prati0100/git-gui.git on the branch 'trial_merge'.
-
-These are the new commits introduced:
-
-  7435f916d3 git-gui: fix build with core.autocrlf=true
-  834e3ec31e git-gui: correct "up-to-date" to "up to date"
-  fecfccf9ff Merge branches 'js/msgfmt-on-windows', 'tz/fsf-address-update', 'jn/reproducible-build', 'ls/no-double-utf8-author-name', 'js/misc-git-gui-stuff', 'bb/ssh-key-files', 'bp/bind-kp-enter', 'cb/ttk-style' and 'py/call-do-quit-before-exit' of ../git into trial_merge
-  f7a8834ba4 Merge branch 'bp/amend-toggle-bind'
-  ec7424e1a6 git-gui: add hotkey to toggle "Amend Last Commit"
-  6c8ec8c30a Merge branch 'bw/commit-scrollbuffer'
-  acfa495519 Merge branch 'bw/amend-checkbutton'
-  da08d559b7 git-gui: add horizontal scrollbar to commit buffer
-  ba41b5b335 git-gui: convert new/amend commit radiobutton to checkbutton
-  c77abf0460 Merge branch 'py/revert-hunks-lines'
-  5a2bb62180 Merge branch 'bp/widget-focus-hotkeys'
-  e07446ed5f git-gui: add hotkeys to set widget focus
-  a4fa2f0a4c git-gui: allow undoing last revert
-  2ccdfb1c78 git-gui: return early when patch fails to apply
-  62bd99934b git-gui: allow reverting selected hunk
-  5f0a516de9 git-gui: allow reverting selected lines
-
-The top 3 commits are of note. The top 2 are the manual backports. The 
-third is the octopus merge of all the topics not in git-gui yet. The 
-rest are just other topics that were introduced in my fork recently.
-
-If it looks all good, I'll put all this on my 'master' and re-send the 
-pull request.
-
--- 
-Regards,
-Pratyush Yadav
+-- Hannes
