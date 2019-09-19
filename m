@@ -2,121 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF2F41F463
-	for <e@80x24.org>; Thu, 19 Sep 2019 21:47:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2CB21F463
+	for <e@80x24.org>; Thu, 19 Sep 2019 22:16:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733022AbfISVro (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Sep 2019 17:47:44 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37024 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404915AbfISVrh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Sep 2019 17:47:37 -0400
-Received: by mail-wr1-f68.google.com with SMTP id i1so4677150wro.4
-        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=H3dDDYIYyi6CnRx8e/3NPMBZL8lDzLq8eR94uAzDL2M=;
-        b=u1Wd38qiaTEh5dx8ccJ1mt9DVLzMVaNVXmlbjPEpSVf/T80UsUXk9339/UiuSbrtP+
-         AGl4s4o5Zif69njeEhXUFZqrvlRu/q78qx0R8tLGlYwIM7ORIFHE/c/VQiRchiSGfOjt
-         C2pzRUyg8dZRglObZkR2UwRrZ9VM1RzfUa2S2tuAV+fuRQysvfkEKXBrN6h1qjVxjS0/
-         PkWxKbxtDVixw7jOJFhvaf3PvdgMjhg65grfaV+dXMhKohnWQbkHfXaLkAJmgdNO03Ju
-         TSJJUy+zteHocuic4HxQaNI8QgBB/HRQd2hReghHNuBI78DfAwl3YvSJrrxYXv+Dt4RG
-         g8Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=H3dDDYIYyi6CnRx8e/3NPMBZL8lDzLq8eR94uAzDL2M=;
-        b=BfVBJYetk1g9kXV6iMIOX3Fn1I73shHXNtM8Ut8tfXLZ3qYq4t0Im3Pi71k2Lnm56k
-         uxYpsNzM2p8/iEKEPFPF5pzdfKOZGx38OWc1Fk8gRge9lwtNHhbhvcabZeWcwO99LyM1
-         eb57QtWKiKh3ZVaxAKqPuQMIJwurIHFe/jNTOrXESGnToQuVB3jzc3XnIdomZ5QSFVdy
-         BDRsaV6EwIEomay7ptIxQblnLsM22LXrdRbM8/qU/PQLgnPCJG6YgmIrfkuuwvVF98Er
-         lbPv5MVWcMe0P79crLOtyhWD9LS/t6QrWIrGNWv1IFtWcXYcA3D69XG7fyF/rYeWmh/Q
-         5V6g==
-X-Gm-Message-State: APjAAAW2ZnHpHl7Uw5mmXdYk5BP9IZMzvm8xIeugY0Z9g8lryFIQTSl4
-        KrbZc8KMAGF3noqbNM0nmb0=
-X-Google-Smtp-Source: APXvYqxeEgpqnNZbPr/mpdcKL8iBocc3FeUT8MUzxJJeuxNLnpMV3v2CUh6BhSQbsI7QeT+D1ycxhg==
-X-Received: by 2002:a5d:4ac7:: with SMTP id y7mr9335140wrs.271.1568929655389;
-        Thu, 19 Sep 2019 14:47:35 -0700 (PDT)
-Received: from localhost.localdomain (x4db63806.dyn.telefonica.de. [77.182.56.6])
-        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 Sep 2019 14:47:34 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 14/15] name-rev: plug memory leak in name_rev() in the deref case
-Date:   Thu, 19 Sep 2019 23:47:10 +0200
-Message-Id: <20190919214712.7348-16-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.23.0.331.g4e51dcdf11
-In-Reply-To: <20190919214712.7348-1-szeder.dev@gmail.com>
-References: <20190919214712.7348-1-szeder.dev@gmail.com>
+        id S2406306AbfISWQS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Sep 2019 18:16:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55298 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2406298AbfISWQQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 18:16:16 -0400
+Received: (qmail 8872 invoked by uid 109); 19 Sep 2019 22:16:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Sep 2019 22:16:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5020 invoked by uid 111); 19 Sep 2019 22:18:29 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 19 Sep 2019 18:18:29 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 19 Sep 2019 18:16:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "gitster@pobox.com" <gitster@pobox.com>, garimasigit@gmail.com
+Subject: Re: [DISCUSSION] Growing the Git community
+Message-ID: <20190919221615.GA25636@sigill.intra.peff.net>
+References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The name_rev() function's 'tip_name' parameter is a freshly
-xstrdup()ed string, so when name_rev() invokes:
+On Thu, Sep 19, 2019 at 12:30:13PM -0400, Derrick Stolee wrote:
 
-  tip_name = xstrfmt("%s^0", tip_name);
+> Feel free to pick apart all of the claims I make below. This is based
+> on my own experience and opinions. It should be a good baseline
+> for us to all arrive with valuable action items.
 
-then the original 'tip_name' string is leaked.
+First off, thanks for starting this conversation on the list.  I agree
+with 99% of what you said, so I'll quote sparingly below, and just cover
+the parts where I have something interesting to add.
 
-Make sure that this string is free()d after it has been used as input
-for that xstrfmt() call.
+> 1. Improve the documentation for contributing to Git.
+> 
+> In preparation for this email, I talked to someone familiar with issues
+> around new contributors, and they sat down to try and figure out how to
+> contribute to Git. The first place they went was https://github.com/git/git
+> and looked at the README. It takes deep reading of a paragraph to see a
+> link to the SubmittingPatches docs.
+> 
+> To improve this experience, we could rewrite the README to have clearer
+> section markers, including one "Contributing to Git" section relatively
+> high in the doc. We may want to update the README for multiple reasons.
+> It should link to the new "My First Contribution" document
+> (https://git-scm.com/docs/MyFirstContribution).
 
-This only happens when name_rev() is invoked with a tag, i.e.
-relatively infrequently in a usual repository, so any reduction in
-memory usage is lost in the noise.
+I suspect some people may end up at:
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- builtin/name-rev.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+  https://git-scm.com/community
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index e202835129..f867d45f0b 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -101,18 +101,22 @@ static struct rev_name *create_or_update_name(struct commit *commit,
- }
- 
- static void name_rev(struct commit *start_commit,
--		const char *tip_name, timestamp_t taggerdate,
-+		const char *start_tip_name, timestamp_t taggerdate,
- 		int from_tag, int deref)
- {
- 	struct commit_list *list = NULL;
-+	const char *tip_name;
- 	char *to_free = NULL;
- 
- 	parse_commit(start_commit);
- 	if (start_commit->date < cutoff)
- 		return;
- 
--	if (deref)
--		tip_name = to_free = xstrfmt("%s^0", tip_name);
-+	if (deref) {
-+		tip_name = to_free = xstrfmt("%s^0", start_tip_name);
-+		free((char*) start_tip_name);
-+	} else
-+		tip_name = start_tip_name;
- 
- 	if (!create_or_update_name(start_commit, tip_name, taggerdate, 0, 0,
- 				   from_tag)) {
--- 
-2.23.0.331.g4e51dcdf11
+when figuring out how to get involved. That discusses the mailing list
+itself, but is mostly from the perspective of "how do I ask a question".
+I think it could definitely cover some more things:
 
+  - how to get involved by submitting a patch
+
+  - how to get involved in some _other_ way (say, by reviewing or
+    participating in discussions)
+
+  - what kind of behavior we expect (and participants can expect) on the
+    list
+
+Most of those things would probably be links to other places (e.g., the
+first one pointing to MyFirstContribution), but to me it makes sense as
+a general landing page for "what is this community and how do I interact
+with it".
+
+We take PRs at:
+
+  https://github.com/git/git-scm.com
+
+but I'm happy to apply patches if somebody doesn't want to use GitHub.
+The file you'd want to touch is app/views/community/index.html.erb
+(there are instructions for spinning up a local version of the site in
+its README, but if you open a PR it will also get auto-deployed to a
+staging site where you can check formatting, etc).
+
+> We have a reference to GitGitGadget in the GitHub PR template to try and
+> get people who try to submit a pull request to git/git to instead create
+> one on GitGitGadget. However, that captures contributors who didn't read
+> the docs about how to submit! (This is somewhat covered by the "My First
+> Contribution" doc as well, so making that more visible will also help.)
+> 
+> Could we reference GitGitGadget as part of the Submitting Patches doc
+> as well?
+
+Hmm, I thought we did, but it looks like it's just in CONTRIBUTING. From
+my perspective as a reviewer of such patches, I don't mind seeing more
+GGG submissions. I.e., I think the tool is mature enough that I don't
+mind us letting more people know that it's an option.
+
+> 4. Add an official Code of Conduct
+> 
+> So far, the community has had an unofficial policy of "be nice,
+> as much as possible". We should add a Code of Conduct that is
+> more explicit about the behavior we want to model. This was also
+> discussed in the meeting with wide approval.
+
+I agree, and will send a separate message going into more detail.
+
+> 5. Advertise that Git wants new contributors
+> 
+> After we put items 1-4 in place, we should reach out to the
+> general tech community that we are interested in new
+> contributors. It's not enough to open the door, we should
+> point people to it.
+> 
+> This item is much less explicit about the _how_. This could
+> be done at the individual level: posting to social media or
+> blog posts. But perhaps there is something more official we
+> could do?
+
+This point is the one I'm least on board with. Not because I'm not
+thrilled to have new contributors, but that to some degree I think the
+open source system relies heavily on intrinsic motivations like
+scratching your own itch. I'm worried that advertising "hey, we need
+people to work on stuff!" then brings in people who are well-meaning but
+don't necessarily care much about Git in particular. And it becomes an
+administrative headache to try to figure out things for them to do, or
+get them acclimated to the community.
+
+I.e., I think we want to grow the community a bit more organically,
+which should be more sustainable in the long run.
+
+So I think any advertising would be more about making it clear that _if_
+you have an idea, we're very interested in welcoming newcomers. And that
+to me falls under a lot of the points already made above: making the
+process more clear and more inviting to people who are already thinking
+about contributing.
+
+-Peff
