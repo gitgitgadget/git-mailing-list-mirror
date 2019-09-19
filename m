@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BA211F463
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF2F41F463
 	for <e@80x24.org>; Thu, 19 Sep 2019 21:47:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733014AbfISVrn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Sep 2019 17:47:43 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38196 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404918AbfISVri (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Sep 2019 17:47:38 -0400
-Received: by mail-wm1-f68.google.com with SMTP id 3so52281wmi.3
-        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:37 -0700 (PDT)
+        id S1733022AbfISVro (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Sep 2019 17:47:44 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37024 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404915AbfISVrh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 17:47:37 -0400
+Received: by mail-wr1-f68.google.com with SMTP id i1so4677150wro.4
+        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JKmsVKExkfAYw0IYzUUv32f/XB7grMwgZaMtwvnCIHk=;
-        b=OPO4vQ7dGAq8T+Og+BEyb+EwgG2AKe9KHqGT6p/S2kYKDZIgX+bDbkebUAHCq1l/HW
-         xiQnKPHkNYS++X3AnkKAsby2Umbu846pvM88j/BgpC2oaNj1NG0ClFFUyqAeNW1ufZn7
-         ijPIXIlds5aUO/JEXVLqdqLCmcWE3gxC1esQkSkdgEU7/+JAUFvOBAEdgCu6wbdriumC
-         PZYhbqox94MwrnDEd2RAfHopKK3YFREkLc6rXlCl/uC5Vz2pLFahAQZzQNqxWPsKQ7jk
-         IqegSqDx+yJpM6mOLhfZyVY1F5udSlyQL6osq6FSMqsSfpnnd3TR7avDEW6KQ204Bsv0
-         PMUA==
+        bh=H3dDDYIYyi6CnRx8e/3NPMBZL8lDzLq8eR94uAzDL2M=;
+        b=u1Wd38qiaTEh5dx8ccJ1mt9DVLzMVaNVXmlbjPEpSVf/T80UsUXk9339/UiuSbrtP+
+         AGl4s4o5Zif69njeEhXUFZqrvlRu/q78qx0R8tLGlYwIM7ORIFHE/c/VQiRchiSGfOjt
+         C2pzRUyg8dZRglObZkR2UwRrZ9VM1RzfUa2S2tuAV+fuRQysvfkEKXBrN6h1qjVxjS0/
+         PkWxKbxtDVixw7jOJFhvaf3PvdgMjhg65grfaV+dXMhKohnWQbkHfXaLkAJmgdNO03Ju
+         TSJJUy+zteHocuic4HxQaNI8QgBB/HRQd2hReghHNuBI78DfAwl3YvSJrrxYXv+Dt4RG
+         g8Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JKmsVKExkfAYw0IYzUUv32f/XB7grMwgZaMtwvnCIHk=;
-        b=hrqqop2AfUHzSDGiIyHsr62EVw9mqoYV0WzAlUz3LkcmZ/eQOYLWToU26sCxHep0hK
-         mHMn2iH419jBqsn8h3cEW8XwkjJmA+QRq57200nZQfOHYgx5pqw9iwtUaX/rOsHfkvxQ
-         ps69NEEI8HWmNq4cxUKxD5RMT0m6IvS2LxbPh8lISIjZZo3DAlMDLfQPj2p1F5KGdsBC
-         bXXkSybb0nBbPWH8jDup8yG4/zCUQLUFhXbvCsUJOBC/8P1M+B58TS0DirgfQbkeaMP7
-         cTw/k0hMFUn+J+E2o+rXMbsuBHpA6APteC6cmXq15NjDoXYhnJ0h9jrE42TF8ot272ez
-         pVoA==
-X-Gm-Message-State: APjAAAVsXtHPB0IEmruFXlrzDCweDE8SHobjFRdNz69z7RbvT6rvz692
-        4EEuhVt4wAH0ur4ujF2ocyI=
-X-Google-Smtp-Source: APXvYqyEAPwMjJTy10c/WSWIAovrtBTkCdm3sy7bn30Mgl3FNQrmfJhFtzRa6J7antO5gR/YVUbO8w==
-X-Received: by 2002:a1c:4102:: with SMTP id o2mr42791wma.66.1568929656480;
-        Thu, 19 Sep 2019 14:47:36 -0700 (PDT)
-Received: from localhost.localdomain (x4db63806.dyn.telefonica.de. [77.182.56.6])
-        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=H3dDDYIYyi6CnRx8e/3NPMBZL8lDzLq8eR94uAzDL2M=;
+        b=BfVBJYetk1g9kXV6iMIOX3Fn1I73shHXNtM8Ut8tfXLZ3qYq4t0Im3Pi71k2Lnm56k
+         uxYpsNzM2p8/iEKEPFPF5pzdfKOZGx38OWc1Fk8gRge9lwtNHhbhvcabZeWcwO99LyM1
+         eb57QtWKiKh3ZVaxAKqPuQMIJwurIHFe/jNTOrXESGnToQuVB3jzc3XnIdomZ5QSFVdy
+         BDRsaV6EwIEomay7ptIxQblnLsM22LXrdRbM8/qU/PQLgnPCJG6YgmIrfkuuwvVF98Er
+         lbPv5MVWcMe0P79crLOtyhWD9LS/t6QrWIrGNWv1IFtWcXYcA3D69XG7fyF/rYeWmh/Q
+         5V6g==
+X-Gm-Message-State: APjAAAW2ZnHpHl7Uw5mmXdYk5BP9IZMzvm8xIeugY0Z9g8lryFIQTSl4
+        KrbZc8KMAGF3noqbNM0nmb0=
+X-Google-Smtp-Source: APXvYqxeEgpqnNZbPr/mpdcKL8iBocc3FeUT8MUzxJJeuxNLnpMV3v2CUh6BhSQbsI7QeT+D1ycxhg==
+X-Received: by 2002:a5d:4ac7:: with SMTP id y7mr9335140wrs.271.1568929655389;
         Thu, 19 Sep 2019 14:47:35 -0700 (PDT)
+Received: from localhost.localdomain (x4db63806.dyn.telefonica.de. [77.182.56.6])
+        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 19 Sep 2019 14:47:34 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 15/15] name-rev: plug a memory leak in name_rev() in the deref case
-Date:   Thu, 19 Sep 2019 23:47:11 +0200
-Message-Id: <20190919214712.7348-17-szeder.dev@gmail.com>
+Subject: [PATCH 14/15] name-rev: plug memory leak in name_rev() in the deref case
+Date:   Thu, 19 Sep 2019 23:47:10 +0200
+Message-Id: <20190919214712.7348-16-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.23.0.331.g4e51dcdf11
 In-Reply-To: <20190919214712.7348-1-szeder.dev@gmail.com>
 References: <20190919214712.7348-1-szeder.dev@gmail.com>
@@ -88,7 +88,7 @@ Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
  1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 3331075aa4..d65de04918 100644
+index e202835129..f867d45f0b 100644
 --- a/builtin/name-rev.c
 +++ b/builtin/name-rev.c
 @@ -101,18 +101,22 @@ static struct rev_name *create_or_update_name(struct commit *commit,
