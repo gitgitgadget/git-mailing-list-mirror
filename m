@@ -2,98 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CD861F463
-	for <e@80x24.org>; Thu, 19 Sep 2019 20:59:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 953D61F463
+	for <e@80x24.org>; Thu, 19 Sep 2019 21:39:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732829AbfISU70 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Sep 2019 16:59:26 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:41901 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732070AbfISU70 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Sep 2019 16:59:26 -0400
-Received: by mail-qk1-f194.google.com with SMTP id p10so4914891qkg.8
-        for <git@vger.kernel.org>; Thu, 19 Sep 2019 13:59:26 -0700 (PDT)
+        id S2403858AbfISVjt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Sep 2019 17:39:49 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:33830 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390087AbfISVjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 17:39:48 -0400
+Received: by mail-qt1-f196.google.com with SMTP id 3so3759548qta.1
+        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=kZvUMlCoBuyEDthI3xpY0WsP/yJ/AOWV3j2xRiY6gDs=;
-        b=oTqC+iufOZiVlEdQQWYxcxdR35aTYFkrs5z0lNAM7w8jheEihSAAxg2bkg4EqnM/yf
-         mM6w7/ZJvOJKMx+GiNYqTqawd8/BuheQyJO44/3iyMwtSseqmRKUXbiRU5QMldtJqJNo
-         bKJXJ8uK8yQNsM6kXJ7GEy1cLaiRCZZH6f0XiGlAVHobQm+Hhfx/2qNNjDv4sDCUA1Rp
-         p4cttK6K73vC54DVVf/7kYZZlAdBM89PzPKLTHEnkaz6AFAERK9oXzzHaCyujs17P93H
-         nKUZZWegobW3Mzp6YMBCjga3kfIOwJRmSY8PLSYqfMfQC3OoAJcdi/iotpf3ne8w+8VR
-         dCJQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2CLMk21rjS+lCKE+FOq3LOTz6PgjQJh+fzcG4QcG7N0=;
+        b=dTEcGqNVx+sfkG/xVk4+5+VY8uoPlnhwFDDRkqJ+NYZsZzI6O7X5IegMADcBt5NQB2
+         b+XkSg3cFmysDOLdj+b1GuXhAWkTGWRWp69mo6h168E926aIzPz5qPc1MBPLVpDpHDQe
+         pZ1tL8apDnmbqyeon+n1mNuW4ZAumccjBh3sqkba819zCRu7yoHxRV0bFkk+50HA71qh
+         w7rQkqybXfuOO9kXzdlresPu6qTIoFBPE+liPbKFJYj6QSMQnXSiL5kAhFHHVvyg6acE
+         oniKdQRyL2dyrArKVbDgOHpC8j7R/4C/dFk/ewW0p70xjJKeyj86yaJ9v/j+Ed6SYRmU
+         YdZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=kZvUMlCoBuyEDthI3xpY0WsP/yJ/AOWV3j2xRiY6gDs=;
-        b=R4j9i1TNM3Zz4qMLAki5hlT00xxMvO88RZJw6Cm6DIsIo9alt6KOGXmdcpqTjGZ6ZO
-         E4pemp5fY4sOCcDMYLrWdOH7iD5N65StMCmEUUoQOOPqPGqjcK9nCQ4h43SyoLAA91oY
-         OZ2Lxafcs7N06ud93uAB8mZrByimjIpp++zehHk83MOTGLWwojnrsO1wzmE1DU710eel
-         +lvyXQ4emsYRNLQHaJusiz/OgpBF6ZriT/Pzlq8VWWEUYn1h+ahi0RROOMvJkvuCMWR3
-         yXEeT4G9oBNAwhtTBmEH+NVxI1kUEXCBEg2XFeWsatN/edExSU4WCziF/CQHagHhIhEr
-         B2Pw==
-X-Gm-Message-State: APjAAAUrmBk2m5xTTN+SalPzojhVSbcJAVe8VSSt01+oXuebnx7nBVe4
-        dXiawsVGTio4YEhdSlljP7Q=
-X-Google-Smtp-Source: APXvYqxRX8Db4CshaqLE5tPi76HQecjZq4iMOjQNXmN0bo4ShYEeIslN8No6Bd0KBeorzGcA8fZzCw==
-X-Received: by 2002:a05:620a:16da:: with SMTP id a26mr5087990qkn.412.1568926765457;
-        Thu, 19 Sep 2019 13:59:25 -0700 (PDT)
-Received: from [10.0.1.19] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id j17sm5066238qki.99.2019.09.19.13.59.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Sep 2019 13:59:24 -0700 (PDT)
-Subject: Re: [PATCH v2 09/11] sparse-checkout: use hashmaps for cone patterns
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.316.git.gitgitgadget@gmail.com>
- <pull.316.v2.git.gitgitgadget@gmail.com>
- <95a3285bc6021daa236d98d7e1bbdc5c45fc73b0.1568904188.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <6b461ad3-164d-46ff-4a68-99f8e6562a72@gmail.com>
-Date:   Thu, 19 Sep 2019 16:59:23 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2CLMk21rjS+lCKE+FOq3LOTz6PgjQJh+fzcG4QcG7N0=;
+        b=GMUxJZKh4ITpc3lx6jDtHmzc+FR68LY49GYyjTuGsK6+kHrIcuBF+jikglmPiTIWQV
+         D66Nb6v+vj/mcKa2IcxVLVxW0p5M22GTQJ4undLbfP8vWJtrRgUgHQOT30qvprwfM9T0
+         hFQpMLIIEVVTVza2KeqLSzo2t4ZqDWiC+CQMUjlc4i9P+ZB0BgAGpGz89DcrWUZ2sEBs
+         ZqXDrYsXimbSFwQWQIbXKeWo97JPpce45ZMphLEeXmD9RaqEM5UD7pPeMNBm0RQ4tGoh
+         82+T5XLA7pNiG2RGAToDco3sZRBj7pxmco+n38q+5AyHqUhn9c2RWvg5EofrSlRD4kDt
+         vPxA==
+X-Gm-Message-State: APjAAAXKg1KGGHo9GuLE1xypXe4fBfyG5/31KyoaKA0Vpf45wqiJRprx
+        hWELIk+CrLIQRlQxJn0EHANGAGksPb4=
+X-Google-Smtp-Source: APXvYqyQgAb1wYNR+QJbMjyhRGE4QEsxNrp/pH8yUgh3K9IxGiwjgzmXOZkR47DiYuWFPImC61JcvQ==
+X-Received: by 2002:aed:2381:: with SMTP id j1mr5697321qtc.373.1568929186421;
+        Thu, 19 Sep 2019 14:39:46 -0700 (PDT)
+Received: from localhost (adamsmorganips06.a.subnet.rcn.com. [66.44.93.133])
+        by smtp.gmail.com with ESMTPSA id x55sm6570095qta.74.2019.09.19.14.39.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 19 Sep 2019 14:39:45 -0700 (PDT)
+Date:   Thu, 19 Sep 2019 22:39:44 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Sep 2019, #02; Wed, 18)
+Message-ID: <20190919213944.GA29614@cat>
+References: <xmqqy2yl44lw.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <95a3285bc6021daa236d98d7e1bbdc5c45fc73b0.1568904188.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqy2yl44lw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/19/2019 10:43 AM, Derrick Stolee via GitGitGadget wrote:
-> @@ -848,6 +953,10 @@ static int add_patterns_from_buffer(char *buf, size_t size,
->  	int i, lineno = 1;
->  	char *entry;
->  
-> +	pl->use_cone_patterns = core_sparse_checkout_cone;
-> +	hashmap_init(&pl->recursive_hashmap, pl_hashmap_cmp, NULL, 0);
-> +	hashmap_init(&pl->parent_hashmap, pl_hashmap_cmp, NULL, 0);
-> +
+On 09/18, Junio C Hamano wrote:
+> * tg/stash-refresh-index (2019-09-05) 3 commits
+>  - stash: make sure to write refreshed cache
+>  - merge: use refresh_and_write_cache
+>  - factor out refresh_and_write_cache function
+> 
+>  "git stash" learned to write refreshed index back to disk.
+> 
+>  Needs coordination with js/builtin-add-i topic, as they both wants
+>  the same kind of enhancement to the same API function.
 
-Just a head's-up to anyone looking at this series: this is not the
-right place to set use_cone_patterns (without passing a flag or
-something). This same path is called from the .gitignore machinery,
-so if you have a non-cone pattern in your .gitignore you will start
-seeing warnings with core.sparseCheckoutCone=true.
+I have sent an updated version of this, that integrates the changes
+the js/builtin-add-i topic needs in [*1*].  I think it would be ok to
+pick up that version and keep js/builtin-add-i out of pu until it's
+rebased on top of that.
 
-I figured it out only via integration tests with our C# layer. In
-v2 I'll fix this and add a test to make sure it stays fixed.
+Dscho: to help reduce the amount of work you (and to double check that
+my series works well with the builtin-add-i series) I have rebased
+js/builtin-add-i on top of my series, and pushed the result to
+https://github.com/tgummerer/git js/builtin-add-i.  Feel free to use
+that if it helps :)
 
-Otherwise, everything is working as expected.
-
--Stolee
-
+*1*: https://public-inbox.org/git/20190911182027.41284-1-t.gummerer@gmail.com/.
