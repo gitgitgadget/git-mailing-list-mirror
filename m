@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5F31F463
+	by dcvr.yhbt.net (Postfix) with ESMTP id 921371F463
 	for <e@80x24.org>; Thu, 19 Sep 2019 21:47:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404900AbfISVra (ORCPT <rfc822;e@80x24.org>);
+        id S2404861AbfISVra (ORCPT <rfc822;e@80x24.org>);
         Thu, 19 Sep 2019 17:47:30 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33571 "EHLO
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38806 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404758AbfISVr0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Sep 2019 17:47:26 -0400
-Received: by mail-wr1-f66.google.com with SMTP id b9so4713887wrs.0
-        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:25 -0700 (PDT)
+        with ESMTP id S2404752AbfISVr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 17:47:29 -0400
+Received: by mail-wr1-f66.google.com with SMTP id l11so4678791wrx.5
+        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=U2NywZg190sBMlIfdAdjM7U+vNWYMaSqu2GAQJsAFtc=;
-        b=Lu7l/mHxeVMCb1E8EU/vdy+oySbSyudFvVdqnLWxStYZ1Gv1RdqxWvAuXp7JbJ0OAd
-         km7mT5l27Niz0bTSxsERIfTQPNdVa4gHBSm+oIj+djhSXt8mPnrP9QFrJ1+ZYQGj1RVP
-         1fVOnFz3jsLbPvSKpyi/xmzKnmZ6Br2Mivb7L+lH4HLV/lp5g+EzzXIGlTd5tlYz8EFJ
-         vgMaU03odjKEgZ5fv/66wWnaghckMYSUlArFj5psBD91mUUiB9WMGMbRZQAnVcdm3nzN
-         W+8QGrAgu0XxNTMekeRxgHi8NDnjV+rM234ACKBrwUn+fZYSm4gIUjIP7ZwFRVrdUZur
-         hIRA==
+        bh=K0MzvnfBXB8JaOjw6+zEjvICoUYRHnROdi1ECaqsicU=;
+        b=Djr5FMakbFFximtPhsTufWEQSSvV/6jKMEBsa1i81RhbeqigvHhjuvCz8ii1dLUhQW
+         B0ChoAyhmlrwCd2ZQpVtVTUR4iGZYPzTy+kalHMnzLrdO7fB1d7dhRaPwokPn5rpmgfN
+         hMNNae85uJP7SEjK2DC4ZXtuSv1omcpgMHUDwW9vKLbhBLKnd648/U9ITJemugAlgbML
+         LUSMYFnDnrKVnjQwK06EAXieadLc18dNMcoFm6Gr3/ad/Z2O93zWMwZ8VrJMrkEneGDo
+         3ZQwNm/F2Qvx3IukixCZCcDv2Cs6J0pLW06WQBuvx+FNOWaZ/ynTHSvU+zhOxAwNj7E9
+         7XMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=U2NywZg190sBMlIfdAdjM7U+vNWYMaSqu2GAQJsAFtc=;
-        b=q0/411gZJPvLnlXKf8Aec8yMlH/QjUVFlSyTy7PlNh5Y23J4ymuIc5/HpLQDcknBGS
-         VySFxbKdGOdmpmx2IgQSQMTQoe2bzTcgmkLkYE4wUfrB66q3urvAItn4bCKXC9RtydAt
-         hyK7Gou5NSSPGxLgPbJxgA68ZUCfou/OUJCmpDOaWOsn6hrGAzkOsNTvSi4dALoO4EDm
-         ZvUGCaeBs2N04Lw5NaItDuBarUBllLfp2XBhL2E0U3MkTeU7jtspZqIN3O4+hm5L9D5J
-         tbLTqQ5tfihDfxFDVOucTiTB/0Qe3ABRYsn0IerGMnZFkw3S3ItIM7XcgyH+jAQvxEox
-         i5Nw==
-X-Gm-Message-State: APjAAAWNxEGpep32rgQggsKRxoRaKSQFa88Ocz1luYaW6h7YQwyNg1l1
-        j4m9tcZUKcQqBzjSTvCXULo=
-X-Google-Smtp-Source: APXvYqxIJgTsKQtVsI7N8TQDVxcbjPDiNuJ9T+xg1/9E4fs+cJ57GLLadObGkY+Y3Yldbq07mIHySA==
-X-Received: by 2002:adf:ff8a:: with SMTP id j10mr9346250wrr.334.1568929644548;
-        Thu, 19 Sep 2019 14:47:24 -0700 (PDT)
+        bh=K0MzvnfBXB8JaOjw6+zEjvICoUYRHnROdi1ECaqsicU=;
+        b=POyrH+j0TpUZHpRffOmiMjbXrz6sBIdin0LfO+r+6upaG5ip0abo7OFfPr2GF4touL
+         w9ab/KHe/E+VVQ0LTdZl4bcovI4Hc/O0d9n/yUs5g8W2VwrZhVRpYXC/5u62chJN+/fJ
+         hR+7luh6gJP1vB0Mh4bzgxEsJrHyfzjIRQL7GODUmIKfFgP167Mn3YQb6iUHI0H5Accv
+         Xb3owZoM+yYDcU/0k9dKKfP3lkd2tLVaXnJYL/McjUlq9MuJ2Vez4v6J0B5Hkg53DhOu
+         lG2sj+vh4qwfJJrCJpYb8bEQENRF2B4DFadr+8DNxHLG3e8Bb/3kMylziwxMMzZEyRD5
+         8yKw==
+X-Gm-Message-State: APjAAAXSlZkl4+EYgpOKO1E2YHWHfEXG3pw5ODuPqYY2Bp2PgHiP7Bjv
+        K0Ewum1l5khFsT770wSXOMWA/QmB
+X-Google-Smtp-Source: APXvYqy6iWbNT8KUHLuIqp6LRxc45x0w1YwbZNsrLSa2SoHqdj9wCwl7+MflYsOQKeTVkqxFkW02+g==
+X-Received: by 2002:a5d:6812:: with SMTP id w18mr8434376wru.250.1568929645590;
+        Thu, 19 Sep 2019 14:47:25 -0700 (PDT)
 Received: from localhost.localdomain (x4db63806.dyn.telefonica.de. [77.182.56.6])
-        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.23
+        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 Sep 2019 14:47:24 -0700 (PDT)
+        Thu, 19 Sep 2019 14:47:25 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 05/15] name-rev: use sizeof(*ptr) instead of sizeof(type) in allocation
-Date:   Thu, 19 Sep 2019 23:47:00 +0200
-Message-Id: <20190919214712.7348-6-szeder.dev@gmail.com>
+Subject: [PATCH 06/15] t6120: add a test to cover inner conditions in 'git name-rev's name_rev()
+Date:   Thu, 19 Sep 2019 23:47:01 +0200
+Message-Id: <20190919214712.7348-7-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.23.0.331.g4e51dcdf11
 In-Reply-To: <20190919214712.7348-1-szeder.dev@gmail.com>
 References: <20190919214712.7348-1-szeder.dev@gmail.com>
@@ -68,24 +68,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+In 'builtin/name-rev.c' in the name_rev() function there is a loop
+iterating over all parents of the given commit, and the loop body
+looks like this:
+
+  if (parent_number > 1) {
+    if (generation > 0)
+      // do stuff #1
+    else
+      // do stuff #2
+  } else {
+     // do stuff #3
+  }
+
+These conditions are not covered properly in the test suite.  As far
+as purely test coverage goes, they are all executed several times over
+in 't6120-describe.sh'.  However, they don't directly influence the
+command's output, because the repository used in that test script
+contains several branches and tags pointing somewhere into the middle
+of the commit DAG, and thus result in a better name for the
+to-be-named commit.  In an early version of this patch series I
+managed to mess up those conditions (every single one of them at
+once!), but the whole test suite still passed successfully.
+
+So add a new test case that operates on the following history:
+
+    -----------master
+   /          /
+  A----------M2
+   \        /
+    \---M1-C
+     \ /
+      B
+
+and names the commit 'B', where:
+
+  - The merge commit at master makes sure that the 'do stuff #3'
+    affects the final name.
+
+  - The merge commit M2 make sure that the 'do stuff #1' part
+    affects the final name.
+
+  - And M1 makes sure that the 'do stuff #2' part affects the final
+    name.
+
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- builtin/name-rev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t6120-describe.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index e406ff8e17..dec2228cc7 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -98,7 +98,7 @@ static void name_rev(struct commit *commit,
- 	}
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 07e6793e84..2a0f2204c4 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -421,4 +421,47 @@ test_expect_success 'describe complains about missing object' '
+ 	test_must_fail git describe $ZERO_OID
+ '
  
- 	if (name == NULL) {
--		name = xmalloc(sizeof(rev_name));
-+		name = xmalloc(sizeof(*name));
- 		set_commit_rev_name(commit, name);
- 		goto copy_data;
- 	} else if (is_better_name(name, taggerdate, distance, from_tag)) {
++#   -----------master
++#  /          /
++# A----------M2
++#  \        /
++#   \---M1-C
++#    \ /
++#     B
++test_expect_success 'test' '
++	git init repo &&
++	(
++		cd repo &&
++
++		echo A >file &&
++		git add file &&
++		git commit -m A &&
++		A=$(git rev-parse HEAD) &&
++
++		git checkout --detach &&
++		echo B >file &&
++		git commit -m B file &&
++		B=$(git rev-parse HEAD) &&
++
++		git checkout $A &&
++		git merge --no-ff $B &&  # M1
++
++		echo C >file &&
++		git commit -m C file &&
++
++		git checkout $A &&
++		git merge --no-ff HEAD@{1} && # M2
++
++		git checkout master &&
++		git merge --no-ff HEAD@{1} &&
++
++		git log --graph --oneline &&
++
++		echo "$B master^2^2~1^2" >expect &&
++		git name-rev $B >actual &&
++
++		test_cmp expect actual
++	)
++'
++
+ test_done
 -- 
 2.23.0.331.g4e51dcdf11
 
