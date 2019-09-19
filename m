@@ -2,443 +2,247 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F3061F463
-	for <e@80x24.org>; Thu, 19 Sep 2019 14:43:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D95BF1F463
+	for <e@80x24.org>; Thu, 19 Sep 2019 16:30:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389387AbfISOnY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Sep 2019 10:43:24 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41940 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389041AbfISOnW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Sep 2019 10:43:22 -0400
-Received: by mail-wr1-f68.google.com with SMTP id h7so3367814wrw.8
-        for <git@vger.kernel.org>; Thu, 19 Sep 2019 07:43:19 -0700 (PDT)
+        id S2404364AbfISQaR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Sep 2019 12:30:17 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:45577 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404350AbfISQaR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 12:30:17 -0400
+Received: by mail-qk1-f195.google.com with SMTP id z67so3962694qkb.12
+        for <git@vger.kernel.org>; Thu, 19 Sep 2019 09:30:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=ch1B1PQdv5t1YUEbo43+JNl+sht9+UErPZhpGcZTGgw=;
-        b=k4C+P8JhdHb2DrUjMvACnRmoe4u9f7+dRUh3vzDIujBbOFMqxvIZTbXdReBIX/Iqkr
-         zFo9PU/yk6zb4CZZOOqc3dkifqObkX8r5VEx/xxpE6yWcPK8/hEKfGq31ZhCDWEBynKu
-         5QkS9nUYoFnuNbTrAIobqPjJixy8/RumUbtd+/8sqJJfMlTjNLubX3OfodlZ2sh7V/9t
-         dB4iQQj8OGe2qo3Xv2vNu1GmcqwTPf2KywmDviUcpElg7VdzrgUk/ZODFs8lURqbNOMB
-         d2un8OKqlM6EQZR3l0kurzoYp9+sloALgBb7ClxrrwVHkcHI2oASVslW3b6ZAvk6wA4G
-         N3yw==
+        h=from:subject:to:cc:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=6bS8NbPQTsD+bj4Wi9FeWdhddUqXC9JBT6PidSMof74=;
+        b=c4QoUniCstYhnV2eL4rfKQim5yFk29NT2ZTP/hj1HRutGHtceGDtfrDQ5FxOKka83H
+         C/QsCOllQT7Bq+vNd3i4PUN6nfmCbvNaw07S8Swq9rJzK3yGU9PdoOyyMJXAKElRcVbG
+         +JIbryUeSYzx3Y1ugN02cYQQgWkWME9LmoYP40iMBDG4IZqMUKrkOonqCbbKOZHbP1Po
+         BBUhkF+2S/TueQd0FZ/zGcAUdmsl/VQBGQCzyX+sRXZ45hrZ02ic057yuh962q1RVO3R
+         XVn6KH4Ovy7fVbHy2JNQ6o3iACKdypzUeiceop864QHbEjSBPGFQS8tCeH0UPrqlXYMo
+         GGoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ch1B1PQdv5t1YUEbo43+JNl+sht9+UErPZhpGcZTGgw=;
-        b=SwDElhImDxQfBPkGwC1U2m0/iXHb3vbmzcwSavIoOk/IlQko7SGGxzuCDStzIWpNgV
-         3VA1tdGuSvwVBnvpIiKtLnL8m8B/ey/0hu2hmi7vmw0U/oAxIe/sqq9UTsoG43O6eZCT
-         +CB5M16mu5Kcrb00YAWK0sgKMYH6rYuqyjE8FZH3eGvoBKs5GrLoN0gdmwADhVgbaLpw
-         WRrQO1cSvp7ddLm6mYml8WfmF/u+K5R/2fKBUAnPCVq1jYYhR5vdNgZgPP309OsmgnfZ
-         CdKHxbS8Rg8jHyAsOTvg5dOI6ji3BJ+l40dw9nBTAPlww/FOwTwpjN6cUN6REdfvRK4i
-         a2wQ==
-X-Gm-Message-State: APjAAAWy7h4zC7LIWqEJbAVrY2cWIhFOBpiOUHas2A6XOTVrdOB6EIUL
-        u13Vd45BiQVYL73Znz6qx0N6fNWW
-X-Google-Smtp-Source: APXvYqy/C2gA8bd+3V8TU1RiGB+jdyoZyJ1eA4llC0bRQt9RKjZLKCy5NMNMo1WHnIg1eEH4lxmMmw==
-X-Received: by 2002:adf:ee4a:: with SMTP id w10mr7486340wro.138.1568904198218;
-        Thu, 19 Sep 2019 07:43:18 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d28sm13569203wrb.95.2019.09.19.07.43.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Sep 2019 07:43:17 -0700 (PDT)
-Date:   Thu, 19 Sep 2019 07:43:17 -0700 (PDT)
-X-Google-Original-Date: Thu, 19 Sep 2019 14:43:07 GMT
-Message-Id: <995c5b8e2b4b4ba36c09165de1bc4719819c3ce4.1568904188.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.316.v2.git.gitgitgadget@gmail.com>
-References: <pull.316.git.gitgitgadget@gmail.com>
-        <pull.316.v2.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 10/11] sparse-checkout: init and set in cone mode
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:subject:to:cc:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=6bS8NbPQTsD+bj4Wi9FeWdhddUqXC9JBT6PidSMof74=;
+        b=RJSEpB5ePAZrN0LTUp42PRZbRMtTdyUbmqJcGKqOso658+QRWyRdC6KGy/hl8ely8h
+         EqdonZiIx2oUk4trztcQiCog5F4G4nPq+rpJMZ2/2N3+uGllJjstaByNEE4yQnU3OSrS
+         EkuD+7oTgcOqLMSAsQaq9q9TT2sZZbcL0eS0wagxMtRp2kF3nLzkKX/9owgVcboko7lH
+         0cQwLWee5wMzUwWEJr/cfVJoXs1A8hXF32Ak6ipc3gXzsCx2kgt7PEo8ipGXd0Ds6xaU
+         u66FBZN1/oBYJ/YH/YY3MPx1exLah+taVmrImdE1pGRbX4wsiBLg14Gb49x5zNYNOtH+
+         juNQ==
+X-Gm-Message-State: APjAAAWNkK1qO7p806Eu7gZYrkJyotXkasMXoF4K7SYcg5lti0GO+ffj
+        ypVkKT7ucZ2aXsMl8eLGfbloS1HaPqE=
+X-Google-Smtp-Source: APXvYqyWLiXGg6K3r8ECZ1+HlpubzE9IAG5/yCvq7cUTcDxz0cjawe8+ejUGAB4o1dxMlGgmIyTzcA==
+X-Received: by 2002:ae9:eb51:: with SMTP id b78mr3912180qkg.452.1568910615410;
+        Thu, 19 Sep 2019 09:30:15 -0700 (PDT)
+Received: from [10.0.1.19] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id i30sm4972695qte.27.2019.09.19.09.30.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Sep 2019 09:30:14 -0700 (PDT)
+From:   Derrick Stolee <stolee@gmail.com>
+Subject: [DISCUSSION] Growing the Git community
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     "peff@peff.net" <peff@peff.net>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "gitster@pobox.com" <gitster@pobox.com>, garimasigit@gmail.com
+Message-ID: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
+Date:   Thu, 19 Sep 2019 12:30:13 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+During the Virtual Git Contributors' Summit, Dscho brought up the topic of
+"Inclusion & Diversity". We discussed ideas for how to make the community
+more welcoming to new contributors of all kinds. Let's discuss some of
+the ideas we talked about, and some that have been growing since.
 
-To make the cone pattern set easy to use, update the behavior of
-'git sparse-checkout [init|set]'.
+Feel free to pick apart all of the claims I make below. This is based
+on my own experience and opinions. It should be a good baseline
+for us to all arrive with valuable action items.
 
-Add '--cone' flag to 'git sparse-checkout init' to set the config
-option 'core.sparseCheckoutCone=true'.
+I have CC'd some of the people who were part of that discussion. Sorry
+if I accidentally left someone out.
 
-When running 'git sparse-checkout set' in cone mode, a user only
-needs to supply a list of recursive folder matches. Git will
-automatically add the necessary parent matches for the leading
-directories.
+I. Goals and Perceived Problems
 
-When testing 'git sparse-checkout set' in cone mode, check the
-error stream to ensure we do not see any errors. Specifically,
-we want to avoid the warning that the patterns do not match
-the cone-mode patterns.
+As a community, our number one goal is for Git to continue to be the best
+distributed version control system. At minimum, it should continue to be
+the most widely-used DVCS. Towards that goal, we need to make sure Git is
+the best solution for every kind of developer in every industry. The
+community cannot do this without including developers of all kinds. This
+means having a diverse community, for all senses of the word: Diverse in
+physical location, gender, professional status, age, and others.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- builtin/sparse-checkout.c          | 171 +++++++++++++++++++++++++++--
- dir.c                              |   4 +-
- dir.h                              |   3 +
- t/t1091-sparse-checkout-builtin.sh |  49 +++++++++
- 4 files changed, 213 insertions(+), 14 deletions(-)
+In addition, the community must continue to grow, but members leave the
+community on a regular basis for multiple reasons. New contributors must
+join and mature within the community or the community will dwindle. Without
+dedicating effort and attention to this, natural forces may result in the
+community being represented only by contributors working at large tech
+companies focused on the engineering systems of very large groups.
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index f858f0b1b5..111cbc96d9 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -6,6 +6,7 @@
- #include "repository.h"
- #include "run-command.h"
- #include "strbuf.h"
-+#include "string-list.h"
- 
- static char const * const builtin_sparse_checkout_usage[] = {
- 	N_("git sparse-checkout [init|list|set|disable] <options>"),
-@@ -74,9 +75,14 @@ static int update_working_directory(void)
- 	return result;
- }
- 
-+#define SPARSE_CHECKOUT_NONE 0
-+#define SPARSE_CHECKOUT_FULL 1
-+#define SPARSE_CHECKOUT_CONE 2
-+
- static int sc_set_config(int mode)
- {
- 	struct argv_array argv = ARGV_ARRAY_INIT;
-+	struct argv_array cone_argv = ARGV_ARRAY_INIT;
- 
- 	if (git_config_set_gently("extensions.worktreeConfig", "true")) {
- 		error(_("failed to set extensions.worktreeConfig setting"));
-@@ -95,9 +101,31 @@ static int sc_set_config(int mode)
- 		return 1;
- 	}
- 
-+	argv_array_pushl(&cone_argv, "config", "--worktree",
-+			 "core.sparseCheckoutCone", NULL);
-+
-+	if (mode == SPARSE_CHECKOUT_CONE)
-+		argv_array_push(&cone_argv, "true");
-+	else
-+		argv_array_push(&cone_argv, "false");
-+
-+	if (run_command_v_opt(cone_argv.argv, RUN_GIT_CMD)) {
-+		error(_("failed to enable core.sparseCheckoutCone"));
-+		return 1;
-+	}
-+
- 	return 0;
- }
- 
-+static char const * const builtin_sparse_checkout_init_usage[] = {
-+	N_("git sparse-checkout init [--cone]"),
-+	NULL
-+};
-+
-+static struct sparse_checkout_init_opts {
-+	int cone_mode;
-+} init_opts;
-+
- static int sparse_checkout_init(int argc, const char **argv)
- {
- 	struct pattern_list pl;
-@@ -105,8 +133,21 @@ static int sparse_checkout_init(int argc, const char **argv)
- 	FILE *fp;
- 	int res;
- 	struct object_id oid;
-+	int mode;
-+
-+	static struct option builtin_sparse_checkout_init_options[] = {
-+		OPT_BOOL(0, "cone", &init_opts.cone_mode,
-+			 N_("initialize the sparse-checkout in cone mode")),
-+		OPT_END(),
-+	};
- 
--	if (sc_set_config(1))
-+	argc = parse_options(argc, argv, NULL,
-+			     builtin_sparse_checkout_init_options,
-+			     builtin_sparse_checkout_init_usage, 0);
-+
-+	mode = init_opts.cone_mode ? SPARSE_CHECKOUT_CONE : SPARSE_CHECKOUT_FULL;
-+
-+	if (sc_set_config(mode))
- 		return 1;
- 
- 	memset(&pl, 0, sizeof(pl));
-@@ -135,6 +176,72 @@ static int sparse_checkout_init(int argc, const char **argv)
- 	return update_working_directory();
- }
- 
-+static void insert_recursive_pattern(struct pattern_list *pl, struct strbuf *path)
-+{
-+	struct pattern_entry *e = xmalloc(sizeof(struct pattern_entry));
-+	e->patternlen = path->len;
-+	e->pattern = strbuf_detach(path, NULL);
-+	hashmap_entry_init(e, memhash(e->pattern, e->patternlen));
-+
-+	hashmap_add(&pl->recursive_hashmap, e);
-+
-+	while (e->patternlen) {
-+		char *slash = strrchr(e->pattern, '/');
-+		char *oldpattern = e->pattern;
-+		size_t newlen;
-+
-+		if (!slash)
-+			break;
-+
-+		newlen = slash - e->pattern;
-+		e = xmalloc(sizeof(struct pattern_entry));
-+		e->patternlen = newlen;
-+		e->pattern = xstrndup(oldpattern, newlen);
-+		hashmap_entry_init(e, memhash(e->pattern, e->patternlen));
-+
-+		if (!hashmap_get(&pl->parent_hashmap, e, NULL))
-+			hashmap_add(&pl->parent_hashmap, e);
-+	}
-+}
-+
-+static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
-+{
-+	int i;
-+	struct pattern_entry *entry;
-+	struct hashmap_iter iter;
-+	struct string_list sl = STRING_LIST_INIT_DUP;
-+
-+	hashmap_iter_init(&pl->parent_hashmap, &iter);
-+	while ((entry = hashmap_iter_next(&iter)))
-+		string_list_insert(&sl, entry->pattern);
-+
-+	string_list_sort(&sl);
-+	string_list_remove_duplicates(&sl, 0);
-+
-+	fprintf(fp, "/*\n!/*/\n");
-+
-+	for (i = 0; i < sl.nr; i++) {
-+		char *pattern = sl.items[i].string;
-+
-+		if (strlen(pattern))
-+			fprintf(fp, "/%s/\n!/%s/*/\n", pattern, pattern);
-+	}
-+
-+	string_list_clear(&sl, 0);
-+
-+	hashmap_iter_init(&pl->recursive_hashmap, &iter);
-+	while ((entry = hashmap_iter_next(&iter)))
-+		string_list_insert(&sl, entry->pattern);
-+
-+	string_list_sort(&sl);
-+	string_list_remove_duplicates(&sl, 0);
-+
-+	for (i = 0; i < sl.nr; i++) {
-+		char *pattern = sl.items[i].string;
-+		fprintf(fp, "/%s/\n", pattern);
-+	}
-+}
-+
- static int write_patterns_and_update(struct pattern_list *pl)
- {
- 	char *sparse_filename;
-@@ -142,7 +249,12 @@ static int write_patterns_and_update(struct pattern_list *pl)
- 
- 	sparse_filename = get_sparse_checkout_filename();
- 	fp = fopen(sparse_filename, "w");
--	write_patterns_to_file(fp, pl);
-+
-+	if (core_sparse_checkout_cone)
-+		write_cone_to_file(fp, pl);
-+	else
-+		write_patterns_to_file(fp, pl);
-+
- 	fclose(fp);
- 	free(sparse_filename);
- 
-@@ -150,6 +262,24 @@ static int write_patterns_and_update(struct pattern_list *pl)
- 	return update_working_directory();
- }
- 
-+static void strbuf_to_cone_pattern(struct strbuf *line, struct pattern_list *pl)
-+{
-+	strbuf_trim(line);
-+
-+	strbuf_trim_trailing_dir_sep(line);
-+
-+	if (!line->len)
-+		return;
-+
-+	if (line->buf[0] == '/')
-+		strbuf_remove(line, 0, 1);
-+
-+	if (!line->len)
-+		return;
-+
-+	insert_recursive_pattern(pl, line);
-+}
-+
- static char const * const builtin_sparse_checkout_set_usage[] = {
- 	N_("git sparse-checkout set [--stdin|<patterns>]"),
- 	NULL
-@@ -177,17 +307,34 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
- 			     builtin_sparse_checkout_set_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN);
- 
--	if (set_opts.use_stdin) {
-+	if (core_sparse_checkout_cone) {
- 		struct strbuf line = STRBUF_INIT;
--
--		while (!strbuf_getline(&line, stdin)) {
--			size_t len;
--			char *buf = strbuf_detach(&line, &len);
--			add_pattern(buf, buf, len, &pl, 0);
-+		hashmap_init(&pl.recursive_hashmap, pl_hashmap_cmp, NULL, 0);
-+		hashmap_init(&pl.parent_hashmap, pl_hashmap_cmp, NULL, 0);
-+
-+		if (set_opts.use_stdin) {
-+			while (!strbuf_getline(&line, stdin))
-+				strbuf_to_cone_pattern(&line, &pl);
-+		} else {
-+			for (i = 0; i < argc; i++) {
-+				strbuf_setlen(&line, 0);
-+				strbuf_addstr(&line, argv[i]);
-+				strbuf_to_cone_pattern(&line, &pl);
-+			}
- 		}
- 	} else {
--		for (i = 0; i < argc; i++)
--			add_pattern(argv[i], argv[i], strlen(argv[i]), &pl, 0);
-+		if (set_opts.use_stdin) {
-+			struct strbuf line = STRBUF_INIT;
-+
-+			while (!strbuf_getline(&line, stdin)) {
-+				size_t len;
-+				char *buf = strbuf_detach(&line, &len);
-+				add_pattern(buf, buf, len, &pl, 0);
-+			}
-+		} else {
-+			for (i = 0; i < argc; i++)
-+				add_pattern(argv[i], argv[i], strlen(argv[i]), &pl, 0);
-+		}
- 	}
- 
- 	return write_patterns_and_update(&pl);
-@@ -198,7 +345,7 @@ static int sparse_checkout_disable(int argc, const char **argv)
- 	char *sparse_filename;
- 	FILE *fp;
- 
--	if (sc_set_config(1))
-+	if (sc_set_config(SPARSE_CHECKOUT_FULL))
- 		die(_("failed to change config"));
- 
- 	sparse_filename = get_sparse_checkout_filename();
-@@ -212,7 +359,7 @@ static int sparse_checkout_disable(int argc, const char **argv)
- 	unlink(sparse_filename);
- 	free(sparse_filename);
- 
--	return sc_set_config(0);
-+	return sc_set_config(SPARSE_CHECKOUT_NONE);
- }
- 
- int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
-diff --git a/dir.c b/dir.c
-index 4fc57187e9..298a4539ec 100644
---- a/dir.c
-+++ b/dir.c
-@@ -599,8 +599,8 @@ void parse_path_pattern(const char **pattern,
- 	*patternlen = len;
- }
- 
--static int pl_hashmap_cmp(const void *unused_cmp_data,
--			  const void *a, const void *b, const void *key)
-+int pl_hashmap_cmp(const void *unused_cmp_data,
-+		   const void *a, const void *b, const void *key)
- {
- 	const struct pattern_entry *ee1 = (const struct pattern_entry *)a;
- 	const struct pattern_entry *ee2 = (const struct pattern_entry *)b;
-diff --git a/dir.h b/dir.h
-index bbd5bd1cc9..7c76a2d55e 100644
---- a/dir.h
-+++ b/dir.h
-@@ -296,6 +296,9 @@ int is_excluded(struct dir_struct *dir,
- 		struct index_state *istate,
- 		const char *name, int *dtype);
- 
-+int pl_hashmap_cmp(const void *unused_cmp_data,
-+		   const void *a, const void *b, const void *key);
-+
- struct pattern_list *add_pattern_list(struct dir_struct *dir,
- 				      int group_type, const char *src);
- int add_patterns_from_file_to_list(const char *fname, const char *base, int baselen,
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index f726205d21..b6eb02c69a 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -178,5 +178,54 @@ test_expect_success 'sparse-checkout disable' '
- 	test_cmp expect dir
- '
- 
-+test_expect_success 'cone mode: init and set' '
-+	git -C repo sparse-checkout init --cone &&
-+	git -C repo config --list >config &&
-+	test_i18ngrep "core.sparsecheckoutcone=true" config &&
-+	ls repo >dir  &&
-+	echo a >expect &&
-+	test_cmp expect dir &&
-+	git -C repo sparse-checkout set deep/deeper1/deepest/ 2>err &&
-+	test_line_count = 0 err &&
-+	ls repo >dir  &&
-+	cat >expect <<-EOF &&
-+		a
-+		deep
-+	EOF
-+	ls repo/deep >dir  &&
-+	cat >expect <<-EOF &&
-+		a
-+		deeper1
-+	EOF
-+	ls repo/deep/deeper1 >dir  &&
-+	cat >expect <<-EOF &&
-+		a
-+		deepest
-+	EOF
-+	test_cmp expect dir &&
-+	cat >expect <<-EOF &&
-+		/*
-+		!/*/
-+		/deep/
-+		!/deep/*/
-+		/deep/deeper1/
-+		!/deep/deeper1/*/
-+		/deep/deeper1/deepest/
-+	EOF
-+	test_cmp expect repo/.git/info/sparse-checkout &&
-+	git -C repo sparse-checkout set --stdin 2>err <<-EOF &&
-+		folder1
-+		folder2
-+	EOF
-+	test_line_count = 0 err &&
-+	cat >expect <<-EOF &&
-+		a
-+		folder1
-+		folder2
-+	EOF
-+	ls repo >dir &&
-+	test_cmp expect dir
-+'
-+
- test_done
- 
--- 
-gitgitgadget
+It is worth noting that this community growth must never be at the cost
+of code quality. We must continue to hold all contributors to a high
+standard so Git stays a stable product.
 
+Here are some problems that may exist within the Git community and may
+form a barrier to new contributors entering:
+
+1. Discovering how to contribute to Git is non-obvious.
+
+2. Submitting to a mailing list is a new experience for most developers.
+   This includes the full review and discussion process.
+
+3. The high standards for patch quality are intimidating to new contributors.
+
+4. Some people do not feel comfortable engaging in a community without
+   a clear Code of Conduct. This discomfort is significant and based on real
+   experiences throughout society.
+
+5. Since Git development happens in a different place than where users
+    acquire the end product, some are not aware that they can contribute.
+
+II. Approach
+
+The action items below match the problems listed above.
+
+1. Improve the documentation for contributing to Git.
+
+In preparation for this email, I talked to someone familiar with issues
+around new contributors, and they sat down to try and figure out how to
+contribute to Git. The first place they went was https://github.com/git/git
+and looked at the README. It takes deep reading of a paragraph to see a
+link to the SubmittingPatches docs.
+
+To improve this experience, we could rewrite the README to have clearer
+section markers, including one "Contributing to Git" section relatively
+high in the doc. We may want to update the README for multiple reasons.
+It should link to the new "My First Contribution" document
+(https://git-scm.com/docs/MyFirstContribution).
+
+2. Add more pointers to GitGitGadget
+
+We have a reference to GitGitGadget in the GitHub PR template to try and
+get people who try to submit a pull request to git/git to instead create
+one on GitGitGadget. However, that captures contributors who didn't read
+the docs about how to submit! (This is somewhat covered by the "My First
+Contribution" doc as well, so making that more visible will also help.)
+
+Could we reference GitGitGadget as part of the Submitting Patches doc
+as well?
+
+3. Introduce a new "mentors" mailing list
+
+From personal experience, all new contributors at Microsoft (after Jeff
+Hostetler at least) have first had their patches reviewed privately by
+the team before sending them upstream. Each time, the new contributor
+gained confidence about the code and had help interpreting feedback from
+the list.
+
+We want to make this kind of experience part of the open Git community.
+
+The idea discussed in the virtual summit was to create a new mailing
+list (probably a Google group) of Git community members. The point of
+the list is for a new contributor to safely say "I'm looking for a
+mentor!" and the list can help pair them with a mentor. This must
+include (a) who is available now? and (b) what area of the code are they
+hoping to change?
+
+As evidence that this is a good idea, please see the recent research
+paper ""We Don't Do That Here": How Collaborative Editing With Mentors
+Improves Engagement in Social Q&A Communities" [1].
+
+[1] http://www.chrisparnin.me/pdf/chi18.pdf
+
+When asking your first question on Stack Overflow, this group added
+a pop-up saying "Would you like someone to help you with this?". Then,
+a mentor would assist crafting the best possible question to ensure
+the asker got the best response possible.
+
+I believe this would work in our community, too. The action items
+are:
+
+a. Create the mailing list and add people to the list.
+
+b. Add a pointer to the list in our documentation.
+
+Note: the people on the mentoring list do not need to be
+"senior" community members. In fact, someone who more recently
+joined the community has a more fresh perspective on the process.
+
+4. Add an official Code of Conduct
+
+So far, the community has had an unofficial policy of "be nice,
+as much as possible". We should add a Code of Conduct that is
+more explicit about the behavior we want to model. This was also
+discussed in the meeting with wide approval.
+
+5. Advertise that Git wants new contributors
+
+After we put items 1-4 in place, we should reach out to the
+general tech community that we are interested in new
+contributors. It's not enough to open the door, we should
+point people to it.
+
+This item is much less explicit about the _how_. This could
+be done at the individual level: posting to social media or
+blog posts. But perhaps there is something more official we
+could do?
+
+III. Measurement
+
+How do we know if any of these items make a difference? We
+need to gather data and measure the effects. With the size
+of our community, I expect that it will take multiple years
+to really see a measurable difference. But, no time like
+the present to ask "What does success look like?"
+
+Here are a few measurements that we could use. Each "count"
+could be measured over any time frame. We could use major
+releases as time buckets: v2.22.0 to v2.23.0, for example.
+
+1. How many first-time contributors sent a patch?
+
+2. How many contributors had their first commit accepted into
+   the release?
+
+3. How many contributors started reviewing?
+
+4. How many total patches/reviews did the list receive?
+
+What other measurements would be reasonable? We could try
+building tools to collect these measurements for the past
+to see historical trends. Based on that data, we may be
+able to set goals for the future.
+
+With such a small community, and an expected small number
+of new contributors, it may also be good to do interviews
+with the new contributors to ask about their experience.
+In particular, we would be looking for moments where they
+had trouble or experience friction. Each of those
+moments is a barrier that others may not be clearing.
+
+
+I look forward to the discussion.
+
+Thanks,
+-Stolee
