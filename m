@@ -8,57 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 288E91F463
+	by dcvr.yhbt.net (Postfix) with ESMTP id 132821F464
 	for <e@80x24.org>; Thu, 19 Sep 2019 14:43:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389047AbfISOnS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Sep 2019 10:43:18 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44547 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388953AbfISOnR (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2389016AbfISOnR (ORCPT <rfc822;e@80x24.org>);
         Thu, 19 Sep 2019 10:43:17 -0400
-Received: by mail-wr1-f67.google.com with SMTP id i18so3349971wru.11
-        for <git@vger.kernel.org>; Thu, 19 Sep 2019 07:43:15 -0700 (PDT)
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:40917 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732732AbfISOnP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 10:43:15 -0400
+Received: by mail-wm1-f66.google.com with SMTP id b24so4254762wmj.5
+        for <git@vger.kernel.org>; Thu, 19 Sep 2019 07:43:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NsKP+NJWULFzo+Nul6WMF/A63W/28C3bXfTdPlDK/1w=;
-        b=bYlr8A5Qi1VJ6xMUb5Td7Fx8X7Ya2RJ4SQpM3ZmuYrUaNTd4PFv7d7TBqHMvD7iGCf
-         Iwp5g84a3RPtntMq2UZ4z9ePuk/av/QdhbjhHu3ZO6sT9dle5OIBVBgJ27CMgXLcPURQ
-         HuAQ3N0TkCML4ZYKL+gz9Yp9LlgQ9/5C9H0OQL6/VeCCDgFMFJQMvQH6ZNVyZ4rg17GS
-         b0kT3ujndDbbTa3OHbQds5xbH7a6Hgag6SeNyW2ElrwZKlxAu4DZiIKi2VesD3s6mEP+
-         PXuqfuiybUC394oLsvrwtO4Q61vwYVGcrU2e9XUjuGA/HZ3TJU6G3NHk/Brn/1JVgCqJ
-         YHFQ==
+        bh=EbCIxBjP1Gjy6pX4s2tXi7UGlubyPnXXNEjGv/7cmbA=;
+        b=J4XzBC1kUXpQsuuVV/ENAbVeGzmvBIkI4Kcsi0HiO7Ye1CyzuceQA+u2stndrDnPcW
+         apOZFz5QwRvD5h+/w973Vyh2NKLG+EmpSBQqBE8I+x2c5F34tBVWOJcDqPtpA9NAAK2+
+         daJU10qiH1i2j4JK3AJCSMRh3fhgi/zaB0n90oJiifnhuWSu4HiKG8LjFLx9UIcez51q
+         3BYtgzaF7geOAh2i/b0qOg+esZFfrCmW/GQMYhametLFfNDsPO1Dsyh10FucgyyxoAq3
+         K/winSF1qU9hVAIhUDGlYH/TcT+FvHSqAI/0DCsoFQZxraSh3i/zT7wGWlNJzmhIAQX6
+         SQQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NsKP+NJWULFzo+Nul6WMF/A63W/28C3bXfTdPlDK/1w=;
-        b=MfvWd9eoeIbL6g33J+MP2aJbX7jY1slArsfab1bVIOLRRDqSQXP7/IrEP1QK7FIfMK
-         9xz+k4aBXGke3qtel8AHOTKBhBEAEKASYhPZ3HzfOByB01vqU6HJNS1ZzvSvneGgUlaz
-         m0lmWi7tIocRIgDtNEQLecMVpCZ1VyBgGIgbVBlV3Q9DO0mZJV2wepJ4xXsHZV1ZGgeN
-         3VjRufjMGA8Tb6xuV2YMLCxbnRICJKzeR5OTaIHhkdNUYg94TQlzIv0bj7WWLisBBgo5
-         nIl4fmCvFPyjRQgCJe5lBrM70llsAVShmTRj5NccPcwWb18++0xC1OXn+d2e3nTYQNds
-         ZNAA==
-X-Gm-Message-State: APjAAAVe3S1y1YiHLyd43mzKdi01DNTMCP8yiJ5vXLqBrYwUF0MOXwC6
-        dpPvRMEw0Y14VYoGv76+6Pw4liKr
-X-Google-Smtp-Source: APXvYqx0ZXBRc7jQXbKsbWkEt0+56Nq1Bbsdz4cIiDbJayeM75jktS4z97HeIgX7B5RB0NkGD7R0Ow==
-X-Received: by 2002:a5d:500b:: with SMTP id e11mr7458233wrt.285.1568904194344;
-        Thu, 19 Sep 2019 07:43:14 -0700 (PDT)
+        bh=EbCIxBjP1Gjy6pX4s2tXi7UGlubyPnXXNEjGv/7cmbA=;
+        b=lrp+SptScKTPItMx/UvYejzMZbTm0EOzO6bCUZNxzGK91G4wife6utox+cE+6SjnYX
+         Ds+LAEzD8b82Zx6hT3vP3H6fAd8B+CUus5htB8UHWXsCYR6S44jCLlzqEBXNKHcvybUE
+         uuYGGDhILxgEQGGhD3Ui2PR86pxYpM70qY3TbYIjWZItiLiKPyX7Nkr/DbKpnsDZKko6
+         tHbe+dHKTIYK2XmbxdmajB/ahB55P9agBwasN6imGTaFrLytKFhGeV4jrZZunie+R/mm
+         Ipt0kYZJsDuOqBnmv1s4wI4aDAZJt5ygAr66I5uHYsarvqYoHGMyvqZ/LeKDhl5SLfdJ
+         TS0Q==
+X-Gm-Message-State: APjAAAXvntsNTUCbAq/2B7/59/4H+TjNmTOZ6n48Vfve1OSmFsYHZteo
+        uIyidWo4K1F/8aA90iY4IHbCpV/R
+X-Google-Smtp-Source: APXvYqyYOzw9E4e1mvAwFSNswLe62905SEl/3wtOPa7h0YBbHxuPW8plw7qnf7cF180MX5/Y722i5w==
+X-Received: by 2002:a05:600c:d4:: with SMTP id u20mr3397747wmm.66.1568904193613;
+        Thu, 19 Sep 2019 07:43:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a10sm9943392wrm.52.2019.09.19.07.43.13
+        by smtp.gmail.com with ESMTPSA id a3sm5161468wmc.3.2019.09.19.07.43.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Thu, 19 Sep 2019 07:43:13 -0700 (PDT)
 Date:   Thu, 19 Sep 2019 07:43:13 -0700 (PDT)
-X-Google-Original-Date: Thu, 19 Sep 2019 14:43:02 GMT
-Message-Id: <21a0165be73dccf25c2c83a37d506ec061fd1d07.1568904188.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Thu, 19 Sep 2019 14:43:01 GMT
+Message-Id: <9a78f9ea0fe8d1988654f52a86a01031607621fe.1568904188.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.316.v2.git.gitgitgadget@gmail.com>
 References: <pull.316.git.gitgitgadget@gmail.com>
         <pull.316.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 05/11] sparse-checkout: add '--stdin' option to set
- subcommand
+Subject: [PATCH v2 04/11] sparse-checkout: 'set' subcommand
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,86 +73,108 @@ X-Mailing-List: git@vger.kernel.org
 From: Derrick Stolee <dstolee@microsoft.com>
 
 The 'git sparse-checkout set' subcommand takes a list of patterns
-and places them in the sparse-checkout file. Then, it updates the
-working directory to match those patterns. For a large list of
-patterns, the command-line call can get very cumbersome.
+as arguments and writes them to the sparse-checkout file. Then, it
+updates the working directory using 'git read-tree -mu HEAD'.
 
-Add a '--stdin' option to instead read patterns over standard in.
+The 'set' subcommand will replace the entire contents of the
+sparse-checkout file. The write_patterns_and_update() method is
+extracted from cmd_sparse_checkout() to make it easier to implement
+'add' and/or 'remove' subcommands in the future.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/sparse-checkout.c          | 35 ++++++++++++++++++++++++++++--
- t/t1091-sparse-checkout-builtin.sh | 20 +++++++++++++++++
- 2 files changed, 53 insertions(+), 2 deletions(-)
+ Documentation/git-sparse-checkout.txt |  5 +++++
+ builtin/sparse-checkout.c             | 31 ++++++++++++++++++++++++++-
+ t/t1091-sparse-checkout-builtin.sh    | 19 ++++++++++++++++
+ 3 files changed, 54 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index 9707ef93b1..87813e5797 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -34,6 +34,11 @@ COMMANDS
+ 	by Git. Add patterns to the sparse-checkout file to
+ 	repopulate the working directory.
+ 
++'set'::
++	Write a set of patterns to the sparse-checkout file, as given as
++	a list of arguments following the 'set' subcommand. Update the
++	working directory to match the new patterns.
++
+ SPARSE CHECKOUT
+ ----------------
+ 
 diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 13333fba6a..f726fcd6b8 100644
+index 656e6ebdd5..13333fba6a 100644
 --- a/builtin/sparse-checkout.c
 +++ b/builtin/sparse-checkout.c
-@@ -145,14 +145,45 @@ static int write_patterns_and_update(struct pattern_list *pl)
+@@ -8,7 +8,7 @@
+ #include "strbuf.h"
+ 
+ static char const * const builtin_sparse_checkout_usage[] = {
+-	N_("git sparse-checkout [init|list]"),
++	N_("git sparse-checkout [init|list|set] <options>"),
+ 	NULL
+ };
+ 
+@@ -130,6 +130,33 @@ static int sparse_checkout_init(int argc, const char **argv)
  	return update_working_directory();
  }
  
-+static char const * const builtin_sparse_checkout_set_usage[] = {
-+	N_("git sparse-checkout set [--stdin|<patterns>]"),
-+	NULL
-+};
++static int write_patterns_and_update(struct pattern_list *pl)
++{
++	char *sparse_filename;
++	FILE *fp;
 +
-+static struct sparse_checkout_set_opts {
-+	int use_stdin;
-+} set_opts;
++	sparse_filename = get_sparse_checkout_filename();
++	fp = fopen(sparse_filename, "w");
++	write_patterns_to_file(fp, pl);
++	fclose(fp);
++	free(sparse_filename);
 +
- static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
++	clear_pattern_list(pl);
++	return update_working_directory();
++}
++
++static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
++{
++	int i;
++	struct pattern_list pl;
++	memset(&pl, 0, sizeof(pl));
++
++	for (i = 1; i < argc; i++)
++		add_pattern(argv[i], NULL, 0, &pl, 0);
++
++	return write_patterns_and_update(&pl);
++}
++
+ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
  {
- 	int i;
- 	struct pattern_list pl;
-+
-+	static struct option builtin_sparse_checkout_set_options[] = {
-+		OPT_BOOL(0, "stdin", &set_opts.use_stdin,
-+			 N_("read patterns from standard in")),
-+		OPT_END(),
-+	};
-+
- 	memset(&pl, 0, sizeof(pl));
+ 	static struct option builtin_sparse_checkout_options[] = {
+@@ -152,6 +179,8 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
+ 			return sparse_checkout_list(argc, argv);
+ 		if (!strcmp(argv[0], "init"))
+ 			return sparse_checkout_init(argc, argv);
++		if (!strcmp(argv[0], "set"))
++			return sparse_checkout_set(argc, argv, prefix);
+ 	}
  
--	for (i = 1; i < argc; i++)
--		add_pattern(argv[i], NULL, 0, &pl, 0);
-+	argc = parse_options(argc, argv, prefix,
-+			     builtin_sparse_checkout_set_options,
-+			     builtin_sparse_checkout_set_usage,
-+			     PARSE_OPT_KEEP_UNKNOWN);
-+
-+	if (set_opts.use_stdin) {
-+		struct strbuf line = STRBUF_INIT;
-+
-+		while (!strbuf_getline(&line, stdin)) {
-+			size_t len;
-+			char *buf = strbuf_detach(&line, &len);
-+			add_pattern(buf, buf, len, &pl, 0);
-+		}
-+	} else {
-+		for (i = 0; i < argc; i++)
-+			add_pattern(argv[i], argv[i], strlen(argv[i]), &pl, 0);
-+	}
- 
- 	return write_patterns_and_update(&pl);
- }
+ 	usage_with_options(builtin_sparse_checkout_usage,
 diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index f21ea61494..02ba9ec314 100755
+index 26b4ce9acd..f21ea61494 100755
 --- a/t/t1091-sparse-checkout-builtin.sh
 +++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -120,5 +120,25 @@ test_expect_success 'set sparse-checkout using builtin' '
+@@ -101,5 +101,24 @@ test_expect_success 'clone --sparse' '
  	test_cmp expect dir
  '
  
-+test_expect_success 'set sparse-checkout using --stdin' '
++test_expect_success 'set sparse-checkout using builtin' '
++	git -C repo sparse-checkout set "/*" "!/*/" "*folder*" &&
 +	cat >expect <<-EOF &&
 +		/*
 +		!/*/
-+		/folder1/
-+		/folder2/
++		*folder*
 +	EOF
-+	git -C repo sparse-checkout set --stdin <expect &&
 +	git -C repo sparse-checkout list >actual &&
 +	test_cmp expect actual &&
 +	test_cmp expect repo/.git/info/sparse-checkout &&
