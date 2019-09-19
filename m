@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F75B1F463
-	for <e@80x24.org>; Thu, 19 Sep 2019 21:47:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B83A1F463
+	for <e@80x24.org>; Thu, 19 Sep 2019 21:47:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404753AbfISVrX (ORCPT <rfc822;e@80x24.org>);
+        id S2404754AbfISVrX (ORCPT <rfc822;e@80x24.org>);
         Thu, 19 Sep 2019 17:47:23 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33562 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389341AbfISVrW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Sep 2019 17:47:22 -0400
-Received: by mail-wr1-f65.google.com with SMTP id b9so4713757wrs.0
-        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:20 -0700 (PDT)
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51424 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393094AbfISVrX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 17:47:23 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 7so59308wme.1
+        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DuD3G6Wnstjdqq/ZU3fbCUz147/UNOC45pou1uLCWgE=;
-        b=Fxn5I5TrkskelU7F+QwSq7VnMiMw8ko+4zPCPlIOTBcbIFIxWnlfN4gW5H42iKDk4Y
-         u0lZkbcP7nJo27BFRavby4BDb0iW18OEY6gU/QFW9vzrETGm/i7C434BvZQaFrW99xLt
-         kJkpkxt+P/Rbwvs9ZGj3QYeW0rU8968pGPIWdlH6IrbKS6JAT3m/+jO/dNSsFpSCX34o
-         d1ldwNAq2f7cugZZ7xOQfWGHsVvR/xUYIQ9Z60wCzmeazVzcqKtnno0MZh/oxMMALY5c
-         T7bkfR3mNN2WBL50AeFHOtYAEpPvqC+vSVwNcrNjNL8MfG813VT7BhTB+Q5e54+Bqm6e
-         +WgA==
+        bh=BD7P4sn+NT52OIe/SHeswONtpvv8STQkxsqVBbNW5o4=;
+        b=Us1O4fsYZ9VmPaNAcJXFGO8VK0xX64UAJcM9elJwnakPE71BUvrTotf52OIdFsv0DV
+         RFn9odxRFq9Ty/HJLy8L4vmT6Yl+jv/wqSlltZhybeG8UFipkj4R+l8Il/8Re3f0KGI7
+         VmW9KLNVGnkKATz9pG90ft3WT8Jq9WW3JL7usd+sH6datdU56CuUUfTmeNTIrmRC5X7e
+         JRc939nqD2zNLsznSaOjB21+iuRy0RJ5V2sICfHjzVuWxX8DfS0ZeBxIHGY179P0Q0s5
+         PpPRAA4anzMB+2fU8QNrmJUzocU6GAzi27dY7FBosUocJg62jY39VhsGFbrykUR+kKh9
+         b3UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DuD3G6Wnstjdqq/ZU3fbCUz147/UNOC45pou1uLCWgE=;
-        b=lXHH2FN2j/8LqTyNIFE3jN73qce8M5whiFVj1ZLYC3FYTx6+vgWJy1f1as1uafLq4b
-         j42ZOLEd59YF71PCkhiSfNg+fTjdPKBNSxr+bGSqNuwQS4fLtY2GxZJjhcB9DiV6SbWn
-         7eN+mMF4OKa76l+tO+uEYNnhDGsHBTJUDaltjCLmLTss7Fl4+FIhmreJ73Q0PsYwXuS4
-         /8SdTCA6W4c/c+Pvxb0hhqxuQ5oE5xRJfY2XOfdp4zb/GE9+UJ7t+8WyP14EZL7IF6vk
-         OwLCzfCMP3Ko5nyJyyW0J1pCBu3vW/yQOUeRAW3RtjgkBqcOuUNB39FXCuFyiuNg0IH9
-         vi8g==
-X-Gm-Message-State: APjAAAVBXUeuFeCKWa3PuqoanervdURkpi976ttrm0PAuIXuqXcCrlnp
-        9UNRlH9DlEYTGnGgvtAwG5g=
-X-Google-Smtp-Source: APXvYqyOnIiy1CwBUW69iLzsYej8yOig4qiawfg42unKtt3uBjQ8M6E2ZoANZBqr8Iep0snaq6ESlQ==
-X-Received: by 2002:a5d:424c:: with SMTP id s12mr8399960wrr.221.1568929640321;
-        Thu, 19 Sep 2019 14:47:20 -0700 (PDT)
+        bh=BD7P4sn+NT52OIe/SHeswONtpvv8STQkxsqVBbNW5o4=;
+        b=JWESN3J7L5dBRvUs4pI/DsjIW67nfoMLbyqmrdBCDeHrCHCvvgFPvvXG9seOFO03gy
+         LChGHs+i9CeDYdsbZTZOEGm9dzJNlb1VpWZ8Xo1qVCs4pIuh7dXg3Lljk9YArnKWsR+P
+         ne5uta6QO0UE5HXtujyZ14wjRJyc+q2BC/TIe2Y9xwJ7wA0U0e3wmlDniHcCi+g+oW6a
+         Wh1UYUHECv0UZtHxXE7TmCtyHDeUZUB8fW+HalcLYmHOxphs8rDU0/yGrYg3MUXKSLbP
+         ZXfxHhHKJFXc7CKAq//y3wIOwXzWWTMUQgxs7QTPsDJVeeZiAEMR+Q0An7lHsNcK4/ic
+         fgVw==
+X-Gm-Message-State: APjAAAUzMGW9vcY10xv7uP9Er0iCl/mjN00GNcyVMil7CBQ2Z/BfF0+u
+        Nqi4Suj8ryubmZF3bpEMbYM=
+X-Google-Smtp-Source: APXvYqwkRUe/l6Pad+uy+lSDx0fDYIc5b6sV6r7hDNbLuao8vFflim4JG4iam6a/loRudV0h+G9ebg==
+X-Received: by 2002:a1c:540c:: with SMTP id i12mr44356wmb.90.1568929641447;
+        Thu, 19 Sep 2019 14:47:21 -0700 (PDT)
 Received: from localhost.localdomain (x4db63806.dyn.telefonica.de. [77.182.56.6])
-        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.19
+        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 Sep 2019 14:47:19 -0700 (PDT)
+        Thu, 19 Sep 2019 14:47:20 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 01/15] t6120-describe: correct test repo history graph in comment
-Date:   Thu, 19 Sep 2019 23:46:56 +0200
-Message-Id: <20190919214712.7348-2-szeder.dev@gmail.com>
+Subject: [PATCH 02/15] t6120-describe: modernize the 'check_describe' helper
+Date:   Thu, 19 Sep 2019 23:46:57 +0200
+Message-Id: <20190919214712.7348-3-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.23.0.331.g4e51dcdf11
 In-Reply-To: <20190919214712.7348-1-szeder.dev@gmail.com>
 References: <20190919214712.7348-1-szeder.dev@gmail.com>
@@ -68,51 +68,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-At the top of 't6120-describe.sh' an ASCII graph illustrates the
-repository's history used in this test script.  This graph is a bit
-misleading, because it swapped the second merge commit's first and
-second parents.
+The 'check_describe' helper function runs 'git describe' outside of
+'test_expect_success' blocks, with extra hand-rolled code to record
+and examine its exit code.
 
-When describing/naming a commit it does make a difference which parent
-is the first and which is the second/Nth, so update this graph to
-accurately represent that second merge.
-
-While at it, move this history graph from the 'test_description'
-variable to a regular comment.
+Update this helper and move the 'git decribe' invocation inside the
+'test_expect_success' block.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/t6120-describe.sh | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ t/t6120-describe.sh | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 2b883d8174..0bf7e0c8bc 100755
+index 0bf7e0c8bc..07e6793e84 100755
 --- a/t/t6120-describe.sh
 +++ b/t/t6120-describe.sh
-@@ -1,15 +1,14 @@
- #!/bin/sh
- 
--test_description='test describe
-+test_description='test describe'
-+
-+#       ,---o----o----o-----.
-+#      /   D,R   e           \
-+#  o--o-----o-------------o---o----x
-+#      \    B            /
-+#       `---o----o----o-'
-+#                A    c
- 
--                       B
--        .--------------o----o----o----x
--       /                   /    /
-- o----o----o----o----o----.    /
--       \        A    c        /
--        .------------o---o---o
--                   D,R   e
--'
- . ./test-lib.sh
- 
+@@ -14,14 +14,12 @@ test_description='test describe'
  check_describe () {
+ 	expect="$1"
+ 	shift
+-	R=$(git describe "$@" 2>err.actual)
+-	S=$?
+-	cat err.actual >&3
+-	test_expect_success "describe $*" '
+-	test $S = 0 &&
++	describe_opts="$@"
++	test_expect_success "describe $describe_opts" '
++	R=$(git describe $describe_opts 2>err.actual) &&
+ 	case "$R" in
+ 	$expect)	echo happy ;;
+-	*)	echo "Oops - $R is not $expect";
++	*)	echo "Oops - $R is not $expect" &&
+ 		false ;;
+ 	esac
+ 	'
 -- 
 2.23.0.331.g4e51dcdf11
 
