@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 664AC1F463
-	for <e@80x24.org>; Thu, 19 Sep 2019 21:47:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BA211F463
+	for <e@80x24.org>; Thu, 19 Sep 2019 21:47:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733027AbfISVrp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Sep 2019 17:47:45 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54725 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732082AbfISVrj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Sep 2019 17:47:39 -0400
-Received: by mail-wm1-f65.google.com with SMTP id p7so45195wmp.4
-        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:38 -0700 (PDT)
+        id S1733014AbfISVrn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Sep 2019 17:47:43 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38196 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404918AbfISVri (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 17:47:38 -0400
+Received: by mail-wm1-f68.google.com with SMTP id 3so52281wmi.3
+        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5Mmb/W0PMqpYxJe+a1U3Yg0AyF3gnkbyucfeef2nJCA=;
-        b=bSMcr6DhdCih3C1HFrqEDJ4dkZpjxDFGbr85j1okohp4M8KlX7n740pSjN72Bk/Wxx
-         w2CvZFuCTWnBasUYZYvyP2q4gyqn0nwglSEZ8NOK43G/A4IaomxTGCnTQE9hIUtJtrqf
-         hev2BqeLE7Mo/098I/jwWD3krUw0WTp8d7utfAFHT3V5oLmzSNv9iym5pXNTP2vjy+MB
-         LGtyFGWKMAp2AfqIWhzv99CqNryrR3hRFtVleO/Xz8FJ1yJBLBjPs+WZbfYUhSprL0q2
-         S1zK75bULZZcv3nvQZRkyf/xUgTyI5FDQoG4GrvHnaatCor5vNAqsfDIr4IrTj+Z+0pm
-         59tA==
+        bh=JKmsVKExkfAYw0IYzUUv32f/XB7grMwgZaMtwvnCIHk=;
+        b=OPO4vQ7dGAq8T+Og+BEyb+EwgG2AKe9KHqGT6p/S2kYKDZIgX+bDbkebUAHCq1l/HW
+         xiQnKPHkNYS++X3AnkKAsby2Umbu846pvM88j/BgpC2oaNj1NG0ClFFUyqAeNW1ufZn7
+         ijPIXIlds5aUO/JEXVLqdqLCmcWE3gxC1esQkSkdgEU7/+JAUFvOBAEdgCu6wbdriumC
+         PZYhbqox94MwrnDEd2RAfHopKK3YFREkLc6rXlCl/uC5Vz2pLFahAQZzQNqxWPsKQ7jk
+         IqegSqDx+yJpM6mOLhfZyVY1F5udSlyQL6osq6FSMqsSfpnnd3TR7avDEW6KQ204Bsv0
+         PMUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5Mmb/W0PMqpYxJe+a1U3Yg0AyF3gnkbyucfeef2nJCA=;
-        b=EGjSN6zy3sv4CCHTrjC0yUKiRQt8BsTcGj4NAaQl1i2EfDey7ECJI34CIgYwgdEpl3
-         Pz8RBZia0nNEOkXDw8a93Lb9g9ODfMA0NnY4MbcwiILYGZRxtzRI4OqGVvrKD2VBFwXH
-         9G1at4YR2yLebk1oiZYclJUAzrUFoOLhynCxpFJzAlBF0rnX/pLLR3ImoXHX7wlEaEUj
-         j8DcPaE2EP2tvx50N4YXTx9vwJGR258Ck1hEtPt7a0EI+OmiuVcjbMdGZUVGFKPAhYnd
-         JS7B8X5hxyE7aeP5cPUqz+hL+lE62q+ii/n/YtxuTej4lwuUN+Av7b+6vo1ImMCFyZ7k
-         I0Xw==
-X-Gm-Message-State: APjAAAXSKHTNrDRXomfT9wTKqq3vMo+9/jx8Crlygg37+66Xzk6Ifudd
-        QHW9pZPoJbqPfI7kodBLgr8=
-X-Google-Smtp-Source: APXvYqy6RL+DV8Tm+7XyJ48sENOdmzu9W37CjmlCCY3+rpIAwp+tKUylloOVpp5jA/KnbJzKaY43xA==
-X-Received: by 2002:a1c:1f08:: with SMTP id f8mr48127wmf.46.1568929657526;
-        Thu, 19 Sep 2019 14:47:37 -0700 (PDT)
+        bh=JKmsVKExkfAYw0IYzUUv32f/XB7grMwgZaMtwvnCIHk=;
+        b=hrqqop2AfUHzSDGiIyHsr62EVw9mqoYV0WzAlUz3LkcmZ/eQOYLWToU26sCxHep0hK
+         mHMn2iH419jBqsn8h3cEW8XwkjJmA+QRq57200nZQfOHYgx5pqw9iwtUaX/rOsHfkvxQ
+         ps69NEEI8HWmNq4cxUKxD5RMT0m6IvS2LxbPh8lISIjZZo3DAlMDLfQPj2p1F5KGdsBC
+         bXXkSybb0nBbPWH8jDup8yG4/zCUQLUFhXbvCsUJOBC/8P1M+B58TS0DirgfQbkeaMP7
+         cTw/k0hMFUn+J+E2o+rXMbsuBHpA6APteC6cmXq15NjDoXYhnJ0h9jrE42TF8ot272ez
+         pVoA==
+X-Gm-Message-State: APjAAAVsXtHPB0IEmruFXlrzDCweDE8SHobjFRdNz69z7RbvT6rvz692
+        4EEuhVt4wAH0ur4ujF2ocyI=
+X-Google-Smtp-Source: APXvYqyEAPwMjJTy10c/WSWIAovrtBTkCdm3sy7bn30Mgl3FNQrmfJhFtzRa6J7antO5gR/YVUbO8w==
+X-Received: by 2002:a1c:4102:: with SMTP id o2mr42791wma.66.1568929656480;
+        Thu, 19 Sep 2019 14:47:36 -0700 (PDT)
 Received: from localhost.localdomain (x4db63806.dyn.telefonica.de. [77.182.56.6])
-        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.36
+        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 Sep 2019 14:47:37 -0700 (PDT)
+        Thu, 19 Sep 2019 14:47:35 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 15/15] name-rev: plug memory leak in name_rev()
-Date:   Thu, 19 Sep 2019 23:47:12 +0200
-Message-Id: <20190919214712.7348-18-szeder.dev@gmail.com>
+Subject: [PATCH 15/15] name-rev: plug a memory leak in name_rev() in the deref case
+Date:   Thu, 19 Sep 2019 23:47:11 +0200
+Message-Id: <20190919214712.7348-17-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.23.0.331.g4e51dcdf11
 In-Reply-To: <20190919214712.7348-1-szeder.dev@gmail.com>
 References: <20190919214712.7348-1-szeder.dev@gmail.com>
@@ -68,53 +68,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The loop iterating over the parent commits in the name_rev() function
-contains two xstrfmt() calls, and their result is leaked if the parent
-commit is not processed further (because that parent has already been
-visited before, and this further visit doesn't result in a better name
-for its ancestors).
+The name_rev() function's 'tip_name' parameter is a freshly
+xstrdup()ed string, so when name_rev() invokes:
 
-Make sure that the result of those xstrfmt() calls is free()d if the
-parent commit is not processed further.
+  tip_name = xstrfmt("%s^0", tip_name);
 
-This results in slightly but measurably lower memory usage: the
-avarage maximum resident size of 5 'git name-rev --all' invocations in
-'linux.git' shrinks from 3256124kB to 319990kB, just about 2% less.
+then the original 'tip_name' string is leaked.
+
+Make sure that this string is free()d after it has been used as input
+for that xstrfmt() call.
+
+This only happens when name_rev() is invoked with a tag, i.e.
+relatively infrequently in a usual repository, so any reduction in
+memory usage is lost in the noise.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- builtin/name-rev.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ builtin/name-rev.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index f867d45f0b..d65de04918 100644
+index 3331075aa4..d65de04918 100644
 --- a/builtin/name-rev.c
 +++ b/builtin/name-rev.c
-@@ -139,6 +139,7 @@ static void name_rev(struct commit *start_commit,
- 			struct commit *parent = parents->item;
- 			const char *new_name;
- 			int generation, distance;
-+			const char *new_name_to_free = NULL;
+@@ -101,18 +101,22 @@ static struct rev_name *create_or_update_name(struct commit *commit,
+ }
  
- 			parse_commit(parent);
- 			if (parent->date < cutoff)
-@@ -158,6 +159,7 @@ static void name_rev(struct commit *start_commit,
- 					new_name = xstrfmt("%.*s^%d", (int)len,
- 							   name->tip_name,
- 							   parent_number);
-+				new_name_to_free = new_name;
- 				generation = 0;
- 				distance = name->distance + MERGE_TRAVERSAL_WEIGHT;
- 			} else {
-@@ -171,6 +173,8 @@ static void name_rev(struct commit *start_commit,
- 						  from_tag))
- 				last_new_parent = commit_list_append(parent,
- 						  last_new_parent);
-+			else
-+				free((char*) new_name_to_free);
- 		}
+ static void name_rev(struct commit *start_commit,
+-		const char *tip_name, timestamp_t taggerdate,
++		const char *start_tip_name, timestamp_t taggerdate,
+ 		int from_tag, int deref)
+ {
+ 	struct commit_list *list = NULL;
++	const char *tip_name;
+ 	char *to_free = NULL;
  
- 		*last_new_parent = list;
+ 	parse_commit(start_commit);
+ 	if (start_commit->date < cutoff)
+ 		return;
+ 
+-	if (deref)
+-		tip_name = to_free = xstrfmt("%s^0", tip_name);
++	if (deref) {
++		tip_name = to_free = xstrfmt("%s^0", start_tip_name);
++		free((char*) start_tip_name);
++	} else
++		tip_name = start_tip_name;
+ 
+ 	if (!create_or_update_name(start_commit, tip_name, taggerdate, 0, 0,
+ 				   from_tag)) {
 -- 
 2.23.0.331.g4e51dcdf11
 
