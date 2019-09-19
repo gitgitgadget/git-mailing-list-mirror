@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04A461F463
-	for <e@80x24.org>; Thu, 19 Sep 2019 21:47:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C0A91F463
+	for <e@80x24.org>; Thu, 19 Sep 2019 21:47:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404907AbfISVrd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Sep 2019 17:47:33 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40527 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404888AbfISVrc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Sep 2019 17:47:32 -0400
-Received: by mail-wr1-f65.google.com with SMTP id l3so4658683wru.7
-        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:30 -0700 (PDT)
+        id S2404848AbfISVr3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Sep 2019 17:47:29 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36184 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404802AbfISVr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 17:47:29 -0400
+Received: by mail-wm1-f68.google.com with SMTP id m18so61527wmc.1
+        for <git@vger.kernel.org>; Thu, 19 Sep 2019 14:47:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=r0Ivbp18e6VgGToW47wIP3uzjCX5eGkJPBMyfFmSgv0=;
-        b=MxzHNd7lltQXS7yUMTx3G/gQKnYtgKurmxhe80bsIVWrTQXijb5sevm4Sb06VOg48k
-         0dCEeNsu3qpwQaXEQhCrg6b1opsJyWEzTyaswOMJ7T0E9t5BXCeO8b4K/Bzd6A9QKmvs
-         7FijOb/tV7mmSRrGvFmcjlVWsmuwHusslMELjQo6abau1XqXl04+K/nENQhGIBDeJ5rY
-         84jhaLZEwR+rXqLsQjiAUOQOIFibXRrz9XQ7i5s7do2DHruSYe8I/YPF+d/VuwId6470
-         gwgDZl2Su6Sufb5N6yHM7/7Oi9xQZbGBzWH7n0Ln1/sIDu1zHt8hwiVC2TorWamN2lyJ
-         8/5A==
+        bh=c4an/fOqvfRRTzQ7r8M1pt9Zpcj++q5ANNBMS/TSRgA=;
+        b=UPGMe+01nsSzM6aOLWZd+6dt36jPwh8biEMuaKT/zmqkpfglf4DSwl2u4u9CMMQvEh
+         jjmlXdULZd7VSnxRj9g973GnY3iQh+ZyMxIsPdP13OPHNOY09ER4EEKF+89AcLhZXuQF
+         85uSg0lCHRdO6/OPblTD7tqWkmyXon7L9MkzO6fpEvHKVZV30+8qlx2QOaf+XCGROLAF
+         3Ev47ORP4+ccnST/OPOnT3te9CLr8sxkX3Yo29fegEqOOSKKOBYJsOOJkWv2qfaemsOM
+         HA6MFglR3TrAj5Z6jaOkysTum2rnpgfNSF3VQjSYb04rs9e3oVRCaGp9FXDtMSLjHkQa
+         iR7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=r0Ivbp18e6VgGToW47wIP3uzjCX5eGkJPBMyfFmSgv0=;
-        b=sXzhUvNm4xzl8HMPJLCG31g76jDnazpBgFXs0gDAoO/hyCweiwcBhSRXZD+kympKWJ
-         C6kMswzj/nocf9g+jqLTz9ZyZWe0To51xMuVm1CM7KwhPRqk0s+ot5JqLE19gE34SXCw
-         Y+TRZpqnlbviPmzzVhUzxescXMPrED38wuwd2apEuQcD0/P48g1UUxi5f0FyFnrB3MqI
-         ZLWzzKbdQwQ92ku9f40aaCONmhaDZtE2W0AdEJGgo7h9tZx3Nj+LdhIS4soEoFLDLWNS
-         m/9a+yx72fgq6guQDXla+SRpFyUDeEgf1RekltgxrCIQ3S3ifgebgsM/RH+HdHgiiD/F
-         iDwg==
-X-Gm-Message-State: APjAAAUmdTWYWeqTlbfJbAYWJVE1WhlFJ2XCp6qmjiwjL/DWCnN5f6SQ
-        nU9hiOyRuGsoNUFxQqIK8nQ=
-X-Google-Smtp-Source: APXvYqwwU94GXLUcYnr2PwCcVwy17/40prNJx1hZ2TlRfAgOQzTaI4Bfbz5sRFStyniXZBUmTzw/qw==
-X-Received: by 2002:a05:6000:188:: with SMTP id p8mr6334100wrx.220.1568929650092;
-        Thu, 19 Sep 2019 14:47:30 -0700 (PDT)
+        bh=c4an/fOqvfRRTzQ7r8M1pt9Zpcj++q5ANNBMS/TSRgA=;
+        b=tzsU3bqsbWYwotM7ZxGgNSJZkxFG/EeP8WzG/4n3fzq1d20PWa7RZvqzROhKHukbnH
+         1RzLneQPomGwA6CR7bYRxwzcCKemW+1fCRwEme9HNkkPlA3BpCu2sqf8UZIJrNLmsN5S
+         262LjBOZ6r/8KSi0SqKwC96IxKuMVJyk4mnxB6ZidUwM6UzBJQmj0aPzf8D/N0ITMYek
+         65ynLsvVWF97c2nMyz7scakXtvx2sxzPhUzb22b/pfwxYkwNP6jYHP2zdswT5JHEpNIN
+         NpTUaA9ODX9mIbiU4KfNmmessEv3fMyfIguQYzHLdQeiUIYtgm7KEDzC90NpwZodR3Yg
+         MsHQ==
+X-Gm-Message-State: APjAAAX5Q6Elh6YcpjnnCuP8Vo+6xJtbMOZufy6aFjrTf97qQdA4AE8u
+        T/X20WJcMqldWS8e2TO/Rrg=
+X-Google-Smtp-Source: APXvYqwjmyHrY9gdo07Xpy5vdtOYbdCUUXgcQRFoHPbSdhVf4d01gNMwNTui20I6D3mbsZ7fRrzEPg==
+X-Received: by 2002:a05:600c:54a:: with SMTP id k10mr17178wmc.127.1568929647803;
+        Thu, 19 Sep 2019 14:47:27 -0700 (PDT)
 Received: from localhost.localdomain (x4db63806.dyn.telefonica.de. [77.182.56.6])
-        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.28
+        by smtp.gmail.com with ESMTPSA id b12sm12280wrt.21.2019.09.19.14.47.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 Sep 2019 14:47:29 -0700 (PDT)
+        Thu, 19 Sep 2019 14:47:27 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 10/15] name-rev: restructure creating/updating 'struct rev_name' instances
-Date:   Thu, 19 Sep 2019 23:47:05 +0200
-Message-Id: <20190919214712.7348-11-szeder.dev@gmail.com>
+Subject: [PATCH 08/15] name-rev: pull out deref handling from the recursion
+Date:   Thu, 19 Sep 2019 23:47:03 +0200
+Message-Id: <20190919214712.7348-9-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.23.0.331.g4e51dcdf11
 In-Reply-To: <20190919214712.7348-1-szeder.dev@gmail.com>
 References: <20190919214712.7348-1-szeder.dev@gmail.com>
@@ -68,105 +68,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-At the beginning of the recursive name_rev() function it creates a new
-'struct rev_name' instance for each previously unvisited commit or, if
-this visit results in better name for an already visited commit, then
-updates the 'struct rev_name' instance attached to to the commit, or
-returns early.
+The 'if (deref) { ... }' condition near the beginning of the recursive
+name_rev() function can only ever be true in the first invocation,
+because the 'deref' parameter is always 0 in the subsequent recursive
+invocations.
 
-Restructure this so it's caller creates or updates the 'struct
-rev_name' instance associated with the commit to be passed as
-parameter, i.e. both name_ref() before calling name_rev() and
-name_rev() itself as it iterates over the parent commits.
+Extract this condition from the recursion into name_rev()'s caller and
+drop the function's 'deref' parameter.  This makes eliminating the
+recursion a bit easier to follow, and it will be moved back into
+name_rev() after the recursion is elminated.
 
-This makes eliminating the recursion a bit easier to follow, and it
-will be moved back to name_rev() after the recursion is eliminated.
+Furthermore, drop the condition that die()s when both 'deref' and
+'generation' are non-null (which should have been a BUG() to begin
+with).
 
-This change also plugs the memory leak that was temporarily unplugged
-in the earlier "name-rev: pull out deref handling from the recursion"
-patch in this series.
+Note that this change reintroduces the memory leak that was plugged in
+in commit 5308224633 (name-rev: avoid leaking memory in the `deref`
+case, 2017-05-04), but a later patch in this series will plug it in
+again.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- builtin/name-rev.c | 35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ builtin/name-rev.c | 27 ++++++++++-----------------
+ 1 file changed, 10 insertions(+), 17 deletions(-)
 
 diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 99643aa4dc..98a549fef7 100644
+index cb8ac2fa64..42cea5c881 100644
 --- a/builtin/name-rev.c
 +++ b/builtin/name-rev.c
-@@ -107,14 +107,12 @@ static void name_rev(struct commit *commit,
+@@ -102,30 +102,19 @@ static struct rev_name *create_or_update_name(struct commit *commit,
+ 
+ static void name_rev(struct commit *commit,
+ 		const char *tip_name, timestamp_t taggerdate,
+-		int generation, int distance, int from_tag,
+-		int deref)
++		int generation, int distance, int from_tag)
+ {
  	struct commit_list *parents;
  	int parent_number = 1;
+-	char *to_free = NULL;
  
--	if (!create_or_update_name(commit, tip_name, taggerdate, generation,
--				   distance, from_tag))
--		return;
+ 	parse_commit(commit);
+ 
+ 	if (commit->date < cutoff)
+ 		return;
+ 
+-	if (deref) {
+-		tip_name = to_free = xstrfmt("%s^0", tip_name);
 -
+-		if (generation)
+-			die("generation: %d, but deref?", generation);
+-	}
+-
+ 	if (!create_or_update_name(commit, tip_name, taggerdate, generation,
+-				   distance, from_tag)) {
+-		free(to_free);
++				   distance, from_tag))
+ 		return;
+-	}
+ 
  	for (parents = commit->parents;
  			parents;
- 			parents = parents->next, parent_number++) {
- 		struct commit *parent = parents->item;
-+		const char *new_name;
-+		int new_generation, new_distance;
+@@ -144,11 +133,11 @@ static void name_rev(struct commit *commit,
  
- 		parse_commit(parent);
- 		if (parent->date < cutoff)
-@@ -122,7 +120,6 @@ static void name_rev(struct commit *commit,
- 
- 		if (parent_number > 1) {
- 			size_t len;
--			char *new_name;
- 
- 			strip_suffix(tip_name, "^0", &len);
- 			if (generation > 0)
-@@ -131,15 +128,19 @@ static void name_rev(struct commit *commit,
- 			else
- 				new_name = xstrfmt("%.*s^%d", (int)len, tip_name,
- 						   parent_number);
--
--			name_rev(parent, new_name, taggerdate, 0,
--				 distance + MERGE_TRAVERSAL_WEIGHT,
--				 from_tag);
-+			new_generation = 0;
-+			new_distance = distance + MERGE_TRAVERSAL_WEIGHT;
+ 			name_rev(parents->item, new_name, taggerdate, 0,
+ 				 distance + MERGE_TRAVERSAL_WEIGHT,
+-				 from_tag, 0);
++				 from_tag);
  		} else {
--			name_rev(parent, tip_name, taggerdate,
--				 generation + 1, distance + 1,
--				 from_tag);
-+			new_name = tip_name;
-+			new_generation = generation + 1;
-+			new_distance = distance + 1;
+ 			name_rev(parents->item, tip_name, taggerdate,
+ 				 generation + 1, distance + 1,
+-				 from_tag, 0);
++				 from_tag);
  		}
-+
-+		if (create_or_update_name(parent, new_name, taggerdate,
-+					  new_generation, new_distance,
-+					  from_tag))
-+			name_rev(parent, new_name, taggerdate,
-+				 new_generation, new_distance, from_tag);
  	}
  }
+@@ -280,12 +269,16 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+ 	if (o && o->type == OBJ_COMMIT) {
+ 		struct commit *commit = (struct commit *)o;
+ 		int from_tag = starts_with(path, "refs/tags/");
++		const char *tip_name;
  
-@@ -276,11 +277,17 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+ 		if (taggerdate == TIME_MAX)
+ 			taggerdate = commit->date;
  		path = name_ref_abbrev(path, can_abbreviate_output);
- 		if (commit->date >= cutoff) {
- 			const char *tip_name;
-+			char *to_free = NULL;
- 			if (deref)
--				tip_name = xstrfmt("%s^0", path);
-+				tip_name = to_free = xstrfmt("%s^0", path);
- 			else
- 				tip_name = xstrdup(path);
--			name_rev(commit, tip_name, taggerdate, 0, 0, from_tag);
-+			if (create_or_update_name(commit, tip_name, taggerdate,
-+						  0, 0, from_tag))
-+				name_rev(commit, tip_name, taggerdate, 0, 0,
-+					 from_tag);
-+			else
-+				free(to_free);
- 		}
+-		name_rev(commit, xstrdup(path), taggerdate, 0, 0,
+-			 from_tag, deref);
++		if (deref)
++			tip_name = xstrfmt("%s^0", path);
++		else
++			tip_name = xstrdup(path);
++		name_rev(commit, tip_name, taggerdate, 0, 0, from_tag);
  	}
  	return 0;
+ }
 -- 
 2.23.0.331.g4e51dcdf11
 
