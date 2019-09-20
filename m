@@ -2,77 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00ACD1F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 19:22:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2FBB1F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 19:22:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726213AbfITTWJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 15:22:09 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63997 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725869AbfITTWI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 15:22:08 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DF0DA97E57;
-        Fri, 20 Sep 2019 15:22:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fmz5qBdlS6G24wobateUuSVQY7U=; b=EsxK5e
-        HGuY8Tq3nIlPsqA8yuNWr8/2MaopF4IZMWjW5BH9Xt/0ijVJ4X7NvRflQIc2YuDa
-        RPQBtuM6cZiXVCvArIoV8HYxPXrwKIVT+d3BR9ZYc/jyYeAaC2vKF3wzpDHeZKHy
-        TqREuHx21pxxFqQJJdUNIzu9ob23aDePARPYY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Hj/gvh0/Wukx0PlfrO0ZGttY6+maX1Cg
-        qIVj+n2MrWMym9qbwHu8Q/cYsQoQVmjUcQSgk3qHOdYFlEP0Ug7jTWQLbc1tBmNB
-        kw96uBVQqXct3UoutPa0knQ7yUzQ0b06DFP/aGsqC6nDh3hyzJlVK+4NKL6liDlA
-        KFMzYVK6eXo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D812497E56;
-        Fri, 20 Sep 2019 15:22:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 11BDC97E55;
-        Fri, 20 Sep 2019 15:22:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2019, #02; Wed, 18)
-References: <xmqqy2yl44lw.fsf@gitster-ct.c.googlers.com>
-        <20190920170811.GA62895@syl.local>
-Date:   Fri, 20 Sep 2019 12:22:01 -0700
-In-Reply-To: <20190920170811.GA62895@syl.local> (Taylor Blau's message of
-        "Fri, 20 Sep 2019 13:08:11 -0400")
-Message-ID: <xmqq36gqvkme.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729401AbfITTWK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 15:22:10 -0400
+Received: from mail2.pdinc.us ([67.90.184.28]:54782 "EHLO mail2.pdinc.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725869AbfITTWK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 15:22:10 -0400
+X-Greylist: delayed 1970 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Sep 2019 15:22:10 EDT
+Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
+        (authenticated bits=0)
+        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id x8KInJJe019976
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Fri, 20 Sep 2019 14:49:19 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us x8KInJJe019976
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
+        t=1569005359; bh=ploMJYpokAWC9vlw0sqFluiVKdNMSE36Fl1pblhSYYk=;
+        h=From:To:Subject:Date:From;
+        b=TuqCaroXKmAFyZ2qSmCKlzOlgcuwhohFce3uKE5QK7Cu1v8VHO6C1t6zSQ5P1cCeW
+         m0xl5nJ5FUS7Ajqt/OplXlakIJry36Xgz54QH6wPIdxnTHQAGBZEAJv+V4sgNgc49s
+         g/OdLLOWCmiY4aunAKcCS3/xtybLdQIWuxHkrwS7B1QN6/Pa2u5nwMnmXQd6IAuMAN
+         6DCgaildrfNIyl8DiHqdTqVRzyu9v+Dt1bq4frL9ztpoAm2xIOcNjgbtmxEs+r00Ue
+         ooyrttZQ48aTuKCFZIiQtEcV4y4hA4EQaLdDFzap4cmDoTs/i6lMKvNxqTxoAmCzRZ
+         7GWjEWLboLzwQ==
+From:   "Jason Pyeron" <jpyeron@pdinc.us>
+To:     <git@vger.kernel.org>
+Subject: was the recent 'NOPATH' email humor or spam?
+Date:   Fri, 20 Sep 2019 14:49:19 -0400
+Organization: PD Inc
+Message-ID: <006e01d56fe4$1c8c48c0$55a4da40$@pdinc.us>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: ED875920-DBDB-11E9-A915-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdVv5Blg4z1cehjARGGMPNjaH8rVuw==
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+EOM
 
-> commit-graph files on all repositories hosted on GitHub, and some
-> corrupt repositories triggered the behavior.
-> ...
-> We've been running this patch since a few days before I submitted it to
-> ...
-> This one has a similar origin story, and has also been running at GitHub
-> for a few weeks. ...
-> ...
-> A previous version of this series is running at GitHub, too, and also
-> without issue.
+--
+Jason Pyeron  | Architect
+PD Inc        |
+10 w 24th St  |
+Baltimore, MD |
+ 
+.mil: jason.j.pyeron.ctr@mail.mil
+.com: jpyeron@pdinc.us
+tel : 202-741-9397
 
-Thanks for a follow-up.  Very much appreciated.
 
