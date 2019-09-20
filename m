@@ -2,94 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC64B1F464
-	for <e@80x24.org>; Fri, 20 Sep 2019 17:04:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7F0F1F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 17:08:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406194AbfITREx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 13:04:53 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:44406 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389495AbfITREx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 13:04:53 -0400
-Received: by mail-pg1-f202.google.com with SMTP id r25so4761007pgu.11
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 10:04:52 -0700 (PDT)
+        id S2389707AbfITRIO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 13:08:14 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:44674 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389214AbfITRIO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 13:08:14 -0400
+Received: by mail-qt1-f193.google.com with SMTP id u40so9441728qth.11
+        for <git@vger.kernel.org>; Fri, 20 Sep 2019 10:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=zMGJlnd7mzU/dtsA3o5yrkWGvN8sPy6EyIDpbuMsZfQ=;
-        b=WgZ0xSHpfPJEra+Mzm6eZ2bsmE9xRmMtIvRvwOU4akPqIUProaooXegNFN1wSlCnQ4
-         k1o/8aeNwSuf9B4ppPIOEdp/Pqym8aa7tdUptwODnrMgPYGvYzbH63AvlfttU5N18YXj
-         xmjKv1C7GeWLTPcOd5mJnMHesMxorZr4SLpYfX84DCfMuyMaq5rbCeYZo/SldJDcX170
-         fk36Wp0PQoO7gY3DNdMyz/XTggPOgae/sfKS22b2xQbLLnXl0OwxDFZNbvv8YA+LszH1
-         DBlbck+J0TmyMgG1bWuyKfOlS550iqTbciuYAzHRLeV17tW6pNGnxCwAmjJHdsbJ5VkL
-         F83Q==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=xlcLmNBQJ0tBpPmPHk59NVTPBqZwlLrc5uoJ2QBHLbg=;
+        b=FmLCWihW1xQV8h9sNQAdiz62LoCZraUEofBNmj4m7yGM2DgWwjUKlxYzFnFeqhklnD
+         gmONvAMqTZjfn3D4heFqwdhh7wTQDY4nl+xPonP+SFLLxRnhysUAN5GHkDm4m0sYJMC8
+         wGHjKQcTjorrhULYEAyE5E8MhovhGK7EmiGS7UKd8d0dVMN0um1yZTgYBzrR/4NkmxWl
+         iSgCjcLA2jdVxFAk87bqa1yrnG4ew2xPTjO7lPz7oPtrD5JjDszqtXylO2NrgiU6xKqd
+         ws9OpL7tTDIdrSjaZSg9ubLcmzfqQcqbFpOTurB/ltP6FoM1jNAeK/5IGvDRefhNyXRv
+         n4Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=zMGJlnd7mzU/dtsA3o5yrkWGvN8sPy6EyIDpbuMsZfQ=;
-        b=ghO/L2hkFaA7cCZ4uFgAMwFG3rF75XKfGGjmYXR7GavDZLXhWbhA7QNRsVIA7yyVnI
-         LXb1uxDctCxB/Y3b/YrWzGNs3LL1fpsKZZHU9iydnECr18lSbx4Hz37VPep0E8QZXuIz
-         2uZe7CYgfFMdowjnUehNFBBdNWIVvxN+7OaKWGWKNoFjofdmgLD81SubBgKYc7PTo0pS
-         Nijyuo42T88pEbbRYD9kpA28Uq5W0hk7mnUghHBY9DTiP2kUtx9LhLl+8OwXg+JPJJRy
-         UcgJqqFFHRA5D2fd6zhEJYQUJVykSTK5BM1hvp/y0HelUjOqZWivIjgkaLREJs/nsP6T
-         BVCA==
-X-Gm-Message-State: APjAAAVkqg3A4lc0T5IWn8zWR2ILpvoCqa1vkSDNPD0AIkFFiyWMQLoF
-        z1pNkaiix/6o6nU+8GUw1aJoH98Ao5bw8caGDUvK
-X-Google-Smtp-Source: APXvYqz1K/YbIbyz5aW0dvkpY269wGLkOBuppmQjnnC+eLcumCSTp9NxWhvnUKd+vJRTnRN+Qhm6a95VyOb3zhDd58XV
-X-Received: by 2002:a63:531d:: with SMTP id h29mr7097614pgb.52.1568999091531;
- Fri, 20 Sep 2019 10:04:51 -0700 (PDT)
-Date:   Fri, 20 Sep 2019 10:04:48 -0700
-In-Reply-To: <20190913205148.GA8799@sigill.intra.peff.net>
-Message-Id: <20190920170448.226942-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190913205148.GA8799@sigill.intra.peff.net>
-X-Mailer: git-send-email 2.23.0.351.gc4317032e6-goog
-Subject: Re: Git in Outreachy December 2019?
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     peff@peff.net
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=xlcLmNBQJ0tBpPmPHk59NVTPBqZwlLrc5uoJ2QBHLbg=;
+        b=Yz6jkqJlb/yUfBj09aVuZhqA59WnungSveWRHPYbbp8p6xtcYZCMcVvp52LmtQDGFL
+         pOEetq5xwL62VH2V+eUB6Smb37oErvSsDSsHdUej8Klolo+ZkUX8Ca/efsCCptgTka1U
+         ZQclGsT/C9LajriOpSGlZSTmkDk6Tptlu1y+igse0tMW2YCbk+oP7I6y9H7X9tQYydq1
+         1CkfTRjLt2AvufEGNMLVtHHHv4ulUY8YbxlIwqiCN/GXs97JYqy4xkbV2GAQtwCYtwS6
+         A0woHulVRla02NJJI8syp5Ulq1KsOSN7Z96/H49SB95S6CE0T1al9Hj4j3exiTqHXWng
+         ngRA==
+X-Gm-Message-State: APjAAAVPXP/vboeFg2vQm/DCcBLKWdBS/O3LeRsPxgR1AfR5lQHlDqI7
+        hnqlOnEdLklpRO+1dYZq4AyUZoCuc+8B5g==
+X-Google-Smtp-Source: APXvYqzlVdmE3pG4Y2+5LfnjIewLKP/WI2wB/XJl+5CU7AmvWPb4V3iqzMqDJBFRd7CZPLnz8iQqDQ==
+X-Received: by 2002:ac8:474c:: with SMTP id k12mr4487821qtp.319.1568999293172;
+        Fri, 20 Sep 2019 10:08:13 -0700 (PDT)
+Received: from localhost (adamsmorganips06.a.subnet.rcn.com. [66.44.93.133])
+        by smtp.gmail.com with ESMTPSA id c16sm1224386qkg.131.2019.09.20.10.08.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Sep 2019 10:08:12 -0700 (PDT)
+Date:   Fri, 20 Sep 2019 13:08:11 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2019, #02; Wed, 18)
+Message-ID: <20190920170811.GA62895@syl.local>
+References: <xmqqy2yl44lw.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy2yl44lw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Prospective mentors need to sign up on that site, and should propose a
-> project they'd be willing to mentor.
+On Wed, Sep 18, 2019 at 03:33:15PM -0700, Junio C Hamano wrote:
+> * tb/commit-graph-harden (2019-09-09) 3 commits
+>  - commit-graph.c: handle corrupt/missing trees
+>  - commit-graph.c: handle commit parsing errors
+>  - t/t5318: introduce failing 'git commit-graph write' tests
+>
+>  The code to parse and use the commit-graph file has been made more
+>  robust against corrupted input.
+>
+>  Will merge to 'next'.
 
-[snip]
+Thanks for moving my topic along. This was found while generating
+commit-graph files on all repositories hosted on GitHub, and some
+corrupt repositories triggered the behavior.
 
-> I'm happy to discuss possible projects if anybody has an idea but isn't
-> sure how to develop it into a proposal.
+We've been running this patch since a few days before I submitted it to
+the mailing list without issue, and it certainly does squash the issue
+I originally found.
 
-I'm new to Outreachy and programs like this, so does anyone have an
-opinion on my draft proposal below? It does not have any immediate
-user-facing benefit, but it does have a definite end point.
+> * jk/disable-commit-graph-during-upload-pack (2019-09-12) 2 commits
+>  - upload-pack: disable commit graph more gently for shallow traversal
+>  - commit-graph: bump DIE_ON_LOAD check to actual load-time
+>
+>  The "upload-pack" (the counterpart of "git fetch") needs to disable
+>  commit-graph when responding to a shallow clone/fetch request, but
+>  the way this was done made Git panic, which has been corrected.
+>
+>  Will merge to 'next'.
 
-Also let me know if an Outreachy proposal should have more detail, etc.
+This one has a similar origin story, and has also been running at GitHub
+for a few weeks. Happily, it does as it advertises and makes the
+commit-graph process faster.
 
-    Refactor "git index-pack" logic into library code
+> * jk/partial-clone-sparse-blob (2019-09-16) 4 commits
+>  - list-objects-filter: use empty string instead of NULL for sparse "base"
+>  - list-objects-filter: give a more specific error sparse parsing error
+>  - list-objects-filter: delay parsing of sparse oid
+>  - t5616: test cloning/fetching with sparse:oid=<oid> filter
+>
+>  The name of the blob object that stores the filter specification
+>  for sparse cloning/fetching was interpreted in a wrong place in the
+>  code, causing Git to abort.
+>
+>  Will merge to 'next'.
 
-    Currently, whenever any Git code needs a pack to be indexed, it
-    needs to spawn a new "git index-pack" process, passing command-line
-    arguments and communicating with it using file descriptors (standard
-    input and output), much like an end-user would if invoking "git
-    index-pack" directly. Refactor the pack indexing logic into library
-    code callable from other Git code, make "git index-pack" a thin
-    wrapper around that library code, and (to demonstrate that the
-    refactoring works) change fetch-pack.c to use the library code
-    instead of spawning the "git index-pack" process.
+A previous version of this series is running at GitHub, too, and also
+without issue.
 
-    This allows the pack indexing code to communicate with its callers
-    with the full power of C (structs, callbacks, etc.) instead of being
-    restricted to command-line arguments and file descriptors. It also
-    simplifies debugging in that there will no longer be 2
-    inter-communicating processes to deal with, only 1.
+Thanks,
+Taylor
