@@ -2,120 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 311561F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 17:10:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 238981F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 17:15:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405316AbfITRKa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 13:10:30 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:36232 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391787AbfITRKa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 13:10:30 -0400
-Received: by mail-wm1-f65.google.com with SMTP id m18so2989396wmc.1
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 10:10:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=TVNNgI33y0/glGCH4afNtcGakCwjlK9EmXC+Gow0EYQ=;
-        b=F2aXuKFy+XdOWO9PnOw4Ro5VVIc9AElrBIvNXK8trr2YKa5BZ05oiv3iod6IJsL3NC
-         yeIR3G0/3p1enY1X0E3cD0Ds2FPysoFbXtgvXoajKkuGDU2C4L3bTyjFu3IgtBxfyBw8
-         RpnRbHE3MKSEwasia39QjWLy+olbdJEcWNsBqw1HXtoswA8u/uVkDq9zQGOy+rGc0ggv
-         f0WIO57IuXXwV1wgx7qdBlkeuIJ4pvHNxgvku2EgfhamEXeYy+k5jeVLxXNsEjkIaRR+
-         e+F7RJfYUFeCZEAWxMD8UIktK482A7Jgn3poprPNQPP/4RvaONeVAEYmuYkQvLmlniXa
-         LC8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=TVNNgI33y0/glGCH4afNtcGakCwjlK9EmXC+Gow0EYQ=;
-        b=UN4/vg1DSp1STcPEtb28uVzBJILvZpfccwnpksuyJ3QqqA2r7u6RrPX/LvxRCfXXdU
-         Stf/VfH7HZp2hKbnvzMt+nglhByV2ZtVqVEk60UWI+og2YibwFhGoGkGg6GQHfdeGcV3
-         enJVfO3t/NFLPGHGpCiXvm6lzQIuvxHZlAd6OTFqO1hN1Rn5fv05WzHOLPDZQxW33BHf
-         uT5v0uvzlL3/c9vxVXI9aBYyAt8abWZFAd5+uGqs6VsWNMfsgNxfsGSg1W6xFaHtF8+7
-         WpP1RFGY5ELGZ0pS58u7r+pbLUb2XwI8uw3XuKt1Tr58CYvAP1LKwBDSmqvycO644Cmn
-         LkcA==
-X-Gm-Message-State: APjAAAUfFG/9zjXrhYziMvcwReqB9wloTeoqoEkMHq3toAP6c9s+cQW/
-        OygksnwgZIAxYxyXVdyz0sVQizjn
-X-Google-Smtp-Source: APXvYqy1MmA6HhHqcIAM2g9CXi1FD0GEKKRbWJdzqRzYm7VahjJCS4IxilSZ8MI7+vRV7PkDbDQONg==
-X-Received: by 2002:a05:600c:10cc:: with SMTP id l12mr4144850wmd.165.1568999428184;
-        Fri, 20 Sep 2019 10:10:28 -0700 (PDT)
-Received: from szeder.dev (x4db40123.dyn.telefonica.de. [77.180.1.35])
-        by smtp.gmail.com with ESMTPSA id t6sm3727691wmf.8.2019.09.20.10.10.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Sep 2019 10:10:27 -0700 (PDT)
-Date:   Fri, 20 Sep 2019 19:10:25 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 03/15] name-rev: use strip_suffix() in get_rev_name()
-Message-ID: <20190920171025.GB32474@szeder.dev>
-References: <20190919214712.7348-1-szeder.dev@gmail.com>
- <20190919214712.7348-4-szeder.dev@gmail.com>
- <bc885655-7b86-86b8-a653-5eecca56bfb2@web.de>
+        id S1729428AbfITRPa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 13:15:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60595 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726020AbfITRPa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 13:15:30 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CC5542EEBC;
+        Fri, 20 Sep 2019 13:15:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZU80OV6YxiyDqtdkRsCWkhPTmX8=; b=KwhTD5
+        LY0KLLAsRK6Gc6sb5jluMyMHPo66SNV4UCAgjgb8OYXkXeYcoN9hDZkcMqv8z16B
+        Bbq4OAJNsF4sY3bhOd7xxKtkM3e5VKnKPS62U3jy1IOwg43KPbCAx4MDbt+6DuOx
+        mZATq4BedlF+zwW/qfD91me8wpWXgUAe/4nX8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qBKsyLbbwPB73Tta4KNSSgCJf6oOSYe4
+        cof0H8Kd8AznxISokbdPsa14eEQqu99aOPi/GyrBVWiF8jqL3VwsdXy2QLlUL2Kp
+        MfM+8Nq1IdPkp4LpO6qSoKOxqXuZtBWEK3YC2oDeKIRbeQG/QXUDA0q3ZKj8R/Sm
+        obINVftgXT0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C331F2EEBB;
+        Fri, 20 Sep 2019 13:15:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2208D2EEBA;
+        Fri, 20 Sep 2019 13:15:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, szeder.dev@gmail.com
+Subject: Re: [PATCH v2] merge-recursive: symlink's descendants not in way
+References: <https://public-inbox.org/git/20190917215040.132503-1-jonathantanmy@google.com/>
+        <20190918202738.57273-1-jonathantanmy@google.com>
+Date:   Fri, 20 Sep 2019 10:15:25 -0700
+In-Reply-To: <20190918202738.57273-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Wed, 18 Sep 2019 13:27:38 -0700")
+Message-ID: <xmqqzhiyvqhe.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <bc885655-7b86-86b8-a653-5eecca56bfb2@web.de>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3D678BFC-DBCA-11E9-BE07-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 20, 2019 at 06:36:30PM +0200, René Scharfe wrote:
-> Am 19.09.19 um 23:46 schrieb SZEDER Gábor:
-> > Use strip_suffix() instead of open-coding it, making the code more
-> > idiomatic.
-> >
-> > Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> > ---
-> >  builtin/name-rev.c | 8 ++++----
-> >  1 file changed, 4 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> > index c785fe16ba..d345456656 100644
-> > --- a/builtin/name-rev.c
-> > +++ b/builtin/name-rev.c
-> > @@ -317,11 +317,11 @@ static const char *get_rev_name(const struct object *o, struct strbuf *buf)
-> >  	if (!n->generation)
-> >  		return n->tip_name;
-> >  	else {
-> > -		int len = strlen(n->tip_name);
-> > -		if (len > 2 && !strcmp(n->tip_name + len - 2, "^0"))
-> > -			len -= 2;
-> > +		size_t len;
-> > +		strip_suffix(n->tip_name, "^0", &len);
-> >  		strbuf_reset(buf);
-> > -		strbuf_addf(buf, "%.*s~%d", len, n->tip_name, n->generation);
-> > +		strbuf_addf(buf, "%.*s~%d", (int) len, n->tip_name,
-> > +			    n->generation);
-> >  		return buf->buf;
-> >  	}
-> >  }
-> >
-> 
-> This gets rid of the repeated magic string length constant 2, which is
-> nice.  But why not go all the way to full strbuf-ness?  It's shorter,
-> looks less busy, and the extra two copied bytes shouldn't matter in a
-> measurable way.
-> 
-> 	else {
-> 		strbuf_reset(buf);
-> 		strbuf_addstr(buf, n->tip_name);
-> 		strbuf_strip_suffix(buf, "^0");
-> 		strbuf_addf(buf, "~%d", n->generation);
-> 		return buf->buf;
-> 	}
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Oh, I like this, thanks!
+> When the working tree has:
+>  - bar (directory)
+>  - bar/file (file)
+>  - foo (symlink to .)
+>
+> (note that lstat() for "foo/bar" would tell us that it is a directory)
+>
+> and the user merges a commit that deletes the foo symlink and instead
+> contains:
+>  - bar (directory, as above)
+>  - bar/file (file, as above)
+>  - foo (directory)
+>  - foo/bar (file)
+>
+> the merge should happen without requiring user intervention.
 
+Thanks.  That clears my previous confusion.  It is clear that the
+desired outcome is that bar/file will be merged with itself, foo
+itself will resolve to "deleted", and foo/bar will be created.
+
+> However, this does not happen.
+
+OK.  We notice that we need to newly create foo/bar but we
+incorrectly find that there is "foo/bar" already because of the
+careless use of bare lstat(2) makes "bar" visible as if it were also
+"foo/bar".  I wonder if the current code would be confused the same
+way if the side branch added "foo/bar/file", or the confusion would
+be even worse---it is not dir_in_way() and a different codepath
+would be affected, no?
+
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 6b812d67e3..22a12cfeba 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -764,7 +764,8 @@ static int dir_in_way(struct index_state *istate, const char *path,
+>  
+>  	strbuf_release(&dirpath);
+>  	return check_working_copy && !lstat(path, &st) && S_ISDIR(st.st_mode) &&
+> -		!(empty_ok && is_empty_dir(path));
+> +		!(empty_ok && is_empty_dir(path)) &&
+> +		!has_symlink_leading_path(path, strlen(path));
+
+As the new call is fairly heavyweight compared to everything else we
+are doing, I think it is very sensible to have this at the end, like
+this patch does.
+
+Nicely done.  Thanks, will queue.
