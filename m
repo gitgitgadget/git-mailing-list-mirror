@@ -2,121 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA8EE1F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 09:36:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C312E1F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 09:42:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408497AbfITJgO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 05:36:14 -0400
-Received: from mail-wr1-f53.google.com ([209.85.221.53]:43464 "EHLO
-        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405989AbfITJgO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 05:36:14 -0400
-Received: by mail-wr1-f53.google.com with SMTP id q17so6016016wrx.10
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 02:36:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=IsfFMr17sfLUzs3Y4Sv/cdF6wW5rTBGlDz7hfnSBPt4=;
-        b=mM48OqqyJbqgymmJaa/zI/PzWX6CNUbEx7tqOsza9X0LaJNOYJgEXf4kjZWxZsJaxL
-         b0kwr+pb/lmp/uP4xRcIl+iLJ0KxowIDKxBa7jK/aFvaEI/AqK1GXwD29yktLcB93L0O
-         tP7r3bUTBbAvifPU17ZVJCQ73Ka0SwQbpC3Bn7aEi4/Vgl+2d6XPM+qHt3JrAyW4Zs6u
-         OmSrJ0ku/KZzbRZjmEo3q4x8HMSUjQo1P7mdNTuiZNSAfOGsOOlXN0q6C8TaAf7xwbUD
-         7fLFVAl3LY5p4vBvxskFkASeLrZTe+5smuaFI8lIxpuDljT51eTRKd5CiD5TQ6E5wdTZ
-         +kiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=IsfFMr17sfLUzs3Y4Sv/cdF6wW5rTBGlDz7hfnSBPt4=;
-        b=cofnBlIjkcVjOCPH4xM6765W2N3K6d9AByURGlmOZlM9Of6vxmkuXk4bu2xBUv5MUT
-         mIZzWZtZxf25ny+dZVY21yB1w6SZBZq31SpzkkFhza5huqbj47iKjuK8F0hrci7T3EQt
-         czcIbYotRA4UhxE6ov9ocLP6YI+y/JTHTyqdoPVldRtu0663Wb/ugnxU21Ooao7HWk8Y
-         jB12pmjkw0teBlvoQHW8Rd0VVuSOUjU3mjl8TIsy5NSJ4EH4vrDxxykHN+GsnISpsDKN
-         H548EVmShRxwa5tmtmOOLlEnplutlkDPApfMfdx7m8nFl36PyMo/a5eeB1pc4Z6YVPUQ
-         Luog==
-X-Gm-Message-State: APjAAAUkccbsc8XuRhbRVNEJDmtVvWCsUtyCfiKlf2/Jg1gvioue1zJF
-        FOSPXP+UskzQaV54IwFnFco=
-X-Google-Smtp-Source: APXvYqxROQ5fPeIMO8Fz7nMIqI6hkg4IE/enqVw5GT1JK0rB+KVJ9vPbzVyxE5wYDZXfozP/NOa8Cw==
-X-Received: by 2002:a5d:4d8c:: with SMTP id b12mr10756006wru.198.1568972172831;
-        Fri, 20 Sep 2019 02:36:12 -0700 (PDT)
-Received: from localhost.localdomain (x4db40123.dyn.telefonica.de. [77.180.1.35])
-        by smtp.gmail.com with ESMTPSA id f197sm1574679wme.22.2019.09.20.02.36.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 20 Sep 2019 02:36:12 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] t/helper: ignore only executable files
-Date:   Fri, 20 Sep 2019 11:36:09 +0200
-Message-Id: <20190920093609.24935-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.23.0.331.g4e51dcdf11
+        id S2405713AbfITJmq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 05:42:46 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:37684 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2405593AbfITJmq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 05:42:46 -0400
+Received: from [92.7.169.237] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1iBFR3-0002NY-5q; Fri, 20 Sep 2019 10:42:42 +0100
+Subject: Re: [PATCH] doc: MyFirstContribution: fix cmd placement instructions
+To:     Emily Shaffer <emilyshaffer@google.com>,
+        Pedro Sousa <pedroteosousa@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20190919184634.8869-1-pedroteosousa@gmail.com>
+ <20190919204627.GB116396@google.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <bba245d1-2828-e356-6f78-6a0bb47cc7e1@iee.email>
+Date:   Fri, 20 Sep 2019 10:42:40 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190919204627.GB116396@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch conceptually reverts 44103f4197 (t/helper: ignore
-everything but sources, 2017-12-12).  Back in those days we did have a
-lot of separate test helper executables under 't/helper', and its
-'.gitignore' did get out of sync every once in a while.
-
-Since then, however, most of those separate executables were
-integrated into a single 'test-tool' command [1], and new test helpers
-are added as new subcommands, so the chances of that '.gitignore'
-getting out of sync again are much lower.  And even if a contributor
-were not careful enough and submits a patch that adds a new executable
-under 't/helper' but forgets to update '.gitignore' accordingly, our
-CI builds would catch it in a timely manner [2].
-
-Ignoring everything but sources has the drawback that building an
-older version of Git (e.g. during bisecting) creates all those
-executables, and after going back to e.g. current 'master' the usual
-cleanup commands like 'make clean' or 'git clean -fd' don't remove
-them (the former doesn't know about them, and the latter doesn't
-remove ignored files).
-
-So let's ignore only the executable files under 't/helper/, i.e.
-'test-tool' and the three other remaining executables that could not
-be integrated into 'test-tool' (no need to ignore object files, as
-they are already ignored by our toplevel '.gitignore').
-
-[1] The topic starting with efd71f8913 (t/helper: add an empty
-    test-tool program, 2018-03-24), and leading up to the merge commit
-    27f25845cf (Merge branch 'nd/combined-test-helper', 2018-04-11).
-
-[2] b92cb86ea1 (travis-ci: check that all build artifacts are
-    .gitignore-d, 2017-12-31)
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- t/helper/.gitignore | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
-
-diff --git a/t/helper/.gitignore b/t/helper/.gitignore
-index 2bad28af92..48c7bb0bbb 100644
---- a/t/helper/.gitignore
-+++ b/t/helper/.gitignore
-@@ -1,5 +1,4 @@
--*
--!*.sh
--!*.[ch]
--!*.gitignore
--
-+/test-tool
-+/test-fake-ssh
-+/test-line-buffer
-+/test-svn-fe
--- 
-2.23.0.331.g4e51dcdf11
+On 19/09/2019 21:46, Emily Shaffer wrote:
+> Thanks for sending this. I guess I don't know the alphabet very well :)
+>
+> A different color we could paint the bikeshed would be to write "add a
+> new line for `psuh` immediately after it" in these places instead. But I
+> have no preference whatsoever.
+>
+>   - Emily
+>
+> Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+>
+> On Thu, Sep 19, 2019 at 03:46:34PM -0300, Pedro Sousa wrote:
+>> Using the pull command instead of push is more accurate when giving
+>> instructions on placing the psuh command in alphabetical order.
+>>
+>> Signed-off-by: Pedro Sousa <pedroteosousa@gmail.com>
+>> ---
+>>   Documentation/MyFirstContribution.txt | 8 ++++----
+>>   1 file changed, 4 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+>> index f867037..fb15af8 100644
+>> --- a/Documentation/MyFirstContribution.txt
+>> +++ b/Documentation/MyFirstContribution.txt
+>> @@ -97,7 +97,7 @@ int cmd_psuh(int argc, const char **argv, const char *prefix)
+>>   ----
+>>   
+>>   We'll also need to add the declaration of psuh; open up `builtin.h`, find the
+>> -declaration for `cmd_push`, and add a new line for `psuh` immediately before it,
+>> +declaration for `cmd_pull`, and add a new line for `psuh` immediately before it,
+Maybe feature the "alphabetical" sort order (i.e. include the word 
+here), so that other see it (use of alphabetical sorting) that little 
+more obviously in the tutorial material.
+Philip
+>>   in order to keep the declarations sorted:
+>>   
+>>   ----
+>> @@ -123,7 +123,7 @@ int cmd_psuh(int argc, const char **argv, const char *prefix)
+>>   }
+>>   ----
+>>   
+>> -Let's try to build it.  Open `Makefile`, find where `builtin/push.o` is added
+>> +Let's try to build it.  Open `Makefile`, find where `builtin/pull.o` is added
+>>   to `BUILTIN_OBJS`, and add `builtin/psuh.o` in the same way next to it in
+>>   alphabetical order. Once you've done so, move to the top-level directory and
+>>   build simply with `make`. Also add the `DEVELOPER=1` variable to turn on
+>> @@ -149,7 +149,7 @@ a `cmd_struct` to the `commands[]` array. `struct cmd_struct` takes a string
+>>   with the command name, a function pointer to the command implementation, and a
+>>   setup option flag. For now, let's keep mimicking `push`. Find the line where
+>>   `cmd_push` is registered, copy it, and modify it for `cmd_psuh`, placing the new
+>> -line in alphabetical order.
+>> +line in alphabetical order (immediately before `cmd_pull`).
+>>   
+>>   The options are documented in `builtin.h` under "Adding a new built-in." Since
+>>   we hope to print some data about the user's current workspace context later,
+>> @@ -167,7 +167,7 @@ Check it out! You've got a command! Nice work! Let's commit this.
+>>   
+>>   `git status` reveals modified `Makefile`, `builtin.h`, and `git.c` as well as
+>>   untracked `builtin/psuh.c` and `git-psuh`. First, let's take care of the binary,
+>> -which should be ignored. Open `.gitignore` in your editor, find `/git-push`, and
+>> +which should be ignored. Open `.gitignore` in your editor, find `/git-pull`, and
+>>   add an entry for your new command in alphabetical order:
+>>   
+>>   ----
+>> -- 
+>> 2.9.3
+>>
 
