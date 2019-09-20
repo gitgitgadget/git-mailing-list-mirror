@@ -2,112 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF8821F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 17:42:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 308A81F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 17:43:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729329AbfITRmT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 13:42:19 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35045 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727318AbfITRmT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 13:42:19 -0400
-Received: by mail-wm1-f66.google.com with SMTP id y21so3088787wmi.0
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 10:42:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=z/6NuGUOZMUgAZDyXSpkHI6qsHpxWrMVwiGF9YPcfdw=;
-        b=gIBj9eqkzzMV8Zr7x677UC+1Bqf19w7cIqVvuOg1lvuUmvOUjDznY/0HvOtJW1efe9
-         alrj42ZHmpo6sxMfB1HTt/dT3R1nPi4ZW8D+DzGB8I8DnhkliT/Bek0J4GIO9uCPedzk
-         pI3MbVY4e5aqhGNAvB2Jn2KFe4jE01FExtpDSiggH+gBMxjFFtSI4EqEYJy7wxM2q80U
-         5SlISq+YLpIut/OmZxbCb1h2eCb1OVBay9a4K6+PSOHPOyJMUS/PKjSGcPjUZEMdo8uW
-         MI/Ca8lZn7Luo1KIzK+UrLY5F3aCarfhuHzsW9H5n2WC0mSroGm3SC29XRjBqd2vzkQB
-         DR7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=z/6NuGUOZMUgAZDyXSpkHI6qsHpxWrMVwiGF9YPcfdw=;
-        b=VTbcm95BTSz90dYFN7lzaz928VHr4FJ1LkuIxzqIVw/ouSxmWMUwV2qCjgrzwc6k8O
-         VVhOdWPffTBZnTLYpJXfwvvSfPLV59cA28ZrdH9supXcjLkTs1gXEI23NReAl2bTYHLS
-         VpGX089y7g/KsLloBdEm8O73w0/4m1IXnGx35OYQz97qiDGAHHX2dHiHJ3OjJ8c46b1O
-         yc+bsYiuOw31VrOhpAMzCwjT44nap5JCMcHoImXoMnZmWAw5KiGpqNIUM9U+dQTAonXD
-         GBpZ3AQyqzjYxDyuCJlKohfZrwjvhqUJfWJe/lsjpzM7P6/UcnBRhagU4EXyJk9dCcFz
-         PvAA==
-X-Gm-Message-State: APjAAAXZ7h5JNVcfGezCQPr8ZYLUW0AE4DFUsCRTxPCnql6vthPz87gQ
-        9HeFP8MEW5MLrnEvSTiQuIVlR3kJ
-X-Google-Smtp-Source: APXvYqzHjfkgO/IeASv/3B3mnGmDY1b/yXRoqe0c0/kdxmWvMsd4Z/Z+Vq8HPiQItt3s2noHSVEe1A==
-X-Received: by 2002:a05:600c:2193:: with SMTP id e19mr3539632wme.2.1569001336029;
-        Fri, 20 Sep 2019 10:42:16 -0700 (PDT)
-Received: from szeder.dev (x4db40123.dyn.telefonica.de. [77.180.1.35])
-        by smtp.gmail.com with ESMTPSA id a13sm5215670wrf.73.2019.09.20.10.42.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Sep 2019 10:42:15 -0700 (PDT)
-Date:   Fri, 20 Sep 2019 19:42:13 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+        id S2393049AbfITRn1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 13:43:27 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63496 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729414AbfITRn1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 13:43:27 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DCA4B2F300;
+        Fri, 20 Sep 2019 13:43:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fCfd00vVptdAyP34V25NKEpYysw=; b=A5PhKG
+        LbVQGvb2LM6ImztMd6I90NznwybBpEggFD3s44XGpFtfiSeGzXUVHj0SYUPizIQS
+        m+mIqYjdc+sEI9MNYhacXlUQ6WeI3OxgBuyjNxaoVH+HTTzCDTZqbMTK2Q3Kz4FY
+        Bb6b7yzDCANZ5bLfUvQGR7zHTjIhVsVevIviI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=TZK3v8+3yvHuE7XX/FeapUSqlUCSSo/9
+        ra1SLjbV+gcdGd+KYfuooPeH6Q1CqZivzpcc+v3PLK/QD/y92fmxC1CHnakb7jUm
+        fe2GP9pdye6vdcaquJqh+89pJ2LQ8eDu4ZUG+CQzepoWW6dbf50lZs3extjrXm3C
+        kcMeKn/z8Q0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D37BF2F2FF;
+        Fri, 20 Sep 2019 13:43:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 335132F2FD;
+        Fri, 20 Sep 2019 13:43:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 08/15] name-rev: pull out deref handling from the
- recursion
-Message-ID: <20190920174213.GB2988@szeder.dev>
-References: <20190919214712.7348-1-szeder.dev@gmail.com>
- <20190919214712.7348-9-szeder.dev@gmail.com>
- <38877cbe-084f-8da5-957a-6d545cf860b1@gmail.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "peff\@peff.net" <peff@peff.net>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        garimasigit@gmail.com
+Subject: Re: [DISCUSSION] Growing the Git community
+References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
+Date:   Fri, 20 Sep 2019 10:43:23 -0700
+In-Reply-To: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com> (Derrick
+        Stolee's message of "Thu, 19 Sep 2019 12:30:13 -0400")
+Message-ID: <xmqqsgoqvp6s.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <38877cbe-084f-8da5-957a-6d545cf860b1@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2504A80C-DBCE-11E9-86AC-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 20, 2019 at 11:21:53AM -0400, Derrick Stolee wrote:
-> On 9/19/2019 5:47 PM, SZEDER Gábor wrote:
-> > The 'if (deref) { ... }' condition near the beginning of the recursive
-> > name_rev() function can only ever be true in the first invocation,
-> > because the 'deref' parameter is always 0 in the subsequent recursive
-> > invocations.
-> > 
-> > Extract this condition from the recursion into name_rev()'s caller and
-> > drop the function's 'deref' parameter.  This makes eliminating the
-> > recursion a bit easier to follow, and it will be moved back into
-> > name_rev() after the recursion is elminated.
+Derrick Stolee <stolee@gmail.com> writes:
 
-s/elminated/eliminated/
+> I. Goals and Perceived Problems
+>
+> As a community, our number one goal is for Git to continue to be the best
+> distributed version control system. At minimum, it should continue to be
+> the most widely-used DVCS. Towards that goal, we need to make sure Git is
+> the best solution for every kind of developer in every industry.
 
-> > Furthermore, drop the condition that die()s when both 'deref' and
-> > 'generation' are non-null (which should have been a BUG() to begin
-> > with).
-> 
-> These changes seem sensible. I look forward to seeing how deref is
-> reintroduced.
-> 
-> > Note that this change reintroduces the memory leak that was plugged in
-> > in commit 5308224633 (name-rev: avoid leaking memory in the `deref`
-> > case, 2017-05-04), but a later patch in this series will plug it in
-> > again.
-> 
-> The memory leak is now for "tip_name" correct? Just tracking to make
-> sure it gets plugged later.
+I have quite a lot of problem with this attitude to place the world
+domination as the ultimate goal, even though it may call for the
+need for sub-goals, one of which is this one,
 
-Yes, it's 'tip_name' (the one returned by xstrfmt()).
+> The
+> community cannot do this without including developers of all kinds. This
+> means having a diverse community, for all senses of the word: Diverse in
+> physical location, gender, professional status, age, and others.
 
-> > -	if (deref) {
-> > -		tip_name = to_free = xstrfmt("%s^0", tip_name);
+that I can 100% agree with.  Also I agree that the tactical moves
+listed like improved onboading and documentation (omitted from this
+response) are all good.
 
-> > +		if (deref)
-> > +			tip_name = xstrfmt("%s^0", path);
-> > +		else
-> > +			tip_name = xstrdup(path);
+> After we put items 1-4 in place, we should reach out to the
+> general tech community that we are interested in new
+> contributors. It's not enough to open the door, we should
+> point people to it.
+
+I am also somewhat negative on this.
+
+I want to see our system to support the use cases of its users well,
+which would lead to its users being happy to use the system.
+
+I think that (and in the remainder, I won't write "I think that" for
+brevity) it should be the primary goal.  By being a system that is
+useful and pleasant to use, we may gain more users, and we may gain
+users from many more different fields and industries and make these
+new users happy.  But it should merely be a result, consequence of
+being a good system for its users, and not a goal of its own, to
+acquire new users from new industries.
+
+And by being a project that works on such a good system for its
+users, with welcoming atmosphere to those who are prepared to
+reciprocate the same respect while interacting with us, the
+community may attract more new members, developers, advocates, tech
+writers, etc.  It should merely be a result, consequence of being a
+good community for its members, and not a goal on its own, to
+acquire new community members.
+
+We first should make sure that we serve existing users and existing
+community members well.  So well that other people who are not yet
+our "existing" users and members would want to become part of us, in
+order to join the fun and share the benefit.  If we cannot serve
+even the existing members well, we shouldn't be talking about
+acquiring new members.
+
+Growth and the world domination may come as a consequence, and I
+would not reject it when it happens, but we should not be actively
+seeking it.
+
+It follows that "in this quarter, we acquired these high profile
+projects as users", "we have this many new contributors this month",
+"the acceptance rate of the patches from contributors with less than
+3 months experience dipped by 20% this month" etc. are not best
+measures of success.  What's preferable would be yardsticks to gauge
+the community-member happiness (e.g. "This many percent of total
+community member population have been active this month").
+
+Thanks.
