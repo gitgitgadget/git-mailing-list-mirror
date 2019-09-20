@@ -2,97 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 722E21F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 15:22:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E04D1F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 15:27:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393454AbfITPWj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 11:22:39 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:33141 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393434AbfITPWh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 11:22:37 -0400
-Received: by mail-qk1-f196.google.com with SMTP id x134so7731185qkb.0
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 08:22:37 -0700 (PDT)
+        id S2391703AbfITP1w (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 11:27:52 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:38204 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728899AbfITP1w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 11:27:52 -0400
+Received: by mail-qt1-f196.google.com with SMTP id j31so9119720qta.5
+        for <git@vger.kernel.org>; Fri, 20 Sep 2019 08:27:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=AamKrdvU3BkR873xXo20yAH1NkNPkO6rclG/+77dKl4=;
-        b=ZYXKmRvmWqBTDJF1WK5k13igOm9B8+yaqD+Lzs8+DXRJNkUvEpgRuiMNZm2nxZ9An4
-         WT+94Yq/Lnol4zwi/RfSLvDZBR1zCLbw4XdfeKak+HXEeXyysQsYxw3Pn/boB175AWF8
-         RtjU2dxWUBBfcY4AWfw0qZUclBWJWDix/Z+Z88MrjY5Q32oHnc6BZbIgNb38bdyMgYzM
-         AwUH1TU+ijZqJ20MMr+z/g/Da9gxLhm3vfG+ZhdRbOGoA6xJVnyBlKa7weckD6hK3FjG
-         pPTdR8bT7B1wi097ErbeiUPPhr7n6kVfrO3h8jYz4910oMaLFN/ZMvvIPnAPipvGJbY3
-         y6uA==
+        bh=gq+y/R1dUTCaH9UmtoKVLgYI130yuodYnKk08Rmnygw=;
+        b=i0HmjTcCjXQo8fkm3P8dsQmTfV5HnpHDj5klAsXO41PczOuSjaaKGFOM8uCTaFQ1Gn
+         5R486w41M071gSNvsnaAvzotzS7dEr8Ssv62TV+zHISy8wlD1vqYZQc4vUGmbZKXNJzq
+         PS9GypycoAjRJwMKvcs1dsEsxTG7Q+NPs8EL6cVoGUv10e7s+kpbIs13uSOwi5qMkAGv
+         N0o5wKy0btyuHXY1sGIn2+zaRB8woLATdmD77tbtmQXXe2UyoF2ttyGlepRtQ+XJ3MfH
+         yFnetpirXlLJx1xJ/Or03DoIzFOSYAYJeE2iEUzFP5i5DZrWKIUwc8Ju3UhsV06EJ/tb
+         UFlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=AamKrdvU3BkR873xXo20yAH1NkNPkO6rclG/+77dKl4=;
-        b=s95PxYsnF4EOW/By3NEW6rbEsRdXYmkxGGZOT9V5ILRg6EIWYMJZuLLLtFNRPL2OFt
-         enAey8PHCBVdLMgO3dPCVl6wgaE+Q5Tn8YGowuWwQqrMql8XIu0TlNzlZTPXktUOz2rY
-         LC8YxeDtQP8Lnu/LuQGdVNW7E7ClWx9nHgDAbRT39k4+0sTpGCUSzwE37aoqdl792R2E
-         tGhdNpJC4IsYVuutV3SOy9vOzPfk0ma1Z67fxSOlyAfMUwZoiJ9GIMvfvOADdvbdsZ+P
-         Ur2p6KBc3GbgFZ0oCOszDJrF2uL9Bs+Jze16uN5XWKsjnwxGbqvoCDOHeN6s1AXcNHOK
-         eEBQ==
-X-Gm-Message-State: APjAAAVr8NVan6OY6B+XpWm+ynZENKkvVtk0nMXjgBi6yI8NfVN2MxKp
-        Kf1Svvy1euP1zxmigT07WdY9cgU2dEY=
-X-Google-Smtp-Source: APXvYqzLWk2JfZLViqebJsDyxs9nbfVsOE0cvhWyl0cZxFdjoRM4Xe3vFk9s8FkvNkxG1xhcN8/1aA==
-X-Received: by 2002:ae9:e817:: with SMTP id a23mr4169484qkg.294.1568992957029;
-        Fri, 20 Sep 2019 08:22:37 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:a0ff:8705:33f2:4791? ([2001:4898:a800:1010:5235:8705:33f2:4791])
-        by smtp.gmail.com with ESMTPSA id 56sm1866092qty.15.2019.09.20.08.22.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Sep 2019 08:22:36 -0700 (PDT)
-Subject: Re: [DISCUSSION] Growing the Git community
-To:     Denton Liu <liu.denton@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "gitster@pobox.com" <gitster@pobox.com>
-References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
- <20190919173423.GA70421@dentonliu-ltm.internal.salesforce.com>
-From:   Garima Singh <garimasigit@gmail.com>
-Message-ID: <7819b52e-9222-8158-d26d-bf4ab2eec498@gmail.com>
-Date:   Fri, 20 Sep 2019 11:22:37 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        bh=gq+y/R1dUTCaH9UmtoKVLgYI130yuodYnKk08Rmnygw=;
+        b=P8/2xoWA422BFT94wHb0/+U8TMBD1rReabpuBFszNxacmoQKt2Z4AiwfYu1g8+II/d
+         O9R6cxEPpoznzOK/GarAQJHkG4+y6ZlgM40/uAyGeUPHQkr390FVma1bhMRTT95vxtTe
+         UksNrEr1ne56YNnK6qlAdWhLKjRgmfyvxL8n0QBGYdwG+Nrmk0t6T2/zB+HNRglYtV6L
+         AkF7C35cxn5/6u08e9nkAHDlNqwSzcEMRVG5kpTncQGLITFyItc2nNR3nTOR0IhH89Uo
+         U27Ywq2CP9e5X0SXErAJkKxpVm72lMnRy8NSR+O4AzlrInI2lBlyVjzrqF3kHZVwV+dC
+         T0OQ==
+X-Gm-Message-State: APjAAAV3H/LMqz6R9tPffD58gWYIpKcLVj3CI3qzvr3kY3yToCZZHr5Z
+        LpLYpHpN/FufPxS6zBb+WT5JVZe8hmY=
+X-Google-Smtp-Source: APXvYqyYc1B99Augt8ym4aq5y7evkyG0aZcuKM7jFl81h+3vJOG1UESZkIIerXsY7Rv00jkqpAAtWA==
+X-Received: by 2002:a0c:f3c1:: with SMTP id f1mr13552655qvm.165.1568993271226;
+        Fri, 20 Sep 2019 08:27:51 -0700 (PDT)
+Received: from ?IPv6:2001:4898:4070:37:142:491c:a46c:6a48? ([2001:4898:a800:1010:89d8:491c:a46c:6a48])
+        by smtp.gmail.com with ESMTPSA id i1sm1085197qkk.88.2019.09.20.08.27.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Sep 2019 08:27:50 -0700 (PDT)
+Subject: Re: [PATCH 10/15] name-rev: restructure creating/updating 'struct
+ rev_name' instances
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <20190919214712.7348-1-szeder.dev@gmail.com>
+ <20190919214712.7348-11-szeder.dev@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <515a4590-47e8-fe95-833b-307364fc8fa4@gmail.com>
+Date:   Fri, 20 Sep 2019 11:27:49 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-In-Reply-To: <20190919173423.GA70421@dentonliu-ltm.internal.salesforce.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20190919214712.7348-11-szeder.dev@gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/19/2019 1:34 PM, Denton Liu wrote:
-> Another discouraging thing when I was just starting out was sending a
-> out a patch and just getting radio silence (especially the first one, I
-> wasn't sure if it even sent out properly!). Perhaps in the main list, we
-> could get people to tag with [FIRST PATCH] or something when sending in
-> their first patch.
+On 9/19/2019 5:47 PM, SZEDER Gábor wrote:
+> At the beginning of the recursive name_rev() function it creates a new
+> 'struct rev_name' instance for each previously unvisited commit or, if
+> this visit results in better name for an already visited commit, then
+> updates the 'struct rev_name' instance attached to to the commit, or
+> returns early.
 > 
-> If the patch is not desired, then we should explain why it wasn't
-> desired instead of just leaving them hanging. I know Junio is too busy
-> to say "hey, I'm picking this patch up" to every single patchset, but if
-> a patch is desired, perhaps the rest of us could pick up the slack and
-> say, "hey, your patchset was picked up by Junio in his gitster repo on
-> this branch".
+> Restructure this so it's caller creates or updates the 'struct
+> rev_name' instance associated with the commit to be passed as
+> parameter, i.e. both name_ref() before calling name_rev() and
+> name_rev() itself as it iterates over the parent commits.
 > 
+> This makes eliminating the recursion a bit easier to follow, and it
+> will be moved back to name_rev() after the recursion is eliminated.
+> 
+> This change also plugs the memory leak that was temporarily unplugged
+> in the earlier "name-rev: pull out deref handling from the recursion"
+> patch in this series.
+[snip]
+>  
+> @@ -276,11 +277,17 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+>  		path = name_ref_abbrev(path, can_abbreviate_output);
+>  		if (commit->date >= cutoff) {
+>  			const char *tip_name;
+> +			char *to_free = NULL;
+>  			if (deref)
+> -				tip_name = xstrfmt("%s^0", path);
+> +				tip_name = to_free = xstrfmt("%s^0", path);
+>  			else
+>  				tip_name = xstrdup(path);
 
-I absolutely *love* this idea!
+So this xstrdup(path) is not a leak?
 
-Cheers!
-Garima Singh
+> -			name_rev(commit, tip_name, taggerdate, 0, 0, from_tag);
+> +			if (create_or_update_name(commit, tip_name, taggerdate,
+> +						  0, 0, from_tag))
+> +				name_rev(commit, tip_name, taggerdate, 0, 0,
+> +					 from_tag);
+> +			else
+> +				free(to_free);
+>  		}
+>  	}
+>  	return 0;
+> 
