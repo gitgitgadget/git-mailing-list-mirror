@@ -9,61 +9,58 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	SPOOFED_FREEMAIL shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B1C61F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 16:53:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF0A41F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 16:53:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404658AbfITQxw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 12:53:52 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44555 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390491AbfITQxw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 12:53:52 -0400
-Received: by mail-wr1-f65.google.com with SMTP id i18so7418119wru.11
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 09:53:50 -0700 (PDT)
+        id S2405365AbfITQxz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 12:53:55 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42702 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391425AbfITQxy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 12:53:54 -0400
+Received: by mail-wr1-f66.google.com with SMTP id n14so7435424wrw.9
+        for <git@vger.kernel.org>; Fri, 20 Sep 2019 09:53:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+1cWiJ5MeAObE96B9PJGJ+I+ZasW11OsQMM/ZAuTY9M=;
-        b=M60T+BxqdTWD9TwGRu3hD2oBr+RlLUFS2WhcoFjYpCw+Xm8aR7LcncG2EUvk9HH/ar
-         DQZKlI9f5899SaIE/5MTWiYRfWaY9NJPqM88l0HARmMt5hUtKvgNvtNLO18g2Vt96QmU
-         vbf3m8ZTjDKhJEEeFyscZIoIWRGK09MRyWSZFIriyhGEeYUr8K1agc6AGAHNaKWDKsnW
-         twnYQZsgFi4Xi6m7FrMVgC9HtLdAzu8UVS3NVot9aqFHnLzPSLrX2sqdS3J9z730A8HM
-         vH2/EhJyTUs4fSTJmTjrtSqhCBi7tXTqrVrh7De+SRqQFIJmDqCxpwIJRdPbRHMdhw6Y
-         EclA==
+        bh=2MAhdrAonx7LpocIdJOKaz4KH3yJKe0qlHiS0HqRbEc=;
+        b=nKb6CaASUTA7F1QidwRkoHsO4GN1nBG3H81XWQGuI/opfy6p+MU8gi4SNXsSN6+oIv
+         2afvD1rwgxvfz5i1FPwUUUeQtRkYIw7cVLuTMF7VRp8H4sPWYQFKFkyT8Dv+FOGL8PVc
+         hJ6ojEdHW3Pa/IfaCglm/YPHbu50Y1CASJlEMuU27R3EMilkAsuxL+dbbXCOB0zMqV7K
+         rP49t00w9JIGUFoKyoNmE0SEvVTC3njjLSovQZM9W3ppCc7CX1SaQ/i1sIecpGhzji1u
+         L7VP6vxbFMon1bzuU64cfUcrUJsg0qZOK74Smmx4Tb86w+3HpEhOCBY4kxJFwdizaJkZ
+         gV0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+1cWiJ5MeAObE96B9PJGJ+I+ZasW11OsQMM/ZAuTY9M=;
-        b=qn+ocwKgyP+fd81oUdRFDGGTmZC/hiZqyLPIjlnhvzUin15o5QaGIDc9FdplsVDrg7
-         yfomHuBcTObU5p1tOh2YFSj8LY5IfSZSEWcvIzx0nOZDJGjMIYbhiPx8KoWkvGmLQ48C
-         KnAKmHFCSSuZgPAurkIo+NlRG3Ijp1gX/aE2LBpPIza8M9xK3an62d8UWdzPiW0wVBRW
-         FL2+DfwDXeC5h7ifLS+aoVVRX3ZHWUiA2Dr4EI9kNmaIVb6JRfXpipO+knBZP/ccmWNi
-         DKpM6S0mljChzEcu5nTfWjbgTSOc/2BPxH5svQAC6vVJBRPfFa8qN2sQLubYJZ3OmJy8
-         3nJw==
-X-Gm-Message-State: APjAAAWXaTl1v2gSMw4wstbq3Ng/Nk5r/rE5smAolV+V/yihK+05Bcp6
-        2DxuS00Mk7VJ5WFbViNvtZqTbm53
-X-Google-Smtp-Source: APXvYqzeFEu+KzkV1nJjZGjqFwBGqXldoD66ThtqFFucznGAgsHjTYig00StF+qOzv1b/bRjSCpH3A==
-X-Received: by 2002:adf:f78a:: with SMTP id q10mr12157091wrp.276.1568998429281;
-        Fri, 20 Sep 2019 09:53:49 -0700 (PDT)
+        bh=2MAhdrAonx7LpocIdJOKaz4KH3yJKe0qlHiS0HqRbEc=;
+        b=LpIxSMjFKT7ONg95EihrSxQ1uSZwHFgSHH7OJ0684kH50eJ/9tlvzxDChNIPrdaLfW
+         h0LXtMWHiVzwjRP3gyU+q8hwHPqztOZ1fmLzxmMRVnkimL3wGKErpScOA9qfmajN9+84
+         9TKWI0XqHIbhCWpW0mx9iQ5cqdCKlfaeoWjD1bH2SgdpERvLct+Y5xgtTNI0rWKd9TJo
+         kJyJVHckqbgonOiYW5DzqhqP/fRr8xmQEHDWnNdG/pNwVAZAuq5EvTPhs58hhyeNWe7X
+         wlFPb+1E84i4vUUOfzKVSgQctbTbE9e+BZk9Z27X97tzKtT4Rsgfz2YoJNgwFULE9tGZ
+         5tiw==
+X-Gm-Message-State: APjAAAW1S827EXdqzx6xDjZZctwxsH5C7x2LsHToXqEFVhRrzSZnoEug
+        DBFNR1CQseeUZxEMcO9EhK2QqXQd
+X-Google-Smtp-Source: APXvYqwUDbSPvM8kTC25eAPOSpZl5IoCEA0ixgWmnQk/Gq0n4OIHwtH/z/hHeJ3FIgCjj6qhhEX1/w==
+X-Received: by 2002:a5d:6885:: with SMTP id h5mr13201608wru.92.1568998432227;
+        Fri, 20 Sep 2019 09:53:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a192sm3080964wma.1.2019.09.20.09.53.48
+        by smtp.gmail.com with ESMTPSA id c132sm2675156wme.27.2019.09.20.09.53.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Sep 2019 09:53:48 -0700 (PDT)
-Date:   Fri, 20 Sep 2019 09:53:48 -0700 (PDT)
-X-Google-Original-Date: Fri, 20 Sep 2019 16:53:41 GMT
-Message-Id: <6badd9ceaf4851b2984e78a5cfd0cb8ec0c810f5.1568998427.git.gitgitgadget@gmail.com>
+        Fri, 20 Sep 2019 09:53:51 -0700 (PDT)
+Date:   Fri, 20 Sep 2019 09:53:51 -0700 (PDT)
+X-Google-Original-Date: Fri, 20 Sep 2019 16:53:45 GMT
+Message-Id: <57f6742f09820964453bb325023d44d86bca05a2.1568998427.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.337.v2.git.gitgitgadget@gmail.com>
 References: <pull.337.git.gitgitgadget@gmail.com>
         <pull.337.v2.git.gitgitgadget@gmail.com>
 From:   "William Baker via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/6] midx: add MIDX_PROGRESS flag Add the MIDX_PROGRESS
- flag and update the write|verify|expire|repack functions in midx.h to accept
- a flags parameter.  The MIDX_PROGRESS flag indicates whether the caller of
- the function would like progress information to be displayed. This patch only
- changes the method prototypes and does not change the functionality. The
- functionality change will be handled by a later patch.
+Subject: [PATCH v2 5/6] midx: honor the MIDX_PROGRESS flag in midx_repack
+ Update midx_repack to only display progress when the MIDX_PROGRESS flag is
+ set.
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,119 +78,26 @@ From: William Baker <William.Baker@microsoft.com>
 
 Signed-off-by: William Baker <William.Baker@microsoft.com>
 ---
- builtin/multi-pack-index.c |  8 ++++----
- builtin/repack.c           |  2 +-
- midx.c                     |  8 ++++----
- midx.h                     | 10 ++++++----
- 4 files changed, 15 insertions(+), 13 deletions(-)
+ midx.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index b1ea1a6aa1..e86b8cd17d 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -47,16 +47,16 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 	trace2_cmd_mode(argv[0]);
- 
- 	if (!strcmp(argv[0], "repack"))
--		return midx_repack(the_repository, opts.object_dir, (size_t)opts.batch_size);
-+		return midx_repack(the_repository, opts.object_dir, (size_t)opts.batch_size, 0);
- 	if (opts.batch_size)
- 		die(_("--batch-size option is only for 'repack' subcommand"));
- 
- 	if (!strcmp(argv[0], "write"))
--		return write_midx_file(opts.object_dir);
-+		return write_midx_file(opts.object_dir, 0);
- 	if (!strcmp(argv[0], "verify"))
--		return verify_midx_file(the_repository, opts.object_dir);
-+		return verify_midx_file(the_repository, opts.object_dir, 0);
- 	if (!strcmp(argv[0], "expire"))
--		return expire_midx_packs(the_repository, opts.object_dir);
-+		return expire_midx_packs(the_repository, opts.object_dir, 0);
- 
- 	die(_("unrecognized subcommand: %s"), argv[0]);
- }
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 632c0c0a79..5b3623337f 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -561,7 +561,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	remove_temporary_files();
- 
- 	if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0))
--		write_midx_file(get_object_directory());
-+		write_midx_file(get_object_directory(), 0);
- 
- 	string_list_clear(&names, 0);
- 	string_list_clear(&rollback, 0);
 diff --git a/midx.c b/midx.c
-index d649644420..b2673f52e8 100644
+index dc7c5f43f8..106ccc4ab2 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -1017,7 +1017,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	return result;
- }
- 
--int write_midx_file(const char *object_dir)
-+int write_midx_file(const char *object_dir, unsigned flags)
- {
- 	return write_midx_internal(object_dir, NULL, NULL);
- }
-@@ -1077,7 +1077,7 @@ static int compare_pair_pos_vs_id(const void *_a, const void *_b)
- 			display_progress(progress, _n); \
- 	} while (0)
- 
--int verify_midx_file(struct repository *r, const char *object_dir)
-+int verify_midx_file(struct repository *r, const char *object_dir, unsigned flags)
- {
- 	struct pair_pos_vs_id *pairs = NULL;
- 	uint32_t i;
-@@ -1184,7 +1184,7 @@ int verify_midx_file(struct repository *r, const char *object_dir)
- 	return verify_midx_error;
- }
- 
--int expire_midx_packs(struct repository *r, const char *object_dir)
-+int expire_midx_packs(struct repository *r, const char *object_dir, unsigned flags)
- {
- 	uint32_t i, *count, result = 0;
- 	struct string_list packs_to_drop = STRING_LIST_INIT_DUP;
-@@ -1316,7 +1316,7 @@ static int fill_included_packs_batch(struct repository *r,
- 	return 0;
- }
- 
--int midx_repack(struct repository *r, const char *object_dir, size_t batch_size)
-+int midx_repack(struct repository *r, const char *object_dir, size_t batch_size, unsigned flags)
- {
- 	int result = 0;
- 	uint32_t i;
-diff --git a/midx.h b/midx.h
-index f0ae656b5d..e6fa356b5c 100644
---- a/midx.h
-+++ b/midx.h
-@@ -37,6 +37,8 @@ struct multi_pack_index {
- 	char object_dir[FLEX_ARRAY];
- };
- 
-+#define MIDX_PROGRESS     (1 << 0)
+@@ -1374,6 +1374,12 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
+ 	strbuf_addstr(&base_name, object_dir);
+ 	strbuf_addstr(&base_name, "/pack/pack");
+ 	argv_array_push(&cmd.args, base_name.buf);
 +
- struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local);
- int prepare_midx_pack(struct repository *r, struct multi_pack_index *m, uint32_t pack_int_id);
- int bsearch_midx(const struct object_id *oid, struct multi_pack_index *m, uint32_t *result);
-@@ -47,11 +49,11 @@ int fill_midx_entry(struct repository *r, const struct object_id *oid, struct pa
- int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name);
- int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, int local);
++	if (flags & MIDX_PROGRESS)
++		argv_array_push(&cmd.args, "--progress");
++	else
++		argv_array_push(&cmd.args, "-q");
++
+ 	strbuf_release(&base_name);
  
--int write_midx_file(const char *object_dir);
-+int write_midx_file(const char *object_dir, unsigned flags);
- void clear_midx_file(struct repository *r);
--int verify_midx_file(struct repository *r, const char *object_dir);
--int expire_midx_packs(struct repository *r, const char *object_dir);
--int midx_repack(struct repository *r, const char *object_dir, size_t batch_size);
-+int verify_midx_file(struct repository *r, const char *object_dir, unsigned flags);
-+int expire_midx_packs(struct repository *r, const char *object_dir, unsigned flags);
-+int midx_repack(struct repository *r, const char *object_dir, size_t batch_size, unsigned flags);
- 
- void close_midx(struct multi_pack_index *m);
- 
+ 	cmd.git_cmd = 1;
 -- 
 gitgitgadget
 
