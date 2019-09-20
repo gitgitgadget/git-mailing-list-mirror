@@ -2,78 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CB2B1F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 18:28:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57C261F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 18:45:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406488AbfITS2P (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 14:28:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50874 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406342AbfITS2P (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 14:28:15 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A4842F8F5;
-        Fri, 20 Sep 2019 14:28:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=m++HZeBja//j
-        O/5q9K+5cgBefc8=; b=kXcWwQ4B7xwlMtrGcxDUFsijkkubPR5zn+Z1VM+wuYGb
-        T1LU6xCLhVMKXpMhpEbq2XJoEkB70QABwzhdfXTKG/r2H6KZiwwHP35oIXEXEBwp
-        5xpIW/rnvP4qRZLR1q/cQmhejeVBk5jCwrQSK9oVg9Perp84M4GrRZPwELH1oeg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=VkboVm
-        K4EyMPb/THxIBtmTtKhSVUehZTotD1V7R+IFSLekuWrgTDSdle4udJBwYaV/Gkkg
-        yXDWjOyckWC/4E+bKLjhENlm7uvXVB5zRqyn9leiBh5eLQRR8JLnSTXr8tvOzbI+
-        4u0x2PJLDjmHWOzIOBZrYtV4Cl0DdyNxGEKLs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3251E2F8F4;
-        Fri, 20 Sep 2019 14:28:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B0242F8F3;
-        Fri, 20 Sep 2019 14:28:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] travis-ci: ignore already tested trees in debug mode
-References: <20190919173514.24074-1-szeder.dev@gmail.com>
-        <xmqqftkqvo8r.fsf@gitster-ct.c.googlers.com>
-        <20190920181732.GC26402@szeder.dev>
-Date:   Fri, 20 Sep 2019 11:28:11 -0700
-In-Reply-To: <20190920181732.GC26402@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message of
-        "Fri, 20 Sep 2019 20:17:32 +0200")
-Message-ID: <xmqqblvevn44.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2405532AbfITSpO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 14:45:14 -0400
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:36248 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404617AbfITSpO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 14:45:14 -0400
+Received: by mail-wr1-f52.google.com with SMTP id y19so7819596wrd.3
+        for <git@vger.kernel.org>; Fri, 20 Sep 2019 11:45:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=FVaLC30OEQrOzFcwXqFkOLnxVqliXdQaAhVdKYb3+k4=;
+        b=N6Do4PThsuE6MDfEb1oBBqVK8kimobm5x7kk1wPYZ4j4euyfk+abXWRc0Wv7sVYQNv
+         RYHDE/zE7sbl9Y+bAaHSuxg15qRWC3CLvwQ74jWi8lZsi5ppfodDHMj73hyOVoHAVTRA
+         /DmwLn6XZ69SSUIY+4Eua4SBGFWMFYmz4fkwG9BVf3h0KNwDM05rDIkj3SiI/QdJRobZ
+         KIVJrHw9h2mmwYNHg7cqhETA/JVhLkqniugfUi5dskGQIRP+d3chlQ/Hb5NL7CiMjJHb
+         7fHZUuzNQFgCMslyytcqfX9AOZ72v4+hzAiVOpI411Y4ix8mVhSAAA/32W3EJ4DYgN0B
+         rG+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=FVaLC30OEQrOzFcwXqFkOLnxVqliXdQaAhVdKYb3+k4=;
+        b=eaFzeknZbe1W3HL8pp7w7yn1nLSDKGgLq78XwQQuyHsfdMIfNiBJo8Npu2C2xTdy3t
+         +CBNF/elNsdNUzMCBX0vzclktAu1OTmDHI66xL1V9d9R0gk/g1wDWgL+HCRYFGWlf9Ka
+         bO2gWfz7fUfBvK6TeeJQccSK9oJ43VTwsBTxh95Vc1WXuQFS/8m4+cpFFsZuLzCFEy0b
+         c+bgtK+DWO2+3y5Gj4ToI95PaoCefJYZEZsSOYpMxcdvm6ErOyjV/QWlthzjm/qoCMvm
+         8laJtZUwsPssVYyHZsmE86ybnz40aSVPhHono4MFPPrgsodt52HfvtROH/1l6XGKVJuh
+         zs3w==
+X-Gm-Message-State: APjAAAWSK0Iabe5kTFFBbHnOHNt2TT3FwVGGdpmdj68PAfa1ulDsg8XD
+        ejjopcKrfy0cN+fmMZqAovmHuQkE6cESmSOHguaQxOGRCkQ=
+X-Google-Smtp-Source: APXvYqxyssnyjZigIIi5dUeWUa3vEINaKNfaL44ZFhYLBpAR19FFZo5VprAapoPyJZsMxPbL6HZOZ3fipfuMS0yGeGk=
+X-Received: by 2002:adf:b3c1:: with SMTP id x1mr13762751wrd.33.1569005112524;
+ Fri, 20 Sep 2019 11:45:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6770DDE0-DBD4-11E9-83D9-C28CBED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Klaus Sembritzki <klausem@gmail.com>
+Date:   Fri, 20 Sep 2019 20:45:01 +0200
+Message-ID: <CADMnYXDqj2AxXKRhHTfYaWonxi5_GC+6-zzALN4m6u+=fo+muQ@mail.gmail.com>
+Subject: NOPATH: A Cannonically-First Git-Class
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+Hello,
 
->> But in the larger picture, I would expect that readers would more
->> immediately grasp what it is about if it were titled "do not skip
->> versions that have already tested good in debug mode"
->
-> Will try to come up with a better subject line, but I don't have any
-> usable ideas at the moment.
+Trailing delimiters are solved: /a/b/c = a/b/c///////, making it cash-burn.
+This concept is called NOPATH, and a no-cash-burn-class is a
+canonically-first Git-class.
 
-Subject: [PATCH] travis-ci: do not skip already tested trees in debug mod=
-e
-
-???
+Cheers,
+Klaus Sembritzki
