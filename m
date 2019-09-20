@@ -2,99 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6E4F1F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 18:17:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CB2B1F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 18:28:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405210AbfITSRg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 14:17:36 -0400
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:39751 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389097AbfITSRg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 14:17:36 -0400
-Received: by mail-wm1-f41.google.com with SMTP id v17so3152625wml.4
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 11:17:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=7S4755HLjC6LuEo8DI8NGsa4T/9I3BZHhBzvaGwbODQ=;
-        b=QhlfJMZ5QclpwGoiq/Egq4qw/4Kn+2eHwCexCRAnMLwnYS4YYj4JVf/5/KzoUcekfG
-         kPymSvnPlIlM4KRERnbr9FXNZfdMX9xYRQC188YhvKPbYAK8weRS3/w80GLE+DR3+20Y
-         ILavJiKoeiys3qTAWFsj7Y/KmGmzIuNPt6dWj9zfZfWkrSnhswdcffXzikIJfreDsag8
-         RcGT+WIVFr58ndWHEbizm59I+tOqs4hYzv8nsw8Cnm0QjHA/t5QJg7ElQdKFG+IGYZyE
-         cZ6DZ9OsanJz76mKKrZgS/RFEISM+nL8JHOhMEMkLPW4lHclDpMS6RKEMJSmczxesoMU
-         2t4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=7S4755HLjC6LuEo8DI8NGsa4T/9I3BZHhBzvaGwbODQ=;
-        b=IHdvRa7sjuiBvcamAWRoz9UwkvZgtd9DtHdj41Ev4/CKD71rfmjV8rGhtxRfrKwaas
-         w9FK8a+Nc/5OtQofIRkfMHpDWQpV3aSdoJSfPpt+sEOTDUA6q8CsVV1FY3O7CuHkIxru
-         FwbnobzZn5NTKFlWk0ffbj5gsY+aBTuKhEXjf+vpwH2RfV8xd6tdwW5zVUdUmPZmrMCa
-         Qbuz+cY6UZ04KBoOYJF0fvGI9vil4UITbwVnyhBhWAeAWS+Tm9PK21XX61DBjRiMjWWp
-         a5gf/enqKWceMga5hdRum7vg2qhajczQhHTAErgCXdOhLOjMvNLDU8DX1WCJN0FmozY2
-         008Q==
-X-Gm-Message-State: APjAAAXr5PclWq9MnIrof0h1d9UATsJpA0Mhpja7WUa/j8lnQXemAPfb
-        LE4E4lPCSxXTjRwuuvNAXPa2iZPV
-X-Google-Smtp-Source: APXvYqz/P935f7LU1qid0tZFB5G/kn8k9ByTnXnwAJq1SRItQz1XDj7PVtu9S9IYjN/29WYfaOT4AQ==
-X-Received: by 2002:a1c:980e:: with SMTP id a14mr4261601wme.99.1569003454338;
-        Fri, 20 Sep 2019 11:17:34 -0700 (PDT)
-Received: from szeder.dev (x4db40123.dyn.telefonica.de. [77.180.1.35])
-        by smtp.gmail.com with ESMTPSA id e6sm3211745wrp.91.2019.09.20.11.17.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Sep 2019 11:17:33 -0700 (PDT)
-Date:   Fri, 20 Sep 2019 20:17:32 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S2406488AbfITS2P (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 14:28:15 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50874 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406342AbfITS2P (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 14:28:15 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A4842F8F5;
+        Fri, 20 Sep 2019 14:28:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=m++HZeBja//j
+        O/5q9K+5cgBefc8=; b=kXcWwQ4B7xwlMtrGcxDUFsijkkubPR5zn+Z1VM+wuYGb
+        T1LU6xCLhVMKXpMhpEbq2XJoEkB70QABwzhdfXTKG/r2H6KZiwwHP35oIXEXEBwp
+        5xpIW/rnvP4qRZLR1q/cQmhejeVBk5jCwrQSK9oVg9Perp84M4GrRZPwELH1oeg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=VkboVm
+        K4EyMPb/THxIBtmTtKhSVUehZTotD1V7R+IFSLekuWrgTDSdle4udJBwYaV/Gkkg
+        yXDWjOyckWC/4E+bKLjhENlm7uvXVB5zRqyn9leiBh5eLQRR8JLnSTXr8tvOzbI+
+        4u0x2PJLDjmHWOzIOBZrYtV4Cl0DdyNxGEKLs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3251E2F8F4;
+        Fri, 20 Sep 2019 14:28:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B0242F8F3;
+        Fri, 20 Sep 2019 14:28:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
 Cc:     git@vger.kernel.org
 Subject: Re: [PATCH] travis-ci: ignore already tested trees in debug mode
-Message-ID: <20190920181732.GC26402@szeder.dev>
 References: <20190919173514.24074-1-szeder.dev@gmail.com>
- <xmqqftkqvo8r.fsf@gitster-ct.c.googlers.com>
+        <xmqqftkqvo8r.fsf@gitster-ct.c.googlers.com>
+        <20190920181732.GC26402@szeder.dev>
+Date:   Fri, 20 Sep 2019 11:28:11 -0700
+In-Reply-To: <20190920181732.GC26402@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Fri, 20 Sep 2019 20:17:32 +0200")
+Message-ID: <xmqqblvevn44.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqftkqvo8r.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Pobox-Relay-ID: 6770DDE0-DBD4-11E9-83D9-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 20, 2019 at 11:03:48AM -0700, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> >  skip_good_tree () {
-> > +	if test "$TRAVIS_DEBUG_MODE" = true
-> > +	then
-> > +		return
-> > +	fi
-> 
-> I think you convinced readers why it is a good idea to avoid
-> skipping an already tested tree, and technically the title of this
-> commit is not incorrect per-se.  You are teaching to ignore
-> "already-tested-ness" from a part of the logic).
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-Hrm, that's subtle, but you are right.
+>> But in the larger picture, I would expect that readers would more
+>> immediately grasp what it is about if it were titled "do not skip
+>> versions that have already tested good in debug mode"
+>
+> Will try to come up with a better subject line, but I don't have any
+> usable ideas at the moment.
 
-> But in the larger picture, I would expect that readers would more
-> immediately grasp what it is about if it were titled "do not skip
-> versions that have already tested good in debug mode"
+Subject: [PATCH] travis-ci: do not skip already tested trees in debug mod=
+e
 
-Will try to come up with a better subject line, but I don't have any
-usable ideas at the moment.
-
-> or something
-> like that (IOW, we do not want to ignore such trees, we want to test
-> them again).
-> 
+???
