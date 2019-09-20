@@ -2,111 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 238981F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 17:15:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF1351F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 17:37:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729428AbfITRPa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 13:15:30 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60595 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726020AbfITRPa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 13:15:30 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CC5542EEBC;
-        Fri, 20 Sep 2019 13:15:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZU80OV6YxiyDqtdkRsCWkhPTmX8=; b=KwhTD5
-        LY0KLLAsRK6Gc6sb5jluMyMHPo66SNV4UCAgjgb8OYXkXeYcoN9hDZkcMqv8z16B
-        Bbq4OAJNsF4sY3bhOd7xxKtkM3e5VKnKPS62U3jy1IOwg43KPbCAx4MDbt+6DuOx
-        mZATq4BedlF+zwW/qfD91me8wpWXgUAe/4nX8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qBKsyLbbwPB73Tta4KNSSgCJf6oOSYe4
-        cof0H8Kd8AznxISokbdPsa14eEQqu99aOPi/GyrBVWiF8jqL3VwsdXy2QLlUL2Kp
-        MfM+8Nq1IdPkp4LpO6qSoKOxqXuZtBWEK3YC2oDeKIRbeQG/QXUDA0q3ZKj8R/Sm
-        obINVftgXT0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C331F2EEBB;
-        Fri, 20 Sep 2019 13:15:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2208D2EEBA;
-        Fri, 20 Sep 2019 13:15:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, szeder.dev@gmail.com
-Subject: Re: [PATCH v2] merge-recursive: symlink's descendants not in way
-References: <https://public-inbox.org/git/20190917215040.132503-1-jonathantanmy@google.com/>
-        <20190918202738.57273-1-jonathantanmy@google.com>
-Date:   Fri, 20 Sep 2019 10:15:25 -0700
-In-Reply-To: <20190918202738.57273-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Wed, 18 Sep 2019 13:27:38 -0700")
-Message-ID: <xmqqzhiyvqhe.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2392225AbfITRhw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 13:37:52 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45787 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387829AbfITRhv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 13:37:51 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r5so7554157wrm.12
+        for <git@vger.kernel.org>; Fri, 20 Sep 2019 10:37:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=NzF61dLznpHFb2AxVNwCNGcJDDdqFOlg8vGvQHHyv+I=;
+        b=qddNfv6tpX3JNdKtB2+JV5avmmXBeNrY94uonFF1+p3RYe5KtxbX0heng6s6JR+Z8U
+         DAZ9BJBG/3hGkelW/owV9GEbH0bEXJFpFCyCY9rDZf+dQuE18IvpAQ45s6DvP6ILqabu
+         D/c6iOg2v7+YevYyQjU6CvMloHHQJ5hGeCxTQyh15M9nW17fXp6T0Zh6eKV/2nU+FlER
+         V/iNmY8rM6ZkkgqIkHn3Ber764pM1kdvu/U+yuK3WwEo0cldCl4kZF2lKXXdXAYNE7zz
+         yU3hO3rAjN/xGAwFyRRPFdiQb121iYaf3X21nBD9kND66yuFzYR+eFiy/EbgBI33qERQ
+         T4wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=NzF61dLznpHFb2AxVNwCNGcJDDdqFOlg8vGvQHHyv+I=;
+        b=Z4MSKzCpky7+NZk2UY7KBb97sbPcZ799Ysj+eGsOmJ3vhjSb10FmHE0J6jZTvzra62
+         7YHoRDTeSKYsiV+lbWnp99wk/p6WloTKe+tfjRoMdBTRgow0oCdGIu5jXZKu2JAVkEu4
+         y24sSz2AJVHJfDEVZvv6GyiFfGBof7rmiyWxESq372nb9Hxfzu1f2TaRJhxMnFWHNegw
+         YSS7m7sTU3zNM2TneM8Vxj8Wg8vERBWMUSeiascSWhOhOOycP855q4+sOkY5MN9QMZFZ
+         AtKGk5E2nH6BYZMDf8Kh5fb7XDQjZBw63Jp6Im9hFfgKWgFqVLA5KG0CCHTdEpNXV1No
+         5H9g==
+X-Gm-Message-State: APjAAAUutLyGv8hwbwQo9QvYPWJTkFJHmA92TqaCNaqhIOv8a6aCyAQ+
+        pIyzQbTJCgN03xrcOt5BIMo=
+X-Google-Smtp-Source: APXvYqyJjChxrCeqbGIiACSl0Pav3mCeNCdAt6RqM1CMZXDRJkZWiDtdAjHGLgRzsthLoMmPAd0s+w==
+X-Received: by 2002:adf:dc41:: with SMTP id m1mr11898454wrj.46.1569001069448;
+        Fri, 20 Sep 2019 10:37:49 -0700 (PDT)
+Received: from szeder.dev (x4db40123.dyn.telefonica.de. [77.180.1.35])
+        by smtp.gmail.com with ESMTPSA id h9sm3014978wrv.30.2019.09.20.10.37.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Sep 2019 10:37:48 -0700 (PDT)
+Date:   Fri, 20 Sep 2019 19:37:44 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 00/15] name-rev: eliminate recursion
+Message-ID: <20190920173744.GA2988@szeder.dev>
+References: <20190919214712.7348-1-szeder.dev@gmail.com>
+ <62669882-bb48-6711-6f9a-b45db2e64da5@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3D678BFC-DBCA-11E9-BE07-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <62669882-bb48-6711-6f9a-b45db2e64da5@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
-> When the working tree has:
->  - bar (directory)
->  - bar/file (file)
->  - foo (symlink to .)
->
-> (note that lstat() for "foo/bar" would tell us that it is a directory)
->
-> and the user merges a commit that deletes the foo symlink and instead
-> contains:
->  - bar (directory, as above)
->  - bar/file (file, as above)
->  - foo (directory)
->  - foo/bar (file)
->
-> the merge should happen without requiring user intervention.
-
-Thanks.  That clears my previous confusion.  It is clear that the
-desired outcome is that bar/file will be merged with itself, foo
-itself will resolve to "deleted", and foo/bar will be created.
-
-> However, this does not happen.
-
-OK.  We notice that we need to newly create foo/bar but we
-incorrectly find that there is "foo/bar" already because of the
-careless use of bare lstat(2) makes "bar" visible as if it were also
-"foo/bar".  I wonder if the current code would be confused the same
-way if the side branch added "foo/bar/file", or the confusion would
-be even worse---it is not dir_in_way() and a different codepath
-would be affected, no?
-
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 6b812d67e3..22a12cfeba 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -764,7 +764,8 @@ static int dir_in_way(struct index_state *istate, const char *path,
+On Fri, Sep 20, 2019 at 11:37:12AM -0400, Derrick Stolee wrote:
+> On 9/19/2019 5:46 PM, SZEDER Gábor wrote:
+> > 'git name-rev' is implemented using a recursive algorithm, and,
+> > consequently, it can segfault in deep histories (e.g. WebKit), and
+> > thanks to a test case demonstrating this limitation every test run
+> > results in a dmesg entry logging the segfaulting git process.
+> > 
+> > This patch series eliminates the recursion.
+> 
+> A noble goal! Recursion into commit history is much easier to get
+> stack overflows than when we recurse into the directory hierarchy.
+> 
+> > Patches 1-5 and 14-15 are while-at-it cleanups I noticed on the way,
+> > and patch 6 improves test coverage.
+> 
+> These cleanups are nice, and I think I followed them pretty closely.
 >  
->  	strbuf_release(&dirpath);
->  	return check_working_copy && !lstat(path, &st) && S_ISDIR(st.st_mode) &&
-> -		!(empty_ok && is_empty_dir(path));
-> +		!(empty_ok && is_empty_dir(path)) &&
-> +		!has_symlink_leading_path(path, strlen(path));
+> > Patches 7-11 are preparatory refactorings that are supposed to make
+> > this series easier to follow, and make patch 12, the one finally
+> > eliminating the recursion, somewhat shorter, and even much shorter
+> > when viewed with '--ignore-all-space'.  Patch 13 cleans up after those
+> > preparatory steps.
+> 
+> I responded to several of these, mostly with questions and not actual
+> recommendations. I do want to apply your patches locally so I can try
+> this --ignore-all-space trick to really be sure patch 12 is doing the
+> right thing.
 
-As the new call is fairly heavyweight compared to everything else we
-are doing, I think it is very sensible to have this at the end, like
-this patch does.
+  git fetch https://github.com/szeder/git name-rev-no-recursion
 
-Nicely done.  Thanks, will queue.
+(But this is sort of a v1.1, as it already includes René's suggestion
+for patch 3.)
+
