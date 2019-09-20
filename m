@@ -2,81 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10FB41F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 20:17:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1772B1F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 20:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728716AbfITURH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 16:17:07 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60476 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725842AbfITURH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 16:17:07 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1DF158E8F9;
-        Fri, 20 Sep 2019 16:17:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=97GgbxuimE8yj0kdmcUQxVhFMqM=; b=US630f
-        K9MJSeNhJGJwunVwjSFTmD/zoC34ZLHqR7Xf3deZ8+EocyXTAiYIjN7J+x0QMXDn
-        XxC4fFmLNiB9lkW/1/ffuf28g+vm1x2ab5KuufKGGaP8a+c+UgecAN2am1X7OOcR
-        Pt2vybyYsBW+2PpXLT8n7jabwjwUQSECy7IDw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=egzD/LwzHGqJk4Jt2Z0W5tBDaWdkFBln
-        7N0DGtT/Z0GJVIxj/7Qyi7KTh3uMEsXVTxoc5Wd2qGgAzz2bM4Gh3RA9rhJsnwBR
-        x6YWzL+O70fIrtJO06pNPD4q3FleSXjyg2qAh1xbDi/bSL9IJJfFm1Vqo4mryVDO
-        LUPnf56dP/w=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1633E8E8F8;
-        Fri, 20 Sep 2019 16:17:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2AA7D8E8F4;
-        Fri, 20 Sep 2019 16:17:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "William Baker via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, williamtbakeremail@gmail.com,
-        stolee@gmail.com, jeffhost@microsoft.com,
-        William Baker <William.Baker@microsoft.com>
-Subject: Re: [PATCH v2 1/6] midx: add MIDX_PROGRESS flag Add the MIDX_PROGRESS flag and update the write|verify|expire|repack functions in midx.h to accept a flags parameter.  The MIDX_PROGRESS flag indicates whether the caller of the function would like progress information to be displayed. This patch only changes the method prototypes and does not change the functionality. The functionality change will be handled by a later patch.
-References: <pull.337.git.gitgitgadget@gmail.com>
-        <pull.337.v2.git.gitgitgadget@gmail.com>
-        <6badd9ceaf4851b2984e78a5cfd0cb8ec0c810f5.1568998427.git.gitgitgadget@gmail.com>
-        <xmqqr24au480.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 20 Sep 2019 13:16:59 -0700
-In-Reply-To: <xmqqr24au480.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 20 Sep 2019 13:01:35 -0700")
-Message-ID: <xmqqd0fuu3ic.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9B5983AA-DBE3-11E9-B370-8D86F504CC47-77302942!pb-smtp21.pobox.com
+        id S1729997AbfITUZM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 16:25:12 -0400
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:57289 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729816AbfITUZM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 16:25:12 -0400
+Received: by mail-pg1-f201.google.com with SMTP id h5so5090739pgq.23
+        for <git@vger.kernel.org>; Fri, 20 Sep 2019 13:25:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=qgLVi33IiW2G6mD/egMvl24a6CasyK5do8+RoSF5+A0=;
+        b=ukGODT+J9D82PJvscLeJoLnNk0rhHoo5kqmC04S9cMMtdapv8Vr6l7oCOH8zswnvzk
+         LzeW9rctlQ3HqJtb/Q00FEdFZwkqZ90/39PIpbmmWb/D5jaRTBjwyH2/yd4HbbMKquxJ
+         GdL94oZ0F6kwWB9IFPBSr2am+4DdtC86goHMhRtNo3gpLTidP/5Fvlm6bd+kR+cDIdzI
+         4rcnp2TRXmDmYDBi02XecWNmVfy7a4+KcOCD4YYde0RQEwTy2pWVA7hiEZzo3O/6kkwz
+         RgXvRxni4lcjIekslftrsY79E1fnJql3+riNyeBOvwygR3tAsmsNC+gvbfYS/J8drEIJ
+         ieQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=qgLVi33IiW2G6mD/egMvl24a6CasyK5do8+RoSF5+A0=;
+        b=VyxuOAqUt6wJV9niNGddoKj7v/Cgn8HzoxxONlUyWh1U8iPnBAI8hQB7DlkkxbyB4x
+         CYKvZKMNBVArmszf+wQBLZAzNWkS1Tw5t5oZyVYX1DJ5I3dcFyku2LZAAht0QpKfQiCM
+         PJG6Mndh0Dpmnf9YYNmDKkBtibvpGwB/fqs3SSmqILq3C52UuFYTjlHfQas7hmw9vMC1
+         13aIkZBxOZlkUGveJAuJjFxu87iToEIzVvFWIVM1g1n72+7z71AUlT+6Dh7AOmxRM7ue
+         FxZO6j6LffJ9H0bEBTk1aCjrn56mGaV/rmHDosUFJMzFaZUTmLgVqeXp2Yy8S9iY90Kr
+         9oGw==
+X-Gm-Message-State: APjAAAV/77gZvMnnkniUE2/iw8srf8IkLuGQjA71XhYgBEweYI8hRLz3
+        PdeHuQKy5IHqfGnuyb6Zg1QC8xAHlUXdUyC0Ak48
+X-Google-Smtp-Source: APXvYqwj0zZGdwKNp2mvEMFHjbAhYXBghPbH5fre5Krf2Rj6Py7e1v5qQxHk45qHhCMj4zFEckdjm3o2vdiUyPektFTn
+X-Received: by 2002:a63:546:: with SMTP id 67mr17304027pgf.429.1569011109743;
+ Fri, 20 Sep 2019 13:25:09 -0700 (PDT)
+Date:   Fri, 20 Sep 2019 13:25:06 -0700
+In-Reply-To: <xmqqzhiyvqhe.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20190920202506.74644-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqzhiyvqhe.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.23.0.351.gc4317032e6-goog
+Subject: Re: [PATCH v2] merge-recursive: symlink's descendants not in way
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, newren@gmail.com,
+        szeder.dev@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+> OK.  We notice that we need to newly create foo/bar but we
+> incorrectly find that there is "foo/bar" already because of the
+> careless use of bare lstat(2) makes "bar" visible as if it were also
+> "foo/bar".  I wonder if the current code would be confused the same
+> way if the side branch added "foo/bar/file", or the confusion would
+> be even worse---it is not dir_in_way() and a different codepath
+> would be affected, no?
 
-> This step is meant to be just preparing by extending the interface
-> and passing the new argument throughout the callchain, I believe,
-> and it looks correctly done, assuming that we are OK to take this
-> "add a separate 'progress' parameter, when we need more parameters
-> later, the interface will gain more and more parameters" approach.
+I don't think there is a different codepath to be affected - as far as I
+can tell, dir_in_way() is the only cause (at least of this particular
+error). I've tested this case [1] and the current code actually works -
+as you said, dir_in_way() will not report anything in the way (since
+foo/bar/file doesn't exist in the working tree), so the merge will
+happen as expected.
 
-After re-reading the remainder of the series, I think the structure
-this patch series takes (i.e. adding a new parameter to these callees)
-is better than the alternative (i.e. making sure everybody takes the
-pointer to the opts structure).
+> Nicely done.  Thanks, will queue.
 
-Thanks.  I couldn't review the proposed log messages of these
-commits, which were unreadable, at all, though.
+Thanks.
+
+[1]
+diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
+index faa8892741..f284aeb173 100755
+--- a/t/t3030-merge-recursive.sh
++++ b/t/t3030-merge-recursive.sh
+@@ -468,15 +468,16 @@ test_expect_success SYMLINKS 'dir in working tree with symlink ancestor does not
+                git checkout master &&
+                git rm foo &&
+                mkdir foo &&
+-               >foo/bar &&
+-               git add foo/bar &&
+-               git commit -m "replace foo symlink with real foo dir and foo/bar file" &&
++               mkdir foo/bar &&
++               >foo/bar/baz &&
++               git add foo/bar/baz &&
++               git commit -m "replace foo symlink with real foo dir and foo/bar/baz file" &&
+ 
+                git checkout branch1 &&
+ 
+                git cherry-pick master &&
+                test_path_is_dir foo &&
+-               test_path_is_file foo/bar
++               test_path_is_file foo/bar/baz
+        )
+ '
+
