@@ -2,90 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96D891F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 20:39:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02B2C1F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 20:50:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728968AbfITUju (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 16:39:50 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:37266 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725842AbfITUju (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 16:39:50 -0400
-Received: by mail-pl1-f194.google.com with SMTP id b10so3718359plr.4
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 13:39:50 -0700 (PDT)
+        id S2387594AbfITUug (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 16:50:36 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:44517 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387479AbfITUug (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 16:50:36 -0400
+Received: by mail-pf1-f202.google.com with SMTP id b204so5511027pfb.11
+        for <git@vger.kernel.org>; Fri, 20 Sep 2019 13:50:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=XdzzkFrxpNUQJBdCGcvlb6JZpP6ZuSHsLM94Q8wKqEc=;
-        b=Klne7QYNiTW53PRDy3WyBuCZqweg52Tq2TTtN8cFRV5w9ER6lZu0sWVCa3ZgyUMj7F
-         L4FvLcrEB73uqwJBrX8bL9msvEhmKctM2dGoo3YSXAFaIMr64Gy/K2fR0HZfLatC7cDh
-         OAnfE89lkz5M66Su1nwOv6bi3tHCj5Zv+Cui6A/XpdIfUQqCczpuEtJMfURjaYKttV30
-         66jsWIrIWb6k5yy94V69s9Tj4HIwSL9OCrire3lylyIP+hQqMVhGoK1pt6/CWmaZ1fx/
-         NSVuf4hadwuVmUmGKbEqQd+xH7bzy6ta9QSgxUTn75rUh5+5bKAtwaaCPMXfhe1ogSkn
-         znwQ==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=smELTEdiQMzSJJm1iReJ5QhqXiGem5B1XKB+B9YRP4U=;
+        b=I3Gqza3NQHsyQxSF/3nJdNkniAHV3MUqa15/q5SheXv901/nbeARvCW61r1hPw76fF
+         iiWKhGhk3mYNhTYpru0DB6gx7WoJ2660vuH5TMjHb48XglpCTpi9U+3XkYI0iueWO6JO
+         zjNLCxBoF3cGhWKyCMxWXn37gM79mixFKFrcIz23fqixgPbgg/rPfiPyn4Zy8vLsnOC0
+         NPwolseBLyWtjbHKKnZpm4hVGbtfTztL4Nxxwnt3YkkhNWPR6Q27yMSWeg77yLY0w32J
+         BkgGIh1oyWczOES8hX/7e6aTMjNGSeJVFnod/Bkv4Q20VZ/sIaQpxCTtLlJX8sfNNMZ/
+         9tVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=XdzzkFrxpNUQJBdCGcvlb6JZpP6ZuSHsLM94Q8wKqEc=;
-        b=CGxU8aBnYJK8FHiDwwzNkex+0xcVMGPwuZ8DkrmYsBXrgk8ou9zKBgKOGJL6TNDt6Z
-         jh1RqWzJl2JzF+dVxSa1G0QQBa9q7e2Bal+Gu3AySRXuv96Qhv8aJvqW9+PrHMV580Dy
-         IQRs3v+QgTplKFnQUrNA1rz2u59aQB9OQUOhW/dnZ/jIvIWseI7VYoQJJLZ30qrBLhux
-         hRUSzJwm4i1goXXKtvuokOPGKUAEdTYPz+GPrxfOXUCPRIK/p6WhJ3qwFbkf9DfBvupk
-         hr2ChUbHz7K5qUG2wNoyp8c6VzU3bE5/F5fs/KtpRtmBD3MSXKaY3qp/WizR/dR+HSzO
-         ok4A==
-X-Gm-Message-State: APjAAAXfFPF1FhE286N2QCSs40B5vSEqhuxWG3loZ38y196dHN7/81Eu
-        NtveNo9vDbowgtLmPmIp7cQ=
-X-Google-Smtp-Source: APXvYqx0BDd3lAp79LburrO6cZposcAjvmG66fEHwrJgT7QBjlaoOMHD5ku+hlBndOBr5xaMepYGHA==
-X-Received: by 2002:a17:902:a715:: with SMTP id w21mr18028787plq.274.1569011989941;
-        Fri, 20 Sep 2019 13:39:49 -0700 (PDT)
-Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:b:3de5:4d83:552b:26ce])
-        by smtp.gmail.com with ESMTPSA id n21sm3023920pjo.21.2019.09.20.13.39.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Sep 2019 13:39:49 -0700 (PDT)
-Subject: Re: [PATCH v2 0/6] multi-pack-index: add --no-progress
-To:     Philip Oakley <philipoakley@iee.email>,
-        William Baker via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     stolee@gmail.com, jeffhost@microsoft.com,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.337.git.gitgitgadget@gmail.com>
- <pull.337.v2.git.gitgitgadget@gmail.com>
- <1c94eaf5-fd62-cca3-2aeb-37512e8e41e6@iee.email>
-From:   William Baker <williamtbakeremail@gmail.com>
-Message-ID: <247026fb-0429-bc0e-3ef3-9f2553dfebd7@gmail.com>
-Date:   Fri, 20 Sep 2019 13:39:48 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:68.0)
- Gecko/20100101 Thunderbird/68.0
-MIME-Version: 1.0
-In-Reply-To: <1c94eaf5-fd62-cca3-2aeb-37512e8e41e6@iee.email>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=smELTEdiQMzSJJm1iReJ5QhqXiGem5B1XKB+B9YRP4U=;
+        b=n+I23TzyIL3XeRqw1ABWvMIXEsbeQOmf1khkMKI8YfWfESMnqFaiRqJ8k56IsMRmy5
+         +e9ayMg63F07RzmLZ5UCFVJHKs+z4mgj+p8YLMoGPDUuPl15A1XyljawliSYpLWjCZH3
+         6PTtkcOrPq/w6l7cg3ONhr+pi6cFs5WoTLr7+qNiMQayYxxe4LH7F6N6ZqZ0illsJbWP
+         1bIk4ie0yMcCDN4yJ3RmHgfK238pRsH6jhCwCUMckgLX1WuuKIpeDqO0iAGnEZdaas18
+         /nGf6XA93NsbwWWTi4MLHBmP+7kU17aXnFgeUexVycak6ws2+4k7gganP58pYLNyQyS8
+         eSWw==
+X-Gm-Message-State: APjAAAWpqddsXv7kxiG4LWdke9kG/oMrwJqzTuIy0a6VBMbPMOzVzMwm
+        uu2189KhWTZDlllA129QbeAzobWP00VYmFgHc5S7
+X-Google-Smtp-Source: APXvYqwnyVmH+SbfXL85kB+6+uZoKbVqbIZyP3xFhSOuN3cc2gGUAfaD1S8kKRAY8z9Z+TXcwq7VPWZ7hTsyjk4tMb5G
+X-Received: by 2002:a63:8942:: with SMTP id v63mr17156494pgd.58.1569012635545;
+ Fri, 20 Sep 2019 13:50:35 -0700 (PDT)
+Date:   Fri, 20 Sep 2019 13:50:32 -0700
+In-Reply-To: <xmqq8sqiu2in.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20190920205032.84796-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqq8sqiu2in.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.23.0.351.gc4317032e6-goog
+Subject: Re: [PATCH v2] merge-recursive: symlink's descendants not in way
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, newren@gmail.com,
+        szeder.dev@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/20/19 1:23 PM, Philip Oakley wrote:
-
-> These subject lines are a bit long. Has there been some white space damage during preparation, such that the end of line, and following blank line, for a short subject line been compromised?
+> Jonathan Tan <jonathantanmy@google.com> writes:
 > 
-> Normally the 'git log --oneline' should fit within the line, so ~50 chars.
+> >> OK.  We notice that we need to newly create foo/bar but we
+> >> incorrectly find that there is "foo/bar" already because of the
+> >> careless use of bare lstat(2) makes "bar" visible as if it were also
+> >> "foo/bar".  I wonder if the current code would be confused the same
+> >> way if the side branch added "foo/bar/file", or the confusion would
+> >> be even worse---it is not dir_in_way() and a different codepath
+> >> would be affected, no?
+> >
+> > I don't think there is a different codepath to be affected - as far as I
+> > can tell, dir_in_way() is the only cause (at least of this particular
+> > error).
 > 
-> Philip
-> 
+> OK, so existing code already realizes that "foo/bar/file" added in
+> the side branch is the one that must survive, and the "bar/file" in
+> the current branch does not fool it into thinking that "foo/bar/file"
+> is also on our end, and needs to be merged as an add-add conflict.
+> It was only the dir-in-the-way logic that was not careful enough?
 
-Thanks for the tip regarding 'git log --oneline'!  I missed that
-I need a second end of line before the body of the commit
-message and I will be sure to include them in future commits.
+Yes, that's correct. (I wrote foo/bar/baz in my other email but replaced
+"baz" with "file", and it still works before and after my patch.)
 
--William
+> In that case, thanks for a very good news and for a careful analysis.
+
+You're welcome! The careful analysis should be credited to Elijah Newren
+[1].
+
+[1] https://public-inbox.org/git/CABPp-BHpXWF+1hKUTfn8s-y4MJZXz+jUVS_K10eKyD6PGwo=gg@mail.gmail.com/
