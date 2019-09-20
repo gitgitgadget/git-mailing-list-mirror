@@ -2,284 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	SPOOFED_FREEMAIL shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD0301F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 16:54:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 190201F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 17:00:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405432AbfITQx6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 12:53:58 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37297 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405360AbfITQx5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 12:53:57 -0400
-Received: by mail-wr1-f68.google.com with SMTP id i1so7456948wro.4
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 09:53:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=32cxsnXl0PHZoL2xhVBBihlM3hceX5jGTU/i1pRlQOU=;
-        b=OiK+qZhe+OUXjUACtb/V3s+T3LJXMSPNojruRQKUq531Of/hTC0nvlLniOFE12Wn8B
-         rKx2RHfNsl5nMFtyXY+Oxfb5DTjXxfifnqmO8U9y+9Vqp6ir67t0JW5DP9y2VVUodbYL
-         F7Ycy1A+t4MCToqa/l1N36JOgB86/nHZ0EJoaQnX4nwI4fxiupbozN1+N/E4uJHFb+Ih
-         psRKfRsfzKRPNFfP7BQV1zw05oyNdbjtLNVC0ouXEOqUAr4UHh4+6YqVKNdTRWs3CatP
-         +K9gXlQLKitRWru0InC9pN0jjWOfrbaheiZUNshLxztNRXL2Nn7FI7+POIBgl5xxFQ/x
-         5QHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=32cxsnXl0PHZoL2xhVBBihlM3hceX5jGTU/i1pRlQOU=;
-        b=SZcllNhig7jSVlhwgHX4pcoLxNLCmnGCk3OFmrx/sq+RZ7/cKdvfFl9bGfBUEHpIrL
-         1wMVlvRZvbiCucXfUvK41zXH4TqX9SJp111kk/crSGWyQj5BdmoiYMQ/kODZIXZa/0G/
-         W6ljjI7yqsTdFFiedN8ltNrri8XJh+dK/9PJ6lt3ZLdc41NGyJ2in4FfHR1uOku3fE+G
-         mRLHBaSO/3DwUdNNHvKvrBcXpoTOAJ2PbUzzFFXAK5LQYa1uSWRWuPReGVuXOcd4MjEj
-         1ku/zKv24vhmrc4Bpo+cDZJSbLy3hoiNvkqnc6l2MVnCUVCjzFmV8soN0PsFjAs6oeou
-         R9mQ==
-X-Gm-Message-State: APjAAAUr/DqZNa8c1kIerVittJSUbH70ugPZBHT54BbFE0X59NRWTKZ7
-        XXxjHfwM5JIMmw9yq3OLu5DlfgQ1
-X-Google-Smtp-Source: APXvYqzmhyjhYVw1Ih9akPeQwUF9Vg6SO9Ur39GFo9gLvsmXyuWOyZyx7g4qzJUg4yh0QzfnoioUnA==
-X-Received: by 2002:adf:84c6:: with SMTP id 64mr12456904wrg.287.1568998432904;
-        Fri, 20 Sep 2019 09:53:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u10sm1936669wmm.0.2019.09.20.09.53.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Sep 2019 09:53:52 -0700 (PDT)
-Date:   Fri, 20 Sep 2019 09:53:52 -0700 (PDT)
-X-Google-Original-Date: Fri, 20 Sep 2019 16:53:46 GMT
-Message-Id: <5b933ab74424d768e99d8e810ad24b62132dbd02.1568998427.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.337.v2.git.gitgitgadget@gmail.com>
-References: <pull.337.git.gitgitgadget@gmail.com>
-        <pull.337.v2.git.gitgitgadget@gmail.com>
-From:   "William Baker via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 6/6] multi-pack-index: add [--[no-]progress] option. Add
- the --[no-]progress option to git multi-pack-index. Pass the MIDX_PROGRESS
- flag to the subcommand functions when progress should be displayed by
- multi-pack-index. The progress feature was added to 'verify' in 144d703
- ("multi-pack-index: report progress during 'verify'", 2018-09-13) but some
- subcommands were not updated to display progress, and the ability to opt-out
- was overlooked.
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2391680AbfITRAq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 13:00:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52435 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391425AbfITRAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 13:00:44 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F115A2D4DC;
+        Fri, 20 Sep 2019 13:00:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BqOv7aLy5AyINXNbSyZevdu2PJU=; b=MApl5X
+        qD8pMgzznd5MIKnEQZ42260oYMAxqGLR6fo1Xhtyz7Y5NCxslcjJPhxZsv6ca6CP
+        NbuF39u4NYgNkum0mA67Z1LFih98REWyz1UF1XVZ91ovbLyG05eqtaC8agN0NDKb
+        eYP/ccJfJtl0n3ZIthbDGGffTlhcoOXy1JY/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=V6tJ/B/O7TiQ1zTIOhcxMNc6JCdcIk4H
+        7TfxlHXwcnW9C8dhT47mUD2U00bDrRYVlYPMEBJRsKrEWFN9/q0LPUJHYLWPS/XM
+        L4jJH7Hijh5qufiOCdvRIqMK+8mpTe6JQBpY6yV1i7kiotQ0DWUZ6LwegygEEeX8
+        oAS8PZ10U4c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E79552D4DB;
+        Fri, 20 Sep 2019 13:00:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BE5482D4DA;
+        Fri, 20 Sep 2019 13:00:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Sep 2019, #02; Wed, 18)
+References: <xmqqy2yl44lw.fsf@gitster-ct.c.googlers.com>
+        <20190919213944.GA29614@cat>
+Date:   Fri, 20 Sep 2019 10:00:37 -0700
+In-Reply-To: <20190919213944.GA29614@cat> (Thomas Gummerer's message of "Thu,
+        19 Sep 2019 22:39:44 +0100")
+Message-ID: <xmqq4l16x5qi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     williamtbakeremail@gmail.com, stolee@gmail.com,
-        jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>,
-        William Baker <William.Baker@microsoft.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2C7F605A-DBC8-11E9-9A69-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: William Baker <William.Baker@microsoft.com>
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-Signed-off-by: William Baker <William.Baker@microsoft.com>
----
- Documentation/git-multi-pack-index.txt |  6 ++-
- builtin/multi-pack-index.c             | 18 +++++--
- t/t5319-multi-pack-index.sh            | 69 ++++++++++++++++++++++++++
- 3 files changed, 87 insertions(+), 6 deletions(-)
+> I have sent an updated version of this, that integrates the changes
+> the js/builtin-add-i topic needs in [*1*].  I think it would be ok to
+> pick up that version and keep js/builtin-add-i out of pu until it's
+> rebased on top of that.
 
-diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index 233b2b7862..d7a02cc6fa 100644
---- a/Documentation/git-multi-pack-index.txt
-+++ b/Documentation/git-multi-pack-index.txt
-@@ -9,7 +9,7 @@ git-multi-pack-index - Write and verify multi-pack-indexes
- SYNOPSIS
- --------
- [verse]
--'git multi-pack-index' [--object-dir=<dir>] <subcommand>
-+'git multi-pack-index' [--object-dir=<dir>] [--[no-]progress] <subcommand>
- 
- DESCRIPTION
- -----------
-@@ -23,6 +23,10 @@ OPTIONS
- 	`<dir>/packs/multi-pack-index` for the current MIDX file, and
- 	`<dir>/packs` for the pack-files to index.
- 
-+--[no-]progress::
-+	Turn progress on/off explicitly. If neither is specified, progress is 
-+	shown if standard error is connected to a terminal.
-+
- The following subcommands are available:
- 
- write::
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index e86b8cd17d..1730b21901 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -6,21 +6,25 @@
- #include "trace2.h"
- 
- static char const * const builtin_multi_pack_index_usage[] = {
--	N_("git multi-pack-index [--object-dir=<dir>] (write|verify|expire|repack --batch-size=<size>)"),
-+	N_("git multi-pack-index [<options>] (write|verify|expire|repack --batch-size=<size>)"),
- 	NULL
- };
- 
- static struct opts_multi_pack_index {
- 	const char *object_dir;
- 	unsigned long batch_size;
-+	int progress;
- } opts;
- 
- int cmd_multi_pack_index(int argc, const char **argv,
- 			 const char *prefix)
- {
-+	unsigned flags = 0;
-+
- 	static struct option builtin_multi_pack_index_options[] = {
- 		OPT_FILENAME(0, "object-dir", &opts.object_dir,
- 		  N_("object directory containing set of packfile and pack-index pairs")),
-+		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
- 		OPT_MAGNITUDE(0, "batch-size", &opts.batch_size,
- 		  N_("during repack, collect pack-files of smaller size into a batch that is larger than this size")),
- 		OPT_END(),
-@@ -28,12 +32,15 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 
- 	git_config(git_default_config, NULL);
- 
-+	opts.progress = isatty(2);
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_multi_pack_index_options,
- 			     builtin_multi_pack_index_usage, 0);
- 
- 	if (!opts.object_dir)
- 		opts.object_dir = get_object_directory();
-+	if (opts.progress)
-+		flags |= MIDX_PROGRESS;
- 
- 	if (argc == 0)
- 		usage_with_options(builtin_multi_pack_index_usage,
-@@ -47,16 +54,17 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 	trace2_cmd_mode(argv[0]);
- 
- 	if (!strcmp(argv[0], "repack"))
--		return midx_repack(the_repository, opts.object_dir, (size_t)opts.batch_size, 0);
-+		return midx_repack(the_repository, opts.object_dir, 
-+			(size_t)opts.batch_size, flags);
- 	if (opts.batch_size)
- 		die(_("--batch-size option is only for 'repack' subcommand"));
- 
- 	if (!strcmp(argv[0], "write"))
--		return write_midx_file(opts.object_dir, 0);
-+		return write_midx_file(opts.object_dir, flags);
- 	if (!strcmp(argv[0], "verify"))
--		return verify_midx_file(the_repository, opts.object_dir, 0);
-+		return verify_midx_file(the_repository, opts.object_dir, flags);
- 	if (!strcmp(argv[0], "expire"))
--		return expire_midx_packs(the_repository, opts.object_dir, 0);
-+		return expire_midx_packs(the_repository, opts.object_dir, flags);
- 
- 	die(_("unrecognized subcommand: %s"), argv[0]);
- }
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index c72ca04399..cd2f87be6a 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -147,6 +147,21 @@ test_expect_success 'write midx with two packs' '
- 
- compare_results_with_midx "two packs"
- 
-+test_expect_success 'write progress off for redirected stderr' '
-+	git multi-pack-index --object-dir=$objdir write 2>err &&
-+	test_line_count = 0 err
-+'
-+
-+test_expect_success 'write force progress on for stderr' '
-+	git multi-pack-index --object-dir=$objdir --progress write 2>err &&
-+	test_file_not_empty err
-+'
-+
-+test_expect_success 'write with the --no-progress option' '
-+	git multi-pack-index --object-dir=$objdir --no-progress write 2>err &&
-+	test_line_count = 0 err
-+'
-+
- test_expect_success 'add more packs' '
- 	for j in $(test_seq 11 20)
- 	do
-@@ -169,6 +184,21 @@ test_expect_success 'verify multi-pack-index success' '
- 	git multi-pack-index verify --object-dir=$objdir
- '
- 
-+test_expect_success 'verify progress off for redirected stderr' '
-+	git multi-pack-index verify --object-dir=$objdir 2>err &&
-+	test_line_count = 0 err
-+'
-+
-+test_expect_success 'verify force progress on for stderr' '
-+	git multi-pack-index verify --object-dir=$objdir --progress 2>err &&
-+	test_file_not_empty err
-+'
-+
-+test_expect_success 'verify with the --no-progress option' '
-+	git multi-pack-index verify --object-dir=$objdir --no-progress 2>err &&
-+	test_line_count = 0 err
-+'
-+
- # usage: corrupt_midx_and_verify <pos> <data> <objdir> <string>
- corrupt_midx_and_verify() {
- 	POS=$1 &&
-@@ -284,6 +314,21 @@ test_expect_success 'git-fsck incorrect offset' '
- 		"git -c core.multipackindex=true fsck"
- '
- 
-+test_expect_success 'repack progress off for redirected stderr' '
-+	git multi-pack-index --object-dir=$objdir repack 2>err &&
-+	test_line_count = 0 err
-+'
-+
-+test_expect_success 'repack force progress on for stderr' '
-+	git multi-pack-index --object-dir=$objdir --progress repack 2>err &&
-+	test_file_not_empty err
-+'
-+
-+test_expect_success 'repack with the --no-progress option' '
-+	git multi-pack-index --object-dir=$objdir --no-progress repack 2>err &&
-+	test_line_count = 0 err
-+'
-+
- test_expect_success 'repack removes multi-pack-index' '
- 	test_path_is_file $objdir/pack/multi-pack-index &&
- 	GIT_TEST_MULTI_PACK_INDEX=0 git repack -adf &&
-@@ -413,6 +458,30 @@ test_expect_success 'expire does not remove any packs' '
- 	)
- '
- 
-+test_expect_success 'expire progress off for redirected stderr' '
-+	(
-+		cd dup &&
-+		git multi-pack-index expire 2>err &&
-+		test_line_count = 0 err
-+	)
-+'
-+
-+test_expect_success 'expire force progress on for stderr' '
-+	(
-+		cd dup &&
-+		git multi-pack-index --progress expire 2>err &&
-+		test_file_not_empty err
-+	)
-+'
-+
-+test_expect_success 'expire with the --no-progress option' '
-+	(
-+		cd dup &&
-+		git multi-pack-index --no-progress expire 2>err &&
-+		test_line_count = 0 err
-+	)
-+'
-+
- test_expect_success 'expire removes unreferenced packs' '
- 	(
- 		cd dup &&
--- 
-gitgitgadget
+Thanks, will replace after looking it over once again.
+
+
+> Dscho: to help reduce the amount of work you (and to double check that
+> my series works well with the builtin-add-i series) I have rebased
+> js/builtin-add-i on top of my series, and pushed the result to
+> https://github.com/tgummerer/git js/builtin-add-i.  Feel free to use
+> that if it helps :)
+>
+> *1*: https://public-inbox.org/git/20190911182027.41284-1-t.gummerer@gmail.com/.
