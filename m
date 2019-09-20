@@ -8,111 +8,98 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 104B31F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 16:37:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 990341F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 16:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727320AbfITQhS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 12:37:18 -0400
-Received: from mout.web.de ([212.227.15.14]:51011 "EHLO mout.web.de"
+        id S1727384AbfITQhp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 12:37:45 -0400
+Received: from mout.web.de ([212.227.15.14]:34291 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725280AbfITQhS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 12:37:18 -0400
+        id S1725280AbfITQhp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 12:37:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1568997432;
-        bh=gtjYqLr44oViADt8dKNO0U95ZV2u+RQ6YjgsRXC7ybo=;
+        s=dbaedf251592; t=1568997462;
+        bh=+SQ3rNfF1RAsY+QwQGcpvvUGbs9NKYMT/4NWiE6yZ8g=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=BthHATrBhkkb7QeQIrt/sSwoicFjLIgf9I5cT3wMOgo+TbE1LSAgtVvQAQnyCZ3Nz
-         Hs87IHKfM6NnvtfAl9SCHHfsBG6X4xbm5irJIwAJLOkql5PYzW87kgLkZhYpaWM1gt
-         vSSvJW/sVESb+fSHQbf8HTV8FvDDyYg/x5KVBbaw=
+        b=D+br0DdzXXP0xhox80yH/Je/5BOUEiO0qIFrE3Gq5oaWb1VSJ2/TgwvSOxpgLr/K9
+         2xNu7T5ec7N8JFWMcpngh9glvsTC7thGKDguHmfAkVS90EV4k2Dzl7beoRSMqdsQ2K
+         LGLfhqJOqEQF0zzdmyuh7y7B0d9lFsDlRswXk/WA=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MNcHy-1iIWu211L8-007HbC; Fri, 20
- Sep 2019 18:37:12 +0200
-Subject: Re: [PATCH 03/15] name-rev: use strip_suffix() in get_rev_name()
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MTPjb-1ib2JN0L0J-00SKuZ; Fri, 20
+ Sep 2019 18:37:42 +0200
+Subject: Re: [PATCH 04/15] name-rev: avoid unnecessary cast in name_ref()
 To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <20190919214712.7348-1-szeder.dev@gmail.com>
- <20190919214712.7348-4-szeder.dev@gmail.com>
+ <20190919214712.7348-5-szeder.dev@gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <bc885655-7b86-86b8-a653-5eecca56bfb2@web.de>
-Date:   Fri, 20 Sep 2019 18:36:30 +0200
+Message-ID: <2347ccf4-9843-5773-aa0a-9aee4a499194@web.de>
+Date:   Fri, 20 Sep 2019 18:37:41 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20190919214712.7348-4-szeder.dev@gmail.com>
+In-Reply-To: <20190919214712.7348-5-szeder.dev@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:3jSxkBJaZJ6W7YpTE5uCw35gAHr8D1zCZ/sqZHiPK4WaPnOJxV0
- X7fRVlIEsIOIH2I//VHr0SGSCx1bHPagXaFusFiw1XgqWTGKIAtngxmArmKze1PwTHjxbhn
- VhRIczUTI8HIHrSV4GGT4wKUoDvIk9Cjr7H70UBUj2IrY5LNJ1QvHOCwtjNMtUsG0INunYO
- ijoTLHn1SG/P+4I2SIdJw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:aiejmVAsroo=:gV2u/SBOLqQKqlpjxDVLP9
- PKBrhyMBFaOpOgoU73RNHqZi2gsvggqzJrQ927LMO/yMv9ZgHzD7mY/qpVnERrQLxue+kXsRF
- /C1qX9s/wAqmYzKOCQO7610mwy2k6NnY4+pPqiL+n+qcPockHzkh0v19kHy4zYxLd26CacbEc
- Iuwxi1sFT7GZt/QLxbgDHhocn6CEywgS9AaB/znbJjL6CTQgx2j3t4YHmJwIvlhOwAhNJ4o/Q
- sp19Nm2ZceqXZumQECWdqejIXBS7uKjHHbXtjxLjstvhLtY55QidAMwu+sQf9msXB8IVS6Pe6
- tZ0B9t/F7m/9feDxTj0nyVWg211HAIF8ijp9Bq5rWSuoCLC7m1Bp7cGH/0yMjfTRlgSG4mzqI
- lTnU7rd8uwmYFaH0+jZMYBP+VZHVFSQ7Do4lC2no1C7iOOzgw/fN+MWaqaXAa/sS1lK/YAvHL
- /Pu/dcKa/XILqft51+U3/4qJEFtnJFMK2epuLvzCzVEZ92Z2B2PxYwPDMkamvTsMTWy5iv9pD
- H7oEitJHEQPTYdp7cNC6zM6mvQ5zhNWr2hR23rIXd/MMhUiqtyWo4vRcgTEu5TMHqPX9hVl8k
- 1qCIcuQ0rw+EpA1yDYwPGVv+KKXcHEVzEi/ay2NFvvutre3yIbl6PQamPNXsKH7JXSqwqLIUt
- oWEiOCVM04qQX1NaZdU/xtS2ISb+WvpaBWKq3jtBM5Mki/eBL6IpOyqKlB5WsXP2TxVxsojza
- pJgdnM1DiNCxFylv9Zdq6QVngmFNc5IuFm4KI5MgXlhe6ntuJtrUrPieFvZUw7J7ChR4z65zW
- 4MWy37TUjA6HdYF8R7NBYtSIofTrsqbMsueLcRzSlRU6hmYKdjzQz7Xavmyni4ZkZeM1f5zoY
- tS3WGO99rRlZG8B9Pch/+tqNyDBeMAslPYogPgDQhOKQJ54xy58UIlN8oEU0NKtwyW2jvntXE
- X4q5UN1aoSrRJQnqTG4yN4Npr9FL5Ue26OHA6gdT3Zvp/ZttV844OBqMKTRNcK28NC59MXMw1
- AOTXecMfhtXWqLRo/z7NFauFVcjwjPs6NH9o06OlTrIs+PKg+WfuBKb0TMIHwq/6Y+EpLk34Z
- L/WIRXtUna4f5mZHztuYvKgGqyE90KNirKylzqZololqkE6laU03r6Ri58jc57r3g7FjoIesa
- QlzSXHBKu2KYs3JyBetaRJ0cmOBv8otJAQCMhoPgDwLXHsTmCyq8GwVOaUYGjlXhPGu9PKrHr
- 9TSkeMjclSG/PdjrulPSwqhTQoK5yvR1K+03YWQ==
+X-Provags-ID: V03:K1:HNjNIqXOvwpdn9t19Mee6N63u4g0AAyolMWJQUmDGlmu2CqFABl
+ eHcACiWDPUI93b6O+OdFbDnBd9mi2NW8BFE+2+FOr61G/NHPtPb3IJUxAuA3wHg+NGR3lA1
+ EV93uop9ZhUQqFdXgiFjEoiWaBWgjR/bNZtjtUbycqsZXcqZocC0GzB+kJrWaHiK5e3WXsL
+ KoRT0EHEeG6rr27GsyH1g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:NVS74qM2uBk=:e5g7RPH9+rvErLb7mKXutb
+ n+RihCtIuJ3NhoAygb1nWvwkjtiHGTkwn4ff3NIKVe2gbzC9hoLVHNprtf/XlCxpq+Q1meFpv
+ LnRmKMydG/XJNwmvffY1PvyUMelj3um8qFYvbvZRd/IkDRcrxOpRKgw9gmj+Px+ehjp9J+qnZ
+ CaCa/yBgN/3pHoLpBz7RQ/ZazDsDB3mO2pmSZWeebQc76arFl4QrvDCW8y+M5nMHK65illrjL
+ eubzhU7HzLopfTqT/yabh6WoXI+Uz1Hsga+VOm3PXFUv5eQiwp9FaTB16RyZBlXUfkSDdRaP9
+ vS6qZ0dpVu8e2PD2nmvZf0VSFzvw9q0VrWny5Kyw0+VDoEO02Sx8VOYymw49lLqoK78NsQBme
+ WwrnmMSoSWhMrvBEisMtoULH6qd2L1gp0jsPNAmGPfagzHtdIIfiHT2AyaCkZvgJ0bKm649Es
+ 5jAqldn1AMAyr3o16turZw7Z2ZiZX6Ig9yUVM4gzXjVmDWUGLnfI8WT7XhHT3Wywc2wWvrdTT
+ C6iwqQ9tgK/ArVEd4j/GlXzA12rck80wM3tNYtMdbz8g45lZNWlIw66HaHKodtZdIIu7ydeu4
+ P+/GFejeJB3W3BUkBzvtGDMOuhEKaTf9maNiPvkvWTbePjj6TsOYHykNtFiE8GevDoUK6W+3m
+ YMC+prTBLgvm6oWbYIGYK+YurtpJOjOqVC8zEn7iBJngjQ6LQ80g8c8A6tLILFVx/tTrQGQvL
+ K8jpYFhF+2IOATa/zIfWe+Z1oISFSbC9F3WNEPYR7uozJaseyj760dFuwMuoWq+dnAHau7FfQ
+ An8o17IGw6fuYc4/QtvFi2fFDsk8KAk7yCGMz3x1USuGeS0rrP5jH6V00ArZY8ZMeI0mZK4gk
+ 7xuGyqzglOIhcgM/lOtnxc/DL1dl6mRTowkJcIifxD1epwwgqEGs/EA9EM42iu3qFVljcWbQl
+ ICpB9p2S8AQ8bonOoO3nziaaGkkUlh0Mt/GKcmkKRnQ3jSs0IVU7G5d0+mRg59Ys+0jbAq1zK
+ K33eWUcqMpG3a2zoS7DmMpDHYkUU2UluAApeddq8caitVmEZQNZLjdPd3OY6WvemiL4e5vpgb
+ HAzvRhBj3vab32z41L9p0MOadsvuSY0ZbE/Ytn1sfG8Ttl9588rhLAO1JvKLXIlSbAOFPu+Od
+ F+Jcn4dPIBfLFHfOO9XdNw+cK87ks9uiiB/tDOf3ZUIcK9GdGxvsi2sFfzQVpRLi6QFW7IOC3
+ 7fpXsm6cFvDc5T04NMR8N1FloEnIGRpXNoAcQuw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Am 19.09.19 um 23:46 schrieb SZEDER G=C3=A1bor:
-> Use strip_suffix() instead of open-coding it, making the code more
-> idiomatic.
+> Casting a 'struct object' to 'struct commit' is unnecessary there,
+> because it's already available in the local 'commit' variable.
+
+That's true, but you can't see that only by reading your email.
+
 >
 > Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
 > ---
->  builtin/name-rev.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  builtin/name-rev.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> index c785fe16ba..d345456656 100644
+> index d345456656..e406ff8e17 100644
 > --- a/builtin/name-rev.c
 > +++ b/builtin/name-rev.c
-> @@ -317,11 +317,11 @@ static const char *get_rev_name(const struct objec=
-t *o, struct strbuf *buf)
->  	if (!n->generation)
->  		return n->tip_name;
->  	else {
-> -		int len =3D strlen(n->tip_name);
-> -		if (len > 2 && !strcmp(n->tip_name + len - 2, "^0"))
-> -			len -=3D 2;
-> +		size_t len;
-> +		strip_suffix(n->tip_name, "^0", &len);
->  		strbuf_reset(buf);
-> -		strbuf_addf(buf, "%.*s~%d", len, n->tip_name, n->generation);
-> +		strbuf_addf(buf, "%.*s~%d", (int) len, n->tip_name,
-> +			    n->generation);
->  		return buf->buf;
->  	}
->  }
+> @@ -268,7 +268,7 @@ static int name_ref(const char *path, const struct o=
+bject_id *oid, int flags, vo
+
+Here's the pertinent context line; --function-context would have been too
+much, I think, but -U4 would have shown it:
+
+		struct commit *commit =3D (struct commit *)o;
+>  		int from_tag =3D starts_with(path, "refs/tags/");
 >
-
-This gets rid of the repeated magic string length constant 2, which is
-nice.  But why not go all the way to full strbuf-ness?  It's shorter,
-looks less busy, and the extra two copied bytes shouldn't matter in a
-measurable way.
-
-	else {
-		strbuf_reset(buf);
-		strbuf_addstr(buf, n->tip_name);
-		strbuf_strip_suffix(buf, "^0");
-		strbuf_addf(buf, "~%d", n->generation);
-		return buf->buf;
-	}
-
+>  		if (taggerdate =3D=3D TIME_MAX)
+> -			taggerdate =3D ((struct commit *)o)->date;
+> +			taggerdate =3D commit->date;
+>  		path =3D name_ref_abbrev(path, can_abbreviate_output);
+>  		name_rev(commit, xstrdup(path), taggerdate, 0, 0,
+>  			 from_tag, deref);
+>
