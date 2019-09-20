@@ -8,98 +8,106 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 990341F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 16:37:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB2261F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 16:37:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727384AbfITQhp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 12:37:45 -0400
-Received: from mout.web.de ([212.227.15.14]:34291 "EHLO mout.web.de"
+        id S1729371AbfITQh5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 12:37:57 -0400
+Received: from mout.web.de ([212.227.15.14]:36411 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725280AbfITQhp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 12:37:45 -0400
+        id S1725280AbfITQh5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 12:37:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1568997462;
-        bh=+SQ3rNfF1RAsY+QwQGcpvvUGbs9NKYMT/4NWiE6yZ8g=;
+        s=dbaedf251592; t=1568997474;
+        bh=MTWlzrHbB/0zDMvPjxCAfSU459XJR2WWM+7iJo6PiNc=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=D+br0DdzXXP0xhox80yH/Je/5BOUEiO0qIFrE3Gq5oaWb1VSJ2/TgwvSOxpgLr/K9
-         2xNu7T5ec7N8JFWMcpngh9glvsTC7thGKDguHmfAkVS90EV4k2Dzl7beoRSMqdsQ2K
-         LGLfhqJOqEQF0zzdmyuh7y7B0d9lFsDlRswXk/WA=
+        b=PFRawOLzymFxsKBLrGhtZr002cyv4I62pnYnQckz5wziaeKY8dH8XTPEC5urmc9O5
+         EXzANc8KwthR7cEyfd2DIeKdJhuWxSE1YuXsQktivyO3JFA37bMzd6J18E7r/xMRHQ
+         0M/aApEcC78Y0D9QrDeP7EaW7pYCuQBDWb3EO1RQ=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MTPjb-1ib2JN0L0J-00SKuZ; Fri, 20
- Sep 2019 18:37:42 +0200
-Subject: Re: [PATCH 04/15] name-rev: avoid unnecessary cast in name_ref()
+Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LrbHJ-1i3dIF2Sy5-013Pd4; Fri, 20
+ Sep 2019 18:37:54 +0200
+Subject: Re: [PATCH 05/15] name-rev: use sizeof(*ptr) instead of sizeof(type)
+ in allocation
 To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <20190919214712.7348-1-szeder.dev@gmail.com>
- <20190919214712.7348-5-szeder.dev@gmail.com>
+ <20190919214712.7348-6-szeder.dev@gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <2347ccf4-9843-5773-aa0a-9aee4a499194@web.de>
-Date:   Fri, 20 Sep 2019 18:37:41 +0200
+Message-ID: <afa53824-9d55-9a55-eb00-ead9ff9940ce@web.de>
+Date:   Fri, 20 Sep 2019 18:37:53 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20190919214712.7348-5-szeder.dev@gmail.com>
+In-Reply-To: <20190919214712.7348-6-szeder.dev@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:HNjNIqXOvwpdn9t19Mee6N63u4g0AAyolMWJQUmDGlmu2CqFABl
- eHcACiWDPUI93b6O+OdFbDnBd9mi2NW8BFE+2+FOr61G/NHPtPb3IJUxAuA3wHg+NGR3lA1
- EV93uop9ZhUQqFdXgiFjEoiWaBWgjR/bNZtjtUbycqsZXcqZocC0GzB+kJrWaHiK5e3WXsL
- KoRT0EHEeG6rr27GsyH1g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NVS74qM2uBk=:e5g7RPH9+rvErLb7mKXutb
- n+RihCtIuJ3NhoAygb1nWvwkjtiHGTkwn4ff3NIKVe2gbzC9hoLVHNprtf/XlCxpq+Q1meFpv
- LnRmKMydG/XJNwmvffY1PvyUMelj3um8qFYvbvZRd/IkDRcrxOpRKgw9gmj+Px+ehjp9J+qnZ
- CaCa/yBgN/3pHoLpBz7RQ/ZazDsDB3mO2pmSZWeebQc76arFl4QrvDCW8y+M5nMHK65illrjL
- eubzhU7HzLopfTqT/yabh6WoXI+Uz1Hsga+VOm3PXFUv5eQiwp9FaTB16RyZBlXUfkSDdRaP9
- vS6qZ0dpVu8e2PD2nmvZf0VSFzvw9q0VrWny5Kyw0+VDoEO02Sx8VOYymw49lLqoK78NsQBme
- WwrnmMSoSWhMrvBEisMtoULH6qd2L1gp0jsPNAmGPfagzHtdIIfiHT2AyaCkZvgJ0bKm649Es
- 5jAqldn1AMAyr3o16turZw7Z2ZiZX6Ig9yUVM4gzXjVmDWUGLnfI8WT7XhHT3Wywc2wWvrdTT
- C6iwqQ9tgK/ArVEd4j/GlXzA12rck80wM3tNYtMdbz8g45lZNWlIw66HaHKodtZdIIu7ydeu4
- P+/GFejeJB3W3BUkBzvtGDMOuhEKaTf9maNiPvkvWTbePjj6TsOYHykNtFiE8GevDoUK6W+3m
- YMC+prTBLgvm6oWbYIGYK+YurtpJOjOqVC8zEn7iBJngjQ6LQ80g8c8A6tLILFVx/tTrQGQvL
- K8jpYFhF+2IOATa/zIfWe+Z1oISFSbC9F3WNEPYR7uozJaseyj760dFuwMuoWq+dnAHau7FfQ
- An8o17IGw6fuYc4/QtvFi2fFDsk8KAk7yCGMz3x1USuGeS0rrP5jH6V00ArZY8ZMeI0mZK4gk
- 7xuGyqzglOIhcgM/lOtnxc/DL1dl6mRTowkJcIifxD1epwwgqEGs/EA9EM42iu3qFVljcWbQl
- ICpB9p2S8AQ8bonOoO3nziaaGkkUlh0Mt/GKcmkKRnQ3jSs0IVU7G5d0+mRg59Ys+0jbAq1zK
- K33eWUcqMpG3a2zoS7DmMpDHYkUU2UluAApeddq8caitVmEZQNZLjdPd3OY6WvemiL4e5vpgb
- HAzvRhBj3vab32z41L9p0MOadsvuSY0ZbE/Ytn1sfG8Ttl9588rhLAO1JvKLXIlSbAOFPu+Od
- F+Jcn4dPIBfLFHfOO9XdNw+cK87ks9uiiB/tDOf3ZUIcK9GdGxvsi2sFfzQVpRLi6QFW7IOC3
- 7fpXsm6cFvDc5T04NMR8N1FloEnIGRpXNoAcQuw==
+X-Provags-ID: V03:K1:WplELNFq5fanfFxUrSRgG0SRH7AwfRZh87e2xdFgMDDDGevveV2
+ M2G870anhWYd+jSnMwdTpMBUuTwaSXI8WZ2KsObaBTx1jKmvoKhU9s4tbSMYAbxCFdEFG+6
+ f9Wda3BAJRFSrI01KseBK8CZfsbAcuMjL5i/YDqfnbdDVJ8jSk25IJY412hwBGnvpC3Qt+q
+ ug9jr4NKybXx2AqOlNaFw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1UJAX9LsMO0=:lCCFOIkiUhrlHAAeBbgmBW
+ xK+4lCORBvr7FznR+X5+6bBK2OzBwLISxx18CC6yKoNZZEJOUpuA5wDTYjtG+Lag157od+Hxh
+ CGtKjYCnaxHCQMBMeljUDG4sbpi+KOlz5uyHVlGknZIJRtHXaKjpyKDMcZGXRnvGNJfsF08Oh
+ 5DcKOvxUrLBN4tHLWe2sMBOjTcwA/JgFVSezh/JO32PyGxLWPBSKnWZ3i8BrHHy5tbSF4Qj0b
+ QwrfrHn7ACVcUzJWlzLj1jhWU+bjIhmX0EDOLtHEYUcwP4GabKzAz7/hjn9uzwrmQ6myE75Qu
+ xHpDnojjrb6+5sUEXzzky+uP+pM1d11jhge+O/l0MVYgoGaqJB68mCBYhjOVC4/CFvey0UU+h
+ kpeT2TpY2F9Sc+QqqevgODIJfu96EO+op3AYOjXg0r1vUYH2MjEXpl8RxCNdAO3eMxLCBIMuY
+ SN+BWp4YQgCEshsOeadQ/kTAJrAmscCHv1eZQVYh95YHr14tOKYmLyXqkitX8ovtJzTYwGsl9
+ Zsr8w38H6R8taWqy5XlJnd3A6giUWYKaReOCD4Jai7QmHdmmVf/WJAPvCczSd2U6mh5zhoZXQ
+ JB4fQebwXkpmt15PCyKDiTa0GUME/aRxL5fX47utes1YhPfd5bgDEMr2QpEgu/+nphK19OK/q
+ JM+hedSOIZYwQtikmckhIsfV+nBM7MHKGAN8g/L8C3GUR4jN0kVuPVlv+YS3zRo+7gu6pwJd3
+ AQtzRLXg8Q1lyGq8CXGAZeXQIyRWkRlYaIgdXtz2aAEhYxa0tsCLxrR3mfDZOFa54hoW0aXnY
+ rIHGFWXC1Nqd1KQgk0UPsyjWGmxNUjdxkivs7TugLn6yC+tHVbOcB44KxX+qlO2KjvudIwfww
+ /CLmTDNfh/oFIm4//IZiFwphO9DMqZMKfMukJDlVHsfLJglh9w53+t+di4HtOYTfC7IXhR60u
+ Tv7/GdxzYettTpxphl4Y05pHBEqxDkVCIN2ykykvNUo1UeBv48h4VgnpJo+2N5rZSL+g+E0U7
+ J4rRIYzdR3SM425dFXVArAzRE5i1FhLYUDd+rn2xm0qIPcRkRhM95ggEud6ZP6O0LJq4EUDx0
+ MBB4sk8/fHZGAo+yGz4hH8LTupNvJbEzTQTF7eG3MqofXU20ysAMFqQ5NscFQghAA3NFS8dkg
+ Xoboqj3HVIVK4CTN+JCLZrr6Mo6xdHt9ilIEmaJMDAfzRkAb1LVERrahLuVI8nV5CxUIeCIcg
+ EcFqPNSvd9KPLWlyEarLU7jMZQR/tBuMOT1RRjg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.09.19 um 23:46 schrieb SZEDER G=C3=A1bor:
-> Casting a 'struct object' to 'struct commit' is unnecessary there,
-> because it's already available in the local 'commit' variable.
-
-That's true, but you can't see that only by reading your email.
-
->
+Am 19.09.19 um 23:47 schrieb SZEDER G=C3=A1bor:
 > Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
 > ---
 >  builtin/name-rev.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> index d345456656..e406ff8e17 100644
+> index e406ff8e17..dec2228cc7 100644
 > --- a/builtin/name-rev.c
 > +++ b/builtin/name-rev.c
-> @@ -268,7 +268,7 @@ static int name_ref(const char *path, const struct o=
-bject_id *oid, int flags, vo
-
-Here's the pertinent context line; --function-context would have been too
-much, I think, but -U4 would have shown it:
-
-		struct commit *commit =3D (struct commit *)o;
->  		int from_tag =3D starts_with(path, "refs/tags/");
+> @@ -98,7 +98,7 @@ static void name_rev(struct commit *commit,
+>  	}
 >
->  		if (taggerdate =3D=3D TIME_MAX)
-> -			taggerdate =3D ((struct commit *)o)->date;
-> +			taggerdate =3D commit->date;
->  		path =3D name_ref_abbrev(path, can_abbreviate_output);
->  		name_rev(commit, xstrdup(path), taggerdate, 0, 0,
->  			 from_tag, deref);
+>  	if (name =3D=3D NULL) {
+> -		name =3D xmalloc(sizeof(rev_name));
+> +		name =3D xmalloc(sizeof(*name));
+
+Here are the declarations of both (and my beloved --function-context
+option would only have shown the second one):
+
+typedef struct rev_name {
+	const char *tip_name;
+	timestamp_t taggerdate;
+	int generation;
+	int distance;
+	int from_tag;
+} rev_name;
+
+	struct rev_name *name =3D get_commit_rev_name(commit);
+
+So your patch is correct.  Had me scratching my head when I first saw
+it, though.  That old code has been present since bd321bcc51 ("Add
+git-name-rev", 2005-10-26).
+
+>  		set_commit_rev_name(commit, name);
+>  		goto copy_data;
+>  	} else if (is_better_name(name, taggerdate, distance, from_tag)) {
 >
+
