@@ -2,80 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 190201F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 17:00:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC64B1F464
+	for <e@80x24.org>; Fri, 20 Sep 2019 17:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391680AbfITRAq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 13:00:46 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52435 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391425AbfITRAo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 13:00:44 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F115A2D4DC;
-        Fri, 20 Sep 2019 13:00:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BqOv7aLy5AyINXNbSyZevdu2PJU=; b=MApl5X
-        qD8pMgzznd5MIKnEQZ42260oYMAxqGLR6fo1Xhtyz7Y5NCxslcjJPhxZsv6ca6CP
-        NbuF39u4NYgNkum0mA67Z1LFih98REWyz1UF1XVZ91ovbLyG05eqtaC8agN0NDKb
-        eYP/ccJfJtl0n3ZIthbDGGffTlhcoOXy1JY/o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=V6tJ/B/O7TiQ1zTIOhcxMNc6JCdcIk4H
-        7TfxlHXwcnW9C8dhT47mUD2U00bDrRYVlYPMEBJRsKrEWFN9/q0LPUJHYLWPS/XM
-        L4jJH7Hijh5qufiOCdvRIqMK+8mpTe6JQBpY6yV1i7kiotQ0DWUZ6LwegygEEeX8
-        oAS8PZ10U4c=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E79552D4DB;
-        Fri, 20 Sep 2019 13:00:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BE5482D4DA;
-        Fri, 20 Sep 2019 13:00:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Sep 2019, #02; Wed, 18)
-References: <xmqqy2yl44lw.fsf@gitster-ct.c.googlers.com>
-        <20190919213944.GA29614@cat>
-Date:   Fri, 20 Sep 2019 10:00:37 -0700
-In-Reply-To: <20190919213944.GA29614@cat> (Thomas Gummerer's message of "Thu,
-        19 Sep 2019 22:39:44 +0100")
-Message-ID: <xmqq4l16x5qi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2C7F605A-DBC8-11E9-9A69-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+        id S2406194AbfITREx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 13:04:53 -0400
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:44406 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389495AbfITREx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 13:04:53 -0400
+Received: by mail-pg1-f202.google.com with SMTP id r25so4761007pgu.11
+        for <git@vger.kernel.org>; Fri, 20 Sep 2019 10:04:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=zMGJlnd7mzU/dtsA3o5yrkWGvN8sPy6EyIDpbuMsZfQ=;
+        b=WgZ0xSHpfPJEra+Mzm6eZ2bsmE9xRmMtIvRvwOU4akPqIUProaooXegNFN1wSlCnQ4
+         k1o/8aeNwSuf9B4ppPIOEdp/Pqym8aa7tdUptwODnrMgPYGvYzbH63AvlfttU5N18YXj
+         xmjKv1C7GeWLTPcOd5mJnMHesMxorZr4SLpYfX84DCfMuyMaq5rbCeYZo/SldJDcX170
+         fk36Wp0PQoO7gY3DNdMyz/XTggPOgae/sfKS22b2xQbLLnXl0OwxDFZNbvv8YA+LszH1
+         DBlbck+J0TmyMgG1bWuyKfOlS550iqTbciuYAzHRLeV17tW6pNGnxCwAmjJHdsbJ5VkL
+         F83Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=zMGJlnd7mzU/dtsA3o5yrkWGvN8sPy6EyIDpbuMsZfQ=;
+        b=ghO/L2hkFaA7cCZ4uFgAMwFG3rF75XKfGGjmYXR7GavDZLXhWbhA7QNRsVIA7yyVnI
+         LXb1uxDctCxB/Y3b/YrWzGNs3LL1fpsKZZHU9iydnECr18lSbx4Hz37VPep0E8QZXuIz
+         2uZe7CYgfFMdowjnUehNFBBdNWIVvxN+7OaKWGWKNoFjofdmgLD81SubBgKYc7PTo0pS
+         Nijyuo42T88pEbbRYD9kpA28Uq5W0hk7mnUghHBY9DTiP2kUtx9LhLl+8OwXg+JPJJRy
+         UcgJqqFFHRA5D2fd6zhEJYQUJVykSTK5BM1hvp/y0HelUjOqZWivIjgkaLREJs/nsP6T
+         BVCA==
+X-Gm-Message-State: APjAAAVkqg3A4lc0T5IWn8zWR2ILpvoCqa1vkSDNPD0AIkFFiyWMQLoF
+        z1pNkaiix/6o6nU+8GUw1aJoH98Ao5bw8caGDUvK
+X-Google-Smtp-Source: APXvYqz1K/YbIbyz5aW0dvkpY269wGLkOBuppmQjnnC+eLcumCSTp9NxWhvnUKd+vJRTnRN+Qhm6a95VyOb3zhDd58XV
+X-Received: by 2002:a63:531d:: with SMTP id h29mr7097614pgb.52.1568999091531;
+ Fri, 20 Sep 2019 10:04:51 -0700 (PDT)
+Date:   Fri, 20 Sep 2019 10:04:48 -0700
+In-Reply-To: <20190913205148.GA8799@sigill.intra.peff.net>
+Message-Id: <20190920170448.226942-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20190913205148.GA8799@sigill.intra.peff.net>
+X-Mailer: git-send-email 2.23.0.351.gc4317032e6-goog
+Subject: Re: Git in Outreachy December 2019?
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     peff@peff.net
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+> Prospective mentors need to sign up on that site, and should propose a
+> project they'd be willing to mentor.
 
-> I have sent an updated version of this, that integrates the changes
-> the js/builtin-add-i topic needs in [*1*].  I think it would be ok to
-> pick up that version and keep js/builtin-add-i out of pu until it's
-> rebased on top of that.
+[snip]
 
-Thanks, will replace after looking it over once again.
+> I'm happy to discuss possible projects if anybody has an idea but isn't
+> sure how to develop it into a proposal.
 
+I'm new to Outreachy and programs like this, so does anyone have an
+opinion on my draft proposal below? It does not have any immediate
+user-facing benefit, but it does have a definite end point.
 
-> Dscho: to help reduce the amount of work you (and to double check that
-> my series works well with the builtin-add-i series) I have rebased
-> js/builtin-add-i on top of my series, and pushed the result to
-> https://github.com/tgummerer/git js/builtin-add-i.  Feel free to use
-> that if it helps :)
->
-> *1*: https://public-inbox.org/git/20190911182027.41284-1-t.gummerer@gmail.com/.
+Also let me know if an Outreachy proposal should have more detail, etc.
+
+    Refactor "git index-pack" logic into library code
+
+    Currently, whenever any Git code needs a pack to be indexed, it
+    needs to spawn a new "git index-pack" process, passing command-line
+    arguments and communicating with it using file descriptors (standard
+    input and output), much like an end-user would if invoking "git
+    index-pack" directly. Refactor the pack indexing logic into library
+    code callable from other Git code, make "git index-pack" a thin
+    wrapper around that library code, and (to demonstrate that the
+    refactoring works) change fetch-pack.c to use the library code
+    instead of spawning the "git index-pack" process.
+
+    This allows the pack indexing code to communicate with its callers
+    with the full power of C (structs, callbacks, etc.) instead of being
+    restricted to command-line arguments and file descriptors. It also
+    simplifies debugging in that there will no longer be 2
+    inter-communicating processes to deal with, only 1.
