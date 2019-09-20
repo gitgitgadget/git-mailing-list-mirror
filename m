@@ -2,117 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E8111F463
-	for <e@80x24.org>; Thu, 19 Sep 2019 23:18:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D00641F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 02:18:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405333AbfISXSm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Sep 2019 19:18:42 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:38054 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405316AbfISXSm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Sep 2019 19:18:42 -0400
-Received: by mail-wm1-f65.google.com with SMTP id 3so248862wmi.3
-        for <git@vger.kernel.org>; Thu, 19 Sep 2019 16:18:41 -0700 (PDT)
+        id S2437062AbfITCSC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Sep 2019 22:18:02 -0400
+Received: from mail-qk1-f176.google.com ([209.85.222.176]:46959 "EHLO
+        mail-qk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393877AbfITCSB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Sep 2019 22:18:01 -0400
+Received: by mail-qk1-f176.google.com with SMTP id 201so5632441qkd.13
+        for <git@vger.kernel.org>; Thu, 19 Sep 2019 19:18:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ycVv5q8iZcb/5VRxI8qsresLsx/U0c2nE/6JFhNepxk=;
-        b=Z085cGQ09Ipo8Bo0BAngMMZyu0ZLNGXQTQORjaYBjls9y0sswYKrrbDIrjnF7Pk+9h
-         3bIGbwsJnvH4F5Wp67h4nGCRXQmNM4bUW3gxWm9X1fzriRAwWeaVTP/iLjCMDSwYtmMQ
-         MZrdpgAHA05G6WidHIg+NeDc72sudY75FCjqLOb5qb+TmH5CcfStCZlupuqKbryu9ttF
-         UVVnZnuqGoKI8kWKS830XiAtoxFKZjHwHtgFGrSGZxEuigE1BIEwyY2WdOdBt4M8kibg
-         zeEI11+oVSdENzxMbqKiuQ48SG1CtjDbYCahtoC0hMzu6E3pFF6yGIO9YYSixKAS/Tki
-         V4RA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Op6IpkynF/zCAKibwboT7FvYm4N8VehElrdpGu0BXLs=;
+        b=LQxMVqfWAuc4s/nJrl3CmWWNLeXtlPKVsMlkZTtgnid4WasqtCGgldN/+h/cN99TIl
+         EGxP/vet3LMo8kYNJ6sxRFkV1A8BBbi0go3jC1dE7fspY9zJudGTX+YDi5GPhmwlA4N5
+         buIA+MZXy+smAkUC7ClSrEl2QbleNEPYsumpaQFkVVvB8IyAKe3d/jeHoDRtuMpcpjre
+         iTnQX6Phn22KYYo6m1pcTIed5ORYDrkI2xK9oIpiKyuwF+jYuA5DS/mzBtvgkXiaAFuU
+         GcT2SQJKRhRB20tOw6wkn2Buug1bxGHiVJ0IPiZvHPi76M1DfF9b67UaxJnie937zfPw
+         4d9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ycVv5q8iZcb/5VRxI8qsresLsx/U0c2nE/6JFhNepxk=;
-        b=gEqFzBPZqknZz7sNJAmEBKAlHLxG36QVbIBZYymcWR5Aw/jYfNpDWNLekcR5SjkDfx
-         NNTGRRRxeRRAUIotuIXUR0k5A5lFuuUu2ChPjjZVuLgMZkaMEreVVEm5VRo5YN4i8MkJ
-         4Pv+QyBcIkCxeGP9Gub8dhLWAvX6eIKHuuizppnUxbhvxDCyfS2LNSt3lnSMqh/wMb11
-         tqd26h7GJkGNm9B35bV5cSW277DZQe/7MlJdyKL7IUBqACKX8w2/p4kfdYJCNV/+iWsb
-         S3E/zF8dC3o1XTlWgOc5b1iuve3aLnth6aJFAARzrz7D55fa8+bIYt3GOJJ/EvWxL3fQ
-         49VA==
-X-Gm-Message-State: APjAAAXnxx8QJ70Z16kKONlLnCoJRI43wOscKv2oK2FyWiKwAihXBKaq
-        yfwh7Dluk5g6ktvAWmAFn+Vczjyd
-X-Google-Smtp-Source: APXvYqz5OBg3QsGBZMQW5kfy7t2r2OnLt4gRtoczOmT8QkY9zfHhpeZOkuBWii7KkqxxmBlgXq7DLw==
-X-Received: by 2002:a1c:6508:: with SMTP id z8mr241017wmb.93.1568935120417;
-        Thu, 19 Sep 2019 16:18:40 -0700 (PDT)
-Received: from szeder.dev (x4db63806.dyn.telefonica.de. [77.182.56.6])
-        by smtp.gmail.com with ESMTPSA id v2sm82816wmf.18.2019.09.19.16.18.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Sep 2019 16:18:39 -0700 (PDT)
-Date:   Fri, 20 Sep 2019 01:18:33 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Joseph Mingrone <jrm@ftfl.ca>
-Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>
-Subject: Re: git-svn authors file in repo (Author: xxx not defined in
- .gitauthors file)
-Message-ID: <20190919231833.GA9363@szeder.dev>
-References: <86o8zgfj82.fsf@phe.ftfl.ca>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Op6IpkynF/zCAKibwboT7FvYm4N8VehElrdpGu0BXLs=;
+        b=T4d3IYbdmes6jg/9J+KqLaVIHxOXteGrQ4C9GgPxU+646IkNu36UlS/RLo51NlFWbT
+         X53QyGtJvJliDw4dwDJRhftTlB383vrOi+C+nCIcQxSwXYQ1bE2qDdvz55uQmsYVnD7j
+         sQwBHGvY1peE6A7Vt+5MbWxfaxakMstB2iyikjFAI4cvdTwDuqXxJpol/gqJA0Nhdsgu
+         MmteF84b6vu5smaYiUw23ufVKu36G2sZmVujp/yRlFHUSYp9t0SIQyDrUqGVAoNfHO25
+         WUOM+gQV6/U9xTOgWVR1oMagm1JHYdgdSGCwsImlrC7cNZQ1iepYT/TyY2rfXs0Gr42W
+         8CaQ==
+X-Gm-Message-State: APjAAAXkYBGEgqJWyDBnVheg0NjzIx0okapon6n2opSwNOUq3ZPL7K00
+        44YAnXVLhM1SDTol54/4E7Y=
+X-Google-Smtp-Source: APXvYqwKtz23Lkn71FAIuSBzgMzTJe4FoBez+2yOXYhAVjzwFDaJv+skZunveCVqMLAOhrzPWee3WQ==
+X-Received: by 2002:ae9:f209:: with SMTP id m9mr1153397qkg.388.1568945880421;
+        Thu, 19 Sep 2019 19:18:00 -0700 (PDT)
+Received: from [10.0.1.19] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id i2sm277940qti.58.2019.09.19.19.17.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Sep 2019 19:17:59 -0700 (PDT)
+Subject: Re: [DISCUSSION] Growing the Git community
+To:     Jeff King <peff@peff.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "gitster@pobox.com" <gitster@pobox.com>, garimasigit@gmail.com
+References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
+ <20190919221615.GA25636@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d13a8d01-065b-bfff-d279-c57cd0c0f7c9@gmail.com>
+Date:   Thu, 19 Sep 2019 22:17:57 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
+In-Reply-To: <20190919221615.GA25636@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <86o8zgfj82.fsf@phe.ftfl.ca>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 19, 2019 at 11:34:21AM -0300, Joseph Mingrone wrote:
-> Hello,
-> 
-> We maintain a .gitauthors file for git-svn.  When a new committer is
-> added to our project, a new entry is added to the .gitauthors file,
-> but we sometimes see errors like this:
-> 
-> % git -C /usr/ports svn rebase
->         M       .gitauthors
-> r512146 = 0c1f924ca984d53333beabb909ea53afb856c44b (refs/remotes/origin/trunk)
->         M       math/py-pystan/Makefile
-> r512147 = acc387d4c8f3ebf904010bccc5679be06b184a9d (refs/remotes/origin/trunk)
->         M       deskutils/gworkspace-gwmetadata/Makefile
-> ...
-> ...
-> ...
-> r512184 = 442bd1025776d5e3171be8e497ef2056dc47ff06 (refs/remotes/origin/trunk)
->         M       www/rubygem-passenger/Makefile
->         M       www/rubygem-passenger/distinfo
->         D       www/rubygem-passenger/files/patch-asio-libc++7
-> W: -empty_dir: head/www/rubygem-passenger/files/patch-asio-libc++7
-> r512185 = f1a1b447811ae84011288678136e185c83180b8e (refs/remotes/origin/trunk)
->         M       astro/xearth/files/freebsd.committers.markers
-> Author: dmgk not defined in .gitauthors file
-> 
-> The new committer, dmgk, was added to .gitauthors in svn commit r512146,
-> then later he committed to the repository for the first time in r512185.
-> It seems that if these two commits are included in the same `git svn
-> rebase`, the error above will occur.
-> 
-> Is there a solution or workaround for this aside from each committer
-> having an updated .gitauthors before doing `git svn rebase`.  It's seems
-> to be a chicken/egg issue; they first need the updated .gitauthors file,
-> but the way to get the updated .gitauthors files is to do `git svn
-> rebase`.
+On 9/19/2019 6:16 PM, Jeff King wrote:
+> On Thu, Sep 19, 2019 at 12:30:13PM -0400, Derrick Stolee wrote:
+>>
+>> 5. Advertise that Git wants new contributors
+>>
+> This point is the one I'm least on board with. Not because I'm not
+> thrilled to have new contributors, but that to some degree I think the
+> open source system relies heavily on intrinsic motivations like
+> scratching your own itch. I'm worried that advertising "hey, we need
+> people to work on stuff!" then brings in people who are well-meaning but
+> don't necessarily care much about Git in particular. And it becomes an
+> administrative headache to try to figure out things for them to do, or
+> get them acclimated to the community.
 
-I have no idea how 'git svn' works and what this '.gitauthors' file
-is, so no workarounds from me...  But this seems to be similar to the
-issue with '.gitattributes' in core Git that was fixed recently:
+Your concerns are valid.
+ 
+> I.e., I think we want to grow the community a bit more organically,
+> which should be more sustainable in the long run.>
+> So I think any advertising would be more about making it clear that _if_
+> you have an idea, we're very interested in welcoming newcomers. And that
+> to me falls under a lot of the points already made above: making the
+> process more clear and more inviting to people who are already thinking
+> about contributing.
 
-  https://public-inbox.org/git/20190902223944.897504-3-sandals@crustytoothpaste.net/
+I guess I was vague about this. It's not "we need more people to work on
+our (non-existent) backlog" but instead "if you have an interest in
+contributing your (existing) ideas to Git, we welcome you with open arms!"
 
-Perhaps 'git svn rebase' should do the same, i.e. look out for commits
-changing this '.gitauthors' file and re-read the file each time it is
-changed.
-
-Cc-ing Eric for git-svn know-how.
+Thanks,
+-Stolee
 
