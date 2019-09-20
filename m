@@ -2,138 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A5B31F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 14:37:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 172841F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 14:37:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392496AbfITOhG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 10:37:06 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:44532 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726328AbfITOhF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 10:37:05 -0400
-Received: by mail-qt1-f195.google.com with SMTP id u40so8868861qth.11
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 07:37:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=n/P4N7nRRYX6sWrPo4FvEpv1l8NVf2/NJPrTgGaY/o4=;
-        b=gbj3X4bTThvwV+DSOlu01rojML45scHDFTr4JyvxhbKLAoSiB09tykdsv+LIPNntZR
-         Ig7dgL6czi7TO55hPIv1Hjs9Bh8t8RKEUxP2lNte1dxHkxHyolCWGfiapJVCTI03GGB6
-         PUvrxalHiTtEOqt+Y8meijGmulRldMiBTHY2Sp9YyQTi+szjrJK5q4zhbqxcqB/jWesG
-         7BuPIT4YuN3Bgjy/7Kij1XwWS0OCSpA+aCrtQV8Hpz1YbBiDddrx4K8CFaqQJajA7PT6
-         fTHFbAL91x/P8dnNzBk062cYtBz2tpxjY8a18sMib07ob0WztNFKQ8wBWPTyvWTOacpV
-         A20Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=n/P4N7nRRYX6sWrPo4FvEpv1l8NVf2/NJPrTgGaY/o4=;
-        b=SK6uG+TJbwet0tpcM9Wv3maMNwfG/XUXk+Kg14W+IH5eBBDXRkkn73srJCjw7a50Eu
-         XvodZudpc3wd9ZAy5JwFLpV9bCFodXME2XMHryPmbtS1u7RZg6dtlye1FeD0hSOZ/YL0
-         gf9zTbCdeTNwZ/YOnuRYDyUxXMLRHflvauiQ2hCCtQYj+ePyohaRd/onYDMXZynfnUfC
-         1N9xC+Orb54/ERrnyoiO2f0HYta1G2WSfd8JJuzWK5GWCRZ+iFZ/FgAzw0DFW3rhGN6R
-         snLCo6LBalJxdTf1np9XhSev56t7iBDstHBmA2nQSL2YsPEDuFQO5ROCNW2soTfh66mI
-         NhKw==
-X-Gm-Message-State: APjAAAVO6LatjRxXpRnEqSf1r6JudTY/8h1co/ZkolPmrkFO8oFCqlnT
-        5c08azADGDsK5KzFgOJYDws=
-X-Google-Smtp-Source: APXvYqxO6RWp01/t2PBnGfn/ve0jrNw3khUc9NJAgnvuotgfbSiP4EMpbQxiHSN/VvCoImU8NVOc3Q==
-X-Received: by 2002:ac8:18c2:: with SMTP id o2mr3746071qtk.276.1568990223758;
-        Fri, 20 Sep 2019 07:37:03 -0700 (PDT)
-Received: from ?IPv6:2001:4898:4070:37:142:491c:a46c:6a48? ([2001:4898:a800:1012:89d6:491c:a46c:6a48])
-        by smtp.gmail.com with ESMTPSA id f27sm947160qkh.42.2019.09.20.07.37.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Sep 2019 07:37:03 -0700 (PDT)
-Subject: Re: [PATCH v2 09/11] sparse-checkout: use hashmaps for cone patterns
-From:   Derrick Stolee <stolee@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.316.git.gitgitgadget@gmail.com>
- <pull.316.v2.git.gitgitgadget@gmail.com>
- <95a3285bc6021daa236d98d7e1bbdc5c45fc73b0.1568904188.git.gitgitgadget@gmail.com>
- <6b461ad3-164d-46ff-4a68-99f8e6562a72@gmail.com>
-Message-ID: <7d87fe4b-160c-34c2-db6d-4a56fd919755@gmail.com>
-Date:   Fri, 20 Sep 2019 10:37:00 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        id S2392859AbfITOht (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 10:37:49 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58792 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2391448AbfITOhm (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 20 Sep 2019 10:37:42 -0400
+Received: from genre.crustytoothpaste.net (unknown [75.104.69.183])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 055AF6074C;
+        Fri, 20 Sep 2019 14:37:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1568990260;
+        bh=2ud2sOOwBVUn6rfwTbqCFasm5nukaikcm8nEpvywTIU=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=A5XRliBC4XRegZ8Fjas2Dlzy357NGeIMT82M05WQTvXnL4WGFJTc8YMyL3Xpdlbo5
+         pWhGErQa5iWQjVx8FcSAte4w4rfRGic5xxYPsjQ4Gt5CbUZYUY4sJ/pPahSPjVcdaZ
+         qF9dyRTDb/RdOF18nR4psl6wKMLOMF6+yS1cm3HD/CabVIRVGLidv/3Z8V2o8ihc6F
+         bm1D/cDl5TJzGFCHhIzLbLzlwKHnAb7NXEnPU1QudkJiwkUPingNrrwFV7q3Qvt+gG
+         6Vgz3KYHD5D3D1v393sA0Mi5aZs6POJ8/nZJLcD8JDgiNmrqjktkEsdgUvh1xQxS2i
+         5EowuWFq+0avTDOV6GdMAcLt9HTXux+zPDT/Wo6kWGwJK/r5Jye4SDeMLrdH+0RcpM
+         td+szM+tIiFCdW2HdqdhI0HkQ2974nV9y9V7/tY/jKZIO4AaySEQTbmU2AhGwFPoOI
+         ggTnfh9KddMhVMFEuicwo0GJp7xxaFnNK4UnJVoDxFkARvbGS67
+Date:   Fri, 20 Sep 2019 14:36:17 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "gitster@pobox.com" <gitster@pobox.com>, garimasigit@gmail.com
+Subject: Re: [DISCUSSION] Growing the Git community
+Message-ID: <20190920143614.GB20698@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "gitster@pobox.com" <gitster@pobox.com>, garimasigit@gmail.com
+References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <6b461ad3-164d-46ff-4a68-99f8e6562a72@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="IiVenqGWf+H9Y6IX"
+Content-Disposition: inline
+In-Reply-To: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/19/2019 4:59 PM, Derrick Stolee wrote:
-> On 9/19/2019 10:43 AM, Derrick Stolee via GitGitGadget wrote:
->> @@ -848,6 +953,10 @@ static int add_patterns_from_buffer(char *buf, size_t size,
->>  	int i, lineno = 1;
->>  	char *entry;
->>  
->> +	pl->use_cone_patterns = core_sparse_checkout_cone;
->> +	hashmap_init(&pl->recursive_hashmap, pl_hashmap_cmp, NULL, 0);
->> +	hashmap_init(&pl->parent_hashmap, pl_hashmap_cmp, NULL, 0);
->> +
-> 
-> Just a head's-up to anyone looking at this series: this is not the
-> right place to set use_cone_patterns (without passing a flag or
-> something). This same path is called from the .gitignore machinery,
-> so if you have a non-cone pattern in your .gitignore you will start
-> seeing warnings with core.sparseCheckoutCone=true.
-> 
-> I figured it out only via integration tests with our C# layer. In
-> v2 I'll fix this and add a test to make sure it stays fixed.
 
-Here is the code fix. I will have a test to check this in v3.
+--IiVenqGWf+H9Y6IX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--->8--
+On 2019-09-19 at 16:30:13, Derrick Stolee wrote:
+> 1. Improve the documentation for contributing to Git.
+>=20
+> In preparation for this email, I talked to someone familiar with issues
+> around new contributors, and they sat down to try and figure out how to
+> contribute to Git. The first place they went was https://github.com/git/g=
+it
+> and looked at the README. It takes deep reading of a paragraph to see a
+> link to the SubmittingPatches docs.
+>=20
+> To improve this experience, we could rewrite the README to have clearer
+> section markers, including one "Contributing to Git" section relatively
+> high in the doc. We may want to update the README for multiple reasons.
+> It should link to the new "My First Contribution" document
+> (https://git-scm.com/docs/MyFirstContribution).
 
-From 73b100d11d11bf8f045c2e116390120819dcb800 Mon Sep 17 00:00:00 2001
-From: Derrick Stolee <dstolee@microsoft.com>
-Date: Fri, 20 Sep 2019 08:55:06 -0400
-Subject: [PATCH v2] fixup! sparse-checkout: use hashmaps for cone patterns
+I think there's a lot of improvements we could make here, and I know
+that many folks are already working on contributor documentation.
+That's enormously valuable work, and I'm pleased to see it going on.
 
----
- dir.c          | 1 -
- unpack-trees.c | 1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+> 2. Add more pointers to GitGitGadget
+>=20
+> We have a reference to GitGitGadget in the GitHub PR template to try and
+> get people who try to submit a pull request to git/git to instead create
+> one on GitGitGadget. However, that captures contributors who didn't read
+> the docs about how to submit! (This is somewhat covered by the "My First
+> Contribution" doc as well, so making that more visible will also help.)
 
-diff --git a/dir.c b/dir.c
-index 35fd60d487..248a418379 100644
---- a/dir.c
-+++ b/dir.c
-@@ -953,7 +953,6 @@ static int add_patterns_from_buffer(char *buf, size_t size,
- 	int i, lineno = 1;
- 	char *entry;
- 
--	pl->use_cone_patterns = core_sparse_checkout_cone;
- 	hashmap_init(&pl->recursive_hashmap, pl_hashmap_cmp, NULL, 0);
- 	hashmap_init(&pl->parent_hashmap, pl_hashmap_cmp, NULL, 0);
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 43acc0ffd6..b5cf591c38 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1487,6 +1487,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		o->skip_sparse_checkout = 1;
- 	if (!o->skip_sparse_checkout) {
- 		char *sparse = git_pathdup("info/sparse-checkout");
-+		pl.use_cone_patterns = core_sparse_checkout_cone;
- 		if (add_patterns_from_file_to_list(sparse, "", 0, &pl, NULL) < 0)
- 			o->skip_sparse_checkout = 1;
- 		else
--- 
-2.23.0.vfs.1.1.19.gce6e76d
+I think GitGitGadget is a useful tool which I haven't really had the
+time to learn how to use.  I appreciate that many people prefer a
+patch-based workflow, and that using a patch-based workflow and a
+mailing list provides the project independence and avoids favoring any
+hosting platform or tool, which I agree with.
 
+I think also that many folks find a pull request-based workflow to be
+easier and more familiar and supporting this a bit better may lower the
+barrier to entry, so I'm in favor of bridges that make contributing
+easier, even if one still needs to subscribe to the list to get
+feedback.
 
+> 4. Add an official Code of Conduct
+>=20
+> So far, the community has had an unofficial policy of "be nice,
+> as much as possible". We should add a Code of Conduct that is
+> more explicit about the behavior we want to model. This was also
+> discussed in the meeting with wide approval.
+
+I think this is a good idea.  We already document how to contribute to
+the community by sending a bug report or a patch: how to format your
+emails, how to sign off your patches, and how to write a good commit
+message.  I see a code of conduct as another way to do this by
+documenting our social norms much as we document the way our
+contributions should look technically.
+
+I also know in the past we have had problems with a contributor who was
+being argumentative and disagreeable.  I think documenting the kind of
+behavior we want to see both helps individuals ask themselves if their
+own behavior is helping us provide a positive community and helps other
+contributors provide feedback about unhelpful or unacceptable behavior
+on the rare occasion that we see it.
+
+Lest I give the impression otherwise, I think that overall the Git
+community is quite welcoming and positive, and I anticipate that it will
+continue to remain that way.  I expect that the difference in behavior
+on the list if we adopt a code of conduct will be small, since so far
+pretty much everyone seems to be engaging in productive, helpful ways.
+
+However, I know that many folks from underrepresented groups in tech
+feel more comfortable when there's a code of conduct because it signals
+to them that the project cares about fostering a respectful, healthy
+community and that their contributions are likely to be welcomed.  I
+recommend the Contributor Covenant for this purpose, since it is well
+known, well accepted, and is used by numerous other FLOSS projects.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--IiVenqGWf+H9Y6IX
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl2E494ACgkQv1NdgR9S
+9oskGQ/+N4Y3vFPu7rVKBtrjdwm7d9FtzEpmGNByoyMf7mwngk4i1/ESHMhYxMzc
+bI1OUIgCNiidurUE2JMJ3ACnDGxaA7aDShLnJ3ykMuvetpy3rtfoOeNXz/Uxs0ff
+W04utK7C9L2RaGwhzJoSNNUJ2hjeGPBaCfPWO0g1U483y65SIoQdGli+MXqmuhbm
+ZHDfCSjWiWKWe+5KwZPN8c1gLSpVI+Y7daAoPeVFKBgQmDk/tOcp8TxFggSFIPCG
+xsrBrGlK+FmtSLmqlJvJM0HwQiLzQqUU0ME7CQAcsg72jeQMCRHMwmMh+aPqdxUe
+f/b/JV1iFzbI6OriaV8lLPXbWuVcOreRH6+vly674wxt1uBvlNGUZNrq6m7cOX27
+T4ujIZ1l7fkuyy0KjrbI5eVFodx/qEBWuXyxNLfVMB5BdODhxsD0VfdHC0q5OLJ5
+KWD6+dGR1/n3WzlE3qipXV1SPLcC8ccoHrQ6uxv4SkscsF1LvjIKIATgeUeFnWS7
+LiXQ3j0IUhM8DcKZQ0fVg5g1k0Mfd/LpwvZkEHcIQCbGSJW62rttOUMFS4M0JCDp
+SOd9JY1PLoslYaTJ+a4W2X/NHtVShyPLefoq9tKcee7H5hPQKgt0O2ywI7I5dM2x
+Iqv1u3j19ZYMtwlbiitL9EyMd0+oSauKBY2hx1ljTLzRCG0OhU4=
+=S3gh
+-----END PGP SIGNATURE-----
+
+--IiVenqGWf+H9Y6IX--
