@@ -2,93 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02B2C1F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 20:50:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A7251F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 21:47:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387594AbfITUug (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 16:50:36 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:44517 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387479AbfITUug (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 16:50:36 -0400
-Received: by mail-pf1-f202.google.com with SMTP id b204so5511027pfb.11
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 13:50:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=smELTEdiQMzSJJm1iReJ5QhqXiGem5B1XKB+B9YRP4U=;
-        b=I3Gqza3NQHsyQxSF/3nJdNkniAHV3MUqa15/q5SheXv901/nbeARvCW61r1hPw76fF
-         iiWKhGhk3mYNhTYpru0DB6gx7WoJ2660vuH5TMjHb48XglpCTpi9U+3XkYI0iueWO6JO
-         zjNLCxBoF3cGhWKyCMxWXn37gM79mixFKFrcIz23fqixgPbgg/rPfiPyn4Zy8vLsnOC0
-         NPwolseBLyWtjbHKKnZpm4hVGbtfTztL4Nxxwnt3YkkhNWPR6Q27yMSWeg77yLY0w32J
-         BkgGIh1oyWczOES8hX/7e6aTMjNGSeJVFnod/Bkv4Q20VZ/sIaQpxCTtLlJX8sfNNMZ/
-         9tVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=smELTEdiQMzSJJm1iReJ5QhqXiGem5B1XKB+B9YRP4U=;
-        b=n+I23TzyIL3XeRqw1ABWvMIXEsbeQOmf1khkMKI8YfWfESMnqFaiRqJ8k56IsMRmy5
-         +e9ayMg63F07RzmLZ5UCFVJHKs+z4mgj+p8YLMoGPDUuPl15A1XyljawliSYpLWjCZH3
-         6PTtkcOrPq/w6l7cg3ONhr+pi6cFs5WoTLr7+qNiMQayYxxe4LH7F6N6ZqZ0illsJbWP
-         1bIk4ie0yMcCDN4yJ3RmHgfK238pRsH6jhCwCUMckgLX1WuuKIpeDqO0iAGnEZdaas18
-         /nGf6XA93NsbwWWTi4MLHBmP+7kU17aXnFgeUexVycak6ws2+4k7gganP58pYLNyQyS8
-         eSWw==
-X-Gm-Message-State: APjAAAWpqddsXv7kxiG4LWdke9kG/oMrwJqzTuIy0a6VBMbPMOzVzMwm
-        uu2189KhWTZDlllA129QbeAzobWP00VYmFgHc5S7
-X-Google-Smtp-Source: APXvYqwnyVmH+SbfXL85kB+6+uZoKbVqbIZyP3xFhSOuN3cc2gGUAfaD1S8kKRAY8z9Z+TXcwq7VPWZ7hTsyjk4tMb5G
-X-Received: by 2002:a63:8942:: with SMTP id v63mr17156494pgd.58.1569012635545;
- Fri, 20 Sep 2019 13:50:35 -0700 (PDT)
-Date:   Fri, 20 Sep 2019 13:50:32 -0700
-In-Reply-To: <xmqq8sqiu2in.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20190920205032.84796-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqq8sqiu2in.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.23.0.351.gc4317032e6-goog
-Subject: Re: [PATCH v2] merge-recursive: symlink's descendants not in way
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, newren@gmail.com,
-        szeder.dev@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1726160AbfITVrn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 17:47:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61170 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726103AbfITVrm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 17:47:42 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B516C2FE80;
+        Fri, 20 Sep 2019 17:47:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=JfrGGS+8CqDY
+        a9grnGjI4U9rY7c=; b=wwXCAy33zzi/yS9UC4KuYtzTmIKlhD/Tv85/nV9WolmU
+        pdHIEJPqYCVRIpxAykal2l+2o1lcGp8x5E2ljdfHc7U9oV98b//sWmo0ioWIlcSv
+        j/SkxTQBS9bbCovTJYNL6a8pgACTVu6QUIqSceOT0VEasos7yZT8iJowE8TuPSg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=irasUD
+        EUXyWlXyteZvLTWVGd1Hbk2StGFOiBL1PgIzCvdg0ZGQ0CxvdD0XUjTZh/hVY0in
+        eT+gDdy319gi8K2yzvNjuNG1C3/k0/65XPiJrxjUK6XG0P773rVMufqEPhhmZzZQ
+        bf277HRepc20/2XZreRHENRgFWMEL2X76W1uE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC4A32FE7F;
+        Fri, 20 Sep 2019 17:47:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 189552FE7E;
+        Fri, 20 Sep 2019 17:47:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 01/15] t6120-describe: correct test repo history graph in comment
+References: <20190919214712.7348-1-szeder.dev@gmail.com>
+        <20190919214712.7348-2-szeder.dev@gmail.com>
+Date:   Fri, 20 Sep 2019 14:47:38 -0700
+In-Reply-To: <20190919214712.7348-2-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+        message of "Thu, 19 Sep 2019 23:46:56 +0200")
+Message-ID: <xmqqv9tmskqt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 449B2610-DBF0-11E9-9860-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> >> OK.  We notice that we need to newly create foo/bar but we
-> >> incorrectly find that there is "foo/bar" already because of the
-> >> careless use of bare lstat(2) makes "bar" visible as if it were also
-> >> "foo/bar".  I wonder if the current code would be confused the same
-> >> way if the side branch added "foo/bar/file", or the confusion would
-> >> be even worse---it is not dir_in_way() and a different codepath
-> >> would be affected, no?
-> >
-> > I don't think there is a different codepath to be affected - as far as I
-> > can tell, dir_in_way() is the only cause (at least of this particular
-> > error).
-> 
-> OK, so existing code already realizes that "foo/bar/file" added in
-> the side branch is the one that must survive, and the "bar/file" in
-> the current branch does not fool it into thinking that "foo/bar/file"
-> is also on our end, and needs to be merged as an add-add conflict.
-> It was only the dir-in-the-way logic that was not careful enough?
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-Yes, that's correct. (I wrote foo/bar/baz in my other email but replaced
-"baz" with "file", and it still works before and after my patch.)
+> At the top of 't6120-describe.sh' an ASCII graph illustrates the
+> repository's history used in this test script.  This graph is a bit
+> misleading, because it swapped the second merge commit's first and
+> second parents.
 
-> In that case, thanks for a very good news and for a careful analysis.
+Hmm...
 
-You're welcome! The careful analysis should be credited to Elijah Newren
-[1].
+> +#       ,---o----o----o-----.
+> +#      /   D,R   e           \
+> +#  o--o-----o-------------o---o----x
+> +#      \    B            /
+> +#       `---o----o----o-'
+> +#                A    c
 
-[1] https://public-inbox.org/git/CABPp-BHpXWF+1hKUTfn8s-y4MJZXz+jUVS_K10eKyD6PGwo=gg@mail.gmail.com/
+What's the first parent of the merge between 'B' and 'c' in this
+picture and how does the reader figure it out?  What about the same
+question on the direct parent of 'x'?  Is it generally accepted that
+a straight line denotes the first ancestry, or something?  I do not
+offhand see between these two the new one is a clear improvement.
+
+I do agree with the issue with illustrating topology, and it is an
+issue worth addressing.  In the past when the order of parents
+mattered, I experimented to find ways to depict them clearly,
+without much success.  One of the things I tried was to label the
+parents, like so:
+
+> -                       B
+> -        .--------------o---1o---2o----x
+> -       /                   2    1
+> - o----o----o----o----o----.    /
+> -       \        A    c        /
+> -        .------------o---o---o
+> -                   D,R   e
+
+but I did not find it very satisfactory.
+
+In any case, since this step is about "improving" the illustration,
+I'd like to see a clear improvement.  Perhaps an extra comment that
+says "straight line is the first parent chain" next to the drawing
+might qualify as such.
+
+Thanks.
