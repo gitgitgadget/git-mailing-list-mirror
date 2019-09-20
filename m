@@ -8,63 +8,61 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B20731F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 15:35:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4488F1F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 15:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404086AbfITPfP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 11:35:15 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:40164 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404034AbfITPfP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 11:35:15 -0400
-Received: by mail-qk1-f195.google.com with SMTP id y144so7706242qkb.7
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 08:35:15 -0700 (PDT)
+        id S2404126AbfITPhU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 11:37:20 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:38688 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388863AbfITPhT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 11:37:19 -0400
+Received: by mail-qt1-f195.google.com with SMTP id j31so9156073qta.5
+        for <git@vger.kernel.org>; Fri, 20 Sep 2019 08:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gWKJKmJQZvLVRCJJuG27uFkO2xEkuMxtCzDr64xXc48=;
-        b=mSSbWckKUT00QCmspyJMEM771TYVms0UkFQXmoej6EAfB3F2xtGlI2camagw7lHgoS
-         TWiY3UlS+sheFqeEFNKs+KgAUHCAZoFMiv7uAI7GAV+VJlS5tMdO1WP+hqCtUfM4Ld2i
-         j0d8YITFC+7XdOjEk8XU9t92Iy30A1isgIKcBEtilImz47Hn7JCVFjlKZ+FXkTwUhPJ6
-         QQwlxlfysuBtoQvH/vFeU7UbFqBuHTJQDz2YOLUxFjwqleOW01dCaocq6z0cdjAVWcEE
-         8hD0EXWRNtRPss/VzDxIE3DbNrPSQKdkK8PrTY0ELqMxbHz5s2Vum3rpCROp4DfeQzy2
-         3/eA==
+        bh=5O/8TULriOYbz/dOy6BRUVdlLk0J9mqqRl3eSHFNqYw=;
+        b=ZgEcJcJRZ/lzi3nAE6S2CT7ie8uYdVvUr4yxqsfX+/oVOtqiI+00P65VwdnWNWitmT
+         g8LuXdmsI/flGBlMZ7DaqXmK1syBTtzhGfiO9nmJOUpOyPoIsGZOS/NUZg+DHQfpnlla
+         ozLvyC6o2kkHkJxmI/0zm11vc9Jip3hhv027mQSHBvB08281ilcm9M/KXJoP2uUAEQCb
+         I/2nRUnnyBlxa4RXnRz8WpSpgZrqLwvxdXd6lsV01DKo0qzw7fRjArS2eF/xAN7dDhV5
+         WXnedLT7wfKOBN/Jt3colLhKeXcpTLQc5odok0mrtkkPHZcXT7Z5mEpqHfhcTNUyXYYB
+         WH+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=gWKJKmJQZvLVRCJJuG27uFkO2xEkuMxtCzDr64xXc48=;
-        b=IuaUqUaGPkOzoNZLw9LvwLOjr2ZdDi5mCzfDvZvljlX6TZ+L5030jC2oUtqhx2FDVS
-         QFimtgk524EXTWrW9zJclhGcgSMPPbR3ypCZ5d/tv3y8IcCAjsT1+8FS0bqWqZfckU1u
-         eOBukdRGCXg8Ot0R/HK0Kg0grT5gEEKKsiYLCNQYAz/5IiM2+0UO6Md55VJn5UeXSjNa
-         KZgKvxFzRwWF7nHeop2f+CjvrODdRzfOUV52cn8DpkT+zcdpLtZ4p8A7b4ecV1MePWG2
-         OQSbjHWea3Tj4PzISg83t8W8Uvu3L3FUO6RKwzza4HXJs2rPPm1BCuFCLrpPZ2VwDGlS
-         bxAw==
-X-Gm-Message-State: APjAAAVJUw7y1ofyI9v4mX8omXXWyZ40HNRQwY82g3s8qI3Xru9/6Mfw
-        zURu40xNAkAw635m7VeXedTovlCnLrw=
-X-Google-Smtp-Source: APXvYqwhakDlf9wbBBYsJzUF5sGeCmKBVmyyoCceK5ES+sjk1YT8PUGSOHOFYIZwoVkRRbTHoScmBA==
-X-Received: by 2002:a05:620a:6cf:: with SMTP id 15mr4362730qky.112.1568993714286;
-        Fri, 20 Sep 2019 08:35:14 -0700 (PDT)
+        bh=5O/8TULriOYbz/dOy6BRUVdlLk0J9mqqRl3eSHFNqYw=;
+        b=GoOvS/BnbbIYMgqBM8ghhTh9idmxWWkH4B0YwG0mFRh0depmV2LUZMDNagMoJMyICq
+         9mYCbeohzpzpCykXa3nbvcxVWhKrERupC2bByDBVpf5Se33lMPucxlCZ/l/CKl8YRMEK
+         RyzCGluAdd3x5eDvTsPUvuOJMBjtwZ7uwjQJDmD72+ql2CxrakeceKagi+rvREyWY67A
+         uU2J9pZUN4sxmRNWy7Lz0hhTmBY/a7zm+/BR+y6v/Gr7pFUG3Bz8PgQck9qjgaFMOmE8
+         sxmRjGiW0KQTdfBdF/lFeiqz4RhpeOuost9bKSAVuU1nHRyD4InRRgaCr9np2F3vpYJD
+         x8BA==
+X-Gm-Message-State: APjAAAUkchPdo28tXgxFE6hMhE5MnC5hpsAqff3F/xs1y4Guieb90/gT
+        x7ZT2y3sV/WnP7Gz27ZZL72MOxu1IEU=
+X-Google-Smtp-Source: APXvYqyHW5Pa8d0TPnGyZUSkLshq+AaG6u78r/W17BaS4VAqKo56dI1RJs2HKgiAV36bTJRpnd950Q==
+X-Received: by 2002:aed:22cc:: with SMTP id q12mr4069597qtc.232.1568993837095;
+        Fri, 20 Sep 2019 08:37:17 -0700 (PDT)
 Received: from ?IPv6:2001:4898:4070:37:142:491c:a46c:6a48? ([2001:4898:a800:1012:89d6:491c:a46c:6a48])
-        by smtp.gmail.com with ESMTPSA id h68sm1160462qkd.35.2019.09.20.08.35.13
+        by smtp.gmail.com with ESMTPSA id y26sm1194626qkj.75.2019.09.20.08.37.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Sep 2019 08:35:13 -0700 (PDT)
-Subject: Re: [PATCH 15/15] name-rev: plug a memory leak in name_rev() in the
- deref case
+        Fri, 20 Sep 2019 08:37:16 -0700 (PDT)
+Subject: Re: [PATCH 00/15] name-rev: eliminate recursion
 To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
 References: <20190919214712.7348-1-szeder.dev@gmail.com>
- <20190919214712.7348-17-szeder.dev@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f354882e-885b-baba-60f0-8dfeba273bfc@gmail.com>
-Date:   Fri, 20 Sep 2019 11:35:02 -0400
+Message-ID: <62669882-bb48-6711-6f9a-b45db2e64da5@gmail.com>
+Date:   Fri, 20 Sep 2019 11:37:12 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
  Thunderbird/70.0
 MIME-Version: 1.0
-In-Reply-To: <20190919214712.7348-17-szeder.dev@gmail.com>
+In-Reply-To: <20190919214712.7348-1-szeder.dev@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -73,11 +71,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/19/2019 5:47 PM, SZEDER Gábor wrote:
-> The name_rev() function's 'tip_name' parameter is a freshly
-> xstrdup()ed string, so when name_rev() invokes...
-This patch 15/15 seems to be the same as your 14/15, and
-we should use your _other_ 15/15, right?
+On 9/19/2019 5:46 PM, SZEDER Gábor wrote:
+> 'git name-rev' is implemented using a recursive algorithm, and,
+> consequently, it can segfault in deep histories (e.g. WebKit), and
+> thanks to a test case demonstrating this limitation every test run
+> results in a dmesg entry logging the segfaulting git process.
+> 
+> This patch series eliminates the recursion.
 
-Thanks,
+A noble goal! Recursion into commit history is much easier to get
+stack overflows than when we recurse into the directory hierarchy.
+
+> Patches 1-5 and 14-15 are while-at-it cleanups I noticed on the way,
+> and patch 6 improves test coverage.
+
+These cleanups are nice, and I think I followed them pretty closely.
+ 
+> Patches 7-11 are preparatory refactorings that are supposed to make
+> this series easier to follow, and make patch 12, the one finally
+> eliminating the recursion, somewhat shorter, and even much shorter
+> when viewed with '--ignore-all-space'.  Patch 13 cleans up after those
+> preparatory steps.
+
+I responded to several of these, mostly with questions and not actual
+recommendations. I do want to apply your patches locally so I can try
+this --ignore-all-space trick to really be sure patch 12 is doing the
+right thing.
+
+Great organization of patches!
+
 -Stolee
