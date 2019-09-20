@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A7251F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 21:47:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D06171F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 21:49:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726160AbfITVrn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 17:47:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61170 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726103AbfITVrm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 17:47:42 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B516C2FE80;
-        Fri, 20 Sep 2019 17:47:40 -0400 (EDT)
+        id S1726458AbfITVtK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 17:49:10 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52297 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726190AbfITVtJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 17:49:09 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5214E8F681;
+        Fri, 20 Sep 2019 17:49:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=JfrGGS+8CqDY
-        a9grnGjI4U9rY7c=; b=wwXCAy33zzi/yS9UC4KuYtzTmIKlhD/Tv85/nV9WolmU
-        pdHIEJPqYCVRIpxAykal2l+2o1lcGp8x5E2ljdfHc7U9oV98b//sWmo0ioWIlcSv
-        j/SkxTQBS9bbCovTJYNL6a8pgACTVu6QUIqSceOT0VEasos7yZT8iJowE8TuPSg=
+        :content-type:content-transfer-encoding; s=sasl; bh=dNOysWL4y7c3
+        X9siQ1NilWFWHUk=; b=Ly05RGbWVPq1goFZgBj5glWSJpmHkKfWgU0Ox4Yz+tSo
+        QrCJmkfc7q16esqaFAAAnLpQOOmwIjDRRhNH8D3BnRh4sEBU8cUv7ZROJIEIA981
+        NRtMLYIpblHSz6FYLPxTC5X8YhHJMn8cfYqR6vQKo6XVzOypIfsUQL+8WXyvEa4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=irasUD
-        EUXyWlXyteZvLTWVGd1Hbk2StGFOiBL1PgIzCvdg0ZGQ0CxvdD0XUjTZh/hVY0in
-        eT+gDdy319gi8K2yzvNjuNG1C3/k0/65XPiJrxjUK6XG0P773rVMufqEPhhmZzZQ
-        bf277HRepc20/2XZreRHENRgFWMEL2X76W1uE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC4A32FE7F;
-        Fri, 20 Sep 2019 17:47:40 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=FuFvCi
+        Xy12c2Rz/xXKd5F8YCStciTD0+p3QOKhFElGIHNVf+iXInzYRjlVv0c/6CE5Dyq4
+        jCC2QILVXh0pUOf8Ejc3gqVl0RIgGScCuGELon6DF94og6bnIwsCUXcP3aD6Txc9
+        uZQ13cXC4NVVm5jaq5Gn28cTBFjUiE4Riz8nw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4A1798F680;
+        Fri, 20 Sep 2019 17:49:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 189552FE7E;
-        Fri, 20 Sep 2019 17:47:40 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 75A5C8F67F;
+        Fri, 20 Sep 2019 17:49:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 01/15] t6120-describe: correct test repo history graph in comment
+Subject: Re: [PATCH 02/15] t6120-describe: modernize the 'check_describe' helper
 References: <20190919214712.7348-1-szeder.dev@gmail.com>
-        <20190919214712.7348-2-szeder.dev@gmail.com>
-Date:   Fri, 20 Sep 2019 14:47:38 -0700
-In-Reply-To: <20190919214712.7348-2-szeder.dev@gmail.com> ("SZEDER
+        <20190919214712.7348-3-szeder.dev@gmail.com>
+Date:   Fri, 20 Sep 2019 14:49:04 -0700
+In-Reply-To: <20190919214712.7348-3-szeder.dev@gmail.com> ("SZEDER
  =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Thu, 19 Sep 2019 23:46:56 +0200")
-Message-ID: <xmqqv9tmskqt.fsf@gitster-ct.c.googlers.com>
+        message of "Thu, 19 Sep 2019 23:46:57 +0200")
+Message-ID: <xmqqr24askof.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 449B2610-DBF0-11E9-9860-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 78179186-DBF0-11E9-A0C6-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -65,45 +65,41 @@ X-Mailing-List: git@vger.kernel.org
 
 SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-> At the top of 't6120-describe.sh' an ASCII graph illustrates the
-> repository's history used in this test script.  This graph is a bit
-> misleading, because it swapped the second merge commit's first and
-> second parents.
+> The 'check_describe' helper function runs 'git describe' outside of
+> 'test_expect_success' blocks, with extra hand-rolled code to record
+> and examine its exit code.
+>
+> Update this helper and move the 'git decribe' invocation inside the
+> 'test_expect_success' block.
 
-Hmm...
+Thanks for a fix.  This makes quite a lot of sense.
 
-> +#       ,---o----o----o-----.
-> +#      /   D,R   e           \
-> +#  o--o-----o-------------o---o----x
-> +#      \    B            /
-> +#       `---o----o----o-'
-> +#                A    c
-
-What's the first parent of the merge between 'B' and 'c' in this
-picture and how does the reader figure it out?  What about the same
-question on the direct parent of 'x'?  Is it generally accepted that
-a straight line denotes the first ancestry, or something?  I do not
-offhand see between these two the new one is a clear improvement.
-
-I do agree with the issue with illustrating topology, and it is an
-issue worth addressing.  In the past when the order of parents
-mattered, I experimented to find ways to depict them clearly,
-without much success.  One of the things I tried was to label the
-parents, like so:
-
-> -                       B
-> -        .--------------o---1o---2o----x
-> -       /                   2    1
-> - o----o----o----o----o----.    /
-> -       \        A    c        /
-> -        .------------o---o---o
-> -                   D,R   e
-
-but I did not find it very satisfactory.
-
-In any case, since this step is about "improving" the illustration,
-I'd like to see a clear improvement.  Perhaps an extra comment that
-says "straight line is the first parent chain" next to the drawing
-might qualify as such.
-
-Thanks.
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> ---
+>  t/t6120-describe.sh | 10 ++++------
+>  1 file changed, 4 insertions(+), 6 deletions(-)
+>
+> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+> index 0bf7e0c8bc..07e6793e84 100755
+> --- a/t/t6120-describe.sh
+> +++ b/t/t6120-describe.sh
+> @@ -14,14 +14,12 @@ test_description=3D'test describe'
+>  check_describe () {
+>  	expect=3D"$1"
+>  	shift
+> -	R=3D$(git describe "$@" 2>err.actual)
+> -	S=3D$?
+> -	cat err.actual >&3
+> -	test_expect_success "describe $*" '
+> -	test $S =3D 0 &&
+> +	describe_opts=3D"$@"
+> +	test_expect_success "describe $describe_opts" '
+> +	R=3D$(git describe $describe_opts 2>err.actual) &&
+>  	case "$R" in
+>  	$expect)	echo happy ;;
+> -	*)	echo "Oops - $R is not $expect";
+> +	*)	echo "Oops - $R is not $expect" &&
+>  		false ;;
+>  	esac
+>  	'
