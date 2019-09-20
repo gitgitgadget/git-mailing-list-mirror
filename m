@@ -2,82 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4F4E1F463
-	for <e@80x24.org>; Fri, 20 Sep 2019 18:03:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C39C1F463
+	for <e@80x24.org>; Fri, 20 Sep 2019 18:13:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406154AbfITSDw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 14:03:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55462 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404946AbfITSDw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 14:03:52 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 358252DEB2;
-        Fri, 20 Sep 2019 14:03:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=3d7xBB0if2eP
-        c4QrYO2SeLwL/z4=; b=ZNtIC79w+cwACkrLjaqb7Ex9pD5TGPmrUpC+z1HnYy4A
-        Q71nMUqCg53CrtthQsUvnAFWG7k2/5xyf2yJFpzGHQ2BtwG7jOZbno+Rot2FMq8a
-        +KUCQa30BUizfMl6oqYokTsNsmL1FRWiHj1NBjLkg9YHyWuh8OO0ENsH5pP8qyY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ZJpQuX
-        5cRC6vVrmLpF6bSfhrq7Q3+E/TsEKYQkXXVPvDUKwGzPrna4PlSUcUOvL8gu/vrG
-        FnexoeHj+0Kwys91dnmkgR3bn6JpqXyuwm3EYeqoOWwl0k9naMrgFQb0zMQHQ5PY
-        beW9gIp0LokTyH151lTnO2w7PaJpud7ZgfbGs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2B4832DEB1;
-        Fri, 20 Sep 2019 14:03:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5551C2DEB0;
-        Fri, 20 Sep 2019 14:03:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] travis-ci: ignore already tested trees in debug mode
-References: <20190919173514.24074-1-szeder.dev@gmail.com>
-Date:   Fri, 20 Sep 2019 11:03:48 -0700
-In-Reply-To: <20190919173514.24074-1-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Thu, 19 Sep 2019 19:35:14 +0200")
-Message-ID: <xmqqftkqvo8r.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2405763AbfITSNJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 14:13:09 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:52254 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404864AbfITSNJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 14:13:09 -0400
+Received: by mail-wm1-f68.google.com with SMTP id x2so3499377wmj.2
+        for <git@vger.kernel.org>; Fri, 20 Sep 2019 11:13:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=duPFsQUiAB394NLJIG6CxXbuWqIVANIn/AeH/CjYalg=;
+        b=JGSJ12TxTzVAzI+mvcj7j9s7CLr5aPhqbpNnyg964GJPtvPslPOxyvGX9cAuyXVzi4
+         ywFjWHZxQiPFCsi2BeqbPZfpGGjp6BFbhI6X04AlRNjbGRWF842R3zKxlWDBurjeLp8W
+         8otgQuohUr/VLXpLIQ6aFTk9sT0ibGsxG4VOmBWex6YWMMitUP70WPrTK8k6U8t9hicu
+         a8dbEzv9Oq1zh+IFbK85abxyAabOLU1io+EQPAA1QteyuvhC63jURjF2ixz+N6bvjuAK
+         QvC1jiW5JO60S3Ux0SAZqHXlK6TOfu0D+dbzN+u+1HheV916pYK2VbFTQjNXkp7TuJWY
+         G2DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=duPFsQUiAB394NLJIG6CxXbuWqIVANIn/AeH/CjYalg=;
+        b=GoyRlwE1O6TxEffrLV9Glo/BnLgoLWpEo7BmmdEyjb4wZ3cZ6fMTvkQxBsCmBiccun
+         sYSRJ/wG02mlaM8r3zYfhfNcWzYUrIXkn79d6KN4SQi1Gt0b+CYHVBakS8YpVzTaQt5w
+         Es7JUKDvPW78UDzLp4m06TvB3ckhRDP4YYhuvCon9H6zgk/r2NQepXq+zFJEPwXXT51W
+         3iZd1CTo4CHLOpAOyXoKCapRSW3+MgWbRun3b78i10lc9QJlY5hwG3CehqL+TeL0a+T7
+         JtBce8P7wOkd7C/Dj6SOegVT6uvWFIUIPz/KdAkrdcGWOpFNx/MueaUHg2lswOGuNYxk
+         pUWg==
+X-Gm-Message-State: APjAAAXFtE5nyNCenfBr64pxqfz4ttPlXRZss0wDqfdW0dq5KuK8CG4S
+        Oowy6gzx1msWQtguG3HXNa/FQklm
+X-Google-Smtp-Source: APXvYqwgZdI/O1nl22JvQs9HvtlovwZyducxDpDuWSF3dvmWuUUiaB40gbu/qADzprbH1NAhatGUBg==
+X-Received: by 2002:a1c:9a46:: with SMTP id c67mr4417904wme.115.1569003187226;
+        Fri, 20 Sep 2019 11:13:07 -0700 (PDT)
+Received: from szeder.dev (x4db40123.dyn.telefonica.de. [77.180.1.35])
+        by smtp.gmail.com with ESMTPSA id o188sm6661143wma.14.2019.09.20.11.13.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Sep 2019 11:13:06 -0700 (PDT)
+Date:   Fri, 20 Sep 2019 20:13:02 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 08/15] name-rev: pull out deref handling from the
+ recursion
+Message-ID: <20190920181302.GA26402@szeder.dev>
+References: <20190919214712.7348-1-szeder.dev@gmail.com>
+ <20190919214712.7348-9-szeder.dev@gmail.com>
+ <5bf3b958-8c95-ae3d-1ae5-df3d57272d8c@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FF41D2A4-DBD0-11E9-A474-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <5bf3b958-8c95-ae3d-1ae5-df3d57272d8c@web.de>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+> > @@ -280,12 +269,16 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+> >  	if (o && o->type == OBJ_COMMIT) {
+> >  		struct commit *commit = (struct commit *)o;
+> >  		int from_tag = starts_with(path, "refs/tags/");
+> > +		const char *tip_name;
+> 
+> This should not be const because you allocate the buffer it points to
+> right here in the function, in each execution path.
 
->  skip_good_tree () {
-> +	if test "$TRAVIS_DEBUG_MODE" =3D true
-> +	then
-> +		return
-> +	fi
+Marking it as const indicates that this function doesn't modify the
+buffer where the pointer points at.
 
-I think you convinced readers why it is a good idea to avoid
-skipping an already tested tree, and technically the title of this
-commit is not incorrect per-se.  You are teaching to ignore
-"already-tested-ness" from a part of the logic).
+> >
+> >  		if (taggerdate == TIME_MAX)
+> >  			taggerdate = commit->date;
+> >  		path = name_ref_abbrev(path, can_abbreviate_output);
+> > -		name_rev(commit, xstrdup(path), taggerdate, 0, 0,
+> > -			 from_tag, deref);
+> > +		if (deref)
+> > +			tip_name = xstrfmt("%s^0", path);
+> > +		else
+> > +			tip_name = xstrdup(path);
+> > +		name_rev(commit, tip_name, taggerdate, 0, 0, from_tag);
+> 
+> tip_name should be free(3)'d here.  Except we can't do that because
+> name_rev() sometimes stores that pointer in a commit slab.  Ugh.
+> 
+> If the (re)introduced leak doesn't impact performance and memory
+> usage too much then duplicating tip_name again in name_rev() or
+> rather your new create_or_update_name() would likely make the
+> lifetimes of those string buffers easier to manage.
 
-But in the larger picture, I would expect that readers would more
-immediately grasp what it is about if it were titled "do not skip
-versions that have already tested good in debug mode" or something
-like that (IOW, we do not want to ignore such trees, we want to test
-them again).
+Yeah, the easiest would be when each 'struct rev_name' in the commit
+slab would have its own 'tip_name' string, but that would result in
+a lot of duplicated strings and increased memory usage.
 
