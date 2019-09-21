@@ -2,117 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-9.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5BA21F463
-	for <e@80x24.org>; Sat, 21 Sep 2019 00:03:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD71F1F463
+	for <e@80x24.org>; Sat, 21 Sep 2019 01:48:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407306AbfIUADx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 20:03:53 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:34223 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407272AbfIUADw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Sep 2019 20:03:52 -0400
-Received: by mail-pf1-f195.google.com with SMTP id b128so5626215pfa.1
-        for <git@vger.kernel.org>; Fri, 20 Sep 2019 17:03:52 -0700 (PDT)
+        id S1730747AbfIUBrJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Sep 2019 21:47:09 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:37433 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730495AbfIUBrJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Sep 2019 21:47:09 -0400
+Received: by mail-pf1-f196.google.com with SMTP id y5so5737759pfo.4
+        for <git@vger.kernel.org>; Fri, 20 Sep 2019 18:47:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=bKgDbbt+/Da5mtk/0Y7wQuo0fY8uRCgwD2WPAR/wh+o=;
-        b=jSSoZFT1kVB07HCKSgAsUDriRDau3jI0QhHMYQPxX6pT4U9E/5w0E6rFFFPrcY8lhs
-         tICHOHT0BELGG9s5VKIcv54Hd3vtzQGglWHFTEjUnHUfJa/PvPePeo5MVQl8nAYJdIaA
-         A/0wp/vyIozkJE7zcyqa44VMthFiZAh0A6GKqFlMTG463jQ3ZxczcPDgPUJSwVCbZfDE
-         yHvy4OFbyNqiJB+xPA4cocYrsVcJTLqWhKoQTvT35z/kOX7M42OCYynVudLbWeQezpYB
-         aSy0vqC5vAtGns9gD4FNIo4Dcfmnc9lrS0QYWqjUqR3oxQ0VKmmdXD4nC8X6pqVvtIZs
-         D3yg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hx4EpBhLUgEgtiwg7y6Mn+7y6PqvJSwt48sQ8pVliSk=;
+        b=HKzf88IqviPv4AukNeAvG+skmj0EANgr6hyq20hGvioX6Ga1gT3x1ESdsmY1HVXjL1
+         pxY+BwMFTtsbEa/BDR8DNYK/csAKQ6U6/W3uQllssWfDk+1itM8AgV81zPiJ4I5CyciB
+         7mqFpkGqve35JlvW5oWFHjjoN02MsW/p60i7/V85YTYhPkFgrjTR4Xzlv36ANaTHA991
+         Z2Kp8d8qRX2DcTxS6yk9PY37rO9SqJmmGR0cDAH2HOoG7GnLqblTvoIJDmsz780Tnfim
+         V5nJDCQW/mby1lkr3r5hxjSzL7AGE800F6Ck6WIHShHP1jLWTep7MccC/cJ4Vq6teS5D
+         f0vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=bKgDbbt+/Da5mtk/0Y7wQuo0fY8uRCgwD2WPAR/wh+o=;
-        b=JS5Ypz42eD6XRrG4rg4VHm73QESrBHdJ7ltCFZ3IdVSdqAR3cw5SxHkN1yFLKMl+aM
-         dlL4DKWm4xjvdXHzTzNE+aqICglLRC7DAux/jjvYyFS2gJuyCVMPgvq3I8F4Zxd77AB3
-         9PjX6IdhJC+6+iHrWjsc0PqETFf4h3hsehwU95g2xz5E70bY2rUqTM7h1hHuNM9QOs+P
-         g2qrjwBbKItOEK8kkP3wmRX0/toea3mpY51MAx8u9ataMQRQD6GYMPhj80sqrzPs9cJ4
-         o/qwpRWjM1NP9ePGZAF6iSvMPFsfA2SvOa5AigSmEmA4tXP0b6dkjvLLlWLvI+U52cLp
-         4+SA==
-X-Gm-Message-State: APjAAAWTN+dzT+6cK0lg+AonHoSKprB75Jel6KKkWig8TQNia20jsWyJ
-        0jTzX8M7xdi7tEW7g7VixHfI9sCH
-X-Google-Smtp-Source: APXvYqzrds2+TVXlFbrhvAXNepaD0tsNGYmj2i9JynB2MH82AyY3yOTG6Al68iea4+XiBTKkB4wtwQ==
-X-Received: by 2002:a63:ec03:: with SMTP id j3mr18419736pgh.325.1569024231325;
-        Fri, 20 Sep 2019 17:03:51 -0700 (PDT)
-Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.137])
-        by smtp.gmail.com with ESMTPSA id q2sm4286129pfg.144.2019.09.20.17.03.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Sep 2019 17:03:50 -0700 (PDT)
-Date:   Fri, 20 Sep 2019 17:03:48 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH] promisor-remote.h: drop extern from function declaration
-Message-ID: <96a3cee1dd4700a9e033f545db5891e4fa8c073d.1569024025.git.liu.denton@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hx4EpBhLUgEgtiwg7y6Mn+7y6PqvJSwt48sQ8pVliSk=;
+        b=Dabqr8xrKU0S+GeX5IF4wsQa7wCDYSjjmePlKexqO6LkzcKnaMK/cDtcnpdFUxQ3Zd
+         D8YbfbbqTeos7MKvwTQ01QTw8na3aFq/IMXY2fbat5anRd/k9zP0iG6uF4oxdz0oeZFg
+         CkCx7dqqX92gAEzjXzqbSibjcp/ZPwrK/P5KdXa3rZtZUUk64eUilB1nsxd27eCt7F3b
+         2RIJN84pds/OPjTBbiSj9VrnQu3lc1vRHtwvmE1JcsldbTW+b2Q4mFUwHTR6k/E+72wx
+         9VREW4BC9RH9J4UlFjelUcTi6cWUBtIJbmJ8gKpBtmsznZq762wH5mGvksedUtWUxC2z
+         10hg==
+X-Gm-Message-State: APjAAAVGd1g2RjWnHkX3yVOJtWcZDP7d6Z79hJhppyaL46PEZcmUqtzO
+        m6SbjSIY8P3IphHJBF/EQjmuJg==
+X-Google-Smtp-Source: APXvYqyyilz3qU7FuE4X0Rbh/OUTAhe54DnA6lyRvuwExVaxpYGZaplfd/bsCoRuaZCZtsHLqXaXuw==
+X-Received: by 2002:aa7:85d0:: with SMTP id z16mr21106587pfn.206.1569030427841;
+        Fri, 20 Sep 2019 18:47:07 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id n15sm3092996pgl.80.2019.09.20.18.47.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Sep 2019 18:47:06 -0700 (PDT)
+Date:   Fri, 20 Sep 2019 18:47:01 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     peff@peff.net, git@vger.kernel.org
+Subject: Re: Git in Outreachy December 2019?
+Message-ID: <20190921014701.GA191795@google.com>
+References: <20190913205148.GA8799@sigill.intra.peff.net>
+ <20190920170448.226942-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20190920170448.226942-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-During the creation of this file, each time a new function declaration
-was introduced, it included an `extern`. However, starting from
-554544276a (*.[ch]: remove extern from function declarations using
-spatch, 2019-04-29), we've been actively trying to prevent externs from
-being used in function declarations because they're unnecessary.
+On Fri, Sep 20, 2019 at 10:04:48AM -0700, Jonathan Tan wrote:
+> > Prospective mentors need to sign up on that site, and should propose a
+> > project they'd be willing to mentor.
+> 
+> [snip]
+> 
+> > I'm happy to discuss possible projects if anybody has an idea but isn't
+> > sure how to develop it into a proposal.
+> 
+> I'm new to Outreachy and programs like this, so does anyone have an
+> opinion on my draft proposal below? It does not have any immediate
+> user-facing benefit, but it does have a definite end point.
 
-Remove these spurious `extern`s.
+I'd appreciate similar opinion if anybody has it - and I'd also really
+feel more comfortable with a co-mentor.
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
+"""
+"Did You Mean..?"
 
-This patch should be placed on the tip of cc/multi-promisor.
+There are some situations where it's fairly clear what a user meant to
+do, even though they did not do that thing correctly. For example, if a
+user runs `git commit` with tracked, modified, unstaged files in their
+worktree, but no staged files at all, it's fairly likely that they
+simply forgot to add the files they wanted. In this case, the error
+message is slightly obtuse:
 
-I wonder if there's any way we can automate this check...
+$ git commit
+On branch master
+Changes not staged for commit:
+	modified:   foo.txt
 
- promisor-remote.h | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+no changes added to commit
 
-diff --git a/promisor-remote.h b/promisor-remote.h
-index 8200dfc940..c60aaa5cce 100644
---- a/promisor-remote.h
-+++ b/promisor-remote.h
-@@ -15,17 +15,17 @@ struct promisor_remote {
- 	const char name[FLEX_ARRAY];
- };
- 
--extern void promisor_remote_reinit(void);
--extern struct promisor_remote *promisor_remote_find(const char *remote_name);
--extern int has_promisor_remote(void);
--extern int promisor_remote_get_direct(struct repository *repo,
--				      const struct object_id *oids,
--				      int oid_nr);
-+void promisor_remote_reinit(void);
-+struct promisor_remote *promisor_remote_find(const char *remote_name);
-+int has_promisor_remote(void);
-+int promisor_remote_get_direct(struct repository *repo,
-+			       const struct object_id *oids,
-+			       int oid_nr);
- 
- /*
-  * This should be used only once from setup.c to set the value we got
-  * from the extensions.partialclone config option.
-  */
--extern void set_repository_format_partial_clone(char *partial_clone);
-+void set_repository_format_partial_clone(char *partial_clone);
- 
- #endif /* PROMISOR_REMOTE_H */
--- 
-2.23.0.565.g1cc52d20df
 
+Since we have an idea of what the user _meant_ to do, we can offer
+something more like:
+
+$ git commit
+On branch master
+Changes not staged for commit:
+	modified:   foo.txt
+
+Stage listed changes and continue? [Y/n]
+
+While the above case is a good starting place, other similar cases can
+be added afterwards if time permits. These helper prompts should be
+enabled/disabled via a config option so that people who are used to
+their current workflow won't be impacted.
+"""
+
+Thanks in advance for feedback.
+
+ - Emily
