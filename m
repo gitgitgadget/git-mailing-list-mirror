@@ -2,118 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 469681F463
-	for <e@80x24.org>; Sat, 21 Sep 2019 15:52:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CF121F463
+	for <e@80x24.org>; Sat, 21 Sep 2019 20:34:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438302AbfIUPwY (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Sep 2019 11:52:24 -0400
-Received: from mout.web.de ([212.227.15.4]:55379 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2438252AbfIUPwY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Sep 2019 11:52:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1569081136;
-        bh=u/FpUaa4/1SwinRU2FdwUEekpC24eUjUAQhbmE1zZtM=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=KDRjcc56AHjMX+dTc8b5P7RLNJbPAQU0JMFZZo40xF1O6ui+7DGugRfjt2j5ELkVW
-         XCdiizRI+jdKHa8dKA2zkdCP5abEDD30dz8FO/YM9F8VyIHNW3Qie0ZPUOdG272bOU
-         MdiGFXT6FXZKiFo6E4TDch3AZlR+EoSpvoq3onsQ=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MgZLb-1iWGhT20l5-00Nye3; Sat, 21
- Sep 2019 17:52:16 +0200
-Subject: Re: [PATCH 08/15] name-rev: pull out deref handling from the
- recursion
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20190919214712.7348-1-szeder.dev@gmail.com>
- <20190919214712.7348-9-szeder.dev@gmail.com>
- <5bf3b958-8c95-ae3d-1ae5-df3d57272d8c@web.de>
- <20190920181302.GA26402@szeder.dev>
- <813f9deb-4448-ed4e-b124-5b85f1ca7147@web.de>
- <20190921142121.GA10866@szeder.dev>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <14079466-78f9-a724-269d-9209e9e6ab26@web.de>
-Date:   Sat, 21 Sep 2019 17:52:15 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1726145AbfIUUer (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Sep 2019 16:34:47 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:44291 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726075AbfIUUer (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Sep 2019 16:34:47 -0400
+Received: by mail-io1-f67.google.com with SMTP id j4so24023384iog.11
+        for <git@vger.kernel.org>; Sat, 21 Sep 2019 13:34:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hM0RzgKEv+D/eXogyTz3rQhdJO3CK3lPy5jQR+pA8gE=;
+        b=q6IUIay502kY7DJCiC3avbiNUAM+nbZGs2Pc2XI/KmzwSGok692Hk1UP2t6UkuDZND
+         MasJSvdVXFGmEV8uL3k2XsgwcPRvdUVFB7jKiBJztyg3gpu6k9h5CjkyRJ8MAjxoBPCE
+         5JSR+DwGtMtdpgf+ehMs63cMYnLm/hTKiQ97Z5bxbtkGBstONZfWZCpJ6Ri7c2tiL+t4
+         EEYqOvN7MENATBhO7DHCN2YSFZjDNMqFqH1dHSMLO0opNSIichYyRV/i65U8diCWksac
+         j91SrhNtWPhTxfyqJU4RYc0Me5m+1I/OM+SfW8++3zV/FKTK+JGw6DoCRObkXfKjuPbu
+         IYgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hM0RzgKEv+D/eXogyTz3rQhdJO3CK3lPy5jQR+pA8gE=;
+        b=X+9TfG5KTRSwkGcPn/mYDDgamvBJgcp5oE9aeRsJb66N4fIFVm0LslnYjA4Sqcl3Ur
+         jEhGpMwbgob+/xSqjRn5oCHe5+Kw0FCs15chFLm3ubF/Ve12viY7fAeY+R1PeApyxThp
+         oHmLoOwfDwLq7gFhqUJgc0xfRkKOk/D073V5+FX5jVThDzZcusYiAV47P4QD6yVl59Bl
+         mpiteU7cM+5KFl+zYVT8ANgxuoMS2FVEmSOlQalfx9Uvw0hSoEzI/G3rVD93YwhF79Ns
+         ENQzDe5zGZgwwe7xTFx0fT/Mx6Qstd8yoV3grHKhpzYU134ixmQWITNEbYnX8m+yL8cO
+         SPsQ==
+X-Gm-Message-State: APjAAAXRhdTSAVpJaf17vrjFkN+NDVKsYEE5xCzz1dsIfF2uCGvCJrJk
+        qMIAkJVWOOyfcwWz0TpSYGxYFE3EGwzsiKekoQO+7Q==
+X-Google-Smtp-Source: APXvYqxPa9XS3Pem8LGcSA5WXbVVsI0hQW79Ghnyz8ZDCQfNJ5+oV2Yth6XseiHaboH0ySBJVIibGfHdEUWTFPeTm78=
+X-Received: by 2002:a6b:7116:: with SMTP id q22mr9067085iog.280.1569098086291;
+ Sat, 21 Sep 2019 13:34:46 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190921142121.GA10866@szeder.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:NfX02NKTpK9i8x386u/9YTXDZUwcKp/XvExiTWhGUq3dakTVcHW
- QVz62RgJboJvRvyDg1RKTQr+q+1Z1HMfZJF3HeCV5Z2rvAoNNy9K0owDmYmGNJE3fl1N7vy
- 9pRj1FiB9x5I7BEh2umpTvZIFQ4rTBBqv+LqLQAtPBeDDKMinT4SBDH/l5MjqKWAeya5Y/k
- nsighMMUQc/Yfkoykg5/A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8CM0QfBJtfA=:7JzCjT9Xtdl72XawyEDWDA
- jIC/ccw9j9q4C+c8dlSe+BKMSKzWv8QAVY4cpxmShJCTl69lUMZ4+8SxoJzOvqC3VQcUxJXYE
- doeXl1l+kJzfMcx+D2qKBz4Ha/J1GRXKuY8PJXyr4dMEupFQgjwv2yIxy1RYJHlZxI8/DA9WO
- FTPas+FzeMXRxIJhR8U2Jh3jhroPfwwTVhSo1nA0ra5kavRxi+WTfoTmbWS+1ys4RHFgGbjkk
- 6fheBHttcRuNgV044F+WciqyKiiCJ5WqlKnK+lUIBGahRyyz0jAzI6JISV6jPL0PX2S5+ockD
- vnNFUnDoMBo4dZdHm2kdvy9meOJ6tFCc3zmeWnHhRW4kw5cNmxZ99CJU+0U/PliWSJARIwp/m
- z/clWNINbxy0HHRTDFL3mgDLtncVFdjDHpXkj+/kGV2GkLrudRfduezwh3hFNJrpeYccTf7vj
- eup5lZf+JDvdcMGzRsO0Zdizgt6XwPHoJsTL8hIx9qXresAAjuQZ0VVhilxcEbPV5ytJ3F0Np
- Cr+dWhGQORWHTrjazceR2sX1Y60K87EJqmzXdxKJqq1lUtbbjIjNMN3TMfHw5d9gj0uxB8LhO
- QmnuUIXEqy52vm8nj+iEWq3BPib6d2b5AqQkpwKqmptrK0rr53d+6wZbEqCXzRoJ0IPhHyw5N
- CBcKHoJ7MWLbO2fOpFGQLXuwM21snAGZUXcTrmCNa7JL06cjaD5JfnwmYqEe6pPQzLGt0uMh7
- l6gmo6algqbnLYqjWFKchnugXQ0cH5dgk1YW2C8oXsZPXESg6ZRF9yipcD2nnsfQnKE+i8OWp
- AIvGzVi3nitY3gn+cJcRjn8l9X/7mq7eGiSueIRpExlMWHlQfs4+cGN7d2G/tujlu1cOjzD97
- CCCqycKHM4HA3oG1pZtm0lZO+M1HD4fp2oGujITuGNugANffoaeEs/TYtACkTSiMLEaz/XVpt
- pi8ZAqhbFpQ+eqwRUPJeLbuvhb+ICG5vOuOkmbehYnUW2sHsKuPlX7zjFqAxjjiDL6MZ5/TKn
- Te0+xf4B60/3lqFYZI/WqDPbia18sCW+SlyIY8WGh1JlgIfX0JWFlWDMO5pEc6HyvrgagPvcH
- jxE9XH6VQMRtuLMzI527gr6RE0xo7duzS7CTlSRhB5xaCzZelO0xBb9K1aQFsmIG+vKP6viuo
- Ndq/gBpGUlVwcM3dDBnIFZavRrI1GwEXwhz9mw1zI+eCztYMvKDIj//Gqqe5z/7tYKdiyy2Fz
- MXxSjFq9HqrHy4JTKOYIDXVdzQoFG3MsfOQuUhQ==
+References: <cover.1568771073.git.matheus.bernardino@usp.br>
+ <xmqq36gt5qhr.fsf@gitster-ct.c.googlers.com> <CAHd-oW4u+iPFMvSGNvSJxfPLE34dQQ3x5_aQ-Y4Pd99FXR1p7Q@mail.gmail.com>
+ <xmqqh857vsqz.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqh857vsqz.fsf@gitster-ct.c.googlers.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Sat, 21 Sep 2019 17:34:35 -0300
+Message-ID: <CAHd-oW5iEQarYVxEXoTG-ua2zdoybTrSjCBKtO0YT292fm0NQQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/3] grep: don't add subrepos to in-memory alternates
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 21.09.19 um 16:21 schrieb SZEDER G=C3=A1bor:
-> On Sat, Sep 21, 2019 at 02:37:05PM +0200, Ren=C3=A9 Scharfe wrote:
->> Am 20.09.19 um 20:13 schrieb SZEDER G=C3=A1bor:
->>>>> @@ -280,12 +269,16 @@ static int name_ref(const char *path, const st=
-ruct object_id *oid, int flags, vo
->>>>>  	if (o && o->type =3D=3D OBJ_COMMIT) {
->>>>>  		struct commit *commit =3D (struct commit *)o;
->>>>>  		int from_tag =3D starts_with(path, "refs/tags/");
->>>>> +		const char *tip_name;
->>>>
->>>> This should not be const because you allocate the buffer it points to
->>>> right here in the function, in each execution path.
->>>
->>> Marking it as const indicates that this function doesn't modify the
->>> buffer where the pointer points at.
->>
->> Right, and that's at odds with this code:
->>
->>>>> +		if (deref)
->>>>> +			tip_name =3D xstrfmt("%s^0", path);
->>>>> +		else
->>>>> +			tip_name =3D xstrdup(path);
->>
->> ... which allocates said memory and writes a string to it.
+On Fri, Sep 20, 2019 at 1:26 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> ... before assigning it to the const pointer.
+> Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
 >
+> > Hmm, I may have gotten a little confused here. Are you talking
+> > about the attributes stack (which contains .gitattributes and
+> > info/attributes)?  If so, isn't this stack already rebuild for
+> > every path? I mean, by the previous call chain it seems to me that
+> > at least these two files are reread for every path.
+>
+> Yes, but for the switch that happens when coming out of a normal
+> directory and then descending into another normal directory is just
+> to pop the entries from the directory hierarchy we are getting out
+> of, and then pushing the entries from the new directory hierarchy.
+> We would not be discarding and rereading $GIT_DIR/info/ or the
+> .gitattribute file from the top-level of the working tree.
 
-Sure, you can cast anything to anything else, and slapping on a const
-qualifier is even allowed to be done implicitly for pointers to objects
-(but not for pointers to pointers).  Removing it later (e.g. for
-free(3)) is a warning sign; such sites need to be checked manually, as
-the compiler won't do it.
+Right, this would be the best way of doing it. However, I think this
+is not how it's currently implemented. I if correctly understood the
+code in this call chain:
 
-The declaration says we don't modify the buffer, but then we actually
-create it, which is as big a modification as can be.  That's a bit
-misleading.  Is protection against accidental updates worth the
-misdirection, and where would they come from?  Usually code without
-such tricks is easier to read and maintain.
+grep_source_load_driver() >  userdiff_find_by_path() >
+git_check_attr() > collect_some_attrs() > prepare_attr_stack() >
+bootstrap_attr_stack()
 
-Ren=C3=A9
+it seems that the whole stack is being rebuild for every path (even
+for paths descending in the same superproject or submodule). So
+$GIT_DIR/info/ and .gitattributes are being discarded and reread every
+time :(
+
+> Descending into a submodule is fundamentally and completely
+> different.  None of the attributes defined in the superproject
+> should affect the paths in the submodule, as it is a totally
+> separate project, oblivious to the existence of enclosing the
+> superproject.
+
+I think we currently have a bug here as the attributes from the
+superproject *are* affecting the paths in the submodule. Here is a
+small script I wrote to test this: https://gitlab.com/snippets/1896951
+
+The cause of this problem is that boostrap_attr_stack() doesn't read
+"<subrepo_prefix>/.gitattributes" but just ".gitattributes", always
+getting the superproject's file not the suprepo's. Yet another problem
+is that when this file is not present and we need to retrieve it from
+the index, this function calls read_attr() > read_attr_from_index() >
+read_blob_data_from_index(). The last one always reads from
+the_repository's odb, so it won't ever find the subrepo's
+".gitattributes".
+
+And a third bug is that when reading attributes of paths inside
+subrepo's directories, from index, we call read_attr_from_index() with
+a path such as "<subrepo_prefix>/<subdir>/.gitattributes". However,
+the subrepo_prefix should be stripped when looking in the subrepo's
+index, otherwise there will be no matches.
+
+To fix these three problems, I think we would need to pass on a struct
+repository in these call chains. But this would require a very big
+modification as there are many places that can lead to one of them...
+And there're corner cases such as index_stream_convert_blob() which
+would need to receive a struct repository but it always writes to
+the_repo, which would be kind of inconsistent. Do you think this would
+be a good solution or should I try something else?
