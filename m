@@ -2,91 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 475A31F463
-	for <e@80x24.org>; Sat, 21 Sep 2019 03:03:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 972E91F464
+	for <e@80x24.org>; Sat, 21 Sep 2019 07:41:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730808AbfIUCtE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Sep 2019 22:49:04 -0400
-Received: from forward500p.mail.yandex.net ([77.88.28.110]:58730 "EHLO
-        forward500p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730800AbfIUCtE (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 20 Sep 2019 22:49:04 -0400
-Received: from mxback2q.mail.yandex.net (mxback2q.mail.yandex.net [IPv6:2a02:6b8:c0e:40:0:640:9c8c:4946])
-        by forward500p.mail.yandex.net (Yandex) with ESMTP id 1639B9401FF;
-        Sat, 21 Sep 2019 05:49:01 +0300 (MSK)
-Received: from localhost (localhost [::1])
-        by mxback2q.mail.yandex.net (nwsmtp/Yandex) with ESMTP id Hzpy9bt3B8-n0s0R3kW;
-        Sat, 21 Sep 2019 05:49:00 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1569034140;
-        bh=ZberBRGDjL7o3nUISrHUAcxLy8yN8DRVfmwKQFYqS4c=;
-        h=Message-Id:Cc:Subject:Date:References:To:From;
-        b=EIyy/Cfe61Hzf0ywB7kRtf5u63GfkxHE1F7CY80ND9K3iGNsSelvqGB26JReFW/K3
-         9cmLspcDnBxNFvRxNko0VzlB1kbtTkVBMjEb2xDCJPwOm6Sr0j+2nfV+CO+5dmqUEu
-         XiAlEHaw+eamkpN8/oCl5GbPQNYgvY12LirzBScc=
-Authentication-Results: mxback2q.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by vla1-b1f71bfb4f06.qloud-c.yandex.net with HTTP;
-        Sat, 21 Sep 2019 05:49:00 +0300
-From:   Andrey <ahippo@yandex.ru>
-Envelope-From: ahippo@yandex.com
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <b8cd556ebb4715d2111422d4bacf4075eedea8f8.1566879764.git.ahippo@yandex.com>
-Subject: Re: [PATCH 1/1] .mailmap: update email address of Andrey Mazo
+        id S1731103AbfIUHlA (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Sep 2019 03:41:00 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41682 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731099AbfIUHlA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Sep 2019 03:41:00 -0400
+Received: by mail-wr1-f67.google.com with SMTP id h7so8875246wrw.8
+        for <git@vger.kernel.org>; Sat, 21 Sep 2019 00:40:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=VsNYBRIdOieZv+/do9NdarO23+L7nFSoiW5VGu1L4ms=;
+        b=KYO/BJKnrkukHxqSKlTnAXcE6OU1ZTtne/T98kJjY1yNt4VrC4vHBiCh9E+2+noATt
+         vQmS/jzUKT678ln8fiy/sD26Ysqs/1O8+JL9y/dXn/AWbUb2jXQBzG7b/7z9f0dytu+F
+         17LozjRZ5wy++/mfxyyIn7o0A3kLzraZk2NYjFPoF4W2wlPmuI+Eh3MVnREyXQc72iZM
+         ItEa/HYju7tK/f5qiYiE16FKvPxEVTzAs+WJBOFdCie3TJDT4CnMkRnubHn5P/s9HAgX
+         FE0LOnxQozUquhDEZ8eWQ5isd6jVdQyvwGm99vgWWdBgu1mY2Tnq9P9AUIEMMl259iOL
+         46YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=VsNYBRIdOieZv+/do9NdarO23+L7nFSoiW5VGu1L4ms=;
+        b=Cy521AgNbbNH/7JI14cMtiWLfnBavOEjKgYFIeAIhUgmXWQtdfZbn3AfnV4v1qdx9l
+         Zf8KOxVhendphakAf3R7h/fyy24Uf7IijjXIS+QiloN1NYUH4lLMmtgyD5L2KGgkvozb
+         vd5ENsLNKeYvIP91bvOubaFmc/owA3jtbPitSwA5W2IIpVV/4UsbWM7Sk9lf7J56lrwS
+         QrFSzXaau/azdQ4ZZcc9mlEomz7sCHppMBImE/89TQwf5W4m0UKsh6KVBo2TQ+cDKh5O
+         h019lUEGTwgXLlGmqUHHv6QsqfUJjmmuH30aBf09jmHLpYTwvrXSU+jTHNc7HtJ8iC9A
+         vITA==
+X-Gm-Message-State: APjAAAVLejNmCvKzUyO420ndSi6q6BA2/KIQGztc9PKwH8TA6L648x3V
+        lTWt1s+oFTGpl5X+fLJucVc=
+X-Google-Smtp-Source: APXvYqy8e9Gif07pdlpYFqjsZE6zRUPbIbXdAbmZ/ydG15yktjUQBAAr+bEsopsCEvqKL+9lsDyi0g==
+X-Received: by 2002:adf:eb42:: with SMTP id u2mr13665236wrn.307.1569051658058;
+        Sat, 21 Sep 2019 00:40:58 -0700 (PDT)
+Received: from localhost.localdomain (x4db43ca8.dyn.telefonica.de. [77.180.60.168])
+        by smtp.gmail.com with ESMTPSA id s5sm4926882wro.27.2019.09.21.00.40.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 21 Sep 2019 00:40:57 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v2] travis-ci: do not skip successfully tested trees in debug mode
+Date:   Sat, 21 Sep 2019 09:40:54 +0200
+Message-Id: <20190921074055.8214-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.23.0.331.g4e51dcdf11
+In-Reply-To: <xmqqblvevn44.fsf@gitster-ct.c.googlers.com>
+References: <xmqqblvevn44.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Fri, 20 Sep 2019 22:49:00 -0400
-Message-Id: <86791569034140@vla1-b1f71bfb4f06.qloud-c.yandex.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio,
+Travis CI offers shell access to its virtual machine environment
+running the build jobs, called "debug mode" [1].  After restarting a
+build job in debug mode and logging in, the first thing I usually do
+is to install dependencies, i.e. run './ci/install-dependencies.sh'.
+This works just fine when I restarted a failed build job in debug
+mode.  However, after restarting a successful build job in debug mode
+our CI scripts get all clever, and exit without doing anything useful,
+claiming that "This commit's tree has already been built and tested
+successfully" [2].  Our CI scripts are right, and we do want to skip
+building and testing already known good trees in "regular" CI builds.
+In debug mode, however, this is a nuisiance, because one has to delete
+the cache (or at least the 'good-trees' file in the cache) to proceed.
 
-27.08.2019, 00:25, "Andrey Mazo" <ahippo@yandex.ru>:
-> From: Andrey Mazo <ahippo@yandex.com>
->
-> I don't have access to my old work email since 20 Apr 2019.
-> Replace with my personal email address.
->
-> Signed-off-by: Andrey Mazo <ahippo@yandex.com>
-> ---
->  .mailmap | 1 +
->  1 file changed, 1 insertion(+)
->
+Let's update our CI scripts, in particular the common 'ci/lib.sh', to
+not skip previously successfully built and tested trees in debug mode,
+so all those scripts will do what there were supposed to do even when
+a successful build job was restarted in debug mode.
 
-Do I need any acks on this patch?
+[1] https://docs.travis-ci.com/user/running-build-in-debug-mode/
+[2] 9cc2c76f5e (travis-ci: record and skip successfully built trees,
+    2017-12-31)
 
-> diff --git a/.mailmap b/.mailmap
-> index 9a5ff04753..14fa041043 100644
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -16,10 +16,11 @@ Alexander Gavrilov <angavrilov@gmail.com>
->  Alexander Kuleshov <kuleshovmail@gmail.com>
->  Alexey Shumkin <alex.crezoff@gmail.com> <zapped@mail.ru>
->  Alexey Shumkin <alex.crezoff@gmail.com> <Alex.Crezoff@gmail.com>
->  Anders Kaseorg <andersk@MIT.EDU> <andersk@ksplice.com>
->  Anders Kaseorg <andersk@MIT.EDU> <andersk@mit.edu>
-> +Andrey Mazo <ahippo@yandex.com> Mazo, Andrey <amazo@checkvideo.com>
->  Aneesh Kumar K.V <aneesh.kumar@gmail.com>
->  Amos Waterland <apw@debian.org> <apw@rossby.metr.ou.edu>
->  Amos Waterland <apw@debian.org> <apw@us.ibm.com>
->  Ben Peart <benpeart@microsoft.com> <Ben.Peart@microsoft.com>
->  Ben Peart <benpeart@microsoft.com> <peartben@gmail.com>
->
-> base-commit: 745f6812895b31c02b29bdfe4ae8e5498f776c26
-> --
-> 2.21.0
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+Range-diff:
+1:  e9badc7483 ! 1:  a1959d3e16 travis-ci: ignore already tested trees in debug mode
+    @@ Metadata
+     Author: SZEDER Gábor <szeder.dev@gmail.com>
+     
+      ## Commit message ##
+    -    travis-ci: ignore already tested trees in debug mode
+    +    travis-ci: do not skip successfully tested trees in debug mode
+     
+         Travis CI offers shell access to its virtual machine environment
+         running the build jobs, called "debug mode" [1].  After restarting a
+    @@ Commit message
+         the cache (or at least the 'good-trees' file in the cache) to proceed.
+     
+         Let's update our CI scripts, in particular the common 'ci/lib.sh', to
+    -    ignore previously successfully built and tested trees in debug mode,
+    +    not skip previously successfully built and tested trees in debug mode,
+         so all those scripts will do what there were supposed to do even when
+         a successful build job was restarted in debug mode.
+     
 
+ ci/lib.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 44db2d5cbb..1a09ac4b34 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -34,6 +34,11 @@ save_good_tree () {
+ # successfully before (e.g. because the branch got rebased, changing only
+ # the commit messages).
+ skip_good_tree () {
++	if test "$TRAVIS_DEBUG_MODE" = true
++	then
++		return
++	fi
++
+ 	if ! good_tree_info="$(grep "^$(git rev-parse $CI_COMMIT^{tree}) " "$good_trees_file")"
+ 	then
+ 		# Haven't seen this tree yet, or no cached good trees file yet.
 -- 
-Andrey.
-
+2.23.0.331.g4e51dcdf11
 
