@@ -2,63 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 550611F463
-	for <e@80x24.org>; Sun, 22 Sep 2019 12:00:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27C2C1F463
+	for <e@80x24.org>; Sun, 22 Sep 2019 18:01:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728793AbfIVL77 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Sep 2019 07:59:59 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:37841 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728742AbfIVL77 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Sep 2019 07:59:59 -0400
-Received: by mail-lf1-f66.google.com with SMTP id w67so8026672lff.4
-        for <git@vger.kernel.org>; Sun, 22 Sep 2019 04:59:56 -0700 (PDT)
+        id S2388529AbfIVSBu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Sep 2019 14:01:50 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:42421 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387966AbfIVSBt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Sep 2019 14:01:49 -0400
+Received: by mail-wr1-f49.google.com with SMTP id n14so11488443wrw.9
+        for <git@vger.kernel.org>; Sun, 22 Sep 2019 11:01:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=qNQapSheaOYNP05xynpSBzMC/vrKqwxSU/iGbX33/gk=;
-        b=WcVqMKuTKraSrADtwFM4YRpt/I0ta/bkJY9oHDInRUS9j+zymkt1ATaH6wyB2W9byu
-         fZZ6NuNLmNDmJJqLBSr6rEb1HIYFH9SUU9bkhjZNLHfqDqMXTU+W8xjQ9gkxbBaIjTtF
-         mhS1V6T6Jhsqf/1SunW+a6FXv1MnRdth0jAd+7N7M8NWIwXmxZ9y/enQ/NyTfofEvElz
-         g9IiPrguWDF+xluq15fNw9TyeBjOGYXsZpE3Dz2FHEN1qFHWfJm/zuxQFHjbyCKEsBeb
-         abVvKSs4AolM7IYuRbXHYwgdp1trYQN14I4sVAyyE3mHoPqMb52GyF9rsZlCUif9TiKw
-         2V3A==
+        bh=hOOuxxFjKXrp2z3PIxk2zH5zz3r+VTR9DlLDjEN4Hm0=;
+        b=MY1YZWlzqecDaalHRTkM+oMMJkHFYCjHRmHaBqsoGCXAmQJolO5im1TipKgryUDAwQ
+         C9vUnRHogTSSjfSzkRxw3qhT/VJsY5CC1ZUuOGEvhnTCbgDrAZeL+CTJWHNDroFxZI4L
+         ZBMlWxyQw4iT63TGYSbeScB1n8CnPrZmrxqQjHARG5KdPv06S9UyfNVt8XI5FrmdcU5t
+         m37oM6/JCSeqkD4n70UdWdaQIO5M4+RM4QVDwtntCAdQ19rb+F7+i5U9Vit6XvdRe88/
+         4BqrCO2wAbhvT8YlMx8nosJWwFCPRQO6xVMUk1pDPZ6gyiAKTiufpS/8eYvu+BHAWrQ3
+         DFPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qNQapSheaOYNP05xynpSBzMC/vrKqwxSU/iGbX33/gk=;
-        b=rWfRUwlZx4Vs+budTwc2sZ8ywfXwn3lmHqtJ0sQsD29cuyMh5GhT5LqXuycE+DDUDA
-         0XUYx5TWTVoK3zCk0yODbsxbR1U3lRRl22G0ybxeIFBIg7Ex85LLwKwpLaSF3e0gL1MY
-         tFfkxAuHfUcS9V+E9/gWqK7BrsfDyn/Vt6+7kHOcNQm7OXs2ArAbSQ9uNo38neu6ql10
-         vL/AT4Sl5cdJaM8UZn1L//Ae0YdcLlEQ92n6RoX5OZDtMQgdUT8geUF1XslYVgSlqwzm
-         WSG94KRx+DJLTLnOGXZrgVCOT0PmwOKU8fz9v+KwnSFHZYlfd0e+1iNLvfep8Gx6cUmw
-         p1uA==
-X-Gm-Message-State: APjAAAUOeGAxhQhiAfYmOImunqs5dPQKaJiDk4s3RxWA6atdfFHfyywR
-        wC/NXybXqI4AkVoaBDLGDLeSkVSq
-X-Google-Smtp-Source: APXvYqzEX6HfLEtlh8tlOs5rLGhBhPeBJGm8iMCPmtAQ6Oui18M96FFZxg5TDim0SdgGWd4MBNWKEg==
-X-Received: by 2002:ac2:44b9:: with SMTP id c25mr14756920lfm.112.1569153595544;
-        Sun, 22 Sep 2019 04:59:55 -0700 (PDT)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id q24sm1622413ljj.6.2019.09.22.04.59.54
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Sep 2019 04:59:54 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Subject: [PATCH 4/4] user-manual.txt: render ASCII art correctly under Asciidoctor
-Date:   Sun, 22 Sep 2019 13:57:59 +0200
-Message-Id: <774a3ee180401fb1074f07ae3ae3d55494646eb0.1569152396.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <cover.1569152396.git.martin.agren@gmail.com>
-References: <cover.1569152396.git.martin.agren@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hOOuxxFjKXrp2z3PIxk2zH5zz3r+VTR9DlLDjEN4Hm0=;
+        b=ZNELJjazPPT9Dzx3BvuTIQAyFcazJC+WXprM69dNvX5zR4Y8/AYF00KcIFQul4FBKG
+         o0fv6a+L0atFt0M/onKRf28QMo0qvVixOHiseHAWt1tcJKN/TCRXkxeOQko5Pf4xwyiL
+         V+8t5c2R1GR5CTwhDLUfONw2ilqw+8hTUCDAKX76Orp58cZ8jUDheHxFBzPqoHLJzbOq
+         JhJQTCMFoTUHFuM1a9ioPXmNNYhh560SqSGSP0bp7WHrglJ0fx5NBis5Qdh3dUaKHZOq
+         7kZJT1NzsJ5dWS8gZEmrZ6hveDEI+6OobEJ7mmiqRtO1iYmMPZB6HpfhZRHz1//0xy1W
+         eLLg==
+X-Gm-Message-State: APjAAAWF4AUrvCtV8AOy3tiHtp7NROF252rtlEisR+bzFvO7+apdprGK
+        jHz6bDfUhIKVov9XSXIg+dY=
+X-Google-Smtp-Source: APXvYqzTMgiciVsaCMAldC34FceHi8NNDXTK9nqyQ6BXzUg2dkt0nft4SiiX7v5UYbN94vNCL53RcA==
+X-Received: by 2002:a5d:40d2:: with SMTP id b18mr19047710wrq.4.1569175307470;
+        Sun, 22 Sep 2019 11:01:47 -0700 (PDT)
+Received: from localhost.localdomain (x4dbd3787.dyn.telefonica.de. [77.189.55.135])
+        by smtp.gmail.com with ESMTPSA id 33sm10687017wra.41.2019.09.22.11.01.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 22 Sep 2019 11:01:46 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] name-rev: avoid cutoff timestamp underflow
+Date:   Sun, 22 Sep 2019 20:01:43 +0200
+Message-Id: <20190922180143.25026-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.23.0.597.gb58f4577a1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,51 +66,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit is similar to 379805051d ("Documentation: render revisions
-correctly under Asciidoctor", 2018-05-06) and is a no-op with AsciiDoc.
+When 'git name-rev' is invoked with commit-ish parameters, it tries to
+save some work, and doesn't visit commits older than the committer
+date of the oldest given commit minus a one day worth of slop.  Since
+our 'timestamp_t' is an unsigned type, this leads to a timestamp
+underflow when the committer date of the oldest given commit is within
+a day of the UNIX epoch.  As a result the cutoff timestamp ends up
+far-far in the future, and 'git name-rev' doesn't visit any commits,
+and names each given commit as 'undefined'.
 
-When creating a literal block from an indented block without any sort of
-delimiters, Asciidoctor strips off all leading whitespace, resulting in
-a misrendered ASCII drawing. Use an explicit literal block to indicate
-to Asciidoctor that we want to keep the leading whitespace. Drop the
-common indentation for all lines to make this a no-op with AsciiDoc.
+Check whether substacting the slop from the oldest committer date
+would lead to an underflow, and use a 0 as cutoff in that case.  This
+way it will handle commits shortly after the epoch even if we were to
+switch to a signed 'timestamp_t' (but then we'll have to worry about
+signed underflow for very old commits).
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+Note that the type of the cutoff timestamp variable used to be signed
+before 5589e87fd8 (name-rev: change a "long" variable to timestamp_t,
+2017-05-20).  The behavior was still the same even back then, but the
+underflow didn't happen when substracting the slop from the oldest
+committer date, but when comparing the signed cutoff timestamp with
+unsigned committer dates in name_rev().  IOW, this underflow bug is as
+old as 'git name-rev' itself.
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- Documentation/user-manual.txt | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 919c214b71..06bd8994ee 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1831,15 +1831,17 @@ pull from that repository.  So the flow of changes, in a situation
- where there is one other developer with a public repository, looks
- like this:
+This patch adds a test at the end of 't6120-describe.sh', so it will
+conflict with my non-recursive name-rev patch series, which adds a
+test there as well, but the conflict should be wasy to resolve.
+
+  https://public-inbox.org/git/20190919214712.7348-7-szeder.dev@gmail.com/
+
+ builtin/name-rev.c  | 15 ++++++++++++---
+ t/t6120-describe.sh | 15 +++++++++++++++
+ 2 files changed, 27 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index c785fe16ba..a4d8d312ab 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -9,7 +9,11 @@
+ #include "sha1-lookup.h"
+ #include "commit-slab.h"
  
--                        you push
--  your personal repo ------------------> your public repo
--	^                                     |
--	|                                     |
--	| you pull                            | they pull
--	|                                     |
--	|                                     |
--        |               they push             V
--  their public repo <------------------- their repo
-+....
-+		      you push
-+your personal repo ------------------> your public repo
-+      ^                                     |
-+      |                                     |
-+      | you pull                            | they pull
-+      |                                     |
-+      |                                     |
-+      |               they push             V
-+their public repo <------------------- their repo
-+....
+-#define CUTOFF_DATE_SLOP 86400 /* one day */
++/*
++ * One day.  See the 'name a rev close to epoch' test in t6120 when
++ * changing this value
++ */
++#define CUTOFF_DATE_SLOP 86400
  
- We explain how to do this in the following sections.
+ typedef struct rev_name {
+ 	const char *tip_name;
+@@ -481,8 +485,13 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 		add_object_array(object, *argv, &revs);
+ 	}
  
+-	if (cutoff)
+-		cutoff = cutoff - CUTOFF_DATE_SLOP;
++	if (cutoff) {
++		/* check for undeflow */
++		if (cutoff - CUTOFF_DATE_SLOP < cutoff)
++			cutoff = cutoff - CUTOFF_DATE_SLOP;
++		else
++			cutoff = 0;
++	}
+ 	for_each_ref(name_ref, &data);
+ 
+ 	if (transform_stdin) {
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 2b883d8174..965e633c32 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -424,4 +424,19 @@ test_expect_success 'describe complains about missing object' '
+ 	test_must_fail git describe $ZERO_OID
+ '
+ 
++test_expect_success 'name-rev a rev shortly after epoch' '
++	test_when_finished "git checkout master" &&
++
++	git checkout --orphan no-timestamp-underflow &&
++	# Any date closer to epoch than the CUTOFF_DATE_SLOP constant
++	# in builtin/name-rev.c.
++	GIT_COMMITTER_DATE="@1234 +0000" \
++	git commit -m "committer date shortly after epoch" &&
++	near_commit_oid=$(git rev-parse HEAD) &&
++
++	echo "$near_commit_oid no-timestamp-underflow" >expect &&
++	git name-rev $near_commit_oid >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
-2.23.0
+2.23.0.597.gb58f4577a1
 
