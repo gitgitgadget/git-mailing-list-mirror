@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D17B1F463
-	for <e@80x24.org>; Sun, 22 Sep 2019 11:59:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 550611F463
+	for <e@80x24.org>; Sun, 22 Sep 2019 12:00:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728789AbfIVL7y (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Sep 2019 07:59:54 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:37637 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728182AbfIVL7y (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Sep 2019 07:59:54 -0400
-Received: by mail-lj1-f193.google.com with SMTP id l21so11056886lje.4
-        for <git@vger.kernel.org>; Sun, 22 Sep 2019 04:59:53 -0700 (PDT)
+        id S1728793AbfIVL77 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Sep 2019 07:59:59 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:37841 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728742AbfIVL77 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Sep 2019 07:59:59 -0400
+Received: by mail-lf1-f66.google.com with SMTP id w67so8026672lff.4
+        for <git@vger.kernel.org>; Sun, 22 Sep 2019 04:59:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=3ZI00nUxzlruKdLhtj+VzuoSZZA3wTnhpNvQEgnSySU=;
-        b=BaaJPnaZVSCDO3Y0GpcoQnz+b6yNwavskLC9Nvs5gwAnNWi8oonWk+kJDMsIrEcuWP
-         lsy6Qfo5duCI9omKAsB9rwHLmzNKPDLqyNHrqlUuF2faFAGOtEoalgQtLipNaeZ5ke7I
-         1Gqu5qDFOrsmSg8ZFGzVK9tEwYWYA5puc27KtBNwei5qIQ9DdPUqouO+eOLoFw5G1n1v
-         HUh9zVZJcRS0b/MKbSqfBqtr30ZPC6X/HXoHl8ZT6v774HD5R3PV0nZ2MP13eeTTDOXM
-         xpwRDDDzFHbaPU7FRJlhwVmrQj5pUvAsbkH1foCjDtO+z5SCM4qZh+rcyP/wYkDw0HU1
-         1bdw==
+        bh=qNQapSheaOYNP05xynpSBzMC/vrKqwxSU/iGbX33/gk=;
+        b=WcVqMKuTKraSrADtwFM4YRpt/I0ta/bkJY9oHDInRUS9j+zymkt1ATaH6wyB2W9byu
+         fZZ6NuNLmNDmJJqLBSr6rEb1HIYFH9SUU9bkhjZNLHfqDqMXTU+W8xjQ9gkxbBaIjTtF
+         mhS1V6T6Jhsqf/1SunW+a6FXv1MnRdth0jAd+7N7M8NWIwXmxZ9y/enQ/NyTfofEvElz
+         g9IiPrguWDF+xluq15fNw9TyeBjOGYXsZpE3Dz2FHEN1qFHWfJm/zuxQFHjbyCKEsBeb
+         abVvKSs4AolM7IYuRbXHYwgdp1trYQN14I4sVAyyE3mHoPqMb52GyF9rsZlCUif9TiKw
+         2V3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3ZI00nUxzlruKdLhtj+VzuoSZZA3wTnhpNvQEgnSySU=;
-        b=l3rD0nr7R6IerDELpRZ6uYiVnh0v19DSoq0bO1NebQvW/FhWtV+R9INVfIdR+B3bU9
-         DqTcjn53Q3eHTPIabRbURwvJ+poT4g3d11VmN3eqhKuVYjDp/yUe/bE21ejBgH/AGxUg
-         nintXLEzOan/O/6nyXJBnw8chk0dVZDc3kmSFbcLaYid3sFuHmeHnC7cFX4HWCMYyctd
-         PDXN6kBB+f8CnIGOxGyy2oWk4gDZJYSH8lN/vrHsTnQa+0Oh8Rd0d6jDLEJTLsBYi3DO
-         nfTZEWJ2gqTK4iuqE2RzMLcXpLrWXDWHkz2bkXwn6QAPzEcHsp9Ty+1MrrpPtq8mUXai
-         EEWQ==
-X-Gm-Message-State: APjAAAXRK8bCLyghYQrUPYxmOCbsPjXh7oht1D/9QHk8GzWHTM2zbuX2
-        O+faGE+uXfuDtDDgWTwK0g7MtYHN
-X-Google-Smtp-Source: APXvYqyi/lg6VeKbwsxZMPxxhGas47uug6F+ASytSih7iGiyY6ziy2PwuNqsBy+jgqri2wxGJbwZDg==
-X-Received: by 2002:a2e:3902:: with SMTP id g2mr14798244lja.196.1569153591955;
-        Sun, 22 Sep 2019 04:59:51 -0700 (PDT)
+        bh=qNQapSheaOYNP05xynpSBzMC/vrKqwxSU/iGbX33/gk=;
+        b=rWfRUwlZx4Vs+budTwc2sZ8ywfXwn3lmHqtJ0sQsD29cuyMh5GhT5LqXuycE+DDUDA
+         0XUYx5TWTVoK3zCk0yODbsxbR1U3lRRl22G0ybxeIFBIg7Ex85LLwKwpLaSF3e0gL1MY
+         tFfkxAuHfUcS9V+E9/gWqK7BrsfDyn/Vt6+7kHOcNQm7OXs2ArAbSQ9uNo38neu6ql10
+         vL/AT4Sl5cdJaM8UZn1L//Ae0YdcLlEQ92n6RoX5OZDtMQgdUT8geUF1XslYVgSlqwzm
+         WSG94KRx+DJLTLnOGXZrgVCOT0PmwOKU8fz9v+KwnSFHZYlfd0e+1iNLvfep8Gx6cUmw
+         p1uA==
+X-Gm-Message-State: APjAAAUOeGAxhQhiAfYmOImunqs5dPQKaJiDk4s3RxWA6atdfFHfyywR
+        wC/NXybXqI4AkVoaBDLGDLeSkVSq
+X-Google-Smtp-Source: APXvYqzEX6HfLEtlh8tlOs5rLGhBhPeBJGm8iMCPmtAQ6Oui18M96FFZxg5TDim0SdgGWd4MBNWKEg==
+X-Received: by 2002:ac2:44b9:: with SMTP id c25mr14756920lfm.112.1569153595544;
+        Sun, 22 Sep 2019 04:59:55 -0700 (PDT)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id q24sm1622413ljj.6.2019.09.22.04.58.45
+        by smtp.gmail.com with ESMTPSA id q24sm1622413ljj.6.2019.09.22.04.59.54
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Sep 2019 04:59:51 -0700 (PDT)
+        Sun, 22 Sep 2019 04:59:54 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH 3/4] asciidoctor-extensions.rb: handle "book" doctype in linkgit
-Date:   Sun, 22 Sep 2019 13:57:58 +0200
-Message-Id: <78d131f31b760addf5d22d4f95f04eda9aa45927.1569152396.git.martin.agren@gmail.com>
+Subject: [PATCH 4/4] user-manual.txt: render ASCII art correctly under Asciidoctor
+Date:   Sun, 22 Sep 2019 13:57:59 +0200
+Message-Id: <774a3ee180401fb1074f07ae3ae3d55494646eb0.1569152396.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <cover.1569152396.git.martin.agren@gmail.com>
 References: <cover.1569152396.git.martin.agren@gmail.com>
@@ -67,54 +67,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-user-manual.txt is the only file we process using the "book" doctype.
-When we use AsciiDoc, user-manual.conf ensures that the linkgit macro
-expands into something like
+This commit is similar to 379805051d ("Documentation: render revisions
+correctly under Asciidoctor", 2018-05-06) and is a no-op with AsciiDoc.
 
-  <ulink url="git-foo.html">git-foo(1)</ulink>
-
-in user-manual.xml, which we then process into a clickable link, both in
-user-manual.html and user-manual.pdf. With Asciidoctor,
-user-manual.conf is ignored (this is expected) and our
-Asciidoctor-specific implementation of linkgit kicks in:
-
-  <citerefentry>
-    <refentrytitle>git-foo</refentrytitle><manvolnum>1</manvolnum>
-  </citerefentry>
-
-This eventually renders as "git-foo(1)", which is not bad, but it
-doesn't turn into a link.
-
-Teach our Asciidoctor-specific implementation of the linkgit macro that
-if the doctype is "book", we should emit <ulink .../> just like we do
-with AsciiDoc. While we're doing this, future-proof by supporting a
-"prefix". The implementation in user-manual.conf doesn't support this,
-and we don't need this for now because user-manual.txt is the only file
-we process this way (and it's immediately in Documentation/).
+When creating a literal block from an indented block without any sort of
+delimiters, Asciidoctor strips off all leading whitespace, resulting in
+a misrendered ASCII drawing. Use an explicit literal block to indicate
+to Asciidoctor that we want to keep the leading whitespace. Drop the
+common indentation for all lines to make this a no-op with AsciiDoc.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/asciidoctor-extensions.rb | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ Documentation/user-manual.txt | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-index 0089e0cfb8..70a0956663 100644
---- a/Documentation/asciidoctor-extensions.rb
-+++ b/Documentation/asciidoctor-extensions.rb
-@@ -9,8 +9,11 @@ module Git
-       named :chrome
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 919c214b71..06bd8994ee 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1831,15 +1831,17 @@ pull from that repository.  So the flow of changes, in a situation
+ where there is one other developer with a public repository, looks
+ like this:
  
-       def process(parent, target, attrs)
--        if parent.document.basebackend? 'html'
--          prefix = parent.document.attr('git-relative-html-prefix')
-+        prefix = parent.document.attr('git-relative-html-prefix')
-+        if parent.document.doctype == 'book'
-+          "<ulink url=\"#{prefix}#{target}.html\">" \
-+          "#{target}(#{attrs[1]})</ulink>"
-+        elsif parent.document.basebackend? 'html'
-           %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>)
-         elsif parent.document.basebackend? 'docbook'
-           "<citerefentry>\n" \
+-                        you push
+-  your personal repo ------------------> your public repo
+-	^                                     |
+-	|                                     |
+-	| you pull                            | they pull
+-	|                                     |
+-	|                                     |
+-        |               they push             V
+-  their public repo <------------------- their repo
++....
++		      you push
++your personal repo ------------------> your public repo
++      ^                                     |
++      |                                     |
++      | you pull                            | they pull
++      |                                     |
++      |                                     |
++      |               they push             V
++their public repo <------------------- their repo
++....
+ 
+ We explain how to do this in the following sections.
+ 
 -- 
 2.23.0
 
