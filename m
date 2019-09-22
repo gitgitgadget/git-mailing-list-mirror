@@ -2,138 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 967781F463
-	for <e@80x24.org>; Sun, 22 Sep 2019 03:11:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F2A51F463
+	for <e@80x24.org>; Sun, 22 Sep 2019 08:19:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727391AbfIVDLc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Sep 2019 23:11:32 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:35344 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727310AbfIVDLb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Sep 2019 23:11:31 -0400
-Received: by mail-qt1-f193.google.com with SMTP id m15so13321596qtq.2
-        for <git@vger.kernel.org>; Sat, 21 Sep 2019 20:11:31 -0700 (PDT)
+        id S1727908AbfIVITC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Sep 2019 04:19:02 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:39840 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727902AbfIVITC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Sep 2019 04:19:02 -0400
+Received: by mail-lj1-f195.google.com with SMTP id y3so9388607ljj.6
+        for <git@vger.kernel.org>; Sun, 22 Sep 2019 01:19:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=1JWk5whgWNZdDP2iNh9/FWwwNomacffKBOk6HdejI/0=;
-        b=vYdJimmhroLxig/rr9A7XIQ5Hk9+4IPgYPlzNRJ0Efl9RjJOxVRnx7AYFoAY5i/IIs
-         QYBSyWz12hzqzX+WWmSSfjeWjZkA+7I5cIPiW6iJmmDuhs2gGYHcL1AhWIsGWRTpzg6W
-         yJahx7W1WaGCQKgz+BEVpWZjqxoUdbdU3mnqn5iSV6J51E53AwKW/zmS896xz6fSUdeh
-         rWY1mPkADbC0JJKULHW0hxblCGTaETjOdGmEzO66OtiBytRuPcmDkMoqTQ7dLzQzY6dt
-         YDdmgkY5G2yJyB+x4SULbwQMQDGq6xtaDoYG3IM9hmCMfkV5zsJ9u/gwXpth9JGzMY5u
-         KLDQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=vGthUcYxDQJHTSe9NOxrSZ9Z5JoNMsAEWbU3ozUzyhc=;
+        b=ZaTE2mxzFF7moM76BadkeaOQ/eYSvnVP8zdsEHWelywNyeoBEdXopUlh3GPyRv6lB9
+         Cx5WOQfEJifyM6lmjzAdIX7O5uRJHf1i97JUlrRGhSBrtgrUMctHSQKYopNMNAkzrkmX
+         vx2iMnQn2bM2md0+g7GS04WyzSjQLyDMUDWH9+YVJtdT4HZgPkq9aX/OonstiYraDN7m
+         y4NVEVxZJ6y54eKgVM1S26nM3nUDg0X7yNPwcw/KFLFNcmnLgNkF+6o6hnAaTCM0mzBM
+         A5uvUMpU+yqIv6YN+UK8V+1maRx8gZuYQcvTNC+47oAVQvkibufJCkmsiHAvTAPEchfj
+         ITgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1JWk5whgWNZdDP2iNh9/FWwwNomacffKBOk6HdejI/0=;
-        b=mnXL87XDj4ZEJCYcYylicX9q6h03Vt9kc5jDObok1gnmzYPiVFz5cyh1iCElXlLSef
-         DjF4SMqzhWhP5tbuscAl/8C+OKSQcn9Iy5eQi44oB86ai4gYgwq7YRZPR7G8O25I+KUd
-         WZDvNKFwpefz1ieUSrOh1my3AU6awvXYqmcXcqE4AEoiyIbDa74YQgksAcMm60geyQ39
-         sbYt+EPdCntPHVyGcJvpKIPhRiZctUTNYmxZcpoWGK85kbJIb4CnCnBwqQKg0t4UGQpJ
-         TtHBLopokub5SJKZF6Nnm+uiydrltFoA+lsn8Lb2BLuQzjstYg0H7d1N57QJaGJJew6m
-         /iPw==
-X-Gm-Message-State: APjAAAV6+rgPQnUvCQJRjoxUj+r4buGxj8UFWYvse96RcHnCqTIuOyPq
-        u4fogTcD4z3Z3Mza19l3yk267DDoSXKh7Q==
-X-Google-Smtp-Source: APXvYqyG711UbmHtK9ynnt/IgF3MkhHR5xdV3o1OqSbeaRyWMNDkf5uXvDJDftxgalA4OiQ8xg5KtA==
-X-Received: by 2002:ac8:4597:: with SMTP id l23mr11589552qtn.284.1569121890507;
-        Sat, 21 Sep 2019 20:11:30 -0700 (PDT)
-Received: from localhost ([2605:9480:205:dfe1:54bf:e7df:e363:e72])
-        by smtp.gmail.com with ESMTPSA id j5sm3226669qkd.56.2019.09.21.20.11.29
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=vGthUcYxDQJHTSe9NOxrSZ9Z5JoNMsAEWbU3ozUzyhc=;
+        b=QadNZjgaP51hofCiez4utmE2B9eblrIK13Fo3aTDz7F3nylHoFk0dCxPJhknw4Qd5a
+         Imd7QTBM75LVtnzrcHWTB4GMa+SZ7sW1TZodsKIYFh3H1vd/uT3+sCzr03e2Hlx7LXwD
+         U5MG+MomMSfMchbSiKdo4llubVP1uaB9SSOo3es0fm3FX6FtRW2Bs6l2xiMI/UY3g9/g
+         oINSXXhaQ2rB4VmLhTvpZNts/UXhy37T5WoO61E55Twedkz16uWHvCDyi2o4XxsXKVwN
+         rX/9UemiOlvGX4sFsmWXHYyHE/daUgAxic8gQG46gW1+3hxrwMeXN2ENixJu0Wo3qv5d
+         SpDA==
+X-Gm-Message-State: APjAAAVitBKKOCbW/IyL8DD/aHQMEGEVQFgmcyk3Ik2j8SHlsmK59uIh
+        FsSHt4Kne9RzPzHPZpq+RyQ=
+X-Google-Smtp-Source: APXvYqwwmR8o9XNIxXQDdbsKhLM8F8WspChXhfRbGglLxbXpGG6OSqV7VQF6gs+OxQ6kxMKCZPn3Ig==
+X-Received: by 2002:a2e:7611:: with SMTP id r17mr4092023ljc.133.1569140340319;
+        Sun, 22 Sep 2019 01:19:00 -0700 (PDT)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id k23sm1541284ljc.13.2019.09.22.01.18.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Sep 2019 20:11:29 -0700 (PDT)
-Date:   Sat, 21 Sep 2019 23:11:28 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Zeger-Jan van de Weg <git@zjvandeweg.nl>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/1] git-config --add allows values from stdin
-Message-ID: <20190922031128.GA76333@syl.lan>
-References: <20190917133135.190145-1-git@zjvandeweg.nl>
+        Sun, 22 Sep 2019 01:18:59 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: [PATCH] name-rev: rewrite create_or_update_name()
+Date:   Sun, 22 Sep 2019 10:18:46 +0200
+Message-Id: <20190922081846.14452-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20190919214712.7348-8-szeder.dev@gmail.com>
+References: <20190919214712.7348-8-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190917133135.190145-1-git@zjvandeweg.nl>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi ZJ,
+This code was moved straight out of name_rev(). As such, we inherited
+the "goto" to jump from an if into an else-if. We also inherited the
+fact that "nothing to do -- return NULL" is handled last.
 
-On Tue, Sep 17, 2019 at 03:31:34PM +0200, Zeger-Jan van de Weg wrote:
-> When adding or updating configuration values using git-config, the
-> values could all be observed by different processes as these are passed
-> as arguments. In some environments all commands executed are also all
-> logged. When the value contains secrets, this is a side effect that
-> would be great to avoid. At GitLab we use Rugged/libgit2 to circumvent
-> this property[1].
->
-> The following patch allows a value to be set through stdin when the user
-> passes a `--stdin` flag.
+Rewrite the function to first handle the "nothing to do" case. Then we
+can handle the conditional allocation early before going on to populate
+the struct. No need for goto-ing.
 
-Interesting. I had thought some time ago about making an interactive
-line-oriented 'mode' for using 'git-config(1)', which would allow
-callers to add/delete/fetch multiple variables using only a single
-process.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Hi SZEDER,
 
-This would satisfy a more general use-case than yours: particularly my
-idea was grown out of wanting to specify or read many configuration
-entries at once when using a tool built around Git, such as Git LFS.
+ For the record, --color-moved confirms that your patch is a move and
+ the conversion around it looks good to me. I was a bit puzzled by what
+ the moved code actually wanted to *do* and came up with this rewrite.
 
-I had not considered tying '--stdin' to the '--add' (implicit or not)
-mode of 'git-config(1)'. It is an interesting idea to be sure.
+ I guess it's subjective which of these ways of writing this function is
+ "better", but I found this rewrite helped in understanding this
+ function. Feel free to pick up in a reroll, squash or ignore as you see
+ fit. This is based on top of your whole series (your e5d77042f), but
+ could perhaps go immediately after your patch 07/15.
 
-On the one hand, it lends itself to other modes, such as '--get'
-combined with '--stdin', or '--unset' in the same fashion. One could
-imagine that each of these would take either a key/value-pair (in the
-case of '--add') or a set of key(s) (in the remaining cases). The most
-desirable aspect is that this would allow for a clear path to this
-series being picked up.
+ It seems there was some discussion around leaks and leak-plugs. That
+ would conflict/interact with this. Instead of placing a call to free()
+ just before the label so we can more or less goto around it, the middle
+ section of this rewritten function would turn from "if no name,
+ allocate one" to "if we have a name, free stuff, else allocate one".
+ Again, it's subjective which way is "better", so trust your judgment.
 
-On the other hand, tying '--stdin' to a particular mode of using 'git
-conifg' seems overly restrictive to me. If I am building a tool that
-wants to fetch some values in the configuration, and then add/unset
-others based on the results using only a single process, I don't think
-that a mode-based '--stdin' flag gets the job done.
+ Martin
 
-One happy medium that comes to mind is a new '--interactive' mode, which
-implies '--stdin' and would allow the above use-case, e.g.:
+ builtin/name-rev.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-  $ git config --interactive <<\EOF
-  get core.myval
-  set core.foo bar
-  unset core.baz
-  EOF
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 6969af76c4..03a5f0b189 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -83,21 +83,21 @@ static struct rev_name *create_or_update_name(struct commit *commit,
+ {
+ 	struct rev_name *name = get_commit_rev_name(commit);
+ 
++	if (name && !is_better_name(name, taggerdate, distance, from_tag))
++		return NULL;
++
+ 	if (name == NULL) {
+ 		name = xmalloc(sizeof(*name));
+ 		set_commit_rev_name(commit, name);
+-		goto copy_data;
+-	} else if (is_better_name(name, taggerdate, distance, from_tag)) {
+-copy_data:
+-		name->tip_name = tip_name;
+-		name->taggerdate = taggerdate;
+-		name->generation = generation;
+-		name->distance = distance;
+-		name->from_tag = from_tag;
+-
+-		return name;
+-	} else
+-		return NULL;
++	}
++
++	name->tip_name = tip_name;
++	name->taggerdate = taggerdate;
++	name->generation = generation;
++	name->distance = distance;
++	name->from_tag = from_tag;
++
++	return name;
+ }
+ 
+ static void name_rev(struct commit *start_commit,
+-- 
+2.23.0
 
-(An off-topic note is that it would be interesting to allow more
-fanciful options than 'get', e.g., 'get' with a '--type' specifier, or
-some such).
-
-I'm not sure if anyone actually wants to use 'git-config(1)' in this
-way, but I figured that I would at least share some things that I was
-thinking about when initially considering this proposal.
-
-> [1]: https://gitlab.com/gitlab-org/gitaly/blob/8ab5bd595984678838f3f09a96798b149e68a939/ruby/lib/gitlab/git/http_auth.rb#L14-15
->
-> Zeger-Jan van de Weg (1):
->   Git config allows value setting from stdin
->
->  Documentation/git-config.txt |  5 ++++-
->  builtin/config.c             | 23 +++++++++++++++++++++--
->  t/t1300-config.sh            | 11 +++++++++++
->  3 files changed, 36 insertions(+), 3 deletions(-)
->
-> --
-> 2.23.0
->
-
-Thanks,
-Taylor
