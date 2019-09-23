@@ -8,118 +8,93 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9648D1F463
-	for <e@80x24.org>; Mon, 23 Sep 2019 14:23:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B24341F463
+	for <e@80x24.org>; Mon, 23 Sep 2019 15:01:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437717AbfIWOXj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Sep 2019 10:23:39 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:39683 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437634AbfIWOXj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Sep 2019 10:23:39 -0400
-Received: by mail-ed1-f66.google.com with SMTP id a15so10353480edt.6
-        for <git@vger.kernel.org>; Mon, 23 Sep 2019 07:23:38 -0700 (PDT)
+        id S1731387AbfIWPBq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Sep 2019 11:01:46 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:44865 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726084AbfIWPBq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Sep 2019 11:01:46 -0400
+Received: by mail-ed1-f65.google.com with SMTP id r16so13132115edq.11
+        for <git@vger.kernel.org>; Mon, 23 Sep 2019 08:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kPjpxUuDwj2tybbJAcoOVzZzaqUu6h+xx2IMhYGGI3s=;
-        b=oqIQZMBCbmUfgeUNOdFJwAWPnlzJyByRIQ+AGJ93UOH2sMaqarYojgUMcnPooYDaxn
-         16iFRhdcSloUeF6RWW3zlTiW/2zHrPfeUtiCy11DPdMlFWDw6pEP5PxmSXkTPbtSOs/o
-         u7XBZI4fYbe3p5etxyQnhNqY6N6EzxoUcHAnfY/d6vV7p5EwIUyqYVObhWyCzBoXXrMP
-         eeC9qCxu7VGQ6YSJxSIrzqWc7PIHkQ038Z1adUgiHrkPox5VklniFnaySRXljdLFYV7n
-         KnTlJtf4cBE5NfCpFzDxVe+7uwX3nuoSZ1lOzQV42ptmXNiaUMtysYZ7CJSaOQMncQ3y
-         +YIw==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=s7DpcJFLBBmWq3MmPL6zVdAFJD0GI1udmN9pjKfUhdk=;
+        b=LvglQBX5PvwsfqlgTrchSays5uE6H0l0dc8g/Dq2ksubFFXd8b9GPqZWy8+FrANa+A
+         QsB3B612hJkwj9q0LHZy/9O6nsRSk6WVkDMwE40Lgu2bRPMJc/JPn4Iqu+fA0zftNag4
+         OB8/jSgUGAjtBmOzc/74R5fmkmLdtgs2CR1VkTdotwR7u7Zp8DAuJNbwDvs0MTqpJYwF
+         clCgN739eoNydZxmcMEZCUitYY5k5s8uEGGjhptGzoJzPYIN2kvOx1nmg/hVcMELJSux
+         an/0mCbDKQZpXwcoWgiAE0VUckEW7gAdwdliLCDPkTCwk0f6HC9J89QVgdoeR5EVMD7m
+         oPvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kPjpxUuDwj2tybbJAcoOVzZzaqUu6h+xx2IMhYGGI3s=;
-        b=Ha0i2Riv7itVQvcsaQ5k7oQrsdjNqx22t71MjiqEK1nPc9LccLs3fGAILxNbCjNYKQ
-         E5VEJHkOqAMf27eNIaNLB1YXyeRfAtHpJSLz7LSCV6cviTuBEvG9warOV00sADxHrFSi
-         ZNihbDiVEvEGmx5A2kWXHcGVcw1O2xM3x7WC76WpSNXuv/euPMgd7yZZOZCiB7EzHghl
-         cjQKgktlUPzYGiTQ4ZfNOPsUYBfdvhYJCzxoEfMQyM2llZP3eVeNxrC6BJ4/0DuaIqas
-         atT/uXv8kDjxI/qUVoQ4MTPQULf/vljCoG/nvTDOJP1DOWVpNo3dJOfe2Yye/NHxXIuS
-         V8iA==
-X-Gm-Message-State: APjAAAV41WidVlWftqnekodnNkbqhYNdktlvEuIgPoYVdaxKnNGfsnXU
-        qAtqD/fUUok54GljEIfRlJwZxY5MQx1tjVHWJlA=
-X-Google-Smtp-Source: APXvYqwoQrYYUZO8eTJe58dhPogHdnVWxGW0cqmLWNpOlNTnua+YVoi/CAqmOWQaJxwXlaVENSln2mQfwa3GxkD58Oo=
-X-Received: by 2002:a17:906:1c06:: with SMTP id k6mr118798ejg.217.1569248617821;
- Mon, 23 Sep 2019 07:23:37 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=s7DpcJFLBBmWq3MmPL6zVdAFJD0GI1udmN9pjKfUhdk=;
+        b=RQcpsVGeVIqgfb6asjMuDgGqUa3/fJublUWuuvYt1uwV8MZnQ3JxIrHzJI3vx3k+By
+         2RM/3pwXLPKgojQUPKwoiqBUDICa1JGyixQjH8EfPTgSXqbzLxheXUPBCjJlZpcwO8+6
+         FQPYELdsgx7sQmVvDi/PDCeOf170V6W+fGdEy89WiTd6aQHhFqz6MxrXqo1gfbtSuv1c
+         96PLTfrJaxc0E30HrZqDbuQX03T54/K0lBUunqduae7Dt6M6P05nXRTrk6xAqtgz7Ivw
+         Oxamdxsdbq22iMNNZkneeyZBny1TSen5Q2PjuXaRLDv/+TsYyYjC/B04HS6VyP6bm1h6
+         Fcfg==
+X-Gm-Message-State: APjAAAWJ9H7Jb5kiVBr62sC02xFX/UESNwJYu/T3A0s4m6UOOlYUMI10
+        CckO2nYyN8FsC9Hos/Li9kUuu77mGsDqdmwW87gccrHeKsY=
+X-Google-Smtp-Source: APXvYqyiPOY1v9P+DS6508G/tOSi4N63k2mqdlwFQHBOFZnlB3FmOQc4nyzBsjbqzRQig74mNtaSKGi7B9ONBXw80/U=
+X-Received: by 2002:a50:ab0f:: with SMTP id s15mr489584edc.119.1569250904037;
+ Mon, 23 Sep 2019 08:01:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190913205148.GA8799@sigill.intra.peff.net> <20190920170448.226942-1-jonathantanmy@google.com>
- <20190921014701.GA191795@google.com>
-In-Reply-To: <20190921014701.GA191795@google.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 23 Sep 2019 16:23:25 +0200
-Message-ID: <CAP8UFD3zw1dYUZ8Sei+kzcYmcsgQsRLoy1uHU+ZQp6CBDbCVkQ@mail.gmail.com>
-Subject: Re: Git in Outreachy December 2019?
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, Jeff King <peff@peff.net>,
-        git <git@vger.kernel.org>
+Date:   Mon, 23 Sep 2019 17:01:32 +0200
+Message-ID: <CAP8UFD3nB_jn=KLp+2WMCzh9uo4HME7tc2Fn4-MqxCM+drydWA@mail.gmail.com>
+Subject: Draft of Git Rev News edition 55
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        James Ramsay <james@jramsay.com.au>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Robert Dailey <rcdailey.lists@gmail.com>,
+        Bryan Turner <bturner@atlassian.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 23, 2019 at 3:35 PM Emily Shaffer <emilyshaffer@google.com> wrote:
->
-> On Fri, Sep 20, 2019 at 10:04:48AM -0700, Jonathan Tan wrote:
->
-> > I'm new to Outreachy and programs like this, so does anyone have an
-> > opinion on my draft proposal below? It does not have any immediate
-> > user-facing benefit, but it does have a definite end point.
->
-> I'd appreciate similar opinion if anybody has it - and I'd also really
-> feel more comfortable with a co-mentor.
+Hi everyone!
 
-First as the deadline is tomorrow, I think it is important to submit
-projects to Outreachy even if they are not perfect and even if we
-would like a co-mentor (which is also my case by the way).
+A draft of a new Git Rev News edition is available here:
 
-We can hopefully improve the projects after the deadline or perhaps
-drop them if we cannot find enough co-mentors or if we don't agree
-with the goal or find it too difficult.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-55.md
 
-> """
-> "Did You Mean..?"
->
-> There are some situations where it's fairly clear what a user meant to
-> do, even though they did not do that thing correctly. For example, if a
-> user runs `git commit` with tracked, modified, unstaged files in their
-> worktree, but no staged files at all, it's fairly likely that they
-> simply forgot to add the files they wanted. In this case, the error
-> message is slightly obtuse:
->
-> $ git commit
-> On branch master
-> Changes not staged for commit:
->         modified:   foo.txt
->
-> no changes added to commit
->
->
-> Since we have an idea of what the user _meant_ to do, we can offer
-> something more like:
->
-> $ git commit
-> On branch master
-> Changes not staged for commit:
->         modified:   foo.txt
->
-> Stage listed changes and continue? [Y/n]
->
-> While the above case is a good starting place, other similar cases can
-> be added afterwards if time permits. These helper prompts should be
-> enabled/disabled via a config option so that people who are used to
-> their current workflow won't be impacted.
-> """
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-I agree that it might help. There could be significant discussion
-about what the UI should be though. For example maybe we could just
-promote `git commit -p` in the tutorials instead of doing the above.
-Or have a commit.patch config option if we haven't one already.
+  https://github.com/git/git.github.io/issues/394
+
+You can also reply to this email.
+
+In general all kinds of contribution, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
+
+In this edition I try to cover a few more topics than usual, though
+the articles are shorter. Feel free to improve on any article if you
+think that there are important things that could be added to them.
+
+I tried to cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Gabriel and me plan to publish this edition late on
+Wednesday September 25th.
 
 Thanks,
 Christian.
