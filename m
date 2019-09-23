@@ -2,106 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E70E81F464
-	for <e@80x24.org>; Mon, 23 Sep 2019 11:49:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B9831F463
+	for <e@80x24.org>; Mon, 23 Sep 2019 12:36:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727290AbfIWLtT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Sep 2019 07:49:19 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:36616 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726146AbfIWLtT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Sep 2019 07:49:19 -0400
-Received: by mail-ed1-f66.google.com with SMTP id h2so12565994edn.3
-        for <git@vger.kernel.org>; Mon, 23 Sep 2019 04:49:18 -0700 (PDT)
+        id S2394601AbfIWMg5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Sep 2019 08:36:57 -0400
+Received: from mail-qt1-f169.google.com ([209.85.160.169]:44702 "EHLO
+        mail-qt1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390719AbfIWMg5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Sep 2019 08:36:57 -0400
+Received: by mail-qt1-f169.google.com with SMTP id u40so16842039qth.11
+        for <git@vger.kernel.org>; Mon, 23 Sep 2019 05:36:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FncQz5HZ8GP/I1G8NkFy+0eulDj52LZl+vKeSvIX8dw=;
-        b=eZ3gaDx2ysklE3UCohw1dVfUtowacCrHAVTomFSOa82D+hujLHNMb6DQxneVw2x+fe
-         eOiWdx1Wis6j1hRPSbePMnJ6bNyz1S+vmmByssaP0/FkV02wtTRvipXQnZD/hnHISf5B
-         XdoHsSPMb4YhLMb2DAG8g8vipf1HZ93Eu15Xl8yQt0+mTeEEsTHoKnpZ9duyjebiYoki
-         AZzq1SHCuPdiPJbvlcEg9OBdy0P5JkvXGwLjaxhv1p5GN9bWb8Am4Wn52Jpoznac57Ri
-         LE51C7gaFr2QPK2ZitYM39s7eSbM4oDawFAUaI5cjufawU3FY1sQp47TwW54ZLK93zYy
-         b1JQ==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+j0FNlLhAePzopGFiKeLuYs88F+kwgHeVjpCtOzWAUY=;
+        b=EmhcSF+LJul7g3WqUlyjW+dqQXPeUSfz9Xg2tvXZWozYwSQDS6ImQr2/uEdrMUDvcG
+         OnYN4i9ozIdJjc/w933df/NDRHIfakU+wtrQQpHjfvu/hYNgI444G30l2uQFpVe0xuLb
+         1Tpz0zoSz1hOhCeq8eJBeTYRDGWmPGGJ9oyU407YLC1Kwh2AWrNfbiDjMVz1PxrKdtzY
+         LCVWnxE9eIkhgZwKvwIeWcamqgzpzNevKwOBwI7B0EsYMqabIX8o2I3A2i98GCvxlOog
+         YHJyJ3/PqHF6JFsVtgm1O/WAQwo6jI00dWOaMW9FmZSOgUxUPbs4Erx3jzj1O5nGO4mo
+         CR9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FncQz5HZ8GP/I1G8NkFy+0eulDj52LZl+vKeSvIX8dw=;
-        b=CzLVVSwA4CcxnvrhhzIEJbRJobF/vo4yRaxf+lvnwF3OfNfnlsADa0qG0vo5uk7hVX
-         0m0oM5Hqi1o7ddxoO64mYzHPZTTCPqOAoKIN2sGqmegGw19F8+qEAGob/h3P0CV+CRRY
-         siKfQZ3KXmBH93vFcLKMpLqvEuavaS4SCaAmojyh6wEBE729/BCKELopr7lgL9hcIRgW
-         tJBsEPIoQcy1Ho2fDcd1XCZzzHYoAiJZ7bOmHGNGbCX2sEuyfKIxFg+HRm87aE9uBu8y
-         6Gtq2XceEMioe9F/v3b/jQbDq3WlDubEDKkS9Fxu4Ui7CZdkr1NrnmC37YOKrtw2Kr45
-         98zw==
-X-Gm-Message-State: APjAAAWmArnfFU2o6H8IRRGw8bL6fxoryIg9cvQJhTOSAhQE+O6TOUgD
-        I+kmHsgnVGK+05z6BL6WiE48lMfLzGiYLA2ZtW7exiyCTd4=
-X-Google-Smtp-Source: APXvYqzTxauedITr0lfOXuc/tXAVavVXTIKy7X8Dnfxkm+SSrphSNppJrNOY/AW9b9aI8WrTcUNDJUsu8eRpsLdwI8U=
-X-Received: by 2002:a17:906:1c06:: with SMTP id k6mr30096497ejg.217.1569239357841;
- Mon, 23 Sep 2019 04:49:17 -0700 (PDT)
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+j0FNlLhAePzopGFiKeLuYs88F+kwgHeVjpCtOzWAUY=;
+        b=kIGSMdgTTdVG6x8J8ds9QJJ8DikoQR7iNv4rHKAUxQiCxVyEQ3VdmTeDHWtt6WYbi/
+         PEjxZCq3LTYHB29jbH8yBB+74hy5VnhJuGisbM9eI3lEIT8+cOcQ7kG195mRxqEDr+DE
+         NxBYIJcBg2loLv8Cc0q+5MURXceZFc6KY8oQy/38cNnCbPyNNCw+QoWaosy/atQNENDG
+         sgBabnHr/i0VMWizWYzdGQUCu1zz1CA7BOEOuVfJTX7sVHWJYEe4K1Gp3vacioDlp5HG
+         9/2zLtAie3Z9FYPv9PxK0VAmWE/88CWz7G8ssjWCPKF14PFE7nhqomiwmxCXl38e/zYY
+         SQmg==
+X-Gm-Message-State: APjAAAXEF2osFXsDdwgwCL62fD8+bJ1OJDGe8N429e5dmWkn65X5N0C2
+        sdacM/lD4WOt80Tn2ehMKu0=
+X-Google-Smtp-Source: APXvYqwYQA5x/PMbkUa+COcKi8RnO2TMo1gVKdXUUk7fTdtgVOygc60nkn26U9IXMGjP6CglrwfuEA==
+X-Received: by 2002:ac8:1c54:: with SMTP id j20mr16816922qtk.302.1569242216332;
+        Mon, 23 Sep 2019 05:36:56 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:8434:a619:c799:e8af? ([2001:4898:a800:1010:356a:a619:c799:e8af])
+        by smtp.gmail.com with ESMTPSA id j17sm6692843qta.0.2019.09.23.05.36.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Sep 2019 05:36:55 -0700 (PDT)
+Subject: Re: [DISCUSSION] Growing the Git community
+From:   Derrick Stolee <stolee@gmail.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     "peff@peff.net" <peff@peff.net>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "gitster@pobox.com" <gitster@pobox.com>, garimasigit@gmail.com
+References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
+Message-ID: <e284245a-8acc-7ec7-c66c-e5b30d25f8a7@gmail.com>
+Date:   Mon, 23 Sep 2019 08:36:51 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-References: <20190913205148.GA8799@sigill.intra.peff.net> <20190920170448.226942-1-jonathantanmy@google.com>
-In-Reply-To: <20190920170448.226942-1-jonathantanmy@google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 23 Sep 2019 13:49:05 +0200
-Message-ID: <CAP8UFD3NPYJr5PXLDyRD=qbEPft8E-HwtGUo_FxoG=q5jfY5Ng@mail.gmail.com>
-Subject: Re: Git in Outreachy December 2019?
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 23, 2019 at 10:53 AM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> > Prospective mentors need to sign up on that site, and should propose a
-> > project they'd be willing to mentor.
+On 9/19/2019 12:30 PM, Derrick Stolee wrote:
+> During the Virtual Git Contributors' Summit, Dscho brought up the topic of
+> "Inclusion & Diversity". We discussed ideas for how to make the community
+> more welcoming to new contributors of all kinds. Let's discuss some of
+> the ideas we talked about, and some that have been growing since.
+> 
+> Feel free to pick apart all of the claims I make below. This is based
+> on my own experience and opinions. It should be a good baseline
+> for us to all arrive with valuable action items.
 
-Yeah, you are very welcome to sign up soon if you haven't already done
-so as I think the deadline is really soon.
+Thanks, everyone, for the valuable discussion! I particularly appreciate
+that everyone who disagreed with my misguided opinions pointed out the
+flaws respectfully and moved forward in a positive direction.
 
-> > I'm happy to discuss possible projects if anybody has an idea but isn't
-> > sure how to develop it into a proposal.
->
-> I'm new to Outreachy and programs like this, so does anyone have an
-> opinion on my draft proposal below? It does not have any immediate
-> user-facing benefit, but it does have a definite end point.
-
-No need for user-facing benefits. Refactoring or improving the code in
-other useful ways are very good subjects (as I already said in my
-reply to Emily and Dscho).
-
-> Also let me know if an Outreachy proposal should have more detail, etc.
->
->     Refactor "git index-pack" logic into library code
->
->     Currently, whenever any Git code needs a pack to be indexed, it
->     needs to spawn a new "git index-pack" process, passing command-line
->     arguments and communicating with it using file descriptors (standard
->     input and output), much like an end-user would if invoking "git
->     index-pack" directly. Refactor the pack indexing logic into library
->     code callable from other Git code, make "git index-pack" a thin
->     wrapper around that library code, and (to demonstrate that the
->     refactoring works) change fetch-pack.c to use the library code
->     instead of spawning the "git index-pack" process.
->
->     This allows the pack indexing code to communicate with its callers
->     with the full power of C (structs, callbacks, etc.) instead of being
->     restricted to command-line arguments and file descriptors. It also
->     simplifies debugging in that there will no longer be 2
->     inter-communicating processes to deal with, only 1.
-
-I think this is really great, both the idea and the description! No
-need for more details.
+That's a great thing to see in an open community.
 
 Thanks,
-Christian.
+-Stolee
