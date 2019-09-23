@@ -2,125 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FBB11F463
-	for <e@80x24.org>; Mon, 23 Sep 2019 21:28:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50DBC1F463
+	for <e@80x24.org>; Mon, 23 Sep 2019 21:28:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2503099AbfIWV2g (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Sep 2019 17:28:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57588 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1732345AbfIWV2g (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Sep 2019 17:28:36 -0400
-Received: (qmail 30412 invoked by uid 109); 23 Sep 2019 21:28:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 23 Sep 2019 21:28:36 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4484 invoked by uid 111); 23 Sep 2019 21:30:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Sep 2019 17:30:56 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 23 Sep 2019 17:28:34 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git in Outreachy December 2019?
-Message-ID: <20190923212834.GA19504@sigill.intra.peff.net>
-References: <20190923191509.GC21344@sigill.intra.peff.net>
- <20190923203854.171170-1-jonathantanmy@google.com>
+        id S2503102AbfIWV2m (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Sep 2019 17:28:42 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53535 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732345AbfIWV2m (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Sep 2019 17:28:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1569274101;
+        bh=exTvJB5KQH6UOtLqSpjoU4qXVQGbslirbx+2Q/kvr0Y=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=aY6FD1h2FKLOHRF8z/9NYESEsau6SsWmJ7WqfGbDzkBpSGoX2fGEGKEM/u88A4B+g
+         GXUqbfK4Tx4bNg9O2f7CWYvcUqYV70idIpN5zCMlc0quH5waiLMmY6h5P4tuc8k45J
+         h30LAivNsuiSq55j+DSfAx3/z1avrDMtb8V96POM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N33Ib-1i2VT62YtZ-013Myd; Mon, 23
+ Sep 2019 23:28:21 +0200
+Date:   Mon, 23 Sep 2019 23:28:05 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Mike Hommey <mh@glandium.org>
+cc:     Derrick Stolee <stolee@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "gitster@pobox.com" <gitster@pobox.com>, garimasigit@gmail.com
+Subject: Re: [DISCUSSION] Growing the Git community
+In-Reply-To: <20190919214023.hu3oznjcrzrsmpso@glandium.org>
+Message-ID: <nycvar.QRO.7.76.6.1909232316300.15067@tvgsbejvaqbjf.bet>
+References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com> <20190919214023.hu3oznjcrzrsmpso@glandium.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190923203854.171170-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:BOLoQ/C4kI15lsc4b+SQVButIDYM/9t7l1SUy6QpKLC9rWGEnoH
+ O3ZXKldWQBPtnCmny1MJnZCkBbSHZIuE3peO30UjCt9LT7WdwqUhoE/MtuAxiYlBipDE0/y
+ 6vymUKT5LvZzT1ne8o+GmocU4wH4x+vYJWeXVA4Rz+gROvbzvRpqEYjFDElXpootQjXLoS/
+ m9IKyoMgzt5OpS24nkxYQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dBFiQHGJxAE=:43V4KlJsmAndNFYudhp4by
+ ltHveCbCwZOR18etzFghjbd2T1bG2xaJ2yV3acfUdAK5RNjRooEy5GXE3dj9v/WjhmwBlwg34
+ LUaXlgyOV2xX/HfBTjQaw0dGPqHSIUOaJYXiNx5nRf0xfFs3takQ40b/ryLPhLW6vCAwV3IkK
+ MimwpJiE3tHzXMVA01m1H+GHRbkpjD6J2uOnZdD0g95gjh/Zx6EY/afTYGya87DXLZSsknyf3
+ F2cKy3ZKXndZooljPEynrnWmFjoLFleZ887UrFzFp2n3WQfV1eE0mtRjaL5DingLWWrjH1pJS
+ LvQsZm5UL8B3uJs8esa6+IyO8C8B0MnFwAjEqA6bUpvR4YSk8ZuNmBibdorCxvCPygiia1T78
+ faMDcm2vy9e0V4jZpoRJjuTfZHwCB6dW6WcDVcJFQ/cZD8AraEvG1xy8UMcbeIODFyNRJ8eNN
+ 9m90vR7bkJlbumW3FGu+hrYynwiQv/imFzmk2J4gPswvFujss69TDp9AXmTqraBIO0E/T8GLf
+ YMrlt7eM+Pma+z2yXnkthEWlvYjltl/L27uO5nr/6gHTMT3FaW4ddIUuq8LqvP4islu2NmLG+
+ Gilf4ISurAfFkXjl72m4oK4n29rlKssftLcVRV0GG8F/Yplivpj1gJL08Vi3wqy2npo80IA6o
+ Mk9wjg+rsruHR1pGY0l81Ix9wdIOtjFUXaBwjFzldkvXio91qJ+7TTkBW7LrE1EI3gtZgLR+Q
+ bj4vytcz21cli6dcLXhKnYIU66W4HKCievmEsU3usXZeuC2vXy/DE8PajWAQlaSYT7BxEKgWH
+ tb1TVJQPBkN5unTZ1seiqzkSHTYoMX7yAfm9bu6o0lm87B5y707l0wVOQFDDlfmLUUZ3ze4PH
+ et2tlFWUTBC5KPmMwf+8bRS/9PDWqTDOrhBSlJzk0Cp7pfjE6boC/qw7iD7E3lHpGFVqpXT+c
+ 5FQWkEWqzhGGbigMrt3BDsgQ8vyB721SxzHfO5xJ1JQXyJM9HbQ/geWFxRgML4l5xW8GYqnUJ
+ U20UaEAJwL6T/xDvDDhUY+RmHneX9iHxt6F6Yv2OY9wEB0J/KLWodYPi9DOmFz2wnhC8YAxE4
+ tejxQHul/+aiQ3CAzEPP+4u1TFEPWTiJR3RwN1ccQqc8aRs5vX65+lVAp+otxZoXT2r82Qejz
+ yv/2Z5ax08spvOb32vCZSFf5lSJ8JNAgrl4nsPAt0i8wsB1gfJKcHO0tFttAHRBynclCvhtek
+ 8K2Trtj8wEMB9r2lStuBy/+s1KesZt/0QxcDWr6nqMx+8fo1zGb05wQu82fs=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 23, 2019 at 01:38:54PM -0700, Jonathan Tan wrote:
+Hi Mike,
 
-> I didn't have any concrete ideas so I didn't include those, but some
-> unrefined ideas:
 
-One risk to a mentoring project like this is that the intern does a good
-job of steps 1-5, and then in step 6 we realize that the whole thing is
-not useful, and upstream doesn't want it. Which isn't to say the intern
-didn't learn something, and the project didn't benefit. Negative results
-can be useful; but it can also be demoralizing.
+On Fri, 20 Sep 2019, Mike Hommey wrote:
 
-I'm not arguing that's going to be the case here. But I do think it's
-worth talking through these things a bit as part of thinking about
-proposals.
+> On Thu, Sep 19, 2019 at 12:30:13PM -0400, Derrick Stolee wrote:
+> > During the Virtual Git Contributors' Summit, Dscho brought up the topi=
+c of
+> > "Inclusion & Diversity". We discussed ideas for how to make the commun=
+ity
+> > more welcoming to new contributors of all kinds. Let's discuss some of
+> > the ideas we talked about, and some that have been growing since.
+> >
+> > Feel free to pick apart all of the claims I make below. This is based
+> > on my own experience and opinions. It should be a good baseline
+> > for us to all arrive with valuable action items.
+> >
+> > I have CC'd some of the people who were part of that discussion. Sorry
+> > if I accidentally left someone out.
+> >
+> > I. Goals and Perceived Problems
+> >
+> > As a community, our number one goal is for Git to continue to be the b=
+est
+> > distributed version control system. At minimum, it should continue to =
+be
+> > the most widely-used DVCS. Towards that goal, we need to make sure Git=
+ is
+> > the best solution for every kind of developer in every industry. The
+> > community cannot do this without including developers of all kinds. Th=
+is
+> > means having a diverse community, for all senses of the word: Diverse =
+in
+> > physical location, gender, professional status, age, and others.
+> >
+> > In addition, the community must continue to grow, but members leave th=
+e
+> > community on a regular basis for multiple reasons. New contributors mu=
+st
+> > join and mature within the community or the community will dwindle. Wi=
+thout
+> > dedicating effort and attention to this, natural forces may result in =
+the
+> > community being represented only by contributors working at large tech
+> > companies focused on the engineering systems of very large groups.
+> >
+> > It is worth noting that this community growth must never be at the cos=
+t
+> > of code quality. We must continue to hold all contributors to a high
+> > standard so Git stays a stable product.
+> >
+> > Here are some problems that may exist within the Git community and may
+> > form a barrier to new contributors entering:
+> >
+> > 1. Discovering how to contribute to Git is non-obvious.
+> >
+> > 2. Submitting to a mailing list is a new experience for most developer=
+s.
+> >    This includes the full review and discussion process.
+> >
+> > 3. The high standards for patch quality are intimidating to new contri=
+butors.
+> >
+> > 4. Some people do not feel comfortable engaging in a community without
+> >    a clear Code of Conduct. This discomfort is significant and based o=
+n real
+> >    experiences throughout society.
+> >
+> > 5. Since Git development happens in a different place than where users
+> >     acquire the end product, some are not aware that they can contribu=
+te.
+>
+> 6. Newcomers don't really have any idea /what/ they could contribute.
+> They either have to come with their own itch to scratch, or read the
+> code to figure out if there's something to fix.
 
->  - index-pack has the CLI option to specify a message to be written into
->    the .promisor file, but in my patch to write fetched refs to
->    .promisor [1], I ended up making fetch-pack.c write the information
->    because I didn't know how many refs were going to be written (and I
->    didn't want to bump into CLI argument length limits). If we had this
->    feature, I might have been able to pass a callback to index-pack that
->    writes the list of refs once we have the fd into .promisor,
->    eliminating some code duplication (but I haven't verified this).
+I think this is very related to the "not only open the door, but invite
+contributors in" idea mentioned upthread.
 
-That makes some sense. We could pass the data over a pipe, but obviously
-stdin is already in use to receive the pack here. Ideally we'd be able
-to pass multiple streams between the programs, but I think due to
-Windows support, we can't assume that arbitrary pipe descriptors will
-make it across the run-command boundary. So I think we'd be left with
-communicating via temporary files (which really isn't the worst thing in
-the world, but has its own complications).
+Speaking from my experience as mentor in particular in Outreachy, it is
+often not obvious to old-timers in this here project (including myself!)
+how intimidating even the idea of "scratching your own itch" is, and
+it can be tremendously helpful to even so much as seeing the problem
+stated by somebody else first ("Others agree with me! I need not have
+doubted myself when I ran into this problem, it really is a bug that
+needs to be fixed!").
 
->  - In your reply [2] to the above [1], you mentioned the possibility of
->    keeping a list of cutoff points. One way of doing this, as I state in
->    [3], is my original suggestion back in 2017 of one such
->    repository-wide list. If we do this, it would be better for
->    fetch-pack to handle this instead of index-pack, and it seems more
->    efficient to me to have index-pack be able to pass objects to
->    fetch-pack as they are inflated instead of fetch-pack rereading the
->    compressed forms on disk (but again, I haven't verified this).
+Additionally, it is no longer all that easy to come up with an "own
+itch" to scratch, as the most common workflows work reasonably well in
+Git. Yet, it seems that some users _still_ want to "give back" by
+contributing patches. Or they just want to see their name in the next
+version's announcement mail.
 
-And this is the flip-side problem: we need to get data back, but we have
-only stdout, which is already in use (so we need some kind of protocol).
-That leads to things like the horrible NUL-byte added by 83558686ce
-(receive-pack: send keepalives during quiet periods, 2016-07-15).
+To address both concerns, I started this little experiment a while ago
+(but announced it only during a Git IRC standup):
+https://github.com/gitgitgadget/git/issues is open, intended to
+accumulate possible project ideas. It seems to work reasonably well,
+there already have been volunteers who picked up on some of those ideas
+I (and Denton) listed.
 
-> There are also the debuggability improvements of not having to deal with
-> 2 processes.
+Hopefully this issue tracker (together with https://crbug.com/git which
+targets users more comfortable with that flavor of issue trackers) will
+help address your bullet point?
 
-I think it can sometimes be easier to debug with two separate processes,
-because the input to index-pack is well-defined and can be repeated
-without hitting the network (though you do have to figure out how to
-record the network response, which can be non-trivial). I've also done
-similar things for running performance simulations.
-
-We'll still have the stand-alone index-pack command, so it can be used
-for those cases. But as we add more features that utilize the in-process
-interface, that may eventually stop being feasible.
-
-> > [dropping unpack-objects]
-> >     Maybe that would be worth making part of the project?
-> 
-> I'm reluctant to do so because I don't want to increase the scope too
-> much - although if my project has relatively narrow scope for an
-> Outreachy project, we can do so. As for eliminating the utility of
-> having richer communication, I don't think so, because in the situations
-> where we require richer communication (right now, situations to do with
-> partial clone), we specifically run index-pack anyway.
-
-Yeah, we're in kind of a weird situation there, where unpack-objects is
-used less and less. I wonder how many surprises are lurking where
-somebody reasoned about index-pack behavior, but unpack-objects may do
-something slightly differently (I know this came up when we looked at
-fsck-ing incoming objects for submodule vulnerabilities).
-
-I kind of wonder if it would be reasonable to just always use index-pack
-for the sake of simplicity, even if it never learns to actually unpack
-objects. We've been doing that for years on the server side at GitHub
-without ill effects (I think the unpack route is slightly more efficient
-for a thin pack, but since it only kicks in when there are few objects
-anyway, I wonder how big an advantage it is in general).
-
--Peff
+Ciao,
+Dscho
