@@ -2,99 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B24341F463
-	for <e@80x24.org>; Mon, 23 Sep 2019 15:01:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86D281F463
+	for <e@80x24.org>; Mon, 23 Sep 2019 16:52:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731387AbfIWPBq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Sep 2019 11:01:46 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:44865 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726084AbfIWPBq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Sep 2019 11:01:46 -0400
-Received: by mail-ed1-f65.google.com with SMTP id r16so13132115edq.11
-        for <git@vger.kernel.org>; Mon, 23 Sep 2019 08:01:45 -0700 (PDT)
+        id S2390851AbfIWQwW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Sep 2019 12:52:22 -0400
+Received: from mail-ua1-f66.google.com ([209.85.222.66]:45695 "EHLO
+        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387683AbfIWQwW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Sep 2019 12:52:22 -0400
+Received: by mail-ua1-f66.google.com with SMTP id j5so4551721uak.12
+        for <git@vger.kernel.org>; Mon, 23 Sep 2019 09:52:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=s7DpcJFLBBmWq3MmPL6zVdAFJD0GI1udmN9pjKfUhdk=;
-        b=LvglQBX5PvwsfqlgTrchSays5uE6H0l0dc8g/Dq2ksubFFXd8b9GPqZWy8+FrANa+A
-         QsB3B612hJkwj9q0LHZy/9O6nsRSk6WVkDMwE40Lgu2bRPMJc/JPn4Iqu+fA0zftNag4
-         OB8/jSgUGAjtBmOzc/74R5fmkmLdtgs2CR1VkTdotwR7u7Zp8DAuJNbwDvs0MTqpJYwF
-         clCgN739eoNydZxmcMEZCUitYY5k5s8uEGGjhptGzoJzPYIN2kvOx1nmg/hVcMELJSux
-         an/0mCbDKQZpXwcoWgiAE0VUckEW7gAdwdliLCDPkTCwk0f6HC9J89QVgdoeR5EVMD7m
-         oPvQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=B9+duR4W07vx9JmGNz++s0GZiGWHv7euOVLtMkQqaNc=;
+        b=SSWXqgXb/nWgEyPPTwfCBUb+Q5wZwmvCg8LEwWXoWTrHO9FnSmMrqVHsCyfj7qU43c
+         MarVNPbbqo8WxwiXyDLAQ3ste+osWNh7BG7C/d2Akx66Mg9QE8Ns6rejXbYdJUtRLIeb
+         Z1K5gXuKybjl0LLzNs1G9YT4oBMfD/MfiJEEKLcTjjv0kcrxMCrYagXyWZxMM7U8hRQo
+         nBRtpPAPnjcLZuYJixTthzTwhbpHPw5CbTbs/rSxtBoY7XC/AMYvRJvVeZhMGwnkIkXy
+         /dUAWVhwF82lYnDbtEpiz0/EHWGg5ZV6ofxcgRupyZhnis7kzQMrGFsEN8Iay2FqfI7h
+         xLvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=s7DpcJFLBBmWq3MmPL6zVdAFJD0GI1udmN9pjKfUhdk=;
-        b=RQcpsVGeVIqgfb6asjMuDgGqUa3/fJublUWuuvYt1uwV8MZnQ3JxIrHzJI3vx3k+By
-         2RM/3pwXLPKgojQUPKwoiqBUDICa1JGyixQjH8EfPTgSXqbzLxheXUPBCjJlZpcwO8+6
-         FQPYELdsgx7sQmVvDi/PDCeOf170V6W+fGdEy89WiTd6aQHhFqz6MxrXqo1gfbtSuv1c
-         96PLTfrJaxc0E30HrZqDbuQX03T54/K0lBUunqduae7Dt6M6P05nXRTrk6xAqtgz7Ivw
-         Oxamdxsdbq22iMNNZkneeyZBny1TSen5Q2PjuXaRLDv/+TsYyYjC/B04HS6VyP6bm1h6
-         Fcfg==
-X-Gm-Message-State: APjAAAWJ9H7Jb5kiVBr62sC02xFX/UESNwJYu/T3A0s4m6UOOlYUMI10
-        CckO2nYyN8FsC9Hos/Li9kUuu77mGsDqdmwW87gccrHeKsY=
-X-Google-Smtp-Source: APXvYqyiPOY1v9P+DS6508G/tOSi4N63k2mqdlwFQHBOFZnlB3FmOQc4nyzBsjbqzRQig74mNtaSKGi7B9ONBXw80/U=
-X-Received: by 2002:a50:ab0f:: with SMTP id s15mr489584edc.119.1569250904037;
- Mon, 23 Sep 2019 08:01:44 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=B9+duR4W07vx9JmGNz++s0GZiGWHv7euOVLtMkQqaNc=;
+        b=r2YYQy3QzGQcKN1FpWUbIn0iWIZm1Mh/NjnG3NDdbM/BJfyuPzQUWfUDHud4qA35zh
+         Lq1cog2JetYYdxHva/GlprpOlkkADToNjRvVBtosvXHXhL+1VmIOiVaCoGvx8srrlKGP
+         5HUHmzvq2756RrApLtaG1NJ+p7PF08tjdeGOqf05KqDA3UGMRjjqMsA8uCSaN+gfmmg5
+         uufkP2WU+znJ7mDLhi6k6z3rUeSEheDk4t92u6f1Li5u47qvfby1me69F8XoaT6sum1o
+         3vuYueRlij0qqp4zQvPMXUpp1w5narcevkF632GYgEHtRXjp3/AlpRwQ5rLHb5pM6CAF
+         mZtg==
+X-Gm-Message-State: APjAAAWsgMexMyyy5pVlIdX27HhgY3S5wYXfW+AwBtz3ci8cXgovFK65
+        nG5OmdxJXtmmJ/s3yKQfg57J2oNzse+4HSjsgVxbUd8T
+X-Google-Smtp-Source: APXvYqycCGf7jTamRpVqALl40jMFYMZeY+8N7dya7vjwuc5tvi/CYO+NxrDMcf5TEGJB4HlUJ2UkjJBlpTdO4oJmfyw=
+X-Received: by 2002:ab0:734f:: with SMTP id k15mr199368uap.18.1569257541156;
+ Mon, 23 Sep 2019 09:52:21 -0700 (PDT)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 23 Sep 2019 17:01:32 +0200
-Message-ID: <CAP8UFD3nB_jn=KLp+2WMCzh9uo4HME7tc2Fn4-MqxCM+drydWA@mail.gmail.com>
-Subject: Draft of Git Rev News edition 55
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        James Ramsay <james@jramsay.com.au>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Robert Dailey <rcdailey.lists@gmail.com>,
-        Bryan Turner <bturner@atlassian.com>
+References: <20190920220601.8090-1-cb@hashpling.org>
+In-Reply-To: <20190920220601.8090-1-cb@hashpling.org>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 23 Sep 2019 09:52:10 -0700
+Message-ID: <CABPp-BFF1Vqa7QoH6s1Vf6QtXcBoy1v7XzSsLjOTOCVh4GL3vg@mail.gmail.com>
+Subject: Re: [PATCH] t4038: Remove non-portable '-a' option passed to test_cmp
+To:     CB Bailey <cb@hashpling.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+On Fri, Sep 20, 2019 at 3:07 PM CB Bailey <cb@hashpling.org> wrote:
+>
+> From: CB Bailey <cbailey32@bloomberg.net>
+>
+> Signed-off-by: CB Bailey <cbailey32@bloomberg.net>
+> ---
+>  t/t4038-diff-combined.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
+> index d4afe12554..b9d876efa2 100755
+> --- a/t/t4038-diff-combined.sh
+> +++ b/t/t4038-diff-combined.sh
+> @@ -509,7 +509,7 @@ test_expect_success FUNNYNAMES '--combined-all-paths =
+and --raw and funny names'
+>  test_expect_success FUNNYNAMES '--combined-all-paths and --raw -and -z a=
+nd funny names' '
+>         printf "aaf8087c3cbd4db8e185a2d074cf27c53cfb75d7\0::100644 100644=
+ 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e7e4c=
+2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR\0file\twith\ttab=
+s\0i\tam\ttabbed\0fickle\tnaming\0" >expect &&
+>         git diff-tree -c -M --raw --combined-all-paths -z HEAD >actual &&
+> -       test_cmp -a expect actual
+> +       test_cmp expect actual
+>  '
 
-A draft of a new Git Rev News edition is available here:
+This will mean slightly less useful diagnostic output should the test
+ever fail on a platform that does support diff -a, but that's a small
+price to pay to make sure the test is portable.  If anyone does ever
+see this test fail, they can go in and inspect further themselves.
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-55.md
-
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
-
-  https://github.com/git/git.github.io/issues/394
-
-You can also reply to this email.
-
-In general all kinds of contribution, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
-
-In this edition I try to cover a few more topics than usual, though
-the articles are shorter. Feel free to improve on any article if you
-think that there are important things that could be added to them.
-
-I tried to cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Gabriel and me plan to publish this edition late on
-Wednesday September 25th.
-
-Thanks,
-Christian.
+Thanks for the fix.
