@@ -8,127 +8,78 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA371F463
-	for <e@80x24.org>; Mon, 23 Sep 2019 08:28:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08E0A1F463
+	for <e@80x24.org>; Mon, 23 Sep 2019 08:33:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393787AbfIWI2i (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Sep 2019 04:28:38 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36419 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392225AbfIWI2i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Sep 2019 04:28:38 -0400
-Received: by mail-wr1-f68.google.com with SMTP id y19so12879438wrd.3
-        for <git@vger.kernel.org>; Mon, 23 Sep 2019 01:28:36 -0700 (PDT)
+        id S2392575AbfIWIdZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Sep 2019 04:33:25 -0400
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:40258 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389956AbfIWIdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Sep 2019 04:33:24 -0400
+Received: by mail-wr1-f52.google.com with SMTP id l3so12857663wru.7
+        for <git@vger.kernel.org>; Mon, 23 Sep 2019 01:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=cLOJPBGHQeoP3VsScz52IA7p2fUAq65mbDvCQBrzHjQ=;
-        b=SWpirlaet0wg8MjV56XUDnnetSnsvQz5mavRyJBGwsL9hxlQSFBSXXyBj/zO+sT6CO
-         3nFS1s6qKFwUCj+T2xz9bpgAkeSMdP2HkOMwJzXDhN27tbPf++6ZrEfwKXHLEFZMjnTa
-         raHnOHfoVmQEnU5zfiSXMd08rhzzAv6//gPr6BQiswzvQc5MuWdv9/5moXplEBW6RYPw
-         3X03v4td1p8Yy125ur5PFJ5Sj4GK0dZ21eKxmUtMZVbt9+mClyDpdlb+iGXGnxHWufTd
-         njHUqqgD/RsP4p1P1L/rRvhRmhUFaq75RgPcYvagBsdiNWs6ZEIMojMsblk7BRSmaFBc
-         ok1w==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=bod1FpFujQemY4tdbiDIKeVUbtr7eOMXD4r3xG9Hv5g=;
+        b=gUNdVKQ7rCE9NFKisQXoBwiYM4wStC8oV5/e2MoLlnuLfmfOoWEgz726Q8qaV0ckiR
+         cEpla7yQR+OQay9Bcoc798tJt2M/kdT1uGTqq4++ZtVu0xg9x3CFzC0PJejDn5wDXOiL
+         ivG33uPg1vATEEqZWg1pGUj6HKaBVT9XAhP6MlgutLS1HOojztgzRI3RtDT1uWaub9ZW
+         nwcHMkRkUPjPdQ/XCFYKCwQySZlzmKYtAkzTSimiwx5jashwVs8SiTQUb3ExnNVtu/Bc
+         +Yu8dnrclBG+5QuO2nf9FdVLkSEHVBHjSsltk5R8BwoXK/8r5LZvY9i0MI9Iyikc1tns
+         bXLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cLOJPBGHQeoP3VsScz52IA7p2fUAq65mbDvCQBrzHjQ=;
-        b=pg3lrjyqRdmEJxeDBURP7DqrlOht/Rhn+k38zvyVHyt76FhkzXXJaPGNgZ7VUoBoBF
-         Ij5w5KclemYqZxuaoDWS2ijbwRburxif7nF4N9zQkHO934EWae29yzIWOQyvSyUqtDG0
-         vRCvK0YzFalZAZlRPR0iiVKcYAANAv8hOjz7GEVz56K0B0duVrlD3YliyBcdqLqC0qYh
-         VXNCdDS2PbKMEoF5zsNxmyakYfuLL8j1AjKVluznVxwc0ERDIbCHSzl9ionIFsQKI9S4
-         v8LLUe84Dzy31zUf/KMAFBLFBnvUCexzKdL1zHDVz5K0CMo+/6bOXQTQqS1dXFYRnvm+
-         vTBQ==
-X-Gm-Message-State: APjAAAXqRFyOd2z5TQpEsQsg/8kLQquufrJyl7uUMJGSRKjeSHw/ViAL
-        kezk/hBlyOfnRzOdDoSPCpPUX+1D
-X-Google-Smtp-Source: APXvYqwKxUMRnveU4ur276PyNUwNiqynmTbVrIDLCycL5ACJKfJWC0kwNmbqvZtAXIV2KLSWXMG6Cg==
-X-Received: by 2002:adf:e5c2:: with SMTP id a2mr20035601wrn.320.1569227316019;
-        Mon, 23 Sep 2019 01:28:36 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=bod1FpFujQemY4tdbiDIKeVUbtr7eOMXD4r3xG9Hv5g=;
+        b=RkOL3HCgc6CHRDE+Rpc/q+cCGYR5G1NPFU0cbkK8dDU+djBVOsaJdMrVgO/TVCfCMy
+         B9PgJagbqcX6fV2Sg7ivSveQkM2An0Js6vmM24UH/XpWSJNzstqQhVrYSSIkp8SySRlY
+         fDy1xAmkPeQ9kwZLviDHER4Xdcbngd/oYl4ND5MCp/ouDZSN5MGyKFYHu97LQPjUSKYt
+         R9cZP5FRIz30UPgiRKczrOmRV0cEKAL7B1p8vwDd5++3+HSAgDh3Zg5MX7HVvxErAHvy
+         E9WTkohJGAxsja2JFw5FZBImdjdHU4IcIo3tQQYDz/n18fXNzxVG+hQ6iV/Ziu9YpphW
+         beqw==
+X-Gm-Message-State: APjAAAWoo23WU8A6OcmHEQK69j1C5i+4flYpuZ7615/k9QetKlMSnWs3
+        fdTZtUd5ntYdhNyJRwTpXkw+D6Qs
+X-Google-Smtp-Source: APXvYqwWYhZuMGThFFb9QEizI9YD4c4kBzdy56M7nSGYi/ZiX69gUgk5EJQSZEOJqJV/zgXJw/CRKw==
+X-Received: by 2002:a5d:5048:: with SMTP id h8mr20149819wrt.280.1569227602693;
+        Mon, 23 Sep 2019 01:33:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n17sm9535568wrp.37.2019.09.23.01.28.35
+        by smtp.gmail.com with ESMTPSA id y19sm9084503wmi.13.2019.09.23.01.33.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Sep 2019 01:28:35 -0700 (PDT)
-Date:   Mon, 23 Sep 2019 01:28:35 -0700 (PDT)
-X-Google-Original-Date: Mon, 23 Sep 2019 08:28:33 GMT
-Message-Id: <525669b3b38ed57d6d4f188dfe0bb8fe10b63749.1569227313.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.348.git.gitgitgadget@gmail.com>
-References: <pull.348.git.gitgitgadget@gmail.com>
+        Mon, 23 Sep 2019 01:33:22 -0700 (PDT)
+Date:   Mon, 23 Sep 2019 01:33:22 -0700 (PDT)
+X-Google-Original-Date: Mon, 23 Sep 2019 08:33:19 GMT
+Message-Id: <pull.347.git.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] contrib/buildsystems: fix Visual Studio Debug
- configuration
+Subject: [PATCH 0/2] t0028 fix test + more tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Commit 1/2: t0028: fix test for UTF-16-LE-BOM Commit 2/2: t0028: add more
+tests Please refer to individual commit messages for more information.
 
-Even though Debug configuration builds, the resulting build is incorrect
-in a subtle way: it mixes up Debug and Release binaries, which in turn
-causes hard-to-predict bugs.
+Alexandr Miloslavskiy (2):
+  t0028: fix test for UTF-16-LE-BOM
+  t0028: add more tests
 
-In my case, when git calls iconv library, iconv sets 'errno' and git
-then tests it, but in Debug and Release CRT those 'errno' are different
-memory locations.
+ t/t0028-working-tree-encoding.sh | 41 +++++++++++++++++++++++++++++++-
+ 1 file changed, 40 insertions(+), 1 deletion(-)
 
-This patch addresses 3 connected bugs:
-1) Typo in '\(Configuration)'. As a result, Debug configuration
-   condition is always false and Release path is taken instead.
-2) Regexp that replaced 'zlib.lib' with 'zlibd.lib' was only affecting
-   the first occurrence. However, some projects have it listed twice.
-   Previously this bug was hidden, because Debug path was never taken.
-   I decided that avoiding double -lz in makefile is fragile and I'd
-   better replace all occurrences instead.
-3) In Debug, 'libcurl-d.lib' should be used instead of 'libcurl.lib'.
-   Previously this bug was hidden, because Debug path was never taken.
 
-Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
----
- contrib/buildsystems/Generators/Vcxproj.pm | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
-
-diff --git a/contrib/buildsystems/Generators/Vcxproj.pm b/contrib/buildsystems/Generators/Vcxproj.pm
-index 576ccabe1d..7b1e277eca 100644
---- a/contrib/buildsystems/Generators/Vcxproj.pm
-+++ b/contrib/buildsystems/Generators/Vcxproj.pm
-@@ -79,7 +79,8 @@ sub createProject {
-     if (!$static_library) {
-       $libs_release = join(";", sort(grep /^(?!libgit\.lib|xdiff\/lib\.lib|vcs-svn\/lib\.lib)/, @{$$build_structure{"$prefix${name}_LIBS"}}));
-       $libs_debug = $libs_release;
--      $libs_debug =~ s/zlib\.lib/zlibd\.lib/;
-+      $libs_debug =~ s/zlib\.lib/zlibd\.lib/g;
-+      $libs_debug =~ s/libcurl\.lib/libcurl-d\.lib/g;
-     }
- 
-     $defines =~ s/-D//g;
-@@ -119,13 +120,13 @@ sub createProject {
-     <VCPKGArch Condition="'\$(Platform)'=='Win32'">x86-windows</VCPKGArch>
-     <VCPKGArch Condition="'\$(Platform)'!='Win32'">x64-windows</VCPKGArch>
-     <VCPKGArchDirectory>$cdup\\compat\\vcbuild\\vcpkg\\installed\\\$(VCPKGArch)</VCPKGArchDirectory>
--    <VCPKGBinDirectory Condition="'\(Configuration)'=='Debug'">\$(VCPKGArchDirectory)\\debug\\bin</VCPKGBinDirectory>
--    <VCPKGLibDirectory Condition="'\(Configuration)'=='Debug'">\$(VCPKGArchDirectory)\\debug\\lib</VCPKGLibDirectory>
--    <VCPKGBinDirectory Condition="'\(Configuration)'!='Debug'">\$(VCPKGArchDirectory)\\bin</VCPKGBinDirectory>
--    <VCPKGLibDirectory Condition="'\(Configuration)'!='Debug'">\$(VCPKGArchDirectory)\\lib</VCPKGLibDirectory>
-+    <VCPKGBinDirectory Condition="'\$(Configuration)'=='Debug'">\$(VCPKGArchDirectory)\\debug\\bin</VCPKGBinDirectory>
-+    <VCPKGLibDirectory Condition="'\$(Configuration)'=='Debug'">\$(VCPKGArchDirectory)\\debug\\lib</VCPKGLibDirectory>
-+    <VCPKGBinDirectory Condition="'\$(Configuration)'!='Debug'">\$(VCPKGArchDirectory)\\bin</VCPKGBinDirectory>
-+    <VCPKGLibDirectory Condition="'\$(Configuration)'!='Debug'">\$(VCPKGArchDirectory)\\lib</VCPKGLibDirectory>
-     <VCPKGIncludeDirectory>\$(VCPKGArchDirectory)\\include</VCPKGIncludeDirectory>
--    <VCPKGLibs Condition="'\(Configuration)'=='Debug'">$libs_debug</VCPKGLibs>
--    <VCPKGLibs Condition="'\(Configuration)'!='Debug'">$libs_release</VCPKGLibs>
-+    <VCPKGLibs Condition="'\$(Configuration)'=='Debug'">$libs_debug</VCPKGLibs>
-+    <VCPKGLibs Condition="'\$(Configuration)'!='Debug'">$libs_release</VCPKGLibs>
-   </PropertyGroup>
-   <Import Project="\$(VCTargetsPath)\\Microsoft.Cpp.Default.props" />
-   <PropertyGroup Condition="'\$(Configuration)'=='Debug'" Label="Configuration">
+base-commit: 4c86140027f4a0d2caaa3ab4bd8bfc5ce3c11c8a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-347%2FSyntevoAlex%2F%230189_t0028_fixes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-347/SyntevoAlex/#0189_t0028_fixes-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/347
 -- 
 gitgitgadget
