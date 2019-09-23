@@ -8,78 +8,98 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08E0A1F463
-	for <e@80x24.org>; Mon, 23 Sep 2019 08:33:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B36FF1F463
+	for <e@80x24.org>; Mon, 23 Sep 2019 08:33:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392575AbfIWIdZ (ORCPT <rfc822;e@80x24.org>);
+        id S2392596AbfIWId0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Sep 2019 04:33:26 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43276 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390680AbfIWIdZ (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 Sep 2019 04:33:25 -0400
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:40258 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389956AbfIWIdY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Sep 2019 04:33:24 -0400
-Received: by mail-wr1-f52.google.com with SMTP id l3so12857663wru.7
+Received: by mail-wr1-f68.google.com with SMTP id q17so12866560wrx.10
         for <git@vger.kernel.org>; Mon, 23 Sep 2019 01:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=bod1FpFujQemY4tdbiDIKeVUbtr7eOMXD4r3xG9Hv5g=;
-        b=gUNdVKQ7rCE9NFKisQXoBwiYM4wStC8oV5/e2MoLlnuLfmfOoWEgz726Q8qaV0ckiR
-         cEpla7yQR+OQay9Bcoc798tJt2M/kdT1uGTqq4++ZtVu0xg9x3CFzC0PJejDn5wDXOiL
-         ivG33uPg1vATEEqZWg1pGUj6HKaBVT9XAhP6MlgutLS1HOojztgzRI3RtDT1uWaub9ZW
-         nwcHMkRkUPjPdQ/XCFYKCwQySZlzmKYtAkzTSimiwx5jashwVs8SiTQUb3ExnNVtu/Bc
-         +Yu8dnrclBG+5QuO2nf9FdVLkSEHVBHjSsltk5R8BwoXK/8r5LZvY9i0MI9Iyikc1tns
-         bXLg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cqbjFdas5iAFxs9Qje7GsOGHGSNrZCQXW8lY5D5fQg4=;
+        b=dNts3gIe30XlXyl4Prkf/kCvz9jGhUHhRpE4t+36K++VHWqOfYVRfGWKYaav8u+v7F
+         BWrWQAystPtGFRhwxnpzS353KiJkL/ZVQCVmQhy0R9doNXyT2QPpUvirj7TXNC6ZzB/C
+         skaJizYYzuhVtAcSjJ7lcfVm2WnHKrhw19ZDU8inT7O8b71xYdhkT3uEm15lIhdb0dzm
+         spZg9AAIoWIUaIgeptt6I36p76dwQh+CRqxdfqGa+HBtAmKEZvP17Jqolm3jp90sHD59
+         /Go1sGG8dWIVSPaUqkiza1Ml0QungHB+RV/xPqjB+Nm5u+Raelhc0DajSllHeE+aCGPN
+         n03w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=bod1FpFujQemY4tdbiDIKeVUbtr7eOMXD4r3xG9Hv5g=;
-        b=RkOL3HCgc6CHRDE+Rpc/q+cCGYR5G1NPFU0cbkK8dDU+djBVOsaJdMrVgO/TVCfCMy
-         B9PgJagbqcX6fV2Sg7ivSveQkM2An0Js6vmM24UH/XpWSJNzstqQhVrYSSIkp8SySRlY
-         fDy1xAmkPeQ9kwZLviDHER4Xdcbngd/oYl4ND5MCp/ouDZSN5MGyKFYHu97LQPjUSKYt
-         R9cZP5FRIz30UPgiRKczrOmRV0cEKAL7B1p8vwDd5++3+HSAgDh3Zg5MX7HVvxErAHvy
-         E9WTkohJGAxsja2JFw5FZBImdjdHU4IcIo3tQQYDz/n18fXNzxVG+hQ6iV/Ziu9YpphW
-         beqw==
-X-Gm-Message-State: APjAAAWoo23WU8A6OcmHEQK69j1C5i+4flYpuZ7615/k9QetKlMSnWs3
-        fdTZtUd5ntYdhNyJRwTpXkw+D6Qs
-X-Google-Smtp-Source: APXvYqwWYhZuMGThFFb9QEizI9YD4c4kBzdy56M7nSGYi/ZiX69gUgk5EJQSZEOJqJV/zgXJw/CRKw==
-X-Received: by 2002:a5d:5048:: with SMTP id h8mr20149819wrt.280.1569227602693;
-        Mon, 23 Sep 2019 01:33:22 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=cqbjFdas5iAFxs9Qje7GsOGHGSNrZCQXW8lY5D5fQg4=;
+        b=ti/YMjIZyNSgdls6qMJDuZo27RuC4cP9ZPMJXtno/cbJb69ISvdfEarVEN/vzpPqZ5
+         sys2En95XzenN5GF4u8MEedDVm9iYNwMCt0SWe/3c4/xW3Q3XmRC9+TVGl7zQE/BKIWZ
+         dXXmHVJZBkKSlvHW89TenBQ4xb6qt4JAmLjR2BGqoASpd6LEwzIzlrFTPZE6l8/zjbB1
+         ugI89TW5IWB6Q/6ByvH/W2CgJqJDfxoPbS9Vas/sA8Zm++ho+D9Q8j47YNoezcbPGr7b
+         mDhRibBfaVL3jZyLNDCT++QWd9eJZVqJdh/XRkNIVyBtvCrRXWSrKS4yIsLKYpK3XBup
+         5hpA==
+X-Gm-Message-State: APjAAAVZw8EcY2J+g76RiBGB2UBnobIrbUPg4GA1Jv+Uwfhr7U/osMtQ
+        5v2PdZ+NA6EU45HXDCy9I9qoBcic
+X-Google-Smtp-Source: APXvYqxqgJS7tfktj8LZ0z0urUoVscsVbxY1rOYZycQBnfVk7yw2wAqktdRDJmQar1mVasGRS4CyrA==
+X-Received: by 2002:a5d:6302:: with SMTP id i2mr9549926wru.249.1569227603325;
+        Mon, 23 Sep 2019 01:33:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y19sm9084503wmi.13.2019.09.23.01.33.22
+        by smtp.gmail.com with ESMTPSA id d9sm13508110wrf.62.2019.09.23.01.33.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Mon, 23 Sep 2019 01:33:22 -0700 (PDT)
 Date:   Mon, 23 Sep 2019 01:33:22 -0700 (PDT)
-X-Google-Original-Date: Mon, 23 Sep 2019 08:33:19 GMT
-Message-Id: <pull.347.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Mon, 23 Sep 2019 08:33:20 GMT
+Message-Id: <fe850a8cd597e48bf023f7a3b025fe497f9d6153.1569227601.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.347.git.gitgitgadget@gmail.com>
+References: <pull.347.git.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/2] t0028 fix test + more tests
+Subject: [PATCH 1/2] t0028: fix test for UTF-16-LE-BOM
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 1/2: t0028: fix test for UTF-16-LE-BOM Commit 2/2: t0028: add more
-tests Please refer to individual commit messages for more information.
+From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-Alexandr Miloslavskiy (2):
-  t0028: fix test for UTF-16-LE-BOM
-  t0028: add more tests
+According to its name, the test its designed for UTF-16-LE-BOM.
+However, possibly due to copy&paste oversight, it was using UTF-32 file.
 
- t/t0028-working-tree-encoding.sh | 41 +++++++++++++++++++++++++++++++-
- 1 file changed, 40 insertions(+), 1 deletion(-)
+While the test succeeds (probably interprets extra \x00\x00 as embedded
+zero), I myself had an unrelated problem which caused the test to fail.
+When analyzing the 	failure I was quite puzzled by the fact that the
+test is obviously bugged. And it seems that I'm not alone:
+https://public-inbox.org/git/CAH8yC8kSakS807d4jc_BtcUJOrcVT4No37AXSz=jePxhw-o9Dg@mail.gmail.com/T/#u
 
+This fix changes the test to follow its original intention.
 
-base-commit: 4c86140027f4a0d2caaa3ab4bd8bfc5ce3c11c8a
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-347%2FSyntevoAlex%2F%230189_t0028_fixes-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-347/SyntevoAlex/#0189_t0028_fixes-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/347
+Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+---
+ t/t0028-working-tree-encoding.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
+index 1090e650ed..5493cf3ca9 100755
+--- a/t/t0028-working-tree-encoding.sh
++++ b/t/t0028-working-tree-encoding.sh
+@@ -40,7 +40,7 @@ test_expect_success 'setup test files' '
+ 	printf "$text" | write_utf16 >test.utf16.raw &&
+ 	printf "$text" | write_utf32 >test.utf32.raw &&
+ 	printf "\377\376"                         >test.utf16lebom.raw &&
+-	printf "$text" | iconv -f UTF-8 -t UTF-32LE >>test.utf16lebom.raw &&
++	printf "$text" | iconv -f UTF-8 -t UTF-16LE >>test.utf16lebom.raw &&
+ 
+ 	# Line ending tests
+ 	printf "one\ntwo\nthree\n" >lf.utf8.raw &&
 -- 
 gitgitgadget
+
