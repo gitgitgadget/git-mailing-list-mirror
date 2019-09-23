@@ -2,110 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89CC41F463
-	for <e@80x24.org>; Mon, 23 Sep 2019 18:59:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71DE21F463
+	for <e@80x24.org>; Mon, 23 Sep 2019 19:15:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733155AbfIWS7W (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Sep 2019 14:59:22 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41918 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733182AbfIWS7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Sep 2019 14:59:15 -0400
-Received: by mail-wr1-f66.google.com with SMTP id h7so15176165wrw.8
-        for <git@vger.kernel.org>; Mon, 23 Sep 2019 11:59:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=oD5+hjSNO5iE99+G2wym9QLK6FpjPEYeEdJumX5TTNM=;
-        b=QMJ0//gdIF5cnTp1olSOrG/df31Ivr+2X1XPEDWyRcJc0KExIwrH9rR7THhqeEY3+R
-         vi1lcA0g0tFoWCEnLTON2ivQvwZhRKJZnE3GL2ABcpZe3Ec6yfKNv4gJu8AUWixiJFff
-         Rf3/Hdm306FbrhQj5UhcTPWgx//22ZxXAZZGoqydmTBXecqfBeimjG/h+nWNMD8Dj3+2
-         P9tw49pzMmEiowRIEJzJLNXA5KaG3oK4iPL6MXMkRUrcGIcC2SqELqgBkxagVx2Hq2xV
-         wIXFfnV88SZmTS2wAEN2AfQuAKuOnpbO/MfM27EpQaBcW9hULAb3582y2evU+773HcwD
-         /gPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=oD5+hjSNO5iE99+G2wym9QLK6FpjPEYeEdJumX5TTNM=;
-        b=nnOmiZMU//3kXA0oab19X6I65PVaLaY9V2ULQFKpaLExf6hj15bRXl8X3ecuo/HWzd
-         vecssrO2xCNtG6qG3CY9vVDhT9ORqcnQGIlr4BZCTWStF4ZcNkFHB7ncnzTb5sqFQDlU
-         8cC3OvRxRvG/Mx/F2c+g3pcPMkoWkhwLP1/009eh0bwLqMXzb2H1AWTYLyY5DNor/qql
-         egLgh3DyVb5x6f/Dr9/bNen6swpTdeKtug7OzwyQxPy00AkDXmvc/baWr6kP4oXHut9q
-         ZOdAeKpEDTeBU5Arr6I4LgdnujFGNXxvIilcJON6At9cDMyEjKZO3hfjUZXo9MP2GW5u
-         UoCg==
-X-Gm-Message-State: APjAAAU75PgRQHFUDnQlS2BlvtAOf0cZTEoO0kV3eHcIOT+/1QYmMSuU
-        aNdJBVuq1oEAF2SdJxysnQxbDs9o
-X-Google-Smtp-Source: APXvYqwS5zh7VyyAlLR3f+bI184wDlszYN+Fo5Bupiy2RMJMN0a6Wcg9QR/b/67hJhrRHZuqzOE0Hw==
-X-Received: by 2002:a5d:4d42:: with SMTP id a2mr635846wru.89.1569265151443;
-        Mon, 23 Sep 2019 11:59:11 -0700 (PDT)
-Received: from szeder.dev (x4db53381.dyn.telefonica.de. [77.181.51.129])
-        by smtp.gmail.com with ESMTPSA id 189sm25114935wma.6.2019.09.23.11.59.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Sep 2019 11:59:10 -0700 (PDT)
-Date:   Mon, 23 Sep 2019 20:59:08 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 08/15] name-rev: pull out deref handling from the
- recursion
-Message-ID: <20190923185908.GB2637@szeder.dev>
-References: <20190919214712.7348-1-szeder.dev@gmail.com>
- <20190919214712.7348-9-szeder.dev@gmail.com>
- <5bf3b958-8c95-ae3d-1ae5-df3d57272d8c@web.de>
- <20190920181302.GA26402@szeder.dev>
- <20190920181407.GB26402@szeder.dev>
- <20190921095718.GA23203@szeder.dev>
- <a507bbd1-88cf-6668-908e-92978fb77930@web.de>
- <20190922190511.GB10866@szeder.dev>
- <822d19dc-5202-b67f-5c0c-e5c69a679237@web.de>
+        id S1727191AbfIWTPL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Sep 2019 15:15:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57464 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726033AbfIWTPL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Sep 2019 15:15:11 -0400
+Received: (qmail 29418 invoked by uid 109); 23 Sep 2019 19:15:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 23 Sep 2019 19:15:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3799 invoked by uid 111); 23 Sep 2019 19:17:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Sep 2019 15:17:32 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 23 Sep 2019 15:15:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Git in Outreachy December 2019?
+Message-ID: <20190923191509.GC21344@sigill.intra.peff.net>
+References: <20190913205148.GA8799@sigill.intra.peff.net>
+ <20190920170448.226942-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <822d19dc-5202-b67f-5c0c-e5c69a679237@web.de>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20190920170448.226942-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 23, 2019 at 08:43:11PM +0200, René Scharfe wrote:
-> > It's overall memory usage, the avarage of five runs of:
-> >
-> >   /usr/bin/time --format='%M' ~/src/git/git name-rev --all
-> >
-> >> And how much is that in absolute terms?
-> >
-> > git:     29801 ->  28514
-> > linux:  317018 -> 332218
-> > gcc:    106462 -> 114140
-> > gecko:  315448 -> 344486
-> > webkit:  55847 ->  62780
-> > llvm:   112867 -> 134384
-> 
-> I only have the first two handy, and I get numbers like this with
-> master:
-> 
-> git, lots of branches with long names: 3075476
-> git, local clone, single branch:       1349016
-> linux, single branch:                  1520468
-> 
-> O_o
+On Fri, Sep 20, 2019 at 10:04:48AM -0700, Jonathan Tan wrote:
 
-I have commit graph present and enabled.  Without that I get approx.
-the same memory usage in my linux repo as you did (along with much
-longer runtime).
+> > I'm happy to discuss possible projects if anybody has an idea but isn't
+> > sure how to develop it into a proposal.
+> 
+> I'm new to Outreachy and programs like this, so does anyone have an
+> opinion on my draft proposal below? It does not have any immediate
+> user-facing benefit, but it does have a definite end point.
+> 
+> Also let me know if an Outreachy proposal should have more detail, etc.
+> 
+>     Refactor "git index-pack" logic into library code
+> 
+>     Currently, whenever any Git code needs a pack to be indexed, it
+>     needs to spawn a new "git index-pack" process, passing command-line
+>     arguments and communicating with it using file descriptors (standard
+>     input and output), much like an end-user would if invoking "git
+>     index-pack" directly. Refactor the pack indexing logic into library
+>     code callable from other Git code, make "git index-pack" a thin
+>     wrapper around that library code, and (to demonstrate that the
+>     refactoring works) change fetch-pack.c to use the library code
+>     instead of spawning the "git index-pack" process.
+> 
+>     This allows the pack indexing code to communicate with its callers
+>     with the full power of C (structs, callbacks, etc.) instead of being
+>     restricted to command-line arguments and file descriptors. It also
+>     simplifies debugging in that there will no longer be 2
+>     inter-communicating processes to deal with, only 1.
 
-Will have to clarify this in the commit messages that talk about
-runtime and memory usage.
+I think this is an OK level of detail. I'm not sure quite sure about the
+goal of the project, though. In particular:
 
+  - I'm not clear what we'd hope to gain. I.e., what richer information
+    would we want to pass back and forth between index-pack and the
+    other processes? It might also be more efficient, but I'm not sure
+    it's measurably so (we save a single process, and we save some pipe
+    traffic, but the sideband demuxer would probably end up passing it
+    over a self-pipe anyway).
+
+  - index-pack is prone to dying on bad input, and we wouldn't want it
+    to take down the outer fetch-pack or receive-pack, which are what
+    produce useful messages to the user. That's something that could be
+    fixed as part of the libification, but I suspect the control flow
+    might be a little tricky.
+
+  - we don't always call index-pack, but sometimes call unpack-objects.
+    I suppose we could continue to call an external unpack-objects in
+    that path, but that eliminates the utility of having richer
+    communication if we sometimes have to take the "dumb" path. A while
+    ago I took a stab at teaching index-pack to unpack. It works, but
+    there are a few ugly bits, as discussed in:
+
+      https://github.com/peff/git/commit/7df82454a855281e9c147f3023225f8a6f72e303
+
+    Maybe that would be worth making part of the project?
+
+-Peff
