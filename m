@@ -2,182 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0D751F463
-	for <e@80x24.org>; Mon, 23 Sep 2019 18:38:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D0241F463
+	for <e@80x24.org>; Mon, 23 Sep 2019 18:43:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728032AbfIWSiO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Sep 2019 14:38:14 -0400
-Received: from mail-wr1-f44.google.com ([209.85.221.44]:35613 "EHLO
-        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727376AbfIWSiO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Sep 2019 14:38:14 -0400
-Received: by mail-wr1-f44.google.com with SMTP id v8so15154836wrt.2
-        for <git@vger.kernel.org>; Mon, 23 Sep 2019 11:38:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=znS9QyrOOrBM1N1+PlXYLCAP3WtaFdeiJcLDcKjNdzM=;
-        b=DxH0yfHEISRaWdwdrMkR6v/5uAldbIUu478QannAIF/VsXpVO7xE7LEjpCNO43FXrq
-         cbC98zFumnHIDatjcQfWjNY+1Nqao3kQaDcOI3HzTpShWALcgc5aRUk0RNJUIx8lvXbX
-         dtJfW8654VwAvhbFv4bYK4NfBfUulRFsCK8wPf30pErCEh4CyRf/7Lyu0uQU3gAMH4L1
-         LtTuyETttpcKL5lMvG60iIt/Z9v5q1cqUKB+zn/d5Seii2VvExKW+g5BzWPGahHF8Aih
-         OEcYTgwkQURzeFNZSzp8fsxytlAXV5nMEApNiocuy2bITxVAAwT1gD7D3EaZO3U13g5s
-         xNwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=znS9QyrOOrBM1N1+PlXYLCAP3WtaFdeiJcLDcKjNdzM=;
-        b=tM9sqDsmPR3WWnCKKmf6r6KpQqO+N3SzTc7mhA1bf3X+j8W9KpQhb84wMDJHiI/pYh
-         JCDa8/brp9Wc2qBrRebbIyQ7fTRwIYGOkmp8zunu4r3nATNQJ1CnDA2w4RhGMkaH4wc5
-         XLc92WyQJ389TcohjXanh4ZuUmBtso7C/qai7/4k7cc+yqQ3/njfPqYCdhj2VZDkvd5x
-         rctdc09sPCftyl6yKh2x+3WlQYh1rpEgIOC8xeISfSAxIu53CWUJUMcjA6IvaUNHkrt7
-         M7O0MCAAtJva4uHAiW33mQ5k4nY7z/b4YjzGsWBD42Sr0GOpAViKwIlhLefz6NVfF1s1
-         MTUg==
-X-Gm-Message-State: APjAAAW161nTthl6d9StB3sw15ub7thrVr60R6b1ouAdL/ymc8ye3m22
-        OGl35Sq2NmegGqWfPwPVmJI=
-X-Google-Smtp-Source: APXvYqzSE/S7umPIhSFjMP0fskQcdqrPATpBJcLq7w2Pza8hl95600lR6a7rXrr2BiVWNSB7FRzRiw==
-X-Received: by 2002:adf:ea47:: with SMTP id j7mr608079wrn.394.1569263892159;
-        Mon, 23 Sep 2019 11:38:12 -0700 (PDT)
-Received: from szeder.dev (x4db53381.dyn.telefonica.de. [77.181.51.129])
-        by smtp.gmail.com with ESMTPSA id g11sm12838835wmh.45.2019.09.23.11.38.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Sep 2019 11:38:11 -0700 (PDT)
-Date:   Mon, 23 Sep 2019 20:38:06 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeffrey Walton <noloader@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: How to see command line arguments passed to program in
- core.sshcommand?
-Message-ID: <20190923183806.GA2637@szeder.dev>
-References: <CAH8yC8nVBcBntJVZ6eV+YxoBpZRx+ecC2JxGuunhxNbY2cGyFQ@mail.gmail.com>
- <20190923092417.GF10866@szeder.dev>
- <CAH8yC8mT+rArXBKPb1w2c74ZMRWZsc75x=52fmcpGuE6NBOhCQ@mail.gmail.com>
+        id S1726967AbfIWSnX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Sep 2019 14:43:23 -0400
+Received: from mout.web.de ([212.227.15.4]:41629 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726206AbfIWSnW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Sep 2019 14:43:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1569264196;
+        bh=CyCBtteJ9Jw+HmhAZGGxwjbs8wpqWeP+25I2SV7exDE=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=VyV7T7ER8P0DI1pDdYuYSii75xSDfJ8YDwFyWVGHo59m8y1Vvewj/z28iP/S6LkJN
+         h5oDPZu9xmmFB319WQUhTQpEBpR814QNSY0fQFDRxJorehUQzKuiPRgoVe2KOlmwBx
+         VaWCRiKBp4jWXANppTA52eCT5ZJvwwWr0NRe0xxo=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MhfoB-1iYnNn0RWd-00MuWb; Mon, 23
+ Sep 2019 20:43:16 +0200
+Subject: Re: [PATCH 08/15] name-rev: pull out deref handling from the
+ recursion
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20190919214712.7348-1-szeder.dev@gmail.com>
+ <20190919214712.7348-9-szeder.dev@gmail.com>
+ <5bf3b958-8c95-ae3d-1ae5-df3d57272d8c@web.de>
+ <20190920181302.GA26402@szeder.dev> <20190920181407.GB26402@szeder.dev>
+ <20190921095718.GA23203@szeder.dev>
+ <a507bbd1-88cf-6668-908e-92978fb77930@web.de>
+ <20190922190511.GB10866@szeder.dev>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <822d19dc-5202-b67f-5c0c-e5c69a679237@web.de>
+Date:   Mon, 23 Sep 2019 20:43:11 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
+In-Reply-To: <20190922190511.GB10866@szeder.dev>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAH8yC8mT+rArXBKPb1w2c74ZMRWZsc75x=52fmcpGuE6NBOhCQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:DzVAYRwPOLrdAiI0MOoBxqqs8RlCeyYS9sSlSji1lAjgoW0F0wU
+ H1rTS/YltGqd9HqUwNWYDHcfpndsbI3+Ghd76HAfSUtXuWHJWlOzk2fQxNt7UK70vro0J8U
+ Rg+dK0lhGKUfgVw4nS2hHrKhRJKP1HakQTfwkaNe+PZBD8AbnMnhD45Lz6cZxXvDho4mIIh
+ xHanjdqIMnRu7wwo/094A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:eK+2eMIl1No=:6KDGqiAg/L2lSG83ijkFcO
+ YtmhMIE4sf7Ql4aegkkcsu/W570Lqu9NoLstqv/yCQovahS+cnemKNrVm26fWdu1VzTrCUcw0
+ 1b0c1se3x/G0Av0cXfudWOR9cwkvUqm8RcozTpCDX+6mCxcOEOHES6JX0zAbShdrqChGKCQ0E
+ KpCTng+r3JafhSKyxNEByyxBDnPtDmzRrXR7eSM+3++rNimtbXGkYfo6INpXdZKeOpORAib4k
+ hGoXsv/TNvx70iOUFChq0bwH5WizpluwwMFTMvnc6Nxy0UQa7Wg3GDMkSz5Ew81ayKWbwyRYa
+ Y4V5/JqDU78n03MCXJmZwmqUVSiy8B+6XLyRszK28RLKs5prxeD2w0BH1ypAufpZBNVuOluZi
+ nmTXX8GA6GTnvOp90WLBhof+pGRemLv34+Vp8Gh1hVfSZPZfblylrvhmHyXHBRhTUFcFZhezS
+ 22i5ghbnf96BKKHcZZxZ/X6LAfxhy+0VsAo08kvrRABNtnWuFlepkj7lfvwmO9UKaLQrtGI/5
+ 1XIClmLOcD/Av7XVFpxlemY3bnh6BVxNET9fZNynqxNhB7Rrye4idhhYDd7OXJYwfSF3wA8RC
+ PFIOzowZWb2Nem1gn5SnHEaminFSCaXZSIfFsCETUA/QjcwFNLAQUuI8xa3Kr5bCengyg9Bho
+ rBwW/j5XOKywp2TzLTQoYOe+hGhnbLHOOmZwI9lFaqkw5t8QBpknghESjgZ9fogJetJlErAvc
+ ybDr9IEtavMPvlFLHHsNDcjCYWKjNh9O3vqcSKfOkI/N4/+7Ac6WaMwovMaDJnnYeRjUb77Qq
+ pqyZLX3TWwsmztRXIbtiCgoJUPJ/E8oB7quJGJWU4YVBaTIRwFk2mPIrJ4SbLYnPOLZn7M7Iw
+ CMUtwm5KdAjll/89hjZHs0Bo+DaeM1HAT/F0CmeE2Jz0ViXTOVV6jZNqhth4AoWw7yOoV7eop
+ Q9DyOYqsfC6lcO4rD6gSaegvlwq72ntUoc2TW4Lj9iE7qNhIKYheG7De9d7gyTc/kIrkpLKNX
+ qSsGZW8VegBkkPsZ89o07E4j6IvJNRtsTckLPfNuUjEV9AtmIFsw7LIYhnd+emsXFSsZ449jF
+ C+EvE3mGeRDzL5eooeHBPv+Cd9auvZ59WGMbYvpdVpmWmb8ZvQ5pp5pqEMnSTPv5aduZVzrVX
+ 5h5wRzYRxW8Ms0670EmMXfuSBFZxaD12bZikwfD2FfAUJqOBFpWJ56QsoXmb8Vo+PnQ8ksa2+
+ AaU1O5Qx+fTZRFy69p9vtI2L53g/EATnIXWU5XQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 23, 2019 at 01:18:39PM -0400, Jeffrey Walton wrote:
-> (A) core.sshCommand:
-> 
->     sshcommand = "C:\\Users\\Jeffrey Walton\\Desktop\\test_tunnel.exe"
-> 
-> Result:
-> 
-> $ GIT_TRACE=1 git clone ssh://jeffrey.walton@example.com:22480/main
-> ...
-> Cloning into 'main'...
-> 11:44:32.192382 run-command.c:663       trace: run_command: unset
-> GIT_DIR; 'C:\Users\Jeffrey Walton\Desktop\test_tunnel.exe' -p 22480
-> jeffrey.walton@example.com 'git-upload-pack '\''/main'\'''
-> C:\Users\Jeffrey Walton\Desktop\test_tunnel.exe: C:UsersJeffrey:
-> command not found
-> fatal: Could not read from remote repository.
-> 
-> =====
-> 
-> (B) core.sshCommand:
-> 
->     sshcommand = "C:\\\\Users\\\\Jeffrey Walton\\\\Desktop\\\\test_tunnel.exe"
-> 
-> Result:
-> 
-> $ GIT_TRACE=1 git clone ssh://jeffrey.walton@example.com:22480/main
-> ...
-> Cloning into 'main'...
-> 11:45:59.161132 run-command.c:663       trace: run_command: unset
-> GIT_DIR; 'C:\\Users\\Jeffrey Walton\\Desktop\\test_tunnel.exe' -p
-> 22480 jeffrey.walton@example.com 'git-upload-pack '\''/main'\'''
-> C:\\Users\\Jeffrey Walton\\Desktop\\test_tunnel.exe: C:\Users\Jeffrey:
-> No such file or directory
-> fatal: Could not read from remote repository.
-> 
-> =====
-> 
-> (C) core.sshCommand:
-> 
->     sshcommand = "C:\\\\Users\\\\JEFFRE~1\\\\Desktop\\\\TEST_T~1.EXE"
-> 
-> Result:
-> 
-> $ GIT_TRACE=1 git clone ssh://jeffrey.walton@example.com:22480/main
-> ...
-> Cloning into 'main'...
-> 11:47:49.973632 run-command.c:663       trace: run_command: unset
-> GIT_DIR; 'C:\\Users\\JEFFRE~1\\Desktop\\TEST_T~1.EXE' -p 22480
-> jeffrey.walton@example.com 'git-upload-pack '\''/main'\'''
-> Arg 1: 'C:\Users\JEFFRE~1\Desktop\TEST_T~1.EXE'
-> Arg 2: '-p'
-> fArg 3: '22480'
-> atal: pArg 4: 'jeffrey.walton@example.com'
-> rotocol error:Arg 5: 'git-upload-pack '/main''
->  bad line length character: Test
-> 
-> =====
-> 
-> (A) is stripping quotes but they are needed for Windows long file
-> names. (A) also seems to be double-escaping slashes.
-> 
-> (B) is also stripping quotes. (B) works around the double-escaping slashes.
-> 
-> (C) works around stripping quotes by using short filenames. (C) also
-> works around the double-escaping slashes.
-> 
-> I did not find a git-path or git-filename man page. Most of this
-> appear undocumented (to me).
-> 
-> From a usability point of view, Windows long filenames have been
-> around since at least 1995. This is how Windows users expect things to
-> work for the last couple of decades:
-> 
->     shcommand = "C:\Users\Jeffrey Walton\Desktop\test_tunnel.exe"
-> 
-> or
-> 
->     shcommand = "C:\\Users\\Jeffrey Walton\\Desktop\\test_tunnel.exe"
-> 
-> In contrast, this would not need quotes:
-> 
->     shcommand = C:\Users\Jeff\Desktop\test_tunnel.exe
+Am 22.09.19 um 21:05 schrieb SZEDER G=C3=A1bor:
+> On Sat, Sep 21, 2019 at 02:37:18PM +0200, Ren=C3=A9 Scharfe wrote:
+>> Am 21.09.19 um 11:57 schrieb SZEDER G=C3=A1bor:
+>>> On Fri, Sep 20, 2019 at 08:14:07PM +0200, SZEDER G=C3=A1bor wrote:
+>>>> On Fri, Sep 20, 2019 at 08:13:02PM +0200, SZEDER G=C3=A1bor wrote:
+>>>>>> If the (re)introduced leak doesn't impact performance and memory
+>>>>>> usage too much then duplicating tip_name again in name_rev() or
+>>>>>> rather your new create_or_update_name() would likely make the
+>>>>>> lifetimes of those string buffers easier to manage.
+>>>>>
+>>>>> Yeah, the easiest would be when each 'struct rev_name' in the commit
+>>>>> slab would have its own 'tip_name' string, but that would result in
+>>>>> a lot of duplicated strings and increased memory usage.
+>>>>
+>>>> I didn't measure how much more memory would be used, though.
+>>>
+>>> So, I tried the patch below to give each 'struct rev_name' instance
+>>> its own copy of 'tip_name', and the memory usage of 'git name-rev
+>>> --all' usually increased.
+>>>
+>>> The increase depends on how many merges and how many refs there are
+>>> compared to the number of commits: the fewer merges and refs, the
+>>> higher the more the memory usage increased:
+>>>
+>>>   linux:         +4.8%
+>>>   gcc:           +7.2%
+>>>   gecko-dev:     +9.2%
+>>>   webkit:       +12.4%
+>>>   llvm-project: +19.0%
+>>
+>> Is that the overall memory usage or just for struct rev_name instances
+>> and tip_name strings?
+>
+> It's overall memory usage, the avarage of five runs of:
+>
+>   /usr/bin/time --format=3D'%M' ~/src/git/git name-rev --all
+>
+>> And how much is that in absolute terms?
+>
+> git:     29801 ->  28514
+> linux:  317018 -> 332218
+> gcc:    106462 -> 114140
+> gecko:  315448 -> 344486
+> webkit:  55847 ->  62780
+> llvm:   112867 -> 134384
 
-Git's configuration file format allows optional double quotes around
-the values of configuration variables.  Consequently all double quotes
-in your examples above are treated as part of the file format and are
-removed; you have to escape them if you want to keep them:
+I only have the first two handy, and I get numbers like this with
+master:
 
-  [foo]
-        one = "inside double quotes"
-        two = \"need those double quotes\"
-        three = "\"need these double quotes, too\""
+git, lots of branches with long names: 3075476
+git, local clone, single branch:       1349016
+linux, single branch:                  1520468
 
-  $ git config --get foo.one
-  inside double quotes
-  $ git config --get foo.two
-  "need those double quotes"
-  $ git config --get foo.three
-  "need these double quotes, too"
+O_o
 
+>> (Perhaps
+>> it's worth it to get the memory ownership question off the table at
+>> least during the transformation to iterative processing.)
+>
+> I looked into it only because I got curious, but other than that I
+> will definitely play the "beyond the scope of this patch series" card
+> :)
 
-> If there is extra work to be done, then I think the program should do
-> it, not the user. I believe Git should preserve the quotes in a long
-> filename.
-> 
-> A fallback is to call GetShortPathName, but it is an incomplete
-> remediation because short name aliases can be turned off. If short
-> filenames were disabled on my system then the workaround would not
-> work.
-> 
-> Jeff
+Fair enough.
+
+>> I wonder why regular commits even need a struct name_rev.  Shouldn't
+>> only tips and roots need ones?  And perhaps merges and occasional
+>> regular "checkpoint" commits, to avoid too many duplicate traversals.
+>
+> The 'struct rev_name' holds all info that's necessary to determine the
+> commit's name.  It seems to be much simpler to just attach one to each
+> commit and then retrieve it from the commit slab when printing the
+> name of the commit than to come up with an algorithm where only a
+> sleect set of commits get a 'struct rev_name', including how to access
+> those when naming a commit that doesn't have one.
+
+Sure, the lookup of individual commits is much easier once all commits
+have name tags attached.  Preparing that sounds expensive, though.
+It's a trade-off favoring looking up lots of names per program run.
+
+>>>  --- >8 ---
+>>>
+>>> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+>>> index 6969af76c4..62ab78242b 100644
+>>> --- a/builtin/name-rev.c
+>>> +++ b/builtin/name-rev.c
+>>> @@ -88,6 +88,7 @@ static struct rev_name *create_or_update_name(struct=
+ commit *commit,
+>>>  		set_commit_rev_name(commit, name);
+>>>  		goto copy_data;
+>>>  	} else if (is_better_name(name, taggerdate, distance, from_tag)) {
+>>> +		free((char*) name->tip_name);
+>>>  copy_data:
+>>>  		name->tip_name =3D tip_name;
+>>
+>> I would have expected a xstrdup() call here.
+>
+> But then we'd needed to release the results of all those xstrfmt()
+> calls at the callsites of create_or_update_name(), so instead of those
+> strdup() calls that you deem unnecessary we would need additional
+> free() calls.
+
+Correct.  That would be simpler and shouldn't affect peak memory
+usage.
+
+Ren=C3=A9
