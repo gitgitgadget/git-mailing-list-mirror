@@ -8,101 +8,95 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79A171F463
-	for <e@80x24.org>; Mon, 23 Sep 2019 07:26:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE4221F463
+	for <e@80x24.org>; Mon, 23 Sep 2019 08:28:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393482AbfIWH05 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Sep 2019 03:26:57 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37891 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393460AbfIWH05 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Sep 2019 03:26:57 -0400
-Received: by mail-wm1-f67.google.com with SMTP id 3so7993859wmi.3
-        for <git@vger.kernel.org>; Mon, 23 Sep 2019 00:26:55 -0700 (PDT)
+        id S2404845AbfIWI2h (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Sep 2019 04:28:37 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42728 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392172AbfIWI2h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Sep 2019 04:28:37 -0400
+Received: by mail-wr1-f66.google.com with SMTP id n14so12849555wrw.9
+        for <git@vger.kernel.org>; Mon, 23 Sep 2019 01:28:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=BQSwWHGsdf3U7XGa9SXJERdXPVpznw03WNDigUiYQO0=;
-        b=eZatoxRmNGdZZmBYMKZc7+ZhSg6XhMN62xuD7oOH4+Oa6gD4BlO+OOot5ARp/W7L29
-         YegmJY0vDOvkyAbDbK/pfxVWIZ5ZvcrrTpoEPKA2fN1vCjuYXTBbiPV3wyUoaN4KCOoV
-         5siDVX1etipGuRy/zT2CjrtaVUrhqEvPQXw/Y7HwxND1+c3prUk98iVq+7243ETOm0eA
-         Foc1FnBpR4uW91Ni79avG8eehUvVBn1FdyR2Qjy07JGNrQEH6jP1gcHtoUIbQSw4sNLt
-         M/ENcsmBHiTRaU60SF5BF5cOc43WWFNChHxr02vKZohEjyFZm7fBjLHlVTcqlqkxVm1v
-         IBeQ==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=CQBYS6+aj3t2CcUJVdcAtk7VaTe2uPZjluqgccCFpqw=;
+        b=nnjsbi7nyrda3j41X0GJUbx6luPBTOTesBApFvr/OnMnA+Hcql6xd5tXftzYOg9C9O
+         korcSi6Om52U/QlO/lPrzOXJ9N3S0viPcCg9upn/XF9LnhlhB2GxlEGLub7E54dRQI8Z
+         5CUdFqDjWGxNcriIBtIED0Z+mwPZttwhPzSHfYSqSlaEZs162woeXudnVymOc66fEdxX
+         ZwjfkMxLm9N2Fgy4rwoebvGflVWonz9nD8wAbOsp0kE9kdGl3jLgq6AUI+fXfxzsPmFu
+         pgMmNPL/Fzvh9iMaBFoF6Vt/OPy5br4pNYqJiBWM4sQoS/me5tE64QGbaoM8MsD+B+33
+         KDog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=BQSwWHGsdf3U7XGa9SXJERdXPVpznw03WNDigUiYQO0=;
-        b=Az3eFhYL2GTuYze2QVWD80m+382x6bwSIIGmVnE971d6LAsSr1j0yisMobdtbiJxzR
-         zBe+ayOKs7usulkjc/ngkpLr+JbH0+L4I6E/APB6sZAnn3ch0WnuraFfXiHeNw9cW6ZJ
-         PgLiPi9XyJb9zomGOY3ammOl0GUsAEuvXpFPF43RqtbwFgCIrNdAAekqKWZJZu7WNEg5
-         87VCGRqRaV6MK4OXv0Crm77KxRQy6GCnx2V0B/YU46FYBhfeMtXVzv3/mBe+PihAL/Ug
-         xsO3B7JYZNQo4//7OAjoc7kh/fWtu9W9cRA9DitCwSs/h2SWKZhp2LknOfBaQHKvoUKs
-         dppA==
-X-Gm-Message-State: APjAAAVTUTBnS52uKYYLkLbPKbJBmotELtkHdmX8KhpH16VjYlbq4eB3
-        GtXBPymXY2areNLCqY8sxlIBN29I
-X-Google-Smtp-Source: APXvYqx1nNNSwPrdtBJaT28BisxlrUdxzJnVa/mQR41tPGFgwqAREer/hzImeDf6VeDtQGjZN1JU7Q==
-X-Received: by 2002:a7b:c35a:: with SMTP id l26mr951732wmj.81.1569223614800;
-        Mon, 23 Sep 2019 00:26:54 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=CQBYS6+aj3t2CcUJVdcAtk7VaTe2uPZjluqgccCFpqw=;
+        b=pSILmGoEpyzcSsAT1X0qJCnso2Wd5+D9j/5OZ7OVORQjolUBjDqD7vTRitIbe3rpxO
+         yvXOK4sWazENuJoy8pe1ToLTEt+qWQ3HPHWtCQMI/ae5Z2ahM4jm+R+PQ5go+iyOW90f
+         YhU/9h+9ytXKIAqwxys4EEoMPQPf4sB0UZ3BuMsmPRAlFCw9rvknIcCz2l9FC3oC8GuY
+         ZUq/u3ecuaZDe6oGf5mU6MN9vvR4ENlwPgKNspWtoGyngMnRbISp7gFCGBeuXv1E7LR6
+         iNp4Mts0s1oQvNQ/PG438K+RZkhgvtLRimQk07idBq0USQo3DmvBCoK8Ph9MyHPq+j/A
+         aS7w==
+X-Gm-Message-State: APjAAAVTuuIQbfO+ZmgYlgcjA2t43QxHi0JMqH5mtO0CDuttmWzK5B1B
+        iPZWRk/rAtOn00PwvimcepWj0eGQ
+X-Google-Smtp-Source: APXvYqwwTJ3kZaNqJwWk4TYoZFpmxHaTx00DNrBH4resraKK8yg6BeIhjCA0SwmhG+V51s4miGFQnA==
+X-Received: by 2002:a5d:458b:: with SMTP id p11mr549777wrq.160.1569227315163;
+        Mon, 23 Sep 2019 01:28:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r2sm8637384wrm.3.2019.09.23.00.26.54
+        by smtp.gmail.com with ESMTPSA id d78sm13633493wmd.47.2019.09.23.01.28.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Sep 2019 00:26:54 -0700 (PDT)
-Date:   Mon, 23 Sep 2019 00:26:54 -0700 (PDT)
-X-Google-Original-Date: Mon, 23 Sep 2019 07:26:52 GMT
-Message-Id: <8edf23f816dc0546fb3b5812573d7a759184206b.1569223612.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.349.git.gitgitgadget@gmail.com>
-References: <pull.349.git.gitgitgadget@gmail.com>
-From:   "Kunal Tyagi via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] git-add--interactive.perl: Add progress counter in the
- prompt
+        Mon, 23 Sep 2019 01:28:34 -0700 (PDT)
+Date:   Mon, 23 Sep 2019 01:28:34 -0700 (PDT)
+X-Google-Original-Date: Mon, 23 Sep 2019 08:28:32 GMT
+Message-Id: <pull.348.git.gitgitgadget@gmail.com>
+From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] contrib/buildsystems: fix Visual Studio Debug configuration
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Kunal Tyagi <tyagi.kunal@live.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Kunal Tyagi <tyagi.kunal@live.com>
+Even though Debug configuration builds, the resulting build is incorrect in
+a subtle way: it mixes up Debug and Release binaries, which in turn causes
+hard-to-predict bugs.
 
-Signed-off-by: Kunal Tyagi <tyagi.kunal@live.com>
----
- git-add--interactive.perl  | 2 +-
- t/t3701-add-interactive.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+In my case, when git calls iconv library, iconv sets 'errno' and git then
+tests it, but in Debug and Release CRT those 'errno' are different memory
+locations.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index c20ae9e210..3951c25a28 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1541,7 +1541,7 @@ sub patch_update_file {
- 		for (@{$hunk[$ix]{DISPLAY}}) {
- 			print;
- 		}
--		print colored $prompt_color,
-+		print colored $prompt_color,"(", $ix+1, "/$num) ",
- 			sprintf(__($patch_update_prompt_modes{$patch_mode}{$hunk[$ix]{TYPE}}), $other);
- 
- 		my $line = prompt_single_character;
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 69991a3168..3a2d9fb607 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -314,7 +314,7 @@ test_expect_success C_LOCALE_OUTPUT 'add first line works' '
- 	git commit -am "clear local changes" &&
- 	git apply patch &&
- 	printf "%s\n" s y y | git add -p file 2>error |
--		sed -n -e "s/^Stage this hunk[^@]*\(@@ .*\)/\1/" \
-+		sed -n -e "s/^(.*) Stage this hunk[^@]*\(@@ .*\)/\1/" \
- 		       -e "/^[-+@ \\\\]"/p  >output &&
- 	test_must_be_empty error &&
- 	git diff --cached >diff &&
+This patch addresses 3 connected bugs: 1) Typo in '(Configuration)'. As a
+result, Debug configuration condition is always false and Release path is
+taken instead. 2) Regexp that replaced 'zlib.lib' with 'zlibd.lib' was only
+affecting the first occurrence. However, some projects have it listed twice.
+Previously this bug was hidden, because Debug path was never taken. I
+decided that avoiding double -lz in makefile is fragile and I'd better
+replace all occurrences instead. 3) In Debug, 'libcurl-d.lib' should be used
+instead of 'libcurl.lib'. Previously this bug was hidden, because Debug path
+was never taken.
+
+Signed-off-by: Alexandr Miloslavskiy alexandr.miloslavskiy@syntevo.com
+[alexandr.miloslavskiy@syntevo.com]
+
+Alexandr Miloslavskiy (1):
+  contrib/buildsystems: fix Visual Studio Debug configuration
+
+ contrib/buildsystems/Generators/Vcxproj.pm | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+
+base-commit: 4c86140027f4a0d2caaa3ab4bd8bfc5ce3c11c8a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-348%2FSyntevoAlex%2F%230188_VisualStudio_Debug_build_fixes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-348/SyntevoAlex/#0188_VisualStudio_Debug_build_fixes-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/348
 -- 
 gitgitgadget
