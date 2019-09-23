@@ -2,112 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F68F1F463
-	for <e@80x24.org>; Mon, 23 Sep 2019 21:12:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FBB11F463
+	for <e@80x24.org>; Mon, 23 Sep 2019 21:28:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502930AbfIWVM5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Sep 2019 17:12:57 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:35738 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388807AbfIWVM5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Sep 2019 17:12:57 -0400
-Received: by mail-pg1-f193.google.com with SMTP id a24so8721680pgj.2
-        for <git@vger.kernel.org>; Mon, 23 Sep 2019 14:12:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EwFsuT9BzkOv/azBmbgN+9rThKqr6ZTzZ7YvU+iRFRw=;
-        b=ZZN91Auj/8Pk7yR/pExanCSfJx9LqmDmyfuEnUhW1Fm6RSu1mP3XAlOqSjvLrAOglT
-         am3hdrO8RMf99xR46SUyb6y+5sCnkGOmv458VwjBXsPhMu2I8TUDjCL1Kmga6KVTYAVr
-         XYut6u3GkMQRJktu9Hp+KWSmQOqTSRkVXFTtUx9LWuDCfxPI3FvJhTUTsu9eJ44/6eSD
-         iFwZY6G+g2LWg9Iv67hksglIUDQLFw7YrUS6CkNwsTXaiPsi5Fx28Yhho27duQ1gvsFF
-         Edn52KOJFmdul599kybGHOfFfTGc511JpuN3R17FLBr4LZ/8XXoNpTIKUwe/kGxULPQg
-         ImeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=EwFsuT9BzkOv/azBmbgN+9rThKqr6ZTzZ7YvU+iRFRw=;
-        b=LNaAjOZF1svZL1tiQMwIX0ezxa1pDbu8hWXUlg77D/LrW7hxjDbrJCiBgQODB9oWMc
-         BoxOM5itwic/RAvzUaMUyDuVhAsGyd18EIqxizY6+7pODkPHcsqm+MiA3XF/gkj7l/my
-         khnCvO//AAHjsfEcqfuYAZBKtGIIn2T5fHZvaXIZrPSOKhFXgjEr9bdipDrgMZMkZhHG
-         TEJblF1oyPCCExzuo5JmKJ1LVm76gAztTiXsJzHs1uzzdeeG6yCLdtYq2AoPjw/xY5cn
-         7OwuLcg4O1Fei6HXgfvLVoZZOrQc6sPreWsiQZyEI/3D8EyurA8sLjtQOdQIwqKHbxpE
-         oCSQ==
-X-Gm-Message-State: APjAAAXlNa/qI9tTqo2jvkETEm2IgBGn+j3tV4EUb4nQhJZutY9n7xoL
-        30jtHy94He5ffNbfXijpvr0=
-X-Google-Smtp-Source: APXvYqxruPcgxGr/zicyo1fVU7w3g/A69HroNw2WmC402HVN7OjUTul5KFfnrQKTU96/za0yj9xbag==
-X-Received: by 2002:a62:870a:: with SMTP id i10mr1682090pfe.259.1569273176963;
-        Mon, 23 Sep 2019 14:12:56 -0700 (PDT)
-Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:8:549d:4edf:133b:7cbf])
-        by smtp.gmail.com with ESMTPSA id 26sm13709454pjg.21.2019.09.23.14.12.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Sep 2019 14:12:56 -0700 (PDT)
-Subject: Re: [PATCH v2 2/6] midx: add progress to write_midx_file Add progress
- to write_midx_file. Progress is displayed when the MIDX_PROGRESS flag is set.
-To:     Junio C Hamano <gitster@pobox.com>,
-        William Baker via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, jeffhost@microsoft.com,
-        William Baker <William.Baker@microsoft.com>
-References: <pull.337.git.gitgitgadget@gmail.com>
- <pull.337.v2.git.gitgitgadget@gmail.com>
- <3bc8677ea7655a3706914f9753c0a3b79dbf7e1f.1568998427.git.gitgitgadget@gmail.com>
- <xmqqlfuiu3sv.fsf@gitster-ct.c.googlers.com>
-From:   William Baker <williamtbakeremail@gmail.com>
-Message-ID: <373fc8e9-2ef3-d501-b6e0-b953e047ac78@gmail.com>
-Date:   Mon, 23 Sep 2019 14:12:54 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:68.0)
- Gecko/20100101 Thunderbird/68.0
+        id S2503099AbfIWV2g (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Sep 2019 17:28:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57588 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1732345AbfIWV2g (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Sep 2019 17:28:36 -0400
+Received: (qmail 30412 invoked by uid 109); 23 Sep 2019 21:28:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 23 Sep 2019 21:28:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4484 invoked by uid 111); 23 Sep 2019 21:30:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Sep 2019 17:30:56 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 23 Sep 2019 17:28:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Git in Outreachy December 2019?
+Message-ID: <20190923212834.GA19504@sigill.intra.peff.net>
+References: <20190923191509.GC21344@sigill.intra.peff.net>
+ <20190923203854.171170-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqlfuiu3sv.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <20190923203854.171170-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/20/19 1:10 PM, Junio C Hamano wrote:
->> diff --git a/midx.c b/midx.c
->> index b2673f52e8..54e4e93b2b 100644
->> --- a/midx.c
->> +++ b/midx.c
->> @@ -449,6 +449,8 @@ struct pack_list {
->>  	uint32_t nr;
->>  	uint32_t alloc;
->>  	struct multi_pack_index *m;
->> +	struct progress *progress;
->> +	uint32_t pack_paths_checked;
->>  };
+On Mon, Sep 23, 2019 at 01:38:54PM -0700, Jonathan Tan wrote:
+
+> I didn't have any concrete ideas so I didn't include those, but some
+> unrefined ideas:
+
+One risk to a mentoring project like this is that the intern does a good
+job of steps 1-5, and then in step 6 we realize that the whole thing is
+not useful, and upstream doesn't want it. Which isn't to say the intern
+didn't learn something, and the project didn't benefit. Negative results
+can be useful; but it can also be demoralizing.
+
+I'm not arguing that's going to be the case here. But I do think it's
+worth talking through these things a bit as part of thinking about
+proposals.
+
+>  - index-pack has the CLI option to specify a message to be written into
+>    the .promisor file, but in my patch to write fetched refs to
+>    .promisor [1], I ended up making fetch-pack.c write the information
+>    because I didn't know how many refs were going to be written (and I
+>    didn't want to bump into CLI argument length limits). If we had this
+>    feature, I might have been able to pass a callback to index-pack that
+>    writes the list of refs once we have the fd into .promisor,
+>    eliminating some code duplication (but I haven't verified this).
+
+That makes some sense. We could pass the data over a pipe, but obviously
+stdin is already in use to receive the pack here. Ideally we'd be able
+to pass multiple streams between the programs, but I think due to
+Windows support, we can't assume that arbitrary pipe descriptors will
+make it across the run-command boundary. So I think we'd be left with
+communicating via temporary files (which really isn't the worst thing in
+the world, but has its own complications).
+
+>  - In your reply [2] to the above [1], you mentioned the possibility of
+>    keeping a list of cutoff points. One way of doing this, as I state in
+>    [3], is my original suggestion back in 2017 of one such
+>    repository-wide list. If we do this, it would be better for
+>    fetch-pack to handle this instead of index-pack, and it seems more
+>    efficient to me to have index-pack be able to pass objects to
+>    fetch-pack as they are inflated instead of fetch-pack rereading the
+>    compressed forms on disk (but again, I haven't verified this).
+
+And this is the flip-side problem: we need to get data back, but we have
+only stdout, which is already in use (so we need some kind of protocol).
+That leads to things like the horrible NUL-byte added by 83558686ce
+(receive-pack: send keepalives during quiet periods, 2016-07-15).
+
+> There are also the debuggability improvements of not having to deal with
+> 2 processes.
+
+I think it can sometimes be easier to debug with two separate processes,
+because the input to index-pack is well-defined and can be repeated
+without hitting the network (though you do have to figure out how to
+record the network response, which can be non-trivial). I've also done
+similar things for running performance simulations.
+
+We'll still have the stand-alone index-pack command, so it can be used
+for those cases. But as we add more features that utilize the in-process
+interface, that may eventually stop being feasible.
+
+> > [dropping unpack-objects]
+> >     Maybe that would be worth making part of the project?
 > 
-> What is the reason behind u32 here?  Do we want to be consistently
-> limited to 4G on all platforms?
-> 
-> I have a feeling that we do not care too deeply all that much for
-> the purpose of progress output, in which case, just an ordinary
-> "unsigned" may be much less misleading.
+> I'm reluctant to do so because I don't want to increase the scope too
+> much - although if my project has relatively narrow scope for an
+> Outreachy project, we can do so. As for eliminating the utility of
+> having richer communication, I don't think so, because in the situations
+> where we require richer communication (right now, situations to do with
+> partial clone), we specifically run index-pack anyway.
 
-I went with u32 here to match the data type used to track how many
-entries are in the pack_list ('nr' is a u32).
+Yeah, we're in kind of a weird situation there, where unpack-objects is
+used less and less. I wonder how many surprises are lurking where
+somebody reasoned about index-pack behavior, but unpack-objects may do
+something slightly differently (I know this came up when we looked at
+fsck-ing incoming objects for submodule vulnerabilities).
 
-I could switch to this to an unsigned but we would run the (extremely
-unlikely) risk of having more than 65k packs on a system where
-unsigned is 16 bits.
+I kind of wonder if it would be reasonable to just always use index-pack
+for the sake of simplicity, even if it never learns to actually unpack
+objects. We've been doing that for years on the server side at GitHub
+without ill effects (I think the unpack route is slightly more efficient
+for a thin pack, but since it only kicks in when there are few objects
+anyway, I wonder how big an advantage it is in general).
 
-> FWIW, the function that uses this field is display_progress(), which
-> takes uint64_t there.
-
-Thanks for pointing this out.  Given that display_progress() expects a
-u64 using that type here for 'pack_paths_checked' could help make things
-more straightforward.
-
--William
+-Peff
