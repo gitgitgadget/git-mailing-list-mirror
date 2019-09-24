@@ -2,96 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FDE81F463
-	for <e@80x24.org>; Tue, 24 Sep 2019 20:50:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AE631F463
+	for <e@80x24.org>; Tue, 24 Sep 2019 20:51:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731388AbfIXUuw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Sep 2019 16:50:52 -0400
-Received: from mail.maxeymade.com ([108.252.2.93]:59995 "EHLO
-        mail.maxeymade.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731288AbfIXUuv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Sep 2019 16:50:51 -0400
-X-Greylist: delayed 2393 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Sep 2019 16:50:51 EDT
-Received: from [10.41.86.232] (eric.riw.enoyolf.org [10.41.86.232])
-        (authenticated bits=0)
-        by mail.maxeymade.com (8.15.2/8.15.2) with ESMTPSA id x8OKAjDl017300
-        (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
-        Tue, 24 Sep 2019 15:10:45 -0500
-Subject: Re: [PATCH] add a Code of Conduct document
-To:     Pratyush Yadav <me@yadavpratyush.com>,
-        Denton Liu <liu.denton@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        git@sfconservancy.org, Derrick Stolee <stolee@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, garimasigit@gmail.com
-References: <20190924064454.GA30419@sigill.intra.peff.net>
- <20190924171214.GA11452@dentonliu-ltm.internal.salesforce.com>
- <20190924200533.pfi7zjv73zklaahw@yadavpratyush.com>
-From:   Doug Maxey <doug@maxeymade.com>
-Message-ID: <939c10b4-d018-82cb-395b-e1d85bfa253b@maxeymade.com>
-Date:   Tue, 24 Sep 2019 15:10:43 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.0
+        id S2441975AbfIXUva (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Sep 2019 16:51:30 -0400
+Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:56492
+        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731288AbfIXUva (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 24 Sep 2019 16:51:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1569358288;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=DEsNlmoqPtftkYlxxuJb6twb7pKFg+jR8lj4HV4BGEI=;
+        b=E1PggtEXqYmyFqQzVHIujtz1rNEGB/KVZXFD3YQOBkzFsLqtp1GTfz5vp961u5Pm
+        iE64HDhsdhDOaUbCwkt/qxPbRjPDMjMnsIwp//gA2riLIVyAXlqrR2Xf+NOFXx2VhcO
+        XuzaXLHnDrG75OnAhzKJmTjNX11+PDM43QwAjtL0=
+From:   Durant Schoon <durant.schoon@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <0102016d650b16ca-073c796f-065f-4966-9f94-f276c8fe6ee7-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102016b2ebafc26-1bd39076-62e4-4b7e-9309-b08cc072fbdf-000000@eu-west-1.amazonses.com>
+References: <0102016b2ebafc26-1bd39076-62e4-4b7e-9309-b08cc072fbdf-000000@eu-west-1.amazonses.com>
+Subject: [PATCH] completion (zsh): fix misleading install location
 MIME-Version: 1.0
-In-Reply-To: <20190924200533.pfi7zjv73zklaahw@yadavpratyush.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Date:   Tue, 24 Sep 2019 20:51:28 +0000
+X-SES-Outgoing: 2019.09.24-54.240.7.11
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When the code comment in the zsh completion suggests that this file
+should be copied to `~/.zsh`, many users might be misled to believe that
+this refers to a file location. But it refers to a directory, and won't
+work when it is a file.
 
-On 9/24/19 3:05 PM, Pratyush Yadav wrote:
-> On 24/09/19 10:12AM, Denton Liu wrote:
->> On Tue, Sep 24, 2019 at 02:44:54AM -0400, Jeff King wrote:
->>> +## Enforcement
->>> +
->>> +Instances of abusive, harassing, or otherwise unacceptable behavior may be
->>> +reported by contacting the project team at git@sfconservancy.org. All
->>> +complaints will be reviewed and investigated and will result in a response
->>> +that is deemed necessary and appropriate to the circumstances. The project
->>> +team is obligated to maintain confidentiality with regard to the reporter of
->>> +an incident. Further details of specific enforcement policies may be posted
->>> +separately.
->> I feel uncomfortable with this being left so wide open. First of all, I
->> know that the power *probably* won't be abused but I don't think
->> probably is good enough.
+Let's just add a slash, to make it abundantly clear that this must be a
+directory.
 
+Signed-off-by: B. Durant Schoon <durant.schoon@gmail.com>
+Helped-by: Johannes Schindelin
+---
+ contrib/completion/git-completion.zsh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I can put it more succinctly:
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index 886bf95d1f594..0e63004e2613e 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -11,8 +11,8 @@
+ #
+ #  zstyle ':completion:*:*:git:*' script ~/.git-completion.zsh
+ #
+-# The recommended way to install this script is to copy to '~/.zsh/_git', and
+-# then add the following to your ~/.zshrc file:
++# The recommended way to install this script is to copy to '~/.zsh/_git/',
++# and then add the following to your ~/.zshrc file:
+ #
+ #  fpath=(~/.zsh $fpath)
+ 
 
-Has anyone ever heard the pebble dropped in this well hit bottom?
-
-
->>
->> As I said above, I couldn't find a public list of the people who were on
->> the project committee. Perhaps that's because my Googling skills are bad
->> but I feel uncomfortable knowing that *anyone* will be given judge, jury
->> and executioner power, let alone people whom I don't know anything
->> about.
->   
-> I agree with this. I would certainly like to know who the people who
-> will judge these cases are.
->
-> I want to add another question: what will the judgement process be like?
-> Will it be an open discussion on this list, or will it be decided behind
-> closed doors by the committee, and we just get to hear the results?
->
-> While there might be no plans regarding this as of now, I'd _really_
-> like an open discussion regarding these issues that arise in the future,
-> rather than it being decided behind closed doors with us regular old
-> contributors getting no say in it. A closed discussion would be much
-> more prone to power abuse, if any.
->
->> I'm okay with leaving it open for now but I think I would be a lot more
->> comfortable if we had the interpretations document to close up the
->> vagueness later.
+--
+https://github.com/git/git/pull/609
