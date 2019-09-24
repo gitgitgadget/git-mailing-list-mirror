@@ -2,89 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76FA31F463
-	for <e@80x24.org>; Tue, 24 Sep 2019 06:58:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F8B81F463
+	for <e@80x24.org>; Tue, 24 Sep 2019 07:22:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390189AbfIXG6I (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Sep 2019 02:58:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58004 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2388503AbfIXG6I (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Sep 2019 02:58:08 -0400
-Received: (qmail 3131 invoked by uid 109); 24 Sep 2019 06:58:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 24 Sep 2019 06:58:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7586 invoked by uid 111); 24 Sep 2019 07:00:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Sep 2019 03:00:29 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 24 Sep 2019 02:58:06 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        rohit.ashiwal265@gmail.com, philip.wood123@gmail.com,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: Git Test Coverage Report (Sept 19)
-Message-ID: <20190924065806.GB30419@sigill.intra.peff.net>
-References: <9fdd15ab-b2dc-f5fa-9969-90bd57014ff5@gmail.com>
- <1ed86989-9ba2-0cd7-b6f7-654d1943b1d7@gmail.com>
+        id S2409240AbfIXHWE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Sep 2019 03:22:04 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:38893 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390221AbfIXHWE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Sep 2019 03:22:04 -0400
+Received: by mail-wm1-f66.google.com with SMTP id 3so798520wmi.3
+        for <git@vger.kernel.org>; Tue, 24 Sep 2019 00:22:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=OQYCNeFqGeyBjG6N1iYXpU6+zpWYiduFOlqDa7fR7uU=;
+        b=fEeDC8E/wvarn8VRQf0NDaKTrEXFGh2vRmJJPk3fS2ypl+bmx/j1ZnF8LwoPHhsHFt
+         0c7xAUD/B7oVSiwy87wE5QtXDZA4U8nQMPoXfrH3Xgx0tdsETaLxpUdYq75U7yqeToBo
+         jSIpyqCyUuVhdU4i65eQQRYTF3xjsm2OPaaRaFqpuLFgdiJM2VZ67ZuvXYGEzU/ON96t
+         xHJ1LDfUxuoe1TdIxFQqRFqdxOihEhS1CO2RPNvpnDOcnqJ4UJcRv8Vr810gw4IDuOUl
+         L4THy43UfIq1Hi/9qgphnRDv7a17iTGG57ZhWlalSeUT7jIo5t79nyRF3ugM0u09c83p
+         v8rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=OQYCNeFqGeyBjG6N1iYXpU6+zpWYiduFOlqDa7fR7uU=;
+        b=FmUtFm8wi9RSB3VR9q9ipLrft7XiDNduNtFYhLRd4qWrRKyFgqvWyD+5jS9mZopnUJ
+         AHp+bTIPPoEKcRkbII0pjwn1oH60vzAuoTLigNlNzVbzYC6cp1zCtBbhyox41SMXERbx
+         QqzYXwGVREvRSuZxPSpnet5izNImFvMgR2erCDxLPyri494rn8awzmgDYgPcSCRKIY3f
+         5zty7l5bMbyg9dwfmf1ZFYo8K1zCMkFQoVFC0axRkbi3nf8NmlsZ96sQ0ZNFOpqhsnto
+         cN78zeGviqqwWISRnrcHt7pvJQApGVD57CbdT9uoa0HwfBxpY4p23pwaNGndVQoc57Xv
+         hfDA==
+X-Gm-Message-State: APjAAAUXKH0ywo7ULdzcjlirK2CS4XEitnydTVgrTCAf2MpDU5en8hYD
+        8IysbTe/L1ezFT9lxaXhVGVoLv1Ve4E=
+X-Google-Smtp-Source: APXvYqwMhCJxzc4pEZrfs2BKNujwHiF8Ldmsf+a5IRB/A0hSS/ZJEzmmUbUgiRrOC1rVg4azIyQLlQ==
+X-Received: by 2002:a1c:5451:: with SMTP id p17mr1405876wmi.103.1569309721963;
+        Tue, 24 Sep 2019 00:22:01 -0700 (PDT)
+Received: from szeder.dev (x4dbd468e.dyn.telefonica.de. [77.189.70.142])
+        by smtp.gmail.com with ESMTPSA id s19sm2468801wrb.14.2019.09.24.00.22.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 24 Sep 2019 00:22:01 -0700 (PDT)
+Date:   Tue, 24 Sep 2019 09:21:59 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] name-rev: avoid cutoff timestamp underflow
+Message-ID: <20190924072159.GD2637@szeder.dev>
+References: <20190922180143.25026-1-szeder.dev@gmail.com>
+ <5692e751-ae5b-e1c8-e5f7-79f0b43e20c0@gmail.com>
+ <20190922195312.GC10866@szeder.dev>
+ <8e7617ef-85d0-df3f-4418-5a2502b8e726@kdbg.org>
+ <20190923083723.GD10866@szeder.dev>
+ <fe58f33f-a3ae-4981-5bb7-d1659f3ab189@kdbg.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1ed86989-9ba2-0cd7-b6f7-654d1943b1d7@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fe58f33f-a3ae-4981-5bb7-d1659f3ab189@kdbg.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 23, 2019 at 10:00:37AM -0400, Derrick Stolee wrote:
-
-> > builtin/pack-objects.c
-> > 7c59828b 2694) (reuse_packfile_bitmap &&
-> > 7c59828b 2695)  bitmap_walk_contains(bitmap_git, reuse_packfile_bitmap, oid));
+On Mon, Sep 23, 2019 at 09:16:26PM +0200, Johannes Sixt wrote:
+> Am 23.09.19 um 10:37 schrieb SZEDER Gábor:
+> > On Sun, Sep 22, 2019 at 11:01:26PM +0200, Johannes Sixt wrote:
+> >> Huh? For signed cutoff and positive CUTOFF_DATE_SLOP,
+> >> cutoff - CUTOFF_DATE_SLOP < cutoff is ALWAYS true. Signed interger
+> >> underflow is undefined behavior and signed integer arithmetic does not
+> >> wrap around!
+> >>
+> >> IOW, the new condition makes only sense today, because cutoff is an
+> >> unsigned type, but breaks down should we switch to a signed type.
+> > 
+> > Yeah, that's what I meant with worrying about signed underflow in the
+> > commit message.  As long as the cutoff is at least a day later than
+> > the minimum value of our future signed 'timestamp_t', the condition
+> > does the right thing.  And considering that oldest time a signed 64
+> > bit timestamp can represent far exceeds the age of the universe, and
+> > the oldest value of even a signed 32 bit timestamp is almost half the
+> > age of the Earth, I wasn't too worried.
 > 
-> This change to obj_is_packed(oid) is a small change in a
-> really big commit. Here is the change:
-
-I'd suggest not looking too closely at this one yet. This was a
-preliminary split by Christian of some older code that I had written. I
-think it needs to be split up more, and probably does need more test
-coverage (bitmaps are only enabled in a few specific scripts).
-
-> @@ -2571,7 +2706,9 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
->  
->  static int obj_is_packed(const struct object_id *oid)
->  {
-> -       return !!packlist_find(&to_pack, oid, NULL);
-> +       return packlist_find(&to_pack, oid, NULL) ||
-> +               (reuse_packfile_bitmap &&
-> +                bitmap_walk_contains(bitmap_git, reuse_packfile_bitmap, oid));
->  }
+> Note that commits and timestamps can be forged easily. I'm not worried
+> that Git does not work "correctly" with forged timestamps (as long as it
+> is not exploitable); but when it is simple to make foolproof, we should
+> do it.
 > 
-> So, every time this is called, the || is short-circuited because
-> packlist_find() returns true.
+> BTW, 32-bit timestamps cover just ~135 years (not half the age of
+> Earth).
 
-That does surprise me, though. I'm not sure if it's insufficient
-testing, or if there's a bug. 
+Gah, forgot the division with seconds/year when calculating the range
+of the 32bit timestamp.
 
-> Does this change the meaning of this method? obj_is_packed() would
-> only return true if we found the object specifically in the to_pack
-> list. Now, we would also return true if the object is in the bitmap
-> walk.
-> 
-> If this is only a performance improvement, and the bitmap_walk_contains()
-> method would return the same as packlist_find(), then should the order
-> be swapped? Or rather, should reuse_packfile_bitmap indicate which to use
-> as the full result?
+> That's too little for people who want to store historic
+> documents in a Git repository.
 
-No, there should be cases where the walk mentions some objects that
-aren't added to the to_pack list (that's the point of the reuse code; it
-fast-tracks a big chunk of objects directly to the output).
+Indeed, but 'timestamp_t' is defined as 'uintmax_t', and we have the
+Makefile knob 'NO_UINTMAX_T', in which case 'uintmax_t' is defined as
+'uint32_t'...
 
--Peff
