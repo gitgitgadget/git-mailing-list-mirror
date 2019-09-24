@@ -2,89 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,PDS_TONAME_EQ_TOLOCAL_SHORT,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B84CF1F463
-	for <e@80x24.org>; Tue, 24 Sep 2019 10:22:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E23571F463
+	for <e@80x24.org>; Tue, 24 Sep 2019 10:31:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408111AbfIXKWd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Sep 2019 06:22:33 -0400
-Received: from mail-wr1-f48.google.com ([209.85.221.48]:42644 "EHLO
-        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405224AbfIXKWd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Sep 2019 06:22:33 -0400
-Received: by mail-wr1-f48.google.com with SMTP id n14so1289118wrw.9
-        for <git@vger.kernel.org>; Tue, 24 Sep 2019 03:22:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mat.ucm.es; s=google;
-        h=from:to:subject:date:message-id:user-agent:mime-version;
-        bh=iMAPfzlmjdTiVsZq7D572DHr02otd87+XN9y2cb+rOY=;
-        b=O6QjY5729J++cFNeZ64140InM2bHmU18bQcwBDjVCbI0ajE9g+A9T0ZMay6FEVOcQ4
-         hhE2awF8vw2IiPz1M+aadjwERrWoZOW8VruaVquAELHoRhvW3N8JtzZBWfo2MnRRgyRF
-         gCsdx5vrUdVfHBsw0aJpNl8CnL6TLv/o/3jRU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:user-agent
-         :mime-version;
-        bh=iMAPfzlmjdTiVsZq7D572DHr02otd87+XN9y2cb+rOY=;
-        b=TZrb37Tp+WEnEqGRxPIGiyx+6gZ+CS+cFMNV+W5HcvYQ3fCXEOtl+zsDliiaGzaXmZ
-         +czuwPEaLGwFXqREb6nITUaf6IccdXuvX+M/18PovpnnMFxGR0iaUsLUrX1tjuAxIgSF
-         1yROr7sPV1t3+YPaGw0+QxK2/fQti48AjYbtrjMCB1RoatxtBpygZ6ED1qCoRbn7LSWT
-         4JpL0fbcRc6eeFuFvqWGsmFP5ercpT0O+34OcY5y72dJQCwnrXP3gqVn4sIXDfDI/I17
-         3xB5w6vM91WJ7hGFzfPP+Q+PMPJnY6hnshdZNrPsGruG28vZ8P8bTnqEO7oz/0aQVDBo
-         kCSA==
-X-Gm-Message-State: APjAAAWvUWdQ950livD/MBovDaf/X8qzjLdsAYtmoz7l7vFwvx8YLOG4
-        hTHRyo6zCBQQmlA7qq7s3DV4X2JQKYQ=
-X-Google-Smtp-Source: APXvYqzzUtoL8YDjSvsl4QWk1Vx6Ayml5BmqqWudwFKuVqU4X+/LHotA++CQ5E5CLEB4h4Vm0yPocA==
-X-Received: by 2002:adf:f4cd:: with SMTP id h13mr1637006wrp.42.1569320549542;
-        Tue, 24 Sep 2019 03:22:29 -0700 (PDT)
-Received: from Utnapischtim (gilgamesch.quim.ucm.es. [147.96.12.99])
-        by smtp.gmail.com with ESMTPSA id e6sm1571243wrp.91.2019.09.24.03.22.28
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Sep 2019 03:22:28 -0700 (PDT)
-X-Mailer: emacs 27.0.50 (via feedmail 11-beta-1 I)
-From:   Uwe Brauer <oub@mat.ucm.es>
-To:     git <git@vger.kernel.org>
-Subject: I just pulled, and git log --graph does not show all
-X-Hashcash: 1:20:190924:git@vger.kernel.org::waBMGRYtgBLGyK/k:0000000000000000000000000000000000000000000lYU
-Date:   Tue, 24 Sep 2019 12:22:27 +0200
-Message-ID: <87sgomyows.fsf@mat.ucm.es>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.0.50 (gnu/linux)
+        id S2409471AbfIXKbo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Sep 2019 06:31:44 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.31.26]:32866 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387644AbfIXKbn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Sep 2019 06:31:43 -0400
+Received: from [24.134.116.61] (helo=[192.168.92.208])
+        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.92.2)
+        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
+        id 1iCi6d-0007DM-Gs; Tue, 24 Sep 2019 12:31:39 +0200
+Subject: Re: [PATCH v2 2/2] t0028: add more tests
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Alexandr Miloslavskiy via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <pull.347.git.gitgitgadget@gmail.com>
+ <pull.347.v2.git.gitgitgadget@gmail.com>
+ <40e54cf5ce74d1404187e31c94644df29134b4ff.1569233057.git.gitgitgadget@gmail.com>
+ <163fcc3c-e827-ad15-5987-a2ae93a0bec2@kdbg.org>
+From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Message-ID: <9f681989-b2cf-ff66-b2e8-2a2823d5609c@syntevo.com>
+Date:   Tue, 24 Sep 2019 12:31:38 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <163fcc3c-e827-ad15-5987-a2ae93a0bec2@kdbg.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 24.09.2019 8:21, Johannes Sixt wrote:
+> What are we testing here? Is there some back-and-forth conversion going
+> on, and are we testing that the conversion happens at all, or that the
+> correct conversion/encoding is picked, or that the conversion that is
+> finally chosen is correct? Why does it help to test more interesting
+> chars (and would you not also regard codepoints outside the BMP the most
+> interesting because they require surrogate codepoints in UTF-16)?
 
+According to my understanding (I'm not the author of test package),
+it is designed to test that various encodings are properly supported
+by git in the working tree.
 
+The new tests are designed to avoid any back-and-forth, which actually
+happened for the previous UTF-16-LE-BOM test, which in turn hidden
+that the test was bugged.
 
-Hi 
+Otherwise, the test verifies that if you requested some encoding, you
+get exactly that, and it covers various potential problems at once.
 
-I am confused, I just pulled 
-but git log --graph --decorate
-did not show all commits, 
+ > Why does it help to test more interesting chars (and would you not
+ > also regard codepoints outside the BMP the most interesting because
+ > they require surrogate codepoints in UTF-16)?
+					
+It helps to cover more potential problems. One could agree that
+converting latin characters is mostly about padding/dropping zero
+chars, but this approach could never work for the chars I used. As for
+"outside the BMP", I'm simply not experienced with that. If you are,
+you're welcome to further improve the tests I added.
 
-Only 
-
-git log --graph --decorate --all
-
- and from the emails I received the commits shown by --all
-
-Should be on a new branch.
-
-I confess I am a mercurial user not a git user, 
-
-What is the reason for this behavior.
-
-How can I now merge the new branch into master?
-
-Thanks
-
-Uwe Brauer 
