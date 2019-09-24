@@ -2,115 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D5AD1F463
-	for <e@80x24.org>; Tue, 24 Sep 2019 20:15:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58BB51F463
+	for <e@80x24.org>; Tue, 24 Sep 2019 20:16:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403795AbfIXUPI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Sep 2019 16:15:08 -0400
-Received: from mout.web.de ([217.72.192.78]:34421 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391571AbfIXUPI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Sep 2019 16:15:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1569356097;
-        bh=WM667Zsx5A1DhomaJ+TSBUCOVR4sejZ6Kzew/ohQrO0=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=UrwfF/nXC7zLZ9C0DTceRGtEB0e8xm+b3OawMLrN9ubinxXs87pnxo8ShrEqNWNba
-         O7jx17pkWQMJSIm8cZmxH1WfYTreehGhep0FFdv3JfYoOxCbbX/D/s0iOuHUeokT2h
-         uhHd3HDv7GZrINnr3ZgDvFC/0e4w8d0qDPZCKNhs=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lopa3-1hfhKE1saJ-00glX9; Tue, 24
- Sep 2019 22:14:57 +0200
-Subject: Re: [PATCH] add a Code of Conduct document
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     git@sfconservancy.org, Derrick Stolee <stolee@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, garimasigit@gmail.com
-References: <20190924064454.GA30419@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <89c6f5b7-aeab-740c-06b6-e50232266fd4@web.de>
-Date:   Tue, 24 Sep 2019 22:14:55 +0200
+        id S2410454AbfIXUQB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Sep 2019 16:16:01 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43296 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2410403AbfIXUQB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Sep 2019 16:16:01 -0400
+Received: by mail-wr1-f67.google.com with SMTP id q17so3463775wrx.10
+        for <git@vger.kernel.org>; Tue, 24 Sep 2019 13:15:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=EbX9Jp3R8uINO9tYGzBMSpkF8UXR/gx/21TRoCsdF6o=;
+        b=Xx4r+F0yUa6pdbumK7jnZBNmX+JpzehxlDwO0xkHrnvTor0EpcCOdoejMfPVm+LzoG
+         z/t3pbs7xC2aTnDQGvVIWzdZMfpZSDoLBSMXWd11pZuisKkOYkLtM21fP5jOUv3YvvDq
+         5HOir9QHRVrkrSh86wmACm0qAqQ54O7PUDEF8pj+p5qP89rv1MewPuVeXw8L+aZRPDoW
+         xU0KyPo3+U1USKTV8QCrq1j1WCw09Ey/33tQLb/x/ehDdJc8Qr652W60D3h+13cLGC9Z
+         0PzOWEPTtGIHe/iuzUEMlwrUVC7VYjqZ4yELLShj9lBueCOR2DtEaf8LABvZyAhuPCvn
+         5M9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=EbX9Jp3R8uINO9tYGzBMSpkF8UXR/gx/21TRoCsdF6o=;
+        b=CRKJVzdzaBMk4HcjDoRTLrZWbqO8QEmoIA/bB/TuUrG0xHIHmK020rZGDrJQsvEJBb
+         i5MAhB0Jml8L7TL3zMAWTdQ2xw86hMUnoYy4Z/82+Y0nvAefWb4x7gHLucyzWIs1t9bz
+         OX064pnD8MF1vDsXD4P8b+Zg+kggbIXO4EkqTG0jwsXxKDFRT+3tkeL8xQzIVA6GtZ6/
+         d/P6ElOuMHW6PC/26CcDuJyymSViK7tjmDugbiKJcUogX/Xf3j3ilDrzc8uu2lIzHYT5
+         PWajV3OCmCBv2OIWIR3lZb6Kut5aw3V7LRaad+dnhQ0JqxmLGsbbIUUOnIQsHBh8VbED
+         OsDg==
+X-Gm-Message-State: APjAAAWy3DMQ6DcaMsitXKE9/8Ln4f2VJW3JHFcu+a+cWJJsZ4aSrjKQ
+        HQPROzqKNfoLD2Bc/rwAsSk=
+X-Google-Smtp-Source: APXvYqzWBsGuIiw7V9/z2sGgrjjo0erTV6R3yEC9A1zco/oN7dVuv6xwKxi8jhm5TKoqB7IiZgbaMQ==
+X-Received: by 2002:a05:6000:a:: with SMTP id h10mr4465815wrx.226.1569356157193;
+        Tue, 24 Sep 2019 13:15:57 -0700 (PDT)
+Received: from [192.168.0.104] (atoulouse-658-1-81-250.w90-5.abo.wanadoo.fr. [90.5.214.250])
+        by smtp.gmail.com with ESMTPSA id b3sm1754911wrw.4.2019.09.24.13.15.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Sep 2019 13:15:56 -0700 (PDT)
+Subject: Re: [RFC PATCH 0/9] rebase -i: extend rebase.missingCommitsCheck to
+ `--edit-todo' and co.
+To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20190717143918.7406-1-alban.gruin@gmail.com>
+ <ce6bdffd-0a04-803c-4a1e-0959342db01f@gmail.com>
+ <69ceed35-ced4-51e7-d724-1818ae45e9a6@gmail.com>
+ <8214207e-fa35-44c4-4135-45bd90209e18@gmail.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <5dc165ae-8d56-04e1-911e-06836af30cde@gmail.com>
+Date:   Tue, 24 Sep 2019 22:15:46 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-In-Reply-To: <20190924064454.GA30419@sigill.intra.peff.net>
+In-Reply-To: <8214207e-fa35-44c4-4135-45bd90209e18@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:dnuIdSbq5mkcDkWJZa5k8VoaXp2vB4ckv74E2wxwZCKD6LJknPO
- /WEis50dnJC/cCp9Ua9CdAwsdGDhr96Vh57O22OPZzBbr838MAoWwJqetNMcK2KCHy2P9iX
- bSau+GkOHhv2GwtuMGQVzAWZxGCPsuvusIKCIpo/uNEEqXwf50HhXUueWNpPtleZ7ph/SS4
- zd6PbjA1nEDAa2oub/smQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:GiD7G34onMU=:LSp7VUbT17OVTL2p+Izpxc
- azyVBWPw9t7kfrNtarYYcKsICCa3c1ltHPlXD1QNBFcRb0MZWJattjgq4ewyKpnr5TiAruLGc
- b/MNbgVu+RRjjuEF74F8uBWUs25Z97IcsMUrC+CUkXMTHhf5+hMIsn9edTZA9Bsg7EgcOGmuX
- vjyw1KplR+jMy/d1LuZfayDUCjKCtiYPgl49BQP2ss/9Vz14NSozYbhWKiknTXbsFuKKMlvL+
- QvPP60asvPpQ82I4o88Vx8MGb2PJ+tRN4+NBa2y8+x43UUcC5IZPw4h5vFvjx1myq7echEFu/
- MFOGVt4Q6woHAjGDIs5soSvz+Z2KppLCoGIIvtCNAlIpIrjN3fm7RWiT6YRnDhnYXFfU9E+Ds
- 9uIGig+2AwKoJ4947E62SvweuOdtyD1NdwJD7w40HMYk+8ui7cXcz6y+Ep2LOqB4t5STFHCf2
- mLGP3rVkcKfCfs3nnn4j/HMgtn+nEwHkK26Ipo1kyFYFlp+oI3qa7k1CcdJkCO7rvdrSY/E1A
- mvfjJWF3AWrvJzc0/88Y3z9E77Acu7vWIdt/MHO5b4nPEiYNfnay4ru3yS3UHoeXXQsfbNSJ3
- ULbJRaaaPTTEHvAstXanEjXYLKaU9de/FcBTNfPr20M4h9/4W25vik4+rtPmMKfOZoce87rg8
- VzjN0Pm5wprDUEMYIbYBICfjm4CYzmIiUYbycZIdSZiQQ1kanYaaBNItN/giB7VBqCyJg+p3+
- qfJ3RFUgiXuI/KFOpslK/q4dFfrDIW9lPUS0m+gYqIjRsMmHDx0pDOIEZrbIk1tZaiX4x0M05
- jsq2A+YW8Xd3y/hH9t4nOahVFLu5Mcicp8X18JPzTzXodJnp7ELRQozi6HBigJDswoqHoxwak
- 4cBAcQ9FRuGkVpw74Je79d+ALxDi8Om4ghBTM3+5Yl01R6KFR/kXS4cNXKlWXj8s+Fj9vfqnK
- FmUpqU2aHRkEEBlp2vAk2fQRi3b3Uz3G2vVzqVGZ3h8nzxvpx1SwRRy1tUQmrR2zm2rvZgwVd
- ts/EMy8Z4gnBmmyvvyMu16M5gJhG91cStSAhkfG/tk+qVxx5IU581BgAxVFa1RqJ83LK4BsNa
- XcqGX+6qX/SsFB+fnB2b+JDWdj9ma8jgqk7UCm0TLM3CTsP0aGlG+QiA521QOC7UaaMqct8jw
- Q0n7FT5Xe9I+0B0Kcg7qFdKLxiAM3IkgbNBZUubZa/whCAUI5lkz79E83dAUxuueVT0azR85Y
- aWYJPhmQ0cuavdNNn/B1SDwhB532SxORXnZamZQ==
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.09.19 um 08:44 schrieb Jeff King:> +Examples of unacceptable behavio=
-r by participants include:> +> +* The use of sexualized language or imager=
-y and unwelcome sexual attention or> +  advances
-Sure.
+Hi,
 
-> +* Trolling, insulting/derogatory comments, and personal or political at=
-tacks
+This has been a long time since I have not given an update on this --
+sorry about that.  I think it’s time to do it.
 
-Hmm.  Trolling can be helpful, if done right.  I consider this to be a
-good example: https://git-man-page-generator.lokaltog.net/.  Wrote some
-texts that look like that..
+Le 29/07/2019 à 11:38, Phillip Wood a écrit :
+> Hi Alban
+> 
+> -%<-
+> 
+> That's an interesting point about `--continue`. Perhaps if `--edit-todo`
+> detects deleted lines in error mode it should write a file to stop
+> `--continue` continuing rather than having to validate the entire list
+> each time we continue a rebase. Alternatively we could annotate the todo
+> list with a message the dropped commits commented out and reopen the
+> editor for the user to fix the problem, but that would cause scripted
+> editors to enter a infinite loop as they're unlikely to fix the problem
+> the second time round. A third possibility is to keep your code
+> validating the list each time we run continue, but update the backup
+> file with each edit so it detects added commits that are deleted in a
+> later edit. This would also provide some protection for users who edit
+> git-rebase-todo directly, though if they are using a script that deletes
+> lines in git-rebase-todo directly it will suddenly stop working with
+> this change if they have rebase.missingCommitsCheck set to error.
+> 
+> Having said all that we could decide that the existing error message is
+> enough and allow the user to skip re-editing the list if they really did
+> mean to remove those lines. It would be annoying to have to re-edit the
+> list when one had intended to delete those lines.
+> 
 
-I don't mind insults.  Perhaps that's a cultural thing.  I don't
-necessarily need them, though.
+If we do not check the todo list after `exec' commands, patches 3 to 6
+should be useless in this series and could be sent separately (I’m still
+interested in reducing useless round trips to the disk).  I found a
+cleaner way to do that, without touching to sequencer_continue().
 
-"Personal and political attacks" sound really scary and don't seem to
-match trolling and insulting in severity.  Perhaps I don't understand
-the intended meaning.  In any case, I also wouldn't want anyone to be
-beaten up or swatted, get a lower social credit score or be forced out
-of public office over participation in our project.
+For the main feature of this series, I need to write tests for it, and
+then I’ll send it as a WIP series, once again.
 
-> +* Public or private harassment
-
-Right.
-
-> +* Publishing others' private information, such as a physical or electro=
-nic
-> +  address, without explicit permission
-
-Good.
-
-> +* Other conduct which could reasonably be considered inappropriate in a
-> +  professional setting
-
-This is very vague.  It could match eating at your desk, tipping, not
-tipping, not wearing a tie, or talking back to a senior developer.
-
-Ren=C3=A9
-
+Cheers,
+Alban
 
