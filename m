@@ -2,251 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF38C1F463
-	for <e@80x24.org>; Tue, 24 Sep 2019 07:32:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17DF41F463
+	for <e@80x24.org>; Tue, 24 Sep 2019 08:40:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438442AbfIXHcT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Sep 2019 03:32:19 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35369 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391594AbfIXHcS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Sep 2019 03:32:18 -0400
-Received: by mail-wm1-f67.google.com with SMTP id y21so838967wmi.0
-        for <git@vger.kernel.org>; Tue, 24 Sep 2019 00:32:17 -0700 (PDT)
+        id S2440670AbfIXIkw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Sep 2019 04:40:52 -0400
+Received: from mail-bgr052100129054.outbound.protection.outlook.com ([52.100.129.54]:14010
+        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S2440614AbfIXIkw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Sep 2019 04:40:52 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LgsmzPx6EFeSxMD5aqhbsOGXiQ32F6f7qZkLPYG/kzQYy7mmBw5+0ppefUyPcTcS7YJkLG1HZUd9JLi5r3JB92skFZAjMypxaK/q+TDXi/o4Izr+OvQtZl6otSgdsBgoyDqWbZIDj8z4Rw+mqSulqrwB9fFU/+eHP4JTtDmN8bmEOyPA4U8g5QsDjj3iwK/ipBdwYnN8rA5hLnmy19L5dU2zDGo7lL10RJh57E1ONuqO4SPKiY78R8RBeqqy6WO6wgSfOHH6QKGldtAW+dXKku0d7W0zkfoYwE5/GB0ImWw1cA2QSfzxuAMPRsn7Pi6lQqx01Yus8DvdYDw5AnBBqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=V+oerZ7of/ArBLO4f2K1ScoeDBauuRxtQ2fk8Oav4aI=;
+ b=WbSmqtfFe3d9+AWo0hlBIxEcJ4x+qab/vDp63q0m0eG7aK1johdb1ZjNZeZsc8sS9vLL9mJ8xEt4Fg3HIN/iawqKiZYWKVbub/pOXLenMtzFhTDi+3fC5xaD0JRnwwejFwC4GCpsiL1Gb6fW54b/oSyCJYrUwVCuv4c8O4UxB/HZHxGha1qHgOVPcdo5TtrCFfYP1cmtqYOZVNTM1pkZmx03vHyabdwHTvPDBoE2mHi/mAn7M3eRV5N1gkBe7B56ovEWnh1xoYuUfFiYsVDlAfOv/2v6SsJwCfiwzhFSCbyHwrZrDd4Pt2FwHSrNjPVweSAuqL/pDGBd06UhtjocnQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=ngu.edu; dmarc=pass action=none header.from=ngu.edu; dkim=pass
+ header.d=ngu.edu; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3aozaoX8r8MZQVlxUY7oVk35Wzs2QLfAc0WYPpOVkwQ=;
-        b=vbiR66OCK+S7be3dYYayNyLerunBYp1viCYnt007kFsuRifEspuAUNbvLc67bvgx1v
-         9e+qhEZvWr1URk39NIdjRshetz7TI9IEKx4THR0iNavTBJezeCE8ra4VB7yyCn/C0Xf3
-         N7H9mh2dFuyQg9XCOlsH0ReC6IiLGBea+vZ8g2gOXK2TuevPAUb5Uv8PiUNjgUQzae37
-         xSfj7MfiQ7We7S/ymFgFUpNHigQqkUJ0jXxG2ijHXiyQB4Qim30/R/gjRV6UfBR50cJ9
-         OqmkwrAKwJVH7zGeAEJVJuy6qybpJJ8KNMha7126hH9hqg1bX875FQLlqHdqGwFrqbjP
-         PNzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3aozaoX8r8MZQVlxUY7oVk35Wzs2QLfAc0WYPpOVkwQ=;
-        b=SKt2H3ejudoj5i99NoNTmS427GCCSHiRveuPVMIIrneIh9iqNQIp7eVKeatkdE1hL6
-         fyACKkGeiw/rEjJ//qWGSgzJK+kKZNkDHIBPwSviqkq+p0Q0aYD8MaFm6VxZvIGjER4K
-         liaISyGyJZImMVnlEVts0gjl3lsyKmOj0/PAXu6AmBi16eZfyQnTMBPdk/XcRf3FM1bd
-         2Nn046l59fiT9pRX3hcI0KwKuN1hVDyo63/FVZhmK/IJXhpiQbwAr8YGP2nsyVIGjk9i
-         6pkinBg+6V/pYsSaP+vqEa3pkrHku+e0fhpeIbecZ03CVN9TLq9kuHLaGjMN4anIUuZW
-         jYTg==
-X-Gm-Message-State: APjAAAW3cYNSk33Ek03YSRnibJrgOgeq7xiZ0b8zTYVY/yadwn6cAEeC
-        78+2xjv3jkXNjdsbpPhfvcM=
-X-Google-Smtp-Source: APXvYqybVu9oilPgdjPqhEkhI7qeEu/3tibbrnskp9jx+GqIamMnrJt50xotVx+BwIp/Fo+bK48lfA==
-X-Received: by 2002:a1c:c589:: with SMTP id v131mr1373887wmf.163.1569310336717;
-        Tue, 24 Sep 2019 00:32:16 -0700 (PDT)
-Received: from localhost.localdomain (x4dbd468e.dyn.telefonica.de. [77.189.70.142])
-        by smtp.gmail.com with ESMTPSA id w125sm1737309wmg.32.2019.09.24.00.32.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 Sep 2019 00:32:15 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        phillip.wood@dunelm.org.uk,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] name-rev: avoid cutoff timestamp underflow
-Date:   Tue, 24 Sep 2019 09:32:13 +0200
-Message-Id: <20190924073213.7125-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.23.0.597.gb58f4577a1
-In-Reply-To: <20190922180143.25026-1-szeder.dev@gmail.com>
-References: <20190922180143.25026-1-szeder.dev@gmail.com>
+ d=NGUniversity.onmicrosoft.com; s=selector2-NGUniversity-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=V+oerZ7of/ArBLO4f2K1ScoeDBauuRxtQ2fk8Oav4aI=;
+ b=EPSgxLQt6HYZee0MXilRHKHov8Ts0D/Mh0+MgXbfh8pyjUfu+/YAuS/Hq8Q4pJKnp51obuBriRAWN29rs1N8H2l9ROtI6FzPiRrOqgsBF/tPnnxKchZM2+Zv4eziM205P48v/IrH7rjidN0C1CdAZA9ZXfSGm401ePtrhx6Gpao=
+Received: from BN8PR18MB2769.namprd18.prod.outlook.com (20.179.75.95) by
+ BN8PR18MB2914.namprd18.prod.outlook.com (20.179.75.141) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2284.20; Tue, 24 Sep 2019 08:40:49 +0000
+Received: from BN8PR18MB2769.namprd18.prod.outlook.com
+ ([fe80::18bf:ad26:af99:f75d]) by BN8PR18MB2769.namprd18.prod.outlook.com
+ ([fe80::18bf:ad26:af99:f75d%5]) with mapi id 15.20.2284.023; Tue, 24 Sep 2019
+ 08:40:49 +0000
+From:   Meghan Alee Patterson <Patterson0344@ngu.edu>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: information
+Thread-Topic: information
+Thread-Index: AQHVcpxZOGycgVMjokOeoKf2+/lPew==
+Date:   Tue, 24 Sep 2019 05:53:12 +0000
+Message-ID: <BN8PR18MB2769BB1BB08D943159232A6FAB840@BN8PR18MB2769.namprd18.prod.outlook.com>
+Reply-To: "mr.johnharold@yahoo.ca" <mr.johnharold@yahoo.ca>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: CH2PR02CA0013.namprd02.prod.outlook.com
+ (2603:10b6:610:4e::23) To BN8PR18MB2769.namprd18.prod.outlook.com
+ (2603:10b6:408:a5::31)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Patterson0344@ngu.edu; 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [172.93.201.160]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 1e1e6f5f-b819-4e0c-4ece-08d740b37bf0
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600167)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:BN8PR18MB2914;
+x-ms-traffictypediagnostic: BN8PR18MB2914:
+x-microsoft-antispam-prvs: <BN8PR18MB29142379E28DE48133554FEDAB840@BN8PR18MB2914.namprd18.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:628;
+x-forefront-prvs: 0170DAF08C
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(366004)(136003)(396003)(39860400002)(346002)(199004)(189003)(5003540100004)(88552002)(66066001)(6666004)(7116003)(14454004)(6116002)(102836004)(3846002)(52536014)(186003)(19618925003)(2906002)(256004)(26005)(221733001)(486006)(52116002)(25786009)(71200400001)(386003)(6506007)(2351001)(3480700005)(71190400001)(4270600006)(2501003)(7696005)(9686003)(99286004)(66946007)(6916009)(66556008)(66476007)(43066004)(7736002)(66446008)(64756008)(476003)(75432002)(316002)(305945005)(74316002)(478600001)(5640700003)(55016002)(8796002)(8936002)(6436002)(786003)(81166006)(1730700003)(33656002)(8676002)(81156014)(558084003)(2860700004)(86362001)(5660300002)(66806009)(60233001)(57042006)(166393002)(220243001);DIR:OUT;SFP:1501;SCL:1;SRVR:BN8PR18MB2914;H:BN8PR18MB2769.namprd18.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: ngu.edu does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: /sV/jUVOGZHiBtH2h/ZyL5vWu5qbgbQ9TW8Pixmv1YE3ipIKFo2VGXyCCaxE3w4+grl92954Qiq9Rt527Qty95TDP/Lhu2vfpscj8wZAwyytgv8psng8Gx8Sc/TTUomVsyjB9OelkgFmcTmkxtcGW+5+0ZYqV9cOvGUB8Ws4oPol3uKj1x34u6nMQv+cHDLDEw3PuaJv9sKPQ+0zZ9ns8ypCmwPCgZtAWC88UlPP/bHIdsAOa340nzC8DcgOQa4yV5IQnRDI+OQB7xipCENddFCAikSaOsbGHweKw5qgqCt0YrWtvNxIc4AnuiskUpO0WI0erBgKnHlbuk4IyBmHIKUnBsRcGd8TwXiZ2wIilaohe/I8ukRmH4VYP+V745RINV3BC8Oa9V4ewqD7T5Oayv/vw/OU+He8QBxrZiYHkWE=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-ID: <B2E7AF2A0E3E7D4FB57515899B8B8CDA@namprd18.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: ngu.edu
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1e1e6f5f-b819-4e0c-4ece-08d740b37bf0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Sep 2019 05:53:12.0443
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: f3f33163-20cb-4302-8dbb-72202bfcedda
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ADFaNXu4yLk63PFsMe7j8rE0GlCcSBsABcIBe2aVFJOZ0ckGWe7rOAbuI2IQRoURhskYksINfWPjX71hnTdmuQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8PR18MB2914
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When 'git name-rev' is invoked with commit-ish parameters, it tries to
-save some work, and doesn't visit commits older than the committer
-date of the oldest given commit minus a one day worth of slop.  Since
-our 'timestamp_t' is an unsigned type, this leads to a timestamp
-underflow when the committer date of the oldest given commit is within
-a day of the UNIX epoch.  As a result the cutoff timestamp ends up
-far-far in the future, and 'git name-rev' doesn't visit any commits,
-and names each given commit as 'undefined'.
 
-Check whether subtracting the slop from the oldest committer date
-would lead to an underflow, and use no cutoff in that case.  We don't
-have a TIME_MIN constant, dddbad728c (timestamp_t: a new data type for
-timestamps, 2017-04-26) didn't add one, so do it now.
 
-Note that the type of the cutoff timestamp variable used to be signed
-before 5589e87fd8 (name-rev: change a "long" variable to timestamp_t,
-2017-05-20).  The behavior was still the same even back then, but the
-underflow didn't happen when substracting the slop from the oldest
-committer date, but when comparing the signed cutoff timestamp with
-unsigned committer dates in name_rev().  IOW, this underflow bug is as
-old as 'git name-rev' itself.
-
-Helped-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
-Range-diff:
-1:  3bef6bdf7b ! 1:  b053181af9 name-rev: avoid cutoff timestamp underflow
-    @@ Commit message
-         far-far in the future, and 'git name-rev' doesn't visit any commits,
-         and names each given commit as 'undefined'.
-     
-    -    Check whether substacting the slop from the oldest committer date
-    -    would lead to an underflow, and use a 0 as cutoff in that case.  This
-    -    way it will handle commits shortly after the epoch even if we were to
-    -    switch to a signed 'timestamp_t' (but then we'll have to worry about
-    -    signed underflow for very old commits).
-    +    Check whether subtracting the slop from the oldest committer date
-    +    would lead to an underflow, and use no cutoff in that case.  We don't
-    +    have a TIME_MIN constant, dddbad728c (timestamp_t: a new data type for
-    +    timestamps, 2017-04-26) didn't add one, so do it now.
-     
-         Note that the type of the cutoff timestamp variable used to be signed
-         before 5589e87fd8 (name-rev: change a "long" variable to timestamp_t,
-    @@ Commit message
-         unsigned committer dates in name_rev().  IOW, this underflow bug is as
-         old as 'git name-rev' itself.
-     
-    +    Helped-by: Johannes Sixt <j6t@kdbg.org>
-         Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-     
-      ## builtin/name-rev.c ##
-    @@ builtin/name-rev.c
-      
-     -#define CUTOFF_DATE_SLOP 86400 /* one day */
-     +/*
-    -+ * One day.  See the 'name a rev close to epoch' test in t6120 when
-    ++ * One day.  See the 'name a rev shortly after epoch' test in t6120 when
-     + * changing this value
-     + */
-     +#define CUTOFF_DATE_SLOP 86400
-    @@ builtin/name-rev.c: int cmd_name_rev(int argc, const char **argv, const char *pr
-     -		cutoff = cutoff - CUTOFF_DATE_SLOP;
-     +	if (cutoff) {
-     +		/* check for undeflow */
-    -+		if (cutoff - CUTOFF_DATE_SLOP < cutoff)
-    ++		if (cutoff > TIME_MIN + CUTOFF_DATE_SLOP)
-     +			cutoff = cutoff - CUTOFF_DATE_SLOP;
-     +		else
-    -+			cutoff = 0;
-    ++			cutoff = TIME_MIN;
-     +	}
-      	for_each_ref(name_ref, &data);
-      
-      	if (transform_stdin) {
-     
-    + ## git-compat-util.h ##
-    +@@ git-compat-util.h: typedef uintmax_t timestamp_t;
-    + #define PRItime PRIuMAX
-    + #define parse_timestamp strtoumax
-    + #define TIME_MAX UINTMAX_MAX
-    ++#define TIME_MIN 0
-    + 
-    + #ifndef PATH_SEP
-    + #define PATH_SEP ':'
-    +
-      ## t/t6120-describe.sh ##
-     @@ t/t6120-describe.sh: test_expect_success 'describe complains about missing object' '
-      	test_must_fail git describe $ZERO_OID
-    @@ t/t6120-describe.sh: test_expect_success 'describe complains about missing objec
-     +	# in builtin/name-rev.c.
-     +	GIT_COMMITTER_DATE="@1234 +0000" \
-     +	git commit -m "committer date shortly after epoch" &&
-    -+	near_commit_oid=$(git rev-parse HEAD) &&
-    ++	old_commit_oid=$(git rev-parse HEAD) &&
-     +
-    -+	echo "$near_commit_oid no-timestamp-underflow" >expect &&
-    -+	git name-rev $near_commit_oid >actual &&
-    ++	echo "$old_commit_oid no-timestamp-underflow" >expect &&
-    ++	git name-rev $old_commit_oid >actual &&
-     +	test_cmp expect actual
-     +'
-     +
-
- builtin/name-rev.c  | 15 ++++++++++++---
- git-compat-util.h   |  1 +
- t/t6120-describe.sh | 15 +++++++++++++++
- 3 files changed, 28 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index c785fe16ba..b0f0776947 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -9,7 +9,11 @@
- #include "sha1-lookup.h"
- #include "commit-slab.h"
- 
--#define CUTOFF_DATE_SLOP 86400 /* one day */
-+/*
-+ * One day.  See the 'name a rev shortly after epoch' test in t6120 when
-+ * changing this value
-+ */
-+#define CUTOFF_DATE_SLOP 86400
- 
- typedef struct rev_name {
- 	const char *tip_name;
-@@ -481,8 +485,13 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 		add_object_array(object, *argv, &revs);
- 	}
- 
--	if (cutoff)
--		cutoff = cutoff - CUTOFF_DATE_SLOP;
-+	if (cutoff) {
-+		/* check for undeflow */
-+		if (cutoff > TIME_MIN + CUTOFF_DATE_SLOP)
-+			cutoff = cutoff - CUTOFF_DATE_SLOP;
-+		else
-+			cutoff = TIME_MIN;
-+	}
- 	for_each_ref(name_ref, &data);
- 
- 	if (transform_stdin) {
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f0d13e4e28..d2e884e46a 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -344,6 +344,7 @@ typedef uintmax_t timestamp_t;
- #define PRItime PRIuMAX
- #define parse_timestamp strtoumax
- #define TIME_MAX UINTMAX_MAX
-+#define TIME_MIN 0
- 
- #ifndef PATH_SEP
- #define PATH_SEP ':'
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 2b883d8174..45047d0a72 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -424,4 +424,19 @@ test_expect_success 'describe complains about missing object' '
- 	test_must_fail git describe $ZERO_OID
- '
- 
-+test_expect_success 'name-rev a rev shortly after epoch' '
-+	test_when_finished "git checkout master" &&
-+
-+	git checkout --orphan no-timestamp-underflow &&
-+	# Any date closer to epoch than the CUTOFF_DATE_SLOP constant
-+	# in builtin/name-rev.c.
-+	GIT_COMMITTER_DATE="@1234 +0000" \
-+	git commit -m "committer date shortly after epoch" &&
-+	old_commit_oid=$(git rev-parse HEAD) &&
-+
-+	echo "$old_commit_oid no-timestamp-underflow" >expect &&
-+	git name-rev $old_commit_oid >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.23.0.597.gb58f4577a1
+I have information for you. Get back to me urgently
 
