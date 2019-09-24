@@ -2,94 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE,URIBL_RED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DE531F463
-	for <e@80x24.org>; Tue, 24 Sep 2019 14:30:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 155AF1F463
+	for <e@80x24.org>; Tue, 24 Sep 2019 14:40:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441367AbfIXOam (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Sep 2019 10:30:42 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53259 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2393649AbfIXOam (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Sep 2019 10:30:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1569335436;
-        bh=Hvtj17CHgd+0GwQZPlmKEBIw1NGc0h9OWaD2HcFr6ts=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=UYRf6TA/CdxdPano6q44rZRLLT1imMTFNmrzWCe8H3/7H1+vfu7H3kBkveCBNcKjE
-         29nZx94kazUCwO1ffUSfS1f4Jcp/rZVjP/L7/++jcBlNR4Obl2g0tPonGewsrDJ6V7
-         /kiQk9wBnot7P0sNZlwLAhqIyeHtLUeioCkiLvNk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N79yG-1i7SJ5478G-017YZU; Tue, 24
- Sep 2019 16:30:36 +0200
-Date:   Tue, 24 Sep 2019 16:30:20 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        id S1731018AbfIXOko (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Sep 2019 10:40:44 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41754 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725855AbfIXOko (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Sep 2019 10:40:44 -0400
+Received: by mail-wr1-f67.google.com with SMTP id h7so2244349wrw.8
+        for <git@vger.kernel.org>; Tue, 24 Sep 2019 07:40:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xda43rKov4qggLuzZGRoCh9sr4jWrkwJ+EjY5tiM3N0=;
+        b=IXlfZQa47sRQoviEjm9qZvuCnCn1vKCYAZikfPSL3VEPIEeOmiQTXV1e1WCcpeY5eP
+         PUJ31VlTuapGkikScHiFB35/cSwj0hFBOPI0xc+qrvSG1SBpiXYvuVhASjb4FQZ8cGP+
+         BFcbVaN9oc14BagG9pAKNZvPxkqetUFkvH31pjQ0kdRDRFBvykMLpdl5xvcUjVT0GEDj
+         VFoLLUtE6HC2UyJgw04UkjZ//B1ClUDYfP+djLdpgyEIa+NubRvjGk4KzbbsRV9/csli
+         anQldMb1n8NhcsLUHddJE9PbsGMbv1rLC6mktqCuTYbxuypbmJQBijG8HOJ0+HZqOech
+         dAVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=xda43rKov4qggLuzZGRoCh9sr4jWrkwJ+EjY5tiM3N0=;
+        b=HJJkKjiM17ZR+BSuAIdgSC/iX0c2W3aGeaEwQ/BkDoj1xEiRFrJgx0GT0HHYSlIMtq
+         pzpfxOfs7Irk25RLPwNrw/6Z6SneBkDc+tYkwBAdQGOWpdnxlrHLrn8HMQueYxLTmlI3
+         k4Oi2f/eMKQrXfIniofodNGf4tpzD8ppDlWzP+8L16qYFVCWIjU9+JVO46/PUam63i0p
+         zJeI12zc98kKBqiEyi6j9dgFWZFUppkN3JzShjctIZtLmbG3cntGx/z+/wzK7P3viITG
+         6O0tFzAUWZRHvyO9uQEuK5Y4Hpv+dyd2PuV+DIeZlYTlIGD2/o1HPov9Gnnpe9xP6Gus
+         BITw==
+X-Gm-Message-State: APjAAAWi+0iSDEyS+861R4OL6xMUozJyjg5ZguFpFpzkHMqOXoQscKh8
+        iYDTubTJlX6gFtDGIbo1kxQ=
+X-Google-Smtp-Source: APXvYqzcIhJWZSE9dPlmCIf2Xdf8Qycn3QUyq9sJSzJAC2oEZSLF1D4zs6n1ThUeXEpLFwNiNuHQ6A==
+X-Received: by 2002:adf:a415:: with SMTP id d21mr2507527wra.94.1569336042062;
+        Tue, 24 Sep 2019 07:40:42 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-10-31.as13285.net. [92.22.10.31])
+        by smtp.gmail.com with ESMTPSA id z4sm2153415wrh.93.2019.09.24.07.40.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Sep 2019 07:40:41 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] add a Code of Conduct document
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, git@sfconservancy.org,
+        Derrick Stolee <stolee@gmail.com>,
         Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: Git in Outreachy December 2019?
-In-Reply-To: <20190923181950.GB21344@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1909241629530.15067@tvgsbejvaqbjf.bet>
-References: <20190827051756.GA12795@sigill.intra.peff.net> <20190913200317.68440-1-jonathantanmy@google.com> <20190913205148.GA8799@sigill.intra.peff.net> <20190916184208.GB17913@google.com> <nycvar.QRO.7.76.6.1909171158090.15067@tvgsbejvaqbjf.bet>
- <20190917120230.GA27531@szeder.dev> <nycvar.QRO.7.76.6.1909231444590.15067@tvgsbejvaqbjf.bet> <20190923181950.GB21344@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, garimasigit@gmail.com
+References: <20190924064454.GA30419@sigill.intra.peff.net>
+ <20190924090152.GA7209@szeder.dev>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <9e65e95c-4a8d-c904-d8e9-bdd494f41ce0@gmail.com>
+Date:   Tue, 24 Sep 2019 15:40:39 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:iubhuxwbgFkgKBvwfEyOffiy8Dvk4zthuEADeNMCTHh+j1Ydqsp
- tSRL+gUDePeUhfQ8kWLmobmD/NZeMfr/RAkYqkON1nYqRuxgDLjf4/ZMngqNmV2t670QCXu
- /hAfuqN8v2T2j4oTQN/95G0nHF/gwbAFuh0bliw/X6sGrjxts+hcXIshuY272s64Cde03UO
- N8fA5XB5cvZEgReOU+DMw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:kKiSoesBPM8=:m8/VSUgFkzmJ8eAfPgzqo/
- LsmtCDKCSaP1LqllW6G3NhbmOes5BhSggs0Y1kJrMDqJgszjU4ThpSwfe1g+5pTTgVN3EW5e0
- 3zzXNa6+6VYfSu3S0++vNL9YSAaRm0ESPUCr/dIPkXRp1SsjxVYRasvmshNiFYo4tKb2OuguF
- 25ToMv1W9Mt4LN1lg0XjGIR2Ae1ATEQopXzZxbdcoN6N6nw6++s89W1PvYnZTRKHdZqrTmVGj
- FADc1mDtzKex+7fEannao3SHzxekfIH8IYVLwC48qd0jeTd4s6BTcZ5oYWhmwRVYO82WbKiFJ
- x0UgCkq7y8aJR0hcXyXOd2mvbllsBhaCby75tpBGjgUKV4scrgye0YEU46gvhoR/jpxZQ0pFM
- FPuNfGMIUesZzsbU78CyreOUOf9xUY0D7OoJdsqqH3UZyXBZVBj65MFruPVUD1Zpfrm3tfM65
- 49ZIeTsmiQAFnqA+zVOK+2YKN5plxCK8RYDssDaxa9y5awhky/+Ze/MB0xFTSBGH26Co7s9UM
- 05mAd6kaWIl34+HHoC+WtwJkls2OelFGHItC9F4wNAXCtwgGzNo2zz5DuSv3bCEAv5ssyG/68
- hQIHlovCh5h7u562q5P7PyUONIC5GNivtHrMQhk0jR2ROtgGbFK+CG29SrGgcnAtaFsGgOkaX
- 8NJ23fNQXLQ6TF48sDP+tMomP76B/3F/hfSCkRSaqw4lOdApLiAXdmBl0oHIQyBVwiomjprVO
- ibxh/atchBp1jfhG1P6gI8zY0HqN7Bc5eeCE7yis0Y/nwzsgNQx8qJW7/B2q/nbw+Hr+s9LNP
- m8pjQwj6TybmQ+LUjQ0fj+Ktc+CU6WWptKEa/QhTHsFVhMICC77Z8344cDMnaaegIynfHdfdU
- 2KgmD71JqBJTuJCRWdXXm+3P9a3GgwTG6Sx+BV4OOgeGi7q7TrTgz25GoviRBd/jqLFTqoTpd
- ebXb/FaR2sQNkZHcZIXA3G8gBLFVPacrdevHCmAL30o6vs7jPfKhiDuPlXSyX0MK//FBRzEGO
- zVxFrKTJtw6KLAVpl7lUVLpokoBgzqmJNCSoMIb0aULrvE1gM3rkgw8ja+huZ4FUnP8mOI5jn
- tOwPtp8rkNKgJ5ZKO9Eecp8kpelgxmcrIVhgq6dSAJXDeiR4NCLfhdL/JWVug6L8qoERZqRPF
- EnrnE9l8l3iy9o0xK3KA4zYTgK2jcsgI9YeJZvuMqJGnVAnIW6zRASApwqebBnIrNudliE/8p
- 16kVL9UMh3UaKYhuagjdqNQhzf9zMGFHt9sqSdzJfdqCgkHCOdPkazvSPP4s=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190924090152.GA7209@szeder.dev>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Gábor
 
-On Mon, 23 Sep 2019, Jeff King wrote:
+On 24/09/2019 10:01, SZEDER Gábor wrote:
+> On Tue, Sep 24, 2019 at 02:44:54AM -0400, Jeff King wrote:
+>> [...]
+>>
+>> After some poking around at various CoC options, this one seemed like
+>> the best fit to me. But I'm open to suggestions or more discussion. It
+>> seems to me that the important piece is having _some_ CoC, and picking
+>> something standard-ish seems a safe bet.
+> 
+> We are decent people, and know how to behave properly and treat each
+> other with respect.  It is my fundamental assumption that all future
+> contributors are decent and respectful human beings as well.
 
-> On Mon, Sep 23, 2019 at 02:47:23PM +0200, Johannes Schindelin wrote:
->
-> > The evaluation of the lazy prereq is indeed not different between Bash
-> > or dash. It is nevertheless quite disruptive in the trace of a test
-> > script, especially when it is evaluated for a test case that is skippe=
-d
-> > explicitly via the `--run` option.
->
-> That sounds like a bug: if we know we are not going to run the test
-> anyway due to --run or GIT_TEST_SKIP, we should probably avoid checking
-> the prereq at all.
+History suggests that almost all will be decent but there will be one or 
+two who aren't and cause trouble.
 
-Yep. Likewise, the `&&` chain checker seems to run even if the test case
-is skipped.
+> A CoC
+> like this, which is "explicit about the behavior we want to model"
+> (quoting the original discussion starter) inherently insinuates that
+> we aren't decent, and can't behave without being told how to do so.
+> Frankly, I find this borderline insulting to me, to my parents, to all
+> fellow contributors, and to future contributors as well.
 
-Ciao,
-Dscho
+I don't find it insulting, to me it just sets out that the project 
+welcomes contributors who behave decently.
+
+> There are locations, nationalities and cultures, where the avarage
+> wide-spread CoCs, like Contributor Covenant and its derivatives, are
+> perceived as (paraphrasing) too "American", politically overcorrect,
+> corporate BS, etc., which are forced upon open-source projects.
+> Consequently, such CoCs are often found rather discouraging, and
+> announcements about their adoption in open-source projects generally
+> get negative reaction.
+> 
+> Less is more.  Much-much more.  A concise CoC that treats its readers
+> as responsible, well-behaved human beings is met with much approval.
+
+I was pleasantly surprised at how short the proposed CoC is, I don't 
+think it's too long at all. It only takes a couple of minutes to read 
+and is quite clear.
+
+Best Wishes
+
+Phillip
+
+
+> Take, for example, the TrueOS Rules of Conduct, which in just a few
+> short sentences covers everything that's worth covering:
+> 
+>    https://www.trueos.org/rulesofconduct/
+> 
+> If diversity and inclusion of other cultures is indeed a priority,
+> then we should carefully consider that some potential contributors
+> will rather choose not to contribute because of a CoC like this.
+> 
+> 
+>> If people are on board with this direction, it might be fun to pick up a
+>> bunch of "Acked-by" trailers from people in the community who agree with
+>> it. It might give it more weight if many members have publicly endorsed
+>> it.
+> 
+> Because of the above I'm leaning towards NACK.
+> 
