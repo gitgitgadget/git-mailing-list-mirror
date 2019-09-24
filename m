@@ -2,114 +2,251 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F8B81F463
-	for <e@80x24.org>; Tue, 24 Sep 2019 07:22:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF38C1F463
+	for <e@80x24.org>; Tue, 24 Sep 2019 07:32:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409240AbfIXHWE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Sep 2019 03:22:04 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38893 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390221AbfIXHWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Sep 2019 03:22:04 -0400
-Received: by mail-wm1-f66.google.com with SMTP id 3so798520wmi.3
-        for <git@vger.kernel.org>; Tue, 24 Sep 2019 00:22:02 -0700 (PDT)
+        id S2438442AbfIXHcT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Sep 2019 03:32:19 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:35369 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391594AbfIXHcS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Sep 2019 03:32:18 -0400
+Received: by mail-wm1-f67.google.com with SMTP id y21so838967wmi.0
+        for <git@vger.kernel.org>; Tue, 24 Sep 2019 00:32:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=OQYCNeFqGeyBjG6N1iYXpU6+zpWYiduFOlqDa7fR7uU=;
-        b=fEeDC8E/wvarn8VRQf0NDaKTrEXFGh2vRmJJPk3fS2ypl+bmx/j1ZnF8LwoPHhsHFt
-         0c7xAUD/B7oVSiwy87wE5QtXDZA4U8nQMPoXfrH3Xgx0tdsETaLxpUdYq75U7yqeToBo
-         jSIpyqCyUuVhdU4i65eQQRYTF3xjsm2OPaaRaFqpuLFgdiJM2VZ67ZuvXYGEzU/ON96t
-         xHJ1LDfUxuoe1TdIxFQqRFqdxOihEhS1CO2RPNvpnDOcnqJ4UJcRv8Vr810gw4IDuOUl
-         L4THy43UfIq1Hi/9qgphnRDv7a17iTGG57ZhWlalSeUT7jIo5t79nyRF3ugM0u09c83p
-         v8rA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3aozaoX8r8MZQVlxUY7oVk35Wzs2QLfAc0WYPpOVkwQ=;
+        b=vbiR66OCK+S7be3dYYayNyLerunBYp1viCYnt007kFsuRifEspuAUNbvLc67bvgx1v
+         9e+qhEZvWr1URk39NIdjRshetz7TI9IEKx4THR0iNavTBJezeCE8ra4VB7yyCn/C0Xf3
+         N7H9mh2dFuyQg9XCOlsH0ReC6IiLGBea+vZ8g2gOXK2TuevPAUb5Uv8PiUNjgUQzae37
+         xSfj7MfiQ7We7S/ymFgFUpNHigQqkUJ0jXxG2ijHXiyQB4Qim30/R/gjRV6UfBR50cJ9
+         OqmkwrAKwJVH7zGeAEJVJuy6qybpJJ8KNMha7126hH9hqg1bX875FQLlqHdqGwFrqbjP
+         PNzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=OQYCNeFqGeyBjG6N1iYXpU6+zpWYiduFOlqDa7fR7uU=;
-        b=FmUtFm8wi9RSB3VR9q9ipLrft7XiDNduNtFYhLRd4qWrRKyFgqvWyD+5jS9mZopnUJ
-         AHp+bTIPPoEKcRkbII0pjwn1oH60vzAuoTLigNlNzVbzYC6cp1zCtBbhyox41SMXERbx
-         QqzYXwGVREvRSuZxPSpnet5izNImFvMgR2erCDxLPyri494rn8awzmgDYgPcSCRKIY3f
-         5zty7l5bMbyg9dwfmf1ZFYo8K1zCMkFQoVFC0axRkbi3nf8NmlsZ96sQ0ZNFOpqhsnto
-         cN78zeGviqqwWISRnrcHt7pvJQApGVD57CbdT9uoa0HwfBxpY4p23pwaNGndVQoc57Xv
-         hfDA==
-X-Gm-Message-State: APjAAAUXKH0ywo7ULdzcjlirK2CS4XEitnydTVgrTCAf2MpDU5en8hYD
-        8IysbTe/L1ezFT9lxaXhVGVoLv1Ve4E=
-X-Google-Smtp-Source: APXvYqwMhCJxzc4pEZrfs2BKNujwHiF8Ldmsf+a5IRB/A0hSS/ZJEzmmUbUgiRrOC1rVg4azIyQLlQ==
-X-Received: by 2002:a1c:5451:: with SMTP id p17mr1405876wmi.103.1569309721963;
-        Tue, 24 Sep 2019 00:22:01 -0700 (PDT)
-Received: from szeder.dev (x4dbd468e.dyn.telefonica.de. [77.189.70.142])
-        by smtp.gmail.com with ESMTPSA id s19sm2468801wrb.14.2019.09.24.00.22.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Sep 2019 00:22:01 -0700 (PDT)
-Date:   Tue, 24 Sep 2019 09:21:59 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] name-rev: avoid cutoff timestamp underflow
-Message-ID: <20190924072159.GD2637@szeder.dev>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3aozaoX8r8MZQVlxUY7oVk35Wzs2QLfAc0WYPpOVkwQ=;
+        b=SKt2H3ejudoj5i99NoNTmS427GCCSHiRveuPVMIIrneIh9iqNQIp7eVKeatkdE1hL6
+         fyACKkGeiw/rEjJ//qWGSgzJK+kKZNkDHIBPwSviqkq+p0Q0aYD8MaFm6VxZvIGjER4K
+         liaISyGyJZImMVnlEVts0gjl3lsyKmOj0/PAXu6AmBi16eZfyQnTMBPdk/XcRf3FM1bd
+         2Nn046l59fiT9pRX3hcI0KwKuN1hVDyo63/FVZhmK/IJXhpiQbwAr8YGP2nsyVIGjk9i
+         6pkinBg+6V/pYsSaP+vqEa3pkrHku+e0fhpeIbecZ03CVN9TLq9kuHLaGjMN4anIUuZW
+         jYTg==
+X-Gm-Message-State: APjAAAW3cYNSk33Ek03YSRnibJrgOgeq7xiZ0b8zTYVY/yadwn6cAEeC
+        78+2xjv3jkXNjdsbpPhfvcM=
+X-Google-Smtp-Source: APXvYqybVu9oilPgdjPqhEkhI7qeEu/3tibbrnskp9jx+GqIamMnrJt50xotVx+BwIp/Fo+bK48lfA==
+X-Received: by 2002:a1c:c589:: with SMTP id v131mr1373887wmf.163.1569310336717;
+        Tue, 24 Sep 2019 00:32:16 -0700 (PDT)
+Received: from localhost.localdomain (x4dbd468e.dyn.telefonica.de. [77.189.70.142])
+        by smtp.gmail.com with ESMTPSA id w125sm1737309wmg.32.2019.09.24.00.32.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 24 Sep 2019 00:32:15 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        phillip.wood@dunelm.org.uk,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] name-rev: avoid cutoff timestamp underflow
+Date:   Tue, 24 Sep 2019 09:32:13 +0200
+Message-Id: <20190924073213.7125-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.23.0.597.gb58f4577a1
+In-Reply-To: <20190922180143.25026-1-szeder.dev@gmail.com>
 References: <20190922180143.25026-1-szeder.dev@gmail.com>
- <5692e751-ae5b-e1c8-e5f7-79f0b43e20c0@gmail.com>
- <20190922195312.GC10866@szeder.dev>
- <8e7617ef-85d0-df3f-4418-5a2502b8e726@kdbg.org>
- <20190923083723.GD10866@szeder.dev>
- <fe58f33f-a3ae-4981-5bb7-d1659f3ab189@kdbg.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <fe58f33f-a3ae-4981-5bb7-d1659f3ab189@kdbg.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 23, 2019 at 09:16:26PM +0200, Johannes Sixt wrote:
-> Am 23.09.19 um 10:37 schrieb SZEDER Gábor:
-> > On Sun, Sep 22, 2019 at 11:01:26PM +0200, Johannes Sixt wrote:
-> >> Huh? For signed cutoff and positive CUTOFF_DATE_SLOP,
-> >> cutoff - CUTOFF_DATE_SLOP < cutoff is ALWAYS true. Signed interger
-> >> underflow is undefined behavior and signed integer arithmetic does not
-> >> wrap around!
-> >>
-> >> IOW, the new condition makes only sense today, because cutoff is an
-> >> unsigned type, but breaks down should we switch to a signed type.
-> > 
-> > Yeah, that's what I meant with worrying about signed underflow in the
-> > commit message.  As long as the cutoff is at least a day later than
-> > the minimum value of our future signed 'timestamp_t', the condition
-> > does the right thing.  And considering that oldest time a signed 64
-> > bit timestamp can represent far exceeds the age of the universe, and
-> > the oldest value of even a signed 32 bit timestamp is almost half the
-> > age of the Earth, I wasn't too worried.
-> 
-> Note that commits and timestamps can be forged easily. I'm not worried
-> that Git does not work "correctly" with forged timestamps (as long as it
-> is not exploitable); but when it is simple to make foolproof, we should
-> do it.
-> 
-> BTW, 32-bit timestamps cover just ~135 years (not half the age of
-> Earth).
+When 'git name-rev' is invoked with commit-ish parameters, it tries to
+save some work, and doesn't visit commits older than the committer
+date of the oldest given commit minus a one day worth of slop.  Since
+our 'timestamp_t' is an unsigned type, this leads to a timestamp
+underflow when the committer date of the oldest given commit is within
+a day of the UNIX epoch.  As a result the cutoff timestamp ends up
+far-far in the future, and 'git name-rev' doesn't visit any commits,
+and names each given commit as 'undefined'.
 
-Gah, forgot the division with seconds/year when calculating the range
-of the 32bit timestamp.
+Check whether subtracting the slop from the oldest committer date
+would lead to an underflow, and use no cutoff in that case.  We don't
+have a TIME_MIN constant, dddbad728c (timestamp_t: a new data type for
+timestamps, 2017-04-26) didn't add one, so do it now.
 
-> That's too little for people who want to store historic
-> documents in a Git repository.
+Note that the type of the cutoff timestamp variable used to be signed
+before 5589e87fd8 (name-rev: change a "long" variable to timestamp_t,
+2017-05-20).  The behavior was still the same even back then, but the
+underflow didn't happen when substracting the slop from the oldest
+committer date, but when comparing the signed cutoff timestamp with
+unsigned committer dates in name_rev().  IOW, this underflow bug is as
+old as 'git name-rev' itself.
 
-Indeed, but 'timestamp_t' is defined as 'uintmax_t', and we have the
-Makefile knob 'NO_UINTMAX_T', in which case 'uintmax_t' is defined as
-'uint32_t'...
+Helped-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+Range-diff:
+1:  3bef6bdf7b ! 1:  b053181af9 name-rev: avoid cutoff timestamp underflow
+    @@ Commit message
+         far-far in the future, and 'git name-rev' doesn't visit any commits,
+         and names each given commit as 'undefined'.
+     
+    -    Check whether substacting the slop from the oldest committer date
+    -    would lead to an underflow, and use a 0 as cutoff in that case.  This
+    -    way it will handle commits shortly after the epoch even if we were to
+    -    switch to a signed 'timestamp_t' (but then we'll have to worry about
+    -    signed underflow for very old commits).
+    +    Check whether subtracting the slop from the oldest committer date
+    +    would lead to an underflow, and use no cutoff in that case.  We don't
+    +    have a TIME_MIN constant, dddbad728c (timestamp_t: a new data type for
+    +    timestamps, 2017-04-26) didn't add one, so do it now.
+     
+         Note that the type of the cutoff timestamp variable used to be signed
+         before 5589e87fd8 (name-rev: change a "long" variable to timestamp_t,
+    @@ Commit message
+         unsigned committer dates in name_rev().  IOW, this underflow bug is as
+         old as 'git name-rev' itself.
+     
+    +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+         Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+     
+      ## builtin/name-rev.c ##
+    @@ builtin/name-rev.c
+      
+     -#define CUTOFF_DATE_SLOP 86400 /* one day */
+     +/*
+    -+ * One day.  See the 'name a rev close to epoch' test in t6120 when
+    ++ * One day.  See the 'name a rev shortly after epoch' test in t6120 when
+     + * changing this value
+     + */
+     +#define CUTOFF_DATE_SLOP 86400
+    @@ builtin/name-rev.c: int cmd_name_rev(int argc, const char **argv, const char *pr
+     -		cutoff = cutoff - CUTOFF_DATE_SLOP;
+     +	if (cutoff) {
+     +		/* check for undeflow */
+    -+		if (cutoff - CUTOFF_DATE_SLOP < cutoff)
+    ++		if (cutoff > TIME_MIN + CUTOFF_DATE_SLOP)
+     +			cutoff = cutoff - CUTOFF_DATE_SLOP;
+     +		else
+    -+			cutoff = 0;
+    ++			cutoff = TIME_MIN;
+     +	}
+      	for_each_ref(name_ref, &data);
+      
+      	if (transform_stdin) {
+     
+    + ## git-compat-util.h ##
+    +@@ git-compat-util.h: typedef uintmax_t timestamp_t;
+    + #define PRItime PRIuMAX
+    + #define parse_timestamp strtoumax
+    + #define TIME_MAX UINTMAX_MAX
+    ++#define TIME_MIN 0
+    + 
+    + #ifndef PATH_SEP
+    + #define PATH_SEP ':'
+    +
+      ## t/t6120-describe.sh ##
+     @@ t/t6120-describe.sh: test_expect_success 'describe complains about missing object' '
+      	test_must_fail git describe $ZERO_OID
+    @@ t/t6120-describe.sh: test_expect_success 'describe complains about missing objec
+     +	# in builtin/name-rev.c.
+     +	GIT_COMMITTER_DATE="@1234 +0000" \
+     +	git commit -m "committer date shortly after epoch" &&
+    -+	near_commit_oid=$(git rev-parse HEAD) &&
+    ++	old_commit_oid=$(git rev-parse HEAD) &&
+     +
+    -+	echo "$near_commit_oid no-timestamp-underflow" >expect &&
+    -+	git name-rev $near_commit_oid >actual &&
+    ++	echo "$old_commit_oid no-timestamp-underflow" >expect &&
+    ++	git name-rev $old_commit_oid >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+
+ builtin/name-rev.c  | 15 ++++++++++++---
+ git-compat-util.h   |  1 +
+ t/t6120-describe.sh | 15 +++++++++++++++
+ 3 files changed, 28 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index c785fe16ba..b0f0776947 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -9,7 +9,11 @@
+ #include "sha1-lookup.h"
+ #include "commit-slab.h"
+ 
+-#define CUTOFF_DATE_SLOP 86400 /* one day */
++/*
++ * One day.  See the 'name a rev shortly after epoch' test in t6120 when
++ * changing this value
++ */
++#define CUTOFF_DATE_SLOP 86400
+ 
+ typedef struct rev_name {
+ 	const char *tip_name;
+@@ -481,8 +485,13 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 		add_object_array(object, *argv, &revs);
+ 	}
+ 
+-	if (cutoff)
+-		cutoff = cutoff - CUTOFF_DATE_SLOP;
++	if (cutoff) {
++		/* check for undeflow */
++		if (cutoff > TIME_MIN + CUTOFF_DATE_SLOP)
++			cutoff = cutoff - CUTOFF_DATE_SLOP;
++		else
++			cutoff = TIME_MIN;
++	}
+ 	for_each_ref(name_ref, &data);
+ 
+ 	if (transform_stdin) {
+diff --git a/git-compat-util.h b/git-compat-util.h
+index f0d13e4e28..d2e884e46a 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -344,6 +344,7 @@ typedef uintmax_t timestamp_t;
+ #define PRItime PRIuMAX
+ #define parse_timestamp strtoumax
+ #define TIME_MAX UINTMAX_MAX
++#define TIME_MIN 0
+ 
+ #ifndef PATH_SEP
+ #define PATH_SEP ':'
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 2b883d8174..45047d0a72 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -424,4 +424,19 @@ test_expect_success 'describe complains about missing object' '
+ 	test_must_fail git describe $ZERO_OID
+ '
+ 
++test_expect_success 'name-rev a rev shortly after epoch' '
++	test_when_finished "git checkout master" &&
++
++	git checkout --orphan no-timestamp-underflow &&
++	# Any date closer to epoch than the CUTOFF_DATE_SLOP constant
++	# in builtin/name-rev.c.
++	GIT_COMMITTER_DATE="@1234 +0000" \
++	git commit -m "committer date shortly after epoch" &&
++	old_commit_oid=$(git rev-parse HEAD) &&
++
++	echo "$old_commit_oid no-timestamp-underflow" >expect &&
++	git name-rev $old_commit_oid >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.23.0.597.gb58f4577a1
 
