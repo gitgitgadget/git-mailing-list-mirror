@@ -2,94 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65C211F463
-	for <e@80x24.org>; Tue, 24 Sep 2019 17:05:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02C431F463
+	for <e@80x24.org>; Tue, 24 Sep 2019 17:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728180AbfIXRFP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Sep 2019 13:05:15 -0400
-Received: from pine.sfconservancy.org ([162.242.171.33]:46222 "EHLO
-        pine.sfconservancy.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726859AbfIXRFP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Sep 2019 13:05:15 -0400
-X-Greylist: delayed 549 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Sep 2019 13:05:15 EDT
-Received: from YOLO (c-76-118-177-220.hsd1.ma.comcast.net [76.118.177.220])
-        (Authenticated sender: deb)
-        by pine.sfconservancy.org (Postfix) with ESMTPSA id ECB6CE256;
-        Tue, 24 Sep 2019 16:56:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=sfconservancy.org;
-        s=pine; t=1569344164;
-        bh=P1I5CCvktztVUIw0PVo6a3U2LcXMX+F6wSrnJSero+0=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-        b=csjUYb/mD3IGC1o7diKJqV6Yg3oIlclT7/7U7IgQEUBou+0TDSTl+Kaedd/y+9rjX
-         sCdOx4jo5tJFNonWBTlD+XBHZ1QQBewg+8JAWyZJv/1AB2Led0xb11HWWcZW1fADKX
-         fdCxpx3ZfqEFbc+8DHB1iAvovmDhMzbpKb4pMKAGb9XcOqtFNAPGgQFGzCU+ozwCW5
-         sKMqNPr5/ittpDXem5QPo6aX7mBz6vVhcY+LcUXB63g5K95jbKyFLObxEqziaXArkK
-         aUpoSHB6RNaIhI32QXPCt3BkshaiItsag6mFW2Hfa8j7OB9XmM/Jg6zseMoB4Wn1st
-         jeQuMnWz5n7Jw==
-Message-ID: <1569344163.2309.5.camel@sfconservancy.org>
-Subject: Re: [PATCH] add a Code of Conduct document
-From:   Deb Nicholson <deb@sfconservancy.org>
-To:     Garima Singh <garimasigit@gmail.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-Cc:     git@sfconservancy.org, Derrick Stolee <stolee@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Date:   Tue, 24 Sep 2019 12:56:03 -0400
-In-Reply-To: <133b46b2-b2e1-4673-820b-5a5ca6ec0269@gmail.com>
-References: <20190924064454.GA30419@sigill.intra.peff.net>
-         <133b46b2-b2e1-4673-820b-5a5ca6ec0269@gmail.com>
-Organization: Software Freedom Conservancy
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3.2 
+        id S2406258AbfIXRHw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Sep 2019 13:07:52 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:49787 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732478AbfIXRHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Sep 2019 13:07:51 -0400
+Received: by mail-pf1-f202.google.com with SMTP id i28so1932036pfq.16
+        for <git@vger.kernel.org>; Tue, 24 Sep 2019 10:07:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=tCdK3dU6HrYl0V6np884KdAHnm+g+dnD06sPeeY3IkI=;
+        b=beR65cHRGLKEsVlUW1yzo41i1qP9jKLqUw6wjDvtg9hJxMYm78SQ2D6ateUo/RwfcX
+         BbxOWq08N7TPD+bnhykOY9J5bYG2qfKs4a4O3BTzONUJJeIj3UoT6EqahQLBYVq5poHr
+         4zvlryH0TfBVGnVyMZHRU/Deg3xx9cBXHnJckhA2e7begFh5UdJHTQx15sA5WnWb4aOV
+         QUdscTcTuXF3vMLI7FGBB1sQT5TbTzZ+cvFl7/fy3FPdVfKm/suZ+OP2tDL1oBL5pPG0
+         dvvssaT40YK9G22WdPDcyKZheOB2dqFCF9c0B3V+gSz31lXEapobC7PeIuBrvnK+RjXX
+         6W6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=tCdK3dU6HrYl0V6np884KdAHnm+g+dnD06sPeeY3IkI=;
+        b=Td7nAZ2PeDzjZfUt0GIRu2Ifnz65V2ZW6zKNqTIAIzYuk2eB4BQdiGn+Lqc2p9v6Y3
+         SMgtsydAIq8mKCWGPLfg3MJMu8iEyOGkejLXx58TjQ5c5UupeWQpnxMyuk2cTbJHfK4z
+         oADE+B9C0VZ0VwwUxjerEzhosUzWhdgmCKtlQON4FDWB8QAABqQiXh4j72JeeCAYTeun
+         KPNdTGzjzCvVz3NsYw+91sdIX0BZFGpY5cCfLVg46kfJ9aqqrCCJl+j0msKkEVo9vTsX
+         lqbdkgFrxcZeZNTs6e/UT4Gf3JPmBE254UGENkhNnt7+uHYCXdndSC7gLqaIiEKEf0Fv
+         wD+g==
+X-Gm-Message-State: APjAAAVcGyXE0WX1f3m84yzaSaJ4SoT+nOhyH+6+dA2ttXRP/q65ECOa
+        tfzP4XlXfn9QYeAXTb30TeG4RTUKyZ5SmMioR/9Z
+X-Google-Smtp-Source: APXvYqxYrZLpTFu+H8GdT61MpS4iEAtsHoIzE9ReYJZnaxtD7umfagLuTyhQutnquY+UaG0OblL5e+O08Dmy6gEi7RPO
+X-Received: by 2002:a63:e5c:: with SMTP id 28mr4092322pgo.133.1569344869862;
+ Tue, 24 Sep 2019 10:07:49 -0700 (PDT)
+Date:   Tue, 24 Sep 2019 10:07:46 -0700
+In-Reply-To: <20190923212834.GA19504@sigill.intra.peff.net>
+Message-Id: <20190924170746.100302-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190923212834.GA19504@sigill.intra.peff.net>
+X-Mailer: git-send-email 2.23.0.351.gc4317032e6-goog
+Subject: Re: Git in Outreachy December 2019?
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     peff@peff.net
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all, 
-Deb here from Git's fiscal home. Let us know if you need any advice or
-help finding a professional consultant to take a look at the Code of
-Conduct document for you. I'm also happy to perosanlly take a look at
-any draft(s).
-Best, 
-Deb
-
-
-On Tue, 2019-09-24 at 12:53 -0400, Garima Singh wrote:
-> On 9/24/2019 2:44 AM, Jeff King wrote:
-> > 
-> > 
-> > If people are on board with this direction, it might be fun to pick
-> > up a
-> > bunch of "Acked-by" trailers from people in the community who agree
-> > with
-> > it. It might give it more weight if many members have publicly
-> > endorsed
-> > it.
-> > 
-> > I've cc'd git@sfconservancy.org here, because I think it's
-> > important for
-> > all of the project committee members to endorse it (and because the
-> > document puts us on the hook for enforcing it!).
-> > 
-> I think this looks really good. I appreciate how it gets the point
-> across for
-> people to empower each other and welcome new members without being
-> too wordy.
-> It gets my wholehearted ACK. Thanks for putting it together. 
+> On Mon, Sep 23, 2019 at 01:38:54PM -0700, Jonathan Tan wrote:
 > 
-> Cheers,
-> Garima G Singh
--- 
-Deb Nicholson <deb@sfconservancy.org>
-Software Freedom Conservancy
+> > I didn't have any concrete ideas so I didn't include those, but some
+> > unrefined ideas:
+> 
+> One risk to a mentoring project like this is that the intern does a good
+> job of steps 1-5, and then in step 6 we realize that the whole thing is
+> not useful, and upstream doesn't want it. Which isn't to say the intern
+> didn't learn something, and the project didn't benefit. Negative results
+> can be useful; but it can also be demoralizing.
 
+That's true. I think that libification is in itself a useful and
+non-controversial goal.
+
+> I'm not arguing that's going to be the case here. But I do think it's
+> worth talking through these things a bit as part of thinking about
+> proposals.
+
+[snip]
+
+> >  - index-pack has the CLI option to specify a message to be written into
+> >    the .promisor file, but in my patch to write fetched refs to
+> >    .promisor [1], I ended up making fetch-pack.c write the information
+> >    because I didn't know how many refs were going to be written (and I
+> >    didn't want to bump into CLI argument length limits). If we had this
+> >    feature, I might have been able to pass a callback to index-pack that
+> >    writes the list of refs once we have the fd into .promisor,
+> >    eliminating some code duplication (but I haven't verified this).
+> 
+> That makes some sense. We could pass the data over a pipe, but obviously
+> stdin is already in use to receive the pack here. Ideally we'd be able
+> to pass multiple streams between the programs, but I think due to
+> Windows support, we can't assume that arbitrary pipe descriptors will
+> make it across the run-command boundary. So I think we'd be left with
+> communicating via temporary files (which really isn't the worst thing in
+> the world, but has its own complications).
+> 
+> >  - In your reply [2] to the above [1], you mentioned the possibility of
+> >    keeping a list of cutoff points. One way of doing this, as I state in
+> >    [3], is my original suggestion back in 2017 of one such
+> >    repository-wide list. If we do this, it would be better for
+> >    fetch-pack to handle this instead of index-pack, and it seems more
+> >    efficient to me to have index-pack be able to pass objects to
+> >    fetch-pack as they are inflated instead of fetch-pack rereading the
+> >    compressed forms on disk (but again, I haven't verified this).
+> 
+> And this is the flip-side problem: we need to get data back, but we have
+> only stdout, which is already in use (so we need some kind of protocol).
+> That leads to things like the horrible NUL-byte added by 83558686ce
+> (receive-pack: send keepalives during quiet periods, 2016-07-15).
+
+Sounds good. With this, do you think that there is enough likelihood of
+acceptance that we can move ahead with my proposed project?
+
+Besides discussing the likelihood of patches being accepted/rejected,
+should we record the result of discussion somewhere (or, if only the
+mentor should give their ideas, for me to write in more detail)? I don't
+recall a place in the Outreachy form to write this, so I just mentioned
+the benefits in outline, but maybe I can just include it somewhere
+anyway.
+
+> > There are also the debuggability improvements of not having to deal with
+> > 2 processes.
+> 
+> I think it can sometimes be easier to debug with two separate processes,
+> because the input to index-pack is well-defined and can be repeated
+> without hitting the network (though you do have to figure out how to
+> record the network response, which can be non-trivial). I've also done
+> similar things for running performance simulations.
+
+Hmm...that's true, but I think this is a matter of degree. The input to
+a lib function for index-pack can be similarly simple and well-defined
+(a C interface that we can exercise using a throwaway patch to
+test-tool, for example), but I agree that it usually won't be as simple
+as input to CLI (but this is because of limitations that the CLI
+imposes).
+
+> > > [dropping unpack-objects]
+> > >     Maybe that would be worth making part of the project?
+> > 
+> > I'm reluctant to do so because I don't want to increase the scope too
+> > much - although if my project has relatively narrow scope for an
+> > Outreachy project, we can do so. As for eliminating the utility of
+> > having richer communication, I don't think so, because in the situations
+> > where we require richer communication (right now, situations to do with
+> > partial clone), we specifically run index-pack anyway.
+> 
+> Yeah, we're in kind of a weird situation there, where unpack-objects is
+> used less and less. I wonder how many surprises are lurking where
+> somebody reasoned about index-pack behavior, but unpack-objects may do
+> something slightly differently (I know this came up when we looked at
+> fsck-ing incoming objects for submodule vulnerabilities).
+> 
+> I kind of wonder if it would be reasonable to just always use index-pack
+> for the sake of simplicity, even if it never learns to actually unpack
+> objects. We've been doing that for years on the server side at GitHub
+> without ill effects (I think the unpack route is slightly more efficient
+> for a thin pack, but since it only kicks in when there are few objects
+> anyway, I wonder how big an advantage it is in general).
+
+This sounds reasonable to me.
