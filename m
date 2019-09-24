@@ -2,85 +2,274 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29FA01F463
-	for <e@80x24.org>; Tue, 24 Sep 2019 14:06:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67FDA1F463
+	for <e@80x24.org>; Tue, 24 Sep 2019 14:13:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730615AbfIXOGv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Sep 2019 10:06:51 -0400
-Received: from relay11.mail.gandi.net ([217.70.178.231]:47755 "EHLO
-        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727005AbfIXOGv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Sep 2019 10:06:51 -0400
-Received: from localhost (unknown [1.186.12.39])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 31E87100014;
-        Tue, 24 Sep 2019 14:06:47 +0000 (UTC)
-Date:   Tue, 24 Sep 2019 19:36:45 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: git-gui: missing some patches from git?
-Message-ID: <20190924140645.k62dkndxy3z5fxke@yadavpratyush.com>
-References: <CAGr--=KXqFbivuXHPNecb3dBR_hx8QqWoR4pBGXy7uOiT+ESbg@mail.gmail.com>
- <20190918092721.GA76617@archbookpro.localdomain>
- <20190918151404.rqjohdderwxfqtdm@yadavpratyush.com>
- <xmqqblvh5wbr.fsf@gitster-ct.c.googlers.com>
- <20190919183258.g7ae4u5nzuzwgu7b@yadavpratyush.com>
- <20190919184708.GA83166@dentonliu-ltm.internal.salesforce.com>
- <20190919190359.cuvy5g3xangrkgim@yadavpratyush.com>
- <20190919191105.GA85790@dentonliu-ltm.internal.salesforce.com>
+        id S2436891AbfIXONo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Sep 2019 10:13:44 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43057 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726441AbfIXONo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Sep 2019 10:13:44 -0400
+Received: by mail-wr1-f66.google.com with SMTP id q17so2134267wrx.10
+        for <git@vger.kernel.org>; Tue, 24 Sep 2019 07:13:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=gpSnS5J/Z8Gg4zsBsbbNBiDZYAymdmUQXDxWgjaQTJg=;
+        b=nJ1UP+BRR1MJm1gkHeLisvLuhSlYZ5WUT7d4qJ9/K3Rvq1XZO5dDchEZtObO+XtqMB
+         p/7lIdPBIm8MoiTlfiDQYgIpO5eH5Xex2QDs/gcrADMLFK5Tppjg/edWFNd2SGUqgvSN
+         n+yJYkgMDOIM7VHilgfaFZfLAoVLhezwU4Caw/uNM3XQxc2rEDjdJRUismh/Y7nEpnt8
+         iIpRFjDMSgfBPMN84YT/8iO9CdOnfhnjuqGY1xSWfuVmy9WDaYIqSF2l/VGSNZfA1Gq8
+         gV6FP6SdB33vSNpBZW0b8Iggtl90/i8VZxWqt3cf0YohbdHi4SZWpUxWQWWhxceMJWQv
+         ygtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=gpSnS5J/Z8Gg4zsBsbbNBiDZYAymdmUQXDxWgjaQTJg=;
+        b=avQ7XhCNrn99jYrLbuHU/duKh/G2qyjhazs9P4I+Bh1Q2XQ3Y+jm6SetZ3yjTSus5D
+         Vlg/Lx0r6qs2ZLKj9sq97QpXwEsqXhqTe+MQnN2KvjYvIMXTeOXIar8PNVMllG/WX0um
+         YiIuxZlkZm4Vvv/nLP2A0oZ1AwX//SJ2/sbvF8cDyEiSYvy3ZcxXSeP8hb9iMo7C6EvU
+         yJ2Jj6Xyu5+H+kT5ZBQE8Uf7IDplneWEDkba+ck0x7oxPgIrIl6aw3BBbtasH273KMFt
+         g2jwIyFm7u+hKoMYmHr56d+1IDdtTyp3UARuXokKYBsQhdR51OgSrCaGKPFLta7s1C5t
+         +ysw==
+X-Gm-Message-State: APjAAAVXCZ4U2oOW5aeD/SI71LLGxN/ZBbCecTmIliTBUmOOGCXZmlDi
+        6y3t2tX9tC2LwCCHh05T3UpIewZO
+X-Google-Smtp-Source: APXvYqyIw4+oibZ3VWn3+ffqVzwzE41WOY41wBmGv8YcBKdcue/yO2OCnRpp1UlNl6nzJe99zbybKw==
+X-Received: by 2002:adf:eb4d:: with SMTP id u13mr2690767wrn.224.1569334420880;
+        Tue, 24 Sep 2019 07:13:40 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-10-31.as13285.net. [92.22.10.31])
+        by smtp.gmail.com with ESMTPSA id u83sm3205889wme.0.2019.09.24.07.13.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Sep 2019 07:13:40 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] add a Code of Conduct document
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc:     git@sfconservancy.org, Derrick Stolee <stolee@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, garimasigit@gmail.com
+References: <20190924064454.GA30419@sigill.intra.peff.net>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <cc8cc0b3-777c-6ef8-202f-ea1d0518bbd3@gmail.com>
+Date:   Tue, 24 Sep 2019 15:13:38 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190919191105.GA85790@dentonliu-ltm.internal.salesforce.com>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <20190924064454.GA30419@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19/09/19 12:11PM, Denton Liu wrote:
-> On Fri, Sep 20, 2019 at 12:33:59AM +0530, Pratyush Yadav wrote:
-> > On 19/09/19 11:47AM, Denton Liu wrote:
-> > > For the record, you could do a
-> > > 
-> > > 	git cherry-pick -Xsubtree=git-gui 00ddc9d13c 7560f547e6
-> > > 
-> > > to bring them over instead of manually recreating the changes yourself.
-> > > Personally, I'd prefer the cherry-picked commits as it'd preserve
-> > > authorship information but I'm not sure how Junio feels.
-> > 
-> > I'm not sure how this will work internally, but won't this also pull all 
-> > the ancestors of those commits into git-gui? That is bloat I'd rather 
-> > avoid.
-> > 
-> > I tried creating branches for those two commits and then did a subtree 
-> 
-> Since those two commits have parents that are found in git.git, you'll
-> pull the whole history of git.git if you try doing this.
-> 
-> > pull, and that is what happened. The repo size went up from around 6M to 
-> > 72M. Will cherry-picking avoid that?
-> > 
-> 
-> Yes, when you cherry-pick, you're essentially replaying the patch from
-> the old tree onto the new tree and recording a fresh commit from it. The
-> new commit is completely separate from the one it's based on so you
-> won't end up pulling in any ancestry information and, as a result, you
-> won't pull the rest of git's history.
-> 
-> In any case, give it a try. It doesn't hurt to experiment and play
-> around with it.
+Hi Peff
 
-It works. Thanks.
+On 24/09/2019 07:44, Jeff King wrote:
+> We've never had a formally written Code of Conduct document. Though it
+> has been discussed off and on over the years, for the most part the
+> behavior on the mailing list has been good enough that nobody felt the
+> need to push one forward.
+> 
+> However, even if there aren't specific problems now, it's a good idea to
+> have a document:
+> 
+>    - it puts everybody on the same page with respect to expectations.
+>      This might avoid poor behavior, but also makes it easier to handle
+>      it if it does happen.
+> 
+>    - it publicly advertises that good conduct is important to us and will
+>      be enforced, which may make some people more comfortable with
+>      joining our community
+> 
+>    - it may be a good time to cement our expectations when things are
+>      quiet, since it gives everybody some distance rather than focusing
+>      on a current contentious issue
 
--- 
-Regards,
-Pratyush Yadav
+I think these are all good points, it is definitely better to discuss 
+this when there isn't a pressing problem to resolve.
+
+> This patch adapts the Contributor Covenant Code of Conduct. As opposed
+> to writing our own from scratch, this uses common and well-accepted
+> language, and strikes a good balance between illustrating expectations
+> and avoiding a laundry list of behaviors. It's also the same document
+> used by the Git for Windows project.
+> 
+> The text is taken mostly verbatim from:
+> 
+>    https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+> 
+> I also stole a very nice introductory paragraph from the Git for Windows
+> version of the file.
+
+Using an existing text makes sense, even more so if it is being 
+successfully used by git for windows
+
+> 
+> There are a few subtle points, though:
+> 
+>    - the document refers to "the project maintainers". For the code, we
+>      generally only consider there to be one maintainer: Junio C Hamano.
+>      But for dealing with community issues, it makes sense to involve
+>      more people to spread the responsibility. I've listed the project
+>      committee address of git@sfconservancy.org as the contact point.
+> 
+>    - the document mentions banning from the community, both in the intro
+>      paragraph and in "Our Responsibilities". The exact mechanism here is
+>      left vague. I can imagine it might start with social enforcement
+>      (not accepting patches, ignoring emails) and could escalate to
+>      technical measures if necessary (asking vger admins to block an
+>      address). It probably make sense _not_ to get too specific at this
+>      point, and deal with specifics as they come up.
+
+I think this is a sensible approach - it needs to be clear that there is 
+a mechanism to deal with violations otherwise there's no point to having 
+a CoC but we don't want to get bogged down by a whole sequence of what 
+if someone does this that or the other.
+
+I think the text below does a good job of setting out expectations 
+without being too long
+
+Best Wishes
+
+Phillip
+
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Obviously related to the discussion in:
+> 
+>    https://public-inbox.org/git/71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com/
+> 
+> After some poking around at various CoC options, this one seemed like
+> the best fit to me. But I'm open to suggestions or more discussion. It
+> seems to me that the important piece is having _some_ CoC, and picking
+> something standard-ish seems a safe bet.
+> 
+> I did find this nice set of guidelines in an old discussion:
+> 
+>    https://github.com/mhagger/git/commit/c6e6196be8fab3d48b12c4e42eceae6937538dee
+> 
+> I think it's missing some things that are "standard" in more modern CoCs
+> (in particular, there's not much discussion of enforcement or
+> responsibilities, and I think those are important for the "making people
+> comfortable" goal). But maybe there are bits we'd like to pick out for
+> other documents; not so much "_what_ we expect" as "here are some tips
+> on _how_".
+> 
+> If people are on board with this direction, it might be fun to pick up a
+> bunch of "Acked-by" trailers from people in the community who agree with
+> it. It might give it more weight if many members have publicly endorsed
+> it.
+> 
+> I've cc'd git@sfconservancy.org here, because I think it's important for
+> all of the project committee members to endorse it (and because the
+> document puts us on the hook for enforcing it!).
+> 
+>   CODE_OF_CONDUCT.md | 85 ++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 85 insertions(+)
+>   create mode 100644 CODE_OF_CONDUCT.md
+> 
+> diff --git a/CODE_OF_CONDUCT.md b/CODE_OF_CONDUCT.md
+> new file mode 100644
+> index 0000000000..b94f72b0b8
+> --- /dev/null
+> +++ b/CODE_OF_CONDUCT.md
+> @@ -0,0 +1,85 @@
+> +# Git Code of Conduct
+> +
+> +This code of conduct outlines our expectations for participants within
+> +the Git community, as well as steps for reporting unacceptable behavior.
+> +We are committed to providing a welcoming and inspiring community for
+> +all and expect our code of conduct to be honored. Anyone who violates
+> +this code of conduct may be banned from the community.
+> +
+> +## Our Pledge
+> +
+> +In the interest of fostering an open and welcoming environment, we as
+> +contributors and maintainers pledge to make participation in our project and
+> +our community a harassment-free experience for everyone, regardless of age,
+> +body size, disability, ethnicity, sex characteristics, gender identity and
+> +expression, level of experience, education, socio-economic status,
+> +nationality, personal appearance, race, religion, or sexual identity and
+> +orientation.
+> +
+> +## Our Standards
+> +
+> +Examples of behavior that contributes to creating a positive environment
+> +include:
+> +
+> +* Using welcoming and inclusive language
+> +* Being respectful of differing viewpoints and experiences
+> +* Gracefully accepting constructive criticism
+> +* Focusing on what is best for the community
+> +* Showing empathy towards other community members
+> +
+> +Examples of unacceptable behavior by participants include:
+> +
+> +* The use of sexualized language or imagery and unwelcome sexual attention or
+> +  advances
+> +* Trolling, insulting/derogatory comments, and personal or political attacks
+> +* Public or private harassment
+> +* Publishing others' private information, such as a physical or electronic
+> +  address, without explicit permission
+> +* Other conduct which could reasonably be considered inappropriate in a
+> +  professional setting
+> +
+> +## Our Responsibilities
+> +
+> +Project maintainers are responsible for clarifying the standards of acceptable
+> +behavior and are expected to take appropriate and fair corrective action in
+> +response to any instances of unacceptable behavior.
+> +
+> +Project maintainers have the right and responsibility to remove, edit, or
+> +reject comments, commits, code, wiki edits, issues, and other contributions
+> +that are not aligned to this Code of Conduct, or to ban temporarily or
+> +permanently any contributor for other behaviors that they deem inappropriate,
+> +threatening, offensive, or harmful.
+> +
+> +## Scope
+> +
+> +This Code of Conduct applies within all project spaces, and it also applies
+> +when an individual is representing the project or its community in public
+> +spaces. Examples of representing a project or community include using an
+> +official project e-mail address, posting via an official social media account,
+> +or acting as an appointed representative at an online or offline event.
+> +Representation of a project may be further defined and clarified by project
+> +maintainers.
+> +
+> +## Enforcement
+> +
+> +Instances of abusive, harassing, or otherwise unacceptable behavior may be
+> +reported by contacting the project team at git@sfconservancy.org. All
+> +complaints will be reviewed and investigated and will result in a response
+> +that is deemed necessary and appropriate to the circumstances. The project
+> +team is obligated to maintain confidentiality with regard to the reporter of
+> +an incident. Further details of specific enforcement policies may be posted
+> +separately.
+> +
+> +Project maintainers who do not follow or enforce the Code of Conduct in good
+> +faith may face temporary or permanent repercussions as determined by other
+> +members of the project's leadership.
+> +
+> +## Attribution
+> +
+> +This Code of Conduct is adapted from the [Contributor Covenant][homepage],
+> +version 1.4, available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+> +
+> +[homepage]: https://www.contributor-covenant.org
+> +
+> +For answers to common questions about this code of conduct, see
+> +https://www.contributor-covenant.org/faq
+> 
