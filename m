@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B4CE1F463
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FDC51F463
 	for <e@80x24.org>; Wed, 25 Sep 2019 01:40:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2442112AbfIYBkV (ORCPT <rfc822;e@80x24.org>);
+        id S2442127AbfIYBkW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Sep 2019 21:40:22 -0400
+Received: from mail-pf1-f172.google.com ([209.85.210.172]:44325 "EHLO
+        mail-pf1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2439285AbfIYBkV (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 24 Sep 2019 21:40:21 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:45209 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439273AbfIYBkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Sep 2019 21:40:20 -0400
-Received: by mail-pg1-f196.google.com with SMTP id 4so2240211pgm.12
-        for <git@vger.kernel.org>; Tue, 24 Sep 2019 18:40:19 -0700 (PDT)
+Received: by mail-pf1-f172.google.com with SMTP id q21so2365369pfn.11
+        for <git@vger.kernel.org>; Tue, 24 Sep 2019 18:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bnMBZO0iYMIQ7/qnuO4E6933jCQOYpURaQW8mTFkgfI=;
-        b=WddjyPQ+F7rhSp1caUNke1FiF6E49K3Dat77lwZH1JIEvO2r+n1jyqyPyLz3m+e1m8
-         1xvN3GoAT91kLuuyDOyOSxuUNIITDfrcs0cehRWH9+2ONVGSg63QO3pwSo2KB186RpH9
-         7Kr79z+Q6ZXQi4cAPq4zEKAPCCRaGKnDrjn1DL03Ei+B5QdESAP+Yiao2mMONbi1kSAX
-         MUqqKbCxYFpE/tSHC+o9VB0FLnHloQTZFSaBCl2bt1VCFLch4EVfHV6duqt4846jOC3B
-         Xst53VUstRFJ3hRnxq8ga4FfrZTaDQ/BQz8pNdhW9Tqbb5PzpVGPaU1ueMfUhXpY9hxG
-         +45g==
+        bh=Zlkoi6rTsj/rKOoXQBdiTxBZXu/PGCaRIpjv1vvMjKw=;
+        b=l5O1WH21A8Ui4xyQHs+s+QSydvdbB+4/t1uF4KgJm3LWXgOHOe4L/I4J2hJDdc8VQI
+         K5mdNqCG74CcQANSkLxTSuo42a/YZd+W/mbd5NrU2cssQzJiaQMZ22yn3daDu3ScNfQQ
+         rWLnWBa0DN59njJvbbJoBeFh3RIBCnau6O7aeeV2P9mJPv3pjUqkV/2i3dMp+6PcJNCB
+         mrIDvqZVWXZdqQWxaeZa6NRlpNXFygfoE46TWiQC1hUOpL8ViUYWPpd5k1Mn8mMTzVrG
+         sBhKdX9Bn9XSac7fcz1YEcbP3toBPhsvDasu7U9F79fDQZU1IWt74pd+prdqwfke9WAb
+         j9dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bnMBZO0iYMIQ7/qnuO4E6933jCQOYpURaQW8mTFkgfI=;
-        b=huF5mhpp0eHsUXMQtFo39dpm+UT9c3SVJGP5NJmn5ykpgf7Z40sbZQABgUT5c//WoI
-         rdlTLLEwpEbI+pK91VMQ0Z5h9Z40tEpuUZ5dRVUZqVNyjVSL+B8Pnxj10IY0RZWp9nym
-         WQUy1+FSvn6tSJ36Hcp18EjbHINRsPhp9798ZK+IUjY57mgW+d/k5R5XCAsxnr9DDdgd
-         nggn9avZDJFvdiUJn9+rKN1zhm5ga7du9UFjdPhwr6JiOlwfcOhmSSDMeVT2FSQS+kc5
-         PEIWAdar92kev6FtivpJb0IMpm+2MJIWYm6BPOeNAx5vbwzx6OOtDwEapSo65P01pM66
-         fz9Q==
-X-Gm-Message-State: APjAAAX5RYhQKx/3pLSii9m/3SjlmeRUpTEMx+XfFnyY8iZ6o3CPJ4eb
-        jmAzw/Iwmer642nx5N24HvKszOoPUEc=
-X-Google-Smtp-Source: APXvYqy0DbCP2yCU4o37wlpQDNx9z9GPJIA153yhkSnv27QwQShTX0eLi4bHX1xXhs9XBycXRaaZ3w==
-X-Received: by 2002:a17:90a:191d:: with SMTP id 29mr3515999pjg.60.1569375619155;
-        Tue, 24 Sep 2019 18:40:19 -0700 (PDT)
+        bh=Zlkoi6rTsj/rKOoXQBdiTxBZXu/PGCaRIpjv1vvMjKw=;
+        b=tQaU5wiuJ3YAl146tpLH/NYs1iJO6z8JVgnrkW9LYgdRHURANC1RNBT+9hWw0i7fRs
+         OQzl7U8PAcHV7ZJpyH8XPoCFjM0AsZcsDWkB1Oc5uxZyhh85dggw/DqTOYtI7Mun7ELn
+         vmOC6kkj9rZCgvpPKRs4qyQNchIVedOsuAYW7EgqZlXtWobGJQ7CTgo6eBPDzlc+jlep
+         OKYmTmwiXcWuwXjE4BfLrjEaLPPlnI5TP4DikDPSfwTIs+caDitYCyyXhIXiAU23DT1H
+         aJQDiOk+D6s6A0THcW3iK2klJ3ZiX5pkK1qgtYpE3V/EMx33PV+LNDL+HddfZhnwcO1R
+         O8XA==
+X-Gm-Message-State: APjAAAXszu2OcqQyxoz3Rt2HQV2ogZXMeYF6UsFk0bqz3iLW8BJ6MJNx
+        FoMJ2xxyyu8EVUp4HlkFRPND9YNcjko=
+X-Google-Smtp-Source: APXvYqy04ELIcKxyr8mavXg5ZZOIcYeEQPz6rTyBit/0cNVZ5uozPmCAmtBmWlmSKUi1GHI7sFlD5w==
+X-Received: by 2002:a17:90a:db47:: with SMTP id u7mr3347482pjx.40.1569375620061;
+        Tue, 24 Sep 2019 18:40:20 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id h4sm3759050pgg.81.2019.09.24.18.40.18
+        by smtp.gmail.com with ESMTPSA id h4sm3759050pgg.81.2019.09.24.18.40.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 Sep 2019 18:40:18 -0700 (PDT)
+        Tue, 24 Sep 2019 18:40:19 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH 7/8] t9350: add tests for tags of things other than a commit
-Date:   Tue, 24 Sep 2019 18:40:04 -0700
-Message-Id: <20190925014005.17056-8-newren@gmail.com>
+Subject: [PATCH 8/8] fast-export: handle nested tags
+Date:   Tue, 24 Sep 2019 18:40:05 -0700
+Message-Id: <20190925014005.17056-9-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.177.g8af0b3ca64
 In-Reply-To: <20190925014005.17056-1-newren@gmail.com>
 References: <20190925014005.17056-1-newren@gmail.com>
@@ -66,64 +66,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Multiple changes here:
-  * add a test for a tag of a blob
-  * add a test for a tag of a tag of a commit
-  * add a comment to the tests for (possibly nested) tags of trees,
-    making it clear that these tests are doing much less than you might
-    expect
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t9350-fast-export.sh | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ builtin/fast-export.c  | 30 ++++++++++++++++++------------
+ t/t9350-fast-export.sh |  2 +-
+ 2 files changed, 19 insertions(+), 13 deletions(-)
 
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index d32e1e9327..58a74de42a 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -843,22 +843,28 @@ static void handle_tag(const char *name, struct tag *tag)
+ 			free(buf);
+ 			return;
+ 		case REWRITE:
+-			if (tagged->type != OBJ_COMMIT) {
+-				die("tag %s tags unexported %s!",
+-				    oid_to_hex(&tag->object.oid),
+-				    type_name(tagged->type));
+-			}
+-			p = rewrite_commit((struct commit *)tagged);
+-			if (!p) {
+-				printf("reset %s\nfrom %s\n\n",
+-				       name, oid_to_hex(&null_oid));
+-				free(buf);
+-				return;
++			if (tagged->type == OBJ_TAG && !mark_tags) {
++				die(_("Error: Cannot export nested tags unless --mark-tags is specified."));
++			} else if (tagged->type == OBJ_COMMIT) {
++				p = rewrite_commit((struct commit *)tagged);
++				if (!p) {
++					printf("reset %s\nfrom %s\n\n",
++					       name, oid_to_hex(&null_oid));
++					free(buf);
++					return;
++				}
++				tagged_mark = get_object_mark(&p->object);
++			} else {
++				/* tagged->type is either OBJ_BLOB or OBJ_TAG */
++				tagged_mark = get_object_mark(tagged);
+ 			}
+-			tagged_mark = get_object_mark(&p->object);
+ 		}
+ 	}
+ 
++	if (tagged->type == OBJ_TAG) {
++		printf("reset %s\nfrom %s\n\n",
++		       name, oid_to_hex(&null_oid));
++	}
+ 	if (starts_with(name, "refs/tags/"))
+ 		name += 10;
+ 	printf("tag %s\n", name);
 diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index b3fca6ffba..9ab281e4b9 100755
+index 9ab281e4b9..2e4e214815 100755
 --- a/t/t9350-fast-export.sh
 +++ b/t/t9350-fast-export.sh
-@@ -540,10 +540,41 @@ test_expect_success 'tree_tag'        '
+@@ -567,7 +567,7 @@ test_expect_success 'handling tags of blobs' '
+ 	test_cmp expect actual
  '
  
- # NEEDSWORK: not just check return status, but validate the output
-+# Note that these tests DO NOTHING other than print a warning that
-+# they are ommitting the one tag we asked them to export (because the
-+# tags resolve to a tree).  They exist just to make sure we do not
-+# abort but instead just warn.
- test_expect_success 'tree_tag-obj'    'git fast-export tree_tag-obj'
- test_expect_success 'tag-obj_tag'     'git fast-export tag-obj_tag'
- test_expect_success 'tag-obj_tag-obj' 'git fast-export tag-obj_tag-obj'
- 
-+test_expect_success 'handling tags of blobs' '
-+	git tag -a -m "Tag of a blob" blobtag $(git rev-parse master:file) &&
-+	git fast-export blobtag >actual &&
-+	cat >expect <<-EOF &&
-+	blob
-+	mark :1
-+	data 9
-+	die Luft
-+
-+	tag blobtag
-+	from :1
-+	tagger $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+	data 14
-+	Tag of a blob
-+
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_failure 'handling nested tags' '
-+	git tag -a -m "This is a nested tag" nested muss &&
-+	git fast-export --mark-tags nested >output &&
-+	grep "^from $ZERO_OID$" output &&
-+	grep "^tag nested$" output >tag_lines &&
-+	test_line_count = 2 tag_lines
-+'
-+
- test_expect_success 'directory becomes symlink'        '
- 	git init dirtosymlink &&
- 	git init result &&
+-test_expect_failure 'handling nested tags' '
++test_expect_success 'handling nested tags' '
+ 	git tag -a -m "This is a nested tag" nested muss &&
+ 	git fast-export --mark-tags nested >output &&
+ 	grep "^from $ZERO_OID$" output &&
 -- 
 2.23.0.177.g8af0b3ca64
 
