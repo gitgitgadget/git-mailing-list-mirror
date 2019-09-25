@@ -2,204 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAF921F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 21:28:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 162051F463
+	for <e@80x24.org>; Wed, 25 Sep 2019 21:37:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbfIYV23 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Sep 2019 17:28:29 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:42352 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726139AbfIYV22 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Sep 2019 17:28:28 -0400
-Received: by mail-vs1-f67.google.com with SMTP id m22so130928vsl.9
-        for <git@vger.kernel.org>; Wed, 25 Sep 2019 14:28:27 -0700 (PDT)
+        id S1728015AbfIYVhZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Sep 2019 17:37:25 -0400
+Received: from mail-qt1-f202.google.com ([209.85.160.202]:45467 "EHLO
+        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727285AbfIYVhY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Sep 2019 17:37:24 -0400
+Received: by mail-qt1-f202.google.com with SMTP id r15so315683qtn.12
+        for <git@vger.kernel.org>; Wed, 25 Sep 2019 14:37:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8+S06WVocqKykVd+YdfUiZ9WkjdYLl8m9xRz1hQME2o=;
-        b=lBz3t7XlZ/ENNHC8GDsK/HSBzlvUiMgRfhAJThHjDn3JOhVGKRjCqGqqR5nzs1Becz
-         tzolX3NSNv77sDmTEDBqbbUw5EVJ0CHSJ+UglFOGtp0pQVB5qa0duboF2880c5+ssLRu
-         V7Z52is3W6cH9TVYrrsloj0vbUJZ6yFBNSgGiAxIhVg5rNTsmQoKrNZo6Et3MavOAyrV
-         6I6VP5pz3HYJ/JdobokhNGAa8xHLpTY6VUByj7uojltmlnIi55xfn6thxJjDBJFBqHhu
-         EWkbfDByNPDVCxANkDM/jCwMEbaJFBBWLog95kfSiZnaYjWfArxt8i6n5v3dzjn7WZKA
-         YuSw==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=B7AQBr1vfKDxnIzxM1urLpxXVogAbeDx/Cw8jSEQJ1g=;
+        b=b7QKdOd6VlM9OxiC+UTYdAn0VSr1xof61uScQDuvmQZzhpBnx4SoliOiMAdxVx0LLH
+         ibtvN3s0fKQ02NsIEAnHX6nt5rc98hEE2AcL9r8cwg2tm/EXp8yUXlhp0tyv7D0eE48y
+         sEnykScxqQzB7qigTO2NewDu+aS49GE5TE7TldaOyCFvuUd+vEJRlRlGV9lc+SYeZrUm
+         JY12KeDVgb/HpdLaiIjGwGkfLD1hIAv0qXrL9oSOKtzZQaWF8rMq6bkMS7r8qDzKc2lb
+         MgKV0vcoz9Lrgv4D4tOKMaV9jb8C4ixnq3SBfLcwrJg/4KBkXscLVKArrm3oWgHdvPHV
+         3M1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8+S06WVocqKykVd+YdfUiZ9WkjdYLl8m9xRz1hQME2o=;
-        b=q/gWRRqq4HBFfR7gGkdvsKlv/S3MRJcYva7hsDpSQp4u++Xfh+hwsXFa4V6Xi5RtKv
-         5vobV5xeWAwmku02/qsc0e1NsodxYluUvRziIMP7apsYEoZR5LE+c6//XmY82a64mdye
-         N/F33vNUInEXnxO3su16dScB1oHBuNvOtY1vwtYA0ZSSr6Gd8DnBVwmkIMiNAdMm2Oy8
-         hIUpHbrOya7Xd0XF/DNn8blycH4haHf4/FZEW+zvrK3DRZGWmHxFPUzdIoD31J8DZUjy
-         9+fAc0jVghLy7P0IQhDVG6HOCDVJh8Xu7RckfLJE1VvUFkIIm8an1Tvn0rrAcyY9lyp8
-         dGlg==
-X-Gm-Message-State: APjAAAV9UfVGLSdskiXdPu32L8v4SsPv/bgUq95qXvcUt+YY2vXIyxko
-        BKfhN1JqQXkR3jMaX8Vyl1Yr4K2B5CXyvTOT16s=
-X-Google-Smtp-Source: APXvYqzJE64Hxq+hhxlwIXE8GYWFouDRsDN39AN2t3DiFsJjTz3t+LgAvBUwzs8EqRdinbegHVPmIc6WXBEUi4ZyWl8=
-X-Received: by 2002:a67:e8ca:: with SMTP id y10mr6256852vsn.136.1569446907086;
- Wed, 25 Sep 2019 14:28:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190912221240.18057-1-newren@gmail.com> <20190917163504.14566-1-newren@gmail.com>
- <20190917163504.14566-5-newren@gmail.com> <20190925203919.GA89135@generichostname>
-In-Reply-To: <20190925203919.GA89135@generichostname>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 25 Sep 2019 14:28:15 -0700
-Message-ID: <CABPp-BHyjVSD6_S_dYgPiXM=GVEpT97FqJJearzg4hvKHXfNVA@mail.gmail.com>
-Subject: Re: [BUG] git is segfaulting, was [PATCH v4 04/12] dir: also check
- directories for matching pathspecs
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=B7AQBr1vfKDxnIzxM1urLpxXVogAbeDx/Cw8jSEQJ1g=;
+        b=ZdGYyZCd43pNlMfrHvY5GSbf5FjoDtGFArv80+2iFxZcyznfGUU826pgU5/jfB3BnW
+         dtYSOs20RyMvxTXW+ezlbAj5SBgsMKHNEp6BSGs3TMHhLj0xrgDnJ5JYqhVdO38jO1pM
+         L47/bGLvEdBXePuUixJf36eW3v1HzC16oZB6Ufuc0KDcgkmPJ4ZAFfJwU/nYG0OrFbbn
+         UOrfw8zEnuFxuush2YwnFrULqhnhTKbBsACtHrkEmMD3n8F8Y5XlQYb31MshsF5pRIoi
+         ftpvtZfKJ1GdDDaAA9EoifRWS6ZpTZ6ggqiVtX2FGF5cUKYOhVwOtzukNZ8YXxDRSCV1
+         pnuQ==
+X-Gm-Message-State: APjAAAVSLv2UDGVFT0XbknmT39utOrG9WTC7t2RRZvwOUqfQOkkcvyvb
+        yhHJKBGzU8OM4JzdCzNccfwmiXAoTd2b2aj6tSt3MbkKPoa8yje9y66gfY24Mrhv1rLZdrk3tKv
+        ZqmwsFTY5/qQaZQYzDBgCVKR2GjiWjb/PPdnpMXzS5CvywU6S11aRkPW52j9arPh1bPIDMEZaag
+        ==
+X-Google-Smtp-Source: APXvYqz7XZXlMYyos4KlFnz3xQ1l23HHLYYlAbcv3iLPdrvZjJ2guXKKi/L6EitpOij7iGC9eAKe0AITbqwA9CW0dTY=
+X-Received: by 2002:ac8:16e2:: with SMTP id y31mr587067qtk.370.1569447443700;
+ Wed, 25 Sep 2019 14:37:23 -0700 (PDT)
+Date:   Wed, 25 Sep 2019 14:37:18 -0700
+Message-Id: <20190925213718.231231-1-emilyshaffer@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.23.0.351.gc4317032e6-goog
+Subject: [PATCH] promisor-remote: skip move_to_tail when n=1
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Christian Couder <christian.couder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+Previously, when promisor_remote_move_to_tail() is called for a
+promisor_remote which is currently the *only* element in promisors, a
+cycle is created in the promisors linked list. This cycle leads to a
+double free later on in promisor_remote_clear(): promisors is set to
+promisors->next (a no-op, as promisors->next == promisors); the previous
+value of promisors is free()'d; then the new value of promisors (which
+is equal to the previous value of promisors) is also free()'d. This
+double-free error was unrecoverable for the user without removing the
+filter or re-cloning the repo and hoping to miss this edge case.
 
-On Wed, Sep 25, 2019 at 1:39 PM Denton Liu <liu.denton@gmail.com> wrote:
->
-> Hi Elijah,
->
-> I ran into a segfault on MacOS. I managed to bisect it down to
-> 404ebceda0 (dir: also check directories for matching pathspecs,
-> 2019-09-17), which should be the patch in the parent thread. The test
-> case below works fine without this patch applied but segfaults once it
-> is applied.
->
->         #!/bin/sh
->
->         git worktree add testdir
->         git -C testdir checkout master
->         git -C testdir fetch https://github.com/git/git.git todo
->         bin-wrappers/git -C testdir checkout FETCH_HEAD # segfault here
->
-> Note that the worktree part isn't necessary to reproduce the problem but
-> I didn't want my files to be constantly refreshed, triggering a rebuild
-> each time.
->
-> I also managed to get this backtrace from running lldb at the segfault
-> but it is based on the latest "jch" commit, 1cc52d20df (Merge branch
-> 'jt/merge-recursive-symlink-is-not-a-dir-in-way' into jch, 2019-09-20).
->
->         * thread #1, queue =3D 'com.apple.main-thread', stop reason =3D E=
-XC_BAD_ACCESS (code=3D1, address=3D0x8)
->           * frame #0: 0x00000001000f63a0 git`do_match_pathspec(istate=3D0=
-x0000000100299940, ps=3D0x000000010200aa80, name=3D"Gitweb/static/js/lib/",=
- namelen=3D21, prefix=3D0, seen=3D0x0000000000000000, flags=3D0) at dir.c:4=
-20:2 [opt]
->                 frame #1: 0x00000001000f632c git`match_pathspec(istate=3D=
-0x0000000100299940, ps=3D0x0000000000000000, name=3D"Gitweb/static/js/lib/"=
-, namelen=3D21, prefix=3D0, seen=3D0x0000000000000000, is_dir=3D0) at dir.c=
-:490:13 [opt]
->                 frame #2: 0x00000001000f8315 git`read_directory_recursive=
-(dir=3D0x00007ffeefbfe278, istate=3D0x0000000100299940, base=3D<unavailable=
->, baselen=3D17, untracked=3D<unavailable>, check_only=3D0, stop_at_first_f=
-ile=3D0, pathspec=3D0x0000000000000000) at dir.c:1990:9 [opt]
->                 frame #3: 0x00000001000f82e9 git`read_directory_recursive=
-(dir=3D0x00007ffeefbfe278, istate=3D0x0000000100299940, base=3D<unavailable=
->, baselen=3D14, untracked=3D<unavailable>, check_only=3D0, stop_at_first_f=
-ile=3D0, pathspec=3D0x0000000000000000) at dir.c:1984:5 [opt]
->                 frame #4: 0x00000001000f82e9 git`read_directory_recursive=
-(dir=3D0x00007ffeefbfe278, istate=3D0x0000000100299940, base=3D<unavailable=
->, baselen=3D7, untracked=3D<unavailable>, check_only=3D0, stop_at_first_fi=
-le=3D0, pathspec=3D0x0000000000000000) at dir.c:1984:5 [opt]
->                 frame #5: 0x00000001000f60d1 git`read_directory(dir=3D0x0=
-0007ffeefbfe278, istate=3D0x0000000100299940, path=3D"Gitweb/", len=3D7, pa=
-thspec=3D0x0000000000000000) at dir.c:2298:3 [opt]
->                 frame #6: 0x00000001001bded1 git`verify_clean_subdirector=
-y(ce=3D<unavailable>, o=3D0x00007ffeefbfe8c0) at unpack-trees.c:1846:6 [opt=
-]
->                 frame #7: 0x00000001001bdc1d git`check_ok_to_remove(name=
-=3D"Gitweb", len=3D6, dtype=3D4, ce=3D0x0000000103e70de0, st=3D0x00007ffeef=
-bfe438, error_type=3DERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN, o=3D0x00007ffe=
-efbfe8c0) at unpack-trees.c:1901:7 [opt]
->                 frame #8: 0x00000001001bdb01 git`verify_absent_1(ce=3D<un=
-available>, error_type=3D<unavailable>, o=3D<unavailable>) at unpack-trees.=
-c:1964:10 [opt]
->                 frame #9: 0x00000001001bafc0 git`verify_absent(ce=3D<unav=
-ailable>, error_type=3D<unavailable>, o=3D<unavailable>) at unpack-trees.c:=
-1052:11 [opt] [artificial]
->                 frame #10: 0x00000001001bbc3c git`merged_entry(ce=3D0x000=
-0000100605fb0, old=3D0x0000000000000000, o=3D0x00007ffeefbfe8c0) at unpack-=
-trees.c:2013:7 [opt]
->                 frame #11: 0x00000001001bd2b7 git`call_unpack_fn(src=3D<u=
-navailable>, o=3D<unavailable>) at unpack-trees.c:522:12 [opt]
->                 frame #12: 0x00000001001bca16 git`unpack_nondirectories(n=
-=3D2, mask=3D2, dirmask=3D<unavailable>, src=3D0x00007ffeefbfe5d0, names=3D=
-<unavailable>, info=3D0x00007ffeefbfe718) at unpack-trees.c:1029:12 [opt]
->                 frame #13: 0x00000001001bad1a git`unpack_callback(n=3D2, =
-mask=3D2, dirmask=3D0, names=3D0x0000000102007390, info=3D0x00007ffeefbfe71=
-8) at unpack-trees.c:1229:6 [opt]
->                 frame #14: 0x00000001001b8be2 git`traverse_trees(istate=
-=3D0x0000000100299940, n=3D2, t=3D<unavailable>, info=3D<unavailable>) at t=
-ree-walk.c:497:17 [opt]
->                 frame #15: 0x00000001001ba80f git`unpack_trees(len=3D2, t=
-=3D0x00007ffeefbfebe0, o=3D0x00007ffeefbfe8c0) at unpack-trees.c:1546:9 [op=
-t]
->                 frame #16: 0x000000010001a443 git`merge_working_tree(opts=
-=3D0x00007ffeefbfee38, old_branch_info=3D0x00007ffeefbfeca0, new_branch_inf=
-o=3D0x00007ffeefbfeda0, writeout_error=3D0x00007ffeefbfeccc) at checkout.c:=
-704:9 [opt]
->                 frame #17: 0x000000010001a08c git`switch_branches(opts=3D=
-0x00007ffeefbfee38, new_branch_info=3D0x00007ffeefbfeda0) at checkout.c:105=
-7:9 [opt]
->                 frame #18: 0x0000000100018df0 git`checkout_branch(opts=3D=
-<unavailable>, new_branch_info=3D<unavailable>) at checkout.c:1426:9 [opt]
->                 frame #19: 0x0000000100017b90 git`checkout_main(argc=3D0,=
- argv=3D0x00007ffeefbff570, prefix=3D0x0000000000000000, opts=3D0x00007ffee=
-fbfee38, options=3D<unavailable>, usagestr=3D<unavailable>) at checkout.c:1=
-682:10 [opt]
->                 frame #20: 0x0000000100016f2d git`cmd_checkout(argc=3D2, =
-argv=3D0x00007ffeefbff568, prefix=3D0x0000000000000000) at checkout.c:1731:=
-8 [opt]
->                 frame #21: 0x00000001000026f6 git`run_builtin(p=3D0x00000=
-0010024c710, argc=3D2, argv=3D0x00007ffeefbff568) at git.c:444:11 [opt]
->                 frame #22: 0x0000000100001a36 git`handle_builtin(argc=3D2=
-, argv=3D0x00007ffeefbff568) at git.c:673:3 [opt]
->                 frame #23: 0x000000010000235c git`run_argv(argcp=3D0x0000=
-7ffeefbff4ec, argv=3D0x00007ffeefbff4d8) at git.c:740:4 [opt]
->                 frame #24: 0x0000000100001794 git`cmd_main(argc=3D2, argv=
-=3D0x00007ffeefbff568) at git.c:871:19 [opt]
->                 frame #25: 0x00000001000a4405 git`main(argc=3D<unavailabl=
-e>, argv=3D0x00007ffeefbff560) at common-main.c:52:11 [opt]
->                 frame #26: 0x00007fff783053d5 libdyld.dylib`start + 1
->
-> Sorry for the information dump, I haven't had the time to properly look
-> into the issue but I just wanted to make sure that you're aware.
+Now, when promisor_remote_move_to_tail() would be a no-op, just do a
+no-op. In cases of promisor_remote_move_to_tail() where n>1, it works
+correctly.
 
-Thanks for testing and sending the heads up.  Unfortunately, I cannot
-reproduce on either Linux or Mac.  Do you have some special ignore
-files or sparse-checkout paths that are important to triggering?
-What's in your config.mak?  What compiler and version?
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+---
+This change showed up for us in a user bugreport; I'm actually fairly
+unfamiliar with the codebase here but given the drastic nature of the
+failure, I wanted to get a fix up quickly. I'm still working on how to
+reproduce this exact case in the test suite (and actually would
+appreciate any pointers). Specifically, it looks like we only really
+break if we have a single promisor_remote in the linked list, call
+move_to_tail() on it at least once, and then call clear() on it without
+adding another promisor_remote first.
 
-Here's what I did, just to verify:
+ promisor-remote.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-cd ~/floss/git
-git checkout 404ebceda0
-NO_GETTEXT=3D1 make DEVELOPER=3D1 -j8   # I leave off the NO_GETTEXT=3D1 on=
- linux
-git worktree add testdir
-git -C testdir checkout master
-git -C testdir fetch https://github.com/git/git.git todo
-bin-wrappers/git -C testdir checkout FETCH_HEAD
+diff --git a/promisor-remote.c b/promisor-remote.c
+index 9bc296cdde..dccd697c2d 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -89,6 +89,9 @@ static struct promisor_remote *promisor_remote_lookup(const char *remote_name,
+ static void promisor_remote_move_to_tail(struct promisor_remote *r,
+ 					 struct promisor_remote *previous)
+ {
++	if (promisors == r && promisors->next == NULL)
++		return;
++
+ 	if (previous)
+ 		previous->next = r->next;
+ 	else
+-- 
+2.23.0.351.gc4317032e6-goog
 
-Did I get any of those steps wrong?
-
-
-Thanks,
-Elijah
