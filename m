@@ -8,89 +8,103 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4C911F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 08:36:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1D371F463
+	for <e@80x24.org>; Wed, 25 Sep 2019 08:36:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2442787AbfIYIgC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Sep 2019 04:36:02 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:52250 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405068AbfIYIgC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Sep 2019 04:36:02 -0400
-Received: by mail-wm1-f67.google.com with SMTP id r19so2519834wmh.2
-        for <git@vger.kernel.org>; Wed, 25 Sep 2019 01:36:01 -0700 (PDT)
+        id S2442791AbfIYIgE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Sep 2019 04:36:04 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46384 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2442788AbfIYIgD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Sep 2019 04:36:03 -0400
+Received: by mail-wr1-f65.google.com with SMTP id o18so5531858wrv.13
+        for <git@vger.kernel.org>; Wed, 25 Sep 2019 01:36:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=WplIugY8x7hdUBoczzQ/udELCd60j0lmPIZtdMLjVgM=;
-        b=oE08SN8pBtlAe4UiycuJSeyn4Zw1blbMYUqS6ZahlNIoa2gRMyrcoDo1ZC0bUumfC8
-         bk75DbZcbQK1gkrMIEW3DuzwEd9PcBRZDGshcokwEHMnZxI3cP/DXHvLZW64sPRB3MZj
-         2UWEXeRQu5aK6OveM8L1M00a5rya0pNg4RWajVytvVrIflomBcA3TEX5pANtnenQ/G6H
-         1ZBaMb5I00qcaEf8RPNVbEmulMuKP3IIxmROZdVfG8eSizMwD008cyd0bWA2dUwSbH71
-         UCVL5f6fOa1mHEdhGTJKrgeIQshveyZg6g2pXbeqVXN+dc7ZynMSheNzij2xTQEHLECk
-         VTWg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=sUOsx4qaav9oV6r/02W+yv61w+tWGC5sf+4eoSXDHvA=;
+        b=eEHKmI42alB7e5wpUGqG26RC+DzMmwRyMHO9ukZnc558L5Qv99iQpA0zJErKYAv97x
+         Rj+jZ7tGJqmRZabLDdt0pNyhvfBmFXhZvvmYiyNxn0o2WL2B0wuAbD8JHue/hd8A8biL
+         SKNoX2G+6U1+vCN5JtGia4dvm/hkqnEJvJ51KZF34qz1wC1WTiZZD5p0YV1rJxDa1iIO
+         K7vW2fS2esLivXXvQ2luHzF0tP6CXacgBsmiwYx+AOjFmiluv+1PCgPnP7Wah44mdIca
+         dAc0Z9Al+wh3NZpRae5tEGCxGHgr3aOxxX7gZ2WpErJzu5PqMwe8aIQZWPMTZDFBzUWI
+         gNOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=WplIugY8x7hdUBoczzQ/udELCd60j0lmPIZtdMLjVgM=;
-        b=N5UMe+7nZWLAxty8hgK5Su4ttK9gSvZiE8H4pK8VJLknAm0lknpN0qLhLncA9j+qo3
-         3H/bC4XGIVhCX7Mr1Q8EjZDY49SFc65hiSYl+Y40zViAQUo9wG6ZRYdJzlTkYGJ/5C38
-         h6IT17hhWwW77/4UDcA8TJgsALJpl4nyKYK9lTTmSkl3lzC/GQ+QCckr6axcm9J8HL2s
-         nS93z/wZvPpDhBr5SncxG1H5+BSVDZZnJUhzMzcnp5h6ykhlIiEHSDY6aScB/IVdiEMw
-         OtXzVfGGuUvwI5SBXvDBYfqH/5c/N15nEeOXbCdpflGT31Qzi/1oyrKBc5rVYskMKihc
-         1Hsg==
-X-Gm-Message-State: APjAAAW1G6uXaLD4NVQNt3DNglwrNLQKw0tUU+lLTkt8Ksnl7ZoI3IZR
-        PPfz7nExPT3IMfSNRZMtNtBiZVf0
-X-Google-Smtp-Source: APXvYqw77GOVGVpId+XTvrK+p92DoShN0jisEIil4wZfkQxa2AfJjFSGNXtUWVpUmBszzMlOrx1Y0Q==
-X-Received: by 2002:a1c:7d8e:: with SMTP id y136mr6076840wmc.83.1569400560358;
-        Wed, 25 Sep 2019 01:36:00 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=sUOsx4qaav9oV6r/02W+yv61w+tWGC5sf+4eoSXDHvA=;
+        b=OKMMAlZ5M9iLZs70S7PZ8hCQl0Rdf3DGJDlvC7bREjMhwIaym9g3kWbD8ZIX8CXwFE
+         OzDbdSQwoB0hn5y+CF9OK5iB12LKsqVCpzFalKodDHpK8EdTmXBB/bisi5lDruwF8lyQ
+         CBYjWKcZ1OfxvDqOlM8XZt/5FH4gLxTvIiicG2pRPxQAFS3U7yOgYwbxDHMBEpx3U0tF
+         MkBYW3LffsbPT0AlDyaT9ECI4pl6SyjyubPVxKEP2t4jKz3KSU4irYJcM1BCJL0IvpII
+         lriWyrVvxHmx6IrXK6TNZkgK4SCMvYu5hsIcHBMmexQ9Mjv9KCKwHnb7p9QXv3PDt41f
+         BxYg==
+X-Gm-Message-State: APjAAAXBoj2Gx2hQ+iEE3x/WFGsR0jtBOWqALboUf1mY4iFS3Z0I/0x4
+        boklK5UlOnzhi33p2ADO9EAdk3Ta
+X-Google-Smtp-Source: APXvYqxG/j/9d2hagY8IQfD6U2RP+q4Fv6yNC4zwcEOS78QascidjLh3HeAi4rKXS0h3tepEfSJo+A==
+X-Received: by 2002:adf:f78f:: with SMTP id q15mr5108266wrp.389.1569400561959;
+        Wed, 25 Sep 2019 01:36:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f20sm2061881wmb.6.2019.09.25.01.35.59
+        by smtp.gmail.com with ESMTPSA id c21sm1726389wmb.46.2019.09.25.01.36.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Sep 2019 01:35:59 -0700 (PDT)
-Date:   Wed, 25 Sep 2019 01:35:59 -0700 (PDT)
-X-Google-Original-Date: Wed, 25 Sep 2019 08:35:56 GMT
-Message-Id: <pull.352.git.gitgitgadget@gmail.com>
+        Wed, 25 Sep 2019 01:36:01 -0700 (PDT)
+Date:   Wed, 25 Sep 2019 01:36:01 -0700 (PDT)
+X-Google-Original-Date: Wed, 25 Sep 2019 08:35:58 GMT
+Message-Id: <a95cdf1e944a1bae56aca7ef460d86a5ccf79fb9.1569400558.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.352.git.gitgitgadget@gmail.com>
+References: <pull.352.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/2] Git's rename detection requires a stable sort
+Subject: [PATCH 2/2] diffcore_rename(): use a stable sort
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With the en/merge-recursive-cleanup patches already having advanced to next,
-the problem I discovered when rebasing Git for Windows' branch thicket
-becomes quite relevant now: t3030.35 fails consistently in the MSVC build &
-test (this part of the Azure Pipeline will be upstreamed later).
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The solution: use a stable sort.
+During Git's rename detection, the file names are sorted. At the moment,
+this job is performed by `qsort()`. As that function is not guaranteed
+to implement a stable sort algorithm, this can lead to inconsistent
+and/or surprising behavior: a rename might be detected differently
+depending on the platform where Git was run.
 
-Note: this patch series is based on top of en/merge-recursive-cleanup.
+The `qsort()` in MS Visual C's runtime does _not_ implement a stable
+sort algorithm, and it even leads to an inconsistency leading to a test
+failure in t3030.35 "merge-recursive remembers the names of all base
+trees": a different code path than on Linux is taken in the rename
+detection of an ambiguous rename between either `e` to `a` or
+`a~Temporary merge branch 2_0` to `a` during a recursive merge,
+unexpectedly resulting in a clean merge.
 
-Johannes Schindelin (2):
-  Move git_sort(), a stable sort, into into libgit.a
-  diffcore_rename(): use a stable sort
+Let's use the stable sort provided by `git_sort()` to avoid this
+inconsistency.
 
- Makefile                  | 2 +-
- compat/mingw.c            | 5 -----
- diffcore-rename.c         | 2 +-
- git-compat-util.h         | 4 +++-
- compat/qsort.c => qsort.c | 2 +-
- 5 files changed, 6 insertions(+), 9 deletions(-)
- rename compat/qsort.c => qsort.c (97%)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ diffcore-rename.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-base-commit: 4615a8cb5b3a8d4959c30338925b1fa3b948ae52
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-352%2Fdscho%2Frename-needs-stable-sort-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-352/dscho/rename-needs-stable-sort-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/352
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 9624864858..248f2be430 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -585,7 +585,7 @@ void diffcore_rename(struct diff_options *options)
+ 	stop_progress(&progress);
+ 
+ 	/* cost matrix sorted by most to least similar pair */
+-	QSORT(mx, dst_cnt * NUM_CANDIDATE_PER_DST, score_compare);
++	QSORT_STABLE(mx, dst_cnt * NUM_CANDIDATE_PER_DST, score_compare);
+ 
+ 	rename_count += find_renames(mx, dst_cnt, minimum_score, 0);
+ 	if (detect_rename == DIFF_DETECT_COPY)
 -- 
 gitgitgadget
