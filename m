@@ -8,150 +8,89 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BDA91F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 08:21:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4C911F463
+	for <e@80x24.org>; Wed, 25 Sep 2019 08:36:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406904AbfIYIVF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Sep 2019 04:21:05 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:44151 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405820AbfIYIVF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Sep 2019 04:21:05 -0400
-Received: by mail-pf1-f193.google.com with SMTP id q21so2920728pfn.11
-        for <git@vger.kernel.org>; Wed, 25 Sep 2019 01:21:05 -0700 (PDT)
+        id S2442787AbfIYIgC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Sep 2019 04:36:02 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:52250 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405068AbfIYIgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Sep 2019 04:36:02 -0400
+Received: by mail-wm1-f67.google.com with SMTP id r19so2519834wmh.2
+        for <git@vger.kernel.org>; Wed, 25 Sep 2019 01:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=c1yeFComJdT3K3FcVq/cpP/e6NGVkjr/1fSwE2QW0lU=;
-        b=dT60H5tu4USejW7X0oc9uhIQo+4RMy+CPKjttAne6wW3siPZ/4f/2fYLNsA995BFy4
-         eW/4qlty7FfrxrF2iTCKserKIw/ZVmkdwB5Fprm/3Ey9YwpE8zJ0dJ/CXKnIyrMDMNTQ
-         iZWtTeS3IkOCPnVFX/w72RpZPoYfcRWbnxfKn7yTht+21wiq6R2h9iGB10nZL6os/0nJ
-         FFozHCbjRMVl0By/uqAsuPCfHRFXA3leLur0oPyeAjz6czDW/dmrLCyXOv5UYnF+XDsV
-         yjqlNmmjL1SJHacZhn1P6LreH0r2+cI2bvQd9X1Y9Eao/tyXRR858GOUCLhMolaoccsv
-         4hCA==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=WplIugY8x7hdUBoczzQ/udELCd60j0lmPIZtdMLjVgM=;
+        b=oE08SN8pBtlAe4UiycuJSeyn4Zw1blbMYUqS6ZahlNIoa2gRMyrcoDo1ZC0bUumfC8
+         bk75DbZcbQK1gkrMIEW3DuzwEd9PcBRZDGshcokwEHMnZxI3cP/DXHvLZW64sPRB3MZj
+         2UWEXeRQu5aK6OveM8L1M00a5rya0pNg4RWajVytvVrIflomBcA3TEX5pANtnenQ/G6H
+         1ZBaMb5I00qcaEf8RPNVbEmulMuKP3IIxmROZdVfG8eSizMwD008cyd0bWA2dUwSbH71
+         UCVL5f6fOa1mHEdhGTJKrgeIQshveyZg6g2pXbeqVXN+dc7ZynMSheNzij2xTQEHLECk
+         VTWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=c1yeFComJdT3K3FcVq/cpP/e6NGVkjr/1fSwE2QW0lU=;
-        b=gWWS68EWnSHrV9y43gYpHfN3x6h53LztXytqo7QCTXMyt104nF/I7xsoXQipyKSyaj
-         2OronVZGiBdnKhnIbHWUuWAN0PmVyEb7/sppyXw2wpUDBOdvBUZf+Dpr4uHhRZX6H/yd
-         Np6c3WCjoZ4w3K8nwhUeaX5QFIfQxTDJnzbqW+8lEAjbAjD8azR/xBlZqAo69j8D5nXW
-         5WadKP4+OoPNRp3KMMEZJ6Yojn8whKy+4wgteR4QftAgVzX7fi+fZQjzWkFaO+sn030Y
-         B5py7tX78it2y01NE4NkllN2bLBI0xIdSzLHRPozll/iE14czTk6qibjQbYPCn1CkQXW
-         rdKQ==
-X-Gm-Message-State: APjAAAV4XyhX6XMpt2dasmg/98TVvTEAjNAtjzegUU2Mg6Tj1dHX2RLI
-        Zo8UV3VzfO2yq1bSDIg6IODpCmWo
-X-Google-Smtp-Source: APXvYqyRXbcaQIiYUINnZJ+SY9P3AFi2YgjZHEa7lxhnkWU1OTHg4xcOXRMWNHnzLpruckWGodstQQ==
-X-Received: by 2002:a63:4661:: with SMTP id v33mr7584944pgk.258.1569399664143;
-        Wed, 25 Sep 2019 01:21:04 -0700 (PDT)
-Received: from archbookpro.localdomain ([2601:646:280:1b30::6486])
-        by smtp.gmail.com with ESMTPSA id g12sm8317913pfb.97.2019.09.25.01.21.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Sep 2019 01:21:03 -0700 (PDT)
-Date:   Wed, 25 Sep 2019 01:21:01 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>
-Subject: [PATCH v2 4/4] Makefile: emulate compile in $(HCO) target better
-Message-ID: <14def72319521d7380fb6a8ec570d014c0f5361b.1569398897.git.liu.denton@gmail.com>
-References: <cover.1569263631.git.liu.denton@gmail.com>
- <cover.1569398897.git.liu.denton@gmail.com>
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=WplIugY8x7hdUBoczzQ/udELCd60j0lmPIZtdMLjVgM=;
+        b=N5UMe+7nZWLAxty8hgK5Su4ttK9gSvZiE8H4pK8VJLknAm0lknpN0qLhLncA9j+qo3
+         3H/bC4XGIVhCX7Mr1Q8EjZDY49SFc65hiSYl+Y40zViAQUo9wG6ZRYdJzlTkYGJ/5C38
+         h6IT17hhWwW77/4UDcA8TJgsALJpl4nyKYK9lTTmSkl3lzC/GQ+QCckr6axcm9J8HL2s
+         nS93z/wZvPpDhBr5SncxG1H5+BSVDZZnJUhzMzcnp5h6ykhlIiEHSDY6aScB/IVdiEMw
+         OtXzVfGGuUvwI5SBXvDBYfqH/5c/N15nEeOXbCdpflGT31Qzi/1oyrKBc5rVYskMKihc
+         1Hsg==
+X-Gm-Message-State: APjAAAW1G6uXaLD4NVQNt3DNglwrNLQKw0tUU+lLTkt8Ksnl7ZoI3IZR
+        PPfz7nExPT3IMfSNRZMtNtBiZVf0
+X-Google-Smtp-Source: APXvYqw77GOVGVpId+XTvrK+p92DoShN0jisEIil4wZfkQxa2AfJjFSGNXtUWVpUmBszzMlOrx1Y0Q==
+X-Received: by 2002:a1c:7d8e:: with SMTP id y136mr6076840wmc.83.1569400560358;
+        Wed, 25 Sep 2019 01:36:00 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f20sm2061881wmb.6.2019.09.25.01.35.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Sep 2019 01:35:59 -0700 (PDT)
+Date:   Wed, 25 Sep 2019 01:35:59 -0700 (PDT)
+X-Google-Original-Date: Wed, 25 Sep 2019 08:35:56 GMT
+Message-Id: <pull.352.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/2] Git's rename detection requires a stable sort
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1569398897.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, when testing headers using `make hdr-check`, headers are
-directly compiled. Although this seems to test the headers, this is too
-strict since we treat the headers as C sources. As a result, this will
-cause warnings to appear that would otherwise not, such as a static
-variable definition intended for later use throwing a unused variable
-warning.
+With the en/merge-recursive-cleanup patches already having advanced to next,
+the problem I discovered when rebasing Git for Windows' branch thicket
+becomes quite relevant now: t3030.35 fails consistently in the MSVC build &
+test (this part of the Azure Pipeline will be upstreamed later).
 
-In addition, on platforms that can run `make hdr-check` but require
-custom flags, this target was failing because none of them were being
-passed to the compiler. For example, on MacOS, the NO_OPENSSL flag was
-being set but it was not being passed into compiler so the check was
-failing.
+The solution: use a stable sort.
 
-Fix these problems by emulating the compile process better, including
-test compiling dummy *.hcc C sources generated from the *.h files and
-passing $(ALL_CFLAGS) into the compiler for the $(HCO) target so that
-these custom flags can be used.
+Note: this patch series is based on top of en/merge-recursive-cleanup.
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
+Johannes Schindelin (2):
+  Move git_sort(), a stable sort, into into libgit.a
+  diffcore_rename(): use a stable sort
 
-Peff, thanks for the suggestion! I modified it a little bit so that we
-wouldn't have to keep regenerating the *.hcc files unnecessarily.
+ Makefile                  | 2 +-
+ compat/mingw.c            | 5 -----
+ diffcore-rename.c         | 2 +-
+ git-compat-util.h         | 4 +++-
+ compat/qsort.c => qsort.c | 2 +-
+ 5 files changed, 6 insertions(+), 9 deletions(-)
+ rename compat/qsort.c => qsort.c (97%)
 
-I also considered piping into the compiler's stdin directly which I know
-works for GCC (and _probably_ Clang) but I opted against it because I'm
-not sure it's portable for other compilers. Maybe it's alright for this
-to be less portable since it's a developer target?
 
- .gitignore |  1 +
- Makefile   | 12 +++++++++---
- 2 files changed, 10 insertions(+), 3 deletions(-)
-
-diff --git a/.gitignore b/.gitignore
-index 521d8f4fb4..34efe125cb 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -216,6 +216,7 @@
- /tags
- /TAGS
- /cscope*
-+*.hcc
- *.obj
- *.lib
- *.res
-diff --git a/Makefile b/Makefile
-index f879697ea3..581cc617e3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1872,7 +1872,7 @@ ifndef V
- 	QUIET_MSGFMT   = @echo '   ' MSGFMT $@;
- 	QUIET_GCOV     = @echo '   ' GCOV $@;
- 	QUIET_SP       = @echo '   ' SP $<;
--	QUIET_HDR      = @echo '   ' HDR $<;
-+	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
- 	QUIET_RC       = @echo '   ' RC $@;
- 	QUIET_SUBDIR0  = +@subdir=
- 	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
-@@ -2771,9 +2771,14 @@ ifndef GCRYPT_SHA256
- endif
- CHK_HDRS = $(filter-out $(EXCEPT_HDRS),$(patsubst ./%,%,$(LIB_H)))
- HCO = $(patsubst %.h,%.hco,$(CHK_HDRS))
-+HCC = $(HCO:hco=hcc)
- 
--$(HCO): %.hco: %.h FORCE
--	$(QUIET_HDR)$(CC) -include git-compat-util.h -I. -o /dev/null -c -xc $<
-+%.hcc: %.h
-+	@echo '#include "git-compat-util.h"' >$@
-+	@echo '#include "$<"' >>$@
-+
-+$(HCO): %.hco: %.hcc FORCE
-+	$(QUIET_HDR)$(CC) $(ALL_CFLAGS) -o /dev/null -c -xc $<
- 
- .PHONY: hdr-check $(HCO)
- hdr-check: $(HCO)
-@@ -3082,6 +3087,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
- 	$(RM) $(TEST_PROGRAMS)
- 	$(RM) $(FUZZ_PROGRAMS)
-+	$(RM) $(HCC)
- 	$(RM) -r bin-wrappers $(dep_dirs)
- 	$(RM) -r po/build/
- 	$(RM) *.pyc *.pyo */*.pyc */*.pyo command-list.h $(ETAGS_TARGET) tags cscope*
+base-commit: 4615a8cb5b3a8d4959c30338925b1fa3b948ae52
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-352%2Fdscho%2Frename-needs-stable-sort-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-352/dscho/rename-needs-stable-sort-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/352
 -- 
-2.23.0.248.g3a9dd8fb08
-
+gitgitgadget
