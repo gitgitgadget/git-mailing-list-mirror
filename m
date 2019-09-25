@@ -8,132 +8,82 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72A1E1F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 12:45:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 358651F463
+	for <e@80x24.org>; Wed, 25 Sep 2019 12:45:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405698AbfIYMp1 (ORCPT <rfc822;e@80x24.org>);
+        id S2405597AbfIYMp1 (ORCPT <rfc822;e@80x24.org>);
         Wed, 25 Sep 2019 08:45:27 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43906 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404621AbfIYMp1 (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39832 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726369AbfIYMp1 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 25 Sep 2019 08:45:27 -0400
-Received: by mail-wr1-f67.google.com with SMTP id q17so6775967wrx.10
-        for <git@vger.kernel.org>; Wed, 25 Sep 2019 05:45:25 -0700 (PDT)
+Received: by mail-wr1-f66.google.com with SMTP id r3so6778416wrj.6
+        for <git@vger.kernel.org>; Wed, 25 Sep 2019 05:45:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=2r0ALgRKisw5BArvTdwU0oIOtcZvpmG4qZxwXk7SjTg=;
-        b=VObuHa94vrdKlWFq/aaQEZoxdZfGbc3IGLhp5NtSVquQjbj8l1I7UW3jhpSnxsg5sJ
-         KJPpFeOV2vWgWSDDqjeoD3qkfre0XNIr1NJECpt7h3GqhkJ8UQ/o4Mx2v7WX95x3An5/
-         fPi0zAQKcCuEFa6svmti3zGMJdMAdsBZFfYfILkwlvmX89n74CWVAGlQmHDybmE1/dmP
-         nfxQY+EpBZ8d07Vnvxke0tNxV2d5fFxlrGPxl/6UI9ghetvzJhbssCiGM8oBDxw+UgB1
-         t094+HGZIA/Y25qVUP9FvQpw2lMhVJS3NuwHVXxwDZ7Lk7KIP9GU+ngXdl9sc/nPhqba
-         q4rA==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=759q2NBP2SW2C8AglZQw7/gWVmb5KcuficaXX5sy+ho=;
+        b=BHzb6YHVwG6SqOTSmt6lNbH/t7YeE4dd1SDt+kdvzrq64NACraCJY3ZrGpUl8J30ms
+         XX1YCJvWTqiexP4GWXEIeuxdnOkiasr2FFcat0jnrBE+PirFa8mjNigT5kwv6u3BdUqW
+         WdsXM7jUlkLp68ueNvFffhw6sewuuVhzEfqQmrdEBRk0LrRPxURqqSj4rv45c9JgiK8i
+         dnFpZ14vyMhUocL3nahRicnAqLOKoV+ok1hgj4c+cnSYQKxihICMOYKzhWr9HpcEd3Li
+         5eI+kcu4bho8wgbtOA+jOBlHqOQQ3qWd7apEFWUcGfm26/Hqa38yie9WbGE6gdDP48Hj
+         JevQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2r0ALgRKisw5BArvTdwU0oIOtcZvpmG4qZxwXk7SjTg=;
-        b=bawz2tZXVa3IvmvKfSKLzmSoNbP/KaKAa0PymVGaT7jhOK7p+lbmJoCGP02UHaNjcQ
-         ho9wJeHpvmO3qt5hu+9cQv5vw+a6BVLrtvNnnci+BMbXTSdWqxS6xKlF8BTAJLiX8bu0
-         fcoUKGGNzWIkSazeGKcmI+Z1XXrCuT3ttk1AnJlNy9N5yUbR9kbhUsH3JAzBBItMQWlq
-         8FRpbBzvp502NRItIZPOM6wmgqehoCfW89J+9Cv53aL+B7tr55CTQViDTuaT93jf0gsP
-         s9msC7qtGf/GHv8jV2jdqYDKI0uzgN3GbCjf6rlJ72fAbhPT6OXlH4rW1qSsXRxaL+ft
-         mKCg==
-X-Gm-Message-State: APjAAAW6idhhg4LMHCoFt4boq1bmHewvJ4s4Hr9Jlnh96l3YZaQLTs0e
-        MckZbROQxvefG8OYiFjh/UyMyeDD
-X-Google-Smtp-Source: APXvYqxzLaVKhgx55sNz6YsZ5bCaCJci55EZJEqW4X8Kmz/7J1gcl7zvOT43Vfi0vEBlbdt01w2IcA==
-X-Received: by 2002:a05:6000:160a:: with SMTP id u10mr9780476wrb.235.1569415524505;
-        Wed, 25 Sep 2019 05:45:24 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=759q2NBP2SW2C8AglZQw7/gWVmb5KcuficaXX5sy+ho=;
+        b=PVXKQk3C9QXAgtzD+olZCvyxQ9OYvLDRlxSGD7hl4lsN0QX4gdc9RTBOqcQ43+XwpG
+         vV2VTXrNizv2/QTuNADnzzbCjvKFbm8nPDSfgBLDKjr3YL6KHraMs9M6lAt62iwd5iJO
+         TbE8H+2r9QU3vKotlbEWsIUXvnURHuNoFSGewoXHTyObsBV1bYSTWsGxd5M9x5FXOJZY
+         BBN3CW/xJU6Lrcx5l68VrX/0YV4jgiQO7+SuRAfz36wseU7RoRL+iEPFtT/n1p8QIFoL
+         o2kiZhon07jyv2RZhFhjrMgHR+guEDiynX1BhCdQgPruT6JefletdD3xZsLHElRrUURq
+         jiEw==
+X-Gm-Message-State: APjAAAW9ZoyedNjdScBEJVsfPWo/FQNcuwEXEDF9TbVdwvbaRTIbhnAU
+        1dIMbBvB0+OLDU09qEFgC/tu6bfV
+X-Google-Smtp-Source: APXvYqz5bOUPPejRNbCM7FiOooULDlMzDOy2GENwRPFsmJsXhgBPd0ObYbzutontJ9oHng6SUHDYpA==
+X-Received: by 2002:a5d:4041:: with SMTP id w1mr9126183wrp.313.1569415523719;
+        Wed, 25 Sep 2019 05:45:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 3sm4327162wmo.22.2019.09.25.05.45.23
+        by smtp.gmail.com with ESMTPSA id g24sm6686248wrb.35.2019.09.25.05.45.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Sep 2019 05:45:24 -0700 (PDT)
-Date:   Wed, 25 Sep 2019 05:45:24 -0700 (PDT)
-X-Google-Original-Date: Wed, 25 Sep 2019 12:45:22 GMT
-Message-Id: <a687c16b824ec9ab45d1e2c39a5470ed89153fc0.1569415522.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.354.git.gitgitgadget@gmail.com>
-References: <pull.354.git.gitgitgadget@gmail.com>
+        Wed, 25 Sep 2019 05:45:23 -0700 (PDT)
+Date:   Wed, 25 Sep 2019 05:45:23 -0700 (PDT)
+X-Google-Original-Date: Wed, 25 Sep 2019 12:45:21 GMT
+Message-Id: <pull.354.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] stash apply: report status correctly even in a worktree's
- subdirectory
+Subject: [PATCH 0/1] stash apply: be prepared to run in a worktree's subdirectory
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+I saw this issue a couple times in my setup, and always wondered why nobody
+else seemed to be hit by this. When I finally found/made some time to
+investigate, I found out that it really requires a specific setup: I have
+many worktrees connected to my main git.git clone, often run inside t/ and I
+do stash quite often (now that git stash's performance is a joy on Windows).
 
-When Git wants to spawn a child Git process inside a worktree's
-subdirectory, we need to take care of specifying the work tree's
-top-level directory explicitly because it cannot be discovered: the
-current directory is _not_ the top-level directory of the work tree, and
-neither is it inside the parent directory of `GIT_DIR`.
+Johannes Schindelin (1):
+  stash apply: report status correctly even in a worktree's subdirectory
 
-This fixes the problem where `git stash apply` would report pretty much
-everything deleted or untracked when run inside a worktree's
-subdirectory.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
  builtin/stash.c              |  2 ++
  t/t3908-stash-in-worktree.sh | 27 +++++++++++++++++++++++++++
  2 files changed, 29 insertions(+)
  create mode 100755 t/t3908-stash-in-worktree.sh
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index b5a301f24d..a1e2e7ae7e 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -497,6 +497,8 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 		 */
- 		cp.git_cmd = 1;
- 		cp.dir = prefix;
-+		argv_array_pushf(&cp.env_array, GIT_WORK_TREE_ENVIRONMENT"=%s",
-+				 absolute_path(get_git_work_tree()));
- 		argv_array_push(&cp.args, "status");
- 		run_command(&cp);
- 	}
-diff --git a/t/t3908-stash-in-worktree.sh b/t/t3908-stash-in-worktree.sh
-new file mode 100755
-index 0000000000..2b2b366ef9
---- /dev/null
-+++ b/t/t3908-stash-in-worktree.sh
-@@ -0,0 +1,27 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2019 Johannes E Schindelin
-+#
-+
-+test_description='Test git stash in a worktree'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit initial &&
-+	git worktree add wt &&
-+	test_commit -C wt in-worktree
-+'
-+
-+test_expect_success 'apply in subdirectory' '
-+	mkdir wt/subdir &&
-+	(
-+		cd wt/subdir &&
-+		echo modified >../initial.t &&
-+		git stash &&
-+		git stash apply >out
-+	) &&
-+	grep "\.\.\/initial\.t" wt/subdir/out
-+'
-+
-+test_done
+
+base-commit: 4c86140027f4a0d2caaa3ab4bd8bfc5ce3c11c8a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-354%2Fdscho%2Fapply-stash-in-subdirectory-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-354/dscho/apply-stash-in-subdirectory-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/354
 -- 
 gitgitgadget
