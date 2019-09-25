@@ -8,142 +8,127 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BDAA1F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 20:38:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 146BC1F463
+	for <e@80x24.org>; Wed, 25 Sep 2019 20:39:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393338AbfIYUi5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Sep 2019 16:38:57 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:54995 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732671AbfIYUi5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Sep 2019 16:38:57 -0400
-Received: by mail-wm1-f66.google.com with SMTP id p7so155573wmp.4
-        for <git@vger.kernel.org>; Wed, 25 Sep 2019 13:38:55 -0700 (PDT)
+        id S1732671AbfIYUjZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Sep 2019 16:39:25 -0400
+Received: from mail-pf1-f169.google.com ([209.85.210.169]:38020 "EHLO
+        mail-pf1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728993AbfIYUjZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Sep 2019 16:39:25 -0400
+Received: by mail-pf1-f169.google.com with SMTP id h195so138509pfe.5
+        for <git@vger.kernel.org>; Wed, 25 Sep 2019 13:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JdsctYWXuuXXqEOzB63lpFiHupXhaM+lS9/RkB/3n9s=;
-        b=YimI5ZsE4aqMZmcsJY9KYcr0zSD6QeoKrVWPLZVVkGmIWqlMz7kuYNr99bPiz24BzG
-         IGMi/rTQyF+kVDBOWAwEZbVHTtaMrfxb6ahFXDmLCuDm7TDAnaGL8migxsUdTIO4Omve
-         4OmXqQJEJFFS2fgXJ+i5YEVb07grrAyhmguSOsb5+7TcHkGGJYiqSZM6gi3NaOG/apnv
-         hOcPRe+e0OY7Cu6EbxpGFEbLxHY2mfsy5ptquxdH8yBW8ZHu/3fNZO2fD8Anrucm7uy/
-         eRGZAyyl7tcl61D0XQF36IOExN+++9SDHhAHnN1j5z7PBsZkCHfrhrG6UrnR6p9dV/+U
-         i81g==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=SbOT7VPurQKAYH2qJZvdAPiDxDOf/hLJ4yqvEVMzlHI=;
+        b=prKtSZT+FKzaJYuEzP5iUxj+1GueGzoesIKHRMYUcLs1hIU9O4N+57yVqT7NogSYzi
+         AyUGtRUkwq9dvyd7F8Xa2i99EK/RhOqn4gskhTQwINmvgjkaurkrYQ1F1Mw/zMclwIbP
+         APX5IgolqBBTbYpBdGDFV586QpmepdR1300pdo4MTTmUYH7kkGckmnWKqkWdqpf04Jlu
+         /VxQJlhMSfEZ1z0VD0SxmDAYqtwcRq2a+Hfvanq4IGHllBIcP0pqZTN8M6IMMN8OTOKc
+         N32xtZuGB5wlvZEPN9zE1wOB3rueOaPPDb1E5X41/XQCJX7HbvIyjI8l7IsuAG17bZtw
+         NFdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JdsctYWXuuXXqEOzB63lpFiHupXhaM+lS9/RkB/3n9s=;
-        b=KyFqZj7+Xy4KpZ3Mf0X8NJePexNpjI+PBf5/4zFU1aU/oNBRFhMg9Imk2WbegYkJzs
-         eGHcKB326yPvz95fAPlP9W8LBkdaEIas2h4p7OjBlx+PG0T3ZjkYq9wiB4pTNxrWhHtd
-         tvEzIIuC7tW0uhNI8rSvtqiKUE9fOrgVmrBpsO4fZRSThEI2BhOu0V3Fpkh2K11rptOz
-         XKMkdP1ez4QwrboZf9SGR+OTy0hft7efVc4tCbcfGxiguO6TnfmjcWWsXm/E0XE4nZgP
-         16I4xqwfoYI8+ulGsMtiGViPGyMy1fwuV5Zb4UtwKi6VVty0LITMjhgHRZetJIpyck9f
-         fb0g==
-X-Gm-Message-State: APjAAAWgoX8t7mYdf03UXvbCtqVlgolK9SPDhyR6nZRG7aEUYgMKz155
-        wRhxhhP2rUBrbswCIX4=
-X-Google-Smtp-Source: APXvYqwQu4oN04EoKs6p9rhDpdk1bOSo1mFE8vcFaVXFQhpd7uxQVnbgxwBcfR78L9KkT1NgRUrp1Q==
-X-Received: by 2002:a05:600c:210b:: with SMTP id u11mr80023wml.29.1569443934569;
-        Wed, 25 Sep 2019 13:38:54 -0700 (PDT)
-Received: from localhost ([2a02:810a:8c80:d2c:4d89:574b:af6e:1a3])
-        by smtp.gmail.com with ESMTPSA id c18sm252870wrn.45.2019.09.25.13.38.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Sep 2019 13:38:54 -0700 (PDT)
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-To:     git@vger.kernel.org
-Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Pratyush Yadav <me@yadavpratyush.com>
-Subject: [PATCH 2/2] git-gui: support for diff3 conflict style
-Date:   Wed, 25 Sep 2019 22:38:51 +0200
-Message-Id: <f1477ba53a03484a0440202065a5293c8795d3b7.1569443729.git.bert.wesarg@googlemail.com>
-X-Mailer: git-send-email 2.21.0.789.ga095d9d866
-In-Reply-To: <97013a71289857767100d6a4adcb39ca99b2b21b.1569443729.git.bert.wesarg@googlemail.com>
-References: <97013a71289857767100d6a4adcb39ca99b2b21b.1569443729.git.bert.wesarg@googlemail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=SbOT7VPurQKAYH2qJZvdAPiDxDOf/hLJ4yqvEVMzlHI=;
+        b=fG7t5jm07aGR45K1fiO78+4zNZWPMXIMA7mXdLiJ9iVRksMEIa6hxEgUcEvKsfGVp0
+         Jjqu05RWL0xKuBi4PPJyRoSRINIt4+9MkBVAplovDRqY4mEb2p/6MEE0zoSPHAYMl4wp
+         b6nQVLjj4bC0bt1En/hUJTIw09Pc7Lvu9w/NgwnIXGsV/49rFF+MbYSPelPI0idMaiVE
+         k+GM+6LntBCWmg3IIPyo8XYdSOxH3plZmYvKyGxMCQO0nUCgojEMkPk6zgZpL1NC0ZnQ
+         YoLgf3BZFLdeYe8c0Yry7k/QGjWnSu2tda0NQgsHUKdQaclt3LtXb7j5Y2w7wH3tQbSQ
+         GfsA==
+X-Gm-Message-State: APjAAAX1DOxMavgqunRbzSuHCaVc8hWfAfsmf/O4LFtMj55gjsOVa/Mt
+        MwCPWYfqbTJy0dGuxfMGqP8=
+X-Google-Smtp-Source: APXvYqyPgq8DjWJwOdX8sCAx+rlgV294DI3adOyjirpQ7lwJaKJ7PdZLSt74dq/ATN6dpjsg3Zv8Aw==
+X-Received: by 2002:a63:ff18:: with SMTP id k24mr1242202pgi.427.1569443963933;
+        Wed, 25 Sep 2019 13:39:23 -0700 (PDT)
+Received: from generichostname ([204.14.239.83])
+        by smtp.gmail.com with ESMTPSA id u9sm5440705pfl.138.2019.09.25.13.39.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Sep 2019 13:39:22 -0700 (PDT)
+Date:   Wed, 25 Sep 2019 13:39:19 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Rafael =?iso-8859-1?Q?Ascens=E3o?= <rafa.almas@gmail.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Samuel Lijin <sxlijin@gmail.com>
+Subject: [BUG] git is segfaulting, was [PATCH v4 04/12] dir: also check
+ directories for matching pathspecs
+Message-ID: <20190925203919.GA89135@generichostname>
+References: <20190912221240.18057-1-newren@gmail.com>
+ <20190917163504.14566-1-newren@gmail.com>
+ <20190917163504.14566-5-newren@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190917163504.14566-5-newren@gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds highlight support for the diff3 conflict style.
+Hi Elijah,
 
-The common pre-image will be reversed to --, because it has been removed
-and either replaced with ours or theirs side.
+I ran into a segfault on MacOS. I managed to bisect it down to
+404ebceda0 (dir: also check directories for matching pathspecs,
+2019-09-17), which should be the patch in the parent thread. The test
+case below works fine without this patch applied but segfaults once it
+is applied.
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- git-gui.sh   |  3 +++
- lib/diff.tcl | 22 ++++++++++++++++++++++
- 2 files changed, 25 insertions(+)
+	#!/bin/sh
 
-diff --git a/git-gui.sh b/git-gui.sh
-index fd476b6..6d80f82 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -3581,6 +3581,9 @@ $ui_diff tag conf d_s- \
- $ui_diff tag conf d< \
- 	-foreground orange \
- 	-font font_diffbold
-+$ui_diff tag conf d| \
-+	-foreground orange \
-+	-font font_diffbold
- $ui_diff tag conf d= \
- 	-foreground orange \
- 	-font font_diffbold
-diff --git a/lib/diff.tcl b/lib/diff.tcl
-index 0fd4600..6caf4e7 100644
---- a/lib/diff.tcl
-+++ b/lib/diff.tcl
-@@ -347,6 +347,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 	}
- 
- 	set ::current_diff_inheader 1
-+	set ::conflict_state {CONTEXT}
- 	fconfigure $fd \
- 		-blocking 0 \
- 		-encoding [get_path_encoding $path] \
-@@ -450,10 +451,28 @@ proc read_diff {fd conflict_size cont_info} {
- 			{++} {
- 				set regexp [string map [list %conflict_size $conflict_size]\
- 								{^\+\+([<>=]){%conflict_size}(?: |$)}]
-+				set regexp_pre_image [string map [list %conflict_size $conflict_size]\
-+								{^\+\+\|{%conflict_size}(?: |$)}]
- 				if {[regexp $regexp $line _g op]} {
- 					set is_conflict_diff 1
- 					set line [string replace $line 0 1 {  }]
-+					set markup {}
- 					set tags d$op
-+					switch -exact -- $op {
-+					< { set ::conflict_state {OURS} }
-+					= { set ::conflict_state {THEIRS} }
-+					> { set ::conflict_state {CONTEXT} }
-+					}
-+				} elseif {[regexp $regexp_pre_image $line]} {
-+					set is_conflict_diff 1
-+					set line [string replace $line 0 1 {  }]
-+					set markup {}
-+					set tags d|
-+					set ::conflict_state {BASE}
-+				} elseif {$::conflict_state eq {BASE}} {
-+					set line [string replace $line 0 1 {--}]
-+					set markup {}
-+					set tags d_--
- 				} else {
- 					set tags d_++
- 				}
-@@ -505,6 +524,9 @@ proc read_diff {fd conflict_size cont_info} {
- 			}
- 		}
- 		set mark [$ui_diff index "end - 1 line linestart"]
-+		if {[llength $markup] > 0} {
-+			set tags {}
-+		}
- 		$ui_diff insert end $line $tags
- 		if {[string index $line end] eq "\r"} {
- 			$ui_diff tag add d_cr {end - 2c}
--- 
-2.21.0.789.ga095d9d866
+	git worktree add testdir
+	git -C testdir checkout master
+	git -C testdir fetch https://github.com/git/git.git todo
+	bin-wrappers/git -C testdir checkout FETCH_HEAD # segfault here
 
+Note that the worktree part isn't necessary to reproduce the problem but
+I didn't want my files to be constantly refreshed, triggering a rebuild
+each time.
+
+I also managed to get this backtrace from running lldb at the segfault
+but it is based on the latest "jch" commit, 1cc52d20df (Merge branch
+'jt/merge-recursive-symlink-is-not-a-dir-in-way' into jch, 2019-09-20).
+
+	* thread #1, queue = 'com.apple.main-thread', stop reason = EXC_BAD_ACCESS (code=1, address=0x8)
+	  * frame #0: 0x00000001000f63a0 git`do_match_pathspec(istate=0x0000000100299940, ps=0x000000010200aa80, name="Gitweb/static/js/lib/", namelen=21, prefix=0, seen=0x0000000000000000, flags=0) at dir.c:420:2 [opt]
+		frame #1: 0x00000001000f632c git`match_pathspec(istate=0x0000000100299940, ps=0x0000000000000000, name="Gitweb/static/js/lib/", namelen=21, prefix=0, seen=0x0000000000000000, is_dir=0) at dir.c:490:13 [opt]
+		frame #2: 0x00000001000f8315 git`read_directory_recursive(dir=0x00007ffeefbfe278, istate=0x0000000100299940, base=<unavailable>, baselen=17, untracked=<unavailable>, check_only=0, stop_at_first_file=0, pathspec=0x0000000000000000) at dir.c:1990:9 [opt]
+		frame #3: 0x00000001000f82e9 git`read_directory_recursive(dir=0x00007ffeefbfe278, istate=0x0000000100299940, base=<unavailable>, baselen=14, untracked=<unavailable>, check_only=0, stop_at_first_file=0, pathspec=0x0000000000000000) at dir.c:1984:5 [opt]
+		frame #4: 0x00000001000f82e9 git`read_directory_recursive(dir=0x00007ffeefbfe278, istate=0x0000000100299940, base=<unavailable>, baselen=7, untracked=<unavailable>, check_only=0, stop_at_first_file=0, pathspec=0x0000000000000000) at dir.c:1984:5 [opt]
+		frame #5: 0x00000001000f60d1 git`read_directory(dir=0x00007ffeefbfe278, istate=0x0000000100299940, path="Gitweb/", len=7, pathspec=0x0000000000000000) at dir.c:2298:3 [opt]
+		frame #6: 0x00000001001bded1 git`verify_clean_subdirectory(ce=<unavailable>, o=0x00007ffeefbfe8c0) at unpack-trees.c:1846:6 [opt]
+		frame #7: 0x00000001001bdc1d git`check_ok_to_remove(name="Gitweb", len=6, dtype=4, ce=0x0000000103e70de0, st=0x00007ffeefbfe438, error_type=ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN, o=0x00007ffeefbfe8c0) at unpack-trees.c:1901:7 [opt]
+		frame #8: 0x00000001001bdb01 git`verify_absent_1(ce=<unavailable>, error_type=<unavailable>, o=<unavailable>) at unpack-trees.c:1964:10 [opt]
+		frame #9: 0x00000001001bafc0 git`verify_absent(ce=<unavailable>, error_type=<unavailable>, o=<unavailable>) at unpack-trees.c:1052:11 [opt] [artificial]
+		frame #10: 0x00000001001bbc3c git`merged_entry(ce=0x0000000100605fb0, old=0x0000000000000000, o=0x00007ffeefbfe8c0) at unpack-trees.c:2013:7 [opt]
+		frame #11: 0x00000001001bd2b7 git`call_unpack_fn(src=<unavailable>, o=<unavailable>) at unpack-trees.c:522:12 [opt]
+		frame #12: 0x00000001001bca16 git`unpack_nondirectories(n=2, mask=2, dirmask=<unavailable>, src=0x00007ffeefbfe5d0, names=<unavailable>, info=0x00007ffeefbfe718) at unpack-trees.c:1029:12 [opt]
+		frame #13: 0x00000001001bad1a git`unpack_callback(n=2, mask=2, dirmask=0, names=0x0000000102007390, info=0x00007ffeefbfe718) at unpack-trees.c:1229:6 [opt]
+		frame #14: 0x00000001001b8be2 git`traverse_trees(istate=0x0000000100299940, n=2, t=<unavailable>, info=<unavailable>) at tree-walk.c:497:17 [opt]
+		frame #15: 0x00000001001ba80f git`unpack_trees(len=2, t=0x00007ffeefbfebe0, o=0x00007ffeefbfe8c0) at unpack-trees.c:1546:9 [opt]
+		frame #16: 0x000000010001a443 git`merge_working_tree(opts=0x00007ffeefbfee38, old_branch_info=0x00007ffeefbfeca0, new_branch_info=0x00007ffeefbfeda0, writeout_error=0x00007ffeefbfeccc) at checkout.c:704:9 [opt]
+		frame #17: 0x000000010001a08c git`switch_branches(opts=0x00007ffeefbfee38, new_branch_info=0x00007ffeefbfeda0) at checkout.c:1057:9 [opt]
+		frame #18: 0x0000000100018df0 git`checkout_branch(opts=<unavailable>, new_branch_info=<unavailable>) at checkout.c:1426:9 [opt]
+		frame #19: 0x0000000100017b90 git`checkout_main(argc=0, argv=0x00007ffeefbff570, prefix=0x0000000000000000, opts=0x00007ffeefbfee38, options=<unavailable>, usagestr=<unavailable>) at checkout.c:1682:10 [opt]
+		frame #20: 0x0000000100016f2d git`cmd_checkout(argc=2, argv=0x00007ffeefbff568, prefix=0x0000000000000000) at checkout.c:1731:8 [opt]
+		frame #21: 0x00000001000026f6 git`run_builtin(p=0x000000010024c710, argc=2, argv=0x00007ffeefbff568) at git.c:444:11 [opt]
+		frame #22: 0x0000000100001a36 git`handle_builtin(argc=2, argv=0x00007ffeefbff568) at git.c:673:3 [opt]
+		frame #23: 0x000000010000235c git`run_argv(argcp=0x00007ffeefbff4ec, argv=0x00007ffeefbff4d8) at git.c:740:4 [opt]
+		frame #24: 0x0000000100001794 git`cmd_main(argc=2, argv=0x00007ffeefbff568) at git.c:871:19 [opt]
+		frame #25: 0x00000001000a4405 git`main(argc=<unavailable>, argv=0x00007ffeefbff560) at common-main.c:52:11 [opt]
+		frame #26: 0x00007fff783053d5 libdyld.dylib`start + 1
+
+Sorry for the information dump, I haven't had the time to properly look
+into the issue but I just wanted to make sure that you're aware.
+
+Thanks and hope this helps,
+
+Denton
