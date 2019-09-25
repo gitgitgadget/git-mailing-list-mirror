@@ -2,88 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 358651F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 12:45:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADF021F466
+	for <e@80x24.org>; Wed, 25 Sep 2019 12:48:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405597AbfIYMp1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Sep 2019 08:45:27 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39832 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726369AbfIYMp1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Sep 2019 08:45:27 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r3so6778416wrj.6
-        for <git@vger.kernel.org>; Wed, 25 Sep 2019 05:45:24 -0700 (PDT)
+        id S2405769AbfIYMsL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Sep 2019 08:48:11 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:38576 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404621AbfIYMsL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Sep 2019 08:48:11 -0400
+Received: by mail-qt1-f194.google.com with SMTP id j31so6356415qta.5
+        for <git@vger.kernel.org>; Wed, 25 Sep 2019 05:48:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=759q2NBP2SW2C8AglZQw7/gWVmb5KcuficaXX5sy+ho=;
-        b=BHzb6YHVwG6SqOTSmt6lNbH/t7YeE4dd1SDt+kdvzrq64NACraCJY3ZrGpUl8J30ms
-         XX1YCJvWTqiexP4GWXEIeuxdnOkiasr2FFcat0jnrBE+PirFa8mjNigT5kwv6u3BdUqW
-         WdsXM7jUlkLp68ueNvFffhw6sewuuVhzEfqQmrdEBRk0LrRPxURqqSj4rv45c9JgiK8i
-         dnFpZ14vyMhUocL3nahRicnAqLOKoV+ok1hgj4c+cnSYQKxihICMOYKzhWr9HpcEd3Li
-         5eI+kcu4bho8wgbtOA+jOBlHqOQQ3qWd7apEFWUcGfm26/Hqa38yie9WbGE6gdDP48Hj
-         JevQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=uUdAH7ZatVofGF61b51UbFfbbrIpSZVzfaeOlVqqG74=;
+        b=TahRqxcB0yy+RmEgxk2peIZqL0A5OGwXVRNSRFO9wMgGUvrAPYhaV4taj53e8H3TU3
+         4XXbJ3WtmRd+WvFrBGuCl6LkMM1GAQuM07joO1PkooL4BXIftd6KxAD3ctvlMLtKcRxj
+         PhtMyTnxe3/EgL50qjNoWKTTlF2fji4skzNHLkpUKvo3kATAkpmCRe991lLZOcmMsJ41
+         cNZ7/JpvKNwK/UI5EqqxE1MIg2lsfDRy9yqMilXj3F7Vcwr/X9w1ezUhQWdfNr6OZFga
+         2h7BT64QcSV4ubSK9MrscL25GwHYQJE3K8DHPXGBj5IRLaqPCDp6PtrcLweEFPlF4r/n
+         MSSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=759q2NBP2SW2C8AglZQw7/gWVmb5KcuficaXX5sy+ho=;
-        b=PVXKQk3C9QXAgtzD+olZCvyxQ9OYvLDRlxSGD7hl4lsN0QX4gdc9RTBOqcQ43+XwpG
-         vV2VTXrNizv2/QTuNADnzzbCjvKFbm8nPDSfgBLDKjr3YL6KHraMs9M6lAt62iwd5iJO
-         TbE8H+2r9QU3vKotlbEWsIUXvnURHuNoFSGewoXHTyObsBV1bYSTWsGxd5M9x5FXOJZY
-         BBN3CW/xJU6Lrcx5l68VrX/0YV4jgiQO7+SuRAfz36wseU7RoRL+iEPFtT/n1p8QIFoL
-         o2kiZhon07jyv2RZhFhjrMgHR+guEDiynX1BhCdQgPruT6JefletdD3xZsLHElRrUURq
-         jiEw==
-X-Gm-Message-State: APjAAAW9ZoyedNjdScBEJVsfPWo/FQNcuwEXEDF9TbVdwvbaRTIbhnAU
-        1dIMbBvB0+OLDU09qEFgC/tu6bfV
-X-Google-Smtp-Source: APXvYqz5bOUPPejRNbCM7FiOooULDlMzDOy2GENwRPFsmJsXhgBPd0ObYbzutontJ9oHng6SUHDYpA==
-X-Received: by 2002:a5d:4041:: with SMTP id w1mr9126183wrp.313.1569415523719;
-        Wed, 25 Sep 2019 05:45:23 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g24sm6686248wrb.35.2019.09.25.05.45.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Sep 2019 05:45:23 -0700 (PDT)
-Date:   Wed, 25 Sep 2019 05:45:23 -0700 (PDT)
-X-Google-Original-Date: Wed, 25 Sep 2019 12:45:21 GMT
-Message-Id: <pull.354.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] stash apply: be prepared to run in a worktree's subdirectory
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=uUdAH7ZatVofGF61b51UbFfbbrIpSZVzfaeOlVqqG74=;
+        b=K+xy0VNwShJoR+wUUnS7VZ92NX2uQ10gRaSdBjudB1lmCZp8Kp0XjaNbuXJUiG1nrf
+         QT5fK5xnwjSxEthOrKIQYt3MXxXJPCAQKzdwPLGN/aPvukHYP5gSXU6TMD0to/4Q21WU
+         smf4+En01n+WIBiFOTS4BZEJcq4T1Ct9KrZiw1ddS5TYUy9seFyjaKYWfszEsUljW1fq
+         p/EfFa3hSakxj1AHC9SXTzogL211wU0Ss0v8nPiEIJJuPwXZDkEnN3OTSFKNvMfKKIgP
+         yqkW1htLDLGH33P3RiDpqVOBLtGisTMMerNtf2Sdwrn86FY9/hKsK5pz2H0K0wq/OLnP
+         qw9Q==
+X-Gm-Message-State: APjAAAWs5rTynRn7zjVIBgMrj8K1W/heNsaX90IugQ+epq0opejmab1g
+        hNopV/ig1VjjkeVD8F/KHZvLZxIsS8E=
+X-Google-Smtp-Source: APXvYqy0VMLjtqIa+53pbMkIcP5qrEsHoKULxd5UeOTSwn6sUFx/VccsR4iGGWIUpp4OkmqBeYcU0A==
+X-Received: by 2002:ac8:5399:: with SMTP id x25mr8589301qtp.144.1569415690166;
+        Wed, 25 Sep 2019 05:48:10 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:4cc1:b74:5d5b:b0b0? ([2001:4898:a800:1010:fdf6:b74:5d5b:b0b0])
+        by smtp.gmail.com with ESMTPSA id w73sm3161507qkb.111.2019.09.25.05.48.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Sep 2019 05:48:09 -0700 (PDT)
+Subject: Re: [PATCH v2 04/19] hashmap_entry_init takes "struct hashmap_entry
+ *"
+To:     Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+References: <20190924010324.22619-1-e@80x24.org>
+ <20190924010324.22619-5-e@80x24.org>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d0f08de3-3fa8-1e76-0b57-425eb96aefcf@gmail.com>
+Date:   Wed, 25 Sep 2019 08:48:08 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+In-Reply-To: <20190924010324.22619-5-e@80x24.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I saw this issue a couple times in my setup, and always wondered why nobody
-else seemed to be hit by this. When I finally found/made some time to
-investigate, I found out that it really requires a specific setup: I have
-many worktrees connected to my main git.git clone, often run inside t/ and I
-do stash quite often (now that git stash's performance is a joy on Windows).
+On 9/23/2019 9:03 PM, Eric Wong wrote:
+> C compilers do type checking to make life easier for us.  So
+> rely on that and update all hashmap_entry_init callers to take
+> "struct hashmap_entry *" to avoid future bugs while improving
+> safety and readability.
+[snip]
+> @@ -244,9 +244,9 @@ void hashmap_free(struct hashmap *map, int free_entries);
+>   * your structure was allocated with xmalloc(), you can just free(3) it,
+>   * and if it is on stack, you can just let it go out of scope).
+>   */
+> -static inline void hashmap_entry_init(void *entry, unsigned int hash)
+> +static inline void
+> +hashmap_entry_init(struct hashmap_entry *e, unsigned int hash)
+>  {
 
-Johannes Schindelin (1):
-  stash apply: report status correctly even in a worktree's subdirectory
+I think the preferred line break here would be something like:
 
- builtin/stash.c              |  2 ++
- t/t3908-stash-in-worktree.sh | 27 +++++++++++++++++++++++++++
- 2 files changed, 29 insertions(+)
- create mode 100755 t/t3908-stash-in-worktree.sh
+static inline void hashmap_entry_init(struct hashmap_entry *e,
+				      unsigned int hash)
 
+The rest of this patch is very mechanical and easy to check
+for correctness.
 
-base-commit: 4c86140027f4a0d2caaa3ab4bd8bfc5ce3c11c8a
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-354%2Fdscho%2Fapply-stash-in-subdirectory-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-354/dscho/apply-stash-in-subdirectory-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/354
--- 
-gitgitgadget
+Thanks,
+-Stolee
+
