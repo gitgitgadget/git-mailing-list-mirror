@@ -8,56 +8,59 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C98CB1F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 20:38:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BDAA1F463
+	for <e@80x24.org>; Wed, 25 Sep 2019 20:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393333AbfIYUiz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Sep 2019 16:38:55 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:40225 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727102AbfIYUiz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Sep 2019 16:38:55 -0400
-Received: by mail-wm1-f68.google.com with SMTP id b24so160808wmj.5
-        for <git@vger.kernel.org>; Wed, 25 Sep 2019 13:38:54 -0700 (PDT)
+        id S2393338AbfIYUi5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Sep 2019 16:38:57 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:54995 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732671AbfIYUi5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Sep 2019 16:38:57 -0400
+Received: by mail-wm1-f66.google.com with SMTP id p7so155573wmp.4
+        for <git@vger.kernel.org>; Wed, 25 Sep 2019 13:38:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lNJHXHwCYA7mJJNicjzFnF9BaMIk3HB8BKl0Qp+0du0=;
-        b=t4l7Z7dihYYeJzB9bUYoyo2OcFEtoH1WJvWwh+LMeSesVnlB4FcOhLBUru6XdOUzOU
-         5QE0kuvRr/ESvHU+YZvjmtHUBuR/L2SEkUd4Zmb+fNuqVuFQTImX/kxMLPL4hkveHZGa
-         LBALQhCabmKVR1COriL5ohNPG6KIAT6yVSZ431unMbuUV1VzJr/tWr/z4B1VEjp3W5/R
-         FxZSDJbc5PFhxjTbSjzXkm6jvlLkPA0lEIYTOaihxOz9a+nuBdqsjUoJd4Avz36baodI
-         vq2oJ0F+QzX6xkfCcXTBgTL0VZMZdrrOLEGNlKRGVIgBSdT3DmvHOzv6RCv4XPT156EL
-         ODfQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JdsctYWXuuXXqEOzB63lpFiHupXhaM+lS9/RkB/3n9s=;
+        b=YimI5ZsE4aqMZmcsJY9KYcr0zSD6QeoKrVWPLZVVkGmIWqlMz7kuYNr99bPiz24BzG
+         IGMi/rTQyF+kVDBOWAwEZbVHTtaMrfxb6ahFXDmLCuDm7TDAnaGL8migxsUdTIO4Omve
+         4OmXqQJEJFFS2fgXJ+i5YEVb07grrAyhmguSOsb5+7TcHkGGJYiqSZM6gi3NaOG/apnv
+         hOcPRe+e0OY7Cu6EbxpGFEbLxHY2mfsy5ptquxdH8yBW8ZHu/3fNZO2fD8Anrucm7uy/
+         eRGZAyyl7tcl61D0XQF36IOExN+++9SDHhAHnN1j5z7PBsZkCHfrhrG6UrnR6p9dV/+U
+         i81g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lNJHXHwCYA7mJJNicjzFnF9BaMIk3HB8BKl0Qp+0du0=;
-        b=iwpEZ5AprcpY8byyjTW4/m/40rVpLcTCQk3hQIpFDwySs3lJ+TFc5p1oy4Mb2OeYlP
-         iNrh7TA2VACgxgbpH4Hd14wyl5q32avJhUgb310eq6jE+3rF1hBRiWpPzTRrYRLH3pE+
-         QyzcQb7baLw9bMvcOljwXE7DLOPBm8C4qJpBI+uF8l00y5tek9byXTTpeyX5yPGdgwMx
-         YWYZ5s/0KzqKHirHjRqWKZuiJ9DMotMDfEHLjU7fkJJQcjVfX0QAzGIOd1XlSy21gKGP
-         YSUTuo4KDL6HIbloINLpWH0BH6teTmIDhE7TX1kOd3S/jnb2P/G+sQ3HHIQ7hNWWPHcn
-         b5MQ==
-X-Gm-Message-State: APjAAAXGMCMu8G+cYSHULYpnP+Rd3S08e2BAuT2xYlQZpIF5GS6xm9fw
-        pFC+9ttp90wUKZ/0++M=
-X-Google-Smtp-Source: APXvYqx4BfiTa/RhQZTGZifjD2FWaWWcveDREffwJc7ktuHSDceiTEsuiBzItjMYmmRybyuQVtp3fA==
-X-Received: by 2002:a05:600c:2308:: with SMTP id 8mr78509wmo.67.1569443933320;
-        Wed, 25 Sep 2019 13:38:53 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JdsctYWXuuXXqEOzB63lpFiHupXhaM+lS9/RkB/3n9s=;
+        b=KyFqZj7+Xy4KpZ3Mf0X8NJePexNpjI+PBf5/4zFU1aU/oNBRFhMg9Imk2WbegYkJzs
+         eGHcKB326yPvz95fAPlP9W8LBkdaEIas2h4p7OjBlx+PG0T3ZjkYq9wiB4pTNxrWhHtd
+         tvEzIIuC7tW0uhNI8rSvtqiKUE9fOrgVmrBpsO4fZRSThEI2BhOu0V3Fpkh2K11rptOz
+         XKMkdP1ez4QwrboZf9SGR+OTy0hft7efVc4tCbcfGxiguO6TnfmjcWWsXm/E0XE4nZgP
+         16I4xqwfoYI8+ulGsMtiGViPGyMy1fwuV5Zb4UtwKi6VVty0LITMjhgHRZetJIpyck9f
+         fb0g==
+X-Gm-Message-State: APjAAAWgoX8t7mYdf03UXvbCtqVlgolK9SPDhyR6nZRG7aEUYgMKz155
+        wRhxhhP2rUBrbswCIX4=
+X-Google-Smtp-Source: APXvYqwQu4oN04EoKs6p9rhDpdk1bOSo1mFE8vcFaVXFQhpd7uxQVnbgxwBcfR78L9KkT1NgRUrp1Q==
+X-Received: by 2002:a05:600c:210b:: with SMTP id u11mr80023wml.29.1569443934569;
+        Wed, 25 Sep 2019 13:38:54 -0700 (PDT)
 Received: from localhost ([2a02:810a:8c80:d2c:4d89:574b:af6e:1a3])
-        by smtp.gmail.com with ESMTPSA id t4sm122153wrm.13.2019.09.25.13.38.52
+        by smtp.gmail.com with ESMTPSA id c18sm252870wrn.45.2019.09.25.13.38.53
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Sep 2019 13:38:52 -0700 (PDT)
+        Wed, 25 Sep 2019 13:38:54 -0700 (PDT)
 From:   Bert Wesarg <bert.wesarg@googlemail.com>
 To:     git@vger.kernel.org
 Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Philip Oakley <philipoakley@iee.email>,
         Pratyush Yadav <me@yadavpratyush.com>
-Subject: [PATCH 1/2] git-gui: use existing interface to query a path's attribute
-Date:   Wed, 25 Sep 2019 22:38:50 +0200
-Message-Id: <97013a71289857767100d6a4adcb39ca99b2b21b.1569443729.git.bert.wesarg@googlemail.com>
+Subject: [PATCH 2/2] git-gui: support for diff3 conflict style
+Date:   Wed, 25 Sep 2019 22:38:51 +0200
+Message-Id: <f1477ba53a03484a0440202065a5293c8795d3b7.1569443729.git.bert.wesarg@googlemail.com>
 X-Mailer: git-send-email 2.21.0.789.ga095d9d866
+In-Reply-To: <97013a71289857767100d6a4adcb39ca99b2b21b.1569443729.git.bert.wesarg@googlemail.com>
+References: <97013a71289857767100d6a4adcb39ca99b2b21b.1569443729.git.bert.wesarg@googlemail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -65,46 +68,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace the hand-coded call to git check-attr with the already provided one.
+This adds highlight support for the diff3 conflict style.
+
+The common pre-image will be reversed to --, because it has been removed
+and either replaced with ours or theirs side.
 
 Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 ---
- lib/diff.tcl | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+ git-gui.sh   |  3 +++
+ lib/diff.tcl | 22 ++++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
+diff --git a/git-gui.sh b/git-gui.sh
+index fd476b6..6d80f82 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -3581,6 +3581,9 @@ $ui_diff tag conf d_s- \
+ $ui_diff tag conf d< \
+ 	-foreground orange \
+ 	-font font_diffbold
++$ui_diff tag conf d| \
++	-foreground orange \
++	-font font_diffbold
+ $ui_diff tag conf d= \
+ 	-foreground orange \
+ 	-font font_diffbold
 diff --git a/lib/diff.tcl b/lib/diff.tcl
-index 958a0fa..0fd4600 100644
+index 0fd4600..6caf4e7 100644
 --- a/lib/diff.tcl
 +++ b/lib/diff.tcl
-@@ -270,19 +270,6 @@ proc show_other_diff {path w m cont_info} {
+@@ -347,6 +347,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
  	}
- }
  
--proc get_conflict_marker_size {path} {
--	set size 7
--	catch {
--		set fd_rc [eval [list git_read check-attr "conflict-marker-size" -- $path]]
--		set ret [gets $fd_rc line]
--		close $fd_rc
--		if {$ret > 0} {
--			regexp {.*: conflict-marker-size: (\d+)$} $line line size
--		}
--	}
--	return $size
--}
--
- proc start_show_diff {cont_info {add_opts {}}} {
- 	global file_states file_lists
- 	global is_3way_diff is_submodule_diff diff_active repo_config
-@@ -298,7 +285,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 	set is_submodule_diff 0
- 	set diff_active 1
- 	set current_diff_header {}
--	set conflict_size [get_conflict_marker_size $path]
-+	set conflict_size [gitattr $path conflict-marker-size 7]
- 
- 	set cmd [list]
- 	if {$w eq $ui_index} {
+ 	set ::current_diff_inheader 1
++	set ::conflict_state {CONTEXT}
+ 	fconfigure $fd \
+ 		-blocking 0 \
+ 		-encoding [get_path_encoding $path] \
+@@ -450,10 +451,28 @@ proc read_diff {fd conflict_size cont_info} {
+ 			{++} {
+ 				set regexp [string map [list %conflict_size $conflict_size]\
+ 								{^\+\+([<>=]){%conflict_size}(?: |$)}]
++				set regexp_pre_image [string map [list %conflict_size $conflict_size]\
++								{^\+\+\|{%conflict_size}(?: |$)}]
+ 				if {[regexp $regexp $line _g op]} {
+ 					set is_conflict_diff 1
+ 					set line [string replace $line 0 1 {  }]
++					set markup {}
+ 					set tags d$op
++					switch -exact -- $op {
++					< { set ::conflict_state {OURS} }
++					= { set ::conflict_state {THEIRS} }
++					> { set ::conflict_state {CONTEXT} }
++					}
++				} elseif {[regexp $regexp_pre_image $line]} {
++					set is_conflict_diff 1
++					set line [string replace $line 0 1 {  }]
++					set markup {}
++					set tags d|
++					set ::conflict_state {BASE}
++				} elseif {$::conflict_state eq {BASE}} {
++					set line [string replace $line 0 1 {--}]
++					set markup {}
++					set tags d_--
+ 				} else {
+ 					set tags d_++
+ 				}
+@@ -505,6 +524,9 @@ proc read_diff {fd conflict_size cont_info} {
+ 			}
+ 		}
+ 		set mark [$ui_diff index "end - 1 line linestart"]
++		if {[llength $markup] > 0} {
++			set tags {}
++		}
+ 		$ui_diff insert end $line $tags
+ 		if {[string index $line end] eq "\r"} {
+ 			$ui_diff tag add d_cr {end - 2c}
 -- 
 2.21.0.789.ga095d9d866
 
