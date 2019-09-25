@@ -2,62 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F4441F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 02:04:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 460521F463
+	for <e@80x24.org>; Wed, 25 Sep 2019 02:04:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2633761AbfIYCEq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Sep 2019 22:04:46 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:38709 "EHLO
+        id S2633764AbfIYCEs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Sep 2019 22:04:48 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:45289 "EHLO
         mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389401AbfIYCEq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Sep 2019 22:04:46 -0400
-Received: by mail-io1-f68.google.com with SMTP id u8so9506425iom.5
-        for <git@vger.kernel.org>; Tue, 24 Sep 2019 19:04:45 -0700 (PDT)
+        with ESMTP id S2389401AbfIYCEs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Sep 2019 22:04:48 -0400
+Received: by mail-io1-f68.google.com with SMTP id c25so9465401iot.12
+        for <git@vger.kernel.org>; Tue, 24 Sep 2019 19:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=OnZZvmY6fY2/NSaMV4bCDa17Q8npDbBpmOa8GU/uwmU=;
-        b=pgIN361lm1EIVyvDcstCSEXFMOwYNXweA5XCpnBXnOCkj5j+TB6zwO7Rv2ltsTtzW9
-         sWTspHEk9iRuitsJscTn50B9CZ8isUuS7cAQ/nbJPwEd5QtHhxGY9IQf1w8vxl2Zc6VR
-         Yl17UALIGgp9A1OCrSbpP+PUdBe9q+18upKljAImyUBXrpuMCvkJ+RRcPqxG/KKAeL5e
-         EMS1JkVf39Ev7auObTXxDM9y19Sfg8VmnZ+W0wFRPkW07HHyFS9RNeLdHY5fpw/8ArMX
-         2JJZipKJxlX3ixjGrgqP2vzvhEB2dM/KtDlwqRNRosVqltDedUfwtF5fdRYGHHnGiD+u
-         hD2A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=s/BUQK4TBWTerPsbwVxt4e3h1Zpptorjgr+lA2TqEFc=;
+        b=oByAD5LrnpOHbmg61Mwo28DkdfwXU+FtDHzhtdY9uqLuPitjX67LeUnppnvRF3NQkh
+         065Ma7+hJAMJAWr0LS4Yokup5pqDhcBPfjEX951l6mq7vM46JN3tuFysRqztKe4EFtou
+         ltS3xOuVaLJvBW+/f1PZ+33GHKDvnWyKL5kCzO9kzsIG2pkSUvDyJqBc56Deq+JYLm4Z
+         iqZtVtxvCURBw3TTKvViEG+YK1LmqWv8ExoTnL3bOwwpzGM0OknKHYI6MLgk+3/O05ZD
+         L2S3ucpS2ghpT44ilDd3C7iECXMkyCS0K3ZfpLWgfK8EZKNpXDgp10d8rwgH4hGAEjSS
+         T1NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=OnZZvmY6fY2/NSaMV4bCDa17Q8npDbBpmOa8GU/uwmU=;
-        b=LRymli2ngBgyefz3t9cqPKM+R/i9xsdPK6DuBHJfrilHJYZP7t8kvcbowYMvibxtjY
-         TheuzKpLqJI+9kw59kkU93HsD53FVED3nyB6EH5FFHxWS/CgiJDYGDCchRBMluuS0IOc
-         W/zvguUIJxjbDtUoN76o+IjLhg/dYgcKSJqwUI5a2eU2szlq1RKANIrAIAh72SxtsOJD
-         s9KUXx3k8j+XAeCSmm3K+39jB+pKgGDeDCRrU7CApv6LrWZR2iJ7Vii+M5S4aq8new0V
-         iOdhFWgbBI3I/ryXmnL/KLIe3JmCWrxhi1fcLk/++6API6iJtk2+efoyVJX/yE2x6DqA
-         b3EQ==
-X-Gm-Message-State: APjAAAXB5wxHDR7UIGfxM38GgjDRxOYSvKShnEjLVGtkLBgwCBoZLdLB
-        5x2sOh7C1p322Y+QMbkIKm8zMVg+bWY=
-X-Google-Smtp-Source: APXvYqwJt6rpKYv4NezCN63aRiLke6SHXGxQyAphZqpr1DhioO0h0+s/h6qy2e5+/+g/M/sp9LWjrg==
-X-Received: by 2002:a6b:8bd4:: with SMTP id n203mr7754038iod.133.1569377085155;
-        Tue, 24 Sep 2019 19:04:45 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=s/BUQK4TBWTerPsbwVxt4e3h1Zpptorjgr+lA2TqEFc=;
+        b=CJJqxeTBxCV9np0e4lDgq/s+yRGJpVBKFZzkMU6s2vS3nC4rtULX+7YIFUHyZOLsHa
+         RHc8tXaR7LIYJs9qkxh0BpEIIz+WTQryBGygS/HC3MnpA+ZZunwfWgSUFqnia+F9nwLl
+         uHK29xNquYzYnOX0XwBsF49DEM/XlPJhM3s/W7VcS65yBTeP1+Jt42pMcfW06rUZx5iJ
+         FXiO+j0M8YlWn8txAMj/e1VkWz+K67RXHjVwo65i81Jc+nT0iAVKyh21lcn64xlFJueG
+         D6dphU9hyWOS4iVEAARtIVoKcivBX+QRMEv7L2REnFLTPSjyHwrR1T8hiC8qY393Sqjv
+         sL5Q==
+X-Gm-Message-State: APjAAAV9+hmQMXPDwY7Pll757/BpO5a3VDmiYYfrPqQ6Y8yRyzrveLoT
+        FXSfCMwCRhqbsBxIgwEjFVmmkg8nSJk=
+X-Google-Smtp-Source: APXvYqxGWYtEwtK/BdRU+iYTbFcXD96iCdkRp6DMxeWjoJhz7yeA6BsgGE6LSYeSNkJODVG3qEWHmQ==
+X-Received: by 2002:a02:aa8f:: with SMTP id u15mr2611065jai.13.1569377086678;
+        Tue, 24 Sep 2019 19:04:46 -0700 (PDT)
 Received: from xavier.hsd1.ut.comcast.net ([2601:681:4100:375e:3837:c90c:13fa:5c01])
-        by smtp.gmail.com with ESMTPSA id u11sm5341777iof.22.2019.09.24.19.04.43
+        by smtp.gmail.com with ESMTPSA id u11sm5341777iof.22.2019.09.24.19.04.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2019 19:04:43 -0700 (PDT)
+        Tue, 24 Sep 2019 19:04:45 -0700 (PDT)
 From:   Alex Henrie <alexhenrie24@gmail.com>
 To:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
         davvid@gmail.com
 Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH 0/3] scan-build fixes
-Date:   Tue, 24 Sep 2019 20:01:55 -0600
-Message-Id: <20190925020158.751492-1-alexhenrie24@gmail.com>
+Subject: [PATCH 1/3] commit-graph: remove a duplicate assignment
+Date:   Tue, 24 Sep 2019 20:01:56 -0600
+Message-Id: <20190925020158.751492-2-alexhenrie24@gmail.com>
 X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20190925020158.751492-1-alexhenrie24@gmail.com>
+References: <20190925020158.751492-1-alexhenrie24@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -65,24 +67,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These patches fix a few problems identified by scan-build [1]. None of
-them affect behavior, but they do make the code easier to follow and
-ensure that the compiler is able to optimize it to the fullest.
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
+ commit-graph.c | 1 -
+ 1 file changed, 1 deletion(-)
 
--Alex
-
-[1] https://clang-analyzer.llvm.org/scan-build.html
-
-Alex Henrie (3):
-  commit-graph: remove a duplicate assignment
-  diffcore-break: use a goto instead of a redundant if statement
-  wrapper: use a loop instead of repetitive statements
-
- commit-graph.c   |  1 -
- diffcore-break.c | 15 +++++++--------
- wrapper.c        | 11 +++++------
- 3 files changed, 12 insertions(+), 15 deletions(-)
-
+diff --git a/commit-graph.c b/commit-graph.c
+index 9b02d2c426..659f4bb4f4 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1534,7 +1534,6 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
+ 		size_mult = ctx->split_opts->size_multiple;
+ 	}
+ 
+-	g = ctx->r->objects->commit_graph;
+ 	ctx->num_commit_graphs_after = ctx->num_commit_graphs_before + 1;
+ 
+ 	while (g && (g->num_commits <= size_mult * num_commits ||
 -- 
 2.23.0
 
