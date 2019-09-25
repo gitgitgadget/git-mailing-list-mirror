@@ -8,62 +8,63 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 489341F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 15:35:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E07C61F463
+	for <e@80x24.org>; Wed, 25 Sep 2019 15:39:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439685AbfIYPfW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Sep 2019 11:35:22 -0400
-Received: from mout.gmx.net ([212.227.17.21]:33375 "EHLO mout.gmx.net"
+        id S1732801AbfIYPjT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Sep 2019 11:39:19 -0400
+Received: from mout.gmx.net ([212.227.15.18]:49007 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2439481AbfIYPfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Sep 2019 11:35:21 -0400
+        id S1731744AbfIYPjT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Sep 2019 11:39:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1569425715;
-        bh=rlfqcnmwWsTOdaIvj+bAuY+E7WLBqPgqvi5qsJpJHYc=;
+        s=badeba3b8450; t=1569425950;
+        bh=zMpn5R7u9QhPh3FjOlbLQ72XEw+619/8v4ZokgOR1kE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=THWxtam/B+dq82NSxYUDZgb8xK58f96nQmLpi7wumkOu1cnyyay9Tc4tRMGQH/uRA
-         ppW6dsYKeZxC+XDnGPP4Z/FEm7Iqo/2Ys6eg7s92vW2aECzPZXqKZt8/9Sfw08a+iF
-         UtxUB2QVlIPRnkunhdEPQKa7jwf59CIIA9yx5SJw=
+        b=R790QqRBFbU49vN7iXmbVj5Qvo1NEwb3Ib5BQeAccRCXebbBB++XVrerW4n2QHQMA
+         jPwGPI4nGeTrxA1QPhsy0HanZAfiWhRROMMpD8jhhStkBbesh3M1WhGMYXU9i9cfQq
+         gUGQhdi5+rAlZwIzZXOduC38KB4enRSe8j8xoAr8=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N7R1J-1i7Lw625KX-017l5J; Wed, 25
- Sep 2019 17:35:15 +0200
-Date:   Wed, 25 Sep 2019 17:35:01 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbAh0-1hbbhm0Q8m-00barU; Wed, 25
+ Sep 2019 17:39:10 +0200
+Date:   Wed, 25 Sep 2019 17:38:56 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Kunal Tyagi via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/1] git-add--interactive.perl: Add progress counter in
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Kunal Tyagi <tyagi.kunal@live.com>
+Subject: Re: [PATCH 1/1] git-add--interactive.perl: Add progress counter in
  the prompt
-In-Reply-To: <pull.349.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1909251728370.15067@tvgsbejvaqbjf.bet>
-References: <pull.349.git.gitgitgadget@gmail.com>
+In-Reply-To: <8edf23f816dc0546fb3b5812573d7a759184206b.1569223612.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1909251736190.15067@tvgsbejvaqbjf.bet>
+References: <pull.349.git.gitgitgadget@gmail.com> <8edf23f816dc0546fb3b5812573d7a759184206b.1569223612.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:eo/SpPOaw/qPbuiJHtEBxPGejZSezcc6hEOMI3m6cj6Y2pf4dUJ
- sH89C0ZfP0XUA5iEXKeeDpwP4ff2MJXPg/QP8YI9XsNMXma7VejYizmRztlJhRKdAtBwsms
- lcmi763f0874wm3BxmUBpMeAGzEGxdZ6QobTp4ctSXJvPotXXpAZ3xkq/uSq9PiuUf4dQp4
- r3aepLriHLBomHrnQDjZQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:B2wFt1S8ARE=:IodVcxF911YkFLYNEtOkdi
- dwfeONO1dRziqf3ehUdcPz7/ICv2i7rgR4uKD5vpJ31huGN4IMKRpukxr9XuWYPszkrIBig6e
- yZmbLCJ1XegSuV9pkgIBaUMutPz7Fw1t/Ma22VZ845V93p4O207jEwfpYAMQS9+zpjDX/c7KW
- s+aEMcN5Qen4EntsamgPm7fQXDQc1p3vkVtEWFhD5stUAPWf1N/SQoaZViNl725VrNMe/UwIG
- 7bd3OBC1+exzfXU+MqAf3G6Rg7qv3nbiUwxnpUY2A3tIz7Llz81JmhjJur/nsazba+payZF+/
- J4Ct0o1IBmAAb7hlU8OKBO3C7yb7UpcwhsAWPxnEgq6znN2GJ6F3cw7a04aRFeg8rV66jY+GL
- +Wxy+ntSTOsNE9qXq1IkuF/zrR6p9NEVFlsXUFEd8UI6UK2lmyXiVr5CFjNxgQhG47p+rDE0a
- xhg8XDRi0O41iFuhqqJ5V6fIoiTij+IgYco0r56AUwpvxzVAWjqhJEJV8MuKYZAgc+UXe22af
- FUdJWPx22gJCK/wOq32EvOSlLoSwxAdhWMES60osBDUxaCr7OwrygQiXK38JhWvFDQIkCwgME
- pBtqqHlF7GWF49tlF1wgfd0ojoz0oMzZH0jNTHbNk29jKmuTVMYqGk0xqNC7RFgp+Uv2Heyjy
- y6ieB4W618EuTsI4syhlSZMEWowW5zqrqlFQ5HxmyvJA5X3i4czTfCmnGmC8J46sRF0qT7LZd
- phcY3PYZkLslnf2WXrvFS2T6+S//akzUlI8wn4T/UIGucCfjmr6+QrQe9i4uzH6W8dG5om1PF
- Q+9lMwJ4krIoLoII4og+Um669X1L5dRdI37U69wWS+VWIH7aY3wkhy8wjAFHXphDXybqEg01o
- Dj6EvBUYFUAj9rhqJtGHfOeA6cNXAo2JxZLOhixv0yHYCHbNK49vQrDa8e2tcrTk0+VCN1HGi
- ryutowjRCE3HWmG5b8Qh3gA3VizU9wRVbEBSiy5KqWmUqOlXy8x6CGLEZUf6i3CxMFfjqxSST
- iCNiQG8Lo4dRenYB+PhMMq7tEUjmAKbnhLtkkpPkJBrTqOwxLB+M8jzme19oYO2IINZckgFLY
- PS6XAO6s7pDGHTYeLazs8T8H3oCnA4+tPqhhchxBVCN4UmDAsWWerjLDQAgjZd8XwlvhR6jao
- jFGK7gWwUJ0nv/OS85LvgXDUdXIVLsSBrvTwm6xpqrvaTRnPueFz/jNQErX+GB3P1PpkKTNuh
- fp3JQGiSdJ82MNHR0+tRXjVr35fjgThkPjkkQ0078c/CD8MmotAy7bcPd5gI=
+X-Provags-ID: V03:K1:OGZgsqPyB9sG16A7aQ8FHkY5qucdZNBagBuu6mrTbqwvEXH2lSz
+ SPA3C/WU6IwWyu7zbUHvmNl6iGtRTmsiz+dS9eRjUflSCwPw5DgwOdi34z8NT2QwRT/9vVA
+ Fswms3nB2MzJV2EwAEzOZqkfJhEwAePv/zNASlaaBTEX3vnQlM6Y/gE852MOL+sZZSbQhao
+ qyb+hLV3v+d88WmrExLfg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XSVQ3xpzB40=:eIBGA9r+usblv9WmwDT1ro
+ jAIeTbUHzSw2VmWwQf3LDfJcQ2eHr+18Hyx8rPs9+wcBLR0OWoK+MgBpV7/HRS7X+QPpGrArC
+ cGZog0sqfenXRMuV+tib1E+HGVzCgl6kju8o9KTNm+rwfOll6i2QBgK4rs8HHBLvTVVGh505Z
+ Q0aVYpYeER+4xehSXtoA72nHjcfKA9VICLVSGU5yKCGzmF/stlsyF2DUAvdRf56DP16E+nhBM
+ OSBRDkRaWhTNcU4TJjJmsN/fBqgYi+tfUQMKT1K3t+wWniY7MsGUeF9sOJ5JXn5u+sU1wyzlQ
+ Hossg+owFgaBIyjqKvaREuQ4lXNel4RdT2A0TXL54LCg2qbm37frHOZYOMVCbY39+YVJJ4+Ds
+ uSyt4glnWHSshwjsyVomrzA9Tn0DqR/Cj6mzCItEv4wgA/vHUvkgbxO1dJrbCwbKPKAwepeLS
+ joAiPYEm8lghc1GJOCfKgunUnMK7eKSwepm+v3jZyProWemOpHSo6tsgjjEFOl4MUBXkp00n4
+ b3w3am6C6+PM4ZvzLxdyd7Cxcqf9sR9iprDfb0eaTj0ZiV+Vs3VIvcpzccKcxkk52Kd9UKb6q
+ DL7dIeu1+/E6F89iMdwd0ODd2ZcRvSL/xr3X3s8Dfj3gRPdo2wpSjNrN24nrsMFZMrjtoszEw
+ K1ToX1jMAcdffVpu6bCxKqygc+ZPRTjTlL2SIm0twpzVGGPWYk2B/7qrTJjPKzpYil3EDaOQE
+ pHuPUSezxuQhXJJmOdBGQbVKdRJa2qYDeq5HPTZRLlihgom8eeJSjgOk9qBOf5DVjwfJeD5To
+ y9KaFR6sdiGyPCDy6CWKCeojKI8F1IJgQG1wOWiP6yt5Cdb22YS4FTVVuVYVnrdmAS+TIj70k
+ 89UGgYLBLfuuBe+ToQvcOSaVbW5RgaIl6OZlkjEKRTe0E7Cpdf7YZA7Jz134XLp/8KJTGECQw
+ nHvz6QOjDDxvBnfCTd5TaLEwcGX9sgNwOGvYG78X+e66IW/qctJcvR1DSAVRkl4VKsSpeGCaX
+ a6LUFOgMJWx9I9690uWs8MGXJbreWIyfxAIh4qv+fqUE5+ZbcNDv/p1bZ23ZWz+wAtOPCSQgq
+ rdb0xTtnByf4XXEQZtvxNViAhrG87i2WnDwIRnMXKY40fwlA5v4YgyOYF72YL2TN2jRUZ04Tr
+ rsffR5/qjGvPXPs6Pg2sT8xsvz+r+lK0V658Sdiyvdr/isD0JPuOwvNwmZ2h1bHq0a9VUzIl2
+ lWSNPPZig9UaIW/4m2zHgZYY0TlGWsmjZwY8mHCqv23cg5RoPW9keXOqQUsc=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -74,57 +75,55 @@ Hi,
 
 On Mon, 23 Sep 2019, Kunal Tyagi via GitGitGadget wrote:
 
-> Hi git contributors!
+> From: Kunal Tyagi <tyagi.kunal@live.com>
 >
-> I'm Kunal Tyagi. While I was choosing the relevant patches for a commit
-> using the git add -p command, I found that there was no feedback regardi=
-ng
-> how many hunks from the current file had been processed and how many wer=
-e
-> left. So I decided to add a small change to the prompt which basically j=
-ust
-> displays (${current-hunk-id} + 1/${total-hunks}) before displaying the
-> prompt during user interaction. This patch doesn't account for all total
-> hunks, only per file.
+> Signed-off-by: Kunal Tyagi <tyagi.kunal@live.com>
 
-I like this idea!
+Could you move most (if not all) of the explanation from the cover
+letter (read: the PR description) into the commit message?
 
-> I don't know perl so even this one liner might have mistakes. I did test
-> this locally and hope this works for others. Personally, this change fee=
-ls
-> helpful to me when I have to separate a long list of changes after an
-> erroneous commit.
->
-> On the #git-devel freenode channel, I was informed that @dscho is rewrit=
-ing
-> git-add in C. If so, perhaps a similar change could be added in the rewr=
-ite.
-> I haven't seen his patches in detail so I can't comment if it'll be as
-> trivial as in perl.
+The patch looks good, I just have one suggestion:
 
-I bet it will be trivial to implement it in C. Don't let this stop you,
-your change should go in before built-in add -i.
-
-Thanks,
-Johannes
-
->
-> Regards Kunal Tyagi
->
-> Kunal Tyagi (1):
->   git-add--interactive.perl: Add progress counter in the prompt
->
+> ---
 >  git-add--interactive.perl  | 2 +-
 >  t/t3701-add-interactive.sh | 2 +-
 >  2 files changed, 2 insertions(+), 2 deletions(-)
 >
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index c20ae9e210..3951c25a28 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -1541,7 +1541,7 @@ sub patch_update_file {
+>  		for (@{$hunk[$ix]{DISPLAY}}) {
+>  			print;
+>  		}
+> -		print colored $prompt_color,
+> +		print colored $prompt_color,"(", $ix+1, "/$num) ",
+
+It would probably make sense to use `.` rather than `,`, the dot is the
+concatenation operator in Perl.
+
+Thanks,
+Johannes
+
+>  			sprintf(__($patch_update_prompt_modes{$patch_mode}{$hunk[$ix]{TYPE}}=
+), $other);
 >
-> base-commit: 4c86140027f4a0d2caaa3ab4bd8bfc5ce3c11c8a
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-349%2F=
-kunaltyagi%2Fmaster-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-349/kunal=
-tyagi/master-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/349
+>  		my $line =3D prompt_single_character;
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index 69991a3168..3a2d9fb607 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -314,7 +314,7 @@ test_expect_success C_LOCALE_OUTPUT 'add first line =
+works' '
+>  	git commit -am "clear local changes" &&
+>  	git apply patch &&
+>  	printf "%s\n" s y y | git add -p file 2>error |
+> -		sed -n -e "s/^Stage this hunk[^@]*\(@@ .*\)/\1/" \
+> +		sed -n -e "s/^(.*) Stage this hunk[^@]*\(@@ .*\)/\1/" \
+>  		       -e "/^[-+@ \\\\]"/p  >output &&
+>  	test_must_be_empty error &&
+>  	git diff --cached >diff &&
 > --
 > gitgitgadget
 >
