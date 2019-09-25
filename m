@@ -2,128 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E07C61F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 15:39:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57D951F463
+	for <e@80x24.org>; Wed, 25 Sep 2019 17:09:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732801AbfIYPjT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Sep 2019 11:39:19 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49007 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731744AbfIYPjT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Sep 2019 11:39:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1569425950;
-        bh=zMpn5R7u9QhPh3FjOlbLQ72XEw+619/8v4ZokgOR1kE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=R790QqRBFbU49vN7iXmbVj5Qvo1NEwb3Ib5BQeAccRCXebbBB++XVrerW4n2QHQMA
-         jPwGPI4nGeTrxA1QPhsy0HanZAfiWhRROMMpD8jhhStkBbesh3M1WhGMYXU9i9cfQq
-         gUGQhdi5+rAlZwIzZXOduC38KB4enRSe8j8xoAr8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbAh0-1hbbhm0Q8m-00barU; Wed, 25
- Sep 2019 17:39:10 +0200
-Date:   Wed, 25 Sep 2019 17:38:56 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Kunal Tyagi via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Kunal Tyagi <tyagi.kunal@live.com>
-Subject: Re: [PATCH 1/1] git-add--interactive.perl: Add progress counter in
- the prompt
-In-Reply-To: <8edf23f816dc0546fb3b5812573d7a759184206b.1569223612.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1909251736190.15067@tvgsbejvaqbjf.bet>
-References: <pull.349.git.gitgitgadget@gmail.com> <8edf23f816dc0546fb3b5812573d7a759184206b.1569223612.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2392132AbfIYRJG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Sep 2019 13:09:06 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:45904 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731087AbfIYRJG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Sep 2019 13:09:06 -0400
+Received: by mail-pf1-f194.google.com with SMTP id y72so3893798pfb.12
+        for <git@vger.kernel.org>; Wed, 25 Sep 2019 10:09:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=0qMgrlycqXkFbx3TdhkdJqzCoP7TuODALyI4OKiFQvw=;
+        b=s/YBi6UKOhzfduime+f89ZZJ4y91P+Wj7UNTnrUsyOYHLsWnMy8bCYsKs03mGR4gtp
+         BOPLTTIBLHke765T2vJMmn52CjTRSYpZspkZBVcVUyrSao0hsBAIQhhSb0XHkZZ3TAXo
+         /5Git9aLmTZYJx5ca9PHL6s6o5OJiV6uuuA5IGh9lLZQfzyT5JDqNN1XVx9Ye4UUWu6D
+         izFvfx8Lqz9JlrUwMPC2GJGHEkEQLRKPHuR2BB0MvBzqlQyD1a/HIwQ2vVylmS++necR
+         OkSdcoKZj44aLh1Np/GB2P8CYkYCee4PKanVCMb3s6nTUY9daE9c3yaTMURbjdHuikFJ
+         3qfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0qMgrlycqXkFbx3TdhkdJqzCoP7TuODALyI4OKiFQvw=;
+        b=VXXLXap/EHDevOEsEv9xpHUMe91wDIlwgHk2HZyk4vEOuq9ZXfU9ndj9w6jKj4BZ9D
+         aj3MlPz+SUgzLReGfNQD3bu2iAgQytNxvaJGC4oRj76bw6o7dHzLNckc5Q0p8Qhiu3Ea
+         xsrYAb1AZbLYRreZFaZUT3AO4gypdhhkEL7OnMPj2sLrOL+j3JFJODA+TYBzztBb6CtG
+         WnNhg02ahW2z0D9VajDeKXkpHlUTbF9Tx7/gtXanNEFuPMPOu3RQHQkGE8eghTo2FoKt
+         0slmPyq5FXQqb3KsZHYhETsEQWZtaIQmCrvu42ap2gPKYmfnqa0g51PGhPGsIIA9MZ+S
+         E3lg==
+X-Gm-Message-State: APjAAAUcMNRGdZ1ebs9wfd4+d5xvyNLPjcUDN3mRBhaBYZ85Q9vBDvbB
+        Ja9nnD4DTp/7sIprVu70mPig4G7H
+X-Google-Smtp-Source: APXvYqyTARYoKWeo9WKkQ5XIQhdWCHrLMmDyHm5zgJ9qkwvmWZzZzEUcPePyOUx67cPyRJotrYL7Fw==
+X-Received: by 2002:a65:67d4:: with SMTP id b20mr318156pgs.445.1569431344908;
+        Wed, 25 Sep 2019 10:09:04 -0700 (PDT)
+Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.83])
+        by smtp.gmail.com with ESMTPSA id d5sm12061489pfa.180.2019.09.25.10.09.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Sep 2019 10:09:04 -0700 (PDT)
+Date:   Wed, 25 Sep 2019 10:09:02 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Allan Caffee <allan.caffee@gmail.com>,
+        Noam Postavsky <npostavs@users.sourceforge.net>
+Subject: Re: [BUG/PATCH 0/5] t4214: cleanup and demonstrate graph bug
+Message-ID: <20190925170902.GA11547@dentonliu-ltm.internal.salesforce.com>
+References: <cover.1569407150.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:OGZgsqPyB9sG16A7aQ8FHkY5qucdZNBagBuu6mrTbqwvEXH2lSz
- SPA3C/WU6IwWyu7zbUHvmNl6iGtRTmsiz+dS9eRjUflSCwPw5DgwOdi34z8NT2QwRT/9vVA
- Fswms3nB2MzJV2EwAEzOZqkfJhEwAePv/zNASlaaBTEX3vnQlM6Y/gE852MOL+sZZSbQhao
- qyb+hLV3v+d88WmrExLfg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XSVQ3xpzB40=:eIBGA9r+usblv9WmwDT1ro
- jAIeTbUHzSw2VmWwQf3LDfJcQ2eHr+18Hyx8rPs9+wcBLR0OWoK+MgBpV7/HRS7X+QPpGrArC
- cGZog0sqfenXRMuV+tib1E+HGVzCgl6kju8o9KTNm+rwfOll6i2QBgK4rs8HHBLvTVVGh505Z
- Q0aVYpYeER+4xehSXtoA72nHjcfKA9VICLVSGU5yKCGzmF/stlsyF2DUAvdRf56DP16E+nhBM
- OSBRDkRaWhTNcU4TJjJmsN/fBqgYi+tfUQMKT1K3t+wWniY7MsGUeF9sOJ5JXn5u+sU1wyzlQ
- Hossg+owFgaBIyjqKvaREuQ4lXNel4RdT2A0TXL54LCg2qbm37frHOZYOMVCbY39+YVJJ4+Ds
- uSyt4glnWHSshwjsyVomrzA9Tn0DqR/Cj6mzCItEv4wgA/vHUvkgbxO1dJrbCwbKPKAwepeLS
- joAiPYEm8lghc1GJOCfKgunUnMK7eKSwepm+v3jZyProWemOpHSo6tsgjjEFOl4MUBXkp00n4
- b3w3am6C6+PM4ZvzLxdyd7Cxcqf9sR9iprDfb0eaTj0ZiV+Vs3VIvcpzccKcxkk52Kd9UKb6q
- DL7dIeu1+/E6F89iMdwd0ODd2ZcRvSL/xr3X3s8Dfj3gRPdo2wpSjNrN24nrsMFZMrjtoszEw
- K1ToX1jMAcdffVpu6bCxKqygc+ZPRTjTlL2SIm0twpzVGGPWYk2B/7qrTJjPKzpYil3EDaOQE
- pHuPUSezxuQhXJJmOdBGQbVKdRJa2qYDeq5HPTZRLlihgom8eeJSjgOk9qBOf5DVjwfJeD5To
- y9KaFR6sdiGyPCDy6CWKCeojKI8F1IJgQG1wOWiP6yt5Cdb22YS4FTVVuVYVnrdmAS+TIj70k
- 89UGgYLBLfuuBe+ToQvcOSaVbW5RgaIl6OZlkjEKRTe0E7Cpdf7YZA7Jz134XLp/8KJTGECQw
- nHvz6QOjDDxvBnfCTd5TaLEwcGX9sgNwOGvYG78X+e66IW/qctJcvR1DSAVRkl4VKsSpeGCaX
- a6LUFOgMJWx9I9690uWs8MGXJbreWIyfxAIh4qv+fqUE5+ZbcNDv/p1bZ23ZWz+wAtOPCSQgq
- rdb0xTtnByf4XXEQZtvxNViAhrG87i2WnDwIRnMXKY40fwlA5v4YgyOYF72YL2TN2jRUZ04Tr
- rsffR5/qjGvPXPs6Pg2sT8xsvz+r+lK0V658Sdiyvdr/isD0JPuOwvNwmZ2h1bHq0a9VUzIl2
- lWSNPPZig9UaIW/4m2zHgZYY0TlGWsmjZwY8mHCqv23cg5RoPW9keXOqQUsc=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1569407150.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Sep 25, 2019 at 03:26:57AM -0700, Denton Liu wrote:
+> I tried my hand at fixing the bug but in the hour I spent going at it, I
+> couldn't fix the logic up. The buggy logic is in graph.c:
+> graph_draw_octopus_merge() in case anyone is interested.
 
-On Mon, 23 Sep 2019, Kunal Tyagi via GitGitGadget wrote:
+I guess for the record, this was the final patch that I ended up with.
+Two issues with it, though: 
 
-> From: Kunal Tyagi <tyagi.kunal@live.com>
->
-> Signed-off-by: Kunal Tyagi <tyagi.kunal@live.com>
+1. It assumes that there can be no parallel paths on the right side,
+which I'm not sure is a correct assumption.
 
-Could you move most (if not all) of the explanation from the cover
-letter (read: the PR description) into the commit message?
+2. It _still_ fails my last proposed test case.
 
-The patch looks good, I just have one suggestion:
+-- >8 --
 
-> ---
->  git-add--interactive.perl  | 2 +-
->  t/t3701-add-interactive.sh | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index c20ae9e210..3951c25a28 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -1541,7 +1541,7 @@ sub patch_update_file {
->  		for (@{$hunk[$ix]{DISPLAY}}) {
->  			print;
->  		}
-> -		print colored $prompt_color,
-> +		print colored $prompt_color,"(", $ix+1, "/$num) ",
-
-It would probably make sense to use `.` rather than `,`, the dot is the
-concatenation operator in Perl.
-
-Thanks,
-Johannes
-
->  			sprintf(__($patch_update_prompt_modes{$patch_mode}{$hunk[$ix]{TYPE}}=
-), $other);
->
->  		my $line =3D prompt_single_character;
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 69991a3168..3a2d9fb607 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -314,7 +314,7 @@ test_expect_success C_LOCALE_OUTPUT 'add first line =
-works' '
->  	git commit -am "clear local changes" &&
->  	git apply patch &&
->  	printf "%s\n" s y y | git add -p file 2>error |
-> -		sed -n -e "s/^Stage this hunk[^@]*\(@@ .*\)/\1/" \
-> +		sed -n -e "s/^(.*) Stage this hunk[^@]*\(@@ .*\)/\1/" \
->  		       -e "/^[-+@ \\\\]"/p  >output &&
->  	test_must_be_empty error &&
->  	git diff --cached >diff &&
-> --
-> gitgitgadget
->
+diff --git a/graph.c b/graph.c
+index f53135485f..f9395a2327 100644
+--- a/graph.c
++++ b/graph.c
+@@ -881,8 +881,7 @@ static int graph_draw_octopus_merge(struct git_graph *graph,
+ 	/*
+ 	 * In both cases, commit_index corresponds to the edge labeled "0".
+ 	 */
+-	int first_col = graph->commit_index + dashless_parents
+-	    - parent_in_old_cols;
++	int first_col = graph->num_new_columns - dashful_parents;
+ 
+ 	int i;
+ 	for (i = 0; i < dashful_parents; i++) {
