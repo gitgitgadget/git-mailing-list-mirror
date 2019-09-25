@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A42F31F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 10:27:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F03D01F463
+	for <e@80x24.org>; Wed, 25 Sep 2019 10:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389792AbfIYK1J (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Sep 2019 06:27:09 -0400
-Received: from mail-pg1-f176.google.com ([209.85.215.176]:45677 "EHLO
-        mail-pg1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389749AbfIYK1I (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Sep 2019 06:27:08 -0400
-Received: by mail-pg1-f176.google.com with SMTP id 4so2935010pgm.12
-        for <git@vger.kernel.org>; Wed, 25 Sep 2019 03:27:08 -0700 (PDT)
+        id S2389794AbfIYK1L (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Sep 2019 06:27:11 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:42420 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729987AbfIYK1K (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Sep 2019 06:27:10 -0400
+Received: by mail-pf1-f195.google.com with SMTP id q12so3119129pff.9
+        for <git@vger.kernel.org>; Wed, 25 Sep 2019 03:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=ucONfj4AdB/ejkTR+TtMFfSYEJn2gM2Il8jG9MsHE/s=;
-        b=f6fBiqtMtW6sFXHFDnQ3nYLk+tkghdo/sVyqkdtPQ+qz9B3liYjYECu5wZvdU6Jf8h
-         0yH9ipLerjZFGihIKYQmKoWGi5KkCeNzrFKCFrQyQ+5DwOtTbPrqZPZu7Udt1Y675mvU
-         y0X6AzFAPXWUWL3R4JLeW0Qw4CjwO0eZU/KjePDf4dTJmVOzW7ljZ8mHcZdyq431lSZh
-         9F+AgSy2oB8l1CO93tbrdHTxI5lrVf9mk1ft0T13Aw0MTfIDIw1kZjrXQm2aLPuWwxLI
-         un3npLayxkec6GPYnYftDo4fFyuKmEXtcbSr0PDRPpNu/FG5a2BvDj5XvYJGJ7Fz9WAS
-         GYog==
+        bh=nGAhU3kD5XPE6fsMJ+L8wLQ/5x3cAZFMMrNjDg1iWe0=;
+        b=dTwSxxIfLLYetiAX7LWYfwGtIc+iK0uXMjossLM74KYa9rtSxucyOxuEioMffH4ai3
+         v8e148ywAH7KXRCqpkRpPqum81hr0KhGYzAXjln+dYCf20rIff1vDUIMbO0aqG4eLtHy
+         rHsZL4udMozH3YUQyGvbHMtDdLQM3qf51sGRmJaSUyNw71YutghzHaRpDOPUIjvMgmUO
+         f8K4xnvlMKtgZrV2eC0rAke8k1xwsAziMFQlTmFsblZCdPURTy+RGTJe+D1P5mlWVHAu
+         aJgnkzKh86uc2h21Uo6eSXz9ZDbQRKhicbbh+NcZGFcsg7XKt79c/MephhWa5BalTsXq
+         u8tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ucONfj4AdB/ejkTR+TtMFfSYEJn2gM2Il8jG9MsHE/s=;
-        b=gcEuR2Da4VfaS64r4CrZ1DL16ZAGIaf/orj4p3/kEZd012YdlCbqxE6Ze2vM0BBwi0
-         LYpDFRwMqQiHfTJVzxZ9QIA5pKNeqwRx4i+NMNNlCOFoSTnG0fTURILozGrJZe/lvwXL
-         f3Y8TISezGg7jdEW3In04bnbxiC66RnxamTr2MM+sTx1X54Xi/C+zb6iyM4wvXBfVKRu
-         HQeSq3DimRjGf8y5/Apg9MPced6Y/NcPFNkTW5+1m5E4la2ycKasa1QNej4KDiQu8n47
-         cr5zddsWI6vYIgrEY+ALkuUzFyuzVrKWPJc3kGVXyLDTuB6VCtVcz0rkLGqtjl+APgVE
-         nyyw==
-X-Gm-Message-State: APjAAAX5cbzuPDmcIb1xiy60OWHvuRzXetpGlmva+odIPeigMMpi6w3Q
-        g7WO/E4YCF7Gr9ZwMjUULrmXl1nz
-X-Google-Smtp-Source: APXvYqzteHsJCawstkxElzknS00jbQ1QLLwTc0bmi9GSTCH0/lNplPbYdWbIcbCrWvjhoDiAW7WGJQ==
-X-Received: by 2002:a62:1603:: with SMTP id 3mr9054983pfw.0.1569407227503;
-        Wed, 25 Sep 2019 03:27:07 -0700 (PDT)
+        bh=nGAhU3kD5XPE6fsMJ+L8wLQ/5x3cAZFMMrNjDg1iWe0=;
+        b=siYd7PiywfC01tVIlfphXdf+MqCxvngoqlpVuIrYCYDDadUQOxKIg2pxYmalz9Y7qT
+         mlO+FgCxxXDCGCaTJP8sbUqenJ5tTcIzNadqvjsYPdIkZ29W7Z3qPoQnvtWNNTHN3hpR
+         vYTcKpxWRQOBi7zkoJAnDVyxhgN60lsuurejarvRkZv+MqdIzFSXec8xDmYTxvV92l5C
+         0vMf+IPQLOVKOa5wsvVfa/U2SPBHYHv33W41kqjg/zJMynqQ/epzAR5J9rqBlY3CmcX8
+         bCKNfNxCLBV2YJWFMg4uYLILs39v+G970kt+tl/6z0irW+0jtSpr/WZRJ0hiPUIUkAWb
+         TVXw==
+X-Gm-Message-State: APjAAAXJfVtkwwIxCe3WDV9iMfFjlAwI199kuJpzsGjsDvhfe1TzHkip
+        nBvibDNJG039RSASpWUAjOaOcesJ
+X-Google-Smtp-Source: APXvYqzvH8d+c6Mwt3jrAAJtDljQgbnAZZwxBQnYcgHajJJFXiYVb0zODu37uY4bGYWDKGo+yg8PgA==
+X-Received: by 2002:a63:b95a:: with SMTP id v26mr7932711pgo.244.1569407229666;
+        Wed, 25 Sep 2019 03:27:09 -0700 (PDT)
 Received: from archbookpro.localdomain ([2601:646:280:1b30::6486])
-        by smtp.gmail.com with ESMTPSA id 18sm5527321pfp.100.2019.09.25.03.27.06
+        by smtp.gmail.com with ESMTPSA id k8sm4072821pgm.14.2019.09.25.03.27.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Sep 2019 03:27:06 -0700 (PDT)
-Date:   Wed, 25 Sep 2019 03:27:05 -0700
+        Wed, 25 Sep 2019 03:27:09 -0700 (PDT)
+Date:   Wed, 25 Sep 2019 03:27:07 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Allan Caffee <allan.caffee@gmail.com>,
         Noam Postavsky <npostavs@users.sourceforge.net>
-Subject: [BUG/PATCH 3/5] t4214: generate expect in their own test cases
-Message-ID: <c09f761185859998d33c4944fe3a7317e3a8c987.1569407150.git.liu.denton@gmail.com>
+Subject: [BUG/PATCH 4/5] t4214: explicitly list tags in log
+Message-ID: <ad6d89440be6e5a26d107dd7b11bad322df1f0cb.1569407150.git.liu.denton@gmail.com>
 References: <cover.1569407150.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -68,101 +68,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before, the expect files of the test case were being generated in the
-setup method. However, it would make more sense to generate these files
-within the test cases that actually use them so that it's obvious to
-future readers where the expected values are coming from.
-
-Move the generation of the expect files in their own respective test
-cases.
-
-While we're at it, we want to establish a pattern in this test suite
-that, firstly, a non-colored test case is given then, immediately after,
-the colored version is given.
-
-Switch test cases "log --graph with tricky octopus merge, no color" and
-"log --graph with tricky octopus merge with colors" so that the "no
-color" version appears first.
-
-This patch is best viewed with `--color-moved`.
+In a future test case, we will be extending the commit graph. As a
+result, explicitly list the tags that will generate the graph so that
+when future additions are made, the current graph illustrations won't be
+affected.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4214-log-graph-octopus.sh | 42 ++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 21 deletions(-)
+ t/t4214-log-graph-octopus.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/t/t4214-log-graph-octopus.sh b/t/t4214-log-graph-octopus.sh
-index f6e22ec825..16776e347c 100755
+index 16776e347c..097151da39 100755
 --- a/t/t4214-log-graph-octopus.sh
 +++ b/t/t4214-log-graph-octopus.sh
-@@ -5,6 +5,20 @@ test_description='git log --graph of skewed left octopus merge.'
- . ./test-lib.sh
- 
- test_expect_success 'set up merge history' '
-+	test_commit initial &&
-+	for i in 1 2 3 4 ; do
-+		git checkout master -b $i || return $?
-+		# Make tag name different from branch name, to avoid
-+		# ambiguity error when calling checkout.
-+		test_commit $i $i $i tag$i || return $?
-+	done &&
-+	git checkout 1 -b merge &&
-+	test_merge octopus-merge 1 2 3 4 &&
-+	git checkout 1 -b L &&
-+	test_commit left
-+'
-+
-+test_expect_success 'log --graph with tricky octopus merge, no color' '
- 	cat >expect.uncolored <<-\EOF &&
- 	* left
- 	| *---.   octopus-merge
-@@ -19,6 +33,13 @@ test_expect_success 'set up merge history' '
+@@ -33,7 +33,7 @@ test_expect_success 'log --graph with tricky octopus merge, no color' '
  	|/
  	* initial
  	EOF
-+	git log --color=never --graph --date-order --pretty=tformat:%s --all >actual.raw &&
-+	sed "s/ *\$//" actual.raw >actual &&
-+	test_cmp expect.uncolored actual
-+'
-+
-+test_expect_success 'log --graph with tricky octopus merge with colors' '
-+	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
- 	cat >expect.colors <<-\EOF &&
- 	* left
- 	<RED>|<RESET> *<BLUE>-<RESET><BLUE>-<RESET><MAGENTA>-<RESET><MAGENTA>.<RESET>   octopus-merge
-@@ -33,32 +54,11 @@ test_expect_success 'set up merge history' '
+-	git log --color=never --graph --date-order --pretty=tformat:%s --all >actual.raw &&
++	git log --color=never --graph --date-order --pretty=tformat:%s left octopus-merge >actual.raw &&
+ 	sed "s/ *\$//" actual.raw >actual &&
+ 	test_cmp expect.uncolored actual
+ '
+@@ -54,7 +54,7 @@ test_expect_success 'log --graph with tricky octopus merge with colors' '
  	<MAGENTA>|<RESET><MAGENTA>/<RESET>
  	* initial
  	EOF
--	test_commit initial &&
--	for i in 1 2 3 4 ; do
--		git checkout master -b $i || return $?
--		# Make tag name different from branch name, to avoid
--		# ambiguity error when calling checkout.
--		test_commit $i $i $i tag$i || return $?
--	done &&
--	git checkout 1 -b merge &&
--	test_merge octopus-merge 1 2 3 4 &&
--	git checkout 1 -b L &&
--	test_commit left
--'
--
--test_expect_success 'log --graph with tricky octopus merge with colors' '
--	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
- 	git log --color=always --graph --date-order --pretty=tformat:%s --all >actual.colors.raw &&
+-	git log --color=always --graph --date-order --pretty=tformat:%s --all >actual.colors.raw &&
++	git log --color=always --graph --date-order --pretty=tformat:%s left octopus-merge >actual.colors.raw &&
  	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
  	test_cmp expect.colors actual.colors
  '
- 
--test_expect_success 'log --graph with tricky octopus merge, no color' '
--	git log --color=never --graph --date-order --pretty=tformat:%s --all >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
--'
--
- # Repeat the previous two tests with "normal" octopus merge (i.e.,
- # without the first parent skewing to the "left" branch column).
- 
+@@ -75,7 +75,7 @@ test_expect_success 'log --graph with normal octopus merge, no color' '
+ 	|/
+ 	* initial
+ 	EOF
+-	git log --color=never --graph --date-order --pretty=tformat:%s merge >actual.raw &&
++	git log --color=never --graph --date-order --pretty=tformat:%s octopus-merge >actual.raw &&
+ 	sed "s/ *\$//" actual.raw >actual &&
+ 	test_cmp expect.uncolored actual
+ '
+@@ -94,7 +94,7 @@ test_expect_success 'log --graph with normal octopus merge with colors' '
+ 	* initial
+ 	EOF
+ 	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
+-	git log --color=always --graph --date-order --pretty=tformat:%s merge >actual.colors.raw &&
++	git log --color=always --graph --date-order --pretty=tformat:%s octopus-merge >actual.colors.raw &&
+ 	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
+ 	test_cmp expect.colors actual.colors
+ '
 -- 
 2.23.0.248.g3a9dd8fb08
 
