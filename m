@@ -2,65 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBA761F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 06:52:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4E461F463
+	for <e@80x24.org>; Wed, 25 Sep 2019 08:20:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2442340AbfIYGwQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Sep 2019 02:52:16 -0400
-Received: from giant.haxx.se ([80.67.6.50]:52178 "EHLO giant.haxx.se"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2436671AbfIYGwQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Sep 2019 02:52:16 -0400
-X-Greylist: delayed 774 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Sep 2019 02:52:15 EDT
-Received: from giant.haxx.se (mail [127.0.0.1])
-        by giant.haxx.se (8.15.2/8.15.2/Debian-4) with ESMTPS id x8P6dAcV013582
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Sep 2019 08:39:10 +0200
-Received: from localhost (dast@localhost)
-        by giant.haxx.se (8.15.2/8.15.2/Submit) with ESMTP id x8P6d94p013566;
-        Wed, 25 Sep 2019 08:39:09 +0200
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date:   Wed, 25 Sep 2019 08:39:09 +0200 (CEST)
-From:   Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-cc:     =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        git@sfconservancy.org, Derrick Stolee <stolee@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, garimasigit@gmail.com
-Subject: Re: [PATCH] add a Code of Conduct document
-In-Reply-To: <nycvar.QRO.7.76.6.1909241426580.15067@tvgsbejvaqbjf.bet>
-Message-ID: <alpine.DEB.2.20.1909250834220.4757@tvnag.unkk.fr>
-References: <20190924064454.GA30419@sigill.intra.peff.net> <20190924090152.GA7209@szeder.dev> <nycvar.QRO.7.76.6.1909241426580.15067@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+        id S2442637AbfIYIUy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Sep 2019 04:20:54 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:44132 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2442604AbfIYIUy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Sep 2019 04:20:54 -0400
+Received: by mail-pf1-f193.google.com with SMTP id q21so2920447pfn.11
+        for <git@vger.kernel.org>; Wed, 25 Sep 2019 01:20:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=GtQhtCXxCKQtvXldK676Wvm7h6mCpMwmzuIG4Fr/RN4=;
+        b=RhPji3gHNmAsnprmZCiWPQCrOHsijuq8j+SZ7SvRWZAuVZLwI1+NCJTLufBU2uRYoi
+         6f05nXndohVaBzRHkByE7OxtHU4o3hhPkP31zONI0MJ1upckiomNiTnZNxgzkkBX4Hp6
+         i8W/h4GTkXxjVu6ma89nsBMiQiwAa0Qs7PrmJULZpGYL0Wnm5vD9mtlGWVs3qmd7s8eI
+         sLG4B0SMIZTTUZcdU4FvhJTSwHakAAj2S0oTM4JDgMT7PLTmSJ+lc7vpEbpUQaoWB/bX
+         htrn9+RbBYXkBId0V/uqkng7ujpxCe4ImleNgLpEsUuhr6BdDIMfqER7Kho4IQeY1bL1
+         FQzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=GtQhtCXxCKQtvXldK676Wvm7h6mCpMwmzuIG4Fr/RN4=;
+        b=N3KAhrrsmAscIBm71QSs7egr8ssnMK2+jL9s/GvXbBCrkaFE2DopE4PIgAb4HCzahn
+         SfzDxQPIExQ2zDQJ/scdwliTBgl+/3imzpw+4X6XwjoHhUl3ZtDoiUJ+vx5Rf7dVCW7P
+         FdTDHImc697uew+L7K9ui1LS6ZyPP5l38Miryfoc474wn/tICwDOGeNA6RNJSwg2+mRa
+         bYtLEZh4mhs2TVgumkYz36uV17Kee9R3M6tzEiytMYOTmTqdLG4Y5nZqIM6acVwIV1xc
+         g/Qe23107Q/OxuSOICZjT0SMZAY4BvvLa3kPWIeHrHVD+lhix1W7Y4YcpqgJnb/ypcA5
+         tlSA==
+X-Gm-Message-State: APjAAAU09btlMO5cXZO6OebnpHLEpwIji33BqQF3wAvvacVAYv+OPc7k
+        i7x60D/1wVVIEJYWpmvr0IuwDD/9
+X-Google-Smtp-Source: APXvYqywtcKP0RCVg+7qDnPQqxd0IVNGymCh8703ObfWDgbdQZk2jFCgFPrLal/cq7cSgeBxMWts1w==
+X-Received: by 2002:a63:1c4b:: with SMTP id c11mr7597653pgm.216.1569399653285;
+        Wed, 25 Sep 2019 01:20:53 -0700 (PDT)
+Received: from archbookpro.localdomain ([2601:646:280:1b30::6486])
+        by smtp.gmail.com with ESMTPSA id p190sm8309134pfb.160.2019.09.25.01.20.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Sep 2019 01:20:52 -0700 (PDT)
+Date:   Wed, 25 Sep 2019 01:20:49 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>
+Subject: [PATCH v2 0/4] fixes related to `make hdr-check`
+Message-ID: <cover.1569398897.git.liu.denton@gmail.com>
+References: <cover.1569263631.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1569263631.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 24 Sep 2019, Johannes Schindelin wrote:
+The first two patches fix errors causing `make hdr-check` to fail. The third is
+legacy from v1 but provides code cleanup so we leave it. Finally, the last
+patch is a patch which improves the portability and correctness of `hdr-check`.
 
-> A CoC can very easily create clarity in such circumstances. By stating 
-> explicitly the standards to which we promise to hold ourselves, as well as 
-> others. And it can even help those who think of themselves as decent to 
-> improve on that front.
+Changes since v1:
 
-As one of the lurking not-really-in-this-project persons around, I just want 
-to step out of the shadows for a sec and say:
+* Reordered patches to put fixes first
 
-I think this is totally the right move and I'm a strong +1 on the CoC as 
-suggested.
+* Took Peff's improvement suggestions for the $(HCO) target
 
+* Added "pack-bitmap.h: fix unused variable warning"
+
+
+Denton Liu (4):
+  apply.h: include missing header
+  promisor-remote.h: include missing header
+  pack-bitmap.h: remove magic number
+  Makefile: emulate compile in $(HCO) target better
+
+ .gitignore        |  1 +
+ Makefile          | 12 +++++++++---
+ apply.h           |  1 +
+ pack-bitmap.h     |  6 +++---
+ promisor-remote.h |  2 ++
+ 5 files changed, 16 insertions(+), 6 deletions(-)
+
+Range-diff against v1:
+1:  0336d1345a < -:  ---------- Makefile: use $(ALL_CFLAGS) in $(HCO) target
+2:  1fc6dfc5fa = 1:  74efb6c04c apply.h: include missing header
+3:  8ccbd81673 = 2:  2befc450fb promisor-remote.h: include missing header
+4:  a3a3357925 ! 3:  50e37c16f9 pack-bitmap.h: fix unused variable warning
+    @@ Metadata
+     Author: Denton Liu <liu.denton@gmail.com>
+     
+      ## Commit message ##
+    -    pack-bitmap.h: fix unused variable warning
+    +    pack-bitmap.h: remove magic number
+     
+    -    When we ran `make hdr-check`, we got the following warning on Arch Linux:
+    +    When we ran `make hdr-check` with the following patch
+    +
+    +            diff --git a/Makefile b/Makefile
+    +            index f879697ea3..d8df4e316b 100644
+    +            --- a/Makefile
+    +            +++ b/Makefile
+    +            @@ -2773,7 +2773,7 @@ CHK_HDRS = $(filter-out $(EXCEPT_HDRS),$(patsubst ./%,%,$(LIB_H)))
+    +            HCO = $(patsubst %.h,%.hco,$(CHK_HDRS))
+    +
+    +            $(HCO): %.hco: %.h FORCE
+    +            -       $(QUIET_HDR)$(CC) -include git-compat-util.h -I. -o /dev/null -c -xc $<
+    +            +       $(QUIET_HDR)$(CC) -include git-compat-util.h -I. -o /dev/null -c -xc $(ALL_CFLAGS) $<
+    +
+    +            .PHONY: hdr-check $(HCO)
+    +            hdr-check: $(HCO)
+    +
+    +    and with `DEVELOPER=1`, we got the following warning on Arch Linux:
+     
+                 pack-bitmap.h:20:19: error: ‘BITMAP_IDX_SIGNATURE’ defined but not used [-Werror=unused-const-variable=]
+                    20 | static const char BITMAP_IDX_SIGNATURE[] = {'B', 'I', 'T', 'M'};
+    @@ Commit message
+                 cc1: all warnings being treated as errors
+     
+         "Use" the BITMAP_IDX_SIGNATURE variable by making the size of
+    -    bitmap_disk_header.magic equal to the size of BITMAP_IDX_SIGNATURE. An
+    -    alternative was to simply add MAYBE_UNUSED. However, this design was
+    -    chosen because we eliminate the magic number (4) in the process.
+    +    bitmap_disk_header.magic equal to the size of BITMAP_IDX_SIGNATURE,
+    +    thereby eliminating the magic number (4).
+    +
+    +    An alternative was to simply add MAYBE_UNUSED, however that does not
+    +    eliminate the magic number.
+    +
+    +    Another alternative was to change the definition to
+    +
+    +            extern const char BITMAP_IDX_SIGNATURE[4];
+    +
+    +    However, this design was also not chosen as the static definition allows
+    +    us to keep the declaration together for readability along with removing
+    +    the magic number.
+     
+      ## pack-bitmap.h ##
+     @@ pack-bitmap.h: struct commit;
+-:  ---------- > 4:  14def72319 Makefile: emulate compile in $(HCO) target better
 -- 
+2.23.0.248.g3a9dd8fb08
 
-  / daniel.haxx.se
