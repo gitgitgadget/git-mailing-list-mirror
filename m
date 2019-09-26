@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 094441F463
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0CD51F463
 	for <e@80x24.org>; Thu, 26 Sep 2019 08:30:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729127AbfIZIaZ (ORCPT <rfc822;e@80x24.org>);
+        id S1729175AbfIZIaZ (ORCPT <rfc822;e@80x24.org>);
         Thu, 26 Sep 2019 04:30:25 -0400
-Received: from mail-lj1-f177.google.com ([209.85.208.177]:42576 "EHLO
-        mail-lj1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727529AbfIZIaV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 04:30:21 -0400
-Received: by mail-lj1-f177.google.com with SMTP id y23so1210366lje.9
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 01:30:19 -0700 (PDT)
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:40052 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728554AbfIZIaY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 04:30:24 -0400
+Received: by mail-lf1-f67.google.com with SMTP id d17so1025548lfa.7
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 01:30:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=uc1FRuQv1blFb9Pgjg/gjq1hKALg3HS9Tf2+tLI+NHg=;
-        b=fY0q3eobDgtfmRipds/xbX1JRJSUuFz+b7F9aLapwKZctaIEtBJgFd2aa3TvoFprMg
-         oJOwhmwYzxHwz4SnqM00gulZ9RTvtG7j9hk3mBIADtH9N1AaZYA9X3QmLHAL+aOjcHrm
-         Sg2BJtcUjqQ6s9RzgUesbw0nlABj2+1YDeeS6RT3Oxr7ViDSY1h7NZa4twHZy1SuNPuU
-         m2Rw6LZs8GKh2Wk7CLTvmiXOdOvEtNvxax62vPUowU+0lKGh0q4wBPqPlAkDfMMdbdCZ
-         iEITuhA8di+RKz3V634NYuIpd17eKMs/Skjb2cAFWILPnjSYFDKRxG3WmyT+FrbONaW3
-         eBNQ==
+        bh=HGFrFNyVHi280AGFhSwMmw4T+7XoU3wVKH7GZLHn6U0=;
+        b=FHlgFEd1nvw25b6ijKsbekILav2bGJDy+0YMv+tDdU2ojEOhRzYXYeOUWxGxhRXDVs
+         0qlvozqTlD71aJIxg6hkoSwxcKEVHkdoWg2mf0+9UfYVQLl7VK5ILJb0ajJBFiBRAk7u
+         LeE44JPhz96bpsPWLRoZeF+CM+82/YzAA64fh7pdgU+8z7psJ5ZVYER7kN6sKVF4U/iE
+         1XUqaZVge7Oh0QPjxyaRsXABPxML4kU7cvg5gXKTygghRjVMUXG1/A4F44KrstmjNWWL
+         M3zYcrvHJT8zVu7GQOx2hDWrNpvhWS/jPtfpvPaUp6lzjbnggXpUd5FBqzali0FYhpys
+         R4cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uc1FRuQv1blFb9Pgjg/gjq1hKALg3HS9Tf2+tLI+NHg=;
-        b=Ukok4vuO148UMlrUUuuPYHnZTVOYVSDzkYXYi+gzSf28r6jiESLpaECvM/S4248Bse
-         lOoq4qWSyvtd0PxmaKrajLSdxhRKADddRGdvgY9L1wYCKS2DMQ8rnn8dkWmH9Vi2GGSS
-         LjdGz15dIDttCZsKi4XeE1UitmySdkUxFGH9kAvQGIWNLl1tXoKxfrkp7gfmdVtj7ktv
-         L6vmvrbBMiyX+mfJZf4w1O3dWgFAKHzSpcdhVKnSJ5rlzbiTG/7QEQt3P6X95UqjEQcQ
-         ZSfTCn1fLNHREPVejRazJgwxYn9AZes33289OUNO3LcAO6bY1wXQqWLbBcSRam1k+Uap
-         8ozw==
-X-Gm-Message-State: APjAAAWKr0nbjynskwNRNS94mlYUG7gVxTsnPFrHHuRucXd7PSeRakA2
-        5HuvSMa1ZsPCCU4u441tMAd2FHVz
-X-Google-Smtp-Source: APXvYqx432WSk2YTFlPe6XK7kGFkG8lieLPEZ8KGlRwUQyuSAmJWSGHdN4saFKQP9p2wYpIekbVmOg==
-X-Received: by 2002:a2e:9d16:: with SMTP id t22mr1462059lji.207.1569486619088;
-        Thu, 26 Sep 2019 01:30:19 -0700 (PDT)
+        bh=HGFrFNyVHi280AGFhSwMmw4T+7XoU3wVKH7GZLHn6U0=;
+        b=ec4h1CCOmcVj4aJhU/PYHfLvRE4ofBd3AiycCgqnFSQ81Yis5Q08RuySNTBwDid9N1
+         tRfNntiMm5N77yILVgSsRD2a65KBBNiFOJPkP3YtR3t7sU1NmqP4dXJgzVwda3soVStg
+         JDvGlQJtMvTgu9EgL0xY/CVhrahri7hlM3CmAHZ/QvJQvb5Db0EZhbYTshWfj8VBZHab
+         +HcI/suXw4zM9UnKZr6LHULca4S4yl2Y9law5CNDDrFxZytb0QrVJBuWhTH7f+BeTlob
+         5sB3UknHeDvJL177MFL00xa2i9FxAwVOILFbx+VGjY4sfy5kdAaEmbZz9LqpNZA+PQU/
+         cSeQ==
+X-Gm-Message-State: APjAAAW7780Ms2wrM9f1JSbwOBjRQXNO/SPQSyZ4cMW0H55HIR1PLphP
+        OhAyLfLN+NT9ycnt/NKtn7Uf1h+H
+X-Google-Smtp-Source: APXvYqzwkitjFbo3JmJOC1tyf3ptTa4f9qlwlttkpkxn+9HzzxLjl4VB/Wr1b60y5Z6Jk0Ew2csdFw==
+X-Received: by 2002:ac2:5966:: with SMTP id h6mr1476616lfp.78.1569486621713;
+        Thu, 26 Sep 2019 01:30:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k15sm351954ljg.65.2019.09.26.01.30.18
+        by smtp.gmail.com with ESMTPSA id n2sm344988ljj.30.2019.09.26.01.30.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 01:30:18 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 01:30:18 -0700 (PDT)
-X-Google-Original-Date: Thu, 26 Sep 2019 08:30:01 GMT
-Message-Id: <f7d5d1a1bce8dd783914b4b5406abdae61440517.1569486607.git.gitgitgadget@gmail.com>
+        Thu, 26 Sep 2019 01:30:21 -0700 (PDT)
+Date:   Thu, 26 Sep 2019 01:30:21 -0700 (PDT)
+X-Google-Original-Date: Thu, 26 Sep 2019 08:30:03 GMT
+Message-Id: <ad9ab10ce0ec0615570f5d685f5765b27093dae7.1569486607.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.288.git.gitgitgadget@gmail.com>
 References: <pull.288.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 08/13] vcxproj: only copy `git-remote-http.exe` once it was
- built
+Subject: [PATCH 10/13] test-tool run-command: learn to run (parts of) the
+ testsuite
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,68 +72,219 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In b18ae14a8f6 (vcxproj: also link-or-copy builtins, 2019-07-29), we
-started to copy or hard-link the built-ins as a post-build step of the
-`git` project.
+Git for Windows jumps through hoops to provide a development environment
+that allows to build Git and to run its test suite. To that end, an
+entire MSYS2 system, including GNU make and GCC is offered as "the Git
+for Windows SDK". It does come at a price: an initial download of said
+SDK weighs in with several hundreds of megabytes, and the unpacked SDK
+occupies ~2GB of disk space.
 
-At the same time, we tried to copy or hard-link `git-remote-http.exe`,
-but it is quite possible that it was not built at that time.
+A much more native development environment on Windows is Visual Studio.
+To help contributors use that environment, we already have a Makefile
+target `vcxproj` that generates a commit with project files (and other
+generated files), and Git for Windows' `vs/master` branch is
+continuously re-generated using that target.
 
-Let's move that latter task into a post-install step of the
-`git-remote-http` project instead.
+The idea is to allow building Git in Visual Studio, and to run
+individual tests using a Portable Git.
+
+The one missing thing is a way to run the entire test suite: neither
+`make` nor `prove` are required to run Git, therefore Git for Windows
+does not support those commands in the Portable Git.
+
+To help with that, add a simple test helper that exercises the
+`run_processes_parallel()` function to allow for running test scripts in
+parallel (which is really necessary, especially on Windows, as Git's
+test suite takes such a long time to run).
+
+This will also come in handy for the upcoming change to our Azure
+Pipeline: we will use this helper in a Portable Git to test the Visual
+Studio build of Git.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname                           | 10 +++++++---
- contrib/buildsystems/Generators/Vcxproj.pm |  3 +++
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ t/helper/test-run-command.c | 153 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 153 insertions(+)
 
-diff --git a/config.mak.uname b/config.mak.uname
-index db7f06b95f..701aad62b1 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -703,20 +703,24 @@ vcxproj:
- 	perl contrib/buildsystems/generate -g Vcxproj
- 	git add -f git.sln {*,*/lib,t/helper/*}/*.vcxproj
+diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+index 2cc93bb69c..ead6dc611a 100644
+--- a/t/helper/test-run-command.c
++++ b/t/helper/test-run-command.c
+@@ -10,9 +10,14 @@
  
--	# Generate the LinkOrCopyBuiltins.targets file
-+	# Generate the LinkOrCopyBuiltins.targets and LinkOrCopyRemoteHttp.targets file
- 	(echo '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">' && \
- 	 echo '  <Target Name="CopyBuiltins_AfterBuild" AfterTargets="AfterBuild">' && \
- 	 for name in $(BUILT_INS);\
- 	 do \
- 	   echo '    <Copy SourceFiles="$$(OutDir)\git.exe" DestinationFiles="$$(OutDir)\'"$$name"'" SkipUnchangedFiles="true" UseHardlinksIfPossible="true" />'; \
- 	 done && \
-+	 echo '  </Target>' && \
-+	 echo '</Project>') >git/LinkOrCopyBuiltins.targets
-+	(echo '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">' && \
-+	 echo '  <Target Name="CopyBuiltins_AfterBuild" AfterTargets="AfterBuild">' && \
- 	 for name in $(REMOTE_CURL_ALIASES); \
- 	 do \
- 	   echo '    <Copy SourceFiles="$$(OutDir)\'"$(REMOTE_CURL_PRIMARY)"'" DestinationFiles="$$(OutDir)\'"$$name"'" SkipUnchangedFiles="true" UseHardlinksIfPossible="true" />'; \
- 	 done && \
- 	 echo '  </Target>' && \
--	 echo '</Project>') >git/LinkOrCopyBuiltins.targets
--	git add -f git/LinkOrCopyBuiltins.targets
-+	 echo '</Project>') >git-remote-http/LinkOrCopyRemoteHttp.targets
-+	git add -f git/LinkOrCopyBuiltins.targets git-remote-http/LinkOrCopyRemoteHttp.targets
+ #include "test-tool.h"
+ #include "git-compat-util.h"
++#include "cache.h"
+ #include "run-command.h"
+ #include "argv-array.h"
+ #include "strbuf.h"
++#include "parse-options.h"
++#include "string-list.h"
++#include "thread-utils.h"
++#include "wildmatch.h"
+ #include <string.h>
+ #include <errno.h>
  
- 	# Add command-list.h
- 	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 command-list.h
-diff --git a/contrib/buildsystems/Generators/Vcxproj.pm b/contrib/buildsystems/Generators/Vcxproj.pm
-index 576ccabe1d..868b787855 100644
---- a/contrib/buildsystems/Generators/Vcxproj.pm
-+++ b/contrib/buildsystems/Generators/Vcxproj.pm
-@@ -277,6 +277,9 @@ sub createProject {
-     if ($target eq 'git') {
-       print F "  <Import Project=\"LinkOrCopyBuiltins.targets\" />\n";
-     }
-+    if ($target eq 'git-remote-http') {
-+      print F "  <Import Project=\"LinkOrCopyRemoteHttp.targets\" />\n";
-+    }
-     print F << "EOM";
- </Project>
- EOM
+@@ -50,11 +55,159 @@ static int task_finished(int result,
+ 	return 1;
+ }
+ 
++struct testsuite {
++	struct string_list tests, failed;
++	int next;
++	int quiet, immediate, verbose, verbose_log, trace, write_junit_xml;
++};
++#define TESTSUITE_INIT \
++	{ STRING_LIST_INIT_DUP, STRING_LIST_INIT_DUP, -1, 0, 0, 0, 0, 0, 0 }
++
++static int next_test(struct child_process *cp, struct strbuf *err, void *cb,
++		     void **task_cb)
++{
++	struct testsuite *suite = cb;
++	const char *test;
++	if (suite->next >= suite->tests.nr)
++		return 0;
++
++	test = suite->tests.items[suite->next++].string;
++	argv_array_pushl(&cp->args, "sh", test, NULL);
++	if (suite->quiet)
++		argv_array_push(&cp->args, "--quiet");
++	if (suite->immediate)
++		argv_array_push(&cp->args, "-i");
++	if (suite->verbose)
++		argv_array_push(&cp->args, "-v");
++	if (suite->verbose_log)
++		argv_array_push(&cp->args, "-V");
++	if (suite->trace)
++		argv_array_push(&cp->args, "-x");
++	if (suite->write_junit_xml)
++		argv_array_push(&cp->args, "--write-junit-xml");
++
++	strbuf_addf(err, "Output of '%s':\n", test);
++	*task_cb = (void *)test;
++
++	return 1;
++}
++
++static int test_finished(int result, struct strbuf *err, void *cb,
++			 void *task_cb)
++{
++	struct testsuite *suite = cb;
++	const char *name = (const char *)task_cb;
++
++	if (result)
++		string_list_append(&suite->failed, name);
++
++	strbuf_addf(err, "%s: '%s'\n", result ? "FAIL" : "SUCCESS", name);
++
++	return 0;
++}
++
++static int test_failed(struct strbuf *out, void *cb, void *task_cb)
++{
++	struct testsuite *suite = cb;
++	const char *name = (const char *)task_cb;
++
++	string_list_append(&suite->failed, name);
++	strbuf_addf(out, "FAILED TO START: '%s'\n", name);
++
++	return 0;
++}
++
++static const char * const testsuite_usage[] = {
++	"test-run-command testsuite [<options>] [<pattern>...]",
++	NULL
++};
++
++static int testsuite(int argc, const char **argv)
++{
++	struct testsuite suite = TESTSUITE_INIT;
++	int max_jobs = 1, i, ret;
++	DIR *dir;
++	struct dirent *d;
++	struct option options[] = {
++		OPT_BOOL('i', "immediate", &suite.immediate,
++			 "stop at first failed test case(s)"),
++		OPT_INTEGER('j', "jobs", &max_jobs, "run <N> jobs in parallel"),
++		OPT_BOOL('q', "quiet", &suite.quiet, "be terse"),
++		OPT_BOOL('v', "verbose", &suite.verbose, "be verbose"),
++		OPT_BOOL('V', "verbose-log", &suite.verbose_log,
++			 "be verbose, redirected to a file"),
++		OPT_BOOL('x', "trace", &suite.trace, "trace shell commands"),
++		OPT_BOOL(0, "write-junit-xml", &suite.write_junit_xml,
++			 "write JUnit-style XML files"),
++		OPT_END()
++	};
++
++	memset(&suite, 0, sizeof(suite));
++	suite.tests.strdup_strings = suite.failed.strdup_strings = 1;
++
++	argc = parse_options(argc, argv, NULL, options,
++			testsuite_usage, PARSE_OPT_STOP_AT_NON_OPTION);
++
++	if (max_jobs <= 0)
++		max_jobs = online_cpus();
++
++	dir = opendir(".");
++	if (!dir)
++		die("Could not open the current directory");
++	while ((d = readdir(dir))) {
++		const char *p = d->d_name;
++
++		if (*p != 't' || !isdigit(p[1]) || !isdigit(p[2]) ||
++		    !isdigit(p[3]) || !isdigit(p[4]) || p[5] != '-' ||
++		    !ends_with(p, ".sh"))
++			continue;
++
++		/* No pattern: match all */
++		if (!argc) {
++			string_list_append(&suite.tests, p);
++			continue;
++		}
++
++		for (i = 0; i < argc; i++)
++			if (!wildmatch(argv[i], p, 0)) {
++				string_list_append(&suite.tests, p);
++				break;
++			}
++	}
++	closedir(dir);
++
++	if (!suite.tests.nr)
++		die("No tests match!");
++	if (max_jobs > suite.tests.nr)
++		max_jobs = suite.tests.nr;
++
++	fprintf(stderr, "Running %d tests (%d at a time)\n",
++		suite.tests.nr, max_jobs);
++
++	ret = run_processes_parallel(max_jobs, next_test, test_failed,
++				     test_finished, &suite);
++
++	if (suite.failed.nr > 0) {
++		ret = 1;
++		fprintf(stderr, "%d tests failed:\n\n", suite.failed.nr);
++		for (i = 0; i < suite.failed.nr; i++)
++			fprintf(stderr, "\t%s\n", suite.failed.items[i].string);
++	}
++
++	string_list_clear(&suite.tests, 0);
++	string_list_clear(&suite.failed, 0);
++
++	return !!ret;
++}
++
+ int cmd__run_command(int argc, const char **argv)
+ {
+ 	struct child_process proc = CHILD_PROCESS_INIT;
+ 	int jobs;
+ 
++	if (argc > 1 && !strcmp(argv[1], "testsuite"))
++		exit(testsuite(argc - 1, argv + 1));
++
+ 	if (argc < 3)
+ 		return 1;
+ 	while (!strcmp(argv[1], "env")) {
 -- 
 gitgitgadget
 
