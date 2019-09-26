@@ -8,71 +8,63 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B28B21F464
-	for <e@80x24.org>; Thu, 26 Sep 2019 00:33:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A92B51F464
+	for <e@80x24.org>; Thu, 26 Sep 2019 00:37:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729402AbfIZAdH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Sep 2019 20:33:07 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:42482 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726984AbfIZAdG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Sep 2019 20:33:06 -0400
-Received: by mail-pg1-f202.google.com with SMTP id d3so250744pgv.9
-        for <git@vger.kernel.org>; Wed, 25 Sep 2019 17:33:06 -0700 (PDT)
+        id S2389761AbfIZAfe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Sep 2019 20:35:34 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:47244 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389677AbfIZAf2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Sep 2019 20:35:28 -0400
+Received: by mail-pf1-f202.google.com with SMTP id t65so463341pfd.14
+        for <git@vger.kernel.org>; Wed, 25 Sep 2019 17:35:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=ia7Ew7UqskrWVO4L1JtFW7BtVlvhW5GKyFs1jDMo5yw=;
-        b=sqwQcAmlFmk/x3uRCXZz4B+u7VDEWzWNetij+JclkWcvwLAOSpY2beAXUm4KypQtYh
-         cqOP84B5Gt/O4yB07nqnhEMxAxrRp2mhrKDi5yq7nMGvSFOSUzE12UPPGFs9r8kGnlhq
-         v6PgMuD6YFNwCTmrNorv2kpy0TVrXyvlNcQ5NpI8p5wFiDquHsF9VaLY7cYw2j2+h6Bj
-         zeGPs5vvIj7rdWaf0A3jq5re4hPxx33xCvmM7NUcC/MXc3MpOMKUdY2y1xteTHOLUu7+
-         Esajr0tD5b2JK1IbZCSWOBYEcpHQ5hnG47rpVsJRrcF8HyOe+13C44od4Bg0UaMKlUsi
-         Bbfg==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=urWvYIy9whFNoNqKI3qmu1lDbEEGteGhcRP0s8UHsS8=;
+        b=sNGcli1LpQwnlu/V3dB6PmFdkoRxofAolivb/Qrqyxk05Yfup62c17HbwRjnBt+Rrd
+         pH99mbdWNf+Xqbbnlp+fgRWbJxlp/yb4trGPFqUIXgMD33IO93tEdyWaPXyF5SAS9Fbl
+         vW879YhsaYUawoHA4hTK7qlpjVYEu71enzw33gS65qeN234jpN3CWaw+WueHBCMCUVKN
+         obyYbMUoAVb82D7MFNlAdjZUn3V59n8pglUriktk4gDmMjRyqFEb2/W2JgXJiiqRSgK2
+         KSdbJmo4mf2BWrBv4tnNujT9l8M3YoY/Sz48ku/FUwVe8lIYRDuBHUWtdH3eyGb6+9vF
+         Y6vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=ia7Ew7UqskrWVO4L1JtFW7BtVlvhW5GKyFs1jDMo5yw=;
-        b=S1gPhPNaEtkYjtjUp403ROgvbTdI5L3bfSRUpY+T9UatklJPYXSCt5Q2jE68N94L/T
-         YRUOzRQZ0cKQECLp67lQSeFLMsO/1oSiNj/pR1Xnnwetco2hy+PDUAoWkSyFQ4H/uE6e
-         gpF+QbsBruXXu7IY3z2yS8ykevUiB0S6tbyHCrTiq7UpATTInfcOp6LBxwtAeNCxpu4Y
-         +CSjKlgpjRLZKhF/OVI5h3+A96ZNVa1E5f40hgzAgDknjeo6bq0eyBpjXo8HSLmLRjw+
-         pny+1ZSioyO5/bELAwMWZl/xsHrtGauKoi6HqLClV5G7XmLfdKrwglQxkp6F7IaJD5+A
-         zpDA==
-X-Gm-Message-State: APjAAAXXe13dVhx9yXOJSsc9cJJrSl6OfXTcT31dI5y8tZ5OaEnKvOln
-        Mk72rT4Q3tWStXleOrKhViMoNnH75YuJj41kZJmirno/Vq9WMk/41Bnafpctw8Gc32xq/xRzYwe
-        u8CtgJ6/NdiQUchio/4MtcmylhlLhyqKZMLD+2j8XC+CZAJ15AuGvWbfpn9NMCtFjSAzuWHYLVs
-        2B
-X-Google-Smtp-Source: APXvYqxvYoKLICgb4hFHZJeIMnVNloKN4g8jSyv9EbEiZNTll7ik7KPTJaR9sOvgOsZvDTvNXNxsrGL86VPYdbnLG7X3
-X-Received: by 2002:a63:5005:: with SMTP id e5mr663438pgb.442.1569457985592;
- Wed, 25 Sep 2019 17:33:05 -0700 (PDT)
-Date:   Wed, 25 Sep 2019 17:33:00 -0700
-Message-Id: <20190926003300.195781-1-jonathantanmy@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=urWvYIy9whFNoNqKI3qmu1lDbEEGteGhcRP0s8UHsS8=;
+        b=V3FRYeJFN1lI1iIKddIkjovRV8nf+PFYzb5UF1n2sy8197pxv1YbNzQRnvUwW0/ksN
+         Kj8S9aAOzg0rYcLwDRDxFICtAvFhMP/YMDQYVlTblYJe2LQpSJ7NXR/WPV1A9MDvX6cy
+         j4iC7jPN+0JJySIV1WmgH493IoR6rriF5S810Aj2Rn8EnW7hQ30Qb6F9QeA9x74afG5x
+         hYWlLYC6WTTyU4G6QJVSqODviqOlgZpriXfGktq27kEc0fjWwP3Ci1jUj3W4FKrx1YB5
+         lxwiJcwKOeT9XQ4gK3vfX5UXpJIx1HyuWcZYaeJ98GtOs8hXbrbLI/Om/iZNwqueUnmQ
+         ZwZQ==
+X-Gm-Message-State: APjAAAVFV8Q57vPc4ov8xrC7fyUQBvRBc13f2eQM9SjTDPF1pJkH2eJ7
+        r/1GZu27TbxVlLtkXRWGfVSQMzxEsq78pIsdqKJA
+X-Google-Smtp-Source: APXvYqxIQnGlzH+U+nzrUnYVD/wsQjytabwS+P32deZqiDLsezv6z3H6AG6HvsHQ80489y78eg3rC9ijRhi4a+FX+4+G
+X-Received: by 2002:a63:4755:: with SMTP id w21mr662317pgk.122.1569458126457;
+ Wed, 25 Sep 2019 17:35:26 -0700 (PDT)
+Date:   Wed, 25 Sep 2019 17:35:23 -0700
+In-Reply-To: <20190926003300.195781-1-jonathantanmy@google.com>
+Message-Id: <20190926003523.197188-1-jonathantanmy@google.com>
 Mime-Version: 1.0
+References: <20190926003300.195781-1-jonathantanmy@google.com>
 X-Mailer: git-send-email 2.23.0.351.gc4317032e6-goog
-Subject: Common thread pool API in Git?
+Subject: Re: Common thread pool API in Git?
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
+To:     jonathantanmy@google.com
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Does anyone have ideas or plans for this? I know that (at least) "grep"
-and "index-pack" have their own implementations, and it would be great
-to just have one that all code can use.
+> For those who want to know, this question was motivated by a big delta
+> tree occurring in [1].
 
-For those who want to know, this question was motivated by a big delta
-tree occurring in [1]. index-pack does parallelize delta resolution, but
-it cannot split up trees into threads: each delta base root can go into
-its own thread, but when a delta base root is processed, all deltas on
-that root (direct or indirect) is processed in the same thread. I took a
-look to see if this could be parallelized, but thought that it might be
-better to standardize on a thread pool implementation first.
-
-Searching reveals [2], but I don't think it ever made it into Git.
-
-[1] git -c core.deltabasecachelimit=2g clone https://fuchsia.googlesource.com/third_party/vulkan-cts
-[2] https://public-inbox.org/git/1440121237-24576-2-git-send-email-sbeller@google.com/
+Forgot to mention: this is not an issue of the server not repacking with
+a chain length limit. The tree in question is indeed not tall, but it is
+very wide.
