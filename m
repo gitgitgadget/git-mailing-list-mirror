@@ -7,85 +7,80 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F16CD1F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 22:36:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A9651F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 22:41:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727734AbfIZWgn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 18:36:43 -0400
-Received: from relay2-d.mail.gandi.net ([217.70.183.194]:55759 "EHLO
-        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725871AbfIZWgm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 18:36:42 -0400
-X-Originating-IP: 1.186.12.44
+        id S1727510AbfIZWl4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 18:41:56 -0400
+Received: from relay11.mail.gandi.net ([217.70.178.231]:35833 "EHLO
+        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726084AbfIZWl4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 18:41:56 -0400
 Received: from localhost (unknown [1.186.12.44])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 8F6AB40006;
-        Thu, 26 Sep 2019 22:36:40 +0000 (UTC)
-Date:   Fri, 27 Sep 2019 04:06:38 +0530
+        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 98401100005;
+        Thu, 26 Sep 2019 22:41:53 +0000 (UTC)
+Date:   Fri, 27 Sep 2019 04:11:51 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] respect core.hooksPath, falling back to .git/hooks
-Message-ID: <20190926223638.6tk2qhc4e62hs2wt@yadavpratyush.com>
-References: <pull.361.git.gitgitgadget@gmail.com>
- <eca193f91b85fc4ffea453bc3adb64bc5c8831a8.1569532628.git.gitgitgadget@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-gui contributions, was Re: What's cooking in git.git (Sep
+ 2019, #02; Wed, 18)
+Message-ID: <20190926224151.xoezhpsjwrgy5jg4@yadavpratyush.com>
+References: <xmqqy2yl44lw.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1909232132570.15067@tvgsbejvaqbjf.bet>
+ <20190924122306.bcwe37wlahjimve7@yadavpratyush.com>
+ <nycvar.QRO.7.76.6.1909262042590.15067@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <eca193f91b85fc4ffea453bc3adb64bc5c8831a8.1569532628.git.gitgitgadget@gmail.com>
+In-Reply-To: <nycvar.QRO.7.76.6.1909262042590.15067@tvgsbejvaqbjf.bet>
 User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 26/09/19 08:44PM, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Tue, 24 Sep 2019, Pratyush Yadav wrote:
+> 
+> > On 23/09/19 09:35PM, Johannes Schindelin wrote:
+> > > Hi,
+> > >
+> > > On Wed, 18 Sep 2019, Junio C Hamano wrote:
+> > >
+> > > > We have a new maintainer for git-gui now.  Thanks Pratyush for
+> > > > volunteering.
+> > >
+> > > Excellent!
+> > >
+> > > I opened PRs at https://github.com/prati0100/git-gui/pulls. Pratyush, do
+> > > you accept contributions in this form, or should I do anything
+> > > differently?
+> >
+> > I prefer email. Also, please Cc this list so other people interested in
+> > git-gui can take a look.
+> 
+> I did so.
+> 
+> Since mailing list-centric workflow is cumbersome for me, I used
+> GitGitGadget (I had to work a bit to allow for that, and you are Cc:ed
+> manually, that bit is not automated, I hope that other contributors
+> implement that in https://github.com/gitgitgadget/gitgitgadget if they
+> want that).
 
-On 26/09/19 02:17PM, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> 
-> Since v2.9.0, Git knows about the config variable core.hookspath
-> that allows overriding the path to the directory containing the
-> Git hooks.
-> 
-> Since v2.10.0, the `--git-path` option respects that config
-> variable, too, so we may just as well use that command.
-> 
-> For Git versions older than v2.5.0 (which was the first version to
-> support the `--git-path` option for the `rev-parse` command), we
-> simply fall back to the previous code.
-> 
-> This fixes https://github.com/git-for-windows/git/issues/1755
-> 
-> Initial-patch-by: Philipp Gortan <philipp@gortan.org>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  git-gui.sh | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/git-gui.sh b/git-gui.sh
-> index fd476b6999..b2c6e7a1db 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -623,7 +623,11 @@ proc git_write {args} {
->  }
->  
->  proc githook_read {hook_name args} {
-> -	set pchook [gitdir hooks $hook_name]
-> +	if {[package vcompare $::_git_version 2.5.0] >= 0} {
-> +		set pchook [git rev-parse --git-path "hooks/$hook_name"]
-> +	} else {
-> +		set pchook [gitdir hooks $hook_name]
-> +	}
+Sorry to hear that you had to go through so much trouble to send these 
+patches. I personally have the opposite taste. I don't like GitHub's 
+workflow and prefer an email based one.
 
-gitdir is used in a lot of places, and I think all those would also 
-benefit from using --git-path. So I think it is a better idea to move 
-this to the procedure gitdir. It would have to be refactored to take any 
-number of arguments, instead of the two it takes here.
+I don't mind setting aside my differences in preferences, but there is 
+another more important reason I asked you to email the patches: most of 
+the people involved and interested in git-gui development watch this 
+list, and not the "Pull Requests" section on my GitHub.
 
-Other than that, looks good. Thanks.
+Either way, thanks for the patches :).
 
 -- 
 Regards,
