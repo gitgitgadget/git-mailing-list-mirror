@@ -2,145 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 093931F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 20:35:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 720E71F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 20:46:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728741AbfIZUfN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 16:35:13 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:44297 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727868AbfIZUfM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 16:35:12 -0400
-Received: by mail-pf1-f193.google.com with SMTP id q21so151100pfn.11
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 13:35:12 -0700 (PDT)
+        id S1728871AbfIZUq0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 16:46:26 -0400
+Received: from mail-ua1-f47.google.com ([209.85.222.47]:38466 "EHLO
+        mail-ua1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728816AbfIZUq0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 16:46:26 -0400
+Received: by mail-ua1-f47.google.com with SMTP id 107so1247160uau.5
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 13:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=y/0T2Ps1zO5Y3xj5VN/jDgQcB2RQbLeG6kV5LxBlj0I=;
-        b=k0j2Or1cdgri/eXkD1MCk6yxccABYmqqdzykAQ5pSSPWb6BXKhIi7Y/cbiTmco43Fl
-         uaSxakt2/7i5ZDLgnjaPLQdQz2G1GMX6ao8T2qZFVxcFN68QqocSciLXfVXm60Ua2UUR
-         mjD6Eix1STF2NLiCCtrE2wWDaj+pm8i3UpEwv5OZo9GJe3tyTq9wFE96+JRrOWQRkLls
-         tAPWezOjhP3nZ23FwJNWISRY0nVacphQi/+LXq6eyX7BfOaExMr+CdQ5Fv+qXBqrgxNj
-         jfyQErKTKwJkfddZFUYZxW5LThRiMlLCw0sZMgR6QHcxA70nkW4xTNOhUbQAGPG/MlyN
-         Qviw==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=JJNtZE6fanxLvuOjMv5sMzCAzFhgHYIes2GJS6mX8M8=;
+        b=PyIzcJnaHL1A6LNiBtyO9stv1mh5nnoolBImFmXTHwGXrPX58rDNupqMBrhvGagLWZ
+         yGu4m54Orcwy/XAhff+5FzMg5+uNFrc1kILBgjkC34ajy0o8pGJMr+XwloCIWh7Mm1l1
+         Jn7LTXRCvSrZQSxTOl1p6BmtVojw6ZR6gS5nMA/g9ciOV/UT+BG78IQkl4dJn0uUZF4z
+         X59xzE6QxHrb81ZPrHZE4GmSt51mxdRTqseSj/luY21Hdvp3+YkjcYVOVX7qWm7KdqHO
+         g3uV8FEdTdiMCgK0nkT3Bzm2dm/uFHUKC2nBRjUS1yXyyjSy8eHVRsK/ZsX0bpo4umfF
+         gbyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=y/0T2Ps1zO5Y3xj5VN/jDgQcB2RQbLeG6kV5LxBlj0I=;
-        b=hMOdlz+wq1gGzyszJxWwRNhyVVwdp9UOXb0WQClEsjy2rvSwKcTR/4C5+zzweai8ca
-         fkvlCdRdcNqEiYamJLTCqUGIB0OTMdM4mG3DajBY8396ygmaBA5p5N2DSUW8kE5sB7JX
-         yZDymw6swl7wHd+BkP3B/+XDKZCecFOq/CZL5ptu+Uu16KYrJvbXAG39tsSxcEzC9Uu1
-         XIirAwZgKEzTBWiFC59c/ToZz37Fp2sFkW71+9jQC2g/yRc29Jm/PihMlQmxT/X3LO4U
-         5QzTIMJeiDa58dvL5dVPf7ELat++m+ncWve9yqATvrviisxHiCPqZ0zu/aWcT8hjHtcE
-         UGfQ==
-X-Gm-Message-State: APjAAAWfZg5lKQlMmM3dNaOkxDhvUa5CIrilKal7xcUgIlIpmw2B7323
-        I5rpeUCOGHUB5n8udySnoGRIE2LL
-X-Google-Smtp-Source: APXvYqxS49zqZ4YfgP4kqUBuHiu2MMvMus9jDrdNyPz6hoSE5gJj2NtnudTTF6M5imfSxwXd9cA6OQ==
-X-Received: by 2002:a17:90a:9a81:: with SMTP id e1mr5627806pjp.95.1569530112187;
-        Thu, 26 Sep 2019 13:35:12 -0700 (PDT)
-Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id f6sm2583561pga.50.2019.09.26.13.35.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 13:35:11 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 13:35:09 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Rafael =?iso-8859-1?Q?Ascens=E3o?= <rafa.almas@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>
-Subject: Re: [BUG] git is segfaulting, was [PATCH v4 04/12] dir: also check
- directories for matching pathspecs
-Message-ID: <20190926203509.GA61514@generichostname>
-References: <20190912221240.18057-1-newren@gmail.com>
- <20190917163504.14566-1-newren@gmail.com>
- <20190917163504.14566-5-newren@gmail.com>
- <20190925203919.GA89135@generichostname>
- <CABPp-BHyjVSD6_S_dYgPiXM=GVEpT97FqJJearzg4hvKHXfNVA@mail.gmail.com>
- <20190925215530.GA9013@generichostname>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=JJNtZE6fanxLvuOjMv5sMzCAzFhgHYIes2GJS6mX8M8=;
+        b=cSht6L2cFXOl9AhPOcFHVLZGvnT7y+KGRNM5nCNS/5S2mXCFDppl2TwO3QDGhC/W2r
+         ZD3D4YuqSWEYEBGFAuuylrqCFu+wPrL/pNrpkBdACYWfPCHpWDxK+EOR2PC03S6CS+p1
+         rb+ZIdtvqA7iIXWjAsrW2LPpr8uPHlx3BbsIA0VIIMWAlOyJXHC+JemwYIE7un/9pzYu
+         OFOI+Bww1dmwm7xmze8S++pezdhMvZwLANbugH8o9JIcVpA4jspqlT6CDP0/bxbdTept
+         0H+b4ffy6U5Ifr2iIY8StQzoNGY3vY9oJS5Zob+fbRgOLStySvFw4jceUubMWZim43ms
+         nM4g==
+X-Gm-Message-State: APjAAAUBAspKk+bINRnOlVbH0YR5mhgkKm3ZNWcd0sqHHSRsjCJ3CzC/
+        YMu1ySS1fuOwE3fu/2gyplXj+I7QLH/PIPg/vVagi2eXMCs=
+X-Google-Smtp-Source: APXvYqyqoPWagJeHaUbLeZAWqieAPc6QgY3RwDQQaEYPlMl/touIw8eZkLscJYw682MQiE+jDJQ8b/DgeC8PCaYDDmE=
+X-Received: by 2002:ab0:7c3:: with SMTP id d3mr749606uaf.131.1569530784751;
+ Thu, 26 Sep 2019 13:46:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190925215530.GA9013@generichostname>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+From:   "dirtbikersteve ." <stevemk14ebr@gmail.com>
+Date:   Thu, 26 Sep 2019 16:46:13 -0400
+Message-ID: <CAN-=hvFX+tN_pQHPBxo0pA90N03dO7pxHVbD79Es22mx30TdxQ@mail.gmail.com>
+Subject: Git describe shows old tag
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 25, 2019 at 02:55:30PM -0700, Denton Liu wrote:
-> Looks correct to me. I don't see why this wouldn't reproduce. I'll send
-> you more information if I figure anything else out.
+I believe there is a bug in git describe. When using the command `git
+describe =E2=80=93tags` an old tag version was returned. The repo had a
+lightweight tag at v0.6.1, which was correctly shown by `git tag` but
+did not get returned by `git describe =E2=80=93tags` OR `git describe =E2=
+=80=93all`.
+The command `git for-each-ref --format=3D"%(refname:short)"
+--sort=3D-authordate --count=3D1 refs/tags` worked correctly. Console
+logs:
 
-I looked into it a little more and I think I know why it's being
-triggered.
+=CE=BB git tag
+v0.1.0
+v0.1.1
+v0.1.10
+v0.1.11
+v0.1.12
+v0.1.13
+v0.1.14
+v0.1.15
+v0.1.16
+v0.1.17
+v0.1.18
+v0.1.2
+v0.1.3
+v0.1.4
+v0.1.5
+v0.1.6
+v0.1.7
+v0.1.8
+v0.1.9
+v0.2.0
+v0.2.1
+v0.2.2
+v0.2.3
+v0.2.4
+v0.2.5
+v0.2.7
+v0.2.8
+v0.2.9
+v0.3.0
+v0.3.1
+v0.3.2
+v0.3.3
+v0.3.4
+v0.4.0
+v0.4.1
+v0.4.9
+v0.5.0
+v0.5.1
+v0.5.10
+v0.5.11
+v0.5.12
+v0.5.13
+v0.5.14
+v0.5.15
+v0.5.16
+v0.5.17
+v0.5.18
+v0.5.19
+v0.5.2
+v0.5.20
+v0.5.21
+v0.5.3
+v0.5.4
+v0.5.5
+v0.5.6
+v0.5.7
+v0.5.8
+v0.5.9
+v0.6
+v0.6.1
 
-When we checkout 'todo' from 'master', since they're completely
-different trees, all of git's source files need to be removed. As a
-result, the checkout process at some point invokes check_ok_to_remove().
+=CE=BB git describe --all
+tags/v0.5.20
 
-This kicks off the following call chain:
+=CE=BB git describe --all --debug
+describe HEAD
+tags/v0.5.20
 
-	check_ok_to_remove()
-	verify_clean_subdirectory()
-	read_directory()
-	read_directory_recursive() (this is called recursively, of course)
-	match_pathspec()
-	do_match_pathspec()
+=CE=BB git describe --all --debug
+describe HEAD
+tags/v0.5.20
 
-Where we segfault in do_match_pathspec() because ps is NULL:
+=CE=BB git for-each-ref --format=3D"%(refname:short)" --sort=3D-authordate
+--count=3D1 refs/tags
+v0.6.1
 
-	GUARD_PATHSPEC(ps,
-			   PATHSPEC_FROMTOP |
-			   PATHSPEC_MAXDEPTH |
-			   PATHSPEC_LITERAL |
-			   PATHSPEC_GLOB |
-			   PATHSPEC_ICASE |
-			   PATHSPEC_EXCLUDE |
-			   PATHSPEC_ATTR);
-
-So why is ps == NULL? In verify_clean_subdirectory(), we call
-read_directory() like this:
-
-	i = read_directory(&d, o->src_index, pathbuf, namelen+1, NULL);
-
-where we explictly pass in a NULL and it is handed down the callstack. I
-guess this means that we should be expecting that pathspecs can be NULL
-in this path. So I've applied the patch at the bottom and it fixes the
-problem.
-
-I was wondering if we should stick a
-
-	if (!ps)
-		BUG("ps is NULL");
-
-into do_match_pathspec(), though, so we can avoid these situations in
-the future.
-
-Also, I'm still not sure why the issue wasn't reproducible on your
-side... I'm not too familiar with this area of the code, though.
-
--- >8 --
-diff --git a/dir.c b/dir.c
-index 76a3c3894b..b7a6de58c6 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1952,7 +1952,7 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
-                        if (subdir_state > dir_state)
-                                dir_state = subdir_state;
- 
--                       if (!match_pathspec(istate, pathspec, path.buf, path.len,
-+                       if (pathspec && !match_pathspec(istate, pathspec, path.buf, path.len,
-                                            0 /* prefix */, NULL,
-                                            0 /* do NOT special case dirs */))
-                                state = path_none;
+-Stephen Eckels
