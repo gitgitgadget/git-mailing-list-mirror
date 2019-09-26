@@ -2,122 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3665E1F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 11:42:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47D951F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 12:16:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726552AbfIZLmh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 07:42:37 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53073 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726529AbfIZLmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 07:42:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1569498148;
-        bh=wvrS9oxjoCm6O0U9DzBu1gnSwCfYgXUJ1jneVwD55I4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=DxooFdvSSQqeN7eI0K4Qt689jmKQl8ksJ01bMQgLZgUQBdzN/l3oe02HdZMp53Edx
-         jit4i6k7vrLQUmSRgUJSfY/wggM0OjfglVXn5mrAgcis/o7J9zL4XjoJzjsPgmsmcO
-         0bgE9gOCxUM0FhJ5gkFddxjbvp1TzQgXy6uTTRKs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MmDEg-1hmsq33xeS-00iGd6; Thu, 26
- Sep 2019 13:42:28 +0200
-Date:   Thu, 26 Sep 2019 13:42:12 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Subject: Re: Git in Outreachy December 2019?
-In-Reply-To: <20190923180649.GA2886@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1909261341300.15067@tvgsbejvaqbjf.bet>
-References: <20190827051756.GA12795@sigill.intra.peff.net> <20190904194114.GA31398@sigill.intra.peff.net> <20190923180649.GA2886@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726478AbfIZMQY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 08:16:24 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:40864 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726049AbfIZMQX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 08:16:23 -0400
+Received: by mail-qk1-f194.google.com with SMTP id y144so1527770qkb.7
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 05:16:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rDDHJNkDcvav6dGapR/wjapZ9oszFGqzWohK4op+L1k=;
+        b=Kq+3vcaFc7pv9OyDjsaRq1y8U9bSFoOumFwBvZzoVNUOQBBQ2TbRPRg02K2AWb6US9
+         0IWMstWOLIYE4opa22EOP7oNYkR9O/FWnjuYMG0BzM3F1UXr/7UhL80Zc7efGawUWVS7
+         GXGRH0Qi+2d3HdYd/REsNgWDyJT9oAW62FZePEgsm7BGK+2n4QVUEY21WWU8EmywcBlt
+         1NPoFwfxokW40vYtlExeizjK3xK+csuF4xTbbbYO6WALjBotWe1jT7DdfU9g6xmCoMHp
+         U4ud4yQxFF96LRhyVCgu989fxENWVbEoKCkqM3noTcLXqnOf94xGk76eWvhuQJo3C+5p
+         OSyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rDDHJNkDcvav6dGapR/wjapZ9oszFGqzWohK4op+L1k=;
+        b=otgErHCgjQnUIWnq02TUb29zkEw7jvh1aRpLIXCaHXF3aWCDFGPTFfGV2PC/Ze+JNk
+         V7dfzcY6/dvaDKx5IdqcCOBngmRi2rhttfKz2MpLPnlEgAPaX1aq8DMQIkkF3tHoRB7t
+         55OLu/t1n6fSMou5iWXhP9Rc4icoDG6oivpXy+0lpaILtVDcRSxP7R7bSx6pZr9Laqfb
+         pVnDLVymOx+gGukta00R1zzNYK/pIiqxHsEx/tSTS5hycY6+xfPdWbF/4MLbkhjcDS+9
+         LDmUUjZHGO6NRhE6f50TnXb55J1h7ZN5dqNdENJUhVkZ6p+HvcKpOZN9tcP7xZyjhwKC
+         e0hA==
+X-Gm-Message-State: APjAAAVZw5Rsx7yKdSJrcCp6vXgWdeIwZe0GOLCDk6kEk+X67tgxhi95
+        pcRYo7LLKwvuSVVFxbypotc=
+X-Google-Smtp-Source: APXvYqz5vV2kbVbGidtaluV67ijOEe+9NXb1I4VF3X7++Kve1mMvdsRcCm2JnKRKLB1amK/fijVPEg==
+X-Received: by 2002:a05:620a:389:: with SMTP id q9mr2895863qkm.81.1569500182208;
+        Thu, 26 Sep 2019 05:16:22 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:b594:20f6:c10f:d45d? ([2001:4898:a800:1012:66c8:20f6:c10f:d45d])
+        by smtp.gmail.com with ESMTPSA id z12sm997506qkg.97.2019.09.26.05.16.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Sep 2019 05:16:21 -0700 (PDT)
+Subject: Re: [PATCH] CODE_OF_CONDUCT: mention individual project-leader emails
+To:     Jeff King <peff@peff.net>, Emily Shaffer <emilyshaffer@google.com>
+Cc:     Denton Liu <liu.denton@gmail.com>, Git List <git@vger.kernel.org>,
+        git@sfconservancy.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, garimasigit@gmail.com
+References: <20190924064454.GA30419@sigill.intra.peff.net>
+ <20190924171214.GA11452@dentonliu-ltm.internal.salesforce.com>
+ <CAJoAoZkw08A_nkJNMwgTTFvGMCRUqR2UqEckOp65Vg_TW7K8bg@mail.gmail.com>
+ <20190926072046.GB20653@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0188e484-20d4-59b1-5fdd-bbaecdc1819a@gmail.com>
+Date:   Thu, 26 Sep 2019 08:16:20 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2038308231-1569498149=:15067"
-X-Provags-ID: V03:K1:uUBF+1IxNddQEvA92D2GTY/kx4NqlwwfUHM+hJB6ectvGMJnkRy
- wfDaNWWkS3P1e/zpQSmv3+A14y/njs1Kz+fpZqjsbK83KSQVo2N7XKv6w+BN43GE0zobL7f
- U8jL4tFqzrFzzOryeB4zv0hCyb8y9a/Gl20URAkWk/nEMv+B+1QL06e+ewDnG2FBqLzO0zB
- QNeheZHOc6C0c2aqv1whg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:AG+KdPnMCkU=:GSioMancvkffvPq1vsbikw
- pKGaCtLBihwz/XdKeV19VnOgbMHRqFwD0cQsdpjSOlk/h71MJsSZrt1YIfh1zCTgQRav+ZCav
- HMtVuI2ONDNFsHOLQGbZH7iPj7nYBi5hWXwBGJrN5tmPLvdR/Oy53zMEEfGpUkPkJg8KfU24C
- MeFGTqmSsKCFJukIVJIE0MA7cW0/6gF+POttXDfMJQDsskJ6cHxU+TGZwb1YjYCuzPm9F0cCD
- cHA3hMgixdcXI2AuApy1J5Csneze4vZgATOo4AZBKGc2VODjFFkrXtGo+gVOW975S715OBVbR
- SC3jy+2FypkdVLk4m4FwxDXzZKziVgUx384l0XdguNk6VIdWBwWWkU6cdLYFvW50HnpJuyV6T
- Feb/jPK+UB9+RS0BwSZLhFADjKEjvT8ENNoRDxD3VB4oBU3T09fxvOpi+6cDOKBS7+xHElKfe
- jNH0kwB6IYmJpslFqmAzAx53hEYqJdjP34e5DdF4O2D6A4QKt8kaC9C8iJ9yhcYKpf76jiRE5
- +UwW7q98TexKcTvTO2UFZnVo27SFEd0nx8Qi36jZhNordmIBt0iQgg/UN03Blq97azi8ROdCS
- Gi/AkjJWg8uXSJ1v4zB2OYiY4Qy5rROqF4Yi+GMHgM1SvpnWX/g6OZRMlClRV4ES1frqcuhW0
- BF3sD5G2u3y9plUdkKLOtglnMAbaS80Zs7pNaBjhW1dMEEg6qF/4HU2jByWidHNYTWa+YSXD1
- yh5CfUSuStylKZS6hTKtLHGKh6NSJfNil9foNoeo60xS/byZRvyQkldAI0QcOvDljIXeWXMVw
- d6XnWP33WlZCjQaEkWpq2ub/dcazoBJNWNLAvWETe2wVdZ86LDm3HNt0CfMbVAFHzf7NNG6PW
- Puebl7BBDWFaiL1KRiHKUOmL4nI4MQIon5KoCrH9SMSju7loYb9xqZ9qa3v5wK2flfMc0xtDO
- g4D3G22h9Kwzkw+YoKqFCB5FED1zPFZtiKneeqbm5xngfDCVJTW6sz0tcoWH4u0uELu/Kksfx
- TgVxjd8pLYZB9FAiFZEEBjV5KTkLZq/RDegpyqqNepe3Tt1l/z5MwTTUbXCmzDOhj8xA2Z0jh
- mW5SBnwYkfnaa7xfgNZq1v5LVaMRItkSAzQJPFE2Fy8JC595WMtZf1YgCl1mFJhSbdzAsdZU5
- 1ZmPwFrnjYgzStSIwpLasfAqiiv5ctOHctQVK0iBV3aSG9kb8EL1pjvXq+z2UzyIIA9rdl9IS
- 8Bxd3kX9yDDvtDrO4Mqox5/ehnSbBXW9sNV3KKeTCMFEA8kz+gKO9LuzHcGY=
+In-Reply-To: <20190926072046.GB20653@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 9/26/2019 3:20 AM, Jeff King wrote:
+> On Tue, Sep 24, 2019 at 04:52:56PM -0700, Emily Shaffer wrote:
+> 
+>>>> I've cc'd git@sfconservancy.org here, because I think it's important for
+>>>> all of the project committee members to endorse it (and because the
+>>>> document puts us on the hook for enforcing it!).
+>>>
+>>> I tried looking it up but I couldn't find who the project committee
+>>> members are. Is this list published anywhere? More on that later...
+>>
+>> To be honest, I'm a little worried about it too. What if I have a
+>> problem with someone on the project committee? What if I have a
+>> problem with someone I don't know is on the project committee?
+> 
+> I think those are very good points. See the patch below.
+> 
+>> I helped my other FOSS project to adopt a Code of Conduct earlier in
+>> the year (https://github.com/openbmc/docs/blob/master/code-of-conduct.md)
+>> and we got around this by asking for volunteers from the technical
+>> steering committee to agree to have their contact info listed on the
+>> escalation path; at the end of the escalation path we also listed
+>> someone external to the project (which we were able to do because we
+>> had been adopted by the Linux Foundation, and they have someone for
+>> that).
+> 
+> Yeah, I think this is sort of the same thing except that I
+> pre-volunteered the whole project committee. ;)
+> 
+> We could have a separate list of contacts for the code of conduct, but
+> it seems simplest to just use the existing group that we already have,
+> unless there's a compelling reason not to.
+> 
+>> A possible con of being on this escalation path is having your name
+>> and contact info outed to trolls as a supporter of something
+>> controversial like a code of conduct. However, I'd argue that the
+>> growing list of ACKs on this thread expose us in a similar way. On the
+>> other side, the benefit of having a transparent escalation path like
+>> this is that you can bypass a problematic individual who may be in a
+>> position of power. It also provides an opportunity for increased
+>> discretion in delicate situations like the example Peff gave
+>> downthread.
+> 
+> Yep, agreed with all of this.
+> 
+> So here's a patch that I think improves the situation.
+> 
+> -- >8 --
+> Subject: [PATCH] CODE_OF_CONDUCT: mention individual project-leader emails
+> 
+> It's possible that somebody on the project committee is the subject of a
+> complaint. In that case, it may be useful to be able to contact the
+> other members individually, so let's make it clear that's an option.
+> 
+> This also serves to enumerate the set of people on the committee. That
+> lets you easily _know_ if you're in the situation mentioned above. And
+> it's just convenient to list who's involved in the process, since the
+> project committee list is not anywhere else in the repository.
 
---8323328-2038308231-1569498149=:15067
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+I think this handles the conflict of interest issues. This is likely
+never to be needed, but helpful to have.
 
-Hi,
+Thanks,
+-Stolee
 
-On Mon, 23 Sep 2019, SZEDER G=C3=A1bor wrote:
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  CODE_OF_CONDUCT.md | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/CODE_OF_CONDUCT.md b/CODE_OF_CONDUCT.md
+> index b94f72b0b8..fc4645d5c0 100644
+> --- a/CODE_OF_CONDUCT.md
+> +++ b/CODE_OF_CONDUCT.md
+> @@ -74,6 +74,14 @@ Project maintainers who do not follow or enforce the Code of Conduct in good
+>  faith may face temporary or permanent repercussions as determined by other
+>  members of the project's leadership.
+>  
+> +The project leadership team can be contacted by email as a whole at
+> +git@sfconservancy.org, or individually:
+> +
+> +  - Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> +  - Christian Couder <christian.couder@gmail.com>
+> +  - Jeff King <peff@peff.net>
+> +  - Junio C Hamano <gitster@pobox.com>
+> +
+>  ## Attribution
+>  
+>  This Code of Conduct is adapted from the [Contributor Covenant][homepage],
+> 
 
-> On Wed, Sep 04, 2019 at 03:41:15PM -0400, Jeff King wrote:
-> > The project page has a section to point people in the right direction
-> > for first-time contributions. I've left it blank for now, but I think =
-it
-> > makes sense to point one (or both) of:
-> >
-> >   - https://git-scm.com/docs/MyFirstContribution
-> >
-> >   - https://matheustavares.gitlab.io/posts/first-steps-contributing-to=
--git
-> >
-> > as well as a list of micro-projects (or at least instructions on how t=
-o
-> > find #leftoverbits, though we'd definitely have to step up our labelin=
-g,
-> > as I do not recall having seen one for a while).
->
-> And we should make sure that all microprojects are indeed micro in
-> size.  Matheus sent v8 of a 10 patch series in July that started out
-> as a microproject back in February...
-
-Indeed.
-
-> Here is one more idea for microprojects:
->
->   Find a group of related preprocessor constants and turn them into an
->   enum.  Also find where those constants are stored in variables and
->   in structs and passed around as function parameters, and change the
->   type of those variables, fields and parameters to the new enum.
-
-I agree that this is a good suggestion, and turned this #leftoverbits
-into https://github.com/gitgitgadget/git/issues/357.
-
-Ciao,
-Dscho
-
---8323328-2038308231-1569498149=:15067--
