@@ -8,99 +8,100 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 789771F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 15:30:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C9541F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 16:16:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727343AbfIZPaD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 11:30:03 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:33076 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727328AbfIZPaC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 11:30:02 -0400
-Received: by mail-lf1-f66.google.com with SMTP id y127so2060493lfc.0
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 08:30:01 -0700 (PDT)
+        id S1727418AbfIZQQU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 12:16:20 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:34757 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726105AbfIZQQU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 12:16:20 -0400
+Received: by mail-qt1-f195.google.com with SMTP id 3so3581683qta.1
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 09:16:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=o7H0eAkVOQrYQ/l8M8LRQgb39M1cTspu1n1arbg/hyk=;
-        b=UZ4yPDAp/Vpry83V6yn9hvm95RU3PiV3w1DJ19+RIyEKIXUMIPZlCCBkOpIj5bYaZk
-         47AHS3WXwbAN+px/mbHS4O9b8E9Q+BNbWAKbZnbg5z0SKkNEAAWNQfN1VZ5dVpG88hrJ
-         hYmpX2dm9KsdE6AtofQ5d9Ot7XtYhieWsVoHvE3IYxZsvFQ/N3j+u4/x44zSkR82ga0U
-         ZPAJsXeCy6HFYgIALrLQTTSTazbvMKLrPpG8v3zv+Imm/t6+blxrYGZR16ZobGLYIuUs
-         hzxO6qdfCKGY5q7/zDk9A/b32E3dEVfkk7d4xIzSxcH12DbZxPNhcnXZfkp/87F1TDbH
-         9Qcg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=J8/rVguxKSzo8ls8nkBdNJ/MdEeE1r3e0qxBWJvWUxw=;
+        b=XbLeH7NymfBHh4rfHoTZwdYMGCWwyBxGn9pDxI/+R4pKUkrQFUVecDTRAzMHlY64L3
+         jKcIDFzx+6d5ThRdK4kvJSs+99fKyTXJiQ5G51SCZvtuS/2OQ7N5syVg90TANMhVdogt
+         68rvverr6N7rXfpXXQIZw8yMXtCGu37eUnJJU8uwMF3IM21S8WS/JwrumIOog8rmWMpE
+         VWarAVmTTIPTItgPuy5MHu83vTWBtEOh5PDdINpzFCc8hO93mOYoxnwdEbIK84GRm9jj
+         PPZcv5tTvLJc2/wZvS2gYf+vJsQoGUvlV9gXwW10Y3mXFRk0+/vnJsbO3zZ4PGewhrXp
+         JiuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=o7H0eAkVOQrYQ/l8M8LRQgb39M1cTspu1n1arbg/hyk=;
-        b=I/wE9ffydQfG6yFpctpMfCHIEqH8gSBujCFpGS7rhKzM7DgUZ7XiQaSCJ92K24E37/
-         EkHgR38CgZVh6RL2WAPpCHXZjn0Cgc+rNkVu7skb7DYZPksZCkH2NCaSTcmjaV0OlPTs
-         wERMJFcZsk3RTH4ArkIOMAsb8j9TfZ2B/RB+5160TuaNCTWwR+XChGqaSkqu+YtFT5kP
-         zGl/rYtIte4kpSIHHfvkPsUV8GmdjF8jUALU0CMluAqbgs+CMnz8zvUdt3/vfqaeeOHL
-         w6mqhzOkXwHlYb+raslpufZ86W/dPK3u0Y6MvLJYNYOxFrK52fOwHT6I0w0cb562GcBC
-         k4UA==
-X-Gm-Message-State: APjAAAUtNlndUiSKDzuVMsx+5LVGwTSuPcYyhiY/wZRP1Cndm+nJtXH8
-        nJCvUnY3KO5jv2l0zR/sP+Nw6YmV
-X-Google-Smtp-Source: APXvYqwP94XxN/1mAYpllZVkg7R0Ca1Hj3PzHU9Gi30H7BId8rz3QldVCJC+XtWjNXbzyr36ZWYraA==
-X-Received: by 2002:a19:7605:: with SMTP id c5mr2767298lff.114.1569511800568;
-        Thu, 26 Sep 2019 08:30:00 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t16sm587832lfp.38.2019.09.26.08.29.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 08:30:00 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 08:30:00 -0700 (PDT)
-X-Google-Original-Date: Thu, 26 Sep 2019 15:29:53 GMT
-Message-Id: <6025b38d2659caa111d2e5e9a1fa48d47de0e827.1569511793.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.358.git.gitgitgadget@gmail.com>
-References: <pull.358.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 4/4] git-gui--askyesno (mingw): use Git for Windows' icon, if
- available
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=J8/rVguxKSzo8ls8nkBdNJ/MdEeE1r3e0qxBWJvWUxw=;
+        b=UjVxbksZ9jFWHlfxAL9dinQJkBIRfnRTBZafg84VWmz6qWTihjQkAW91D/CAnhzt6J
+         PXA9iQbmZShqQmQyW/sCKry5ku6jWO6F+HvnQ0t3Y3nama1dLDuiPYv8etJBQXa3Ew6C
+         aVj/pHQv5lE4O1HVDzJlUp0GCjomi0haUz9ynOVKX5QkgQWdWry/lddXOP0fjqEIhVOF
+         bXVPB186nazgk2U9SdTym4WqOQzXtfxAMR3gEll0GcokuRM0d+C0jt20I+GxAnaYP1HD
+         8eExKStU3o4kGeS69KkmUMZv8rv/BrFFr5Jbf2SxFCsX7Cf1E4vnCIDpZT6RLt11sA53
+         ijKA==
+X-Gm-Message-State: APjAAAWNpn3gq620Zlzz20WMxLr4Nj4LCo3FdJTnOsR7kLBir6J/l0zk
+        ILs1yLk7a0r33zLstGYV8yOQK6CsYZk=
+X-Google-Smtp-Source: APXvYqxrJDnTDL7HBaE798OnEeYgHriPu7z2oj2gVtYp0yd6eH+5oG8KqS4ije3X+2T+XRV9D9MPjA==
+X-Received: by 2002:ac8:51:: with SMTP id i17mr4750136qtg.283.1569514578871;
+        Thu, 26 Sep 2019 09:16:18 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:b594:20f6:c10f:d45d? ([2001:4898:a800:1012:66c8:20f6:c10f:d45d])
+        by smtp.gmail.com with ESMTPSA id n125sm1253736qkn.129.2019.09.26.09.16.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Sep 2019 09:16:18 -0700 (PDT)
+Subject: Re: sizeof(var) vs sizeof(type), was Re: [PATCH] git: use COPY_ARRAY
+ and MOVE_ARRAY in handle_alias()
+To:     Philip Oakley <philipoakley@iee.email>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <d5eef24a-faa8-d6f3-c9e5-f13dc40219d4@web.de>
+ <20190923222659.GA22645@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1909261521380.15067@tvgsbejvaqbjf.bet>
+ <b79f52f7-4a7e-f7cd-ed8a-cb6cfbadd7b2@gmail.com>
+ <7bbcf6fa-e36d-4a1e-86e1-437e9e92dab7@iee.email>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <6ecafde8-cd1c-9457-4102-b73304a122fd@gmail.com>
+Date:   Thu, 26 Sep 2019 12:16:17 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <7bbcf6fa-e36d-4a1e-86e1-437e9e92dab7@iee.email>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 9/26/2019 11:24 AM, Philip Oakley wrote:
+> On 26/09/2019 14:36, Derrick Stolee wrote:
+>>>> Another good reason to use "sizeof(var)" instead of sizeof(type)". :)
+>>> That is indeed a very good reason, in addition to getting the type right
+>>> automatically (by virtue of letting the compiler pick it).
+>>>
+>>> Should we make this an explicit guideline in our documentation?
+>> Better yet: can we create a Coccinelle script to fix it automatically?
+>>
+>> -Stolee
+>>
+> How about 'Both'. We can't assume all contributors have Coccinelle on their OS/system.
 
-For additional GUI goodness.
+Both is best, but I find static checkers to be more reliable than
+updating documentation. For that reason, I would prioritize the
+Coccinelle script over adding another bullet point to the style
+guide.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-gui--askyesno | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+The PR builds for GitGitGadget run ci/run-static-analysis.sh as a check
+(see the StaticAnalysis job in [1] for an example). That provides a free
+way to get feedback for users without Coccinelle.
 
-diff --git a/git-gui--askyesno b/git-gui--askyesno
-index 45b0260eff..c0c82e7cbd 100755
---- a/git-gui--askyesno
-+++ b/git-gui--askyesno
-@@ -52,5 +52,17 @@ proc yes {} {
- 	exit 0
- }
- 
-+if {$::tcl_platform(platform) eq {windows}} {
-+	set icopath [file dirname [file normalize $argv0]]
-+	if {[file tail $icopath] eq {git-core}} {
-+		set icopath [file dirname $icopath]
-+	}
-+	set icopath [file dirname $icopath]
-+	set icopath [file join $icopath share git git-for-windows.ico]
-+	if {[file exists $icopath]} {
-+		wm iconbitmap . -default $icopath
-+	}
-+}
-+
- wm title . $title
- tk::PlaceWindow .
--- 
-gitgitgadget
+[1] https://dev.azure.com/gitgitgadget/git/_build/results?buildId=16864&view=logs
+
+Thanks,
+-Stolee
