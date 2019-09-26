@@ -2,101 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 342961F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 21:42:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB28F1F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 21:44:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725919AbfIZVmG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 17:42:06 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:32641 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725280AbfIZVmG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 17:42:06 -0400
-Received: from [92.7.169.237] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1iDbWU-0006WE-8w; Thu, 26 Sep 2019 22:42:03 +0100
-Subject: Re: [PATCH v2] doc: MyFirstContribution: fix cmd placement
- instructions
-To:     Pedro Sousa <pedroteosousa@gmail.com>, git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, emilyshaffer@google.com,
-        gitster@pobox.com, jonathantanmy@google.com
-References: <20190919184634.8869-1-pedroteosousa@gmail.com>
- <20190926190522.3424-1-pedroteosousa@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <0a52455d-9859-587e-9c88-bf47676b9b28@iee.email>
-Date:   Thu, 26 Sep 2019 22:42:03 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1728090AbfIZVoz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 17:44:55 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33742 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725280AbfIZVoy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 17:44:54 -0400
+Received: by mail-wr1-f68.google.com with SMTP id b9so452782wrs.0
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 14:44:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=YjUs9r43uZxol/ktZUQtBRipA/6b6E2jqOpS/5+5Xlk=;
+        b=jeUUPvfe32C6U254+6Ta2MGdRN+RMHMbzRsO5xUj68vjprJlQf0Fl6E944HLxFZ50B
+         dALCGUdeBCOyTPAGBQXY6Jj2ORyACeDo8DMKv58kgErbIDbUxkrZj7mq60pYZ3nVHXgU
+         LfXtFDYrVjsCH3JT7V2FN+ZG+rOykSfmub66MdOCCnn57qnd9f6usdYpGZlVaxV3EaYV
+         SfSwCWd9kj1/Fc4EwHyhw8TNhs33xCeh5ughcnX+6bHmc+Xlqnev2VA8SXWcqhEkQ4Ik
+         ojgwYh1EjVvXY/AuGGzEeJ0Ec2cM6FTrOBsjNocbnhTFP0kETWj9qqtKzGtQcvMb3Pkx
+         fydg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=YjUs9r43uZxol/ktZUQtBRipA/6b6E2jqOpS/5+5Xlk=;
+        b=WUvTVgo76JwJwse2SeWbIJCr7/a8ENHRqdJskqx4vM/43jc3uPItOoTEuMFIEiZqbp
+         dvfx7a6wzv2zXZAfQboG0lByoLhFNcfMs5/mz8LFK/qWJQAySZVzhD8Ft1HTQWBOWMxb
+         AnQAnBL4IiG0Nw+tL5D44EvBqGG6CAaml/BPG3QUkUX5jkiywjNnFU9SaKiza1+i/E8v
+         STiTHfDzLH6oJyQSJjgwrIdYOSKt9CjVbjM+1nAZyM5xwSfq46Ssx4QDuOt55nxWhvzW
+         7ZV4nYc6wvRIZGCwMlaN/OeeFCO3AGAJBM7ReLD5uW++FZoct8bEsKJFF6A5SMII+Kc8
+         JOCA==
+X-Gm-Message-State: APjAAAUYiTzbK5oscQlO7Ij8coQ5GRWJxZGBlnSBDjwgjlL9cvzUMHzN
+        tDwbDVa9tfFF7iyIZapbZTG47hwU
+X-Google-Smtp-Source: APXvYqwaYOPjLPpC4ivw3NZoLzZKI0CkpX5XH198MSo2rg0UkhLAVw5kr6QACx3TTsac+hKSwtssXQ==
+X-Received: by 2002:a5d:628f:: with SMTP id k15mr402554wru.124.1569534291908;
+        Thu, 26 Sep 2019 14:44:51 -0700 (PDT)
+Received: from szeder.dev (x4db9381f.dyn.telefonica.de. [77.185.56.31])
+        by smtp.gmail.com with ESMTPSA id y14sm1013542wrd.84.2019.09.26.14.44.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Sep 2019 14:44:51 -0700 (PDT)
+Date:   Thu, 26 Sep 2019 23:44:48 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: Git in Outreachy December 2019?
+Message-ID: <20190926214448.GI2637@szeder.dev>
+References: <20190913200317.68440-1-jonathantanmy@google.com>
+ <20190913205148.GA8799@sigill.intra.peff.net>
+ <20190916184208.GB17913@google.com>
+ <nycvar.QRO.7.76.6.1909171158090.15067@tvgsbejvaqbjf.bet>
+ <20190917120230.GA27531@szeder.dev>
+ <nycvar.QRO.7.76.6.1909231444590.15067@tvgsbejvaqbjf.bet>
+ <20190923165828.GA27068@szeder.dev>
+ <nycvar.QRO.7.76.6.1909261257160.15067@tvgsbejvaqbjf.bet>
+ <20190926132852.GF2637@szeder.dev>
+ <nycvar.QRO.7.76.6.1909262138450.15067@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-In-Reply-To: <20190926190522.3424-1-pedroteosousa@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.1909262138450.15067@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 26/09/2019 20:05, Pedro Sousa wrote:
-> Using the pull command instead of push is more accurate when giving
-> instructions on placing the psuh command in alphabetical order.
->
-> Signed-off-by: Pedro Sousa <pedroteosousa@gmail.com>
-> ---
-> Changes since v1: Addressed Philip's comments on making alphabetical
-> sort instructions more explicit
+On Thu, Sep 26, 2019 at 09:39:58PM +0200, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Thu, 26 Sep 2019, SZEDER Gábor wrote:
+> 
+> > On Thu, Sep 26, 2019 at 01:04:48PM +0200, Johannes Schindelin wrote:
+> > > > > > > Also, things like the code tracing via `-x` (which relies on Bash
+> > > > > > > functionality in order to work properly,
+> > > > > >
+> > > > > > Not really.
+> > > > >
+> > > > > To work properly. What I meant was the trick we need to play with
+> > > > > `BASH_XTRACEFD`.
+> > > >
+> > > > I'm still unsure what BASH_XTRACEFD trick you mean.  AFAICT we don't
+> > > > play any tricks with it to make '-x' work properly, and indeed '-x'
+> > > > tracing works properly even without BASH_XTRACEFD (and to achive that
+> > > > we did have to play some tricks, but not any with BASH_XTRACEFD;
+> > > > perhaps these tricks are what you meant?).
+> > >
+> > > It works okay some of the time.
+> >
+> > As far as I can tell it works all the time.
+> 
+> I must be misinterpreting this part of `t/test-lib.sh`, then:
 
-LGTM. Thanks.
-Philip
->
->   Documentation/MyFirstContribution.txt | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-> index f867037..5e9b808 100644
-> --- a/Documentation/MyFirstContribution.txt
-> +++ b/Documentation/MyFirstContribution.txt
-> @@ -97,8 +97,8 @@ int cmd_psuh(int argc, const char **argv, const char *prefix)
->   ----
->   
->   We'll also need to add the declaration of psuh; open up `builtin.h`, find the
-> -declaration for `cmd_push`, and add a new line for `psuh` immediately before it,
-> -in order to keep the declarations sorted:
-> +declaration for `cmd_pull`, and add a new line for `psuh` immediately before it,
-> +in order to keep the declarations alphabetically sorted:
->   
->   ----
->   int cmd_psuh(int argc, const char **argv, const char *prefix);
-> @@ -123,7 +123,7 @@ int cmd_psuh(int argc, const char **argv, const char *prefix)
->   }
->   ----
->   
-> -Let's try to build it.  Open `Makefile`, find where `builtin/push.o` is added
-> +Let's try to build it.  Open `Makefile`, find where `builtin/pull.o` is added
->   to `BUILTIN_OBJS`, and add `builtin/psuh.o` in the same way next to it in
->   alphabetical order. Once you've done so, move to the top-level directory and
->   build simply with `make`. Also add the `DEVELOPER=1` variable to turn on
-> @@ -149,7 +149,7 @@ a `cmd_struct` to the `commands[]` array. `struct cmd_struct` takes a string
->   with the command name, a function pointer to the command implementation, and a
->   setup option flag. For now, let's keep mimicking `push`. Find the line where
->   `cmd_push` is registered, copy it, and modify it for `cmd_psuh`, placing the new
-> -line in alphabetical order.
-> +line in alphabetical order (immediately before `cmd_pull`).
->   
->   The options are documented in `builtin.h` under "Adding a new built-in." Since
->   we hope to print some data about the user's current workspace context later,
-> @@ -167,7 +167,7 @@ Check it out! You've got a command! Nice work! Let's commit this.
->   
->   `git status` reveals modified `Makefile`, `builtin.h`, and `git.c` as well as
->   untracked `builtin/psuh.c` and `git-psuh`. First, let's take care of the binary,
-> -which should be ignored. Open `.gitignore` in your editor, find `/git-push`, and
-> +which should be ignored. Open `.gitignore` in your editor, find `/git-pull`, and
->   add an entry for your new command in alphabetical order:
->   
->   ----
+Ok, let me try to clarify.
+
+There are a couple of things that we can't do in our tests without
+BASH_XTRACEFD, e.g. redirecting the standard error of a subshell or a
+loop to a file and then check that file with 'test_cmp' or
+'test_must_be_empty'.  With tracing enabled but without BASH_XTRACEFD,
+the trace of the commands executed within the subshell or loop end up
+in that file as well, and cause failure (grepping through that file is
+mostly ok, though).  Back then we had 23 test cases failing because
+they were doing things like this and needed to be fixed, so
+considering the total number of test cases we only rarely used such
+problematic constructs.
+
+Still, as I recall, Peff was concerned that these limitations might
+lead to maintenance burden on the long run, so I decided to add an
+escape hatch, just in case someone constructs such an elaborate test
+script, where redirecting the stderr of a compound command could
+considerably simplify the tests. 
+
+That snippet of code that you copied is this escape hatch: if 
+$test_untraceable is set to a non-empty value before sourcing
+'test-lib.sh', then tracing will only be enabled if BASH_XTRACEFD is
+available.
+
+All that was over a year and a half ago, and these limitations weren't
+a maintenance burden at all so far, and nobody needed that escape
+hatch.
+
+Well, nobody except me, that is :)  When I saw back then that t1510
+saves the stderr of nested function calls with 7 parameters, I
+shrugged in disgust, admitted defeat, and simply reached for that
+escape hatch: partly because I couldn't be bothered to figure out how
+that test script works, but more importantly because I didn't want to
+risk that any cleanup inadvertently hides a bug in the future.
+
+So that's the only user that piece of code ever had, and I certainly
+hope that no other test script will ever grow so complicated that it
+will need this escape hatch.  I would actually prefer to remove it,
+but t1510 must be cleaned up first...  so I'm afraid it will be with
+us for a while.
+
+
+> -- snipsnap --
+> if test -n "$trace" && test -n "$test_untraceable"
+> then
+> 	# '-x' tracing requested, but this test script can't be reliably
+> 	# traced, unless it is run with a Bash version supporting
+> 	# BASH_XTRACEFD (introduced in Bash v4.1).
+> 	#
+> 	# Perform this version check _after_ the test script was
+> 	# potentially re-executed with $TEST_SHELL_PATH for '--tee' or
+> 	# '--verbose-log', so the right shell is checked and the
+> 	# warning is issued only once.
+> 	if test -n "$BASH_VERSION" && eval '
+> 	     test ${BASH_VERSINFO[0]} -gt 4 || {
+> 	       test ${BASH_VERSINFO[0]} -eq 4 &&
+> 	       test ${BASH_VERSINFO[1]} -ge 1
+> 	     }
+> 	   '
+> 	then
+> 		: Executed by a Bash version supporting BASH_XTRACEFD.  Good.
+> 	else
+> 		echo >&2 "warning: ignoring -x; '$0' is untraceable without BASH_XTRACEFD"
+> 		trace=
+> 	fi
+> fi
 
