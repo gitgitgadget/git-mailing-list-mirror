@@ -7,89 +7,62 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AC741F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 19:15:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 823261F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 19:30:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728527AbfIZTPu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 15:15:50 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:37827 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727707AbfIZTPu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 15:15:50 -0400
+        id S1728619AbfIZTaJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 15:30:09 -0400
+Received: from relay3-d.mail.gandi.net ([217.70.183.195]:39509 "EHLO
+        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728432AbfIZTaJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 15:30:09 -0400
 X-Originating-IP: 1.186.12.44
 Received: from localhost (unknown [1.186.12.44])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 493BEE0006;
-        Thu, 26 Sep 2019 19:15:47 +0000 (UTC)
-Date:   Fri, 27 Sep 2019 00:45:45 +0530
+        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 3E41060006;
+        Thu, 26 Sep 2019 19:30:06 +0000 (UTC)
+Date:   Fri, 27 Sep 2019 01:00:04 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: git-gui: disable the "loose objects popup" dialog?
-Message-ID: <20190926191545.ro7w6lbtlpbyxpk7@yadavpratyush.com>
-References: <CAGr--=K15nUcnsJWOP87uMMjeQmTgAeO_6hnr12k2zuNQjNyBw@mail.gmail.com>
- <91e5b3b0-08f9-66a8-ebdf-90effd34c888@kdbg.org>
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: git-gui: automatically move focus to staged file before typing
+ commit message?
+Message-ID: <20190926193004.jspiirmb4ejxznjo@yadavpratyush.com>
+References: <CAGr--=KMJmYtVaATFkOPcboAdkLvpZFbWAo4QAE0-uC6RL4Lqg@mail.gmail.com>
+ <20190914211509.sjy6lh2rlcl32lj5@yadavpratyush.com>
+ <20190914212732.plymb3vnz3dv4rmc@yadavpratyush.com>
+ <CAGr--=LmhE9m9V4Dq8Zt0aXqdThzrNnWSnxWawVZiLYTKbL2ig@mail.gmail.com>
+ <20190916180059.aifw5r4c4k5o5hur@yadavpratyush.com>
+ <CAGr--=+SNO7GuHH-dE_ZnrJDCa8tv8EA5LMrVGwsMTRpxhzEZA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <91e5b3b0-08f9-66a8-ebdf-90effd34c888@kdbg.org>
+In-Reply-To: <CAGr--=+SNO7GuHH-dE_ZnrJDCa8tv8EA5LMrVGwsMTRpxhzEZA@mail.gmail.com>
 User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 26/09/19 08:54PM, Johannes Sixt wrote:
-> Am 26.09.19 um 19:31 schrieb Birger Skogeng Pedersen:
-> > Every once in a while, I get the "This repository currently has
-> > approximately (some number) loose objects." popup dialog.
-> > 
-> > I don't want to sound arrogant, but I find this popup along with the
-> > dialog showing after that prints the result of the compression,
-> > immensely annoying. And I've seen people mention before that they
-> > would, in some casese, rather not have to deal with the dialog[0].
-> > 
-> > [0] https://stackoverflow.com/questions/1106529/how-to-skip-loose-object-popup-when-running-git-gui
-> > 
-> > I get that git-gui merely wants to resolve a performance issue. But
-> > personally I'd prefer if git could just assume I always wanted to
-> > compress the database, and automatically do it without bugging me with
-> > the popups.
-> 
-> I dislike the popup, too. But I want total control over my repository:
-> No automatic compression behind my back, in particular, when that
-> expires reflogs, and git-gui does that.
+On 26/09/19 08:33PM, Birger Skogeng Pedersen wrote:
+> Honestly I'll need some help to get this one implemented. The only
+> implementation I've got working currently, is to change Alt+4 key bind
+> to do the following:
+> - Focus the "Staged Changes" widget (which will select a path in the
+> list, if it isn't focused already), then
+> - Focus the "Commit Message" widget
 
-I agree. Doing stuff like this in background by default is not the best 
-idea IMHO. If the user asks explicitly, fine, but don't do it by 
-default.
- 
-> > I propose we implement the following options in git-gui:
-> > - ignore loose objects (do not show the popup), disabled by default.
+Why are you changing the Alt+4 binding? This means your feature won't 
+work for people who use the mouse to move around in the UI (which I 
+suppose would be a majority).
 
-Reading the Stackoverflow link, it seems this is already possible via an 
-undocumented config variable "gui.gcwarning". I haven't tried using it 
-though, but I see no reason for it to not work (looking at 
-git-gui.sh:4141).
+Did you try binding a script to the FocusIn event of the commit message 
+buffer? You can do this like:
+  
+  bind $ui_comm <FocusIn> {your_script}
 
-Maybe we should add this variable in the options dialog, so people at 
-least know it exists?
-
-> > - automatically, silently compress the database, without prompt. Also
-> > disabled by default.
-> 
-> What about a configurable limit, but still show the dialog?
-
-Do people really care that much about configuring this limit to warrant 
-something like this? 
-
-
-Talking about auto compression, would it be a better idea to let users 
-disable the dialog, and then if they do want auto compression, they can 
-just run a cron job (or the Windows equivalent) to do this on their 
-repos? What reasons do people have to have this feature in git-gui, 
-instead of running cron jobs?
+I'm not sure if $ui_comm is the correct widget, but you can experiment a 
+bit by printing something in your_script to find out for sure.
 
 -- 
 Regards,
