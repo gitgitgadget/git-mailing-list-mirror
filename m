@@ -2,241 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 478C01F464
-	for <e@80x24.org>; Thu, 26 Sep 2019 13:48:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47AA61F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 14:20:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726910AbfIZNsa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 09:48:30 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:39373 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726094AbfIZNsa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 09:48:30 -0400
-Received: by mail-wm1-f68.google.com with SMTP id v17so2650049wml.4
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 06:48:27 -0700 (PDT)
+        id S1727090AbfIZOUe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 10:20:34 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:46966 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726500AbfIZOUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 10:20:34 -0400
+Received: by mail-io1-f65.google.com with SMTP id c6so6858256ioo.13
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 07:20:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=uKkX0MTq9A/R6a7YPAAzTJx1lTWz+xF9r/a8tInyNbo=;
-        b=F4AhJzCdhIY7aRKfRPx9kh2UEUelw0dDXxH8I71VO9OPrccx4652/kVYgqNaI95fb0
-         qXbQUIxD0/G+rUOMOUPoLOrxOOQxwhSm+DgR8qUXCrgN8FIn+WEgn6F0uhy31rYSW9GB
-         5QwDFEZTtVtDXhDX5bM1Ztd+dahpmTnzOac5Xi1GgWfQPJh/QAQBbFJDoHn5z3Uq9ohv
-         FfNQ7on+P/koA4y6HxsELTCn919IVWVNDyUZRIbglygfyYs3j2vbl8LWWGuPXn5+4BUe
-         p+f8sjNUuzETmsgLeVGDRaaKOUQFL/ko3vQxbS9ItswDscIRTV6CIlJS2MnPvuiYdf86
-         gxbw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QDego3gEKzsT9wqnSmMH9L8M5RO9y2ff0Mpi/qeNHRk=;
+        b=tb5wKVEWYqfbOKDBqNcH8f9I0BaWl+sj6XgDkJUWGKca/kv64n3pxHiU25x4sH+S4t
+         wJ5TIdmqGQeYgwdZ3DRxI8xNf5m7xNGUqDTRzgy//+RFu4qWzThcVtmNj4Yx7Ao1K+9r
+         LgDVKf1q+MFVuhyFCeJu4uyivXEYFW7eerxKq3iviK7ifslBpT+yTq4+oCqfcgG/cFUA
+         FUNOnwr2RPjQdEG3HLiT12ow4j3hF2dfQO0HXjNpJKR4G/ccNCvjKdTcKKp4YpX7xQyB
+         YnZVP1zDmlTP/9taEuDTYQP9AuTam7aGE+6hjNURCkGbgNCsPwZHazqXszOdEQou934b
+         jL/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=uKkX0MTq9A/R6a7YPAAzTJx1lTWz+xF9r/a8tInyNbo=;
-        b=Zvq89fRtdH1T1wEwDasVq3em7adeOoKQwv/f9O7bw468Fg/i7sU9ioN1smjnl5jxdb
-         F0Xsqtdid6bNDFQA38ibf+ni9X7292MnT4PvO7UEEh7X9yHQoBfsNcX8hZxtEpdZ4/nL
-         m7JoqD+BHO7TmvSM1QJ/2qR5rsRK3j9BH2hWJVUIgJsmiZS0ielD0YEDJRO69mXt9AEA
-         IoYYk97LCZuPeEyZVrgmhqmhTPOPkCBukj9LTfPmg58w/hIKywFWl89PIRMW1dO3yRZc
-         HIT3EMpFu5gZNd1S4b+Csue8fQFXcUdmKQE+g+RiYMCpyDCTPEd4B3Th+I0AFbU+N7rp
-         Y+Og==
-X-Gm-Message-State: APjAAAXJgdfcwPcoCacvvWmEowmFo+eo8ez16/mZvJoj0XO4DCtBR/U8
-        ZevVH0DXmNvv0fkPEwlOqnMccXA0
-X-Google-Smtp-Source: APXvYqyLGqVmy9UqpbtS4jtd2ORBm/0tXJrGtbQdtH3oKuKGaUfNEg9EKvRsK3x9TZTqVA/UGOQ3rw==
-X-Received: by 2002:a1c:6607:: with SMTP id a7mr3250906wmc.125.1569505706640;
-        Thu, 26 Sep 2019 06:48:26 -0700 (PDT)
-Received: from [192.168.2.240] (host-92-22-10-31.as13285.net. [92.22.10.31])
-        by smtp.gmail.com with ESMTPSA id z142sm7282241wmc.24.2019.09.26.06.48.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Sep 2019 06:48:26 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 00/19] hashmap bug/safety/ease-of-use fixes
-To:     Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-References: <20190924010324.22619-1-e@80x24.org>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <935a9ad6-2dfb-3073-9f62-4e0f7bf7a170@gmail.com>
-Date:   Thu, 26 Sep 2019 14:48:24 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QDego3gEKzsT9wqnSmMH9L8M5RO9y2ff0Mpi/qeNHRk=;
+        b=DSHTiW8vMVbkJNj4hlicw1d0oQ+Sp7M8mPtgIPKZwXuPFPe7abBr1OKsbjDWtQH9EK
+         1Pn3Ds8A2YwlnW+oMNaGkIlmimx8vkGtKiLEyR0FcQ0y7l/2gMldt7CZTDfHf46wW5dz
+         pjIH7fNZgtD5VgvocdX2Bj9ChVOki4uIwSoj19fPODx3VpJxRXBZ6eKOXpHpOVFTL+z+
+         txvL9Mc/o9xV0R4PaafCJM66tFj+zTZCZelmK2TrK3C/H2XUmQOd4xmSa596yS2WHoSM
+         2vljPIHFCTKy1pTq7z/oMNdAsexwJnlzm7KIsJ/4x+Kdj/70qr61+e0/khzwoAoSvMYr
+         MVRQ==
+X-Gm-Message-State: APjAAAUndaxTv/X/xbJahze/R69iwFjusI5KFUEQ2kWAteeu1NTVlpED
+        zLb98/l8mIENN7QbA07YiZ55iNmV1DCRSZQRrdc=
+X-Google-Smtp-Source: APXvYqzJGGftYk4PmIuqzlItBn996yDs2QQTjYw+A0c5uaYHkj5dqnPSv5mwiNx1JAuexsjQm8kXEXlnpu30otBZAwc=
+X-Received: by 2002:a92:4994:: with SMTP id k20mr2552988ilg.159.1569507631725;
+ Thu, 26 Sep 2019 07:20:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190924010324.22619-1-e@80x24.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+References: <20190520120636.GA12634@sigill.intra.peff.net> <20190520121301.GD11212@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1905230858570.46@tvgsbejvaqbjf.bet> <20190524063955.GD25694@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1905281301070.44@tvgsbejvaqbjf.bet> <20190528213529.GG24650@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1905291356240.44@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1905291356240.44@tvgsbejvaqbjf.bet>
+From:   Alejandro Sanchez <asanchez1987@gmail.com>
+Date:   Thu, 26 Sep 2019 16:20:05 +0200
+Message-ID: <CAA4phoF5xm=HuoAmor+dQEBqBJn_0thAT38ao8JtA6XhGCDQ6Q@mail.gmail.com>
+Subject: Re: [PATCH 4/4] am: fix --interactive HEAD tree resolution
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric
+Hi,
 
-On 24/09/2019 02:03, Eric Wong wrote:
-> Patches 1-11 are largely unchanged from the original series with the
-> exception of 2, which is new and posted at:
-> 
-> 	https://public-inbox.org/git/20190908074953.kux7zz4y7iolqko4@whir/
-> 
-> 12-17 take further steps to get us away from hashmap_entry being
-> the first element, but they're also a bit ugly because __typeof__
-> isn't portable
-> 
-> 18-19 finally brings me to the APIs I want to expose without
-> relying on __typeof :)
+Are there any updates to this problem?
 
-Looking at the overall diff for this series looks a lot nicer with the 
-extra patches that eliminate most of the explicit calls to 
-container_of(). Thanks for the improved api and the cocci-check patch as 
-well.
+Thank you,
+Alex
 
-I've only had time for a quick look through but the patches seem well 
-ordered and easy to follow. I think there are some line folding issues 
-where you have wrapped a line when you added the type parameter and then 
-removed it in a later path without re-flowing the line. Apart from that 
-the only thing I noticed is that hashmap.h still starts with
 
-   * struct long2string {
-   *     struct hashmap_entry ent; // must be the first member!
-
-Is that still the case now that hashmap_{get,put,remove}_entry() use 
-container_of() and hashmap_init() takes a struct hashmap_entry? That 
-comment is in a lot of our structure definitions as well.
-
-Best Wishes
-
-Phillip
-
-> Apologies for the delays, been busy with other stuff...
-> 
-> Previous discussion starts at:
-> 
-> 	https://public-inbox.org/git/20190826024332.3403-1-e@80x24.org/
-> 
-> The following changes since commit 745f6812895b31c02b29bdfe4ae8e5498f776c26:
-> 
->    First batch after Git 2.23 (2019-08-22 12:41:04 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://80x24.org/git-svn.git hashmap-wip-v2
-> 
-> for you to fetch changes up to 212a596edd99169b284912b7b70b6280e2fb90e6:
-> 
->    hashmap: remove type arg from hashmap_{get,put,remove}_entry (2019-09-24 00:42:22 +0000)
-> 
-> ----------------------------------------------------------------
-> Eric Wong (19):
->        diff: use hashmap_entry_init on moved_entry.ent
->        coccicheck: detect hashmap_entry.hash assignment
->        packfile: use hashmap_entry in delta_base_cache_entry
->        hashmap_entry_init takes "struct hashmap_entry *"
->        hashmap_get_next takes "const struct hashmap_entry *"
->        hashmap_add takes "struct hashmap_entry *"
->        hashmap_get takes "const struct hashmap_entry *"
->        hashmap_remove takes "const struct hashmap_entry *"
->        hashmap_put takes "struct hashmap_entry *"
->        introduce container_of macro
->        hashmap_get_next returns "struct hashmap_entry *"
->        hashmap: use *_entry APIs to wrap container_of
->        hashmap_get{,_from_hash} return "struct hashmap_entry *"
->        hashmap_cmp_fn takes hashmap_entry params
->        hashmap: use *_entry APIs for iteration
->        hashmap: hashmap_{put,remove} return hashmap_entry *
->        hashmap: introduce hashmap_free_entries
->        OFFSETOF_VAR macro to simplify hashmap iterators
->        hashmap: remove type arg from hashmap_{get,put,remove}_entry
-> 
->   attr.c                              |  22 ++---
->   blame.c                             |  25 +++---
->   builtin/describe.c                  |  21 +++--
->   builtin/difftool.c                  |  56 ++++++------
->   builtin/fast-export.c               |  15 ++--
->   builtin/fetch.c                     |  30 ++++---
->   config.c                            |  24 +++---
->   contrib/coccinelle/hashmap.cocci    |  16 ++++
->   diff.c                              |  31 ++++---
->   diffcore-rename.c                   |  15 ++--
->   git-compat-util.h                   |  33 ++++++++
->   hashmap.c                           |  58 ++++++++-----
->   hashmap.h                           | 164 +++++++++++++++++++++++++++++-------
->   merge-recursive.c                   |  87 ++++++++++---------
->   name-hash.c                         |  57 +++++++------
->   oidmap.c                            |  20 +++--
->   oidmap.h                            |   6 +-
->   packfile.c                          |  22 +++--
->   patch-ids.c                         |  18 ++--
->   range-diff.c                        |  10 +--
->   ref-filter.c                        |  31 ++++---
->   refs.c                              |  23 +++--
->   remote.c                            |  21 +++--
->   revision.c                          |  28 +++---
->   sequencer.c                         |  44 ++++++----
->   sub-process.c                       |  20 +++--
->   sub-process.h                       |   4 +-
->   submodule-config.c                  |  52 +++++++-----
->   t/helper/test-hashmap.c             |  49 ++++++-----
->   t/helper/test-lazy-init-name-hash.c |  12 +--
->   30 files changed, 647 insertions(+), 367 deletions(-)
->   create mode 100644 contrib/coccinelle/hashmap.cocci
-> 
-> Eric Wong (19):
->    diff: use hashmap_entry_init on moved_entry.ent
->    coccicheck: detect hashmap_entry.hash assignment
->    packfile: use hashmap_entry in delta_base_cache_entry
->    hashmap_entry_init takes "struct hashmap_entry *"
->    hashmap_get_next takes "const struct hashmap_entry *"
->    hashmap_add takes "struct hashmap_entry *"
->    hashmap_get takes "const struct hashmap_entry *"
->    hashmap_remove takes "const struct hashmap_entry *"
->    hashmap_put takes "struct hashmap_entry *"
->    introduce container_of macro
->    hashmap_get_next returns "struct hashmap_entry *"
->    hashmap: use *_entry APIs to wrap container_of
->    hashmap_get{,_from_hash} return "struct hashmap_entry *"
->    hashmap_cmp_fn takes hashmap_entry params
->    hashmap: use *_entry APIs for iteration
->    hashmap: hashmap_{put,remove} return hashmap_entry *
->    hashmap: introduce hashmap_free_entries
->    OFFSETOF_VAR macro to simplify hashmap iterators
->    hashmap: remove type arg from hashmap_{get,put,remove}_entry
-> 
->   attr.c                              |  22 ++--
->   blame.c                             |  25 +++--
->   builtin/describe.c                  |  21 ++--
->   builtin/difftool.c                  |  56 ++++++----
->   builtin/fast-export.c               |  15 ++-
->   builtin/fetch.c                     |  30 ++---
->   config.c                            |  24 ++--
->   contrib/coccinelle/hashmap.cocci    |  16 +++
->   diff.c                              |  31 +++---
->   diffcore-rename.c                   |  15 ++-
->   git-compat-util.h                   |  33 ++++++
->   hashmap.c                           |  58 ++++++----
->   hashmap.h                           | 164 +++++++++++++++++++++++-----
->   merge-recursive.c                   |  87 ++++++++-------
->   name-hash.c                         |  57 +++++-----
->   oidmap.c                            |  20 ++--
->   oidmap.h                            |   6 +-
->   packfile.c                          |  22 ++--
->   patch-ids.c                         |  18 +--
->   range-diff.c                        |  10 +-
->   ref-filter.c                        |  31 ++++--
->   refs.c                              |  23 +++-
->   remote.c                            |  21 ++--
->   revision.c                          |  28 +++--
->   sequencer.c                         |  44 +++++---
->   sub-process.c                       |  20 ++--
->   sub-process.h                       |   4 +-
->   submodule-config.c                  |  52 +++++----
->   t/helper/test-hashmap.c             |  49 +++++----
->   t/helper/test-lazy-init-name-hash.c |  12 +-
->   30 files changed, 647 insertions(+), 367 deletions(-)
->   create mode 100644 contrib/coccinelle/hashmap.cocci
-> 
-> 
-> base-commit: 745f6812895b31c02b29bdfe4ae8e5498f776c26
-> 
+On Wed, May 29, 2019 at 1:57 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Peff,
+>
+> On Tue, 28 May 2019, Jeff King wrote:
+>
+> > On Tue, May 28, 2019 at 01:06:21PM +0200, Johannes Schindelin wrote:
+> >
+> > > > Or do you prefer having a one-liner? I'd rather come up with a more
+> > > > generic helper to cover this case, that can run any command and compare
+> > > > it to a single argument (or stdin). E.g.,:
+> > > >
+> > > >   test_cmp_cmd no-conflict git log -1 --format=%s
+> > > >
+> > > > or
+> > > >
+> > > >   test_cmp_cmd - git foo <<-\EOF
+> > > >   multi-line
+> > > >   expectation
+> > > >   EOF
+> > >
+> > > I guess that you and me go into completely opposite directions here. I
+> > > want something *less* general. Because I want to optimize for the
+> > > unfortunate times when a test fails and most likely somebody else than the
+> > > original author of the test case is tasked with figuring out what the heck
+> > > goes wrong.
+> > >
+> > > You seem to want to optimize for writing test cases. Which I find -- with
+> > > all due respect -- the wrong thing to optimize for. It is already dirt
+> > > easy to write new test cases. But *good* test cases (i.e. easy to debug
+> > > ones)? Not so much.
+> >
+> > Hmm. I too want the test output to be useful to people other than the
+> > test author. But I find the output from test_cmp perfectly fine there.
+> > My first step in digging into a failure is usually to look at what
+> > commands the test is running, which generally makes it obvious why we
+> > are expecting one thing and seeing another (or at least, just as obvious
+> > as a hand-written message).
+> >
+> > So to me the two are equal on that front, which makes me want to go with
+> > the thing that is shorter to write, as it makes it more likely the test
+> > writer will write it. The _worst_ option IMHO is a straight-up use of
+> > "test" which provides no output at all in the test log of what value we
+> > _did_ see. That requires the person looking into the failure to re-run
+> > the test, which is hard if it's a remote CI, or if the failure does not
+> > always reproduce.
+>
+> If you think your version is easier to debug, then I won't object.
+>
+> Thanks,
+> Dscho
