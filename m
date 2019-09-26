@@ -8,106 +8,85 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9BFE1F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 21:17:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75EB71F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 21:18:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728844AbfIZVRO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 17:17:14 -0400
-Received: from mail-lj1-f174.google.com ([209.85.208.174]:42684 "EHLO
-        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726027AbfIZVRN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 17:17:13 -0400
-Received: by mail-lj1-f174.google.com with SMTP id y23so356312lje.9
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 14:17:11 -0700 (PDT)
+        id S1728854AbfIZVR7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 17:17:59 -0400
+Received: from mail-lf1-f41.google.com ([209.85.167.41]:37685 "EHLO
+        mail-lf1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726027AbfIZVR7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 17:17:59 -0400
+Received: by mail-lf1-f41.google.com with SMTP id w67so281499lff.4
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 14:17:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Zvlb7WqjkI/qZlOIr5HvOL97s8w49okBhHtv37Pjh1o=;
-        b=fghyRb7NMktYf6UpOrnHQE9xr2mM9WuxJans/CmSYq5dXWvTSqYUEF120tyBixgmnn
-         K4YmNS/GOeULlN5r7WSI5VvbemNW91FWBLQ1t0HO39BBrii9IFWe2AYdhAY0REtKga9n
-         aK3Oa8RP8iDkxUsisggyJ0/QbbONZHDR6Sr2Noj+cTpXHNCFsLvOjAi0H58VvVncxR61
-         Jv604JV5wwoZrQjdwIMyqdI1yWj2BnBcu6AuNwSmG+vSabjpJVAcRLBafsmM1Bl+bPYX
-         MOJoZYyEumIgNeDWreNabKb8o8aMhB5eUcsIbRhPNCE7w07rjPCM4KjsOxotbaKvv3QG
-         c6pA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=H/YbzlGrIqHSVsOx2TF38NdbZDKmHkaZCa6WIvSe7fk=;
+        b=XHSWRaS0D+bGKjsWdlok3qzyz91EfxypjaUMdGFU9TAi2iJXGPlKuM5km+UISsLpW9
+         5Ori2kYUIbXkDNUyGlEHDSi/Kd4PC1a4We3Fusbnod+Jt5F1R0W7H5MCOysdNqFtjoI5
+         jIOjNv05a9dPJMArzfES4cd1O0c2fokmUglP7PfhCs225p2/Q+IYnzwEhoInBuLp9W/N
+         yPENxu3nlOs2S7wweN7BIIvR8Ub/iR3RakXfoSRG2Gm16jV/uWgAHYMXraFGaKdb4kdO
+         l+7xDLX02qIiaMQRcFVbxPXKjgKljIlSsm6yRb1FzbBWKZMGHDP6cLl0XGae31shZ0DA
+         Jz5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Zvlb7WqjkI/qZlOIr5HvOL97s8w49okBhHtv37Pjh1o=;
-        b=J1LWmUPfZ422Ox8++/D5438P8CQjl5H3lH7/tWulf+ujCU3mfxHUUx0qlFphENBNpW
-         TUOQHvq+ZRlmMwug3HE0mxTA36fqNbeujSzPgdX/GjO7I7z0Usjl2CpF0K7Bs0TLoy57
-         iVDeBrPWefyN3pC3tqaK7gGWP6gvvX8MmWQP/ha94z4d2oDs/4Rhe0WR5oNe5/j5wrPQ
-         +xL3/ez6Jy+RYpFqcu5Qv+tGw8N7dvrdv07Zf5M/f2ZbbNzQNSS5jW1vMCAF2hawOLgI
-         9yjUG9pqQVjbKGF1aKP+Y7k2znSit+ujtRmQe4S23k/ixWFNUrNCseQEweYbMcvV8qr1
-         eJJg==
-X-Gm-Message-State: APjAAAV2H+/YTLSBqzaxGce6tYalwCFqQV/q7mRhTiVAbNzsP0y3pyVM
-        +Ur/NFwjMuqhgkJVoEwnj/pRd6qV
-X-Google-Smtp-Source: APXvYqw62dJ1cWQi8wt6pN1ortT1LneA2sUP9nLuTnubjzIwoljbbH0NGut9X9d+UBfp1PqP2z9oUA==
-X-Received: by 2002:a2e:9a0c:: with SMTP id o12mr466873lji.204.1569532631083;
-        Thu, 26 Sep 2019 14:17:11 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d3sm63076ljc.66.2019.09.26.14.17.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 14:17:10 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 14:17:10 -0700 (PDT)
-X-Google-Original-Date: Thu, 26 Sep 2019 21:17:08 GMT
-Message-Id: <eca193f91b85fc4ffea453bc3adb64bc5c8831a8.1569532628.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.361.git.gitgitgadget@gmail.com>
-References: <pull.361.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] respect core.hooksPath, falling back to .git/hooks
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=H/YbzlGrIqHSVsOx2TF38NdbZDKmHkaZCa6WIvSe7fk=;
+        b=TUo5aIp3vBZf5HqqH5Ks83oolOVv9XFfDVlR8mc8GSLJTqX8YTucq8qobNuB0xzGsW
+         L2C4dIjFXLR9RCsZxnsbbxNxEz+GLE5Gnd2klKZ2QB4XvX5sSmW0ASyeffhzyQyQOGWX
+         KZheAbZFzT293nP4/+sUD8aHRxkZuL0m7uketsH7/yPHxsfRTTx+SuhF3Jf/dCvDubE6
+         prW4U6hboFKvMRyEp0DSwSP885mKaoYi75VvowxRCZz3xXdauR4XTScgFDRbnk5Talnj
+         hBXXCmT79kkhbuBv3E0eOFbROoOUsaOkee9PdXW3d15UGD4Mv+oyrPG8XXY91njLTlfq
+         JfAQ==
+X-Gm-Message-State: APjAAAVrz7/6RrWpPHhU8eF4nYSUtSzSEcOAu46Rtu8VR8VimbefUlFS
+        +Ov7p2gO3t8bow1EO3ell+/tJ8/DzWPbwVtnIVE=
+X-Google-Smtp-Source: APXvYqyNV8mlSch2jPRabMeee+wxyFTJKrsohWmp2zv1L8hVp1CsG0qQveyrgfqr6l90xyhYAmIL5FoW+vJM0NVbK84=
+X-Received: by 2002:a19:f801:: with SMTP id a1mr346254lff.166.1569532677551;
+ Thu, 26 Sep 2019 14:17:57 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <CAGr--=KMJmYtVaATFkOPcboAdkLvpZFbWAo4QAE0-uC6RL4Lqg@mail.gmail.com>
+ <20190914211509.sjy6lh2rlcl32lj5@yadavpratyush.com> <20190914212732.plymb3vnz3dv4rmc@yadavpratyush.com>
+ <CAGr--=LmhE9m9V4Dq8Zt0aXqdThzrNnWSnxWawVZiLYTKbL2ig@mail.gmail.com>
+ <20190916180059.aifw5r4c4k5o5hur@yadavpratyush.com> <CAGr--=+SNO7GuHH-dE_ZnrJDCa8tv8EA5LMrVGwsMTRpxhzEZA@mail.gmail.com>
+ <20190926193004.jspiirmb4ejxznjo@yadavpratyush.com>
+In-Reply-To: <20190926193004.jspiirmb4ejxznjo@yadavpratyush.com>
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
+Date:   Thu, 26 Sep 2019 23:17:46 +0200
+Message-ID: <CAGr--=Jiu-haHMX2fc8AB1uGWT1OMw5=M3_CuGWVzrYmO0uq3A@mail.gmail.com>
+Subject: Re: git-gui: automatically move focus to staged file before typing
+ commit message?
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+On Thu, Sep 26, 2019 at 9:30 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> Why are you changing the Alt+4 binding?
 
-Since v2.9.0, Git knows about the config variable core.hookspath
-that allows overriding the path to the directory containing the
-Git hooks.
+I couldn't really find an easier way before.
 
-Since v2.10.0, the `--git-path` option respects that config
-variable, too, so we may just as well use that command.
+> This means your feature won't
+> work for people who use the mouse to move around in the UI (which I
+> suppose would be a majority).
 
-For Git versions older than v2.5.0 (which was the first version to
-support the `--git-path` option for the `rev-parse` command), we
-simply fall back to the previous code.
+True. I would much prefer that the staged file is selected on commit
+widget focus, regardless of how the focus was changed (hotkey or
+mouse).
 
-This fixes https://github.com/git-for-windows/git/issues/1755
+> Did you try binding a script to the FocusIn event of the commit message
+> buffer? You can do this like:
+>
+>   bind $ui_comm <FocusIn> {your_script}
+>
+> I'm not sure if $ui_comm is the correct widget, but you can experiment a
+> bit by printing something in your_script to find out for sure.
 
-Initial-patch-by: Philipp Gortan <philipp@gortan.org>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-gui.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Ah, that's pretty neat! I'll play around with that. Thanks, Pratyush.
 
-diff --git a/git-gui.sh b/git-gui.sh
-index fd476b6999..b2c6e7a1db 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -623,7 +623,11 @@ proc git_write {args} {
- }
- 
- proc githook_read {hook_name args} {
--	set pchook [gitdir hooks $hook_name]
-+	if {[package vcompare $::_git_version 2.5.0] >= 0} {
-+		set pchook [git rev-parse --git-path "hooks/$hook_name"]
-+	} else {
-+		set pchook [gitdir hooks $hook_name]
-+	}
- 	lappend args 2>@1
- 
- 	# On Windows [file executable] might lie so we need to ask
--- 
-gitgitgadget
+Birger
