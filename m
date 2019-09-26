@@ -2,153 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A5A91F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 07:42:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BABAE1F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 07:55:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731118AbfIZHmf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 03:42:35 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:35316 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731084AbfIZHme (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 03:42:34 -0400
-Received: by mail-lf1-f68.google.com with SMTP id w6so948575lfl.2
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 00:42:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=FPsqk1PK/xKUY/hJlGx/dDqrkcUC7sJ7OXr3+q+Wi0Q=;
-        b=LkuSb85mZ4LgfnPCXfcxdcHvymw2B19yOybCnIIAYhxVlmZLAKwfygRRzSSwDpbIVH
-         4tOxEsiyROvLQaY05MHMGiYimYzqXXVS4X5vnvs2IdPRxvSgTeDR9M8ulvrUcyxdnXbT
-         tHDD7IBMi/EAfY1+kuzM3gBzIc8hpHAYOb/5OELzZuYWeM/kN35rtnK2bWtJsKnKBVmg
-         jknJkwQUqOvxKdJB6daJWs5TmMFxAuk+rQrf+S/8wnew9BLTaBjL9A90y40xav9+hE1J
-         UBEPXkuZbS+St7aCMVwrHM3PEzUU7pAGSKxbLv2F8shRere4ZQh6IK3zYlJwSNizHBNB
-         I7Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FPsqk1PK/xKUY/hJlGx/dDqrkcUC7sJ7OXr3+q+Wi0Q=;
-        b=Q9aSIurN86fYuWxUKwww2dUQZUsTI6vFkuQlTx9LMF9AL3LHeh+oor3Ai+EJfV8B7L
-         jPXREGOsh4p1oVg6w1jKE6qUJbI9WN5cSKd5N1CDQ8Z6AP9ANXwhQdHasVOc83GHxYIW
-         s4b6XQ+lWuks6HmD/grM+MvP0kJdPQnN9jBaN1WZO+KYnuF8VYZfCRnEyUiGhCtlGxDZ
-         D9FvfI+qacbw+7VTbgfSq0XjiZKgO2zgWZ1huCi8OfhlRPcmSltNhOVnuqzf4QC+VyZA
-         P4/+IXXa/FKndms2lbjAjP0/yYh7FNcjzaQFAhOyC+A/vhZ5t8bmowXzQ+cP719PPIUR
-         7u3A==
-X-Gm-Message-State: APjAAAULPLA2hJ1eXiVhC7wGshcvlutmmEuakKra4QxKLwrzri9a3aIR
-        g83m2Ds85l66C/uZt02nqiYqdjpv
-X-Google-Smtp-Source: APXvYqy5GBaznVSFbmisnhoTPnTrJS14/flvqCCKxU0dmgVfEr+7p+regu2XXFTAXkCO6JVVQu2LsA==
-X-Received: by 2002:a19:7715:: with SMTP id s21mr1251273lfc.98.1569483752775;
-        Thu, 26 Sep 2019 00:42:32 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k68sm254157lje.86.2019.09.26.00.42.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 00:42:32 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 00:42:32 -0700 (PDT)
-X-Google-Original-Date: Thu, 26 Sep 2019 07:42:27 GMT
-Message-Id: <4c684be1794cd0c62cc19d9c9558981584ec3e9a.1569483748.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.355.git.gitgitgadget@gmail.com>
-References: <pull.355.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/2] stash: handle staged changes in skip-worktree files
- correctly
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726968AbfIZHzh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 03:55:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60648 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726874AbfIZHzg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 03:55:36 -0400
+Received: (qmail 8054 invoked by uid 109); 26 Sep 2019 07:55:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 26 Sep 2019 07:55:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26006 invoked by uid 111); 26 Sep 2019 07:58:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Sep 2019 03:58:02 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 26 Sep 2019 03:55:35 -0400
+From:   Jeff King <peff@peff.net>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] promisor-remote: skip move_to_tail when n=1
+Message-ID: <20190926075535.GC20653@sigill.intra.peff.net>
+References: <20190925213718.231231-1-emilyshaffer@google.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190925213718.231231-1-emilyshaffer@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Wed, Sep 25, 2019 at 02:37:18PM -0700, Emily Shaffer wrote:
 
-When calling `git stash` while changes were staged for files that are
-marked with the `skip-worktree` bit (e.g. files that are excluded in a
-sparse checkout), the files are recorded as _deleted_ instead.
+> Previously, when promisor_remote_move_to_tail() is called for a
+> promisor_remote which is currently the *only* element in promisors, a
+> cycle is created in the promisors linked list. This cycle leads to a
+> double free later on in promisor_remote_clear(): promisors is set to
+> promisors->next (a no-op, as promisors->next == promisors); the previous
+> value of promisors is free()'d; then the new value of promisors (which
+> is equal to the previous value of promisors) is also free()'d. This
+> double-free error was unrecoverable for the user without removing the
+> filter or re-cloning the repo and hoping to miss this edge case.
 
-The reason is that `git stash` tries to construct the tree reflecting
-the worktree essentially by copying the index to a temporary one and
-then updating the files from the worktree. Crucially, it calls `git
-diff-index` to update also those files that are in the HEAD but have
-been unstaged in the index.
+Nice clear description.
 
-However, when the temporary index is updated via `git update-index --add
---remove`, skip-worktree entries mark the files as deleted by mistake.
+Is the problem only when the remote is the only element of the list, or
+would it also happen when it's at the end?
 
-Let's use the newly-introduced `--ignore-skip-worktree-entries` option
-of `git update-index` to prevent exactly this from happening.
+I think the problematic lines are:
 
-Note that the regression test case deliberately avoids replicating the
-scenario described above and instead tries to recreate just the symptom.
+  r->next = NULL;
+  *promisors_tail = r;
 
-Reported by Dan Thompson.
+If our "r" is already the tail, then promisors_tail points to &r->next,
+and we create a cycle in the linked list.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/stash.c     |  5 +++--
- git-legacy-stash.sh |  3 ++-
- t/t3903-stash.sh    | 11 +++++++++++
- 3 files changed, 16 insertions(+), 3 deletions(-)
+I think if you swap those two lines, the problem goes away. That said,
+it's subtle enough that I think covering the noop case at the start of
+the function is much clearer.
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index b5a301f24d..56f3b551e4 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1082,8 +1082,9 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
- 	}
- 
- 	cp_upd_index.git_cmd = 1;
--	argv_array_pushl(&cp_upd_index.args, "update-index", "-z", "--add",
--			 "--remove", "--stdin", NULL);
-+	argv_array_pushl(&cp_upd_index.args, "update-index",
-+			 "--ignore-skip-worktree-entries",
-+			 "-z", "--add", "--remove", "--stdin", NULL);
- 	argv_array_pushf(&cp_upd_index.env_array, "GIT_INDEX_FILE=%s",
- 			 stash_index_path.buf);
- 
-diff --git a/git-legacy-stash.sh b/git-legacy-stash.sh
-index f60e9b3e87..5398a5161d 100755
---- a/git-legacy-stash.sh
-+++ b/git-legacy-stash.sh
-@@ -193,7 +193,8 @@ create_stash () {
- 			GIT_INDEX_FILE="$TMPindex" &&
- 			export GIT_INDEX_FILE &&
- 			git diff-index --name-only -z HEAD -- "$@" >"$TMP-stagenames" &&
--			git update-index -z --add --remove --stdin <"$TMP-stagenames" &&
-+			git update-index --ignore-skip-worktree-entries \
-+				-z --add --remove --stdin <"$TMP-stagenames" &&
- 			git write-tree &&
- 			rm -f "$TMPindex"
- 		) ) ||
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index b8e337893f..1e977145b8 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1241,4 +1241,15 @@ test_expect_success 'stash --keep-index with file deleted in index does not resu
- 	test_path_is_missing to-remove
- '
- 
-+test_expect_success 'stash handles skip-worktree entries nicely' '
-+	test_commit A &&
-+	echo changed >A.t &&
-+	git add A.t &&
-+	git update-index --skip-worktree A.t &&
-+	rm A.t &&
-+	git stash &&
-+
-+	git rev-parse --verify refs/stash:A.t
-+'
-+
- test_done
--- 
-gitgitgadget
+Using that strategy, I think this:
+
+> +	if (promisors == r && promisors->next == NULL)
+> +		return;
+
+should probably just see if we're already at the end, which also covers
+the single-element case. Like:
+
+  if (!r->next)
+	return; /* we're already at the end */
+
+or possibly:
+
+  if (promisors_tail == &r->next)
+	return; /* we're already at the end */
+
+I also can't help but think this would all be a lot simpler using the
+implementation in list.h. Then we don't have to pass this weird
+"previous" pointer around (because it's a doubly-linked list). And
+functions like this one could go away in favor of list_move(). But
+that's obviously a bigger change.
+
+> This change showed up for us in a user bugreport; I'm actually fairly
+> unfamiliar with the codebase here but given the drastic nature of the
+> failure, I wanted to get a fix up quickly. I'm still working on how to
+> reproduce this exact case in the test suite (and actually would
+> appreciate any pointers). Specifically, it looks like we only really
+> break if we have a single promisor_remote in the linked list, call
+> move_to_tail() on it at least once, and then call clear() on it without
+> adding another promisor_remote first.
+
+The only call is in promisor_remote_init(), where we try to move
+whatever promisor we get from looking up repository_format_partial_clone.
+That name in turn comes from the extensions.partialclone config.
+
+The init function also creates elements in the list from any remotes
+marked with remote.XYZ.promisor in the config.
+
+So this is enough to create the cycle in the linked list:
+
+  git init
+  git remote add foo /wherever
+  git config remote.foo.promisor true
+  git config extensions.partialclone foo
+  git fetch foo
+
+but it doesn't trigger the double-free because we don't ever free
+anything. We only call the clear() function during reinit(). And that
+only happens in partial_clone_register(). So if we take the commands
+above, and then try to actually do a partial clone with it (causing it
+to re-register), I get (building with ASan, but vanilla glibc seems to
+detect the double-free too):
+
+  $ git fetch --filter=blob:none foo
+  ==30356==ERROR: AddressSanitizer: heap-use-after-free on address 0x603000001f90 at pc 0x559adb9a0919 bp 0x7ffeb7a52b30 sp 0x7ffeb7a52b28
+  READ of size 8 at 0x603000001f90 thread T0
+    #0 0x559adb9a0918 in promisor_remote_clear /home/peff/compile/git/promisor-remote.c:173
+    #1 0x559adb9a0918 in promisor_remote_reinit /home/peff/compile/git/promisor-remote.c:183
+    #2 0x559adb5856c0 in fetch_one_setup_partial builtin/fetch.c:1570
+    #3 0x559adb5856c0 in cmd_fetch builtin/fetch.c:1736
+    [...etc...]
+
+Another way to manifest the error:
+
+  git remote add bar /does-not-matter
+  git fetch --filter=blob:none bar
+
+Now we'll try to register "bar". But since it's _not_ already in the
+linked list, our search will go on forever, since the list loops back on
+itself.
+
+-Peff
