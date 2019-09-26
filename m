@@ -2,134 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93C071F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 13:28:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE6D11F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 13:36:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726880AbfIZN26 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 09:28:58 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:44622 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726817AbfIZN26 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 09:28:58 -0400
-Received: by mail-wr1-f66.google.com with SMTP id i18so2464330wru.11
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 06:28:56 -0700 (PDT)
+        id S1726817AbfIZNgt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 09:36:49 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:41206 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726094AbfIZNgt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 09:36:49 -0400
+Received: by mail-qk1-f194.google.com with SMTP id p10so1752905qkg.8
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 06:36:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=iMRViA4J4Y7VUlrHVSDn0arSHqU3NrAf+TwslWWdXBY=;
-        b=ERilNpH+WacRfvBCZWTI8CFMBP8mdTuKJtpZDCxZY3JiSULUKEaGYosnIM2c1w1K4Z
-         ay0jo1sgcg7mR2tbQ86Rfoa+rlBUyfKpemfDL6BZGepGu4ufTQHAtwUyTgEyom74eNi1
-         SBfj7PH9LMi5gLMdwuTdr+IaD3u2yMmSpp1Eu6YtcTCEZ0C7ikXEPof8zRi4qV1jWS0N
-         xouYavKIltz2oIxdw1MT/qBy2iCIET57+M9LBew5Syt2+hlrWCkgrE22XGSNWLgPriUp
-         HRL9PDCc1SfXEAYtmbZllh6pYUTQeIqE89KBC45H+7Gu38rdUSFoQXsjdfmSr8GKMv0Z
-         v5gw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=PQc1EkREy542qBGfuQ9Y4sJJPjkPkeizV4nRCHzyk7U=;
+        b=Qy4UxkszZoP7fnItxQLwXP9aubddvpZtyyjdL3dShXKoAgclGJ7k14yYnf6OOR57mc
+         9QE0QPR7+a1wxqex0XGn6+gT/bs7KJmIA3OEBb4aXc+jIa4zlSpGGct3cLdsDKOuLS4V
+         0293hav0RZZ7/7okt9y9D3ee7qKYtqfuvKKLUDKCvsFfsXxBQMXvS5mSj/jSPpz/1Dwc
+         Nt3ZQhvrm93tUJl2z3PerVC5GDU+uf7DXq8uwH1aysANlFYK+q+lPKedrcruFrv0yIwU
+         ZZnF8jkxLZrJTN4V/4tCD8SlrlrJ8JGnVjSYZeu72fKL2SzAVAKTBGOoO+Aa1KkQ9+0U
+         UdmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=iMRViA4J4Y7VUlrHVSDn0arSHqU3NrAf+TwslWWdXBY=;
-        b=jonNr3ZafwThqeqCv9kZjx5ZNykAWVCw4L4rVk9aMpLWIBTPISVCVppbKhtFzFm9S5
-         /EvZgzBgpswNMd9Pw1uTbvQKpyJhRYhi+wh5E6nJVzY1+ZoEymtdRaLISVxZaBhDMKny
-         0wzobqaKukVbMFo4tK7jJ1cRt8uxwZcjtBf+I2t409j43zvV9V+1GMMbQinxYpkhHxVh
-         PNOo5ltOzGtJXh0DyPsev7BrxzZ/jiXuch+HFx3Rr+SBopdLL+MnLFYEroCJRQNuPv1j
-         osQtPf9MMKYfDbQBdsfBBBmgO8emIZJEFBzYbMSGL3m6gkl/s6toEYBprLapyUZ4chCa
-         nkSg==
-X-Gm-Message-State: APjAAAXpahuoDmCDk4mvp0eOYXlLNWHMUGm0c6KV/Q8bQSyV0YEHiTtu
-        PzpXTrsZJQxL0h2O4d2XO3g=
-X-Google-Smtp-Source: APXvYqyD9LmxDIsJ0RQv51fQiumaypAn794lKk1fUdAGtrKGoz75kx9QEni7KedeYSz1JwMuehlPzA==
-X-Received: by 2002:adf:fa86:: with SMTP id h6mr2965578wrr.152.1569504535985;
-        Thu, 26 Sep 2019 06:28:55 -0700 (PDT)
-Received: from szeder.dev (x4db9381f.dyn.telefonica.de. [77.185.56.31])
-        by smtp.gmail.com with ESMTPSA id u4sm3809589wmg.41.2019.09.26.06.28.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 06:28:55 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 15:28:52 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: Git in Outreachy December 2019?
-Message-ID: <20190926132852.GF2637@szeder.dev>
-References: <20190827051756.GA12795@sigill.intra.peff.net>
- <20190913200317.68440-1-jonathantanmy@google.com>
- <20190913205148.GA8799@sigill.intra.peff.net>
- <20190916184208.GB17913@google.com>
- <nycvar.QRO.7.76.6.1909171158090.15067@tvgsbejvaqbjf.bet>
- <20190917120230.GA27531@szeder.dev>
- <nycvar.QRO.7.76.6.1909231444590.15067@tvgsbejvaqbjf.bet>
- <20190923165828.GA27068@szeder.dev>
- <nycvar.QRO.7.76.6.1909261257160.15067@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=PQc1EkREy542qBGfuQ9Y4sJJPjkPkeizV4nRCHzyk7U=;
+        b=MKAnEmkWK3Ot6353AfE9AxYrNVlPwc9rqUk3a/Rm3AWWYBJ+daoydfmSDmLwIjx1KE
+         HdRpL4qXEXn1wRpxEtmTIFwQ+MN2n/Na5+fzePlgVw6V2J5aEV1OzDTlA598XUnkS1qi
+         hSrmXWzTN7qt/zGUyyFsaGg6p5eigM/PZqglH/tbWzN4dZU8IEF5AasOLtAirEpMx5Ud
+         z95pNsB3tL5x/KdFVb0AjPbShaRkOJcKCdLRimR1hV+TotlElayMgNNQEE3uTAM7Gn7N
+         D4Qv1f+eBVi/dwVD7enbPltl2oheDQam7Zz+xNjzrELrRNMU+KOg7pyeHRy2TQQiQDPx
+         1QBQ==
+X-Gm-Message-State: APjAAAV1RKjzQq7xAF6RdLTFbFWozVPbZ2wOYdWPCYbrjVt4OkK0EZsE
+        nbVVoOiYeT0o19BJLQT/Or1UjucPi7w=
+X-Google-Smtp-Source: APXvYqwqgyHI7JHzgyQRLr3GFK29Mhf8tCa5WcM/yC7G1Vtwa6X5NLKDk/1YpjLbvCSHp89O9jY0ig==
+X-Received: by 2002:a37:6291:: with SMTP id w139mr3340294qkb.268.1569505008610;
+        Thu, 26 Sep 2019 06:36:48 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:b594:20f6:c10f:d45d? ([2001:4898:a800:1012:66c8:20f6:c10f:d45d])
+        by smtp.gmail.com with ESMTPSA id x19sm993981qkf.26.2019.09.26.06.36.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Sep 2019 06:36:47 -0700 (PDT)
+Subject: Re: sizeof(var) vs sizeof(type), was Re: [PATCH] git: use COPY_ARRAY
+ and MOVE_ARRAY in handle_alias()
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <d5eef24a-faa8-d6f3-c9e5-f13dc40219d4@web.de>
+ <20190923222659.GA22645@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1909261521380.15067@tvgsbejvaqbjf.bet>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <b79f52f7-4a7e-f7cd-ed8a-cb6cfbadd7b2@gmail.com>
+Date:   Thu, 26 Sep 2019 09:36:44 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
+In-Reply-To: <nycvar.QRO.7.76.6.1909261521380.15067@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1909261257160.15067@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 26, 2019 at 01:04:48PM +0200, Johannes Schindelin wrote:
-> > > > > Also, things like the code tracing via `-x` (which relies on Bash
-> > > > > functionality in order to work properly,
-> > > >
-> > > > Not really.
-> > >
-> > > To work properly. What I meant was the trick we need to play with
-> > > `BASH_XTRACEFD`.
-> >
-> > I'm still unsure what BASH_XTRACEFD trick you mean.  AFAICT we don't
-> > play any tricks with it to make '-x' work properly, and indeed '-x'
-> > tracing works properly even without BASH_XTRACEFD (and to achive that
-> > we did have to play some tricks, but not any with BASH_XTRACEFD;
-> > perhaps these tricks are what you meant?).
+On 9/26/2019 9:22 AM, Johannes Schindelin wrote:
+> Hi Peff,
 > 
-> It works okay some of the time.
+> On Mon, 23 Sep 2019, Jeff King wrote:
+> 
+>> On Thu, Sep 19, 2019 at 10:48:30PM +0200, René Scharfe wrote:
+>>
+>>> Use the macro COPY_ARRAY to copy array elements and MOVE_ARRAY to do the
+>>> same for moving them backwards in an array with potential overlap.  The
+>>> result is shorter and safer, as it infers the element type automatically
+>>> and does a (very) basic type compatibility check for its first two
+>>> arguments.
+>>>
+>>> These cases were missed by Coccinelle and contrib/coccinelle/array.cocci
+>>> because the type of the elements is "const char *", not "char *", and
+>>> the rules in the semantic patch cautiously insist on the sizeof operator
+>>> being used on exactly the same type to avoid generating transformations
+>>> that introduce subtle bugs into tricky code.
+>>
+>> Another good reason to use "sizeof(var)" instead of sizeof(type)". :)
+> 
+> That is indeed a very good reason, in addition to getting the type right
+> automatically (by virtue of letting the compiler pick it).
+> 
+> Should we make this an explicit guideline in our documentation?
 
-As far as I can tell it works all the time.
+Better yet: can we create a Coccinelle script to fix it automatically?
 
-(Well, Ok, with the exception of t1510, but only because back then I
-couldn't be bothered to figure out how that test script works.  But
-even that script handles '-x' without BASH_XTRACEFD gracefully, and
-it's safe to run the whole test suite with '-x'.)
-
->  But IIRC `-x -V` requires the `BASH_XTRACEFD` trick.
-
-No, it doesn't; '-V' should have no effect on the '-x' trace
-whatsoever.
-
-As soon as I fixed running the test suite with '-x' and /bin/sh I
-added GIT_TEST_OPTS="--verbose-log -x" to my 'config.mak' and to our
-CI scripts.  The default shell running the test suite in our Linux CI
-jobs is dash, and in our macOS jobs it's an ancient Bash version that
-doesn't yet have BASH_XTRACEFD.  As far as I know they all work as
-they should.
-
-> However, I start to feel like I am distracted deliberately from my main
-> argument
-
-That was definitely not my intention.  However, if there are any open
-issues with '-x', then I do want to know about it and fix it sooner
-rather than later.  Alas, I still don't have the slightest clue about
-what your issue actually is.
-
-> I forgot a crucial tidbit: if you run with `-x` and a lazy prereq is
-> evaluated, not only is the output disruptive, the trace is also turned
-> off after the lazy prereq, _before_ the actual test case is run. So you
-> don't see any trace of the actual test case.
-
-Tracing is always turned on before running the test case,
-independently from whether a lazy prereq was evaluated or not, so we
-do always see the trace of the actual test case.  Notice the '+ true'
-and '++ true' lines in my earlier reply including the test traces:
-those lines are the trace of the actual test case.
-
-  https://public-inbox.org/git/20190917120230.GA27531@szeder.dev/
+-Stolee
 
