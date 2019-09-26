@@ -8,55 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 913A01F463
+	by dcvr.yhbt.net (Postfix) with ESMTP id 789771F463
 	for <e@80x24.org>; Thu, 26 Sep 2019 15:30:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727340AbfIZPaD (ORCPT <rfc822;e@80x24.org>);
+        id S1727343AbfIZPaD (ORCPT <rfc822;e@80x24.org>);
         Thu, 26 Sep 2019 11:30:03 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:38985 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727265AbfIZPaC (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:33076 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727328AbfIZPaC (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 26 Sep 2019 11:30:02 -0400
-Received: by mail-lj1-f194.google.com with SMTP id y3so2637613ljj.6
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 08:30:00 -0700 (PDT)
+Received: by mail-lf1-f66.google.com with SMTP id y127so2060493lfc.0
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 08:30:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=cJGdPqSU11PM6WKMoDjYNtqzgxCbRtpAPJYrYtksTUw=;
-        b=mDKG/vdNowpH42QB3XH2tqDVLPbuaz/g8U1/sLM9OMPKDOU8HeT70jHdTbfs0e2b3B
-         kq5l69MM/jH++OgCFZRJgkyvNMF200B/DU0Dze8mrMG3KpK0BQh9hxVGX7Ybp7ZajyoR
-         VL4KOipC2OaMgDIb+AcjBirsA/6BfK7MQ4JP/PUrlVtJAiYthAhosNYs7neIUFzgJdbL
-         guKEOAMt+5N34wr+WgdaLa8rbk9xz/SB+AeuK420oQ1EvOJeYZrvVS1is7ruL8LHIwZY
-         ei2HxgjbqXxfhjABhR2AbTWA6u6XwqgPysK08GRDYm/VWbgJyL6VkpJb67r2l4YtS5gs
-         TsSQ==
+        bh=o7H0eAkVOQrYQ/l8M8LRQgb39M1cTspu1n1arbg/hyk=;
+        b=UZ4yPDAp/Vpry83V6yn9hvm95RU3PiV3w1DJ19+RIyEKIXUMIPZlCCBkOpIj5bYaZk
+         47AHS3WXwbAN+px/mbHS4O9b8E9Q+BNbWAKbZnbg5z0SKkNEAAWNQfN1VZ5dVpG88hrJ
+         hYmpX2dm9KsdE6AtofQ5d9Ot7XtYhieWsVoHvE3IYxZsvFQ/N3j+u4/x44zSkR82ga0U
+         ZPAJsXeCy6HFYgIALrLQTTSTazbvMKLrPpG8v3zv+Imm/t6+blxrYGZR16ZobGLYIuUs
+         hzxO6qdfCKGY5q7/zDk9A/b32E3dEVfkk7d4xIzSxcH12DbZxPNhcnXZfkp/87F1TDbH
+         9Qcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cJGdPqSU11PM6WKMoDjYNtqzgxCbRtpAPJYrYtksTUw=;
-        b=sT8u4/J6DX0D9/+JoL6SVkZSiVkNvuReQvlhD01bZ7pObFLnkd4heFVUMGa+40btWx
-         3hwNuhww0WtGQd44B4+jnarK93/KuKyR5XMpQqVT6cLq24W5bVE2OLqzy/dCUtNNH0iI
-         BkZeT6rCcklOvpH9qzmnY1NtB0hWKGlLlOKoRhRVhB3JODqv/PPRtZixWFcao7YaZkJx
-         79EMhcRviBZfQ0S3qNBdpWfWJuxSKjNnZkGb0rLN0j5NVNTrX/9KzFRuWzGKg2EGlekM
-         2H93iNxQm4dQOXpgRj/jcmbGt0yvGB4CWN2WGRnYbYtOHKraZM5aD2chRxaAyt1XHW0K
-         /JjA==
-X-Gm-Message-State: APjAAAUIybUqtKfRe0ptuaDaUx/H4YX1mo47o3i+V+OP3FXJGsXlbIF/
-        G17Z90xBb/oi1vhft3p0S9DbnzRo
-X-Google-Smtp-Source: APXvYqyStWg4eGQcno6gB3K028qDW3adQOHMt/J1ZgGr11MCtyll20Dd7YgoLrX5ooDkJD2RUk0ZYg==
-X-Received: by 2002:a2e:9ad6:: with SMTP id p22mr3055018ljj.168.1569511799291;
-        Thu, 26 Sep 2019 08:29:59 -0700 (PDT)
+        bh=o7H0eAkVOQrYQ/l8M8LRQgb39M1cTspu1n1arbg/hyk=;
+        b=I/wE9ffydQfG6yFpctpMfCHIEqH8gSBujCFpGS7rhKzM7DgUZ7XiQaSCJ92K24E37/
+         EkHgR38CgZVh6RL2WAPpCHXZjn0Cgc+rNkVu7skb7DYZPksZCkH2NCaSTcmjaV0OlPTs
+         wERMJFcZsk3RTH4ArkIOMAsb8j9TfZ2B/RB+5160TuaNCTWwR+XChGqaSkqu+YtFT5kP
+         zGl/rYtIte4kpSIHHfvkPsUV8GmdjF8jUALU0CMluAqbgs+CMnz8zvUdt3/vfqaeeOHL
+         w6mqhzOkXwHlYb+raslpufZ86W/dPK3u0Y6MvLJYNYOxFrK52fOwHT6I0w0cb562GcBC
+         k4UA==
+X-Gm-Message-State: APjAAAUtNlndUiSKDzuVMsx+5LVGwTSuPcYyhiY/wZRP1Cndm+nJtXH8
+        nJCvUnY3KO5jv2l0zR/sP+Nw6YmV
+X-Google-Smtp-Source: APXvYqwP94XxN/1mAYpllZVkg7R0Ca1Hj3PzHU9Gi30H7BId8rz3QldVCJC+XtWjNXbzyr36ZWYraA==
+X-Received: by 2002:a19:7605:: with SMTP id c5mr2767298lff.114.1569511800568;
+        Thu, 26 Sep 2019 08:30:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j17sm576760lfb.11.2019.09.26.08.29.58
+        by smtp.gmail.com with ESMTPSA id t16sm587832lfp.38.2019.09.26.08.29.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 08:29:58 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 08:29:58 -0700 (PDT)
-X-Google-Original-Date: Thu, 26 Sep 2019 15:29:52 GMT
-Message-Id: <8cfc935cdba316f513f2408c1f39c5d68d5258fc.1569511793.git.gitgitgadget@gmail.com>
+        Thu, 26 Sep 2019 08:30:00 -0700 (PDT)
+Date:   Thu, 26 Sep 2019 08:30:00 -0700 (PDT)
+X-Google-Original-Date: Thu, 26 Sep 2019 15:29:53 GMT
+Message-Id: <6025b38d2659caa111d2e5e9a1fa48d47de0e827.1569511793.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.358.git.gitgitgadget@gmail.com>
 References: <pull.358.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 3/4] git-gui--askyesno: allow overriding the window title
+Subject: [PATCH 4/4] git-gui--askyesno (mingw): use Git for Windows' icon, if
+ available
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,48 +73,34 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-"Question?" is maybe not the most informative thing to ask. In the
-absence of better information, it is the best we can do, of course.
-
-However, Git for Windows' auto updater just learned the trick to use
-git-gui--askyesno to ask the user whether to update now or not. And in
-this scripted scenario, we can easily pass a command-line option to
-change the window title.
-
-So let's support that with the new `--title <title>` option.
+For additional GUI goodness.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- git-gui--askyesno | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ git-gui--askyesno | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/git-gui--askyesno b/git-gui--askyesno
-index cf9c990d09..45b0260eff 100755
+index 45b0260eff..c0c82e7cbd 100755
 --- a/git-gui--askyesno
 +++ b/git-gui--askyesno
-@@ -12,10 +12,15 @@ if {$use_ttk} {
- 	set NS ttk
- }
- 
-+set title "Question?"
- if {$argc < 1} {
- 	puts stderr "Usage: $argv0 <question>"
- 	exit 1
- } else {
-+	if {$argc > 2 && [lindex $argv 0] == "--title"} {
-+		set title [lindex $argv 1]
-+		set argv [lreplace $argv 0 1]
-+	}
- 	set prompt [join $argv " "]
- }
- 
-@@ -47,5 +52,5 @@ proc yes {} {
+@@ -52,5 +52,17 @@ proc yes {} {
  	exit 0
  }
  
--wm title . "Question?"
-+wm title . $title
++if {$::tcl_platform(platform) eq {windows}} {
++	set icopath [file dirname [file normalize $argv0]]
++	if {[file tail $icopath] eq {git-core}} {
++		set icopath [file dirname $icopath]
++	}
++	set icopath [file dirname $icopath]
++	set icopath [file join $icopath share git git-for-windows.ico]
++	if {[file exists $icopath]} {
++		wm iconbitmap . -default $icopath
++	}
++}
++
+ wm title . $title
  tk::PlaceWindow .
 -- 
 gitgitgadget
-
