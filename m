@@ -2,106 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C9541F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 16:16:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23F711F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 17:20:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727418AbfIZQQU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 12:16:20 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:34757 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726105AbfIZQQU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 12:16:20 -0400
-Received: by mail-qt1-f195.google.com with SMTP id 3so3581683qta.1
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 09:16:19 -0700 (PDT)
+        id S1727639AbfIZRU1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 13:20:27 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:39531 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726029AbfIZRU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 13:20:27 -0400
+Received: by mail-pg1-f196.google.com with SMTP id o10so1909753pgs.6
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 10:20:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=J8/rVguxKSzo8ls8nkBdNJ/MdEeE1r3e0qxBWJvWUxw=;
-        b=XbLeH7NymfBHh4rfHoTZwdYMGCWwyBxGn9pDxI/+R4pKUkrQFUVecDTRAzMHlY64L3
-         jKcIDFzx+6d5ThRdK4kvJSs+99fKyTXJiQ5G51SCZvtuS/2OQ7N5syVg90TANMhVdogt
-         68rvverr6N7rXfpXXQIZw8yMXtCGu37eUnJJU8uwMF3IM21S8WS/JwrumIOog8rmWMpE
-         VWarAVmTTIPTItgPuy5MHu83vTWBtEOh5PDdINpzFCc8hO93mOYoxnwdEbIK84GRm9jj
-         PPZcv5tTvLJc2/wZvS2gYf+vJsQoGUvlV9gXwW10Y3mXFRk0+/vnJsbO3zZ4PGewhrXp
-         JiuA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Tfxr1S3K/WlReLYl8eXbRSgLFNoKVrdv72SFrxg9JRU=;
+        b=jIVIUygowGayrsyqIXOev5TtGtPsEOhXjNbb7HBXy9lFh9ARVZ4/7cPI6yILKZMl7C
+         P6qoHVeKc9m6j+1iBJ8LKM/qKOO3x5pfCqsZI3QLh/RSH1S6vPYAo3ZkqIraExJ7FqRC
+         nQFLcbolbT1/OOoctxw1g3U1M6gmPxglTvhtwfvgDhfnKwxe1d8/4Ok9U7Z8cSMnLl/U
+         f9qa1JmZ4pVUxgp4K0NmYHEEmP/Qw2hZN52unerSXF7SR7Wvwkjibl2knOl7HJoGv9vA
+         qjJ+TgH++CrGDVpLuCMkE9mlLXPsH0EXKBMO6/w8ekbc0VGChpdfFoNLQ92uXnHuRYi3
+         JJFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=J8/rVguxKSzo8ls8nkBdNJ/MdEeE1r3e0qxBWJvWUxw=;
-        b=UjVxbksZ9jFWHlfxAL9dinQJkBIRfnRTBZafg84VWmz6qWTihjQkAW91D/CAnhzt6J
-         PXA9iQbmZShqQmQyW/sCKry5ku6jWO6F+HvnQ0t3Y3nama1dLDuiPYv8etJBQXa3Ew6C
-         aVj/pHQv5lE4O1HVDzJlUp0GCjomi0haUz9ynOVKX5QkgQWdWry/lddXOP0fjqEIhVOF
-         bXVPB186nazgk2U9SdTym4WqOQzXtfxAMR3gEll0GcokuRM0d+C0jt20I+GxAnaYP1HD
-         8eExKStU3o4kGeS69KkmUMZv8rv/BrFFr5Jbf2SxFCsX7Cf1E4vnCIDpZT6RLt11sA53
-         ijKA==
-X-Gm-Message-State: APjAAAWNpn3gq620Zlzz20WMxLr4Nj4LCo3FdJTnOsR7kLBir6J/l0zk
-        ILs1yLk7a0r33zLstGYV8yOQK6CsYZk=
-X-Google-Smtp-Source: APXvYqxrJDnTDL7HBaE798OnEeYgHriPu7z2oj2gVtYp0yd6eH+5oG8KqS4ije3X+2T+XRV9D9MPjA==
-X-Received: by 2002:ac8:51:: with SMTP id i17mr4750136qtg.283.1569514578871;
-        Thu, 26 Sep 2019 09:16:18 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:b594:20f6:c10f:d45d? ([2001:4898:a800:1012:66c8:20f6:c10f:d45d])
-        by smtp.gmail.com with ESMTPSA id n125sm1253736qkn.129.2019.09.26.09.16.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Sep 2019 09:16:18 -0700 (PDT)
-Subject: Re: sizeof(var) vs sizeof(type), was Re: [PATCH] git: use COPY_ARRAY
- and MOVE_ARRAY in handle_alias()
-To:     Philip Oakley <philipoakley@iee.email>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <d5eef24a-faa8-d6f3-c9e5-f13dc40219d4@web.de>
- <20190923222659.GA22645@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1909261521380.15067@tvgsbejvaqbjf.bet>
- <b79f52f7-4a7e-f7cd-ed8a-cb6cfbadd7b2@gmail.com>
- <7bbcf6fa-e36d-4a1e-86e1-437e9e92dab7@iee.email>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <6ecafde8-cd1c-9457-4102-b73304a122fd@gmail.com>
-Date:   Thu, 26 Sep 2019 12:16:17 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Tfxr1S3K/WlReLYl8eXbRSgLFNoKVrdv72SFrxg9JRU=;
+        b=I9xgo3ZtxkwDFqWNLky280R6Nn/ZY+O7yb09oqpitmX5SV5B4HesoXc58ti0p/YL7Q
+         tS6Q60t9Ic7oeVxsxEPCexJAPw7TTsMJ15ZIRbk6RDh6oeUlaiTkdYTtonQJBFtYGaTC
+         1jc6xwKiX4I3UBMjhkrscnq4uAH++yt1u3sBuFnWIjuKYEp6aFbjwnaWMyXsKmf4Affl
+         egaKLuOJXLC6/P4S+u8ONpi3PgoU2T2PnlQdJ+MX3OES7W+ijkQ0MOMffx9FfKBg0APg
+         XnA6iPdpebTvtCXvfIgvPIctQhI4KhCtWw6fTQOKsBEtpQiTcgQ5ANNDQM+W7Le0mgMN
+         g6xA==
+X-Gm-Message-State: APjAAAVIKLS2lIi49QzLnlZwrb3Nff47FM122RrdsS2B6Jhb0ah2Nhmx
+        os9iB5n7Xp7+VsRZvHae+r4=
+X-Google-Smtp-Source: APXvYqxuXN/8rISRItFw7fT8gca/js8R7FOEhjGa8/XnSf3aguu8R+a3n0kmrP+8Gq5qexJi5ciK6w==
+X-Received: by 2002:a17:90a:c8a:: with SMTP id v10mr4722850pja.4.1569518426101;
+        Thu, 26 Sep 2019 10:20:26 -0700 (PDT)
+Received: from generichostname ([204.14.239.54])
+        by smtp.gmail.com with ESMTPSA id g5sm3355084pfh.133.2019.09.26.10.20.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Sep 2019 10:20:24 -0700 (PDT)
+Date:   Thu, 26 Sep 2019 10:20:22 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 02/13] msvc: avoid using minus operator on unsigned types
+Message-ID: <20190926172022.GA41037@generichostname>
+References: <pull.288.git.gitgitgadget@gmail.com>
+ <2abe1e1fb0bf3025489c2e543b9a9c648a164827.1569486607.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <7bbcf6fa-e36d-4a1e-86e1-437e9e92dab7@iee.email>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2abe1e1fb0bf3025489c2e543b9a9c648a164827.1569486607.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/26/2019 11:24 AM, Philip Oakley wrote:
-> On 26/09/2019 14:36, Derrick Stolee wrote:
->>>> Another good reason to use "sizeof(var)" instead of sizeof(type)". :)
->>> That is indeed a very good reason, in addition to getting the type right
->>> automatically (by virtue of letting the compiler pick it).
->>>
->>> Should we make this an explicit guideline in our documentation?
->> Better yet: can we create a Coccinelle script to fix it automatically?
->>
->> -Stolee
->>
-> How about 'Both'. We can't assume all contributors have Coccinelle on their OS/system.
+Hi Dscho,
 
-Both is best, but I find static checkers to be more reliable than
-updating documentation. For that reason, I would prioritize the
-Coccinelle script over adding another bullet point to the style
-guide.
+On Thu, Sep 26, 2019 at 01:30:10AM -0700, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> MSVC complains about this with `-Wall`, which can be taken as a sign
+> that this is indeed a real bug. The symptom is:
+> 
+> 	C4146: unary minus operator applied to unsigned type, result
+> 	still unsigned
+> 
+> Let's avoid this warning in the minimal way, e.g. writing `-1 -
+> <unsigned value>` instead of `-<unsigned value> - 1`.
 
-The PR builds for GitGitGadget run ci/run-static-analysis.sh as a check
-(see the StaticAnalysis job in [1] for an example). That provides a free
-way to get feedback for users without Coccinelle.
+[...]
 
-[1] https://dev.azure.com/gitgitgadget/git/_build/results?buildId=16864&view=logs
+> ---
+>  read-cache.c  | 4 ++--
+>  sha1-lookup.c | 2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/read-cache.c b/read-cache.c
+> index c701f7f8b8..11f3357216 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1276,7 +1276,7 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
+>  	 */
+>  	if (istate->cache_nr > 0 &&
+>  		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
+> -		pos = -istate->cache_nr - 1;
+> +		pos = -1 - istate->cache_nr;
 
-Thanks,
--Stolee
+I've been thinking about this and I'm still not certain that this 100%
+correct from a language-lawyer perspective.
+
+If we do `-1 - istate->cache_nr`, then the unsignedness of
+istate->cache_nr takes over and the whole expression is a very large
+unsigned number.
+
+Then, when we assign to `int pos`, we are converting an unsigned number
+which is out of the range of the signed number. According to a
+StackOverflow post citing the C99 standard[1]:
+
+	Otherwise, the new type is signed and the value cannot be
+	represented in it; either the result is implementation-defined
+	or an implementation-defined signal is raised.
+
+I'm sure that most platforms that we support will handle it sanely but
+could we write this as
+
+	pos = -1 - (int) istate->cache_nr;
+
+to be doubly sure that no funny business will happen?
+
+>  	else
+>  		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
+>  
+> @@ -1894,7 +1894,7 @@ static size_t estimate_cache_size(size_t ondisk_size, unsigned int entries)
+>  	/*
+>  	 * Account for potential alignment differences.
+>  	 */
+> -	per_entry += align_padding_size(sizeof(struct cache_entry), -sizeof(struct ondisk_cache_entry));
+> +	per_entry += align_padding_size(per_entry, 0);
+>  	return ondisk_size + entries * per_entry;
+>  }
+>  
+> diff --git a/sha1-lookup.c b/sha1-lookup.c
+> index 796ab68da8..c819687730 100644
+> --- a/sha1-lookup.c
+> +++ b/sha1-lookup.c
+> @@ -97,7 +97,7 @@ int sha1_pos(const unsigned char *sha1, void *table, size_t nr,
+>  			lo = mi + 1;
+>  		mi = lo + (hi - lo) / 2;
+>  	} while (lo < hi);
+> -	return -lo-1;
+> +	return -1 - lo;
+
+Same thing here.
+
+[1]: https://stackoverflow.com/questions/50605/signed-to-unsigned-conversion-in-c-is-it-always-safe
+
+>  }
+>  
+>  int bsearch_hash(const unsigned char *sha1, const uint32_t *fanout_nbo,
+> -- 
+> gitgitgadget
+> 
