@@ -2,102 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75D9D1F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 12:57:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC7AE1F466
+	for <e@80x24.org>; Thu, 26 Sep 2019 13:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726901AbfIZM5n (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 08:57:43 -0400
-Received: from mout.gmx.net ([212.227.15.18]:48003 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726857AbfIZM5n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 08:57:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1569502661;
-        bh=2NoQRIIKhldfFsgO3/C55h99f/MZJAnvVbTIsfS+Mjo=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JYpenCpEaqBp79M4LgSWOKkA+9IVqz8AcAkLPtbAKVmkdl9AcH6nq9Tp9REShc5HZ
-         GPFwO6AlNBKVjE3FkD/17G4VYqo+FGNs/UL7ubLLan0ZBDo/3OVVDPXdYK8QaueQtL
-         rxnUJ1kSvkPFqmAgwoA0iCE0Zswvyvl5rL1I5PSo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MC30Z-1iJDRY1stB-00COIk; Thu, 26
- Sep 2019 14:57:41 +0200
-Date:   Thu, 26 Sep 2019 14:57:27 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/3] fixes related to `make hdr-check`
-In-Reply-To: <cover.1569263631.git.liu.denton@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1909261452340.15067@tvgsbejvaqbjf.bet>
-References: <cover.1569263631.git.liu.denton@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1725914AbfIZNCF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 09:02:05 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:37908 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725768AbfIZNCF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 09:02:05 -0400
+Received: by mail-qk1-f194.google.com with SMTP id u186so1659077qkc.5
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 06:02:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=XT2DKl2eHMNR4xMQS2Zkaa/5V5T2TblAfwh5s/z/Dy8=;
+        b=P2QqR7opuXienQ/cMuOWLZGEoTYKjNu2mHEvlC78S727r9kkBVkn3VCxN9vuuvm8bK
+         rB5zBR5QghwdTzwjDAOF9H20NDvnRNrraenb9Zrjz6oUh1i451gjbYeDSzV1P2jfHRNg
+         vsi/WmxEfLf6PxIuR/Lu2e5X3+l0P3GsEOoGmyAktJgCbMYwBJUNGnVVQnzSr5RvYaeo
+         k1PXyd3tffiCkYxRqH8MFdYIwRfSt5rak+5QMgEjCHYc0EeEH2euXxBT0vt918LI/qo1
+         dBjTHF8JEA6ZSwu/L2eHs8j8QiNVhKV8JP6od0x2kF0cUH3AHGuxSghrJ+FkEcIf8/+p
+         kogQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=XT2DKl2eHMNR4xMQS2Zkaa/5V5T2TblAfwh5s/z/Dy8=;
+        b=HLaPvutc4AM9twnIVshC0S7uptBcGLPnnoe39fWxPuHW/Hp61hZvihStXPf9Gz3NZx
+         GQsKGMmSzZUr8pe2OYipS+VA9SlLaf+hKQXHBpKuhNcwhx8xBHJTT8/W6CXr7qbhD8b+
+         3BPWWjY/6sd7b+KSYpxqdhKwMtpWXdmtAYcqXm2637Y07Fhjc7ERku9VsezRlFTU70/Q
+         RyiDiuBRlUPAG9dUY4P+dU4zy0BEfdRB/yAAoRcRyGdYmgFSGBfPQNtQwn2f396UY3jB
+         FKc/OxXPe7qAKw3/JUkgsUl3KfAQHRTPdiL9jyB5e5fVLAZz6wRf5DBXVzHH0VKM7V+m
+         Cl7w==
+X-Gm-Message-State: APjAAAV8P4/V8YsQZtmuiGOYomX7emlNY22yyX8n456y0+xLn6Q8bSwB
+        WgyZhKxrZBcstH6Qn0qfWPU=
+X-Google-Smtp-Source: APXvYqy4YO4l7U/Bo+S3N+fAejztaoI+hG1HruV9Z0szi9MlOpNM5LmujYfir7v6LuWa9DjcLguDYg==
+X-Received: by 2002:a37:4bd8:: with SMTP id y207mr3030208qka.271.1569502923072;
+        Thu, 26 Sep 2019 06:02:03 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:b594:20f6:c10f:d45d? ([2001:4898:a800:1010:66ca:20f6:c10f:d45d])
+        by smtp.gmail.com with ESMTPSA id 64sm921505qkk.63.2019.09.26.06.02.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Sep 2019 06:02:02 -0700 (PDT)
+Subject: Re: [PATCH 1/3] commit-graph: remove a duplicate assignment
+To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        dstolee@microsoft.com, gitster@pobox.com, davvid@gmail.com
+References: <20190925020158.751492-1-alexhenrie24@gmail.com>
+ <20190925020158.751492-2-alexhenrie24@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <8307cccf-e115-c720-6670-2ab537066a01@gmail.com>
+Date:   Thu, 26 Sep 2019 09:02:01 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:UkRNpbJYWma2EVlwtEYPBgLE7q/28mmog1btUSPFZmU0NFytIHM
- MOS/l2fnuAIJDcNx0GQhX7yjT5sFuh6SDtSMPYQ2W1oLGMLJ7+H2nlWgdRtmIJYXi+wMTTJ
- YfeYmxkgFb4/s+COkCgdgtCCSgId5uhChBkgLouzb277iY/p10Jd2fKfkxX7yb3CY5u5dPJ
- MywwBnDTNXk8FMv/Fz1Ug==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nZyYoSh2fBs=:gLplEtEBgy1IXGE+AmvNBk
- nEdksDmTpijKjxpWJdgSVcHqpOzjj6D5hWh9x2LxahB/rufslsTLW/Kt2VRzvflWniSqSRhVD
- YDp2bqk7VxSz8mahx6IoYh7GIwibPDxsYIgu7pMENR5jx7lXnp0APcQYQVaDbrDaWnSy1p8IK
- Xe0mq0KE/TRHSYR+kV9E8ASTVURdzDG2QCh3GJwPVaC6pZ0Vcq1Zmurjz2M4Kr9tKM6Hop7UQ
- Q8MircfV3VN193RXJBo+ZTgV0sitGic3xFT9EEWOK9QNEvHmXmuzojbQsbXQll1QFJgClLjP3
- 0W56ZzPNOVp5vu9TNPOziMP0lBLX0xJzpI1PnSqfQscZWmnO8pcVhtWYitg6p6fiIp9WSHivf
- xQdNoQ7SWNmZbXD60UEA85fkb8EU6TZWW9s5mh6xeh3QkY1bMjBzM6ZUUbarEgguUXFl/5PSG
- N868MVHV0E2RPCGLBG6gRD+RD9gNqJHckEZsrj4k78/7bH6jBYw78Iy5wi+I8iA/eoTmN2GlE
- vf2QiVMqo4UM14u1XFqfTJ3P/gOJzANzj0s/NZSooA01WtpVlMiq/7B1v3f3Q/AKCJtK1gXe7
- l6WlfGLKLFxaSLalbJ5pnf50M0Mjh5Q1mfB7FOlNNneXrB4Aa1tIF0bwtsjOdbObDU/PhzGpu
- xX0sX5ih2gVI1+bRs8GRIKVqhFVsxCrUDPD0rm6TlDEgz2vVPfva6e9ikIzEvevoTCsQKPzMX
- sH5Oj+oCUkBMePRCnONam4DANWazeylrxV1O3IUffLtUcXYihHGpJ9zgnPhj9SlCQtM5lp6zh
- w46CRpojV5jxhzEquikaLC9x4SO9Is6Ic7gfHcDFunr+qeHA4/0tRG3u7DqUx+dVf8Ecp4qFV
- b516XiwWwTTj0tHKgK2lyboS47xv5Imnk42RYxy750cq9pAAa5MbzqFsi5X+amwLhOl48fohE
- eZXeStsWv0qHrKiY01pMUhCN0SCq8RGfNyDTyBeYIzXPIZFq7kC+jnVfpcMHLfXoLQFANNDuN
- rkKx2umObKWcYex3R227dWKciDoVOgrTClLzfAh+o9pqlaZmnpck5VrePI2b6OYB24GB8X9Au
- 9fH4nSM8XIidjO/sjT+7BF4pNl+GZqqpLeZesmlsE9HnolMO+P5YeV1tL5/Vhh5Jd2pBme7rR
- mPu/ioLuK0sqQS5SKtZKdUi4xxlONqwjGM/g8DatKIbs2keT+kKk3Ii+6CEMYw6ct8HIM5PWt
- 1k5gjf9oQvH9Gwtol3NCBh7Qb/El+G1UVKCQbNikqCT6E+HpK+1X90XpCk3Y=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190925020158.751492-2-alexhenrie24@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+On 9/24/2019 10:01 PM, Alex Henrie wrote:
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+> ---
+>  commit-graph.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 9b02d2c426..659f4bb4f4 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -1534,7 +1534,6 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
+>  		size_mult = ctx->split_opts->size_multiple;
+>  	}
+>  
+> -	g = ctx->r->objects->commit_graph;
+>  	ctx->num_commit_graphs_after = ctx->num_commit_graphs_before + 1;
+>  
+>  	while (g && (g->num_commits <= size_mult * num_commits ||
 
-On Mon, 23 Sep 2019, Denton Liu wrote:
+Could we instead remove the assignment during the declaration? It is
+easier to know the while loop will work if the assignment is closer
+to the loop.
 
-> This patchset relates to `make hdr-check`. The first patch addresses
-> getting it to run on platforms which require custom CFLAGS.
->
-> The other two patches address errors/warnings caught by actually running
-> `make hdr-check`.
->
->
-> Denton Liu (3):
->   Makefile: use $(ALL_CFLAGS) in $(HCO) target
->   apply.h: include missing header
->   promisor-remote.h: include missing header
+Thanks,
+-Stolee
+ 
 
-These all make sense to me (including 4/3). I wonder whether we would
-want a 5/3 that essentially does this:
-
-=2D- snipsnap --
-diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
-index a19aa7ebbc0..65bcebda41a 100755
-=2D-- a/ci/run-static-analysis.sh
-+++ b/ci/run-static-analysis.sh
-@@ -26,4 +26,7 @@ then
- 	exit 1
- fi
-
-+make hdr-check ||
-+exit 1
-+
- save_good_tree
