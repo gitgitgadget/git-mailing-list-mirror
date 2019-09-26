@@ -8,168 +8,123 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB28F1F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 21:44:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 549EA1F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 21:54:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728090AbfIZVoz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 17:44:55 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33742 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725280AbfIZVoy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 17:44:54 -0400
-Received: by mail-wr1-f68.google.com with SMTP id b9so452782wrs.0
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 14:44:52 -0700 (PDT)
+        id S1726492AbfIZVyx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 17:54:53 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:32907 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725871AbfIZVyx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 17:54:53 -0400
+Received: by mail-wm1-f65.google.com with SMTP id r17so7560379wme.0
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 14:54:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=YjUs9r43uZxol/ktZUQtBRipA/6b6E2jqOpS/5+5Xlk=;
-        b=jeUUPvfe32C6U254+6Ta2MGdRN+RMHMbzRsO5xUj68vjprJlQf0Fl6E944HLxFZ50B
-         dALCGUdeBCOyTPAGBQXY6Jj2ORyACeDo8DMKv58kgErbIDbUxkrZj7mq60pYZ3nVHXgU
-         LfXtFDYrVjsCH3JT7V2FN+ZG+rOykSfmub66MdOCCnn57qnd9f6usdYpGZlVaxV3EaYV
-         SfSwCWd9kj1/Fc4EwHyhw8TNhs33xCeh5ughcnX+6bHmc+Xlqnev2VA8SXWcqhEkQ4Ik
-         ojgwYh1EjVvXY/AuGGzEeJ0Ec2cM6FTrOBsjNocbnhTFP0kETWj9qqtKzGtQcvMb3Pkx
-         fydg==
+        bh=DSwKe0KjtBOENYEOi1Z1mliEUunJLgZvQlGp1vvqoDI=;
+        b=oOtjscDtRkYBXGQ7NqVTFeDKKYUxeFS3okuVu/4U4NuhzD9mT0dzknJdRMqZ8RVOuC
+         DJdAvJtgJoiWXTc+EMVFxa0a9+VxNHGOCrzQ224GfEQjBHP6jHZwmTxXav9OPIpqEl8c
+         oOQDwYsjLpOn97Rmr917JUCxTWQBrgawKWxCWmejtgoXENN80aydusT4bfVcAcAUp+jH
+         p7si4nOHG8QjblmN49iNY6OU6fRfqF0lOvF5EmppqS/8mqISkYd4B+u++X8/Y18HlDbV
+         GqhFSYbJHNCAQC9CIVmGX0gy6dDrZEaUYj/74jImKVBkuP5ILm7B4wpX/gNSfwqcjcBI
+         vERg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=YjUs9r43uZxol/ktZUQtBRipA/6b6E2jqOpS/5+5Xlk=;
-        b=WUvTVgo76JwJwse2SeWbIJCr7/a8ENHRqdJskqx4vM/43jc3uPItOoTEuMFIEiZqbp
-         dvfx7a6wzv2zXZAfQboG0lByoLhFNcfMs5/mz8LFK/qWJQAySZVzhD8Ft1HTQWBOWMxb
-         AnQAnBL4IiG0Nw+tL5D44EvBqGG6CAaml/BPG3QUkUX5jkiywjNnFU9SaKiza1+i/E8v
-         STiTHfDzLH6oJyQSJjgwrIdYOSKt9CjVbjM+1nAZyM5xwSfq46Ssx4QDuOt55nxWhvzW
-         7ZV4nYc6wvRIZGCwMlaN/OeeFCO3AGAJBM7ReLD5uW++FZoct8bEsKJFF6A5SMII+Kc8
-         JOCA==
-X-Gm-Message-State: APjAAAUYiTzbK5oscQlO7Ij8coQ5GRWJxZGBlnSBDjwgjlL9cvzUMHzN
-        tDwbDVa9tfFF7iyIZapbZTG47hwU
-X-Google-Smtp-Source: APXvYqwaYOPjLPpC4ivw3NZoLzZKI0CkpX5XH198MSo2rg0UkhLAVw5kr6QACx3TTsac+hKSwtssXQ==
-X-Received: by 2002:a5d:628f:: with SMTP id k15mr402554wru.124.1569534291908;
-        Thu, 26 Sep 2019 14:44:51 -0700 (PDT)
+        bh=DSwKe0KjtBOENYEOi1Z1mliEUunJLgZvQlGp1vvqoDI=;
+        b=gqnoKAnACOVXFr8e8G8Z9EsBLWkcU3kLQXUS65gYUBXckXol06oGYa1XLMeibZRhiS
+         rjVVCabPUXFGGupSXDSkaA7LgoolaQNPsr6gCD8kCD6r6+Ov3HdNk6LSBU6SfvBeFDLx
+         QLCAn1j6OruhAH/K38FJAvj30uaCAfupk6RK+81dC8NIpuIZCEoPeEyw8/I+HjR8BDQ2
+         56fSVLMnY8SNbX4kic5r9ej8RRzbJLE3d/QcDipcnyrz+rJrewze7hAJeuzTW8jUr9qo
+         a/R7gzx3++QNHazYXnvQs3XApObTsJ/XH2wWS87qnJM9+z5h0pcFKYLK8Y/6H/5gTh4E
+         iFUw==
+X-Gm-Message-State: APjAAAUjST1z0A7bh6kp4Ec++HomEU5cR3Tgv70pr8XvT0lCEUYAm7R/
+        mTh8m2kTlYjPq0DPwGR6IB8=
+X-Google-Smtp-Source: APXvYqw3dfssAvGlSec6O5v5iaxs+vQa3dsHXk3wJfBlo5ngkDA7iolIPROrkuMww94NnP/7CayzOQ==
+X-Received: by 2002:a7b:ce0a:: with SMTP id m10mr4645315wmc.121.1569534890887;
+        Thu, 26 Sep 2019 14:54:50 -0700 (PDT)
 Received: from szeder.dev (x4db9381f.dyn.telefonica.de. [77.185.56.31])
-        by smtp.gmail.com with ESMTPSA id y14sm1013542wrd.84.2019.09.26.14.44.50
+        by smtp.gmail.com with ESMTPSA id l10sm1158656wrh.20.2019.09.26.14.54.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 14:44:51 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 23:44:48 +0200
+        Thu, 26 Sep 2019 14:54:50 -0700 (PDT)
+Date:   Thu, 26 Sep 2019 23:54:48 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
 Subject: Re: Git in Outreachy December 2019?
-Message-ID: <20190926214448.GI2637@szeder.dev>
-References: <20190913200317.68440-1-jonathantanmy@google.com>
- <20190913205148.GA8799@sigill.intra.peff.net>
- <20190916184208.GB17913@google.com>
- <nycvar.QRO.7.76.6.1909171158090.15067@tvgsbejvaqbjf.bet>
- <20190917120230.GA27531@szeder.dev>
- <nycvar.QRO.7.76.6.1909231444590.15067@tvgsbejvaqbjf.bet>
- <20190923165828.GA27068@szeder.dev>
- <nycvar.QRO.7.76.6.1909261257160.15067@tvgsbejvaqbjf.bet>
- <20190926132852.GF2637@szeder.dev>
- <nycvar.QRO.7.76.6.1909262138450.15067@tvgsbejvaqbjf.bet>
+Message-ID: <20190926215448.GJ2637@szeder.dev>
+References: <20190827051756.GA12795@sigill.intra.peff.net>
+ <20190904194114.GA31398@sigill.intra.peff.net>
+ <20190923180649.GA2886@szeder.dev>
+ <20190926094723.GE2637@szeder.dev>
+ <nycvar.QRO.7.76.6.1909262132090.15067@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <nycvar.QRO.7.76.6.1909262138450.15067@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1909262132090.15067@tvgsbejvaqbjf.bet>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 26, 2019 at 09:39:58PM +0200, Johannes Schindelin wrote:
+On Thu, Sep 26, 2019 at 09:32:35PM +0200, Johannes Schindelin wrote:
 > Hi,
 > 
 > On Thu, 26 Sep 2019, SZEDER Gábor wrote:
 > 
-> > On Thu, Sep 26, 2019 at 01:04:48PM +0200, Johannes Schindelin wrote:
-> > > > > > > Also, things like the code tracing via `-x` (which relies on Bash
-> > > > > > > functionality in order to work properly,
-> > > > > >
-> > > > > > Not really.
-> > > > >
-> > > > > To work properly. What I meant was the trick we need to play with
-> > > > > `BASH_XTRACEFD`.
-> > > >
-> > > > I'm still unsure what BASH_XTRACEFD trick you mean.  AFAICT we don't
-> > > > play any tricks with it to make '-x' work properly, and indeed '-x'
-> > > > tracing works properly even without BASH_XTRACEFD (and to achive that
-> > > > we did have to play some tricks, but not any with BASH_XTRACEFD;
-> > > > perhaps these tricks are what you meant?).
+> > On Mon, Sep 23, 2019 at 08:07:09PM +0200, SZEDER Gábor wrote:
+> > > Here is one more idea for microprojects:
 > > >
-> > > It works okay some of the time.
+> > >   Find a group of related preprocessor constants and turn them into an
+> > >   enum.  Also find where those constants are stored in variables and
+> > >   in structs and passed around as function parameters, and change the
+> > >   type of those variables, fields and parameters to the new enum.
 > >
-> > As far as I can tell it works all the time.
+> > Peff thought elsewhere in the thread that this is a good idea, so I
+> > wanted to try out how this microproject would work in practice, and to
+> > add a commit that we can show as a good example, and therefore set out
+> > to convert 'cache_entry->ce_flags' to an enum...  and will soon send
+> > out a RFH patch, because I hit a snag, and am not sure what to do
+> > about it :)  Anyway:
+> >
+> >   - Finding a group of related preprocessor constants is trivial: the
+> >     common prefixes and vertically aligned values of related constants
+> >     stand out in output of 'git grep #define'.  Converting them to an
+> >     enum is fairly trivial as well.
+> >
+> >   - Converting various integer types of variables, struct fields, and
+> >     function parameters to the new enum is... well, I wouldn't say
+> >     that it's hard, but it's tedious (but 'ce_flags' with about 20
+> >     related constants is perhaps the biggest we have).  OTOH, it's all
+> >     fairly mechanical, and doesn't require any understanding of Git
+> >     internals.  Overall I think that this is indeed a micro-sized
+> >     microproject, but...
+> >
+> >   - The bad news is that I expect that reviewing the variable, etc.
+> >     type conversions will be just as tedious, and it's quite easy to
+> >     miss a conversion or three, so I'm afraid that several rerolls
+> >     will be necessary.
 > 
-> I must be misinterpreting this part of `t/test-lib.sh`, then:
+> I thought Coccinelle could help with that?
 
-Ok, let me try to clarify.
+Maybe it could, I don't know.  I mean, it should be able to e.g.
+change the data type of the function parameter 'param' if the function
+body contains a
 
-There are a couple of things that we can't do in our tests without
-BASH_XTRACEFD, e.g. redirecting the standard error of a subshell or a
-loop to a file and then check that file with 'test_cmp' or
-'test_must_be_empty'.  With tracing enabled but without BASH_XTRACEFD,
-the trace of the commands executed within the subshell or loop end up
-in that file as well, and cause failure (grepping through that file is
-mostly ok, though).  Back then we had 23 test cases failing because
-they were doing things like this and needed to be fixed, so
-considering the total number of test cases we only rarely used such
-problematic constructs.
+  param & <any named value of the new enum or their combinarion>
 
-Still, as I recall, Peff was concerned that these limitations might
-lead to maintenance burden on the long run, so I decided to add an
-escape hatch, just in case someone constructs such an elaborate test
-script, where redirecting the stderr of a compound command could
-considerably simplify the tests. 
-
-That snippet of code that you copied is this escape hatch: if 
-$test_untraceable is set to a non-empty value before sourcing
-'test-lib.sh', then tracing will only be enabled if BASH_XTRACEFD is
-available.
-
-All that was over a year and a half ago, and these limitations weren't
-a maintenance burden at all so far, and nobody needed that escape
-hatch.
-
-Well, nobody except me, that is :)  When I saw back then that t1510
-saves the stderr of nested function calls with 7 parameters, I
-shrugged in disgust, admitted defeat, and simply reached for that
-escape hatch: partly because I couldn't be bothered to figure out how
-that test script works, but more importantly because I didn't want to
-risk that any cleanup inadvertently hides a bug in the future.
-
-So that's the only user that piece of code ever had, and I certainly
-hope that no other test script will ever grow so complicated that it
-will need this escape hatch.  I would actually prefer to remove it,
-but t1510 must be cleaned up first...  so I'm afraid it will be with
-us for a while.
-
-
-> -- snipsnap --
-> if test -n "$trace" && test -n "$test_untraceable"
-> then
-> 	# '-x' tracing requested, but this test script can't be reliably
-> 	# traced, unless it is run with a Bash version supporting
-> 	# BASH_XTRACEFD (introduced in Bash v4.1).
-> 	#
-> 	# Perform this version check _after_ the test script was
-> 	# potentially re-executed with $TEST_SHELL_PATH for '--tee' or
-> 	# '--verbose-log', so the right shell is checked and the
-> 	# warning is issued only once.
-> 	if test -n "$BASH_VERSION" && eval '
-> 	     test ${BASH_VERSINFO[0]} -gt 4 || {
-> 	       test ${BASH_VERSINFO[0]} -eq 4 &&
-> 	       test ${BASH_VERSINFO[1]} -ge 1
-> 	     }
-> 	   '
-> 	then
-> 		: Executed by a Bash version supporting BASH_XTRACEFD.  Good.
-> 	else
-> 		echo >&2 "warning: ignoring -x; '$0' is untraceable without BASH_XTRACEFD"
-> 		trace=
-> 	fi
-> fi
+statement, or similar statements with operators '|=', '&=', or '='.
+I have no idea how to tell Coccinelle to do that.
 
