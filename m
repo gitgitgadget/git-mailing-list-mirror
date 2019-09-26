@@ -2,75 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A33F1F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 07:09:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1556A1F464
+	for <e@80x24.org>; Thu, 26 Sep 2019 07:12:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727974AbfIZHJC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 03:09:02 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60584 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727933AbfIZHJC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 03:09:02 -0400
-Received: (qmail 7651 invoked by uid 109); 26 Sep 2019 07:09:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 26 Sep 2019 07:09:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25802 invoked by uid 111); 26 Sep 2019 07:11:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Sep 2019 03:11:27 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 26 Sep 2019 03:09:01 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git in Outreachy December 2019?
-Message-ID: <20190926070900.GA20653@sigill.intra.peff.net>
-References: <20190923212834.GA19504@sigill.intra.peff.net>
- <20190924170746.100302-1-jonathantanmy@google.com>
+        id S1727991AbfIZHMN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 03:12:13 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:45822 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727480AbfIZHMN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 03:12:13 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id B80321F463;
+        Thu, 26 Sep 2019 07:12:12 +0000 (UTC)
+Date:   Thu, 26 Sep 2019 07:12:12 +0000
+From:   Eric Wong <e@80x24.org>
+To:     James Ramsay <james@jramsay.com.au>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: Virtual Git Contributor Summit
+Message-ID: <20190926071212.2pldwtcskmphapjn@whir>
+References: <nycvar.QRO.7.76.6.1907031429420.44@tvgsbejvaqbjf.bet>
+ <BF65DE67-42F0-4BFD-A2EF-E12DA48B8B4F@jramsay.com.au>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190924170746.100302-1-jonathantanmy@google.com>
+In-Reply-To: <BF65DE67-42F0-4BFD-A2EF-E12DA48B8B4F@jramsay.com.au>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 24, 2019 at 10:07:46AM -0700, Jonathan Tan wrote:
-
-> > >  - In your reply [2] to the above [1], you mentioned the possibility of
-> > >    keeping a list of cutoff points. One way of doing this, as I state in
-> > >    [3], is my original suggestion back in 2017 of one such
-> > >    repository-wide list. If we do this, it would be better for
-> > >    fetch-pack to handle this instead of index-pack, and it seems more
-> > >    efficient to me to have index-pack be able to pass objects to
-> > >    fetch-pack as they are inflated instead of fetch-pack rereading the
-> > >    compressed forms on disk (but again, I haven't verified this).
+James Ramsay <james@jramsay.com.au> wrote:
+> On 3 Jul 2019, at 9:01, Johannes Schindelin wrote:
+> > Team,
 > > 
-> > And this is the flip-side problem: we need to get data back, but we have
-> > only stdout, which is already in use (so we need some kind of protocol).
-> > That leads to things like the horrible NUL-byte added by 83558686ce
-> > (receive-pack: send keepalives during quiet periods, 2016-07-15).
+> > I kept talking about this idea of a purely online Git Contributor
+> > Summit,
+> > and it is finally time for action.
 > 
-> Sounds good. With this, do you think that there is enough likelihood of
-> acceptance that we can move ahead with my proposed project?
+> Thank you for organizing!
 > 
-> Besides discussing the likelihood of patches being accepted/rejected,
-> should we record the result of discussion somewhere (or, if only the
-> mentor should give their ideas, for me to write in more detail)? I don't
-> recall a place in the Outreachy form to write this, so I just mentioned
-> the benefits in outline, but maybe I can just include it somewhere
-> anyway.
+> Yesterday, Christian and I took notes in the doc below which might be useful
+> for others.
+> 
+> https://docs.google.com/document/d/1Yp6tz_JgUYjoofTDogtosLsdykwiAyYu9yM42yTuFA4/edit
 
-Yeah, I think it's OK to go ahead. I think an intern who is interested
-in the project would get in touch with you either directly, or via the
-list. So that gives some opportunity to discuss the ideas with them, and
-to go into more detail on the proposal in an interactive way (it would
-also be fine to point at this thread, too, of course).
-
--Peff
+Is there a way to view that without JavaScript?
+I'm using w3m.  Thanks
