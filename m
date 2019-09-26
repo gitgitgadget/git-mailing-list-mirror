@@ -8,184 +8,132 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 090481F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 21:01:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CD641F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 21:05:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727956AbfIZVB5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 17:01:57 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49779 "EHLO mout.gmx.net"
+        id S1727954AbfIZVFn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 17:05:43 -0400
+Received: from mout.gmx.net ([212.227.17.21]:40895 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727816AbfIZVB4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 17:01:56 -0400
+        id S1727816AbfIZVFn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 17:05:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1569531710;
-        bh=NONGklYyQGl991Usb7NhYaoLQp7LPjl7SrBPOWv4Z/Y=;
+        s=badeba3b8450; t=1569531935;
+        bh=tTqGcevMNYLYAOl+Bi9kNd20goDnWEOMjPq1i7oAaoA=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Xh+uHl7kFQcjTnQWAdnVQ1i/mJNwAwN400LVRVdd+ZSGm4ICkrH6K4+7sDRDrBJJE
-         2rkIFlXpXZmvKOV///Fqkbllz5UgQJKZ8QNUUFADRIWpxzGxKdf4kYWflV2KkjXjxf
-         EI1ZoxDHUKZry2cfLNZU0tLvCLc8Xb+oI0LGjp4o=
+        b=OQ2Z5XyYPMdAk4cdGvWpoGbeblwQnJz1864xO9sHD+LBrI/wj1mGQvd0ryvXyW2qN
+         uTJKaLVUqtHTmsMlFvZ8PhX8lu3wId6wdIrUFMWp4q8gscg6uVckJcngxSYdlmezTs
+         E9ZLXlEUt/lc9fnOb4Z+U6ZiR6ipY/Zz04eRVSUs=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MWASe-1igng41vyM-00XcbJ; Thu, 26
- Sep 2019 23:01:50 +0200
-Date:   Thu, 26 Sep 2019 23:01:32 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N4z6q-1i3sAl1VtU-010tLQ; Thu, 26
+ Sep 2019 23:05:35 +0200
+Date:   Thu, 26 Sep 2019 23:05:20 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/13] msvc: avoid using minus operator on unsigned
- types
-In-Reply-To: <20190926172022.GA41037@generichostname>
-Message-ID: <nycvar.QRO.7.76.6.1909262236550.15067@tvgsbejvaqbjf.bet>
-References: <pull.288.git.gitgitgadget@gmail.com> <2abe1e1fb0bf3025489c2e543b9a9c648a164827.1569486607.git.gitgitgadget@gmail.com> <20190926172022.GA41037@generichostname>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] git gui: fix staging a second line to a 1-line
+ file
+In-Reply-To: <20190926184449.swkqutltmwpzde6s@yadavpratyush.com>
+Message-ID: <nycvar.QRO.7.76.6.1909262303310.15067@tvgsbejvaqbjf.bet>
+References: <pull.359.git.gitgitgadget@gmail.com> <02ec6c5bde2f15c51e946c6806d8231fb5abffe5.1569519804.git.gitgitgadget@gmail.com> <CAKPyHN1XJHtcdzhaaeACFfb9=7PxdyHvrdafwJxDwQjbW_hbcA@mail.gmail.com> <20190926184449.swkqutltmwpzde6s@yadavpratyush.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:74znEv88x4Nur1oiAqE3Jk0Tg8m5lhHEjIdAV9AQk9EeznKyQQh
- 8ohjaRYzdAT5DfoLwMMTpna9L29CP943LQFQtZ59otgSAZOXnZNY3B++bLojuYnT3BoqcT4
- 6txd19swoahzFCV8vjlSUK1K4u1aQhLZ5YJnl+Fy5x0BdWAs5WVn/onSF3uEZQ5gEaMj2Nc
- 0gkas0ln6qL8tg3bQyrHg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NwlK96UegR0=:oYNb5ne1Kj6HWFg69x2T77
- yGrnWJFveM3DHYcg9nrKJpahJulCO8sWFI1imzTGYK9jwkJOCsXW7GLQfqZ3qR0b44zR2KhWm
- TlrosTwP0ZGgE99GKm3DcQEHnEQKPw3kKRlqQsxhhjU87aHVvZ1k2Ciu1tB4v1MywU3NOk4UQ
- nxQwsxndOQf1wGeZU9pg8uDGa1W6FWuSZknKLW1CPu4Po03wreFie/eCbhOnQwAEMXK4lnr02
- sAdhhImUxR8PpQBUpOySLLcdxtnJombv8Z3XmYLhwwR4jDvyZDcbuiRL9zexjPU6WbiBFQdSn
- t+4aovDPVd90EFEyvaCJyy68L41NVT+vuyf5W/ENhrasnGkq0cw9+4np6gXYagUZbDTI5vfYh
- 05FGzmXOXMFT1QAbwW9GvZ2oZ+xoTsqq71H0DBpIBJE+d33Dj/krqbOcu/VD4AL/sWOHT5fBi
- W6Gq0XEVAVRacLPdN1UdMYMuC2nqnyrODjejlFdjqpQ9YtvHaWNqICBzxXVMyfMZGlD0AiYds
- IxaRe5hamepFzvTPx14Fwzo9aR/atBGTJBABmGbUrXgGbtaVJOk01szx8bKywhQ7F8wCi8EgM
- dPo0bDhFEkC0xGXqSsnAyef2uDWEa7jZCBDeh+nwjnJBmr4YB7waERQIMQp+2hh03B45QDCvi
- TJ5lTh8RJv04JKmlHfDQepfKJn91FmV/DSmULMF7Yl7thnEi+Cy0oW49jqGwAQ0i4DLXWEMNF
- ELK3c7qPgbrdTVZUtow/b4vhrshnnLvYF9rkX4vwj9oV9Vasm8M9TE09IjPqlffHO+PJ477CW
- qfqrO7yj72PaUKAy44tiieTaFLnJ00Qs1KqmZgSwq+2Eqk+fgBqq3mMaJ9ALBpjQCJyn3bpTT
- vj20T2sLrx1v2Mu4d5rYmEAA/DaqUQ2QxlH16iYFvTLqdadiVgAzc1568iTjvgD99tmDyoqD2
- bz0g+kwGlGJdLASom6BA9ut9jWWuYTMn1rfHa4ooInCJxMF0cVNXPGc5XhwOUaCIVcxQLG9lR
- j3EJdlOGQZXfLCUFvy2khBDWXw8Ka2C//Kh622eBUAxcyLL+fYS61AWc/bkyp5VTpeCELArZ7
- dU0IIXltuIV1oalPPfKNGO2QzcRM146fJ+x4uWp6gzxtn8nU/79VcozoyWFqbUMMIBGImMuQj
- t0lZ7iD7/ERlJoDBemiND+HixbXMKBaSvVWK5+0X1DbuGeR1VT8zPaf5SdQqFkRabWJvWfAHN
- hhH4EZEB8EgVYKG3gZz8u/vH/umgH1gh3L+GN4Mpg3e8r5E6q0JAhjT+q++I=
+X-Provags-ID: V03:K1:lxnHGaCdZJ5GZpUsbP8w6Kvu1FJPD6KoYm8BcC0CYZaLHoQ28aO
+ oPM0Qt6dS+/Mx8nFvZZZr2WpzZeLAwxRklw7ujqtjpQb4SdyLXvVPmNUd9Dvh2AzcCRf1YY
+ ePGqeyA+RouJiVqfKQslQ62r4uXDwlnWLiFXe3HYId59GYBa7d2SOD9z66ErS0nqTCcN1Jh
+ aUYuLOMDjpgvJL+9e4evg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:f6LC2gOk3uA=:f8LhlyiHEtmO2GBaPNmjWW
+ g83SsUOMIqUgd1ozjoacXjg0c9reYUg2l7crT41mWDbJvZ9JZLqrXwK94P0Q54mdSKf8hCT5K
+ jP+N4tIs+Vz6SMf8wuX7sUmmk8CMEm8scH12wEDizULj8t5Cb1ewS6OjIFC/iuvbTFD4otfqT
+ qKOzr/DwPsptnGiSUTw7Ueq4SuJ4k7hzLag8wVqhFIN8z/TWJMQ9ZEgdFrS/BQqYHuzu6yITd
+ 07wPx9qQ/wp7ESOOt2UPGbiwR6+Y3P4E9/5f4BRe24+ZrEi1jU2s8mtHVJw9swM0YgB4ffqd5
+ FFgNbxmIhcHLTycNCaAtBgT5Iat4OqNvAcpaf+6EGKTZExrbXXiMGFBMIWia2KzsT465hn9cA
+ bUN4GhAyWPDFoVoG6dZrBwp8d3gJwRFjwwK588SAl81zI0Se144+WYCj4zZC2xqVGLcWzvG/8
+ AqN+bwcV0ojHVWVlurdmpcwjjxWFjQIdBJaYBk1zMAwse7moetZJmeANrqoD8hYikwSCuVA7S
+ JtkYA85TgcuAB1qdwEv3oieh2HapSimtsC2geiszxo7T4FjDYp4Xfqtfxj794Yu7qP6x2p5ci
+ p8zNVWNfgSzGso6gDZLxwE4J+l5VAxtKqh57dRWSxD/nGwczr/NhbSMx86SFuD4QRSFucZic8
+ bV1yeuGaGwuwx0g/rxYUhvKyiVNBlYhVQCXXMEKhjL9TOBPZeRIb0X0Pd/oeFHpL/YbZrDfeF
+ 9UyVTefDBrDvDTyhfSTtGorPqsIF2WSECOfpto1CsbtMfzARF44moVYNQG2aiXirL0Qt37RoO
+ TipLse7rpSXCffmu6Uo1pw2944mdatlqnWAs9k22tjnfnsV8Z9hx2mqGuINDKRS2o+EuqMC2A
+ V6fdJllbnNqa7NGqbi4rGESBN6J/ASYCuuq6r9JtKZMk3W9C+ejSC79cnHU9L8JRb7lUntU0m
+ dUnzeSkRxN+fIs+4y8TbF66J3m1td5eF7QeHGDO1NXEmczkTFCqg4XMqXV+VpGRcC8UnshYAU
+ qMvrmc9ydRHhYNgLFoqPwacYnNU25fDpIH60b0NXfuIoNCjN5Ld/5lD9ty3A/T/l1Y5oox2/5
+ efxo+OGAr34GNGU+WrDDHoytK08VHmSm7D/JhpHfK7xpY4HaDaH1Se6yyyNpbhQtt3sB8ewzh
+ G9CS08gnqMrHz3piK4/Oj7db9ZRwnRj/WKWYfHZD5URr6z4Se9mVimnjLujcUnnW/XHbEOYs4
+ l5yxB2TiZL1ukIVb6snqvg0G3Sd3z+iRc0XaB9fleLN6dLVl4hUEHEEk6tXE=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+Hi,
 
-On Thu, 26 Sep 2019, Denton Liu wrote:
 
-> Hi Dscho,
->
-> On Thu, Sep 26, 2019 at 01:30:10AM -0700, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > MSVC complains about this with `-Wall`, which can be taken as a sign
-> > that this is indeed a real bug. The symptom is:
-> >
-> > 	C4146: unary minus operator applied to unsigned type, result
-> > 	still unsigned
-> >
-> > Let's avoid this warning in the minimal way, e.g. writing `-1 -
-> > <unsigned value>` instead of `-<unsigned value> - 1`.
->
-> [...]
->
-> > ---
-> >  read-cache.c  | 4 ++--
-> >  sha1-lookup.c | 2 +-
-> >  2 files changed, 3 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/read-cache.c b/read-cache.c
-> > index c701f7f8b8..11f3357216 100644
-> > --- a/read-cache.c
-> > +++ b/read-cache.c
-> > @@ -1276,7 +1276,7 @@ static int add_index_entry_with_check(struct ind=
-ex_state *istate, struct cache_e
-> >  	 */
-> >  	if (istate->cache_nr > 0 &&
-> >  		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
-> > -		pos =3D -istate->cache_nr - 1;
-> > +		pos =3D -1 - istate->cache_nr;
->
-> I've been thinking about this and I'm still not certain that this 100%
-> correct from a language-lawyer perspective.
->
-> If we do `-1 - istate->cache_nr`, then the unsignedness of
-> istate->cache_nr takes over and the whole expression is a very large
-> unsigned number.
->
-> Then, when we assign to `int pos`, we are converting an unsigned number
-> which is out of the range of the signed number. According to a
-> StackOverflow post citing the C99 standard[1]:
->
-> 	Otherwise, the new type is signed and the value cannot be
-> 	represented in it; either the result is implementation-defined
-> 	or an implementation-defined signal is raised.
->
-> I'm sure that most platforms that we support will handle it sanely but
-> could we write this as
->
-> 	pos =3D -1 - (int) istate->cache_nr;
->
-> to be doubly sure that no funny business will happen?
+On Fri, 27 Sep 2019, Pratyush Yadav wrote:
 
-I guess we should use `signed_add_overflows()` to make extra certain
-that it does what we want it to do, kind of like `st_add()`. Or just do
-the check explicitly, like so:
-
-	if (istate->cache_nr > INT_MAX)
-		die("overflow: -1 - %u", istate->cache_nr);
-	pos =3D -1 - istate->cache_nr;
-}
->
-> >  	else
-> >  		pos =3D index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_s=
-tage(ce));
+> On 26/09/19 08:25PM, Bert Wesarg wrote:
+> > On Thu, Sep 26, 2019 at 7:43 PM Johannes Schindelin via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> > >
+> > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > >
+> > > When a 1-line file is augmented by a second line, and the user tries=
+ to
+> > > stage that single line via the "Stage Line" context menu item, we do=
+ not
+> > > want to see "apply: corrupt patch at line 5".
+> > >
+> > > The reason for this error was that the hunk header looks like this:
+> > >
+> > >         @@ -1 +1,2 @@
+> > >
+> > > but the existing code expects the original range always to contain a
+> > > comma. This problem is easily fixed by cutting the string "1 +1,2"
+> > > (that Git GUI formerly mistook for the starting line) at the space.
+> > >
+> > > This fixes https://github.com/git-for-windows/git/issues/515
+> > >
+> > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > > ---
+> > >  lib/diff.tcl | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > >
+> > > diff --git a/lib/diff.tcl b/lib/diff.tcl
+> > > index 4cae10a4c7..68c4a6c736 100644
+> > > --- a/lib/diff.tcl
+> > > +++ b/lib/diff.tcl
+> > > @@ -698,6 +698,7 @@ proc apply_range_or_line {x y} {
+> > >                 set hh [$ui_diff get $i_l "$i_l + 1 lines"]
+> > >                 set hh [lindex [split $hh ,] 0]
+> > >                 set hln [lindex [split $hh -] 1]
+> > > +               set hln [lindex [split $hln " "] 0]
 > >
-> > @@ -1894,7 +1894,7 @@ static size_t estimate_cache_size(size_t ondisk_=
-size, unsigned int entries)
-> >  	/*
-> >  	 * Account for potential alignment differences.
-> >  	 */
-> > -	per_entry +=3D align_padding_size(sizeof(struct cache_entry), -sizeo=
-f(struct ondisk_cache_entry));
-> > +	per_entry +=3D align_padding_size(per_entry, 0);
-> >  	return ondisk_size + entries * per_entry;
-> >  }
-> >
-> > diff --git a/sha1-lookup.c b/sha1-lookup.c
-> > index 796ab68da8..c819687730 100644
-> > --- a/sha1-lookup.c
-> > +++ b/sha1-lookup.c
-> > @@ -97,7 +97,7 @@ int sha1_pos(const unsigned char *sha1, void *table,=
- size_t nr,
-> >  			lo =3D mi + 1;
-> >  		mi =3D lo + (hi - lo) / 2;
-> >  	} while (lo < hi);
-> > -	return -lo-1;
-> > +	return -1 - lo;
->
-> Same thing here.
+> > this is already in that master
 
-This is even more critical, as `lo` has the type `size_t`:
+Sorry, I thought I had rebased, but I obviously failed to do so.
 
-	if (lo > INT_MAX)
-		die("overflow: -1 - %"PRIuMAX, (uintmax_t)lo);
-	return -1 - lo;
+Ciao,
+Johannes
 >
-What do you think?
-Dscho
-
-> [1]: https://stackoverflow.com/questions/50605/signed-to-unsigned-conver=
-sion-in-c-is-it-always-safe
+> Yes, this was recently merged in when I was pulling in some stuff that
+> went directly into git.git's git-gui subtree, instead of making it into
+> git-gui first (thread at [0] in case someone wants to find out more).
+> This commit was one of those. Junio directly merged this commit into
+> git/git-gui, along with some other stuff from Johannes in the commit
+> 02a5f25d95 (Merge branch 'js/misc-git-gui-stuff' of ../git-gui) of
+> git.git.
 >
-> >  }
-> >
-> >  int bsearch_hash(const unsigned char *sha1, const uint32_t *fanout_nb=
-o,
-> > --
-> > gitgitgadget
-> >
+> [0] https://public-inbox.org/git/CAGr--=3DKXqFbivuXHPNecb3dBR_hx8QqWoR4p=
+BGXy7uOiT+ESbg@mail.gmail.com/
+>
+> --
+> Regards,
+> Pratyush Yadav
 >
