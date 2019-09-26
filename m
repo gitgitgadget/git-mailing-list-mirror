@@ -2,142 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D84EB1F463
-	for <e@80x24.org>; Wed, 25 Sep 2019 22:02:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B28B21F464
+	for <e@80x24.org>; Thu, 26 Sep 2019 00:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726673AbfIYWBs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Sep 2019 18:01:48 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:41884 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728176AbfIYVze (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Sep 2019 17:55:34 -0400
-Received: by mail-pg1-f194.google.com with SMTP id s1so68626pgv.8
-        for <git@vger.kernel.org>; Wed, 25 Sep 2019 14:55:34 -0700 (PDT)
+        id S1729402AbfIZAdH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Sep 2019 20:33:07 -0400
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:42482 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726984AbfIZAdG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Sep 2019 20:33:06 -0400
+Received: by mail-pg1-f202.google.com with SMTP id d3so250744pgv.9
+        for <git@vger.kernel.org>; Wed, 25 Sep 2019 17:33:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=XlSBVEeFnRGUeyzTxWxtincGgmquk0lFfnKoudKE2uA=;
-        b=Zr2OSyNGcfwA11324mXNSWm5hdPaHm/F2+leDXZhma4Gx4ur/MXde4WrZ+mHI+O2zc
-         Srmu7DJQwe8BKzGhceNoRGkaxrKQUshE+Qj9yQQJGhjGb+5VeU2jQp1EhXTXMnmmiDPV
-         +potxps5wjHXe2KdzXMOVGdPKhWN/hEWHwC3ZSKoYrxpTbJZmF3QxBNnnvYvrKqzKni/
-         BpR6UlLrQ/VxRDj5OaXGG2PHzY3EsdBv78YIkodTAaMKjC5DUUr3DgXbgXq88bXIWkr0
-         YrXh45gFJt31ZGeUE6zqbI0pQ2YGoys5vDTtLGTmA45Ple/5jnJMSYRjmRHYCLjLgi3D
-         /Egg==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=ia7Ew7UqskrWVO4L1JtFW7BtVlvhW5GKyFs1jDMo5yw=;
+        b=sqwQcAmlFmk/x3uRCXZz4B+u7VDEWzWNetij+JclkWcvwLAOSpY2beAXUm4KypQtYh
+         cqOP84B5Gt/O4yB07nqnhEMxAxrRp2mhrKDi5yq7nMGvSFOSUzE12UPPGFs9r8kGnlhq
+         v6PgMuD6YFNwCTmrNorv2kpy0TVrXyvlNcQ5NpI8p5wFiDquHsF9VaLY7cYw2j2+h6Bj
+         zeGPs5vvIj7rdWaf0A3jq5re4hPxx33xCvmM7NUcC/MXc3MpOMKUdY2y1xteTHOLUu7+
+         Esajr0tD5b2JK1IbZCSWOBYEcpHQ5hnG47rpVsJRrcF8HyOe+13C44od4Bg0UaMKlUsi
+         Bbfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XlSBVEeFnRGUeyzTxWxtincGgmquk0lFfnKoudKE2uA=;
-        b=j7+o3Sv6crHGxwhicZYnR1cwWnSSroDVPY4Bb+1iMRPKkL78PGHM9faAz0IdBDxskU
-         B47/fTeOezp3RmgHQxBb1deyBaCBjjAg2qNxT7zklwav5JJsXti0PsHQDonho5QeOFOW
-         fCYnoIG4eFgTeFizOAdxwviIUXf6z+X0YZXHYOVBo7gIOjQUo/z3x1huDNsVrRv+F9aR
-         DFHnkR5WiOz7j0s5+T2UmhmOTkqk7177jif3ak6OUNyuj4vxIPIsp/KNumlZUtgqhC4M
-         YS/NYa44IdYskviIEn73dH+iEyY2Bk7sBFunLzLQRKWfySUbVnRm8qhQwsBTEAT5Lf1s
-         0PBA==
-X-Gm-Message-State: APjAAAVsxMnPArCOYtXX29LgrmO9XVXMxCPtFgTHeGmDcAVcaa5kzX8U
-        CYwLZMOnJVDHFXkkpnBTgEA=
-X-Google-Smtp-Source: APXvYqzg1LF0Hvu4VYCyhebWmqBoyPa56y5F0LOkmTN0rIgbxKFUEn1vK1Kei1WVGbiSW+1BcyUk4Q==
-X-Received: by 2002:a63:6b06:: with SMTP id g6mr13418pgc.221.1569448533476;
-        Wed, 25 Sep 2019 14:55:33 -0700 (PDT)
-Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id f15sm6452929pfd.141.2019.09.25.14.55.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Sep 2019 14:55:32 -0700 (PDT)
-Date:   Wed, 25 Sep 2019 14:55:30 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Rafael =?iso-8859-1?Q?Ascens=E3o?= <rafa.almas@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>
-Subject: Re: [BUG] git is segfaulting, was [PATCH v4 04/12] dir: also check
- directories for matching pathspecs
-Message-ID: <20190925215530.GA9013@generichostname>
-References: <20190912221240.18057-1-newren@gmail.com>
- <20190917163504.14566-1-newren@gmail.com>
- <20190917163504.14566-5-newren@gmail.com>
- <20190925203919.GA89135@generichostname>
- <CABPp-BHyjVSD6_S_dYgPiXM=GVEpT97FqJJearzg4hvKHXfNVA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABPp-BHyjVSD6_S_dYgPiXM=GVEpT97FqJJearzg4hvKHXfNVA@mail.gmail.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=ia7Ew7UqskrWVO4L1JtFW7BtVlvhW5GKyFs1jDMo5yw=;
+        b=S1gPhPNaEtkYjtjUp403ROgvbTdI5L3bfSRUpY+T9UatklJPYXSCt5Q2jE68N94L/T
+         YRUOzRQZ0cKQECLp67lQSeFLMsO/1oSiNj/pR1Xnnwetco2hy+PDUAoWkSyFQ4H/uE6e
+         gpF+QbsBruXXu7IY3z2yS8ykevUiB0S6tbyHCrTiq7UpATTInfcOp6LBxwtAeNCxpu4Y
+         +CSjKlgpjRLZKhF/OVI5h3+A96ZNVa1E5f40hgzAgDknjeo6bq0eyBpjXo8HSLmLRjw+
+         pny+1ZSioyO5/bELAwMWZl/xsHrtGauKoi6HqLClV5G7XmLfdKrwglQxkp6F7IaJD5+A
+         zpDA==
+X-Gm-Message-State: APjAAAXXe13dVhx9yXOJSsc9cJJrSl6OfXTcT31dI5y8tZ5OaEnKvOln
+        Mk72rT4Q3tWStXleOrKhViMoNnH75YuJj41kZJmirno/Vq9WMk/41Bnafpctw8Gc32xq/xRzYwe
+        u8CtgJ6/NdiQUchio/4MtcmylhlLhyqKZMLD+2j8XC+CZAJ15AuGvWbfpn9NMCtFjSAzuWHYLVs
+        2B
+X-Google-Smtp-Source: APXvYqxvYoKLICgb4hFHZJeIMnVNloKN4g8jSyv9EbEiZNTll7ik7KPTJaR9sOvgOsZvDTvNXNxsrGL86VPYdbnLG7X3
+X-Received: by 2002:a63:5005:: with SMTP id e5mr663438pgb.442.1569457985592;
+ Wed, 25 Sep 2019 17:33:05 -0700 (PDT)
+Date:   Wed, 25 Sep 2019 17:33:00 -0700
+Message-Id: <20190926003300.195781-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.23.0.351.gc4317032e6-goog
+Subject: Common thread pool API in Git?
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 25, 2019 at 02:28:15PM -0700, Elijah Newren wrote:
+Does anyone have ideas or plans for this? I know that (at least) "grep"
+and "index-pack" have their own implementations, and it would be great
+to just have one that all code can use.
 
-[...]
+For those who want to know, this question was motivated by a big delta
+tree occurring in [1]. index-pack does parallelize delta resolution, but
+it cannot split up trees into threads: each delta base root can go into
+its own thread, but when a delta base root is processed, all deltas on
+that root (direct or indirect) is processed in the same thread. I took a
+look to see if this could be parallelized, but thought that it might be
+better to standardize on a thread pool implementation first.
 
-> > Sorry for the information dump, I haven't had the time to properly look
-> > into the issue but I just wanted to make sure that you're aware.
-> 
-> Thanks for testing and sending the heads up.  Unfortunately, I cannot
-> reproduce on either Linux or Mac.  Do you have some special ignore
-> files or sparse-checkout paths that are important to triggering?
-> What's in your config.mak?  
+Searching reveals [2], but I don't think it ever made it into Git.
 
-Before, I had an empty config.mak and I also had the following
-.git/info/exclude (these are two worktrees I have checked out):
-
-	/jch
-	/patches
-
-aside from that, I don't think I've changed anything else. Anyway, to
-double-check that it wasn't my setup that was broken, I ran
-
-	cd ..
-	git clone git git2
-	cd git2
-	make configure
-	./configure
-
-and then followed the rest the steps and I could still reproduce it.
-
-> What compiler and version?
-
-	$ cc --version
-	Apple LLVM version 10.0.1 (clang-1001.0.46.4)
-	Target: x86_64-apple-darwin18.7.0
-	Thread model: posix
-	InstalledDir: /Library/Developer/CommandLineTools/usr/bin
-
-> 
-> Here's what I did, just to verify:
-> 
-> cd ~/floss/git
-> git checkout 404ebceda0
-> NO_GETTEXT=1 make DEVELOPER=1 -j8   # I leave off the NO_GETTEXT=1 on linux
-
-I don't have NO_GETTEXT on Mac but I don't think it affects anything.
-
-> git worktree add testdir
-> git -C testdir checkout master
-> git -C testdir fetch https://github.com/git/git.git todo
-> bin-wrappers/git -C testdir checkout FETCH_HEAD
-> 
-> Did I get any of those steps wrong?
-
-Looks correct to me. I don't see why this wouldn't reproduce. I'll send
-you more information if I figure anything else out.
-
-Thanks,
-
-Denton
-
-> 
-> 
-> Thanks,
-> Elijah
+[1] git -c core.deltabasecachelimit=2g clone https://fuchsia.googlesource.com/third_party/vulkan-cts
+[2] https://public-inbox.org/git/1440121237-24576-2-git-send-email-sbeller@google.com/
