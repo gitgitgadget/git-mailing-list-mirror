@@ -8,56 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0CD51F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 08:30:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42B2E1F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 08:30:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729175AbfIZIaZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 04:30:25 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:40052 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728554AbfIZIaY (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1729092AbfIZIaY (ORCPT <rfc822;e@80x24.org>);
         Thu, 26 Sep 2019 04:30:24 -0400
-Received: by mail-lf1-f67.google.com with SMTP id d17so1025548lfa.7
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 01:30:22 -0700 (PDT)
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:38402 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728638AbfIZIaW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 04:30:22 -0400
+Received: by mail-lj1-f193.google.com with SMTP id b20so1232850ljj.5
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 01:30:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HGFrFNyVHi280AGFhSwMmw4T+7XoU3wVKH7GZLHn6U0=;
-        b=FHlgFEd1nvw25b6ijKsbekILav2bGJDy+0YMv+tDdU2ojEOhRzYXYeOUWxGxhRXDVs
-         0qlvozqTlD71aJIxg6hkoSwxcKEVHkdoWg2mf0+9UfYVQLl7VK5ILJb0ajJBFiBRAk7u
-         LeE44JPhz96bpsPWLRoZeF+CM+82/YzAA64fh7pdgU+8z7psJ5ZVYER7kN6sKVF4U/iE
-         1XUqaZVge7Oh0QPjxyaRsXABPxML4kU7cvg5gXKTygghRjVMUXG1/A4F44KrstmjNWWL
-         M3zYcrvHJT8zVu7GQOx2hDWrNpvhWS/jPtfpvPaUp6lzjbnggXpUd5FBqzali0FYhpys
-         R4cw==
+        bh=BFyAjQnd1YVfz2Ku67xIMyrmgwG0vlKeKxSQ3lSdH1M=;
+        b=QHaf/zpB5j9ml/Wr78i/OZ9IyJWckNfDuxOo4MdDGv+x4LO2lJP/dboV5cwAQmFavA
+         Q3tvakkQdIjbqHA3WGNLlZaH0r9akbo9OFx+VkFc2L8s6CYmI8cVh0Fc486e2zNe1E6/
+         9UfyIJUfqBPVmb68+3IhPbodKuqkNIV8+9zs2P/426GNv0hBWgzUj4RhC6xlDk4F8omb
+         YDrHF0EyXr9ObcQI7MX2wQL3vjzO3zLRQ9+bx/Efv9sEdebFT4OxQqzKM7GPgHENj6+3
+         vTN6GPhXtLhT0uyF7wVBFo/Y88QZLi8vY9Ja9+YJ3gUA40ZKBW77NMyD+DYKTnuAGD4X
+         IA2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HGFrFNyVHi280AGFhSwMmw4T+7XoU3wVKH7GZLHn6U0=;
-        b=ec4h1CCOmcVj4aJhU/PYHfLvRE4ofBd3AiycCgqnFSQ81Yis5Q08RuySNTBwDid9N1
-         tRfNntiMm5N77yILVgSsRD2a65KBBNiFOJPkP3YtR3t7sU1NmqP4dXJgzVwda3soVStg
-         JDvGlQJtMvTgu9EgL0xY/CVhrahri7hlM3CmAHZ/QvJQvb5Db0EZhbYTshWfj8VBZHab
-         +HcI/suXw4zM9UnKZr6LHULca4S4yl2Y9law5CNDDrFxZytb0QrVJBuWhTH7f+BeTlob
-         5sB3UknHeDvJL177MFL00xa2i9FxAwVOILFbx+VGjY4sfy5kdAaEmbZz9LqpNZA+PQU/
-         cSeQ==
-X-Gm-Message-State: APjAAAW7780Ms2wrM9f1JSbwOBjRQXNO/SPQSyZ4cMW0H55HIR1PLphP
-        OhAyLfLN+NT9ycnt/NKtn7Uf1h+H
-X-Google-Smtp-Source: APXvYqzwkitjFbo3JmJOC1tyf3ptTa4f9qlwlttkpkxn+9HzzxLjl4VB/Wr1b60y5Z6Jk0Ew2csdFw==
-X-Received: by 2002:ac2:5966:: with SMTP id h6mr1476616lfp.78.1569486621713;
-        Thu, 26 Sep 2019 01:30:21 -0700 (PDT)
+        bh=BFyAjQnd1YVfz2Ku67xIMyrmgwG0vlKeKxSQ3lSdH1M=;
+        b=jQmKAZTijyY5kZ19BhQyxuHdfttPx5H57ZDAvskJi7Iv9NN4NNktsHUjZdKP5tgIt+
+         ymWVA48EJvSaTFMuGLUBObPbtu0SdTKzkqulD4Mp1dTkA6ym7wKer8j5xuIPitUUiU1u
+         et9YtgtueqPXlB07MwA14RYicgJHi1GPgS5TnQByuhFRNMLOPEHlrLP4NcX6mNxjjhZB
+         RsKIkBKkNQFopZxwWHw2nFHlMwIYuP2vHVBBs72HmeV0ictDVwmb1Mng7Bu8oh6OXwq+
+         KLmpvHRsDI6EF3xmvx40wU5oesQG2s5zjwhJt1IxJWmyiNoFGLTeCChqf3zpd1j1kVOE
+         vP4w==
+X-Gm-Message-State: APjAAAX9ARWcA5NVieEaOJF9D7fHUFXpzWTGqF413pc5MMNL/i8afmcV
+        zHyVaY7ij/E3YUovP0m2k8qn11fz
+X-Google-Smtp-Source: APXvYqyUgz0MQfHLJrrJ3MPwqb8pGLOEIbeLMKVIZnJDGXaBQyRbqLMwZ/Q4T2JpHfor4Pd+q7F92w==
+X-Received: by 2002:a2e:a17b:: with SMTP id u27mr1698002ljl.65.1569486620481;
+        Thu, 26 Sep 2019 01:30:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n2sm344988ljj.30.2019.09.26.01.30.20
+        by smtp.gmail.com with ESMTPSA id n3sm381655lfl.62.2019.09.26.01.30.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 01:30:21 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 01:30:21 -0700 (PDT)
-X-Google-Original-Date: Thu, 26 Sep 2019 08:30:03 GMT
-Message-Id: <ad9ab10ce0ec0615570f5d685f5765b27093dae7.1569486607.git.gitgitgadget@gmail.com>
+        Thu, 26 Sep 2019 01:30:20 -0700 (PDT)
+Date:   Thu, 26 Sep 2019 01:30:20 -0700 (PDT)
+X-Google-Original-Date: Thu, 26 Sep 2019 08:30:02 GMT
+Message-Id: <6adfc63e98b481c25dc45ed96caeaeb20a70f9fa.1569486607.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.288.git.gitgitgadget@gmail.com>
 References: <pull.288.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 10/13] test-tool run-command: learn to run (parts of) the
- testsuite
+Subject: [PATCH 09/13] vcxproj: include more generated files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,219 +71,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Git for Windows jumps through hoops to provide a development environment
-that allows to build Git and to run its test suite. To that end, an
-entire MSYS2 system, including GNU make and GCC is offered as "the Git
-for Windows SDK". It does come at a price: an initial download of said
-SDK weighs in with several hundreds of megabytes, and the unpacked SDK
-occupies ~2GB of disk space.
+In the CI builds, we bundle all generated files into a so-called
+artifacts `.tar` file, so that the test phase can fan out into multiple
+parallel builds.
 
-A much more native development environment on Windows is Visual Studio.
-To help contributors use that environment, we already have a Makefile
-target `vcxproj` that generates a commit with project files (and other
-generated files), and Git for Windows' `vs/master` branch is
-continuously re-generated using that target.
-
-The idea is to allow building Git in Visual Studio, and to run
-individual tests using a Portable Git.
-
-The one missing thing is a way to run the entire test suite: neither
-`make` nor `prove` are required to run Git, therefore Git for Windows
-does not support those commands in the Portable Git.
-
-To help with that, add a simple test helper that exercises the
-`run_processes_parallel()` function to allow for running test scripts in
-parallel (which is really necessary, especially on Windows, as Git's
-test suite takes such a long time to run).
-
-This will also come in handy for the upcoming change to our Azure
-Pipeline: we will use this helper in a Portable Git to test the Visual
-Studio build of Git.
+This patch makes sure that all files are included in the `vcxproj`
+target which are needed for that artifacts `.tar` file.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/helper/test-run-command.c | 153 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 153 insertions(+)
+ config.mak.uname | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index 2cc93bb69c..ead6dc611a 100644
---- a/t/helper/test-run-command.c
-+++ b/t/helper/test-run-command.c
-@@ -10,9 +10,14 @@
+diff --git a/config.mak.uname b/config.mak.uname
+index 701aad62b1..cc8efd95b1 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -728,11 +728,10 @@ vcxproj:
  
- #include "test-tool.h"
- #include "git-compat-util.h"
-+#include "cache.h"
- #include "run-command.h"
- #include "argv-array.h"
- #include "strbuf.h"
-+#include "parse-options.h"
-+#include "string-list.h"
-+#include "thread-utils.h"
-+#include "wildmatch.h"
- #include <string.h>
- #include <errno.h>
+ 	# Add scripts
+ 	rm -f perl/perl.mak
+-	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 \
+-		$(SCRIPT_LIB) $(SCRIPT_SH_GEN) $(SCRIPT_PERL_GEN)
++	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 $(SCRIPT_LIB) $(SCRIPTS)
+ 	# Strip out the sane tool path, needed only for building
+ 	sed -i '/^git_broken_path_fix ".*/d' git-sh-setup
+-	git add -f $(SCRIPT_LIB) $(SCRIPT_SH_GEN) $(SCRIPT_PERL_GEN)
++	git add -f $(SCRIPT_LIB) $(SCRIPTS)
  
-@@ -50,11 +55,159 @@ static int task_finished(int result,
- 	return 1;
- }
+ 	# Add Perl module
+ 	$(MAKE) $(LIB_PERL_GEN)
+@@ -762,6 +761,10 @@ vcxproj:
+ 	$(MAKE) -C templates
+ 	git add -f templates/boilerplates.made templates/blt/
  
-+struct testsuite {
-+	struct string_list tests, failed;
-+	int next;
-+	int quiet, immediate, verbose, verbose_log, trace, write_junit_xml;
-+};
-+#define TESTSUITE_INIT \
-+	{ STRING_LIST_INIT_DUP, STRING_LIST_INIT_DUP, -1, 0, 0, 0, 0, 0, 0 }
++	# Add the translated messages
++	make MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 $(MOFILES)
++	git add -f $(MOFILES)
 +
-+static int next_test(struct child_process *cp, struct strbuf *err, void *cb,
-+		     void **task_cb)
-+{
-+	struct testsuite *suite = cb;
-+	const char *test;
-+	if (suite->next >= suite->tests.nr)
-+		return 0;
-+
-+	test = suite->tests.items[suite->next++].string;
-+	argv_array_pushl(&cp->args, "sh", test, NULL);
-+	if (suite->quiet)
-+		argv_array_push(&cp->args, "--quiet");
-+	if (suite->immediate)
-+		argv_array_push(&cp->args, "-i");
-+	if (suite->verbose)
-+		argv_array_push(&cp->args, "-v");
-+	if (suite->verbose_log)
-+		argv_array_push(&cp->args, "-V");
-+	if (suite->trace)
-+		argv_array_push(&cp->args, "-x");
-+	if (suite->write_junit_xml)
-+		argv_array_push(&cp->args, "--write-junit-xml");
-+
-+	strbuf_addf(err, "Output of '%s':\n", test);
-+	*task_cb = (void *)test;
-+
-+	return 1;
-+}
-+
-+static int test_finished(int result, struct strbuf *err, void *cb,
-+			 void *task_cb)
-+{
-+	struct testsuite *suite = cb;
-+	const char *name = (const char *)task_cb;
-+
-+	if (result)
-+		string_list_append(&suite->failed, name);
-+
-+	strbuf_addf(err, "%s: '%s'\n", result ? "FAIL" : "SUCCESS", name);
-+
-+	return 0;
-+}
-+
-+static int test_failed(struct strbuf *out, void *cb, void *task_cb)
-+{
-+	struct testsuite *suite = cb;
-+	const char *name = (const char *)task_cb;
-+
-+	string_list_append(&suite->failed, name);
-+	strbuf_addf(out, "FAILED TO START: '%s'\n", name);
-+
-+	return 0;
-+}
-+
-+static const char * const testsuite_usage[] = {
-+	"test-run-command testsuite [<options>] [<pattern>...]",
-+	NULL
-+};
-+
-+static int testsuite(int argc, const char **argv)
-+{
-+	struct testsuite suite = TESTSUITE_INIT;
-+	int max_jobs = 1, i, ret;
-+	DIR *dir;
-+	struct dirent *d;
-+	struct option options[] = {
-+		OPT_BOOL('i', "immediate", &suite.immediate,
-+			 "stop at first failed test case(s)"),
-+		OPT_INTEGER('j', "jobs", &max_jobs, "run <N> jobs in parallel"),
-+		OPT_BOOL('q', "quiet", &suite.quiet, "be terse"),
-+		OPT_BOOL('v', "verbose", &suite.verbose, "be verbose"),
-+		OPT_BOOL('V', "verbose-log", &suite.verbose_log,
-+			 "be verbose, redirected to a file"),
-+		OPT_BOOL('x', "trace", &suite.trace, "trace shell commands"),
-+		OPT_BOOL(0, "write-junit-xml", &suite.write_junit_xml,
-+			 "write JUnit-style XML files"),
-+		OPT_END()
-+	};
-+
-+	memset(&suite, 0, sizeof(suite));
-+	suite.tests.strdup_strings = suite.failed.strdup_strings = 1;
-+
-+	argc = parse_options(argc, argv, NULL, options,
-+			testsuite_usage, PARSE_OPT_STOP_AT_NON_OPTION);
-+
-+	if (max_jobs <= 0)
-+		max_jobs = online_cpus();
-+
-+	dir = opendir(".");
-+	if (!dir)
-+		die("Could not open the current directory");
-+	while ((d = readdir(dir))) {
-+		const char *p = d->d_name;
-+
-+		if (*p != 't' || !isdigit(p[1]) || !isdigit(p[2]) ||
-+		    !isdigit(p[3]) || !isdigit(p[4]) || p[5] != '-' ||
-+		    !ends_with(p, ".sh"))
-+			continue;
-+
-+		/* No pattern: match all */
-+		if (!argc) {
-+			string_list_append(&suite.tests, p);
-+			continue;
-+		}
-+
-+		for (i = 0; i < argc; i++)
-+			if (!wildmatch(argv[i], p, 0)) {
-+				string_list_append(&suite.tests, p);
-+				break;
-+			}
-+	}
-+	closedir(dir);
-+
-+	if (!suite.tests.nr)
-+		die("No tests match!");
-+	if (max_jobs > suite.tests.nr)
-+		max_jobs = suite.tests.nr;
-+
-+	fprintf(stderr, "Running %d tests (%d at a time)\n",
-+		suite.tests.nr, max_jobs);
-+
-+	ret = run_processes_parallel(max_jobs, next_test, test_failed,
-+				     test_finished, &suite);
-+
-+	if (suite.failed.nr > 0) {
-+		ret = 1;
-+		fprintf(stderr, "%d tests failed:\n\n", suite.failed.nr);
-+		for (i = 0; i < suite.failed.nr; i++)
-+			fprintf(stderr, "\t%s\n", suite.failed.items[i].string);
-+	}
-+
-+	string_list_clear(&suite.tests, 0);
-+	string_list_clear(&suite.failed, 0);
-+
-+	return !!ret;
-+}
-+
- int cmd__run_command(int argc, const char **argv)
- {
- 	struct child_process proc = CHILD_PROCESS_INIT;
- 	int jobs;
- 
-+	if (argc > 1 && !strcmp(argv[1], "testsuite"))
-+		exit(testsuite(argc - 1, argv + 1));
-+
- 	if (argc < 3)
- 		return 1;
- 	while (!strcmp(argv[1], "env")) {
+ 	# Add build options
+ 	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 GIT-BUILD-OPTIONS
+ 	git add -f GIT-BUILD-OPTIONS
 -- 
 gitgitgadget
 
