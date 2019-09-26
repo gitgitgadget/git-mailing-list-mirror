@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5D6E1F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 07:42:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A5A91F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 07:42:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731101AbfIZHme (ORCPT <rfc822;e@80x24.org>);
+        id S1731118AbfIZHmf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 03:42:35 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:35316 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731084AbfIZHme (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 26 Sep 2019 03:42:34 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:33378 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730670AbfIZHmd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 03:42:33 -0400
-Received: by mail-lf1-f66.google.com with SMTP id y127so953306lfc.0
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 00:42:32 -0700 (PDT)
+Received: by mail-lf1-f68.google.com with SMTP id w6so948575lfl.2
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 00:42:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Ppm30Fw8VXNNVYkDmVIhV0RP2Bwtc5Ol/NFbZQSsOO4=;
-        b=CjKgWepZIBWHz5VRycLjhMy2zFdCPCFbJPmcRP7xxDjgYycEFVG+R09pSxBKpnyMt6
-         fwIBAR8Rq2V7auBfr9Hzp8FX4tXhzWQOs7Mhj/XHYh6MonsPZRioFuqjTzvP/V08bwt9
-         yqPJ9VMqyzlGDZcrvj+xCGRLnSBoZcjFILYNCaqipMok4JcsYGqFN3ZbZCmakBwxjjBa
-         dqPmyT16RPG+Bo6eqG6XJkfcG//+ibMLKnf/iMHb762PvZrygtYkvfJW47ttdT5FbL22
-         q2sRseQWs60U1kJXf4IxXiXeNStUD/Ch2Yb6rHWoK3G713w3TEwCmzFME/UN8I/YyhFK
-         w/Bg==
+        bh=FPsqk1PK/xKUY/hJlGx/dDqrkcUC7sJ7OXr3+q+Wi0Q=;
+        b=LkuSb85mZ4LgfnPCXfcxdcHvymw2B19yOybCnIIAYhxVlmZLAKwfygRRzSSwDpbIVH
+         4tOxEsiyROvLQaY05MHMGiYimYzqXXVS4X5vnvs2IdPRxvSgTeDR9M8ulvrUcyxdnXbT
+         tHDD7IBMi/EAfY1+kuzM3gBzIc8hpHAYOb/5OELzZuYWeM/kN35rtnK2bWtJsKnKBVmg
+         jknJkwQUqOvxKdJB6daJWs5TmMFxAuk+rQrf+S/8wnew9BLTaBjL9A90y40xav9+hE1J
+         UBEPXkuZbS+St7aCMVwrHM3PEzUU7pAGSKxbLv2F8shRere4ZQh6IK3zYlJwSNizHBNB
+         I7Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Ppm30Fw8VXNNVYkDmVIhV0RP2Bwtc5Ol/NFbZQSsOO4=;
-        b=EBvimZ0V3SxzoIt3Wb3AdVr0uD/m1+MwosEYAn7TT1zp6bEJHiJse+XY5ljnIbGCZI
-         Vzt85Wv9NDekQARWmKiYbWlTBWvLWLBDdMfje0oRZMJmEg6LPOAexLXpajR3VCQ2okmn
-         rNENPN250KYW4+Ffat4QqhBtRk44Ix1IBur52Fsbx83/icpRJkMmGmL2fzsmpUtjTYiO
-         aPGFtm2spIj/43KUeYnG7RcnjYyOjk+tcUT8qvcWups4v2V/Wuwd5b53ZJ7ztTwPuBPQ
-         nOKZAexJfPJHa/l15FWI7NBn8R1ilbUYcF/k0m3gcx5dqTTWgvvLsrYOzl8ggOP8l4/C
-         0Mkg==
-X-Gm-Message-State: APjAAAVfwE9qT21PDhMjdQkd4q9VlIicKNflR7cf7NG1oT9u80VEsFj1
-        SW8vAxjnIEV2+3KfLgw1IHrDDNr5
-X-Google-Smtp-Source: APXvYqwL9pspvlhB6kHhjldWzUZ5ClhIJZKmJFZI/15P6Sqb5iaqge0f0CbDpo10+eNaEL9063V/Fg==
-X-Received: by 2002:ac2:5c11:: with SMTP id r17mr1293802lfp.61.1569483751544;
-        Thu, 26 Sep 2019 00:42:31 -0700 (PDT)
+        bh=FPsqk1PK/xKUY/hJlGx/dDqrkcUC7sJ7OXr3+q+Wi0Q=;
+        b=Q9aSIurN86fYuWxUKwww2dUQZUsTI6vFkuQlTx9LMF9AL3LHeh+oor3Ai+EJfV8B7L
+         jPXREGOsh4p1oVg6w1jKE6qUJbI9WN5cSKd5N1CDQ8Z6AP9ANXwhQdHasVOc83GHxYIW
+         s4b6XQ+lWuks6HmD/grM+MvP0kJdPQnN9jBaN1WZO+KYnuF8VYZfCRnEyUiGhCtlGxDZ
+         D9FvfI+qacbw+7VTbgfSq0XjiZKgO2zgWZ1huCi8OfhlRPcmSltNhOVnuqzf4QC+VyZA
+         P4/+IXXa/FKndms2lbjAjP0/yYh7FNcjzaQFAhOyC+A/vhZ5t8bmowXzQ+cP719PPIUR
+         7u3A==
+X-Gm-Message-State: APjAAAULPLA2hJ1eXiVhC7wGshcvlutmmEuakKra4QxKLwrzri9a3aIR
+        g83m2Ds85l66C/uZt02nqiYqdjpv
+X-Google-Smtp-Source: APXvYqy5GBaznVSFbmisnhoTPnTrJS14/flvqCCKxU0dmgVfEr+7p+regu2XXFTAXkCO6JVVQu2LsA==
+X-Received: by 2002:a19:7715:: with SMTP id s21mr1251273lfc.98.1569483752775;
+        Thu, 26 Sep 2019 00:42:32 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c15sm377749ljf.1.2019.09.26.00.42.30
+        by smtp.gmail.com with ESMTPSA id k68sm254157lje.86.2019.09.26.00.42.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 00:42:31 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 00:42:31 -0700 (PDT)
-X-Google-Original-Date: Thu, 26 Sep 2019 07:42:26 GMT
-Message-Id: <c263eb54b30b3e93abb74662d120d8bb882322bb.1569483748.git.gitgitgadget@gmail.com>
+        Thu, 26 Sep 2019 00:42:32 -0700 (PDT)
+Date:   Thu, 26 Sep 2019 00:42:32 -0700 (PDT)
+X-Google-Original-Date: Thu, 26 Sep 2019 07:42:27 GMT
+Message-Id: <4c684be1794cd0c62cc19d9c9558981584ec3e9a.1569483748.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.355.git.gitgitgadget@gmail.com>
 References: <pull.355.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/2] update-index: optionally leave skip-worktree entries
- alone
+Subject: [PATCH 2/2] stash: handle staged changes in skip-worktree files
+ correctly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,81 +72,83 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-While `git update-index` mostly ignores paths referring to index entries
-whose skip-worktree bit is set, in b4d1690df11 (Teach Git to respect
-skip-worktree bit (reading part), 2009-08-20), for reasons that are not
-entirely obvious, the `--remove` option was made special: it _does_
-remove index entries even if their skip-worktree bit is set.
+When calling `git stash` while changes were staged for files that are
+marked with the `skip-worktree` bit (e.g. files that are excluded in a
+sparse checkout), the files are recorded as _deleted_ instead.
 
-Seeing as this behavior has been in place for a decade now, it does not
-make sense to change it.
+The reason is that `git stash` tries to construct the tree reflecting
+the worktree essentially by copying the index to a temporary one and
+then updating the files from the worktree. Crucially, it calls `git
+diff-index` to update also those files that are in the HEAD but have
+been unstaged in the index.
 
-However, in preparation for fixing a bug in `git stash` where it
-pretends that skip-worktree entries have actually been removed, we need
-a mode where `git update-index` leaves all skip-worktree entries alone,
-even if the `--remove` option was passed.
+However, when the temporary index is updated via `git update-index --add
+--remove`, skip-worktree entries mark the files as deleted by mistake.
+
+Let's use the newly-introduced `--ignore-skip-worktree-entries` option
+of `git update-index` to prevent exactly this from happening.
+
+Note that the regression test case deliberately avoids replicating the
+scenario described above and instead tries to recreate just the symptom.
+
+Reported by Dan Thompson.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-update-index.txt | 6 ++++++
- builtin/update-index.c             | 6 +++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ builtin/stash.c     |  5 +++--
+ git-legacy-stash.sh |  3 ++-
+ t/t3903-stash.sh    | 11 +++++++++++
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 1c4d146a41..08393445e7 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -16,6 +16,7 @@ SYNOPSIS
- 	     [--chmod=(+|-)x]
- 	     [--[no-]assume-unchanged]
- 	     [--[no-]skip-worktree]
-+	     [--[no-]ignore-skip-worktree-entries]
- 	     [--[no-]fsmonitor-valid]
- 	     [--ignore-submodules]
- 	     [--[no-]split-index]
-@@ -113,6 +114,11 @@ you will need to handle the situation manually.
- 	set and unset the "skip-worktree" bit for the paths. See
- 	section "Skip-worktree bit" below for more information.
- 
-+
-+--[no-]ignore-skip-worktree-entries::
-+	Do not remove skip-worktree (AKA "index-only") entries even when
-+	the `--remove` option was specified.
-+
- --[no-]fsmonitor-valid::
- 	When one of these flags is specified, the object name recorded
- 	for the paths are not updated. Instead, these options
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index dff2f4b837..074d563df0 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -35,6 +35,7 @@ static int verbose;
- static int mark_valid_only;
- static int mark_skip_worktree_only;
- static int mark_fsmonitor_only;
-+static int ignore_skip_worktree_entries;
- #define MARK_FLAG 1
- #define UNMARK_FLAG 2
- static struct strbuf mtime_dir = STRBUF_INIT;
-@@ -381,7 +382,8 @@ static int process_path(const char *path, struct stat *st, int stat_errno)
- 		 * so updating it does not make sense.
- 		 * On the other hand, removing it from index should work
- 		 */
--		if (allow_remove && remove_file_from_cache(path))
-+		if (!ignore_skip_worktree_entries && allow_remove &&
-+		    remove_file_from_cache(path))
- 			return error("%s: cannot remove from the index", path);
- 		return 0;
+diff --git a/builtin/stash.c b/builtin/stash.c
+index b5a301f24d..56f3b551e4 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1082,8 +1082,9 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
  	}
-@@ -1013,6 +1015,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		{OPTION_SET_INT, 0, "no-skip-worktree", &mark_skip_worktree_only, NULL,
- 			N_("clear skip-worktree bit"),
- 			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, UNMARK_FLAG},
-+		OPT_BOOL(0, "ignore-skip-worktree-entries", &ignore_skip_worktree_entries,
-+			 N_("do not touch index-only entries")),
- 		OPT_SET_INT(0, "info-only", &info_only,
- 			N_("add to index only; do not add content to object database"), 1),
- 		OPT_SET_INT(0, "force-remove", &force_remove,
+ 
+ 	cp_upd_index.git_cmd = 1;
+-	argv_array_pushl(&cp_upd_index.args, "update-index", "-z", "--add",
+-			 "--remove", "--stdin", NULL);
++	argv_array_pushl(&cp_upd_index.args, "update-index",
++			 "--ignore-skip-worktree-entries",
++			 "-z", "--add", "--remove", "--stdin", NULL);
+ 	argv_array_pushf(&cp_upd_index.env_array, "GIT_INDEX_FILE=%s",
+ 			 stash_index_path.buf);
+ 
+diff --git a/git-legacy-stash.sh b/git-legacy-stash.sh
+index f60e9b3e87..5398a5161d 100755
+--- a/git-legacy-stash.sh
++++ b/git-legacy-stash.sh
+@@ -193,7 +193,8 @@ create_stash () {
+ 			GIT_INDEX_FILE="$TMPindex" &&
+ 			export GIT_INDEX_FILE &&
+ 			git diff-index --name-only -z HEAD -- "$@" >"$TMP-stagenames" &&
+-			git update-index -z --add --remove --stdin <"$TMP-stagenames" &&
++			git update-index --ignore-skip-worktree-entries \
++				-z --add --remove --stdin <"$TMP-stagenames" &&
+ 			git write-tree &&
+ 			rm -f "$TMPindex"
+ 		) ) ||
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index b8e337893f..1e977145b8 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -1241,4 +1241,15 @@ test_expect_success 'stash --keep-index with file deleted in index does not resu
+ 	test_path_is_missing to-remove
+ '
+ 
++test_expect_success 'stash handles skip-worktree entries nicely' '
++	test_commit A &&
++	echo changed >A.t &&
++	git add A.t &&
++	git update-index --skip-worktree A.t &&
++	rm A.t &&
++	git stash &&
++
++	git rev-parse --verify refs/stash:A.t
++'
++
+ test_done
 -- 
 gitgitgadget
-
