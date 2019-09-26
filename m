@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CD191F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 08:30:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE1871F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 08:30:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727975AbfIZIaP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 04:30:15 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:44377 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727528AbfIZIaO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 04:30:14 -0400
-Received: by mail-lj1-f194.google.com with SMTP id m13so1207128ljj.11
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 01:30:13 -0700 (PDT)
+        id S1728332AbfIZIaQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 04:30:16 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:38393 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727529AbfIZIaQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 04:30:16 -0400
+Received: by mail-lj1-f196.google.com with SMTP id b20so1232442ljj.5
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 01:30:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=YnMTIPjZvbP+6ylmBnfB+NxC7dfryopwFIX8J+o4KjU=;
-        b=rWgoM/LD8vjGTiddb696DVrw5/nQYpjo+3yi04IYagyqhtnZAZMnz4deP1dzkSzfzb
-         dqdO1DuRST7i6KVdaqHsy71khpSyou3CKFdSnHUaKudAq8S47Zhy38xdp/CKPe3TQeU2
-         8fHeqFMNF4ssJl578xURXxl3fznesz9CCzbF31lKHYihaOYTt/UF7Q/M8ZNaFcRFvwKp
-         oyG/su0wWL80xBHVrQrD8oRf+934CeO5e7kyQO/OnUSvAiiDqnFb51gcZ7S3fNFSTU9Q
-         CQrOLh1bO9yMytiT8ejNSbk93P0uUT/SxlDKDjPYaeh4YfGXTd+iaRfgrXQb9yxkuVmN
-         CfUA==
+        bh=PwAFlDQ5FlWkf4x5wuYtwAm/soXttcp6NKf0ywJLbFQ=;
+        b=lNEFpOsMiV4i2QOP2eCUsE5bqtpDB98teMW1lAH2ebJXhmJiSVTntzofuHF2tuK2ls
+         TvNBt8kX6sIGXHPaEf1YqkyEWznLHbiL5HCnPmkZXa8Mt36AiWlr08VRrn02X7K+xESa
+         QG4MIEzlOkr7uWzahnTSQ6TeQ1nbK0y2OQh8uLrnu878YyfBRAZnLFDlklh52/VeUIvd
+         +YYiayO74XxfwXmlwYIMNdK+njidqjQ0mXLjR+zDC7Z51dxXcxqkZpeCsETVauca2pAk
+         wBySIJsUsqC6oAGdn4ylNJwYtJUZVtCvxkvUzHmmIcB+Gr+vYhl4ABCvduL775lQkbeG
+         DBuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=YnMTIPjZvbP+6ylmBnfB+NxC7dfryopwFIX8J+o4KjU=;
-        b=WpwVRbwF9a4i2Amf4/OipWOpe/HhYkXcNccoxbA3MJq4C6w5WSuU9sWvjLsqc98U+J
-         cZ3zqqTpAwV2AqygnwwKaNv/XPs57XPa/0eKrTCUrKVThi6CoIXle88TDjgr/RqvqMnU
-         vYxUpxJWXNcRdLNM4TGpeSlYi5e9I9BPfoqll+gjEka6ix18/aIR9vrahnnN+5gEWzIo
-         cdS/sKr76fBenWsnNNd9DBF9OFL30m2RI6nbPIeazLHxMNUUPMq29W1y0+zO5x5FIqi+
-         x8ta9lPYrtT0bna9j8NRvgafspEDrmaMnJyiRX0X059Y2oFMd+9t6mCV7PANfyW9mGJe
-         qpVA==
-X-Gm-Message-State: APjAAAWK64ie1Z6HT6Qj80AB+LbHHbXP2/L8HGL0RcqjKM95VsV4Rm/f
-        AKmEuawInks+cm84tprDmb7OJGZd
-X-Google-Smtp-Source: APXvYqwEuZwSJZR8sq8v4rqx1ikzQNj7UP5F9xZeZGDcZhc8wb2r9zzo9kU6W9Tl0W8BJgKxpTHLSg==
-X-Received: by 2002:a2e:b0f4:: with SMTP id h20mr1746414ljl.10.1569486612524;
-        Thu, 26 Sep 2019 01:30:12 -0700 (PDT)
+        bh=PwAFlDQ5FlWkf4x5wuYtwAm/soXttcp6NKf0ywJLbFQ=;
+        b=aB2bOrbI3JtXgI+DaOXiS88ggZXbZUkffdCzuWrlP36MKR/RDIujopJ32pvts1efaT
+         9rbmV/nJktQPd6XnthvMniWAQKfeldfzHbG+NLv/P5UBSvja0oa2jMLg42JrSC20UTQO
+         bQ/0KksvkL6gWVlKl90Gz+WkoP/QntUYkvt1a96SzJfbwGxu8CS2wdXX4TunTRM8IU5f
+         kDUOITEqM87JVQumcM5Hkzc7VHST10OrBDxZiYijG2Y7LsRYWmKMmOia7mKiTqQ15sLT
+         h/qkTnl0L8f2Hzw/TyLJ6A72igpcqFGqyGvcTPtWyIOZn7eqeFqIr4WOhM0tlRIS3lQP
+         59hQ==
+X-Gm-Message-State: APjAAAWhrRRLCnGGvxKJ6JXrfb0/DynTWgAZkcDUD9Qm04LDdQne8ZU2
+        w0CCOPyXn6Q6QN4wPhZXWDZWNTSO
+X-Google-Smtp-Source: APXvYqy10PE5eU3QitC7CojplyYJRDFKU6nE4USLbzabSp+Uq8L5+2Rweq3JGJL23uEvUMoDVr3zGA==
+X-Received: by 2002:a2e:80d3:: with SMTP id r19mr1701655ljg.41.1569486613657;
+        Thu, 26 Sep 2019 01:30:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g3sm347287ljj.59.2019.09.26.01.30.11
+        by smtp.gmail.com with ESMTPSA id q24sm411836ljj.6.2019.09.26.01.30.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 01:30:12 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 01:30:12 -0700 (PDT)
-X-Google-Original-Date: Thu, 26 Sep 2019 08:29:56 GMT
-Message-Id: <dbd9022ad540561f4401d43c3a6b7870f025ac27.1569486607.git.gitgitgadget@gmail.com>
+        Thu, 26 Sep 2019 01:30:13 -0700 (PDT)
+Date:   Thu, 26 Sep 2019 01:30:13 -0700 (PDT)
+X-Google-Original-Date: Thu, 26 Sep 2019 08:29:57 GMT
+Message-Id: <6417d6f68953f0d7530e6c61bdd09348adade088.1569486607.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.288.git.gitgitgadget@gmail.com>
 References: <pull.288.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 03/13] winansi: use FLEX_ARRAY to avoid compiler warning
+Subject: [PATCH 04/13] compat/win32/path-utils.h: add #include guards
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,31 +71,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-MSVC would complain thusly:
-
-    C4200: nonstandard extension used: zero-sized array in struct/union
-
-Let's just use the `FLEX_ARRAY` constant that we introduced for exactly
-this type of scenario.
+This adds the common guards that allow headers to be #include'd multiple
+times.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/winansi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ compat/win32/path-utils.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/compat/winansi.c b/compat/winansi.c
-index cacd82c833..54fd701cbf 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -546,7 +546,7 @@ static HANDLE swap_osfhnd(int fd, HANDLE new_handle)
- typedef struct _OBJECT_NAME_INFORMATION
- {
- 	UNICODE_STRING Name;
--	WCHAR NameBuffer[0];
-+	WCHAR NameBuffer[FLEX_ARRAY];
- } OBJECT_NAME_INFORMATION, *POBJECT_NAME_INFORMATION;
- 
- #define ObjectNameInformation 1
+diff --git a/compat/win32/path-utils.h b/compat/win32/path-utils.h
+index 0f70d43920..8ed062a6b7 100644
+--- a/compat/win32/path-utils.h
++++ b/compat/win32/path-utils.h
+@@ -1,3 +1,6 @@
++#ifndef WIN32_PATH_UTILS_H
++#define WIN32_PATH_UTILS_H
++
+ #define has_dos_drive_prefix(path) \
+ 	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
+ int win32_skip_dos_drive_prefix(char **path);
+@@ -18,3 +21,5 @@ static inline char *win32_find_last_dir_sep(const char *path)
+ #define find_last_dir_sep win32_find_last_dir_sep
+ int win32_offset_1st_component(const char *path);
+ #define offset_1st_component win32_offset_1st_component
++
++#endif
 -- 
 gitgitgadget
 
