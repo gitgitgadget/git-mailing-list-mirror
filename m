@@ -8,55 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42B2E1F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 08:30:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 264FF1F463
+	for <e@80x24.org>; Thu, 26 Sep 2019 08:30:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729092AbfIZIaY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 04:30:24 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:38402 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728638AbfIZIaW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 04:30:22 -0400
-Received: by mail-lj1-f193.google.com with SMTP id b20so1232850ljj.5
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 01:30:21 -0700 (PDT)
+        id S1729233AbfIZIa2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 04:30:28 -0400
+Received: from mail-lj1-f176.google.com ([209.85.208.176]:34395 "EHLO
+        mail-lj1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727529AbfIZIa0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 04:30:26 -0400
+Received: by mail-lj1-f176.google.com with SMTP id j19so1250533lja.1
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 01:30:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=BFyAjQnd1YVfz2Ku67xIMyrmgwG0vlKeKxSQ3lSdH1M=;
-        b=QHaf/zpB5j9ml/Wr78i/OZ9IyJWckNfDuxOo4MdDGv+x4LO2lJP/dboV5cwAQmFavA
-         Q3tvakkQdIjbqHA3WGNLlZaH0r9akbo9OFx+VkFc2L8s6CYmI8cVh0Fc486e2zNe1E6/
-         9UfyIJUfqBPVmb68+3IhPbodKuqkNIV8+9zs2P/426GNv0hBWgzUj4RhC6xlDk4F8omb
-         YDrHF0EyXr9ObcQI7MX2wQL3vjzO3zLRQ9+bx/Efv9sEdebFT4OxQqzKM7GPgHENj6+3
-         vTN6GPhXtLhT0uyF7wVBFo/Y88QZLi8vY9Ja9+YJ3gUA40ZKBW77NMyD+DYKTnuAGD4X
-         IA2g==
+        bh=+ALQB6JMvVM0c9hGwY/fZEppEZoPfVaLQt24/cPaKnQ=;
+        b=Dx3HGL1kqhj10iEV6cdMv39TZIFW5bH0ckf1xL+yhFGjWCA2FZU5SuBVibr8Cmi7gz
+         Xr2+/csqTQPhOprxMEOgYbqomnMQTxai5jllloti5ocmXvUGB3gojTWbaliCxTcPuWR2
+         p/SWqbeXX+6oGSsa7oeUN0acxpzwfJjxgGCp57kLf0xWvpkC+spyyaRJD/a3CMxogjsj
+         TLUaEKzfaBZSM9oV+LyYUQisLsTCBx7Ni/a4GKHGzadr2x0B4EETJcnu6W6uEjWsbJkG
+         8ekeBnseTbkOz6UNEOmQ06fJyaugjiI/DnvbN3k+12O6TiLZCRZOGCgXrBE2XcCcxaWr
+         UoIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=BFyAjQnd1YVfz2Ku67xIMyrmgwG0vlKeKxSQ3lSdH1M=;
-        b=jQmKAZTijyY5kZ19BhQyxuHdfttPx5H57ZDAvskJi7Iv9NN4NNktsHUjZdKP5tgIt+
-         ymWVA48EJvSaTFMuGLUBObPbtu0SdTKzkqulD4Mp1dTkA6ym7wKer8j5xuIPitUUiU1u
-         et9YtgtueqPXlB07MwA14RYicgJHi1GPgS5TnQByuhFRNMLOPEHlrLP4NcX6mNxjjhZB
-         RsKIkBKkNQFopZxwWHw2nFHlMwIYuP2vHVBBs72HmeV0ictDVwmb1Mng7Bu8oh6OXwq+
-         KLmpvHRsDI6EF3xmvx40wU5oesQG2s5zjwhJt1IxJWmyiNoFGLTeCChqf3zpd1j1kVOE
-         vP4w==
-X-Gm-Message-State: APjAAAX9ARWcA5NVieEaOJF9D7fHUFXpzWTGqF413pc5MMNL/i8afmcV
-        zHyVaY7ij/E3YUovP0m2k8qn11fz
-X-Google-Smtp-Source: APXvYqyUgz0MQfHLJrrJ3MPwqb8pGLOEIbeLMKVIZnJDGXaBQyRbqLMwZ/Q4T2JpHfor4Pd+q7F92w==
-X-Received: by 2002:a2e:a17b:: with SMTP id u27mr1698002ljl.65.1569486620481;
-        Thu, 26 Sep 2019 01:30:20 -0700 (PDT)
+        bh=+ALQB6JMvVM0c9hGwY/fZEppEZoPfVaLQt24/cPaKnQ=;
+        b=RvfzcSClEfbKT/Px4yWUMC4FQu/tag+jx5XQ0vB5yjIholSzEG9T/GH133IIxKppMj
+         SuAe5IrP9/NCo/+h4e6Cz8gaR0wLVGaq62jMdJcHphVQo31CPKvMgDB3AFFaYuDZJoKi
+         R7PMkfePJWdh/obbAQOGLmUy/A3nUrwquL+SX45l4wG7KdXFxK+LLGbsc5nGbCMg4Il2
+         OjvOBeQy/x7cRRITUO9TeCbpJaXK9c2lYOIyP31XELPRkyrRLKMSgbXoxbP8VoKfunmQ
+         RlIYtF+U/pPCX3knemEDHAajrYMKrZHu3UltEcn+TSPs3kmNZBlsKfFA3qEXsjboxbQh
+         rzeQ==
+X-Gm-Message-State: APjAAAVg36tEX3vFBUhTJPo1ojwzpqhVy3pAROcW9Jf/haUMYYPL4O1N
+        YtsMJdpV27b6QPu3CgLe7HfEck4h
+X-Google-Smtp-Source: APXvYqyL61s0D6slVxYKf6/wGtCjPM2gLHi2gQYk2g2sYkR0wK3nmkoFR6UUkAcXMTmHyr5q5VqTbg==
+X-Received: by 2002:a2e:1614:: with SMTP id w20mr1669141ljd.159.1569486622904;
+        Thu, 26 Sep 2019 01:30:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n3sm381655lfl.62.2019.09.26.01.30.19
+        by smtp.gmail.com with ESMTPSA id k23sm413380ljc.13.2019.09.26.01.30.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 01:30:20 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 01:30:20 -0700 (PDT)
-X-Google-Original-Date: Thu, 26 Sep 2019 08:30:02 GMT
-Message-Id: <6adfc63e98b481c25dc45ed96caeaeb20a70f9fa.1569486607.git.gitgitgadget@gmail.com>
+        Thu, 26 Sep 2019 01:30:22 -0700 (PDT)
+Date:   Thu, 26 Sep 2019 01:30:22 -0700 (PDT)
+X-Google-Original-Date: Thu, 26 Sep 2019 08:30:04 GMT
+Message-Id: <99724f6a1e45b497e15037bbac1cb5f70a3bb236.1569486607.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.288.git.gitgitgadget@gmail.com>
 References: <pull.288.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 09/13] vcxproj: include more generated files
+Subject: [PATCH 11/13] tests: let --immediate and --write-junit-xml play well
+ together
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,47 +72,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the CI builds, we bundle all generated files into a so-called
-artifacts `.tar` file, so that the test phase can fan out into multiple
-parallel builds.
+When the `--immediate` option is in effect, any test failure will
+immediately exit the test script. Together with `--write-junit-xml`, we
+will want the JUnit-style `.xml` file to be finalized (and not leave the
+XML incomplete). Let's make it so.
 
-This patch makes sure that all files are included in the `vcxproj`
-target which are needed for that artifacts `.tar` file.
+This comes in particularly handy when trying to debug via Azure
+Pipelines, where the JUnit-style XML is consumed to present the test
+results in an informative and helpful way.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ t/test-lib.sh | 37 +++++++++++++++++++++----------------
+ 1 file changed, 21 insertions(+), 16 deletions(-)
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 701aad62b1..cc8efd95b1 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -728,11 +728,10 @@ vcxproj:
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index d1ba33745a..f21c781e68 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -695,7 +695,7 @@ test_failure_ () {
+ 	say_color error "not ok $test_count - $1"
+ 	shift
+ 	printf '%s\n' "$*" | sed -e 's/^/#	/'
+-	test "$immediate" = "" || { GIT_EXIT_OK=t; exit 1; }
++	test "$immediate" = "" || { finalize_junit_xml; GIT_EXIT_OK=t; exit 1; }
+ }
  
- 	# Add scripts
- 	rm -f perl/perl.mak
--	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 \
--		$(SCRIPT_LIB) $(SCRIPT_SH_GEN) $(SCRIPT_PERL_GEN)
-+	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 $(SCRIPT_LIB) $(SCRIPTS)
- 	# Strip out the sane tool path, needed only for building
- 	sed -i '/^git_broken_path_fix ".*/d' git-sh-setup
--	git add -f $(SCRIPT_LIB) $(SCRIPT_SH_GEN) $(SCRIPT_PERL_GEN)
-+	git add -f $(SCRIPT_LIB) $(SCRIPTS)
+ test_known_broken_ok_ () {
+@@ -1063,6 +1063,25 @@ write_junit_xml_testcase () {
+ 	junit_have_testcase=t
+ }
  
- 	# Add Perl module
- 	$(MAKE) $(LIB_PERL_GEN)
-@@ -762,6 +761,10 @@ vcxproj:
- 	$(MAKE) -C templates
- 	git add -f templates/boilerplates.made templates/blt/
- 
-+	# Add the translated messages
-+	make MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 $(MOFILES)
-+	git add -f $(MOFILES)
++finalize_junit_xml () {
++	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
++	then
++		test -n "$junit_have_testcase" || {
++			junit_start=$(test-tool date getnanos)
++			write_junit_xml_testcase "all tests skipped"
++		}
 +
- 	# Add build options
- 	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 GIT-BUILD-OPTIONS
- 	git add -f GIT-BUILD-OPTIONS
++		# adjust the overall time
++		junit_time=$(test-tool date getnanos $junit_suite_start)
++		sed "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
++			<"$junit_xml_path" >"$junit_xml_path.new"
++		mv "$junit_xml_path.new" "$junit_xml_path"
++
++		write_junit_xml "  </testsuite>" "</testsuites>"
++		write_junit_xml=
++	fi
++}
++
+ test_atexit_cleanup=:
+ test_atexit_handler () {
+ 	# In a succeeding test script 'test_atexit_handler' is invoked
+@@ -1085,21 +1104,7 @@ test_done () {
+ 	# removed, so the commands can access pidfiles and socket files.
+ 	test_atexit_handler
+ 
+-	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
+-	then
+-		test -n "$junit_have_testcase" || {
+-			junit_start=$(test-tool date getnanos)
+-			write_junit_xml_testcase "all tests skipped"
+-		}
+-
+-		# adjust the overall time
+-		junit_time=$(test-tool date getnanos $junit_suite_start)
+-		sed "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
+-			<"$junit_xml_path" >"$junit_xml_path.new"
+-		mv "$junit_xml_path.new" "$junit_xml_path"
+-
+-		write_junit_xml "  </testsuite>" "</testsuites>"
+-	fi
++	finalize_junit_xml
+ 
+ 	if test -z "$HARNESS_ACTIVE"
+ 	then
 -- 
 gitgitgadget
 
