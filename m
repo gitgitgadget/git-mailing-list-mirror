@@ -2,173 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B299F1F463
-	for <e@80x24.org>; Fri, 27 Sep 2019 12:02:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99E231F463
+	for <e@80x24.org>; Fri, 27 Sep 2019 12:21:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726549AbfI0MCH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Sep 2019 08:02:07 -0400
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:37223 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726251AbfI0MCH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Sep 2019 08:02:07 -0400
-Received: by mail-wr1-f54.google.com with SMTP id i1so2433741wro.4
-        for <git@vger.kernel.org>; Fri, 27 Sep 2019 05:02:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jsVU7h/AMJQnyqPwXDcuhLkau2+rWHdZhWjETdnJ9KQ=;
-        b=tukZ6OzuBgv17fYzyuoBBdZeZrvKjW2DZfg7/695ot7vqTxiWtcjizL0VnmHjSbhJf
-         536pNPCxJJHfK6nTLIOF3jZ4gzFte61G1ylPVxHTBMMxx7F5zBht1MQ+8rWYO1CK06J3
-         7Awqg5n9WtvIjePT9MBPb9We4/A2ckSgwRa/XFtFNqm3lrlcM3bG9JxjzxlkI0NsjhQX
-         uchGGJXDSBn7E7wYswTn3REZS1s5qqY58vW5oUmOrwbQYfKzYhb+5UcVSOw1nikDwivr
-         UcwGBedf1pp10YIu3u+5j02QYrU8O18SzO9w9eVMZ3Bve1R4cvIWDmc9B8RcBxObovme
-         +gdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jsVU7h/AMJQnyqPwXDcuhLkau2+rWHdZhWjETdnJ9KQ=;
-        b=X0D2NkImDQEdo1T8Lnd4y4DX7hcPrAgXsPyQM/0aY8wifwFQ9hrxL5ZBZ8ZLo1eNyB
-         dABLGCnjNWOXazEyuXJH9HGWcx9gGPpXwH/OE+XCm0hK4vou846uDtl4/GKLyqg85NFt
-         ylclp+Bvd8uhD81MJMqWMnUR4kKgZxyn4VmlaLB3dE99rdQalZSuy5wVtpiiwxyDwixz
-         7rknNOAwhwvDN5woNp/8vx5hLcqmKzqfvwXlMG9CxL9kHhJ21ilxdRH+djqPWx0BEwQj
-         Acr9sPQePFnswu5hhlf7zq54ySXrPVkKC/ngt35ykGwNsMJ3o78vour//ICSVO/a1eAw
-         Q+Hw==
-X-Gm-Message-State: APjAAAWJAb4nEY6eB7RCWrY1oPvFUn4xqzBQG5y7CMey5CzpOyRrvQTK
-        DKuV2Nh6T+GR3RzCHIfuNjrYRhk5Dow=
-X-Google-Smtp-Source: APXvYqxFBTJh1yoCo6FZQCh3LAHyosjy5zqHAOwens292/dVonbcAwOdtKN4STm/uXK6yFo+SewinQ==
-X-Received: by 2002:adf:ec85:: with SMTP id z5mr2878916wrn.374.1569585725367;
-        Fri, 27 Sep 2019 05:02:05 -0700 (PDT)
-Received: from szeder.dev (x4db42589.dyn.telefonica.de. [77.180.37.137])
-        by smtp.gmail.com with ESMTPSA id b7sm2508821wrj.28.2019.09.27.05.02.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 27 Sep 2019 05:02:04 -0700 (PDT)
-Date:   Fri, 27 Sep 2019 14:02:01 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Anders Janmyr <anders@janmyr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Possible bug in git describe, additional commits differs when
- cloned with --depth
-Message-ID: <20190927120201.GM2637@szeder.dev>
-References: <CA+UvoT7EBa6S6Fi7scYTo8mYKx=n1e=sPvxy5TRP3vG7gw97Xw@mail.gmail.com>
+        id S1726295AbfI0MVS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Sep 2019 08:21:18 -0400
+Received: from mout.gmx.net ([212.227.17.21]:53509 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725890AbfI0MVS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Sep 2019 08:21:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1569586874;
+        bh=DPm6Xm6eOaDpdSN4o6Q8RPJ7Usf9476WtJHRZuJNJt4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FkmUx812VwKoA5HtuzByTLuj4Z6Hvzl1P4j8OzPFYmNlUMtVgB5IbOrI3N7B70MYA
+         xWFTmioSVrUC1hoEi4layEP/0+5IFI+exUwRb96mtqH2EGA3MVJDZSKZ86wmAC6YvK
+         5uAFrNO/ELN68KrWpxcuoLJl6IyHGisO7kTMvkUc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5VHG-1i7VUO0tH0-0170iw; Fri, 27
+ Sep 2019 14:21:14 +0200
+Date:   Fri, 27 Sep 2019 14:21:00 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Alex Henrie <alexhenrie24@gmail.com>
+cc:     git@vger.kernel.org, dstolee@microsoft.com, stolee@gmail.com
+Subject: Re: [PATCH v2] commit-graph: remove a duplicate assignment
+In-Reply-To: <20190927021952.364646-1-alexhenrie24@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1909271418170.15067@tvgsbejvaqbjf.bet>
+References: <20190927021952.364646-1-alexhenrie24@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+UvoT7EBa6S6Fi7scYTo8mYKx=n1e=sPvxy5TRP3vG7gw97Xw@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Nd7+MDX8Ywr8kEbC9SNvQsUULhmCklaNdHBYLcirCnZT6As1pXZ
+ 0C8sK39t/82UxJHT9WAa2JF/QlLYF7WnmzOc9YSlZVzAe2R4kgDB91yZeFfRXSivKSTOoSj
+ tuOaoHBrAOsy+FH3MicCLB8dm3xE0JPo9nEFaiudUDtwjAe7NlY9MzYA8ObDwktLE2P7ack
+ hO3CIwJ+Cv/sB+Vbz1PwQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:E7x5lsXH/sM=:k0UwLCPYZt2MTIddP+72b8
+ wk7KPXdJUeO0rfV/4WLlc8YcI9nsavi1D7X9RMKZpBSANdXio1zTyDU5J+yg4DxuE4o6DLEkr
+ EdoelkFDNJsJ79c33oJCLILCXyYQSwPVuTCGmGxwbQtNirFE8WmgGT9+UOA1Qs+cGW3Y4elvb
+ r7s/o8eddgP5fpTS68xdyjBXSO08mlqoHhuTSCjAvKIEoXIEKwTe0kPfk1uGtlvdYh+5Xlfxs
+ xOvaVtFSUd6DrETNZwG4qR82eQUfNFlDig8ElogZ/IkTDvHVwidQNnsqECpdn12c7rZvpA+mZ
+ ZALeoqjxosO1Me0x/hvint2RoO+x+FQYoy4WqwYhC5joF10tV1HDldGlmgEe/cv38T7Yy1BJu
+ 0gizmvuJFQ+fmWovGiD8IVaHyodMHdZwe96eNQhKYRMLQ5LWzzV12vwT3ZUimA/6DlJ6PEawQ
+ iZvTDKO/dEVnOFpqNq25Uc8JFgqSi+09sdDgVMVSqx2JlaIqlziBGN40/HeR5S/qcAwX0JKQJ
+ Xbnh2pWkvJGQDpMksfe8zdRP4tNfzfDOIJLQjzIiD2PKEsnxOZpEvAZy6LWPmkgPwNu1OkY5G
+ haf5qBBi3K3cQD1EPJ7j5ijUO3TFNqh3uVvwIcuWc3u3+nmDvSa1xmhCdBy81CNyNCr/ZrMsG
+ xKN31JValwZyCveGPNy49/d6NOQb6EXXOtrKGhpldrmmlW00hhWnEpCcMLFYQJRFP30jNXQAU
+ m3gTWl4LZVjRH63bexhk4/eMkT2H0zw+0L9PqUERc/PGXzKfy0XiuzM0mq17xU4Cob8qifjAq
+ QYBWNIeAdr8BiexiTx/L0sSsGNQHoSJ7ZKr2GjX/KoUxapTEBu1W2hGZ/ENa/hfiVDHn9oOTe
+ s1l1Q1OS6NbFFS5R867KVdW+9JY5cGZ3Y+9eOmbtV932FqKi6AVmmGr8Zk2TuzYEOHeWkzAF1
+ IxFlp/fVumV9mifLC9bzYCeXftliip/zj2yXWSll73pywrJs7sbqZRXHbrZy8oiPjJU+FVMTq
+ VUAtEWwkN+bFGBDxLKu9nfjm6KXQxFXjB4WsCHyA90z8LJvUgzwXrlbBBOy4ACuhDAZcz57Rl
+ Or96KRbyvASxVBHC+2IwfJHLm+ZF23uef9idnBBAcQR/3zjX2wi6In97rjjTeFdzY3QGwxr+4
+ IGntn2OSCgkdrd1+/kek46iXkPJ5Qgu2zoBNr5hZxqk5Mn1qH53Qg4zdTqUiq18ghq8RHZQr7
+ CBdqF1HUNT4WNHzwc5ox6/IZXSbUPPa57Bv0jFzJNAmg6KQePlHtd3P4aMts=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 27, 2019 at 11:51:07AM +0200, Anders Janmyr wrote:
-> Hi,
-> 
-> I'm not sure if this is a bug or not but `git describe` gives
-> different results when the repo has been cloned with `--depth` or not.
-> 
-> In the example below from the git repository the number of additional
-> commits since the
-> last tag differs 256 vs. 265.
-> 
-> ```
-> $ git clone https://github.com/git/git
-> $ cd git/
-> $ git describe
-> v2.23.0-256-g4c86140027
-> $ git rev-list -n 1 HEAD
-> 4c86140027f4a0d2caaa3ab4bd8bfc5ce3c11c8a
-> 
-> 
-> $ git clone --depth=50 https://github.com/git/git git-depth
-> $ cd git-depth/
-> $ git describe
-> v2.23.0-265-g4c861400
-> $ git rev-list -n 1 HEAD
-> 4c86140027f4a0d2caaa3ab4bd8bfc5ce3c11c8a
-> ```
-
-I don't think this is a bug, but rather an inherent limitation of
-shallow histories with lots of merges, and it affects not only 'git
-describe', but any limited history traversal.
-
-In the Git project new features are developed on their dedicated
-branches, which are then eventually merged to 'master'.  Alas, we make
-mistakes, and sometimes we realize that a feature was buggy after it
-has already been merged to 'master'.  In such cases the bugfix is
-often applied not on top of 'master', but on top of the feature
-branch, so it can be merged to maintenance releases as well.
-
-This results in a history like this:
-
-  M2     Merge the bugfix to 'master'
-  |  \
-  |   \
- v2.0  |
-  |    o  Bugfix for new feature
- CO2   |
-  |    |
-  M1  /  Merge 'new feature' to 'master'
-  | \/
-  |  o   new feature
-  |  |
-  |  o
-  |  |
-  | CO1
-  |  |    
-  | /
- v1.0
-
-Describing M2 in a full repository results in something like
-v2.0-2-gdeadbeef, because M2 contains only two commits that aren't in
-v2.0, (M2 and the bugfix).
-
-Now let's suppose that in a shallow repo the given '--depth=<N>'
-resulted in a cutoff at commits CO1 and CO2, meaning that the shallow
-repo does not include commits M1 and v1.0.  Consequently, Git can't
-possibly see that the commits implementing the new feature are already
-merged and thus reachable from v2.0, so it will count those commits as
-well, resulting in v2.0-5-gabcdef.
-
-There is a lot more going on in the Git repository, so it's not as
-simple as above.  Case in point is the merge d1a251a1fa (Merge branch
-'en/checkout-mismerge-fix', 2019-09-09), which merges a fix to a bug
-that happened before v2.22.0-rc0, but that bug was not introduced in
-the feature branch, but while merging that branch to 'master'.  The
-result is still the same, though: since there are a lot of commits on
-the ancestry path between that buggy merge and v2.23.0, '--depth=50'
-doesn't include them all in the shallow clone, so Git can't possibly
-know that that merge is reachable from v2.23.0.
-
-  # same in both the full and shallow repos
-  $ git log --oneline v2.23.0..d1a251a1fa^ |wc -l
-  57
-
-  # in the full repo
-  $ git log --oneline v2.23.0..d1a251a1fa |wc -l
-  59
-
-  # in the shallow repo
-  $ git log --oneline v2.23.0..d1a251a1fa |wc -l
-  132
-
-> In the example above the first version also gives additional digits
-> for the SHA,
-> g4c86140027 vs. g4c861400, but that is not always the case.
-
-Git shows as many hexdigits as needed to form a unique object name
-with a few additional digits worth of safety margin.  There are a lot
-more objects in the full repository than in the shallow clone, which
-means more hexdigits in the abbreviated object name.
+Hi,
 
 
-Thanks for letting us know.  I think this is worth a warning in
-the documentation of 'git clone --depth'.
+On Thu, 26 Sep 2019, Alex Henrie wrote:
 
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+
+Hrm, the commit message should reflect Stolee's careful consideration,
+no? An empty commit message won't be helpful e.g. when cherry-picking on
+top of a branch that already has your v1.
+
+Ciao,
+Johannes
+
+> ---
+>  commit-graph.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 9b02d2c426..d0e1f9e1f2 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -1522,7 +1522,7 @@ static int write_commit_graph_file(struct write_co=
+mmit_graph_context *ctx)
+>
+>  static void split_graph_merge_strategy(struct write_commit_graph_contex=
+t *ctx)
+>  {
+> -	struct commit_graph *g =3D ctx->r->objects->commit_graph;
+> +	struct commit_graph *g;
+>  	uint32_t num_commits =3D ctx->commits.nr;
+>  	uint32_t i;
+>
+> --
+> 2.23.0
+>
+>
