@@ -2,204 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 496481F463
-	for <e@80x24.org>; Thu, 26 Sep 2019 23:57:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EFFB1F463
+	for <e@80x24.org>; Fri, 27 Sep 2019 00:12:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729026AbfIZX56 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Sep 2019 19:57:58 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:32996 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728441AbfIZX56 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Sep 2019 19:57:58 -0400
-Received: by mail-pg1-f195.google.com with SMTP id i30so2458628pgl.0
-        for <git@vger.kernel.org>; Thu, 26 Sep 2019 16:57:57 -0700 (PDT)
+        id S1726084AbfI0AMg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Sep 2019 20:12:36 -0400
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:35306 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725819AbfI0AMg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Sep 2019 20:12:36 -0400
+Received: by mail-vs1-f66.google.com with SMTP id s7so687088vsl.2
+        for <git@vger.kernel.org>; Thu, 26 Sep 2019 17:12:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cJfD/ABz4G1t0lSJx1X22WrJzsq8Hk3QKt23sn8S9kw=;
-        b=fmdksj0zyNzaR7HnqZKAK1qNHq3yCx+KvzOQwQ2b2237KzqP6TIz00mwEJuU/sNzM9
-         qZPup57KxqAo/TFW4f5RZ+0EiTAZYIlJhFIxIPD6YSC4dD5L1Dami/WFdG8cpwb1lmsr
-         cWetrQN/GMKiwG7s8YWM7lYIwkC85LOY2b3m/oX2TXS2+xIHla7vVLoAwvzsE611ykU1
-         sRmfb92pDukjcEpzex3ICl5mRdvo6fpJ9SGqoJF9MoDW/pr8dImcyzLBd9vNk51PjJCi
-         HifSdUhZYUNgGpBpALlJSv6f5Q/M6NzxfMIAbRyhQXba2Eb4VJVGECO4uVwRlNMYE/KR
-         Dbig==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CYoEquyzPFgsWJAOU7RO7/9E5L4zFnoKuN55p1rQmtw=;
+        b=PGBQWVdmuBKzFnuz6/jhRxYNO0tddWxhw7nAQBnngTGGs1u6Nk36TzGlAI9mdnjNoX
+         +6cOi4HYFFQ8KYXdfeCTG3dddbNX9xbVCxPUjpyWOk+WGgVzB3dAji51em3nwflaMdfW
+         rIG/Sbvj0NwJ2d2bDMy+IPBPUNR1+d6ouIzMY3uplgBW/W+6fDCJfvYLigblhRGXgnsh
+         jBF1V/6qYxrcds8QvvOd0qtcOwUD4uhGMJYosELjmsXUOGqyjumRNdEq0Y1+dKMdL66N
+         PdHAm5ck+po5hKTWO9fP7MpYq10cCGREJGqI1Ghx0pGDXmjl0DUTK0ipNAhqppwVgdxI
+         3wVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cJfD/ABz4G1t0lSJx1X22WrJzsq8Hk3QKt23sn8S9kw=;
-        b=e5SaAyE6to4W1hlC2Gf+NXOwTOF/4Hw8kX6ZrC0GdkIXDWEr52DA0JUqFRMFUnBnDx
-         1gMzt0kzR9a83K2RtNaGlFAQeTPFWFkDNSSwRVoHwpRqNZ67e1yWozrmQlZ3CDcRBhl1
-         278zGP9ZR7KG1bLn5fTA+RNCWZe7mKLvvugBkOwT+s45pKAd2jbhbpvnLM5ZmsKlI1nG
-         gfn5Ewt3JAcSTxaa6C0WaJ4xQqtoJKzjXnndA0UxwC6A8+zQxaZUn9/hqLnvI4hT/F09
-         uRb+m4HTFQnWba1ChfQzdrmjwc/FeiMlkvTD9PgnYrgyhIk1Jsz0/YbwpU4jlo7yp/y6
-         YDXg==
-X-Gm-Message-State: APjAAAWvtu416sPxl2kmwoGcGFwqsPU3Y4arzHPMKKE6UgzUgCUZGWNy
-        krSkEPNXC/qrU6Vm5bqD4Zw=
-X-Google-Smtp-Source: APXvYqwI6PIt4KDROpMC32fGoi8f1RQMGZMJ82oM1lKaLB7yGhCLV0WasoOP/2QoIODxsrHNqImUvw==
-X-Received: by 2002:a65:6799:: with SMTP id e25mr6414612pgr.271.1569542276677;
-        Thu, 26 Sep 2019 16:57:56 -0700 (PDT)
-Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id w10sm360151pfi.137.2019.09.26.16.57.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Sep 2019 16:57:55 -0700 (PDT)
-Date:   Thu, 26 Sep 2019 16:57:53 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/13] msvc: avoid using minus operator on unsigned types
-Message-ID: <20190926235753.GA94990@generichostname>
-References: <pull.288.git.gitgitgadget@gmail.com>
- <2abe1e1fb0bf3025489c2e543b9a9c648a164827.1569486607.git.gitgitgadget@gmail.com>
- <20190926172022.GA41037@generichostname>
- <nycvar.QRO.7.76.6.1909262236550.15067@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CYoEquyzPFgsWJAOU7RO7/9E5L4zFnoKuN55p1rQmtw=;
+        b=bAkNeVuJFytADHffuCgeC0ik8INNJffjnza+cPsRQzuMu9xC6Lv0fxa4Wf0hsZ1tsD
+         +fe+sSSAQF6WFjiuGatABZxRFSiRJsvPN9o4DbUKTM1nNCQdpm5d8FNKcnVUY6776CjI
+         JapQWFljN6GGGQmaczRCs+d0DAqjJHXr7E0J+BWarZILy3OHNEmSK/CQCZJQerGKV+pV
+         SFHfWxyVglgi+RSg8Z51LYNzXUUrmxZ8McC7wjKgR5Vwwsv4XfG9RtY4B269/xUeA5V7
+         hTtk5j6UxEqslhaixJ8hB+k5gAj2ogFa8rMJVX3hKNn0Gy7tc2k8zCFa1vdSeew28kXj
+         s6QA==
+X-Gm-Message-State: APjAAAUCoBz2kYpHxUtSf2PDJ5YyNxUzb7ehRtvvA293Q7R6CHZIWjkN
+        UGx+3258JdIND4v63LorDr+Gr4vmWPSlWfS2MHKLBJVuZqI=
+X-Google-Smtp-Source: APXvYqzMJ4iAaR6blARCgdWSQuIbk6dlPIvK17lhJdDTRAHcVsX9XvAqSGzkniX0Qa6UiFvZ6RydWTa+Som7wmcT5io=
+X-Received: by 2002:a67:1bc2:: with SMTP id b185mr459033vsb.116.1569543154654;
+ Thu, 26 Sep 2019 17:12:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1909262236550.15067@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+References: <20190912221240.18057-1-newren@gmail.com> <20190917163504.14566-1-newren@gmail.com>
+ <20190917163504.14566-5-newren@gmail.com> <20190925203919.GA89135@generichostname>
+ <CABPp-BHyjVSD6_S_dYgPiXM=GVEpT97FqJJearzg4hvKHXfNVA@mail.gmail.com>
+ <20190925215530.GA9013@generichostname> <20190926203509.GA61514@generichostname>
+In-Reply-To: <20190926203509.GA61514@generichostname>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 26 Sep 2019 17:12:23 -0700
+Message-ID: <CABPp-BGWG-HExZSwzOL75-9Oi0Cs1c8dc6Hq9TotgpQa0XmNvg@mail.gmail.com>
+Subject: Re: [BUG] git is segfaulting, was [PATCH v4 04/12] dir: also check
+ directories for matching pathspecs
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Samuel Lijin <sxlijin@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Hi Denton,
 
-On Thu, Sep 26, 2019 at 11:01:32PM +0200, Johannes Schindelin wrote:
-> Hi Denton,
-> 
-> On Thu, 26 Sep 2019, Denton Liu wrote:
-> 
-> > Hi Dscho,
-> >
-> > On Thu, Sep 26, 2019 at 01:30:10AM -0700, Johannes Schindelin via GitGitGadget wrote:
-> > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > >
-> > > MSVC complains about this with `-Wall`, which can be taken as a sign
-> > > that this is indeed a real bug. The symptom is:
-> > >
-> > > 	C4146: unary minus operator applied to unsigned type, result
-> > > 	still unsigned
-> > >
-> > > Let's avoid this warning in the minimal way, e.g. writing `-1 -
-> > > <unsigned value>` instead of `-<unsigned value> - 1`.
-> >
-> > [...]
-> >
-> > > ---
-> > >  read-cache.c  | 4 ++--
-> > >  sha1-lookup.c | 2 +-
-> > >  2 files changed, 3 insertions(+), 3 deletions(-)
-> > >
-> > > diff --git a/read-cache.c b/read-cache.c
-> > > index c701f7f8b8..11f3357216 100644
-> > > --- a/read-cache.c
-> > > +++ b/read-cache.c
-> > > @@ -1276,7 +1276,7 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
-> > >  	 */
-> > >  	if (istate->cache_nr > 0 &&
-> > >  		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
-> > > -		pos = -istate->cache_nr - 1;
-> > > +		pos = -1 - istate->cache_nr;
-> >
-> > I've been thinking about this and I'm still not certain that this 100%
-> > correct from a language-lawyer perspective.
-> >
-> > If we do `-1 - istate->cache_nr`, then the unsignedness of
-> > istate->cache_nr takes over and the whole expression is a very large
-> > unsigned number.
-> >
-> > Then, when we assign to `int pos`, we are converting an unsigned number
-> > which is out of the range of the signed number. According to a
-> > StackOverflow post citing the C99 standard[1]:
-> >
-> > 	Otherwise, the new type is signed and the value cannot be
-> > 	represented in it; either the result is implementation-defined
-> > 	or an implementation-defined signal is raised.
-> >
-> > I'm sure that most platforms that we support will handle it sanely but
-> > could we write this as
-> >
-> > 	pos = -1 - (int) istate->cache_nr;
-> >
-> > to be doubly sure that no funny business will happen?
-> 
-> I guess we should use `signed_add_overflows()` to make extra certain
-> that it does what we want it to do, kind of like `st_add()`. Or just do
-> the check explicitly, like so:
-> 
-> 	if (istate->cache_nr > INT_MAX)
-> 		die("overflow: -1 - %u", istate->cache_nr);
-> 	pos = -1 - istate->cache_nr;
+On Thu, Sep 26, 2019 at 1:35 PM Denton Liu <liu.denton@gmail.com> wrote:
+>
+> On Wed, Sep 25, 2019 at 02:55:30PM -0700, Denton Liu wrote:
+> > Looks correct to me. I don't see why this wouldn't reproduce. I'll send
+> > you more information if I figure anything else out.
+>
+> I looked into it a little more and I think I know why it's being
+> triggered.
+>
+> When we checkout 'todo' from 'master', since they're completely
+> different trees, all of git's source files need to be removed. As a
+> result, the checkout process at some point invokes check_ok_to_remove().
+>
+> This kicks off the following call chain:
+>
+>         check_ok_to_remove()
+>         verify_clean_subdirectory()
+>         read_directory()
+>         read_directory_recursive() (this is called recursively, of course)
+>         match_pathspec()
+>         do_match_pathspec()
+>
+> Where we segfault in do_match_pathspec() because ps is NULL:
+>
+>         GUARD_PATHSPEC(ps,
+>                            PATHSPEC_FROMTOP |
+>                            PATHSPEC_MAXDEPTH |
+>                            PATHSPEC_LITERAL |
+>                            PATHSPEC_GLOB |
+>                            PATHSPEC_ICASE |
+>                            PATHSPEC_EXCLUDE |
+>                            PATHSPEC_ATTR);
+>
+> So why is ps == NULL? In verify_clean_subdirectory(), we call
+> read_directory() like this:
+>
+>         i = read_directory(&d, o->src_index, pathbuf, namelen+1, NULL);
+>
+> where we explictly pass in a NULL and it is handed down the callstack. I
+> guess this means that we should be expecting that pathspecs can be NULL
+> in this path. So I've applied the patch at the bottom and it fixes the
+> problem.
+>
+> I was wondering if we should stick a
+>
+>         if (!ps)
+>                 BUG("ps is NULL");
+>
+> into do_match_pathspec(), though, so we can avoid these situations in
+> the future.
+>
+> Also, I'm still not sure why the issue wasn't reproducible on your
+> side... I'm not too familiar with this area of the code, though.
+>
+> -- >8 --
+> diff --git a/dir.c b/dir.c
+> index 76a3c3894b..b7a6de58c6 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1952,7 +1952,7 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
+>                         if (subdir_state > dir_state)
+>                                 dir_state = subdir_state;
+>
+> -                       if (!match_pathspec(istate, pathspec, path.buf, path.len,
+> +                       if (pathspec && !match_pathspec(istate, pathspec, path.buf, path.len,
+>                                             0 /* prefix */, NULL,
+>                                             0 /* do NOT special case dirs */))
+>                                 state = path_none;
 
-Could we change this to 
+The patch makes sense...but I'd really like to add a test, and
+understand it better so I can check to see if there are any other bad
+codepaths.  Sadly, I still have no idea how to reproduce the bug.  I
+can put
 
- 	pos = -1 - (int) istate->cache_nr;
+    char *oopsies = NULL;
+    printf("oopsies = %s\n", oopsies);
 
-so that we alleviate the problem I was talking about above?
-
-Other than that, it looks good. Well, it might break on one's complement
-systems but I don't think we support UNIVACs anyway. ;)
-
-> }
-> >
-> > >  	else
-> > >  		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
-> > >
-> > > @@ -1894,7 +1894,7 @@ static size_t estimate_cache_size(size_t ondisk_size, unsigned int entries)
-> > >  	/*
-> > >  	 * Account for potential alignment differences.
-> > >  	 */
-> > > -	per_entry += align_padding_size(sizeof(struct cache_entry), -sizeof(struct ondisk_cache_entry));
-> > > +	per_entry += align_padding_size(per_entry, 0);
-> > >  	return ondisk_size + entries * per_entry;
-> > >  }
-> > >
-> > > diff --git a/sha1-lookup.c b/sha1-lookup.c
-> > > index 796ab68da8..c819687730 100644
-> > > --- a/sha1-lookup.c
-> > > +++ b/sha1-lookup.c
-> > > @@ -97,7 +97,7 @@ int sha1_pos(const unsigned char *sha1, void *table, size_t nr,
-> > >  			lo = mi + 1;
-> > >  		mi = lo + (hi - lo) / 2;
-> > >  	} while (lo < hi);
-> > > -	return -lo-1;
-> > > +	return -1 - lo;
-> >
-> > Same thing here.
-> 
-> This is even more critical, as `lo` has the type `size_t`:
-> 
-> 	if (lo > INT_MAX)
-> 		die("overflow: -1 - %"PRIuMAX, (uintmax_t)lo);
-> 	return -1 - lo;
-
-Also, could we change this to
-
- 	return -1 - (int) lo;
-
-Thanks,
-
-Denton
-
-> >
-> What do you think?
-> Dscho
-> 
-> > [1]: https://stackoverflow.com/questions/50605/signed-to-unsigned-conversion-in-c-is-it-always-safe
-> >
-> > >  }
-> > >
-> > >  int bsearch_hash(const unsigned char *sha1, const uint32_t *fanout_nbo,
-> > > --
-> > > gitgitgadget
-> > >
-> >
+at the beginning of check_ok_to_remove() to verify that function is
+never called and run the steps you gave with no problem.  However, I
+do notice that your reproduction steps involve 'master' which may have
+local changes for you that I don't have.  Is there any chance you can
+reproduce this using a commit id that is already upstream instead of
+'master'?  I've been poking around unpack-trees.c for a bit but I'm
+having a hard time reversing out of it what's different about our
+setups and how to trigger.
