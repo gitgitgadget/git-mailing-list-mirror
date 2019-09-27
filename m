@@ -8,68 +8,67 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1939F1F463
-	for <e@80x24.org>; Fri, 27 Sep 2019 13:26:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0A4D1F463
+	for <e@80x24.org>; Fri, 27 Sep 2019 13:31:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726843AbfI0N0b (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Sep 2019 09:26:31 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:40519 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725992AbfI0N0a (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Sep 2019 09:26:30 -0400
-Received: by mail-wr1-f67.google.com with SMTP id l3so2732527wru.7
-        for <git@vger.kernel.org>; Fri, 27 Sep 2019 06:26:29 -0700 (PDT)
+        id S1727466AbfI0NbC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Sep 2019 09:31:02 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51525 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727230AbfI0NbC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Sep 2019 09:31:02 -0400
+Received: by mail-wm1-f68.google.com with SMTP id 7so6642423wme.1
+        for <git@vger.kernel.org>; Fri, 27 Sep 2019 06:31:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=cwc548Q+n/ayD0FJD03MDPGQ/iyvyoW0eieoGdSgUJk=;
-        b=Okyj2C01fEKRpxKTClajCs7u00TDa0ZZNNrTw0mJA86VT1XvjqPmzVrFNEdAdxKS36
-         zQvuiotttYasNMj9bpC44on3pscDoZ75ZODd+k5lXbyzWNz7k0DbRPqK3PAk1q/GLyi+
-         JNgNIYfzfVcrHLa1qBB+Fq0kfwAUYbH1uF3Ya+MYqkFL4tlQoxG/o2fMoQcqzuqG5apD
-         iFQK6hqJfRqeAe44v1J6FNkfR+gpR8WUY0sbExeLZCwdHrcrn8Dpo+Kwx4VaaSLadnvp
-         N3mZTMenx1ucdK5FbuyJ2+3IgUU6aS5eGP/n5uLLJ1zihdmnTtLs5/sBnHqeIpQRlANH
-         ggzA==
+        bh=Vms5h+2UCLAFd+IQYe0nBEz91EMExQQd+t2vNejgLCw=;
+        b=VX0pWFTWBWJr9/FrnwDjfczRqshBX2wpPArdAKkhth0cUaNQGBh4GFrG/HMC0YoI37
+         ExotSfPtmNG/NvfRIc7ELt3kVZAdCTZ8fAnqKq5k/7RwcAEV/rv/bIuYmdSEZp0kILGD
+         /QN93INon0i7M1iJLid8Mp4SOKu6MZUgr1wwsIoGzOLu6lnekESayn9eeYGmoe9gJL8d
+         071FXSLGGBN04D/PY7SpcrUjwca7lnvQdylItN0+WEOD6fOAh0OvE6/bCFszKS9fgF7P
+         HaQzY69g3AcQZkHgJrdNEsgEwqqGtYe71uRomtUyk67OtmVSzxQ5JyStDLzzXrHttmzF
+         lygg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:reply-to:subject:to:cc:references:from
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=cwc548Q+n/ayD0FJD03MDPGQ/iyvyoW0eieoGdSgUJk=;
-        b=rYxQ1PefiUvWjud6NlYH89WEOdDgwGez07dswrSHYYduleVKpeecvKa7NxFTf5/B7w
-         K0d9lWKdjV/jt3l3wn6LH0WFqTiQSXA5njqp++GAl2dDHse8opoYNN1DBxfS+0inwMTI
-         74ui3ozMJ51xZPRL9iKEE9g8LxNOHWnfqlgr50ywEbWuEnRp5G6uz6b6hBK1+qnvz0Sm
-         kXP+VtmFi7B2YIqdzkrQppR4r6CGXJTDIiYi6lS68kni1gBHIPUZ3zHWpOP+YMwLDxXK
-         UtQuRAOMSxZndMcnihkvREm+mScDj+FgbrkSyq3DlBxPmDOomqqBY85aiNLGfDCvZXbr
-         1hVw==
-X-Gm-Message-State: APjAAAXhSZ4lEZrhz4Zs3NWM9cF0h9o8jnl+UEvogKin8ZuC9a6K5o4h
-        dIvQD5nHdcTTKSqRYgVYxoQ=
-X-Google-Smtp-Source: APXvYqxBbdclTdkejFjcAfdoRT2/HdBGzBjYHYEWr41i6GWtQ/lTbG4sNry3XzHebMc1vFlUIixI6g==
-X-Received: by 2002:adf:e791:: with SMTP id n17mr3284442wrm.388.1569590788668;
-        Fri, 27 Sep 2019 06:26:28 -0700 (PDT)
+        bh=Vms5h+2UCLAFd+IQYe0nBEz91EMExQQd+t2vNejgLCw=;
+        b=Jdloe0fhhWoATVvFhR9e0E59rqyrkTZrQrNiaWt1nKwaDndUxfczGSIPQ4ouY99ovD
+         yz/X2qA+nxeHAIXqW0H6/b2unK0363kZnlBLdU+dju0b+UYzwKHRCq74bzZCaj3SopZi
+         xHL6HWlDy9EzYLTTHiYvlhOqB1Bv/4eY0vdtKGOTkFwbT1M8joRL31bvLjMKQD6bXk+u
+         RY0PabSBEcsuvCMIvgVgMOj53cdbMejRX1o3cVRXAjc8Q0UnNiOGMOWXAP1dkGjACEXJ
+         RtoNqmF5t30AKvBSVc4Om6BpB6nAYyK0Y8jow86Lml9BMuz9kzRV251Z6tkSwCHezC9m
+         gu0w==
+X-Gm-Message-State: APjAAAVf2rBPn4Axvbh3uYMQ6XJ+yvvhW0VYs9WCGhSEgYDlYcTiawrB
+        jAvOLA+aMYh/dbAAq2a47hg=
+X-Google-Smtp-Source: APXvYqwaqyoljdaq1VND61pZu9TNDz7O3AKNftth9QCqPm8zxJk1k27IE+6gfVQC1eghAqnRt8xqtw==
+X-Received: by 2002:a1c:a404:: with SMTP id n4mr7047555wme.137.1569591060593;
+        Fri, 27 Sep 2019 06:31:00 -0700 (PDT)
 Received: from [192.168.2.240] (host-92-22-10-31.as13285.net. [92.22.10.31])
-        by smtp.gmail.com with ESMTPSA id d193sm12602516wmd.0.2019.09.27.06.26.27
+        by smtp.gmail.com with ESMTPSA id g11sm6380506wmh.45.2019.09.27.06.30.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Sep 2019 06:26:27 -0700 (PDT)
+        Fri, 27 Sep 2019 06:31:00 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v1 5/5] sequencer: directly call pick_commits() from
- complete_action()
+Subject: Re: [PATCH v1 4/5] rebase: fill `squash_onto' in get_replay_opts()
 To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Junio C Hamano <gitster@pobox.com>
 References: <20190925201315.19722-1-alban.gruin@gmail.com>
- <20190925201315.19722-6-alban.gruin@gmail.com>
+ <20190925201315.19722-5-alban.gruin@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <212cdc0d-8cf3-9172-d405-39b3868e6ca4@gmail.com>
-Date:   Fri, 27 Sep 2019 14:26:26 +0100
+Message-ID: <66fcd66b-fad2-e5a1-cdd8-fd7b37c4abbf@gmail.com>
+Date:   Fri, 27 Sep 2019 14:30:58 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.1.0
 MIME-Version: 1.0
-In-Reply-To: <20190925201315.19722-6-alban.gruin@gmail.com>
+In-Reply-To: <20190925201315.19722-5-alban.gruin@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -77,60 +76,43 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Alban
 
-Thanks for removing some more unnecessary work reloading the the todo list.
-
 On 25/09/2019 21:13, Alban Gruin wrote:
-> Currently, complete_action() calls sequencer_continue() to do the
-> rebase.  Even though the former already has the todo list, the latter
-> loads it from the disk and parses it.  Calling directly pick_commits()
-> from complete_action() avoids this unnecessary round trip.
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> ---
->   sequencer.c | 8 +++++---
->   1 file changed, 5 insertions(+), 3 deletions(-)
+> get_replay_opts() did not fill `squash_onto' if possible, meaning that
+
+I'm not sure what you mean by 'if possible' here, I think the sentance 
+makes sense without that.
+
+> this field should be read from the disk by the sequencer through
+> read_populate_opts().  Without this, calling `pick_commits()' directly
+> will result in incorrect results with `rebase --root'.
 > 
-> diff --git a/sequencer.c b/sequencer.c
-> index ec7ea8d9e5..b395dd6e11 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -5140,15 +5140,17 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
->   		return error_errno(_("could not write '%s'"), todo_file);
->   	}
->   
-> -	todo_list_release(&new_todo);
-> -
->   	if (checkout_onto(r, opts, onto_name, &oid, orig_head))
->   		return -1;
->   
->   	if (require_clean_work_tree(r, "rebase", "", 1, 1))
->   		return -1;
->   
-> -	return sequencer_continue(r, opts);
+> Let’s change that.
 
-sequencer_continue does a number of things before calling pick_commits(). It
-  - calls read_and_refresh_cache() - this is unnecessary here as we've 
-just called require_clean_work_tree()
-  - calls read_populate_opts() - this is unnecessary as we're staring a 
-new rebase so opts is fully populated
-  - loads the todo list - this is unnecessary as we've just populated 
-the todo list
-  - commits any staged changes - this is unnecessary as we're staring a 
-new rebase so there are no staged changes
-  - calls record_in_rewritten() - this is unnecessary as we're starting 
-a new rebase
+Good catch
 
-So I agree that this patch is correct.
-
-Thanks
+Best Wishes
 
 Phillip
 
-> +	todo_list_write_total_nr(&new_todo);
-> +	res = pick_commits(r, &new_todo, opts);
-> +	todo_list_release(&new_todo);
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>   builtin/rebase.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index e8319d5946..2097d41edc 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -117,6 +117,11 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>   	if (opts->strategy_opts)
+>   		parse_strategy_opts(&replay, opts->strategy_opts);
+>   
+> +	if (opts->squash_onto) {
+> +		oidcpy(&replay.squash_onto, opts->squash_onto);
+> +		replay.have_squash_onto = 1;
+> +	}
 > +
-> +	return res;
+>   	return replay;
 >   }
 >   
->   struct subject2item_entry {
 > 
