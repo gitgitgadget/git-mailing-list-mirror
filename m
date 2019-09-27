@@ -2,75 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1210C1F463
-	for <e@80x24.org>; Fri, 27 Sep 2019 12:55:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75D341F463
+	for <e@80x24.org>; Fri, 27 Sep 2019 13:05:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727170AbfI0Mzl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Sep 2019 08:55:41 -0400
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:36001 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726295AbfI0Mzk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Sep 2019 08:55:40 -0400
-Received: by mail-ed1-f54.google.com with SMTP id h2so2250310edn.3
-        for <git@vger.kernel.org>; Fri, 27 Sep 2019 05:55:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=gY/2HabndTukQ86clZqDIiTQcoATwHE6J5WuT+GeOyo=;
-        b=pzwO/MMei928jKmZ/WEuucvtaEvgrAXItvIBf91HYeYe72N+rZFYo3EdkQUcQeICDe
-         +nrPd8k6xXo5VspQvJgM65y4wBdykVpzL8xRmOiYuqsunMp4Bap4WErYL22kCMrar9BX
-         RS+OSx41hqpNSWsn298JX9w7xfT0fvHbIaTIL3g4oLD8iJpnYoaBXtqTpKl47ZO9UUYN
-         9yvZCIdjduwU73mn96HdFiIBatiKzitHpUxz5EHtnWn+xrRkMBU/SitfSu0M91GUIGX7
-         xnhfV5UmC6oEyGKXqSI9OGMrvG13s1vDsU0X4QuBn6g4udoMA67Nva8u4BR7SajaiHBF
-         vTxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=gY/2HabndTukQ86clZqDIiTQcoATwHE6J5WuT+GeOyo=;
-        b=XY8V145Emh5pxXNoF1qqWL38+11ZxKj6sYnWGwrHBokQ+YvISZ8NuRd4H8MQhetnCZ
-         KLhCCiLsMVhns76nqyG01qrpLPnBXa/GT4KRN5IrnebJhwYOt2A5PE5hEA2LfrP6yf+p
-         vZ2AqQgNGnEjOdvvT/70g7muS05ZSiaxL4uSRUPLDFoQn05SU7K+b3SA8CPol5gpE2pi
-         QszRwds7KP6dTwbPA4yD09XuKhnnywFiKd788AH8FKDM4hD/DvFQ2VuRop6IieQ9lM1y
-         vlmZuECB4fAs0nNgO3JNQ9g2pg13tbrMexULS6LlnoJ97WE29w444ulC6+Mg4vYIkDIv
-         knVw==
-X-Gm-Message-State: APjAAAWZvuLbesabmDpgikxVkcJC4Orru5vO3GefZiuIzDsNORG+cNeA
-        VcD14H3IajgJthIITdBQ1QI6nZKnSsg6cvbH5WKSSoODhyE=
-X-Google-Smtp-Source: APXvYqwjvGcVLMTFBxTTOezr2QILP/ZkQK3Uc3K/PlTLZihZdz1vJo75ddC5tOak0CKpMr2t+4KE1sYY8mGYsthkpeA=
-X-Received: by 2002:aa7:c6c6:: with SMTP id b6mr4293368eds.19.1569588938841;
- Fri, 27 Sep 2019 05:55:38 -0700 (PDT)
+        id S1726549AbfI0NFo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Sep 2019 09:05:44 -0400
+Received: from relay11.mail.gandi.net ([217.70.178.231]:58503 "EHLO
+        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725992AbfI0NFo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Sep 2019 09:05:44 -0400
+Received: from localhost (unknown [1.186.12.44])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay11.mail.gandi.net (Postfix) with ESMTPSA id ED69C100016;
+        Fri, 27 Sep 2019 13:05:41 +0000 (UTC)
+Date:   Fri, 27 Sep 2019 18:35:39 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] respect core.hooksPath, falling back to .git/hooks
+Message-ID: <20190927130539.52oir56byuedqmm3@yadavpratyush.com>
+References: <pull.361.git.gitgitgadget@gmail.com>
+ <eca193f91b85fc4ffea453bc3adb64bc5c8831a8.1569532628.git.gitgitgadget@gmail.com>
+ <20190926223638.6tk2qhc4e62hs2wt@yadavpratyush.com>
+ <CAKPyHN1P713bTb2TYXFuXcM5Dg=7vXBVgchwvJUrNsQ6EcP5Rg@mail.gmail.com>
 MIME-Version: 1.0
-From:   Ian Kemp <ian.kemp@gmail.com>
-Date:   Fri, 27 Sep 2019 13:55:27 +0100
-Message-ID: <CADZUK1cjvifbFYk9w6+vE95jgEBuwjoOi_1QfZHoPFBXuXHCCg@mail.gmail.com>
-Subject: Feature request: different exit codes for git stash depending on
- whether stash was created or not
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKPyHN1P713bTb2TYXFuXcM5Dg=7vXBVgchwvJUrNsQ6EcP5Rg@mail.gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 27/09/19 08:10AM, Bert Wesarg wrote:
+> On Fri, Sep 27, 2019 at 12:40 AM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> >
+> > Hi,
+> >
+> > On 26/09/19 02:17PM, Johannes Schindelin via GitGitGadget wrote:
+> > > From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> > >
+> > > Since v2.9.0, Git knows about the config variable core.hookspath
+> > > that allows overriding the path to the directory containing the
+> > > Git hooks.
+> > >
+> > > Since v2.10.0, the `--git-path` option respects that config
+> > > variable, too, so we may just as well use that command.
+> > >
+> > > For Git versions older than v2.5.0 (which was the first version to
+> > > support the `--git-path` option for the `rev-parse` command), we
+> > > simply fall back to the previous code.
+> > >
+> > > This fixes https://github.com/git-for-windows/git/issues/1755
+> > >
+> > > Initial-patch-by: Philipp Gortan <philipp@gortan.org>
+> > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > > ---
+> > >  git-gui.sh | 6 +++++-
+> > >  1 file changed, 5 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/git-gui.sh b/git-gui.sh
+> > > index fd476b6999..b2c6e7a1db 100755
+> > > --- a/git-gui.sh
+> > > +++ b/git-gui.sh
+> > > @@ -623,7 +623,11 @@ proc git_write {args} {
+> > >  }
+> > >
+> > >  proc githook_read {hook_name args} {
+> > > -     set pchook [gitdir hooks $hook_name]
+> > > +     if {[package vcompare $::_git_version 2.5.0] >= 0} {
+> > > +             set pchook [git rev-parse --git-path "hooks/$hook_name"]
+> > > +     } else {
+> > > +             set pchook [gitdir hooks $hook_name]
+> > > +     }
+> >
+> > gitdir is used in a lot of places, and I think all those would also
+> > benefit from using --git-path. So I think it is a better idea to move
+> > this to the procedure gitdir. It would have to be refactored to take any
+> > number of arguments, instead of the two it takes here.
+> 
+> gitdir already takes an arbitrary number of arguments and joins them
+> to a path. The more imminent challenge is, that gitdir caches the
+> GIT_DIR, thus it tries to avoid calling "git rev-parse". Which works
+> for most, but not for hooks.
 
-Currently, git stash's exit code is 0 regardless of whether it
-performed a stash operation or not. Third parties invoking git stash
-are therefore unable to determine whether a stash was actually made or
-not.
+What I was thinking of was something like this:
 
-It would be helpful if there were different exit codes for the case
-when a stash was created (working directory dirty) vs when a stash was
-not (working dir clean). git stash create suffers from the same issue.
+  - If no args are passed, then just directly return $_gitdir. This is 
+    already being done. I assume the GIT_DIR relocation is already 
+    handled by `git rev-parse --git-dir`, so this would point to the 
+    correct location.
+  - If args are passed, then we want a subdirectory of GIT_DIR In this 
+    case, it is possible that this subdirectory has also been relocated 
+    (hooks/ being one of those subdirectories). So in this case, use 
+    `git rev-parse --git-path` instead.
 
-There are various workarounds for this e.g.
-https://stackoverflow.com/a/34116244/70345 but they aren't
-particularly pretty or reliable, hence this request.
+So the gitdir procedure would look something like:
 
+  proc gitdir {args} {
+  	global $_gitdir
+  	if {$args eq {}} {
+  		# Return the cached GIT_DIR
+  		return $_gitdir
+  	}
+  
+  	# Use `git rev-parse --git-path` to get the path instead of 
+  	# using the cached value.
+  }
+
+Am I missing something? Or does this fix the issue you describe?
+ 
+> We could either maintain a blacklist, for what we cache the result
+> too, or always call "git rev-parse --git-dir".
+> 
+> This blacklist would need to be in sync with the one in Git's
+> path.c::adjust_git_path() than.
+
+Is caching GIT_DIR that important in terms of performance? Otherwise, 
+I'd say calling `git rev-parse --git-path` for _every_ subdirectory of 
+GIT_DIR is a much simpler solution.
+
+-- 
 Regards,
-Ian
+Pratyush Yadav
