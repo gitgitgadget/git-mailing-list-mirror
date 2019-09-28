@@ -7,78 +7,76 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFAC61F463
-	for <e@80x24.org>; Sat, 28 Sep 2019 04:59:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EC9E1F463
+	for <e@80x24.org>; Sat, 28 Sep 2019 07:58:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725857AbfI1E7X (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Sep 2019 00:59:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55340 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725263AbfI1E7X (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Sep 2019 00:59:23 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F22E360CC;
-        Sat, 28 Sep 2019 00:59:21 -0400 (EDT)
+        id S1727335AbfI1H6r (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Sep 2019 03:58:47 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57936 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725876AbfI1H6r (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Sep 2019 03:58:47 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3FFF935B01;
+        Sat, 28 Sep 2019 03:58:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4l+9zpaLN+XIN3to0GxBuCCa8dI=; b=wmB/CA
-        t/i0eR7qtjZLK3ixxPGlqDxsDpviRKW6UyYNAeKgVkDm/JSkuuGtNJv2JJmnA4I7
-        Io9i/RbWF4yuQDfam0daRwDmgZMC/hxQSShCVHmfNKPTWPTBwtsD6I2KodoCHyl5
-        mZRKwE4wPtQUMmo70wjnNZV4bzJp3QTOQgJNw=
+        :content-type; s=sasl; bh=D6Tu7taIoJcIPWPUDOeTETGuvcA=; b=s4MaxE
+        3tLdMTM2clmGhwN6Zw6/fZJ+svr6fpJOMoTL0qctuPo0o9mbSlRmZGmlyhoxGRVZ
+        d24/FT7AzOmC+b0BLiWMVR23yvsA6g0N1wOLrtMVSVn6vU3ejvRqOkSArqXBJ5ZJ
+        Vo8iueqsLyq2B6uvByIyLPJ1LyPPgatBCH/3E=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=giXqHuh5z7PdSmg/2X1Nt1RImczJ6eHR
-        RINrNqUttrMOJrBKVbH6sjMGm0xXwm/OGsfLwEYvho6e3bY8sQl6zbDiySkfCXL4
-        Dbg+3eNPkI5QKyxQw2DvpO/0AHK+ZwHGpfYJLHuVRScpyOBM+b1f/lhZPwOq+Y6B
-        WtParc/rjxI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 28133360CB;
-        Sat, 28 Sep 2019 00:59:21 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Y0xVWCdBGJwoLUCvZXzDYjveEK4stox0
+        PyLfhWLMCKwEEDMVU5QnGerhVIuO4C6KxcIlP+uAOCeYN7ZwmNUAY5VHwrGfjFHA
+        bRYqcS/naYpNAx/2KiEOzPVJcoDIgX5ppQmPC0h8xWLzjfgcZXRM1tMHFkTRRvA2
+        CrlWoxlnL6g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3694935B00;
+        Sat, 28 Sep 2019 03:58:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8BAF3360CA;
-        Sat, 28 Sep 2019 00:59:20 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9394335AFF;
+        Sat, 28 Sep 2019 03:58:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] Makefile: use $(ALL_CFLAGS) in $(HCO) target
-References: <cover.1569263631.git.liu.denton@gmail.com>
-        <0336d1345abfef563d9228e250316cc58a01f2b3.1569263631.git.liu.denton@gmail.com>
-        <nycvar.QRO.7.76.6.1909261449230.15067@tvgsbejvaqbjf.bet>
-        <20190926173801.GA42456@generichostname>
-        <nycvar.QRO.7.76.6.1909262144060.15067@tvgsbejvaqbjf.bet>
-Date:   Sat, 28 Sep 2019 13:59:19 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1909262144060.15067@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Thu, 26 Sep 2019 21:47:43 +0200
-        (CEST)")
-Message-ID: <xmqqr241j9so.fsf@gitster-ct.c.googlers.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Bi-Weekly Standup - Time/timezone in calendar?
+References: <a56e5ebe-53ba-5f20-5606-b4b17dc660b5@iee.email>
+        <20190925143247.GD11444@cat>
+Date:   Sat, 28 Sep 2019 16:58:43 +0900
+In-Reply-To: <20190925143247.GD11444@cat> (Thomas Gummerer's message of "Wed,
+        25 Sep 2019 15:32:47 +0100")
+Message-ID: <xmqqk19skg24.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BB626602-E1AC-11E9-B382-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: CB3F1C3C-E1C5-11E9-91F1-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> The only problem is that my patch made it into `next` already, according
-> to https://github.com/gitgitgadget/git/pull/129 (look for the labels on
-> the right side, or for the comments on the bottom), and
-> https://github.com/gitster/git/commit/a3f332f4fb10 agrees (look for
-> names of the branches containing that commit, under the commit message).
+>> I thought it was to be 1700 UTC, which currently is 1800 BST her in UK, and
+>> 1900 CST in Europe.
 >
-> So we should explicitly as for my patch to be backed out from `next` and
-> be stopped from advancing to `master`.
+> That's my recollection as well, and what the calendar should say.
+> Thanks for flagging this!
 >
-> Junio, would you kindly do that? According to the PR, you gave this
-> branch the name `js/honor-cflags-in-hdr-check`.
+> I don't know.  I'd be happy to keep it at 17:00 UTC, but that might be
+> a bit early for folks living on the west coast.  I don't have a strong
+> opinion on this, but I'm happy to update the calendar (or not
+> depending on what we decide) once the decision is made.
 
-OK, so the topic should be dropped and replaced by the Denton's
-series.  Thanks, will do.
+By the way, this is sort of off-topic, but should I add this to
+tinyurl.com/gitCal (or even better, should I add you as another
+editor of the said calendar), so that people have one fewer
+calendars to follow?
