@@ -7,127 +7,82 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B7051F463
-	for <e@80x24.org>; Sat, 28 Sep 2019 22:23:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B3C91F463
+	for <e@80x24.org>; Sat, 28 Sep 2019 23:31:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728813AbfI1WXF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Sep 2019 18:23:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59090 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728666AbfI1WXF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Sep 2019 18:23:05 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A1313DE2C;
-        Sat, 28 Sep 2019 18:23:00 -0400 (EDT)
+        id S1728834AbfI1Xbk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Sep 2019 19:31:40 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62549 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728666AbfI1Xbk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Sep 2019 19:31:40 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 982D6844D4;
+        Sat, 28 Sep 2019 19:31:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+WoXlztHGQgsTmyvO14+4jdCfsE=; b=Hk7jt+
-        yCX2GFhqSV9CSxWncuwfXBWCMuJBWllLtQ8o822vEGoIcHR0nBvLwqx7eqlJ4FaT
-        V7dvnh+0BuT9oO1oZcZ/GwzgVqnvfX2/gVowhiU22X1L4OrAaGMoVrSev/JwQ9Eu
-        n3kUOulhhz38VfAPOo9umSqFKklyRr0k0nDvg=
+        :content-type:content-transfer-encoding; s=sasl; bh=EJS1b95RPFNq
+        s/uoSOzIsLierfs=; b=X691SoP87KyIAWCfaP50by9UQQZ55SA5U9rnzs8x+GgW
+        CLSOUnpZgXRWTt9ZXSpZ3+B75dLWgmT+ZdJ1SL7epXIatAtMCa1+1xpqKlykCMz3
+        +V3N3kA9n9akPzjfxMNajHwJN0VKRe7v76ofY69bC1vYP8CPNMnls4CbuN1PwgQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yZq5/IEg4mVcxVNmRR3PSqSN6JxjgLih
-        pSnagX1ZQyT37Aq2MOPyoTMs0iJYT/HVut6iBUIdPyPFz5NjWCufa9IVxrogsV3Y
-        772Hkyl+shHM9j5EY6tSbUTrv0JcuB59DcCtGZxlz71mn0THKzQ7y3NAduGH4B6k
-        l0TAB4wk+gI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F36663DE2B;
-        Sat, 28 Sep 2019 18:22:59 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rSJJ+6
+        naKssSHU+/39IFKLxcIZAnw3ywUvdQeVymIzIZShWSFcTsAKz3XM0Yw/gHiVZzaP
+        G05z+ms2R9WFuEHVIwY8f30NqCBk1qJNJaQoF5PcDp7ASFdQ4u2FNOCuBuTxy6U1
+        ryfljQMdgCv7B3pFLKJZGOVqmYqDyTx/RMb74=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91FB1844D3;
+        Sat, 28 Sep 2019 19:31:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4409F3DE2A;
-        Sat, 28 Sep 2019 18:22:59 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C5841844D0;
+        Sat, 28 Sep 2019 19:31:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 11/13] tests: let --immediate and --write-junit-xml play well together
-References: <pull.288.git.gitgitgadget@gmail.com>
-        <99724f6a1e45b497e15037bbac1cb5f70a3bb236.1569486607.git.gitgitgadget@gmail.com>
-Date:   Sun, 29 Sep 2019 07:22:58 +0900
-In-Reply-To: <99724f6a1e45b497e15037bbac1cb5f70a3bb236.1569486607.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Thu, 26 Sep 2019
-        01:30:22 -0700 (PDT)")
-Message-ID: <xmqq7e5sjc1p.fsf@gitster-ct.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2019, #01; Sat, 7)
+References: <xmqqd0gcm2zm.fsf@gitster-ct.c.googlers.com>
+        <20190909234715.GO11334@genre.crustytoothpaste.net>
+Date:   Sun, 29 Sep 2019 08:31:33 +0900
+In-Reply-To: <20190909234715.GO11334@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Mon, 9 Sep 2019 23:47:16 +0000")
+Message-ID: <xmqq36ggj8ve.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 870A1DB8-E23E-11E9-8273-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1CAE65A0-E248-11E9-9D16-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index d1ba33745a..f21c781e68 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -695,7 +695,7 @@ test_failure_ () {
->  	say_color error "not ok $test_count - $1"
->  	shift
->  	printf '%s\n' "$*" | sed -e 's/^/#	/'
-> -	test "$immediate" = "" || { GIT_EXIT_OK=t; exit 1; }
-> +	test "$immediate" = "" || { finalize_junit_xml; GIT_EXIT_OK=t; exit 1; }
->  }
+> On 2019-09-07 at 17:26:53, Junio C Hamano wrote:
+>> * bc/object-id-part17 (2019-08-19) 26 commits
+>> ...
+>>  - builtin/replace: make hash size independent
+>>=20
+>>  Preparation for SHA-256 upgrade continues.
+>>=20
+>>  Looked mostly OK, with a possible update.
+>>  cf. <20190820223606.GJ365197@genre.crustytoothpaste.net>
+>
+> Just to update on the status of this, I wasn't planning on a reroll,
+> although I'm happy to do so if folks have feedback.  Opinions for or
+> against the current state are welcome.
 
-There are three places that do GIT_EXIT_OK=t in the test framework,
-and the above covers one of them.  The original in test_done is
-another, and that place is made to call the "finalize" thing (it
-used to have the same finalization code inlined).
+I've already said that this looked mostly OK, and I think you and
+RR=C3=A9ne's "maybe adopt the use of oid_to_hex()s without using our own
+buffer" can come after the dust settles, so let's move this forward
+as-is.
 
-The remaining one appears in
+That is, unless I hear otherwise in the next few days.
 
-        error () {
-                say_color error "error: $*"
-                GIT_EXIT_OK=t
-                exit 1
-        }
-
-I wonder if we should cover this case, too.  One caller of "error" I
-know is BUG that says "bug in the test script", which means that
-after successfully passing 30 tests, when the 31st test has 5 params
-to test_expect_success by mistake, without finailzation we will lose
-the result for the first 30.
-
-And if we call "finalize" from the "error" helper, perhaps it makes
-even more sense to update the above manual exit in test_failure_ to
-do something like
-
-	if test -n "$immediate"
-	then
-		error "immediate exit after the first error"
-	fi
-
-to delegate the finalization.
-
-> @@ -1085,21 +1104,7 @@ test_done () {
->  	# removed, so the commands can access pidfiles and socket files.
->  	test_atexit_handler
->  
-> -	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
-> -	then
-> -		test -n "$junit_have_testcase" || {
-> -			junit_start=$(test-tool date getnanos)
-> -			write_junit_xml_testcase "all tests skipped"
-> -		}
-> -
-> -		# adjust the overall time
-> -		junit_time=$(test-tool date getnanos $junit_suite_start)
-> -		sed "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
-> -			<"$junit_xml_path" >"$junit_xml_path.new"
-> -		mv "$junit_xml_path.new" "$junit_xml_path"
-> -
-> -		write_junit_xml "  </testsuite>" "</testsuites>"
-> -	fi
-> +	finalize_junit_xml
->  
->  	if test -z "$HARNESS_ACTIVE"
->  	then
+Thanks.
