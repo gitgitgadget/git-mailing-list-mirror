@@ -2,117 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 464001F464
-	for <e@80x24.org>; Sun, 29 Sep 2019 01:30:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 869B21F464
+	for <e@80x24.org>; Sun, 29 Sep 2019 09:22:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728862AbfI2BaX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Sep 2019 21:30:23 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:38101 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728569AbfI2BaX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Sep 2019 21:30:23 -0400
-Received: by mail-lf1-f68.google.com with SMTP id u28so4511758lfc.5
-        for <git@vger.kernel.org>; Sat, 28 Sep 2019 18:30:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=eisXpCs5vDyv2GrHuvnIZC0xLGr6UB0SyOoUQGKxwNo=;
-        b=H+hQsNU4Hej3xse3k/WwtH6mL3YkZKRnOARvpAKHTEjGcBptuxn05S6tZX5cx1MxQw
-         qy3XySLBDvOn8kEzC0xCnGUBEffzrw/TkevmImGbp+Xz3pjjwiTENNHra8NUR2/TsmMr
-         JgjTT2od19lsLP6X5dD9b48HFs9y5t6EebUYz8JO3s0KjVdUcmPqQqUgVwZYRy2QU1nR
-         a+pl2f8rRa09yfIiUHocee2079ay/il7Gqx1kOSYChl7gKxCV9IU0TOT5qqTK1oEnbFG
-         IY71vuN48zVrjZLdiUUliwhvZEMFne5f3jhTsMobu7mvAJPTh9YPzEXxJc//vp0Z0WZs
-         fuAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eisXpCs5vDyv2GrHuvnIZC0xLGr6UB0SyOoUQGKxwNo=;
-        b=qnQ57ynQlmiWtLFuQmdypOxRtyKCIskOlu1TkCVGarRkomCW+4mS9ZgNo7lkmU4bHM
-         epbWU/9fnk13WcIlzfVFsiNplzI0r1misdzGusyi0OQOC3zwKhD46l1HqBRFQbWyiV3d
-         2i12ZgEePPXBbjdwx2PPBcSOULLlC0coYBcJI/OzIpm/p3tLxsN0Cs/iN6NllJeb4gyA
-         8iAupmh0iXRdTgipdStqLCpcxuFhrf56Sdhi7u1me6dD0mlDGNr/tFz6YyiMO7qJpbVw
-         Rnp0+5jOjxvnfuMGS2Le9Lw5mB5c+v1ob45mwCNSs4JgM6RStEOeAic9beA36Hqa3foC
-         Q1XQ==
-X-Gm-Message-State: APjAAAXu35OmE6EylHoWo5Nlld9mXU/GiMXQQtrFRFa9+CloSs6J6EFv
-        I+OqtBJSMcTCHkuP6pAvZWOBqI/j
-X-Google-Smtp-Source: APXvYqy2pt67VjDRtFqRGMg46kWSOZkdnfKOVCECI//In0yYuryxzq164EKOyx6An950z+Cpci2egg==
-X-Received: by 2002:ac2:4a8f:: with SMTP id l15mr7334157lfp.21.1569720619579;
-        Sat, 28 Sep 2019 18:30:19 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d28sm1664716lfq.88.2019.09.28.18.30.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 28 Sep 2019 18:30:19 -0700 (PDT)
-Date:   Sat, 28 Sep 2019 18:30:19 -0700 (PDT)
-X-Google-Original-Date: Sun, 29 Sep 2019 01:30:16 GMT
-Message-Id: <a9c590689931ebc49e91c56d8a095f66193801c2.1569720616.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.349.v2.git.gitgitgadget@gmail.com>
-References: <pull.349.git.gitgitgadget@gmail.com>
-        <pull.349.v2.git.gitgitgadget@gmail.com>
-From:   "Kunal Tyagi via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/1] git-add--interactive.perl: Add progress counter in the
- prompt
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726076AbfI2JWh (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Sep 2019 05:22:37 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51606 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725924AbfI2JWh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Sep 2019 05:22:37 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 75A8D87EF8;
+        Sun, 29 Sep 2019 05:22:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cHIvGKN2w9lCTEG0RJG/ZVyc6FU=; b=LHfCu2
+        CIHMrOzJOKftuQceN+blcci4GxqZ6bMDHP39BAhNtoQ75PXdw3+8O8I5s/Z6As+L
+        CmJ1PBVPlTMnaCv0iDWy5MBW/dXJyQw8H1Ll6e7ptVyZy10QQocGxNdn1TWbi+iP
+        JIiJuhutD6Y+BS7BIGfOGP/EzbUSks1PAqzCM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uvNWGYmHU5ZQqSLYAsfgY2TELbPS4B30
+        oHXGnrrN7vhtYepaHIEelINOILHJXVHvjz8dNGnZuRV1VWvmQ3PK3/7c8263aWlp
+        Td3nHidxbyE8WekPyOZ2tNP5GkcwANUNDk7v11S50ZVqvx11jVfsebxEiQnQ8dbk
+        zaLAV+IkODE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6D9D887EF7;
+        Sun, 29 Sep 2019 05:22:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9CDD087EF5;
+        Sun, 29 Sep 2019 05:22:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: Re: [PATCH v2 00/19] hashmap bug/safety/ease-of-use fixes
+References: <20190924010324.22619-1-e@80x24.org>
+Date:   Sun, 29 Sep 2019 18:22:30 +0900
+In-Reply-To: <20190924010324.22619-1-e@80x24.org> (Eric Wong's message of
+        "Tue, 24 Sep 2019 01:03:05 +0000")
+Message-ID: <xmqqy2y7ihih.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Kunal Tyagi <tyagi.kunal@live.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Kunal Tyagi <tyagi.kunal@live.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: AA9A6C2C-E29A-11E9-809F-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Kunal Tyagi <tyagi.kunal@live.com>
+Eric Wong <e@80x24.org> writes:
 
-Adds a feedback regarding how many hunks from the current file have been
-processed and total number of hunks
-Also included: changes to the test script due to change in expected
-output string
+> Patches 1-11 are largely unchanged from the original series with the
+> exception of 2, which is new and posted at:
+>
+> 	https://public-inbox.org/git/20190908074953.kux7zz4y7iolqko4@whir/
+>
+> 12-17 take further steps to get us away from hashmap_entry being
+> the first element, but they're also a bit ugly because __typeof__
+> isn't portable
+>
+> 18-19 finally brings me to the APIs I want to expose without
+> relying on __typeof :)
+>
+> Apologies for the delays, been busy with other stuff...
 
-Change in UI: displays '(${current-hunk-id} + 1/${total-hunks-in-file})' before
-displaying the current prompt during user interaction
+Thanks.  clang version 6.0.1-10 (which is the version I happen to
+have installed locally) seems to throw a lot of errors like these:
 
-Signed-off-by: Kunal Tyagi <tyagi.kunal@live.com>
----
- git-add--interactive.perl  | 2 +-
- t/t3701-add-interactive.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ -- -- --
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index c20ae9e210..51c30e08cb 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1541,7 +1541,7 @@ sub patch_update_file {
- 		for (@{$hunk[$ix]{DISPLAY}}) {
- 			print;
- 		}
--		print colored $prompt_color,
-+		print colored $prompt_color,"(". ($ix+1) ."/$num) ",
- 			sprintf(__($patch_update_prompt_modes{$patch_mode}{$hunk[$ix]{TYPE}}), $other);
- 
- 		my $line = prompt_single_character;
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 69991a3168..3a2d9fb607 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -314,7 +314,7 @@ test_expect_success C_LOCALE_OUTPUT 'add first line works' '
- 	git commit -am "clear local changes" &&
- 	git apply patch &&
- 	printf "%s\n" s y y | git add -p file 2>error |
--		sed -n -e "s/^Stage this hunk[^@]*\(@@ .*\)/\1/" \
-+		sed -n -e "s/^(.*) Stage this hunk[^@]*\(@@ .*\)/\1/" \
- 		       -e "/^[-+@ \\\\]"/p  >output &&
- 	test_must_be_empty error &&
- 	git diff --cached >diff &&
--- 
-gitgitgadget
+$ make CC=clang config.o
+    CC config.o
+config.c:1944:50: error: variable 'entry' is uninitialized when used here [-Werror,-Wuninitialized]
+        hashmap_for_each_entry(&cs->config_hash, &iter, entry,
+                                                        ^~~~~
+./hashmap.h:453:20: note: expanded from macro 'hashmap_for_each_entry'
+                                                OFFSETOF_VAR(var, member)); \
+                                                             ^~~
+./git-compat-util.h:1346:16: note: expanded from macro 'OFFSETOF_VAR'
+        ((uintptr_t)&(ptr)->member - (uintptr_t)(ptr))
+                      ^~~
+./hashmap.h:445:61: note: expanded from macro 'hashmap_iter_first_entry_offset'
+        container_of_or_null_offset(hashmap_iter_first(map, iter), offset)
+                                                                   ^~~~~~
+config.c:1939:34: note: initialize the variable 'entry' to silence this warning
+        struct config_set_element *entry;
+                                        ^
+                                         = NULL
+1 error generated.
+make: *** [Makefile:2365: config.o] Error 1
+
+ -- -- --
+
+even though gcc seems to be happy with the source.
+
