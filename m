@@ -7,141 +7,188 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0C261F463
-	for <e@80x24.org>; Sun, 29 Sep 2019 15:13:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31AE31F463
+	for <e@80x24.org>; Sun, 29 Sep 2019 17:11:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726390AbfI2PEN (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Sep 2019 11:04:13 -0400
-Received: from relay7-d.mail.gandi.net ([217.70.183.200]:51339 "EHLO
-        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725948AbfI2PEN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Sep 2019 11:04:13 -0400
+        id S1728998AbfI2RLf (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Sep 2019 13:11:35 -0400
+Received: from relay6-d.mail.gandi.net ([217.70.183.198]:60105 "EHLO
+        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725948AbfI2RLf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Sep 2019 13:11:35 -0400
 X-Originating-IP: 1.186.12.44
 Received: from localhost (unknown [1.186.12.44])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id A2FDE20003;
-        Sun, 29 Sep 2019 15:04:09 +0000 (UTC)
-Date:   Sun, 29 Sep 2019 20:34:07 +0530
+        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id CAA6CC0002;
+        Sun, 29 Sep 2019 17:11:31 +0000 (UTC)
+Date:   Sun, 29 Sep 2019 22:41:29 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH 2/2] git-gui: support for diff3 conflict style
-Message-ID: <20190929150406.s57pmb3dggfbcqhr@yadavpratyush.com>
-References: <97013a71289857767100d6a4adcb39ca99b2b21b.1569443729.git.bert.wesarg@googlemail.com>
- <f1477ba53a03484a0440202065a5293c8795d3b7.1569443729.git.bert.wesarg@googlemail.com>
+To:     Heiko Voigt via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH 1/4] git-gui: provide question helper for retry fallback
+ on Windows
+Message-ID: <20190929171129.u5kvx5ggyjxjkzdu@yadavpratyush.com>
+References: <pull.358.git.gitgitgadget@gmail.com>
+ <58972068a230c996951e26d795e26cf66459c497.1569511793.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f1477ba53a03484a0440202065a5293c8795d3b7.1569443729.git.bert.wesarg@googlemail.com>
+In-Reply-To: <58972068a230c996951e26d795e26cf66459c497.1569511793.git.gitgitgadget@gmail.com>
 User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip, Bert,
-
-Is there any way I can test this change? Philip, I ran the rebase you 
-mention in the GitHub issue [0], and I get that '9c8cba6862abe5ac821' is 
-an unknown revision.
-
-Is there any quick way I can reproduce this (maybe on a sample repo)?
-
-[0] https://github.com/git-for-windows/git/issues/2340
-
-On 25/09/19 10:38PM, Bert Wesarg wrote:
-> This adds highlight support for the diff3 conflict style.
+On 26/09/19 08:29AM, Heiko Voigt via GitGitGadget wrote:
+> From: Heiko Voigt <hvoigt@hvoigt.net>
 > 
-> The common pre-image will be reversed to --, because it has been removed
-> and either replaced with ours or theirs side.
+> Make use of the new environment variable GIT_ASK_YESNO to support the
+> recently implemented fallback in case unlink, rename or rmdir fail for
+> files in use on Windows. The added dialog will present a yes/no question
+> to the the user which will currently be used by the windows compat layer
+> to let the user retry a failed file operation.
+
+I can't find any documentation related to this environment variable. A 
+Google search does not yield any promising results. I don't see this 
+mentioned in the git man page either, though that is to be expected 
+because it seems to be a Windows-only variable.
+
+My point is, it would be nice if the commit message pointed to some sort 
+of documentation for the environment variable. It would also help me in 
+reviewing the patch if I know more about the variable.
+
+Either way, some minor comments down below.
+
 > 
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  git-gui.sh   |  3 +++
->  lib/diff.tcl | 22 ++++++++++++++++++++++
->  2 files changed, 25 insertions(+)
+>  Makefile          |  2 ++
+>  git-gui--askyesno | 51 +++++++++++++++++++++++++++++++++++++++++++++++
+>  git-gui.sh        |  3 +++
+>  3 files changed, 56 insertions(+)
+>  create mode 100755 git-gui--askyesno
 > 
+> diff --git a/Makefile b/Makefile
+> index fe30be38dc..85633b73df 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -291,6 +291,7 @@ install: all
+>  	$(QUIET)$(INSTALL_D0)'$(DESTDIR_SQ)$(gitexecdir_SQ)' $(INSTALL_D1)
+>  	$(QUIET)$(INSTALL_X0)git-gui $(INSTALL_X1) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+>  	$(QUIET)$(INSTALL_X0)git-gui--askpass $(INSTALL_X1) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+> +	$(QUIET)$(INSTALL_X0)git-gui--askyesno $(INSTALL_X1) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+>  	$(QUIET)$(foreach p,$(GITGUI_BUILT_INS), $(INSTALL_L0)'$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' $(INSTALL_L1)'$(DESTDIR_SQ)$(gitexecdir_SQ)/git-gui' $(INSTALL_L2)'$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' $(INSTALL_L3) &&) true
+>  ifdef GITGUI_WINDOWS_WRAPPER
+>  	$(QUIET)$(INSTALL_R0)git-gui.tcl $(INSTALL_R1) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+> @@ -309,6 +310,7 @@ uninstall:
+>  	$(QUIET)$(CLEAN_DST) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+>  	$(QUIET)$(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/git-gui $(REMOVE_F1)
+>  	$(QUIET)$(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/git-gui--askpass $(REMOVE_F1)
+> +	$(QUIET)$(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/git-gui--askyesno $(REMOVE_F1)
+>  	$(QUIET)$(foreach p,$(GITGUI_BUILT_INS), $(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/$p $(REMOVE_F1) &&) true
+>  ifdef GITGUI_WINDOWS_WRAPPER
+>  	$(QUIET)$(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/git-gui.tcl $(REMOVE_F1)
+
+I'm not too slick with Makefiles, but these changes look good.
+
+> diff --git a/git-gui--askyesno b/git-gui--askyesno
+> new file mode 100755
+> index 0000000000..cf9c990d09
+> --- /dev/null
+> +++ b/git-gui--askyesno
+> @@ -0,0 +1,51 @@
+> +#!/bin/sh
+> +# Tcl ignores the next line -*- tcl -*- \
+> +exec wish "$0" -- "$@"
+> +
+> +# This is an implementation of a simple yes no dialog
+> +# which is injected into the git commandline by git gui
+> +# in case a yesno question needs to be answered.
+> +
+> +set NS {}
+> +set use_ttk [package vsatisfies [package provide Tk] 8.5]
+> +if {$use_ttk} {
+> +	set NS ttk
+> +}
+> +
+> +if {$argc < 1} {
+> +	puts stderr "Usage: $argv0 <question>"
+> +	exit 1
+> +} else {
+> +	set prompt [join $argv " "]
+> +}
+> +
+> +${NS}::frame .t
+> +${NS}::label .t.m -text $prompt -justify center -width 400px
+> +.t.m configure -wraplength 400px
+> +pack .t.m -side top -fill x -padx 20 -pady 20 -expand 1
+> +pack .t -side top -fill x -ipadx 20 -ipady 20 -expand 1
+> +
+> +${NS}::frame .b
+> +${NS}::frame .b.left -width 200
+> +${NS}::button .b.yes -text Yes -command yes
+> +${NS}::button .b.no  -text No  -command no
+
+Do you really need separate functions for yes/no? I think something like
+
+  -command {exit 1}
+
+and
+
+  -command {exit 0}
+
+would do just fine.
+
+Either way...
+
+> +
+> +
+
+Nitpick: Drop one of the two blank lines.
+
+> +pack .b.left -side left -expand 1 -fill x
+> +pack .b.yes -side left -expand 1
+> +pack .b.no -side right -expand 1 -ipadx 5
+> +pack .b -side bottom -fill x -ipadx 20 -ipady 15
+> +
+> +bind . <Key-Return> {exit 0}
+> +bind . <Key-Escape> {exit 1}
+
+... do the same thing here. Call yes and no here too if you are using 
+them above.
+
+I have no preference for either way, but I would like uniformity in 
+these two spots.
+
+> +
+> +proc no {} {
+> +	exit 1
+> +}
+> +
+> +proc yes {} {
+> +	exit 0
+> +}
+> +
+> +wm title . "Question?"
+> +tk::PlaceWindow .
 > diff --git a/git-gui.sh b/git-gui.sh
-> index fd476b6..6d80f82 100755
+> index f9b323abff..76d8139b8d 100755
 > --- a/git-gui.sh
 > +++ b/git-gui.sh
-> @@ -3581,6 +3581,9 @@ $ui_diff tag conf d_s- \
->  $ui_diff tag conf d< \
->  	-foreground orange \
->  	-font font_diffbold
-> +$ui_diff tag conf d| \
-> +	-foreground orange \
-> +	-font font_diffbold
->  $ui_diff tag conf d= \
->  	-foreground orange \
->  	-font font_diffbold
-> diff --git a/lib/diff.tcl b/lib/diff.tcl
-> index 0fd4600..6caf4e7 100644
-> --- a/lib/diff.tcl
-> +++ b/lib/diff.tcl
-> @@ -347,6 +347,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
->  	}
->  
->  	set ::current_diff_inheader 1
-> +	set ::conflict_state {CONTEXT}
->  	fconfigure $fd \
->  		-blocking 0 \
->  		-encoding [get_path_encoding $path] \
-> @@ -450,10 +451,28 @@ proc read_diff {fd conflict_size cont_info} {
->  			{++} {
->  				set regexp [string map [list %conflict_size $conflict_size]\
->  								{^\+\+([<>=]){%conflict_size}(?: |$)}]
-> +				set regexp_pre_image [string map [list %conflict_size $conflict_size]\
-> +								{^\+\+\|{%conflict_size}(?: |$)}]
->  				if {[regexp $regexp $line _g op]} {
->  					set is_conflict_diff 1
->  					set line [string replace $line 0 1 {  }]
-> +					set markup {}
->  					set tags d$op
-> +					switch -exact -- $op {
-> +					< { set ::conflict_state {OURS} }
-> +					= { set ::conflict_state {THEIRS} }
-> +					> { set ::conflict_state {CONTEXT} }
-> +					}
-> +				} elseif {[regexp $regexp_pre_image $line]} {
-> +					set is_conflict_diff 1
-> +					set line [string replace $line 0 1 {  }]
-> +					set markup {}
-> +					set tags d|
-> +					set ::conflict_state {BASE}
-> +				} elseif {$::conflict_state eq {BASE}} {
-> +					set line [string replace $line 0 1 {--}]
-> +					set markup {}
-> +					set tags d_--
+> @@ -1248,6 +1248,9 @@ set have_tk85 [expr {[package vcompare $tk_version "8.5"] >= 0}]
+>  if {![info exists env(SSH_ASKPASS)]} {
+>  	set env(SSH_ASKPASS) [gitexec git-gui--askpass]
+>  }
+> +if {![info exists env(GIT_ASK_YESNO)]} {
+> +	set env(GIT_ASK_YESNO) [gitexec git-gui--askyesno]
+> +}
 
-I'm afraid I don't follow what this hunk is supposed to do.
-
-You set the variable ::conflict_state to the values like OURS, THEIRS, 
-CONTEXT, but I don't see those values being used anywhere. A quick 
-search for these words shows me that you only set them, never read them.
-
-Is there some extra code that you have and I don't?
-
-Also, this function is long and complicated already. A comment 
-explaining what this code is doing would be nice, since it is not at all 
-obvious at first read-through.
-
->  				} else {
->  					set tags d_++
->  				}
-> @@ -505,6 +524,9 @@ proc read_diff {fd conflict_size cont_info} {
->  			}
->  		}
->  		set mark [$ui_diff index "end - 1 line linestart"]
-> +		if {[llength $markup] > 0} {
-> +			set tags {}
-> +		}
->  		$ui_diff insert end $line $tags
->  		if {[string index $line end] eq "\r"} {
->  			$ui_diff tag add d_cr {end - 2c}
-> -- 
-> 2.21.0.789.ga095d9d866
-> 
+Since this seems to be a Windows-only variable, you might want to enable 
+it only on Windows. Are there workflows on other platforms that would 
+use this environment variable?
 
 -- 
 Regards,
