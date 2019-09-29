@@ -2,88 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A80401F463
-	for <e@80x24.org>; Sun, 29 Sep 2019 20:10:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FB411F463
+	for <e@80x24.org>; Sun, 29 Sep 2019 20:51:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729156AbfI2UKr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Sep 2019 16:10:47 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:45140 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725948AbfI2UKr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Sep 2019 16:10:47 -0400
-Received: by mail-lf1-f66.google.com with SMTP id r134so5412360lff.12
-        for <git@vger.kernel.org>; Sun, 29 Sep 2019 13:10:46 -0700 (PDT)
+        id S1728853AbfI2UoF (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Sep 2019 16:44:05 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:39617 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728576AbfI2UoF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Sep 2019 16:44:05 -0400
+Received: by mail-io1-f66.google.com with SMTP id a1so32594892ioc.6
+        for <git@vger.kernel.org>; Sun, 29 Sep 2019 13:44:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4SdIERZA+OnVBqptBnjRNah42jIah+k74ssVYRemZyU=;
-        b=nEr6/cN8dHRBM07DmtcaVS/Xb5tsjWVSBBbTW32vD2bJVViTHwRYQMQ24JeP9Ev8b6
-         0nabuADYHZg5pHMNY82yeFA62VRRrFRofqabhI29n3XxZfpQaZ07rHzx8sJnBoZXUaG4
-         NZOOhND64ktzBBqQM+mfacM0qyYFC0efJhVHjhFhu1yQAmiQvnAhqUxaqUkgW5XVuM4X
-         00FQa3qvbQLy89z1Z92qXV78pP/GlKklsPuqWrDlgvqP8UBlhf0vbk85Mmb0ifrFxb7H
-         ve4l6i9SUxmfrhWUR47+ZKz089kdOiFXXaehTR+cSiMfzDKItSoSbm5VtcosbnuSMmWx
-         LXIw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=m+Ez4QhKOceskyoU0ThrcQM2Rg/roEjF2Plt71EGK4k=;
+        b=Y6xoBpHeZ0NTkoBShfk23Sx8EfULHNLQ+4hs2z0N0nBY8DlrtTNJMviEbQHcB1B5e9
+         qyItWr/xvwAJqeKf10kBn/b8r8s6TnwdwOMk9dT6783Oj0TqOoxsVzCVmOx6Ki8LX9Ls
+         XWxrjs818tSPP5F5gwVTx5qMhlWpgUxRKxkFMrPg/r5yS13EevSGmDpQ8lPQiQ68NhBj
+         YNi+g5p5wp1LygnpcCZtRCcuuzEIw5Qx4p8/uedyYOu5iQsIgvrFreI6GPOl24g+HmRx
+         HjAPwtt6i1S0XNRwfxBOTQgR2x6iS7jGGS4O4AWl/GH34L5xwBlDMZBm2Wq183y4o0Y8
+         sV9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4SdIERZA+OnVBqptBnjRNah42jIah+k74ssVYRemZyU=;
-        b=B7m+uALVVCrHiPqf3GeLO/ezVfNe5D56XDoqceJT56w4rojdoVflTPlmi4Qa4I1u+z
-         7b0sYOIZq/c1mW1H2OG/y2WbRPv2rRJSCOLPVDIG2Nt+ZpUYPpHSbdWMTQXngV2FsfRY
-         5um6h3xsO+0ZjBVmecQR8T1Y6lg6sSvHpMDANBYqu+GYftY2PjbUN2cXjYtCvMzTMkiC
-         PTMjYNpfP30+GK/aASKRai/yi76jrz4Ay0UBhsFp9RZVB/7kn3xhQ5HeZpGNM7c2zy3k
-         1xhws52d2D2NbjOWspLUwy0xJsE/KoUyJDagB4Q6i9Y3+edVcf3dwjxGtENtAiXAkjYP
-         0RXw==
-X-Gm-Message-State: APjAAAXSPO2AdAsZ7DZMY7ZoUc8BhsRJBUzFvzGWJPcpJNGGrMHnRlnF
-        e1/vEddnMYGxF3dx4KBWQLWZDPdDVeVbbtT5W7M=
-X-Google-Smtp-Source: APXvYqxkFc79NvGtNJGg22GbvW+Cpd2eTAvNeJlOJK9kGBZh7c2a4V4r1jeNdEyhLWtujG2U8h9inaphTTamq6Gptp0=
-X-Received: by 2002:a19:2313:: with SMTP id j19mr7694114lfj.138.1569787845275;
- Sun, 29 Sep 2019 13:10:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190929005646.734046-1-alexhenrie24@gmail.com> <20190929093706.ylm5dsftwl2y2nnz@hashpling.org>
-In-Reply-To: <20190929093706.ylm5dsftwl2y2nnz@hashpling.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=m+Ez4QhKOceskyoU0ThrcQM2Rg/roEjF2Plt71EGK4k=;
+        b=q8o8l5eVbxT2X5/qdOE9uT9zwPlt8QMIKsMBzZd0fmPfRRW1hSmjYxyG8pI6da8Ptm
+         +IZ9lAfN6Pu6jTLMyzIZ3C1kU8tOp8GBHTGZsudrfKXyA55bYs83jtJ4zPR5RgwbyIl1
+         VnJtLRnyRToNONKE0NcD3sE90PGohPpZiQVMSYAcA00d44iTlrUkPkMpBG3K/CU8iw2S
+         G+xp4CHWyvlVyqBs8AcRXYaRoEGYqL7sm7SI8xNO1bmIkkU2g+PPIgz6IGOJ029eIArP
+         kg2PjCNeeY1aBdzUeGQrBuGsNskFosJX0ZGwQkejDHEazdG+dxDNKrMdbs5WmMEbWLNe
+         qa4A==
+X-Gm-Message-State: APjAAAXMGkbaz6dsqzLteUHeu8Xh+EpBr23kb6+qCThbr1ycK4Zgl+bp
+        FEBN4jQ9cUpC81RbIVBsERlQTVe59Hk=
+X-Google-Smtp-Source: APXvYqwMqXwQ0lC90v7US3pCpUPWQctmqRUFq6SqbQSsS82ILU9uT2YLpreUEZLWN2oZazCPIbkiEw==
+X-Received: by 2002:a92:bb47:: with SMTP id w68mr17941470ili.226.1569789843781;
+        Sun, 29 Sep 2019 13:44:03 -0700 (PDT)
+Received: from xavier.hsd1.ut.comcast.net ([2601:681:4100:375e:3837:c90c:13fa:5c01])
+        by smtp.gmail.com with ESMTPSA id m9sm4845545ilc.44.2019.09.29.13.44.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Sep 2019 13:44:01 -0700 (PDT)
 From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Sun, 29 Sep 2019 14:10:33 -0600
-Message-ID: <CAMMLpeQnVb1M_Wy_GDeH44YVweXvNQ2jpyJqtvJ4zS_fGfxKuw@mail.gmail.com>
-Subject: Re: [PATCH v3] diffcore-break: use a goto instead of a redundant if statement
-To:     CB Bailey <cb@hashpling.org>
-Cc:     Git mailing list <git@vger.kernel.org>, dstolee@microsoft.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org, cb@hashpling.org, dstolee@microsoft.com,
+        gitster@pobox.com
+Cc:     Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH v4] diffcore-break: use a goto instead of a redundant if statement
+Date:   Sun, 29 Sep 2019 14:43:22 -0600
+Message-Id: <20190929204322.1244907-1-alexhenrie24@gmail.com>
+X-Mailer: git-send-email 2.23.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 29, 2019 at 3:37 AM CB Bailey <cb@hashpling.org> wrote:
->
-> Previously, if the condition matched in the inner loop, the function
-> would null out the entry in the queue that that inner loop had reached
-> (q->queue[j] = NULL) and then break out of the inner loop. This meant
-> that the outer loop would skip over this entry (if (!p)).
->
-> The change introduced seems to break out of both loops as soon as we
-> reach one match, whereas before other subsequent matches would be
-> considered and merged. Not only this, but the outer 'else' case for all
-> subsequent entries is skipped so the rest of the entries the original
-> queue are missing from 'outq'.
+The condition "if (q->nr <= j)" checks whether the loop exited normally
+or via a break statement. This check can be avoided by replacing the
+jump out of the inner loop with a jump to the end of the outer loop.
 
-> I spent a bit of time trying to see if this change was user visible
-> which turned out to be unneeded as t4008-diff-break-rewrite.sh already
-> fails with this change for me in my environment, initially with this
-> test but also 3 other tests in this file.
+With the break replaced by a goto, the two diff_q calls then can be
+replaced with a single diff_q call outside of the outer if statement.
 
-Thank you for reviewing this. I should have run `make test` myself
-before sending the patch; I do indeed see the same test failure that
-you saw. I will send a v4 of this patch with the label in the right
-place.
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
+ diffcore-break.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
--Alex
+diff --git a/diffcore-break.c b/diffcore-break.c
+index 875aefd3fe..ee7519d959 100644
+--- a/diffcore-break.c
++++ b/diffcore-break.c
+@@ -286,17 +286,15 @@ void diffcore_merge_broken(void)
+ 					/* Peer survived.  Merge them */
+ 					merge_broken(p, pp, &outq);
+ 					q->queue[j] = NULL;
+-					break;
++					goto next;
+ 				}
+ 			}
+-			if (q->nr <= j)
+-				/* The peer did not survive, so we keep
+-				 * it in the output.
+-				 */
+-				diff_q(&outq, p);
++			/* The peer did not survive, so we keep
++			 * it in the output.
++			 */
+ 		}
+-		else
+-			diff_q(&outq, p);
++		diff_q(&outq, p);
++next:;
+ 	}
+ 	free(q->queue);
+ 	*q = outq;
+-- 
+2.23.0
+
