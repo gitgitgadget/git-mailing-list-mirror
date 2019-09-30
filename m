@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 729D71F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 09:55:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FBA81F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 09:55:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730631AbfI3Jzj (ORCPT <rfc822;e@80x24.org>);
+        id S1730634AbfI3Jzj (ORCPT <rfc822;e@80x24.org>);
         Mon, 30 Sep 2019 05:55:39 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:40321 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730598AbfI3Jzg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 05:55:36 -0400
-Received: by mail-wr1-f66.google.com with SMTP id l3so10498798wru.7
-        for <git@vger.kernel.org>; Mon, 30 Sep 2019 02:55:35 -0700 (PDT)
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:38214 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728581AbfI3Jzf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 05:55:35 -0400
+Received: by mail-wm1-f66.google.com with SMTP id 3so11987817wmi.3
+        for <git@vger.kernel.org>; Mon, 30 Sep 2019 02:55:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=PTJvnArUvKNsOxVEuhJbTo8k3kGB1/WAG8v2GjmdSbc=;
-        b=RfG4kuISwtWa0/0WepiBOgKEckYjec27MYpBPkNvJ4Uf4FRDA1mKOuISsgfZ45lMtz
-         aWkZVZCb4Lqi4uFWyxjexbqLQhX/wXFE4uwifw3jFF0/yqlEcWXuUBy+UHSC8BFNGxKf
-         g+Q2+SnrgKtG/guTutTJNRreZESpmmaOazDrmnctSupp7ax+ptne6EfZ1pQXCy0rrmv6
-         qspQD+4jNFopelWbxZk9tHD7k5LG0L1T3KFpRqHEYFyIer7hodl557BSUmbp6ECFEsip
-         vgA26KYDtp6XVfo3HnF1lyCv1Ie9gnzPiTX4kfshcU+laArsLgxwgo25T9xWlNvdYImD
-         mGmg==
+        bh=PwAFlDQ5FlWkf4x5wuYtwAm/soXttcp6NKf0ywJLbFQ=;
+        b=HFhPxNNQOxR0gypOR7RPBhrBu1ZQiiKIiMjsVmRfMGCFag8x8dmECCUoSglUOx9IU2
+         wr7x2B3M8cnchTcwovHnokbTaBCsGzYKGSRrerxR00IzbLysMx8ABHna13Bw4BK6UzRR
+         mxZpVMNvYMtsJ6PW0U3WmtHRUofh0FXkRnHeDH0PoOFEQh90o9mgqrIA9ou+WtZbE4/J
+         YRwe9Z4d5SRJ31Rxw6RXWyV636kgyjxFXML+kNtCLk6nTLMpdYEB78fqjs5bu4L/t2nf
+         blXdfxOLYh8XS15KanLOSYv5QxEWn5Jf/LkUeKSYDXdYZRaM6PucnzfeLGEhA4GHFNwE
+         MwkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=PTJvnArUvKNsOxVEuhJbTo8k3kGB1/WAG8v2GjmdSbc=;
-        b=XCkwzt9g2UXBmJYncHu/khd2aooR28dSvb2paY+AgoBYVcI7vJGZySPxb96lgfzxtL
-         msK/QImVQi7NAorOGL/QdhALf5+i8beIDK2gbVCqNUfkZE8SfR/TQfiPFPgEH7ib17kV
-         GZB2GTtrklYwfncBFecehD+4Sm9HrQUQjw+5S9HlrrFLkCo5HLM5EOFNBGnDpPVYJFcH
-         6TSVk/Ta1zO62csT5/C0kprJ4nq2TZvsr1rB/rNF85lyeM1Y86dqlHMaGfJ/ObfeE8Y/
-         moW4TNG74xBJl1sMTcHG+Y/PKhBrAzsE1lf0oEpzd26efYulP5Xr+CKpHT8yGP85BPoN
-         5lHg==
-X-Gm-Message-State: APjAAAXJiIoYTS/uLG5GZUD4INmiNmRW0+JYouSTZamTV+0jjVbq4o1t
-        Y++OGkI7hjuL5yjckWTHAp4R/Vrh
-X-Google-Smtp-Source: APXvYqzSh8tf/YTGjeyxe4kIXvdOYOBRKurMWD5ofukZfLL61EPPMAwLQlfyjjqGf7UHQ3Ewn4ALLw==
-X-Received: by 2002:a05:6000:45:: with SMTP id k5mr6181376wrx.259.1569837335030;
-        Mon, 30 Sep 2019 02:55:35 -0700 (PDT)
+        bh=PwAFlDQ5FlWkf4x5wuYtwAm/soXttcp6NKf0ywJLbFQ=;
+        b=hyWDcRhJggj4ofzqToS6mnMvLstP4k7pbW2pdEwUg4rsn1HyA1emuGPghm8Ec7McBY
+         l4o7kNIZaICgK2vqd30tru0ecJNmRRJDkG6RqXa0UFob+LibKqIP6k4E/a33B80q+1vu
+         glsmbyCyHIVaYmOOx8PCY4HptiCZsio24dPhUupetbBPtPaF9Y4RArh0HEnDI/Ehu85K
+         J7bm39OsoSOr41gQYxeOx3Gyn9OVopUJ+65TluBpuEVRR97PQpnpIpvrddVZwcQ679/D
+         8vvM8e9+rQMK2+e9EmhLz/d9n+k1LabLBa7HGaSJ751hHQ9xBo4to2zkQtnXgCDQBc3U
+         z22g==
+X-Gm-Message-State: APjAAAUf7iORIBk2nmkhfzaNrMHn1X9zF1UviSmw/I02Kgewmsa5NMdb
+        URV07qOdQr0XRVXkvMdFdvYIuENj
+X-Google-Smtp-Source: APXvYqxBzMKOOyQnA4/mH+tJJMzZZAUl8jFO3BnhX2EaOcacFMhLwyZLBqhjiSOMpxUkGX6p8NwegQ==
+X-Received: by 2002:a1c:9c96:: with SMTP id f144mr16990203wme.96.1569837333695;
+        Mon, 30 Sep 2019 02:55:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b5sm12236793wmj.18.2019.09.30.02.55.34
+        by smtp.gmail.com with ESMTPSA id v6sm33687229wma.24.2019.09.30.02.55.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Sep 2019 02:55:34 -0700 (PDT)
-Date:   Mon, 30 Sep 2019 02:55:34 -0700 (PDT)
-X-Google-Original-Date: Mon, 30 Sep 2019 09:55:22 GMT
-Message-Id: <5c880f923ec9d5aa72b3b2dc6d54f427823b8389.1569837329.git.gitgitgadget@gmail.com>
+        Mon, 30 Sep 2019 02:55:33 -0700 (PDT)
+Date:   Mon, 30 Sep 2019 02:55:33 -0700 (PDT)
+X-Google-Original-Date: Mon, 30 Sep 2019 09:55:20 GMT
+Message-Id: <0345b08f542b1ba950882be2932e1643890bf8d2.1569837329.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.288.v2.git.gitgitgadget@gmail.com>
 References: <pull.288.git.gitgitgadget@gmail.com>
         <pull.288.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 06/13] msvc: handle DEVELOPER=1
+Subject: [PATCH v2 04/13] compat/win32/path-utils.h: add #include guards
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,75 +74,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We frequently build Git using the `DEVELOPER=1` make setting as a
-shortcut to enable all kinds of more stringent compiler warnings.
-
-Those compiler warnings are relatively specific to GCC, though, so let's
-try our best to translate them to the equivalent options to pass to MS
-Visual C++'s `cl.exe`.
+This adds the common guards that allow headers to be #include'd multiple
+times.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/vcbuild/scripts/clink.pl | 46 +++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ compat/win32/path-utils.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/compat/vcbuild/scripts/clink.pl b/compat/vcbuild/scripts/clink.pl
-index 00fc339cba..ec95a3b2d0 100755
---- a/compat/vcbuild/scripts/clink.pl
-+++ b/compat/vcbuild/scripts/clink.pl
-@@ -70,6 +70,52 @@
- 		push(@lflags, $arg);
- 	} elsif ("$arg" =~ /^-[Rl]/) {
- 		# eat
-+	} elsif ("$arg" eq "-Werror") {
-+		push(@cflags, "-WX");
-+	} elsif ("$arg" eq "-Wall") {
-+		# cl.exe understands -Wall, but it is really overzealous
-+		push(@cflags, "-W4");
-+		# disable the "signed/unsigned mismatch" warnings; our source code violates that
-+		push(@cflags, "-wd4018");
-+		push(@cflags, "-wd4245");
-+		push(@cflags, "-wd4389");
-+		# disable the "unreferenced formal parameter" warning; our source code violates that
-+		push(@cflags, "-wd4100");
-+		# disable the "conditional expression is constant" warning; our source code violates that
-+		push(@cflags, "-wd4127");
-+		# disable the "const object should be initialized" warning; these warnings affect only objects that are `static`
-+		push(@cflags, "-wd4132");
-+		# disable the "function/data pointer conversion in expression" warning; our source code violates that
-+		push(@cflags, "-wd4152");
-+		# disable the "non-constant aggregate initializer" warning; our source code violates that
-+		push(@cflags, "-wd4204");
-+		# disable the "cannot be initialized using address of automatic variable" warning; our source code violates that
-+		push(@cflags, "-wd4221");
-+		# disable the "possible loss of data" warnings; our source code violates that
-+		push(@cflags, "-wd4244");
-+		push(@cflags, "-wd4267");
-+		# disable the "array is too small to include a terminating null character" warning; we ab-use strings to initialize OIDs
-+		push(@cflags, "-wd4295");
-+		# disable the "'<<': result of 32-bit shift implicitly converted to 64 bits" warning; our source code violates that
-+		push(@cflags, "-wd4334");
-+		# disable the "declaration hides previous local declaration" warning; our source code violates that
-+		push(@cflags, "-wd4456");
-+		# disable the "declaration hides function parameter" warning; our source code violates that
-+		push(@cflags, "-wd4457");
-+		# disable the "declaration hides global declaration" warning; our source code violates that
-+		push(@cflags, "-wd4459");
-+		# disable the "potentially uninitialized local variable '<name>' used" warning; our source code violates that
-+		push(@cflags, "-wd4701");
-+		# disable the "unreachable code" warning; our source code violates that
-+		push(@cflags, "-wd4702");
-+		# disable the "potentially uninitialized local pointer variable used" warning; our source code violates that
-+		push(@cflags, "-wd4703");
-+		# disable the "assignment within conditional expression" warning; our source code violates that
-+		push(@cflags, "-wd4706");
-+		# disable the "'inet_ntoa': Use inet_ntop() or InetNtop() instead" warning; our source code violates that
-+		push(@cflags, "-wd4996");
-+	} elsif ("$arg" =~ /^-W[a-z]/) {
-+		# let's ignore those
- 	} else {
- 		push(@args, $arg);
- 	}
+diff --git a/compat/win32/path-utils.h b/compat/win32/path-utils.h
+index 0f70d43920..8ed062a6b7 100644
+--- a/compat/win32/path-utils.h
++++ b/compat/win32/path-utils.h
+@@ -1,3 +1,6 @@
++#ifndef WIN32_PATH_UTILS_H
++#define WIN32_PATH_UTILS_H
++
+ #define has_dos_drive_prefix(path) \
+ 	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
+ int win32_skip_dos_drive_prefix(char **path);
+@@ -18,3 +21,5 @@ static inline char *win32_find_last_dir_sep(const char *path)
+ #define find_last_dir_sep win32_find_last_dir_sep
+ int win32_offset_1st_component(const char *path);
+ #define offset_1st_component win32_offset_1st_component
++
++#endif
 -- 
 gitgitgadget
 
