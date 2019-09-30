@@ -2,137 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF7161F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 22:55:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B7751F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 23:33:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729736AbfI3WzC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Sep 2019 18:55:02 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:44116 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726425AbfI3WzB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 18:55:01 -0400
-Received: by mail-pf1-f196.google.com with SMTP id q21so6435601pfn.11
-        for <git@vger.kernel.org>; Mon, 30 Sep 2019 15:55:01 -0700 (PDT)
+        id S1729042AbfI3XdQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 19:33:16 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:38500 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728369AbfI3XdQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 19:33:16 -0400
+Received: by mail-lf1-f67.google.com with SMTP id u28so8373791lfc.5
+        for <git@vger.kernel.org>; Mon, 30 Sep 2019 16:33:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4ccdx2lOL1PNlnSHz4HITfKhP3n2xAGd8ECJg4IFCZw=;
-        b=oWfbO6BJeGDTcr4edVMzMWUMn8GR5oBezFX5DyFsd1DMbDjaru205YLa1/9qo6rVAv
-         GvKptWDt5hYD53w61Hm8UtYqTOhfGax08OWM7q0q9LtpbD35gISwoHBC62bBbxj9/XK4
-         fzgp77YOUBORzerCZpZL6RuzQmObMiSU2P1EiFkTsg7z6rDT7KN5WrRt09Eqis5lraGi
-         XDfGQ9v4MusRIbov0hts+VKkhuzNttDtTqGN7uREHVblOiEMp5gGRjuXpcICO9Xw2+dy
-         vnO7ufwPUQyob4iQgMdybLSCGw9bdrtsbVY43LwQSXhgYHjWK25B9HtKxz9vwUXHpq+J
-         lFmw==
+        h=from:to:cc:subject:date:message-id;
+        bh=wL5A4Cr1R61xmAYLH0HbhxoCelH3jozB0haooIeuBRk=;
+        b=r/wOM0WDgzEzSbZwKSr5CB0KE8a4IzPApeSKvuthWpL9cxMpsYGnXemQGYUKF+aecI
+         ArcRDPvEvNyUtsQh7jWzG6p/ZF1p7Hqk0j7GJ4YCAU/0zwFVgKZCU88hMFd5Qg6FNge0
+         dSU6KGVErk8hMEi3vfXTNj7Txq5bBpeDZ/Jp0POBsgPkrVjXldDSwU6qy4BXZXP0l2IV
+         vU64sztL/Hjqn27TbrzDuBUiOD+jpjhLBko76KUlALILQnIGTR9+dLQ2X4PguqEezPRX
+         wKtYqSD6BX9QXqXbZg545WeiZa4Wc7rzDQIwTVWKbbbacMzsPOfwVQ5rHDHKPRvmNXcq
+         zW3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4ccdx2lOL1PNlnSHz4HITfKhP3n2xAGd8ECJg4IFCZw=;
-        b=JBo9hCvC+CYx8zBwtRewkNge35h7nzXCNmNP0wP9U7khbhe96foTsjGXRzKZlsj3qG
-         63Dq6RdvR6PCjZrqbto23cmQ0nECF2zNWSyVAgzqAKuQzm4YBoxkwNlFyGo+q3K39dsm
-         x5XmymQ22XCkWGLtU63kKLFtqDK6445Aql8fgthmuwWELCzE2tyw9WDL2M1QtE3OUQzz
-         nZtgH40nwPoQpWG1Zn3g4HpBnnYfEWMnEZln1OKPjXc1ORlcZycaexunot5aiwW9gkVj
-         4UMCUd/gcSjC8Qosq6dKR18Oveq4MyeHanzEIUU97e4KumJPWktl7mgTviT/shPBscYh
-         Wtlg==
-X-Gm-Message-State: APjAAAX9IplBq/Hz+IzBfhnyWBC8YIQiSsJyIpkQlhI/DRTJ8DrAF7Fo
-        j8dj/QokFpjjk3/1c/zERy7ddrqcT94=
-X-Google-Smtp-Source: APXvYqwwyM3yemP+wOscCaBLFFQIEMGM53fV+1eEBD/jptWBTSPUbNpkRmynrcjwNo3drqqtookLSg==
-X-Received: by 2002:a17:90a:9d86:: with SMTP id k6mr1779800pjp.105.1569884100598;
-        Mon, 30 Sep 2019 15:55:00 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id s5sm546595pjn.24.2019.09.30.15.54.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 30 Sep 2019 15:55:00 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=wL5A4Cr1R61xmAYLH0HbhxoCelH3jozB0haooIeuBRk=;
+        b=hcYBQdsxxZz0nZsjOW69a+ZUdhlGqzYfW5CO85mJITqt+wJB+Wmw6vVDLEZtlaWUAY
+         aAdwe0aUz9GCUbN+OMdUi70ofevDzcRfTeA1Rx3wHdNutpw/3GMorzzCoAs+erQwZOvh
+         3E+1TYwKiJZrIz4YfIPNkA0T5x9fasHIWUT7QlcXcpEbUs+28FPqr1YPgjZ14wlhGd67
+         PPdbtjYn37fsQ/YnJFLanQAcqcziLG/EiC62glkJCOxvYeV0PAwG4/9AgclR+7qr8Vj2
+         FNnlUX1glJqagiKp5G/b7WaTAnE+j1d8gun8cMLuTT+EawqcGBwAJCmwUykAF7PrI/XI
+         k20A==
+X-Gm-Message-State: APjAAAWyzXF9cN7ciwyvYzACX1zZ/lFGKWyoI7k91wKm3zqY7YrdK2Pd
+        TCr3EJJIOoEQiiCu42juKiIIMKSy
+X-Google-Smtp-Source: APXvYqxoG6iY9KwwOTJ7ympGxDnswUVeaFdxn12uUi0PcSHvzOPpbXEpqUiurE+I3YkE92YOez42QA==
+X-Received: by 2002:a19:c3d3:: with SMTP id t202mr13153117lff.48.1569886394184;
+        Mon, 30 Sep 2019 16:33:14 -0700 (PDT)
+Received: from DESKTOP-VIJHNRI.lan (c-82d3225c.06-345-6c756e10.bbcust.telenor.se. [92.34.211.130])
+        by smtp.gmail.com with ESMTPSA id b19sm3714025lji.41.2019.09.30.16.33.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Sep 2019 16:33:13 -0700 (PDT)
+From:   Ali Utku Selen <auselen@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH] merge-recursive: fix the diff3 common ancestor label for virtual commits
-Date:   Mon, 30 Sep 2019 15:54:55 -0700
-Message-Id: <20190930225455.6208-1-newren@gmail.com>
-X-Mailer: git-send-email 2.23.0.25.ge3b5015985
-In-Reply-To: <20190930211437.GA28110@sigill.intra.peff.net>
-References: <20190930211437.GA28110@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Cc:     Ali Utku Selen <auselen@gmail.com>
+Subject: [PATCH] shallow.c: Don't free unallocated slabs
+Date:   Tue,  1 Oct 2019 01:33:10 +0200
+Message-Id: <20190930233310.19287-1-auselen@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In commit 743474cbfa8b ("merge-recursive: provide a better label for
-diff3 common ancestor", 2019-08-17), the label for the common ancestor
-was changed from always being
+Fix possible segfault when cloning a submodule shallow.
 
-         "merged common ancestors"
-
-to instead be based on the number of merge bases:
-
-    >=2: "merged common ancestors"
-      1: <abbreviated commit hash>
-      0: "<empty tree>"
-
-Unfortunately, this did not take into account that when we have a single
-merge base, that merge base could be fake or constructed.  In such
-cases, this resulted in a label of "00000000".  Of course, the previous
-label of "merged common ancestors" was also misleading for these cases.
-Since we have an API that is explicitly about creating fake commits in
-merge_recursive_generic(), we should provide a better label when using
-that API.  So, when merge_recursive_generic() is called, set the label
-to:
-
-         "constructed merge base"
-
-Note that users of merge_recursive_generic include the builtin commands
-git-am (in combination with git apply --build-fake-ancestor),
-git-merge-recursive, and git-stash.
-
-Reported-by: Jeff King <peff@peff.net>
-Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Ali Utku Selen <auselen@gmail.com>
 ---
-Applies to the top of en/merge-recursive-cleanup, which is in next.
+It is possible to have unallocated slabs in shallow.c's commit_depth
+for a shallow submodule with many commits.
 
- merge-recursive.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Easiest way to reproduce this I found was changing COMMIT_SLAB_SIZE to
+32 and run t7406-submodule-update.sh. Segfault happens in case 50:
+"submodule update clone shallow submodule outside of depth"
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index b058741f00..2b7722e350 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -3550,6 +3550,8 @@ static int merge_recursive_internal(struct merge_options *opt,
- 		merged_merge_bases = make_virtual_commit(opt->repo, tree,
- 							 "ancestor");
- 		ancestor_name = "empty tree";
-+	} else if (opt->ancestor) {
-+		ancestor_name = opt->ancestor;
- 	} else if (merge_bases) {
- 		ancestor_name = "merged common ancestors";
- 	} else {
-@@ -3689,7 +3691,8 @@ int merge_recursive(struct merge_options *opt,
- {
- 	int clean;
+ shallow.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/shallow.c b/shallow.c
+index 5fa2b15d37..c33ab94bd7 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -156,6 +156,8 @@ struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
+ 	for (i = 0; i < depths.slab_count; i++) {
+ 		int j;
  
--	assert(opt->ancestor == NULL);
-+	assert(opt->ancestor == NULL ||
-+	       !strcmp(opt->ancestor, "constructed merge base"));
- 
- 	if (merge_start(opt, repo_get_commit_tree(opt->repo, h1)))
- 		return -1;
-@@ -3741,6 +3744,7 @@ int merge_recursive_generic(struct merge_options *opt,
- 					   oid_to_hex(merge_bases[i]));
- 			commit_list_insert(base, &ca);
- 		}
-+		opt->ancestor = "constructed merge base";
++		if (!depths.slab[i])
++			continue;
+ 		for (j = 0; j < depths.slab_size; j++)
+ 			free(depths.slab[i][j]);
  	}
- 
- 	repo_hold_locked_index(opt->repo, &lock, LOCK_DIE_ON_ERROR);
 -- 
-2.23.0.25.ge3b5015985
+2.17.1
 
