@@ -2,79 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_03_06,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2C731F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 21:14:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A94101F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 21:18:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730455AbfI3VOj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Sep 2019 17:14:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35804 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727767AbfI3VOi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 17:14:38 -0400
-Received: (qmail 2373 invoked by uid 109); 30 Sep 2019 21:14:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 30 Sep 2019 21:14:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4791 invoked by uid 111); 30 Sep 2019 21:17:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Sep 2019 17:17:12 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 30 Sep 2019 17:14:37 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v4 04/24] merge-recursive: provide a better label for
- diff3 common ancestor
-Message-ID: <20190930211437.GA28110@sigill.intra.peff.net>
-References: <20190815214053.16594-1-newren@gmail.com>
- <20190817184144.32179-1-newren@gmail.com>
- <20190817184144.32179-5-newren@gmail.com>
+        id S1729964AbfI3VSl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 17:18:41 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:52251 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727118AbfI3VSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 17:18:41 -0400
+Received: by mail-wm1-f67.google.com with SMTP id r19so980861wmh.2
+        for <git@vger.kernel.org>; Mon, 30 Sep 2019 14:18:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=EKteq2LqbmJS7qpNSfvODGPn2gF/oPHNT0GuBcYdyX0=;
+        b=P5LE5vM9IZ017MdljnpVp4BPHBwgQDY/E0Lkxwj4mIbgPlLfmeRYsXGmkQIDLHZ74T
+         2G4hVeRBwaghN0m+rN+zN7HzT2zrA2OCXW9eO8R79eCHJG+DJgJdYs7iKn3DAPRAMkZF
+         FfnFkv9CWgWW01W54Cl8OUCzgxmRUgmsxUNeE/rtIqVBxfndvuV8kCVoO1Ms/Dfk6Cx8
+         8xvmT8FfowFo+ljiprTIE/MnB4WmMiZi0Tc+F2pwi6C6cTJkrskYRle7RUY3XFIgRNP1
+         YDqeIjn0n4cgjHLkJLAJHlnFU0ZDDhT3GpuTPhbBJbNvDYHzSnI7296WrQRz0Olv7lis
+         j9nA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=EKteq2LqbmJS7qpNSfvODGPn2gF/oPHNT0GuBcYdyX0=;
+        b=DjQYyWP41xLWQ90WMRpS4AS/C3j38nMq/nQiBvh3GlU08EQmRSzId87o29TvX9LIjF
+         yyj4vF/0o/olndyvS7aIVfq46oNNVRqjTmQ8NdebFYKW94/JsROW8h+Dsn0IL0hpPSUS
+         3YeO5mhkuhJzQ+mpE2xs9YL4n554RaxVKPK8l5nHWhgZIYN7bzhbTk4GxH3kXlmI9zYN
+         x0sIHtzISuVA/+ZwIXSdsu8duHa8Mu8CfT172GhVELV7L/UgBXZYXlIBd/xa1EuQy4MJ
+         YIx2s+yXNX5TxWqkDwFtNQgF3avRENRrZ5SX0pWtoL0YbZifJ3aHWiOuODLfykt/TVPb
+         hK5A==
+X-Gm-Message-State: APjAAAVMpKjgNmMSBDoNo9jdjW1L8nd8reW7SQCXn5TyIIy6000x4+Ta
+        ZOHytPYWAdl4xTcm7pONYQQeiKyv
+X-Google-Smtp-Source: APXvYqxLMUddCrHc4rQZ+VqcA4pFsBKKPzwMQXpeXpk6xFe82BvYaJIGkLvYN17hYrpBYRlpzaMkww==
+X-Received: by 2002:a7b:c10c:: with SMTP id w12mr278202wmi.26.1569864114482;
+        Mon, 30 Sep 2019 10:21:54 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b7sm10797907wrj.28.2019.09.30.10.21.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Sep 2019 10:21:53 -0700 (PDT)
+Date:   Mon, 30 Sep 2019 10:21:53 -0700 (PDT)
+X-Google-Original-Date: Mon, 30 Sep 2019 17:21:50 GMT
+Message-Id: <pull.352.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.352.git.gitgitgadget@gmail.com>
+References: <pull.352.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/2] Git's rename detection requires a stable sort
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190817184144.32179-5-newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 17, 2019 at 11:41:24AM -0700, Elijah Newren wrote:
+With the en/merge-recursive-cleanup patches already having advanced to next,
+the problem I discovered when rebasing Git for Windows' branch thicket
+becomes quite relevant now: t3030.35 fails consistently in the MSVC build &
+test (this part of the Azure Pipeline will be upstreamed later).
 
-> In commit 7ca56aa07619 ("merge-recursive: add a label for ancestor",
-> 2010-03-20), a label was added for the '||||||' line to make it have
-> the more informative heading '|||||| merged common ancestors', with
-> the statement:
-> 
->     It would be nicer to use a more informative label.  Perhaps someone
->     will provide one some day.
-> 
-> This chosen label was perfectly reasonable when recursiveness kicks in,
-> i.e. when there are multiple merge bases.  (I can't think of a better
-> label in such cases.)  But it is actually somewhat misleading when there
-> is a unique merge base or no merge base.  Change this based on the
-> number of merge bases:
->     >=2: "merged common ancestors"
->     1:   <abbreviated commit hash>
->     0:   "<empty tree>"
+The solution: use a stable sort.
 
-I got a funny result from this today while rebasing some patches in
-git.git, where the base is reported as "00000000". I didn't make a
-minimal case, but you can easily reproduce it with:
+Note: this patch series is based on top of en/merge-recursive-cleanup.
 
-  cd /your/git/clone
-  git fetch https://github.com/peff/git odd-diff3-base
-  git checkout -b odd-diff3-base FETCH_HEAD
-  git -c merge.conflictstyle=diff3 rebase --onto origin/master HEAD~2
+Changes since v1:
 
-Maybe this has to do with "git apply --build-fake-ancestor" being used
-under the hood?
+ * The function was renamed to git_stable_qsort(), as per Junio's
+   suggestion.
 
--Peff
+Johannes Schindelin (2):
+  Move git_sort(), a stable sort, into into libgit.a
+  diffcore_rename(): use a stable sort
+
+ Makefile                         |  2 +-
+ compat/mingw.c                   | 11 +++--------
+ diffcore-rename.c                |  2 +-
+ git-compat-util.h                |  9 ++++++---
+ compat/qsort.c => stable-qsort.c |  6 +++---
+ 5 files changed, 14 insertions(+), 16 deletions(-)
+ rename compat/qsort.c => stable-qsort.c (89%)
+
+
+base-commit: 4615a8cb5b3a8d4959c30338925b1fa3b948ae52
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-352%2Fdscho%2Frename-needs-stable-sort-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-352/dscho/rename-needs-stable-sort-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/352
+
+Range-diff vs v1:
+
+ 1:  1202809db7 < -:  ---------- Move git_sort(), a stable sort, into into libgit.a
+ -:  ---------- > 1:  8a99008a64 Move git_sort(), a stable sort, into into libgit.a
+ 2:  a95cdf1e94 ! 2:  442140438a diffcore_rename(): use a stable sort
+     @@ -16,7 +16,7 @@
+          `a~Temporary merge branch 2_0` to `a` during a recursive merge,
+          unexpectedly resulting in a clean merge.
+      
+     -    Let's use the stable sort provided by `git_sort()` to avoid this
+     +    Let's use the stable sort provided by `git_stable_qsort()` to avoid this
+          inconsistency.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+     @@ -29,7 +29,7 @@
+       
+       	/* cost matrix sorted by most to least similar pair */
+      -	QSORT(mx, dst_cnt * NUM_CANDIDATE_PER_DST, score_compare);
+     -+	QSORT_STABLE(mx, dst_cnt * NUM_CANDIDATE_PER_DST, score_compare);
+     ++	STABLE_QSORT(mx, dst_cnt * NUM_CANDIDATE_PER_DST, score_compare);
+       
+       	rename_count += find_renames(mx, dst_cnt, minimum_score, 0);
+       	if (detect_rename == DIFF_DETECT_COPY)
+
+-- 
+gitgitgadget
