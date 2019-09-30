@@ -8,55 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C3CA1F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 09:55:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99B7D1F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 09:55:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730595AbfI3Jzf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Sep 2019 05:55:35 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:33125 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727935AbfI3Jze (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 05:55:34 -0400
-Received: by mail-wm1-f65.google.com with SMTP id r17so13728394wme.0
-        for <git@vger.kernel.org>; Mon, 30 Sep 2019 02:55:31 -0700 (PDT)
+        id S1730639AbfI3Jzm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 05:55:42 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34190 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730602AbfI3Jzh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 05:55:37 -0400
+Received: by mail-wr1-f68.google.com with SMTP id a11so10524580wrx.1
+        for <git@vger.kernel.org>; Mon, 30 Sep 2019 02:55:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ehaFjOxYUjrmCY/HSlmWwlWOPJWMpU7M8+bRvj9nfTA=;
-        b=FsRJzSeSU+hluE5ROk6ZQNsGGrOdEAHNktwbljRtvw28x3ckSG6YHUDfibztf+ORgA
-         fn0gRbY+brSGLJN9FSvAiGcXzp3uHSr64l2dbICRbuDahXD1ZTsYj0J+RcAZIsK1HXwE
-         iZCBeT5c7JEyIo453XLaeHM41utE5yrHVu7J6R9Lie8BE6gZa9mN7Lu9G5AdlBJ5GGbK
-         hDw+pqkns8DWH67sEnOMcP9oDhtTCkyITJA3MTDpFMLLvvKrUDfI2KpNxFc+x5VBGOeH
-         uFzU5uclf4CRYgtBAgHSAByVblmMnArbTbnoTJBikbEoDllk+H3JeaoL/XJFkexgXyO6
-         3rYw==
+        bh=RVE9a0xIxOv1m/oHcTcIhY+O/HERoXxmdzKfXgJwF88=;
+        b=NUNWPlqkZO3ejxrAtYs/hcwKeYVK5K9d/u8A/qT7AEpvUqELcHVsds6jh/2dWDlrVD
+         Qyn6QASzikyGFoHkWN1dyd/SnuKZGlGjfSAjr1tFcX0pP6sEMAQMyBKiMHf8jy70Ciup
+         +CCwgHHVQbJGK5xUHONPlt1aQunmTkBPVTlqGCdz6KGpOrGEXNKioXzdYZyCPtY8lpHm
+         usg0jqow6JOdcEvAOVpGexUPNmiaM+TKqsAx8m70pUU3dmWtK33TfmQTmriEznJBsdlL
+         EIXON0Ahigi/KIeZML6L1oZA40Zl7+suuO+6YdslWUGE0guyibK+b89nx6SDwdRWqW8O
+         ck8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ehaFjOxYUjrmCY/HSlmWwlWOPJWMpU7M8+bRvj9nfTA=;
-        b=n1cdmlNxuZLSPlcpArkyIyhymhuMOmiNb3tZh8oGuSVQXJ3OJT2PFiqRwVPZ68k0Mx
-         oPvFxxKAXdOdiPUOxDeWE4qMWDZ7ameYp5DFj3/YNf/yDMoznPUtKqdqo337JHxqe86j
-         lSvzdJGhjVSWIdTz4L8mtq7Bwfjh8FhrjBiCXgWJ0xCapNN1VewnwU+TnPKLYlqf+Dt+
-         zcwARl4fno0VP6t2rjHH8u6tPkYv/VqyC+8quOkgiNAFKE4WtnUn+FahpUFZd8hBlr4p
-         ndkGhHi9/iWM0xKJHrDIHzwx/qaVp/HHSlUZCbeTE8JP8MV9eXDtiMHyFuYrDaQXiALo
-         EjvQ==
-X-Gm-Message-State: APjAAAXvZlf/0b7+8rrOnz6XAyIU1ryCAAY9AErRia/IskNMFqpO8xOl
-        POtG+wNzTWoV9XErpP2gzwe83/fS
-X-Google-Smtp-Source: APXvYqwnJqxODW7Ev0BwQVwFTWK+pcyDNvKQqH5gjVl52h3Ji6MwlyUA+UiN2ftH0moFyxNJ+k5uuA==
-X-Received: by 2002:a05:600c:2412:: with SMTP id 18mr15812086wmp.128.1569837331007;
-        Mon, 30 Sep 2019 02:55:31 -0700 (PDT)
+        bh=RVE9a0xIxOv1m/oHcTcIhY+O/HERoXxmdzKfXgJwF88=;
+        b=M0IGQS78ENcHPlJErfuX0Z/kD1oS5hBT1AK4KfFtbbGAAfjoDqYWljqFGjPdCtKy3U
+         ARCFXugFrOu6jv/+4UvEHla2+FygOrT98PgvZs3lhOpJuGckFf3ZOWY5uA8rH/kWwK/E
+         eTcajbiQX++7nGzYg6PBwiDectPxxgaMPYQx5ey7QEbdPEh3b7+8ofCg9zccAskY31lP
+         NG61wtMajIYh1n/hFw5a/X3wtWNG9STjr/q9CpaF/y3rf/J/F50SpQKhxcmALj4bItp0
+         2GOt7Hh49cy7qet6cv8etPg5M1eyqzBkK5eu8N7Q3mTbF7RKqhGaTAfdbyml88awhNLr
+         LrdA==
+X-Gm-Message-State: APjAAAX9BqRDQtAJdGSMMz22HVuqZbophxwY0JbBLkAhrNBuwMN5z451
+        dTVRXIDvgTc6Rdy15n2sYbbL1Cna
+X-Google-Smtp-Source: APXvYqx6HvQOmnq+2+3Azg5RNCFrBwPdE9KmXyXg0c5OpzjqRwxCFR9VG15Tvt6aW2UroZdVivq95Q==
+X-Received: by 2002:adf:ea12:: with SMTP id q18mr13105508wrm.378.1569837335816;
+        Mon, 30 Sep 2019 02:55:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v16sm15109136wrt.12.2019.09.30.02.55.30
+        by smtp.gmail.com with ESMTPSA id u4sm22459525wmg.41.2019.09.30.02.55.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Sep 2019 02:55:30 -0700 (PDT)
-Date:   Mon, 30 Sep 2019 02:55:30 -0700 (PDT)
-X-Google-Original-Date: Mon, 30 Sep 2019 09:55:16 GMT
-Message-Id: <pull.288.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.288.git.gitgitgadget@gmail.com>
+        Mon, 30 Sep 2019 02:55:35 -0700 (PDT)
+Date:   Mon, 30 Sep 2019 02:55:35 -0700 (PDT)
+X-Google-Original-Date: Mon, 30 Sep 2019 09:55:23 GMT
+Message-Id: <1f2245a228e1e1a9b6f0bb70f8f6987af2140182.1569837329.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.288.v2.git.gitgitgadget@gmail.com>
 References: <pull.288.git.gitgitgadget@gmail.com>
+        <pull.288.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 00/13] ci: include a Visual Studio build & test in our Azure Pipeline
+Subject: [PATCH v2 07/13] msvc: work around a bug in GetEnvironmentVariable()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,189 +65,54 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Denton Liu <liu.denton@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git's Continuous Integration (CI) includes an Azure Pipeline that builds Git
-on Linux, macOS and Windows, in the former two cases even in multiple
-configurations (using GCC vs clang, 32-bit vs 64-bit, etc). On Windows, we
-only build using GCC, using (a subset of) Git for Windows' SDK.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Recently, a patch series made it into Git that re-instates the ability to
-generate project files for use with Visual Studio. The idea there being:
-contributors can check out a special branch that has those generated files
-in one generated commit on top of e.g. Git for Windows' master, allowing the
-contributors to build Git in Visual Studio, without the need for downloading
-Git for Windows' SDK (which weighs quite a bit: ~600MB download, ~2GB disk
-footprint). The tests can then be run from a regular Git for Windows Bash.
+The return value of that function is 0 both for variables that are
+unset, as well as for variables whose values are empty. To discern those
+two cases, one has to call `GetLastError()`, whose return value is
+`ERROR_ENVVAR_NOT_FOUND` and `ERROR_SUCCESS`, respectively.
 
-This patch series adds that axis to Git's Azure Pipeline: the project files
-are generated, MSBuild (which is kind of the command-line equivalent of
-Visual Studio's "Build" operation) is used to build Git, and then a
-parallelized test job runs the test suite in a Portable Git.
+Except that it is not actually set to `ERROR_SUCCESS` in the latter
+case, apparently, but the last error value seems to be simply unchanged.
 
-These patches are based on js/visual-studio.
+To work around this, let's just re-set the last error value just before
+inspecting the environment variable.
 
-Changes since v1:
+This fixes a problem that triggers failures in t3301-notes.sh (where we
+try to override config settings by passing empty values for certain
+environment variables).
 
- * "While at it", we now also check for overflows when doing that -1 -
-   <unsigned> arithmetic.
- * The JUnit-style XML is finalized also in case that the script aborts e.g.
-   due to an incorrect number of arguments in a test_expect_success call.
+This problem is hidden in the MINGW build by the fact that older
+MSVC runtimes (such as the one used by MINGW builds) have a `calloc()`
+that re-sets the last error value in case of success, while newer
+runtimes set the error value only if `NULL` is returned by that
+function.
 
-Johannes Schindelin (13):
-  push: do not pretend to return `int` from `die_push_simple()`
-  msvc: avoid using minus operator on unsigned types
-  winansi: use FLEX_ARRAY to avoid compiler warning
-  compat/win32/path-utils.h: add #include guards
-  msvc: ignore some libraries when linking
-  msvc: handle DEVELOPER=1
-  msvc: work around a bug in GetEnvironmentVariable()
-  vcxproj: only copy `git-remote-http.exe` once it was built
-  vcxproj: include more generated files
-  test-tool run-command: learn to run (parts of) the testsuite
-  tests: let --immediate and --write-junit-xml play well together
-  ci: really use shallow clones on Azure Pipelines
-  ci: also build and test with MS Visual Studio on Azure Pipelines
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/mingw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
- Makefile                                   |   4 +
- azure-pipelines.yml                        | 164 ++++++++++++++++++++-
- builtin/push.c                             |   4 +-
- compat/mingw.c                             |   2 +
- compat/vcbuild/scripts/clink.pl            |  48 +++++-
- compat/win32/path-utils.h                  |   5 +
- compat/winansi.c                           |   2 +-
- config.mak.uname                           |  19 ++-
- contrib/buildsystems/Generators/Vcxproj.pm |   3 +
- read-cache.c                               |   9 +-
- sha1-lookup.c                              |  12 +-
- t/helper/test-run-command.c                | 153 +++++++++++++++++++
- t/test-lib.sh                              |  38 +++--
- 13 files changed, 428 insertions(+), 35 deletions(-)
-
-
-base-commit: aac6ff7b5beeea9bca66ecda6eec60fc1dd447ec
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-288%2Fdscho%2Fazure-pipelines-msvc-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-288/dscho/azure-pipelines-msvc-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/288
-
-Range-diff vs v1:
-
-  1:  4d0b38125a =  1:  4d0b38125a push: do not pretend to return `int` from `die_push_simple()`
-  2:  2abe1e1fb0 !  2:  8800320590 msvc: avoid using minus operator on unsigned types
-     @@ -40,17 +40,30 @@
-          that is both easier to read and that also does not trigger MSVC's
-          warning.
-      
-     +    While at it, we take care of reporting overflows (which are unlikely,
-     +    but hey, defensive programming is good!).
-     +
-     +    We _also_ take pains of casting the unsigned value to signed: otherwise,
-     +    the signed operand (i.e. the `-1`) would be cast to unsigned before
-     +    doing the arithmetic.
-     +
-     +    Helped-by: Denton Liu <liu.denton@gmail.com>
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       diff --git a/read-cache.c b/read-cache.c
-       --- a/read-cache.c
-       +++ b/read-cache.c
-      @@
-     + 	 * we can avoid searching for it.
-       	 */
-       	if (istate->cache_nr > 0 &&
-     - 		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
-     +-		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
-      -		pos = -istate->cache_nr - 1;
-     -+		pos = -1 - istate->cache_nr;
-     ++		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0) {
-     ++		if (istate->cache_nr > INT_MAX)
-     ++			die("overflow: -1 - %u", istate->cache_nr);
-     ++		pos = -1 - (int)istate->cache_nr;
-     ++	}
-       	else
-       		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
-       
-     @@ -67,12 +80,29 @@
-       diff --git a/sha1-lookup.c b/sha1-lookup.c
-       --- a/sha1-lookup.c
-       +++ b/sha1-lookup.c
-     +@@
-     + 			miv = take2(sha1 + ofs);
-     + 			if (miv < lov)
-     + 				return -1;
-     +-			if (hiv < miv)
-     +-				return -1 - nr;
-     ++			if (hiv < miv) {
-     ++				if (nr > INT_MAX)
-     ++					die("overflow: -1 - %"PRIuMAX,
-     ++					    (uintmax_t)nr);
-     ++				return -1 - (int)nr;
-     ++			}
-     + 			if (lov != hiv) {
-     + 				/*
-     + 				 * At this point miv could be equal
-      @@
-       			lo = mi + 1;
-       		mi = lo + (hi - lo) / 2;
-       	} while (lo < hi);
-      -	return -lo-1;
-     -+	return -1 - lo;
-     ++	if (nr > INT_MAX)
-     ++		die("overflow: -1 - %"PRIuMAX, (uintmax_t)lo);
-     ++	return -1 - (int)lo;
-       }
-       
-       int bsearch_hash(const unsigned char *sha1, const uint32_t *fanout_nbo,
-  3:  dbd9022ad5 =  3:  8512a3e96d winansi: use FLEX_ARRAY to avoid compiler warning
-  4:  6417d6f689 =  4:  0345b08f54 compat/win32/path-utils.h: add #include guards
-  5:  d1dee56fcc =  5:  5add01f8ff msvc: ignore some libraries when linking
-  6:  c978c76599 =  6:  5c880f923e msvc: handle DEVELOPER=1
-  7:  0590514e43 =  7:  1f2245a228 msvc: work around a bug in GetEnvironmentVariable()
-  8:  f7d5d1a1bc =  8:  582b299634 vcxproj: only copy `git-remote-http.exe` once it was built
-  9:  6adfc63e98 =  9:  38ccf999e7 vcxproj: include more generated files
- 10:  ad9ab10ce0 = 10:  24b1c7bff3 test-tool run-command: learn to run (parts of) the testsuite
- 11:  99724f6a1e ! 11:  7be13d19e1 tests: let --immediate and --write-junit-xml play well together
-     @@ -11,12 +11,34 @@
-          Pipelines, where the JUnit-style XML is consumed to present the test
-          results in an informative and helpful way.
-      
-     +    While at it, also handle the `error()` code path.
-     +
-     +    The only remaining code path that sets `GIT_EXIT_OK` happens whenever
-     +    the trash directory could not be set up, i.e. long before the JUnit XML
-     +    was written, therefore we should _not_ try to finalize that XML in that
-     +    case.
-     +
-     +    It is tempting to change the `immediate` code path to just hand off to
-     +    `error`, simplifying the code in the process. That would, however,
-     +    result in a change of behavior (an additional error message) in the test
-     +    suite, which is outside of the purview of the current patch series: its
-     +    goal is to allow building Git with Visual Studio and testing it with a
-     +    portable version of Git for Windows.
-     +
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       diff --git a/t/test-lib.sh b/t/test-lib.sh
-       --- a/t/test-lib.sh
-       +++ b/t/test-lib.sh
-      @@
-     + 
-     + error () {
-     + 	say_color error "error: $*"
-     ++	finalize_junit_xml
-     + 	GIT_EXIT_OK=t
-     + 	exit 1
-     + }
-     +@@
-       	say_color error "not ok $test_count - $1"
-       	shift
-       	printf '%s\n' "$*" | sed -e 's/^/#	/'
- 12:  29dceaae5e = 12:  bde1e8ef65 ci: really use shallow clones on Azure Pipelines
- 13:  ece296922b = 13:  7af1c01a08 ci: also build and test with MS Visual Studio on Azure Pipelines
-
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 4891789771..7d8cb814ba 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1661,6 +1661,8 @@ char *mingw_getenv(const char *name)
+ 	if (!w_key)
+ 		die("Out of memory, (tried to allocate %u wchar_t's)", len_key);
+ 	xutftowcs(w_key, name, len_key);
++	/* GetEnvironmentVariableW() only sets the last error upon failure */
++	SetLastError(ERROR_SUCCESS);
+ 	len_value = GetEnvironmentVariableW(w_key, w_value, ARRAY_SIZE(w_value));
+ 	if (!len_value && GetLastError() == ERROR_ENVVAR_NOT_FOUND) {
+ 		free(w_key);
 -- 
 gitgitgadget
+
