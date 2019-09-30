@@ -7,56 +7,58 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EED251F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 01:51:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DF3F1F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 01:51:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729337AbfI3Bv1 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Sep 2019 21:51:27 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:43399 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729332AbfI3Bv0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Sep 2019 21:51:26 -0400
-Received: by mail-qk1-f195.google.com with SMTP id h126so6394544qke.10
-        for <git@vger.kernel.org>; Sun, 29 Sep 2019 18:51:25 -0700 (PDT)
+        id S1729346AbfI3Bva (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Sep 2019 21:51:30 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:37827 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729332AbfI3Bva (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Sep 2019 21:51:30 -0400
+Received: by mail-qt1-f196.google.com with SMTP id l3so14998555qtr.4
+        for <git@vger.kernel.org>; Sun, 29 Sep 2019 18:51:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XjgY7U/fvsDJln7bP14c0fp0bf0y0uP4VAMF2X8hlH4=;
-        b=J5bdIGRIoAdsHb4iIZBVofV8+gz9Pp89U1SUCfR1+6MEZrF/Ca6sYy9tnxQyomPYpV
-         AlOYYFJJ+zmWTd3xyquUrIhJtYW/iPtYAadCScBhRmPEU1nK8lx5jlC30bPQqF20dluw
-         sXSBDrM9VlUO0+k03zB/RPu04miZeaJk9GLhLdBPUcvUadH99Gy5S86kYxRw9n2TsvRX
-         oc/tbM3PaBeSDoGg29JVaveBxh+8y+WTxeblKFJ4Wl3enT83mLULAKkvYOcgU54yoJgR
-         dN11kqbPu/L0kq4bHjAtsE7y0GxhBnvU2HDVf4gM/9z9aQXBORki7PMC67Yu4h+Ilntu
-         yZig==
+        bh=xgiB40YHaRVet1Sl9BloM9o+wnaTv1b6Qxmf3/gnBVI=;
+        b=ToSfrbTEgOhkOg2tinGqYc3vLv5sdaDmnDVrlpJVQHFdiZIBIfEf1yb57hzO/2eHz5
+         N4rnHN4Ig1O9qCYR0agidAtmpurCaZZOktmMPqUP1yOsidvlVpUBFCVATtREAnJDQBrD
+         ZfHl4HuB7M3JaUAyoEjQtNNe1Ldlco9O1iocZbdCaKB/tIZ3r0Fn50qTF/YfCJc5mKHv
+         PuLrmINEHfQe0QfPFAVHbU9R6Y5eQoQGnoaNDplfYLnyztpDRZf63f6oquGn1QYR5+Iu
+         Z5tGndsuk2tPoZ4JEHpyAVuXLcsT/bo7UbASYhhYLDFu8hSDrAe3b9Vzx8B/05lk/sOP
+         deIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XjgY7U/fvsDJln7bP14c0fp0bf0y0uP4VAMF2X8hlH4=;
-        b=k25ThJfZT8e94FY3IlluDImyik3U/gJCn0eVakUY4VoqaJDY+kBA6NAXR5nuim16aE
-         FfZqpLTq+tEIeVPPmvUFlwv/VNbTw2RCE2Ei7JBcOhXSfzz5EDszIkhTJcqakXT6h8ku
-         K0hgSGF0LRJyT3/8IW1zY+FqCsgDX6nWCLgMOR1pjkXxcr45a+IglOSwbT275UZa4HAu
-         CdmdbDqjLrRMZgdoqqgGLRbX99FxBsiR1Xov0m4y9uiAwLm2ITqmv7BqR6LWq6QgbML0
-         eiAdz7W3G4QBIivtTjTtvBO8Q8NGbmYBbNGmR6NVt3yMOj9ow5tHO8XdP/5UyLqixv5f
-         cAyQ==
-X-Gm-Message-State: APjAAAWWB7GME6NImWrztgmWlRzpNDflMNLBpUiWdo4Avw5fhEv/2QQX
-        WOrGduMaNvA3cP7WHMM05oX4WOXjfzI=
-X-Google-Smtp-Source: APXvYqzIE6TafNEQyekya/UwhGp+csMJvh8myje4UFybMwt0txPuaI7iuLSKIfh9LuEKYMkfxz+ykg==
-X-Received: by 2002:a37:bd5:: with SMTP id 204mr15002726qkl.330.1569808284813;
-        Sun, 29 Sep 2019 18:51:24 -0700 (PDT)
+        bh=xgiB40YHaRVet1Sl9BloM9o+wnaTv1b6Qxmf3/gnBVI=;
+        b=Ju6YNeWEM8o/SkUarzOOJnr5zvG2ioKjbK7b2Bs1Xz8UthU0D1c4+x8/QKwBQ4/PWQ
+         DjgubfGzSCrF+K95oUqGta8N9BCxqT9o1h95WJRjIQyq7aduMKrIOLangCAENhrMFXyC
+         yzsbqV4fmjcBb4JWD5XsySJ8J4pRIyE8OFvo6PDgxOOf5BBMLNtOLs4Uzc/Yo3Cga3tT
+         QrDrYmbXbSYnRQo8t94ypmK7AayYwR8ZvBjCskDAEpLVEXv/VJ4LQCaSOShDmFcgyxu7
+         ViDI7XEy2Lj9u1jjrnX3AbXrQDy5MMS1egXtv3iBj+VWrQsbxFZX5hxGdR3GEhQeV8SU
+         crYQ==
+X-Gm-Message-State: APjAAAUhUuc25/lE5zYF0lwklU3qq2FIvF9GxSfLX7zVOnkxvLgyW56T
+        7/hyMqjOUstFGe7QfSUGj3BIEdjgxFE=
+X-Google-Smtp-Source: APXvYqyV188mKs7XrkpyMjBZeUM7NHgY6Wg859aZT0jdsorRLuSUudPKnrHJ5V7N8JgGCbWYify+DQ==
+X-Received: by 2002:ac8:50c:: with SMTP id u12mr22205686qtg.322.1569808288773;
+        Sun, 29 Sep 2019 18:51:28 -0700 (PDT)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::3])
-        by smtp.gmail.com with ESMTPSA id f11sm4706954qkk.76.2019.09.29.18.51.22
+        by smtp.gmail.com with ESMTPSA id f11sm4706954qkk.76.2019.09.29.18.51.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Sep 2019 18:51:24 -0700 (PDT)
+        Sun, 29 Sep 2019 18:51:28 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, olyatelezhnaya@gmail.com,
         pclouds@gmail.com, gitster@pobox.com, jrnieder@gmail.com,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: [PATCH v2 04/11] replace-object: make replace operations thread-safe
-Date:   Sun, 29 Sep 2019 22:50:50 -0300
-Message-Id: <5deee3cf11e6f67c696617a9264395fb1ab04f73.1569808052.git.matheus.bernardino@usp.br>
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH v2 05/11] object-store: allow threaded access to object reading
+Date:   Sun, 29 Sep 2019 22:50:51 -0300
+Message-Id: <4c5652ab34f0989856aba919ca84b2b091dcad98.1569808052.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <cover.1569808052.git.matheus.bernardino@usp.br>
 References: <cover.1569808052.git.matheus.bernardino@usp.br>
@@ -67,137 +69,266 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-replace-object functions are very close to being thread-safe: the only
-current racy section is the lazy initialization at
-prepare_replace_object(). The following patches will protect some object
-reading operations to be called threaded, but before that, replace
-functions must be protected. To do so, add a mutex to struct
-raw_object_store and acquire it before lazy initializing the
-replace_map. This won't cause any noticeable performance drop as the
-mutex will no longer be used after the replace_map is initialized.
+Allow object reading to be performed by multiple threads protecting it
+with an internal lock. The lock usage can be toggled with
+enable_obj_read_lock() and disable_obj_read_lock(). Currently, the
+functions which can be safely called in parallel are:
+read_object_file_extended(), repo_read_object_file(),
+read_object_file(), read_object_with_reference(), read_object(),
+oid_object_info() and oid_object_info_extended(). It's also possible to
+use obj_read_lock() and obj_read_unlock() to protect other sections that
+cannot execute in parallel with object reading.
 
-Later, when the replace functions are called in parallel, thread
-debuggers might point our use of the added replace_map_initialized flag
-as a data race. However, as this boolean variable is initialized as
-false and it's only updated once, there's no real harm. It's perfectly
-fine if the value is updated right after a thread read it in
-replace-map.h:lookup_replace_object() (there'll only be a performance
-penalty for the affected threads at that moment). We could cease the
-debugger warning protecting the variable reading at the said function.
-However, this would negatively affect performance for all threads
-calling it, at any time, so it's not really worthy since the warning
-doesn't represent a real problem. Instead, to make sure we don't get
-false positives (at ThreadSanitizer, at least) an entry for the
-respective function is added to .tsan-suppressions.
+Probably there are many spots in the functions listed above that could
+be executed unlocked (and thus, in parallel). But, for now, we are most
+interested in allowing parallel access to zlib inflation. This is one of
+the sections where object reading spends most of the time and it's
+already thread-safe. So, to take advantage of that, the respective lock
+is released when calling git_inflate() and re-acquired right after, for
+every calling spot in oid_object_info_extended()'s call chain. We may
+refine the lock to also exploit other possible parallel spots in the
+future, but threaded zlib inflation should already give great speedups
+for now.
+
+Note that add_delta_base_cache() was also modified to skip adding
+already present entries to the cache. This wasn't possible before, but
+now it is since phase I and phase III of unpack_entry() may execute
+concurrently.
+
+Another important thing to notice is that the object reading lock only
+works in conjunction with the 'struct raw_object_store's replace_mutex.
+Otherwise, there would still be racy spots in object reading
+functions.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- .tsan-suppressions |  6 ++++++
- object-store.h     |  2 ++
- object.c           |  2 ++
- replace-object.c   | 11 ++++++++++-
- replace-object.h   |  7 ++++++-
- 5 files changed, 26 insertions(+), 2 deletions(-)
+ object-store.h | 35 +++++++++++++++++++++++++++++++
+ packfile.c     |  7 +++++++
+ sha1-file.c    | 57 +++++++++++++++++++++++++++++++++++++++++++++-----
+ 3 files changed, 94 insertions(+), 5 deletions(-)
 
-diff --git a/.tsan-suppressions b/.tsan-suppressions
-index 8c85014a0a..5ba86d6845 100644
---- a/.tsan-suppressions
-+++ b/.tsan-suppressions
-@@ -8,3 +8,9 @@
- # in practice it (hopefully!) doesn't matter.
- race:^want_color$
- race:^transfer_debug$
-+
-+# A boolean value, which tells whether the replace_map has been initialized or
-+# not, is read racily with an update. As this variable is written to only once,
-+# and it's OK if the value change right after reading it, this shouldn't be a
-+# problem.
-+race:^lookup_replace_object$
 diff --git a/object-store.h b/object-store.h
-index 7f7b3cdd80..b22e20ad7d 100644
+index b22e20ad7d..8f63f21ad2 100644
 --- a/object-store.h
 +++ b/object-store.h
-@@ -110,6 +110,8 @@ struct raw_object_store {
- 	 * (see git-replace(1)).
- 	 */
- 	struct oidmap *replace_map;
-+	unsigned replace_map_initialized : 1;
-+	pthread_mutex_t replace_mutex; /* protect object replace functions */
+@@ -6,6 +6,7 @@
+ #include "list.h"
+ #include "sha1-array.h"
+ #include "strbuf.h"
++#include "thread-utils.h"
  
- 	struct commit_graph *commit_graph;
- 	unsigned commit_graph_attempted : 1; /* if loading has been attempted */
-diff --git a/object.c b/object.c
-index 07bdd5b26e..7ef5856f57 100644
---- a/object.c
-+++ b/object.c
-@@ -480,6 +480,7 @@ struct raw_object_store *raw_object_store_new(void)
+ struct object_directory {
+ 	struct object_directory *next;
+@@ -230,6 +231,40 @@ int has_loose_object_nonlocal(const struct object_id *);
  
- 	memset(o, 0, sizeof(*o));
- 	INIT_LIST_HEAD(&o->packed_git_mru);
-+	pthread_mutex_init(&o->replace_mutex, NULL);
- 	return o;
- }
+ void assert_oid_type(const struct object_id *oid, enum object_type expect);
  
-@@ -507,6 +508,7 @@ void raw_object_store_clear(struct raw_object_store *o)
- 
- 	oidmap_free(o->replace_map, 1);
- 	FREE_AND_NULL(o->replace_map);
-+	pthread_mutex_destroy(&o->replace_mutex);
- 
- 	free_commit_graph(o->commit_graph);
- 	o->commit_graph = NULL;
-diff --git a/replace-object.c b/replace-object.c
-index e295e87943..7bd9aba6ee 100644
---- a/replace-object.c
-+++ b/replace-object.c
-@@ -34,14 +34,23 @@ static int register_replace_ref(struct repository *r,
- 
- void prepare_replace_object(struct repository *r)
- {
--	if (r->objects->replace_map)
-+	if (r->objects->replace_map_initialized)
- 		return;
- 
-+	pthread_mutex_lock(&r->objects->replace_mutex);
-+	if (r->objects->replace_map_initialized) {
-+		pthread_mutex_unlock(&r->objects->replace_mutex);
-+		return;
-+	}
-+
- 	r->objects->replace_map =
- 		xmalloc(sizeof(*r->objects->replace_map));
- 	oidmap_init(r->objects->replace_map, 0);
- 
- 	for_each_replace_ref(r, register_replace_ref, NULL);
-+	r->objects->replace_map_initialized = 1;
-+
-+	pthread_mutex_unlock(&r->objects->replace_mutex);
- }
- 
- /* We allow "recursive" replacement. Only within reason, though */
-diff --git a/replace-object.h b/replace-object.h
-index 04ed7a85a2..3fbc32eb7b 100644
---- a/replace-object.h
-+++ b/replace-object.h
-@@ -24,12 +24,17 @@ const struct object_id *do_lookup_replace_object(struct repository *r,
-  * name (replaced recursively, if necessary).  The return value is
-  * either sha1 or a pointer to a permanently-allocated value.  When
-  * object replacement is suppressed, always return sha1.
++/*
++ * Enabling the object read lock allows multiple threads to safely call the
++ * following functions in parallel: repo_read_object_file(), read_object_file(),
++ * read_object_file_extended(), read_object_with_reference(), read_object(),
++ * oid_object_info() and oid_object_info_extended().
 + *
-+ * Note: some thread debuggers might point a data race on the
-+ * replace_map_initialized reading in this function. However, we know there's no
-+ * problem in the value being updated by one thread right after another one read
-+ * it here (and it should be written to only once, anyway).
-  */
- static inline const struct object_id *lookup_replace_object(struct repository *r,
- 							    const struct object_id *oid)
++ * obj_read_lock() and obj_read_unlock() may also be used to protect other
++ * section which cannot execute in parallel with object reading. Since the used
++ * lock is a recursive mutex, these sections can even contain calls to object
++ * reading functions. However, beware that in these cases zlib inflation won't
++ * be performed in parallel, losing performance.
++ *
++ * TODO: oid_object_info_extended()'s call stack has a recursive behavior. If
++ * any of its callees end up calling it, this recursive call won't benefit from
++ * parallel inflation.
++ */
++void enable_obj_read_lock(void);
++void disable_obj_read_lock(void);
++
++extern int obj_read_use_lock;
++extern pthread_mutex_t obj_read_mutex;
++
++static inline void obj_read_lock(void)
++{
++	if(obj_read_use_lock)
++		pthread_mutex_lock(&obj_read_mutex);
++}
++
++static inline void obj_read_unlock(void)
++{
++	if(obj_read_use_lock)
++		pthread_mutex_unlock(&obj_read_mutex);
++}
++
+ struct object_info {
+ 	/* Request */
+ 	enum object_type *typep;
+diff --git a/packfile.c b/packfile.c
+index 1a7d69fe32..a336972174 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1098,7 +1098,9 @@ unsigned long get_size_from_delta(struct packed_git *p,
+ 	do {
+ 		in = use_pack(p, w_curs, curpos, &stream.avail_in);
+ 		stream.next_in = in;
++		obj_read_unlock();
+ 		st = git_inflate(&stream, Z_FINISH);
++		obj_read_lock();
+ 		curpos += stream.next_in - in;
+ 	} while ((st == Z_OK || st == Z_BUF_ERROR) &&
+ 		 stream.total_out < sizeof(delta_head));
+@@ -1451,6 +1453,9 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
+ 	struct delta_base_cache_entry *ent = xmalloc(sizeof(*ent));
+ 	struct list_head *lru, *tmp;
+ 
++	if (get_delta_base_cache_entry(p, base_offset))
++		return;
++
+ 	delta_base_cached += base_size;
+ 
+ 	list_for_each_safe(lru, tmp, &delta_base_cache_lru) {
+@@ -1580,7 +1585,9 @@ static void *unpack_compressed_entry(struct packed_git *p,
+ 	do {
+ 		in = use_pack(p, w_curs, curpos, &stream.avail_in);
+ 		stream.next_in = in;
++		obj_read_unlock();
+ 		st = git_inflate(&stream, Z_FINISH);
++		obj_read_lock();
+ 		if (!stream.avail_out)
+ 			break; /* the payload is larger than it should be */
+ 		curpos += stream.next_in - in;
+diff --git a/sha1-file.c b/sha1-file.c
+index e85f249a5d..b4f2f5cb94 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -1148,6 +1148,8 @@ static int unpack_loose_short_header(git_zstream *stream,
+ 				     unsigned char *map, unsigned long mapsize,
+ 				     void *buffer, unsigned long bufsiz)
  {
- 	if (!read_replace_refs ||
--	    (r->objects->replace_map &&
-+	    (r->objects->replace_map_initialized &&
- 	     r->objects->replace_map->map.tablesize == 0))
- 		return oid;
- 	return do_lookup_replace_object(r, oid);
++	int ret;
++
+ 	/* Get the data stream */
+ 	memset(stream, 0, sizeof(*stream));
+ 	stream->next_in = map;
+@@ -1156,7 +1158,11 @@ static int unpack_loose_short_header(git_zstream *stream,
+ 	stream->avail_out = bufsiz;
+ 
+ 	git_inflate_init(stream);
+-	return git_inflate(stream, 0);
++	obj_read_unlock();
++	ret = git_inflate(stream, 0);
++	obj_read_lock();
++
++	return ret;
+ }
+ 
+ int unpack_loose_header(git_zstream *stream,
+@@ -1201,7 +1207,9 @@ static int unpack_loose_header_to_strbuf(git_zstream *stream, unsigned char *map
+ 	stream->avail_out = bufsiz;
+ 
+ 	do {
++		obj_read_unlock();
+ 		status = git_inflate(stream, 0);
++		obj_read_lock();
+ 		strbuf_add(header, buffer, stream->next_out - (unsigned char *)buffer);
+ 		if (memchr(buffer, '\0', stream->next_out - (unsigned char *)buffer))
+ 			return 0;
+@@ -1241,8 +1249,11 @@ static void *unpack_loose_rest(git_zstream *stream,
+ 		 */
+ 		stream->next_out = buf + bytes;
+ 		stream->avail_out = size - bytes;
+-		while (status == Z_OK)
++		while (status == Z_OK) {
++			obj_read_unlock();
+ 			status = git_inflate(stream, Z_FINISH);
++			obj_read_lock();
++		}
+ 	}
+ 	if (status == Z_STREAM_END && !stream->avail_in) {
+ 		git_inflate_end(stream);
+@@ -1412,10 +1423,32 @@ static int loose_object_info(struct repository *r,
+ 	return (status < 0) ? status : 0;
+ }
+ 
++int obj_read_use_lock = 0;
++pthread_mutex_t obj_read_mutex;
++
++void enable_obj_read_lock(void)
++{
++	if (obj_read_use_lock)
++		return;
++
++	obj_read_use_lock = 1;
++	init_recursive_mutex(&obj_read_mutex);
++}
++
++void disable_obj_read_lock(void)
++{
++	if (!obj_read_use_lock)
++		return;
++
++	obj_read_use_lock = 0;
++	pthread_mutex_destroy(&obj_read_mutex);
++}
++
+ int fetch_if_missing = 1;
+ 
+-int oid_object_info_extended(struct repository *r, const struct object_id *oid,
+-			     struct object_info *oi, unsigned flags)
++static int do_oid_object_info_extended(struct repository *r,
++				       const struct object_id *oid,
++				       struct object_info *oi, unsigned flags)
+ {
+ 	static struct object_info blank_oi = OBJECT_INFO_INIT;
+ 	struct pack_entry e;
+@@ -1423,6 +1456,7 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
+ 	const struct object_id *real = oid;
+ 	int already_retried = 0;
+ 
++
+ 	if (flags & OBJECT_INFO_LOOKUP_REPLACE)
+ 		real = lookup_replace_object(r, oid);
+ 
+@@ -1498,7 +1532,7 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
+ 	rtype = packed_object_info(r, e.p, e.offset, oi);
+ 	if (rtype < 0) {
+ 		mark_bad_packed_object(e.p, real->hash);
+-		return oid_object_info_extended(r, real, oi, 0);
++		return do_oid_object_info_extended(r, real, oi, 0);
+ 	} else if (oi->whence == OI_PACKED) {
+ 		oi->u.packed.offset = e.offset;
+ 		oi->u.packed.pack = e.p;
+@@ -1509,6 +1543,17 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
+ 	return 0;
+ }
+ 
++int oid_object_info_extended(struct repository *r, const struct object_id *oid,
++			     struct object_info *oi, unsigned flags)
++{
++	int ret;
++	obj_read_lock();
++	ret = do_oid_object_info_extended(r, oid, oi, flags);
++	obj_read_unlock();
++	return ret;
++}
++
++
+ /* returns enum object_type or negative */
+ int oid_object_info(struct repository *r,
+ 		    const struct object_id *oid,
+@@ -1581,6 +1626,7 @@ void *read_object_file_extended(struct repository *r,
+ 	if (data)
+ 		return data;
+ 
++	obj_read_lock();
+ 	if (errno && errno != ENOENT)
+ 		die_errno(_("failed to read object %s"), oid_to_hex(oid));
+ 
+@@ -1596,6 +1642,7 @@ void *read_object_file_extended(struct repository *r,
+ 	if ((p = has_packed_and_bad(r, repl->hash)) != NULL)
+ 		die(_("packed object %s (stored in %s) is corrupt"),
+ 		    oid_to_hex(repl), p->pack_name);
++	obj_read_unlock();
+ 
+ 	return NULL;
+ }
 -- 
 2.23.0
 
