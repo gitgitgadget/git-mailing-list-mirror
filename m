@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 653581F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 01:51:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 727901F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 01:51:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729332AbfI3Bvt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Sep 2019 21:51:49 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:39552 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729032AbfI3Bvt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Sep 2019 21:51:49 -0400
-Received: by mail-qk1-f193.google.com with SMTP id 4so6411620qki.6
-        for <git@vger.kernel.org>; Sun, 29 Sep 2019 18:51:47 -0700 (PDT)
+        id S1729374AbfI3Bvv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Sep 2019 21:51:51 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:40717 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729032AbfI3Bvv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Sep 2019 21:51:51 -0400
+Received: by mail-qk1-f196.google.com with SMTP id y144so6410379qkb.7
+        for <git@vger.kernel.org>; Sun, 29 Sep 2019 18:51:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JS/RrePUGZe/cr8DroQGq0RI4LOSZ3t+Db1OrFTxxGA=;
-        b=YMGzzhU0XpWWIqLMrNYBNRPG/cQjz2rtbZ0hcuvsBUZFrdecqFP9oLnmfXPxAe0j24
-         E8mBbJgMh4hORW29HXqiISIyhKYk/8D+PXMby7IZf+dVpyq0xjBQyMpS0I8WG5HCq0tG
-         r5nP5LFZYVDNGHpyAOd+ky9VqNV5dsIvkHDl2h+w9dPxY4sscgCm37c3iSLYY9vdRBk5
-         4WUS7YvhPu/91lSj02B7CZiOKRgbLz19BOgPZeykfyO0EzyNZP1eAWaZdH4EMMDjdUIt
-         23wT6IS1OGbHEx+iFsOcDE8v5wou+7lOU+2vd1QxsXCTk9wWOVHp0bf9PNBw/cPK1LZW
-         DBxA==
+        bh=aAHx6dNVHtQnsN4hlXQaghh9Z6aH9U6OUj77ClLhva4=;
+        b=RuMovP3wwuaW7SkfmoEkw7ghHq+KrA79f5pcjHxvpm5QKQQ28mVC3g+C6nT/EBKM4l
+         w6Vg1AEPd6DIKQKQzEjbFRPNpGsF08L3xzLT5uY9k+LCJ/763szAp54IqCAd3bPFiXSp
+         /PD+vkUwjVm5t6feNUZQlSXa274tTX+dnd/tZfwrr55nPkuLNuJLbK5UaQ8peymKgKUa
+         92EozDb2fSMUk0EdCHP7c5GWomu6Bd77IUeXad8c1f7P3lFB4DOsnM7rzADcd8ZT06Gx
+         dURcNVIYmdj84dodf76kguo4ZrTJSLNz4mYeFx7sjqbatIgKL8nWT5uThFcG0UBzKQHU
+         JtWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JS/RrePUGZe/cr8DroQGq0RI4LOSZ3t+Db1OrFTxxGA=;
-        b=gl6lEPmh5DIdahomFaxu7WJIHgkIq+ESu+lBE3JAkyK0ijtVT4OKMXaL0oL45yXJcq
-         l67gs3UiKZ+F+GjxvdDnsvGMSvHgBypjDrW5J20B76ozHzHfYjqhmr2W9Kty6eG5zmWq
-         +MOG7Kf3hmlkNttwljoeMcoSHm+5a0Gix+Z9uJLKyQp2JLTrtaee7+zgHE8/qalUw0Nt
-         bCsV45RXFpVwSlQZFr+kJMFF9aYV6dJ+9TL9MUP+YD8dsXGbiBQflQt2vX+WMVhfyXSQ
-         wr3WMbvhiQmJW5Wv6Yd/VLS6awaWxYKVX11l173QNV0tOocLR3t0qEnkqXgLt+Mb68B2
-         gwQg==
-X-Gm-Message-State: APjAAAVoQUcr397m/fwpXdV9POR2OnYEdGUkpf1bhCo6OAwSSDcsRUq+
-        t1ovnCc2yLR7cFVMjRe8tqnqx3GAlTc=
-X-Google-Smtp-Source: APXvYqz+hOhs6LJDdLys59mlfIGx+RSWBNx7wQrFDQQdFoJl1Jg1B02I8oUxcPy++icxkTIH9aoB0A==
-X-Received: by 2002:a37:a2c3:: with SMTP id l186mr16024219qke.461.1569808306764;
-        Sun, 29 Sep 2019 18:51:46 -0700 (PDT)
+        bh=aAHx6dNVHtQnsN4hlXQaghh9Z6aH9U6OUj77ClLhva4=;
+        b=Qyy8A+gNECwiq2yI7+6/mUD1CVPUiJJkUNyRhdwTMNo21T/u1WAoBIi3irlFvz/bRT
+         9kxAFZ/hE9HuZsOFGWx0KQbejc2lP+XCrChC+w0RBDojCLf9eBGDq6CzFy3+5jrsugIr
+         YjLSWy7PVw7I3FDgzbm/5VNNmF25EiN4hw9qINb4Vpf7R2cKEH/cb4c5xYE+V2IUTBhA
+         VOYE/zps6L+62/YaxazzP8LjNO+GTgH//GTm8obR+WIn1dMMDTaI+6qb2cdFah7W9BKv
+         b7kMs0Zz3T5h6aIw0LVbNGAVCAjq9M9duzk6HS6ZzmGR3FyxeZ+LP2kYub3bfyaTKGES
+         R1Gw==
+X-Gm-Message-State: APjAAAWgpdJbi4430LteMU4UfQElBK0pRY2Ox2Y2/oisLbD3yMSaLNcQ
+        YQ7q+ajOdjqari9VShlo6e2dGzykxJg=
+X-Google-Smtp-Source: APXvYqwD27toE/d/dwKGVw2u3+AtsEz3rjvH1SnvUcwOBWIWubXV83jBMtGDK/mdJLc0WzSr7Oycrg==
+X-Received: by 2002:a37:bd45:: with SMTP id n66mr16206201qkf.272.1569808309907;
+        Sun, 29 Sep 2019 18:51:49 -0700 (PDT)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::3])
-        by smtp.gmail.com with ESMTPSA id f11sm4706954qkk.76.2019.09.29.18.51.44
+        by smtp.gmail.com with ESMTPSA id f11sm4706954qkk.76.2019.09.29.18.51.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Sep 2019 18:51:46 -0700 (PDT)
+        Sun, 29 Sep 2019 18:51:49 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, olyatelezhnaya@gmail.com,
         pclouds@gmail.com, gitster@pobox.com, jrnieder@gmail.com,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        Manav Rathi <mnvrth@gmail.com>
-Subject: [PATCH v2 10/11] grep: re-enable threads in non-worktree case
-Date:   Sun, 29 Sep 2019 22:50:56 -0300
-Message-Id: <c1fe6545a90563419731932b0bb17869dab1cda7.1569808052.git.matheus.bernardino@usp.br>
+        Rasmus Villemoes <rv@rasmusvillemoes.dk>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH v2 11/11] grep: move driver pre-load out of critical section
+Date:   Sun, 29 Sep 2019 22:50:57 -0300
+Message-Id: <7b0358d1596e6673d12f9592cf05f5193247f3ec.1569808052.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <cover.1569808052.git.matheus.bernardino@usp.br>
 References: <cover.1569808052.git.matheus.bernardino@usp.br>
@@ -69,92 +69,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-They were disabled at 53b8d93 ("grep: disable threading in non-worktree
-case", 12-12-2011), due to observable performance drops (to the point
-that using a single thread would be faster than multiple threads). But
-now that zlib inflation can be performed in parallel we can regain the
-speedup, so let's re-enable threads in non-worktree grep.
+In builtin/grep.c:add_work() we pre-load the userdiff drivers before
+adding the grep_source in the todo list. This operation is currently
+being performed after acquiring the grep_mutex, but as it's already
+thread-safe, we don't need to protect it here. So let's move it out of
+the critical section which should avoid thread contention and improve
+performance.
 
-Grepping 'abcd[02]' ("Regex 1") and '(static|extern) (int|double) \*'
-("Regex 2") at chromium's repository[1] I got:
+Running[1] `git grep --threads=8 abcd[02] HEAD` on chromium's
+repository[2], I got the following mean times for 30 executions after 2
+warmups:
 
- Threads |   Regex 1  |  Regex 2
----------|------------|-----------
-    1    |  17.2920s  |  20.9624s
-    2    |   9.6512s  |  11.3184s
-    4    |   6.7723s  |   7.6268s
-    8**  |   6.2886s  |   6.9843s
+        Original         |  6.2886s
+-------------------------|-----------
+ Out of critical section |  5.7852s
 
-These are all means of 30 executions after 2 warmup runs. All tests were
-executed on an i7-7700HQ (quad core w/ hyper-threading), 16GB of RAM and
-SSD, running Manjaro Linux. But to make sure the optimization also
-performs well on HDD, the tests were repeated on another machine with an
-i5-4210U (dual core w/ hyper-threading), 8GB of RAM and HDD (SATA III,
-5400 rpm), also running Manjaro Linux:
-
- Threads |   Regex 1  |  Regex 2
----------|------------|-----------
-    1    |  18.4035s  |  22.5368s
-    2    |  12.5063s  |  14.6409s
-    4**  |  10.9136s  |  12.7106s
-
-** Note that in these cases we relied on hyper-threading, and that's
-   probably why we don't see a big difference in time.
-
-Unfortunately, multithreaded git-grep might be slow in the non-worktree
-case when --textconv is used and there're too many text conversions.
-Probably the reason for this is that the object read lock is used to
-protect fill_textconv() and therefore there is a mutual exclusion
-between textconv execution and object reading. Because both are time
-consuming operations, not being able to perform them in parallel can
-cause performance drops. To inform the users about this (and other
-threading detais), let's also add a "NOTES ON THREADS" section to
-Documentation/git-grep.txt.
-
-[1]: chromium’s repo at commit 03ae96f (“Add filters testing at DSF=2”,
-     04-06-2019), after a 'git gc' execution.
+[1]: Tests performed on an i7-7700HQ with 16GB of RAM and SSD, running
+     Manjaro Linux.
+[2]: chromium’s repo at commit 03ae96f (“Add filters testing at DSF=2”,
+         04-06-2019), after a 'git gc' execution.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- Documentation/git-grep.txt | 11 +++++++++++
- builtin/grep.c             |  2 +-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ builtin/grep.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 2d27969057..00fc59d565 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -330,6 +330,17 @@ EXAMPLES
- `git grep solution -- :^Documentation`::
- 	Looks for `solution`, excluding files in `Documentation`.
- 
-+NOTES ON THREADS
-+----------------
-+
-+The `--threads` option (and the grep.threads configuration) will be ignored when
-+`--open-files-in-pager` is used, forcing a single-threaded execution.
-+
-+When grepping the object store (with `--cached` or giving tree objects), running
-+with multiple threads might perform slower than single threaded if `--textconv`
-+is given and there're too many text conversions. So if you experience low
-+performance in this case, it might be desirable to use `--threads=1`.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
 diff --git a/builtin/grep.c b/builtin/grep.c
-index 0947596bcd..163f14b60d 100644
+index 163f14b60d..d275b76647 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -1054,7 +1054,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	if (recurse_submodules && (!use_index || untracked))
- 		die(_("option not supported with --recurse-submodules"));
+@@ -92,8 +92,11 @@ static pthread_cond_t cond_result;
  
--	if (list.nr || cached || show_in_pager) {
-+	if (show_in_pager) {
- 		if (num_threads > 1)
- 			warning(_("invalid option combination, ignoring --threads"));
- 		num_threads = 1;
+ static int skip_first_line;
+ 
+-static void add_work(struct grep_opt *opt, const struct grep_source *gs)
++static void add_work(struct grep_opt *opt, struct grep_source *gs)
+ {
++	if (opt->binary != GREP_BINARY_TEXT)
++		grep_source_load_driver(gs, opt->repo->index);
++
+ 	grep_lock();
+ 
+ 	while ((todo_end+1) % ARRAY_SIZE(todo) == todo_done) {
+@@ -101,9 +104,6 @@ static void add_work(struct grep_opt *opt, const struct grep_source *gs)
+ 	}
+ 
+ 	todo[todo_end].source = *gs;
+-	if (opt->binary != GREP_BINARY_TEXT)
+-		grep_source_load_driver(&todo[todo_end].source,
+-					opt->repo->index);
+ 	todo[todo_end].done = 0;
+ 	strbuf_reset(&todo[todo_end].out);
+ 	todo_end = (todo_end + 1) % ARRAY_SIZE(todo);
 -- 
 2.23.0
 
