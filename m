@@ -2,109 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FB411F463
-	for <e@80x24.org>; Sun, 29 Sep 2019 20:51:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 908FE1F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 01:19:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728853AbfI2UoF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Sep 2019 16:44:05 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:39617 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728576AbfI2UoF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Sep 2019 16:44:05 -0400
-Received: by mail-io1-f66.google.com with SMTP id a1so32594892ioc.6
-        for <git@vger.kernel.org>; Sun, 29 Sep 2019 13:44:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=m+Ez4QhKOceskyoU0ThrcQM2Rg/roEjF2Plt71EGK4k=;
-        b=Y6xoBpHeZ0NTkoBShfk23Sx8EfULHNLQ+4hs2z0N0nBY8DlrtTNJMviEbQHcB1B5e9
-         qyItWr/xvwAJqeKf10kBn/b8r8s6TnwdwOMk9dT6783Oj0TqOoxsVzCVmOx6Ki8LX9Ls
-         XWxrjs818tSPP5F5gwVTx5qMhlWpgUxRKxkFMrPg/r5yS13EevSGmDpQ8lPQiQ68NhBj
-         YNi+g5p5wp1LygnpcCZtRCcuuzEIw5Qx4p8/uedyYOu5iQsIgvrFreI6GPOl24g+HmRx
-         HjAPwtt6i1S0XNRwfxBOTQgR2x6iS7jGGS4O4AWl/GH34L5xwBlDMZBm2Wq183y4o0Y8
-         sV9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=m+Ez4QhKOceskyoU0ThrcQM2Rg/roEjF2Plt71EGK4k=;
-        b=q8o8l5eVbxT2X5/qdOE9uT9zwPlt8QMIKsMBzZd0fmPfRRW1hSmjYxyG8pI6da8Ptm
-         +IZ9lAfN6Pu6jTLMyzIZ3C1kU8tOp8GBHTGZsudrfKXyA55bYs83jtJ4zPR5RgwbyIl1
-         VnJtLRnyRToNONKE0NcD3sE90PGohPpZiQVMSYAcA00d44iTlrUkPkMpBG3K/CU8iw2S
-         G+xp4CHWyvlVyqBs8AcRXYaRoEGYqL7sm7SI8xNO1bmIkkU2g+PPIgz6IGOJ029eIArP
-         kg2PjCNeeY1aBdzUeGQrBuGsNskFosJX0ZGwQkejDHEazdG+dxDNKrMdbs5WmMEbWLNe
-         qa4A==
-X-Gm-Message-State: APjAAAXMGkbaz6dsqzLteUHeu8Xh+EpBr23kb6+qCThbr1ycK4Zgl+bp
-        FEBN4jQ9cUpC81RbIVBsERlQTVe59Hk=
-X-Google-Smtp-Source: APXvYqwMqXwQ0lC90v7US3pCpUPWQctmqRUFq6SqbQSsS82ILU9uT2YLpreUEZLWN2oZazCPIbkiEw==
-X-Received: by 2002:a92:bb47:: with SMTP id w68mr17941470ili.226.1569789843781;
-        Sun, 29 Sep 2019 13:44:03 -0700 (PDT)
-Received: from xavier.hsd1.ut.comcast.net ([2601:681:4100:375e:3837:c90c:13fa:5c01])
-        by smtp.gmail.com with ESMTPSA id m9sm4845545ilc.44.2019.09.29.13.44.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Sep 2019 13:44:01 -0700 (PDT)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org, cb@hashpling.org, dstolee@microsoft.com,
-        gitster@pobox.com
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v4] diffcore-break: use a goto instead of a redundant if statement
-Date:   Sun, 29 Sep 2019 14:43:22 -0600
-Message-Id: <20190929204322.1244907-1-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.23.0
+        id S1729266AbfI3BOg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Sep 2019 21:14:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59412 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726360AbfI3BOg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Sep 2019 21:14:36 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B0E41ED1E;
+        Sun, 29 Sep 2019 21:14:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YOd/V6WdAxjBBEhWPiZ/twjNd2E=; b=ahJuuQ
+        5GEJI1LOgJLgmG80XKQpbt/3qxqkMQLunPsbC9zaWqlA2EVFHkDlLkyI4DnPL9Yq
+        swl1jBrLyh+xd8ubParmwdGGY+NVIa2nZV/bAVPqCJdm/yR7qa3XaqRGaT3LoXQo
+        4jB/KvonKqSidb8UjqZyv0/BhbVRUx13r3MAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bJxKxKomqCTU1ZAcx3e1Iu8r0Vrec/KB
+        3nxcFubYxLB9nmmFbXb2s1reb4ahaynv5jO2DYSpwzSp9gjc04tygWl9lp8R69gI
+        NUE0uWcK4QDK8Qqn2Ayn2eCeRD7TtEq0+mnzIFuxwmzCEW83E2BSDq+A852QNVfs
+        s36wrYDfXoY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 935741ED1D;
+        Sun, 29 Sep 2019 21:14:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EE7471ED1C;
+        Sun, 29 Sep 2019 21:14:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     CB Bailey <cb@hashpling.org>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        dstolee@microsoft.com, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3] diffcore-break: use a goto instead of a redundant if statement
+References: <20190929005646.734046-1-alexhenrie24@gmail.com>
+        <20190929093706.ylm5dsftwl2y2nnz@hashpling.org>
+Date:   Mon, 30 Sep 2019 10:14:31 +0900
+In-Reply-To: <20190929093706.ylm5dsftwl2y2nnz@hashpling.org> (CB Bailey's
+        message of "Sun, 29 Sep 2019 10:37:06 +0100")
+Message-ID: <xmqqpnjiio08.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: A8FA05AA-E31F-11E9-9159-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The condition "if (q->nr <= j)" checks whether the loop exited normally
-or via a break statement. This check can be avoided by replacing the
-jump out of the inner loop with a jump to the end of the outer loop.
+CB Bailey <cb@hashpling.org> writes:
 
-With the break replaced by a goto, the two diff_q calls then can be
-replaced with a single diff_q call outside of the outer if statement.
+> For easier discussion, I've snipped the original patch and replaced with
+> one with enough context to show the entire function.
+>
+> I was reviewing this patch and it appeared to introduce a change in
+> behaviour.
+>
+>> diff --git a/diffcore-break.c b/diffcore-break.c
+>> index 875aefd3fe..f6ab74141b 100644
+>> --- a/diffcore-break.c
+>> +++ b/diffcore-break.c
+>> @@ -262,44 +262,43 @@ static void merge_broken(struct diff_filepair *p,
+>> 
+>>  void diffcore_merge_broken(void)
+>>  {
+>>  	struct diff_queue_struct *q = &diff_queued_diff;
+>>  	struct diff_queue_struct outq;
+>>  	int i, j;
+>> 
+>>  	DIFF_QUEUE_CLEAR(&outq);
+>> 
+>>  	for (i = 0; i < q->nr; i++) {
+>>  		struct diff_filepair *p = q->queue[i];
+>>  		if (!p)
+>>  			/* we already merged this with its peer */
+>>  			continue;
+>>  		else if (p->broken_pair &&
+>>  			 !strcmp(p->one->path, p->two->path)) {
+>>  			/* If the peer also survived rename/copy, then
+>>  			 * we merge them back together.
+>>  			 */
+>>  			for (j = i + 1; j < q->nr; j++) {
+>>  				struct diff_filepair *pp = q->queue[j];
+>>  				if (pp->broken_pair &&
+>>  				    !strcmp(pp->one->path, pp->two->path) &&
+>>  				    !strcmp(p->one->path, pp->two->path)) {
+>>  					/* Peer survived.  Merge them */
+>>  					merge_broken(p, pp, &outq);
+>>  					q->queue[j] = NULL;
+>> -					break;
+>> +					goto done;
+>
+> Previously, if the condition matched in the inner loop, the function
+> would null out the entry in the queue that that inner loop had reached
+> (q->queue[j] = NULL) and then break out of the inner loop. This meant
+> that the outer loop would skip over this entry (if (!p)).
+>
+> The change introduced seems to break out of both loops as soon as we
+> reach one match, whereas before other subsequent matches would be
+> considered and merged. Not only this, but the outer 'else' case for all
+> subsequent entries is skipped so the rest of the entries the original
+> queue are missing from 'outq'.
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- diffcore-break.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+Thanks.
 
-diff --git a/diffcore-break.c b/diffcore-break.c
-index 875aefd3fe..ee7519d959 100644
---- a/diffcore-break.c
-+++ b/diffcore-break.c
-@@ -286,17 +286,15 @@ void diffcore_merge_broken(void)
- 					/* Peer survived.  Merge them */
- 					merge_broken(p, pp, &outq);
- 					q->queue[j] = NULL;
--					break;
-+					goto next;
- 				}
- 			}
--			if (q->nr <= j)
--				/* The peer did not survive, so we keep
--				 * it in the output.
--				 */
--				diff_q(&outq, p);
-+			/* The peer did not survive, so we keep
-+			 * it in the output.
-+			 */
- 		}
--		else
--			diff_q(&outq, p);
-+		diff_q(&outq, p);
-+next:;
- 	}
- 	free(q->queue);
- 	*q = outq;
--- 
-2.23.0
+Sometimes judicious use of 'goto' makes the resulting code easier to
+follow, but quite honestly, I do not see it happening with this
+change.  The original makes it much more clear that there are three
+cases to worry about:
 
+    A. an earlier round handled this one already;
+
+    B. we have a broken pair and need to find the other one,
+       B-1. if there is, we process it;
+       B-2. otherwise we keep it in the outq.
+
+    C. a normal one that does not need the complication of B is
+       sent to the outq.
+
+and I find it much easier to follow without any goto.
+
+>
+>>  				}
+>>  			}
+>> -			if (q->nr <= j)
+>> -				/* The peer did not survive, so we keep
+>> -				 * it in the output.
+>> -				 */
+>> -				diff_q(&outq, p);
+>> +			/* The peer did not survive, so we keep
+>> +			 * it in the output.
+>> +			 */
+>>  		}
+>> -		else
+>> -			diff_q(&outq, p);
+>> +		diff_q(&outq, p);
+>>  	}
+>> +
+>> +done:
+>>  	free(q->queue);
+>>  	*q = outq;
+>> 
+>>  	return;
+>>  }
+>
+> I spent a bit of time trying to see if this change was user visible
+> which turned out to be unneeded as t4008-diff-break-rewrite.sh already
+> fails with this change for me in my environment, initially with this
+> test but also 3 other tests in this file.
+>
+>> expecting success of 4008.6 'run diff with -B (#3)':
+>> 	git diff-index -B reference >current &&
+>> 	cat >expect <<-EOF &&
+>> 	:100644 100644 $blob0_id $blob1_id M100	file0
+>> 	:100644 100644 $blob1_id $blob0_id M100	file1
+>> 	EOF
+>> 	compare_diff_raw expect current
+>> 
+>> --- .tmp-1	2019-09-29 09:21:07.089070076 +0000
+>> +++ .tmp-2	2019-09-29 09:21:07.093070086 +0000
+>> @@ -1,2 +1 @@
+>>  :100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 6ff87c4664981e4397625791c8ea3bbb5f2279a3 M#	file0
+>> -:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 548142c327a6790ff8821d67c2ee1eff7a656b52 M#	file1
+>> not ok 6 - run diff with -B (#3)
