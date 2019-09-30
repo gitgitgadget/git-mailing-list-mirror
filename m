@@ -2,93 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_03_06,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1BC91F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 21:23:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C54C31F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 21:28:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732550AbfI3VXx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Sep 2019 17:23:53 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:41779 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726784AbfI3VXx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 17:23:53 -0400
-Received: by mail-lf1-f65.google.com with SMTP id r2so8156863lfn.8
-        for <git@vger.kernel.org>; Mon, 30 Sep 2019 14:23:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=h2VbDKLBc4Rv/8z9HcPg1eE+KfK8a4wa3vxlMuUOKy0=;
-        b=A2DEQLsygbnYThyzy1p4gfTCKquNW+wEOih5TwDxM0jkSpt1GgCAhj0abkvaTsbXRX
-         A3aZ/ld+3kKSjgs2oSwJY/AegeJICBwYMXSaiBv8Bb5SEm1vyJtSVpOUu2M1kflHDuuZ
-         qHnC4hkshK6AmgC2yGYXHFnrHg/11lLlEeRL/5Jxuv9vONer9Rvx+GiK39B4dwIAijcF
-         UMNPnwkJFcJD8LPW+0RsEdzMR+WT46o16NpKoq6lXw+OhE/EwSX29PrviarcD5UNpg/t
-         T30nktqEOdI0HAYrsF+Qvi2BaL5WPt/CmSooGMcXB1Sk2fDOuUOv8MHyGHDDTONwBgUS
-         LvtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=h2VbDKLBc4Rv/8z9HcPg1eE+KfK8a4wa3vxlMuUOKy0=;
-        b=P3jWKRdyv4+8Y8obb9vBHswExwyNovAEGKXnJCjRaOoKrDUTNBG7HR3H797R0g//wA
-         Ph97ZcoNatbF395bNbZBkJBHDLhyDH6Bznsi1ohIS4uVyRIZp8vGOXKga4tpcQj86uZO
-         3CH0tgdcRQugxwnowUwGG+bKec9EF45jWMTK/xXhLPsDwZfCuyYv7XetYw25rd6B1h+N
-         tJ48SJDuqo0rh29z9f6C02UiXb6POEs5+rjAeURjTCvhSM/PoL0lxKEqtosltsRTOuO9
-         OHX5bBQ/3WwV+UU+k83y9Lhrh3LFGsMNxlFlaJmFViBqp+Od+UvnSlIOboIUNGI5yszU
-         pLYg==
-X-Gm-Message-State: APjAAAW/4AH+Oem5MuzpYODGMzGFlWcdo5hhFPGvTZVUxviLHtmNzxoW
-        g4NkYvuXRRb8lsICHnp62XSC+7t616GQ9Yjks3b/Q9A7
-X-Google-Smtp-Source: APXvYqxZN/OvuOrPxTAGUgdntrQMDO7ofGOA+njJ4fsZRKGwEzWAlKerBUpNt7E4WEHddRoSmFjA0IhChbZTGvzaVW0=
-X-Received: by 2002:ac2:5ec1:: with SMTP id d1mr11831075lfq.83.1569865018330;
- Mon, 30 Sep 2019 10:36:58 -0700 (PDT)
+        id S1730178AbfI3V17 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 17:27:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35876 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726504AbfI3V17 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 17:27:59 -0400
+Received: (qmail 2574 invoked by uid 109); 30 Sep 2019 21:27:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 30 Sep 2019 21:27:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5050 invoked by uid 111); 30 Sep 2019 21:30:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Sep 2019 17:30:33 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 30 Sep 2019 17:27:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3] promisor-remote: skip move_to_tail when no-op
+Message-ID: <20190930212758.GA18708@sigill.intra.peff.net>
+References: <20190926213156.88185-1-emilyshaffer@google.com>
+ <20190930202818.2172-1-emilyshaffer@google.com>
 MIME-Version: 1.0
-References: <20190929204322.1244907-1-alexhenrie24@gmail.com>
- <xmqqa7amimzc.fsf@gitster-ct.c.googlers.com> <CAMMLpeQLXN=jvD6MSJPdUTr60MiKdQq=zHFQ7aiatFuhqX1aeQ@mail.gmail.com>
- <xmqq36gei07z.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq36gei07z.fsf@gitster-ct.c.googlers.com>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Mon, 30 Sep 2019 11:36:46 -0600
-Message-ID: <CAMMLpeQps8jvgpBXDnzqeeSsH7RA=__XjnDb4p_4SdGB-G2mSw@mail.gmail.com>
-Subject: Re: [PATCH v4] diffcore-break: use a goto instead of a redundant if statement
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        CB Bailey <cb@hashpling.org>, dstolee@microsoft.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190930202818.2172-1-emilyshaffer@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 30, 2019 at 3:48 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Alex Henrie <alexhenrie24@gmail.com> writes:
->
-> > Well, I admit that code clarity is somewhat subjective. To me it's not
-> > obvious that "if (q->nr <= j)" means "if the loop exited normally",
->
-> I actually do not have too much problem with this side of the
-> equation.  I however do see problem with squashing the two diff_q
-> calls that _happens_ to be textually the same but is made from two
-> logically separate codepaths (cases B.1 and C, in the message you
-> are responding to but omitted from quote).  After all, you did not
-> even realize you introduced a new bug by doing so before CB pointed
-> it out, no?  A rewrite like that that easily allows a new bug to
-> slip in hardly qualifies as making code "more clear and readable".
+On Mon, Sep 30, 2019 at 01:28:18PM -0700, Emily Shaffer wrote:
 
-Sure, let's keep the two diff_q calls. I'll send a new patch.
+> Previously, when promisor_remote_move_to_tail() is called for a
+> promisor_remote which is currently the final element in promisors, a
+> cycle is created in the promisors linked list. This cycle leads to a
+> double free later on in promisor_remote_clear() when the final element
+> of the promisors list is removed: promisors is set to promisors->next (a
+> no-op, as promisors->next == promisors); the previous value of promisors
+> is free()'d; then the new value of promisors (which is equal to the
+> previous value of promisors) is also free()'d. This double-free error
+> was unrecoverable for the user without removing the filter or re-cloning
+> the repo and hoping to miss this edge case.
+> 
+> Now, when promisor_remote_move_to_tail() would be a no-op, just do a
+> no-op. In cases of promisor_remote_move_to_tail() where r is not already
+> at the tail of the list, it works as before.
+> 
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
+> Fixed up some nits from Peff in v2. Thanks especially for the catch on
+> capturing the output of the fetch - I had been grepping it before I
+> realized that test_must_fail accounted for unexpected signal exits, and
+> forgot to remove the redirect.
 
-To me at least it was not clear what code is executed if the peer
-survives. The fact that I put the goto label in the wrong place the
-first time only underscores the difficulty of understanding this
-function. But with a goto (and with its label in the correct place),
-the execution path is obvious.
+Thanks, this looks pretty good, except one little thing:
 
-Thank you for being willing to look at this code with me, and thank
-you for your feedback!
+> +test_expect_success 'single promisor remote can be re-initialized gracefully' '
+> +	# ensure one promisor is in the promisors list
+> +	rm -rf repo &&
+> +	test_create_repo repo &&
+> +	test_create_repo other &&
+> +	git -C repo remote add foo "file://$(pwd)/other" &&
+> +	git -C repo config remote.foo.promisor true &&
+> +	git -C repo config extensions.partialclone foo &&
+> +
+> +	# reinitialize the promisors list; this must fail gracefully
+> +	git -C repo fetch --filter=blob:none foo
+> +'
 
--Alex
+We expect this to succeed now, so "this must fail gracefully" no longer
+applies, right?
+
+-Peff
