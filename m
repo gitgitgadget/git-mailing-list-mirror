@@ -7,133 +7,101 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A8061F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 01:34:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8629E1F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 01:36:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729091AbfI3BeU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Sep 2019 21:34:20 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56632 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726390AbfI3BeU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Sep 2019 21:34:20 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E7F73212D4;
-        Sun, 29 Sep 2019 21:34:14 -0400 (EDT)
+        id S1729268AbfI3Bgq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Sep 2019 21:36:46 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50643 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726390AbfI3Bgq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Sep 2019 21:36:46 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 724188E0A5;
+        Sun, 29 Sep 2019 21:36:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DHgP0nKY7eBs9QIaohz9et8Jkps=; b=Y84QD3
-        ffaDiHBOEh0eMoNTQ6IfCsEj6jl9Nx9Eytu9TCJ21R7dClMPpKJEj85+9Y7NySHy
-        u8lckDAZh0wB6OKLsulePXiXO2LZvse5K+/Nr8r+f16+Rp+TWxGiBElt9YYUGFTJ
-        idq37VSZnCjXiSCby/xlkoygjEjw2Xt64zbj0=
+        :content-type; s=sasl; bh=yHkYvtGjaQiv3dodh+Yhn0L10TE=; b=ONe71p
+        7n6lmSpKgpFTtjM5NfDk+F/vLhHp2NvEMJl4jiZW/c9OWZG67CCA4e7jjSUd7Idz
+        ZxhXCxCHiI1rCPVOh28vA/VbRCkWe0qIe0URylGvs1Dt57IQuh9MD+4loVaDrlfW
+        1UFyn3oBW3QRd/xoVCuoABhi+PhtaDlhe+FRo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=igqrMnlP36AS9YcY7AcDI0lLv/LM87SD
-        sz8MZpKbbz+xaIdWo7wUDub2JLvXjrKCsA49ZtMr3EhIEoBfIvV8fTwS9NSkExYc
-        4Y2Jrj+lU8oanAM/91mEuhnp8Kw5KRCS6rOCi96RUsbdDtfQgpZfVYBvYOFwbKs8
-        NZr+nMsv5kc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DFED5212D3;
-        Sun, 29 Sep 2019 21:34:14 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Cq3n0g/9nek+4TYHFypx4PGkPKBxhH65
+        firG3q/B+pwFqFPXo906U3AI+2zuCtDHSRzh28IjRj4Rvzis8xynnuNsCYNB3ux5
+        67KH0OXWgzue8lD95543abkReoGGZ+6YAfSB0qEdbs84xQk1CbbKJOMjLqkdUaU7
+        8AeZcYr7Yak=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5D4538E0A3;
+        Sun, 29 Sep 2019 21:36:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4C2FE212D2;
-        Sun, 29 Sep 2019 21:34:14 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 773AD8E0A2;
+        Sun, 29 Sep 2019 21:36:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Kunal Tyagi via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Kunal Tyagi <tyagi.kunal@live.com>
-Subject: Re: [PATCH v2 1/1] git-add--interactive.perl: Add progress counter in the prompt
-References: <pull.349.git.gitgitgadget@gmail.com>
-        <pull.349.v2.git.gitgitgadget@gmail.com>
-        <a9c590689931ebc49e91c56d8a095f66193801c2.1569720616.git.gitgitgadget@gmail.com>
-Date:   Mon, 30 Sep 2019 10:34:13 +0900
-In-Reply-To: <a9c590689931ebc49e91c56d8a095f66193801c2.1569720616.git.gitgitgadget@gmail.com>
-        (Kunal Tyagi via GitGitGadget's message of "Sat, 28 Sep 2019 18:30:19
-        -0700 (PDT)")
-Message-ID: <xmqqeezyin3e.fsf@gitster-ct.c.googlers.com>
+To:     Alex Henrie <alexhenrie24@gmail.com>
+Cc:     git@vger.kernel.org, cb@hashpling.org, dstolee@microsoft.com
+Subject: Re: [PATCH v4] diffcore-break: use a goto instead of a redundant if statement
+References: <20190929204322.1244907-1-alexhenrie24@gmail.com>
+Date:   Mon, 30 Sep 2019 10:36:39 +0900
+In-Reply-To: <20190929204322.1244907-1-alexhenrie24@gmail.com> (Alex Henrie's
+        message of "Sun, 29 Sep 2019 14:43:22 -0600")
+Message-ID: <xmqqa7amimzc.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 691B48B0-E322-11E9-BDA3-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C0D470F4-E322-11E9-B69A-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Kunal Tyagi via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Alex Henrie <alexhenrie24@gmail.com> writes:
 
-> From: Kunal Tyagi <tyagi.kunal@live.com>
-> Subject: Re: [PATCH v2 1/1] git-add--interactive.perl: Add progress counter in the prompt
-
-Either of these two, perhaps (I'd use the former if I were writing
-this patch):
-
-	add -i: show progress counter in the prompt
-	add -i: add progress counter to the prompt
-
-Give an order to the codebase to "become like so".  E.g.
-
-	Report how many hunks have been processed and the total
-	number of hunks in the current file in the prompt, and
-	adjust the expected output in some tests.
-
-	Signed-off-by: ...
-
-> Adds a feedback regarding how many hunks from the current file have been
-> processed and total number of hunks
-> Also included: changes to the test script due to change in expected
-> output string
+> The condition "if (q->nr <= j)" checks whether the loop exited normally
+> or via a break statement. This check can be avoided by replacing the
+> jump out of the inner loop with a jump to the end of the outer loop.
 >
-> Change in UI: displays '(${current-hunk-id} + 1/${total-hunks-in-file})' before
-> displaying the current prompt during user interaction
->
-> Signed-off-by: Kunal Tyagi <tyagi.kunal@live.com>
+> With the break replaced by a goto, the two diff_q calls then can be
+> replaced with a single diff_q call outside of the outer if statement.
+
+I doubt that it is a good idea to do these two things.  Especially I
+do not see why the latter makes the resulting code better.
+
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
 > ---
->  git-add--interactive.perl  | 2 +-
->  t/t3701-add-interactive.sh | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+>  diffcore-break.c | 14 ++++++--------
+>  1 file changed, 6 insertions(+), 8 deletions(-)
 >
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index c20ae9e210..51c30e08cb 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -1541,7 +1541,7 @@ sub patch_update_file {
->  		for (@{$hunk[$ix]{DISPLAY}}) {
->  			print;
+> diff --git a/diffcore-break.c b/diffcore-break.c
+> index 875aefd3fe..ee7519d959 100644
+> --- a/diffcore-break.c
+> +++ b/diffcore-break.c
+> @@ -286,17 +286,15 @@ void diffcore_merge_broken(void)
+>  					/* Peer survived.  Merge them */
+>  					merge_broken(p, pp, &outq);
+>  					q->queue[j] = NULL;
+> -					break;
+> +					goto next;
+>  				}
+>  			}
+> -			if (q->nr <= j)
+> -				/* The peer did not survive, so we keep
+> -				 * it in the output.
+> -				 */
+> -				diff_q(&outq, p);
+> +			/* The peer did not survive, so we keep
+> +			 * it in the output.
+> +			 */
 >  		}
-> -		print colored $prompt_color,
-> +		print colored $prompt_color,"(". ($ix+1) ."/$num) ",
-
-Don't omit space after comma. or around the "." operators---if you
-want to use "." here, that is.  I am not convinced it makes the code
-better to use ".", though.
-
-	print colored $prompt_color, "(", ($ix+1), "/$num) ",
-
-is probably how I would write this, as I expect those writing Perl
-would know that elements of a comma separated list fed to 'print'
-are shown without any extra space in between.
-
->  			sprintf(__($patch_update_prompt_modes{$patch_mode}{$hunk[$ix]{TYPE}}), $other);
->  
->  		my $line = prompt_single_character;
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 69991a3168..3a2d9fb607 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -314,7 +314,7 @@ test_expect_success C_LOCALE_OUTPUT 'add first line works' '
->  	git commit -am "clear local changes" &&
->  	git apply patch &&
->  	printf "%s\n" s y y | git add -p file 2>error |
-> -		sed -n -e "s/^Stage this hunk[^@]*\(@@ .*\)/\1/" \
-> +		sed -n -e "s/^(.*) Stage this hunk[^@]*\(@@ .*\)/\1/" \
-
-Shouldn't this pattern be a bit tighter than "(.*)" (i.e. anything
-can come between paren)?
-
->  		       -e "/^[-+@ \\\\]"/p  >output &&
->  	test_must_be_empty error &&
->  	git diff --cached >diff &&
+> -		else
+> -			diff_q(&outq, p);
+> +		diff_q(&outq, p);
+> +next:;
+>  	}
+>  	free(q->queue);
+>  	*q = outq;
