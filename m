@@ -3,124 +3,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 727901F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 01:51:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E2E11F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 05:23:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729374AbfI3Bvv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Sep 2019 21:51:51 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:40717 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729032AbfI3Bvv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Sep 2019 21:51:51 -0400
-Received: by mail-qk1-f196.google.com with SMTP id y144so6410379qkb.7
-        for <git@vger.kernel.org>; Sun, 29 Sep 2019 18:51:50 -0700 (PDT)
+        id S1729493AbfI3FXC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 01:23:02 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33143 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726314AbfI3FXC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 01:23:02 -0400
+Received: by mail-wr1-f68.google.com with SMTP id b9so9621084wrs.0
+        for <git@vger.kernel.org>; Sun, 29 Sep 2019 22:23:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aAHx6dNVHtQnsN4hlXQaghh9Z6aH9U6OUj77ClLhva4=;
-        b=RuMovP3wwuaW7SkfmoEkw7ghHq+KrA79f5pcjHxvpm5QKQQ28mVC3g+C6nT/EBKM4l
-         w6Vg1AEPd6DIKQKQzEjbFRPNpGsF08L3xzLT5uY9k+LCJ/763szAp54IqCAd3bPFiXSp
-         /PD+vkUwjVm5t6feNUZQlSXa274tTX+dnd/tZfwrr55nPkuLNuJLbK5UaQ8peymKgKUa
-         92EozDb2fSMUk0EdCHP7c5GWomu6Bd77IUeXad8c1f7P3lFB4DOsnM7rzADcd8ZT06Gx
-         dURcNVIYmdj84dodf76kguo4ZrTJSLNz4mYeFx7sjqbatIgKL8nWT5uThFcG0UBzKQHU
-         JtWw==
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=u6Yu1ugChssk7xr0x9mEegOFbGUezqTxvNCeBPhRlfg=;
+        b=dojVwo2B661rXxjWjxFZrWcN5ZSR+gXAh8ERDdSClh7JYCvDv0ETTvsuwTdb3ZESXm
+         mP391ZMFa1RF9/VSSBXFm3p94y9sd8/ZnXEy4T/1K4endABwtMVszR2PBJ9IzsnIkSuJ
+         2pcUZGeZMiTzg64FHTnQZBgg7GRYq3ib9QMnjUmA4m5h+fcKQVHH6qGQ2NCU4COIbQfM
+         RflPHLZJTosEgzXqJB4Hl7snI02veY/L7uUSq/q3gGCh0ZNBsqc1LliPNj5YSHZkvSj+
+         euH96rmhJ2+LPknfkOr8a2XNQSOXDrAhFqlQq2/SEkRj98t0cCGk1xlrU6DJNB6R42bI
+         n2eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aAHx6dNVHtQnsN4hlXQaghh9Z6aH9U6OUj77ClLhva4=;
-        b=Qyy8A+gNECwiq2yI7+6/mUD1CVPUiJJkUNyRhdwTMNo21T/u1WAoBIi3irlFvz/bRT
-         9kxAFZ/hE9HuZsOFGWx0KQbejc2lP+XCrChC+w0RBDojCLf9eBGDq6CzFy3+5jrsugIr
-         YjLSWy7PVw7I3FDgzbm/5VNNmF25EiN4hw9qINb4Vpf7R2cKEH/cb4c5xYE+V2IUTBhA
-         VOYE/zps6L+62/YaxazzP8LjNO+GTgH//GTm8obR+WIn1dMMDTaI+6qb2cdFah7W9BKv
-         b7kMs0Zz3T5h6aIw0LVbNGAVCAjq9M9duzk6HS6ZzmGR3FyxeZ+LP2kYub3bfyaTKGES
-         R1Gw==
-X-Gm-Message-State: APjAAAWgpdJbi4430LteMU4UfQElBK0pRY2Ox2Y2/oisLbD3yMSaLNcQ
-        YQ7q+ajOdjqari9VShlo6e2dGzykxJg=
-X-Google-Smtp-Source: APXvYqwD27toE/d/dwKGVw2u3+AtsEz3rjvH1SnvUcwOBWIWubXV83jBMtGDK/mdJLc0WzSr7Oycrg==
-X-Received: by 2002:a37:bd45:: with SMTP id n66mr16206201qkf.272.1569808309907;
-        Sun, 29 Sep 2019 18:51:49 -0700 (PDT)
-Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::3])
-        by smtp.gmail.com with ESMTPSA id f11sm4706954qkk.76.2019.09.29.18.51.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Sep 2019 18:51:49 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     git@vger.kernel.org
-Cc:     christian.couder@gmail.com, olyatelezhnaya@gmail.com,
-        pclouds@gmail.com, gitster@pobox.com, jrnieder@gmail.com,
-        Rasmus Villemoes <rv@rasmusvillemoes.dk>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v2 11/11] grep: move driver pre-load out of critical section
-Date:   Sun, 29 Sep 2019 22:50:57 -0300
-Message-Id: <7b0358d1596e6673d12f9592cf05f5193247f3ec.1569808052.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <cover.1569808052.git.matheus.bernardino@usp.br>
-References: <cover.1569808052.git.matheus.bernardino@usp.br>
-MIME-Version: 1.0
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=u6Yu1ugChssk7xr0x9mEegOFbGUezqTxvNCeBPhRlfg=;
+        b=PiYJV82nARJMtE2CM9zTa3GS/u+fDYkzdWfFMnNoIbjGEp6PCNR5khqYwnN3C0O8iQ
+         WlmN8K3JJ6O7Bay+rtjPa+99NM4MDSLsy9jVsR4yjysNxOBia7fkL8KapziwdYdkA6oz
+         NED4FtrhME+u1Jzp1lJX6Z0HYJ5K4SmzQXGXfbnoRa5O/qg97Vq3NaAPtI+LfWDPw/V4
+         8kAv8BsqV6WyDw8avO0T8guj9+7+MeS5i0mLZL7Ai2vRww8pOsjHaCdAyVjWxegRQQq7
+         fi06ahCFx/YKn4mvx0rDYhVhsNrIq9LmrZ79lfjkjzAA/BOzVvrLXXEy0MJ4XMjZwv5O
+         FxYA==
+X-Gm-Message-State: APjAAAWrGAyY+6rDz4Y8huIxwJGv3yD9RokHJt3iijKB6ZuVM65ftOWJ
+        mtz9uwAg7pRjRRticmHFYILt5Brd
+X-Google-Smtp-Source: APXvYqwu3FBHDoNI2c8/sE1pR0r0KFAsXuFi7naxa4EE53SCBeb/YpTbwbsVcaHaKE7yB6FNkTOICA==
+X-Received: by 2002:adf:828d:: with SMTP id 13mr12049486wrc.115.1569820979954;
+        Sun, 29 Sep 2019 22:22:59 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a10sm11351199wrm.52.2019.09.29.22.22.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 29 Sep 2019 22:22:59 -0700 (PDT)
+Date:   Sun, 29 Sep 2019 22:22:59 -0700 (PDT)
+X-Google-Original-Date: Mon, 30 Sep 2019 05:22:57 GMT
+Message-Id: <b351c74a3fc5787e8a41c12342b592d38ef0dede.1569820977.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.349.v3.git.gitgitgadget@gmail.com>
+References: <pull.349.v2.git.gitgitgadget@gmail.com>
+        <pull.349.v3.git.gitgitgadget@gmail.com>
+From:   "Kunal Tyagi via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v3 1/1] add -i: Show progress counter in the prompt
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Kunal Tyagi <tyagi.kunal@live.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Kunal Tyagi <tyagi.kunal@live.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In builtin/grep.c:add_work() we pre-load the userdiff drivers before
-adding the grep_source in the todo list. This operation is currently
-being performed after acquiring the grep_mutex, but as it's already
-thread-safe, we don't need to protect it here. So let's move it out of
-the critical section which should avoid thread contention and improve
-performance.
+From: Kunal Tyagi <tyagi.kunal@live.com>
 
-Running[1] `git grep --threads=8 abcd[02] HEAD` on chromium's
-repository[2], I got the following mean times for 30 executions after 2
-warmups:
+Report the current hunk count and total number of hunks for the current
+file in the prompt
+Adjust the expected output in some tests to account for new data on the prompt
 
-        Original         |  6.2886s
--------------------------|-----------
- Out of critical section |  5.7852s
-
-[1]: Tests performed on an i7-7700HQ with 16GB of RAM and SSD, running
-     Manjaro Linux.
-[2]: chromium’s repo at commit 03ae96f (“Add filters testing at DSF=2”,
-         04-06-2019), after a 'git gc' execution.
-
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+Signed-off-by: Kunal Tyagi <tyagi.kunal@live.com>
 ---
- builtin/grep.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ git-add--interactive.perl  | 2 +-
+ t/t3701-add-interactive.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 163f14b60d..d275b76647 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -92,8 +92,11 @@ static pthread_cond_t cond_result;
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index c20ae9e210..52659bb74c 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -1541,7 +1541,7 @@ sub patch_update_file {
+ 		for (@{$hunk[$ix]{DISPLAY}}) {
+ 			print;
+ 		}
+-		print colored $prompt_color,
++		print colored $prompt_color, "(", ($ix+1), "/$num) ",
+ 			sprintf(__($patch_update_prompt_modes{$patch_mode}{$hunk[$ix]{TYPE}}), $other);
  
- static int skip_first_line;
- 
--static void add_work(struct grep_opt *opt, const struct grep_source *gs)
-+static void add_work(struct grep_opt *opt, struct grep_source *gs)
- {
-+	if (opt->binary != GREP_BINARY_TEXT)
-+		grep_source_load_driver(gs, opt->repo->index);
-+
- 	grep_lock();
- 
- 	while ((todo_end+1) % ARRAY_SIZE(todo) == todo_done) {
-@@ -101,9 +104,6 @@ static void add_work(struct grep_opt *opt, const struct grep_source *gs)
- 	}
- 
- 	todo[todo_end].source = *gs;
--	if (opt->binary != GREP_BINARY_TEXT)
--		grep_source_load_driver(&todo[todo_end].source,
--					opt->repo->index);
- 	todo[todo_end].done = 0;
- 	strbuf_reset(&todo[todo_end].out);
- 	todo_end = (todo_end + 1) % ARRAY_SIZE(todo);
+ 		my $line = prompt_single_character;
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 69991a3168..d50e165ca8 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -314,7 +314,7 @@ test_expect_success C_LOCALE_OUTPUT 'add first line works' '
+ 	git commit -am "clear local changes" &&
+ 	git apply patch &&
+ 	printf "%s\n" s y y | git add -p file 2>error |
+-		sed -n -e "s/^Stage this hunk[^@]*\(@@ .*\)/\1/" \
++		sed -n -e "s/^([1-2]\/[1-2]) Stage this hunk[^@]*\(@@ .*\)/\1/" \
+ 		       -e "/^[-+@ \\\\]"/p  >output &&
+ 	test_must_be_empty error &&
+ 	git diff --cached >diff &&
 -- 
-2.23.0
-
+gitgitgadget
