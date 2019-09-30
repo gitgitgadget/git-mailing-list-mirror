@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 233541F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 01:51:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE10C1F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 01:51:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729357AbfI3Bvi (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Sep 2019 21:51:38 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:42553 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729332AbfI3Bvh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Sep 2019 21:51:37 -0400
-Received: by mail-qk1-f196.google.com with SMTP id f16so6408983qkl.9
-        for <git@vger.kernel.org>; Sun, 29 Sep 2019 18:51:37 -0700 (PDT)
+        id S1729362AbfI3Bvm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Sep 2019 21:51:42 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:35476 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729332AbfI3Bvm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Sep 2019 21:51:42 -0400
+Received: by mail-qt1-f196.google.com with SMTP id m15so15034765qtq.2
+        for <git@vger.kernel.org>; Sun, 29 Sep 2019 18:51:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RxfiWCZo0YKl0QO8A60X9gdAN0bHMQeS4a3WgubKrxI=;
-        b=rKb04N8RoZxum1e1BBA5fkndiGdam/Len6OBLeaxJkOKDE6LHd0KEiMcrF+6egeCVF
-         lWnqeGMS6pdES/El82K8aczti0nDCBzzVlM3fwVhsmTtuD+Snao+4OdHlkDFL6P1AMXn
-         ZeoVr/M8DAAY3xQVbS78eRk47UdMCHmRy+jVMcL44XSLqWNZ+QFcD+cCiB9W//Wl26MZ
-         j/5FsqDleaWZYkjxOrq9NM32JUFJyumKL3bpxaL96iD/4cY562fD26aEo5eeVKnoh3jm
-         EyuVv2cEBC8HxfISbkpTzumRNX/oyXVwK3lamPK5vIHF5oUAi1NIfbsLJ1buF/zg3qMD
-         vzhA==
+        bh=fqBGrCUWa9QM3lyZChHVyrO7vjAONfPnBWLMDPdXlmE=;
+        b=cw8F0ogWxLE1mNHB8crnvmdLKkdpBhA3x8PW9zVbwODp1bsyk1jzZMtEA+yt8X7zSA
+         Vl2w21joa2gL+G8N1uAUNd5z2JC6aebLAsrbxFl0KQEdMTLWWM1MwJ4ala9bgbN8xpS2
+         dlUzrnSUpKeAx5r5BAQXcXK/MDTDoZjlshwBCsjYkhsV+o7F4CR/rtTKmlXYZkmY1lyY
+         HYTDEZZYCNIYtL92UN64fmgrWkEljAH1TfVSurzikwT58bj4Ux7nPjyLoy8exqugOQ6t
+         pVXtJEtLQVkIbuhGOArG28m9cZnFUtnMDyHKpwjkTck387aH5U8/0/sFAguupqEYx7ud
+         mm5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RxfiWCZo0YKl0QO8A60X9gdAN0bHMQeS4a3WgubKrxI=;
-        b=a1DLnD2n85kf+Vj03/8mL6ndiP9R5dSZ7DfoYFYfDqyHbPoziVnmZcT2ZlmOzg6Aw9
-         Pvu1GyZz0xlIRUxLcRScFlINW1InksjYJ+Pb4xdzQ7lgOb7GFCD19xVt+a3twZDilJGT
-         NY4PQZjb1HiSkbTN69c1EWA00Wd85sjNoze1gIstX2WAXhcQu+RA7qWPmcwF5UKycmrX
-         blOuk/KJGUMKNUMx1zK5Gp2/YfMMvRj3KCFqOt7J+yOv/xNQkKbX1gUrfBCbi9XnkB2A
-         1iy3+SCRmQ0zTy92jT8T6qJIyxklSRdtjuTKW6c2jmf58uiUrgyrAoeVk7NjcKnfGXpL
-         2dPg==
-X-Gm-Message-State: APjAAAWVfYhheM48OrhGQy6xKoMHUWmacoy7qDPqj2PWmAeeW6AXoV5u
-        1diV07P8yY0m2vPI9fEDJTIk9cQul8Y=
-X-Google-Smtp-Source: APXvYqw4VfcOg4qptuoRkpRfqGiPGi+o8FlbzCXRTEYQP85putAEIjqMBVSYT+FaN/d67qE+ed/JWg==
-X-Received: by 2002:a37:6005:: with SMTP id u5mr15242355qkb.79.1569808296340;
-        Sun, 29 Sep 2019 18:51:36 -0700 (PDT)
+        bh=fqBGrCUWa9QM3lyZChHVyrO7vjAONfPnBWLMDPdXlmE=;
+        b=n4P7p+M9/Ygy25fIHMr2qqJnv6UkcNlw0q5QG0wYrIHIhCJulo7L8ZCutTwVxxArfT
+         f8W9i8g+FDbnn1jTRFpDQNZrNmavqN6VW1ymmIt7KRo/RqwHXEj9uaKE1HWv4I/IToki
+         MlmNWZlDW0i+RwSU+J4gKk5/kKmT9bUhCLJfAaS42DmjRjLn0JiJUx/IaGIYfQ1nrf9j
+         nZQjyeqt8Ii/pxzo2SJ60+hPITvsRYyb0ICp/Gt3C2uUX8EOMENlqnfzxot6han+vgPc
+         AtxK9foOwKk+26+t608kCFMa4k/o2WGTSmCbHRD8lUQ5RJ5zIBSnwZ8BODgokq2UGWx4
+         QqsQ==
+X-Gm-Message-State: APjAAAWqi0jMHleCjLSq76/kRVEIUq6keGx9UW4rt5gnYlEtvb36nVEn
+        hqQQfE+WbozxNwyrKG6Xd5Q5GajbfIg=
+X-Google-Smtp-Source: APXvYqwec1ngAUgkpw1ZWzhn06D8TlqFehUu8sNjJD+cxgspfH4a6dipaG0x9IdF7ErU9wpwkqh9Lw==
+X-Received: by 2002:a0c:9369:: with SMTP id e38mr18566952qve.25.1569808299593;
+        Sun, 29 Sep 2019 18:51:39 -0700 (PDT)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::3])
-        by smtp.gmail.com with ESMTPSA id f11sm4706954qkk.76.2019.09.29.18.51.33
+        by smtp.gmail.com with ESMTPSA id f11sm4706954qkk.76.2019.09.29.18.51.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Sep 2019 18:51:35 -0700 (PDT)
+        Sun, 29 Sep 2019 18:51:39 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, olyatelezhnaya@gmail.com,
         pclouds@gmail.com, gitster@pobox.com, jrnieder@gmail.com,
-        Stefan Beller <stefanbeller@gmail.com>,
         Brandon Williams <bwilliams.eng@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH v2 07/11] submodule-config: add skip_if_read option to repo_read_gitmodules()
-Date:   Sun, 29 Sep 2019 22:50:53 -0300
-Message-Id: <38940b38af5337646b0ddd4b06d3efb1b97aec81.1569808052.git.matheus.bernardino@usp.br>
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH v2 08/11] grep: allow submodule functions to run in parallel
+Date:   Sun, 29 Sep 2019 22:50:54 -0300
+Message-Id: <8070e154070e6eaef6f31077d15349e74147ff84.1569808052.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <cover.1569808052.git.matheus.bernardino@usp.br>
 References: <cover.1569808052.git.matheus.bernardino@usp.br>
@@ -69,117 +69,115 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, submodule-config.c doesn't have an externally acessible
-function to read gitmodules only if it wasn't already read. But this
-exactly behavior is internally implemented by gitmodules_read_check(),
-to perform a lazy load. Let's merge this function with
-repo_read_gitmodules() adding an 'skip_if_read' which allow both
-internal and external callers to access this functionality. This
-simplifies a little the code. The added option will also be used in the
-following patch.
+Now that object reading operations are internally protected, the
+submodule initialization functions at builtin/grep.c:grep_submodule()
+are very close to being thread-safe. Let's take a look at each call and
+remove from the critical section what we can, for better performance:
+
+- submodule_from_path() and is_submodule_active() cannot be called in
+  parallel yet only because they call repo_read_gitmodules() which
+  contains, in its call stack, operations that would otherwise be in
+  race condition with object reading (for example parse_object() and
+  is_promisor_remote()). However, they only call repo_read_gitmodules()
+  if it wasn't read before. So let's pre-read it before firing the
+  threads and allow these two functions to safelly be called in
+  parallel.
+
+- repo_submodule_init() is already thread-safe, so remove it from the
+  critical section without other necessary changes.
+
+- The repo_read_gitmodules(&subrepo) call at grep_submodule() is safe as
+  no other thread is performing object reading operations in the subrepo
+  yet. However, threads might be working in the superproject, and this
+  function calls add_to_alternates_memory() internally, which is racy
+  with object readings in the superproject. So it must be kept
+  protected for now. Let's add a "NEEDSWORK" to it, informing why it
+  cannot be removed from the critical section yet.
+
+- Finally, add_to_alternates_memory() must be kept protected by the same
+  reason of the above item.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- builtin/grep.c     |  2 +-
- submodule-config.c | 18 ++++++------------
- submodule-config.h |  2 +-
- unpack-trees.c     |  4 ++--
- 4 files changed, 10 insertions(+), 16 deletions(-)
+ builtin/grep.c | 38 ++++++++++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index 5a404ee1db..1c4ff4a75f 100644
+index 1c4ff4a75f..c973ac46a7 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -420,7 +420,7 @@ static int grep_submodule(struct grep_opt *opt,
- 		return 0;
- 	}
+@@ -401,25 +401,23 @@ static int grep_submodule(struct grep_opt *opt,
+ 	struct grep_opt subopt;
+ 	int hit;
  
--	repo_read_gitmodules(&subrepo);
-+	repo_read_gitmodules(&subrepo, 0);
+-	/*
+-	 * NEEDSWORK: submodules functions need to be protected because they
+-	 * call config_from_gitmodules(): the latter contains in its call stack
+-	 * many thread-unsafe operations that are racy with object reading, such
+-	 * as parse_object() and is_promisor_object().
+-	 */
+-	obj_read_lock();
+ 	sub = submodule_from_path(superproject, &null_oid, path);
+ 
+-	if (!is_submodule_active(superproject, path)) {
+-		obj_read_unlock();
++	if (!is_submodule_active(superproject, path))
+ 		return 0;
+-	}
+ 
+-	if (repo_submodule_init(&subrepo, superproject, sub)) {
+-		obj_read_unlock();
++	if (repo_submodule_init(&subrepo, superproject, sub))
+ 		return 0;
+-	}
+ 
++	/*
++	 * NEEDSWORK: repo_read_gitmodules() might call
++	 * add_to_alternates_memory() via config_from_gitmodules(). This
++	 * operation causes a race condition with concurrent object readings
++	 * performed by the worker threads. That's why we need obj_read_lock()
++	 * here. It should be removed once it's no longer necessary to add the
++	 * subrepo's odbs to the in-memory alternates list.
++	 */
++	obj_read_lock();
+ 	repo_read_gitmodules(&subrepo, 0);
  
  	/*
- 	 * NEEDSWORK: This adds the submodule's object directory to the list of
-diff --git a/submodule-config.c b/submodule-config.c
-index 4264ee216f..8c4333120a 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -660,10 +660,13 @@ static int gitmodules_cb(const char *var, const char *value, void *data)
- 	return parse_config(var, value, &parameter);
- }
+@@ -1052,6 +1050,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	pathspec.recursive = 1;
+ 	pathspec.recurse_submodules = !!recurse_submodules;
  
--void repo_read_gitmodules(struct repository *repo)
-+void repo_read_gitmodules(struct repository *repo, int skip_if_read)
- {
- 	submodule_cache_check_init(repo);
- 
-+	if (repo->submodule_cache->gitmodules_read && skip_if_read)
-+		return;
++	if (recurse_submodules && (!use_index || untracked))
++		die(_("option not supported with --recurse-submodules"));
 +
- 	if (repo_read_index(repo) < 0)
- 		return;
- 
-@@ -689,20 +692,11 @@ void gitmodules_config_oid(const struct object_id *commit_oid)
- 	the_repository->submodule_cache->gitmodules_read = 1;
- }
- 
--static void gitmodules_read_check(struct repository *repo)
--{
--	submodule_cache_check_init(repo);
--
--	/* read the repo's .gitmodules file if it hasn't been already */
--	if (!repo->submodule_cache->gitmodules_read)
--		repo_read_gitmodules(repo);
--}
--
- const struct submodule *submodule_from_name(struct repository *r,
- 					    const struct object_id *treeish_name,
- 		const char *name)
- {
--	gitmodules_read_check(r);
-+	repo_read_gitmodules(r, 1);
- 	return config_from(r->submodule_cache, treeish_name, name, lookup_name);
- }
- 
-@@ -710,7 +704,7 @@ const struct submodule *submodule_from_path(struct repository *r,
- 					    const struct object_id *treeish_name,
- 		const char *path)
- {
--	gitmodules_read_check(r);
-+	repo_read_gitmodules(r, 1);
- 	return config_from(r->submodule_cache, treeish_name, path, lookup_path);
- }
- 
-diff --git a/submodule-config.h b/submodule-config.h
-index 1b4e2da658..7a76ef8cd8 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -39,7 +39,7 @@ int option_fetch_parse_recurse_submodules(const struct option *opt,
- 					  const char *arg, int unset);
- int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
- int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
--void repo_read_gitmodules(struct repository *repo);
-+void repo_read_gitmodules(struct repository *repo, int skip_if_read);
- void gitmodules_config_oid(const struct object_id *commit_oid);
- const struct submodule *submodule_from_name(struct repository *r,
- 					    const struct object_id *commit_or_tree,
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 9c25126aec..689575944c 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -292,11 +292,11 @@ static void load_gitmodules_file(struct index_state *index,
- 	if (pos >= 0) {
- 		struct cache_entry *ce = index->cache[pos];
- 		if (!state && ce->ce_flags & CE_WT_REMOVE) {
--			repo_read_gitmodules(the_repository);
-+			repo_read_gitmodules(the_repository, 0);
- 		} else if (state && (ce->ce_flags & CE_UPDATE)) {
- 			submodule_free(the_repository);
- 			checkout_entry(ce, state, NULL, NULL);
--			repo_read_gitmodules(the_repository);
-+			repo_read_gitmodules(the_repository, 0);
+ 	if (list.nr || cached || show_in_pager) {
+ 		if (num_threads > 1)
+ 			warning(_("invalid option combination, ignoring --threads"));
+@@ -1071,6 +1072,14 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		    && (opt.pre_context || opt.post_context ||
+ 			opt.file_break || opt.funcbody))
+ 			skip_first_line = 1;
++
++		/*
++		 * Pre-read gitmodules (if not read already) to prevent racy
++		 * lazy reading in worker threads.
++		 */
++		if (recurse_submodules)
++			repo_read_gitmodules(the_repository, 1);
++
+ 		start_threads(&opt);
+ 	} else {
+ 		/*
+@@ -1105,9 +1114,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
  		}
  	}
- }
+ 
+-	if (recurse_submodules && (!use_index || untracked))
+-		die(_("option not supported with --recurse-submodules"));
+-
+ 	if (!show_in_pager && !opt.status_only)
+ 		setup_pager();
+ 
 -- 
 2.23.0
 
