@@ -2,94 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_03_06,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DD691F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 21:19:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1BC91F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 21:23:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731972AbfI3VTK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Sep 2019 17:19:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35842 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729326AbfI3VTK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 17:19:10 -0400
-Received: (qmail 2455 invoked by uid 109); 30 Sep 2019 21:19:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 30 Sep 2019 21:19:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4898 invoked by uid 111); 30 Sep 2019 21:21:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Sep 2019 17:21:44 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 30 Sep 2019 17:19:09 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v4 04/24] merge-recursive: provide a better label for
- diff3 common ancestor
-Message-ID: <20190930211909.GA29232@sigill.intra.peff.net>
-References: <20190815214053.16594-1-newren@gmail.com>
- <20190817184144.32179-1-newren@gmail.com>
- <20190817184144.32179-5-newren@gmail.com>
- <20190930211437.GA28110@sigill.intra.peff.net>
+        id S1732550AbfI3VXx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 17:23:53 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:41779 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726784AbfI3VXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 17:23:53 -0400
+Received: by mail-lf1-f65.google.com with SMTP id r2so8156863lfn.8
+        for <git@vger.kernel.org>; Mon, 30 Sep 2019 14:23:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=h2VbDKLBc4Rv/8z9HcPg1eE+KfK8a4wa3vxlMuUOKy0=;
+        b=A2DEQLsygbnYThyzy1p4gfTCKquNW+wEOih5TwDxM0jkSpt1GgCAhj0abkvaTsbXRX
+         A3aZ/ld+3kKSjgs2oSwJY/AegeJICBwYMXSaiBv8Bb5SEm1vyJtSVpOUu2M1kflHDuuZ
+         qHnC4hkshK6AmgC2yGYXHFnrHg/11lLlEeRL/5Jxuv9vONer9Rvx+GiK39B4dwIAijcF
+         UMNPnwkJFcJD8LPW+0RsEdzMR+WT46o16NpKoq6lXw+OhE/EwSX29PrviarcD5UNpg/t
+         T30nktqEOdI0HAYrsF+Qvi2BaL5WPt/CmSooGMcXB1Sk2fDOuUOv8MHyGHDDTONwBgUS
+         LvtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=h2VbDKLBc4Rv/8z9HcPg1eE+KfK8a4wa3vxlMuUOKy0=;
+        b=P3jWKRdyv4+8Y8obb9vBHswExwyNovAEGKXnJCjRaOoKrDUTNBG7HR3H797R0g//wA
+         Ph97ZcoNatbF395bNbZBkJBHDLhyDH6Bznsi1ohIS4uVyRIZp8vGOXKga4tpcQj86uZO
+         3CH0tgdcRQugxwnowUwGG+bKec9EF45jWMTK/xXhLPsDwZfCuyYv7XetYw25rd6B1h+N
+         tJ48SJDuqo0rh29z9f6C02UiXb6POEs5+rjAeURjTCvhSM/PoL0lxKEqtosltsRTOuO9
+         OHX5bBQ/3WwV+UU+k83y9Lhrh3LFGsMNxlFlaJmFViBqp+Od+UvnSlIOboIUNGI5yszU
+         pLYg==
+X-Gm-Message-State: APjAAAW/4AH+Oem5MuzpYODGMzGFlWcdo5hhFPGvTZVUxviLHtmNzxoW
+        g4NkYvuXRRb8lsICHnp62XSC+7t616GQ9Yjks3b/Q9A7
+X-Google-Smtp-Source: APXvYqxZN/OvuOrPxTAGUgdntrQMDO7ofGOA+njJ4fsZRKGwEzWAlKerBUpNt7E4WEHddRoSmFjA0IhChbZTGvzaVW0=
+X-Received: by 2002:ac2:5ec1:: with SMTP id d1mr11831075lfq.83.1569865018330;
+ Mon, 30 Sep 2019 10:36:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190930211437.GA28110@sigill.intra.peff.net>
+References: <20190929204322.1244907-1-alexhenrie24@gmail.com>
+ <xmqqa7amimzc.fsf@gitster-ct.c.googlers.com> <CAMMLpeQLXN=jvD6MSJPdUTr60MiKdQq=zHFQ7aiatFuhqX1aeQ@mail.gmail.com>
+ <xmqq36gei07z.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq36gei07z.fsf@gitster-ct.c.googlers.com>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Mon, 30 Sep 2019 11:36:46 -0600
+Message-ID: <CAMMLpeQps8jvgpBXDnzqeeSsH7RA=__XjnDb4p_4SdGB-G2mSw@mail.gmail.com>
+Subject: Re: [PATCH v4] diffcore-break: use a goto instead of a redundant if statement
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        CB Bailey <cb@hashpling.org>, dstolee@microsoft.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 30, 2019 at 05:14:37PM -0400, Jeff King wrote:
+On Mon, Sep 30, 2019 at 3:48 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+> > Well, I admit that code clarity is somewhat subjective. To me it's not
+> > obvious that "if (q->nr <= j)" means "if the loop exited normally",
+>
+> I actually do not have too much problem with this side of the
+> equation.  I however do see problem with squashing the two diff_q
+> calls that _happens_ to be textually the same but is made from two
+> logically separate codepaths (cases B.1 and C, in the message you
+> are responding to but omitted from quote).  After all, you did not
+> even realize you introduced a new bug by doing so before CB pointed
+> it out, no?  A rewrite like that that easily allows a new bug to
+> slip in hardly qualifies as making code "more clear and readable".
 
-> > This chosen label was perfectly reasonable when recursiveness kicks in,
-> > i.e. when there are multiple merge bases.  (I can't think of a better
-> > label in such cases.)  But it is actually somewhat misleading when there
-> > is a unique merge base or no merge base.  Change this based on the
-> > number of merge bases:
-> >     >=2: "merged common ancestors"
-> >     1:   <abbreviated commit hash>
-> >     0:   "<empty tree>"
-> 
-> I got a funny result from this today while rebasing some patches in
-> git.git, where the base is reported as "00000000". I didn't make a
-> minimal case, but you can easily reproduce it with:
-> 
->   cd /your/git/clone
->   git fetch https://github.com/peff/git odd-diff3-base
->   git checkout -b odd-diff3-base FETCH_HEAD
->   git -c merge.conflictstyle=diff3 rebase --onto origin/master HEAD~2
-> 
-> Maybe this has to do with "git apply --build-fake-ancestor" being used
-> under the hood?
+Sure, let's keep the two diff_q calls. I'll send a new patch.
 
-Oh, indeed, this seems to be the case for all rebases. Doing:
+To me at least it was not clear what code is executed if the peer
+survives. The fact that I put the goto label in the wrong place the
+first time only underscores the difficulty of understanding this
+function. But with a goto (and with its label in the correct place),
+the execution path is obvious.
 
-  git init repo && cd repo
-  
-  echo base >file && git add file && git commit -m base
-  echo master >file && git commit -am master
-  git checkout -b side HEAD^
-  echo side >file && git commit -am side
-  git config merge.conflictstyle diff3
-  
-  git rebase master
+Thank you for being willing to look at this code with me, and thank
+you for your feedback!
 
-yields:
-
-  <<<<<<< HEAD
-  master
-  ||||||| 0000000
-  base
-  =======
-  side
-  >>>>>>> side
-
--Peff
+-Alex
