@@ -8,223 +8,152 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CEAF1F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 09:50:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C89121F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 09:52:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730483AbfI3JuW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Sep 2019 05:50:22 -0400
-Received: from mout.gmx.net ([212.227.15.19]:52811 "EHLO mout.gmx.net"
+        id S1730033AbfI3Jw4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 05:52:56 -0400
+Received: from mout.gmx.net ([212.227.17.21]:40267 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728404AbfI3JuW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 05:50:22 -0400
+        id S1726504AbfI3Jw4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 05:52:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1569837016;
-        bh=CBpAlYQa7Ikt9XrM/2K3SZR0Wpy0GYe7Q67f2b3DquM=;
+        s=badeba3b8450; t=1569837169;
+        bh=GDGMfYtakOwC6l79PcwnzqR2wDPC3Pdr0wEYvxxLWwM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=OMdgR9ownssbm+Z/tCYsh8908ZRqWZjtfIGIvy2+yeNJZZQ/iO77xP7J0ZX7r4Eym
-         94auuO+oL1Mi4/nJcnBICcrx8lVChbykPznxye3mA7k25L3RhyjcSUr94zhoiN224O
-         MJdYitox64KkQctKMS3GrzUE+EELjClJ62sjW2GU=
+        b=Us0BMrcIIXl51Zer9cchKVdMavk+ivdcKlHES+gNPmADdjqEHidrJtph+rZP25g9k
+         UzEc6GhpkaxN8Hlh4YHJxywEyvj5qxPa1llbC/9JKQBbNzdQMPd0lj3tO/M7yMnJS8
+         eQo9eXkiUk4NIuzHyzLdnWMf9/KksXNMAIcYML88=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MFsUv-1iMswK1VFf-00HKGU; Mon, 30
- Sep 2019 11:50:15 +0200
-Date:   Mon, 30 Sep 2019 11:50:00 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M1po0-1iH5Hl0sTg-002IHb; Mon, 30
+ Sep 2019 11:52:49 +0200
+Date:   Mon, 30 Sep 2019 11:52:36 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/13] msvc: avoid using minus operator on unsigned
- types
-In-Reply-To: <20190926235753.GA94990@generichostname>
-Message-ID: <nycvar.QRO.7.76.6.1909301149070.46@tvgsbejvaqbjf.bet>
-References: <pull.288.git.gitgitgadget@gmail.com> <2abe1e1fb0bf3025489c2e543b9a9c648a164827.1569486607.git.gitgitgadget@gmail.com> <20190926172022.GA41037@generichostname> <nycvar.QRO.7.76.6.1909262236550.15067@tvgsbejvaqbjf.bet>
- <20190926235753.GA94990@generichostname>
+        git@vger.kernel.org
+Subject: Re: [PATCH 11/13] tests: let --immediate and --write-junit-xml play
+ well together
+In-Reply-To: <xmqq7e5sjc1p.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1909301151050.46@tvgsbejvaqbjf.bet>
+References: <pull.288.git.gitgitgadget@gmail.com> <99724f6a1e45b497e15037bbac1cb5f70a3bb236.1569486607.git.gitgitgadget@gmail.com> <xmqq7e5sjc1p.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:TRtArS/Y0FgI5b5OWBtmUtAjDMksM0fL5ccz0dsxGbCp1B1TANf
- D+zRjdl6FG7XjI+juZWU6Bcs+hI4lQMTUKreliEHCbFLeNJKexbIT77qD0aD0WNUIGWoqFs
- NYGMCS8PoChLE3EkcJPggLCnscw755b1uufUu/40IZoydG59eeu8T4vXvGyQazmqioj7K40
- ahaQMACOEcwhC9jfNxByg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:HOESi/NBB/A=:Nz5aGP6uGrDKVwCAatuQPy
- bB/0DXQxyp8XsHevArSZGgBJe5ohV5WZo+3zTs7t/DzSD5XVW/zrX2Fj52SW9sS3T3h6pSfAu
- /O7KGGLBORXdDw9JtHD0FxdSrMn2TfT0bP7b7lHtVz1xIDs7D6CMWQJ4pB2jeFA2SMVZdfxaY
- YrFnKke72XmXmLzwA+n9IiSCBqOTaUnxdCBVzvGAn4hwJ8Ef+kF2YNXxlLDu42k4uUq4w0L1E
- DJCFLAgOkFxW08vbX+gWD4fS3YbXWehs3Yw8eqgH9O+FPU90xr0u+kPfazS3cx1ZXXOQnaLf9
- SOFXl698TuVVgzUHHH2ToGuHHoywXNBXzW4cjVHi+Y5IEoYAtmfxss4EaQU7aVtmLqTJ0zBNu
- o/h0awjxU/rGM6FpEZZqM0rowz4mOxLlHknr2TFmp6QQHcJQq0hfe/Jo3YV5HNT314vExgXFq
- A9SoE64eNBUAuCuFtdWtuzDcfOKhggj71237AXbRzUgxfpY6PnYfxkxGslX3Z7Ji1MBKFiICq
- +wZRQn7YdNpau/e04LPHqUWgGtSBo/rqI86UJRZ/ztYW+kUW8rfkoe7o+Afh8LquyIPM6NyfN
- B0XoRwGxI/vnHPtM4GO/rx7tlpV/kZynDqxuB2mXh/QezgmoeY+RW4YftEot6FRCm7JmhqcAD
- GSLT/N6QlEAh69G+Gc5ZyRF68aRoLxrc2ekKf71fO0c6lMbhenX1OVVWMtPCgl4vS99jumYWW
- O0oYEbSEVULEb4qPRzQKCOA+1NIAK5NbO5W5fx2bobEtCHzRMLCdWtYgNba1878zTKdgafUVa
- jLcA4Aq7kO6FNeGCOTil/CgKLYrteFAMSj+5CZr29dQioRrkg1JgiGUNWqWXTcSfAWl+Ut8FI
- j0qKu+0f2a8f64ObJlZSviYLkwZbcKiY7u1c8jWZMaaPEo2cBQUXzldIyeGD+l/KM//SlB0Tm
- w2mtxIFuoK4nMkVP/7ZSArTIxAObePc3g/c98w45qT6fGpfCrZP8oSsh55PUwEad38ZuVSavf
- UbYOnmQcRqG7bWadckaYN4eqIy2oaLUNCy1bJgiInuYYQYxpk5MEX+YvJtOIdcpWEzLeMT5Q2
- 9eJIHHV5itBvcXI9cqIHz2IKe3EeeLggNYz5rvQ6naFCVuaqLe47mLEGfmsCyVgxuKFLJKVxT
- L8o3lY/xycYEm4fgdioLO2RkNr8Y4H3DtuYdqROtEWgWgM8wzltPxbnQT6nUaZ5eGm6q97KgC
- c4pu2y73OB8egcT88FblSBUGKHVG6W2CQ8d5mQe+QG6E6HvOkltl+aJ7ka1Y=
+X-Provags-ID: V03:K1:dT/CuGUFhGdAIRyTv2UmVWVrOlLxBYWeMJGiREh4BRtmECg+Le9
+ DdZ5/eoaqBtNlfR8NJWkvMJVa5Oltu/op5iLn/m6RLhRM7sX5UA/o/OA+JRzlbpbIhjctMt
+ 0jcDXnLeYvDJbjRvF4GErnevNCjmHvMdgEQgb7VX35QE+P3ucSVbRFog29gsye6WNZjrVdo
+ /0U7ZcPrkeIL2OqMwDLWg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:g47pTSU4Wco=:B2IV4465rP7yRW5q66Rxdb
+ IuXUvriInAnmNCCmMoYAIZWJxciXUb4dmtqJ/TsXADe+1Yxsqyl7QDlUOjiewx6zDQkb657aE
+ tumiqzHnXBLjpyEP9ZJ2mQs1KPEcXzQz/M84yo4GZChbpuC5+lfbicrVUgJ4KKixAzV7Im6xb
+ f/iK6MEkJ/9A8yhckUyesMWDOiF/kgC7LDPM0RoZozm7ywhHrezJhgWFiXGX+M9DC2ND4ut+S
+ DTSmi2rfJfpe/+RPLWZAoKPp+4GMEe0Fvmc+sB7yDAwHBonGVTCSX68xiGqSbfrr86dJm9uu4
+ oD6Xf4JurhsOcZh4UfTVlAvDObA8XVC80XByULG78P895MXBD9olSUJNEFQVFcCCHiulgQbXp
+ yUDoFCDPkqt8Hsuw/BOlmHB3e/yrRtSQUuHUxcj9rncuK8nuW9rcjQToMjnLjn73PcQKE20bm
+ Th3PaqSpbvf7EEywmsiE1PrzqTfvf/oT3qK1z3x8IbNW30VZB61xa48j11wA2cRDyIMNgfidf
+ RQrSYcADm3rfMgvsm3JNRIue5nIWMSGE1IXFWB6dbMEbEvsWHhLgVTUTgebvsdninblzeJXjD
+ Kh9cpLmVJJt1Wb0eXL8ApJY5UMdPTzhmDH9mwk+AngSnYzQaZ27R7SSQi9fDdS68ouxrCUUN7
+ ylUz1AjSy6tuIQaYzpRI0knvwLxal75/jYdYwKqnlPA7RV8eaaWTfzjPU/ryjZpUXfM4TOJzU
+ pjCm7qVrVuss0GSawHwhuz6tZTqQxP56J9Yfc1z5K0IefRjtXQxX5cansfgKhOM861oogfcUi
+ tj6ds10YLY4Il69/f0RST8CYQGIHpbVc9IXz9g9oHr9UeNdsiqIWTTYOZPm5yVFMkAby9YZOG
+ qomDYBNxcZv88lK4on+EjOuPEiisHZmUvaavrphqEGlDat3SlNu1DuL+1tB0vr4K5wDSmbQXv
+ mA+GCIR+apHxO5FI2wxJSxkmXKSbc1q4gRKDUcF+S8F2iCQrK6tDvDr4Doce8+fo54LVSrTsD
+ D2alb0m7qqCVZ750So8bwoLqILm3T1AsJfrdNS1ArvcrcMYNkDqt9CaMBBhowHNHsFqnktQ7k
+ D1az4ABokk1z8m3nQBPnxWLHmR+NKYclg6LVlgFnhctukPnh3BrrZLd1j8lA91FVl17GKpq90
+ rMRy+0vF1KQqobr1pJwK9ZVlyK/cTMBv9dIFzmzmS3p+MuLwdm2OlqmkTaHyx8Yk7tSV+NsfO
+ SAmHOER4hvv6RnF/CaGHGm9VeA2w874e65RrKR/x6Gk8KBMno08iUc7xqGkw=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+Hi Junio,
 
-On Thu, 26 Sep 2019, Denton Liu wrote:
+On Sun, 29 Sep 2019, Junio C Hamano wrote:
 
-> On Thu, Sep 26, 2019 at 11:01:32PM +0200, Johannes Schindelin wrote:
-> >
-> > On Thu, 26 Sep 2019, Denton Liu wrote:
-> >
-> > > Hi Dscho,
-> > >
-> > > On Thu, Sep 26, 2019 at 01:30:10AM -0700, Johannes Schindelin via Gi=
-tGitGadget wrote:
-> > > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > > >
-> > > > MSVC complains about this with `-Wall`, which can be taken as a si=
-gn
-> > > > that this is indeed a real bug. The symptom is:
-> > > >
-> > > > 	C4146: unary minus operator applied to unsigned type, result
-> > > > 	still unsigned
-> > > >
-> > > > Let's avoid this warning in the minimal way, e.g. writing `-1 -
-> > > > <unsigned value>` instead of `-<unsigned value> - 1`.
-> > >
-> > > [...]
-> > >
-> > > > ---
-> > > >  read-cache.c  | 4 ++--
-> > > >  sha1-lookup.c | 2 +-
-> > > >  2 files changed, 3 insertions(+), 3 deletions(-)
-> > > >
-> > > > diff --git a/read-cache.c b/read-cache.c
-> > > > index c701f7f8b8..11f3357216 100644
-> > > > --- a/read-cache.c
-> > > > +++ b/read-cache.c
-> > > > @@ -1276,7 +1276,7 @@ static int add_index_entry_with_check(struct=
- index_state *istate, struct cache_e
-> > > >  	 */
-> > > >  	if (istate->cache_nr > 0 &&
-> > > >  		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0=
-)
-> > > > -		pos =3D -istate->cache_nr - 1;
-> > > > +		pos =3D -1 - istate->cache_nr;
-> > >
-> > > I've been thinking about this and I'm still not certain that this 10=
-0%
-> > > correct from a language-lawyer perspective.
-> > >
-> > > If we do `-1 - istate->cache_nr`, then the unsignedness of
-> > > istate->cache_nr takes over and the whole expression is a very large
-> > > unsigned number.
-> > >
-> > > Then, when we assign to `int pos`, we are converting an unsigned num=
-ber
-> > > which is out of the range of the signed number. According to a
-> > > StackOverflow post citing the C99 standard[1]:
-> > >
-> > > 	Otherwise, the new type is signed and the value cannot be
-> > > 	represented in it; either the result is implementation-defined
-> > > 	or an implementation-defined signal is raised.
-> > >
-> > > I'm sure that most platforms that we support will handle it sanely b=
-ut
-> > > could we write this as
-> > >
-> > > 	pos =3D -1 - (int) istate->cache_nr;
-> > >
-> > > to be doubly sure that no funny business will happen?
-> >
-> > I guess we should use `signed_add_overflows()` to make extra certain
-> > that it does what we want it to do, kind of like `st_add()`. Or just d=
-o
-> > the check explicitly, like so:
-> >
-> > 	if (istate->cache_nr > INT_MAX)
-> > 		die("overflow: -1 - %u", istate->cache_nr);
-> > 	pos =3D -1 - istate->cache_nr;
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
-> Could we change this to
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index d1ba33745a..f21c781e68 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -695,7 +695,7 @@ test_failure_ () {
+> >  	say_color error "not ok $test_count - $1"
+> >  	shift
+> >  	printf '%s\n' "$*" | sed -e 's/^/#	/'
+> > -	test "$immediate" =3D "" || { GIT_EXIT_OK=3Dt; exit 1; }
+> > +	test "$immediate" =3D "" || { finalize_junit_xml; GIT_EXIT_OK=3Dt; e=
+xit 1; }
+> >  }
 >
->  	pos =3D -1 - (int) istate->cache_nr;
+> There are three places that do GIT_EXIT_OK=3Dt in the test framework,
+> and the above covers one of them.  The original in test_done is
+> another, and that place is made to call the "finalize" thing (it
+> used to have the same finalization code inlined).
 >
-> so that we alleviate the problem I was talking about above?
+> The remaining one appears in
+>
+>         error () {
+>                 say_color error "error: $*"
+>                 GIT_EXIT_OK=3Dt
+>                 exit 1
+>         }
+>
+> I wonder if we should cover this case, too.  One caller of "error" I
+> know is BUG that says "bug in the test script", which means that
+> after successfully passing 30 tests, when the 31st test has 5 params
+> to test_expect_success by mistake, without finailzation we will lose
+> the result for the first 30.
 
-Thank you, I had missed that.
+Good point.
 
-> Other than that, it looks good. Well, it might break on one's complement
-> systems but I don't think we support UNIVACs anyway. ;)
+> And if we call "finalize" from the "error" helper, perhaps it makes
+> even more sense to update the above manual exit in test_failure_ to
+> do something like
+>
+> 	if test -n "$immediate"
+> 	then
+> 		error "immediate exit after the first error"
+> 	fi
+>
+> to delegate the finalization.
 
-Let's hope that nobody tries to run Git on such a system, indeed.
+This adds an additional message. I am not sure how many scripts/CI
+integrations are there that rely on the current behavior, so I would
+like to exclude this change from this here patch series: it is about
+including a Visual Studio build in our Azure Pipeline, nothing more,
+nothing less...
 
-Thanks,
+Ciao,
 Dscho
 
 >
-> > }
-> > >
-> > > >  	else
-> > > >  		pos =3D index_name_stage_pos(istate, ce->name, ce_namelen(ce), =
-ce_stage(ce));
-> > > >
-> > > > @@ -1894,7 +1894,7 @@ static size_t estimate_cache_size(size_t ond=
-isk_size, unsigned int entries)
-> > > >  	/*
-> > > >  	 * Account for potential alignment differences.
-> > > >  	 */
-> > > > -	per_entry +=3D align_padding_size(sizeof(struct cache_entry), -s=
-izeof(struct ondisk_cache_entry));
-> > > > +	per_entry +=3D align_padding_size(per_entry, 0);
-> > > >  	return ondisk_size + entries * per_entry;
-> > > >  }
-> > > >
-> > > > diff --git a/sha1-lookup.c b/sha1-lookup.c
-> > > > index 796ab68da8..c819687730 100644
-> > > > --- a/sha1-lookup.c
-> > > > +++ b/sha1-lookup.c
-> > > > @@ -97,7 +97,7 @@ int sha1_pos(const unsigned char *sha1, void *ta=
-ble, size_t nr,
-> > > >  			lo =3D mi + 1;
-> > > >  		mi =3D lo + (hi - lo) / 2;
-> > > >  	} while (lo < hi);
-> > > > -	return -lo-1;
-> > > > +	return -1 - lo;
-> > >
-> > > Same thing here.
+> > @@ -1085,21 +1104,7 @@ test_done () {
+> >  	# removed, so the commands can access pidfiles and socket files.
+> >  	test_atexit_handler
 > >
-> > This is even more critical, as `lo` has the type `size_t`:
+> > -	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
+> > -	then
+> > -		test -n "$junit_have_testcase" || {
+> > -			junit_start=3D$(test-tool date getnanos)
+> > -			write_junit_xml_testcase "all tests skipped"
+> > -		}
+> > -
+> > -		# adjust the overall time
+> > -		junit_time=3D$(test-tool date getnanos $junit_suite_start)
+> > -		sed "s/<testsuite [^>]*/& time=3D\"$junit_time\"/" \
+> > -			<"$junit_xml_path" >"$junit_xml_path.new"
+> > -		mv "$junit_xml_path.new" "$junit_xml_path"
+> > -
+> > -		write_junit_xml "  </testsuite>" "</testsuites>"
+> > -	fi
+> > +	finalize_junit_xml
 > >
-> > 	if (lo > INT_MAX)
-> > 		die("overflow: -1 - %"PRIuMAX, (uintmax_t)lo);
-> > 	return -1 - lo;
->
-> Also, could we change this to
->
->  	return -1 - (int) lo;
->
-> Thanks,
->
-> Denton
->
-> > >
-> > What do you think?
-> > Dscho
-> >
-> > > [1]: https://stackoverflow.com/questions/50605/signed-to-unsigned-co=
-nversion-in-c-is-it-always-safe
-> > >
-> > > >  }
-> > > >
-> > > >  int bsearch_hash(const unsigned char *sha1, const uint32_t *fanou=
-t_nbo,
-> > > > --
-> > > > gitgitgadget
-> > > >
-> > >
+> >  	if test -z "$HARNESS_ACTIVE"
+> >  	then
 >
