@@ -2,111 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EE591F464
-	for <e@80x24.org>; Mon, 30 Sep 2019 16:58:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E8DD1F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 17:01:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729217AbfI3Q6h (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Sep 2019 12:58:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61868 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727025AbfI3Q6h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 12:58:37 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB60E26B25;
-        Mon, 30 Sep 2019 12:58:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HfuS3WpG3zQEtkGp+t6Ci5trASw=; b=txMuOo
-        37oaHvlbkaq0lweP9MCEr4Q/dEM/7RA6hKrheG9Riw7DDolIz85cIxOJy8o6ZNlE
-        sIQTpX4oJBhKGyEaz9Nw7tagThhjWj+djO8ZicT/mz4NWbCRROmxrcmxoDzPd5jJ
-        Dxm1xwVKoiLMw1kz5j3OIDzwNyFR7MHIVBuMk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=I/5ZQn10b91wXI/7n36UpNLa7Xmko/lP
-        DMvcafXGg1cZETef7kyxvNcDZYLBx//P45EB4eC5VhOCWfG6KKBoTdBjMnitLUIU
-        k0rjCntjsBoCDfCJtf7sS4UaWZms9bZGDT+dDrKNDPS0nkKIqrzp/abHz36qa9QZ
-        UrxEnviQ2Ak=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C35A526B24;
-        Mon, 30 Sep 2019 12:58:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1CAA126B23;
-        Mon, 30 Sep 2019 12:58:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: [PATCH v2 18/19] OFFSETOF_VAR macro to simplify hashmap iterators
-References: <20190924010324.22619-1-e@80x24.org>
-        <20190924010324.22619-19-e@80x24.org>
-Date:   Tue, 01 Oct 2019 01:58:33 +0900
-In-Reply-To: <20190924010324.22619-19-e@80x24.org> (Eric Wong's message of
-        "Tue, 24 Sep 2019 01:03:23 +0000")
-Message-ID: <xmqqy2y5hgau.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1730536AbfI3RB5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 13:01:57 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:43462 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730485AbfI3RB5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 13:01:57 -0400
+Received: by mail-pf1-f195.google.com with SMTP id a2so5943452pfo.10
+        for <git@vger.kernel.org>; Mon, 30 Sep 2019 10:01:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=VtaNnIZz8GMRDonwSl1t3MWeenfBOlFDiYlY+43pc1M=;
+        b=JlY7auq9t1mCKSoGQAKjnhFthAN4nnbKjy6LBE6+ht8kxuXI8TcW29exEfe4wAbQdP
+         f/eWguKylmEMQHOPHz/8ydJNF1kj6GneRK8Zv/lceNzIJ67WAXzW6p17oeFHjN0Uwro4
+         d7jHI6mKHDhrURU3ZBSkIi6pZrzHSamTvKYLVEt82BWnGN+wylEKBjS4ib0nHVoah3+t
+         nOuvjfIXV9o3RkEbOLVyaKK9sLBvoB6XSH8PQ6VkC5MXlth0oQmdbbS8wzx/mPfZD3gh
+         5gfaAeVOXmZDsOnik1QaN1lCC3wnXeuXJEuHyQN0yHgxy6F59SNLk5FFXkf0yYoadWzN
+         kJkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=VtaNnIZz8GMRDonwSl1t3MWeenfBOlFDiYlY+43pc1M=;
+        b=KVIIYMyJOKF9NvSJpLpNCEOs9HEI5t9T4GEro8Bb0hSaApoXcsohLfSO75S2aBG5tc
+         RAH19atgau+9bTeqNi6JVNtJ7xA6OHt/yaOWdG58atQ98CFM4dDEiEeqRd9oFli/87lX
+         tKzjwzbsC8X8tOggj/lSCpfv6jpyVichUAqUiqnU6QkZi6OpgEkXpBDnpq2g2FN/QYjj
+         X3YhmZgu5WJ5eAGxBDYdfedzfiH0ZDyQtBDSdlX1wARyf2h6ww094d5oMRqdqyJy+9/t
+         EGz5AwtMyFDJNOWz4WWfRkYuhp4tjZ9t2KDuPylVHRr+MsUNBLmsyjdaTDeEXnBbvI0/
+         /I8w==
+X-Gm-Message-State: APjAAAXsQIOgsdV7/WI59VjX+DipavEY8vRGEeDi2gJpoLxCyJjWW2pR
+        ksQ52OLjejh1XV4V+bSCNhE=
+X-Google-Smtp-Source: APXvYqyyegEWXM7PX4twZCFBuI3n32+i8N9u5xj5BWm2NFNaTYL1EHD6SCN621oCRwyb/aBvgcClnA==
+X-Received: by 2002:a17:90a:cf93:: with SMTP id i19mr268053pju.72.1569862916717;
+        Mon, 30 Sep 2019 10:01:56 -0700 (PDT)
+Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:b:a89a:71af:9e6e:a9c9])
+        by smtp.gmail.com with ESMTPSA id h4sm13197226pfg.159.2019.09.30.10.01.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Sep 2019 10:01:56 -0700 (PDT)
+Subject: Re: [PATCH v2 1/6] midx: add MIDX_PROGRESS flag <snip>
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     William Baker via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com, jeffhost@microsoft.com,
+        William Baker <William.Baker@microsoft.com>
+References: <pull.337.git.gitgitgadget@gmail.com>
+ <pull.337.v2.git.gitgitgadget@gmail.com>
+ <6badd9ceaf4851b2984e78a5cfd0cb8ec0c810f5.1568998427.git.gitgitgadget@gmail.com>
+ <20190921121104.GA6787@szeder.dev>
+ <xmqqlfu9krzv.fsf@gitster-ct.c.googlers.com>
+From:   William Baker <williamtbakeremail@gmail.com>
+Message-ID: <2de6b236-7bd8-256b-7d8f-911d63a47498@gmail.com>
+Date:   Mon, 30 Sep 2019 10:01:55 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:68.0)
+ Gecko/20100101 Thunderbird/68.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 89B9EE60-E3A3-11E9-87AD-C28CBED8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqlfu9krzv.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+On 9/27/19 8:40 PM, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+>>> +#define MIDX_PROGRESS     (1 << 0)
+>>
+>> Please consider using an enum.
+> 
+> If they are used by assiging one of their values, definitely a good
+> idea to use an enum.  Are debuggers clever enough that they can
+> tell, when they see something like this:
+> 
+> 	enum gress {
+> 		PROGRESS = 1,
+> 		REGRESS = 2,
+> 	};
+> 
+> 	void func(enum gress v);
+> 
+> 	...
+> 
+>         void caller(void)
+> 	{
+> 		func(PROGRESS | REGRESS);
+> 		func(PROGRESS + REGRESS);
+> 		func(PROGRESS * 3);
+> 	}
+> 
+> how caller came about to give 3?
+> 
 
-> While we cannot rely on a `__typeof__' operator being portable
-> to use with `offsetof'; we can calculate the pointer offset
-> using an existing pointer and the address of a member using
-> pointer arithmetic.
+My debugger was not smart enough to figure out what flags were combined
+to give the value of 3 in this example.  
 
-> +/*
-> + * like offsetof(), but takes a pointer to type instead of the type
+I saw that the code base is currently a mix of #define and enums when it
+comes to flags  (e.g. dir_struct.flags and rebase_options.flags are both
+enums) and so using one here would not be something new stylistically.
 
-It actually takes "a pointer to a variable of the type".  I had to
-read the above twice to guess what is going on.
+Although my debugger might not be the smartest, I haven't noticed any
+downsides to switching this to an enum.
 
-> + * @ptr is subject to multiple evaluation since we can't rely on TYPEOF()
-> + */
-> +#define OFFSETOF_VAR(ptr, member) \
-> +	((uintptr_t)&(ptr)->member - (uintptr_t)(ptr))
-> +
-
-This unfortunately has funny interactions with using uninitialized
-variables.  "make CC=clang config.o" gives something like this:
-
-config.c:1944:50: error: variable 'entry' is uninitialized when used here
-      [-Werror,-Wuninitialized]
-        hashmap_for_each_entry(&cs->config_hash, &iter, entry,
-                                                        ^~~~~
-./hashmap.h:453:20: note: expanded from macro 'hashmap_for_each_entry'
-                                                OFFSETOF_VAR(var, member)); \
-                                                             ^~~
-./git-compat-util.h:1346:16: note: expanded from macro 'OFFSETOF_VAR'
-        ((uintptr_t)&(ptr)->member - (uintptr_t)(ptr))
-                      ^~~
-./hashmap.h:445:61: note: expanded from macro 'hashmap_iter_first_entry_offset'
-        container_of_or_null_offset(hashmap_iter_first(map, iter), offset)
-                                                                   ^~~~~~
-config.c:1939:34: note: initialize the variable 'entry' to silence this warning
-        struct config_set_element *entry;
-                                        ^
-                                         = NULL
-
-Personally, I feel the workaround suggested by the compiler is just
-as bogus as the warning itself X-<.  Casting NULL as if it were a
-pointer to an object of type typeof(*ptr), treating it as if it is a
-valid address, and doing raw address arith is just as bogus as doing
-the same raw address arith on an uninitialized ptr, isn't it?
-
-Anyway...
+Thanks,
+William
