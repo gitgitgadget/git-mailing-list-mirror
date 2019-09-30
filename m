@@ -7,59 +7,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB14B1F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 01:51:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EED251F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 01:51:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729331AbfI3BvX (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Sep 2019 21:51:23 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:45424 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726360AbfI3BvW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Sep 2019 21:51:22 -0400
-Received: by mail-qk1-f194.google.com with SMTP id z67so6386270qkb.12
-        for <git@vger.kernel.org>; Sun, 29 Sep 2019 18:51:22 -0700 (PDT)
+        id S1729337AbfI3Bv1 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Sep 2019 21:51:27 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:43399 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729332AbfI3Bv0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Sep 2019 21:51:26 -0400
+Received: by mail-qk1-f195.google.com with SMTP id h126so6394544qke.10
+        for <git@vger.kernel.org>; Sun, 29 Sep 2019 18:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=x2GhhSRV6LXMMvgatnOqDZDnEP37kWP7zdaFkJZKwHE=;
-        b=0QH8YtUjsmESg8NCanQ5mphknGlgX2VipNTvzb6gncT+NOEx3TAkEPWh2UtOpCmelX
-         awTzmdOo/+xyKJ59vOrbtkMEf+T0RYyPSCeSlQyp9b/aoylU0DpCFpcTdjuZSnQPqULR
-         lZ8xOH25FUbGQZWzky5SQNzJ9zpQfqgNU26+knQSfkOAH/qLX7nmedFXo0e9sF59xoqC
-         0Sz33fnciru1InetNOtuZj9wk9/gqLuqODitPYx9EXMLoYvoCNpyE9+qLqXvmcrTTEcq
-         dJO2M1JVeEFKRKJA4s/PTjhkPGl7kxMYK/WCCOqcUiLHWJkDeHnceym9mmG7NxpNpZnM
-         i3KQ==
+        bh=XjgY7U/fvsDJln7bP14c0fp0bf0y0uP4VAMF2X8hlH4=;
+        b=J5bdIGRIoAdsHb4iIZBVofV8+gz9Pp89U1SUCfR1+6MEZrF/Ca6sYy9tnxQyomPYpV
+         AlOYYFJJ+zmWTd3xyquUrIhJtYW/iPtYAadCScBhRmPEU1nK8lx5jlC30bPQqF20dluw
+         sXSBDrM9VlUO0+k03zB/RPu04miZeaJk9GLhLdBPUcvUadH99Gy5S86kYxRw9n2TsvRX
+         oc/tbM3PaBeSDoGg29JVaveBxh+8y+WTxeblKFJ4Wl3enT83mLULAKkvYOcgU54yoJgR
+         dN11kqbPu/L0kq4bHjAtsE7y0GxhBnvU2HDVf4gM/9z9aQXBORki7PMC67Yu4h+Ilntu
+         yZig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=x2GhhSRV6LXMMvgatnOqDZDnEP37kWP7zdaFkJZKwHE=;
-        b=sPvOR2m1bDL9A4sB7ekLExetzZgPjeIKbVyOpoBTRlDvNPbcfzfKCdWiJsqsto2gor
-         I15WAxlKiENs4JB5uS+Rt6ZPaF901RBOIQWn0lwdl4P5wxOdnNNP5jbskyJFSE+eqgjB
-         CqakOoh/HxMAeBp/WjrFJ0tPWQab8qMTOBOlpfD8sk+I6AWKbb8ZNDlSeSJvaVlxf16R
-         kIwMD0/HZAEyyEHYdBN/hXxsQB63dRNWr1dtXOGcs5GNNcmBfxQjyRHqzTYgcdwlivsc
-         Z4+kk/xRLeeZdOIPDLpOL4ckrWKaJ42J5OlenRBdR5IMKjYOrsGwpp0AworA8pUvehFf
-         VoFA==
-X-Gm-Message-State: APjAAAWGbisX3bO9Cv0jB/F5rUryukFB7fjmrkCsfh5cT02KH7U85oQX
-        sDa6/e8OOrIEpAsqSN/2DGhfuwGxuos=
-X-Google-Smtp-Source: APXvYqxX7U6u6qIkljl+jwKds3nndM5rvBcoJk41ex8JeNziSStY9J+9LIxZIrYLVCRoWc+ivm2Olg==
-X-Received: by 2002:a05:620a:6cd:: with SMTP id 13mr16793534qky.266.1569808281282;
-        Sun, 29 Sep 2019 18:51:21 -0700 (PDT)
+        bh=XjgY7U/fvsDJln7bP14c0fp0bf0y0uP4VAMF2X8hlH4=;
+        b=k25ThJfZT8e94FY3IlluDImyik3U/gJCn0eVakUY4VoqaJDY+kBA6NAXR5nuim16aE
+         FfZqpLTq+tEIeVPPmvUFlwv/VNbTw2RCE2Ei7JBcOhXSfzz5EDszIkhTJcqakXT6h8ku
+         K0hgSGF0LRJyT3/8IW1zY+FqCsgDX6nWCLgMOR1pjkXxcr45a+IglOSwbT275UZa4HAu
+         CdmdbDqjLrRMZgdoqqgGLRbX99FxBsiR1Xov0m4y9uiAwLm2ITqmv7BqR6LWq6QgbML0
+         eiAdz7W3G4QBIivtTjTtvBO8Q8NGbmYBbNGmR6NVt3yMOj9ow5tHO8XdP/5UyLqixv5f
+         cAyQ==
+X-Gm-Message-State: APjAAAWWB7GME6NImWrztgmWlRzpNDflMNLBpUiWdo4Avw5fhEv/2QQX
+        WOrGduMaNvA3cP7WHMM05oX4WOXjfzI=
+X-Google-Smtp-Source: APXvYqzIE6TafNEQyekya/UwhGp+csMJvh8myje4UFybMwt0txPuaI7iuLSKIfh9LuEKYMkfxz+ykg==
+X-Received: by 2002:a37:bd5:: with SMTP id 204mr15002726qkl.330.1569808284813;
+        Sun, 29 Sep 2019 18:51:24 -0700 (PDT)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::3])
-        by smtp.gmail.com with ESMTPSA id f11sm4706954qkk.76.2019.09.29.18.51.18
+        by smtp.gmail.com with ESMTPSA id f11sm4706954qkk.76.2019.09.29.18.51.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Sep 2019 18:51:20 -0700 (PDT)
+        Sun, 29 Sep 2019 18:51:24 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, olyatelezhnaya@gmail.com,
         pclouds@gmail.com, gitster@pobox.com, jrnieder@gmail.com,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 03/11] grep: fix racy calls in grep_objects()
-Date:   Sun, 29 Sep 2019 22:50:49 -0300
-Message-Id: <34aeb218bf266ac1a8fabcd9e8b307130d31eb0b.1569808052.git.matheus.bernardino@usp.br>
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: [PATCH v2 04/11] replace-object: make replace operations thread-safe
+Date:   Sun, 29 Sep 2019 22:50:50 -0300
+Message-Id: <5deee3cf11e6f67c696617a9264395fb1ab04f73.1569808052.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <cover.1569808052.git.matheus.bernardino@usp.br>
 References: <cover.1569808052.git.matheus.bernardino@usp.br>
@@ -70,46 +67,137 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-deref_tag() calls is_promisor_object() and parse_object(), both of which
-perform lazy initializations and other thread-unsafe operations. If it
-was only called by grep_objects() this wouldn't be a problem as the
-latter is only executed by the main thread. However, deref_tag() is also
-present in read_object_file()'s call stack. So calling deref_tag() in
-grep_objects() without acquiring the grep_read_mutex may incur in a race
-condition with object reading operations (such as the ones internally
-performed by fill_textconv(), called at fill_textconv_grep()). The same
-problem happens with the call to gitmodules_config_oid() which also has
-parse_object() in its call stack. Fix that protecting both call with the
-said grep_read_mutex.
+replace-object functions are very close to being thread-safe: the only
+current racy section is the lazy initialization at
+prepare_replace_object(). The following patches will protect some object
+reading operations to be called threaded, but before that, replace
+functions must be protected. To do so, add a mutex to struct
+raw_object_store and acquire it before lazy initializing the
+replace_map. This won't cause any noticeable performance drop as the
+mutex will no longer be used after the replace_map is initialized.
+
+Later, when the replace functions are called in parallel, thread
+debuggers might point our use of the added replace_map_initialized flag
+as a data race. However, as this boolean variable is initialized as
+false and it's only updated once, there's no real harm. It's perfectly
+fine if the value is updated right after a thread read it in
+replace-map.h:lookup_replace_object() (there'll only be a performance
+penalty for the affected threads at that moment). We could cease the
+debugger warning protecting the variable reading at the said function.
+However, this would negatively affect performance for all threads
+calling it, at any time, so it's not really worthy since the warning
+doesn't represent a real problem. Instead, to make sure we don't get
+false positives (at ThreadSanitizer, at least) an entry for the
+respective function is added to .tsan-suppressions.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- builtin/grep.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ .tsan-suppressions |  6 ++++++
+ object-store.h     |  2 ++
+ object.c           |  2 ++
+ replace-object.c   | 11 ++++++++++-
+ replace-object.h   |  7 ++++++-
+ 5 files changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 626dbe554d..fa8b9996d1 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -658,13 +658,18 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
- 
- 	for (i = 0; i < nr; i++) {
- 		struct object *real_obj;
+diff --git a/.tsan-suppressions b/.tsan-suppressions
+index 8c85014a0a..5ba86d6845 100644
+--- a/.tsan-suppressions
++++ b/.tsan-suppressions
+@@ -8,3 +8,9 @@
+ # in practice it (hopefully!) doesn't matter.
+ race:^want_color$
+ race:^transfer_debug$
 +
-+		grep_read_lock();
- 		real_obj = deref_tag(opt->repo, list->objects[i].item,
- 				     NULL, 0);
-+		grep_read_unlock();
++# A boolean value, which tells whether the replace_map has been initialized or
++# not, is read racily with an update. As this variable is written to only once,
++# and it's OK if the value change right after reading it, this shouldn't be a
++# problem.
++race:^lookup_replace_object$
+diff --git a/object-store.h b/object-store.h
+index 7f7b3cdd80..b22e20ad7d 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -110,6 +110,8 @@ struct raw_object_store {
+ 	 * (see git-replace(1)).
+ 	 */
+ 	struct oidmap *replace_map;
++	unsigned replace_map_initialized : 1;
++	pthread_mutex_t replace_mutex; /* protect object replace functions */
  
- 		/* load the gitmodules file for this rev */
- 		if (recurse_submodules) {
- 			submodule_free(opt->repo);
-+			grep_read_lock();
- 			gitmodules_config_oid(&real_obj->oid);
-+			grep_read_unlock();
- 		}
- 		if (grep_object(opt, pathspec, real_obj, list->objects[i].name,
- 				list->objects[i].path)) {
+ 	struct commit_graph *commit_graph;
+ 	unsigned commit_graph_attempted : 1; /* if loading has been attempted */
+diff --git a/object.c b/object.c
+index 07bdd5b26e..7ef5856f57 100644
+--- a/object.c
++++ b/object.c
+@@ -480,6 +480,7 @@ struct raw_object_store *raw_object_store_new(void)
+ 
+ 	memset(o, 0, sizeof(*o));
+ 	INIT_LIST_HEAD(&o->packed_git_mru);
++	pthread_mutex_init(&o->replace_mutex, NULL);
+ 	return o;
+ }
+ 
+@@ -507,6 +508,7 @@ void raw_object_store_clear(struct raw_object_store *o)
+ 
+ 	oidmap_free(o->replace_map, 1);
+ 	FREE_AND_NULL(o->replace_map);
++	pthread_mutex_destroy(&o->replace_mutex);
+ 
+ 	free_commit_graph(o->commit_graph);
+ 	o->commit_graph = NULL;
+diff --git a/replace-object.c b/replace-object.c
+index e295e87943..7bd9aba6ee 100644
+--- a/replace-object.c
++++ b/replace-object.c
+@@ -34,14 +34,23 @@ static int register_replace_ref(struct repository *r,
+ 
+ void prepare_replace_object(struct repository *r)
+ {
+-	if (r->objects->replace_map)
++	if (r->objects->replace_map_initialized)
+ 		return;
+ 
++	pthread_mutex_lock(&r->objects->replace_mutex);
++	if (r->objects->replace_map_initialized) {
++		pthread_mutex_unlock(&r->objects->replace_mutex);
++		return;
++	}
++
+ 	r->objects->replace_map =
+ 		xmalloc(sizeof(*r->objects->replace_map));
+ 	oidmap_init(r->objects->replace_map, 0);
+ 
+ 	for_each_replace_ref(r, register_replace_ref, NULL);
++	r->objects->replace_map_initialized = 1;
++
++	pthread_mutex_unlock(&r->objects->replace_mutex);
+ }
+ 
+ /* We allow "recursive" replacement. Only within reason, though */
+diff --git a/replace-object.h b/replace-object.h
+index 04ed7a85a2..3fbc32eb7b 100644
+--- a/replace-object.h
++++ b/replace-object.h
+@@ -24,12 +24,17 @@ const struct object_id *do_lookup_replace_object(struct repository *r,
+  * name (replaced recursively, if necessary).  The return value is
+  * either sha1 or a pointer to a permanently-allocated value.  When
+  * object replacement is suppressed, always return sha1.
++ *
++ * Note: some thread debuggers might point a data race on the
++ * replace_map_initialized reading in this function. However, we know there's no
++ * problem in the value being updated by one thread right after another one read
++ * it here (and it should be written to only once, anyway).
+  */
+ static inline const struct object_id *lookup_replace_object(struct repository *r,
+ 							    const struct object_id *oid)
+ {
+ 	if (!read_replace_refs ||
+-	    (r->objects->replace_map &&
++	    (r->objects->replace_map_initialized &&
+ 	     r->objects->replace_map->map.tablesize == 0))
+ 		return oid;
+ 	return do_lookup_replace_object(r, oid);
 -- 
 2.23.0
 
