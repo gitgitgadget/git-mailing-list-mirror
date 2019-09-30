@@ -8,56 +8,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99B7D1F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 09:55:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DF911F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 09:55:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730639AbfI3Jzm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Sep 2019 05:55:42 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34190 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730602AbfI3Jzh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 05:55:37 -0400
-Received: by mail-wr1-f68.google.com with SMTP id a11so10524580wrx.1
-        for <git@vger.kernel.org>; Mon, 30 Sep 2019 02:55:36 -0700 (PDT)
+        id S1730643AbfI3Jzo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 05:55:44 -0400
+Received: from mail-wr1-f44.google.com ([209.85.221.44]:42343 "EHLO
+        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730598AbfI3Jzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 05:55:41 -0400
+Received: by mail-wr1-f44.google.com with SMTP id n14so10483219wrw.9
+        for <git@vger.kernel.org>; Mon, 30 Sep 2019 02:55:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RVE9a0xIxOv1m/oHcTcIhY+O/HERoXxmdzKfXgJwF88=;
-        b=NUNWPlqkZO3ejxrAtYs/hcwKeYVK5K9d/u8A/qT7AEpvUqELcHVsds6jh/2dWDlrVD
-         Qyn6QASzikyGFoHkWN1dyd/SnuKZGlGjfSAjr1tFcX0pP6sEMAQMyBKiMHf8jy70Ciup
-         +CCwgHHVQbJGK5xUHONPlt1aQunmTkBPVTlqGCdz6KGpOrGEXNKioXzdYZyCPtY8lpHm
-         usg0jqow6JOdcEvAOVpGexUPNmiaM+TKqsAx8m70pUU3dmWtK33TfmQTmriEznJBsdlL
-         EIXON0Ahigi/KIeZML6L1oZA40Zl7+suuO+6YdslWUGE0guyibK+b89nx6SDwdRWqW8O
-         ck8g==
+        bh=XYXaIeL7Z2OEQPuvIovvmDL7JcKKrIbPABA50H0G2Lc=;
+        b=qkDsRfYr18iFddKUsY4zL+RmqqOFYBzGBfYv12UAmOL/BuM7Kon3SRrQEGXKBs4T7S
+         bni2DFuqCndtpDVx/+3EgnCn/Y7Zt+1rGYRLNTN1HQQ2WwlCXgzownLf4OYWY1MCB/kI
+         fG+52JUmKAcToOLBC3kb/48MlXflKPBaTJXTvBq/HZpY+8dmJfMLZJF3TlHv5d4pXK2W
+         kp3pX949iUDPWnjyZ13k7313jTf+mbaLhygN5KtPdgnrq76lcOb/O3dYsOg5EjqPNShH
+         MReT45+HMuvzwxVmYiqpdVvVMS0gDFESA6EX715u3nHPr1LPulkqt6EhBDAqhTR+IFKo
+         MJsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RVE9a0xIxOv1m/oHcTcIhY+O/HERoXxmdzKfXgJwF88=;
-        b=M0IGQS78ENcHPlJErfuX0Z/kD1oS5hBT1AK4KfFtbbGAAfjoDqYWljqFGjPdCtKy3U
-         ARCFXugFrOu6jv/+4UvEHla2+FygOrT98PgvZs3lhOpJuGckFf3ZOWY5uA8rH/kWwK/E
-         eTcajbiQX++7nGzYg6PBwiDectPxxgaMPYQx5ey7QEbdPEh3b7+8ofCg9zccAskY31lP
-         NG61wtMajIYh1n/hFw5a/X3wtWNG9STjr/q9CpaF/y3rf/J/F50SpQKhxcmALj4bItp0
-         2GOt7Hh49cy7qet6cv8etPg5M1eyqzBkK5eu8N7Q3mTbF7RKqhGaTAfdbyml88awhNLr
-         LrdA==
-X-Gm-Message-State: APjAAAX9BqRDQtAJdGSMMz22HVuqZbophxwY0JbBLkAhrNBuwMN5z451
-        dTVRXIDvgTc6Rdy15n2sYbbL1Cna
-X-Google-Smtp-Source: APXvYqx6HvQOmnq+2+3Azg5RNCFrBwPdE9KmXyXg0c5OpzjqRwxCFR9VG15Tvt6aW2UroZdVivq95Q==
-X-Received: by 2002:adf:ea12:: with SMTP id q18mr13105508wrm.378.1569837335816;
-        Mon, 30 Sep 2019 02:55:35 -0700 (PDT)
+        bh=XYXaIeL7Z2OEQPuvIovvmDL7JcKKrIbPABA50H0G2Lc=;
+        b=tygANBnHgUL8k5dAQOo/Bc72jALV9C5NC4tiDVCsQsS4AXHHwe/sJlZHq5yeBnBiSR
+         XZ5x97Ptd/cQXRaJWLNqbmFJlDhE132COiZykyml5VfaKS2ESHcU/Svv2Qd61WMko7+M
+         M6SSnLGztVRJwAXZOGmwiw0nn2tg+D2tsrzBlK12ge8KNyCp8oxgfkAkmsRvHEZyka7c
+         9Xe5Tc4Q5e/eAGlxBmtvo6IbTKQEYWXbBBYW+qTh691YmC5INLzMW1cxaOHPw2VG8tmb
+         9Kz0XqVg8SVnQhjjKh2GYO49nxIkNcZjHVI0B0vz6j1obxNvu+vc2PZvlfTZW47v4ChT
+         IB7g==
+X-Gm-Message-State: APjAAAW+8NFHdX3a4oQRQIg934eOkx2aBSiMmiWn8LzIKVHCT/lk4Hhe
+        LV5PPsF/NS7bOGTi70VTXgJE4yfJ
+X-Google-Smtp-Source: APXvYqw7LT2O/BFZ4REg1C8/BHqa2jbqXMZZxvbz4b+ZmxwJ/CaOQ57so+tg5qH25c423kcQ0DeiUQ==
+X-Received: by 2002:a5d:490f:: with SMTP id x15mr12141132wrq.375.1569837338893;
+        Mon, 30 Sep 2019 02:55:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u4sm22459525wmg.41.2019.09.30.02.55.35
+        by smtp.gmail.com with ESMTPSA id z3sm13130644wmi.30.2019.09.30.02.55.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Sep 2019 02:55:35 -0700 (PDT)
-Date:   Mon, 30 Sep 2019 02:55:35 -0700 (PDT)
-X-Google-Original-Date: Mon, 30 Sep 2019 09:55:23 GMT
-Message-Id: <1f2245a228e1e1a9b6f0bb70f8f6987af2140182.1569837329.git.gitgitgadget@gmail.com>
+        Mon, 30 Sep 2019 02:55:38 -0700 (PDT)
+Date:   Mon, 30 Sep 2019 02:55:38 -0700 (PDT)
+X-Google-Original-Date: Mon, 30 Sep 2019 09:55:27 GMT
+Message-Id: <7be13d19e1000adc0d5f02e67a799b1b87524322.1569837330.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.288.v2.git.gitgitgadget@gmail.com>
 References: <pull.288.git.gitgitgadget@gmail.com>
         <pull.288.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 07/13] msvc: work around a bug in GetEnvironmentVariable()
+Subject: [PATCH v2 11/13] tests: let --immediate and --write-junit-xml play
+ well together
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,45 +75,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The return value of that function is 0 both for variables that are
-unset, as well as for variables whose values are empty. To discern those
-two cases, one has to call `GetLastError()`, whose return value is
-`ERROR_ENVVAR_NOT_FOUND` and `ERROR_SUCCESS`, respectively.
+When the `--immediate` option is in effect, any test failure will
+immediately exit the test script. Together with `--write-junit-xml`, we
+will want the JUnit-style `.xml` file to be finalized (and not leave the
+XML incomplete). Let's make it so.
 
-Except that it is not actually set to `ERROR_SUCCESS` in the latter
-case, apparently, but the last error value seems to be simply unchanged.
+This comes in particularly handy when trying to debug via Azure
+Pipelines, where the JUnit-style XML is consumed to present the test
+results in an informative and helpful way.
 
-To work around this, let's just re-set the last error value just before
-inspecting the environment variable.
+While at it, also handle the `error()` code path.
 
-This fixes a problem that triggers failures in t3301-notes.sh (where we
-try to override config settings by passing empty values for certain
-environment variables).
+The only remaining code path that sets `GIT_EXIT_OK` happens whenever
+the trash directory could not be set up, i.e. long before the JUnit XML
+was written, therefore we should _not_ try to finalize that XML in that
+case.
 
-This problem is hidden in the MINGW build by the fact that older
-MSVC runtimes (such as the one used by MINGW builds) have a `calloc()`
-that re-sets the last error value in case of success, while newer
-runtimes set the error value only if `NULL` is returned by that
-function.
+It is tempting to change the `immediate` code path to just hand off to
+`error`, simplifying the code in the process. That would, however,
+result in a change of behavior (an additional error message) in the test
+suite, which is outside of the purview of the current patch series: its
+goal is to allow building Git with Visual Studio and testing it with a
+portable version of Git for Windows.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 2 ++
- 1 file changed, 2 insertions(+)
+ t/test-lib.sh | 38 ++++++++++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 16 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 4891789771..7d8cb814ba 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1661,6 +1661,8 @@ char *mingw_getenv(const char *name)
- 	if (!w_key)
- 		die("Out of memory, (tried to allocate %u wchar_t's)", len_key);
- 	xutftowcs(w_key, name, len_key);
-+	/* GetEnvironmentVariableW() only sets the last error upon failure */
-+	SetLastError(ERROR_SUCCESS);
- 	len_value = GetEnvironmentVariableW(w_key, w_value, ARRAY_SIZE(w_value));
- 	if (!len_value && GetLastError() == ERROR_ENVVAR_NOT_FOUND) {
- 		free(w_key);
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index d1ba33745a..86b5e6133b 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -567,6 +567,7 @@ export TERM
+ 
+ error () {
+ 	say_color error "error: $*"
++	finalize_junit_xml
+ 	GIT_EXIT_OK=t
+ 	exit 1
+ }
+@@ -695,7 +696,7 @@ test_failure_ () {
+ 	say_color error "not ok $test_count - $1"
+ 	shift
+ 	printf '%s\n' "$*" | sed -e 's/^/#	/'
+-	test "$immediate" = "" || { GIT_EXIT_OK=t; exit 1; }
++	test "$immediate" = "" || { finalize_junit_xml; GIT_EXIT_OK=t; exit 1; }
+ }
+ 
+ test_known_broken_ok_ () {
+@@ -1063,6 +1064,25 @@ write_junit_xml_testcase () {
+ 	junit_have_testcase=t
+ }
+ 
++finalize_junit_xml () {
++	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
++	then
++		test -n "$junit_have_testcase" || {
++			junit_start=$(test-tool date getnanos)
++			write_junit_xml_testcase "all tests skipped"
++		}
++
++		# adjust the overall time
++		junit_time=$(test-tool date getnanos $junit_suite_start)
++		sed "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
++			<"$junit_xml_path" >"$junit_xml_path.new"
++		mv "$junit_xml_path.new" "$junit_xml_path"
++
++		write_junit_xml "  </testsuite>" "</testsuites>"
++		write_junit_xml=
++	fi
++}
++
+ test_atexit_cleanup=:
+ test_atexit_handler () {
+ 	# In a succeeding test script 'test_atexit_handler' is invoked
+@@ -1085,21 +1105,7 @@ test_done () {
+ 	# removed, so the commands can access pidfiles and socket files.
+ 	test_atexit_handler
+ 
+-	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
+-	then
+-		test -n "$junit_have_testcase" || {
+-			junit_start=$(test-tool date getnanos)
+-			write_junit_xml_testcase "all tests skipped"
+-		}
+-
+-		# adjust the overall time
+-		junit_time=$(test-tool date getnanos $junit_suite_start)
+-		sed "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
+-			<"$junit_xml_path" >"$junit_xml_path.new"
+-		mv "$junit_xml_path.new" "$junit_xml_path"
+-
+-		write_junit_xml "  </testsuite>" "</testsuites>"
+-	fi
++	finalize_junit_xml
+ 
+ 	if test -z "$HARNESS_ACTIVE"
+ 	then
 -- 
 gitgitgadget
 
