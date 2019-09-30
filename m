@@ -7,143 +7,154 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC72B1F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 01:51:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 653581F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 01:51:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729371AbfI3Bvp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Sep 2019 21:51:45 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:45471 "EHLO
+        id S1729332AbfI3Bvt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Sep 2019 21:51:49 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:39552 "EHLO
         mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729332AbfI3Bvo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Sep 2019 21:51:44 -0400
-Received: by mail-qk1-f193.google.com with SMTP id z67so6386757qkb.12
-        for <git@vger.kernel.org>; Sun, 29 Sep 2019 18:51:44 -0700 (PDT)
+        with ESMTP id S1729032AbfI3Bvt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Sep 2019 21:51:49 -0400
+Received: by mail-qk1-f193.google.com with SMTP id 4so6411620qki.6
+        for <git@vger.kernel.org>; Sun, 29 Sep 2019 18:51:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eZfDqgFYsaqy0pboOGfXHX5w1U2DUJ/RUk17H0TOAIU=;
-        b=q0yYY3CfNrEEkSGYlZSClpXp8xK3H8w3fk1Q5aSnoJ/BVngvxYI8lc4CKbf6vJllL7
-         P4zVARGUBlXlhGvf9tnOjUEBUsG7jwEcZesGGxfv7iqj216r9Nc9Qel/I7wha3e7D/+6
-         XMWMc5HVWFH9UZx2tHXZikhVvVfx391oyAV4dq6YomX5fVwlIcCOOG0i9bidUn0gMuOY
-         wDWvNtVPSNu6Twvkz+k4rgB7bL0I3GPDaaRxRcti7aWAFdhi7w6oBZ8PWAGd0vilkCuk
-         U8E9TOhFChzeqnqpQNK/Zy+h8E9oAc40PSWxUzyeWHEmLh994c802/rCuNLXN8sohfpg
-         kITg==
+        bh=JS/RrePUGZe/cr8DroQGq0RI4LOSZ3t+Db1OrFTxxGA=;
+        b=YMGzzhU0XpWWIqLMrNYBNRPG/cQjz2rtbZ0hcuvsBUZFrdecqFP9oLnmfXPxAe0j24
+         E8mBbJgMh4hORW29HXqiISIyhKYk/8D+PXMby7IZf+dVpyq0xjBQyMpS0I8WG5HCq0tG
+         r5nP5LFZYVDNGHpyAOd+ky9VqNV5dsIvkHDl2h+w9dPxY4sscgCm37c3iSLYY9vdRBk5
+         4WUS7YvhPu/91lSj02B7CZiOKRgbLz19BOgPZeykfyO0EzyNZP1eAWaZdH4EMMDjdUIt
+         23wT6IS1OGbHEx+iFsOcDE8v5wou+7lOU+2vd1QxsXCTk9wWOVHp0bf9PNBw/cPK1LZW
+         DBxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eZfDqgFYsaqy0pboOGfXHX5w1U2DUJ/RUk17H0TOAIU=;
-        b=LYUGjLiX1VA0cjMKWj/WKhUR5oQ/WriEEj3lvrrgMKLjojJuyobF/+wv2HmPWQ6Uvx
-         lTCMStfzvDhCsw83im+ysWS9cQx35lRjsvVc2a5p18ybHaFvyCfkFQjwUaitJi4gE5AO
-         +ePAHPRkKmL7eChkikxRpb1ZpUgOGHiw+8e5c5tFu6j2cJE11J6ZEFGubgK+dch4X20q
-         0VcOOGB1UrH9uzXgcDGQKV2aHU8+LZU7GeyLs0kYrwKejydnZ12iKj3QaDvgfBo6m4I/
-         TTwjX3UxI8qprRoeKBV6zioJPNBQqFZzukn2+gHd/n+g9ogdvx9fSBKSm45JRaGnnlOI
-         f+oQ==
-X-Gm-Message-State: APjAAAWTUMjeCCthLmJyyO0DcmaSwgOVSuPe4vsqoqwfNV6JeQGlA3WN
-        E2RzOKO06pRLYR2YBSsTFsEtQh4SO+o=
-X-Google-Smtp-Source: APXvYqxsMN7rHwobtV5e+WRVuYlEvbdGXux8lQ8X2KmSVPkxqBhlrxX0RkOswycGz+eU52+d0xdtgA==
-X-Received: by 2002:a37:a410:: with SMTP id n16mr16804090qke.429.1569808303498;
-        Sun, 29 Sep 2019 18:51:43 -0700 (PDT)
+        bh=JS/RrePUGZe/cr8DroQGq0RI4LOSZ3t+Db1OrFTxxGA=;
+        b=gl6lEPmh5DIdahomFaxu7WJIHgkIq+ESu+lBE3JAkyK0ijtVT4OKMXaL0oL45yXJcq
+         l67gs3UiKZ+F+GjxvdDnsvGMSvHgBypjDrW5J20B76ozHzHfYjqhmr2W9Kty6eG5zmWq
+         +MOG7Kf3hmlkNttwljoeMcoSHm+5a0Gix+Z9uJLKyQp2JLTrtaee7+zgHE8/qalUw0Nt
+         bCsV45RXFpVwSlQZFr+kJMFF9aYV6dJ+9TL9MUP+YD8dsXGbiBQflQt2vX+WMVhfyXSQ
+         wr3WMbvhiQmJW5Wv6Yd/VLS6awaWxYKVX11l173QNV0tOocLR3t0qEnkqXgLt+Mb68B2
+         gwQg==
+X-Gm-Message-State: APjAAAVoQUcr397m/fwpXdV9POR2OnYEdGUkpf1bhCo6OAwSSDcsRUq+
+        t1ovnCc2yLR7cFVMjRe8tqnqx3GAlTc=
+X-Google-Smtp-Source: APXvYqz+hOhs6LJDdLys59mlfIGx+RSWBNx7wQrFDQQdFoJl1Jg1B02I8oUxcPy++icxkTIH9aoB0A==
+X-Received: by 2002:a37:a2c3:: with SMTP id l186mr16024219qke.461.1569808306764;
+        Sun, 29 Sep 2019 18:51:46 -0700 (PDT)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::3])
-        by smtp.gmail.com with ESMTPSA id f11sm4706954qkk.76.2019.09.29.18.51.40
+        by smtp.gmail.com with ESMTPSA id f11sm4706954qkk.76.2019.09.29.18.51.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Sep 2019 18:51:43 -0700 (PDT)
+        Sun, 29 Sep 2019 18:51:46 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, olyatelezhnaya@gmail.com,
         pclouds@gmail.com, gitster@pobox.com, jrnieder@gmail.com,
         Brandon Williams <bwilliams.eng@gmail.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: [PATCH v2 09/11] grep: protect packed_git [re-]initialization
-Date:   Sun, 29 Sep 2019 22:50:55 -0300
-Message-Id: <ede35868d797ea5a3560422afe7280e977bc9f59.1569808052.git.matheus.bernardino@usp.br>
+        Manav Rathi <mnvrth@gmail.com>
+Subject: [PATCH v2 10/11] grep: re-enable threads in non-worktree case
+Date:   Sun, 29 Sep 2019 22:50:56 -0300
+Message-Id: <c1fe6545a90563419731932b0bb17869dab1cda7.1569808052.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <cover.1569808052.git.matheus.bernardino@usp.br>
 References: <cover.1569808052.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some fields in struct raw_object_store are lazy initialized by the
-thread-unsafe packfile.c:prepare_packed_git(). Although this function is
-present in the call stack of git-grep threads, all paths to it are
-currently protected by obj_read_lock() (and the main thread usually
-indirectly calls it before firing the worker threads, anyway). However,
-it's possible that future modifications add new unprotected paths to it,
-introducing a race condition. Because errors derived from it wouldn't
-happen often, it could be hard to detect. So to prevent future
-headaches, let's force eager initialization of packed_git when setting
-git-grep up. There'll be a small overhead in the cases where we didn't
-really needed to prepare packed_git during execution but this shouldn't
-be very noticeable.
+They were disabled at 53b8d93 ("grep: disable threading in non-worktree
+case", 12-12-2011), due to observable performance drops (to the point
+that using a single thread would be faster than multiple threads). But
+now that zlib inflation can be performed in parallel we can regain the
+speedup, so let's re-enable threads in non-worktree grep.
 
-Also, packed_git may be re-initialized by
-packfile.c:reprepare_packed_git(). Again, all paths to it in git-grep
-are already protected by obj_read_lock() but it may suffer from the same
-problem in the future. So let's also internally protect it with
-obj_read_lock() (which is a recursive mutex).
+Grepping 'abcd[02]' ("Regex 1") and '(static|extern) (int|double) \*'
+("Regex 2") at chromium's repository[1] I got:
+
+ Threads |   Regex 1  |  Regex 2
+---------|------------|-----------
+    1    |  17.2920s  |  20.9624s
+    2    |   9.6512s  |  11.3184s
+    4    |   6.7723s  |   7.6268s
+    8**  |   6.2886s  |   6.9843s
+
+These are all means of 30 executions after 2 warmup runs. All tests were
+executed on an i7-7700HQ (quad core w/ hyper-threading), 16GB of RAM and
+SSD, running Manjaro Linux. But to make sure the optimization also
+performs well on HDD, the tests were repeated on another machine with an
+i5-4210U (dual core w/ hyper-threading), 8GB of RAM and HDD (SATA III,
+5400 rpm), also running Manjaro Linux:
+
+ Threads |   Regex 1  |  Regex 2
+---------|------------|-----------
+    1    |  18.4035s  |  22.5368s
+    2    |  12.5063s  |  14.6409s
+    4**  |  10.9136s  |  12.7106s
+
+** Note that in these cases we relied on hyper-threading, and that's
+   probably why we don't see a big difference in time.
+
+Unfortunately, multithreaded git-grep might be slow in the non-worktree
+case when --textconv is used and there're too many text conversions.
+Probably the reason for this is that the object read lock is used to
+protect fill_textconv() and therefore there is a mutual exclusion
+between textconv execution and object reading. Because both are time
+consuming operations, not being able to perform them in parallel can
+cause performance drops. To inform the users about this (and other
+threading detais), let's also add a "NOTES ON THREADS" section to
+Documentation/git-grep.txt.
+
+[1]: chromium’s repo at commit 03ae96f (“Add filters testing at DSF=2”,
+     04-06-2019), after a 'git gc' execution.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- builtin/grep.c | 8 ++++++--
- packfile.c     | 2 ++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ Documentation/git-grep.txt | 11 +++++++++++
+ builtin/grep.c             |  2 +-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 2d27969057..00fc59d565 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -330,6 +330,17 @@ EXAMPLES
+ `git grep solution -- :^Documentation`::
+ 	Looks for `solution`, excluding files in `Documentation`.
+ 
++NOTES ON THREADS
++----------------
++
++The `--threads` option (and the grep.threads configuration) will be ignored when
++`--open-files-in-pager` is used, forcing a single-threaded execution.
++
++When grepping the object store (with `--cached` or giving tree objects), running
++with multiple threads might perform slower than single threaded if `--textconv`
++is given and there're too many text conversions. So if you experience low
++performance in this case, it might be desirable to use `--threads=1`.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 diff --git a/builtin/grep.c b/builtin/grep.c
-index c973ac46a7..0947596bcd 100644
+index 0947596bcd..163f14b60d 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -24,6 +24,7 @@
- #include "submodule.h"
- #include "submodule-config.h"
- #include "object-store.h"
-+#include "packfile.h"
+@@ -1054,7 +1054,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	if (recurse_submodules && (!use_index || untracked))
+ 		die(_("option not supported with --recurse-submodules"));
  
- static char const * const grep_usage[] = {
- 	N_("git grep [<options>] [-e] <pattern> [<rev>...] [[--] <path>...]"),
-@@ -1074,11 +1075,14 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			skip_first_line = 1;
- 
- 		/*
--		 * Pre-read gitmodules (if not read already) to prevent racy
--		 * lazy reading in worker threads.
-+		 * Pre-read gitmodules (if not read already) and force eager
-+		 * initialization of packed_git to prevent racy lazy
-+		 * reading/initialization once worker threads are started.
- 		 */
- 		if (recurse_submodules)
- 			repo_read_gitmodules(the_repository, 1);
-+		if (startup_info->have_repository)
-+			(void)get_packed_git(the_repository);
- 
- 		start_threads(&opt);
- 	} else {
-diff --git a/packfile.c b/packfile.c
-index a336972174..5b32dac4ce 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1016,12 +1016,14 @@ void reprepare_packed_git(struct repository *r)
- {
- 	struct object_directory *odb;
- 
-+	obj_read_lock();
- 	for (odb = r->objects->odb; odb; odb = odb->next)
- 		odb_clear_loose_cache(odb);
- 
- 	r->objects->approximate_object_count_valid = 0;
- 	r->objects->packed_git_initialized = 0;
- 	prepare_packed_git(r);
-+	obj_read_unlock();
- }
- 
- struct packed_git *get_packed_git(struct repository *r)
+-	if (list.nr || cached || show_in_pager) {
++	if (show_in_pager) {
+ 		if (num_threads > 1)
+ 			warning(_("invalid option combination, ignoring --threads"));
+ 		num_threads = 1;
 -- 
 2.23.0
 
