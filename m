@@ -2,139 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A851A1F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 16:36:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EE591F464
+	for <e@80x24.org>; Mon, 30 Sep 2019 16:58:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732219AbfI3QgW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Sep 2019 12:36:22 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:45234 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731459AbfI3QgW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 12:36:22 -0400
-Received: by mail-pf1-f194.google.com with SMTP id y72so5900408pfb.12
-        for <git@vger.kernel.org>; Mon, 30 Sep 2019 09:36:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/Z1faWckin67l8s6BG31Ec7oycx54fk60oaZPa8Y79Y=;
-        b=EpFj6gI7wrHP6Zhby/wL7O09Vw1vsKoJk34KB144y6Gcq9GDGvSlVvVPQosv47drb9
-         R1deTn0bXvEDoTskkee95E+4qS6PuH6dvkcdYQnSkEHLwOL+zsHF8GOlC8i3VihOqIyy
-         cQih2MI1yzQ9gms5djxSpSPwq3OLjHmrlx2St+fRSr84m25t4OioHs1BzcAhWzZgQYR5
-         Qk2PbaSy4vB01vHrPJasKspVzdILEkXzJqZuHp1hHLfa15x4rfyEbepE84u/n/o5Ns9f
-         yIumkutYsdiTK2895mJCPSaMsZPPC2XQ088y0eFnVJdcw2Y93BKSl2GXpvnbOO1CbE6I
-         VE/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/Z1faWckin67l8s6BG31Ec7oycx54fk60oaZPa8Y79Y=;
-        b=rY9naHYUOsa2uzuVbEMZBa4AqZGZkvKl7n1h72N7Xn/KiLFOFtuHFXzHA0AUuDW6hk
-         gM4QXTmDNPOUh4hKHTILoKZH0WzoHL2EMLJxbjX2/5n/6TjTINq9RfsrPPdei40JRQwC
-         ynZUTysAPBGJqq32HH3hIUYNJWl+b+7Pzn6lnmBp3uW4/cvfW5D/JqceScZ2Z7od1Gg8
-         tgV+5Mk5bIIwwJmtC1x9hWG1A3sRWIVt/QSJmNFVjgcXgzCYvPe8XF6JegDArm3pGddW
-         f1ge/cf03jlbfoVogrkOHIsiSQjEVFqGVVu5VHtXx3+LxVLDal2gVbRtudK0Tp5xIdek
-         TAVA==
-X-Gm-Message-State: APjAAAUa49u1qCdg57QnuWfFqO7NiUdtGhcEYCXdBpPyZ1Hta8n6Qgi3
-        MFkYfYwHeK0B1HBYe9p3TFk=
-X-Google-Smtp-Source: APXvYqzg9F87D0I1qcKkG9Jt+TJNP/lnCrMhx2iz7TYiO21pbHdisc/K2ZGSOcBTSYnxhEzd9FxN/Q==
-X-Received: by 2002:a17:90a:77c7:: with SMTP id e7mr122148pjs.114.1569861381749;
-        Mon, 30 Sep 2019 09:36:21 -0700 (PDT)
-Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:f:a896:71af:9e6e:a9c9])
-        by smtp.gmail.com with ESMTPSA id m19sm25239pjl.28.2019.09.30.09.36.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Sep 2019 09:36:21 -0700 (PDT)
-Subject: Re: [PATCH v2 2/6] midx: add progress to write_midx_file Add progress
- to write_midx_file. Progress is displayed when the MIDX_PROGRESS flag is set.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     William Baker via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, jeffhost@microsoft.com,
-        William Baker <William.Baker@microsoft.com>
-References: <pull.337.git.gitgitgadget@gmail.com>
- <pull.337.v2.git.gitgitgadget@gmail.com>
- <3bc8677ea7655a3706914f9753c0a3b79dbf7e1f.1568998427.git.gitgitgadget@gmail.com>
- <xmqqlfuiu3sv.fsf@gitster-ct.c.googlers.com>
- <373fc8e9-2ef3-d501-b6e0-b953e047ac78@gmail.com>
- <xmqqftkhkrl6.fsf@gitster-ct.c.googlers.com>
-From:   William Baker <williamtbakeremail@gmail.com>
-Message-ID: <07d054d2-c37e-5a8a-9550-c1d90bb80af7@gmail.com>
-Date:   Mon, 30 Sep 2019 09:36:20 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:68.0)
- Gecko/20100101 Thunderbird/68.0
+        id S1729217AbfI3Q6h (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 12:58:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61868 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727025AbfI3Q6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 12:58:37 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB60E26B25;
+        Mon, 30 Sep 2019 12:58:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HfuS3WpG3zQEtkGp+t6Ci5trASw=; b=txMuOo
+        37oaHvlbkaq0lweP9MCEr4Q/dEM/7RA6hKrheG9Riw7DDolIz85cIxOJy8o6ZNlE
+        sIQTpX4oJBhKGyEaz9Nw7tagThhjWj+djO8ZicT/mz4NWbCRROmxrcmxoDzPd5jJ
+        Dxm1xwVKoiLMw1kz5j3OIDzwNyFR7MHIVBuMk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=I/5ZQn10b91wXI/7n36UpNLa7Xmko/lP
+        DMvcafXGg1cZETef7kyxvNcDZYLBx//P45EB4eC5VhOCWfG6KKBoTdBjMnitLUIU
+        k0rjCntjsBoCDfCJtf7sS4UaWZms9bZGDT+dDrKNDPS0nkKIqrzp/abHz36qa9QZ
+        UrxEnviQ2Ak=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C35A526B24;
+        Mon, 30 Sep 2019 12:58:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1CAA126B23;
+        Mon, 30 Sep 2019 12:58:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: Re: [PATCH v2 18/19] OFFSETOF_VAR macro to simplify hashmap iterators
+References: <20190924010324.22619-1-e@80x24.org>
+        <20190924010324.22619-19-e@80x24.org>
+Date:   Tue, 01 Oct 2019 01:58:33 +0900
+In-Reply-To: <20190924010324.22619-19-e@80x24.org> (Eric Wong's message of
+        "Tue, 24 Sep 2019 01:03:23 +0000")
+Message-ID: <xmqqy2y5hgau.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqftkhkrl6.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 89B9EE60-E3A3-11E9-87AD-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/27/19 8:49 PM, Junio C Hamano wrote:
->>>> diff --git a/midx.c b/midx.c
->>>> index b2673f52e8..54e4e93b2b 100644
->>>> --- a/midx.c
->>>> +++ b/midx.c
->>>> @@ -449,6 +449,8 @@ struct pack_list {
->>>>  	uint32_t nr;
->>>>  	uint32_t alloc;
->>>>  	struct multi_pack_index *m;
->>>> +	struct progress *progress;
->>>> +	uint32_t pack_paths_checked;
->>>>  };
->>
->> I went with u32 here to match the data type used to track how many
->> entries are in the pack_list ('nr' is a u32).
-> 
-> That kind of parallel is valid when you could compare nr with this
-> new thing (or put it differently, the existing nr and this new thing
-> counts the same).  Are they both about the number of packs?
-> 
+Eric Wong <e@80x24.org> writes:
 
-Both 'nr' and 'pack_paths_checked' are about the number of packs.  
-'nr' tracks the number of packs in the multi-pack-index and it grows
-as add_pack_to_midx() finds new packs to add.  'pack_paths_checked' is
-the number of pack ".idx" files that have been checked by add_pack_to_midx().
+> While we cannot rely on a `__typeof__' operator being portable
+> to use with `offsetof'; we can calculate the pointer offset
+> using an existing pointer and the address of a member using
+> pointer arithmetic.
 
->> I could switch to this to an unsigned but we would run the (extremely
->> unlikely) risk of having more than 65k packs on a system where
->> unsigned is 16 bits.
-> 
-> Why?  If an arch is small enough that the natural integer size is 16-bit,
-> then limiting the total number of packs to 65k sound entirely
-> sensible.> The only reason why you'd want fixed (across platforms and
-> architectures) type is when you want to make sure that a file
-> storing the literal values taken from these fields are portable and
-> everybody is limited the same way.  If a platform's natural integer
-> is 64-bit, by artificially limiting the size of this field to u32,
-> you are making disservice to the platform users, and more
-> importantly, you are wasting developers' time by forcing them to
-> wonder if there is a reason behind the choice of u32 (does it really
-> need to be able to store up to 4G, even on a smaller machines?  Is
-> it necessary to refuse to store more than 4G?  What are the
-> reasons?), like me wondering about these questions and writing them
-> down here.
-> 
-> So, unless there is a reason why this must be of fixed type, I'd say
-> just an unsigned would be the most reasonable choice.
-> 
+> +/*
+> + * like offsetof(), but takes a pointer to type instead of the type
 
-I agree that it's best to avoid using a fixed type here unless there's
-a reason that it must be.  Do you think that both 'nr' and
-'pack_paths_checked' being about the number of packs is a strong enough
-reason to use u32 for 'pack_paths_checked'?  If not, I will update
-'pack_paths_checked' in the next path series to be an unsigned int.
+It actually takes "a pointer to a variable of the type".  I had to
+read the above twice to guess what is going on.
 
-Thanks,
-William
+> + * @ptr is subject to multiple evaluation since we can't rely on TYPEOF()
+> + */
+> +#define OFFSETOF_VAR(ptr, member) \
+> +	((uintptr_t)&(ptr)->member - (uintptr_t)(ptr))
+> +
 
+This unfortunately has funny interactions with using uninitialized
+variables.  "make CC=clang config.o" gives something like this:
 
+config.c:1944:50: error: variable 'entry' is uninitialized when used here
+      [-Werror,-Wuninitialized]
+        hashmap_for_each_entry(&cs->config_hash, &iter, entry,
+                                                        ^~~~~
+./hashmap.h:453:20: note: expanded from macro 'hashmap_for_each_entry'
+                                                OFFSETOF_VAR(var, member)); \
+                                                             ^~~
+./git-compat-util.h:1346:16: note: expanded from macro 'OFFSETOF_VAR'
+        ((uintptr_t)&(ptr)->member - (uintptr_t)(ptr))
+                      ^~~
+./hashmap.h:445:61: note: expanded from macro 'hashmap_iter_first_entry_offset'
+        container_of_or_null_offset(hashmap_iter_first(map, iter), offset)
+                                                                   ^~~~~~
+config.c:1939:34: note: initialize the variable 'entry' to silence this warning
+        struct config_set_element *entry;
+                                        ^
+                                         = NULL
 
+Personally, I feel the workaround suggested by the compiler is just
+as bogus as the warning itself X-<.  Casting NULL as if it were a
+pointer to an object of type typeof(*ptr), treating it as if it is a
+valid address, and doing raw address arith is just as bogus as doing
+the same raw address arith on an uninitialized ptr, isn't it?
+
+Anyway...
