@@ -2,210 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 863131F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 22:31:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF7161F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 22:55:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726784AbfI3WbL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Sep 2019 18:31:11 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:38383 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726103AbfI3WbK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 18:31:10 -0400
-Received: by mail-pg1-f194.google.com with SMTP id x10so8170232pgi.5
-        for <git@vger.kernel.org>; Mon, 30 Sep 2019 15:31:09 -0700 (PDT)
+        id S1729736AbfI3WzC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 18:55:02 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:44116 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726425AbfI3WzB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 18:55:01 -0400
+Received: by mail-pf1-f196.google.com with SMTP id q21so6435601pfn.11
+        for <git@vger.kernel.org>; Mon, 30 Sep 2019 15:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=iOXBcr4jAhRQgotFpqjpGZfGHjtxS6artB8lA9X6dcs=;
-        b=mo7dJnbexhT5eg/0p5y+bYmOYy9aX5yNqN2gtpfyiXWMs8Yq/527+KJpps0kEf5GBT
-         budSWJF5/ItdxO/9/jo49mi2u/n1sANG4Mej5bWNNym+5aLBJg90Hri/juOXCF9IpZLH
-         GXlzXGUEds1l+TzmWAjCZX4nOByZ2kP+oMjB+iSgHbRjrWDgN8ODpe1wPSHpMafoXszo
-         kozq5Q7mhRI+ZF/KJmlRrEth/CWANwLJDHijOKYFqz9QmBn97OLkHMjZGogrt+zu6ctN
-         IqFU+JOcuxjtLvtpczD4n3lbXtNDEDas8rFldkpzZ0oCSQEYSeIijEMB8SOPy5mCrfib
-         bV4A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4ccdx2lOL1PNlnSHz4HITfKhP3n2xAGd8ECJg4IFCZw=;
+        b=oWfbO6BJeGDTcr4edVMzMWUMn8GR5oBezFX5DyFsd1DMbDjaru205YLa1/9qo6rVAv
+         GvKptWDt5hYD53w61Hm8UtYqTOhfGax08OWM7q0q9LtpbD35gISwoHBC62bBbxj9/XK4
+         fzgp77YOUBORzerCZpZL6RuzQmObMiSU2P1EiFkTsg7z6rDT7KN5WrRt09Eqis5lraGi
+         XDfGQ9v4MusRIbov0hts+VKkhuzNttDtTqGN7uREHVblOiEMp5gGRjuXpcICO9Xw2+dy
+         vnO7ufwPUQyob4iQgMdybLSCGw9bdrtsbVY43LwQSXhgYHjWK25B9HtKxz9vwUXHpq+J
+         lFmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=iOXBcr4jAhRQgotFpqjpGZfGHjtxS6artB8lA9X6dcs=;
-        b=lMunNa0NVaTRfAGCgI1Oxnnxns8dr4NGM7Ag8QXuDdSZ7yNNLQLtmTfo/nzEwIy5Ev
-         xtQKa8fhEEKn1DIm+0T4wOj6ItVmfSHFCMXt5PhWTDrLzorua1/uGYFyjSpXEkBt+vZj
-         zA9bjDQu48AHN2kKhWUoeEdxl3ZlzY0RPvHWpn24VM8oh51fRq+nWFLbY4mRITRnRlT3
-         8hdtzvKxrjQXA5DZfQrbwnngLv4rzdvLJKxqeueXUmzOfqE853ilvXFVw2FUinklkoSq
-         RsR5zWcEN2yIf7VuBMcAND+MAbMSaFSv2FeZ7BIJmmgFQFpF91oFe463G56DYNjqHOMq
-         J7/A==
-X-Gm-Message-State: APjAAAXlroSAvosAh+3P66ZOgq4edf9vD87UuVc17FY+qHt9s9jo4tLE
-        TSxePJ9NkNJb0ZdAiYrJNBEgBxZE
-X-Google-Smtp-Source: APXvYqx1RpOLKrCsz8euLC1aK297FpQhAqQbVCdPSACIlz/eF1zU/PmcD1SFT1oU83dTAz+bkcpl7g==
-X-Received: by 2002:a17:90a:28c5:: with SMTP id f63mr1714546pjd.67.1569882668939;
-        Mon, 30 Sep 2019 15:31:08 -0700 (PDT)
-Received: from generichostname ([204.14.239.137])
-        by smtp.gmail.com with ESMTPSA id k124sm15879276pgc.6.2019.09.30.15.31.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Sep 2019 15:31:07 -0700 (PDT)
-Date:   Mon, 30 Sep 2019 15:31:05 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH] dir: special case check for the possibility that
- pathspec is NULL
-Message-ID: <20190930223105.GA86525@generichostname>
-References: <20190927171034.GA6542@generichostname>
- <20190930191106.16128-1-newren@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4ccdx2lOL1PNlnSHz4HITfKhP3n2xAGd8ECJg4IFCZw=;
+        b=JBo9hCvC+CYx8zBwtRewkNge35h7nzXCNmNP0wP9U7khbhe96foTsjGXRzKZlsj3qG
+         63Dq6RdvR6PCjZrqbto23cmQ0nECF2zNWSyVAgzqAKuQzm4YBoxkwNlFyGo+q3K39dsm
+         x5XmymQ22XCkWGLtU63kKLFtqDK6445Aql8fgthmuwWELCzE2tyw9WDL2M1QtE3OUQzz
+         nZtgH40nwPoQpWG1Zn3g4HpBnnYfEWMnEZln1OKPjXc1ORlcZycaexunot5aiwW9gkVj
+         4UMCUd/gcSjC8Qosq6dKR18Oveq4MyeHanzEIUU97e4KumJPWktl7mgTviT/shPBscYh
+         Wtlg==
+X-Gm-Message-State: APjAAAX9IplBq/Hz+IzBfhnyWBC8YIQiSsJyIpkQlhI/DRTJ8DrAF7Fo
+        j8dj/QokFpjjk3/1c/zERy7ddrqcT94=
+X-Google-Smtp-Source: APXvYqwwyM3yemP+wOscCaBLFFQIEMGM53fV+1eEBD/jptWBTSPUbNpkRmynrcjwNo3drqqtookLSg==
+X-Received: by 2002:a17:90a:9d86:: with SMTP id k6mr1779800pjp.105.1569884100598;
+        Mon, 30 Sep 2019 15:55:00 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id s5sm546595pjn.24.2019.09.30.15.54.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 30 Sep 2019 15:55:00 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH] merge-recursive: fix the diff3 common ancestor label for virtual commits
+Date:   Mon, 30 Sep 2019 15:54:55 -0700
+Message-Id: <20190930225455.6208-1-newren@gmail.com>
+X-Mailer: git-send-email 2.23.0.25.ge3b5015985
+In-Reply-To: <20190930211437.GA28110@sigill.intra.peff.net>
+References: <20190930211437.GA28110@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190930191106.16128-1-newren@gmail.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+In commit 743474cbfa8b ("merge-recursive: provide a better label for
+diff3 common ancestor", 2019-08-17), the label for the common ancestor
+was changed from always being
 
-On Mon, Sep 30, 2019 at 12:11:06PM -0700, Elijah Newren wrote:
-> Commits 404ebceda01c ("dir: also check directories for matching
-> pathspecs", 2019-09-17) and 89a1f4aaf765 ("dir: if our pathspec might
-> match files under a dir, recurse into it", 2019-09-17) added calls to
-> match_pathspec() and do_match_pathspec() passing along their pathspec
-> parameter.  Both match_pathspec() and do_match_pathspec() assume the
-> pathspec argument they are given is non-NULL.  It turns out that
-> unpack-tree.c's verify_clean_subdirectory() calls read_directory() with
-> pathspec == NULL, and it is possible on case insensitive filesystems for
-> that NULL to make it to these new calls to match_pathspec() and
-> do_match_pathspec().  Add appropriate checks on the NULLness of pathspec
-> to avoid a segfault.
-> 
-> In case the negation throws anyone off (one of the calls was to
-> do_match_pathspec() while the other was to !match_pathspec(), yet no
-> negation of the NULLness of pathspec is used), there are two ways to
-> understand the differences:
->   * The code already handled the pathspec == NULL cases before this
->     series, and this series only tried to change behavior when there was
->     a pathspec, thus we only want to go into the if-block if pathspec is
->     non-NULL.
->   * One of the calls is for whether to recurse into a subdirectory, the
->     other is for after we've recursed into it for whether we want to
->     remove the subdirectory itself (i.e. the subdirectory didn't match
->     but something under it could have).  That difference in situation
->     leads to the slight differences in logic used (well, that and the
->     slightly unusual fact that we don't want empty pathspecs to remove
->     untracked directories by default).
-> 
-> Helped-by: Denton Liu <liu.denton@gmail.com>
-> Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
-> This patch applies on top of en/clean-nested-with-ignored, which is now
-> in next.
-> 
-> Denton found and analyzed one issue and provided the patch for the
-> match_pathspec() call, SZEDER figured out why the issue only reproduced
-> for some folks and not others and provided the testcase, and I looked
-> through the remainder of the series and noted the do_match_pathspec()
-> call that should have the same check.
+         "merged common ancestors"
 
-Thanks for catching what I missed.
+to instead be based on the number of merge bases:
 
-> 
-> So, I'm not sure who should be author and who should be helped-by; I
-> feel like their contributions are possibly bigger than mine.  While I
-> tried to reproduce and debug, they ended up doing the work, and I just
-> looked through the rest of the series for similar issues and wrote up
-> a commit message.  *shrug*
+    >=2: "merged common ancestors"
+      1: <abbreviated commit hash>
+      0: "<empty tree>"
 
-Eh, it doesn't really matter to me. GitHub appears to have de facto
-standardised the Co-authored-by: trailer to allow credit to be split
-amonst multiple authors so _maybe_ we could use that, but I'm pretty
-impartial.
+Unfortunately, this did not take into account that when we have a single
+merge base, that merge base could be fake or constructed.  In such
+cases, this resulted in a label of "00000000".  Of course, the previous
+label of "merged common ancestors" was also misleading for these cases.
+Since we have an API that is explicitly about creating fake commits in
+merge_recursive_generic(), we should provide a better label when using
+that API.  So, when merge_recursive_generic() is called, set the label
+to:
 
-> 
->  dir.c                 |  8 +++++---
->  t/t0050-filesystem.sh | 23 +++++++++++++++++++++++
->  2 files changed, 28 insertions(+), 3 deletions(-)
-> 
-> diff --git a/dir.c b/dir.c
-> index 7ff79170fc..bd39b86be4 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1962,8 +1962,9 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
->  			((state == path_untracked) &&
->  			 (get_dtype(cdir.de, istate, path.buf, path.len) == DT_DIR) &&
->  			 ((dir->flags & DIR_SHOW_IGNORED_TOO) ||
-> -			  do_match_pathspec(istate, pathspec, path.buf, path.len,
-> -					    baselen, NULL, DO_MATCH_LEADING_PATHSPEC) == MATCHED_RECURSIVELY_LEADING_PATHSPEC))) {
-> +			  (pathspec &&
-> +			   do_match_pathspec(istate, pathspec, path.buf, path.len,
-> +					     baselen, NULL, DO_MATCH_LEADING_PATHSPEC) == MATCHED_RECURSIVELY_LEADING_PATHSPEC)))) {
->  			struct untracked_cache_dir *ud;
->  			ud = lookup_untracked(dir->untracked, untracked,
->  					      path.buf + baselen,
-> @@ -1975,7 +1976,8 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
->  			if (subdir_state > dir_state)
->  				dir_state = subdir_state;
->  
-> -			if (!match_pathspec(istate, pathspec, path.buf, path.len,
-> +			if (pathspec &&
-> +			    !match_pathspec(istate, pathspec, path.buf, path.len,
->  					    0 /* prefix */, NULL,
->  					    0 /* do NOT special case dirs */))
->  				state = path_none;
-> diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-> index 192c94eccd..edb30f9eb2 100755
-> --- a/t/t0050-filesystem.sh
-> +++ b/t/t0050-filesystem.sh
-> @@ -131,4 +131,27 @@ $test_unicode 'merge (silent unicode normalization)' '
->  	git merge topic
->  '
->  
-> +test_expect_success CASE_INSENSITIVE_FS 'checkout with no pathspec and a case insensitive fs' '
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +
-> +		>Gitweb &&
-> +		git add Gitweb &&
-> +		git commit -m "add Gitweb" &&
-> +
-> +		git checkout --orphan todo &&
-> +		git reset --hard &&
-> +		# the subdir is crucial, without it there is no segfault
+         "constructed merge base"
 
-We should either remove this comment or change the justification. A
-future reader may be confused at what particular segfault this refers
-to.
+Note that users of merge_recursive_generic include the builtin commands
+git-am (in combination with git apply --build-fake-ancestor),
+git-merge-recursive, and git-stash.
 
-> +		mkdir -p gitweb/subdir &&
-> +		>gitweb/subdir/file &&
-> +		# it is not strictly necessary to add and commit the
-> +		# gitweb directory, its presence is sufficient
+Reported-by: Jeff King <peff@peff.net>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+Applies to the top of en/merge-recursive-cleanup, which is in next.
 
-Same here, its presence is sufficient to... what?
+ merge-recursive.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Thanks,
+diff --git a/merge-recursive.c b/merge-recursive.c
+index b058741f00..2b7722e350 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3550,6 +3550,8 @@ static int merge_recursive_internal(struct merge_options *opt,
+ 		merged_merge_bases = make_virtual_commit(opt->repo, tree,
+ 							 "ancestor");
+ 		ancestor_name = "empty tree";
++	} else if (opt->ancestor) {
++		ancestor_name = opt->ancestor;
+ 	} else if (merge_bases) {
+ 		ancestor_name = "merged common ancestors";
+ 	} else {
+@@ -3689,7 +3691,8 @@ int merge_recursive(struct merge_options *opt,
+ {
+ 	int clean;
+ 
+-	assert(opt->ancestor == NULL);
++	assert(opt->ancestor == NULL ||
++	       !strcmp(opt->ancestor, "constructed merge base"));
+ 
+ 	if (merge_start(opt, repo_get_commit_tree(opt->repo, h1)))
+ 		return -1;
+@@ -3741,6 +3744,7 @@ int merge_recursive_generic(struct merge_options *opt,
+ 					   oid_to_hex(merge_bases[i]));
+ 			commit_list_insert(base, &ca);
+ 		}
++		opt->ancestor = "constructed merge base";
+ 	}
+ 
+ 	repo_hold_locked_index(opt->repo, &lock, LOCK_DIE_ON_ERROR);
+-- 
+2.23.0.25.ge3b5015985
 
-Denton
-
-> +		git add gitweb &&
-> +		git commit -m "add gitweb/subdir/file" &&
-> +
-> +		git checkout master
-> +	)
-> +'
-> +
->  test_done
-> -- 
-> 2.22.1.14.g885c22d24b
-> 
