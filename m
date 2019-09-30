@@ -2,153 +2,295 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A42A1F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 11:38:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 977F91F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 12:17:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729988AbfI3Lin (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Sep 2019 07:38:43 -0400
-Received: from mout.gmx.net ([212.227.15.15]:51557 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729736AbfI3Lin (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 07:38:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1569843518;
-        bh=yomPIDkksmu8r1ELJpVqYgnRjfOJAd0qx5llh2RE2Ig=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=eh4IPyr4IcyBkDSbAGcZcSXR+74fE322eZi1nDmBFCioNiKM35nFtX+gpiPdC38eT
-         NvSnn38gcm/jhM1wnQzZE8w3f2caG8MM8czjuCC8CDIOzfjyx4vKcUmjn6Oug/Zsis
-         if+UAQ8FgOVMZfJQtaQQ1yvp0b+emy6kWRYh7fQM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N3se2-1i5rZO0zey-00zne3; Mon, 30
- Sep 2019 13:38:38 +0200
-Date:   Mon, 30 Sep 2019 13:38:22 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/2] Move git_sort(), a stable sort, into into libgit.a
-In-Reply-To: <xmqqftkgk9sj.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1909301338040.46@tvgsbejvaqbjf.bet>
-References: <pull.352.git.gitgitgadget@gmail.com> <1202809db71a7b0d06efd5e50716861ecff186de.1569400558.git.gitgitgadget@gmail.com> <xmqqftkgk9sj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730749AbfI3MRS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 08:17:18 -0400
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:44117 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729988AbfI3MRS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 08:17:18 -0400
+Received: by mail-vk1-f193.google.com with SMTP id j21so2595339vki.11
+        for <git@vger.kernel.org>; Mon, 30 Sep 2019 05:17:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zLBk8bRiEmf/CTjewJthNw9rSXw0Jshs1tyLsIE90Dc=;
+        b=mk7mhRStMpaD97cuZNgkzS9Qky0QBvobuCl5CtTcGcpxUejMqh7qmprdAtUGX8JqYe
+         5W919MIXEwwrUT5TaYog0B379GCpt77qAPCHPLlJ8eQowwWzn/AUn8N13s9TejQoF6KB
+         WB5B15jJ+hzjWUsKHb8hGy+IyMbnWSvaZ8PPNn1ZMdXd8xuh87U8wyBP4wMIn09mFigt
+         7RoGPbo/EE8Zk9MtMPRoYDwwxokqqavOzfvfRCNOA6X5m7JJN9pUeU8Or4vM9GUtto2p
+         lOMUw7AmYy+fjOHzTweYV2lxnRom9Z8/PLTtP58qA9GH8Z38f/ahYawTCswBUHkQ1qP+
+         +fqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zLBk8bRiEmf/CTjewJthNw9rSXw0Jshs1tyLsIE90Dc=;
+        b=izvVYu7et4C5CrEg/msRSJcVWwav3ayIeRltH0EAKxQ99yr1NYQE32Y00VxTwV0Eo0
+         KhSN16RtMdfwrysaNTmI5NOE0vymZIE4BWULCQ2EDA1paT2v+/3SrB+zX/tM9X3ZNj1g
+         mHTfD7i7ImBFF/P2gAdrrVWXDvURlVPWqrIrqFQeRyAgLgbdvGF9AV0sDPkjfdKGMwvy
+         JjBAtmYH/TEX7EcYnZuTp2lUbJcQOSUtwboScjJPpZh/rmvPxDBjixrQ58ryZmFrGZHS
+         R03oFeSkvpROPlNtJRSNnTN1b38m38lG+z7vVwpMP0EVnNh1QlWTgrFPnplipSvxzkK1
+         VmDA==
+X-Gm-Message-State: APjAAAXWKYZP2RBNStRvmaQLhufHNitaj0iluWsJbKHqOeDX/1F3hGTR
+        CkMfWoPuyCaI6hw3o06ObaZlk2Vv7TPgqaKg3bODfdZZ
+X-Google-Smtp-Source: APXvYqxbX2LbXTFgxRfAdQz8EibyiKJIsYoopKZ8Tskaz3eyAsGeqczldu5ARCgE406ncmVrA2Ei8JfCR0LP5QwLZjU=
+X-Received: by 2002:a1f:3cc9:: with SMTP id j192mr4473117vka.58.1569845836219;
+ Mon, 30 Sep 2019 05:17:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:18nt5S6FxiCnFxid4/mq98aZv7h2RiV/wBL+h3iQPUVGEufFbuV
- Ooc+1NxipLzkuIvR9uLR4k1N1X507nUD9Ld5R7D0KtiSVR875wwWllPBnM5Tjrb/Hi+vgbj
- 6XnmxQ7e7EVefrjdTXpIDCLpSbkQTdjJE47cRfmrRwc/By+auajc2YQ93on+IpKFa5zHg/d
- bdiXV/Zx/3lw/jsKD2Z2w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ZyWx/qai0cg=:FVfw9OkuN4I6io7I5oc/IC
- siKfzIeKmEoA8fX9M1B3WpkE/0/4QV49huae+kkX3+IuJl6IRPpn5tjGDP0z1Xja7bP87MG6x
- opD8DYvSEyyCOLCwVxTNDQ7gF7WqrQM+Tt9XtkoFiU9ldPTn+eyLNMx/1FC9Gj46Jagz2UhBm
- YcbmpLvs7biep/v7bmOH08oErNPlHK7jYrhp4F3u5D2To750mKibBuhikjxof3dipTJisnK0e
- r1kN6251R+zZVkZ6cz/jueU+x4UhGxaKHE9BLQmkizMwJKAbxDcbg2QT+ajXfuLyv91EGC4um
- SNAE8S1kQOy8nMM15Gu3Gs1M2PE8orvpJUxfOKmIEDGPO+/B2uzRRlS/hhYSYrxb9/SH2b8NI
- 0fWG9LdaZ4oOnpuEdViLku9zUY+XGbIhUMNOZxDrQRl3oJkyic7xr4lrRi7junjUy1rTBqDug
- 0Dch3X/kW8JAopZb5E0FFQJh14sRC9EwpDXbUj5HZSoJDIw4ZvZC+Q9tPLsoh6bybPu0SGVX7
- 63wWgrMwE3PoOB9KPRs6WAvCn6+IIlnKzsNgGQvA/oK5Exn6jmAk4/0vNbg7/sDT54LdLFEYn
- dzo1NbcC+cdBf4B5HBeRZwHrwNs8hwGRAFybuHmCyD54rTwABMtPHb8Y2/uNvzLVcPXUZhwOl
- quWjfrcg29sExPXHsw8pMXkOe/N7mKp6EP2WvYbT93XzBram9UhF/DRvHmFYtuyvAhBYmGK3X
- IKJkFGzSSGe4Hf/ATgvjY7obCsv8GZmTNoHNT+yXkxUGy1XT5u1P8AHsyWNNUnU1uclf42vPW
- j0SYnW2hVWjUU53FjgY1FjYovKI8VtPQQ+E8nQAs5WoDIOIAy0o3jkHu0w650geYqWS971dvM
- 5ROZoVCd9oRB3gZnJu2SMo2eF5jvJisu8Jyby2vD28rXHvhk7FqavWRDKdJAgkfeHHH6bmOap
- Jz2Lv9wyjIfY8ZHk1P8uZCitjhGPM4c08uBS3hxhrH/1Xmn4M3sQd1D/TGn0OW5D73maogv8O
- 7l+yXebsDzuQ/W3YiRgKvFcHYyFSRk72OKFefrxfDjSlFDkKwmhDs2aYTZRS02ZooFml84ugd
- optkGiXfhPJufO7MwgTRv4MLCxj1TOUKBjXnxEVrXX4GvgLWVFoQVTd8bTqFOzqEdSP/XmIn2
- WHQGRWd/fOQ4fg+8mZH+k+XJmspEiG3X5PIomeW3J12XrSJJ3CguuamCSn3co/DzFyJmFUyZK
- 6E86RcEUnobARm0xwVoggVg8/T0CdIUdqVrvhkgS9bHMUpVXgCfmOHMxgt0A=
-Content-Transfer-Encoding: quoted-printable
+References: <97013a71289857767100d6a4adcb39ca99b2b21b.1569443729.git.bert.wesarg@googlemail.com>
+ <f1477ba53a03484a0440202065a5293c8795d3b7.1569443729.git.bert.wesarg@googlemail.com>
+ <20190929150406.s57pmb3dggfbcqhr@yadavpratyush.com>
+In-Reply-To: <20190929150406.s57pmb3dggfbcqhr@yadavpratyush.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Mon, 30 Sep 2019 14:17:04 +0200
+Message-ID: <CAKPyHN3nOL6qy4RhwwHrh2m3EJuJ1-rt-8+0+=z2oJi96Nigpw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] git-gui: support for diff3 conflict style
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.email>
+Content-Type: multipart/mixed; boundary="0000000000006bbece0593c437a6"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+--0000000000006bbece0593c437a6
+Content-Type: text/plain; charset="UTF-8"
 
-On Sat, 28 Sep 2019, Junio C Hamano wrote:
+Pratyush,
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+On Sun, Sep 29, 2019 at 5:04 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
 >
-> > ---
-> >  Makefile                  | 2 +-
-> >  compat/mingw.c            | 5 -----
-> >  git-compat-util.h         | 4 +++-
-> >  compat/qsort.c =3D> qsort.c | 2 +-
-> >  4 files changed, 5 insertions(+), 8 deletions(-)
-> >  rename compat/qsort.c =3D> qsort.c (97%)
+> Hi Philip, Bert,
 >
-> Quite pleasing.
+> Is there any way I can test this change? Philip, I ran the rebase you
+> mention in the GitHub issue [0], and I get that '9c8cba6862abe5ac821' is
+> an unknown revision.
 >
-> > diff --git a/compat/mingw.c b/compat/mingw.c
-> > index 738f0a826a..77d4ef4d19 100644
-> > --- a/compat/mingw.c
-> > +++ b/compat/mingw.c
-> > @@ -1229,11 +1229,6 @@ static int wenvcmp(const void *a, const void *b=
-)
-> >  	return _wcsnicmp(p, q, p_len);
-> >  }
+> Is there any quick way I can reproduce this (maybe on a sample repo)?
+
+The easiest way to produce a merge conflict, is to change the same
+line differently in two branches and try to merge them. I added a
+fast-import file to demonstrate this for you.
+
+$ git init foo
+$ cd foo
+$ git fast-import <../conflict-merge.fi
+$ git reset --hard master
+$ git merge branch
+
+this gets you into the conflict, probably the usual style. Which looks
+in liek this on the terminal:
+
+@@@ -2,7 -2,7 +2,11 @@@ Lorem ipsum dolor sit amet, consectetu
+  Sed feugiat nisl eget efficitur ultrices.
+  Nunc cursus metus rutrum, mollis lorem vitae, hendrerit mi.
+  Aenean vestibulum ante ac libero venenatis, non hendrerit orci pharetra.
+++<<<<<<< HEAD
+ +Proin bibendum purus ut est tristique, non pharetra dui consectetur.
+++=======
++ Proin placerat leo malesuada lacinia lobortis.
+++>>>>>>> branch
+  Pellentesque aliquam libero et nisi scelerisque commodo.
+  Quisque id velit sed magna molestie porttitor.
+  Vivamus sed urna in risus molestie ultricies.
+
+and this in git gui: https://kgab.selfhost.eu/s/gHHaQqowGp7mXEb
+
+Git gui removes the '++' in front of the marker lines. It therefor
+already 'changes' the 'diff'. Though git-apply cannot handle such
+'diffs' anyway.
+
+To get the diff3 style do:
+
+$ git merge --abort
+$ git -c merge.conflictStyle=diff3 merge branch
+
+This is how it looks in the terminal now:
+
+@@@ -2,7 -2,7 +2,13 @@@ Lorem ipsum dolor sit amet, consectetu
+  Sed feugiat nisl eget efficitur ultrices.
+  Nunc cursus metus rutrum, mollis lorem vitae, hendrerit mi.
+  Aenean vestibulum ante ac libero venenatis, non hendrerit orci pharetra.
+++<<<<<<< HEAD
+ +Proin bibendum purus ut est tristique, non pharetra dui consectetur.
+++||||||| merged common ancestors
+++Proin in felis eu elit suscipit rhoncus vel ut metus.
+++=======
++ Proin placerat leo malesuada lacinia lobortis.
+++>>>>>>> branch
+  Pellentesque aliquam libero et nisi scelerisque commodo.
+  Quisque id velit sed magna molestie porttitor.
+  Vivamus sed urna in risus molestie ultricies.
+
+As you can see, there is not the usual 'I removed this, and added
+that' experience, everything is 'added'. Thus I inverted the pre-image
+to '--'. Here is how it looks in the gui:
+https://kgab.selfhost.eu/s/5c8Tosra7WRfjwJ
+
+> [0] https://github.com/git-for-windows/git/issues/2340
+>
+> On 25/09/19 10:38PM, Bert Wesarg wrote:
+> > This adds highlight support for the diff3 conflict style.
 > >
-> > -/* We need a stable sort to convert the environment between UTF-16 <-=
-> UTF-8 */
-> > -#ifndef INTERNAL_QSORT
-> > -#include "qsort.c"
-> > -#endif
-> > -
+> > The common pre-image will be reversed to --, because it has been removed
+> > and either replaced with ours or theirs side.
+> >
+> > Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> > ---
+> >  git-gui.sh   |  3 +++
+> >  lib/diff.tcl | 22 ++++++++++++++++++++++
+> >  2 files changed, 25 insertions(+)
+> >
+> > diff --git a/git-gui.sh b/git-gui.sh
+> > index fd476b6..6d80f82 100755
+> > --- a/git-gui.sh
+> > +++ b/git-gui.sh
+> > @@ -3581,6 +3581,9 @@ $ui_diff tag conf d_s- \
+> >  $ui_diff tag conf d< \
+> >       -foreground orange \
+> >       -font font_diffbold
+> > +$ui_diff tag conf d| \
+> > +     -foreground orange \
+> > +     -font font_diffbold
+> >  $ui_diff tag conf d= \
+> >       -foreground orange \
+> >       -font font_diffbold
+> > diff --git a/lib/diff.tcl b/lib/diff.tcl
+> > index 0fd4600..6caf4e7 100644
+> > --- a/lib/diff.tcl
+> > +++ b/lib/diff.tcl
+> > @@ -347,6 +347,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
+> >       }
+> >
+> >       set ::current_diff_inheader 1
+> > +     set ::conflict_state {CONTEXT}
+> >       fconfigure $fd \
+> >               -blocking 0 \
+> >               -encoding [get_path_encoding $path] \
+> > @@ -450,10 +451,28 @@ proc read_diff {fd conflict_size cont_info} {
+> >                       {++} {
+> >                               set regexp [string map [list %conflict_size $conflict_size]\
+> >                                                               {^\+\+([<>=]){%conflict_size}(?: |$)}]
+> > +                             set regexp_pre_image [string map [list %conflict_size $conflict_size]\
+> > +                                                             {^\+\+\|{%conflict_size}(?: |$)}]
+> >                               if {[regexp $regexp $line _g op]} {
+> >                                       set is_conflict_diff 1
+> >                                       set line [string replace $line 0 1 {  }]
+> > +                                     set markup {}
+> >                                       set tags d$op
+> > +                                     switch -exact -- $op {
+> > +                                     < { set ::conflict_state {OURS} }
+> > +                                     = { set ::conflict_state {THEIRS} }
+> > +                                     > { set ::conflict_state {CONTEXT} }
+> > +                                     }
+> > +                             } elseif {[regexp $regexp_pre_image $line]} {
+> > +                                     set is_conflict_diff 1
+> > +                                     set line [string replace $line 0 1 {  }]
+> > +                                     set markup {}
+> > +                                     set tags d|
+> > +                                     set ::conflict_state {BASE}
+> > +                             } elseif {$::conflict_state eq {BASE}} {
+> > +                                     set line [string replace $line 0 1 {--}]
+> > +                                     set markup {}
+> > +                                     set tags d_--
 >
-> Especially these ;-)
+> I'm afraid I don't follow what this hunk is supposed to do.
 >
-> > diff --git a/compat/qsort.c b/qsort.c
-> > similarity index 97%
-> > rename from compat/qsort.c
-> > rename to qsort.c
-> > index 7d071afb70..08f80eea09 100644
-> > --- a/compat/qsort.c
-> > +++ b/qsort.c
-> > @@ -1,4 +1,4 @@
-> > -#include "../git-compat-util.h"
-> > +#include "git-compat-util.h"
->
-> I however do not think this goes far enough.  With a bit more effort
-> would make the intention of the API more obvious.
->
-> What we are saying now is that
->
->  (1) some platforms do not even have qsort()
->  (2) some codepaths do care the stability of sorting
->
-> the former used to be the reason why we called our implementation
-> git_qsort() and aliased qsort() to use git_qsort().
->
-> But now (2) is in the picture, we would probably want to make it
-> more clear that our own implementation is not about having a sort
-> function that behaves like qsort() and We want a lot more out of it
-> (namely, stability).  It probably is time to rename git_qsort() to
-> git_stable_qsort() or something like that.
->
-> Macros QSORT() and QSORT_S() are about having a convenient and less
-> error-prone thin wrapper that retains an interface similar to
-> qsort(3) and qsort_s(3) that developers are familiar with, so they
-> can and should stay the same name, and it is perfectly fine if the
-> former called qsort() that in turn calls git_stable_qsort() on some
-> platforms.
->
-> And that way, if/when the calling site of QSORT() (not the calling
-> site of STABLE_QSORT()) needs a more performant but unstable sort
-> implementation, we can safely give the most sensible name for it,
-> which is git_qsort().
->
-> Other than that, the two patches look good to me.  Thanks for
-> working on this topic.
+> You set the variable ::conflict_state to the values like OURS, THEIRS,
+> CONTEXT, but I don't see those values being used anywhere. A quick
+> search for these words shows me that you only set them, never read them.
 
-Okay, I will make that change.
+the last elseif depends on it.
 
-Ciao,
-Dscho
+I actually only need to detect the pre-image lines, which starts with
+the ||| conflict-marker and ends with the === conflict-marker, instead
+of all possible states.
+
+>
+> Is there some extra code that you have and I don't?
+>
+> Also, this function is long and complicated already. A comment
+> explaining what this code is doing would be nice, since it is not at all
+> obvious at first read-through.
+
+Will re-send.
+
+Bert
+
+>
+> >                               } else {
+> >                                       set tags d_++
+> >                               }
+> > @@ -505,6 +524,9 @@ proc read_diff {fd conflict_size cont_info} {
+> >                       }
+> >               }
+> >               set mark [$ui_diff index "end - 1 line linestart"]
+> > +             if {[llength $markup] > 0} {
+> > +                     set tags {}
+> > +             }
+> >               $ui_diff insert end $line $tags
+> >               if {[string index $line end] eq "\r"} {
+> >                       $ui_diff tag add d_cr {end - 2c}
+> > --
+> > 2.21.0.789.ga095d9d866
+> >
+>
+> --
+> Regards,
+> Pratyush Yadav
+
+--0000000000006bbece0593c437a6
+Content-Type: application/octet-stream; name="conflict-merge.fi"
+Content-Disposition: attachment; filename="conflict-merge.fi"
+Content-Transfer-Encoding: base64
+Content-ID: <f_k160m4g10>
+X-Attachment-Id: f_k160m4g10
+
+YmxvYgptYXJrIDoxCmRhdGEgNDM2CkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0LCBjb25zZWN0
+ZXR1ciBhZGlwaXNjaW5nIGVsaXQuClNlZCBmZXVnaWF0IG5pc2wgZWdldCBlZmZpY2l0dXIgdWx0
+cmljZXMuCk51bmMgY3Vyc3VzIG1ldHVzIHJ1dHJ1bSwgbW9sbGlzIGxvcmVtIHZpdGFlLCBoZW5k
+cmVyaXQgbWkuCkFlbmVhbiB2ZXN0aWJ1bHVtIGFudGUgYWMgbGliZXJvIHZlbmVuYXRpcywgbm9u
+IGhlbmRyZXJpdCBvcmNpIHBoYXJldHJhLgpQcm9pbiBpbiBmZWxpcyBldSBlbGl0IHN1c2NpcGl0
+IHJob25jdXMgdmVsIHV0IG1ldHVzLgpQZWxsZW50ZXNxdWUgYWxpcXVhbSBsaWJlcm8gZXQgbmlz
+aSBzY2VsZXJpc3F1ZSBjb21tb2RvLgpRdWlzcXVlIGlkIHZlbGl0IHNlZCBtYWduYSBtb2xlc3Rp
+ZSBwb3J0dGl0b3IuClZpdmFtdXMgc2VkIHVybmEgaW4gcmlzdXMgbW9sZXN0aWUgdWx0cmljaWVz
+LgoKcmVzZXQgcmVmcy9oZWFkcy9icmFuY2gKY29tbWl0IHJlZnMvaGVhZHMvYnJhbmNoCm1hcmsg
+OjIKYXV0aG9yIEJlcnQgV2VzYXJnIDxiZXJ0Lndlc2FyZ0Bnb29nbGVtYWlsLmNvbT4gMTU2OTgy
+MjUxNCArMDIwMApjb21taXR0ZXIgQmVydCBXZXNhcmcgPGJlcnQud2VzYXJnQGdvb2dsZW1haWwu
+Y29tPiAxNTY5ODIyODkxICswMjAwCmRhdGEgNQppbml0Ck0gMTAwNjQ0IDoxIGxvcmVtCgpibG9i
+Cm1hcmsgOjMKZGF0YSA0NTEKTG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVy
+IGFkaXBpc2NpbmcgZWxpdC4KU2VkIGZldWdpYXQgbmlzbCBlZ2V0IGVmZmljaXR1ciB1bHRyaWNl
+cy4KTnVuYyBjdXJzdXMgbWV0dXMgcnV0cnVtLCBtb2xsaXMgbG9yZW0gdml0YWUsIGhlbmRyZXJp
+dCBtaS4KQWVuZWFuIHZlc3RpYnVsdW0gYW50ZSBhYyBsaWJlcm8gdmVuZW5hdGlzLCBub24gaGVu
+ZHJlcml0IG9yY2kgcGhhcmV0cmEuClByb2luIGJpYmVuZHVtIHB1cnVzIHV0IGVzdCB0cmlzdGlx
+dWUsIG5vbiBwaGFyZXRyYSBkdWkgY29uc2VjdGV0dXIuClBlbGxlbnRlc3F1ZSBhbGlxdWFtIGxp
+YmVybyBldCBuaXNpIHNjZWxlcmlzcXVlIGNvbW1vZG8uClF1aXNxdWUgaWQgdmVsaXQgc2VkIG1h
+Z25hIG1vbGVzdGllIHBvcnR0aXRvci4KVml2YW11cyBzZWQgdXJuYSBpbiByaXN1cyBtb2xlc3Rp
+ZSB1bHRyaWNpZXMuCgpjb21taXQgcmVmcy9oZWFkcy9tYXN0ZXIKbWFyayA6NAphdXRob3IgQmVy
+dCBXZXNhcmcgPGJlcnQud2VzYXJnQGdvb2dsZW1haWwuY29tPiAxNTY5ODIyNjY3ICswMjAwCmNv
+bW1pdHRlciBCZXJ0IFdlc2FyZyA8YmVydC53ZXNhcmdAZ29vZ2xlbWFpbC5jb20+IDE1Njk4MjMw
+NDQgKzAyMDAKZGF0YSA4CmNoYW5nZWQKZnJvbSA6MgpNIDEwMDY0NCA6MyBsb3JlbQoKYmxvYgpt
+YXJrIDo1CmRhdGEgNDI5CkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0LCBjb25zZWN0ZXR1ciBh
+ZGlwaXNjaW5nIGVsaXQuClNlZCBmZXVnaWF0IG5pc2wgZWdldCBlZmZpY2l0dXIgdWx0cmljZXMu
+Ck51bmMgY3Vyc3VzIG1ldHVzIHJ1dHJ1bSwgbW9sbGlzIGxvcmVtIHZpdGFlLCBoZW5kcmVyaXQg
+bWkuCkFlbmVhbiB2ZXN0aWJ1bHVtIGFudGUgYWMgbGliZXJvIHZlbmVuYXRpcywgbm9uIGhlbmRy
+ZXJpdCBvcmNpIHBoYXJldHJhLgpQcm9pbiBwbGFjZXJhdCBsZW8gbWFsZXN1YWRhIGxhY2luaWEg
+bG9ib3J0aXMuClBlbGxlbnRlc3F1ZSBhbGlxdWFtIGxpYmVybyBldCBuaXNpIHNjZWxlcmlzcXVl
+IGNvbW1vZG8uClF1aXNxdWUgaWQgdmVsaXQgc2VkIG1hZ25hIG1vbGVzdGllIHBvcnR0aXRvci4K
+Vml2YW11cyBzZWQgdXJuYSBpbiByaXN1cyBtb2xlc3RpZSB1bHRyaWNpZXMuCgpjb21taXQgcmVm
+cy9oZWFkcy9icmFuY2gKbWFyayA6NgphdXRob3IgQmVydCBXZXNhcmcgPGJlcnQud2VzYXJnQGdv
+b2dsZW1haWwuY29tPiAxNTY5ODIzMDc3ICswMjAwCmNvbW1pdHRlciBCZXJ0IFdlc2FyZyA8YmVy
+dC53ZXNhcmdAZ29vZ2xlbWFpbC5jb20+IDE1Njk4MjMwNzcgKzAyMDAKZGF0YSA5CmNvbmZsaWN0
+CmZyb20gOjIKTSAxMDA2NDQgOjUgbG9yZW0KCg==
+--0000000000006bbece0593c437a6--
