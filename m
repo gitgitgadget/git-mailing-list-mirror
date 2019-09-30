@@ -3,105 +3,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8629E1F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 01:36:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A938A1F463
+	for <e@80x24.org>; Mon, 30 Sep 2019 01:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729268AbfI3Bgq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Sep 2019 21:36:46 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50643 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726390AbfI3Bgq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Sep 2019 21:36:46 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 724188E0A5;
-        Sun, 29 Sep 2019 21:36:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yHkYvtGjaQiv3dodh+Yhn0L10TE=; b=ONe71p
-        7n6lmSpKgpFTtjM5NfDk+F/vLhHp2NvEMJl4jiZW/c9OWZG67CCA4e7jjSUd7Idz
-        ZxhXCxCHiI1rCPVOh28vA/VbRCkWe0qIe0URylGvs1Dt57IQuh9MD+4loVaDrlfW
-        1UFyn3oBW3QRd/xoVCuoABhi+PhtaDlhe+FRo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Cq3n0g/9nek+4TYHFypx4PGkPKBxhH65
-        firG3q/B+pwFqFPXo906U3AI+2zuCtDHSRzh28IjRj4Rvzis8xynnuNsCYNB3ux5
-        67KH0OXWgzue8lD95543abkReoGGZ+6YAfSB0qEdbs84xQk1CbbKJOMjLqkdUaU7
-        8AeZcYr7Yak=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5D4538E0A3;
-        Sun, 29 Sep 2019 21:36:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 773AD8E0A2;
-        Sun, 29 Sep 2019 21:36:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     git@vger.kernel.org, cb@hashpling.org, dstolee@microsoft.com
-Subject: Re: [PATCH v4] diffcore-break: use a goto instead of a redundant if statement
-References: <20190929204322.1244907-1-alexhenrie24@gmail.com>
-Date:   Mon, 30 Sep 2019 10:36:39 +0900
-In-Reply-To: <20190929204322.1244907-1-alexhenrie24@gmail.com> (Alex Henrie's
-        message of "Sun, 29 Sep 2019 14:43:22 -0600")
-Message-ID: <xmqqa7amimzc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729188AbfI3BvK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Sep 2019 21:51:10 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:46992 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726360AbfI3BvK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Sep 2019 21:51:10 -0400
+Received: by mail-qk1-f194.google.com with SMTP id 201so6389458qkd.13
+        for <git@vger.kernel.org>; Sun, 29 Sep 2019 18:51:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=k+59ScLgg6gvCPiPaVrgq45X0/YVz/3sa5rzKCPOuJo=;
+        b=XpvuILXFfILWfPlwk1oV79SuUaT7b+fj007zNZFSHE7M+5xFMOXyBi7PDGhyNk0xkV
+         EuGKHBWCTmZZ3VrNFZ5AXuDpwa6TVqHMqqyo0fvJgt05HOP9XWm+uiMQdY7Hsu/QxW7u
+         aprlrdTxqsmS3SZeFwxi6r5YbV/TM/5a/TlN838LV9q0Ra6IgAB44qACQhmTZ8s3aSZm
+         h56lKwuwhHKCUmy1r9EBNOSRDxm0tWFAegsqXVkGaggpFYa0JR7QxIm3EvBZzhNmMzp1
+         QQYAHHwYk+TWDLA0IZInYcrtGjfDuRvnMihEpR8dv5jx2/7ZBrGVm9ZVXHoke0hScVDa
+         1dTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=k+59ScLgg6gvCPiPaVrgq45X0/YVz/3sa5rzKCPOuJo=;
+        b=r7TyE97TRAcfmcmDgevcv+sc5FpzCdxOzfdZUTzaz3Q4d2H76fEbGivHX9/TlFntmx
+         ItiFtsXGnn5s9M0xpak72CD0MIs8RQ34dtW3q5gCcQy25ANMXPPDZJ4ww+hWUp0m0CPm
+         C5tRhtdq8AzHNkGMkMh9UzL6tROeuXeaQUYqbTOpRo4jRPGOedpDOz2hGufe3losIiL2
+         J5n9mYgmK2ZiNYPVidjyETLXzwL9nIfvtJU1z60myIgLojGKw+gWyHW09/S63FPC4DJD
+         OX+VZt0DfLBAij+l6i/JLswiLircOlmPszx4ovT1Vb/pe+ZeCdj8SIsneYkFk1yoHoJh
+         wyUA==
+X-Gm-Message-State: APjAAAVbmEd3eLkgnySx62/NCdPNalJd7neeXU26Xqr+aijZofu85ooQ
+        H+rSWwCZsN91Q7+HSbY1zWfd+EsvXKI=
+X-Google-Smtp-Source: APXvYqze5zsm6dgRkWAvWb5E6TeyXGgQgK6u2LaUk2P1+d5gRVVHuP9v6pWAfOPtwhhcnSZWDbZsWw==
+X-Received: by 2002:a05:620a:119a:: with SMTP id b26mr16577949qkk.39.1569808268889;
+        Sun, 29 Sep 2019 18:51:08 -0700 (PDT)
+Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::3])
+        by smtp.gmail.com with ESMTPSA id f11sm4706954qkk.76.2019.09.29.18.51.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Sep 2019 18:51:08 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     git@vger.kernel.org
+Cc:     christian.couder@gmail.com, olyatelezhnaya@gmail.com,
+        pclouds@gmail.com, gitster@pobox.com, jrnieder@gmail.com
+Subject: [PATCH v2 00/11] grep: improve threading and fix race conditions
+Date:   Sun, 29 Sep 2019 22:50:46 -0300
+Message-Id: <cover.1569808052.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <cover.1565468806.git.matheus.bernardino@usp.br>
+References: <cover.1565468806.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C0D470F4-E322-11E9-B69A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+This series focus on re-enabling threads at git-grep for the
+non-worktree case. They are currently disabled due to being slower than
+single-threaded grep in this case. However, by allowing parallel zlib
+inflation when reading objects, speedups of up to 3x were observed.
 
-> The condition "if (q->nr <= j)" checks whether the loop exited normally
-> or via a break statement. This check can be avoided by replacing the
-> jump out of the inner loop with a jump to the end of the outer loop.
->
-> With the break replaced by a goto, the two diff_q calls then can be
-> replaced with a single diff_q call outside of the outer if statement.
+The patchset also contains some fixes for race conditions found in the
+worktree git-grep and thread optimizations to hopefully increase
+overall performance.
 
-I doubt that it is a good idea to do these two things.  Especially I
-do not see why the latter makes the resulting code better.
+This version was almost entirely re-written from scratch so I thought a
+range-diff wouldn't be very useful. The major differences from the first
+one are the race condition fixes and being able to run --textconv and
+--recurse-submodules threaded now.
 
-> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-> ---
->  diffcore-break.c | 14 ++++++--------
->  1 file changed, 6 insertions(+), 8 deletions(-)
->
-> diff --git a/diffcore-break.c b/diffcore-break.c
-> index 875aefd3fe..ee7519d959 100644
-> --- a/diffcore-break.c
-> +++ b/diffcore-break.c
-> @@ -286,17 +286,15 @@ void diffcore_merge_broken(void)
->  					/* Peer survived.  Merge them */
->  					merge_broken(p, pp, &outq);
->  					q->queue[j] = NULL;
-> -					break;
-> +					goto next;
->  				}
->  			}
-> -			if (q->nr <= j)
-> -				/* The peer did not survive, so we keep
-> -				 * it in the output.
-> -				 */
-> -				diff_q(&outq, p);
-> +			/* The peer did not survive, so we keep
-> +			 * it in the output.
-> +			 */
->  		}
-> -		else
-> -			diff_q(&outq, p);
-> +		diff_q(&outq, p);
-> +next:;
->  	}
->  	free(q->queue);
->  	*q = outq;
+Matheus Tavares (11):
+  grep: fix race conditions on userdiff calls
+  grep: fix race conditions at grep_submodule()
+  grep: fix racy calls in grep_objects()
+  replace-object: make replace operations thread-safe
+  object-store: allow threaded access to object reading
+  grep: replace grep_read_mutex by internal obj read lock
+  submodule-config: add skip_if_read option to repo_read_gitmodules()
+  grep: allow submodule functions to run in parallel
+  grep: protect packed_git [re-]initialization
+  grep: re-enable threads in non-worktree case
+  grep: move driver pre-load out of critical section
+
+ .tsan-suppressions         |  6 +++
+ Documentation/git-grep.txt | 11 +++++
+ builtin/grep.c             | 90 +++++++++++++++++++-------------------
+ grep.c                     | 32 ++++++++------
+ grep.h                     | 13 ------
+ object-store.h             | 37 ++++++++++++++++
+ object.c                   |  2 +
+ packfile.c                 |  9 ++++
+ replace-object.c           | 11 ++++-
+ replace-object.h           |  7 ++-
+ sha1-file.c                | 57 +++++++++++++++++++++---
+ submodule-config.c         | 18 +++-----
+ submodule-config.h         |  2 +-
+ unpack-trees.c             |  4 +-
+ 14 files changed, 205 insertions(+), 94 deletions(-)
+
+-- 
+2.23.0
+
