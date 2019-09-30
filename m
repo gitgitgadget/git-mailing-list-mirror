@@ -2,101 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 584B41F463
-	for <e@80x24.org>; Mon, 30 Sep 2019 09:55:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEB2C1F464
+	for <e@80x24.org>; Mon, 30 Sep 2019 09:57:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730649AbfI3Jzq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Sep 2019 05:55:46 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:33903 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728581AbfI3Jzl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Sep 2019 05:55:41 -0400
-Received: by mail-wm1-f66.google.com with SMTP id y135so13715229wmc.1
-        for <git@vger.kernel.org>; Mon, 30 Sep 2019 02:55:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=1WrFUOjNOCYQ9G5fl078OoTy2uTYYjpRxw5Us+PnBoc=;
-        b=jTNncJW2gkGVGMoPYFzNNHj2C9SDs72pOsyLwWpowtOcDzpPzBm+45YiZ2Q2o3uEzv
-         Ot3FLXFST3e57ZIhGXIqaysaQwumgRUGurZrDgvCo6TDcl6JocCLHpVAa9CkqfnMJphG
-         7mxXOQ/F+kI3f8tLa+j0cpvWRQK9YhghLCd7x3+RwpnbLMT/Be2kS+CazDYxam2uM1su
-         k+QdnVRadvUdy9d+DQPbtmElzKsAvBvhF9Q+wl4XCUcY0gHppX1TH90IQ8GDeS2foMZK
-         DzeRQ+BFejBvAghqY8C0k/mvyMS7kWkxvLR36PgyTKgD2TPJ69LYt/8Sl9su+PmGtERt
-         oDZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1WrFUOjNOCYQ9G5fl078OoTy2uTYYjpRxw5Us+PnBoc=;
-        b=HQcnb3XAjJbc/EJn0hpxOxWFfFVZfnbzXckQ+0sniLGwiD5N9cmJrZIBUE45bwC7E8
-         3OxahYYs2g0HA+h53XUy1AHRNpAbwGsRfBmNx/YGq2M07Fzd4VRsSjzOoyDd1t/ytGfZ
-         y22cr9/XzkUkNJ2LVrX1NIMhUtG/Fp32beCeYPeSTUapYI36L586W+nwvveYEObxMbKb
-         9xlsjcL+JSWVPWTtHLExpHX6nOkrx2c9nbajEwgHkfaSGU/yfb6CNWV3RShqZH/a/Yr0
-         zhK9NPgOg3FqGKDgZDLMgEivu5mckh5iE1ydpqpMlBpRK4t7nyqB2uUvoz4HDnmjj64Y
-         QawA==
-X-Gm-Message-State: APjAAAUyUO1uVXt+Nf17hYZClrDFvrwwTfB1KHOZBpTWLL4eSInnBAKG
-        STT9ciOlF8KiiW5I2V4rQQ8hhL0b
-X-Google-Smtp-Source: APXvYqzcfZA6yMbimJzBZybNjzGsTG6TWQ1HcOLoU6kQBQyBs+u8yDH2Zh+FBV1OJSDRGJ4JDGh+Uw==
-X-Received: by 2002:a1c:3904:: with SMTP id g4mr17233470wma.116.1569837339551;
-        Mon, 30 Sep 2019 02:55:39 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 17sm9679574wrl.15.2019.09.30.02.55.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Sep 2019 02:55:39 -0700 (PDT)
-Date:   Mon, 30 Sep 2019 02:55:39 -0700 (PDT)
-X-Google-Original-Date: Mon, 30 Sep 2019 09:55:28 GMT
-Message-Id: <bde1e8ef658c3978a85b58c3f2c4ffbd49a562f0.1569837330.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.288.v2.git.gitgitgadget@gmail.com>
-References: <pull.288.git.gitgitgadget@gmail.com>
-        <pull.288.v2.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 12/13] ci: really use shallow clones on Azure Pipelines
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729415AbfI3J5t (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Sep 2019 05:57:49 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:54950 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726329AbfI3J5t (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Sep 2019 05:57:49 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 5BE031F463;
+        Mon, 30 Sep 2019 09:57:49 +0000 (UTC)
+Date:   Mon, 30 Sep 2019 09:57:49 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: Re: [PATCH v2 07/19] hashmap_get takes "const struct hashmap_entry *"
+Message-ID: <20190930095749.GA24511@dcvr>
+References: <20190924010324.22619-1-e@80x24.org>
+ <20190924010324.22619-8-e@80x24.org>
+ <9dc71ed0-617c-84e8-b7fc-0766f4d83695@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9dc71ed0-617c-84e8-b7fc-0766f4d83695@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Derrick Stolee <stolee@gmail.com> wrote:
+> On 9/23/2019 9:03 PM, Eric Wong wrote:
+> > This is less error-prone than "const void *" as the compiler
+> > now detects invalid types being passed.
+> [snip]
+> > diff --git a/hashmap.h b/hashmap.h
+> > index 40bcc64289..2a4b4a3954 100644
+> > --- a/hashmap.h
+> > +++ b/hashmap.h
+> > @@ -74,7 +74,8 @@
+> >   *             e->key = key;
+> >   *
+> >   *             flags |= COMPARE_VALUE;
+> > - *             printf("%sfound\n", hashmap_get(&map, e, NULL) ? "" : "not ");
+> > + *             printf("%sfound\n",
+> > + *                    hashmap_get(&map, &e->ent, NULL) ? "" : "not ");
+> >   *             free(e);
+> >   *         }
+> >   *
+> > @@ -84,7 +85,8 @@
+> >   *             k.key = key;
+> >   *
+> >   *             flags |= COMPARE_VALUE;
+> > - *             printf("%sfound\n", hashmap_get(&map, &k, value) ? "" : "not ");
+> > + *             printf("%sfound\n",
+> > + *                    hashmap_get(&map, &k->ent, value) ? "" : "not ");
+> >   *         }
+> >   *
+> >   *         if (!strcmp("end", action)) {
+> > @@ -286,7 +288,7 @@ static inline unsigned int hashmap_get_size(struct hashmap *map)
+> >   * If an entry with matching hash code is found, `key` and `keydata` are passed
+> >   * to `hashmap_cmp_fn` to decide whether the entry matches the key.
+> >   */
+> > -void *hashmap_get(const struct hashmap *map, const void *key,
+> > +void *hashmap_get(const struct hashmap *map, const struct hashmap_entry *key,
+> >  			 const void *keydata);
+> 
+> super-nit: the whitespace before the second line is "\t\t\t " but should be
+> "\t\t  ".
 
-This was a left-over from the previous YAML schema, and it no longer
-works. The problem was noticed while editing `azure-pipelines.yml` in VS
-Code with the very helpful "Azure Pipelines" extension (syntax
-highlighting and intellisense for `azure-pipelines.yml`...).
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- azure-pipelines.yml | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/azure-pipelines.yml b/azure-pipelines.yml
-index c329b7218b..55ee23ad0f 100644
---- a/azure-pipelines.yml
-+++ b/azure-pipelines.yml
-@@ -1,6 +1,5 @@
--resources:
--- repo: self
--  fetchDepth: 1
-+variables:
-+  Agent.Source.Git.ShallowFetchDepth: 1
- 
- jobs:
- - job: windows_build
--- 
-gitgitgadget
-
+Huh?  Do you mean the "const void *keydata);" line?
+That's context and unchanged from before.  Thanks.
