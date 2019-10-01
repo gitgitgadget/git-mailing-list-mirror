@@ -8,101 +8,196 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E9441F4BD
-	for <e@80x24.org>; Tue,  1 Oct 2019 18:15:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA23B1F4BD
+	for <e@80x24.org>; Tue,  1 Oct 2019 18:17:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728071AbfJASPy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Oct 2019 14:15:54 -0400
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:41652 "EHLO
-        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726873AbfJASPy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Oct 2019 14:15:54 -0400
-Received: by mail-yb1-f196.google.com with SMTP id 206so5399339ybc.8
-        for <git@vger.kernel.org>; Tue, 01 Oct 2019 11:15:54 -0700 (PDT)
+        id S1731842AbfJASRh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Oct 2019 14:17:37 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:35000 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726376AbfJASRg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Oct 2019 14:17:36 -0400
+Received: by mail-pg1-f193.google.com with SMTP id a24so10257485pgj.2
+        for <git@vger.kernel.org>; Tue, 01 Oct 2019 11:17:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Rf5erE41oFdNfYws6UixLUf9Adi4SfzzQcFf55LDOYE=;
-        b=i1+gZ4i5EHl5NO/0wBmWmb2oH5bCtTPOlqvWB19KUfOCl+6/IvcBBLihaa0mDPis7v
-         C2/nnIb1yDfVTAKJVfnB+nYfh6Ell9P6S3WZ1BAA35G8tXUwzzWr3nRe4N0I2Lhi/Uxo
-         JXzLMHn+5WJshha3y+wGHBYc+Bo475pfBF4RtMgVA7rOJr9pq586beR1s8p3EhR6WI+4
-         X30od6j+2IAQxCwlkhyNLR/Koam0qyaQ1gY9PlElSwXRZ+TxPFwG2tV66pepZY3xZHj6
-         52D6XupeU2O8FGgfZmqWVCJNG6OTBnn63k6JudtXIJBIMsJxnurxeayvfFZh0a7jsuQQ
-         +Czw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hWP0TP1JRIe9x7P0piw3KSRo0/eTeq7vFYkyiV/zDeY=;
+        b=Ue3S5NA1YiOhmqOZ0GWN9On7v1V3XpT2eksDktkkkMg22HzpXnv+b8TTY9TksQIIsU
+         zcQ2LAHA5eYGsfEHr1yMwjuTjhU7KNI5oMb7pLmby6Fgh7ZkCyFQ3KkQZFNWIyD4F1Bk
+         jCRUEvP+6Ajyf1t0Efc+AstXTN7NcLbnm55vmAfrdBVcFD8djHGK24LGVveMBmENjUiS
+         eKhLClaU5oB3B/+elG/13NTzuINzvx5jHRns4SBogHjnJEOkhi2pMzb1ams75ULidk1U
+         R3BDSGsZ8f6Oi01pgsCf6obg1ieShiuilG15dTNpTwImB/DKUKLZNOUS47PQu61LpMcc
+         12fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Rf5erE41oFdNfYws6UixLUf9Adi4SfzzQcFf55LDOYE=;
-        b=VbkN2yFz8Fsbqa3J1I98RfmmRRAbhtxgK+8YxRaFtlKM1mOX2vTRaxrLT1BInU7Kpl
-         FsAwX4My+MtCYw+BgoINRCypZQh0vNLvRNgInbYNWNTKzsGJieEumcO2jnz0E0/EC5A3
-         M9J3pducPMZAvWDl5t4wULsCs7Q/FpXQwj1JmM1Vb8M9O+FMJAlg5EornntDuL5qUXxR
-         EMTgIbRKaG6zfGl4QiDilOGn1T0YxgueycF1WjIGpyNsjFexvatU7Mzp3+YVB2WXjCuw
-         9M1NIdIpPL1iHUTFy0Wy0qf4fTzjkYOvpg7MdepaZCbvZ7pM6sbZqXIpHmerBf0/4BrR
-         39hA==
-X-Gm-Message-State: APjAAAVjULsGyQ9cYtBzScK6AgzxaPcLSv9lavGt1JDwGbRYwo3FuaBx
-        dfzQODzJivAhJWI7eVsYqnY=
-X-Google-Smtp-Source: APXvYqyZpXnX9RpgBWS0iQiiCWsBFGVW7Z8Bj1uCnfnbLae84d9utuYTd79HzfPk0tjdfodpFxXDjg==
-X-Received: by 2002:a25:af85:: with SMTP id g5mr20615590ybh.417.1569953753588;
-        Tue, 01 Oct 2019 11:15:53 -0700 (PDT)
-Received: from [192.168.1.3] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id e17sm4322372ywa.52.2019.10.01.11.15.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Oct 2019 11:15:53 -0700 (PDT)
-Subject: Re: [PATCH v2 00/11] New sparse-checkout builtin and "cone" mode
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.316.git.gitgitgadget@gmail.com>
- <pull.316.v2.git.gitgitgadget@gmail.com>
- <47186f02-164d-fa41-f65c-05a197e4a046@gmail.com>
- <CABPp-BHGNzLNzOW6nSi_ComA0DrRnJukqoemG8z_qS6e22uBUQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <eb1bac92-2c65-b329-46ee-bcb64cb9ac0c@gmail.com>
-Date:   Tue, 1 Oct 2019 14:15:52 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hWP0TP1JRIe9x7P0piw3KSRo0/eTeq7vFYkyiV/zDeY=;
+        b=EeArJbuZM7TN8HqvcNtNuARN/5QwA8KAH3sZFAB13A3wQusQjvj4oUxbQY5p1u3zCx
+         47n4sORxiOZuoIj4nh1Q03Y36k8KfO3b+OjUr6HZSTuf3F30ivdC11lNoUr3LFoGVdsI
+         jc096YPjDMsL7mgjgZLpAd9nfWpS5nUhV3Zx1xLsURMYq2WyMe5zAO/7N1Q/fDix4jXb
+         KXfRUHO+cwo34R8Ygo3ppn9I1SinnNqe1klX1rFzXd/Yd6Th8U1jy27Y7I0x0uR0qXeZ
+         ILjwsSiolhsgyXelWFPlK+MJAHMzwva54Tpe8q/15ir00dIel34/DMjZQGoX+NjPrT8x
+         63Zw==
+X-Gm-Message-State: APjAAAXX12oC/NXhmG8I3VCbdyhcaSrsjKcABcfoXVEFn2722v/zT1sy
+        /9mXyp5ikwd2/oRpdRtbLhM=
+X-Google-Smtp-Source: APXvYqxLyA5fw7iKxd9w2/iFeaDFo1aybbo+gks3xK0TZeyhuG/kTLUr/tMhzkJgFnY76VR3432WHQ==
+X-Received: by 2002:a17:90a:8001:: with SMTP id b1mr7320471pjn.56.1569953852979;
+        Tue, 01 Oct 2019 11:17:32 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id u10sm15636931pfh.61.2019.10.01.11.17.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 01 Oct 2019 11:17:32 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH v3] merge-recursive: fix the diff3 common ancestor label for virtual commits
+Date:   Tue,  1 Oct 2019 11:17:27 -0700
+Message-Id: <20191001181727.16009-1-newren@gmail.com>
+X-Mailer: git-send-email 2.23.0.25.g3f4444bfd7.dirty
+In-Reply-To: <20191001144940.GH10875@sigill.intra.peff.net>
+References: <20191001144940.GH10875@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BHGNzLNzOW6nSi_ComA0DrRnJukqoemG8z_qS6e22uBUQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/1/2019 12:54 PM, Elijah Newren wrote:
-> On Tue, Oct 1, 2019 at 9:48 AM Derrick Stolee <stolee@gmail.com> wrote:
->>
->> On 9/19/2019 10:43 AM, Derrick Stolee via GitGitGadget wrote:
->>> This series makes the sparse-checkout feature more user-friendly. While
->>> there, I also present a way to use a limited set of patterns to gain a
->>> significant performance boost in very large repositories.
->>>
->>> Sparse-checkout is only documented as a subsection of the read-tree docs
->>> [1], which makes the feature hard to discover. Users have trouble navigating
->>> the feature, especially at clone time [2], and have even resorted to
->>> creating their own helper tools [3].
->>>
->>> This series attempts to solve these problems using a new builtin.
->>
->> I haven't heard anything about this series since Elijah's careful
->> review of the RFC. There are definitely areas where this can be
->> made more robust, but I'd like to save those for a follow-up series.
->>
->> Junio: I know you didn't track this in the recent "what's cooking"
->> list, and I don't expect you to take it until I re-roll v3 to
->> include the .gitignore interaction I already pointed out.
-> 
-> Oh, sorry, I missed this.  By the way, is there any reason I wasn't
-> cc'ed on this round after reviewing the RFC?
+In commit 743474cbfa8b ("merge-recursive: provide a better label for
+diff3 common ancestor", 2019-08-17), the label for the common ancestor
+was changed from always being
 
-Sorry, I forgot to modify my GitGitGadget cover letter to include you
-as a CC. Totally my oversight, not on purpose.
+         "merged common ancestors"
 
-Thanks,
--Stolee
+to instead be based on the number of merge bases:
+
+    >=2: "merged common ancestors"
+      1: <abbreviated commit hash>
+      0: "<empty tree>"
+
+Unfortunately, this did not take into account that when we have a single
+merge base, that merge base could be fake or constructed.  In such
+cases, this resulted in a label of "00000000".  Of course, the previous
+label of "merged common ancestors" was also misleading for this case.
+Since we have an API that is explicitly about creating fake merge base
+commits in merge_recursive_generic(), we should provide a better label
+when using that API with one merge base.  So, when
+merge_recursive_generic() is called with one merge base, set the label
+to:
+
+         "constructed merge base"
+
+Note that callers of merge_recursive_generic() include the builtin
+commands git-am (in combination with git apply --build-fake-ancestor),
+git-merge-recursive, and git-stash.
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+Note: Applies to the top of en/merge-recursive-cleanup, which is in next.
+
+Changes since v2:
+  - Squashed in the testcase Peff provided and changed his attribution
+    from Reported-by to Helped-by due to the testcase
+
+Range-diff:
+1:  3f4444bfd7 ! 1:  208e69a4eb merge-recursive: fix the diff3 common ancestor label for virtual commits
+    @@ Commit message
+         commands git-am (in combination with git apply --build-fake-ancestor),
+         git-merge-recursive, and git-stash.
+     
+    -    Reported-by: Jeff King <peff@peff.net>
+    +    Helped-by: Jeff King <peff@peff.net>
+         Signed-off-by: Elijah Newren <newren@gmail.com>
+     
+      ## merge-recursive.c ##
+    @@ merge-recursive.c: int merge_recursive_generic(struct merge_options *opt,
+      	}
+      
+      	repo_hold_locked_index(opt->repo, &lock, LOCK_DIE_ON_ERROR);
+    +
+    + ## t/t6047-diff3-conflict-markers.sh ##
+    +@@ t/t6047-diff3-conflict-markers.sh: test_expect_success 'check multiple merge bases' '
+    + 	)
+    + '
+    + 
+    ++test_expect_success 'rebase describes fake ancestor base' '
+    ++	test_create_repo rebase &&
+    ++	(
+    ++		cd rebase &&
+    ++		test_commit base file &&
+    ++		test_commit master file &&
+    ++		git checkout -b side HEAD^ &&
+    ++		test_commit side file &&
+    ++		test_must_fail git -c merge.conflictstyle=diff3 rebase master &&
+    ++		grep "||||||| constructed merge base" file
+    ++	)
+    ++'
+    ++
+    + test_done
+
+ merge-recursive.c                 |  7 ++++++-
+ t/t6047-diff3-conflict-markers.sh | 13 +++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index b058741f00..e12d91f48a 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3550,6 +3550,8 @@ static int merge_recursive_internal(struct merge_options *opt,
+ 		merged_merge_bases = make_virtual_commit(opt->repo, tree,
+ 							 "ancestor");
+ 		ancestor_name = "empty tree";
++	} else if (opt->ancestor) {
++		ancestor_name = opt->ancestor;
+ 	} else if (merge_bases) {
+ 		ancestor_name = "merged common ancestors";
+ 	} else {
+@@ -3689,7 +3691,8 @@ int merge_recursive(struct merge_options *opt,
+ {
+ 	int clean;
+ 
+-	assert(opt->ancestor == NULL);
++	assert(opt->ancestor == NULL ||
++	       !strcmp(opt->ancestor, "constructed merge base"));
+ 
+ 	if (merge_start(opt, repo_get_commit_tree(opt->repo, h1)))
+ 		return -1;
+@@ -3741,6 +3744,8 @@ int merge_recursive_generic(struct merge_options *opt,
+ 					   oid_to_hex(merge_bases[i]));
+ 			commit_list_insert(base, &ca);
+ 		}
++		if (num_merge_bases == 1)
++			opt->ancestor = "constructed merge base";
+ 	}
+ 
+ 	repo_hold_locked_index(opt->repo, &lock, LOCK_DIE_ON_ERROR);
+diff --git a/t/t6047-diff3-conflict-markers.sh b/t/t6047-diff3-conflict-markers.sh
+index 3fb68e0aae..860542aad0 100755
+--- a/t/t6047-diff3-conflict-markers.sh
++++ b/t/t6047-diff3-conflict-markers.sh
+@@ -186,4 +186,17 @@ test_expect_success 'check multiple merge bases' '
+ 	)
+ '
+ 
++test_expect_success 'rebase describes fake ancestor base' '
++	test_create_repo rebase &&
++	(
++		cd rebase &&
++		test_commit base file &&
++		test_commit master file &&
++		git checkout -b side HEAD^ &&
++		test_commit side file &&
++		test_must_fail git -c merge.conflictstyle=diff3 rebase master &&
++		grep "||||||| constructed merge base" file
++	)
++'
++
+ test_done
+-- 
+2.23.0.25.g3f4444bfd7.dirty
+
