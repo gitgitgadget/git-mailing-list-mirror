@@ -7,68 +7,60 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D4C81F4BD
-	for <e@80x24.org>; Tue,  1 Oct 2019 13:47:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A2A81F4BD
+	for <e@80x24.org>; Tue,  1 Oct 2019 14:14:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388673AbfJANrE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Oct 2019 09:47:04 -0400
-Received: from relay9-d.mail.gandi.net ([217.70.183.199]:34127 "EHLO
-        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726152AbfJANrD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Oct 2019 09:47:03 -0400
+        id S1727051AbfJAOOz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Oct 2019 10:14:55 -0400
+Received: from relay2-d.mail.gandi.net ([217.70.183.194]:51209 "EHLO
+        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726554AbfJAOOz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Oct 2019 10:14:55 -0400
 X-Originating-IP: 1.186.12.44
-Received: from localhost (unknown [1.186.12.44])
+Received: from localhost.localdomain (unknown [1.186.12.44])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 492DCFF804;
-        Tue,  1 Oct 2019 13:47:01 +0000 (UTC)
-Date:   Tue, 1 Oct 2019 19:16:54 +0530
+        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 0202640002;
+        Tue,  1 Oct 2019 14:14:52 +0000 (UTC)
 From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Thomas Klaeger via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Thomas Klaeger <thklaeger@gmail.com>
-Subject: Re: [PATCH 1/1] git-gui (Windows): use git-bash.exe if it is
- available
-Message-ID: <20191001134654.vpiygrpczegynfis@yadavpratyush.com>
-References: <pull.360.git.gitgitgadget@gmail.com>
- <414cf2c89876fe122ee18f8d6533f083c2f65654.1569519977.git.gitgitgadget@gmail.com>
+To:     <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Pratyush Yadav <me@yadavpratyush.com>
+Subject: [PATCH] SubmittingPatches: update git-gui maintainer information
+Date:   Tue,  1 Oct 2019 19:44:35 +0530
+Message-Id: <20191001141435.21787-1-me@yadavpratyush.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <414cf2c89876fe122ee18f8d6533f083c2f65654.1569519977.git.gitgitgadget@gmail.com>
-User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 26/09/19 10:46AM, Thomas Klaeger via GitGitGadget wrote:
-> From: Thomas Klaeger <thklaeger@gmail.com>
-> 
-> Git for Windows 2.x ships with an executable that starts the Git Bash
-> with all the environment variables and what not properly set up. It is
-> also adjusted according to the Terminal emulator option chosen when
-> installing Git for Windows (while `bash.exe --login -i` would always
-> launch with Windows' default console).
-> 
-> So let's use that executable (usually C:\Program Files\Git\git-bash.exe)
-> instead of `bash.exe --login -i` if its presence was detected.
-> 
-> This fixes https://github.com/git-for-windows/git/issues/490
-> 
-> Signed-off-by: Thomas Kläger <thomas.klaeger@10a.ch>
+Since I have taken over maintainership of git-gui, it is a good idea to
+point new contributors to my fork of the project, so they can see the
+latest version of the project.
 
-While applying the patch, my patch check script complained that the 
-author did not sign off.
+Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+---
+ Documentation/SubmittingPatches | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Well, they did... but with a slightly different name (Kläger vs  
-Klaeger) and a completely different email address.
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 6d589e118c..06bfaf1c1c 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -372,9 +372,9 @@ such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
+ Some parts of the system have dedicated maintainers with their own
+ repositories.
 
-I'm not sure if I can do something about it, just thought it was 
-something worth mentioning.
+-- `git-gui/` comes from git-gui project, maintained by Pat Thoyts:
++- `git-gui/` comes from git-gui project, maintained by Pratyush Yadav:
 
--- 
-Regards,
-Pratyush Yadav
+-	git://repo.or.cz/git-gui.git
++	https://github.com/prati0100/git-gui
+
+ - `gitk-git/` comes from Paul Mackerras's gitk project:
+
+--
+2.21.0
+
