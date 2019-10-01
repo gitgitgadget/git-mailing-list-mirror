@@ -2,196 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76E641F4BD
-	for <e@80x24.org>; Tue,  1 Oct 2019 18:56:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66F3F1F4BD
+	for <e@80x24.org>; Tue,  1 Oct 2019 19:24:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726261AbfJAS4A (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Oct 2019 14:56:00 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:45890 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726177AbfJAS4A (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Oct 2019 14:56:00 -0400
-Received: by mail-pl1-f193.google.com with SMTP id u12so5940198pls.12
-        for <git@vger.kernel.org>; Tue, 01 Oct 2019 11:55:58 -0700 (PDT)
+        id S1726642AbfJATYq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Oct 2019 15:24:46 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:43423 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726180AbfJATYq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Oct 2019 15:24:46 -0400
+Received: by mail-qk1-f195.google.com with SMTP id h126so12405591qke.10
+        for <git@vger.kernel.org>; Tue, 01 Oct 2019 12:24:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vqBrSSpM+snfvC/th8lXj9DKZ9LnmoG6TRdO+vBbaNI=;
-        b=HvadydhP1Z09ZVYTBIcwbyodm9FriMoCfQOLDEyClyduGGEmAp81XxsRUW/5g6Ts29
-         hJWBiaGKdJLCNucswGBe0CmWXQ2O1KdcBliDi6UjxNbSX/GswdFq/MIPfmQFrJPCkqDe
-         /a6GHOxn0bNo/MKAB2ztd7kAHgzOWM4hqPBYOEjui7UEiHBvDdhuNZYkDAV1vTJAjgZj
-         zcRVe0jbzpnoTprP5k2b1DgiDZ8ZAWL2AJ4zDlbj2gWgqJ3GR9UYGwtHiBAfkJcaLZXd
-         CmLus2WB8/Z7/Y1O6/QhAOPImLlC8mTm7jjRg1gp3X+vyhc7GLTrHFgUuRGpXUsmCu+c
-         uphQ==
+        bh=8Kcd+U+bco7keArjVPT+wy3xbzd7ipQp8AnDMaYJCiA=;
+        b=DOnT2a4Q/P/D2R5QJGtk+8aVnY/f7eyMlK3i7ssPkaCl5oQfuPUN7lM2efYzvkJrTu
+         CluyicgoWWXSS/w+oLDhZMcm957GOeeh8p/UxsVC8YgTded+0k2RTJlWRoIEZbKlRvKm
+         xiI+sMFO5MdfMSfDiCmw+w/Ny3bpWLfyyhHt9zdcJofMgtLB6SFp9oRl7Q1j3rN/hKn6
+         TgqgFI7B7n2DF+lO8UOuxzuWIkBybyICm+r9QjY9RarSyYhUzoegM+vqeoxkfNv60i4U
+         TMXQHuEjZg3VatYSVWoeEwJyBo7mKfVZdHbkOGTZit0ftygoaVptWbAqACKESFIAHoRD
+         3gnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vqBrSSpM+snfvC/th8lXj9DKZ9LnmoG6TRdO+vBbaNI=;
-        b=bShqt5r1/2A5JmcZu2Bauiqoc4XJOG/DvuCh0WtInGct8thEELubeNQXXXWsNOkdlt
-         0sNcnoD7Wv641XKqHy+3ObReZsrIQn84gqX4f4+AtnU+hukpwvMyl24qVrRDiPszRpEa
-         HhKLD9XVBOMFOmZiOX9VwEFxrKe3o03RFCBLEmlTJNYZgzmnNIQnf6j52vKQ/T0/+dAd
-         JOGr8Cr2Ek9JKpwgkUazrFyjZPRVB0cZT6Su1/WJvrBwBPoe92UlVdgWa5rsNFbqaBUe
-         g0iUYErrEz+1GwyzhNJ719AZUwXRWx8d7R35XckiiGzp4W8OOFYeTnbPoeqOvL+BeWzm
-         iW7A==
-X-Gm-Message-State: APjAAAXBDVlBZzKHm0ik/mTTNH2XHbHfblpzts7Jzi8cbDWZDEWQdI89
-        dWOEKlrr2amp/KN96uczuFWrBTp7o/Y=
-X-Google-Smtp-Source: APXvYqxcGN+BB9IjI0RORYg+zcSJwW9r2gGEwSu6jfUn5EmrYgD3b6yuh9IeBHCoA+DqT3OfEDgtQg==
-X-Received: by 2002:a17:902:788f:: with SMTP id q15mr19771099pll.321.1569956157539;
-        Tue, 01 Oct 2019 11:55:57 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id j10sm16834203pfn.128.2019.10.01.11.55.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 01 Oct 2019 11:55:57 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
+        bh=8Kcd+U+bco7keArjVPT+wy3xbzd7ipQp8AnDMaYJCiA=;
+        b=rHaAjQwJR/ysHmA/HuxczKdp5ep/jwwj6a1fbBhG5yjvc59tH76vTbyeJPThmM8mBg
+         /BpdqSGh6fCCjD3KJ3rGiiJpQdhnu0PG1QF4sXZMMhuPJsqId56aNH09tmvbN9j78sio
+         B84BFXFMIxHyaPruHBjo2SECi1UvQvI73yGfDK4fB/w60gXTQcyWrKA8E4t0yMzSCR1c
+         Ju320vl7wXpdLa1hFI56uQMSdihxdA5dyvavcaTrn5QIdycM4no2ihRjH1AzABnOvReG
+         abdUt8GuBhMvLLuSoBVZJH6UdulwDeoUbBnRbxCxWV6QAPmCCM9BZ6b+097oDA7jEKnf
+         ItCA==
+X-Gm-Message-State: APjAAAWlc8je4vVi+8v+OWvTREZJF6KSmUAyj3AUD0gqU+qlDn3yQ4xy
+        Ntq7kO9bUxmyv8+UCB0LrkLV0mEOqFA=
+X-Google-Smtp-Source: APXvYqzSO7whczuBlI1V3u5K8wFupKCzPInRt54U4McGUYzWJcPnho22YeJ2tKpMgHf5rETfHhI3Mw==
+X-Received: by 2002:a05:620a:140b:: with SMTP id d11mr7976710qkj.22.1569957883489;
+        Tue, 01 Oct 2019 12:24:43 -0700 (PDT)
+Received: from mango.semfio.usp.br ([143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id d133sm9355020qkg.31.2019.10.01.12.24.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Oct 2019 12:24:42 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3] dir: special case check for the possibility that pathspec is NULL
-Date:   Tue,  1 Oct 2019 11:55:24 -0700
-Message-Id: <20191001185524.18772-1-newren@gmail.com>
-X-Mailer: git-send-email 2.23.0.25.g3f4444bfd7.dirty
-In-Reply-To: <20191001184049.GA30113@generichostname>
-References: <20191001184049.GA30113@generichostname>
+Cc:     bwilliams.eng@gmail.com, christian.couder@gmail.com,
+        gitster@pobox.com, jrnieder@gmail.com, olyatelezhnaya@gmail.com,
+        pclouds@gmail.com, sandals@crustytoothpaste.net,
+        stefanbeller@gmail.com
+Subject: [PATCH] squash! grep: replace grep_read_mutex by internal obj read lock
+Date:   Tue,  1 Oct 2019 16:23:34 -0300
+Message-Id: <e452947091b96a02ca3292f8cd9793a8d661fca4.1569950899.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <48b632d7a0278f4abb4f0b0390f316a631a9d0ef.1569808052.git.matheus.bernardino@usp.br>
+References: <48b632d7a0278f4abb4f0b0390f316a631a9d0ef.1569808052.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commits 404ebceda01c ("dir: also check directories for matching
-pathspecs", 2019-09-17) and 89a1f4aaf765 ("dir: if our pathspec might
-match files under a dir, recurse into it", 2019-09-17) added calls to
-match_pathspec() and do_match_pathspec() passing along their pathspec
-parameter.  Both match_pathspec() and do_match_pathspec() assume the
-pathspec argument they are given is non-NULL.  It turns out that
-unpack-tree.c's verify_clean_subdirectory() calls read_directory() with
-pathspec == NULL, and it is possible on case insensitive filesystems for
-that NULL to make it to these new calls to match_pathspec() and
-do_match_pathspec().  Add appropriate checks on the NULLness of pathspec
-to avoid a segfault.
-
-In case the negation throws anyone off (one of the calls was to
-do_match_pathspec() while the other was to !match_pathspec(), yet no
-negation of the NULLness of pathspec is used), there are two ways to
-understand the differences:
-  * The code already handled the pathspec == NULL cases before this
-    series, and this series only tried to change behavior when there was
-    a pathspec, thus we only want to go into the if-block if pathspec is
-    non-NULL.
-  * One of the calls is for whether to recurse into a subdirectory, the
-    other is for after we've recursed into it for whether we want to
-    remove the subdirectory itself (i.e. the subdirectory didn't match
-    but something under it could have).  That difference in situation
-    leads to the slight differences in logic used (well, that and the
-    slightly unusual fact that we don't want empty pathspecs to remove
-    untracked directories by default).
-
-Denton found and analyzed one issue and provided the patch for the
-match_pathspec() call, SZEDER figured out why the issue only reproduced
-for some folks and not others and provided the testcase, and I looked
-through the remainder of the series and noted the do_match_pathspec()
-call that should have the same check.
-
-Co-authored-by: Denton Liu <liu.denton@gmail.com>
-Co-authored-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
-Note: Applies on top of en/clean-nested-with-ignored, in next.
 
-As with v1, the authorship is really mixed, so I don't know if I
-should use Co-authored-by (highlighted as a possibility by Denton), or
-the far more common Helped-by (as suggested by Junio but based on a
-more limited summary of the different contributions), or if perhaps
-Denton or SZEDER should be marked as the author and I be marked as
-Helped-by or Co-authored-by.  Since Denton commented on round 1, I
-used his suggestion for attribution in this round, but I'm open to
-changing it to whatever works best.
+This is just a small fixup to be squashed into patch 6: with multiple
+locks, the locking order must be consistent across all critical sections
+to avoid dead-lock. Since grep_attr_lock() is called before
+obj_read_lock() in grep_source_load_driver(), it must also be called
+first here.
 
-Changes since v2:
-  - This time actually removed the entire unnecessary comment
 
-Range-diff:
-1:  c495b9303c ! 1:  40392c6bba dir: special case check for the possibility that pathspec is NULL
-    @@ t/t0050-filesystem.sh: $test_unicode 'merge (silent unicode normalization)' '
-     +		git reset --hard &&
-     +		mkdir -p gitweb/subdir &&
-     +		>gitweb/subdir/file &&
-    -+		# it is not strictly necessary to add and commit the
-     +		git add gitweb &&
-     +		git commit -m "add gitweb/subdir/file" &&
-     +
+ grep.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- dir.c                 |  8 +++++---
- t/t0050-filesystem.sh | 21 +++++++++++++++++++++
- 2 files changed, 26 insertions(+), 3 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index 7ff79170fc..bd39b86be4 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1962,8 +1962,9 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 			((state == path_untracked) &&
- 			 (get_dtype(cdir.de, istate, path.buf, path.len) == DT_DIR) &&
- 			 ((dir->flags & DIR_SHOW_IGNORED_TOO) ||
--			  do_match_pathspec(istate, pathspec, path.buf, path.len,
--					    baselen, NULL, DO_MATCH_LEADING_PATHSPEC) == MATCHED_RECURSIVELY_LEADING_PATHSPEC))) {
-+			  (pathspec &&
-+			   do_match_pathspec(istate, pathspec, path.buf, path.len,
-+					     baselen, NULL, DO_MATCH_LEADING_PATHSPEC) == MATCHED_RECURSIVELY_LEADING_PATHSPEC)))) {
- 			struct untracked_cache_dir *ud;
- 			ud = lookup_untracked(dir->untracked, untracked,
- 					      path.buf + baselen,
-@@ -1975,7 +1976,8 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 			if (subdir_state > dir_state)
- 				dir_state = subdir_state;
+diff --git a/grep.c b/grep.c
+index 0ca400f7b6..85ee89b5d6 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1813,11 +1813,11 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 		 * currenty thread-safe and might be racy with object reading,
+ 		 * obj_read_lock() must be called.
+ 		 */
+-		obj_read_lock();
+ 		grep_attr_lock();
++		obj_read_lock();
+ 		textconv = userdiff_get_textconv(opt->repo, gs->driver);
+-		grep_attr_unlock();
+ 		obj_read_unlock();
++		grep_attr_unlock();
+ 	}
  
--			if (!match_pathspec(istate, pathspec, path.buf, path.len,
-+			if (pathspec &&
-+			    !match_pathspec(istate, pathspec, path.buf, path.len,
- 					    0 /* prefix */, NULL,
- 					    0 /* do NOT special case dirs */))
- 				state = path_none;
-diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-index 192c94eccd..a840919967 100755
---- a/t/t0050-filesystem.sh
-+++ b/t/t0050-filesystem.sh
-@@ -131,4 +131,25 @@ $test_unicode 'merge (silent unicode normalization)' '
- 	git merge topic
- '
- 
-+test_expect_success CASE_INSENSITIVE_FS 'checkout with no pathspec and a case insensitive fs' '
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		>Gitweb &&
-+		git add Gitweb &&
-+		git commit -m "add Gitweb" &&
-+
-+		git checkout --orphan todo &&
-+		git reset --hard &&
-+		mkdir -p gitweb/subdir &&
-+		>gitweb/subdir/file &&
-+		git add gitweb &&
-+		git commit -m "add gitweb/subdir/file" &&
-+
-+		git checkout master
-+	)
-+'
-+
- test_done
+ 	/*
 -- 
-2.23.0.25.g3f4444bfd7.dirty
+2.23.0
 
