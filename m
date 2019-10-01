@@ -2,123 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F64C1F4BD
-	for <e@80x24.org>; Tue,  1 Oct 2019 15:23:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55C171F4BD
+	for <e@80x24.org>; Tue,  1 Oct 2019 15:42:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389513AbfJAPXM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Oct 2019 11:23:12 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:35064 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727246AbfJAPXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Oct 2019 11:23:11 -0400
-Received: by mail-vs1-f66.google.com with SMTP id s7so9654928vsl.2
-        for <git@vger.kernel.org>; Tue, 01 Oct 2019 08:23:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=khHDIMPMyPOJ02u4xm4i3w43TP0O+yZlzOIIRHJP6zI=;
-        b=N/CgQykHw+201YO2yU76YAaEVoXYG8P2BocDiuocFkKPEXqHxIWxAxtH65yO6oi4oj
-         Nftv4ICiqOIrYP8ktj/hCTNS/VZR1oB3KBTZVTinrx4omk/xwgcvLYhgIU5zMuoO0Pcy
-         +w5TwXV0luej3zYZ7VyrXxOv6YiJAmNtF854MxDEbdmeh9dmnES/jCFlDtr1ZHZUAkWn
-         4xVNYPBXT3OS+oyyXivfpWCqOPoPJ7iY5x7YrVq1HKCd/xsazODbumj6zs9pXkIhtvEw
-         n/00/IxtE2JemtAXct48Uj+j28Qp9EHP63QJJZKLtBjPgl+DKl7xy4gHpMPxUcalgojs
-         D6Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=khHDIMPMyPOJ02u4xm4i3w43TP0O+yZlzOIIRHJP6zI=;
-        b=pXGRUbbMfRVu9afUSyiEzuhrjp95i902yEj4m1VXPEtt8jsI84j615oTvlE15fW1iR
-         UCtg6bmEBIU4GnoDOWfUZadY+PzNTxXr/7f7nyhEvfaOHXm8luxfn/b5jUkXfEzydYWi
-         0/xCpmX3yOTW2f2iWO2wBDhU5Q3o7S+4vH7NOSDnao3w3is0++4ELSLL3CPITRH2Ofdh
-         BqqQT+VWfm8qFCEy5EqVk6oFYV9g0jlB1moajvg4+K3C5COeKnxo91HtxRV0q91Zk6B8
-         fMLkUTiJySVZfNvWV3EBX/bLR0c+QMpF5tv1BOabnorjLJ7EHs8kGwqU4lxsQU85xUsq
-         YBCw==
-X-Gm-Message-State: APjAAAXYW/RaGlyCN3ty3OTGl1To/DxXcTDVYPiZBnLv8Xa6rk+LSkJg
-        /HBneycT4MMD/ASZcTt+9epVOup9DB8X61U9i6IrXg==
-X-Google-Smtp-Source: APXvYqyth43RXg9ZpwXe4RCtBCfmCTBrzoUOxMn23TnMnmuWDOY96aZ2DAdYtxm0e8r1vmde4a6sRvGiA0IM1IHUkCE=
-X-Received: by 2002:a67:2e43:: with SMTP id u64mr13221868vsu.75.1569943389513;
- Tue, 01 Oct 2019 08:23:09 -0700 (PDT)
+        id S2389296AbfJAPmD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Oct 2019 11:42:03 -0400
+Received: from smtp125.iad3b.emailsrvr.com ([146.20.161.125]:40498 "EHLO
+        smtp125.iad3b.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727302AbfJAPmD (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 Oct 2019 11:42:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xiplink.com;
+        s=20181102-2c3qeqyt; t=1569944522;
+        bh=IyITJYxWvEXWy1KMoyRicv4AxYogTMh/qEBLxMXpbTQ=;
+        h=Subject:To:From:Date:From;
+        b=dD8rIQ9XzpR89UJZFZs2WQmLLt5G0PWkgrH1FIc5yiBmKmL3Ai0p8+OdeaP0jYxE4
+         jUcUHZmyh+WoLyiJcPw9lcIFE9OSTKBHt3gzLnfh+KxbOJAquosIrgJ8slEq8Qww6t
+         7kX/DbwQRSNCeomAZr/EYliiYL7Zapna4qLLLvII=
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp8.relay.iad3b.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id EEE8A401AB;
+        Tue,  1 Oct 2019 11:42:01 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+        (using TLSv1.2 with cipher AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Tue, 01 Oct 2019 11:42:02 -0400
+Subject: Re: [PATCH] gitk: Add horizontal scrollbar to the files list
+To:     Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+Cc:     paulus@ozlabs.org
+References: <5c5803ac99b6aaf7ca39393422ca9aa17f0280ec.1569910203.git.bert.wesarg@googlemail.com>
+From:   Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <650bb0ab-50e8-96a6-957a-ebf3e75efed2@xiplink.com>
+Date:   Tue, 1 Oct 2019 11:42:01 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <97013a71289857767100d6a4adcb39ca99b2b21b.1569873171.git.bert.wesarg@googlemail.com>
- <20191001142401.hhg5dtefj6qg66dd@yadavpratyush.com>
-In-Reply-To: <20191001142401.hhg5dtefj6qg66dd@yadavpratyush.com>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Tue, 1 Oct 2019 17:22:57 +0200
-Message-ID: <CAKPyHN2qSudnEMfokp5-BXBDU6_kcVv3aokNUYdqZOnMXYVzYw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] git-gui: use existing interface to query a path's attribute
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <5c5803ac99b6aaf7ca39393422ca9aa17f0280ec.1569910203.git.bert.wesarg@googlemail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 1, 2019 at 4:24 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
->
-> Hi,
->
-> I don't see any difference between v3 and v2 of this patch. What changed
-> in this version?
+On 2019-10-01 6:08 a.m., Bert Wesarg wrote:
+> Wrapping filenames is an unexpected experience in UX design. Disable
+> wrapping and add a horizontal scrollbar to the files list to remove this.
 
-nothing, but 2/2 changed.
+(Thanks for working on gitk and git-gui!)
 
-Bert
+I have to say I'm mildly opposed to this change.  The reason is that 
+having to scroll to see the end of the filename is extra work, and it's 
+work that would have to be repeated as one navigates between commits in 
+the same area of code.  Git-gui has scrollbars for its filename panes, 
+and I find them more of a hassle that gitk's wrapping.  (The horizontal 
+scrollbar might work better if it defaulted to scrolling all the way to 
+the *right* instead of to the left.)
 
->
-> On 30/09/19 09:54PM, Bert Wesarg wrote:
-> > Replace the hand-coded call to git check-attr with the already provided one.
-> >
-> > Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-> > ---
-> >  lib/diff.tcl | 15 +--------------
-> >  1 file changed, 1 insertion(+), 14 deletions(-)
-> >
-> > diff --git a/lib/diff.tcl b/lib/diff.tcl
-> > index 958a0fa..0fd4600 100644
-> > --- a/lib/diff.tcl
-> > +++ b/lib/diff.tcl
-> > @@ -270,19 +270,6 @@ proc show_other_diff {path w m cont_info} {
-> >       }
-> >  }
-> >
-> > -proc get_conflict_marker_size {path} {
-> > -     set size 7
-> > -     catch {
-> > -             set fd_rc [eval [list git_read check-attr "conflict-marker-size" -- $path]]
-> > -             set ret [gets $fd_rc line]
-> > -             close $fd_rc
-> > -             if {$ret > 0} {
-> > -                     regexp {.*: conflict-marker-size: (\d+)$} $line line size
-> > -             }
-> > -     }
-> > -     return $size
-> > -}
-> > -
-> >  proc start_show_diff {cont_info {add_opts {}}} {
-> >       global file_states file_lists
-> >       global is_3way_diff is_submodule_diff diff_active repo_config
-> > @@ -298,7 +285,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
-> >       set is_submodule_diff 0
-> >       set diff_active 1
-> >       set current_diff_header {}
-> > -     set conflict_size [get_conflict_marker_size $path]
-> > +     set conflict_size [gitattr $path conflict-marker-size 7]
-> >
-> >       set cmd [list]
-> >       if {$w eq $ui_index} {
-> > --
-> > 2.23.0.11.g242cf7f110
-> >
->
-> --
-> Regards,
-> Pratyush Yadav
+But I would instead prefer there to be some visual indication that the 
+filename was wrapped.  Maybe indent the wrapped lines?  Or how about 
+contracting the file path with an ellipsis (...), like "git diff --stat"?
+
+		M.
+
+
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> ---
+>   gitk | 11 +++++++----
+>   1 file changed, 7 insertions(+), 4 deletions(-)
+> 
+> diff --git a/gitk b/gitk
+> index abe4805..bf2a061 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -2477,13 +2477,16 @@ proc makewindow {} {
+>   	-background $bgcolor -foreground $fgcolor \
+>   	-font mainfont \
+>   	-tabs [list $indent [expr {2 * $indent}]] \
+> -	-yscrollcommand ".bright.sb set" \
+> +	-xscrollcommand ".bright.sbx set" \
+> +	-yscrollcommand ".bright.sby set" \
+>   	-cursor [. cget -cursor] \
+> -	-spacing1 1 -spacing3 1
+> +	-spacing1 1 -spacing3 1 -wrap none
+>       lappend bglist $cflist
+>       lappend fglist $cflist
+> -    ${NS}::scrollbar .bright.sb -command "$cflist yview"
+> -    pack .bright.sb -side right -fill y
+> +    ${NS}::scrollbar .bright.sbx -orient horizontal -command "$cflist xview"
+> +    ${NS}::scrollbar .bright.sby -orient vertical   -command "$cflist yview"
+> +    pack .bright.sbx -side bottom -fill x
+> +    pack .bright.sby -side right -fill y
+>       pack $cflist -side left -fill both -expand 1
+>       $cflist tag configure highlight \
+>   	-background [$cflist cget -selectbackground]
+> 
