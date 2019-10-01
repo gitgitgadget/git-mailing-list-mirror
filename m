@@ -2,144 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C422F1F4BD
-	for <e@80x24.org>; Tue,  1 Oct 2019 18:41:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09F831F4BD
+	for <e@80x24.org>; Tue,  1 Oct 2019 18:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726114AbfJASlB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Oct 2019 14:41:01 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:34388 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726038AbfJASlB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Oct 2019 14:41:01 -0400
-Received: by mail-pf1-f194.google.com with SMTP id b128so8695021pfa.1
-        for <git@vger.kernel.org>; Tue, 01 Oct 2019 11:41:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=BqCL3DMHszq4Ty9ahmAL0fAUaLjjXOCRwT/fRfibEWE=;
-        b=a3pBvQn9MeGlRVtSCeK/yN32+7H63etjTZo0P5bnx100uFZAroA7v6zMImzvIy+8Zz
-         uexrkPv6wpW8cbn3EgWg0qiIVkVXAC97PBGcCdHn+Jfk4QEHi2JvpAdtAyo3pn0kXpmY
-         o/6l/N49OZ/30anLrxi9dYf5BJadsnopn23O99yc7PZ7BlZgDJHKga+TIHFm/zR98FIB
-         4i7QqpC5gEG5k5R1gSKu+4PqPDYpse96SjIZanQLhRFZ/r4lNsvHtOUaCXGbItRIAZ6M
-         MzDEsIwmYc9AouirrOplS0phoNS56s7L2+e8g/SJ4UwHaZSKVdYmcN/4wDXDfSmsiMmU
-         9lSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BqCL3DMHszq4Ty9ahmAL0fAUaLjjXOCRwT/fRfibEWE=;
-        b=CrqXerAXLY6Zw+23+N/4qjcvOHosCJU6y12oyux2105+uIuxb8l+DNjgr/i1tbYRfu
-         zSdtVIdgPw5kz8QyQp8F73/yDP/mXt5m4mWKukKyHlBHa8qe7KVfTWaPlt9RybNwYCj/
-         X1oeJAUfyv1PkImSnttZgzLdKrNNEG0HkJn+Y0QNQx1fu8/28hAZ0gY8iRYg9RIuaOI1
-         xFUFGBLMXJmJPTKsPOicFsHImktr4WRPu47FJD+0iPM+dRZS0oEnVLuD5AGkdCRHkru8
-         KpYiKy3+llGPYekppoQsWpNAMil4KmWqSiMOf6iqLfg17XlCD6n+sVHiu4WKExnTEX+g
-         3p4Q==
-X-Gm-Message-State: APjAAAVvbqrPrx7Ja4G1geW81svJG4gQvl4vQUB0pRWoeZQtpexs/Y9r
-        OwI9Ocr0yxtL6MiV1/coj5w=
-X-Google-Smtp-Source: APXvYqyaMgh7obs10uar2tcKz35K0yYSu+maw8WmlIgy6dr2VDk7Bj90l5CXYOvzZT7vecHGcZEFxg==
-X-Received: by 2002:a63:8e42:: with SMTP id k63mr32110846pge.114.1569955259805;
-        Tue, 01 Oct 2019 11:40:59 -0700 (PDT)
-Received: from generichostname ([204.14.239.53])
-        by smtp.gmail.com with ESMTPSA id l7sm3507207pjy.12.2019.10.01.11.40.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Oct 2019 11:40:51 -0700 (PDT)
-Date:   Tue, 1 Oct 2019 11:40:49 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v2] dir: special case check for the possibility that
- pathspec is NULL
-Message-ID: <20191001184049.GA30113@generichostname>
-References: <20190930191106.16128-1-newren@gmail.com>
- <20191001183005.16977-1-newren@gmail.com>
+        id S1726224AbfJASpe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Oct 2019 14:45:34 -0400
+Received: from mout.gmx.net ([212.227.15.19]:36519 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725909AbfJASpb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Oct 2019 14:45:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1569955524;
+        bh=oX1dYrOgnWfFDywz4UYst3ZkEC8I2CJJB6wPgRrr0kA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Wg+O9qIMKkcLkIPwELrzPkmvvblneDXY+QNZEDi/taIQWMl5Qphf/YLe8jCPeFU0U
+         EhhuI8gAvzd8EMfFB+m7PoLyM+rzNKYFSLgu5CS3QJ+nxAgyFbaWKBlC8XPEivYT17
+         exNoY+VMuZY0ea7q9ol93fbstpg2y4ni3+gZTI/c=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGyxN-1iIxnT0Zhz-00E2PQ; Tue, 01
+ Oct 2019 20:45:24 +0200
+Date:   Tue, 1 Oct 2019 20:45:24 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Denton Liu <liu.denton@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] ci: run `hdr-check` as part of the `Static Analysis`
+ job
+In-Reply-To: <20191001164258.GA1356@generichostname>
+Message-ID: <nycvar.QRO.7.76.6.1910012041550.46@tvgsbejvaqbjf.bet>
+References: <pull.368.git.gitgitgadget@gmail.com> <4b3b58ca6ddff476acff6735129049588c0a1f13.1569928584.git.gitgitgadget@gmail.com> <20191001164258.GA1356@generichostname>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191001183005.16977-1-newren@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:miJFBupYMS+PPxfEvAQkKTXKwGYnPZiv3swZYIT3azP01Kh0x1C
+ iiQbtf+o9aQX0Qwe9oufxT1oJxiweQV6eoZanSbWQ8c+DULaeKMtdkxl7+4KHWTyjzOV2Xu
+ RW8KhDlHZIjM/l3dbwFs2Itg1HloXbgcn4sXX4stzhb3zQU1uYcYitdhCoShGccJvU/WHFf
+ bwcytFlq6l1OKF3SbNfkQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GSSdZbGl174=:FK2Gs7V8PzDmW+VV09/3PJ
+ CeSQMF9AvxVYYyAvmo5IGLUJbuWXHfqRuIcEi/vQlklJ9KeGUp0fFPR6Xx8YuYt9g6uZSbyUm
+ YRy3ee7dpxieOB/GvCIyaCsJc2FxEqSaI1U0fb+ovq8s+aZl0imbbubNXILqViNuGfB6o83vL
+ Z3Es6oepK4uowYrmqH+Us2OpYSWHgX+y3Bfpu4MmqUZfKd5J6YiZ7pJ+YKStg6MHjznqK8+yI
+ bbTXKMxdn/JWqhWVkXbUTMOASQoi0NHZ5Qd6Oapfgbs2Id7/RhU61q+F11tgfZgBUbvGZWU9A
+ deczax6cj5Opk+Nu3XhtNzoJ86pVkA/yJswriV7FRk8ZuWcXmIdQ3816p3lX2Xu72UJ9Xb9wX
+ pDWxvL3kJnFyfDPd8puja3HC7g28HOGI9qxp6/4p+5mKpMp9TjWBodVaHIPeILph5BcdbxxYD
+ PKbgRc0czcbcqAF7N3YndEsOcAFQTo5yJjWqUpOGkVCJWWsNEpwC8CEwlxoA0bBxxPVExAiBX
+ rh3zwQg6bMCbgTBQaaXqjxuUJewiJzkFjbECnR37+MGrFRi8MFGH3B7p9nAHTMJs9DAdQAYkf
+ fnRQrdgBIGa0Pu7YR8nLfPg9rM/xD+K5iLEO8ats6f/DufdZbmrewmS39c+s2m1N+tDnon3nj
+ MVcl5xioZcNi+UzIT16tPrTfSEav2vwDUf1Iv9bcLtCP7XHngJcbtwtAfvVYsl004DgI9BhBG
+ o4Uu1OB2a18bFujIRfuZj/Q8ytQ1cxGARQ/29AQnKNLIYBAXTWIq3bj8XOiN7RfgVIB/imZWX
+ 0/FjSbPU6Oe2LVgT9+FHSeuR+EJivycqmNQnsJgdecvxZTQabO1zYVznKATPpX0lbRWZ2p5Up
+ YCfshpySNFgzs3Qit9c1kS/DxV28RPwuvZpmMmdpwoFP7yPkoYaMpQ4nBdwNLregPEod1br3/
+ pkG/XIj5GBGmi7KVDYPvdHT3fagm8wVqcnQyqM1IIySBy1+ak2OpkIWp2Y+xZJeXcgoRfmZCf
+ VOjRgG+CAo30NiJli/2p2dLc6nFVeX1yXSy+vCb6cqvDrp6mM04AcQvRxue1Num99ffmoAEm/
+ Vtqn1zZzyuw1ji25T1fHwgx4YYUtsxD6uZC36Tjf+M99WPSGPY43YG7mUa+shNL/KBMyj5xVK
+ nOVUdOwlICI3/ptjRIrSjw1oW0baIBwKL6zraTzGnWyFsl2IPl12BtqU7EInkYQvHwvAuGbJi
+ u1Vcx27AImV21j2AbkytvQ/INWpKqGSE412ER/LamjFnavDrEJSZPvk8MWbM=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi Denton,
 
-On Tue, Oct 01, 2019 at 11:30:05AM -0700, Elijah Newren wrote:
+On Tue, 1 Oct 2019, Denton Liu wrote:
 
-[...]
+> Sorry for not replying or rolling this in earlier, I was waiting for
+> my series to hit master before doing this change but I guess it
+> doesn't really hurt to do it any earlier.
 
-> diff --git a/dir.c b/dir.c
-> index 7ff79170fc..bd39b86be4 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1962,8 +1962,9 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
->  			((state == path_untracked) &&
->  			 (get_dtype(cdir.de, istate, path.buf, path.len) == DT_DIR) &&
->  			 ((dir->flags & DIR_SHOW_IGNORED_TOO) ||
-> -			  do_match_pathspec(istate, pathspec, path.buf, path.len,
-> -					    baselen, NULL, DO_MATCH_LEADING_PATHSPEC) == MATCHED_RECURSIVELY_LEADING_PATHSPEC))) {
-> +			  (pathspec &&
-> +			   do_match_pathspec(istate, pathspec, path.buf, path.len,
-> +					     baselen, NULL, DO_MATCH_LEADING_PATHSPEC) == MATCHED_RECURSIVELY_LEADING_PATHSPEC)))) {
->  			struct untracked_cache_dir *ud;
->  			ud = lookup_untracked(dir->untracked, untracked,
->  					      path.buf + baselen,
-> @@ -1975,7 +1976,8 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
->  			if (subdir_state > dir_state)
->  				dir_state = subdir_state;
->  
-> -			if (!match_pathspec(istate, pathspec, path.buf, path.len,
-> +			if (pathspec &&
-> +			    !match_pathspec(istate, pathspec, path.buf, path.len,
->  					    0 /* prefix */, NULL,
->  					    0 /* do NOT special case dirs */))
->  				state = path_none;
-> diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-> index 192c94eccd..a840919967 100755
-> --- a/t/t0050-filesystem.sh
-> +++ b/t/t0050-filesystem.sh
-> @@ -131,4 +131,25 @@ $test_unicode 'merge (silent unicode normalization)' '
->  	git merge topic
->  '
->  
-> +test_expect_success CASE_INSENSITIVE_FS 'checkout with no pathspec and a case insensitive fs' '
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +
-> +		>Gitweb &&
-> +		git add Gitweb &&
-> +		git commit -m "add Gitweb" &&
-> +
-> +		git checkout --orphan todo &&
-> +		git reset --hard &&
-> +		mkdir -p gitweb/subdir &&
-> +		>gitweb/subdir/file &&
-> +		# it is not strictly necessary to add and commit the
+No worries, thank you for working on this!
 
-Probably not worth a reroll but we're missing "gitweb directory" at the
-end of the comment. Other than that, it looks good to me.
+I wonder whether it would make sense to add a `hdr-check` to at least
+one macOS and on Windows job, too, so that we get some confidence in the
+non-Linux contributions. But that I _will_ leave to others ;-)
 
-Thanks again for the prompt fix,
+> On Tue, Oct 01, 2019 at 04:16:26AM -0700, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  azure-pipelines.yml        | 2 +-
+> >  ci/install-dependencies.sh | 3 ++-
+> >  ci/run-static-analysis.sh  | 3 +++
+> >  3 files changed, 6 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/azure-pipelines.yml b/azure-pipelines.yml
+> > index c329b7218b..15831f6006 100644
+> > --- a/azure-pipelines.yml
+> > +++ b/azure-pipelines.yml
+> > @@ -354,7 +354,7 @@ jobs:
+> >         test "$GITFILESHAREPWD" =3D '$(gitfileshare.pwd)' || ci/mount-=
+fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare =
+"$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+> >
+> >         sudo apt-get update &&
+> > -       sudo apt-get install -y coccinelle &&
+> > +       sudo apt-get install -y coccinelle  coccinelle libcurl4-openss=
+l-dev libssl-dev libexpat-dev gettext &&
+>
+> Seems like you accidentally included coccinelle twice.
 
-Denton
+Good point (copy-edit fail!). I force-pushed a fixed version, and will
+probably send out a new version tomorrow or Friday.
 
-> +		git add gitweb &&
-> +		git commit -m "add gitweb/subdir/file" &&
-> +
-> +		git checkout master
-> +	)
-> +'
-> +
->  test_done
-> -- 
-> 2.23.0.25.g3f4444bfd7.dirty
-> 
+Thanks,
+Dscho
+
+>
+> Anyway, thanks for picking up where I left off.
+>
+> -Denton
+>
+> >
+> >         export jobname=3DStaticAnalysis &&
+> >
+> > diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> > index 8cc72503cb..8ce9ce276e 100755
+> > --- a/ci/install-dependencies.sh
+> > +++ b/ci/install-dependencies.sh
+> > @@ -49,7 +49,8 @@ osx-clang|osx-gcc)
+> >  	;;
+> >  StaticAnalysis)
+> >  	sudo apt-get -q update
+> > -	sudo apt-get -q -y install coccinelle
+> > +	sudo apt-get -q -y install coccinelle libcurl4-openssl-dev libssl-de=
+v \
+> > +		libexpat-dev gettext
+> >  	;;
+> >  Documentation)
+> >  	sudo apt-get -q update
+> > diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
+> > index a19aa7ebbc..65bcebda41 100755
+> > --- a/ci/run-static-analysis.sh
+> > +++ b/ci/run-static-analysis.sh
+> > @@ -26,4 +26,7 @@ then
+> >  	exit 1
+> >  fi
+> >
+> > +make hdr-check ||
+> > +exit 1
+> > +
+> >  save_good_tree
+> > --
+> > gitgitgadget
+>
