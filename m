@@ -2,102 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEFAF1F4BD
-	for <e@80x24.org>; Tue,  1 Oct 2019 13:30:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C84FF1F4BE
+	for <e@80x24.org>; Tue,  1 Oct 2019 13:31:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388512AbfJANa7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Oct 2019 09:30:59 -0400
-Received: from mail-vk1-f174.google.com ([209.85.221.174]:38810 "EHLO
-        mail-vk1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388330AbfJANa6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Oct 2019 09:30:58 -0400
-Received: by mail-vk1-f174.google.com with SMTP id s72so3496332vkh.5
-        for <git@vger.kernel.org>; Tue, 01 Oct 2019 06:30:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2R1nt7XJ/VoLw1PixVneiACe/HNMk8S8AYQDjNoF2lI=;
-        b=X/4m3yFv7xbY0yUX8Ad7cgK0qxV0TczclKlJMCxLh+yZ1awtDDnwcH7ArA+YtJwSOA
-         O9OxVdAl26KY6drtKa3VbdujtSVd+SVasX2tv0uyEZ0oqm5Nf0UTjKMFzMbNcHtcTOOr
-         E2IFRDZgHfLwut2PqRClCyOypvLHgLfRLmTs4vLgUuXUZO0+CwB+ghPwb/saUiObBXH1
-         FWvUeKe2zPh8GpoGxRZUAVmoB843thbA53oAogLI8ENq1xwVqcxNuX+o7Y9nT3Vs+7g6
-         4cj35WL9cLk4SvXFFHnj8vYwZsSqrGEDYm9V0lgB4U9XsJrDjCZVALhKIEh9om0OpK7u
-         ys4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2R1nt7XJ/VoLw1PixVneiACe/HNMk8S8AYQDjNoF2lI=;
-        b=KgMYfwTcoPvd7hSJSTnVGaVYeFy2S5tQYJOTTlFNdSImc+G3htkXpfoVGdEwMswjX2
-         xOjHNp+X8BDRwukwXdZ1m7lZPQdl8p5sCH0h8p0EJLgNXkJUPBauzPFWhUjQRxzbvw3c
-         Br6pr9NJZZ1NZyU+BwyYGx2GRwnZyr+9yOChQUvBJ7MjeAPzpfqHHvVSsOhQP+Xh6s6g
-         3aotOxoEy9N4Vuas/QCNbpXKanN6zWO/rMHUqc7nG9pmc+r8+IXGLPGS6xDN5IjuhzXP
-         fBp+PaqB6kMZDC18uxWp7gu6KsY0Oodrom0LAHTtbqlaZ+qtksYjUIkOE7K5ZAq6Kwk2
-         AgNg==
-X-Gm-Message-State: APjAAAXm9I3Pqt9XsUw8mm56BOlP3uTqeIhYgT6vItnmQ+QHOXdqK8q5
-        tNibheFdql+5aWHsu5iwJ4mmvfSK/yvVCp6YM2SIUQ==
-X-Google-Smtp-Source: APXvYqxxQ0eAN8MhUYj0yWJvOmKIPKI2mLbVb+qQmcphBVdp2Dh3AQdRnw+sovTkbRy1B342DisEjO6808sTyeudh0I=
-X-Received: by 2002:a1f:53c5:: with SMTP id h188mr7673381vkb.33.1569936657572;
- Tue, 01 Oct 2019 06:30:57 -0700 (PDT)
+        id S2388527AbfJANbR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Oct 2019 09:31:17 -0400
+Received: from relay2-d.mail.gandi.net ([217.70.183.194]:55347 "EHLO
+        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726710AbfJANbR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Oct 2019 09:31:17 -0400
+X-Originating-IP: 1.186.12.44
+Received: from localhost (unknown [1.186.12.44])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 872B24000D;
+        Tue,  1 Oct 2019 13:31:14 +0000 (UTC)
+Date:   Tue, 1 Oct 2019 19:01:12 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] respect core.hooksPath, falling back to .git/hooks
+Message-ID: <20191001133112.3qh4aeoctkoz2wxy@yadavpratyush.com>
+References: <pull.361.git.gitgitgadget@gmail.com>
+ <eca193f91b85fc4ffea453bc3adb64bc5c8831a8.1569532628.git.gitgitgadget@gmail.com>
+ <20190926223638.6tk2qhc4e62hs2wt@yadavpratyush.com>
+ <CAKPyHN1P713bTb2TYXFuXcM5Dg=7vXBVgchwvJUrNsQ6EcP5Rg@mail.gmail.com>
+ <20190927130539.52oir56byuedqmm3@yadavpratyush.com>
+ <nycvar.QRO.7.76.6.1909301139460.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <CAHd-oW7e5qCuxZLBeVDq+Th3E+E4+P8=WzJfK8WcG2yz=n_nag@mail.gmail.com>
-In-Reply-To: <CAHd-oW7e5qCuxZLBeVDq+Th3E+E4+P8=WzJfK8WcG2yz=n_nag@mail.gmail.com>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Tue, 1 Oct 2019 15:30:45 +0200
-Message-ID: <CAKPyHN3G-j6p8YZmk+07Sb3tL9vua_R-hJ=W81O7vCYr07AkxA@mail.gmail.com>
-Subject: Re: git-grep in sparse checkout
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1909301139460.46@tvgsbejvaqbjf.bet>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 30/09/19 11:42AM, Johannes Schindelin wrote:
+> On Fri, 27 Sep 2019, Pratyush Yadav wrote:
+> > On 27/09/19 08:10AM, Bert Wesarg wrote:
+> > > On Fri, Sep 27, 2019 at 12:40 AM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> > > > gitdir is used in a lot of places, and I think all those would 
+> > > > also
+> > > > benefit from using --git-path. So I think it is a better idea to move
+> > > > this to the procedure gitdir. It would have to be refactored to take any
+> > > > number of arguments, instead of the two it takes here.
+> 
+> The `gitdir` function is called 13 times during startup alone, and who
+> knows how many more times later.
+> 
+> So I am quite convinced that the original intention was to save on
+> spawning processes left and right.
+> 
+> But since you are the Git GUI maintainer, and this was your suggestion,
+> I made it so.
 
-On Tue, Oct 1, 2019 at 3:06 PM Matheus Tavares Bernardino
-<matheus.bernardino@usp.br> wrote:
->
-> Hi,
->
-> During Git Summit it was mentioned that git-grep searches outside
-> sparsity pattern which is not aligned with user expectation. I took a
-> quick look at it and it seems the reason is
-> builtin/grep.c:grep_cache() (which also greps worktree) will grep the
-> object store when a given index entry has the CE_SKIP_WORKTREE bit
-> turned on.
->
+Yes, I am the maintainer, but I am not an all-knowing, all-seeing 
+entity. Your, and every other contributors, suggestions are very 
+valuable. And my suggestions aren't gospel. I would hate to see someone 
+send in a patch they weren't sure was the best thing to do just because 
+I suggested it. Please feel free to object my suggestions.
 
-I also had once this problem and found that out and wrote a patch. I
-was just about to send this patch out.
+In this case, I didn't expect gitdir to be called this many times.
 
-Btw, ls-files should also learn to skip worktree files.
+While I don't notice much of a performance difference on my system 
+(Linux), a quick measurement tells me that the time spent in gitdir is 
+about 16 ms. In contrast, the same measurement without the v2 patch 
+gives out 0 ms (IOW, very fast). 16 ms sounds a bit much for something 
+so simple. It might not be the same for everyone else. AFAIK, spawning a 
+process is much slower on Windows.
 
-Stay tuned.
+So now I'm not so sure my suggestion was a good one. My original aim was 
+to be sure everything was correct, and no incorrect directories were 
+being used. But the current solution comes at a performance hit.
 
-Bert
+> > > We could either maintain a blacklist, for what we cache the result
+> > > too, or always call "git rev-parse --git-dir".
+> > >
+> > > This blacklist would need to be in sync with the one in Git's
+> > > path.c::adjust_git_path() than.
 
-> From what I understand, this bit is used exactly for sparse checkouts
-> (as described in Documentation/technical/index-format.txt[1]). But
-> should we perhaps ignore it in git-grep to have the expected behavior?
-> I'll be happy to send the patch if so, but I wanted to check with you
-> first.
->
-> Grepping with --cached or in given trees objects would still grep
-> outside the cone, but that is what one would expect, right? Or should
-> we filter out what is outside of the cone for cached grep as well?
->
-> Thanks,
-> Matheus
->
-> [1]: https://github.com/git/git/blob/master/Documentation/technical/index-format.txt#L101
+Bert's suggestion seems like a decent compromise. We run `git rev-parse 
+--git-path` for the paths in the blacklist, and for the rest we use the 
+cached value. This does run the risk of getting out of sync with 
+git.git's list, but it might be better than spawing a process every 
+time, and is very likely better than just doing it for hooks.
+
+Thoughts?
+
+-- 
+Regards,
+Pratyush Yadav
