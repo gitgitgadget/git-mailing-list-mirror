@@ -8,100 +8,197 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 249F61F4BD
-	for <e@80x24.org>; Tue,  1 Oct 2019 18:29:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2302D1F4BD
+	for <e@80x24.org>; Tue,  1 Oct 2019 18:30:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725884AbfJAS3D (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Oct 2019 14:29:03 -0400
-Received: from mail-yb1-f177.google.com ([209.85.219.177]:37948 "EHLO
-        mail-yb1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725848AbfJAS3C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Oct 2019 14:29:02 -0400
-Received: by mail-yb1-f177.google.com with SMTP id x4so1557116ybr.5
-        for <git@vger.kernel.org>; Tue, 01 Oct 2019 11:29:02 -0700 (PDT)
+        id S1725905AbfJASaM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Oct 2019 14:30:12 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:43296 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725848AbfJASaL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Oct 2019 14:30:11 -0400
+Received: by mail-pg1-f193.google.com with SMTP id v27so10238877pgk.10
+        for <git@vger.kernel.org>; Tue, 01 Oct 2019 11:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=YZyt9HvMQC+GF1oRtPQl4uDuwJqwMVjFUAkDx5BNewA=;
-        b=nKtAQK6uPOZnNYLlqNT9kxHfzNeR9hUkYRTrqxYGp2egc2UmRF+F+3Xd3hS0sxSZCC
-         eEmGvhOmJrWOYH7krJeSlUjkOuM72wceeqL6AuUdn7JtHAH/5Qnn4udUnM45Rb9FwX1j
-         wCZAnZBeX40Vsz/YhhxKZr0WUXYbZgw+FbJwZRkXSNqhnbAxhbYSTXPlUndcjIW02wgd
-         R48NkL7mXN2aHksUmJK8FUHX8gOeUhk+o0qVILnqEjPeHcaB85zpTtLTGh8W4mO8gice
-         uqYNBMFTlWbPP9D+2B94jgC3RD22aY1dJtAXdiwo9MvSGRDfof9yTHX7mNwXynUYmR6D
-         6gFQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Iz5w1hcY6KmUS9gRJEM/CsHU+54g5wSHLJQP1TfWYEc=;
+        b=PyRrgxcZwNYcknYypO4FXG6nsR3akplNF72v8PcoE58Ygdc7K67AfhopIU/yjWhXDT
+         g5eaT4zsEvEGFbYmwQ9cNkA29v2LR+BGYFnJcNQ1jstNv7bUdUInhnIybr/1WgQ08+i0
+         5jFa7Ol2Q33O1Cr3vT6xVoaBFwlyuhAql3gRPC3TMzWFXgOHec+VY9q+9bCikIuM+iRv
+         fB1WAirzC+sS7hPqwlMxDbwQf+2+ILx9uswfMSSjuanA304bWv4GAvGoWppo2lLqWYdo
+         kaAwFX4rJuFRmYVBlrAKMOiMc7eca0yOVudDnT/qW78HqnEUf3noeyWooyd1ynDDEz0r
+         6UHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=YZyt9HvMQC+GF1oRtPQl4uDuwJqwMVjFUAkDx5BNewA=;
-        b=UN6LNFBDErxIwIczOaKLCFkFS1q6bqCfnk2JUTnWyEiJyWw0iHoyPZ7M2YcVxe23zX
-         BLHnNj7Tj1O5rHeVw/Jvsh4Q10pojc0qiBCOc6BwXgMVkT7N3RNT02VABqIQuPo61edR
-         9gy0lm4e5G6HWl4WfBw94Tx2T91df9Wn878CLWKG51uSma9OF6rJdz7uTPhb9ZMrKw0s
-         VZb0CnY8+AvaybTaJVJACMgA6YBL/1O3j0R4kPB0VP67xjKiENJ5TFfuqoUzNAaqBN3X
-         MnZ58V3SpTQiobs7mINsBsTUG56afyNVXhcCVU6yU44DN9qQA8QhLn/1coVMysAb+Xfq
-         nJ3w==
-X-Gm-Message-State: APjAAAUbZHpw/wP/v7zWfbXBew/yT20lWQNIRhHuesgk9YKzzJo6HJu7
-        FS7PiBiuId1n4P7MWwUPqRjqyFW/EUA=
-X-Google-Smtp-Source: APXvYqwvBFxyNt2N8Ki5Xe3sci+UoS+p48zdIPm1chEjYMOA1+/g54NbySV1qkvHawm41JHcVSfbpQ==
-X-Received: by 2002:a25:db90:: with SMTP id g138mr18404014ybf.326.1569954541675;
-        Tue, 01 Oct 2019 11:29:01 -0700 (PDT)
-Received: from [192.168.1.3] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id 83sm3859773ywd.51.2019.10.01.11.29.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Oct 2019 11:29:01 -0700 (PDT)
-Subject: Re: git-grep in sparse checkout
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        git <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Derrick Stolee <dstolee@microsoft.com>,
-        Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>
-References: <CAHd-oW7e5qCuxZLBeVDq+Th3E+E4+P8=WzJfK8WcG2yz=n_nag@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f3101c8f-9709-5bcb-35f0-39ffaf8aa809@gmail.com>
-Date:   Tue, 1 Oct 2019 14:29:00 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Iz5w1hcY6KmUS9gRJEM/CsHU+54g5wSHLJQP1TfWYEc=;
+        b=gxSCk27cMqcZmXZ+ja8dS8GBF9uVAth4PdgklH8RDfW1rndnJms+JlkKZoFkz8KHN5
+         JMRCZqz3BRNoPtZ6sV2S6MbECE607nSOVhFhtFXevqSE25T+kp3sq2jZAbbJGIaJ2/dx
+         kuECpNjCOzvs/HYOUERuqqpwQCx0Z5o+E3Ix31hE9KTi8bMphRM6xA+jNYCaaXcTksa2
+         1jo+AzjpULJ36W3IydReFpqnWEsFV+2SkAfddZUOmmQ5iLIXtAJbrK5O6kQV6R+UH7HV
+         hxeYR0dXQjAM1Sul498NgL5AKd0IKVh5QS1Bo7e1/XW+/BfHBiwjJtw1q53PTp0FfVhN
+         m9pw==
+X-Gm-Message-State: APjAAAUEjOEawP/p16ncPQqazVSHFE8VzVcdGagzBpDSs/vvJ0G2q9G6
+        q5gL7ZNsMJW3Tk1QtFgdoylaQjzQSTM=
+X-Google-Smtp-Source: APXvYqzerKJnoUXsxOIfUnBvVigl5uFNewfn/GMFWfXHvyI151Prv2o5iw0Lcr/grjbHj1x4VvWO4w==
+X-Received: by 2002:a17:90a:e50b:: with SMTP id t11mr7068385pjy.50.1569954610433;
+        Tue, 01 Oct 2019 11:30:10 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id c8sm16229304pgw.37.2019.10.01.11.30.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 01 Oct 2019 11:30:09 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH v2] dir: special case check for the possibility that pathspec is NULL
+Date:   Tue,  1 Oct 2019 11:30:05 -0700
+Message-Id: <20191001183005.16977-1-newren@gmail.com>
+X-Mailer: git-send-email 2.23.0.25.g3f4444bfd7.dirty
+In-Reply-To: <20190930191106.16128-1-newren@gmail.com>
+References: <20190930191106.16128-1-newren@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAHd-oW7e5qCuxZLBeVDq+Th3E+E4+P8=WzJfK8WcG2yz=n_nag@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/1/2019 9:06 AM, Matheus Tavares Bernardino wrote:
-> Hi,
-> 
-> During Git Summit it was mentioned that git-grep searches outside
-> sparsity pattern which is not aligned with user expectation. I took a
-> quick look at it and it seems the reason is
-> builtin/grep.c:grep_cache() (which also greps worktree) will grep the
-> object store when a given index entry has the CE_SKIP_WORKTREE bit
-> turned on.
-> 
-> From what I understand, this bit is used exactly for sparse checkouts
-> (as described in Documentation/technical/index-format.txt[1]). But
-> should we perhaps ignore it in git-grep to have the expected behavior?
-> I'll be happy to send the patch if so, but I wanted to check with you
-> first.
+Commits 404ebceda01c ("dir: also check directories for matching
+pathspecs", 2019-09-17) and 89a1f4aaf765 ("dir: if our pathspec might
+match files under a dir, recurse into it", 2019-09-17) added calls to
+match_pathspec() and do_match_pathspec() passing along their pathspec
+parameter.  Both match_pathspec() and do_match_pathspec() assume the
+pathspec argument they are given is non-NULL.  It turns out that
+unpack-tree.c's verify_clean_subdirectory() calls read_directory() with
+pathspec == NULL, and it is possible on case insensitive filesystems for
+that NULL to make it to these new calls to match_pathspec() and
+do_match_pathspec().  Add appropriate checks on the NULLness of pathspec
+to avoid a segfault.
 
-Is that the expected behavior? In a sparse-checkout, wouldn't you _want_
-Git to report things outside the cone? You can already use external tools
-to search for things in the sparse cone: they are on disk. You need "git
-grep" for the objects reachable from the current tree but not already
-on disk.
+In case the negation throws anyone off (one of the calls was to
+do_match_pathspec() while the other was to !match_pathspec(), yet no
+negation of the NULLness of pathspec is used), there are two ways to
+understand the differences:
+  * The code already handled the pathspec == NULL cases before this
+    series, and this series only tried to change behavior when there was
+    a pathspec, thus we only want to go into the if-block if pathspec is
+    non-NULL.
+  * One of the calls is for whether to recurse into a subdirectory, the
+    other is for after we've recursed into it for whether we want to
+    remove the subdirectory itself (i.e. the subdirectory didn't match
+    but something under it could have).  That difference in situation
+    leads to the slight differences in logic used (well, that and the
+    slightly unusual fact that we don't want empty pathspecs to remove
+    untracked directories by default).
 
-I respect the goal to minimize the work "git grep" is doing, especially
-in a sparse-checkout + partial-clone world, where we wouldn't expect to
-have the blobs locally and this search would cause many blob downloads.
-I just want to truly examine if this is the right behavior.
+Denton found and analyzed one issue and provided the patch for the
+match_pathspec() call, SZEDER figured out why the issue only reproduced
+for some folks and not others and provided the testcase, and I looked
+through the remainder of the series and noted the do_match_pathspec()
+call that should have the same check.
 
-At minimum, I would expect a new option to have "git grep" go back to
-the old behavior, so users who really want a tree-wide search can have
-one.
+Co-authored-by: Denton Liu <liu.denton@gmail.com>
+Co-authored-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+Note: Applies on top of en/clean-nested-with-ignored, in next.
 
-Thanks,
--Stolee
+As with v1, the authorship is really mixed, so I don't know if I
+should use Co-authored-by (highlighted as a possibility by Denton), or
+the far more common Helped-by (as suggested by Junio but based on a
+more limited summary of the different contributions), or if perhaps
+Denton or SZEDER should be marked as the author and I be marked as
+Helped-by or Co-authored-by.  Since Denton commented on round 1, I
+used his suggestion for attribution in this round, but I'm open to
+changing it to whatever works best.
+
+Changes since v1:
+  - Removed comments that made sense in context of the original thread
+    but wouldn't be helpful to future readers.
+  - s/Helped-by/Co-authored-by/
+
+Range-diff:
+1:  885c22d24b ! 1:  c495b9303c dir: special case check for the possibility that pathspec is NULL
+    @@ t/t0050-filesystem.sh: $test_unicode 'merge (silent unicode normalization)' '
+     +
+     +		git checkout --orphan todo &&
+     +		git reset --hard &&
+    -+		# the subdir is crucial, without it there is no segfault
+     +		mkdir -p gitweb/subdir &&
+     +		>gitweb/subdir/file &&
+     +		# it is not strictly necessary to add and commit the
+    -+		# gitweb directory, its presence is sufficient
+     +		git add gitweb &&
+     +		git commit -m "add gitweb/subdir/file" &&
+     +
+
+ dir.c                 |  8 +++++---
+ t/t0050-filesystem.sh | 21 +++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 3 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index 7ff79170fc..bd39b86be4 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1962,8 +1962,9 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
+ 			((state == path_untracked) &&
+ 			 (get_dtype(cdir.de, istate, path.buf, path.len) == DT_DIR) &&
+ 			 ((dir->flags & DIR_SHOW_IGNORED_TOO) ||
+-			  do_match_pathspec(istate, pathspec, path.buf, path.len,
+-					    baselen, NULL, DO_MATCH_LEADING_PATHSPEC) == MATCHED_RECURSIVELY_LEADING_PATHSPEC))) {
++			  (pathspec &&
++			   do_match_pathspec(istate, pathspec, path.buf, path.len,
++					     baselen, NULL, DO_MATCH_LEADING_PATHSPEC) == MATCHED_RECURSIVELY_LEADING_PATHSPEC)))) {
+ 			struct untracked_cache_dir *ud;
+ 			ud = lookup_untracked(dir->untracked, untracked,
+ 					      path.buf + baselen,
+@@ -1975,7 +1976,8 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
+ 			if (subdir_state > dir_state)
+ 				dir_state = subdir_state;
+ 
+-			if (!match_pathspec(istate, pathspec, path.buf, path.len,
++			if (pathspec &&
++			    !match_pathspec(istate, pathspec, path.buf, path.len,
+ 					    0 /* prefix */, NULL,
+ 					    0 /* do NOT special case dirs */))
+ 				state = path_none;
+diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+index 192c94eccd..a840919967 100755
+--- a/t/t0050-filesystem.sh
++++ b/t/t0050-filesystem.sh
+@@ -131,4 +131,25 @@ $test_unicode 'merge (silent unicode normalization)' '
+ 	git merge topic
+ '
+ 
++test_expect_success CASE_INSENSITIVE_FS 'checkout with no pathspec and a case insensitive fs' '
++	git init repo &&
++	(
++		cd repo &&
++
++		>Gitweb &&
++		git add Gitweb &&
++		git commit -m "add Gitweb" &&
++
++		git checkout --orphan todo &&
++		git reset --hard &&
++		mkdir -p gitweb/subdir &&
++		>gitweb/subdir/file &&
++		# it is not strictly necessary to add and commit the
++		git add gitweb &&
++		git commit -m "add gitweb/subdir/file" &&
++
++		git checkout master
++	)
++'
++
+ test_done
+-- 
+2.23.0.25.g3f4444bfd7.dirty
+
