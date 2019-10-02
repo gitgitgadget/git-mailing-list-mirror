@@ -8,119 +8,129 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2C731F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 15:51:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83E7E1F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 15:54:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729061AbfJBPvX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 11:51:23 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:37533 "EHLO
+        id S1727433AbfJBPyP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 11:54:15 -0400
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:41767 "EHLO
         mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729058AbfJBPvW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 11:51:22 -0400
-Received: by mail-vs1-f65.google.com with SMTP id p13so12259698vsr.4
-        for <git@vger.kernel.org>; Wed, 02 Oct 2019 08:51:22 -0700 (PDT)
+        with ESMTP id S1725747AbfJBPyP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 11:54:15 -0400
+Received: by mail-vs1-f65.google.com with SMTP id l2so12237501vsr.8
+        for <git@vger.kernel.org>; Wed, 02 Oct 2019 08:54:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=cjINSseH7dd4bRuFe/HhJcLzpmaJWwJbDZmde0mJp+Y=;
-        b=FwuI7nrIaHiT9Uqd/GMO0j0l8seZpqSKjF+XLG5sZlSlcxE379ttLUe1Qyy0qpTyXG
-         jMJxveHy8rajuTjcRjKPZ6EPVWNAVA6N7coATMT1L6pRt/UUVuPbuFvkM/87zWcAjwPk
-         6pZn1Y5uxuD8ZABn7czD2M0WtAOylUaFzeDZybf3ZZpixmh/eC4Vvb5xd4+oTDn8KF2S
-         ftUSZTlHZ9361aof2SvTDdTdaOfHo7f4Ob6Thsk7sdMuNdUPhgGwk7nfk9s3Scoro+g9
-         BH4Ppl7bW4iB1L+X6aDpTLxyPwhWPW9OBex5aqRAEZ1iERt54wFVIheBEo0fqQKeY7rJ
-         CFeA==
+        bh=Ah+2hq9ly3dLBQXoc74UnpjVEYrBZ5N4uQ0MlmIz1HA=;
+        b=OvVeE9X45Ho+GfNPp4pJcPDJe9Q819qY4dkrDQFtHpn7BtET4N+25F9DPn+LhQfAet
+         ygqbzhPG2f/sRhyz9B/U6DzuWyV0abb6wG2DLSyj9qCwmcDDvpD6KzOa8xPo5tV5qUF+
+         9M0wGbbiRgjCvwo9zVm/iCjX5WUickbfvPfkZ7qo7xWUzqbjxYEBmTfkCpTSfx6zzic8
+         yLrcYkUArvbZ9Lc/5cjAm2hV5gcOrxEUlX55pmq/TVd/kH9qhTlVLmvdpWPOSv87pJyY
+         OuOYrFovvQzlR5U4pI2ni0Jh2nZoY7IjVjgPJImmqz7lGXU4a4aF3BhosgYWm9X2c75e
+         PnVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=cjINSseH7dd4bRuFe/HhJcLzpmaJWwJbDZmde0mJp+Y=;
-        b=a7NIhZf8yD1a3al+/5O6K8VBo/0YZ5lK3GOTFgzNUNRQ87KzauoYR3nff+Jgq/mUYm
-         ZP+JrQC8YCPHPnQ0QTHJy1j/Vy7OjOAUxkBIH2ja661DYujwwVR9WYiUseSDTP8pI0mK
-         DXi1wiyO4gIJ5JoD/PLQHaH8knm4JLCetiz5tCC8DPzqv6NPZ3l+T8dgEa41L7HGssvL
-         jyK24QPDjXF2wVOWJSnJBK27A9HtpmbZt04QmiHZfANY5GI6jlyROQNShcRlb7Rsz1IJ
-         HdLDUM9Yp0+iZkEwzkjyJdFF/AaS23ItVBQppOC56EQPndyPQAMLiljXrNY7pl5Wll+A
-         BjMw==
-X-Gm-Message-State: APjAAAWbaqNHShEkaxTCV3fLANR8JMuZnbrRrcBbJT3iAR+V/KhXkfGQ
-        DxBCkohSLRqq52t/ubMbQiTl/3irfZz65f7PDRI=
-X-Google-Smtp-Source: APXvYqwBXpgyZVW7CCNZJj6a2AtKnOfL/caOAwm3tksxBwRPgugGvRmVZyXuQLSiDsB+JeQFLA4PH8Q1Cm8TQv+sa+U=
-X-Received: by 2002:a67:1bc2:: with SMTP id b185mr2343183vsb.116.1570031481708;
- Wed, 02 Oct 2019 08:51:21 -0700 (PDT)
+        bh=Ah+2hq9ly3dLBQXoc74UnpjVEYrBZ5N4uQ0MlmIz1HA=;
+        b=txLuguVGc9+Wd4yYX5w0fa+xGGupAGI5n59TEd/gw1hpdFdFuTKP8Bd2C0yfdn3XeL
+         EgDV/0Cf8vzJ83LKazjINnnG82ifDE5QYOoWwYRMee5v2eLUF2bSa7DKy0Q3Psb1ID3S
+         D3LrVtb0rMTmZNoJqWI5e5x5zLbDYpiGYaiboK7T3Q2JcmAFbIxYYvi4CqSn0kTR1N+q
+         DQQ/dGS/T1PtxK5ctigCi1WjjnGT6iRtC6DL5ZlRujjLSfpwK6Lgl6C8fHbcYISRBmsw
+         9ZQSaYkK/PdHheDD+g8HSwb7ZKkBCvJMdqAdf4FR5YWSEPV4yeySKOpN7hWMZzU98wk2
+         9ZZA==
+X-Gm-Message-State: APjAAAVLhUL+GEHZuoAnymBr0/1sCupGuPVPfDbs4mpQuCaEiXrXBKHH
+        6mLdMzBADUxIarN6R1iIZaHZ6yiMVCX3+1p6iO/EaXtBL/o=
+X-Google-Smtp-Source: APXvYqxg07/JUNN3gmCPZrQdEGeevL32ZjBCX5pgevy1JQrP584Vm6nwXuOqVsUROdY95weCLcIer/tXq3FsCrvzM8o=
+X-Received: by 2002:a67:e8ca:: with SMTP id y10mr2197373vsn.136.1570031654122;
+ Wed, 02 Oct 2019 08:54:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20191001184049.GA30113@generichostname> <20191001185524.18772-1-newren@gmail.com>
- <20191001193510.GA43899@generichostname> <CABPp-BEMNbnncJ=Zv7q+PoMrt7yN0ZxaUVW-rEyjZ9vvXxMHLQ@mail.gmail.com>
-In-Reply-To: <CABPp-BEMNbnncJ=Zv7q+PoMrt7yN0ZxaUVW-rEyjZ9vvXxMHLQ@mail.gmail.com>
+References: <20190925014005.17056-1-newren@gmail.com> <20190930211018.23633-1-newren@gmail.com>
+In-Reply-To: <20190930211018.23633-1-newren@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 2 Oct 2019 08:51:10 -0700
-Message-ID: <CABPp-BEwopZr9NRQ51mpd1Ym4q_DT1qsefPS4PBr=8j-C03w=Q@mail.gmail.com>
-Subject: Re: [PATCH v3] dir: special case check for the possibility that
- pathspec is NULL
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Wed, 2 Oct 2019 08:54:02 -0700
+Message-ID: <CABPp-BFckDZL4iAqhHmrXDpFi3eQgvOkbgjJdGRZE4ePUwNDuw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] fast export/import: handle nested tags, improve
+ incremental exports
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 1, 2019 at 12:39 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Tue, Oct 1, 2019 at 12:35 PM Denton Liu <liu.denton@gmail.com> wrote:
-> >
-> > Hi Elijah,
-> >
-> > Sorry for dragging out this thread for so long...
-> >
-> > On Tue, Oct 01, 2019 at 11:55:24AM -0700, Elijah Newren wrote:
-> >
-> > [...]
-> >
-> > > diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-> > > index 192c94eccd..a840919967 100755
-> > > --- a/t/t0050-filesystem.sh
-> > > +++ b/t/t0050-filesystem.sh
-> > > @@ -131,4 +131,25 @@ $test_unicode 'merge (silent unicode normalization)' '
-> >
-> > I had to change the 25 to a 24 for this to apply cleanly.
-> >
-> > >       git merge topic
-> > >  '
-> > >
-> > > +test_expect_success CASE_INSENSITIVE_FS 'checkout with no pathspec and a case insensitive fs' '
-> > > +     git init repo &&
-> > > +     (
-> > > +             cd repo &&
-> > > +
-> > > +             >Gitweb &&
-> > > +             git add Gitweb &&
-> > > +             git commit -m "add Gitweb" &&
-> > > +
-> > > +             git checkout --orphan todo &&
-> > > +             git reset --hard &&
-> > > +             mkdir -p gitweb/subdir &&
-> > > +             >gitweb/subdir/file &&
-> > > +             git add gitweb &&
-> > > +             git commit -m "add gitweb/subdir/file" &&
-> > > +
-> > > +             git checkout master
-> > > +     )
-> > > +'
-> > > +
-> > >  test_done
-> >
-> > Just wondering, how did you generate this patch? Did you manually edit
-> > the last patch and resend it or is this a bug in our diff machinery?
->
-> I manually edited because it "was so simple" and of course just
-> compounded the problem because I didn't fix the count, as you pointed
-> out.  Gah.  Thanks for checking.  Clearly, I'm bouncing between too
-> many things this morning, and need to wait until I'm not so distracted
-> and rushing so I don't mess things up.  I'll sound out a v4 in a few
-> hours when I've cleaned a few other things off my plate.
+Hi Junio,
 
-I was going to send out a new version this morning, but it looks like
-Junio already picked up the patch and fixed it up (the tip of
-en/clean-nested-with-ignored already has what we want), so I won't
-resend after all.  Thanks Denton, SZEDER, and Junio.
+On Mon, Sep 30, 2019 at 2:10 PM Elijah Newren <newren@gmail.com> wrote:
+>
+> This series improves the incremental export story for fast-export and
+> fast-import (--export-marks and --import-marks fell a bit short),
+> fixes a couple small export/import bugs, and enables handling nested
+> tags.  In particular, the nested tags handling makes it so that
+> fast-export and fast-import can finally handle the git.git repo.
+
+I see you picked up this corrected series in pu; thanks.  However,
+your merge commit, 2a99d6b6ff7c ("Merge branch
+'en/fast-imexport-nested-tags' into pu", 2019-10-02), claims "Seems to
+break t9300 when merged to 'pu'.".  I know v1 did that and I could
+reproduce, but I can't reproduce any failures here.  Was this message
+just left over or is there some problem you are seeing?
+
+Thanks,
+Elijah
+
+>
+> Changes since v1 (full range-diff below):
+>   - Fixed an issue integrating with next/pu (in particular, with
+>     jk/fast-import-history-bugfix)
+>
+> Elijah Newren (8):
+>   fast-export: fix exporting a tag and nothing else
+>   fast-import: fix handling of deleted tags
+>   fast-import: allow tags to be identified by mark labels
+>   fast-import: add support for new 'alias' command
+>   fast-export: add support for --import-marks-if-exists
+>   fast-export: allow user to request tags be marked with --mark-tags
+>   t9350: add tests for tags of things other than a commit
+>   fast-export: handle nested tags
+>
+>  Documentation/git-fast-export.txt | 17 ++++--
+>  Documentation/git-fast-import.txt | 23 ++++++++
+>  builtin/fast-export.c             | 67 ++++++++++++++++------
+>  fast-import.c                     | 94 +++++++++++++++++++++++++++----
+>  t/t9300-fast-import.sh            | 37 ++++++++++++
+>  t/t9350-fast-export.sh            | 68 ++++++++++++++++++++--
+>  6 files changed, 268 insertions(+), 38 deletions(-)
+>
+> Range-diff:
+> 1:  b751d6c2d6 ! 1:  1d19498bc6 fast-import: fix handling of deleted tags
+>     @@ fast-import.c: static void parse_reset_branch(const char *arg)
+>                 b = new_branch(arg);
+>         read_next_command();
+>         parse_from(b);
+>     -+  if (b->delete && !strncmp(arg, "refs/tags/", 10)) {
+>     ++  if (b->delete && !strncmp(b->name, "refs/tags/", 10)) {
+>      +          /*
+>      +           * Elsewhere, we call dump_branches() before dump_tags(),
+>      +           * and dump_branches() will handle ref deletions first, so
+>     @@ fast-import.c: static void parse_reset_branch(const char *arg)
+>      +          for (t = first_tag; t; t = t->next_tag) {
+>      +                  strbuf_reset(&tag_name);
+>      +                  strbuf_addf(&tag_name, "refs/tags/%s", t->name);
+>     -+                  if (!strcmp(arg, tag_name.buf))
+>     ++                  if (!strcmp(b->name, tag_name.buf))
+>      +                          break;
+>      +                  prev = t;
+>      +          }
+> 2:  26b77dde15 = 2:  e1fd888e4a fast-import: allow tags to be identified by mark labels
+> 3:  e0d1a1d7aa = 3:  93175f28d9 fast-import: add support for new 'alias' command
+> 4:  edea892661 = 4:  8c8743395c fast-export: add support for --import-marks-if-exists
+> 5:  6af7e1fdd0 = 5:  eebc40df33 fast-export: allow user to request tags be marked with --mark-tags
+> 6:  631ae9a63e = 6:  de39f703c6 t9350: add tests for tags of things other than a commit
+> 7:  c0e932e4da = 7:  ac739dbb79 fast-export: handle nested tags
+> --
+> 2.23.0.264.gac739dbb79
+>
