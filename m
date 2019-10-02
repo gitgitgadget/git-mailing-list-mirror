@@ -7,95 +7,91 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3717E1F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 15:57:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83E211F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 16:03:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728930AbfJBP5X (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 11:57:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38084 "HELO cloud.peff.net"
+        id S1726948AbfJBQDx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 12:03:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38100 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727103AbfJBP5X (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 11:57:23 -0400
-Received: (qmail 25097 invoked by uid 109); 2 Oct 2019 15:57:23 -0000
+        id S1725799AbfJBQDx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 12:03:53 -0400
+Received: (qmail 25169 invoked by uid 109); 2 Oct 2019 16:03:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Oct 2019 15:57:23 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Oct 2019 16:03:52 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22997 invoked by uid 111); 2 Oct 2019 16:00:00 -0000
+Received: (qmail 23038 invoked by uid 111); 2 Oct 2019 16:06:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Oct 2019 12:00:00 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Oct 2019 12:06:30 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 2 Oct 2019 11:57:22 -0400
+Date:   Wed, 2 Oct 2019 12:03:52 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [RFC PATCH 10/10] pack-objects: improve partial packfile reuse
-Message-ID: <20191002155721.GD6116@sigill.intra.peff.net>
-References: <20190913130226.7449-1-chriscool@tuxfamily.org>
- <20190913130226.7449-11-chriscool@tuxfamily.org>
- <xmqq7e6bde4z.fsf@gitster-ct.c.googlers.com>
- <20190914020225.GB28422@sigill.intra.peff.net>
- <xmqqy2yrbmqu.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: write fetched refs to .promisor
+Message-ID: <20191002160351.GE6116@sigill.intra.peff.net>
+References: <20190905070153.GE21450@sigill.intra.peff.net>
+ <20190905183926.137490-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqy2yrbmqu.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20190905183926.137490-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 13, 2019 at 08:06:01PM -0700, Junio C Hamano wrote:
+On Thu, Sep 05, 2019 at 11:39:26AM -0700, Jonathan Tan wrote:
 
-> Jeff King <peff@peff.net> writes:
+> > I'm not really opposed to what you're doing here, but I did recently
+> > think of another possible use for .promisor files. So it seems like a
+> > good time to bring it up, since presumably we'd have to choose one or
+> > the other.
 > 
-> > On Fri, Sep 13, 2019 at 03:29:00PM -0700, Junio C Hamano wrote:
-> >
-> >> This comment has nothing to do with the change, but the way the
-> >> patch is presented is quite hard to follow, in that the preimage or
-> >> the common context lines do not help understand what the new code is
-> >> doing at all ;-)
-> >> 
-> >> I'll come back to the remainder of the patch later.  Thanks.
-> >
-> > I applaud Christian's effort to tease it out into separate patches.
+> Thanks for bringing it up - yes, we should discuss this.
+
+Sorry for starting a discussion and then abandoning it. :)
+
+> > I know one of the original design features of the promisor pack was that
+> > the client would _not_ keep a list of all of the objects it didn't have.
+> > But I wonder if it would make sense to keep a cache of these "cut
+> > points" in the partial clone. That's potentially smaller than the
+> > complete set of objects (especially for tree-based partial cloning), and
+> > it seems clear we're willing to store it in memory anyway.
 > 
-> Ah, no question about it.  I have a suspicion that 10/10 alone may
-> still be a bit too large a ball of wax, but with all the earlier
-> preparatory steps are bite-sized and trivial to see how they are
-> correct.
+> Well, before the current design was implemented, I had a design that had
+> such a list of missing objects. :-) I couldn't find a writeup, but here
+> is some preliminary code [1]. In that code, as far as I can tell, the
+> server gives us the list directly during fetch and the client merges it
+> with a repository-wide file called $GIT_DIR/objects/promisedblob, but we
+> don't have to follow the design (we could lazily generate the file, have
+> per-packfile promisedblob files, etc.).
 > 
-> The "way the patch is presented" comment was not at all about what
-> Christian did, but was about what the diff machinery computed when
-> comparing the 9th step Christian created and the final step.  In its
-> attempt to find and align common context lines, it ended up finding
-> blank lines and almost nothing else in the earlier part of the
-> patch, not just making it harder to read the new helper function
-> (i.e. the best way to read record_reused_object(), for example, is
-> to look only at '+' and ' ' lines, because the '-' lines are
-> irrelevant), it also made it hard to see what got discarded.
+> [1] https://public-inbox.org/git/cover.1499800530.git.jonathantanmy@google.com/
 
-Hmm, I see the early parts of this graduated to 'next'. I'm not sure
-everything there is completely correct, though. E.g. I'm not sure of the
-reasoning in df75281e78 (ewah/bitmap: always allocate 2 more words,
-2019-09-13).
+This was also a feature of my very old "external odb" patches. In fact,
+there the server told the client the type and size, which let us easily
+know that many objects weren't worth fetching (e.g., a large blob would
+be marked as binary and skipped for diffing, without the diff code even
+having to care about "is it a promisor object that we don't have?").
 
-I think the "block+1" there is actually because "block" might be "0".
-Prior to 2820ed171a (ewah/bitmap: introduce bitmap_word_alloc(),
-2019-09-13) from the same series, that could never be the case because
-we know that we always start with at least 32 allocated words. But after
-that we _could_ start with an empty word array, and allocating "block *
-2" would not make forward progress.
+For just omitting some blobs, I think that carrying extra information
+(either just the set of blobs, or even some basic meta-information) is
+valuable. But for "narrow" or "cone" clones, the current system of
+implied promisors is pretty nice, because then the client effort
+literally does (or could) scale with the size of their cone, independent
+of the number of objects outside their cone.
 
-And then the "2 more words" thing is used as justification in the next
-patch, 04a32d357f (pack-bitmap: don't rely on bitmap_git->reuse_objects,
-2019-09-13). I won't say that there isn't some subtle dependency there,
-but I certainly don't remember any logic like that at all. ;) So I think
-it might bear a little more scrutiny.
+> > And if we do that, would the .promisor file for a pack be a good place
+> > to store it?
+> 
+> After looking at [1], it might be better in another place. If we want to
+> preserve fast fetches, we still need another file to indicate that the
+> pack is a promisor, so ".promisor" seems good for that. The presence or
+> absence of the cutoff points is a separate issue and could go into a
+> separate file, and it might be worth putting all cutoff points into a
+> single per-repository file too.
 
-I'm sorry for being so slow on giving it a more careful review. I was
-traveling for work, then playing catch-up, and am now going on vacation.
-So it might be a little while yet.
+OK, that makes sense. Thanks for giving it some thought.
 
 -Peff
