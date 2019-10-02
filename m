@@ -2,77 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AFA01F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 07:14:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B95B31F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 07:35:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726070AbfJBHOy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 03:14:54 -0400
-Received: from mail-lf1-f50.google.com ([209.85.167.50]:35850 "EHLO
-        mail-lf1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725799AbfJBHOx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 03:14:53 -0400
-Received: by mail-lf1-f50.google.com with SMTP id x80so11904599lff.3
-        for <git@vger.kernel.org>; Wed, 02 Oct 2019 00:14:52 -0700 (PDT)
+        id S1726875AbfJBHfs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 03:35:48 -0400
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:38878 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726783AbfJBHfr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 03:35:47 -0400
+Received: by mail-vk1-f196.google.com with SMTP id s72so4116661vkh.5
+        for <git@vger.kernel.org>; Wed, 02 Oct 2019 00:35:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=googlemail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=zzoJTgat/jspIWZT1W0eGqkga5Gq02NxjgBC5HitQzE=;
-        b=TaDKhTMlMz/4Ueh3o+OQmyvPzFovFkZbXsrKQYvXIahLlX30g9qV07FD1FLOn8ubQn
-         Inba3tjclk2PAmjOw73OO7256Nc3hH37tLMr4kVEe93dQfOkzdMFZEVsD1zadFkj5Ofv
-         ULdFb7YVDSBtiIidZmL7qCDAzXeWFSCLgLsvX3QvYCGN89sFtXX0HqUPQ5wha3pPNFNj
-         qWm+WuvcpPY6HF2YvsADfrOYGojmtY3dCeVriHFFF1kdmgwV/w9HUItxfDPvCfzj1e5B
-         IOrZr+OOE3Mt6P6CFXOaSrFBcIUhlzgh+Puxahb5af8zhJfMdc341tVqjMCK7GvpOcwx
-         NmgA==
+        bh=yxiopv2PFfH1IiblTuFp1YHVbdTGZVgC8ID+JUfNuCA=;
+        b=C1RLxniu4vycNAL2TT5iN8pnLI1sVz9eakQ2iHNrxfbE2KfC8WKdvSs/5xoZO9g6q0
+         I0ed3r2T5fiL+K/ozlQXg5bQtRDoxu+OAqvDYETMI6EiXXu+B3zUDAFqv+M9aSJB+6ec
+         dhoTbue2XyV2SYtuioHqX1FmFLxuB/4ER87rHho8ecFrkIKfv2tCFB3Z5aMKEoWR4bgp
+         Kq3p4jOGfFgKkXIQhCoNMvPyyh8ZmFZg0mtBNMkq3XSUBFqXEK2pwh5EoM0hFuYhVMNI
+         BNe71vpJB79V1WgOs6ZhQ6vo3JF2sS84xItv2wr9flPf0rGYXoQNT4dZ9WDM+12F9JPn
+         iJAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=zzoJTgat/jspIWZT1W0eGqkga5Gq02NxjgBC5HitQzE=;
-        b=n3yrpzsUVaoF3lU5U2lCL+p1bP3ptRDYqXkMDOVoZVKg6XLxOLPaWrOJz6kjuuzlI2
-         iWc+fBEZdRWfpDA6kGzkLgfQABJpUrnAY6G9rkgO9QDSqv2pF4e5PY8sucRcFkm2SuXW
-         utjpxirXPtaQPCvve7+4Iks7nRWJm5BlCpw3wQihatfQH0XD/8ZfXkh0+8zOJ5r8JBGg
-         VQqD6C5+s/unCfOESXno7w+5OX7T4kuTwrNoEyOCxIG9fpXuujf7ivuwgZoYkF1qgcnt
-         WN0IDkSMUu2kOyYeZIYfmSXElaQeSxO/EHgQLqa5YOPtaRost8ZQaogfZN7v/IFfuUp3
-         FQsg==
-X-Gm-Message-State: APjAAAWVst23BiC45TpiTG6fNH+WJFuPN33e/6gRr1bao31G0lTXvGR9
-        HeIJiVHzOps0xwfab1a6+YO/nrY5/HMUA38o77o8xh3i91E=
-X-Google-Smtp-Source: APXvYqx+9oORUCvyjMWA1Gh7YaJceAIA9ao+76WmBFTRb7JLvVV23HA56bar/BnPdTYBWJHi7MTPkgoUMqCrRAtItyQ=
-X-Received: by 2002:a19:f801:: with SMTP id a1mr1139559lff.166.1570000491703;
- Wed, 02 Oct 2019 00:14:51 -0700 (PDT)
+        bh=yxiopv2PFfH1IiblTuFp1YHVbdTGZVgC8ID+JUfNuCA=;
+        b=OURwmdEHq8+ppB8jPMzwTP/CmvqNMgyCW4ewnnqe0fCRfCvqG/bOO3jM5KZfcXq9qV
+         xS01ihUGh30Hibjc6a7bJarWtHnaKnxVk00Vq5JzifIILCV4XN455YD0hz5bL+dbGvsV
+         quqiAN1WvTVj0LlQ7gtcNokB2DdUuJWu30a3jRFroLm9YphOqtPSXTxXknDq0lgG1N/O
+         mUln1hW4rZxfzrD0BIhJeN/itcPe1ThgeFjW/pb8oMN/RIs21gaRUalLG57eQcPJtcBq
+         n8tWJY7Xr2jFqbfSYjGa/WQ4fTq9hwb1POja+LT6RAK01DyWYXT2QNfZuVtm5prvClwa
+         4vqQ==
+X-Gm-Message-State: APjAAAW2Yw0HpJfpcA7DTuKqMOCXso4K5PczlJaOMsBZPeB8UxMWrwH/
+        U/ls1ME5KawgHSzCvlyzhihnPUNCc/IDQyzC94g=
+X-Google-Smtp-Source: APXvYqwulPzlhcvRXgX3CHHCraArdnUsXfETKaaapcrk209LjoTNpuk5scO9M/8XQ8fsCTjf+pV08YW1nYW0NwX0Y6I=
+X-Received: by 2002:a1f:53c5:: with SMTP id h188mr1286687vkb.33.1570001746345;
+ Wed, 02 Oct 2019 00:35:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAGr--=K15nUcnsJWOP87uMMjeQmTgAeO_6hnr12k2zuNQjNyBw@mail.gmail.com>
- <91e5b3b0-08f9-66a8-ebdf-90effd34c888@kdbg.org> <20190926191545.ro7w6lbtlpbyxpk7@yadavpratyush.com>
- <9d77189d-a357-ab0a-6cb5-e87ecdeffb91@kdbg.org> <20191001180005.iemqmlbn7ncv3dav@yadavpratyush.com>
-In-Reply-To: <20191001180005.iemqmlbn7ncv3dav@yadavpratyush.com>
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-Date:   Wed, 2 Oct 2019 09:12:03 +0200
-Message-ID: <CAGr--=Jv2Zh7meg3V8Q5EyTZZF=4v465+wzBx2YNmrFbq3PAhA@mail.gmail.com>
-Subject: Re: git-gui: disable the "loose objects popup" dialog?
+References: <97013a71289857767100d6a4adcb39ca99b2b21b.1569873171.git.bert.wesarg@googlemail.com>
+ <20191001142401.hhg5dtefj6qg66dd@yadavpratyush.com> <CAKPyHN2qSudnEMfokp5-BXBDU6_kcVv3aokNUYdqZOnMXYVzYw@mail.gmail.com>
+ <20191001173100.n5dipyhjk4uxcnnj@yadavpratyush.com>
+In-Reply-To: <20191001173100.n5dipyhjk4uxcnnj@yadavpratyush.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Wed, 2 Oct 2019 09:35:34 +0200
+Message-ID: <CAKPyHN31qQwL=x0hwk2TjOkyC8iRtcLY0v6NgwA81N2i8P6aBg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] git-gui: use existing interface to query a path's attribute
 To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 1, 2019 at 8:00 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> So here's what I propose: why don't we try to do something similar? What
-> about running `git-gc --auto` in the background when the user makes a
-> commit (which I assume is the most common operation in git-gui). This
-> would be disabled when the user sets gc.auto to 0.
+Pratyush,
+
+On Tue, Oct 1, 2019 at 7:31 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
 >
-> This way, we keep a similar experience to the command line in case of
-> auto-gc, and we get rid of the prompt. People who don't want
-> auto-compression can just set gc.auto to 0, which they should do anyway.
+> On 01/10/19 05:22PM, Bert Wesarg wrote:
+> > On Tue, Oct 1, 2019 at 4:24 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> > >
+> > > Hi,
+> > >
+> > > I don't see any difference between v3 and v2 of this patch. What changed
+> > > in this version?
+> >
+> > nothing, but 2/2 changed.
+>
+> I don't see a v3 of 2/2 in my inbox. A search on public-inbox yields
+> nothing either. Can you please check if the patch was sent properly? Or
+> if you _can_ find it on public-inbox.org, a link to that would do just
+> fine.
+>
+> I _do_ have v2 of both patches, but the v3 of the second patch is the
+> one missing.
 
-FWIW that proposal sounds pretty good to me.
+I noticed this already, while in contact with Johannes on GitHub and I
+found my error. While pasting messages ids for References into the v3
+patch, I missed to renamed Message-Id to References for the v2 patch,
+thus the v3 has the same Message-Id than the v2 patch. Will resend
+now.
 
-Birger
+Bert
+
+>
+> --
+> Regards,
+> Pratyush Yadav
