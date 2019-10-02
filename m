@@ -8,129 +8,113 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22CA31F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 08:03:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ACCD1F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 08:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727302AbfJBIDO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 04:03:14 -0400
-Received: from mout.gmx.net ([212.227.15.19]:41275 "EHLO mout.gmx.net"
+        id S1727121AbfJBIGa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 04:06:30 -0400
+Received: from mout.gmx.net ([212.227.17.21]:37549 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725852AbfJBIDO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 04:03:14 -0400
+        id S1726162AbfJBIGa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 04:06:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570003386;
-        bh=XX5Tcgng0urtsDwxgHet9WwMY5QKvsI5N5ifGz8eW8o=;
+        s=badeba3b8450; t=1570003579;
+        bh=4r4JTvHH3bJeskrfzo32i+YhZ/ddaZIO6c7vSrqP9Vo=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=KbSRjhm2Yj+/Eu8Wnz94UbqkcAQFzgebbh/rcuRdr7yRUj1fVboBYeFwOryJFmBMv
-         5mn/ZZHOFdBnFlL63WRMhCoNflWqAmHn1ObU4hGKhNIEYkxZORvLTLEbsP9tmSlMB0
-         GKNkkvy6XbJsBmda4SBMBw48Gm6nEd3p0ohi3ya0=
+        b=dTW4I5rkgA9Fa6qHh2PcrEmkHCqMLtWOSMjp7f1e2ulfEIf4juUi0XFOkbnWQa6Jz
+         96uyG/ywD3YwpzK6j+UG5EXrlNEVlX9ps6eFUn3BSSA0zOeBSz7Y/gTHAghWsNNFpG
+         yvAdeI5VR6t9raDt4s2VZ45nFT/pn+VkY0Xj3eSo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MmUHj-1hpcV63lb7-00iRHV; Wed, 02
- Oct 2019 10:03:06 +0200
-Date:   Wed, 2 Oct 2019 10:02:51 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MN5if-1iWHgk078v-00IzlH; Wed, 02
+ Oct 2019 10:06:19 +0200
+Date:   Wed, 2 Oct 2019 10:06:04 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff Hostetler <git@jeffhostetler.com>
-cc:     Garima Singh <garimasigit@gmail.com>,
-        Garima Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/1] commit-graph: emit trace2 cmd_mode for each
- sub-command
-In-Reply-To: <da9a7ce5-736c-9d85-d655-cb19172063f8@jeffhostetler.com>
-Message-ID: <nycvar.QRO.7.76.6.1910021001400.46@tvgsbejvaqbjf.bet>
-References: <pull.323.git.gitgitgadget@gmail.com> <6d1e51c3-64a4-0075-5c9c-3302c5d07c50@gmail.com> <da9a7ce5-736c-9d85-d655-cb19172063f8@jeffhostetler.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v1 1/5] sequencer: update `total_nr' when adding an item
+ to a todo list
+In-Reply-To: <xmqqbluzhp8g.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910021005050.46@tvgsbejvaqbjf.bet>
+References: <20190925201315.19722-1-alban.gruin@gmail.com> <20190925201315.19722-2-alban.gruin@gmail.com> <xmqqbluzhp8g.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-727874285-1570003388=:46"
-X-Provags-ID: V03:K1:LVGYltQvKgaC8f4CZkOTbr/GzsTH+gsoQLwgPGTfrlAmCiIRIDP
- nnRSMV4XfWPYsDmI5oZ5vm2dzz9stz0B2r+h0EXsgB/afKstRcy2qV3RjUkwTHiJNLnfkVw
- tdq/DBc3GU+ZtdcapXdshBC0HguMGPvmTbHQ2pvXd9S7C8OTEnUHhlkXQbCzsYDBr/mHIgj
- ieH11hOTwOSOac8tXLprg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:u35/yJe8K9M=:/xV1RL8Y9S1VVByz9oUUlp
- 5iTU0L2OkgdkkcFDQxCL32PJjNU/YR2li8Ls9JY6ad2EH1uNgB7IAxrwbeKj3nN+KnA36j2jZ
- TurF9yTEYW+lzgBdXlNfIz52gszR7eSiNd7KN/KJxGRB8SwXt+pVMQVT1L2HP9sg1RaPs9TaT
- /sFH7FMr4qSjr8jNu/nDMJi6m19AkFpGHhvI2oPas/WHIcv+dA1dwJaWtHF4OrDJ1w/HyfoJB
- a++lB4beeU4DIB6HYKewsZNEEl2Z9vMNLHO/oU+88xVSYFBK9CkOTLXjYT5BFdRh6r+EbIKyi
- E62ESUzXx0Nh1sXAgIAhIvKD9i//4ysM73YB+ITYT3aPpeMjoloWUVPqY8hP+kMWynlSneLLl
- a1SERXoF3jnvS85OT494wMXivCK499DXfb7OGMIDZNYeS7zK/ersuX7QAaNMUeLnL7oCZTISK
- NWEmz18LqAgBpwzud9mB8bbmLm0/SwA9w+oxTYMO7XbZKuQCl9Vpxw1SvlIINEDaP5ns5qc30
- brGrqHRWqWf3jYHygCEywtsucPaz+1L/HwuKYb1yz2GXig/DBvzl4lHJcQ9Dh0UPqawURrpVX
- nECFn28uH65HCc1KPcB+Xin8446WrZzIbqryLrDz+iBMrGVZdFN4yBrJywVn0WZWQTM6eYqrt
- 1kyNqVDxvnLReYyfLsP6CdQ1rURC1ZuP34OxsIfyzVp2y535WvjnTg6USmSNgTdgMSErgZeE2
- mxoR7wm0YZ7Dt0/GToFgZEmOByu+I+NALcD4GteDIAkUW8G7pyvs0c2+T/716EamFdErhtyYy
- yjjbmbHYWJjo9xUTHlTIlixGVSX9gaU//GVq8SLPv+09WTSUBPfZ/rcz3mkXNBPcjuQHSPJFk
- kkOs1IAwsaX4ajB2Pd4fUD4Ji/WaJfVu8knmviap2U4SRVNVXf+TFFaBcdhOtQCPcPOBKKp/b
- dmp0KQjZ4GeJZ7XxBkbK4+YoDJL8B6ldNcC5gl4pMHGnDUrbtWoHYkZDnbwrLEvwkcjTmizAT
- R7F+/mTFJJysh1WMJXbD0CwkuYc53ie2IYNnZc6ozv7L2yOYOgztpyImrbpiHvr/oJ8yjdOJn
- vZGe5PD4005cXINHERaQydH+uz70RW+t/gj3/q9qAUCwDDojigxLHNwcXUmgaV7xE5H7FEC75
- 5sR1HD7OE8IcK6Y5V7qd4DvGtCMZnbSdexiFyIdpeu8Uu5+mgrwc/vj8aGQfz7IOjLjmVaw26
- EkeefCkKQ0fXrLFSwnb0xB1GURNnAQlNothNlBPjMoTMqPHNjL2C7hke8aLY=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:RxupK0lrd+Cw4jWPSrYdRJ+ByNnaDFmhH8uY/sbiL86tVsqAhf4
+ AVP5EN9/CEwxSIswpDrayvaqveZWpoOjZuM7i2jHHvymd78m5BaH52zITEYgrbtCjNOJups
+ OF8mFrA4vpP3kDdUJk3dfbfxaGMq4gt1rAydtg/QFNVZO2KjQuBinLMhtjfmepu9qEqjGM2
+ oUQNIYp/lEQaXx1UasNag==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GdwGPb9j+YE=:6ZPVOZ/H8B6WG0WynnA6K5
+ aD/2E473dzA73t7oDmPzOLOtPJLdoMgMD3nleWlYyW5QlvlbofnMA4/E29CQFm99Cftghv55M
+ hRxC6yd7EG+bPgUXsY1I6q7Kysx+N357Awj1x9qPweexCnjxUwXj14hlWR8BklxuvKygGk48y
+ 1AHv5sZRqAnU9OIVLrkzWbg5iNXWuRJ7bgUTRJPQMOfz2gDJaBavLVdgzqHsFvMXUivgstEUQ
+ ssGg8SqrffMkKvofi+a99ICAtaCZ6LPdFHBF0wJH8u6+6yksmzNIH614naCrQ7JbWC6Q7ALLu
+ xxFzTWNfLXVxKMVThVKbzz0BjcPz8KK9dI9WKatn2BtdWdWFg23IMDFtPIBl7sVv0pIW0mQhC
+ wu3PEuoPu08ZrWPwRW5PrIH5Lt8nqsB80q9uZ6ijVvs3CUZPRPAfBOwnlXE16Ukl4psYUf0vR
+ Tbj2Rln66jRnLbcjlWt0YhbrhB/nefAMblnJXAtbri5fQB1MXwJkXNpTB+Z9xuA58tuELpPuS
+ ZpaoVpfjajqZfz+mdYH/+iueUornH+h+/yXdWvXTqxpaN/eExuUffWmdX10QXsun6js0Bc9Tx
+ sp2xiZ3Me7/EZo5uk61c3WUdrwaZt4mypQtwNlyHUt3E5J112SvZ7XFEtC1U+JUwOlz+jbGou
+ JejU2x2PZNgw57RfK4GDDqFCD1Ah7rByHdtSnHwalugY7N3MMMW004oye7b/0P3t+EgoxDdco
+ IyIqZNFJN0fDIgis2MKwKPvJsbfKhmKIAv7gTdzI4Bz8CBH77XnyKdcaMt1ePqSMUE/ktbRyI
+ Tiyid/RJtRWdnc34zCcb5pawH7mlGTGFPU8ka7aJUN5bLzL+bIf4vhw19ErUtoLOr0dZeXaUQ
+ te+At7+gt03YYyXyfQw8KjxMR4ifXgad/4n1t4hjqtnt/QoQsau9F+wPkPEfB2EEtmeUKr+BK
+ 7KNKFt//NlprpU5ak0TWNCy0qUYt4CRj9qlkvBpxT38SLbqANJNO20y/QatL/PcOAOon/9KIH
+ lrzpOaysHD99pnW0GVeI9s8wcQPMiolKdvZZQYFvUtsiXp0c19A7v1TcLFoWbGmH52opi9CS/
+ EV8zxbnsfDHtBkCe7mdGRTpNmPJyT+KRgEFV5UzbfpGJ/QL5MFrsLMTszZ3eTPhYre1gteVJG
+ CBbcu77eTTRLPL6PlNN0wGg2Ozl+l//1fIDEGMkEtqKLaqk6NxW/J3JqtPUQZPhT9jIwp/kav
+ lxYE+Vz6MP/1PJ1SVokpObZIpRZDEgvJBB1CbiXAz4sFuXtkZJnDomF9zW5M=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-727874285-1570003388=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, 2 Oct 2019, Junio C Hamano wrote:
 
-Hi,
-
-On Wed, 11 Sep 2019, Jeff Hostetler wrote:
-
-> On 9/10/2019 9:54 AM, Garima Singh wrote:
-> > Ping :) Any thoughts on this?
-> >
-> > On 8/27/2019 12:56 PM, Garima Singh via GitGitGadget wrote:
-> > > Emit trace2_cmd_mode() messages for each commit-graph sub-command.
-> > >
-> > > The commit graph commands were in flux when trace2 was making it's w=
-ay to
-> > > git. Now that we have enough sub-commands in commit-graph, we can la=
-bel
-> > > the
-> > > various modes within them. Distinguishing between read, write and ve=
-rify
-> > > is
-> > > a great start.
-> > >
-> > > Signed-off-by: Garima Singh garima.singh@microsoft.com
-> > > [garima.singh@microsoft.com]
-> > >
-> > > CC: jeffhost@microsoft.com, stolee@gmail.com, garimasigit@gmail.com,
-> > > avarab@gmail.com
-> > >
-> > > Garima Singh (1):
-> > > =C2=A0=C2=A0 commit-graph: emit trace2 cmd_mode for each sub-command
-> > >
-> > > =C2=A0 builtin/commit-graph.c | 6 ++++++
-> > > =C2=A0 1 file changed, 6 insertions(+)
-> > >
-> > >
-> > > base-commit: 745f6812895b31c02b29bdfe4ae8e5498f776c26
-> > > Published-As:
-> > > https://github.com/gitgitgadget/git/releases/tag/pr-323%2Fgarimasi51=
-4%2FcoreGit-commit-graph-trace2-v1
-> > >
-> > > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git
-> > > pr-323/garimasi514/coreGit-commit-graph-trace2-v1
-> > > Pull-Request: https://github.com/gitgitgadget/git/pull/323
-> > >
+> Alban Gruin <alban.gruin@gmail.com> writes:
 >
-> Looks good to me.  Thanks!
+> > `total_nr' is the total amount of items, done and toto, that are in a
+> > todo list.  But unlike `nr', it was not updated when an item was
+> > appended to the list.
+>
+> s/amount/number/, as amount is specifically for something
+> that cannot be counted.
+>
+> Perhaps a stupid language question but what is "toto"?
 
-This was not yet picked up into `pu`, correct? Or did I miss anything?
+"in toto" is Latin for "in total", if I remember correctly.
+
+But in this instance, I think it is merely a typo and should have been
+"todo" instead. That is what the "total_nr" is about: the number of
+"done" and "todo" items, added together.
 
 Ciao,
 Dscho
 
 >
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 >
+> > This variable is mostly used by command prompts (ie. git-prompt.sh and
+> > the like).
+> >
+> > Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> > ---
+> >  sequencer.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/sequencer.c b/sequencer.c
+> > index d648aaf416..575b852a5a 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -2070,6 +2070,7 @@ void todo_list_release(struct todo_list *todo_li=
+st)
+> >  static struct todo_item *append_new_todo(struct todo_list *todo_list)
+> >  {
+> >  	ALLOC_GROW(todo_list->items, todo_list->nr + 1, todo_list->alloc);
+> > +	todo_list->total_nr++;
+> >  	return todo_list->items + todo_list->nr++;
+> >  }
 >
-
---8323328-727874285-1570003388=:46--
