@@ -2,135 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83E7E1F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 15:54:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A235C1F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 15:56:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727433AbfJBPyP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 11:54:15 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:41767 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725747AbfJBPyP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 11:54:15 -0400
-Received: by mail-vs1-f65.google.com with SMTP id l2so12237501vsr.8
-        for <git@vger.kernel.org>; Wed, 02 Oct 2019 08:54:14 -0700 (PDT)
+        id S1728916AbfJBP4s (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 11:56:48 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:44888 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726157AbfJBP4s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 11:56:48 -0400
+Received: by mail-pg1-f195.google.com with SMTP id i14so12040310pgt.11
+        for <git@vger.kernel.org>; Wed, 02 Oct 2019 08:56:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ah+2hq9ly3dLBQXoc74UnpjVEYrBZ5N4uQ0MlmIz1HA=;
-        b=OvVeE9X45Ho+GfNPp4pJcPDJe9Q819qY4dkrDQFtHpn7BtET4N+25F9DPn+LhQfAet
-         ygqbzhPG2f/sRhyz9B/U6DzuWyV0abb6wG2DLSyj9qCwmcDDvpD6KzOa8xPo5tV5qUF+
-         9M0wGbbiRgjCvwo9zVm/iCjX5WUickbfvPfkZ7qo7xWUzqbjxYEBmTfkCpTSfx6zzic8
-         yLrcYkUArvbZ9Lc/5cjAm2hV5gcOrxEUlX55pmq/TVd/kH9qhTlVLmvdpWPOSv87pJyY
-         OuOYrFovvQzlR5U4pI2ni0Jh2nZoY7IjVjgPJImmqz7lGXU4a4aF3BhosgYWm9X2c75e
-         PnVQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=BZQBCUHCiIGrNL/4/KsZ1OIGbe+ABWcOPMdmIwCbnd4=;
+        b=XwQgFvulMjAL3JIq+nYprcejlgwLt+AqcwNCcdr8a1Ss2lQFTZNUJuKiet62d4GzVA
+         V2liQRMXi6iXW3rBFOaLl+tFSlPd573EFgqv2T9+uI65Me+URFyn3cDYQ5nI019/sjhb
+         28qMNYmcJTdgTi2a9m6mCksZHxhCIekMBvmruOthCqRdEO5vxybKVr19UKboTR7D+E1B
+         X3CCZC6cXcXt6mUnqypjy+8XhAWEUl7jmTJdU9/WhQ1kZZw/TQ7SgcvBMqVwgR2hFBnM
+         VzHHVxQPFhSjJubeaoOE5xMaNcMb2a7BToXO7y/A2fTI9GkcoXrgTchlHHl7UdWnm4jV
+         ANKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ah+2hq9ly3dLBQXoc74UnpjVEYrBZ5N4uQ0MlmIz1HA=;
-        b=txLuguVGc9+Wd4yYX5w0fa+xGGupAGI5n59TEd/gw1hpdFdFuTKP8Bd2C0yfdn3XeL
-         EgDV/0Cf8vzJ83LKazjINnnG82ifDE5QYOoWwYRMee5v2eLUF2bSa7DKy0Q3Psb1ID3S
-         D3LrVtb0rMTmZNoJqWI5e5x5zLbDYpiGYaiboK7T3Q2JcmAFbIxYYvi4CqSn0kTR1N+q
-         DQQ/dGS/T1PtxK5ctigCi1WjjnGT6iRtC6DL5ZlRujjLSfpwK6Lgl6C8fHbcYISRBmsw
-         9ZQSaYkK/PdHheDD+g8HSwb7ZKkBCvJMdqAdf4FR5YWSEPV4yeySKOpN7hWMZzU98wk2
-         9ZZA==
-X-Gm-Message-State: APjAAAVLhUL+GEHZuoAnymBr0/1sCupGuPVPfDbs4mpQuCaEiXrXBKHH
-        6mLdMzBADUxIarN6R1iIZaHZ6yiMVCX3+1p6iO/EaXtBL/o=
-X-Google-Smtp-Source: APXvYqxg07/JUNN3gmCPZrQdEGeevL32ZjBCX5pgevy1JQrP584Vm6nwXuOqVsUROdY95weCLcIer/tXq3FsCrvzM8o=
-X-Received: by 2002:a67:e8ca:: with SMTP id y10mr2197373vsn.136.1570031654122;
- Wed, 02 Oct 2019 08:54:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190925014005.17056-1-newren@gmail.com> <20190930211018.23633-1-newren@gmail.com>
-In-Reply-To: <20190930211018.23633-1-newren@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 2 Oct 2019 08:54:02 -0700
-Message-ID: <CABPp-BFckDZL4iAqhHmrXDpFi3eQgvOkbgjJdGRZE4ePUwNDuw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/8] fast export/import: handle nested tags, improve
- incremental exports
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=BZQBCUHCiIGrNL/4/KsZ1OIGbe+ABWcOPMdmIwCbnd4=;
+        b=OezOAgjpFQW96jacOBs92c7Da8QQoIjFn/1k9OR/fZEUxAmYoXZfr3d91QXDtY5WCh
+         VOnncrcDfmRNMbce+DVi5KTyT8qWsyxrtDdnfCoRtrt4C4gdihcTu8J4LLhzYOSokN2k
+         e67EmhVyXSqWLE9/NN70SrjVKq7fHvTMby8JWASMQKxuifWIYwvXjo8fIwDonDxF+bNl
+         zEkx2VFIp8rTRego8z2MfiCRq7JNp1qoy4+05j34e3Dqs85eT8I80TXGe3cGBvEMRn/g
+         j4LuMkTtCSgHG89DOZE8xoYKEw3WKKl3NwwHtUcyoxja9CwkYrVYoZFkKNO1znxbvj3t
+         R2yg==
+X-Gm-Message-State: APjAAAUwYcWXnAV7lFLxusBD0k+7iHYs+FNOPEEKYsjNFgV/TxxffX4C
+        0lzv4LxF8V1+Lx8kO/lTWDUzRCKY
+X-Google-Smtp-Source: APXvYqzK6Vs1EAgcZxECUfZD4zrg3o4KxbweYT5hfZnH/DysqbSYl0qiCt8+jOCbyZ947ReZAPA9Nw==
+X-Received: by 2002:a63:ee03:: with SMTP id e3mr2405837pgi.95.1570031808014;
+        Wed, 02 Oct 2019 08:56:48 -0700 (PDT)
+Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:3:cd32:1847:435d:97e])
+        by smtp.gmail.com with ESMTPSA id t125sm19558900pfc.80.2019.10.02.08.56.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Oct 2019 08:56:47 -0700 (PDT)
+Subject: Re: [PATCH v2 1/6] midx: add MIDX_PROGRESS flag <snip>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        William Baker via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com, jeffhost@microsoft.com,
+        William Baker <William.Baker@microsoft.com>
+References: <pull.337.git.gitgitgadget@gmail.com>
+ <pull.337.v2.git.gitgitgadget@gmail.com>
+ <6badd9ceaf4851b2984e78a5cfd0cb8ec0c810f5.1568998427.git.gitgitgadget@gmail.com>
+ <20190921121104.GA6787@szeder.dev>
+ <xmqqlfu9krzv.fsf@gitster-ct.c.googlers.com>
+ <2de6b236-7bd8-256b-7d8f-911d63a47498@gmail.com>
+ <xmqqsgobg0rv.fsf@gitster-ct.c.googlers.com>
+ <xmqqlfu3eigp.fsf@gitster-ct.c.googlers.com>
+From:   William Baker <williamtbakeremail@gmail.com>
+Message-ID: <8ec5513c-fcfa-bc55-5d73-6aa6528ac4dc@gmail.com>
+Date:   Wed, 2 Oct 2019 08:56:45 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:68.0)
+ Gecko/20100101 Thunderbird/68.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqlfu3eigp.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 10/2/19 12:04 AM, Junio C Hamano wrote>>
+>> Well, if you write
+>>
+>> 	enum { BIT_0 = 1, BIT_1 = 2, BIT_3 = 4 } var;
+>>
+>> it's pretty much a promise that the normal value for the var is one
+>> of these listed values to your readers.
+> 
+> ... that is why compilers give a warning when you write
+> 
+> 	switch (var) {
+> 	case ...:
+> 	...
+> 	}
+> 
+> and do not have case arms for all the declared enum values without
+> having the 'default' arm.
+> 
 
-On Mon, Sep 30, 2019 at 2:10 PM Elijah Newren <newren@gmail.com> wrote:
->
-> This series improves the incremental export story for fast-export and
-> fast-import (--export-marks and --import-marks fell a bit short),
-> fixes a couple small export/import bugs, and enables handling nested
-> tags.  In particular, the nested tags handling makes it so that
-> fast-export and fast-import can finally handle the git.git repo.
-
-I see you picked up this corrected series in pu; thanks.  However,
-your merge commit, 2a99d6b6ff7c ("Merge branch
-'en/fast-imexport-nested-tags' into pu", 2019-10-02), claims "Seems to
-break t9300 when merged to 'pu'.".  I know v1 did that and I could
-reproduce, but I can't reproduce any failures here.  Was this message
-just left over or is there some problem you are seeing?
+Thanks for all of the details and feedback here.  I can leave the
+flag as-is (and not switch to enum).
 
 Thanks,
-Elijah
-
->
-> Changes since v1 (full range-diff below):
->   - Fixed an issue integrating with next/pu (in particular, with
->     jk/fast-import-history-bugfix)
->
-> Elijah Newren (8):
->   fast-export: fix exporting a tag and nothing else
->   fast-import: fix handling of deleted tags
->   fast-import: allow tags to be identified by mark labels
->   fast-import: add support for new 'alias' command
->   fast-export: add support for --import-marks-if-exists
->   fast-export: allow user to request tags be marked with --mark-tags
->   t9350: add tests for tags of things other than a commit
->   fast-export: handle nested tags
->
->  Documentation/git-fast-export.txt | 17 ++++--
->  Documentation/git-fast-import.txt | 23 ++++++++
->  builtin/fast-export.c             | 67 ++++++++++++++++------
->  fast-import.c                     | 94 +++++++++++++++++++++++++++----
->  t/t9300-fast-import.sh            | 37 ++++++++++++
->  t/t9350-fast-export.sh            | 68 ++++++++++++++++++++--
->  6 files changed, 268 insertions(+), 38 deletions(-)
->
-> Range-diff:
-> 1:  b751d6c2d6 ! 1:  1d19498bc6 fast-import: fix handling of deleted tags
->     @@ fast-import.c: static void parse_reset_branch(const char *arg)
->                 b = new_branch(arg);
->         read_next_command();
->         parse_from(b);
->     -+  if (b->delete && !strncmp(arg, "refs/tags/", 10)) {
->     ++  if (b->delete && !strncmp(b->name, "refs/tags/", 10)) {
->      +          /*
->      +           * Elsewhere, we call dump_branches() before dump_tags(),
->      +           * and dump_branches() will handle ref deletions first, so
->     @@ fast-import.c: static void parse_reset_branch(const char *arg)
->      +          for (t = first_tag; t; t = t->next_tag) {
->      +                  strbuf_reset(&tag_name);
->      +                  strbuf_addf(&tag_name, "refs/tags/%s", t->name);
->     -+                  if (!strcmp(arg, tag_name.buf))
->     ++                  if (!strcmp(b->name, tag_name.buf))
->      +                          break;
->      +                  prev = t;
->      +          }
-> 2:  26b77dde15 = 2:  e1fd888e4a fast-import: allow tags to be identified by mark labels
-> 3:  e0d1a1d7aa = 3:  93175f28d9 fast-import: add support for new 'alias' command
-> 4:  edea892661 = 4:  8c8743395c fast-export: add support for --import-marks-if-exists
-> 5:  6af7e1fdd0 = 5:  eebc40df33 fast-export: allow user to request tags be marked with --mark-tags
-> 6:  631ae9a63e = 6:  de39f703c6 t9350: add tests for tags of things other than a commit
-> 7:  c0e932e4da = 7:  ac739dbb79 fast-export: handle nested tags
-> --
-> 2.23.0.264.gac739dbb79
->
+William
