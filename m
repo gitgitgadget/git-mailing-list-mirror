@@ -8,67 +8,66 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA4001F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 18:03:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B48D91F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 18:03:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727685AbfJBSDR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 14:03:17 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34076 "EHLO
+        id S1728482AbfJBSDd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 14:03:33 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41203 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726669AbfJBSDR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 14:03:17 -0400
-Received: by mail-wr1-f65.google.com with SMTP id a11so94065wrx.1
-        for <git@vger.kernel.org>; Wed, 02 Oct 2019 11:03:16 -0700 (PDT)
+        with ESMTP id S1727883AbfJBSDd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 14:03:33 -0400
+Received: by mail-wr1-f65.google.com with SMTP id q9so49082wrm.8
+        for <git@vger.kernel.org>; Wed, 02 Oct 2019 11:03:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=u+6YvN6FI/kT9GcrhWMd0WtchUsEg7F+dRwK5wcyHak=;
-        b=pVcYq69oCkr02lQ1kQg9636K4FSduXDN5Pz5Doo1eSuI4UAnotKme2jOi2swzAI58Z
-         YZ/x70XD2pyjvijev+RRdLwdsIzqYtmHv9x6o+7fVyi+uMPsSGSBP8z29LS1Ntbvy2uG
-         uuHQDCMRTtoczn0XtRUYxlCBLEm3VdGT/Mbg/UpaCB+ZlNhjkrq86TTaUnVHfDev7KK0
-         IcygU4/Hxqtx1TmPWmGSxikTEoQTmW7SHRq9Yyo6+TOKdstt6CxdLxwMHlvwciEjUrK/
-         dfyTjOu/9aS/I5o0cLR09RtZcMcFfT/3nZNJ5KMiqMwiJkq7oc0mknC1gMvnx5GFCMF+
-         xDRA==
+        bh=0YnwF9NA8j2NoEezPrnzZTc9VkpW5Wqz5NpzZG6j1dU=;
+        b=ZHmUDxH8zmLx984cTxL+Z2oPLHzlIvj41xOUms1GtZSnYZTvA75v8618CWiTEKF1nG
+         2Y/AjW0WtY0mFI3RN6KXjgMjc1W6pNlr0oLIqEjlwmD6d+xitYU+5nM9102wLAjzKgNX
+         L1ELCPc07bgvGNbC/HHhwQxSt4BSMysIyzfXq+M/K3otCIbeDCZ/cv9uQKr/StYE+wbc
+         xRMgko1S8+gAlbuHzEdTP5voRFuHBRT7cPBK8+EC5mWxucmjqHElqAtGi0oHfoZ4entO
+         C2lt1/cAYHi6NmkqqABqv7v9VlXN71WPD1gcOWbvR7nSsURF/K6W7Gq8t4snFOALuiii
+         +9XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
          :date:user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=u+6YvN6FI/kT9GcrhWMd0WtchUsEg7F+dRwK5wcyHak=;
-        b=c+fxgx/IbOhpJgQcgMTrSinLUGZ0ZYEA7jFf+C/1IC9l+Fd/bRJPOO9Tm3POZgbUVA
-         rz4rsx6lqOqTfQYy626RD8ROp+QomNei8s8qveBmi7N+wp5Wo1ty8QDGb+GNz+VyJQbY
-         CgMHcp635VCfu3CnDmOHQZGpnJqMNJ0Fb+smjOaedDP6UxckHXe9hBk5J5UTFXsaey2l
-         1O7PaMzRHSM9PmTqvKSWKgY2d4YroLXl2T4SO2ivN3+dSXQ2ihJN6PW/wobaExshQc7x
-         kzWzKKR/kmg4ZDq2ShSZpnawL+3Thwllg7Ad8+pRszBnoLdzz5qCouCzBnTkAhf204gE
-         T/cg==
-X-Gm-Message-State: APjAAAVxmdB8yZK/G+XFURSx8+4FZw8eCc0rZxifUjspj/1OLqS5vvK1
-        3XY/b0YSQikoDbwK4T+E1n0sfuyp
-X-Google-Smtp-Source: APXvYqzy87aV/IelTOiV570sbs4HcYNAFnAImHU2UbGKCEOeAqOHUCICF8fNYgB+kjVCm2vtBVE4eQ==
-X-Received: by 2002:adf:f547:: with SMTP id j7mr3902986wrp.119.1570039395556;
-        Wed, 02 Oct 2019 11:03:15 -0700 (PDT)
+        bh=0YnwF9NA8j2NoEezPrnzZTc9VkpW5Wqz5NpzZG6j1dU=;
+        b=B7dHcnRzmcknumBpQoe0X6U4n5yitWET0heUoK5Bs/Iv8N30Ew4rCuLvLUGoKOBjci
+         rndUt3yi3ex0N+OIuyo03Ua6ZoAaebTJyxAb4rLBBGzGQgjNVzQ8wvzG+qTX4oFEM77P
+         zBz7f09klsLbGV17Hwwn4jTf5vdjUTP0B/C6TCNo55euqAakK08uiqsdiLG6E0FEiPZ+
+         dGfj3SHoNe5Z2qiX0JnewroFRdWqoLtm9aLH474fNWBhcIJ9ojjXVqBv4uRYvxzoqkmF
+         qfLgl5czszI0tHynLkf4JEzfiDHS13nrrOw2nNc1XnRdPZLmpg7Xp6hA91cXDYlS6Sb8
+         t6DQ==
+X-Gm-Message-State: APjAAAVnT3pDpIowBljLYuTcABzHVu7xGpmfEH+KS4WoR/KL2SUvmY0j
+        XHGNrkmWjcT1QOBdNED8ons=
+X-Google-Smtp-Source: APXvYqzgQ52ecvHnJ9MPhgI/l3uN5F7NuV9quaObZNSeuK6KJUIfyE43gQ3ymkxoDFVwbMS72gOp1w==
+X-Received: by 2002:adf:f343:: with SMTP id e3mr3769847wrp.268.1570039410863;
+        Wed, 02 Oct 2019 11:03:30 -0700 (PDT)
 Received: from [192.168.0.104] (atoulouse-658-1-236-54.w90-38.abo.wanadoo.fr. [90.38.111.54])
-        by smtp.gmail.com with ESMTPSA id u22sm73847wru.72.2019.10.02.11.03.14
+        by smtp.gmail.com with ESMTPSA id w5sm177956wrs.34.2019.10.02.11.03.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Oct 2019 11:03:14 -0700 (PDT)
-Subject: Re: [PATCH v1 1/5] sequencer: update `total_nr' when adding an item
- to a todo list
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+        Wed, 02 Oct 2019 11:03:30 -0700 (PDT)
+Subject: Re: [PATCH v1 5/5] sequencer: directly call pick_commits() from
+ complete_action()
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 References: <20190925201315.19722-1-alban.gruin@gmail.com>
- <20190925201315.19722-2-alban.gruin@gmail.com>
- <xmqqbluzhp8g.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1910021005050.46@tvgsbejvaqbjf.bet>
- <xmqqh84red54.fsf@gitster-ct.c.googlers.com>
+ <20190925201315.19722-6-alban.gruin@gmail.com>
+ <212cdc0d-8cf3-9172-d405-39b3868e6ca4@gmail.com>
+ <nycvar.QRO.7.76.6.1910021018360.46@tvgsbejvaqbjf.bet>
 From:   Alban Gruin <alban.gruin@gmail.com>
 Openpgp: preference=signencrypt
-Message-ID: <88ea97e2-664f-33f9-5f94-fe66b5e4220c@gmail.com>
-Date:   Wed, 2 Oct 2019 20:03:04 +0200
+Message-ID: <e37012e1-09dd-41b9-aa51-b6dd2b28a9c4@gmail.com>
+Date:   Wed, 2 Oct 2019 20:03:29 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.3.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqh84red54.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <nycvar.QRO.7.76.6.1910021018360.46@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
@@ -77,84 +76,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio and Johannes,
+Hi Johannes,
 
-Le 02/10/2019 à 10:59, Junio C Hamano a écrit :
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Le 02/10/2019 à 10:20, Johannes Schindelin a écrit :
+> Hi,
 > 
->> Hi Junio,
+> On Fri, 27 Sep 2019, Phillip Wood wrote:
+> 
+>> Hi Alban
 >>
->> On Wed, 2 Oct 2019, Junio C Hamano wrote:
+>> Thanks for removing some more unnecessary work reloading the the todo list.
 >>
->>> Alban Gruin <alban.gruin@gmail.com> writes:
+>> On 25/09/2019 21:13, Alban Gruin wrote:
+>>> Currently, complete_action() calls sequencer_continue() to do the
+>>> rebase.  Even though the former already has the todo list, the latter
+>>> loads it from the disk and parses it.  Calling directly pick_commits()
+>>> from complete_action() avoids this unnecessary round trip.
+>>> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+>>> ---
+>>>   sequencer.c | 8 +++++---
+>>>   1 file changed, 5 insertions(+), 3 deletions(-)
 >>>
->>>> `total_nr' is the total amount of items, done and toto, that are in a
->>>> todo list.  But unlike `nr', it was not updated when an item was
->>>> appended to the list.
+>>> diff --git a/sequencer.c b/sequencer.c
+>>> index ec7ea8d9e5..b395dd6e11 100644
+>>> --- a/sequencer.c
+>>> +++ b/sequencer.c
+>>> @@ -5140,15 +5140,17 @@ int complete_action(struct repository *r, struct
+>>> replay_opts *opts, unsigned fla
+>>>    	return error_errno(_("could not write '%s'"), todo_file);
+>>>    }
+>>>   -	todo_list_release(&new_todo);
+>>> -
+>>>    if (checkout_onto(r, opts, onto_name, &oid, orig_head))
+>>>     return -1;
 >>>
->>> s/amount/number/, as amount is specifically for something
->>> that cannot be counted.
->>>
-
-Thank you for these corrections, I really appreciate it :)
-
->>> Perhaps a stupid language question but what is "toto"?
+>>>    if (require_clean_work_tree(r, "rebase", "", 1, 1))
+>>>     return -1;
+>>>   -	return sequencer_continue(r, opts);
 >>
->> "in toto" is Latin for "in total", if I remember correctly.
+>> sequencer_continue does a number of things before calling pick_commits(). It
+>>  - calls read_and_refresh_cache() - this is unnecessary here as we've just
+>> called require_clean_work_tree()
+>>  - calls read_populate_opts() - this is unnecessary as we're staring a new
+>> rebase so opts is fully populated
+>>  - loads the todo list - this is unnecessary as we've just populated the todo
+>> list
+>>  - commits any staged changes - this is unnecessary as we're staring a new
+>> rebase so there are no staged changes
+>>  - calls record_in_rewritten() - this is unnecessary as we're starting a new
+>> rebase
+>>
+>> So I agree that this patch is correct.
 > 
-> And "Toto" can also be "Toyo Toki", one of the two large and well
-> known Japanese manufacturers of porcelain things you see in
-> bathrooms--oh how appropriate in this project ;-).
-> 
-
-In French, it’s the name of a recurring character in children’s jokes.
-It’s also used sometimes as a dummy variable name like foo or bar.
-
->> But in this instance, I think it is merely a typo and should have been
->> "todo" instead. That is what the "total_nr" is about: the number of
->> "done" and "todo" items, added together.
-> 
-
-Correct.
-
-> If I were writing this, I would probably say "... the total number
-> of items, counting both done and todo,..." and with 'counting both'
-> I wouldn't have been so puzzled.
+> All true. Could this careful analysis maybe be included in the commit
+> message (with `s/staring/starting/`)?
 > 
 
-I will change this.
+I will do so (same for your comment on 4/5) and resend this series as
+soon as possible.
 
 Cheers,
 Alban
 
 
 
-> Thanks.
+> Thanks,
+> Dscho
 > 
 >>
->> Ciao,
->> Dscho
+>> Thanks
 >>
+>> Phillip
+>>
+>>> +	todo_list_write_total_nr(&new_todo);
+>>> +	res = pick_commits(r, &new_todo, opts);
+>>> +	todo_list_release(&new_todo);
+>>> +
+>>> +	return res;
+>>>   }
 >>>
+>>>   struct subject2item_entry {
 >>>
->>>> This variable is mostly used by command prompts (ie. git-prompt.sh and
->>>> the like).
->>>>
->>>> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
->>>> ---
->>>>  sequencer.c | 1 +
->>>>  1 file changed, 1 insertion(+)
->>>>
->>>> diff --git a/sequencer.c b/sequencer.c
->>>> index d648aaf416..575b852a5a 100644
->>>> --- a/sequencer.c
->>>> +++ b/sequencer.c
->>>> @@ -2070,6 +2070,7 @@ void todo_list_release(struct todo_list *todo_list)
->>>>  static struct todo_item *append_new_todo(struct todo_list *todo_list)
->>>>  {
->>>>  	ALLOC_GROW(todo_list->items, todo_list->nr + 1, todo_list->alloc);
->>>> +	todo_list->total_nr++;
->>>>  	return todo_list->items + todo_list->nr++;
->>>>  }
->>>
+>>
 
