@@ -2,159 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E68211F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 23:49:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 361D71F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 23:54:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728716AbfJBXtk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 19:49:40 -0400
-Received: from mail-vk1-f201.google.com ([209.85.221.201]:41186 "EHLO
-        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727327AbfJBXtj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 19:49:39 -0400
-Received: by mail-vk1-f201.google.com with SMTP id u123so231154vkf.8
-        for <git@vger.kernel.org>; Wed, 02 Oct 2019 16:49:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
-        bh=UprPYrepAY5h9AAZedBDIHbfqDboqFL59p1RPsmZshU=;
-        b=YR6GKzltSmPOqdeFbcqACC2cnSbmejnwAKUqHyXDsLtPIkuoJiCT08aBn9NJTrRi1j
-         lAnqLo9lA5YVYxoTPR9L7lbrnlpK1Kh+VVvXP7PzKVGew2JcYvnt+CPRdKLOkUi6vSbX
-         2kkO1V0IHQVEswRQQRy7XBmyLnHBwP40hlqlkTNKLBVh/Woox8fSgu8azY80XuE59J34
-         5c547eXqcrq9OgXpzHguWUq14N4LaqysF2aW9EWf5i949grbyS6ptdvQByBULqBfkHp1
-         6F83E77wx1wkpUnGa3vx5zryB9PLAia1D4Rg72G+5mSKAYp82k/ZDmuUb+YMs6Bm0mrC
-         WSvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to;
-        bh=UprPYrepAY5h9AAZedBDIHbfqDboqFL59p1RPsmZshU=;
-        b=hORQ0/ZvZGmto+1ptowP2YJgVjUeO6qHi9TtdSaAypG9SWvJj6WUhugEgHQC3B7yEq
-         4RG8N43k39T8erS4zqTdqg+wzDZT9syv2Glx+vvRoSE3FqOe7ExMmxzmd3LGnCxp0AZz
-         YJgEQ6bXvHVhkgQrdAcZYQ0Q3IrE8KzpUIlUEQoF396uVIh6IbP03ARTUzOG47i6nTZV
-         TTNFX8ivEX/PD9+3bvezRUwJbHuCoSVhQvVwda8ZCBs8sqrMiZziP5jAJ2BETfDrRs+0
-         NwmtJJNLQnrMXgtTcXHRuZylJGz0hNla05J95tvU7oTOEYSGb8nqJV/pNC9jNN6yLzuC
-         2rxw==
-X-Gm-Message-State: APjAAAXjeM26qEcm/0oBOZc6yjpUbeQ1XWE92R7GDgIlCT6m/DwJfdn/
-        tEdYwDgl/fS2f+m4XY2Ct768pbYOOOXJ8qGp2eNf0eY7QL3Bl8GBDlWjne9aW8XYCpM+wjDViql
-        SLKS0r1O8GI3S67sBh1uBv3B77HCbzlUodCYE4TkYfbWtDy8i2h6PVebVTVwXCvI=
-X-Google-Smtp-Source: APXvYqzpevBWwgW5bpgfFlq3TIzuI3wqHFSI864vavunOyeTdEUdO8V3cIEG+Jzu2nyfXkP5/C0gVW7ipuDNCQ==
-X-Received: by 2002:a05:6102:3032:: with SMTP id v18mr3408002vsa.203.1570060176956;
- Wed, 02 Oct 2019 16:49:36 -0700 (PDT)
-Date:   Wed,  2 Oct 2019 16:49:29 -0700
-In-Reply-To: <cover.1570059953.git.steadmon@google.com>
-Message-Id: <054936f40b8232516763ec90bf44ad50d86d7b65.1570059953.git.steadmon@google.com>
-Mime-Version: 1.0
-References: <cover.1570059953.git.steadmon@google.com>
-X-Mailer: git-send-email 2.23.0.444.g18eeb5a265-goog
-Subject: [PATCH 2/2] push: add trace2 instrumentation
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S1729007AbfJBXyR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 19:54:17 -0400
+Received: from relay7-d.mail.gandi.net ([217.70.183.200]:43339 "EHLO
+        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726137AbfJBXyR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 19:54:17 -0400
+X-Originating-IP: 1.186.12.44
+Received: from localhost (unknown [1.186.12.44])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id E71B320002;
+        Wed,  2 Oct 2019 23:54:13 +0000 (UTC)
+Date:   Thu, 3 Oct 2019 05:24:11 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v3 2/2] git-gui: support for diff3 conflict style
+Message-ID: <20191002235411.bfkrjc6cgyayqwud@yadavpratyush.com>
+References: <14754a59ecf15194dccc659072e2bc180280d097.1569845908.git.bert.wesarg@googlemail.com>
+ <a7cff5097eaf29a80c822cb37b537b3859d06ad7.1569873171.git.bert.wesarg@googlemail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a7cff5097eaf29a80c822cb37b537b3859d06ad7.1569873171.git.bert.wesarg@googlemail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add trace2 regions in transport.c and builtin/push.c to better track
-time spent in various phases of pushing:
+Hi,
 
-* Listing refs
-* Checking submodules
-* Pushing submodules
-* Pushing refs
+I made some fixes to the punctuation and capitalization in the comments 
+you added. You can take a look at [0].
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- builtin/push.c |  2 ++
- transport.c    | 14 ++++++++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+Just to be sure, I get the following text in git-gui when I ran your 
+example:
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 3742daf7b0..cc1292a566 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -357,8 +357,10 @@ static int push_with_options(struct transport *transport, struct refspec *rs,
- 
- 	if (verbosity > 0)
- 		fprintf(stderr, _("Pushing to %s\n"), transport->url);
-+	trace2_region_enter("push", "transport_push", the_repository);
- 	err = transport_push(the_repository, transport,
- 			     rs, flags, &reject_reasons);
-+	trace2_region_leave("push", "transport_push", the_repository);
- 	if (err != 0) {
- 		fprintf(stderr, "%s", push_get_color(PUSH_COLOR_ERROR));
- 		error(_("failed to push some refs to '%s'"), transport->url);
-diff --git a/transport.c b/transport.c
-index ae558af944..f313f288de 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1145,8 +1145,10 @@ int transport_push(struct repository *r,
- 
- 		refspec_ref_prefixes(rs, &ref_prefixes);
- 
-+		trace2_region_enter("transport_push", "get_refs_list", the_repository);
- 		remote_refs = transport->vtable->get_refs_list(transport, 1,
- 							       &ref_prefixes);
-+		trace2_region_leave("transport_push", "get_refs_list", the_repository);
- 
- 		argv_array_clear(&ref_prefixes);
- 
-@@ -1182,6 +1184,7 @@ int transport_push(struct repository *r,
- 			struct ref *ref = remote_refs;
- 			struct oid_array commits = OID_ARRAY_INIT;
- 
-+			trace2_region_enter("transport_push", "push_submodules", the_repository);
- 			for (; ref; ref = ref->next)
- 				if (!is_null_oid(&ref->new_oid))
- 					oid_array_append(&commits,
-@@ -1194,9 +1197,11 @@ int transport_push(struct repository *r,
- 						      transport->push_options,
- 						      pretend)) {
- 				oid_array_clear(&commits);
-+				trace2_region_leave("transport_push", "push_submodules", the_repository);
- 				die(_("failed to push all needed submodules"));
- 			}
- 			oid_array_clear(&commits);
-+			trace2_region_leave("transport_push", "push_submodules", the_repository);
- 		}
- 
- 		if (((flags & TRANSPORT_RECURSE_SUBMODULES_CHECK) ||
-@@ -1207,6 +1212,7 @@ int transport_push(struct repository *r,
- 			struct string_list needs_pushing = STRING_LIST_INIT_DUP;
- 			struct oid_array commits = OID_ARRAY_INIT;
- 
-+			trace2_region_enter("transport_push", "check_submodules", the_repository);
- 			for (; ref; ref = ref->next)
- 				if (!is_null_oid(&ref->new_oid))
- 					oid_array_append(&commits,
-@@ -1217,15 +1223,19 @@ int transport_push(struct repository *r,
- 						     transport->remote->name,
- 						     &needs_pushing)) {
- 				oid_array_clear(&commits);
-+				trace2_region_leave("transport_push", "check_submodules", the_repository);
- 				die_with_unpushed_submodules(&needs_pushing);
- 			}
- 			string_list_clear(&needs_pushing, 0);
- 			oid_array_clear(&commits);
-+			trace2_region_leave("transport_push", "check_submodules", the_repository);
- 		}
- 
--		if (!(flags & TRANSPORT_RECURSE_SUBMODULES_ONLY))
-+		if (!(flags & TRANSPORT_RECURSE_SUBMODULES_ONLY)) {
-+			trace2_region_enter("transport_push", "push_refs", the_repository);
- 			push_ret = transport->vtable->push_refs(transport, remote_refs, flags);
--		else
-+			trace2_region_leave("transport_push", "push_refs", the_repository);
-+		} else
- 			push_ret = 0;
- 		err = push_had_errors(remote_refs);
- 		ret = push_ret | err;
+  <<<<<<< HEAD
+ +Proin bibendum purus ut est tristique, non pharetra dui consectetur.
+  ||||||| merged common ancestors
+--Proin in felis eu elit suscipit rhoncus vel ut metus.
+  =======
++ Proin placerat leo malesuada lacinia lobortis.
+  >>>>>>> branch
+
+I noticed that the line after '<<<<<<< HEAD' starts with ' +' and the 
+line after '=======' starts with '+ '.
+
+So on the "HEAD" version, the space is before the '+', and on the 
+"branch" version, the space is after the '+'. This is the intended 
+behaviour, right?
+
+It is not strictly related to your patch because it happens without 
+diff3 conflict style enabled as well, but I just want to make sure this 
+is not a bug.
+
+The patch looks good. Will queue. Thanks.
+
+[0] https://github.com/prati0100/git-gui/commit/d6e413c7cff6d09a0089d7a5de115ad438b42e81
+
+On 02/10/19 09:36AM, Bert Wesarg wrote:
+> This adds highlight support for the diff3 conflict style.
+> 
+> The common pre-image will be reversed to --, because it has been removed
+> and replaced with ours or theirs side respectively.
+> 
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> ---
+>  git-gui.sh   |  3 +++
+>  lib/diff.tcl | 17 ++++++++++++++++-
+>  2 files changed, 19 insertions(+), 1 deletion(-)
+> 
+> --- 
+> 
+> v3: Fixed a syntax error
+> 
+> diff --git a/git-gui.sh b/git-gui.sh
+> index fd476b6..6d80f82 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -3581,6 +3581,9 @@ $ui_diff tag conf d_s- \
+>  $ui_diff tag conf d< \
+>  	-foreground orange \
+>  	-font font_diffbold
+> +$ui_diff tag conf d| \
+> +	-foreground orange \
+> +	-font font_diffbold
+>  $ui_diff tag conf d= \
+>  	-foreground orange \
+>  	-font font_diffbold
+> diff --git a/lib/diff.tcl b/lib/diff.tcl
+> index 0fd4600..dacdda2 100644
+> --- a/lib/diff.tcl
+> +++ b/lib/diff.tcl
+> @@ -347,6 +347,10 @@ proc start_show_diff {cont_info {add_opts {}}} {
+>  	}
+>  
+>  	set ::current_diff_inheader 1
+> +	# detect pre-image lines of the diff3 conflict-style, they are just '++'
+> +	# lines which is not bijective, thus we need to maintain a state across
+> +	# lines
+> +	set ::conflict_in_pre_image 0
+>  	fconfigure $fd \
+>  		-blocking 0 \
+>  		-encoding [get_path_encoding $path] \
+> @@ -449,11 +453,22 @@ proc read_diff {fd conflict_size cont_info} {
+>  			{--} {set tags d_--}
+>  			{++} {
+>  				set regexp [string map [list %conflict_size $conflict_size]\
+> -								{^\+\+([<>=]){%conflict_size}(?: |$)}]
+> +								{^\+\+([<>=|]){%conflict_size}(?: |$)}]
+>  				if {[regexp $regexp $line _g op]} {
+>  					set is_conflict_diff 1
+>  					set line [string replace $line 0 1 {  }]
+>  					set tags d$op
+> +					# the ||| conflict-marker marks the start of the pre-image,
+> +					# all those lines are also prefixed with '++', thus we need
+> +					# to maintain this state
+> +					set ::conflict_in_pre_image [expr {$op eq {|}}]
+> +				} elseif {$::conflict_in_pre_image} {
+> +					# this is a pre-image line, it is the one which both sides
+> +					# are based on. As it has also the '++' line start, it is
+> +					# normally shown as 'added', invert this to '--' to make
+> +					# it a 'removed' line
+> +					set line [string replace $line 0 1 {--}]
+> +					set tags d_--
+>  				} else {
+>  					set tags d_++
+>  				}
+
 -- 
-2.23.0.444.g18eeb5a265-goog
-
+Regards,
+Pratyush Yadav
