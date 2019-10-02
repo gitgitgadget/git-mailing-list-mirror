@@ -2,105 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A235C1F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 15:56:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3717E1F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 15:57:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728916AbfJBP4s (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 11:56:48 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:44888 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726157AbfJBP4s (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 11:56:48 -0400
-Received: by mail-pg1-f195.google.com with SMTP id i14so12040310pgt.11
-        for <git@vger.kernel.org>; Wed, 02 Oct 2019 08:56:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=BZQBCUHCiIGrNL/4/KsZ1OIGbe+ABWcOPMdmIwCbnd4=;
-        b=XwQgFvulMjAL3JIq+nYprcejlgwLt+AqcwNCcdr8a1Ss2lQFTZNUJuKiet62d4GzVA
-         V2liQRMXi6iXW3rBFOaLl+tFSlPd573EFgqv2T9+uI65Me+URFyn3cDYQ5nI019/sjhb
-         28qMNYmcJTdgTi2a9m6mCksZHxhCIekMBvmruOthCqRdEO5vxybKVr19UKboTR7D+E1B
-         X3CCZC6cXcXt6mUnqypjy+8XhAWEUl7jmTJdU9/WhQ1kZZw/TQ7SgcvBMqVwgR2hFBnM
-         VzHHVxQPFhSjJubeaoOE5xMaNcMb2a7BToXO7y/A2fTI9GkcoXrgTchlHHl7UdWnm4jV
-         ANKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=BZQBCUHCiIGrNL/4/KsZ1OIGbe+ABWcOPMdmIwCbnd4=;
-        b=OezOAgjpFQW96jacOBs92c7Da8QQoIjFn/1k9OR/fZEUxAmYoXZfr3d91QXDtY5WCh
-         VOnncrcDfmRNMbce+DVi5KTyT8qWsyxrtDdnfCoRtrt4C4gdihcTu8J4LLhzYOSokN2k
-         e67EmhVyXSqWLE9/NN70SrjVKq7fHvTMby8JWASMQKxuifWIYwvXjo8fIwDonDxF+bNl
-         zEkx2VFIp8rTRego8z2MfiCRq7JNp1qoy4+05j34e3Dqs85eT8I80TXGe3cGBvEMRn/g
-         j4LuMkTtCSgHG89DOZE8xoYKEw3WKKl3NwwHtUcyoxja9CwkYrVYoZFkKNO1znxbvj3t
-         R2yg==
-X-Gm-Message-State: APjAAAUwYcWXnAV7lFLxusBD0k+7iHYs+FNOPEEKYsjNFgV/TxxffX4C
-        0lzv4LxF8V1+Lx8kO/lTWDUzRCKY
-X-Google-Smtp-Source: APXvYqzK6Vs1EAgcZxECUfZD4zrg3o4KxbweYT5hfZnH/DysqbSYl0qiCt8+jOCbyZ947ReZAPA9Nw==
-X-Received: by 2002:a63:ee03:: with SMTP id e3mr2405837pgi.95.1570031808014;
-        Wed, 02 Oct 2019 08:56:48 -0700 (PDT)
-Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:3:cd32:1847:435d:97e])
-        by smtp.gmail.com with ESMTPSA id t125sm19558900pfc.80.2019.10.02.08.56.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Oct 2019 08:56:47 -0700 (PDT)
-Subject: Re: [PATCH v2 1/6] midx: add MIDX_PROGRESS flag <snip>
+        id S1728930AbfJBP5X (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 11:57:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38084 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727103AbfJBP5X (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 11:57:23 -0400
+Received: (qmail 25097 invoked by uid 109); 2 Oct 2019 15:57:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Oct 2019 15:57:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22997 invoked by uid 111); 2 Oct 2019 16:00:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Oct 2019 12:00:00 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 2 Oct 2019 11:57:22 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        William Baker via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, jeffhost@microsoft.com,
-        William Baker <William.Baker@microsoft.com>
-References: <pull.337.git.gitgitgadget@gmail.com>
- <pull.337.v2.git.gitgitgadget@gmail.com>
- <6badd9ceaf4851b2984e78a5cfd0cb8ec0c810f5.1568998427.git.gitgitgadget@gmail.com>
- <20190921121104.GA6787@szeder.dev>
- <xmqqlfu9krzv.fsf@gitster-ct.c.googlers.com>
- <2de6b236-7bd8-256b-7d8f-911d63a47498@gmail.com>
- <xmqqsgobg0rv.fsf@gitster-ct.c.googlers.com>
- <xmqqlfu3eigp.fsf@gitster-ct.c.googlers.com>
-From:   William Baker <williamtbakeremail@gmail.com>
-Message-ID: <8ec5513c-fcfa-bc55-5d73-6aa6528ac4dc@gmail.com>
-Date:   Wed, 2 Oct 2019 08:56:45 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:68.0)
- Gecko/20100101 Thunderbird/68.0
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [RFC PATCH 10/10] pack-objects: improve partial packfile reuse
+Message-ID: <20191002155721.GD6116@sigill.intra.peff.net>
+References: <20190913130226.7449-1-chriscool@tuxfamily.org>
+ <20190913130226.7449-11-chriscool@tuxfamily.org>
+ <xmqq7e6bde4z.fsf@gitster-ct.c.googlers.com>
+ <20190914020225.GB28422@sigill.intra.peff.net>
+ <xmqqy2yrbmqu.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqlfu3eigp.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <xmqqy2yrbmqu.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/2/19 12:04 AM, Junio C Hamano wrote>>
->> Well, if you write
->>
->> 	enum { BIT_0 = 1, BIT_1 = 2, BIT_3 = 4 } var;
->>
->> it's pretty much a promise that the normal value for the var is one
->> of these listed values to your readers.
-> 
-> ... that is why compilers give a warning when you write
-> 
-> 	switch (var) {
-> 	case ...:
-> 	...
-> 	}
-> 
-> and do not have case arms for all the declared enum values without
-> having the 'default' arm.
-> 
+On Fri, Sep 13, 2019 at 08:06:01PM -0700, Junio C Hamano wrote:
 
-Thanks for all of the details and feedback here.  I can leave the
-flag as-is (and not switch to enum).
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Fri, Sep 13, 2019 at 03:29:00PM -0700, Junio C Hamano wrote:
+> >
+> >> This comment has nothing to do with the change, but the way the
+> >> patch is presented is quite hard to follow, in that the preimage or
+> >> the common context lines do not help understand what the new code is
+> >> doing at all ;-)
+> >> 
+> >> I'll come back to the remainder of the patch later.  Thanks.
+> >
+> > I applaud Christian's effort to tease it out into separate patches.
+> 
+> Ah, no question about it.  I have a suspicion that 10/10 alone may
+> still be a bit too large a ball of wax, but with all the earlier
+> preparatory steps are bite-sized and trivial to see how they are
+> correct.
+> 
+> The "way the patch is presented" comment was not at all about what
+> Christian did, but was about what the diff machinery computed when
+> comparing the 9th step Christian created and the final step.  In its
+> attempt to find and align common context lines, it ended up finding
+> blank lines and almost nothing else in the earlier part of the
+> patch, not just making it harder to read the new helper function
+> (i.e. the best way to read record_reused_object(), for example, is
+> to look only at '+' and ' ' lines, because the '-' lines are
+> irrelevant), it also made it hard to see what got discarded.
 
-Thanks,
-William
+Hmm, I see the early parts of this graduated to 'next'. I'm not sure
+everything there is completely correct, though. E.g. I'm not sure of the
+reasoning in df75281e78 (ewah/bitmap: always allocate 2 more words,
+2019-09-13).
+
+I think the "block+1" there is actually because "block" might be "0".
+Prior to 2820ed171a (ewah/bitmap: introduce bitmap_word_alloc(),
+2019-09-13) from the same series, that could never be the case because
+we know that we always start with at least 32 allocated words. But after
+that we _could_ start with an empty word array, and allocating "block *
+2" would not make forward progress.
+
+And then the "2 more words" thing is used as justification in the next
+patch, 04a32d357f (pack-bitmap: don't rely on bitmap_git->reuse_objects,
+2019-09-13). I won't say that there isn't some subtle dependency there,
+but I certainly don't remember any logic like that at all. ;) So I think
+it might bear a little more scrutiny.
+
+I'm sorry for being so slow on giving it a more careful review. I was
+traveling for work, then playing catch-up, and am now going on vacation.
+So it might be a little while yet.
+
+-Peff
