@@ -7,54 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6261D1F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 06:51:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 572971F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 07:02:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726334AbfJBGvT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 02:51:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58434 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726233AbfJBGvT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 02:51:19 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 258CB33E4A;
-        Wed,  2 Oct 2019 02:51:17 -0400 (EDT)
+        id S1726550AbfJBHCz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 03:02:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51432 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726010AbfJBHCz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 03:02:55 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 057023616C;
+        Wed,  2 Oct 2019 03:02:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HflWw+jI0UuJaUOT+2lEpPZiqCA=; b=KzvPx5
-        kxuwLA/pji0laR0qPkXwmeKAov5KJOjl80/P6nZgtln6Ag2Ckgy3TG/vIIKOdC+g
-        EZbYc+iOlsGAnCeyiGQ4nd1SmXSqjOjW7k3NZX/DO79gA3elwy0yRnQdLW2vvPkx
-        iLv+/cbVT+WRNpOPsrgHN5YMdWnvfgmrUUkmc=
+        :content-type; s=sasl; bh=l7x1zZUaHEP39CVDLK9Nt3tdu6o=; b=Qk414z
+        JR4Tw/qd63F+oH4dsyNcVFxodPpdqR6vliYBirmY1emsj/bE3WpKmLlZhxv/hJYH
+        uqdImczPmxnBMt7l1vQmjORWpywl/pGaOBdVcptZGuPP4/MpRglrxvMdPVPU7eDO
+        v4/786kJqbtsedIAE5LVYqUkW861Dh63AH+0s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=COKxdmUPsOU2wp3l/6E6gW7LgK4XZZ9d
-        R2H5wC4DwlXEuRHqIYdds5pQLQqWLFgfzfxu3gObj/K4Q/Wqp2cMXEr1blbPQK1l
-        0ghp2D5uLLEh8AEmKZoD0YQZR3ys+tqv3xd+TbhZxkSD+Qa+gIvxXKA/hTye8+qb
-        U1tPNPt8UsM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1BFE533E49;
-        Wed,  2 Oct 2019 02:51:17 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=A73a7fc83J+adwKNV3K66+GZsjZ1avyR
+        FYc8lorNlFWidP1qYmOuqPCpkDalA74Yd9MvmApFggBjvH9nD4vrwNGCaZSrvmna
+        bOZdkyqunH4z7d7Vapc2GCJurc3Aqto+wERNb3VpxsL0r1YuWnAKaTZMpC+Sdxur
+        4jpe3XeIUVQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F03113616B;
+        Wed,  2 Oct 2019 03:02:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7BA1133E47;
-        Wed,  2 Oct 2019 02:51:16 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 56A2E3616A;
+        Wed,  2 Oct 2019 03:02:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Chris Zehner via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Chris Zehner <cbzehner@gmail.com>
-Subject: Re: [PATCH 0/1] gitignore: ignore comments on the same line as a pattern
+Subject: Re: [PATCH 1/1] gitignore: ignore comments on the same line as a pattern
 References: <pull.370.git.gitgitgadget@gmail.com>
-Date:   Wed, 02 Oct 2019 15:51:15 +0900
-In-Reply-To: <pull.370.git.gitgitgadget@gmail.com> (Chris Zehner via
-        GitGitGadget's message of "Tue, 01 Oct 2019 20:13:12 -0700 (PDT)")
-Message-ID: <xmqqtv8rej30.fsf@gitster-ct.c.googlers.com>
+        <e448214e87b46dc649781b10727043bc390d9aab.1569985991.git.gitgitgadget@gmail.com>
+Date:   Wed, 02 Oct 2019 16:02:51 +0900
+In-Reply-To: <e448214e87b46dc649781b10727043bc390d9aab.1569985991.git.gitgitgadget@gmail.com>
+        (Chris Zehner via GitGitGadget's message of "Tue, 01 Oct 2019 20:13:13
+        -0700 (PDT)")
+Message-ID: <xmqqpnjfeijo.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 080B1490-E4E1-11E9-927E-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: A6CCED78-E4E2-11E9-86A8-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -62,26 +64,60 @@ X-Mailing-List: git@vger.kernel.org
 
 "Chris Zehner via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Why make this change?
-> =====================
->
-> Add the ability to use # to put comments after ignore patterns. This is
-> useful for documenting the reason for particular ignore patterns inclusion
-> and structure.
->
-> Right now a common convention in .gitignore files is to group patterns by
-> similarity, using new lines beginning with one or more # characters as
-> headings to explain these groupings. This works well when clarifying why
-> broad classes of things are ignored, e.g. # build artifacts followed by
-> several patterns.
->
-> When leaving comments about a particular pattern it can be difficult to
-> distinguish comments about a single patterns from comments used for file
-> organization.
+> -   that begin with a hash.
+> +   Put a backslash ("`\`") in front of each hash for patterns
+> +   containing a hash.
+> +
+> + - A # after a pattern will be treated as the start of a comment.
+> +   Put a backslash ("`\`") in front of each hash for patterns
+> +   containing a hash.
 
-Not a good enough justification to break backward compatibility, I
-would have to say.  If a single line is so tricky to deserve its own
-comment, perhaps a group of lines can be separated with the next
-group by a handful of blank lines for clarity (or the project can
-adopt a convention that differentiates between comments on a group
-and comments on an individual rule).
+Besides being backward incompatible, this looks somewhat misdesigned
+by lacking a way to escape a backslash (i.e. what should a project
+do if they want a patttern with backslash followed by a hash
+literally in there?).
+
+> diff --git a/dir.c b/dir.c
+> index cab9c2a458..aeefe142bc 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -658,6 +658,38 @@ void clear_pattern_list(struct pattern_list *pl)
+>  	memset(pl, 0, sizeof(*pl));
+>  }
+>  
+> +static void trim_trailing_comments(char *buf)
+> +{
+> +	char *p, *last_hash = NULL;
+> +	int escape_seq = 0;
+> +
+> +	for (p = buf; *p; p++)
+> +	{
+
+Style (see Documentation/CodingGuidelines).  The opening parenthesis
+of a control structure like if/for/switch are placed on the same
+line, i.e.
+
+	for (p = buf; *p; p++) {
+
+Do we even need a separate 'p', instead of scanning with 'buf' itself?
+
+> +		if (!*p)
+> +			return;
+
+What happens when an entry ends with '\' followed by an EOL?  IOW,
+what if escape_seq is true here?
+
+> +		switch (*p) {
+> +		case '#':
+> +			if (escape_seq)
+> +			{
+> +				escape_seq = 0;
+> +				p++;
+> +				break;
+> +			}
+> +			if (!last_hash)
+> +				last_hash = p;
+> +			break;
+> +		case '\\':
+> +			escape_seq = 1;
+> +			break;
