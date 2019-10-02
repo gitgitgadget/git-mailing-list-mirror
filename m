@@ -2,96 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1EEF1F4BE
-	for <e@80x24.org>; Wed,  2 Oct 2019 20:17:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6C291F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 20:31:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726924AbfJBURD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 16:17:03 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:38194 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726887AbfJBURD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 16:17:03 -0400
-Received: by mail-pg1-f193.google.com with SMTP id x10so213742pgi.5
-        for <git@vger.kernel.org>; Wed, 02 Oct 2019 13:17:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6nVyhp6sAiUffMIh3cdGAW+GWDG+8o98wX6opxCA+o4=;
-        b=sr9j2KCBXeg4XjY34wNfxc6ma8gpjyZ6cjvkpa/sIEwnxl/L2zF3hNf3lwsruHkVPi
-         s1dkvBVogXNvLP4rxp7Bj5YrY9/ECWck38U8vIMZYOGNfaw8H2wvz2DKaZopGmglj1GT
-         GTy3Q8YNh/U3dKssLEEBc5fhlq2WYbqppZ2py9XBssGcw42vyde/4zR+inPANaTuwv/U
-         e9QouwWIKlqnetGiNDbd/qTuR/m27whaEH0hofEObfrfVQ4DiLUUdeztjItg6TXYvU5W
-         FkL+qhsSR0OXuQUx5K7MhnbhMsJTebrF7xHyQtUpvUI6V2UHucRMPu/xk5YqYZf+KISr
-         viaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6nVyhp6sAiUffMIh3cdGAW+GWDG+8o98wX6opxCA+o4=;
-        b=H5UhE2GAoadeN9MtYSAEdwdJyPjh5v9Dt0C+4/saPrk6VTaaJM03Py/0fwgWICzUVO
-         8aqvgzHBhf9oQ3O2AKSQKgGSIX3+OH0nWdE8CMYl7Enc6bX3irbShvcd6srRFPkjnIJT
-         m9L0J8mO1F5Bti9Lvh4k7AlVJAV00t3HkKlbTGC8amUmObBuWRZBSbaE5lPsu9ZeG//r
-         4aJB7hj+XX257SUSGvN0QCP22Jmt0TDE5D55IbxaN0UzJGyEFGWJoVWoiQc/7VlTiF13
-         3Cg3a6wR6Jd+Hg4binMVHWu7rMw9SVIMRQEoMturUYxwotXQ8l38u9KEU2hhhFurAJEp
-         JnSA==
-X-Gm-Message-State: APjAAAU5SXbb30QbaoevsQNnVu16sBOtG29rW2T8kmhadKQZJSLdAKqr
-        XsjPHPucgYbJNEjyE6IoZik=
-X-Google-Smtp-Source: APXvYqzdHlcZ8lwUaHv0aRa84JUVJssvzw0U3bVSfvsuwIpxV/bdHHGt/5NsG73s7OT/KAy1AaiTxg==
-X-Received: by 2002:a62:53c7:: with SMTP id h190mr6689638pfb.208.1570047422428;
-        Wed, 02 Oct 2019 13:17:02 -0700 (PDT)
-Received: from generichostname ([204.14.239.137])
-        by smtp.gmail.com with ESMTPSA id z12sm325551pfj.41.2019.10.02.13.17.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Oct 2019 13:17:01 -0700 (PDT)
-Date:   Wed, 2 Oct 2019 13:16:59 -0700
-From:   Denton Liu <liu.denton@gmail.com>
+        id S1728151AbfJBUbD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 16:31:03 -0400
+Received: from mout.gmx.net ([212.227.15.18]:41139 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725799AbfJBUbC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 16:31:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570048256;
+        bh=JvXLnBDaFK52J4mNbG9Xcnlscmzv84yYQsFu9P8Ka84=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=gvH2hvSTTzBBAtcKUiXp+Xvs3kO0gYK+v2Shm0Rb8hNZVU8Fxr1EC/vbW4wBurJ57
+         yWAj8zG6yVE0+ZQI7s0e86gSOETB9ONcmjGnLta2dK2wgPb9fQTEFXqKtuYzQbcd0L
+         z7rimXpiCYFrebSsvHTRpzT6plMTdTtn9xrmVGkw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MYNJg-1icQqT1Ax8-00VOe6; Wed, 02
+ Oct 2019 22:30:56 +0200
+Date:   Wed, 2 Oct 2019 22:30:26 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [BUG] incorrect line numbers reported in git am
-Message-ID: <20191002201659.GB24697@generichostname>
-References: <20191002184546.GA22174@generichostname>
- <xmqq8sq2ewzh.fsf@gitster-ct.c.googlers.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] range-diff: internally force `diff.noprefix=false`
+In-Reply-To: <xmqq4l0qewu5.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910022229340.46@tvgsbejvaqbjf.bet>
+References: <pull.373.git.gitgitgadget@gmail.com> <1f84f92846bc14d21aa7339c8baa0f9bb710b17d.1570039511.git.gitgitgadget@gmail.com> <xmqq4l0qewu5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8sq2ewzh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:8f5GpyXArBxViipFyp4/1YDvQuyf6SGf/vevmYSHbxE351VZ+AS
+ tJLT8hsPZuUGsRM7LEw7zbPp1p1UaU/PxK0AFnHFvG8l2eqATwetoTbPYu8Px9eTLIZokOO
+ jhINAe2Q6Vbf2bVqgPe2euULvRvdK2nmORh0btv8OZSRQbID+huhDzHJybisTb2rBD/eRTA
+ /vtAiyLBE4dfoBZzZ8Umw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vZWFSmeBDmw=:jX68fZ7tCV5rSwXJsoVP7b
+ fxFlpsu+0JBYCnXiKhQq5EevHQcwqCHJuX3LwT1NK/qPleseY4cSRTQ7cy8TOenafF3ecwcQt
+ aavk2x9xMl1XhLZ+53ij3+OTxirCQDWAR7/ZwP6hFJon9Apk2qccyL3r0j0qer9TKstKVWcFx
+ wRUb+t8Vtvkm67M3Bba3/UnQ2ZEgdJCmWx+g+p5UpJOTQLZXT1txxaLFrthmQf9WxfK6b57oJ
+ LID1dhcT66Vqf3cHGwypMtiuIxIrcoS5YAs3SHP7qe7nbsFhUsI5YEstiuSBJOnHUy/HodEF1
+ mBepelzIAn4NLjVcNKlXHod1izD5pJpG9W2soXpRmJVDuG9C9kkChSpJAb4f7+egSx8E+eJrd
+ Be0li2yiHau0RdTXtOJumd/MJlYrqsWXWJx1anEYYbisWQPNlvlqor4e8WtLI59NWnWoc9avv
+ 1QWs+OuJpOFXZZANBxulk258pmS6q7pXmt815Bs5wcujkpF3x0m5GbJEdHQSZp/uFSy2FrukP
+ rb76aBnuzXs4y0FAutAa8b5Qc4TI+32THsTzYJrIdzv/AD+H6R/z3MkwWENRPzita5rLXFYQg
+ jxARgerrzh7YZdII9hGpAThdpf50hzYXakAnQUIPY6zS5vJYVelOMN8n+0hQ/eEL5CDDghdXS
+ tv4E/lpOuZZ6hcpmhTZBxC9C+qdGSIcPyiv7+vxvhhklU3hXS5S04HhussS96PmRan8i0SP0B
+ io0zPbnff+nHhPKb/N3aukMR0HIbRlE4Ze+LRFTYlvL/MXN+hOdKISC7MY/iffJkWRTbJ7Qfz
+ V8fPlX8FaU8LTAWPJxQbrsqUXzsEMo21mFJBNM3h4rx4PDXFlU2nOVTpBzSDTAUg+aKu5YPDA
+ Hk09K5RNB2jzBKV+cVyLnkVaCpbxtmFHjqvW+biZcFBa7wlNmhArN7tratNXDBpGSFWzRNhNY
+ gT01hxmPuqbKt5uIycpMszwO8Qo3GXyMbc8J5SQx4JbV4XM5qFivPNHnxKPd8a3q38diU+2ke
+ 3EKbdm6gxVyDB1xPhM6Nu7RZxGja5qRkAK8FRBrWfniht/HDCyrjKr+gby2tYGfHyn8kqv8f5
+ U/yos1uHGUtj8vT0It/BpLPQAcYciu6WYZ5V/Xid5nKtgTf/Q2aFyU9vRqKRxl2eT8x4d2JX0
+ Gzjpjtoe94EUp4UX/yp6Lhov4oedbSuIVUyaLK4z07vw1rP4YSmLrEfzmm2ENimehMVwVgJuD
+ D/CZmVZ2HfosUpNbVOMcUnqMIjWu24eBGRh2zPdaBez53lHVPeK7/vSY7D+c=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 03, 2019 at 05:03:14AM +0900, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> > which is in the middle of the log message. I expect the line to be
-> > reported as something in the range of 198-203,...
-> 
-> That comes from not knowing who is complaining and what it is
-> reading.  In this case, "git apply" issues a warning because it is
-> fed .git/rebase-apply/patch file, which is the output of mailinfo
-> that parses header & log message out, leaves the message in a
-> separate 'msg' file in the same directory and stores the rest in
-> that 'patch' file.  And it is line 87 that has problems.
+Hi Junio,
 
-In this case, I would still regard this as a bug since users would
-expect the line 87 to refer to their input file. I think most users
-don't even realise that a .git/rebase-apply/patch file exists. (I
-certainly didn't.)
+On Thu, 3 Oct 2019, Junio C Hamano wrote:
 
-In fact, running `git am --show-current-patch` shows the whole mail, not
-only the 'patch' file so users would have no reason to expect the line
-numbers to refer to the 'patch' file.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > When parsing the diffs, `range-diff` expects to see the prefixes `a/`
+> > and `b/` in the diff headers.
+>
+> If so, passing src/dst prefix as command line option is a much better
+> solution, I think.  diff.noprefix may not stay to be (or it may
+> already not to be) the only thing how the prefix gets chosen.
 
-I think it would make sense to pass the number of lines skipped by
-mailinfo to the apply step so that more accurate line numbers can be
-reported to users.
+Good point.
+
+While at it, I invert the logic in v2: instead of forcing a prefix, I
+now force no prefix (and reduce the strip level from 1 to 0 when parsing
+the diff header).
+
+Thanks,
+Dscho
+
+>
+> > -	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
+> > +	argv_array_pushl(&cp.args, "-c", "diff.noprefix=3Dfalse",
+> > +			"log", "--no-color", "-p", "--no-merges",
+> >  			"--reverse", "--date-order", "--decorate=3Dno",
+> >  			/*
+> >  			 * Choose indicators that are not used anywhere
+> > diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> > index 0120f769f1..64b66f2094 100755
+> > --- a/t/t3206-range-diff.sh
+> > +++ b/t/t3206-range-diff.sh
+> > @@ -461,4 +461,8 @@ test_expect_success 'format-patch --range-diff as =
+commentary' '
+> >  	grep "> 1: .* new message" 0001-*
+> >  '
+> >
+> > +test_expect_success 'range-diff overrides diff.noprefix internally' '
+> > +	git -c diff.noprefix=3Dtrue range-diff HEAD^...
+> > +'
+> > +
+> >  test_done
+>
