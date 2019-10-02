@@ -2,99 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B95B31F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 07:35:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22D271F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 07:36:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726875AbfJBHfs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 03:35:48 -0400
-Received: from mail-vk1-f196.google.com ([209.85.221.196]:38878 "EHLO
-        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726783AbfJBHfr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 03:35:47 -0400
-Received: by mail-vk1-f196.google.com with SMTP id s72so4116661vkh.5
-        for <git@vger.kernel.org>; Wed, 02 Oct 2019 00:35:46 -0700 (PDT)
+        id S1726902AbfJBHgG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 03:36:06 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:34959 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726783AbfJBHgF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 03:36:05 -0400
+Received: by mail-wm1-f65.google.com with SMTP id y21so5788665wmi.0
+        for <git@vger.kernel.org>; Wed, 02 Oct 2019 00:36:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yxiopv2PFfH1IiblTuFp1YHVbdTGZVgC8ID+JUfNuCA=;
-        b=C1RLxniu4vycNAL2TT5iN8pnLI1sVz9eakQ2iHNrxfbE2KfC8WKdvSs/5xoZO9g6q0
-         I0ed3r2T5fiL+K/ozlQXg5bQtRDoxu+OAqvDYETMI6EiXXu+B3zUDAFqv+M9aSJB+6ec
-         dhoTbue2XyV2SYtuioHqX1FmFLxuB/4ER87rHho8ecFrkIKfv2tCFB3Z5aMKEoWR4bgp
-         Kq3p4jOGfFgKkXIQhCoNMvPyyh8ZmFZg0mtBNMkq3XSUBFqXEK2pwh5EoM0hFuYhVMNI
-         BNe71vpJB79V1WgOs6ZhQ6vo3JF2sS84xItv2wr9flPf0rGYXoQNT4dZ9WDM+12F9JPn
-         iJAw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=tFnttCed13jYBuJxShS3UDdAo0SwnChsGPD7bTLyt90=;
+        b=CD5MQAB6blVbxL0/bHxm3tpQOXoZpucUvE7Vv+CNhVLwgX243tXRA3AmsKBr/IsUGW
+         B4qF2chmQ8uDat/s+VygGYWnTzWcac/iravB1WJWM/W+AlV12Kn7Gy7Aspz01CK9Fe8I
+         IFGlYDNsvSntzLRBFgoatQa4ruoJFCqlB//APkn439o4njXyhpKuC/D7JJ2Jnd2UYG49
+         Q7+yn0kmTEBRdNTHKgebmZkkpXagGt4bCOWO4+dAm0NHF98OgjpSsdmQXXaCosj0IoCW
+         n053/iQ38hUqX05i0d+DrFPPyFJM6uJQb7I/cLcearaofv8aElVDbBCoY5cK+fxKqW+w
+         kR4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yxiopv2PFfH1IiblTuFp1YHVbdTGZVgC8ID+JUfNuCA=;
-        b=OURwmdEHq8+ppB8jPMzwTP/CmvqNMgyCW4ewnnqe0fCRfCvqG/bOO3jM5KZfcXq9qV
-         xS01ihUGh30Hibjc6a7bJarWtHnaKnxVk00Vq5JzifIILCV4XN455YD0hz5bL+dbGvsV
-         quqiAN1WvTVj0LlQ7gtcNokB2DdUuJWu30a3jRFroLm9YphOqtPSXTxXknDq0lgG1N/O
-         mUln1hW4rZxfzrD0BIhJeN/itcPe1ThgeFjW/pb8oMN/RIs21gaRUalLG57eQcPJtcBq
-         n8tWJY7Xr2jFqbfSYjGa/WQ4fTq9hwb1POja+LT6RAK01DyWYXT2QNfZuVtm5prvClwa
-         4vqQ==
-X-Gm-Message-State: APjAAAW2Yw0HpJfpcA7DTuKqMOCXso4K5PczlJaOMsBZPeB8UxMWrwH/
-        U/ls1ME5KawgHSzCvlyzhihnPUNCc/IDQyzC94g=
-X-Google-Smtp-Source: APXvYqwulPzlhcvRXgX3CHHCraArdnUsXfETKaaapcrk209LjoTNpuk5scO9M/8XQ8fsCTjf+pV08YW1nYW0NwX0Y6I=
-X-Received: by 2002:a1f:53c5:: with SMTP id h188mr1286687vkb.33.1570001746345;
- Wed, 02 Oct 2019 00:35:46 -0700 (PDT)
-MIME-Version: 1.0
-References: <97013a71289857767100d6a4adcb39ca99b2b21b.1569873171.git.bert.wesarg@googlemail.com>
- <20191001142401.hhg5dtefj6qg66dd@yadavpratyush.com> <CAKPyHN2qSudnEMfokp5-BXBDU6_kcVv3aokNUYdqZOnMXYVzYw@mail.gmail.com>
- <20191001173100.n5dipyhjk4uxcnnj@yadavpratyush.com>
-In-Reply-To: <20191001173100.n5dipyhjk4uxcnnj@yadavpratyush.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=tFnttCed13jYBuJxShS3UDdAo0SwnChsGPD7bTLyt90=;
+        b=tx8A36xmoyXnXFaorr4LeuFJPsojxUM+lReZFpsZQR9LiGyvAyiQO3YBp62+86yTrb
+         Yto3JCw6j7WhVs9J/kQiaC7tDey2kolB6xlNzNacooElmt00+no4tj5o1/Wzw99M+Q7m
+         hba/uiXzjMUVYNPEQvThBcOQrr6WwANk09C0AcVTxQevVJYzJHvHu0yGfBYp8apFrIOY
+         gqPOsxLCgUYHksA5Unu09ftkalPHIwQxDrD3MtwK0PG+ssuFEi+R45YUd7mRHzTMW/Kc
+         OXWv4Vbuxc2txtPLzkIQqR++/RmNvpH0r0gS5H1tgTRLTIJgZ4zH6wsYsMzYkm8Yq26B
+         bHfw==
+X-Gm-Message-State: APjAAAWg5vwE19N8zNiyYEp5XN9/HvqBndyV4Ce1tJBs59JDBziRi2cH
+        tCU0In3foWyNb9fB/fxAbw==
+X-Google-Smtp-Source: APXvYqw+n2aEIiKuBRAZhJW5AtzxOG3pcmdv9H4i5tkquDAn5OZ1ea4K5S2vPzb1HeI8o80yyMp4tA==
+X-Received: by 2002:a1c:720b:: with SMTP id n11mr1544530wmc.23.1570001763737;
+        Wed, 02 Oct 2019 00:36:03 -0700 (PDT)
+Received: from localhost (m221.zih.tu-dresden.de. [141.30.68.221])
+        by smtp.gmail.com with ESMTPSA id a10sm20108186wrm.52.2019.10.02.00.36.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 02 Oct 2019 00:36:03 -0700 (PDT)
 From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Wed, 2 Oct 2019 09:35:34 +0200
-Message-ID: <CAKPyHN31qQwL=x0hwk2TjOkyC8iRtcLY0v6NgwA81N2i8P6aBg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] git-gui: use existing interface to query a path's attribute
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Pratyush Yadav <me@yadavpratyush.com>
+Subject: [PATCH v3 2/2] git-gui: support for diff3 conflict style
+Date:   Wed,  2 Oct 2019 09:36:02 +0200
+Message-Id: <a7cff5097eaf29a80c822cb37b537b3859d06ad7.1569873171.git.bert.wesarg@googlemail.com>
+X-Mailer: git-send-email 2.23.0.11.g242cf7f110
+In-Reply-To: <97013a71289857767100d6a4adcb39ca99b2b21b.1569873171.git.bert.wesarg@googlemail.com>
+References: <14754a59ecf15194dccc659072e2bc180280d097.1569845908.git.bert.wesarg@googlemail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratyush,
+This adds highlight support for the diff3 conflict style.
 
-On Tue, Oct 1, 2019 at 7:31 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
->
-> On 01/10/19 05:22PM, Bert Wesarg wrote:
-> > On Tue, Oct 1, 2019 at 4:24 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> > >
-> > > Hi,
-> > >
-> > > I don't see any difference between v3 and v2 of this patch. What changed
-> > > in this version?
-> >
-> > nothing, but 2/2 changed.
->
-> I don't see a v3 of 2/2 in my inbox. A search on public-inbox yields
-> nothing either. Can you please check if the patch was sent properly? Or
-> if you _can_ find it on public-inbox.org, a link to that would do just
-> fine.
->
-> I _do_ have v2 of both patches, but the v3 of the second patch is the
-> one missing.
+The common pre-image will be reversed to --, because it has been removed
+and replaced with ours or theirs side respectively.
 
-I noticed this already, while in contact with Johannes on GitHub and I
-found my error. While pasting messages ids for References into the v3
-patch, I missed to renamed Message-Id to References for the v2 patch,
-thus the v3 has the same Message-Id than the v2 patch. Will resend
-now.
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+---
+ git-gui.sh   |  3 +++
+ lib/diff.tcl | 17 ++++++++++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-Bert
+--- 
 
->
-> --
-> Regards,
-> Pratyush Yadav
+v3: Fixed a syntax error
+
+diff --git a/git-gui.sh b/git-gui.sh
+index fd476b6..6d80f82 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -3581,6 +3581,9 @@ $ui_diff tag conf d_s- \
+ $ui_diff tag conf d< \
+ 	-foreground orange \
+ 	-font font_diffbold
++$ui_diff tag conf d| \
++	-foreground orange \
++	-font font_diffbold
+ $ui_diff tag conf d= \
+ 	-foreground orange \
+ 	-font font_diffbold
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index 0fd4600..dacdda2 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -347,6 +347,10 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 	}
+ 
+ 	set ::current_diff_inheader 1
++	# detect pre-image lines of the diff3 conflict-style, they are just '++'
++	# lines which is not bijective, thus we need to maintain a state across
++	# lines
++	set ::conflict_in_pre_image 0
+ 	fconfigure $fd \
+ 		-blocking 0 \
+ 		-encoding [get_path_encoding $path] \
+@@ -449,11 +453,22 @@ proc read_diff {fd conflict_size cont_info} {
+ 			{--} {set tags d_--}
+ 			{++} {
+ 				set regexp [string map [list %conflict_size $conflict_size]\
+-								{^\+\+([<>=]){%conflict_size}(?: |$)}]
++								{^\+\+([<>=|]){%conflict_size}(?: |$)}]
+ 				if {[regexp $regexp $line _g op]} {
+ 					set is_conflict_diff 1
+ 					set line [string replace $line 0 1 {  }]
+ 					set tags d$op
++					# the ||| conflict-marker marks the start of the pre-image,
++					# all those lines are also prefixed with '++', thus we need
++					# to maintain this state
++					set ::conflict_in_pre_image [expr {$op eq {|}}]
++				} elseif {$::conflict_in_pre_image} {
++					# this is a pre-image line, it is the one which both sides
++					# are based on. As it has also the '++' line start, it is
++					# normally shown as 'added', invert this to '--' to make
++					# it a 'removed' line
++					set line [string replace $line 0 1 {--}]
++					set tags d_--
+ 				} else {
+ 					set tags d_++
+ 				}
+-- 
+2.23.0.11.g242cf7f110
+
