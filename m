@@ -2,97 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A95461F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 12:09:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 675E51F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 13:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727283AbfJBMJQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 08:09:16 -0400
-Received: from mail-qk1-f180.google.com ([209.85.222.180]:37232 "EHLO
-        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725747AbfJBMJQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 08:09:16 -0400
-Received: by mail-qk1-f180.google.com with SMTP id u184so14694891qkd.4
-        for <git@vger.kernel.org>; Wed, 02 Oct 2019 05:09:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=F3saOuElTFL+/n4RgC17YCW26ALQ0xQOemKgjb7ToHY=;
-        b=kRgUBFK4neMbb0aBpqJIJXv500IeBDhCajVO+2DXdCYwIgSC49Gi+DuKhQit+evqQb
-         lDLxpJ+yxGQSg/yLY0mUQiqRDrQDvGfBBzF2NduIb2GrO4yQhexhpcwoKP1CIKuPwdzM
-         lMv/x3Rpjk0ePCGchaEa/Sbup3k2DazvaKtHImwVfqVWtW5iYCmoJCK6EnW72xSTeiQg
-         KV+m6/rMOEt+SWp0LbP18mVRSgxf4rCvKuNGmEbtwbS8C96ehcA13pIJNvlv965mpKrE
-         Blpzk9l7tW9tVjELjvjUlwgMq9EoRmJmGg2u5SjNt8gTABYAxax+O9xMrOp5ngbXkdzw
-         Ghag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=F3saOuElTFL+/n4RgC17YCW26ALQ0xQOemKgjb7ToHY=;
-        b=BEo7hACHRAfVjUxmak8n4eSvSJ7uKNCGq01dZm26D1Kq7KljC9DAHtoHvqWtef91u2
-         PRzk3ubB8Z0K6Od1f7UvjHEMJ9YBOP3HaiCorJHVfggEzpNlt39zU2ojKjWJ9UyAHbGk
-         4XQ0PWd6VPPUrl/azrYcFJ7+FdZqrCzOCB8Rh2F9/4XNWyOwhRU8ddVKPUr22dUDd7ht
-         Ea2WMuoNaw3rH4Ex3b6LBJsOfD3jam319mD9pTg0RtB+1k9SmRc7XJkhJvHm5FUhldFS
-         L1lPDunyJM1uqYsemzyV6o41E/Nh5uHpPOcxl8nkxxdScnCqtQjaNpZGGahKwfHTX4K2
-         x/KQ==
-X-Gm-Message-State: APjAAAUlk30h57Nbl9xIViRbwoIE7H/cDKuhaB4ZpfA5q22llLfoAzsU
-        R54qZbZo5IDawvCejPTANrlr6b+5NUM=
-X-Google-Smtp-Source: APXvYqy/fM/fBU5W2ST4waRATKjOpw093hG5M7Cv06iX7WKDL6Am4u1elU8T6XR4wdJRLnichr79ag==
-X-Received: by 2002:a05:620a:1467:: with SMTP id j7mr3322791qkl.434.1570018154725;
-        Wed, 02 Oct 2019 05:09:14 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:8034:1f9c:700f:499? ([2001:4898:a800:1010:316a:1f9c:700f:499])
-        by smtp.gmail.com with ESMTPSA id c26sm14112091qtk.93.2019.10.02.05.09.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Oct 2019 05:09:14 -0700 (PDT)
-Subject: Re: git-grep in sparse checkout
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>
-References: <CAHd-oW7e5qCuxZLBeVDq+Th3E+E4+P8=WzJfK8WcG2yz=n_nag@mail.gmail.com>
- <f3101c8f-9709-5bcb-35f0-39ffaf8aa809@gmail.com>
- <xmqq36gbfz62.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <48ebe9a4-23a8-8679-f380-195d7fc93d60@gmail.com>
-Date:   Wed, 2 Oct 2019 08:09:13 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        id S1726330AbfJBNSr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 09:18:47 -0400
+Received: from gate3.osm-gmbh.de ([194.77.68.107]:36254 "EHLO
+        gate3.osm-gmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725851AbfJBNSr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 09:18:47 -0400
+X-Greylist: delayed 510 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Oct 2019 09:18:46 EDT
+Received: from mail.osm-gmbh.de (vmmail.osm-gmbh.de [193.101.76.128])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by gate3.osm-gmbh.de (Postfix) with ESMTPS id 620273C09D
+        for <git@vger.kernel.org>; Wed,  2 Oct 2019 15:10:12 +0200 (CEST)
+Received: from pcmn.osm-gmbh.de (pcmn.osm-gmbh.de [193.101.76.39])
+        by mail.osm-gmbh.de (OSM Mailserver) with ESMTP id 5077D3DC01E
+        for <git@vger.kernel.org>; Wed,  2 Oct 2019 15:10:12 +0200 (CEST)
+Date:   Wed, 2 Oct 2019 15:10:12 +0200 (CEST)
+From:   Martin Nicolay <m.nicolay@osm-ag.de>
+Reply-To: Martin Nicolay <m.nicolay@osm-ag.de>
+To:     git@vger.kernel.org
+Subject: missing tags from "git fetch"
+Message-ID: <alpine.LSU.2.20.1910021431130.32588@cpza.bfz-tzou.qr>
+User-Agent: Alpine 2.20 (LSU 67 2015-01-07)
+X-Virus-Scanned: by "The Virus" itself
+X-Mailer: Pine 4.63
 MIME-Version: 1.0
-In-Reply-To: <xmqq36gbfz62.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; BOUNDARY="1707157324-1484178433-1570021812=:32588"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/2/2019 2:18 AM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->> Is that the expected behavior? In a sparse-checkout, wouldn't you _want_
->> Git to report things outside the cone?
-> 
-> That should be optional, I would think.  When you declare "by
-> default, this the subset of the project I am interested in", we
-> should honor it, I would think.
-> 
->> At minimum, I would expect a new option to have "git grep" go back to
->> the old behavior, so users who really want a tree-wide search can have
->> one.
-> 
-> Yeah, a bugfix to honor SKIP_WORKTREE bit, followed by a new feature
-> to ignore it, would be pretty sensible way to go.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Thanks for everyone's responses here. I am satisfied with this direction.
+--1707157324-1484178433-1570021812=:32588
+Content-Type: text/plain; format=flowed; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
--Stolee
+Hi!
 
+I don't know if this is a lack of understanding or a software or 
+documentation bug.
+
+man git-fetch says about tags:
+        By default, any tag that points into the histories being fetched is
+        also fetched; the effect is to fetch tags that point at branches that
+        you are interested in.
+
+If I fetch without --tags the tags that point to the commits of the 
+fetched branch are not fetched. If I fetch with --tags than all tags are 
+fetched but I only wish to fetch tags pointing to something in the 
+branch fetched.
+
+Here is a self contained example:
+--------------------------
+$ cd /tmp
+$ git init r1 && cd r1
+Initialized empty Git repository in /tmp/r1/.git/
+$ date >f1
+$ git add f1
+$ git commit -minitial f1
+[master (root-commit) 61753c60ac] initial
+  1 file changed, 1 insertion(+)
+  create mode 100644 f1
+$ git tag -mt1 t1
+$ git tag t2
+$ git init ../r2 && cd ../r2
+Initialized empty Git repository in /tmp/r2/.git/
+$ git remote add origin $(cd ../r1; pwd)
+$ git fetch origin master
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From /tmp/r1
+  * branch                  master     -> FETCH_HEAD
+  * [new branch]            master     -> origin/master
+$ git tag | wc
+       0       0       0
+$ git fetch --tags origin master
+remote: Enumerating objects: 1, done.
+remote: Counting objects: 100% (1/1), done.
+remote: Total 1 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (1/1), done.
+From /tmp/r1
+  * branch                  master     -> FETCH_HEAD
+  * [new tag]               t1         -> t1
+  * [new tag]               t2         -> t2
+$ git tag | wc
+       2       2       6
+$ git rev-parse FETCH_HEAD
+61753c60ac550a5315b7c930a701b94f36e08e4f
+$ git rev-parse t1^{commit}
+61753c60ac550a5315b7c930a701b94f36e08e4f
+$ git rev-parse t2^{commit}
+61753c60ac550a5315b7c930a701b94f36e08e4f
+--------------------------
+
+Obviously the two tags point to the fetched commit but without --tags 
+they are not fetched. The behavior is identical for lightweight and 
+annotated tags.
+
+Best regards
+Martin Nicolay
+
+-- 
+
+No MS-Word attachments (http://www.gnu.org/philosophy/no-word-attachments.html)
+_______________________________________________________________________________
+OSM AG | Ruhrallee 191 | 45136 Essen | Fon: 0201-89 555 | Fax: 0201-89 55 400
+web: www.osm-ag.de | e-mail: info@osm-ag.de
+IBAN: DE67 4325 0030 0001 0059 82 | BIC: WELADED1HRN
+USt-ldNr.: DE163337313 | HRB: 28171 Essen
+Aufsichtsratsvorsitzende: Dipl.-Kff. Sabine Elsas
+Vorstand: Johannes Kuhn (Vorsitzender), Christian Damsky, Axel Roland
+
+--
+Diese E-Mail enthält vertrauliche und/oder rechtlich geschützte Informationen.
+Wenn Sie nicht der richtige Adressat sind oder diese E-Mail irrtümlich erhalten
+haben, informieren Sie bitte sofort den Absender und vernichten Sie diese Mail.
+Das unerlaubte Kopieren sowie die unbefugte Weitergabe dieser Mail ist nicht
+gestattet.
+_______________________________________________________________________________
+--1707157324-1484178433-1570021812=:32588--
