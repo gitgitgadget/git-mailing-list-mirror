@@ -2,102 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AE8D1F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 15:24:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 870711F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 15:32:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728701AbfJBPY1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 11:24:27 -0400
-Received: from gate3.osm-gmbh.de ([194.77.68.107]:39400 "EHLO
-        gate3.osm-gmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726710AbfJBPY1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 11:24:27 -0400
-Received: from mail.osm-gmbh.de (vmmail.osm-gmbh.de [193.101.76.128])
-        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by gate3.osm-gmbh.de (Postfix) with ESMTPS id 8FA4F3C0D4;
-        Wed,  2 Oct 2019 17:24:25 +0200 (CEST)
-Received: from pcmn.osm-gmbh.de (pcmn.osm-gmbh.de [193.101.76.39])
-        by mail.osm-gmbh.de (OSM Mailserver) with ESMTP id 95B333DC01E;
-        Wed,  2 Oct 2019 17:24:25 +0200 (CEST)
-Date:   Wed, 2 Oct 2019 17:24:22 +0200 (CEST)
-From:   Martin Nicolay <m.nicolay@osm-ag.de>
-Reply-To: Martin Nicolay <m.nicolay@osm-ag.de>
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org
-Subject: Re: missing tags from "git fetch"
-In-Reply-To: <20191002135518.GA3599@sigill.intra.peff.net>
-Message-ID: <alpine.LSU.2.20.1910021707570.32588@cpza.bfz-tzou.qr>
-References: <alpine.LSU.2.20.1910021431130.32588@cpza.bfz-tzou.qr> <20191002135518.GA3599@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (LSU 67 2015-01-07)
-X-Virus-Scanned: by "The Virus" itself
-X-Mailer: Pine 4.63
+        id S1728731AbfJBPcI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 11:32:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37994 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725875AbfJBPcI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 11:32:08 -0400
+Received: (qmail 24776 invoked by uid 109); 2 Oct 2019 15:32:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Oct 2019 15:32:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22565 invoked by uid 111); 2 Oct 2019 15:34:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Oct 2019 11:34:46 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 2 Oct 2019 11:32:07 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        dstolee@microsoft.com, cb@hashpling.org,
+        Derrick Stolee <stolee@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v5] wrapper: use a loop instead of repetitive statements
+Message-ID: <20191002153207.GA6116@sigill.intra.peff.net>
+References: <20191001022936.1757141-1-alexhenrie24@gmail.com>
+ <20191001022936.1757141-3-alexhenrie24@gmail.com>
+ <xmqqbluzfzql.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="1707157324-1830003502-1570029865=:32588"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqbluzfzql.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Oct 02, 2019 at 03:06:10PM +0900, Junio C Hamano wrote:
 
---1707157324-1830003502-1570029865=:32588
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+> All three patches looked sensible.
+> 
+> Even though there is no dependency or relationships among them
+> (beyond that they got written at the same time by the same person),
+> I'll just queue them on a single ah/cleanups topic and get them
+> advance together, as I do not expect any one of them to be blocking
+> the other two.
 
-On Wednesday 2019-10-02 15:55, Jeff King wrote:
-> So instead of this:
->
->> $ git fetch origin master
->
-> try this:
->
->  $ git fetch origin
+Just re-posting this follow-on from the earlier thread (it goes on top
+of the third one):
 
-It creates the master branch. This is what I'm trying to avoid.
+-- >8 --
+Subject: git_mkstemps_mode(): replace magic numbers with computed value
 
-> or even this:
->
->  $ git fetch origin master:refs/remotes/origin/master
+The magic number "6" appears several times in the function, and is
+related to the size of the "XXXXXX" string we expect to find in the
+template. Let's pull that "XXXXXX" into a constant array, whose size we
+can get at compile time with ARRAY_SIZE().
 
-Bingo. It's ugly but it works. Problem solved :-).
+Note that we probably can't just change this value, since callers will
+be feeding us a certain number of X's, but it hopefully makes the
+function itself easier to follow.
 
-> There's more discussion in this thread (but it looks like no patches
-> ever came out of it):
->
->  https://public-inbox.org/git/20170817092853.hteuzni5lxia4ejf@sigill.intra.peff.net/
+While we're here, let's do the same with the "letters" array (which we
+_could_ modify if we wanted to include more characters).
 
-The explanation makes a kind of sense, but if someone want to avoid 
-polluting the tags when fetching into FETCH_HEAD one could get it with 
---no-tags. So this is more of a misguided attempt to get a seemingly 
-sensible default while destroying a consistent behaviour.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ wrapper.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-Sometimes I can see why people say git is confusing ;-).
-
-Thanks
-Martin Nicolay
-
+diff --git a/wrapper.c b/wrapper.c
+index 54541386c1..75992cff02 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -478,7 +478,9 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
+ 		"abcdefghijklmnopqrstuvwxyz"
+ 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+ 		"0123456789";
+-	static const int num_letters = 62;
++	static const int num_letters = ARRAY_SIZE(letters) - 1;
++	static const char x_pattern[] = "XXXXXX";
++	static const int num_x = ARRAY_SIZE(x_pattern) - 1;
+ 	uint64_t value;
+ 	struct timeval tv;
+ 	char *filename_template;
+@@ -487,12 +489,12 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
+ 
+ 	len = strlen(pattern);
+ 
+-	if (len < 6 + suffix_len) {
++	if (len < num_x + suffix_len) {
+ 		errno = EINVAL;
+ 		return -1;
+ 	}
+ 
+-	if (strncmp(&pattern[len - 6 - suffix_len], "XXXXXX", 6)) {
++	if (strncmp(&pattern[len - num_x - suffix_len], x_pattern, num_x)) {
+ 		errno = EINVAL;
+ 		return -1;
+ 	}
+@@ -503,12 +505,12 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
+ 	 */
+ 	gettimeofday(&tv, NULL);
+ 	value = ((uint64_t)tv.tv_usec << 16) ^ tv.tv_sec ^ getpid();
+-	filename_template = &pattern[len - 6 - suffix_len];
++	filename_template = &pattern[len - num_x - suffix_len];
+ 	for (count = 0; count < TMP_MAX; ++count) {
+ 		uint64_t v = value;
+ 		int i;
+ 		/* Fill in the random bits. */
+-		for (i = 0; i < 6; i++) {
++		for (i = 0; i < num_x; i++) {
+ 			filename_template[i] = letters[v % num_letters];
+ 			v /= num_letters;
+ 		}
 -- 
+2.23.0.926.g3dc922fbbc
 
-No MS-Word attachments (http://www.gnu.org/philosophy/no-word-attachments.html)
-_______________________________________________________________________________
-OSM AG | Ruhrallee 191 | 45136 Essen | Fon: 0201-89 555 | Fax: 0201-89 55 400
-web: www.osm-ag.de | e-mail: info@osm-ag.de
-IBAN: DE67 4325 0030 0001 0059 82 | BIC: WELADED1HRN
-USt-ldNr.: DE163337313 | HRB: 28171 Essen
-Aufsichtsratsvorsitzende: Dipl.-Kff. Sabine Elsas
-Vorstand: Johannes Kuhn (Vorsitzender), Christian Damsky, Axel Roland
-
---
-Diese E-Mail enthält vertrauliche und/oder rechtlich geschützte Informationen.
-Wenn Sie nicht der richtige Adressat sind oder diese E-Mail irrtümlich erhalten
-haben, informieren Sie bitte sofort den Absender und vernichten Sie diese Mail.
-Das unerlaubte Kopieren sowie die unbefugte Weitergabe dieser Mail ist nicht
-gestattet.
-_______________________________________________________________________________
---1707157324-1830003502-1570029865=:32588--
