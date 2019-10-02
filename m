@@ -7,122 +7,71 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 870711F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 15:32:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90F4F1F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 15:41:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728731AbfJBPcI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 11:32:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37994 "HELO cloud.peff.net"
+        id S1728049AbfJBPlc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 11:41:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38030 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725875AbfJBPcI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 11:32:08 -0400
-Received: (qmail 24776 invoked by uid 109); 2 Oct 2019 15:32:08 -0000
+        id S1727451AbfJBPlc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 11:41:32 -0400
+Received: (qmail 24891 invoked by uid 109); 2 Oct 2019 15:41:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Oct 2019 15:32:08 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Oct 2019 15:41:32 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22565 invoked by uid 111); 2 Oct 2019 15:34:46 -0000
+Received: (qmail 22716 invoked by uid 111); 2 Oct 2019 15:44:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Oct 2019 11:34:46 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Oct 2019 11:44:10 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 2 Oct 2019 11:32:07 -0400
+Date:   Wed, 2 Oct 2019 11:41:31 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        dstolee@microsoft.com, cb@hashpling.org,
-        Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5] wrapper: use a loop instead of repetitive statements
-Message-ID: <20191002153207.GA6116@sigill.intra.peff.net>
-References: <20191001022936.1757141-1-alexhenrie24@gmail.com>
- <20191001022936.1757141-3-alexhenrie24@gmail.com>
- <xmqqbluzfzql.fsf@gitster-ct.c.googlers.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 4/4] Makefile: emulate compile in $(HCO) target better
+Message-ID: <20191002154131.GB6116@sigill.intra.peff.net>
+References: <cover.1569263631.git.liu.denton@gmail.com>
+ <cover.1569398897.git.liu.denton@gmail.com>
+ <14def72319521d7380fb6a8ec570d014c0f5361b.1569398897.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqbluzfzql.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <14def72319521d7380fb6a8ec570d014c0f5361b.1569398897.git.liu.denton@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 02, 2019 at 03:06:10PM +0900, Junio C Hamano wrote:
+On Wed, Sep 25, 2019 at 01:21:01AM -0700, Denton Liu wrote:
 
-> All three patches looked sensible.
+> Fix these problems by emulating the compile process better, including
+> test compiling dummy *.hcc C sources generated from the *.h files and
+> passing $(ALL_CFLAGS) into the compiler for the $(HCO) target so that
+> these custom flags can be used.
 > 
-> Even though there is no dependency or relationships among them
-> (beyond that they got written at the same time by the same person),
-> I'll just queue them on a single ah/cleanups topic and get them
-> advance together, as I do not expect any one of them to be blocking
-> the other two.
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+> 
+> Peff, thanks for the suggestion! I modified it a little bit so that we
+> wouldn't have to keep regenerating the *.hcc files unnecessarily.
 
-Just re-posting this follow-on from the earlier thread (it goes on top
-of the third one):
+What you have here looks good. I doubt it matters too much compared to
+the cost of the compiler, but having them in their own rule makes it
+easier to follow, I think.
 
--- >8 --
-Subject: git_mkstemps_mode(): replace magic numbers with computed value
+> I also considered piping into the compiler's stdin directly which I know
+> works for GCC (and _probably_ Clang) but I opted against it because I'm
+> not sure it's portable for other compilers. Maybe it's alright for this
+> to be less portable since it's a developer target?
 
-The magic number "6" appears several times in the function, and is
-related to the size of the "XXXXXX" string we expect to find in the
-template. Let's pull that "XXXXXX" into a constant array, whose size we
-can get at compile time with ARRAY_SIZE().
+Yeah, I'd worry slightly about portability. But it would be nice to
+avoid generating more cruft. And I agree that most people running this
+would be developers. Maybe it would make sense to float a separate patch
+on top (that would make it easy to revert if somebody runs into a
+problem).
 
-Note that we probably can't just change this value, since callers will
-be feeding us a certain number of X's, but it hopefully makes the
-function itself easier to follow.
+Thanks for working on this (and the whole series looks good, including
+the commit message changes you made regarding the bitmap code).
 
-While we're here, let's do the same with the "letters" array (which we
-_could_ modify if we wanted to include more characters).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- wrapper.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/wrapper.c b/wrapper.c
-index 54541386c1..75992cff02 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -478,7 +478,9 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
- 		"abcdefghijklmnopqrstuvwxyz"
- 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
- 		"0123456789";
--	static const int num_letters = 62;
-+	static const int num_letters = ARRAY_SIZE(letters) - 1;
-+	static const char x_pattern[] = "XXXXXX";
-+	static const int num_x = ARRAY_SIZE(x_pattern) - 1;
- 	uint64_t value;
- 	struct timeval tv;
- 	char *filename_template;
-@@ -487,12 +489,12 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
- 
- 	len = strlen(pattern);
- 
--	if (len < 6 + suffix_len) {
-+	if (len < num_x + suffix_len) {
- 		errno = EINVAL;
- 		return -1;
- 	}
- 
--	if (strncmp(&pattern[len - 6 - suffix_len], "XXXXXX", 6)) {
-+	if (strncmp(&pattern[len - num_x - suffix_len], x_pattern, num_x)) {
- 		errno = EINVAL;
- 		return -1;
- 	}
-@@ -503,12 +505,12 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
- 	 */
- 	gettimeofday(&tv, NULL);
- 	value = ((uint64_t)tv.tv_usec << 16) ^ tv.tv_sec ^ getpid();
--	filename_template = &pattern[len - 6 - suffix_len];
-+	filename_template = &pattern[len - num_x - suffix_len];
- 	for (count = 0; count < TMP_MAX; ++count) {
- 		uint64_t v = value;
- 		int i;
- 		/* Fill in the random bits. */
--		for (i = 0; i < 6; i++) {
-+		for (i = 0; i < num_x; i++) {
- 			filename_template[i] = letters[v % num_letters];
- 			v /= num_letters;
- 		}
--- 
-2.23.0.926.g3dc922fbbc
-
+-Peff
