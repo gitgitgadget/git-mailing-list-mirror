@@ -2,163 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBBEA1F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 21:47:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7D1D1F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 23:49:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727891AbfJBVrP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 17:47:15 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:45417 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726691AbfJBVrO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 17:47:14 -0400
-Received: by mail-pg1-f194.google.com with SMTP id q7so381139pgi.12
-        for <git@vger.kernel.org>; Wed, 02 Oct 2019 14:47:14 -0700 (PDT)
+        id S1727659AbfJBXtd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 19:49:33 -0400
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:56872 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727327AbfJBXtc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 19:49:32 -0400
+Received: by mail-pg1-f201.google.com with SMTP id u4so632731pgp.23
+        for <git@vger.kernel.org>; Wed, 02 Oct 2019 16:49:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZoQy8UOq3VZ/ODnZ/Z89R45ZYyQw5VbiiagBJ88BNJ0=;
-        b=RztsGIba54tM2a/Zh8NTN7nq5k5uQ3VHdY2md2jHfQRKPoTnPmiDmJ+H4gcCXJG2PZ
-         mWTvOI9aCkpPQ1O32DS0C1N+TiZwv4vgcYl6TU0fOkWYT7NMEfuovbezuiLKI5XxUit2
-         iDyIfPZgF/d/STTpxFCO4xoML1AWg0KSW2MLrWkXMvDEjiHG/VHWRZdqKEP7LMzWpY5h
-         9KBO44vI0bZo6keAPIwi7f4sc7xfiPGgruZ/yfjRf47rf/rd15nwouv2Zwe74626ke7g
-         1hahLyHafr2QgbKXIVPY3P41UQuA76LWEIUk8ecawaddWrliZPB+Ya99tKA51cqxieqr
-         x+Zg==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to;
+        bh=2iP60HDYfuzrb/NxgpZH3Rqc2oIV+tXyN5JAWDhlOhk=;
+        b=bCP29OBZZH3ZGDNxiME2AMBjeEnKaY2vlCLf1xt1CKpLzbEkKbkLCMVy9d4yWEmnlE
+         9Kt1qgzaczge/ItURMMISrsf6ft0WDWNYso0nrVPoHBszMWOxQ+9H2yAsfrH0wM8Vr1Q
+         CDlYtyG/Ve43RUwYpx0U/yMso4ynOpK842NDzKIexE/lOBmUUqIuI5DIgRHWhH7fgqpS
+         JIGSOnQHUcSv+DKn99DYWtdU+Aot9PZtRx5L7pF6T0R3zPl41XFh9hw7HAni9LfRlVt+
+         xxNJygG71Y0BGECdkCWaZGzy0u8WesU0Dyx1GbCum5ZO3+A9IXY0f6rSYzQwIpoujJFC
+         Ys3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZoQy8UOq3VZ/ODnZ/Z89R45ZYyQw5VbiiagBJ88BNJ0=;
-        b=VI3XbZr13LUmFcXFoHblVzuWEtlMhcoNQqUxS/qaYX7rnbhUAWsdVmuDW7LxFNBxxf
-         pGOj4wMPQqhEvaKI4uj3/I6er4nouPg54se1TA4Obi6XT9hLgkQhh9kjSdBLs8H+Be6V
-         joIVFpZTpWlaYz1zODQSgZ50fxXtRyy7XzXkF2G9kP+tBxFyG5mjb4vPs8pNi+Y0+/kZ
-         0+m/nYypZH2F0gCT10UK+xtWbbs1OYzJXa4Pu1yknjh0kH4EQR3yoYxMWGPyzaTlSahj
-         mugI/MQkhEAv0So3tefUIa9qxJPherRlgc71IbwelKj13kJrUVH1r5HXbrpPNp08xXOM
-         oHLQ==
-X-Gm-Message-State: APjAAAXBdeQOKdm/zWGrxFvPiXARh8EAofPNFW0nN3OEeT/0n+FG796F
-        kOkLh5vXSLfZFAP7heydJzc=
-X-Google-Smtp-Source: APXvYqz4v5xFZ4DjGfDJPYRwKO6cIDoGj2yf9X54FZ95hrkXiTPUE2MZEXygZQVl2mFhgYsWBBUW/g==
-X-Received: by 2002:a63:e114:: with SMTP id z20mr5858916pgh.278.1570052833104;
-        Wed, 02 Oct 2019 14:47:13 -0700 (PDT)
-Received: from generichostname ([204.14.239.137])
-        by smtp.gmail.com with ESMTPSA id 195sm417331pfz.103.2019.10.02.14.47.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Oct 2019 14:47:11 -0700 (PDT)
-Date:   Wed, 2 Oct 2019 14:47:09 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/3] format-patch: document and exercise that -o does
- only create the trailing directory
-Message-ID: <20191002214709.GA51809@generichostname>
-References: <1aeacd8af4b83142f160c63be4746554e823cfc3.1570051490.git.bert.wesarg@googlemail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1aeacd8af4b83142f160c63be4746554e823cfc3.1570051490.git.bert.wesarg@googlemail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
+        bh=2iP60HDYfuzrb/NxgpZH3Rqc2oIV+tXyN5JAWDhlOhk=;
+        b=FM9wYCmTSPetQDtV3vbcwyCC3yJbGA6hdYXJ3Ysk9v4NLO+VtQDEj49Y1OnS7btRmy
+         F+Fau26Q5XiUVmOHofRCTb/meiCSfJmh/h565bgFaO/YfZcq6LPMd34c2cghbrO89/Pb
+         x4WgUUSqXVJsraRHggU1DlISyATR+EBy0kGK68M06XTPsKL73OawqabvyVi3X2qdjtdY
+         V/OeSXR+VIV3sDsgOGdKHpbbBLJWE6+BHeK9cuvhMZa2+szfUm7fuX03kJ7b2OfXH/25
+         y07F1TTOYvbf58AbuMRbPTocEH0MwMAA01OhHYW1rvDWO4oI1zlbWU31CUHZmMYmti+B
+         b6Tg==
+X-Gm-Message-State: APjAAAXVvfihiDeA9NwYMZxaxy5VzhREYpLeVjPUxd0h4+qnoLilo3XU
+        WFJc6xcT3y0jQgvCT2vPMqyGD2R0gQIh3/BOxDceeD8RfuK7p/kzyWzTgk4SxAmBMjdrmvGWyiX
+        bXA6xxzGV7L3t5ch6j7P1R/uksiKZgi7vii0OHDkgU1aobM0NR7a4ZlD0p6bMjoY=
+X-Google-Smtp-Source: APXvYqwh7nshsvqkg0b/XBXi59u4r8UFfCp47yx/lMdVbkqLt+x5VudKvJtAeZ6n68J4OiZoTF3vsLV3O6/dig==
+X-Received: by 2002:a63:4924:: with SMTP id w36mr6536753pga.113.1570060171662;
+ Wed, 02 Oct 2019 16:49:31 -0700 (PDT)
+Date:   Wed,  2 Oct 2019 16:49:27 -0700
+Message-Id: <cover.1570059953.git.steadmon@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.23.0.444.g18eeb5a265-goog
+Subject: [PATCH 0/2] add trace2 regions to fetch & push
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Bert,
+We'd like to collect better statistics about where the time is spent in
+fetches and pushes so that we can hopefully identify some areas for
+future optimization. So let's add some trace2 regions around some of the
+fetch/push phases so we can break down their timing.
 
-> Subject: format-patch: document and exercise that -o does only create the trailing directory
+Josh Steadmon (2):
+  fetch: add trace2 instrumentation
+  push: add trace2 instrumentation
 
-s/does only create/only creates/ ?
+ builtin/fetch.c | 22 +++++++++++++++-------
+ builtin/push.c  |  2 ++
+ fetch-pack.c    | 13 ++++++++++++-
+ transport.c     | 14 ++++++++++++--
+ 4 files changed, 41 insertions(+), 10 deletions(-)
 
-Anyway, as a prepatory patch, I don't think that it's necessary. Maybe
-it's just me but I assume that most tools create at most one directory
-deep. Even mkdir won't created nested dirs unless you pass `-p`. I
-dunno.
+-- 
+2.23.0.444.g18eeb5a265-goog
 
-On Wed, Oct 02, 2019 at 11:26:11PM +0200, Bert Wesarg wrote:
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-> ---
->  Documentation/config/format.txt    |  3 ++-
->  Documentation/git-format-patch.txt |  4 +++-
->  t/t4014-format-patch.sh            | 16 ++++++++++++++++
->  3 files changed, 21 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
-> index 414a5a8a9d..e17c5d6b0f 100644
-> --- a/Documentation/config/format.txt
-> +++ b/Documentation/config/format.txt
-> @@ -80,7 +80,8 @@ format.coverLetter::
->  
->  format.outputDirectory::
->  	Set a custom directory to store the resulting files instead of the
-> -	current working directory.
-> +	current working directory. Only the trailing directory will be created
-> +	though.
->  
->  format.useAutoBase::
->  	A boolean value which lets you enable the `--base=auto` option of
-> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> index b9b97e63ae..fe7492353e 100644
-> --- a/Documentation/git-format-patch.txt
-> +++ b/Documentation/git-format-patch.txt
-> @@ -66,7 +66,9 @@ they are created in the current working directory. The default path
->  can be set with the `format.outputDirectory` configuration option.
->  The `-o` option takes precedence over `format.outputDirectory`.
->  To store patches in the current working directory even when
-> -`format.outputDirectory` points elsewhere, use `-o .`.
-> +`format.outputDirectory` points elsewhere, use `-o .`. Note that only
-> +the trailing directory will be created by Git, leading directories must
-> +already exists.
->  
->  By default, the subject of a single patch is "[PATCH] " followed by
->  the concatenation of lines from the commit message up to the first blank
-> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> index ca7debf1d4..bf2715a503 100755
-> --- a/t/t4014-format-patch.sh
-> +++ b/t/t4014-format-patch.sh
-> @@ -1632,6 +1632,22 @@ test_expect_success 'From line has expected format' '
->  	test_cmp from filtered
->  '
->  
-> +test_expect_success 'format-patch -o with no leading directories' '
-> +	rm -fr patches &&
-> +	git format-patch -o patches master..side &&
-> +	test $(git rev-list master..side | wc -l) -eq $(ls patches | wc -l)
-
-For test case you write, please use the following pattern:
-
-	git rev-list master..side >list &&
-	test_line_count = $(ls patches | wc -l) list
-
-The first benefit is that we get to take advantage of the
-test_line_count function that's already written for us. The second is
-that when we write tests, we shouldn't put Git commands in the upstream
-of a pipe because if they fail, their return codes will be lost and we
-won't be able to fail the test properly.
-
-> +'
-> +
-> +test_expect_success 'format-patch -o with leading existing directories' '
-> +	git format-patch -o patches/side master..side &&
-> +	test $(git rev-list master..side | wc -l) -eq $(ls patches/side | wc -l)
-> +'
-> +
-> +test_expect_failure 'format-patch -o with leading non-existing directories' '
-> +	rm -fr patches &&
-> +	git format-patch -o patches/side master..side
-> +'
-
-As above, I wouldn't really call this a bug in Git. I think we should
-leave this test case off until the next patch.
-
-> +
->  test_expect_success 'format-patch format.outputDirectory option' '
->  	test_config format.outputDirectory patches &&
->  	rm -fr patches &&
-> -- 
-> 2.23.0.11.g242cf7f110
-> 
