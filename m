@@ -2,124 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BA301F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 02:43:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A90F1F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 03:13:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726171AbfJBCjH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Oct 2019 22:39:07 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55820 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726014AbfJBCjH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Oct 2019 22:39:07 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 35078813A7;
-        Tue,  1 Oct 2019 22:39:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fEpxGotISM77k72trfzTX87gnpc=; b=x9CXca
-        jJ/oTtzww3ZMYl96ppeEwKm1fMCndCQhkTGUAs88ra64CZQml4TS+QZTKotQoOLF
-        MwwaFQl6tDDTpQe2H5oobHkqEvfWt1Yo6ULmp/lRLmawPqmWJCiU/GD5BrBxMOfZ
-        Autrsy74J19EnmGT+Gm354KZFeNwf7EiK8LYA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VU/OMrctTQQMDmy7MVY97qenqq/KQf/y
-        cBCvOSI6duh50RX6WJieCo4YjEuF20Pk2GO1nAYtX49CQcC2qVLoBhoxZYT74ha5
-        NLXkAF02thDeKFiTGGIV2g8swPgjK4w+o4UeFjs7kO7i+Qp7kuCfrKKB/W211uyW
-        pEWrspd3s8o=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2E95F813A6;
-        Tue,  1 Oct 2019 22:39:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 587BA813A4;
-        Tue,  1 Oct 2019 22:38:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v1 5/5] sequencer: directly call pick_commits() from complete_action()
-References: <20190925201315.19722-1-alban.gruin@gmail.com>
-        <20190925201315.19722-6-alban.gruin@gmail.com>
-Date:   Wed, 02 Oct 2019 11:38:57 +0900
-In-Reply-To: <20190925201315.19722-6-alban.gruin@gmail.com> (Alban Gruin's
-        message of "Wed, 25 Sep 2019 22:13:15 +0200")
-Message-ID: <xmqq5zl7hnwe.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727772AbfJBDNQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Oct 2019 23:13:16 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:32926 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725928AbfJBDNP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Oct 2019 23:13:15 -0400
+Received: by mail-wr1-f68.google.com with SMTP id b9so17786669wrs.0
+        for <git@vger.kernel.org>; Tue, 01 Oct 2019 20:13:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=cecFbFfdNtLIj2tZFlPzRak29yNaF+ab+xWf8LmQcPY=;
+        b=HWBGIdjUHsZrJdYQPd2Tc8xAtpSbK/PNmTR71EEr2Ri0mfr+vA8c0/CFTKqPoDfghD
+         kgmv/Jlyfg1pmZsC6EUYMS3VD50JYSysDb1RZdMvO7TDVzNk6sI7UlycG/fh9khkGVxD
+         sGQZ7z+I3hEH6d7ucqNdW0d3Bg6kYKmZ8qMnHAM7Gu6AP5Iaad+PYK5kvhIco7GwOyzD
+         Q0KJ5/CPVhKeTMIXkYNCYpLA1fWs1wMybE/Hj7M84uVVOhkk/coFc84kmKDP1WXXYac4
+         vL8LiRdwvyEikRWqRG1Cwn7tZcdbD5FxOWyZIihsBUXIJ8PDxMh4WFUTJon2l2kT4DM1
+         KjLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cecFbFfdNtLIj2tZFlPzRak29yNaF+ab+xWf8LmQcPY=;
+        b=dbOxRwgGRFcbTDhMgz8iqfNSGMKQ3uEQ9KhSVbLBVDLKgLtIKr1uQtUUy95S5Kz/ul
+         aCJP3TilLMFn3uXNt0ibqYo0o7UV1JB3I4vQru+PZHDuUYJ6opJ9vdoOZIq3hfSZ3pQH
+         RrDCbjOu5Slf5j1WRulTEqyfCyrxnhvija3MmmExW3ezBOCvBjvCX96vSTGwHVfUyTsh
+         AeT8XJjaXy8HV0bQbRC21Jpb75X5PUeJgZN+xAww+uWqXkQbnAWDpR9G1MI1MvJaK+KZ
+         iPX4IDD/RWNZsIo9j7tvaqgOykDuL8dsRXMuH20CBMpYAzbBigeV6ytMeEEKZ+5O+GMd
+         /5wg==
+X-Gm-Message-State: APjAAAXUk0CzXsh4lIHJT3hpcpqA9f3zWeNbWYlUIQZArdhRXkyIVB0F
+        LLgt9YYlZCAEZE8cxP3YjVoOm5BF
+X-Google-Smtp-Source: APXvYqx7TXpeqab9pcYd/OgKLJRQELG8y9wCpg34LPqA9wnWvPDGQUQT4fiURAnwh3aoqTg3/oOeLg==
+X-Received: by 2002:a05:6000:34a:: with SMTP id e10mr697008wre.364.1569985993303;
+        Tue, 01 Oct 2019 20:13:13 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t1sm15256323wrn.57.2019.10.01.20.13.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 01 Oct 2019 20:13:12 -0700 (PDT)
+Date:   Tue, 01 Oct 2019 20:13:12 -0700 (PDT)
+X-Google-Original-Date: Wed, 02 Oct 2019 03:13:10 GMT
+Message-Id: <pull.370.git.gitgitgadget@gmail.com>
+From:   "Chris Zehner via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] gitignore: ignore comments on the same line as a pattern
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C999869C-E4BD-11E9-8AB5-B0405B776F7B-77302942!pb-smtp20.pobox.com
+To:     git@vger.kernel.org
+Cc:     Chris Zehner <cbzehner@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alban Gruin <alban.gruin@gmail.com> writes:
+Why make this change?
+=====================
 
-> Currently, complete_action() calls sequencer_continue() to do the
-> rebase.  Even though the former already has the todo list, the latter
-> loads it from the disk and parses it.  Calling directly pick_commits()
-> from complete_action() avoids this unnecessary round trip.
->
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> ---
->  sequencer.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+Add the ability to use # to put comments after ignore patterns. This is
+useful for documenting the reason for particular ignore patterns inclusion
+and structure.
 
-All the earlier steps in this series are necessary because the
-inconsistencies caused by not doing things the code updated by the
-earlier steps do (e.g. leaving number of commits recorded in
-total_nr and done_nr stale) were masked by re-reading the info from
-the on-disk file.  And this step exposes these inconsistencies
-because the extra reading from the file no longer happens.
+Right now a common convention in .gitignore files is to group patterns by
+similarity, using new lines beginning with one or more # characters as
+headings to explain these groupings. This works well when clarifying why
+broad classes of things are ignored, e.g. # build artifacts followed by
+several patterns.
 
-That is my reading of the series---did I get it right?
+When leaving comments about a particular pattern it can be difficult to
+distinguish comments about a single patterns from comments used for file
+organization.
 
-I wonder if that can be stated clearly in the log message of the
-earlier steps.
+Comments left after a pattern are unambiguously related to that line, and
+that line only.
 
-For example, by reading 1/5 or 2/5 alone, it would be natural for
-readers to wonder why the original code that did not update done_nr
-correctly terminated after going through the todo list (you would
-expect that when done reaches total you are finished, so if one of
-these variables are not maintained correctly, your termination
-condition may be borked), and then by knowing that the current code
-more-or-less works correctly by not terminating too early or barfing
-to say it ran out of things to do prematurely, the next thing
-readers would wonder is if these patches introduce new bugs by
-incrementing these variables twice (iow, "does the author of the
-patch missed other places where these variables are correctly
-updated?")
+What should this change do?
+===========================
 
-1/5 for example talks about the variable mostly being used by
-prompts, which may be useful to reduce worries by readers about
-correctness (iow, "well, if it is only showing wrong number in the
-prompts and does not affect correctness otherwise, perhaps that was
-why the current code that is buggy did not behave incorrectly").
-But I suspect that it is not why these changes in the earlier steps
-are acceptable or are right things to do.  So, perhaps replace the
-"these are used only in prompts and the numbers being wrong does not
-affect correctness" comments from them with:
+The entirety of a string after a non-escaped #, including the #, is removed
+from the pattern in a .gitignore file.
 
-    By forgetting to update the variable, the original code made it
-    not reflect the reality, but this flaw was masked by the code
-    calling (sometimes unnecessarily) read_todo_list() again to
-    update the variable to its correct value before the next action
-    happens.  At the end of this series, the unnecessary call will
-    be removed and the inconsistency addressed by this patch would
-    start to matter.
+Why make the change this way?
+=============================
 
-or something like that (assuming that the answer to the first
-question I asked in this message is "yes", that is), or a more
-concise version of it?
+I don't normally write C, so I probably overlooked more idiomatic ways to do
+this. This is done similarly to the way trim_trailing_spaces removes
+extraneous spaces from patterns.
 
-Thanks.
+Potentially this change could be combined with the existing code for
+trim_trailing_spaces, but the logic is slightly different and it seems to me
+that the difference in naming aids readability by making it clear what the
+responsibilities are for each function.
+
+How can we test this change works?
+==================================
+
+That's one area I'd like help with, please.
+
+Test cases:
+
+/pattern/to/match
+# Existing comment
+/pattern/with/comment # This comment is ignored
+/pattern/with/\#octothorpe # \#octothorpe is ignored
+
+I wasn't sure where the correct place to add these would be, I didn't see
+(and potentially overlooked) any tests in /t/* that cover this
+functionality. Would someone be willing to provide a pointer to the correct
+place to add these tests?
+
+Signed-off-by: Chris Zehner cbzehner@gmail.com [cbzehner@gmail.com]
+
+Chris Zehner (1):
+  gitignore: ignore comments on the same line as a pattern
+
+ Documentation/gitignore.txt |  8 ++++++--
+ dir.c                       | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+), 2 deletions(-)
+
+
+base-commit: bc12974a897308fd3254cf0cc90319078fe45eea
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-370%2Fcbzehner%2Fgitignore-pattern-comment-oneline-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-370/cbzehner/gitignore-pattern-comment-oneline-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/370
+-- 
+gitgitgadget
