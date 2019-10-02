@@ -2,135 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 521B21F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 12:06:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A95461F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 12:09:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727221AbfJBMG5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 08:06:57 -0400
-Received: from mout.gmx.net ([212.227.17.21]:37427 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725852AbfJBMG5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 08:06:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570018008;
-        bh=qIXrjUzp1mdzfC0tJiChprwbtz9KKmbZ7d9cJgvPCII=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=iHflnzU9hgIsVTMQjy6fcY/f6QaDbU3epDx7R0rPU1NHyd6TEKTqMRGBatJyx2IGb
-         vZJtATMc+h+p3oP0pPNPzsU9AFyTy9N4V3snI70E05F2j8GGZLV+H/4fyP5M3QOlvC
-         OvlMQ+a6KCrJPtBAQngWC3GX1iuhqKIaFnuiC94k=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N8XU1-1i2eva38Wf-014RW1; Wed, 02
- Oct 2019 14:06:48 +0200
-Date:   Wed, 2 Oct 2019 14:06:18 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 4/5] rebase: fill `squash_onto' in get_replay_opts()
-In-Reply-To: <94dbb49e-2c11-ce30-5d50-05be19ebb3bb@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910021405391.46@tvgsbejvaqbjf.bet>
-References: <20190925201315.19722-1-alban.gruin@gmail.com> <20190925201315.19722-5-alban.gruin@gmail.com> <66fcd66b-fad2-e5a1-cdd8-fd7b37c4abbf@gmail.com> <nycvar.QRO.7.76.6.1910021011010.46@tvgsbejvaqbjf.bet>
- <94dbb49e-2c11-ce30-5d50-05be19ebb3bb@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727283AbfJBMJQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 08:09:16 -0400
+Received: from mail-qk1-f180.google.com ([209.85.222.180]:37232 "EHLO
+        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725747AbfJBMJQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 08:09:16 -0400
+Received: by mail-qk1-f180.google.com with SMTP id u184so14694891qkd.4
+        for <git@vger.kernel.org>; Wed, 02 Oct 2019 05:09:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=F3saOuElTFL+/n4RgC17YCW26ALQ0xQOemKgjb7ToHY=;
+        b=kRgUBFK4neMbb0aBpqJIJXv500IeBDhCajVO+2DXdCYwIgSC49Gi+DuKhQit+evqQb
+         lDLxpJ+yxGQSg/yLY0mUQiqRDrQDvGfBBzF2NduIb2GrO4yQhexhpcwoKP1CIKuPwdzM
+         lMv/x3Rpjk0ePCGchaEa/Sbup3k2DazvaKtHImwVfqVWtW5iYCmoJCK6EnW72xSTeiQg
+         KV+m6/rMOEt+SWp0LbP18mVRSgxf4rCvKuNGmEbtwbS8C96ehcA13pIJNvlv965mpKrE
+         Blpzk9l7tW9tVjELjvjUlwgMq9EoRmJmGg2u5SjNt8gTABYAxax+O9xMrOp5ngbXkdzw
+         Ghag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=F3saOuElTFL+/n4RgC17YCW26ALQ0xQOemKgjb7ToHY=;
+        b=BEo7hACHRAfVjUxmak8n4eSvSJ7uKNCGq01dZm26D1Kq7KljC9DAHtoHvqWtef91u2
+         PRzk3ubB8Z0K6Od1f7UvjHEMJ9YBOP3HaiCorJHVfggEzpNlt39zU2ojKjWJ9UyAHbGk
+         4XQ0PWd6VPPUrl/azrYcFJ7+FdZqrCzOCB8Rh2F9/4XNWyOwhRU8ddVKPUr22dUDd7ht
+         Ea2WMuoNaw3rH4Ex3b6LBJsOfD3jam319mD9pTg0RtB+1k9SmRc7XJkhJvHm5FUhldFS
+         L1lPDunyJM1uqYsemzyV6o41E/Nh5uHpPOcxl8nkxxdScnCqtQjaNpZGGahKwfHTX4K2
+         x/KQ==
+X-Gm-Message-State: APjAAAUlk30h57Nbl9xIViRbwoIE7H/cDKuhaB4ZpfA5q22llLfoAzsU
+        R54qZbZo5IDawvCejPTANrlr6b+5NUM=
+X-Google-Smtp-Source: APXvYqy/fM/fBU5W2ST4waRATKjOpw093hG5M7Cv06iX7WKDL6Am4u1elU8T6XR4wdJRLnichr79ag==
+X-Received: by 2002:a05:620a:1467:: with SMTP id j7mr3322791qkl.434.1570018154725;
+        Wed, 02 Oct 2019 05:09:14 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:8034:1f9c:700f:499? ([2001:4898:a800:1010:316a:1f9c:700f:499])
+        by smtp.gmail.com with ESMTPSA id c26sm14112091qtk.93.2019.10.02.05.09.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Oct 2019 05:09:14 -0700 (PDT)
+Subject: Re: git-grep in sparse checkout
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>
+References: <CAHd-oW7e5qCuxZLBeVDq+Th3E+E4+P8=WzJfK8WcG2yz=n_nag@mail.gmail.com>
+ <f3101c8f-9709-5bcb-35f0-39ffaf8aa809@gmail.com>
+ <xmqq36gbfz62.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <48ebe9a4-23a8-8679-f380-195d7fc93d60@gmail.com>
+Date:   Wed, 2 Oct 2019 08:09:13 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:kIbbwIF1v8qLVRoknZLv92CQ9nh4MtxTTR+VFjnOohw/WbfE7+a
- dZVo8nwq/XY5hQ6IVMsVmeB+yFeIocN1Yo7ZduUT8xDFKWHrDYvEx+1ZJohSoFyRWgj0U/N
- Re8Jf+cxV0UNrD1pQosiQh3BleBaehOjuiOsLrIkvrlVdDRTbMhVxYFfutf8C6Sjxx0KGXK
- g7xUtus7vQhtPZvjb9TpQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:pq9gI3Gcz5E=:WjBOaSmKwUxmygZQKRBzgn
- 49k8VPKWii4pdEBxPAlkD8SQP2Xmb/PGDyNYxz8pieiH7CNKc5TJVl/dtV0NZdIaP7NN1znb5
- R9e7vMoZ3PvcIZEUSsRnPtEahEI7goVUMWEuw+ZZM4qOnvYkk/NVV0KyFOT2dTMC5KoRHPVYD
- V+WIrKLmDsHPfZtDWGDy21K6tgm0QufPgeWipxow/5GDrRhKqzlGiP5dBQcDHeQVJbNufVYnl
- DgRfrMDB6PrCNxsQJXO9avQS0OHDi4KBULJ7R7Fe0j8NO3LSg00xHma4+VmgI0ZbOoEYCxfgr
- 79JpoyjEH3P84qqo6qX2kCd3xDN8B2IGB7G/BSuOBVlm9ZVki1ixbwE12SKARbDNh3VDVIR9g
- oZoq4WMOu8YRqMAOmI86cIg5L3QT+qNR9rOboP/OMO7M6GGHlacEWt12k/pnFzUDW4LQNavrI
- uR3mXVF3E1NUbuAwIyEmQtkXyZTEe4uNan865Wx+kGPGLZFTqlc6GnmSGQ/1XIIZsqFvBR0Za
- doa/6K9pFf688YNbGxDOOdrSS2roG7GZUQdQu/H40iZu+ElSyLLWa91ay2bI5rjZu8X0hXFM6
- eDOiBCsYYs478vgkY1iZA7OBMXhgyVRp0x3GOkO3+QGwfa4CxUjBztErSShf0iu75BHJx7WtV
- N5LeBpNPmBsdZIZDbj9xFls0zAzIFeQekfoVNLPDYvhoofbk1+8RA4JyFsIuaS/zci41lSuqn
- McLgdbWjQVqGT55I6AdBTxSUH4U6LgZOFtQhH2lbIQ4ytK8MO+inMJ8p7Y/KsVu+oFhgSDHax
- yigiAuHog9YuNzHjaG6K0SRkDD1cs4Ca+kMkHk0pRSa9+bC3T5vaVERaJ007QtIOAAwqtlev/
- WvS8ikPBw4AFeshuQy+NQTOr/I3Trb1uhHxpDHLEEYkVAx+JA2/lbZUZ5f+yh1OLOi36J5Y8F
- N1CzfvegbZb/cvHtUTt5KzhWZNs/ETeUqLU/8VFyIr1ZmDfFIT1F65bBSgJTctVn8ikcogKLP
- d25JRNsFXqBOYJJrzARAlsPzFIcXPiNqYk19KzFJuN3FwxNoFzT/Pb+gglWFhNZEEL3Ly9YMM
- eSFOMsns3pL4brjzsZnOv6Xyt2s584LqN56EcvgQRd9Me4iIJPWJF0c2FgQUO2joeeqswBa3X
- GB16QqSz7DfdqJkk0HL0J1lKDaOERQ37tUcSocPqfGOaraw3WtT6QMUbqsmoGGAcDdmJ1UtTo
- E0WCbhmzQ6qJImJ2vum/cFhoppupOYQkMIlgQG11IfG9TmVksFTKC41tjQJE=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqq36gbfz62.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+On 10/2/2019 2:18 AM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>> Is that the expected behavior? In a sparse-checkout, wouldn't you _want_
+>> Git to report things outside the cone?
+> 
+> That should be optional, I would think.  When you declare "by
+> default, this the subset of the project I am interested in", we
+> should honor it, I would think.
+> 
+>> At minimum, I would expect a new option to have "git grep" go back to
+>> the old behavior, so users who really want a tree-wide search can have
+>> one.
+> 
+> Yeah, a bugfix to honor SKIP_WORKTREE bit, followed by a new feature
+> to ignore it, would be pretty sensible way to go.
 
-On Wed, 2 Oct 2019, Phillip Wood wrote:
+Thanks for everyone's responses here. I am satisfied with this direction.
 
-> On 02/10/2019 09:16, Johannes Schindelin wrote:
-> >
-> > On Fri, 27 Sep 2019, Phillip Wood wrote:
-> >
-> > > Hi Alban
-> > >
-> > > On 25/09/2019 21:13, Alban Gruin wrote:
-> > > > [...]
-> > > >    builtin/rebase.c | 5 +++++
-> > > >    1 file changed, 5 insertions(+)
-> > > >
-> > > > diff --git a/builtin/rebase.c b/builtin/rebase.c
-> > > > index e8319d5946..2097d41edc 100644
-> > > > --- a/builtin/rebase.c
-> > > > +++ b/builtin/rebase.c
-> > > > @@ -117,6 +117,11 @@ static struct replay_opts get_replay_opts(con=
-st
-> > > > struct
-> > > > rebase_options *opts)
-> > > >     if (opts->strategy_opts)
-> > > >      parse_strategy_opts(&replay, opts->strategy_opts);
-> > > >    +	if (opts->squash_onto) {
-> >
-> > I guess it does not matter much, but shouldn't this be guarded against
-> > the case where `replay.squash_onto` was already initialized? Like, `if
-> > (opts->squash_onto && !replay.have_squash_onto)`?
->
-> replay is uninitialized as this function takes a `struct rebase_opitons`=
- and
-> returns a new `struct replay_options` based on that.
+-Stolee
 
-Ooops, you're right. The `.` in `replay.have_squash_onto` should have
-been a strong hint, eh?
-
-Thanks,
-Dscho
-
->
-> Best Wishes
->
-> Phillip
->
-> >
-> > Other than that, this patch makes sense to me.
-> >
-> > Ciao,
-> > Dscho
-> >
-> > > > +		oidcpy(&replay.squash_onto, opts->squash_onto);
-> > > > +		replay.have_squash_onto =3D 1;
-> > > > +	}
-> > > > +
-> > > >    	return replay;
-> > > >    }
-> > > >
-> > > >
-> > >
-> > >
->
