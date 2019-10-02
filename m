@@ -8,113 +8,144 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ACCD1F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 08:06:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A5B51F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 08:17:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727121AbfJBIGa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 04:06:30 -0400
-Received: from mout.gmx.net ([212.227.17.21]:37549 "EHLO mout.gmx.net"
+        id S1727592AbfJBIRZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 04:17:25 -0400
+Received: from mout.gmx.net ([212.227.15.15]:54761 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726162AbfJBIGa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 04:06:30 -0400
+        id S1726162AbfJBIRZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 04:17:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570003579;
-        bh=4r4JTvHH3bJeskrfzo32i+YhZ/ddaZIO6c7vSrqP9Vo=;
+        s=badeba3b8450; t=1570004227;
+        bh=P1BCKe0nKWcNeEwbQsPdCwwdRyjqUhH326MhbaQgkuc=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dTW4I5rkgA9Fa6qHh2PcrEmkHCqMLtWOSMjp7f1e2ulfEIf4juUi0XFOkbnWQa6Jz
-         96uyG/ywD3YwpzK6j+UG5EXrlNEVlX9ps6eFUn3BSSA0zOeBSz7Y/gTHAghWsNNFpG
-         yvAdeI5VR6t9raDt4s2VZ45nFT/pn+VkY0Xj3eSo=
+        b=JAKLD9Ir7ioc5l0Fo0cbxJMTVnt/ro5miQgdCghaHjYUYijXXaLvE0CKwPuoMXp17
+         EvWdpjV89t5DMChnC+Rzc+xwLUBish0vfscQIhCwEMQfE4MGSsSBoMCT1c4zvHFeQu
+         yqEuAFeiHJB4YyJfschOwK6Zc111DeKjos8JKjho=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MN5if-1iWHgk078v-00IzlH; Wed, 02
- Oct 2019 10:06:19 +0200
-Date:   Wed, 2 Oct 2019 10:06:04 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M26vL-1iI2f42Na5-002Z8k; Wed, 02
+ Oct 2019 10:17:07 +0200
+Date:   Wed, 2 Oct 2019 10:16:52 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
 cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v1 1/5] sequencer: update `total_nr' when adding an item
- to a todo list
-In-Reply-To: <xmqqbluzhp8g.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1910021005050.46@tvgsbejvaqbjf.bet>
-References: <20190925201315.19722-1-alban.gruin@gmail.com> <20190925201315.19722-2-alban.gruin@gmail.com> <xmqqbluzhp8g.fsf@gitster-ct.c.googlers.com>
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 4/5] rebase: fill `squash_onto' in get_replay_opts()
+In-Reply-To: <66fcd66b-fad2-e5a1-cdd8-fd7b37c4abbf@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910021011010.46@tvgsbejvaqbjf.bet>
+References: <20190925201315.19722-1-alban.gruin@gmail.com> <20190925201315.19722-5-alban.gruin@gmail.com> <66fcd66b-fad2-e5a1-cdd8-fd7b37c4abbf@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:RxupK0lrd+Cw4jWPSrYdRJ+ByNnaDFmhH8uY/sbiL86tVsqAhf4
- AVP5EN9/CEwxSIswpDrayvaqveZWpoOjZuM7i2jHHvymd78m5BaH52zITEYgrbtCjNOJups
- OF8mFrA4vpP3kDdUJk3dfbfxaGMq4gt1rAydtg/QFNVZO2KjQuBinLMhtjfmepu9qEqjGM2
- oUQNIYp/lEQaXx1UasNag==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:GdwGPb9j+YE=:6ZPVOZ/H8B6WG0WynnA6K5
- aD/2E473dzA73t7oDmPzOLOtPJLdoMgMD3nleWlYyW5QlvlbofnMA4/E29CQFm99Cftghv55M
- hRxC6yd7EG+bPgUXsY1I6q7Kysx+N357Awj1x9qPweexCnjxUwXj14hlWR8BklxuvKygGk48y
- 1AHv5sZRqAnU9OIVLrkzWbg5iNXWuRJ7bgUTRJPQMOfz2gDJaBavLVdgzqHsFvMXUivgstEUQ
- ssGg8SqrffMkKvofi+a99ICAtaCZ6LPdFHBF0wJH8u6+6yksmzNIH614naCrQ7JbWC6Q7ALLu
- xxFzTWNfLXVxKMVThVKbzz0BjcPz8KK9dI9WKatn2BtdWdWFg23IMDFtPIBl7sVv0pIW0mQhC
- wu3PEuoPu08ZrWPwRW5PrIH5Lt8nqsB80q9uZ6ijVvs3CUZPRPAfBOwnlXE16Ukl4psYUf0vR
- Tbj2Rln66jRnLbcjlWt0YhbrhB/nefAMblnJXAtbri5fQB1MXwJkXNpTB+Z9xuA58tuELpPuS
- ZpaoVpfjajqZfz+mdYH/+iueUornH+h+/yXdWvXTqxpaN/eExuUffWmdX10QXsun6js0Bc9Tx
- sp2xiZ3Me7/EZo5uk61c3WUdrwaZt4mypQtwNlyHUt3E5J112SvZ7XFEtC1U+JUwOlz+jbGou
- JejU2x2PZNgw57RfK4GDDqFCD1Ah7rByHdtSnHwalugY7N3MMMW004oye7b/0P3t+EgoxDdco
- IyIqZNFJN0fDIgis2MKwKPvJsbfKhmKIAv7gTdzI4Bz8CBH77XnyKdcaMt1ePqSMUE/ktbRyI
- Tiyid/RJtRWdnc34zCcb5pawH7mlGTGFPU8ka7aJUN5bLzL+bIf4vhw19ErUtoLOr0dZeXaUQ
- te+At7+gt03YYyXyfQw8KjxMR4ifXgad/4n1t4hjqtnt/QoQsau9F+wPkPEfB2EEtmeUKr+BK
- 7KNKFt//NlprpU5ak0TWNCy0qUYt4CRj9qlkvBpxT38SLbqANJNO20y/QatL/PcOAOon/9KIH
- lrzpOaysHD99pnW0GVeI9s8wcQPMiolKdvZZQYFvUtsiXp0c19A7v1TcLFoWbGmH52opi9CS/
- EV8zxbnsfDHtBkCe7mdGRTpNmPJyT+KRgEFV5UzbfpGJ/QL5MFrsLMTszZ3eTPhYre1gteVJG
- CBbcu77eTTRLPL6PlNN0wGg2Ozl+l//1fIDEGMkEtqKLaqk6NxW/J3JqtPUQZPhT9jIwp/kav
- lxYE+Vz6MP/1PJ1SVokpObZIpRZDEgvJBB1CbiXAz4sFuXtkZJnDomF9zW5M=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-604431256-1570004229=:46"
+X-Provags-ID: V03:K1:Hw24bs1yy510HW7IWn7nwpEQnTl4yy7x3dKZf4b2dYoBF/luCJG
+ 5S+YEwMqMchH3zEpzDDWFvhuxCkFxo/2UUoRJF8uGIXM79SYgjKnWX8yCOmPyHrxpT4SdzH
+ SL8U3ztg1XMfrfmIKyvCJq++GUWG6HzD7Qo9c9qIsaK9bDQkFyh/AXM1PXBegCsOieB92uU
+ Mqk8g2U/p/H+r5U1sIukA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:84jIdVbT734=:apTyMWC27XvuvT4YWTGhcd
+ /VPNicK7knuzw8E+eZrq+Enyq/oWVGNXnjDLyP0GXGGf7zfS447N7PmJS3G9/cjqKQr9jeige
+ 5La9KFePEQbLdGNIuNPPveWq+RMQX/SAjtJsmUuN3jX0JctUh/ei3D6X2pI2o6RN7hCjTCSVQ
+ dNpvG3CE7wQg/dghcHHjgF+b8MP3QDNC1ZaKXkYva07opvtbX6uaAuskHxh3j4Ut5pl9SymYC
+ CdrIZ1dwgER43GBverNASGQs6KyLAWSozdbHfPY065h0NqLfuhzGpuARC60f3+bh+YymSy5/M
+ zrv7CFzReVRgzSwS5uRUx+oIlpu7TH2dhqc3FqyYOeEd32x7mc+YBG4YqqL/9zKnEZasy9r33
+ n0zI9M/3V/QGA8OEUwTog+mLVjLfQ8XId6saLY0fXMxKJBRpPrLYGYBSg5iQcqDKGvcw7xtqi
+ JPHKktyJYF5ZgwIBP6WUyXFtazBV/mDBC98AZSknroQpVQkDe2h7CrGy8FUOf30GcT3PsNAUp
+ i7YOtrZo78NyzYIXYsPgZIuhfzTyM0f1c7qsvZozrUH+lyOXapP4b7CjDl63LaZ4Ev6eZtLm5
+ zrVrG1EfjcYWqcQmZYbWGUIZLODKO1WtudE+oY+bJAUOpXqBc5uv2ax5aYkRVtHYAc5zXQBvU
+ jdNXk98uvVdEKNERVaWUhXZcb4BU3bbdazAHwwdXFc4cdeEFwymDHc6hfzycdCOd3rMv7AloF
+ kHbatnvNg5muWep1TICzG3CXxdrL974lvXdMB5ddl92GyB6cTkG17Va9O2TrRGFOip1p5zOeW
+ Q9pCeFKk6jWGI9N+7BPeyMUG97suia0AtSEEe2V6mkPgUF2rVjyvbI1Mvmm1wqzvn4xTW9UPN
+ Rg24kzFsWX6vxdwbm0t+sM8V/RUEZc3wMkI7pHFJ29kgkzgG4nzjySP867GVdeMPdbTDQapx5
+ loGtX1pZGbAg5K84fvjI8/o2Mk3q0hYMrToLItcFCwQo6UXDOaesi6RUgXFKjhVtGmkjvxRCS
+ SP+r/tbAsxPm21zMo4OwWO1nQW8OzIsB0ue9XFnLImAM5rgHmh12ZUUvtMwX5mjER8Yw4u1uY
+ S0KPHSaq01S4NK1lRG+98ewGSeWYF/pFH+g6grkQvhwGXNJMyv9Tx+0aFVWZOngSrn+4dQk7u
+ 56VwTEiX/Vjon+FTm0b3gt5m8MCKljK0K1HIpUd432LdR0uIXcjIK1L2ReNrsxr/rC1SXMJ2c
+ QETuXMKtUjLIVihhwsLzrnOW6gHWdocFoVM5mKQW7qBXfGxVkJJ7O/m5maSs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, 2 Oct 2019, Junio C Hamano wrote:
+--8323328-604431256-1570004229=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Alban Gruin <alban.gruin@gmail.com> writes:
+Hi,
+
+On Fri, 27 Sep 2019, Phillip Wood wrote:
+
+> Hi Alban
 >
-> > `total_nr' is the total amount of items, done and toto, that are in a
-> > todo list.  But unlike `nr', it was not updated when an item was
-> > appended to the list.
+> On 25/09/2019 21:13, Alban Gruin wrote:
+> > get_replay_opts() did not fill `squash_onto' if possible, meaning that
 >
-> s/amount/number/, as amount is specifically for something
-> that cannot be counted.
+> I'm not sure what you mean by 'if possible' here, I think the sentance m=
+akes
+> sense without that.
 >
-> Perhaps a stupid language question but what is "toto"?
+> > this field should be read from the disk by the sequencer through
+> > read_populate_opts().  Without this, calling `pick_commits()' directly
+> > will result in incorrect results with `rebase --root'.
 
-"in toto" is Latin for "in total", if I remember correctly.
+I guess I would have an easier time reading the commit message if this
+paragraph read like this:
 
-But in this instance, I think it is merely a typo and should have been
-"todo" instead. That is what the "total_nr" is about: the number of
-"done" and "todo" items, added together.
+	The `get_replay_opts()` function currently does not initialize
+	the `squash_onto` field (which is used for the `--root` mode),
+	only `read_populate_opts()` does.
+
+	That would lead to incorrect results when calling
+	`pick_commits()` without reading the options from disk first.
+
+> >
+> > Let=E2=80=99s change that.
+>
+> Good catch
+>
+> Best Wishes
+>
+> Phillip
+>
+> > Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> > ---
+> >   builtin/rebase.c | 5 +++++
+> >   1 file changed, 5 insertions(+)
+> >
+> > diff --git a/builtin/rebase.c b/builtin/rebase.c
+> > index e8319d5946..2097d41edc 100644
+> > --- a/builtin/rebase.c
+> > +++ b/builtin/rebase.c
+> > @@ -117,6 +117,11 @@ static struct replay_opts get_replay_opts(const s=
+truct
+> > rebase_options *opts)
+> >    if (opts->strategy_opts)
+> >     parse_strategy_opts(&replay, opts->strategy_opts);
+> >   +	if (opts->squash_onto) {
+
+I guess it does not matter much, but shouldn't this be guarded against
+the case where `replay.squash_onto` was already initialized? Like, `if
+(opts->squash_onto && !replay.have_squash_onto)`?
+
+Other than that, this patch makes sense to me.
 
 Ciao,
 Dscho
 
->
->
-> > This variable is mostly used by command prompts (ie. git-prompt.sh and
-> > the like).
+> > +		oidcpy(&replay.squash_onto, opts->squash_onto);
+> > +		replay.have_squash_onto =3D 1;
+> > +	}
+> > +
+> >   	return replay;
+> >   }
 > >
-> > Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> > ---
-> >  sequencer.c | 1 +
-> >  1 file changed, 1 insertion(+)
 > >
-> > diff --git a/sequencer.c b/sequencer.c
-> > index d648aaf416..575b852a5a 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -2070,6 +2070,7 @@ void todo_list_release(struct todo_list *todo_li=
-st)
-> >  static struct todo_item *append_new_todo(struct todo_list *todo_list)
-> >  {
-> >  	ALLOC_GROW(todo_list->items, todo_list->nr + 1, todo_list->alloc);
-> > +	todo_list->total_nr++;
-> >  	return todo_list->items + todo_list->nr++;
-> >  }
 >
+>
+
+--8323328-604431256-1570004229=:46--
