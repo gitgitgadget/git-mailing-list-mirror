@@ -2,118 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6C291F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 20:31:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 434CA1F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 20:51:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728151AbfJBUbD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 16:31:03 -0400
-Received: from mout.gmx.net ([212.227.15.18]:41139 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725799AbfJBUbC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 16:31:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570048256;
-        bh=JvXLnBDaFK52J4mNbG9Xcnlscmzv84yYQsFu9P8Ka84=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gvH2hvSTTzBBAtcKUiXp+Xvs3kO0gYK+v2Shm0Rb8hNZVU8Fxr1EC/vbW4wBurJ57
-         yWAj8zG6yVE0+ZQI7s0e86gSOETB9ONcmjGnLta2dK2wgPb9fQTEFXqKtuYzQbcd0L
-         z7rimXpiCYFrebSsvHTRpzT6plMTdTtn9xrmVGkw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MYNJg-1icQqT1Ax8-00VOe6; Wed, 02
- Oct 2019 22:30:56 +0200
-Date:   Wed, 2 Oct 2019 22:30:26 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] range-diff: internally force `diff.noprefix=false`
-In-Reply-To: <xmqq4l0qewu5.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1910022229340.46@tvgsbejvaqbjf.bet>
-References: <pull.373.git.gitgitgadget@gmail.com> <1f84f92846bc14d21aa7339c8baa0f9bb710b17d.1570039511.git.gitgitgadget@gmail.com> <xmqq4l0qewu5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727426AbfJBUvm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 16:51:42 -0400
+Received: from smtp92.iad3a.emailsrvr.com ([173.203.187.92]:50055 "EHLO
+        smtp92.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727287AbfJBUvm (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 2 Oct 2019 16:51:42 -0400
+X-Greylist: delayed 595 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Oct 2019 16:51:41 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=g001.emailsrvr.com;
+        s=20190322-9u7zjiwi; t=1570048906;
+        bh=KMgXJaBGy0o59Nl6S0y1De/87zqbYOc2X8Ry32BX0Vo=;
+        h=Subject:To:From:Date:From;
+        b=nxzXM70YLVWMoS3ClFuKywuhaqe1taP+RiDCXM4lyDufzqS1KwCptj0WNSj3Wqio/
+         ut7LHtmhcQskt8pTesLRLk6V8LAjtKqQhFoR8AM2WiK5CL5yWn3XvakfOSUQqM+HRb
+         cJagXfYGvO+yupE/lQjBDr77IDcWhW8vUBsl2xMY=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xiplink.com;
+        s=20181102-2c3qeqyt; t=1570048906;
+        bh=KMgXJaBGy0o59Nl6S0y1De/87zqbYOc2X8Ry32BX0Vo=;
+        h=Subject:To:From:Date:From;
+        b=SzRG/KF36N7IljLcHlY9l6kORJGR9blH/OBoxgfOaYBh/RlE6MZNjHdRXBtf3WF0k
+         P4uxt+ORNwur0bgZtCYE4GDaQYP//K0Vb7FTdpzRO6mU9qRBjYCzZQERY6ZpkIkOOZ
+         5nL9jwellmikKWtaZ5YYxqT1bDUKffZAuLmYy9pY=
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp36.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 413ADB60;
+        Wed,  2 Oct 2019 16:41:46 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+        (using TLSv1.2 with cipher AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Wed, 02 Oct 2019 16:41:46 -0400
+Subject: Re: git-gui: disable the "loose objects popup" dialog?
+To:     Pratyush Yadav <me@yadavpratyush.com>, Johannes Sixt <j6t@kdbg.org>
+Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Git List <git@vger.kernel.org>
+References: <CAGr--=K15nUcnsJWOP87uMMjeQmTgAeO_6hnr12k2zuNQjNyBw@mail.gmail.com>
+ <91e5b3b0-08f9-66a8-ebdf-90effd34c888@kdbg.org>
+ <20190926191545.ro7w6lbtlpbyxpk7@yadavpratyush.com>
+ <9d77189d-a357-ab0a-6cb5-e87ecdeffb91@kdbg.org>
+ <20191001180005.iemqmlbn7ncv3dav@yadavpratyush.com>
+From:   Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <d774be5e-e451-5435-f131-19020062fee9@xiplink.com>
+Date:   Wed, 2 Oct 2019 16:41:46 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:8f5GpyXArBxViipFyp4/1YDvQuyf6SGf/vevmYSHbxE351VZ+AS
- tJLT8hsPZuUGsRM7LEw7zbPp1p1UaU/PxK0AFnHFvG8l2eqATwetoTbPYu8Px9eTLIZokOO
- jhINAe2Q6Vbf2bVqgPe2euULvRvdK2nmORh0btv8OZSRQbID+huhDzHJybisTb2rBD/eRTA
- /vtAiyLBE4dfoBZzZ8Umw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vZWFSmeBDmw=:jX68fZ7tCV5rSwXJsoVP7b
- fxFlpsu+0JBYCnXiKhQq5EevHQcwqCHJuX3LwT1NK/qPleseY4cSRTQ7cy8TOenafF3ecwcQt
- aavk2x9xMl1XhLZ+53ij3+OTxirCQDWAR7/ZwP6hFJon9Apk2qccyL3r0j0qer9TKstKVWcFx
- wRUb+t8Vtvkm67M3Bba3/UnQ2ZEgdJCmWx+g+p5UpJOTQLZXT1txxaLFrthmQf9WxfK6b57oJ
- LID1dhcT66Vqf3cHGwypMtiuIxIrcoS5YAs3SHP7qe7nbsFhUsI5YEstiuSBJOnHUy/HodEF1
- mBepelzIAn4NLjVcNKlXHod1izD5pJpG9W2soXpRmJVDuG9C9kkChSpJAb4f7+egSx8E+eJrd
- Be0li2yiHau0RdTXtOJumd/MJlYrqsWXWJx1anEYYbisWQPNlvlqor4e8WtLI59NWnWoc9avv
- 1QWs+OuJpOFXZZANBxulk258pmS6q7pXmt815Bs5wcujkpF3x0m5GbJEdHQSZp/uFSy2FrukP
- rb76aBnuzXs4y0FAutAa8b5Qc4TI+32THsTzYJrIdzv/AD+H6R/z3MkwWENRPzita5rLXFYQg
- jxARgerrzh7YZdII9hGpAThdpf50hzYXakAnQUIPY6zS5vJYVelOMN8n+0hQ/eEL5CDDghdXS
- tv4E/lpOuZZ6hcpmhTZBxC9C+qdGSIcPyiv7+vxvhhklU3hXS5S04HhussS96PmRan8i0SP0B
- io0zPbnff+nHhPKb/N3aukMR0HIbRlE4Ze+LRFTYlvL/MXN+hOdKISC7MY/iffJkWRTbJ7Qfz
- V8fPlX8FaU8LTAWPJxQbrsqUXzsEMo21mFJBNM3h4rx4PDXFlU2nOVTpBzSDTAUg+aKu5YPDA
- Hk09K5RNB2jzBKV+cVyLnkVaCpbxtmFHjqvW+biZcFBa7wlNmhArN7tratNXDBpGSFWzRNhNY
- gT01hxmPuqbKt5uIycpMszwO8Qo3GXyMbc8J5SQx4JbV4XM5qFivPNHnxKPd8a3q38diU+2ke
- 3EKbdm6gxVyDB1xPhM6Nu7RZxGja5qRkAK8FRBrWfniht/HDCyrjKr+gby2tYGfHyn8kqv8f5
- U/yos1uHGUtj8vT0It/BpLPQAcYciu6WYZ5V/Xid5nKtgTf/Q2aFyU9vRqKRxl2eT8x4d2JX0
- Gzjpjtoe94EUp4UX/yp6Lhov4oedbSuIVUyaLK4z07vw1rP4YSmLrEfzmm2ENimehMVwVgJuD
- D/CZmVZ2HfosUpNbVOMcUnqMIjWu24eBGRh2zPdaBez53lHVPeK7/vSY7D+c=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20191001180005.iemqmlbn7ncv3dav@yadavpratyush.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 2019-10-01 2:00 p.m., Pratyush Yadav wrote:
+> 
+> So here's what I propose: why don't we try to do something similar? What
+> about running `git-gc --auto` in the background when the user makes a
+> commit (which I assume is the most common operation in git-gui). This
+> would be disabled when the user sets gc.auto to 0.
+> 
+> This way, we keep a similar experience to the command line in case of
+> auto-gc, and we get rid of the prompt. People who don't want
+> auto-compression can just set gc.auto to 0, which they should do anyway.
+> 
+> Thoughts?
+> 
 
-On Thu, 3 Oct 2019, Junio C Hamano wrote:
++1 from me.
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > When parsing the diffs, `range-diff` expects to see the prefixes `a/`
-> > and `b/` in the diff headers.
->
-> If so, passing src/dst prefix as command line option is a much better
-> solution, I think.  diff.noprefix may not stay to be (or it may
-> already not to be) the only thing how the prefix gets chosen.
+		M.
 
-Good point.
-
-While at it, I invert the logic in v2: instead of forcing a prefix, I
-now force no prefix (and reduce the strip level from 1 to 0 when parsing
-the diff header).
-
-Thanks,
-Dscho
-
->
-> > -	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
-> > +	argv_array_pushl(&cp.args, "-c", "diff.noprefix=3Dfalse",
-> > +			"log", "--no-color", "-p", "--no-merges",
-> >  			"--reverse", "--date-order", "--decorate=3Dno",
-> >  			/*
-> >  			 * Choose indicators that are not used anywhere
-> > diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-> > index 0120f769f1..64b66f2094 100755
-> > --- a/t/t3206-range-diff.sh
-> > +++ b/t/t3206-range-diff.sh
-> > @@ -461,4 +461,8 @@ test_expect_success 'format-patch --range-diff as =
-commentary' '
-> >  	grep "> 1: .* new message" 0001-*
-> >  '
-> >
-> > +test_expect_success 'range-diff overrides diff.noprefix internally' '
-> > +	git -c diff.noprefix=3Dtrue range-diff HEAD^...
-> > +'
-> > +
-> >  test_done
->
