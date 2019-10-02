@@ -8,204 +8,157 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D4D01F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 21:26:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBBEA1F4BD
+	for <e@80x24.org>; Wed,  2 Oct 2019 21:47:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729181AbfJBV0W (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 17:26:22 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:40169 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728883AbfJBV0U (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 17:26:20 -0400
-Received: by mail-ed1-f66.google.com with SMTP id v38so506625edm.7
-        for <git@vger.kernel.org>; Wed, 02 Oct 2019 14:26:17 -0700 (PDT)
+        id S1727891AbfJBVrP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 17:47:15 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:45417 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726691AbfJBVrO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 17:47:14 -0400
+Received: by mail-pg1-f194.google.com with SMTP id q7so381139pgi.12
+        for <git@vger.kernel.org>; Wed, 02 Oct 2019 14:47:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3LPlPjWtsf12ikJ3fQw1ZDy/OpJJCzhhxiQZfmU7Y7I=;
-        b=k76neYBIv4WC5y7pY/GF4x2XN0wYyMtpmR0OpwE97TGcCdyQtzk6nhvxI+hZGXeKPS
-         pNsd8/d8DmIDgj/rLvbtSVzAGiVlpeoIc5WZ/CGhkBN229bI31sDDlcHUItAtUk8GkVD
-         c5RovCMkEn+v4bE9EbHm3TleyvCfGxwY3vhGU2TuroF734/o39hgbHuGbTQs72TPCooX
-         iUmli6+PgXmoC56oRZ/yYHHw+cojjJo26ncH6vNLVvKX8jJx4B/LcsWECuJxwL3IxaUr
-         CcPyUlINRf9PP37PKHaMPTLSfrsaVg/DlI45IqS+t/ZHtRpkSkotTZUTZt+NMb4ZCTYU
-         yifQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ZoQy8UOq3VZ/ODnZ/Z89R45ZYyQw5VbiiagBJ88BNJ0=;
+        b=RztsGIba54tM2a/Zh8NTN7nq5k5uQ3VHdY2md2jHfQRKPoTnPmiDmJ+H4gcCXJG2PZ
+         mWTvOI9aCkpPQ1O32DS0C1N+TiZwv4vgcYl6TU0fOkWYT7NMEfuovbezuiLKI5XxUit2
+         iDyIfPZgF/d/STTpxFCO4xoML1AWg0KSW2MLrWkXMvDEjiHG/VHWRZdqKEP7LMzWpY5h
+         9KBO44vI0bZo6keAPIwi7f4sc7xfiPGgruZ/yfjRf47rf/rd15nwouv2Zwe74626ke7g
+         1hahLyHafr2QgbKXIVPY3P41UQuA76LWEIUk8ecawaddWrliZPB+Ya99tKA51cqxieqr
+         x+Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3LPlPjWtsf12ikJ3fQw1ZDy/OpJJCzhhxiQZfmU7Y7I=;
-        b=j85fXjE7MNJDOCn+Va7BOSAepvpwRERWhKS6ErpePoeJcIo5dvb5817x13syKq4gWI
-         ONl4yLJw1BnxMNWd3d2K7CagMNBvLH5YAu+Sj3IEINsd61yWXUUQyhOZ/mius09V8Cfb
-         ZGlhtpaYnHY2CY8Ww0RAiS68vbTpYyrzV5HhgolO7xa6O2QXfzfHEgUujviZrd8tV464
-         hcH7Qgj1JdeJoq+rT4RD5HTWjjscdBWBo0n1x6Ev9TrYhfQMBBC2Jo6XMc4XXvWRJp48
-         IltVtodCYWEX8SlA3Zm83MLReUfPymkHdXlT6XiH6ZLBeD3stVYDa5YYsRH/l8h5kpjs
-         oRXw==
-X-Gm-Message-State: APjAAAXKPHDZB/Y/PnCsJvF4GBUs59ea3A8gnthpcv0pjDWmsW1Ac+4u
-        FVMN9Y6m/NTFgk7EERI=
-X-Google-Smtp-Source: APXvYqxHaxHo9iJRBr7BdSZWKrXWPkhqqXlwzlrDar7uRBT2GiCAqueJZRHqeXZnTc5z5uY7qLa6Zw==
-X-Received: by 2002:a17:906:409b:: with SMTP id u27mr4983207ejj.295.1570051576883;
-        Wed, 02 Oct 2019 14:26:16 -0700 (PDT)
-Received: from localhost ([2a02:810a:8c80:d2c:4d89:574b:af6e:1a3])
-        by smtp.gmail.com with ESMTPSA id o26sm63799edi.23.2019.10.02.14.26.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 02 Oct 2019 14:26:16 -0700 (PDT)
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-To:     git@vger.kernel.org
-Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
-        Alexander Kuleshov <kuleshovmail@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [RFC PATCH 3/3] format-patch: use a command to generate the output directory name
-Date:   Wed,  2 Oct 2019 23:26:13 +0200
-Message-Id: <431f8a4e372feccf240b9c66c91248a6f53eab47.1570051490.git.bert.wesarg@googlemail.com>
-X-Mailer: git-send-email 2.23.0.11.g242cf7f110
-In-Reply-To: <1aeacd8af4b83142f160c63be4746554e823cfc3.1570051490.git.bert.wesarg@googlemail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ZoQy8UOq3VZ/ODnZ/Z89R45ZYyQw5VbiiagBJ88BNJ0=;
+        b=VI3XbZr13LUmFcXFoHblVzuWEtlMhcoNQqUxS/qaYX7rnbhUAWsdVmuDW7LxFNBxxf
+         pGOj4wMPQqhEvaKI4uj3/I6er4nouPg54se1TA4Obi6XT9hLgkQhh9kjSdBLs8H+Be6V
+         joIVFpZTpWlaYz1zODQSgZ50fxXtRyy7XzXkF2G9kP+tBxFyG5mjb4vPs8pNi+Y0+/kZ
+         0+m/nYypZH2F0gCT10UK+xtWbbs1OYzJXa4Pu1yknjh0kH4EQR3yoYxMWGPyzaTlSahj
+         mugI/MQkhEAv0So3tefUIa9qxJPherRlgc71IbwelKj13kJrUVH1r5HXbrpPNp08xXOM
+         oHLQ==
+X-Gm-Message-State: APjAAAXBdeQOKdm/zWGrxFvPiXARh8EAofPNFW0nN3OEeT/0n+FG796F
+        kOkLh5vXSLfZFAP7heydJzc=
+X-Google-Smtp-Source: APXvYqz4v5xFZ4DjGfDJPYRwKO6cIDoGj2yf9X54FZ95hrkXiTPUE2MZEXygZQVl2mFhgYsWBBUW/g==
+X-Received: by 2002:a63:e114:: with SMTP id z20mr5858916pgh.278.1570052833104;
+        Wed, 02 Oct 2019 14:47:13 -0700 (PDT)
+Received: from generichostname ([204.14.239.137])
+        by smtp.gmail.com with ESMTPSA id 195sm417331pfz.103.2019.10.02.14.47.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Oct 2019 14:47:11 -0700 (PDT)
+Date:   Wed, 2 Oct 2019 14:47:09 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/3] format-patch: document and exercise that -o does
+ only create the trailing directory
+Message-ID: <20191002214709.GA51809@generichostname>
 References: <1aeacd8af4b83142f160c63be4746554e823cfc3.1570051490.git.bert.wesarg@googlemail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1aeacd8af4b83142f160c63be4746554e823cfc3.1570051490.git.bert.wesarg@googlemail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Having 'format.outputDirectory' is convenient, but being able to process
-all produced patches via a wildcard command is even more so. I.e.,
-using an argument like '<dir>/*'. Neither '-o' nor
-'format.outputDirectory' can be parameterized to produce a new unique
-directory. Thus provide the new 'format.outputDirectoryCmd' configuration
-to specify a command which does the job and puts the name to standard
-output.
+Hi Bert,
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> Subject: format-patch: document and exercise that -o does only create the trailing directory
 
----
-Cc: Alexander Kuleshov <kuleshovmail@gmail.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>
----
- Documentation/config/format.txt    |  5 +++++
- Documentation/git-format-patch.txt |  6 +++++-
- builtin/log.c                      | 24 +++++++++++++++++++++++-
- t/t4014-format-patch.sh            | 24 ++++++++++++++++++++++++
- 4 files changed, 57 insertions(+), 2 deletions(-)
+s/does only create/only creates/ ?
 
-diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
-index b6c96ece04..dcce2c67ef 100644
---- a/Documentation/config/format.txt
-+++ b/Documentation/config/format.txt
-@@ -82,6 +82,11 @@ format.outputDirectory::
- 	Set a custom directory to store the resulting files instead of the
- 	current working directory. All directory components will be created.
- 
-+format.outputDirectoryCmd::
-+	The command which is used to name a custom directory to store the
-+	resulting files instead of the current working directory. All directory
-+	components will be created.
-+
- format.useAutoBase::
- 	A boolean value which lets you enable the `--base=auto` option of
- 	format-patch by default.
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index f418f490aa..0da904255b 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -67,7 +67,11 @@ can be set with the `format.outputDirectory` configuration option.
- The `-o` option takes precedence over `format.outputDirectory`.
- To store patches in the current working directory even when
- `format.outputDirectory` points elsewhere, use `-o .`. All directory
--components will be created.
-+components will be created. The 'format.outputDirectoryCmd' configuration can
-+be used to name a command to produce the directory name programmatically. The
-+command should produce the name to its standard output. The
-+`format.outputDirectory` configuration takes precedence over
-+`format.outputDirectoryCmd`.
- 
- By default, the subject of a single patch is "[PATCH] " followed by
- the concatenation of lines from the commit message up to the first blank
-diff --git a/builtin/log.c b/builtin/log.c
-index 1ab9eb6b78..b102e86bea 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -774,6 +774,7 @@ static const char *signature = git_version_string;
- static const char *signature_file;
- static int config_cover_letter;
- static const char *config_output_directory;
-+static const char *config_output_directory_cmd;
- 
- enum {
- 	COVER_UNSET,
-@@ -856,6 +857,8 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 	}
- 	if (!strcmp(var, "format.outputdirectory"))
- 		return git_config_string(&config_output_directory, var, value);
-+	if (!strcmp(var, "format.outputdirectorycmd"))
-+		return git_config_string(&config_output_directory_cmd, var, value);
- 	if (!strcmp(var, "format.useautobase")) {
- 		base_auto = git_config_bool(var, value);
- 		return 0;
-@@ -1756,8 +1759,27 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	if (rev.show_notes)
- 		init_display_notes(&rev.notes_opt);
- 
--	if (!output_directory && !use_stdout)
-+	if (!output_directory && !use_stdout) {
-+		// outputDirectoryCmd can be preceeded by outputDirectory
-+		if (!config_output_directory && config_output_directory_cmd) {
-+			struct child_process cp = CHILD_PROCESS_INIT;
-+			const char *argv[1];
-+			struct strbuf buf = STRBUF_INIT;
-+			int rc;
-+
-+			argv[0] = config_output_directory_cmd;
-+			cp.argv = argv;
-+			cp.use_shell = 1;
-+			rc = capture_command(&cp, &buf, PATH_MAX);
-+			if (rc)
-+				die(_("outputDirectoryCmd command failed: "
-+				      "'%s'"), config_output_directory_cmd);
-+			strbuf_setlen(&buf, strcspn(buf.buf, "\r\n"));
-+			config_output_directory = strbuf_detach(&buf, NULL);
-+		}
-+
- 		output_directory = config_output_directory;
-+	}
- 
- 	if (!use_stdout)
- 		output_directory = set_outdir(prefix, output_directory);
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 43d608aa94..bf2547ce87 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1664,6 +1664,30 @@ test_expect_success 'format-patch -o overrides format.outputDirectory' '
- 	test_path_is_dir patchset
- '
- 
-+test_expect_success 'format-patch format.outputDirectoryCmd option' '
-+	test_config format.outputDirectoryCmd "echo patches" &&
-+	rm -fr patches &&
-+	git format-patch master..side &&
-+	test $(git rev-list master..side | wc -l) -eq $(ls patches | wc -l)
-+'
-+
-+test_expect_success 'format-patch format.outputDirectory overrides format.outputDirectoryCmd' '
-+	test_config format.outputDirectoryCmd "echo patches" &&
-+	test_config format.outputDirectory patchset &&
-+	rm -fr patches patchset &&
-+	git format-patch master..side &&
-+	test_path_is_missing patches &&
-+	test_path_is_dir patchset
-+'
-+
-+test_expect_success 'format-patch -o overrides format.outputDirectoryCmd' '
-+	test_config format.outputDirectoryCmd "echo patches" &&
-+	rm -fr patches patchset &&
-+	git format-patch -o patchset master..side &&
-+	test_path_is_missing patches &&
-+	test_path_is_dir patchset
-+'
-+
- test_expect_success 'format-patch --base' '
- 	git checkout patchid &&
- 	git format-patch --stdout --base=HEAD~3 -1 | tail -n 7 >actual1 &&
--- 
-2.23.0.11.g242cf7f110
+Anyway, as a prepatory patch, I don't think that it's necessary. Maybe
+it's just me but I assume that most tools create at most one directory
+deep. Even mkdir won't created nested dirs unless you pass `-p`. I
+dunno.
 
+On Wed, Oct 02, 2019 at 11:26:11PM +0200, Bert Wesarg wrote:
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> ---
+>  Documentation/config/format.txt    |  3 ++-
+>  Documentation/git-format-patch.txt |  4 +++-
+>  t/t4014-format-patch.sh            | 16 ++++++++++++++++
+>  3 files changed, 21 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
+> index 414a5a8a9d..e17c5d6b0f 100644
+> --- a/Documentation/config/format.txt
+> +++ b/Documentation/config/format.txt
+> @@ -80,7 +80,8 @@ format.coverLetter::
+>  
+>  format.outputDirectory::
+>  	Set a custom directory to store the resulting files instead of the
+> -	current working directory.
+> +	current working directory. Only the trailing directory will be created
+> +	though.
+>  
+>  format.useAutoBase::
+>  	A boolean value which lets you enable the `--base=auto` option of
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> index b9b97e63ae..fe7492353e 100644
+> --- a/Documentation/git-format-patch.txt
+> +++ b/Documentation/git-format-patch.txt
+> @@ -66,7 +66,9 @@ they are created in the current working directory. The default path
+>  can be set with the `format.outputDirectory` configuration option.
+>  The `-o` option takes precedence over `format.outputDirectory`.
+>  To store patches in the current working directory even when
+> -`format.outputDirectory` points elsewhere, use `-o .`.
+> +`format.outputDirectory` points elsewhere, use `-o .`. Note that only
+> +the trailing directory will be created by Git, leading directories must
+> +already exists.
+>  
+>  By default, the subject of a single patch is "[PATCH] " followed by
+>  the concatenation of lines from the commit message up to the first blank
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index ca7debf1d4..bf2715a503 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -1632,6 +1632,22 @@ test_expect_success 'From line has expected format' '
+>  	test_cmp from filtered
+>  '
+>  
+> +test_expect_success 'format-patch -o with no leading directories' '
+> +	rm -fr patches &&
+> +	git format-patch -o patches master..side &&
+> +	test $(git rev-list master..side | wc -l) -eq $(ls patches | wc -l)
+
+For test case you write, please use the following pattern:
+
+	git rev-list master..side >list &&
+	test_line_count = $(ls patches | wc -l) list
+
+The first benefit is that we get to take advantage of the
+test_line_count function that's already written for us. The second is
+that when we write tests, we shouldn't put Git commands in the upstream
+of a pipe because if they fail, their return codes will be lost and we
+won't be able to fail the test properly.
+
+> +'
+> +
+> +test_expect_success 'format-patch -o with leading existing directories' '
+> +	git format-patch -o patches/side master..side &&
+> +	test $(git rev-list master..side | wc -l) -eq $(ls patches/side | wc -l)
+> +'
+> +
+> +test_expect_failure 'format-patch -o with leading non-existing directories' '
+> +	rm -fr patches &&
+> +	git format-patch -o patches/side master..side
+> +'
+
+As above, I wouldn't really call this a bug in Git. I think we should
+leave this test case off until the next patch.
+
+> +
+>  test_expect_success 'format-patch format.outputDirectory option' '
+>  	test_config format.outputDirectory patches &&
+>  	rm -fr patches &&
+> -- 
+> 2.23.0.11.g242cf7f110
+> 
