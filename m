@@ -7,96 +7,83 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B8171F4BE
-	for <e@80x24.org>; Thu,  3 Oct 2019 01:10:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2395D1F4BD
+	for <e@80x24.org>; Thu,  3 Oct 2019 02:07:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726165AbfJCBHr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 21:07:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58483 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725860AbfJCBHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 21:07:46 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD1801B71B;
-        Wed,  2 Oct 2019 21:07:44 -0400 (EDT)
+        id S1727315AbfJCCHB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 22:07:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50039 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726070AbfJCCHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 22:07:01 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD7A41E000;
+        Wed,  2 Oct 2019 22:06:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=l/pS/WiwZH7ut7tUYYMHKF9OzBA=; b=o/Ie/4
-        AM6fGooQfHtGebXJOgbGsQjZK/Eh2whrQswAiOCpWbZyA8vgB5ZmGlZaYB7rTTbU
-        xCkmbpzg35x+y5XNuzM0mR7v5LVyjafZNbsPXqhUfElNRJKFB6u7cA8/RpSdOzbD
-        LMeYru5W9KPNzbjXEs9lcvy1r6u3HrEg1UDP0=
+        :content-type; s=sasl; bh=RjsCZ0lWmpifVW5qeiFtRLU1Xzo=; b=nsMCGT
+        3VJaz/0v6pAqr60ozdfHDbmP++o5z2oUzBF7xHjRJHnuGYmnYL1uQIWfnt+4GQTd
+        iF2c9j83eWeXvEZ5Kc+wazbV34autNwYH3uS5g2Y4lSFA1nzaFkWxzHlDcApBDDi
+        PlSbpl17KpJ2whEBud1E9Y6jTH15dXdM2ohGY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wWPU25C4HwkSwU+0ZfDgDZT+cBeMes4a
-        m9TgdMJoZms4aRSP2NCH4YjfBWHEozkkNdflKZyLwqA7aJziWqjbr3wExV9jHVvn
-        hqSubq4+4JG1tQIPWTqvszibVrxsMAEZJ5bcyZwqEaQ+Ww7txcYziKKWf1cRp9MN
-        J/AoZpeg8M0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A542E1B71A;
-        Wed,  2 Oct 2019 21:07:44 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=rgWul+98hPqfS2U4eDYqv06/WA1+Ydon
+        cqC0YhaBwViaHWDuVFu4SFme+mrL2Uk+iCcKlTqsiGUBF6L9bVQZRb4XHifzrmX1
+        bB9UfOxbN1l9nbnjQFvSlAZRrpbGpUWnqEpbkgXT7bYFJcpFko9vYLqfs9Wwxkjg
+        i5oDw3SUfec=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B1E1F1DFFE;
+        Wed,  2 Oct 2019 22:06:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0F53D1B719;
-        Wed,  2 Oct 2019 21:07:43 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 196811DFFD;
+        Wed,  2 Oct 2019 22:06:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 0/8] fast export/import: handle nested tags, improve incremental exports
-References: <20190925014005.17056-1-newren@gmail.com>
-        <20190930211018.23633-1-newren@gmail.com>
-        <CABPp-BFckDZL4iAqhHmrXDpFi3eQgvOkbgjJdGRZE4ePUwNDuw@mail.gmail.com>
-        <xmqqzhiidi2u.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BEJ47MonV2WmD+UornSG5LPmpGAyjWQa_4DTkAfjMjRmg@mail.gmail.com>
-Date:   Thu, 03 Oct 2019 10:07:42 +0900
-In-Reply-To: <CABPp-BEJ47MonV2WmD+UornSG5LPmpGAyjWQa_4DTkAfjMjRmg@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 2 Oct 2019 14:05:55 -0700")
-Message-ID: <xmqqa7aid4bl.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [RFC PATCH 10/10] pack-objects: improve partial packfile reuse
+References: <20190913130226.7449-1-chriscool@tuxfamily.org>
+        <20190913130226.7449-11-chriscool@tuxfamily.org>
+        <xmqq7e6bde4z.fsf@gitster-ct.c.googlers.com>
+        <20190914020225.GB28422@sigill.intra.peff.net>
+        <xmqqy2yrbmqu.fsf@gitster-ct.c.googlers.com>
+        <20191002155721.GD6116@sigill.intra.peff.net>
+Date:   Thu, 03 Oct 2019 11:06:56 +0900
+In-Reply-To: <20191002155721.GD6116@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 2 Oct 2019 11:57:22 -0400")
+Message-ID: <xmqq5zl6d1kv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 347B2526-E57A-11E9-A701-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 7ADB6F78-E582-11E9-AD42-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> And the draft copy I locally have for the next issue of what's cooking
->> has the comment removed already.
->>
->> Anything I missed?
->
-> I was looking at the commit message for the merge commit where you
-> merged in v2 of the series...
+> Hmm, I see the early parts of this graduated to 'next'. I'm not sure
+> everything there is completely correct, though. E.g. I'm not sure of the
+> reasoning in df75281e78 (ewah/bitmap: always allocate 2 more words,
+> 2019-09-13).
+> ...
+> I'm sorry for being so slow on giving it a more careful review. I was
+> traveling for work, then playing catch-up, and am now going on vacation.
+> So it might be a little while yet.
 
-Ah, sorry, yes you are right, the merge messages can lag behind,
-especially until the topic hits 'next'.  It is not a designed goal
-to work that way, but just a consequene of how my workflow is
-structured.
+Thanks for a status update.  I do not mind moving this topic much
+slower than other topics at all (if somebody is actively working on
+it, I do not even mind reverting the merge and requeuing an updated
+series, but I do not think that is the case here).  It would give me
+much more confidence in the topic if we can collectively promise
+ourselves that we'll give it a good review before we let it graduate
+to 'master'.
 
- * A merge grabs the message from the then-latest "what's cooking" draft.
-
- * The "what's cooking" draft is then updated.  This is a two-part
-   process:
-
-   - "git log --first-parent master..pu" is scanned, to see which
-     parts of what topic are and are not yet in 'next' (this flips
-     '-' and '+' prefix in the "what's cooking" report) and marks
-     the changed parts for the next part.
-
-   - An editor session looks for these topics with updated status
-     and updates the comment in the "what's cooking" draft..
-
-So, the topic with the new fix-up commit was merged to 'pu' with the
-message taken from the "what's cooking" draft before the draft gets
-updated with that fix-up commit.  When I have sufficient time, I
-rebuild 'pu' twice (i.e. do the integration once, and then update
-the "what's cooking" draft, rewind 'pu' to 'master' and do the
-integration again to pick up messages from the updated "what's
-cooking" draft), but yesterday was not one of those days X-<.
-
+Thanks.
