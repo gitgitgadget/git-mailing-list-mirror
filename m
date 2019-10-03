@@ -2,184 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E162C1F4BD
-	for <e@80x24.org>; Thu,  3 Oct 2019 21:44:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D70B1F4BD
+	for <e@80x24.org>; Thu,  3 Oct 2019 21:53:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731103AbfJCVo1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Oct 2019 17:44:27 -0400
-Received: from relay5-d.mail.gandi.net ([217.70.183.197]:39579 "EHLO
-        relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729891AbfJCVo0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Oct 2019 17:44:26 -0400
-X-Originating-IP: 1.186.12.44
-Received: from localhost (unknown [1.186.12.44])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id A64571C0003;
-        Thu,  3 Oct 2019 21:44:24 +0000 (UTC)
-Date:   Fri, 4 Oct 2019 03:14:22 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     harish k <harish2704@gmail.com>
-Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] Feature: custom guitool commands can now have custom
- keyboard shortcuts
-Message-ID: <20191003214422.d4nocrxadxt47smg@yadavpratyush.com>
-References: <01020153c22ab06b-e195b148-37cc-4f89-92f3-f4bed1915eb9-000000@eu-west-1.amazonses.com>
- <20160331164137.GA11150@gmail.com>
- <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com>
- <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com>
+        id S1730117AbfJCVxo convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 3 Oct 2019 17:53:44 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:51976 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726002AbfJCVxo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Oct 2019 17:53:44 -0400
+Received: from [92.7.169.237] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1iG92a-0004b7-7s; Thu, 03 Oct 2019 22:53:41 +0100
+Subject: Re: [Outreachy] Outreachy internship program
+To:     Emily Shaffer <emilyshaffer@google.com>,
+        gespinoz gespinoz <gespinoz2019@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git List <git@vger.kernel.org>
+References: <CAP_ANik21_mkUdqwd0YQS4VDa80AnqQ+Xa1jWsQ7ihnfyQymYw@mail.gmail.com>
+ <CAJoAoZkq1=VfJ05J8L2AvJjp6GxoTNTF6pNFAzQ1rx+7LKk6bQ@mail.gmail.com>
+ <CAP_ANinzBvysKE6QWUinmNzcvKqsRv10VSjFGChoK-0Nz4KT7Q@mail.gmail.com>
+ <CAJoAoZ=5aK50T9ugMww9Po0whFUSfOYY4djVhUvCU_azn2SABA@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <6f993a81-9bb5-9d57-0876-45fb2f7e2705@iee.email>
+Date:   Thu, 3 Oct 2019 22:53:39 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <CAJoAoZ=5aK50T9ugMww9Po0whFUSfOYY4djVhUvCU_azn2SABA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Harish,
+On 03/10/2019 21:35, Emily Shaffer wrote:
+> Hi George, it sounds like you are probably using Git for Windows
+> (https://github.com/git-for-windows/git).
+>
+> I'm actually not very familiar with how folks who primarily use GfW as
+> their client manage their contributions to the main Git project.
+> However, I know there are plenty - the GfW maintainer is an active
+> contributor upstream.
+>
+> I'm CCing the Git mailing list as well as the GfW maintainer in the
+> hopes that you can get some help from somebody who regularly uses the
+> workflow you're trying to achieve. :)
+>
+> Unfortunately I use Linux everywhere and so I can't try to replicate
+> what you're doing - but once you have a good workflow and are able to
+> finish the My First Contribution tutorial we should still be able to
+> work together.
+>
+> Can you be specific about which "official website" you downloaded Git
+> from (share a URL), and paste the command you run and error message
+> you receive? Please also share the output you see when you run "uname
+> -a" in Git Bash.
 
-Thanks for the patch. Unfortunately, it seems your mail client messed up 
-the formatting, and the patch won't apply. I'm guessing it is because 
-your mail client broke long lines into two, messing up the diff.
+Hi,
+The top level domain would be https://gitforwindows.org/
 
-We use an email-based workflow, so please either configure your mail 
-client so it doesn't munge patches, or use `git send-email`. You can 
-find a pretty good tutorial on sending patches via email over at [0]. 
-The tutorial is for git.git, but works for git-gui.git as well.
+The download button should give the same pure run-time as the git-scm 
+website.
 
-If you feel more comfortable with GitHub pull requests, please take a 
-look at Gitgitgadget [1]. Johannes (in Cc) has used it recently to send 
-patches based on the git-gui repo (AFAIK, it was originally designed 
-only for the git.git repo). Maybe ask the folks over there how they do 
-it.
+However for this case you should go via the "Contribute" button to get 
+the full Windows SDK that will provide all those missing items for a 
+reasonable compile experience (including 'make' !). The SDK and the 
+regular 'Program Files' Git are independent so can both be used.
 
-One more thing: your patch is based on the main Git repo. That repo is 
-not where git-gui development takes place. The current "official" repo 
-for git-gui is over at [2]. Please base your patches on top of that 
-repo.
+I tend to develop on to of the patched Windows version of git, and 
+usually there is enough separation that the patches transfer direct to 
+the Linux upstream.
 
-[0] https://matheustavares.gitlab.io/posts/first-steps-contributing-to-git#submitting-patches
-[1] https://gitgitgadget.github.io/
-[2] https://github.com/prati0100/git-gui
+HTHs
 
-Now on to the nitty gritty details.
+Philip
 
-I like the idea. In fact, there were some discussions recently about 
-having configurable key bindings for _all_ shortcuts in git-gui. Nothing 
-concrete has been done in that direction yet though. But I feel like 
-this is a pretty good first step.
+>   - Emily
+>
+>
+> On Thu, Oct 3, 2019 at 12:40 PM gespinoz gespinoz
+> <gespinoz2019@gmail.com> wrote:
+>> Hello,
+>>
+>> Great! Thanks for the tips Emily! This mentor and internship program sounds awesome which is why I decided to apply. I’ll look through it to see if there’s a specific micro project available later on today and run it through you.
+>>
+>> I am having one slight issue, I’m not sure why I can’t use the “make” command to run Makefile, I’ve done it at school in the past so I was a bit familiar with Makefile and how it helps compile things. This is what I did. I downloaded git from the official git website, installed it, then I found the repository link and I cloned it in the git bash client to my desktop. I’m using windows at home but at school I used an iMac and when I cloned repositories I used iTerm and pushed to git within iTerm. I’m guessing the git bash is similar since I was able to open and edit files using vim commands similar in iTerm when I was going through the walkthrough. So now I’m stuck on the “make” step to see if I added the psuh feature in correctly. I also noticed when I looked at the INSTALL page on github it made it seem like maybe installing it through the website wasn’t the right idea? Maybe that’s why I can’t use make? I also can’t use man correctly. For both I get bash command does not exist. Should I install something similar to iTerm instead on windows and just start fresh? ty.
+>>
+>> George!
+>>
+>> On Thu, Oct 3, 2019 at 11:14 AM Emily Shaffer <emilyshaffer@google.com> wrote:
+>>> Hi George,
+>>>
+>>> Great to hear that you're walking through the MyFirstContribution
+>>> tutorial - that's a great introduction to how the Git project gets
+>>> stuff done.
+>>>
+>>> This is my first time mentoring for Outreachy, but as I understand it,
+>>> you will start by doing a microproject so everybody can see if you are
+>>> a good fit for the project. The community discussed the list of
+>>> microprojects for applicants to try in this mailing list thread:
+>>> https://public-inbox.org/git/20190916184208.GB17913@google.com/
+>>> I don't think you need to wade through the replies on that thread to
+>>> determine whether the microproject you are interested in is available,
+>>> although you're certainly welcome to. You can also ask me if you see a
+>>> microproject you are interested in and I will be happy to help
+>>> summarize it and point you in the right direction :)
+>>>
+>>> It is also probably a good idea for you to search that mailing list
+>>> archive for "[Outreachy]" so you can see what Outreachy interns have
+>>> done in the past and try to emulate how they submitted finished
+>>> microprojects.
+>>>
+>>> The tutorial you said you're reading covers how to send your
+>>> contributions for review when you're done, but if you find you're
+>>> having trouble or want someone to check that you've formatted it
+>>> right, you can let me know!
+>>>
+>>>   - Emily
+>>>
+>>> On Wed, Oct 2, 2019 at 9:55 PM gespinoz gespinoz <gespinoz2019@gmail.com> wrote:
+>>>> Hello Emily,
+>>>>
+>>>> How are you? My name is George Espinoza and I am one of the applicants in the Outreachy internship program. I hope you are doing well! I wanted to introduce myself and connect as I am interested in the Git open source project that you are mentoring. I'm currently creating my work environment and tinkering with the git program while doing the myfirstcontribution walk-through. I have had a bit of experience using git for a school i attended over the summer that used it for clone and pushing repositories. We worked with iTerm and I learned how to use vim as well. I know some basics, in no way a master yet/ I hope to learn more as I progress in making contributions!
+>>>>
+>>>> After I set up my environment I will join the IRC channel and introduce myself in the project's public chat and go from there searching how and what I should first contribute.  I'll also join the mailing list. If you have any tips or advice that would be great! I'm looking forward to working with you and learning more about Open Source Projects! Thank you.
+>>>>
+>>>> sincerely,
+>>>> George Espinoza
 
-On 03/10/19 08:18PM, harish k wrote:
-> Hi All,
-> I', Just reopening this feature request.
-> A quick summary of my proposal is given below.
-> 
-> 1. This PR will allow an additional configuration option
-> "guitool.<name>.gitgui-shortcut" which will allow us to specify
-> keyboard shortcut  for custom commands in git-gui
 
-A pretty nice way of doing it. But I would _really_ like it if there was 
-an option in the "create tool" dialog to specify the shortcut. People of 
-a gui tool shouldn't have to mess around with config files as much as 
-possible.
- 
-> 2. Even there exists a parameter called "guitool.<name>.shortcut"
-> which is used by git-cola, I suggest to keep this new additional
-> config parameter as an independent config parameter, which will not
-> interfere with git-cola in any way, because, both are different
-> applications and it may have different "built-in" shortcuts already
-> assigned. So, sharing shortcut scheme between two apps is not a good
-> idea.
-
-David has advocated inter-operability between git-gui and git-cola. 
-While I personally don't know how many people actually use both the 
-tools at the same time, it doesn't sound like a bad idea either.
-
-So, sharing shortcuts with git-cola would be nice. Of course, it would 
-then mean that we would have to parse the config parameter before 
-feeding them to `bind`. I don't suppose that should be something too 
-complicated to do, but I admit I haven't looked too deeply into it.
-
-I'd like to hear what other people think about whether it is worth the 
-effort to inter-operate with git-cola.
- 
-> 3. New parameter will expect shortcut combinations specified in TCL/TK
-> 's format and we will not be doing any processing on it. Will keep it
-> simple.
-
-Are you sure that is a good idea? I think we should at least make sure 
-we are not binding some illegal sequence, and if we are, we should warn 
-the user about it. And a much more important case would be when a user 
-over-writes a pre-existing shortcut for other commands like "commit", 
-"reset", etc. In that case, the menu entires of those commands would 
-still be labelled with the shortcut, but it won't actually work.
-
-Yes, your current implementation keeps things simple, but I think some 
-light processing would be beneficial. And if we do decide to go the 
-inter-operability with git-cola route, then processing would be needed 
-anyway, and we can validate there.
- 
-> ---
->  Documentation/config/guitool.txt | 15 +++++++++++++++
->  git-gui/lib/tools.tcl            | 15 ++++++++++++---
->  2 files changed, 27 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/config/guitool.txt b/Documentation/config/guitool.txt
-> index 43fb9466ff..79dac23ca3 100644
-> --- a/Documentation/config/guitool.txt
-> +++ b/Documentation/config/guitool.txt
-> @@ -48,3 +48,18 @@ guitool.<name>.prompt::
->   Specifies the general prompt string to display at the top of
->   the dialog, before subsections for 'argPrompt' and 'revPrompt'.
->   The default value includes the actual command.
-> +
-> +guitool.<name>.gitgui-shortcut
-> + Specifies a keyboard shortcut for the custom tool in the git-gui
-> + application. The value must be a valid string ( without "<" , ">" wrapper )
-> + understood by the TCL/TK 's bind command.See
-> https://www.tcl.tk/man/tcl8.4/TkCmd/bind.htm
-> + for more details about the supported values. Avoid creating shortcuts that
-> + conflict with existing built-in `git gui` shortcuts.
-> + Example:
-> + [guitool "Terminal"]
-> + cmd = gnome-terminal -e zsh
-> + noconsole = yes
-> + gitgui-shortcut = "Control-y"
-> + [guitool "Sync"]
-> + cmd = "git pull; git push"
-> + gitgui-shortcut = "Alt-s"
-
-The "Documentation/" subdirectory belongs to the Git project, and not to 
-git-gui, so if you want to see this change, you'd have to submit a 
-separate patch for it.
-
-As far as git-gui's documentation is concerned, unfortunately there is 
-none yet. I have been meaning to start working towards it, but just 
-haven't found the time or motivation to do it yet.
-
-> diff --git a/git-gui/lib/tools.tcl b/git-gui/lib/tools.tcl
-
-Like I mentioned before, please base your patches on the git-gui.git 
-repo, and not git.git. So, this should read "a/lib/tools.tcl" instead of 
-"a/git-gui/lib/tools.tcl".
-
-I haven't looked at the contents of the patch because I can't apply it, 
-and I'd prefer to tinker around with it before commenting. So please 
-re-send the patch in the proper format and we can discuss the 
-implementation :).
-
-> index 413f1a1700..40db3f6395 100644
-> --- a/git-gui/lib/tools.tcl
-> +++ b/git-gui/lib/tools.tcl
-[snip]
-
--- 
-Regards,
-Pratyush Yadav
