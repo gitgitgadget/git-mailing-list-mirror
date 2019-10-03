@@ -2,144 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 361D71F4BD
-	for <e@80x24.org>; Wed,  2 Oct 2019 23:54:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E6B81F4BD
+	for <e@80x24.org>; Thu,  3 Oct 2019 00:41:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729007AbfJBXyR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 19:54:17 -0400
-Received: from relay7-d.mail.gandi.net ([217.70.183.200]:43339 "EHLO
-        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726137AbfJBXyR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 19:54:17 -0400
-X-Originating-IP: 1.186.12.44
-Received: from localhost (unknown [1.186.12.44])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id E71B320002;
-        Wed,  2 Oct 2019 23:54:13 +0000 (UTC)
-Date:   Thu, 3 Oct 2019 05:24:11 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v3 2/2] git-gui: support for diff3 conflict style
-Message-ID: <20191002235411.bfkrjc6cgyayqwud@yadavpratyush.com>
-References: <14754a59ecf15194dccc659072e2bc180280d097.1569845908.git.bert.wesarg@googlemail.com>
- <a7cff5097eaf29a80c822cb37b537b3859d06ad7.1569873171.git.bert.wesarg@googlemail.com>
+        id S1725999AbfJCAlq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 20:41:46 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60798 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725799AbfJCAlp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 20:41:45 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF6031D7EA;
+        Wed,  2 Oct 2019 20:41:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bVB9hHp/LS4QxAvShZEt0V5lJz0=; b=SxTIu4
+        oPd6UzrycWGNxTro/c9NHxOk1fsbc31VRA/+ztXLOzHXrpgjt37cSGs3/1xnOJr4
+        IobtLCvz8rRQNdiiW6h5nXRuCMYJXPOEhb0Rp9swScZOMjHJOQlcQ41xDQv3sZ55
+        GcGYAQfvIZTw/aFqm31/meZkStp60f14WLWhk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XEhl+ZJCVIc19M+HR72mQhnUMst46HXV
+        taT0/wHPIqTj+64V30EC++Y+ZVZh1EAaOuXMiyPpJWb0RwacJ+GoWmFogOY0eASR
+        Dr/lTEPSR1/6viwGirzb0HIHpjg7zWO7JBWIizjvHA0s5HVKXavIsGK0iDMfxXCj
+        plEmIV+GSbk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A7EBD1D7E9;
+        Wed,  2 Oct 2019 20:41:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 13FDB1D7E8;
+        Wed,  2 Oct 2019 20:41:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] range-diff: internally force `diff.noprefix=false`
+References: <pull.373.git.gitgitgadget@gmail.com>
+        <1f84f92846bc14d21aa7339c8baa0f9bb710b17d.1570039511.git.gitgitgadget@gmail.com>
+        <xmqq4l0qewu5.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 03 Oct 2019 09:41:41 +0900
+In-Reply-To: <xmqq4l0qewu5.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 03 Oct 2019 05:06:26 +0900")
+Message-ID: <xmqqv9t6d5iy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a7cff5097eaf29a80c822cb37b537b3859d06ad7.1569873171.git.bert.wesarg@googlemail.com>
-User-Agent: NeoMutt/20180716
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9210BB14-E576-11E9-B308-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-I made some fixes to the punctuation and capitalization in the comments 
-you added. You can take a look at [0].
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>
+>> When parsing the diffs, `range-diff` expects to see the prefixes `a/`
+>> and `b/` in the diff headers.
+>
+> If so, passing src/dst prefix as command line option is a much
+> better solution, I think.  diff.noprefix may not stay to be (or it
+> may already not to be) the only thing how the prefix gets chosen.
 
-Just to be sure, I get the following text in git-gui when I ran your 
-example:
+That is, "--src-prefix=a/ --dst-prefix=b/", so that configuration
+variables yet to be invented for setting prefixes different from a/
+and b/ can also be overridden, not just diff.noprefix (ancient Git
+used l/ and k/ as src and dst prefix, IIRC).
 
-  <<<<<<< HEAD
- +Proin bibendum purus ut est tristique, non pharetra dui consectetur.
-  ||||||| merged common ancestors
---Proin in felis eu elit suscipit rhoncus vel ut metus.
-  =======
-+ Proin placerat leo malesuada lacinia lobortis.
-  >>>>>>> branch
 
-I noticed that the line after '<<<<<<< HEAD' starts with ' +' and the 
-line after '=======' starts with '+ '.
-
-So on the "HEAD" version, the space is before the '+', and on the 
-"branch" version, the space is after the '+'. This is the intended 
-behaviour, right?
-
-It is not strictly related to your patch because it happens without 
-diff3 conflict style enabled as well, but I just want to make sure this 
-is not a bug.
-
-The patch looks good. Will queue. Thanks.
-
-[0] https://github.com/prati0100/git-gui/commit/d6e413c7cff6d09a0089d7a5de115ad438b42e81
-
-On 02/10/19 09:36AM, Bert Wesarg wrote:
-> This adds highlight support for the diff3 conflict style.
-> 
-> The common pre-image will be reversed to --, because it has been removed
-> and replaced with ours or theirs side respectively.
-> 
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-> ---
->  git-gui.sh   |  3 +++
->  lib/diff.tcl | 17 ++++++++++++++++-
->  2 files changed, 19 insertions(+), 1 deletion(-)
-> 
-> --- 
-> 
-> v3: Fixed a syntax error
-> 
-> diff --git a/git-gui.sh b/git-gui.sh
-> index fd476b6..6d80f82 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -3581,6 +3581,9 @@ $ui_diff tag conf d_s- \
->  $ui_diff tag conf d< \
->  	-foreground orange \
->  	-font font_diffbold
-> +$ui_diff tag conf d| \
-> +	-foreground orange \
-> +	-font font_diffbold
->  $ui_diff tag conf d= \
->  	-foreground orange \
->  	-font font_diffbold
-> diff --git a/lib/diff.tcl b/lib/diff.tcl
-> index 0fd4600..dacdda2 100644
-> --- a/lib/diff.tcl
-> +++ b/lib/diff.tcl
-> @@ -347,6 +347,10 @@ proc start_show_diff {cont_info {add_opts {}}} {
->  	}
->  
->  	set ::current_diff_inheader 1
-> +	# detect pre-image lines of the diff3 conflict-style, they are just '++'
-> +	# lines which is not bijective, thus we need to maintain a state across
-> +	# lines
-> +	set ::conflict_in_pre_image 0
->  	fconfigure $fd \
->  		-blocking 0 \
->  		-encoding [get_path_encoding $path] \
-> @@ -449,11 +453,22 @@ proc read_diff {fd conflict_size cont_info} {
->  			{--} {set tags d_--}
->  			{++} {
->  				set regexp [string map [list %conflict_size $conflict_size]\
-> -								{^\+\+([<>=]){%conflict_size}(?: |$)}]
-> +								{^\+\+([<>=|]){%conflict_size}(?: |$)}]
->  				if {[regexp $regexp $line _g op]} {
->  					set is_conflict_diff 1
->  					set line [string replace $line 0 1 {  }]
->  					set tags d$op
-> +					# the ||| conflict-marker marks the start of the pre-image,
-> +					# all those lines are also prefixed with '++', thus we need
-> +					# to maintain this state
-> +					set ::conflict_in_pre_image [expr {$op eq {|}}]
-> +				} elseif {$::conflict_in_pre_image} {
-> +					# this is a pre-image line, it is the one which both sides
-> +					# are based on. As it has also the '++' line start, it is
-> +					# normally shown as 'added', invert this to '--' to make
-> +					# it a 'removed' line
-> +					set line [string replace $line 0 1 {--}]
-> +					set tags d_--
->  				} else {
->  					set tags d_++
->  				}
-
--- 
-Regards,
-Pratyush Yadav
