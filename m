@@ -7,77 +7,96 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 391B41F4BD
-	for <e@80x24.org>; Thu,  3 Oct 2019 00:57:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B8171F4BE
+	for <e@80x24.org>; Thu,  3 Oct 2019 01:10:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726165AbfJCA51 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 20:57:27 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51603 "EHLO
+        id S1726165AbfJCBHr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Oct 2019 21:07:47 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58483 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725928AbfJCA51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 20:57:27 -0400
+        with ESMTP id S1725860AbfJCBHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Oct 2019 21:07:46 -0400
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD0FC1B547;
-        Wed,  2 Oct 2019 20:57:24 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD1801B71B;
+        Wed,  2 Oct 2019 21:07:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7m2y1WIkQqQJzskE7rMFcfLAD80=; b=ucYKeA
-        OjTOcDUiB47wIsoJpGtYSXIWChmrq6oS4BILG3rqxGK14qNNtGDE9FziF8k/gVYu
-        CeTGQxwdEM/SlTQC+/I1dYDCg9OQ0QMQhyT/uFbrqpYoW7tn0dzCu8FFBuQQ0i1g
-        4J0Nnl/BDRPhUXXlxzc3IoK/njX/3yf491GCs=
+        :content-type; s=sasl; bh=l/pS/WiwZH7ut7tUYYMHKF9OzBA=; b=o/Ie/4
+        AM6fGooQfHtGebXJOgbGsQjZK/Eh2whrQswAiOCpWbZyA8vgB5ZmGlZaYB7rTTbU
+        xCkmbpzg35x+y5XNuzM0mR7v5LVyjafZNbsPXqhUfElNRJKFB6u7cA8/RpSdOzbD
+        LMeYru5W9KPNzbjXEs9lcvy1r6u3HrEg1UDP0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IKs3M1e4cIOO198iC1QTNHWYox1Jd3MB
-        AiNSFQUqb3LCWB5lDgDtGjR2OGrstj6CEehew3B+u0CFFnM3UK08iSLSa4VBwlRz
-        NFYVID6TVlBsmAz2CWvCdTfku0lzmX9Bmnh2lVgJ9fA4qhcBKFMkzGZroMo4jOrA
-        0LaLksXoJU0=
+        :content-type; q=dns; s=sasl; b=wWPU25C4HwkSwU+0ZfDgDZT+cBeMes4a
+        m9TgdMJoZms4aRSP2NCH4YjfBWHEozkkNdflKZyLwqA7aJziWqjbr3wExV9jHVvn
+        hqSubq4+4JG1tQIPWTqvszibVrxsMAEZJ5bcyZwqEaQ+Ww7txcYziKKWf1cRp9MN
+        J/AoZpeg8M0=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D3FF21B546;
-        Wed,  2 Oct 2019 20:57:24 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A542E1B71A;
+        Wed,  2 Oct 2019 21:07:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4A1381B545;
-        Wed,  2 Oct 2019 20:57:24 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0F53D1B719;
+        Wed,  2 Oct 2019 21:07:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     git@vger.kernel.org, Alexander Kuleshov <kuleshovmail@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC PATCH 3/3] format-patch: use a command to generate the output directory name
-References: <1aeacd8af4b83142f160c63be4746554e823cfc3.1570051490.git.bert.wesarg@googlemail.com>
-        <431f8a4e372feccf240b9c66c91248a6f53eab47.1570051490.git.bert.wesarg@googlemail.com>
-Date:   Thu, 03 Oct 2019 09:57:23 +0900
-In-Reply-To: <431f8a4e372feccf240b9c66c91248a6f53eab47.1570051490.git.bert.wesarg@googlemail.com>
-        (Bert Wesarg's message of "Wed, 2 Oct 2019 23:26:13 +0200")
-Message-ID: <xmqqeezud4ss.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 0/8] fast export/import: handle nested tags, improve incremental exports
+References: <20190925014005.17056-1-newren@gmail.com>
+        <20190930211018.23633-1-newren@gmail.com>
+        <CABPp-BFckDZL4iAqhHmrXDpFi3eQgvOkbgjJdGRZE4ePUwNDuw@mail.gmail.com>
+        <xmqqzhiidi2u.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BEJ47MonV2WmD+UornSG5LPmpGAyjWQa_4DTkAfjMjRmg@mail.gmail.com>
+Date:   Thu, 03 Oct 2019 10:07:42 +0900
+In-Reply-To: <CABPp-BEJ47MonV2WmD+UornSG5LPmpGAyjWQa_4DTkAfjMjRmg@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 2 Oct 2019 14:05:55 -0700")
+Message-ID: <xmqqa7aid4bl.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C313B8EA-E578-11E9-B49D-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 347B2526-E57A-11E9-A701-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> Having 'format.outputDirectory' is convenient, but being able to process
-> all produced patches via a wildcard command is even more so. I.e.,
-> using an argument like '<dir>/*'. Neither '-o' nor
-> 'format.outputDirectory' can be parameterized to produce a new unique
-> directory. Thus provide the new 'format.outputDirectoryCmd' configuration
-> to specify a command which does the job and puts the name to standard
-> output.
+>> And the draft copy I locally have for the next issue of what's cooking
+>> has the comment removed already.
+>>
+>> Anything I missed?
 >
+> I was looking at the commit message for the merge commit where you
+> merged in v2 of the series...
 
-The above does not interest me (a reader) enough, without the log
-message explaining why
+Ah, sorry, yes you are right, the merge messages can lag behind,
+especially until the topic hits 'next'.  It is not a designed goal
+to work that way, but just a consequene of how my workflow is
+structured.
 
-	git format-patch -o "$(outdircmd)"
+ * A merge grabs the message from the then-latest "what's cooking" draft.
 
-is not sufficient.
+ * The "what's cooking" draft is then updated.  This is a two-part
+   process:
 
-Thanks.
+   - "git log --first-parent master..pu" is scanned, to see which
+     parts of what topic are and are not yet in 'next' (this flips
+     '-' and '+' prefix in the "what's cooking" report) and marks
+     the changed parts for the next part.
+
+   - An editor session looks for these topics with updated status
+     and updates the comment in the "what's cooking" draft..
+
+So, the topic with the new fix-up commit was merged to 'pu' with the
+message taken from the "what's cooking" draft before the draft gets
+updated with that fix-up commit.  When I have sufficient time, I
+rebuild 'pu' twice (i.e. do the integration once, and then update
+the "what's cooking" draft, rewind 'pu' to 'master' and do the
+integration again to pick up messages from the updated "what's
+cooking" draft), but yesterday was not one of those days X-<.
+
