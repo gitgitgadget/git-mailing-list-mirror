@@ -8,188 +8,398 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D68B21F4BD
-	for <e@80x24.org>; Thu,  3 Oct 2019 11:53:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5189D1F4BD
+	for <e@80x24.org>; Thu,  3 Oct 2019 12:18:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730060AbfJCLxd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Oct 2019 07:53:33 -0400
-Received: from mout.web.de ([212.227.15.14]:38805 "EHLO mout.web.de"
+        id S1729379AbfJCMSk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Oct 2019 08:18:40 -0400
+Received: from mout.web.de ([212.227.15.14]:59023 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729366AbfJCLxc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Oct 2019 07:53:32 -0400
+        id S1728095AbfJCMSk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Oct 2019 08:18:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1570103606;
-        bh=jFikP1MZuYK+6WoBagAPv8lXI6DHTVXplmkHczrUkJM=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=MN1pQiIJOScc76I/TYSRDARU1Migo8XfiRt2rgKXQbhwwvRwcadkhl1rKx2Hlmxbi
-         Dzm0DL7ttpdR71HbBQXb+xsH6OrUpGAA8Q54hHL8swDU3SkA838rL/dU6yTYAL8L7g
-         KQ4A9irOji6VD+fA9H95iL1SBsmXhuyyLP+3ABIY=
+        s=dbaedf251592; t=1570105114;
+        bh=GYXsTRaoMobmCIqgnA71xGi/HVzs0neMzt+MrXXa4jY=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=chJ3VxBgwZTe66PCT94KrLO9Ji7dS8PSkHA++B8IyFi36cePwDZ/+wx7PVBnKCCbs
+         okXQJqTg048bTnflzoaKDPftFRmI1rd7D2VJC7tiEyt8kFwJsVi3mN0EOsLzLzcuHc
+         /vdE5tI/xWzXGE50HClERmAv0GbRUyn/LtrLJOCc=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MQf77-1ih7rX0JwL-00U5Uz; Thu, 03
- Oct 2019 13:53:26 +0200
-Subject: Re: [PATCH v2 2/8] fast-import: fix handling of deleted tags
-To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LbIiI-1hsBdo2vaU-00kvye; Thu, 03
+ Oct 2019 14:18:34 +0200
+X-Mozilla-News-Host: news://nntp.public-inbox.org:119
+To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-References: <20190925014005.17056-1-newren@gmail.com>
- <20190930211018.23633-1-newren@gmail.com>
- <20190930211018.23633-3-newren@gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f5b70fc3-8aff-7dc6-66c4-df3cc85df312@web.de>
-Date:   Thu, 3 Oct 2019 13:53:23 +0200
+Subject: PATCH] remove duplicate #include directives
+Message-ID: <1133ae3b-81e8-4ec1-c2d7-d071e7e65ec1@web.de>
+Date:   Thu, 3 Oct 2019 14:18:34 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <20190930211018.23633-3-newren@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:uM/ogdQoAThyj4VYZL0rEFPKRaZjJsy17G6yh0/E+/cDt/K5Bin
- nevmr/SoE1HJRm6mbfDGJmxX1VIrNjbKm6pz5cfHWHMTDoHOAGTsRbe5gFA3sg+738RuUzD
- GyLBA+CGBk/pVTpCKuNEPCMPVa5IuHcLk1UlKT69QwoSWiOeOHhJ8db2FM681/dc5QZF24K
- 0MaHbAjoeCVnSuiqBZzog==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ApLcgn0Eibo=:R3VE1er1CbAmyWvNADDXcS
- aIcA1sObHz+8Q44J8JsUoOAeJl/4mzqguFgWZISBFg/1CC/PiNyeY9kmASGBpueop7f8kqC1T
- iWECYzAKohDPrTymaEMjNps4QIYtDqOu/gex8r/usojRCt+wOE39QXMemvaANyg7R9vFr8TP0
- A1MEXXnhEL6Fu8wfWnBUeNdwt4GpIarPWBUQIhsiOsEj2hLn/sat0UOd4QGbT+Wa65JZdFw/R
- C80fbRBMJeEbty+huMvHP2H9GuFkjzwqYq+INPcE8VYI6NCbqIwaVdaw2umW5PpYSW4w8Uc/p
- foqd/O8ihwBBGQs2Dx4cFnSrW0jrf+3N0163q8kfhMHzPKoLzICe2bGmolv1UdQckHU1p1nY4
- WRexEVzg9kuO1eicLMAdiOxv9i9BzzG0jxUeULEjXIHw4FfDr/IUIMJd+PLklG7Gr/93hD2Jq
- CcK2wMBAW+1Cs3enrrxTgYDLA3mTCMC+VUkIDGpvkTstwFiJnHWN5D/FpXc3Co5BLEBAmFhty
- BIh2vqrd0UEC3PHqJCR6juMnZGMmEvwPK3x9Bgc0C+bkcWwTr1/1BRud+JC6WFF8KdLZ/UcdC
- KwJ1u6QipObNQceW0slV9AS39rNXqgp059K2gMKe6Ta0Dv/2Hu+hS35/cu3ZBHYbXCRBhxhqT
- rulZnVPvNoEHesMNrjmHMHXAKj+edUtb9GvW+KXvjlFHbeR9SUWrdETtCsLoGG06Wme6y+j73
- yUnSfHV58fsJnjkutGdQu8WQPI9IY+e4f+d2AofWbo+rYQMsUw7yVQFYFlzvwunGAUe7aPY3B
- w8fU5xSCtLUW6zPBaGxl3zyKt3t1qDGQYJgo4adbfUqtnLgy2JK8/y/WxwUfAXPXrYHTeVuZm
- 5e3QttQ5bovJANFVfGQ0Zkm/h48h+rjltmFPj3FlEy+bxZsQ1W9RdVtjQv0Mlmwww5+RZeYtY
- 9JozsQtXEvv1EQS9nBBDD3kbpJAOkEvmjBTYp2yKIeBkt3fr3ur6U+Hyfd85Zi1HQYm1K48xM
- Mpq5EJnqs4kEDrWpeO2m7fdyErVFL4pDmyn22iagJNQvoPiANvh5GbuujWK5OrPG5BRKSEfX6
- Qo11TmVcIUWsQVAL5zDDVinfUtmtcgUYcxVSjYIE696dtu1h/0SNFnE/nz14u6FXxzO46lkOH
- Nnt/OlEGYWKFjB9nL1MQA03dcLOjQtLolCAhTGjp/3LtqIU3mC0gwesyr3sjnWrZni+NbVruX
- 93gaweQfFhz4qj2IhSDPxWTFuHGF7z+8MOZhB6w==
+X-Provags-ID: V03:K1:8602afDDCUNArdc8MBAd877Ucp+nFmBS/rAvA5941TiwWYtTmbI
+ W21gmTqe6ijiB/tOSiIC6+OzxxVT5WwuvqzJXjmL86wUYKtD6JeWVe+XlRb+OYatI6eZqz+
+ qHF1DGRptwVHRaWLlcb/vO/ldh/ApCHuJNlcjMAPQ36wR3AJpmW/a8Z2Jl9GblPltoxvfll
+ HCSMUs4OpPx1Qjw8D9gPA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:AiM+BtH9BJg=:uoXelojHgWYNr80tUzsZgR
+ rmo6zo8fBOfB1g5+xRQqukMMsCmys2zzoA0SDNMgQ3kANUScTZWmKfJr+0TmDHW0I0q9RHFYh
+ 1eAhZExASzete0vRegO+4bZuQ/bX7gw0iIBx+cTB3ZL2EoSHHbOJn2I2sS3kyzNCIOoiF9gkp
+ WKfGWrlQUAfLjaXSJtE17MLbqXeqcynY7z97MXQqbqoYFUnz+YQN00VaVx7e2I7B2h/yV7rAS
+ UJpHnjCJpVPaTNWgPkdwbW9daSAMTJX+rwoJ1uk3ilmEyttRKQbgAxZWaU07wPbTKOmzK/TRZ
+ tWHIlUlAtkp6Acoph8QCnPLtVV2GqlApDOiK7m9xmjXi7+jq0EmSa9HZAL3V5glHWtozmg9W6
+ phuXr1yp8gK++XHHS9gvXNi8Qnl1zosfGygAWru0G4yI2dCx6Ny6PHieF9Gs62Hq4duyMQ1EH
+ 9Qg53BkLqnvAgvzszxwkNkmKt72NNtAAWmKTkjnduDXA2RPtloe45CvG6ezKxTofy3x4yboI8
+ md7JOQv3g1n/wlL2UJhby1VtlrUry6rKFrKoQ2vie4iiv4XjcsbNZwM38hISQxEF6cEdSZZRz
+ S0PoKL+ibXSohEfS4aHxAL4x9ESBGn6Ci6pgXc1skC9wr4Vz8G0xw8t3GGBIqa73UJNoIAU5J
+ NtdlT2chIpM8u+PmObEd6+Rfy+DgyBuD3av2ER7SVceJA08fyvC/U83Qu7gnd9/tAQ5zgn7zJ
+ tqE8ULx4/s+pd4jGdcn8vrwSemex4eCT4f2mLL1OZIyrXUGXBXIDAS9Hd/c8i32dd5y9+lQhU
+ jJm7cu/jniWha48xYb5M+mDzT6o9c0GOYJkUB4z7SnsAl4nvYabd/TnsXDbqkHzB/MKkVAvFG
+ P+ORddbqpAiy3XYTj51CmuXP8GaIGJ8JnzkFXZOKA3DUc9yHA5SnBNFJllN6UPW01Pl+2bt/7
+ QLAUZLwoCVbmMh8ltLpFmNXxtP9yNjSh99VIbkCiXfBM5ZpqpNh8adcJ9io0jfAALKVTknzmK
+ yolZco1gIYIThAt48COUicRs/NpVR+thF0cnf25gvKBIt3SIvtRmlksUsPyISRnEIeyEkGMkP
+ cAreB2duMLW/YhbT4z8oP3SSPWMh2zjgzoLcOmV+uMKlBrjEHO6+Donz3nI0uaS1+w4iswpPA
+ TjMGIwVvuuBzNVJ/dzaZsOln4zU64ik945o9Iyf6SQkst4AHKorU6c5GhRb7cDqVLNXGBeCcM
+ urOsFlV1I1V0CNLQoSGkaa6WS1W82Es4ciZEPqg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.09.19 um 23:10 schrieb Elijah Newren:
-> If our input stream includes a tag which is later deleted, we were not
-> properly deleting it.  We did have a step which would delete it, but we
-> left a tag in the tag list noting that it needed to be updated, and the
-> updating of annotated tags occurred AFTER ref deletion.  So, when we
-> record that a tag needs to be deleted, also remove it from the list of
-> annotated tags to update.
->
-> While this has likely been something that has not happened in practice,
-> it will come up more in order to support nested tags.  For nested tags,
-> we either need to give temporary names to the intermediate tags and then
-> delete them, or else we need to use the final name for the intermediate
-> tags.  If we use the final name for the intermediate tags, then in order
-> to keep the sanity check that someone doesn't try to update the same tag
-> twice, we need to delete the ref after creating the intermediate tag.
-> So, either way nested tags imply the need to delete temporary inner tag
-> references.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  fast-import.c          | 29 +++++++++++++++++++++++++++++
->  t/t9300-fast-import.sh | 13 +++++++++++++
->  2 files changed, 42 insertions(+)
->
-> diff --git a/fast-import.c b/fast-import.c
-> index b44d6a467e..546da3a938 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -2793,6 +2793,35 @@ static void parse_reset_branch(const char *arg)
->  		b =3D new_branch(arg);
->  	read_next_command();
->  	parse_from(b);
-> +	if (b->delete && !strncmp(b->name, "refs/tags/", 10)) {
+Found with "git grep '^#include ' '*.c' | sort | uniq -d".
 
-b->name is a NUL-terminated string; starts_with() could be used to avoid
-the magic number 10.
-
-> +		/*
-> +		 * Elsewhere, we call dump_branches() before dump_tags(),
-> +		 * and dump_branches() will handle ref deletions first, so
-> +		 * in order to make sure the deletion actually takes effect,
-> +		 * we need to remove the tag from our list of tags to update.
-> +		 *
-> +		 * NEEDSWORK: replace list of tags with hashmap for faster
-> +		 * deletion?
-> +		 */
-> +		struct strbuf tag_name =3D STRBUF_INIT;
-
-This adds a small memory leak.
-
-> +		struct tag *t, *prev =3D NULL;
-> +		for (t =3D first_tag; t; t =3D t->next_tag) {
-> +			strbuf_reset(&tag_name);
-> +			strbuf_addf(&tag_name, "refs/tags/%s", t->name);
-> +			if (!strcmp(b->name, tag_name.buf))
-
-So the strbuf is used to prefix t->name with "refs/tags/", which we know
-b->name starts with, and to compare the result with b->name.  Removing
-the "refs/tags/" prefix from b->name using skip_prefix() and comparing
-the result with t->name would be easier.
-
-> +				break;
-> +			prev =3D t;
-> +		}
-> +		if (t) {
-> +			if (prev)
-> +				prev->next_tag =3D t->next_tag;
-> +			else
-> +				first_tag =3D t->next_tag;
-> +			if (!t->next_tag)
-> +				last_tag =3D prev;
-> +			/* There is no mem_pool_free(t) function to call. */
-> +		}
-> +	}
->  	if (command_buf.len > 0)
->  		unread_command_buf =3D 1;
->  }
-
-Here's a squashable patch for that:
-
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- fast-import.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+Patch formatted with --function-context for easier review.
 
-diff --git a/fast-import.c b/fast-import.c
-index 70cd3f0ff4..a109591406 100644
-=2D-- a/fast-import.c
-+++ b/fast-import.c
-@@ -2779,6 +2779,7 @@ static void parse_new_tag(const char *arg)
- static void parse_reset_branch(const char *arg)
- {
- 	struct branch *b;
-+	const char *tag_name;
+ builtin/am.c       | 1 -
+ builtin/blame.c    | 1 -
+ builtin/clone.c    | 1 -
+ builtin/describe.c | 1 -
+ builtin/rev-list.c | 1 -
+ builtin/worktree.c | 1 -
+ object.c           | 1 -
+ packfile.c         | 1 -
+ shallow.c          | 3 ---
+ unpack-trees.c     | 1 -
+ 10 files changed, 12 deletions(-)
 
- 	b =3D lookup_branch(arg);
- 	if (b) {
-@@ -2794,7 +2795,7 @@ static void parse_reset_branch(const char *arg)
- 		b =3D new_branch(arg);
- 	read_next_command();
- 	parse_from(b);
--	if (b->delete && !strncmp(b->name, "refs/tags/", 10)) {
-+	if (b->delete && skip_prefix(b->name, "refs/tags/", &tag_name)) {
- 		/*
- 		 * Elsewhere, we call dump_branches() before dump_tags(),
- 		 * and dump_branches() will handle ref deletions first, so
-@@ -2804,12 +2805,9 @@ static void parse_reset_branch(const char *arg)
- 		 * NEEDSWORK: replace list of tags with hashmap for faster
- 		 * deletion?
- 		 */
--		struct strbuf tag_name =3D STRBUF_INIT;
- 		struct tag *t, *prev =3D NULL;
- 		for (t =3D first_tag; t; t =3D t->next_tag) {
--			strbuf_reset(&tag_name);
--			strbuf_addf(&tag_name, "refs/tags/%s", t->name);
--			if (!strcmp(b->name, tag_name.buf))
-+			if (!strcmp(t->name, tag_name))
- 				break;
- 			prev =3D t;
- 		}
+diff --git a/builtin/am.c b/builtin/am.c
+index ee7305eaa6..b015e1d7d1 100644
+=2D-- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1,40 +1,39 @@
+ /*
+  * Builtin "git am"
+  *
+  * Based on git-am.sh by Junio C Hamano.
+  */
+ #define USE_THE_INDEX_COMPATIBILITY_MACROS
+ #include "cache.h"
+ #include "config.h"
+ #include "builtin.h"
+ #include "exec-cmd.h"
+ #include "parse-options.h"
+ #include "dir.h"
+ #include "run-command.h"
+ #include "quote.h"
+ #include "tempfile.h"
+ #include "lockfile.h"
+ #include "cache-tree.h"
+ #include "refs.h"
+ #include "commit.h"
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "unpack-trees.h"
+ #include "branch.h"
+ #include "sequencer.h"
+ #include "revision.h"
+ #include "merge-recursive.h"
+-#include "revision.h"
+ #include "log-tree.h"
+ #include "notes-utils.h"
+ #include "rerere.h"
+ #include "prompt.h"
+ #include "mailinfo.h"
+ #include "apply.h"
+ #include "string-list.h"
+ #include "packfile.h"
+ #include "repository.h"
+
+ /**
+  * Returns the length of the first line of msg.
+  */
+diff --git a/builtin/blame.c b/builtin/blame.c
+index bfd537b344..9858d6b269 100644
+=2D-- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1,32 +1,31 @@
+ /*
+  * Blame
+  *
+  * Copyright (c) 2006, 2014 by its authors
+  * See COPYING for licensing conditions
+  */
+
+ #include "cache.h"
+ #include "config.h"
+ #include "color.h"
+ #include "builtin.h"
+ #include "repository.h"
+ #include "commit.h"
+ #include "diff.h"
+ #include "revision.h"
+ #include "quote.h"
+ #include "string-list.h"
+ #include "mailmap.h"
+ #include "parse-options.h"
+ #include "prio-queue.h"
+ #include "utf8.h"
+ #include "userdiff.h"
+ #include "line-range.h"
+ #include "line-log.h"
+ #include "dir.h"
+ #include "progress.h"
+ #include "object-store.h"
+ #include "blame.h"
+-#include "string-list.h"
+ #include "refs.h"
+
+ static char blame_usage[] =3D N_("git blame [<options>] [<rev-opts>] [<re=
+v>] [--] <file>");
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 2048b6760a..9d73102c42 100644
+=2D-- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1,44 +1,43 @@
+ /*
+  * Builtin "git clone"
+  *
+  * Copyright (c) 2007 Kristian H=C3=B8gsberg <krh@redhat.com>,
+  *		 2008 Daniel Barkalow <barkalow@iabervon.org>
+  * Based on git-commit.sh by Junio C Hamano and Linus Torvalds
+  *
+  * Clone a repository into a different directory that does not yet exist.
+  */
+
+ #define USE_THE_INDEX_COMPATIBILITY_MACROS
+ #include "builtin.h"
+ #include "config.h"
+ #include "lockfile.h"
+ #include "parse-options.h"
+ #include "fetch-pack.h"
+ #include "refs.h"
+ #include "refspec.h"
+ #include "object-store.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+ #include "unpack-trees.h"
+ #include "transport.h"
+ #include "strbuf.h"
+ #include "dir.h"
+ #include "dir-iterator.h"
+ #include "iterator.h"
+ #include "sigchain.h"
+ #include "branch.h"
+ #include "remote.h"
+ #include "run-command.h"
+ #include "connected.h"
+ #include "packfile.h"
+ #include "list-objects-filter-options.h"
+-#include "object-store.h"
+
+ /*
+  * Overall FIXMEs:
+  *  - respect DB_ENVIRONMENT for .git/objects.
+  *
+  * Implementation notes:
+  *  - dropping use-separate-remote and no-separate-remote compatibility
+  *
+  */
+diff --git a/builtin/describe.c b/builtin/describe.c
+index e048f85484..90feab1120 100644
+=2D-- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -1,22 +1,21 @@
+ #define USE_THE_INDEX_COMPATIBILITY_MACROS
+ #include "cache.h"
+ #include "config.h"
+ #include "lockfile.h"
+ #include "commit.h"
+ #include "tag.h"
+ #include "blob.h"
+ #include "refs.h"
+ #include "builtin.h"
+ #include "exec-cmd.h"
+ #include "parse-options.h"
+ #include "revision.h"
+ #include "diff.h"
+ #include "hashmap.h"
+ #include "argv-array.h"
+ #include "run-command.h"
+ #include "object-store.h"
+-#include "revision.h"
+ #include "list-objects.h"
+ #include "commit-slab.h"
+
+ #define MAX_TAGS	(FLAG_BITS - 1)
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index b8dc2e1fba..fb8187fba5 100644
+=2D-- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -1,24 +1,23 @@
+ #include "cache.h"
+ #include "config.h"
+ #include "commit.h"
+ #include "diff.h"
+ #include "revision.h"
+ #include "list-objects.h"
+ #include "list-objects-filter.h"
+ #include "list-objects-filter-options.h"
+ #include "object.h"
+ #include "object-store.h"
+ #include "pack.h"
+ #include "pack-bitmap.h"
+ #include "builtin.h"
+ #include "log-tree.h"
+ #include "graph.h"
+ #include "bisect.h"
+ #include "progress.h"
+ #include "reflog-walk.h"
+ #include "oidset.h"
+ #include "packfile.h"
+-#include "object-store.h"
+
+ static const char rev_list_usage[] =3D
+ "git rev-list [OPTION] <commit-id>... [ -- paths... ]\n"
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 7f094f8170..0a53788151 100644
+=2D-- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -1,16 +1,15 @@
+ #include "cache.h"
+ #include "checkout.h"
+ #include "config.h"
+ #include "builtin.h"
+ #include "dir.h"
+ #include "parse-options.h"
+ #include "argv-array.h"
+ #include "branch.h"
+ #include "refs.h"
+ #include "run-command.h"
+ #include "sigchain.h"
+ #include "submodule.h"
+-#include "refs.h"
+ #include "utf8.h"
+ #include "worktree.h"
+
+diff --git a/object.c b/object.c
+index 07bdd5b26e..3b8b8c55c9 100644
+=2D-- a/object.c
++++ b/object.c
+@@ -1,13 +1,12 @@
+ #include "cache.h"
+ #include "object.h"
+ #include "replace-object.h"
+ #include "object-store.h"
+ #include "blob.h"
+ #include "tree.h"
+ #include "commit.h"
+ #include "tag.h"
+ #include "alloc.h"
+-#include "object-store.h"
+ #include "packfile.h"
+ #include "commit-graph.h"
+
+diff --git a/packfile.c b/packfile.c
+index f3f962af4c..87512540f8 100644
+=2D-- a/packfile.c
++++ b/packfile.c
+@@ -1,20 +1,19 @@
+ #include "cache.h"
+ #include "list.h"
+ #include "pack.h"
+ #include "repository.h"
+ #include "dir.h"
+ #include "mergesort.h"
+ #include "packfile.h"
+ #include "delta.h"
+-#include "list.h"
+ #include "streaming.h"
+ #include "sha1-lookup.h"
+ #include "commit.h"
+ #include "object.h"
+ #include "tag.h"
+ #include "tree-walk.h"
+ #include "tree.h"
+ #include "object-store.h"
+ #include "midx.h"
+ #include "commit-graph.h"
+ #include "promisor-remote.h"
+diff --git a/shallow.c b/shallow.c
+index 5fa2b15d37..ae813658fb 100644
+=2D-- a/shallow.c
++++ b/shallow.c
+@@ -1,21 +1,18 @@
+ #include "cache.h"
+ #include "repository.h"
+ #include "tempfile.h"
+ #include "lockfile.h"
+ #include "object-store.h"
+ #include "commit.h"
+ #include "tag.h"
+ #include "pkt-line.h"
+ #include "remote.h"
+ #include "refs.h"
+ #include "sha1-array.h"
+ #include "diff.h"
+ #include "revision.h"
+ #include "commit-slab.h"
+-#include "revision.h"
+ #include "list-objects.h"
+-#include "commit-slab.h"
+-#include "repository.h"
+ #include "commit-reach.h"
+
+ void set_alternate_shallow_file(struct repository *r, const char *path, i=
+nt override)
+diff --git a/unpack-trees.c b/unpack-trees.c
+index f0f56d40ac..33ea7810d8 100644
+=2D-- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1,27 +1,26 @@
+ #include "cache.h"
+ #include "argv-array.h"
+ #include "repository.h"
+ #include "config.h"
+ #include "dir.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+ #include "cache-tree.h"
+ #include "unpack-trees.h"
+ #include "progress.h"
+ #include "refs.h"
+ #include "attr.h"
+ #include "split-index.h"
+-#include "dir.h"
+ #include "submodule.h"
+ #include "submodule-config.h"
+ #include "fsmonitor.h"
+ #include "object-store.h"
+ #include "promisor-remote.h"
+
+ /*
+  * Error messages expected by scripts out of plumbing commands such as
+  * read-tree.  Non-scripted Porcelain is not required to use these messag=
+es
+  * and in fact are encouraged to reword them to better suit their particu=
+lar
+  * situation better.  See how "git checkout" and "git merge" replaces
+  * them using setup_unpack_trees_porcelain(), for example.
+  */
 =2D-
 2.23.0
+
