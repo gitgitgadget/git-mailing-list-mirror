@@ -3,76 +3,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4A4C1F4BD
-	for <e@80x24.org>; Thu,  3 Oct 2019 22:37:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CC871F4BD
+	for <e@80x24.org>; Thu,  3 Oct 2019 22:38:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730537AbfJCWh1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Oct 2019 18:37:27 -0400
-Received: from mail-lj1-f169.google.com ([209.85.208.169]:42635 "EHLO
-        mail-lj1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727302AbfJCWh1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Oct 2019 18:37:27 -0400
-Received: by mail-lj1-f169.google.com with SMTP id y23so4453837lje.9
-        for <git@vger.kernel.org>; Thu, 03 Oct 2019 15:37:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=WgHRHo0sUJ1fGVzo+ZOA9peyAm3Fy0HP/AJ6BV1bJG4=;
-        b=P2XgpN9xFDdHWHd0SeTLu5AF7Acv7UEEcS718fkFrSKPE7eaSZurspr+IEwe8DzpOh
-         obRnBs06n7TMd9BcVoIpKCaCq8RCoLu6KllfHp/dJ2Ck0h9xTj4i9iQTfvOVAto3Az2F
-         B1LijWN6boeVA2aqVsB9xle1elfdaEV3HkNqCOdkoGSUHj6zr+wLy6HxU/vM3R/OgBv7
-         a0c8mCRy5T9hSMHR7tCn0r9/b+LafQX6gdDMMLcZAQrwc0m26g+ZYnC0E0BqnOI7jCAF
-         S2vD+hljgCXLmUbAyAFZVeuMvyG77ng5YCy5Aoi0Ag4n//tQ0Zg1DWcBoXCEFlNXcYqP
-         hDNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=WgHRHo0sUJ1fGVzo+ZOA9peyAm3Fy0HP/AJ6BV1bJG4=;
-        b=svutcGa+u6kQGoK0NlNrnODIMEbiUGLp+UOzodyNqpMEcnF2aFUolZfj8IhzUlytzk
-         o0tBKi8OzMAYrCHKZPjcubNBdlCXIP1kmYxhXT3MUD2ak73EdZ+fMJfYHzXLMXPHJaDQ
-         /oBd9lfMFHNpo/xcnU+x64/HSFC+dwKSximuvjXw2/1MfiqGagNgUGCnJ7HOE29MusOV
-         4l53hzXL9Hw50K7WjhlhtsbrwLZcC3abtVluLCMD9roaXkMY03oAESw2LzGUM+6giAUg
-         m0ZGDYsXoo0UoNdVP7YLbwbW0ywN0za5sSABzbCXw3n/VuePPwhoyA1ZPgrMHJjlM1BQ
-         /U1Q==
-X-Gm-Message-State: APjAAAUpkYp8uhAGDvyufneUi+LGE/XOw7PgPwV1aRPQb58BWVpORxkp
-        7FAIiDk3TdlPZ+YrJBByTFvlfXLSYKFv9+nC+1NzCa+3
-X-Google-Smtp-Source: APXvYqyAl6RYIKGGD+yz8W5/BSfm6nI5jUGxcqOYZFDR1FpFnU8fZ4NW4Ie//fOtfvceBmTjNdwe9on9B2ePFTGcAok=
-X-Received: by 2002:a2e:5dc3:: with SMTP id v64mr7694267lje.118.1570142245368;
- Thu, 03 Oct 2019 15:37:25 -0700 (PDT)
+        id S1731376AbfJCWiD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Oct 2019 18:38:03 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62181 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727302AbfJCWiC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Oct 2019 18:38:02 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 54ACD260F2;
+        Thu,  3 Oct 2019 18:38:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HxjuJtS8bPyGJQ+F2Xf36WhEnOA=; b=NeLxg3
+        A+qPu3IWvVBROx4wZnpY0gYiNgzF04FZTCZBCxnUn1IMcoL8lDJt663g2WnmQVWK
+        gUtMUReI+R/ciCyKCH5P6yF3Fstqa528ZGCmRSy3LB5H14oSf3whjHH8bzsBFK4S
+        TFKBRW/gMpYkNfaz4SqnBdY0a3TqCQeUxFl/U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZHBM9nIB/SMFttSYiqIEktkzoCyNiKsE
+        0YSE1Ag+ifI9takmsFrBXrIz1cwa1igRhjQMVPphOFMvLxwUMqCfSzb8kGnWp8st
+        DA7lgQS8V96r2wUeslUqg9Qy2dwdp6FW7yvWA9ubhthb7794S06LYRwU34LrSHkS
+        RKjI0/vqxSY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A5A5260F1;
+        Thu,  3 Oct 2019 18:38:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 977D6260EF;
+        Thu,  3 Oct 2019 18:37:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 01/13] push: do not pretend to return `int` from `die_push_simple()`
+References: <pull.288.git.gitgitgadget@gmail.com>
+        <pull.288.v2.git.gitgitgadget@gmail.com>
+        <4d0b38125a13d85963be5e524becf48271893e2b.1569837329.git.gitgitgadget@gmail.com>
+Date:   Fri, 04 Oct 2019 07:37:57 +0900
+In-Reply-To: <4d0b38125a13d85963be5e524becf48271893e2b.1569837329.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Mon, 30 Sep 2019
+        02:55:31 -0700 (PDT)")
+Message-ID: <xmqq36g9bgl6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Alexander Mills <alexander.d.mills@gmail.com>
-Date:   Thu, 3 Oct 2019 15:37:14 -0700
-Message-ID: <CA+KyZp6MKqL0mz-iCHGEcvZi09P+GmS7QEogX10-2OJ5nMPDRA@mail.gmail.com>
-Subject: bad error message - Not a git repository (or any of the parent
- directories): .git
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 73C07060-E62E-11E9-92EF-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-when running git commands outside of a git repo, we often see:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-fatal: Not a git repository (or any of the parent directories): .git
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> This function is marked as `NORETURN`, and it indeed does not want to
+> return anything. So let's not declare it with the return type `int`.
+> This fixes the following warning when building with MSVC:
+>
+> 	C4646: function declared with 'noreturn' has non-void return type
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/push.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/push.c b/builtin/push.c
+> index 021dd3b1e4..d216270d5f 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -143,8 +143,8 @@ static int push_url_of_remote(struct remote *remote, const char ***url_p)
+>  	return remote->url_nr;
+>  }
+>  
+> -static NORETURN int die_push_simple(struct branch *branch,
+> -				    struct remote *remote)
+> +static NORETURN void die_push_simple(struct branch *branch,
+> +				     struct remote *remote)
 
-such a lame message lol.
-can we get an absolute path on this message in future git versions, eg:
+Haha ;-)  "I won't return and I'll return int" sounds like an
+oxymoron.
 
-Not a git repository (or any of the parent directories): /home/ubuntu/xyz/.git
-
-ty
-
--alex
-
--- 
-Alexander D. Mills
-New cell phone # (415)730-1805
-alexander.d.mills@gmail.com
-
-www.linkedin.com/pub/alexander-mills/b/7a5/418/
+>  {
+>  	/*
+>  	 * There's no point in using shorten_unambiguous_ref here,
