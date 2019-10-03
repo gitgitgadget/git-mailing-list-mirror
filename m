@@ -2,141 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D70B1F4BD
-	for <e@80x24.org>; Thu,  3 Oct 2019 21:53:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 223681F4BD
+	for <e@80x24.org>; Thu,  3 Oct 2019 22:16:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730117AbfJCVxo convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 3 Oct 2019 17:53:44 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:51976 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726002AbfJCVxo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Oct 2019 17:53:44 -0400
-Received: from [92.7.169.237] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1iG92a-0004b7-7s; Thu, 03 Oct 2019 22:53:41 +0100
-Subject: Re: [Outreachy] Outreachy internship program
-To:     Emily Shaffer <emilyshaffer@google.com>,
-        gespinoz gespinoz <gespinoz2019@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>
-References: <CAP_ANik21_mkUdqwd0YQS4VDa80AnqQ+Xa1jWsQ7ihnfyQymYw@mail.gmail.com>
- <CAJoAoZkq1=VfJ05J8L2AvJjp6GxoTNTF6pNFAzQ1rx+7LKk6bQ@mail.gmail.com>
- <CAP_ANinzBvysKE6QWUinmNzcvKqsRv10VSjFGChoK-0Nz4KT7Q@mail.gmail.com>
- <CAJoAoZ=5aK50T9ugMww9Po0whFUSfOYY4djVhUvCU_azn2SABA@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <6f993a81-9bb5-9d57-0876-45fb2f7e2705@iee.email>
-Date:   Thu, 3 Oct 2019 22:53:39 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1730329AbfJCWQm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Oct 2019 18:16:42 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64353 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730297AbfJCWQm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Oct 2019 18:16:42 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 891318D994;
+        Thu,  3 Oct 2019 18:16:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=OykWiAZZkfQHPXG15hecD3U9HqQ=; b=HQQXoz
+        Q6KjycehWZu7MQP8UYAD99S2daeOmMroTJ2uOCgysQ1VO/ieneNwEl1IHpIsKVCT
+        miLO4k6oRXV7IOy/7G54WuMxk5FNXuhqwCgr76jZu7c0senF+vPU1ckJDXVDRcY7
+        ls8K2Ryfbka6LNbZ12OG3TVw4XI6pxbpfaF+M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xmhEn3RUeP2LvZxulFOZWbWmn5MTZiPx
+        rkbeda8ENOfxfCuBNKP+xdsN//g/VRhizeKFkrjnfCnZDKnvAqc/6SnFaSTjzP3k
+        7Xv/Ha5bWWRXk0F3uxjafS4oNiRErSJDeGCDMJQMk0KYv1CBbaXdgNIgvKUwdrIJ
+        aojSilGGfis=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 81F6D8D993;
+        Thu,  3 Oct 2019 18:16:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 37A258D990;
+        Thu,  3 Oct 2019 18:16:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Allan Caffee <allan.caffee@gmail.com>,
+        Noam Postavsky <npostavs@users.sourceforge.net>
+Subject: Re: [BUG/PATCH 0/5] t4214: cleanup and demonstrate graph bug
+References: <cover.1569407150.git.liu.denton@gmail.com>
+        <20190925170902.GA11547@dentonliu-ltm.internal.salesforce.com>
+        <20190926202326.GA16664@sigill.intra.peff.net>
+Date:   Fri, 04 Oct 2019 07:16:34 +0900
+In-Reply-To: <20190926202326.GA16664@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 26 Sep 2019 16:23:27 -0400")
+Message-ID: <xmqqo8yxbhkt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAJoAoZ=5aK50T9ugMww9Po0whFUSfOYY4djVhUvCU_azn2SABA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-Content-Language: en-GB
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7762B924-E62B-11E9-B146-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/10/2019 21:35, Emily Shaffer wrote:
-> Hi George, it sounds like you are probably using Git for Windows
-> (https://github.com/git-for-windows/git).
+Jeff King <peff@peff.net> writes:
+
+> That works for the diagram in the code:
 >
-> I'm actually not very familiar with how folks who primarily use GfW as
-> their client manage their contributions to the main Git project.
-> However, I know there are plenty - the GfW maintainer is an active
-> contributor upstream.
+>            | *---.
+>            | |\ \ \
+>            |/ / / /
+>            x 0 1 2
 >
-> I'm CCing the Git mailing list as well as the GfW maintainer in the
-> hopes that you can get some help from somebody who regularly uses the
-> workflow you're trying to achieve. :)
+> where one of the parent lines is collapsing back to the left. But not
+> for this more mundane case:
 >
-> Unfortunately I use Linux everywhere and so I can't try to replicate
-> what you're doing - but once you have a good workflow and are able to
-> finish the My First Contribution tutorial we should still be able to
-> work together.
+>   | *-----.   commit 211232bae64bcc60bbf5d1b5e5b2344c22ed767e
+>   | |\ \ \ \  Merge: fc54a9c30c 9e30dd7c0e c4b83e618f 660265909f b28858bf65
+>   | | | | | | 
 >
-> Can you be specific about which "official website" you downloaded Git
-> from (share a URL), and paste the command you run and error message
-> you receive? Please also share the output you see when you run "uname
-> -a" in Git Bash.
-
-Hi,
-The top level domain would be https://gitforwindows.org/
-
-The download button should give the same pure run-time as the git-scm 
-website.
-
-However for this case you should go via the "Contribute" button to get 
-the full Windows SDK that will provide all those missing items for a 
-reasonable compile experience (including 'make' !). The SDK and the 
-regular 'Program Files' Git are independent so can both be used.
-
-I tend to develop on to of the patched Windows version of git, and 
-usually there is enough separation that the patches transfer direct to 
-the Linux upstream.
-
-HTHs
-
-Philip
-
->   - Emily
+> where we go straight down. I'm not sure I've fully grasped it, but it
+> feels like that distinction is the source of the off-by-one. I'm not
+> sure how to tell the difference here, though. I think it relies on the
+> next commit on the left-hand line being the same as the first parent (or
+> maybe any parent?).
 >
+> If I remove the use of parent_in_old_cols entirely, the merge looks
+> right, but the "collapsing" one is broken (and t4214 fails).
 >
-> On Thu, Oct 3, 2019 at 12:40 PM gespinoz gespinoz
-> <gespinoz2019@gmail.com> wrote:
->> Hello,
->>
->> Great! Thanks for the tips Emily! This mentor and internship program sounds awesome which is why I decided to apply. I’ll look through it to see if there’s a specific micro project available later on today and run it through you.
->>
->> I am having one slight issue, I’m not sure why I can’t use the “make” command to run Makefile, I’ve done it at school in the past so I was a bit familiar with Makefile and how it helps compile things. This is what I did. I downloaded git from the official git website, installed it, then I found the repository link and I cloned it in the git bash client to my desktop. I’m using windows at home but at school I used an iMac and when I cloned repositories I used iTerm and pushed to git within iTerm. I’m guessing the git bash is similar since I was able to open and edit files using vim commands similar in iTerm when I was going through the walkthrough. So now I’m stuck on the “make” step to see if I added the psuh feature in correctly. I also noticed when I looked at the INSTALL page on github it made it seem like maybe installing it through the website wasn’t the right idea? Maybe that’s why I can’t use make? I also can’t use man correctly. For both I get bash command does not exist. Should I install something similar to iTerm instead on windows and just start fresh? ty.
->>
->> George!
->>
->> On Thu, Oct 3, 2019 at 11:14 AM Emily Shaffer <emilyshaffer@google.com> wrote:
->>> Hi George,
->>>
->>> Great to hear that you're walking through the MyFirstContribution
->>> tutorial - that's a great introduction to how the Git project gets
->>> stuff done.
->>>
->>> This is my first time mentoring for Outreachy, but as I understand it,
->>> you will start by doing a microproject so everybody can see if you are
->>> a good fit for the project. The community discussed the list of
->>> microprojects for applicants to try in this mailing list thread:
->>> https://public-inbox.org/git/20190916184208.GB17913@google.com/
->>> I don't think you need to wade through the replies on that thread to
->>> determine whether the microproject you are interested in is available,
->>> although you're certainly welcome to. You can also ask me if you see a
->>> microproject you are interested in and I will be happy to help
->>> summarize it and point you in the right direction :)
->>>
->>> It is also probably a good idea for you to search that mailing list
->>> archive for "[Outreachy]" so you can see what Outreachy interns have
->>> done in the past and try to emulate how they submitted finished
->>> microprojects.
->>>
->>> The tutorial you said you're reading covers how to send your
->>> contributions for review when you're done, but if you find you're
->>> having trouble or want someone to check that you've formatted it
->>> right, you can let me know!
->>>
->>>   - Emily
->>>
->>> On Wed, Oct 2, 2019 at 9:55 PM gespinoz gespinoz <gespinoz2019@gmail.com> wrote:
->>>> Hello Emily,
->>>>
->>>> How are you? My name is George Espinoza and I am one of the applicants in the Outreachy internship program. I hope you are doing well! I wanted to introduce myself and connect as I am interested in the Git open source project that you are mentoring. I'm currently creating my work environment and tinkering with the git program while doing the myfirstcontribution walk-through. I have had a bit of experience using git for a school i attended over the summer that used it for clone and pushing repositories. We worked with iTerm and I learned how to use vim as well. I know some basics, in no way a master yet/ I hope to learn more as I progress in making contributions!
->>>>
->>>> After I set up my environment I will join the IRC channel and introduce myself in the project's public chat and go from there searching how and what I should first contribute.  I'll also join the mailing list. If you have any tips or advice that would be great! I'm looking forward to working with you and learning more about Open Source Projects! Thank you.
->>>>
->>>> sincerely,
->>>> George Espinoza
+> By the way, a useful trick I stumbled on to look at the coloring across
+> many such merges:
+>
+>   git log --graph --format=%h --color | grep -A2 -e - | less -S
+>
+> It looks like every octopus in git.git is colored wrong (because they're
+> the non-collapsing type).
 
+Thanks for analysing further.  I wonder if new tests added by
+Denton's BUG/PATCH series cover both kinds?  It would be good
+to make sure that any "fix" corrects known-broken cases while
+keeping the working cases still working.
 
+Thanks.
