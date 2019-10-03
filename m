@@ -3,75 +3,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 852D11F4BD
-	for <e@80x24.org>; Thu,  3 Oct 2019 22:31:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4A4C1F4BD
+	for <e@80x24.org>; Thu,  3 Oct 2019 22:37:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729228AbfJCWbs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Oct 2019 18:31:48 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56773 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727721AbfJCWbs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Oct 2019 18:31:48 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4758D93FD4;
-        Thu,  3 Oct 2019 18:31:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=zg8593iPNnp8
-        79IaF4YvcgyLMlg=; b=KSWqqi6LkPC7b0IFEW4s7JHj4GcWXVBxj1Md7o0Gthcp
-        Sx/3y22L+nEjvn6CWZtLQnk8rACWaXnCSaBBYJLVZQQiPoGCtvEKT6CAmCF/7arV
-        wCdmaloJU/N924BdqxkfoadG8jWNedcxFBIbNFLvTvVlKd73Ql2SM32f14Qhw1o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=cICHxC
-        pUBL8F2j+YWFKkdCI1t+er5nVUigx35m8YLtWt/FMVvX8NSM1vgjttZi0ct5+Kzq
-        IrLrP1HRYvYrgnAgyp7t9V6kiPfhaoGvklmwEW2T7I2m222/fm3djBJSwr1wH1HW
-        +7HCyJ3hvXjguHm0TOR92LVJpkkzzZeDmu/dM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3308793FD3;
-        Thu,  3 Oct 2019 18:31:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2610093FD2;
-        Thu,  3 Oct 2019 18:31:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Oct 2019, #01; Thu, 3)
-References: <xmqqsgoabes8.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BHvzyLf=Wwhv45qKdKjiTVwHtsMdfA0hd5Ejf5fmhHyPg@mail.gmail.com>
-Date:   Fri, 04 Oct 2019 07:31:39 +0900
-In-Reply-To: <CABPp-BHvzyLf=Wwhv45qKdKjiTVwHtsMdfA0hd5Ejf5fmhHyPg@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 3 Oct 2019 13:28:01 -0700")
-Message-ID: <xmqq7e5lbgvo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1730537AbfJCWh1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Oct 2019 18:37:27 -0400
+Received: from mail-lj1-f169.google.com ([209.85.208.169]:42635 "EHLO
+        mail-lj1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727302AbfJCWh1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Oct 2019 18:37:27 -0400
+Received: by mail-lj1-f169.google.com with SMTP id y23so4453837lje.9
+        for <git@vger.kernel.org>; Thu, 03 Oct 2019 15:37:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=WgHRHo0sUJ1fGVzo+ZOA9peyAm3Fy0HP/AJ6BV1bJG4=;
+        b=P2XgpN9xFDdHWHd0SeTLu5AF7Acv7UEEcS718fkFrSKPE7eaSZurspr+IEwe8DzpOh
+         obRnBs06n7TMd9BcVoIpKCaCq8RCoLu6KllfHp/dJ2Ck0h9xTj4i9iQTfvOVAto3Az2F
+         B1LijWN6boeVA2aqVsB9xle1elfdaEV3HkNqCOdkoGSUHj6zr+wLy6HxU/vM3R/OgBv7
+         a0c8mCRy5T9hSMHR7tCn0r9/b+LafQX6gdDMMLcZAQrwc0m26g+ZYnC0E0BqnOI7jCAF
+         S2vD+hljgCXLmUbAyAFZVeuMvyG77ng5YCy5Aoi0Ag4n//tQ0Zg1DWcBoXCEFlNXcYqP
+         hDNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=WgHRHo0sUJ1fGVzo+ZOA9peyAm3Fy0HP/AJ6BV1bJG4=;
+        b=svutcGa+u6kQGoK0NlNrnODIMEbiUGLp+UOzodyNqpMEcnF2aFUolZfj8IhzUlytzk
+         o0tBKi8OzMAYrCHKZPjcubNBdlCXIP1kmYxhXT3MUD2ak73EdZ+fMJfYHzXLMXPHJaDQ
+         /oBd9lfMFHNpo/xcnU+x64/HSFC+dwKSximuvjXw2/1MfiqGagNgUGCnJ7HOE29MusOV
+         4l53hzXL9Hw50K7WjhlhtsbrwLZcC3abtVluLCMD9roaXkMY03oAESw2LzGUM+6giAUg
+         m0ZGDYsXoo0UoNdVP7YLbwbW0ywN0za5sSABzbCXw3n/VuePPwhoyA1ZPgrMHJjlM1BQ
+         /U1Q==
+X-Gm-Message-State: APjAAAUpkYp8uhAGDvyufneUi+LGE/XOw7PgPwV1aRPQb58BWVpORxkp
+        7FAIiDk3TdlPZ+YrJBByTFvlfXLSYKFv9+nC+1NzCa+3
+X-Google-Smtp-Source: APXvYqyAl6RYIKGGD+yz8W5/BSfm6nI5jUGxcqOYZFDR1FpFnU8fZ4NW4Ie//fOtfvceBmTjNdwe9on9B2ePFTGcAok=
+X-Received: by 2002:a2e:5dc3:: with SMTP id v64mr7694267lje.118.1570142245368;
+ Thu, 03 Oct 2019 15:37:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 92C36BC6-E62D-11E9-AAF3-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Alexander Mills <alexander.d.mills@gmail.com>
+Date:   Thu, 3 Oct 2019 15:37:14 -0700
+Message-ID: <CA+KyZp6MKqL0mz-iCHGEcvZi09P+GmS7QEogX10-2OJ5nMPDRA@mail.gmail.com>
+Subject: bad error message - Not a git repository (or any of the parent
+ directories): .git
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+when running git commands outside of a git repo, we often see:
 
-> Actually, Ren=C3=A9 posted a code cleanup suggestion for patch 2/8, so =
-I
-> sent a V3 re-roll[1].  Could you pick up V3 instead of merging V2 down
-> to next?
->
-> [1] https://public-inbox.org/git/20191003202709.26279-1-newren@gmail.co=
-m/
+fatal: Not a git repository (or any of the parent directories): .git
 
-Thanks for stopping me.
+such a lame message lol.
+can we get an absolute path on this message in future git versions, eg:
 
-Will take a look.
+Not a git repository (or any of the parent directories): /home/ubuntu/xyz/.git
+
+ty
+
+-alex
+
+-- 
+Alexander D. Mills
+New cell phone # (415)730-1805
+alexander.d.mills@gmail.com
+
+www.linkedin.com/pub/alexander-mills/b/7a5/418/
