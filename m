@@ -7,87 +7,82 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 606541F4BD
-	for <e@80x24.org>; Thu,  3 Oct 2019 22:28:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1418D1F4BD
+	for <e@80x24.org>; Thu,  3 Oct 2019 22:31:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730960AbfJCW2T (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Oct 2019 18:28:19 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62115 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729219AbfJCW2T (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Oct 2019 18:28:19 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CCEA693FA6;
-        Thu,  3 Oct 2019 18:28:18 -0400 (EDT)
+        id S1728531AbfJCWbO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Oct 2019 18:31:14 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59218 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727721AbfJCWbO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Oct 2019 18:31:14 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 00E6D8DBF7;
+        Thu,  3 Oct 2019 18:31:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=unreNSd5SyEL1iH/EQz06BqxGok=; b=hiWDZb
-        mQBTBI8v87FWbFW/mhs4afQ6jONjJ8DtxXfSgJrHOMKFISZJfMk85y0B2z9IBpZb
-        WIEwTz9s5wHAzn97ZSlAwtgpNIBzpYOQTw+OuBPErYNgDUl39mzUyVzrwWpRutyM
-        FRwsPr7XLuHXO5EA+5dIcaqCf8eLCk8GwQ0us=
+        :content-type; s=sasl; bh=yp6MqFM0iQ5B3amPIsncbWMCCNE=; b=kUY83d
+        cGijyiyGVtI4H7Q6n2EgdpPxagtcOYcf1004GGvgYu/ryq6ajlZ7nG5gmTPSGF7z
+        ucpvOaXdUUycassKotRh+hjoQm+c1KiHbxu/EMhBik2TFpmDQ70kZpfZUOsNUBDb
+        LXK08QYBr8ZWBBKkFL3wzloGckLhr3kdm/8QI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AmgAiVt6ljXEkAzDkewez+Tj/8brV4+I
-        AjnrqOnwWHusbjAMoRXU2D9eqAbT5q4+P5E7E24F38mMJceArjeDoD5Ok0YMYj0/
-        BQseZIBLHm/n+Yxh8JIUvnLfv3e5NvAJ2Kb+gs9Qx6lPYujKtvPYnSfyuc3SqoeB
-        1htlWYC1MzM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C3CC893FA5;
-        Thu,  3 Oct 2019 18:28:18 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=BM+8CZ5CWUoy2m6Hej9OY1fhJ6FFN4GD
+        jwiymWpyNJOCw/DgncRdFn+6kXuNTzuqr8S9X4Lx91wnkGfVPvSsOWUiIPwDuU/0
+        aX//7KXXA5GZf9BEh7UtYGkucGBKphT/wp6rey/BAJwCccIVp3z2jVJSZ2EVIeyL
+        hU+LIKLHa9M=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EDD858DBF6;
+        Thu,  3 Oct 2019 18:31:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E824393FA4;
-        Thu,  3 Oct 2019 18:28:15 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2052B8DBF5;
+        Thu,  3 Oct 2019 18:31:08 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 00/11] New sparse-checkout builtin and "cone" mode
-References: <pull.316.git.gitgitgadget@gmail.com>
-        <pull.316.v2.git.gitgitgadget@gmail.com>
-        <47186f02-164d-fa41-f65c-05a197e4a046@gmail.com>
-Date:   Fri, 04 Oct 2019 07:28:13 +0900
-In-Reply-To: <47186f02-164d-fa41-f65c-05a197e4a046@gmail.com> (Derrick
-        Stolee's message of "Tue, 1 Oct 2019 09:40:08 -0400")
-Message-ID: <xmqqftk9bh1e.fsf@gitster-ct.c.googlers.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2019, #01; Thu, 3)
+References: <xmqqsgoabes8.fsf@gitster-ct.c.googlers.com>
+        <20191003182838.GA173211@google.com>
+Date:   Fri, 04 Oct 2019 07:31:06 +0900
+In-Reply-To: <20191003182838.GA173211@google.com> (Emily Shaffer's message of
+        "Thu, 3 Oct 2019 11:28:38 -0700")
+Message-ID: <xmqqbluxbgwl.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 17DAFEEC-E62D-11E9-A4A5-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 7F14926C-E62D-11E9-A301-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-> On 9/19/2019 10:43 AM, Derrick Stolee via GitGitGadget wrote:
->> This series makes the sparse-checkout feature more user-friendly. While
->> there, I also present a way to use a limited set of patterns to gain a
->> significant performance boost in very large repositories.
+> On Thu, Oct 03, 2019 at 02:04:39PM +0900, Junio C Hamano wrote:
+>> Here are the topics that have been cooking.  Commits prefixed with
+>> '-' are only in 'pu' (proposed updates) while commits prefixed with
+>> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+>> the integration branches, but I am still holding onto them.
 >> 
->> Sparse-checkout is only documented as a subsection of the read-tree docs
->> [1], which makes the feature hard to discover. Users have trouble navigating
->> the feature, especially at clone time [2], and have even resorted to
->> creating their own helper tools [3].
+>> You can find the changes described here in the integration branches
+>> of the repositories listed at
 >> 
->> This series attempts to solve these problems using a new builtin.
+>>     http://git-blame.blogspot.com/p/git-public-repositories.html
+>> 
 >
-> I haven't heard anything about this series since Elijah's careful
-> review of the RFC. There are definitely areas where this can be
-> made more robust, but I'd like to save those for a follow-up series.
+> Hi Junio,
 >
-> Junio: I know you didn't track this in the recent "what's cooking"
-> list, and I don't expect you to take it until I re-roll v3 to
-> include the .gitignore interaction I already pointed out.
+> How do you feel about
+> https://public-inbox.org/git/20190930220355.108394-1-emilyshaffer@google.com/
+> which fixes a user-facing SIGABRT during partial clone operations? It's
+> reviewed by Peff and Christian.
 
-I have made a mental note that says "expecting v3, a
-reroll. cf. <7d87fe4b-160c-34c2-db6d-4a56fd919755@gmail.com>"; there
-is no existing entry to hang it below in the "what's cooking"
-report, though X-<.
+Already picked up on the tip of cc/multi-promisor and pushed out, I
+think, as part of yesterday's integration cycle.
 
-
+Thanks for fixing.
