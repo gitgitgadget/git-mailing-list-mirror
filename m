@@ -7,78 +7,85 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2DF51F4BD
-	for <e@80x24.org>; Thu,  3 Oct 2019 02:11:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEEAD1F4BD
+	for <e@80x24.org>; Thu,  3 Oct 2019 05:02:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727910AbfJCCLY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Oct 2019 22:11:24 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50960 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726267AbfJCCLY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Oct 2019 22:11:24 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 621B084BBA;
-        Wed,  2 Oct 2019 22:11:22 -0400 (EDT)
+        id S1727325AbfJCFCJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Oct 2019 01:02:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55789 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726816AbfJCFCJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Oct 2019 01:02:09 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 63B981EDA7;
+        Thu,  3 Oct 2019 01:02:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=29UTmm0rGryBe3W9BHUTTjnbHaw=; b=QmHD/U
-        2o69LmmpGaQd0mhmlAbv5jc3STtakpggUSk3byknXadeIzEXDWYr0ZxES+3zRnPE
-        BaveCBu84mtA/BYUwO584CepYH9AC3e0XBY43eDi6eOh59LJ9hXTTjsuLHXyqgMK
-        iInV/bHeeiM339GRV0uiN1kbTYSZuWIWoLLTI=
+        :content-type; s=sasl; bh=D0JS86sFJqscvFNHKX9vKqvipAw=; b=YIXmDR
+        04dgEhyg7/7Z5f/gpd6AX93Ux3IalZ2rfFYO2o6E2C0dAa8MIS9SJ0YCgXKvw/ev
+        Mq0M2nH5Gq66eNB3tg/uDUG0gRwrWvd3bQUElFxyU4t+eFHAjcqBzCRmgJ8ubwMr
+        ho8Baplfb6vGKjVq9Vdtkmm5eHyNQnbd45o8w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fD2oNB25tiFZ9azGe/2iWzOUB3AoI4xx
-        HhtffEEtDtzvzPQ5Qg7VzcuzXbN+J1aZRmKkL1G9GU2wvh2NZ7dv6Obbu68ds9L9
-        VCOQGunp8rUBez+9A6ZLyvnQAtJYrnuZVvYU9mzSK3/V0SpJDqA8JvnXgp9dCODY
-        /lfedmlMUbc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 44FBD84BB9;
-        Wed,  2 Oct 2019 22:11:22 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=a4PnLst6h+TjCBgnOFmoauvuBFkP3p59
+        WAzPiicI4Ax0K3Z2raJm7jMt/uIijO7ECRCcxC4MXim9FALuWIuX88zYn+ohNJYN
+        6S65NbCrmAL++lth4ZQ7jkvNVLpaKclOfkcqW8O9BrHuFzOPqBiYCnSxzMXD48q+
+        JqgM6+t7vFM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A1E9E1EDA6;
+        Thu,  3 Oct 2019 01:02:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 70D1184BB8;
-        Wed,  2 Oct 2019 22:11:19 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A08F01EDA5;
+        Thu,  3 Oct 2019 01:02:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/1] range-diff: internally force `diff.noprefix=true`
-References: <pull.373.git.gitgitgadget@gmail.com>
-        <pull.373.v2.git.gitgitgadget@gmail.com>
-        <9993a607beaafc66f72e1be3f158074cd121b4bb.1570050645.git.gitgitgadget@gmail.com>
-Date:   Thu, 03 Oct 2019 11:11:17 +0900
-In-Reply-To: <9993a607beaafc66f72e1be3f158074cd121b4bb.1570050645.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Wed, 02 Oct 2019
-        14:10:47 -0700 (PDT)")
-Message-ID: <xmqq1rvud1dm.fsf@gitster-ct.c.googlers.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, avarab@gmail.com, l.s.r@web.de,
+        michal.kiedrowicz@gmail.com
+Subject: Re: [RFC PATCH v5 2/3] grep: make PCRE2 aware of custom allocator
+References: <20190807213945.10464-1-carenas@gmail.com>
+        <20190809030210.18353-1-carenas@gmail.com>
+        <20190809030210.18353-3-carenas@gmail.com>
+        <nycvar.QRO.7.76.6.1908271057280.46@tvgsbejvaqbjf.bet>
+        <CAPUEspjJNSrJQT7xV2fsdp2t5odW5fzzPdDxuar_5x_JPUtf6Q@mail.gmail.com>
+Date:   Thu, 03 Oct 2019 14:02:02 +0900
+In-Reply-To: <CAPUEspjJNSrJQT7xV2fsdp2t5odW5fzzPdDxuar_5x_JPUtf6Q@mail.gmail.com>
+        (Carlo Arenas's message of "Tue, 27 Aug 2019 04:51:14 -0700")
+Message-ID: <xmqqwodmbewl.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 16A32734-E583-11E9-9E8C-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: F0A8BA72-E59A-11E9-98F2-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Carlo Arenas <carenas@gmail.com> writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> When parsing the diffs, `range-diff` expects to see the prefixes `a/`
-> and `b/` in the diff headers.
->
-> These prefixes can be forced off via the config setting
-> `diff.noprefix=true`. As `range-diff` is not prepared for that
-> situation, this will cause a segmentation fault.
->
-> Let's avoid that by passing the `--no-prefix` option to the `git log`
-> process that generates the diffs that `range-diff` wants to parse.
-> And of course expect the output to have no prefixes, then.
+> On Tue, Aug 27, 2019 at 2:07 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>>
+>> Unfortunately, this is _still_ incorrect.
+> ...
+> Just to clarify, I think my patch accounts for that (haven't tested
+> that assumption, but will do now that I have a windows box, probably
+> even with mi-alloc) but yes, the only reason why there were references
+> to NEDMALLOC was to isolate the code and make sure the fix was
+> tackling the problem, it was not my intention to do so at the end,
+> specially once we agreed that xmalloc should be used anyway.
+> ...
+> apologize for the delays, and will be fine using your squash, mine,
+> the V6 RC (my preference) or dropping this series from pu if that
+> would help clear the ugliness of pu for windows
 
-Looks good.  Thanks.
+So,... have we seen any conclusion on this?  Can any of you guys
+give us a pointer to or copies of the candidate to be the final
+solution of this topic, please?
+
+Thanks.
