@@ -8,55 +8,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 613AA1F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 15:09:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58DCD1F4BD
+	for <e@80x24.org>; Fri,  4 Oct 2019 15:09:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389708AbfJDPJ2 (ORCPT <rfc822;e@80x24.org>);
+        id S2389706AbfJDPJ2 (ORCPT <rfc822;e@80x24.org>);
         Fri, 4 Oct 2019 11:09:28 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36803 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388802AbfJDPJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33612 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389165AbfJDPJ2 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 4 Oct 2019 11:09:28 -0400
-Received: by mail-wr1-f65.google.com with SMTP id y19so7682212wrd.3
-        for <git@vger.kernel.org>; Fri, 04 Oct 2019 08:09:25 -0700 (PDT)
+Received: by mail-wm1-f68.google.com with SMTP id r17so9834554wme.0
+        for <git@vger.kernel.org>; Fri, 04 Oct 2019 08:09:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7LykGDhs2SU76jy8bLReMk7rmhtvnUK5OKGGpveG5nY=;
-        b=cPqRAlHbrAdaRQmNzuNQn4cxcUtBqeMVwFsaURXbVUNJKYicbV5ELbvX1A95Vbp6x4
-         fG928Iy7VuGnOwAjxSSl1cCfFlIhkJlIL3MTXPcXKN2C5wc2xL2um0w5f9qx7hPIdH9J
-         6v+P/c6AlaiAsHMQMDck6h87R7rHQEkvPq5I7rsHeEI+HvrpMfaufVjWhRknt8/pcSna
-         5iW/jGflVd6wR2Diy44t+8cAKBaDzlDL6lPneppZ9kpEm2KgxvBaUwBP7QS6y8uJK1Md
-         gRIHV33anF+BxJ5Yxd2Tp1XOg/O8KTxenU3Xrr6uJnngQSXPEkg/M6P3114vDaMIqXa+
-         6PcQ==
+        bh=vvWfyWe/pSI2Q4yl+6HpmxNLfmif9NwMsTGV9UJkH8c=;
+        b=aChO4mDdhq0lHf4t5DwH5Rk8os9Uzbvsc8gYqGxD04jm5Ag48aguODSEfslx+6OhST
+         Os5JPnJ59KAuCLOCePh3AnR7HjLNkSb44GUr+2r7EBn/gvRVH5p0U2KlzZOfPicEYOvD
+         6Lo9rFULdT0o7tb8S+kADElkpC3ZXpBtzUuAeIp+nVQl5DvLqPznPTmmCO5f5/ryqihI
+         rMAveYPDdXSA4d9Mi8fUz8pNFLpEdVQt8F4oGloVgc988FA3uRzF4bHyZeyRabAfsgfL
+         rUf63lkqf6/eFNYiO1ergi6h++pAbDICKSuDj3eYlVmFDq4OKOecFimCIV2u37Bh+X+l
+         y0Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7LykGDhs2SU76jy8bLReMk7rmhtvnUK5OKGGpveG5nY=;
-        b=i1VUWyBk+nHZ38gry7eeVmYOG75gpWHYoeLXt/T4A//O+qZUXj2X0abTO8xE8WMArI
-         ToFE6N8G2M/+FXZSVkB6tR79DBq2HQnaZ/MenyOOaWuVX0GfPIclfF++xnFDbFabtfWz
-         +NG71M8NkFiyzUcytV66RNkyQpLCdDrBHFzs/BqnIqKIZ4KNvHUw+tSqPAyn+1/k4jMa
-         mVK3fq3+t6Fh0Pe+MvnT/Zn/X92P0KCUKygBhMM/OqNtx+OPSW385yzgtH6zYQ2LcB1x
-         46uoxDw7FJLc4hlcZ2zjI+XnS1O2UwosSkfsjw1/NE6j2BiWjT1PtZqe7gTNVmHI0Wrj
-         C//Q==
-X-Gm-Message-State: APjAAAUUEoPR0GcUqyiIB2YGzjFPunMiSMtSImkmMUkNJbAkkyI0+ZJp
-        OBJ1Wpi1OxJbKYOIIhRaOTrm1wg3
-X-Google-Smtp-Source: APXvYqwVfbiV4KD6dywTtpTZJAr1TfAiNYc6buwukaJobB0IZ/Buz5loJF5PKGq2/FhWopQDOtPxhA==
-X-Received: by 2002:adf:e701:: with SMTP id c1mr12295404wrm.296.1570201765074;
-        Fri, 04 Oct 2019 08:09:25 -0700 (PDT)
+        bh=vvWfyWe/pSI2Q4yl+6HpmxNLfmif9NwMsTGV9UJkH8c=;
+        b=Y0vd2Jt1fPZ1V+YLuYOo1l/xGc3OzIzIN7nzE11bGwh3L0akJmVWLZ9EDq+i5pWVMR
+         YKVJj4uMLToxCo7AS41NiASA508nyvFiEORr12KVunvohlHdGeN7lhvv2PsE7nNcOb1t
+         Sl7QpSoDlbIN+eFfO6zhWuravVOhYG9SeMpreAd+/jaiFaHAZc8OWLBBTMdkUBCq0G8r
+         f7bsO4GsDLZ2rX+SXR/pwGpjsQPOwpCqsLBJY3BjBdMUI30rLqr5bXDzLu8LUiSQhI/i
+         qe9AE7wpZjp/AvZ6v/facLKBDJuEKfLO+Z0eenMMl6WQENGibyC8CDAl4+ZsxrGeGi4b
+         kfJA==
+X-Gm-Message-State: APjAAAVCjR4iqJ7W5sOFuO7SUgEiMdlMHJ96czV2ceUFT4gPcdyAtfIr
+        Vi37UtT0dGqGqcpdRgLKGA0Gkpzd
+X-Google-Smtp-Source: APXvYqw7vaE9ock/zuSTprMUBsjgZfgGU8R3YzJGrOLlm5echdF2aiZXx48dHjF8KXmET1DyIcaOmA==
+X-Received: by 2002:a1c:9988:: with SMTP id b130mr11715794wme.164.1570201766024;
+        Fri, 04 Oct 2019 08:09:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l11sm7531305wmh.34.2019.10.04.08.09.23
+        by smtp.gmail.com with ESMTPSA id x5sm5366715wrt.75.2019.10.04.08.09.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 Oct 2019 08:09:23 -0700 (PDT)
-Date:   Fri, 04 Oct 2019 08:09:23 -0700 (PDT)
-X-Google-Original-Date: Fri, 04 Oct 2019 15:09:09 GMT
-Message-Id: <pull.288.v3.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.288.v2.git.gitgitgadget@gmail.com>
+        Fri, 04 Oct 2019 08:09:25 -0700 (PDT)
+Date:   Fri, 04 Oct 2019 08:09:25 -0700 (PDT)
+X-Google-Original-Date: Fri, 04 Oct 2019 15:09:10 GMT
+Message-Id: <4d0b38125a13d85963be5e524becf48271893e2b.1570201763.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.288.v3.git.gitgitgadget@gmail.com>
 References: <pull.288.v2.git.gitgitgadget@gmail.com>
+        <pull.288.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 00/13] ci: include a Visual Studio build & test in our Azure Pipeline
+Subject: [PATCH v3 01/13] push: do not pretend to return `int` from
+ `die_push_simple()`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,97 +66,41 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Denton Liu <liu.denton@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git's Continuous Integration (CI) includes an Azure Pipeline that builds Git
-on Linux, macOS and Windows, in the former two cases even in multiple
-configurations (using GCC vs clang, 32-bit vs 64-bit, etc). On Windows, we
-only build using GCC, using (a subset of) Git for Windows' SDK.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Recently, a patch series made it into Git that re-instates the ability to
-generate project files for use with Visual Studio. The idea there being:
-contributors can check out a special branch that has those generated files
-in one generated commit on top of e.g. Git for Windows' master, allowing the
-contributors to build Git in Visual Studio, without the need for downloading
-Git for Windows' SDK (which weighs quite a bit: ~600MB download, ~2GB disk
-footprint). The tests can then be run from a regular Git for Windows Bash.
+This function is marked as `NORETURN`, and it indeed does not want to
+return anything. So let's not declare it with the return type `int`.
+This fixes the following warning when building with MSVC:
 
-This patch series adds that axis to Git's Azure Pipeline: the project files
-are generated, MSBuild (which is kind of the command-line equivalent of
-Visual Studio's "Build" operation) is used to build Git, and then a
-parallelized test job runs the test suite in a Portable Git.
+	C4646: function declared with 'noreturn' has non-void return type
 
-These patches are based on js/visual-studio.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/push.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Changes since v2:
-
- * The overflow check introduced in v1 was consolidated into a single
-   helper.
-
-Changes since v1:
-
- * "While at it", we now also check for overflows when doing that -1 -
-   <unsigned> arithmetic.
- * The JUnit-style XML is finalized also in case that the script aborts e.g.
-   due to an incorrect number of arguments in a test_expect_success call.
-
-Johannes Schindelin (13):
-  push: do not pretend to return `int` from `die_push_simple()`
-  msvc: avoid using minus operator on unsigned types
-  winansi: use FLEX_ARRAY to avoid compiler warning
-  compat/win32/path-utils.h: add #include guards
-  msvc: ignore some libraries when linking
-  msvc: handle DEVELOPER=1
-  msvc: work around a bug in GetEnvironmentVariable()
-  vcxproj: only copy `git-remote-http.exe` once it was built
-  vcxproj: include more generated files
-  test-tool run-command: learn to run (parts of) the testsuite
-  tests: let --immediate and --write-junit-xml play well together
-  ci: really use shallow clones on Azure Pipelines
-  ci: also build and test with MS Visual Studio on Azure Pipelines
-
- Makefile                                   |   4 +
- azure-pipelines.yml                        | 164 ++++++++++++++++++++-
- builtin/push.c                             |   4 +-
- cache.h                                    |  13 ++
- compat/mingw.c                             |   2 +
- compat/vcbuild/scripts/clink.pl            |  48 +++++-
- compat/win32/path-utils.h                  |   5 +
- compat/winansi.c                           |   2 +-
- config.mak.uname                           |  19 ++-
- contrib/buildsystems/Generators/Vcxproj.pm |   3 +
- read-cache.c                               |   4 +-
- sha1-lookup.c                              |   4 +-
- t/helper/test-run-command.c                | 153 +++++++++++++++++++
- t/test-lib.sh                              |  38 +++--
- 14 files changed, 430 insertions(+), 33 deletions(-)
-
-
-base-commit: aac6ff7b5beeea9bca66ecda6eec60fc1dd447ec
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-288%2Fdscho%2Fazure-pipelines-msvc-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-288/dscho/azure-pipelines-msvc-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/288
-
-Range-diff vs v2:
-
-  1:  4d0b38125a =  1:  4d0b38125a push: do not pretend to return `int` from `die_push_simple()`
-  2:  8800320590 <  -:  ---------- msvc: avoid using minus operator on unsigned types
-  -:  ---------- >  2:  7fe2a85506 msvc: avoid using minus operator on unsigned types
-  3:  8512a3e96d =  3:  e632a4eef4 winansi: use FLEX_ARRAY to avoid compiler warning
-  4:  0345b08f54 =  4:  cd96d7ff70 compat/win32/path-utils.h: add #include guards
-  5:  5add01f8ff =  5:  bf09257f65 msvc: ignore some libraries when linking
-  6:  5c880f923e =  6:  39c707464c msvc: handle DEVELOPER=1
-  7:  1f2245a228 =  7:  91b09cfdd8 msvc: work around a bug in GetEnvironmentVariable()
-  8:  582b299634 =  8:  cca891450d vcxproj: only copy `git-remote-http.exe` once it was built
-  9:  38ccf999e7 =  9:  e6e60b3c2b vcxproj: include more generated files
- 10:  24b1c7bff3 = 10:  d2c4973431 test-tool run-command: learn to run (parts of) the testsuite
- 11:  7be13d19e1 = 11:  0644a2f8da tests: let --immediate and --write-junit-xml play well together
- 12:  bde1e8ef65 = 12:  4495c392fd ci: really use shallow clones on Azure Pipelines
- 13:  7af1c01a08 = 13:  b1ff8eff4d ci: also build and test with MS Visual Studio on Azure Pipelines
-
+diff --git a/builtin/push.c b/builtin/push.c
+index 021dd3b1e4..d216270d5f 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -143,8 +143,8 @@ static int push_url_of_remote(struct remote *remote, const char ***url_p)
+ 	return remote->url_nr;
+ }
+ 
+-static NORETURN int die_push_simple(struct branch *branch,
+-				    struct remote *remote)
++static NORETURN void die_push_simple(struct branch *branch,
++				     struct remote *remote)
+ {
+ 	/*
+ 	 * There's no point in using shorten_unambiguous_ref here,
 -- 
 gitgitgadget
+
