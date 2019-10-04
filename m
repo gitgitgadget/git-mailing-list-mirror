@@ -2,142 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A98A21F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 21:59:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED45A1F4C0
+	for <e@80x24.org>; Fri,  4 Oct 2019 22:04:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731466AbfJDV7I (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 17:59:08 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:40703 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730969AbfJDV7I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 17:59:08 -0400
-Received: by mail-pl1-f196.google.com with SMTP id d22so3740656pll.7
-        for <git@vger.kernel.org>; Fri, 04 Oct 2019 14:59:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uGRQdo72ga1rH+Lx43aTF/JRx+An1EYlCRTNpV3dyVQ=;
-        b=s5SQBd1Rzu4vn++GZyTfUh33GfPeaENeNBBdDTpHiamc/GKO5bHoJ7DU+2KgwV9LC4
-         KrxmyWrESE/Xc8venS1LWBmiQTUwZPkXDDenBmn3QGHzhm1XiXQf9TBIpUVA1OnPwbgL
-         s+dBjkoxjiqM1LCEJYOk9KL31ttF2t99N6LztsyvbIDQ9Fr3bbha/mIwYgHoLV/4pxkD
-         idHuH2ze0UeMx9skPn8qykyAw+cYQTNtgdcabZQAAwPZ9UGqtVzuNazl3dbDpNkAyEpo
-         8d2oYsbiKNSw6IFobh3tgtLLIiVYRngwk1tUpiM39uiL/DBWGK8f4X8Wg9eGjCmZ/ccZ
-         p2dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uGRQdo72ga1rH+Lx43aTF/JRx+An1EYlCRTNpV3dyVQ=;
-        b=fG1cAi0SzZPp8+YRUagtdvpxedCSb8eXE9BoMwCnnwb1njba6f8c0FLGiMTjGZbPR1
-         uFl2JmMMRNMQL1ZF5vmtK3IroRW4DSnnXYFlFagMzViinHW13TbAUCM4a+/QzD/IbGRn
-         DPKQ8oYBJSIkknZVKecTVZbpx1OKcmFaTGKTXCuThWwb/++CRvfsmnYFV1t6PShwyc2z
-         5yPFi2V/y5Onz0rYQ/3zMPDiRM4APoQTWI3v64Q5ITto6Ckk0UdQ7nEHqbtS9Iun3zuK
-         lBQ62Te0bYSdoMlTjumxlY9I3DC7PJScU4XFRAPb3ymzRDBBXvKZBAwQ+ByR3AQT9CyX
-         EHSw==
-X-Gm-Message-State: APjAAAWIO2pRaz47IMgfLkBblsV4lUALDLH3Koyawsi1qoqqDladXv4X
-        Lf0SujeG+Jw8e3c/tyMa5nUxo6yT
-X-Google-Smtp-Source: APXvYqx0xZHmp7RFowQM0360TtCdQAPzPIB7gFt87J/23hsm8CBRuqvckiaIaUOE87VvS5WpU8+u4w==
-X-Received: by 2002:a17:902:7610:: with SMTP id k16mr17468510pll.260.1570226346674;
-        Fri, 04 Oct 2019 14:59:06 -0700 (PDT)
-Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id k5sm6024115pgb.11.2019.10.04.14.59.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Oct 2019 14:59:05 -0700 (PDT)
-Date:   Fri, 4 Oct 2019 14:59:03 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH] apply: tell user location of corrupted patch file
-Message-ID: <ec38908d05f0d40190173158ef3f0753fa9f1184.1570226253.git.liu.denton@gmail.com>
-References: <20191002184546.GA22174@generichostname>
+        id S1731179AbfJDWEE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 18:04:04 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59639 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728356AbfJDWED (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 18:04:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570226638;
+        bh=7qO5ed6QySn8DWKzwiTxwoY1uuzkdoNWUq10QyIhKUY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=E4vC2E4OW/rra8NeRs4Oc1iYiKvgAPo3YB1ly4oDxxTG1uK3GOIhIsrGR896QcSLp
+         nf0wZfSxNMAP0L8gqnZ3mIdIl5kq9280lzYYt5BtGBtMQaaWiPNo0jke5twusKsJsQ
+         a5qUtxiwAec/tsnd5HoTPSKRtFDarB2nrFjY3VnU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N4z6q-1i6RUA0XtE-010tIR; Sat, 05
+ Oct 2019 00:03:58 +0200
+Date:   Sat, 5 Oct 2019 00:03:43 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] fetch: let --jobs=<n> parallelize --multiple, too
+In-Reply-To: <xmqqftk9870h.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910042356450.46@tvgsbejvaqbjf.bet>
+References: <pull.369.git.gitgitgadget@gmail.com> <818936f1e0389820fdfa31f36c6f75e8a4bb1a07.1569930816.git.gitgitgadget@gmail.com> <xmqqftk9870h.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191002184546.GA22174@generichostname>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:FbGvTe7JOmn6G6taZTlWOYV/FNJD6MqIKxTChfmYHO7UBQ61AVC
+ syfuTF/1l+DRvtT1JeifZ1ZsFRU5Q3xde9uBjvaGp5aGjEj7ixP7D/4PfGAiXQgHAXBIWRo
+ xJY5KXcXaa8qkeUxzvdzM396nsg0luf6/3M/uShS+s9QyvHzv3qnoXQqAAk84QlPkeZjt4C
+ 6vsf/Qn53JBNyfRaOmX1A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vdpgqczbwOI=:IkOYhFLErcCLL+8rsH5WJa
+ 1XGPpNlUeuwz6Jz4Fm8vjACw2GD2mhVL2J7ia3ijsuRhy74yJ7c6RqnkJZtu5LalBM5KQv3nO
+ dgVoNopHdEqp3CZc8/kn2mLp9qgmvl9mdF89SC2DNJMjzltF45NYZ9NPTAycBM9VeL10EmQkY
+ T2QieY3wvQgED2VsbHYvxDq6qkD56eyY96ZTYR9EVEwhG9g6X6/oRAt1KUFO7VLmTSCl/brNJ
+ KCW/I+N8PdJCFSASOfWLydGdMsWlXRbotSnOdMhyJ1X1y58LsX4j5mJgw+xLOjClnIwyK7DWL
+ q1yXr7Ws4OfTVj41GP6Zp3Ye7KX16Swv9lkyX829AZzOvCJOpqVl2trLEa0xWVlJy/vpRPlXN
+ CldMhJ2ow2wuz43BsDcByaJILGPQed3BlhFJ2TLMf+tRwifnPcYboZosZC1cighU6rtYorVXe
+ CCKJ8utWw+n+YOWvSnyQbYslGZEw+BCSYJSgBKqAtWl+xutwH7Rzv5uADvdqq0buElN9tkXV7
+ a3qDM+LIsJNpUL5bQobAPKWeQBuXWS7Or2/wusMAaHTqodgY+tIwAmM8tH/LZkEw7AO507zHr
+ FZ2bFId184SDHc9Op0+vzmUYHVUJpa+hT+gSBlTlwkfZXXKiY8wKyBnrrhdRkRwoHpMWzWbox
+ LQcWBd9slzp9jtaMXrJeMWi3WwYJ6cn+b3pbm9cAAQqsjDy5g/rc+VOjcj8XlSo2Rx4IQUVKn
+ ST78b1oCb3HPVjApqFz+jcqaj2rGzUjUNP8BfratOFaraBfOeFX5zcsvTF3s4XTOP7Mg37a7M
+ +jq4ru+UHm6dmSLdIq8iOOvcaIWUPG9c1JMD3AuykbLa5LhO9SGdPXR0ZSdwwqSPN3KFCRj57
+ oUSW6raRsYbkAqSEQ5rC1H14k3i79Zf7eglZv8dwBg5tSVDykrj3+28L8nHN/XBOufnW5Eo0r
+ AtCCav0n2oz5yO/6grTBi5uQu9ZeuMRh/0i6472e7AyIZHhgTD07pKVuGlyy6c9ewRyWGs2v0
+ sD/7BsH6zK9VVM/HG0c45lDFj1Eytl6F3Ap5DlNUnX1/pB9aCimt4mOTukkq4OV9j8v9GHkgx
+ TY3qhLQZSXnaJ9fxJQYeReTpV2PVaCgRh+M+7+3Emz6pQz7ySbPF5ee5EIPIX2HgGelxKR6Wb
+ 8KX/RUd17Dg6pNFooq77Y+nHLHwa+VIf9Cs1/MGZ07eitYh4OwkimmHcinurJd/lSRzXc2k06
+ 489tc9rL6i40ZYttdWBErO/4tCGUZNbxUvJkHeavcn9pB0mv9iXat59hiA/0=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When `git am` runs into a corrupt patch, it'll error out and give a
-message such as,
+Hi Junio,
 
-	error: corrupt patch at line 87
+On Fri, 4 Oct 2019, Junio C Hamano wrote:
 
-Casual users of am may assume that this line number refers to the <mbox>
-file that they provided on the command-line. This assumption, however,
-is incorrect. The line count really refers to the
-.git/rebase-apply/patch file genrated by am.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > +test_expect_success 'parallel' '
+> > +	git remote add one ./bogus1 &&
+> > +	git remote add two ./bogus2 &&
+> > +
+> > +	test_must_fail env GIT_TRACE=3D"$PWD/trace" \
+> > +		git fetch --jobs=3D2 --multiple one two 2>err &&
+> > +	grep "2 tasks" trace &&
+>
+> I think this one expects to match this in run-command.c:
+>
+> 	trace_printf("run_processes_parallel: preparing to run up to %d tasks",=
+ n);
+>
+> > +	grep "one.*128" err &&
+> > +	grep "two.*128" err
+>
+> and these expect to match this in fetch.c
+>
+> 		strbuf_addf(out, _("could not fetch '%s' (exit code: %d)\n"),
+>
+> It would have been nice to fellow contributors, if the grep patterns
+> were written a bit more tightly.  It would allow people who debug
+> test failure to more easily identify which message the patterns are
+> trying to catch.
 
-Teach am to print the location of corrupted patch files so that users of
-the tool will know where to look when fixing their corrupted patch. Thus
-the error message will look like this:
+This is a two-edged sword: when those messages change (for whatever
+reason), the regression test will fail, too, but it actually wants to
+test the parallel fetch, not the trace message of
+`run_processes_parallel`.
 
-	error: corrupt patch at .git/rebase-apply/patch:87
+So I tried to prevent such an unactionable regression test failure. But
+I see your reasoning, and I now thought about it and consider those
+error messages to be rather stable.
 
-An alternate design was considered which involved printing the line
-numbers relative to the output of `git am --show-current-patch` (in
-other words, the actual mail file that's provided to am). This design
-was not chosen because am does not store the whole mail and instead,
-splits the mail into several files. As a result of this, this would
-break existing users' workflow if they piped their mail directly to am
-from their mail client, the whole mail would not exist in any file and
-they would have to manually recreate the mail to see the line number.
+Will fix.
 
-Let's avoid breaking Junio's workflow since he's probably one of the
-most frequent user of `git am` in the world. ;)
+> In any case, the latter two needs to be guarded against
+> gettext-poison, I would think.  Without addressing the vagueness of
+> the pattern, at least the following needs to be squashed to help the
+> CI.
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- apply.c                | 2 +-
- t/t4012-diff-binary.sh | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+Indeed. I missed this because the GitGitGadget PR build was all green.
+My guess is that I messed up the definition of that PR build (it is
+_not_ what's in `azure-pipelines.yml` because that would not work
+correctly when PRs target older commits). I _think_ I fixed it by
+setting `export GIT_TEST_GETTEXT_POISON=3Dtrue` explicitly (previously I
+only set the `jobname`, expecting `ci/run-build-and-tests.sh` to pick up
+on that.
 
-diff --git a/apply.c b/apply.c
-index 57a61f2881..b0ba2e7b1a 100644
---- a/apply.c
-+++ b/apply.c
-@@ -1785,7 +1785,7 @@ static int parse_single_patch(struct apply_state *state,
- 		len = parse_fragment(state, line, size, patch, fragment);
- 		if (len <= 0) {
- 			free(fragment);
--			return error(_("corrupt patch at line %d"), state->linenr);
-+			return error(_("corrupt patch at %s:%d"), state->patch_input_file, state->linenr);
- 		}
- 		fragment->patch = line;
- 		fragment->size = len;
-diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
-index 6579c81216..42cb2dd404 100755
---- a/t/t4012-diff-binary.sh
-+++ b/t/t4012-diff-binary.sh
-@@ -68,7 +68,7 @@ test_expect_success C_LOCALE_OUTPUT 'apply detecting corrupt patch correctly' '
- 	sed -e "s/-CIT/xCIT/" <output >broken &&
- 	test_must_fail git apply --stat --summary broken 2>detected &&
- 	detected=$(cat detected) &&
--	detected=$(expr "$detected" : "error.*at line \\([0-9]*\\)\$") &&
-+	detected=$(expr "$detected" : "error.*at broken:\\([0-9]*\\)\$") &&
- 	detected=$(sed -ne "${detected}p" broken) &&
- 	test "$detected" = xCIT
- '
-@@ -77,7 +77,7 @@ test_expect_success C_LOCALE_OUTPUT 'apply detecting corrupt patch correctly' '
- 	git diff --binary | sed -e "s/-CIT/xCIT/" >broken &&
- 	test_must_fail git apply --stat --summary broken 2>detected &&
- 	detected=$(cat detected) &&
--	detected=$(expr "$detected" : "error.*at line \\([0-9]*\\)\$") &&
-+	detected=$(expr "$detected" : "error.*at broken:\\([0-9]*\\)\$") &&
- 	detected=$(sed -ne "${detected}p" broken) &&
- 	test "$detected" = xCIT
- '
--- 
-2.23.0.687.g391267506c
+Thanks,
+Dscho
 
+>
+> Thanks.
+>
+> ---
+>  t/t5514-fetch-multiple.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t5514-fetch-multiple.sh b/t/t5514-fetch-multiple.sh
+> index cce829b989..33f5220a53 100755
+> --- a/t/t5514-fetch-multiple.sh
+> +++ b/t/t5514-fetch-multiple.sh
+> @@ -190,8 +190,8 @@ test_expect_success 'parallel' '
+>  	test_must_fail env GIT_TRACE=3D"$PWD/trace" \
+>  		git fetch --jobs=3D2 --multiple one two 2>err &&
+>  	grep "2 tasks" trace &&
+> -	grep "one.*128" err &&
+> -	grep "two.*128" err
+> +	test_i18ngrep "one.*128" err &&
+> +	test_i18ngrep "two.*128" err
+>  '
+>
+>  test_done
+> --
+> 2.23.0-686-g3bf927a9c0
+>
+>
