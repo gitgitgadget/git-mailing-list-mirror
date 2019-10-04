@@ -2,78 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE,SUBJ_ALL_CAPS shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D01141F4BE
-	for <e@80x24.org>; Fri,  4 Oct 2019 17:26:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33B4D1F4BD
+	for <e@80x24.org>; Fri,  4 Oct 2019 19:16:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388549AbfJDR0E (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 13:26:04 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:33654 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388146AbfJDR0D (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 13:26:03 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 65A781F4BD;
-        Fri,  4 Oct 2019 17:26:03 +0000 (UTC)
-Date:   Fri, 4 Oct 2019 17:26:03 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: [PATCH v2 18/19] OFFSETOF_VAR macro to simplify hashmap iterators
-Message-ID: <20191004172603.GA7215@dcvr>
-References: <20190924010324.22619-1-e@80x24.org>
- <20190924010324.22619-19-e@80x24.org>
- <xmqqr23t8g0t.fsf@gitster-ct.c.googlers.com>
- <20191004025115.GA26605@dcvr>
- <xmqqk19l89xt.fsf@gitster-ct.c.googlers.com>
+        id S1728360AbfJDTQZ convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 4 Oct 2019 15:16:25 -0400
+Received: from outgoing10.jnb.host-h.net ([129.232.250.62]:34709 "EHLO
+        outgoing10.jnb.host-h.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725932AbfJDTQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 15:16:25 -0400
+X-Greylist: delayed 1769 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Oct 2019 15:16:25 EDT
+Received: from www109.jnb2.host-h.net ([129.232.138.108])
+        by antispam8-jnb1.host-h.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.89)
+        (envelope-from <ahmed.nashwanah@gmail.com>)
+        id 1iGSbL-0007tz-GY
+        for git@vger.kernel.org; Fri, 04 Oct 2019 20:46:53 +0200
+Received: from [172.96.14.183]
+        by www109.jnb2.host-h.net with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:256)
+        (Exim 4.84_2)
+        (envelope-from <ahmed.nashwanah@gmail.com>)
+        id 1iGS9F-0007E7-Tk
+        for git@vger.kernel.org; Fri, 04 Oct 2019 20:17:50 +0200
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqk19l89xt.fsf@gitster-ct.c.googlers.com>
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: INVESTMENT OPPORTUNITY
+To:     git@vger.kernel.org
+From:   "Ahmed Nashwan Ahmed " <ahmed.nashwanah@gmail.com>
+Date:   Fri, 04 Oct 2019 11:17:47 -0700
+Reply-To: ahmednashwanah@gmail.com
+Message-Id: <E1iGS9F-0007E7-Tk@www109.jnb2.host-h.net>
+X-Authenticated-Sender: lei@mayoclinic.co.za
+X-Virus-Scanned: Clear (ClamAV 0.100.3/25592/Fri Oct  4 10:30:20 2019)
+X-Originating-IP: 129.232.138.108
+X-SpamExperts-Domain: mayoclinic.co.za
+X-SpamExperts-Username: 
+Authentication-Results: host-h.net; auth=pass (login) smtp.auth=@mayoclinic.co.za
+X-SpamExperts-Outgoing-Class: unsure
+X-SpamExperts-Outgoing-Evidence: Combined (0.70)
+X-Recommended-Action: accept
+X-Filter-ID: Mvzo4OR0dZXEDF/gcnlw0ezqdolHG91LK5q2HN6uCHCpSDasLI4SayDByyq9LIhVWPTodmAx+p0O
+ 7/8rM4Js6kTNWdUk1Ol2OGx3IfrIJKywOmJyM1qr8uRnWBrbSAGD/pkzQlBV2bVP1uyFc0/uwU7K
+ tnbp43ibBfPYwDSMY4A/rEoKFEDRDBb59OHnrrP9eJpLxjaPHE1A/OyZ+V+dxJHxv66GAHi8uM8f
+ Zgs2VV2jwcu3W6VBA+l5oq12BV6rg8CBO1Snvm6qXHQp7O9kdRKxdp9EAqMz5OB4rvCLZ5L3Jifm
+ B2X5dT1tYEs9HAhWtHWRoedXPhIcip9oGNxhEcZ0aGFFcZuhlM61z8husbE8SD49VFOJrE9jnafQ
+ +n/zJZnhI7NAWaCwxOy1sh944o8+GTF45YjycdibmmYEOoX7hMx35KcKfE7wybFmAAFikGDeg9cb
+ B1zhmkeS9Pgv3MDT9ZG0CmXc0v4tKHsUSjuO8OL3MKmWpyx7GTPK+LOWY5R6BpcvGp3jcY/qUcse
+ g2KrLjRFuOfsv9pIlKVsvXPjZs8+fzEZSuLotjGmXkLs+MEYMo0NDeyXVO3tNSgVgckOnz0mswVX
+ ZkpFVe5ZgGA0MLjqgL337Aba0izaNK+kwY1AdI9o/MPZoOjO5xMP90VOubGlAU2ZgXfXllxu/wA0
+ 9fvUPhMAbmy+gj80vIBbB5hQ6nsDvccjqgmDvD9WhwzNYukEEOKyU8+zDCDVPjzXHrpDDdPRQUCO
+ LRzmScK8/68CYLPlQFwp6GX+3lTTkwAWtX1O8bsflFFHgVy72vPUPOEBvPSTejL6TXcy6lu68Ywp
+ dGHJSZN60K+irgJ0wRxwEiTVJqDh0qKoKsXx5llB27w2sNsLtUZsw9WHpTLBMen4EGn53Jss02ux
+ jOKuq30cq+P4uL4HSyVl3hpp2LYLXxjZ4qCcN14KGYtWDu7h7bFPVKr9pIMBPJHg/OAz9+6zGuTj
+ gSZJXJ9a7Hv3qnc2yPRk3H1E4ANRdN1BlPI5HU0gmf7blPG68auyZnu/8TvwuoZwdj9XpBZb3raY
+ +Pg=
+X-Report-Abuse-To: spam@antispammaster.host-h.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Wong <e@80x24.org> writes:
-> 
-> > That seems too tedious.  I'm learning towards just initializing
-> > var = NULL in the start of the for-loop:
-> >
-> > @@ -449,7 +449,8 @@ static inline struct hashmap_entry *hashmap_iter_first(struct hashmap *map,
-> >   * containing a @member which is a "struct hashmap_entry"
-> >   */
-> >  #define hashmap_for_each_entry(map, iter, var, member) \
-> > -	for (var = hashmap_iter_first_entry_offset(map, iter, \
-> > +	for (var = NULL /* squelch uninitialized warnings for OFFSETOF_VAR */, \
-> > +		var = hashmap_iter_first_entry_offset(map, iter, \
-> >  						OFFSETOF_VAR(var, member)); \
-> 
-> That looks a bit too ugly for my taste.  I've added an updated
-> version (see below) and then rebased the whole thing on top of it.
+Greetings
 
-I prefer to minimize the amount of stuff we do to work around
-buggy compilers (in case they get fixed and old versions are
-obsoleted).
+We are interested in Inquiring a prospective investment opportunity with you. Sharath Holdings S.P.C executes public & private offerings, mergers and acquisitions, and initial public offerings. These can take either the form of investment in start-up companies, greenfield projects, or direct investments in existing companies. This activity is concerned about grabbing investment opportunities in international financial markets then studying and evaluating them, in addition to contributing in them directly for the benefit of the company and customers through a specified investment strategy seeking to achieve an awarding profit and at the same time with a previously determined policy. 
 
-If it's just clang with this problem, we know clang sets
-__GNUC__, so we can use __typeof__ directly (bypassing extra
-parentheses in our TYPEOF macro) to get around the warning:
+I await a responses from you and make available further information to you for your review.
 
-#if defined(__GNUC__) /* clang sets this, too */
-#define OFFSETOF_VAR(ptr, member) offsetof(__typeof__(*ptr), member)
-#else /* !__GNUC__ */
-...
+Sincerely
 
+Ahmed Nathan Ahmed
 
-That said, there could be other compilers which don't set
-__GNUC__ and have the same problem as clang.  But maybe those
-compilers are too buggy and we already ignore invalid warnings
-on those compilers.
+Isa Town, Bahrain
+P.O Box 32590
+Kingdom of Bahrain
