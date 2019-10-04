@@ -2,84 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,SUBJ_ALL_CAPS shortcircuit=no autolearn=no
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33B4D1F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 19:16:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 730E71F4BD
+	for <e@80x24.org>; Fri,  4 Oct 2019 19:26:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728360AbfJDTQZ convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 4 Oct 2019 15:16:25 -0400
-Received: from outgoing10.jnb.host-h.net ([129.232.250.62]:34709 "EHLO
-        outgoing10.jnb.host-h.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725932AbfJDTQZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 15:16:25 -0400
-X-Greylist: delayed 1769 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Oct 2019 15:16:25 EDT
-Received: from www109.jnb2.host-h.net ([129.232.138.108])
-        by antispam8-jnb1.host-h.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.89)
-        (envelope-from <ahmed.nashwanah@gmail.com>)
-        id 1iGSbL-0007tz-GY
-        for git@vger.kernel.org; Fri, 04 Oct 2019 20:46:53 +0200
-Received: from [172.96.14.183]
-        by www109.jnb2.host-h.net with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:256)
-        (Exim 4.84_2)
-        (envelope-from <ahmed.nashwanah@gmail.com>)
-        id 1iGS9F-0007E7-Tk
-        for git@vger.kernel.org; Fri, 04 Oct 2019 20:17:50 +0200
-Content-Type: text/plain; charset="iso-8859-1"
+        id S1728356AbfJDTZ7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 15:25:59 -0400
+Received: from mout.web.de ([212.227.17.11]:37275 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725932AbfJDTZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 15:25:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1570217153;
+        bh=XXsuqevWWgcHjU+8TloI8VI//XN8r3/myRV9tMbIDjQ=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=II6DWPtWMaUmfRFD71dWRZRMMZPkcE2DpPmVJsmtBEU6jtGGaIm7kqu/8vSN6+wWW
+         PFbGfbCoqXCJ+6nWUotANRCryepp01trP0ncIc89QhPB/ciWSmqKAy4WDsfzynMQwf
+         tWjLCxVhTDbXpCAlq6OSKcRTDRozwgvKGiZFNjF0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LsQPU-1i9pKj0bYO-0120Fs; Fri, 04
+ Oct 2019 21:25:53 +0200
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] convert: fix handling of dashless UTF prefix in
+ validate_encoding()
+Message-ID: <c886671c-7753-6ac8-fefc-277e76019cd4@web.de>
+Date:   Fri, 4 Oct 2019 21:25:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: INVESTMENT OPPORTUNITY
-To:     git@vger.kernel.org
-From:   "Ahmed Nashwan Ahmed " <ahmed.nashwanah@gmail.com>
-Date:   Fri, 04 Oct 2019 11:17:47 -0700
-Reply-To: ahmednashwanah@gmail.com
-Message-Id: <E1iGS9F-0007E7-Tk@www109.jnb2.host-h.net>
-X-Authenticated-Sender: lei@mayoclinic.co.za
-X-Virus-Scanned: Clear (ClamAV 0.100.3/25592/Fri Oct  4 10:30:20 2019)
-X-Originating-IP: 129.232.138.108
-X-SpamExperts-Domain: mayoclinic.co.za
-X-SpamExperts-Username: 
-Authentication-Results: host-h.net; auth=pass (login) smtp.auth=@mayoclinic.co.za
-X-SpamExperts-Outgoing-Class: unsure
-X-SpamExperts-Outgoing-Evidence: Combined (0.70)
-X-Recommended-Action: accept
-X-Filter-ID: Mvzo4OR0dZXEDF/gcnlw0ezqdolHG91LK5q2HN6uCHCpSDasLI4SayDByyq9LIhVWPTodmAx+p0O
- 7/8rM4Js6kTNWdUk1Ol2OGx3IfrIJKywOmJyM1qr8uRnWBrbSAGD/pkzQlBV2bVP1uyFc0/uwU7K
- tnbp43ibBfPYwDSMY4A/rEoKFEDRDBb59OHnrrP9eJpLxjaPHE1A/OyZ+V+dxJHxv66GAHi8uM8f
- Zgs2VV2jwcu3W6VBA+l5oq12BV6rg8CBO1Snvm6qXHQp7O9kdRKxdp9EAqMz5OB4rvCLZ5L3Jifm
- B2X5dT1tYEs9HAhWtHWRoedXPhIcip9oGNxhEcZ0aGFFcZuhlM61z8husbE8SD49VFOJrE9jnafQ
- +n/zJZnhI7NAWaCwxOy1sh944o8+GTF45YjycdibmmYEOoX7hMx35KcKfE7wybFmAAFikGDeg9cb
- B1zhmkeS9Pgv3MDT9ZG0CmXc0v4tKHsUSjuO8OL3MKmWpyx7GTPK+LOWY5R6BpcvGp3jcY/qUcse
- g2KrLjRFuOfsv9pIlKVsvXPjZs8+fzEZSuLotjGmXkLs+MEYMo0NDeyXVO3tNSgVgckOnz0mswVX
- ZkpFVe5ZgGA0MLjqgL337Aba0izaNK+kwY1AdI9o/MPZoOjO5xMP90VOubGlAU2ZgXfXllxu/wA0
- 9fvUPhMAbmy+gj80vIBbB5hQ6nsDvccjqgmDvD9WhwzNYukEEOKyU8+zDCDVPjzXHrpDDdPRQUCO
- LRzmScK8/68CYLPlQFwp6GX+3lTTkwAWtX1O8bsflFFHgVy72vPUPOEBvPSTejL6TXcy6lu68Ywp
- dGHJSZN60K+irgJ0wRxwEiTVJqDh0qKoKsXx5llB27w2sNsLtUZsw9WHpTLBMen4EGn53Jss02ux
- jOKuq30cq+P4uL4HSyVl3hpp2LYLXxjZ4qCcN14KGYtWDu7h7bFPVKr9pIMBPJHg/OAz9+6zGuTj
- gSZJXJ9a7Hv3qnc2yPRk3H1E4ANRdN1BlPI5HU0gmf7blPG68auyZnu/8TvwuoZwdj9XpBZb3raY
- +Pg=
-X-Report-Abuse-To: spam@antispammaster.host-h.net
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:DmQ+rJB5DOyov3BebScsWm6S9mhA407dtFqoJFhJ5OtKeuej/t5
+ w0DiZ/Btvos/IAVyE32mFil8SluItoLd1ju0XshjUazGd9MoQkA+1p5qlB81ZtIOYkZhHnb
+ BB+Lin2ZpW19jAEDCAxJx8DP/nZID+rywoX0hxJ+sT5SMfl4oNrhBrGPo32VTxbb/VI/15j
+ VrphuGmdXWd3k4Wkw9iKw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OpI7kWbpaaM=:ICHY+nA4uxlXscxWlpoBMZ
+ hWlCJuVLGiEwIeuh8li1jluA8jbV8KJK7/6jUUj7h8rJdVCaowRzqctUbXmhjMJsQBTvT9Qm9
+ BNKusQsbXmJ422vq+OPkw5mGd0cT/URcSKWZnmiwaAjKV9I9OU00MHjkIoRLwIfx/dSF1RAaZ
+ oqhPJ1VfXA6JTod03zxCqlQwTOf91PvcKWOYSwYpcetmuUq+zo1iEg1OYZTbJnUaGGB9p1tLn
+ jvGvToIllPDeyS8R/qEcGjsriz0qvxw2c2C82g1kYQ1hb7RmezPQSeeedmB5yR4/6G4vRfH2Z
+ 6/ZHvkMeF4IF49ua/A5HMnZU/b9cNJJQz3bbbSE4kxr/MEdei/w/bpZuh45thmJL/F0q0m/z4
+ qYFSGwyUDtdllwOaJYbbTUjmd8s3H66s6zmtRG6FuWErGwvYEHmI05oucTmgA8FTV9DFhTftO
+ 3XVptbM/N9Y3CJ0cgr7P8A0+m6ZjNJVAg95VIQqYnPd57tkhVknSpFgt0T88nJl9k1oiwjxXf
+ uvUBaDi1ajbfcA4Ceo3cXtsE2NUriNQVjp10D/3NjAEt9LeM7D0liEnh17yAggkcDIgm/W+Bb
+ iXzo3cMD+xUjstNVLfKR3qynDH7Hr+yJzY0i51pSLt2sYL0mwNt3rScFLBPUjKva0ONtN2Ex9
+ d19XAL4REp3Bh28EDn5qDa6k2CJgGs0bWBzGuW4pwxhdRI8XvAtfdrgXTgD8z68crWQqsnOPU
+ igqxenv4cIHZS04OKYoAdeIX4jf3OFBHeWJQNpQpBkPCOTt9pJJtr4eVYtXk+9bQk9zC2MAis
+ +G0EHXKzbslPe4oXG4e7OpbXx9g7MD0W/ytAFyYUVbsMUjPgaR4GK17v7DXJRmk9EjbU3n+Hl
+ xkz5LyUXKXL105a6BiPDcpV3PR+r8VRf6YpFohIessb5BlVPt8JgpKJhfZUG0yvuNJWoDtkcI
+ JGxvDCHYhaYKcnjzjrN1kWWaIcbC5yDZfgOjFBK/RNdYtQK/nHDH08nPlxlhOgJ9eDLFj4VEa
+ ecsuFsFtDGNO5Q9h1Iirnvy7Bnb/m2KzKR1U/CPGMf2aYhA7G71A29Fp3TJ0TEp40N6N/guqN
+ hQsAqOQWha/UdcnLhNBgfz58RdbLq/vYzOYqeGKKvzCTcfRhwgo+3+qm9HqEXLMZFd5xxYota
+ Oz8AJYZQzHImNg+6SZpcMsGqsvvyqycQryaDryzjHGbeW0CVgCb+6oDPU4aamAFrOpDlOoKhz
+ +GwZomS0kXuDTGgW7/TiaMI/boWlccp5gLeGUQg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Greetings
+Strip "UTF" and an optional dash from the start of 'upper' without
+passing a NULL pointer to skip_prefix() in the second call, as it cannot
+handle that.
 
-We are interested in Inquiring a prospective investment opportunity with you. Sharath Holdings S.P.C executes public & private offerings, mergers and acquisitions, and initial public offerings. These can take either the form of investment in start-up companies, greenfield projects, or direct investments in existing companies. This activity is concerned about grabbing investment opportunities in international financial markets then studying and evaluating them, in addition to contributing in them directly for the benefit of the company and customers through a specified investment strategy seeking to achieve an awarding profit and at the same time with a previously determined policy. 
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ convert.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-I await a responses from you and make available further information to you for your review.
-
-Sincerely
-
-Ahmed Nathan Ahmed
-
-Isa Town, Bahrain
-P.O Box 32590
-Kingdom of Bahrain
+diff --git a/convert.c b/convert.c
+index deb6f71b2d..25ac525d5f 100644
+=2D-- a/convert.c
++++ b/convert.c
+@@ -290,8 +290,8 @@ static int validate_encoding(const char *path, const c=
+har *enc,
+ 			const char *stripped =3D NULL;
+ 			char *upper =3D xstrdup_toupper(enc);
+ 			upper[strlen(upper)-2] =3D '\0';
+-			if (!skip_prefix(upper, "UTF-", &stripped))
+-				skip_prefix(stripped, "UTF", &stripped);
++			if (skip_prefix(upper, "UTF", &stripped))
++				skip_prefix(stripped, "-", &stripped);
+ 			advise(advise_msg, path, stripped);
+ 			free(upper);
+ 			if (die_on_error)
+@@ -310,8 +310,8 @@ static int validate_encoding(const char *path, const c=
+har *enc,
+ 				"working-tree-encoding.");
+ 			const char *stripped =3D NULL;
+ 			char *upper =3D xstrdup_toupper(enc);
+-			if (!skip_prefix(upper, "UTF-", &stripped))
+-				skip_prefix(stripped, "UTF", &stripped);
++			if (skip_prefix(upper, "UTF", &stripped))
++				skip_prefix(stripped, "-", &stripped);
+ 			advise(advise_msg, path, stripped, stripped);
+ 			free(upper);
+ 			if (die_on_error)
+=2D-
+2.23.0
