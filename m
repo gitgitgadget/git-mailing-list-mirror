@@ -8,122 +8,116 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7C121F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 09:33:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 983601F4BE
+	for <e@80x24.org>; Fri,  4 Oct 2019 09:37:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387867AbfJDJdy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 05:33:54 -0400
-Received: from mout.gmx.net ([212.227.15.18]:43463 "EHLO mout.gmx.net"
+        id S2388126AbfJDJhO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 05:37:14 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55895 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387406AbfJDJdx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 05:33:53 -0400
+        id S1727451AbfJDJhO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 05:37:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570181632;
-        bh=mQXFmFDBgU+YRj3ALcgYEr94X/Co04ycRTE6+nyjIl0=;
+        s=badeba3b8450; t=1570181827;
+        bh=aXz8RxTZeHwd+WH22BNST7BNYm1RmK0WC8eU2Ax81yc=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RtwhwaDMCeMkv6+g5tJEc9IFvEWyZ94yAyN+u6baV6M3wTBW70oC1w0AZNgmcT5wo
-         gLNw9tdTdXWjN6P2h9SDo7NY6wDntd0FsxARQ9TY6w6psXBzV8LBH7mw/0UjVH+e02
-         3OxKubdEclp8w5kp8dpABqFy7TNQ6B9QnVTzcSD8=
+        b=J/CeLgHxe68iSPoSzBXNEQke7m3o3jG8qBAhbxFt4QY3cPdtnk7iWGnzI/DjSnQtU
+         Xc76sEhbcSnxM9tHpe6lqccqRuiL0EQgRGCGppE7NhF/NrIe4LPf2pKbTcKg0wNAgI
+         0OYKG1fg0IDNFGzZ9MqONniU4zwWB5k1DQy5Y1ZE=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.189]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MCKBc-1iObgz3z9O-009TvJ; Fri, 04
- Oct 2019 11:33:52 +0200
-Date:   Fri, 4 Oct 2019 11:33:37 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.192.189]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MXp5Q-1idWFr1udo-00Y9ET; Fri, 04
+ Oct 2019 11:37:07 +0200
+Date:   Fri, 4 Oct 2019 11:36:52 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Alexander Mills <alexander.d.mills@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: bad error message - Not a git repository (or any of the parent
- directories): .git
-In-Reply-To: <CA+KyZp6MKqL0mz-iCHGEcvZi09P+GmS7QEogX10-2OJ5nMPDRA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910041125490.46@tvgsbejvaqbjf.bet>
-References: <CA+KyZp6MKqL0mz-iCHGEcvZi09P+GmS7QEogX10-2OJ5nMPDRA@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v2 01/13] push: do not pretend to return `int` from
+ `die_push_simple()`
+In-Reply-To: <xmqq36g9bgl6.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910041136150.46@tvgsbejvaqbjf.bet>
+References: <pull.288.git.gitgitgadget@gmail.com> <pull.288.v2.git.gitgitgadget@gmail.com> <4d0b38125a13d85963be5e524becf48271893e2b.1569837329.git.gitgitgadget@gmail.com> <xmqq36g9bgl6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:x5dvQopwiOvJVvzQcaiI0yGyXxXr/3QPZvQwPTEaCR7u2CwRrnI
- TRNrPvIfhYGD60kP1KK0id3T5DYoMlZOKB1L7DD71pwzdZtEqHEJMPe09sOWV6PAa5iwRHY
- o3Pl54ES1pz7CDkUhjKxc8695WMVTqMNUns+BKO1uNGXSojeAEvs0Vi01Q2V6ZJJM9Y/RZn
- B3GvDXxOBw/uAHcWgxraw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:C0QVccv4yZo=:5Et1tVZ/F4jt/GcvNqTjNt
- JWT/n1KUP7NVVUl42m84A+foocVh4Ofdf5kKpj3JZUhjB1wQQ6Ny62nYVlfjm8pNl/K2nZ1QK
- tNb2W4dDu69rWQ736aFB8opl9jxRoo3zo6+5JlXskY0gcQ/zcKE2ZpYS6YpSWSEazeRiaa3oG
- FPM35AGo8s71msM9nd528BZn0/qONmT8d0neNqogGT74haBv9gatTNGEqmBItSnHoC6yHvkQi
- MPNZI88t3za+nghiaRvX/Bmk0O2JM4jmpo6Hha7Agv7/u3wkHLpJv8pdfZwGHamwOogbCnd3D
- dDGpqK0qFkp0PHnMBfG2q7wOmLga7F9753PW439bRGnGd4d8F/AFcI458BBP9frqk2q2WgurI
- U5Q4tAWBQQaZPSrY3lLmoEQDo5As+a9fDbFF4bmtg25Uv3J5by8gtm86L4YiYZEO4Wp3TcUUu
- IqHLVCvqA+NBFcXMLVZoqZawZLsi0x85fbz2x8SAL0dlR0AY8JbnXTnB2H5DlTgTFioQuOGbr
- d1hCFOlpJPRtemoOXeVC9yC3sAQb0xK7jkhbhjbfl1aCV/YVW4wqJ9OpX+xoVNgiB27FurZxD
- 37KTH1zR451yodJkdyx3pf7HdpkIFiEOVTLBrE/UOwHgmMa95aQyZBEpsCGDqTo4SyvEQpkBg
- RmrhIkQPNAA0wx9TJa0DMvs3vRFJ14mJiNJuU3qFuPmGuHCmmFE+GIzfRaYJvG8RZTHVjSX3i
- Pk+MNGHmEuimPbT4qr2tT7v6hpnJgXMbvdpXmO2mKf7BFFBzH3VDN0kFwoZ7ZqB2lVu54SrG6
- 6M2nprppe3TI7Qygi0VWgvkw5TMwagSiz3PUDQW6Z2tQnDkpJvYWAnvqHapu7ItEMNEDSwfMy
- IZ1w5z7uDL3aRuafVp/gluChRHQCWTvw8/SO1y6YQ1pIKFKi+p0WtimayDa1hNNxScuQm87id
- DXXDRdss3DYVd0DKtUh1KaQRZ0x96Bfypp5ksUz0jSQUdf/pwPbTZKVET1PQqvld39J+uTCaL
- c9TpN9qttXWSxZTCNhBST2gk2PdHnP2wJCKJgpl0lMhGD0XB1jb/qUKRDvqwMoPrsvlpPzbZ9
- LN7eWegV0d65d5uiV2w6K5u3hvBavvPisbGhyywzwkU6Tm/5PLycvEIbQua17zsxnQ554mWvF
- vGre0liQ8vG2g+jxT2GtFFPMXNijb64T2LD+3n00rWZMH5gLYzNLLBo/8Int20xdvfd3EAr6u
- Zcm4IWrnxfZCvKs/8uJJnsBgdfyDh54/aEdXUgTylnhdBenSgKA147nB4Jxw=
+X-Provags-ID: V03:K1:h7zmu+M5u4vF6nWOHYbv+6hyk65k+hn27fdtGydEFpZJt8z3/ZK
+ NjVmq4G6xfWEe7bGOqFZMatXFQK7OFICJ21J0ofjy0RQ3O3thAGj2loQ78XRRypRwcDorxU
+ d2U3XLtk0JMB2A1o03sCVWctGbxQaFnJEhyMqV5t1M72Y07ZoGk9t5PEd7qXdCtE6rhEIss
+ KD5UDJgvgZan9oY59wFOg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/ywfCGVtiz4=:QG9aP019Ul6G4geqchweCp
+ H5R8wiJZUXoJxRuBzEYsI2iggrdumF3BAmoBooMAE/1d+aO1xsSHaXT1y6tOoPF4vss5vCx7b
+ glOVkSo5wpe6ohju4g1WG9Hq0Fp+Q5XoDkTD4c9U/NM4+aBBNuat+OohVv1/uHPZ4feGv0jof
+ ilGqlOxUZ5cvzMRDM7v/0TGUnABaOyR8dgNVyVG6NHkDgUmjZWO47jmWdmwDPbaDjfE6j0Z2h
+ OvPHnRRNxCgNI/aKBrVoQipyUE7mFSy/t6WSM1l0VzGwiIUhIElZyCxHCq8w6uBmHTBwDvnC4
+ pjMYKNvpdDz1wlhJX3BOcVZq4tbNw6QwwzNAVNTV2UKFDlXRSL/sCsqz0sys5l2ZF0o3ZX4UC
+ wO72sVVodAUuCS/XXfh7864S3mHfcHyHH4l6ycxszHpCW8WoGDOKKhE6aNA6miduioCdeK5sJ
+ PEOAJUzUO9eoFZmMewZH/E80gpTmU5nAl2cuznW1hO2GDVU8EINwL4zfzQzDiX8NHYDk8gtf4
+ OQkLuTAli3bGfpo0axW+w1JzwVRbhKtOAK77xhdJRCJG2fvofFNrqECH5NR6fEEbCkAdATLLd
+ FyUOFbeXuJbEe1igBuE1VgOE8O9ttQo9vfGZDY+p3AJQRaMLcfem4wHH5y5L0cClCdVrfrghK
+ w4ZU3VDvRb/W7hvXYCVyJK6tEJPSSBhw9NX12UVqK77xigOHArd5zxW1vWhlnqKxOY23v6tdN
+ 8rqZScd0DqqFTjVKVGb4V4nobavLdS2GO902VLvuNVaJw519avD0lZc1HH4p7hWw/7sn9z54Q
+ LIOLfsyIffjyEQ+jXrGz74hc/JSvllabrmc3B7J/WBU9QY+LEUb4ilnsdFghrSRIE8zUVgso0
+ PCALBPGt1rUIodBxRKCG1wr9HWN8JCRw8xBben6BIp8xkHXyFI9aAKI0gwjvh2peuvC5iijFX
+ 0Lkjsp5+KVqt+x0fgt3lqEMy0uVEJ3sn4YxRbtJg1CfajH7Ox1xhnVucSWHK1cmjqyQK7ill3
+ ha96tz7Jz3XaNxYiIZVs4EjtPjKTs3A/qK3MwiUmRfIfZHmZh3ZukeC5bmyT0SiKXdGMv+NV9
+ VduWKvyk6CGhYAgzqgV85U/mIX+d0EfiOSECtnO7WvELfM3Yv+EHtvtNjLvWMHldD8bDBIt9J
+ DumUWI7XvqIjozbJ6LvLfJ8IWKEw4ZnpYLOQERqcgE+3+KyIeNaIY5ZCucmYhctG1kayPXBQt
+ 38QR/Cy1Bh6unc+XF4Hqm9RtycZUbx3eopJZyOHogoxEhtz/ZESg348wLI+g=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alexander,
+Hi Junio,
 
-On Thu, 3 Oct 2019, Alexander Mills wrote:
+On Fri, 4 Oct 2019, Junio C Hamano wrote:
 
-> when running git commands outside of a git repo, we often see:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
-> fatal: Not a git repository (or any of the parent directories): .git
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > This function is marked as `NORETURN`, and it indeed does not want to
+> > return anything. So let's not declare it with the return type `int`.
+> > This fixes the following warning when building with MSVC:
+> >
+> > 	C4646: function declared with 'noreturn' has non-void return type
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  builtin/push.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/builtin/push.c b/builtin/push.c
+> > index 021dd3b1e4..d216270d5f 100644
+> > --- a/builtin/push.c
+> > +++ b/builtin/push.c
+> > @@ -143,8 +143,8 @@ static int push_url_of_remote(struct remote *remot=
+e, const char ***url_p)
+> >  	return remote->url_nr;
+> >  }
+> >
+> > -static NORETURN int die_push_simple(struct branch *branch,
+> > -				    struct remote *remote)
+> > +static NORETURN void die_push_simple(struct branch *branch,
+> > +				     struct remote *remote)
 >
-> such a lame message lol.
+> Haha ;-)  "I won't return and I'll return int" sounds like an
+> oxymoron.
 
-An equally ornery response might point out that reporting this as a bug
-instead of providing a patch is probably just as "lame"... :-)
+Funny, right? ;-)
 
-> can we get an absolute path on this message in future git versions, eg:
->
-> Not a git repository (or any of the parent directories): /home/ubuntu/xy=
-z/.git
-
-Just clone https://github.com/git/git, then look for that error message:
-
-=2D- snip --
-$ git grep -A1 "or any of the parent" \*.[ch]
-setup.c:                        die(_("not a git repository (or any of the=
- parent directories): %s"),
-setup.c-                            DEFAULT_GIT_DIR_ENVIRONMENT);
-=2D- snap --
-
-You can then wrap the argument in that second line in `absolute_path()`,
-build (using `make -j$(nproc)` on Linux), and test (use
-`/path/to/git/bin-wrappers/git` instead of regular `git` to test without
-installing). Once everything works as you expect it, commit it.
-
-Please make sure that your commit message focuses on answering the
-question "why?" more than on "how?", and that it wraps at <=3D 76 columns
-per line. Also do make sure to add your sign off
-(https://git-scm.com/docs/SubmittingPatches#sign-off).
-
-Finally send the patch to the mailing list for review. You can use
-GitGitGadget (https://gitgitgadget.github.io), submitGit
-(https://submitgit.herokuapp.com) or send it manually
-(https://github.com/git-for-windows/git/blob/master/CONTRIBUTING.md#submit=
--your-patch).
+I was a bit concerned that GCC did not catch it, nor Clang, but hey,
+that's the benefit of compiling with more than just one compiler.
 
 Ciao,
-Johannes
+Dscho
 
-> ty
 >
-> -alex
->
-> --
-> Alexander D. Mills
-> New cell phone # (415)730-1805
-> alexander.d.mills@gmail.com
->
-> www.linkedin.com/pub/alexander-mills/b/7a5/418/
+> >  {
+> >  	/*
+> >  	 * There's no point in using shorten_unambiguous_ref here,
 >
