@@ -8,57 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C2DB1F4BD
+	by dcvr.yhbt.net (Postfix) with ESMTP id D67701F4BD
 	for <e@80x24.org>; Fri,  4 Oct 2019 15:09:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389727AbfJDPJe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 11:09:34 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:34847 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389721AbfJDPJe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 11:09:34 -0400
-Received: by mail-wm1-f68.google.com with SMTP id y21so6260052wmi.0
-        for <git@vger.kernel.org>; Fri, 04 Oct 2019 08:09:33 -0700 (PDT)
+        id S2389735AbfJDPJg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 11:09:36 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:40664 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389387AbfJDPJd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 11:09:33 -0400
+Received: by mail-wm1-f66.google.com with SMTP id b24so6231389wmj.5
+        for <git@vger.kernel.org>; Fri, 04 Oct 2019 08:09:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=uc1FRuQv1blFb9Pgjg/gjq1hKALg3HS9Tf2+tLI+NHg=;
-        b=QDbgzERuvB+FCc4CBvYBkcZtEZ9b8BV2TCE/Io6xR7fxS8B8mll2oKiP8Urhj/36t1
-         3QY2LBJk1fBC59XMaOvsqaGYmq00GTbZ5DLxiv/8sxVMiqbJUhznUm7kngWwqN+pwdpk
-         YFsX0qZBOuj/bxbn2OP7N+OOomv1FPAJDOGmtl/1BcEUPkJR87I8a6E4IS0UAwQS3fNt
-         LBKrtoA7wEyCMto/ENe4SITxkkhSn0qfzJdjFuCscn/IuG/CXllZ1JQ7X8YnCz1zqOQp
-         euvRTD5cacAqhHQainYKH5Pc9IF+kIjE2zrPtSqQyrjJ5NqmmccRVn/PbejfYaf1XcKs
-         JNvw==
+        bh=RVE9a0xIxOv1m/oHcTcIhY+O/HERoXxmdzKfXgJwF88=;
+        b=c5tG1eUc2zoU50G0fFxpRyADv8PtgLGtPdMH8VvBdWltYYwep19KbyfHw8Oxj+RduK
+         /zg0thIW6yNpA+a6dd7I03hh86hCBpxqJZocJ2XLz4chouAn2CfqYbKX1cjw/80qBKZA
+         rYWaCTBnU5PSqwrPlA0lhBihezdtcYJSScb1muNzVsWF1+isONBdymbpwoUVEQw1AhPI
+         7R94uNp0qvC3u2yiqLOriEZV4KFJbZqr/yg96ajXpri8lpNWIWwscH0bSJduQX/Rtzko
+         gj0rS6GR22+iAxLCvsVcm6DLq67OcJq1gFgFse7A72+8dfUvoJGm7a8qMYNeq/ImrBW8
+         y7bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uc1FRuQv1blFb9Pgjg/gjq1hKALg3HS9Tf2+tLI+NHg=;
-        b=Lm9xpjD4SJBHEzntn2aJY96oj1VCkxPd7McJTXyW0g0CYUMKuOnzHLy3ygdRlXt3Vw
-         sXioG47GBZ4iOWmgYhSgamQ9uQ0fEMJwSWCZZZU3PhDW+3UgTj6JvseTqHCSIt4nafiB
-         UIlo7/Gr8ZHk4U2AmPdkYQvRRwWCeYy/VAf5qdrt66YH4QOcy3yA7au8wh0HD8I36+dw
-         afP4Ba/GT8/frPZJ6wnvH2RhCcEVEMFCs6J7acOLAd7Dkw+ARrEcli9ct3mf1AIpjDOh
-         m6mbVFs6qDKsnX0w/xxoX5pEN3kxQjpIDniS3ly8lStOTiqWP3dIRq4ap/Zt30Jtkmsl
-         FNlA==
-X-Gm-Message-State: APjAAAU+PK47vbySkYTw+kxv4tVu56soaOcH/Fgp8rkD/qSTbHVz/LA4
-        QkKlPZaIjPADIhfINgoIhqdE7Cwe
-X-Google-Smtp-Source: APXvYqynV+iiBEBRg21Ierf/nYZciI3mwF7igSwGgHfA/BQHDTcrrk8ruOqQ4n1vV3PAc6sfiU1YEw==
-X-Received: by 2002:a1c:49d4:: with SMTP id w203mr10539062wma.132.1570201772372;
-        Fri, 04 Oct 2019 08:09:32 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i5sm6816124wmd.21.2019.10.04.08.09.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=RVE9a0xIxOv1m/oHcTcIhY+O/HERoXxmdzKfXgJwF88=;
+        b=jkjGjyrzw/hCGLnHKQcUJpXp0WmiU0fVJ360X3CvOt7d6xJIcEq5SrNqy4gIhj6UI4
+         TCOQYBQ+VRnkO/jYsr1mwzVrPj1QypOlAFC9NoDA3daP1BthJEfkEEQCJ/uIW6z9YPwj
+         O8uaK86JXKkryLOqS1uuVnpqJrJGtwIsTdIXI0A9b9+LNwF+qOeYN8nLyX6pRjS7jV/6
+         3A0i5DEb4ysIhPCglJfKDn8JT/iICddDMRKFhK4wHsnoqreSCUwcKESAnTbZfG7V+cnv
+         7kh4TUHvJ/ZtykHG03iLV8ChQw5meTq8jDQzjxkn1lnwI8ekYXlg8dozpa9tj/aCn65I
+         1KPQ==
+X-Gm-Message-State: APjAAAVqBp7XEBJjpc5HvY5AHZzYNXSrinxb876KbMrtMbLINAUA9wuR
+        +RWM2Ui13MuCdwCiPJYgGxXmp+ff
+X-Google-Smtp-Source: APXvYqyAzFB9jKke9iB990zD7EK+C2lVuGA37g1wn/j9NqgIreQ6tkc8+Ee7y6ubddIfycRfq1VDhQ==
+X-Received: by 2002:a1c:2d85:: with SMTP id t127mr11962453wmt.81.1570201771523;
         Fri, 04 Oct 2019 08:09:31 -0700 (PDT)
-Date:   Fri, 04 Oct 2019 08:09:31 -0700 (PDT)
-X-Google-Original-Date: Fri, 04 Oct 2019 15:09:17 GMT
-Message-Id: <cca891450df4eddaa1cb73e4aaa70c444f2531d2.1570201763.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o70sm4004884wme.29.2019.10.04.08.09.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 04 Oct 2019 08:09:30 -0700 (PDT)
+Date:   Fri, 04 Oct 2019 08:09:30 -0700 (PDT)
+X-Google-Original-Date: Fri, 04 Oct 2019 15:09:16 GMT
+Message-Id: <91b09cfdd8738f27009c86760d1e6a24a46017eb.1570201763.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.288.v3.git.gitgitgadget@gmail.com>
 References: <pull.288.v2.git.gitgitgadget@gmail.com>
         <pull.288.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 08/13] vcxproj: only copy `git-remote-http.exe` once it was
- built
+Subject: [PATCH v3 07/13] msvc: work around a bug in GetEnvironmentVariable()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,68 +74,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In b18ae14a8f6 (vcxproj: also link-or-copy builtins, 2019-07-29), we
-started to copy or hard-link the built-ins as a post-build step of the
-`git` project.
+The return value of that function is 0 both for variables that are
+unset, as well as for variables whose values are empty. To discern those
+two cases, one has to call `GetLastError()`, whose return value is
+`ERROR_ENVVAR_NOT_FOUND` and `ERROR_SUCCESS`, respectively.
 
-At the same time, we tried to copy or hard-link `git-remote-http.exe`,
-but it is quite possible that it was not built at that time.
+Except that it is not actually set to `ERROR_SUCCESS` in the latter
+case, apparently, but the last error value seems to be simply unchanged.
 
-Let's move that latter task into a post-install step of the
-`git-remote-http` project instead.
+To work around this, let's just re-set the last error value just before
+inspecting the environment variable.
+
+This fixes a problem that triggers failures in t3301-notes.sh (where we
+try to override config settings by passing empty values for certain
+environment variables).
+
+This problem is hidden in the MINGW build by the fact that older
+MSVC runtimes (such as the one used by MINGW builds) have a `calloc()`
+that re-sets the last error value in case of success, while newer
+runtimes set the error value only if `NULL` is returned by that
+function.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname                           | 10 +++++++---
- contrib/buildsystems/Generators/Vcxproj.pm |  3 +++
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ compat/mingw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/config.mak.uname b/config.mak.uname
-index db7f06b95f..701aad62b1 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -703,20 +703,24 @@ vcxproj:
- 	perl contrib/buildsystems/generate -g Vcxproj
- 	git add -f git.sln {*,*/lib,t/helper/*}/*.vcxproj
- 
--	# Generate the LinkOrCopyBuiltins.targets file
-+	# Generate the LinkOrCopyBuiltins.targets and LinkOrCopyRemoteHttp.targets file
- 	(echo '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">' && \
- 	 echo '  <Target Name="CopyBuiltins_AfterBuild" AfterTargets="AfterBuild">' && \
- 	 for name in $(BUILT_INS);\
- 	 do \
- 	   echo '    <Copy SourceFiles="$$(OutDir)\git.exe" DestinationFiles="$$(OutDir)\'"$$name"'" SkipUnchangedFiles="true" UseHardlinksIfPossible="true" />'; \
- 	 done && \
-+	 echo '  </Target>' && \
-+	 echo '</Project>') >git/LinkOrCopyBuiltins.targets
-+	(echo '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">' && \
-+	 echo '  <Target Name="CopyBuiltins_AfterBuild" AfterTargets="AfterBuild">' && \
- 	 for name in $(REMOTE_CURL_ALIASES); \
- 	 do \
- 	   echo '    <Copy SourceFiles="$$(OutDir)\'"$(REMOTE_CURL_PRIMARY)"'" DestinationFiles="$$(OutDir)\'"$$name"'" SkipUnchangedFiles="true" UseHardlinksIfPossible="true" />'; \
- 	 done && \
- 	 echo '  </Target>' && \
--	 echo '</Project>') >git/LinkOrCopyBuiltins.targets
--	git add -f git/LinkOrCopyBuiltins.targets
-+	 echo '</Project>') >git-remote-http/LinkOrCopyRemoteHttp.targets
-+	git add -f git/LinkOrCopyBuiltins.targets git-remote-http/LinkOrCopyRemoteHttp.targets
- 
- 	# Add command-list.h
- 	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 command-list.h
-diff --git a/contrib/buildsystems/Generators/Vcxproj.pm b/contrib/buildsystems/Generators/Vcxproj.pm
-index 576ccabe1d..868b787855 100644
---- a/contrib/buildsystems/Generators/Vcxproj.pm
-+++ b/contrib/buildsystems/Generators/Vcxproj.pm
-@@ -277,6 +277,9 @@ sub createProject {
-     if ($target eq 'git') {
-       print F "  <Import Project=\"LinkOrCopyBuiltins.targets\" />\n";
-     }
-+    if ($target eq 'git-remote-http') {
-+      print F "  <Import Project=\"LinkOrCopyRemoteHttp.targets\" />\n";
-+    }
-     print F << "EOM";
- </Project>
- EOM
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 4891789771..7d8cb814ba 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1661,6 +1661,8 @@ char *mingw_getenv(const char *name)
+ 	if (!w_key)
+ 		die("Out of memory, (tried to allocate %u wchar_t's)", len_key);
+ 	xutftowcs(w_key, name, len_key);
++	/* GetEnvironmentVariableW() only sets the last error upon failure */
++	SetLastError(ERROR_SUCCESS);
+ 	len_value = GetEnvironmentVariableW(w_key, w_value, ARRAY_SIZE(w_value));
+ 	if (!len_value && GetLastError() == ERROR_ENVVAR_NOT_FOUND) {
+ 		free(w_key);
 -- 
 gitgitgadget
 
