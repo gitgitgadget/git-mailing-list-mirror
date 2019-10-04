@@ -2,401 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2C131F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 00:23:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BE8D1F4BD
+	for <e@80x24.org>; Fri,  4 Oct 2019 00:25:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732546AbfJDAX1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Oct 2019 20:23:27 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:38088 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731918AbfJDAX1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Oct 2019 20:23:27 -0400
-Received: by mail-pg1-f196.google.com with SMTP id x10so2729266pgi.5
-        for <git@vger.kernel.org>; Thu, 03 Oct 2019 17:23:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4krdbl2RVnlLX5Fws5JNCN30ZBrWBi0WKJiSdU7Ov4E=;
-        b=URPkXl+tuRbDaSsyAx5TN7IvSegkdHfEl90yxSsqE/3WZDDWtf+EzEvU82vWSIETeZ
-         O+/tF0D5cfJMQ0mA1NX2Bh6Ci/x2a7MtGrTY67xb3vw3C47FMMHPDVAPWokpqu7y/RGp
-         H1ZdBdKuCg1TsfE39Gwuv69pdc1MUwUTXJB4msOFC7oY52lKlOiERDjsAKjWfMqAlIjT
-         weyVFmUd9Cvj0h0K3FMQpXBxWLioN5g81lF5LPGTID2a5n/QsZI6YQ2C1M3WC1kLeXaA
-         DhHslESr0q1m5qh/SGwliFtaAEkMcfFer83BHEibjHpM7oSEFlCjgG7tuGkUxrCVrIck
-         Gznw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4krdbl2RVnlLX5Fws5JNCN30ZBrWBi0WKJiSdU7Ov4E=;
-        b=AUhjaKuCJ4eMqKpV0v3qB83H0zPSe+Le2tDHai1W9DmBw9POuMQ5w0HmphKbe1zCJq
-         OFKA0TC6GWkkKez7I+PDCPpbSg1hhdUKRnA/kBmixI4UDdUqtuY6Qn9SDdQJLL51tTFJ
-         w8r5Tsl16tmgWCDBhShThilRdimAxY71SazmAXYsb77QJNaQk/4LBF23wPzcPv7ZKHGE
-         lV60la0tWHfuaAK4DKBRLomoLu8626B1+WNp7e7yBlLKmyBvle9rZYw/hjUK8ECGRopi
-         37PjqlXZTxhHjcbqcJlzprmH5RcNO5XQ1AdziFs40Pp+3RdlzpHpQvIr1WC7ZUHxbSor
-         eDog==
-X-Gm-Message-State: APjAAAWErHQnuVGzm7Mm/OQtnwE1YuH1OAF7vEFBhj6dZli5xffaQvUC
-        Ik8zpSZKJvcdPBTPNYyy+kQQNADi
-X-Google-Smtp-Source: APXvYqxJqEYmeXXTAmFaesLk6I5+96H/UeUcHeWvYzz+1SBd752Wp/fbpGe7mlwQKcZlKNeGIRU9Fw==
-X-Received: by 2002:a62:1ad2:: with SMTP id a201mr8377696pfa.151.1570148604619;
-        Thu, 03 Oct 2019 17:23:24 -0700 (PDT)
-Received: from generichostname ([216.52.21.197])
-        by smtp.gmail.com with ESMTPSA id h14sm4319130pfo.15.2019.10.03.17.23.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Oct 2019 17:23:24 -0700 (PDT)
-Date:   Thu, 3 Oct 2019 17:23:22 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Allan Caffee <allan.caffee@gmail.com>,
-        Noam Postavsky <npostavs@users.sourceforge.net>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 5/5] t4214: demonstrate octopus graph coloring failure
-Message-ID: <e58c1929bc40dadc468a3e37e49a8de04c46af99.1570148053.git.liu.denton@gmail.com>
-References: <cover.1569407150.git.liu.denton@gmail.com>
- <cover.1570148053.git.liu.denton@gmail.com>
+        id S1732685AbfJDAZv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Oct 2019 20:25:51 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60048 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730956AbfJDAZv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Oct 2019 20:25:51 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4A89A94AC5;
+        Thu,  3 Oct 2019 20:25:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=M1xscRq2HNdiT6R1qJ4RQAE6pCo=; b=iIsbXX
+        AqBTUvKo6QjuyPGGUhhZvo+ERr5O3AhMWLL1KcGaJi9qbe9GufM3GQdrQgxomZdU
+        7e84fuGJTPwDwsaIT6j8vwVeKxNKfIxE3KEAe/Dulv8pQR95WnzdrNuQV6htVLhA
+        AWtpE13tXpAcimCpSqFzkgL7VL+DZZXynVEzA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=N8aJVA2QwXB5KnEIhqih+OiR7H8mZROv
+        gNPl/L+BdKi8tUeijUoVcHF6srhEsUz33SHhoOA51Xizu1wixWHMYqXdsOkL+q4v
+        SD8y+1rhMEBEbJt8HnON3stHrc5hvTXvJoxFv7/Gg3l4Lsm+mseMme/ESPO7mqMP
+        KK/yWrx+F9U=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 42DBA94AC4;
+        Thu,  3 Oct 2019 20:25:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 65F2D94AC3;
+        Thu,  3 Oct 2019 20:25:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, stolee@gmail.com
+Subject: Re: [PATCH v4 3/4] trace2: don't overload target directories
+References: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
+        <cover.1570144820.git.steadmon@google.com>
+        <98a8440d3f0ef3cd3cdd0291051d976d4a659cc4.1570144820.git.steadmon@google.com>
+Date:   Fri, 04 Oct 2019 09:25:44 +0900
+In-Reply-To: <98a8440d3f0ef3cd3cdd0291051d976d4a659cc4.1570144820.git.steadmon@google.com>
+        (Josh Steadmon's message of "Thu, 3 Oct 2019 16:32:58 -0700")
+Message-ID: <xmqq1rvt9x13.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1570148053.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 82433118-E63D-11E9-90C5-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The graph coloring logic for octopus merges currently has a bug. This
-can be seen git.git with 74c7cfa875 (Merge of
-http://members.cox.net/junkio/git-jc.git, 2005-05-05), whose second
-child is 211232bae6 (Octopus merge of the following five patches.,
-2005-05-05).
+Josh Steadmon <steadmon@google.com> writes:
 
-If one runs
+> trace2 can write files into a target directory. With heavy usage, this
+> directory can fill up with files, causing difficulty for
+> trace-processing systems.
 
-	git log --graph 74c7cfa875
+Sorry for not mentioning this, but "don't overload" is a suboptimal
+keyword for the entire topic and for this particular step for a few
+reasons.  For one, "overload" is an overloaded verb that gives an
+incorrect impression that the problem you are dealing with is that
+the target directory you specify is (mis)used for other purposes,
+which is not the case.  You instead refrain from creating too many
+files.  The other (which is probably more serious) is that it is
+unclear what approach you chose to solve the "directory ends up
+holding too many files".  One could simply discard new traces to do
+so, one could concatenate to existing files to avoid creating new
+files, one could even cycle the directory (i.e. path/to/log may
+become path/to/log.old.1 and path/to/log is recreated as an empty
+directory when it gets a new file).
 
-one can see that the octopus merge is colored incorrectly. In
-particular, the horizontal dashes are off by one color. Each horizontal
-dash should be the color of the line to their bottom-right. Instead, they
-are currently the color of the line to their bottom.
+    trace2: discard new traces when a target directory has too many files
 
-Demonstrate this breakage with a few sets of test cases. These test
-cases should show not only simple cases of the bug occuring but trickier
-situations that may not be handled properly in any attempt to fix the
-bug.
+or something would convey the problem you are solving (i.e. "too
+many files" implying negative performance and usability impact
+coming from it) and solution (i.e. "discard new traces"), if it is
+the approach you have chosen.
 
-While we're at it, include a passing test case as a canary in case an
-attempt to fix the bug breaks existing operation.
+> +	/* check sentinel */
+> +	strbuf_addbuf(&sentinel_path, &path);
+> +	strbuf_addstr(&sentinel_path, OVERLOAD_SENTINEL_NAME);
+> +	if (!stat(sentinel_path.buf, &statbuf)) {
+> +		ret = 1;
+> +		goto cleanup;
+> +	}
+> +
+> +	/* check file count */
+> +	dirp = opendir(path.buf);
+> +	while (file_count < tr2env_max_files && dirp && readdir(dirp))
+> +		file_count++;
+> +	if (dirp)
+> +		closedir(dirp);
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- t/t4214-log-graph-octopus.sh | 282 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 281 insertions(+), 1 deletion(-)
-
-diff --git a/t/t4214-log-graph-octopus.sh b/t/t4214-log-graph-octopus.sh
-index 097151da39..3ae8e51e50 100755
---- a/t/t4214-log-graph-octopus.sh
-+++ b/t/t4214-log-graph-octopus.sh
-@@ -14,8 +14,13 @@ test_expect_success 'set up merge history' '
- 	done &&
- 	git checkout 1 -b merge &&
- 	test_merge octopus-merge 1 2 3 4 &&
-+	test_commit after-merge &&
- 	git checkout 1 -b L &&
--	test_commit left
-+	test_commit left &&
-+	git checkout 4 -b crossover &&
-+	test_commit after-4 &&
-+	git checkout initial -b more-L &&
-+	test_commit after-initial
- '
- 
- test_expect_success 'log --graph with tricky octopus merge, no color' '
-@@ -98,4 +103,279 @@ test_expect_success 'log --graph with normal octopus merge with colors' '
- 	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
- 	test_cmp expect.colors actual.colors
- '
-+
-+test_expect_success 'log --graph with normal octopus merge and child, no color' '
-+	cat >expect.uncolored <<-\EOF &&
-+	* after-merge
-+	*---.   octopus-merge
-+	|\ \ \
-+	| | | * 4
-+	| | * | 3
-+	| | |/
-+	| * | 2
-+	| |/
-+	* | 1
-+	|/
-+	* initial
-+	EOF
-+	git log --color=never --graph --date-order --pretty=tformat:%s after-merge >actual.raw &&
-+	sed "s/ *\$//" actual.raw >actual &&
-+	test_cmp expect.uncolored actual
-+'
-+
-+test_expect_failure 'log --graph with normal octopus and child merge with colors' '
-+	cat >expect.colors <<-\EOF &&
-+	* after-merge
-+	*<BLUE>-<RESET><BLUE>-<RESET><MAGENTA>-<RESET><MAGENTA>.<RESET>   octopus-merge
-+	<GREEN>|<RESET><YELLOW>\<RESET> <BLUE>\<RESET> <MAGENTA>\<RESET>
-+	<GREEN>|<RESET> <YELLOW>|<RESET> <BLUE>|<RESET> * 4
-+	<GREEN>|<RESET> <YELLOW>|<RESET> * <MAGENTA>|<RESET> 3
-+	<GREEN>|<RESET> <YELLOW>|<RESET> <MAGENTA>|<RESET><MAGENTA>/<RESET>
-+	<GREEN>|<RESET> * <MAGENTA>|<RESET> 2
-+	<GREEN>|<RESET> <MAGENTA>|<RESET><MAGENTA>/<RESET>
-+	* <MAGENTA>|<RESET> 1
-+	<MAGENTA>|<RESET><MAGENTA>/<RESET>
-+	* initial
-+	EOF
-+	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
-+	git log --color=always --graph --date-order --pretty=tformat:%s after-merge >actual.colors.raw &&
-+	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
-+	test_cmp expect.colors actual.colors
-+'
-+
-+test_expect_success 'log --graph with tricky octopus merge and its child, no color' '
-+	cat >expect.uncolored <<-\EOF &&
-+	* left
-+	| * after-merge
-+	| *---.   octopus-merge
-+	| |\ \ \
-+	|/ / / /
-+	| | | * 4
-+	| | * | 3
-+	| | |/
-+	| * | 2
-+	| |/
-+	* | 1
-+	|/
-+	* initial
-+	EOF
-+	git log --color=never --graph --date-order --pretty=tformat:%s left after-merge >actual.raw &&
-+	sed "s/ *\$//" actual.raw >actual &&
-+	test_cmp expect.uncolored actual
-+'
-+
-+test_expect_failure 'log --graph with tricky octopus merge and its child with colors' '
-+	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
-+	cat >expect.colors <<-\EOF &&
-+	* left
-+	<RED>|<RESET> * after-merge
-+	<RED>|<RESET> *<MAGENTA>-<RESET><MAGENTA>-<RESET><CYAN>-<RESET><CYAN>.<RESET>   octopus-merge
-+	<RED>|<RESET> <RED>|<RESET><BLUE>\<RESET> <MAGENTA>\<RESET> <CYAN>\<RESET>
-+	<RED>|<RESET><RED>/<RESET> <BLUE>/<RESET> <MAGENTA>/<RESET> <CYAN>/<RESET>
-+	<RED>|<RESET> <BLUE>|<RESET> <MAGENTA>|<RESET> * 4
-+	<RED>|<RESET> <BLUE>|<RESET> * <CYAN>|<RESET> 3
-+	<RED>|<RESET> <BLUE>|<RESET> <CYAN>|<RESET><CYAN>/<RESET>
-+	<RED>|<RESET> * <CYAN>|<RESET> 2
-+	<RED>|<RESET> <CYAN>|<RESET><CYAN>/<RESET>
-+	* <CYAN>|<RESET> 1
-+	<CYAN>|<RESET><CYAN>/<RESET>
-+	* initial
-+	EOF
-+	git log --color=always --graph --date-order --pretty=tformat:%s left after-merge >actual.colors.raw &&
-+	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
-+	test_cmp expect.colors actual.colors
-+'
-+
-+test_expect_success 'log --graph with crossover in octopus merge, no color' '
-+	cat >expect.uncolored <<-\EOF &&
-+	* after-4
-+	| *---.   octopus-merge
-+	| |\ \ \
-+	| |_|_|/
-+	|/| | |
-+	* | | | 4
-+	| | | * 3
-+	| |_|/
-+	|/| |
-+	| | * 2
-+	| |/
-+	|/|
-+	| * 1
-+	|/
-+	* initial
-+	EOF
-+	git log --color=never --graph --date-order --pretty=tformat:%s after-4 octopus-merge >actual.raw &&
-+	sed "s/ *\$//" actual.raw >actual &&
-+	test_cmp expect.uncolored actual
-+'
-+
-+test_expect_failure 'log --graph with crossover in octopus merge with colors' '
-+	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
-+	cat >expect.colors <<-\EOF &&
-+	* after-4
-+	<RED>|<RESET> *<BLUE>-<RESET><BLUE>-<RESET><RED>-<RESET><RED>.<RESET>   octopus-merge
-+	<RED>|<RESET> <GREEN>|<RESET><YELLOW>\<RESET> <BLUE>\<RESET> <RED>\<RESET>
-+	<RED>|<RESET> <GREEN>|<RESET><RED>_<RESET><YELLOW>|<RESET><RED>_<RESET><BLUE>|<RESET><RED>/<RESET>
-+	<RED>|<RESET><RED>/<RESET><GREEN>|<RESET> <YELLOW>|<RESET> <BLUE>|<RESET>
-+	* <GREEN>|<RESET> <YELLOW>|<RESET> <BLUE>|<RESET> 4
-+	<MAGENTA>|<RESET> <GREEN>|<RESET> <YELLOW>|<RESET> * 3
-+	<MAGENTA>|<RESET> <GREEN>|<RESET><MAGENTA>_<RESET><YELLOW>|<RESET><MAGENTA>/<RESET>
-+	<MAGENTA>|<RESET><MAGENTA>/<RESET><GREEN>|<RESET> <YELLOW>|<RESET>
-+	<MAGENTA>|<RESET> <GREEN>|<RESET> * 2
-+	<MAGENTA>|<RESET> <GREEN>|<RESET><MAGENTA>/<RESET>
-+	<MAGENTA>|<RESET><MAGENTA>/<RESET><GREEN>|<RESET>
-+	<MAGENTA>|<RESET> * 1
-+	<MAGENTA>|<RESET><MAGENTA>/<RESET>
-+	* initial
-+	EOF
-+	git log --color=always --graph --date-order --pretty=tformat:%s after-4 octopus-merge >actual.colors.raw &&
-+	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
-+	test_cmp expect.colors actual.colors
-+'
-+
-+test_expect_success 'log --graph with crossover in octopus merge and its child, no color' '
-+	cat >expect.uncolored <<-\EOF &&
-+	* after-4
-+	| * after-merge
-+	| *---.   octopus-merge
-+	| |\ \ \
-+	| |_|_|/
-+	|/| | |
-+	* | | | 4
-+	| | | * 3
-+	| |_|/
-+	|/| |
-+	| | * 2
-+	| |/
-+	|/|
-+	| * 1
-+	|/
-+	* initial
-+	EOF
-+	git log --color=never --graph --date-order --pretty=tformat:%s after-4 after-merge >actual.raw &&
-+	sed "s/ *\$//" actual.raw >actual &&
-+	test_cmp expect.uncolored actual
-+'
-+
-+test_expect_failure 'log --graph with crossover in octopus merge and its child with colors' '
-+	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
-+	cat >expect.colors <<-\EOF &&
-+	* after-4
-+	<RED>|<RESET> * after-merge
-+	<RED>|<RESET> *<MAGENTA>-<RESET><MAGENTA>-<RESET><RED>-<RESET><RED>.<RESET>   octopus-merge
-+	<RED>|<RESET> <YELLOW>|<RESET><BLUE>\<RESET> <MAGENTA>\<RESET> <RED>\<RESET>
-+	<RED>|<RESET> <YELLOW>|<RESET><RED>_<RESET><BLUE>|<RESET><RED>_<RESET><MAGENTA>|<RESET><RED>/<RESET>
-+	<RED>|<RESET><RED>/<RESET><YELLOW>|<RESET> <BLUE>|<RESET> <MAGENTA>|<RESET>
-+	* <YELLOW>|<RESET> <BLUE>|<RESET> <MAGENTA>|<RESET> 4
-+	<CYAN>|<RESET> <YELLOW>|<RESET> <BLUE>|<RESET> * 3
-+	<CYAN>|<RESET> <YELLOW>|<RESET><CYAN>_<RESET><BLUE>|<RESET><CYAN>/<RESET>
-+	<CYAN>|<RESET><CYAN>/<RESET><YELLOW>|<RESET> <BLUE>|<RESET>
-+	<CYAN>|<RESET> <YELLOW>|<RESET> * 2
-+	<CYAN>|<RESET> <YELLOW>|<RESET><CYAN>/<RESET>
-+	<CYAN>|<RESET><CYAN>/<RESET><YELLOW>|<RESET>
-+	<CYAN>|<RESET> * 1
-+	<CYAN>|<RESET><CYAN>/<RESET>
-+	* initial
-+	EOF
-+	git log --color=always --graph --date-order --pretty=tformat:%s after-4 after-merge >actual.colors.raw &&
-+	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
-+	test_cmp expect.colors actual.colors
-+'
-+
-+test_expect_success 'log --graph with unrelated commit and octopus tip, no color' '
-+	cat >expect.uncolored <<-\EOF &&
-+	* after-initial
-+	| *---.   octopus-merge
-+	| |\ \ \
-+	| | | | * 4
-+	| |_|_|/
-+	|/| | |
-+	| | | * 3
-+	| |_|/
-+	|/| |
-+	| | * 2
-+	| |/
-+	|/|
-+	| * 1
-+	|/
-+	* initial
-+	EOF
-+	git log --color=never --graph --date-order --pretty=tformat:%s after-initial octopus-merge >actual.raw &&
-+	sed "s/ *\$//" actual.raw >actual &&
-+	test_cmp expect.uncolored actual
-+'
-+
-+test_expect_success 'log --graph with unrelated commit and octopus tip with colors' '
-+	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
-+	cat >expect.colors <<-\EOF &&
-+	* after-initial
-+	<RED>|<RESET> *<BLUE>-<RESET><BLUE>-<RESET><MAGENTA>-<RESET><MAGENTA>.<RESET>   octopus-merge
-+	<RED>|<RESET> <GREEN>|<RESET><YELLOW>\<RESET> <BLUE>\<RESET> <MAGENTA>\<RESET>
-+	<RED>|<RESET> <GREEN>|<RESET> <YELLOW>|<RESET> <BLUE>|<RESET> * 4
-+	<RED>|<RESET> <GREEN>|<RESET><RED>_<RESET><YELLOW>|<RESET><RED>_<RESET><BLUE>|<RESET><RED>/<RESET>
-+	<RED>|<RESET><RED>/<RESET><GREEN>|<RESET> <YELLOW>|<RESET> <BLUE>|<RESET>
-+	<RED>|<RESET> <GREEN>|<RESET> <YELLOW>|<RESET> * 3
-+	<RED>|<RESET> <GREEN>|<RESET><RED>_<RESET><YELLOW>|<RESET><RED>/<RESET>
-+	<RED>|<RESET><RED>/<RESET><GREEN>|<RESET> <YELLOW>|<RESET>
-+	<RED>|<RESET> <GREEN>|<RESET> * 2
-+	<RED>|<RESET> <GREEN>|<RESET><RED>/<RESET>
-+	<RED>|<RESET><RED>/<RESET><GREEN>|<RESET>
-+	<RED>|<RESET> * 1
-+	<RED>|<RESET><RED>/<RESET>
-+	* initial
-+	EOF
-+	git log --color=always --graph --date-order --pretty=tformat:%s after-initial octopus-merge >actual.colors.raw &&
-+	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
-+	test_cmp expect.colors actual.colors
-+'
-+
-+test_expect_success 'log --graph with unrelated commit and octopus child, no color' '
-+	cat >expect.uncolored <<-\EOF &&
-+	* after-initial
-+	| * after-merge
-+	| *---.   octopus-merge
-+	| |\ \ \
-+	| | | | * 4
-+	| |_|_|/
-+	|/| | |
-+	| | | * 3
-+	| |_|/
-+	|/| |
-+	| | * 2
-+	| |/
-+	|/|
-+	| * 1
-+	|/
-+	* initial
-+	EOF
-+	git log --color=never --graph --date-order --pretty=tformat:%s after-initial after-merge >actual.raw &&
-+	sed "s/ *\$//" actual.raw >actual &&
-+	test_cmp expect.uncolored actual
-+'
-+
-+test_expect_failure 'log --graph with unrelated commit and octopus child with colors' '
-+	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
-+	cat >expect.colors <<-\EOF &&
-+	* after-initial
-+	<RED>|<RESET> * after-merge
-+	<RED>|<RESET> *<MAGENTA>-<RESET><MAGENTA>-<RESET><CYAN>-<RESET><CYAN>.<RESET>   octopus-merge
-+	<RED>|<RESET> <YELLOW>|<RESET><BLUE>\<RESET> <MAGENTA>\<RESET> <CYAN>\<RESET>
-+	<RED>|<RESET> <YELLOW>|<RESET> <BLUE>|<RESET> <MAGENTA>|<RESET> * 4
-+	<RED>|<RESET> <YELLOW>|<RESET><RED>_<RESET><BLUE>|<RESET><RED>_<RESET><MAGENTA>|<RESET><RED>/<RESET>
-+	<RED>|<RESET><RED>/<RESET><YELLOW>|<RESET> <BLUE>|<RESET> <MAGENTA>|<RESET>
-+	<RED>|<RESET> <YELLOW>|<RESET> <BLUE>|<RESET> * 3
-+	<RED>|<RESET> <YELLOW>|<RESET><RED>_<RESET><BLUE>|<RESET><RED>/<RESET>
-+	<RED>|<RESET><RED>/<RESET><YELLOW>|<RESET> <BLUE>|<RESET>
-+	<RED>|<RESET> <YELLOW>|<RESET> * 2
-+	<RED>|<RESET> <YELLOW>|<RESET><RED>/<RESET>
-+	<RED>|<RESET><RED>/<RESET><YELLOW>|<RESET>
-+	<RED>|<RESET> * 1
-+	<RED>|<RESET><RED>/<RESET>
-+	* initial
-+	EOF
-+	git log --color=always --graph --date-order --pretty=tformat:%s after-initial after-merge >actual.colors.raw &&
-+	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
-+	test_cmp expect.colors actual.colors
-+'
-+
- test_done
--- 
-2.23.0.565.g1cc52d20df
-
+So, until we accumulate too many files in the directory, every
+process when it starts tracing will scan the output directory.
+Hopefully the max is not set to too large a value.
