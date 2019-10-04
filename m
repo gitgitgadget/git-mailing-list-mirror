@@ -8,105 +8,153 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 009D41F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 14:27:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 613AA1F4BD
+	for <e@80x24.org>; Fri,  4 Oct 2019 15:09:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388376AbfJDO1l (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 10:27:41 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:42750 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388149AbfJDO1k (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 10:27:40 -0400
-Received: by mail-lf1-f66.google.com with SMTP id c195so4624502lfg.9
-        for <git@vger.kernel.org>; Fri, 04 Oct 2019 07:27:38 -0700 (PDT)
+        id S2389708AbfJDPJ2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 11:09:28 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36803 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388802AbfJDPJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 11:09:28 -0400
+Received: by mail-wr1-f65.google.com with SMTP id y19so7682212wrd.3
+        for <git@vger.kernel.org>; Fri, 04 Oct 2019 08:09:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=v8rUWXbkn9sfjTQZQi5ZKyXXnvzt3TPm9esI0uvsHk4=;
-        b=eoKEf786A2NtbllDPHx3C+IYxPnDTael39oPDW0Y4B5JxLb/3eSwMjctFudpAJnqdY
-         a30HY6Vz5KoWBidXXoKpQ/U0hRH/RqsyIkrUm37xxBynAOvfi63o52+o2YD10GD/jCz7
-         NcBhDwa1rNrAzzqN8Piv4/1BrG523XEw0THArnruf2PjDkK0ujwCDk0NGbXJvLuAZH5U
-         WRmnUm2yOlngSDp2sAy5jcGVXeEW4wCZrC2jb+1f7rwcKr7dUYTbWjQu2juEPqdJ/K9Y
-         2Ar56Iv+53mvtEjUKc37JZmkfFUQL2Z9UqozyT8zh7OpGM2nwfv/FkdE92FSrBaKFCfY
-         9wXw==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=7LykGDhs2SU76jy8bLReMk7rmhtvnUK5OKGGpveG5nY=;
+        b=cPqRAlHbrAdaRQmNzuNQn4cxcUtBqeMVwFsaURXbVUNJKYicbV5ELbvX1A95Vbp6x4
+         fG928Iy7VuGnOwAjxSSl1cCfFlIhkJlIL3MTXPcXKN2C5wc2xL2um0w5f9qx7hPIdH9J
+         6v+P/c6AlaiAsHMQMDck6h87R7rHQEkvPq5I7rsHeEI+HvrpMfaufVjWhRknt8/pcSna
+         5iW/jGflVd6wR2Diy44t+8cAKBaDzlDL6lPneppZ9kpEm2KgxvBaUwBP7QS6y8uJK1Md
+         gRIHV33anF+BxJ5Yxd2Tp1XOg/O8KTxenU3Xrr6uJnngQSXPEkg/M6P3114vDaMIqXa+
+         6PcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=v8rUWXbkn9sfjTQZQi5ZKyXXnvzt3TPm9esI0uvsHk4=;
-        b=PMOJkX5+vU8Avmspl8VsfjbdSPoTeWCZ26rZ7YUfCzVgFdPY+HArmaPUBiDTNgNtrf
-         uDjhlg+ydj1F5HtgYyaN6JwbfF0DkEjvUCGWwTlsyHeNci8EstO3IAuahKJCrlr9a827
-         zo8IQmF/DH8kd2H/0+XkPrm1OeI6789GCF9ltxX/RU5mzqb3Gb3ouuGVSs9U/4xHyA8P
-         DEwg2QdAMIYN0+15AeFyqklisM0dP2nwM6kuADKbo9VKqz8qTgGXH43/Bjbh+2k3yF9c
-         GNfACTaB0Cb2KSoma4aYVLXXl8PN+MpB2GmCc2OAYB3JL1Uu1+dhOrnXCGF87iPBHIVI
-         bOZQ==
-X-Gm-Message-State: APjAAAVN/sfNr4cNJxekKw6a1MWKso4xKbtVeCxLvMhxUAU3F997ZulA
-        JcJciPHyy0QVmEa7R3tZVws=
-X-Google-Smtp-Source: APXvYqy0FHYkpneKNc7/3RB7AHrqQmZSOmTAdEKDGQxB6ORC2HFQCNE0qA/K6o0gGmIcBpur7PwKLA==
-X-Received: by 2002:ac2:483a:: with SMTP id 26mr9054869lft.188.1570199257611;
-        Fri, 04 Oct 2019 07:27:37 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id z20sm1525045ljk.63.2019.10.04.07.27.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 04 Oct 2019 07:27:36 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "peff\@peff.net" <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "gitster\@pobox.com" <gitster@pobox.com>, garimasigit@gmail.com
-Subject: Re: [DISCUSSION] Growing the Git community
-References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
-        <20190920143614.GB20698@genre.crustytoothpaste.net>
-Date:   Fri, 04 Oct 2019 16:27:36 +0200
-In-Reply-To: <20190920143614.GB20698@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Fri, 20 Sep 2019 14:36:17 +0000")
-Message-ID: <86muegoaav.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=7LykGDhs2SU76jy8bLReMk7rmhtvnUK5OKGGpveG5nY=;
+        b=i1VUWyBk+nHZ38gry7eeVmYOG75gpWHYoeLXt/T4A//O+qZUXj2X0abTO8xE8WMArI
+         ToFE6N8G2M/+FXZSVkB6tR79DBq2HQnaZ/MenyOOaWuVX0GfPIclfF++xnFDbFabtfWz
+         +NG71M8NkFiyzUcytV66RNkyQpLCdDrBHFzs/BqnIqKIZ4KNvHUw+tSqPAyn+1/k4jMa
+         mVK3fq3+t6Fh0Pe+MvnT/Zn/X92P0KCUKygBhMM/OqNtx+OPSW385yzgtH6zYQ2LcB1x
+         46uoxDw7FJLc4hlcZ2zjI+XnS1O2UwosSkfsjw1/NE6j2BiWjT1PtZqe7gTNVmHI0Wrj
+         C//Q==
+X-Gm-Message-State: APjAAAUUEoPR0GcUqyiIB2YGzjFPunMiSMtSImkmMUkNJbAkkyI0+ZJp
+        OBJ1Wpi1OxJbKYOIIhRaOTrm1wg3
+X-Google-Smtp-Source: APXvYqwVfbiV4KD6dywTtpTZJAr1TfAiNYc6buwukaJobB0IZ/Buz5loJF5PKGq2/FhWopQDOtPxhA==
+X-Received: by 2002:adf:e701:: with SMTP id c1mr12295404wrm.296.1570201765074;
+        Fri, 04 Oct 2019 08:09:25 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l11sm7531305wmh.34.2019.10.04.08.09.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 04 Oct 2019 08:09:23 -0700 (PDT)
+Date:   Fri, 04 Oct 2019 08:09:23 -0700 (PDT)
+X-Google-Original-Date: Fri, 04 Oct 2019 15:09:09 GMT
+Message-Id: <pull.288.v3.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.288.v2.git.gitgitgadget@gmail.com>
+References: <pull.288.v2.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v3 00/13] ci: include a Visual Studio build & test in our Azure Pipeline
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Git's Continuous Integration (CI) includes an Azure Pipeline that builds Git
+on Linux, macOS and Windows, in the former two cases even in multiple
+configurations (using GCC vs clang, 32-bit vs 64-bit, etc). On Windows, we
+only build using GCC, using (a subset of) Git for Windows' SDK.
 
-> I think GitGitGadget is a useful tool which I haven't really had the
-> time to learn how to use.  I appreciate that many people prefer a
-> patch-based workflow, and that using a patch-based workflow and a
-> mailing list provides the project independence and avoids favoring any
-> hosting platform or tool, which I agree with.
->
-> I think also that many folks find a pull request-based workflow to be
-> easier and more familiar and supporting this a bit better may lower the
-> barrier to entry, so I'm in favor of bridges that make contributing
-> easier, even if one still needs to subscribe to the list to get
-> feedback.       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  ^^^^^^^^
+Recently, a patch series made it into Git that re-instates the ability to
+generate project files for use with Visual Studio. The idea there being:
+contributors can check out a special branch that has those generated files
+in one generated commit on top of e.g. Git for Windows' master, allowing the
+contributors to build Git in Visual Studio, without the need for downloading
+Git for Windows' SDK (which weighs quite a bit: ~600MB download, ~2GB disk
+footprint). The tests can then be run from a regular Git for Windows Bash.
 
-Actually you can get feedback without having to subscribe to git mailing
-list; and I am not talking here about GitGitGadget gathering response
-like GitHub Issues <-> mail bridge.  You can get your feedback via
-public-inbox.org, and respond to feedback via public-inboc.org mail to
-[Usenet] news interface, reading and replying via NNTP (or replying via
-email from thread read via NNTP):
-  nntp://news.public-inbox.org/inbox.comp.version-control.git
+This patch series adds that axis to Git's Azure Pipeline: the project files
+are generated, MSBuild (which is kind of the command-line equivalent of
+Visual Studio's "Build" operation) is used to build Git, and then a
+parallelized test job runs the test suite in a Portable Git.
 
-Unfortunately it looks like newsreaders are dying category of
-applications.  KDE's KNode got discontinued in 2015, XPN (X Python
-Newsreader) last release had in 2009, MicroPlanet Gravity in 2010; there
-is still Pan, Gnus for GNU Emacs; some e-mail clients also have support
-for Usenet, like Mozilla Thunderbird (and SeaMonkey), Sylpheed and Claws
-Mail.
+These patches are based on js/visual-studio.
 
-This technique might not be described in our documentation...
+Changes since v2:
 
-Best,
---=20
-Jakub Nar=C4=99bski
+ * The overflow check introduced in v1 was consolidated into a single
+   helper.
+
+Changes since v1:
+
+ * "While at it", we now also check for overflows when doing that -1 -
+   <unsigned> arithmetic.
+ * The JUnit-style XML is finalized also in case that the script aborts e.g.
+   due to an incorrect number of arguments in a test_expect_success call.
+
+Johannes Schindelin (13):
+  push: do not pretend to return `int` from `die_push_simple()`
+  msvc: avoid using minus operator on unsigned types
+  winansi: use FLEX_ARRAY to avoid compiler warning
+  compat/win32/path-utils.h: add #include guards
+  msvc: ignore some libraries when linking
+  msvc: handle DEVELOPER=1
+  msvc: work around a bug in GetEnvironmentVariable()
+  vcxproj: only copy `git-remote-http.exe` once it was built
+  vcxproj: include more generated files
+  test-tool run-command: learn to run (parts of) the testsuite
+  tests: let --immediate and --write-junit-xml play well together
+  ci: really use shallow clones on Azure Pipelines
+  ci: also build and test with MS Visual Studio on Azure Pipelines
+
+ Makefile                                   |   4 +
+ azure-pipelines.yml                        | 164 ++++++++++++++++++++-
+ builtin/push.c                             |   4 +-
+ cache.h                                    |  13 ++
+ compat/mingw.c                             |   2 +
+ compat/vcbuild/scripts/clink.pl            |  48 +++++-
+ compat/win32/path-utils.h                  |   5 +
+ compat/winansi.c                           |   2 +-
+ config.mak.uname                           |  19 ++-
+ contrib/buildsystems/Generators/Vcxproj.pm |   3 +
+ read-cache.c                               |   4 +-
+ sha1-lookup.c                              |   4 +-
+ t/helper/test-run-command.c                | 153 +++++++++++++++++++
+ t/test-lib.sh                              |  38 +++--
+ 14 files changed, 430 insertions(+), 33 deletions(-)
+
+
+base-commit: aac6ff7b5beeea9bca66ecda6eec60fc1dd447ec
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-288%2Fdscho%2Fazure-pipelines-msvc-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-288/dscho/azure-pipelines-msvc-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/288
+
+Range-diff vs v2:
+
+  1:  4d0b38125a =  1:  4d0b38125a push: do not pretend to return `int` from `die_push_simple()`
+  2:  8800320590 <  -:  ---------- msvc: avoid using minus operator on unsigned types
+  -:  ---------- >  2:  7fe2a85506 msvc: avoid using minus operator on unsigned types
+  3:  8512a3e96d =  3:  e632a4eef4 winansi: use FLEX_ARRAY to avoid compiler warning
+  4:  0345b08f54 =  4:  cd96d7ff70 compat/win32/path-utils.h: add #include guards
+  5:  5add01f8ff =  5:  bf09257f65 msvc: ignore some libraries when linking
+  6:  5c880f923e =  6:  39c707464c msvc: handle DEVELOPER=1
+  7:  1f2245a228 =  7:  91b09cfdd8 msvc: work around a bug in GetEnvironmentVariable()
+  8:  582b299634 =  8:  cca891450d vcxproj: only copy `git-remote-http.exe` once it was built
+  9:  38ccf999e7 =  9:  e6e60b3c2b vcxproj: include more generated files
+ 10:  24b1c7bff3 = 10:  d2c4973431 test-tool run-command: learn to run (parts of) the testsuite
+ 11:  7be13d19e1 = 11:  0644a2f8da tests: let --immediate and --write-junit-xml play well together
+ 12:  bde1e8ef65 = 12:  4495c392fd ci: really use shallow clones on Azure Pipelines
+ 13:  7af1c01a08 = 13:  b1ff8eff4d ci: also build and test with MS Visual Studio on Azure Pipelines
+
+-- 
+gitgitgadget
