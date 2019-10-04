@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68A371F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 22:08:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D25C81F4BD
+	for <e@80x24.org>; Fri,  4 Oct 2019 22:08:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731452AbfJDWI3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 18:08:29 -0400
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:44925 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726002AbfJDWI3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 18:08:29 -0400
-Received: by mail-pl1-f201.google.com with SMTP id h11so4760505plt.11
-        for <git@vger.kernel.org>; Fri, 04 Oct 2019 15:08:27 -0700 (PDT)
+        id S1731514AbfJDWIc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 18:08:32 -0400
+Received: from mail-qk1-f202.google.com ([209.85.222.202]:32790 "EHLO
+        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726002AbfJDWIb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 18:08:31 -0400
+Received: by mail-qk1-f202.google.com with SMTP id w198so7967658qka.0
+        for <git@vger.kernel.org>; Fri, 04 Oct 2019 15:08:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=+/hxFnO/MBvVuyHypi0CpuNBzRsAkLIiQEcAHtiLtsw=;
-        b=WUJpidIB+yT9VydW/RQN/YMn7r/bVHb6BYVUJdy8S3p2VqQ1Ygcv2J6Ru9PWPWy0re
-         LXBHyysm48LmrVvese5JniDHo1iwFSPx5OAW1LIQ8vXozvRpOXTaQS7/8lkozlKqOvLb
-         88ilDfsG+FpMo0g7GON1l/2PXn0VdxFd6zZ3UppyGPdZ1Epf9jAxaBrQtHTi8UzeRdMv
-         ee/G45rb5T3Cam5wu2zoSaLMjgDIKWSPRYCdl/7D/EwiFEq4OTG5uFy/4bbLL7c/RGDR
-         1OoAi5QBpdbdwgEKJbkNyGgUR8Q5yEMkWU0TjYdyHx8SP6mW39ZnokZhFIahRhTNWXRD
-         bkWg==
+        bh=rrfjlT2d1ppUSO9oJnMgWJPtCSuFxQnwsKohJ+DUp2w=;
+        b=KmK7DM0n0dqOpuDixssDLQsvfz8O+y0y2LUPkWc8aM/qoWqYyCkUcfpkx8SFDmIVKf
+         HJ5bUEOVzr1bXY8QvBN3BTzsqoISEkHaGjYMxR6x/FCGwjIU8eZYmXeiFPfskkbBULJQ
+         nVh4hZ3Eyy8Qwo6xvEdNLZ5IiyGwZ1GFEEA+Z/6OSc/2t4CX1VH3APboiV6RvZqrEyJ8
+         dr1KpfGmNr9/0GDGE32AzAVz6IaD3iOc8UhYp1SGt0vDWVl7R2n7UJ90vbR6+Y8ukqGO
+         WPZlONVKutcWiwLmwoZjf/8otM7qHx8E8+EIx+dwvRCLXaMnDvlCrytEZgt8/wGCc5RC
+         xLgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=+/hxFnO/MBvVuyHypi0CpuNBzRsAkLIiQEcAHtiLtsw=;
-        b=QlhxxgEqQRFWLzCdS939KHGkxvFvbYzXIIoXgUpZ4rbiYQF0a1HnZojFdUFoHOEnbA
-         4b7FflpY6dJ4mpdzjSz79n57v3U6cnr+KkoCcKcvfaVVFeYZ+9VcjdKuGdeUIh/ejuNK
-         DCDvzozy5byGuk+4K+eAEr3u3TBxAOswU4l2Eihpx7bvCs0e/29ZlOwhp4QFJWjobF00
-         xzJRuPOy2Fm5Xp3hMJ3t0U7TfOY0A6IRpgT1DQIj4d8Rx/h4hB7Ej7MidD6kuJepLCQ8
-         VNlD5WicGYeMFTVkxrLku9zc8i7HBcnlJO0da8GopnowtDlfgsr9hgWr8EnCFQqKWA0+
-         h4gQ==
-X-Gm-Message-State: APjAAAU5iRQcuXXK2mnoEOcZ2XT/wRDEBarHbVHLYfKGcnQPar1hQBHV
-        LT4ZDNn/73h2nUJzqBUZZfw4DyQ4m0bbqVSmOb0MiSgtXMfIbjYvA7jhYaqPbNT6yoTPpR9ezvR
-        a6RBudNuh554WUekqiXY4h1UBIekaIEGIYDSC7CE4m72DboY+xOLjlmIl5/ZglTk=
-X-Google-Smtp-Source: APXvYqzfnoEDgHf3r4F+s+CHtL5QLp2p7y4BKiEu0hZh3yApKpdcH4Q80dbq0E+UL4N4HRd98xOZyTCtfg0zEg==
-X-Received: by 2002:a63:d30f:: with SMTP id b15mr17471708pgg.341.1570226906816;
- Fri, 04 Oct 2019 15:08:26 -0700 (PDT)
-Date:   Fri,  4 Oct 2019 15:08:18 -0700
+        bh=rrfjlT2d1ppUSO9oJnMgWJPtCSuFxQnwsKohJ+DUp2w=;
+        b=GnFz4aVasiiqv5MHPc/puQ+Ca3zfED9ifb84PC66ykY8jZXbgk+r+TmDDhSCuhm9Mh
+         yqMvJvuW0O9ZwunA3sfULt/L9QosJ+K3qzGivMb2kkV3slfM22a3uZxZQN2d1POtLVfu
+         YLEhu4rYjzygsmH/pfuBuJ9F9Vq8SaqkE8j1J6Q+UBF1M3XnfUhMujHsAfhtVA1IzAci
+         aipE3u7wXhFC6Lfh9WizxQTjwkfVl4jhTa1J6ByYpwtrvAxADPNMXkSQjN510kzGQDBH
+         jVDnU6aTWT69KfOw4Vtoqq2bH+WPgJvCFuopSQ6QCkYSy9HmO8Dty7TfOxPhO6b2RxH8
+         flFQ==
+X-Gm-Message-State: APjAAAWJv4Fp2nbA4vHYTBqIuFI8fIsJ5P/QWkmpwHQW7QlHbBi9kiPG
+        H7xhg/GmEijqbRfnz5mTttQsihmNEKFiF44i7+K/eYrjyfCGZ3HsdzLSdZxzkReCqh9RIaXOuga
+        ovUVqmLMwCz0kyG8UlF7RACMjZOx4cPksNM/Rsip1NARUsNCqcG0hZO2wZJdW9jk=
+X-Google-Smtp-Source: APXvYqx7+uqgTO9pbaeppswZIyFapQUQ9xJQ60b83g6Ns/LWGpMxrK2MMf8cb76oWHyJ5Sjb0m08DjKTS05edA==
+X-Received: by 2002:ac8:548d:: with SMTP id h13mr18689682qtq.228.1570226909267;
+ Fri, 04 Oct 2019 15:08:29 -0700 (PDT)
+Date:   Fri,  4 Oct 2019 15:08:19 -0700
 In-Reply-To: <cover.1570225500.git.steadmon@google.com>
-Message-Id: <eacffe250d2029f190d04144c9242ae25b8fb094.1570225500.git.steadmon@google.com>
+Message-Id: <a757bca8f99bad57806bfdcd67ac1c1f6cc38584.1570225500.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
  <cover.1570225500.git.steadmon@google.com>
 X-Mailer: git-send-email 2.23.0.581.g78d2f28ef7-goog
-Subject: [PATCH v5 1/4] docs: mention trace2 target-dir mode in git-config
+Subject: [PATCH v5 2/4] docs: clarify trace2 version invariants
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, stolee@gmail.com, gitster@pobox.com,
@@ -65,51 +65,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the description of trace2's target-directory behavior into the
-shared trace2-target-values file so that it is included in both the
-git-config and api-trace2 docs. Leave the SID discussion only in
-api-trace2 since it's a technical detail.
+Make it explicit that we always want trace2 "version" events to be the
+first event of any trace session. Also list the changes that would or
+would not cause the EVENT format version field to be incremented.
 
-Change-Id: I3d052c5904684e981f295d64aa2c5d62cfaa4500
+Change-Id: I20b9ac1fa0786bcaad7e290cc805cbf45b323021
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- Documentation/technical/api-trace2.txt | 7 +++----
- Documentation/trace2-target-values.txt | 4 +++-
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ Documentation/technical/api-trace2.txt | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index 71eb081fed..80ffceada0 100644
+index 80ffceada0..18b79128fd 100644
 --- a/Documentation/technical/api-trace2.txt
 +++ b/Documentation/technical/api-trace2.txt
-@@ -142,10 +142,9 @@ system or global config value to one of the following:
+@@ -604,7 +604,13 @@ only present on the "start" and "atexit" events.
+ ==== Event-Specific Key/Value Pairs
  
- include::../trace2-target-values.txt[]
- 
--If the target already exists and is a directory, the traces will be
--written to files (one per process) underneath the given directory. They
--will be named according to the last component of the SID (optionally
--followed by a counter to avoid filename collisions).
-+When trace files are written to a target directory, they will be named according
-+to the last component of the SID (optionally followed by a counter to avoid
-+filename collisions).
- 
- == Trace2 API
- 
-diff --git a/Documentation/trace2-target-values.txt b/Documentation/trace2-target-values.txt
-index 27d3c64e66..3985b6d3c2 100644
---- a/Documentation/trace2-target-values.txt
-+++ b/Documentation/trace2-target-values.txt
-@@ -2,7 +2,9 @@
- * `0` or `false` - Disables the target.
- * `1` or `true` - Writes to `STDERR`.
- * `[2-9]` - Writes to the already opened file descriptor.
--* `<absolute-pathname>` - Writes to the file in append mode.
-+* `<absolute-pathname>` - Writes to the file in append mode. If the target
-+already exists and is a directory, the traces will be written to files (one
-+per process) underneath the given directory.
- * `af_unix:[<socket_type>:]<absolute-pathname>` - Write to a
- Unix DomainSocket (on platforms that support them).  Socket
- type can be either `stream` or `dgram`; if omitted Git will
+ `"version"`::
+-	This event gives the version of the executable and the EVENT format.
++	This event gives the version of the executable and the EVENT format. It
++	should always be the first event in a trace session. The EVENT format
++	version will be incremented if new event types are added, if existing
++	fields are removed, or if there are significant changes in
++	interpretation of existing events or fields. Smaller changes, such as
++	adding a new field to an existing event, will not require an increment
++	to the EVENT format version.
+ +
+ ------------
+ {
 -- 
 2.23.0.581.g78d2f28ef7-goog
 
