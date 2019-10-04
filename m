@@ -7,73 +7,80 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C5AF1F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 05:51:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 120111F4BD
+	for <e@80x24.org>; Fri,  4 Oct 2019 05:52:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731008AbfJDFux (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 01:50:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57108 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728763AbfJDFux (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 01:50:53 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6458026687;
-        Fri,  4 Oct 2019 01:50:52 -0400 (EDT)
+        id S1731712AbfJDFvW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 01:51:22 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54181 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729834AbfJDFvW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 01:51:22 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5EDB390C51;
+        Fri,  4 Oct 2019 01:51:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9EGFxPcEJWS/Q/T021PN+Tqk69M=; b=ucxBI8
-        Qe+HQNfFm56UGT/aYGliV/VAS7nmyuSzT3gcS+SNLyQP3kNeWj1A5S1HVFYpEuba
-        MZKrCSEo4C0FORzFLHXi2JpsVZUPtc+wgHYAu4Dx7xaxzKs5q30iM2r/i21rNloN
-        1vOIvZVfdlIOWbzy6Fyf/CiJeAGwOCe6DVOag=
+        :content-type:content-transfer-encoding; s=sasl; bh=FjU+q4b+lEV/
+        T2Ex9m9qP3/OIVM=; b=J75IJKivII7ZuTvLtgT1n9q244X/yI4IL9E0LM+/Kgn6
+        4BF+hBvmOZdZIEGsfciH8+sFjTUg4BfSK2L0fGhqvnBzCcxmazQyJPcvVFy+bIr7
+        Iok3DJh3HeeXtNF6dNo7hPKJG27FCkHDv0cSVPGGVnxoQ8zO7gKm2BprBzbAjE8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FuEYetqyHwi35ceaK42g4JbbjBflRjCW
-        i2Nm7sO47qY1GOhVd1FB4iZO+RQ14U27wUtEiWsjA8Rc7m8ZpfOhZNt4iS7lCOEG
-        Qr9RF/N1EjS38w3Frf0dGF0Ih4ydheZTJncyr09dooodkdS3qhFkKPG971kpNe/8
-        9H1aQiWV29w=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5BDB126686;
-        Fri,  4 Oct 2019 01:50:52 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=C1u5HL
+        nff2+PKJG3w6TJ6tLsPgXFcxVhKbQY5PlIwupjF235faWTv1EotH2WE7LShCMNgc
+        Eq8sGEV0J8siyjw6FyiqNIevWYs0/1CN+IRpmtmSvDzZQicxie571kSkrvgNxMF+
+        RH9CJDN7tPC+St0ep/OPrqHLKgJSj576gNysk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 582D090C50;
+        Fri,  4 Oct 2019 01:51:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C4E7926684;
-        Fri,  4 Oct 2019 01:50:51 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 83EC590C4F;
+        Fri,  4 Oct 2019 01:51:17 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Allan Caffee <allan.caffee@gmail.com>,
-        Noam Postavsky <npostavs@users.sourceforge.net>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] t4214: cleanup and demonstrate graph bug
-References: <cover.1569407150.git.liu.denton@gmail.com>
-        <cover.1570148053.git.liu.denton@gmail.com>
-Date:   Fri, 04 Oct 2019 14:50:50 +0900
-In-Reply-To: <cover.1570148053.git.liu.denton@gmail.com> (Denton Liu's message
-        of "Thu, 3 Oct 2019 17:23:09 -0700")
-Message-ID: <xmqqblux83et.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH -v3 0/8] fast export/import: handle nested tags, improve incremental exports
+References: <20190930211018.23633-1-newren@gmail.com>
+        <20191003202709.26279-1-newren@gmail.com>
+Date:   Fri, 04 Oct 2019 14:51:15 +0900
+In-Reply-To: <20191003202709.26279-1-newren@gmail.com> (Elijah Newren's
+        message of "Thu, 3 Oct 2019 13:27:01 -0700")
+Message-ID: <xmqq7e5l83e4.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EC612E4C-E66A-11E9-9E60-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FBB7BC6C-E66A-11E9-895A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> Range-diff against v1:
-> 1:  e77af8cde5 = 1:  e77af8cde5 test-lib: let test_merge() perform octopus merges
+> This series improves the incremental export story for fast-export and
+> fast-import (--export-marks and --import-marks fell a bit short),
+> fixes a couple small export/import bugs, and enables handling nested
+> tags.  In particular, the nested tags handling makes it so that
+> fast-export and fast-import can finally handle the git.git repo.
+>
+> Changes since v2 (full range-diff below):
+>   - Code cleanup of patch 2 suggested by Ren=C3=A9
+>
+> Elijah Newren (8):
+>   fast-export: fix exporting a tag and nothing else
+>   fast-import: fix handling of deleted tags
+>   fast-import: allow tags to be identified by mark labels
+>   fast-import: add support for new 'alias' command
+>   fast-export: add support for --import-marks-if-exists
+>   fast-export: allow user to request tags be marked with --mark-tags
+>   t9350: add tests for tags of things other than a commit
+>   fast-export: handle nested tags
 
-micronit: I would say s/let/allow/ if I were writing this.
-
-> 2:  4a93deb3f6 = 2:  4a93deb3f6 t4214: use test_merge
-> 3:  c09f761185 = 3:  c09f761185 t4214: generate expect in their own test cases
-> 4:  ad6d89440b = 4:  ad6d89440b t4214: explicitly list tags in log
-> 5:  0b84bf5417 ! 5:  e58c1929bc t4214: demonstrate octopus graph coloring failure
-
-Queued and pushed out.  Thanks.
+Thanks, both.  Replaced.
