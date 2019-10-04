@@ -2,83 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15EDC1F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 17:09:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D01141F4BE
+	for <e@80x24.org>; Fri,  4 Oct 2019 17:26:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729670AbfJDRJs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 13:09:48 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:56990 "EHLO bsmtp.bon.at"
+        id S2388549AbfJDR0E (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 13:26:04 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:33654 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728671AbfJDRJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 13:09:48 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 46lGZd4C61z5tlD;
-        Fri,  4 Oct 2019 19:09:45 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 8A6451CAA;
-        Fri,  4 Oct 2019 19:09:44 +0200 (CEST)
-Subject: Re: [PATCH v2 02/13] msvc: avoid using minus operator on unsigned
- types
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-References: <pull.288.git.gitgitgadget@gmail.com>
- <pull.288.v2.git.gitgitgadget@gmail.com>
- <8800320590e4d7218a80f80abca23a7f44b8747d.1569837329.git.gitgitgadget@gmail.com>
- <xmqqy2y1a1qk.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1910041154120.46@tvgsbejvaqbjf.bet>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <ae6a64f4-8f46-cbaf-5004-defc316c5157@kdbg.org>
-Date:   Fri, 4 Oct 2019 19:09:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2388146AbfJDR0D (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 13:26:03 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 65A781F4BD;
+        Fri,  4 Oct 2019 17:26:03 +0000 (UTC)
+Date:   Fri, 4 Oct 2019 17:26:03 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: Re: [PATCH v2 18/19] OFFSETOF_VAR macro to simplify hashmap iterators
+Message-ID: <20191004172603.GA7215@dcvr>
+References: <20190924010324.22619-1-e@80x24.org>
+ <20190924010324.22619-19-e@80x24.org>
+ <xmqqr23t8g0t.fsf@gitster-ct.c.googlers.com>
+ <20191004025115.GA26605@dcvr>
+ <xmqqk19l89xt.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1910041154120.46@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <xmqqk19l89xt.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 04.10.19 um 11:55 schrieb Johannes Schindelin:
-> On Fri, 4 Oct 2019, Junio C Hamano wrote:
->> These three look good and too similar to each other, which makes me
->> wonder if we want to allow them simply write
->>
->> 	return insert_pos_as_negative_offset(nr);
->>
->> with something like
->>
->> 	static int insert_pos_as_negative_offset(uintmax_t nr)
->> 	{
->> 		if (INT_MAX < nr)
->> 			die("overflow: -1 - %"PRIuMAX, nr);
->> 		return -1 - (int)nr;
->> 	}
->>
->> to avoid repetition.
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <e@80x24.org> writes:
 > 
-> I tried not to do that because there are two different data types in
-> play: `unsigned int` and `size_t`. But I guess by making this an
-> `inline` function, compilers can optimize for the common case and avoid
-> casting _twice_.
+> > That seems too tedious.  I'm learning towards just initializing
+> > var = NULL in the start of the for-loop:
+> >
+> > @@ -449,7 +449,8 @@ static inline struct hashmap_entry *hashmap_iter_first(struct hashmap *map,
+> >   * containing a @member which is a "struct hashmap_entry"
+> >   */
+> >  #define hashmap_for_each_entry(map, iter, var, member) \
+> > -	for (var = hashmap_iter_first_entry_offset(map, iter, \
+> > +	for (var = NULL /* squelch uninitialized warnings for OFFSETOF_VAR */, \
+> > +		var = hashmap_iter_first_entry_offset(map, iter, \
+> >  						OFFSETOF_VAR(var, member)); \
 > 
-> Will be fixed in v2,
+> That looks a bit too ugly for my taste.  I've added an updated
+> version (see below) and then rebased the whole thing on top of it.
 
-IMHO, if you don't accompany insert_pos_as_negative_offset() with a
-corresponding extract_pos_and_found_condition() and use it everywhere,
-it is more obfuscating than necessary.
+I prefer to minimize the amount of stuff we do to work around
+buggy compilers (in case they get fixed and old versions are
+obsoleted).
 
-The *real* problem to solve is to ensure that the index/cache does not
-grow so large that 32-bit indexes would be needed. Then the calculation
-that you want to hide here cannot overflow.
+If it's just clang with this problem, we know clang sets
+__GNUC__, so we can use __typeof__ directly (bypassing extra
+parentheses in our TYPEOF macro) to get around the warning:
 
--- Hannes
+#if defined(__GNUC__) /* clang sets this, too */
+#define OFFSETOF_VAR(ptr, member) offsetof(__typeof__(*ptr), member)
+#else /* !__GNUC__ */
+...
+
+
+That said, there could be other compilers which don't set
+__GNUC__ and have the same problem as clang.  But maybe those
+compilers are too buggy and we already ignore invalid warnings
+on those compilers.
