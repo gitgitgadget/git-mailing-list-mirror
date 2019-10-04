@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 692921F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 15:09:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CB961F4BD
+	for <e@80x24.org>; Fri,  4 Oct 2019 15:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389744AbfJDPJj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 11:09:39 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41679 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389729AbfJDPJh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 11:09:37 -0400
-Received: by mail-wr1-f68.google.com with SMTP id q9so7648330wrm.8
-        for <git@vger.kernel.org>; Fri, 04 Oct 2019 08:09:35 -0700 (PDT)
+        id S2389756AbfJDPJn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 11:09:43 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51980 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389743AbfJDPJk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 11:09:40 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 7so6222022wme.1
+        for <git@vger.kernel.org>; Fri, 04 Oct 2019 08:09:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HGFrFNyVHi280AGFhSwMmw4T+7XoU3wVKH7GZLHn6U0=;
-        b=RgWjaSeGvkhAapshh4Du+UzSw7cB4WaIz8moX5fsQKmnsmuPMqNdSg/VNkxIbuLJkF
-         PiL9Z46v/aZhm5G5P8mdQ9rN+ZaeJ9qSOybADedy8+4c2uOnwxcagqHGP7fLc2/tL6mI
-         u3ka3BwKX60fmDbj4yLv4qZ/tFN5gzGKenwrIMh7cZGiVRjKlHb1zJfyJOJWwJi8765m
-         4vVsXf2aK9DVOBxSdjU4huo8vQBaZIms0HlynpJLY7sxWGa80Ec28kvQlUq9Rrd5lY0T
-         +6AOfr/jc0FOUdfhjbKN2+eounV+47u/dnTeyorwPl+poLprzbLZQ5Rh/+IiUoY4mGXt
-         69JA==
+        bh=2sgHY/MFdO8y7LIMA6x3QeA95At2V5bCVZfn9F3/7mM=;
+        b=msaGJHgMCdJG1tf2vb2EObDHTzl1ReD/g55zpyLqEmkxrl1zC7r9DROTxyex139vJR
+         LOy3yhgHWWSe5yme3g6ss0lIwTJ/CbtWW2pSWhzj2QE0S8VYDQCoTrO7l2TSGouIuUAx
+         nnGNaJqY1SB+NE9hJxuDwLOwzR0qWg1d0D81ikJr+jT+S7trHjH/kPNPAtenDSC3C3kA
+         j3OC9iCqdC2UMZUDnkvo+S1Wo+MrLDjJzw7+6Am07zsVZw3Vu5Cz/1b8hgLxOES2Vo/o
+         StBzNQT97lXXTf2cQmzcNZmFvOx58p93uqN5gkwoh5jzLkhOxDolX6h5ScEO0P2cKO8v
+         ucAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HGFrFNyVHi280AGFhSwMmw4T+7XoU3wVKH7GZLHn6U0=;
-        b=aXMfZvkRe60eXg1rPiapfddXAL71q9/eKgFUaiMlpRs+mS2SILVjwtrVbN7uPzT0jH
-         IBi3whi1tF6UOmzi6RySEaO6GzTbM9uj/LM89qCOWESWu4Iv9YyiLK8occJtPduiEfWL
-         iQbc7/4P/IeO8MLXbs+rXW1hyeT5YMfNegrswhryqbFh27TgEmNwfgvbyZ0Sjg13fVmc
-         D3iqyF8d4J1XgQuaVXTwjUaEeW0KO/vNF+ZBU1Jc6sgRmqwbJzX7EJ3KkO+ML3Ss+Ezp
-         vj892iDJs+8piO3qEAkS8TAWYOEk+tjWXlBczo0njPWtOicr8XsSfhY5W8Om8nlpKTN/
-         17qg==
-X-Gm-Message-State: APjAAAWf3R8RpjwxtyaVCz/ynUJbpRQAWTbR4MIiSU7Lz/aFVjiwXM7a
-        ZU/pxD48c70mTHsqTqLPeHo1X9qq
-X-Google-Smtp-Source: APXvYqxUj8BJuKTEJgwayXdTOHr1WmLb1KF7k0za+K6tYTJNChnO/+emcg2M4v2ZwsOa1bI13JpYTQ==
-X-Received: by 2002:a5d:52c2:: with SMTP id r2mr12466772wrv.367.1570201774241;
-        Fri, 04 Oct 2019 08:09:34 -0700 (PDT)
+        bh=2sgHY/MFdO8y7LIMA6x3QeA95At2V5bCVZfn9F3/7mM=;
+        b=cNkHlM6VufxdpXOJM/wi6cXjzoTjFLuR3KmZGXaaqPWkckxEsU3Crw6Nu5vFjOowdV
+         RAMO8bOGWRyJ3LjWdBTEww+BiDXnCSgO2FxjB0aRwPwWLkHqVhJCWpKmgOC4pJeVE9NR
+         zvBn5jxnIdMTrN5zO1Kl1KbPc80vjfc/eT/fSLBpXJd4VfQlzmDVoiQkTcYJw2P6Wq/I
+         oSSazGtAFCI/BSSKvn2YzinE0kTWa5nVg8IHNlmCohq4H3AB/ERFO9VZvkeK1NF44mgc
+         2rm0SEyDqct+XxW9yszM7Nb84N4U8bwBDPBD1eWonNzCuNP01Z0ByrsW0sKod9c4h3Ap
+         7wEQ==
+X-Gm-Message-State: APjAAAV50g69SeHWNfRb/l92epjxTzGTA1a7XiTEFJAB1mb2PN6vtWYH
+        Ws2uDa/16H9FGStiOmViVuuSq4vr
+X-Google-Smtp-Source: APXvYqzwjg9EdiicZo2eeZRh8x7HOzWTxbbqaZbDqcsnBs+2QLNsMO0g6WAUmf6oPpmI9rMdD139bQ==
+X-Received: by 2002:a7b:cd11:: with SMTP id f17mr11072946wmj.12.1570201777444;
+        Fri, 04 Oct 2019 08:09:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d4sm7768187wrq.22.2019.10.04.08.09.33
+        by smtp.gmail.com with ESMTPSA id y19sm12023078wmi.13.2019.10.04.08.09.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 Oct 2019 08:09:33 -0700 (PDT)
-Date:   Fri, 04 Oct 2019 08:09:33 -0700 (PDT)
-X-Google-Original-Date: Fri, 04 Oct 2019 15:09:19 GMT
-Message-Id: <d2c4973431e36b7b7b9f05ae30d96541d5fc1938.1570201763.git.gitgitgadget@gmail.com>
+        Fri, 04 Oct 2019 08:09:36 -0700 (PDT)
+Date:   Fri, 04 Oct 2019 08:09:36 -0700 (PDT)
+X-Google-Original-Date: Fri, 04 Oct 2019 15:09:22 GMT
+Message-Id: <b1ff8eff4d209d2ab44c76da6146bb7ad49d9650.1570201763.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.288.v3.git.gitgitgadget@gmail.com>
 References: <pull.288.v2.git.gitgitgadget@gmail.com>
         <pull.288.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 10/13] test-tool run-command: learn to run (parts of) the
- testsuite
+Subject: [PATCH v3 13/13] ci: also build and test with MS Visual Studio on
+ Azure Pipelines
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,219 +75,204 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Git for Windows jumps through hoops to provide a development environment
-that allows to build Git and to run its test suite. To that end, an
-entire MSYS2 system, including GNU make and GCC is offered as "the Git
-for Windows SDK". It does come at a price: an initial download of said
-SDK weighs in with several hundreds of megabytes, and the unpacked SDK
-occupies ~2GB of disk space.
+... because we can, now. Technically, we actually build using `MSBuild`,
+which is however pretty close to building interactively in Visual
+Studio.
 
-A much more native development environment on Windows is Visual Studio.
-To help contributors use that environment, we already have a Makefile
-target `vcxproj` that generates a commit with project files (and other
-generated files), and Git for Windows' `vs/master` branch is
-continuously re-generated using that target.
-
-The idea is to allow building Git in Visual Studio, and to run
-individual tests using a Portable Git.
-
-The one missing thing is a way to run the entire test suite: neither
-`make` nor `prove` are required to run Git, therefore Git for Windows
-does not support those commands in the Portable Git.
-
-To help with that, add a simple test helper that exercises the
-`run_processes_parallel()` function to allow for running test scripts in
-parallel (which is really necessary, especially on Windows, as Git's
-test suite takes such a long time to run).
-
-This will also come in handy for the upcoming change to our Azure
-Pipeline: we will use this helper in a Portable Git to test the Visual
-Studio build of Git.
+As there is no convenient way to run Git's test suite in Visual Studio,
+we unpack a Portable Git to run it, using the just-added test helper to
+allow running test scripts in parallel.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/helper/test-run-command.c | 153 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 153 insertions(+)
+ Makefile            |   4 ++
+ azure-pipelines.yml | 159 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 163 insertions(+)
 
-diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index 2cc93bb69c..ead6dc611a 100644
---- a/t/helper/test-run-command.c
-+++ b/t/helper/test-run-command.c
-@@ -10,9 +10,14 @@
+diff --git a/Makefile b/Makefile
+index 3716dadc08..3f6dcec54b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3025,6 +3025,10 @@ rpm::
+ 	@false
+ .PHONY: rpm
  
- #include "test-tool.h"
- #include "git-compat-util.h"
-+#include "cache.h"
- #include "run-command.h"
- #include "argv-array.h"
- #include "strbuf.h"
-+#include "parse-options.h"
-+#include "string-list.h"
-+#include "thread-utils.h"
-+#include "wildmatch.h"
- #include <string.h>
- #include <errno.h>
++ifneq ($(INCLUDE_DLLS_IN_ARTIFACTS),)
++OTHER_PROGRAMS += $(shell echo *.dll t/helper/*.dll)
++endif
++
+ artifacts-tar:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) \
+ 		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(test_bindir_programs) \
+ 		$(MOFILES)
+diff --git a/azure-pipelines.yml b/azure-pipelines.yml
+index 55ee23ad0f..875e63cac1 100644
+--- a/azure-pipelines.yml
++++ b/azure-pipelines.yml
+@@ -130,6 +130,165 @@ jobs:
+       PathtoPublish: t/failed-test-artifacts
+       ArtifactName: failed-test-artifacts
  
-@@ -50,11 +55,159 @@ static int task_finished(int result,
- 	return 1;
- }
- 
-+struct testsuite {
-+	struct string_list tests, failed;
-+	int next;
-+	int quiet, immediate, verbose, verbose_log, trace, write_junit_xml;
-+};
-+#define TESTSUITE_INIT \
-+	{ STRING_LIST_INIT_DUP, STRING_LIST_INIT_DUP, -1, 0, 0, 0, 0, 0, 0 }
++- job: vs_build
++  displayName: Visual Studio Build
++  condition: succeeded()
++  pool: Hosted VS2017
++  timeoutInMinutes: 240
++  steps:
++  - powershell: |
++      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
++        net use s: \\gitfileshare.file.core.windows.net\test-cache "$GITFILESHAREPWD" /user:AZURE\gitfileshare /persistent:no
++        cmd /c mklink /d "$(Build.SourcesDirectory)\test-cache" S:\
++      }
++    displayName: 'Mount test-cache'
++    env:
++      GITFILESHAREPWD: $(gitfileshare.pwd)
++  - powershell: |
++      $urlbase = "https://dev.azure.com/git-for-windows/git/_apis/build/builds"
++      $id = ((Invoke-WebRequest -UseBasicParsing "${urlbase}?definitions=22&statusFilter=completed&resultFilter=succeeded&`$top=1").content | ConvertFrom-JSON).value[0].id
++      $downloadUrl = ((Invoke-WebRequest -UseBasicParsing "${urlbase}/$id/artifacts").content | ConvertFrom-JSON).value[1].resource.downloadUrl
++      (New-Object Net.WebClient).DownloadFile($downloadUrl,"git-sdk-64-minimal.zip")
++      Expand-Archive git-sdk-64-minimal.zip -DestinationPath . -Force
++      Remove-Item git-sdk-64-minimal.zip
 +
-+static int next_test(struct child_process *cp, struct strbuf *err, void *cb,
-+		     void **task_cb)
-+{
-+	struct testsuite *suite = cb;
-+	const char *test;
-+	if (suite->next >= suite->tests.nr)
-+		return 0;
++      # Let Git ignore the SDK and the test-cache
++      "/git-sdk-64-minimal/`n/test-cache/`n" | Out-File -NoNewLine -Encoding ascii -Append "$(Build.SourcesDirectory)\.git\info\exclude"
++    displayName: 'Download git-sdk-64-minimal'
++  - powershell: |
++      & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
++        make vcxproj
++      "@
++      if (!$?) { exit(1) }
++    displayName: Generate Visual Studio Solution
++    env:
++      HOME: $(Build.SourcesDirectory)
++      MSYSTEM: MINGW64
++      DEVELOPER: 1
++      NO_PERL: 1
++      GIT_CONFIG_PARAMETERS: "'user.name=CI' 'user.email=ci@git'"
++  - powershell: |
++      $urlbase = "https://dev.azure.com/git/git/_apis/build/builds"
++      $id = ((Invoke-WebRequest -UseBasicParsing "${urlbase}?definitions=9&statusFilter=completed&resultFilter=succeeded&`$top=1").content | ConvertFrom-JSON).value[0].id
++      $downloadUrl = ((Invoke-WebRequest -UseBasicParsing "${urlbase}/$id/artifacts").content | ConvertFrom-JSON).value[0].resource.downloadUrl
++      (New-Object Net.WebClient).DownloadFile($downloadUrl, "compat.zip")
++      Expand-Archive compat.zip -DestinationPath . -Force
++      Remove-Item compat.zip
++    displayName: 'Download vcpkg artifacts'
++  - task: MSBuild@1
++    inputs:
++      solution: git.sln
++      platform: x64
++      configuration: Release
++      maximumCpuCount: 4
++  - powershell: |
++      & compat\vcbuild\vcpkg_copy_dlls.bat release
++      if (!$?) { exit(1) }
++      & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
++        mkdir -p artifacts &&
++        eval \"`$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts | grep ^tar)\"
++      "@
++      if (!$?) { exit(1) }
++    displayName: Bundle artifact tar
++    env:
++      HOME: $(Build.SourcesDirectory)
++      MSYSTEM: MINGW64
++      DEVELOPER: 1
++      NO_PERL: 1
++      MSVC: 1
++      VCPKG_ROOT: $(Build.SourcesDirectory)\compat\vcbuild\vcpkg
++  - powershell: |
++      $tag = (Invoke-WebRequest -UseBasicParsing "https://gitforwindows.org/latest-tag.txt").content
++      $version = (Invoke-WebRequest -UseBasicParsing "https://gitforwindows.org/latest-version.txt").content
++      $url = "https://github.com/git-for-windows/git/releases/download/${tag}/PortableGit-${version}-64-bit.7z.exe"
++      (New-Object Net.WebClient).DownloadFile($url,"PortableGit.exe")
++      & .\PortableGit.exe -y -oartifacts\PortableGit
++      # Wait until it is unpacked
++      while (-not @(Remove-Item -ErrorAction SilentlyContinue PortableGit.exe; $?)) { sleep 1 }
++    displayName: Download & extract portable Git
++  - task: PublishPipelineArtifact@0
++    displayName: 'Publish Pipeline Artifact: MSVC test artifacts'
++    inputs:
++      artifactName: 'vs-artifacts'
++      targetPath: '$(Build.SourcesDirectory)\artifacts'
++  - powershell: |
++      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
++        cmd /c rmdir "$(Build.SourcesDirectory)\test-cache"
++      }
++    displayName: 'Unmount test-cache'
++    condition: true
++    env:
++      GITFILESHAREPWD: $(gitfileshare.pwd)
 +
-+	test = suite->tests.items[suite->next++].string;
-+	argv_array_pushl(&cp->args, "sh", test, NULL);
-+	if (suite->quiet)
-+		argv_array_push(&cp->args, "--quiet");
-+	if (suite->immediate)
-+		argv_array_push(&cp->args, "-i");
-+	if (suite->verbose)
-+		argv_array_push(&cp->args, "-v");
-+	if (suite->verbose_log)
-+		argv_array_push(&cp->args, "-V");
-+	if (suite->trace)
-+		argv_array_push(&cp->args, "-x");
-+	if (suite->write_junit_xml)
-+		argv_array_push(&cp->args, "--write-junit-xml");
++- job: vs_test
++  displayName: Visual Studio Test
++  dependsOn: vs_build
++  condition: succeeded()
++  pool: Hosted
++  timeoutInMinutes: 240
++  strategy:
++    parallel: 10
++  steps:
++  - powershell: |
++      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
++        net use s: \\gitfileshare.file.core.windows.net\test-cache "$GITFILESHAREPWD" /user:AZURE\gitfileshare /persistent:no
++        cmd /c mklink /d "$(Build.SourcesDirectory)\test-cache" S:\
++      }
++    displayName: 'Mount test-cache'
++    env:
++      GITFILESHAREPWD: $(gitfileshare.pwd)
++  - task: DownloadPipelineArtifact@0
++    displayName: 'Download Pipeline Artifact: VS test artifacts'
++    inputs:
++      artifactName: 'vs-artifacts'
++      targetPath: '$(Build.SourcesDirectory)'
++  - powershell: |
++      & PortableGit\git-cmd.exe --command=usr\bin\bash.exe -lc @"
++        test -f artifacts.tar.gz || {
++          echo No test artifacts found\; skipping >&2
++          exit 0
++        }
++        tar xf artifacts.tar.gz || exit 1
 +
-+	strbuf_addf(err, "Output of '%s':\n", test);
-+	*task_cb = (void *)test;
++        # Let Git ignore the SDK and the test-cache
++        printf '%s\n' /PortableGit/ /test-cache/ >>.git/info/exclude
 +
-+	return 1;
-+}
++        cd t &&
++        PATH=\"`$PWD/helper:`$PATH\" &&
++        test-tool.exe run-command testsuite -V -x --write-junit-xml \
++                `$(test-tool.exe path-utils slice-tests \
++                        `$SYSTEM_JOBPOSITIONINPHASE `$SYSTEM_TOTALJOBSINPHASE t[0-9]*.sh)
++      "@
++      if (!$?) { exit(1) }
++    displayName: 'Test (parallel)'
++    env:
++      HOME: $(Build.SourcesDirectory)
++      MSYSTEM: MINGW64
++      NO_SVN_TESTS: 1
++      GIT_TEST_SKIP_REBASE_P: 1
++  - powershell: |
++      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
++        cmd /c rmdir "$(Build.SourcesDirectory)\test-cache"
++      }
++    displayName: 'Unmount test-cache'
++    condition: true
++    env:
++      GITFILESHAREPWD: $(gitfileshare.pwd)
++  - task: PublishTestResults@2
++    displayName: 'Publish Test Results **/TEST-*.xml'
++    inputs:
++      mergeTestResults: true
++      testRunTitle: 'vs'
++      platform: Windows
++      publishRunAttachments: false
++    condition: succeededOrFailed()
++  - task: PublishBuildArtifacts@1
++    displayName: 'Publish trash directories of failed tests'
++    condition: failed()
++    inputs:
++      PathtoPublish: t/failed-test-artifacts
++      ArtifactName: failed-vs-test-artifacts
 +
-+static int test_finished(int result, struct strbuf *err, void *cb,
-+			 void *task_cb)
-+{
-+	struct testsuite *suite = cb;
-+	const char *name = (const char *)task_cb;
-+
-+	if (result)
-+		string_list_append(&suite->failed, name);
-+
-+	strbuf_addf(err, "%s: '%s'\n", result ? "FAIL" : "SUCCESS", name);
-+
-+	return 0;
-+}
-+
-+static int test_failed(struct strbuf *out, void *cb, void *task_cb)
-+{
-+	struct testsuite *suite = cb;
-+	const char *name = (const char *)task_cb;
-+
-+	string_list_append(&suite->failed, name);
-+	strbuf_addf(out, "FAILED TO START: '%s'\n", name);
-+
-+	return 0;
-+}
-+
-+static const char * const testsuite_usage[] = {
-+	"test-run-command testsuite [<options>] [<pattern>...]",
-+	NULL
-+};
-+
-+static int testsuite(int argc, const char **argv)
-+{
-+	struct testsuite suite = TESTSUITE_INIT;
-+	int max_jobs = 1, i, ret;
-+	DIR *dir;
-+	struct dirent *d;
-+	struct option options[] = {
-+		OPT_BOOL('i', "immediate", &suite.immediate,
-+			 "stop at first failed test case(s)"),
-+		OPT_INTEGER('j', "jobs", &max_jobs, "run <N> jobs in parallel"),
-+		OPT_BOOL('q', "quiet", &suite.quiet, "be terse"),
-+		OPT_BOOL('v', "verbose", &suite.verbose, "be verbose"),
-+		OPT_BOOL('V', "verbose-log", &suite.verbose_log,
-+			 "be verbose, redirected to a file"),
-+		OPT_BOOL('x', "trace", &suite.trace, "trace shell commands"),
-+		OPT_BOOL(0, "write-junit-xml", &suite.write_junit_xml,
-+			 "write JUnit-style XML files"),
-+		OPT_END()
-+	};
-+
-+	memset(&suite, 0, sizeof(suite));
-+	suite.tests.strdup_strings = suite.failed.strdup_strings = 1;
-+
-+	argc = parse_options(argc, argv, NULL, options,
-+			testsuite_usage, PARSE_OPT_STOP_AT_NON_OPTION);
-+
-+	if (max_jobs <= 0)
-+		max_jobs = online_cpus();
-+
-+	dir = opendir(".");
-+	if (!dir)
-+		die("Could not open the current directory");
-+	while ((d = readdir(dir))) {
-+		const char *p = d->d_name;
-+
-+		if (*p != 't' || !isdigit(p[1]) || !isdigit(p[2]) ||
-+		    !isdigit(p[3]) || !isdigit(p[4]) || p[5] != '-' ||
-+		    !ends_with(p, ".sh"))
-+			continue;
-+
-+		/* No pattern: match all */
-+		if (!argc) {
-+			string_list_append(&suite.tests, p);
-+			continue;
-+		}
-+
-+		for (i = 0; i < argc; i++)
-+			if (!wildmatch(argv[i], p, 0)) {
-+				string_list_append(&suite.tests, p);
-+				break;
-+			}
-+	}
-+	closedir(dir);
-+
-+	if (!suite.tests.nr)
-+		die("No tests match!");
-+	if (max_jobs > suite.tests.nr)
-+		max_jobs = suite.tests.nr;
-+
-+	fprintf(stderr, "Running %d tests (%d at a time)\n",
-+		suite.tests.nr, max_jobs);
-+
-+	ret = run_processes_parallel(max_jobs, next_test, test_failed,
-+				     test_finished, &suite);
-+
-+	if (suite.failed.nr > 0) {
-+		ret = 1;
-+		fprintf(stderr, "%d tests failed:\n\n", suite.failed.nr);
-+		for (i = 0; i < suite.failed.nr; i++)
-+			fprintf(stderr, "\t%s\n", suite.failed.items[i].string);
-+	}
-+
-+	string_list_clear(&suite.tests, 0);
-+	string_list_clear(&suite.failed, 0);
-+
-+	return !!ret;
-+}
-+
- int cmd__run_command(int argc, const char **argv)
- {
- 	struct child_process proc = CHILD_PROCESS_INIT;
- 	int jobs;
- 
-+	if (argc > 1 && !strcmp(argv[1], "testsuite"))
-+		exit(testsuite(argc - 1, argv + 1));
-+
- 	if (argc < 3)
- 		return 1;
- 	while (!strcmp(argv[1], "env")) {
+ - job: linux_clang
+   displayName: linux-clang
+   condition: succeeded()
 -- 
 gitgitgadget
-
