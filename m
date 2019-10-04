@@ -2,75 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8328C1F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 11:08:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CB631F4BD
+	for <e@80x24.org>; Fri,  4 Oct 2019 12:01:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726927AbfJDLIe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 07:08:34 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:9456 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725788AbfJDLIe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 07:08:34 -0400
-Received: from [92.7.169.237] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1iGLRo-0002Rc-6o; Fri, 04 Oct 2019 12:08:32 +0100
-Subject: Re: Git Basics Episode 1 GUI
-To:     Colin Agnew <colinagnew@gmail.com>, Git List <git@vger.kernel.org>
-References: <763118BC-2142-419D-A48F-9CD48865CB06@gmail.com>
- <c7e85712-4be3-2684-c5f3-210d5a48aa56@iee.email>
- <82F109E7-54BF-4BEF-B7DB-C05CF92E1A6E@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <0350fc74-2e98-6259-ebd2-5d70432caf7c@iee.email>
-Date:   Fri, 4 Oct 2019 12:08:32 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1728608AbfJDMBS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 08:01:18 -0400
+Received: from relay9-d.mail.gandi.net ([217.70.183.199]:56119 "EHLO
+        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726002AbfJDMBS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 08:01:18 -0400
+X-Originating-IP: 157.45.233.193
+Received: from localhost (unknown [157.45.233.193])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id AFC55FF807;
+        Fri,  4 Oct 2019 12:01:10 +0000 (UTC)
+Date:   Fri, 4 Oct 2019 17:31:07 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     harish k <harish2704@gmail.com>, git@vger.kernel.org,
+        David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] Feature: custom guitool commands can now have custom
+ keyboard shortcuts
+Message-ID: <20191004120107.kpskplwhflnsamwu@yadavpratyush.com>
+References: <01020153c22ab06b-e195b148-37cc-4f89-92f3-f4bed1915eb9-000000@eu-west-1.amazonses.com>
+ <20160331164137.GA11150@gmail.com>
+ <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com>
+ <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com>
+ <20191003214422.d4nocrxadxt47smg@yadavpratyush.com>
+ <nycvar.QRO.7.76.6.1910041046000.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-In-Reply-To: <82F109E7-54BF-4BEF-B7DB-C05CF92E1A6E@gmail.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1910041046000.46@tvgsbejvaqbjf.bet>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Don't forget the reply-all..
+On 04/10/19 10:49AM, Johannes Schindelin wrote:
+> Hi Pratyush,
+> 
+> please don't top-post on this list (yet another of these things
+> requiring extra brain cycles in the mailing list workflow).
 
-On 04/10/2019 11:48, Colin Agnew wrote:
-> Hi,
->
-> Sorry the screenshot was blocked. The screenshot: 
-> http://media.makingthingswork.org/gui.png
+I didn't top-post, or at least it wasn't the intention. The text above 
+the quoted text is the "preface" (just like this line I'm replying to is 
+a "preface"). It was a comment on the patch formatting, and it wouldn't 
+make sense (at least to me) to have it _below_ the quoted part, 
+especially since I did have comments in-line (IOW, bottom-posted).
 
-png shows https://git-scm.com/video/what-is-version-control 2m:21s 
-position, and the spoken word is that it is the "GitHub for Mac 
-graphical client".
+Maybe because I included the references in the middle of the text you 
+thought the message was over (understandably so. I probably shouldn't do 
+that), and didn't scroll till the end to read the rest of the message.
 
-Philip
+Or maybe I don't know something about email etiquette that I should.
+ 
+> On Fri, 4 Oct 2019, Pratyush Yadav wrote:
+> 
+> > Hi Harish,
+> >
+> > Thanks for the patch. Unfortunately, it seems your mail client messed up
+> > the formatting, and the patch won't apply. I'm guessing it is because
+> > your mail client broke long lines into two, messing up the diff.
+> >
+> > We use an email-based workflow, so please either configure your mail
+> > client so it doesn't munge patches, or use `git send-email`. You can
+> > find a pretty good tutorial on sending patches via email over at [0].
+> > The tutorial is for git.git, but works for git-gui.git as well.
+> 
+> Ah, well. Mailing list-based workflows are so easy, amirite? They are so
+> welcoming and inclusive, yes?
+> </sarcasm>
+> 
+> > If you feel more comfortable with GitHub pull requests, please take a
+> > look at Gitgitgadget [1]. Johannes (in Cc) has used it recently to send
+> > patches based on the git-gui repo (AFAIK, it was originally designed
+> > only for the git.git repo). Maybe ask the folks over there how they do
+> > it.
+> 
+> Harish, it is actually relatively easy to use GitGitGadget: just add a
+> remote like this:
+> 
+> 	git remote add gitgitgadget https://github.com/gitgitgadget/git
+> 	git fetch gitgitgadget git-gui/master
+> 
+> and then rebase your patch on top of that branch:
+> 
+> 	git rebase -i --onto git-gui/master HEAD~1
+> 
+> Then force-push your branch to your GitHub fork of git.git and open a
+> Pull Request at https://github.com/gitgitgadget/git/pulls, targeting
+> git-gui/master.
+> 
+> GitGitGadget will welcome you with a (hopefully) helpful message ;-)
 
->
-> Best regards
->
->> On 4 Oct 2019, at 11:14, Philip Oakley <philipoakley@iee.email 
->> <mailto:philipoakley@iee.email>> wrote:
->>
->> On 04/10/2019 08:19, Colin Agnew wrote:
->>> Could you confirm which GUI is featured in the first video?
->>> Please advise - thanks
->> Dunno,
->>
->> Do you have a web reference for the "Git Basics Episode 1" and then 
->> which video you are watching?
->>
->> I guess that if it is the plain vanila Git, then it will be `git gui` 
->> which is a Tcl/Tk script and included as part of the Git repo.
->>
->> Philip
->
+Thanks for these instructions. I will include them in a "Contributing" 
+document I'm writing for git-gui.
 
+-- 
+Regards,
+Pratyush Yadav
