@@ -2,79 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 270F41F4BE
-	for <e@80x24.org>; Fri,  4 Oct 2019 05:52:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3431A1F4BD
+	for <e@80x24.org>; Fri,  4 Oct 2019 07:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731719AbfJDFwl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 01:52:41 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53591 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728441AbfJDFwl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 01:52:41 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E069A266A0;
-        Fri,  4 Oct 2019 01:52:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oGzV00WolDBR/oe/jjkTegSOYHA=; b=Mb6/8e
-        vfeeYFjzIT59cAvedAKTG0SfuoZwLmOR5ye2XDwn3rhWgYYyIjKZFNzXPvHcROW9
-        05LYCysxtd7Ml3x11Jt7h2449Rlw778ieozpBobjo6F64EwJp5upOv0IMOA/tZUN
-        fqlyAGfdjBNxMugYqICbWiS2buMZrdQZDCHGY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AD9XAdOyohcGf9ePuQEWzFS+kVoVxMi8
-        XJ7Te/jqkFYtqzTz5oJJRKBvQ2sPJRQ6jC4GBWhh4RNjKqGnbI3oXZEM1k7VFMn8
-        RXo1f63FmchZjZKWSowIfpiM9nk9oPc2IhPLD3Ffzm+idfjtOzKgM+oienwR+NPO
-        fWo4NOpF6+0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D8F5B2669F;
-        Fri,  4 Oct 2019 01:52:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4BE102669E;
-        Fri,  4 Oct 2019 01:52:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Kunal Tyagi via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Kunal Tyagi <tyagi.kunal@live.com>
-Subject: Re: [PATCH v3 1/1] add -i: Show progress counter in the prompt
-References: <pull.349.v2.git.gitgitgadget@gmail.com>
-        <pull.349.v3.git.gitgitgadget@gmail.com>
-        <b351c74a3fc5787e8a41c12342b592d38ef0dede.1569820977.git.gitgitgadget@gmail.com>
-Date:   Fri, 04 Oct 2019 14:52:38 +0900
-In-Reply-To: <b351c74a3fc5787e8a41c12342b592d38ef0dede.1569820977.git.gitgitgadget@gmail.com>
-        (Kunal Tyagi via GitGitGadget's message of "Sun, 29 Sep 2019 22:22:59
-        -0700 (PDT)")
-Message-ID: <xmqqzhih6ord.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2C753028-E66B-11E9-AA0B-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+        id S1728773AbfJDHTt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 03:19:49 -0400
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:39765 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727484AbfJDHTs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 03:19:48 -0400
+Received: by mail-wm1-f49.google.com with SMTP id v17so4668117wml.4
+        for <git@vger.kernel.org>; Fri, 04 Oct 2019 00:19:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=sHr0f4q8W3t8TEQi798GUhYzlm93igEDmBo+7r/e6p4=;
+        b=b2d8BauWnQCiJb3VCTddvbEyKLRqhiQhhPB9DyQH4feQLprybFEkHk0ez+7GDixq+o
+         tdSKbOFw/9G5mjRppF1qI8p6j15w/2aPXLx4oQT6w7hHC8i5k8Ow++aks39kGFSbspH1
+         wBp5/qrPX6FjKwYOhSUnYxvVftkjNhX/j3bEGWuw5le0N0wq11/Z+AOk/67BLgiY0+YQ
+         rav7O5HPq/llrjt4xaebjsu2zV6QI21dC3Zff1frZcUj6V6CQOlzi7ZanxFtvSkBr0Qd
+         vSQ7BpARnrD0DntTx6ffxLUW52xP473LAmejhpaGZoMIkJWzxsfkKTfz6sQ/Cr5uaJ+0
+         v0Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=sHr0f4q8W3t8TEQi798GUhYzlm93igEDmBo+7r/e6p4=;
+        b=U86Tjjt4HzjQfy1P7OUiVMw/S29Vmlsv/bbWAY/64jlEilD+XUhLPtW3n4wwc3yUXO
+         73buP2T1m0U7XxZMwxj+oZb3vZQasPXLWQQPsM9krnCqCZxeOn1+IlmEgRHO5S+Dsqhv
+         JN6RyjrpV3AxHIkfDni+AA81tjg4Q+HOId55DPAsEFeBqErOPAAlJLYKh5GDibGLDQ7T
+         2ms0h1OkBxd5ywLF4tktJyQyERItoULyCK8FW38vBICIm9syn8SJ8KRNPfLSfVeV4w3E
+         qstXMzDKCH4m4AEmlDNH63Ru1FYuuahO9XLYexduNy7WZlMClS86iLEDd25/+5dGunHR
+         xVKQ==
+X-Gm-Message-State: APjAAAWjMZ/f3MkGZn/qVaO9mv/ug8XPewJd7XRuxzrTV/cEgrb3jcxS
+        pLH4eJ32EWco4c9rvdectv3txcc+
+X-Google-Smtp-Source: APXvYqyXeocMxiKwNyc7AV7ppO6wTWoZ8p91+fE2+iy/7OEmGPgi/GXlHdYBqParOXv0kUzCFki/ug==
+X-Received: by 2002:a05:600c:2052:: with SMTP id p18mr9602718wmg.13.1570173587393;
+        Fri, 04 Oct 2019 00:19:47 -0700 (PDT)
+Received: from colins-imac-2.home (host31-53-1-137.range31-53.btcentralplus.com. [31.53.1.137])
+        by smtp.gmail.com with ESMTPSA id e18sm6725208wrv.63.2019.10.04.00.19.46
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 04 Oct 2019 00:19:47 -0700 (PDT)
+From:   Colin Agnew <colinagnew@gmail.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Git Basics Episode 1 GUI
+Message-Id: <763118BC-2142-419D-A48F-9CD48865CB06@gmail.com>
+Date:   Fri, 4 Oct 2019 08:19:31 +0100
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Kunal Tyagi via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Kunal Tyagi <tyagi.kunal@live.com>
->
-> Report the current hunk count and total number of hunks for the current
-> file in the prompt
-> Adjust the expected output in some tests to account for new data on the prompt
->
-> Signed-off-by: Kunal Tyagi <tyagi.kunal@live.com>
-> ---
->  git-add--interactive.perl  | 2 +-
->  t/t3701-add-interactive.sh | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
-
-Thanks; queued.
+Could you confirm which GUI is featured in the first video?
+Please advise - thanks
