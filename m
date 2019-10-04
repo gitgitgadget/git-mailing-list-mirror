@@ -2,118 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7C9C1F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 09:44:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C51961F4BD
+	for <e@80x24.org>; Fri,  4 Oct 2019 09:55:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388447AbfJDJov (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 05:44:51 -0400
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:37216 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388388AbfJDJov (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 05:44:51 -0400
-Received: by mail-wr1-f42.google.com with SMTP id p14so5375782wro.4
-        for <git@vger.kernel.org>; Fri, 04 Oct 2019 02:44:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=eNV6YMAvcBg051r967is4Zxq1NyOK9ePuiZ14oTwjjw=;
-        b=k9kqXbMIkkkVsj1wL8bP22Ufg8Srh7CO3YYABanNBX4J8f8nrxyc9Urnjxjliz7/xS
-         ogeJ2k838jW+yS8tJgpfvPemxX5yzP6jJOcR5SbjSFMIDiTfqzQ3eXpBHI17uyJa0Snh
-         GT1vcLTeF5mZXOF9HhMum4nt7U/BMgYV+NRWnl9RQHkC9kMk5yJ3nqykw9AU3sTxjvh7
-         w8PeduRV5E+P1pQl6cZmTxfkwBzDEj2iCKJ5hECzBXr2YPOnnPPe4RcVPd2/9PfSzDSf
-         WW5huFbLgmjJEO4BYEJUvwGcQYsdzVv578TO1Z+Slj1xBNUHPXH9MfoiqWvV0sWfPXme
-         TFWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=eNV6YMAvcBg051r967is4Zxq1NyOK9ePuiZ14oTwjjw=;
-        b=qK1HDa+0SkBA/45Vm/Lnlv2DdSCyEGgh18kqE9v3WAOP0ndFkAJes9OYm3bgWuANJt
-         s9uJzGJlAZ3pPJlUOFurmHuWEoov1wx45IjBI0NoJMejLCEInhHA7bwyQg5x/fO6lYMp
-         O5xvjF+d7Jha2QJeKHBBL0aOvjjleK69JnG6NT1hJYVd0Xyuw9eGuu2Q0Iy8v3aw7ehD
-         D/Fkfw9Apear0DwJQFoD3O/4cT5j1fvbhcb/Difo2AZ37Xcf05FQjFMcTERCHTPZQzMr
-         I62R9sY2W8e+ubwg6GEaUKfAUuUpK3jKHusDbO3OvacnHoEi/L0Ey7FGPeEB2QIOSl+J
-         WBVQ==
-X-Gm-Message-State: APjAAAXSQTstaYmDEh0GUPXHrqZUNw+meReV1mpJBEp+8uCmGv3dTMdF
-        KaFWFQGXSThi9qpgSL5JJsOymQrZ
-X-Google-Smtp-Source: APXvYqxOzJWXxCp9T/XLGB9+HBvjcIO+rQnjCMdGiYzVqERG3ZmraE5NrfzKR8aSE40HOJ7ZO3fSJw==
-X-Received: by 2002:a5d:540c:: with SMTP id g12mr10775138wrv.207.1570182288875;
-        Fri, 04 Oct 2019 02:44:48 -0700 (PDT)
-Received: from [192.168.2.240] (host-92-22-28-119.as13285.net. [92.22.28.119])
-        by smtp.gmail.com with ESMTPSA id r7sm5559489wrx.87.2019.10.04.02.44.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Oct 2019 02:44:48 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (Oct 2019, #01; Thu, 3)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqsgoabes8.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <972f4674-ed00-7113-24eb-f59f1b751690@gmail.com>
-Date:   Fri, 4 Oct 2019 10:44:47 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.0
+        id S2388352AbfJDJzt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 05:55:49 -0400
+Received: from mout.gmx.net ([212.227.15.15]:51321 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387499AbfJDJzt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 05:55:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570182943;
+        bh=Sr3eV38r9OE7SEsSKO6l4Fm1MXJNEnGsOymdsK91OMI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=PO3Hiec9cXzNw80DNzPslj4h3bXrsrXNLMn3hqzJdMrTBW6qWtzZNTQsW5Dm4vd+4
+         thdIffhO3lHCEzfVFbh4sb82tozjI6F5CCoZczhv1U9J8WBPrNnbpnj1uBqW3W7E4F
+         leGgN5hXmmbNH5M95ILB71W3+Ba5pEwwcCYhttFU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.189]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQe5k-1iRvAn0RrK-00Netn; Fri, 04
+ Oct 2019 11:55:43 +0200
+Date:   Fri, 4 Oct 2019 11:55:27 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v2 02/13] msvc: avoid using minus operator on unsigned
+ types
+In-Reply-To: <xmqqy2y1a1qk.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910041154120.46@tvgsbejvaqbjf.bet>
+References: <pull.288.git.gitgitgadget@gmail.com> <pull.288.v2.git.gitgitgadget@gmail.com> <8800320590e4d7218a80f80abca23a7f44b8747d.1569837329.git.gitgitgadget@gmail.com> <xmqqy2y1a1qk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqqsgoabes8.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:pxre6c0Eied/5gSeAy2rNP7D5ot2t5A/y2ZxNtDcvzkjzJaFJtT
+ 4M5Lsd/IQ+1oD+aCcSRp8pVA3xyRvTBWH8yJVcbWSdBHg0zF9vr5Ng4dAiGQSAEwQySMzGn
+ /Iq58wK6jAIVpRWuwbV341xmLYBOcqHMR6ZPZKI7eDnGWUPa1TIwjMcc3YvAgFTqLha1MXx
+ BpHuCT68zsfVNXj1J2ntA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Wlr7F4gz9UQ=:49tAp5cK1wUSbKyg6WArg9
+ QFZG6Z4bMUUkRHo4ejCz+qdbu9/JZCE4aDNdugjUIZaY09FiLEVYvfhnuG5LzkrBKhRNN2PiF
+ 1Wr1DrXH2kdrUifeZUaZCqatkAaTv4CbBj0ggdSU+EpOio2+PeU8yquPt1M6Gi3vcZ41ufKt9
+ UP0vYMLl48u5fvRBwPuA9iVh8ZCcBsYRovj+HJftWIgU1P1KD9flAxvqgTJWr3i91E/f343Di
+ 1CfmnBUqbPPSMUBMLaOYyyjz1AuVmnBeeuIxdJZq/qx4ANhH91D39m4PkO3FNnnJxdwinLSyO
+ 1nAoLZlHIsXtvd0YmEf3vOtN3LQu+W6aiT1upxNKCv8SpBaHbnJMB0BNfM4kSMdq0FzStxg9Z
+ 9+lKc7+7ogiyF3kntKmouYMiGVVPAJlzF+i12lhoKnaqBIY0oOpPg1FUnI2TFPjysLTxiSfEl
+ yybhweGuf0cJHwLqSEQnz89tY4aQdmvI1y+/VcqbboxnyARoJ2/aBr6PZCd+18/YQh9PgKTuL
+ LymcrGO1qd44TiUaTkaSB0fzSfqXoD/DKi3tXUXz8Aoe8Wh9SellnTXzR5ETl69qU+GoghT71
+ gL7hKvg2dDI6/IINMU+g0M6YpI15AAzGHaczRIxbPsXaPX5kkgVQIvtOTvBZksjt31zigPyu6
+ 2pNvTjXy0zqzgt2bNvBuilcz27fMGDXWjPhiplHoaJSbuz1pI9MPQ8Hqr1By4UQHL70qiOB1S
+ O61BzON+nTWBwk6V8hMdKA4lmOp8/5SeIKTKI99OZZT844pChc6Ph1m2ppYq6s1bM5tQr2nA1
+ H5rUAHjxNIslHUHjo/PVVDh0sPKnIue5rgcq8C8BX0TAnC8EK3RxOFgrOONhiEILUO6RR0yIk
+ ZfSmy9l7iuyPb2yzhFl8oS4p+iG1HsuxdVmDzCZM6cQbKQuK6fbw7LZBl+GzCK+OBbqS4jOBk
+ G4OElNSpbtlHwMKwsmEW/zQ31RYq+BUVhmChQzRJp/hl34CkrI/52QlP8xwj6kOryQyzAluHc
+ HPne8mnOL5Y++KL2xrymAaze0e89ck+REOUxufoGfSIW7qJpO9zQveXee2/R/27g0+XPcGHJq
+ vZUm4WQRHzIthE6QqxdWv8PFS4/k7GJwjHYidoUCd7TJ4FcZrkwdjB1I6AGhLC3jgj0FfRX9s
+ kwr0UoOKUkEJJk4ZOsMkL8GbJUSk24+GT0vUkPm8C1t1oDGMhKcGkgqjPqpdW7wB2L0ZOqhiu
+ mqw8kMsGoepWaDUcx4VrSwB7rFmT8sHtiGby3AG8NFUiooACP+7130FdZvzU=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+Hi Junio,
 
-On 03/10/2019 06:04, Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
-> [...]
-> 
-> 
-> * pw/rebase-i-show-HEAD-to-reword (2019-08-19) 3 commits
->   - sequencer: simplify root commit creation
->   - rebase -i: check for updated todo after squash and reword
->   - rebase -i: always update HEAD before rewording
->   (this branch is used by ra/rebase-i-more-options.)
-> 
->   "git rebase -i" showed a wrong HEAD while "reword" open the editor.
-> 
->   Will merge to 'next'.
+On Fri, 4 Oct 2019, Junio C Hamano wrote:
 
-That's great, thanks
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > While at it, we take care of reporting overflows (which are unlikely,
+> > but hey, defensive programming is good!).
+> >
+> > We _also_ take pains of casting the unsigned value to signed: otherwis=
+e,
+> > the signed operand (i.e. the `-1`) would be cast to unsigned before
+> > doing the arithmetic.
+>
+> These three look good and too similar to each other, which makes me
+> wonder if we want to allow them simply write
+>
+> 	return insert_pos_as_negative_offset(nr);
+>
+> with something like
+>
+> 	static int insert_pos_as_negative_offset(uintmax_t nr)
+> 	{
+> 		if (INT_MAX < nr)
+> 			die("overflow: -1 - %"PRIuMAX, nr);
+> 		return -1 - (int)nr;
+> 	}
+>
+> to avoid repetition.
 
-> 
-> * ra/rebase-i-more-options (2019-09-09) 6 commits
->   - rebase: add --reset-author-date
->   - rebase -i: support --ignore-date
->   - sequencer: rename amend_author to author_to_rename
->   - rebase -i: support --committer-date-is-author-date
->   - sequencer: allow callers of read_author_script() to ignore fields
->   - rebase -i: add --ignore-whitespace flag
->   (this branch uses pw/rebase-i-show-HEAD-to-reword.)
-> 
->   "git rebase -i" learned a few options that are known by "git
->   rebase" proper.
-> 
->   Is this ready for 'next'.
+I tried not to do that because there are two different data types in
+play: `unsigned int` and `size_t`. But I guess by making this an
+`inline` function, compilers can optimize for the common case and avoid
+casting _twice_.
 
-Nearly, but not quite I think cf [1]. Also I'm still not convinced that 
-having different behaviors for --ignore-whitespace depending on the 
-backend is going to be helpful but maybe they are close enough not to 
-matter too much in practice [2].
+Will be fixed in v2,
+Dscho
 
-[1] 
-https://public-inbox.org/git/20190806173638.17510-1-rohit.ashiwal265@gmail.com/T/#m965ce1f09d1d1b8010c04db0eabd4b19ce99fe82
-
-[2] 
-https://public-inbox.org/git/20190806173638.17510-1-rohit.ashiwal265@gmail.com/T/#m94e059c18b7bbcc721d12b190bd4aaecc5e8d591
+>
+> > Helped-by: Denton Liu <liu.denton@gmail.com>
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  read-cache.c  |  9 ++++++---
+> >  sha1-lookup.c | 12 +++++++++---
+> >  2 files changed, 15 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/read-cache.c b/read-cache.c
+> > index c701f7f8b8..97745c2a31 100644
+> > --- a/read-cache.c
+> > +++ b/read-cache.c
+> > @@ -1275,8 +1275,11 @@ static int add_index_entry_with_check(struct in=
+dex_state *istate, struct cache_e
+> >  	 * we can avoid searching for it.
+> >  	 */
+> >  	if (istate->cache_nr > 0 &&
+> > -		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
+> > -		pos =3D -istate->cache_nr - 1;
+> > +		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0) {
+> > +		if (istate->cache_nr > INT_MAX)
+> > +			die("overflow: -1 - %u", istate->cache_nr);
+> > +		pos =3D -1 - (int)istate->cache_nr;
+> > +	}
+> >  	else
+> >  		pos =3D index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_s=
+tage(ce));
+> >
+> > @@ -1894,7 +1897,7 @@ static size_t estimate_cache_size(size_t ondisk_=
+size, unsigned int entries)
+> >  	/*
+> >  	 * Account for potential alignment differences.
+> >  	 */
+> > -	per_entry +=3D align_padding_size(sizeof(struct cache_entry), -sizeo=
+f(struct ondisk_cache_entry));
+> > +	per_entry +=3D align_padding_size(per_entry, 0);
+> >  	return ondisk_size + entries * per_entry;
+> >  }
+> >
+> > diff --git a/sha1-lookup.c b/sha1-lookup.c
+> > index 796ab68da8..bb786b5420 100644
+> > --- a/sha1-lookup.c
+> > +++ b/sha1-lookup.c
+> > @@ -69,8 +69,12 @@ int sha1_pos(const unsigned char *sha1, void *table=
+, size_t nr,
+> >  			miv =3D take2(sha1 + ofs);
+> >  			if (miv < lov)
+> >  				return -1;
+> > -			if (hiv < miv)
+> > -				return -1 - nr;
+> > +			if (hiv < miv) {
+> > +				if (nr > INT_MAX)
+> > +					die("overflow: -1 - %"PRIuMAX,
+> > +					    (uintmax_t)nr);
+> > +				return -1 - (int)nr;
+> > +			}
+> >  			if (lov !=3D hiv) {
+> >  				/*
+> >  				 * At this point miv could be equal
+> > @@ -97,7 +101,9 @@ int sha1_pos(const unsigned char *sha1, void *table=
+, size_t nr,
+> >  			lo =3D mi + 1;
+> >  		mi =3D lo + (hi - lo) / 2;
+> >  	} while (lo < hi);
+> > -	return -lo-1;
+> > +	if (nr > INT_MAX)
+> > +		die("overflow: -1 - %"PRIuMAX, (uintmax_t)lo);
+> > +	return -1 - (int)lo;
+> >  }
+> >
+> >  int bsearch_hash(const unsigned char *sha1, const uint32_t *fanout_nb=
+o,
+>
