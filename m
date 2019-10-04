@@ -8,56 +8,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73C251F4BD
-	for <e@80x24.org>; Fri,  4 Oct 2019 15:09:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78A961F4BD
+	for <e@80x24.org>; Fri,  4 Oct 2019 15:09:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389753AbfJDPJk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Oct 2019 11:09:40 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38807 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389711AbfJDPJc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Oct 2019 11:09:32 -0400
-Received: by mail-wr1-f67.google.com with SMTP id w12so7680717wro.5
-        for <git@vger.kernel.org>; Fri, 04 Oct 2019 08:09:31 -0700 (PDT)
+        id S2389746AbfJDPJj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Oct 2019 11:09:39 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38249 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389736AbfJDPJh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Oct 2019 11:09:37 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 3so6247328wmi.3
+        for <git@vger.kernel.org>; Fri, 04 Oct 2019 08:09:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=PTJvnArUvKNsOxVEuhJbTo8k3kGB1/WAG8v2GjmdSbc=;
-        b=O6w5WpizwfNeRFf4sJhzyUNFBCbwSSvC0/omtg/Ih4+axxq4N0lxB+HKay3irDYz8R
-         mLxFo7R3M4LZ842exbaSFFoFin98NKvEMMzhiRR1oxjAKAauwddBOFA+6r6tF+FpMlaW
-         f5qxbW0aRsTQcXqExkYn207qU6a4kKuF05fXKy2EMbPeWXgYzgnetXdS4PH+RKDXWwDs
-         OmYLazu9a409DQOloK8vb2uqkhYL2CpfMvI/I1WLEMVU6ACIv/SZFsppa7KcOxGO4BJo
-         5mdGiWcR00PP3b8+4MvL4DPeQqh5ryDiyfpQ3yXfUQhsOwwKLsqvVYZOYqb5LtWhmten
-         cchQ==
+        bh=XYXaIeL7Z2OEQPuvIovvmDL7JcKKrIbPABA50H0G2Lc=;
+        b=fr9/bJ3mUYucCM06cw5K5LjgQQeeHaalQ60R3PAaG7zDgl3N2VVbJu49oFKXA20qaq
+         FeXTNsu+ZDGlWfQuQkCHwzZh3kDGlkdioIhz32cfDpQbcSNgSlhCKvig20sz05IhZNJg
+         gk/wMBuu9K9lVfqoKq8zNLixDDk9m97w+jkQyHhzJL7+0QzQBGY8Igo9K7J+n6a1WD+G
+         WO+hqApFs3487XsRBAziguOGO39+cE2oDJ/GvPkt2/1sQLt+H44lSqwVlW7Clql8XfQA
+         r0s+ii/eadfa3jwBDEyqy2jNok31hWKUYMPrWAsUgQclQnDdbLwwtYQ3MmHahGgJs7Sy
+         gGbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=PTJvnArUvKNsOxVEuhJbTo8k3kGB1/WAG8v2GjmdSbc=;
-        b=c89A7dQ7sSVJgo25aYsPjnqHu3H2weoO/s9SLNyjI98Q5wedC0KdsZBGb4/W5k1yZI
-         wZKcC2DaOMS8pOlAXabOShtd/jGwcCf9iiSl6FQ44qurJ9QflHLJXQwwHovL3kwmfeUd
-         KANf7JNoc2bdAs91JX4BwRbMpmTQ1b9Xr/nG7/p4hEOgK+g8IWcZaK8bnwtgTDVbIRFd
-         lWrB2ev927+VWmMRSuVFD7KNNGmTHkDK4qvkbor/NZ+WgRMo9Bp5SeATZwBAKa4GidwN
-         A1g8rAHHMMPw5HWgaWsssFKomyktImw6Rwb4Cak4dE0TUkruJlVWy6WCSFbBav60BWwb
-         CEQw==
-X-Gm-Message-State: APjAAAVAaphcbBg1USYctiA0b0sYTsyHpZd3DCiPZbRabe6DIiWrj/bm
-        /yQ+93ySlQb/s/xFEZKsFfjcDRyu
-X-Google-Smtp-Source: APXvYqwwU/hh+cPMWSpQXMfoM84ipHg0ljHIPXdqYnc2aXXDgz3DgwQQIGmsfWQn4pZwXQSB5P75ww==
-X-Received: by 2002:adf:f20e:: with SMTP id p14mr11443135wro.212.1570201770631;
-        Fri, 04 Oct 2019 08:09:30 -0700 (PDT)
+        bh=XYXaIeL7Z2OEQPuvIovvmDL7JcKKrIbPABA50H0G2Lc=;
+        b=U7xqZ9eqMnjuIBNPswjlnuasMEB2Nl3a09WgDvt6AsF0e3nj/334f91ooZGE+AzgAk
+         wCTx5P5doleiCBEiObh6s3TMcUNhPgCv0lAS6WCt0zGAEVmQQo200IfkIklfxOD/7wRr
+         Mu4tX5NhMVqaBrwgK6QpBlJbP20MT44/08fnMZ1As7i8DFLA4IV7wjRlmkvstK3uyWgK
+         HyYig5FxRl0w88xOALVB+fKfuZtA3i32YdPhy1o2gGm8zdFOTrn6+fR8QiSYIB0+nt4C
+         Vvoet8ZFmBby/rcJjAfqHTkgPpwj4b4LCxEWWm1iLNq6Y2JJw+WYwP0uEIv/AGQjjii6
+         yQnA==
+X-Gm-Message-State: APjAAAWuu1XfahzxUVp6ox9xDGYM5Waw1ZCR0aGRD8BrnP3DtjrDrQuD
+        Q0pU9TPhATUOCqN9jeNCNpkOmVPT
+X-Google-Smtp-Source: APXvYqz52ybjnD8YjPTKgyuZMGsdp+HCUc6n+G5qp5HKmzmY2WeTB/oeD7ABxiSwGsn7kGbrBMHUlw==
+X-Received: by 2002:a1c:e906:: with SMTP id q6mr10599149wmc.136.1570201775225;
+        Fri, 04 Oct 2019 08:09:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s9sm5146857wme.36.2019.10.04.08.09.29
+        by smtp.gmail.com with ESMTPSA id g13sm6576357wrm.42.2019.10.04.08.09.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 Oct 2019 08:09:30 -0700 (PDT)
-Date:   Fri, 04 Oct 2019 08:09:30 -0700 (PDT)
-X-Google-Original-Date: Fri, 04 Oct 2019 15:09:15 GMT
-Message-Id: <39c707464cf46f199157db0c37bf6dec1da7c3af.1570201763.git.gitgitgadget@gmail.com>
+        Fri, 04 Oct 2019 08:09:34 -0700 (PDT)
+Date:   Fri, 04 Oct 2019 08:09:34 -0700 (PDT)
+X-Google-Original-Date: Fri, 04 Oct 2019 15:09:20 GMT
+Message-Id: <0644a2f8da8d04d505d3c70224ca806b52523daf.1570201763.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.288.v3.git.gitgitgadget@gmail.com>
 References: <pull.288.v2.git.gitgitgadget@gmail.com>
         <pull.288.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 06/13] msvc: handle DEVELOPER=1
+Subject: [PATCH v3 11/13] tests: let --immediate and --write-junit-xml play
+ well together
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,75 +75,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We frequently build Git using the `DEVELOPER=1` make setting as a
-shortcut to enable all kinds of more stringent compiler warnings.
+When the `--immediate` option is in effect, any test failure will
+immediately exit the test script. Together with `--write-junit-xml`, we
+will want the JUnit-style `.xml` file to be finalized (and not leave the
+XML incomplete). Let's make it so.
 
-Those compiler warnings are relatively specific to GCC, though, so let's
-try our best to translate them to the equivalent options to pass to MS
-Visual C++'s `cl.exe`.
+This comes in particularly handy when trying to debug via Azure
+Pipelines, where the JUnit-style XML is consumed to present the test
+results in an informative and helpful way.
+
+While at it, also handle the `error()` code path.
+
+The only remaining code path that sets `GIT_EXIT_OK` happens whenever
+the trash directory could not be set up, i.e. long before the JUnit XML
+was written, therefore we should _not_ try to finalize that XML in that
+case.
+
+It is tempting to change the `immediate` code path to just hand off to
+`error`, simplifying the code in the process. That would, however,
+result in a change of behavior (an additional error message) in the test
+suite, which is outside of the purview of the current patch series: its
+goal is to allow building Git with Visual Studio and testing it with a
+portable version of Git for Windows.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/vcbuild/scripts/clink.pl | 46 +++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ t/test-lib.sh | 38 ++++++++++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 16 deletions(-)
 
-diff --git a/compat/vcbuild/scripts/clink.pl b/compat/vcbuild/scripts/clink.pl
-index 00fc339cba..ec95a3b2d0 100755
---- a/compat/vcbuild/scripts/clink.pl
-+++ b/compat/vcbuild/scripts/clink.pl
-@@ -70,6 +70,52 @@
- 		push(@lflags, $arg);
- 	} elsif ("$arg" =~ /^-[Rl]/) {
- 		# eat
-+	} elsif ("$arg" eq "-Werror") {
-+		push(@cflags, "-WX");
-+	} elsif ("$arg" eq "-Wall") {
-+		# cl.exe understands -Wall, but it is really overzealous
-+		push(@cflags, "-W4");
-+		# disable the "signed/unsigned mismatch" warnings; our source code violates that
-+		push(@cflags, "-wd4018");
-+		push(@cflags, "-wd4245");
-+		push(@cflags, "-wd4389");
-+		# disable the "unreferenced formal parameter" warning; our source code violates that
-+		push(@cflags, "-wd4100");
-+		# disable the "conditional expression is constant" warning; our source code violates that
-+		push(@cflags, "-wd4127");
-+		# disable the "const object should be initialized" warning; these warnings affect only objects that are `static`
-+		push(@cflags, "-wd4132");
-+		# disable the "function/data pointer conversion in expression" warning; our source code violates that
-+		push(@cflags, "-wd4152");
-+		# disable the "non-constant aggregate initializer" warning; our source code violates that
-+		push(@cflags, "-wd4204");
-+		# disable the "cannot be initialized using address of automatic variable" warning; our source code violates that
-+		push(@cflags, "-wd4221");
-+		# disable the "possible loss of data" warnings; our source code violates that
-+		push(@cflags, "-wd4244");
-+		push(@cflags, "-wd4267");
-+		# disable the "array is too small to include a terminating null character" warning; we ab-use strings to initialize OIDs
-+		push(@cflags, "-wd4295");
-+		# disable the "'<<': result of 32-bit shift implicitly converted to 64 bits" warning; our source code violates that
-+		push(@cflags, "-wd4334");
-+		# disable the "declaration hides previous local declaration" warning; our source code violates that
-+		push(@cflags, "-wd4456");
-+		# disable the "declaration hides function parameter" warning; our source code violates that
-+		push(@cflags, "-wd4457");
-+		# disable the "declaration hides global declaration" warning; our source code violates that
-+		push(@cflags, "-wd4459");
-+		# disable the "potentially uninitialized local variable '<name>' used" warning; our source code violates that
-+		push(@cflags, "-wd4701");
-+		# disable the "unreachable code" warning; our source code violates that
-+		push(@cflags, "-wd4702");
-+		# disable the "potentially uninitialized local pointer variable used" warning; our source code violates that
-+		push(@cflags, "-wd4703");
-+		# disable the "assignment within conditional expression" warning; our source code violates that
-+		push(@cflags, "-wd4706");
-+		# disable the "'inet_ntoa': Use inet_ntop() or InetNtop() instead" warning; our source code violates that
-+		push(@cflags, "-wd4996");
-+	} elsif ("$arg" =~ /^-W[a-z]/) {
-+		# let's ignore those
- 	} else {
- 		push(@args, $arg);
- 	}
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index d1ba33745a..86b5e6133b 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -567,6 +567,7 @@ export TERM
+ 
+ error () {
+ 	say_color error "error: $*"
++	finalize_junit_xml
+ 	GIT_EXIT_OK=t
+ 	exit 1
+ }
+@@ -695,7 +696,7 @@ test_failure_ () {
+ 	say_color error "not ok $test_count - $1"
+ 	shift
+ 	printf '%s\n' "$*" | sed -e 's/^/#	/'
+-	test "$immediate" = "" || { GIT_EXIT_OK=t; exit 1; }
++	test "$immediate" = "" || { finalize_junit_xml; GIT_EXIT_OK=t; exit 1; }
+ }
+ 
+ test_known_broken_ok_ () {
+@@ -1063,6 +1064,25 @@ write_junit_xml_testcase () {
+ 	junit_have_testcase=t
+ }
+ 
++finalize_junit_xml () {
++	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
++	then
++		test -n "$junit_have_testcase" || {
++			junit_start=$(test-tool date getnanos)
++			write_junit_xml_testcase "all tests skipped"
++		}
++
++		# adjust the overall time
++		junit_time=$(test-tool date getnanos $junit_suite_start)
++		sed "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
++			<"$junit_xml_path" >"$junit_xml_path.new"
++		mv "$junit_xml_path.new" "$junit_xml_path"
++
++		write_junit_xml "  </testsuite>" "</testsuites>"
++		write_junit_xml=
++	fi
++}
++
+ test_atexit_cleanup=:
+ test_atexit_handler () {
+ 	# In a succeeding test script 'test_atexit_handler' is invoked
+@@ -1085,21 +1105,7 @@ test_done () {
+ 	# removed, so the commands can access pidfiles and socket files.
+ 	test_atexit_handler
+ 
+-	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
+-	then
+-		test -n "$junit_have_testcase" || {
+-			junit_start=$(test-tool date getnanos)
+-			write_junit_xml_testcase "all tests skipped"
+-		}
+-
+-		# adjust the overall time
+-		junit_time=$(test-tool date getnanos $junit_suite_start)
+-		sed "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
+-			<"$junit_xml_path" >"$junit_xml_path.new"
+-		mv "$junit_xml_path.new" "$junit_xml_path"
+-
+-		write_junit_xml "  </testsuite>" "</testsuites>"
+-	fi
++	finalize_junit_xml
+ 
+ 	if test -z "$HARNESS_ACTIVE"
+ 	then
 -- 
 gitgitgadget
 
