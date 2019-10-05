@@ -3,169 +3,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEF351F4BE
-	for <e@80x24.org>; Sat,  5 Oct 2019 08:33:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F2881F4BD
+	for <e@80x24.org>; Sat,  5 Oct 2019 08:43:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727108AbfJEIdI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 04:33:08 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62543 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725927AbfJEIdH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Oct 2019 04:33:07 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 47A473152C;
-        Sat,  5 Oct 2019 04:33:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LmZPPOAgTGd9Ly1r5eblAvbfKUY=; b=aaCxA5
-        DVNanrLGDSasWbKtJlyTl1X9Gro+khbOgpJsxhwVt/mi4wxXSGhISYZvLUy6vwan
-        IK522W/RrugqNMG4e+lprMO8TFhUyNSxCJ/8VEfZHAMvBir8GVSbiCDKUJDQzCHY
-        s2WSsKdovtmf2ZSHLJrl5WbcGVgTa244GRWNg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DMUYcOvIv0MpKG3R6k1A8Jby55iurj6y
-        8rRu3hDbfrcUdJ6h7msfwFWcuBzl0ufpEtlnrylnUepgH2z+G7rWvKwWRLmT2RwW
-        rm01n3Qj1QqueFu7Enp6RUYSGT1j1MNcos9DLR/TBxuozo0S1f/1Vjr8k6a8QLUA
-        aiKxuKk7T9w=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D8173152B;
-        Sat,  5 Oct 2019 04:33:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 354C031529;
-        Sat,  5 Oct 2019 04:33:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH] apply: tell user location of corrupted patch file
-References: <20191002184546.GA22174@generichostname>
-        <ec38908d05f0d40190173158ef3f0753fa9f1184.1570226253.git.liu.denton@gmail.com>
-Date:   Sat, 05 Oct 2019 17:33:03 +0900
-In-Reply-To: <ec38908d05f0d40190173158ef3f0753fa9f1184.1570226253.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Fri, 4 Oct 2019 14:59:03 -0700")
-Message-ID: <xmqqv9t37fsw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727418AbfJEIn4 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 04:43:56 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:41757 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727318AbfJEIn4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Oct 2019 04:43:56 -0400
+Received: by mail-ed1-f67.google.com with SMTP id f20so8067286edv.8
+        for <git@vger.kernel.org>; Sat, 05 Oct 2019 01:43:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NQL7En6aaQYk5Sd8eemK9WMc5xmNRPeL5XNIa1lxEgM=;
+        b=e3UQWGuI6ShYsu9S7eTz3uyu5ztj5ccE0Khxv+ELIDji9TjgTR6SfPjBAohCET98Uw
+         7rpOqSSlDNAS7SfrHMySroF4RZGgRLwWUPwVcvmTOj1GuFdbjwlgtCzUq1/KH/qYv3z5
+         Cc4X/oheqvRikQXwLw7zUSLazREa/4IDJI7INUcpGIbQKrS4MfICj6WPCA6ThK/71StA
+         YGBAAFEZKr6PJvTjtvC/LcC+MS9tkMVm4T7H8XmoH7szoGmQCoKKpOeWl8QbQCviSjIB
+         MOifPviXUQs0MW+EU8gE4lb4DUOZYbsxqmYh+k2FyJG2NgwAMxMwbsy6nGMYRm6Whfsy
+         5x/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NQL7En6aaQYk5Sd8eemK9WMc5xmNRPeL5XNIa1lxEgM=;
+        b=Bm7KmKyOtSXDU8Xn69kX+KLHds8Hmm2XdHq3DIiiGEhQBZn7wQiZ/7J7O58Yu+ta99
+         iAj0dOUFrxXIveKhUWbySbQwYJ9bdINMtWssuM/mpM/gE2B3uT38DY18K8GA+m0fySV/
+         JutYEj5EEjtd6r2IOmuKv3HrfUyDCCrXiZK/ZkLpIrADuV4R2Y6r0zxHFxyNJc0vMgWw
+         mBMGEpl4e7eDkkGNJ5L6k1a6wqGfgoqBHHxx45sH0Af0BQA7qdIrt5VKEAdm9lQC+SLJ
+         cJqlrJetWeEbUTuqTH/7XVZnLk+6hF0GCaJ1NVRhcHGaY9VqBWTl6ak2Vk4W5X0v3fk6
+         AuUw==
+X-Gm-Message-State: APjAAAUUDQDe877bWe0/n8YxmsKCf69Lag9+Bosp9WygdzJhJy3rsMJP
+        o2ejdH4J/a0kLYZEYSw=
+X-Google-Smtp-Source: APXvYqxfxbmkrKEvwKo0uwt3jsFJuqCduhp7Jvv/jVKlMqA/aUwPwU+UeYBh/CvIR6knemNjlzeBaA==
+X-Received: by 2002:a17:906:839a:: with SMTP id p26mr15574467ejx.94.1570265034082;
+        Sat, 05 Oct 2019 01:43:54 -0700 (PDT)
+Received: from localhost ([2a02:810a:8c80:d2c:4d89:574b:af6e:1a3])
+        by smtp.gmail.com with ESMTPSA id nd2sm928507ejb.8.2019.10.05.01.43.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 05 Oct 2019 01:43:53 -0700 (PDT)
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+To:     git@vger.kernel.org
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: [PATCH v2 1/2] format-patch: create leading components of output directory
+Date:   Sat,  5 Oct 2019 10:43:51 +0200
+Message-Id: <2b8b000d76a20349f1f9e09260eff91429beebfb.1570264824.git.bert.wesarg@googlemail.com>
+X-Mailer: git-send-email 2.23.0.11.g242cf7f110
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C05C45EE-E74A-11E9-BCE4-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
-> When `git am` runs into a corrupt patch, it'll error out and give a
-> message such as,
->
-> 	error: corrupt patch at line 87
->
-> Casual users of am may assume that this line number refers to the <mbox>
-> file that they provided on the command-line. This assumption, however,
-> is incorrect. The line count really refers to the
-> .git/rebase-apply/patch file genrated by am.
->
-> Teach am to print the location of corrupted patch files so that users of
+--- 
 
-s/corrupted/corrupt/;
+ChangeLog:
 
-> the tool will know where to look when fixing their corrupted patch. Thus
+v2:
+ * squashed and base new tests on 'dl/format-patch-doc-test-cleanup'
 
-Likewise.
+Cc: Denton Liu <liu.denton@gmail.com>
+---
+ Documentation/config/format.txt    |  2 +-
+ Documentation/git-format-patch.txt |  3 ++-
+ builtin/log.c                      |  8 ++++++++
+ t/t4014-format-patch.sh            | 20 ++++++++++++++++++++
+ 4 files changed, 31 insertions(+), 2 deletions(-)
 
-> the error message will look like this:
->
-> 	error: corrupt patch at .git/rebase-apply/patch:87
->
-> An alternate design was considered which involved printing the line
-> numbers relative to the output of `git am --show-current-patch` (in
-> other words, the actual mail file that's provided to am). This design
-> was not chosen because am does not store the whole mail and instead,
-> splits the mail into several files. As a result of this, this would
-> break existing users' workflow if they piped their mail directly to am
-> from their mail client, the whole mail would not exist in any file and
-> they would have to manually recreate the mail to see the line number.
-
-More importantly, a change to apply.c (hence "git apply", not "git
-am") will mean the tool can only talk about its input.  If you
-run, instead of "git am mbox", "git apply mbox" (assuming you are
-lucky and the piece of mail does not use any fancy features like
-MIME or RFC 1342) may work just as well and it would report the
-corrupt patch relative to the entire mail text.
-
->
-> Let's avoid breaking Junio's workflow since he's probably one of the
-> most frequent user of `git am` in the world. ;)
-
-Don't name me.
-
->  		if (len <= 0) {
->  			free(fragment);
-> -			return error(_("corrupt patch at line %d"), state->linenr);
-> +			return error(_("corrupt patch at %s:%d"), state->patch_input_file, state->linenr);
->  		}
-
-Do not forget that you can run "git apply" and feed the patch from
-its standard input, e.g.
-
-	$ git apply <patchfile
-	$ git show -R | git apply
-
-Make sure state->patch_input_file is a reasonable string before
-considering this.
-
-Also, if you have a mbox file
-
-	$ cd sub/direc/tory
-	$ git am -s /var/tmp/mbox
-
-The "git apply" process thatis run inside "git am" would be running
-at the top level of the working tree, so state->patch_input_file may
-say ".git/rebase-apply/patch" (i.e. relative pathname) that is not
-relative to where the end user is in.  I personally do not thinkg it
-matters too much, but some people may complain.
-
-Other than that, looks good.  I am kind-of surprised that there is
-only one place that we report an unusable input with a line number.
-Nicely found.
-
-> diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
-> index 6579c81216..42cb2dd404 100755
-> --- a/t/t4012-diff-binary.sh
-> +++ b/t/t4012-diff-binary.sh
-> @@ -68,7 +68,7 @@ test_expect_success C_LOCALE_OUTPUT 'apply detecting corrupt patch correctly' '
->  	sed -e "s/-CIT/xCIT/" <output >broken &&
->  	test_must_fail git apply --stat --summary broken 2>detected &&
->  	detected=$(cat detected) &&
-> -	detected=$(expr "$detected" : "error.*at line \\([0-9]*\\)\$") &&
-> +	detected=$(expr "$detected" : "error.*at broken:\\([0-9]*\\)\$") &&
->  	detected=$(sed -ne "${detected}p" broken) &&
->  	test "$detected" = xCIT
->  '
-> @@ -77,7 +77,7 @@ test_expect_success C_LOCALE_OUTPUT 'apply detecting corrupt patch correctly' '
->  	git diff --binary | sed -e "s/-CIT/xCIT/" >broken &&
->  	test_must_fail git apply --stat --summary broken 2>detected &&
->  	detected=$(cat detected) &&
-> -	detected=$(expr "$detected" : "error.*at line \\([0-9]*\\)\$") &&
-> +	detected=$(expr "$detected" : "error.*at broken:\\([0-9]*\\)\$") &&
->  	detected=$(sed -ne "${detected}p" broken) &&
->  	test "$detected" = xCIT
->  '
-
-These existing tests can serve a good test for this new feature, but
-I think you'd also need a case where "apply" is fed the patch from
-the standard input, and possibly another case where it is run from a
-subdirectory of a working tree.
-
-Thanks.
+diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
+index cb629fa769..40cad9278f 100644
+--- a/Documentation/config/format.txt
++++ b/Documentation/config/format.txt
+@@ -81,7 +81,7 @@ format.coverLetter::
+ 
+ format.outputDirectory::
+ 	Set a custom directory to store the resulting files instead of the
+-	current working directory.
++	current working directory. All directory components will be created.
+ 
+ format.useAutoBase::
+ 	A boolean value which lets you enable the `--base=auto` option of
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 0ac56f4b70..2035d4d5d5 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -66,7 +66,8 @@ they are created in the current working directory. The default path
+ can be set with the `format.outputDirectory` configuration option.
+ The `-o` option takes precedence over `format.outputDirectory`.
+ To store patches in the current working directory even when
+-`format.outputDirectory` points elsewhere, use `-o .`.
++`format.outputDirectory` points elsewhere, use `-o .`. All directory
++components will be created.
+ 
+ By default, the subject of a single patch is "[PATCH] " followed by
+ the concatenation of lines from the commit message up to the first blank
+diff --git a/builtin/log.c b/builtin/log.c
+index c4b35fdaf9..294534aacb 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1770,6 +1770,14 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			rev.diffopt.use_color = GIT_COLOR_NEVER;
+ 		if (use_stdout)
+ 			die(_("standard output, or directory, which one?"));
++		switch (safe_create_leading_directories_const(output_directory)) {
++		case SCLD_OK:
++		case SCLD_EXISTS:
++			break;
++		default:
++			die(_("could not create leading directories "
++			      "of '%s'"), output_directory);
++		}
+ 		if (mkdir(output_directory, 0777) < 0 && errno != EEXIST)
+ 			die_errno(_("could not create directory '%s'"),
+ 				  output_directory);
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 83f52614d3..2f2cd6fea6 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1606,6 +1606,26 @@ test_expect_success 'From line has expected format' '
+ 	test_cmp from filtered
+ '
+ 
++test_expect_success 'format-patch -o with no leading directories' '
++	rm -fr patches &&
++	git format-patch -o patches master..side &&
++	git rev-list master..side >list &&
++	test_line_count = $(ls patches | wc -l) list
++'
++
++test_expect_success 'format-patch -o with leading existing directories' '
++	git format-patch -o patches/side master..side &&
++	git rev-list master..side >list &&
++	test_line_count = $(ls patches/side | wc -l) list
++'
++
++test_expect_success 'format-patch -o with leading non-existing directories' '
++	rm -fr patches &&
++	git format-patch -o patches/side master..side &&
++	git rev-list master..side >list &&
++	test_line_count = $(ls patches/side | wc -l) list
++'
++
+ test_expect_success 'format-patch format.outputDirectory option' '
+ 	test_config format.outputDirectory patches &&
+ 	rm -fr patches &&
+-- 
+2.23.0.11.g242cf7f110
 
