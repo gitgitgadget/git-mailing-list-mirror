@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFA541F4BD
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C1B61F4BD
 	for <e@80x24.org>; Sat,  5 Oct 2019 21:12:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726089AbfJEVMT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 17:12:19 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36302 "EHLO
+        id S1726116AbfJEVMV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 17:12:21 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36310 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725789AbfJEVMS (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 5 Oct 2019 17:12:18 -0400
+        by vger.kernel.org with ESMTP id S1726084AbfJEVMV (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 5 Oct 2019 17:12:21 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E228161C63;
-        Sat,  5 Oct 2019 21:12:16 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AF32E61C64;
+        Sat,  5 Oct 2019 21:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1570309937;
-        bh=oj6Hsyz93EL/63WPIe805Aute2VrMB6kGlSkslSoLTY=;
+        s=default; t=1570309940;
+        bh=9cHS+BdocZDusjgmfDKsZP7OczLxO50sQOp48s48Hg0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=zEzx1uLtK38HIeB90jmRcLVeycMmPfowj4AliP27wxkGzHYhyPYYyTrkmpwOKuxU7
-         C+OpRqpfOOG3wGwRyNvDR9ZHeMDu1ZmL+W4oNx4tsOHmySrp+awu/vDjlKslyC8VZK
-         Hj7rk6Y98yqMJH3DyHvkO5OmTnSvfPevaCGLQvFejeYGTJOUnjfMFJz0f0vMSuHmud
-         uaFqvSkopB6A1wdV+X565T2yzvcaSrLyPX/dLpIeoEpr+jOASPM57/5LxCzj3sAgQ5
-         rv79ANzD9Mi5VKbVCASK1xSIutfsfrVINuX98Q0AN8LAveSUJs6O1giWuJgFbIezM9
-         n82lwSpAo+iaz4YSFbkoGYtVA6liLrsKizzyyLLJ5RYeA2ELALcOLkeI+8ZuiX9hxs
-         qV0EKT45ai3RPb5Ye5Rurx7DTsKevNrKeHRJcE3rk4FpxlzXfPcyIjGkGJ3rIM3VLc
-         bPKc9+PTSCQ/nyADFJuSWAgXj6xjCMonhpRtmUezu/e9B4GNGnz
+        b=FmkqQujZahuvkaMMUvsTtfrRDVmsKVhD8ZzJI8saQ8wCQg8hLSb6z9g1Kyuhpqfcf
+         uw/DfCg8IkfADz0JD0P7yHoyRFjqMbB714AnXh734F+0/mL0y3+tYpGNJhM/GwbKXo
+         Dx2+QZVvu93LH/7b1Rqu0rVVAegAENTqCXkri76qrxFkuox9s2NotgrgWzvdiQ20CR
+         HZuAClIKEzC4KRH1RGrMsALlYRaF5hlvlhyJB+gSAQzVu3TYoiWZ34P7mZFuK4ZEGc
+         U5upBwBR0fox2qJaOyJWcHDvdo9XrnfetHpoBJUDRrXR0VkWBmvpgw8GdxTRcYdg5p
+         WagIFnkz38MIPXuJYzu/P+uij+P7wHQMjKHlwBJBil5ieNeAR0e6n40aZQo3KWsVkv
+         nsjH0WGPLyejwUpjoJty2rlg+RJIB8/bNdgkmi5FTPmUDciEU2M3x9EF4g2usNeJlh
+         2JiBUUoN6llVmaH+YBEu6l0iIQ2YibrSGgmU0CMkG0qxP/9jbJl
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Stefan Beller <stefanbeller@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 03/15] rev-parse: add an --object-format option
-Date:   Sat,  5 Oct 2019 21:11:57 +0000
-Message-Id: <20191005211209.18237-4-sandals@crustytoothpaste.net>
+Subject: [PATCH 08/15] t4015: abstract away SHA-1-specific constants
+Date:   Sat,  5 Oct 2019 21:12:02 +0000
+Message-Id: <20191005211209.18237-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.23.0.700.g56cf767bdb
 In-Reply-To: <20191005211209.18237-1-sandals@crustytoothpaste.net>
 References: <20191005211209.18237-1-sandals@crustytoothpaste.net>
@@ -52,92 +52,296 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an option to print the object format used for input, output, or
-storage. This allows shell scripts to discover the hash algorithm in
-use.
-
-Since the transition plan allows for multiple input algorithms, document
-that we may provide multiple results for input, and the format that the
-results may take. While we don't support this now, documenting it early
-means that script authors can future-proof their scripts for when we do.
+Adjust the test so that it computes variables for object IDs instead of
+using hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/git-rev-parse.txt |  7 +++++++
- builtin/rev-parse.c             | 11 +++++++++++
- t/t1500-rev-parse.sh            | 15 +++++++++++++++
- 3 files changed, 33 insertions(+)
+ t/t4015-diff-whitespace.sh | 89 +++++++++++++++++++++++---------------
+ 1 file changed, 53 insertions(+), 36 deletions(-)
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index e72d332b83..8a72190940 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -274,6 +274,13 @@ print a message to stderr and exit with nonzero status.
- 	Show the path to the shared index file in split index mode, or
- 	empty if not in split-index mode.
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 6b087df3dc..eadaf57262 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -16,6 +16,7 @@ test_expect_success "Ray Lehtiniemi's example" '
+ 	} while (0);
+ 	EOF
+ 	git update-index --add x &&
++	before=$(git rev-parse --short $(git hash-object x)) &&
  
-+--object-format[=(storage|input|output)]::
-+	Show the object format (hash algorithm) used for the repository
-+	for storage inside the `.git` directory, input, or output. For
-+	input, multiple algorithms may be printed, space-separated.
-+	If not specified, the default is "storage".
-+
-+
- Other Options
- ~~~~~~~~~~~~~
+ 	cat <<-\EOF >x &&
+ 	do
+@@ -24,10 +25,11 @@ test_expect_success "Ray Lehtiniemi's example" '
+ 	}
+ 	while (0);
+ 	EOF
++	after=$(git rev-parse --short $(git hash-object x)) &&
  
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index f8bbe6d47e..8036219921 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -918,6 +918,17 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				show_datestring("--min-age=", arg);
- 				continue;
- 			}
-+			if (opt_with_value(arg, "--object-format", &arg)) {
-+				const char *val = arg ? arg : "storage";
-+
-+				if (strcmp(val, "storage") &&
-+				    strcmp(val, "input") &&
-+				    strcmp(val, "output"))
-+					die("unknown mode for --object-format: %s",
-+					    arg);
-+				puts(the_hash_algo->name);
-+				continue;
-+			}
- 			if (show_flag(arg) && verify)
- 				die_no_single_rev(quiet);
- 			continue;
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index 01abee533d..fb3d81df4c 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -59,6 +59,7 @@ test_rev_parse () {
- ROOT=$(pwd)
+-	cat <<-\EOF >expect &&
++	cat <<-EOF >expect &&
+ 	diff --git a/x b/x
+-	index adf3937..6edc172 100644
++	index $before..$after 100644
+ 	--- a/x
+ 	+++ b/x
+ 	@@ -1,3 +1,5 @@
+@@ -61,6 +63,7 @@ test_expect_success 'another test, without options' '
+ 	EOF
  
- test_expect_success 'setup' '
-+	test_oid_init &&
- 	mkdir -p sub/dir work &&
- 	cp -R .git repo.git
+ 	git update-index x &&
++	before=$(git rev-parse --short $(git hash-object x)) &&
+ 
+ 	tr "_" " " <<-\EOF >x &&
+ 	_	whitespace at beginning
+@@ -70,10 +73,11 @@ test_expect_success 'another test, without options' '
+ 	unchanged line
+ 	CR at end
+ 	EOF
++	after=$(git rev-parse --short $(git hash-object x)) &&
+ 
+-	tr "Q_" "\015 " <<-\EOF >expect &&
++	tr "Q_" "\015 " <<-EOF >expect &&
+ 	diff --git a/x b/x
+-	index d99af23..22d9f73 100644
++	index $before..$after 100644
+ 	--- a/x
+ 	+++ b/x
+ 	@@ -1,6 +1,6 @@
+@@ -108,9 +112,9 @@ test_expect_success 'another test, without options' '
+ 	git diff -w --ignore-cr-at-eol >out &&
+ 	test_must_be_empty out &&
+ 
+-	tr "Q_" "\015 " <<-\EOF >expect &&
++	tr "Q_" "\015 " <<-EOF >expect &&
+ 	diff --git a/x b/x
+-	index d99af23..22d9f73 100644
++	index $before..$after 100644
+ 	--- a/x
+ 	+++ b/x
+ 	@@ -1,6 +1,6 @@
+@@ -132,9 +136,9 @@ test_expect_success 'another test, without options' '
+ 	git diff -b --ignore-cr-at-eol >out &&
+ 	test_cmp expect out &&
+ 
+-	tr "Q_" "\015 " <<-\EOF >expect &&
++	tr "Q_" "\015 " <<-EOF >expect &&
+ 	diff --git a/x b/x
+-	index d99af23..22d9f73 100644
++	index $before..$after 100644
+ 	--- a/x
+ 	+++ b/x
+ 	@@ -1,6 +1,6 @@
+@@ -154,9 +158,9 @@ test_expect_success 'another test, without options' '
+ 	git diff --ignore-space-at-eol --ignore-cr-at-eol >out &&
+ 	test_cmp expect out &&
+ 
+-	tr "Q_" "\015 " <<-\EOF >expect &&
++	tr "Q_" "\015 " <<-EOF >expect &&
+ 	diff --git a/x b/x
+-	index_d99af23..22d9f73 100644
++	index_$before..$after 100644
+ 	--- a/x
+ 	+++ b/x
+ 	@@ -1,6 +1,6 @@
+@@ -786,23 +790,25 @@ test_expect_success 'whitespace-only changes not reported' '
+ 	test_must_be_empty actual
  '
-@@ -131,6 +132,20 @@ test_expect_success 'rev-parse --is-shallow-repository in non-shallow repo' '
+ 
+-cat <<EOF >expect
+-diff --git a/x b/z
+-similarity index NUM%
+-rename from x
+-rename to z
+-index 380c32a..a97b785 100644
+-EOF
+ test_expect_success 'whitespace-only changes reported across renames' '
+ 	git reset --hard &&
+ 	for i in 1 2 3 4 5 6 7 8 9; do echo "$i$i$i$i$i$i"; done >x &&
+ 	git add x &&
++	before=$(git rev-parse --short $(git hash-object x)) &&
+ 	git commit -m "base" &&
+ 	sed -e "5s/^/ /" x >z &&
+ 	git rm x &&
+ 	git add z &&
++	after=$(git rev-parse --short $(git hash-object z)) &&
+ 	git diff -w -M --cached |
+ 	sed -e "/^similarity index /s/[0-9][0-9]*/NUM/" >actual &&
++	cat <<-EOF >expect &&
++	diff --git a/x b/z
++	similarity index NUM%
++	rename from x
++	rename to z
++	index $before..$after 100644
++	EOF
  	test_cmp expect actual
  '
  
-+test_expect_success 'rev-parse --object-format in repo' '
-+	echo "$(test_oid algo)" >expect &&
-+	git rev-parse --object-format >actual &&
-+	test_cmp expect actual &&
-+	git rev-parse --object-format=storage >actual &&
-+	test_cmp expect actual &&
-+	git rev-parse --object-format=input >actual &&
-+	test_cmp expect actual &&
-+	git rev-parse --object-format=output >actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git rev-parse --object-format=squeamish-ossifrage 2>err &&
-+	grep "unknown mode for --object-format: squeamish-ossifrage" err
-+'
-+
- test_expect_success 'showing the superproject correctly' '
- 	git rev-parse --show-superproject-working-tree >out &&
- 	test_must_be_empty out &&
+@@ -858,13 +864,15 @@ test_expect_success 'diff that introduces a line with only tabs' '
+ 	git config core.whitespace blank-at-eol &&
+ 	git reset --hard &&
+ 	echo "test" >x &&
++	before=$(git rev-parse --short $(git hash-object x)) &&
+ 	git commit -m "initial" x &&
+ 	echo "{NTN}" | tr "NT" "\n\t" >>x &&
++	after=$(git rev-parse --short $(git hash-object x)) &&
+ 	git diff --color | test_decode_color >current &&
+ 
+-	cat >expected <<-\EOF &&
++	cat >expected <<-EOF &&
+ 	<BOLD>diff --git a/x b/x<RESET>
+-	<BOLD>index 9daeafb..2874b91 100644<RESET>
++	<BOLD>index $before..$after 100644<RESET>
+ 	<BOLD>--- a/x<RESET>
+ 	<BOLD>+++ b/x<RESET>
+ 	<CYAN>@@ -1 +1,4 @@<RESET>
+@@ -883,19 +891,21 @@ test_expect_success 'diff that introduces and removes ws breakages' '
+ 		echo "0. blank-at-eol " &&
+ 		echo "1. blank-at-eol "
+ 	} >x &&
++	before=$(git rev-parse --short $(git hash-object x)) &&
+ 	git commit -a --allow-empty -m preimage &&
+ 	{
+ 		echo "0. blank-at-eol " &&
+ 		echo "1. still-blank-at-eol " &&
+ 		echo "2. and a new line "
+ 	} >x &&
++	after=$(git rev-parse --short $(git hash-object x)) &&
+ 
+ 	git diff --color |
+ 	test_decode_color >current &&
+ 
+-	cat >expected <<-\EOF &&
++	cat >expected <<-EOF &&
+ 	<BOLD>diff --git a/x b/x<RESET>
+-	<BOLD>index d0233a2..700886e 100644<RESET>
++	<BOLD>index $before..$after 100644<RESET>
+ 	<BOLD>--- a/x<RESET>
+ 	<BOLD>+++ b/x<RESET>
+ 	<CYAN>@@ -1,2 +1,3 @@<RESET>
+@@ -915,16 +925,18 @@ test_expect_success 'ws-error-highlight test setup' '
+ 		echo "0. blank-at-eol " &&
+ 		echo "1. blank-at-eol "
+ 	} >x &&
++	before=$(git rev-parse --short $(git hash-object x)) &&
+ 	git commit -a --allow-empty -m preimage &&
+ 	{
+ 		echo "0. blank-at-eol " &&
+ 		echo "1. still-blank-at-eol " &&
+ 		echo "2. and a new line "
+ 	} >x &&
++	after=$(git rev-parse --short $(git hash-object x)) &&
+ 
+-	cat >expect.default-old <<-\EOF &&
++	cat >expect.default-old <<-EOF &&
+ 	<BOLD>diff --git a/x b/x<RESET>
+-	<BOLD>index d0233a2..700886e 100644<RESET>
++	<BOLD>index $before..$after 100644<RESET>
+ 	<BOLD>--- a/x<RESET>
+ 	<BOLD>+++ b/x<RESET>
+ 	<CYAN>@@ -1,2 +1,3 @@<RESET>
+@@ -934,9 +946,9 @@ test_expect_success 'ws-error-highlight test setup' '
+ 	<GREEN>+<RESET><GREEN>2. and a new line<RESET><BLUE> <RESET>
+ 	EOF
+ 
+-	cat >expect.all <<-\EOF &&
++	cat >expect.all <<-EOF &&
+ 	<BOLD>diff --git a/x b/x<RESET>
+-	<BOLD>index d0233a2..700886e 100644<RESET>
++	<BOLD>index $before..$after 100644<RESET>
+ 	<BOLD>--- a/x<RESET>
+ 	<BOLD>+++ b/x<RESET>
+ 	<CYAN>@@ -1,2 +1,3 @@<RESET>
+@@ -946,9 +958,9 @@ test_expect_success 'ws-error-highlight test setup' '
+ 	<GREEN>+<RESET><GREEN>2. and a new line<RESET><BLUE> <RESET>
+ 	EOF
+ 
+-	cat >expect.none <<-\EOF
++	cat >expect.none <<-EOF
+ 	<BOLD>diff --git a/x b/x<RESET>
+-	<BOLD>index d0233a2..700886e 100644<RESET>
++	<BOLD>index $before..$after 100644<RESET>
+ 	<BOLD>--- a/x<RESET>
+ 	<BOLD>+++ b/x<RESET>
+ 	<CYAN>@@ -1,2 +1,3 @@<RESET>
+@@ -1022,14 +1034,15 @@ test_expect_success 'detect moved code, complete file' '
+ 	EOF
+ 	git add test.c &&
+ 	git commit -m "add main function" &&
++	file=$(git rev-parse --short HEAD:test.c) &&
+ 	git mv test.c main.c &&
+ 	test_config color.diff.oldMoved "normal red" &&
+ 	test_config color.diff.newMoved "normal green" &&
+ 	git diff HEAD --color-moved=zebra --color --no-renames | test_decode_color >actual &&
+-	cat >expected <<-\EOF &&
++	cat >expected <<-EOF &&
+ 	<BOLD>diff --git a/main.c b/main.c<RESET>
+ 	<BOLD>new file mode 100644<RESET>
+-	<BOLD>index 0000000..a986c57<RESET>
++	<BOLD>index 0000000..$file<RESET>
+ 	<BOLD>--- /dev/null<RESET>
+ 	<BOLD>+++ b/main.c<RESET>
+ 	<CYAN>@@ -0,0 +1,5 @@<RESET>
+@@ -1040,7 +1053,7 @@ test_expect_success 'detect moved code, complete file' '
+ 	<BGREEN>+<RESET><BGREEN>}<RESET>
+ 	<BOLD>diff --git a/test.c b/test.c<RESET>
+ 	<BOLD>deleted file mode 100644<RESET>
+-	<BOLD>index a986c57..0000000<RESET>
++	<BOLD>index $file..0000000<RESET>
+ 	<BOLD>--- a/test.c<RESET>
+ 	<BOLD>+++ /dev/null<RESET>
+ 	<CYAN>@@ -1,5 +0,0 @@<RESET>
+@@ -1094,6 +1107,8 @@ test_expect_success 'detect malicious moved code, inside file' '
+ 	EOF
+ 	git add main.c test.c &&
+ 	git commit -m "add main and test file" &&
++	before_main=$(git rev-parse --short HEAD:main.c) &&
++	before_test=$(git rev-parse --short HEAD:test.c) &&
+ 	cat <<-\EOF >main.c &&
+ 		#include<stdio.h>
+ 		int stuff()
+@@ -1126,10 +1141,12 @@ test_expect_success 'detect malicious moved code, inside file' '
+ 			bar();
+ 		}
+ 	EOF
++	after_main=$(git rev-parse --short $(git hash-object main.c)) &&
++	after_test=$(git rev-parse --short $(git hash-object test.c)) &&
+ 	git diff HEAD --no-renames --color-moved=zebra --color | test_decode_color >actual &&
+-	cat <<-\EOF >expected &&
++	cat <<-EOF >expected &&
+ 	<BOLD>diff --git a/main.c b/main.c<RESET>
+-	<BOLD>index 27a619c..7cf9336 100644<RESET>
++	<BOLD>index $before_main..$after_main 100644<RESET>
+ 	<BOLD>--- a/main.c<RESET>
+ 	<BOLD>+++ b/main.c<RESET>
+ 	<CYAN>@@ -5,13 +5,6 @@<RESET> <RESET>printf("Hello ");<RESET>
+@@ -1147,7 +1164,7 @@ test_expect_success 'detect malicious moved code, inside file' '
+ 	 {<RESET>
+ 	 foo();<RESET>
+ 	<BOLD>diff --git a/test.c b/test.c<RESET>
+-	<BOLD>index 1dc1d85..2bedec9 100644<RESET>
++	<BOLD>index $before_test..$after_test 100644<RESET>
+ 	<BOLD>--- a/test.c<RESET>
+ 	<BOLD>+++ b/test.c<RESET>
+ 	<CYAN>@@ -4,6 +4,13 @@<RESET> <RESET>int bar()<RESET>
+@@ -1176,9 +1193,9 @@ test_expect_success 'plain moved code, inside file' '
+ 	test_config color.diff.newMovedAlternative "yellow" &&
+ 	# needs previous test as setup
+ 	git diff HEAD --no-renames --color-moved=plain --color | test_decode_color >actual &&
+-	cat <<-\EOF >expected &&
++	cat <<-EOF >expected &&
+ 	<BOLD>diff --git a/main.c b/main.c<RESET>
+-	<BOLD>index 27a619c..7cf9336 100644<RESET>
++	<BOLD>index $before_main..$after_main 100644<RESET>
+ 	<BOLD>--- a/main.c<RESET>
+ 	<BOLD>+++ b/main.c<RESET>
+ 	<CYAN>@@ -5,13 +5,6 @@<RESET> <RESET>printf("Hello ");<RESET>
+@@ -1196,7 +1213,7 @@ test_expect_success 'plain moved code, inside file' '
+ 	 {<RESET>
+ 	 foo();<RESET>
+ 	<BOLD>diff --git a/test.c b/test.c<RESET>
+-	<BOLD>index 1dc1d85..2bedec9 100644<RESET>
++	<BOLD>index $before_test..$after_test 100644<RESET>
+ 	<BOLD>--- a/test.c<RESET>
+ 	<BOLD>+++ b/test.c<RESET>
+ 	<CYAN>@@ -4,6 +4,13 @@<RESET> <RESET>int bar()<RESET>
