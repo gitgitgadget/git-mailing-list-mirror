@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA7F51F4BD
-	for <e@80x24.org>; Sat,  5 Oct 2019 21:12:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 500C11F4BD
+	for <e@80x24.org>; Sat,  5 Oct 2019 21:12:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726128AbfJEVMW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 17:12:22 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36304 "EHLO
+        id S1726138AbfJEVMX (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 17:12:23 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36310 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725789AbfJEVMU (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 5 Oct 2019 17:12:20 -0400
+        by vger.kernel.org with ESMTP id S1726084AbfJEVMW (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 5 Oct 2019 17:12:22 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AAC8E61C65;
-        Sat,  5 Oct 2019 21:12:18 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 55B5F61C63;
+        Sat,  5 Oct 2019 21:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1570309939;
-        bh=KtiT5CidkjsFlDXBaQ/DpJldMHEGdvP6U+ynpDTh+Y0=;
+        s=default; t=1570309941;
+        bh=r81OHTNdRZalvqaLHm4qnZRbzuBf11/N7jQZHWxMBqQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=yXnpYYpnvoaGkIjAklH0IJfdaQwxJz+f9qLgIa8OlFHCSqvz1Acucr4bfTsJbtJ8A
-         tqfbMcDlYduaIEZSDmmN55Gbczj+09haA5Lt2XC57Tl+eg/80PrAB8d9aK/wqZprRi
-         bg5IegGSme34lDduJkOTwDvfoE4H1RNwR0nK1WRsR7tzJLMLeHNSV/p5gaZYvpY2hX
-         zh6Np/FWAOATqMahC08Tp/r2deOCL0Ae4SwbZHjR06ZSAKaqDQ3x6LeY7dn6550sht
-         FLPILadeHvGqchgj5NuSFn9Qaiuq8e7SM1lID8VKiIa494zwkNMApb8NUXZOVBjs9a
-         +RgB05VLTKbmrVbjPd5IiCY1SLk1sbLstEJPNjRk+cU+U5U0bUvPThKGoTh1ulW3/7
-         cEME/rD2QLwzQeFkDl3lq0N5DlpxJhgVEuOiWzkcFTsBF4qczFllJt6r/tLoLtBXuw
-         H3IALAvi4HMPOJEQbFdFA2PQxN6Xftu36tcSN2vNJm93dDAyeLR
+        b=UGQEnchfC8j3wYgGVBf6teQd0ta6Xumk5rpt/6wzVmi08QsucOaJXR/5oD2O7tiiw
+         IUu2RDcRpomKOBB4oZacVBRbN8trow5HePQGSiZ8lDD5mHonZGiMGZD/GAbXITMQP4
+         HxOp/GtsgFLB1AcpRepCAK7TuXxFJE5yphG29JHYfi51Z0ISqxdVebWmbRnLyvSwNX
+         zCmWRBy53pvR0Wk+n7zQVszAdWzLNCtk4A1CQ66Cd+BFHl54eQiSIwutdCqYCBJgVn
+         IMZsUHDVEJX2ruaabmQaLNV0IB47CMMX/aN+ia2NtU86PO8PQjVjyOXsJyWBg2po7P
+         vQzWKktg/WnqG554zooteZ50Daw9Vc/Zc+SyRAtLc9+mwSkmY5X4P8/kd3p2tJgKiE
+         I6oAzseUoxyRv4SjEVwRqa0ioJdyx5vXlb+UMAsz53yf1pH0YZHUv/2f1iCXAoXt7D
+         OzKXukR6ebahRYPcEJ5XtMdeRX7mZrgD4hr1PiIAjtvCgDqfGzR
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Stefan Beller <stefanbeller@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 06/15] t4010: abstract away SHA-1-specific constants
-Date:   Sat,  5 Oct 2019 21:12:00 +0000
-Message-Id: <20191005211209.18237-7-sandals@crustytoothpaste.net>
+Subject: [PATCH 11/15] t4038: abstract away SHA-1 specific constants
+Date:   Sat,  5 Oct 2019 21:12:05 +0000
+Message-Id: <20191005211209.18237-12-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.23.0.700.g56cf767bdb
 In-Reply-To: <20191005211209.18237-1-sandals@crustytoothpaste.net>
 References: <20191005211209.18237-1-sandals@crustytoothpaste.net>
@@ -52,72 +52,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes variables for object IDs instead of
-using hard-coded hashes.
+Compute several object IDs that exist in expected output, since we don't
+care about the specific object IDs, only that the format of the output
+is syntactically correct.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4010-diff-pathspec.sh | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ t/t4038-diff-combined.sh | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
-index 281f8fad0c..e5ca359edf 100755
---- a/t/t4010-diff-pathspec.sh
-+++ b/t/t4010-diff-pathspec.sh
-@@ -17,11 +17,15 @@ test_expect_success \
-     'echo frotz >file0 &&
-      mkdir path1 &&
-      echo rezrov >path1/file1 &&
-+     before0=$(git hash-object file0) &&
-+     before1=$(git hash-object path1/file1) &&
-      git update-index --add file0 path1/file1 &&
-      tree=$(git write-tree) &&
-      echo "$tree" &&
-      echo nitfol >file0 &&
-      echo yomin >path1/file1 &&
-+     after0=$(git hash-object file0) &&
-+     after1=$(git hash-object path1/file1) &&
-      git update-index file0 path1/file1'
+diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
+index d4afe12554..15fc054fdb 100755
+--- a/t/t4038-diff-combined.sh
++++ b/t/t4038-diff-combined.sh
+@@ -440,11 +440,13 @@ test_expect_success 'setup for --combined-all-paths' '
+ 	git branch side2c &&
+ 	git checkout side1c &&
+ 	test_seq 1 10 >filename-side1c &&
++	side1cf=$(git hash-object filename-side1c) &&
+ 	git add filename-side1c &&
+ 	git commit -m with &&
+ 	git checkout side2c &&
+ 	test_seq 1 9 >filename-side2c &&
+ 	echo ten >>filename-side2c &&
++	side2cf=$(git hash-object filename-side2c) &&
+ 	git add filename-side2c &&
+ 	git commit -m iam &&
+ 	git checkout -b mergery side1c &&
+@@ -452,13 +454,14 @@ test_expect_success 'setup for --combined-all-paths' '
+ 	git rm filename-side1c &&
+ 	echo eleven >>filename-side2c &&
+ 	git mv filename-side2c filename-merged &&
++	mergedf=$(git hash-object filename-merged) &&
+ 	git add filename-merged &&
+ 	git commit
+ '
  
- cat >expected <<\EOF
-@@ -31,32 +35,32 @@ test_expect_success \
-     'git diff-index --cached $tree -- path >current &&
-      compare_diff_raw current expected'
+ test_expect_success '--combined-all-paths and --raw' '
+-	cat <<-\EOF >expect &&
+-	::100644 100644 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR	filename-side1c	filename-side2c	filename-merged
++	cat <<-EOF >expect &&
++	::100644 100644 100644 $side1cf $side2cf $mergedf RR	filename-side1c	filename-side2c	filename-merged
+ 	EOF
+ 	git diff-tree -c -M --raw --combined-all-paths HEAD >actual.tmp &&
+ 	sed 1d <actual.tmp >actual &&
+@@ -482,11 +485,13 @@ test_expect_success FUNNYNAMES 'setup for --combined-all-paths with funny names'
+ 	git checkout side1d &&
+ 	test_seq 1 10 >"$(printf "file\twith\ttabs")" &&
+ 	git add file* &&
++	side1df=$(git hash-object *tabs) &&
+ 	git commit -m with &&
+ 	git checkout side2d &&
+ 	test_seq 1 9 >"$(printf "i\tam\ttabbed")" &&
+ 	echo ten >>"$(printf "i\tam\ttabbed")" &&
+ 	git add *tabbed &&
++	side2df=$(git hash-object *tabbed) &&
+ 	git commit -m iam &&
+ 	git checkout -b funny-names-mergery side1d &&
+ 	git merge --no-commit side2d &&
+@@ -494,12 +499,14 @@ test_expect_success FUNNYNAMES 'setup for --combined-all-paths with funny names'
+ 	echo eleven >>"$(printf "i\tam\ttabbed")" &&
+ 	git mv "$(printf "i\tam\ttabbed")" "$(printf "fickle\tnaming")" &&
+ 	git add fickle* &&
+-	git commit
++	headf=$(git hash-object fickle*) &&
++	git commit &&
++	head=$(git rev-parse HEAD)
+ '
  
--cat >expected <<\EOF
--:100644 100644 766498d93a4b06057a8e49d23f4068f1170ff38f 0a41e115ab61be0328a19b29f18cdcb49338d516 M	path1/file1
-+cat >expected <<EOF
-+:100644 100644 $before1 $after1 M	path1/file1
- EOF
- test_expect_success \
-     'limit to path1 should show path1/file1' \
-     'git diff-index --cached $tree -- path1 >current &&
-      compare_diff_raw current expected'
+ test_expect_success FUNNYNAMES '--combined-all-paths and --raw and funny names' '
+-	cat <<-\EOF >expect &&
+-	::100644 100644 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR	"file\twith\ttabs"	"i\tam\ttabbed"	"fickle\tnaming"
++	cat <<-EOF >expect &&
++	::100644 100644 100644 $side1df $side2df $headf RR	"file\twith\ttabs"	"i\tam\ttabbed"	"fickle\tnaming"
+ 	EOF
+ 	git diff-tree -c -M --raw --combined-all-paths HEAD >actual.tmp &&
+ 	sed 1d <actual.tmp >actual &&
+@@ -507,7 +514,7 @@ test_expect_success FUNNYNAMES '--combined-all-paths and --raw and funny names'
+ '
  
--cat >expected <<\EOF
--:100644 100644 766498d93a4b06057a8e49d23f4068f1170ff38f 0a41e115ab61be0328a19b29f18cdcb49338d516 M	path1/file1
-+cat >expected <<EOF
-+:100644 100644 $before1 $after1 M	path1/file1
- EOF
- test_expect_success \
-     'limit to path1/ should show path1/file1' \
-     'git diff-index --cached $tree -- path1/ >current &&
-      compare_diff_raw current expected'
- 
--cat >expected <<\EOF
--:100644 100644 766498d93a4b06057a8e49d23f4068f1170ff38f 0a41e115ab61be0328a19b29f18cdcb49338d516 M	path1/file1
-+cat >expected <<EOF
-+:100644 100644 $before1 $after1 M	path1/file1
- EOF
- test_expect_success \
-     '"*file1" should show path1/file1' \
-     'git diff-index --cached $tree -- "*file1" >current &&
-      compare_diff_raw current expected'
- 
--cat >expected <<\EOF
--:100644 100644 8e4020bb5a8d8c873b25de15933e75cc0fc275df dca6b92303befc93086aa025d90a5facd7eb2812 M	file0
-+cat >expected <<EOF
-+:100644 100644 $before0 $after0 M	file0
- EOF
- test_expect_success \
-     'limit to file0 should show file0' \
+ test_expect_success FUNNYNAMES '--combined-all-paths and --raw -and -z and funny names' '
+-	printf "aaf8087c3cbd4db8e185a2d074cf27c53cfb75d7\0::100644 100644 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR\0file\twith\ttabs\0i\tam\ttabbed\0fickle\tnaming\0" >expect &&
++	printf "$head\0::100644 100644 100644 $side1df $side2df $headf RR\0file\twith\ttabs\0i\tam\ttabbed\0fickle\tnaming\0" >expect &&
+ 	git diff-tree -c -M --raw --combined-all-paths -z HEAD >actual &&
+ 	test_cmp -a expect actual
+ '
