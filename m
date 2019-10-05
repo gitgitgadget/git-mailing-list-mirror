@@ -7,109 +7,92 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62BAB1F4BD
-	for <e@80x24.org>; Sat,  5 Oct 2019 22:51:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41D621F4BD
+	for <e@80x24.org>; Sat,  5 Oct 2019 23:36:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725853AbfJEWvX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 18:51:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65349 "EHLO
+        id S1725935AbfJEXgk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 19:36:40 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50836 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725801AbfJEWvX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Oct 2019 18:51:23 -0400
+        with ESMTP id S1725801AbfJEXgk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Oct 2019 19:36:40 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7221319309;
-        Sat,  5 Oct 2019 18:51:22 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C4AE196F2;
+        Sat,  5 Oct 2019 19:36:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7toR33WMZbv/k/LhD0zlwdmy3JU=; b=LLS7yz
-        OaBrSMhc72+SXZHvFKfabSskVdyAGa/c92kfDhKoxMDiNYnhqRmphQ+RPZaKbg9t
-        BPFBUqeGj/HjlQwySD/g7ZeGCqBc75aodQQ1sciufBZyTsgSctp3p8BEqrnZzBbM
-        iwHeWk8Hvpn7WjW7+HXcfxItmwJ6VSQ5pp4CM=
+        :content-type; s=sasl; bh=Rf1S8cgPJ4UTL+CUzfQM6yWNuMg=; b=T/BsqM
+        BlCA3pxNx/dKj9HXBDQ+1CJQdopot8+/koOP2TPINURgdWQOmNOI5kc8wFaa8C/l
+        /9pRQw76zD/rX+EXYcJdw76n0upc3RmEZHYYc19A/kexioJNpyuwlB5B4Qvfug21
+        gGjtYqbVFtU5oc/ocFfn8ZfAHOAGU0aYMegTE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RM3+IQSPe5CKo3FPKj7CD37kQ1sWRgou
-        8sS+uu7j8JJxVBGch3ZG5Zf6vmViSRuGBPIuFXQowzUCI8SodVXYqj+FE8xZ2kxG
-        sm/HOq4Q6fKy400d1G26Cf1DQi5hBZKz8+3Ql+F4Uorg+9u8Z6NsAA0FyCecsZh7
-        G8SUztknXfM=
+        :content-type; q=dns; s=sasl; b=weyquUpOX//HP2O9l6lLW+3Tw4oVFrQ2
+        QoArEzozv9TEksqsnU/qg3OZPK1OcWHGoPNJd13BSZvR9O2o1d6MUyiagW0gfSoa
+        f1aszQn1IvXxr8D2PiFNertpVIIJXhMVVDkzq1UT/Uhgpwq2Wdd9+3Q9BDJQ/uUW
+        toohZPsVSC8=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 69E7719308;
-        Sat,  5 Oct 2019 18:51:22 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 63FA5196F1;
+        Sat,  5 Oct 2019 19:36:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D37B419307;
-        Sat,  5 Oct 2019 18:51:21 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BB3DF196EF;
+        Sat,  5 Oct 2019 19:36:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH] apply: tell user location of corrupted patch file
-References: <20191002184546.GA22174@generichostname>
-        <ec38908d05f0d40190173158ef3f0753fa9f1184.1570226253.git.liu.denton@gmail.com>
-        <xmqqv9t37fsw.fsf@gitster-ct.c.googlers.com>
-Date:   Sun, 06 Oct 2019 07:51:20 +0900
-In-Reply-To: <xmqqv9t37fsw.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Sat, 05 Oct 2019 17:33:03 +0900")
-Message-ID: <xmqq4l0m7qmv.fsf@gitster-ct.c.googlers.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2019, #01; Thu, 3)
+References: <xmqqsgoabes8.fsf@gitster-ct.c.googlers.com>
+        <972f4674-ed00-7113-24eb-f59f1b751690@gmail.com>
+Date:   Sun, 06 Oct 2019 08:36:36 +0900
+In-Reply-To: <972f4674-ed00-7113-24eb-f59f1b751690@gmail.com> (Phillip Wood's
+        message of "Fri, 4 Oct 2019 10:44:47 +0100")
+Message-ID: <xmqqzhie69yz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A6C09766-E7C2-11E9-931B-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F98E1ABC-E7C8-11E9-AA96-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->>  		if (len <= 0) {
->>  			free(fragment);
->> -			return error(_("corrupt patch at line %d"), state->linenr);
->> +			return error(_("corrupt patch at %s:%d"), state->patch_input_file, state->linenr);
->>  		}
+>> * ra/rebase-i-more-options (2019-09-09) 6 commits
+>> ...
+>>   Is this ready for 'next'.
 >
-> Do not forget that you can run "git apply" and feed the patch from
-> its standard input, e.g.
+> Nearly, but not quite I think cf [1]. Also I'm still not convinced
+> that having different behaviors for --ignore-whitespace depending on
+> the backend is going to be helpful but maybe they are close enough not
+> to matter too much in practice [2].
 >
-> 	$ git apply <patchfile
-> 	$ git show -R | git apply
->
-> Make sure state->patch_input_file is a reasonable string before
-> considering this.
+> [1]
+> https://public-inbox.org/git/20190806173638.17510-1-rohit.ashiwal265@gmail.com/T/#m965ce1f09d1d1b8010c04db0eabd4b19ce99fe82
 
-I think what the patch does is safe in this case; callsites of
-apply_patch(), which sets the .patch_input_file field, pass the
-string "<stdin>", so you'd say
+OK, so I'll leave a note that this needs to consider existing
+GIT_COMMITTER_DATE environment variable, etc, with a reference to
+<5adde732-173b-d24d-d23f-bb4d043076d7@gmail.com>.
 
-	error: corrupt patch at <stdin>:43
+A URL to public-inbox.org is good, but that is because those who do
+not use public-inbox.org (or after the site goes out of service) can
+still identify exactly which message you are referring to if you use
+the https://public-inbox.org/git/$message_id_without_brackets
+format.  
 
-We lost the word "line" in the message, but it would be picked up
-rather quickly by users that colon + integer is a line number, so
-I think it is OK.
+Unlike that form, the format you used only identifies the thread
+starter, and without public-inbox.org in service, a reader cannot
+tell which message in the thread you are referring to, even if the
+reader had full mailing list archive.
 
-> Also, if you have a mbox file
->
-> 	$ cd sub/direc/tory
-> 	$ git am -s /var/tmp/mbox
->
-> The "git apply" process thatis run inside "git am" would be running
-> at the top level of the working tree, so state->patch_input_file may
-> say ".git/rebase-apply/patch" (i.e. relative pathname) that is not
-> relative to where the end user is in.  I personally do not thinkg it
-> matters too much, but some people may complain.
->
-> Other than that, looks good.  I am kind-of surprised that there is
-> only one place that we report an unusable input with a line number.
-> Nicely found.
+IOW, I would have appreciated if the above reference were done like
+so:
 
-I still do not know if we have a relative-path problem, how severe
-it would be if there is, or if it is fixable if we wanted to and
-how, though.
-
+ https://public-inbox.org/git/5adde732-173b-d24d-d23f-bb4d043076d7@gmail.com/
 
 Thanks.
-
