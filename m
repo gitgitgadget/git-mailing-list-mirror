@@ -7,177 +7,144 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 019731F4BD
-	for <e@80x24.org>; Sat,  5 Oct 2019 21:01:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 623511F4BD
+	for <e@80x24.org>; Sat,  5 Oct 2019 21:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726053AbfJEVBm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 17:01:42 -0400
-Received: from relay2-d.mail.gandi.net ([217.70.183.194]:50241 "EHLO
-        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725879AbfJEVBm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Oct 2019 17:01:42 -0400
-X-Originating-IP: 1.186.12.44
+        id S1725839AbfJEVKU (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 17:10:20 -0400
+Received: from relay11.mail.gandi.net ([217.70.178.231]:33405 "EHLO
+        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725789AbfJEVKU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Oct 2019 17:10:20 -0400
 Received: from localhost (unknown [1.186.12.44])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 62E4340003;
-        Sat,  5 Oct 2019 21:01:39 +0000 (UTC)
-Date:   Sun, 6 Oct 2019 02:31:27 +0530
+        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 5CD04100002;
+        Sat,  5 Oct 2019 21:10:18 +0000 (UTC)
+Date:   Sun, 6 Oct 2019 02:40:16 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Harish Karumuthil <harish2704@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] Feature: custom guitool commands can now have custom
- keyboard shortcuts
-Message-ID: <20191005210127.uinrgazj5ezyqftj@yadavpratyush.com>
-References: <01020153c22ab06b-e195b148-37cc-4f89-92f3-f4bed1915eb9-000000@eu-west-1.amazonses.com>
- <20160331164137.GA11150@gmail.com>
- <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com>
- <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com>
- <20191003214422.d4nocrxadxt47smg@yadavpratyush.com>
- <nycvar.QRO.7.76.6.1910041046000.46@tvgsbejvaqbjf.bet>
- <20191004120107.kpskplwhflnsamwu@yadavpratyush.com>
- <149a83fd40b71896b134b16c2b499ff472c6234e.camel@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] git-gui: add a readme
+Message-ID: <20191005211016.bsrnbwapyqvycygs@yadavpratyush.com>
+References: <20191004221052.23313-1-me@yadavpratyush.com>
+ <nycvar.QRO.7.76.6.1910052149490.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <149a83fd40b71896b134b16c2b499ff472c6234e.camel@gmail.com>
+In-Reply-To: <nycvar.QRO.7.76.6.1910052149490.46@tvgsbejvaqbjf.bet>
 User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/10/19 01:46AM, Harish Karumuthil wrote:
-> Hi All,
+Hi Johannes,
+
+On 05/10/19 09:56PM, Johannes Schindelin wrote:
+> Hi Pratyush,
 > 
-> From https://www.kernel.org/doc/html/v4.10/process/email-clients.html, I
-> understood that, my current email client ( that is gmail web ) is not good
-> for submitting patches. So I was tying to setup a mail client which is
-> compatible with `git send-mail`. But I was not able to get a satisfactory
-> result in that.
-
-You don't need to "set up" an email client with git-send-email. 
-git-send-email is an email client itself. Well, one which can only send 
-emails.
-
-So what you should do is run `git format-patch -o feature master..HEAD`, 
-assuming your feature branch is checked out. This will give you a set of 
-'.patch' files depending on how many commits you made in your branch in 
-the folder feature/. Then, you can run 
-
-  git send-email --to='Pratyush Yadav <me@yadavpratyush.com>' --cc='<git@vger.kernel.org>' feature/*.patch
-
-This will send all your patch files via email to me with the git list in 
-Cc. You can add multiple '--to' and '--cc' options to send it to 
-multiple people.
-
-Try sending the patches to yourself to experiment around with it.
-
-A pretty good tutorial to configuring and using git-send-email can be 
-found at [0]. And of course, read the man page.
-
-These instructions are for Linux, but you can probably do something 
-similar in Windows too (if you're using Windows that is).
- 
-> For now, I followed the instruction of Johannes Schindelin and submitted a
-> pull request . Please see https://github.com/gitgitgadget/git/pull/376
-
-You haven't sent '/submit' over there, so those emails aren't in the 
-list (and my inbox) yet. You need to comment with '/submit' (without the 
-quotes) to tell GitGitGadget to send your PR as email.
-
-But I see that Dscho has left a comment over there, so you should 
-probably address that first. You probably need to amend the commit, 
-force push, and then comment with '/submit'. But I'm not a 100% sure 
-because I haven't used GitHub PRs a lot.
- 
-> ---------
-> @ Pratyush: Regarding your comments,
+> On Sat, 5 Oct 2019, Pratyush Yadav wrote:
 > 
-> 
-> > A pretty nice way of doing it. But I would _really_ like it if there was
-> > an option in the "create tool" dialog to specify the shortcut. People of
-> > a gui tool shouldn't have to mess around with config files as much as
-> > possible.
-> 
-> I agree with this, But that may require some more profficiency in TCL/TK
-> programming which I don't have. This is the first time I am looking into a
-> TCL/TK source code.
-> Any way I will try to integrate the gui gradually in feature. But
-> unfortunatly, I may not be able to do that now.
-
-Please do whatever you can. I will try to add a patch on top of yours to 
-add the GUI option.
- 
-> > David has advocated inter-operability between git-gui and git-cola.
-> > While I personally don't know how many people actually use both the
-> > tools at the same time, it doesn't sound like a bad idea either.
+> > It is a good idea to have a readme so people finding the project can
+> > know more about it, and know how they can get involved.
 > >
-> > So, sharing shortcuts with git-cola would be nice. Of course, it would
-> > then mean that we would have to parse the config parameter before
-> > feeding them to `bind`. I don't suppose that should be something too
-> > complicated to do, but I admit I haven't looked too deeply into it.
+> > Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+> > ---
+> >
+> > I don't have much experience writing this kind of readme or
+> > documentation, so comments are appreciated. Please feel free to chime in
+> > with suggestions and things that can also be added.
+> >
+> >  README.md | 128 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 128 insertions(+)
+> >  create mode 100644 README.md
+> >
+> > diff --git a/README.md b/README.md
+> > new file mode 100644
+> > index 0000000..d76122d
+> > --- /dev/null
+> > +++ b/README.md
+> > @@ -0,0 +1,128 @@
+> > +# Git Gui - A graphical user interface for Git
 > 
-> IMHO, Using a uniform shortcut-key code/foramat for both application can be
-> considered as nice feature.
-> But, whether we should share common shortcut-scheme with both application is
-> a different question.
-> Currently, both apps don't have a common shortcut-scheme. So in this
-> situation, only sharing custom-tool's shortcut-scheme with both applications
-> doesn't look like a good  idea to me 
+> Why not Git GUI? "Git" is a name, "GUI" is an abbreviation, and the
+> convention is (at least as far as I can tell) to upcase abbreviations.
 
-Makes sense.
+Well, the _appname global variable is set to "Git Gui". But I don't mind 
+changing it to "GUI" either.
  
-> > Are you sure that is a good idea? I think we should at least make 
-> > sure
-> > we are not binding some illegal sequence, and if we are, we should warn
-> > the user about it. And a much more important case would be when a user
-> > over-writes a pre-existing shortcut for other commands like "commit",
-> > "reset", etc. In that case, the menu entires of those commands would
-> > still be labelled with the shortcut, but it won't actually work.
+> > +
+> > +Git Gui is a GUI for [git](https://git-scm.com/) written in Tcl/Tk. It allows
+> > +you to use the git source control management tools via a GUI. This includes
+>                   ^^^
 > 
-> I agree with you. It is an important point. After reading this, I checked
-> current status of these issues. What I found is given below.
+> I prefer to spell it as "Git", i.e. with an upper-case "G" because "Git"
+> is a name. Lower-case "git" would suggest the command-line executable to
+> me.
+
+Will fix.
+ 
+> > +staging, commiting, adding, pushing, etc. It can also be used as a blame
+> > +viewer, a tree browser, and a citool (make exactly one commit before exiting
+> > +and returning to shell). More details about git-gui can be found in its manual
+> > +page by either running `man git-gui`, or by visiting the [online manual
+> > +page](https://git-scm.com/docs/git-gui).
+> > +
+> > +Git Gui was initially written by Shawn O. Pearce, and is distributed with the
+> > +standard git installation.
+> > +
+> > +# Building and installing
+> > +
+> > +Most of Git Gui is written in Tcl, so there is not much compilation involved.
 > 
-> 1. When user provides an invalid sequence for the shortcut, it will cuase the
-> entire gitgui application to crash at the startup
+> "Most"? Are there parts that are not written in Tcl?
+
+Well, there is the Makefile, which is a part of the project and not in 
+Tcl. Also, if I open GitHub's "language stat bar" (the colored bar below 
+"commits", "branches", "releases", etc), it says 96.4% Tcl, 2.7% 
+Makefile, and 0.9% Other.
+
+So _technically_ there is a small part not in Tcl.
+ 
+> As far as I can tell, _no_ compilation is involved. Just a couple of
+> substitutions, e.g. the version number.
+
+Yes, correct. I suppose that was bad wording. Will fix.
+ 
+> > +Still, some things do need to be done, so you do need to "build" it.
+> > +
+> > +You can build Git Gui using:
+> > +
+> > +```
+> > +make
+> > +```
+> > +
+> > +And then install it using:
+> > +
+> > +```
+> > +make install
+> > +```
+> > +
+> > +You probably need to have root/admin permissions to install.
+> > +
+> > +# Contributing
+> > +
+> > +The project is currently maintained by Pratyush Yadav over at
+> > +https://github.com/prati0100/git-gui. Even though the project is hosted at
+> > +GitHub, the development does not happen over GitHub Issues and Pull Requests.
+> > +Instead, an email based workflow is used. The git mailing list
+> > +[git@vger.kernel.org](mailto:git@vger.kernel.org) is where the patches are
+> > +discussed and reviewed.
 > 
-> 2. When user tries to overwrite existing shortcut, it will not have any
-> effect. Because, built in shortcuts will overwrite user provided one. But
-> still, wrong menu accelerator label will persist for custom tools
+> You might want to accompany this `README.md` with a
+> `.github/PULL_REQUEST_TEMPLATE.md` that explains this, and discourages
+> contributors from opening PRs (mind, some contributors will not even
+> read this, let alone delete it nor refrain from opening PRs, but most
+> contributors will read it and avoid unnecessary work).
 
-One point I forgot to mention earlier was that I'm honestly not a big 
-fan of separating the binding and accelerator label. I understand that 
-you might not have the time to do this, but I think it is still worth 
-mentioning. Maybe I will implement something like that over your patch. 
-But it would certainly be nice if you can figure it out :).
+Will do as a follow-up patch.
 
-Either ways, detecting an existing shortcut is pretty easy. The `bind` 
-man page [1] says:
-
-  If sequence is specified without a script, then the script currently 
-  bound to sequence is returned, or an empty string is returned if there 
-  is no binding for sequence.
-
-So you can use this to find out if there is a binding conflict, and warn 
-the user.
-
-> Since #1 is a serious issue, I tried to find out the function which does the
-> keycode validation, but I haven't succeded till now. ( I found the C function
-> name  which is "TkStringToKeysym" from TK source, but I couldn't find its TCL
-> binding ). It will be helpful if any one can help me on this.
-
-I really think you shouldn't dive around in the C parts of Tcl. I 
-haven't looked too deeply into this, but you can probably wrap your bind 
-calls in `catch` [2] and handle errors from there. Again, I haven't 
-tried actually doing this, so you do need to check first.
-
-You can find examples of how to use `catch` in our codebase. Just search 
-for it.
-
-[0] https://www.freedesktop.org/wiki/Software/PulseAudio/HowToUseGitSendEmail/
-[1] https://www.tcl.tk/man/tcl8.4/TkCmd/bind.htm
-[2] https://www.tcl.tk/man/tcl8.4/TclCmd/catch.htm
+Thanks for the review.
 
 -- 
 Regards,
