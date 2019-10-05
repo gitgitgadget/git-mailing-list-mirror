@@ -2,166 +2,286 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B62871F4BE
-	for <e@80x24.org>; Sat,  5 Oct 2019 19:49:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92CC31F4BD
+	for <e@80x24.org>; Sat,  5 Oct 2019 19:56:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729674AbfJETrB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 15:47:01 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35091 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728245AbfJETrB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Oct 2019 15:47:01 -0400
-Received: by mail-wr1-f68.google.com with SMTP id v8so10860415wrt.2
-        for <git@vger.kernel.org>; Sat, 05 Oct 2019 12:46:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WWshh0A7OkZZ8eCjbO2lSgq3sIte7WuMIJagWRcoEv0=;
-        b=lQI20REFqmsm74GE7AHfUtNjts9Sl0e3pn3/NQ6kCkp/NSbvZYEhDdDtkmM07ZgxXd
-         UM9slSgsO3sHSu5DWWPy+DFfslKCzbNxYKGXKtdp8w6a3o+czlDyuw5pqs3jjT+lPE29
-         zqoRJKxBHfwkV2PR503SbDZ47xFEKj0fUjcXECQuidlFRzkw/ozj+HFFd80dGRoONYRR
-         Fxzswqt9REm/h9zCMJu6wS1FtCCBugmBhBGShKVYRP5mOUZ2GSgugicC3oWnTyRSmBse
-         UjX7Q/5uU79KEHE7XhgffsiAS5GmfOs+ECKaNjlV/78cIlsFbfE+wfU0LIOQT/Bkm2O1
-         ukjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=WWshh0A7OkZZ8eCjbO2lSgq3sIte7WuMIJagWRcoEv0=;
-        b=S4XrFzxCp4ZrraFSWxW5Ax6sIOHd9VYjVdvVoRx/FzNfUuhfOwuta2iBdmIOKj3PJM
-         l7/p21cl5CHNnhCnDkhsK66h8qXBAzfw6/pf6xkTpj1YZnxNoid62pgixvfo+wnGS4If
-         sLaUNA/G5XHeBWatFLM4Tis3Jx+t4ZXJyuV30GyOXfHNeden90UmcmD9RbhEb10lilxX
-         plDecU9X5O+lILCnI8OqHqPd8MVOjwPbs0hETdTvQ5kaHQUTJ36xRwo+QuK6j73URFxE
-         81VmoKf7lzVM2iiFjTEjrUrJWKx3rKsAEsU7JaY044T5KToGDDwYepspQHiBVSpjAvfu
-         IUIA==
-X-Gm-Message-State: APjAAAUuq3SU4ShyzBuujf9ssYguuvHtBdHyJpCX9GKmgpOJUSqKBdZ3
-        b/lfykyTuabM/GbxePxfqyziIA6N
-X-Google-Smtp-Source: APXvYqxEnZduUxylpYyyrfme1EWTKM8HcJ+2FZ1LHkqXo8eWNjY7tysjtd3rh3puaah7Hj3ViGfvMQ==
-X-Received: by 2002:adf:d1a4:: with SMTP id w4mr13752447wrc.331.1570304816675;
-        Sat, 05 Oct 2019 12:46:56 -0700 (PDT)
-Received: from [192.168.2.240] (host-92-22-28-119.as13285.net. [92.22.28.119])
-        by smtp.gmail.com with ESMTPSA id a7sm21588848wra.43.2019.10.05.12.46.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 05 Oct 2019 12:46:56 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (Oct 2019, #01; Thu, 3)
-To:     Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <xmqqsgoabes8.fsf@gitster-ct.c.googlers.com>
- <972f4674-ed00-7113-24eb-f59f1b751690@gmail.com>
- <CABPp-BE+D-GFJaucgCCsBA8E7nQAxc0vNE92HaCpOTQrUp=mPA@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <a462c85b-5ae9-8b3d-27ee-00ba081d8af1@gmail.com>
-Date:   Sat, 5 Oct 2019 20:46:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.0
+        id S1729509AbfJET4v (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 15:56:51 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52975 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727980AbfJET4v (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Oct 2019 15:56:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570305407;
+        bh=VuUbn3Jngrm0NJiQ93nxrE2dO8nETYPfjobnIZjX1tM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=BqCLJ7E44TZIWtw1R8j9TrNpnGbGkDTq5NllKlDr781PLhzPmXZ5kvYglio283NBh
+         Sa/no/96E7pGlS12Q0bXQL0fsypk2mAqcMsD4DkfZXSqcxeaXDYaKo1jCjCGsbkQLN
+         o7fo4idKrAw4qa6OFA5rCWFAl/b08mHgRQUH5pRY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mq2jC-1hmPDp20BO-00nBeR; Sat, 05
+ Oct 2019 21:56:47 +0200
+Date:   Sat, 5 Oct 2019 21:56:31 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Pratyush Yadav <me@yadavpratyush.com>
+cc:     git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] git-gui: add a readme
+In-Reply-To: <20191004221052.23313-1-me@yadavpratyush.com>
+Message-ID: <nycvar.QRO.7.76.6.1910052149490.46@tvgsbejvaqbjf.bet>
+References: <20191004221052.23313-1-me@yadavpratyush.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BE+D-GFJaucgCCsBA8E7nQAxc0vNE92HaCpOTQrUp=mPA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:u+KqGw008xL0+neh6wSN9ywlVXn8VffZ4uEXrx2ahH3RLQRczBm
+ c9jpi37u4OyU4of0RPzu4iktkGH7lNSsRoG3iuPHVT5jvDIG5DqqbhEKYapOSx5i7nlV5fy
+ ItKDiqXB/f+zWiH1pJHTnErE4vWe3xpa9DRhN6Ek1jQhhP+UZGrYI3L+DVj22yL6ZVoIONM
+ 0I9OqaFfkO1lgLswVFtmw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sEFSvWHjBJ8=:jIt+t9VcIZAWWC9jTpmGZU
+ pmOKmDeneyKP7ZJz+jTTaKLwcv2C32E1b9nwe8w7hNnCsqiu2Ji1vt0FuIK0LljL8BJnpOnp/
+ KBryZ0pX6DqtJ64kYwbqbdhBOae0/A+zPngxpWeB4RG7EIgZHyneY0KvvviBWsAADOAcvIfeg
+ jXl/3s3FW4If6OFXPEQrsXi0EWhl9vrs9flQhrjpIP0zJYh11zEiDKhgIg7t6dm7Mi0qSqFRi
+ j9PSSKPpLZa6MNFcAdcRJiytIZldf9o4fiNym2Q2J3MmADYUcOgFEoL237AnH+Nki+XP0I7Xr
+ n8UYYhFY8mVBbonnTQyRMIkRQJzK/ygUzsYTkwBi2/J80F+np9AAVDzF7aYx3NxI9LEtdPtwL
+ BEKHMGBUA2nbNEUJkCIISScW0V8Xz842Tu4x962qm8aX/XieAlKE/19PuUV5xuN1rdX1OYtww
+ nje4dSqMN/1L7yIgGyuI4l9rA/UDWDtCQQust92+3MUBqPHYYnZF32cYMbMoMq3CsE3Obo2Os
+ qF1Micf0pSo+KmuSu85cf2NDSdDl+P0qpjmqQRU9/j+2FR83XyqKo9qlkk4zCXeAHymT16yt9
+ 2xVU6hUJQNegLcX6zvSqQ3rGCZ8ReLaeAlGKMv70LbTYYWYx2C/kCC9viHeG7E4K7clvCdM5d
+ 0AJy6VGx9wIi2VUnAj0XsurqVmNdcNBsc1t7ZEej/sVsUzQBdO58AKMPh6cWoPBavM+apdhfZ
+ qOFczqP4Q8T67+kbTOWeDyAlsyCW1i0+eCUYtMIWIKBfW/uvskr6tw6oorQo7iLQCqKoN4nnN
+ yy0tqUz28CSv9rpnHeHBRkTFAMBTFNR2IwFV2dVlRhtQxWxaxJM4UMBoCRZCmcJOVKax+1R5l
+ IJv1loqctfNj6iTn+D4UulAxgoGh/DgMNSKNZeFANFle6Un1VBxEPss6ZCI/9X0AoK4wLELEt
+ L0Dfi8UO4MPefZe72AfGgpNKZt7o4OqDu4TvteFlOdEQe6h5XRvdGGI9wLIhXXEixtVFbUy/O
+ aFucleY7ue/ifGrYehE+80PfIoloTI64eaZ6p3yO4nplTbGG+hG+aPfyJ0nAjojO/871qtMMf
+ eRIqZBZzDgSSr8Yssu4f97v6+mQHLMjA1U/rFj+oHDSBJTUzNxSOOi89o0eWlsGKiFUJaXPsb
+ Zcsok4YUKRKep+Rb5/jfQ+oillCptq+XV4dZy+orvT4VaJ3OQiYoP5t+8+pdL3lYZ1yT/0kxE
+ 7R14MTgnduQ16rdMWF5QJRpcgpH9O7adtYqqh1h6LZwgYqtAt72Qbi379eM4=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah
+Hi Pratyush,
 
-On 05/10/2019 01:40, Elijah Newren wrote:
-> On Fri, Oct 4, 2019 at 4:49 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->> Hi Junio
->>
->> On 03/10/2019 06:04, Junio C Hamano wrote:
->>> Here are the topics that have been cooking.  Commits prefixed with
->>> '-' are only in 'pu' (proposed updates) while commits prefixed with
->>> '+' are in 'next'.  The ones marked with '.' do not appear in any of
->>> the integration branches, but I am still holding onto them.
->>> [...]
->>>
->>>
->>> * pw/rebase-i-show-HEAD-to-reword (2019-08-19) 3 commits
->>>    - sequencer: simplify root commit creation
->>>    - rebase -i: check for updated todo after squash and reword
->>>    - rebase -i: always update HEAD before rewording
->>>    (this branch is used by ra/rebase-i-more-options.)
->>>
->>>    "git rebase -i" showed a wrong HEAD while "reword" open the editor.
->>>
->>>    Will merge to 'next'.
->>
->> That's great, thanks
->>
->>>
->>> * ra/rebase-i-more-options (2019-09-09) 6 commits
->>>    - rebase: add --reset-author-date
->>>    - rebase -i: support --ignore-date
->>>    - sequencer: rename amend_author to author_to_rename
->>>    - rebase -i: support --committer-date-is-author-date
->>>    - sequencer: allow callers of read_author_script() to ignore fields
->>>    - rebase -i: add --ignore-whitespace flag
->>>    (this branch uses pw/rebase-i-show-HEAD-to-reword.)
->>>
->>>    "git rebase -i" learned a few options that are known by "git
->>>    rebase" proper.
->>>
->>>    Is this ready for 'next'.
->>
->> Nearly, but not quite I think cf [1]. Also I'm still not convinced that
->> having different behaviors for --ignore-whitespace depending on the
->> backend is going to be helpful but maybe they are close enough not to
->> matter too much in practice [2].
-> 
-> Sorry I should have chimed in sooner; I can speak to the second point.
-> I would say that in practice it doesn't matter a lot; in most cases
-> the two overlap.  Both am's --ignore-whitespace and merge's
-> -Xignore-space-change are buggy (in different ways) and should be
-> fixed, but I'd consider them both to be buggy in edge cases.  I
-> recommended earlier this summer that Rohit submit the patches without
-> first attempting to fix apply or xdiff, and kept in my TODO list
-> that'd I'd go in and fix xdiff later if Rohit didn't have extra time
-> for it.  I did a little digging back then to find out the differences
-> and suggested some text to use to explain them and to argue that they
-> shouldn't block this feature:
-> 
-> """
-> am's --ignore-space-change (an alias for am's --ignore-whitespace; see
-> git-apply's description of those two flags) not only share the same
-> name with diff's --ignore-space-change and merge's
-> -Xignore-space-change, but the similarity in naming appears to have
-> been intentional with am's --ignore-space-change and merge's
-> -Xignore-space-change being designed to have the same functionality
-> (see e.g. the commit messages for f008cef4abb2 ("Merge branch
-> 'jc/apply-ignore-whitespace'", 2014-06-03) and 4e5dd044c62f
-> ("merge-recursive: options to ignore whitespace changes",
-> 2010-08-26)).  For the most part, these options do provide the same
-> behavior.  However, there are some edge cases where both apply's
-> --ignore-space-change and merge's -Xignore-space-change fall short of
-> optimal behavior, and in different ways.  In particular,
-> --ignore-space-change for apply will handle whitespace changes in the
-> context region but not in the region the other side modified, and
-> -Xignore-space-change will delete whitespace changes even when the
-> other side had no changes (thus treating both sides as unmodified).
-> Fixing these differences in edge cases is left for future work; this
-> patch simply wires interactive rebase to also understand
-> --ignore-whitespace by translating it to -Xignore-space-change.
-> """
-> 
-> I've got another email with even more detail if folks need it.
+On Sat, 5 Oct 2019, Pratyush Yadav wrote:
 
-Thanks for clarifying that, it sounds like it shouldn't be a problem in 
-practice then (especially if you're planning some improvements)
+> It is a good idea to have a readme so people finding the project can
+> know more about it, and know how they can get involved.
+>
+> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+> ---
+>
+> I don't have much experience writing this kind of readme or
+> documentation, so comments are appreciated. Please feel free to chime in
+> with suggestions and things that can also be added.
+>
+>  README.md | 128 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 128 insertions(+)
+>  create mode 100644 README.md
+>
+> diff --git a/README.md b/README.md
+> new file mode 100644
+> index 0000000..d76122d
+> --- /dev/null
+> +++ b/README.md
+> @@ -0,0 +1,128 @@
+> +# Git Gui - A graphical user interface for Git
 
-Best Wishes
+Why not Git GUI? "Git" is a name, "GUI" is an abbreviation, and the
+convention is (at least as far as I can tell) to upcase abbreviations.
 
-Phillip
+> +
+> +Git Gui is a GUI for [git](https://git-scm.com/) written in Tcl/Tk. It =
+allows
+> +you to use the git source control management tools via a GUI. This incl=
+udes
+                  ^^^
+
+I prefer to spell it as "Git", i.e. with an upper-case "G" because "Git"
+is a name. Lower-case "git" would suggest the command-line executable to
+me.
+
+> +staging, commiting, adding, pushing, etc. It can also be used as a blam=
+e
+> +viewer, a tree browser, and a citool (make exactly one commit before ex=
+iting
+> +and returning to shell). More details about git-gui can be found in its=
+ manual
+> +page by either running `man git-gui`, or by visiting the [online manual
+> +page](https://git-scm.com/docs/git-gui).
+> +
+> +Git Gui was initially written by Shawn O. Pearce, and is distributed wi=
+th the
+> +standard git installation.
+> +
+> +# Building and installing
+> +
+> +Most of Git Gui is written in Tcl, so there is not much compilation inv=
+olved.
+
+"Most"? Are there parts that are not written in Tcl?
+
+As far as I can tell, _no_ compilation is involved. Just a couple of
+substitutions, e.g. the version number.
+
+> +Still, some things do need to be done, so you do need to "build" it.
+> +
+> +You can build Git Gui using:
+> +
+> +```
+> +make
+> +```
+> +
+> +And then install it using:
+> +
+> +```
+> +make install
+> +```
+> +
+> +You probably need to have root/admin permissions to install.
+> +
+> +# Contributing
+> +
+> +The project is currently maintained by Pratyush Yadav over at
+> +https://github.com/prati0100/git-gui. Even though the project is hosted=
+ at
+> +GitHub, the development does not happen over GitHub Issues and Pull Req=
+uests.
+> +Instead, an email based workflow is used. The git mailing list
+> +[git@vger.kernel.org](mailto:git@vger.kernel.org) is where the patches =
+are
+> +discussed and reviewed.
+
+You might want to accompany this `README.md` with a
+`.github/PULL_REQUEST_TEMPLATE.md` that explains this, and discourages
+contributors from opening PRs (mind, some contributors will not even
+read this, let alone delete it nor refrain from opening PRs, but most
+contributors will read it and avoid unnecessary work).
+
+Ciao,
+Johannes
+
+> +
+> +More information about the git mailing list and instructions to subscri=
+be can
+> +be found [here](https://git.wiki.kernel.org/index.php/GitCommunity).
+> +
+> +## Sending your changes
+> +
+> +Since the development happens over email, you need to send in your comm=
+its in
+> +text format. Commits can be converted to emails via the two tools provi=
+ded by
+> +git: `git-send-email` and `git-format-patch`.
+> +
+> +If you are sending multiple patches, it is recommended to include a cov=
+er
+> +letter. A cover letter is an email explaining in brief what the series =
+is
+> +supposed to do. A cover letter template can be generated by passing
+> +`--cover-letter` to `git-format-patch`.
+> +
+> +After you send your patches, you might get a review suggesting some cha=
+nges.
+> +Make those changes, and re-send your patch(es) in reply to the first pa=
+tch of
+> +your initial version. Also please mention the version of the patch. Thi=
+s can be
+> +done by passing `-v X` to `git-format-patch`, where 'X' is the version =
+number
+> +of the patch(es).
+> +
+> +### Using git-send-email
+> +
+> +You can use `git-send-email` to send patches via email. A pretty good g=
+uide to
+> +configuring and using `git-send-email` can be found
+> +[here](https://www.freedesktop.org/wiki/Software/PulseAudio/HowToUseGit=
+SendEmail/)
+> +
+> +### Using your email client
+> +
+> +If your email client supports sending mbox format emails, you can use
+> +`git-format-patch` to get an mbox file for each commit, and then send t=
+hem. If
+> +there is more than one patch in the series, then all patches after the =
+first
+> +patch (or the cover letter) need to be sent as replies to the first.
+> +`git-send-email` does this by default.
+> +
+> +### Using GitGitGadget
+> +
+> +Since some people prefer a GitHub pull request based workflow, they can=
+ use
+> +[GitGitGadget](https://gitgitgadget.github.io/) to send in patches. The=
+ tool
+> +was originally written for sending patches to the Git project, but it n=
+ow also
+> +supports sending patches for git-gui.
+> +
+> +Instructions for using GitGitGadget to send git-gui patches, courtesy o=
+f
+> +Johannes Schindelin:
+> +
+> +If you don't already have a fork of the [git/git](https://github.com/gi=
+t/git)
+> +repo, you need to make one. Then clone your fork:
+> +
+> +```
+> +git clone https://github.com/<your-username>/git
+> +```
+> +
+> +Then add GitGitGadget as a remote:
+> +
+> +```
+> +git remote add gitgitgadget https://github.com/gitgitgadget/git
+> +```
+> +
+> +Then fetch the git-gui branch:
+> +
+> +```
+> +git fetch gitgitgadget git-gui/master
+> +```
+> +
+> +Then create a new branch based on git-gui/master:
+> +
+> +```
+> +git checkout -b <your-branch-name> git-gui/master
+> +```
+> +
+> +Make whatever commits you need to, push them to your fork, and then hea=
+d over
+> +to https://github.com/gitgitgadget/git/pulls and open a Pull Request ta=
+rgeting
+> +git-gui/master.
+> +
+> +GitGitGadget will welcome you with a (hopefully) helpful message.
+> +
+> +## Signing off
+> +
+> +You need to sign off your commits before sending them to the list. You =
+can do
+> +that by passing the `-s` option to `git-commit`. You can also use the "=
+Sign
+> +Off" option in Git Gui.
+> +
+> +A sign-off is a simple 'Signed-off-by: A U Thor \<author@example.com\>'=
+ line at
+> +the end of the commit message, after your explanation of the commit.
+> +
+> +A sign-off means that you are legally allowed to send the code, and it =
+serves
+> +as a certificate of origin. More information can be found at
+> +[developercertificate.org](https://developercertificate.org/).
+> --
+> 2.21.0
+>
+>
