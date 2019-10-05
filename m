@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B8E81F4BD
-	for <e@80x24.org>; Sat,  5 Oct 2019 21:12:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFA541F4BD
+	for <e@80x24.org>; Sat,  5 Oct 2019 21:12:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726107AbfJEVMU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 17:12:20 -0400
+        id S1726089AbfJEVMT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 17:12:19 -0400
 Received: from injection.crustytoothpaste.net ([192.241.140.119]:36302 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726100AbfJEVMU (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 5 Oct 2019 17:12:20 -0400
+        by vger.kernel.org with ESMTP id S1725789AbfJEVMS (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 5 Oct 2019 17:12:18 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 32D5161C63;
-        Sat,  5 Oct 2019 21:12:19 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E228161C63;
+        Sat,  5 Oct 2019 21:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1570309939;
-        bh=R1peGq3gHTVqQyCMrxtvF/BhGK1RjhCO4LktLfzNJmA=;
+        s=default; t=1570309937;
+        bh=oj6Hsyz93EL/63WPIe805Aute2VrMB6kGlSkslSoLTY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=VIPg7Ool23uiJESTzFWjcnQZb79HBGaQEAkAFLTmAdGt9zUd7TJE/+7pWw37XOYdX
-         2hyzMkeQjzGanfZim1TzoacMyVR5qBkHWYsaM/67z4rK/x+6YU8GVYLORh3BwgUVKO
-         eATX4PSkedWvuGmOy2C7/U/uz3qTzYCO8bMkw6oBIwAjRdZ6BUXrFXOWPRPMJT7N+S
-         NcNU69JtPnbMIAIYAOeKg5ZUBD7dXR3Xot0OnA8QSReM6XuaGrwMJMFYjYJ9Ft62AJ
-         6bhZ1ZaWjY8QtKEcgp9L4xdPPO9XH9Ae22nhdb7nHzTOMxubv20eE1FUlZhJOrixJH
-         O+chE331FYTsOuql+2UgiB5LxdwLKLQWIkOOUHlRM2I5dSwjwE+Coyw5abuEdchBuQ
-         AcgMa0va+fh8jogxu++pRAldYMRAcJFGXjP6+6NI8w5z7plfamvjmPsFFcYBzAQdFH
-         P7Do+sdFOtzYAk1DSBjCUaRuWCWfD42u7gwGm6lDIEzvNOm/Kj7
+        b=zEzx1uLtK38HIeB90jmRcLVeycMmPfowj4AliP27wxkGzHYhyPYYyTrkmpwOKuxU7
+         C+OpRqpfOOG3wGwRyNvDR9ZHeMDu1ZmL+W4oNx4tsOHmySrp+awu/vDjlKslyC8VZK
+         Hj7rk6Y98yqMJH3DyHvkO5OmTnSvfPevaCGLQvFejeYGTJOUnjfMFJz0f0vMSuHmud
+         uaFqvSkopB6A1wdV+X565T2yzvcaSrLyPX/dLpIeoEpr+jOASPM57/5LxCzj3sAgQ5
+         rv79ANzD9Mi5VKbVCASK1xSIutfsfrVINuX98Q0AN8LAveSUJs6O1giWuJgFbIezM9
+         n82lwSpAo+iaz4YSFbkoGYtVA6liLrsKizzyyLLJ5RYeA2ELALcOLkeI+8ZuiX9hxs
+         qV0EKT45ai3RPb5Ye5Rurx7DTsKevNrKeHRJcE3rk4FpxlzXfPcyIjGkGJ3rIM3VLc
+         bPKc9+PTSCQ/nyADFJuSWAgXj6xjCMonhpRtmUezu/e9B4GNGnz
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Stefan Beller <stefanbeller@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 07/15] t4011: abstract away SHA-1-specific constants
-Date:   Sat,  5 Oct 2019 21:12:01 +0000
-Message-Id: <20191005211209.18237-8-sandals@crustytoothpaste.net>
+Subject: [PATCH 03/15] rev-parse: add an --object-format option
+Date:   Sat,  5 Oct 2019 21:11:57 +0000
+Message-Id: <20191005211209.18237-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.23.0.700.g56cf767bdb
 In-Reply-To: <20191005211209.18237-1-sandals@crustytoothpaste.net>
 References: <20191005211209.18237-1-sandals@crustytoothpaste.net>
@@ -52,105 +52,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes variables for object IDs instead of
-using hard-coded hashes.
+Add an option to print the object format used for input, output, or
+storage. This allows shell scripts to discover the hash algorithm in
+use.
+
+Since the transition plan allows for multiple input algorithms, document
+that we may provide multiple results for input, and the format that the
+results may take. While we don't support this now, documenting it early
+means that script authors can future-proof their scripts for when we do.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4011-diff-symlink.sh | 31 +++++++++++++++++++------------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ Documentation/git-rev-parse.txt |  7 +++++++
+ builtin/rev-parse.c             | 11 +++++++++++
+ t/t1500-rev-parse.sh            | 15 +++++++++++++++
+ 3 files changed, 33 insertions(+)
 
-diff --git a/t/t4011-diff-symlink.sh b/t/t4011-diff-symlink.sh
-index 5ae19b987d..b6934da266 100755
---- a/t/t4011-diff-symlink.sh
-+++ b/t/t4011-diff-symlink.sh
-@@ -10,10 +10,12 @@ test_description='Test diff of symlinks.
- . "$TEST_DIRECTORY"/diff-lib.sh
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index e72d332b83..8a72190940 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -274,6 +274,13 @@ print a message to stderr and exit with nonzero status.
+ 	Show the path to the shared index file in split index mode, or
+ 	empty if not in split-index mode.
  
- test_expect_success 'diff new symlink and file' '
--	cat >expected <<-\EOF &&
-+	symlink=$(git rev-parse --short \
-+		$(printf xyzzy | git hash-object --stdin)) &&
-+	cat >expected <<-EOF &&
- 	diff --git a/frotz b/frotz
- 	new file mode 120000
--	index 0000000..7c465af
-+	index 0000000..$symlink
- 	--- /dev/null
- 	+++ b/frotz
- 	@@ -0,0 +1 @@
-@@ -21,7 +23,7 @@ test_expect_success 'diff new symlink and file' '
- 	\ No newline at end of file
- 	diff --git a/nitfol b/nitfol
- 	new file mode 100644
--	index 0000000..7c465af
-+	index 0000000..$symlink
- 	--- /dev/null
- 	+++ b/nitfol
- 	@@ -0,0 +1 @@
-@@ -46,10 +48,10 @@ test_expect_success 'diff unchanged symlink and file'  '
++--object-format[=(storage|input|output)]::
++	Show the object format (hash algorithm) used for the repository
++	for storage inside the `.git` directory, input, or output. For
++	input, multiple algorithms may be printed, space-separated.
++	If not specified, the default is "storage".
++
++
+ Other Options
+ ~~~~~~~~~~~~~
+ 
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index f8bbe6d47e..8036219921 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -918,6 +918,17 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				show_datestring("--min-age=", arg);
+ 				continue;
+ 			}
++			if (opt_with_value(arg, "--object-format", &arg)) {
++				const char *val = arg ? arg : "storage";
++
++				if (strcmp(val, "storage") &&
++				    strcmp(val, "input") &&
++				    strcmp(val, "output"))
++					die("unknown mode for --object-format: %s",
++					    arg);
++				puts(the_hash_algo->name);
++				continue;
++			}
+ 			if (show_flag(arg) && verify)
+ 				die_no_single_rev(quiet);
+ 			continue;
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 01abee533d..fb3d81df4c 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -59,6 +59,7 @@ test_rev_parse () {
+ ROOT=$(pwd)
+ 
+ test_expect_success 'setup' '
++	test_oid_init &&
+ 	mkdir -p sub/dir work &&
+ 	cp -R .git repo.git
+ '
+@@ -131,6 +132,20 @@ test_expect_success 'rev-parse --is-shallow-repository in non-shallow repo' '
+ 	test_cmp expect actual
  '
  
- test_expect_success 'diff removed symlink and file' '
--	cat >expected <<-\EOF &&
-+	cat >expected <<-EOF &&
- 	diff --git a/frotz b/frotz
- 	deleted file mode 120000
--	index 7c465af..0000000
-+	index $symlink..0000000
- 	--- a/frotz
- 	+++ /dev/null
- 	@@ -1 +0,0 @@
-@@ -57,7 +59,7 @@ test_expect_success 'diff removed symlink and file' '
- 	\ No newline at end of file
- 	diff --git a/nitfol b/nitfol
- 	deleted file mode 100644
--	index 7c465af..0000000
-+	index $symlink..0000000
- 	--- a/nitfol
- 	+++ /dev/null
- 	@@ -1 +0,0 @@
-@@ -90,9 +92,11 @@ test_expect_success 'diff identical, but newly created symlink and file' '
- '
- 
- test_expect_success 'diff different symlink and file' '
--	cat >expected <<-\EOF &&
-+	new=$(git rev-parse --short \
-+		$(printf yxyyz | git hash-object --stdin)) &&
-+	cat >expected <<-EOF &&
- 	diff --git a/frotz b/frotz
--	index 7c465af..df1db54 120000
-+	index $symlink..$new 120000
- 	--- a/frotz
- 	+++ b/frotz
- 	@@ -1 +1 @@
-@@ -101,7 +105,7 @@ test_expect_success 'diff different symlink and file' '
- 	+yxyyz
- 	\ No newline at end of file
- 	diff --git a/nitfol b/nitfol
--	index 7c465af..df1db54 100644
-+	index $symlink..$new 100644
- 	--- a/nitfol
- 	+++ b/nitfol
- 	@@ -1 +1 @@
-@@ -137,14 +141,17 @@ test_expect_success SYMLINKS 'setup symlinks with attributes' '
- '
- 
- test_expect_success SYMLINKS 'symlinks do not respect userdiff config by path' '
--	cat >expect <<-\EOF &&
-+	file=$(git rev-parse --short $(git hash-object file.bin)) &&
-+	link=$(git rev-parse --short \
-+		$(printf file.bin | git hash-object --stdin)) &&
-+	cat >expect <<-EOF &&
- 	diff --git a/file.bin b/file.bin
- 	new file mode 100644
--	index 0000000..d95f3ad
-+	index 0000000..$file
- 	Binary files /dev/null and b/file.bin differ
- 	diff --git a/link.bin b/link.bin
- 	new file mode 120000
--	index 0000000..dce41ec
-+	index 0000000..$link
- 	--- /dev/null
- 	+++ b/link.bin
- 	@@ -0,0 +1 @@
++test_expect_success 'rev-parse --object-format in repo' '
++	echo "$(test_oid algo)" >expect &&
++	git rev-parse --object-format >actual &&
++	test_cmp expect actual &&
++	git rev-parse --object-format=storage >actual &&
++	test_cmp expect actual &&
++	git rev-parse --object-format=input >actual &&
++	test_cmp expect actual &&
++	git rev-parse --object-format=output >actual &&
++	test_cmp expect actual &&
++	test_must_fail git rev-parse --object-format=squeamish-ossifrage 2>err &&
++	grep "unknown mode for --object-format: squeamish-ossifrage" err
++'
++
+ test_expect_success 'showing the superproject correctly' '
+ 	git rev-parse --show-superproject-working-tree >out &&
+ 	test_must_be_empty out &&
