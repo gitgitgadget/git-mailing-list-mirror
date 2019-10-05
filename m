@@ -7,126 +7,42 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 623511F4BD
-	for <e@80x24.org>; Sat,  5 Oct 2019 21:10:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4AD31F4BD
+	for <e@80x24.org>; Sat,  5 Oct 2019 21:11:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725839AbfJEVKU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 17:10:20 -0400
-Received: from relay11.mail.gandi.net ([217.70.178.231]:33405 "EHLO
-        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725789AbfJEVKU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Oct 2019 17:10:20 -0400
+        id S1725852AbfJEVLk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 17:11:40 -0400
+Received: from relay5-d.mail.gandi.net ([217.70.183.197]:52353 "EHLO
+        relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725789AbfJEVLj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Oct 2019 17:11:39 -0400
+X-Originating-IP: 1.186.12.44
 Received: from localhost (unknown [1.186.12.44])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 5CD04100002;
-        Sat,  5 Oct 2019 21:10:18 +0000 (UTC)
-Date:   Sun, 6 Oct 2019 02:40:16 +0530
+        by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id C439B1C0002;
+        Sat,  5 Oct 2019 21:11:36 +0000 (UTC)
+Date:   Sun, 6 Oct 2019 02:41:34 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] git-gui: add a readme
-Message-ID: <20191005211016.bsrnbwapyqvycygs@yadavpratyush.com>
+Message-ID: <20191005211134.fkuwvuztck2k3heu@yadavpratyush.com>
 References: <20191004221052.23313-1-me@yadavpratyush.com>
- <nycvar.QRO.7.76.6.1910052149490.46@tvgsbejvaqbjf.bet>
+ <CAKPyHN0ERLroxwPebVrXJNa3pMA3Uxv-vHbvKAhSB52xRcS=oA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1910052149490.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <CAKPyHN0ERLroxwPebVrXJNa3pMA3Uxv-vHbvKAhSB52xRcS=oA@mail.gmail.com>
 User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
-
-On 05/10/19 09:56PM, Johannes Schindelin wrote:
-> Hi Pratyush,
-> 
-> On Sat, 5 Oct 2019, Pratyush Yadav wrote:
-> 
-> > It is a good idea to have a readme so people finding the project can
-> > know more about it, and know how they can get involved.
-> >
-> > Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
-> > ---
-> >
-> > I don't have much experience writing this kind of readme or
-> > documentation, so comments are appreciated. Please feel free to chime in
-> > with suggestions and things that can also be added.
-> >
-> >  README.md | 128 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 128 insertions(+)
-> >  create mode 100644 README.md
-> >
-> > diff --git a/README.md b/README.md
-> > new file mode 100644
-> > index 0000000..d76122d
-> > --- /dev/null
-> > +++ b/README.md
-> > @@ -0,0 +1,128 @@
-> > +# Git Gui - A graphical user interface for Git
-> 
-> Why not Git GUI? "Git" is a name, "GUI" is an abbreviation, and the
-> convention is (at least as far as I can tell) to upcase abbreviations.
-
-Well, the _appname global variable is set to "Git Gui". But I don't mind 
-changing it to "GUI" either.
- 
-> > +
-> > +Git Gui is a GUI for [git](https://git-scm.com/) written in Tcl/Tk. It allows
-> > +you to use the git source control management tools via a GUI. This includes
->                   ^^^
-> 
-> I prefer to spell it as "Git", i.e. with an upper-case "G" because "Git"
-> is a name. Lower-case "git" would suggest the command-line executable to
-> me.
-
-Will fix.
- 
-> > +staging, commiting, adding, pushing, etc. It can also be used as a blame
-> > +viewer, a tree browser, and a citool (make exactly one commit before exiting
-> > +and returning to shell). More details about git-gui can be found in its manual
-> > +page by either running `man git-gui`, or by visiting the [online manual
-> > +page](https://git-scm.com/docs/git-gui).
-> > +
-> > +Git Gui was initially written by Shawn O. Pearce, and is distributed with the
-> > +standard git installation.
-> > +
-> > +# Building and installing
-> > +
-> > +Most of Git Gui is written in Tcl, so there is not much compilation involved.
-> 
-> "Most"? Are there parts that are not written in Tcl?
-
-Well, there is the Makefile, which is a part of the project and not in 
-Tcl. Also, if I open GitHub's "language stat bar" (the colored bar below 
-"commits", "branches", "releases", etc), it says 96.4% Tcl, 2.7% 
-Makefile, and 0.9% Other.
-
-So _technically_ there is a small part not in Tcl.
- 
-> As far as I can tell, _no_ compilation is involved. Just a couple of
-> substitutions, e.g. the version number.
-
-Yes, correct. I suppose that was bad wording. Will fix.
- 
-> > +Still, some things do need to be done, so you do need to "build" it.
-> > +
-> > +You can build Git Gui using:
-> > +
-> > +```
-> > +make
-> > +```
-> > +
-> > +And then install it using:
-> > +
-> > +```
-> > +make install
-> > +```
-> > +
-> > +You probably need to have root/admin permissions to install.
-> > +
+On 05/10/19 12:51PM, Bert Wesarg wrote:
+> On Sat, Oct 5, 2019 at 12:10 AM Pratyush Yadav <me@yadavpratyush.com> wrote:
 > > +# Contributing
 > > +
 > > +The project is currently maintained by Pratyush Yadav over at
@@ -135,16 +51,56 @@ Yes, correct. I suppose that was bad wording. Will fix.
 > > +Instead, an email based workflow is used. The git mailing list
 > > +[git@vger.kernel.org](mailto:git@vger.kernel.org) is where the patches are
 > > +discussed and reviewed.
+> > +
+> > +More information about the git mailing list and instructions to subscribe can
+> > +be found [here](https://git.wiki.kernel.org/index.php/GitCommunity).
+> > +
+> > +## Sending your changes
+> > +
+> > +Since the development happens over email, you need to send in your commits in
+> > +text format. Commits can be converted to emails via the two tools provided by
+> > +git: `git-send-email` and `git-format-patch`.
+> > +
+> > +If you are sending multiple patches, it is recommended to include a cover
+> > +letter. A cover letter is an email explaining in brief what the series is
+> > +supposed to do. A cover letter template can be generated by passing
+> > +`--cover-letter` to `git-format-patch`.
+> > +
+> > +After you send your patches, you might get a review suggesting some changes.
+> > +Make those changes, and re-send your patch(es) in reply to the first patch of
+> > +your initial version. Also please mention the version of the patch. This can be
+> > +done by passing `-v X` to `git-format-patch`, where 'X' is the version number
+> > +of the patch(es).
+> > +
+> > +### Using git-send-email
+> > +
+> > +You can use `git-send-email` to send patches via email. A pretty good guide to
+> > +configuring and using `git-send-email` can be found
+> > +[here](https://www.freedesktop.org/wiki/Software/PulseAudio/HowToUseGitSendEmail/)
+> > +
+> > +### Using your email client
+> > +
+> > +If your email client supports sending mbox format emails, you can use
+> > +`git-format-patch` to get an mbox file for each commit, and then send them. If
+> > +there is more than one patch in the series, then all patches after the first
+> > +patch (or the cover letter) need to be sent as replies to the first.
+> > +`git-send-email` does this by default.
+> > +
 > 
-> You might want to accompany this `README.md` with a
-> `.github/PULL_REQUEST_TEMPLATE.md` that explains this, and discourages
-> contributors from opening PRs (mind, some contributors will not even
-> read this, let alone delete it nor refrain from opening PRs, but most
-> contributors will read it and avoid unnecessary work).
+> Junio mentioned (at least?) once [1], that using only git-send-email
+> is not a good workflow. Instead one should use git-format-patch to
+> generate the patches, audit them. and then use git-send-email. I
+> second this.
+> 
+> Please switch these two sections to encompass this.
 
-Will do as a follow-up patch.
-
-Thanks for the review.
+Thanks for pointing it out. Will fix.
+ 
+> Thanks.
+> 
+> Bert
+> 
+> [1] https://public-inbox.org/git/xmqqh9n241el.fsf@gitster.mtv.corp.google.com/
 
 -- 
 Regards,
