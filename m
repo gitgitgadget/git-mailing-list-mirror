@@ -2,106 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4AD31F4BD
-	for <e@80x24.org>; Sat,  5 Oct 2019 21:11:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 345341F4BD
+	for <e@80x24.org>; Sat,  5 Oct 2019 21:12:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725852AbfJEVLk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 17:11:40 -0400
-Received: from relay5-d.mail.gandi.net ([217.70.183.197]:52353 "EHLO
-        relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725789AbfJEVLj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Oct 2019 17:11:39 -0400
-X-Originating-IP: 1.186.12.44
-Received: from localhost (unknown [1.186.12.44])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id C439B1C0002;
-        Sat,  5 Oct 2019 21:11:36 +0000 (UTC)
-Date:   Sun, 6 Oct 2019 02:41:34 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-gui: add a readme
-Message-ID: <20191005211134.fkuwvuztck2k3heu@yadavpratyush.com>
-References: <20191004221052.23313-1-me@yadavpratyush.com>
- <CAKPyHN0ERLroxwPebVrXJNa3pMA3Uxv-vHbvKAhSB52xRcS=oA@mail.gmail.com>
+        id S1726078AbfJEVMR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 17:12:17 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36290 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726038AbfJEVMR (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 5 Oct 2019 17:12:17 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DE50B61C61;
+        Sat,  5 Oct 2019 21:12:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1570309936;
+        bh=raAhS3PrnzvOKKvzy4YPRvhsXXlEiiTAXRPjU4RjW6c=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=UItvoaeeNCkyw33EXaUvcTlLMb/aLkSK+OlXSdyOqLI+JMW0b+7DT4DSwsu8YviOy
+         r9IRYTWVQfN+Nb1F9y7lfsrBpq/bzVIb3VikQOUBGRcVJJo440aM3VpQMaxehZErHn
+         aRE7qPRcnWdLh5xb2jQBB62r1963yxSP0WwxNhsgab09lZ9/ErGuWFF0K0boq9SF83
+         ct8KuCViv+vcKRoyVEW3t7ivv9UZWbQNFZT/P3cPFnRosHVrf7VSRPPCyhYrLGmTKa
+         mWDZRzNAOHLWzceq/xgcgqEP6QND31s+IImLQeFElICPEYuvnKf9ihJzfRamiC2WVs
+         JzBxkgKO+oUaCOrEna1fPGp3XPJLd76RhcE+sIPYhYIbF61YECheXpRcs0rblcr28Z
+         3c+rwTyhcYdQwi5np6IgIRE81nRjMIy8N4UxD3ASbFt1yIZLwR2Oew3v/LECJCI8FV
+         Lq6Zliy96fp6wrChaUHaWgBvx3Dnx6m284d3N/fN4W7crYXe2qJ
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Stefan Beller <stefanbeller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 01/15] t/oid-info: allow looking up hash algorithm name
+Date:   Sat,  5 Oct 2019 21:11:55 +0000
+Message-Id: <20191005211209.18237-2-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.23.0.700.g56cf767bdb
+In-Reply-To: <20191005211209.18237-1-sandals@crustytoothpaste.net>
+References: <20191005211209.18237-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKPyHN0ERLroxwPebVrXJNa3pMA3Uxv-vHbvKAhSB52xRcS=oA@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/10/19 12:51PM, Bert Wesarg wrote:
-> On Sat, Oct 5, 2019 at 12:10 AM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> > +# Contributing
-> > +
-> > +The project is currently maintained by Pratyush Yadav over at
-> > +https://github.com/prati0100/git-gui. Even though the project is hosted at
-> > +GitHub, the development does not happen over GitHub Issues and Pull Requests.
-> > +Instead, an email based workflow is used. The git mailing list
-> > +[git@vger.kernel.org](mailto:git@vger.kernel.org) is where the patches are
-> > +discussed and reviewed.
-> > +
-> > +More information about the git mailing list and instructions to subscribe can
-> > +be found [here](https://git.wiki.kernel.org/index.php/GitCommunity).
-> > +
-> > +## Sending your changes
-> > +
-> > +Since the development happens over email, you need to send in your commits in
-> > +text format. Commits can be converted to emails via the two tools provided by
-> > +git: `git-send-email` and `git-format-patch`.
-> > +
-> > +If you are sending multiple patches, it is recommended to include a cover
-> > +letter. A cover letter is an email explaining in brief what the series is
-> > +supposed to do. A cover letter template can be generated by passing
-> > +`--cover-letter` to `git-format-patch`.
-> > +
-> > +After you send your patches, you might get a review suggesting some changes.
-> > +Make those changes, and re-send your patch(es) in reply to the first patch of
-> > +your initial version. Also please mention the version of the patch. This can be
-> > +done by passing `-v X` to `git-format-patch`, where 'X' is the version number
-> > +of the patch(es).
-> > +
-> > +### Using git-send-email
-> > +
-> > +You can use `git-send-email` to send patches via email. A pretty good guide to
-> > +configuring and using `git-send-email` can be found
-> > +[here](https://www.freedesktop.org/wiki/Software/PulseAudio/HowToUseGitSendEmail/)
-> > +
-> > +### Using your email client
-> > +
-> > +If your email client supports sending mbox format emails, you can use
-> > +`git-format-patch` to get an mbox file for each commit, and then send them. If
-> > +there is more than one patch in the series, then all patches after the first
-> > +patch (or the cover letter) need to be sent as replies to the first.
-> > +`git-send-email` does this by default.
-> > +
-> 
-> Junio mentioned (at least?) once [1], that using only git-send-email
-> is not a good workflow. Instead one should use git-format-patch to
-> generate the patches, audit them. and then use git-send-email. I
-> second this.
-> 
-> Please switch these two sections to encompass this.
+The test_oid function provides a mechanism for looking up hash algorithm
+information, but it doesn't specify a way to discover the hash algorithm
+name.  Knowing this information is useful if one wants to invoke the
+test-tool helper for the algorithm in use, such as in our pack
+generation library.
 
-Thanks for pointing it out. Will fix.
+While it's currently possible to inspect the global variable holding
+this value, in the future we'll allow specifying an algorithm for
+storage and an algorithm for display, so it's better to abstract this
+value away.  To assist with this, provide a named entry in the
+algorithm-specific lookup table that prints the algorithm in use.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ t/oid-info/hash-info | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/t/oid-info/hash-info b/t/oid-info/hash-info
+index ccdbfdf974..6b5ded0b34 100644
+--- a/t/oid-info/hash-info
++++ b/t/oid-info/hash-info
+@@ -6,3 +6,6 @@ hexsz sha256:64
  
-> Thanks.
-> 
-> Bert
-> 
-> [1] https://public-inbox.org/git/xmqqh9n241el.fsf@gitster.mtv.corp.google.com/
-
--- 
-Regards,
-Pratyush Yadav
+ zero sha1:0000000000000000000000000000000000000000
+ zero sha256:0000000000000000000000000000000000000000000000000000000000000000
++
++algo sha1:sha1
++algo sha256:sha256
