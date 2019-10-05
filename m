@@ -2,286 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92CC31F4BD
-	for <e@80x24.org>; Sat,  5 Oct 2019 19:56:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 322891F4BD
+	for <e@80x24.org>; Sat,  5 Oct 2019 20:16:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729509AbfJET4v (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 15:56:51 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52975 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727980AbfJET4v (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Oct 2019 15:56:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570305407;
-        bh=VuUbn3Jngrm0NJiQ93nxrE2dO8nETYPfjobnIZjX1tM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=BqCLJ7E44TZIWtw1R8j9TrNpnGbGkDTq5NllKlDr781PLhzPmXZ5kvYglio283NBh
-         Sa/no/96E7pGlS12Q0bXQL0fsypk2mAqcMsD4DkfZXSqcxeaXDYaKo1jCjCGsbkQLN
-         o7fo4idKrAw4qa6OFA5rCWFAl/b08mHgRQUH5pRY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mq2jC-1hmPDp20BO-00nBeR; Sat, 05
- Oct 2019 21:56:47 +0200
-Date:   Sat, 5 Oct 2019 21:56:31 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Pratyush Yadav <me@yadavpratyush.com>
-cc:     git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] git-gui: add a readme
-In-Reply-To: <20191004221052.23313-1-me@yadavpratyush.com>
-Message-ID: <nycvar.QRO.7.76.6.1910052149490.46@tvgsbejvaqbjf.bet>
-References: <20191004221052.23313-1-me@yadavpratyush.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729664AbfJEUQs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 16:16:48 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:33029 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727980AbfJEUQs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Oct 2019 16:16:48 -0400
+Received: by mail-pg1-f194.google.com with SMTP id q1so5758156pgb.0
+        for <git@vger.kernel.org>; Sat, 05 Oct 2019 13:16:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=O+a0BZaESm3oiCPY94zDdc5YZUQ0SKRaGxxWvlMvqmU=;
+        b=poRPaCzJyhoH/ySoSYN67Imqo1wPYC5klAw5fXOWKoIQq2RslEP002oHX6Po870x5f
+         SH0VeHbVuRJr+K280Tn8XevIsLM1p3gzoEMSEr1JeVgNCj3rZ5lJXAwvw651z24tEONq
+         v8SibVkm7aQ03QWVd3TKTbUnmMMs3uy+w5SK2Nw9mC3R2GyhOS3xiPmiv4l5ZrmwD6Wv
+         zAMz71Uk/lCAWkooyD9/ceFQ1+JAte8GSD+wfxnwZPo/1U/Kx4qogVGF/MdACChmMrNL
+         DMSMmXHeR3HqhwQBMpp9j5Q3Gh4gw8hhq+02T+UimF6YfrqZEYjjpVqODY8v9M8YRVGr
+         BaPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=O+a0BZaESm3oiCPY94zDdc5YZUQ0SKRaGxxWvlMvqmU=;
+        b=Q5zqCQSFEQjokF/k7paMDixaeylh+YLUNGTXOAp98W7J63FrWFsPMjmKDuRqTVCu2n
+         od05A5yg2NoLFjcPehwQtthCoRFj1xD7hbkzB/eFXU+mkdDm/MYcTzxMYFB8zZ0S4LqK
+         G2h62s9fWYm1woGkdp333HtPyy5CxZgsdDgCEV507zHAYCPR9GtLE3xeAGiujoMQ/xmq
+         c3aUulxPSKNObTSpoHyfjRLehlzNf8fRQW/LfjaGc+IMBtdKOkyRz+QkzxB4SxYtc7dE
+         KY7K+Oqn09QGj+TfbDBRc3BaTA6fy2qj3QWRxZvaGxqxHI7WIUNwCXYtAe00AvCQxBPf
+         dwzA==
+X-Gm-Message-State: APjAAAXBQwhP3JTXw3qpYYIhOZKtU1O/6v1B4P5J8m4DBV9d5DAuUGHE
+        Kw2vTidrHPpDbwIo6L1lOtI=
+X-Google-Smtp-Source: APXvYqyWHalkkJFRmcIDkQbklvye5CvJqM1LPiSTy132nxjgdwDNlRgg+RdjQDeD1smXqnBmPSlhWw==
+X-Received: by 2002:a63:c7:: with SMTP id 190mr21573708pga.186.1570306607416;
+        Sat, 05 Oct 2019 13:16:47 -0700 (PDT)
+Received: from ?IPv6:2409:4073:2012:1c57:a6db:30ff:fee2:b535? ([2409:4073:2012:1c57:a6db:30ff:fee2:b535])
+        by smtp.gmail.com with ESMTPSA id cx22sm8231420pjb.19.2019.10.05.13.16.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 05 Oct 2019 13:16:46 -0700 (PDT)
+Message-ID: <149a83fd40b71896b134b16c2b499ff472c6234e.camel@gmail.com>
+Subject: Re: [PATCH] Feature: custom guitool commands can now have custom
+ keyboard shortcuts
+From:   Harish Karumuthil <harish2704@gmail.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+Date:   Sun, 06 Oct 2019 01:46:41 +0530
+In-Reply-To: <20191004120107.kpskplwhflnsamwu@yadavpratyush.com>
+References: <01020153c22ab06b-e195b148-37cc-4f89-92f3-f4bed1915eb9-000000@eu-west-1.amazonses.com>
+         <20160331164137.GA11150@gmail.com>
+         <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com>
+         <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com>
+         <20191003214422.d4nocrxadxt47smg@yadavpratyush.com>
+         <nycvar.QRO.7.76.6.1910041046000.46@tvgsbejvaqbjf.bet>
+         <20191004120107.kpskplwhflnsamwu@yadavpratyush.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.32.4 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:u+KqGw008xL0+neh6wSN9ywlVXn8VffZ4uEXrx2ahH3RLQRczBm
- c9jpi37u4OyU4of0RPzu4iktkGH7lNSsRoG3iuPHVT5jvDIG5DqqbhEKYapOSx5i7nlV5fy
- ItKDiqXB/f+zWiH1pJHTnErE4vWe3xpa9DRhN6Ek1jQhhP+UZGrYI3L+DVj22yL6ZVoIONM
- 0I9OqaFfkO1lgLswVFtmw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:sEFSvWHjBJ8=:jIt+t9VcIZAWWC9jTpmGZU
- pmOKmDeneyKP7ZJz+jTTaKLwcv2C32E1b9nwe8w7hNnCsqiu2Ji1vt0FuIK0LljL8BJnpOnp/
- KBryZ0pX6DqtJ64kYwbqbdhBOae0/A+zPngxpWeB4RG7EIgZHyneY0KvvviBWsAADOAcvIfeg
- jXl/3s3FW4If6OFXPEQrsXi0EWhl9vrs9flQhrjpIP0zJYh11zEiDKhgIg7t6dm7Mi0qSqFRi
- j9PSSKPpLZa6MNFcAdcRJiytIZldf9o4fiNym2Q2J3MmADYUcOgFEoL237AnH+Nki+XP0I7Xr
- n8UYYhFY8mVBbonnTQyRMIkRQJzK/ygUzsYTkwBi2/J80F+np9AAVDzF7aYx3NxI9LEtdPtwL
- BEKHMGBUA2nbNEUJkCIISScW0V8Xz842Tu4x962qm8aX/XieAlKE/19PuUV5xuN1rdX1OYtww
- nje4dSqMN/1L7yIgGyuI4l9rA/UDWDtCQQust92+3MUBqPHYYnZF32cYMbMoMq3CsE3Obo2Os
- qF1Micf0pSo+KmuSu85cf2NDSdDl+P0qpjmqQRU9/j+2FR83XyqKo9qlkk4zCXeAHymT16yt9
- 2xVU6hUJQNegLcX6zvSqQ3rGCZ8ReLaeAlGKMv70LbTYYWYx2C/kCC9viHeG7E4K7clvCdM5d
- 0AJy6VGx9wIi2VUnAj0XsurqVmNdcNBsc1t7ZEej/sVsUzQBdO58AKMPh6cWoPBavM+apdhfZ
- qOFczqP4Q8T67+kbTOWeDyAlsyCW1i0+eCUYtMIWIKBfW/uvskr6tw6oorQo7iLQCqKoN4nnN
- yy0tqUz28CSv9rpnHeHBRkTFAMBTFNR2IwFV2dVlRhtQxWxaxJM4UMBoCRZCmcJOVKax+1R5l
- IJv1loqctfNj6iTn+D4UulAxgoGh/DgMNSKNZeFANFle6Un1VBxEPss6ZCI/9X0AoK4wLELEt
- L0Dfi8UO4MPefZe72AfGgpNKZt7o4OqDu4TvteFlOdEQe6h5XRvdGGI9wLIhXXEixtVFbUy/O
- aFucleY7ue/ifGrYehE+80PfIoloTI64eaZ6p3yO4nplTbGG+hG+aPfyJ0nAjojO/871qtMMf
- eRIqZBZzDgSSr8Yssu4f97v6+mQHLMjA1U/rFj+oHDSBJTUzNxSOOi89o0eWlsGKiFUJaXPsb
- Zcsok4YUKRKep+Rb5/jfQ+oillCptq+XV4dZy+orvT4VaJ3OQiYoP5t+8+pdL3lYZ1yT/0kxE
- 7R14MTgnduQ16rdMWF5QJRpcgpH9O7adtYqqh1h6LZwgYqtAt72Qbi379eM4=
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pratyush,
+Hi All,
 
-On Sat, 5 Oct 2019, Pratyush Yadav wrote:
+From https://www.kernel.org/doc/html/v4.10/process/email-clients.html, I
+understood that, my current email client ( that is gmail web ) is not good
+for submitting patches. So I was tying to setup a mail client which is
+compatible with `git send-mail`. But I was not able to get a satisfactory
+result in that.
 
-> It is a good idea to have a readme so people finding the project can
-> know more about it, and know how they can get involved.
+For now, I followed the instruction of Johannes Schindelin and submitted a
+pull request . Please see https://github.com/gitgitgadget/git/pull/376
+
+---------
+@ Pratyush: Regarding your comments,
+
+
+> A pretty nice way of doing it. But I would _really_ like it if there was
+> an option in the "create tool" dialog to specify the shortcut. People of
+> a gui tool shouldn't have to mess around with config files as much as
+> possible.
+
+I agree with this, But that may require some more profficiency in TCL/TK
+programming which I don't have. This is the first time I am looking into a
+TCL/TK source code.
+Any way I will try to integrate the gui gradually in feature. But
+unfortunatly, I may not be able to do that now.
+
+
+
+> David has advocated inter-operability between git-gui and git-cola.
+> While I personally don't know how many people actually use both the
+> tools at the same time, it doesn't sound like a bad idea either.
 >
-> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
-> ---
->
-> I don't have much experience writing this kind of readme or
-> documentation, so comments are appreciated. Please feel free to chime in
-> with suggestions and things that can also be added.
->
->  README.md | 128 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 128 insertions(+)
->  create mode 100644 README.md
->
-> diff --git a/README.md b/README.md
-> new file mode 100644
-> index 0000000..d76122d
-> --- /dev/null
-> +++ b/README.md
-> @@ -0,0 +1,128 @@
-> +# Git Gui - A graphical user interface for Git
+> So, sharing shortcuts with git-cola would be nice. Of course, it would
+> then mean that we would have to parse the config parameter before
+> feeding them to `bind`. I don't suppose that should be something too
+> complicated to do, but I admit I haven't looked too deeply into it.
 
-Why not Git GUI? "Git" is a name, "GUI" is an abbreviation, and the
-convention is (at least as far as I can tell) to upcase abbreviations.
+IMHO, Using a uniform shortcut-key code/foramat for both application can be
+considered as nice feature.
+But, whether we should share common shortcut-scheme with both application is
+a different question.
+Currently, both apps don't have a common shortcut-scheme. So in this
+situation, only sharing custom-tool's shortcut-scheme with both applications
+doesn't look like a good  idea to me 
 
-> +
-> +Git Gui is a GUI for [git](https://git-scm.com/) written in Tcl/Tk. It =
-allows
-> +you to use the git source control management tools via a GUI. This incl=
-udes
-                  ^^^
 
-I prefer to spell it as "Git", i.e. with an upper-case "G" because "Git"
-is a name. Lower-case "git" would suggest the command-line executable to
-me.
+> Are you sure that is a good idea? I think we should at least make sure
+> we are not binding some illegal sequence, and if we are, we should warn
+> the user about it. And a much more important case would be when a user
+> over-writes a pre-existing shortcut for other commands like "commit",
+> "reset", etc. In that case, the menu entires of those commands would
+> still be labelled with the shortcut, but it won't actually work.
 
-> +staging, commiting, adding, pushing, etc. It can also be used as a blam=
-e
-> +viewer, a tree browser, and a citool (make exactly one commit before ex=
-iting
-> +and returning to shell). More details about git-gui can be found in its=
- manual
-> +page by either running `man git-gui`, or by visiting the [online manual
-> +page](https://git-scm.com/docs/git-gui).
-> +
-> +Git Gui was initially written by Shawn O. Pearce, and is distributed wi=
-th the
-> +standard git installation.
-> +
-> +# Building and installing
-> +
-> +Most of Git Gui is written in Tcl, so there is not much compilation inv=
-olved.
+I agree with you. It is an important point. After reading this, I checked
+current status of these issues. What I found is given below.
 
-"Most"? Are there parts that are not written in Tcl?
+1. When user provides an invalid sequence for the shortcut, it will cuase the
+entire gitgui application to crash at the startup
 
-As far as I can tell, _no_ compilation is involved. Just a couple of
-substitutions, e.g. the version number.
+2. When user tries to overwrite existing shortcut, it will not have any
+effect. Because, built in shortcuts will overwrite user provided one. But
+still, wrong menu accelerator label will persist for custom tools
 
-> +Still, some things do need to be done, so you do need to "build" it.
-> +
-> +You can build Git Gui using:
-> +
-> +```
-> +make
-> +```
-> +
-> +And then install it using:
-> +
-> +```
-> +make install
-> +```
-> +
-> +You probably need to have root/admin permissions to install.
-> +
-> +# Contributing
-> +
-> +The project is currently maintained by Pratyush Yadav over at
-> +https://github.com/prati0100/git-gui. Even though the project is hosted=
- at
-> +GitHub, the development does not happen over GitHub Issues and Pull Req=
-uests.
-> +Instead, an email based workflow is used. The git mailing list
-> +[git@vger.kernel.org](mailto:git@vger.kernel.org) is where the patches =
-are
-> +discussed and reviewed.
+Since #1 is a serious issue, I tried to find out the function which does the
+keycode validation, but I haven't succeded till now. ( I found the C function
+name  which is "TkStringToKeysym" from TK source, but I couldn't find its TCL
+binding ). It will be helpful if any one can help me on this.
 
-You might want to accompany this `README.md` with a
-`.github/PULL_REQUEST_TEMPLATE.md` that explains this, and discourages
-contributors from opening PRs (mind, some contributors will not even
-read this, let alone delete it nor refrain from opening PRs, but most
-contributors will read it and avoid unnecessary work).
-
-Ciao,
-Johannes
-
-> +
-> +More information about the git mailing list and instructions to subscri=
-be can
-> +be found [here](https://git.wiki.kernel.org/index.php/GitCommunity).
-> +
-> +## Sending your changes
-> +
-> +Since the development happens over email, you need to send in your comm=
-its in
-> +text format. Commits can be converted to emails via the two tools provi=
-ded by
-> +git: `git-send-email` and `git-format-patch`.
-> +
-> +If you are sending multiple patches, it is recommended to include a cov=
-er
-> +letter. A cover letter is an email explaining in brief what the series =
-is
-> +supposed to do. A cover letter template can be generated by passing
-> +`--cover-letter` to `git-format-patch`.
-> +
-> +After you send your patches, you might get a review suggesting some cha=
-nges.
-> +Make those changes, and re-send your patch(es) in reply to the first pa=
-tch of
-> +your initial version. Also please mention the version of the patch. Thi=
-s can be
-> +done by passing `-v X` to `git-format-patch`, where 'X' is the version =
-number
-> +of the patch(es).
-> +
-> +### Using git-send-email
-> +
-> +You can use `git-send-email` to send patches via email. A pretty good g=
-uide to
-> +configuring and using `git-send-email` can be found
-> +[here](https://www.freedesktop.org/wiki/Software/PulseAudio/HowToUseGit=
-SendEmail/)
-> +
-> +### Using your email client
-> +
-> +If your email client supports sending mbox format emails, you can use
-> +`git-format-patch` to get an mbox file for each commit, and then send t=
-hem. If
-> +there is more than one patch in the series, then all patches after the =
-first
-> +patch (or the cover letter) need to be sent as replies to the first.
-> +`git-send-email` does this by default.
-> +
-> +### Using GitGitGadget
-> +
-> +Since some people prefer a GitHub pull request based workflow, they can=
- use
-> +[GitGitGadget](https://gitgitgadget.github.io/) to send in patches. The=
- tool
-> +was originally written for sending patches to the Git project, but it n=
-ow also
-> +supports sending patches for git-gui.
-> +
-> +Instructions for using GitGitGadget to send git-gui patches, courtesy o=
-f
-> +Johannes Schindelin:
-> +
-> +If you don't already have a fork of the [git/git](https://github.com/gi=
-t/git)
-> +repo, you need to make one. Then clone your fork:
-> +
-> +```
-> +git clone https://github.com/<your-username>/git
-> +```
-> +
-> +Then add GitGitGadget as a remote:
-> +
-> +```
-> +git remote add gitgitgadget https://github.com/gitgitgadget/git
-> +```
-> +
-> +Then fetch the git-gui branch:
-> +
-> +```
-> +git fetch gitgitgadget git-gui/master
-> +```
-> +
-> +Then create a new branch based on git-gui/master:
-> +
-> +```
-> +git checkout -b <your-branch-name> git-gui/master
-> +```
-> +
-> +Make whatever commits you need to, push them to your fork, and then hea=
-d over
-> +to https://github.com/gitgitgadget/git/pulls and open a Pull Request ta=
-rgeting
-> +git-gui/master.
-> +
-> +GitGitGadget will welcome you with a (hopefully) helpful message.
-> +
-> +## Signing off
-> +
-> +You need to sign off your commits before sending them to the list. You =
-can do
-> +that by passing the `-s` option to `git-commit`. You can also use the "=
-Sign
-> +Off" option in Git Gui.
-> +
-> +A sign-off is a simple 'Signed-off-by: A U Thor \<author@example.com\>'=
- line at
-> +the end of the commit message, after your explanation of the commit.
-> +
-> +A sign-off means that you are legally allowed to send the code, and it =
-serves
-> +as a certificate of origin. More information can be found at
-> +[developercertificate.org](https://developercertificate.org/).
-> --
-> 2.21.0
->
->
