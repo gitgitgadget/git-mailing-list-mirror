@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D42E91F4BD
-	for <e@80x24.org>; Sat,  5 Oct 2019 21:12:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 970FB1F4BD
+	for <e@80x24.org>; Sat,  5 Oct 2019 21:12:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726166AbfJEVMZ (ORCPT <rfc822;e@80x24.org>);
+        id S1726170AbfJEVMZ (ORCPT <rfc822;e@80x24.org>);
         Sat, 5 Oct 2019 17:12:25 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36350 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36342 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726131AbfJEVMY (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 5 Oct 2019 17:12:24 -0400
+        by vger.kernel.org with ESMTP id S1726139AbfJEVMZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 5 Oct 2019 17:12:25 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5BA0561C6E;
-        Sat,  5 Oct 2019 21:12:22 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 69B1C61C71;
+        Sat,  5 Oct 2019 21:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1570309942;
-        bh=caxNNuYwTJoI8ptat8Y449AK/P/k0yNfqXKdzaJFfYs=;
+        s=default; t=1570309943;
+        bh=v+qOBlhknk2JmCEKxVPu22ZOeyUBzrkh2PeLVzN8pEM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Uhrs/+uRC2FhT5rVLoEFk8Zk5/cMVvICjfC8wPS4BgonibaksWnyMx4ZT+MdNLVeE
-         q23a+G+IKGnL39iAexpUecZIRwzBbZCnkzKo4QNVivI/BWS+msqah/g6gk0KVth+Rf
-         wQy6b/PZWhXmcd20jh4DuXtGsOyr8ClweLXQHfwOs+8LYVTAycEI3ei8Egrn6V9sMv
-         boN0UDqMt6Vyhz8uJMfzwv0siakrDHHi+1O604QBu/g/sHbXIaR9xcWjHu2O45OICM
-         KTZHDEjB4D/WGGAyXKqHoqU5+uv592BE6CkGiUjiEoYwHM/ZGXMd27OTCC0Uj56bAd
-         wHsVJhbo1HM6zFTbMbF3tRjoWz7gmaOaX/rybOgfjH7fB7xJh6G60UKeQymEuaRH4+
-         wG4awWLxVf9fJbUwr1MKWWPc+RzJukTnl966vERrVM9APT5on2YmdH+AUtcyquUf0X
-         KE7ZWxK0kZyx8Ut9lKTns5x7DDUzzvlB2pM4VAgLCsFYPSzHVMx
+        b=xAKbrkDKlTtiGnJw4RBsOTXPjxwbcgIzRAsvijFJZN0Xxdpu9cKW5pJ+q1oXFW3xP
+         4gX/6kniLb0AaAF2DTK9jjGV65h0/8J8z+UgoLVmHT3PbY65sACtKluW9H8YcqvjNk
+         /M4Gvk2XlBsqx/KfwGqjkFNvesSsqndp+hGkJsrncexDAbRca5P4KGmuMFhBNgIvXx
+         nBL625tgWuqiaKrYCNqAGZSk6o+h3Msut1lGFmiHcPYFJFDWCfOLYteq/K4NOtG+AR
+         gxQSaYDKrbvKAbMcpweRgHRIF3nPbaW4+3XrsRogVrncU/Zr6xLnnx4QSxGVfFe2g5
+         GxLw3K1Jyuq7rrX+AMradScSQRBv9XDnAqBcRihnnpA2S/Ob+/oVSWBjAjifpDURRx
+         HCkyIJaSIxzl/hOJfCwLOPkTpe8Vvc4wOxT1riZBkFfn6AqBjusKYjEo9GZ93cWdON
+         LMTBnJ2q/JijRfxzg+eahzm2XimTr0fAX4sP3I6MJEcPYsLyaMN
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Stefan Beller <stefanbeller@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 13/15] t4044: update test to work with SHA-256
-Date:   Sat,  5 Oct 2019 21:12:07 +0000
-Message-Id: <20191005211209.18237-14-sandals@crustytoothpaste.net>
+Subject: [PATCH 15/15] t4048: abstract away SHA-1-specific constants
+Date:   Sat,  5 Oct 2019 21:12:09 +0000
+Message-Id: <20191005211209.18237-16-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.23.0.700.g56cf767bdb
 In-Reply-To: <20191005211209.18237-1-sandals@crustytoothpaste.net>
 References: <20191005211209.18237-1-sandals@crustytoothpaste.net>
@@ -52,83 +52,208 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test produces pseudo-collisions and tests git diff's behavior with
-them, and is therefore sensitive to the hash in use. Update the test to
-compute the collisions for both SHA-1 and SHA-256 using appropriate
-constants. Move the heredocs inside the setup block so that all of the
-setup code can be tested for failure.
+Adjust the test so that it computes variables for object IDs instead of
+using hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4044-diff-index-unique-abbrev.sh | 46 +++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 16 deletions(-)
+ t/t4048-diff-combined-binary.sh | 58 ++++++++++++++++++---------------
+ 1 file changed, 32 insertions(+), 26 deletions(-)
 
-diff --git a/t/t4044-diff-index-unique-abbrev.sh b/t/t4044-diff-index-unique-abbrev.sh
-index 647905e01f..4701796d10 100755
---- a/t/t4044-diff-index-unique-abbrev.sh
-+++ b/t/t4044-diff-index-unique-abbrev.sh
-@@ -3,34 +3,48 @@
- test_description='test unique sha1 abbreviation on "index from..to" line'
- . ./test-lib.sh
- 
--if ! test_have_prereq SHA1
--then
--       skip_all='not using SHA-1 for objects'
--       test_done
--fi
--
--cat >expect_initial <<EOF
--100644 blob 51d2738463ea4ca66f8691c91e33ce64b7d41bb1	foo
--EOF
-+test_expect_success 'setup' '
-+	test_oid_cache <<-EOF &&
-+	val1 sha1:4827
-+	val1 sha256:5664
- 
--cat >expect_update <<EOF
--100644 blob 51d2738efb4ad8a1e40bed839ab8e116f0a15e47	foo
--EOF
-+	val2 sha1:11742
-+	val2 sha256:10625
- 
--test_expect_success 'setup' '
--	echo 4827 > foo &&
-+	hash1 sha1:51d2738463ea4ca66f8691c91e33ce64b7d41bb1
-+	hash1 sha256:ae31dfff0af93b2c62b0098a039b38569c43b0a7e97b873000ca42d128f27350
-+
-+	hasht1 sha1:51d27384
-+	hasht1 sha256:ae31dfff
-+
-+	hash2 sha1:51d2738efb4ad8a1e40bed839ab8e116f0a15e47
-+	hash2 sha256:ae31dffada88a46fd5f53c7ed5aa25a7a8951f1d5e88456c317c8d5484d263e5
-+
-+	hasht2 sha1:51d2738e
-+	hasht2 sha256:ae31dffa
-+	EOF
-+
-+	cat >expect_initial <<-EOF &&
-+	100644 blob $(test_oid hash1)	foo
-+	EOF
-+
-+	cat >expect_update <<-EOF &&
-+	100644 blob $(test_oid hash2)	foo
-+	EOF
-+
-+	echo "$(test_oid val1)" > foo &&
- 	git add foo &&
- 	git commit -m "initial" &&
- 	git cat-file -p HEAD: > actual &&
- 	test_cmp expect_initial actual &&
--	echo 11742 > foo &&
-+	echo "$(test_oid val2)" > foo &&
- 	git commit -a -m "update" &&
- 	git cat-file -p HEAD: > actual &&
- 	test_cmp expect_update actual
+diff --git a/t/t4048-diff-combined-binary.sh b/t/t4048-diff-combined-binary.sh
+index 87a8949500..7f9ad9fa3d 100755
+--- a/t/t4048-diff-combined-binary.sh
++++ b/t/t4048-diff-combined-binary.sh
+@@ -9,24 +9,27 @@ test_expect_success 'setup binary merge conflict' '
+ 	git commit -m one &&
+ 	echo twoQ2 | q_to_nul >binary &&
+ 	git commit -a -m two &&
++	two=$(git rev-parse --short HEAD:binary) &&
+ 	git checkout -b branch-binary HEAD^ &&
+ 	echo threeQ3 | q_to_nul >binary &&
+ 	git commit -a -m three &&
++	three=$(git rev-parse --short HEAD:binary) &&
+ 	test_must_fail git merge master &&
+ 	echo resolvedQhooray | q_to_nul >binary &&
+-	git commit -a -m resolved
++	git commit -a -m resolved &&
++	res=$(git rev-parse --short HEAD:binary)
  '
  
- cat >expect <<EOF
--index 51d27384..51d2738e 100644
-+index $(test_oid hasht1)..$(test_oid hasht2) 100644
- EOF
+-cat >expect <<'EOF'
++cat >expect <<EOF
+ resolved
  
- test_expect_success 'diff does not produce ambiguous index line' '
+ diff --git a/binary b/binary
+-index 7ea6ded..9563691 100644
++index $three..$res 100644
+ Binary files a/binary and b/binary differ
+ resolved
+ 
+ diff --git a/binary b/binary
+-index 6197570..9563691 100644
++index $two..$res 100644
+ Binary files a/binary and b/binary differ
+ EOF
+ test_expect_success 'diff -m indicates binary-ness' '
+@@ -34,11 +37,11 @@ test_expect_success 'diff -m indicates binary-ness' '
+ 	test_cmp expect actual
+ '
+ 
+-cat >expect <<'EOF'
++cat >expect <<EOF
+ resolved
+ 
+ diff --combined binary
+-index 7ea6ded,6197570..9563691
++index $three,$two..$res
+ Binary files differ
+ EOF
+ test_expect_success 'diff -c indicates binary-ness' '
+@@ -46,11 +49,11 @@ test_expect_success 'diff -c indicates binary-ness' '
+ 	test_cmp expect actual
+ '
+ 
+-cat >expect <<'EOF'
++cat >expect <<EOF
+ resolved
+ 
+ diff --cc binary
+-index 7ea6ded,6197570..9563691
++index $three,$two..$res
+ Binary files differ
+ EOF
+ test_expect_success 'diff --cc indicates binary-ness' '
+@@ -62,23 +65,26 @@ test_expect_success 'setup non-binary with binary attribute' '
+ 	git checkout master &&
+ 	test_commit one text &&
+ 	test_commit two text &&
++	two=$(git rev-parse --short HEAD:text) &&
+ 	git checkout -b branch-text HEAD^ &&
+ 	test_commit three text &&
++	three=$(git rev-parse --short HEAD:text) &&
+ 	test_must_fail git merge master &&
+ 	test_commit resolved text &&
++	res=$(git rev-parse --short HEAD:text) &&
+ 	echo text -diff >.gitattributes
+ '
+ 
+-cat >expect <<'EOF'
++cat >expect <<EOF
+ resolved
+ 
+ diff --git a/text b/text
+-index 2bdf67a..2ab19ae 100644
++index $three..$res 100644
+ Binary files a/text and b/text differ
+ resolved
+ 
+ diff --git a/text b/text
+-index f719efd..2ab19ae 100644
++index $two..$res 100644
+ Binary files a/text and b/text differ
+ EOF
+ test_expect_success 'diff -m respects binary attribute' '
+@@ -86,11 +92,11 @@ test_expect_success 'diff -m respects binary attribute' '
+ 	test_cmp expect actual
+ '
+ 
+-cat >expect <<'EOF'
++cat >expect <<EOF
+ resolved
+ 
+ diff --combined text
+-index 2bdf67a,f719efd..2ab19ae
++index $three,$two..$res
+ Binary files differ
+ EOF
+ test_expect_success 'diff -c respects binary attribute' '
+@@ -98,11 +104,11 @@ test_expect_success 'diff -c respects binary attribute' '
+ 	test_cmp expect actual
+ '
+ 
+-cat >expect <<'EOF'
++cat >expect <<EOF
+ resolved
+ 
+ diff --cc text
+-index 2bdf67a,f719efd..2ab19ae
++index $three,$two..$res
+ Binary files differ
+ EOF
+ test_expect_success 'diff --cc respects binary attribute' '
+@@ -115,11 +121,11 @@ test_expect_success 'setup textconv attribute' '
+ 	git config diff.upcase.textconv "tr a-z A-Z <"
+ '
+ 
+-cat >expect <<'EOF'
++cat >expect <<EOF
+ resolved
+ 
+ diff --git a/text b/text
+-index 2bdf67a..2ab19ae 100644
++index $three..$res 100644
+ --- a/text
+ +++ b/text
+ @@ -1 +1 @@
+@@ -128,7 +134,7 @@ index 2bdf67a..2ab19ae 100644
+ resolved
+ 
+ diff --git a/text b/text
+-index f719efd..2ab19ae 100644
++index $two..$res 100644
+ --- a/text
+ +++ b/text
+ @@ -1 +1 @@
+@@ -140,11 +146,11 @@ test_expect_success 'diff -m respects textconv attribute' '
+ 	test_cmp expect actual
+ '
+ 
+-cat >expect <<'EOF'
++cat >expect <<EOF
+ resolved
+ 
+ diff --combined text
+-index 2bdf67a,f719efd..2ab19ae
++index $three,$two..$res
+ --- a/text
+ +++ b/text
+ @@@ -1,1 -1,1 +1,1 @@@
+@@ -157,11 +163,11 @@ test_expect_success 'diff -c respects textconv attribute' '
+ 	test_cmp expect actual
+ '
+ 
+-cat >expect <<'EOF'
++cat >expect <<EOF
+ resolved
+ 
+ diff --cc text
+-index 2bdf67a,f719efd..2ab19ae
++index $three,$two..$res
+ --- a/text
+ +++ b/text
+ @@@ -1,1 -1,1 +1,1 @@@
+@@ -174,9 +180,9 @@ test_expect_success 'diff --cc respects textconv attribute' '
+ 	test_cmp expect actual
+ '
+ 
+-cat >expect <<'EOF'
++cat >expect <<EOF
+ diff --combined text
+-index 2bdf67a,f719efd..2ab19ae
++index $three,$two..$res
+ --- a/text
+ +++ b/text
+ @@@ -1,1 -1,1 +1,1 @@@
+@@ -190,9 +196,9 @@ test_expect_success 'diff-tree plumbing does not respect textconv' '
+ 	test_cmp expect actual
+ '
+ 
+-cat >expect <<'EOF'
++cat >expect <<EOF
+ diff --cc text
+-index 2bdf67a,f719efd..0000000
++index $three,$two..0000000
+ --- a/text
+ +++ b/text
+ @@@ -1,1 -1,1 +1,5 @@@
