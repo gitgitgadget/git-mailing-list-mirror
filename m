@@ -2,354 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 177241F4BD
-	for <e@80x24.org>; Sat,  5 Oct 2019 18:46:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F3341F4BD
+	for <e@80x24.org>; Sat,  5 Oct 2019 19:22:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387950AbfJESqo (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 14:46:44 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41068 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387861AbfJESqn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Oct 2019 14:46:43 -0400
-Received: by mail-wr1-f66.google.com with SMTP id q9so10748376wrm.8
-        for <git@vger.kernel.org>; Sat, 05 Oct 2019 11:46:41 -0700 (PDT)
+        id S1728727AbfJETW0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 15:22:26 -0400
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:34740 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727466AbfJETW0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Oct 2019 15:22:26 -0400
+Received: by mail-vs1-f65.google.com with SMTP id d3so6373994vsr.1
+        for <git@vger.kernel.org>; Sat, 05 Oct 2019 12:22:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=JoTzmZtLTgzsiri+lN4YeQkX/6i7E6GHnp9g9h+NsfY=;
-        b=WnWNvo96gLQqksF/Ugko+8P4YjHhoiV4Bpfo5cfpZKStJbh09RVGNzAJyzdTMp3D9E
-         qdghqPVWiRRHHrj1CP84WEuHtP5dVBhcPQZd8lolk1wM9cNHYbpZLccfIzWncN9ciTyL
-         fJ9V3+jPNO31/MIJyMxiqTwBO+AvWro3d8CjoV25AZ9pheiInp35G3R/z4nGvHZclx7w
-         LHl+IAckica9vKzdwbEU06ND4dT0LfPsbP60KH79/qE9O3oOdyEZLZm3kJND0h0Zdaiz
-         AtS+72ecP6beGN0kA4OjzldxOIGtHv35XQ8E1Qg8XIjkyi88HqO2EpIghLn3+lz9TNcG
-         IHLw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+WYYKCDou2JWk+djrJzFOYcxS3Qt3TL2wEC8HVG1jVA=;
+        b=i7Fa7mllqeVZ9AWjAsSvzH0wJpZ5On1fzbvs4ClgZ2hpR4NmwpK66INhmvWtJDGjUe
+         2dCogb5a1hvH2W/iM5SrG+Ikihb2BXvX6I7Ax/n9QrfQZFeFuWXXVOubtHCwFiemgcLU
+         LKUi12JvH7Hrs4NajTIqiADBk/8KkRtEL+ls9a/Ee9AeBF6LqjUvP7c9CRxZQ1QS5day
+         JdOQsCBsbfvF6gE5Wtt3n/cULgJCdus7BCZCt9yjO35CCk+V72lHg2zPneEDKqFXvX6O
+         3FYQ3W6099SBtBo08PMp5ceB7nIspGa+anVSjR02N13PZrY8cvE57YNglOtkL1DpRA6O
+         s+5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JoTzmZtLTgzsiri+lN4YeQkX/6i7E6GHnp9g9h+NsfY=;
-        b=spuf8LHt1TvausvfDQe1PahCb/lVQNOoXO8AJViMFMUx+m+6q8L9J+Qpq2Ns24sobc
-         0u5fx7eXSmFmZEBsnQiEQHQRmlR7YfFx+wNvVSHBuVVwL8qWUQNKkVb79wrpY2q7vTYY
-         PFE7i8pKSQKDBpxH6o/T+aG/qZ7rLjTbAMndQLVKe5wL9wbNQipL/aSw+Br9OlICeQ33
-         66oePVOj/lIjIYIxXfwRIu6V+5yH4fCrKz9Gt053ykS96eB2sVg1QfWebSvdrCKr+ftP
-         HO/sRdBCDTg3NfodQbGIKWvBI2cttAm1cZyp52TQ1tmmqAS3p1l11Q9G7IQUJSHZzb43
-         SG7A==
-X-Gm-Message-State: APjAAAXolaGuJWQQ/0NCWs0xRVwk8BG8y9I0T5nD66/T+uR9iunvOB/D
-        bk7HRqdd0yAj/xq6XsNX1ab8MvIB
-X-Google-Smtp-Source: APXvYqzqMZdIINRxe0d4XfRM4iV2zX1uf6J8bOG0AAHaDRcUc9r3EqxhZFRPNOCrONodalSGxOUWMQ==
-X-Received: by 2002:adf:ef4a:: with SMTP id c10mr7448802wrp.10.1570301200686;
-        Sat, 05 Oct 2019 11:46:40 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a2sm11258774wrp.11.2019.10.05.11.46.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 05 Oct 2019 11:46:40 -0700 (PDT)
-Date:   Sat, 05 Oct 2019 11:46:40 -0700 (PDT)
-X-Google-Original-Date: Sat, 05 Oct 2019 18:46:38 GMT
-Message-Id: <93a155a000571df3f3f3a63cd8d886d68fbe8403.1570301198.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.369.v2.git.gitgitgadget@gmail.com>
-References: <pull.369.git.gitgitgadget@gmail.com>
-        <pull.369.v2.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/1] fetch: let --jobs=<n> parallelize --multiple, too
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+WYYKCDou2JWk+djrJzFOYcxS3Qt3TL2wEC8HVG1jVA=;
+        b=Uo2yibg6uAGNqbYliq1YqlM57QFa/L4XOPBw5TZ7hL3zYrV46ywJlbU/wBcm0UrIAb
+         q+JeWJolB/8Bl2dxGs2IcjLNF9HA8XSqUcmVBgZHh2uoxjD0Hztzx7a3m/lNbd36nWwp
+         Ion8kSpXjWnYLHzPY8zLKZE12IKZwebiX9kpTCrMnktgS6tnWO6s0KoGpbljG/zseLC9
+         9XoV14rUtCSJl+1ys3C3WiWj+cFZVP4JBG5fXCix2QKicVuwNEWzocVCRXeBuo8MwA/U
+         NfnsyiKSu8UuvCL0Lq2DZZWc59FEaL4VbVdJpa/yH9Q/fIdt06upPgrcatnHRu0MBewB
+         fWDw==
+X-Gm-Message-State: APjAAAUtJoAtFJFuFA/4qx91enRIJCwiM5akOXIJoRPSbULY2Ah5nt7K
+        8WsU7YuIqp5ONkGWwJNnWR6cYWGmsvKZ71fpHhQ=
+X-Google-Smtp-Source: APXvYqxEZ3oDabW70J1WGgcpqvgafPdDPHLNJUxCxTSHZ8tiQWyuL9ClMnKM2KQbylogVkirWyqGKlvTRAk735e9Lqg=
+X-Received: by 2002:a67:f502:: with SMTP id u2mr11283724vsn.117.1570303344203;
+ Sat, 05 Oct 2019 12:22:24 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+References: <pull.316.git.gitgitgadget@gmail.com> <pull.316.v2.git.gitgitgadget@gmail.com>
+ <dbaf3de88e036fb23d7760582030726f32581a4d.1568904188.git.gitgitgadget@gmail.com>
+In-Reply-To: <dbaf3de88e036fb23d7760582030726f32581a4d.1568904188.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 5 Oct 2019 12:22:13 -0700
+Message-ID: <CABPp-BEb-C=M5FQ7DhXViSooyNeify5v_5v+n6QbqQZm64jMdg@mail.gmail.com>
+Subject: Re: [PATCH v2 01/11] sparse-checkout: create builtin with 'list' subcommand
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Thu, Sep 19, 2019 at 1:45 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The sparse-checkout feature is mostly hidden to users, as its
+> only documentation is supplementary information in the docs for
+> 'git read-tree'. In addition, users need to know how to edit the
+> .git/info/sparse-checkout file with the right patterns, then run
+> the appropriate 'git read-tree -mu HEAD' command. Keeping the
+> working directory in sync with the sparse-checkout file requires
+> care.
+>
+> Begin an effort to make the sparse-checkout feature a porcelain
+> feature by creating a new 'git sparse-checkout' builtin. This
+> builtin will be the preferred mechanism for manipulating the
+> sparse-checkout file and syncing the working directory.
 
-So far, `--jobs=<n>` only parallelizes submodule fetches/clones, not
-`--multiple` fetches, which is unintuitive, given that the option's name
-does not say anything about submodules in particular.
+Sounds good.
 
-Let's change that. With this patch, also fetches from multiple remotes
-are parallelized.
+> The `$GIT_DIR/info/sparse-checkout` file defines the skip-
+> worktree reference bitmap. When Git updates the working
+> directory, it updates the skip-worktree bits in the index
+> based on this file and removes or restores files in the
+> working copy to match.
 
-For backwards-compatibility (and to prepare for a use case where
-submodule and multiple-remote fetches may need different parallelization
-limits), the config setting `submodule.fetchJobs` still only controls
-the submodule part of `git fetch`, while the newly-introduced setting
-`fetch.parallel` controls both (but can be overridden for submodules
-with `submodule.fetchJobs`).
+Does this paragraph make sense in the commit message?  It's not
+explaining anything new or changing with your patch, just pre-existing
+behavior, but you don't seem to reference or expound on it.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/config/fetch.txt  |  10 +++
- Documentation/fetch-options.txt |  13 ++--
- builtin/fetch.c                 | 124 +++++++++++++++++++++++++++-----
- t/t5514-fetch-multiple.sh       |  11 +++
- 4 files changed, 137 insertions(+), 21 deletions(-)
+> The documentation provided is adapted from the "git read-tree"
+> documentation with a few edits for clarity in the new context.
+> Extra sections are added to hint toward a future change to
+> a more restricted pattern set.
 
-diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
-index ba890b5884..b200634065 100644
---- a/Documentation/config/fetch.txt
-+++ b/Documentation/config/fetch.txt
-@@ -68,3 +68,13 @@ fetch.showForcedUpdates::
- 	Set to false to enable `--no-show-forced-updates` in
- 	linkgit:git-fetch[1] and linkgit:git-pull[1] commands.
- 	Defaults to true.
-+
-+fetch.parallel::
-+	Specifies the maximal number of fetch operations to be run in parallel
-+	at a time (submodules, or remotes when the `--multiple` option of
-+	linkgit:git-fetch[1] is in effect).
-++
-+A value of 0 will give some reasonable default. If unset, it defaults to 1.
-++
-+For submodules, this setting can be overridden using the `submodule.fetchJobs`
-+config setting.
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 3c9b4f9e09..8f269d3baa 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -160,10 +160,15 @@ ifndef::git-pull[]
- 
- -j::
- --jobs=<n>::
--	Number of parallel children to be used for fetching submodules.
--	Each will fetch from different submodules, such that fetching many
--	submodules will be faster. By default submodules will be fetched
--	one at a time.
-+	Number of parallel children to be used for all forms of fetching.
-++
-+If the `--multiple` option was specified, the different remotes will be fetched
-+in parallel. If multiple submodules are fetched, they will be fetched in
-+parallel. To control them independently, use the config settings
-+`fetch.parallel` and `submodule.fetchJobs` (see linkgit:git-config[1]).
-++
-+Typically, parallel recursive and multi-remote fetches will be faster. By
-+default fetches are performed sequentially, not in parallel.
- 
- --no-recurse-submodules::
- 	Disable recursive fetching of submodules (this has the same effect as
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 53ce99d2bb..e2d374724d 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -54,7 +54,8 @@ static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosit
- static int progress = -1;
- static int enable_auto_gc = 1;
- static int tags = TAGS_DEFAULT, unshallow, update_shallow, deepen;
--static int max_children = 1;
-+static int max_jobs = -1, submodule_fetch_jobs_config = -1;
-+static int fetch_parallel_config = 1;
- static enum transport_family family;
- static const char *depth;
- static const char *deepen_since;
-@@ -96,13 +97,20 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
- 	}
- 
- 	if (!strcmp(k, "submodule.fetchjobs")) {
--		max_children = parse_submodule_fetchjobs(k, v);
-+		submodule_fetch_jobs_config = parse_submodule_fetchjobs(k, v);
- 		return 0;
- 	} else if (!strcmp(k, "fetch.recursesubmodules")) {
- 		recurse_submodules = parse_fetch_recurse_submodules_arg(k, v);
- 		return 0;
- 	}
- 
-+	if (!strcmp(k, "fetch.parallel")) {
-+		fetch_parallel_config = git_config_int(k, v);
-+		if (fetch_parallel_config < 0)
-+			die(_("fetch.parallel cannot be negative"));
-+		return 0;
-+	}
-+
- 	return git_default_config(k, v, cb);
- }
- 
-@@ -134,7 +142,7 @@ static struct option builtin_fetch_options[] = {
- 		    N_("fetch all tags and associated objects"), TAGS_SET),
- 	OPT_SET_INT('n', NULL, &tags,
- 		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
--	OPT_INTEGER('j', "jobs", &max_children,
-+	OPT_INTEGER('j', "jobs", &max_jobs,
- 		    N_("number of submodules fetched in parallel")),
- 	OPT_BOOL('p', "prune", &prune,
- 		 N_("prune remote-tracking branches no longer on remote")),
-@@ -1456,7 +1464,62 @@ static void add_options_to_argv(struct argv_array *argv)
- 
- }
- 
--static int fetch_multiple(struct string_list *list)
-+/* Fetch multiple remotes in parallel */
-+
-+struct parallel_fetch_state {
-+	const char **argv;
-+	struct string_list *remotes;
-+	int next, result;
-+};
-+
-+static int fetch_next_remote(struct child_process *cp, struct strbuf *out,
-+			     void *cb, void **task_cb)
-+{
-+	struct parallel_fetch_state *state = cb;
-+	char *remote;
-+
-+	if (state->next < 0 || state->next >= state->remotes->nr)
-+		return 0;
-+
-+	remote = state->remotes->items[state->next++].string;
-+	*task_cb = remote;
-+
-+	argv_array_pushv(&cp->args, state->argv);
-+	argv_array_push(&cp->args, remote);
-+	cp->git_cmd = 1;
-+
-+	if (verbosity >= 0)
-+		printf(_("Fetching %s\n"), remote);
-+
-+	return 1;
-+}
-+
-+static int fetch_failed_to_start(struct strbuf *out, void *cb, void *task_cb)
-+{
-+	struct parallel_fetch_state *state = cb;
-+	const char *remote = task_cb;
-+
-+	state->result = error(_("Could not fetch %s"), remote);
-+
-+	return 0;
-+}
-+
-+static int fetch_finished(int result, struct strbuf *out,
-+			  void *cb, void *task_cb)
-+{
-+	struct parallel_fetch_state *state = cb;
-+	const char *remote = task_cb;
-+
-+	if (result) {
-+		strbuf_addf(out, _("could not fetch '%s' (exit code: %d)\n"),
-+			    remote, result);
-+		state->result = -1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int fetch_multiple(struct string_list *list, int max_children)
- {
- 	int i, result = 0;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
-@@ -1470,20 +1533,34 @@ static int fetch_multiple(struct string_list *list)
- 	argv_array_pushl(&argv, "fetch", "--append", "--no-auto-gc", NULL);
- 	add_options_to_argv(&argv);
- 
--	for (i = 0; i < list->nr; i++) {
--		const char *name = list->items[i].string;
--		argv_array_push(&argv, name);
--		if (verbosity >= 0)
--			printf(_("Fetching %s\n"), name);
--		if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
--			error(_("Could not fetch %s"), name);
--			result = 1;
-+	if (max_children != 1 && list->nr != 1) {
-+		struct parallel_fetch_state state = { argv.argv, list, 0, 0 };
-+
-+		argv_array_push(&argv, "--end-of-options");
-+		result = run_processes_parallel_tr2(max_children,
-+						    &fetch_next_remote,
-+						    &fetch_failed_to_start,
-+						    &fetch_finished,
-+						    &state,
-+						    "fetch", "parallel/fetch");
-+
-+		if (!result)
-+			result = state.result;
-+	} else
-+		for (i = 0; i < list->nr; i++) {
-+			const char *name = list->items[i].string;
-+			argv_array_push(&argv, name);
-+			if (verbosity >= 0)
-+				printf(_("Fetching %s\n"), name);
-+			if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
-+				error(_("Could not fetch %s"), name);
-+				result = 1;
-+			}
-+			argv_array_pop(&argv);
- 		}
--		argv_array_pop(&argv);
--	}
- 
- 	argv_array_clear(&argv);
--	return result;
-+	return !!result;
- }
- 
- /*
-@@ -1626,7 +1703,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	for (i = 1; i < argc; i++)
- 		strbuf_addf(&default_rla, " %s", argv[i]);
- 
--	fetch_config_from_gitmodules(&max_children, &recurse_submodules);
-+	fetch_config_from_gitmodules(&submodule_fetch_jobs_config,
-+				     &recurse_submodules);
- 	git_config(git_fetch_config, NULL);
- 
- 	argc = parse_options(argc, argv, prefix,
-@@ -1692,15 +1770,27 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			fetch_one_setup_partial(remote);
- 		result = fetch_one(remote, argc, argv, prune_tags_ok);
- 	} else {
-+		int max_children = max_jobs;
-+
- 		if (filter_options.choice)
- 			die(_("--filter can only be used with the remote "
- 			      "configured in extensions.partialclone"));
-+
-+		if (max_children < 0)
-+			max_children = fetch_parallel_config;
-+
- 		/* TODO should this also die if we have a previous partial-clone? */
--		result = fetch_multiple(&list);
-+		result = fetch_multiple(&list, max_children);
- 	}
- 
- 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
- 		struct argv_array options = ARGV_ARRAY_INIT;
-+		int max_children = max_jobs;
-+
-+		if (max_children < 0)
-+			max_children = submodule_fetch_jobs_config;
-+		if (max_children < 0)
-+			max_children = fetch_parallel_config;
- 
- 		add_options_to_argv(&options);
- 		result = fetch_populated_submodules(the_repository,
-diff --git a/t/t5514-fetch-multiple.sh b/t/t5514-fetch-multiple.sh
-index 5426d4b5ab..de8e2f1531 100755
---- a/t/t5514-fetch-multiple.sh
-+++ b/t/t5514-fetch-multiple.sh
-@@ -183,4 +183,15 @@ test_expect_success 'git fetch --all --tags' '
- 	test_cmp expect test8/output
- '
- 
-+test_expect_success 'parallel' '
-+	git remote add one ./bogus1 &&
-+	git remote add two ./bogus2 &&
-+
-+	test_must_fail env GIT_TRACE="$PWD/trace" \
-+		git fetch --jobs=2 --multiple one two 2>err &&
-+	grep "preparing to run up to 2 tasks" trace &&
-+	test_i18ngrep "could not fetch .one.*128" err &&
-+	test_i18ngrep "could not fetch .two.*128" err
-+'
-+
- test_done
--- 
-gitgitgadget
+I think it needs a few more adaptations, as noted below...
+
+> +SPARSE CHECKOUT
+> +----------------
+> +
+> +"Sparse checkout" allows populating the working directory sparsely.
+> +It uses the skip-worktree bit (see linkgit:git-update-index[1]) to tell
+> +Git whether a file in the working directory is worth looking at. If
+> +the skip-worktree bit is set, then the file is ignored in the working
+> +directory. Git will not populate the contents of those files, which
+> +makes a sparse checkout helpful when working in a repository with many
+> +files, but only a few are important to the current user.
+> +
+> +The `$GIT_DIR/info/sparse-checkout` file is used to define the
+> +skip-worktree reference bitmap. When Git updates the working
+> +directory, it resets the skip-worktree bit in the index based on this
+> +file. If an entry
+> +matches a pattern in this file, skip-worktree will not be set on
+> +that entry. Otherwise, skip-worktree will be set.
+> +
+> +Then it compares the new skip-worktree value with the previous one. If
+> +skip-worktree turns from set to unset, it will add the corresponding
+> +file back. If it turns from unset to set, that file will be removed.
+
+I know this was just copied from elsewhere, but I still have the same
+problem I mentioned last time with these paragraphs: the double
+negations just make it confusing to follow.  I'd prefer e.g. replacing
+the last two paragraphs above with the following (which I think you
+did take but accidentally placed in the commit message instead of
+using it to replace these confusing paragraphs?):
+
+The `$GIT_DIR/info/sparse-checkout` file is used to define the
+skip-worktree reference bitmap. When Git updates the working
+directory, it updates the skip-worktree bits in the index based on this
+file and removes or restores files in the working copy to match.
+
+It doesn't have to be this precise wording, but something like it
+which is way easier to follow than those two paragraphs you were
+copying.
+
+> +Another tricky thing is fully repopulating the working directory when you
+> +no longer want sparse checkout. You cannot just disable "sparse
+> +checkout" because skip-worktree bits are still in the index and your working
+> +directory is still sparsely populated. You should re-populate the working
+> +directory with the `$GIT_DIR/info/sparse-checkout` file content as
+> +follows:
+> +
+> +----------------
+> +/*
+> +----------------
+> +
+> +Then you can disable sparse checkout.
+
+I would comment on this section, but it appears you remove this
+section later in your series when you add 'sparse-checkout disable',
+which addresses my concern.
+
+> Sparse checkout support in 'git
+> +read-tree' and similar commands is disabled by default. You need to
+> +set `core.sparseCheckout` to `true` in order to have sparse checkout
+> +support.
+
+I see you change `git read-tree` to `git checkout` later in the
+series, which is good.  However, you keep the second sentence which
+seems unhelpful.  Why have a 'git sparse-checkout init' command if the
+user still has to manually set `core.sparseCheckout`?  Also, if we're
+going to mention that setting, we should mention
+extensions.worktreeConfig at the same time.  Not sure whether it'd be
+better to drop the second sentence or restructure it to let the user
+know that it depends on the core.sparseCheckout setting which the init
+command runs, but something should probably be done.
+
+
+The rest of the patch looks good.
