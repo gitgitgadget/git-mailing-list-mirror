@@ -2,121 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CB0C1F4BD
-	for <e@80x24.org>; Sun,  6 Oct 2019 09:54:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51D1F1F4BD
+	for <e@80x24.org>; Sun,  6 Oct 2019 10:16:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726261AbfJFJyZ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 Oct 2019 05:54:25 -0400
-Received: from mout.gmx.net ([212.227.17.21]:42499 "EHLO mout.gmx.net"
+        id S1726322AbfJFKQV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Oct 2019 06:16:21 -0400
+Received: from mout.web.de ([212.227.17.12]:53343 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726185AbfJFJyZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Oct 2019 05:54:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570355650;
-        bh=BJIvLMTBunjrYiTAl42mBVS1w3TFQcaseDzvWKBDkBY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=XQMlgEEJwNEreMXjUazJs/mgDZmETuOrNd1hkGb5TDPwjKjm2hGZaNTIAMjWAXsqT
-         gPT0OqGM1N8GNP6DG+TykVkdZshb3mOzNYg3QgIJYuBIcW+/b3kwgVNLROa/oNup8p
-         JOc9vEM8zMriL9P5B1octLnFNUcjIHMh50Ci/mMQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKKUp-1iXtGw3uhT-00LnAY; Sun, 06
- Oct 2019 11:54:10 +0200
-Date:   Sun, 6 Oct 2019 11:53:54 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1726261AbfJFKQU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Oct 2019 06:16:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1570356975;
+        bh=1Pj2lgMSzUmGEXRuZRN3ABS45b9L39fxNk3s3z6IqOk=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=LT0LDrR0usOdo8/foSIHHmJ+mTPVVp5eG11KC8Gd3COs3DcDpRKmsnTgPuPvJP+zx
+         BwDFh6KoJdmAszRzoJZYfWGP8QVvDtwWhLfazZtSH0+dVLAezT5bL43JThrs0ClYmM
+         /2JxnnI1xx83aitlPdrBPRl/wNio1oGtUhU+1WXs=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LilJB-1hgKmo1Joj-00cvtW; Sun, 06
+ Oct 2019 12:16:15 +0200
+Subject: Re: PATCH] remove duplicate #include directives
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v2 1/1] fetch: let --jobs=<n> parallelize --multiple,
- too
-In-Reply-To: <xmqqftk67r6j.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1910061151440.46@tvgsbejvaqbjf.bet>
-References: <pull.369.git.gitgitgadget@gmail.com> <pull.369.v2.git.gitgitgadget@gmail.com> <93a155a000571df3f3f3a63cd8d886d68fbe8403.1570301198.git.gitgitgadget@gmail.com> <xmqqftk67r6j.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <1133ae3b-81e8-4ec1-c2d7-d071e7e65ec1@web.de>
+ <xmqqh84pa0ah.fsf@gitster-ct.c.googlers.com>
+ <59f7fafc-818e-1996-4e1a-5697bd4880e0@web.de>
+ <xmqqv9t269qk.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <5af3ad29-5127-b5f7-46c9-f1d3d45b4e67@web.de>
+Date:   Sun, 6 Oct 2019 12:16:12 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:m6Y7nSG64rRnxfo3fITKUyaZznt50Cfizgojn37+f2TSVJVrV5V
- C6KBJGPK1wXQ8GG2RrrDBETRuBx+jVQdiRqb9NEGEZ3puh3oZhKHYGEjl8WkvfV4WMKngcA
- kU7LbNmnQ5+xjzXiVC/YfMhzVsLxTo9ZOdFnTKPhZK9h8oAY/nXMG1uFVrEwBb/0r0l56uM
- ppc23ca6E8jxtbOCFUGaQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:z5nVs4VNx5Y=:6sy2jfDWTG+78jEeg4qq82
- wXoqnanE2xDcGOPcrI7qop/F2aWE8i7ObFFepMxszR+coNpyEZvdnrtGiRNlJqmVKbnN+a+nW
- jtQEtTvISIA//XeFr6Ga4FPidVXAEhjxIpqCAfiBnbxifCMSqyksDeDKkDGcOIhtVUSQgG4yO
- +pyxnm5os34wvniABE1e7nfVBLSaRhNySIHhAVXXKgqvm82k84pLg1htcMpm5fxvv6grNWeyF
- jTX+5gbY/WFu03A0FrCIVO+TjkCXmplVtxMGgU+l7367d/L9IBfsV0LMlz5f7OyBLvAGoLlmF
- 2AoiGM5hvbJQ5prGbNqTGe5Lw0chTBwuwEo45T+cMJOI56kMpzg3FiMbRgPnp/Ax0EAPuQu4G
- 0Mmpp5DI1KvHtBeflQisGoS9fn4zSabB1+wv+xxBSOMQV6RT20GjfF/6Joz/FjJNcPSSzi4S5
- IwBiFvt8b8nwomZUrYfF2V9YFb9a/BQ2qAJ8S/CSfzr6M2K58lG0eryYCqY/Ehvazh/2YNX9O
- JbmcCHDCMgTmNoDVl0mDr387xC+sxS6YKRIKKfJSsh0MC7nZc2P7t8p8tdIJ2Z/Q84FO+B/Yy
- N0DP+SIOupDLUAgUQTFgezcfXSsCahFEEuOfa4jBiYs8xwBII6O3R2AiwNc2bjGU6CJc3fY53
- V+eJybNP3FaDx7u/2r7XYotiZP5LHr47jPn6VxYyTBmtMXJvkKwz3bGpAjIDroanNklDuNjW1
- J6V7395urq4GZa7/qC7bw5wWyRoc250uv8puvRsVteMiqMQFa22WQnzO4ybDK5BOcqA6LMxF+
- 15sGDiWqtNstXASW1kU8VLIE4Ht1I2Jw2ZaPH3drmvOfmhAn25yu2RH8UPEcuqUZI+sURW26Y
- kLsl/Vmt0f/anljKidKOVLEn4FJBR4bf85aKBTRfnBoahsBu9K0po0qrNRHq3F8iAAP9rkqZs
- MqrNwYta5RlWLUfCtI06jIiOGx/GDZMN3oH1oWhG62czaG6z57lpg4t7lWHtoq/las6U1SCvV
- BeSMewvZdUV4R312wYcwwpu1mcGdBlEwFJu19nfNOSjqpeS6y9PqLnYO1cAvGtHpmbQ0EfUrB
- dMdpaArUODoHEaXeq8APs0ITivbXB6Bvg1douCWUg0b6QkWDmYt0nVzpzxwD6W29xuAaTrxvk
- Ywl9lrK1LqZ5p5yo+ol4Vj2vcYru3FbALl+dyjJtzzhKXiZRm6pWKpB2gX7zKwS616aRuHACi
- TvHRCG1ZaHFuIiXVb9NHQU80PQVuieEsSx7aCiAWmbIjeqS0kOJ5vFTj3YQk=
+In-Reply-To: <xmqqv9t269qk.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:U2wWwWzsNVHRMpTTPdqBhNEdFp+haD4okUT1GssdcpxEEWbWO68
+ AGMpwQkxiVKEMYiXeEz/EV2ohc/PGP5XSj9iEFHI68fMx63HIRX4IegrR7ufOxALkaLQoa3
+ uh762evcOhBld2knfdyaaFhs1ZRmq9UotgOy41OSwT693pXm7lIqV3ZmOxkgN01fr5o9rRH
+ lOjG20li/JPP0la3msGlA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:L6nB0R7Ocvs=:swTJ+Ea5ye6Rqqtd9HHkub
+ mrKUGVixac9CReztpv56BOfxhWDo+UHUtO7xad0kbmykwPfQ8WrZTEbKtXV14XSGqpDBn8Lh4
+ 2zLSdOroL2I0x4W8gu2lUYF0kXAFELqP3uUv/KTm/3QPJuWJpW+9J26/B/U6a0HirbK3tnKbb
+ Yki3tQbESgOpJ4+xehuQgRm0CWuKO9cuYrc7qBF4GjEkgipK3tBMNs3zjjWJ8xt9B1rGOd4zy
+ Sz15JBFscOExXzyW8aFLWcEbqC6BhKH+iIfKfrd6bDT1qToey5Lkrpn9I+Y/x9OXFz1Ncr27t
+ ZF0NRBx9n+/Y2HWA4X5th9AFkz/gLTARUqnwKtjbtn/g2WlI3FjDRQtUN2jQEtQUme3Y8Q6aL
+ DvBwKJfZdjVUu4wBgJY44R3hNT2EZa1jOjFkWODhuqtubYlDCivHqNo/qEnt0LrI4xUqzeAvr
+ ykC0fbwHGU1ntHKEwgml5i0MxYN30Lwfg6pR48nQ6mgNWEYkEnp5SkrWhcB96iWu8O+ACjXXg
+ GK2gRB2Ub6JOCmOZ45yboW2dctP4+caJF9KINThU0MWtArKfpmEk63BYu8+mZ8EC4TMbKXz/8
+ Y1JRJy64OeSNawlf4GFRyn8vRG2aA1lQ0Uo4hvsYBodNx4K/YJS+ROgmRhzCr5jMdJj68o9zW
+ Zqatg3K7BLDEloRoq7BoSyFBjOIx5pziZYQUseG1gpVZVpNJgKRmBMePNIdo17luMpXFRR+lR
+ RUe2IXP8JqaBeZ+N2FdlayQcKVkHFX4VvEB30mOYAkhQPXCthrHYwwCxv5TDYzbgxXAIRsdEi
+ nRnt1zBKx8ceHH9tZtQr5GsNXCPdcLtrRu0+SWUiNBuTGLVTSJDnLcO96tK21AuCS5+VX8is/
+ Amf/pi3W8gFHheANtbBLtWKg2YhlXuEhlqc3FoBYBLqCFLzb1e963Ga1Vy1fButZjNOYwkfnT
+ ieAWaml2N6pPy7gezMTAquJvy2kXMn2EgkxKqOkmEo5P/Ug7lXyRqGJtfJgaeIdcJcLQUspPc
+ 5gbljC4lcnYfnoIQFRDO6ulbmaydaWrnzW9KEHJ9v0PpPLh1VoyygC0R/V24UdXq85XWym+Mi
+ QqGgkUawWJnaKzYwEkNv4wQ12F97LBSNNgsqlYBn5aEvkz4USjj+TvyY1U3tHQblFW/igD+F0
+ lcWPHFb30v4DDe3omwPCD3b5KONs2Z6h98I+Cj+S5Rb/90GfyC13EL+/Pf2iCYhVXtinv0IVd
+ kNaCe8q90qGebRZa8j2O/WhHQebOwtRJQpGUQxg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Sun, 6 Oct 2019, Junio C Hamano wrote:
-
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+Am 06.10.19 um 01:41 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>> This one here requires one more piece of information, though, namely ou=
+r
+>> convention of wrapping header files in guard defines to make repeated
+>> includes of them no-ops.  We do that for those removed by the patch, bu=
+t
+>> we have a few exceptions to that rule in our repo (at least
+>> command-list.h, kwset.h, sha1dc_git.h, tar.h, unicode-width.h).  So in
+>> that sense it's not such a good example of a self-sufficient patch. :)
 >
-> > +test_expect_success 'parallel' '
-> > +	git remote add one ./bogus1 &&
-> > +	git remote add two ./bogus2 &&
-> > +
-> > +	test_must_fail env GIT_TRACE=3D"$PWD/trace" \
-> > +		git fetch --jobs=3D2 --multiple one two 2>err &&
-> > +	grep "preparing to run up to 2 tasks" trace &&
-> > +	test_i18ngrep "could not fetch .one.*128" err &&
-> > +	test_i18ngrep "could not fetch .two.*128" err
-> > +'
-> > +
-> >  test_done
->
-> Thanks.  I think it is much better to prepare these tests like this
-> patch does to be broken when phrasing changes---that would give
-> feedback and confidence to the person who is changing the message
-> and/or the logic to emit the message.
->
-> Where does the constant 128 come from, by the way?  If it is from errno.=
-h
-> then we will soon hear breakage report from NonStop folks, I predict
-> ;-)
+> Not really.  "We use header guards" is an argument that demotes this
+> cleanup from "must have" to "nice to have".  If a project did not
+> use header guards or including the same header twice were an error,
+> the patch in question would have been more necessary, but that
+> wouldn't have changed the correctness of the patch, I think.
 
-It comes from `die()`:
+You start with "No", but make my point -- a reader would need more
+information than the content of the patch itself to classify it as a
+trivial cleanup, namely knowledge of our use of include guards.
 
-=2D- snip --
-static NORETURN void die_builtin(const char *err, va_list params)
-{
-        /*
-	 * We call this trace2 function first and expect it to va_copy 'params'
-	 * before using it (because an 'ap' can only be walked once).
-	 */
-	trace2_cmd_error_va(err, params);
+Here is an example of a non-idempotent header:
 
-	vreportf("fatal: ", err, params);
+   #define NDEBUG
+   ...
+   #include <assert.h>
+   ...
+   #undef NDEBUG
+   ...
+   #include <assert.h>
 
-	exit(128);
-}
-=2D- snap --
+(That's the only one we use that I'm aware of.)
 
-Thanks,
-Dscho
+Ren=C3=A9
