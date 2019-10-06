@@ -2,257 +2,213 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 738641F4BD
-	for <e@80x24.org>; Sun,  6 Oct 2019 04:22:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACDCE1F4BE
+	for <e@80x24.org>; Sun,  6 Oct 2019 09:50:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726091AbfJFEWp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 Oct 2019 00:22:45 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:41144 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726086AbfJFEWp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Oct 2019 00:22:45 -0400
-Received: by mail-vs1-f66.google.com with SMTP id l2so6732283vsr.8
-        for <git@vger.kernel.org>; Sat, 05 Oct 2019 21:22:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=H7jjD/Ysu+PgiBOlpCosEoZopCF1ZKMKCB+7FUdYl0E=;
-        b=tK0w1+8gFYF7t1hc5ziv5qiht6vlJZ26h3gpizIvqFfnMXDnGb8Na+f/QxyG2mxfBv
-         aQPU46YR2sXhfoLoS1BQz3MV8LaIa7PuUtg3Fc0WO63ejVbopnjMazhuF9Aa2+SiKOC7
-         kh9wKtbjf/0J8FyCAZ4boKHmVywEpEI+uba5yy6/cuUGkFqidy0WMTAhK2PSUMdQ5vpg
-         0sCBuqvQ/6C52ApBjByiYfWrhsIsZ/UbLhpKO5sUJdE7BYOY5NKUCFw/By7mwKrjXCbS
-         39NiYrWsZ8HqYXBlBJDW1TsUiRg0ZE4wHzj7WXYYSd2uazBamESMu/iSW2sr7JTmCJFm
-         SGWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=H7jjD/Ysu+PgiBOlpCosEoZopCF1ZKMKCB+7FUdYl0E=;
-        b=BduXUeo17EUlZ51zttGw7Syh9/BRD9tyA3DIXaxP0INqhRZ7GqkfNpNI2QheyDRs4v
-         QU7SnVkk11jiBJcKCVRXu/+RWpqJI+teABzQJJV+ZyJmyWB2BNkkWayVRCqSy40CmJFH
-         17HYjHo0qTCuZN2AOfLPbILJ+JidmUPIIAhIYhDRo4QjQuycJDrc/myVxwpXwLRJeFc5
-         J+y84ukNx3WoJrOVQPbIiZl8oMTVuZSBTTYmCRoGSKSbfcwU6u+PxWnsP5j9x6wjkunY
-         SC/N+FzJ2F/g5GRmDfMDuMrSCDGamdwwppwuv5iVLERAWlnf16Wu1EQGHAdWHKEsbHcs
-         2Weg==
-X-Gm-Message-State: APjAAAUGb2rDa1oLO4oeXsIi0ne7TboG3MGAti767P6Zxn0ukaWojbbd
-        uSzi3rkhMQktaibEwSeES2sj3CVPQ7RVqwfjESofGcy1
-X-Google-Smtp-Source: APXvYqxAWh+Kd6kJv7KuTAh9P+c/QCyQj2weytmj3684vwjcUfmgWIQdiQvxGU347dFOlFG0PGZTqhVaS3Ta3FGZnbo=
-X-Received: by 2002:a67:f502:: with SMTP id u2mr11959266vsn.117.1570335763675;
- Sat, 05 Oct 2019 21:22:43 -0700 (PDT)
+        id S1726322AbfJFJuO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Oct 2019 05:50:14 -0400
+Received: from mout.gmx.net ([212.227.15.19]:48561 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726185AbfJFJuO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Oct 2019 05:50:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570355411;
+        bh=Cny+rWs47Pc7WqWpe3vMbPtCXx6lH29gFMG5vGBAv+Q=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hhSeMt/jv49Y6zsYTNyxqdsS9Rru+Awkcz2uRqJqf7nd63H4lwt/xyzyOoKAuh0fY
+         E7Z+V734Fdm0SJWK/b1bTzswNl1osAQon5HibaZIWlNl3yJBi7OxIyUyESxxfVgXhZ
+         Mpe5t7ozSc7TIzo9tUBIOjxFUvgExqrphnrlX0bk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N6bfw-1i3B643hYk-0181DT; Sun, 06
+ Oct 2019 11:50:11 +0200
+Date:   Sun, 6 Oct 2019 11:49:55 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Pratyush Yadav <me@yadavpratyush.com>
+cc:     Harish Karumuthil <harish2704@gmail.com>, git@vger.kernel.org,
+        David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] Feature: custom guitool commands can now have custom
+ keyboard shortcuts
+In-Reply-To: <20191005210127.uinrgazj5ezyqftj@yadavpratyush.com>
+Message-ID: <nycvar.QRO.7.76.6.1910061054470.46@tvgsbejvaqbjf.bet>
+References: <01020153c22ab06b-e195b148-37cc-4f89-92f3-f4bed1915eb9-000000@eu-west-1.amazonses.com> <20160331164137.GA11150@gmail.com> <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com> <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com>
+ <20191003214422.d4nocrxadxt47smg@yadavpratyush.com> <nycvar.QRO.7.76.6.1910041046000.46@tvgsbejvaqbjf.bet> <20191004120107.kpskplwhflnsamwu@yadavpratyush.com> <149a83fd40b71896b134b16c2b499ff472c6234e.camel@gmail.com>
+ <20191005210127.uinrgazj5ezyqftj@yadavpratyush.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <pull.316.git.gitgitgadget@gmail.com> <pull.316.v2.git.gitgitgadget@gmail.com>
- <84511255d1f28e1bdcec3de6096d2d9ac2a9f483.1568904188.git.gitgitgadget@gmail.com>
-In-Reply-To: <84511255d1f28e1bdcec3de6096d2d9ac2a9f483.1568904188.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 5 Oct 2019 21:22:32 -0700
-Message-ID: <CABPp-BE9HrMyskiMhQ7VxeMvZX_CCurUM_20M6md2UXZG13XEA@mail.gmail.com>
-Subject: Re: [PATCH v2 08/11] sparse-checkout: add 'cone' mode
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:b8Kx8QbHLmsFaGUkp4vdtYC7EBOlQSLUNPoeAfIqCEDdx0SW6qj
+ WbNeiYHeUJbu6XPWBQz2s4KsuRMToSLkPvE7drfAYP6KwkChEzMyvNno4LkETUUSIKif5HG
+ UImXb9R1/EV2OrmoNRH3hoe9dVVRgKlegDTMx/bFVvNMaOaTXz1kcsBOVjIxS+M8qXgH/DC
+ oNIVWFeIXwalnxFQZLUHA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6ok19sZYyoQ=:uVZgMvPYG8/FGIrtVCXpnl
+ g0O4Qp5B9UOx5pN6WfPZBsXMVfIoST2nJ2XxVM2k7o+6cqsjoQsnndxGbdqNuoqsCImnBZvub
+ Srb2pLP52/57SDKjbdgVVCCl3ejm+C0vbSo0/xconmDsRfl1h2AgTHMMbOzlP5VozngZSFq9r
+ u6wcuVM3dPHUw5JEKWrclnxgz7zY6NzVWtvyAMzdaMReuCzvO666ESWpHWCIuWBsMAfanHEB1
+ lVDoQPwrW7tARuqXr3gLw7yrVEfOIYFemnjFXCjiSxm1HjJO53iK6/fMW0kxMbpT0LgsRqcwL
+ Iy0EjSpWJWgtMmParG2CkZUPHj6+Wquj0tYSb3HJK/IvbRbZscCtjWYb6ljqeIO5xM9nHG2OC
+ kBZCoyj6KeTxcf9FGbKTdkUMlf7RNNsyy4IYuN6LvJEzZcPme/aziEiExyulQ3oWOed1R8YgW
+ 3i1yoSNA4UzyAsNR7rECLZLEk9esenRwHwiwvVa66SWZdrWzGR/q/P/nvSmndFkznIq0Gp02k
+ ViXIPpjVOoFQ4qD6LcNNjopJnr7TBKUKql/bxQ81bmvtQSS3y99ut57aLN4kRpnolrv1BucFC
+ 1N/JwkE7/JOkvq44X2rwF3AlAAiemPhSypqVEvp7wkrxXgq+8gFoWamib3+EwS94XDH9ObE3m
+ gUHeWEjo60Em/MFdHMHwyJdaDJq/wc3bd1oh57YqHE4hFRP+Dx6o7v6dzW80AzG/U53X8nmtv
+ 9uJRgWJ3QOSyneBo0c4Q4vISY3aC7TZ4fbLuDsIx3Nlgyho61xClJzr7NksE03ifIU2vSU3rg
+ mi3X61f5NFZmxNBvpzlmpfqZT3jFbpf4gN8geagJcDbSvrxNAwO0WbdsrPdHqH9WvPftK1VcJ
+ NYYNXAhRMGj5gipwj7ju5/VVTfwVqSEledzwtVt3wlJySrILLwiHQOvA0koGj7DoK0Isre2tW
+ 3WBfIq+UvAE+RbN8lJg/95SgftX7OnhKhmFW6mG9oFbSLgZure1ePGlDyEQ7Jm17adctRUq3f
+ ycdnFdk1N6p/+mcpw3JEI5jG/klFLqLDqh5L7sel6JptUuP6BtcA4vz5D+h3CCGxrhkrVxzL8
+ ezDcmPPKamWsdk894pCZqhYal83Ium8LHKjpnlXtPyLxeaXFe8YlEfeLs3B14nCJAr5gWK6xK
+ /H+6oBWN/HzD4vFukZEPPHip3mTeGnnxTj3JcRfRlMeiTKhvQUt0we5qvuDY7GolHMxx8/aq2
+ hhEwDDF/hP9geOhMPbzIZMwVPe1MoNDU8fE3BQu5H5y76KbmnAdHfTg4HGQk=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 19, 2019 at 1:45 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> The sparse-checkout feature can have quadratic performance as
-> the number of patterns and number of entries in the index grow.
-> If there are 1,000 patterns and 1,000,000 entries, this time can
-> be very significant.
->
-> Create a new Boolean config option, core.sparseCheckoutCone, to
-> indicate that we expect the sparse-checkout file to contain a
-> more limited set of patterns. This is a separate config setting
-> from core.sparseCheckout to avoid breaking older clients by
-> introcuding a tri-state option.
+Hi Pratyush,
 
-s/introcuding/introducing/
+On Sun, 6 Oct 2019, Pratyush Yadav wrote:
 
-> The config option does nothing right now, but will be expanded
-> upon in a later commit.
+> On 06/10/19 01:46AM, Harish Karumuthil wrote:
+> >
+> > From https://www.kernel.org/doc/html/v4.10/process/email-clients.html,=
+ I
+> > understood that, my current email client ( that is gmail web ) is not =
+good
+> > for submitting patches. So I was tying to setup a mail client which is
+> > compatible with `git send-mail`. But I was not able to get a satisfact=
+ory
+> > result in that.
 >
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  Documentation/config/core.txt         |  7 ++--
->  Documentation/git-sparse-checkout.txt | 50 +++++++++++++++++++++++++++
->  cache.h                               |  4 ++-
->  config.c                              |  5 +++
->  environment.c                         |  1 +
->  t/t1091-sparse-checkout-builtin.sh    | 14 ++++++++
->  6 files changed, 78 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-> index 75538d27e7..9b8ab2a6d4 100644
-> --- a/Documentation/config/core.txt
-> +++ b/Documentation/config/core.txt
-> @@ -591,8 +591,11 @@ core.multiPackIndex::
->         multi-pack-index design document].
->
->  core.sparseCheckout::
-> -       Enable "sparse checkout" feature. See section "Sparse checkout" in
-> -       linkgit:git-read-tree[1] for more information.
-> +       Enable "sparse checkout" feature. If "false", then sparse-checkout
-> +       is disabled. If "true", then sparse-checkout is enabled with the full
-> +       .gitignore pattern set. If "cone", then sparse-checkout is enabled with
-> +       a restricted pattern set. See linkgit:git-sparse-checkout[1] for more
-> +       information.
+> You don't need to "set up" an email client with git-send-email.
+> git-send-email is an email client itself. Well, one which can only send
+> emails.
 
-This isn't consistent with the commit message that suggests it's a new
-option rather than a new possible value for an old option.
+It also cannot reply to mails on the mailing list.
 
->  core.abbrev::
->         Set the length object names are abbreviated to.  If
-> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-> index da95b28b1c..757326618d 100644
-> --- a/Documentation/git-sparse-checkout.txt
-> +++ b/Documentation/git-sparse-checkout.txt
-> @@ -87,6 +87,56 @@ using negative patterns. For example, to remove the file `unwanted`:
->  ----------------
->
->
-> +## CONE PATTERN SET
-> +
-> +The full pattern set allows for arbitrary pattern matches and complicated
-> +inclusion/exclusion rules. These can result in O(N*M) pattern matches when
-> +updating the index, where N is the number of patterns and M is the number
-> +of paths in the index. To combat this performance issue, a more restricted
-> +pattern set is allowed when `core.spareCheckoutCone` is enabled.
-> +
-> +The accepted patterns in the cone pattern set are:
-> +
-> +1. *Recursive:* All paths inside a directory are included.
-> +
-> +2. *Parent:* All files immediately inside a directory are included.
-> +
-> +In addition to the above two patterns, we also expect that all files in the
-> +root directory are included. If a recursive pattern is added, then all
-> +leading directories are added as parent patterns.
-> +
-> +By default, when running `git sparse-checkout init`, the root directory is
-> +added as a parent pattern. At this point, the sparse-checkout file contains
-> +the following patterns:
-> +
-> +```
-> +/*
-> +!/*/
-> +```
-> +
-> +This says "include everything in root, but nothing two levels below root."
-> +If we then add the folder `A/B/C` as a recursive pattern, the folders `A` and
-> +`A/B` are added as parent patterns. The resulting sparse-checkout file is
-> +now
-> +
-> +```
-> +/*
-> +!/*/
-> +/A/
-> +!/A/*/
-> +/A/B/
-> +!/A/B/*/
-> +/A/B/C/
-> +```
-> +
-> +Here, order matters, so the negative patterns are overridden by the positive
-> +patterns that appear lower in the file.
-> +
-> +If `core.sparseCheckoutCone=true`, then Git will parse the sparse-checkout file
-> +expecting patterns of these types. Git will warn if the patterns do not match.
-> +If the patterns do match the expected format, then Git will use faster hash-
-> +based algorithms to compute inclusion in the sparse-checkout.
-> +
->  SEE ALSO
->  --------
->
-> diff --git a/cache.h b/cache.h
-> index cf5d70c196..8e8ea67efa 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -911,12 +911,14 @@ extern char *git_replace_ref_base;
->
->  extern int fsync_object_files;
->  extern int core_preload_index;
-> -extern int core_apply_sparse_checkout;
->  extern int precomposed_unicode;
->  extern int protect_hfs;
->  extern int protect_ntfs;
->  extern const char *core_fsmonitor;
->
-> +int core_apply_sparse_checkout;
-> +int core_sparse_checkout_cone;
-> +
->  /*
->   * Include broken refs in all ref iterations, which will
->   * generally choke dangerous operations rather than letting
-> diff --git a/config.c b/config.c
-> index 296a6d9cc4..f65c74f5b7 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1329,6 +1329,11 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
->                 return 0;
->         }
->
-> +       if (!strcmp(var, "core.sparsecheckoutcone")) {
-> +               core_sparse_checkout_cone = git_config_bool(var, value);
-> +               return 0;
-> +       }
-> +
->         if (!strcmp(var, "core.precomposeunicode")) {
->                 precomposed_unicode = git_config_bool(var, value);
->                 return 0;
-> diff --git a/environment.c b/environment.c
-> index 89af47cb85..670d92bcc0 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -69,6 +69,7 @@ enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
->  char *notes_ref_name;
->  int grafts_replace_parents = 1;
->  int core_apply_sparse_checkout;
-> +int core_sparse_checkout_cone;
->  int merge_log_config = -1;
->  int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
->  unsigned long pack_size_limit_cfg;
-> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-> index 22fa032d6d..9b089c98c4 100755
-> --- a/t/t1091-sparse-checkout-builtin.sh
-> +++ b/t/t1091-sparse-checkout-builtin.sh
-> @@ -140,6 +140,20 @@ test_expect_success 'set sparse-checkout using --stdin' '
->         test_cmp expect dir
->  '
->
-> +test_expect_success 'cone mode: match patterns' '
-> +       git -C repo config --worktree core.sparseCheckoutCone true &&
-> +       rm -rf repo/a repo/folder1 repo/folder2 &&
-> +       git -C repo read-tree -mu HEAD &&
-> +       git -C repo reset --hard &&
-> +       ls repo >dir  &&
-> +       cat >expect <<-EOF &&
-> +               a
-> +               folder1
-> +               folder2
-> +       EOF
-> +       test_cmp expect dir
-> +'
-> +
->  test_expect_success 'sparse-checkout disable' '
->         git -C repo sparse-checkout disable &&
->         test_path_is_missing repo/.git/info/sparse-checkout &&
-> --
-> gitgitgadget
+It cannot even notify you when anybody replied to your patch.
 
-What if core.sparseCheckoutCone is true but core.sparseCheckout is
-false?  Is that an error case we warn the user about, or do we make
-sense of it somehow?
+Two rather problematic aspects when it comes to patch contributions: how
+are you supposed to work with the reviewers when you lack all the tools
+to _interact_ with them? All `git send-email` provides is a "fire and
+forget" way to send patches, i.e. it encourages a monologue, when you
+want to start a dialogue instead.
+
+> So what you should do is run `git format-patch -o feature master..HEAD`,
+> assuming your feature branch is checked out. This will give you a set of
+> '.patch' files depending on how many commits you made in your branch in
+> the folder feature/. Then, you can run
+>
+>   git send-email --to=3D'Pratyush Yadav <me@yadavpratyush.com>' --cc=3D'=
+<git@vger.kernel.org>' feature/*.patch
+>
+> This will send all your patch files via email to me with the git list in
+> Cc. You can add multiple '--to' and '--cc' options to send it to
+> multiple people.
+>
+> Try sending the patches to yourself to experiment around with it.
+>
+> A pretty good tutorial to configuring and using git-send-email can be
+> found at [0]. And of course, read the man page.
+>
+> These instructions are for Linux, but you can probably do something
+> similar in Windows too (if you're using Windows that is).
+
+Last I checked, `git send-email` worked in Git for Windows.
+
+But of course, it does not only not address the problem it tries to
+solve fully (to provide a way to interact with a mailing list when
+submitting patches for review), not even close, to add insult to injury,
+it now adds an additional burden to contributors (who might already have
+struggled to learn themselves enough Tcl/Tk to fix the problem) to
+configure `git send-email` correctly.
+
+> > For now, I followed the instruction of Johannes Schindelin and submitt=
+ed a
+> > pull request . Please see https://github.com/gitgitgadget/git/pull/376
+>
+> You haven't sent '/submit' over there, so those emails aren't in the
+> list (and my inbox) yet. You need to comment with '/submit' (without the
+> quotes) to tell GitGitGadget to send your PR as email.
+
+They probably did not hit `/submit` because the initial hurdle is to be
+`/allow`ed (a very, very simplistic attempt at trying to prevent
+spamming the mailing list by jokesters, of which there are unfortunately
+quite a number).
+
+This `/allow` command, BTW, can be issued by anybody who has been
+`/allow`ed before, it does not always have to be me.
+
+FWIW you should probably be in that list of `/allow`ed people so that
+you can `/allow` new contributors to use GitGitGadget, too.
+
+> [...]
+>
+> > Since #1 is a serious issue, I tried to find out the function which do=
+es the
+> > keycode validation, but I haven't succeded till now. ( I found the C f=
+unction
+> > name  which is "TkStringToKeysym" from TK source, but I couldn't find =
+its TCL
+> > binding ). It will be helpful if any one can help me on this.
+>
+> I really think you shouldn't dive around in the C parts of Tcl. I
+> haven't looked too deeply into this, but you can probably wrap your bind
+> calls in `catch` [2] and handle errors from there. Again, I haven't
+> tried actually doing this, so you do need to check first.
+>
+> You can find examples of how to use `catch` in our codebase. Just search
+> for it.
+
+FWIW in addition to the `catch` method, I would also recommend looking
+into a minimal (not even necessarily complete) way to translate the Qt
+way to specify the keyboard shortcuts (as used by `git-cola`) to Tk
+ones.
+
+As indicated in
+https://github.com/git/git/pull/220#issuecomment-536045075, the Qt style
+`CTRL+,` should be translated to `Control-comma`, for example. In
+particular, keystrokes specified in the format indicated at
+https://doc.qt.io/archives/qt-4.8/qkeysequence.html#QKeySequence-2 to
+the format indicated at https://www.tcl.tk/man/tcl8.4/TkCmd/keysyms.htm.
+
+However, it might not even need to put in _such_ a lot of work: in my
+tests, `Control-,` worked just as well as `Control-comma`. To test this
+for yourself, use this snippet (that is slightly modified from the
+example at the bottom of https://www.tcl.tk/man/tcl/TkCmd/bind.htm so
+that it reacts _only_ to Control+comma instead of all keys):
+
+=2D- snip --
+set keysym "Press any key"
+pack [label .l -textvariable keysym -padx 2m -pady 1m]
+#bind . <Key> {
+bind . <Control-,> {
+    set keysym "You pressed %K"
+}
+=2D- snap --
+
+So I could imagine that something like this could serve as an initial
+draft for a function that you can turn into a "good enough" version:
+
+=2D- snip --
+proc QKeySequence2keysym {keystroke} {
+	regsub -all {(?i)Ctrl\+} $keystroke "Control-" keystroke
+	regsub -all {(?i)Alt\+} $keystroke "Alt-" keystroke
+	regsub -all {(?i)Shift\+} $keystroke "Shift-" keystroke
+	return $keystroke
+}
+=2D- snap --
+
+That way, you don't have to introduce settings separate from
+`git-cola`'s, and you can reuse the short-and-sweet variable name.
+
+Ciao,
+Johannes
