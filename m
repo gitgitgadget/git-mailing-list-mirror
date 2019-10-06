@@ -7,342 +7,347 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C5A81F4BD
-	for <e@80x24.org>; Sun,  6 Oct 2019 21:06:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69CB71F4BD
+	for <e@80x24.org>; Sun,  6 Oct 2019 22:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725976AbfJFVG5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 Oct 2019 17:06:57 -0400
-Received: from relay7-d.mail.gandi.net ([217.70.183.200]:40589 "EHLO
-        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725811AbfJFVG4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Oct 2019 17:06:56 -0400
+        id S1726167AbfJFWJm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Oct 2019 18:09:42 -0400
+Received: from relay1-d.mail.gandi.net ([217.70.183.193]:52489 "EHLO
+        relay1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725958AbfJFWJm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Oct 2019 18:09:42 -0400
 X-Originating-IP: 1.186.12.44
-Received: from localhost (unknown [1.186.12.44])
+Received: from localhost.localdomain (unknown [1.186.12.44])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id B4C2620002;
-        Sun,  6 Oct 2019 21:06:49 +0000 (UTC)
-Date:   Mon, 7 Oct 2019 02:36:47 +0530
+        by relay1-d.mail.gandi.net (Postfix) with ESMTPSA id 21313240004;
+        Sun,  6 Oct 2019 22:09:37 +0000 (UTC)
 From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Harish Karumuthil <harish2704@gmail.com>, git@vger.kernel.org,
-        David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] Feature: custom guitool commands can now have custom
- keyboard shortcuts
-Message-ID: <20191006210647.wfjr7lhw5fxs4bin@yadavpratyush.com>
-References: <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com>
- <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com>
- <20191003214422.d4nocrxadxt47smg@yadavpratyush.com>
- <nycvar.QRO.7.76.6.1910041046000.46@tvgsbejvaqbjf.bet>
- <20191004120107.kpskplwhflnsamwu@yadavpratyush.com>
- <149a83fd40b71896b134b16c2b499ff472c6234e.camel@gmail.com>
- <20191005210127.uinrgazj5ezyqftj@yadavpratyush.com>
- <nycvar.QRO.7.76.6.1910061054470.46@tvgsbejvaqbjf.bet>
- <20191006183948.5n23sdy2l4uwl6kb@yadavpratyush.com>
- <nycvar.QRO.7.76.6.1910062208460.46@tvgsbejvaqbjf.bet>
+To:     <git@vger.kernel.org>
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2] git-gui: add a readme
+Date:   Mon,  7 Oct 2019 03:39:35 +0530
+Message-Id: <20191006220935.31766-1-me@yadavpratyush.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20191004221052.23313-1-me@yadavpratyush.com>
+References: <20191004221052.23313-1-me@yadavpratyush.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1910062208460.46@tvgsbejvaqbjf.bet>
-User-Agent: NeoMutt/20180716
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/10/19 10:27PM, Johannes Schindelin wrote:
-> Hi Pratyush,
-> 
-> On Mon, 7 Oct 2019, Pratyush Yadav wrote:
-> 
-> > On 06/10/19 11:49AM, Johannes Schindelin wrote:
-> > > Hi Pratyush,
-> > >
-> > > On Sun, 6 Oct 2019, Pratyush Yadav wrote:
-> > >
-> > > > On 06/10/19 01:46AM, Harish Karumuthil wrote:
-> > > > >
-> > > > > From https://www.kernel.org/doc/html/v4.10/process/email-clients.html, I
-> > > > > understood that, my current email client ( that is gmail web ) is not good
-> > > > > for submitting patches. So I was tying to setup a mail client which is
-> > > > > compatible with `git send-mail`. But I was not able to get a satisfactory
-> > > > > result in that.
-> > > >
-> > > > You don't need to "set up" an email client with git-send-email.
-> > > > git-send-email is an email client itself. Well, one which can only send
-> > > > emails.
-> > >
-> > > It also cannot reply to mails on the mailing list.
-> > >
-> > > It cannot even notify you when anybody replied to your patch.
-> > >
-> > > Two rather problematic aspects when it comes to patch contributions: how
-> > > are you supposed to work with the reviewers when you lack all the tools
-> > > to _interact_ with them? All `git send-email` provides is a "fire and
-> > > forget" way to send patches, i.e. it encourages a monologue, when you
-> > > want to start a dialogue instead.
-> >
-> > Well, I started with email based patch contribution when I was first got
-> > started with open source, so I might be a bit biased, but in my
-> > experience, it is not that difficult to set all these things up. Most of
-> > the time, all you need to tell git-send-email is your SMTP server,
-> > username, and password. All pretty easy things to do.
-> 
-> Okay, set it up with a corporate Exchange server.
-> 
-> I'll be waiting right here.
+It is a good idea to have a readme so people finding the project can
+know more about it, and know how they can get involved.
 
-I admit, I've never had to do that. And by how you word it, hope I never 
-have to do it in the future either.
- 
-> > And you add in your email client (which pretty much everyone should
-> > have), and it is a complete setup. I personally use neomutt as my email
-> > client, but I have used Thunderbird before, and it is really easy to set
-> > it up to send plain text emails. All you need to do is hold Shift before
-> > hitting reply, and you're in plain text mode. And you can even make it
-> > use plain text by default by flipping a switch in the settings.
-> 
-> How intuitive. And of course Thunderbird still messes up the patches so
-> that they won't apply, unless you *checks notes* do things that are
-> quite involved or *checks notes* do other things that are quite
-> involved.
+Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+---
+Changes in v2:
+  - s/Gui/GUI/g suggested by Johannes.
+  - s/git/Git/ wherever applicable suggested by Johannes.
+  - Clarify that there is no compilation involved, and it is just a
+    bunch of substitutions. Suggested by Johannes.
+  - Clarify that directly using `git send-email` is bad workflow, and
+    suggest using `git format-patch` before that. Suggested by Bert.
+  - Add an example of using `git format-patch`.
+  - Add a "Responding to review comments" section.
 
-Ha! Made me chuckle. You got me there :). I suppose it isn't _that_ 
-simple and I'm just biased because I am so used to it.
- 
-> But then, everybody reads their mails on their command-line anyway.
-> Right?
+Range-diff against v1:
+1:  df866a9 ! 1:  82fd39f git-gui: add a readme
+    @@ -12,25 +12,26 @@
+      --- /dev/null
+      +++ b/README.md
+     @@
+    -+# Git Gui - A graphical user interface for Git
+    ++# Git GUI - A graphical user interface for Git
+     +
+    -+Git Gui is a GUI for [git](https://git-scm.com/) written in Tcl/Tk. It allows
+    -+you to use the git source control management tools via a GUI. This includes
+    ++Git GUI is a GUI for [Git](https://git-scm.com/) written in Tcl/Tk. It allows
+    ++you to use the Git source control management tools via a GUI. This includes
+     +staging, commiting, adding, pushing, etc. It can also be used as a blame
+     +viewer, a tree browser, and a citool (make exactly one commit before exiting
+     +and returning to shell). More details about git-gui can be found in its manual
+     +page by either running `man git-gui`, or by visiting the [online manual
+     +page](https://git-scm.com/docs/git-gui).
+     +
+    -+Git Gui was initially written by Shawn O. Pearce, and is distributed with the
+    -+standard git installation.
+    ++Git GUI was initially written by Shawn O. Pearce, and is distributed with the
+    ++standard Git installation.
+     +
+     +# Building and installing
+     +
+    -+Most of Git Gui is written in Tcl, so there is not much compilation involved.
+    -+Still, some things do need to be done, so you do need to "build" it.
+    ++Most of Git GUI is written in Tcl, so there is no compilation involved. Still,
+    ++some things do need to be done (mostly some substitutions), so you do need to
+    ++"build" it.
+     +
+    -+You can build Git Gui using:
+    ++You can build Git GUI using:
+     +
+     +```
+     +make
+    @@ -49,18 +50,29 @@
+     +The project is currently maintained by Pratyush Yadav over at
+     +https://github.com/prati0100/git-gui. Even though the project is hosted at
+     +GitHub, the development does not happen over GitHub Issues and Pull Requests.
+    -+Instead, an email based workflow is used. The git mailing list
+    ++Instead, an email based workflow is used. The Git mailing list
+     +[git@vger.kernel.org](mailto:git@vger.kernel.org) is where the patches are
+     +discussed and reviewed.
+     +
+    -+More information about the git mailing list and instructions to subscribe can
+    ++More information about the Git mailing list and instructions to subscribe can
+     +be found [here](https://git.wiki.kernel.org/index.php/GitCommunity).
+     +
+     +## Sending your changes
+     +
+     +Since the development happens over email, you need to send in your commits in
+     +text format. Commits can be converted to emails via the two tools provided by
+    -+git: `git-send-email` and `git-format-patch`.
+    ++Git: `git-send-email` and `git-format-patch`.
+    ++
+    ++You can use `git-format-patch` to generate patches in mbox format from your
+    ++commits that can then be sent via email. Let's say you are working on a branch
+    ++called 'foo' that was created on top of 'master'. You can run:
+    ++
+    ++```
+    ++git format-patch -o output_dir master..foo
+    ++```
+    ++
+    ++to convert all the extra commits in 'foo' into a set of patches saved in the
+    ++folder `output_dir`.
+     +
+     +If you are sending multiple patches, it is recommended to include a cover
+     +letter. A cover letter is an email explaining in brief what the series is
+    @@ -75,8 +87,12 @@
+     +
+     +### Using git-send-email
+     +
+    -+You can use `git-send-email` to send patches via email. A pretty good guide to
+    -+configuring and using `git-send-email` can be found
+    ++You can use `git-send-email` to send patches generated via `git-format-patch`.
+    ++While you can directly send patches via `git-send-email`, it is recommended
+    ++that you first use `git-format-patch` to generate the emails, audit them, and
+    ++then send them via `git-send-email`.
+    ++
+    ++A pretty good guide to configuring and using `git-send-email` can be found
+     +[here](https://www.freedesktop.org/wiki/Software/PulseAudio/HowToUseGitSendEmail/)
+     +
+     +### Using your email client
+    @@ -132,7 +148,7 @@
+     +
+     +You need to sign off your commits before sending them to the list. You can do
+     +that by passing the `-s` option to `git-commit`. You can also use the "Sign
+    -+Off" option in Git Gui.
+    ++Off" option in Git GUI.
+     +
+     +A sign-off is a simple 'Signed-off-by: A U Thor \<author@example.com\>' line at
+     +the end of the commit message, after your explanation of the commit.
+    @@ -140,3 +156,24 @@
+     +A sign-off means that you are legally allowed to send the code, and it serves
+     +as a certificate of origin. More information can be found at
+     +[developercertificate.org](https://developercertificate.org/).
+    ++
+    ++## Responding to review comments
+    ++
+    ++It is quite likely your patches will get review comments. Those comments are
+    ++sent on the Git mailing list as replies to your patch, and you will usually be
+    ++Cc'ed in those replies.
+    ++
+    ++You are expected to respond by either explaining your code further to convince
+    ++the reviewer what you are doing is correct, or acknowledge the comments and
+    ++re-send the patches with those comments addressed.
+    ++
+    ++Some tips for those not familiar with communication on a mailing list:
+    ++
+    ++- Use only plain text emails. No HTML at all.
+    ++- Wrap lines at around 75 characters.
+    ++- Do not send attachments. If you do need to send some files, consider using a
+    ++  hosting service, and paste the link in your email.
+    ++- Do not [top post](http://www.idallen.com/topposting.html).
+    ++- Always "reply all". Keep all correspondents and the list in Cc. If you reply
+    ++  directly to a reviewer, and not Cc the list, other people would not be able
+    ++  to chime in.
 
-Well, they should. It is objectively superior ;) </sarcasm>
- 
-> > So while I agree with you that there is certainly a learning curve
-> > involved, I don't think it is all too bad. But again, that is all my
-> > personal opinion, and nothing based on facts or data.
-> 
-> Let me provide you with some data, then. Granted, it's not necessarily
-> all Git GUI, but it includes Git GUI patches, too: Git for Windows'
-> contributions.
-> 
-> As should be well-known, I try to follow Postel's Law when it comes to
-> Git for Windows' patches: be lenient in the input, strict in the output.
-> As such, I don't force contributors to use GitHub PRs (although that is
-> certainly encouraged by virtue of Git for Windows' source code being
-> hosted on GitHub), or send patches, or send pull requests to their own
-> public repositories or bundles sent to the mailing list. I accept them
-> all. At least that is the idea.
-> 
-> I cannot tell you how many contributions came in via GitHub PRs. I can
-> tell precisely you how many contributions were made _not_ using GitHub
-> PRs. One one hand. Actually, on zero hands.
-> 
-> So clearly, at least Git for Windows' contributors (including some who
-> provided Git GUI patches) are much more comfortable with the PR workflow
-> than with the mailing list-based workflow.
+ README.md | 165 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 165 insertions(+)
+ create mode 100644 README.md
 
-I never said email is better that GitHub PRs. It isn't. My point was 
-that using email isn't _that_ hard. When I first did it, it maybe took 
-me 3-4 hours to figure everything out, and then I was set forever. I 
-carry around the same '.gitconfig' file to all my setups, and everything 
-"just works".
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..f87d92f
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,165 @@
++# Git GUI - A graphical user interface for Git
++
++Git GUI is a GUI for [Git](https://git-scm.com/) written in Tcl/Tk. It allows
++you to use the Git source control management tools via a GUI. This includes
++staging, commiting, adding, pushing, etc. It can also be used as a blame
++viewer, a tree browser, and a citool (make exactly one commit before exiting
++and returning to shell). More details about git-gui can be found in its manual
++page by either running `man git-gui`, or by visiting the [online manual
++page](https://git-scm.com/docs/git-gui).
++
++Git GUI was initially written by Shawn O. Pearce, and is distributed with the
++standard Git installation.
++
++# Building and installing
++
++Most of Git GUI is written in Tcl, so there is no compilation involved. Still,
++some things do need to be done (mostly some substitutions), so you do need to
++"build" it.
++
++You can build Git GUI using:
++
++```
++make
++```
++
++And then install it using:
++
++```
++make install
++```
++
++You probably need to have root/admin permissions to install.
++
++# Contributing
++
++The project is currently maintained by Pratyush Yadav over at
++https://github.com/prati0100/git-gui. Even though the project is hosted at
++GitHub, the development does not happen over GitHub Issues and Pull Requests.
++Instead, an email based workflow is used. The Git mailing list
++[git@vger.kernel.org](mailto:git@vger.kernel.org) is where the patches are
++discussed and reviewed.
++
++More information about the Git mailing list and instructions to subscribe can
++be found [here](https://git.wiki.kernel.org/index.php/GitCommunity).
++
++## Sending your changes
++
++Since the development happens over email, you need to send in your commits in
++text format. Commits can be converted to emails via the two tools provided by
++Git: `git-send-email` and `git-format-patch`.
++
++You can use `git-format-patch` to generate patches in mbox format from your
++commits that can then be sent via email. Let's say you are working on a branch
++called 'foo' that was created on top of 'master'. You can run:
++
++```
++git format-patch -o output_dir master..foo
++```
++
++to convert all the extra commits in 'foo' into a set of patches saved in the
++folder `output_dir`.
++
++If you are sending multiple patches, it is recommended to include a cover
++letter. A cover letter is an email explaining in brief what the series is
++supposed to do. A cover letter template can be generated by passing
++`--cover-letter` to `git-format-patch`.
++
++After you send your patches, you might get a review suggesting some changes.
++Make those changes, and re-send your patch(es) in reply to the first patch of
++your initial version. Also please mention the version of the patch. This can be
++done by passing `-v X` to `git-format-patch`, where 'X' is the version number
++of the patch(es).
++
++### Using git-send-email
++
++You can use `git-send-email` to send patches generated via `git-format-patch`.
++While you can directly send patches via `git-send-email`, it is recommended
++that you first use `git-format-patch` to generate the emails, audit them, and
++then send them via `git-send-email`.
++
++A pretty good guide to configuring and using `git-send-email` can be found
++[here](https://www.freedesktop.org/wiki/Software/PulseAudio/HowToUseGitSendEmail/)
++
++### Using your email client
++
++If your email client supports sending mbox format emails, you can use
++`git-format-patch` to get an mbox file for each commit, and then send them. If
++there is more than one patch in the series, then all patches after the first
++patch (or the cover letter) need to be sent as replies to the first.
++`git-send-email` does this by default.
++
++### Using GitGitGadget
++
++Since some people prefer a GitHub pull request based workflow, they can use
++[GitGitGadget](https://gitgitgadget.github.io/) to send in patches. The tool
++was originally written for sending patches to the Git project, but it now also
++supports sending patches for git-gui.
++
++Instructions for using GitGitGadget to send git-gui patches, courtesy of
++Johannes Schindelin:
++
++If you don't already have a fork of the [git/git](https://github.com/git/git)
++repo, you need to make one. Then clone your fork:
++
++```
++git clone https://github.com/<your-username>/git
++```
++
++Then add GitGitGadget as a remote:
++
++```
++git remote add gitgitgadget https://github.com/gitgitgadget/git
++```
++
++Then fetch the git-gui branch:
++
++```
++git fetch gitgitgadget git-gui/master
++```
++
++Then create a new branch based on git-gui/master:
++
++```
++git checkout -b <your-branch-name> git-gui/master
++```
++
++Make whatever commits you need to, push them to your fork, and then head over
++to https://github.com/gitgitgadget/git/pulls and open a Pull Request targeting
++git-gui/master.
++
++GitGitGadget will welcome you with a (hopefully) helpful message.
++
++## Signing off
++
++You need to sign off your commits before sending them to the list. You can do
++that by passing the `-s` option to `git-commit`. You can also use the "Sign
++Off" option in Git GUI.
++
++A sign-off is a simple 'Signed-off-by: A U Thor \<author@example.com\>' line at
++the end of the commit message, after your explanation of the commit.
++
++A sign-off means that you are legally allowed to send the code, and it serves
++as a certificate of origin. More information can be found at
++[developercertificate.org](https://developercertificate.org/).
++
++## Responding to review comments
++
++It is quite likely your patches will get review comments. Those comments are
++sent on the Git mailing list as replies to your patch, and you will usually be
++Cc'ed in those replies.
++
++You are expected to respond by either explaining your code further to convince
++the reviewer what you are doing is correct, or acknowledge the comments and
++re-send the patches with those comments addressed.
++
++Some tips for those not familiar with communication on a mailing list:
++
++- Use only plain text emails. No HTML at all.
++- Wrap lines at around 75 characters.
++- Do not send attachments. If you do need to send some files, consider using a
++  hosting service, and paste the link in your email.
++- Do not [top post](http://www.idallen.com/topposting.html).
++- Always "reply all". Keep all correspondents and the list in Cc. If you reply
++  directly to a reviewer, and not Cc the list, other people would not be able
++  to chime in.
+--
+2.21.0
 
-So yes, GitHub PRs are certainly easier, but email wasn't too difficult 
-in my experience. But then I'm a kernel developer, so I'm a minority to 
-begin with.
-
-I suspect you've had this debate more than once, because you come in 
-guns blazing ;)
- 
-> Just so you can't say you don't have data.
-> 
-> > > > So what you should do is run `git format-patch -o feature master..HEAD`,
-> > > > assuming your feature branch is checked out. This will give you a set of
-> > > > '.patch' files depending on how many commits you made in your branch in
-> > > > the folder feature/. Then, you can run
-> > > >
-> > > >   git send-email --to='Pratyush Yadav <me@yadavpratyush.com>' --cc='<git@vger.kernel.org>' feature/*.patch
-> > > >
-> > > > This will send all your patch files via email to me with the git list in
-> > > > Cc. You can add multiple '--to' and '--cc' options to send it to
-> > > > multiple people.
-> > > >
-> > > > Try sending the patches to yourself to experiment around with it.
-> > > >
-> > > > A pretty good tutorial to configuring and using git-send-email can be
-> > > > found at [0]. And of course, read the man page.
-> > > >
-> > > > These instructions are for Linux, but you can probably do something
-> > > > similar in Windows too (if you're using Windows that is).
-> > >
-> > > Last I checked, `git send-email` worked in Git for Windows.
-> > >
-> > > But of course, it does not only not address the problem it tries to
-> > > solve fully (to provide a way to interact with a mailing list when
-> > > submitting patches for review), not even close, to add insult to injury,
-> > > it now adds an additional burden to contributors (who might already have
-> > > struggled to learn themselves enough Tcl/Tk to fix the problem) to
-> > > configure `git send-email` correctly.
-> >
-> > The way I see it, git-send-email does not need to solve the problem of
-> > interacting with a mailing list. That problem is already solved by a
-> > hoard of MUAs. All git-send-email should do is, you guessed it, send
-> > emails (or patches to be specific).
-> 
-> But of course! And it is natural that you should use two separate MUAs.
-> 
-> > Anyway, GitGitGadget solves a large part of the problem. It eliminates
-> > the need for using git-send-email, and it even shows you the replies
-> > received on the list. I honestly think it is a great tool, and it gives
-> > people a very good alternative to using git-send-email.
-> 
-> GitGitGadget is just a workaround. Not even complete. Can't be complete,
-> really. Because problems. It has much of the same problems of `git
-> send-email`: it's a one-way conversation. Code is not discussed in the
-> right context (which would be a worktree with the correct commit checked
-> out). The transfer is lossy (email is designed for human-readable
-> messages, not for transferring machine-readable serialized objects).
-> Matching original commits and/or branches to the ones on the other side
-> is tedious. Any interaction requires switching between many tools. Etc
-> 
-> > One feature that would make it complete would be the ability to reply to
-> > review comments.
-> 
-> And how would that work, exactly? How to determine *which* email to
-> respond to? *Which* person to reply to? *What* to quote?
-
-GGG already shows replies to the patches as a comment. On GitHub you can 
-"Quote reply" a comment, which quotes the entire comment just like your 
-MUA would. The option can be found by clicking the 3 dots on the top 
-right of a comment.
-
-Then you can write your reply there, and the last line would be 
-'/reply', which would make GGG send that email as a reply. You would 
-need to strip the first line from the reply because GGG starts the reply 
-with something like:
-
-  > [On the Git mailing list](https://public-inbox.org/git/xmqq7e5l9zb1.fsf@gitster-ct.c.googlers.com), Junio C Hamano wrote ([reply to this](https://github.com/gitgitgadget/gitgitgadget/wiki/ReplyToThis)):
- 
-GGG also adds 3 backticks before and after the reply content, so those 
-would need to be removed too.
-
-Does this sound like a sane solution?
-
-> > This would remove the need for an email client (almost) completely. I
-> > have never written Typescript or used Azure pipelines ever, but I can
-> > try tinkering around to see if I can figure out how to do something
-> > like that. Unless, of course, you or someone else is already doing it.
-> > If not, some pointers would be appreciated.
-> 
-> Feel free to give this challenge a try.
-
-The first challenge is learning Typescript :)
- 
-> > > > > For now, I followed the instruction of Johannes Schindelin and submitted a
-> > > > > pull request . Please see https://github.com/gitgitgadget/git/pull/376
-> > > >
-> > > > You haven't sent '/submit' over there, so those emails aren't in the
-> > > > list (and my inbox) yet. You need to comment with '/submit' (without the
-> > > > quotes) to tell GitGitGadget to send your PR as email.
-> > >
-> > > They probably did not hit `/submit` because the initial hurdle is to be
-> > > `/allow`ed (a very, very simplistic attempt at trying to prevent
-> > > spamming the mailing list by jokesters, of which there are unfortunately
-> > > quite a number).
-> > >
-> > > This `/allow` command, BTW, can be issued by anybody who has been
-> > > `/allow`ed before, it does not always have to be me.
-> > >
-> > > FWIW you should probably be in that list of `/allow`ed people so that
-> > > you can `/allow` new contributors to use GitGitGadget, too.
-> >
-> > That would be great! How do I get '/allow'ed? Do I have to open a PR
-> > there for you to '/allow' me?
-> 
-> https://github.com/gitgitgadget/git/pull/376#issuecomment-538784646
-> 
-> > > > [...]
-> > > >
-> > > > > Since #1 is a serious issue, I tried to find out the function which does the
-> > > > > keycode validation, but I haven't succeded till now. ( I found the C function
-> > > > > name  which is "TkStringToKeysym" from TK source, but I couldn't find its TCL
-> > > > > binding ). It will be helpful if any one can help me on this.
-> > > >
-> > > > I really think you shouldn't dive around in the C parts of Tcl. I
-> > > > haven't looked too deeply into this, but you can probably wrap your bind
-> > > > calls in `catch` [2] and handle errors from there. Again, I haven't
-> > > > tried actually doing this, so you do need to check first.
-> > > >
-> > > > You can find examples of how to use `catch` in our codebase. Just search
-> > > > for it.
-> > >
-> > > FWIW in addition to the `catch` method, I would also recommend looking
-> > > into a minimal (not even necessarily complete) way to translate the Qt
-> > > way to specify the keyboard shortcuts (as used by `git-cola`) to Tk
-> > > ones.
-> > >
-> > > As indicated in
-> > > https://github.com/git/git/pull/220#issuecomment-536045075, the Qt style
-> > > `CTRL+,` should be translated to `Control-comma`, for example. In
-> > > particular, keystrokes specified in the format indicated at
-> > > https://doc.qt.io/archives/qt-4.8/qkeysequence.html#QKeySequence-2 to
-> > > the format indicated at https://www.tcl.tk/man/tcl8.4/TkCmd/keysyms.htm.
-> > >
-> > > However, it might not even need to put in _such_ a lot of work: in my
-> > > tests, `Control-,` worked just as well as `Control-comma`. To test this
-> > > for yourself, use this snippet (that is slightly modified from the
-> > > example at the bottom of https://www.tcl.tk/man/tcl/TkCmd/bind.htm so
-> > > that it reacts _only_ to Control+comma instead of all keys):
-> >
-> > Another benefit to the translation framework would be that we could also
-> > generate the menu labels (aka "accelerator") for the tools, instead of
-> > making the user specify both the shortcut and the label.
-> >
-> > > -- snip --
-> > > set keysym "Press any key"
-> > > pack [label .l -textvariable keysym -padx 2m -pady 1m]
-> > > #bind . <Key> {
-> > > bind . <Control-,> {
-> > >     set keysym "You pressed %K"
-> > > }
-> > > -- snap --
-> > >
-> > > So I could imagine that something like this could serve as an initial
-> > > draft for a function that you can turn into a "good enough" version:
-> > >
-> > > -- snip --
-> > > proc QKeySequence2keysym {keystroke} {
-> > > 	regsub -all {(?i)Ctrl\+} $keystroke "Control-" keystroke
-> > > 	regsub -all {(?i)Alt\+} $keystroke "Alt-" keystroke
-> > > 	regsub -all {(?i)Shift\+} $keystroke "Shift-" keystroke
-> > > 	return $keystroke
-> > > }
-> > > -- snap --
-> > >
-> > > That way, you don't have to introduce settings separate from
-> > > `git-cola`'s, and you can reuse the short-and-sweet variable name.
-> >
-> > I think a more important question is whether we _really_ need to have
-> > compatibility with git-cola. Most of our shortcuts don't match with
-> > them, so is it really worth the effort to try to keep compatibility?
-> >
-> > I'm not against something like this, but just want to be sure we
-> > evaluate whether the effort is worth it.
-> 
-> `git-cola`, by virtue of being there first, squats on the neat config
-> setting name `shortcut`.
-> 
-> I expect users to be utterly surprised when that name does not work for
-> them.
-
-Correct. Makes sense.
- 
-> Please note that I intended `QKeySequence2keysym` to leave parameters
-> unchanged that already refer to keysyms. So this is purely a way to
-> reuse the same name as `git-cola` while still playing nice with existing
-> configurations targeting `git-cola`.
-
-Since you already gave a draft of the function, it shouldn't be too 
-difficult to pick up from there. I'm just waiting for Harish to send in 
-his first iteration so we can first discuss that.
-
--- 
-Regards,
-Pratyush Yadav
