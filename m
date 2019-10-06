@@ -2,91 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 990511F4BD
-	for <e@80x24.org>; Sun,  6 Oct 2019 00:57:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5B741F4BD
+	for <e@80x24.org>; Sun,  6 Oct 2019 02:43:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726965AbfJFA5z (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 20:57:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64296 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726956AbfJFA5z (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Oct 2019 20:57:55 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ABBAA19F9E;
-        Sat,  5 Oct 2019 20:57:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VEsQPeSV5uFu7+2sAckdvTX1Fh8=; b=NqIiFY
-        GyzJbtUinWhZYrx1F12Uq4b79vOFeYC4CPL5Lzc3qSifcGNnbGh7RBZRC+zidz5x
-        qye9V42Zzoe8UsbzgdyR/asyvKjkYyLTRmS0UK6ZB5bU8ddAYOu6y2PJHXE1iJAW
-        wrUe8bzQ7NOEg5V+tUbMrjfpejg1t3tC/zBD4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HAXuXKCojtyBRFXoEvj7PJIIJe1M6yks
-        //85cu/J6kA0Rh5QgSKcy7xwh8GWhuFR/Q+XGG9VXbT0R5q54kHVxvoWQT17CXt2
-        OzOfw76etIuHxrTl/j4dx1Z/i6Ncmj8IZxLqtGYCL80J6GP5s5mmMoNP62QYjlub
-        rSFhYz1JbH0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A190719F9B;
-        Sat,  5 Oct 2019 20:57:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1497C19F9A;
-        Sat,  5 Oct 2019 20:57:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH v2 1/2] format-patch: create leading components of output directory
-References: <2b8b000d76a20349f1f9e09260eff91429beebfb.1570264824.git.bert.wesarg@googlemail.com>
-Date:   Sun, 06 Oct 2019 09:57:53 +0900
-In-Reply-To: <2b8b000d76a20349f1f9e09260eff91429beebfb.1570264824.git.bert.wesarg@googlemail.com>
-        (Bert Wesarg's message of "Sat, 5 Oct 2019 10:43:51 +0200")
-Message-ID: <xmqqa7ae667i.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726138AbfJFCnS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 22:43:18 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45496 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726074AbfJFCnR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Oct 2019 22:43:17 -0400
+Received: by mail-ed1-f65.google.com with SMTP id h33so9323136edh.12
+        for <git@vger.kernel.org>; Sat, 05 Oct 2019 19:43:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kUEMpnEZ8iOmYH48ZPfAEhi68YS6Gp8FZjYy2f69JxI=;
+        b=WZNwV/X3WronpleRD5PqQzHwIkFQMIM4OltAihgYAbrapvT3PHhN8sCDn6Dm+3UCXN
+         OSaOcu8ZPVBuaZqefVOddcImj2Ns5nBR3TZtK2Xid90RvFL/WWGzb394k2FdD1ZpCaXr
+         7R7dwagOJUiwmsbXq8RX4E4oVLBeFCtRC5MtSzITV7ztrez+yqaxIffQs1At2p/fPA/Z
+         rDNG6sKePUJgCJhidamFhGMqqpNIYlOMWFYbxszF4Ni3UefaKyQUfO8wP0H8OeajtN+Y
+         +F27caUv9EtjBVaaMTvZ17mVYOzf3RX96roi4IlhKvM9TBwPwCCesFaUBdR+SEzjG2GI
+         ac/A==
+X-Gm-Message-State: APjAAAWqoiSU7sTeJeGgb2J1nAcgz1ZZxI4GhG4F5jBErV3qTMKDk8Ge
+        jj47gWZ3AZL8iQlw3Y8SwL5VMEd2Rep6EtHb9Y0=
+X-Google-Smtp-Source: APXvYqyVlk69HBV13+wf2m2u+PvLLAJq0JXco5oGLJILE8M3Xwt5LAwi2SvjFCWM2K9L1rXsOgze9x1xUBG/Vs3G+M0=
+X-Received: by 2002:a17:906:4a5a:: with SMTP id a26mr18431580ejv.154.1570329795420;
+ Sat, 05 Oct 2019 19:43:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 54110192-E7D4-11E9-BFB2-C28CBED8090B-77302942!pb-smtp1.pobox.com
+References: <pull.303.v2.git.gitgitgadget@gmail.com> <7e59b5cec2f267820feeeeb63a20814fe67d61e3.1566876175.git.ahippo@yandex.com>
+ <xmqq1rx62qbe.fsf@gitster-ct.c.googlers.com> <CAE5ih78iSO+yu0KC8gg450iv5iY1gJusN33uatFdRgp_1ToALw@mail.gmail.com>
+ <10209481570324845@myt6-4218ece6190d.qloud-c.yandex.net>
+In-Reply-To: <10209481570324845@myt6-4218ece6190d.qloud-c.yandex.net>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Sun, 6 Oct 2019 11:43:01 +0900
+Message-ID: <CAPc5daXU=fcjYJ4p6wQH-Ljz1Y8j=sBiwcN96hkxhP4CP_k8uA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] git-p4: auto-delete named temporary file
+To:     Andrey <ahippo@yandex.ru>
+Cc:     Luke Diamand <luke@diamand.org>,
+        "Philip.McGraw" <philip.mcgraw@bentley.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Git Users <git@vger.kernel.org>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+> >> ...
+> >>  Luke, does this look good?
+> >>
+> >>  I know Mazo is the only other contributor who has multiple commits
+> >>  to git-p4.py in the past 2 years, to make Reviewed-by carry some
+> >>  weight ;-) but as we have so small number of people touching this
+> >>  script anyway, I'd rather see what the main contributor in the past
+> >>  2 years thinks.
+> >
+> > I think it looks reasonable.
+> >
+> > Ack.
+>
+> Junio, does Philip need to resend a v3 with Luke's ack or will you just add it yourself while queuing the patch?
+> (sorry, if you already picked up the patch -- I just didn't see it in the last What's cooking update)
 
-> +		switch (safe_create_leading_directories_const(output_directory)) {
-> +		case SCLD_OK:
-> +		case SCLD_EXISTS:
-> +			break;
-> +		default:
-> +			die(_("could not create leading directories "
-> +			      "of '%s'"), output_directory);
-> +		}
->  		if (mkdir(output_directory, 0777) < 0 && errno != EEXIST)
->  			die_errno(_("could not create directory '%s'"),
->  				  output_directory);
+Sorry, I do not recall the details of this old a thread but if I
+recall correctly there was only a corrupt patch that I cannot use,
+so somebody would need to send a patch that actually applies. With a
+patch that applies, I can tweak the log message
+with acked-by etc. just fine.
 
-There is a slight discrepancy here in that mkdir(..., 0777) is to
-honor the umask setting of the user who is running the command and
-does not care about anybody else being able to (or unable to) access
-the resulting directory.  On the other hand, s-c-l-d is (as you can
-guess from the location the function is defined, sha1-file.c) meant
-to be used to create hierarchy _inside_ $GIT_DIR/ in such a way that
-anybody who needs to access the repository can access it (via
-core.sharedrepository config).
-
-I do not think it matters too much in practice, but
-
-	$ git format-patch -o $HOME/my/patch/depot
-
-that creates intermediate levels that can be writable by other
-users, only because the repository you took the patches from was
-shared with other users, may probably be seen as a security bug.
+Thanks.
