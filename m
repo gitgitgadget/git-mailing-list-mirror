@@ -7,26 +7,26 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F03E1F4BE
-	for <e@80x24.org>; Sun,  6 Oct 2019 23:30:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68E411F4BD
+	for <e@80x24.org>; Sun,  6 Oct 2019 23:30:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726739AbfJFXaw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 Oct 2019 19:30:52 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:39118 "EHLO dcvr.yhbt.net"
+        id S1726771AbfJFXa6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Oct 2019 19:30:58 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:39192 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726253AbfJFXav (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Oct 2019 19:30:51 -0400
+        id S1726253AbfJFXa5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Oct 2019 19:30:57 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 399031F4C0;
+        by dcvr.yhbt.net (Postfix) with ESMTP id A58B41F4C3;
         Sun,  6 Oct 2019 23:30:44 +0000 (UTC)
 From:   Eric Wong <e@80x24.org>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 03/20] packfile: use hashmap_entry in delta_base_cache_entry
-Date:   Sun,  6 Oct 2019 23:30:26 +0000
-Message-Id: <20191006233043.3516-4-e@80x24.org>
+Subject: [PATCH v3 05/20] hashmap_get_next takes "const struct hashmap_entry *"
+Date:   Sun,  6 Oct 2019 23:30:28 +0000
+Message-Id: <20191006233043.3516-6-e@80x24.org>
 In-Reply-To: <20191006233043.3516-1-e@80x24.org>
 References: <20191006233043.3516-1-e@80x24.org>
 MIME-Version: 1.0
@@ -36,34 +36,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This hashmap_entry_init function is intended to take a
-hashmap_entry struct pointer, not a hashmap struct pointer.
-
-This was not noticed because hashmap_entry_init takes a "void *"
-arg instead of "struct hashmap_entry *", and the hashmap struct
-is larger and can be cast into a hashmap_entry struct without
-data corruption.
-
-This has the beneficial side effect of reducing the size of
-a delta_base_cache_entry from 104 bytes to 72 bytes on 64-bit
-systems.
+This is less error-prone than "const void *" as the compiler
+now detects invalid types being passed.
 
 Signed-off-by: Eric Wong <e@80x24.org>
 Reviewed-by: Derrick Stolee <stolee@gmail.com>
 ---
- packfile.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ diff.c                  | 5 +++--
+ diffcore-rename.c       | 2 +-
+ hashmap.c               | 5 +++--
+ hashmap.h               | 3 ++-
+ name-hash.c             | 2 +-
+ t/helper/test-hashmap.c | 2 +-
+ 6 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/packfile.c b/packfile.c
-index fc43a6c52c..37fe0b73a6 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1361,7 +1361,7 @@ struct delta_base_cache_key {
- };
+diff --git a/diff.c b/diff.c
+index 02491ee684..1168f0cbb9 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1036,7 +1036,7 @@ static void pmb_advance_or_null_multi_match(struct diff_options *o,
+ 	int i;
+ 	char *got_match = xcalloc(1, pmb_nr);
  
- struct delta_base_cache_entry {
--	struct hashmap hash;
-+	struct hashmap_entry ent;
- 	struct delta_base_cache_key key;
- 	struct list_head lru;
- 	void *data;
+-	for (; match; match = hashmap_get_next(hm, match)) {
++	for (; match; match = hashmap_get_next(hm, &match->ent)) {
+ 		for (i = 0; i < pmb_nr; i++) {
+ 			struct moved_entry *prev = pmb[i].match;
+ 			struct moved_entry *cur = (prev && prev->next_line) ?
+@@ -1189,7 +1189,8 @@ static void mark_color_as_moved(struct diff_options *o,
+ 			 * The current line is the start of a new block.
+ 			 * Setup the set of potential blocks.
+ 			 */
+-			for (; match; match = hashmap_get_next(hm, match)) {
++			for (; match; match = hashmap_get_next(hm,
++								&match->ent)) {
+ 				ALLOC_GROW(pmb, pmb_nr + 1, pmb_alloc);
+ 				if (o->color_moved_ws_handling &
+ 				    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) {
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 44a3ab1e31..2a1449013b 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -285,7 +285,7 @@ static int find_identical_files(struct hashmap *srcs,
+ 	p = hashmap_get_from_hash(srcs,
+ 				  hash_filespec(options->repo, target),
+ 				  NULL);
+-	for (; p; p = hashmap_get_next(srcs, p)) {
++	for (; p; p = hashmap_get_next(srcs, &p->entry)) {
+ 		int score;
+ 		struct diff_filespec *source = p->filespec;
+ 
+diff --git a/hashmap.c b/hashmap.c
+index 6818c65174..c1de40eea0 100644
+--- a/hashmap.c
++++ b/hashmap.c
+@@ -191,9 +191,10 @@ void *hashmap_get(const struct hashmap *map, const void *key, const void *keydat
+ 	return *find_entry_ptr(map, key, keydata);
+ }
+ 
+-void *hashmap_get_next(const struct hashmap *map, const void *entry)
++void *hashmap_get_next(const struct hashmap *map,
++			const struct hashmap_entry *entry)
+ {
+-	struct hashmap_entry *e = ((struct hashmap_entry *) entry)->next;
++	struct hashmap_entry *e = entry->next;
+ 	for (; e; e = e->next)
+ 		if (entry_equals(map, entry, e, NULL))
+ 			return e;
+diff --git a/hashmap.h b/hashmap.h
+index 54b0b8c698..93fb9599ca 100644
+--- a/hashmap.h
++++ b/hashmap.h
+@@ -318,7 +318,8 @@ static inline void *hashmap_get_from_hash(const struct hashmap *map,
+  * `entry` is the hashmap_entry to start the search from, obtained via a previous
+  * call to `hashmap_get` or `hashmap_get_next`.
+  */
+-void *hashmap_get_next(const struct hashmap *map, const void *entry);
++void *hashmap_get_next(const struct hashmap *map,
++			const struct hashmap_entry *entry);
+ 
+ /*
+  * Adds a hashmap entry. This allows to add duplicate entries (i.e.
+diff --git a/name-hash.c b/name-hash.c
+index 1ce1417f7e..4d84326c58 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -710,7 +710,7 @@ struct cache_entry *index_file_exists(struct index_state *istate, const char *na
+ 	while (ce) {
+ 		if (same_name(ce, name, namelen, icase))
+ 			return ce;
+-		ce = hashmap_get_next(&istate->name_hash, ce);
++		ce = hashmap_get_next(&istate->name_hash, &ce->ent);
+ 	}
+ 	return NULL;
+ }
+diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
+index 0c9fd7c996..bf063a2521 100644
+--- a/t/helper/test-hashmap.c
++++ b/t/helper/test-hashmap.c
+@@ -203,7 +203,7 @@ int cmd__hashmap(int argc, const char **argv)
+ 				puts("NULL");
+ 			while (entry) {
+ 				puts(get_value(entry));
+-				entry = hashmap_get_next(&map, entry);
++				entry = hashmap_get_next(&map, &entry->ent);
+ 			}
+ 
+ 		} else if (!strcmp("remove", cmd) && p1) {
