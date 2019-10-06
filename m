@@ -2,96 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 915641F4BD
-	for <e@80x24.org>; Sun,  6 Oct 2019 00:30:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B6731F4BE
+	for <e@80x24.org>; Sun,  6 Oct 2019 00:41:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726948AbfJFAaS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 20:30:18 -0400
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:44492 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726863AbfJFAaS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Oct 2019 20:30:18 -0400
-Received: by mail-vs1-f68.google.com with SMTP id w195so6559152vsw.11
-        for <git@vger.kernel.org>; Sat, 05 Oct 2019 17:30:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Z1LG7XfJ7oF91fitQ8rhkY7jR90sfaKKo2UvxpHfza8=;
-        b=B7sj2FNP8dBwMRk4oxDayOHh2DjH2g+BslGvUrr3BQocwHZDe6roeK+3g+axwDYrjk
-         7QT4/lD03MysiuAUPn2aEPlOVg1+vNvMmnxyZk0qKp6Vpb2dlqAHnUJWDYwmgDysOeF/
-         ZaENEjURvAut35J1Izi5deMtmR35YO8XKie2gmDPiUU8wxJkOutz/3enFWoC/Yff0Xqh
-         yxyR996llMGmUOWm+4xEnQxWp5csjYiJzxo07FM/GhM+CSVT+zpN+VmkBP2jpPMO0FPu
-         +CyLuZI62Spp2Ind/Y6UXalaIsP/zgY6kaG4s+l0gMDgoDaQD/w4UtSnq07A9lXpk4hE
-         SXhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Z1LG7XfJ7oF91fitQ8rhkY7jR90sfaKKo2UvxpHfza8=;
-        b=g/5ypM9jMjMM5YzsaCELOkEdZqzFpcgJocwNyL3j/JjbEoPxW3uV4X+Y55jH8Iwa+s
-         qezoDscT3jf644C64AFjEY0l7Z9HFQTaQ23em0kWFk3eCN2/fIjNb4pj4ugT65I1uY/V
-         3J1EFVzjvlM2EJncEwIwMkD62H/mmoeb7HksCESHlY+L89UiuIFnSYPPedDcu+s9l05z
-         OLDMDSNYcmBvd5LCZpeppLSoa+2O3yzsFEUjRrZu8xLQqzDe6KxiNjYQslB7p8QeVxrA
-         xs6daelfjaMacGxCBIxzBf64xqYDchmWldb4QJM2m6Htx+EPD0IhxbpnMWN4/Ew68viZ
-         d1MA==
-X-Gm-Message-State: APjAAAWmHX6zLs5eEB92IO9UwqeNe+MCq1eprf2Ds1pr3gywPgh6vhDY
-        X3dxmU65xjAxocf/mUVqmpuleXFF473+ihvzlio=
-X-Google-Smtp-Source: APXvYqyFapwJHFOpLWegvkJq/xNUYfP1iwgQTfFSHEcocFTQ1gKHD/6v9/rujpirTuxw4TZh2f9SPQKe++8PgKyARaw=
-X-Received: by 2002:a67:c11b:: with SMTP id d27mr12065575vsj.175.1570321817406;
- Sat, 05 Oct 2019 17:30:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.316.git.gitgitgadget@gmail.com> <pull.316.v2.git.gitgitgadget@gmail.com>
- <9a78f9ea0fe8d1988654f52a86a01031607621fe.1568904188.git.gitgitgadget@gmail.com>
- <CABPp-BHB0UM1G2tHQ7igRX7Sn1O9ujW6mq_e-UGanGMONHxiag@mail.gmail.com>
-In-Reply-To: <CABPp-BHB0UM1G2tHQ7igRX7Sn1O9ujW6mq_e-UGanGMONHxiag@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 5 Oct 2019 17:30:06 -0700
-Message-ID: <CABPp-BGcZT2-m=D_X4d7zE9pzuWTKCnmURruahdQndpp=+-_WA@mail.gmail.com>
-Subject: Re: [PATCH v2 04/11] sparse-checkout: 'set' subcommand
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+        id S1726950AbfJFAlk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 20:41:40 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64381 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726932AbfJFAlk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Oct 2019 20:41:40 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5EF6D79448;
+        Sat,  5 Oct 2019 20:41:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Dd5fcMr5b4gR
+        Hpe9DamDmdS2Iqo=; b=VRABFCsKySkUnVarM/JREwya6e7kb3OMD8PxQ6xMd7Ux
+        e1rBj0vDfs88xwDg3WKsFyfKXvTO6bvHUj4KtMfzQs0pqGWwLDBgtAnaSnv6tjEU
+        Nfq95X9BejqXO3RbDUbisj7G/gYSNTTyLikEQvBsMRLBGhhaTSoayUNjCXBa7g0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LiVhvd
+        2G3ENAmiLT9xQ+Bl/9mzga0J4XMG4XfPOJYBGEeF/ebFDhuZZUOG2zOboHhMCv7d
+        x0iwDCI3+WWAAQArp1JzmT5pErm4/7aTcfF4p3F8/NsDHgblWjodZCqD2fPem3b3
+        w2nS4dsG03FmdIeV62x8CP6qmL99cjr0HNQbA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5742A79446;
+        Sat,  5 Oct 2019 20:41:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8398D79445;
+        Sat,  5 Oct 2019 20:41:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH] convert: fix handling of dashless UTF prefix in validate_encoding()
+References: <c886671c-7753-6ac8-fefc-277e76019cd4@web.de>
+Date:   Sun, 06 Oct 2019 09:41:30 +0900
+In-Reply-To: <c886671c-7753-6ac8-fefc-277e76019cd4@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Fri, 4 Oct 2019 21:25:50 +0200")
+Message-ID: <xmqqeezq66yt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0B04FB86-E7D2-11E9-90A3-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 5, 2019 at 3:44 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Thu, Sep 19, 2019 at 3:07 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > +static int write_patterns_and_update(struct pattern_list *pl)
-> > +{
-> > +       char *sparse_filename;
-> > +       FILE *fp;
-> > +
-> > +       sparse_filename = get_sparse_checkout_filename();
-> > +       fp = fopen(sparse_filename, "w");
-> > +       write_patterns_to_file(fp, pl);
-> > +       fclose(fp);
-> > +       free(sparse_filename);
-> > +
-> > +       clear_pattern_list(pl);
->
-> It seems slightly odd that pl is passed in but cleared in this
-> function rather than in the caller that created pl.  Should this be
-> moved to the caller, or, alternatively, a comment added to explain
-> this side-effect for future callers of the function?
->
-> The rest of the patch looked good to me.
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-Actually, thought of something else.  What if the user calls 'git
-sparse-checkout set ...' without first calling 'git sparse-checkout
-init'?  Should that report an error to the user, a suggestion to
-follow it up with 'sparse-checkout init', or should it just call
-sc_set_config() behind the scenes and allow bypassing the init
-subcommand?
+> Strip "UTF" and an optional dash from the start of 'upper' without
+> passing a NULL pointer to skip_prefix() in the second call, as it canno=
+t
+> handle that.
+
+Did the original meant to say "skip UTF- from the beginning of upper
+and store it to stripped, or if that cannot be done, skip UTF from
+the beginning of upper and store it to stripped", but made the
+second one scan the stripped instead of upper by mistake?
+
+Changing it to "skip UTF from upper and store it to stripped, and if
+the resulting stripped begins with dash, advance stripped to skip
+that too" is certainly a right fix.  Fixing the second one to scan
+upper would also make the result correct, but there is no point
+scanning the same thing twice to skip the same leading "UTF"
+substring.
+
+Thanks.
+
+>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+>  convert.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/convert.c b/convert.c
+> index deb6f71b2d..25ac525d5f 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -290,8 +290,8 @@ static int validate_encoding(const char *path, cons=
+t char *enc,
+>  			const char *stripped =3D NULL;
+>  			char *upper =3D xstrdup_toupper(enc);
+>  			upper[strlen(upper)-2] =3D '\0';
+> -			if (!skip_prefix(upper, "UTF-", &stripped))
+> -				skip_prefix(stripped, "UTF", &stripped);
+> +			if (skip_prefix(upper, "UTF", &stripped))
+> +				skip_prefix(stripped, "-", &stripped);
+>  			advise(advise_msg, path, stripped);
+>  			free(upper);
+>  			if (die_on_error)
+> @@ -310,8 +310,8 @@ static int validate_encoding(const char *path, cons=
+t char *enc,
+>  				"working-tree-encoding.");
+>  			const char *stripped =3D NULL;
+>  			char *upper =3D xstrdup_toupper(enc);
+> -			if (!skip_prefix(upper, "UTF-", &stripped))
+> -				skip_prefix(stripped, "UTF", &stripped);
+> +			if (skip_prefix(upper, "UTF", &stripped))
+> +				skip_prefix(stripped, "-", &stripped);
+>  			advise(advise_msg, path, stripped, stripped);
+>  			free(upper);
+>  			if (die_on_error)
+> --
+> 2.23.0
