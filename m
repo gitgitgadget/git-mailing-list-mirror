@@ -7,94 +7,92 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B7B31F4BD
-	for <e@80x24.org>; Sat,  5 Oct 2019 23:41:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C04C1F4BD
+	for <e@80x24.org>; Sun,  6 Oct 2019 00:02:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725947AbfJEXlq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Oct 2019 19:41:46 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55614 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725801AbfJEXlq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Oct 2019 19:41:46 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 85B53820F4;
-        Sat,  5 Oct 2019 19:41:44 -0400 (EDT)
+        id S1726866AbfJFACs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Oct 2019 20:02:48 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60950 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726706AbfJFACr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Oct 2019 20:02:47 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E76019A17;
+        Sat,  5 Oct 2019 20:02:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ln+BgE85ifYE
-        A99f9PgqR6XT8Kg=; b=ZWA+nG5nBuKls+2Ha/VK3R9mlEqwbAIZKBhWB4YE0c3L
-        iQVrWd+6Mp4C49VVoZ3TxLL58mFctLyvcF53tai8wVb87LandMnPPKPM+LPNleIH
-        kZNTqk1uoannKTLPT/OWdR9cbnPGPUovW7fezNSUKhqHnziFj5tH8TbxkppbFts=
+        :content-type; s=sasl; bh=TBQWn/2zwdqmc4DMUa9pwgjMHMU=; b=ixu89a
+        8dKTRSFtjMY1YTDrb4d/9fDRJ0eU5Wn5B2wgp/bl6mQ5vXGMvBGZdjbCmgxfZXY3
+        GkmrnbjGeR/HUO65b3Hu8rUoN0GfpJcmsrwdBDdG89cB6jaEZ1FxwXnHOcuhANdF
+        fxJ5rKYvdovxhY1q8TMvVBK3l5VUaYoEAmhvE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=FwSn0E
-        APB9tVvb+AuvxTqt0XhdTeqWN+tiOffyv7W95L5rQEX3XUtNMXZ8xM9GK2fRGZde
-        9B3whAMXp1aeerBnVGtKdQdK9FJGlTR6iSikpgz6TfGKnI3XOYKvVDAjq47mNzdf
-        8xHVVwpbVQgT1sUjUCUqnozp3Tp+fK06S5nR4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7E547820F3;
-        Sat,  5 Oct 2019 19:41:44 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=LztBMzkXilA2sq70mlUO9hUyaikvKmwt
+        qOdR1kA1YxOloAZc7ol7MjpvpGv7gPP1u7JnF2ctkpkl57ws+m+UaBbyY7UwMVO7
+        C/NtPtVIuslIssEKr+HrSI0cfBAOScIvEo6lT831NW6ItJYlGbngYJAytpPGtZni
+        yDn/Ln8S08A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 857A619A16;
+        Sat,  5 Oct 2019 20:02:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AD2E6820F2;
-        Sat,  5 Oct 2019 19:41:41 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F0E7A19A14;
+        Sat,  5 Oct 2019 20:02:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: PATCH] remove duplicate #include directives
-References: <1133ae3b-81e8-4ec1-c2d7-d071e7e65ec1@web.de>
-        <xmqqh84pa0ah.fsf@gitster-ct.c.googlers.com>
-        <59f7fafc-818e-1996-4e1a-5697bd4880e0@web.de>
-Date:   Sun, 06 Oct 2019 08:41:39 +0900
-In-Reply-To: <59f7fafc-818e-1996-4e1a-5697bd4880e0@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sat, 5 Oct 2019 18:18:42 +0200")
-Message-ID: <xmqqv9t269qk.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v2 02/13] msvc: avoid using minus operator on unsigned types
+References: <pull.288.git.gitgitgadget@gmail.com>
+        <pull.288.v2.git.gitgitgadget@gmail.com>
+        <8800320590e4d7218a80f80abca23a7f44b8747d.1569837329.git.gitgitgadget@gmail.com>
+        <xmqqy2y1a1qk.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1910041154120.46@tvgsbejvaqbjf.bet>
+        <ae6a64f4-8f46-cbaf-5004-defc316c5157@kdbg.org>
+        <nycvar.QRO.7.76.6.1910042319190.46@tvgsbejvaqbjf.bet>
+Date:   Sun, 06 Oct 2019 09:02:43 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1910042319190.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 4 Oct 2019 23:24:26 +0200 (CEST)")
+Message-ID: <xmqqr23q68rg.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AEB83A12-E7C9-11E9-9DAF-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9FB0FC72-E7CC-11E9-97C8-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> It works best for changes whose effects are constrained to within the
-> affected functions, but have crucial information located outside the
-> three default lines of context.  An example would be a change at the en=
-d
-> of a function for which a reviewer might need to know the type of some
-> variables declared at the top.
-
-Yup.
-
->> If there were topics in flight that touch any of these include
->> blocks, the patch would not apply and a reviewer who is interested
->> in these fixes ends up needing to wiggle them in somehow.
+>> IMHO, if you don't accompany insert_pos_as_negative_offset() with a
+>> corresponding extract_pos_and_found_condition() and use it everywhere,
+>> it is more obfuscating than necessary.
 >
-> Instructing git am or apply to ignore extra context lines using -C3
-> or similar would help in such a case.
+> I do disagree here. No overflow checking needs to be performed for `-1 -
+> <int-value>`. And that's what the opposite of this function really boils
+> down to.
 
-It may, but that is still extra work ;-)
+I do not think j6t is referring to the over/underflow issues at all.
 
-> This one here requires one more piece of information, though, namely ou=
-r
-> convention of wrapping header files in guard defines to make repeated
-> includes of them no-ops.  We do that for those removed by the patch, bu=
-t
-> we have a few exceptions to that rule in our repo (at least
-> command-list.h, kwset.h, sha1dc_git.h, tar.h, unicode-width.h).  So in
-> that sense it's not such a good example of a self-sufficient patch. :)
+The suggestion is that, because insert-pos-as-negative-offset
+abstracts away (in addition to the overflow checks) the fact that
+"does not exist but here is the location it would be inserted" is
+encoded in a certain way (i.e. not just the array index negated, but
+also is offset by -1, because we wouldn't be able to say "at the
+very beginning at index 0" without the -1 offset), the side that
+consumes the encoded "pos" (i.e. "we got a negative, so we know the
+element does not exist, and the index into the array we would insert
+a new element is computed this way") should be abstracted away, as
+it must know that the extra negative offset used when encoding is
+"-1".
 
-Not really.  "We use header guards" is an argument that demotes this
-cleanup from "must have" to "nice to have".  If a project did not
-use header guards or including the same header twice were an error,
-the patch in question would have been more necessary, but that
-wouldn't have changed the correctness of the patch, I think.
+I think that is a reasonable thing to consider; it is not necessary
+for correctness, but contributes to the conceptual clarity (iow, it
+can be left as a separate clean-up step done after the series is
+done).
