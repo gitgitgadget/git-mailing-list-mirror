@@ -7,26 +7,26 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFA2C1F4BE
-	for <e@80x24.org>; Sun,  6 Oct 2019 23:31:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B526A1F4BE
+	for <e@80x24.org>; Sun,  6 Oct 2019 23:31:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726852AbfJFXbX (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 Oct 2019 19:31:23 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:39442 "EHLO dcvr.yhbt.net"
+        id S1726860AbfJFXbZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Oct 2019 19:31:25 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:39468 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726227AbfJFXbW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Oct 2019 19:31:22 -0400
+        id S1726227AbfJFXbZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Oct 2019 19:31:25 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 8182B1F4CF;
+        by dcvr.yhbt.net (Postfix) with ESMTP id B9B7F1F4CC;
         Sun,  6 Oct 2019 23:30:46 +0000 (UTC)
 From:   Eric Wong <e@80x24.org>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 13/20] hashmap_get{,_from_hash} return "struct hashmap_entry *"
-Date:   Sun,  6 Oct 2019 23:30:36 +0000
-Message-Id: <20191006233043.3516-14-e@80x24.org>
+Subject: [PATCH v3 14/20] hashmap_cmp_fn takes hashmap_entry params
+Date:   Sun,  6 Oct 2019 23:30:37 +0000
+Message-Id: <20191006233043.3516-15-e@80x24.org>
 In-Reply-To: <20191006233043.3516-1-e@80x24.org>
 References: <20191006233043.3516-1-e@80x24.org>
 MIME-Version: 1.0
@@ -36,444 +36,788 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update callers to use hashmap_get_entry, hashmap_get_entry_from_hash
-or container_of as appropriate.
-
-This is another step towards eliminating the requirement of
-hashmap_entry being the first field in a struct.
+Another step in eliminating the requirement of hashmap_entry
+being the first member of a struct.
 
 Signed-off-by: Eric Wong <e@80x24.org>
 Reviewed-by: Derrick Stolee <stolee@gmail.com>
 ---
- attr.c                |  2 +-
- blame.c               | 11 ++++++++---
- builtin/describe.c    |  3 ++-
- builtin/difftool.c    |  2 +-
- builtin/fast-export.c |  2 +-
- builtin/fetch.c       | 11 +++++++----
- config.c              |  3 ++-
- hashmap.c             |  7 ++++---
- hashmap.h             | 12 +++++++-----
- merge-recursive.c     |  6 ++++--
- name-hash.c           |  3 ++-
- packfile.c            |  5 +++--
- patch-ids.c           |  3 ++-
- ref-filter.c          | 12 +++++++-----
- refs.c                |  5 ++++-
- remote.c              |  7 ++++---
- revision.c            |  3 ++-
- sequencer.c           |  7 +++++--
- sub-process.c         |  3 ++-
- submodule-config.c    |  6 ++++--
- 20 files changed, 72 insertions(+), 41 deletions(-)
+ attr.c                  | 10 ++++++----
+ builtin/describe.c      | 10 ++++++----
+ builtin/difftool.c      | 31 +++++++++++++++++++------------
+ builtin/fast-export.c   |  9 +++++++--
+ builtin/fetch.c         |  9 +++++----
+ config.c                | 10 ++++++----
+ diff.c                  | 12 +++++++-----
+ hashmap.c               | 17 +++++++++++------
+ hashmap.h               | 13 +++++++++----
+ merge-recursive.c       | 33 +++++++++++++++++++++------------
+ name-hash.c             | 21 +++++++++++++--------
+ oidmap.c                | 14 +++++++++-----
+ packfile.c              |  9 +++++++--
+ patch-ids.c             | 10 ++++++----
+ ref-filter.c            | 11 +++++++----
+ refs.c                  | 11 ++++++++---
+ remote.c                | 10 ++++++----
+ revision.c              | 11 ++++++++---
+ sequencer.c             | 24 +++++++++++++++++-------
+ sub-process.c           | 10 ++++++----
+ sub-process.h           |  4 ++--
+ submodule-config.c      | 20 ++++++++++++--------
+ t/helper/test-hashmap.c | 10 ++++++----
+ 23 files changed, 204 insertions(+), 115 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index 9bdef61cc3..4230bee63d 100644
+index 4230bee63d..6053481610 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -101,7 +101,7 @@ static void *attr_hashmap_get(struct attr_hashmap *map,
- 	hashmap_entry_init(&k.ent, memhash(key, keylen));
- 	k.key = key;
- 	k.keylen = keylen;
--	e = hashmap_get(&map->map, &k.ent, NULL);
-+	e = hashmap_get_entry(&map->map, &k, NULL, struct attr_hash_entry, ent);
+@@ -70,12 +70,14 @@ struct attr_hash_entry {
  
- 	return e ? e->value : NULL;
+ /* attr_hashmap comparison function */
+ static int attr_hash_entry_cmp(const void *unused_cmp_data,
+-			       const void *entry,
+-			       const void *entry_or_key,
++			       const struct hashmap_entry *eptr,
++			       const struct hashmap_entry *entry_or_key,
+ 			       const void *unused_keydata)
+ {
+-	const struct attr_hash_entry *a = entry;
+-	const struct attr_hash_entry *b = entry_or_key;
++	const struct attr_hash_entry *a, *b;
++
++	a = container_of(eptr, const struct attr_hash_entry, ent);
++	b = container_of(entry_or_key, const struct attr_hash_entry, ent);
+ 	return (a->keylen != b->keylen) || strncmp(a->key, b->key, a->keylen);
  }
-diff --git a/blame.c b/blame.c
-index 00f8f3fb0a..aa46c7ec52 100644
---- a/blame.c
-+++ b/blame.c
-@@ -419,7 +419,8 @@ static void get_fingerprint(struct fingerprint *result,
- 			continue;
- 		hashmap_entry_init(&entry->entry, hash);
  
--		found_entry = hashmap_get(&result->map, &entry->entry, NULL);
-+		found_entry = hashmap_get_entry(&result->map, entry, NULL,
-+					struct fingerprint_entry, entry);
- 		if (found_entry) {
- 			found_entry->count += 1;
- 		} else {
-@@ -452,7 +453,9 @@ static int fingerprint_similarity(struct fingerprint *a, struct fingerprint *b)
- 	hashmap_iter_init(&b->map, &iter);
- 
- 	while ((entry_b = hashmap_iter_next(&iter))) {
--		if ((entry_a = hashmap_get(&a->map, &entry_b->entry, NULL))) {
-+		entry_a = hashmap_get_entry(&a->map, entry_b, NULL,
-+					struct fingerprint_entry, entry);
-+		if (entry_a) {
- 			intersection += entry_a->count < entry_b->count ?
- 					entry_a->count : entry_b->count;
- 		}
-@@ -471,7 +474,9 @@ static void fingerprint_subtract(struct fingerprint *a, struct fingerprint *b)
- 	hashmap_iter_init(&b->map, &iter);
- 
- 	while ((entry_b = hashmap_iter_next(&iter))) {
--		if ((entry_a = hashmap_get(&a->map, &entry_b->entry, NULL))) {
-+		entry_a = hashmap_get_entry(&a->map, entry_b, NULL,
-+					struct fingerprint_entry, entry);
-+		if (entry_a) {
- 			if (entry_a->count <= entry_b->count)
- 				hashmap_remove(&a->map, &entry_b->entry, NULL);
- 			else
 diff --git a/builtin/describe.c b/builtin/describe.c
-index f5e0a7e033..c6d2386b64 100644
+index c6d2386b64..e9267b5c9c 100644
 --- a/builtin/describe.c
 +++ b/builtin/describe.c
-@@ -76,7 +76,8 @@ static int commit_name_neq(const void *unused_cmp_data,
+@@ -64,12 +64,14 @@ static const char *prio_names[] = {
+ };
  
- static inline struct commit_name *find_commit_name(const struct object_id *peeled)
+ static int commit_name_neq(const void *unused_cmp_data,
+-			   const void *entry,
+-			   const void *entry_or_key,
++			   const struct hashmap_entry *eptr,
++			   const struct hashmap_entry *entry_or_key,
+ 			   const void *peeled)
  {
--	return hashmap_get_from_hash(&names, oidhash(peeled), peeled);
-+	return hashmap_get_entry_from_hash(&names, oidhash(peeled), peeled,
-+						struct commit_name, entry);
- }
+-	const struct commit_name *cn1 = entry;
+-	const struct commit_name *cn2 = entry_or_key;
++	const struct commit_name *cn1, *cn2;
++
++	cn1 = container_of(eptr, const struct commit_name, entry);
++	cn2 = container_of(entry_or_key, const struct commit_name, entry);
  
- static int replace_name(struct commit_name *e,
+ 	return !oideq(&cn1->peeled, peeled ? peeled : &cn2->peeled);
+ }
 diff --git a/builtin/difftool.c b/builtin/difftool.c
-index f41298d199..fa9c862e3a 100644
+index fa9c862e3a..4a37b3edee 100644
 --- a/builtin/difftool.c
 +++ b/builtin/difftool.c
-@@ -162,7 +162,7 @@ static void add_left_or_right(struct hashmap *map, const char *path,
+@@ -125,12 +125,15 @@ struct working_tree_entry {
+ };
  
- 	FLEX_ALLOC_STR(e, path, path);
- 	hashmap_entry_init(&e->entry, strhash(path));
--	existing = hashmap_get(map, &e->entry, NULL);
-+	existing = hashmap_get_entry(map, e, NULL, struct pair_entry, entry);
- 	if (existing) {
- 		free(e);
- 		e = existing;
+ static int working_tree_entry_cmp(const void *unused_cmp_data,
+-				  const void *entry,
+-				  const void *entry_or_key,
++				  const struct hashmap_entry *eptr,
++				  const struct hashmap_entry *entry_or_key,
+ 				  const void *unused_keydata)
+ {
+-	const struct working_tree_entry *a = entry;
+-	const struct working_tree_entry *b = entry_or_key;
++	const struct working_tree_entry *a, *b;
++
++	a = container_of(eptr, const struct working_tree_entry, entry);
++	b = container_of(entry_or_key, const struct working_tree_entry, entry);
++
+ 	return strcmp(a->path, b->path);
+ }
+ 
+@@ -145,12 +148,14 @@ struct pair_entry {
+ };
+ 
+ static int pair_cmp(const void *unused_cmp_data,
+-		    const void *entry,
+-		    const void *entry_or_key,
++		    const struct hashmap_entry *eptr,
++		    const struct hashmap_entry *entry_or_key,
+ 		    const void *unused_keydata)
+ {
+-	const struct pair_entry *a = entry;
+-	const struct pair_entry *b = entry_or_key;
++	const struct pair_entry *a, *b;
++
++	a = container_of(eptr, const struct pair_entry, entry);
++	b = container_of(entry_or_key, const struct pair_entry, entry);
+ 
+ 	return strcmp(a->path, b->path);
+ }
+@@ -179,12 +184,14 @@ struct path_entry {
+ };
+ 
+ static int path_entry_cmp(const void *unused_cmp_data,
+-			  const void *entry,
+-			  const void *entry_or_key,
++			  const struct hashmap_entry *eptr,
++			  const struct hashmap_entry *entry_or_key,
+ 			  const void *key)
+ {
+-	const struct path_entry *a = entry;
+-	const struct path_entry *b = entry_or_key;
++	const struct path_entry *a, *b;
++
++	a = container_of(eptr, const struct path_entry, entry);
++	b = container_of(entry_or_key, const struct path_entry, entry);
+ 
+ 	return strcmp(a->path, key ? key : b->path);
+ }
 diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 192e21dae4..25195badd4 100644
+index 25195badd4..ef0578bf90 100644
 --- a/builtin/fast-export.c
 +++ b/builtin/fast-export.c
-@@ -151,7 +151,7 @@ static const void *anonymize_mem(struct hashmap *map,
- 	hashmap_entry_init(&key.hash, memhash(orig, *len));
- 	key.orig = orig;
- 	key.orig_len = *len;
--	ret = hashmap_get(map, &key.hash, NULL);
-+	ret = hashmap_get_entry(map, &key, NULL, struct anonymized_entry, hash);
+@@ -126,10 +126,15 @@ struct anonymized_entry {
+ };
  
- 	if (!ret) {
- 		ret = xmalloc(sizeof(*ret));
+ static int anonymized_entry_cmp(const void *unused_cmp_data,
+-				const void *va, const void *vb,
++				const struct hashmap_entry *eptr,
++				const struct hashmap_entry *entry_or_key,
+ 				const void *unused_keydata)
+ {
+-	const struct anonymized_entry *a = va, *b = vb;
++	const struct anonymized_entry *a, *b;
++
++	a = container_of(eptr, const struct anonymized_entry, hash);
++	b = container_of(entry_or_key, const struct anonymized_entry, hash);
++
+ 	return a->orig_len != b->orig_len ||
+ 		memcmp(a->orig, b->orig, a->orig_len);
+ }
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 909dbde909..d06f2b98aa 100644
+index d06f2b98aa..476c2416e3 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -383,8 +383,10 @@ static void find_non_local_tags(const struct ref *refs,
- 	for_each_string_list_item(remote_ref_item, &remote_refs_list) {
- 		const char *refname = remote_ref_item->string;
- 		struct ref *rm;
-+		unsigned int hash = strhash(refname);
+@@ -258,13 +258,14 @@ struct refname_hash_entry {
+ };
  
--		item = hashmap_get_from_hash(&remote_refs, strhash(refname), refname);
-+		item = hashmap_get_entry_from_hash(&remote_refs, hash, refname,
-+					struct refname_hash_entry, ent);
- 		if (!item)
- 			BUG("unseen remote ref?");
+ static int refname_hash_entry_cmp(const void *hashmap_cmp_fn_data,
+-				  const void *e1_,
+-				  const void *e2_,
++				  const struct hashmap_entry *eptr,
++				  const struct hashmap_entry *entry_or_key,
+ 				  const void *keydata)
+ {
+-	const struct refname_hash_entry *e1 = e1_;
+-	const struct refname_hash_entry *e2 = e2_;
++	const struct refname_hash_entry *e1, *e2;
  
-@@ -516,10 +518,11 @@ static struct ref *get_ref_map(struct remote *remote,
- 		if (rm->peer_ref) {
- 			const char *refname = rm->peer_ref->name;
- 			struct refname_hash_entry *peer_item;
-+			unsigned int hash = strhash(refname);
++	e1 = container_of(eptr, const struct refname_hash_entry, ent);
++	e2 = container_of(entry_or_key, const struct refname_hash_entry, ent);
+ 	return strcmp(e1->refname, keydata ? keydata : e2->refname);
+ }
  
--			peer_item = hashmap_get_from_hash(&existing_refs,
--							  strhash(refname),
--							  refname);
-+			peer_item = hashmap_get_entry_from_hash(&existing_refs,
-+						hash, refname,
-+						struct refname_hash_entry, ent);
- 			if (peer_item) {
- 				struct object_id *old_oid = &peer_item->oid;
- 				oidcpy(&rm->peer_ref->old_oid, old_oid);
 diff --git a/config.c b/config.c
-index 1a1b6675fd..4952d1cc9e 100644
+index 4952d1cc9e..33043ee73c 100644
 --- a/config.c
 +++ b/config.c
-@@ -1863,7 +1863,8 @@ static struct config_set_element *configset_find_element(struct config_set *cs,
- 
- 	hashmap_entry_init(&k.ent, strhash(normalized_key));
- 	k.key = normalized_key;
--	found_entry = hashmap_get(&cs->config_hash, &k.ent, NULL);
-+	found_entry = hashmap_get_entry(&cs->config_hash, &k, NULL,
-+				struct config_set_element, ent);
- 	free(normalized_key);
- 	return found_entry;
+@@ -1914,12 +1914,14 @@ static int configset_add_value(struct config_set *cs, const char *key, const cha
  }
+ 
+ static int config_set_element_cmp(const void *unused_cmp_data,
+-				  const void *entry,
+-				  const void *entry_or_key,
++				  const struct hashmap_entry *eptr,
++				  const struct hashmap_entry *entry_or_key,
+ 				  const void *unused_keydata)
+ {
+-	const struct config_set_element *e1 = entry;
+-	const struct config_set_element *e2 = entry_or_key;
++	const struct config_set_element *e1, *e2;
++
++	e1 = container_of(eptr, const struct config_set_element, ent);
++	e2 = container_of(entry_or_key, const struct config_set_element, ent);
+ 
+ 	return strcmp(e1->key, e2->key);
+ }
+diff --git a/diff.c b/diff.c
+index 66cdf4e9ca..5eaf689fcc 100644
+--- a/diff.c
++++ b/diff.c
+@@ -933,16 +933,18 @@ static int cmp_in_block_with_wsd(const struct diff_options *o,
+ }
+ 
+ static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
+-			   const void *entry,
+-			   const void *entry_or_key,
++			   const struct hashmap_entry *eptr,
++			   const struct hashmap_entry *entry_or_key,
+ 			   const void *keydata)
+ {
+ 	const struct diff_options *diffopt = hashmap_cmp_fn_data;
+-	const struct moved_entry *a = entry;
+-	const struct moved_entry *b = entry_or_key;
++	const struct moved_entry *a, *b;
+ 	unsigned flags = diffopt->color_moved_ws_handling
+ 			 & XDF_WHITESPACE_FLAGS;
+ 
++	a = container_of(eptr, const struct moved_entry, ent);
++	b = container_of(entry_or_key, const struct moved_entry, ent);
++
+ 	if (diffopt->color_moved_ws_handling &
+ 	    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
+ 		/*
+@@ -1019,7 +1021,7 @@ static void pmb_advance_or_null(struct diff_options *o,
+ 		struct moved_entry *prev = pmb[i].match;
+ 		struct moved_entry *cur = (prev && prev->next_line) ?
+ 				prev->next_line : NULL;
+-		if (cur && !hm->cmpfn(o, cur, match, NULL)) {
++		if (cur && !hm->cmpfn(o, &cur->ent, &match->ent, NULL)) {
+ 			pmb[i].match = cur;
+ 		} else {
+ 			pmb[i].match = NULL;
 diff --git a/hashmap.c b/hashmap.c
-index 22bc7c5b3b..5662bee10a 100644
+index 5662bee10a..64f6accfff 100644
 --- a/hashmap.c
 +++ b/hashmap.c
-@@ -186,8 +186,9 @@ void hashmap_free(struct hashmap *map, int free_entries)
- 	memset(map, 0, sizeof(*map));
+@@ -140,8 +140,8 @@ static inline struct hashmap_entry **find_entry_ptr(const struct hashmap *map,
  }
  
--void *hashmap_get(const struct hashmap *map, const struct hashmap_entry *key,
--		const void *keydata)
-+struct hashmap_entry *hashmap_get(const struct hashmap *map,
-+				const struct hashmap_entry *key,
-+				const void *keydata)
+ static int always_equal(const void *unused_cmp_data,
+-			const void *unused1,
+-			const void *unused2,
++			const struct hashmap_entry *unused1,
++			const struct hashmap_entry *unused2,
+ 			const void *unused_keydata)
  {
- 	return *find_entry_ptr(map, key, keydata);
+ 	return 0;
+@@ -279,10 +279,15 @@ struct pool_entry {
+ };
+ 
+ static int pool_entry_cmp(const void *unused_cmp_data,
+-			  const struct pool_entry *e1,
+-			  const struct pool_entry *e2,
+-			  const unsigned char *keydata)
++			  const struct hashmap_entry *eptr,
++			  const struct hashmap_entry *entry_or_key,
++			  const void *keydata)
+ {
++	const struct pool_entry *e1, *e2;
++
++	e1 = container_of(eptr, const struct pool_entry, ent);
++	e2 = container_of(entry_or_key, const struct pool_entry, ent);
++
+ 	return e1->data != keydata &&
+ 	       (e1->len != e2->len || memcmp(e1->data, keydata, e1->len));
  }
-@@ -298,7 +299,7 @@ const void *memintern(const void *data, size_t len)
+@@ -294,7 +299,7 @@ const void *memintern(const void *data, size_t len)
+ 
+ 	/* initialize string pool hashmap */
+ 	if (!map.tablesize)
+-		hashmap_init(&map, (hashmap_cmp_fn) pool_entry_cmp, NULL, 0);
++		hashmap_init(&map, pool_entry_cmp, NULL, 0);
+ 
  	/* lookup interned string in pool */
  	hashmap_entry_init(&key.ent, memhash(data, len));
- 	key.len = len;
--	e = hashmap_get(&map, &key.ent, data);
-+	e = hashmap_get_entry(&map, &key, data, struct pool_entry, ent);
- 	if (!e) {
- 		/* not found: create it */
- 		FLEX_ALLOC_MEM(e, data, data, len);
 diff --git a/hashmap.h b/hashmap.h
-index cd42dcc15c..82ddb0ef41 100644
+index 82ddb0ef41..8f5c163d56 100644
 --- a/hashmap.h
 +++ b/hashmap.h
-@@ -290,8 +290,9 @@ static inline unsigned int hashmap_get_size(struct hashmap *map)
-  * If an entry with matching hash code is found, `key` and `keydata` are passed
-  * to `hashmap_cmp_fn` to decide whether the entry matches the key.
+@@ -21,12 +21,16 @@
+  * #define COMPARE_VALUE 1
+  *
+  * static int long2string_cmp(const void *hashmap_cmp_fn_data,
+- *                            const struct long2string *e1,
+- *                            const struct long2string *e2,
++ *                            const struct hashmap_entry *eptr,
++ *                            const struct hashmap_entry *entry_or_key,
+  *                            const void *keydata)
+  * {
+  *     const char *string = keydata;
+  *     unsigned flags = *(unsigned *)hashmap_cmp_fn_data;
++ *     const struct long2string *e1, *e2;
++ *
++ *     e1 = container_of(eptr, const struct long2string, ent);
++ *     e2 = container_of(entry_or_key, const struct long2string, ent);
+  *
+  *     if (flags & COMPARE_VALUE)
+  *         return e1->key != e2->key ||
+@@ -41,7 +45,7 @@
+  *     char value[255], action[32];
+  *     unsigned flags = 0;
+  *
+- *     hashmap_init(&map, (hashmap_cmp_fn) long2string_cmp, &flags, 0);
++ *     hashmap_init(&map, long2string_cmp, &flags, 0);
+  *
+  *     while (scanf("%s %ld %s", action, &key, value)) {
+  *
+@@ -172,7 +176,8 @@ struct hashmap_entry {
+  * The `hashmap_cmp_fn_data` entry is the pointer given in the init function.
   */
--void *hashmap_get(const struct hashmap *map, const struct hashmap_entry *key,
--			 const void *keydata);
-+struct hashmap_entry *hashmap_get(const struct hashmap *map,
-+				const struct hashmap_entry *key,
-+				const void *keydata);
+ typedef int (*hashmap_cmp_fn)(const void *hashmap_cmp_fn_data,
+-			      const void *entry, const void *entry_or_key,
++			      const struct hashmap_entry *entry,
++			      const struct hashmap_entry *entry_or_key,
+ 			      const void *keydata);
  
  /*
-  * Returns the hashmap entry for the specified hash code and key data,
-@@ -305,9 +306,10 @@ void *hashmap_get(const struct hashmap *map, const struct hashmap_entry *key,
-  * `entry_or_key` parameter of `hashmap_cmp_fn` points to a hashmap_entry
-  * structure that should not be used in the comparison.
-  */
--static inline void *hashmap_get_from_hash(const struct hashmap *map,
--					  unsigned int hash,
--					  const void *keydata)
-+static inline struct hashmap_entry *hashmap_get_from_hash(
-+					const struct hashmap *map,
-+					unsigned int hash,
-+					const void *keydata)
- {
- 	struct hashmap_entry key;
- 	hashmap_entry_init(&key, hash);
 diff --git a/merge-recursive.c b/merge-recursive.c
-index a685b4fb69..8274828c4d 100644
+index 8274828c4d..b06e9f7f0b 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -63,7 +63,8 @@ static struct dir_rename_entry *dir_rename_find_entry(struct hashmap *hashmap,
- 		return NULL;
- 	hashmap_entry_init(&key.ent, strhash(dir));
- 	key.dir = dir;
--	return hashmap_get(hashmap, &key.ent, NULL);
-+	return hashmap_get_entry(hashmap, &key, NULL,
-+				struct dir_rename_entry, ent);
+@@ -35,14 +35,16 @@ struct path_hashmap_entry {
+ };
+ 
+ static int path_hashmap_cmp(const void *cmp_data,
+-			    const void *entry,
+-			    const void *entry_or_key,
++			    const struct hashmap_entry *eptr,
++			    const struct hashmap_entry *entry_or_key,
+ 			    const void *keydata)
+ {
+-	const struct path_hashmap_entry *a = entry;
+-	const struct path_hashmap_entry *b = entry_or_key;
++	const struct path_hashmap_entry *a, *b;
+ 	const char *key = keydata;
+ 
++	a = container_of(eptr, const struct path_hashmap_entry, e);
++	b = container_of(entry_or_key, const struct path_hashmap_entry, e);
++
+ 	if (ignore_case)
+ 		return strcasecmp(a->path, key ? key : b->path);
+ 	else
+@@ -68,12 +70,14 @@ static struct dir_rename_entry *dir_rename_find_entry(struct hashmap *hashmap,
  }
  
  static int dir_rename_cmp(const void *unused_cmp_data,
-@@ -99,7 +100,8 @@ static struct collision_entry *collision_find_entry(struct hashmap *hashmap,
+-			  const void *entry,
+-			  const void *entry_or_key,
++			  const struct hashmap_entry *eptr,
++			  const struct hashmap_entry *entry_or_key,
+ 			  const void *unused_keydata)
+ {
+-	const struct dir_rename_entry *e1 = entry;
+-	const struct dir_rename_entry *e2 = entry_or_key;
++	const struct dir_rename_entry *e1, *e2;
++
++	e1 = container_of(eptr, const struct dir_rename_entry, ent);
++	e2 = container_of(entry_or_key, const struct dir_rename_entry, ent);
  
- 	hashmap_entry_init(&key.ent, strhash(target_file));
- 	key.target_file = target_file;
--	return hashmap_get(hashmap, &key.ent, NULL);
-+	return hashmap_get_entry(hashmap, &key, NULL,
-+				struct collision_entry, ent);
+ 	return strcmp(e1->dir, e2->dir);
+ }
+@@ -104,17 +108,22 @@ static struct collision_entry *collision_find_entry(struct hashmap *hashmap,
+ 				struct collision_entry, ent);
  }
  
- static int collision_cmp(void *unused_cmp_data,
+-static int collision_cmp(void *unused_cmp_data,
+-			 const struct collision_entry *e1,
+-			 const struct collision_entry *e2,
++static int collision_cmp(const void *unused_cmp_data,
++			 const struct hashmap_entry *eptr,
++			 const struct hashmap_entry *entry_or_key,
+ 			 const void *unused_keydata)
+ {
++	const struct collision_entry *e1, *e2;
++
++	e1 = container_of(eptr, const struct collision_entry, ent);
++	e2 = container_of(entry_or_key, const struct collision_entry, ent);
++
+ 	return strcmp(e1->target_file, e2->target_file);
+ }
+ 
+ static void collision_init(struct hashmap *map)
+ {
+-	hashmap_init(map, (hashmap_cmp_fn) collision_cmp, NULL, 0);
++	hashmap_init(map, collision_cmp, NULL, 0);
+ }
+ 
+ static void flush_output(struct merge_options *opt)
 diff --git a/name-hash.c b/name-hash.c
-index 73b83adf3d..aa8253ddd5 100644
+index aa8253ddd5..85a1ce982c 100644
 --- a/name-hash.c
 +++ b/name-hash.c
-@@ -35,7 +35,8 @@ static struct dir_entry *find_dir_entry__hash(struct index_state *istate,
- 	struct dir_entry key;
- 	hashmap_entry_init(&key.ent, hash);
- 	key.namelen = namelen;
--	return hashmap_get(&istate->dir_hash, &key.ent, name);
-+	return hashmap_get_entry(&istate->dir_hash, &key, name,
-+					struct dir_entry, ent);
+@@ -17,14 +17,16 @@ struct dir_entry {
+ };
+ 
+ static int dir_entry_cmp(const void *unused_cmp_data,
+-			 const void *entry,
+-			 const void *entry_or_key,
++			 const struct hashmap_entry *eptr,
++			 const struct hashmap_entry *entry_or_key,
+ 			 const void *keydata)
+ {
+-	const struct dir_entry *e1 = entry;
+-	const struct dir_entry *e2 = entry_or_key;
++	const struct dir_entry *e1, *e2;
+ 	const char *name = keydata;
+ 
++	e1 = container_of(eptr, const struct dir_entry, ent);
++	e2 = container_of(entry_or_key, const struct dir_entry, ent);
++
+ 	return e1->namelen != e2->namelen || strncasecmp(e1->name,
+ 			name ? name : e2->name, e1->namelen);
+ }
+@@ -115,12 +117,15 @@ static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
  }
  
- static struct dir_entry *find_dir_entry(struct index_state *istate,
+ static int cache_entry_cmp(const void *unused_cmp_data,
+-			   const void *entry,
+-			   const void *entry_or_key,
++			   const struct hashmap_entry *eptr,
++			   const struct hashmap_entry *entry_or_key,
+ 			   const void *remove)
+ {
+-	const struct cache_entry *ce1 = entry;
+-	const struct cache_entry *ce2 = entry_or_key;
++	const struct cache_entry *ce1, *ce2;
++
++	ce1 = container_of(eptr, const struct cache_entry, ent);
++	ce2 = container_of(entry_or_key, const struct cache_entry, ent);
++
+ 	/*
+ 	 * For remove_name_hash, find the exact entry (pointer equality); for
+ 	 * index_file_exists, find all entries with matching hash code and
+diff --git a/oidmap.c b/oidmap.c
+index cd22b3a8bf..4942599391 100644
+--- a/oidmap.c
++++ b/oidmap.c
+@@ -2,14 +2,18 @@
+ #include "oidmap.h"
+ 
+ static int oidmap_neq(const void *hashmap_cmp_fn_data,
+-		      const void *entry, const void *entry_or_key,
++		      const struct hashmap_entry *e1,
++		      const struct hashmap_entry *e2,
+ 		      const void *keydata)
+ {
+-	const struct oidmap_entry *entry_ = entry;
++	const struct oidmap_entry *a, *b;
++
++	a = container_of(e1, const struct oidmap_entry, internal_entry);
++	b = container_of(e2, const struct oidmap_entry, internal_entry);
++
+ 	if (keydata)
+-		return !oideq(&entry_->oid, (const struct object_id *) keydata);
+-	return !oideq(&entry_->oid,
+-		      &((const struct oidmap_entry *) entry_or_key)->oid);
++		return !oideq(&a->oid, (const struct object_id *) keydata);
++	return !oideq(&a->oid, &b->oid);
+ }
+ 
+ void oidmap_init(struct oidmap *map, size_t initial_size)
 diff --git a/packfile.c b/packfile.c
-index 3edd648de0..f2aa34bb49 100644
+index f2aa34bb49..675d5f2287 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1381,7 +1381,7 @@ static unsigned int pack_entry_hash(struct packed_git *p, off_t base_offset)
- static struct delta_base_cache_entry *
- get_delta_base_cache_entry(struct packed_git *p, off_t base_offset)
- {
--	struct hashmap_entry entry;
-+	struct hashmap_entry entry, *e;
- 	struct delta_base_cache_key key;
- 
- 	if (!delta_base_cache.cmpfn)
-@@ -1390,7 +1390,8 @@ get_delta_base_cache_entry(struct packed_git *p, off_t base_offset)
- 	hashmap_entry_init(&entry, pack_entry_hash(p, base_offset));
- 	key.p = p;
- 	key.base_offset = base_offset;
--	return hashmap_get(&delta_base_cache, &entry, &key);
-+	e = hashmap_get(&delta_base_cache, &entry, &key);
-+	return e ? container_of(e, struct delta_base_cache_entry, ent) : NULL;
+@@ -1401,11 +1401,16 @@ static int delta_base_cache_key_eq(const struct delta_base_cache_key *a,
  }
  
- static int delta_base_cache_key_eq(const struct delta_base_cache_key *a,
+ static int delta_base_cache_hash_cmp(const void *unused_cmp_data,
+-				     const void *va, const void *vb,
++				     const struct hashmap_entry *va,
++				     const struct hashmap_entry *vb,
+ 				     const void *vkey)
+ {
+-	const struct delta_base_cache_entry *a = va, *b = vb;
++	const struct delta_base_cache_entry *a, *b;
+ 	const struct delta_base_cache_key *key = vkey;
++
++	a = container_of(va, const struct delta_base_cache_entry, ent);
++	b = container_of(vb, const struct delta_base_cache_entry, ent);
++
+ 	if (key)
+ 		return !delta_base_cache_key_eq(&a->key, key);
+ 	else
 diff --git a/patch-ids.c b/patch-ids.c
-index 437f29e42c..176c47d967 100644
+index 176c47d967..75f8c9f1a1 100644
 --- a/patch-ids.c
 +++ b/patch-ids.c
-@@ -99,7 +99,8 @@ struct patch_id *has_commit_patch_id(struct commit *commit,
- 	if (init_patch_id_entry(&patch, commit, ids))
- 		return NULL;
+@@ -36,14 +36,16 @@ int commit_patch_id(struct commit *commit, struct diff_options *options,
+  * any significance; only that it is non-zero matters.
+  */
+ static int patch_id_neq(const void *cmpfn_data,
+-			const void *entry,
+-			const void *entry_or_key,
++			const struct hashmap_entry *eptr,
++			const struct hashmap_entry *entry_or_key,
+ 			const void *unused_keydata)
+ {
+ 	/* NEEDSWORK: const correctness? */
+ 	struct diff_options *opt = (void *)cmpfn_data;
+-	struct patch_id *a = (void *)entry;
+-	struct patch_id *b = (void *)entry_or_key;
++	struct patch_id *a, *b;
++
++	a = container_of(eptr, struct patch_id, ent);
++	b = container_of(entry_or_key, struct patch_id, ent);
  
--	return hashmap_get(&ids->patches, &patch.ent, NULL);
-+	return hashmap_get_entry(&ids->patches, &patch, NULL,
-+					struct patch_id, ent);
- }
- 
- struct patch_id *add_commit_patch_id(struct commit *commit,
+ 	if (is_null_oid(&a->patch_id) &&
+ 	    commit_patch_id(a->commit, opt, &a->patch_id, 0, 0))
 diff --git a/ref-filter.c b/ref-filter.c
-index d939ebc6bb..9999426914 100644
+index 9999426914..4613df8826 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1585,18 +1585,20 @@ static void lazy_init_worktree_map(void)
+@@ -84,12 +84,15 @@ struct ref_to_worktree_entry {
+ };
  
- static char *get_worktree_path(const struct used_atom *atom, const struct ref_array_item *ref)
+ static int ref_to_worktree_map_cmpfnc(const void *unused_lookupdata,
+-				      const void *existing_hashmap_entry_to_test,
+-				      const void *key,
++				      const struct hashmap_entry *eptr,
++				      const struct hashmap_entry *kptr,
+ 				      const void *keydata_aka_refname)
  {
--	struct hashmap_entry entry;
-+	struct hashmap_entry entry, *e;
- 	struct ref_to_worktree_entry *lookup_result;
- 
- 	lazy_init_worktree_map();
- 
- 	hashmap_entry_init(&entry, strhash(ref->refname));
--	lookup_result = hashmap_get(&(ref_to_worktree_map.map), &entry, ref->refname);
-+	e = hashmap_get(&(ref_to_worktree_map.map), &entry, ref->refname);
- 
--	if (lookup_result)
--		return xstrdup(lookup_result->wt->path);
--	else
-+	if (!e)
- 		return xstrdup("");
+-	const struct ref_to_worktree_entry *e = existing_hashmap_entry_to_test;
+-	const struct ref_to_worktree_entry *k = key;
++	const struct ref_to_worktree_entry *e, *k;
 +
-+	lookup_result = container_of(e, struct ref_to_worktree_entry, ent);
++	e = container_of(eptr, const struct ref_to_worktree_entry, ent);
++	k = container_of(kptr, const struct ref_to_worktree_entry, ent);
 +
-+	return xstrdup(lookup_result->wt->path);
+ 	return strcmp(e->wt->head_ref,
+ 		keydata_aka_refname ? keydata_aka_refname : k->wt->head_ref);
  }
- 
- /*
 diff --git a/refs.c b/refs.c
-index 3e55031256..43a95105f1 100644
+index 43a95105f1..2d3eb40f39 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1815,12 +1815,15 @@ static struct ref_store *lookup_ref_store_map(struct hashmap *map,
- 					      const char *name)
+@@ -1781,11 +1781,16 @@ struct ref_store_hash_entry
+ };
+ 
+ static int ref_store_hash_cmp(const void *unused_cmp_data,
+-			      const void *entry, const void *entry_or_key,
++			      const struct hashmap_entry *eptr,
++			      const struct hashmap_entry *entry_or_key,
+ 			      const void *keydata)
  {
- 	struct ref_store_hash_entry *entry;
-+	unsigned int hash;
+-	const struct ref_store_hash_entry *e1 = entry, *e2 = entry_or_key;
+-	const char *name = keydata ? keydata : e2->name;
++	const struct ref_store_hash_entry *e1, *e2;
++	const char *name;
++
++	e1 = container_of(eptr, const struct ref_store_hash_entry, ent);
++	e2 = container_of(entry_or_key, const struct ref_store_hash_entry, ent);
++	name = keydata ? keydata : e2->name;
  
- 	if (!map->tablesize)
- 		/* It's initialized on demand in register_ref_store(). */
- 		return NULL;
- 
--	entry = hashmap_get_from_hash(map, strhash(name), name);
-+	hash = strhash(name);
-+	entry = hashmap_get_entry_from_hash(map, hash, name,
-+					struct ref_store_hash_entry, ent);
- 	return entry ? entry->refs : NULL;
+ 	return strcmp(e1->name, name);
  }
- 
 diff --git a/remote.c b/remote.c
-index 8ca23d95dc..ed95ae6ed6 100644
+index ed95ae6ed6..fa9cadcfbd 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -135,7 +135,7 @@ static struct remote *make_remote(const char *name, int len)
+@@ -111,14 +111,16 @@ struct remotes_hash_key {
+ };
+ 
+ static int remotes_hash_cmp(const void *unused_cmp_data,
+-			    const void *entry,
+-			    const void *entry_or_key,
++			    const struct hashmap_entry *eptr,
++			    const struct hashmap_entry *entry_or_key,
+ 			    const void *keydata)
  {
- 	struct remote *ret, *replaced;
- 	struct remotes_hash_key lookup;
--	struct hashmap_entry lookup_entry;
-+	struct hashmap_entry lookup_entry, *e;
+-	const struct remote *a = entry;
+-	const struct remote *b = entry_or_key;
++	const struct remote *a, *b;
+ 	const struct remotes_hash_key *key = keydata;
  
- 	if (!len)
- 		len = strlen(name);
-@@ -145,8 +145,9 @@ static struct remote *make_remote(const char *name, int len)
- 	lookup.len = len;
- 	hashmap_entry_init(&lookup_entry, memhash(name, len));
- 
--	if ((ret = hashmap_get(&remotes_hash, &lookup_entry, &lookup)) != NULL)
--		return ret;
-+	e = hashmap_get(&remotes_hash, &lookup_entry, &lookup);
-+	if (e)
-+		return container_of(e, struct remote, ent);
- 
- 	ret = xcalloc(1, sizeof(struct remote));
- 	ret->prune = -1;  /* unspecified */
++	a = container_of(eptr, const struct remote, ent);
++	b = container_of(entry_or_key, const struct remote, ent);
++
+ 	if (key)
+ 		return strncmp(a->name, key->str, key->len) || a->name[key->len];
+ 	else
 diff --git a/revision.c b/revision.c
-index a7e2339064..d5f534209d 100644
+index d5f534209d..f32fbc5e2e 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -147,7 +147,8 @@ static void paths_and_oids_insert(struct hashmap *map,
- 	key.path = (char *)path;
- 	oidset_init(&key.trees, 0);
+@@ -107,16 +107,21 @@ struct path_and_oids_entry {
+ };
  
--	entry = hashmap_get(map, &key.ent, NULL);
-+	entry = hashmap_get_entry(map, &key, NULL,
-+				struct path_and_oids_entry, ent);
- 	if (!entry) {
- 		entry = xcalloc(1, sizeof(struct path_and_oids_entry));
- 		hashmap_entry_init(&entry->ent, hash);
-diff --git a/sequencer.c b/sequencer.c
-index b4ef70e260..aea2cb12cc 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5217,8 +5217,11 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
- 					break;
- 			}
- 
--			if ((entry = hashmap_get_from_hash(&subject2item,
--							   strhash(p), p)))
-+			entry = hashmap_get_entry_from_hash(&subject2item,
-+						strhash(p), p,
-+						struct subject2item_entry,
-+						entry);
-+			if (entry)
- 				/* found by title */
- 				i2 = entry->i;
- 			else if (!strchr(p, ' ') &&
-diff --git a/sub-process.c b/sub-process.c
-index 99fccef592..f2fcc16c3e 100644
---- a/sub-process.c
-+++ b/sub-process.c
-@@ -22,7 +22,8 @@ struct subprocess_entry *subprocess_find_entry(struct hashmap *hashmap, const ch
- 
- 	hashmap_entry_init(&key.ent, strhash(cmd));
- 	key.cmd = cmd;
--	return hashmap_get(hashmap, &key.ent, NULL);
-+	return hashmap_get_entry(hashmap, &key, NULL,
-+				struct subprocess_entry, ent);
+ static int path_and_oids_cmp(const void *hashmap_cmp_fn_data,
+-			     const struct path_and_oids_entry *e1,
+-			     const struct path_and_oids_entry *e2,
++			     const struct hashmap_entry *eptr,
++			     const struct hashmap_entry *entry_or_key,
+ 			     const void *keydata)
+ {
++	const struct path_and_oids_entry *e1, *e2;
++
++	e1 = container_of(eptr, const struct path_and_oids_entry, ent);
++	e2 = container_of(entry_or_key, const struct path_and_oids_entry, ent);
++
+ 	return strcmp(e1->path, e2->path);
  }
  
- int subprocess_read_status(int fd, struct strbuf *status)
+ static void paths_and_oids_init(struct hashmap *map)
+ {
+-	hashmap_init(map, (hashmap_cmp_fn) path_and_oids_cmp, NULL, 0);
++	hashmap_init(map, path_and_oids_cmp, NULL, 0);
+ }
+ 
+ static void paths_and_oids_clear(struct hashmap *map)
+diff --git a/sequencer.c b/sequencer.c
+index aea2cb12cc..b3e7319b55 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4440,9 +4440,14 @@ struct labels_entry {
+ 	char label[FLEX_ARRAY];
+ };
+ 
+-static int labels_cmp(const void *fndata, const struct labels_entry *a,
+-		      const struct labels_entry *b, const void *key)
++static int labels_cmp(const void *fndata, const struct hashmap_entry *eptr,
++		      const struct hashmap_entry *entry_or_key, const void *key)
+ {
++	const struct labels_entry *a, *b;
++
++	a = container_of(eptr, const struct labels_entry, entry);
++	b = container_of(entry_or_key, const struct labels_entry, entry);
++
+ 	return key ? strcmp(a->label, key) : strcmp(a->label, b->label);
+ }
+ 
+@@ -4573,7 +4578,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 
+ 	oidmap_init(&commit2todo, 0);
+ 	oidmap_init(&state.commit2label, 0);
+-	hashmap_init(&state.labels, (hashmap_cmp_fn) labels_cmp, NULL, 0);
++	hashmap_init(&state.labels, labels_cmp, NULL, 0);
+ 	strbuf_init(&state.buf, 32);
+ 
+ 	if (revs->cmdline.nr && (revs->cmdline.rev[0].flags & BOTTOM)) {
+@@ -5138,9 +5143,15 @@ struct subject2item_entry {
+ };
+ 
+ static int subject2item_cmp(const void *fndata,
+-			    const struct subject2item_entry *a,
+-			    const struct subject2item_entry *b, const void *key)
++			    const struct hashmap_entry *eptr,
++			    const struct hashmap_entry *entry_or_key,
++			    const void *key)
+ {
++	const struct subject2item_entry *a, *b;
++
++	a = container_of(eptr, const struct subject2item_entry, entry);
++	b = container_of(entry_or_key, const struct subject2item_entry, entry);
++
+ 	return key ? strcmp(a->subject, key) : strcmp(a->subject, b->subject);
+ }
+ 
+@@ -5173,8 +5184,7 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
+ 	 * In that case, last[i] will indicate the index of the latest item to
+ 	 * be moved to appear after the i'th.
+ 	 */
+-	hashmap_init(&subject2item, (hashmap_cmp_fn) subject2item_cmp,
+-		     NULL, todo_list->nr);
++	hashmap_init(&subject2item, subject2item_cmp, NULL, todo_list->nr);
+ 	ALLOC_ARRAY(next, todo_list->nr);
+ 	ALLOC_ARRAY(tail, todo_list->nr);
+ 	ALLOC_ARRAY(subjects, todo_list->nr);
+diff --git a/sub-process.c b/sub-process.c
+index f2fcc16c3e..ad94f72665 100644
+--- a/sub-process.c
++++ b/sub-process.c
+@@ -6,12 +6,14 @@
+ #include "pkt-line.h"
+ 
+ int cmd2process_cmp(const void *unused_cmp_data,
+-		    const void *entry,
+-		    const void *entry_or_key,
++		    const struct hashmap_entry *eptr,
++		    const struct hashmap_entry *entry_or_key,
+ 		    const void *unused_keydata)
+ {
+-	const struct subprocess_entry *e1 = entry;
+-	const struct subprocess_entry *e2 = entry_or_key;
++	const struct subprocess_entry *e1, *e2;
++
++	e1 = container_of(eptr, const struct subprocess_entry, ent);
++	e2 = container_of(entry_or_key, const struct subprocess_entry, ent);
+ 
+ 	return strcmp(e1->cmd, e2->cmd);
+ }
+diff --git a/sub-process.h b/sub-process.h
+index 5c182fad98..0d12708b8c 100644
+--- a/sub-process.h
++++ b/sub-process.h
+@@ -43,8 +43,8 @@ struct subprocess_capability {
+ 
+ /* Function to test two subprocess hashmap entries for equality. */
+ int cmd2process_cmp(const void *unused_cmp_data,
+-		    const void *e1,
+-		    const void *e2,
++		    const struct hashmap_entry *e,
++		    const struct hashmap_entry *entry_or_key,
+ 		    const void *unused_keydata);
+ 
+ /*
 diff --git a/submodule-config.c b/submodule-config.c
-index 9248c5ea5b..b031884789 100644
+index b031884789..5463729ab8 100644
 --- a/submodule-config.c
 +++ b/submodule-config.c
-@@ -166,7 +166,8 @@ static const struct submodule *cache_lookup_path(struct submodule_cache *cache,
- 	hashmap_entry_init(&key.ent, hash);
- 	key.config = &key_config;
+@@ -38,24 +38,28 @@ enum lookup_type {
+ };
  
--	entry = hashmap_get(&cache->for_path, &key.ent, NULL);
-+	entry = hashmap_get_entry(&cache->for_path, &key, NULL,
-+				struct submodule_entry, ent);
- 	if (entry)
- 		return entry->config;
- 	return NULL;
-@@ -186,7 +187,8 @@ static struct submodule *cache_lookup_name(struct submodule_cache *cache,
- 	hashmap_entry_init(&key.ent, hash);
- 	key.config = &key_config;
+ static int config_path_cmp(const void *unused_cmp_data,
+-			   const void *entry,
+-			   const void *entry_or_key,
++			   const struct hashmap_entry *eptr,
++			   const struct hashmap_entry *entry_or_key,
+ 			   const void *unused_keydata)
+ {
+-	const struct submodule_entry *a = entry;
+-	const struct submodule_entry *b = entry_or_key;
++	const struct submodule_entry *a, *b;
++
++	a = container_of(eptr, const struct submodule_entry, ent);
++	b = container_of(entry_or_key, const struct submodule_entry, ent);
  
--	entry = hashmap_get(&cache->for_name, &key.ent, NULL);
-+	entry = hashmap_get_entry(&cache->for_name, &key, NULL,
-+				struct submodule_entry, ent);
- 	if (entry)
- 		return entry->config;
- 	return NULL;
+ 	return strcmp(a->config->path, b->config->path) ||
+ 	       !oideq(&a->config->gitmodules_oid, &b->config->gitmodules_oid);
+ }
+ 
+ static int config_name_cmp(const void *unused_cmp_data,
+-			   const void *entry,
+-			   const void *entry_or_key,
++			   const struct hashmap_entry *eptr,
++			   const struct hashmap_entry *entry_or_key,
+ 			   const void *unused_keydata)
+ {
+-	const struct submodule_entry *a = entry;
+-	const struct submodule_entry *b = entry_or_key;
++	const struct submodule_entry *a, *b;
++
++	a = container_of(eptr, const struct submodule_entry, ent);
++	b = container_of(entry_or_key, const struct submodule_entry, ent);
+ 
+ 	return strcmp(a->config->name, b->config->name) ||
+ 	       !oideq(&a->config->gitmodules_oid, &b->config->gitmodules_oid);
+diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
+index e82cbfdee2..56846da64c 100644
+--- a/t/helper/test-hashmap.c
++++ b/t/helper/test-hashmap.c
+@@ -16,15 +16,17 @@ static const char *get_value(const struct test_entry *e)
+ }
+ 
+ static int test_entry_cmp(const void *cmp_data,
+-			  const void *entry,
+-			  const void *entry_or_key,
++			  const struct hashmap_entry *eptr,
++			  const struct hashmap_entry *entry_or_key,
+ 			  const void *keydata)
+ {
+ 	const int ignore_case = cmp_data ? *((int *)cmp_data) : 0;
+-	const struct test_entry *e1 = entry;
+-	const struct test_entry *e2 = entry_or_key;
++	const struct test_entry *e1, *e2;
+ 	const char *key = keydata;
+ 
++	e1 = container_of(eptr, const struct test_entry, ent);
++	e2 = container_of(entry_or_key, const struct test_entry, ent);
++
+ 	if (ignore_case)
+ 		return strcasecmp(e1->key, key ? key : e2->key);
+ 	else
