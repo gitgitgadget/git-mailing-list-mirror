@@ -2,33 +2,30 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D867D1F4BD
-	for <e@80x24.org>; Sun,  6 Oct 2019 18:40:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01B531F4BD
+	for <e@80x24.org>; Sun,  6 Oct 2019 19:37:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725900AbfJFSjy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 Oct 2019 14:39:54 -0400
-Received: from relay9-d.mail.gandi.net ([217.70.183.199]:34819 "EHLO
-        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725805AbfJFSjy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Oct 2019 14:39:54 -0400
-X-Originating-IP: 1.186.12.44
-Received: from localhost (unknown [1.186.12.44])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 68EAEFF803;
-        Sun,  6 Oct 2019 18:39:51 +0000 (UTC)
-Date:   Mon, 7 Oct 2019 00:09:49 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Harish Karumuthil <harish2704@gmail.com>, git@vger.kernel.org,
-        David Aguilar <davvid@gmail.com>
+        id S1726712AbfJFThR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Oct 2019 15:37:17 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:10026 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726204AbfJFThR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Oct 2019 15:37:17 -0400
+Received: from [92.7.169.237] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1iHCLD-0006Qs-6V; Sun, 06 Oct 2019 20:37:15 +0100
 Subject: Re: [PATCH] Feature: custom guitool commands can now have custom
  keyboard shortcuts
-Message-ID: <20191006183948.5n23sdy2l4uwl6kb@yadavpratyush.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Harish Karumuthil <harish2704@gmail.com>, git@vger.kernel.org,
+        David Aguilar <davvid@gmail.com>
 References: <01020153c22ab06b-e195b148-37cc-4f89-92f3-f4bed1915eb9-000000@eu-west-1.amazonses.com>
  <20160331164137.GA11150@gmail.com>
  <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com>
@@ -39,194 +36,35 @@ References: <01020153c22ab06b-e195b148-37cc-4f89-92f3-f4bed1915eb9-000000@eu-wes
  <149a83fd40b71896b134b16c2b499ff472c6234e.camel@gmail.com>
  <20191005210127.uinrgazj5ezyqftj@yadavpratyush.com>
  <nycvar.QRO.7.76.6.1910061054470.46@tvgsbejvaqbjf.bet>
+ <20191006183948.5n23sdy2l4uwl6kb@yadavpratyush.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <293e0738-85dd-14eb-20b9-a837aa88c0cc@iee.email>
+Date:   Sun, 6 Oct 2019 20:37:14 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1910061054470.46@tvgsbejvaqbjf.bet>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <20191006183948.5n23sdy2l4uwl6kb@yadavpratyush.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/10/19 11:49AM, Johannes Schindelin wrote:
-> Hi Pratyush,
-> 
-> On Sun, 6 Oct 2019, Pratyush Yadav wrote:
-> 
-> > On 06/10/19 01:46AM, Harish Karumuthil wrote:
-> > >
-> > > From https://www.kernel.org/doc/html/v4.10/process/email-clients.html, I
-> > > understood that, my current email client ( that is gmail web ) is not good
-> > > for submitting patches. So I was tying to setup a mail client which is
-> > > compatible with `git send-mail`. But I was not able to get a satisfactory
-> > > result in that.
-> >
-> > You don't need to "set up" an email client with git-send-email.
-> > git-send-email is an email client itself. Well, one which can only send
-> > emails.
-> 
-> It also cannot reply to mails on the mailing list.
-> 
-> It cannot even notify you when anybody replied to your patch.
-> 
-> Two rather problematic aspects when it comes to patch contributions: how
-> are you supposed to work with the reviewers when you lack all the tools
-> to _interact_ with them? All `git send-email` provides is a "fire and
-> forget" way to send patches, i.e. it encourages a monologue, when you
-> want to start a dialogue instead.
+On 06/10/2019 19:39, Pratyush Yadav wrote:
+>> That way, you don't have to introduce settings separate from
+>> `git-cola`'s, and you can reuse the short-and-sweet variable name.
+> I think a more important question is whether we_really_  need to have
+> compatibility with git-cola. Most of our shortcuts don't match with
+> them, so is it really worth the effort to try to keep compatibility?
+>
+> I'm not against something like this, but just want to be sure we
+> evaluate whether the effort is worth it.
+I just wondered if the custom list would/could be split between a 
+"Common-shortcuts" list, and "GUI-local" list (and hence, elsewhere, a 
+"Cola-local" list)
 
-Well, I started with email based patch contribution when I was first got 
-started with open source, so I might be a bit biased, but in my 
-experience, it is not that difficult to set all these things up. Most of 
-the time, all you need to tell git-send-email is your SMTP server, 
-username, and password. All pretty easy things to do.
-
-And you add in your email client (which pretty much everyone should 
-have), and it is a complete setup. I personally use neomutt as my email 
-client, but I have used Thunderbird before, and it is really easy to set 
-it up to send plain text emails. All you need to do is hold Shift before 
-hitting reply, and you're in plain text mode. And you can even make it 
-use plain text by default by flipping a switch in the settings.
-
-So while I agree with you that there is certainly a learning curve 
-involved, I don't think it is all too bad. But again, that is all my 
-personal opinion, and nothing based on facts or data.
- 
-> > So what you should do is run `git format-patch -o feature master..HEAD`,
-> > assuming your feature branch is checked out. This will give you a set of
-> > '.patch' files depending on how many commits you made in your branch in
-> > the folder feature/. Then, you can run
-> >
-> >   git send-email --to='Pratyush Yadav <me@yadavpratyush.com>' --cc='<git@vger.kernel.org>' feature/*.patch
-> >
-> > This will send all your patch files via email to me with the git list in
-> > Cc. You can add multiple '--to' and '--cc' options to send it to
-> > multiple people.
-> >
-> > Try sending the patches to yourself to experiment around with it.
-> >
-> > A pretty good tutorial to configuring and using git-send-email can be
-> > found at [0]. And of course, read the man page.
-> >
-> > These instructions are for Linux, but you can probably do something
-> > similar in Windows too (if you're using Windows that is).
-> 
-> Last I checked, `git send-email` worked in Git for Windows.
-> 
-> But of course, it does not only not address the problem it tries to
-> solve fully (to provide a way to interact with a mailing list when
-> submitting patches for review), not even close, to add insult to injury,
-> it now adds an additional burden to contributors (who might already have
-> struggled to learn themselves enough Tcl/Tk to fix the problem) to
-> configure `git send-email` correctly.
-
-The way I see it, git-send-email does not need to solve the problem of 
-interacting with a mailing list. That problem is already solved by a 
-hoard of MUAs. All git-send-email should do is, you guessed it, send 
-emails (or patches to be specific).
-
-Anyway, GitGitGadget solves a large part of the problem. It eliminates 
-the need for using git-send-email, and it even shows you the replies 
-received on the list. I honestly think it is a great tool, and it gives 
-people a very good alternative to using git-send-email.
-
-One feature that would make it complete would be the ability to reply to 
-review comments. This would remove the need for an email client (almost) 
-completely. I have never written Typescript or used Azure pipelines 
-ever, but I can try tinkering around to see if I can figure out how to 
-do something like that. Unless, of course, you or someone else is 
-already doing it. If not, some pointers would be appreciated.
- 
-> > > For now, I followed the instruction of Johannes Schindelin and submitted a
-> > > pull request . Please see https://github.com/gitgitgadget/git/pull/376
-> >
-> > You haven't sent '/submit' over there, so those emails aren't in the
-> > list (and my inbox) yet. You need to comment with '/submit' (without the
-> > quotes) to tell GitGitGadget to send your PR as email.
-> 
-> They probably did not hit `/submit` because the initial hurdle is to be
-> `/allow`ed (a very, very simplistic attempt at trying to prevent
-> spamming the mailing list by jokesters, of which there are unfortunately
-> quite a number).
-> 
-> This `/allow` command, BTW, can be issued by anybody who has been
-> `/allow`ed before, it does not always have to be me.
-> 
-> FWIW you should probably be in that list of `/allow`ed people so that
-> you can `/allow` new contributors to use GitGitGadget, too.
-
-That would be great! How do I get '/allow'ed? Do I have to open a PR 
-there for you to '/allow' me?
- 
-> > [...]
-> >
-> > > Since #1 is a serious issue, I tried to find out the function which does the
-> > > keycode validation, but I haven't succeded till now. ( I found the C function
-> > > name  which is "TkStringToKeysym" from TK source, but I couldn't find its TCL
-> > > binding ). It will be helpful if any one can help me on this.
-> >
-> > I really think you shouldn't dive around in the C parts of Tcl. I
-> > haven't looked too deeply into this, but you can probably wrap your bind
-> > calls in `catch` [2] and handle errors from there. Again, I haven't
-> > tried actually doing this, so you do need to check first.
-> >
-> > You can find examples of how to use `catch` in our codebase. Just search
-> > for it.
-> 
-> FWIW in addition to the `catch` method, I would also recommend looking
-> into a minimal (not even necessarily complete) way to translate the Qt
-> way to specify the keyboard shortcuts (as used by `git-cola`) to Tk
-> ones.
-> 
-> As indicated in
-> https://github.com/git/git/pull/220#issuecomment-536045075, the Qt style
-> `CTRL+,` should be translated to `Control-comma`, for example. In
-> particular, keystrokes specified in the format indicated at
-> https://doc.qt.io/archives/qt-4.8/qkeysequence.html#QKeySequence-2 to
-> the format indicated at https://www.tcl.tk/man/tcl8.4/TkCmd/keysyms.htm.
-> 
-> However, it might not even need to put in _such_ a lot of work: in my
-> tests, `Control-,` worked just as well as `Control-comma`. To test this
-> for yourself, use this snippet (that is slightly modified from the
-> example at the bottom of https://www.tcl.tk/man/tcl/TkCmd/bind.htm so
-> that it reacts _only_ to Control+comma instead of all keys):
-
-Another benefit to the translation framework would be that we could also 
-generate the menu labels (aka "accelerator") for the tools, instead of 
-making the user specify both the shortcut and the label.
- 
-> -- snip --
-> set keysym "Press any key"
-> pack [label .l -textvariable keysym -padx 2m -pady 1m]
-> #bind . <Key> {
-> bind . <Control-,> {
->     set keysym "You pressed %K"
-> }
-> -- snap --
-> 
-> So I could imagine that something like this could serve as an initial
-> draft for a function that you can turn into a "good enough" version:
-> 
-> -- snip --
-> proc QKeySequence2keysym {keystroke} {
-> 	regsub -all {(?i)Ctrl\+} $keystroke "Control-" keystroke
-> 	regsub -all {(?i)Alt\+} $keystroke "Alt-" keystroke
-> 	regsub -all {(?i)Shift\+} $keystroke "Shift-" keystroke
-> 	return $keystroke
-> }
-> -- snap --
-> 
-> That way, you don't have to introduce settings separate from
-> `git-cola`'s, and you can reuse the short-and-sweet variable name.
-
-I think a more important question is whether we _really_ need to have 
-compatibility with git-cola. Most of our shortcuts don't match with 
-them, so is it really worth the effort to try to keep compatibility?
-
-I'm not against something like this, but just want to be sure we 
-evaluate whether the effort is worth it.
-
+I don't use Cola at all, so this is just a bikeshed comment...
 -- 
-Regards,
-Pratyush Yadav
+Philip
