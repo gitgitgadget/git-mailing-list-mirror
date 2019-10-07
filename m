@@ -2,104 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-9.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B594F1F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 20:08:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FE971F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 20:37:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729335AbfJGUIw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 16:08:52 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:52845 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729169AbfJGUIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 16:08:48 -0400
-Received: by mail-wm1-f66.google.com with SMTP id r19so773758wmh.2
-        for <git@vger.kernel.org>; Mon, 07 Oct 2019 13:08:45 -0700 (PDT)
+        id S1728992AbfJGUhA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 16:37:00 -0400
+Received: from mail-pf1-f172.google.com ([209.85.210.172]:46449 "EHLO
+        mail-pf1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728330AbfJGUhA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 16:37:00 -0400
+Received: by mail-pf1-f172.google.com with SMTP id q5so9356197pfg.13
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 13:36:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Ece6VVjB0Ab+cwqH63x+BXogFIWNVunbb3YimZA0Fzs=;
-        b=vF1fXaFj5/ZMQ1HREHbhACfZjdsB98weCDgjiqze9SdQEzK84H0O8id50tFebiaV5X
-         sgb3RU0QtDN6dOV9FfxLoOd58+5epXtTz/eQFkyCJH+FApO9yf6XnGfsRn9WQvn4xC3s
-         VqnjEEWv51RWbNktJSFFZDHq+DcF6uTM/aLC84vVLPLGKEVTuiO7s0086ExBnGVe9Hog
-         sc6NfocTyL68USHyYT5K6X7SYw4F0m9Hztd5Z8K+f6TKzajl3cLCAXfjvMuY9j3NY/mS
-         8714yAmlneP5T1a9yr10jyVCB9qTSOxtufqrR17lmZ3Ah1G/ICvXtrOb2JSDLN5KQNxT
-         zpaw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wD9d7799RGgz6ULeEn182oLSoU6v/ifAX6FSPysZDeI=;
+        b=omnvip2ConaRCiYB724EOFkfR7kEpZ5S0KhXXBqqpj/CzLF67tkhtxUpsTlObRiY+c
+         nfVV+TR4vqjAdH9tBp9ALJyCVpbHO9rpDeYpNZ5TCmRRJ2ERgM0C47WXtbudDwwAt3g6
+         LKfIW0FzXGbljMIOO8Dh2J5bqvQP7Pywmn0VJPhKrcw+L1EYvObsiSrRYJti9kucFxrU
+         iPYyVmfGi6wBez6fLyf5LjkIVFkwK4U9ODOThtpmODnceY5GjPmgnMdAHxQry5YI/gFQ
+         WuiQz51FLHO/98bSbeHOt1L+13rqXkDbp7kkKBsEh8y0aicvxtIo+90xlwIHxjKBcuna
+         /ftA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Ece6VVjB0Ab+cwqH63x+BXogFIWNVunbb3YimZA0Fzs=;
-        b=YRyJREcUdfi093c6nGKJZexwAPVaOARnGiGi1zJZcCDQSXquRBEqBxdF8DqwC3EHoB
-         PcDLGn7LTmQYR4bw64U86bXlyDhZLHaTq4hjsH0q/mW64YVWf2ibD0A6oRBeiP9SrSG8
-         N7fA4dJff5x/6vksSN7yx0vMJPokhh3jt7f9zn+LqcUIlMR4mLNA+MV9DxVj23uuEKEK
-         af6RdZ3C/ySri5v8fL5R6r/QHgafUfDoCw5oLJH29ww1PWhSfkkozLzJm2/2tk3Hb06T
-         Le4pgn6s5Urr5EEUvImqzRRJ28AZd0aJWCJ5vdfBR9kUk5k/BEbqd7m7mX2k+i2jl/8L
-         /G1A==
-X-Gm-Message-State: APjAAAWwLzKAaJ/X94zYC60DLx1J5uAGhcnqX5Hf8Zo99RKvCFXLOppU
-        Tk1SSetXtjHEpGLVz8uettpLrt3o
-X-Google-Smtp-Source: APXvYqz7zDo/oeNhSObxqJnVZTUBi+aKOaX7ORnkZCPqWdRumCUESyKSubvB5qUY4LzsFx40PFQS4w==
-X-Received: by 2002:a05:600c:2049:: with SMTP id p9mr782031wmg.30.1570478924201;
-        Mon, 07 Oct 2019 13:08:44 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y19sm1343878wmi.13.2019.10.07.13.08.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Oct 2019 13:08:43 -0700 (PDT)
-Date:   Mon, 07 Oct 2019 13:08:43 -0700 (PDT)
-X-Google-Original-Date: Mon, 07 Oct 2019 20:08:25 GMT
-Message-Id: <7f377c1407274aec87c6261f05bb9a944b659ba0.1570478905.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.316.v3.git.gitgitgadget@gmail.com>
-References: <pull.316.v2.git.gitgitgadget@gmail.com>
-        <pull.316.v3.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 17/17] sparse-checkout: cone mode should not interact with
- .gitignore
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wD9d7799RGgz6ULeEn182oLSoU6v/ifAX6FSPysZDeI=;
+        b=PgrIrMbP2TG45BBi7zshB1AguYw9Dio/vmADRekjiVmu/cU2etiewTgs34Bq+lnN3M
+         lfNla+mCYrtMWGcf5KYT2eSArR4f0OsUEk0sBzaqHH/Ogs97kyN70mB45l9V1lwFZcO8
+         9nxkeTJrZTkvAarCvhaVcguRsL78L7hfiR0wWiFrE6q6p7y3tzQFyrJWyIKtQ6fOHgzv
+         NRXgCI4Vb61Na4H37Af95SWHIgYdHceJz7lCNOfxTIRWLrn6qm8yfv+TSlJu3Dkky+DT
+         2CW7wr+RsB0TsIe7SGhDVI9LYop+e93xDPWlh9ZdWB80h7F435Fx4b7rovJf166jWtci
+         CmJA==
+X-Gm-Message-State: APjAAAVaKkax3hE17PEe4JnO1iWfzrjewYv2a9NRvBSeBBf1j0w0vJpQ
+        scmm5e34OL1HzqALDEYaJxwwuQ==
+X-Google-Smtp-Source: APXvYqxK64qtKhMz8ldhPI8ljx8ZSzWGVvR36jM/yjLMM4H7tk9l/FA8ZP30EWbshgROs86p5YaTlg==
+X-Received: by 2002:a62:170b:: with SMTP id 11mr33617139pfx.243.1570480619043;
+        Mon, 07 Oct 2019 13:36:59 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id q30sm330913pja.18.2019.10.07.13.36.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Oct 2019 13:36:58 -0700 (PDT)
+Date:   Mon, 7 Oct 2019 13:36:54 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Rajni Jha <rajnikjha98@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Outreachy
+Message-ID: <20191007203654.GA20450@google.com>
+References: <CAAe2+-RUhQDuw2kR4xCh2Sjh0CvpuBsWtK2iLmHih1iWtcP60w@mail.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     newren@gmail.com, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAAe2+-RUhQDuw2kR4xCh2Sjh0CvpuBsWtK2iLmHih1iWtcP60w@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On Sun, Oct 06, 2019 at 01:32:54AM +0530, Rajni Jha wrote:
+> Hello!
+Welcome! Thank you for introducing yourself and please don't hesitate to
+ask any questions you may have.
 
-During the development of the sparse-checkout "cone mode" feature,
-an incorrect placement of the initializer for "use_cone_patterns = 1"
-caused warnings to show up when a .gitignore file was present with
-non-cone-mode patterns. This was fixed in the original commit
-introducing the cone mode, but now we should add a test to avoid
-hitting this problem again in the future.
+> 
+> I am an outreachy applicant and I am looking forward to working with git
+> for my outreachy internship.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- t/t1091-sparse-checkout-builtin.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+Hope this will help you get started. The community discussed the list of
+microprojects for applicants to try in this mailing list thread:
+https://public-inbox.org/git/20190916184208.GB17913@google.com/
+I don't think you need to wade through the replies on that thread to
+determine whether the microproject you are interested in is available,
+although you're certainly welcome to. You can also ask me if you see a
+microproject you are interested in and I will be happy to help
+summarize it and point you in the right direction :)
 
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index f22a4afbea..ed9355384a 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -269,4 +269,11 @@ test_expect_success 'fail when lock is taken' '
- 	test_i18ngrep "File exists" err
- '
- 
-+test_expect_success '.gitignore should not warn about cone mode' '
-+	git -C repo config --worktree core.sparseCheckoutCone true &&
-+	echo "**/bin/*" >repo/.gitignore &&
-+	git -C repo reset --hard 2>err &&
-+	test_i18ngrep ! "disabling cone patterns" err
-+'
-+
- test_done
--- 
-gitgitgadget
+It is also probably a good idea for you to search that mailing list
+archive for "[Outreachy]" so you can see what Outreachy interns have
+done in the past and try to emulate how they submitted finished
+microprojects. I also recommend that you read through
+https://git-scm.com/docs/MyFirstContribution.html#ready-to-share to
+learn how to share your code with us when you have finished.
+
+ - Emily
