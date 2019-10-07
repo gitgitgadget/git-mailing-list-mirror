@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 725A01F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 20:08:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69DDC1F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 20:08:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729291AbfJGUIp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 16:08:45 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:52830 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729169AbfJGUIk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 16:08:40 -0400
-Received: by mail-wm1-f66.google.com with SMTP id r19so773502wmh.2
-        for <git@vger.kernel.org>; Mon, 07 Oct 2019 13:08:39 -0700 (PDT)
+        id S1729199AbfJGUIj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 16:08:39 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:47066 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729169AbfJGUIi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 16:08:38 -0400
+Received: by mail-wr1-f65.google.com with SMTP id o18so16723404wrv.13
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 13:08:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=vSxY2/AV/uKAwbPZvrTS2ddJm3Q7YwRkcLQwX//7Weo=;
-        b=t3/RfkFAmAHahV4AFFrcQEDX7pYyMfKB67ThR+glZh5RqDTFDv16B+tjfg7mPj1qPa
-         YzWweE7M7Tf/tvzqTIcEdPARzqpATSBeb7yv83kSe2FfjdLQbdUALWqe/NV24M+ckNzO
-         5iEUDk9gMJ88mmbpbblT804prs8N2loZ+XZKoMpHmxRawkeapilmz9z6BG7DimirTwlm
-         4g8AD6fRwjz7qE93pI6mxjmizwUhFhdgDuguvYoXKpDntpr5nCiAmkKVHDkoHvD5RIW1
-         +N/vx3v5V4XfK/DfZq0lyGgYgD/wJPgAHeNrGez+AcVaEu3yl/o87umNJfeicH1zLCck
-         pEEA==
+        bh=7bzgwgdCydpgqPF6OX/Rcw8pxWIqn2f0XiBaaMLM44c=;
+        b=FwYjNtiGXOofOOcJUtyQw5GCO05X3sFqp4D7wp7d2Pn4Peha+JbZ/+j75o8SQ9W1Eh
+         mB4OzmDjo6ZF/j+GTuAwNDJDwYAc/mU+3L+COHo1ypRasXT+wdxC7Mpj4SQymiEAmy3e
+         rMDdL2wjp8ZqHEfncw5Zgw/Pl1ybGnlEtpSlBceyl4LdHX4JZOqGIJndtN4Ecrjrm/+q
+         JVebj94BkuCmFhsc9iBihHw0ViR4+6nUEodOnGPcWSoUidalKGx3dAJ91iVvRC6rJrXh
+         9XoiTXPntoKCIlU0XuTD9qI3q3noR85Al+TY1hOxgn6usPWK+twMisRXa8bBir4LG0lv
+         k5yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=vSxY2/AV/uKAwbPZvrTS2ddJm3Q7YwRkcLQwX//7Weo=;
-        b=hIZgSRVTU3EVTVZOx6xeFrA7Xe0aLdo1GxCYPeyXQg9O3T2C9l7Mg8Nf7Vmstc9w06
-         y+yecZRLyRhPf3+1PWTwQvFEeGiV78VqW/w2nOWyugX9NF2FSRN8zS9ij8/yFaFH1y9n
-         mEO6wZKEWktaSoCK1HKl+WpyD70uZH78QDzzrgWfIgrZ3Iall/s9arkcxWrwfukecGc+
-         /FUHbA9bONpW1KArUCRgI5I1NQD1TLq2toDDVV5MNEsAJo7ybsxX+jktOXhZNRhD1n+4
-         1Ha8CYae8UQur4tPRONNq9Hw98CauUhQdKxsO3zK9OO9CQfpNHD87Eu6DVG6PVd/y5ir
-         BfHg==
-X-Gm-Message-State: APjAAAVIZT1zMGqin5kuLbP9Ytgg6M9+/5RPYj2zjpWOcvIGSUb5yhgR
-        RFF5mYtNp3NOm16dmt4ovadr5zKh
-X-Google-Smtp-Source: APXvYqwgnoju0ZDa3KVuqfyzpc2Wc4ydfzjGutfjIPZfXtOLRgObazOR0VZJp0rqcPA7vvCUG3XX8A==
-X-Received: by 2002:a7b:c775:: with SMTP id x21mr812020wmk.52.1570478918720;
-        Mon, 07 Oct 2019 13:08:38 -0700 (PDT)
+        bh=7bzgwgdCydpgqPF6OX/Rcw8pxWIqn2f0XiBaaMLM44c=;
+        b=PRiXVmdQ6PqPTZy+HausOb8F4t2p7PuJgSitvz3QVluoGUHRzuJBij+w533WKwmgRd
+         coaihIiZ4Y0FV5AsrKEJhpaWIkXTXUXwodhXPKSjejgFFB8lYW1vBzSJmvL4NhsxjZ3i
+         vFN//GTSy+3cwzu/Gn+7Vf+A9xwhzMqkyI1z1YYVaUMhjYg7mRdniSuP0/KBJzLDFf4A
+         BH+ijzY131DJh7Rt+EZpDPlnHXlspRHtS7ejNU2/bwYCuWAkEbmSIRX1jYHrWDnXrHYZ
+         aDOZVntuG5tGG7sIcLIcE9Y2Xk4hQS2VnaliEk1aoshtVaenpwUL8LvGNwG0d0xb/J7a
+         BmHw==
+X-Gm-Message-State: APjAAAUFm25F0dRhyPpF3NF6n8K4H/p6ms1f+EfxagMFBK4YNbyJUwb/
+        f4rMZoSOCxYhZ/bze8mdaU2p80zi
+X-Google-Smtp-Source: APXvYqwr9558j+eCqXq2ndwDYisxiToXTBab1K2q8EddPpqIdQeQnSPsuIrOJWztYVv75vOqWYWDmQ==
+X-Received: by 2002:adf:fec9:: with SMTP id q9mr13277041wrs.336.1570478915704;
+        Mon, 07 Oct 2019 13:08:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b186sm1086396wmd.16.2019.10.07.13.08.38
+        by smtp.gmail.com with ESMTPSA id p85sm793319wme.23.2019.10.07.13.08.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Oct 2019 13:08:38 -0700 (PDT)
-Date:   Mon, 07 Oct 2019 13:08:38 -0700 (PDT)
-X-Google-Original-Date: Mon, 07 Oct 2019 20:08:19 GMT
-Message-Id: <e06349fcec6612c74bed35cc7ca3a039017c2845.1570478905.git.gitgitgadget@gmail.com>
+        Mon, 07 Oct 2019 13:08:35 -0700 (PDT)
+Date:   Mon, 07 Oct 2019 13:08:35 -0700 (PDT)
+X-Google-Original-Date: Mon, 07 Oct 2019 20:08:16 GMT
+Message-Id: <a66ec1affc22829d693090af2287692e032263d3.1570478905.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.316.v3.git.gitgitgadget@gmail.com>
 References: <pull.316.v2.git.gitgitgadget@gmail.com>
         <pull.316.v3.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 11/17] unpack-trees: hash less in cone mode
+Subject: [PATCH v3 08/17] sparse-checkout: add 'cone' mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,117 +72,185 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The sparse-checkout feature in "cone mode" can use the fact that
-the recursive patterns are "connected" to the root via parent
-patterns to decide if a directory is entirely contained in the
-sparse-checkout or entirely removed.
+The sparse-checkout feature can have quadratic performance as
+the number of patterns and number of entries in the index grow.
+If there are 1,000 patterns and 1,000,000 entries, this time can
+be very significant.
 
-In these cases, we can skip hashing the paths within those
-directories and simply set the skipworktree bit to the correct
-value.
+Create a new Boolean config option, core.sparseCheckoutCone, to
+indicate that we expect the sparse-checkout file to contain a
+more limited set of patterns. This is a separate config setting
+from core.sparseCheckout to avoid breaking older clients by
+introducing a tri-state option.
+
+The config option does nothing right now, but will be expanded
+upon in a later commit.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- dir.c          |  4 ++--
- dir.h          |  1 +
- unpack-trees.c | 38 +++++++++++++++++++++++---------------
- 3 files changed, 26 insertions(+), 17 deletions(-)
+ Documentation/config/core.txt         | 10 ++++--
+ Documentation/git-sparse-checkout.txt | 50 +++++++++++++++++++++++++++
+ cache.h                               |  4 ++-
+ config.c                              |  5 +++
+ environment.c                         |  1 +
+ t/t1091-sparse-checkout-builtin.sh    | 14 ++++++++
+ 6 files changed, 81 insertions(+), 3 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index 2b240111aa..eb6b2913ef 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1253,7 +1253,7 @@ enum pattern_match_result path_matches_pattern_list(
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index 75538d27e7..e2d343f738 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -591,8 +591,14 @@ core.multiPackIndex::
+ 	multi-pack-index design document].
  
- 	if (hashmap_contains_path(&pl->recursive_hashmap,
- 				  &parent_pathname)) {
--		result = MATCHED;
-+		result = MATCHED_RECURSIVE;
- 		goto done;
- 	}
- 
-@@ -1275,7 +1275,7 @@ enum pattern_match_result path_matches_pattern_list(
- 	if (hashmap_contains_parent(&pl->recursive_hashmap,
- 				    pathname,
- 				    &parent_pathname))
--		result = MATCHED;
-+		result = MATCHED_RECURSIVE;
- 
- done:
- 	strbuf_release(&parent_pathname);
-diff --git a/dir.h b/dir.h
-index f7a2f000c3..c868129a54 100644
---- a/dir.h
-+++ b/dir.h
-@@ -262,6 +262,7 @@ enum pattern_match_result {
- 	UNDECIDED = -1,
- 	NOT_MATCHED = 0,
- 	MATCHED = 1,
-+	MATCHED_RECURSIVE = 2,
- };
- 
- /*
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 566df11309..b5cf591c38 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1280,15 +1280,17 @@ static int clear_ce_flags_dir(struct index_state *istate,
- 	struct cache_entry **cache_end;
- 	int dtype = DT_DIR;
- 	int rc;
--	enum pattern_match_result ret;
--	ret = path_matches_pattern_list(prefix->buf, prefix->len,
--					basename, &dtype, pl, istate);
-+	enum pattern_match_result ret, orig_ret;
-+	orig_ret = path_matches_pattern_list(prefix->buf, prefix->len,
-+					     basename, &dtype, pl, istate);
- 
- 	strbuf_addch(prefix, '/');
- 
- 	/* If undecided, use matching result of parent dir in defval */
--	if (ret == UNDECIDED)
-+	if (orig_ret == UNDECIDED)
- 		ret = default_match;
-+	else
-+		ret = orig_ret;
- 
- 	for (cache_end = cache; cache_end != cache + nr; cache_end++) {
- 		struct cache_entry *ce = *cache_end;
-@@ -1296,17 +1298,23 @@ static int clear_ce_flags_dir(struct index_state *istate,
- 			break;
- 	}
- 
--	/*
--	 * TODO: check pl, if there are no patterns that may conflict
--	 * with ret (iow, we know in advance the incl/excl
--	 * decision for the entire directory), clear flag here without
--	 * calling clear_ce_flags_1(). That function will call
--	 * the expensive path_matches_pattern_list() on every entry.
--	 */
--	rc = clear_ce_flags_1(istate, cache, cache_end - cache,
--			      prefix,
--			      select_mask, clear_mask,
--			      pl, ret);
-+	if (pl->use_cone_patterns && orig_ret == MATCHED_RECURSIVE) {
-+		struct cache_entry **ce = cache;
-+		rc = (cache_end - cache) / sizeof(struct cache_entry *);
+ core.sparseCheckout::
+-	Enable "sparse checkout" feature. See section "Sparse checkout" in
+-	linkgit:git-read-tree[1] for more information.
++	Enable "sparse checkout" feature. See linkgit:git-sparse-checkout[1]
++	for more information.
 +
-+		while (ce < cache_end) {
-+			(*ce)->ce_flags &= ~clear_mask;
-+			ce++;
-+		}
-+	} else if (pl->use_cone_patterns && orig_ret == NOT_MATCHED) {
-+		rc = (cache_end - cache) / sizeof(struct cache_entry *);
-+	} else {
-+		rc = clear_ce_flags_1(istate, cache, cache_end - cache,
-+				      prefix,
-+				      select_mask, clear_mask,
-+				      pl, ret);
++core.sparseCheckoutCone::
++	Enables the "cone mode" of the sparse checkout feature. When the
++	sparse-checkout file contains a limited set of patterns, then this
++	mode provides significant performance advantages. See
++	linkgit:git-sparse-checkout[1] for more information.
+ 
+ core.abbrev::
+ 	Set the length object names are abbreviated to.  If
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index b12bf385ae..e2eb82ec45 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -88,6 +88,56 @@ using negative patterns. For example, to remove the file `unwanted`:
+ ----------------
+ 
+ 
++## CONE PATTERN SET
++
++The full pattern set allows for arbitrary pattern matches and complicated
++inclusion/exclusion rules. These can result in O(N*M) pattern matches when
++updating the index, where N is the number of patterns and M is the number
++of paths in the index. To combat this performance issue, a more restricted
++pattern set is allowed when `core.spareCheckoutCone` is enabled.
++
++The accepted patterns in the cone pattern set are:
++
++1. *Recursive:* All paths inside a directory are included.
++
++2. *Parent:* All files immediately inside a directory are included.
++
++In addition to the above two patterns, we also expect that all files in the
++root directory are included. If a recursive pattern is added, then all
++leading directories are added as parent patterns.
++
++By default, when running `git sparse-checkout init`, the root directory is
++added as a parent pattern. At this point, the sparse-checkout file contains
++the following patterns:
++
++```
++/*
++!/*/
++```
++
++This says "include everything in root, but nothing two levels below root."
++If we then add the folder `A/B/C` as a recursive pattern, the folders `A` and
++`A/B` are added as parent patterns. The resulting sparse-checkout file is
++now
++
++```
++/*
++!/*/
++/A/
++!/A/*/
++/A/B/
++!/A/B/*/
++/A/B/C/
++```
++
++Here, order matters, so the negative patterns are overridden by the positive
++patterns that appear lower in the file.
++
++If `core.sparseCheckoutCone=true`, then Git will parse the sparse-checkout file
++expecting patterns of these types. Git will warn if the patterns do not match.
++If the patterns do match the expected format, then Git will use faster hash-
++based algorithms to compute inclusion in the sparse-checkout.
++
+ SEE ALSO
+ --------
+ 
+diff --git a/cache.h b/cache.h
+index cf5d70c196..8e8ea67efa 100644
+--- a/cache.h
++++ b/cache.h
+@@ -911,12 +911,14 @@ extern char *git_replace_ref_base;
+ 
+ extern int fsync_object_files;
+ extern int core_preload_index;
+-extern int core_apply_sparse_checkout;
+ extern int precomposed_unicode;
+ extern int protect_hfs;
+ extern int protect_ntfs;
+ extern const char *core_fsmonitor;
+ 
++int core_apply_sparse_checkout;
++int core_sparse_checkout_cone;
++
+ /*
+  * Include broken refs in all ref iterations, which will
+  * generally choke dangerous operations rather than letting
+diff --git a/config.c b/config.c
+index 296a6d9cc4..f65c74f5b7 100644
+--- a/config.c
++++ b/config.c
+@@ -1329,6 +1329,11 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.sparsecheckoutcone")) {
++		core_sparse_checkout_cone = git_config_bool(var, value);
++		return 0;
 +	}
 +
- 	strbuf_setlen(prefix, prefix->len - 1);
- 	return rc;
- }
+ 	if (!strcmp(var, "core.precomposeunicode")) {
+ 		precomposed_unicode = git_config_bool(var, value);
+ 		return 0;
+diff --git a/environment.c b/environment.c
+index 89af47cb85..670d92bcc0 100644
+--- a/environment.c
++++ b/environment.c
+@@ -69,6 +69,7 @@ enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
+ char *notes_ref_name;
+ int grafts_replace_parents = 1;
+ int core_apply_sparse_checkout;
++int core_sparse_checkout_cone;
+ int merge_log_config = -1;
+ int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+ unsigned long pack_size_limit_cfg;
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 52d24c66ba..36fda5907b 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -147,6 +147,20 @@ test_expect_success 'set sparse-checkout using --stdin' '
+ 	test_cmp expect dir
+ '
+ 
++test_expect_success 'cone mode: match patterns' '
++	git -C repo config --worktree core.sparseCheckoutCone true &&
++	rm -rf repo/a repo/folder1 repo/folder2 &&
++	git -C repo read-tree -mu HEAD &&
++	git -C repo reset --hard &&
++	ls repo >dir  &&
++	cat >expect <<-EOF &&
++		a
++		folder1
++		folder2
++	EOF
++	test_cmp expect dir
++'
++
+ test_expect_success 'sparse-checkout disable' '
+ 	git -C repo sparse-checkout disable &&
+ 	test_path_is_missing repo/.git/info/sparse-checkout &&
 -- 
 gitgitgadget
 
