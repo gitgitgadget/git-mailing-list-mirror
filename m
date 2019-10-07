@@ -2,128 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 543D51F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 16:17:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77D6E1F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 16:43:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728983AbfJGQRn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 12:17:43 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:35474 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728465AbfJGQRn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 12:17:43 -0400
-Received: by mail-wm1-f65.google.com with SMTP id y21so126583wmi.0
-        for <git@vger.kernel.org>; Mon, 07 Oct 2019 09:17:42 -0700 (PDT)
+        id S1728956AbfJGQnT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 12:43:19 -0400
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:36055 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727830AbfJGQnT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 12:43:19 -0400
+Received: by mail-wr1-f52.google.com with SMTP id y19so16157554wrd.3
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 09:43:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=eNUisPD4Ij/T9dLeoIK4bNCaZCHx6hrAdbrHEbtiKy8=;
-        b=QRfl3PDOTygxcvHerVLTawbFFDC2lrI8NaFM24lgwORmZjkRQ9m2XG+JKuNj4xRfhX
-         kkP8oaVDHS0FSt5horJzKwplrWFld7PXmNin5CkkQhAZpmaGzzJgbqJzKtUZ8HLjpdXk
-         6muaUF8MPEiXiQ8VJvMV1duaUuE18BQrQv8kDL9PSepZVvhD76pRrRaHQU6vPSAR+e78
-         +xWPePjFyjOSAVyOly5IZngZyYvaROsYRNRSdbIXePqz6rcMdx+rb3quDRCmMlMtsVe8
-         R+fDTgXQqYjtKDTvPImHj9bMeJziMrhmtiKKWK/QpDPvlDWnGGQtF+Y0XLla67er2IDT
-         ZFCQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1QT/Gm4vX0q8ViWqOrKMYVnJYJYEnsoQdKB5MWwyQnc=;
+        b=U6Fc+XtT8Q61QeYVpAWtYoPCUZhSA0XWezXgqZBADK8Ofbd8z+rny1KrOOHsmTkDlF
+         ZgWmueh+3w7lxFqTmp/+dpio8Ye/oy8QovXxDIXbJDvo3wd3LtYfzse7JK+r0rF6VgAU
+         R1NyTbonyf5VUcELHez8+QeS8j0cH1brBcaqIug+yQ3NmD4d8J5umoVa7UOA6Z2TIxKO
+         rTWHnK2fcsc9oHRpfNDsnY0g71uhFB/5jA/psxD+pjBt7V7D1mLomHFZfnslGjDdVsMd
+         ZS5nkDtiLuOUalNCj4kvU0R5CJTuAh6t6Ij06YK6GMGdBcg3KuEjUM1q/1jWsLRw7GQY
+         LYsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eNUisPD4Ij/T9dLeoIK4bNCaZCHx6hrAdbrHEbtiKy8=;
-        b=Xnmqu15LiIDNYaKNNjs30RAyqJQmaH5fja3CHvo8g9xDvEDD/WZ4gIC3ZH/aXWmlnd
-         UbjVkllkOUrpih7J7ZHCIckkHNEjfJgBikBMMNr+6LkBR9xZ9H6uBIy2LVjkAycwLFXi
-         wDZrDpdJuskO/ctbLA7AvzlG3oGRKOGO7/4iYjGaOvgVA1ltU3oODHuyLDkOArmQkGLB
-         TGAWZRO/x+yCO1x1oteOv3aEXQUosdN4NlYDbcvNDDQNwgMv7ILq8vAF1r9R1+WZYxgc
-         mTHpuKoXoepGGQ9Z+6g7phdVHF0STJ+qwUlGVh+ghc00dfh5zWbON4P3hYqseXag0qCp
-         55Yw==
-X-Gm-Message-State: APjAAAUxsD2aTdvVpKpOtXy09a8/3RIiNhyNgaAYwHQcIDM7kXn/ecBO
-        n1S5JSvAlCpkQt9jdREmX/N1McLW
-X-Google-Smtp-Source: APXvYqws3jAW2fuTjbzW/dQq92eb2GisawUz7+/ehiFTi2YYrHpzybNBNJgK5EZMLDtqmA/qPst/3Q==
-X-Received: by 2002:a7b:c775:: with SMTP id x21mr96262wmk.52.1570465061650;
-        Mon, 07 Oct 2019 09:17:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n7sm15923078wrt.59.2019.10.07.09.17.40
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1QT/Gm4vX0q8ViWqOrKMYVnJYJYEnsoQdKB5MWwyQnc=;
+        b=pxgJlBNq7SgKOTUh5UXx0GhFwnJeY+wf3d3G0UQaXWBRzudK5LD0L/l8Qy3Es+DPYj
+         gl34C/hbhFgrrM0sdwfQQ5ZhoOEhBg3+DnuyK6CNvm/h1FRwNb31IGNbOCa83gbeSul8
+         P003gRm3q164q5tyPUFVjfANAlmXWoy0E4RpEMh75Ijc+3+3NiiGajGLJ7SpG+vCkf3c
+         UjjdLlJwFTfItiHKKCFA2pTGHphDQ3rSExJ1JjIpLIeEDOAyOeq8BLM/6kAx1XS8zWjv
+         CtY7ajHCG93zobN+8VBpp85OcCDPOud3trWbz2lGf3/bYJAd/DtIcpoZ8PU8jDfKMIAs
+         ihHw==
+X-Gm-Message-State: APjAAAXAznJSeDiE+grJs3e6bptatHhnqsva7VWjC3X3rnnAngAHAX4N
+        FYyiyj+sVbuHUonXB41AR6M2FvFX
+X-Google-Smtp-Source: APXvYqxuEatkpac06b+7/+qz/uYDVfo9/kmOxrT0TURiQi7fzgjVKrQ/YjHrQyEGH92eX1HIRWtAzw==
+X-Received: by 2002:a5d:46cc:: with SMTP id g12mr16896794wrs.101.1570466597227;
+        Mon, 07 Oct 2019 09:43:17 -0700 (PDT)
+Received: from szeder.dev (x4dbd6b2d.dyn.telefonica.de. [77.189.107.45])
+        by smtp.gmail.com with ESMTPSA id 13sm137877wmj.29.2019.10.07.09.43.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Oct 2019 09:17:41 -0700 (PDT)
-Date:   Mon, 07 Oct 2019 09:17:41 -0700 (PDT)
-X-Google-Original-Date: Mon, 07 Oct 2019 16:17:38 GMT
-Message-Id: <399fe02cb155770fc2d937607014677874075458.1570465059.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.314.v3.git.gitgitgadget@gmail.com>
-References: <pull.314.v2.git.gitgitgadget@gmail.com>
-        <pull.314.v3.git.gitgitgadget@gmail.com>
-From:   "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 1/1] quote: handle numm and empty strings in
- sq_quote_buf_pretty
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 07 Oct 2019 09:43:16 -0700 (PDT)
+Date:   Mon, 7 Oct 2019 18:43:10 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Semyon Kirnosenko <kirnosenko@mail.ru>
+Cc:     git@vger.kernel.org
+Subject: Re: log -m output
+Message-ID: <20191007164310.GA11529@szeder.dev>
+References: <ee1f00fd-715c-5ecd-bc29-5e5a2de2d0f9@mail.ru>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     garimasigit@gmail.com, jeffhost@microsoft.com, stolee@gmail.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Garima Singh <garima.singh@microsoft.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ee1f00fd-715c-5ecd-bc29-5e5a2de2d0f9@mail.ru>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Garima Singh <garima.singh@microsoft.com>
+On Mon, Oct 07, 2019 at 07:14:25PM +0400, Semyon Kirnosenko wrote:
+> I have a question about log command.
+> Probably I'm just missing something but anyway.
+> I can illustrate the question on the repository of Git.
+> Let's look at revision 1ed91937
+> It is a merge based on pair of revisions a9572072 and 294c695d.
+> According to blame these parent revisions have different content for
+> delta.h file.
 
-The sq_quote_buf_pretty() function does not emit anything
-when the incoming string is empty, but the function is to
-accumulate command line arguments, properly quoted as
-necessary, and the right way to add an argument that is an
-empty string is to show it quoted, i.e. ''. We warn the caller
-with the BUG macro is they pass in a NULL.
+I'm not sure what you mean by this statement; what blame command did
+you run?
 
-Reported by: Junio Hamano <gitster@pobox.com>
-Signed-off-by: Garima Singh <garima.singh@microsoft.com>
----
- quote.c          | 10 ++++++++++
- t/t0014-alias.sh |  7 +++++++
- 2 files changed, 17 insertions(+)
+> But when I get log with -m flag for merge revision, I can't see that
+> file in the list of changed files.
+> Why?
 
-diff --git a/quote.c b/quote.c
-index 7f2aa6faa4..f31ebf6c43 100644
---- a/quote.c
-+++ b/quote.c
-@@ -48,6 +48,16 @@ void sq_quote_buf_pretty(struct strbuf *dst, const char *src)
- 	static const char ok_punct[] = "+,-./:=@_^";
- 	const char *p;
- 
-+	/* In case of null tokens, warn the user of the BUG in their call. */
-+	if (!src) 
-+		BUG("Cannot append a NULL token to the buffer");
-+	
-+	/* Avoid dropping a zero-length token by adding '' */
-+	if (!*src) {
-+		strbuf_addstr(dst, "''");
-+		return;
-+	}
-+
- 	for (p = src; *p; p++) {
- 		if (!isalpha(*p) && !isdigit(*p) && !strchr(ok_punct, *p)) {
- 			sq_quote_buf(dst, src);
-diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-index a070e645d7..ae316aa6fd 100755
---- a/t/t0014-alias.sh
-+++ b/t/t0014-alias.sh
-@@ -37,4 +37,11 @@ test_expect_success 'looping aliases - internal execution' '
- #	test_i18ngrep "^fatal: alias loop detected: expansion of" output
- #'
- 
-+test_expect_success 'run-command parses empty args properly, using sq_quote_buf_pretty' '
-+    GIT_TRACE=1 git frotz a "" b " " c 2>&1 |
-+    sed -ne "/run_command:/s/.*trace: run_command: //p" >actual &&
-+    echo "git-frotz a '\'''\'' b '\'' '\'' c" >expect &&
-+    test_cmp expect actual
-+'
-+
- test_done
--- 
-gitgitgadget
+The contents of 'delta.h' is identical in both parents of that merge:
+
+  $ git diff a9572072 294c695d delta.h
+  $
+  # no difference
+
+So 'git log -m' does the right thing by not showing 'delta.h'.
+
