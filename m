@@ -2,112 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC3C51F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 17:12:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3152B1F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 17:20:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729126AbfJGRMz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 13:12:55 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40708 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728691AbfJGRMy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 13:12:54 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h4so7515016wrv.7
-        for <git@vger.kernel.org>; Mon, 07 Oct 2019 10:12:53 -0700 (PDT)
+        id S1728592AbfJGRUe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 13:20:34 -0400
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:34521 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728528AbfJGRUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 13:20:34 -0400
+Received: by mail-vs1-f65.google.com with SMTP id d3so9456273vsr.1
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 10:20:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=SbQHeiNzlU2Mh/3/FkO2JevfcXVrT8hdH3Y4+Cpp4RI=;
-        b=cKFAXBD5bSxl8TwMfi0SlUz9nCRKRejjPy/E7nM5huEXat3pNQhoHveF+dwIuaD5yt
-         DE0e/f98X5C/OY3BpXsGDpXd3Ccm7IK4STV4FM5YdCQ+tdLKlD9hD7t2IDbq04K4JrzB
-         N8xGG7ZpTFaD8Sw/qheaP7dHmyXn7R3gX9f+cC9wcVJdKki4qnXIZYMiyOThyA6SozOB
-         8TVp5q1so3NbnZrpVs8Qt/bpj/IglWQwXz3KUkR1Ma9FguU5ejIgS/5lX35xQPqUU+Xz
-         sLwjfTZJ597EvsBUnHFU++2N7ivbDvY6AbPB9Sry709vnFD2QyYOQUWBvG/M563rDg0z
-         DWeQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=5FGraoB1xwAV4GVW1GR8fLaDywLVqvBUj70pHO/p0AM=;
+        b=JFbeUYuL0YHy+5Ou8gYkaqpKklZ7rR240OMzlXTgPCKieP3/vr3QkOUCqghxmAARnW
+         EzqJ1muJeUado1WrkZ7zmALpdh5Z20EsP/QZoMYb5pxvdTKWmmu+WO/f16qWWmunAymS
+         wdTOSvF/89xuaZ1viTkkQGB73f1Yk48dRaeIdgClqEtlGGzRW5v5S7/xv/M7g0W6fuLa
+         FIuvWHzpCCDvIb8fgbnLqe+CT+Siai/QQbOXgzVKHQYX1ikDWf9UTfNq+nYSvd5HkKfy
+         ux4MixsWA3/wMeOQBdAYEbww0/mSwC42R1NdG/lPPKqO8nWe2b/EGVAQ9F+JzN3DfWqj
+         yZaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SbQHeiNzlU2Mh/3/FkO2JevfcXVrT8hdH3Y4+Cpp4RI=;
-        b=ncO5/+vVBswv3JfgiP4yZz9ngzyWrdQDrPa5ShyglF9qKjtcjBoMkNYxOnDO1a7QP/
-         ofgejSYoAluFD1gN+U7Rvjnvldho8fsk9qXU2bbjNr/9bw2v/IoSapEt4t2TsXgE/Q2D
-         VRq+Ww141rfqBvnOtQOj/5JfC2Ant7Z0nRvenB9CP8zi0W0nEpgZ3abMSeb0EAf15bNq
-         wktY3QkHCUK1poI1MkFW+i7FhuZ/RWHJJ3R13xWGCFBNhgIfJN4Zk56RQKZ6WnmOPGmw
-         v9JuIAFmLjeEAuF/ZThu/1OonrJwKDvwseZzTZfqOjkexOeEDXkXctyOhpy/ho7M+Mi0
-         jtEQ==
-X-Gm-Message-State: APjAAAXi6f42J8Ckijj4TUXrm8+7nVCQghM+op+D3+DncpbemNciBLO8
-        /OuG9r6wv9tTP6YRLvh5a/s3v/2I
-X-Google-Smtp-Source: APXvYqyGyzJ6FGgh6/MqaNx5W21xlQcCr6L29VATbhjprDpjdbY5lwr/0ZjOec80xCUvZfPoSjyC1g==
-X-Received: by 2002:adf:ce91:: with SMTP id r17mr22043333wrn.97.1570468373171;
-        Mon, 07 Oct 2019 10:12:53 -0700 (PDT)
-Received: from szeder.dev (x4dbd6b2d.dyn.telefonica.de. [77.189.107.45])
-        by smtp.gmail.com with ESMTPSA id q15sm32407138wrg.65.2019.10.07.10.12.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Oct 2019 10:12:52 -0700 (PDT)
-Date:   Mon, 7 Oct 2019 19:12:49 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     William Baker <williamtbakeremail@gmail.com>,
-        William Baker via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, jeffhost@microsoft.com,
-        William Baker <William.Baker@microsoft.com>
-Subject: Re: [PATCH v2 1/6] midx: add MIDX_PROGRESS flag <snip>
-Message-ID: <20191007171249.GB11529@szeder.dev>
-References: <pull.337.git.gitgitgadget@gmail.com>
- <pull.337.v2.git.gitgitgadget@gmail.com>
- <6badd9ceaf4851b2984e78a5cfd0cb8ec0c810f5.1568998427.git.gitgitgadget@gmail.com>
- <20190921121104.GA6787@szeder.dev>
- <xmqqlfu9krzv.fsf@gitster-ct.c.googlers.com>
- <2de6b236-7bd8-256b-7d8f-911d63a47498@gmail.com>
- <xmqqsgobg0rv.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5FGraoB1xwAV4GVW1GR8fLaDywLVqvBUj70pHO/p0AM=;
+        b=NEKN4cv+ZHdUJnJeVqaI2gqVcKpTeoaB375PYz9B59SxFhNZrnJ9Zzj9ZxEDo3UQzs
+         DNz6vrs0zvj3cwEUHgRwRb7UYGMiKtfcYsQxD0jalebUh0qeaMOvN4Yy8njIkrLK4Nu3
+         dChG6q30Z8Y2tJL7K/6UUazPr4NbbOtXIt8/JrtvNrOcpEb/Y6LMm7uGklN8EGz8KqYR
+         9SfS8hUGu6ryNyWmHDapKXgvAn3oozaiTxoDy/dsjTOnqXn8zlzAB+Lp98pSsSXSjQ0q
+         laqsCAjntxhXMy03BgB6hoivvsEpRjQfG0xkxF+YkP0OkLXDX9RLWCqzI8hrBYMhLujg
+         oroQ==
+X-Gm-Message-State: APjAAAVgc8xZuwacJ4aaVTcODWAqnjZZcowmMtFSahqkoh9+qiLnxRxv
+        ScGlxxx+Vpxkgfh9fxVzjJWLCFNXvgEUeqPcyC0=
+X-Google-Smtp-Source: APXvYqxN3fl8HxgaZ7+sQB0/3l1e1AHBYL0sfwuwM5baew8/RnhRaglH88qidwFcaYvACGqgNAkUo7PTm5z+T61EHMk=
+X-Received: by 2002:a67:1bc2:: with SMTP id b185mr16478434vsb.116.1570468831852;
+ Mon, 07 Oct 2019 10:20:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqsgobg0rv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <ee1f00fd-715c-5ecd-bc29-5e5a2de2d0f9@mail.ru> <20191007164310.GA11529@szeder.dev>
+ <7b9c0b0b-2a1c-d4d3-13ba-f020ff15d5ad@mail.ru>
+In-Reply-To: <7b9c0b0b-2a1c-d4d3-13ba-f020ff15d5ad@mail.ru>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 7 Oct 2019 10:20:20 -0700
+Message-ID: <CABPp-BFPrweNZ=ubT+8EE9xPyNjzEuUXKvESmXDb3Mhh37dAVA@mail.gmail.com>
+Subject: Re: log -m output
+To:     Semyon Kirnosenko <kirnosenko@mail.ru>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 02, 2019 at 02:43:48PM +0900, Junio C Hamano wrote:
-> William Baker <williamtbakeremail@gmail.com> writes:
-> 
-> > Although my debugger might not be the smartest, I haven't noticed any
-> > downsides to switching this to an enum.
-> 
-> Well, if you write
-> 
-> 	enum { BIT_0 = 1, BIT_1 = 2, BIT_3 = 4 } var;
-> 
-> it's pretty much a promise that the normal value for the var is one
-> of these listed values to your readers.  But bit flags are meant to
-> be used combined (after all, they are cheaper alternative for 1-bit
-> wide bitfields in a structure), so it is misleading to use enum as
-> such.
+On Mon, Oct 7, 2019 at 10:05 AM Semyon Kirnosenko <kirnosenko@mail.ru> wrot=
+e:
+>
+> On 2019-10-07 20:43, SZEDER G=C3=A1bor wrote:
+> > On Mon, Oct 07, 2019 at 07:14:25PM +0400, Semyon Kirnosenko wrote:
+> >> I have a question about log command.
+> >> Probably I'm just missing something but anyway.
+> >> I can illustrate the question on the repository of Git.
+> >> Let's look at revision 1ed91937
+> >> It is a merge based on pair of revisions a9572072 and 294c695d.
+> >> According to blame these parent revisions have different content for
+> >> delta.h file.
+> >
+> > I'm not sure what you mean by this statement; what blame command did
+> > you run?
+> >
+> >> But when I get log with -m flag for merge revision, I can't see that
+> >> file in the list of changed files.
+> >> Why?
+> >
+> > The contents of 'delta.h' is identical in both parents of that merge:
+> >
+> >    $ git diff a9572072 294c695d delta.h
+> >    $
+> >    # no difference
+> >
+> > So 'git log -m' does the right thing by not showing 'delta.h'.
+> >
+> > .
+> >
+>
+> But blame shows different results:
+>
+> git blame a9572072 delta.h
+> git blame 294c695d delta.h
 
-Having the combination of enum constants with power-of-two values is
-not misleading, but rather an idiom.
+blame does not at all claim those two revisions have different
+versions of delta.h:
 
-Back when debugging the racy split index issues I only saw gibberish
-like this:
+$ diff -u <(git blame a9572072 delta.h) <(git blame 294c695d delta.h)
+--- /dev/fd/63    2019-10-07 10:16:43.092356078 -0700
++++ /dev/fd/62    2019-10-07 10:16:43.092356078 -0700
+@@ -9,8 +9,8 @@
+ a310d434946 (Nicolas Pitre  2005-05-19 10:27:14 -0400  9)
+ void *delta_buf, unsigned long delta_size,
+ a310d434946 (Nicolas Pitre  2005-05-19 10:27:14 -0400 10)
+ unsigned long *dst_size);
+ d1af002dc60 (Nicolas Pitre  2005-05-20 16:59:17 -0400 11)
+-dcde55bc58a (Nicolas Pitre  2005-06-29 02:49:56 -0400 12) /* the
+smallest possible delta size is 4 bytes */
+-dcde55bc58a (Nicolas Pitre  2005-06-29 02:49:56 -0400 13) #define
+DELTA_SIZE_MIN    4
++c7a45bd20e4 (Junio C Hamano 2005-12-12 16:42:38 -0800 12) /* the
+smallest possible delta size is 4 bytes */
++c7a45bd20e4 (Junio C Hamano 2005-12-12 16:42:38 -0800 13) #define
+DELTA_SIZE_MIN    4
+ dcde55bc58a (Nicolas Pitre  2005-06-29 02:49:56 -0400 14)
+ dcde55bc58a (Nicolas Pitre  2005-06-29 02:49:56 -0400 15) /*
+ dcde55bc58a (Nicolas Pitre  2005-06-29 02:49:56 -0400 16)  * This
+must be called twice on the delta data buffer, first to get t
 
-  (gdb) p ce->ce_flags 
-  $2 = 469762048
-
-With an enum I now have this instead:
-
-  (gdb) p ce->ce_flags
-  $2 = (CE_MATCHED | CE_UPDATE_IN_BASE | CE_STRIP_NAME)
-
-The latter is about as many times more readable as the int value of
-that 'ce_flags'.
-
-The sooner everyone gets on board with this the better.
-
+It does say that _how_ those two arrived at the *same* version of the
+file differed, but if you compare the portions of the differing lines
+corresponding to the actual file contents you see that they are the
+same...just as SZEDER pointed out.
