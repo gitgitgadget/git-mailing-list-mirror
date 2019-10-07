@@ -2,116 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDF0E1F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 18:18:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12E371F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 18:26:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728187AbfJGSSa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 14:18:30 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:44084 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728031AbfJGSSa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 14:18:30 -0400
-Received: by mail-pf1-f202.google.com with SMTP id b204so11671466pfb.11
-        for <git@vger.kernel.org>; Mon, 07 Oct 2019 11:18:29 -0700 (PDT)
+        id S1728329AbfJGS0Q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 14:26:16 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:42577 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728031AbfJGS0P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 14:26:15 -0400
+Received: by mail-qt1-f194.google.com with SMTP id w14so20591111qto.9
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 11:26:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=ZOC7/JSp3X4bWCvPK2kIvVcXvfmtecDnh2mxoIfVNCU=;
-        b=IDbrzI/pk7GfiyoVRdTp3nv1LKYazgXws4ih3rMk1FetWwkSB8yBHdylXnB32vODdZ
-         Xxg7CUz1X1MsdF3oT6eITTZ5PyOdjTvh3jrYlpawVn+nIicFr3KElv/MNDXeIWJrk59K
-         8gC9VPtEoE1vJwDgC61TW9/Jz7Gr3HC7SlUll6qDx7FTuWZxMwvhceE0HEVuP2A3YQGC
-         4r0rqBw9pFUzj1qqoaCzcLSKm0Perqn9PiR6u8Ru6CDg/EMkP/IyOQKROGw3IfTi76W/
-         JsdysU/roY5nppulmZupphLNOVEpZ2rHK5pV9H0rzOhz6vsoIJBVpFrhE9AxJUHRJOEL
-         +7RA==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=pABxVQOpSyfAOIFahUnytCY5zoSXIQdvAZiTKNhGcyw=;
+        b=XN/6yrWHLgeIcD0TyU1r8R/XqO5j5+U9raCwQaoa4IBK66M6F52RrjrWVo3fMSlBAX
+         i1K6Km7xd8TJmK8gGttYoQsXkgGp4gOaftD7F/RBvG0ktfvqJ7v9hLDTMUSXfZUModLE
+         RO+O5HRv0P/MmI7QHFuNoft7GF2w94Wke6AAPpct/6FTbw3ngbQqqV3G8P3rp47MzWKR
+         GHyghTd8BtIGA0aEsKcbs8LEjHwFTRzd7nYF/DhrV+6wOGLY0/XsE1pANJpTdaNOrZZR
+         FQORBkc5S6BZ115GoVWZ9Sc2wejXXSoVoL/XrJR7/MbH/lf3xtCCUDTHxXtcqn9HuhT3
+         qwyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=ZOC7/JSp3X4bWCvPK2kIvVcXvfmtecDnh2mxoIfVNCU=;
-        b=Ne6PN+2tyEOBS4ZCa4UgAwbwLoGb8/HyhVqGhbaXJNyBHkiNA1NDaoQoVm/DIv0TT/
-         DE0ZrE7pp2WB/hZ45JGVHjKlUrBg6jo3Wg1Nv2EKFsykkZAHaYTSp86OoFfJxw2GjZXC
-         59VVG3r7RFd3h7oLOIruHV01NhgdW+5bx25shrjKuLj7I8WudfbqOqykOueMXlE8fjps
-         aI+Xhn8wRN9Q1LOy+Pf8Q7+5doGbhgw5YWIIPFmCnObW4fadSkqgIJ0Kxj6Hz2m+mJ75
-         KCVY7dVW8gqFu0SFfrQe2eYRtPO8UW58FILLNXV7NLlOXzeJgV206dZCFQBVEgGhAX7P
-         +uTQ==
-X-Gm-Message-State: APjAAAXfUsPJawF7VzUb1s3xHxa8h89hm3nb03piQ3QzxVpNYhWWhlZK
-        X4d1jyxrNBG6VN+bTCPP8T5WgHqU3tFQ/PEKtXsx/+wPiAyvg6b/PDuHybcQ248AiAlDuRxDTmk
-        TlEb9OJQjx/uJZ5GrhemIE/GUThgDh076VdeKqR1fFySGWMD80bhm+/rRIGJ3cS/6di3xQ35Efe
-        ab
-X-Google-Smtp-Source: APXvYqxsaq1c7ZvBTXr1r7wYgrMEF9h4UxcE7L7m3wSVaTbXyBjj9JiMenGG41cGxJN72bA395WA09pGxXX5qUszEgje
-X-Received: by 2002:a63:f14c:: with SMTP id o12mr32065956pgk.386.1570472309144;
- Mon, 07 Oct 2019 11:18:29 -0700 (PDT)
-Date:   Mon,  7 Oct 2019 11:18:25 -0700
-Message-Id: <20191007181825.13463-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.23.0.581.g78d2f28ef7-goog
-Subject: [PATCH] fetch: delay fetch_if_missing=0 until after config
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=pABxVQOpSyfAOIFahUnytCY5zoSXIQdvAZiTKNhGcyw=;
+        b=Yh9AW42EeYaPQjoojeEJrcoxKx2g1G0GA0dyke1UkzO0RoFh/xeZunOdeFHN6yeQ2K
+         RUvXtC7eDFKQPktGHqm/8LDynzQpM2NgTwnPuGF3QvtLytX9diiOIs6A2P/PJOuN8kTE
+         +4xcvPh4Drb8tZ51OX+D8gGVepwTb6HSJ4fx0IucDA/CaqhhwB0GtzwCi3kOjOeXIkIE
+         o7L39d1ZNK/Ypm9Bk3y87GLgWgZj++5NNfyXIUW6cATJI9J+FVdmOlA2FEM//CprFose
+         53ZLPJR4qu3iBS5Y7OoMHJdd04sIBZA0rsmu5sL4LZDOGqWlDicyEFz1dy8FqXh4HFCR
+         OlUA==
+X-Gm-Message-State: APjAAAXkoM7wXKR/8qtPTjNPVv6zEAzoFQA+ahkfz+J614khAsRBlk43
+        rUGL17rJx4FcAkusE5oeT2Q=
+X-Google-Smtp-Source: APXvYqxgp6RRr+ipsj3+MVuwALqdw/Ec0ngwMWoB5RC0GHIPWxMZv3edW+pbrxYuTQ4njg8Aw2GEmw==
+X-Received: by 2002:a05:6214:1401:: with SMTP id n1mr28987721qvx.196.1570472774487;
+        Mon, 07 Oct 2019 11:26:14 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c988:3ed2:5e14:1c0f? ([2001:4898:a800:1010:7abe:3ed2:5e14:1c0f])
+        by smtp.gmail.com with ESMTPSA id t32sm10169303qtb.64.2019.10.07.11.26.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Oct 2019 11:26:13 -0700 (PDT)
+Subject: Re: [PATCH v2 04/11] sparse-checkout: 'set' subcommand
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.316.git.gitgitgadget@gmail.com>
+ <pull.316.v2.git.gitgitgadget@gmail.com>
+ <9a78f9ea0fe8d1988654f52a86a01031607621fe.1568904188.git.gitgitgadget@gmail.com>
+ <CABPp-BHB0UM1G2tHQ7igRX7Sn1O9ujW6mq_e-UGanGMONHxiag@mail.gmail.com>
+ <CABPp-BGcZT2-m=D_X4d7zE9pzuWTKCnmURruahdQndpp=+-_WA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0c3e34ab-1eee-fe29-f584-d21047fd1457@gmail.com>
+Date:   Mon, 7 Oct 2019 14:26:12 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
+MIME-Version: 1.0
+In-Reply-To: <CABPp-BGcZT2-m=D_X4d7zE9pzuWTKCnmURruahdQndpp=+-_WA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When running "git fetch" in a partial clone with no blobs, for example,
-by:
+On 10/5/2019 8:30 PM, Elijah Newren wrote:
+> On Sat, Oct 5, 2019 at 3:44 PM Elijah Newren <newren@gmail.com> wrote:
+>>
+>> On Thu, Sep 19, 2019 at 3:07 PM Derrick Stolee via GitGitGadget
+>> <gitgitgadget@gmail.com> wrote:
+>>> +static int write_patterns_and_update(struct pattern_list *pl)
+>>> +{
+>>> +       char *sparse_filename;
+>>> +       FILE *fp;
+>>> +
+>>> +       sparse_filename = get_sparse_checkout_filename();
+>>> +       fp = fopen(sparse_filename, "w");
+>>> +       write_patterns_to_file(fp, pl);
+>>> +       fclose(fp);
+>>> +       free(sparse_filename);
+>>> +
+>>> +       clear_pattern_list(pl);
+>>
+>> It seems slightly odd that pl is passed in but cleared in this
+>> function rather than in the caller that created pl.  Should this be
+>> moved to the caller, or, alternatively, a comment added to explain
+>> this side-effect for future callers of the function?
+>>
+>> The rest of the patch looked good to me.
+> 
+> Actually, thought of something else.  What if the user calls 'git
+> sparse-checkout set ...' without first calling 'git sparse-checkout
+> init'?  Should that report an error to the user, a suggestion to
+> follow it up with 'sparse-checkout init', or should it just call
+> sc_set_config() behind the scenes and allow bypassing the init
+> subcommand?
 
-  git clone --filter=blob:none --no-checkout \
-    https://kernel.googlesource.com/pub/scm/git/git
-  git -C git fetch
+Maybe a warning would suffice. I still think the workflow of the
+following is most correct, and not difficult to recommend:
 
-"git fetch" will fail to load the config blob object, printing "unable
-to load config blob object".
+* "git sparse-checkout init [--cone]" -OR- "git clone --sparse"
+* git sparse-checkout set [stuff]
+* git sparse-checkout disable
 
-This is because fetch_if_missing is set to 0 before the config is
-processed. Git must set fetch_if_missing to 0 before the fetch because
-as part of the fetch, packfile negotiation happens (and we do not want
-to fetch any missing objects when checking existence of objects), but we
-do not need to set it so early. Move the setting of fetch_if_missing to
-the earliest possible point in cmd_fetch(), right before any fetching
-happens.
----
-This is not a full solution, but this helps in the use case described in
-the commit message. The full solution probably will involve teaching the
-fetch mechanism to support arbitrary struct repository objects, and by
-moving fetch_if_missing into the repository object. (Alternatively, we
-could add the equivalent of OBJECT_INFO_SKIP_FETCH_OBJECT to functions
-like parse_commit() that are used by files like negotiator/default.c, or
-split up commit parsing into object reading - which already has that
-flag - and commit parsing.)
----
- builtin/fetch.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 24d382b2fb..865ae6677d 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1666,8 +1666,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 
- 	packet_trace_identity("fetch");
- 
--	fetch_if_missing = 0;
--
- 	/* Record the command line for the reflog */
- 	strbuf_addstr(&default_rla, "fetch");
- 	for (i = 1; i < argc; i++)
-@@ -1734,6 +1732,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
-+	fetch_if_missing = 0;
-+
- 	if (remote) {
- 		if (filter_options.choice || has_promisor_remote())
- 			fetch_one_setup_partial(remote);
--- 
-2.23.0.581.g78d2f28ef7-goog
-
+Thanks,
+-Stolee
