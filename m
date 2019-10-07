@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 644291F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 09:27:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3981D1F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 09:27:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727394AbfJGJ1D (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 05:27:03 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41245 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726969AbfJGJ1D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 05:27:03 -0400
-Received: by mail-wr1-f67.google.com with SMTP id q9so14352323wrm.8
-        for <git@vger.kernel.org>; Mon, 07 Oct 2019 02:27:00 -0700 (PDT)
+        id S1727403AbfJGJ1E (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 05:27:04 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35018 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727375AbfJGJ1E (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 05:27:04 -0400
+Received: by mail-wr1-f65.google.com with SMTP id v8so14372631wrt.2
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 02:27:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=K1lssAzVcjOIZYcG9Rqnrhi4wYG8jrz4Ugyueneq7B8=;
-        b=sLxqcTdMH4sfrw6eJULleV0HWu92zzXBH0ue0EaIypoNRzFYz7Zoo4kbaeLJ8j39UN
-         isL1y1r5Xit4UXRpK+2MKdSqR9lqL0WGhQYzBSLIypKg1WWiPK8Q+JNKJOk/EyO3pFtq
-         GISv8OPY7fKnRpiSswY7Dte9KyfOs+FV8/dlgzzBOgBU7fmg6tCaUArd7gJY7GUCE2my
-         DOtBtpevGkoWQnGp0C3RsbzVvdrK011lHcQ/vZ9Wh3J8K/VyymQMGWDO3NS2beB9yLgv
-         j9mNSBfdsDBrR7Ha0rPJ9CroRX57De5WIo9aXo+iXSjHihPJg8z/E082ytL+azKp45O0
-         rG7g==
+        bh=1/HNJ4oa/khQQUfeg3XoK7zRdCWG38Uj0B1kt+9pIes=;
+        b=qwgIh+kn4rK0ob8xIfclUitP/8jgPVoKw56GbFkGMeNGTLvmSR0m56MjaB9rTxYdwU
+         ZMlX7NuN7647N4UPHDTNfdpCmyk3pBOjrt0281t7+6h7FqzI6joHllkkICTIKoyCzVbm
+         FInmaD81vOrW+zg7fl6dqsxtFnlf59iDDoHVlC6hDWFiQD5XgV7WvgSIcOo+T4RlBkhP
+         sESZXt0xSwq8ff84lY7iJmCJ1YHg14Iba+g4HODTmrIqRV8P4UAgKQHcmJMWQkM1t521
+         abWBrTA2kMgagCIS0wdsBaelUZJSuCd2pOOFeV5kIP4ipliShoKQmm5tDTdmj4bcwPa0
+         pdZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=K1lssAzVcjOIZYcG9Rqnrhi4wYG8jrz4Ugyueneq7B8=;
-        b=kGeZIndkNJ+k58tKnD54XVJulrto/P4BdOWkmnNN0MdRlN5lm0VlGywD4dAKLviu1r
-         9aTiesaRIMWreu7DVDk4uEZXyTOXA0PMNP6EU79FOq0BmVgkYXM0haSM8+gK1OuzvK1h
-         VyL/bBsCvvznOTIxxrKRTcQC2n6buyIVIXP8QgTCs6ktyajWPSGZGFTTMxXZcoYarSL5
-         pLrsz0R1DN9WD0UmUXFlfFRT2ZYxEEjx96OrS1JQcfVLcC4ZvK8dW3Xdz6FuwmQudUZA
-         Dxoms/caBd0K75jD5RNC/a9oydTGLJ+UXl25GW85micuXN7kVbgIfzZZn2zpRwvwWq8Y
-         lLFA==
-X-Gm-Message-State: APjAAAUdCi0+uLtYYl1owgSzyMZMyHwqzhm2qWYeXSGdh7ZC4yq8mVm/
-        eyi0lwJU5/e0j7mkN9gx7nbzKi/o
-X-Google-Smtp-Source: APXvYqyaAj/ZWCL0tem+QhexCMWdl1b3xgaiSvfgszITOiIKTIhBNKtjD9i6GU/fjxYf+mxzqWDLlw==
-X-Received: by 2002:a5d:428d:: with SMTP id k13mr21613903wrq.305.1570440419606;
-        Mon, 07 Oct 2019 02:26:59 -0700 (PDT)
+        bh=1/HNJ4oa/khQQUfeg3XoK7zRdCWG38Uj0B1kt+9pIes=;
+        b=Qd9t7utzoUJ4OGFatCbwL5FqohW3y3WG+cph8PXUJ4ABBfCgQoXxZzMrlvLynOLfHV
+         4pPRN1rWG81mkpCTCdZkINg7LkhUFgvOo4VTCBDqH1HJ4luC1vyMEZPlbtQDzJeEexcv
+         mGP4hTX+wtN5wqjy6pIiQdaOwRJ2I5jI6r7V1fZsCBlVODFVZJk4apZL1bO6i/XL1h2J
+         cdn5BlVmV0VgRtDYkwxZsUeM1N1LOn7OMPSwPU7CVEcMaX12/iOTKnADwswcMjniHnhc
+         803orwDYRs6Y0Pnw/jmQpMutgyRqRhMascOKrr6jM8MF1kDhCW0pB1oLL171dyh7WsZm
+         uHrg==
+X-Gm-Message-State: APjAAAWKRn3YQnr8DgxsXYHwpgxx9+CEkjIZA5+UV3zJ8HJoeNMGJQcd
+        5MW7CK2uqf18cZj6cb2PasP0cW/v
+X-Google-Smtp-Source: APXvYqwg6Vdx0Y5dMyEfBfU9RYiTI6U5WnHsVYp50QC+YBqDLPamESMztVF9956OE+gwL5d8Lu8MgA==
+X-Received: by 2002:a5d:61c8:: with SMTP id q8mr15544434wrv.325.1570440421870;
+        Mon, 07 Oct 2019 02:27:01 -0700 (PDT)
 Received: from localhost.localdomain (atoulouse-658-1-47-220.w86-221.abo.wanadoo.fr. [86.221.54.220])
-        by smtp.googlemail.com with ESMTPSA id w125sm25250914wmg.32.2019.10.07.02.26.58
+        by smtp.googlemail.com with ESMTPSA id w125sm25250914wmg.32.2019.10.07.02.27.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Oct 2019 02:26:59 -0700 (PDT)
+        Mon, 07 Oct 2019 02:27:01 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Junio C Hamano <gitster@pobox.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v2 2/5] sequencer: update `done_nr' when skipping commands in a todo list
-Date:   Mon,  7 Oct 2019 11:26:38 +0200
-Message-Id: <20191007092641.12661-3-alban.gruin@gmail.com>
+Subject: [PATCH v2 3/5] sequencer: move the code writing total_nr on the disk to a new function
+Date:   Mon,  7 Oct 2019 11:26:39 +0200
+Message-Id: <20191007092641.12661-4-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20191007092641.12661-1-alban.gruin@gmail.com>
 References: <20190925201315.19722-1-alban.gruin@gmail.com>
@@ -70,33 +70,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a todo list, `done_nr' is the amount of commands that were executed
-or skipped, but skip_unnecessary_picks() did not update it.
+The total amount of commands can be used to show the progression of the
+rebasing in a shell.  It is written to the disk by read_populate_todo()
+when the todo list is loaded from sequencer_continue() or
+pick_commits(), but not by complete_action().
 
-This variable is mostly used by command prompts (ie. git-prompt.sh and
-the like).  As in the previous commit, this inconsistent behaviour is
-not a problem yet, but it would start to matter at the end of this
-series the same reason.
+This moves the part writing total_nr to a new function so it can be
+called from complete_action().
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
-Reworded commit.
-
-sequencer.c | 1 +
- 1 file changed, 1 insertion(+)
+ sequencer.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 575b852a5a..42313f8de6 100644
+index 42313f8de6..ec7ea8d9e5 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -5054,6 +5054,7 @@ static int skip_unnecessary_picks(struct repository *r,
- 		MOVE_ARRAY(todo_list->items, todo_list->items + i, todo_list->nr - i);
- 		todo_list->nr -= i;
- 		todo_list->current = 0;
-+		todo_list->done_nr += i;
+@@ -2342,6 +2342,16 @@ void sequencer_post_commit_cleanup(struct repository *r, int verbose)
+ 	sequencer_remove_state(&opts);
+ }
  
- 		if (is_fixup(peek_command(todo_list, 0)))
- 			record_in_rewritten(base_oid, peek_command(todo_list, 0));
++static void todo_list_write_total_nr(struct todo_list *todo_list)
++{
++	FILE *f = fopen_or_warn(rebase_path_msgtotal(), "w");
++
++	if (f) {
++		fprintf(f, "%d\n", todo_list->total_nr);
++		fclose(f);
++	}
++}
++
+ static int read_populate_todo(struct repository *r,
+ 			      struct todo_list *todo_list,
+ 			      struct replay_opts *opts)
+@@ -2387,7 +2397,6 @@ static int read_populate_todo(struct repository *r,
+ 
+ 	if (is_rebase_i(opts)) {
+ 		struct todo_list done = TODO_LIST_INIT;
+-		FILE *f = fopen_or_warn(rebase_path_msgtotal(), "w");
+ 
+ 		if (strbuf_read_file(&done.buf, rebase_path_done(), 0) > 0 &&
+ 		    !todo_list_parse_insn_buffer(r, done.buf.buf, &done))
+@@ -2399,10 +2408,7 @@ static int read_populate_todo(struct repository *r,
+ 			+ count_commands(todo_list);
+ 		todo_list_release(&done);
+ 
+-		if (f) {
+-			fprintf(f, "%d\n", todo_list->total_nr);
+-			fclose(f);
+-		}
++		todo_list_write_total_nr(todo_list);
+ 	}
+ 
+ 	return 0;
 -- 
 2.23.0
 
