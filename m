@@ -2,141 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 261041F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 17:27:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37D4D1F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 17:29:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728081AbfJGR1Q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 13:27:16 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35999 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727801AbfJGR1Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 13:27:16 -0400
-Received: by mail-wr1-f65.google.com with SMTP id y19so16308681wrd.3
-        for <git@vger.kernel.org>; Mon, 07 Oct 2019 10:27:14 -0700 (PDT)
+        id S1728371AbfJGR35 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 13:29:57 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:50661 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727801AbfJGR35 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 13:29:57 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 5so367315wmg.0
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 10:29:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=eb9BP9NFjFPXr1sp3/pgry3j6GlpP9qusYAbxe0loRI=;
+        b=ezE+PGbQPHRT3g4+i5+lcHZGyvV31EK9C8u7URO9q1ONGyzbYZC+Ut3/qsEs96tZKr
+         CiGKREn6vf/a4aV76mzA14hPeE/7oW8Cu8JXJB3bJXmj9LPRwRKA4e/AZF3D+B0j9fBP
+         7Qau1rOPpCex4nj38Dww/ACw4l5RBL+qHRKT8/LF8+4rvXVjD7ZL2xX2IvhDqR6SFGJU
+         Qg48xmPqhhj3gAAXMv9FqMVbP2JVaBT0pDMk4yN4+U0aICbTzIZ3NfoeqXZGpkJrmj44
+         7pV4CDOh5hjEqwx9BfvcCf7NRvJ+w36C7fBvdT32ReP3MUVd+D8wUscT2Z/vbNgpZHPv
+         9p0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ndQoA6nJjVBzA7qcNK5hcV4NARc5b47AfODoNbiBn54=;
-        b=FhJz5hqPHyC1nNTl40k9ZwuMNEjYaXna9d0YDRnIlnlqUgsbTriyJ3yGip/NEOWuxN
-         AXM3Epe3rr7uxVIfcDbWpU/5+BVSmy7OiykC3bxvPf7U4aR2bBnylQA9DXDJ10dEPWv7
-         U3HGSUS5VqbifVOT7Dj2BH2EPCp3liK/l0OKf4s5tIEqa+2Ng4mXsQwWPllP3Xo5TNj/
-         X1+Ap0OZmyfm5kjwcOxmG8YQBw1AFKy4Y16y7uqGu+BhwWd36ryEVT9BWQBFAPOKmNZq
-         oOGrqbggPH/GQozrxO7ayzKEY9EwOLFIJ+qG1pdNSEyqoDVsaTPg6NBjaf8O/7IAgiT8
-         J36g==
-X-Gm-Message-State: APjAAAXbzo3Wj2VRogXNMVdCPvWGAB1+hBUXFxSEpFzkpAvIJLM+888A
-        dFG5Fv4WjZaWGLix2MqFmNVkubbEI0V9h7/B9q7vt4eM
-X-Google-Smtp-Source: APXvYqx00zC9ltMN20xSMCRHXAA/aAU+IetpTZB+qBTH/FYHsrUIIhGCBWgQTSrXRPjiTOYJgzjmEAHT9VVCdwJszNQ=
-X-Received: by 2002:a5d:4f0d:: with SMTP id c13mr24010180wru.317.1570469233505;
- Mon, 07 Oct 2019 10:27:13 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=eb9BP9NFjFPXr1sp3/pgry3j6GlpP9qusYAbxe0loRI=;
+        b=UaHkdPDpYho4R1inwXXptaMhB6/MzBNbEjH2A9EmtWjWahVpOR3mKxB/ujIcRSH413
+         /SGMdIkf7/3yJ/pDmCu2ns9obMHCBQ92OxD8gX39o6cusi2kjoL3QMptyxlv+a+oiPTA
+         O+GHtirYf6mYr7lujiHuRskFlCnLr5f9+XuhtYnoLen2zXOezSA+GF6up/OQsIujU5g9
+         gXdpao8X/rGoKSS486paf2w7T0Hdyva4o36ip02gH9mox+oL/0tshTeXD9z6kXo0d96C
+         WaaJ0jX91lEcYA3oXiWOIV4/sV4eNytG4XTfn0dQws9VLuGkE8y5paCW+BST3Ooav1XO
+         ihig==
+X-Gm-Message-State: APjAAAVSL8wQDh8JKHDDIa7iqNnHqx0AMQDuhlKzOthlMi/fRortU3Ej
+        eZeC4YMmnx1WUVkfJeDIOHY=
+X-Google-Smtp-Source: APXvYqw/E1w+bDxNic8tXE7C0EQKlzRc0Dxfd9V93TozJ9k0ZwhIiyav2sNempXA7h9+jl0oCZXavQ==
+X-Received: by 2002:a05:600c:48e:: with SMTP id d14mr287765wme.175.1570469394677;
+        Mon, 07 Oct 2019 10:29:54 -0700 (PDT)
+Received: from szeder.dev (x4dbd6b2d.dyn.telefonica.de. [77.189.107.45])
+        by smtp.gmail.com with ESMTPSA id y186sm405560wmd.26.2019.10.07.10.29.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 07 Oct 2019 10:29:53 -0700 (PDT)
+Date:   Mon, 7 Oct 2019 19:29:51 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     William Baker via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, williamtbakeremail@gmail.com,
+        stolee@gmail.com, jeffhost@microsoft.com,
+        William Baker <William.Baker@microsoft.com>
+Subject: Re: [PATCH v2 1/6] midx: add MIDX_PROGRESS flag <snip>
+Message-ID: <20191007172951.GC11529@szeder.dev>
+References: <pull.337.git.gitgitgadget@gmail.com>
+ <pull.337.v2.git.gitgitgadget@gmail.com>
+ <6badd9ceaf4851b2984e78a5cfd0cb8ec0c810f5.1568998427.git.gitgitgadget@gmail.com>
+ <20190921121104.GA6787@szeder.dev>
+ <xmqqlfu9krzv.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <pull.314.v2.git.gitgitgadget@gmail.com> <pull.314.v3.git.gitgitgadget@gmail.com>
- <399fe02cb155770fc2d937607014677874075458.1570465059.git.gitgitgadget@gmail.com>
-In-Reply-To: <399fe02cb155770fc2d937607014677874075458.1570465059.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 7 Oct 2019 13:27:01 -0400
-Message-ID: <CAPig+cRtL1YPxTHfZ+uYek6hBbRmKJgSNiPNX_zM-Tc_7LnhWA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/1] quote: handle numm and empty strings in sq_quote_buf_pretty
-To:     Garima Singh via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, garimasigit@gmail.com,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Garima Singh <garima.singh@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqlfu9krzv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 7, 2019 at 12:17 PM Garima Singh via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> quote: handle numm and empty strings in sq_quote_buf_pretty
+On Sat, Sep 28, 2019 at 12:40:52PM +0900, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+> > On Fri, Sep 20, 2019 at 09:53:48AM -0700, William Baker via GitGitGadget wrote:
+> >> diff --git a/midx.h b/midx.h
+> >> index f0ae656b5d..e6fa356b5c 100644
+> >> --- a/midx.h
+> >> +++ b/midx.h
+> >> @@ -37,6 +37,8 @@ struct multi_pack_index {
+> >>  	char object_dir[FLEX_ARRAY];
+> >>  };
+> >>  
+> >> +#define MIDX_PROGRESS     (1 << 0)
+> >
+> > Please consider using an enum.
+> 
+> If they are used by assiging one of their values, definitely a good
+> idea to use an enum.  Are debuggers clever enough that they can
+> tell, when they see something like this:
+> 
+> 	enum gress {
+> 		PROGRESS = 1,
+> 		REGRESS = 2,
+> 	};
+> 
+> 	void func(enum gress v);
+> 
+> 	...
+> 
+>         void caller(void)
+> 	{
+> 		func(PROGRESS | REGRESS);
+> 		func(PROGRESS + REGRESS);
+> 		func(PROGRESS * 3);
+> 	}
+> 
+> how caller came about to give 3?
 
-What is "numm"?
+No, they tend to show (PROGRESS | REGRESS), at least both gdb and lldb
+do.  If the enum has only constants with power-of-two values, then that
+is the right way to write it, and the other two are asking for trouble
+(e.g. after someone changes the value of REGRESS from 2 to 8,
+'PROGRESS * 3' will mean something different).
 
-What does it mean to "handle" these things? A possible rewrite of the
-subject to explain the problem more precisely rather than using
-generalizations might be:
-
-    sq_quote_buf_pretty: don't drop empty arguments
-
-> The sq_quote_buf_pretty() function does not emit anything
-> when the incoming string is empty, but the function is to
-> accumulate command line arguments, properly quoted as
-> necessary, and the right way to add an argument that is an
-> empty string is to show it quoted, i.e. ''. We warn the caller
-> with the BUG macro is they pass in a NULL.
-
-s/is they/if they/
-
-By including the final sentence in this paragraph, the reader is
-confused into thinking that warning the caller with BUG() is the
-overall purpose of this patch and is the "fix" for the stated problem.
-At minimum, the final sentence should be yanked out to its own
-paragraph or, better yet, dropped altogether since it's of little
-importance in the overall scheme of the patch.
-
-As a reader of this commit message, I find it difficult to understand
-what problem it's trying to solve since the problem and solution and
-existing behavior are presented in a circuitous way which doesn't make
-any of them stand out clearly. Here's a possible rewrite:
-
-    sq_quote_buf_pretty: don't drop empty arguments
-
-    Empty arguments passed on a command-line should be represented by
-    a zero-length quoted string, however, sq_quote_buf_pretty()
-    incorrectly drops these arguments altogether. Fix this problem by
-    ensuring that such arguments are emitted as '' instead.
-
-> Reported by: Junio Hamano <gitster@pobox.com>
-> Signed-off-by: Garima Singh <garima.singh@microsoft.com>
-> ---
-> diff --git a/quote.c b/quote.c
-> @@ -48,6 +48,16 @@ void sq_quote_buf_pretty(struct strbuf *dst, const char *src)
-> +       /* In case of null tokens, warn the user of the BUG in their call. */
-> +       if (!src)
-> +               BUG("Cannot append a NULL token to the buffer");
-
-The comment merely repeats what the code itself already says clearly,
-thus adds no value and ought to be dropped.
-
-Moreover, this entire check seems superfluous since the program will
-crash anyhow as soon as 'src' is dereferenced (just below), thus the
-programmer will find out soon enough about the error. I'd suggest
-dropping this check entirely since it's not adding any value.
-
-> +       /* Avoid dropping a zero-length token by adding '' */
-> +       if (!*src) {
-> +               strbuf_addstr(dst, "''");
-> +               return;
-> +       }
-
-Ditto regarding dropping the useless comment which merely repeats what
-the code itself already says clearly.
-
-> diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-> @@ -37,4 +37,11 @@ test_expect_success 'looping aliases - internal execution' '
-> +test_expect_success 'run-command parses empty args properly, using sq_quote_buf_pretty' '
-
-Is "parses" the correct word? Should it be "formats" or something?
-
-Also, the bit about "using sq_quote_buf_pretty" lets an implementation
-detail bleed unnecessarily into the test suite, and that detail could
-become outdated at some point (say, if some function ever replaces
-that one, for instance). It should be sufficient for the test title
-merely to mention that it is checking that empty arguments are handled
-properly. So, perhaps:
-
-    test_expect_success 'run-command formats empty args properly' '
-
-> +    GIT_TRACE=1 git frotz a "" b " " c 2>&1 |
-> +    sed -ne "/run_command:/s/.*trace: run_command: //p" >actual &&
-> +    echo "git-frotz a '\'''\'' b '\'' '\'' c" >expect &&
-> +    test_cmp expect actual
-> +'
