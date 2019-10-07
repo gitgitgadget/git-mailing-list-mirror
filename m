@@ -2,108 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 146B01F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 18:10:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDF0E1F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 18:18:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729339AbfJGSKJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 14:10:09 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:41470 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728031AbfJGSKI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 14:10:08 -0400
-Received: by mail-pg1-f194.google.com with SMTP id t3so2850901pga.8
-        for <git@vger.kernel.org>; Mon, 07 Oct 2019 11:10:08 -0700 (PDT)
+        id S1728187AbfJGSSa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 14:18:30 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:44084 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728031AbfJGSSa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 14:18:30 -0400
+Received: by mail-pf1-f202.google.com with SMTP id b204so11671466pfb.11
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 11:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=rY1ysKe53zvaTslI+FwyZkMGlND8KIS5y1lXuUVYq7g=;
-        b=HMdcZI/f6EIcOFHCF5j8PDvt+GcaSvmy5j6EkPP+BNsLTuyz+S/3plwRrm1e2MViBB
-         ObK5a5wfeA1xrbGAzBMi2hW7ppJpvBJ0KuIC4irpSBK+kmHUzXuZcdRASrzRe7GB/Qck
-         wRIAVRcNxmGWdfgwMzEqkA8xHWtxFxhF355eGGPk+p4T1KPu3yA4ZXLmDMW1h1li+m2A
-         hNwfzFs5zg1SrimXRIu+/jFpE7KKonCwwazXY+c4f1Z2yRSxCuZvj40z1ZpNwaSnniHa
-         J4nA13ndEnIBRu95RQ6izfpMxBz3fvj8RytHP2NlCieZJpXtlGsC5ffjFMgpNrFylfDq
-         0Ftg==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=ZOC7/JSp3X4bWCvPK2kIvVcXvfmtecDnh2mxoIfVNCU=;
+        b=IDbrzI/pk7GfiyoVRdTp3nv1LKYazgXws4ih3rMk1FetWwkSB8yBHdylXnB32vODdZ
+         Xxg7CUz1X1MsdF3oT6eITTZ5PyOdjTvh3jrYlpawVn+nIicFr3KElv/MNDXeIWJrk59K
+         8gC9VPtEoE1vJwDgC61TW9/Jz7Gr3HC7SlUll6qDx7FTuWZxMwvhceE0HEVuP2A3YQGC
+         4r0rqBw9pFUzj1qqoaCzcLSKm0Perqn9PiR6u8Ru6CDg/EMkP/IyOQKROGw3IfTi76W/
+         JsdysU/roY5nppulmZupphLNOVEpZ2rHK5pV9H0rzOhz6vsoIJBVpFrhE9AxJUHRJOEL
+         +7RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=rY1ysKe53zvaTslI+FwyZkMGlND8KIS5y1lXuUVYq7g=;
-        b=OAH+IiSPtPxb0Chb0V6TgEJFyNFmCVtlwbHiqvUhkj4kUoZJNqdabJu6VvwpvgUI7x
-         CMP1uI4qpUwBaUpPEcVJSxtR3cQzihC0TvVWVE+qQ8nKVKfeyZRGLnKEnlN5YQ7BLJd4
-         VIy02pFa5741JQ6FHF9Vl/16mn9pKz9JPOarPSqRR9kERhYycYJEW1lQ2UPrcajb8ily
-         cHci80j7k1DHc3lAZeTAY2srScl1jX1etPuh4GbzzQfLLiH5NuytVmgCP+wiJfCnymal
-         ls/uV7XWiWru1gHKWGvq+DHWS3dbpAjN/g1/3QxBKivbigzkh1MrNDchVrDMZyj+XhmM
-         mVqw==
-X-Gm-Message-State: APjAAAVFiz/ZcR1DYiWUxENtPPYxNt2rd+Az8nTE51d8gOS486YF8amz
-        YaaRKloPeytrzQgekA2xKuY=
-X-Google-Smtp-Source: APXvYqxgZkAHbCubOVoUz6mY68w4x9ilXJFbor8k3G0pREA3fmurzBX32tPrwm7sc0D36vJWiY+0Jw==
-X-Received: by 2002:a17:90a:340d:: with SMTP id o13mr627160pjb.19.1570471807804;
-        Mon, 07 Oct 2019 11:10:07 -0700 (PDT)
-Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:b:5d37:a2d6:1242:f34f])
-        by smtp.gmail.com with ESMTPSA id e192sm17589861pfh.83.2019.10.07.11.10.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Oct 2019 11:10:07 -0700 (PDT)
-Subject: Re: [PATCH 1/1] fsmonitor: don't fill bitmap with entries to be
- removed
-To:     Junio C Hamano <gitster@pobox.com>,
-        William Baker via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, Johannes.Schindelin@gmx.de,
-        jeffhost@microsoft.com, William Baker <William.Baker@microsoft.com>
-References: <pull.372.git.gitgitgadget@gmail.com>
- <ce9bf4237e69fcaf2b3e8b50bb88ff61c3b0f710.1570132194.git.gitgitgadget@gmail.com>
- <xmqq7e5l9zb1.fsf@gitster-ct.c.googlers.com>
-From:   William Baker <williamtbakeremail@gmail.com>
-Message-ID: <0de8e44f-53b8-e530-6e75-f696ffa889ce@gmail.com>
-Date:   Mon, 7 Oct 2019 11:10:05 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:68.0)
- Gecko/20100101 Thunderbird/68.0
-MIME-Version: 1.0
-In-Reply-To: <xmqq7e5l9zb1.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=ZOC7/JSp3X4bWCvPK2kIvVcXvfmtecDnh2mxoIfVNCU=;
+        b=Ne6PN+2tyEOBS4ZCa4UgAwbwLoGb8/HyhVqGhbaXJNyBHkiNA1NDaoQoVm/DIv0TT/
+         DE0ZrE7pp2WB/hZ45JGVHjKlUrBg6jo3Wg1Nv2EKFsykkZAHaYTSp86OoFfJxw2GjZXC
+         59VVG3r7RFd3h7oLOIruHV01NhgdW+5bx25shrjKuLj7I8WudfbqOqykOueMXlE8fjps
+         aI+Xhn8wRN9Q1LOy+Pf8Q7+5doGbhgw5YWIIPFmCnObW4fadSkqgIJ0Kxj6Hz2m+mJ75
+         KCVY7dVW8gqFu0SFfrQe2eYRtPO8UW58FILLNXV7NLlOXzeJgV206dZCFQBVEgGhAX7P
+         +uTQ==
+X-Gm-Message-State: APjAAAXfUsPJawF7VzUb1s3xHxa8h89hm3nb03piQ3QzxVpNYhWWhlZK
+        X4d1jyxrNBG6VN+bTCPP8T5WgHqU3tFQ/PEKtXsx/+wPiAyvg6b/PDuHybcQ248AiAlDuRxDTmk
+        TlEb9OJQjx/uJZ5GrhemIE/GUThgDh076VdeKqR1fFySGWMD80bhm+/rRIGJ3cS/6di3xQ35Efe
+        ab
+X-Google-Smtp-Source: APXvYqxsaq1c7ZvBTXr1r7wYgrMEF9h4UxcE7L7m3wSVaTbXyBjj9JiMenGG41cGxJN72bA395WA09pGxXX5qUszEgje
+X-Received: by 2002:a63:f14c:: with SMTP id o12mr32065956pgk.386.1570472309144;
+ Mon, 07 Oct 2019 11:18:29 -0700 (PDT)
+Date:   Mon,  7 Oct 2019 11:18:25 -0700
+Message-Id: <20191007181825.13463-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.23.0.581.g78d2f28ef7-goog
+Subject: [PATCH] fetch: delay fetch_if_missing=0 until after config
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/3/19 4:36 PM, Junio C Hamano wrote:
+When running "git fetch" in a partial clone with no blobs, for example,
+by:
 
->> +	if (pos >= istate->cache_nr)
->> +		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" >= %"PRIuMAX")",
->> +		    (uintmax_t)pos, (uintmax_t)istate->cache_nr);
-> 
-> This is how we show size_t values without using "%z" that we avoid,
-> but are "pos" and 'cache_nr" size_t or ssize_t?  I thought they are
-> plain boring unsigned, so shouldn't we use the plain boring "%u"
-> without casting?
-> 
-> The same comment applies to other uses of uintmax_t cast in this
-> patch.
-> 
+  git clone --filter=blob:none --no-checkout \
+    https://kernel.googlesource.com/pub/scm/git/git
+  git -C git fetch
 
-Thanks for catching this.  I will update these BUGs in the next
-patch to avoid casting.
+"git fetch" will fail to load the config blob object, printing "unable
+to load config blob object".
 
->> +# Use test files that start with 'z' so that the entries being added
->> +# and removed appear at the end of the index.
-> 
-> In other words, future developers are warned against adding entries
-> to and leaving them in the index that sort later than z100 in new
-> tests they add before this point.  Is the above wording clear enough
-> to tell them that, I wonder?
-> 
+This is because fetch_if_missing is set to 0 before the config is
+processed. Git must set fetch_if_missing to 0 before the fetch because
+as part of the fetch, packfile negotiation happens (and we do not want
+to fetch any missing objects when checking existence of objects), but we
+do not need to set it so early. Move the setting of fetch_if_missing to
+the earliest possible point in cmd_fetch(), right before any fetching
+happens.
+---
+This is not a full solution, but this helps in the use case described in
+the commit message. The full solution probably will involve teaching the
+fetch mechanism to support arbitrary struct repository objects, and by
+moving fetch_if_missing into the repository object. (Alternatively, we
+could add the equivalent of OBJECT_INFO_SKIP_FETCH_OBJECT to functions
+like parse_commit() that are used by files like negotiator/default.c, or
+split up commit parsing into object reading - which already has that
+flag - and commit parsing.)
+---
+ builtin/fetch.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-You're understanding is correct, and I agree this comment could be
-clearer.  I will fix this up in v2.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 24d382b2fb..865ae6677d 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1666,8 +1666,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 
+ 	packet_trace_identity("fetch");
+ 
+-	fetch_if_missing = 0;
+-
+ 	/* Record the command line for the reflog */
+ 	strbuf_addstr(&default_rla, "fetch");
+ 	for (i = 1; i < argc; i++)
+@@ -1734,6 +1732,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
++	fetch_if_missing = 0;
++
+ 	if (remote) {
+ 		if (filter_options.choice || has_promisor_remote())
+ 			fetch_one_setup_partial(remote);
+-- 
+2.23.0.581.g78d2f28ef7-goog
 
-Thanks for the feedback!
-William
