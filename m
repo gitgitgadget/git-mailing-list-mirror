@@ -2,119 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12E371F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 18:26:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BFA41F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 18:51:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728329AbfJGS0Q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 14:26:16 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:42577 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728031AbfJGS0P (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 14:26:15 -0400
-Received: by mail-qt1-f194.google.com with SMTP id w14so20591111qto.9
-        for <git@vger.kernel.org>; Mon, 07 Oct 2019 11:26:15 -0700 (PDT)
+        id S1728860AbfJGSvt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 14:51:49 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37558 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728289AbfJGSvt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 14:51:49 -0400
+Received: by mail-wr1-f67.google.com with SMTP id p14so15613857wro.4
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 11:51:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pABxVQOpSyfAOIFahUnytCY5zoSXIQdvAZiTKNhGcyw=;
-        b=XN/6yrWHLgeIcD0TyU1r8R/XqO5j5+U9raCwQaoa4IBK66M6F52RrjrWVo3fMSlBAX
-         i1K6Km7xd8TJmK8gGttYoQsXkgGp4gOaftD7F/RBvG0ktfvqJ7v9hLDTMUSXfZUModLE
-         RO+O5HRv0P/MmI7QHFuNoft7GF2w94Wke6AAPpct/6FTbw3ngbQqqV3G8P3rp47MzWKR
-         GHyghTd8BtIGA0aEsKcbs8LEjHwFTRzd7nYF/DhrV+6wOGLY0/XsE1pANJpTdaNOrZZR
-         FQORBkc5S6BZ115GoVWZ9Sc2wejXXSoVoL/XrJR7/MbH/lf3xtCCUDTHxXtcqn9HuhT3
-         qwyA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=g/pY2NgN39pPFwD/6Nf9wN46NseW7HTI5aNoTZ5dbT4=;
+        b=FMKxAOCyPV6shJROxrjVpfnnRLwP79L/9Eluqu6474hFp+0lKdOEvKT5/RBEvxqiK/
+         ZYaT+fpL9sDoMr+grl+FAM/jR1AePO8WySjvpq5+D/j0rg3IwTzqNXzTQJCAI7irr/7+
+         KkDo4fKjVi2Nb+L5AXReMj1QptbShftEeAZY7IL2WAl4BwiJh/oRVAuI5hVPj18y/pEZ
+         b9ohgx7Y/jOS93aGyvQdoyOYKxtO3NyunsQ+r8/4+b+2kR417e1aNpApIJy9aa1OKDBC
+         glb5PCJ35rjOGtyLNGrdL4zKlzx/+3TDvOy7ncmQy7UjPovoj4S2cBc3D4Mx+DI7baWn
+         GRPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pABxVQOpSyfAOIFahUnytCY5zoSXIQdvAZiTKNhGcyw=;
-        b=Yh9AW42EeYaPQjoojeEJrcoxKx2g1G0GA0dyke1UkzO0RoFh/xeZunOdeFHN6yeQ2K
-         RUvXtC7eDFKQPktGHqm/8LDynzQpM2NgTwnPuGF3QvtLytX9diiOIs6A2P/PJOuN8kTE
-         +4xcvPh4Drb8tZ51OX+D8gGVepwTb6HSJ4fx0IucDA/CaqhhwB0GtzwCi3kOjOeXIkIE
-         o7L39d1ZNK/Ypm9Bk3y87GLgWgZj++5NNfyXIUW6cATJI9J+FVdmOlA2FEM//CprFose
-         53ZLPJR4qu3iBS5Y7OoMHJdd04sIBZA0rsmu5sL4LZDOGqWlDicyEFz1dy8FqXh4HFCR
-         OlUA==
-X-Gm-Message-State: APjAAAXkoM7wXKR/8qtPTjNPVv6zEAzoFQA+ahkfz+J614khAsRBlk43
-        rUGL17rJx4FcAkusE5oeT2Q=
-X-Google-Smtp-Source: APXvYqxgp6RRr+ipsj3+MVuwALqdw/Ec0ngwMWoB5RC0GHIPWxMZv3edW+pbrxYuTQ4njg8Aw2GEmw==
-X-Received: by 2002:a05:6214:1401:: with SMTP id n1mr28987721qvx.196.1570472774487;
-        Mon, 07 Oct 2019 11:26:14 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c988:3ed2:5e14:1c0f? ([2001:4898:a800:1010:7abe:3ed2:5e14:1c0f])
-        by smtp.gmail.com with ESMTPSA id t32sm10169303qtb.64.2019.10.07.11.26.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Oct 2019 11:26:13 -0700 (PDT)
-Subject: Re: [PATCH v2 04/11] sparse-checkout: 'set' subcommand
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.316.git.gitgitgadget@gmail.com>
- <pull.316.v2.git.gitgitgadget@gmail.com>
- <9a78f9ea0fe8d1988654f52a86a01031607621fe.1568904188.git.gitgitgadget@gmail.com>
- <CABPp-BHB0UM1G2tHQ7igRX7Sn1O9ujW6mq_e-UGanGMONHxiag@mail.gmail.com>
- <CABPp-BGcZT2-m=D_X4d7zE9pzuWTKCnmURruahdQndpp=+-_WA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <0c3e34ab-1eee-fe29-f584-d21047fd1457@gmail.com>
-Date:   Mon, 7 Oct 2019 14:26:12 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=g/pY2NgN39pPFwD/6Nf9wN46NseW7HTI5aNoTZ5dbT4=;
+        b=fpwAIADRKVbXcftYrOl6Cya3Y1XqYmPtZnu3HKb1EOF6+MK++dN7mGFmH6SvJ6PM4Y
+         8RCX99uIhXad/6gysx2C2QQj3qTj1MSRe9bWfAsnhYDMYw3QpBSJyoMMsbnxSL6hae6B
+         LD+mdV5l4qodTRWhNvXsgynTNy8VDHSDuNg6IMjQJiapzna87wAVYU/+8cTGV+Og+oFT
+         a1cRZFsG/S5H4pUVjyrjWXdvb2i0BgvAFExIFl4fKVRmqyJBWlrk81mn79APgk06kgoy
+         KiimsG97Q+EHqII4/oAko+aPPW9gof06saL9ZKk5pgK2vQfE4ID0pjkUdSDJz0Kn3JF4
+         vRMQ==
+X-Gm-Message-State: APjAAAU1kVHAvWTdHAi8ZGpvJeDRxtVzseQXyy5vnDAfaxhplONIq4vU
+        5Y8kX93QbgMPy9hd6JkpfpdZM8h2
+X-Google-Smtp-Source: APXvYqwi5TNnpYxX6MYW3kXhyGOhZMir0mgdzoE7Dyl323pdN3ap76JLlBuRQH7JSpwEVxLZKkeraA==
+X-Received: by 2002:adf:9c93:: with SMTP id d19mr21706866wre.383.1570474306979;
+        Mon, 07 Oct 2019 11:51:46 -0700 (PDT)
+Received: from szeder.dev (x4dbd6b2d.dyn.telefonica.de. [77.189.107.45])
+        by smtp.gmail.com with ESMTPSA id b22sm559373wmj.36.2019.10.07.11.51.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 07 Oct 2019 11:51:46 -0700 (PDT)
+Date:   Mon, 7 Oct 2019 20:51:44 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] ci: run `hdr-check` as part of the `Static Analysis`
+ job
+Message-ID: <20191007185144.GE11529@szeder.dev>
+References: <pull.368.git.gitgitgadget@gmail.com>
+ <4b3b58ca6ddff476acff6735129049588c0a1f13.1569928584.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BGcZT2-m=D_X4d7zE9pzuWTKCnmURruahdQndpp=+-_WA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <4b3b58ca6ddff476acff6735129049588c0a1f13.1569928584.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/5/2019 8:30 PM, Elijah Newren wrote:
-> On Sat, Oct 5, 2019 at 3:44 PM Elijah Newren <newren@gmail.com> wrote:
->>
->> On Thu, Sep 19, 2019 at 3:07 PM Derrick Stolee via GitGitGadget
->> <gitgitgadget@gmail.com> wrote:
->>> +static int write_patterns_and_update(struct pattern_list *pl)
->>> +{
->>> +       char *sparse_filename;
->>> +       FILE *fp;
->>> +
->>> +       sparse_filename = get_sparse_checkout_filename();
->>> +       fp = fopen(sparse_filename, "w");
->>> +       write_patterns_to_file(fp, pl);
->>> +       fclose(fp);
->>> +       free(sparse_filename);
->>> +
->>> +       clear_pattern_list(pl);
->>
->> It seems slightly odd that pl is passed in but cleared in this
->> function rather than in the caller that created pl.  Should this be
->> moved to the caller, or, alternatively, a comment added to explain
->> this side-effect for future callers of the function?
->>
->> The rest of the patch looked good to me.
+On Tue, Oct 01, 2019 at 04:16:26AM -0700, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+Good idea, now that 'make hdr-check' runs clean this will help to keep
+it that way.
+
+I think adding it to the static analysis job makes sense, as opposed
+to the additional VM startup, git clone, and dependency installation
+overhead of a dedicated job.  However, this way we won't run 'make
+hdr-check' if Coccinelle were to find something undesired, but I think
+that's acceptable.
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  azure-pipelines.yml        | 2 +-
+>  ci/install-dependencies.sh | 3 ++-
+>  ci/run-static-analysis.sh  | 3 +++
+>  3 files changed, 6 insertions(+), 2 deletions(-)
 > 
-> Actually, thought of something else.  What if the user calls 'git
-> sparse-checkout set ...' without first calling 'git sparse-checkout
-> init'?  Should that report an error to the user, a suggestion to
-> follow it up with 'sparse-checkout init', or should it just call
-> sc_set_config() behind the scenes and allow bypassing the init
-> subcommand?
+> diff --git a/azure-pipelines.yml b/azure-pipelines.yml
+> index c329b7218b..15831f6006 100644
+> --- a/azure-pipelines.yml
+> +++ b/azure-pipelines.yml
+> @@ -354,7 +354,7 @@ jobs:
+>         test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+>  
+>         sudo apt-get update &&
+> -       sudo apt-get install -y coccinelle &&
+> +       sudo apt-get install -y coccinelle  coccinelle libcurl4-openssl-dev libssl-dev libexpat-dev gettext &&
 
-Maybe a warning would suffice. I still think the workflow of the
-following is most correct, and not difficult to recommend:
+These are the same additional packages that the hunk below adds to
+'ci/install-dependencies.sh'.
 
-* "git sparse-checkout init [--cone]" -OR- "git clone --sparse"
-* git sparse-checkout set [stuff]
-* git sparse-checkout disable
+So... why not just run 'ci/install-dependencies.sh' in the first place?
 
-Thanks,
--Stolee
+(On a related note, I noticed that the regular Linux and OSX jobs on
+Azure Pipelines do run 'ci/install-dependencies.sh', but even in those
+jobs 'azure-pipelines.yml' runs its own 'apt-get update && install'
+anyway.)
+
+>         export jobname=StaticAnalysis &&
+>  
+> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> index 8cc72503cb..8ce9ce276e 100755
+> --- a/ci/install-dependencies.sh
+> +++ b/ci/install-dependencies.sh
+> @@ -49,7 +49,8 @@ osx-clang|osx-gcc)
+>  	;;
+>  StaticAnalysis)
+>  	sudo apt-get -q update
+> -	sudo apt-get -q -y install coccinelle
+> +	sudo apt-get -q -y install coccinelle libcurl4-openssl-dev libssl-dev \
+> +		libexpat-dev gettext
+>  	;;
+>  Documentation)
+>  	sudo apt-get -q update
+> diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
+> index a19aa7ebbc..65bcebda41 100755
+> --- a/ci/run-static-analysis.sh
+> +++ b/ci/run-static-analysis.sh
+> @@ -26,4 +26,7 @@ then
+>  	exit 1
+>  fi
+>  
+> +make hdr-check ||
+> +exit 1
+
+This '|| exit 1' is unnecessary: our CI scripts are run with 'set -e',
+so the non-zero exit code from a failing 'make hdr-check' alone would
+fail the build.
+
+(Yeah, there is an other 'exit 1' in the patch context above, but
+that's a whole different ballpark and we do need that one.  Unlike
+'make hdr-check', 'make coccicheck' (or even COccinelle itself for
+that matter) doesn't exit with error when it found something to
+transform, and it doesn't print those transformations either.
+Consequently, we had to take a few extra steps to fail the build if it
+found something, and that 'exit 1' is part of that.  More details in
+0860a7641b (travis-ci: fail if Coccinelle static analysis found
+something to transform, 2018-07-23).)
+
+
+> +
+>  save_good_tree
+> -- 
+> gitgitgadget
