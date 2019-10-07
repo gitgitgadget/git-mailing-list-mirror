@@ -2,279 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BA291F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 09:20:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A2D11F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 09:27:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727522AbfJGJUb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 05:20:31 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49729 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727278AbfJGJUb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 05:20:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570440027;
-        bh=+DSwCTuOgWfCV0jat55s1A9GI5bGN/HyLrbqXJjkLXo=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NIEJ8JlyFIy1PmF2l6ojOE3gStLj+XxHHrpqmennuLPwJxASshuxfnNRdofdp0t34
-         AEhRJO/chqSklw4IJgxUmnCDdduHGWJTbCaWc80jwSnLH8yMFpMI0wuv2seSU3U0pG
-         cCV/CCfwXwVV/fLxx5E0c+NJOPjcGofW7ZEPhkeY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MpDNf-1hksj60Fxv-00qmEA; Mon, 07
- Oct 2019 11:20:27 +0200
-Date:   Mon, 7 Oct 2019 11:20:11 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Pratyush Yadav <me@yadavpratyush.com>
-cc:     Harish Karumuthil <harish2704@gmail.com>, git@vger.kernel.org,
-        David Aguilar <davvid@gmail.com>
-Subject: GitGUIGadget, was Re: [PATCH] Feature: custom guitool commands can
- now have custom keyboard shortcuts
-In-Reply-To: <20191006210647.wfjr7lhw5fxs4bin@yadavpratyush.com>
-Message-ID: <nycvar.QRO.7.76.6.1910071101590.46@tvgsbejvaqbjf.bet>
-References: <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com> <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com> <20191003214422.d4nocrxadxt47smg@yadavpratyush.com> <nycvar.QRO.7.76.6.1910041046000.46@tvgsbejvaqbjf.bet>
- <20191004120107.kpskplwhflnsamwu@yadavpratyush.com> <149a83fd40b71896b134b16c2b499ff472c6234e.camel@gmail.com> <20191005210127.uinrgazj5ezyqftj@yadavpratyush.com> <nycvar.QRO.7.76.6.1910061054470.46@tvgsbejvaqbjf.bet> <20191006183948.5n23sdy2l4uwl6kb@yadavpratyush.com>
- <nycvar.QRO.7.76.6.1910062208460.46@tvgsbejvaqbjf.bet> <20191006210647.wfjr7lhw5fxs4bin@yadavpratyush.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727345AbfJGJ07 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 05:26:59 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37238 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726010AbfJGJ07 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 05:26:59 -0400
+Received: by mail-wr1-f67.google.com with SMTP id p14so13413493wro.4
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 02:26:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=rv0Vma0PfiIUEeKX0rfmxRUk+/4HGWZPP2I9fSwBp5M=;
+        b=rhKpXd1eK4XWlLRJlEV80tL4ImCQX3FCVJuJCQv11BuAhrCq4IDuqz0wI2gqTlllXq
+         aHlEXolNTUj0JNV58GO31ik1OV8mkk90anTd0lmD1TPzH5th5PfM6inIKcJGat12fgkn
+         7ghVvx1zpEyZv5AW2Ap7n7wWa5tiN3sv2CghPwzUkU+VHOZuH5B07TAx4tDTs2GBgwQe
+         oculvoxY2MW0Eh1+xB/CfEvEp6+oXBCRBGRaFomeZor9e9nG/7/vq6qXd4BA4rYgXQ0o
+         aBFA7AUJ0eqZDuEUcHJ2NQ0v1M+AxbWzrIL9cHV4ENPqqnL1Ya1O29j8QMPv/ThEXYZx
+         lg6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=rv0Vma0PfiIUEeKX0rfmxRUk+/4HGWZPP2I9fSwBp5M=;
+        b=efhNXHKMoP3e0eTIaSWzpkvtt5rIodUJuW2e+iL7OMBM3F+WxXK86nlw2LI9mE76sB
+         2fKyTj8Dny4vdKt9v6kTdWEaZLi4FuqW0QmHKCzEtyLwK9PTgke6Ig04+JRfBC4Y9Vor
+         K1Ub3mIS0g2IKnxh48TH31Xit4uAYv33jInRqWN2fRnJ8Cgpk+1SzRpAjb4ZbrCa3Vbn
+         O199rgrksykCwvwcW6CoCEIVmPom5y/yqbutPvPYTNmMsVtk00PBwAMMopAbui69uRVU
+         AYp7KQt59/lLUC3gFewWloJdlXiVaJ0oNsaKPbrSwNElQY/9dVAQVhe7rNTXFSPSVRgL
+         ac8g==
+X-Gm-Message-State: APjAAAXwNGu/qjqOkmlEJoFACzXIJQZ/G69cSY2tjMutjRsZsrg8ZPoP
+        3b8XTFIsd5beE7HDhaCVaE7tM5Pc
+X-Google-Smtp-Source: APXvYqyNCLVoGXYHBYT4T1/RjMSwCEJfraSeXAsETQwRlk/FfmkxdCaFJcuUnIYGKfyL39gXZ+9YDw==
+X-Received: by 2002:a5d:4043:: with SMTP id w3mr22616111wrp.318.1570440415914;
+        Mon, 07 Oct 2019 02:26:55 -0700 (PDT)
+Received: from localhost.localdomain (atoulouse-658-1-47-220.w86-221.abo.wanadoo.fr. [86.221.54.220])
+        by smtp.googlemail.com with ESMTPSA id w125sm25250914wmg.32.2019.10.07.02.26.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 07 Oct 2019 02:26:55 -0700 (PDT)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: [PATCH v2 0/5] Use complete_action's todo list to do the rebase
+Date:   Mon,  7 Oct 2019 11:26:36 +0200
+Message-Id: <20191007092641.12661-1-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20190925201315.19722-1-alban.gruin@gmail.com>
+References: <20190925201315.19722-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:E8+g35GorlXnk8Jh4ul6+1tC92O8knFG6MTa5pc3rP3cDx8yjUz
- jt+N3o3dRdoPH3UP+dgmwmsstiLh18Pn3b577Bc4cz8N2M04UjvoXBqlyG1YrmtMKPOcUNt
- P8TpYWTmlf7ACFNx89S8s1WnmL+c/TuK8hFDGYW/pbNDBywaTrNe9QMNC6jKQWWARmTedm7
- x2Yp3lHdO58n7bD52o03A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:LaLRtC3/abQ=:WboSVp5Qfh/rJnij3CE2yL
- sPWa5quKXhHdhm+lBx21TLxwKXJ64Y3oIuCdx420ork4a/00vHxI3cC6sy2glVUzMD1LTDaNi
- rpZrJdr8DpGCjjm6CEkSU9E2Cv7S83ANThLxlzNpynbjpE3gQgyokTahLyWCS7GSiFAfvyhCc
- YNxPLk+zkzJyf5JibchLI7PaBHVFLdtuCm+QHNiNYqxRLYT1C2nK54J3gqNompCIii06nLqVP
- pa05HXEZDCmNM6cOE08kvdcIir0/JHy4nl/pW3iVuKTKEmpJJasvnUwPJlEic1xVhx8uh3cR3
- eOOn2HUqe/sF2Do+iYpQI9NSRsr8UAZ+KD0p+BfVJirMhAY0xkyGu/e9wW2X4ORGbUIhGVUj2
- YzbWcCsr/xnoMxy0P7jtzBPWLXlz2RhwaKRtTthcNUUtHMf0x0k+5xvhi0nsLubPUFyjVZVBy
- A+UjAGkA8Z4x7N5zAkrIMcaudbJ2OnjT4rxHvtFuipZWSwKohVjyIEWHvO1EORjIM+zvEHuky
- SCdP/DM4q5P6L96PPLu5IraXhKEslhB5mgu7UdzRnt+D2rQz0vXuPj1H/zRH1m3zeS4IlIO+U
- 5XXm3zrbxto2KFjL5cOLVAQYI+8t4M/RmK6tHOeMmsnjUCaOwHvzldUDfPyN0Y4cA6Iw2Xrqb
- lPXOMk6XDuyWptNFhHx8gTNAvBj8YYLLpWCngcAVAnMyWsDNM94r5jS8RasmV8q4g/Q6Nxt16
- gjx5V5Fvj3jvbrafWdmn2BXowECt2Gl8j5O07SNiJzJA3W11u2SvnxqK53O4sVtyf+BJL/S2v
- d8Xy4zAdTaj3079CSKnVSomih06d38LVGLyf2MLVnNsK3XuF+vAw/1Q/jIaFxY57Fxisadq/H
- amusMPPAFPiZon1uOkJl+5MZmTOJHi2r/De1gw/2xmJj+Jrv+8jWERh00MyLdBoJvklGCayJA
- P1d8qS5ipdx8qEDoULi7v56/6TONr0stwSZphvLed39xSts3dh3BLBvE6lCJkEnpI+7XlSpOD
- WePv+Qq7nj4oIE6NMuXFL1pYg23qRCegtGB55oed6hIKtkRKYak7f7XMgds01QM/xDmb4a/zu
- RE2se/MuFc+iB00voK/bq8FdONzwpS+2f2r1mVke6bySQBoMXXaL5eZzUMltgnY0imnRROmGo
- HQ4K7Etv8jDoFnQw5BJcsfAgB/Ps6wHiO2ul2d4gdVcJbNpWO9EkdSvG6sjMiwWQ2odX7wJQd
- mnbuXocyF+y0Z/deAL1koQm4UD0flOBjKXmlaCFGUCDdlWq78lS2EzzXAQ/8=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pratyush,
+This can be seen as a continuation of ag/reduce-rewriting-todo.
 
-On Mon, 7 Oct 2019, Pratyush Yadav wrote:
+Currently, complete_action() releases its todo list before calling
+sequencer_continue(), which reloads the todo list from the disk.  This
+series removes this useless round trip.
 
-> On 06/10/19 10:27PM, Johannes Schindelin wrote:
-> >
-> > On Mon, 7 Oct 2019, Pratyush Yadav wrote:
-> >
-> > > On 06/10/19 11:49AM, Johannes Schindelin wrote:
-> > > >
-> > > > On Sun, 6 Oct 2019, Pratyush Yadav wrote:
-> > > >
-> > > > > On 06/10/19 01:46AM, Harish Karumuthil wrote:
-> > > > > >
-> > > > > > From
-> > > > > > https://www.kernel.org/doc/html/v4.10/process/email-clients.ht=
-ml,
-> > > > > > I understood that, my current email client ( that is gmail
-> > > > > > web ) is not good for submitting patches. So I was tying to
-> > > > > > setup a mail client which is compatible with `git
-> > > > > > send-mail`. But I was not able to get a satisfactory result
-> > > > > > in that.
-> > > > >
-> > > > > You don't need to "set up" an email client with
-> > > > > git-send-email.  git-send-email is an email client itself.
-> > > > > Well, one which can only send emails.
-> > > >
-> > > > It also cannot reply to mails on the mailing list.
-> > > >
-> > > > It cannot even notify you when anybody replied to your patch.
-> > > >
-> > > > Two rather problematic aspects when it comes to patch
-> > > > contributions: how are you supposed to work with the reviewers
-> > > > when you lack all the tools to _interact_ with them? All `git
-> > > > send-email` provides is a "fire and forget" way to send patches,
-> > > > i.e. it encourages a monologue, when you want to start a
-> > > > dialogue instead.
-> > >
-> > > Well, I started with email based patch contribution when I was
-> > > first got started with open source, so I might be a bit biased,
-> > > but in my experience, it is not that difficult to set all these
-> > > things up. Most of the time, all you need to tell git-send-email
-> > > is your SMTP server, username, and password. All pretty easy
-> > > things to do.
-> >
-> > Okay, set it up with a corporate Exchange server.
-> >
-> > I'll be waiting right here.
->
-> I admit, I've never had to do that. And by how you word it, hope I
-> never have to do it in the future either.
+Patches 1, 2, and 3 originally come from a series meaning to improve
+rebase.missingCommitsCheck[0].  In the original series, I wanted to
+check for missing commits in read_populate_todo(), so a warning could be
+issued after a `rebase --continue' or an `exec' commands.  But, in the
+case of the initial edit, it is already checked in complete_action(),
+and would be checked a second time in sequencer_continue() (a caller of
+read_populate_todo()).  So I hacked up sequencer_continue() to accept a
+pointer to a todo list, and if not null, would skip the call to
+read_populate_todo().  (This was really ugly, to be honest.)  Some
+issues arose with git-prompt.sh[1], hence 1, 2 and 3.
 
-And I hope that you make peace with the fact that you prevent any
-corporate developer from contributing easily.
+Patch 5 is a new approach to what I did first.  Instead of bolting a new
+parameter to sequencer_continue(), this makes complete_action() calling
+directly pick_commits().
 
-> > > And you add in your email client (which pretty much everyone
-> > > should have), and it is a complete setup. I personally use neomutt
-> > > as my email client, but I have used Thunderbird before, and it is
-> > > really easy to set it up to send plain text emails. All you need
-> > > to do is hold Shift before hitting reply, and you're in plain text
-> > > mode. And you can even make it use plain text by default by
-> > > flipping a switch in the settings.
-> >
-> > How intuitive. And of course Thunderbird still messes up the patches
-> > so that they won't apply, unless you *checks notes* do things that
-> > are quite involved or *checks notes* do other things that are quite
-> > involved.
->
-> Ha! Made me chuckle. You got me there :). I suppose it isn't _that_
-> simple and I'm just biased because I am so used to it.
+This is based on 4c86140027 ("Third batch").
 
-I assumed that you were comfortable with it, and a bit oblivious about
-the hurdle that this represents to the majority of potential
-contributors.
+Changes since v1:
 
-Remember, one of the beautiful things GitHub has given the world _on
-top_ of Git is how easy one-off contributions are.
+ - Rewording of patches 1, 2, 4 and 5 according to comments made by
+   Phillip Wood, Junio C Hamano and Johannes Schindelin.
 
-> > > So while I agree with you that there is certainly a learning curve
-> > > involved, I don't think it is all too bad. But again, that is all my
-> > > personal opinion, and nothing based on facts or data.
-> >
-> > Let me provide you with some data, then. Granted, it's not necessarily
-> > all Git GUI, but it includes Git GUI patches, too: Git for Windows'
-> > contributions.
-> >
-> > As should be well-known, I try to follow Postel's Law when it comes to
-> > Git for Windows' patches: be lenient in the input, strict in the outpu=
-t.
-> > As such, I don't force contributors to use GitHub PRs (although that i=
-s
-> > certainly encouraged by virtue of Git for Windows' source code being
-> > hosted on GitHub), or send patches, or send pull requests to their own
-> > public repositories or bundles sent to the mailing list. I accept them
-> > all. At least that is the idea.
-> >
-> > I cannot tell you how many contributions came in via GitHub PRs. I can
-> > tell precisely you how many contributions were made _not_ using GitHub
-> > PRs. One one hand. Actually, on zero hands.
-> >
-> > So clearly, at least Git for Windows' contributors (including some who
-> > provided Git GUI patches) are much more comfortable with the PR workfl=
-ow
-> > than with the mailing list-based workflow.
->
-> I never said email is better that GitHub PRs. It isn't. My point was
-> that using email isn't _that_ hard. When I first did it, it maybe took
-> me 3-4 hours to figure everything out, and then I was set forever. I
-> carry around the same '.gitconfig' file to all my setups, and everything
-> "just works".
->
-> So yes, GitHub PRs are certainly easier, but email wasn't too difficult
-> in my experience. But then I'm a kernel developer, so I'm a minority to
-> begin with.
->
-> I suspect you've had this debate more than once, because you come in
-> guns blazing ;)
+The tip of this series is tagged as "reduce-todo-list-cont-v2" at
+https://github.com/agrn/git.
 
-I come in guns blazing because these obstacles that are put in the way
-of contributors are the opposite of what I consider inclusive and
-welcoming.
+[0] http://public-inbox.org/git/20190717143918.7406-1-alban.gruin@gmail.com/
+[1] http://public-inbox.org/git/1732521.CJWHkCQAay@andromeda/
 
-The fact that I am blessed with a lot of privilege (which, let's face
-it, I did nothing to earn) does not mean that I want to discount those
-who do not have that privilege. I have the time to contribute to Open
-Source, which is a privilege. I have the education to do so, with is a
-privilege. I even have the time to struggle with a mailing list-based
-code contribution process, which is a privilege I imagine only
-preciously few people enjoy.
+Alban Gruin (5):
+  sequencer: update `total_nr' when adding an item to a todo list
+  sequencer: update `done_nr' when skipping commands in a todo list
+  sequencer: move the code writing total_nr on the disk to a new
+    function
+  rebase: fill `squash_onto' in get_replay_opts()
+  sequencer: directly call pick_commits() from complete_action()
 
-So I work as hard as I can against obstacles that are essentially big
-"Keep Out" signs (or, if you will, a big middle finger) to contributors
-without these privileges.
+ builtin/rebase.c |  5 +++++
+ sequencer.c      | 26 ++++++++++++++++++--------
+ 2 files changed, 23 insertions(+), 8 deletions(-)
 
-> > > [... talking about GitGitGadget...]
-> > >
-> > > One  feature that would make it complete would be the ability to
-> > > reply to review comments.
-> >
-> > And how would that work, exactly? How to determine *which* email to
-> > respond to? *Which* person to reply to? *What* to quote?
->
-> GGG already shows replies to the patches as a comment.
+Diff-intervalle contre v1 :
+1:  d177b0de1a ! 1:  9215b191c7 sequencer: update `total_nr' when adding an item to a todo list
+    @@ Metadata
+      ## Commit message ##
+         sequencer: update `total_nr' when adding an item to a todo list
+     
+    -    `total_nr' is the total amount of items, done and toto, that are in a
+    -    todo list.  But unlike `nr', it was not updated when an item was
+    -    appended to the list.
+    +    `total_nr' is the total number of items, counting both done and todo,
+    +    that are in a todo list.  But unlike `nr', it was not updated when an
+    +    item was appended to the list.
+     
+         This variable is mostly used by command prompts (ie. git-prompt.sh and
+    -    the like).
+    +    the like).  By forgetting to update it, the original code made it not
+    +    reflect the reality, but this flaw was masked by the code calling
+    +    unnecessarily read_todo_list() again to update the variable to its
+    +    correct value.  At the end of this series, the unnecessary call will be
+    +    removed, and the inconsistency addressed by this patch would start to
+    +    matter.
+     
+         Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+     
+2:  09fcbe159b ! 2:  7cad541092 sequencer: update `done_nr' when skipping commands in a todo list
+    @@ Commit message
+         or skipped, but skip_unnecessary_picks() did not update it.
+     
+         This variable is mostly used by command prompts (ie. git-prompt.sh and
+    -    the like).
+    +    the like).  As in the previous commit, this inconsistent behaviour is
+    +    not a problem yet, but it would start to matter at the end of this
+    +    series the same reason.
+     
+         Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+     
+3:  26a18cd1a9 = 3:  7c9c4ddd30 sequencer: move the code writing total_nr on the disk to a new function
+4:  5d74903cfe ! 4:  cd44fb4e10 rebase: fill `squash_onto' in get_replay_opts()
+    @@ Metadata
+      ## Commit message ##
+         rebase: fill `squash_onto' in get_replay_opts()
+     
+    -    get_replay_opts() did not fill `squash_onto' if possible, meaning that
+    -    this field should be read from the disk by the sequencer through
+    -    read_populate_opts().  Without this, calling `pick_commits()' directly
+    -    will result in incorrect results with `rebase --root'.
+    +    Currently, the get_replay_opts() function does not initialise the
+    +    `squash_onto' field (which is used for the `--root' mode), only
+    +    read_populate_opts() does.  That would lead to incorrect results when
+    +    calling pick_commits() without reading the options from the disk first.
+     
+         Let’s change that.
+     
+5:  dc803c671f ! 5:  523fdd35a1 sequencer: directly call pick_commits() from complete_action()
+    @@ Commit message
+         sequencer: directly call pick_commits() from complete_action()
+     
+         Currently, complete_action() calls sequencer_continue() to do the
+    -    rebase.  Even though the former already has the todo list, the latter
+    -    loads it from the disk and parses it.  Calling directly pick_commits()
+    -    from complete_action() avoids this unnecessary round trip.
+    +    rebase.  Before the former calls pick_commits(), it
+    +
+    +     - calls read_and_refresh_cache() -- this is unnecessary here as we've
+    +       just called require_clean_work_tree()
+    +     - calls read_populate_opts() -- this is unnecessary as we're starting a
+    +       new rebase, so opts is fully populated
+    +     - loads the todo list -- this is unnecessary as we've just populated
+    +       the todo list
+    +     - commits any staged changes -- this is unnecessary as we're starting a
+    +       new rebase, so there are no staged changes
+    +     - calls record_in_rewritten() -- this is unnecessary as we're starting
+    +       a new rebase.
+    +
+    +    This changes complete_action() to directly call pick_commits() to avoid
+    +    these unnecessary steps.
+     
+         Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+     
+-- 
+2.23.0
 
-Yes.
-
-(I know, I implemented this.)
-
-> On GitHub you can "Quote reply" a comment, which quotes the entire
-> comment just like your MUA would.
-
-On GitHub, you can also select part of the comment and press the `r`
-key, which results in the equivalent of what I am doing right here:
-quoting part of your mail and responding to just that part.
-
-You can also just reply without quoting.
-
-These are three ways to reply to comments on GitHub, and in my
-experience the rarest form is the full quote, the most common form is
-the "no quote" form. (Which makes sense because you already have
-everything in that UI, you don't need to quote unless you need to make a
-point about only a certain part of what you are replying to, and only if
-that point might be otherwise missed.)
-
-Something I also saw often enough is to accumulate quotes from multiple
-comments in the same reply.
-
-> Then you can write your reply there, and the last line would be
-> '/reply', which would make GGG send that email as a reply. You would
-> need to strip the first line from the reply because GGG starts the
-> reply with something like:
->
->   > [On the Git mailing
->   > list](https://public-inbox.org/git/xmqq7e5l9zb1.fsf@gitster-ct.c.goo=
-glers.com),
->   > Junio C Hamano wrote ([reply to
->   > this](https://github.com/gitgitgadget/gitgitgadget/wiki/ReplyToThis)=
-):
->
-> GGG also adds 3 backticks before and after the reply content, so those
-> would need to be removed too.
-
-Apart from the problems to identify the correct mail to reply to
-(unless, as you suggested, the Message-ID is part of the quoted part by
-virtue of including that public-inbox URL), I think it would make it
-cumbersome to require the `/reply` command. Quite honestly, I would
-prefer it if GitGitGadget would simply send replies whenever it can
-figure out to who to send, and which Message-ID to reply to.
-
-> > > This would remove the need for an email client (almost)
-> > > completely. I have never written Typescript or used Azure
-> > > pipelines ever, but I can try tinkering around to see if I can
-> > > figure out how to do something like that. Unless, of course, you
-> > > or someone else is already doing it.  If not, some pointers would
-> > > be appreciated.
-> >
-> > Feel free to give this challenge a try.
->
-> The first challenge is learning Typescript :)
-
-I learned Typescript to implement GitGitGadget. It maybe took me 3-4
-hours to figure everything out, and then I was set forever. :-P
-
-Ciao,
-Johannes
