@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06A001F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 20:08:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4566A1F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 20:08:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729329AbfJGUIv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 16:08:51 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42734 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729279AbfJGUIp (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1729324AbfJGUIu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 16:08:50 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38543 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728871AbfJGUIp (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 7 Oct 2019 16:08:45 -0400
-Received: by mail-wr1-f67.google.com with SMTP id n14so16725064wrw.9
-        for <git@vger.kernel.org>; Mon, 07 Oct 2019 13:08:44 -0700 (PDT)
+Received: by mail-wr1-f65.google.com with SMTP id w12so16789784wro.5
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 13:08:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2le2HrJzlVlLNlbW3JTEbjclAZ9reByey/HQksMGVdw=;
-        b=X8XZL615X9vCoQ55Y2IE4QjcvTJRsbLTc5AfuZwPoa1LaDKiX04JjTphk8ozGSBMm7
-         d4masw4wwepsiM4/a82G78rHuL7m6ChRJDo6EudHGh2yy9UIjzOdeuD2s6W3kBXOKwHr
-         YSVi7uEGABS+M+2kpVJD67GiP7EnykBHYXd3ejVyo48jV9BrL34IiN/TPWwSR7B3h54x
-         QLekSZdDB6zZEX3DhlnGJlhy64XB4slNiZUOqg9wkFgJKhdZ/aisMAG6tspx7cOYfghy
-         AEouN5di/6hYt3dgk6xamjwy4U4jP6nXBmRyj5kCuKwtdc/zcuBWtzz8JgtbWO3JyjNP
-         mjfw==
+        bh=2/RiKsLEZuFAOBKmD6Jycsmp4Qyoqc0WA9U5nvYCt4U=;
+        b=p8BDWCA0W3kTHh/u1WqKWQQTzuc+qFM8qSGVSkQTsp6HOWylEVYufgO4g3xUNB3NX3
+         lETvthKtCE+3vALiEjii5/3CSR3APmXjaN7YM6EabKd2azlKb7bkP0KDQY2IZmkTOUtL
+         +DSpCpQcpUgppyxNoImAU6kAMjq/chTBYVR5D80kEeNpMV6LPKJ189QhdqYbxr/L62sV
+         QXYbPwXn/yhfkuOKpmDQgZ/IMkl2m8C7jALZig5jJRfM6+gPuWCd1X4/QZCGNv3uaGjB
+         UKVURPQ6cyxFCwQp8iIO2dbB++Epu1xI15N70tvq7GsgDdNsXUq/Rp0UUcN88WF6gRGj
+         6U/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2le2HrJzlVlLNlbW3JTEbjclAZ9reByey/HQksMGVdw=;
-        b=MWtFuSVOnyvH2Nz2Qd08/4VHqqwuHr6BtJ9oY6/giEw1/uxv/GTaGinE1j8/frouHu
-         est7I5D7LncvvbGHHo9k3Ti2909tqGHZVmb/ydzVXMKLtUumAr8E0gEhHsgfpshNrZBx
-         pdgwTDEO06SoWH8NtwG5UT+UVs4F9wr9OV2nr5Tzp+yYXG3ZDlLMZGl2YKQ9ZTH7JYW4
-         /B1hzosPIrdgdTdOw8EZv54Ev1n+oyKdWMI83A3ZCyqbwlIUfHKvxhDl2wuBM7yz79lT
-         KKgVjqXvF0c29s2jycT9x8ooQ+zwrjDSkb6gcoycrALzY5Z5CGlVf+mCtuyqt5lKH4Y5
-         6DDA==
-X-Gm-Message-State: APjAAAV0nM2dHnvflIQqMUIA04mha5LZMTvAKu3YTLlQmPqulYdFiYS9
-        uPzfGvL5jg44412knZyOXr3m7KmK
-X-Google-Smtp-Source: APXvYqw+2PrwuDY9uIsTDdj4KsrQ3g3twEpFzmmkVGD8pEg/wmy+hf7dJ9+DhTnMrSClenGHE6TpGg==
-X-Received: by 2002:adf:9d88:: with SMTP id p8mr22983406wre.391.1570478923219;
-        Mon, 07 Oct 2019 13:08:43 -0700 (PDT)
+        bh=2/RiKsLEZuFAOBKmD6Jycsmp4Qyoqc0WA9U5nvYCt4U=;
+        b=otCyvXf9s2ykzYrJhs8sMUQ6R6/pEvUKHLROw7fK0Kb1vMU022+R4U5Fy1kYg4kSeq
+         GBVkIiP6DlAeoex3WTPpijFrnncoGNtk8a3HPcb5POBY0Nq7NxB+51ijCj1sS1D2y7a/
+         sP1ap5T8fZbffUmcp6Mdqp9og59lsyt+ga11soog8kVLrfqkztTIGmC8A8qHnuOujF0Y
+         RcoH6v643ZFrVtLQuQ6ksrGnz/YZGtq5vVkFSkZcINLFnXOFlMRU1TyX2qBqjvcn1nR+
+         QiJe0LxH6lPGK+36MxOLwpDbpMou71i06gEjwQGkzjRsJad87U82fA+WPZZ3LyQqeSFj
+         DcyQ==
+X-Gm-Message-State: APjAAAVPmwYmEDj5FgZxsXTMk/1YLxH+B3OspudankbsqXyoYVqkVU5B
+        ksJUjtVk0OrNLgiOsZPaPh0jb5bE
+X-Google-Smtp-Source: APXvYqwH5sWkfuvo7kRs4ItFj9R4ZkF9fxjAB4MHasvolduqVsPVGUfVZFMZTOoi2oA36xkDpAHn4w==
+X-Received: by 2002:adf:f112:: with SMTP id r18mr23493467wro.88.1570478921491;
+        Mon, 07 Oct 2019 13:08:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a9sm1223928wmf.14.2019.10.07.13.08.42
+        by smtp.gmail.com with ESMTPSA id z5sm28905433wrs.54.2019.10.07.13.08.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Oct 2019 13:08:42 -0700 (PDT)
-Date:   Mon, 07 Oct 2019 13:08:42 -0700 (PDT)
-X-Google-Original-Date: Mon, 07 Oct 2019 20:08:24 GMT
-Message-Id: <8927494b8c418e43f5bbd6e1eb108be5a0a263fc.1570478905.git.gitgitgadget@gmail.com>
+        Mon, 07 Oct 2019 13:08:40 -0700 (PDT)
+Date:   Mon, 07 Oct 2019 13:08:40 -0700 (PDT)
+X-Google-Original-Date: Mon, 07 Oct 2019 20:08:22 GMT
+Message-Id: <56444a5498c8194186d294b3128d0ffdb3678296.1570478905.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.316.v3.git.gitgitgadget@gmail.com>
 References: <pull.316.v2.git.gitgitgadget@gmail.com>
         <pull.316.v3.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 16/17] sparse-checkout: write using lockfile
+Subject: [PATCH v3 14/17] sparse-checkout: sanitize for nested folders
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,79 +72,91 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-If two 'git sparse-checkout set' subcommands are launched at the
-same time, the behavior can be unexpected as they compete to write
-the sparse-checkout file and update the working directory.
+If a user provides folders A/ and A/B/ for inclusion in a cone-mode
+sparse-checkout file, the parsing logic will notice that A/ appears
+both as a "parent" type pattern and as a "recursive" type pattern.
+This is unexpected and hence will complain via a warning and revert
+to the old logic for checking sparse-checkout patterns.
 
-Take a lockfile around the writes to the sparse-checkout file. In
-addition, acquire this lock around the working directory update
-to avoid two commands updating the working directory in different
-ways.
+Prevent this from happening accidentally by sanitizing the folders
+for this type of inclusion in the 'git sparse-checkout' builtin.
+This happens in two ways:
+
+1. Do not include any parent patterns that also appear as recursive
+   patterns.
+
+2. Do not include any recursive patterns deeper than other recursive
+   patterns.
+
+In order to minimize duplicate code for scanning parents, create
+hashmap_contains_parent() method. It takes a strbuf buffer to
+avoid reallocating a buffer when calling in a tight loop.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/sparse-checkout.c          | 15 ++++++++++++---
- t/t1091-sparse-checkout-builtin.sh |  7 +++++++
- 2 files changed, 19 insertions(+), 3 deletions(-)
+ builtin/sparse-checkout.c          | 22 ++++++++++++++++++----
+ t/t1091-sparse-checkout-builtin.sh | 11 +++++++++++
+ 2 files changed, 29 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 542d57fac6..9b313093cd 100644
+index b220f15741..25786f8bb0 100644
 --- a/builtin/sparse-checkout.c
 +++ b/builtin/sparse-checkout.c
-@@ -308,6 +308,8 @@ static int write_patterns_and_update(struct pattern_list *pl)
- {
- 	char *sparse_filename;
- 	FILE *fp;
-+	int fd;
-+	struct lock_file lk = LOCK_INIT;
- 	int result;
- 	
- 	if (!core_apply_sparse_checkout) {
-@@ -317,21 +319,28 @@ static int write_patterns_and_update(struct pattern_list *pl)
+@@ -212,10 +212,18 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
+ 	struct pattern_entry *entry;
+ 	struct hashmap_iter iter;
+ 	struct string_list sl = STRING_LIST_INIT_DUP;
++	struct strbuf parent_pattern = STRBUF_INIT;
  
- 	result = update_working_directory(pl);
- 
-+	sparse_filename = get_sparse_checkout_filename();
-+	fd = hold_lock_file_for_update(&lk, sparse_filename,
-+				      LOCK_DIE_ON_ERROR);
+ 	hashmap_iter_init(&pl->parent_hashmap, &iter);
+-	while ((entry = hashmap_iter_next(&iter)))
+-		string_list_insert(&sl, entry->pattern);
++	while ((entry = hashmap_iter_next(&iter))) {
++		if (hashmap_get(&pl->recursive_hashmap, entry, NULL))
++			continue;
 +
-+	result = update_working_directory(pl);
- 	if (result) {
-+		rollback_lock_file(&lk);
-+		free(sparse_filename);
- 		clear_pattern_list(pl);
- 		update_working_directory(NULL);
- 		return result;
- 	}
++		if (!hashmap_contains_parent(&pl->recursive_hashmap,
++					     entry->pattern,
++					     &parent_pattern))
++			string_list_insert(&sl, entry->pattern);
++	}
  
--	sparse_filename = get_sparse_checkout_filename();
--	fp = fopen(sparse_filename, "w");
-+	fp = fdopen(fd, "w");
+ 	string_list_sort(&sl);
+ 	string_list_remove_duplicates(&sl, 0);
+@@ -232,8 +240,14 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
+ 	string_list_clear(&sl, 0);
  
- 	if (core_sparse_checkout_cone)
- 		write_cone_to_file(fp, pl);
- 	else
- 		write_patterns_to_file(fp, pl);
+ 	hashmap_iter_init(&pl->recursive_hashmap, &iter);
+-	while ((entry = hashmap_iter_next(&iter)))
+-		string_list_insert(&sl, entry->pattern);
++	while ((entry = hashmap_iter_next(&iter))) {
++		if (!hashmap_contains_parent(&pl->recursive_hashmap,
++					     entry->pattern,
++					     &parent_pattern))
++			string_list_insert(&sl, entry->pattern);
++	}
++
++	strbuf_release(&parent_pattern);
  
--	fclose(fp);
-+	fflush(fp);
-+	commit_lock_file(&lk);
- 
- 	free(sparse_filename);
- 	clear_pattern_list(pl);
+ 	string_list_sort(&sl);
+ 	string_list_remove_duplicates(&sl, 0);
 diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 82eb5fb2f8..f22a4afbea 100755
+index db6371b079..ee4d361787 100755
 --- a/t/t1091-sparse-checkout-builtin.sh
 +++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -262,4 +262,11 @@ test_expect_success 'revert to old sparse-checkout on bad update' '
- 	test_cmp dir expect
+@@ -234,4 +234,15 @@ test_expect_success 'cone mode: init and set' '
+ 	test_cmp expect dir
  '
  
-+test_expect_success 'fail when lock is taken' '
-+	test_when_finished rm -rf repo/.git/info/sparse-checkout.lock &&
-+	touch repo/.git/info/sparse-checkout.lock &&
-+	test_must_fail git -C repo sparse-checkout set deep 2>err &&
-+	test_i18ngrep "File exists" err
++test_expect_success 'cone mode: set with nested folders' '
++	git -C repo sparse-checkout set deep deep/deeper1/deepest 2>err &&
++	test_line_count = 0 err &&
++	cat >expect <<-EOF &&
++		/*
++		!/*/
++		/deep/
++	EOF
++	test_cmp repo/.git/info/sparse-checkout expect
 +'
 +
  test_done
