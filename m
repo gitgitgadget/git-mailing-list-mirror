@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9913D1F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 09:27:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 644291F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 09:27:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727355AbfJGJ1A (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 05:27:00 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:52089 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726969AbfJGJ07 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 05:26:59 -0400
-Received: by mail-wm1-f67.google.com with SMTP id 7so11844534wme.1
-        for <git@vger.kernel.org>; Mon, 07 Oct 2019 02:26:58 -0700 (PDT)
+        id S1727394AbfJGJ1D (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 05:27:03 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41245 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726969AbfJGJ1D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 05:27:03 -0400
+Received: by mail-wr1-f67.google.com with SMTP id q9so14352323wrm.8
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 02:27:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0xCkbnmCs8Z5d9BHZzxNK2J/yY5q0ioErhjJ3M1BQ5U=;
-        b=q2rIcFEuq5W7prTjhsHNKmXUC4/EHVyDn3n/zLaISN/e+jiUGhkPk2l27eggGZRS7S
-         sa+AQ0wBJVe20iJJXhbhcP06J24ZTa+j1oqAz4CcsT93o4WKBo/oPjMxSAPeUadlRS8V
-         N3p/R+4P13pdjaZM9isRaxhjd0UKoufU5AER4dYAmSal2K0YbCit/7HdCMVZUsRJvHN+
-         EJdzL9h5uW1gpkRVcMn9jT62jXXj8K8wxh5kGAV224u+v0nfqclAHB4hu+fJobdmHMKN
-         c+NGZ/0gfwu2cidPJYMxvV0PcfOTmxfm8vA50fRmlcqlHbwc30go96tsM1sAsVrAWbqU
-         h5FQ==
+        bh=K1lssAzVcjOIZYcG9Rqnrhi4wYG8jrz4Ugyueneq7B8=;
+        b=sLxqcTdMH4sfrw6eJULleV0HWu92zzXBH0ue0EaIypoNRzFYz7Zoo4kbaeLJ8j39UN
+         isL1y1r5Xit4UXRpK+2MKdSqR9lqL0WGhQYzBSLIypKg1WWiPK8Q+JNKJOk/EyO3pFtq
+         GISv8OPY7fKnRpiSswY7Dte9KyfOs+FV8/dlgzzBOgBU7fmg6tCaUArd7gJY7GUCE2my
+         DOtBtpevGkoWQnGp0C3RsbzVvdrK011lHcQ/vZ9Wh3J8K/VyymQMGWDO3NS2beB9yLgv
+         j9mNSBfdsDBrR7Ha0rPJ9CroRX57De5WIo9aXo+iXSjHihPJg8z/E082ytL+azKp45O0
+         rG7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0xCkbnmCs8Z5d9BHZzxNK2J/yY5q0ioErhjJ3M1BQ5U=;
-        b=sH6UyN44udToUapJ5SR8f7SKqnLi+fgHEg0cDC6NGa1dkGq7ap8ilHCzaRSg+PjxVf
-         VgjNyJE7bIj+E+S0pcD4iYMCZT4ZcipruqfKUP5pMqkrMT7VSVQPNBUuSg86EiE8aPkg
-         GbEiARpbtHeP2QzGrpEHI7j+5pMmjfQ56RRWvCCV9xF0Pt9vdDnNN440hKgKzhI8Imgu
-         53t+fW38Rq81SPxH6eThIOqn04zhAkqUisLSmp/JLPkl9OFyu2aCWbErtFun14nEPJZI
-         7Qhk0/CNo1/f+rzGfC32w2R4ePOyccGxiLymRbT8HuECwPQeN3USJ9Pr3KfuiLkVaVYr
-         mDRQ==
-X-Gm-Message-State: APjAAAVTBpVDch+j2oX2x3Xj8j2XBe57Xa4RFLHMV0nP0oY9d/RPG8r/
-        6QhoorlGxL3ZiAVUjXhQ8MeE8rur
-X-Google-Smtp-Source: APXvYqxNpQKVfY8kFVM9tgimCOvXyf+k9Vm0me6ZgBrj+BbJxDtD49jaNlQg92vP168Q6zvkVPYMmQ==
-X-Received: by 2002:a1c:dd0a:: with SMTP id u10mr19465730wmg.100.1570440417960;
-        Mon, 07 Oct 2019 02:26:57 -0700 (PDT)
+        bh=K1lssAzVcjOIZYcG9Rqnrhi4wYG8jrz4Ugyueneq7B8=;
+        b=kGeZIndkNJ+k58tKnD54XVJulrto/P4BdOWkmnNN0MdRlN5lm0VlGywD4dAKLviu1r
+         9aTiesaRIMWreu7DVDk4uEZXyTOXA0PMNP6EU79FOq0BmVgkYXM0haSM8+gK1OuzvK1h
+         VyL/bBsCvvznOTIxxrKRTcQC2n6buyIVIXP8QgTCs6ktyajWPSGZGFTTMxXZcoYarSL5
+         pLrsz0R1DN9WD0UmUXFlfFRT2ZYxEEjx96OrS1JQcfVLcC4ZvK8dW3Xdz6FuwmQudUZA
+         Dxoms/caBd0K75jD5RNC/a9oydTGLJ+UXl25GW85micuXN7kVbgIfzZZn2zpRwvwWq8Y
+         lLFA==
+X-Gm-Message-State: APjAAAUdCi0+uLtYYl1owgSzyMZMyHwqzhm2qWYeXSGdh7ZC4yq8mVm/
+        eyi0lwJU5/e0j7mkN9gx7nbzKi/o
+X-Google-Smtp-Source: APXvYqyaAj/ZWCL0tem+QhexCMWdl1b3xgaiSvfgszITOiIKTIhBNKtjD9i6GU/fjxYf+mxzqWDLlw==
+X-Received: by 2002:a5d:428d:: with SMTP id k13mr21613903wrq.305.1570440419606;
+        Mon, 07 Oct 2019 02:26:59 -0700 (PDT)
 Received: from localhost.localdomain (atoulouse-658-1-47-220.w86-221.abo.wanadoo.fr. [86.221.54.220])
-        by smtp.googlemail.com with ESMTPSA id w125sm25250914wmg.32.2019.10.07.02.26.56
+        by smtp.googlemail.com with ESMTPSA id w125sm25250914wmg.32.2019.10.07.02.26.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Oct 2019 02:26:57 -0700 (PDT)
+        Mon, 07 Oct 2019 02:26:59 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Junio C Hamano <gitster@pobox.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v2 1/5] sequencer: update `total_nr' when adding an item to a todo list
-Date:   Mon,  7 Oct 2019 11:26:37 +0200
-Message-Id: <20191007092641.12661-2-alban.gruin@gmail.com>
+Subject: [PATCH v2 2/5] sequencer: update `done_nr' when skipping commands in a todo list
+Date:   Mon,  7 Oct 2019 11:26:38 +0200
+Message-Id: <20191007092641.12661-3-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20191007092641.12661-1-alban.gruin@gmail.com>
 References: <20190925201315.19722-1-alban.gruin@gmail.com>
@@ -70,17 +70,13 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`total_nr' is the total number of items, counting both done and todo,
-that are in a todo list.  But unlike `nr', it was not updated when an
-item was appended to the list.
+In a todo list, `done_nr' is the amount of commands that were executed
+or skipped, but skip_unnecessary_picks() did not update it.
 
 This variable is mostly used by command prompts (ie. git-prompt.sh and
-the like).  By forgetting to update it, the original code made it not
-reflect the reality, but this flaw was masked by the code calling
-unnecessarily read_todo_list() again to update the variable to its
-correct value.  At the end of this series, the unnecessary call will be
-removed, and the inconsistency addressed by this patch would start to
-matter.
+the like).  As in the previous commit, this inconsistent behaviour is
+not a problem yet, but it would start to matter at the end of this
+series the same reason.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
@@ -90,17 +86,17 @@ sequencer.c | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index d648aaf416..575b852a5a 100644
+index 575b852a5a..42313f8de6 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2070,6 +2070,7 @@ void todo_list_release(struct todo_list *todo_list)
- static struct todo_item *append_new_todo(struct todo_list *todo_list)
- {
- 	ALLOC_GROW(todo_list->items, todo_list->nr + 1, todo_list->alloc);
-+	todo_list->total_nr++;
- 	return todo_list->items + todo_list->nr++;
- }
+@@ -5054,6 +5054,7 @@ static int skip_unnecessary_picks(struct repository *r,
+ 		MOVE_ARRAY(todo_list->items, todo_list->items + i, todo_list->nr - i);
+ 		todo_list->nr -= i;
+ 		todo_list->current = 0;
++		todo_list->done_nr += i;
  
+ 		if (is_fixup(peek_command(todo_list, 0)))
+ 			record_in_rewritten(base_oid, peek_command(todo_list, 0));
 -- 
 2.23.0
 
