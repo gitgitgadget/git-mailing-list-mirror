@@ -2,68 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 565B21F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 16:03:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F4CF1F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 16:08:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727920AbfJGQDh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 12:03:37 -0400
-Received: from fallback24.m.smailru.net ([94.100.187.223]:36964 "EHLO
-        fallback24.mail.ru" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1727711AbfJGQDh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 12:03:37 -0400
-X-Greylist: delayed 2944 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Oct 2019 12:03:35 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail2;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:Subject:From:To; bh=Ntkh1wMAYaJhjfdWiZpx3fe/rl+M3scGnEJLDVC7H7M=;
-        b=hKJqOaQt5jGDyTtTMMp+ZxcCKa39ePI6A13oJeHgATZs86lkmJ4ToX0NkFS0ZnnJ/x9FA/o6Wlih1HaQwmKn3LBVP6dQ0U2BqOdQZfOMcAmcw/F71teYMgm+wWz8zIZOvJHv/v9acEr3rqXp79AiXVl5C42szVlykCPci6YO38g=;
-Received: from [10.161.25.38] (port=46018 helo=smtp61.i.mail.ru)
-        by fallback24.m.smailru.net with esmtp (envelope-from <kirnosenko@mail.ru>)
-        id 1iHUiT-0000Fp-Au
-        for git@vger.kernel.org; Mon, 07 Oct 2019 18:14:29 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail2;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:Subject:From:To; bh=Ntkh1wMAYaJhjfdWiZpx3fe/rl+M3scGnEJLDVC7H7M=;
-        b=hKJqOaQt5jGDyTtTMMp+ZxcCKa39ePI6A13oJeHgATZs86lkmJ4ToX0NkFS0ZnnJ/x9FA/o6Wlih1HaQwmKn3LBVP6dQ0U2BqOdQZfOMcAmcw/F71teYMgm+wWz8zIZOvJHv/v9acEr3rqXp79AiXVl5C42szVlykCPci6YO38g=;
-Received: by smtp61.i.mail.ru with esmtpa (envelope-from <kirnosenko@mail.ru>)
-        id 1iHUiR-0007zU-HN
-        for git@vger.kernel.org; Mon, 07 Oct 2019 18:14:27 +0300
-To:     git@vger.kernel.org
-From:   Semyon Kirnosenko <kirnosenko@mail.ru>
-Subject: log -m output
-Message-ID: <ee1f00fd-715c-5ecd-bc29-5e5a2de2d0f9@mail.ru>
-Date:   Mon, 7 Oct 2019 19:14:25 +0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1728028AbfJGQIT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 12:08:19 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:40915 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727711AbfJGQIT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 12:08:19 -0400
+Received: by mail-wm1-f66.google.com with SMTP id b24so59916wmj.5
+        for <git@vger.kernel.org>; Mon, 07 Oct 2019 09:08:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=aZwIRgadf4jV2/rIn6Xvu6S60BefXmzaW/IHOwLmfjY=;
+        b=QqI30E3soSNzBbSme88HsvGurjKu5U1OFl1YYWu1fXDCZ1sctXD3rCR4mANcmU0uk2
+         QP5vIAcIuIriTZIXokYmMS4+IHMEzuAlkPADjB06xAtQ4H9+0wz0AQznc+ITFWzsGesS
+         cLfcIPZ570fx9wtkrMWfY3GUveMI+76o16s0jP/jFsB7exljKJAehIJItkuYyhS3YIXA
+         oQU2T9hHrCCv3ynUixYrJRXmx/ctjhjLmXePgjADosV+WM+QynlOuNCnY+ai3JbI2icX
+         FKG6bHvvi6MEssC9v/uq04iJtcRwDMSvzxyJBvxjAIJW5uJbrs4SN6CP1yxmBtPU/dnm
+         a+Ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=aZwIRgadf4jV2/rIn6Xvu6S60BefXmzaW/IHOwLmfjY=;
+        b=YERIHTYH7egDaGCwaJCaR2MHVWbofshGKDPtk1Pq3gZq/xGtA1ChpXkTpgX0CZIdMb
+         LL7qjtF3alBz5ey3eV6DJSPHjroAy5+HpuYKVUP13ADvfITxoCV+xvZU91tP1MX63cAw
+         WtP0Fnyttz45ygpyXNfk59sRAancFdqzuRSouMfmrRaXXKUpo54zZkoZF+tMpHQx4HEJ
+         gt+eFcJJrv6DXJTcdTEObxQFhycKS8cO3+ZMiIsiZAed/C4Gk7eRQg535ARr86ePsr4u
+         xhX9JbrC3Ni7MHS+s4MMsF3nairIHo/5bJ7VWKlTAxR6ej0rT3sZZYiljsDBVSVarSZ0
+         ioLA==
+X-Gm-Message-State: APjAAAW/jnj8uFTYVDmYm1O1IA4p3DwgFRQLNYPIkI7+zSyI5E9CeNJH
+        s9x0Kb4ixfdO8Xw9ubjKz38=
+X-Google-Smtp-Source: APXvYqyf3w2N4QEmJNQgBr1yfHRXY2Egst05c5fj50BiKo87EzttAOBCUKAwwmS+t2OZcMjjvuSheg==
+X-Received: by 2002:a05:600c:2293:: with SMTP id 19mr70401wmf.26.1570464497566;
+        Mon, 07 Oct 2019 09:08:17 -0700 (PDT)
+Received: from localhost ([95.149.189.152])
+        by smtp.gmail.com with ESMTPSA id r7sm2325883wrt.28.2019.10.07.09.08.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 07 Oct 2019 09:08:16 -0700 (PDT)
+Date:   Mon, 7 Oct 2019 17:08:16 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v3 00/13] ci: include a Visual Studio build & test in our
+ Azure Pipeline
+Message-ID: <20191007160816.GB74671@cat>
+References: <pull.288.v2.git.gitgitgadget@gmail.com>
+ <pull.288.v3.git.gitgitgadget@gmail.com>
+ <xmqqimp26808.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1910061157320.46@tvgsbejvaqbjf.bet>
+ <xmqq5zl15q1c.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: ru
-Content-Transfer-Encoding: 7bit
-X-77F55803: E14BCC6235C710295A78504BD2AC29415E20F5A9228C2E59CCE5F0A309D2EC0163EAA624C7E4684260F914C4CECC18E4
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7688275994059DE5FEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063723F42433767FAC988638F802B75D45FF5571747095F342E8C7A0BC55FA0FE5FC99A608679120F22AB186C6CFA1B2201C66448121E861B2C4389733CBF5DBD5E913377AFFFEAFD269176DF2183F8FC7C078FCF50C7EAF9C588941B15DA834481FCF19DD082D7633A0E7DDDDC251EA7DABA471835C12D1D977725E5C173C3A84C3CF36E64A7E3F8E58117882F4460429728AD0CFFFB425014E40A5AABA2AD371193AA81AA40904B5D9A18204E546F3947C680B5A81FBA2CF50C0837EA9F3D197644AD6D5ED66289B52E1A3F18E62937ED6A8C29749A63C2581725E5C173C3A84C363953466BDF39C96BA3038C0950A5D36B5C8C57E37DE458B5A02E28F51ECAD4422CA9DD8327EE4930A3850AC1BE2E735EA3737E94E703454E9C3E8102545DED7731C566533BA786A40A5AABA2AD371193C9F3DD0FB1AF5EB82E77451A5C57BD33C9F3DD0FB1AF5EB4E70A05D1297E1BBCB5012B2E24CD356
-X-Mailru-Sender: 263D284DE1FEA85BBEF80A77B8F6DF1D3BCA4A84F0EC5E46588706221090C271A86CF03D785F44ABDC4C2A81C984B8A5C77752E0C033A69E90207DEE2626FE2D9458A22DE3EF5D793453F38A29522196
-X-Mras: OK
-X-77F55803: E8DB3678F13EF3E07F9F52485CB584D7271FD7DF62800FDC73818A4EEB09CBD983CF84EFE91FC7887E7312D506075115933C3CEBF93D5409
-X-7FA49CB5: 0D63561A33F958A5A524B2233ACECE8212FEE4E428DF07CDC10E6C06D833113A8941B15DA834481FA18204E546F3947CB861051D4BA689FCF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B3A703B70628EAD7BA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C22491819D55BF2DA05E976E601842F6C81A12EF20D2F80756B5F5C318D1F9ECD513A76E601842F6C81A127C277FBC8AE2E8B86F44BBDAD779E023AA81AA40904B5D99449624AB7ADAF37F910319684D6E05D462275124DF8B9C9DE2850DD75B2526BE5BFE6E7EFDEDCD789D4C264860C145E
-X-Mailru-Sender: A5480F10D64C9005EA165EA48716E3801E78F7D5C8ED0AA883CF84EFE91FC788A119395EB3F4142A747DBA6A7B69AB523DDE9B364B0DF2894997D260BF952801D63E4CEE33A69112AE208404248635DF
-X-Mras: OK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5zl15q1c.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi there.
+On 10/07, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > 	Date:   Fri, 04 Oct 2019 08:09:25 -0700 (PDT)
+> > 	[...]
+> > 	X-Google-Original-Date: Fri, 04 Oct 2019 15:09:10 GMT
+> > 	[...]
+> >
+> > I am fairly certain that the latter is the actual `Date:` line sent to
+> > GMail, and GMail just decides that it will not respect it.
+> 
+> If the submitting program said "Fri, 04 Oct 2019 15:09:10 +0000
+> (GMT)" instead of "Fri, 04 Oct 2019 15:09:10 GMT", that would match
+> the format the MTA produced itself, I guess.  I am kind-of surprised
+> if the problem is the use of the obs-zone format (RFC 2822 page 31),
+> but anything is possible with GMail X-<.
 
-I have a question about log command.
-Probably I'm just missing something but anyway.
-I can illustrate the question on the repository of Git.
-Let's look at revision 1ed91937
-It is a merge based on pair of revisions a9572072 and 294c695d.
-According to blame these parent revisions have different content for
-delta.h file.
-But when I get log with -m flag for merge revision, I can't see that
-file in the list of changed files.
-Why?
+Yeah, the obs-zone format did seem to be the problem.  I just dug up
+the previous thread we had about this, where I confirmed that +0000 as
+the timezone worked just fine in my setup through GMail [*1*].  Note
+sure if the (GMT) would cause any problems, but I'd agree with
+avoiding it as you mention below to make sure GMail doesn't do
+anything funny with it.
+
+*1*: https://public-inbox.org/git/20190318214842.GA32487@hank.intra.tgummerer.com/
+
+> How does send-email write that date header?  Matching that would be
+> probably the most appropriate, if possible, given that GGG was
+> written for send-email refugees, I guess ;-)
+> 
+> Here is what its format_2822_time sub does, so +0000 without any
+> textual zone name, it is.
+> 
+> 	return sprintf("%s, %2d %s %d %02d:%02d:%02d %s%02d%02d",
+> 		       qw(Sun Mon Tue Wed Thu Fri Sat)[$localtm[6]],
+> 		       $localtm[3],
+> 		       qw(Jan Feb Mar Apr May Jun
+> 			  Jul Aug Sep Oct Nov Dec)[$localtm[4]],
+> 		       $localtm[5]+1900,
+> 		       $localtm[2],
+> 		       $localtm[1],
+> 		       $localtm[0],
+> 		       ($offset >= 0) ? '+' : '-',
+> 		       abs($offhour),
+> 		       $offmin,
+> 		       );
+> 
+> 
