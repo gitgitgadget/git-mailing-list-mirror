@@ -2,123 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,T_HK_NAME_FM_MR_MRS
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E31371F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 09:27:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16C741F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 09:52:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727448AbfJGJ1I (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 05:27:08 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:34061 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727412AbfJGJ1H (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 05:27:07 -0400
-Received: by mail-wm1-f67.google.com with SMTP id y135so14370098wmc.1
-        for <git@vger.kernel.org>; Mon, 07 Oct 2019 02:27:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=EapRB+cqHBsLUnlxapZpRQYyYFhUhGVFRRksoa5qV9w=;
-        b=mAcfCpPI/wv6R8BLbYTcuqyGWFVyWJWOIgsv+zZot6XZ3irVGnHuj0KRtSpQ6IqiLC
-         Zn/TYC3qXRwpBX8Z4qOLdbwi7psV1ikJeUC48TNe5MoaYaHABnwV575Ek0BSQHzz5ght
-         FAsLri6fXTS5fHbJMzfNdMEtsUEJSg2u5s/kGvA316MMqc18hk7I3Dvoh3EY8UjMF81O
-         9cEn9QQLpBBhmzSQzqInSX1/xg9YC+l483zhTAg3BlMHuT8J1H8cU83suGdiJaYw6SRI
-         lfgmrGjNVBJx+MiCrO8SQAeFnZGDS7UBzRkp1BsSWYEY4QX9vkY2SH9X+hKte81G3C1q
-         222Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EapRB+cqHBsLUnlxapZpRQYyYFhUhGVFRRksoa5qV9w=;
-        b=fqR82l8NeFoONRXGOI4eQgEOrPBzFpXKY7Qw2B0FyY48QNeJ+NMOsYkFox1nGMWn0B
-         pUnkWTlXQ3k4KZAVPwUIs+06Qw9qSjTUgJmaBWwUNKuwWXVFRqWHM2WkDS1AX/EKe7RJ
-         ws8sFeBVnGgO0aSvO28n3mcZASa0O01FLddhW55V8dpQasnBOxPd+4x0y1ns1LSdz5rw
-         duiZjjOknuTeFV4nZ9de2rWuQ4H1Ual125qtCFt02TacIYLeONNTkuJPvozrDieaw5Bg
-         NiOH2K1g6mV5W7PPEsGfN8I2Z1WoI0V6OaiWjTcCvhGeVmwEhQBbQpW+tZsBxso/8+wp
-         8XRg==
-X-Gm-Message-State: APjAAAXzImNXO826IvY0Vs7ExeOCnuwvNnLteUyxwBXlqnm+8G8MQ96A
-        SJTZu2xaHqYcyQrbm18W925QC6WL
-X-Google-Smtp-Source: APXvYqw2g+3X2O3/1jRjFlTbk7WPjoLVAao4xK35WOgD831vYj8tU2HkOmBazRISgOg0VMA8bzQV4w==
-X-Received: by 2002:a7b:cbd0:: with SMTP id n16mr18724458wmi.82.1570440425646;
-        Mon, 07 Oct 2019 02:27:05 -0700 (PDT)
-Received: from localhost.localdomain (atoulouse-658-1-47-220.w86-221.abo.wanadoo.fr. [86.221.54.220])
-        by smtp.googlemail.com with ESMTPSA id w125sm25250914wmg.32.2019.10.07.02.27.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Oct 2019 02:27:05 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
+        id S1727347AbfJGJwl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 05:52:41 -0400
+Received: from ny-spamexperts1.aspirationcloud.com ([104.145.231.163]:59648
+        "EHLO ny-spamexperts1.aspirationcloud.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726010AbfJGJwk (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 7 Oct 2019 05:52:40 -0400
+X-Greylist: delayed 2111 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Oct 2019 05:52:40 EDT
+Received: from uk-cwh01.aspirationcloud.com ([85.159.91.180])
+        by ny-spamexperts1.aspirationcloud.com with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <bullnets@uk-cwh01.aspirationcloud.com>)
+        id 1iHPgx-0006NY-41
+        for git@vger.kernel.org; Mon, 07 Oct 2019 05:52:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=uk-cwh01.aspirationcloud.com; s=default; h=Content-Type:
+        Content-Transfer-Encoding:MIME-Version:Message-ID:Subject:From:To:Date:Sender
+        :Reply-To:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:
+        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+        List-Archive; bh=HM6lOjvNDp6F5OjuqNLnctOuMbae0PdSoOBzMvbkSw8=; b=SFgHt9dhPrkT
+        2YdusvBRFUruP8fkcyQ7rSwWRiE1mM06PTd8Kh+wHCkhNOnua+d6e7J6xhwxbzNimNCn9IUZsXRPv
+        B8GI+uNg5K/ffhqDP32KMe9PLaJX249P28pOi77qDopwLKbCsj5kmWJdh+ichoLg5kW3Uzbb6u4+R
+        GWvuYEoEAKS0auJ20ecVipzIx3Guyge6AL1BG+ZR31qe8zz72YKkeIpq0HqQZdMKXGJrFpOYfKfAr
+        j60IUQnl6dlflfkeXIOaYbB85j0gd5p57+fqBTQ0+YF7lcKt2nOgAPInT9NL+JVcV7Rm2LwPbqxac
+        djDVGwlA68I+y6dFAu2Oxg==;
+Received: from bullnets by uk-cwh01.aspirationcloud.com with local (Exim 4.92)
+        (envelope-from <bullnets@uk-cwh01.aspirationcloud.com>)
+        id 1iHPgv-007DCr-Tp
+        for git@vger.kernel.org; Mon, 07 Oct 2019 10:52:33 +0100
+Date:   Mon, 7 Oct 2019 09:52:33 +0000
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v2 5/5] sequencer: directly call pick_commits() from complete_action()
-Date:   Mon,  7 Oct 2019 11:26:41 +0200
-Message-Id: <20191007092641.12661-6-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20191007092641.12661-1-alban.gruin@gmail.com>
-References: <20190925201315.19722-1-alban.gruin@gmail.com>
- <20191007092641.12661-1-alban.gruin@gmail.com>
+From:   =?UTF-8?Q?Mr_Peter_Hector?= <peterhector99@outlook.com>
+Subject: =?UTF-8?Q?Intermex_Investment_Services_Loan_Special_Offer_=40=35=25?=
+Message-ID: <71329683d3dd770fe3e567798de7001c@www.bullnetsystems.com>
+X-Priority: 3
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+X-Originating-IP: 85.159.91.180
+X-SpamExperts-Domain: out.aspirationhosting.com
+X-SpamExperts-Username: 85.159.91.180
+Authentication-Results: aspirationcloud.com; auth=pass smtp.auth=85.159.91.180@out.aspirationhosting.com
+X-SpamExperts-Outgoing-Class: unsure
+X-SpamExperts-Outgoing-Evidence: Combined (0.78)
+X-Recommended-Action: accept
+X-Filter-ID: Mvzo4OR0dZXEDF/gcnlw0ezqdolHG91LK5q2HN6uCHCpSDasLI4SayDByyq9LIhV6P0eY+w2ZUZ9
+ 5eKHYEY9rUTNWdUk1Ol2OGx3IfrIJKywOmJyM1qr8uRnWBrbSAGD/pkzQlBV2bVP1uyFc0/uwU7K
+ tnbp43ibBfPYwDSMY4DjRY1L14oZsznM/w3CjcCOeJpLxjaPHE1A/OyZ+V+dxC9s3DgKO4QdUxeG
+ AAnmp0CDwIE7VKe+bqpcdCns72R1S51fVPe7FTjtADol1WHJLXqkKpebT7dKz7nSYOuZHaNlOlID
+ qiifbDMIVaDgRkgCG6F7cT/ThdBHzbOU6jatmPmALFyxIsP+3Hanvdc0V5AkVoqGRIPLhwAjl7/U
+ /9yssWSUiBVT5FVQCz0Sq5R5TPsg89Zx3yXrQs+gcnxdFyeOFp81yp6bTOfAmIzfMNbnq9bzv9yz
+ M7YIS41tNG20YD+ZLzF4zBDb0bNcgUTHNCd0JmbqROuof5+bHLNCgb4217NirEYyqwqMBGrw8ELi
+ qFsgcTHSOjmEscJ7I7NdMw4kfyIE14cWL4iz9gtVHV2O+hNx1GzMO98UWrvVNHa81LXTnONsqyI+
+ +u9UMf5U2lFyXMWcv2ZlvSNZcmGO3E8wIzvpj9IzyBpc10ZJwnPg5RGKlx5/kU3b3QVH3diaEiFB
+ jTplqL++DQRSUmBv2InUn3SciNtNHc+OotTOShRPggeYUOp7A73HI6oJg7w/Vodcf23Zo94oSLqq
+ XgowxhSegM5yDzctcfgaSyAJ9MhDntZcYflIMbaTJGx1xg/L1K0q1xJdBsTVMFmicy4M8PGzMaXY
+ 8sFPAzK6GLn6MPzLQmre/hsBBxzR0ZxLcHZ9dOgiTSxaNGhvgWh5UTwYvyMUyzX9JBFrXPMmrZQ6
+ 7oM34/7lwIYFFoxOD4mvi7qoIXdqwP2uMV6o5wwqIuulU2X6fqb5R4VemuUI6bcEARsm0NIaVlRw
+ Cf06neNfy6+GtOMSQmwgS5Y5MrI1TJeeCiMZZjMv6PN41V03H2/ZNJy1m4u5BoKG9pD4hQyZUgBX
+ SbqU/ZXshGn0eErkD/5QvshZyMHrkqKE+rUj1Ncec6VKSDAUqsBdJbXPYVwdK7OMLpppv453uH4u
+ eNaPHlDlRUq6lqd9yir0ixHqX85lv1UwQw==
+X-Report-Abuse-To: spam@ca-spamexperts1.aspirationcloud.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, complete_action() calls sequencer_continue() to do the
-rebase.  Before the former calls pick_commits(), it
+Good news for you today
 
- - calls read_and_refresh_cache() -- this is unnecessary here as we've
-   just called require_clean_work_tree()
- - calls read_populate_opts() -- this is unnecessary as we're starting a
-   new rebase, so opts is fully populated
- - loads the todo list -- this is unnecessary as we've just populated
-   the todo list
- - commits any staged changes -- this is unnecessary as we're starting a
-   new rebase, so there are no staged changes
- - calls record_in_rewritten() -- this is unnecessary as we're starting
-   a new rebase.
+Getting a legitimate loan has always been a big problem for clients. The is=
+sue of credit security is something that customers are increasingly worried=
+ about, as well as looking for a loan from a legitimate lender. Intermex In=
+vestment Group offers you an interest rate on Personal/Business loan specia=
+l offer at 5%. Minimum amount we can provide in the form of a loan is from =
+5,000 Pounds and the maximum amount is 5,000,000 Pounds. If you are interes=
+ted in receiving financial assistance without fear, without worries and com=
+plete security;
 
-This changes complete_action() to directly call pick_commits() to avoid
-these unnecessary steps.
+Contact me today on this email: peterhector99@outlook.com
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
-Reworded commit.
+Management
 
-sequencer.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index ec7ea8d9e5..b395dd6e11 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5140,15 +5140,17 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
- 		return error_errno(_("could not write '%s'"), todo_file);
- 	}
- 
--	todo_list_release(&new_todo);
--
- 	if (checkout_onto(r, opts, onto_name, &oid, orig_head))
- 		return -1;
- 
- 	if (require_clean_work_tree(r, "rebase", "", 1, 1))
- 		return -1;
- 
--	return sequencer_continue(r, opts);
-+	todo_list_write_total_nr(&new_todo);
-+	res = pick_commits(r, &new_todo, opts);
-+	todo_list_release(&new_todo);
-+
-+	return res;
- }
- 
- struct subject2item_entry {
--- 
-2.23.0
-
+Mr Peter Hector
