@@ -2,94 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,T_HK_NAME_FM_MR_MRS
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C70441F4BE
-	for <e@80x24.org>; Mon,  7 Oct 2019 09:56:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 427521F4BE
+	for <e@80x24.org>; Mon,  7 Oct 2019 10:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727272AbfJGJ4F (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 05:56:05 -0400
-Received: from ny-spamexperts1.aspirationcloud.com ([104.145.231.163]:34452
-        "EHLO ny-spamexperts1.aspirationcloud.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726010AbfJGJ4F (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 7 Oct 2019 05:56:05 -0400
-Received: from uk-cwh01.aspirationcloud.com ([85.159.91.180])
-        by ny-spamexperts1.aspirationcloud.com with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <bullnets@uk-cwh01.aspirationcloud.com>)
-        id 1iHP8u-000AOh-Ro
-        for git@vger.kernel.org; Mon, 07 Oct 2019 05:17:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=uk-cwh01.aspirationcloud.com; s=default; h=Content-Type:
-        Content-Transfer-Encoding:MIME-Version:Message-ID:Subject:From:To:Date:Sender
-        :Reply-To:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:
-        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-        List-Archive; bh=HM6lOjvNDp6F5OjuqNLnctOuMbae0PdSoOBzMvbkSw8=; b=nIW1URXyO2Lq
-        wo3o1ru7slXdrwLy/2kjV8rAvYtcAffigF5k5BEnpXd0YST4L3hTtX7doMvJ4mdLT/Wzi9p++iLKF
-        9OuP4hEBRgisPUcGPQcPq2eXoizMbAG3548NTX1noGX3lj9ig/B5lpNEohYtdl7MrLET1FqdNR7df
-        jhsPcCIsp/RNwAkNS+BwD9HaeBQQgMpoY1kKIT7daTmF2Q/ufE3ncqwDqWcfeWU1xTL9ai/BxmNwc
-        jzN1lluJl5/MJoCtWQHlH0LffzCApFIRgkR8oasGxTiIhfh5sDve6WfuqKd6+bzI+g4078phXZP5R
-        cIHlZHT3aGZEAsULI5835A==;
-Received: from bullnets by uk-cwh01.aspirationcloud.com with local (Exim 4.92)
-        (envelope-from <bullnets@uk-cwh01.aspirationcloud.com>)
-        id 1iHP8R-005yRT-SE
-        for git@vger.kernel.org; Mon, 07 Oct 2019 10:16:55 +0100
-Date:   Mon, 7 Oct 2019 09:16:55 +0000
-To:     git@vger.kernel.org
-From:   =?UTF-8?Q?Mr_Peter_Hector?= <peterhector99@outlook.com>
-Subject: =?UTF-8?Q?Intermex_Investment_Services_Loan_Special_Offer_=40=35=25?=
-Message-ID: <ebfe682bfb232cbf3dabf6f50b8278c0@www.bullnetsystems.com>
-X-Priority: 3
+        id S1727558AbfJGKCF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 06:02:05 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50917 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726010AbfJGKCF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 06:02:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570442522;
+        bh=KfyA7vSu84dVqaFl1Cf2NczwAngmFTxEDhBB2yYXhvc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=V+S+ntxbG1Gj6zGuOqlBrF+8b8dEZyI9VFYGW8ceOM52cxRqg6xO8FU9JdhLz5LZL
+         34pMQxqL2J62f0ANEV3QcgipPBjpJkh0a2Xbn5YR9Xw2bT3A3o1YVn9LQ3nLKbHUHq
+         iSxoDqwqD5HHxOBu0rqkn1SAmwnH733mRPVjhF+E=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mjj87-1ho9pp2VY3-00lCMw; Mon, 07
+ Oct 2019 12:02:02 +0200
+Date:   Mon, 7 Oct 2019 12:01:47 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Harish Karumuthil <harish2704@gmail.com>
+cc:     Pratyush Yadav <me@yadavpratyush.com>, git@vger.kernel.org,
+        David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] Feature: custom guitool commands can now have custom
+ keyboard shortcuts
+In-Reply-To: <e71835129c0628ff3b9a0653febc3737128fa23c.camel@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910071159530.46@tvgsbejvaqbjf.bet>
+References: <01020153c22ab06b-e195b148-37cc-4f89-92f3-f4bed1915eb9-000000@eu-west-1.amazonses.com>  <20160331164137.GA11150@gmail.com>  <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com>  <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com>
+  <20191003214422.d4nocrxadxt47smg@yadavpratyush.com>  <nycvar.QRO.7.76.6.1910041046000.46@tvgsbejvaqbjf.bet>  <20191004120107.kpskplwhflnsamwu@yadavpratyush.com>  <149a83fd40b71896b134b16c2b499ff472c6234e.camel@gmail.com>  <20191005210127.uinrgazj5ezyqftj@yadavpratyush.com>
+  <nycvar.QRO.7.76.6.1910061054470.46@tvgsbejvaqbjf.bet> <e71835129c0628ff3b9a0653febc3737128fa23c.camel@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:1y1r4laG+ih07B1K3ZgDnL05C1dWEFxOXTauiYagvCqd4+64bGJ
+ 4KeK/svUQR6Vm8SyyBucBgHYZqBTu0rAer7vlj+GScvfCG75LOtXfHOd1XxpFRRyiTKYpcN
+ z67Sanfu+lW3UmsbQ6+KK9gkidygf+hGUdfO8QPt+hKflV+APSar/8U9cqoVrC0IX768H+s
+ ljoTkoMU/0xF72jezxhcw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+qLK3AvBrk8=:EOtBER6+YsthvNu0AmV5Lt
+ 1yC9YfF71Zaw+NXrW5ccXxR01O2xyosOMJ1HYI1VCyzepmSOfcWSELVMigxZv8PloRSs6BM0Y
+ G6oR83K/F9G3FaP/kJ7NKn8ZLLBte2QQ/wWVvifg65g0+NWv/tVpTp4Ts5xrMRl8O/zpoYOsZ
+ MD9wLoUbDhVrlAr5E2jR9kK9Lp3cLEsz5VFLJZMHIgTyYyj0RtUg/6c899O6LGwQlVGHzkCIb
+ sXWcYi4U0gPxthiRzmItfuJKN4/RoR6rJMwYuzETxeSYaVu3AIXILD0+25UvK78xub9Bv632N
+ imWz5iEJppyimdDB8uH87yG/fcrWi4Lh5VrkGpk3rLLwNyToaXW107bsmcQ3pI1u3Sf7bWKQN
+ 2mctzJgbU3KGRq0vB7ntmg+dlBXj3p7/nYKNpRvacagaYvL4xsfUPY1zof9hQW766JNzL06Yg
+ gvYSjSvdazbsVFx3td8Eh8+Gc1JLzuXUOHWEVd9MB+7cSmocF9DLs8z4PJVnfIt7pkss/Wb9D
+ 1mtQYeoF6Tkf+90p7wIQcHHICbJO88bAqW5DrooeFJrvYVtFOE3a4ZqZhtFwG1RPd0HQN3szg
+ nxbe5GFk/E16qLEfKccOuqpYIAK7HZ8IomFnH2h/kKOQFy3oKqe6KIejk8a7MK6D0mUSB8WPs
+ Pmthgsofp+zluG///plNMjBcR51g5jGEttI938wM6d3jUotfDLngpifhP09mIREHEoYwrQgW3
+ IbP1A0Fjy2YGyuxtNHytO/tiidApiOilOlZZ9FbbeCOfbA8KCJQAP+iGwNCZtMlOYUCBdvEns
+ FX9TtLYi4CYlMssqryHTP1W3IBn6lPR+7n/ysFxnKyarKeoaNMKuTSyL/5gIJ3QSOw+CWJ8s1
+ 0qz3yQw/pKB6iGvgbHlnIWxBhEYJdbdm8KaosY42idjeJwMeaLSOPDCr7kz0iRNFq2LtUveiD
+ BE9a7/mvNm97cTp5YXIHe+/NRQWywBM4n7wlqBLLpairM7XsJhcggYtxX7iyLKDmk2uVNExsA
+ WefIwhdc5ELNGu30Aa12uN1FVsVGyi7F/nr5km0QGsYk5d4SOnqnBT3AyDySq/gAqxfQqcijs
+ MJy++eFDZALvyFk9afR9Qf6N2RdnEBLslPnSEqD+H8f/zHC03/iIltYQhdDCyTT6pmFTkyOGR
+ LoPj5dxV3KpEn9HJLBPGf+heTFX3WBkdrR7pWPfXcryZrv181KV+RBtR0NR7GHiLo+cNGqWkp
+ jSGOOKQGh1HGwKTr0nFMmVSJcD3Yqc3JsUl/o2gq7KFrWR21kTx+3bIXx6g4=
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="us-ascii"
-X-Originating-IP: 85.159.91.180
-X-SpamExperts-Domain: out.aspirationhosting.com
-X-SpamExperts-Username: 85.159.91.180
-Authentication-Results: aspirationcloud.com; auth=pass smtp.auth=85.159.91.180@out.aspirationhosting.com
-X-SpamExperts-Outgoing-Class: unsure
-X-SpamExperts-Outgoing-Evidence: Combined (0.78)
-X-Recommended-Action: accept
-X-Filter-ID: Mvzo4OR0dZXEDF/gcnlw0ezqdolHG91LK5q2HN6uCHCpSDasLI4SayDByyq9LIhVFNN1TyUCNnYU
- 9GKyECgdj0TNWdUk1Ol2OGx3IfrIJKywOmJyM1qr8uRnWBrbSAGD/pkzQlBV2bVP1uyFc0/uwU7K
- tnbp43ibBfPYwDSMY4DjRY1L14oZsznM/w3CjcCOeJpLxjaPHE1A/OyZ+V+dxC9s3DgKO4QdUxeG
- AAnmp0CDwIE7VKe+bqpcdCns72R1S51fVPe7FTjtADol1WHJLXqkKpebT7dKz7nSYOuZHaNlOlID
- qiifbDMIVaDgRkgCG6F7cT/ThdBHzbOU6jatmPmALFyxIsP+3Hanvdc0V5AkVoqGRIPLhwAjl7/U
- /9yssWSUiBVT5FVQCz0Sq5R5TPsg89Zx3yXrQs+gcnxdFyeOFp81yp6bTOfAmIzfMNbnq9bzv9yz
- M7YIS41tNG20YD+ZLzF4zBDb0bNcgUTHNCd0JmbqROuof5+bHLNCgb4217NirEYyqwqMBGrw8ELi
- qFsgcTHSOjmEscJ7I7NdMw4kfyIE14cWL4iz9gtVHV2O+hNx1GzMO98UWrvVNHa81LXTnONsqyI+
- +u9UMf5U2lFyXMWcv2ZlvSNZcmGO3E8wIzvpj9IzyBpc10ZJwnPg5RGKlx5/kU3b3QVH3diaEiFB
- jTplqL++DQRSUmBv2InUIakJZ0QI6haEwEVLFd8QmAeYUOp7A73HI6oJg7w/Vodcf23Zo94oSLqq
- XgowxhSegM5yDzctcfgaSyAJ9MhDntZcYflIMbaTJGx1xg/L1K0q1xJdBsTVMFmicy4M8PGzMaXY
- 8sFPAzK6GLn6MPzLQmre/hsBBxzR0ZxLcHZ9dOimWcZKygK3IPDkMH2WoQpC1tBeEqH3n5hlKhn/
- WuSO+/7lwIYFFoxOD4mvi7qoIXdqwP2uMV6o5wwqIuulU2X6fqb5R4VemuUI6bcEARsm0NIaVlRw
- Cf06neNfy6+GtOMSQmwgS5Y5MrI1TJeeCiMZZjMv6PN41V03H2/ZNJy1m4u5BoKG9pD4hQyZUgBX
- SbqU/ZXshGn0eErkD/5QvshZyMHrkqKE+rUj1Ncec6VKSDAUqsBdJbXPYVwdK7OMLpppv453uH4u
- eNaPHlDlRUq6lqd9yir0ixHqX85lv1UwQw==
-X-Report-Abuse-To: spam@ca-spamexperts1.aspirationcloud.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Good news for you today
+Hi Harish,
 
-Getting a legitimate loan has always been a big problem for clients. The is=
-sue of credit security is something that customers are increasingly worried=
- about, as well as looking for a loan from a legitimate lender. Intermex In=
-vestment Group offers you an interest rate on Personal/Business loan specia=
-l offer at 5%. Minimum amount we can provide in the form of a loan is from =
-5,000 Pounds and the maximum amount is 5,000,000 Pounds. If you are interes=
-ted in receiving financial assistance without fear, without worries and com=
-plete security;
+On Mon, 7 Oct 2019, Harish Karumuthil wrote:
 
-Contact me today on this email: peterhector99@outlook.com
+> > However, it might not even need to put in _such_ a lot of work: in my
+> > tests, `Control-,` worked just as well as `Control-comma`. To test thi=
+s
+> > for yourself, use this snippet (that is slightly modified from the
+> > example at the bottom of https://www.tcl.tk/man/tcl/TkCmd/bind.htm so
+> > that it reacts _only_ to Control+comma instead of all keys):
+> >
+> > -- snip --
+> > set keysym "Press any key"
+> > pack [label .l -textvariable keysym -padx 2m -pady 1m]
+> > #bind . <Key> {
+> > bind . <Control-,> {
+> >     set keysym "You pressed %K"
+> > }
+> > -- snap --
+>
+> I tried this, but unfortunatly, it didn't worked for me. My tclsh versio=
+n is
+> "8.6".  The script crashed with following error message
+>
+> ---
+> bad event type or keysym ","
+>     while executing
+> "bind . <Control-,> {
+>     set keysym "You pressed %K"
+> }"
+>     (file "./test.tcl" line 6)
+> ---
 
-Management
+That's too bad! I tested this on Windows, and I imagine it just does not
+work on Linux/macOS...
 
-Mr Peter Hector
+> The complete ( or modified ) script which I used is given below
+>
+> ---
+> package require Tk
+>
+> set keysym "Press any key"
+> pack [label .l -textvariable keysym -padx 2m -pady 1m]
+> #bind . <Key> {
+> bind . <Control-,> {
+>     set keysym "You pressed %K"
+> }
+>
+> ---
+>
+> From the error messages, I understand that, "<Control-,>" will not work
+> instead of "<Control-comma>" .
+>
+> >
+> > So I could imagine that something like this could serve as an initial
+> > draft for a function that you can turn into a "good enough" version:
+> >
+> > -- snip --
+> > proc QKeySequence2keysym {keystroke} {
+> > 	regsub -all {(?i)Ctrl\+} $keystroke "Control-" keystroke
+> > 	regsub -all {(?i)Alt\+} $keystroke "Alt-" keystroke
+> > 	regsub -all {(?i)Shift\+} $keystroke "Shift-" keystroke
+> > 	return $keystroke
+> > }
+> > -- snap --
+> >
+> > That way, you don't have to introduce settings separate from
+> > `git-cola`'s, and you can reuse the short-and-sweet variable name.
+>
+> If my previous observation is correct, then we may have to translate a l=
+ist
+> of key names ( in addition to atl,ctrl & shirt ) to get it working .
+
+I fear you're right. Hopefully we can get away with a relatively short
+list...
+
+Ciao,
+Johannes
