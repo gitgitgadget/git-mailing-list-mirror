@@ -2,112 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6E6B1F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 18:37:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 432E81F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 18:47:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728271AbfJHShn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 14:37:43 -0400
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:42530 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726138AbfJHShn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 14:37:43 -0400
-Received: by mail-pl1-f202.google.com with SMTP id d1so11336434plj.9
-        for <git@vger.kernel.org>; Tue, 08 Oct 2019 11:37:43 -0700 (PDT)
+        id S1729906AbfJHSrq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 14:47:46 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:41108 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726098AbfJHSrp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 14:47:45 -0400
+Received: by mail-qk1-f193.google.com with SMTP id p10so17745805qkg.8
+        for <git@vger.kernel.org>; Tue, 08 Oct 2019 11:47:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=WUXh4hBqoIPXL5AfRT19yRmW4eW7b8gJ3wAfTfgxyJ8=;
-        b=B9hTkiPZHfKLBkdNRnNfZu5e2zYm4P8ZYAMcNXM0V2lPncFt0h7PjjLZ4bmDqVdIMW
-         uA81COaSn2ZxtwT5oNyTs0hPY5R8nkc7dWLzXcz2VuvdkcNjzj48ZdeHkRydefp8GFTG
-         2f8rZ9yH13tXE+ONWBVyG+yklBEPE6c4spXwBLd/flN5AuBZ+tMLNfc4oshm81M3w9Be
-         9MAYjbuCqRnVlwJa25nEeifrQ4BmFomKXjEFu9BMz594wPaRAjrFYTghxsrE1bur7/+4
-         Ki0KmToXmlfQ4t8MtSJTIBUHx2tlnzWttNryPvB/xVja7AI5lhCbH18Xli+4ML2Hz0ER
-         OXyQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TJ/LhTmci3jWKjOCjOF7fqD4rCYbazIWRHRK1r4v6D4=;
+        b=oJiubcbwPqdrtEcHSVud3B7EHazDgK5dRSDdnvL1f2c2wAAYjvbs5jbBHDiNeS2b42
+         ZmIYFPTEhr2radexKhILPDI37sZQSTvjo9sIiZfx5889LzLXT52HXNqu2Q8MC2OhNkAK
+         kTGuny9AvmC7EGO3xpJPHF+quqxWROT2Fa8EIT/XD9DBzv2A1TKp5ISTGO0YTyaVHOL7
+         nMQhsejvoDwTccv0Ler0IZEUaVd9+z0w9eTuozC6TE3D3wb98QjSLxhg9MNANUFlfRca
+         E08Ab/3bcRHR3KxwyzrsPb5zRg8F2+peTd/990puXPFpj+oOfxAyXEglDsvqehT5tA4g
+         v6AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=WUXh4hBqoIPXL5AfRT19yRmW4eW7b8gJ3wAfTfgxyJ8=;
-        b=F/mYkGeYf1QaFe3jlLRYRXvIc8w9nelgE83ioci9lWyVysTXN6+9YwiBlsgQFcttZ/
-         3s3WQjDOMiLKJ5DzY2IxYAtz0M240A0FRZ8zt+WYAJ49enWCiQ2ezQkP/Gre/28F1i53
-         LdJ4c1L+sFEJr5LrthHqFM1f07Oxi/JXmNmta0B+LXk5We6NCPAwi7BVWvja4gVJjtL9
-         sGK42fCKRfYC8gslo7epmvnB+Yiw3kYYJiQrPpjMXMYDJX8oLd08PR2Ae9+b8o5juH0j
-         lBneSTjUCpw6Piw4ULhOSdYviDj6YxiLk/11m09h4vlp7EMWoIwUFV/5m63x3IouSfpZ
-         OkQg==
-X-Gm-Message-State: APjAAAWns+wP87jUbxCBGZ39JiJT7U9XoQSeGM1qjdB0IkrKT8K3nkuu
-        JDFoL0vdJr2ZPv4cpEAsm8Ejftg8Wjf7syexGYL99B45mut6QihqjEuYpw4Wbq8V433+bh4aFhN
-        9ksRNRW4bAE0UlEvmdKFP+a0D9KH1L82Bt+GqcbCjg0I3R/mrEgefVNgPqaOl9eS8ehJxoNNjkY
-        f1
-X-Google-Smtp-Source: APXvYqxV46Uk0ged6zgevCrLzbUJDOgecxfA8mA+uI70MO9+QkAA2ByIJcNd/I+smn37iudzpe8D/5QmSWOwhzLbbbpC
-X-Received: by 2002:a63:d111:: with SMTP id k17mr38689437pgg.355.1570559862339;
- Tue, 08 Oct 2019 11:37:42 -0700 (PDT)
-Date:   Tue,  8 Oct 2019 11:37:39 -0700
-In-Reply-To: <xmqqzhibnahi.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20191008183739.194714-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqzhibnahi.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.23.0.581.g78d2f28ef7-goog
-Subject: [PATCH v2] send-pack: never fetch when checking exclusions
-From:   Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TJ/LhTmci3jWKjOCjOF7fqD4rCYbazIWRHRK1r4v6D4=;
+        b=b+8ClgbdoktePnxUbfG7j0HAEvhFB9yELuJrccjnpQtJ/vINVyT6LECMbeI3CXDB3K
+         BUZem+MlHDIiorLKH32b+D/S1rtqTC9f9u4X9EbV9O90d3y1PHbA61YtrQCyhHdNOSpR
+         ByJF/kRkOpJMS9/RH/Iv1tvemEr5/xsCXfKNjTSjLunV1/3EZBLHWvNLFS8bQRkpgE17
+         1GwK4utyl4z1++/OikBbrPTjwmmuBZ67tyjrbuXUSZW5PIcq6pQqn8H/2QZ1tX6BowSe
+         tbvQQ3aOgUvSjEflEX7/ng8jNW8kIsVrxGAxGKQNq151fzIefFtYUJLOSZIDbefaNU0N
+         Fkhw==
+X-Gm-Message-State: APjAAAVm613yiGAyBaMGpzSE90DBKcqOvhw5N4JmOnAjZZii2chmc+ge
+        VH+4HPowdUbWOU/v7iCp00+5M4NX
+X-Google-Smtp-Source: APXvYqzCQ3L/o59I0wLO6V5gflWGV4rMnbRUkRX0xUknEcqupHRFqL50gaYBmvWXqmhZZh5jYNrIEw==
+X-Received: by 2002:a05:620a:7ca:: with SMTP id 10mr31184463qkb.410.1570560463410;
+        Tue, 08 Oct 2019 11:47:43 -0700 (PDT)
+Received: from wall-e.semfio.usp.br ([143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id s16sm8185118qkg.40.2019.10.08.11.47.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Oct 2019 11:47:42 -0700 (PDT)
+From:   Lucas Oshiro <lucasseikioshiro@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+Cc:     kernel-usp@googlegroups.com, rcdailey.lists@gmail.com,
+        me@ttaylorr.com, peff@peff.net, matheus.bernardino@usp.br
+Subject: [RFC WIP PATCH 0/3] tag: fix --edit and --no-edit flags
+Date:   Tue,  8 Oct 2019 15:47:24 -0300
+Message-Id: <20191008184727.14337-1-lucasseikioshiro@gmail.com>
+X-Mailer: git-send-email 2.23.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When building the packfile to be sent, send_pack() is given a list of
-remote refs to be used as exclusions. For each ref, it first checks if
-the ref exists locally, and if it does, passes it with a "^" prefix to
-pack-objects. However, in a partial clone, the check may trigger a lazy
-fetch.
+This series of patches fixes the flags --edit and --no-edit. Currently,
+--no-edit has no effect.
 
-The additional commit ancestry information obtained during such fetches
-may show that certain objects that would have been sent are already
-known to the server, resulting in a smaller pack being sent. But this is
-at the cost of fetching from many possibly unrelated refs, and the lazy
-fetches do not help at all in the typical case where the client is
-up-to-date with the upstream of the branch being pushed.
+These patches implement the following behaviour:
 
-Ensure that these lazy fetches do not occur.
+- when --edit is provided, the editor will always be opened;
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-> For example, would this change mean that the resulting pack may
-> include stuff that are reachable from the (missing) negative objects
-> that would not otherwise have to be sent if these objects were
-> available (or made available by the lazy fetching), and we are
-> making a trade-off to send possibly more in order for not fetching?
-> Have we laid enough on the table to help readers if such a trade-off
-> (if we are making one, that is) strikes the right balance?
+- when --no-edit is provided, the editor will not be opened (if possible),
+  otherwise an error message will be displayed;
 
-Thanks for your comments. I've expanded the commit message.
----
- send-pack.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+- when neither --edit nor --no-edit are provided, the editor is opened only if
+  a message is not provided and there isn't a previous tag message.
 
-diff --git a/send-pack.c b/send-pack.c
-index 6dc16c3211..34c77cbb1a 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -40,7 +40,8 @@ int option_parse_push_signed(const struct option *opt,
- 
- static void feed_object(const struct object_id *oid, FILE *fh, int negative)
- {
--	if (negative && !has_object_file(oid))
-+	if (negative &&
-+	    !has_object_file_with_flags(oid, OBJECT_INFO_SKIP_FETCH_OBJECT))
- 		return;
- 
- 	if (negative)
+In the future, the fix of these flags and the code factoring done in this
+patchset will be used on the implementation of a new flag --amend, as discussed
+on the mail thread started on
+https://public-inbox.org/git/CAHd499BM6M+=zRE1WFVXr7b+VhJHFeDind5xLqXcwZLv7QeDvw@mail.gmail.com/.
+
+Lucas Oshiro (3):
+  tag: factor out tag reading from write_tag_body()
+  tag: factor out prepare tag template code
+  tag: add full support for --edit and --no-edit
+
+ builtin/tag.c  | 123 ++++++++++++++++++++++++++++++++++---------------
+ t/t7004-tag.sh |   4 +-
+ 2 files changed, 88 insertions(+), 39 deletions(-)
+
 -- 
-2.23.0.581.g78d2f28ef7-goog
+2.23.0
 
