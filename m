@@ -2,275 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDCC41F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 12:17:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 849F81F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 12:21:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730671AbfJHMRm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 08:17:42 -0400
-Received: from relay11.mail.gandi.net ([217.70.178.231]:57365 "EHLO
-        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730317AbfJHMRl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 08:17:41 -0400
-Received: from localhost.localdomain (unknown [1.186.12.44])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 75A02100007;
-        Tue,  8 Oct 2019 12:17:38 +0000 (UTC)
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     <git@vger.kernel.org>
-Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3] git-gui: add a readme
-Date:   Tue,  8 Oct 2019 17:47:35 +0530
-Message-Id: <20191008121735.29531-1-me@yadavpratyush.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20191004221052.23313-1-me@yadavpratyush.com>
-References: <20191004221052.23313-1-me@yadavpratyush.com>
+        id S1730843AbfJHMVu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 08:21:50 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:47051 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730316AbfJHMVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 08:21:50 -0400
+Received: by mail-qk1-f196.google.com with SMTP id 201so16439226qkd.13
+        for <git@vger.kernel.org>; Tue, 08 Oct 2019 05:21:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=efyaUu3J50TdEU/WIet02ET8pMyn5R79XQrRZ2nDCfY=;
+        b=LHPL70vFfPyxBWs3BipBd2zEVV5+YxqRi3Vl2cV8DH0JyTVLEHch/rYKo+Omy/H69U
+         I8qXYkt9yrjoxQ2efRSS9tOlj+3YUkDszq3z/jzucj2Hoyu423hcD/IofWw9zitOXMvc
+         LdYYLDq1Vp+8u0xOxOyZPcDWPETi6BNla3yhTZf3koNjqBIQVO4LfZ4bleneBo2/fN/q
+         TuRVA0LSueUNGiLmNmF/AyuiLh9Cut008JQ6BsCv0V9qE/CBVIwW0S8rHphom8R9absM
+         BuNKmFa86jDAt5dUFqoWjvJ1FJGW7pKpHYyUur28OSUChGIjiSIsnp0WaK9Da8Ld90xi
+         zQhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=efyaUu3J50TdEU/WIet02ET8pMyn5R79XQrRZ2nDCfY=;
+        b=s00XEeub7diD6p04p5dPMeJCx4ZhFaLww5NJ67C2VXOIAGFqKS5ef3x6MFi/7d+OS+
+         7qSUhVLFuO1WVNuD4fHWrSBzu7oQY3bKmpdVis2q/f6ksAZtk2ZuvL2hXEETqT49SNcR
+         2RUCuSq2AZ19QOA9POPHlAVoJE4cIwjxC3bMLCV5nO7/luAUj5ubcH0rUqWx9Vm4czMH
+         1LZOBCJWDLLudj6eU6pRjbPFd4GM1O2hDp1Fz+mPjXweQoCxmUe4Y8GAqK5ktnuMt5pX
+         HQLlt8+ocW7xtYT7luznUUAxkqL+mft9HvFrr0GjD7qSf9UN4rVPKVVhLkYFx6MPKmZk
+         XC2Q==
+X-Gm-Message-State: APjAAAW9OrVGZnIsgfDtC6ij/MnPqoTqx+8lDmX9fN2S2UbzeqUu34LZ
+        /QIABu+GfabbZFN07FhGqJ0=
+X-Google-Smtp-Source: APXvYqxw7DRiEo4EXifAnC4+1J7ZqjZt0kyyQP25jBEhQ2QbKThQgZ606lPeOTMYuQ5s6Wjg9dYNpw==
+X-Received: by 2002:a37:a411:: with SMTP id n17mr6253907qke.216.1570537309478;
+        Tue, 08 Oct 2019 05:21:49 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c988:3ed2:5e14:1c0f? ([2001:4898:a800:1012:7abc:3ed2:5e14:1c0f])
+        by smtp.gmail.com with ESMTPSA id 54sm13059988qts.75.2019.10.08.05.21.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Oct 2019 05:21:49 -0700 (PDT)
+Subject: Re: [PATCH 07/15] t4011: abstract away SHA-1-specific constants
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Stefan Beller <stefanbeller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20191005211209.18237-1-sandals@crustytoothpaste.net>
+ <20191005211209.18237-8-sandals@crustytoothpaste.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4733b8a0-bfd9-a49a-01d2-1c9f2a48cdf8@gmail.com>
+Date:   Tue, 8 Oct 2019 08:21:48 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20191005211209.18237-8-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is a good idea to have a readme so people finding the project can
-know more about it, and know how they can get involved.
+On 10/5/2019 5:12 PM, brian m. carlson wrote:
+> Adjust the test so that it computes variables for object IDs instead of
+> using hard-coded hashes.
 
-Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
----
-Changes in v3:
-- Reword the first paragraph to avoid some repetition. Suggested by
-  Junio.
-- Do not mention "written in Tcl" in the intro. Suggested by Junio.
-- Add a list of dependencies.
+[snip]
 
-Range-diff against v2:
-1:  3c8baed ! 1:  b82d3ba git-gui: add a readme
-    @@ -14,12 +14,12 @@
-     @@
-     +# Git GUI - A graphical user interface for Git
-     +
-    -+Git GUI is a GUI for [Git](https://git-scm.com/) written in Tcl/Tk. It allows
-    -+you to use the Git source control management tools via a GUI. This includes
-    -+staging, commiting, adding, pushing, etc. It can also be used as a blame
-    -+viewer, a tree browser, and a citool (make exactly one commit before exiting
-    -+and returning to shell). More details about git-gui can be found in its manual
-    -+page by either running `man git-gui`, or by visiting the [online manual
-    ++Git GUI allows you to use the [Git source control management
-    ++tools](https://git-scm.com/) via a GUI. This includes staging, commiting,
-    ++adding, pushing, etc. It can also be used as a blame viewer, a tree browser,
-    ++and a citool (make exactly one commit before exiting and returning to shell).
-    ++More details about Git GUI can be found in its manual page by either running
-    ++`man git-gui`, or by visiting the [online manual
-     +page](https://git-scm.com/docs/git-gui).
-     +
-     +Git GUI was initially written by Shawn O. Pearce, and is distributed with the
-    @@ -27,6 +27,15 @@
-     +
-     +# Building and installing
-     +
-    ++You need to have the following dependencies installed before you begin:
-    ++
-    ++- Git
-    ++- Tcl
-    ++- Tk
-    ++- wish
-    ++- Gitk (needed for browsing history)
-    ++- msgfmt
-    ++
-     +Most of Git GUI is written in Tcl, so there is no compilation involved. Still,
-     +some things do need to be done (mostly some substitutions), so you do need to
-     +"build" it.
+> @@ -137,14 +141,17 @@ test_expect_success SYMLINKS 'setup symlinks with attributes' '
+>  '
+>  
+>  test_expect_success SYMLINKS 'symlinks do not respect userdiff config by path' '
+> -	cat >expect <<-\EOF &&
+> +	file=$(git rev-parse --short $(git hash-object file.bin)) &&
+> +	link=$(git rev-parse --short \
+> +		$(printf file.bin | git hash-object --stdin)) &&
 
- README.md | 174 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 174 insertions(+)
- create mode 100644 README.md
+Why this change from $(git hash-object file.bin) to
+$(printf file.bin | git hash-object --stdin)?
 
-diff --git a/README.md b/README.md
-new file mode 100644
-index 0000000..3ee3829
---- /dev/null
-+++ b/README.md
-@@ -0,0 +1,174 @@
-+# Git GUI - A graphical user interface for Git
-+
-+Git GUI allows you to use the [Git source control management
-+tools](https://git-scm.com/) via a GUI. This includes staging, commiting,
-+adding, pushing, etc. It can also be used as a blame viewer, a tree browser,
-+and a citool (make exactly one commit before exiting and returning to shell).
-+More details about Git GUI can be found in its manual page by either running
-+`man git-gui`, or by visiting the [online manual
-+page](https://git-scm.com/docs/git-gui).
-+
-+Git GUI was initially written by Shawn O. Pearce, and is distributed with the
-+standard Git installation.
-+
-+# Building and installing
-+
-+You need to have the following dependencies installed before you begin:
-+
-+- Git
-+- Tcl
-+- Tk
-+- wish
-+- Gitk (needed for browsing history)
-+- msgfmt
-+
-+Most of Git GUI is written in Tcl, so there is no compilation involved. Still,
-+some things do need to be done (mostly some substitutions), so you do need to
-+"build" it.
-+
-+You can build Git GUI using:
-+
-+```
-+make
-+```
-+
-+And then install it using:
-+
-+```
-+make install
-+```
-+
-+You probably need to have root/admin permissions to install.
-+
-+# Contributing
-+
-+The project is currently maintained by Pratyush Yadav over at
-+https://github.com/prati0100/git-gui. Even though the project is hosted at
-+GitHub, the development does not happen over GitHub Issues and Pull Requests.
-+Instead, an email based workflow is used. The Git mailing list
-+[git@vger.kernel.org](mailto:git@vger.kernel.org) is where the patches are
-+discussed and reviewed.
-+
-+More information about the Git mailing list and instructions to subscribe can
-+be found [here](https://git.wiki.kernel.org/index.php/GitCommunity).
-+
-+## Sending your changes
-+
-+Since the development happens over email, you need to send in your commits in
-+text format. Commits can be converted to emails via the two tools provided by
-+Git: `git-send-email` and `git-format-patch`.
-+
-+You can use `git-format-patch` to generate patches in mbox format from your
-+commits that can then be sent via email. Let's say you are working on a branch
-+called 'foo' that was created on top of 'master'. You can run:
-+
-+```
-+git format-patch -o output_dir master..foo
-+```
-+
-+to convert all the extra commits in 'foo' into a set of patches saved in the
-+folder `output_dir`.
-+
-+If you are sending multiple patches, it is recommended to include a cover
-+letter. A cover letter is an email explaining in brief what the series is
-+supposed to do. A cover letter template can be generated by passing
-+`--cover-letter` to `git-format-patch`.
-+
-+After you send your patches, you might get a review suggesting some changes.
-+Make those changes, and re-send your patch(es) in reply to the first patch of
-+your initial version. Also please mention the version of the patch. This can be
-+done by passing `-v X` to `git-format-patch`, where 'X' is the version number
-+of the patch(es).
-+
-+### Using git-send-email
-+
-+You can use `git-send-email` to send patches generated via `git-format-patch`.
-+While you can directly send patches via `git-send-email`, it is recommended
-+that you first use `git-format-patch` to generate the emails, audit them, and
-+then send them via `git-send-email`.
-+
-+A pretty good guide to configuring and using `git-send-email` can be found
-+[here](https://www.freedesktop.org/wiki/Software/PulseAudio/HowToUseGitSendEmail/)
-+
-+### Using your email client
-+
-+If your email client supports sending mbox format emails, you can use
-+`git-format-patch` to get an mbox file for each commit, and then send them. If
-+there is more than one patch in the series, then all patches after the first
-+patch (or the cover letter) need to be sent as replies to the first.
-+`git-send-email` does this by default.
-+
-+### Using GitGitGadget
-+
-+Since some people prefer a GitHub pull request based workflow, they can use
-+[GitGitGadget](https://gitgitgadget.github.io/) to send in patches. The tool
-+was originally written for sending patches to the Git project, but it now also
-+supports sending patches for git-gui.
-+
-+Instructions for using GitGitGadget to send git-gui patches, courtesy of
-+Johannes Schindelin:
-+
-+If you don't already have a fork of the [git/git](https://github.com/git/git)
-+repo, you need to make one. Then clone your fork:
-+
-+```
-+git clone https://github.com/<your-username>/git
-+```
-+
-+Then add GitGitGadget as a remote:
-+
-+```
-+git remote add gitgitgadget https://github.com/gitgitgadget/git
-+```
-+
-+Then fetch the git-gui branch:
-+
-+```
-+git fetch gitgitgadget git-gui/master
-+```
-+
-+Then create a new branch based on git-gui/master:
-+
-+```
-+git checkout -b <your-branch-name> git-gui/master
-+```
-+
-+Make whatever commits you need to, push them to your fork, and then head over
-+to https://github.com/gitgitgadget/git/pulls and open a Pull Request targeting
-+git-gui/master.
-+
-+GitGitGadget will welcome you with a (hopefully) helpful message.
-+
-+## Signing off
-+
-+You need to sign off your commits before sending them to the list. You can do
-+that by passing the `-s` option to `git-commit`. You can also use the "Sign
-+Off" option in Git GUI.
-+
-+A sign-off is a simple 'Signed-off-by: A U Thor \<author@example.com\>' line at
-+the end of the commit message, after your explanation of the commit.
-+
-+A sign-off means that you are legally allowed to send the code, and it serves
-+as a certificate of origin. More information can be found at
-+[developercertificate.org](https://developercertificate.org/).
-+
-+## Responding to review comments
-+
-+It is quite likely your patches will get review comments. Those comments are
-+sent on the Git mailing list as replies to your patch, and you will usually be
-+Cc'ed in those replies.
-+
-+You are expected to respond by either explaining your code further to convince
-+the reviewer what you are doing is correct, or acknowledge the comments and
-+re-send the patches with those comments addressed.
-+
-+Some tips for those not familiar with communication on a mailing list:
-+
-+- Use only plain text emails. No HTML at all.
-+- Wrap lines at around 75 characters.
-+- Do not send attachments. If you do need to send some files, consider using a
-+  hosting service, and paste the link in your email.
-+- Do not [top post](http://www.idallen.com/topposting.html).
-+- Always "reply all". Keep all correspondents and the list in Cc. If you reply
-+  directly to a reviewer, and not Cc the list, other people would not be able
-+  to chime in.
---
-2.21.0
+For that matter, why are you using the "printf|git hash-object"
+pattern throughout your change? Seems like an unnecessary hurdle
+to me.
 
+-Stolee
