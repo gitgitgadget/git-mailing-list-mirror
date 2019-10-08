@@ -8,55 +8,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7175E1F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 11:33:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DDEF1F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 11:33:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730511AbfJHLd3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 07:33:29 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:51500 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730332AbfJHLd3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 07:33:29 -0400
-Received: by mail-wm1-f66.google.com with SMTP id 7so2768101wme.1
+        id S1730632AbfJHLdb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 07:33:31 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51503 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730375AbfJHLda (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 07:33:30 -0400
+Received: by mail-wm1-f68.google.com with SMTP id 7so2768141wme.1
         for <git@vger.kernel.org>; Tue, 08 Oct 2019 04:33:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NmfyIKJRm/VRZGG5bmBEBD+kyHeXAQrLk4sVTiCB7jE=;
-        b=obB8EQTo4SDh607k3vLNrK+SCKAN5ocw6Ox1ZTHmOEWkTKuSLd5Eppy16FfSFhKtWg
-         VzyqdqMgp+8N8h9oOWZ4KjoXPkuQrhzT5Vuk5OH9GoHzjNdEHSYMDwt5FLqE8hhLQnzy
-         oygYzj3jmzcouRkWXICkUaag5B/TWiDvRq8rr/k/sWMLAkwC20nouYIxDwDRGY5Ijp2i
-         QqLW0j/BzvtHVYsJfm2yllBvZj8jb8tB/Fo19LOZFmPmTMbHNe9LpZsmJ3p+nwbn4RlQ
-         xLntFhpbjs/2XzF9iDbvar6z3AqOwx1QWBukGhloo56BqAI/eocsZhruL9k0hHYeQFOQ
-         SyFA==
+        bh=4uZC+yyYb7wCVfwMaNqNSxlQAsQtUPxvjS9dnJCPrE0=;
+        b=Mmih9384ERJ+vwq2nL/6ZDQQmJW2KPo5TI4g5pdc9dLfWfjuxhRWK4A4Oo1xcs9D5n
+         zoYfFhtCSSvLxFIhgSrX1MxuY1oNflHMRi0WExSDRdU1SBkiYNbrx4qBq6hpY+umiGqa
+         vU2ElDOPNgvA66HNHA59BM0fniUGmHs4wPSXx/e2cJz1xqtm1eitLlbg4EDyd3DvW1Fy
+         VO7rw2qc5rfIOGU9R8+wtnIefVaT2ZVO45BRgY861JufDTKR97OwokG6LZGkgUnrRqiT
+         FutFwpFExkm9AEb5F0sEl0b24ngbJowXUFf/p+ljlK4t4xsBKAGWMHEj5uP4AS7iUl2v
+         dFKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NmfyIKJRm/VRZGG5bmBEBD+kyHeXAQrLk4sVTiCB7jE=;
-        b=V6temFwjcDgzSRJPqQftOpK8/8MdbfNMRkLVnsY0Kzvw2ImoCAmBeF8ld6aN23Id8T
-         zxdLwSOqaN72Ru0m0CXIf2bm34q0WecTMHH6hcDyZn6AevKUUfv8iyl5GakA7OHybydI
-         HJRyJu6c3ZcF3wDZF9/6QOSec9iVMrhJIvhDQdtYI2sorQB4zmNfxIKU4lVJVvawkkIG
-         l8lft7gSIe36cXabKWBWriu0+7wIVjszJD6NetpUc2lXJ2GqK031p/Hg6ug6escpptTs
-         KRi1udLVBSvz84SPsUlImgN5aipEpK2T0ixD7NRdhd4PUf9QLyyBp4SfItL8zP8KUVbA
-         ubeA==
-X-Gm-Message-State: APjAAAXKCrSQM3/LKhZZS1r05SP2YpiWV/R+no6Cq2edolExsopia5oP
-        ou9W0tyoPtehRq8pLpm3XMPo+Pdb
-X-Google-Smtp-Source: APXvYqw7BUsddz/Jy3LagY4GBWSMj3YOf9luovv1AdXGPUeIqQNkGWVd4NkTtD1HepPvlnsZ+yRfRw==
-X-Received: by 2002:a1c:1bd8:: with SMTP id b207mr3338691wmb.62.1570534406277;
-        Tue, 08 Oct 2019 04:33:26 -0700 (PDT)
+        bh=4uZC+yyYb7wCVfwMaNqNSxlQAsQtUPxvjS9dnJCPrE0=;
+        b=sgzCPuaX+hgk64GSJ0tOlOEJgqcATXmoobGXvB/QW8NXIoaq+AoRZX8UpFcDHWqhmm
+         E0iZd8dYQDfdsZaoQZhxTjgO0iA+JcLEtUCqrxQMIiqOq+AtlhYZ/4wcMb8SIfcgv+Lv
+         lmxfvU5t6k/4oQk3v3Mow3Pgbd1l0o5gfbiGOhdoxbHE92OTo0gac2NMLgU8hVJ3ypsx
+         lr26DVXtYM6+nx2n5GbqAq529rQ6o3173nFda857F5FIlS7lJ4Y2qFVQg9+k/wsDQzxC
+         PRtIeUVUlmtYQeZQK4R4J6qDkf1Mu6jph8/iK40H3sI7FqQNNhLm1sa8Dr5mHFvVNbIw
+         UqQQ==
+X-Gm-Message-State: APjAAAWgwsaJQtcL9VJbju5l8kougxYcmIr/AF+8SihUOvmFFKx6+F/o
+        YW3rIPaCGQmOxTYGLtyWTP8jlPIp
+X-Google-Smtp-Source: APXvYqwQc7YCjclBFNlDS/LQCJ4EkAvKSLmL4Vf5Tyx6KtMCmbwqEJIDmQkS1Db39Mh8A7KJl0d1lA==
+X-Received: by 2002:a1c:5641:: with SMTP id k62mr3391640wmb.97.1570534407063;
+        Tue, 08 Oct 2019 04:33:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f9sm17369484wre.74.2019.10.08.04.33.25
+        by smtp.gmail.com with ESMTPSA id i11sm21875753wrq.48.2019.10.08.04.33.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Oct 2019 04:33:25 -0700 (PDT)
-Date:   Tue, 08 Oct 2019 04:33:25 -0700 (PDT)
-X-Google-Original-Date: Tue, 08 Oct 2019 11:33:24 GMT
-Message-Id: <pull.361.v4.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.361.v3.git.gitgitgadget@gmail.com>
+        Tue, 08 Oct 2019 04:33:26 -0700 (PDT)
+Date:   Tue, 08 Oct 2019 04:33:26 -0700 (PDT)
+X-Google-Original-Date: Tue, 08 Oct 2019 11:33:25 GMT
+Message-Id: <2f55d6fb2a158c5b26b93ddb9c144ce1af5d9c32.1570534405.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.361.v4.git.gitgitgadget@gmail.com>
 References: <pull.361.v3.git.gitgitgadget@gmail.com>
+        <pull.361.v4.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 0/1] git-gui: respect core.hooksPath, falling back to .git/hooks
+Subject: [PATCH v4 1/1] Make gitdir work with worktrees, respect
+ core.hooksPath, etc
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,121 +67,148 @@ To:     git@vger.kernel.org
 Cc:     Pratyush Yadav <me@yadavpratyush.com>,
         Bert Wesarg <bert.wesarg@googlemail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Pratyush Yadav <me@yadavpratyush.com>
+        Pratyush Yadav <me@yadavpratyush.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is yet another patch from Git for Windows.
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Changes since v3:
+Since v2.9.0, Git knows about the config variable core.hookspath that
+allows overriding the path to the directory containing the Git hooks.
 
- * Adjusted the commit message to reflect that this is no longer only about
-   the hooks directory.
- * Added a code comment to indicate how the list of keys was determined that
-   are used for the gitdir priming.
- * The gitdir cache is now re-primed upon F5.
+Since v2.10.0, the `--git-path` option respects that config variable,
+too, so we may just as well use that command.
 
-Changes since v2:
+Other paths inside `.git` are equally subject to differ from
+`<gitdir>/<path>`, i.e. inside worktrees, where _some_ paths live in the
+"gitdir" and some live in the "commondir" (i.e. the "gitdir" of the main
+worktree).
 
- * The paths returned by git rev-parse --git-path are now cached, and the
-   cache is primed with the most common paths.
+For Git versions older than v2.5.0 (which was the first version to
+support the `--git-path` option for the `rev-parse` command), we simply
+fall back to the previous code.
 
-Changes since v1:
+An original patch handled only the hooksPath setting, however, during
+the code submission it was deemed better to fix all call to the `gitdir`
+function.
 
- * Rather than a fine-grained override of gitdir just for the hooks path, we
-   now spawn git rev-parse --git-path [...] every time gitdir is called with
-   arguments. This makes the code safer, although at the cost of potentially
-   many spawned processes.
+To avoid spawning a gazillion `git rev-parse --git-path` instances, we
+cache the returned paths, priming the cache upon startup in a single
+`git rev-parse invocation` with some paths (that have been
+determined via a typical startup and via grepping the source code for
+calls to the `gitdir` function).
 
-Johannes Schindelin (1):
-  Make gitdir work with worktrees, respect core.hooksPath, etc
+This fixes https://github.com/git-for-windows/git/issues/1755
 
+Initial-patch-by: Philipp Gortan <philipp@gortan.org>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  git-gui.sh | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++----
  1 file changed, 58 insertions(+), 4 deletions(-)
 
-
-base-commit: 60c60b627e81bf84e1cb01729d2ae882178f079d
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-361%2Fdscho%2Fgit-gui-hooks-path-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-361/dscho/git-gui-hooks-path-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/361
-
-Range-diff vs v3:
-
- 1:  65c2fa33e1 ! 1:  2f55d6fb2a Fix gitdir e.g. to respect core.hooksPath
-     @@ -1,17 +1,21 @@
-      Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-      
-     -    Fix gitdir e.g. to respect core.hooksPath
-     +    Make gitdir work with worktrees, respect core.hooksPath, etc
-      
-     -    Since v2.9.0, Git knows about the config variable core.hookspath
-     -    that allows overriding the path to the directory containing the
-     -    Git hooks.
-     +    Since v2.9.0, Git knows about the config variable core.hookspath that
-     +    allows overriding the path to the directory containing the Git hooks.
-      
-     -    Since v2.10.0, the `--git-path` option respects that config
-     -    variable, too, so we may just as well use that command.
-     +    Since v2.10.0, the `--git-path` option respects that config variable,
-     +    too, so we may just as well use that command.
-     +
-     +    Other paths inside `.git` are equally subject to differ from
-     +    `<gitdir>/<path>`, i.e. inside worktrees, where _some_ paths live in the
-     +    "gitdir" and some live in the "commondir" (i.e. the "gitdir" of the main
-     +    worktree).
-      
-          For Git versions older than v2.5.0 (which was the first version to
-     -    support the `--git-path` option for the `rev-parse` command), we
-     -    simply fall back to the previous code.
-     +    support the `--git-path` option for the `rev-parse` command), we simply
-     +    fall back to the previous code.
-      
-          An original patch handled only the hooksPath setting, however, during
-          the code submission it was deemed better to fix all call to the `gitdir`
-     @@ -19,7 +23,9 @@
-      
-          To avoid spawning a gazillion `git rev-parse --git-path` instances, we
-          cache the returned paths, priming the cache upon startup in a single
-     -    `git rev-parse invocation` with the known entries.
-     +    `git rev-parse invocation` with some paths (that have been
-     +    determined via a typical startup and via grepping the source code for
-     +    calls to the `gitdir` function).
-      
-          This fixes https://github.com/git-for-windows/git/issues/1755
-      
-     @@ -48,6 +54,8 @@
-      +
-      +	# `--git-path` is only supported since Git v2.5.0
-      +	if {[package vcompare $::_git_version 2.5.0] >= 0} {
-     ++		# This list was generated from a typical startup as well as from
-     ++		# grepping through Git GUI's source code.
-      +		set gitdir_keys [list \
-      +			CHERRY_PICK_HEAD FETCH_HEAD GITGUI_BCK GITGUI_EDITMSG \
-      +			GITGUI_MSG HEAD hooks hooks/prepare-commit-msg \
-     @@ -106,3 +114,21 @@
-       		set _prefix [git rev-parse --show-prefix]
-       	} err]} {
-       	load_config 1
-     +@@
-     + 	global HEAD PARENT MERGE_HEAD commit_type
-     + 	global ui_index ui_workdir ui_comm
-     + 	global rescan_active file_states
-     +-	global repo_config
-     ++	global repo_config _gitdir_cache
-     + 
-     + 	if {$rescan_active > 0 || ![lock_index read]} return
-     + 
-     ++	# Only re-prime gitdir cache on a full rescan
-     ++	if {$after ne "ui_ready"} {
-     ++		array unset _gitdir_cache
-     ++		prime_gitdir_cache
-     ++	}
-     ++
-     + 	repository_state newType newHEAD newMERGE_HEAD
-     + 	if {[string match amend* $commit_type]
-     + 		&& $newType eq {normal}
-
+diff --git a/git-gui.sh b/git-gui.sh
+index fd476b6999..c684dc7ae1 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -158,6 +158,7 @@ if {[tk windowingsystem] eq "aqua"} {
+ 
+ set _appname {Git Gui}
+ set _gitdir {}
++array set _gitdir_cache {}
+ set _gitworktree {}
+ set _isbare {}
+ set _gitexec {}
+@@ -197,12 +198,59 @@ proc appname {} {
+ 	return $_appname
+ }
+ 
++proc prime_gitdir_cache {} {
++	global _gitdir _gitdir_cache
++
++	set gitdir_cmd [list git rev-parse --git-dir]
++
++	# `--git-path` is only supported since Git v2.5.0
++	if {[package vcompare $::_git_version 2.5.0] >= 0} {
++		# This list was generated from a typical startup as well as from
++		# grepping through Git GUI's source code.
++		set gitdir_keys [list \
++			CHERRY_PICK_HEAD FETCH_HEAD GITGUI_BCK GITGUI_EDITMSG \
++			GITGUI_MSG HEAD hooks hooks/prepare-commit-msg \
++			index.lock info info/exclude logs MERGE_HEAD MERGE_MSG \
++			MERGE_RR objects "objects/4\[0-1\]/*" \
++			"objects/4\[0-3\]/*" objects/info \
++			objects/info/alternates objects/pack packed-refs \
++			PREPARE_COMMIT_MSG rebase-merge/head-name remotes \
++			rr-cache rr-cache/MERGE_RR SQUASH_MSG \
++		]
++
++		foreach key $gitdir_keys {
++			lappend gitdir_cmd --git-path $key
++		}
++	}
++
++	set i -1
++	foreach path [split [eval $gitdir_cmd] "\n"] {
++		if {$i eq -1} {
++			set _gitdir $path
++		} else {
++			set _gitdir_cache([lindex $gitdir_keys $i]) $path
++		}
++		incr i
++	}
++}
++
+ proc gitdir {args} {
+-	global _gitdir
++	global _gitdir _gitdir_cache
++
+ 	if {$args eq {}} {
+ 		return $_gitdir
+ 	}
+-	return [eval [list file join $_gitdir] $args]
++
++	set args [eval [list file join] $args]
++	if {![info exists _gitdir_cache($args)]} {
++		if {[package vcompare $::_git_version 2.5.0] >= 0} {
++			set _gitdir_cache($args) [git rev-parse --git-path $args]
++		} else {
++			set _gitdir_cache($args) [file join $_gitdir $args]
++		}
++	}
++
++	return $_gitdir_cache($args)
+ }
+ 
+ proc gitexec {args} {
+@@ -1242,7 +1290,7 @@ if {[catch {
+ 	&& [catch {
+ 		# beware that from the .git dir this sets _gitdir to .
+ 		# and _prefix to the empty string
+-		set _gitdir [git rev-parse --git-dir]
++		prime_gitdir_cache
+ 		set _prefix [git rev-parse --show-prefix]
+ 	} err]} {
+ 	load_config 1
+@@ -1453,10 +1501,16 @@ proc rescan {after {honor_trustmtime 1}} {
+ 	global HEAD PARENT MERGE_HEAD commit_type
+ 	global ui_index ui_workdir ui_comm
+ 	global rescan_active file_states
+-	global repo_config
++	global repo_config _gitdir_cache
+ 
+ 	if {$rescan_active > 0 || ![lock_index read]} return
+ 
++	# Only re-prime gitdir cache on a full rescan
++	if {$after ne "ui_ready"} {
++		array unset _gitdir_cache
++		prime_gitdir_cache
++	}
++
+ 	repository_state newType newHEAD newMERGE_HEAD
+ 	if {[string match amend* $commit_type]
+ 		&& $newType eq {normal}
 -- 
 gitgitgadget
