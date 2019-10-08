@@ -2,142 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F2741F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 19:32:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 119791F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 19:36:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730135AbfJHTcF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 15:32:05 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:40602 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727220AbfJHTcF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 15:32:05 -0400
-Received: by mail-pg1-f193.google.com with SMTP id d26so10829277pgl.7
-        for <git@vger.kernel.org>; Tue, 08 Oct 2019 12:32:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=sWpatjb5depKPVM0NtJOMgvxN0lstq1rIOCEkUSqGE8=;
-        b=ab7OQ0GRolhIRYOxB8CpF96BBAHbR0pNSyGqourFauQRdal273pdhTRTAvTQebbUWT
-         ho6xwBcuOqUTqj2dtSttE50tT58GuM4nc8l01iP/XahKPYdP5N8egKHsW2NLM4eHBxTL
-         l1bahko+J74jdNyX03eHv05gg1188cFHoZVDCgnQl7YCKfrP4YznfcTMi12DWYtYgV5+
-         gjCadfY7v//WgY3f4UDBdstnNreFfbpetyWl6sKBUlco9K7cuQk53RMj03UtwYvw9V46
-         ClGt8eT8eVM/BI2IzfsFoz1l27rb9lQ+M6Q8gS4jv2d/vUpl8pxnQBoiRzX9x30pVTYL
-         7t9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=sWpatjb5depKPVM0NtJOMgvxN0lstq1rIOCEkUSqGE8=;
-        b=IjI79MdwdF9pL2mwxyOUgVz7c5hKHEDCa33sBAQTOAimoyu9f3sLseACITHsLW8ewM
-         KqP/FR2fU5jIFJq+kr1FHOAChbf6RhV0KiyoaIVXFW3eD9SAP88ALnZnX+GmeXHJoPWh
-         YC51M5VP5254TtvdsPewxO5UCh+lT5hfDxAOmJv2ixPlKLAlKqxJCFq1IpoWRoI5mNck
-         xW3WapKE+kWv8J+QmVVzmqiAZ9tWBvg9JQmH1pPHU2x1avzZ75BP/DXzaGR+An+H0Qro
-         lGsl2QY7zYiEVEKO7Tx3sdVWcr+zm3GEvpRfw5+KKc4BbwHA2c5yIaCJm/dHX06T3/5r
-         9Vpg==
-X-Gm-Message-State: APjAAAXg7mc5LMfKfQPspHwjMBVoBMentltLc/0m9DEADIo+ZaOuh+g1
-        m6gb2/nrQY35bxN80VUnMNCd0NhGxXw=
-X-Google-Smtp-Source: APXvYqwiTokRzYEdgThL/ga/ZQYRx93dbWe2zi0hSmb5j1RgdqJUMmoxWTMOTUucJz/1jhHx8G+2Dw==
-X-Received: by 2002:a63:ef57:: with SMTP id c23mr9759pgk.436.1570563124213;
-        Tue, 08 Oct 2019 12:32:04 -0700 (PDT)
-Received: from ?IPv6:2409:4073:2011:f689:a6db:30ff:fee2:b535? ([2409:4073:2011:f689:a6db:30ff:fee2:b535])
-        by smtp.gmail.com with ESMTPSA id l72sm5677pjb.7.2019.10.08.12.32.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2019 12:32:03 -0700 (PDT)
-Message-ID: <f751705949a7fd23c77cbbf839c081b95b12394b.camel@gmail.com>
-Subject: Re: [PATCH] Feature: custom guitool commands can now have custom
- keyboard shortcuts
-From:   Harish Karumuthil <harish2704@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>, git@vger.kernel.org,
-        David Aguilar <davvid@gmail.com>
-Date:   Wed, 09 Oct 2019 01:01:59 +0530
-In-Reply-To: <nycvar.QRO.7.76.6.1910071159530.46@tvgsbejvaqbjf.bet>
-References: <01020153c22ab06b-e195b148-37cc-4f89-92f3-f4bed1915eb9-000000@eu-west-1.amazonses.com>
-          <20160331164137.GA11150@gmail.com>
-          <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com>
-          <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com>
-         <20191003214422.d4nocrxadxt47smg@yadavpratyush.com>
-          <nycvar.QRO.7.76.6.1910041046000.46@tvgsbejvaqbjf.bet>
-          <20191004120107.kpskplwhflnsamwu@yadavpratyush.com>
-          <149a83fd40b71896b134b16c2b499ff472c6234e.camel@gmail.com>
-          <20191005210127.uinrgazj5ezyqftj@yadavpratyush.com>
-         <nycvar.QRO.7.76.6.1910061054470.46@tvgsbejvaqbjf.bet>
-         <e71835129c0628ff3b9a0653febc3737128fa23c.camel@gmail.com>
-         <nycvar.QRO.7.76.6.1910071159530.46@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.32.4 
+        id S1729794AbfJHTge (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 15:36:34 -0400
+Received: from mout.gmx.net ([212.227.17.21]:49453 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727336AbfJHTgd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 15:36:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570563388;
+        bh=eSdW+/2Uym1h0CKxfkxoCugetole5GypmXXLi+TgN1c=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=YAmWx8DAhep6X9z780G1G5jgJ9Y8EN5sDHsx+27Tew8BDLGJRvSSgBsm8PJcff9nZ
+         JVcQ5+aikhFp6IbsKA6pnO5iWz51CL0BqiaQe4PdweH0rP/Pl7r4TAqh0lSXugWmXl
+         mWTcxinXd5YBs4TeZdnqwOwA0mM+VlNQCMfPMoMg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MA7KU-1iP34w1UiI-00Baac; Tue, 08
+ Oct 2019 21:36:28 +0200
+Date:   Tue, 8 Oct 2019 21:36:26 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: jk/code-of-conduct, was Re: What's cooking in git.git (Oct 2019,
+ #02; Mon, 7)
+In-Reply-To: <xmqq36g5444k.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910082111220.46@tvgsbejvaqbjf.bet>
+References: <xmqq36g5444k.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-699048384-1570563389=:46"
+X-Provags-ID: V03:K1:hnnUkCFrEwrfhIvjcDtrWROkmRgbH9VJj7vixXu6ZHoueBvIJYf
+ ishPGlO4j163pyQ3p1GosT2DLY5lXY+8mamxQ2u5TEq6og4LZPjZf8MOlpVtmBs0l+TgJMY
+ bAoMAYIqZYsWPAwUkx1Kzjm9pyZmaoF2fjZ1o+3mUohH+X0EMC0dJEQkPSMGxtKBaWeBXqS
+ cKKenaX0L6UzFW8P077vA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SWz0Sf5+yis=:Mn40TUjcWPYbRPvrAp2+Zo
+ XCCKdEaZrBeQMa7ryDVtCslcULMtu1KADy1lHNuIAU3gg6K9pwP9PuMRBSbKDtisuSlUcOiRM
+ 8w+Nw1vlnS1L/o9cOWS9chqKCs8Au5MLiVqat/NMNTBqrsJCqkWze2M4w+ERsLfy0FWoCr9N4
+ gk749wV3uJu4IO5c2ld/V1DSAcAIMgia4DZ+MTDejSPxT1HBFt/Wj117W45yiJd1wSlPinCPg
+ k6YzTqWB1CknEC9B4tLG4g0Y4Eb0f3S5+/bSdQTudv79fUWk9yuGbIVaPKeeMpljuIR8duOfd
+ 5RYHv7WkHkT3f1Dcot7KvUpZkkpcETCckTKffOjvAW7pYXeYDvPgG0SkaP8SiVdjJXffSas9Z
+ Qj3dYrVMJZN3bH/Xr3n4m71CsQ5KRJ9FEdj5I4LSRYMH12BAgzSx5AfuthnRZ2F3GQWMOuq6B
+ MDCvEbbSdVCqBds/dJ67KlZacWznaYe4Y6dkU587NhuA8IytSXbPD1t0503qThwbns7Ox64I6
+ NlG8f+DV4CxGoGSbTdpF857LtYWT+wMken9itUy83jmImio/RTpOTQJrny1AY4dlM7HejLIdY
+ zwo7UJgKEe//WRkuo5SQoyyQ0yzBMwMIp91e5eFnxVsdaPBtSim+L2AG9wWY4dS9fhSrq7Wth
+ UXKKX5ZqytjXRxXEf9y1rIXjKv/FqvYQQRFK1gWPTLCzJiLqB+2cJpjqw15kGcrF1+SVtr92B
+ 7vfKHinwc9en6e+njMCUB34KmqJAYQQAA9Idpxxxk1XVsQjdS2DUt2XOaQz6ZFLoS6NQXnbyw
+ WliLMgW+QHtqq3po+BvrJsQsK1Rrk8I3w73jan+wv3RyK2MMw1ukUrU2yWStIp9b42nVrkfQg
+ /7ABHDOtdUa2tlOaEziLcGzJ/Dk9miRbLwU4G3+Pwzep4AcpnTqmEloOYLhJlusd0EJulhpGa
+ D/O9VJWucS2eXc/LoHlMHDelr+5QSxFXH6DJ646UYXH80/yVVnsE7aq752eOcpqQ1J2nhBGZm
+ dqe9B8+BamEs0iPtL5G93i6+rHVlJT/+GPRYslWxO7KizcrViBe9VfDDBIDI4i3BZhH/iYiva
+ dBbyBwE1Min/uPsXepuTs5obXC/zAzBapxqdX+Jt1QvBbDDemXJLd4P4y6l3tB+mzzNA7NaE2
+ LN1p9m6Wp3cF2FEV39DZL+HS5KxSEfuZQd4f8/p8CYhL92zhaWel+ovJTy34PYHD7vBEh1P9F
+ UfEzmoynyYom3hi+2X8/V6PJbLIUhiFnxb9LedLzn8SRLOKDvXMqjFjzZftc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all, there is an update:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I added necessary error catching code so that, script will not crash if the
-keybinding code is worng. Instead of crashing it will print error message.
-The final patch will look something like this.
+--8323328-699048384-1570563389=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
----
- lib/tools.tcl | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+Hi Junio,
 
-diff --git a/lib/tools.tcl b/lib/tools.tcl
-index 413f1a1700..3135e19131 100644
---- a/lib/tools.tcl
-+++ b/lib/tools.tcl
-@@ -38,7 +38,7 @@ proc tools_create_item {parent args} {
- }
- 
- proc tools_populate_one {fullname} {
--	global tools_menubar tools_menutbl tools_id
-+	global tools_menubar tools_menutbl tools_id repo_config
- 
- 	if {![info exists tools_id]} {
- 		set tools_id 0
-@@ -61,9 +61,25 @@ proc tools_populate_one {fullname} {
- 		}
- 	}
- 
--	tools_create_item $parent command \
--		-label [lindex $names end] \
--		-command [list tools_exec $fullname]
-+	set accel_key_bound 0
-+	if {[info exists repo_config(guitool.$fullname.gitgui-shortcut)]} {
-+		set accel_key $repo_config(guitool.$fullname.gitgui-shortcut)
-+		if { [ catch { bind . <$accel_key> [list tools_exec $fullname] } msg ] } {
-+			puts stderr "Failed to bind keyboard shortcut '$accel_key' for custom tool '$fullname'. Error: $msg"
-+		} else {
-+			tools_create_item $parent command \
-+			-label [lindex $names end] \
-+			-command [list tools_exec $fullname] \
-+			-accelerator $accel_key
-+			set accel_key_bound true
-+		}
-+	}
-+
-+	if { ! $accel_key_bound } {
-+		tools_create_item $parent command \
-+			-label [lindex $names end] \
-+			-command [list tools_exec $fullname]
-+	}
- }
- 
- proc tools_exec {fullname} {
----
+On Mon, 7 Oct 2019, Junio C Hamano wrote:
 
-@Johannes Schindelin: In short, from your previous message I understand point.
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> the integration branches, but I am still holding onto them.
+>
+> You can find the changes described here in the integration branches
+> of the repositories listed at
+>
+>     http://git-blame.blogspot.com/p/git-public-repositories.html
+>
+> --------------------------------------------------
+> [...]
+> [New Topics]
+>
+> [...]
 
-1. shortcut codes like "<Control-,>" will only in Windows platform. It may not work in Linux / Mac.
-2. We need do translate shortcut codes somehow ( using one-to-one maping ).
+I missed a well-ACKed contribution in here: the code of conduct Peff
+kindly submitted, with the add-on that clarifies who is in that group of
+potential mediators. See
 
-If this is correct, do you have any example on how to do one-to-one maping of a list of string on TCL ?
+https://public-inbox.org/git/20190924064454.GA30419@sigill.intra.peff.net/
 
+and
+
+https://public-inbox.org/git/20190926072046.GB20653@sigill.intra.peff.net/
+
+As far as I can tell, there was only one critical voice, G=C3=A1bor, and w=
+hen
+I responded asking for clarifications which part of the code of conduct
+exactly would require any change of behavior, there was no response,
+which I took as a silent sign of acquiescence.
+
+Ren=C3=A9 also offered concerns about a part of the code of conduct that t=
+hey
+considered to be too vague, but I think both Peff and I explained why it
+should remain as-is (again, there was no response, which I, again, am
+forced to interpret, and I interpret it as agreeing to the points made
+in particular by Peff).
+
+In contrast, the patch won support from the cURL maintainer
+(https://public-inbox.org/git/alpine.DEB.2.20.1909250834220.4757@tvnag.unk=
+k.fr/),
+and endorsements (also known as ACKs) from myself
+(https://public-inbox.org/git/nycvar.QRO.7.76.6.1909241426580.15067@tvgsbe=
+jvaqbjf.bet/),
+from Stolee
+(https://public-inbox.org/git/6a9fb4c2-6c80-4475-03d3-89bdba73095b@gmail.c=
+om/),
+from Phillip Wood (although I don't dare to interpet this as a full ACK)
+(https://public-inbox.org/git/cc8cc0b3-777c-6ef8-202f-ea1d0518bbd3@gmail.c=
+om/),
+from Garima
+(https://public-inbox.org/git/133b46b2-b2e1-4673-820b-5a5ca6ec0269@gmail.c=
+om/),
+from Jonathan Tan
+(https://public-inbox.org/git/20190924172324.104795-1-jonathantanmy@google=
+.com/),
+from Thomas Gummerer
+(https://public-inbox.org/git/20190924174056.GA55104@cat/), from
+brian
+(https://public-inbox.org/git/20190924233728.6iueqaktlhhfwn7k@camp.crustyt=
+oothpaste.net/),
+and from Elijah
+(https://public-inbox.org/git/CABPp-BERhEp2At-ABPrkCHcqLfb32t+S0hPHs=3Dd17=
+QjcZR1wPA@mail.gmail.com/).
+
+In other words, the commit message can be augmented by this:
+
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Acked-by: Derrick Stolee <stolee@gmail.com>
+Acked-by: Garima Singh <garimasigit@gmail.com>
+Acked-by: Jonathan Tan <jonathantanmy@google.com>
+Acked-by: Thomas Gummerer <t.gummerer@gmail.com>
+Acked-by: brian m. carlson <sandals@crustytoothpaste.net>
+Acked-by: Elijah Newren <newren@gmail.com>
+
+Junio, would you mind picking it up, please?
+
+Ciao,
+Dscho
+
+--8323328-699048384-1570563389=:46--
