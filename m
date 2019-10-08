@@ -2,85 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E33F81F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 19:30:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4296C1F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 19:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729602AbfJHTaQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 15:30:16 -0400
-Received: from kitenet.net ([66.228.36.95]:35878 "EHLO kitenet.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727126AbfJHTaP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 15:30:15 -0400
-X-Greylist: delayed 428 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Oct 2019 15:30:15 EDT
-X-Question: 42
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-        t=1570562577; bh=O9WaBKRaEfZaNJnblG1yRUA/MWqP3JpI6lmy3EE29LU=;
-        h=Date:From:To:Subject:From;
-        b=cU2i1J/teBq5l2h4QFe0k8p2OQolPXBBUZdJWw8lYNcFzj7RRFEHb7znp8RIkrfWT
-         wIRgat4dl5j7LPjPwv34/piFlhS+jJjL3PDbhCNYFXjS6TaHAShN7r+/5/oOvgU3aA
-         upxkfgOONMKO5syWmrJU2Li437Bs1ymlTcyROR1o=
-Date:   Tue, 8 Oct 2019 15:22:57 -0400
-From:   Joey Hess <id@joeyh.name>
-To:     git@vger.kernel.org
-Subject: git cat-file --batch surprising carriage return behavior
-Message-ID: <20191008192257.GA16870@kitenet.net>
+        id S1729841AbfJHTbL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 15:31:11 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38716 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729608AbfJHTbL (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 8 Oct 2019 15:31:11 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5A8B461C5F;
+        Tue,  8 Oct 2019 19:31:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1570563069;
+        bh=yY8nFRAsg9Z+dNyrIgoUyXVeZrjImmYyV7nuVoE7kPo=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=tY14RozZjAOhVRVEu2SoIAQje8Y52BWX2JlqaWkDDKMGQ3s3lDZgTp59yJ18mhraz
+         bJFR55Wit9mLsyXvgfTiOZKEh8lkWVl1ChYqvHM+8lLnUXCvsYwa2n5d6+gxJNJZxO
+         HUmOXb91e96vns/5/Fi2xXEqW8t16rjdgvcKHOriiHhXj/NxgEp9KwLaFuu5fM/VQY
+         O2foONn8BSVABBWS/Lsv0P0gV3UymQIpRqts9tJHUXiGeMdvWpZA6T137pYkuXLlwm
+         ECSk2+OsJNWKUUJgogAwEneKs/GHIoiNtfysdvZkP1yCioqIeKJ93t8UDTFSM9lYEz
+         9aSeei3wYwKkZJfm4DeVJ0WUw4ANhugUPUhkiUUbww0wogi+APkVJhDiViBgdhKjPB
+         p9bX5uK3oYJb0i1BcNHnJuEzTRQTJvy+iqlb3xqKVDPTAFgSKeQ0bvsYA1UVNTNFfY
+         DIerU4C7tB6mpesG21QQLtJShP7H9gk7j2PRQCMCgdxR4rD/gGz
+Date:   Tue, 8 Oct 2019 19:31:04 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 03/15] rev-parse: add an --object-format option
+Message-ID: <20191008193104.xepgqzqvftsixkpo@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20191005211209.18237-1-sandals@crustytoothpaste.net>
+ <20191005211209.18237-4-sandals@crustytoothpaste.net>
+ <3cb91b69-7d33-12ab-de37-175592f95df7@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="lrZ03NoBR/3+SXJZ"
+        protocol="application/pgp-signature"; boundary="rutvncovms5l2s5c"
 Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <3cb91b69-7d33-12ab-de37-175592f95df7@gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.3.0-trunk-amd64)
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---lrZ03NoBR/3+SXJZ
-Content-Type: text/plain; charset=us-ascii
+--rutvncovms5l2s5c
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-I'm surprised to find that git cat-file --batch, on a Linux system,
-strips the \r from an input like "HEAD:foo\r\n"
+On 2019-10-08 at 11:51:45, Derrick Stolee wrote:
+> On 10/5/2019 5:11 PM, brian m. carlson wrote:
+> > Add an option to print the object format used for input, output, or
+> > storage. This allows shell scripts to discover the hash algorithm in
+> > use.
+>=20
+> Why put this in 'rev-parse'? Is a test helper not an option for this?
 
-It's obvious, of course, that it will remove the newline, and so this
-interface cannot be used to query about a filename that, for some
-horrible reason[1], contains a newline. But very surprising that it
-cannot be used for filename that contains a carriage return, at least
-on a non-Windows system.
+We do have a test helper for this, which is the first patch in the
+series.  This rev-parse option is designed to be useful to scripters
+more than anything else, and it will make an appearance in a later
+series.
 
-The docs for cat-file --batch say the list of objects is separated by
-linefeeds. I don't know if updating the docs is the best fix.
-(I'd be happy to use a -z if it had one.)
-
+I sent it here since it's vaguely useful for tests and I also wanted to
+make sure it was available sooner rather than later so folks can start
+using it.
 --=20
-see shy jo
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-[1] aka "a large enough number of monkeys"
-
---lrZ03NoBR/3+SXJZ
+--rutvncovms5l2s5c
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
 
-iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAl2c4g4ACgkQ2xLbD/Bf
-jzj0aA//TUoBvEy2rKGacdT5+/8KBYMs6RXnj3l+gXB3oersvWI8UU3bJdRF2Tid
-8ChoYUsorja6LbE0NTiW4T9cMqyHOxJW1e57eYS2LM10WBmES9urABwwxIBbQ2im
-LHXbsI/N7dOugITEm+x/NYQ/OMWFeBgy2RfKXLRZcXV1d4JVfViToiwZNrKrN8ac
-aGUiUXj0Mgg/yVfYJFB9Lrmz+UxWf0HwcrzxcHX48nlLdjcUD/JQQCd/gLlvLnaV
-fME+ZYGGaLiia33UyRQ79DPvYXZCK3V1ee6uDjyM/GC0VdHe5MnL3S/g/ft6RLt6
-Ie5HzKfeiw7vaYCEqWMABLjB607o2YhxHt5iFcgZJODbtgzWrKAazmpRCTBsANJ1
-YaJ0wNaugYOP+b7IIcFUYZxCwiW4SUTTVW/IVKK+6CSaWOSjw2yG9aO84ZgttSQA
-4VX4fMT/6hi2sLXkvsbNEO3x7XxsCSSJIj5hmEkd/iln7uJgDMxhHMnZEo5rz+Sj
-KWQMHRp9D6WHbUkNV53g7gCZcLdtwN3POXs1JlwW7SF73gBX9CbPaeSG6fpxAunS
-bb+Kr3yGz+1Qd57OO4HmYqB9KxeRVcQLLTW3fxBaLZvJ2uO0K7CP5cc3nEWRWByT
-N5uMKBo9+9RWEkLt2iiC/tCLxR+X6p9qRHFmLXXE3LvsaFGkaQI=
-=gxXH
+iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl2c4/cACgkQv1NdgR9S
+9otRuQ/8Cy6U22ds6VNp/PP9XSQcIMNqNulm5LwcGN2i/o3cJzn79GdN6jo0GiBq
+BwGXafs1sWVLZSSGQFZrm//otXEc5vBgTk5SDuIX0slpHjE+aW3eH8hFKA122A/5
+TAhbZfz069nxFxc0XPJxLBxgUmTyjC9xrd+2C2eD9t3ZK62I9BdcGh33SbjvxUIJ
+oWS83GdqJxV/F0IqV3DTVVIEU3yjh+06jDLbDEKL5+z85HBdgYuv5Ptx90Tk2Jed
+TTBRe3ehwkmal4MtQ3rxZULUx5iOQzc5v38n2HFEk8Thu989pVjizGKb4zzTVNpK
+xhbWyBKv8fk5RLU0sx4FDAG1FckqNxDXtQ2FID+HOr+dXHz4Y5/KotS6BFiC3yPx
+rOVOzEbM26mgtK2fJnbdiaBZ6SeSFXJEM4coB9bAL0YDUy7Mh0x905Aa2Lf9oLKf
+FCr2NDTsmnco4MVbt/CGCAAMo3zLtmreKEhYVN5itCCKm8rOpDDA7oWvs8Gd/U+F
+JJDByyyvKGM8azSdzl2PaY+GaA7zUzM0adpjgu70rjDfHRep19Aq3L6NQtB50bxE
+8Ha7GdeymB+5sl9ki23ni6VjBe1iNBKRywY1oPl0aP8BE8OzrmZ/mjfSfDlADgBO
+50ht53phRp/2Urp6JaTU5BMnKY737gFOgLecn8x3argsHDM4f8Q=
+=tXne
 -----END PGP SIGNATURE-----
 
---lrZ03NoBR/3+SXJZ--
+--rutvncovms5l2s5c--
