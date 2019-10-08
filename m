@@ -8,105 +8,152 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24D671F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 07:43:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D00E61F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 07:44:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730335AbfJHHni (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 03:43:38 -0400
-Received: from mout.gmx.net ([212.227.15.15]:54915 "EHLO mout.gmx.net"
+        id S1730372AbfJHHok (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 03:44:40 -0400
+Received: from mout.gmx.net ([212.227.17.20]:43149 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730292AbfJHHnh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 03:43:37 -0400
+        id S1730222AbfJHHoj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 03:44:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570520609;
-        bh=qsjc5uvSgUTN4PcYKxT1FQEU5XhYR0YGr5hTF6CPraA=;
+        s=badeba3b8450; t=1570520677;
+        bh=RptoCJ47W+UOruxaGNjJd3k2k0RnylqmwifHjdfMFb8=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=N4Xy6FZp+j/l762pRhe1QcOZR76NWf4bnWY4Ms1j86HYIhs29UWsYqVKzBV/rF/Ri
-         HhdMTjeDN9ycvys+dyHlcnFxHDQeK4YKWtJhmq+uQhVT2VLVRqktDHTfEXtQrEzpsu
-         8HScyOhd1Q7WccISl7XTPqAR4Rw63PAcvIidfrz8=
+        b=dguZ8qj99WUhsgFgdFs2d7ShjDxijN49M9VhRJj4VSKUQe8wnKogBv1s60ud2EX46
+         pI2uECVj9TgEnsM1bj6JAEny5ZqDPe++wnNgfqus1qJqBaFCYEQ5UQBMoeAYuitaZn
+         Gt+P20Mbu725LLO5AEaXofcBTSdPi/xqDCy/6Y7k=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2wL0-1iEQlp2JFk-003LyJ; Tue, 08
- Oct 2019 09:43:29 +0200
-Date:   Tue, 8 Oct 2019 09:43:28 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MFsUp-1iJbRq0FjT-00HNJN; Tue, 08
+ Oct 2019 09:44:37 +0200
+Date:   Tue, 8 Oct 2019 09:44:36 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
         git@vger.kernel.org, entwicklung@pengutronix.de
 Subject: Re: Regression in v2.23
-In-Reply-To: <xmqqh84knd7l.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1910080943100.46@tvgsbejvaqbjf.bet>
-References: <20191007110645.7eljju2h6g7ts7lf@pengutronix.de> <20191007134831.GA74671@cat> <xmqqh84knd7l.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20191007134831.GA74671@cat>
+Message-ID: <nycvar.QRO.7.76.6.1910080932560.46@tvgsbejvaqbjf.bet>
+References: <20191007110645.7eljju2h6g7ts7lf@pengutronix.de> <20191007134831.GA74671@cat>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:U1p3GSaFpUhSXir54bw4CeHJMx3D3/1tP+K2rRYlmhx7VxciLQv
- ZCglIdHO4Df5czTLvipbmfcqp+uyZFqMFDzS9lcl0ArPlUD1iFHbjAcmhNaASnNhHR2RecU
- VJN8ZyxBtKVXyCyFX6iPYvg49EsHNXUi6ABBY+9R1jbwq6vjciish7+/p6hs6bczSTHf4YB
- r7BSW1zXnahU747ms3P8g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:2KJcg2cCUJY=:yB/CWfcJcmw/qPTVOGdpQd
- 1IGR9Rr8ELuiK/7NM8j6/u20f28AfZDfB2QiRsGU5NIWCEy3Ff/bMAaAMR1Z0hHj0kYWVCFuV
- Yv4czq9BisT4LEJZaRC3hpZZtbr4W5qZePJK0TrpzZ52qgVKnXu2jKywgV74aHz0gFZLxMquo
- Q9kHgCDJZcPzSUzioWcNfOrbUCdj2t1A/8pPC80ALB6+Voqe7sC17gPZHzHNqU5AKFbwetVBk
- dk06onwKi3mvOTkSStfBH1lnnFpFHHbgAObTnM3wB6q9bh/E0yK4RI3iYTolrdWR9FN1OdjF4
- euJJW2eyANKEzEyMPyd/fb61mgnck/wFOx35NK+825Kpf1Q8y9B0kXR4VzzV/Z2FyY2xoWtgP
- rhA2g1ExuFHacdvFVx2yHU3p70TiU3mUfUqkG6YQjFJGEJ2dXgHCv2fmDlOvwYLeqe6evRL6G
- NsUh/R0ogRMw4VWz6VDr5r5qiKtHoBLh1qHNZ5DKg57E+qU1mmBSqnDsvz5DOok+abRF1oMs6
- QQOONhOrNPovWEFflin/cyP8+kUby03yhzKjv73b+df2OLJq4iQWsGH6pOKKbD593x0EjuugG
- BF01xtNrUdQMMXLRctMgWadsnr+ZYcfu4HRQUQ5Pa/aDJwcGHrTcaRo1n8ejf8L7F2z4yvubr
- mfcQ4DdwxF2aIokU9lpmKUjTJQ6Vv5QPPM5Pi0Zqy45MznSbYL0C/ugzjUXsm5SurPUKFNcFC
- 1LOlRvY2WV7I3cn8kziOIayJwdIzvOTgAzcqUvZPjfMa3YijzC/qe8U0ihsn0FCodc80KtHuS
- oAxIY7OMOHiQQTPGFQpAgJ5gB7OfTzBORfEX3kCCccYiDAl6MKkN/Ab0Nxl+4+ydoKnplFAkO
- bt1/7WYLPS6KzZdhu/pCs6PxKXUdiSaxBzgZZmB6PhWzPIxOEjhdT5ZPZzI0nJOW9vdmzwhFE
- AR1f91+lm4Yz/jQP0DhhOSmo9lTmcJoD4PjOE4qRvKtyhNe/Q0RyQtE4rrQOu3tLd3Kv649AP
- zWWrVeDYwebZdS/q5zvQXIcspFEa/eG1yjzwhzthXUQq1BU36CLnursrAEebql2LodCBuY5gD
- 1IGemut1+dyg6JEaaEKjn8hirBYg8Dwg/OYaRR5NIdlPSbmfjZCuSGURz5Ldcbc18+a+hXoAn
- zodRTWOPh6fHDok3wJIxc1FQjlmEVWubtgFcnt0A3SB90fGznfdLRU0w6auVCmuMvF+4tjW+v
- g09I5V312ngMyaueverXHG2T47JdOQW1ok4Us1o6V5QsjTHwWM45raWSDKRw=
+X-Provags-ID: V03:K1:Y1FWKpU/mUp0ZoMlqEncjoJQSM4uguTKxHkI0s0gaDoUEHNc12e
+ jmSh2hBs7kN9HU1kdL7654uHLeCNs3yXMNAK3FLWo55miIETQRXjKLQbOD+5xd19289EcUs
+ fmCZgGuEZf7qGqX1F+ieOrwTjVWf2UKge37FGm9YbuKyi5p+6pJU4SMnDEPFfTjP2asR7pE
+ hhKnysVHa0jj/8b742Adg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:yhglFWrN/54=:svHjMcqwPwd6uwGA9qbFlB
+ RrBTpp51cztOzxSaLwoygKHInGsT//1oZc1kt1BHf8KiacJ19agl235m++fI3W/G/z2YOApUC
+ qqy1V8Cz5frvd5APbxK60t7G30HN9is8Tafr1Ewn3fENN/OobGbqgbvFrK64zYE7Xa1WC3TQi
+ nGZCX/MtV5i7VYkYzUA5cmauZ3DL7pW36fYqoWpQ9I3bv9q2e+de78kQVQsY2SaRv270d/Ofk
+ VOEcYdTKKtyvz/zUtbMn6lpG1UDMcRF3xYb3dPSYE1ujHSymRgKBSQhQUMYKYPfdkOXeoO8QM
+ 8CnFkQqOUMgnpE9DpKKCsd82V4Vq4MXeSGerdSYT/UABXQ1nixfqu9bxuplt8bG9vNDlcJ8tN
+ AwwPbUkEmlLjdp96JxaU5zgRZenBVdQseKytE7ReIkXVO7m2XtdN5gQ5IvlWfX8kD+W5DxIY/
+ ay+4s5hPebJBOZO375C3Q7h5Waanry80+iVQyk8AcrNA4JVtVnXA+QhHz8i/zsT9FH8kaayDd
+ iTEzkygYF30imbcD00AC4eUw1J2SYgJ0Xc33Pkrk5RAdisk9cARIzFDjANVr9KBSUSjlfVaPL
+ eHWMRZSDfNo8F3sGY6bkuOmFY04SgiKFbT9YYaIiDzzH3GzKTyrWteRFjc3b5KcKKln1Bn2SH
+ mgtG3Ff1XVMeDjjUVbZTr062t2gAiNIKcB17+TuY4rBDGJ8qGIXgVr3NLMQc3/nqdLlkphCox
+ 3l2NdqCsvLbpdufudzkAHr+0w4s79/7BMN6IvBzzgHSU7tgpT5UML+yXpNLHyItM8+JWBcHdQ
+ BtpYVlBRcC4S9X6yMOXaGWmrDVaD3yIa++wXY1/hbUgPLh4R2t/BFgjQFCQeNzoClV/i/j4QW
+ BZvK/OnxiMGapNoKZZQz9ki7oYhFgWcKPIHw6ggyX1XDsDrSvWSXcHFXLmCmLB4XopgXaLu3Z
+ OBPlXhkk1oGqP7eidC5Wew852tc+aicu10F6z3DtKG31LZdE1hgQ71/5umetv4t6HrnmI64bg
+ 0hrrmDZ1N1jIQJfFT1A6QF2cCLVXMr3qZrwjmy6KVeqqu37MfXCj7H27skrkGnVQe2hcgqtOB
+ eG+A+ESg+nxF+18hkncWDw8iHw01WNea5tmiiSXzCroGrcKzFczp2ddtiU9ewIp7h7XsY/5hj
+ ZUrvtHAGwoJKFV1bsrUGo9FdsFJtVa5kDwpI0PIESXiED2+9pTminGNls9frqjD0xW5EZutEd
+ MumsOfA4JwQCcqZAOvYed1HoNT+nHJFvE0872M2WGv1Hb38kAgV2ybJYbF58=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Thomas,
 
-On Tue, 8 Oct 2019, Junio C Hamano wrote:
+On Mon, 7 Oct 2019, Thomas Gummerer wrote:
 
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> Subject: [PATCH] range-diff: don't segfault with mode-only changes
 >
-> > We can however rely on 'patch.def_name' in that case, which is
-> > extracted from the 'diff --git' line and should be equal to
-> > 'patch.new_name'.  Use that instead to avoid the segfault.
+> If we don't have a new file, deleted file or renamed file in a diff,
+> we currently add 'patch.new_name' to the range-diff header.  This
+> works well for files that are changed.  However if we have a pure mode
+> change, 'patch.new_name' is NULL, and thus range-diff segfaults.
 >
-> This patch makes the way this function calls parse_git_diff_header()
-> more in line with the way how it is used by its original caller in
-> apply.c::find_header(), but not quite.
+> We can however rely on 'patch.def_name' in that case, which is
+> extracted from the 'diff --git' line and should be equal to
+> 'patch.new_name'.  Use that instead to avoid the segfault.
 >
-> I have to wonder if we want to move a bit of code around so that
-> callers of parse_git_diff_header() do not have to worry about
-> def_name and can rely on new_name and old_name fields correctly
-> filled.
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+>  range-diff.c | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
 >
-> There was only one caller of the parse_git_diff_header() function
-> before range-diff.  The division of labour between find_header() and
-> parse_git_diff_header() did not make any difference to the consumers
-> of the new/old_name fields.  They only cared that they do not have
-> to worry about def_name.  But by calling parse_git_diff_header()
-> that forces the caller to worry about def_name (which is done by
-> find_header() to free its callers from doing so), range-diff took
-> responsibility of caring, which was suboptimal.  The interface could
-> have been a bit more cleaned up before we started to reuse it in the
-> new caller, and as this bug shows, it may be time to do so now, no?
+> diff --git a/range-diff.c b/range-diff.c
+> index ba1e9a4265..d8d906b3c6 100644
+> --- a/range-diff.c
+> +++ b/range-diff.c
+> @@ -116,20 +116,20 @@ static int read_patches(const char *range, struct =
+string_list *list)
+>  			if (len < 0)
+>  				die(_("could not parse git header '%.*s'"), (int)len, line);
+>  			strbuf_addstr(&buf, " ## ");
+> -			if (patch.is_new > 0)
+> +			free(current_filename);
+> +			if (patch.is_new > 0) {
+>  				strbuf_addf(&buf, "%s (new)", patch.new_name);
+> -			else if (patch.is_delete > 0)
+> +				current_filename =3D xstrdup(patch.new_name);
+> +			} else if (patch.is_delete > 0) {
+>  				strbuf_addf(&buf, "%s (deleted)", patch.old_name);
+> -			else if (patch.is_rename)
+> -				strbuf_addf(&buf, "%s =3D> %s", patch.old_name, patch.new_name);
+> -			else
+> -				strbuf_addstr(&buf, patch.new_name);
+> -
+> -			free(current_filename);
+> -			if (patch.is_delete > 0)
+>  				current_filename =3D xstrdup(patch.old_name);
+> -			else
+> +			} else if (patch.is_rename) {
+> +				strbuf_addf(&buf, "%s =3D> %s", patch.old_name, patch.new_name);
+>  				current_filename =3D xstrdup(patch.new_name);
+> +			} else {
+> +				strbuf_addstr(&buf, patch.def_name);
+> +				current_filename =3D xstrdup(patch.def_name);
+> +			}
 >
-> Perhaps before returing, parse_git_diff_header() should fill the two
-> names with xstrdup() of def_name if (!old_name && !new_name &&
-> !!def_name); all other cases the existing caller and this new caller
-> would work unchanged correctly, no?
+>  			if (patch.new_mode && patch.old_mode &&
+>  			    patch.old_mode !=3D patch.new_mode)
+> --
 
-FWIW I totally agree.
+I am not quite sure that this fixes it... Here is my regression test case:
 
-Ciao,
-Dscho
+=2D- snipsnap --
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index ec548654ce1..6aca7f5a5b1 100755
+=2D-- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -354,4 +354,18 @@ test_expect_success 'format-patch --range-diff as com=
+mentary' '
+ 	grep "> 1: .* new message" 0001-*
+ '
+
++test_expect_success 'range-diff and mode-only changes' '
++	git switch -c mode-only &&
++
++	test_commit mode-only &&
++
++	: pretend it is executable &&
++	git add --chmod=3D+x mode-only.t &&
++	chmod a+x mode-only.t &&
++	test_tick &&
++	git commit -m mode-only &&
++
++	git range-diff @^...
++'
++
+ test_done
+
+
