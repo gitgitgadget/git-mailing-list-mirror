@@ -7,90 +7,122 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C58571F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 03:11:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BA7B1F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 03:16:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729809AbfJHDLd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Oct 2019 23:11:33 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55684 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729536AbfJHDLd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Oct 2019 23:11:33 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8209F9913C;
-        Mon,  7 Oct 2019 23:11:31 -0400 (EDT)
+        id S1729927AbfJHDQS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Oct 2019 23:16:18 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63747 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729536AbfJHDQS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Oct 2019 23:16:18 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8371891A18;
+        Mon,  7 Oct 2019 23:16:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9DZJ8Nrciltt0HtgGuQ5nuJRlRY=; b=nlOCoy
-        8f5ktR/iVt00UWRFRYgvP/V95c8luwatiBKMrueYdH3VJiQmvFfSNMRnGlu2oCGS
-        5aE0enjkPukRowYzCok0p87UicLGpw9YqYL/5JJikSI3AEhK1c+fBptG647acOY0
-        esQ1cf2FlVndgFqN2gs6IRgQBtakcLktil0VI=
+        :content-type; s=sasl; bh=ssSvr0kih3/18p39bEMpat7xgbE=; b=UvnxDA
+        usEWbqeD1j8OSmdpWFwJzha7qWj9DihNhovxUOB8RNF2SauoasF5DD/0Ek2QHSv4
+        HbVb5m/ldSGgdwIaf2tQHU7cEA92v1VQVyoCAIOQgdps/R3+GYiQbXYGi6s47Dcq
+        8xkTCnQdVjwSQZ98k/cjbxfe5s3DKCcWiJI5M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=urdyMN3z7BGXcTzaeWI+nnKFvHnPx8pZ
-        ZJmEvzV0JIQSj4R8iQkJjmqnm3kwAvJ52MtvVKe0xFA4ZP9qqA6enKvza1ukDJpH
-        102UUNeuTWRylV5rS8muieC1BkYM2UYwJL1yqxsZF2LcoFALmJxkzSe6CS5+USN0
-        DqzmFVaEWvU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 79C799913B;
-        Mon,  7 Oct 2019 23:11:31 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=WhoAnfMxk8nuyBWxFzJVryzziWKjM9KW
+        ojVseonnblslrCql2Q37l2UNxg5BMEYELa0O9y8f/rSIA+xtaP7sGfKcHixbiHuO
+        hvvt2eNZ1yj0iFZlqPlMzH+9tKOigGmLLVp0znBpoJYU26djN78Velu3GqzuVHUT
+        gOa+uWLoriE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7ADA591A17;
+        Mon,  7 Oct 2019 23:16:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A96C39913A;
-        Mon,  7 Oct 2019 23:11:28 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5AC8B91A16;
+        Mon,  7 Oct 2019 23:16:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        entwicklung@pengutronix.de
-Subject: Re: Regression in v2.23
-References: <20191007110645.7eljju2h6g7ts7lf@pengutronix.de>
-        <20191007134831.GA74671@cat>
-Date:   Tue, 08 Oct 2019 12:11:26 +0900
-In-Reply-To: <20191007134831.GA74671@cat> (Thomas Gummerer's message of "Mon,
-        7 Oct 2019 14:48:31 +0100")
-Message-ID: <xmqqh84knd7l.fsf@gitster-ct.c.googlers.com>
+To:     "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, garimasigit@gmail.com, jeffhost@microsoft.com,
+        stolee@gmail.com, Garima Singh <garima.singh@microsoft.com>
+Subject: Re: [PATCH v4 1/1] sq_quote_buf_pretty: don't drop empty arguments
+References: <pull.314.v3.git.gitgitgadget@gmail.com>
+        <pull.314.v4.git.gitgitgadget@gmail.com>
+        <a6a0217ce6fa2a7436724d76fc50fd6f8b925de5.1570477135.git.gitgitgadget@gmail.com>
+Date:   Tue, 08 Oct 2019 12:16:10 +0900
+In-Reply-To: <a6a0217ce6fa2a7436724d76fc50fd6f8b925de5.1570477135.git.gitgitgadget@gmail.com>
+        (Garima Singh via GitGitGadget's message of "Mon, 07 Oct 2019 12:38:56
+        -0700 (PDT)")
+Message-ID: <xmqqd0f8nczp.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 51F8FE5E-E979-11E9-9571-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: FB0EEAF8-E979-11E9-830D-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+"Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> We can however rely on 'patch.def_name' in that case, which is
-> extracted from the 'diff --git' line and should be equal to
-> 'patch.new_name'.  Use that instead to avoid the segfault.
+> From: Garima Singh <garima.singh@microsoft.com>
+>
+> Empty arguments passed on the command line can be a represented by
+> a '', however sq_quote_buf_pretty was incorrectly dropping these
+> arguments altogether. Fix this problem by ensuring that such
+> arguments are emitted as '' instead.
+>
+> Reported by: Junio Hamano <gitster@pobox.com>
+> Signed-off-by: Garima Singh <garima.singh@microsoft.com>
+> ---
+>  quote.c          | 9 +++++++++
+>  t/t0014-alias.sh | 7 +++++++
+>  2 files changed, 16 insertions(+)
+>
+> diff --git a/quote.c b/quote.c
+> index 7f2aa6faa4..26f1848dde 100644
+> --- a/quote.c
+> +++ b/quote.c
+> @@ -48,6 +48,15 @@ void sq_quote_buf_pretty(struct strbuf *dst, const char *src)
+>  	static const char ok_punct[] = "+,-./:=@_^";
+>  	const char *p;
+>  
+> +	if (!src) 
+> +		BUG("Cannot append a NULL token to the buffer");
 
-This patch makes the way this function calls parse_git_diff_header()
-more in line with the way how it is used by its original caller in
-apply.c::find_header(), but not quite.
+Remove these two lines.
 
-I have to wonder if we want to move a bit of code around so that
-callers of parse_git_diff_header() do not have to worry about
-def_name and can rely on new_name and old_name fields correctly
-filled.
+I do not want to see "if (!ptr) BUG("don't give a NULL pointer")"
+sprinkled to every function that takes a pointer that must not be
+NULL.  Any caller that violates the contract with the callee
+deserves a segfault, so let's leave it at that.
 
-There was only one caller of the parse_git_diff_header() function
-before range-diff.  The division of labour between find_header() and
-parse_git_diff_header() did not make any difference to the consumers
-of the new/old_name fields.  They only cared that they do not have
-to worry about def_name.  But by calling parse_git_diff_header()
-that forces the caller to worry about def_name (which is done by
-find_header() to free its callers from doing so), range-diff took
-responsibility of caring, which was suboptimal.  The interface could
-have been a bit more cleaned up before we started to reuse it in the
-new caller, and as this bug shows, it may be time to do so now, no?
+> +	/* Avoid losing a zero-length string by adding '' */ 
+> +	if (!*src) {
+> +		strbuf_addstr(dst, "''");
+> +		return;
+> +	}
+> +
 
-Perhaps before returing, parse_git_diff_header() should fill the two
-names with xstrdup() of def_name if (!old_name && !new_name &&
-!!def_name); all other cases the existing caller and this new caller
-would work unchanged correctly, no?
+Nice.
+
+>  	for (p = src; *p; p++) {
+>  		if (!isalpha(*p) && !isdigit(*p) && !strchr(ok_punct, *p)) {
+>  			sq_quote_buf(dst, src);
+> diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
+> index a070e645d7..2694c81afd 100755
+> --- a/t/t0014-alias.sh
+> +++ b/t/t0014-alias.sh
+> @@ -37,4 +37,11 @@ test_expect_success 'looping aliases - internal execution' '
+>  #	test_i18ngrep "^fatal: alias loop detected: expansion of" output
+>  #'
+>  
+> +test_expect_success 'run-command formats empty args properly' '
+> +    GIT_TRACE=1 git frotz a "" b " " c 2>&1 |
+> +    sed -ne "/run_command:/s/.*trace: run_command: //p" >actual &&
+> +    echo "git-frotz a '\'''\'' b '\'' '\'' c" >expect &&
+> +    test_cmp expect actual
+> +'
+> +
+>  test_done
