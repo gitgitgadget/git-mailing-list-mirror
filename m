@@ -2,113 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 364BE1F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 12:40:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14B071F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 12:46:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730882AbfJHMka (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 08:40:30 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:37268 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730648AbfJHMka (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 08:40:30 -0400
-Received: by mail-qk1-f195.google.com with SMTP id u184so16546677qkd.4
-        for <git@vger.kernel.org>; Tue, 08 Oct 2019 05:40:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ay6YHp2sXiV8IUYiHz2FBSnlgqFfDlCQMeojfP3p7Lw=;
-        b=LnF8dxOohf+AK4glc+BMcGtoOJE21BYrcxMyYKOPnS9uok0NilYfy96DI4DJ78jKNe
-         EHcsQDFDsfU1YQHaAag/Uo0UBosobYMtxg7ZnMomBN8zZDRB+w0wSvkMtnOvdTpFdrDn
-         GEOvnROAQqBW8L4W6RPfgh4K8MYQQ52rjcD53u0Dj3Xcv/75XHrYQf4uIw2hAqzLC3wM
-         X0/sjguC/dwRtpT5TE0VY5mWdXB6XM5ovt/lh0WR3tsPnspGcYfKBny+mabBZJiDKbFO
-         Rypixk5tSdBbttWJu87VrcpWM6GdsxZy2BLApsOoYgn+s0R9phtgrF7FaGNQrrVTRYuh
-         YGAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ay6YHp2sXiV8IUYiHz2FBSnlgqFfDlCQMeojfP3p7Lw=;
-        b=sGJTn6/vKCebyUf1u8HaI5PAuRQQW97tZy9DLHzMZHhkhviE2yR74E3zg3T/9uWrx9
-         peP5WN7+28ewuwzl2T5EUQMGrE27sDhK6fEeclwLn6C0dN6uxIuQ6X1Irf5/AkEvzAA8
-         +698I0a4maJX6n9mwR3kX1AyQ0uE3AKdSgM0vBdPVBK75lGQgbkb0LJ/z2i3h1at4/fW
-         uifyf07Smcq6C8SV0Td4Upv4JfhlFtdN+1Fy/7p/tsQw3O03zBC7hmwGmola47VZY0IX
-         4RAPopaFMo8QhQBj9+CAC0fLqUlRBRV2onQI67UlrZ95Q1uwpi+RCSuvjFFM/DCVeiEf
-         vtVQ==
-X-Gm-Message-State: APjAAAWJjlhN1YJq/SMp7XKxi5crrELnHGDEBBELsK8ydjAb2ecb8wSt
-        s9hBYfv7a7YUo7L/4qbQO6c=
-X-Google-Smtp-Source: APXvYqwqN43wxVJEQadcD0xXN5Ltjcrbn2CLiItDNFMBj0FH8sAqs0nUhj7DSvJMokl7DudhtnPWNw==
-X-Received: by 2002:a37:9507:: with SMTP id x7mr28621881qkd.214.1570538429501;
-        Tue, 08 Oct 2019 05:40:29 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c988:3ed2:5e14:1c0f? ([2001:4898:a800:1010:7abe:3ed2:5e14:1c0f])
-        by smtp.gmail.com with ESMTPSA id 4sm9612498qtf.87.2019.10.08.05.40.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Oct 2019 05:40:29 -0700 (PDT)
-Subject: Re: [PATCH 00/15] SHA-256 test fixes, part 6
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Cc:     Stefan Beller <stefanbeller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20191005211209.18237-1-sandals@crustytoothpaste.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <99b996a5-1c68-c186-b480-fdd2ed69cae9@gmail.com>
-Date:   Tue, 8 Oct 2019 08:40:28 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        id S1730947AbfJHMql (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 08:46:41 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53753 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730317AbfJHMqk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 08:46:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570538794;
+        bh=rgi9wAwmP2Htj3CjfG1z18UtWOxIAx3hX7D5N3wQ1Qw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Ye3RtWg3ZrGfDWTo4ED8bfOwg1ZalrXe1jzRe5aLrWzeI2z3PUrYG/PTKDAdF2NM1
+         UTuRo/IdMBClrdIHCkaWGZNkheKPFzy18decQfxe64+Jau9aOcA16xhd1w2ZuXbNyS
+         hAdskCX1U1n9lYtjq4vHCjxYDzFNuiTQaCOMXrTM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MA7KU-1iP0wS35g2-00Bahe; Tue, 08
+ Oct 2019 14:46:34 +0200
+Date:   Tue, 8 Oct 2019 14:46:34 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v3 00/13] ci: include a Visual Studio build & test in
+ our Azure Pipeline
+In-Reply-To: <xmqqzhicnfmr.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910081423250.46@tvgsbejvaqbjf.bet>
+References: <pull.288.v2.git.gitgitgadget@gmail.com> <pull.288.v3.git.gitgitgadget@gmail.com> <xmqqimp26808.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910061157320.46@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1910062237440.46@tvgsbejvaqbjf.bet>
+ <xmqq1rvp5pc0.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910072350300.46@tvgsbejvaqbjf.bet> <xmqqzhicnfmr.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20191005211209.18237-1-sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:cupto7lLAGifLQ0TAv5ks62egQ8m+SqLJE+omZiYspe8k7f+Nl4
+ GDqKnPcEtwpkQWcFgkIErLyJVG7eMb1PcUqO9BR+D0ZELUQUu+51iWNOUHh+ADVLVWhANh7
+ 6HXPhFfdSy9k6GApmlBIPesun1l7f1gK1CqJ/IBPxy181Fk+XFMaGdljNT6S1veAGS/aC1j
+ EBM5LXcwUgN5d0p8YTb7g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SmuKHsaQZZc=:9XSpF3LrY+p8vMKMGEAKYT
+ 1n6KsjTvBNa/kmO13TaC3q2S8+3/9hqVQw0ohPNsdamY4YQqQK71pA5AxkzDIJFjp/qxNycQj
+ 9J/LGcpf/TvnXfhNAXcSGUChF3pp/jhIr05XH1WrCDkuJN5NRaSQFMOskVVg3TA0PLG3keyKZ
+ SaGaLHkCDsazfI+4F71MHCW4LAcRm8cu17Ce+NPL2ewqAFD0Xyj5aT9IQVlZhmXIRbybDAsg2
+ 0p09p8i/RXs3DcjNOq4ZsIoNs/ktu20FGWC3HtcKKDP2gsT1hBUf2RuutP8pP8F88dd1N2ywg
+ hzitA9KafIQ+9jrNOvtOglFiq25cbRYgngjW8GbGqfSYoTUT+fHruYFVeHcqzNS9YDEo0uPH9
+ tQq8J4gW2tKOgnahlOVAik6fyttFq3CkKbrpoi1ZAwHzIfwNtLFGJHeJ4Egp6rCvMjnydIKlo
+ /AbdJp0nVCCarBrbJ4UTVXFryybz9xR0zwUQ+0j3rimPIincJK2J0Hv3plJTYZ5zbcfMxdod9
+ zfn0ezgn+2oEc/QBAKudw476FaISjthMQzT7+2xddTw7+FKndDFRXTC3Bq2WptMtzuPj/mHYD
+ qiQ1bi3o6rEJOPebF1XZRd84JO0Tfu1xINNhVqTkhQfTQ0bktJfvMxzZI8juawfBz4uvXMfwb
+ qTg16iBLULiMMZYWpQnKlJGRNUs34byOvp283bf12xF5RUYFuxUKgFj1Q8k8BjuWvqGu4n24r
+ reZZ6kdUkhv0J97h5T0Udm2aAc7zYOkp7QhCauuhjTYnh3+IbsBsjuc85wQRq9499flp0tzhY
+ NPRJFUx14OkAlbTbQje778Lb8U/FM2cCFnkyLUhIMCeXiIPGeAA5PVD+bNztlZatGK0B3ngPc
+ SxCEdWWyVZZ4AUojATDviwhBBsKppN97L8mrZQHGiHaz1zGXmgwRRev30rIkXg39ZYACz6eMu
+ HDpDVfGvC2W5e8CsYINFHuTLKeB1PhoW9NvtlXrcfm4YM0LjOkDUruRIaYCK1q73I3A5qpxmk
+ yQPn2fnEQYtQMeHXJPLM1HIyteEChxMgvov3Ju2y9TabfdhkH+FYuQ2u82OhLR7DsvqepLuFu
+ XtQRqn1K9V3h5O7cOHDlIttOdu3iS+y8qcPn1YRWaiRwdWUcI8vDe7WbBJ4H/d5M9Bk5mCksQ
+ iCwjFjM5CHYk5VOGfXW0edobOTh7dSZYLjiYphLhjGkVZFFzc12RETGoaVUfww2qPC8txMeRe
+ kSOTIQcdYN/1C0uPT0Rs8hECEwO18Xfm61x3QWtwZTxx832tY/XTfxoYjN6o=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/5/2019 5:11 PM, brian m. carlson wrote:
-> This series consists mostly of additional test fixes for SHA-256, plus
-> some test framework improvements and a new option to rev-parse.
-> 
-> Up until now, most of the test changes have been directly related to
-> fixing hash values or sizes in some way.  In other words, previous test
-> fixes would be required even for a Git binary that supported only
-> SHA-256 and not SHA-1.
-> 
-> In this series, we also introduce some test changes that deal with the
-> extension that will allow the same binary to handle both.  The changes
-> themselves are relatively uninteresting, but changes like these will be
-> making appearances in future test fix series as well.  They may appear
-> bizarre and out of place at times, but rest assured that they will be
-> useful in the future.
-> 
-> The other notable thing in this series is the introduction of a new
-> rev-parse option, --object-format.  We know, according to the transition
-> plan, that we'll need to support users working with input and output
-> in different hash algorithms.  Since we're starting to see this kind of
-> code appear in the codebase, it makes sense to introduce a helper that
-> lets scripters determine the appropriate value, and we should introduce
-> this code sooner, rather than later, so people can start using it.
-> 
-> We had had some discussions about the name of options to be used for
-> hash algorithms but I don't recall us coming to a definitive conclusion.
-> Opinions about the name[0] are of course welcome.  I'm not particularly
-> attached to any name, so whatever the consensus is works for me.
-> 
-> [0] Possibilities include --object-format, --show-object-format, --hash,
-> --show-hash, --hash-algorithm, --show-hash-algorithm, and more.
-Outside of a question regarding using a test-tool instead of adding an
-option to 'git rev-parse', I found this series very readable.
+Hi Junio,
 
-My confusion around the printf|git hash-object stuff that is now
-resolved. The error was in my reading, not in the presentation.
+On Tue, 8 Oct 2019, Junio C Hamano wrote:
 
-Thanks for your continued hard work on this subject!
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> >> I didn't quite understand this part, though.
+> >>
+> >>     The default creation factor is 60 (roughly speaking, it wants 60%=
+ of
+> >>     the lines to match between two patches, otherwise it considers th=
+e
+> >>     patches to be unrelated).
+> >>
+> >> Would the updated creation factor used which is 95 (roughly
+> >> speaking) want 95% of the lines to match between two patches?
+> >>
+> >> That would make the matching logic even pickier and reject more
+> >> paring, so I must be reading the statement wrong X-<.
+> >
+> > No, I must have written the opposite of what I tried to say, is all.
+>
+> So, cfactor of 60 means at most 60% is allowed to differ and the
+> two patches are still considered to be related, while 95 means only
+> 5% needs to be common?  That would make more sense to me.
 
--Stolee
+Okay, I not only wrote the opposite of what I wanted to say, I also
+misremembered.
+
+When `range-diff` tries to determine matching pairs of patches, it
+builds an `(m+n)x(m+n)` cost matrix, where `m` is the number of patches
+in the first commit range and `n` is the number of patches in the second
+one.
+
+Why not `m x n`? Well, that's the obvious matrix, and that's what it
+starts with, essentially assigning the number of lines of the diff
+between the diffs as "cost".
+
+But then `git range-diff` extends the cost matrix to allow for _all_ of
+the `m` patches to be considered deleted, and _all_ of the `n` patches
+to be added. As cost, it cannot use a "diff of diffs" because there is
+no second diff. So it uses the number of lines of the one diff it has,
+multiplied by the creation factor interpreted as a percentage.
+
+The naive creation factor would be 100%, which is (almost) as if we
+assumed an empty diff for the missing diff. But that would make the
+range-diff too eager to dismiss rewrites, as experience obviously showed
+(not my experience, but Thomas Rast's, who came up with `tbdiff` after
+all): the diff of diffs includes a diff header, for example.
+
+The interpretation I offered (although I inverted what I wanted to say)
+is similar in spirit to that metric (which is not actually a metric, I
+believe, because I expect it to violate the triangle inequality) is
+obviously inaccurate: the number of lines of the diff of diffs does not
+say anything about the number of matching lines, quite to the contrary,
+it correlates somewhat to the number of non-matching lines.
+
+So a better interpretation would have been:
+
+	The default creation factor is 60 (roughly speaking, it wants at
+	most 60% of the diffs' lines to differ, otherwise it considers
+	them not to be a match.
+
+This is still inaccurate, but at least it gets the idea of the
+range-diff across.
+
+Of course, I will never be able to amend the commit message in
+GitGitGadget anyway, as I have merged that PR already.
+
+Ciao,
+Dscho
