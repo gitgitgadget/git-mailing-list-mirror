@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88D831F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 18:47:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC5E51F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 18:47:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729933AbfJHSrq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 14:47:46 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:41116 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726098AbfJHSrq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 14:47:46 -0400
-Received: by mail-qk1-f196.google.com with SMTP id p10so17745942qkg.8
-        for <git@vger.kernel.org>; Tue, 08 Oct 2019 11:47:46 -0700 (PDT)
+        id S1729973AbfJHSrt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 14:47:49 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:43992 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726098AbfJHSrt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 14:47:49 -0400
+Received: by mail-qt1-f194.google.com with SMTP id c4so14085716qtn.10
+        for <git@vger.kernel.org>; Tue, 08 Oct 2019 11:47:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZCPjhvsxKdlD2n5BYD1rxmP+Hwn0cTQ8TkcetDMY1bA=;
-        b=PHUW1ceAV4D4o9bjHsG17qrPh32EJ76TS3HvlNQxz96pPxtTVhUsB73AH0vnvZuqK3
-         Nil0dYFg2qfihXgvEvfgS6VHCmuL4AKtzZr5SfMv/8D6LElG8a4UgksROQLDIgtv+SrB
-         httZg+ym6toAOPqYcxHfWHLMA1+ycgPgd79OMYmtVzD6RJ6ErFgI0qhUvunWcckgUINg
-         Q/+NcbTmgO5Cns98i722udd2Q4cji+A6NZhIjq6b9NDADWHmgn1HrlDDoNU0UJL9hss1
-         Q72UCx7+0kTRea2HenHtagLQl/w91Q0hSWJPI/OE23HsvMqFRHOZLk08q02yvPlwFMG8
-         IM3g==
+        bh=QS5KRFlw+nPOu0HRH7qq5jVH5+eYA15Q0b6PvRuNIK0=;
+        b=MK+r6Nm1bMw/JFinrENT1dA+a95AvWAljaQENqXenrElgSYo9vqD5cpZYCwlTfT6ce
+         E+mbCTVG9+Ch9em0E5fvZufEZ5rgbuWFEet49PrHjWr4Etfd7krmhWyWOfSsgUuQkr23
+         6L7bYnExE0HsjsWl4u7kWD4J0CIXGkTdQV+HKkQZy5jpgoa94coEQVM6K7z6+wU8+NeC
+         Pc1ZxJGenykd0j+Q8CVdayd+0A7pVV0f2ecs0BiOkKPxfEWrtd76tJ0MY5SK9k7TNefd
+         M9vRZJzrdYAkpbgjn06LVzXzh8loCW5TvhlXjBRHon9M2Afyk9Cn0E996fBAxojAslxc
+         iRUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZCPjhvsxKdlD2n5BYD1rxmP+Hwn0cTQ8TkcetDMY1bA=;
-        b=oDOmNljucZkP4swQsRWSdLFPoXUMPaM7gzgI0uMWhwhszxzX4jxKSU3g3gmUvN7/OV
-         Dsi40GgZoiBfJBeWXmYVqdH+D9z2tYRMYnVMTuZE3AtxzE3+jNOwNkdzHgf4VZLBEPAt
-         McSIZi29eN7JCIEu6pbxZ4PN1v5Qk3nflSP3J1B9f0QcDRKhULCcHpSKI6KnHi0jJ3Ra
-         wk+jDO4+9z1m8wI2HEeOGkSz/r67MSuE++XeoFtjQgzJ299vG4fvgUeuP3RcmWM84k24
-         W8rxDSqIp38mvhPem+WupENtjpkg1Vkytn0lS19i5Wnrg48kYfRACt9R3OksjnoqHGta
-         pFmg==
-X-Gm-Message-State: APjAAAUze7zZMB3zJx7GBBjQ8mQdzWqTdvZH9aMTR8hacJyZiaNL6D2V
-        YCLbMbQG4vT+6f05MsJjV3ZP1d4z
-X-Google-Smtp-Source: APXvYqz9Z8hTxlTCAWpCE+OO9mtfgrKlElaqNfY4Zsgah78ZSycXweNJ6Fv+yo+DWPu/loZN9iEzrQ==
-X-Received: by 2002:a37:4e48:: with SMTP id c69mr30341527qkb.182.1570560465704;
-        Tue, 08 Oct 2019 11:47:45 -0700 (PDT)
+        bh=QS5KRFlw+nPOu0HRH7qq5jVH5+eYA15Q0b6PvRuNIK0=;
+        b=H1Z9IZeNNY7qnMXMay6VWz8ooyokPP096rt99VAQtn6D6JDrRvFTFk3P45+FQ2DFia
+         1zGq4Euw5J0D9nhrd13Excwgj09bo+V9kNRuQ2mzQN2fK+812QhkE2N3Bm4Zivd1DIl7
+         iQHECIQgD2qIJp8/EzjypTGiN4bfCOjsf5m/DtPdXt8bVnYLHWRSODmyHKBj/xrxqx7M
+         ikAAtRxItswUi5QLdq3X1HexxtRbZlFlR7yK+XoyFi2iqkfJL6nLiPoN+n3v+CPdFoug
+         vBzYrnA1qpEa65chP7+uId3KIn1oPtODlWs7I1PDzcDUfTmE1bDoZMIRJFJyP8oOg5aF
+         skew==
+X-Gm-Message-State: APjAAAWqZr36/FfO0FTKK4GeMqL7A2HxKRQ/aocolBSKwxYc7Ikqvgzn
+        eKqMXFXpREg1IOptvp9ogESLZ5Ul
+X-Google-Smtp-Source: APXvYqzY/Tn7Xt1eSxNpa9XS1G0ZZvqYSI3uLSg/sbIl3YriOP6g6NHv7c+gn6sQ7Y1km14zeuPBow==
+X-Received: by 2002:aed:3c52:: with SMTP id u18mr37009892qte.194.1570560468001;
+        Tue, 08 Oct 2019 11:47:48 -0700 (PDT)
 Received: from wall-e.semfio.usp.br ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id s16sm8185118qkg.40.2019.10.08.11.47.43
+        by smtp.gmail.com with ESMTPSA id s16sm8185118qkg.40.2019.10.08.11.47.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2019 11:47:45 -0700 (PDT)
+        Tue, 08 Oct 2019 11:47:47 -0700 (PDT)
 From:   Lucas Oshiro <lucasseikioshiro@gmail.com>
 To:     git@vger.kernel.org
 Cc:     kernel-usp@googlegroups.com, rcdailey.lists@gmail.com,
         me@ttaylorr.com, peff@peff.net, matheus.bernardino@usp.br,
         =?UTF-8?q?B=C3=A1rbara=20Fernandes?= <barbara.dcf@gmail.com>
-Subject: [RFC WIP PATCH 1/3] tag: factor out tag reading from write_tag_body()
-Date:   Tue,  8 Oct 2019 15:47:25 -0300
-Message-Id: <20191008184727.14337-2-lucasseikioshiro@gmail.com>
+Subject: [RFC WIP PATCH 2/3] tag: factor out prepare tag template code
+Date:   Tue,  8 Oct 2019 15:47:26 -0300
+Message-Id: <20191008184727.14337-3-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20191008184727.14337-1-lucasseikioshiro@gmail.com>
 References: <20191008184727.14337-1-lucasseikioshiro@gmail.com>
@@ -69,86 +69,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve code readability by moving tag reading to a new function called
-get_tag_body, which will be used in the implementation of the git tag
---amend functionality.
+Improve code readability by moving tag body reading to a new function called
+get_tag_body. This function will be used in the following patches to fix the
+--no-edit flag.
 
-Add warning in write_tag_body() in case the tag body is not successfully
-recovered.
+Enhance legibility by encapsulating code that loads previous tag message
+(if any) in new function prepare_tag_template. This code refactoring is
+part of a series of commits that intend to implement the git tag --amend
+flag and fix the functionality of --no-edit.
 
 Co-authored-by: Bárbara Fernandes <barbara.dcf@gmail.com>
-Signed-off-by: Bárbara Fernandes <barbara.dcf@gmail.com>
-Signed-off-by: Lucas Oshiro <lucasseikioshiro@gmail.com>
 Helped-by: Matheus Tavares <matheus.bernardino@usp.br>
+Signed-off-by: Lucas Oshiro <lucasseikioshiro@gmail.com>
+Signed-off-by: Bárbara Fernandes <barbara.dcf@gmail.com>
 ---
- builtin/tag.c | 42 ++++++++++++++++++++++++++++++++++--------
- 1 file changed, 34 insertions(+), 8 deletions(-)
+ builtin/tag.c | 65 ++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 39 insertions(+), 26 deletions(-)
 
 diff --git a/builtin/tag.c b/builtin/tag.c
-index e0a4c25382..e1e3549af9 100644
+index e1e3549af9..0322bdbdfb 100644
 --- a/builtin/tag.c
 +++ b/builtin/tag.c
-@@ -170,26 +170,52 @@ static int git_tag_config(const char *var, const char *value, void *cb)
- 	return git_color_default_config(var, value, cb);
- }
+@@ -244,6 +244,43 @@ static const char message_advice_nested_tag[] =
+ 	   "\n"
+ 	   "\tgit tag -f %s %s^{}");
  
--static void write_tag_body(int fd, const struct object_id *oid)
-+/* 
-+ * Returns the tag body of the given oid or NULL, in case of error. If size is
-+ * not NULL it is assigned the body size in bytes (excluding the '\0').
++/*
++ * Write the tag template message with previous tag body (if any) to the given
++ * file.
 + */
-+static char *get_tag_body(const struct object_id *oid, size_t *size) 
- {
--	unsigned long size;
-+	unsigned long buf_size;
- 	enum object_type type;
--	char *buf, *sp;
-+	char *buf, *sp, *tag_body;
-+	size_t tag_body_size, signature_offset;
- 
--	buf = read_object_file(oid, &type, &size);
-+	buf = read_object_file(oid, &type, &buf_size);
- 	if (!buf)
--		return;
-+		return NULL;
- 	/* skip header */
- 	sp = strstr(buf, "\n\n");
- 
--	if (!sp || !size || type != OBJ_TAG) {
-+	if (!sp || !buf_size || type != OBJ_TAG) {
- 		free(buf);
--		return;
-+		return NULL;
- 	}
- 	sp += 2; /* skip the 2 LFs */
--	write_or_die(fd, sp, parse_signature(sp, buf + size - sp));
-+	signature_offset = parse_signature(sp, buf + buf_size - sp);
-+	sp[signature_offset] = '\0';
- 
-+	/* detach sp from buf */
-+	tag_body_size = strlen(sp) + 1;
-+	tag_body = xmalloc(tag_body_size);
-+	xsnprintf(tag_body, tag_body_size, "%s", sp);
- 	free(buf);
-+	if (size)
-+		*size = tag_body_size - 1; /* exclude '\0' */
-+	return tag_body;
++static void prepare_tag_template(struct strbuf *given_msg,
++				 struct create_tag_options *opt,
++				 struct object_id *prev, char *path,
++				 const char *tag)
++{
++       int fd;
++
++	fd = open(path, O_CREAT | O_TRUNC | O_WRONLY, 0600);
++	if (fd < 0)
++		die_errno(_("could not create file '%s'"), path);
++
++	if (opt->message_given) {
++		write_or_die(fd, given_msg->buf, given_msg->len);
++		strbuf_reset(given_msg);
++	} else if (!is_null_oid(prev)) {
++		write_tag_body(fd, prev);
++	} else {
++		struct strbuf template = STRBUF_INIT;
++		strbuf_addch(&template, '\n');
++		if (opt->cleanup_mode == CLEANUP_ALL) {
++			strbuf_commented_addf(&template, _(tag_template), tag,
++					      comment_line_char);
++		} else {
++			strbuf_commented_addf(&template,
++					      _(tag_template_nocleanup), tag,
++					      comment_line_char);
++		}
++		write_or_die(fd, template.buf, template.len);
++		strbuf_release(&template);
++	}
++	close(fd);
 +}
 +
-+static void write_tag_body(int fd, const struct object_id *oid)
-+{
-+	size_t size;
-+	const char *tag_body = get_tag_body(oid, &size);
-+
-+	if (!tag_body) {
-+		warning("failed to get tag body for %s", oid->hash);
-+		return;
-+	}
-+	printf("tag_body: <%s>\n", tag_body);
-+	write_or_die(fd, tag_body, size);
- }
+ static void create_tag(const struct object_id *object, const char *object_ref,
+ 		       const char *tag,
+ 		       struct strbuf *buf, struct create_tag_options *opt,
+@@ -251,7 +288,7 @@ static void create_tag(const struct object_id *object, const char *object_ref,
+ {
+ 	enum object_type type;
+ 	struct strbuf header = STRBUF_INIT;
+-	char *path = NULL;
++	char *path = git_pathdup("TAG_EDITMSG");
  
- static int build_tag_object(struct strbuf *buf, int sign, struct object_id *result)
+ 	type = oid_object_info(the_repository, object, NULL);
+ 	if (type <= OBJ_NONE)
+@@ -271,31 +308,7 @@ static void create_tag(const struct object_id *object, const char *object_ref,
+ 		    git_committer_info(IDENT_STRICT));
+ 
+ 	if (!opt->message_given || opt->use_editor) {
+-		int fd;
+-
+-		/* write the template message before editing: */
+-		path = git_pathdup("TAG_EDITMSG");
+-		fd = open(path, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+-		if (fd < 0)
+-			die_errno(_("could not create file '%s'"), path);
+-
+-		if (opt->message_given) {
+-			write_or_die(fd, buf->buf, buf->len);
+-			strbuf_reset(buf);
+-		} else if (!is_null_oid(prev)) {
+-			write_tag_body(fd, prev);
+-		} else {
+-			struct strbuf buf = STRBUF_INIT;
+-			strbuf_addch(&buf, '\n');
+-			if (opt->cleanup_mode == CLEANUP_ALL)
+-				strbuf_commented_addf(&buf, _(tag_template), tag, comment_line_char);
+-			else
+-				strbuf_commented_addf(&buf, _(tag_template_nocleanup), tag, comment_line_char);
+-			write_or_die(fd, buf.buf, buf.len);
+-			strbuf_release(&buf);
+-		}
+-		close(fd);
+-
++		prepare_tag_template(buf, opt, prev, path, tag);
+ 		if (launch_editor(path, buf, NULL)) {
+ 			fprintf(stderr,
+ 			_("Please supply the message using either -m or -F option.\n"));
 -- 
 2.23.0
 
