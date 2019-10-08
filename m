@@ -2,177 +2,225 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,UNPARSEABLE_RELAY shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F1701F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 07:49:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E52A41F4BE
+	for <e@80x24.org>; Tue,  8 Oct 2019 07:55:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730367AbfJHHtl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 03:49:41 -0400
-Received: from mout.gmx.net ([212.227.15.18]:37305 "EHLO mout.gmx.net"
+        id S1730389AbfJHHzG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 03:55:06 -0400
+Received: from smtp.soverin.net ([159.69.232.138]:34279 "EHLO smtp.soverin.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730167AbfJHHtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 03:49:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570520977;
-        bh=bOegkZxLOmzY6gnpJcBF48vmA0TG0ViRU3QkDxFNvTM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=lM9OyyUjzap9lafcEmi8IjqLiTiu5Rbjx4FYvQxOEzayW+7Kl2SoourjvT6MQZILN
-         zx4m3oc0unt/EUzcZSVUtXPbIMTZGB4mD/80oyNvw92OCiqWGk6i5rUPkywvnLAqaC
-         zkADG98hwUlAoIsl15RHilzf8AxMwSBqKXOrfblY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGhuK-1iMdnv2P7i-00DrTf; Tue, 08
- Oct 2019 09:49:37 +0200
-Date:   Tue, 8 Oct 2019 09:49:37 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-cc:     =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-        git@vger.kernel.org, entwicklung@pengutronix.de
-Subject: Re: Regression in v2.23
-In-Reply-To: <nycvar.QRO.7.76.6.1910080932560.46@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1910080947070.46@tvgsbejvaqbjf.bet>
-References: <20191007110645.7eljju2h6g7ts7lf@pengutronix.de> <20191007134831.GA74671@cat> <nycvar.QRO.7.76.6.1910080932560.46@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730209AbfJHHzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 03:55:06 -0400
+X-Greylist: delayed 508 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Oct 2019 03:55:04 EDT
+Received: from soverin.net by soverin.net
+From:   Toon Claes <toon@iotcl.com>
+To:     git@vger.kernel.org
+Cc:     Toon Claes <toon@iotcl.com>,
+        Zeger-Jan van de Weg <git@zjvandeweg.nl>
+Subject: [PATCH 1/1] commit: add support to provide --coauthor
+Date:   Tue,  8 Oct 2019 09:49:35 +0200
+Message-Id: <20191008074935.10972-1-toon@iotcl.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:i5thB0meLFdnxuHd5ZFnp9aMmSaGHHjQPrz4DcsbOfIyKgMX/xM
- bu0qz/uFT1qzJp0PQ9ha3KHLJrAaKeyUGI7Ni/wgiW1zXyzi8DJcpNm+xD6xWDyZpWPtr4+
- GYdLYjUsHXY+jeqBOFVBRyCN7VAnkB6m94sm8Xj4edLmHyYAJ04P6njr3AOLzDW4oTon2Z/
- IvoE1SHVIHh0tfYCizy8g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:P1PWlq6qH9Q=:k8MjxMkT7Xrk73U++eEYwF
- 7KfK6/pJTo1XacNnBOKgYkzTcPcyT6ruoYkxCqd73U5Yzi2xhd9C8gKK+N9rdAXh+P5+5vSSN
- a2NaHBEinEslOD0RwrGOB3Nye/Q93J3u1SBmcfAbtCcGrCgU7i6FMfeyDyimPDHxA/5T9LLUP
- GHMH2jNJCFGy7q1Ki7G3vXzouslD0/toCJtce781Yho8FhwRCH4jG4HjRuH50QVCMq9lyGnoH
- A03EUhMxYfvnc8IiIUoRpr/HeFaMGbCmFoj/Va9WJOZ4nukfhyMDnRKevlQpGlQBkcA4wf4RS
- ts1HEkLKzkrrr19ej1qqYRFcuSYGgmmLzVHk/KZeKjrN5Hxg4eCcycl7+t+W1L/ix7ZH3ioNp
- IcXWfqH0QrVCPzr3QClKZIv0bd6P9n28Uq6j8eBuI9e1izezWyezcNTH8Zrv4WzezRjOhEVNC
- 6hJSbJFWfWcD9OgvmbxV+yapuo2jcIP24JGKIwtmbN4TLkS+qiAjJ/guNhUKErp4ciI7LJwCO
- HrrymmuFriJ+LblqHLEPg67y9BAZdqOxj6F/SAlQCg/pObj5XhiVzsnheneyhxPueKezjhvAs
- 6HdCrEpgSPqcOgoXOqW2k9VQzBFZrmhU+Cmj4XI0H78n+QVOqs9fX2MkWO3nLfEwu3L6L45BN
- Qq6mGZLlYKbTKwFVMBRC9d7wmV1vNXNkkJC0C6cL8yiDqrvHSPGjM38lAjKG2vzFiYnykMGow
- +AKTtTJrLXacA9l5GNJmQX1tj9cNHM4WZA1yZ0BCdaSvtZipSnsWXkvsR97mDIADwc2lTqot5
- 7nWSP1tdYv79OidJ1yyDXza686UTFCxK6ZoBRiMNUvyq9glSzYt7riPmiKvpEiHttY6uSqmKR
- EccT7FqzospuqL1u3TAlE6gzzhMvcbhDIVf1iOir64tPueifZE3axECSchN++C1rpxbKzLkGC
- UZYu24a8R20BW5V0SvIHbX3JaApwdcj3aS9B5rTAFTrBhRyZlsrgQ0CsVPomHDAbcC2YGh5NH
- OMofogUTr56Ht6I9eTkjkNE/LmV+bS67KfYjcGBAy8o6xWOOfo7ZsAw6FWsD+3J16NL+dKK/5
- a/tOw++YEboUQyddSAc0ZKKcRQ0vWNauABYG7n/ROBP6rq+qLuKCSgltXsKzk79eq4o0WfvR/
- NYdcyH9ha8Laom0bAgslLAxmoiK4a+QHyv5ne3L4hZ103oqGFFHrta5dpI8nFNltZ+AWTt0p/
- bwVoP1p4NTO4/oML0avG9vcYZY4TD1chrYXwscJuRR77lYyFi8dIgUYPIj+Q=
-Content-Transfer-Encoding: quoted-printable
+X-Virus-Scanned: clamav-milter 0.101.4 at c03mi01
+X-Virus-Status: Clean
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas,
+Add support to provide the Co-author when committing. For each
+co-author provided with --coauthor=<coauthor>, a line is added at the
+bottom of the commit message, like this:
 
-On Tue, 8 Oct 2019, Johannes Schindelin wrote:
+    Co-authored-by: <coauthor>
 
-> On Mon, 7 Oct 2019, Thomas Gummerer wrote:
->
-> > Subject: [PATCH] range-diff: don't segfault with mode-only changes
-> >
-> > If we don't have a new file, deleted file or renamed file in a diff,
-> > we currently add 'patch.new_name' to the range-diff header.  This
-> > works well for files that are changed.  However if we have a pure mode
-> > change, 'patch.new_name' is NULL, and thus range-diff segfaults.
-> >
-> > We can however rely on 'patch.def_name' in that case, which is
-> > extracted from the 'diff --git' line and should be equal to
-> > 'patch.new_name'.  Use that instead to avoid the segfault.
-> >
-> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> > ---
-> >  range-diff.c | 20 ++++++++++----------
-> >  1 file changed, 10 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/range-diff.c b/range-diff.c
-> > index ba1e9a4265..d8d906b3c6 100644
-> > --- a/range-diff.c
-> > +++ b/range-diff.c
-> > @@ -116,20 +116,20 @@ static int read_patches(const char *range, struc=
-t string_list *list)
-> >  			if (len < 0)
-> >  				die(_("could not parse git header '%.*s'"), (int)len, line);
-> >  			strbuf_addstr(&buf, " ## ");
-> > -			if (patch.is_new > 0)
-> > +			free(current_filename);
-> > +			if (patch.is_new > 0) {
-> >  				strbuf_addf(&buf, "%s (new)", patch.new_name);
-> > -			else if (patch.is_delete > 0)
-> > +				current_filename =3D xstrdup(patch.new_name);
-> > +			} else if (patch.is_delete > 0) {
-> >  				strbuf_addf(&buf, "%s (deleted)", patch.old_name);
-> > -			else if (patch.is_rename)
-> > -				strbuf_addf(&buf, "%s =3D> %s", patch.old_name, patch.new_name);
-> > -			else
-> > -				strbuf_addstr(&buf, patch.new_name);
-> > -
-> > -			free(current_filename);
-> > -			if (patch.is_delete > 0)
-> >  				current_filename =3D xstrdup(patch.old_name);
-> > -			else
-> > +			} else if (patch.is_rename) {
-> > +				strbuf_addf(&buf, "%s =3D> %s", patch.old_name, patch.new_name);
-> >  				current_filename =3D xstrdup(patch.new_name);
-> > +			} else {
-> > +				strbuf_addstr(&buf, patch.def_name);
-> > +				current_filename =3D xstrdup(patch.def_name);
-> > +			}
-> >
-> >  			if (patch.new_mode && patch.old_mode &&
-> >  			    patch.old_mode !=3D patch.new_mode)
-> > --
->
-> I am not quite sure that this fixes it...
+It's a common practice use when pairing up with other people and both
+authors want to in the commit message.
 
-Whoops. I should learn to distrust `git apply` claiming success when
-running in `t/`. (I tried to apply your patch, but nothing was actually
-applied before I ran `make`.)
+Co-authored-by: Zeger-Jan van de Weg <git@zjvandeweg.nl>
+Signed-off-by: Toon Claes <toon@iotcl.com>
+---
+ Documentation/git-commit.txt |  5 ++++
+ builtin/commit.c             |  7 ++++++
+ sequencer.c                  | 44 ++++++++++++++++++++++++++----------
+ sequencer.h                  |  2 ++
+ t/t7502-commit-porcelain.sh  | 11 +++++++++
+ 5 files changed, 57 insertions(+), 12 deletions(-)
 
-So it totally fixes the issue (feel free to just pick up the regression
-test case).
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index afa7b75a23..c059944e38 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -140,6 +140,11 @@ OPTIONS
+ 	commit by that author (i.e. rev-list --all -i --author=<author>);
+ 	the commit author is then copied from the first such commit found.
 
-Having said that, I would agree with Junio that it'd be nicer to make
-`parse_git_diff_header()` more useful to all of its callers, including
-future ones.
++--coauthor=<coauthor>::
++        Add a Co-authored-by line with the specified author. Specify the
++	author using the standard `Co Artur <co-artur@example.com>`
++	format.
++
+ --date=<date>::
+ 	Override the author date used in the commit.
 
-Sorry for the misreport, and thanks for all the patch,
-Dscho
+diff --git a/builtin/commit.c b/builtin/commit.c
+index ae7aaf6dc6..feb423ed6f 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -110,6 +110,7 @@ static int config_commit_verbose = -1; /* unspecified */
+ static int no_post_rewrite, allow_empty_message;
+ static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
+ static char *sign_commit;
++static struct string_list coauthors = STRING_LIST_INIT_NODUP;
 
-> Here is my regression test case:
->
-> -- snipsnap --
-> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-> index ec548654ce1..6aca7f5a5b1 100755
-> --- a/t/t3206-range-diff.sh
-> +++ b/t/t3206-range-diff.sh
-> @@ -354,4 +354,18 @@ test_expect_success 'format-patch --range-diff as c=
-ommentary' '
->  	grep "> 1: .* new message" 0001-*
->  '
->
-> +test_expect_success 'range-diff and mode-only changes' '
-> +	git switch -c mode-only &&
-> +
-> +	test_commit mode-only &&
-> +
-> +	: pretend it is executable &&
-> +	git add --chmod=3D+x mode-only.t &&
-> +	chmod a+x mode-only.t &&
-> +	test_tick &&
-> +	git commit -m mode-only &&
-> +
-> +	git range-diff @^...
-> +'
-> +
->  test_done
->
->
->
+ /*
+  * The default commit message cleanup mode will remove the lines
+@@ -672,6 +673,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	int clean_message_contents = (cleanup_mode != COMMIT_MSG_CLEANUP_NONE);
+ 	int old_display_comment_prefix;
+ 	int merge_contains_scissors = 0;
++	int i;
+
+ 	/* This checks and barfs if author is badly specified */
+ 	determine_author_info(author_ident);
+@@ -803,6 +805,10 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	if (clean_message_contents)
+ 		strbuf_stripspace(&sb, 0);
+
++	for (i = 0; i < coauthors.nr; i++) {
++		append_coauthor(&sb, coauthors.items[i].string);
++	}
++
+ 	if (signoff)
+ 		append_signoff(&sb, ignore_non_trailer(sb.buf, sb.len), 0);
+
+@@ -1504,6 +1510,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("use autosquash formatted message to squash specified commit")),
+ 		OPT_BOOL(0, "reset-author", &renew_authorship, N_("the commit is authored by me now (used with -C/-c/--amend)")),
+ 		OPT_BOOL('s', "signoff", &signoff, N_("add Signed-off-by:")),
++		OPT_STRING_LIST(0, "coauthor", &coauthors, N_("co-author"), N_("add Co-authored-by:")),
+ 		OPT_FILENAME('t', "template", &template_file, N_("use specified template file")),
+ 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
+ 		OPT_CLEANUP(&cleanup_arg),
+diff --git a/sequencer.c b/sequencer.c
+index d648aaf416..8958a22470 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -36,6 +36,7 @@
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+
+ static const char sign_off_header[] = "Signed-off-by: ";
++static const char coauthor_header[] = "Co-authored-by: ";
+ static const char cherry_picked_prefix[] = "(cherry picked from commit ";
+
+ GIT_PATH_FUNC(git_path_commit_editmsg, "COMMIT_EDITMSG")
+@@ -4385,15 +4386,9 @@ int sequencer_pick_revisions(struct repository *r,
+ 	return res;
+ }
+
+-void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag)
++static void append_footer(struct strbuf *msgbuf, struct strbuf* sob, size_t ignore_footer, size_t no_dup_sob)
+ {
+-	unsigned no_dup_sob = flag & APPEND_SIGNOFF_DEDUP;
+-	struct strbuf sob = STRBUF_INIT;
+-	int has_footer;
+-
+-	strbuf_addstr(&sob, sign_off_header);
+-	strbuf_addstr(&sob, fmt_name(WANT_COMMITTER_IDENT));
+-	strbuf_addch(&sob, '\n');
++	size_t has_footer;
+
+ 	if (!ignore_footer)
+ 		strbuf_complete_line(msgbuf);
+@@ -4402,11 +4397,11 @@ void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag)
+ 	 * If the whole message buffer is equal to the sob, pretend that we
+ 	 * found a conforming footer with a matching sob
+ 	 */
+-	if (msgbuf->len - ignore_footer == sob.len &&
+-	    !strncmp(msgbuf->buf, sob.buf, sob.len))
++	if (msgbuf->len - ignore_footer == sob->len &&
++	    !strncmp(msgbuf->buf, sob->buf, sob->len))
+ 		has_footer = 3;
+ 	else
+-		has_footer = has_conforming_footer(msgbuf, &sob, ignore_footer);
++		has_footer = has_conforming_footer(msgbuf, sob, ignore_footer);
+
+ 	if (!has_footer) {
+ 		const char *append_newlines = NULL;
+@@ -4440,7 +4435,32 @@ void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag)
+
+ 	if (has_footer != 3 && (!no_dup_sob || has_footer != 2))
+ 		strbuf_splice(msgbuf, msgbuf->len - ignore_footer, 0,
+-				sob.buf, sob.len);
++				sob->buf, sob->len);
++}
++
++void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag)
++{
++	unsigned no_dup_sob = flag & APPEND_SIGNOFF_DEDUP;
++	struct strbuf sob = STRBUF_INIT;
++
++	strbuf_addstr(&sob, sign_off_header);
++	strbuf_addstr(&sob, fmt_name(WANT_COMMITTER_IDENT));
++	strbuf_addch(&sob, '\n');
++
++	append_footer(msgbuf, &sob, ignore_footer, no_dup_sob);
++
++	strbuf_release(&sob);
++}
++
++void append_coauthor(struct strbuf *msgbuf, const char *coauthor)
++{
++	struct strbuf sob = STRBUF_INIT;
++
++	strbuf_addstr(&sob, coauthor_header);
++	strbuf_addstr(&sob, coauthor);
++	strbuf_addch(&sob, '\n');
++
++	append_footer(msgbuf, &sob, 0, 1);
+
+ 	strbuf_release(&sob);
+ }
+diff --git a/sequencer.h b/sequencer.h
+index 574260f621..e36489fce7 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -170,6 +170,8 @@ int todo_list_rearrange_squash(struct todo_list *todo_list);
+  */
+ void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag);
+
++void append_coauthor(struct strbuf *msgbuf, const char* co_author);
++
+ void append_conflicts_hint(struct index_state *istate,
+ 		struct strbuf *msgbuf, enum commit_msg_cleanup_mode cleanup_mode);
+ enum commit_msg_cleanup_mode get_cleanup_mode(const char *cleanup_arg,
+diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
+index 14c92e4c25..5ed6735cf4 100755
+--- a/t/t7502-commit-porcelain.sh
++++ b/t/t7502-commit-porcelain.sh
+@@ -138,6 +138,17 @@ test_expect_success 'partial removal' '
+
+ '
+
++test_expect_success 'co-author' '
++
++	>coauthor &&
++	git add coauthor &&
++	git commit -m "thank you" --co-author="Author <author@example.com>" &&
++	git cat-file commit HEAD >commit.msg &&
++	sed -ne "s/Co-authored-by: //p" commit.msg >actual &&
++	echo "Author <author@example.com>" >expected &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'sign off' '
+
+ 	>positive &&
+--
+2.22.0.rc3
