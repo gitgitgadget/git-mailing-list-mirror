@@ -8,107 +8,178 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B7CF1F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 09:14:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57F861F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 09:22:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729915AbfJHJOQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 05:14:16 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:38948 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729865AbfJHJOP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 05:14:15 -0400
-Received: by mail-pg1-f196.google.com with SMTP id e1so9921163pgj.6
-        for <git@vger.kernel.org>; Tue, 08 Oct 2019 02:14:14 -0700 (PDT)
+        id S1729790AbfJHJWu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 05:22:50 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:43934 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728866AbfJHJWu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 05:22:50 -0400
+Received: by mail-pg1-f195.google.com with SMTP id i32so2626936pgl.10
+        for <git@vger.kernel.org>; Tue, 08 Oct 2019 02:22:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ts594nS4zQHySY8BrkzPNC+WfSPHB45nmos2s9P03a0=;
-        b=YkBLe+JubZa1NRYQLTfstIbmB39q/Pr2pLdvMw6TCJ5g+sXVsN+wTHtBfb1dfUB3yj
-         n1qa73Cp2+C5xw6XdO5FMgfU5gh8+96w1XDwhoqmzwsM6RkHQg4kQNakYumzC8HwITdn
-         2dSO4nOsO0/mqXQrV2yVI3VYraiMqiaiZ5sdtBLibATIxbl4s/9VfUrPXFFmarRQns1S
-         ktfoKAqmKWTrdNMEJATsw32bGjeOkAQquHbePvm6NhybRtC2J6KyBkZ31TFdShXHWG7m
-         ZJFYsRJFwh3Sal5KhyFg+fNe/DLTdM0/u2lzH2Xe6vWZYcDEcyh3+cVOuklkyel9jtXl
-         /xaw==
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+p4ab3OCqNFVxDO7dZsf+tlwvDdtHpSPyXLHgP0jF6E=;
+        b=A54Fk4zIVLfeRPtDHX+tGKc+dPwi68HUK2IjV5QkUnAvZ9thVJUtRBjqGUl2PUWC9A
+         I3Z/4f80s0CCz0nMvYdQScrQdtolzHmTNWTtGlCUDQJ95SE/vVQqYtb3H6PFQPEE3Udr
+         WoL9BTU7/etgVsNvUgkRIr1ZDkMpH3fd+GAjL/s8AHd2bln3sVha28msai74ZlmIDUFi
+         D+nXu4hq40q4k4ayBkiFTofjhNVlr3SCnBASTD1fBAmpMBGumOyzX9ViAITVNeuTlKSU
+         vLIaN0Q8jcw1iLiB9gFcEVJldVx1WywGDszhvlnDsjmJG0+H7b6TBGZ2TwKsn0MaBsY8
+         BYew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ts594nS4zQHySY8BrkzPNC+WfSPHB45nmos2s9P03a0=;
-        b=KeLR5G0ZijqJeOqcklx9ehWW6asLFxw8qTGCp5vXgaRk0JyGALBFAkJAQKXdUXfrtX
-         Q2Q6nqWZdJhDnyUS/VtpReu3ZUIYprvH5c5hcHqBGGED3oUjtnAb2WOeXqzLfy0v3L4a
-         7FrkEk+eCZau21R9vXZyfNJxwN4UGLeX5bxUMr7EamP1YR5a2KubCRvpevgOGBVqWjnj
-         WhGiAb5YBTl5bdd3EkZ341ywFr2+sykkNtwyUkWW5AyDpo3MDXPssC8DpUscn3BsPn3n
-         MosDuG2w8z5UFC1JJshmJJOtpNh3Be/erKARitTNZS4D78eJTAXRtp/UBY8V9lCh8SCv
-         EAGA==
-X-Gm-Message-State: APjAAAXbgCdzqfB50T9OOMmiXP7US3Px2a7C6ojyLQ0ZraOMWjYEKOS1
-        YhzcPHQvIVCL0CYPqTb1WqNmyTlr
-X-Google-Smtp-Source: APXvYqwyRET/zBNygWIei190PttsMt0+5VgchXLWhdVGQVPazKye8GNMohZi/ka7DqPeYvY6nUCdow==
-X-Received: by 2002:a65:6407:: with SMTP id a7mr13355364pgv.123.1570526053358;
-        Tue, 08 Oct 2019 02:14:13 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+p4ab3OCqNFVxDO7dZsf+tlwvDdtHpSPyXLHgP0jF6E=;
+        b=KQE3OfGJdRcL1lePXCZoP98dbkuhTMUytHtsY+XIH09I5mp7K0aLY/W2syWRlhi2FT
+         dvMpu2PvJqQXNsh1su98a7+aWNjm4/qt7udBhf6y10l/zhcVE1MEd9Zv13pVo5bXyBEw
+         fa81jFKRNTuwgZcQNeEfPEKwRqnOwK2UzPajm30wJb4MM4dfliT1er7a1VU2CaKoHYAJ
+         Ftdzo4ImPAC2WnCWD4CcEWSXekoEsI0J4Ev6Z9uv6BMfopWT/z0slM+/C0ResATAyVwk
+         1gSygaEfOl5IoNP9ZLg1s7avrATTzbFR7SY8yUGsO8ftETVMsm/NvStfjDDid37ziTjW
+         +vEw==
+X-Gm-Message-State: APjAAAU0JacULDaNGjufNHn+GlFzLdoDiN4r3l2n/i7093SuK+7eRnS0
+        9EppNjg2xDaxCTQZrWUvrh0/pN8s
+X-Google-Smtp-Source: APXvYqx83hqRDSCJCH/5TspH4lll6aPrnoTN8gqRcSR31HXZNuNgKtKYYGKa1+GzpAc2WDKYPnCJGA==
+X-Received: by 2002:a17:90a:37d1:: with SMTP id v75mr4677588pjb.33.1570526569151;
+        Tue, 08 Oct 2019 02:22:49 -0700 (PDT)
 Received: from generichostname ([2601:646:280:1b30:80db:d816:4d15:ae2a])
-        by smtp.gmail.com with ESMTPSA id d19sm1509607pjz.5.2019.10.08.02.14.12
+        by smtp.gmail.com with ESMTPSA id q29sm21776038pgc.88.2019.10.08.02.22.48
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2019 02:14:12 -0700 (PDT)
-Date:   Tue, 8 Oct 2019 02:14:11 -0700
+        Tue, 08 Oct 2019 02:22:48 -0700 (PDT)
+Date:   Tue, 8 Oct 2019 02:22:47 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] t4014: treat rev-list output as the expected value
-Message-ID: <30d03ed76e46a10bea883ba3fe85b186fbf31d25.1570526007.git.liu.denton@gmail.com>
-References: <20191007210306.GF11529@szeder.dev>
+Subject: [PATCH v2] t0000: cover GIT_SKIP_TESTS blindspots
+Message-ID: <b5f3af8a630aec2d8bffe8e76f1d113171eda250.1570526491.git.liu.denton@gmail.com>
+References: <08273a0d0deae610b93d7f5eb28b0df5f978bf20.1569996425.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191007210306.GF11529@szeder.dev>
+In-Reply-To: <08273a0d0deae610b93d7f5eb28b0df5f978bf20.1569996425.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 6bd26f58ea (t4014: use test_line_count() where possible, 2019-08-27),
-we converted many test cases to take advantage of the test_line_count()
-function. In one conversion, we inverted the expected and actual value
-as tested by test_line_count(). Although functionally correct, if
-format-patch ever produced incorrect output, the debugging output would
-be a bunch of hashes which would be difficult to debug.
+Currently, the tests for GIT_SKIP_TESTS do not cover the situation where
+we skip an entire test suite. The tests also do not cover the situation
+where we have GIT_SKIP_TESTS defined but the test suite does not match.
 
-Invert the expected and actual values provided to test_line_count() so
-that if format-patch produces incorrect output, the debugging output
-will be a list of human-readable files instead.
+Add two test cases so we cover this blindspot.
 
-Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
-Thanks for point out my mistake, Szeder. This patch can be applied to
-the tip of 'dl/format-patch-doc-test-cleanup' and then we should base
-Bert's changes on top of this branch.
+Changes since v1:
 
- t/t4014-format-patch.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+* Added another test case to cover the blindspot where GIT_SKIP_TESTS is
+  defined but the test suite does not match.
 
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 83f52614d3..72b09896cf 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1610,8 +1610,9 @@ test_expect_success 'format-patch format.outputDirectory option' '
- 	test_config format.outputDirectory patches &&
- 	rm -fr patches &&
- 	git format-patch master..side &&
--	git rev-list master..side >list &&
--	test_line_count = $(ls patches | wc -l) list
-+	count=$(git rev-list --count master..side) &&
-+	ls patches >list &&
-+	test_line_count = $count list
- '
+Range-diff against v1:
+1:  08273a0d0d ! 1:  b5f3af8a63 t0000: cover GIT_SKIP_TESTS blindspot
+    @@ Metadata
+     Author: Denton Liu <liu.denton@gmail.com>
+     
+      ## Commit message ##
+    -    t0000: cover GIT_SKIP_TESTS blindspot
+    +    t0000: cover GIT_SKIP_TESTS blindspots
+     
+         Currently, the tests for GIT_SKIP_TESTS do not cover the situation where
+    -    we skip an entire test suite. Add a test case so we cover this
+    -    blindspot.
+    +    we skip an entire test suite. The tests also do not cover the situation
+    +    where we have GIT_SKIP_TESTS defined but the test suite does not match.
+    +
+    +    Add two test cases so we cover this blindspot.
+     
+      ## t/t0000-basic.sh ##
+     @@ t/t0000-basic.sh: test_expect_success 'GIT_SKIP_TESTS sh pattern' "
+    @@ t/t0000-basic.sh: test_expect_success 'GIT_SKIP_TESTS sh pattern' "
+     +		EOF
+     +	)
+     +"
+    ++
+    ++test_expect_success 'GIT_SKIP_TESTS does not skip unmatched suite' "
+    ++	(
+    ++		GIT_SKIP_TESTS='notgit' && export GIT_SKIP_TESTS &&
+    ++		run_sub_test_lib_test git-skip-tests-unmatched-suite \
+    ++			'GIT_SKIP_TESTS does not skip unmatched suite' <<-\\EOF &&
+    ++		for i in 1 2 3
+    ++		do
+    ++			test_expect_success \"passing test #\$i\" 'true'
+    ++		done
+    ++		test_done
+    ++		EOF
+    ++		check_sub_test_lib_test git-skip-tests-unmatched-suite <<-\\EOF
+    ++		> ok 1 - passing test #1
+    ++		> ok 2 - passing test #2
+    ++		> ok 3 - passing test #3
+    ++		> # passed all 3 test(s)
+    ++		> 1..3
+    ++		EOF
+    ++	)
+    ++"
+     +
+      test_expect_success '--run basic' "
+      	run_sub_test_lib_test run-basic \
+
+ t/t0000-basic.sh | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 4c01f60dd3..4d3f7ba295 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -391,6 +391,44 @@ test_expect_success 'GIT_SKIP_TESTS sh pattern' "
+ 	)
+ "
  
- test_expect_success 'format-patch -o overrides format.outputDirectory' '
++test_expect_success 'GIT_SKIP_TESTS entire suite' "
++	(
++		GIT_SKIP_TESTS='git' && export GIT_SKIP_TESTS &&
++		run_sub_test_lib_test git-skip-tests-entire-suite \
++			'GIT_SKIP_TESTS entire suite' <<-\\EOF &&
++		for i in 1 2 3
++		do
++			test_expect_success \"passing test #\$i\" 'true'
++		done
++		test_done
++		EOF
++		check_sub_test_lib_test git-skip-tests-entire-suite <<-\\EOF
++		> 1..0 # SKIP skip all tests in git
++		EOF
++	)
++"
++
++test_expect_success 'GIT_SKIP_TESTS does not skip unmatched suite' "
++	(
++		GIT_SKIP_TESTS='notgit' && export GIT_SKIP_TESTS &&
++		run_sub_test_lib_test git-skip-tests-unmatched-suite \
++			'GIT_SKIP_TESTS does not skip unmatched suite' <<-\\EOF &&
++		for i in 1 2 3
++		do
++			test_expect_success \"passing test #\$i\" 'true'
++		done
++		test_done
++		EOF
++		check_sub_test_lib_test git-skip-tests-unmatched-suite <<-\\EOF
++		> ok 1 - passing test #1
++		> ok 2 - passing test #2
++		> ok 3 - passing test #3
++		> # passed all 3 test(s)
++		> 1..3
++		EOF
++	)
++"
++
+ test_expect_success '--run basic' "
+ 	run_sub_test_lib_test run-basic \
+ 		'--run basic' --run='1 3 5' <<-\\EOF &&
 -- 
 2.23.0.248.g3a9dd8fb08
 
