@@ -2,144 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14B071F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 12:46:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C23011F4BE
+	for <e@80x24.org>; Tue,  8 Oct 2019 13:56:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730947AbfJHMql (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 08:46:41 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53753 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730317AbfJHMqk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 08:46:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570538794;
-        bh=rgi9wAwmP2Htj3CjfG1z18UtWOxIAx3hX7D5N3wQ1Qw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ye3RtWg3ZrGfDWTo4ED8bfOwg1ZalrXe1jzRe5aLrWzeI2z3PUrYG/PTKDAdF2NM1
-         UTuRo/IdMBClrdIHCkaWGZNkheKPFzy18decQfxe64+Jau9aOcA16xhd1w2ZuXbNyS
-         hAdskCX1U1n9lYtjq4vHCjxYDzFNuiTQaCOMXrTM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MA7KU-1iP0wS35g2-00Bahe; Tue, 08
- Oct 2019 14:46:34 +0200
-Date:   Tue, 8 Oct 2019 14:46:34 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH v3 00/13] ci: include a Visual Studio build & test in
- our Azure Pipeline
-In-Reply-To: <xmqqzhicnfmr.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1910081423250.46@tvgsbejvaqbjf.bet>
-References: <pull.288.v2.git.gitgitgadget@gmail.com> <pull.288.v3.git.gitgitgadget@gmail.com> <xmqqimp26808.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910061157320.46@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1910062237440.46@tvgsbejvaqbjf.bet>
- <xmqq1rvp5pc0.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910072350300.46@tvgsbejvaqbjf.bet> <xmqqzhicnfmr.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1725900AbfJHN43 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 09:56:29 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:45859 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725848AbfJHN43 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 09:56:29 -0400
+Received: by mail-qt1-f195.google.com with SMTP id c21so25356407qtj.12
+        for <git@vger.kernel.org>; Tue, 08 Oct 2019 06:56:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=H1voVdbtdUmzVKa41zWGvHZXctO/vwm1t7Nlx8PvsxE=;
+        b=DDzby6nOMSPwAD6RAy5uhcHUIPnrFlsFcG++9Zot1ZIrCl9wTkicvRXyJs27dS+7D0
+         GZ2Jo5WMgSxET6l/Vmnu4ZUtzE+Jus0aVmCFtU35AiJHtMG4rkvQ5NgVbbJHQw0E6jHa
+         i3zKPAlNfg9zGSqvg7xqaW+AV2SzBA8ftYT8KwH8FiYxTUMnYAdTNRJcbZX+kHZ3yvG3
+         S+nOWM4/qmFzMf4lO3LCWRrvazqiaJx6Zc9vgfPfQCD5E852vx4ySIIz1TmKZJcn8LUH
+         IaP278t7BFk0YRPyq1BPZpiOpoawzwz9v42j+e2foL9+ZtMHZTllyYA/RGw0Rx5yvvBt
+         Zyag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=H1voVdbtdUmzVKa41zWGvHZXctO/vwm1t7Nlx8PvsxE=;
+        b=E4jgiE4j1woNG2JnPkHqomz6A0Mrfw1SSKHPL/9eRmqHWOv8QJ/H1ROA593mPb0Plo
+         7pveJQLFJpkY5wZ4f+lw/jvVLb//gXnRYDeP/tAiia/1sIg0DbX5EX64ycjkajXAFhkZ
+         H0AiwxcoGZ4Mrf1Clp9g9vxGqYwQankuWk0miE91BcnaFnStTAb3610YCkI5hzanA+pB
+         8UckxUt7tl+fhjjk0znTdjfiXU5nDZ66gK0ena+4goFowKBYQCoAHTJvr2om10/LQLFP
+         ACw/2Hx6QjwqisttiR6uTOOkh2c2K3qIKRmnrqDa6apUSb3pCz1EEXx7Y2S/6KNTXcO8
+         UBzg==
+X-Gm-Message-State: APjAAAWxrXel16jHqdKjo1uBMLdB0yDQSExOBJy6tR1OIb/PNpofZxPk
+        RVAkAmvdCgife1URomDRU9A0o28nj4E=
+X-Google-Smtp-Source: APXvYqy5cQ0jDHmk3r9aCPpu6kbvVQOP/RbmjGQWYeJF/e4K0SUVh/EBtmqzajFIy0agdXTDYr44cg==
+X-Received: by 2002:ad4:458d:: with SMTP id x13mr33454466qvu.85.1570542988355;
+        Tue, 08 Oct 2019 06:56:28 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c988:3ed2:5e14:1c0f? ([2001:4898:a800:1012:7abc:3ed2:5e14:1c0f])
+        by smtp.gmail.com with ESMTPSA id b16sm12350920qtk.65.2019.10.08.06.56.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Oct 2019 06:56:27 -0700 (PDT)
+Subject: Re: [PATCH v3 00/20] hashmap bug/safety/ease-of-use fixes
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Wong <e@80x24.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood123@gmail.com>
+References: <20191006233043.3516-1-e@80x24.org>
+ <nycvar.QRO.7.76.6.1910081055210.46@tvgsbejvaqbjf.bet>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <111295eb-8bac-7074-158d-a65903de9db7@gmail.com>
+Date:   Tue, 8 Oct 2019 09:56:26 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:cupto7lLAGifLQ0TAv5ks62egQ8m+SqLJE+omZiYspe8k7f+Nl4
- GDqKnPcEtwpkQWcFgkIErLyJVG7eMb1PcUqO9BR+D0ZELUQUu+51iWNOUHh+ADVLVWhANh7
- 6HXPhFfdSy9k6GApmlBIPesun1l7f1gK1CqJ/IBPxy181Fk+XFMaGdljNT6S1veAGS/aC1j
- EBM5LXcwUgN5d0p8YTb7g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SmuKHsaQZZc=:9XSpF3LrY+p8vMKMGEAKYT
- 1n6KsjTvBNa/kmO13TaC3q2S8+3/9hqVQw0ohPNsdamY4YQqQK71pA5AxkzDIJFjp/qxNycQj
- 9J/LGcpf/TvnXfhNAXcSGUChF3pp/jhIr05XH1WrCDkuJN5NRaSQFMOskVVg3TA0PLG3keyKZ
- SaGaLHkCDsazfI+4F71MHCW4LAcRm8cu17Ce+NPL2ewqAFD0Xyj5aT9IQVlZhmXIRbybDAsg2
- 0p09p8i/RXs3DcjNOq4ZsIoNs/ktu20FGWC3HtcKKDP2gsT1hBUf2RuutP8pP8F88dd1N2ywg
- hzitA9KafIQ+9jrNOvtOglFiq25cbRYgngjW8GbGqfSYoTUT+fHruYFVeHcqzNS9YDEo0uPH9
- tQq8J4gW2tKOgnahlOVAik6fyttFq3CkKbrpoi1ZAwHzIfwNtLFGJHeJ4Egp6rCvMjnydIKlo
- /AbdJp0nVCCarBrbJ4UTVXFryybz9xR0zwUQ+0j3rimPIincJK2J0Hv3plJTYZ5zbcfMxdod9
- zfn0ezgn+2oEc/QBAKudw476FaISjthMQzT7+2xddTw7+FKndDFRXTC3Bq2WptMtzuPj/mHYD
- qiQ1bi3o6rEJOPebF1XZRd84JO0Tfu1xINNhVqTkhQfTQ0bktJfvMxzZI8juawfBz4uvXMfwb
- qTg16iBLULiMMZYWpQnKlJGRNUs34byOvp283bf12xF5RUYFuxUKgFj1Q8k8BjuWvqGu4n24r
- reZZ6kdUkhv0J97h5T0Udm2aAc7zYOkp7QhCauuhjTYnh3+IbsBsjuc85wQRq9499flp0tzhY
- NPRJFUx14OkAlbTbQje778Lb8U/FM2cCFnkyLUhIMCeXiIPGeAA5PVD+bNztlZatGK0B3ngPc
- SxCEdWWyVZZ4AUojATDviwhBBsKppN97L8mrZQHGiHaz1zGXmgwRRev30rIkXg39ZYACz6eMu
- HDpDVfGvC2W5e8CsYINFHuTLKeB1PhoW9NvtlXrcfm4YM0LjOkDUruRIaYCK1q73I3A5qpxmk
- yQPn2fnEQYtQMeHXJPLM1HIyteEChxMgvov3Ju2y9TabfdhkH+FYuQ2u82OhLR7DsvqepLuFu
- XtQRqn1K9V3h5O7cOHDlIttOdu3iS+y8qcPn1YRWaiRwdWUcI8vDe7WbBJ4H/d5M9Bk5mCksQ
- iCwjFjM5CHYk5VOGfXW0edobOTh7dSZYLjiYphLhjGkVZFFzc12RETGoaVUfww2qPC8txMeRe
- kSOTIQcdYN/1C0uPT0Rs8hECEwO18Xfm61x3QWtwZTxx832tY/XTfxoYjN6o=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <nycvar.QRO.7.76.6.1910081055210.46@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 10/8/2019 4:58 AM, Johannes Schindelin wrote:
+> Hi Eric & Junio,
+> 
+> On Sun, 6 Oct 2019, Eric Wong wrote:
+> 
+>> v3 changes:
+>> - use __typeof__ to avoid invalid clang warning on uninitialized var
+>> - formatting fixes recommended by Stolee
+>> - add Reviewed-by for Stolee
+>> - add patch 20 to update docs to drop first member requirement
+> 
+> This has quite a bit of fallout, even more than previous rounds, it
+> seems. I need at least these fixup???s to fix the build of `pu`:
+> 
+> https://github.com/git-for-windows/git/commit/f74259754971b427a14e6290681e18950824b99d
+> https://github.com/git-for-windows/git/commit/124c8bc08e974e76ca7d956dc07eb288e71d639e
+> https://github.com/git-for-windows/git/commit/45948433d1b48ff513fbd37f134c0f1491c78192
+> 
+> Junio, feel free to fetch and squash those into the appropriate merge
+> commit(s) (I feel that 4432e8b5f36 (Merge branch 'ds/sparse-cone' into
+> pu, 2019-10-08) may be the right spot).
 
-On Tue, 8 Oct 2019, Junio C Hamano wrote:
+I expected that my series would have semantic conflicts with this series [1].
+I could re-work my code to take these changes into account, based on an
+appropriate merge of ds/include-exclude and ew/hashmap. ew/hashmap is likely
+much closer to merging than ds/sparse-cone.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> >> I didn't quite understand this part, though.
-> >>
-> >>     The default creation factor is 60 (roughly speaking, it wants 60%=
- of
-> >>     the lines to match between two patches, otherwise it considers th=
-e
-> >>     patches to be unrelated).
-> >>
-> >> Would the updated creation factor used which is 95 (roughly
-> >> speaking) want 95% of the lines to match between two patches?
-> >>
-> >> That would make the matching logic even pickier and reject more
-> >> paring, so I must be reading the statement wrong X-<.
-> >
-> > No, I must have written the opposite of what I tried to say, is all.
->
-> So, cfactor of 60 means at most 60% is allowed to differ and the
-> two patches are still considered to be related, while 95 means only
-> 5% needs to be common?  That would make more sense to me.
+Thanks for doing most of the heavy lifting, Johannes! I'll probably start by
+taking your fixups into the appropriate commits of my series.
 
-Okay, I not only wrote the opposite of what I wanted to say, I also
-misremembered.
+-Stolee
 
-When `range-diff` tries to determine matching pairs of patches, it
-builds an `(m+n)x(m+n)` cost matrix, where `m` is the number of patches
-in the first commit range and `n` is the number of patches in the second
-one.
-
-Why not `m x n`? Well, that's the obvious matrix, and that's what it
-starts with, essentially assigning the number of lines of the diff
-between the diffs as "cost".
-
-But then `git range-diff` extends the cost matrix to allow for _all_ of
-the `m` patches to be considered deleted, and _all_ of the `n` patches
-to be added. As cost, it cannot use a "diff of diffs" because there is
-no second diff. So it uses the number of lines of the one diff it has,
-multiplied by the creation factor interpreted as a percentage.
-
-The naive creation factor would be 100%, which is (almost) as if we
-assumed an empty diff for the missing diff. But that would make the
-range-diff too eager to dismiss rewrites, as experience obviously showed
-(not my experience, but Thomas Rast's, who came up with `tbdiff` after
-all): the diff of diffs includes a diff header, for example.
-
-The interpretation I offered (although I inverted what I wanted to say)
-is similar in spirit to that metric (which is not actually a metric, I
-believe, because I expect it to violate the triangle inequality) is
-obviously inaccurate: the number of lines of the diff of diffs does not
-say anything about the number of matching lines, quite to the contrary,
-it correlates somewhat to the number of non-matching lines.
-
-So a better interpretation would have been:
-
-	The default creation factor is 60 (roughly speaking, it wants at
-	most 60% of the diffs' lines to differ, otherwise it considers
-	them not to be a match.
-
-This is still inaccurate, but at least it gets the idea of the
-range-diff across.
-
-Of course, I will never be able to amend the commit message in
-GitGitGadget anyway, as I have merged that PR already.
-
-Ciao,
-Dscho
+[1] https://public-inbox.org/git/d16b22c9-c437-0947-fb5a-9421f987a1f1@gmail.com/
