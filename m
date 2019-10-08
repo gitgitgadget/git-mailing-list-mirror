@@ -2,89 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFD9C1F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 17:59:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D70C1F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 18:27:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729493AbfJHR7n (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 13:59:43 -0400
-Received: from relay11.mail.gandi.net ([217.70.178.231]:40569 "EHLO
-        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726320AbfJHR7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 13:59:43 -0400
-Received: from localhost (unknown [1.186.12.44])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 53FE0100007;
-        Tue,  8 Oct 2019 17:59:41 +0000 (UTC)
-Date:   Tue, 8 Oct 2019 23:29:38 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: git-gui: automatically move focus to staged file before typing
- commit message?
-Message-ID: <20191008175938.iqibournnxam4r6d@yadavpratyush.com>
-References: <CAGr--=KMJmYtVaATFkOPcboAdkLvpZFbWAo4QAE0-uC6RL4Lqg@mail.gmail.com>
- <20190914211509.sjy6lh2rlcl32lj5@yadavpratyush.com>
- <20190914212732.plymb3vnz3dv4rmc@yadavpratyush.com>
- <CAGr--=LmhE9m9V4Dq8Zt0aXqdThzrNnWSnxWawVZiLYTKbL2ig@mail.gmail.com>
- <20190916180059.aifw5r4c4k5o5hur@yadavpratyush.com>
- <CAGr--=+SNO7GuHH-dE_ZnrJDCa8tv8EA5LMrVGwsMTRpxhzEZA@mail.gmail.com>
- <20190926193004.jspiirmb4ejxznjo@yadavpratyush.com>
- <CAGr--=Jiu-haHMX2fc8AB1uGWT1OMw5=M3_CuGWVzrYmO0uq3A@mail.gmail.com>
- <CAGr--=KXpt7GzqPpm1BCrsc1jhfaXeCT-XrWKNvq2pLtgAbSwQ@mail.gmail.com>
+        id S1726439AbfJHS14 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 14:27:56 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:40496 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726138AbfJHS1z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 14:27:55 -0400
+Received: by mail-wr1-f54.google.com with SMTP id h4so11828959wrv.7
+        for <git@vger.kernel.org>; Tue, 08 Oct 2019 11:27:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=c+TFcd7S9yIiP/D6toZeQWJUMK9yLLwFLoi7HUFMbeA=;
+        b=QGVJRZoIzXaOx3jZqkBzOCCIwrFPt6DKfbyb+Og/QNNeJkiuN9U+a1+SEg4Z7jtdlw
+         Opq5cIXYXJN0BXFVQg1wmCpVA4i5Dfpogmj4cjxI7o8V4TTBCRybbGYRsdJHHGqgSnoR
+         978rZCGFXVkaF6gQbXBxlg0CG6uwdl6h4xwqAEkGSXBqtZgvKmo/5+CxQ5Sfh4p3pYBY
+         30j8m4pJh+mXFBBL0BxgZsFfZC0ymgk/Vz+4FdG07htjy53tiZk49mjfvZawteFuy8Zy
+         gdxoP/ke4qm8JHmmK/DwTSRKhGeAaCJ3w/Hky2ccSh9qQJDax+iHcshDi3vvHZ24Kvr6
+         cyzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=c+TFcd7S9yIiP/D6toZeQWJUMK9yLLwFLoi7HUFMbeA=;
+        b=OgefYb25dx+N9AesXEmLxO6WigM0S7M6284XDRRMrCJTHegAhKOTQQDG+btQSF46Zx
+         GHYuTUeX0ks+T4aZh/gJgz8izBruQ/2EgbMIuNOhy+wjHEoVnT608Y3uJakMKxgQZoNZ
+         0nMzRtEQLx+EDvreUv0PCAIkSKXE1NrPoBUk5PO+NA5oc+jJPZ4TSWiR6G1B7m8OL/xy
+         y7zzpKXiar5bTaAzRHp7NxdR0WJzCGDenHN0CHHktE0ApkchKtulhDMR5FAO7yfaAoDV
+         OXYy9JA9ExhdLisVS/RbkPG8s04W9iV44QwBMb+wwKkwz4VUesjJQlPaxaRJL7WBIR6L
+         Yu9w==
+X-Gm-Message-State: APjAAAXC65sxEmCAI+U3SFYKJug5UfAWvDRcujOuyXfokM+AWjnXwJYn
+        VDfGn8RQDnc/tRMm1JxxrRYnF/q7
+X-Google-Smtp-Source: APXvYqwR5lM3h8MqHPQCp79IJ+omptZBm3bog6U5Gdj6hz0smX1SJfu/1+cRCh+0zQyzUg8LBm+Aag==
+X-Received: by 2002:adf:f64f:: with SMTP id x15mr1072028wrp.25.1570559272096;
+        Tue, 08 Oct 2019 11:27:52 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b62sm6476054wmc.13.2019.10.08.11.27.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 Oct 2019 11:27:51 -0700 (PDT)
+Date:   Tue, 08 Oct 2019 11:27:51 -0700 (PDT)
+X-Google-Original-Date: Tue, 08 Oct 2019 18:27:49 GMT
+Message-Id: <pull.380.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] xdiffi: fix typos and touch up comments
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGr--=KXpt7GzqPpm1BCrsc1jhfaXeCT-XrWKNvq2pLtgAbSwQ@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+To:     git@vger.kernel.org
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/10/19 06:52PM, Birger Skogeng Pedersen wrote:
-> So I kinda got this working, but only when focusing the commit message widget.
+Some of these changes are best viewed with --color-words.
 
-Isn't this the point of your feature? You change the view when focusing 
-the commit message widget. I remember you were explicitly against doing 
-it as soon as all unstaged files were staged. Did you change your point 
-of view on that?
- 
-> I did not manage to get it working when invoking "do_add_all", (e.g.
-> when pressing CTRL/CMD+i). I added this:
-> 
-> bind $ui_comm <$M1B-Key-i> {do_add_all;select_staged_file;break}
-> bind $ui_comm <$M1B-Key-I> {do_add_all;select_staged_file;break}
-> 
-> But it seems that the "select_staged_file" procedure is invoked
-> _before_ "do_add_all" finishes. So that's not working. All changes
-> gets staged, but no staged change is selected.
+Johannes Schindelin (1):
+  xdiffi: fix typos and touch up comments
 
-Hmm, that shouldn't happen. select_staged_file should be executed 
-_after_ do_add_all, not before. I haven't looked into your patches yet 
-though.
- 
-> And I'm quite stuck. Do I send the unfinished patch, so maybe I can
-> get some advice? Or is it better to just wait until I have the perfect
-> patch ready?
+ xdiff/xdiffi.c | 99 ++++++++++++++++++++++++++++----------------------
+ 1 file changed, 55 insertions(+), 44 deletions(-)
 
-If you are stuck on something, and want to share the WIP feature to get 
-help/comments, you should mark your patches as "RFC" (Request For 
-Comments). This can be done by passing the option '-rfc' to 
-`git-format-patch`. This will make your subject prefix to "RFC PATCH" 
-instead of just "PATCH".
 
-And yes, it is perfectly OK to send incomplete changes as long as you 
-mark them as such, and specify what you need help with.
-
-But I see that you have already sent those patches. I'm not sure when I 
-can find time to tinker around with them, so it might take me a couple 
-of days to get to them.
-
+base-commit: b744c3af07a15aaeb1b82fab689995fd5528f120
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-380%2Fdscho%2Fxdiffi-typos-and-comment-style-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-380/dscho/xdiffi-typos-and-comment-style-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/380
 -- 
-Regards,
-Pratyush Yadav
+gitgitgadget
