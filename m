@@ -2,314 +2,625 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EAA31F4BD
-	for <e@80x24.org>; Tue,  8 Oct 2019 08:35:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D001B1F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 08:58:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729767AbfJHIfm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 04:35:42 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:34438 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728104AbfJHIfm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 04:35:42 -0400
-Received: by mail-pg1-f195.google.com with SMTP id y35so9900140pgl.1
-        for <git@vger.kernel.org>; Tue, 08 Oct 2019 01:35:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=lxyOtNwqnKSMi+MlBTzUvIxqzDoInLr9W+wpKJPODL8=;
-        b=pqvGbBePrXlBuyV8DZKzng/rs0Uq7vALmlPkDSjrwUvFouvot7o7OLfb1AhM2Rnvyv
-         KKQ+6jsTZwG5cjvSW4NmGTeoDWMcSU5MW0kmwqoGdrWMt7xZluydpl7qD1+6vxWd8lHH
-         vSQY+cJ4SLaXXZylh4owzyxFITBtmoEL2vU14Pw+j4cxMvY3l7GJ59CPPOzEHGFn8qB0
-         6sn83c+hdJr74K8w5yya/2lY7Gslf7ew2BPTA7NxdsvIjP/25NcQjw2s6LvlnYlYQft2
-         T5tXjKdFP51MUQ/ZL7+9Lz6PdPuuHaUnVyCtOoi76RnoQ3flns2pXXWz26UMRm9PBhWb
-         0DIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lxyOtNwqnKSMi+MlBTzUvIxqzDoInLr9W+wpKJPODL8=;
-        b=Mofalz/1lAYvbRqZs5UYweHJ2x/HVLMaGFdC+7dMwUOdpHrR1u/f7CbiUbWSvqBbZ0
-         ZMmfw3ivAl8CSmgT4UWY0rLAC+hhTLoxUsJFNrvewrsWCMoBiLMPoa8FJgsTalbijQZj
-         M6lzATynH6YG+MEdJSAyyhuqNgqifRRxJ3ATPyenb4qkdB38z9XbWBEnvhlp10P8QATY
-         GIzRTGZW4pQ2WthneDWVxngrfd72i8z84UvBK/Knkd4ksY87Oj7NnT6YcyMIPRDAIGGg
-         HdWmqLTQn4y+0nfWXkA1AG5QkhvdzP4XBgU0+HytKreZa/kZBIJ5xZCYA3gqFFiq9EBc
-         j32A==
-X-Gm-Message-State: APjAAAX+neOm8BSKFltm25XjGTr73PBR+QjOmVOLouRGTMGqJey7yYW7
-        2km1ACPnmKQzgUJ8+yIu8k6aS3ho
-X-Google-Smtp-Source: APXvYqxbLM3zdnH6tNWeeqOUoDtjFd4TZU0dfZIuSThhWlGoMkPb8JWC/Vi49LgyT5SFTF+3/ZnvuA==
-X-Received: by 2002:a62:db84:: with SMTP id f126mr3248388pfg.25.1570523739403;
-        Tue, 08 Oct 2019 01:35:39 -0700 (PDT)
-Received: from generichostname ([2601:646:280:1b30:80db:d816:4d15:ae2a])
-        by smtp.gmail.com with ESMTPSA id s14sm18323019pfe.52.2019.10.08.01.35.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2019 01:35:38 -0700 (PDT)
-Date:   Tue, 8 Oct 2019 01:35:37 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Toon Claes <toon@iotcl.com>
-Cc:     git@vger.kernel.org, Zeger-Jan van de Weg <git@zjvandeweg.nl>
-Subject: Re: [PATCH 1/1] commit: add support to provide --coauthor
-Message-ID: <20191008083537.GA6727@generichostname>
-References: <20191008074935.10972-1-toon@iotcl.com>
+        id S1730020AbfJHI6h (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 04:58:37 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55217 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729784AbfJHI6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 04:58:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570525106;
+        bh=4E4VE3Ft3GECpa/0eddDh7tDGeHXCvZY99qo1Ou255c=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=VzW3mUpZ6lFZ7FrXnSa2TokHivhg2IpVPdVheDeRh0KlTTRBwNDGR3YGAOTXydD0q
+         AEB+VxCxlxNTswRBw0BqV+x3r8LSxGAJ9j7hzEV4nJ4j+lhfzN9xV7mpSjzsa/wrxz
+         3MU2EK09+sTvF4CkuGCtW7a3FCrWrq+vXLHIIip0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M1Ycl-1iGNLd2987-0031sx; Tue, 08
+ Oct 2019 10:58:26 +0200
+Date:   Tue, 8 Oct 2019 10:58:25 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Wong <e@80x24.org>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Derrick Stolee <stolee@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 00/20] hashmap bug/safety/ease-of-use fixes
+In-Reply-To: <20191006233043.3516-1-e@80x24.org>
+Message-ID: <nycvar.QRO.7.76.6.1910081055210.46@tvgsbejvaqbjf.bet>
+References: <20191006233043.3516-1-e@80x24.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191008074935.10972-1-toon@iotcl.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Gp2i/PGb9POw1i/hgoo2Xtve9fh1ucBM+D4pFNCztanrIgfkMYW
+ bLKDWyMcKwh+/Xnqhv1d9p0tMf6NpcXsgPT9nv26p/ske6rQMAab3y7QicsRimHMhjfOkA4
+ K1A6/F+k7zy4bta6WfJBqZUqJwapmj5rkAvFqVjh8FN29jjYGjFYFtC1ZrjCo2Vbql6SSf1
+ 69b0zJ2fhpDKNF+QpalUQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:g7e1qsFfY8o=:bZfsKwll21tlSlSL3sc0YH
+ En2yGFYjOzEIsCynR4FbWmsWf94AMPs6KdoKV5XOg+39j++V65Rwq+qS9qaihAJZdDYslWbbC
+ nSoygOGqUXiQSJ6NMGRA6RcslZxPASBmMQWW2470ReaXvWQi5s5kTpf4RuG64hZFe5D+hCWhw
+ qs1gdhbImbEmMgwsuBsdM5PzQDdCs3EjiK925lDk1XyfVfCN36MhRqpZAOcmi68Q/TWRMJ6Cc
+ 6xpV1ZCYIdxSjA3mWXZGs2OecoLmZlRlP64aepSVVvZ83D2PYSBqpuZ0lQFJMGpOkrmD6sNbY
+ HOdp6QNYL8mhAQEx9tpLawoTmrOQnD8qHgN3wWGc10aLdEokAh8iTSkTv9O+MSo90Q6gUyb5X
+ IApppGUOTdvuvtQRqenC1ZvCQJR0zsNGHm7hJfbjNXf7PFjFZrVXdMaT3WSl9s+J1S8WDl5Xi
+ /MeHSwYCeNm6q6ltHC2TkMt64kzD6eT7AfAMZ5fTWXcMsspeNiHy2jmTP6YICKkrzi/T6Mi0J
+ fIykc3QgsXdh5Q79m+bsrOD1l9cMkzTlP74KXRYoVKs3ObkvvvOhFiB0P6HNMHf/KM1ycXKcc
+ INkjPHoalUgmCBWWhabKSo2/RI1P58ylLg/zBIAWFkZ5tDWhpWipcTYHF79/WGWpK6znDK9Ac
+ 4sgNRR374maERZqSeNn9OLYe7XQvbc0Jr99VcbCOzIQzjZCh1CoedmfaIHLcysYJ5HAU8YvZ8
+ 9VFmv4WBBjyjmaTf+JimBLLfzCPNDkvfsESxs1Is3uTV63wvxlhj9j3xJzieZP5btQ/eodxSa
+ jVWSIaHFtZzgRLmx5hugPIR+rfAVpJaFNXc+Ln+ZGbyqctjUJMYE0ZGFbBdsxkSeek/q54iDx
+ FaW7AMPyV9N0J7iv1pWLl9qeT6nLPjS4N4+j/zPs32HYaDSRxP+2VMv0nMirw8JNCC5m06N6h
+ Gol6UDgDlQcNAJwdjw1mKaCiafjfrk3X1TRsB1iE5D1RhymCcFoZo8uJsYI5U04gNyAY9punq
+ RKXbVyCyMEePw91eNsO4z8Ke9XB/3I9p2O3BFEUI8A4K+BIaJNkkufW/+KzRdr/1juFwuZfF6
+ KHu6RCyH46hAg8dKlRmbhGntlgh+HahMCfnrL7c2e7x7bpMEwSAKRvSz9ov9pz4STFDOWzIWg
+ Y5SWKTQKfITYzxtmXslimMhGPDHWaEt/5lAT4FQBP5qqRsVXb3gfPgH0CnohwoIyYRDVC2wmx
+ +YpaL2lfJrZ13Kki6Qb7BPzPgCoiMxt8GGTDO16BvXhIBVwAHRlwrhzRi528=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Welcome to the Git community, Toon!
+Hi Eric & Junio,
 
-Wow, I never realised that people actually read my braindump of issues
-on GGG. Thanks for taking this on.
+On Sun, 6 Oct 2019, Eric Wong wrote:
 
-First some housekeeping, when formatting your patches, it's a good idea
-to use `git format-patch --thread` so that your patches are grouped
-together by thread.
+> v3 changes:
+> - use __typeof__ to avoid invalid clang warning on uninitialized var
+> - formatting fixes recommended by Stolee
+> - add Reviewed-by for Stolee
+> - add patch 20 to update docs to drop first member requirement
 
-On Tue, Oct 08, 2019 at 09:49:35AM +0200, Toon Claes wrote:
-> Add support to provide the Co-author when committing. For each
-> co-author provided with --coauthor=<coauthor>, a line is added at the
+This has quite a bit of fallout, even more than previous rounds, it
+seems. I need at least these fixup???s to fix the build of `pu`:
 
-I know you're taking the name from my GGG issue but perhaps --co-author
-would look better? 
+https://github.com/git-for-windows/git/commit/f74259754971b427a14e6290681e=
+18950824b99d
+https://github.com/git-for-windows/git/commit/124c8bc08e974e76ca7d956dc07e=
+b288e71d639e
+https://github.com/git-for-windows/git/commit/45948433d1b48ff513fbd37f134c=
+0f1491c78192
 
-> bottom of the commit message, like this:
-> 
->     Co-authored-by: <coauthor>
-> 
-> It's a common practice use when pairing up with other people and both
-> authors want to in the commit message.
-> 
-> Co-authored-by: Zeger-Jan van de Weg <git@zjvandeweg.nl>
+Junio, feel free to fetch and squash those into the appropriate merge
+commit(s) (I feel that 4432e8b5f36 (Merge branch 'ds/sparse-cone' into
+pu, 2019-10-08) may be the right spot).
 
-Nice ;)
+Thanks,
+Dscho
 
-> Signed-off-by: Toon Claes <toon@iotcl.com>
-> ---
->  Documentation/git-commit.txt |  5 ++++
->  builtin/commit.c             |  7 ++++++
->  sequencer.c                  | 44 ++++++++++++++++++++++++++----------
->  sequencer.h                  |  2 ++
->  t/t7502-commit-porcelain.sh  | 11 +++++++++
->  5 files changed, 57 insertions(+), 12 deletions(-)
-> 
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index afa7b75a23..c059944e38 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -140,6 +140,11 @@ OPTIONS
->  	commit by that author (i.e. rev-list --all -i --author=<author>);
->  	the commit author is then copied from the first such commit found.
-> 
-> +--coauthor=<coauthor>::
-> +        Add a Co-authored-by line with the specified author. Specify the
-
-This line is indented with spaces but it should be changed to a single
-tab.
-
-> +	author using the standard `Co Artur <co-artur@example.com>`
-> +	format.
-> +
->  --date=<date>::
->  	Override the author date used in the commit.
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index ae7aaf6dc6..feb423ed6f 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -110,6 +110,7 @@ static int config_commit_verbose = -1; /* unspecified */
->  static int no_post_rewrite, allow_empty_message;
->  static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
->  static char *sign_commit;
-> +static struct string_list coauthors = STRING_LIST_INIT_NODUP;
-> 
->  /*
->   * The default commit message cleanup mode will remove the lines
-> @@ -672,6 +673,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  	int clean_message_contents = (cleanup_mode != COMMIT_MSG_CLEANUP_NONE);
->  	int old_display_comment_prefix;
->  	int merge_contains_scissors = 0;
-> +	int i;
-> 
->  	/* This checks and barfs if author is badly specified */
->  	determine_author_info(author_ident);
-> @@ -803,6 +805,10 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  	if (clean_message_contents)
->  		strbuf_stripspace(&sb, 0);
-> 
-> +	for (i = 0; i < coauthors.nr; i++) {
-> +		append_coauthor(&sb, coauthors.items[i].string);
-> +	}
-> +
->  	if (signoff)
->  		append_signoff(&sb, ignore_non_trailer(sb.buf, sb.len), 0);
-> 
-> @@ -1504,6 +1510,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  		OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("use autosquash formatted message to squash specified commit")),
->  		OPT_BOOL(0, "reset-author", &renew_authorship, N_("the commit is authored by me now (used with -C/-c/--amend)")),
->  		OPT_BOOL('s', "signoff", &signoff, N_("add Signed-off-by:")),
-> +		OPT_STRING_LIST(0, "coauthor", &coauthors, N_("co-author"), N_("add Co-authored-by:")),
->  		OPT_FILENAME('t', "template", &template_file, N_("use specified template file")),
->  		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
->  		OPT_CLEANUP(&cleanup_arg),
-> diff --git a/sequencer.c b/sequencer.c
-> index d648aaf416..8958a22470 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -36,6 +36,7 @@
->  #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
-> 
->  static const char sign_off_header[] = "Signed-off-by: ";
-> +static const char coauthor_header[] = "Co-authored-by: ";
->  static const char cherry_picked_prefix[] = "(cherry picked from commit ";
-> 
->  GIT_PATH_FUNC(git_path_commit_editmsg, "COMMIT_EDITMSG")
-> @@ -4385,15 +4386,9 @@ int sequencer_pick_revisions(struct repository *r,
->  	return res;
->  }
-> 
-> -void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag)
-> +static void append_footer(struct strbuf *msgbuf, struct strbuf* sob, size_t ignore_footer, size_t no_dup_sob)
-
-The * for pointers should go with the name, not the type. Also, `sob` is
-a misleading name since it means "Signed-off-by". In this case, we're
-using it as a general footer (since it can include Co-author lines too)
-so perhaps rename this to `footer`? 
-
-Finally, as a nit, can we mark sob as const?
-
->  {
-> -	unsigned no_dup_sob = flag & APPEND_SIGNOFF_DEDUP;
-> -	struct strbuf sob = STRBUF_INIT;
-> -	int has_footer;
-> -
-> -	strbuf_addstr(&sob, sign_off_header);
-> -	strbuf_addstr(&sob, fmt_name(WANT_COMMITTER_IDENT));
-> -	strbuf_addch(&sob, '\n');
-> +	size_t has_footer;
-
-Why was this changed into a size_t? has_conforming_footer() below
-returns int so we should leave it as is.
-
-> 
->  	if (!ignore_footer)
->  		strbuf_complete_line(msgbuf);
-> @@ -4402,11 +4397,11 @@ void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag)
->  	 * If the whole message buffer is equal to the sob, pretend that we
->  	 * found a conforming footer with a matching sob
->  	 */
-> -	if (msgbuf->len - ignore_footer == sob.len &&
-> -	    !strncmp(msgbuf->buf, sob.buf, sob.len))
-> +	if (msgbuf->len - ignore_footer == sob->len &&
-> +	    !strncmp(msgbuf->buf, sob->buf, sob->len))
->  		has_footer = 3;
->  	else
-> -		has_footer = has_conforming_footer(msgbuf, &sob, ignore_footer);
-> +		has_footer = has_conforming_footer(msgbuf, sob, ignore_footer);
-
-Since you're touching this area, could you please a prepatory patch
-before this one that changes the function signature:
-
-	- static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob, size_t ignore_footer)                                                          
-	+ static int has_conforming_footer(struct strbuf *sb, const struct strbuf *footer, size_t ignore_footer)                                                          
-
-That way, you'll be able to mark `sob` const in append_footer() and
-also, `sob` can be renamed to `footer` which should be less misleading.
-
-> 
->  	if (!has_footer) {
->  		const char *append_newlines = NULL;
-> @@ -4440,7 +4435,32 @@ void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag)
-> 
->  	if (has_footer != 3 && (!no_dup_sob || has_footer != 2))
->  		strbuf_splice(msgbuf, msgbuf->len - ignore_footer, 0,
-> -				sob.buf, sob.len);
-> +				sob->buf, sob->len);
-> +}
-> +
-> +void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag)
-> +{
-> +	unsigned no_dup_sob = flag & APPEND_SIGNOFF_DEDUP;
-> +	struct strbuf sob = STRBUF_INIT;
-> +
-> +	strbuf_addstr(&sob, sign_off_header);
-> +	strbuf_addstr(&sob, fmt_name(WANT_COMMITTER_IDENT));
-> +	strbuf_addch(&sob, '\n');
-> +
-> +	append_footer(msgbuf, &sob, ignore_footer, no_dup_sob);
-> +
-> +	strbuf_release(&sob);
-> +}
-> +
-> +void append_coauthor(struct strbuf *msgbuf, const char *coauthor)
-> +{
-> +	struct strbuf sob = STRBUF_INIT;
-
-Same, this `sob` should definitely be written as `footer` or maybe
-`coauthor`.
-> +
-> +	strbuf_addstr(&sob, coauthor_header);
-> +	strbuf_addstr(&sob, coauthor);
-> +	strbuf_addch(&sob, '\n');
-> +
-> +	append_footer(msgbuf, &sob, 0, 1);
-> 
->  	strbuf_release(&sob);
->  }
-> diff --git a/sequencer.h b/sequencer.h
-> index 574260f621..e36489fce7 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -170,6 +170,8 @@ int todo_list_rearrange_squash(struct todo_list *todo_list);
->   */
->  void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag);
-> 
-> +void append_coauthor(struct strbuf *msgbuf, const char* co_author);
-
-Asterisk should also be attached to the name.
-
-> +
->  void append_conflicts_hint(struct index_state *istate,
->  		struct strbuf *msgbuf, enum commit_msg_cleanup_mode cleanup_mode);
->  enum commit_msg_cleanup_mode get_cleanup_mode(const char *cleanup_arg,
-> diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
-> index 14c92e4c25..5ed6735cf4 100755
-> --- a/t/t7502-commit-porcelain.sh
-> +++ b/t/t7502-commit-porcelain.sh
-> @@ -138,6 +138,17 @@ test_expect_success 'partial removal' '
-> 
->  '
-> 
-> +test_expect_success 'co-author' '
-> +
-> +	>coauthor &&
-> +	git add coauthor &&
-> +	git commit -m "thank you" --co-author="Author <author@example.com>" &&
-> +	git cat-file commit HEAD >commit.msg &&
-> +	sed -ne "s/Co-authored-by: //p" commit.msg >actual &&
-> +	echo "Author <author@example.com>" >expected &&
-> +	test_cmp expected actual
-> +'
-> +
-
-This test looks good to me.
-
-Thanks again for taking this on,
-
-Denton
-
->  test_expect_success 'sign off' '
-> 
->  	>positive &&
-> --
-> 2.22.0.rc3
+>
+> v2 here:
+>   https://public-inbox.org/git/20190924010324.22619-1-e@80x24.org/
+>
+> The following changes since commit 745f6812895b31c02b29bdfe4ae8e5498f776=
+c26:
+>
+>   First batch after Git 2.23 (2019-08-22 12:41:04 -0700)
+>
+> are available in the Git repository at:
+>
+>   https://80x24.org/git-svn.git hashmap-wip-v3
+>
+> for you to fetch changes up to 4ec5200646d6b9363e64e2002eb374aa888a6c88:
+>
+>   hashmap_entry: remove first member requirement from docs (2019-10-06 2=
+3:05:22 +0000)
+>
+> ----------------------------------------------------------------
+> Eric Wong (20):
+>       diff: use hashmap_entry_init on moved_entry.ent
+>       coccicheck: detect hashmap_entry.hash assignment
+>       packfile: use hashmap_entry in delta_base_cache_entry
+>       hashmap_entry_init takes "struct hashmap_entry *"
+>       hashmap_get_next takes "const struct hashmap_entry *"
+>       hashmap_add takes "struct hashmap_entry *"
+>       hashmap_get takes "const struct hashmap_entry *"
+>       hashmap_remove takes "const struct hashmap_entry *"
+>       hashmap_put takes "struct hashmap_entry *"
+>       introduce container_of macro
+>       hashmap_get_next returns "struct hashmap_entry *"
+>       hashmap: use *_entry APIs to wrap container_of
+>       hashmap_get{,_from_hash} return "struct hashmap_entry *"
+>       hashmap_cmp_fn takes hashmap_entry params
+>       hashmap: use *_entry APIs for iteration
+>       hashmap: hashmap_{put,remove} return hashmap_entry *
+>       hashmap: introduce hashmap_free_entries
+>       OFFSETOF_VAR macro to simplify hashmap iterators
+>       hashmap: remove type arg from hashmap_{get,put,remove}_entry
+>       hashmap_entry: remove first member requirement from docs
+>
+>  attr.c                              |  24 ++---
+>  blame.c                             |  25 ++---
+>  builtin/describe.c                  |  21 +++--
+>  builtin/difftool.c                  |  56 +++++++-----
+>  builtin/fast-export.c               |  15 ++-
+>  builtin/fetch.c                     |  32 ++++---
+>  config.c                            |  24 ++---
+>  contrib/coccinelle/hashmap.cocci    |  16 ++++
+>  diff.c                              |  31 ++++---
+>  diffcore-rename.c                   |  15 ++-
+>  git-compat-util.h                   |  38 ++++++++
+>  hashmap.c                           |  58 +++++++-----
+>  hashmap.h                           | 176 +++++++++++++++++++++++++++++=
+=2D------
+>  merge-recursive.c                   |  87 ++++++++++--------
+>  merge-recursive.h                   |   4 +-
+>  name-hash.c                         |  57 ++++++------
+>  oidmap.c                            |  20 ++--
+>  oidmap.h                            |   6 +-
+>  packfile.c                          |  22 +++--
+>  patch-ids.c                         |  18 ++--
+>  range-diff.c                        |  10 +-
+>  ref-filter.c                        |  33 ++++---
+>  refs.c                              |  25 +++--
+>  remote.c                            |  21 +++--
+>  remote.h                            |   2 +-
+>  revision.c                          |  28 +++---
+>  sequencer.c                         |  44 ++++++---
+>  sub-process.c                       |  20 ++--
+>  sub-process.h                       |   6 +-
+>  submodule-config.c                  |  52 ++++++-----
+>  t/helper/test-hashmap.c             |  50 +++++-----
+>  t/helper/test-lazy-init-name-hash.c |  12 +--
+>  32 files changed, 667 insertions(+), 381 deletions(-)
+>  create mode 100644 contrib/coccinelle/hashmap.cocci
+>
+> Range-diff against v2:
+>  1:  51ba91d2f9 !  1:  0f530552de diff: use hashmap_entry_init on moved_=
+entry.ent
+>     @@ -10,6 +10,7 @@
+>          hashmap_add callers to take "struct hashmap_entry *".
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/diff.c b/diff.c
+>       --- a/diff.c
+>  2:  be4071d33d !  2:  d12ddb4327 coccicheck: detect hashmap_entry.hash =
+assignment
+>     @@ -8,6 +8,7 @@
+>          hashmap_entry_init, instead.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/contrib/coccinelle/hashmap.cocci b/contrib/coccinelle=
+/hashmap.cocci
+>       new file mode 100644
+>  3:  ff40a39bad !  3:  624b89fbb4 packfile: use hashmap_entry in delta_b=
+ase_cache_entry
+>     @@ -15,6 +15,7 @@
+>          systems.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/packfile.c b/packfile.c
+>       --- a/packfile.c
+>  4:  d1db0f6472 !  4:  7512f2f2f7 hashmap_entry_init takes "struct hashm=
+ap_entry *"
+>     @@ -8,6 +8,7 @@
+>          safety and readability.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/attr.c b/attr.c
+>       --- a/attr.c
+>     @@ -212,8 +213,8 @@
+>        * and if it is on stack, you can just let it go out of scope).
+>        */
+>      -static inline void hashmap_entry_init(void *entry, unsigned int ha=
+sh)
+>     -+static inline void
+>     -+hashmap_entry_init(struct hashmap_entry *e, unsigned int hash)
+>     ++static inline void hashmap_entry_init(struct hashmap_entry *e,
+>     ++					unsigned int hash)
+>       {
+>      -	struct hashmap_entry *e =3D entry;
+>       	e->hash =3D hash;
+>  5:  a293445e97 !  5:  dd167a1113 hashmap_get_next takes "const struct h=
+ashmap_entry *"
+>     @@ -6,6 +6,7 @@
+>          now detects invalid types being passed.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/diff.c b/diff.c
+>       --- a/diff.c
+>  6:  beabdab6fe !  6:  53f429ef6f hashmap_add takes "struct hashmap_entr=
+y *"
+>     @@ -6,6 +6,7 @@
+>          detects invalid types being passed.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/attr.c b/attr.c
+>       --- a/attr.c
+>  7:  99970934c7 !  7:  87739268dc hashmap_get takes "const struct hashma=
+p_entry *"
+>     @@ -6,6 +6,7 @@
+>          now detects invalid types being passed.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/attr.c b/attr.c
+>       --- a/attr.c
+>  8:  8148ed70eb !  8:  22226b3bb4 hashmap_remove takes "const struct has=
+hmap_entry *"
+>     @@ -6,6 +6,7 @@
+>          now detects invalid types being passed.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/blame.c b/blame.c
+>       --- a/blame.c
+>  9:  3756dcc34e !  9:  0b64282a1f hashmap_put takes "struct hashmap_entr=
+y *"
+>     @@ -6,6 +6,7 @@
+>          detects invalid types being passed.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+>       --- a/builtin/fast-export.c
+> 10:  ff586aa43c ! 10:  c2e9201838 introduce container_of macro
+>     @@ -7,15 +7,16 @@
+>          and chained hash tables while allowing the compiler to do
+>          type checking.
+>
+>     -    I intend to use this to remove the limitation of "hashmap_entry=
+"
+>     -    being location-dependent and to allow more compile-time type
+>     -    checking.
+>     +    Later patches will use container_of() to remove the limitation
+>     +    of "hashmap_entry" being location-dependent. This will complete
+>     +    the transition to compile-time type checking for the hashmap AP=
+I.
+>
+>          This macro already exists in our source as "list_entry" in
+>          list.h and making "list_entry" an alias to "container_of"
+>          as the Linux kernel has done is a possibility.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/git-compat-util.h b/git-compat-util.h
+>       --- a/git-compat-util.h
+> 11:  931356f061 ! 11:  c709e607b1 hashmap_get_next returns "struct hashm=
+ap_entry *"
+>     @@ -6,6 +6,7 @@
+>          hashmap_entry being the first field of a struct.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/diff.c b/diff.c
+>       --- a/diff.c
+>     @@ -14,10 +15,10 @@
+>       {
+>       	int i;
+>       	char *got_match =3D xcalloc(1, pmb_nr);
+>     -+	struct hashmap_entry *ent =3D &match->ent;
+>     ++	struct hashmap_entry *ent;
+>
+>      -	for (; match; match =3D hashmap_get_next(hm, &match->ent)) {
+>     -+	for (; ent; ent =3D hashmap_get_next(hm, ent)) {
+>     ++	for (ent =3D &match->ent; ent; ent =3D hashmap_get_next(hm, ent))=
+ {
+>      +		match =3D container_of(ent, struct moved_entry, ent);
+>       		for (i =3D 0; i < pmb_nr; i++) {
+>       			struct moved_entry *prev =3D pmb[i].match;
+> 12:  a748b9b0c4 ! 12:  27ba68a7b8 hashmap: use *_entry APIs to wrap cont=
+ainer_of
+>     @@ -11,6 +11,7 @@
+>          extra parameter to specify the type.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/diff.c b/diff.c
+>       --- a/diff.c
+>     @@ -19,9 +20,9 @@
+>       {
+>       	int i;
+>       	char *got_match =3D xcalloc(1, pmb_nr);
+>     --	struct hashmap_entry *ent =3D &match->ent;
+>     +-	struct hashmap_entry *ent;
+>
+>     --	for (; ent; ent =3D hashmap_get_next(hm, ent)) {
+>     +-	for (ent =3D &match->ent; ent; ent =3D hashmap_get_next(hm, ent))=
+ {
+>      -		match =3D container_of(ent, struct moved_entry, ent);
+>      +	hashmap_for_each_entry_from(hm, match, struct moved_entry, ent) {
+>       		for (i =3D 0; i < pmb_nr; i++) {
+>     @@ -125,7 +126,6 @@
+>       #define container_of(ptr, type, member) \
+>       	((type *) ((char *)(ptr) - offsetof(type, member)))
+>
+>     -+
+>      +/*
+>      + * helper function for `container_of_or_null' to avoid multiple
+>      + * evaluation of @ptr
+> 13:  e8faa5e12e ! 13:  222b1f07f3 hashmap_get{,_from_hash} return "struc=
+t hashmap_entry *"
+>     @@ -9,6 +9,7 @@
+>          hashmap_entry being the first field in a struct.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/attr.c b/attr.c
+>       --- a/attr.c
+>     @@ -152,11 +153,13 @@
+>       }
+>
+>      -void *hashmap_get(const struct hashmap *map, const struct hashmap_=
+entry *key,
+>     -+struct hashmap_entry *
+>     -+hashmap_get(const struct hashmap *map, const struct hashmap_entry =
+*key,
+>     - 		const void *keydata)
+>     +-		const void *keydata)
+>     ++struct hashmap_entry *hashmap_get(const struct hashmap *map,
+>     ++				const struct hashmap_entry *key,
+>     ++				const void *keydata)
+>       {
+>       	return *find_entry_ptr(map, key, keydata);
+>     + }
+>      @@
+>       	/* lookup interned string in pool */
+>       	hashmap_entry_init(&key.ent, memhash(data, len));
+>     @@ -175,21 +178,27 @@
+>        * to `hashmap_cmp_fn` to decide whether the entry matches the key=
+.
+>        */
+>      -void *hashmap_get(const struct hashmap *map, const struct hashmap_=
+entry *key,
+>     -+struct hashmap_entry *
+>     -+hashmap_get(const struct hashmap *map, const struct hashmap_entry =
+*key,
+>     - 			 const void *keydata);
+>     +-			 const void *keydata);
+>     ++struct hashmap_entry *hashmap_get(const struct hashmap *map,
+>     ++				const struct hashmap_entry *key,
+>     ++				const void *keydata);
+>
+>       /*
+>     +  * Returns the hashmap entry for the specified hash code and key d=
+ata,
+>      @@
+>        * `entry_or_key` parameter of `hashmap_cmp_fn` points to a hashma=
+p_entry
+>        * structure that should not be used in the comparison.
+>        */
+>      -static inline void *hashmap_get_from_hash(const struct hashmap *ma=
+p,
+>     -+static inline struct hashmap_entry *
+>     -+hashmap_get_from_hash(const struct hashmap *map,
+>     - 					  unsigned int hash,
+>     - 					  const void *keydata)
+>     +-					  unsigned int hash,
+>     +-					  const void *keydata)
+>     ++static inline struct hashmap_entry *hashmap_get_from_hash(
+>     ++					const struct hashmap *map,
+>     ++					unsigned int hash,
+>     ++					const void *keydata)
+>       {
+>     + 	struct hashmap_entry key;
+>     + 	hashmap_entry_init(&key, hash);
+>
+>       diff --git a/merge-recursive.c b/merge-recursive.c
+>       --- a/merge-recursive.c
+> 14:  f84bd96b8e ! 14:  c789f98c81 hashmap_cmp_fn takes hashmap_entry par=
+ams
+>     @@ -6,6 +6,7 @@
+>          being the first member of a struct.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/attr.c b/attr.c
+>       --- a/attr.c
+> 15:  23fbd888d9 ! 15:  57ae5b5142 hashmap: use *_entry APIs for iteratio=
+n
+>     @@ -7,6 +7,7 @@
+>          by compilers lacking __typeof__ support.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/attr.c b/attr.c
+>       --- a/attr.c
+> 16:  6908364381 ! 16:  f1e35ba094 hashmap: hashmap_{put,remove} return h=
+ashmap_entry *
+>     @@ -6,6 +6,7 @@
+>          to simplify most callers.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/hashmap.c b/hashmap.c
+>       --- a/hashmap.c
+>     @@ -15,18 +16,20 @@
+>       }
+>
+>      -void *hashmap_remove(struct hashmap *map, const struct hashmap_ent=
+ry *key,
+>     -+struct hashmap_entry *
+>     -+hashmap_remove(struct hashmap *map, const struct hashmap_entry *ke=
+y,
+>     - 		const void *keydata)
+>     +-		const void *keydata)
+>     ++struct hashmap_entry *hashmap_remove(struct hashmap *map,
+>     ++					const struct hashmap_entry *key,
+>     ++					const void *keydata)
+>       {
+>       	struct hashmap_entry *old;
+>     + 	struct hashmap_entry **e =3D find_entry_ptr(map, key, keydata);
+>      @@
+>       	return old;
+>       }
+>
+>      -void *hashmap_put(struct hashmap *map, struct hashmap_entry *entry=
+)
+>     -+struct hashmap_entry *
+>     -+hashmap_put(struct hashmap *map, struct hashmap_entry *entry)
+>     ++struct hashmap_entry *hashmap_put(struct hashmap *map,
+>     ++				struct hashmap_entry *entry)
+>       {
+>       	struct hashmap_entry *old =3D hashmap_remove(map, entry, NULL);
+>       	hashmap_add(map, entry);
+>     @@ -39,8 +42,8 @@
+>        * Returns the replaced entry, or NULL if not found (i.e. the entr=
+y was added).
+>        */
+>      -void *hashmap_put(struct hashmap *map, struct hashmap_entry *entry=
+);
+>     -+struct hashmap_entry *
+>     -+hashmap_put(struct hashmap *map, struct hashmap_entry *entry);
+>     ++struct hashmap_entry *hashmap_put(struct hashmap *map,
+>     ++				struct hashmap_entry *entry);
+>      +
+>      +#define hashmap_put_entry(map, keyvar, type, member) \
+>      +	container_of_or_null(hashmap_put(map, &(keyvar)->member), type, m=
+ember)
+>     @@ -52,17 +55,17 @@
+>        * Argument explanation is the same as in `hashmap_get`.
+>        */
+>      -void *hashmap_remove(struct hashmap *map, const struct hashmap_ent=
+ry *key,
+>     -+struct hashmap_entry *
+>     -+hashmap_remove(struct hashmap *map, const struct hashmap_entry *ke=
+y,
+>     - 		const void *keydata);
+>     -
+>     +-		const void *keydata);
+>     ++struct hashmap_entry *hashmap_remove(struct hashmap *map,
+>     ++					const struct hashmap_entry *key,
+>     ++					const void *keydata);
+>     ++
+>      +#define hashmap_remove_entry(map, keyvar, keydata, type, member) \
+>      +	container_of_or_null(hashmap_remove(map, &(keyvar)->member, keyda=
+ta), \
+>      +				type, member)
+>     -+
+>     +
+>       /*
+>        * Returns the `bucket` an entry is stored in.
+>     -  * Useful for multithreaded read access.
+>
+>       diff --git a/range-diff.c b/range-diff.c
+>       --- a/range-diff.c
+> 17:  150944128b ! 17:  adc7cb5516 hashmap: introduce hashmap_free_entrie=
+s
+>     @@ -12,6 +12,7 @@
+>          the hashmap itself.
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/blame.c b/blame.c
+>       --- a/blame.c
+> 18:  de212aa6d6 ! 18:  1a68e1645d OFFSETOF_VAR macro to simplify hashmap=
+ iterators
+>     @@ -5,7 +5,7 @@
+>          While we cannot rely on a `__typeof__' operator being portable
+>          to use with `offsetof'; we can calculate the pointer offset
+>          using an existing pointer and the address of a member using
+>     -    pointer arithmetic.
+>     +    pointer arithmetic for compilers without `__typeof__'.
+>
+>          This allows us to simplify usage of hashmap iterator macros
+>          by not having to specify a type when a pointer of that type
+>     @@ -16,7 +16,10 @@
+>          trouble of using container_of/list_entry macros and without
+>          relying on non-portable `__typeof__'.
+>
+>     +    v3: use `__typeof__' to avoid clang warnings
+>     +
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/attr.c b/attr.c
+>       --- a/attr.c
+>     @@ -141,11 +144,17 @@
+>       	(type *)container_of_or_null_offset(ptr, offsetof(type, member))
+>
+>      +/*
+>     -+ * like offsetof(), but takes a pointer to type instead of the typ=
+e
+>     -+ * @ptr is subject to multiple evaluation since we can't rely on T=
+YPEOF()
+>     ++ * like offsetof(), but takes a pointer to a a variable of type wh=
+ich
+>     ++ * contains @member, instead of a specified type.
+>     ++ * @ptr is subject to multiple evaluation since we can't rely on _=
+_typeof__
+>     ++ * everywhere.
+>      + */
+>     ++#if defined(__GNUC__) /* clang sets this, too */
+>     ++#define OFFSETOF_VAR(ptr, member) offsetof(__typeof__(*ptr), membe=
+r)
+>     ++#else /* !__GNUC__ */
+>      +#define OFFSETOF_VAR(ptr, member) \
+>      +	((uintptr_t)&(ptr)->member - (uintptr_t)(ptr))
+>     ++#endif /* !__GNUC__ */
+>      +
+>       #endif
+>
+> 19:  212a596edd ! 19:  fe02b9f839 hashmap: remove type arg from hashmap_=
+{get,put,remove}_entry
+>     @@ -10,6 +10,7 @@
+>          sequential as they are used as: `keyvar->member'
+>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>     +    Reviewed-by: Derrick Stolee <stolee@gmail.com>
+>
+>       diff --git a/attr.c b/attr.c
+>       --- a/attr.c
+>     @@ -147,8 +148,8 @@
+>        *                 printf("first: %ld %s\n", e->key, e->value);
+>        *                 while ((e =3D hashmap_get_next_entry(&map, e,
+>      @@
+>     - struct hashmap_entry *
+>     - hashmap_put(struct hashmap *map, struct hashmap_entry *entry);
+>     + struct hashmap_entry *hashmap_put(struct hashmap *map,
+>     + 				struct hashmap_entry *entry);
+>
+>      -#define hashmap_put_entry(map, keyvar, type, member) \
+>      -	container_of_or_null(hashmap_put(map, &(keyvar)->member), type, m=
+ember)
+>     @@ -167,8 +168,8 @@
+>       /*
+>        * Removes a hashmap entry matching the specified key. If the hash=
+map contains
+>      @@
+>     - hashmap_remove(struct hashmap *map, const struct hashmap_entry *ke=
+y,
+>     - 		const void *keydata);
+>     + 					const struct hashmap_entry *key,
+>     + 					const void *keydata);
+>
+>      -#define hashmap_remove_entry(map, keyvar, keydata, type, member) \
+>      -	container_of_or_null(hashmap_remove(map, &(keyvar)->member, keyda=
+ta), \
+>  -:  ---------- > 20:  4ec5200646 hashmap_entry: remove first member req=
+uirement from docs
+>
+>
