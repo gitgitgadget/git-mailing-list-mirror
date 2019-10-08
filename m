@@ -2,84 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BDD61F4BE
-	for <e@80x24.org>; Tue,  8 Oct 2019 21:38:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E20AC1F4BD
+	for <e@80x24.org>; Tue,  8 Oct 2019 23:01:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730832AbfJHVim (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 17:38:42 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:42908 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727570AbfJHVil (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 17:38:41 -0400
-Received: by mail-io1-f66.google.com with SMTP id n197so266389iod.9
-        for <git@vger.kernel.org>; Tue, 08 Oct 2019 14:38:41 -0700 (PDT)
+        id S1727769AbfJHXBf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 19:01:35 -0400
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:44636 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726068AbfJHXBf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 19:01:35 -0400
+Received: by mail-wr1-f47.google.com with SMTP id z9so124481wrl.11
+        for <git@vger.kernel.org>; Tue, 08 Oct 2019 16:01:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=gYDrN0550IW4gaQ5Y4xHLKNKseVnYkuMzDH5AB21nrs=;
-        b=IX46C/s/0A0DbfMyIVbG25lWsfhAnjl0beBNhMe1PFvrl8GeYA5tK7+blVzVlKk5Co
-         tjzXfWF3wnrl1irgrDU5ZNnR2UGRTBri0Z7FtvFq7jSzdII728g5r/1CGKED12uwhtuD
-         G7ubUyHo6TIJlx3T0ImJWrWMoFrKxD0brPxbayPFZO2R8Vre7kcFwchfaCqCaRLwT+DY
-         G64jvygcQ4xS0xhU8XmY+E0HzhmRe+ywuxYTJ1+ZRXwc5yeInAF+5y/KdL5Ie1R1djB0
-         OtaCeC6H9TwzBKXJrlcUdnbuHdAk+G13iyixBDHO6nYXOZSW5CinIEfgJbA3g/T/SUg8
-         j3xg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=0r/M7DZi0Ny3eU1osbJqRSg+OlNrKN1zzlScpTtMkjs=;
+        b=HHtjJpBzL5ZoW4ax51q39BwFkcAsYooT1anhiCDVTIHQkx5FPb6hBN/cqZaWE6VHMs
+         +7o78AJkQJ/WHJ3FJMY05dCNp1Az8tHZsrJ7/B2guUd04xUTJPc5mH5nmSkWQZjs8/MY
+         K4OPzm3SsNOUkFBmxwr7BolNFDdOtTo9f4l+fAkwhMzMnzDkXpED/CG6yeZ3JIoukYTM
+         MiYFUqfCidX5nRCtB4pOjgzPRxR7/IMy9NW5+qqs4pnOzS44qvAV/lAw6ju9352WIfVu
+         Y+zOBPGBJjWabRctqmMgij6POHwOKK0xYth3iXSEgDb8xGbhUS8NeMKgFbSqG8rupBNF
+         e8Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=gYDrN0550IW4gaQ5Y4xHLKNKseVnYkuMzDH5AB21nrs=;
-        b=Hn1H2MhzYYFEj5QGD6TIaVbSf9LI7CneDCDlvrFGfdLNMBbaFghkINl639y1h2DlAb
-         O9YMrRYTbtNM5PwOcVxWIpGPnc4NlBDfw3wdQyulj7Vdn2x2dDEMHodQrz1Tx/ntoVwW
-         hdQQEyNmBeIruXBIq/okZHw3FDvLXt5WMyHtull9geRVbOlzfgBSSQxA6Qq/rAkqZpX0
-         cP9aEd0SIWIPufbx7iQ9QvLwIOjlky7fQJIYvDgHoj3QqM/TttGqv/phAt8Q9GT4GYRC
-         wKXjcoMUevbDfttAaU2kZIRptGq7gBF7lPKsFNFrkW8tAVnANdeL44bku6dZ1a28YY4Q
-         WDUQ==
-X-Gm-Message-State: APjAAAUwd1ZST2uRGMITP0lByIAvX8YmTcxf3+97y+wrIfNO4/n6Ps2u
-        NZ0QwkyVBc2X7CNkYH26mNqWzeM79VpMwWw32J7rVpHy5Mw=
-X-Google-Smtp-Source: APXvYqyZ4unvfAvXhsMMDNwxGq+p22MNo86m4B/ltuEx28Lm0k4d7aoHNiBpVq7iJFMcDyee5zyvGjF4WoDrzZABGTs=
-X-Received: by 2002:a05:6602:2207:: with SMTP id n7mr354643ion.36.1570570720201;
- Tue, 08 Oct 2019 14:38:40 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0r/M7DZi0Ny3eU1osbJqRSg+OlNrKN1zzlScpTtMkjs=;
+        b=YPhDFjUoB+PHc4jstA28uEKL1NBsrH0YCvks7msibmiJfiXAmlm/4ZjzDL+7pN1vZi
+         jpC7hPhSKMjFjY+hZKaOCXatpk4TvWFzV658hNBEAt8Z7Pcn1Kcd2ZWZazjDmgII5MAX
+         xm4Og7rWHilyN2NG+U7O+Q+bpiNxA54tOT0mQZaTPIL55iYte3s3sSSpARaCZtMfJAO1
+         ph7WssmHRoW5P4eFyN1V5gcP3xUFyiNttXNRFo00dyOTJWQFVdgCECt7tUqKBLXRfGLq
+         twj09IRDLNCff4eguMWsPH1j83PlP/Jhe6rn2SsoKEq9945bA8+EJL2Iw1VVoJmQ11iC
+         AGGw==
+X-Gm-Message-State: APjAAAXQNMb8u+Vu7cRkg+wBcLC0u8MGdmvotlrUXp+KD6CjVFcF9id8
+        Hf/uN2Oz2fNaEfLXOqefcTg=
+X-Google-Smtp-Source: APXvYqwIvTqDDJE6bL6GB4TCYRgcca7rqiXHjuMuYGIMO5K5BB8UxDEnPYnDIuhYh4BvDSQ8aghJUA==
+X-Received: by 2002:adf:94e5:: with SMTP id 92mr232068wrr.5.1570575693039;
+        Tue, 08 Oct 2019 16:01:33 -0700 (PDT)
+Received: from szeder.dev (x4dbe0d12.dyn.telefonica.de. [77.190.13.18])
+        by smtp.gmail.com with ESMTPSA id o22sm601482wra.96.2019.10.08.16.01.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 Oct 2019 16:01:32 -0700 (PDT)
+Date:   Wed, 9 Oct 2019 01:01:30 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Uwe Brauer <oub@mat.ucm.es>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: I just pulled, and git log --graph does not show all
+Message-ID: <20191008230130.GE29845@szeder.dev>
+References: <87sgomyows.fsf@mat.ucm.es>
 MIME-Version: 1.0
-From:   Francis M <fmcbra@gmail.com>
-Date:   Tue, 8 Oct 2019 22:38:27 +0100
-Message-ID: <CAO+szGsZS9CaU4u77pwxwDssHszFeDAshVxLmqJhd3VAR5T=uA@mail.gmail.com>
-Subject: Shallow-to-deep conversion error query
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87sgomyows.fsf@mat.ucm.es>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Tue, Sep 24, 2019 at 12:22:27PM +0200, Uwe Brauer wrote:
+> I am confused, I just pulled 
+> but git log --graph --decorate
+> did not show all commits, 
+> 
+> Only 
+> 
+> git log --graph --decorate --all
+> 
+>  and from the emails I received the commits shown by --all
+> 
+> Should be on a new branch.
+> 
+> I confess I am a mercurial user not a git user, 
+> 
+> What is the reason for this behavior.
+> 
+> How can I now merge the new branch into master?
 
-Quick question, hopefully. Have tried searching through my local archive
-of the list but didn't find an answer, so fingers crossed this hasn't come
-up come up frequently in the past...
+I hear you: I had a brief encounter with Mercurial not that long ago, 
+and there were several things that didn't work the way I expected (or 
+rather: the way I got used to with Git).  The subtle and sometimes
+not-so-subtle differences between the concepts and philosophy of the
+two systems might very well explain why Git didn't work the way you
+expected.
 
-So, a fresh shallow clone[1] of Linus' mainline repo followed by
-"git fetch --unshallow" results in:
+However, it's impossible to give any explanation or advice without
+knowing more about the situation, e.g. at least the exact commands
+that you run and what they outputted, if you still have them or at
+least if you can still reproduce the issue. (with potentially
+sensitive URLs and/or branchnames redacted, if necessary).
 
-  fatal: error in object: unshallow <sha1>
-
-Re-packing with "git repack -d" sorts it all out, but my question is: is this
-a bug, or is it instead down to something like the server-side version of
-git that created the pack being outdated or similar?
-
-Cheers,
-Francis
-
-[1]
-
-# git clone --shallow-since='Tue  1 Jan 00:00:00 BST 2019'
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-torvalds/linux-mainline
-[...]
-Checking out files: 100% (65698/65698), done.
-# git fetch --unshallow
-fatal: error in object: unshallow 00f8ccd0c95f4e604297057a5bccec86c0903d14
