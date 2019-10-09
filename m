@@ -2,108 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 556911F4BD
-	for <e@80x24.org>; Wed,  9 Oct 2019 20:43:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C392E1F4BD
+	for <e@80x24.org>; Wed,  9 Oct 2019 20:50:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731947AbfJIUnv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Oct 2019 16:43:51 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:36799 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728804AbfJIUnv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Oct 2019 16:43:51 -0400
-Received: by mail-pf1-f196.google.com with SMTP id y22so2395231pfr.3
-        for <git@vger.kernel.org>; Wed, 09 Oct 2019 13:43:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=Gecsx8EgAnaXIBvlCDAES/xSI172609UbMYIpVI7VU8=;
-        b=jQQ1Sgzgo768qqr+5jB2FKwjaF3VwA//LMDhL7tObRO5mv/FMX2xyMomN67xaTObZa
-         MtuOSHI60GxNGeDg18QIsySmgANF4jt4HoJIvVBxoz8p+EU6PWjMFFyxLnzbKASG2cww
-         ujhL9kWIGt+Y/j9fvWuC6/0crfoFqVtA9RuUCiunnAgpdhBzqAsnUXykrgxxkdW1zFGH
-         JXhxC6YYCLiQkI8hwVD9UnqicXKcyNcjMRNvrgX5H8HRwpFN4rRp8iNYkQNt74evf6sY
-         yJZhNT4NO6LKdgk7VH2zbWXldTVuqQy+fauuShDKxpD2yeeEe037IbhcsJxtCLlLVwlC
-         g0kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=Gecsx8EgAnaXIBvlCDAES/xSI172609UbMYIpVI7VU8=;
-        b=axotNJbfsNOt0DTHBEsBis+iK+cqkZxy7eVML7dpo2M2zDZ/Co+rDxAsQe9LhGNild
-         xLKHe+X+r7GXxlaOzisia9G0gq0gBvnsGcp6oJ4ttSfoSwryWmZmIf59s7mkV9gDqeZH
-         XV+ueFeGIP/oxBKZt2ZKy4dDrhf6VTdNi0UaqZ/jvpXbeMMVvgIixXtBL+7t7sqvrna9
-         SiF1Oj1cOmle4shNupeEde6kn4hsO2wybSdKTN8sUDS6myPU7brIctbMLfUVxLF0DpJ2
-         kxcMgfjD08o0NpC6Scs7aAFrGnqiXEnw7mG4c9o8FGiA67dOa6sxmW5hG2oIQ9qwkh5K
-         V5Bg==
-X-Gm-Message-State: APjAAAUbWyI4TkLHARnt7ouIbm1PwtNYCxppHowb5CouQRwSZ0mS8ERx
-        5mHcq+C/KZAeyTBv1cI5ZsAlgB03
-X-Google-Smtp-Source: APXvYqzAoGQlh+NSpARkaQg33ClMO1kdO30kqleNLt/WTvnrVet5wWsA8Ec02vkRZiWI0p14WuaZ0g==
-X-Received: by 2002:a63:e802:: with SMTP id s2mr6410526pgh.188.1570653829528;
-        Wed, 09 Oct 2019 13:43:49 -0700 (PDT)
-Received: from generichostname ([204.14.239.53])
-        by smtp.gmail.com with ESMTPSA id q20sm3634095pfl.79.2019.10.09.13.43.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2019 13:43:48 -0700 (PDT)
-Date:   Wed, 9 Oct 2019 13:43:46 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH] Makefile: respect $(V) in %.cocci.patch target
-Message-ID: <977b19bcf3ef34395288933eb0090b6d9c58864f.1570653788.git.liu.denton@gmail.com>
+        id S1731781AbfJIUuo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Oct 2019 16:50:44 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:44980 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729535AbfJIUuo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Oct 2019 16:50:44 -0400
+Received: from hashpling.plus.com ([212.159.69.125])
+        by smtp with ESMTP
+        id IIupiAcTNyvjUIIuriVrXa; Wed, 09 Oct 2019 21:50:43 +0100
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=UrEdyN4B c=1 sm=1 tr=0
+ a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17
+ a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=XobE76Q3jBoA:10
+ a=Ew9TdX-QAAAA:8 a=FZ0js5LKUbAjmzowjr8A:9 a=2R2LP8nKFKteH-sM:21
+ a=xgM9HTOTRFxZ39yz:21 a=CjuIK1q_8ugA:10 a=obabQ9O6v7JZJTLIbnk7:22
+Received: from seabee by hashpling.plus.com with local (Exim 4.89)
+        (envelope-from <seabee@hashpling.org>)
+        id 1iIIup-0001JI-QO; Wed, 09 Oct 2019 21:50:35 +0100
+Date:   Wed, 9 Oct 2019 21:50:35 +0100
+From:   CB Bailey <cb@hashpling.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Raise your hand to Ack jk/code-of-conduct if your Ack fell thru
+ cracks
+Message-ID: <20191009205035.yrtjeij4sqtj5grc@hashpling.org>
+References: <xmqq36g5444k.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1910082111220.46@tvgsbejvaqbjf.bet>
+ <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-CMAE-Envelope: MS4wfIdINQlwrt/Rt9yCqyBNDHCaWu10ZzKCaTSCyOfa/2tCs8snl7CizzSufUCi4x/W6JMACYR0PAODa0rM3Lj+y29lvBjwHIKmVNJCAkF4taXhCdPMs7UG
+ MKF5CwUAp7hxYxxSLPquMJaA74Gh0YAGx6ihYqCi+u3MPFvZgxMBDvInBWUXJhaqQIsQoZTRH/rt6A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the %.cocci.patch target was defined in 63f0a758a0 (add coccicheck
-make target, 2016-09-15), it included a mechanism to suppress the noisy
-output, similar to the $(QUIET_<x>) family of variables.
+On Wed, Oct 09, 2019 at 09:14:59AM +0900, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Junio, would you mind picking it up, please?
+> 
+> I trust you enough that I won't go back to the cited messages to
+> double check that these acks are real, but I'd still wait for a few
+> days for people who expressed their Acks but your scan missed, or
+> those who wanted to give their Acks but forgot to do so, to raise
+> their hands on this thread.
 
-In the case where one wants to inspect the output hidden by
-$(QUIET_<x>), one could define $(V) for verbose output. In the
-%.cocci.patch target, this was not implemented.
+Acked-by: CB Bailey <cb@hashpling.org>
 
-Move the output suppression into the $(QUIET_SPATCH) variable which is
-used like the other $(QUIET_<x>) variables. While we're at it, change
-the number of spaces printed from 5 to 4, like the other variables
-there.
-
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index c99361e719..ae45bfc429 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1890,6 +1890,7 @@ ifndef V
- 	QUIET_SP       = @echo '   ' SP $<;
- 	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
- 	QUIET_RC       = @echo '   ' RC $@;
-+	QUIET_SPATCH   = @echo '   ' SPATCH $<;
- 	QUIET_SUBDIR0  = +@subdir=
- 	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
- 			 $(MAKE) $(PRINT_DIR) -C $$subdir
-@@ -2818,7 +2819,7 @@ FOUND_C_SOURCES = $(filter %.c,$(shell $(FIND_SOURCE_FILES)))
- COCCI_SOURCES = $(filter-out $(THIRD_PARTY_SOURCES),$(FOUND_C_SOURCES))
- 
- %.cocci.patch: %.cocci $(COCCI_SOURCES)
--	@echo '    ' SPATCH $<; \
-+	$(QUIET_SPATCH) \
- 	if test $(SPATCH_BATCH_SIZE) = 0; then \
- 		limit=; \
- 	else \
--- 
-2.23.0.746.g72fc0fc0b9
-
+I raise my hand.
