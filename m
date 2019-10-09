@@ -2,95 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4D891F4BD
-	for <e@80x24.org>; Wed,  9 Oct 2019 12:10:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD9CA1F4BE
+	for <e@80x24.org>; Wed,  9 Oct 2019 12:33:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730546AbfJIMKG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Oct 2019 08:10:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61980 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729686AbfJIMKF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Oct 2019 08:10:05 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E9DDF3CB11;
-        Wed,  9 Oct 2019 08:10:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Yg1tQI6JcacxrblnsX2ynr9HK24=; b=chqfgq
-        CciHnz/CkVXBPPg8RLwacxp9U16krRQlPyvqR8IquKCOzenO9Byp+sXdWGKtdZ5Z
-        XzgN5OSPlwt1qh0weXfKBxM03NJp0ChEahi/60s+0+fKYCHae6IU76ns4uRC5bgS
-        PNRrYaSZW0sMo0eqsniMsaS6W+COmiPD0YL7w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=I02jjgf1fNMIU7akJV2uL2sjJYIInYy2
-        TXA1DymbQrKOOex4LStu7UiWxzITRVvnfZp3DZt89oOel8ol8+mgO39Q4yfOboPa
-        oX62bFn0LK79gOqnJexie7PNvB/fc0D3lpLqOrSUEKUY5qKwGBHQT9UeyDX7g3b/
-        ZY2M+C7qZPI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 379FC3CB10;
-        Wed,  9 Oct 2019 08:10:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF22E3CB0D;
-        Wed,  9 Oct 2019 08:10:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] Add a helper to reverse index_pos_to_insert_pos()
-References: <pull.378.git.gitgitgadget@gmail.com>
-        <81648344bbab4219c0bfc60d1e5f02473ea7d495.1570517329.git.gitgitgadget@gmail.com>
-        <75a9c7ce-893c-6341-ba8d-eed3ccba7ee3@kdbg.org>
-        <xmqq5zkyn2a7.fsf@gitster-ct.c.googlers.com>
-        <623fcd51-5f0d-bc5b-f70d-0224a054ec5c@kdbg.org>
-        <nycvar.QRO.7.76.6.1910091015090.46@tvgsbejvaqbjf.bet>
-        <xmqqeezmkusk.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1910091358360.46@tvgsbejvaqbjf.bet>
-Date:   Wed, 09 Oct 2019 21:09:59 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1910091358360.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 9 Oct 2019 13:59:04 +0200 (CEST)")
-Message-ID: <xmqqa7aaktm0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1731256AbfJIMdZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Oct 2019 08:33:25 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:35804 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731225AbfJIMdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Oct 2019 08:33:25 -0400
+Received: by mail-qt1-f195.google.com with SMTP id m15so3147057qtq.2
+        for <git@vger.kernel.org>; Wed, 09 Oct 2019 05:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=/nAIT69an0NDzOHRHi72xoWJgVY/XAD19s5Vbhbp//I=;
+        b=D26lvsTgQ874TTQq67SWc64/1v/LoLzpkXFSu3CmQXIgbIxJ+Us7yiTnIa2QUHl8kv
+         MLZxVXXSr0kAV3UxwTSt93Ua/+A+FUaR3UggbCpIExT97DZT3p5DDk1WFd08k49fP44N
+         DZMk5skWBJEy6DPaq+OrEneJskZuvG11iL/wezHm/AUg3sYokEYC+cRQ6vczngNQAPpx
+         i2VY+EeB6o9uCN8UFVGLCTh0tveOwvVnqC5jFPlaTWG4QOxNVWO75yynatJEyU9FKX77
+         rZVkwZ3Kq5SGzfIf26CE6jZNyLi1mjD6U+331hKFhA1XQwvRLcKZT48hwszN60tReRf8
+         qGtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=/nAIT69an0NDzOHRHi72xoWJgVY/XAD19s5Vbhbp//I=;
+        b=d7HPKQU6Ndd53ddl/EN234FOeqKcuRCrKzqtaMJQxhDXuqyc+yRkdkyJbIiFZnIoh0
+         HKreMljcmz/ZRM6AH6kwmTmkSlIXPfok4Wfxq9cO+sDt+DlO3klEEZ4vKSUn/RFpbnLN
+         0QGBFKj4rcIbK3DZd9ZYgiSX3B6Ak8OEhRm1rUyovVenYctl5/m90LAPNlvRHdBQUFjn
+         WssMs8EJxuFdHhpYoaDbg70l67NVS7USUYw/xc05GZ9QHaZv/b7vouRW0GK6o6xT82vR
+         IhdN/UI2czjl5Zjyf5RH8wJ++BRIfUiZkFlHBuB6055+/k8Oktk38KRQM01fWaEBuJ1m
+         QMWQ==
+X-Gm-Message-State: APjAAAWzvgVF5+QgDdjIBY8fC3wETXyuTOBxKAMPSlrkJ+gM79n/9Mbd
+        2yq/Z7D59AZmmZ5c2o2glaQBBYeBv7g=
+X-Google-Smtp-Source: APXvYqzd/nzjecu3tiqDvs/DtOnrs609YyMujAjSoy9aKswzlOV/iCIACiD7npz7bs7dVTsxU3NVsQ==
+X-Received: by 2002:aed:3847:: with SMTP id j65mr3374087qte.124.1570624404035;
+        Wed, 09 Oct 2019 05:33:24 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:4529:c1e2:44b7:b11c? ([2001:4898:a800:1012:f65c:c1e2:44b7:b11c])
+        by smtp.gmail.com with ESMTPSA id w14sm776686qki.73.2019.10.09.05.33.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Oct 2019 05:33:23 -0700 (PDT)
+Subject: Re: I just pulled, and git log --graph does not show all
+To:     Uwe Brauer <oub@mat.ucm.es>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     git <git@vger.kernel.org>
+References: <87sgomyows.fsf@mat.ucm.es> <20191008230130.GE29845@szeder.dev>
+ <871rvmsaxn.fsf@mat.ucm.es>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <3a8158f4-03d6-820d-c7b1-ca27b5261863@gmail.com>
+Date:   Wed, 9 Oct 2019 08:33:22 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B7DAE52E-EA8D-11E9-985A-C28CBED8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <871rvmsaxn.fsf@mat.ucm.es>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 10/9/2019 2:13 AM, Uwe Brauer wrote:
+> 
+>    > On Tue, Sep 24, 2019 at 12:22:27PM +0200, Uwe Brauer wrote:
+> 
+>    > I hear you: I had a brief encounter with Mercurial not that long ago, 
+>    > and there were several things that didn't work the way I expected (or 
+>    > rather: the way I got used to with Git).  The subtle and sometimes
+>    > not-so-subtle differences between the concepts and philosophy of the
+>    > two systems might very well explain why Git didn't work the way you
+>    > expected.
+> 
+>    > However, it's impossible to give any explanation or advice without
+>    > knowing more about the situation, e.g. at least the exact commands
+>    > that you run and what they outputted, if you still have them or at
+>    > least if you can still reproduce the issue. (with potentially
+>    > sensitive URLs and/or branchnames redacted, if necessary).
+> 
+> Thanks for your answer.
+> 
+> Could you please try out 
+> git clone https://git.code.sf.net/p/matlab-emacs/src matlab-emacs-hg
+> 
+> Then you will see
+> 
+> That 
+> git log --graph
+> and
+> 
+> git log --graph --all
+> 
+> Are giving two different results and I don't understand why the branch
+> is not shown when using 
+> 
+> git log --graph
+> 
+> Funny thing is when I use the hg-git plugin and run 
+> 
+> hg clone https://git.code.sf.net/p/matlab-emacs/src matlab-emacs-hg
+> 
+> I see this branch, converted to a hg bookmark.
 
-> On Wed, 9 Oct 2019, Junio C Hamano wrote:
->
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>
->> > FWIW I actually agree with Junio about the helper, but in hindsight I
->> > could have used a better name (not one that is tied to the "index").
->> > Something like `unsigned_one_complement()`. But of course, that would
->> > say _what_ it does, not _why_.
->>
->> I personally feel that the particular name is on the better side of
->> the borderline.  "st_add3(a, b, c)" says it is about adding three
->> size_t quantities, without saying why it exists and should be used
->> over a+b+c.  Existence of the helper and calling it alone should be
->> a good enough sign that we somehow feel a+b+c is not sufficient [ly
->> safe], so we do not call it st_add3_safe() or st_add3_wo_overflow().
->>
->> Your unsigned-one-complement would fall into the same category, no?
->
-> Yes. That's what I meant to say with the "what vs why" argument.
+"git log --graph" has an implicit "HEAD" added on the end, to say
+"start walking from my current commit". The "--all" says "walk from
+all refs", so the set of commits to walk is larger.
 
-And what I wanted to say was that, even though we encourage use of
-names that convey _why_, in a case like this, the name that conveys
-only what without explicitly saying why is probably OK.
+"git log" defaults to showing history from your current position in
+history, so you can look at the recent commits that you have created
+or what changes led to your current state. Adding the "--all" gives
+you a higher-level view of the repository, but can be very noisy
+when trying to discover what has happened for your current state.
+
+In particular, say you are trying to dig into a bug in Git 2.23.0.
+A "git checkout v2.23.0" will change your HEAD to be at the commit
+used to build that version. You can use "git log" to view the
+history leading to that release, and see if you can determine recent
+changes that would have caused a regression. If you use "git log --all",
+then the commits in the "master" branch will appear before your
+current HEAD, and you'll be looking at commits that "haven't happened
+yet" according to your current place in history.
+
+I hope this helps.
+
+-Stolee
+
