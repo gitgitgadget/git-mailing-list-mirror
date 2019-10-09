@@ -2,107 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_SBL,
+	URIBL_SBL_A shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFF961F4BD
-	for <e@80x24.org>; Wed,  9 Oct 2019 00:22:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BDB01F4BD
+	for <e@80x24.org>; Wed,  9 Oct 2019 01:19:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729737AbfJIAWt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 20:22:49 -0400
-Received: from mail-pf1-f175.google.com ([209.85.210.175]:35198 "EHLO
-        mail-pf1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728792AbfJIAWt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 20:22:49 -0400
-Received: by mail-pf1-f175.google.com with SMTP id 205so424997pfw.2
-        for <git@vger.kernel.org>; Tue, 08 Oct 2019 17:22:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4gPgnOS7RPGQ+dh8fZ0cfopTCWp6V005TQk+gKIOfJ4=;
-        b=FKJ3nx8RAJnherCS5XJ0Tslh2aiUON2Ww4hfJ2zM3WF28dUbEUFPEnV1OLnk3co2Bw
-         2xGWgZ17eUWz0lq/pOZyF5fNbJo5JIi1RDEgH1kXkW5zAkEMJW8UBvwGy0grGh+Wf7Nd
-         e7j6WRnf5PhiAiasKOOFD+QTuNps1XEQHoBWlwrroXiagLJD29aFl3Dch/I89LxwB9bx
-         9KZvZerYV7sH3YkH4TzIRf7sMWCmtTpDrn22cZrNF4GW+CfGxwFTawKrwIlu0V7PrKt4
-         lvEOM0slYdw8aNvopik2x8RLXTM7LEzyNhhygEhQSdnJwDgJkSfKLZhFK/ITmtZiWWdu
-         yo8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4gPgnOS7RPGQ+dh8fZ0cfopTCWp6V005TQk+gKIOfJ4=;
-        b=ZvHYL96/0TnsKBlLYYgf5xffAVQy4+/YgHlmcDbQD1voy/X9mxm9/cSZ3538r+J44S
-         oqYiX+eJbnroE+JM7b8LFnRj+B1z4BgR5LLjA57wOiKUkOjNoyNTlu/8tr8qY38bjk5k
-         5vEkDPWH2A82Rna1XBAWPoe2zs491+jTdJSY22d9n7E8q9CezH9He+zZqGXkkTD1vH5J
-         AXMCiIks/8GMHNcerkf/1pSQKrA/OvgW4snt2jNj8S97vyf5tFWCALm6PinEr+wi3JcA
-         DemnqEDG6i6ujNxcOjQ5vyNZe3bqurWitP5m9B/X+MPGNmymPgoIUX8ysscdaWyBlJ9m
-         QPgg==
-X-Gm-Message-State: APjAAAVqoWM1sNdXcFk0G/E7SQY/FnT3Xp2VKiewhnWwonjYIkGUatXA
-        2b6APc+P2VhJtbGR4uQOLdb7k9vSP/gI6g==
-X-Google-Smtp-Source: APXvYqzqVNHr+CpX2tA1fV7L7HgyElO3aI7iQQ3Yn8vettWTYsicc4d+vUhaoCOTX20CvCNM1wSNSw==
-X-Received: by 2002:a62:1b43:: with SMTP id b64mr750761pfb.56.1570580568603;
-        Tue, 08 Oct 2019 17:22:48 -0700 (PDT)
-Received: from localhost ([2601:602:9200:32b0:1cce:84a6:3473:2610])
-        by smtp.gmail.com with ESMTPSA id 37sm286417pgv.32.2019.10.08.17.22.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2019 17:22:47 -0700 (PDT)
-Date:   Tue, 8 Oct 2019 17:22:46 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Raise your hand to Ack jk/code-of-conduct if your Ack fell thru
- cracks
-Message-ID: <20191009002246.GA25840@syl.local>
-References: <xmqq36g5444k.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1910082111220.46@tvgsbejvaqbjf.bet>
- <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
+        id S1729924AbfJIBTv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 21:19:51 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53307 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729700AbfJIBTv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 21:19:51 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 29EC682B93;
+        Tue,  8 Oct 2019 21:19:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rnAzjk+3Uz37y1Lt4A9OJK7QD80=; b=r8cbHC
+        BS22xwZO8cuj5Ya312br8FOKFHLdiqyXYYYRKM8AH8Uyy0PJ3kepTF6ZGCV+Q2ov
+        7zDWP3GvlGJSRAXyAOE3c3I2A5fZz+sDOsjUcb2PUI5gXuCUMTHtehv7Miz4y6WA
+        vAQ8DsC3UoAi8Bx1V6MCX0xM9wdpg4/AYstAE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NVWq+UD1IQ4bRdIvCcmgr6F81Mbni4in
+        cdZdIOyFZZYzgkLsy1bTHu7xhhuKAgXVuy/Rj6hA7aKgb4BM2ZWd7Y6hdJBqRxLX
+        x9MgPLVHYqpwGV5lkEhELiDp4zyT8HAtNQ6xKZAnA9ZVoSSWRvgrW3o14Ddn+sGx
+        yQU3cLh6N6Y=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 225D982B91;
+        Tue,  8 Oct 2019 21:19:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4E51382B90;
+        Tue,  8 Oct 2019 21:19:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] Add a helper to reverse index_pos_to_insert_pos()
+References: <pull.378.git.gitgitgadget@gmail.com>
+        <81648344bbab4219c0bfc60d1e5f02473ea7d495.1570517329.git.gitgitgadget@gmail.com>
+        <75a9c7ce-893c-6341-ba8d-eed3ccba7ee3@kdbg.org>
+Date:   Wed, 09 Oct 2019 10:19:44 +0900
+In-Reply-To: <75a9c7ce-893c-6341-ba8d-eed3ccba7ee3@kdbg.org> (Johannes Sixt's
+        message of "Tue, 8 Oct 2019 23:03:35 +0200")
+Message-ID: <xmqq5zkyn2a7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: E175D44E-EA32-11E9-8AE9-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 09, 2019 at 09:14:59AM +0900, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
+
+> We do not want to have it for *all* cases, where we return -1 - pos, but
+> only for those cases, where the result was actually encoded by
+> index_pos_to_insert_pos().
+
+Yup, I agree with you that decoder should be fed only the data
+emitted by the encoder.
+
+But shouldn't the code that yielded 'pos' that later gets decoded by
+computing "-1 -pos" without using the encoding helper be corrected
+to use the encoder instead?  After all, the primary purpose of
+inventing the encoder was to catch the arith overflow, wasn't it?
+
+> That excludes all cases where the argument is
+> derived from index_name_pos(), and leaves just...
 >
-> > In other words, the commit message can be augmented by this:
-> >
-> > Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > Acked-by: Derrick Stolee <stolee@gmail.com>
-> > Acked-by: Garima Singh <garimasigit@gmail.com>
-> > Acked-by: Jonathan Tan <jonathantanmy@google.com>
-> > Acked-by: Thomas Gummerer <t.gummerer@gmail.com>
-> > Acked-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > Acked-by: Elijah Newren <newren@gmail.com>
-> >
-> > Junio, would you mind picking it up, please?
+>> --- a/rerere.c
+>> +++ b/rerere.c
+>> @@ -154,7 +154,7 @@ static struct rerere_dir *find_rerere_dir(const char *hex)
+>>  		rr_dir->status = NULL;
+>>  		rr_dir->status_nr = 0;
+>>  		rr_dir->status_alloc = 0;
+>> -		pos = -1 - pos;
+>> +		pos = insert_pos_to_index_pos(pos);
 >
-> I trust you enough that I won't go back to the cited messages to
-> double check that these acks are real, but I'd still wait for a few
-> days for people who expressed their Acks but your scan missed, or
-> those who wanted to give their Acks but forgot to do so, to raise
-> their hands on this thread.
-
-I'd be quite pleased to join those above with my strongest:
-
-  Acked-by: Taylor Blau <me@ttaylorr.com>
-
-I admit to waiting a couple of days before responding to that originally
-linked thread, and that by the time I got around to readying a reply,
-everything that I wanted to say in favor of a CoC was already well put
-by others.
-
-So, I don't think that I have anything more to add than to say that I
-think it's great, that we should have it, and that I most certainly
-approve of the direction of that patch.
-
-Thanks,
-Taylor
+> ... this one...
+>
+>>  
+>>  		/* Make sure the array is big enough ... */
+>>  		ALLOC_GROW(rerere_dir, rerere_dir_nr + 1, rerere_dir_alloc);
+>> diff --git a/sha1-name.c b/sha1-name.c
+>> index 49855ad24f..bee7ce39ee 100644
+>> --- a/sha1-name.c
+>> +++ b/sha1-name.c
+>> @@ -98,7 +98,7 @@ static void find_short_object_filename(struct disambiguate_state *ds)
+>>  		loose_objects = odb_loose_cache(odb, &ds->bin_pfx);
+>>  		pos = oid_array_lookup(loose_objects, &ds->bin_pfx);
+>>  		if (pos < 0)
+>> -			pos = -1 - pos;
+>> +			pos = insert_pos_to_index_pos(pos);
+>
+> ... and this one.
+>
+>>  		while (!ds->ambiguous && pos < loose_objects->nr) {
+>>  			const struct object_id *oid;
+>>  			oid = loose_objects->oid + pos;
+>
+> -- Hannes
