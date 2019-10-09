@@ -2,134 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFB0D1F4BD
-	for <e@80x24.org>; Wed,  9 Oct 2019 09:40:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA1561F4BD
+	for <e@80x24.org>; Wed,  9 Oct 2019 10:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729865AbfJIJkL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Oct 2019 05:40:11 -0400
-Received: from quechua.inka.de ([193.197.184.2]:54922 "EHLO mail.inka.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726765AbfJIJkL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Oct 2019 05:40:11 -0400
-Received: from raven.inka.de (uucp@[127.0.0.1])
-        by mail.inka.de with uucp (rmailwrap 0.5) 
-        id 1iI8S0-0000eT-WA; Wed, 09 Oct 2019 11:40:09 +0200
-Received: by raven.inka.de (Postfix, from userid 1000)
-        id DD629120127; Wed,  9 Oct 2019 11:37:19 +0200 (CEST)
-Date:   Wed, 9 Oct 2019 11:37:19 +0200
-From:   Josef Wolf <jw@raven.inka.de>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Why is "Sparse checkout leaves no entry on working directory" a
- fatal error?
-Message-ID: <20191009093719.GC30443@raven.inka.de>
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>,
-        Git Mailing List <git@vger.kernel.org>
-References: <20191008064538.GB30443@raven.inka.de>
- <CABPp-BE8YmVTS=4UWy5jvxBwr3EOcqzbnpWf2Wc78Kv6YScKgQ@mail.gmail.com>
+        id S1729742AbfJIKgd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Oct 2019 06:36:33 -0400
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:37218 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729471AbfJIKgd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Oct 2019 06:36:33 -0400
+Received: by mail-ed1-f42.google.com with SMTP id r4so1560012edy.4
+        for <git@vger.kernel.org>; Wed, 09 Oct 2019 03:36:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OaX1UiDvAxPcvL+N2FKIGadfgRIgSog1RLOEbI9lL5A=;
+        b=VLqVrNTMSygRcbwokiDLRY9sCWEeQVqdMwiEhjjrMAipwNheLc1QtjuuR59sgz1MhI
+         p5P/NIHJYiMYek6D+6npDs2IrAqSry3Y0ZZAcZGYR3bvT5BWhmMKTW/PM/9Ka0SsE0pO
+         7KEm2D/HlqXinXC6Ez29eVYy+rqj41WwR1BDCvf1Hwvc1oio+St4k6vTKk+Nzbe56Ubz
+         F8Wy/NdsIKVolvwF/batuAjyQe4CENKCYUIno6Yd3DIIx4LHRd0D3GXramyEq79Nlx9V
+         JJZ3FWLGFIEnLHS9OHZX+0z2zle7HVTIcUx5t86k7CFkzSjDO8CAT5qjOgpr3srBrgiA
+         tIkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OaX1UiDvAxPcvL+N2FKIGadfgRIgSog1RLOEbI9lL5A=;
+        b=Lfk2Sj3KCbtF16BaARxNX+bcVusMbjSb9oVExfoG6Pvg1HrfdVTyyHjgMFbT8yfcEN
+         uutU9WRv/6WIjyTvBMYEDUI+AHOL03oFgcBWj+ibWiyxOD9zdk9gC1bjZUXA4v2X5OWY
+         RMRHjpDa3egFUptT39T602rawi9jBLxae88Jn9SA9QW0XcuufF1IsVGnM5582f/hb25P
+         ZFVWYHo4l02dkbYDcgZ9ZoYaqD9Zn8DDAK2nb4TWKSdVCHFSqkqDNJn1f4tpX/Rlbwgp
+         4zTRF58WbC5qlVEWH+aC5gGwP/gHavmrUK0UqCCzBrzSzr4a4vafPSEAKfZnDF4iaXw7
+         U0wQ==
+X-Gm-Message-State: APjAAAUtxNXPrFTclGUv5hBoHA7rHWLPpGla9XnynArAHiyN1FTMbIzM
+        /lHsqIkbEU3zha89NaMsZigM/B6bG1GE0jLFbyIRECslR/Y=
+X-Google-Smtp-Source: APXvYqxxl909snEfofXIHGcoETvYDGa6nRNQTffbkdIBNaqa7QvNqntd8vYRTmS1Z7b8Tof8iXXU2bQd+7NORNZS+MM=
+X-Received: by 2002:a17:906:c801:: with SMTP id cx1mr2143688ejb.266.1570617391667;
+ Wed, 09 Oct 2019 03:36:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABPp-BE8YmVTS=4UWy5jvxBwr3EOcqzbnpWf2Wc78Kv6YScKgQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <xmqq36g5444k.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910082111220.46@tvgsbejvaqbjf.bet>
+ <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 9 Oct 2019 12:36:20 +0200
+Message-ID: <CAP8UFD2Cm9+HkNndejOsop0bJ8c=PyMMemPobSPtgqguPFC8+w@mail.gmail.com>
+Subject: Re: Raise your hand to Ack jk/code-of-conduct if your Ack fell thru cracks
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for your comprehensive answer, Elijah!
-
-On Di, Okt 08, 2019 at 09:14:27 -0700, Elijah Newren wrote:
-> On Mon, Oct 7, 2019 at 11:52 PM Josef Wolf <jw@raven.inka.de> wrote:
-> >
-> > I am trying to add a file to an arbitrary branch without touching the current
-> > worktree with as little overhead as possible.
+On Wed, Oct 9, 2019 at 2:20 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I can see the logical progression that a sparse worktree would be less
-> overhead than a full worktree, and that a bare worktree would be even
-> better.  But you're still dealing with unnecessary overhead; you don't
-> need a worktree at all to achieve what you want.
+> For reference, here is the CoC the patch wants to add (there is no
+> such topic yet locally, nor a single patch that can be made into
+> such a topic, so there isn't exactly something people can Ack on
+> yet. So here is a "preview" of what we would see once such a series
+> lands).
 
-Well, the "as little overhead as possible" must be seen from the context. This
-is a repository with roundabout 10GB and more than 6200 files. Shared-clones
-with sparse-worktree is a BIG BIG BIG improvement here, which reduces
-operations from "minutes" to "withhin a second".
+Acked-by: Christian Couder <chriscool@tuxfamily.org>
 
-> Traditionally, if you wanted to modify another branch without touching
-> the worktree at all, you would use a combination of hash-object,
-> mktree, commit-tree, and update-ref.  That would be a better solution
-> to your problem than trying to approximate it with a sparse checkout.
-> However, that's at least four invocations of git, and you said as
-> little overhead as possible, so I'd recommend you use fast-import.
-
-I have taken a look into the commands you are recommending, and indeed, they
-seem to be better suited. Especially fast-import looks very
-promising. Unfortunately, those commands require intimate knowledge about git
-internals. I'll take a closer look into this!
-
-> It is very easy to mess up the sparse specifications.  We can't check
-> for all errors, but a pretty obvious one is when people specify
-> restrictions that match no path.
-
-But why erroring out only on completely empty tree? Why not requiring that
-_every_ line in .git/info/sparse-checkout should match at least one file?
-Would make no sense, right?
-
-> We can at least give an error in that case.
-
-Why must this be a fatal error? Wouldn't a warning suffice?
-
-> 2) When they've learned about sparse checkouts and just want to test
-> what things are like in extreme situations.
-[ ... ]
-> For case 2, people learn that an empty working tree is a too extreme
-> situation that we'll throw an error at and so they adjust and make
-> sure to match at least one path.
-
-When I am trying to learn how a new feature works, I tend to double-check the
-results. If I expect contens but end up with an empty WT, I'd go and double
-check the specifications I've given anyway.
-
-I can easily understand that a warning might be desirable. But erroring out
-and failing to honor the "-b" flag is a bit too drastic, IMHO.
-
-> > Strange enough, I have some repositories at this machine where the
-> > .git/info/sparse-checkout file contains only non-existing files and git
-> > happily executes this "git checkout -b XXX remotes/origin/XXX" command leaving
-> > the working tree totally empty all the time.
-> 
-> I can't reproduce:
-> 
-> $ git config core.sparseCheckout true
-> $ echo 'non-existent' > .git/info/sparse-checkout
-> $ git checkout -b next origin/next
-> error: Sparse checkout leaves no entry on working directory
-> 
-> Can you provide any more details about how you get into this state?
-
-Unfortunately not.
-
-Honestly, I have tried to reproduce for several days, since I tried
-to find a way how to work around that fatal error. Unfortunately, I could not
-find how to reproduce it. The only thing I can say is: threre are several
-clones on my disk which happily switch branches with an empty WT and without
-any complaints.
-
-> > Someone understands this inconsistent behaviour?
-> 
-> No, but I wouldn't be surprised if there are bugs and edge cases.  I
-> think I ran into one or two when testing things out, didn't take good
-> enough notes, and had trouble reproducing later.  The sparse checkout
-> stuff has been under-tested and not well documented, something Stolee
-> is trying to fix right now.
-
-Yes, I've seen the work on the ML. But I am only a user of git and have a very
-hard time to understand what is going on there.
-
--- 
-Josef Wolf
-jw@raven.inka.de
+Thanks to everyone involved,
+Christian.
