@@ -2,159 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 780431F4BD
-	for <e@80x24.org>; Wed,  9 Oct 2019 21:00:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 513CA1F4BD
+	for <e@80x24.org>; Wed,  9 Oct 2019 23:44:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732525AbfJIVAS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Oct 2019 17:00:18 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:40643 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732413AbfJIVAP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Oct 2019 17:00:15 -0400
-Received: by mail-wr1-f67.google.com with SMTP id h4so4762717wrv.7
-        for <git@vger.kernel.org>; Wed, 09 Oct 2019 14:00:12 -0700 (PDT)
+        id S1732465AbfJIXo3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Oct 2019 19:44:29 -0400
+Received: from mail-pl1-f202.google.com ([209.85.214.202]:55546 "EHLO
+        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732453AbfJIXo3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Oct 2019 19:44:29 -0400
+Received: by mail-pl1-f202.google.com with SMTP id g11so2509058plm.22
+        for <git@vger.kernel.org>; Wed, 09 Oct 2019 16:44:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=XtZab/eSvNAGT/nHFzYO8j0MgTZMU0VeiIWAFzVwyfY=;
-        b=PsXx4I2LnJFqtMTq07P8WP+Zy310MKx+jN6gO/TCLmGjw9cEGyKYQ/zZDVQ+0RoiNB
-         sbkPGhtzVtOrPJUVCBOLqtWcxwg3Yp8pUtjht2qyKgOXoThR8RbTKgQBDLgdMM6a5oDc
-         IIFvVF1gffzKg0eGRCQ9mQwxsIbaRwVtMs4cxmzsfNX3qdN+SR6dyQDPg1iSoOnJ2Ut+
-         uVUeHkAC7410Mc9yk9BrAFDBCcjDCOXv7nnJa68QKkk8LzAlIXR+ywCiKzH61tEgRm2q
-         lYRIrjx7XZI67ijUGsX/WkqGn8CrmoZ0Wu/E4tQ86OhMm4jMpx6O6H0s/tMfKduC/l5E
-         11NA==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=8vQeYVkicCWwGawCYLRuWzLBhyYK5d953PK2tAk0GKo=;
+        b=J7PZ322HdNMx4RuaXpz5IR6zsf/GUyxex7FEt9HGVPa8gxxWyLxHxZJ5iKm+5v0j81
+         puy7qEadqYn/NDMB/X2RGGpH9HL3bY0Mh0+zlovW+uNIrIvYEz9s+NKa2T1K+ZMVUwre
+         NvyghufvcRi10ZQtR1qi9iXoINFIyVXx3x7lWdWBg4w5+FSAxfBmWErKqS5ZCiUfegT8
+         /cEGN/AUIxq1m8H0LnMBJY9H8cGS68nSBgy8+Iw9ZFW17+2zHBYq8JxQSck2tZ1/eNm2
+         QaRz8ctvTvm04F4J1DzvojoOd1g37x8WwoBMJSotFZdNUqxhg3+VsXmpIxJVEVH63vkm
+         2/sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XtZab/eSvNAGT/nHFzYO8j0MgTZMU0VeiIWAFzVwyfY=;
-        b=H/LYo1SLZ1RFIWj+0EUuwY/hqfSeShEQwjnwCQKqbOqB/MvZePQ11+dv8i2m0ImZo6
-         vnfY17XBD5Qb19ikyCssxlL12m9exF6JbZ18zI9bH3Ra7Vhf1JT67ajaFvFmuhoAjDhV
-         ruDqL4anXLf4wUtFNkgj+vzjs4UKc2VGj87rn9uczoXSZfN24kRZxPJ3krwcbJYPlNWu
-         0rA7PbtHlCe+NMaGH6T7FS+1nPicwp9VVJXtx0n7P5XO95v05qxYY/cY/UCZgpt4A3z6
-         XZ9IJIazYm6KwljDPSV+S+wlUu26Wx7atQTiQ+ZLG5id9JK2QqjbscfYFQjEOodAePxD
-         ZBBA==
-X-Gm-Message-State: APjAAAXSjirkwrrly5hXaO2KamKIYJGp1dUQuJpeJQ8FukY1dWemx5FG
-        TmYAGjbxOxyDqy/AVhek9kwqMyCY
-X-Google-Smtp-Source: APXvYqzBEpi3XiNYpj9KEXwxMZRCLOxPm3b+WPMWOb9kwMEHlzId6Lv/JhksiIanl2KjGmrLnZAq6g==
-X-Received: by 2002:adf:d848:: with SMTP id k8mr5043920wrl.189.1570654811857;
-        Wed, 09 Oct 2019 14:00:11 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p85sm4737499wme.23.2019.10.09.14.00.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Oct 2019 14:00:11 -0700 (PDT)
-Date:   Wed, 09 Oct 2019 14:00:11 -0700 (PDT)
-X-Google-Original-Date: Wed, 09 Oct 2019 21:00:09 GMT
-Message-Id: <pull.372.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.372.git.gitgitgadget@gmail.com>
-References: <pull.372.git.gitgitgadget@gmail.com>
-From:   "William Baker via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/1] fsmonitor: don't fill bitmap with entries to be removed
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=8vQeYVkicCWwGawCYLRuWzLBhyYK5d953PK2tAk0GKo=;
+        b=fWBtBP9EYaLpYIsyoNXNlee56YAEHKf0d45IhEkAcs6h5hkhJTff1QxCdafbTX3c2l
+         J8vwyWxT0VYT5O5/k1Omhtn8HwdBVYDuKTtdYgnnEsh8pZzHUff4dVYLWFG3lnu1eOSY
+         EBVZ6eom22Ee71yLkv1CrsKNfxiJNSMbzb4s6f6IQ73FrwHthW2/Lf1McqMwa32lQAfS
+         iho/HKFupbrbLUruuc0gr0CJs70FM33O1tr0DQXVmV2ywiGAFguZKNDSqZoHG6vTJJdt
+         rlZlO4XTS2PfbzX+TOmx4NAqSpD71xOTFsEx8S058emmMpT1OCJsM9ydbhyhamJEXGfT
+         j5Gg==
+X-Gm-Message-State: APjAAAU2zahmKYus3TrA6YvWPevzhGrgOdVPEQV2loYDcztXTOspB+6k
+        jhDYU9RDMk5x4zwgudI0YEyx0hzMNGMknFpgAJe2Far2ko4o6gCvh2H+NjfTDOjq6TLavqGES4t
+        KGT8/LCCDaIE9SAdrRQccThlJyRriH397uwYW6rVpz1DTrIfAcWJlvxaX+vBYCWXraymJwdMx9L
+        rB
+X-Google-Smtp-Source: APXvYqyX++YBgEvloeTCTcUnaDuA2VLLRSOC4m25YXclSAj4lBZiNcKI6qrcBOnIMIJNhBqqdMfJNTXaI4eqyFvBcoc5
+X-Received: by 2002:a63:fe44:: with SMTP id x4mr7178588pgj.118.1570664667753;
+ Wed, 09 Oct 2019 16:44:27 -0700 (PDT)
+Date:   Wed,  9 Oct 2019 16:44:16 -0700
+Message-Id: <cover.1570663470.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.23.0.581.g78d2f28ef7-goog
+Subject: [RFC PATCH 0/6] Better threaded delta resolution in index-pack
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     williamtbakeremail@gmail.com, stolee@gmail.com,
-        Johannes.Schindelin@gmx.de, jeffhost@microsoft.com,
-        Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
+        mh@glandium.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the second iteration of changes to fix the segfault that I
-encountered while testing fsmonitor. This iteration includes the following
-updates for feedback I received on v1:
+Quoting myself [1]:
 
- * Use %u instead of %"PRIuMAX" for unsigned ints in BUG format strings
- * Updated the new test's comment to be more descriptive
+> index-pack does parallelize delta resolution, but
+> it cannot split up trees into threads: each delta base root can go into
+> its own thread, but when a delta base root is processed, all deltas on
+> that root (direct or indirect) is processed in the same thread.
 
-Thanks,
+This is a problem when a repository contains a large text file (thus,
+delta-able) that is modified many times - delta resolution time during
+fetching is dominated by processing the deltas corresponding to that
+text file. Here are patches that teach index-pack to better divide up
+the work.
 
-William
+As an example of the effect, when cloning using
 
-William Baker (1):
-  fsmonitor: don't fill bitmap with entries to be removed
+  git -c core.deltabasecachelimit=1g clone \
+    https://fuchsia.googlesource.com/third_party/vulkan-cts
 
- fsmonitor.c                 | 29 ++++++++++++++++++++++++-----
- t/t7519-status-fsmonitor.sh | 13 +++++++++++++
- t/t7519/fsmonitor-env       | 24 ++++++++++++++++++++++++
- 3 files changed, 61 insertions(+), 5 deletions(-)
- create mode 100755 t/t7519/fsmonitor-env
+on my laptop, clone time improved from 3m2s to 2m5s (using 3 threads,
+which is the default).
 
+As you can see from the diff stats, my new algorithm uses comparable
+lines of code to the existing one, but I think that it is a bit more
+complicated. My main point of difficulty was in handling the delta base
+cache - it must be GC-able, but at the same time available to another
+thread if it was being used as a base to inflate a delta. In the end,
+what I did was to make individual mutex-guarded refcounts for each
+inflation result, but the buffer itself is not mutex-guarded: so a
+thread could increment the refcount within the mutex, inflate (and
+verify) outside the mutex, and then decrement the refcount within the
+mutex. (One global mutex guards all the refcounts, as well as other
+things.) Any ideas for making this design less complicated is
+appreciated.
 
-base-commit: 5fa0f5238b0cd46cfe7f6fa76c3f526ea98148d9
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-372%2Fwilbaker%2Ffix_git_fsmonitor_crash-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-372/wilbaker/fix_git_fsmonitor_crash-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/372
+If this is a good direction, let me know and I'll refine the patches. I
+personally think that the improvement in performance is worth the slight
+added complexity. Also, in this patch set, I did some cleanup to make
+future patches clearer, but some of the cleanup is undone by the future
+patches themselves; let me know if it's easier to review if I should
+squash those patches.
 
-Range-diff vs v1:
+Also CC-ing Mike Hommey because Mike brought up a repo with a similar
+case [2], although that case happens during repack.
 
- 1:  ce9bf4237e ! 1:  08741d986c fsmonitor: don't fill bitmap with entries to be removed
-     @@ -44,8 +44,8 @@
-      +	struct cache_entry *ce;
-      +	
-      +	if (pos >= istate->cache_nr)
-     -+		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" >= %"PRIuMAX")",
-     -+		    (uintmax_t)pos, (uintmax_t)istate->cache_nr);
-     ++		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" >= %u)",
-     ++		    (uintmax_t)pos, istate->cache_nr);
-       
-      +	ce = istate->cache[pos];
-       	ce->ce_flags &= ~CE_FSMONITOR_VALID;
-     @@ -56,8 +56,8 @@
-       	istate->fsmonitor_dirty = fsmonitor_dirty;
-       
-      +	if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
-     -+		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %"PRIuMAX")",
-     -+		    (uintmax_t)istate->fsmonitor_dirty->bit_size, (uintmax_t)istate->cache_nr);
-     ++		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
-     ++		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
-      +
-       	trace_printf_key(&trace_fsmonitor, "read fsmonitor extension successful");
-       	return 0;
-     @@ -85,8 +85,8 @@
-       	int fixup = 0;
-       
-      +	if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
-     -+		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %"PRIuMAX")",
-     -+		    (uintmax_t)istate->fsmonitor_dirty->bit_size, (uintmax_t)istate->cache_nr);
-     ++		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
-     ++		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
-      +
-       	put_be32(&hdr_version, INDEX_EXTENSION_VERSION);
-       	strbuf_add(sb, &hdr_version, sizeof(uint32_t));
-     @@ -96,8 +96,8 @@
-       
-       			/* Mark all previously saved entries as dirty */
-      +			if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
-     -+				BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %"PRIuMAX")",
-     -+				    (uintmax_t)istate->fsmonitor_dirty->bit_size, (uintmax_t)istate->cache_nr);
-     ++				BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
-     ++				    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
-       			ewah_each_bit(istate->fsmonitor_dirty, fsmonitor_ewah_callback, istate);
-       
-       			/* Now mark the untracked cache for fsmonitor usage */
-     @@ -109,8 +109,9 @@
-       	test_cmp expect actual
-       '
-       
-     -+# Use test files that start with 'z' so that the entries being added
-     -+# and removed appear at the end of the index.
-     ++# This test covers staging/unstaging files that appear at the end of the index.
-     ++# Test files with names beginning with 'z' are used under the assumption that
-     ++# earlier tests do not add/leave index entries that sort below them. 
-      +test_expect_success 'status succeeds after staging/unstaging ' '
-      +	test_commit initial &&
-      +	removed=$(test_seq 1 100 | sed "s/^/z/") &&
+[1] https://public-inbox.org/git/20190926003300.195781-1-jonathantanmy@google.com/
+[2] https://public-inbox.org/git/20190704100530.smn4rpiekwtfylhz@glandium.org/
+
+Jonathan Tan (6):
+  index-pack: unify threaded and unthreaded code
+  index-pack: remove redundant parameter
+  index-pack: remove redundant child field
+  index-pack: calculate {ref,ofs}_{first,last} early
+  index-pack: make resolve_delta() assume base data
+  index-pack: make quantum of work smaller
+
+ builtin/index-pack.c | 375 ++++++++++++++++++++-----------------------
+ 1 file changed, 177 insertions(+), 198 deletions(-)
 
 -- 
-gitgitgadget
+2.23.0.581.g78d2f28ef7-goog
+
