@@ -2,102 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 972561F4BD
-	for <e@80x24.org>; Wed,  9 Oct 2019 19:52:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95EC71F4BD
+	for <e@80x24.org>; Wed,  9 Oct 2019 20:31:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731155AbfJITwI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Oct 2019 15:52:08 -0400
-Received: from mail-pl1-f169.google.com ([209.85.214.169]:40901 "EHLO
-        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728804AbfJITwI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Oct 2019 15:52:08 -0400
-Received: by mail-pl1-f169.google.com with SMTP id d22so1557760pll.7
-        for <git@vger.kernel.org>; Wed, 09 Oct 2019 12:52:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=e1KmAnb0Ep+OvUe7HOoQgb0yyFpaJU7Vy4DbXMbZTRk=;
-        b=jIMxH3hTmZ1SpJjqvvrADThWocSN9vQKxbRI6wgRCpur9Qz26JAQguJWMqyYaGWN7L
-         BUR6U1LomosRFTOplr53EMJRgaw06peswgOLMNzxwtq1htAJj5gCwkiOqZmnGNS+uctl
-         GPoZdbQGXQUuAIcHpzoQoXKdHfJ+62J/dApnDUobbPgk2Zr6A71UbW5PKj5VvuUBpOfs
-         I4EVg8w8WaaOh/wFWYadxiViFh5Js/k1QP9PlYd0HLvUoc661++zshqz83rnN5fOwvBS
-         4ZQqEGTBULX9RSj0JRuP/Kd2cyMVBNMPlneIo7LNE9Ok/DDIBZgfDt4Ut6T/wckPE3rz
-         3U0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=e1KmAnb0Ep+OvUe7HOoQgb0yyFpaJU7Vy4DbXMbZTRk=;
-        b=d9ETWQhtnc4cwm0kwU4UcACBJKhNpZBEuRkjuWgRzKIq6ZKlZ0A9NDBQWUAvRYMuS2
-         07m9HoEYQW0Guw/z63ykraPVQDYHm6vPtifCl6Ws/OQVgdN1EGL1AQ+lurnFm+Gh57BO
-         DGUjaFBTAeNfMdvpyglVIfUfOLSIoRwk/3KAFElzGwsqL20GIM6fHUvXcbnR5q8W6KhY
-         Mg9IJtLzQSpa8DXtD1IU8NHKZUAJvmF8GrPYj83Dbyz+9ITFmq7Safl3SGxxm451Mt3m
-         G8id6lD8SfhBBim0L8Ae6nuxY+zvlActrixUtplF5Ty54h5gPQBgpPlYMFit5tz8kxtJ
-         P9PQ==
-X-Gm-Message-State: APjAAAWcVlqTmhATTaYyqGPXd3IOfa6KZFV0Imw1QqBEqytGQ2lSYdwd
-        i9nEiXBhlRwYaI6ITYIKOXv75KjE
-X-Google-Smtp-Source: APXvYqyyZFXMtFccRy5FV07RxGmw2J7V+DnrSk2BpTMQeqDuiqad3iMW2p3EWU48iTv6HM8KuPLgIg==
-X-Received: by 2002:a17:902:a58b:: with SMTP id az11mr5080765plb.1.1570650727749;
-        Wed, 09 Oct 2019 12:52:07 -0700 (PDT)
-Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:7:35d9:1017:4e5f:d2fc])
-        by smtp.gmail.com with ESMTPSA id g202sm4259536pfb.155.2019.10.09.12.52.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Oct 2019 12:52:06 -0700 (PDT)
-Subject: Re: Raise your hand to Ack jk/code-of-conduct if your Ack fell thru
- cracks
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <xmqq36g5444k.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1910082111220.46@tvgsbejvaqbjf.bet>
- <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
-From:   William Baker <williamtbakeremail@gmail.com>
-Message-ID: <a1bc8d82-65da-316a-4e34-196a7b10b3c1@gmail.com>
-Date:   Wed, 9 Oct 2019 12:52:05 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.1.0
+        id S1731158AbfJIUbH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Oct 2019 16:31:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43796 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729535AbfJIUbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Oct 2019 16:31:07 -0400
+Received: (qmail 26898 invoked by uid 109); 9 Oct 2019 20:31:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Oct 2019 20:31:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17187 invoked by uid 111); 9 Oct 2019 20:33:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 09 Oct 2019 16:33:58 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 9 Oct 2019 16:31:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
+        Zeger-Jan van de Weg <git@zjvandeweg.nl>
+Subject: Re: [PATCH 1/1] commit: add support to provide --coauthor
+Message-ID: <20191009203105.GA7007@sigill.intra.peff.net>
+References: <20191008074935.10972-1-toon@iotcl.com>
+ <20191009014039.GA10802@szeder.dev>
+ <xmqqr23mlkxo.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <xmqqr23mlkxo.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/8/19 5:14 PM, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
->> In other words, the commit message can be augmented by this:
->>
->> Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> Acked-by: Derrick Stolee <stolee@gmail.com>
->> Acked-by: Garima Singh <garimasigit@gmail.com>
->> Acked-by: Jonathan Tan <jonathantanmy@google.com>
->> Acked-by: Thomas Gummerer <t.gummerer@gmail.com>
->> Acked-by: brian m. carlson <sandals@crustytoothpaste.net>
->> Acked-by: Elijah Newren <newren@gmail.com>
->>
->> Junio, would you mind picking it up, please?
-> 
-> I trust you enough that I won't go back to the cited messages to
-> double check that these acks are real, but I'd still wait for a few
-> days for people who expressed their Acks but your scan missed, or
-> those who wanted to give their Acks but forgot to do so, to raise
-> their hands on this thread.
-> 
+On Wed, Oct 09, 2019 at 11:19:47AM +0900, Junio C Hamano wrote:
 
-This looks good to me as well:
+> > I wonder how we are supposed to use this trailer in the Git project,
+> > in particular in combination with Signed-off-by.  Should all
+> > (co)authors sign off as well?  Or will Co-authored-by imply
+> > Signed-off-by?
+> 
+> I think we have been happy with (1) a comment at the end of the log
+> message that says X worked together with Y and Z to produce this
+> patch, and (2) the trailer block that has S-o-b: from X, Y and Z,
+> without any need for Co-authored-by: trailer so far, and I do not
+> see any reason to change it in this project.
 
-Acked-by: William Baker <williamtbakeremail@gmail.com>
+One advantage to making a machine-readable version is that tools on the
+reading side can then count contributions, etc. For instance:
 
-Thanks,
-William
+  https://github.com/git/git/commit/69f272b922df153c86db520bf9b6018a9808c2a6
+
+shows all of the co-author avatars, and you can click through to their
+pages.
+
+> If other projects wants to use such a footer, that's their choice,
+> but I am fairly negative to the idea to open the gate to unbounded
+> number of new options for new trailer lines.  We do not even have
+> such options like --acked=<acker>, --reported=<reporter>, for the
+> trailers that are actively used already (and to make sure nobody
+> misunderstands, I do not think it is a good idea to add such
+> individual options).
+
+Yeah, I'd agree that we should start first with a generic trailer line.
+There might be some advantage to building trailer-specific intelligence
+on top of that (for instance, it would be nice for coauthor trailers to
+expand names the way --author does). But that can come after, and might
+not even be in the form of specific command-line options. E.g., if the
+coauthor trailer could be marked in config as "this is an ident", then
+we we would know to expand it. And the same could apply to acked,
+reported, etc.
+
+-Peff
