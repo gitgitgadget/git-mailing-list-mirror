@@ -2,157 +2,211 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54CC61F4BD
-	for <e@80x24.org>; Wed,  9 Oct 2019 14:29:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A66A31F4BD
+	for <e@80x24.org>; Wed,  9 Oct 2019 15:13:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731298AbfJIO3v (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Oct 2019 10:29:51 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:43587 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730708AbfJIO3v (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Oct 2019 10:29:51 -0400
-Received: by mail-io1-f66.google.com with SMTP id v2so5365797iob.10
-        for <git@vger.kernel.org>; Wed, 09 Oct 2019 07:29:50 -0700 (PDT)
+        id S1729644AbfJIPNT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Oct 2019 11:13:19 -0400
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:37227 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729471AbfJIPNS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Oct 2019 11:13:18 -0400
+Received: by mail-wr1-f51.google.com with SMTP id p14so3502215wro.4
+        for <git@vger.kernel.org>; Wed, 09 Oct 2019 08:13:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=i3TJMd424UNJZEV9dfQ4LERbBFTWO4ffcmnXnLjTzfU=;
-        b=A9a0lLQvQAxro/xu/Zt0iHxBqrPwV9I8b6stJHXZ/fmlJj7FrLx72wVFE2O3DcoiP9
-         5C3Y0xZe7zXNmKVC1rAwVaZH23TtmA8wjurycfp45LwxmSN0vmXX8cLyBX1uE0nic47c
-         hr8wHuiemvLTt5F7djj4bdwRDQzQaVh+v7xziYQrsJH7GRvS4JLDZzmUiOTWnYSOero/
-         AiApF1vb5jAKL6iTr8dE2K+bbsGYRApI3/qkBj5gpJ8sdreuR2zd6sr/2NrpgNsDGz/f
-         O73NtAhG8sXISPAxgWvIxruJmXiFErbYdA+HA/TK+6PRmetfdsBdRNmfq/bYbFswhusI
-         h0dg==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=zZid4oY/BzleYz7Mnq5PClLUIgKOfJCgUPvg2CI0aVM=;
+        b=gX4YfknJS5lKdsRmr9fd8mxR5BIdF33IY/zYX+T+BBte7sL8jIEtndewfoNoz9mvet
+         gcczFRO/kmNcesFOP2KODobKoPH5VxHarKHUOrme1csURnqcoTWuPgxYiLajDN3n5QMO
+         15y3N9Q/vzGQkbKTTG0DnbSn9QETtnCvnVErLemD7yZ7IsGeJdfup4/7ndpi1X1i1+oE
+         +xervL7onJ2LohU7U/XzDKYsjMLbir848p2ncAFWN4+iq9ZSn9flBrOc5/uR8cuPaapX
+         I4LW6m5FFnd/4aAitPxlElCMPjXNZjSoHqzNfxMH+617qw8zowLYpuBJJu88bVCJZUrQ
+         tZcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=i3TJMd424UNJZEV9dfQ4LERbBFTWO4ffcmnXnLjTzfU=;
-        b=H9+Egh18WqJCoDZID+D98WnPxHBMdcVoZFjv6LhQqE3/gWDFgPFosaRu0PH+eY7GQe
-         qYYJn9FLT8ylGETcykOqKYEc6391hTKB1RdOx9APJWzBj5cwLfH6tO8pji85dA6zN3Mj
-         QXFwpjwDGBCowbwJRWHsUaRFq/GppFr9Fc1OzGdqppK2zV43RyQF2R2VIqQR6GQpQdOB
-         4hi2TfhyKmnxqVLCXa9hsmWN70qFKDWMIDA54xUEHRWB0PoMmzG4cJIVeS6xIhwNNCqZ
-         mT+H7Qk0P++VOa4I+xYYRSHcsMpRptOrjQm25icjwOI0OlVx49aI2Wvi2eKUn2O7lBG1
-         tDjw==
-X-Gm-Message-State: APjAAAVy2HrJJFxG5M9oaJ+7KJyXczFL9VzXbGih+481gkNOHeKmqoO/
-        8mtv5IHH1rJp1cAlH8A6XJKVOB1KVvzDhG5h2tvb2g==
-X-Google-Smtp-Source: APXvYqxol8rFH2351gugn0J1eWdP0W+Le4nKZGkLkpwWYgsM7i9uHTLmyjLIupCwrPp/+ZGT5UFjNEoUubZ71Rokb2M=
-X-Received: by 2002:a02:e48:: with SMTP id 69mr3427945jae.17.1570631389720;
- Wed, 09 Oct 2019 07:29:49 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=zZid4oY/BzleYz7Mnq5PClLUIgKOfJCgUPvg2CI0aVM=;
+        b=USXwwRiCh4bS1hs195FnpaR8dSb0X1xfmHMOJyGa4JCxjaRa3i+l9f89yPdvSctV3M
+         Idt8KjEx4LF5faDdCJDSyr5VZ3rQ+5v1+jeJ0Jv29PVJGtQzd/JS4IXR2n1bDgJcNJwf
+         7RKfjg4QiAZbC1eKgR6Mx6TrbJasaL8MnEYIms8W27P5AOVhW2Ixt//Lqx752JGwqPib
+         8g3eAfZD+7Qkh9D0M7LBV61venB6Pl2CWr9JdMDz6bWDqT6tGagiePDqzo4siwe6JAL5
+         o9i4GIXIki2xZmjcA525Syx8byUzM7uH9zPG5PQX+8/YJYtymlPy/FGTXeueAd2+kT1t
+         tNwQ==
+X-Gm-Message-State: APjAAAVYXql4dTicw6HkWC+j5HZYacfTTmyq1k0KChSwqAH4cUYpkT/f
+        +lPEqQrTBr1LninjUAvQwIU=
+X-Google-Smtp-Source: APXvYqwBqrcEx+i1oQQ9DAfeVoaFY5nvUx11proXiFM37X8WXdzFYW9KOn7Df6SxVTVhK8vA5EewHg==
+X-Received: by 2002:adf:ecd0:: with SMTP id s16mr3328294wro.65.1570633996289;
+        Wed, 09 Oct 2019 08:13:16 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-28-119.as13285.net. [92.22.28.119])
+        by smtp.gmail.com with ESMTPSA id o22sm6572983wra.96.2019.10.09.08.13.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Oct 2019 08:13:15 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Raise your hand to Ack jk/code-of-conduct if your Ack fell thru
+ cracks
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <xmqq36g5444k.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1910082111220.46@tvgsbejvaqbjf.bet>
+ <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <df65a710-c92d-f3da-cf4a-0474a7153089@gmail.com>
+Date:   Wed, 9 Oct 2019 16:13:14 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.0
 MIME-Version: 1.0
-References: <CAEXP2g8-reK+u2FaO=mMP-nsvuDDWGpwV_tyKG5L5XpU=1LQeg@mail.gmail.com>
- <20191009022457.GB73710@google.com>
-In-Reply-To: <20191009022457.GB73710@google.com>
-From:   Dominik Salvet <dominik.salvet@gmail.com>
-Date:   Wed, 9 Oct 2019 16:29:33 +0200
-Message-ID: <CAEXP2g93XtaeEZi-5+A+PEDT7FJgJERdsrsAG7OFqWpShD7mqw@mail.gmail.com>
-Subject: Re: Fetch origin/HEAD during git fetch
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
-Thank you for your time. I would be for something like `git fetch
---head` or `git fetch --remote-head` as the name. It also matches `git
-fetch --tags` - fetch tags from remote, in addition to whatever else.
-Aside from that, there are no further comments from my side. I would
-be really happy to see the option in newer versions of Git (though, I
-would be more happier being able to implement it in current ones...).
-However, I won't be able to implement it myself for two reasons; a)
-not enough skill in C and b) unfortunately, I do not have enough time.
-Nevertheless, I can assist during the development of this feature if
-approved and if there is someone who actually writes the code.
+Hi Junio
 
-Another solution, on the other hand, could be the one from the
-provided link [1] - use ~ for symrefs. That would also solve my
-problem and since it would be equivalent to `git remote set-head
-origin -a`, I am perfectly fine with that. Just run `git config --add
-remote.origin.fetch ~HEAD:refs/remotes/origin/HEAD` after setting up
-the origin remote and then just use `git fetch`.
+On 09/10/2019 01:14, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+>> In other words, the commit message can be augmented by this:
+>>
+>> Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> Acked-by: Derrick Stolee <stolee@gmail.com>
+>> Acked-by: Garima Singh <garimasigit@gmail.com>
+>> Acked-by: Jonathan Tan <jonathantanmy@google.com>
+>> Acked-by: Thomas Gummerer <t.gummerer@gmail.com>
+>> Acked-by: brian m. carlson <sandals@crustytoothpaste.net>
+>> Acked-by: Elijah Newren <newren@gmail.com>
+>>
+>> Junio, would you mind picking it up, please?
+> 
+> I trust you enough that I won't go back to the cited messages to
+> double check that these acks are real, but I'd still wait for a few
+> days for people who expressed their Acks but your scan missed, or
+> those who wanted to give their Acks but forgot to do so, to raise
+> their hands on this thread.
 
-About the `git checkout --orphan`: it also modifies the work tree in
-my case (files in local repository), which I don't want to. Still, if
-I want to create a branch to delete another branch (default clone
-local branch), that itself is counterproductive - I don't want any
-local branches. There is another problem, though. What name to choose
-for `git checkout --orphan <name>` not to conflict with a default
-branch (that could be anything) of the repository? Yep, there is a
-solution for that but I don't want to make things over-complicated. I
-would rather not use the `git clone` solution as long as there is no
-`git clone --no-checkout-and-no-local-branches`-like option/s.
+I forgot to add
 
-However, it looks like I have found an optimal workaround for my case.
-Use git init, setup git remote and also run `git config --add
-remote.origin.fetch HEAD:refs/remotes/origin/HEAD`. Now, using a plain
-`git fetch` for fetching updates also fetches the current default
-remote commit in origin/HEAD each time used, so no symbolic reference
-to a branch might not be required as origin/HEAD points to the latest
-commit of the default branch in both cases. Symbolic reference may be
-beneficient in case when not fetching origin/HEAD while fetching the
-branch pointed by origin/HEAD reference, which may fail in case the
-remote updates its origin/HEAD anyways (e.g., on GitHub - repository
-Settings -> Branches -> Default branch).
+Acked-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Due to my workaround, I guess now it's up to you, developers, whether
-developing a `git fetch --head` option or ~ for symrefs worth it for
-you. Anyway, if you find any pitfalls in my workaround, please let me
-know. If you are rather interested in the actual implementation, take
-a look at GitPack hosted on github.com/dominiksalvet/gitpack, the
-affected file is src/gitpack (search for 'git config').
+to my original reply in this thread, could you add it please
 
-Have a nice day,
+Thanks
 
-On Wed, 9 Oct 2019 at 04:25, Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> Hi!
->
-> Dominik Salvet wrote:
->
-> > 1) `git fetch origin && git remote set-head origin -a`
-> > 2) `git fetch origin +refs/heads/*:refs/remotes/origin/*
-> > HEAD:refs/remotes/origin/HEAD`
-> > 3) instead of git init and remote, use directly `git clone --no-checkout`
-> >
-> > The first solution is not suitable due its delay caused by remote
-> > access (2 separate invocations). For smaller repositories, delays of
-> > these individual commands are almost comparable. However, this
-> > solution is semantically exactly what I want.
->
-> Interesting.
->
-> For the specific case, it sounds like some kind of "git fetch
-> --also-set-head" would do the trick for you.  As you can see, I'm awful
-> at naming command line options --- aside from the need to give it a
-> better name, any others thoughts on that?  Would you be interested in
-> taking a stab at implementing it?
->
-> For the more general case, there's been some discussion of fetching
-> and pushing symrefs on-list before.  [1] discusses one possible UI.
->
-> [...]
-> > The third solution has several problems. The first one is the created
-> > default local branch. So delete it.
->
-> Hm, I don't follow.  Does "git checkout --orphan" do what you're
-> looking for?
->
-> Thanks and hope that helps,
-> Jonathan
->
-> [1] https://public-inbox.org/git/20180814214723.GA667@sigill.intra.peff.net/
-
-
-
---
-Dominik Salvet
+Phillip
+> Thanks for starting the concluding move on this topic.
+> 
+> For reference, here is the CoC the patch wants to add (there is no
+> such topic yet locally, nor a single patch that can be made into
+> such a topic, so there isn't exactly something people can Ack on
+> yet. So here is a "preview" of what we would see once such a series
+> lands).
+> 
+>   CODE_OF_CONDUCT.md | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> 
+> # Git Code of Conduct
+> 
+> This code of conduct outlines our expectations for participants within
+> the Git community, as well as steps for reporting unacceptable behavior.
+> We are committed to providing a welcoming and inspiring community for
+> all and expect our code of conduct to be honored. Anyone who violates
+> this code of conduct may be banned from the community.
+> 
+> ## Our Pledge
+> 
+> In the interest of fostering an open and welcoming environment, we as
+> contributors and maintainers pledge to make participation in our project and
+> our community a harassment-free experience for everyone, regardless of age,
+> body size, disability, ethnicity, sex characteristics, gender identity and
+> expression, level of experience, education, socio-economic status,
+> nationality, personal appearance, race, religion, or sexual identity and
+> orientation.
+> 
+> ## Our Standards
+> 
+> Examples of behavior that contributes to creating a positive environment
+> include:
+> 
+> * Using welcoming and inclusive language
+> * Being respectful of differing viewpoints and experiences
+> * Gracefully accepting constructive criticism
+> * Focusing on what is best for the community
+> * Showing empathy towards other community members
+> 
+> Examples of unacceptable behavior by participants include:
+> 
+> * The use of sexualized language or imagery and unwelcome sexual attention or
+>    advances
+> * Trolling, insulting/derogatory comments, and personal or political attacks
+> * Public or private harassment
+> * Publishing others' private information, such as a physical or electronic
+>    address, without explicit permission
+> * Other conduct which could reasonably be considered inappropriate in a
+>    professional setting
+> 
+> ## Our Responsibilities
+> 
+> Project maintainers are responsible for clarifying the standards of acceptable
+> behavior and are expected to take appropriate and fair corrective action in
+> response to any instances of unacceptable behavior.
+> 
+> Project maintainers have the right and responsibility to remove, edit, or
+> reject comments, commits, code, wiki edits, issues, and other contributions
+> that are not aligned to this Code of Conduct, or to ban temporarily or
+> permanently any contributor for other behaviors that they deem inappropriate,
+> threatening, offensive, or harmful.
+> 
+> ## Scope
+> 
+> This Code of Conduct applies within all project spaces, and it also applies
+> when an individual is representing the project or its community in public
+> spaces. Examples of representing a project or community include using an
+> official project e-mail address, posting via an official social media account,
+> or acting as an appointed representative at an online or offline event.
+> Representation of a project may be further defined and clarified by project
+> maintainers.
+> 
+> ## Enforcement
+> 
+> Instances of abusive, harassing, or otherwise unacceptable behavior may be
+> reported by contacting the project team at git@sfconservancy.org. All
+> complaints will be reviewed and investigated and will result in a response
+> that is deemed necessary and appropriate to the circumstances. The project
+> team is obligated to maintain confidentiality with regard to the reporter of
+> an incident. Further details of specific enforcement policies may be posted
+> separately.
+> 
+> Project maintainers who do not follow or enforce the Code of Conduct in good
+> faith may face temporary or permanent repercussions as determined by other
+> members of the project's leadership.
+> 
+> The project leadership team can be contacted by email as a whole at
+> git@sfconservancy.org, or individually:
+> 
+>    - Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>    - Christian Couder <christian.couder@gmail.com>
+>    - Jeff King <peff@peff.net>
+>    - Junio C Hamano <gitster@pobox.com>
+> 
+> ## Attribution
+> 
+> This Code of Conduct is adapted from the [Contributor Covenant][homepage],
+> version 1.4, available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+> 
+> [homepage]: https://www.contributor-covenant.org
+> 
+> For answers to common questions about this code of conduct, see
+> https://www.contributor-covenant.org/faq
+> 
