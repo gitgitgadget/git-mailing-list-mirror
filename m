@@ -2,105 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 518751F4BD
-	for <e@80x24.org>; Wed,  9 Oct 2019 08:07:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 830031F4BD
+	for <e@80x24.org>; Wed,  9 Oct 2019 08:11:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729802AbfJIIHq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Oct 2019 04:07:46 -0400
-Received: from mout.gmx.net ([212.227.17.21]:37959 "EHLO mout.gmx.net"
+        id S1725879AbfJIILj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Oct 2019 04:11:39 -0400
+Received: from mout.gmx.net ([212.227.17.22]:57099 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729768AbfJIIHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Oct 2019 04:07:46 -0400
+        id S1725440AbfJIILi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Oct 2019 04:11:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570608459;
-        bh=MFmBv6WSHvAO6Rt8JGwhk5H5V5fr7jOYFUwjRE2Pcrg=;
+        s=badeba3b8450; t=1570608692;
+        bh=TGk0+Qk5BZpBeiDZVDGCBIP8AQt7PKveTcY/fQM6WDU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ThBD/Y21CGqYMT+a+xXe8XlVKpvVCEKXiJdNM49hcSMwsy0AtbVfgrvLEUlzv/Eff
-         AZ9O1F4tF80ZkkhOKIMgi6znY8t2SfCR7KQGtGYQ8gfYXNNBvb8cUYOLt96Dx6QWMs
-         mJKI1AP3jUcNF+EsQgjL8fldRZ+KFtx89uCSW1lA=
+        b=HMIaHYtSaX7or4tWtkEiuoLSyO7f3BGhOfpx8BM4c+7anZDthQGkp947mFHfH1g34
+         r2JCMB3e+N7G6F/uD2+Yo9yhli677PyNRJQXDKlx8QSykZNmxrKZbxpXEK2Pp1RQzy
+         PsOrcASpC4BuKR3jnINV7GO1alVajFi4Fg5opyzc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N6KYb-1i2OW20NEv-016eOV; Wed, 09
- Oct 2019 10:07:39 +0200
-Date:   Wed, 9 Oct 2019 10:07:38 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mnaof-1hqEYj2Uc9-00jdZo; Wed, 09
+ Oct 2019 10:11:32 +0200
+Date:   Wed, 9 Oct 2019 10:11:31 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Emily Shaffer <emilyshaffer@google.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Raise your hand to Ack jk/code-of-conduct if your Ack fell thru
- cracks
-In-Reply-To: <20191009014156.GA143120@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1910091007060.46@tvgsbejvaqbjf.bet>
-References: <xmqq36g5444k.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910082111220.46@tvgsbejvaqbjf.bet> <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com> <20191009014156.GA143120@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Add a helper to reverse index_pos_to_insert_pos()
+In-Reply-To: <xmqq5zkyn2a7.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910091009370.46@tvgsbejvaqbjf.bet>
+References: <pull.378.git.gitgitgadget@gmail.com> <81648344bbab4219c0bfc60d1e5f02473ea7d495.1570517329.git.gitgitgadget@gmail.com> <75a9c7ce-893c-6341-ba8d-eed3ccba7ee3@kdbg.org> <xmqq5zkyn2a7.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:DecJQEuX0EN/wUHlGUg6aM0JbFgJ4Z2YDSUO9OMK6CWja9KyJJo
- 7Q+MMtiC1IdkY4Tm7VmXiPsvMzsfF1o3Lk1f86T7T9F7H4m/NqFbeDV24MsWAOdd/gny96I
- ZfOchM0C/UPfd06rNg0D339gAvCCY8NRnUvgzjps07FEAqagzE4vzbOz0jfClh3HPlUgEzx
- z+IhayLb5ZqIByhfeTciA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:CSdf4n1ShTE=:Y2+ucGAb0Ixy2I+Y2Q2TMy
- 4yQ/JvYwLEXn9m+Fp10vkI8ruRJVh/4CSjw1x2yls/v/pcoUF0cNCRJkgh8YZNscd9ugjhHu4
- 7G70Sr17Qh3xPMwkq7Ia6rRsjzYeIp/c4l2qfua7nEHWa36Y3Dm3L8hcaprDzAAYD1iAsASxa
- GqyCbxVeiHXNfMu5/iFBdvyAj45uG68wjyndMGqpaNPGedXSv8CT1Jwa/slC75JyS9X3uJK9u
- EQ96AIZgJIJLzt2J/VPVP5RhV2/VAQb1I6UbhsI9yMfuUtTgDE/gsehX5LJTEpnUOyP43o80j
- Mugf2/0dBLkPqyUmPq6wen8fB34QGhmdNF7Vrg34u4PJIpqWyt6NtZ9m9SdK81dlxbarlL3bR
- OGywZ5KpGQM4atCSnE3Wt4uUhPUjux3R/TxPicOUILERYQVfxNG4zP7oaKX2E6E2gt+8+1HQ/
- GCeQl9+gPMPdCxJEyTWC7R7uuDoAvoc4mfhpqSN6fvwmxTbRzvnzD+bNHrc7Ir1M6VyEHA5sv
- GccV8HICzCWcfOv23mkvotMSSCID+vcG5c2Z6lmmFOPHYvHgu6A39kTaEKzonEpH28XPHvKQd
- wlKu4I5/033J+yYGY5i8mPa9FWcn1hobeX76Lg2bCCCH1zHo1leZQbvUng9DZvHMJYY8w7ppZ
- cDEUIclNRc6PfAhL4Qz5IgeMfVNuIokknotMvD2o2UjOk50CIa8lTfGLpo989HPrlJwZaZd9K
- 0AMU17hL3KvRlrzX5zWV7vXLJ/wyv5lqu3WRd2Ly2Fe/hoFGRDDKeAWUG1bHPvXwNxdZ3RSZJ
- SsIQ07Y4f3pdoIi3vDuoHp7J7B7qHB8n8A5o/P0XXp3UXPqL0VXlSfjVCuq8kR+54DOHMqcxz
- ONOPZdq2WCpqzFS8Axz4RfDof1dnZFZHESFWbDVsVWxwnZy9lkw1IWSrvziB7Pg3asNaZzkfh
- GFGi8G8gU+dBQ11IQtRAopHodvUQMt92ookykmKtaYsx7Y6gdOPC+JiuGKCSwmxBizwxO9hTo
- m4UzDApBfcwm7el2xmw7otHW1RjIwvJlV9ELwnXVz9f3q6vxNIVi1uGT++nqPiWKzzxG5uXjj
- B446+AKm/iZhZ+Vt3Q14OoBn7ERIF6zOK+5BY9nd7HiXAKDoRuN9EIpQ/zlMymFyBSI3qb/4p
- FAF2r1sn9/c+nEb+n/hL0SrTF2E3NpNY7umNvvhvBCJpNaRbedOGKlRC4coXv/3+Qy4wm4Z4p
- zjPSuU+po5U2lsgUM9xyoZ53+LkEXKxiCLYZuzbDLNnlCdsN/1sU3L7IreRE=
+X-Provags-ID: V03:K1:4W62s6OJoGVlxDldF/CnWy2jLmjwv+u64FmXLb8+8sMaOfRlrZG
+ BdCAzXYXbut7krPvZG6QPeqqA4wZSHWqvbpGep0g4mu2WMvdPbX3fMA9kEvwKhsM+8pVPXq
+ xP3wQ6i51wYGLpmC1xtvznOO63k4Phl2ETddcY+dHaMivE3M5ExCn2MRNTBZGoK/RoW7EeV
+ jb9NOVR009SNwxx68gUzg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9kRcfePl4hE=:PghNWqRKgr325j/F8At74b
+ aSA4XuwPgW5a+s/zv8jtV9pX45WGtNyRjwKS4Pm/hnNBLawVLRm6IC7qgKah9rQp/dJfnhSX7
+ 6pKmW0PhGxFrEEITa4yq1juVspCztScDj9z/kFhvB5I9Uh7Y47GEQ4WGZwwpRnh9lO0KLZAbO
+ pWD5w8+qpvif38JyPs9kqvQ3C0Lql95IsID8dzFm24FY9OCNk8Ra7ielAw+ZxBkFEdDAcHUbi
+ 0/oHSNytLxTo+JFHNmjuSKf6vSP5BDHnL+caNQh0ZYAsO4oXjWPwRnjPjLaPqQ8fAlawrAyHN
+ WsFD+GQK+eFDuXFaUh8gwDUDx9AdxwR/8F6PwD2Rkeswmr/rwCEbR8Bvh6xxZRm93O9nnmCGV
+ H+BetAOp3Ftd7tIEJch06iT4dYNa4MBm+iZBMJs1P1fWv3WR0Xkhs4dkJwfw8n0C4OO0zvj8q
+ gFwDxqDYGYwjlgrZ/uuhtA/kRtoNqlipCd6e8O/hZ0rVkUbo8ss/JOYVI0sVVjYylZZWReJSX
+ QHoRTzPG/2kbV9brUEkaHuoewADTD2iOl/d/HMmdTudZmkCx7bZcthaUy6rzDOFqBf9dZqpIG
+ 1lEdXY9T8Hh5v8hLdyZrX4MFAlJfPS0mZg6u4u3hIU/Ydx0NMZkn0xHCqbY7ARdenDeu72TsD
+ iZzo0hwjrUZMMWchR+8IgMibAPc6/FLBPDmNhWDW3kH3lHGO4S2ldja3F7736HjXsbAv4UXV/
+ qAQ2RS9if1o4inMKmBAK30fN6iDXTBri6+cLamqhB8pgp/NNXaClJr37pbDqND49N3rdOrZ3m
+ j9PQu/ryZyXoVey86QadxXiItT7li89ikjIWV48Pq3zGn2o8G3dFARBxr5wQft0QHsW37OvY8
+ MBGDFrMgQU0NuON3jQ5PjiA9Oi0nbXlKtZvHKR8IrCW4BZl3r0oARMUrXZmNcR5bAxoxk9yUu
+ UnhW95ZwK2V/kd49TRs4VQDT2+DGpRkNqzgjPDwTGC3I4N5DRjfoE+gxJV9RqwmTNeYAg0zZj
+ u222vaqvZe0OmCwCyAT7He4MWerwZd4Wk+RzOPH+4McqGbH8MZ4Ltt7jqWqwUeIbHSXwhZa6o
+ FJPHy+RhxW9W9C9yBAWa/ojbdz8Lbo0Bg1GwbXsFNs8sUoFCC8NoypbQ0Pu+6lT/DucEKjnYx
+ N+dw3zpm7Vh9ltkilKwWX9ZE1PMdOVtBm2RGtYYxIk3EBuLGd1yY/T6FrZiKHgS2tB35n96T9
+ Ke5iPmzFwK0hOXL7HSPsZuP6r4dNk55anKIUjqJmMnFs3nmJC7VylAGvMSkw=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Emily,
+Hi Junio,
 
-On Tue, 8 Oct 2019, Emily Shaffer wrote:
 
-> On Wed, Oct 09, 2019 at 09:14:59AM +0900, Junio C Hamano wrote:
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >
-> > > In other words, the commit message can be augmented by this:
-> > >
-> > > Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > > Acked-by: Derrick Stolee <stolee@gmail.com>
-> > > Acked-by: Garima Singh <garimasigit@gmail.com>
-> > > Acked-by: Jonathan Tan <jonathantanmy@google.com>
-> > > Acked-by: Thomas Gummerer <t.gummerer@gmail.com>
-> > > Acked-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > > Acked-by: Elijah Newren <newren@gmail.com>
-> > >
-> > > Junio, would you mind picking it up, please?
+On Wed, 9 Oct 2019, Junio C Hamano wrote:
+
+> Johannes Sixt <j6t@kdbg.org> writes:
 >
-> Yes, I'd like to join too - I was missed by the scan.
+> > We do not want to have it for *all* cases, where we return -1 - pos, b=
+ut
+> > only for those cases, where the result was actually encoded by
+> > index_pos_to_insert_pos().
+>
+> Yup, I agree with you that decoder should be fed only the data
+> emitted by the encoder.
+>
+> But shouldn't the code that yielded 'pos' that later gets decoded by
+> computing "-1 -pos" without using the encoding helper be corrected
+> to use the encoder instead?  After all, the primary purpose of
+> inventing the encoder was to catch the arith overflow, wasn't it?
 
-Sorry about that. I only looked through immediate responses to the
-original patch, my bad.
+That was the primary purpose of the encoder. And it is used in those
+places where we want to encode _unsigned_ positions.
+
+All of the calls to `insert_pos_to_index_pos()` that I introduced in
+this here patch pass _signed_ position values, though. They cannot
+overflow nor underflow because `-1 - <int>` is just the one-complement,
+i.e. all bits are flipped.
 
 Ciao,
 Dscho
 
 >
-> Acked-by: Emily Shaffer <emilyshaffer@google.com>
->
-> I'm very excited for us to adopt this document.
->
->  - Emily
+> > That excludes all cases where the argument is
+> > derived from index_name_pos(), and leaves just...
+> >
+> >> --- a/rerere.c
+> >> +++ b/rerere.c
+> >> @@ -154,7 +154,7 @@ static struct rerere_dir *find_rerere_dir(const c=
+har *hex)
+> >>  		rr_dir->status =3D NULL;
+> >>  		rr_dir->status_nr =3D 0;
+> >>  		rr_dir->status_alloc =3D 0;
+> >> -		pos =3D -1 - pos;
+> >> +		pos =3D insert_pos_to_index_pos(pos);
+> >
+> > ... this one...
+> >
+> >>
+> >>  		/* Make sure the array is big enough ... */
+> >>  		ALLOC_GROW(rerere_dir, rerere_dir_nr + 1, rerere_dir_alloc);
+> >> diff --git a/sha1-name.c b/sha1-name.c
+> >> index 49855ad24f..bee7ce39ee 100644
+> >> --- a/sha1-name.c
+> >> +++ b/sha1-name.c
+> >> @@ -98,7 +98,7 @@ static void find_short_object_filename(struct disam=
+biguate_state *ds)
+> >>  		loose_objects =3D odb_loose_cache(odb, &ds->bin_pfx);
+> >>  		pos =3D oid_array_lookup(loose_objects, &ds->bin_pfx);
+> >>  		if (pos < 0)
+> >> -			pos =3D -1 - pos;
+> >> +			pos =3D insert_pos_to_index_pos(pos);
+> >
+> > ... and this one.
+> >
+> >>  		while (!ds->ambiguous && pos < loose_objects->nr) {
+> >>  			const struct object_id *oid;
+> >>  			oid =3D loose_objects->oid + pos;
+> >
+> > -- Hannes
 >
