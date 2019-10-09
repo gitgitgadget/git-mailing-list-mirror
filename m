@@ -8,200 +8,89 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 638BC1F4BD
-	for <e@80x24.org>; Wed,  9 Oct 2019 20:39:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4153B1F4BD
+	for <e@80x24.org>; Wed,  9 Oct 2019 20:43:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731426AbfJIUjH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Oct 2019 16:39:07 -0400
-Received: from mout.gmx.net ([212.227.15.19]:40547 "EHLO mout.gmx.net"
+        id S1732345AbfJIUnA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Oct 2019 16:43:00 -0400
+Received: from mout.gmx.net ([212.227.17.21]:33263 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731145AbfJIUjH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Oct 2019 16:39:07 -0400
+        id S1731976AbfJIUm7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Oct 2019 16:42:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570653537;
-        bh=4AGC5ViOwvbB63MEwfB6KJFRzoWceq9dyb8b+7Z7P54=;
+        s=badeba3b8450; t=1570653777;
+        bh=+cyUx9eNl9qm10+ZLUN1GmCXc8Otr9HHtis6mw3FIPk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=l0VMvryAHoMz3XAOxZfm06GZocVTYiTbasoLD5PQpQEmcYmBgWoGmh8Qd//77MxqJ
-         B1Xoijvzxl/4bhhD0Wekhz6ud1JQlefym3hKGTkCSFp87UzsPH3Lvx1uHvKmM+eSfa
-         VIbejl8sUnvsUcmnayKDjw4M01zyTHPVA556OWfI=
+        b=N+8cwX6EcbWPTW+GiLLvlq0du1FqBdOVkkjIPs68mZhEelg5nIAsHhQtR8SSXauwh
+         TddIviJsiDGdtVbvVsmmIr9mfVSTVwzR6AFCulKpZ4EA6Sh5GyXN95dvkDUE7LaFSV
+         JfeETJ4vNl1BU6MVI/jhdd/PmslYBdei+PtIescs=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M4axg-1iGeJC3vsc-001kMo; Wed, 09
- Oct 2019 22:38:57 +0200
-Date:   Wed, 9 Oct 2019 22:38:56 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOREc-1iRbNX0DHC-00Pw8X; Wed, 09
+ Oct 2019 22:42:57 +0200
+Date:   Wed, 9 Oct 2019 22:42:56 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        torvalds@linux-foundation.org
-Subject: Re: [PATCH v10 18/36] merge-recursive: add get_directory_renames()
-In-Reply-To: <20180419175823.7946-19-newren@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910092044590.46@tvgsbejvaqbjf.bet>
-References: <20180419175823.7946-1-newren@gmail.com> <20180419175823.7946-19-newren@gmail.com>
+To:     Harish Karumuthil <harish2704@gmail.com>
+cc:     Pratyush Yadav <me@yadavpratyush.com>, git@vger.kernel.org,
+        David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] Feature: custom guitool commands can now have custom
+ keyboard shortcuts
+In-Reply-To: <f751705949a7fd23c77cbbf839c081b95b12394b.camel@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910092240190.46@tvgsbejvaqbjf.bet>
+References: <01020153c22ab06b-e195b148-37cc-4f89-92f3-f4bed1915eb9-000000@eu-west-1.amazonses.com>   <20160331164137.GA11150@gmail.com>   <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com>   <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com>
+  <20191003214422.d4nocrxadxt47smg@yadavpratyush.com>   <nycvar.QRO.7.76.6.1910041046000.46@tvgsbejvaqbjf.bet>   <20191004120107.kpskplwhflnsamwu@yadavpratyush.com>   <149a83fd40b71896b134b16c2b499ff472c6234e.camel@gmail.com>   <20191005210127.uinrgazj5ezyqftj@yadavpratyush.com>
+  <nycvar.QRO.7.76.6.1910061054470.46@tvgsbejvaqbjf.bet>  <e71835129c0628ff3b9a0653febc3737128fa23c.camel@gmail.com>  <nycvar.QRO.7.76.6.1910071159530.46@tvgsbejvaqbjf.bet> <f751705949a7fd23c77cbbf839c081b95b12394b.camel@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:kt+548/kXji29zCyHWanKSY1ChLyBIa32brRAQgQ5+/2emsR87s
- F4Z+X3xzKX6iTkuIPaEZDCcYG5wh9/wHizficEMUcfzxpF+So9K47rphUgOP8xuxn9Vw2D2
- /ogS53rd1myIMtEICNH0iVXEjgZcXMIDsZejcbXiMqW5nyr4h1kgKxxZkXwpJXU48Huz37U
- tASq0C4xFJoOXqFOveLQQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BFbFqxUcjvg=:TOwOhpfC0kWIFw3KzlVCCZ
- HRqevKF4yFBVpMAdHf7Bi2POLQTS2QT0wFAmxskQ68Gh12jzs6Rx+rgeKnZLVwqkdnoWgOURZ
- o19NQfCbciDAVzxmvOK5eRytdNYqUcdrihZ0kyUSwAB8Jd9YmAv2qsNomGw4LmqhTJK2q3v95
- slewnpM7pBW8tGnj3Y6S8L4sIWSulfdu387oEm2E4doMV8P4Lw5ryWVQZeTLcmZm7MEdNqXVN
- lOciLF4Vc6u6dUqs56/yWk3n7bt4rSXFZNzX2FjAKhXBI0ZTS7LGW7jpTb8/KjFkKhEDcmTQ3
- PHPXNmTidhAgGtVmd4UjMKmuRvVVjAeRIbVfBwiDJ7ikxnFZNKswEgct4XDp7yDis5l1jbjUo
- IKyMsUToAWCZd/1qXyL2ZMabIsFS+W6gZAOsVLUonEVu389Oul0EULSVUCsW47kJTEt3zyUL2
- +NE0OMAS8y8FzG1J0VMfwci3fHYSrFqk3hKDNtewOi0+Qyye8z+dAgZ43VOTgVc6LMCXoygCF
- jZbY8nH3ibIabakMRIiw9tpFs/C8zhzI/mZy2MoVOCwtZul6RqtZ/KjBI8MlvOb1HU+hzpsb2
- w2rSoslBy1Y8yF14qf/H0QuAQY2CWT5R1OoTcXSTNzwpW6lRW9D5bjU1izjWh7uEHj+LRS0OQ
- JiWUmJUSevKr8N77E+rXvovBUKbBHSjDfOCtYuUnjd3pNw44hioXf1fqdr68DXut8/IQvxyLX
- 9I93BvZrMupbutWOGylqBnovccdn4w37yQU2rJMbSiPCTWbhj4A1bOJgVIJHDybAs+nFcz7rR
- nczo5wc/RBaVJiz2BkpZ13xcciV2Be3CyuULPnJIOF99xfH900+o6uEDU3aHOntWRVEqRV9Ku
- KFannBBNSJbgINmazvTsE9V4sBjRrKOxglJjpl4YFpDEPRsLCHTMAzadJa2AUlV7tunMtfHa9
- Xz0ELHS4FVDjFNj8GcnL8jh1uWIOBHURX+yTTWXp/jwFhtPmDgOFPRSuvfcWP+1j1fu7IubSI
- 52Thwx22rypQDcxg/kG8Za2+7d6To3+5SfMopvfGqRDIeyYCRNzRy0jR2idRtTWqrMvv3I1Uw
- Mz8LIBprxxgsD7o8djvXYq1emkKmo/IuC7cnlHAQwNpvm07Z9knEZjW9AqzCltKruLSk2u0zL
- d3UVWBm9pF9Igv3whU58XT7rkB8sK1/KSaj3o4FJW/V3X57XO7DBsj+TKPkfW3LL163ZoSLll
- +G6AgJH6AsYwjU+G/pOtUpw8i9S2pDDMeinYCT7if2wHMJ6Xqo9sslSE2waI=
+X-Provags-ID: V03:K1:KCkvVhYBX3R/e1RL8oSePUfC1NIlrCJOCjZfDVxzqrZVa4UO4ol
+ xRnLpt3aKRp1LtZp3hFGcJ4kmHs9s8hDM36TM5PmvH9e/OmAjqmXBFhTZbKnRvdgIeZjBEF
+ RcBv8mpwDQTQak/cP3yrS8jbbvCMdNzqnuspJgsOUAr4uNpvzDIxj/YcV2BIHqIlyIeMt7q
+ S2i4NC7URAFbFzg7UBsPw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5vFRmEQaE4E=:pe9MLazUmNQ2Y0pGbmN9gL
+ b42B2sbAE2gQN0pSr6/WhQ224GhxDZfz5RuFx6oBe0QXSXjuodcUFcvw4ACZILDPo3v218Zhj
+ U6aCBAhPC1cP1HAFxmFQQaLnxHJREFipC1zbefOlAQCcN47H/jLiDvpzAP9snHff4AYtuKhRN
+ YW7Ex98lWZ1opdOHbHDJpS4ZATc6HPbxfceQrsXFz5qyFtvC5DSvWQ+vKbNV8e86DjYrNxIyk
+ 24DNyeFF1/TMOy1smaeNNjIF76AEdqx0OwE2yMGME663vmNrVS7xSjRkfwNH44oIHiyoReTo9
+ v8uoNAVfXJ3g4FXr7mMAr6AuQU+x1/CbQwO4q3XZH40tCmIBOFmwr8Qyo1aP6Emrs7dilf9zh
+ 7iQ+jy6+l45RKUt7rNsGf5tzqbVsflegw6GnAP4/7ffmWmS7ZOZhyHerInXQUDLJv3VBk+P6w
+ 0HV4EHREp2QOZ67w3kwgkRwvxOf51Q+gKE2MdLrDMATiHoEzXQ7Jzvqb4db7NQKqhH5yf58Pj
+ PKMcBND66MieUYrNAWc8q7vVq0Pzwkf3V8uDb3scF7G8JZXnCnp35Gv58PZhUJqyF9Mw9IKmL
+ Uh0Bk9unmXcCoh7Ktp4AJeGjuGi5/ONm9jXEtgUuD+ZaCH59mNKIu16zcmZNih6SctB/cFTAm
+ IVL1oCISvlYwWzD6qHCgKjUutp+mo0QVpVQeVieSUDFoEZjaWa+fPryGOliAe9KwJsault7O2
+ pzsVb/6nuCW9OrXadYbav79jB+zyNCt/UXo52YmS+nE5msBdQ3g+SsGzREVH4xNDe7cXBiriI
+ E6L08+uTVUhQWRjFzo6ito+tN/amsh2d1BYSiC7f0tPUtVjKWzEtLXxe2UoDhX/WzEkcCdeBm
+ q2t6R87yZoq8yXkZbDidsJc9LnAHVzKi545cZwRmhvm3VJyCjI8hW9rfj58LpsdJSIiAXxX5B
+ BQ51Tb1HiYfbz8Np+jjAJZx1pGFeHo39qyo3VuRIOoUA/zH6WFknnDfoP9IkosY4Zn9QbLVP4
+ q8TccP+8I1aum+m0GdYfQcjL4NBWJpJxGYpo0eLqC0GJQDlddvTsdIbfnei7MK58AzVHhVuNR
+ gedAVTlJoSHXFzoembcK+TVUi31+kco9ePwXxn2+biNDBpEK/8+Z62wOuA3FOo5lIc1qQnvYm
+ MqfAQozLxDo5eVDT2xH3lEXVQghTN0kuyp6SpBHbrJQKZCmiBKPXhQmHBBHiUBLw+qFtxEvr8
+ MLqlpebkfKF8kthlWO4KM3IXt3SFQysz9W5CYnkF/IxLFW9cYtETdW59xS1E=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi,
 
-sorry about the blast from the past, but I just stumbled over something
-I could not even find any discussion about:
+On Wed, 9 Oct 2019, Harish Karumuthil wrote:
 
-On Thu, 19 Apr 2018, Elijah Newren wrote:
-
-> This populates a set of directory renames for us.  The set of directory
-> renames is not yet used, but will be in subsequent commits.
+> @Johannes Schindelin: In short, from your previous message I understand =
+point.
 >
-> Note that the use of a string_list for possible_new_dirs in the new
-> dir_rename_entry struct implies an O(n^2) algorithm; however, in practic=
-e
-> I expect the number of distinct directories that files were renamed into
-> from a single original directory to be O(1).  My guess is that n has a
-> mode of 1 and a mean of less than 2, so, for now, string_list seems good
-> enough for possible_new_dirs.
+> 1. shortcut codes like "<Control-,>" will only in Windows platform. It m=
+ay not work in Linux / Mac.
+> 2. We need do translate shortcut codes somehow ( using one-to-one maping=
+ ).
 >
-> Reviewed-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  merge-recursive.c | 224 +++++++++++++++++++++++++++++++++++++++++++++-
->  merge-recursive.h |  18 ++++
->  2 files changed, 239 insertions(+), 3 deletions(-)
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 30894c1cc7..22c5e8e5c9 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> [...]
-> @@ -1357,6 +1395,169 @@ static struct diff_queue_struct *get_diffpairs(s=
-truct merge_options *o,
->  	return ret;
->  }
->
-> +static void get_renamed_dir_portion(const char *old_path, const char *n=
-ew_path,
-> +				    char **old_dir, char **new_dir)
-> +{
-> +	char *end_of_old, *end_of_new;
-> +	int old_len, new_len;
-> +
-> +	*old_dir =3D NULL;
-> +	*new_dir =3D NULL;
-> +
-> +	/*
-> +	 * For
-> +	 *    "a/b/c/d/e/foo.c" -> "a/b/some/thing/else/e/foo.c"
-> +	 * the "e/foo.c" part is the same, we just want to know that
-> +	 *    "a/b/c/d" was renamed to "a/b/some/thing/else"
-> +	 * so, for this example, this function returns "a/b/c/d" in
-> +	 * *old_dir and "a/b/some/thing/else" in *new_dir.
-> +	 *
-> +	 * Also, if the basename of the file changed, we don't care.  We
-> +	 * want to know which portion of the directory, if any, changed.
-> +	 */
-> +	end_of_old =3D strrchr(old_path, '/');
-> +	end_of_new =3D strrchr(new_path, '/');
-> +
-> +	if (end_of_old =3D=3D NULL || end_of_new =3D=3D NULL)
-> +		return;
-> +	while (*--end_of_new =3D=3D *--end_of_old &&
-> +	       end_of_old !=3D old_path &&
-> +	       end_of_new !=3D new_path)
-> +		; /* Do nothing; all in the while loop */
-> +	/*
-> +	 * We've found the first non-matching character in the directory
-> +	 * paths.  That means the current directory we were comparing
-> +	 * represents the rename.  Move end_of_old and end_of_new back
-> +	 * to the full directory name.
-> +	 */
-> +	if (*end_of_old =3D=3D '/')
-> +		end_of_old++;
-> +	if (*end_of_old !=3D '/')
-> +		end_of_new++;
+> If this is correct, do you have any example on how to do one-to-one mapi=
+ng of a list of string on TCL ?
 
-Is this intentional? Even after thinking about it for fifteen minutes, I
-think it was probable meant to test for `*end_of_new =3D=3D '/'` instead o=
-f
-`*end_of_old !=3D '/'`. And...
-
-> +	end_of_old =3D strchr(end_of_old, '/');
-> +	end_of_new =3D strchr(end_of_new, '/');
-
-... while I satisfied myself that these calls cannot return `NULL` at
-this point, it took quite a few minutes of reasoning.
-
-So I think we might want to rewrite these past 6 lines, to make
-everything quite a bit more obvious, like this:
-
-	if (end_of_old !=3D old_path)
-		while (*(++end_of_old) !=3D '/')
-			; /* keep looking */
-	if (end_of_new !=3D new_path)
-		while (*(++end_of_new) !=3D '/')
-			; /* keep looking */
-
-There is _still_ one thing that makes this harder than trivial to reason
-about: the case where one of `*end_of_old` and `*end_of_new` is a slash.
-At this point, we assume that `*end_of_old !=3D *end_of_new` (more about
-that assumption in the next paragraph), therefore only one of them can
-be a slash, and we want to advance beyond it. But even if the pointer
-does not point at a slash, we want to look for one, so we want to
-advance beyond it.
-
-I also think that we need an extra guard: we do not handle the case
-`a/b/c` -> `a/b/d` well. As stated a few lines above, "if the basename
-of the file changed, we don't care". So we start looking at the last
-slash, then go backwards, and since everything matches, end up with
-`end_of_old =3D=3D old_path` and `end_of_new =3D=3D new_path`. The current=
- code
-will advance `end_of_new` (which I think is wrong) and then looks for
-the next slash in both `end_of_new` and `end_of_old` (which is also
-wrong).
-
-Is my reading correct?
+This took much longer to find than I expected, probably my web search fu
+is deserting me. But I found something: `string map`, see
+https://tcl.tk/man/tcl8.6/TclCmd/string.htm#M34 for details.
 
 Ciao,
-Dscho
-
-> +
-> +	/*
-> +	 * It may have been the case that old_path and new_path were the same
-> +	 * directory all along.  Don't claim a rename if they're the same.
-> +	 */
-> +	old_len =3D end_of_old - old_path;
-> +	new_len =3D end_of_new - new_path;
-> +
-> +	if (old_len !=3D new_len || strncmp(old_path, new_path, old_len)) {
-> +		*old_dir =3D xstrndup(old_path, old_len);
-> +		*new_dir =3D xstrndup(new_path, new_len);
-> +	}
-> +}
-> [...]
+Johannes
