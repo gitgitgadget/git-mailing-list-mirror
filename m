@@ -2,99 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6C391F4BD
-	for <e@80x24.org>; Wed,  9 Oct 2019 02:19:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8F021F4BD
+	for <e@80x24.org>; Wed,  9 Oct 2019 02:25:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729677AbfJICTw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Oct 2019 22:19:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59608 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726490AbfJICTv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Oct 2019 22:19:51 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F4C2397AC;
-        Tue,  8 Oct 2019 22:19:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=flWcGgDHbELv
-        q57ZaN/g2uBn0yg=; b=OO9Or/tq8HKtfuSbIOHvudAo7mpH/TO3ITQuFmHDDkc2
-        vwscBZ6H+80Zat1csafnR8SY4TqQXo6iif+CRh78q3+f9vvr8h/ISWjkKCyjPmWF
-        RRwRC2v/YERM4evBRS0DpIOKc7fyLbKJYXgmv5zE8P2YJK53uPJ6xCSHzKPrWWk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Wr3WCH
-        qxhXqXH2zOTGugYlbwM5a4E0FQRQ+F3pB7HEN7LLNAL6ZwXCSRowVAP2HCYni152
-        jqxhH8S+nAn2PWWsyxVu7wllJ81uuwklgyKWAB0W2O6l5xPQ+FDlWtjPWnnBAvu8
-        WpEcp8W5Ex+s+mOD1cGKFq8NVd0WuJ/wXz850=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8700E397AB;
-        Tue,  8 Oct 2019 22:19:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E556F397AA;
-        Tue,  8 Oct 2019 22:19:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
-        Zeger-Jan van de Weg <git@zjvandeweg.nl>
-Subject: Re: [PATCH 1/1] commit: add support to provide --coauthor
-References: <20191008074935.10972-1-toon@iotcl.com>
-        <20191009014039.GA10802@szeder.dev>
-Date:   Wed, 09 Oct 2019 11:19:47 +0900
-In-Reply-To: <20191009014039.GA10802@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message of
-        "Wed, 9 Oct 2019 03:40:39 +0200")
-Message-ID: <xmqqr23mlkxo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729808AbfJICZB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Oct 2019 22:25:01 -0400
+Received: from mail-pf1-f179.google.com ([209.85.210.179]:38173 "EHLO
+        mail-pf1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726257AbfJICZA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Oct 2019 22:25:00 -0400
+Received: by mail-pf1-f179.google.com with SMTP id h195so581846pfe.5
+        for <git@vger.kernel.org>; Tue, 08 Oct 2019 19:25:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8Ie1IRlY1V5Nl9hSJuDNCYHJloBAh4pDFvSPdYJk4RI=;
+        b=ZQt3HXTtGl8OF56kB3tWq2VN2QiZ8sXtyyWXUAoSy1dmqW5nHXS2vXHwadEheBgDG1
+         fhwXFdHzGdZiQuDtc9FGPLPZVNnjoOEtUG9ENDS68aYHWWVhjSukJDvAP1ZBrH/xBCAM
+         wGZsDtKAdxt44I1Z0WdZloCNYjzZDmM3YHXUhjoTrwYTl9kDp5Kez8UvHz7eSmkygWMo
+         BY5uJc+8UOVYTPBKAt9Hbo7cX28lsT9LRHUH9b9obTjaMoNxJ4GPoZJh3UNxyBvgLORo
+         AUzph/bpp1t3RhCOobqVm3YepARA7xq4aYdMjU5J+iNaD/FPYNQfAqrq2vMzZij+cgi0
+         Ikbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8Ie1IRlY1V5Nl9hSJuDNCYHJloBAh4pDFvSPdYJk4RI=;
+        b=XKFtOopf0XEIpGb7o+dDEs6Gzmx+kE9fQVyxW3ySleHW2Bdnw8MIvr+jTDbZlPGWmi
+         UUN9yz/I3aDUUeleDcBu2ktsw2VCbSHXBvGvIPNHkm7PML0+ke2WOr77tXx/477Iiywt
+         0SOGzOPg8GcFlK/Dnm5YdkHebnMqSqREMc2f1loaGD7vwWz02SAFngk64tmIHxvrbEBc
+         KGMr3gkLfBOWOBkRMWDc2Ry8bne6OJrY+H5MJfpSmmAP/K4YeBUsNFIzwYm2e0faWSjL
+         m/9B2lJxm2sSa/CDMjgTuvzW7p2VW23kbTm7tIdyYSqa7sXEcbDME7tsw4+XOaxOOZay
+         z/Bw==
+X-Gm-Message-State: APjAAAUe294BwZgexJ0FEBmo/eobeKMJaMckZfDcvOZoYVopII+gGhDI
+        pHKFQpNiVVPNdKWw+1r6SLdoxPx9
+X-Google-Smtp-Source: APXvYqzet1PQnQ1rOD6fxSJkjmLuAwqw5sroxJ1HA+g3gug/GHTD7Wt+DTLi7NDG/Kj/eyI8lV9i9A==
+X-Received: by 2002:a17:90a:d143:: with SMTP id t3mr1186091pjw.105.1570587899638;
+        Tue, 08 Oct 2019 19:24:59 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id r185sm419456pfr.68.2019.10.08.19.24.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Oct 2019 19:24:58 -0700 (PDT)
+Date:   Tue, 8 Oct 2019 19:24:57 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Dominik Salvet <dominik.salvet@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Fetch origin/HEAD during git fetch
+Message-ID: <20191009022457.GB73710@google.com>
+References: <CAEXP2g8-reK+u2FaO=mMP-nsvuDDWGpwV_tyKG5L5XpU=1LQeg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 44C9F860-EA3B-11E9-8A25-C28CBED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAEXP2g8-reK+u2FaO=mMP-nsvuDDWGpwV_tyKG5L5XpU=1LQeg@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+Hi!
 
-> On Tue, Oct 08, 2019 at 09:49:35AM +0200, Toon Claes wrote:
->> Add support to provide the Co-author when committing. For each
->> co-author provided with --coauthor=3D<coauthor>, a line is added at th=
-e
->> bottom of the commit message, like this:
->>=20
->>     Co-authored-by: <coauthor>
->>=20
->> It's a common practice use when pairing up with other people and both
->> authors want to in the commit message.
+Dominik Salvet wrote:
+
+> 1) `git fetch origin && git remote set-head origin -a`
+> 2) `git fetch origin +refs/heads/*:refs/remotes/origin/*
+> HEAD:refs/remotes/origin/HEAD`
+> 3) instead of git init and remote, use directly `git clone --no-checkout`
 >
-> I wonder how we are supposed to use this trailer in the Git project,
-> in particular in combination with Signed-off-by.  Should all
-> (co)authors sign off as well?  Or will Co-authored-by imply
-> Signed-off-by?
+> The first solution is not suitable due its delay caused by remote
+> access (2 separate invocations). For smaller repositories, delays of
+> these individual commands are almost comparable. However, this
+> solution is semantically exactly what I want.
 
-I think we have been happy with (1) a comment at the end of the log
-message that says X worked together with Y and Z to produce this
-patch, and (2) the trailer block that has S-o-b: from X, Y and Z,
-without any need for Co-authored-by: trailer so far, and I do not
-see any reason to change it in this project.
+Interesting.
 
-If other projects wants to use such a footer, that's their choice,
-but I am fairly negative to the idea to open the gate to unbounded
-number of new options for new trailer lines.  We do not even have
-such options like --acked=3D<acker>, --reported=3D<reporter>, for the
-trailers that are actively used already (and to make sure nobody
-misunderstands, I do not think it is a good idea to add such
-individual options).
+For the specific case, it sounds like some kind of "git fetch
+--also-set-head" would do the trick for you.  As you can see, I'm awful
+at naming command line options --- aside from the need to give it a
+better name, any others thoughts on that?  Would you be interested in
+taking a stab at implementing it?
 
-Thanks.
+For the more general case, there's been some discussion of fetching
+and pushing symrefs on-list before.  [1] discusses one possible UI.
 
+[...]
+> The third solution has several problems. The first one is the created
+> default local branch. So delete it.
+
+Hm, I don't follow.  Does "git checkout --orphan" do what you're
+looking for?
+
+Thanks and hope that helps,
+Jonathan
+
+[1] https://public-inbox.org/git/20180814214723.GA667@sigill.intra.peff.net/
