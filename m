@@ -2,119 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 063CD1F4BD
-	for <e@80x24.org>; Wed,  9 Oct 2019 08:18:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9839E1F4BD
+	for <e@80x24.org>; Wed,  9 Oct 2019 09:19:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729491AbfJIISF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Oct 2019 04:18:05 -0400
-Received: from mout.gmx.net ([212.227.17.22]:54913 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725776AbfJIISE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Oct 2019 04:18:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570609079;
-        bh=rdiHYPrMzr+XgU+zG85TZ2OoyFmEvCoS8HtaLaANUMc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NYcClGdMy1l/2CNzYPqBhKLQp63VlMOniEjfpIQFdsqFzzIYiUk7861Dj5hSsM7GX
-         IxXPyd5M+vYw4eDXFH3L7z3mcVz25u391eNaqxzPQs8/s3BKNIsMOlwY7wEZesbHKL
-         LJpDar3yMEGfhh3BmP6CZl9/ig+dK8B+pwVByzWk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7sDq-1iEFHR374M-00519L; Wed, 09
- Oct 2019 10:17:59 +0200
-Date:   Wed, 9 Oct 2019 10:17:58 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] Add a helper to reverse index_pos_to_insert_pos()
-In-Reply-To: <623fcd51-5f0d-bc5b-f70d-0224a054ec5c@kdbg.org>
-Message-ID: <nycvar.QRO.7.76.6.1910091015090.46@tvgsbejvaqbjf.bet>
-References: <pull.378.git.gitgitgadget@gmail.com> <81648344bbab4219c0bfc60d1e5f02473ea7d495.1570517329.git.gitgitgadget@gmail.com> <75a9c7ce-893c-6341-ba8d-eed3ccba7ee3@kdbg.org> <xmqq5zkyn2a7.fsf@gitster-ct.c.googlers.com>
- <623fcd51-5f0d-bc5b-f70d-0224a054ec5c@kdbg.org>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729677AbfJIJTQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Oct 2019 05:19:16 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:41570 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727035AbfJIJTQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Oct 2019 05:19:16 -0400
+Received: by mail-io1-f68.google.com with SMTP id n26so3364957ioj.8
+        for <git@vger.kernel.org>; Wed, 09 Oct 2019 02:19:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=8HlF5vYlG/fEAPRK5tMWoY6fz+BqA2zRVK7UEP9DAjo=;
+        b=yMthQeZ7P5xo2x25j+NZaeEc2fd5l0MWQwTGmv6Nj5vAlTCSLr9zQGmLj1SSA73w77
+         DkcvWXU9M9NP8s/kx023TDk9RBD0sf0kwXT9dvk/25Rfm4RjT99lvnWN6VQFRk9ds+uz
+         VCBbdbVY3HTCpozmbP1yKWwgW5UKSwaK3fNfe5+7S2Fg7WNqIPuN1OestpO4gPaQjCdm
+         qMyt0Fz614/GtsYx4sdEwmk5LWG9AXm3u9v0ADP3uvm3lEdzp7S8x+tjToyckXQfG211
+         AuW5i6xwK/nzRKzR2HZP5CJ/Uf/xNVse8oMPjbnFBYdH+SpspHqOhRzeOVjszSgEkenB
+         I6yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=8HlF5vYlG/fEAPRK5tMWoY6fz+BqA2zRVK7UEP9DAjo=;
+        b=PCQAPE26fZi4/UqUvmrOPY+OLTGgX2CecF9nMwCua3rxPlwAcZsyP70P8TW0wf68+/
+         Yjm5XJIIXNdQWIfiedx4C8hkO5N9T3hHWv3+eWSNyhOKHpyFfs42A0zc0EzlKQPDJOeV
+         xFb2hvCu6C5AKrte90W3VsAWs7lsfPKYOuRxd5XqZVnG93biNfgdwf2BRYJSeyjfzuRe
+         NR2XdpuNcrJLwKiM5lEAX873sWHoqiwnEY5lIfX2MqUyYFgm2RtkM5fVb2j2zAesqCvt
+         NoXpI/IpdeI02yiDnqJvZWcw0sKur9FtUSkDzoWkf5WQCuznB5yoVjbvDtHzDMU2bBOJ
+         Cbhw==
+X-Gm-Message-State: APjAAAXI0u7XUo/sR1mCtqYz08oIzHvh3nIHP1Qk4olFp6w2vnXSvgzg
+        /zJzs0+op1XBpIL4osjpQmWMX4gV4/LJMWuZlhxa0A==
+X-Google-Smtp-Source: APXvYqz3Ti0Td/85heTC5p9rNobX+GicDBaKMYHfVMCn9H/5mWGN+sesN3hBmulyx2HmKOy+IO+s9tC7Hs8Y51T5nQ8=
+X-Received: by 2002:a92:d084:: with SMTP id h4mr2131156ilh.280.1570612754743;
+ Wed, 09 Oct 2019 02:19:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:P8RZ8HdN9oH5D6cPgQveChxNhkMG9FO3g7AQVRJtpsQpTs+ORmV
- Q+GLtuSXdPncUrihFAq/Ll8/Ek1/JgeQcBzXP9+B15TtwizZsV57wWSr2gps3I1DNe+P/F9
- Y8EBRIbWri0d48wKTUG2uKEIOHV6imsnGA/ImifPsJXmxCeX+kl5GZA2SoKBs1qgvliYOTi
- YhHiQokFQJOSBsFO8vCPA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:gtLKbh9uR0c=:9x9nK7TXH+yYY9u6vOifTo
- RGHhClapmp/nuTjlQokImBIgzwL32VlB14b6GJyPUVGGeGXYqLM8O56n6TYITlO1m4Gp7INBc
- Fz2KgOp5jGHfhummzJQJlsno3XoJkhstTiamA5pCWRAhCYJy94xhg/X32mGCF1nVpPsLIhryC
- oh8vO1d3h6BErs7CmKq6EeAXPlbSUHCoX14LJyscqjQTUGdMzSgZSe/swyXzSpdb2H91gy5dS
- oLQyYN6n4vup5Yu/i/YKYYghF42L+HVnQvVIND63PQ+1NIvaJItmcpoRpqBZjUqLneo5JRnMQ
- vCQJmcYALXKHkOQiK5fiMctkAnKXUtvWklqSXMcQPvCa3MvamTWWR7f0MlJsql4sqMZdI2GnQ
- TrS7uYa7rkcLHoEw4cIfUgQSMtmdKy5NtJ4iLYkLuPo48DgNesr7JM4lIzIyISbu5/gIiL260
- phsadrmt+SK6sMFPodiFBoEZQrnEnh3DmtKhoXfe+047KfaLhhKo6/GBY6k7gPADVWjMnNMi6
- rYJY/p8Uytp0voEGK4aYn5YvM9kRBTewFUcSMu6uwusZw6yHPAhEX10IiR2J9rEn7YVnJXpZW
- oMQHOwHjkU/gQiDKZs3mInXTGNVcOZRTe7lpQTYV3cyTGwhzQozoiW8vIFVt3qOy059rY5w29
- GY4LBl4us3Ga4GbeVhS6dV4vZ00xvP7KUu/iaMQR+ZvLHIB0v/5uUMJesBJegzgQo8QebYVo5
- XT1RxJrjIL93nXoa0MK7bRyiY9EFGni2MIhcDnaQmQKW8M3vg1cBKoT5vcKXRQ1jErUKOGzrx
- 26NGsHepluRmDjeAcLmoZXmCQtObhDd7sucMDN5XjnyDe1SGZBYrgl0Lw5Npil8BZG8na2x43
- YYfYhbr6ZRbzRblVsZTfwLOqRrKcKMYbDDau5Z7+yZDcmo4uGmKtUsT0I69PZYY/qb28v2DNZ
- 1uSlRLfWBBodyfme5J2HR9GtjWNRAgR/c/LOl+JTFQbVtJ2l8ny4LBCw2G2blRqWOIrAliZ6x
- 9LPLVsKtmNScM1vAjomJ133/QEn5sal4fgbkHfPy0gAGfsbP0592chIi9KiOutZQMvC4Hl5MQ
- d314rt+9s2mzr7KMip3DpidPOxOp43C4beSC9QQam6AamS5p3MJiOKgLiXRU2wgLp7JznwObv
- EqiTzBpn657FjYHSjGBWLIji2hawxuy6m5RNigeRooB+f4LDB0YOLTM1HzhcpBapSREbimcFw
- 1hs51TRte1s1WGUhl6VaWSBOaasmUqVpmpz+D660Xb7mKwjVF0IxybbyLiSU=
+References: <20191008184727.14337-1-lucasseikioshiro@gmail.com> <20191008184727.14337-4-lucasseikioshiro@gmail.com>
+In-Reply-To: <20191008184727.14337-4-lucasseikioshiro@gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 9 Oct 2019 06:19:02 -0300
+Message-ID: <CAHd-oW4RrzhhiCSbfVYFdCGuCrsi=cJfpZJGMBqU53oPDk1QgA@mail.gmail.com>
+Subject: Re: [RFC WIP PATCH 3/3] tag: add full support for --edit and --no-edit
+To:     Lucas Oshiro <lucasseikioshiro@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Kernel USP <kernel-usp@googlegroups.com>,
+        rcdailey.lists@gmail.com, Taylor Blau <me@ttaylorr.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?B=C3=A1rbara_Fernandes?= <barbara.dcf@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
-
-On Wed, 9 Oct 2019, Johannes Sixt wrote:
-
-> Am 09.10.19 um 03:19 schrieb Junio C Hamano:
-> > Johannes Sixt <j6t@kdbg.org> writes:
+On Tue, Oct 8, 2019 at 3:47 PM Lucas Oshiro <lucasseikioshiro@gmail.com> wr=
+ote:
 >
-> >  After all, the primary purpose of
-> > inventing the encoder was to catch the arith overflow, wasn't it?
+> git tag --edit and --no-edit flags are not currently fully supported.
+> This patch fixes the functionality that allows the editor to be opened
+> on demand.
 >
-> That was *your* motivation for the helper function. But IMO it is a
-> wrong design decision.
-
-I wish that comment, and the argument following it, would have come as
-part of the review of the patch series that already made it to `next`.
-
-FWIW I actually agree with Junio about the helper, but in hindsight I
-could have used a better name (not one that is tied to the "index").
-Something like `unsigned_one_complement()`. But of course, that would
-say _what_ it does, not _why_.
-
-And yes, I would wish we had C++ templates so that the helper could use
-the exact type of the caller.
-
-Ciao,
-Dscho
-
-> Whether or not the index calculation overflows is a matter of the type
-> that is used for the index, and that in turn is dicated by the
-> possible sizes of the collections that are indexed. IOW, the index
-> overflow check is (*if* it is necessary) a policy decision that must
-> be made at a higher level and must not be hidden away in a helper
-> function whose purpose (as suggested by its name) is something
-> entirely different.
+> Co-authored-by: B=C3=A1rbara Fernandes <barbara.dcf@gmail.com>
+> Signed-off-by: Lucas Oshiro <lucasseikioshiro@gmail.com>
+> Signed-off-by: B=C3=A1rbara Fernandes <barbara.dcf@gmail.com>
+> ---
+>  builtin/tag.c  | 16 +++++++++++++---
+>  t/t7004-tag.sh |  4 ++--
+>  2 files changed, 15 insertions(+), 5 deletions(-)
 >
-> Unless, of course, we declare "all our indexes are of type int". But
-> that ship has sailed long ago, because there are too many cases where we
-> are forced to use size_t as index (strlen, sizeof...).
+> diff --git a/builtin/tag.c b/builtin/tag.c
+> index 0322bdbdfb..7dff61d45a 100644
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -230,6 +230,7 @@ static int build_tag_object(struct strbuf *buf, int s=
+ign, struct object_id *resu
+>  struct create_tag_options {
+>         unsigned int message_given:1;
+>         unsigned int use_editor:1;
+> +       unsigned int force_editor:1;
+
+What if we turn 'use_editor' into a tri-state variable (--edit,
+--no-edit and "nothing given") instead of adding this field? Maybe it
+would simplify some condition checks at create_tag().
+
+>         unsigned int sign;
+>         enum {
+>                 CLEANUP_NONE,
+> @@ -307,13 +308,21 @@ static void create_tag(const struct object_id *obje=
+ct, const char *object_ref,
+>                     tag,
+>                     git_committer_info(IDENT_STRICT));
 >
-> Meta note: We know that we are painting a tiny shed here (Replacing a
-> one-liner by a one-liner, huh?) If anyone of you has better things to
-> do, please move on. My interest in this discussion are just the design
-> decisions that are made, not the actual outcome of this particular case.
+> -       if (!opt->message_given || opt->use_editor) {
+> +       if (opt->force_editor && !opt->message_given && is_null_oid(prev)=
+ &&
+> +           !opt->use_editor) {
+> +               die(_("no tag message?"));
+> +       } else if ((!opt->force_editor && !opt->message_given && is_null_=
+oid(prev))
+> +                 || (opt->force_editor && opt->use_editor)) {
+> +               /* Editor must be opened */
+>                 prepare_tag_template(buf, opt, prev, path, tag);
+>                 if (launch_editor(path, buf, NULL)) {
+>                         fprintf(stderr,
+>                         _("Please supply the message using either -m or -=
+F option.\n"));
+>                         exit(1);
+>                 }
+> +       } else if (!opt->message_given) {
+> +               /* Tag already exists and user doesn't want to change it =
+*/
+> +               strbuf_addstr(buf, get_tag_body(prev, NULL));
+>         }
 >
-> -- Hannes
+>         if (opt->cleanup_mode !=3D CLEANUP_NONE)
+> @@ -436,7 +445,7 @@ int cmd_tag(int argc, const char **argv, const char *=
+prefix)
+>         static struct ref_sorting *sorting =3D NULL, **sorting_tail =3D &=
+sorting;
+>         struct ref_format format =3D REF_FORMAT_INIT;
+>         int icase =3D 0;
+> -       int edit_flag =3D 0;
+> +       int edit_flag =3D -1;
+>         struct option options[] =3D {
+>                 OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), =
+'l'),
+>                 { OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
+> @@ -592,7 +601,8 @@ int cmd_tag(int argc, const char **argv, const char *=
+prefix)
+>                 die(_("tag '%s' already exists"), tag);
+>
+>         opt.message_given =3D msg.given || msgfile;
+> -       opt.use_editor =3D edit_flag;
+> +       opt.force_editor =3D edit_flag >=3D 0;
+> +       opt.use_editor =3D opt.force_editor ? edit_flag : 0;
+>
+>         if (!cleanup_arg || !strcmp(cleanup_arg, "strip"))
+>                 opt.cleanup_mode =3D CLEANUP_ALL;
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> index 80eb13d94e..bf43d2c750 100755
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -1313,7 +1313,7 @@ test_expect_success GPG,RFC1991 \
+>         'reediting a signed tag body omits signature' '
+>         echo "rfc1991" >gpghome/gpg.conf &&
+>         echo "RFC1991 signed tag" >expect &&
+> -       GIT_EDITOR=3D./fakeeditor git tag -f -s rfc1991-signed-tag $commi=
+t &&
+> +       GIT_EDITOR=3D./fakeeditor git tag -f --edit -s rfc1991-signed-tag=
+ $commit &&
+>         test_cmp expect actual
+>  '
+>
+> @@ -1356,7 +1356,7 @@ test_expect_success GPG,RFC1991 \
+>  test_expect_success GPG,RFC1991 \
+>         'reediting a signed tag body omits signature' '
+>         echo "RFC1991 signed tag" >expect &&
+> -       GIT_EDITOR=3D./fakeeditor git tag -f -s rfc1991-signed-tag $commi=
+t &&
+> +       GIT_EDITOR=3D./fakeeditor git tag -f --edit -s rfc1991-signed-tag=
+ $commit &&
+>         test_cmp expect actual
+>  '
+>
+> --
+> 2.23.0
 >
