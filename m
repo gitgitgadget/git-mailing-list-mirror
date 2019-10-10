@@ -2,102 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B83681F4C0
-	for <e@80x24.org>; Thu, 10 Oct 2019 18:36:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34C841F4C0
+	for <e@80x24.org>; Thu, 10 Oct 2019 18:44:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726856AbfJJSgy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 14:36:54 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39190 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726007AbfJJSgx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 14:36:53 -0400
-Received: by mail-wr1-f68.google.com with SMTP id r3so9115673wrj.6
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 11:36:51 -0700 (PDT)
+        id S1726793AbfJJSoo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 14:44:44 -0400
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:43202 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726007AbfJJSoo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 14:44:44 -0400
+Received: by mail-pg1-f201.google.com with SMTP id 6so5036178pgi.10
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 11:44:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=fjrEpJ2fhUjux5ecC0FdGKxJc5Idjg81vPSBppBZbMQ=;
-        b=Sq5W4lJjWOQC+whj7Sfef5G2UNOnkz0QOzHuMUZPgFa7xOYG/z7TRqrQCXga/jH0In
-         8/bMBuCaKmFnB/3JfFzu3vUtyNPXH/ulPEceh1tFsEYBgnXLqMOiKLrgsKP1MUbvSeLi
-         7UVdbrnnLtKzr+qwiSgdSlns+hR7Q3Hh35ARWpNIC2eh1U2tW7skYtwQh+CxXKFkBsOd
-         D+RsAQBvRikaS9Q/zeCbfBudE7S7n7Pn2Da2tcA4oi7xODbUWGu8R1bDz4ecnZ/pJ1lp
-         ZJPo5VFkJpm6OUUedOhdcMwYTXy46dPBlxpTbRzhGBGMLGyU0py9iluq7sbjGAbQ0Q28
-         B42A==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=zgY8VA7SbC2gmoQvmovFAv2ujYXI92aS8gfyCzXnHew=;
+        b=jYHoi8K3Z/jq5pkKDVDemZvUm2Ix0AcQc5FyF32GG9oE4f6Ws5LpLXZli0LTFA+3D3
+         ySrcyTQtTUj8Q9BM7hFBnKD95H4PvRfmCb5d9CLKoZ/L9BaQSCHzKFfRNKVVX20aLObc
+         8pH/fRGngOlyOOzNVEewaXA+AC1+8Cz3Yt+kQU6u/tQ2Z28dM+0rMaG7gtIgwmuK+dFC
+         2lnY4tPq2LzGVNnKP+C0QfPfOZqHYLhw5TZVYjsZ9XfCIocGfW6QoTdKUylnrt/numY7
+         imCIa0HQZyfZQPMcEsP/8GD83txydg7Ca59rlXgeCp/MmzFG9GoLAxFxZqS8RSdYzv6Q
+         8vEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fjrEpJ2fhUjux5ecC0FdGKxJc5Idjg81vPSBppBZbMQ=;
-        b=AZLnfNhfrQFrTZq/ZLBvZAVtCBeIbYp4z6JmLzHhlI3mSSOs9Y3xpD1tya4Voej+Sa
-         phNBeZP92sL0IVRnav3NFjbD1GBrOMJhmD3WFrEVT/8iN0fbU/GBaQaRedEjoPpEyLUR
-         Qh//iuI2Rb7ND+3B29fuiHONmPJ8iLGE1iOEtOhBFhuz4u+i/BT3bs5l8fdpzlvhwPV+
-         THzD2ucyqPL1s9gchoVxhKnN5fRYknPoqrvoVCIOKnFrZEncta9Kcj2ZlPItKV0kOvGZ
-         EixJqz6eQJyBJrjOdS27N8YGOJEb83Ko06q7h7x3WktscJB957+RMQEMNdAdcLjYeWfb
-         goFg==
-X-Gm-Message-State: APjAAAUAqnPtVTYKw+/e8tLLjQytrKfNKeIvGxOM3J/B0mTK4BLjfwQa
-        a2sCyhWziLue3hc1b5N8rH/77dyD
-X-Google-Smtp-Source: APXvYqznZTtzz4YXIuovrZbcOfr0aVQA66egpRA9mhDcldwxGLQsxhlNOnzuL/8jeVhoXWWGzTh6Sg==
-X-Received: by 2002:adf:814d:: with SMTP id 71mr10066841wrm.193.1570732610481;
-        Thu, 10 Oct 2019 11:36:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y5sm6809694wma.14.2019.10.10.11.36.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Oct 2019 11:36:50 -0700 (PDT)
-Date:   Thu, 10 Oct 2019 11:36:50 -0700 (PDT)
-X-Google-Original-Date: Thu, 10 Oct 2019 18:36:46 GMT
-Message-Id: <7305f8d8e81b856ba535aaafe97c708d80567566.1570732608.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.388.git.gitgitgadget@gmail.com>
-References: <pull.388.git.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/3] sequencer.h fix placement of #endif
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=zgY8VA7SbC2gmoQvmovFAv2ujYXI92aS8gfyCzXnHew=;
+        b=AJWt7cNHcc5bOG0MClaw+r/VcFvJnH6xjzI+NMOKtQQD8p8weoEOIhk/1jIv7Etftp
+         CkKIZTok3gpUAk9XJxz5fotK8jLCQQNb0ZMeQGefT7q2U56jdTlf3wx2nExvWyvzwoVO
+         fQwzM23OiDuOqacsH0c1e/ZdepGOYHUPDuEVcu+Go+h9pbDoVpEjHxbvDqGDYo7wL2bO
+         zOW8yQ4061VaKEl1LtJEW67bl4O0YyTZvdwe7ZYWG1x9erMN+hTI0wuMDW+yVHBHFoJJ
+         zWURZBis2zgVJ8Vk8IltUCyr1ZY8aZLCJGquxYAPZoJg4t0Tegc+k5+atcs5OITduw9S
+         rXTA==
+X-Gm-Message-State: APjAAAWe4XLuYJj1ixJK+h3/cqilNYN0XqZJ1o4poZYTl6gnNWzQUuZs
+        l/3mqlZgcG0ChPHi8VBzLP/vft65Nhc+rFthBYKP
+X-Google-Smtp-Source: APXvYqys0BrBC350e9/Wlfmyh/M21YK8SaXX6GXbYPS9qg/eoInBI8XUQOaBTv5VLPmVLR7y6a/yVY5GGTquX8fgenRy
+X-Received: by 2002:a63:9557:: with SMTP id t23mr12995300pgn.268.1570733083316;
+ Thu, 10 Oct 2019 11:44:43 -0700 (PDT)
+Date:   Thu, 10 Oct 2019 11:44:39 -0700
+In-Reply-To: <20191010115230.10623-1-wambui.karugax@gmail.com>
+Message-Id: <20191010184439.94173-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20191010115230.10623-1-wambui.karugax@gmail.com>
+X-Mailer: git-send-email 2.23.0.581.g78d2f28ef7-goog
+Subject: Re: [Outreachy] [PATCH] blame: Convert pickaxe_blame defined
+ constants to enums
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     wambui.karugax@gmail.com
+Cc:     git@vger.kernel.org, jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Convert pickaxe_blame preprocessor constants in blame.h to an enum.
+> Also replace previous instances of the constants with the new enum values.
 
-Commit 65850686cf ("rebase -i: rewrite write_basic_state() in C",
-2018-08-28) accidentially added new function declarations after
-the #endif at the end of the include guard.
+First of all, thanks for your initiative in finding a microproject and
+making a patch for it!
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- sequencer.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+About your commit message title, I know that 50 characters is a soft
+limit, but we should adhere to it if possible. Also, in Git, the letter
+following the colon is usually in lowercase. So I would write it like:
 
-diff --git a/sequencer.h b/sequencer.h
-index 0c494b83d4..ac66892d71 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -195,11 +195,10 @@ void print_commit_summary(struct repository *repo,
- 
- int read_author_script(const char *path, char **name, char **email, char **date,
- 		       int allow_missing);
--#endif
--
- void parse_strategy_opts(struct replay_opts *opts, char *raw_opts);
- int write_basic_state(struct replay_opts *opts, const char *head_name,
- 		      struct commit *onto, const char *orig_head);
- void sequencer_post_commit_cleanup(struct repository *r);
- int sequencer_get_last_command(struct repository* r,
- 			       enum replay_action *action);
-+#endif /* SEQUENCER_H */
--- 
-gitgitgadget
+  blame: make PICKAXE_BLAME_* an enum
 
+(Feel free to use that or think of a different one.)
+
+> -	if ((opt & PICKAXE_BLAME_COPY_HARDEST)
+> -	    || ((opt & PICKAXE_BLAME_COPY_HARDER)
+> +	if ((opt & BLAME_COPY_HARDEST)
+> +	    || ((opt & BLAME_COPY_HARDER)
+
+Any reason why the names are renamed to omit "PICKAXE_"? In particular,
+these names are still global, so it is good to retain the extra context.
+
+(This doesn't mean that you are wrong to remove them - I just gave my
+opinion, and a reason for my opinion. If you had a reason to remove
+them, you can mention that, and we can discuss this together. Or, if you
+read my reason and agree with it, you can say that and put the
+"PICKAXE_" back.)
+
+> -#define PICKAXE_BLAME_MOVE		01
+> -#define PICKAXE_BLAME_COPY		02
+> -#define PICKAXE_BLAME_COPY_HARDER	04
+> -#define PICKAXE_BLAME_COPY_HARDEST	010
+> -
+>  #define BLAME_DEFAULT_MOVE_SCORE	20
+>  #define BLAME_DEFAULT_COPY_SCORE	40
+>  
+> +enum pickaxe_blame_action {
+> +	BLAME_MOVE = 01,
+> +	BLAME_COPY,
+> +	BLAME_COPY_HARDER = 04,
+> +	BLAME_COPY_HARDEST = 010,
+> +};
+
+In Git, we often look at historical commits, so it is good to keep
+history as clean as possible. In particular, we shouldn't move things
+around unless we have another reason to. Here, for example, you are
+moving the constants from above BLAME_DEFAULT_* to below. You should
+move them back. (Or if you have a reason for moving, mention that and we
+can discuss it.)
+
+Also, I have a slight preference for putting "= 02" on the BLAME_COPY
+line but that is not necessary.
+
+Apart from all that, one thing that I expected in this patch is the
+changing of the type of local variables and parameters. For example, in
+blame.c, I would have expected find_copy_in_parent() (for example) to
+have its "opt" parameter changed from "int" to "enum
+pickaxe_blame_option". One of the reasons why we want to use enums is
+for type safety, and that can only be done if we use the enum type when
+possible.
