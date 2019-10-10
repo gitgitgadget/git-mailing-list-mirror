@@ -2,76 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 609DD1F4BD
-	for <e@80x24.org>; Thu, 10 Oct 2019 11:48:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AE471F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 11:49:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727523AbfJJLsX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 07:48:23 -0400
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:34044 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726513AbfJJLsX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 07:48:23 -0400
-Received: by mail-wm1-f47.google.com with SMTP id y135so6959676wmc.1
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 04:48:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=sKErULCvZgQWSepDigrLS1+RnSRakjdGJPfGHl3UQcc=;
-        b=uzQMTO1cVZpX2l1T35wQMlzf0QJyYbH+cW3DXsWhv6gFh4t2yv//Zx25yQjCvN2l5z
-         cdAwY7hVUmT/Gkw5wjO3MyoPhS6yu8deqCIzy/LztgTjlBTZb6+ey4XyQ/XW3tpvLscx
-         DqGajZ8hv1z6QA4DRSWyGcUBgIr1tJeHzZxtUnOhPus2yoHQenHvKbb7D7eHvJRZM1un
-         ZiIKOqXKZ6UcBriFGUBTkg3kN37Q5INzME0RAhkImstv5JEDUdmEhxDnxBgFcESp1XkG
-         1gQNscsKHgRZfqYqUkmK9T5bX/9CHQXHqYwIe59+ixgnKzrSEyG/2LlZj0vNWmwzssQP
-         bG3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=sKErULCvZgQWSepDigrLS1+RnSRakjdGJPfGHl3UQcc=;
-        b=A48ljZDQwNec1OZJ9IWFwtkTSC/rJFwFAB8NKH3E7hPHc2c+s55upsmnzvJTYl+MAE
-         XSq8/Yezlfq2DSUtR4dZLlgs1Z50PMzWLrlCGXagRzGC4qPUVTbQIRzOwucYzso/kg/y
-         0tuptW/6EJecnFp8AZVxcObLB3aYmHgLqjoXQOpPOay3z1Zxobb64gPB7FBucyhyhrSf
-         RK3MIOhfmw0zdWWAkvg/k77f2fsD+Ynbjad56B/MDMY/WWOeztrQiaxKE7fHv+Z3ckg/
-         Ibx6F05aHmFq7R4AFJ0hia/pp8y3by0VuQcqU6U+qHEAttZUVXWd8Et/EhtVTRsJIWQn
-         Y6Xg==
-X-Gm-Message-State: APjAAAVS71SRFEmfaajPecfQBG9zTdRGlhxvKTox2oGSRFa1mTGjCjLS
-        74TGDps7JCDFh4amQz5EMEM=
-X-Google-Smtp-Source: APXvYqz1dkubHUB9KlAY6qnQZ5oaoZD3EjwbT3d7oPnnH8lmYLchmzBzfi0UTYJ4BAmtLSyO8l0E4A==
-X-Received: by 2002:a7b:cb0b:: with SMTP id u11mr7243311wmj.125.1570708099384;
-        Thu, 10 Oct 2019 04:48:19 -0700 (PDT)
-Received: from wambui ([197.254.95.158])
-        by smtp.gmail.com with ESMTPSA id o70sm7541028wme.29.2019.10.10.04.48.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2019 04:48:18 -0700 (PDT)
-Date:   Thu, 10 Oct 2019 14:48:14 +0300
-From:   Wambui Karuga <wambui.karugax@gmail.com>
-To:     jonathantanmy@google.com
-Cc:     git@vger.kernel.org
-Subject: [Outreachy] Outreachy initial contact
-Message-ID: <20191010114814.GA9876@wambui>
+        id S1727934AbfJJLtn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 07:49:43 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56731 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726513AbfJJLtn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 07:49:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570708160;
+        bh=dDnowaIavlmIOJtftz3s3yuQpEzQme+mssikSeLKsjs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=W0Gef1DgH2zAAJ1rZccFkfB0xIoGh79vDMG+V+0XC10r6A44S0u8ntSiij7oB+eUO
+         tbJzbDnrZ/0x06VrgfZwwEOTwZ0jb/L9C0DamED6S0Eepx/0dFvhBEJnuyZbjXTyyr
+         JQoBJTLqLbGTncKU/leWKp6xWcGKxT4uHw6jHqnE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mv2xO-1i18YC0B6W-00qxlm; Thu, 10
+ Oct 2019 13:49:20 +0200
+Date:   Thu, 10 Oct 2019 13:49:03 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
+        Zeger-Jan van de Weg <git@zjvandeweg.nl>
+Subject: Re: [PATCH 1/1] commit: add support to provide --coauthor
+In-Reply-To: <20191009203105.GA7007@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1910101345120.46@tvgsbejvaqbjf.bet>
+References: <20191008074935.10972-1-toon@iotcl.com> <20191009014039.GA10802@szeder.dev> <xmqqr23mlkxo.fsf@gitster-ct.c.googlers.com> <20191009203105.GA7007@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:oV86Xg60wsxAe99p6MFZbI5BnyUMnujfgMLNDKkEOQ/fc9if35r
+ BiJbJAHenToNEgJ2quVt4zU1VdWfkuUGU5VkTeQZjrglpLIy9sJS4GsUocvjuSocUfEcQFm
+ OPcqZpjAug7rOvStbVHLw/7XqAENVo+NEQY/t8ymFjkDZD42zWKUN18nfny0wEmbzhSHqHn
+ L4EsT5gB67fdrE31mZcYQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9lM9JFNI8s0=:SmzaWAwG88l0UU9RzN4LPZ
+ re7FGLuu+wyMutchDPWaMYuP4LWRUsBt+U1/yRl6HboDVQSMih2WQbvlRSaMU/c3Dmw1U5pHA
+ OzSj7t4ooesg8D5Dp4BJUwAsFWrM+sFw/SFA9iA+y+SFFJypL0ybqsPW7aKxWgDvIGbEXTLv2
+ mFVlLpbEwyMDxfwiOzJf1ZYt/Y2XQPczWYvd0bQmeYPB6WBsQ8gOykV4yezS3vIoN2GKBJiKs
+ sAOX/VKv/5+L/gupQFgB3Q3HY/lnLfXHrcljdjOguMJzhqPvaLWM8M9ZUNuyndZCs5R8xjzcM
+ Rh+yWPzU7SMkI0PW3lCbdWRM1Z4WVnlJ7ZWHNHZImwysbTNktgCnzOBnaGvTBjZl1IAm8po4K
+ FlMlU2a1DIOYsWaHmcQ6XL8Iy5LsKZ/w9WbcJLPVrF043K40YAThUbg+dicrHHqG/vXUmB70V
+ UjWnXgDtHCo3JtwfHyhfQl69KetxdrPYMKjBwQcxORv6WssZ/sed8vvKuezbNjZox/Fm13sj2
+ sbH6nP+6jodkKCpQdxfsNNOgcrWBDBRFmdmeIi0MQhPKYqilv5fnrQcMPIpOG4bKWxghNMr1S
+ lOIsBoXp0Kx+QnDOCULlZmIMqn5nK9X1GE9WrVHz9aulIMY+sgaeuM1v2EeWoyGbdZKwfxovH
+ jVHtj4hAwG/fl8UdKeU6dj0N8IN3M21PctKiqJ8ITkwkLaDDpuWej3IZosGsTAK17B8eu4IaR
+ HOVZmeZCaLQFaSKtLH2ZGYjVEf+KdDrlb8rS46Za7dlHtHNdHsPqKsGQfeAeFyau44HG7MaoU
+ im1hdrmFipqXgAcQav1UhxOcAAg3aFG5v6tDQTd5qdQ/E56X+dM7XH50vh/Vf8J02EFoTKsRK
+ yl5mPm004ZTh2SpxXRv5ElsXtgYamoeuQ1y3xOISIlAUR2QZbWoOUGGXxWjpWcbLse8Vl3LlY
+ Gf+3w2TGT0cJRRgOUr0GTHme4QO9qxKulGqnSoWQjUkbm5nIfhzTESSve68RQtXbgAyyPxI1n
+ aBXC1ub2diaWj++TaFEnou4E9dJUfPTnvamLRYJdYUnORfzmXD36AMZuw3b8PmQ4AwTg0rcEC
+ 5OTn6+jk/f9EQ2fZQGhHkUrZqLsVtSqrmo/PPJpKknWlY1xBsCLEFX1Ti7dKetEvuOJsfE4bJ
+ nBiWtzXnUeD82dtLYtfMHghfSDBeO49W1/GNdKxTTpGDWD2A9FSCniEsCGHXKnzBfvY4A5/z1
+ cE5s52jFpuquTM+vHiWIcNLHdEDmxaBOt6LE+LM5O0NNYXyrxP+d9JC5NwZ8=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Jonathan!
-My name is Wambui and I'm one of the applicants in the current round of
-Outreachy applications. I wanted to write an initial email to introduce
-myself since I'm interested in working on your mentored projects!
+Hi,
 
-I have been going through the mailing list threads about Outreachy and
-I found a list of good first issues to begin with. I'm looking forward
-to working on one of the most used system in open source!
+On Wed, 9 Oct 2019, Jeff King wrote:
 
-Wambui Karuga
+> On Wed, Oct 09, 2019 at 11:19:47AM +0900, Junio C Hamano wrote:
+>
+> > > I wonder how we are supposed to use this trailer in the Git project,
+> > > in particular in combination with Signed-off-by.  Should all
+> > > (co)authors sign off as well?  Or will Co-authored-by imply
+> > > Signed-off-by?
+> >
+> > I think we have been happy with (1) a comment at the end of the log
+> > message that says X worked together with Y and Z to produce this
+> > patch, and (2) the trailer block that has S-o-b: from X, Y and Z,
+> > without any need for Co-authored-by: trailer so far, and I do not
+> > see any reason to change it in this project.
+>
+> One advantage to making a machine-readable version is that tools on the
+> reading side can then count contributions, etc. For instance:
+>
+>   https://github.com/git/git/commit/69f272b922df153c86db520bf9b6018a9808=
+c2a6
+>
+> shows all of the co-author avatars, and you can click through to their
+> pages.
+
+FWIW I really like this. It bugged me ever since that GitMerge talk
+(https://www.youtube.com/watch?v=3DusQgAy8YDVA) that we did not have any
+standardized way to document co-authored commits.
+
+> > If other projects wants to use such a footer, that's their choice,
+> > but I am fairly negative to the idea to open the gate to unbounded
+> > number of new options for new trailer lines.  We do not even have
+> > such options like --acked=3D<acker>, --reported=3D<reporter>, for the
+> > trailers that are actively used already (and to make sure nobody
+> > misunderstands, I do not think it is a good idea to add such
+> > individual options).
+>
+> Yeah, I'd agree that we should start first with a generic trailer line.
+> There might be some advantage to building trailer-specific intelligence
+> on top of that (for instance, it would be nice for coauthor trailers to
+> expand names the way --author does). But that can come after, and might
+> not even be in the form of specific command-line options. E.g., if the
+> coauthor trailer could be marked in config as "this is an ident", then
+> we we would know to expand it. And the same could apply to acked,
+> reported, etc.
+
+Yep, and we have to start somewhere. I think this patch is a good start.
+
+FWIW I would not even mind introducing the synonym `--co-author` for
+`--coauthor`. But that's just a very minor suggestion.
+
+Ciao,
+Dscho
