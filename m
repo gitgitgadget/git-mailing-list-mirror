@@ -2,174 +2,203 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 185591F4BD
-	for <e@80x24.org>; Thu, 10 Oct 2019 12:01:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 012D71F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 12:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728912AbfJJMBn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 08:01:43 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41335 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727320AbfJJMBn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 08:01:43 -0400
-Received: by mail-wr1-f65.google.com with SMTP id q9so7547936wrm.8
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 05:01:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=c2XsSggU7/6p8VKHegC/I8senjOvwqwUMY2ghRuiTmo=;
-        b=P5Q90Wy3+MgcrISZubJUxMUu7NKGIHjkHnst3kUbBBu4UoxWKIaui93H8xn8ezd5ME
-         Mw2bvvfGDBSFRWt2zwRaA+mYSgVRucBLzRYuBr7xE3ijZ7HdAZpNyRC+VMJXEedrfT2z
-         dXZf862B6PceYTzT41J5IRaJ8qxAFJz1QHOdWRYpdUeab7LQ4tzOoTgR+k8XVOygmqiO
-         bub4pGeED6pijkOa5rFDFCX/fau9T28UNCwNqr3iLjWIEJhKj4AwAam9F0zy3BrlBfaj
-         Ux6jP8E0Nuc/1JnSW2JLo9TRRkbO2DA49IH8uDWTuXt8qWNih9BJyZwqaTnNjwFrT/5N
-         jriA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=c2XsSggU7/6p8VKHegC/I8senjOvwqwUMY2ghRuiTmo=;
-        b=gqJkhWt/TsK1GlJ4deg3Tifq4A0Kq7doDSrfOJFRECaoj5uHCWSQceQydfJ+HeWxaJ
-         vIRdnskwxgq56kesHOUbv2udLwDGOqY+b564uC/E4tmmpDs+j+V341QX8Dg4KfrJ4rll
-         qL9dNW8XrQIjxFaAs+msIO50HfknWQzZ6FXgq2lGUkEgC3hpqkiQaVBotZM4qKmCmSiJ
-         kNBs3ZUWdfA0h1vZFBGLltYlotgBnOuIPWa4+DJN5Cty4qvjWghJDJ76INZgx/mtBxoQ
-         gnAio3gN2WbNucrhvU3CFeMMbE0IU7909R5s+6eCt9yblQvcEdbKAH3BtJr2PCE36aqZ
-         jC4g==
-X-Gm-Message-State: APjAAAU9/PyP/vljESlfERDwfo4UMe8dmUbpC76JCZnU+igODIFFqjA+
-        dsw+1PnhVhAdxOICKtwekkIgfzIN
-X-Google-Smtp-Source: APXvYqzt+2yRg8P5M2sZQCe5OhW2guh3RicMS+2a8a5VEe91ADURKoP1HuXnc0C2MVi9tG3LMGt9xQ==
-X-Received: by 2002:adf:facc:: with SMTP id a12mr8518493wrs.109.1570708899953;
-        Thu, 10 Oct 2019 05:01:39 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n7sm5990842wrt.59.2019.10.10.05.01.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Oct 2019 05:01:39 -0700 (PDT)
-Date:   Thu, 10 Oct 2019 05:01:39 -0700 (PDT)
-X-Google-Original-Date: Thu, 10 Oct 2019 12:01:37 GMT
-Message-Id: <83305732371f3f511b3f4acf2060610c80ad12fa.1570708898.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.385.git.gitgitgadget@gmail.com>
-References: <pull.385.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] switch/restore: consistently pass through exit code of
- `post-checkout`
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1733064AbfJJMDM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 08:03:12 -0400
+Received: from mout.gmx.net ([212.227.17.22]:56821 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727320AbfJJMDL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 08:03:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570708983;
+        bh=GK06HUHXyiGKt5KswFmFFBkuQf6fZncF/eX3D/6ATAw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=SJB/A+K35X4Nqozpf2BPCjRN2t77CxX01rJWCxjTXri+NS7mFwsvs3k43efrWBcFy
+         PaG4pp/+UBQnkssX1jd8E0VPnQ/GyFRJwrhXPEgAvRTpSZa+30RUpCPRuHHttSDemd
+         MdWKRq388yV2+px5Ge3Td/dqeJ0ifGdiWHtVVxe0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MVNB1-1ih6g53Kg3-00SNeB; Thu, 10
+ Oct 2019 14:03:02 +0200
+Date:   Thu, 10 Oct 2019 14:02:46 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     William Baker via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, williamtbakeremail@gmail.com,
+        stolee@gmail.com, jeffhost@microsoft.com
+Subject: Re: [PATCH v2 0/1] fsmonitor: don't fill bitmap with entries to be
+ removed
+In-Reply-To: <xmqq1rvll5w8.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910101401310.46@tvgsbejvaqbjf.bet>
+References: <pull.372.git.gitgitgadget@gmail.com> <pull.372.v2.git.gitgitgadget@gmail.com> <xmqq1rvll5w8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Magne Land <magne.land@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:zOqY7ByDujNuBAWiW77MIHLwudX80AqXwisrwIc4IfKhuBTpjMz
+ iLNg5q+zqACvoNkXNYB4tYk0MAO/F/L2rFaQJGYEohjK2SxLYwiFOykQWfq+yM6HPw4dVTE
+ usd7mrvA/u0vw7yW9SHOz/Auk+4G7fs/w/CIB7Y/MXuwCQbeSshICwQMrRjT7X/OIscHD6c
+ HIOQZmOkM+18dEnA50apA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:F+elyZYi3XA=:7luV/oi3f3MB6XTaOWM8b5
+ LfKZrIg/dUF26bSIFfHgaNLUieCRDSmLK6ZY95d4klnatgzv/HqftdGUTkHLxe5P9EOtp9RYD
+ /JuTPExIGCRuwM95RsyW/C8AMa3LwHgyzWNIdycdmf7PJ12WsoupPnUQFLEXkTAMiYZ9vTSpq
+ cVjrk4IidMz3gd1oZ2nSerpI/1CCQ8nRPY2BTBOXipf1LCBhCpckJ2Qchyzq06wYI+PDSvmrd
+ OBDRmkHubzM4HdZ7tuqRqkIIQl0pQh8OG2030fYBUaNZIaxJNhURp5oJrswppEvdYyDPDhwo1
+ bLsBgxdscSJBoY6mFbRE5D3tvgpn2OJOATApZMMQWdcDPtlOI7CDvzMQunPD63RTWtuvATFMZ
+ sDQ90MU//uYuAQJ8zCfNtN9o+MHPhlAZ4a++d9VcnLbmJEI844eBGo5fpqAUNfxBRQD0gUXsu
+ Yibk5/6Cl5K6oxskpZF6cUVo6HDfF8WIVoUSBa0ZXkykdRx7qzV1+MkFZqVEOBBsyIc+h+tW8
+ 6fbocRmqj9/LMwHW5qtY+yYJ1lLV5aN9IgJkk2rxwhPPrBJljzgJGOh5F4OeTx87GKiMdTbL/
+ OhEXWo9Cv22aB0+ef2W/je0kSw9XzgRbp10q7IaSRs0tiQQ7YrGO4xDv/VGw+aQTgvtu/O0Nx
+ v6WoDTue0y1tjaoCcdbp6judpUst7J1MbnHZwdtVfLSvxVWbhh4OxYyUaYM3cHH7dfTIvSZZ9
+ 387ierFxHnR5oPN+ltdPEP1nmsnn3sVBcuonm8YXQIpDnltsqN9UPOLwJhdnThvEHSP2dITO+
+ HSPpVbGqfsFYSpHPMjYJDigvXeyJ842RM68wVUvDpoFhU4NJmXKtAF76L1U0oIl4PO1VeEclL
+ e/zwFwOvc/vAH4jwq+INweCksCU74s0ebEagjiO10rSo8D3V1CiTP929I410fU4/pRq4RFjYW
+ SyMIh1EU8x/2rKVv2/vTT/H5cZXZlWcNlQzhRN23q1rP2djtwe7m53JZuZJ8zKhQvqa7COKFX
+ uLG4dBPRdPGXJXkHCkoHF37obQoL/nZM0vP/SStJ6fVTFumF4WuzpvZU4tAysqrA3nSGvdBoA
+ fEs6HsuhxrPk0fn3dvq5ibRZpTUmDvDdj84dgY2jXiAWroTMZiuYq/15A+1KOJiFuf0GlskpH
+ FgRTvwRRDxfDbqYztfg1qFso2e/r3YltxoZz660iV9evvZhugNPsUL7LlBJcipw5x+ixEGdwm
+ KchoXFEhvwKCi+Wa6dUHBvCd6p3E3Q2z5lMh4UoU07EsXdn/yrybUmo9T1Is=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Junio,
 
-Currently, the exit code of the `post-checkout` hook becomes the exit
-code of the `git restore` (or the equivalent `git checkout`) command,
-_iff_ no error occurred during the `restore` operation.
+On Thu, 10 Oct 2019, Junio C Hamano wrote:
 
-That allows versatile scripting where the `post-checkout` failure modes
-can be discerned from the `git restore` failure modes.
+> "William Baker via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > This is the second iteration of changes to fix the segfault that I
+> > encountered while testing fsmonitor. This iteration includes the follo=
+wing
+> > updates for feedback I received on v1:
+> >
+> >  * Use %u instead of %"PRIuMAX" for unsigned ints in BUG format string=
+s
+> >  * Updated the new test's comment to be more descriptive
+> >
+> > Thanks,
+> >
+> > William
+> >
+> > William Baker (1):
+> >   fsmonitor: don't fill bitmap with entries to be removed
+>
+> Thanks.  Dscho, is this still Reviewed-by: you?
 
-There is a problem, though: if that `git restore` operation fails
-_before_ the `post-checkout` hook is run, -1 is returned from the
-`checkout_paths()` function, which yields the misleading exit code 127
-(which is reserved to indicate "command not found").
+Yes!
 
-Another problem: a non-zero exit code of the `post-checkout` hook as run
-at the end of a `git switch` run will always causes that command to exit
-with exit code 1.
+Thanks,
+Dscho
 
-This is inconsistent. Let's pass through the exit code of the
-`post-checkout` hook verbatim (unless the Git operation fails, in which
-case we want to exit with code 1, even if the hook returns another exit
-code).
+P.S.: I guess we could even go and make this a `Co-Authored-by:` because
+the test case is actually by me, at least originally... ;-)
 
-Document this, and add a regression test for this behavior, too.
-
-Inspired-by-a-patch-by: Magne Land <magne.land@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/githooks.txt    | 3 ++-
- builtin/checkout.c            | 8 +++++---
- t/t5403-post-checkout-hook.sh | 9 +++++++++
- 3 files changed, 16 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 50365f2914..12c756a37b 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -193,7 +193,8 @@ worktree.  The hook is given three parameters: the ref of the previous HEAD,
- the ref of the new HEAD (which may or may not have changed), and a flag
- indicating whether the checkout was a branch checkout (changing branches,
- flag=1) or a file checkout (retrieving a file from the index, flag=0).
--This hook cannot affect the outcome of `git switch` or `git checkout`.
-+If this hook exits with an exit code other than 0, it causes the calling
-+`git switch` or `git checkout` command to fail with the same exit code.
- 
- It is also run after linkgit:git-clone[1], unless the `--no-checkout` (`-n`) option is
- used. The first parameter given to the hook is the null-ref, the second the
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 1283727761..56afc3c1a8 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -400,7 +400,7 @@ static int checkout_paths(const struct checkout_opts *opts,
- 	static char *ps_matched;
- 	struct object_id rev;
- 	struct commit *head;
--	int errs = 0;
-+	int errs = 0, ret;
- 	struct lock_file lock_file = LOCK_INIT;
- 	int checkout_index;
- 
-@@ -548,8 +548,8 @@ static int checkout_paths(const struct checkout_opts *opts,
- 	read_ref_full("HEAD", 0, &rev, NULL);
- 	head = lookup_commit_reference_gently(the_repository, &rev, 1);
- 
--	errs |= post_checkout_hook(head, head, 0);
--	return errs;
-+	ret = post_checkout_hook(head, head, 0);
-+	return !errs ? ret : (errs < 0 ? 1 : errs);
- }
- 
- static void show_local_changes(struct object *head,
-@@ -1062,6 +1062,8 @@ static int switch_branches(const struct checkout_opts *opts,
- 
- 	ret = post_checkout_hook(old_branch_info.commit, new_branch_info->commit, 1);
- 	free(path_to_free);
-+	if (ret > 0)
-+		return ret;
- 	return ret || writeout_error;
- }
- 
-diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-index a39b3b5c78..60ce81f6db 100755
---- a/t/t5403-post-checkout-hook.sh
-+++ b/t/t5403-post-checkout-hook.sh
-@@ -73,4 +73,13 @@ test_expect_success 'post-checkout hook is triggered by clone' '
- 	test -f clone3/.git/post-checkout.args
- '
- 
-+test_expect_success 'exit code of post-checkout hook is passed through' '
-+	mkdir -p exit-code &&
-+	echo "exit 123" | write_script exit-code/post-checkout &&
-+	test_expect_code 123 \
-+	git -c core.hooksPath="$PWD/exit-code" switch -c trigger-exit-code &&
-+	test_expect_code 123 \
-+	git -c core.hooksPath="$PWD/exit-code" restore .
-+'
-+
- test_done
--- 
-gitgitgadget
+>
+> >
+> >  fsmonitor.c                 | 29 ++++++++++++++++++++++++-----
+> >  t/t7519-status-fsmonitor.sh | 13 +++++++++++++
+> >  t/t7519/fsmonitor-env       | 24 ++++++++++++++++++++++++
+> >  3 files changed, 61 insertions(+), 5 deletions(-)
+> >  create mode 100755 t/t7519/fsmonitor-env
+> >
+> >
+> > base-commit: 5fa0f5238b0cd46cfe7f6fa76c3f526ea98148d9
+> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-372%=
+2Fwilbaker%2Ffix_git_fsmonitor_crash-v2
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-372/wil=
+baker/fix_git_fsmonitor_crash-v2
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/372
+> >
+> > Range-diff vs v1:
+> >
+> >  1:  ce9bf4237e ! 1:  08741d986c fsmonitor: don't fill bitmap with ent=
+ries to be removed
+> >      @@ -44,8 +44,8 @@
+> >       +	struct cache_entry *ce;
+> >       +
+> >       +	if (pos >=3D istate->cache_nr)
+> >      -+		BUG("fsmonitor_dirty has more entries than the index (%"PRIuM=
+AX" >=3D %"PRIuMAX")",
+> >      -+		    (uintmax_t)pos, (uintmax_t)istate->cache_nr);
+> >      ++		BUG("fsmonitor_dirty has more entries than the index (%"PRIuM=
+AX" >=3D %u)",
+> >      ++		    (uintmax_t)pos, istate->cache_nr);
+> >
+> >       +	ce =3D istate->cache[pos];
+> >        	ce->ce_flags &=3D ~CE_FSMONITOR_VALID;
+> >      @@ -56,8 +56,8 @@
+> >        	istate->fsmonitor_dirty =3D fsmonitor_dirty;
+> >
+> >       +	if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
+> >      -+		BUG("fsmonitor_dirty has more entries than the index (%"PRIuM=
+AX" > %"PRIuMAX")",
+> >      -+		    (uintmax_t)istate->fsmonitor_dirty->bit_size, (uintmax_t)=
+istate->cache_nr);
+> >      ++		BUG("fsmonitor_dirty has more entries than the index (%"PRIuM=
+AX" > %u)",
+> >      ++		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cac=
+he_nr);
+> >       +
+> >        	trace_printf_key(&trace_fsmonitor, "read fsmonitor extension s=
+uccessful");
+> >        	return 0;
+> >      @@ -85,8 +85,8 @@
+> >        	int fixup =3D 0;
+> >
+> >       +	if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
+> >      -+		BUG("fsmonitor_dirty has more entries than the index (%"PRIuM=
+AX" > %"PRIuMAX")",
+> >      -+		    (uintmax_t)istate->fsmonitor_dirty->bit_size, (uintmax_t)=
+istate->cache_nr);
+> >      ++		BUG("fsmonitor_dirty has more entries than the index (%"PRIuM=
+AX" > %u)",
+> >      ++		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cac=
+he_nr);
+> >       +
+> >        	put_be32(&hdr_version, INDEX_EXTENSION_VERSION);
+> >        	strbuf_add(sb, &hdr_version, sizeof(uint32_t));
+> >      @@ -96,8 +96,8 @@
+> >
+> >        			/* Mark all previously saved entries as dirty */
+> >       +			if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
+> >      -+				BUG("fsmonitor_dirty has more entries than the index (%"PRI=
+uMAX" > %"PRIuMAX")",
+> >      -+				    (uintmax_t)istate->fsmonitor_dirty->bit_size, (uintmax_=
+t)istate->cache_nr);
+> >      ++				BUG("fsmonitor_dirty has more entries than the index (%"PRI=
+uMAX" > %u)",
+> >      ++				    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->c=
+ache_nr);
+> >        			ewah_each_bit(istate->fsmonitor_dirty, fsmonitor_ewah_callba=
+ck, istate);
+> >
+> >        			/* Now mark the untracked cache for fsmonitor usage */
+> >      @@ -109,8 +109,9 @@
+> >        	test_cmp expect actual
+> >        '
+> >
+> >      -+# Use test files that start with 'z' so that the entries being =
+added
+> >      -+# and removed appear at the end of the index.
+> >      ++# This test covers staging/unstaging files that appear at the e=
+nd of the index.
+> >      ++# Test files with names beginning with 'z' are used under the a=
+ssumption that
+> >      ++# earlier tests do not add/leave index entries that sort below =
+them.
+> >       +test_expect_success 'status succeeds after staging/unstaging ' =
+'
+> >       +	test_commit initial &&
+> >       +	removed=3D$(test_seq 1 100 | sed "s/^/z/") &&
+>
