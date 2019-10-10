@@ -2,378 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 560BF1F4BD
-	for <e@80x24.org>; Thu, 10 Oct 2019 16:14:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B89F1F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 16:37:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726291AbfJJQN4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 12:13:56 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:34966 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726276AbfJJQNz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 12:13:55 -0400
-Received: by mail-wr1-f67.google.com with SMTP id v8so8626915wrt.2
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 09:13:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=JK2inobb5zhUsTBE/QtcNCBJfbDIsr/OGF0HFkFqJrQ=;
-        b=MbCW5BbbBbiniMOSWUTwLORBgoF2hnSZokJKXu65wJuqNFCdmava1jlBZZlI6Pt9kr
-         70kGktJbYTTLqLNxIZCyZx+E5HpHrRq28ifx05ijvxj1flg0R2zlZFYxGoD86RGGR78m
-         V/ID43iKzr3jGbLb6x8ETrkuQ46R4ZgX7vC5hvrMydjp1t5YGnzvc1BUiEx0RILkdczK
-         6Zoij/vEYZRFXNSRy7X8cXxRue3oxPwIUAXXv7tSqHAnzSLaR1h/zTV/UIYsqC7ROF6S
-         XLvfk3Ey7RGUYxDB3J5QCJKF8lgeWr3F3N4M08668G5ysDv1GFrPXpt5sFIn3F0++rRZ
-         rSaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JK2inobb5zhUsTBE/QtcNCBJfbDIsr/OGF0HFkFqJrQ=;
-        b=hN38H4PlYgkUDUnNrwWPUtxbLaaZsMY9ASgOG7b0ykXtrpt716ujpD0uAc6U1uosMH
-         VjVxp/HAENvDCDOt1wFZew1kcNCoE4F+Kg59MMhHMjqnotjA0cAenObf4MOiaCsDB/qS
-         tZA37YbkKz0pMrjIVmriYBv3J+jXjROrkSKfTdOxinqqjsHcOTwKDnXN/v5b/2bDBWKY
-         iRdp8GLPclAVUXY3g+3WkQSXGzt0gATr/dyVf4TYYa39GTTjsaGQoW/t1V0m3T45SoG0
-         XhPlGZYCEnFDMYsbyk8FIFmGszITd+YdCMXB4BWAmIftZsHLJuNQ/PvYeVNlYWl0qRk7
-         9SlA==
-X-Gm-Message-State: APjAAAUJdTUoEbVrTMz6UiclUniHItQrE02ZCGtYCUgON//D2KvxBCtk
-        mw8N+88fIOA0VrNtJkX08KDxHJCM
-X-Google-Smtp-Source: APXvYqznvRoFaVZAPfoGSGlPcxixRKqU955/3WePmMcI7MMEGQVMEQnB2xQzC8dXs5g3Umj5oKSyIg==
-X-Received: by 2002:a5d:4ed2:: with SMTP id s18mr8893093wrv.52.1570724032107;
-        Thu, 10 Oct 2019 09:13:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f18sm4236692wmh.43.2019.10.10.09.13.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Oct 2019 09:13:51 -0700 (PDT)
-Date:   Thu, 10 Oct 2019 09:13:51 -0700 (PDT)
-X-Google-Original-Date: Thu, 10 Oct 2019 16:13:39 GMT
-Message-Id: <50756edcf7075b27b1ac0b0fb7af8688787bcd00.1570724021.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.383.git.gitgitgadget@gmail.com>
-References: <pull.383.git.gitgitgadget@gmail.com>
-From:   "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 10/11] graph: flatten edges that join to their right neighbor
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
+        id S1726463AbfJJQh5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 12:37:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44604 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725909AbfJJQh5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 12:37:57 -0400
+Received: (qmail 3837 invoked by uid 109); 10 Oct 2019 16:37:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Oct 2019 16:37:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24529 invoked by uid 111); 10 Oct 2019 16:40:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Oct 2019 12:40:49 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 10 Oct 2019 12:37:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     Toon Claes <toon@iotcl.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        James Coglan <jcoglan@gmail.com>
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Zeger-Jan van de Weg <git@zjvandeweg.nl>
+Subject: Re: [PATCH 1/1] commit: add support to provide --coauthor
+Message-ID: <20191010163755.GA12756@sigill.intra.peff.net>
+References: <20191008074935.10972-1-toon@iotcl.com>
+ <20191009014039.GA10802@szeder.dev>
+ <xmqqr23mlkxo.fsf@gitster-ct.c.googlers.com>
+ <20191009203105.GA7007@sigill.intra.peff.net>
+ <87sgo1q92k.fsf@iotcl.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87sgo1q92k.fsf@iotcl.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: James Coglan <jcoglan@gmail.com>
+On Thu, Oct 10, 2019 at 10:49:23AM +0200, Toon Claes wrote:
 
-When a merge commit is printed and its final parent is the same commit
-that occupies the column to the right of the merge, this results in a
-kink in the displayed edges:
+> > Yeah, I'd agree that we should start first with a generic trailer line.
+> 
+> IIUC you are suggesting something like this?
+> 
+>  git commit --trailer="Co-authored-by: <coauthor>"
+> 
+> I really want to consider this, but I do not understand how that improves
+> the user experience compared to adding that trailer manually when typing the
+> commit message in your $EDITOR?
 
-        * |
-        |\ \
-        | |/
-        | *
+I agree that it's a lot worse to type than "--coauthor". And I don't
+really have a problem with us ending up with "--coauthor". My reasoning
+in starting with a generic form was mostly:
 
-Graphs containing these shapes can be hard to read, as the expansion to
-the right followed immediately by collapsing back to the left creates a
-lot of zig-zagging edges, especially when many columns are present.
+  - by having _any_ way to do this on the command-line, it makes it
+    possible to use in aliases, etc.
 
-We can improve this by eliminating the zig-zag and having the merge's
-final parent edge fuse immediately with its neighbor:
+  - having a generic form, even if we later add syntactic sugar on
+    top, lets people easily experiment with their own trailers
 
-        * |
-        |\|
-        | *
+> > There might be some advantage to building trailer-specific intelligence
+> > on top of that (for instance, it would be nice for coauthor trailers to
+> > expand names the way --author does). But that can come after, and might
+> > not even be in the form of specific command-line options. E.g., if the
+> > coauthor trailer could be marked in config as "this is an ident", then
+> > we we would know to expand it. And the same could apply to acked,
+> > reported, etc.
+> 
+> Wouldn't making it a generic --trailer option make this more complex? I can
+> image users might even want to use the --trailer argument to indicate which
+> issue the commit closes:
+> 
+>  git commit --trailer="Closes: $BUGNUMBER"
+> 
+> So, how can we make the config understand it has to expand Co-authored-by
+> and not Closes?
 
-This reduces the horizontal width for the current commit by 2, and
-requires one less row, making the graph display more compact. Taken in
-combination with other graph-smoothing enhancements, it greatly
-compresses the space needed to display certain histories:
+We already have config blocks for specific trailers to describe how they
+should be parsed or added. I was thinking that you'd set an option like
+"trailer.co-authored-by.ident" to "true". And possibly that could be
+used in other places, too (e.g., interpret-trailers code could make sure
+it's syntactically valid, but I didn't really think through the
+implications there).
 
-        *
-        |\
-        | *                       *
-        | |\                      |\
-        | | *                     | *
-        | | |                     | |\
-        | |  \                    | | *
-        | *-. \                   | * |
-        | |\ \ \        =>        |/|\|
-        |/ / / /                  | | *
-        | | | /                   | * |
-        | | |/                    | |/
-        | | *                     * /
-        | * |                     |/
-        | |/                      *
-        * |
-        |/
-        *
+And of course we could bake in the defaults for particular trailers if
+we wanted to (I think we already do for trailer.signoff.*).
 
-One of the test cases here cannot be correctly rendered in Git v2.23.0;
-it produces this output following commit E:
+> > I wonder how we are supposed to use this trailer in the Git project, in
+> > particular in combination with Signed-off-by. Should all (co)authors
+> > sign off as well?  Or will Co-authored-by imply Signed-off-by?
+> 
+> For this purpose I think it's useful git understands what "Co-authored-by"
+> means, so when you run:
+> 
+>  git commit -s --coauthor=<coauthor>
+> 
+> The following trailer will be added:
+> 
+>  Co-authored-by: <coauthor>
+>  Signed-off-by: <author>
+>  Signed-off-by: <coauthor>
+> 
+> So I'm still pro of adding a --co-author option, but I do understand the
+> concerns to avoid adding an option for all the possible trailers found in
+> the link above.
 
-        | | *-. \   5_E
-        | | |\ \ \
-        | |/ / / /
-        | | | / _
-        | |_|/
-        |/| |
+Yes, I agree that ordering and de-duplication rules are useful, too.
+Some of that can be expressed already in trailer.* config, but I don't
+know if it would be capable enough to do everything you want (though
+again, it would be really nice to _make_ it capable enough so that other
+types besides co-authored-by can make use of them).
 
-The new implementation makes sure that the rightmost edge in this
-history is not left dangling as above.
+I don't have a hard belief that we have to do it that way (generic
+before specific), and I can believe that when you get down to the
+details that it might be hard to express some of this stuff in config
+rather than C code. But I think we should at least take a look at
+whether it's possible, because the benefits of having a generic solution
+are nice.
 
-Signed-off-by: James Coglan <jcoglan@gmail.com>
----
- graph.c                                    | 34 ++++++---
- t/t4215-log-skewed-merges.sh               | 80 +++++++++++++++++++++-
- t/t6016-rev-list-graph-simplify-history.sh | 30 ++++----
- 3 files changed, 116 insertions(+), 28 deletions(-)
-
-diff --git a/graph.c b/graph.c
-index 6391e393ec..7dd2fab625 100644
---- a/graph.c
-+++ b/graph.c
-@@ -538,8 +538,24 @@ static void graph_insert_into_new_columns(struct git_graph *graph,
- 		shift = (dist > 1) ? 2 * dist - 3 : 1;
- 
- 		graph->merge_layout = (dist > 0) ? 0 : 1;
-+		graph->edges_added = graph->num_parents + graph->merge_layout  - 2;
-+
- 		mapping_idx = graph->width + (graph->merge_layout - 1) * shift;
- 		graph->width += 2 * graph->merge_layout;
-+
-+	} else if (graph->edges_added > 0 && i == graph->mapping[graph->width - 2]) {
-+		/*
-+		 * If some columns have been added by a merge, but this commit
-+		 * was found in the last existing column, then adjust the
-+		 * numbers so that the two edges immediately join, i.e.:
-+		 *
-+		 *		* |		* |
-+		 *		|\ \	=>	|\|
-+		 *		| |/		| *
-+		 *		| *
-+		 */
-+		mapping_idx = graph->width - 2;
-+		graph->edges_added = -1;
- 	} else {
- 		mapping_idx = graph->width;
- 		graph->width += 2;
-@@ -585,6 +601,8 @@ static void graph_update_columns(struct git_graph *graph)
- 		graph->mapping[i] = -1;
- 
- 	graph->width = 0;
-+	graph->prev_edges_added = graph->edges_added;
-+	graph->edges_added = 0;
- 
- 	/*
- 	 * Populate graph->new_columns and graph->mapping
-@@ -712,9 +730,6 @@ void graph_update(struct git_graph *graph, struct commit *commit)
- 	 */
- 	graph_update_columns(graph);
- 
--	graph->prev_edges_added = graph->edges_added;
--	graph->edges_added = graph->num_parents + graph->merge_layout - 2;
--
- 	graph->expansion_row = 0;
- 
- 	/*
-@@ -1039,7 +1054,7 @@ const char merge_chars[] = {'/', '|', '\\'};
- static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf *sb)
- {
- 	int seen_this = 0;
--	int i;
-+	int i, j;
- 
- 	struct commit_list *first_parent = first_interesting_parent(graph);
- 	int seen_parent = 0;
-@@ -1071,16 +1086,19 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf
- 			char c;
- 			seen_this = 1;
- 
--			for (; parents; parents = next_interesting_parent(graph, parents)) {
-+			for (j = 0; j < graph->num_parents; j++) {
- 				par_column = graph_find_new_column_by_commit(graph, parents->item);
- 				assert(par_column >= 0);
- 
- 				c = merge_chars[idx];
- 				strbuf_write_column(sb, &graph->new_columns[par_column], c);
--				if (idx == 2)
--					strbuf_addch(sb, ' ');
--				else
-+				if (idx == 2) {
-+					if (graph->edges_added > 0 || j < graph->num_parents - 1)
-+						strbuf_addch(sb, ' ');
-+				} else {
- 					idx++;
-+				}
-+				parents = next_interesting_parent(graph, parents);
- 			}
- 			if (graph->edges_added == 0)
- 				strbuf_addch(sb, ' ');
-diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
-index b739268e5e..1481e6fd80 100755
---- a/t/t4215-log-skewed-merges.sh
-+++ b/t/t4215-log-skewed-merges.sh
-@@ -137,9 +137,8 @@ cat > expect <<\EOF
- | | * 3_G
- | * | 3_F
- |/| |
--| * |   3_E
--| |\ \
--| | |/
-+| * | 3_E
-+| |\|
- | | * 3_D
- | * | 3_C
- | |/
-@@ -190,4 +189,79 @@ test_expect_success 'log --graph with right-skewed merge following a left-skewed
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'setup octopus merge with column joining its penultimate parent' '
-+	git checkout --orphan 5_p &&
-+	test_commit 5_A &&
-+	git branch 5_q &&
-+	git branch 5_r &&
-+	test_commit 5_B &&
-+	git checkout 5_q && test_commit 5_C &&
-+	git checkout 5_r && test_commit 5_D &&
-+	git checkout 5_p &&
-+	git merge --no-ff 5_q 5_r -m 5_E &&
-+	git checkout 5_q && test_commit 5_F &&
-+	git checkout -b 5_s 5_p^ &&
-+	git merge --no-ff 5_p 5_q -m 5_G &&
-+	git checkout 5_r &&
-+	git merge --no-ff 5_s -m 5_H
-+'
-+
-+cat > expect <<\EOF
-+*   5_H
-+|\
-+| *-.   5_G
-+| |\ \
-+| | | * 5_F
-+| | * |   5_E
-+| |/|\ \
-+| |_|/ /
-+|/| | /
-+| | |/
-+* | | 5_D
-+| | * 5_C
-+| |/
-+|/|
-+| * 5_B
-+|/
-+* 5_A
-+EOF
-+
-+test_expect_success 'log --graph with octopus merge with column joining its penultimate parent' '
-+	git log --graph --pretty=tformat:%s | sed "s/ *$//" > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup merge fusing with its left and right neighbors' '
-+	git checkout --orphan 6_p &&
-+	test_commit 6_A &&
-+	test_commit 6_B &&
-+	git checkout -b 6_q @^ && test_commit 6_C &&
-+	git checkout -b 6_r @^ && test_commit 6_D &&
-+	git checkout 6_p && git merge --no-ff 6_q 6_r -m 6_E &&
-+	git checkout 6_r && test_commit 6_F &&
-+	git checkout 6_p && git merge --no-ff 6_r -m 6_G &&
-+	git checkout @^^ && git merge --no-ff 6_p -m 6_H
-+'
-+
-+cat > expect <<\EOF
-+*   6_H
-+|\
-+| *   6_G
-+| |\
-+| | * 6_F
-+| * | 6_E
-+|/|\|
-+| | * 6_D
-+| * | 6_C
-+| |/
-+* / 6_B
-+|/
-+* 6_A
-+EOF
-+
-+test_expect_success 'log --graph with merge fusing with its left and right neighbors' '
-+	git log --graph --pretty=tformat:%s | sed "s/ *$//" > actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/t6016-rev-list-graph-simplify-history.sh b/t/t6016-rev-list-graph-simplify-history.sh
-index ca1682f29b..f5e6e92f5b 100755
---- a/t/t6016-rev-list-graph-simplify-history.sh
-+++ b/t/t6016-rev-list-graph-simplify-history.sh
-@@ -67,11 +67,10 @@ test_expect_success '--graph --all' '
- 	echo "| * $C4" >> expected &&
- 	echo "| * $C3" >> expected &&
- 	echo "* | $A5" >> expected &&
--	echo "| |     " >> expected &&
--	echo "|  \\    " >> expected &&
--	echo "*-. \\   $A4" >> expected &&
--	echo "|\\ \\ \\  " >> expected &&
--	echo "| | |/  " >> expected &&
-+	echo "| |   " >> expected &&
-+	echo "|  \\  " >> expected &&
-+	echo "*-. | $A4" >> expected &&
-+	echo "|\\ \\| " >> expected &&
- 	echo "| | * $C2" >> expected &&
- 	echo "| | * $C1" >> expected &&
- 	echo "| * | $B2" >> expected &&
-@@ -97,11 +96,10 @@ test_expect_success '--graph --simplify-by-decoration' '
- 	echo "| * $C4" >> expected &&
- 	echo "| * $C3" >> expected &&
- 	echo "* | $A5" >> expected &&
--	echo "| |     " >> expected &&
--	echo "|  \\    " >> expected &&
--	echo "*-. \\   $A4" >> expected &&
--	echo "|\\ \\ \\  " >> expected &&
--	echo "| | |/  " >> expected &&
-+	echo "| |   " >> expected &&
-+	echo "|  \\  " >> expected &&
-+	echo "*-. | $A4" >> expected &&
-+	echo "|\\ \\| " >> expected &&
- 	echo "| | * $C2" >> expected &&
- 	echo "| | * $C1" >> expected &&
- 	echo "| * | $B2" >> expected &&
-@@ -131,9 +129,8 @@ test_expect_success '--graph --simplify-by-decoration prune branch B' '
- 	echo "| * $C4" >> expected &&
- 	echo "| * $C3" >> expected &&
- 	echo "* | $A5" >> expected &&
--	echo "* |   $A4" >> expected &&
--	echo "|\\ \\  " >> expected &&
--	echo "| |/  " >> expected &&
-+	echo "* | $A4" >> expected &&
-+	echo "|\\| " >> expected &&
- 	echo "| * $C2" >> expected &&
- 	echo "| * $C1" >> expected &&
- 	echo "* | $A3" >> expected &&
-@@ -151,10 +148,9 @@ test_expect_success '--graph --full-history -- bar.txt' '
- 	echo "|\\  " >> expected &&
- 	echo "| * $C4" >> expected &&
- 	echo "* | $A5" >> expected &&
--	echo "* |   $A4" >> expected &&
--	echo "|\\ \\  " >> expected &&
--	echo "| |/  " >> expected &&
--	echo "* / $A3" >> expected &&
-+	echo "* | $A4" >> expected &&
-+	echo "|\\| " >> expected &&
-+	echo "* | $A3" >> expected &&
- 	echo "|/  " >> expected &&
- 	echo "* $A2" >> expected &&
- 	git rev-list --graph --full-history --all -- bar.txt > actual &&
--- 
-gitgitgadget
-
+-Peff
