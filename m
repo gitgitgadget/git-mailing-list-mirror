@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4587D1F4BD
-	for <e@80x24.org>; Thu, 10 Oct 2019 16:14:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 560BF1F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 16:14:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726323AbfJJQN5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 12:13:57 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42832 "EHLO
+        id S1726291AbfJJQN4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 12:13:56 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34966 "EHLO
         mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726187AbfJJQNw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 12:13:52 -0400
-Received: by mail-wr1-f67.google.com with SMTP id n14so8586857wrw.9
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 09:13:49 -0700 (PDT)
+        with ESMTP id S1726276AbfJJQNz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 12:13:55 -0400
+Received: by mail-wr1-f67.google.com with SMTP id v8so8626915wrt.2
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 09:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=CNy1xTMHVsAy6mKLaIY8F8k2guin6Fxc9R6Rg30SXgY=;
-        b=jAsP5939VaapDUL1Q7/XNyYgi7KuFXiTJkMaVcqV4zSElplV6eBz7B5IeTPJiOYTP3
-         Y4sROAJaQ2J83u2p5zqlrDdz+FY839W5TYmmWRMBn4g7wU0eYVCOqKW/Fxz0hOYjcTyn
-         cv/YIg6kenQ1vU7zu0zHIuUT9cYBVpl0I/oiQnibUB8Ecn6yKWPbfIkpSjWOZe9mNIXr
-         3mR5KsxBSlnMfSJJvxDEQEHJJstgjNHr7Rbny8BOiZ9OcNmvLHA2pBn3E1201iM7AvJc
-         0LuY4/wCpEkanbwToBEqcvvseD2//V8O43FlM0DQ2GFl/1xstbey6nTnQa0iccPZaXrn
-         S1Ig==
+        bh=JK2inobb5zhUsTBE/QtcNCBJfbDIsr/OGF0HFkFqJrQ=;
+        b=MbCW5BbbBbiniMOSWUTwLORBgoF2hnSZokJKXu65wJuqNFCdmava1jlBZZlI6Pt9kr
+         70kGktJbYTTLqLNxIZCyZx+E5HpHrRq28ifx05ijvxj1flg0R2zlZFYxGoD86RGGR78m
+         V/ID43iKzr3jGbLb6x8ETrkuQ46R4ZgX7vC5hvrMydjp1t5YGnzvc1BUiEx0RILkdczK
+         6Zoij/vEYZRFXNSRy7X8cXxRue3oxPwIUAXXv7tSqHAnzSLaR1h/zTV/UIYsqC7ROF6S
+         XLvfk3Ey7RGUYxDB3J5QCJKF8lgeWr3F3N4M08668G5ysDv1GFrPXpt5sFIn3F0++rRZ
+         rSaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CNy1xTMHVsAy6mKLaIY8F8k2guin6Fxc9R6Rg30SXgY=;
-        b=NThwu82+qRV5hYn1UyqsndM9CZG3RXLDCHP7qiOl8+2jze+Ub7ruFsVRQ+i4pTi5lY
-         N11MsvttDzhmv3CE7Ii+6d0mARomFr/mNE9whOrJxahchdwjnQ1ySAM318TRha58qBdw
-         eignpGXSqB2FxW0+uHfOZj0SZbX8bvJVFjvRHvrix13d+UiOAXVclMhkMK/5IfwNk6x1
-         RVop2Erz1TTdxVPm2RFrYMw7GeVBicNH8V7PfoLSNszuwlL469tRl9VEu7fgyx93AErT
-         FjLNBvP9WoGxB6J6yCsLPqF2b+gjyS+YypxGvE9FaMNn2/eDilIXO6XNBzhYC3zFBxAJ
-         dPzA==
-X-Gm-Message-State: APjAAAXwWAjYrsIQqIx3CVjmO9XbYgdP8R7xE6IVN7+dDafWvErshuGG
-        xV4V6wf0SpbUz9d27HlAO0NJ6Zqx
-X-Google-Smtp-Source: APXvYqxVJYrwxGF5b4d/cos34Tf+ZLdLL5pStg/KLeBUicWxRyj8l6XtoSh1n65smRw7n6zo1GQxCg==
-X-Received: by 2002:a5d:4b09:: with SMTP id v9mr8825530wrq.127.1570724028246;
-        Thu, 10 Oct 2019 09:13:48 -0700 (PDT)
+        bh=JK2inobb5zhUsTBE/QtcNCBJfbDIsr/OGF0HFkFqJrQ=;
+        b=hN38H4PlYgkUDUnNrwWPUtxbLaaZsMY9ASgOG7b0ykXtrpt716ujpD0uAc6U1uosMH
+         VjVxp/HAENvDCDOt1wFZew1kcNCoE4F+Kg59MMhHMjqnotjA0cAenObf4MOiaCsDB/qS
+         tZA37YbkKz0pMrjIVmriYBv3J+jXjROrkSKfTdOxinqqjsHcOTwKDnXN/v5b/2bDBWKY
+         iRdp8GLPclAVUXY3g+3WkQSXGzt0gATr/dyVf4TYYa39GTTjsaGQoW/t1V0m3T45SoG0
+         XhPlGZYCEnFDMYsbyk8FIFmGszITd+YdCMXB4BWAmIftZsHLJuNQ/PvYeVNlYWl0qRk7
+         9SlA==
+X-Gm-Message-State: APjAAAUJdTUoEbVrTMz6UiclUniHItQrE02ZCGtYCUgON//D2KvxBCtk
+        mw8N+88fIOA0VrNtJkX08KDxHJCM
+X-Google-Smtp-Source: APXvYqznvRoFaVZAPfoGSGlPcxixRKqU955/3WePmMcI7MMEGQVMEQnB2xQzC8dXs5g3Umj5oKSyIg==
+X-Received: by 2002:a5d:4ed2:: with SMTP id s18mr8893093wrv.52.1570724032107;
+        Thu, 10 Oct 2019 09:13:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j18sm5751016wrs.85.2019.10.10.09.13.47
+        by smtp.gmail.com with ESMTPSA id f18sm4236692wmh.43.2019.10.10.09.13.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Oct 2019 09:13:47 -0700 (PDT)
-Date:   Thu, 10 Oct 2019 09:13:47 -0700 (PDT)
-X-Google-Original-Date: Thu, 10 Oct 2019 16:13:35 GMT
-Message-Id: <12c0916cb1ef033f917dc065cc1f18c0477296b8.1570724021.git.gitgitgadget@gmail.com>
+        Thu, 10 Oct 2019 09:13:51 -0700 (PDT)
+Date:   Thu, 10 Oct 2019 09:13:51 -0700 (PDT)
+X-Google-Original-Date: Thu, 10 Oct 2019 16:13:39 GMT
+Message-Id: <50756edcf7075b27b1ac0b0fb7af8688787bcd00.1570724021.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.383.git.gitgitgadget@gmail.com>
 References: <pull.383.git.gitgitgadget@gmail.com>
 From:   "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 06/11] graph: tidy up display of left-skewed merges
+Subject: [PATCH 10/11] graph: flatten edges that join to their right neighbor
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,392 +71,309 @@ X-Mailing-List: git@vger.kernel.org
 
 From: James Coglan <jcoglan@gmail.com>
 
-Currently, when we display a merge whose first parent is already present
-in a column to the left of the merge commit, we display the first parent
-as a veritcal pipe `|` in the GRAPH_POST_MERGE line and then immediately
-enter the GRAPH_COLLAPSING state. The first-parent line tracks to the
-left and all the other parent lines follow it; this creates a "kink" in
-those lines:
+When a merge commit is printed and its final parent is the same commit
+that occupies the column to the right of the merge, this results in a
+kink in the displayed edges:
 
-        | *---.
-        | |\ \ \
-        |/ / / /
-        | | | *
+        * |
+        |\ \
+        | |/
+        | *
 
-This change tidies the display of such commits such that if the first
-parent appears to the left of the merge, we render it as a `/` and the
-second parent as a `|`. This reduces the horizontal and vertical space
-needed to render the merge, and makes the resulting lines easier to
-read.
+Graphs containing these shapes can be hard to read, as the expansion to
+the right followed immediately by collapsing back to the left creates a
+lot of zig-zagging edges, especially when many columns are present.
 
-        | *-.
-        |/|\ \
-        | | | *
+We can improve this by eliminating the zig-zag and having the merge's
+final parent edge fuse immediately with its neighbor:
 
-If the first parent is separated from the merge by several columns, a
-horizontal line is drawn in a similar manner to how the GRAPH_COLLAPSING
-state displays the line.
+        * |
+        |\|
+        | *
 
-        | | | *-.
-        | |_|/|\ \
-        |/| | | | *
+This reduces the horizontal width for the current commit by 2, and
+requires one less row, making the graph display more compact. Taken in
+combination with other graph-smoothing enhancements, it greatly
+compresses the space needed to display certain histories:
 
-This effect is applied to both "normal" two-parent merges, and to
-octopus merges. It also reduces the vertical space needed for pre-commit
-lines, as the merge occupies one less column than usual.
+        *
+        |\
+        | *                       *
+        | |\                      |\
+        | | *                     | *
+        | | |                     | |\
+        | |  \                    | | *
+        | *-. \                   | * |
+        | |\ \ \        =>        |/|\|
+        |/ / / /                  | | *
+        | | | /                   | * |
+        | | |/                    | |/
+        | | *                     * /
+        | * |                     |/
+        | |/                      *
+        * |
+        |/
+        *
 
-        Before:         After:
+One of the test cases here cannot be correctly rendered in Git v2.23.0;
+it produces this output following commit E:
 
-        | *             | *
-        | |\            | |\
-        | | \           | * \
-        | |  \          |/|\ \
-        | *-. \
-        | |\ \ \
+        | | *-. \   5_E
+        | | |\ \ \
+        | |/ / / /
+        | | | / _
+        | |_|/
+        |/| |
+
+The new implementation makes sure that the rightmost edge in this
+history is not left dangling as above.
 
 Signed-off-by: James Coglan <jcoglan@gmail.com>
 ---
- graph.c                      | 125 +++++++++++++++++++++++++++--------
- t/t4214-log-graph-octopus.sh |  10 ++-
- t/t4215-log-skewed-merges.sh |  42 ++++++++++++
- 3 files changed, 143 insertions(+), 34 deletions(-)
- create mode 100755 t/t4215-log-skewed-merges.sh
+ graph.c                                    | 34 ++++++---
+ t/t4215-log-skewed-merges.sh               | 80 +++++++++++++++++++++-
+ t/t6016-rev-list-graph-simplify-history.sh | 30 ++++----
+ 3 files changed, 116 insertions(+), 28 deletions(-)
 
 diff --git a/graph.c b/graph.c
-index 98e8777db4..9136173e03 100644
+index 6391e393ec..7dd2fab625 100644
 --- a/graph.c
 +++ b/graph.c
-@@ -183,6 +183,20 @@ struct git_graph {
- 	 * previous commit.
- 	 */
- 	int prev_commit_index;
-+	/*
-+	 * Which layout variant to use to display merge commits. If the
-+	 * commit's first parent is known to be in a column to the left of the
-+	 * merge, then this value is 0 and we use the layout on the left.
-+	 * Otherwise, the value is 1 and the layout on the right is used. This
-+	 * field tells us how many columns the first parent occupies.
-+	 *
-+	 * 		0)			1)
-+	 *
-+	 * 		| | | *-.		| | *---.
-+	 * 		| |_|/|\ \		| | |\ \ \
-+	 * 		|/| | | | |		| | | | | *
-+	 */
-+	int merge_layout;
- 	/*
- 	 * The maximum number of columns that can be stored in the columns
- 	 * and new_columns arrays.  This is also half the number of entries
-@@ -294,6 +308,7 @@ struct git_graph *graph_init(struct rev_info *opt)
- 	graph->prev_state = GRAPH_PADDING;
- 	graph->commit_index = 0;
- 	graph->prev_commit_index = 0;
-+	graph->merge_layout = 0;
- 	graph->num_columns = 0;
- 	graph->num_new_columns = 0;
- 	graph->mapping_size = 0;
-@@ -453,9 +468,11 @@ static int graph_find_new_column_by_commit(struct git_graph *graph,
- }
+@@ -538,8 +538,24 @@ static void graph_insert_into_new_columns(struct git_graph *graph,
+ 		shift = (dist > 1) ? 2 * dist - 3 : 1;
  
- static void graph_insert_into_new_columns(struct git_graph *graph,
--					  struct commit *commit)
-+					  struct commit *commit,
-+					  int idx)
- {
- 	int i = graph_find_new_column_by_commit(graph, commit);
-+	int mapping_idx;
- 
- 	/*
- 	 * If the commit is not already in the new_columns array, then add it
-@@ -467,8 +484,26 @@ static void graph_insert_into_new_columns(struct git_graph *graph,
- 		graph->new_columns[i].color = graph_find_commit_color(graph, commit);
- 	}
- 
--	graph->mapping[graph->width] = i;
--	graph->width += 2;
-+	if (graph->num_parents > 1 && idx > -1 && graph->merge_layout == -1) {
+ 		graph->merge_layout = (dist > 0) ? 0 : 1;
++		graph->edges_added = graph->num_parents + graph->merge_layout  - 2;
++
+ 		mapping_idx = graph->width + (graph->merge_layout - 1) * shift;
+ 		graph->width += 2 * graph->merge_layout;
++
++	} else if (graph->edges_added > 0 && i == graph->mapping[graph->width - 2]) {
 +		/*
-+		 * If this is the first parent of a merge, choose a layout for
-+		 * the merge line based on whether the parent appears in a
-+		 * column to the left of the merge
++		 * If some columns have been added by a merge, but this commit
++		 * was found in the last existing column, then adjust the
++		 * numbers so that the two edges immediately join, i.e.:
++		 *
++		 *		* |		* |
++		 *		|\ \	=>	|\|
++		 *		| |/		| *
++		 *		| *
 +		 */
-+		int dist, shift;
-+
-+		dist = idx - i;
-+		shift = (dist > 1) ? 2 * dist - 3 : 1;
-+
-+		graph->merge_layout = (dist > 0) ? 0 : 1;
-+		mapping_idx = graph->width + (graph->merge_layout - 1) * shift;
-+		graph->width += 2 * graph->merge_layout;
-+	} else {
-+		mapping_idx = graph->width;
-+		graph->width += 2;
-+	}
-+
-+	graph->mapping[mapping_idx] = i;
- }
++		mapping_idx = graph->width - 2;
++		graph->edges_added = -1;
+ 	} else {
+ 		mapping_idx = graph->width;
+ 		graph->width += 2;
+@@ -585,6 +601,8 @@ static void graph_update_columns(struct git_graph *graph)
+ 		graph->mapping[i] = -1;
  
- static void graph_update_columns(struct git_graph *graph)
-@@ -534,6 +569,7 @@ static void graph_update_columns(struct git_graph *graph)
- 		if (col_commit == graph->commit) {
- 			seen_this = 1;
- 			graph->commit_index = i;
-+			graph->merge_layout = -1;
- 			for (parent = first_interesting_parent(graph);
- 			     parent;
- 			     parent = next_interesting_parent(graph, parent)) {
-@@ -546,7 +582,7 @@ static void graph_update_columns(struct git_graph *graph)
- 				    !is_commit_in_columns) {
- 					graph_increment_column_color(graph);
- 				}
--				graph_insert_into_new_columns(graph, parent->item);
-+				graph_insert_into_new_columns(graph, parent->item, i);
- 			}
- 			/*
- 			 * We always need to increment graph->width by at
-@@ -557,7 +593,7 @@ static void graph_update_columns(struct git_graph *graph)
- 			if (graph->num_parents == 0)
- 				graph->width += 2;
- 		} else {
--			graph_insert_into_new_columns(graph, col_commit);
-+			graph_insert_into_new_columns(graph, col_commit, -1);
- 		}
- 	}
- 
-@@ -569,10 +605,36 @@ static void graph_update_columns(struct git_graph *graph)
- 		graph->mapping_size--;
- }
- 
-+static int graph_num_expansion_rows(struct git_graph *graph)
-+{
-+	/*
-+	 * Normally, we need two expansion rows for each dashed parent line from
-+	 * an octopus merge:
-+	 *
-+	 * 		| *
-+	 * 		| |\
-+	 * 		| | \
-+	 * 		| |  \
-+	 * 		| *-. \
-+	 * 		| |\ \ \
-+	 *
-+	 * If the merge is skewed to the left, then its parents occupy one less
-+	 * column, and we don't need as many expansion rows to route around it;
-+	 * in some cases that means we don't need any expansion rows at all:
-+	 *
-+	 * 		| *
-+	 * 		| |\
-+	 * 		| * \
-+	 * 		|/|\ \
-+	 */
-+	return (graph->num_parents + graph->merge_layout - 3) * 2;
-+}
-+
- static int graph_needs_pre_commit_line(struct git_graph *graph)
- {
- 	return graph->num_parents >= 3 &&
--	       graph->commit_index < (graph->num_columns - 1);
-+	       graph->commit_index < (graph->num_columns - 1) &&
-+	       graph->expansion_row < graph_num_expansion_rows(graph);
- }
- 
- void graph_update(struct git_graph *graph, struct commit *commit)
-@@ -722,7 +784,6 @@ static void graph_output_skip_line(struct git_graph *graph, struct strbuf *sb)
- static void graph_output_pre_commit_line(struct git_graph *graph,
- 					 struct strbuf *sb)
- {
--	int num_expansion_rows;
- 	int i, seen_this;
+ 	graph->width = 0;
++	graph->prev_edges_added = graph->edges_added;
++	graph->edges_added = 0;
  
  	/*
-@@ -733,14 +794,13 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
- 	 * We need 2 extra rows for every parent over 2.
+ 	 * Populate graph->new_columns and graph->mapping
+@@ -712,9 +730,6 @@ void graph_update(struct git_graph *graph, struct commit *commit)
  	 */
- 	assert(graph->num_parents >= 3);
--	num_expansion_rows = (graph->num_parents - 2) * 2;
+ 	graph_update_columns(graph);
+ 
+-	graph->prev_edges_added = graph->edges_added;
+-	graph->edges_added = graph->num_parents + graph->merge_layout - 2;
+-
+ 	graph->expansion_row = 0;
  
  	/*
- 	 * graph->expansion_row tracks the current expansion row we are on.
- 	 * It should be in the range [0, num_expansion_rows - 1]
- 	 */
- 	assert(0 <= graph->expansion_row &&
--	       graph->expansion_row < num_expansion_rows);
-+	       graph->expansion_row < graph_num_expansion_rows(graph));
- 
- 	/*
- 	 * Output the row
-@@ -782,7 +842,7 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
- 	 * and move to state GRAPH_COMMIT if necessary
- 	 */
- 	graph->expansion_row++;
--	if (graph->expansion_row >= num_expansion_rows)
-+	if (!graph_needs_pre_commit_line(graph))
- 		graph_update_state(graph, GRAPH_COMMIT);
- }
- 
-@@ -820,7 +880,7 @@ static void graph_draw_octopus_merge(struct git_graph *graph, struct strbuf *sb)
- 	 * x 0 1 2 3
- 	 *
- 	 */
--	const int dashless_parents = 2;
-+	const int dashless_parents = 3 - graph->merge_layout;
- 	int dashful_parents = graph->num_parents - dashless_parents;
- 
- 	/*
-@@ -828,9 +888,9 @@ static void graph_draw_octopus_merge(struct git_graph *graph, struct strbuf *sb)
- 	 * above) but sometimes the first parent goes into an existing column,
- 	 * like this:
- 	 *
--	 * | *---.
--	 * | |\ \ \
--	 * |/ / / /
-+	 * | *-.
-+	 * |/|\ \
-+	 * | | | |
- 	 * x 0 1 2
- 	 *
- 	 * In which case the number of parents will be one greater than the
-@@ -923,10 +983,15 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
- 		graph_update_state(graph, GRAPH_COLLAPSING);
- }
- 
-+const char merge_chars[] = {'/', '|', '\\'};
-+
+@@ -1039,7 +1054,7 @@ const char merge_chars[] = {'/', '|', '\\'};
  static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf *sb)
  {
  	int seen_this = 0;
--	int i, j;
-+	int i;
-+
-+	struct commit_list *first_parent = first_interesting_parent(graph);
-+	int seen_parent = 0;
+-	int i;
++	int i, j;
  
- 	/*
- 	 * Output the post-merge row
-@@ -949,30 +1014,34 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf
- 			 * new_columns and use those to format the
- 			 * edges.
- 			 */
--			struct commit_list *parents = NULL;
-+			struct commit_list *parents = first_parent;
- 			int par_column;
-+			int idx = graph->merge_layout;
-+			char c;
+ 	struct commit_list *first_parent = first_interesting_parent(graph);
+ 	int seen_parent = 0;
+@@ -1071,16 +1086,19 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf
+ 			char c;
  			seen_this = 1;
--			parents = first_interesting_parent(graph);
--			assert(parents);
--			par_column = graph_find_new_column_by_commit(graph, parents->item);
--			assert(par_column >= 0);
--
--			strbuf_write_column(sb, &graph->new_columns[par_column], '|');
--			for (j = 0; j < graph->num_parents - 1; j++) {
--				parents = next_interesting_parent(graph, parents);
--				assert(parents);
-+
-+			for (; parents; parents = next_interesting_parent(graph, parents)) {
+ 
+-			for (; parents; parents = next_interesting_parent(graph, parents)) {
++			for (j = 0; j < graph->num_parents; j++) {
  				par_column = graph_find_new_column_by_commit(graph, parents->item);
  				assert(par_column >= 0);
--				strbuf_write_column(sb, &graph->new_columns[par_column], '\\');
--				strbuf_addch(sb, ' ');
-+
-+				c = merge_chars[idx];
-+				strbuf_write_column(sb, &graph->new_columns[par_column], c);
-+				if (idx == 2)
-+					strbuf_addch(sb, ' ');
-+				else
-+					idx++;
- 			}
- 		} else if (seen_this) {
- 			strbuf_write_column(sb, col, '\\');
- 			strbuf_addch(sb, ' ');
- 		} else {
- 			strbuf_write_column(sb, col, '|');
--			strbuf_addch(sb, ' ');
-+			if (graph->merge_layout != 0 || i != graph->commit_index - 1)
-+				strbuf_addch(sb, seen_parent ? '_' : ' ');
- 		}
-+
-+		if (col_commit == first_parent->item)
-+			seen_parent = 1;
- 	}
  
- 	graph_pad_horizontally(graph, sb);
-diff --git a/t/t4214-log-graph-octopus.sh b/t/t4214-log-graph-octopus.sh
-index dab96c89aa..40f420877b 100755
---- a/t/t4214-log-graph-octopus.sh
-+++ b/t/t4214-log-graph-octopus.sh
-@@ -7,9 +7,8 @@ test_description='git log --graph of skewed left octopus merge.'
- test_expect_success 'set up merge history' '
- 	cat >expect.uncolored <<-\EOF &&
- 	* left
--	| *---.   octopus-merge
--	| |\ \ \
--	|/ / / /
-+	| *-.   octopus-merge
-+	|/|\ \
- 	| | | * 4
- 	| | * | 3
- 	| | |/
-@@ -21,9 +20,8 @@ test_expect_success 'set up merge history' '
- 	EOF
- 	cat >expect.colors <<-\EOF &&
- 	* left
--	<RED>|<RESET> *<BLUE>-<RESET><BLUE>-<RESET><MAGENTA>-<RESET><MAGENTA>.<RESET>   octopus-merge
--	<RED>|<RESET> <RED>|<RESET><YELLOW>\<RESET> <BLUE>\<RESET> <MAGENTA>\<RESET>
--	<RED>|<RESET><RED>/<RESET> <YELLOW>/<RESET> <BLUE>/<RESET> <MAGENTA>/<RESET>
-+	<RED>|<RESET> *<MAGENTA>-<RESET><MAGENTA>.<RESET>   octopus-merge
-+	<RED>|<RESET><RED>/<RESET><YELLOW>|<RESET><BLUE>\<RESET> <MAGENTA>\<RESET>
- 	<RED>|<RESET> <YELLOW>|<RESET> <BLUE>|<RESET> * 4
- 	<RED>|<RESET> <YELLOW>|<RESET> * <MAGENTA>|<RESET> 3
- 	<RED>|<RESET> <YELLOW>|<RESET> <MAGENTA>|<RESET><MAGENTA>/<RESET>
+ 				c = merge_chars[idx];
+ 				strbuf_write_column(sb, &graph->new_columns[par_column], c);
+-				if (idx == 2)
+-					strbuf_addch(sb, ' ');
+-				else
++				if (idx == 2) {
++					if (graph->edges_added > 0 || j < graph->num_parents - 1)
++						strbuf_addch(sb, ' ');
++				} else {
+ 					idx++;
++				}
++				parents = next_interesting_parent(graph, parents);
+ 			}
+ 			if (graph->edges_added == 0)
+ 				strbuf_addch(sb, ' ');
 diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
-new file mode 100755
-index 0000000000..cfaba40f97
---- /dev/null
+index b739268e5e..1481e6fd80 100755
+--- a/t/t4215-log-skewed-merges.sh
 +++ b/t/t4215-log-skewed-merges.sh
-@@ -0,0 +1,42 @@
-+#!/bin/sh
-+
-+test_description='git log --graph of skewed merges'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup left-skewed merge' '
-+	git checkout --orphan _a && test_commit A &&
-+	git branch _b &&
-+	git branch _c &&
-+	git branch _d &&
-+	git branch _e &&
-+	git checkout _b && test_commit B &&
-+	git checkout _c && test_commit C &&
-+	git checkout _d && test_commit D &&
-+	git checkout _e && git merge --no-ff _d -m E &&
-+	git checkout _a && git merge --no-ff _b _c _e -m F
+@@ -137,9 +137,8 @@ cat > expect <<\EOF
+ | | * 3_G
+ | * | 3_F
+ |/| |
+-| * |   3_E
+-| |\ \
+-| | |/
++| * | 3_E
++| |\|
+ | | * 3_D
+ | * | 3_C
+ | |/
+@@ -190,4 +189,79 @@ test_expect_success 'log --graph with right-skewed merge following a left-skewed
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'setup octopus merge with column joining its penultimate parent' '
++	git checkout --orphan 5_p &&
++	test_commit 5_A &&
++	git branch 5_q &&
++	git branch 5_r &&
++	test_commit 5_B &&
++	git checkout 5_q && test_commit 5_C &&
++	git checkout 5_r && test_commit 5_D &&
++	git checkout 5_p &&
++	git merge --no-ff 5_q 5_r -m 5_E &&
++	git checkout 5_q && test_commit 5_F &&
++	git checkout -b 5_s 5_p^ &&
++	git merge --no-ff 5_p 5_q -m 5_G &&
++	git checkout 5_r &&
++	git merge --no-ff 5_s -m 5_H
 +'
 +
 +cat > expect <<\EOF
-+*---.   F
-+|\ \ \
-+| | | * E
-+| |_|/|
-+|/| | |
-+| | | * D
-+| |_|/
-+|/| |
-+| | * C
++*   5_H
++|\
++| *-.   5_G
++| |\ \
++| | | * 5_F
++| | * |   5_E
++| |/|\ \
++| |_|/ /
++|/| | /
++| | |/
++* | | 5_D
++| | * 5_C
 +| |/
 +|/|
-+| * B
++| * 5_B
 +|/
-+* A
++* 5_A
 +EOF
 +
-+test_expect_success 'log --graph with left-skewed merge' '
++test_expect_success 'log --graph with octopus merge with column joining its penultimate parent' '
 +	git log --graph --pretty=tformat:%s | sed "s/ *$//" > actual &&
 +	test_cmp expect actual
 +'
 +
-+test_done
++test_expect_success 'setup merge fusing with its left and right neighbors' '
++	git checkout --orphan 6_p &&
++	test_commit 6_A &&
++	test_commit 6_B &&
++	git checkout -b 6_q @^ && test_commit 6_C &&
++	git checkout -b 6_r @^ && test_commit 6_D &&
++	git checkout 6_p && git merge --no-ff 6_q 6_r -m 6_E &&
++	git checkout 6_r && test_commit 6_F &&
++	git checkout 6_p && git merge --no-ff 6_r -m 6_G &&
++	git checkout @^^ && git merge --no-ff 6_p -m 6_H
++'
++
++cat > expect <<\EOF
++*   6_H
++|\
++| *   6_G
++| |\
++| | * 6_F
++| * | 6_E
++|/|\|
++| | * 6_D
++| * | 6_C
++| |/
++* / 6_B
++|/
++* 6_A
++EOF
++
++test_expect_success 'log --graph with merge fusing with its left and right neighbors' '
++	git log --graph --pretty=tformat:%s | sed "s/ *$//" > actual &&
++	test_cmp expect actual
++'
++
+ test_done
+diff --git a/t/t6016-rev-list-graph-simplify-history.sh b/t/t6016-rev-list-graph-simplify-history.sh
+index ca1682f29b..f5e6e92f5b 100755
+--- a/t/t6016-rev-list-graph-simplify-history.sh
++++ b/t/t6016-rev-list-graph-simplify-history.sh
+@@ -67,11 +67,10 @@ test_expect_success '--graph --all' '
+ 	echo "| * $C4" >> expected &&
+ 	echo "| * $C3" >> expected &&
+ 	echo "* | $A5" >> expected &&
+-	echo "| |     " >> expected &&
+-	echo "|  \\    " >> expected &&
+-	echo "*-. \\   $A4" >> expected &&
+-	echo "|\\ \\ \\  " >> expected &&
+-	echo "| | |/  " >> expected &&
++	echo "| |   " >> expected &&
++	echo "|  \\  " >> expected &&
++	echo "*-. | $A4" >> expected &&
++	echo "|\\ \\| " >> expected &&
+ 	echo "| | * $C2" >> expected &&
+ 	echo "| | * $C1" >> expected &&
+ 	echo "| * | $B2" >> expected &&
+@@ -97,11 +96,10 @@ test_expect_success '--graph --simplify-by-decoration' '
+ 	echo "| * $C4" >> expected &&
+ 	echo "| * $C3" >> expected &&
+ 	echo "* | $A5" >> expected &&
+-	echo "| |     " >> expected &&
+-	echo "|  \\    " >> expected &&
+-	echo "*-. \\   $A4" >> expected &&
+-	echo "|\\ \\ \\  " >> expected &&
+-	echo "| | |/  " >> expected &&
++	echo "| |   " >> expected &&
++	echo "|  \\  " >> expected &&
++	echo "*-. | $A4" >> expected &&
++	echo "|\\ \\| " >> expected &&
+ 	echo "| | * $C2" >> expected &&
+ 	echo "| | * $C1" >> expected &&
+ 	echo "| * | $B2" >> expected &&
+@@ -131,9 +129,8 @@ test_expect_success '--graph --simplify-by-decoration prune branch B' '
+ 	echo "| * $C4" >> expected &&
+ 	echo "| * $C3" >> expected &&
+ 	echo "* | $A5" >> expected &&
+-	echo "* |   $A4" >> expected &&
+-	echo "|\\ \\  " >> expected &&
+-	echo "| |/  " >> expected &&
++	echo "* | $A4" >> expected &&
++	echo "|\\| " >> expected &&
+ 	echo "| * $C2" >> expected &&
+ 	echo "| * $C1" >> expected &&
+ 	echo "* | $A3" >> expected &&
+@@ -151,10 +148,9 @@ test_expect_success '--graph --full-history -- bar.txt' '
+ 	echo "|\\  " >> expected &&
+ 	echo "| * $C4" >> expected &&
+ 	echo "* | $A5" >> expected &&
+-	echo "* |   $A4" >> expected &&
+-	echo "|\\ \\  " >> expected &&
+-	echo "| |/  " >> expected &&
+-	echo "* / $A3" >> expected &&
++	echo "* | $A4" >> expected &&
++	echo "|\\| " >> expected &&
++	echo "* | $A3" >> expected &&
+ 	echo "|/  " >> expected &&
+ 	echo "* $A2" >> expected &&
+ 	git rev-list --graph --full-history --all -- bar.txt > actual &&
 -- 
 gitgitgadget
 
