@@ -2,101 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F7881F4C0
-	for <e@80x24.org>; Thu, 10 Oct 2019 23:35:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95F091F4C0
+	for <e@80x24.org>; Thu, 10 Oct 2019 23:40:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727206AbfJJXfC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 19:35:02 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:39987 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725845AbfJJXfC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 19:35:02 -0400
-Received: by mail-ed1-f68.google.com with SMTP id v38so7024415edm.7
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 16:35:01 -0700 (PDT)
+        id S1727259AbfJJXkp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 19:40:45 -0400
+Received: from mail-yw1-f74.google.com ([209.85.161.74]:47912 "EHLO
+        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726458AbfJJXkp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 19:40:45 -0400
+Received: by mail-yw1-f74.google.com with SMTP id p205so6032953ywc.14
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 16:40:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=zaFvQczaGqyFvQiHNroE3DH7T/c7UztwECotja/hiGI=;
-        b=iNtE4Qmuj3RYnm6QztS5ujh+XFYpfvWuqxI+claJs92yhB7mbvZsmhsMzXGPTh4+Lf
-         1/ZKeTon+b0SwQtXx1iWZ1Zv50OIk9O2743rTuGyEywy9Ry9RjDLnqyfKW25TVsuKLIz
-         F8c6C+kV3ucRjZIKl2Csbr2cGgaxd0xmKLbRZHK77JIjoJCGP/8P6KuU+SXezquCFMfs
-         dUBaXQ6C+MqeMICGxubAt9L7z0zOm/mMplxscoAO2pEvKZBqxMyiVGWXzJNv1S9+8ooZ
-         xZ2kc/aPMDNZUXTMAxhXFJJgIYIcBP7AoA8uAKL5bYW/ZYAyXwOs4d49Wezbbl/4h7+x
-         /GzA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=alJhCfB1xGR8CmzccYGQg9nKORNSvV2OeMzpgrgN4zE=;
+        b=KOmphjyjfEnfL0Cg4gLiGfwDrhqWmldIISzsrEtlKUAEQ9N3hk4u7JsAK6LYAs5QOZ
+         3TJkkUEn2lJY+bF32cyQuE7riMnggMt4AMnOTzUr7lmY/9/nowHQp+2fKqHHR2kkc1ck
+         qGXGA55BV+VLIPB/PnXCebdK3MidhJ/MS3UXw087oLhDkQ49y+MjSJVk8wlcv1F6ibwm
+         uagx5UGWqlYlJyT/XpgEaUllV7KGvK08Y9bMMmPYbQ1/Wva76YiZ5CYrjL974tBHCf4C
+         au619g+NZU1pWs5FE6kv13AiR7UFfxghyFC28f/WctRFhkkpe9D5zb56x4rxjs6Wsb2S
+         AbsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=zaFvQczaGqyFvQiHNroE3DH7T/c7UztwECotja/hiGI=;
-        b=rjvnjf+nRUWD804SorU9D51Dvg/NzN5SK0k56WIJxChIuMMGfVfuoU/wnLa6iGnG0U
-         79K5wePpDykT8jnP3EtGb02euT2fhusml2HTbDLtSls59euDhk5KBMf+mEs9Jx9e+LnS
-         t4CoXbhmpGagyXaPTbXErkOXvzsJ/uHPyf1CCrI/JR/0pnpDsTgxO67Hz4irGJWkIZ+s
-         Ee2VsUSyyrUAWHo/N04vjc7tPnQVc5SCD5Sr/2P8neeiUbgEuGcpuT7QIq6JWu7z3+AI
-         cyAd9B1yWY/3BHiZdItKG8oIFP9hft35ln+bWZxfyZK3P+3LmDNaSMdxJ6prbsOM/UwM
-         rPow==
-X-Gm-Message-State: APjAAAXy8Ug+Se2zdWYdEI27aek3pptjwwF5eLUo1lfHWjqUQYv9qMbu
-        nSJwz2pSeE3rw5wK3ofGqq9mcmLiSqqZ5Ym3k7fT1LHz
-X-Google-Smtp-Source: APXvYqygvhqdBwJ/1A2ZRCn1mUlpRxZDGSq6SKa/Qqr9g5rEYIOisIMx6FWLwNohWvqohZUwzuXPVoqu7hN1RLQAuuk=
-X-Received: by 2002:a17:906:7f03:: with SMTP id d3mr11120029ejr.209.1570750500334;
- Thu, 10 Oct 2019 16:35:00 -0700 (PDT)
-MIME-Version: 1.0
-From:   Jakob Jarmar <jakob.j@gmail.com>
-Date:   Fri, 11 Oct 2019 01:34:56 +0200
-Message-ID: <CA+xNDHtVc7pJr=SdihKDKiLE9TE_TcpEWWmPq+N9+fFcfM36wA@mail.gmail.com>
-Subject: [PATCH] stash: avoid recursive hard reset on submodules
-To:     git@vger.kernel.org
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=alJhCfB1xGR8CmzccYGQg9nKORNSvV2OeMzpgrgN4zE=;
+        b=grNl0T1rCjnYKiGjk4Ktkk95b0qbtAxsPw9780YMucX1YovPxWGjoUGsG3jX2SO8ue
+         aPl8Sho7Jy0SUw1ktMeW2LeQvFgZNGJNKLF/iUZD1XcSInelcyTqNoAZhJteYFRIG1S9
+         tbLxlCRKfHWgQdudqvJckTuXgCNbymlsfIAaLdy8cSFNuywsWCRVArZx31U+ssGRyT8v
+         tb0CD3ySiG85Vv3Ii5B4oV+XqK1o+IqXg9Y4kZHtgZDaWFfBt5PWeFiXgeLlvJvG8oja
+         jDsuzbLhhReHymZprAwfdp2FmBaFORRbs7MG+o+WGIF/3uGj/Sh2Yk7hUn+8tc9xdiVT
+         9ppw==
+X-Gm-Message-State: APjAAAUh/qhLVZ/HicF+I8b5ls1lxG9HcZXs7GhI0sbxxmER9Qp37sAv
+        l/19N+k6t8FrYOymsQ0EP85jgKUj+56QG9mHFFoR
+X-Google-Smtp-Source: APXvYqw3Ozn/vAJ9mX05dwpACGG1i5HpaRFEPhXI9ANupFO040iryb23HOYoP22XpA9pkuIJ/ixWcBlRlYUW/XEdfAR2
+X-Received: by 2002:a0d:f8c6:: with SMTP id i189mr275456ywf.491.1570750843844;
+ Thu, 10 Oct 2019 16:40:43 -0700 (PDT)
+Date:   Thu, 10 Oct 2019 16:40:40 -0700
+In-Reply-To: <20190913130226.7449-5-chriscool@tuxfamily.org>
+Message-Id: <20191010234040.168894-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20190913130226.7449-5-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.23.0.581.g78d2f28ef7-goog
+Subject: Re: [RFC PATCH 04/10] ewah/bitmap: always allocate 2 more words
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     christian.couder@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        chriscool@tuxfamily.org, ramsay@ramsayjones.plus.com,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git stash push does not recursively stash submodules, but if
-submodule.recurse is set, it may recursively reset --hard them. Having
-only the destructive action recurse is likely to be surprising
-behaviour, and unlikely to be desirable, so the easiest fix should be to
-ensure that the call to git reset --hard never recurses into submodules.
+> From: Jeff King <peff@peff.net>
+> 
+> In a following patch we will allocate a variable number
+> of words in some bitmaps. When iterating over the words we
+> will need a mark to tell us when to stop iterating. Let's
+> always allocate 2 more words, that will always contain 0,
+> as that mark.
 
-This matches the behavior of check_changes_tracked_files, which ignores
-submodules.
+[snip]
 
-Signed-off-by: Jakob Jarmar <jakob@jarmar.se>
----
- builtin/stash.c     | 2 +-
- git-legacy-stash.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+>  	if (block >= self->word_alloc) {
+>  		size_t old_size = self->word_alloc;
+> -		self->word_alloc = block * 2;
+> +		self->word_alloc = (block + 1) * 2;
+>  		REALLOC_ARRAY(self->words, self->word_alloc);
+>  		memset(self->words + old_size, 0x0,
+>  			(self->word_alloc - old_size) * sizeof(eword_t));
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index b5a301f24d..c986c258f2 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1383,7 +1383,7 @@ static int do_push_stash(const struct pathspec
-*ps, const char *stash_msg, int q
-             struct child_process cp = CHILD_PROCESS_INIT;
-             cp.git_cmd = 1;
-             argv_array_pushl(&cp.args, "reset", "--hard", "-q",
--                     NULL);
-+                     "--no-recurse-submodules", NULL);
-             if (run_command(&cp)) {
-                 ret = -1;
-                 goto done;
-diff --git a/git-legacy-stash.sh b/git-legacy-stash.sh
-index f60e9b3e87..07ad4a5459 100755
---- a/git-legacy-stash.sh
-+++ b/git-legacy-stash.sh
-@@ -370,7 +370,7 @@ push_stash () {
-             git diff-index -p --cached --binary HEAD -- "$@" |
-             git apply --index -R
-         else
--            git reset --hard -q
-+            git reset --hard -q --no-recurse-submodules
-         fi
+This patch set was mentioned as needing more thorough review in "What's
+Cooking" [1], so I thought I'd give it a try. As Peff said [2], the
+justification in the commit message looks incorrect. He suggests that it
+is most likely because "block" might be 0 (which is possible because a
+previous patch eliminated the minimum of 32), which makes sense to me.
 
-         if test "$keep_index" = "t" && test -n "$i_tree"
--- 
-2.23.0
+In any case, the next patch does not use 0 as a sentinel mark. Iteration
+stops when word_alloc is reached anyway, and since this is a regular
+bitmap, 0 is a valid word and cannot be used as a sentinel. (Maybe 0 is
+a valid word in a compressed EWAH bitmap too...not sure about that.)
+
+I think this should be squashed with patch 3, adding to that commit
+message "since word_alloc might be 0, we need to change the growth
+function". (Or just make the minimum word_alloc be 1 or 32 or something
+positive, if that's possible.)
+
+[1] https://public-inbox.org/git/xmqq36g5444k.fsf@gitster-ct.c.googlers.com/
+[2] https://public-inbox.org/git/20191002155721.GD6116@sigill.intra.peff.net/
