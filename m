@@ -2,126 +2,224 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAFF51F4BD
-	for <e@80x24.org>; Thu, 10 Oct 2019 15:26:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BAE41F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 16:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726034AbfJJP02 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 11:26:28 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:41342 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725862AbfJJP02 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 11:26:28 -0400
-Received: by mail-ed1-f67.google.com with SMTP id f20so5833394edv.8
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 08:26:27 -0700 (PDT)
+        id S1726053AbfJJQNq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 12:13:46 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55999 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725909AbfJJQNq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 12:13:46 -0400
+Received: by mail-wm1-f65.google.com with SMTP id a6so7569962wma.5
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 09:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=4YhqaCRtXwStRfhM3+ZPFLYlH4B5DN/zgwkXb/qwIf4=;
-        b=qDoD5qhElbpzwFYSzAXaKgsn1xLoUXrjAI0S8TYPGlafcOmZZzga4RKpdGPak1zyiR
-         4g9Thlwh7XWCndgH8Kgg6lff6NIHjPF/X/Jf9uJCiUgF5u2v6+DfsuKgtHl7IDNWGXJN
-         X7gsy9al4R4STiKcEUBifd/asP6fkFvok988cxPDfJub4pIP1n/tMLEw514JWaMoDbxn
-         Dz6Q/1O+pnue0YqBQXpA67dfhoENvnJU+dqOx6OLqliXDWLivfCHnbLnz7cYC5H/Lao5
-         na+anzztGEQro3EsiumItirAZ4KVuh3vaTHcx/+8vTjF1YLywBMzOvq20q1vf/Rblq2l
-         foqA==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=sHnjp65WELDg0aBB1yFF9ieUQesRkxBefxxFEg1HDmQ=;
+        b=PIwFjL3ybSUAmrQ0IRhnM4cxlzwwNZpK/yYPWtCJ8V2jm3UzQjBVbJLxN9jfu5cwzT
+         01Exy/h8UL3kz9LfsJQ4QYFm/eimywX3o5fWzkCLVBRWF6+mziI8DpKwQeIP+bz0gyg7
+         RHkFobR4GOVWQ2g9/wKE1X162O/YVGOTODcvjJQpafoL3/E9ZbXGl/1fIAG3i88qajAW
+         zvVK0QmbNOA2NeUFzx+KjR0aCkazvjnR+w/u8cte6PeQ+R85remKo+9lX43WGXYczlHE
+         VMKA+MJWfxKLaSwwVDtYI9ytcjE+YVrwVp9N7KSMJMddxcKdQpDN6CenQgIRmrkjAvkl
+         QIlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=4YhqaCRtXwStRfhM3+ZPFLYlH4B5DN/zgwkXb/qwIf4=;
-        b=GQckPnKwFcOLymKddw899oSKrClsTnA9VltynmC8su0M+rSLO7iOeDwMXi4Et3pryK
-         AMIofQHxEhgB+Z1GTzefcapE1fD1vZFkaYRuocyOMiLTDEHqbzWLrCs620ErYdq7EtAe
-         aFfefi8yl+iQLUvM4itTAb04qnLJBtImpyzW8u0nJNlWlhCLEwPjHKjxBnhucAGRYzsY
-         UiEBlKhqWrkLkytEM74e4k22cKrX/G7cqkzk0sw8dAcgH19P5Fq/i5VGLWtzjXxrLqig
-         IyC5ls6clCCR9oJRlE9M7ZCVx8NoQtPdXo6b8+FKrOkMJ2+3pRWcdp8UZ3AjO+3kQZTA
-         a0CQ==
-X-Gm-Message-State: APjAAAW74GW6JzzOlDDSM1C9iTZ+/J683yZPFTzUaFWpOeba+q/ic9K9
-        dYxNAvo2rH7AeIEBvnaSkt5YPPkBlGl4CYfBasVynU4D
-X-Google-Smtp-Source: APXvYqynbpaa7hNlgHe6g3eFbyZIuiEXxhH3g0RA/fT9ha71ZrX1XXNRi5DlDRm32X2MJWEiGD2ZW+GfjwdpedJJ0pU=
-X-Received: by 2002:a17:906:154a:: with SMTP id c10mr8440141ejd.238.1570721186519;
- Thu, 10 Oct 2019 08:26:26 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=sHnjp65WELDg0aBB1yFF9ieUQesRkxBefxxFEg1HDmQ=;
+        b=U/ntR32dCroTnT5o6hzIgrpr50vFMUQVTO2XQSYB6JjWUW9GaTtGgf0uOIfhU0Izhn
+         g8O4b+pcCT852GuzyLkF5z65g040BcYZy1JjNCDpRFAfRtp34PkE5oICuxYZ1My8DYcw
+         +zkg9UWHyd4uxfPHDGzAaY4yEmtV2CY9aHYdnspRBnkeO8Z0B92na4YwtaVXi4cT90vt
+         p5JfYNOmTHs58ViD0GE1mG185gfAvzTfLFJagRi6YGlBHgSXih3/eUJVbG+BhFg2DrSr
+         3N1Q396vLqZlq5Vvn3AMTpLkRGJC65DLjJxWpIBJ1JpP9ettGUeHxMwvHpqlV0HCpMlm
+         +cuQ==
+X-Gm-Message-State: APjAAAVlbnu4G7tXViGHDiZu4cZeAuBfPzlI3YeahkNEzdIHs11/ZZF8
+        udyy3FTuZXO7RMrZQdd89Mk1zP+5
+X-Google-Smtp-Source: APXvYqyark5FB/FfuJUU+AWkZXungAALlFl38P/QfBKyJVWdX73niw9zOtht5ywHGsAFDmGkOB7RiA==
+X-Received: by 2002:a05:600c:2:: with SMTP id g2mr8016491wmc.163.1570724022909;
+        Thu, 10 Oct 2019 09:13:42 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u11sm5475650wmd.32.2019.10.10.09.13.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 10 Oct 2019 09:13:42 -0700 (PDT)
+Date:   Thu, 10 Oct 2019 09:13:42 -0700 (PDT)
+X-Google-Original-Date: Thu, 10 Oct 2019 16:13:29 GMT
+Message-Id: <pull.383.git.gitgitgadget@gmail.com>
+From:   "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 00/11] Improve the readability of log --graph output
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-From:   Jakob Jarmar <jakob.j@gmail.com>
-Date:   Thu, 10 Oct 2019 17:26:10 +0200
-Message-ID: <CA+xNDHseTCoD+7Vbb4AG0kt9itXn0Z1Kto0vDjF9bBn+Fuk3TA@mail.gmail.com>
-Subject: Possible bug in git stash with submodule.recurse
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+This series of patches are designed to improve the output of the log --graph
+command; their effect can be summed up in the following diagram:
 
-I ran into an issue where git stash seems to be losing modified content
-from submodules without warning, if submodule.recurse is true. See
-below for an example:
+    Before                    After
+    ------                    -----
 
-1. enable submodule.recurse:
+    *
+    |\
+    | *                       *
+    | |\                      |\
+    | | *                     | *
+    | | |                     | |\
+    | |  \                    | | *
+    | *-. \                   | * |
+    | |\ \ \                  |/|\|
+    |/ / / /                  | | *
+    | | | /                   | * |
+    | | |/                    | |/
+    | | *                     * /
+    | * |                     |/
+    | |/                      *
+    * |
+    |/
+    *
 
-~ $ git config --global submodule.recurse true
+These changes aim to make the edges in graph diagrams easier to read, by
+straightening lines and making certain kinds of topologies display more
+compactly. Three distinct changes are included.
 
-2. create the repo to be used as a submodule:
+First, if the first parent of a merge fuses with an edge to the left of the
+commit, then we display that by making the edges fuse immediately rather
+than by drawing a line straight down and then having it track to the left.
+That is, where we currently display these graphs:
 
-~ $ git init sub
-Initialized empty Git repository in /home/jakob/sub/.git/
-~ $ cd sub/
-~/sub $ touch sub.txt
-~/sub $ git add sub.txt
-~/sub $ git commit -m initial
-[master (root-commit) 651a90c] initial
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 sub.txt
-~/sub $ cd ..
+    | *             | | | *
+    | |\            | | | |\
+    |/ /            | |_|/ /
+    | |             |/| | |
 
-3. create the main repo, add sub as a submodule:
+We will now display these merges as follows:
 
-~ $ git init main
-Initialized empty Git repository in /home/jakob/main/.git/
-~ $ cd main/
-~/main $ touch main.txt
-~/main $ git add main.txt
-~/main $ git submodule add ../sub/
-Cloning into '/home/jakob/main/sub'...
-done.
-~/main $ git commit -m initial
-[master (root-commit) 2f9f4e8] initial
- 3 files changed, 4 insertions(+)
- create mode 100644 .gitmodules
- create mode 100644 main.txt
- create mode 160000 sub
+    | *             | | | *
+    |/|             | |_|/|
+    | |             |/| | |
 
-4. make *both* main and sub dirty (if main is clean, stash does nothing):
+This transformation is applied to merges with any number of parents, for
+example we currently display 3-parent merges like this:
 
-~/main $ echo changes > main.txt
-~/main $ echo changes > sub/sub.txt
-~/main $ git diff sub/
-Submodule sub contains modified content
+    | *-.           | | | *-.
+    | |\ \          | | | |\ \
+    |/ / /          | |_|/ / /
+    | | |           |/| | | |
 
-5. git stash and git stash pop:
+And we will now display them like this:
 
-~/main $ git stash
-Saved working directory and index state WIP on master: 2f9f4e8 initial
-~/main $ git stash pop
-On branch master
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
+    | *             | | | *
+    |/|\            | |_|/|\
+    | | |           |/| | | |
 
-    modified:   main.txt
+If the edge the first parent fuses with is separated from the commit by
+multiple columns, a horizontal edge is drawn just as we currently do in the
+'collapsing' state. This change also affects the display of commit and
+post-merge lines in subtle ways that are more thoroughly described in the
+relevant commits.
 
-no changes added to commit (use "git add" and/or "git commit -a")
-Dropped refs/stash@{0} (00a38b73407e7e3041c9459ef6d61bc90940b91f)
-~/main $ git diff sub/
-~/main $
+The second change is that if the final parent of a merge fuses with the edge
+to the right of the commit, then we can remove the zig-zag effect that
+currently results. We currently display these merges like this:
 
-At this point, I can't seem to find any way to retrieve the changes
-made to sub/sub.txt.
+    * |
+    |\ \
+    | |/
+    | *
 
-Thanks,
-Jakob
+After these changes, this merge will now be displayed like so:
+
+    * |
+    |\|
+    | *
+
+If the final parent fuses with an edge that's further to the right, its
+display is unchanged and it will still display like this:
+
+    * | | |
+    |\ \ \ \
+    | | |_|/
+    | |/| |
+    | * | |
+
+The final structural change smooths out lines that are collapsing through
+commit lines. For example, consider the following history:
+
+    *-. \
+    |\ \ \
+    | | * |
+    | * | |
+    | |/ /
+    * | |
+    |/ /
+    * |
+    |/
+    *
+
+This is now rendered so that commit lines display an edge using / instead of
+|, if that edge is tracking to the left both above and below the commit
+line. That results in this improved display:
+
+    *-. \
+    |\ \ \
+    | | * |
+    | * | |
+    | |/ /
+    * / /
+    |/ /
+    * /
+    |/
+    *
+
+Taken together, these changes produce the change shown in the first diagram
+above, with the current rendering on the left and the new rendering on the
+right.
+
+A final addition to that set of changes fixes the coloring of dashes that
+are drawn next to octopus merges, in a manner compatible with all these
+changes. The early commits in this set are refactorings that make the
+functional changes easier to introduce.
+
+James Coglan (11):
+  graph: automatically track visible width of `strbuf`
+  graph: reuse `find_new_column_by_commit()`
+  graph: reduce duplication in `graph_insert_into_new_columns()`
+  graph: remove `mapping_idx` and `graph_update_width()`
+  graph: extract logic for moving to GRAPH_PRE_COMMIT state
+  graph: tidy up display of left-skewed merges
+  graph: commit and post-merge lines for left-skewed merges
+  graph: rename `new_mapping` to `old_mapping`
+  graph: smooth appearance of collapsing edges on commit lines
+  graph: flatten edges that join to their right neighbor
+  graph: fix coloring of octopus dashes
+
+ graph.c                                    | 499 ++++++++++++---------
+ strbuf.h                                   |   8 +-
+ t/t3430-rebase-merges.sh                   |   2 +-
+ t/t4202-log.sh                             |   2 +-
+ t/t4214-log-graph-octopus.sh               |  85 +++-
+ t/t4215-log-skewed-merges.sh               | 267 +++++++++++
+ t/t6016-rev-list-graph-simplify-history.sh |  30 +-
+ 7 files changed, 649 insertions(+), 244 deletions(-)
+ create mode 100755 t/t4215-log-skewed-merges.sh
+
+
+base-commit: 5fa0f5238b0cd46cfe7f6fa76c3f526ea98148d9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-383%2Fjcoglan%2Fjc%2Fsimplify-graph-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-383/jcoglan/jc/simplify-graph-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/383
+-- 
+gitgitgadget
