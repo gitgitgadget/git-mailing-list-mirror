@@ -2,117 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D2FC1F4C0
-	for <e@80x24.org>; Thu, 10 Oct 2019 21:13:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 778291F4C0
+	for <e@80x24.org>; Thu, 10 Oct 2019 21:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727066AbfJJVNE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 17:13:04 -0400
-Received: from mout.gmx.net ([212.227.15.15]:37241 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725867AbfJJVNE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 17:13:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570741977;
-        bh=9bphFtKGumK237y/ntHNULABgUa6s4L5bvF65oOPu+M=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=J9sJJHX0NL5YeDyj0XhCUMU33l2fDWYJ1QPIKQEfAQjl76hi3M4sm6T041T7cNfiF
-         /GictoM94gZEx+MMAhGrvTvNNU6FljD6yjQwBF4xGuFicac25vij57z8CK3lyDV9+0
-         2gsjAxhpcT/ZUjDNLU1pK8mfC494kBEl6i0KG2MQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTRR0-1ifrQz05UK-00TmjJ; Thu, 10
- Oct 2019 23:12:57 +0200
-Date:   Thu, 10 Oct 2019 23:12:41 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Maxim Belsky via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Max Belsky <public.belsky@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Maxim Belsky <public.belsky@gmail.com>
-Subject: Re: [PATCH 1/1] doc: Change zsh git completion file name
-In-Reply-To: <ae00e1e3932b3364da68fa66e2ec5fbcce124bdc.1570726611.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910102310260.46@tvgsbejvaqbjf.bet>
-References: <pull.367.git.gitgitgadget@gmail.com> <ae00e1e3932b3364da68fa66e2ec5fbcce124bdc.1570726611.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727072AbfJJVN6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 17:13:58 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5]:36362 "EHLO
+        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725867AbfJJVN6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 10 Oct 2019 17:13:58 -0400
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+        by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x9ALDjp6147334
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 17:13:53 -0400
+Received: from e06smtp01.uk.ibm.com (e06smtp01.uk.ibm.com [195.75.94.97])
+        by mx0b-001b2d01.pphosted.com with ESMTP id 2vj96cdtgv-1
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 17:13:47 -0400
+Received: from localhost
+        by e06smtp01.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
+        for <git@vger.kernel.org> from <ajd@linux.ibm.com>;
+        Thu, 10 Oct 2019 22:13:10 +0100
+Received: from b06cxnps4075.portsmouth.uk.ibm.com (9.149.109.197)
+        by e06smtp01.uk.ibm.com (192.168.101.131) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
+        (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+        Thu, 10 Oct 2019 22:13:07 +0100
+Received: from d06av24.portsmouth.uk.ibm.com (d06av24.portsmouth.uk.ibm.com [9.149.105.60])
+        by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id x9ALD6cZ54263984
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 10 Oct 2019 21:13:06 GMT
+Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 69F8742047;
+        Thu, 10 Oct 2019 21:13:06 +0000 (GMT)
+Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 0B1EA4203F;
+        Thu, 10 Oct 2019 21:13:06 +0000 (GMT)
+Received: from ozlabs.au.ibm.com (unknown [9.192.253.14])
+        by d06av24.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+        Thu, 10 Oct 2019 21:13:06 +0000 (GMT)
+Received: from [9.102.39.78] (unknown [9.102.39.78])
+        (using TLSv1.2 with cipher AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by ozlabs.au.ibm.com (Postfix) with ESMTPSA id 0E2F6A01C1;
+        Fri, 11 Oct 2019 08:13:02 +1100 (AEDT)
+Subject: Re: [PATCH] parser: Unmangle From: headers that have been mangled for
+ DMARC purposes
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     patchwork@lists.ozlabs.org,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        git@vger.kernel.org
+References: <20191010062047.21549-1-ajd@linux.ibm.com>
+ <20191010194132.GA191800@google.com>
+From:   Andrew Donnellan <ajd@linux.ibm.com>
+Date:   Fri, 11 Oct 2019 08:13:01 +1100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ew+OvYe1WXn3CcA5Vqhx+O5Ktql8FZpEJsYpyhZMWtbeqL395V6
- Y6B8+vHDupwRi1pwc2KwGv5tvzdqDPz7B89Cy1afTMzmvN4WhvKagVGLjse8wBv1qPniikD
- sAq6NukOr1s6hLMgTq1PnFy6T78kDgkcQzv6Cw1u/2YM1NmGWHrzQo0RyfOWkBI9AtE3SRK
- R76RW9sxoF+xw7IV8+uRQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uCR02kTpBdw=:M3b54Jmn+5+6o2HkcdNg4M
- ehYF/uJyHizBqnS1XlYHrGQTdaMg5Xcm8wYdiM4rOMekF+UdQ4Emfkdv1fqjVMbnmdOjpXVB1
- cW5gT4NHcN88bUjkFFLOE/6XSw/yG/MlGXbofQxystI9QTVBigNgD+qX6+qqIZsFF5denOvwE
- i2wLl/qnm4mtMEubB82Hej80Qlc4EuVfLEU+hzMXlE7lpgNb8MLzIxALdRY0TtpsrIqlwm5sQ
- yLqvNEYWg0d0E27WsPfyDj6BV3fKbSD/aGNygxBQHyavmhGR1Y8AnLreBiujkKVhdEKoSPyKl
- 8/ccmRKX7PXjGB4325elkTTWdPZo+dLl+VzJMCbXzSJfnMuFvyLDSw/1nmzRFOGaYZqxvP4Bw
- 4RWu1OwWR6HQQNeaGPb2f51nNmzUnE13Bv4CqoUcAEZG5A1iolfRe2rLl3BRrk+30tG4XQkxn
- lqPu3VPs+28SMPOLMPdja9FnTtGeG5QMSDamEWA1Ab+miIuQ0l9VuJHMConchP8dfad2ITPM0
- R+fumPKhStdtgQj8gAUaCx8AUzF/UZ4OGsh581ItWeb19UW3jIYyHCP+JeaRV66KgW++AsHqZ
- Qk+i0W4jeEya7kUFBCzmfBooSvc88p3IeiFaGxQp0k3OGFvRGXP0eQp+EMT0I57jizMca9lMb
- eePm9Qb7895vxYDNgPT8FsPKIEUylc/gpTr/A/BMU+beLHl78JnajaGKKV9mZJTR3wkCJ4X9J
- CTFXJsk/6RW+gjlELEm+kdcq42yuBUGkjKwTcRLdNXE6+jlv5nwyKRMnYefWO6ej3X4HXlHK8
- prSxYBUdZc0EOZEZAHME9Lt7OvwPtIYmGCPEBhDP66Ikil2q/KgBWqFM8QtDl/TX4opWb4Td5
- w7LrHImNj6ynkOgv0txwLBfsC0BESlAkbTKkhwyRJjTMjPTG9wJH9/UMeFwIsAjuDaKNY22ln
- gLF2ICuPJuO0WewaR6FaOOXFdFyIv9jfS/7k9Tpw6vislHea2yLIqOqbdIixj7fy0mPgG4cGo
- LZtYA6UiK/GsRB1bOvFUyOqrWAg5Ii437LUHnk9YQnbnXcfA307OsD27fRrFGa2eP0RDWrL7B
- yBdHESY6XZTwSTrnNGv8dNkiUSLcUIbwvbLywd6yT11D575PNk+g1pTWSFToPLQjTdSH0HeYQ
- xiTwwAEmSZiJFtUSHaIy+/M1BihRYbuQYMtyHJNF/020awVyqlH/NGbKhIhGqWGz9IYyJciBv
- Hdq+X0e02Wr6Npc4ipT0FPXLKKbrmdPHkvTcZgOP8KZI7pPY7jpF1diC27GI=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20191010194132.GA191800@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-AU
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+x-cbid: 19101021-4275-0000-0000-00000370F951
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19101021-4276-0000-0000-000038840283
+Message-Id: <236b9c32-b501-79a7-8366-26d64ceac24f@linux.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-10-10_07:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1910100181
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Maxim,
+On 11/10/19 6:41 am, Jonathan Nieder wrote:
+> Interesting!  I'm cc-ing the Git mailing list in case "git am" might
+> wnat to learn the same support.
+Argh, that reminds me... this patch only rewrites the name and email 
+that is recorded as the Patchwork submitter, it doesn't actually rewrite 
+the From: header when you fetch the mbox off Patchwork.
 
+Part of me would really like to keep Patchwork mboxes as close as 
+possible to the mbox we ingested, but on the other hand it means the 
+mangled address is still going to land in the git repo at the end... so 
+I should probably just change it?
 
-On Thu, 10 Oct 2019, Maxim Belsky via GitGitGadget wrote:
+-- 
+Andrew Donnellan              OzLabs, ADL Canberra
+ajd@linux.ibm.com             IBM Australia Limited
 
-> From: Maxim Belsky <public.belsky@gmail.com>
->
-> Signed-off-by: Maxim Belsky <public.belsky@gmail.com>
-
-I totally agree with the patch, but only because I read a couple of
-reports that users were struggling with this. Maybe add a couple of
-reference points to the commit message, to describe how easy it is to
-miss the fact that it needs to be a _file_, not a directory, and also
-describe how `zsh` tells you that there is a problem (even if it does
-not report a problem, that's a valuable piece of information for the
-commit message).
-
-Thanks,
-Johannes
-> ---
->  contrib/completion/git-completion.zsh | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/=
-git-completion.zsh
-> index 886bf95d1f..c0eca3ff25 100644
-> --- a/contrib/completion/git-completion.zsh
-> +++ b/contrib/completion/git-completion.zsh
-> @@ -11,8 +11,9 @@
->  #
->  #  zstyle ':completion:*:*:git:*' script ~/.git-completion.zsh
->  #
-> -# The recommended way to install this script is to copy to '~/.zsh/_git=
-', and
-> -# then add the following to your ~/.zshrc file:
-> +# The recommended way to install this script is to copy to
-> +# '~/.zsh/.git-completion.zsh', and then add the following to your ~/.z=
-shrc
-> +# file:
->  #
->  #  fpath=3D(~/.zsh $fpath)
->
-> --
-> gitgitgadget
->
