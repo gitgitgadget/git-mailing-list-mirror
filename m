@@ -8,218 +8,411 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BAE41F4BD
-	for <e@80x24.org>; Thu, 10 Oct 2019 16:13:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17AE71F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 16:13:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726053AbfJJQNq (ORCPT <rfc822;e@80x24.org>);
+        id S1726131AbfJJQNr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 12:13:47 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36024 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725978AbfJJQNq (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 10 Oct 2019 12:13:46 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:55999 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725909AbfJJQNq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 12:13:46 -0400
-Received: by mail-wm1-f65.google.com with SMTP id a6so7569962wma.5
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 09:13:43 -0700 (PDT)
+Received: by mail-wm1-f68.google.com with SMTP id m18so7419054wmc.1
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 09:13:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=sHnjp65WELDg0aBB1yFF9ieUQesRkxBefxxFEg1HDmQ=;
-        b=PIwFjL3ybSUAmrQ0IRhnM4cxlzwwNZpK/yYPWtCJ8V2jm3UzQjBVbJLxN9jfu5cwzT
-         01Exy/h8UL3kz9LfsJQ4QYFm/eimywX3o5fWzkCLVBRWF6+mziI8DpKwQeIP+bz0gyg7
-         RHkFobR4GOVWQ2g9/wKE1X162O/YVGOTODcvjJQpafoL3/E9ZbXGl/1fIAG3i88qajAW
-         zvVK0QmbNOA2NeUFzx+KjR0aCkazvjnR+w/u8cte6PeQ+R85remKo+9lX43WGXYczlHE
-         VMKA+MJWfxKLaSwwVDtYI9ytcjE+YVrwVp9N7KSMJMddxcKdQpDN6CenQgIRmrkjAvkl
-         QIlg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=NKEjr2o4e7YvpO9myfPIAFVsLL6zk9hzuoqBuKdkJkM=;
+        b=Msi/btXUGKeoTgBFxXuNGeZDV3IJzDZp3lnUO9x80QdJusR72LKph7rhNtCvPlhFLs
+         +F50ECx/iK4KJqVZR80nWX1ZK4VBmqmdcjFLgqwlXl9e/Eo1V38FKKaX7AQsPrx5LkUi
+         nTbHJ8Ro5EE1yKCpcjzKUfsTwuJUn+YIqyP8jW/9EPTGHr1mGyBCBnqIZE9DOqsiOMAD
+         X9kYjlAICRfQiAs6cLK612EuRDXHFVpaSotHh8gFSqKuW9YTOMToBJsl2ieef7zBzj1j
+         nudamCFAwRqkDuQReUozJqm5pCcrwwQjhU+sp7u60uwetzuuARX4kIQ87Fj7q//JuDWC
+         hxKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=sHnjp65WELDg0aBB1yFF9ieUQesRkxBefxxFEg1HDmQ=;
-        b=U/ntR32dCroTnT5o6hzIgrpr50vFMUQVTO2XQSYB6JjWUW9GaTtGgf0uOIfhU0Izhn
-         g8O4b+pcCT852GuzyLkF5z65g040BcYZy1JjNCDpRFAfRtp34PkE5oICuxYZ1My8DYcw
-         +zkg9UWHyd4uxfPHDGzAaY4yEmtV2CY9aHYdnspRBnkeO8Z0B92na4YwtaVXi4cT90vt
-         p5JfYNOmTHs58ViD0GE1mG185gfAvzTfLFJagRi6YGlBHgSXih3/eUJVbG+BhFg2DrSr
-         3N1Q396vLqZlq5Vvn3AMTpLkRGJC65DLjJxWpIBJ1JpP9ettGUeHxMwvHpqlV0HCpMlm
-         +cuQ==
-X-Gm-Message-State: APjAAAVlbnu4G7tXViGHDiZu4cZeAuBfPzlI3YeahkNEzdIHs11/ZZF8
-        udyy3FTuZXO7RMrZQdd89Mk1zP+5
-X-Google-Smtp-Source: APXvYqyark5FB/FfuJUU+AWkZXungAALlFl38P/QfBKyJVWdX73niw9zOtht5ywHGsAFDmGkOB7RiA==
-X-Received: by 2002:a05:600c:2:: with SMTP id g2mr8016491wmc.163.1570724022909;
-        Thu, 10 Oct 2019 09:13:42 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=NKEjr2o4e7YvpO9myfPIAFVsLL6zk9hzuoqBuKdkJkM=;
+        b=VXTr0ZqxRgtT7ih+BtYLPrGFXgfiX8I5b3X37emxVV0hz8+ybnsWOgqkKdYqXJlLHz
+         9qQDrHR4b+P4i9tAhXCoxzItG7uktN5tmGaTYNjJh/sB2WKhCvYmFLgwEzWcM6rfZ9CU
+         Ryxm3Dgq6fKPBdzcnSTyMuMNnIi0dbE7ZfnK6y2Tu+TJi1Pj4DENmLr8eCLeaWEGQ5iM
+         rBHGR49MwA0hWZ2IRm4hSeCqhHSCDHWwDVVJbRrneoNKI775Bx7ZT98H3nK+3vQaJo6j
+         W0Ll0G6bsjsS5TC57uoWPmCzvUCbrfpoiDDeAPU5rgWqpkU5AjpJBK9hoeGaxgRngBs6
+         WDig==
+X-Gm-Message-State: APjAAAXWiUeRd5SdV/TSpwni/EpMk5C3wGyd8b5SIY7ShqoIWM8CI3T9
+        C3neW0hZiUjIQBrPyXUQCUVXg07y
+X-Google-Smtp-Source: APXvYqwnb1gDljATgFmCyEvtFt3agzZhi60pDhtyqJwcISyjW+y7acN5U+OGWPxL/Q2O6K5oUi8qYA==
+X-Received: by 2002:a1c:7e10:: with SMTP id z16mr8061543wmc.11.1570724024022;
+        Thu, 10 Oct 2019 09:13:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u11sm5475650wmd.32.2019.10.10.09.13.41
+        by smtp.gmail.com with ESMTPSA id a2sm6611956wrp.11.2019.10.10.09.13.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Oct 2019 09:13:42 -0700 (PDT)
-Date:   Thu, 10 Oct 2019 09:13:42 -0700 (PDT)
-X-Google-Original-Date: Thu, 10 Oct 2019 16:13:29 GMT
-Message-Id: <pull.383.git.gitgitgadget@gmail.com>
+        Thu, 10 Oct 2019 09:13:43 -0700 (PDT)
+Date:   Thu, 10 Oct 2019 09:13:43 -0700 (PDT)
+X-Google-Original-Date: Thu, 10 Oct 2019 16:13:30 GMT
+Message-Id: <4bc0a0596164212aa9d29d6dd0d7a0d8ab1b9dd0.1570724021.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.383.git.gitgitgadget@gmail.com>
+References: <pull.383.git.gitgitgadget@gmail.com>
 From:   "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 00/11] Improve the readability of log --graph output
+Subject: [PATCH 01/11] graph: automatically track visible width of `strbuf`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        James Coglan <jcoglan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series of patches are designed to improve the output of the log --graph
-command; their effect can be summed up in the following diagram:
+From: James Coglan <jcoglan@gmail.com>
 
-    Before                    After
-    ------                    -----
+All the output functions in `graph.c` currently keep track of how many
+printable chars they've written to the buffer, before calling
+`graph_pad_horizontally()` to pad the line with spaces. Some functions
+do this by incrementing a counter whenever they write to the buffer, and
+others do it by encoding an assumption about how many chars are written,
+as in:
 
-    *
-    |\
-    | *                       *
-    | |\                      |\
-    | | *                     | *
-    | | |                     | |\
-    | |  \                    | | *
-    | *-. \                   | * |
-    | |\ \ \                  |/|\|
-    |/ / / /                  | | *
-    | | | /                   | * |
-    | | |/                    | |/
-    | | *                     * /
-    | * |                     |/
-    | |/                      *
-    * |
-    |/
-    *
+    graph_pad_horizontally(graph, sb, graph->num_columns * 2);
 
-These changes aim to make the edges in graph diagrams easier to read, by
-straightening lines and making certain kinds of topologies display more
-compactly. Three distinct changes are included.
+This adds a fair amount of noise to the functions' logic and is easily
+broken if one forgets to increment the right counter or update the
+calculations used for padding.
 
-First, if the first parent of a merge fuses with an edge to the left of the
-commit, then we display that by making the edges fuse immediately rather
-than by drawing a line straight down and then having it track to the left.
-That is, where we currently display these graphs:
+To make this easier to use, I'm adding a `width` field to `strbuf` that
+tracks the number of printing characters added after the line prefix.
+It's set to 0 at the start of `graph_next_line()`, and then various
+`strbuf` functions update it as follows:
 
-    | *             | | | *
-    | |\            | | | |\
-    |/ /            | |_|/ /
-    | |             |/| | |
+- `strbuf_write_column()` increments `width` by 1
 
-We will now display these merges as follows:
+- `strbuf_setlen()` changes `width` by the amount added to `len` if
+  `len` is increased, or makes `width` and `len` the same if it's
+  decreased
 
-    | *             | | | *
-    |/|             | |_|/|
-    | |             |/| | |
+- `strbuf_addch()` increments `width` by 1
 
-This transformation is applied to merges with any number of parents, for
-example we currently display 3-parent merges like this:
+This is enough to ensure that the functions used by `graph.c` update
+`strbuf->width` correctly, and `graph_pad_horizontally()` can then use
+this field instead of taking `chars_written` as a parameter.
 
-    | *-.           | | | *-.
-    | |\ \          | | | |\ \
-    |/ / /          | |_|/ / /
-    | | |           |/| | | |
+Signed-off-by: James Coglan <jcoglan@gmail.com>
+---
+ graph.c  | 68 ++++++++++++++++++++++----------------------------------
+ strbuf.h |  8 ++++++-
+ 2 files changed, 33 insertions(+), 43 deletions(-)
 
-And we will now display them like this:
-
-    | *             | | | *
-    |/|\            | |_|/|\
-    | | |           |/| | | |
-
-If the edge the first parent fuses with is separated from the commit by
-multiple columns, a horizontal edge is drawn just as we currently do in the
-'collapsing' state. This change also affects the display of commit and
-post-merge lines in subtle ways that are more thoroughly described in the
-relevant commits.
-
-The second change is that if the final parent of a merge fuses with the edge
-to the right of the commit, then we can remove the zig-zag effect that
-currently results. We currently display these merges like this:
-
-    * |
-    |\ \
-    | |/
-    | *
-
-After these changes, this merge will now be displayed like so:
-
-    * |
-    |\|
-    | *
-
-If the final parent fuses with an edge that's further to the right, its
-display is unchanged and it will still display like this:
-
-    * | | |
-    |\ \ \ \
-    | | |_|/
-    | |/| |
-    | * | |
-
-The final structural change smooths out lines that are collapsing through
-commit lines. For example, consider the following history:
-
-    *-. \
-    |\ \ \
-    | | * |
-    | * | |
-    | |/ /
-    * | |
-    |/ /
-    * |
-    |/
-    *
-
-This is now rendered so that commit lines display an edge using / instead of
-|, if that edge is tracking to the left both above and below the commit
-line. That results in this improved display:
-
-    *-. \
-    |\ \ \
-    | | * |
-    | * | |
-    | |/ /
-    * / /
-    |/ /
-    * /
-    |/
-    *
-
-Taken together, these changes produce the change shown in the first diagram
-above, with the current rendering on the left and the new rendering on the
-right.
-
-A final addition to that set of changes fixes the coloring of dashes that
-are drawn next to octopus merges, in a manner compatible with all these
-changes. The early commits in this set are refactorings that make the
-functional changes easier to introduce.
-
-James Coglan (11):
-  graph: automatically track visible width of `strbuf`
-  graph: reuse `find_new_column_by_commit()`
-  graph: reduce duplication in `graph_insert_into_new_columns()`
-  graph: remove `mapping_idx` and `graph_update_width()`
-  graph: extract logic for moving to GRAPH_PRE_COMMIT state
-  graph: tidy up display of left-skewed merges
-  graph: commit and post-merge lines for left-skewed merges
-  graph: rename `new_mapping` to `old_mapping`
-  graph: smooth appearance of collapsing edges on commit lines
-  graph: flatten edges that join to their right neighbor
-  graph: fix coloring of octopus dashes
-
- graph.c                                    | 499 ++++++++++++---------
- strbuf.h                                   |   8 +-
- t/t3430-rebase-merges.sh                   |   2 +-
- t/t4202-log.sh                             |   2 +-
- t/t4214-log-graph-octopus.sh               |  85 +++-
- t/t4215-log-skewed-merges.sh               | 267 +++++++++++
- t/t6016-rev-list-graph-simplify-history.sh |  30 +-
- 7 files changed, 649 insertions(+), 244 deletions(-)
- create mode 100755 t/t4215-log-skewed-merges.sh
-
-
-base-commit: 5fa0f5238b0cd46cfe7f6fa76c3f526ea98148d9
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-383%2Fjcoglan%2Fjc%2Fsimplify-graph-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-383/jcoglan/jc/simplify-graph-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/383
+diff --git a/graph.c b/graph.c
+index f53135485f..c56fdec1fc 100644
+--- a/graph.c
++++ b/graph.c
+@@ -115,11 +115,20 @@ static const char *column_get_color_code(unsigned short color)
+ static void strbuf_write_column(struct strbuf *sb, const struct column *c,
+ 				char col_char)
+ {
++	/*
++	 * Remember the buffer's width as we're about to add non-printing
++	 * content to it, and we want to avoid counting the byte length
++	 * of this content towards the buffer's visible width
++	 */
++	size_t prev_width = sb->width;
++
+ 	if (c->color < column_colors_max)
+ 		strbuf_addstr(sb, column_get_color_code(c->color));
+ 	strbuf_addch(sb, col_char);
+ 	if (c->color < column_colors_max)
+ 		strbuf_addstr(sb, column_get_color_code(column_colors_max));
++
++	sb->width = prev_width + 1;
+ }
+ 
+ struct git_graph {
+@@ -686,8 +695,7 @@ static int graph_is_mapping_correct(struct git_graph *graph)
+ 	return 1;
+ }
+ 
+-static void graph_pad_horizontally(struct git_graph *graph, struct strbuf *sb,
+-				   int chars_written)
++static void graph_pad_horizontally(struct git_graph *graph, struct strbuf *sb)
+ {
+ 	/*
+ 	 * Add additional spaces to the end of the strbuf, so that all
+@@ -696,8 +704,8 @@ static void graph_pad_horizontally(struct git_graph *graph, struct strbuf *sb,
+ 	 * This way, fields printed to the right of the graph will remain
+ 	 * aligned for the entire commit.
+ 	 */
+-	if (chars_written < graph->width)
+-		strbuf_addchars(sb, ' ', graph->width - chars_written);
++	if (sb->width < graph->width)
++		strbuf_addchars(sb, ' ', graph->width - sb->width);
+ }
+ 
+ static void graph_output_padding_line(struct git_graph *graph,
+@@ -723,7 +731,7 @@ static void graph_output_padding_line(struct git_graph *graph,
+ 		strbuf_addch(sb, ' ');
+ 	}
+ 
+-	graph_pad_horizontally(graph, sb, graph->num_new_columns * 2);
++	graph_pad_horizontally(graph, sb);
+ }
+ 
+ 
+@@ -740,7 +748,7 @@ static void graph_output_skip_line(struct git_graph *graph, struct strbuf *sb)
+ 	 * of the graph is missing.
+ 	 */
+ 	strbuf_addstr(sb, "...");
+-	graph_pad_horizontally(graph, sb, 3);
++	graph_pad_horizontally(graph, sb);
+ 
+ 	if (graph->num_parents >= 3 &&
+ 	    graph->commit_index < (graph->num_columns - 1))
+@@ -754,7 +762,6 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+ {
+ 	int num_expansion_rows;
+ 	int i, seen_this;
+-	int chars_written;
+ 
+ 	/*
+ 	 * This function formats a row that increases the space around a commit
+@@ -777,14 +784,12 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+ 	 * Output the row
+ 	 */
+ 	seen_this = 0;
+-	chars_written = 0;
+ 	for (i = 0; i < graph->num_columns; i++) {
+ 		struct column *col = &graph->columns[i];
+ 		if (col->commit == graph->commit) {
+ 			seen_this = 1;
+ 			strbuf_write_column(sb, col, '|');
+ 			strbuf_addchars(sb, ' ', graph->expansion_row);
+-			chars_written += 1 + graph->expansion_row;
+ 		} else if (seen_this && (graph->expansion_row == 0)) {
+ 			/*
+ 			 * This is the first line of the pre-commit output.
+@@ -800,19 +805,15 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+ 				strbuf_write_column(sb, col, '\\');
+ 			else
+ 				strbuf_write_column(sb, col, '|');
+-			chars_written++;
+ 		} else if (seen_this && (graph->expansion_row > 0)) {
+ 			strbuf_write_column(sb, col, '\\');
+-			chars_written++;
+ 		} else {
+ 			strbuf_write_column(sb, col, '|');
+-			chars_written++;
+ 		}
+ 		strbuf_addch(sb, ' ');
+-		chars_written++;
+ 	}
+ 
+-	graph_pad_horizontally(graph, sb, chars_written);
++	graph_pad_horizontally(graph, sb);
+ 
+ 	/*
+ 	 * Increment graph->expansion_row,
+@@ -842,11 +843,9 @@ static void graph_output_commit_char(struct git_graph *graph, struct strbuf *sb)
+ }
+ 
+ /*
+- * Draw the horizontal dashes of an octopus merge and return the number of
+- * characters written.
++ * Draw the horizontal dashes of an octopus merge.
+  */
+-static int graph_draw_octopus_merge(struct git_graph *graph,
+-				    struct strbuf *sb)
++static void graph_draw_octopus_merge(struct git_graph *graph, struct strbuf *sb)
+ {
+ 	/*
+ 	 * Here dashless_parents represents the number of parents which don't
+@@ -890,13 +889,12 @@ static int graph_draw_octopus_merge(struct git_graph *graph,
+ 		strbuf_write_column(sb, &graph->new_columns[i+first_col],
+ 				    i == dashful_parents-1 ? '.' : '-');
+ 	}
+-	return 2 * dashful_parents;
+ }
+ 
+ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+ {
+ 	int seen_this = 0;
+-	int i, chars_written;
++	int i;
+ 
+ 	/*
+ 	 * Output the row containing this commit
+@@ -906,7 +904,6 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+ 	 * children that we have already processed.)
+ 	 */
+ 	seen_this = 0;
+-	chars_written = 0;
+ 	for (i = 0; i <= graph->num_columns; i++) {
+ 		struct column *col = &graph->columns[i];
+ 		struct commit *col_commit;
+@@ -921,14 +918,11 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+ 		if (col_commit == graph->commit) {
+ 			seen_this = 1;
+ 			graph_output_commit_char(graph, sb);
+-			chars_written++;
+ 
+ 			if (graph->num_parents > 2)
+-				chars_written += graph_draw_octopus_merge(graph,
+-									  sb);
++				graph_draw_octopus_merge(graph, sb);
+ 		} else if (seen_this && (graph->num_parents > 2)) {
+ 			strbuf_write_column(sb, col, '\\');
+-			chars_written++;
+ 		} else if (seen_this && (graph->num_parents == 2)) {
+ 			/*
+ 			 * This is a 2-way merge commit.
+@@ -948,16 +942,13 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+ 				strbuf_write_column(sb, col, '\\');
+ 			else
+ 				strbuf_write_column(sb, col, '|');
+-			chars_written++;
+ 		} else {
+ 			strbuf_write_column(sb, col, '|');
+-			chars_written++;
+ 		}
+ 		strbuf_addch(sb, ' ');
+-		chars_written++;
+ 	}
+ 
+-	graph_pad_horizontally(graph, sb, chars_written);
++	graph_pad_horizontally(graph, sb);
+ 
+ 	/*
+ 	 * Update graph->state
+@@ -984,12 +975,11 @@ static struct column *find_new_column_by_commit(struct git_graph *graph,
+ static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf *sb)
+ {
+ 	int seen_this = 0;
+-	int i, j, chars_written;
++	int i, j;
+ 
+ 	/*
+ 	 * Output the post-merge row
+ 	 */
+-	chars_written = 0;
+ 	for (i = 0; i <= graph->num_columns; i++) {
+ 		struct column *col = &graph->columns[i];
+ 		struct commit *col_commit;
+@@ -1017,7 +1007,6 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf
+ 			assert(par_column);
+ 
+ 			strbuf_write_column(sb, par_column, '|');
+-			chars_written++;
+ 			for (j = 0; j < graph->num_parents - 1; j++) {
+ 				parents = next_interesting_parent(graph, parents);
+ 				assert(parents);
+@@ -1026,19 +1015,16 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf
+ 				strbuf_write_column(sb, par_column, '\\');
+ 				strbuf_addch(sb, ' ');
+ 			}
+-			chars_written += j * 2;
+ 		} else if (seen_this) {
+ 			strbuf_write_column(sb, col, '\\');
+ 			strbuf_addch(sb, ' ');
+-			chars_written += 2;
+ 		} else {
+ 			strbuf_write_column(sb, col, '|');
+ 			strbuf_addch(sb, ' ');
+-			chars_written += 2;
+ 		}
+ 	}
+ 
+-	graph_pad_horizontally(graph, sb, chars_written);
++	graph_pad_horizontally(graph, sb);
+ 
+ 	/*
+ 	 * Update graph->state
+@@ -1181,7 +1167,7 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct strbuf
+ 		}
+ 	}
+ 
+-	graph_pad_horizontally(graph, sb, graph->mapping_size);
++	graph_pad_horizontally(graph, sb);
+ 
+ 	/*
+ 	 * Swap mapping and new_mapping
+@@ -1199,6 +1185,8 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct strbuf
+ 
+ int graph_next_line(struct git_graph *graph, struct strbuf *sb)
+ {
++	sb->width = 0;
++
+ 	switch (graph->state) {
+ 	case GRAPH_PADDING:
+ 		graph_output_padding_line(graph, sb);
+@@ -1227,7 +1215,6 @@ int graph_next_line(struct git_graph *graph, struct strbuf *sb)
+ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
+ {
+ 	int i;
+-	int chars_written = 0;
+ 
+ 	if (graph->state != GRAPH_COMMIT) {
+ 		graph_next_line(graph, sb);
+@@ -1245,19 +1232,16 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
+ 		struct column *col = &graph->columns[i];
+ 
+ 		strbuf_write_column(sb, col, '|');
+-		chars_written++;
+ 
+ 		if (col->commit == graph->commit && graph->num_parents > 2) {
+ 			int len = (graph->num_parents - 2) * 2;
+ 			strbuf_addchars(sb, ' ', len);
+-			chars_written += len;
+ 		} else {
+ 			strbuf_addch(sb, ' ');
+-			chars_written++;
+ 		}
+ 	}
+ 
+-	graph_pad_horizontally(graph, sb, chars_written);
++	graph_pad_horizontally(graph, sb);
+ 
+ 	/*
+ 	 * Update graph->prev_state since we have output a padding line
+diff --git a/strbuf.h b/strbuf.h
+index f62278a0be..3a98147321 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -66,11 +66,12 @@ struct string_list;
+ struct strbuf {
+ 	size_t alloc;
+ 	size_t len;
++	size_t width;
+ 	char *buf;
+ };
+ 
+ extern char strbuf_slopbuf[];
+-#define STRBUF_INIT  { .alloc = 0, .len = 0, .buf = strbuf_slopbuf }
++#define STRBUF_INIT  { .alloc = 0, .len = 0, .width = 0, .buf = strbuf_slopbuf }
+ 
+ /*
+  * Predeclare this here, since cache.h includes this file before it defines the
+@@ -161,6 +162,10 @@ static inline void strbuf_setlen(struct strbuf *sb, size_t len)
+ {
+ 	if (len > (sb->alloc ? sb->alloc - 1 : 0))
+ 		die("BUG: strbuf_setlen() beyond buffer");
++	if (len > sb->len)
++		sb->width += len - sb->len;
++	else
++		sb->width = len;
+ 	sb->len = len;
+ 	if (sb->buf != strbuf_slopbuf)
+ 		sb->buf[len] = '\0';
+@@ -231,6 +236,7 @@ static inline void strbuf_addch(struct strbuf *sb, int c)
+ 		strbuf_grow(sb, 1);
+ 	sb->buf[sb->len++] = c;
+ 	sb->buf[sb->len] = '\0';
++	sb->width++;
+ }
+ 
+ /**
 -- 
 gitgitgadget
+
