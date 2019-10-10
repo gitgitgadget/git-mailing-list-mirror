@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25FD71F4BD
-	for <e@80x24.org>; Thu, 10 Oct 2019 03:34:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AC351F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 04:29:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731553AbfJJDet (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Oct 2019 23:34:49 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55332 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726709AbfJJDet (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Oct 2019 23:34:49 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C5FF21875E;
-        Wed,  9 Oct 2019 23:34:46 -0400 (EDT)
+        id S1726686AbfJJE34 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 00:29:56 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54284 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725971AbfJJE34 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 00:29:56 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 75328905AB;
+        Thu, 10 Oct 2019 00:29:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=p9a4Yni0EDaG+qVLPPOlhqGE4eM=; b=pUTkU9
-        mEmRLBS1DJEQ2xN+JQxbCRbik6EwjkMmfzxP54mTvl2wQp59Vz9cCMCj35w5WWX4
-        yx3S/6pAH1e7W93xs9XuYzm+FezIvpjyyMo6vG/vy5hOT2O4fIe8IAmsU7NCEc/b
-        kUBLpBr9zcvRwcfXIaxJZX6vjPbIFhMG3HwEA=
+        :content-type; s=sasl; bh=1dOAJ7fO1K1X939MMfDDTXUSUSY=; b=MgyjX9
+        jbW82in7ztJupXsi4bDJQF7ujlOkOkn0/I04y/aNJB841fdD5kb7+2WP1bCEwM9d
+        EExjF8fSNmajiHk7GdtLlzOfqlrPqeFV0FQ8fHsoCI0UUyRq388cVCPJOxIykouK
+        dJEawj0Oo7XqgzbYnpNub3x5hvZqmIfMNbT48=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DBLxCR2p1e6VfISELRmGouxFZ79vHIIG
-        uAvIvgcnWOC1HPmgt17ocOpTw/wYkUcnGSN3pp0yLwPAb+POMrsfCzKEnKaSNwgw
-        pX26UOpyIAznrmlyi51qmFEv9gwBAWoAXCagzI+RlVj9DPVC1zPxvTbV201R0sb0
-        Dc510UzHCAg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BC43F1875D;
-        Wed,  9 Oct 2019 23:34:46 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=m83FlaAYtjGr8MdI0yK5oXzMt+Oo8G17
+        gYcR3Rb9ViMDKXb/4llT+jtAEyq84TJv8CZAzVv5p07SviqfPBjFlPXgRuoJErM3
+        Tl0ESS98CjR1YXLi5CLLfGHZ1jMPjPVMm7Z+hFhbRp5bWyQqBvUGO7Euq77UA0aH
+        fxdUjuhxu/A=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6C1F2905AA;
+        Thu, 10 Oct 2019 00:29:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1DACF1875C;
-        Wed,  9 Oct 2019 23:34:46 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9A2D9905A9;
+        Thu, 10 Oct 2019 00:29:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Lucas Oshiro <lucasseikioshiro@gmail.com>
@@ -48,97 +48,66 @@ Cc:     git@vger.kernel.org, kernel-usp@googlegroups.com,
         rcdailey.lists@gmail.com, me@ttaylorr.com, peff@peff.net,
         matheus.bernardino@usp.br,
         =?utf-8?Q?B=C3=A1rbara?= Fernandes <barbara.dcf@gmail.com>
-Subject: Re: [RFC WIP PATCH 3/3] tag: add full support for --edit and --no-edit
+Subject: Re: [RFC WIP PATCH 2/3] tag: factor out prepare tag template code
 References: <20191008184727.14337-1-lucasseikioshiro@gmail.com>
-        <20191008184727.14337-4-lucasseikioshiro@gmail.com>
-Date:   Thu, 10 Oct 2019 12:34:44 +0900
-In-Reply-To: <20191008184727.14337-4-lucasseikioshiro@gmail.com> (Lucas
-        Oshiro's message of "Tue, 8 Oct 2019 15:47:27 -0300")
-Message-ID: <xmqqk19djmsr.fsf@gitster-ct.c.googlers.com>
+        <20191008184727.14337-3-lucasseikioshiro@gmail.com>
+        <xmqqo8ypjota.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 10 Oct 2019 13:29:47 +0900
+In-Reply-To: <xmqqo8ypjota.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 10 Oct 2019 11:51:13 +0900")
+Message-ID: <xmqqftk1jk90.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E7BC301E-EB0E-11E9-B0D2-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 98C6D2CC-EB16-11E9-823B-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lucas Oshiro <lucasseikioshiro@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->  struct create_tag_options {
->  	unsigned int message_given:1;
->  	unsigned int use_editor:1;
-> +	unsigned int force_editor:1;
->  	unsigned int sign;
+> Lucas Oshiro <lucasseikioshiro@gmail.com> writes:
+>
+>> Improve code readability by moving tag body reading to a new function called
+>> get_tag_body.
+>
+> Quite honestly, I think the result of this splitting is harder to
+> follow than the original.
+>
+> For example, the value of opt->message_given and the validity of
+> given_msg is very closely related, so if you made the helper
+> function receive non-NULL given_msg when !opt->message_given, the
+> helper could only check !given_msg without having to worry about
+> opt->message_given; with such a change, I could buy that the split
+> improves code readability, but I do not see any such change in the
+> patch.
 
-> -	if (!opt->message_given || opt->use_editor) {
-> +	if (opt->force_editor && !opt->message_given && is_null_oid(prev) &&
-> +	    !opt->use_editor) {
-> +		die(_("no tag message?"));
+Just to avoid misunderstanding, I am not suggesting to change the
+interface into the helper you introduced to be like this
 
-If we didn't get a message from command line, and there is no
-previous tag object to read the message from, there is nowhere but
-editor to grab the message to be used, so !use_editor would trigger
-an error if force_editor (i.e. the command line explicitly said
-either --edit or --no-edit).  Makes sense, but I needed to cheat and
-look at cmd_tag() to see how "force" is set to understand what is
-going on.  I have to say "force" is not a good name for this field;
-is this use similar to what we typically use an additional _given
-field?
+	prepare_tag_template(opt->message_given ? buf, NULL,
+			     opt, prev, path, tag);
 
-> +	} else if ((!opt->force_editor && !opt->message_given && is_null_oid(prev))
-> +		  || (opt->force_editor && opt->use_editor)) {
-> +		/* Editor must be opened */
+That still needs to pass the entire opt structure into the helper
+and forces the helper to look at opt->cleanup_mode and behave
+differently.  If a restructuring of the code can be done in such a
+way that the helper no longer need to look at opt (hence no need to
+pass the entire opt structure into it), I can see that the change
+improves the readability of the resulting code, but I am not all
+that hopeful.
 
-If there is no --[no-]edit and there is no preexisting message, we
-need to use the editor.  If the command line explicitly said --edit,
-we also would use the editor.  OK.
-
-But it starts to make me wonder if you rather want to replace the
-single bit use_editor field with an enum with three possible values
-(enum { EDITOR_UNSPECIFIED, EDITOR_YES, EDITOR_NO } use_editor).
-
->  		prepare_tag_template(buf, opt, prev, path, tag);
->  		if (launch_editor(path, buf, NULL)) {
->  			fprintf(stderr,
->  			_("Please supply the message using either -m or -F option.\n"));
->  			exit(1);
->  		}
-> +	} else if (!opt->message_given) {
-> +		/* Tag already exists and user doesn't want to change it */
-
-Are we certain at this point in if/else cascade that prev is a valid
-tag?  How?
-
-> +		strbuf_addstr(buf, get_tag_body(prev, NULL));
-
-This NULL tells us something about what I mentioned in my review on 1/3.
-
-
-> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-> index 80eb13d94e..bf43d2c750 100755
-> --- a/t/t7004-tag.sh
-> +++ b/t/t7004-tag.sh
-> @@ -1313,7 +1313,7 @@ test_expect_success GPG,RFC1991 \
->  	'reediting a signed tag body omits signature' '
->  	echo "rfc1991" >gpghome/gpg.conf &&
->  	echo "RFC1991 signed tag" >expect &&
-> -	GIT_EDITOR=./fakeeditor git tag -f -s rfc1991-signed-tag $commit &&
-> +	GIT_EDITOR=./fakeeditor git tag -f --edit -s rfc1991-signed-tag $commit &&
->  	test_cmp expect actual
->  '
->  
-> @@ -1356,7 +1356,7 @@ test_expect_success GPG,RFC1991 \
->  test_expect_success GPG,RFC1991 \
->  	'reediting a signed tag body omits signature' '
->  	echo "RFC1991 signed tag" >expect &&
-> -	GIT_EDITOR=./fakeeditor git tag -f -s rfc1991-signed-tag $commit &&
-> +	GIT_EDITOR=./fakeeditor git tag -f --edit -s rfc1991-signed-tag $commit &&
->  	test_cmp expect actual
->  '
-
-Why do these two need explicit --edit option to invoke the editor?
-That smells like an unnecessary backward incompatible change.
+On the other hand (and this is the more important hand among the two
+;-), I do not mind splitting a helper function out of an existing
+codepath and make the existing codepath call the new helper, so that
+the same helper can be reused from another codepath later.  Not at
+all.  What I do mind is to mislabel a change that is done for such a
+later code reuse as one that improves readability, when it does not.
 
 Thanks.
+
+>> Enhance legibility by encapsulating code that loads previous tag message
+>> (if any) in new function prepare_tag_template....
+>
+> The helper seems to be used to _write_ into path, and not load or
+> read any message from either an object or a file on disk.
