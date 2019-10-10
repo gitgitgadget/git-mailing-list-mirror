@@ -2,86 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57A111F4BD
-	for <e@80x24.org>; Thu, 10 Oct 2019 10:12:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F75D1F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 10:28:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387469AbfJJKME (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 06:12:04 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:42274 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726602AbfJJKME (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 06:12:04 -0400
-Received: from [92.7.169.237] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1iIVQO-0005ej-C9; Thu, 10 Oct 2019 11:12:01 +0100
-Subject: Re: [PATCH v3 00/13] ci: include a Visual Studio build & test in our
- Azure Pipeline
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-References: <pull.288.v2.git.gitgitgadget@gmail.com>
- <pull.288.v3.git.gitgitgadget@gmail.com>
- <xmqqimp26808.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1910061157320.46@tvgsbejvaqbjf.bet>
- <nycvar.QRO.7.76.6.1910062237440.46@tvgsbejvaqbjf.bet>
- <xmqq1rvp5pc0.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1910072350300.46@tvgsbejvaqbjf.bet>
- <xmqqzhicnfmr.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1910081423250.46@tvgsbejvaqbjf.bet>
- <9ccbdb9a-845f-a534-29b6-52cfe9eb3229@iee.email>
- <nycvar.QRO.7.76.6.1910101102280.46@tvgsbejvaqbjf.bet>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <a41a083e-ed18-eaed-8305-b7cf82d92878@iee.email>
-Date:   Thu, 10 Oct 2019 11:12:00 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727109AbfJJK2c (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 06:28:32 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42609 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725601AbfJJK2c (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 06:28:32 -0400
+Received: by mail-wr1-f65.google.com with SMTP id n14so7159083wrw.9
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 03:28:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=LS4RmDElKyAPVM95q7frDZoh0agDhr2/IMWFiwuQB9w=;
+        b=H8vpc61hszYDV6l5nnEP9EvX4rHF5KYnSIt56smvj5RhQKQ0bMNceIOtxPhQPT8+u8
+         DDpL82p8YgLDbMN/DsfMiv1+F9aIdoesnqA6ciVRW17wGGF6y+sJjLNmPAxXo8R/602l
+         cCRyQCCSke5XkiMqiEo92zdziOTWnMM9+2OpTJDEMTccPFY8VN+WknSB386XRDR+0bAx
+         d61nTbvmwXecgjchp+cWiQ0ikQiBEHmgSpLq65XNMSw34J2AqiLPfhe8phfSijhn6iQv
+         9zHxVOxcyza+VgLiIJpRmHBcjIwIcZBSEUA5dV6l6vUzQG+GFCBzY99ZZKDyzuSGiP94
+         X1eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=LS4RmDElKyAPVM95q7frDZoh0agDhr2/IMWFiwuQB9w=;
+        b=Ef2xov661njarXf7ogxktUFr5Sbtejmli7lEPcynkXSEizoGjOvfi+lVrfBB1bCGRh
+         2PWpCdbcuzSf7jcyqLLynZuO2puLdnNvssB/0LNLqpaxT7mvJvgI19cvCLrTnmjuoB8D
+         xqbl9ulPcJy/SZYYuQ2XefyTS+8VtPEMBqm5A4KBWVBNC9txfKWkmlkihNUoFD37N5WF
+         gdYIGY0lv3gdsgXioULQssVLXMN4vck5Yq0itAm7JxAlLwbHzpgf2qevmug80bueN5yN
+         aBZrFE6cR9rs3PDD1wEMnglf1Smd0Sge38rYExfgNmSlmrfLUFF3Y1tEVATBZdYw+7kY
+         S2LQ==
+X-Gm-Message-State: APjAAAV5gLFfWhIoeEqkn57mZSxay4gQWHhRehii/bClskf78x/wC9hh
+        Zr+I1PYll0iWXxsVJjYnv1s=
+X-Google-Smtp-Source: APXvYqxIcwHmjHP0F/whLDVh73WN1GEzwufmElM6LjgEa1c2MaPJVSeRTy5cxj534bzY1bMcDNAdBQ==
+X-Received: by 2002:adf:94c5:: with SMTP id 63mr8359605wrr.199.1570703310444;
+        Thu, 10 Oct 2019 03:28:30 -0700 (PDT)
+Received: from localhost ([95.149.189.152])
+        by smtp.gmail.com with ESMTPSA id z22sm5012059wmf.2.2019.10.10.03.28.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 10 Oct 2019 03:28:29 -0700 (PDT)
+Date:   Thu, 10 Oct 2019 11:28:28 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] doc(stash): clarify the description of `save`
+Message-ID: <20191010102828.GA12497@cat>
+References: <pull.384.git.gitgitgadget@gmail.com>
+ <572c7d0c51ffc68dc4603752d05fa7a418dbdd71.1570702000.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1910101102280.46@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <572c7d0c51ffc68dc4603752d05fa7a418dbdd71.1570702000.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
-On 10/10/2019 10:03, Johannes Schindelin wrote:
->>> So a better interpretation would have been:
->>>
->>>   The default creation factor is 60 (roughly speaking, it wants at
->>>   most 60% of the diffs' lines to differ, otherwise it considers
->>>   them not to be a match.
->>>
->>> This is still inaccurate, but at least it gets the idea of the
->>> range-diff across.
->>>
->>> Of course, I will never be able to amend the commit message in
->>> GitGitGadget anyway, as I have merged that PR already.
->>>
->>> Ciao,
->>> Dscho
->> Medium term, is this something that could go in the algorithms section of the
->> range-diff man page, especially if the upstream commit message is already in
->> place.
->>
->> #leftoverdocs ?
-> Sure. How about giving it a try while our memory is still fresh? You
-> would help me immensely if you could take that task off of my plate...
-My sneak think was to introduce the new hash tag for useful explanations 
-from the list that could be copied into the man/guide pages, especially 
-for the project pages.
+On 10/10, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> The original phrasing of this paragraph made at least one person stumble
+> over the word "from" (thinking that it was a typo and "from" was
+> intended), and other readers chimed in, agreeing that it was confusing:
+> https://public-inbox.org/git/0102016b8d597569-c1f6cfdc-cb45-4428-8737-cb1bc30655d8-000000@eu-west-1.amazonses.com/#t
+> 
+> Let's rewrite that paragraph for clarity.
+> 
+> Inspired-by-a-patch-by: Catalin Criste <cris_linu_w@yahoo.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-At the moment I'm trying to get the >4Gb on Window' series sorted, which 
-though working has been a load of bear traps for testing and configs and 
-VS compiling, etc.
-But yes, it is on the back-list.
--- 
-Philip
+Thanks for picking this thread up again, I had already forgotten about
+it.  The updated wording sounds like an improvement to me.
+
+> ---
+>  Documentation/git-stash.txt | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+> index 8fbe12c66c..53e1a1205d 100644
+> --- a/Documentation/git-stash.txt
+> +++ b/Documentation/git-stash.txt
+> @@ -87,8 +87,9 @@ The `--patch` option implies `--keep-index`.  You can use
+>  save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
+>  
+>  	This option is deprecated in favour of 'git stash push'.  It
+> -	differs from "stash push" in that it cannot take pathspecs,
+> -	and any non-option arguments form the message.
+> +	differs from "stash push" in that it cannot take pathspecs.
+> +	Instead, all non-option arguments are concatenated to form the stash
+> +	message.
+>  
+>  list [<options>]::
+>  
+> -- 
+> gitgitgadget
