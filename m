@@ -2,195 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97FE71F4BE
-	for <e@80x24.org>; Thu, 10 Oct 2019 00:18:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8122A1F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 01:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732140AbfJJASy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Oct 2019 20:18:54 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:46262 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731553AbfJJASy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Oct 2019 20:18:54 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 73EB01F4BD;
-        Thu, 10 Oct 2019 00:18:53 +0000 (UTC)
-Date:   Thu, 10 Oct 2019 00:18:53 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Raise your hand to Ack jk/code-of-conduct if your Ack fell thru
- cracks
-Message-ID: <20191010001853.h2pepvg7yilevipv@dcvr>
-References: <xmqq36g5444k.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1910082111220.46@tvgsbejvaqbjf.bet>
- <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
+        id S1732454AbfJJB7G (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Oct 2019 21:59:06 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61714 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731553AbfJJB5G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Oct 2019 21:57:06 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2B75E8F5EE;
+        Wed,  9 Oct 2019 21:57:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=u/PqMRoaTOhbuRPWlIQd/uWPCNY=; b=taafAz
+        EPM12EerRkOz+Ab3qcAHXVtQdKNjHYQ2BWiuAZfa/ya3Hl/DHTsXF6C9PPUPVvlv
+        Y2GHFFsA8fCoh3CgmaPeozQoMgVvTofXvSPlwopUlES7+vDcwITlDcFRPwSOeG48
+        6fVMUSVwtBwsY1+G3TF/AAdipOUXmGIYkGiRI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nmdKovzs86iCmM2lcgxAqe72MRyhC1Nb
+        ZIih0N6D+E1n4ewG3ZLwZeN9gMW7EpKDhJ8D2aAb+ekV0r+whNAm9P67hSAKoCNH
+        +y0gRqDBNUBQYjXaOSKd0ELZtx6ESi9DsQCvMspmUxYIy2k0TRdw5BDy1BasVMkB
+        yLUxPnxMitM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 22ABE8F5ED;
+        Wed,  9 Oct 2019 21:57:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 530908F5EC;
+        Wed,  9 Oct 2019 21:56:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "William Baker via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, williamtbakeremail@gmail.com,
+        stolee@gmail.com, Johannes.Schindelin@gmx.de,
+        jeffhost@microsoft.com
+Subject: Re: [PATCH v2 0/1] fsmonitor: don't fill bitmap with entries to be removed
+References: <pull.372.git.gitgitgadget@gmail.com>
+        <pull.372.v2.git.gitgitgadget@gmail.com>
+Date:   Thu, 10 Oct 2019 10:56:55 +0900
+In-Reply-To: <pull.372.v2.git.gitgitgadget@gmail.com> (William Baker via
+        GitGitGadget's message of "Wed, 09 Oct 2019 14:00:11 -0700 (PDT)")
+Message-ID: <xmqq1rvll5w8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3DA9C77E-EB01-11E9-AC0F-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> wrote:
+"William Baker via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-<snip>
+> This is the second iteration of changes to fix the segfault that I
+> encountered while testing fsmonitor. This iteration includes the following
+> updates for feedback I received on v1:
+>
+>  * Use %u instead of %"PRIuMAX" for unsigned ints in BUG format strings
+>  * Updated the new test's comment to be more descriptive
+>
+> Thanks,
+>
+> William
+>
+> William Baker (1):
+>   fsmonitor: don't fill bitmap with entries to be removed
 
-> For reference, here is the CoC the patch wants to add (there is no
-> such topic yet locally, nor a single patch that can be made into
-> such a topic, so there isn't exactly something people can Ack on
-> yet. So here is a "preview" of what we would see once such a series
-> lands).
-> 
->  CODE_OF_CONDUCT.md | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> 
-> # Git Code of Conduct
-> 
-> This code of conduct outlines our expectations for participants within
-> the Git community, as well as steps for reporting unacceptable behavior.
-> We are committed to providing a welcoming and inspiring community for
-> all and expect our code of conduct to be honored. Anyone who violates
-> this code of conduct may be banned from the community.
-> 
-> ## Our Pledge
-> 
-> In the interest of fostering an open and welcoming environment, we as
-> contributors and maintainers pledge to make participation in our project and
-> our community a harassment-free experience for everyone, regardless of age,
-> body size, disability, ethnicity, sex characteristics, gender identity and
-> expression, level of experience, education, socio-economic status,
-> nationality, personal appearance, race, religion, or sexual identity and
-> orientation.
-> 
-> ## Our Standards
-> 
-> Examples of behavior that contributes to creating a positive environment
-> include:
-> 
-> * Using welcoming and inclusive language
+Thanks.  Dscho, is this still Reviewed-by: you?
 
-What's welcoming to some is repulsive to others.
-
-For example: vger blocks HTML email.
-
-IMHO it's the right thing to do since it blocks much spam and
-phishing while saving precious storage and bandwidth.
-
-However, other folks consider it "gatekeeping", because their
-developed-by-a-megacorp mail tool defaults to HTML.  On the
-other hand, I consider gatekeeping to be making things more
-expensive in terms of computing resources.  Just because
-Moore's law exists doesn't mean our contributors have the
-socio-economic status to keep up with it.
-
-
-Another example: "Fork me on GitXYZ!" which is intended to
-welcome contributions.  For me, that's repulsive since it
-requires:
-
-1) using a Javascript VM (browser) that bogs my system down
-2) accepting their Terms of Service (which can change at any time)
-3) doing a CAPTCHA
-4) contributing via such service(s) implies tacit endorsement of
-   a proprietary/open-core SAAS
-
-git remains one of the few projects I'm comfortable contributing
-to because of that.
-
-> * Being respectful of differing viewpoints and experiences
-
-Agreed.  And we should not be trying to please everybody.
-
-> * Gracefully accepting constructive criticism
-> * Focusing on what is best for the community
-> * Showing empathy towards other community members
-> 
-> Examples of unacceptable behavior by participants include:
-> 
-> * The use of sexualized language or imagery and unwelcome sexual attention or
->   advances
-> * Trolling, insulting/derogatory comments, and personal or political attacks
-> * Public or private harassment
-
-> * Publishing others' private information, such as a physical or electronic
->   address, without explicit permission
-
-Very much agreed on keeping private information private.
-I honestly wished we'd just allow anonymous contributions since
-identity verification is and ought to remain impossible; but
-I understand there's legal concerns about GPL enforcement, too.
-
-> * Other conduct which could reasonably be considered inappropriate in a
->   professional setting
-
-I've been sometimes considered "unprofessional" for sticking to
-plain-text mail/IRC, refusing to deal with video conferencing,
-proprietary/hosted chat, etc.  To me, it's about cost-cutting
-and minimizing security risks, but I don't work with some people
-because of it.  Outside of open source, it's also about preserving
-trade secrets.
-
-> ## Our Responsibilities
-> 
-> Project maintainers are responsible for clarifying the standards of acceptable
-> behavior and are expected to take appropriate and fair corrective action in
-> response to any instances of unacceptable behavior.
-> 
-> Project maintainers have the right and responsibility to remove, edit, or
-> reject comments, commits, code, wiki edits, issues, and other contributions
-> that are not aligned to this Code of Conduct, or to ban temporarily or
-> permanently any contributor for other behaviors that they deem inappropriate,
-> threatening, offensive, or harmful.
-> 
-> ## Scope
-> 
-> This Code of Conduct applies within all project spaces, and it also applies
-> when an individual is representing the project or its community in public
-> spaces. Examples of representing a project or community include using an
-> official project e-mail address, posting via an official social media account,
-> or acting as an appointed representative at an online or offline event.
-> Representation of a project may be further defined and clarified by project
-> maintainers.
-> 
-> ## Enforcement
-> 
-> Instances of abusive, harassing, or otherwise unacceptable behavior may be
-> reported by contacting the project team at git@sfconservancy.org. All
-> complaints will be reviewed and investigated and will result in a response
-> that is deemed necessary and appropriate to the circumstances. The project
-> team is obligated to maintain confidentiality with regard to the reporter of
-> an incident. Further details of specific enforcement policies may be posted
-> separately.
-
-Given the absence of identity verification on the Internet
-(which I'm thankful for), enforcement seems toothless.
-
-> Project maintainers who do not follow or enforce the Code of Conduct in good
-> faith may face temporary or permanent repercussions as determined by other
-> members of the project's leadership.
-> 
-> The project leadership team can be contacted by email as a whole at
-> git@sfconservancy.org, or individually:
-> 
->   - Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->   - Christian Couder <christian.couder@gmail.com>
->   - Jeff King <peff@peff.net>
->   - Junio C Hamano <gitster@pobox.com>
-
-All folks that have proven to exhibit good judgement in the past,
-and hope they continue to exhibit that in the future.
-
-Though we shouldn't forget unexpected things have happened
-in the past, such as SFLC suing SFC...
-
-
-Just pointing out some concerns of mine.  No ack from me
-(but it's not a NACK, either).  I'm pretty ambivalent...
+>
+>  fsmonitor.c                 | 29 ++++++++++++++++++++++++-----
+>  t/t7519-status-fsmonitor.sh | 13 +++++++++++++
+>  t/t7519/fsmonitor-env       | 24 ++++++++++++++++++++++++
+>  3 files changed, 61 insertions(+), 5 deletions(-)
+>  create mode 100755 t/t7519/fsmonitor-env
+>
+>
+> base-commit: 5fa0f5238b0cd46cfe7f6fa76c3f526ea98148d9
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-372%2Fwilbaker%2Ffix_git_fsmonitor_crash-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-372/wilbaker/fix_git_fsmonitor_crash-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/372
+>
+> Range-diff vs v1:
+>
+>  1:  ce9bf4237e ! 1:  08741d986c fsmonitor: don't fill bitmap with entries to be removed
+>      @@ -44,8 +44,8 @@
+>       +	struct cache_entry *ce;
+>       +	
+>       +	if (pos >= istate->cache_nr)
+>      -+		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" >= %"PRIuMAX")",
+>      -+		    (uintmax_t)pos, (uintmax_t)istate->cache_nr);
+>      ++		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" >= %u)",
+>      ++		    (uintmax_t)pos, istate->cache_nr);
+>        
+>       +	ce = istate->cache[pos];
+>        	ce->ce_flags &= ~CE_FSMONITOR_VALID;
+>      @@ -56,8 +56,8 @@
+>        	istate->fsmonitor_dirty = fsmonitor_dirty;
+>        
+>       +	if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
+>      -+		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %"PRIuMAX")",
+>      -+		    (uintmax_t)istate->fsmonitor_dirty->bit_size, (uintmax_t)istate->cache_nr);
+>      ++		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
+>      ++		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
+>       +
+>        	trace_printf_key(&trace_fsmonitor, "read fsmonitor extension successful");
+>        	return 0;
+>      @@ -85,8 +85,8 @@
+>        	int fixup = 0;
+>        
+>       +	if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
+>      -+		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %"PRIuMAX")",
+>      -+		    (uintmax_t)istate->fsmonitor_dirty->bit_size, (uintmax_t)istate->cache_nr);
+>      ++		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
+>      ++		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
+>       +
+>        	put_be32(&hdr_version, INDEX_EXTENSION_VERSION);
+>        	strbuf_add(sb, &hdr_version, sizeof(uint32_t));
+>      @@ -96,8 +96,8 @@
+>        
+>        			/* Mark all previously saved entries as dirty */
+>       +			if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
+>      -+				BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %"PRIuMAX")",
+>      -+				    (uintmax_t)istate->fsmonitor_dirty->bit_size, (uintmax_t)istate->cache_nr);
+>      ++				BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
+>      ++				    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
+>        			ewah_each_bit(istate->fsmonitor_dirty, fsmonitor_ewah_callback, istate);
+>        
+>        			/* Now mark the untracked cache for fsmonitor usage */
+>      @@ -109,8 +109,9 @@
+>        	test_cmp expect actual
+>        '
+>        
+>      -+# Use test files that start with 'z' so that the entries being added
+>      -+# and removed appear at the end of the index.
+>      ++# This test covers staging/unstaging files that appear at the end of the index.
+>      ++# Test files with names beginning with 'z' are used under the assumption that
+>      ++# earlier tests do not add/leave index entries that sort below them. 
+>       +test_expect_success 'status succeeds after staging/unstaging ' '
+>       +	test_commit initial &&
+>       +	removed=$(test_seq 1 100 | sed "s/^/z/") &&
