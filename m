@@ -8,83 +8,90 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E2161F4BD
-	for <e@80x24.org>; Thu, 10 Oct 2019 16:56:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08BAE1F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 16:56:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726178AbfJJQ4z (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 12:56:55 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:35473 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726007AbfJJQ4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 12:56:55 -0400
-Received: by mail-wr1-f45.google.com with SMTP id v8so8787203wrt.2
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 09:56:53 -0700 (PDT)
+        id S1726290AbfJJQ44 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 12:56:56 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:40456 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726038AbfJJQ44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 12:56:56 -0400
+Received: by mail-wm1-f67.google.com with SMTP id b24so7530303wmj.5
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 09:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=y1x4t7CxsUL0zEddlWhOTg5XEIeWdqFgJBDDhtmdqYg=;
-        b=YuYMMXCquP9e8FJqEzLUsg9ZQiuQ4P35r2DtIZcoJfLoNWU//p2syNfLae1VYFAzFA
-         SJ/e8xiCDswJ6FRSEqE0NjiZJtLEMRZH8SZIsAL3i9ywWIjKAEqO+WfWd5nEsHiqizZa
-         GQtcy4ogwH645Panfu5dy1/hGaRF7b5VNZq/SapJGaLEiRSil/u0ypAF4c3YbBK+4hBr
-         WcQ0HBbY0ObKMhervssy6cHPouULw74ozubz8Dmu1vGPiFJjn0k1tPSrCdGLP7pDyMMY
-         iQ85zcD1xcTaN/0SDJUrVXem2d4S+7eZc67hCt5QJAq4NajuoMxyC9I14UOh7WVXyvWO
-         zYqg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KgPwuFJnqYtIb+qYqOMbG0M0kszYy3D1t/Qm+NDMXTc=;
+        b=CPYi+w3+SO5YLpWZ464WWLaxghp1mM6iuU02iGM9Ar+596HC7v0QK4FdQt1/AyTugu
+         kS5bxUPJhaBGKuZEpFD2H9j2G2YV4umuccC1VREsLCe0jF4Jj6j++cNBJdoyfGb/GmfM
+         8WubAk+ekRtcd2v084UARE+MDStZyb/StD+wnOQsPO99nI/F/9HlHsRejvPTvvEHiyEo
+         O96RMGZ3wpxrFEI8YsSi1Rb39WPOfqWn/d7moZPHzlhbB5g3ev7iqY6mneYTV+KA5Aw3
+         V4bwsVdrKTNCNlYwYN8Ifw7CboZtfLRkHA0lxiHC9giaqvl0iNw+gPP3GdRKEk8sCSeS
+         6JZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=y1x4t7CxsUL0zEddlWhOTg5XEIeWdqFgJBDDhtmdqYg=;
-        b=NsxtxYrivcpGit9yaGjYchL00XSTSYUE2kNUmrsL9vgrt7f58V2OYd6dyeQ8S242WN
-         nxLFxGaEhC43uohLZSNT1BnQY4oS8SUYBkkt0AZC5kCvhQmGACdvSWZqfFLFrPiyt7wy
-         MQ386keDUFGdY/NSX91KYKv8roZbipSvsBaf8fu+F5LBf6NzTSTivmAgDp3nPNkag19f
-         V6/+LorbzAn0l3hm9bVxfgrMIn9LQYKkv7cMutpG5Mom4FHJYhOUgekRuu658wbwko0+
-         EDLPF6YwqL06FF5NXABYN9o/Uw8LTnaTqX/C69AieNXACatm0f2NbvS9h/cRkQWJ27y4
-         YONQ==
-X-Gm-Message-State: APjAAAU1tv7R3zO6D9oaVtnrXw/kRmA9nmMtLpaLKhpTB81+SEYkms27
-        dcEB94iDCJC75REjYOOB6KPaCexa
-X-Google-Smtp-Source: APXvYqyJgk9/NLyy5V4wHoJrqJLTYr9V18ZilS4sxkU5zZNy/jGEKtmgtEiQ1izNQNrX3Rtn6t5hsg==
-X-Received: by 2002:a05:6000:1050:: with SMTP id c16mr6252133wrx.175.1570726613126;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=KgPwuFJnqYtIb+qYqOMbG0M0kszYy3D1t/Qm+NDMXTc=;
+        b=XKdjva3iEW/YxCgujzuRIVa7HgjYAU1L04TV62U0KSHrOM3vBLtjOmnvEgu4k6Hn/y
+         ogqZ9Dyk7dG+9qjT3Vhz/NDnQX6adijiZWl5fXUf+NEjmZ0l+qrmB03VciWbSnVtWho3
+         G5hThrucN68X2BeOiEGS9rjWU76lCwS6eO4U01vyAaiconqKLRwPz8ezOXcgN2/UeARb
+         ZVt7xJuGz29+GVjAXJNT7dc+pi2t90/tXRARh8tnzHk/yV/GtllOBgr+vgdgXjF37hvF
+         dluJAzIV1YBPkNHxnSxdIQ1Vb/p1DVWFWPAUdntREL7twEUATuPRhQUFAYlgv92Ae6Sn
+         i8Kg==
+X-Gm-Message-State: APjAAAWX70XCJMPT1CjJCMl74o+bkJNAGgRb0X49dSLn8EQe5nNI8y25
+        3ASvhhMfdYNr3FpxVJLhU1GTEuyU
+X-Google-Smtp-Source: APXvYqwTOy7iP96GuvYP/0IbjvLK33IQHS3fYQlG8olb2CM5rgDW470WqjoyJIh4ZqUId4EGePHVBQ==
+X-Received: by 2002:a05:600c:2293:: with SMTP id 19mr8898004wmf.26.1570726613894;
         Thu, 10 Oct 2019 09:56:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u83sm11566201wme.0.2019.10.10.09.56.52
+        by smtp.gmail.com with ESMTPSA id r7sm5250968wrt.28.2019.10.10.09.56.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Oct 2019 09:56:52 -0700 (PDT)
-Date:   Thu, 10 Oct 2019 09:56:52 -0700 (PDT)
-X-Google-Original-Date: Thu, 10 Oct 2019 16:56:50 GMT
-Message-Id: <pull.367.git.gitgitgadget@gmail.com>
-From:   "Max Belsky via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] doc: Add a note about ~/.zsh/_git file
+        Thu, 10 Oct 2019 09:56:53 -0700 (PDT)
+Date:   Thu, 10 Oct 2019 09:56:53 -0700 (PDT)
+X-Google-Original-Date: Thu, 10 Oct 2019 16:56:51 GMT
+Message-Id: <ae00e1e3932b3364da68fa66e2ec5fbcce124bdc.1570726611.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.367.git.gitgitgadget@gmail.com>
+References: <pull.367.git.gitgitgadget@gmail.com>
+From:   "Maxim Belsky via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 1/1] doc: Change zsh git completion file name
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Max Belsky <public.belsky@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Maxim Belsky <public.belsky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey,
+From: Maxim Belsky <public.belsky@gmail.com>
 
-Today I've spent a few hours to understand why git-completion doesn't work
-in my zsh shell. It was because I thought ~/.zsh/_git should be a dictionary
-with git-completion.zsh file. 
-
-I think this change may save some hours for someone else.
-
-Maxim Belsky (1):
-  doc: Change zsh git completion file name
-
+Signed-off-by: Maxim Belsky <public.belsky@gmail.com>
+---
  contrib/completion/git-completion.zsh | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-
-base-commit: 4c86140027f4a0d2caaa3ab4bd8bfc5ce3c11c8a
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-367%2Fmbelsky%2Fpatch-1-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-367/mbelsky/patch-1-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/367
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index 886bf95d1f..c0eca3ff25 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -11,8 +11,9 @@
+ #
+ #  zstyle ':completion:*:*:git:*' script ~/.git-completion.zsh
+ #
+-# The recommended way to install this script is to copy to '~/.zsh/_git', and
+-# then add the following to your ~/.zshrc file:
++# The recommended way to install this script is to copy to
++# '~/.zsh/.git-completion.zsh', and then add the following to your ~/.zshrc
++# file:
+ #
+ #  fpath=(~/.zsh $fpath)
+ 
 -- 
 gitgitgadget
