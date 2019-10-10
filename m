@@ -2,179 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74A2B1F4BD
-	for <e@80x24.org>; Thu, 10 Oct 2019 11:52:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D12A1F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 11:59:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733120AbfJJLwu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 07:52:50 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:37840 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733091AbfJJLwt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 07:52:49 -0400
-Received: by mail-pg1-f194.google.com with SMTP id p1so3513608pgi.4
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 04:52:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+Do0uWJ8fVLJjOhGWXLsVICWqohEVIscZxF0WUUQ+LU=;
-        b=dzLpSyLEKHFF+fe1tXPA9vCpz+4H34ByOPhaygHCMNqY3b3u/2r/mWYOK5+wsqtqDi
-         rApg4So6cUp8yKxgqaGo25Lz21Oaz+7YrtpWx8b37ISM0BhZYJNUr9L5XgBx24BwGBt1
-         q738rjKRS+SlX8BIHop4FU2pJP73zg/VxUzTsjr5UZp01pe3oprltlX29LlWDjIQ5JWD
-         RV0sBARmHii/szVnDXK0Tvb3SMFVcvS1LljDtVx9fvqcR1dFmhgRm9fG/Xy6xBN6o14B
-         rS7oEAN1TdlKbHWJuRUmCKo0MnhzfFRg0FAlh1jyV0ZKXbXM+KmelhBFDeeZCjrrtf4u
-         wgCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+Do0uWJ8fVLJjOhGWXLsVICWqohEVIscZxF0WUUQ+LU=;
-        b=nNp49NHQL2MxBmHP/91WSHlgAvJYpdgBDStF38IYqjI148pM0xdcsBB9Gu50y1kXAF
-         OkTewtaH8PV5vzNcPjCPwX854z6I6OUcqVufh8ZRNuaEBli1WoycKHKns/kOao3Ygxgk
-         R1jT91CubV+ZD7QbVS7z97YoXJAanYWwRxhc84hKsPHg5yNaN4Rj0t+R+KxPPBPXr8KP
-         wVAmdZ0qnYhQHHO/bUackeL42LTDO9spuLACCynHa6Bt3dxnGTBthasr2/9zck7YoGbn
-         2kvcGwtnFbdZDYqNvHEbh6mOslXnqpgXircWJ4GnUUER4C5/+0ekyn/LkB2F6GNfCdn5
-         KOeA==
-X-Gm-Message-State: APjAAAW2WxWmFODve4ChZ1pOYDMt6MCcJQq+pXLNFf4tsbE//K+tYG27
-        Rim7IagNw8lHQEclZRthL1R4FUHkpMCYdg==
-X-Google-Smtp-Source: APXvYqyqG8VqZx32QBFIiZ3zS9REBubo9FWqTw7h0PaQF94FRFxWReLydBamxxDUKnKi/2hgZN3gUg==
-X-Received: by 2002:a65:6205:: with SMTP id d5mr10969320pgv.424.1570708368456;
-        Thu, 10 Oct 2019 04:52:48 -0700 (PDT)
-Received: from wambui.brck.local ([197.254.95.158])
-        by smtp.googlemail.com with ESMTPSA id y2sm5431178pfe.126.2019.10.10.04.52.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2019 04:52:47 -0700 (PDT)
-From:   Wambui Karuga <wambui.karugax@gmail.com>
-To:     git@vger.kernel.org
-Cc:     jonathantanmy@google.com, Wambui Karuga <wambui.karugax@gmail.com>
-Subject: [Outreachy] [PATCH] blame: Convert pickaxe_blame defined constants to enums
-Date:   Thu, 10 Oct 2019 14:52:30 +0300
-Message-Id: <20191010115230.10623-1-wambui.karugax@gmail.com>
-X-Mailer: git-send-email 2.23.0
+        id S1733072AbfJJL7D (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 07:59:03 -0400
+Received: from mout.gmx.net ([212.227.17.22]:45325 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1733061AbfJJL7D (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 07:59:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570708727;
+        bh=98iL7+bxsGJIVAQyv/n13D6/fn7AZcKfD1ERmszPMeo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=gDRQ0lPL4O8HDbgDusciFyTsmO8UC3e3RDmpXG6A4bN4t36P5533qATSU0FLvUil4
+         io7HshMpu4u2KeLgDZWnKDHHs109xs3SC/9OaykNAEvb/3o5qJw0OfShK5q1IRIio3
+         ypJGoQgQQfB/gfhQ3HY6OcAmdhG7SW1AsYM8+X7Q=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MsHnm-1hyNoK3rnm-00ti9H; Thu, 10
+ Oct 2019 13:58:47 +0200
+Date:   Thu, 10 Oct 2019 13:58:30 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] xdiffi: fix typos and touch up comments
+In-Reply-To: <20191009203847.GB7007@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1910101358020.46@tvgsbejvaqbjf.bet>
+References: <pull.380.git.gitgitgadget@gmail.com> <cb677310cecd52e853055e93a75b365a1d133968.1570559270.git.gitgitgadget@gmail.com> <20191009203847.GB7007@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:QNbpK+FY5lWLrLgM2PTVhhLXwR4FvjXA/M6zB69aPzrOwixZZUh
+ QHioYtxSYKGQYKeRTzfIpPNXrrA/R9xSfDYq7aiRh4mT8xAec8pqa6vPIApBOJHJLIAWTIj
+ eqXrDArouNf8qhRgXOwAR+RXeqwhceYQn5s5V5Ifa8gL6IBFCoqEVLfiZar3yVl9U6fe0BD
+ 7cjIW+G4j9bKo1R06lFrQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/zJ7GzlooZw=:bB7xgSRv9OD/loSeVwiX0C
+ ykNQI4QCvIr6qQUd9PFL6tC2W/NCj85QNosVbU4Mq27dvj/NA5GI+WsTgOY04FanuokZmXtOY
+ bAJ+dlKkmpUS3fj1WfMqzIldE/Dco2l6Pf2kCXMMrVuoqS8b6R/pn3fpeNFgBGsmG6K9JIjPX
+ 7faaFmuUD5/EVeDbWDKzcoxTDm6c2ItVeY01+UGT/uhbOz/U2Ozi6jJ2hripHg3BNiF+2kRHt
+ UpHuAT9SlKppHV63PrCmxEYp7wZJnfB3DzJ/piSEBnYaOpRP2PLI6pRyPa5JcaDFyyLCVsodx
+ oFfmHA8SXu8JTL0+GvmXr0lDUFOdL1gMSgjQNwPfDfrEWf69uqXU82RVLnO8LO30SM7vdfde/
+ s1+h12hbWajSW3RbdjF9VosGEPTuZxqXogu2z1erO4KkygwXqFnei1t+2v4BLD0MauhdohgRN
+ OFB7T0ppZoZ16Q70YhuUfwIJbB9nOcOSdzbDZSPsSamEohivIRxUKL1v9FkUctNO8enS8kdxN
+ 8douQCIZz1PUZuY0+FxzjI/THRQVP220/eltmoe9Y8rLD+3Hko+siYqOtSOR6dXZpvxyV2Qfi
+ NEsUjKq9BQKf4kk6N/c/caFmjaFJ4ZcrLDOJKoOpd0V+WhS5n0A26oxCrBG7UUqZxnlXMGEBO
+ uSsD4TXGTucI6TDdHr+ekQgVp4CqCt9YdtnVpQHSmKZGe7yYIwgUgrk4YsnSIylVJ3bbkroGO
+ JpD71HzlLsqzJYziowUQ+s6Sy7roptY5dnBRa3SjAvwv8BbWaYtAO/ytmszZYD9WaXEhJ4yh0
+ eyfMYtElSgn2suKxmmVptB2Wfs18dHdangYv9oqOaOqwfmne6K1/b1cn+nMW7cdsqNuFSNwQg
+ dA4ZUup9+Bn1hYqKpP1n4Q4TATe7NlapCQ7kL3f1L+Y3elTRsAV2I9kMN58i/tXjNQgKAHCtQ
+ HtMabHAzcjPzy7En9AC9ycATLXzHb4P1ZCyw5L0JHOywkH0WG2mtn1IcM0WH+gFIaHX48tuBD
+ zXXMThSnoJF85d+4COWW+z+rWt6Vsay4poXKXBZYg7ZjXM3eVaf3jWbX79vWZJrjX2PM/PSzf
+ HjXmcI6J8Np2jH7s+2QQLaaH56GSMj2P2Or54xtoRxq3b8qg01AUAYtBPTTkfIrnp3S4Jgo7A
+ Pt5OKbG6vS+OuMgHpLK1vlFilTax3exrBL6ELUDkomJ/lEoA6OlgpjCLLCK2l1qL7AAEMOpUf
+ vVyak4I/PTO6IFAjDP+4yrwzXaDMMvI315mS+01jNP6HX9mLD4X1VzF//NTo=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert pickaxe_blame preprocessor constants in blame.h to an enum.
-Also replace previous instances of the constants with the new enum values.
+Hi Peff,
 
-Signed-off-by: Wambui Karuga <wambui.karugax@gmail.com>
----
- blame.c         |  8 ++++----
- blame.h         | 12 +++++++-----
- builtin/blame.c | 17 ++++++++---------
- 3 files changed, 19 insertions(+), 18 deletions(-)
+On Wed, 9 Oct 2019, Jeff King wrote:
 
-diff --git a/blame.c b/blame.c
-index 36a2e7ef11..4ad86d1217 100644
---- a/blame.c
-+++ b/blame.c
-@@ -2183,8 +2183,8 @@ static void find_copy_in_parent(struct blame_scoreboard *sb,
- 	 * and this code needs to be after diff_setup_done(), which
- 	 * usually makes find-copies-harder imply copy detection.
- 	 */
--	if ((opt & PICKAXE_BLAME_COPY_HARDEST)
--	    || ((opt & PICKAXE_BLAME_COPY_HARDER)
-+	if ((opt & BLAME_COPY_HARDEST)
-+	    || ((opt & BLAME_COPY_HARDER)
- 		&& (!porigin || strcmp(target->path, porigin->path))))
- 		diff_opts.flags.find_copies_harder = 1;
- 
-@@ -2429,7 +2429,7 @@ static void pass_blame(struct blame_scoreboard *sb, struct blame_origin *origin,
- 	/*
- 	 * Optionally find moves in parents' files.
- 	 */
--	if (opt & PICKAXE_BLAME_MOVE) {
-+	if (opt & BLAME_MOVE) {
- 		filter_small(sb, &toosmall, &origin->suspects, sb->move_score);
- 		if (origin->suspects) {
- 			for (i = 0, sg = first_scapegoat(revs, commit, sb->reverse);
-@@ -2448,7 +2448,7 @@ static void pass_blame(struct blame_scoreboard *sb, struct blame_origin *origin,
- 	/*
- 	 * Optionally find copies from parents' files.
- 	 */
--	if (opt & PICKAXE_BLAME_COPY) {
-+	if (opt & BLAME_COPY) {
- 		if (sb->copy_score > sb->move_score)
- 			filter_small(sb, &toosmall, &origin->suspects, sb->copy_score);
- 		else if (sb->copy_score < sb->move_score) {
-diff --git a/blame.h b/blame.h
-index 4a9e1270b0..a4bbf3a8c5 100644
---- a/blame.h
-+++ b/blame.h
-@@ -8,14 +8,16 @@
- #include "prio-queue.h"
- #include "diff.h"
- 
--#define PICKAXE_BLAME_MOVE		01
--#define PICKAXE_BLAME_COPY		02
--#define PICKAXE_BLAME_COPY_HARDER	04
--#define PICKAXE_BLAME_COPY_HARDEST	010
+> On Tue, Oct 08, 2019 at 11:27:52AM -0700, Johannes Schindelin via GitGit=
+Gadget wrote:
+>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > Inspired by the thoroughly stale https://github.com/git/git/pull/159,
+> > this patch fixes a couple of typos, rewraps and clarifies some comment=
+s.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  xdiff/xdiffi.c | 99 ++++++++++++++++++++++++++++---------------------=
 -
- #define BLAME_DEFAULT_MOVE_SCORE	20
- #define BLAME_DEFAULT_COPY_SCORE	40
- 
-+enum pickaxe_blame_action {
-+	BLAME_MOVE = 01,
-+	BLAME_COPY,
-+	BLAME_COPY_HARDER = 04,
-+	BLAME_COPY_HARDEST = 010,
-+};
-+
- /*
-  * One blob in a commit that is being suspected
-  */
-diff --git a/builtin/blame.c b/builtin/blame.c
-index b6534d4dea..fb71517b5c 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -771,11 +771,11 @@ static int blame_copy_callback(const struct option *option, const char *arg, int
- 	 * -C -C -C enables copy from existing files for
- 	 *          everybody
- 	 */
--	if (*opt & PICKAXE_BLAME_COPY_HARDER)
--		*opt |= PICKAXE_BLAME_COPY_HARDEST;
--	if (*opt & PICKAXE_BLAME_COPY)
--		*opt |= PICKAXE_BLAME_COPY_HARDER;
--	*opt |= PICKAXE_BLAME_COPY | PICKAXE_BLAME_MOVE;
-+	if (*opt & BLAME_COPY_HARDER)
-+		*opt |= BLAME_COPY_HARDEST;
-+	if (*opt & BLAME_COPY)
-+		*opt |= BLAME_COPY_HARDER;
-+	*opt |= BLAME_COPY | BLAME_MOVE;
- 
- 	if (arg)
- 		blame_copy_score = parse_score(arg);
-@@ -788,8 +788,7 @@ static int blame_move_callback(const struct option *option, const char *arg, int
- 
- 	BUG_ON_OPT_NEG(unset);
- 
--	*opt |= PICKAXE_BLAME_MOVE;
--
-+	*opt |= BLAME_MOVE;
- 	if (arg)
- 		blame_move_score = parse_score(arg);
- 	return 0;
-@@ -993,8 +992,8 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	blame_date_width -= 1; /* strip the null */
- 
- 	if (revs.diffopt.flags.find_copies_harder)
--		opt |= (PICKAXE_BLAME_COPY | PICKAXE_BLAME_MOVE |
--			PICKAXE_BLAME_COPY_HARDER);
-+		opt |= (BLAME_COPY | BLAME_MOVE |
-+			BLAME_COPY_HARDER);
- 
- 	/*
- 	 * We have collected options unknown to us in argv[1..unk]
--- 
-2.23.0
+> >  1 file changed, 55 insertions(+), 44 deletions(-)
+>
+> I scanned through these with diff-highlight, and they all look good to
+> me!
 
+Thank you!
+Dscho
+
+P.S.: Darn, now I really have to find time to check out
+diff-highlight...
