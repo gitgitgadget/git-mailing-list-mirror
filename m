@@ -2,170 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70F5E1F4BD
-	for <e@80x24.org>; Thu, 10 Oct 2019 09:03:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB4511F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 10:06:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387661AbfJJJDh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 05:03:37 -0400
-Received: from mout.gmx.net ([212.227.17.22]:53483 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387554AbfJJJDg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 05:03:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570698205;
-        bh=zcrBZH09IUUglVOW0ri4xmFLWDAgByo5qz5Ze1YUIUU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=a60kH7w713hMa4yWpI23RqgysUyhMXCLQcA6IktbnTPYm65ZWvPINIXTIyYytVhv5
-         TmGQPiYNdLN0L8dl0XYISsb1opFNNYeBr+lfxT7BeJxFOnvG0YUDyYO+HcoZN0bh9l
-         kIZVudmqmvWcOlAmIE13YLI2zE9EF15D3ISkgMLI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MxUnp-1huLem0SID-00xtl3; Thu, 10
- Oct 2019 11:03:25 +0200
-Date:   Thu, 10 Oct 2019 11:03:08 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Philip Oakley <philipoakley@iee.email>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH v3 00/13] ci: include a Visual Studio build & test in
- our Azure Pipeline
-In-Reply-To: <9ccbdb9a-845f-a534-29b6-52cfe9eb3229@iee.email>
-Message-ID: <nycvar.QRO.7.76.6.1910101102280.46@tvgsbejvaqbjf.bet>
-References: <pull.288.v2.git.gitgitgadget@gmail.com> <pull.288.v3.git.gitgitgadget@gmail.com> <xmqqimp26808.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910061157320.46@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1910062237440.46@tvgsbejvaqbjf.bet>
- <xmqq1rvp5pc0.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910072350300.46@tvgsbejvaqbjf.bet> <xmqqzhicnfmr.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910081423250.46@tvgsbejvaqbjf.bet> <9ccbdb9a-845f-a534-29b6-52cfe9eb3229@iee.email>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2387992AbfJJKGn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 06:06:43 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37020 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733296AbfJJKGn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 06:06:43 -0400
+Received: by mail-wr1-f65.google.com with SMTP id p14so7121505wro.4
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 03:06:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=DjQcnKFwIGr5bQV7y2PDd9XPvPX70iLAhkYayIGTIx8=;
+        b=m4cikf9WJTMUinSO68Pml/Pj8LXudpbckdGmvLa1ah6LJUCWKGP6FarFaN4gguMp1u
+         3EB71opbEKnr01ggNFjwg0zHJWjnY79z03ahOGEeGLX7EGWLjOKTmk89bjhfovbCiQXH
+         JWCzXVqkU+B4Ocrx0/nkm09L3dTXnC6+sWZxOZkXcOxbPm47HbKUR2wbekIOk9zsoari
+         jkChHmzZP/G1BRkqtAynDeiYr4cMvqRjx1xJ/hyqbFDRIlzuweNfm+wYf6tzfPuNknA9
+         HqEAWrpy8zywqi2PAZL+hf32PPFb58E6wbca08XGNSonq9TtkuihTc48Ki2F0R1nvnX1
+         WO6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=DjQcnKFwIGr5bQV7y2PDd9XPvPX70iLAhkYayIGTIx8=;
+        b=UWI6SU/7WuDp008dkCbk4Tga5ySaUk+Hec/V1ZFDaxpNuVb9dQifZnlvq3LA4/A1KG
+         d2KEAqvg/rDm9YbTe84mzvrzSzXCIiSnLMHFY9f7xNxRAp+J2ny/m7D59gZpThNCFe3d
+         W9ql3JXKjA/1kyhH7T2RSOVEXFvKTL0SZQdBDjizH1ecciUtvMZH/fPtTFw8KsgAPo9r
+         5tC/ohZufXLbFsIy7Nj/jEQI8pUQtdKjpBDIP2omd9YgfhdyNtRUTt7qnV9t/K3z8ACK
+         h2hxGfCHWOTpqP5rmJEoMqO8GivVn56UxVMTTaHgSEyHm+uCWySMseCnlVimT0t6zl/8
+         Efug==
+X-Gm-Message-State: APjAAAVfHT/7kAM+9qcK4rB5CLpXbPPbgXrXpJXgcwrc3ah7iP/GxbJz
+        q71SIFIVostrRTKq1GXY0+HeyB3a
+X-Google-Smtp-Source: APXvYqz4Rthmkyg5q0RgsCDFFGpo2zgT2Ak/F9J0Ga4yJy62Z/nQc6XI1W8vONoN/oB2vuEPfaPrWw==
+X-Received: by 2002:a5d:4286:: with SMTP id k6mr7565182wrq.292.1570702001385;
+        Thu, 10 Oct 2019 03:06:41 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q19sm11513355wra.89.2019.10.10.03.06.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 10 Oct 2019 03:06:40 -0700 (PDT)
+Date:   Thu, 10 Oct 2019 03:06:40 -0700 (PDT)
+X-Google-Original-Date: Thu, 10 Oct 2019 10:06:39 GMT
+Message-Id: <pull.384.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Make the description of git stash save clearer
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:WnBomfM5TfwHvxBt381Xfd/0oFADldT8VV+WE0bMZcYCoaFNims
- EP3ppiR6iUYB8NsjxtLfMmgIT8oJ0PHjkGV2ZoGa5TlcQE1pCHy66RPaH5ikl1hr/fDxoNj
- 2nVrDMRf24D6pgyszTB+NKCtEMilHkf77VqoNR+d7ruWR4wUPKgXmQDLfXH2554pFTHB68T
- Zd9eiSd5NMOcMrNAl+IDw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1C06rlLvFj4=:cuvD5WNFX9nIhwlxW+ULAP
- mcQry5EwlEK7gHjTth+B8FMHZI5ceUv3J9X2Ab80SsEwt/PuzpZ1gXqw6wmqaRYqvf10QTLP5
- vbTriChTveEgEDtAuPpXJ0wpVSipFQI8AIIhtljH8nEECW891THYDe/QSvpukbONeoaYJagFY
- Kk9DM8y7Cc6LIPil5vgzHpB5vZvBvPPETbiCRdFu9fb3KmnWXLmYQjXDep4yyyuvsLLPB/c2T
- a99B5MK2oth4Ol9KryObTvX5gRXps9yc0McaxAhAGVw71tmd7uRE/qZoC2++UysLlz0NRRJ0f
- N7fh0pwsGoKZVs+Jb6DtXQhkm2DDjqCaM175SAFsFYdoEartbLkiIPuOYUJas01wf4/pdKpQg
- 9ZiASCEM7NBX5DfnoWvVP6IWAUUDcbwBxitxtEQIgoSy567se/gBWe6JkhYm8tdBihVugznAp
- OPjFOtbeSu7wjPvrS3lp4lf8g1zfBM9/3pLdWN6pfsIEyhpgoOiWcV8kpbWszh1IK78c7+D1p
- 1oF/4A/aglh/hLeBCK78XTFID5w7/77CcB/KvCvT8sVAGpg5yNupbuWsUu/KQ5nLsApcwZL4s
- v1zkm2KN/ThsmykQgqxkKsMRERE6ZGgsW/JYDfIEl57kbZMbkGkjFPOlZLYh3IyNXRu1vx9ZO
- c8Ulbs0GAwviwWpV7ZOVYZP1ooeQTynXJ5wQZ13y9yvNccIAreWbL2sOxT8TBKx17fGHj2fgO
- ujbLWk9+IyQjLKf6EQ0US3QvOKlMPp7RF+YtUAlJpkTnd9BagNm6rv3puRjLaSW8at6ASClYB
- mt45rb/SbwfatSALtqI5pQB2N7yEge/Oo9B1TIOnZHhZmhYY2i0WV2lVQ4xIrkYBFyHdF74bO
- t9rN9cDj5ww1UMU15jJtQXgvNdlTMunYOHwL5B8gi/Mo6lGqZH34ofRjataYtNmRNZfLPUkOK
- lfZKKBHudtbXEZSALuPtpgqoz3F7OcYaWFmF/+OZhrvaYspUpAMK/VbMjbycqs1vlfVi4vdTm
- CtGC03foSHKonDldybCCQ4p6fm3U6UHkkuyvuH/JYrEL1a8QVqnkBOOY0NqWlHzn8PreJyxGf
- DPBWVDynYZq9xqhIitr4J1h3u/vRSvl8gOtqn9+AdGM2KPnr8TRsXrm+44YUd+2/D+fUfjbaM
- BTgvyzXjtHA8SqVaiDdvwybBgewvhbOdOaE8CEOlCUyTrQMgoxyiggeFp9IKiifPvaSI0Acgx
- Ppb+6iGCw+vLiX9XOMnF4h+CQh8KSAT9zZBFZkapSgzYX0ubzM+5MaVnT4n8=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+This is an attempt to revive the discussion started in 
+https://public-inbox.org/git/0102016b8d597569-c1f6cfdc-cb45-4428-8737-cb1bc30655d8-000000@eu-west-1.amazonses.com/#t
 
-On Wed, 9 Oct 2019, Philip Oakley wrote:
+Johannes Schindelin (1):
+  doc(stash): clarify the description of `save`
 
-> On 08/10/2019 13:46, Johannes Schindelin wrote:
-> > Hi Junio,
-> >
-> > On Tue, 8 Oct 2019, Junio C Hamano wrote:
-> >
-> > > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > >
-> > > > > I didn't quite understand this part, though.
-> > > > >
-> > > > >      The default creation factor is 60 (roughly speaking, it wan=
-ts 60%
-> > > > >      of
-> > > > >      the lines to match between two patches, otherwise it consid=
-ers
-> > > > >      the
-> > > > >      patches to be unrelated).
-> > > > >
-> > > > > Would the updated creation factor used which is 95 (roughly
-> > > > > speaking) want 95% of the lines to match between two patches?
-> > > > >
-> > > > > That would make the matching logic even pickier and reject more
-> > > > > paring, so I must be reading the statement wrong X-<.
-> > > > No, I must have written the opposite of what I tried to say, is al=
-l.
-> > > So, cfactor of 60 means at most 60% is allowed to differ and the
-> > > two patches are still considered to be related, while 95 means only
-> > > 5% needs to be common?  That would make more sense to me.
-> > Okay, I not only wrote the opposite of what I wanted to say, I also
-> > misremembered.
-> >
-> > When `range-diff` tries to determine matching pairs of patches, it
-> > builds an `(m+n)x(m+n)` cost matrix, where `m` is the number of patche=
-s
-> > in the first commit range and `n` is the number of patches in the seco=
-nd
-> > one.
-> >
-> > Why not `m x n`? Well, that's the obvious matrix, and that's what it
-> > starts with, essentially assigning the number of lines of the diff
-> > between the diffs as "cost".
-> >
-> > But then `git range-diff` extends the cost matrix to allow for _all_ o=
-f
-> > the `m` patches to be considered deleted, and _all_ of the `n` patches
-> > to be added. As cost, it cannot use a "diff of diffs" because there is
-> > no second diff. So it uses the number of lines of the one diff it has,
-> > multiplied by the creation factor interpreted as a percentage.
-> >
-> > The naive creation factor would be 100%, which is (almost) as if we
-> > assumed an empty diff for the missing diff. But that would make the
-> > range-diff too eager to dismiss rewrites, as experience obviously show=
-ed
-> > (not my experience, but Thomas Rast's, who came up with `tbdiff` after
-> > all): the diff of diffs includes a diff header, for example.
-> >
-> > The interpretation I offered (although I inverted what I wanted to say=
-)
-> > is similar in spirit to that metric (which is not actually a metric, I
-> > believe, because I expect it to violate the triangle inequality) is
-> > obviously inaccurate: the number of lines of the diff of diffs does no=
-t
-> > say anything about the number of matching lines, quite to the contrary=
-,
-> > it correlates somewhat to the number of non-matching lines.
-> >
-> > So a better interpretation would have been:
-> >
-> >  The default creation factor is 60 (roughly speaking, it wants at
-> >  most 60% of the diffs' lines to differ, otherwise it considers
-> >  them not to be a match.
-> >
-> > This is still inaccurate, but at least it gets the idea of the
-> > range-diff across.
-> >
-> > Of course, I will never be able to amend the commit message in
-> > GitGitGadget anyway, as I have merged that PR already.
-> >
-> > Ciao,
-> > Dscho
-> Medium term, is this something that could go in the algorithms section o=
-f the
-> range-diff man page, especially if the upstream commit message is alread=
-y in
-> place.
->
-> #leftoverdocs ?
+ Documentation/git-stash.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-Sure. How about giving it a try while our memory is still fresh? You
-would help me immensely if you could take that task off of my plate...
 
-Thanks,
-Dscho
+base-commit: 70bf0b755af4d1e66da25b7805cac0e481a082e4
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-384%2Fdscho%2Fclarify-stash-doc-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-384/dscho/clarify-stash-doc-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/384
+-- 
+gitgitgadget
