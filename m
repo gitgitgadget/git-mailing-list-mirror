@@ -2,112 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEC2A1F4C0
-	for <e@80x24.org>; Thu, 10 Oct 2019 23:01:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23DB41F4C0
+	for <e@80x24.org>; Thu, 10 Oct 2019 23:05:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726828AbfJJXBe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 19:01:34 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1]:41364 "EHLO
-        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726321AbfJJXBe (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 10 Oct 2019 19:01:34 -0400
-Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x9AMvDEt049266
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 19:01:33 -0400
-Received: from e06smtp01.uk.ibm.com (e06smtp01.uk.ibm.com [195.75.94.97])
-        by mx0a-001b2d01.pphosted.com with ESMTP id 2vjbndkdm8-1
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 19:01:33 -0400
-Received: from localhost
-        by e06smtp01.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
-        for <git@vger.kernel.org> from <ajd@linux.ibm.com>;
-        Fri, 11 Oct 2019 00:01:30 +0100
-Received: from b06cxnps3074.portsmouth.uk.ibm.com (9.149.109.194)
-        by e06smtp01.uk.ibm.com (192.168.101.131) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
-        (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
-        Fri, 11 Oct 2019 00:01:27 +0100
-Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com [9.149.105.61])
-        by b06cxnps3074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id x9AN1Q9T31129734
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 10 Oct 2019 23:01:26 GMT
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id A05AF11C058;
-        Thu, 10 Oct 2019 23:01:26 +0000 (GMT)
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 4E27911C04A;
-        Thu, 10 Oct 2019 23:01:26 +0000 (GMT)
-Received: from ozlabs.au.ibm.com (unknown [9.192.253.14])
-        by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTP;
-        Thu, 10 Oct 2019 23:01:26 +0000 (GMT)
-Received: from [10.61.2.125] (haven.au.ibm.com [9.192.254.114])
-        (using TLSv1.2 with cipher AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by ozlabs.au.ibm.com (Postfix) with ESMTPSA id A4231A01C1;
-        Fri, 11 Oct 2019 10:01:22 +1100 (AEDT)
-Subject: Re: [PATCH] parser: Unmangle From: headers that have been mangled for
- DMARC purposes
-To:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-Cc:     patchwork@lists.ozlabs.org,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Eric Blake <eblake@redhat.com>,
-        Christian Schoenebeck <qemu_oss@crudebyte.com>,
-        git@vger.kernel.org
-References: <20191010062047.21549-1-ajd@linux.ibm.com>
- <20191010194132.GA191800@google.com>
- <20191010225405.GA19475@sigill.intra.peff.net>
-From:   Andrew Donnellan <ajd@linux.ibm.com>
-Date:   Fri, 11 Oct 2019 10:01:23 +1100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726653AbfJJXFz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 19:05:55 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:39254 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726321AbfJJXFy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 19:05:54 -0400
+Received: by mail-pg1-f194.google.com with SMTP id e1so4617713pgj.6
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 16:05:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=jeq3ZfPXwRj/c83Ulryqbd5j1nY4vpQpPOa4qORZ40U=;
+        b=ZcB1vsxoeTMn8nNtaQYARL97OimAjBYtJZccMmyOz1oJc6SlBn18rNngECpHffHQcc
+         XJr01mwqFQQHe4RLMMC9X/ykOad6MZl5YZxsk0EIAf9dgt8k65piz79JYi95NgoyfjpB
+         StGYA8Cp7KUqIvPCGdpmNnG+EL815Psb6molK/lahCoLUkgHnrKu5YcZIMUeVGfkJ0ww
+         3tk9EADJmoVZA/nrzE4m7UTCR9gIdG5Crj0biNqavhcgbgA8dgIj2ezbdCyrxszZMm28
+         bv5XbyIvn1fGwzc3G4+fITlTP7ZuvX2tzZpL3epq9WBX5TbLPwp0qd7ZwQyOmdypAF/R
+         6BKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jeq3ZfPXwRj/c83Ulryqbd5j1nY4vpQpPOa4qORZ40U=;
+        b=pyl4X6M+PS1zHtfkAUiUqGFDu/UxqKOt4/SSFJ81UfDfjPTZ0oWQwX1EnaXpOuiCuc
+         PpBl2A9jHHYs0H/y4SQTL5hW4YtGGmxYEH+jgohwlFTowzZVv+R5L1K4VSDTqPREfDj4
+         T5+rqM1u7kE5MOqyBo4qaSq5bM2wn2bVkS7oo0y7OTJzl2xryW/HxyWj+NYu2JxfcZph
+         dgpg59ZQCfBcwU+Ux1X1BGBH8QZTgGKDPrPJkZk7p+ML1a9OhmYcTKohvxzuC5Q5krk5
+         tpxzXKbJPShVZB2Pdg4bfSdyriyoABNcYUNfyUrBoTpNXA22JSafheT7vd2p6BHVvqhn
+         7V2w==
+X-Gm-Message-State: APjAAAVQk9nbUaY/MZ7aJ3p5fMoMYrTCMYEu5mRDIv598Gmoo3a5rvQI
+        49PcZRclizKjhjZDcRkGplqcm9eJ
+X-Google-Smtp-Source: APXvYqwG5I0JMbF2YM5s+AqM85G48aHSBN7R80tYI0u0SIF9kdumqv/Mnf/mFEPc/clRBaexWEzg1w==
+X-Received: by 2002:a63:a35f:: with SMTP id v31mr1280466pgn.51.1570748753625;
+        Thu, 10 Oct 2019 16:05:53 -0700 (PDT)
+Received: from generichostname ([204.14.239.137])
+        by smtp.gmail.com with ESMTPSA id d20sm8799351pfq.88.2019.10.10.16.05.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Oct 2019 16:05:52 -0700 (PDT)
+Date:   Thu, 10 Oct 2019 16:05:50 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     James Coglan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        James Coglan <jcoglan@gmail.com>
+Subject: Re: [PATCH 01/11] graph: automatically track visible width of
+ `strbuf`
+Message-ID: <20191010230550.GA42541@generichostname>
+References: <pull.383.git.gitgitgadget@gmail.com>
+ <4bc0a0596164212aa9d29d6dd0d7a0d8ab1b9dd0.1570724021.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.1910102303330.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-In-Reply-To: <20191010225405.GA19475@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-AU
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-x-cbid: 19101023-4275-0000-0000-00000370FDC7
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19101023-4276-0000-0000-000038840725
-Message-Id: <06541640-7eca-bc40-5c4b-9aa682d774a8@linux.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-10-10_08:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1910100199
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1910102303330.46@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/10/19 9:54 am, Jeff King wrote:
-> Neat. There was discussion on a similar issue recently in:
+Hi Dscho,
+
+On Thu, Oct 10, 2019 at 11:07:35PM +0200, Johannes Schindelin wrote:
+> Hi James,
 > 
->    https://public-inbox.org/git/305577c2-709a-b632-4056-6582771176ac@redhat.com/
+> On Thu, 10 Oct 2019, James Coglan via GitGitGadget wrote:
 > 
-> where a possible solution was to get senders to use in-body From
-> headers even when sending their own patches.
+> > From: James Coglan <jcoglan@gmail.com>
+> >
+> > All the output functions in `graph.c` currently keep track of how many
+> > printable chars they've written to the buffer, before calling
+> > `graph_pad_horizontally()` to pad the line with spaces. Some functions
+> > do this by incrementing a counter whenever they write to the buffer, and
+> > others do it by encoding an assumption about how many chars are written,
+> > as in:
+> >
+> >     graph_pad_horizontally(graph, sb, graph->num_columns * 2);
+> >
+> > This adds a fair amount of noise to the functions' logic and is easily
+> > broken if one forgets to increment the right counter or update the
+> > calculations used for padding.
+> >
+> > To make this easier to use, I'm adding a `width` field to `strbuf` that
+> > tracks the number of printing characters added after the line prefix.
+> 
+> This is a big heavy-handed: adding a `width` field to `struct strbuf`
+> and maintaining it _just_ for the purpose of `graph.c` puts an
+> unnecssary load on every other `strbuf` user (of which there are a
+> _lot_).
+> 
+> So my obvious question is: what makes `width` different from `len`?
+> Since we exclusively use ASCII characters for the graph part, we should
+> be able to use the already-existing `len`, for free, no?
 
-I think that's a good idea.
+From what I can gleam from looking at the code, `width` is different
+from `len` because when we're printing with colours, there'll be a bunch
+of termcodes that don't actually count for the width.
+
+I think that we should either leave the `chars_written` variable as is
+or maybe calculate it after the fact. Here's an untested and uncompiled
+implementation of something that might do that:
+
+	static int calculate_width(const struct strbuf *row)
+	{
+		int in_termcode = 0;
+		int width = 0;
+		int i;
+
+		for (i = 0; i < row.len; i++) {
+			if (row.buf[i] == '\033')
+				in_termcode = 1;
+
+			if (!in_termcode)
+				width++;
+			else if (row.buf[i] == 'm')
+				in_termcode = 0;
+		}
+	}
+
+If we include this, I'm not sure what kind of performance hit we might
+take if the graph we're generating is particularly big, though.
 
 > 
-> This might provide an alternate solution (or vice versa). I kind of like
-> this one better in that it doesn't require the sender to do anything
-> differently (but it may be less robust, as it assumes the receiver
-> reliably de-mangling).
-
-Yep, it's less robust - but OTOH there's always a long tail of users 
-stuck on old versions of git for whatever reason and having some logic 
-to detect DMARC munging may thus still be useful.
-
--- 
-Andrew Donnellan              OzLabs, ADL Canberra
-ajd@linux.ibm.com             IBM Australia Limited
-
+> I could imagine that the `strbuf` might receive more than one line, but
+> then we still would only need to remember the offset of the last newline
+> character in that `strbuf`, no?
+> 
+> Ciao,
+> Johannes
