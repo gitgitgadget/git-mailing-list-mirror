@@ -8,108 +8,167 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 123DC1F4BD
-	for <e@80x24.org>; Thu, 10 Oct 2019 12:35:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5F161F4BD
+	for <e@80x24.org>; Thu, 10 Oct 2019 14:45:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733206AbfJJMfj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 08:35:39 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53341 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732228AbfJJMfg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 08:35:36 -0400
-Received: by mail-wm1-f65.google.com with SMTP id i16so6749910wmd.3
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 05:35:35 -0700 (PDT)
+        id S1726279AbfJJOpg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 10:45:36 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:39187 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726222AbfJJOpg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 10:45:36 -0400
+Received: by mail-qt1-f196.google.com with SMTP id n7so9057398qtb.6
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 07:45:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=x0wApsDLgaNQ4wNWf8YiA6PwIlW5+8KFmZgQ1b5OQOE=;
-        b=Rm1kSJ+/h5uGaEKFMU3EpW0oBzPu7//LD7hsk/Ij198vpLgoRf37+LKMWaPa5Ligti
-         dlkCbknnK6HF1nBtxTtFagoTPepqU0YUOyJpc0n0oTUNn4FV9Gc5CtsDiV0ZY6hM2d9Y
-         WdDkcNbaMpeprJmYAx8/lnT5rGGVtk/V4AnP8CRlqYzLlBEW8xtzT6I2D6zSobbwb6jk
-         SoLcawf6ApZujXJB8gRiynff8JusVkvioq4Mn7EbPywtdJIawIVHUwc4YUjAuPFBg0DF
-         aVBAelvF2LWVVFwW9Cxp7j/6DXOwbgSJp/9I+oy/oWAjdknkk47IA0tPA53247JtTeTk
-         NWNQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+MjqY15jZqrRxALB2UzMoRt/GK+cPMpksMAbOjkc0Hc=;
+        b=HBhd14ntSu3QdEJO/ulGcQ+IfR71igKO3PN27xXRRwvLedMyukPvociFluAF5CH6WP
+         VUiD6I4olQiuxfVobN0z8AX2Kc5ziNXI7/V9Qh9WtvP1vmsDfkkaUQ2piVRlL4jPYWSw
+         hxGujrYq3XEeH4UySjeF3ycE1nnjFxjnV80k+pqBTnKHWTEwYCAdpgDYHIQv7CQ2af7b
+         HBdCTxks9UTfkUOg365PyN31wjpK8tgbrBrlwI/gN04OqrrbEEti21EfGjMaA6vY4SUQ
+         TELv1YLhBjS9XIr6wqBD90m1fh2x2RUjWqRQ0E2k3Wv1z1CKHaFUwjeV2yZFsvcO3XyA
+         0nAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=x0wApsDLgaNQ4wNWf8YiA6PwIlW5+8KFmZgQ1b5OQOE=;
-        b=oPBlEuHbPTi7cR5VOMhmJe3Z+dPatfORV+h3zo0WgYSXP5BzXZRYfBUX4Tl9YBP2g2
-         R+oF1dhMM9bMfN+I19gTOlbjMV83Z8V/USTtjjHM9MegH+KrZaHi1LKAk9FmJj1nmL6q
-         MfvNryiPhj3+JiuBLmAVasBP1d7to3qupdVE86YwPksiI4yI6hepMc5wyAo1coi4uG8g
-         4Czjx/EZ9LiTOEm8HUmGbjyY33O3IiPJN/ZWH90q0O72NFNCzRHRF/OWJk6qoUaS8rX1
-         H16JEZ0YGNDA5gNCmnDaWb3XlYctx30+ATRyOhd/EeW7dX9plh7afj6IF1ds64ZiVD+L
-         ly/w==
-X-Gm-Message-State: APjAAAU/DEE8ryCFrbDpxfD9LQNV2s9iO1C4ebAeOKTODMpP4wPDlYcB
-        uGf8C3RDX8RHBZRJlSxGNlCHXc+P
-X-Google-Smtp-Source: APXvYqyLtpVQ/SboixkpU5FqX6AqzgAhlfMx1z8kezDh5cH1nQS+YiJ5gOYIFGDc+Jbg5supTtt4qQ==
-X-Received: by 2002:a7b:c936:: with SMTP id h22mr7285282wml.1.1570710934493;
-        Thu, 10 Oct 2019 05:35:34 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h7sm4467394wrt.17.2019.10.10.05.35.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Oct 2019 05:35:34 -0700 (PDT)
-Date:   Thu, 10 Oct 2019 05:35:34 -0700 (PDT)
-X-Google-Original-Date: Thu, 10 Oct 2019 12:35:32 GMT
-Message-Id: <7b88e36723e3e6d51118d62211f487b497c532cc.1570710932.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.387.git.gitgitgadget@gmail.com>
-References: <pull.387.git.gitgitgadget@gmail.com>
-From:   "Tanay Abhra via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] t1308-config-set: fix a test that has a typo
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+MjqY15jZqrRxALB2UzMoRt/GK+cPMpksMAbOjkc0Hc=;
+        b=f19bQ8FsA1O/WsHdz9pBBqRIaSN61U8Csp+loZdKEkzxMY9YPMMGy/dpVnqDm2Exyz
+         rgSh+Y9tSjHU3gKreI8oxDZ6EbJFeP3/cbrUZCrZV3NBJWXAfxAuaAREzIsdm4v2FqlD
+         lrQ83GTGx9eYJvAWwNgM6EBjf9vu3XrQeMnrg8bdkIbhfkkO6YASu/d9bFh278+ZQ35Y
+         usKFgBy+foVOWLTDjDsTM3hRyj7IkgRthusy/qdCBbNDt3Ht0WPh9YxN5oLbtyNZ9Hah
+         foYqAPQhVfw9JWq9KPMid2kKMmH8vY7QpXQIVYRgqvYqo0z1W4k/TupJknSalrQH6I3E
+         dK9w==
+X-Gm-Message-State: APjAAAWm5z0iMPwXLVap7h+ROyAlv0JOmV3hxHGyThCbrdRwiC6BPQM1
+        BUId5O2fpaj7twc5BP4F7QVnyQpB358=
+X-Google-Smtp-Source: APXvYqyEiNPNCUzH2egLsPgiNyuDKT4hjyLMKiJuqVjJkzwPRKl1nBIdj7NVUTHik6sBbrqPE9SIjQ==
+X-Received: by 2002:ac8:1b54:: with SMTP id p20mr10486665qtk.8.1570718735356;
+        Thu, 10 Oct 2019 07:45:35 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:2da2:a6da:62ea:75d9? ([2001:4898:a800:1010:ded7:a6da:62ea:75d9])
+        by smtp.gmail.com with ESMTPSA id z5sm2689308qtb.49.2019.10.10.07.45.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Oct 2019 07:45:34 -0700 (PDT)
+Subject: Re: [PATCH 3/6] index-pack: remove redundant child field
+To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Cc:     peff@peff.net, mh@glandium.org
+References: <cover.1570663470.git.jonathantanmy@google.com>
+ <39740c6e58bd6cb6ea33e5abb4ab8542ff6eb7b7.1570663470.git.jonathantanmy@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <67ca2f70-361a-bebd-7590-37337959552c@gmail.com>
+Date:   Thu, 10 Oct 2019 10:45:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Tanay Abhra <tanayabh@gmail.com>
+In-Reply-To: <39740c6e58bd6cb6ea33e5abb4ab8542ff6eb7b7.1570663470.git.jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tanay Abhra <tanayabh@gmail.com>
+On 10/9/2019 7:44 PM, Jonathan Tan wrote:
+> Instead, recompute ancestry if we ever need to reclaim memory.
 
-Change test 'find value_list for a key from a configset' to redirect the
-result to 'expect' instead of 'except' which was a typo.
+I find this message lacking in important details:
 
-With this change, the test case actually fails because it uses
-`configset_get_value`. Clearly, this was intended to be
-`configset_get_value_multi` since the test expects a list of values
-instead of a single value, so let's fix that, too.
+1. Where do we recompute ancestry?
+2. What are the performance implications of this change?
+3. Why is it important that you construct a stack of deltas in prune_base_data()?
 
-Originally contributed as https://github.com/git/git/pull/451.
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  builtin/index-pack.c | 41 ++++++++++++++++++++++-------------------
+>  1 file changed, 22 insertions(+), 19 deletions(-)
+> 
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index 99f6e2957f..35f7f9e52b 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -34,7 +34,6 @@ struct object_stat {
+>  
+>  struct base_data {
+>  	struct base_data *base;
+> -	struct base_data *child;
+>  	struct object_entry *obj;
+>  	void *data;
+>  	unsigned long size;
+> @@ -44,7 +43,6 @@ struct base_data {
+>  
+>  struct thread_local {
+>  	pthread_t thread;
+> -	struct base_data *base_cache;
+>  	size_t base_cache_used;
+>  	int pack_fd;
+>  };
+> @@ -380,27 +378,37 @@ static void free_base_data(struct base_data *c)
+>  	}
+>  }
+>  
+> -static void prune_base_data(struct base_data *retain)
+> +static void prune_base_data(struct base_data *youngest_child)
+>  {
+>  	struct base_data *b;
+>  	struct thread_local *data = get_thread_data();
+> -	for (b = data->base_cache;
+> -	     data->base_cache_used > delta_base_cache_limit && b;
+> -	     b = b->child) {
+> -		if (b->data && b != retain)
+> -			free_base_data(b);
+> +	struct base_data **ancestry = NULL;
+> +	int nr = 0, alloc = 0;
+> +	int i;
+> +
+> +	if (data->base_cache_used <= delta_base_cache_limit)
+> +		return;
+> +
+> +	/*
+> +	 * Free all ancestors of youngest_child until we have enough space,
+> +	 * starting with the oldest. (We cannot free youngest_child itself.)
+> +	 */
+> +	for (b = youngest_child->base; b != NULL; b = b->base) {
+> +		ALLOC_GROW(ancestry, nr + 1, alloc);
+> +		ancestry[nr++] = b;
+> +	}
+> +	for (i = nr - 1;
+> +	     i >= 0 && data->base_cache_used > delta_base_cache_limit;
+> +	     i--) {
+> +		if (ancestry[i]->data)
+> +			free_base_data(ancestry[i]);
+>  	}
+> +	free(ancestry);
+>  }
+>  
+>  static void link_base_data(struct base_data *base, struct base_data *c)
+>  {
+> -	if (base)
+> -		base->child = c;
+> -	else
+> -		get_thread_data()->base_cache = c;
+> -
+>  	c->base = base;
+> -	c->child = NULL;
+>  	if (c->data)
+>  		get_thread_data()->base_cache_used += c->size;
+>  	prune_base_data(c);
+> @@ -408,11 +416,6 @@ static void link_base_data(struct base_data *base, struct base_data *c)
+>  
+>  static void unlink_base_data(struct base_data *c)
+>  {
+> -	struct base_data *base = c->base;
+> -	if (base)
+> -		base->child = NULL;
+> -	else
+> -		get_thread_data()->base_cache = NULL;
+>  	free_base_data(c);
+>  }
 
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t1308-config-set.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Seems like this method should be removed and all callers should
+call free_base_data() instead.
 
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index d0a2727b85..7b4e1a63eb 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -166,14 +166,14 @@ test_expect_success 'find value with highest priority from a configset' '
- '
- 
- test_expect_success 'find value_list for a key from a configset' '
--	cat >except <<-\EOF &&
-+	cat >expect <<-\EOF &&
-+	lama
-+	ball
- 	sam
- 	bat
- 	hask
--	lama
--	ball
- 	EOF
--	test-tool config configset_get_value case.baz config2 .git/config >actual &&
-+	test-tool config configset_get_value_multi case.baz config2 .git/config >actual &&
- 	test_cmp expect actual
- '
- 
--- 
-gitgitgadget
+-Stolee
+
