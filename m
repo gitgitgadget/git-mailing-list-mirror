@@ -2,105 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D7AD1F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 05:01:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E66081F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 05:30:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726255AbfJKFBR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 01:01:17 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:45531 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726099AbfJKFBR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 01:01:17 -0400
-Received: by mail-pl1-f196.google.com with SMTP id u12so3864754pls.12
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 22:01:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HZmUHEqJ03WfpjNmzrMCrjldrnjxZOo3dRnkd3E1jSk=;
-        b=mAvCaPGFoxIL9U+UWS4so48YZt7RQSNxKBkwaiNeguQqekkaZlsqKmRCJsZPlQ7wnQ
-         N6S8d0GweWq+6AUJ3gAS6ZcNJV9LV6u0exv799Vn9SPQK9S1/WgEox0tb84ZTVyd/yyt
-         lqXFrQ2+p6wrP2CAaG0ZEg3HRJU7dO2oX8FCBYCR1jNL81No3AF16wUvH25uKPWpuRW2
-         uoFKjb3+1wu/rJ96k9iskoADI2mU8S5XSMz7qr+e+1kQK2z1pc99kII+hOUtv59S1dyT
-         klQd24N+s8gyWH1FaMXcs5SrgR5kkSQEH/gkkggonFH30GfT/IjpNQN8KmHvj9uFjElF
-         neVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HZmUHEqJ03WfpjNmzrMCrjldrnjxZOo3dRnkd3E1jSk=;
-        b=HRE8V4Uv42KNJSTW2gS4YzBzGIpzMYgFHwLu/rwK3mWIOBTQwVPnlzxgQEIEkR6ypU
-         2VDxlaKdfEh9a7n7wP/zrC30GMtt/jouaNOOYJjanE1x+A5hLNhaxJy2zWvLJJOYNkVM
-         wST+lkVaDPcbZpGP8NojbpFxH/gy91T7L2CufjQscGsvbHKhj54nHO6eKnnAlNb+bYU7
-         mcRVjEJSNVTmwp3Fp8Vimng95H9sEjcrmD+AZl/GvBOOCplHXncFwhDWXi05aKUm/yj+
-         MaYeACJt+h39JXU1XCmKnL/UfoPdEIaMeiENHiHlyJphcGME/fN3I8IIeQy5nIiV4+xH
-         dtkA==
-X-Gm-Message-State: APjAAAWWvsFAXuZ6YM9xzPVmDYPhba051shiWjtQ+Hm/p5GVIXC+sQPW
-        koiVH6Nqe7ZHN3KVHWU58HPkH+Ba
-X-Google-Smtp-Source: APXvYqzWUUwP03t4PrjDHpM72dueuUhZvJdeCoL9ArUdihN2fWPBzFEIOT0LJ7WJNbnMhwUoMDSz4g==
-X-Received: by 2002:a17:902:8497:: with SMTP id c23mr13452810plo.84.1570770074804;
-        Thu, 10 Oct 2019 22:01:14 -0700 (PDT)
-Received: from generichostname ([2601:646:280:1b30:80db:d816:4d15:ae2a])
-        by smtp.gmail.com with ESMTPSA id y66sm7641033pgy.23.2019.10.10.22.01.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2019 22:01:13 -0700 (PDT)
-Date:   Thu, 10 Oct 2019 22:01:11 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        James Coglan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, James Coglan <jcoglan@gmail.com>
-Subject: Re: [PATCH 01/11] graph: automatically track visible width of
- `strbuf`
-Message-ID: <20191011050111.GA94866@generichostname>
-References: <pull.383.git.gitgitgadget@gmail.com>
- <4bc0a0596164212aa9d29d6dd0d7a0d8ab1b9dd0.1570724021.git.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.1910102303330.46@tvgsbejvaqbjf.bet>
- <20191010230550.GA42541@generichostname>
- <xmqq7e5cjbwj.fsf@gitster-ct.c.googlers.com>
+        id S1726287AbfJKFaH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 01:30:07 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57328 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726184AbfJKFaH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 01:30:07 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1961F99274;
+        Fri, 11 Oct 2019 01:30:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=m8AnCIkZ049QJ0HZNIJmG7ifzlM=; b=ffBxtc
+        LtvkNg/C/2nHPGEvyuo0Fj481fnYhjX4x1aBQosTCzMDo9pzm3lbK9gHz2XzxIpu
+        4z/Ms4U54zlf07kQCv8npAUgawcs0DLAJWRLemQWtSXC86bo5qdg1aXmlpKYp/Nc
+        4xf3K1k0v6AhBUJ5IuBzsND4jbRtNX8vigdKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vTtBE3PHC1GtPhu7lFPXW/WOMAEJcrcm
+        arQYOmgIMhsj8WeU9ZICgBCd0DWSrcq+odRbyj+UEHqYRrcr8jfb5LOeUpChrboj
+        yJ0ggHSXwg/QmH3cn9NTCu4oH0zi2RZfO5BT275pCQN5IReVfpLi8yqd6BsIusnS
+        3IHVJhm9pYE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 05A1D99273;
+        Fri, 11 Oct 2019 01:30:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EC28799271;
+        Fri, 11 Oct 2019 01:30:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] doc(stash): clarify the description of `save`
+References: <pull.384.git.gitgitgadget@gmail.com>
+        <572c7d0c51ffc68dc4603752d05fa7a418dbdd71.1570702000.git.gitgitgadget@gmail.com>
+        <20191010102828.GA12497@cat>
+Date:   Fri, 11 Oct 2019 14:29:59 +0900
+In-Reply-To: <20191010102828.GA12497@cat> (Thomas Gummerer's message of "Thu,
+        10 Oct 2019 11:28:28 +0100")
+Message-ID: <xmqq36fzj1d4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq7e5cjbwj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2C4EEF12-EBE8-11E9-BD5B-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 11, 2019 at 10:42:20AM +0900, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> > 	static int calculate_width(const struct strbuf *row)
-> > 	{
-> > 		int in_termcode = 0;
-> > 		int width = 0;
-> > 		int i;
-> >
-> > 		for (i = 0; i < row.len; i++) {
-> > 			if (row.buf[i] == '\033')
-> > 				in_termcode = 1;
-> >
-> > 			if (!in_termcode)
-> > 				width++;
-> > 			else if (row.buf[i] == 'm')
-> > 				in_termcode = 0;
-> > 		}
-> > 	}
-> 
-> Not every byte that is outside the escape sequence contributes to
-> one display columns.  You would want to take a look at utf8_width()
-> for inspiration.
-> 
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-Heh, I guess you're right. Looking right below the definition of
-utf8_width, I realised we have the utf8_strnwidth function. We should be
-able to just call
+> On 10/10, Johannes Schindelin via GitGitGadget wrote:
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> 
+>> The original phrasing of this paragraph made at least one person stumble
+>> over the word "from" (thinking that it was a typo and "from" was
+>> intended), and other readers chimed in, agreeing that it was confusing:
+>> https://public-inbox.org/git/0102016b8d597569-c1f6cfdc-cb45-4428-8737-cb1bc30655d8-000000@eu-west-1.amazonses.com/#t
+>> 
+>> Let's rewrite that paragraph for clarity.
+>> 
+>> Inspired-by-a-patch-by: Catalin Criste <cris_linu_w@yahoo.com>
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Thanks for picking this thread up again, I had already forgotten about
+> it.  The updated wording sounds like an improvement to me.
 
-	utf8_strnwidth(row.buf, row.len, 1);
+To me too.  I would have just done s/form/become/ out of laziness
+and aiming for conciseness, but the new and separate sentence is
+good, too.
+
+Thanks, both.
+
+>
+>> ---
+>>  Documentation/git-stash.txt | 5 +++--
+>>  1 file changed, 3 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+>> index 8fbe12c66c..53e1a1205d 100644
+>> --- a/Documentation/git-stash.txt
+>> +++ b/Documentation/git-stash.txt
+>> @@ -87,8 +87,9 @@ The `--patch` option implies `--keep-index`.  You can use
+>>  save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
+>>  
+>>  	This option is deprecated in favour of 'git stash push'.  It
+>> -	differs from "stash push" in that it cannot take pathspecs,
+>> -	and any non-option arguments form the message.
+>> +	differs from "stash push" in that it cannot take pathspecs.
+>> +	Instead, all non-option arguments are concatenated to form the stash
+>> +	message.
+>>  
+>>  list [<options>]::
+>>  
+>> -- 
+>> gitgitgadget
