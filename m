@@ -2,76 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-9.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAD3C1F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 22:30:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F35A41F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 23:26:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726595AbfJKWaR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 18:30:17 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:45929 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726174AbfJKWaR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 18:30:17 -0400
-Received: by mail-vs1-f67.google.com with SMTP id d204so7216338vsc.12
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 15:30:17 -0700 (PDT)
+        id S1727199AbfJKX0l (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 19:26:41 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:39511 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726243AbfJKX0k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 19:26:40 -0400
+Received: by mail-pf1-f194.google.com with SMTP id v4so6947908pff.6
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 16:26:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FGhQSYI1EhXkNpdHmeFqG1O4gCqugU454aejAbKOzRQ=;
-        b=tgOMRvQFkPvpZWxAFvtoWIX94zID2wMAIpqT2+JJsUjUjtnaWAoB28lbo4H82hOtB+
-         8pQbLkgovK8Exyue6TPlXsBNQ0ZYPT5DcXZfTcZZvoaa7knysoM3iV1QHcjbi2760Ekg
-         PRA5tuKeCTUy+RoJm+csMYk5pjb7MLYSuYVEWSCXbzHU1/DDN4E+sl8mWzXhxROxyUDw
-         TWjhSw5Sy15d68V/fGK57HePtLDemlZtGsjerfl2E9+6cA0yDJ3RmsE+jadi0M85mj0D
-         7LvyKT47n6alOvS1SA5r3wWDrNZgHeXF20i8Ja2164vYUd38gFH0m/5xFevx5n5xwhw0
-         RKAA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8MwVDR56CskZ+WnRMU7/G+hFQYloypOSlvagAtSSDT4=;
+        b=fyIRidkGo8EBxYE/933st4BL4mxGcBHtYEnnFSmTQuNq9rbNRqtUf6ZWNxvq3X+kd8
+         pU7CGABfg3HArRnq0WHIZy9jHj7KOZZ9L/hE82hsC9zqkqQkqrO9Wj8qIJeKwm84GBmw
+         620uLJ8t8ZDi+tMJvPAcU+NMJ/Wss6LunUE2iUd0fFrv97TUobmadpRNkgMmC3Nwui1R
+         qyUphZ6t3p+Wv8AATmimrPsLdMfEUki6Xcqcc+h+HzAEBmWH6so8HapWGtZzRnnmGEqc
+         M11safv/bEDzEsq5/BrPusy+E/sd40DFYN+j+QAIWhhako77IDlThaOAthl7zkONwA0S
+         rpZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FGhQSYI1EhXkNpdHmeFqG1O4gCqugU454aejAbKOzRQ=;
-        b=WI4bimlKcJkgKlgT2dqr9WM2ZdLvHut2ADxr51pJclEDfeRk1V1i2VaD622uHEXjyQ
-         2/9llKD1XvyJNF+eFap4cWnaJMs+WQg0o0jIniJqKU6fSkUunmotqz2EC8XNeERYQjRF
-         LG7LIF6F/ZoiT5ax3Jsk55eod2Zl1yLlmh8C0181DkOk+luYjGjdkmcTotJiOEvLUtj8
-         hEMAxzyD436vBPs6zN8tOdnuEFdAk5F5gVwDEkqEkq0PoaBO+PJ7qQXKLLTXJVIUbSis
-         J6LWaDdZ69jcpqg1iWpS6H1aWWGypsS7Yj09XKpEKUpVmKINt8ZkydS9mPYTnysBAsT2
-         m/GA==
-X-Gm-Message-State: APjAAAUYlC5GQts/22mkKFPWwrfDOLW6mPsd9kTYfLe090zDUbvCQFJ9
-        mBDSD4iILle5wcaNoG0Epusw1gFRWZdbHJt7oiM=
-X-Google-Smtp-Source: APXvYqwAmKE4QsIfOozi7bEz23rcN00klXP5TB55zxvjP2yAL3iqPc16O1DDe/W25Ye/cfk+K/kY7r6wiESyZJzDu5E=
-X-Received: by 2002:a67:b30c:: with SMTP id a12mr10383708vsm.175.1570833016663;
- Fri, 11 Oct 2019 15:30:16 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8MwVDR56CskZ+WnRMU7/G+hFQYloypOSlvagAtSSDT4=;
+        b=khk1x6J9e21DAK7ox8QjXPUwPmq2hU5BEauUsq1CzBOSnuOzRBPiSBPWazxTS7VHoP
+         c7N+1Oo62Al4vJzs6Ab99JTVHnR860bg3a9ZO4KTyXnSjuU8GE+F9lTV2mzOT7yuvNhU
+         OvkU7W7aOYfRWhvQ84sZ9lObnjghU5wKbwUKYyIcZsHdzf4nxyXlJGmBD+S5D2Gz7fOH
+         17dKE1t/exAe7FSz3Bk+jliVTwkW6Fo3+5uCfhwbuQcO/iOJgPX0pMOk2MOG/7iZ+Tjh
+         oJj35N4AtJ5f5M3FSudIScuaoPK7nE53L1985sZafT93ib1tv4Yer5yR0rSaenmolIlB
+         R/qA==
+X-Gm-Message-State: APjAAAUwoyHfPxOQ0OTH2lwp6PnUss8oF/GgnGuFeonWO4Hp4FTMYnLd
+        bovBEdxtoJ7Y+FjymrqAilyUmklBQqen4w==
+X-Google-Smtp-Source: APXvYqzMPvsVrpv/sPAPWxjvkGcpmmvtQtFUe2L8AD2BwYu3lX+2nEQZLxBB8uyVYlKni1Ob+z/sXQ==
+X-Received: by 2002:a17:90a:fe04:: with SMTP id ck4mr20420147pjb.90.1570836399405;
+        Fri, 11 Oct 2019 16:26:39 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id u65sm3704819pgb.36.2019.10.11.16.26.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Oct 2019 16:26:38 -0700 (PDT)
+Date:   Fri, 11 Oct 2019 16:26:33 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH v5] documentation: add tutorial for object walking
+Message-ID: <20191011232633.GB20450@google.com>
+References: <20191010151932.2716-1-emilyshaffer@google.com>
+ <xmqqr23jhlud.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <pull.316.v2.git.gitgitgadget@gmail.com> <pull.316.v3.git.gitgitgadget@gmail.com>
- <6ce1d60b38a249f8d9f85d1b1a1ed556aef2469e.1570478905.git.gitgitgadget@gmail.com>
- <CABPp-BFaSh6O+eMsZ_ghMNUXdwh5kh2P9JF9msQSgz_XG2fENA@mail.gmail.com>
-In-Reply-To: <CABPp-BFaSh6O+eMsZ_ghMNUXdwh5kh2P9JF9msQSgz_XG2fENA@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 11 Oct 2019 15:30:05 -0700
-Message-ID: <CABPp-BE=p1SnpLnOPpC=5ZsK5DtW7+DsgTwZRDWHor_p3Vx36w@mail.gmail.com>
-Subject: Re: [PATCH v3 04/17] sparse-checkout: 'set' subcommand
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqr23jhlud.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 11, 2019 at 3:26 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Mon, Oct 7, 2019 at 1:08 PM Derrick Stolee via GitGitGadget
+On Fri, Oct 11, 2019 at 02:50:34PM +0900, Junio C Hamano wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> > @@ -77,6 +77,7 @@ API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technica
+> >  SP_ARTICLES += $(API_DOCS)
+> >  
+> >  TECH_DOCS += MyFirstContribution
+> > +TECH_DOCS += MyFirstRevWalk
+> 
+> s/Rev/Object/ probably (if so I can locally amend).
+Yes, that's the case, although I'll send a reroll shortly if you don't
+want to amend locally - there's other stuff to fix according to you and
+SZEDER.
 
-> Looks good, thanks for the fixes.  I'm still slightly worried about
-> folks not looking at the docs and calling sparse-checkout set without
-> calling init, and then being negatively surprised.  It's a minor
-> issue, but a warning might be helpful.
+> 
+> > diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+> > new file mode 100644
+> > index 0000000000..7085f17072
+> > --- /dev/null
+> > +++ b/Documentation/MyFirstObjectWalk.txt
+> > @@ -0,0 +1,905 @@
+> > +My First Object Walk
+> > +======================
+> > +
+> > +== What's an Object Walk?
+> > +
+> > +The object walk is a key concept in Git - this is the process that underpins
+> > +operations like `git log`, `git blame`, and `git reflog`. Beginning at HEAD, the
+> > +list of objects is found by walking parent relationships between objects.
+> 
+> The above is more about revision walk, for which we have plenty of
+> docs already, isn't it?  Walking objects, while walking the commit
+> DAG, is a lessor concept than the key "revision walk" concept and
+> underpins different set of operations like object transfer and fsck.
+> 
+> Also, the object walk, unlike the revision walk, follows containment
+> relationships between objects.
 
-Looks like you added that to patch 5, so nevermind.
+Good point; I'll rewrite this paragraph rather than trying to just edit
+it a little for the next reroll.
+
+> 
+> > +A related concept is the revision walk, which is focused on commit objects and
+> > +their relationships.
+> 
+> Yes, s/their/& parent/ perhaps, to contrast the two a bit better.
+> `git log` and friends, if they need to be listed, should come on
+> this side, I think.
+> 
+OK.
