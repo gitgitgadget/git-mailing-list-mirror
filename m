@@ -8,64 +8,65 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C797F1F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 16:50:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2869A1F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 17:04:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728205AbfJKQuJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 12:50:09 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:34797 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726728AbfJKQuI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 12:50:08 -0400
-Received: by mail-wr1-f66.google.com with SMTP id j11so12707439wrp.1
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 09:50:07 -0700 (PDT)
+        id S1728445AbfJKRE1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 13:04:27 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:38713 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726331AbfJKRE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 13:04:27 -0400
+Received: by mail-wm1-f66.google.com with SMTP id 3so10912352wmi.3
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 10:04:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ibtABbXoECQRPuBIxHjPhQgrWekJwNGSd7qXOqssnvI=;
-        b=FBV3y9ac07YD9fl00bHkTm5UV1JobxQKulGi/XrbaZWNCarNsnGACH+z40651QLspz
-         Iv39GhHFSbg8sJdkFgl7Gi5sdHxwM0gUW+kWRIYW4rL2SzZQfOgOg1ceMi85ETQBSZfs
-         PjoOzgMq0rDOXnhTLhLtnMXEOnWFdOxV5GYjwQe8TcgqO8D0LIkhDDR30UwH5f1tpyCj
-         3rr0g4XQN2dBnvD8Exq5CDF6GMrYjFSeZAbGgZzyQcYxiJ1ghe1bi2iLtxGUpJ7L4RhY
-         C5n8yzmMcQiElxyXrjo0Pxm/Zpg+kXMKXFV2IhfGEgNoe5Lx77zuhR+wWRzqTLzyAqOL
-         PlAw==
+        bh=kf0rLawfb3sgdh6j418/wiAWZ/m2sXSnLVRiF7ozmnI=;
+        b=MZUWLdmhA6TE6jze1vMP5eP2UCKTUqiffRopCrGCED8OS2eAMkpjbc5QiMBwPx8Min
+         ta35SA5bMCDlwsNXVhXnxNJrrRKvC+3R2O5RuArd3pNltXEB8Lxhdjl2WjYgP5Hj1iUb
+         PDgc9Xr8+npv7oR0m2sulxpCwQrjm/BJAEC1BMEdDGoKJtNnZXJwqJyTlnMzWRfCQGrz
+         A8rnkaZPIkdIUvNmnXeOLkNaukkxDsza8BdU0APjZpvbNNyxBUik3bupKcNomPNQPu5h
+         /wxk15sww5BQIyT98owVkSMAvkDB9IGCHn54ilmXl/DLAgWVLsH9TOnAKaJYrsxo5oa/
+         x5MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=ibtABbXoECQRPuBIxHjPhQgrWekJwNGSd7qXOqssnvI=;
-        b=K4dX6WN1Bp7E8dJspfRpmka7/tEuV4Lef076s5qe+OsrQk2pWQy+BSIaJc7GddfDl6
-         TvA3IHaCbhx9NXzKcO4A+uxI/gp0nStv5LXqpe+3MsB7Gh9aCTufbYZjVOa5HP6gCtZR
-         7viJ/45a5aqZ7gcx2PEh1Ta7wmJdjcq7PrCQSRyMWjzD5jhZo+0RLItqLQD05NtwfzSZ
-         GeZfK1b9wi7UwPp+FN1g24uouGygHEMt9AFj42fUsfppySyb6Mj3qJxjrvOxbmdxqtS0
-         2ILKmt9ijLSt9Od5hjUAmoM66g3URXaoGbAp3vJDSTkKWErYOcJ0sJz65ONHYvDQfX+3
-         VvXQ==
-X-Gm-Message-State: APjAAAWGvCPRHK3a3n8aRYUMQc8tjZtYYFHnfzLxzSctmGAn1l4yiLsM
-        2gtj4Y8acg8welweuqx7Bbzw3El1yL8=
-X-Google-Smtp-Source: APXvYqz0CqRzlfeJToQin5Tc8yTH7LU3KYs7e7OIWfcC+3n56dLVXEgscLz7PUb24P6oaU48onuUGQ==
-X-Received: by 2002:a5d:67c5:: with SMTP id n5mr9755787wrw.72.1570812606659;
-        Fri, 11 Oct 2019 09:50:06 -0700 (PDT)
+        bh=kf0rLawfb3sgdh6j418/wiAWZ/m2sXSnLVRiF7ozmnI=;
+        b=apGXMtanRPvqQhwsGKXxNmxBLwPB7w61RksepAYDmzZpzmBiqlL8us5uaLdXM1+D1y
+         05sb18ZiOFwngtec2kOJ2L3sEny5tDos+wuCviAUqO5/aNhMIG42a7lUnReI+4qMe6jY
+         IxBskiURWSAV/91C1hTXqe2pGQCH9bGo6PZxQQSY26S6cHP9PEF5MDL7C2z0O1gsxJ9X
+         N31oJWOUP5uRl8jeKrpAyOSwf3+hUpvxLeUK7AgElzaqSlXlK2akjhNB23URlcmvLdRN
+         LbIxeEE/UYHyd2dIkSMQ4ouG2Ixz5upbzYzJ/e6njSpZXDarwU+M88Py0MGy26zgTGk7
+         3dKw==
+X-Gm-Message-State: APjAAAXEra4d5KeZyu7wX4/NLQkQY6M3W7n5ogOOq6tbWqxx2c+L9NDi
+        H7GkBXnPIwZVbLE66luELUA=
+X-Google-Smtp-Source: APXvYqw5X2uu/varH6omLYW6HDpREIADAV1VseKa5fVL3uxW6VSLX7PR3iqy0ZxmkA35Gguz+W7ajg==
+X-Received: by 2002:a7b:c395:: with SMTP id s21mr4270435wmj.114.1570813462974;
+        Fri, 11 Oct 2019 10:04:22 -0700 (PDT)
 Received: from liskov.home (host109-157-47-110.range109-157.btcentralplus.com. [109.157.47.110])
-        by smtp.gmail.com with ESMTPSA id o70sm12712572wme.29.2019.10.11.09.50.05
+        by smtp.gmail.com with ESMTPSA id z9sm10514663wrp.26.2019.10.11.10.04.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Oct 2019 09:50:05 -0700 (PDT)
-Subject: Re: [PATCH 06/11] graph: tidy up display of left-skewed merges
+        Fri, 11 Oct 2019 10:04:22 -0700 (PDT)
+Subject: Re: [PATCH 07/11] graph: commit and post-merge lines for left-skewed
+ merges
 To:     Derrick Stolee <stolee@gmail.com>,
         James Coglan via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
 References: <pull.383.git.gitgitgadget@gmail.com>
- <12c0916cb1ef033f917dc065cc1f18c0477296b8.1570724021.git.gitgitgadget@gmail.com>
- <5c688030-6351-93a3-89bd-e666d02d12d9@gmail.com>
+ <6c173663aac37f1d314db8637cf4a243066b8078.1570724021.git.gitgitgadget@gmail.com>
+ <9fe7f2d9-2108-5cf6-dcd7-06d91e74e98b@gmail.com>
 From:   James Coglan <jcoglan@gmail.com>
-Message-ID: <494a92ba-00ab-b5d8-ee66-4007647f8483@gmail.com>
-Date:   Fri, 11 Oct 2019 17:50:04 +0100
+Message-ID: <204c7479-c78d-54ff-5ece-397b4c31804c@gmail.com>
+Date:   Fri, 11 Oct 2019 18:04:21 +0100
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:68.0)
  Gecko/20100101 Thunderbird/68.1.1
 MIME-Version: 1.0
-In-Reply-To: <5c688030-6351-93a3-89bd-e666d02d12d9@gmail.com>
+In-Reply-To: <9fe7f2d9-2108-5cf6-dcd7-06d91e74e98b@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -74,67 +75,402 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/10/2019 18:19, Derrick Stolee wrote:
+On 10/10/2019 18:49, Derrick Stolee wrote:
 > On 10/10/2019 12:13 PM, James Coglan via GitGitGadget wrote:
+>> From: James Coglan <jcoglan@gmail.com>
+>>
+>> Following the introduction of "left-skewed" merges, which are merges
+>> whose first parent fuses with another edge to its left, we have some
+>> more edge cases to deal with in the display of commit and post-merge
+>> lines.
+>>
+>> The current graph code handles the following cases for edges appearing
+>> to the right of the commit (*) on commit lines. A 2-way merge is usually
+>> followed by vertical lines:
+>>
+>>         | | |
+>>         | * |
+>>         | |\ \
+>>
+>> An octopus merge (more than two parents) is always followed by edges
+>> sloping to the right:
+>>
+>>         | |  \          | |    \
+>>         | *-. \         | *---. \
+>>         | |\ \ \        | |\ \ \ \
+>>
+>> A 2-way merge is followed by a right-sloping edge if the commit line
+>> immediately follows a post-merge line for a commit that appears in the
+>> same column as the current commit, or any column to the left of that:
+>>
+>>         | *             | * |
+>>         | |\            | |\ \
+>>         | * \           | | * \
+>>         | |\ \          | | |\ \
+>>
+>> This commit introduces the following new cases for commit lines. If a
+>> 2-way merge skews to the left, then the edges to its right are always
+>> vertical lines, even if the commit follows a post-merge line:
+>>
+>>         | | |           | |\
+>>         | * |           | * |
+>>         |/| |           |/| |
+>>
+>> A commit with 3 parents that skews left is followed by vertical edges:
+>>
+>>         | | |
+>>         | * |
+>>         |/|\ \
+>>
+>> If a 3-way left-skewed merge commit appears immediately after a
+>> post-merge line, then it may be followed the right-sloping edges, just
+>> like a 2-way merge that is not skewed.
+>>
+>>         | |\
+>>         | * \
+>>         |/|\ \
+>>
+>> Octopus merges with 4 or more parents that skew to the left will always
+>> be followed by right-sloping edges, because the existing columns need to
+>> expand around the merge.
+>>
+>>         | |  \
+>>         | *-. \
+>>         |/|\ \ \
+>>
+>> On post-merge lines, usually all edges following the current commit
+>> slope to the right:
+>>
+>>         | * | |
+>>         | |\ \ \
+>>
+>> However, if the commit is a left-skewed 2-way merge, the edges to its
+>> right remain vertical. We also need to display a space after the
+>> vertical line descending from the commit marker, whereas this line would
+>> normally be followed by a backslash.
+>>
+>>         | * | |
+>>         |/| | |
+>>
+>> If a left-skewed merge has more than 2 parents, then the edges to its
+>> right are still sloped as they bend around the edges introduced by the
+>> merge.
+>>
+>>         | * | |
+>>         |/|\ \ \
+>>
+>> To handle these new cases, we need to know not just how many parents
+>> each commit has, but how many new columns it adds to the display; this
+>> quantity is recorded in the `edges_added` field for the current commit,
+>> and `prev_edges_added` field for the previous commit.
+>>
+>> Here, "column" refers to visual columns, not the logical columns of the
+>> `columns` array. This is because even if all the commit's parents end up
+>> fusing with existing edges, they initially introduce distinct edges in
+>> the commit and post-merge lines before those edges collapse. For
+>> example, a 3-way merge whose 2nd and 3rd parents fuse with existing
+>> edges still introduces 2 visual columns that affect the display of edges
+>> to their right.
+>>
+>>         | | |  \
+>>         | | *-. \
+>>         | | |\ \ \
+>>         | |_|/ / /
+>>         |/| | / /
+>>         | | |/ /
+>>         | |/| |
+>>         | | | |
+>>
+>> This merge does not introduce any *logical* columns; there are 4 edges
+>> before and after this commit once all edges have collapsed. But it does
+>> initially introduce 2 new edges that need to be accommodated by the
+>> edges to their right.
+>>
+>> Signed-off-by: James Coglan <jcoglan@gmail.com>
+>> ---
+>>  graph.c                      |  63 +++++++++++++--
+>>  t/t4215-log-skewed-merges.sh | 151 +++++++++++++++++++++++++++++++++++
+>>  2 files changed, 209 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/graph.c b/graph.c
+>> index 9136173e03..fb2e42850f 100644
+>> --- a/graph.c
+>> +++ b/graph.c
+>> @@ -197,6 +197,46 @@ struct git_graph {
+>>  	 * 		|/| | | | |		| | | | | *
+>>  	 */
+>>  	int merge_layout;
+>> +	/*
+>> +	 * The number of columns added to the graph by the current commit. For
+>> +	 * 2-way and octopus merges, this is is usually one less than the
+>> +	 * number of parents:
+>> +	 *
+>> +	 * 		| | |			| |    \
+>> +	 *		| * |			| *---. \
+>> +	 *		| |\ \			| |\ \ \ \
+>> +	 *		| | | |         	| | | | | |
+>> +	 *
+>> +	 *		num_parents: 2		num_parents: 4
+>> +	 *		edges_added: 1		edges_added: 3
+>> +	 *
+>> +	 * For left-skewed merges, the first parent fuses with its neighbor and
+>> +	 * so one less column is added:
+>> +	 *
+>> +	 *		| | |			| |  \
+>> +	 *		| * |			| *-. \
+>> +	 *		|/| |			|/|\ \ \
+>> +	 *		| | |			| | | | |
+>> +	 *
+>> +	 *		num_parents: 2		num_parents: 4
+>> +	 *		edges_added: 0		edges_added: 2
+>> +	 *
+>> +	 * This number determines how edges to the right of the merge are
+>> +	 * displayed in commit and post-merge lines; if no columns have been
+>> +	 * added then a vertical line should be used where a right-tracking
+>> +	 * line would otherwise be used.
+>> +	 *
+>> +	 *		| * \			| * |
+>> +	 *		| |\ \			|/| |
+>> +	 *		| | * \			| * |
+>> +	 */
+>> +	int edges_added;
+>> +	/*
+>> +	 * The number of columns added by the previous commit, which is used to
+>> +	 * smooth edges appearing to the right of a commit in a commit line
+>> +	 * following a post-merge line.
+>> +	 */
+>> +	int prev_edges_added;
+>>  	/*
+>>  	 * The maximum number of columns that can be stored in the columns
+>>  	 * and new_columns arrays.  This is also half the number of entries
+>> @@ -309,6 +349,8 @@ struct git_graph *graph_init(struct rev_info *opt)
+>>  	graph->commit_index = 0;
+>>  	graph->prev_commit_index = 0;
+>>  	graph->merge_layout = 0;
+>> +	graph->edges_added = 0;
+>> +	graph->prev_edges_added = 0;
+>>  	graph->num_columns = 0;
+>>  	graph->num_new_columns = 0;
+>>  	graph->mapping_size = 0;
+>> @@ -670,6 +712,9 @@ void graph_update(struct git_graph *graph, struct commit *commit)
+>>  	 */
+>>  	graph_update_columns(graph);
+>>  
+>> +	graph->prev_edges_added = graph->edges_added;
+>> +	graph->edges_added = graph->num_parents + graph->merge_layout - 2;
+>> +
+>>  	graph->expansion_row = 0;
+>>  
+>>  	/*
+>> @@ -943,12 +988,13 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+>>  
+>>  			if (graph->num_parents > 2)
+>>  				graph_draw_octopus_merge(graph, sb);
+>> -		} else if (seen_this && (graph->num_parents > 2)) {
+>> +		} else if (seen_this && (graph->edges_added > 1)) {
+>>  			strbuf_write_column(sb, col, '\\');
+>> -		} else if (seen_this && (graph->num_parents == 2)) {
+>> +		} else if (seen_this && (graph->edges_added == 1)) {
+>>  			/*
+>> -			 * This is a 2-way merge commit.
+>> -			 * There is no GRAPH_PRE_COMMIT stage for 2-way
+>> +			 * This is either a right-skewed 2-way merge
+>> +			 * commit, or a left-skewed 3-way merge.
+>> +			 * There is no GRAPH_PRE_COMMIT stage for such
+>>  			 * merges, so this is the first line of output
+>>  			 * for this commit.  Check to see what the previous
+>>  			 * line of output was.
+>> @@ -960,6 +1006,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+>>  			 * makes the output look nicer.
+>>  			 */
+>>  			if (graph->prev_state == GRAPH_POST_MERGE &&
+>> +			    graph->prev_edges_added > 0 &&
+>>  			    graph->prev_commit_index < i)
+>>  				strbuf_write_column(sb, col, '\\');
+>>  			else
+>> @@ -1031,8 +1078,14 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf
+>>  				else
+>>  					idx++;
+>>  			}
+>> +			if (graph->edges_added == 0)
+>> +				strbuf_addch(sb, ' ');
+>> +
+>>  		} else if (seen_this) {
+>> -			strbuf_write_column(sb, col, '\\');
+>> +			if (graph->edges_added > 0)
+>> +				strbuf_write_column(sb, col, '\\');
+>> +			else
+>> +				strbuf_write_column(sb, col, '|');
+>>  			strbuf_addch(sb, ' ');
+>>  		} else {
+>>  			strbuf_write_column(sb, col, '|');
+>> diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+>> index cfaba40f97..e479d6e676 100755
+>> --- a/t/t4215-log-skewed-merges.sh
 >> +++ b/t/t4215-log-skewed-merges.sh
->> @@ -0,0 +1,42 @@
->> +#!/bin/sh
+>> @@ -39,4 +39,155 @@ test_expect_success 'log --graph with left-skewed merge' '
+>>  	test_cmp expect actual
+>>  '
+>>  
+>> +test_expect_success 'setup nested left-skewed merge' '
+>> +	git checkout --orphan 1_p &&
+>> +	test_commit 1_A &&
+>> +	test_commit 1_B &&
+>> +	test_commit 1_C &&
+>> +	git checkout -b 1_q @^ && test_commit 1_D &&
+>> +	git checkout 1_p && git merge --no-ff 1_q -m 1_E &&
+>> +	git checkout -b 1_r @~3 && test_commit 1_F &&
+>> +	git checkout 1_p && git merge --no-ff 1_r -m 1_G &&
+>> +	git checkout @^^ && git merge --no-ff 1_p -m 1_H
+>> +'
 >> +
->> +test_description='git log --graph of skewed merges'
+>> +cat > expect <<\EOF
+>> +*   1_H
+>> +|\
+>> +| *   1_G
+>> +| |\
+>> +| | * 1_F
+>> +| * | 1_E
+>> +|/| |
+>> +| * | 1_D
+>> +* | | 1_C
+>> +|/ /
+>> +* | 1_B
+>> +|/
+>> +* 1_A
+>> +EOF
 >> +
->> +. ./test-lib.sh
+>> +test_expect_success 'log --graph with nested left-skewed merge' '
+>> +	git log --graph --pretty=tformat:%s | sed "s/ *$//" > actual &&
+>> +	test_cmp expect actual
+>> +'
+> 
+> I should have noticed in your earlier commits, but why don't you keep
+> the output inside the test suite? You can start with "cat >expect <<-EOF"
+> to have it ignore leading whitespace. Sorry if there's something else about
+> this that is causing issues.
+
+I was following a pattern used in t/t4202-log.sh. I believe it was easier to debug these tests with the setup and expectations split into separate blocks, but I wouldn't be opposed to merging them.
+
 >> +
->> +test_expect_success 'setup left-skewed merge' '
+>> +test_expect_success 'setup nested left-skewed merge following normal merge' '
+>> +	git checkout --orphan 2_p &&
+>> +	test_commit 2_A &&
+>> +	test_commit 2_B &&
+>> +	test_commit 2_C &&
+>> +	git checkout -b 2_q @^^ &&
+>> +	test_commit 2_D &&
+>> +	test_commit 2_E &&
+>> +	git checkout -b 2_r @^ && test_commit 2_F &&
+>> +	git checkout 2_q &&
+>> +	git merge --no-ff 2_r -m 2_G &&
+>> +	git merge --no-ff 2_p^ -m 2_H &&
+>> +	git checkout -b 2_s @^^ && git merge --no-ff 2_q -m 2_J &&
+>> +	git checkout 2_p && git merge --no-ff 2_s -m 2_K
+>> +'
+>> +
+>> +cat > expect <<\EOF
+>> +*   2_K
+>> +|\
+>> +| *   2_J
+>> +| |\
+>> +| | *   2_H
+>> +| | |\
+>> +| | * | 2_G
+>> +| |/| |
+>> +| | * | 2_F
+>> +| * | | 2_E
+>> +| |/ /
+>> +| * | 2_D
+>> +* | | 2_C
+>> +| |/
+>> +|/|
+>> +* | 2_B
+>> +|/
+>> +* 2_A
+>> +EOF
+>> +
+>> +test_expect_success 'log --graph with nested left-skewed merge following normal merge' '
+>> +	git log --graph --pretty=tformat:%s | sed "s/ *$//" > actual &&
+>> +	test_cmp expect actual
+>> +'
+>> +
+>> +test_expect_success 'setup nested right-skewed merge following left-skewed merge' '
+>> +	git checkout --orphan 3_p &&
+>> +	test_commit 3_A &&
+>> +	git checkout -b 3_q &&
+>> +	test_commit 3_B &&
+>> +	test_commit 3_C &&
+>> +	git checkout -b 3_r @^ &&
+>> +	test_commit 3_D &&
+>> +	git checkout 3_q && git merge --no-ff 3_r -m 3_E &&
+>> +	git checkout 3_p && git merge --no-ff 3_q -m 3_F &&
+>> +	git checkout 3_r && test_commit 3_G &&
+>> +	git checkout 3_p && git merge --no-ff 3_r -m 3_H &&
+>> +	git checkout @^^ && git merge --no-ff 3_p -m 3_J
+>> +'
+>> +
+>> +cat > expect <<\EOF
+>> +*   3_J
+>> +|\
+>> +| *   3_H
+>> +| |\
+>> +| | * 3_G
+>> +| * | 3_F
+>> +|/| |
+>> +| * |   3_E
+>> +| |\ \
+>> +| | |/
+>> +| | * 3_D
+>> +| * | 3_C
+>> +| |/
+>> +| * 3_B
+>> +|/
+>> +* 3_A
+>> +EOF
+>> +
+>> +test_expect_success 'log --graph with nested right-skewed merge following left-skewed merge' '
+>> +	git log --graph --pretty=tformat:%s | sed "s/ *$//" > actual &&
+>> +	test_cmp expect actual
+>> +'
+>> +
+>> +test_expect_success 'setup right-skewed merge following a left-skewed one' '
+>> +	git checkout --orphan 4_p &&
+>> +	test_commit 4_A &&
+>> +	test_commit 4_B &&
+>> +	test_commit 4_C &&
+>> +	git checkout -b 4_q @^^ && test_commit 4_D &&
+>> +	git checkout -b 4_r 4_p^ && git merge --no-ff 4_q -m 4_E &&
+>> +	git checkout -b 4_s 4_p^^ &&
+>> +	git merge --no-ff 4_r -m 4_F &&
+>> +	git merge --no-ff 4_p -m 4_G &&
+>> +	git checkout @^^ && git merge --no-ff 4_s -m 4_H
+>> +'
+>> +
+>> +cat > expect <<\EOF
+>> +*   4_H
+>> +|\
+>> +| *   4_G
+>> +| |\
+>> +| * | 4_F
+>> +|/| |
+>> +| * |   4_E
+>> +| |\ \
+>> +| | * | 4_D
+>> +| |/ /
+>> +|/| |
+>> +| | * 4_C
+>> +| |/
+>> +| * 4_B
+>> +|/
+>> +* 4_A
+>> +EOF
+>> +
+>> +test_expect_success 'log --graph with right-skewed merge following a left-skewed one' '
+>> +	git log --graph --date-order --pretty=tformat:%s | sed "s/ *$//" > actual &&
+>> +	test_cmp expect actual
+>> +'
+>> +
+>>  test_done
+>>
 > 
-> 
-> Could you skew this example to include a left-skewed octopus merge
-> (and use fewer Git processes) with the following:
-> 
-> 	git checkout --orphan _a && test_commit A &&
-> 	git switch -c _b _a && test_commit B &&
-> 	git switch -c _c _a && test_commit C &&
-> 	git switch -c _d _a && test_commit D &&	git switch -c _e _b && git merge --no-ff _c _d E &&
-> 	git switch -c _f _a && git merge --no-ff _d -m F &&	git checkout _a && git merge --no-ff _b _c _e _f -m G
-> and I think the resulting output will be:
-> 
-> *-----.   G
-> |\ \ \ \
-> | | | | * F
-> | |_|_|/|
-> |/| | | |
-> | | | * | E
-> | |_|/|\|
-> |/| | | |
-> | | |/  * D
-> | |_|__/
-> |/| |
-> | | * C
-> | |/
-> |/|
-> | * B
-> |/
-> * A
-
-At this point in the history, commit E won't render like that -- this is before the change that flattens edges that fuse with the merge's last parent. I think the display of this history at this point will be:
-
-	*-----.   G
-	|\ \ \ \
-	| | | | * F
-	| |_|_|/|
-	|/| | | |
-	| | | * |   E
-	| |_|/|\ \
-	|/| |/ / /
-	| | | | /
-	| | | |/
-	| | | * D
-	| |_|/
-	|/| |
-	| | * C
-	| |/
-	|/|
-	| * B
-	|/
-	* A
-
-Is there a particular reason for wanting to include this test case? What particular combination of states is it designed to test? (My guess is that it includes an octopus merge where the original test does not.) I'd be happy to add it at the appropriate point in the history if it's adding coverage not provided by the other tests.
