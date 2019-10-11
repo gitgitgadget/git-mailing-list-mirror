@@ -2,237 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53C191F4C0
+	by dcvr.yhbt.net (Postfix) with ESMTP id A49FD1F4C0
 	for <e@80x24.org>; Fri, 11 Oct 2019 22:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729425AbfJKW0S (ORCPT <rfc822;e@80x24.org>);
+        id S1729430AbfJKW0T (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 18:26:19 -0400
+Received: from mail-vk1-f194.google.com ([209.85.221.194]:32932 "EHLO
+        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729086AbfJKW0S (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 11 Oct 2019 18:26:18 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:50649 "EHLO
-        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728895AbfJKW0S (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 18:26:18 -0400
-X-Originating-IP: 1.186.12.63
-Received: from localhost (unknown [1.186.12.63])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 401CA60006;
-        Fri, 11 Oct 2019 22:26:14 +0000 (UTC)
-Date:   Sat, 12 Oct 2019 03:56:12 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 1/1] Make gitdir work with worktrees, respect
- core.hooksPath, etc
-Message-ID: <20191011222611.le5lyf6mr5lmvbbd@yadavpratyush.com>
-References: <pull.361.v3.git.gitgitgadget@gmail.com>
- <pull.361.v4.git.gitgitgadget@gmail.com>
- <2f55d6fb2a158c5b26b93ddb9c144ce1af5d9c32.1570534405.git.gitgitgadget@gmail.com>
+Received: by mail-vk1-f194.google.com with SMTP id s21so2470432vkm.0
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 15:26:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2w9pzp5UGXzT86xmjGtkgrug5s61ye9xMN+ikDkTZPA=;
+        b=SvMU+W3C4dldK+vyzpOj8G3oqI9MWMNAA9A8wddvpWrz5FUwy4ZHGHrpqwCy00alIS
+         hJSVGDoBN7kzCqhDaFea439FgDQ2RKz7BkpMimoKkeyuGoP7lf7C1TSgyHG/qWfxxc/c
+         u9+3cp6tGlP3oKWqZWUL97eljGX88szI0A3Fz5vLtmyKsX0uFV2aix33kK/ygf5qygno
+         0V/p3Vg3ex+8+M89WV7ZoNhqFNBp6J9ieO9jIbqmCnz+0BGNS2OJsvy79iFjaJiFFQq1
+         ehqdO0DvPjq+lR0T7xU6uiXT4xU8/QZurz73rGNsQwrXCvAXPgn6TZu8cr2wK0C4GksY
+         vwjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2w9pzp5UGXzT86xmjGtkgrug5s61ye9xMN+ikDkTZPA=;
+        b=XsCB6qftFSRcpWdzCcG8ze1rgjOAbvNtzNh5GoVHU1nHuiEY/cOc7Ei68RxNaJ1j2i
+         SSygL+1pYjY6EsrycNScSrBB/ZW14QT/Y0SOSz9hpM3KCce3n/1edLPxbToqTJ0r4+z7
+         f1MGemTacc/o3utn4gEl+GjM6W3MrUVsO+Kr5MpMU8FjHURNEPhmWPH11ukqD6rXGxg4
+         ixU2/ueVQxvpEiE+BoRiAlLaZdxLje2HV6f/RfYzuHpR/uJxs4nRhRUHhJ4m82txgWNl
+         dW9yp9yODgihHWhgNyNYvxu5nKUkybGEzOvZsUim5Ur5KO6pmWF1TgMUG5ozXwecFbmD
+         pNiw==
+X-Gm-Message-State: APjAAAWl7M5mohrTtHs73IqHR9b6MQ1+ew40jQreRL07+PxSsVlAOjio
+        5/GW6M5FGa1O4eSjfNsTbEjhSd8b+OrJL/2PMX8=
+X-Google-Smtp-Source: APXvYqz8cLJN2nESGYBdNHwdBQ8NRa3uAJUhcqpa8yjL5u7yoJW+kUZGbDYyg7rDWE1xOc0cZtVFao7rLh2P3NgaH54=
+X-Received: by 2002:a1f:cac2:: with SMTP id a185mr9572012vkg.49.1570832775873;
+ Fri, 11 Oct 2019 15:26:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2f55d6fb2a158c5b26b93ddb9c144ce1af5d9c32.1570534405.git.gitgitgadget@gmail.com>
-User-Agent: NeoMutt/20180716
+References: <pull.316.v2.git.gitgitgadget@gmail.com> <pull.316.v3.git.gitgitgadget@gmail.com>
+ <6ce1d60b38a249f8d9f85d1b1a1ed556aef2469e.1570478905.git.gitgitgadget@gmail.com>
+In-Reply-To: <6ce1d60b38a249f8d9f85d1b1a1ed556aef2469e.1570478905.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 11 Oct 2019 15:26:04 -0700
+Message-ID: <CABPp-BFaSh6O+eMsZ_ghMNUXdwh5kh2P9JF9msQSgz_XG2fENA@mail.gmail.com>
+Subject: Re: [PATCH v3 04/17] sparse-checkout: 'set' subcommand
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
-
-Thanks for the re-roll. Some comments below...
-
-On 08/10/19 04:33AM, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> 
-> Since v2.9.0, Git knows about the config variable core.hookspath that
-> allows overriding the path to the directory containing the Git hooks.
-> 
-> Since v2.10.0, the `--git-path` option respects that config variable,
-> too, so we may just as well use that command.
-> 
-> Other paths inside `.git` are equally subject to differ from
-> `<gitdir>/<path>`, i.e. inside worktrees, where _some_ paths live in the
-> "gitdir" and some live in the "commondir" (i.e. the "gitdir" of the main
-> worktree).
-> 
-> For Git versions older than v2.5.0 (which was the first version to
-> support the `--git-path` option for the `rev-parse` command), we simply
-> fall back to the previous code.
-> 
-> An original patch handled only the hooksPath setting, however, during
-> the code submission it was deemed better to fix all call to the `gitdir`
-> function.
-> 
-> To avoid spawning a gazillion `git rev-parse --git-path` instances, we
-> cache the returned paths, priming the cache upon startup in a single
-> `git rev-parse invocation` with some paths (that have been
-> determined via a typical startup and via grepping the source code for
-> calls to the `gitdir` function).
-> 
-> This fixes https://github.com/git-for-windows/git/issues/1755
-> 
-> Initial-patch-by: Philipp Gortan <philipp@gortan.org>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Mon, Oct 7, 2019 at 1:08 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The 'git sparse-checkout set' subcommand takes a list of patterns
+> as arguments and writes them to the sparse-checkout file. Then, it
+> updates the working directory using 'git read-tree -mu HEAD'.
+>
+> The 'set' subcommand will replace the entire contents of the
+> sparse-checkout file. The write_patterns_and_update() method is
+> extracted from cmd_sparse_checkout() to make it easier to implement
+> 'add' and/or 'remove' subcommands in the future.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  git-gui.sh | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++----
->  1 file changed, 58 insertions(+), 4 deletions(-)
-> 
-> diff --git a/git-gui.sh b/git-gui.sh
-> index fd476b6999..c684dc7ae1 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -158,6 +158,7 @@ if {[tk windowingsystem] eq "aqua"} {
->  
->  set _appname {Git Gui}
->  set _gitdir {}
-> +array set _gitdir_cache {}
->  set _gitworktree {}
->  set _isbare {}
->  set _gitexec {}
-> @@ -197,12 +198,59 @@ proc appname {} {
->  	return $_appname
+>  Documentation/git-sparse-checkout.txt |  5 ++++
+>  builtin/sparse-checkout.c             | 35 ++++++++++++++++++++++++++-
+>  t/t1091-sparse-checkout-builtin.sh    | 19 +++++++++++++++
+>  3 files changed, 58 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+> index e095c4a98b..f4bd951550 100644
+> --- a/Documentation/git-sparse-checkout.txt
+> +++ b/Documentation/git-sparse-checkout.txt
+> @@ -39,6 +39,11 @@ and sets the `core.sparseCheckout` setting in the worktree-specific config
+>  file. This prevents the sparse-checkout feature from interfering with other
+>  worktrees.
+>
+> +'set'::
+> +       Write a set of patterns to the sparse-checkout file, as given as
+> +       a list of arguments following the 'set' subcommand. Update the
+> +       working directory to match the new patterns.
+> +
+>  SPARSE CHECKOUT
+>  ----------------
+>
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index 3ecb7ac2e7..52d4f832f3 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -8,7 +8,7 @@
+>  #include "strbuf.h"
+>
+>  static char const * const builtin_sparse_checkout_usage[] = {
+> -       N_("git sparse-checkout [init|list]"),
+> +       N_("git sparse-checkout [init|list|set] <options>"),
+>         NULL
+>  };
+>
+> @@ -140,6 +140,37 @@ static int sparse_checkout_init(int argc, const char **argv)
+>         return update_working_directory();
 >  }
->  
-> +proc prime_gitdir_cache {} {
-> +	global _gitdir _gitdir_cache
+>
+> +static int write_patterns_and_update(struct pattern_list *pl)
+> +{
+> +       char *sparse_filename;
+> +       FILE *fp;
 > +
-> +	set gitdir_cmd [list git rev-parse --git-dir]
+> +       sparse_filename = get_sparse_checkout_filename();
+> +       fp = fopen(sparse_filename, "w");
+> +       write_patterns_to_file(fp, pl);
+> +       fclose(fp);
+> +       free(sparse_filename);
 > +
-> +	# `--git-path` is only supported since Git v2.5.0
-> +	if {[package vcompare $::_git_version 2.5.0] >= 0} {
-> +		# This list was generated from a typical startup as well as from
-> +		# grepping through Git GUI's source code.
-> +		set gitdir_keys [list \
-> +			CHERRY_PICK_HEAD FETCH_HEAD GITGUI_BCK GITGUI_EDITMSG \
-> +			GITGUI_MSG HEAD hooks hooks/prepare-commit-msg \
-> +			index.lock info info/exclude logs MERGE_HEAD MERGE_MSG \
-> +			MERGE_RR objects "objects/4\[0-1\]/*" \
-> +			"objects/4\[0-3\]/*" objects/info \
-> +			objects/info/alternates objects/pack packed-refs \
-> +			PREPARE_COMMIT_MSG rebase-merge/head-name remotes \
-> +			rr-cache rr-cache/MERGE_RR SQUASH_MSG \
-> +		]
-> +
-> +		foreach key $gitdir_keys {
-> +			lappend gitdir_cmd --git-path $key
-> +		}
-> +	}
-> +
-> +	set i -1
-> +	foreach path [split [eval $gitdir_cmd] "\n"] {
-> +		if {$i eq -1} {
-> +			set _gitdir $path
-> +		} else {
-> +			set _gitdir_cache([lindex $gitdir_keys $i]) $path
-> +		}
-> +		incr i
-> +	}
+> +       return update_working_directory();
 > +}
 > +
->  proc gitdir {args} {
-> -	global _gitdir
-> +	global _gitdir _gitdir_cache
+> +static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+> +{
+> +       static const char *empty_base = "";
+> +       int i;
+> +       struct pattern_list pl;
+> +       int result;
+> +       memset(&pl, 0, sizeof(pl));
 > +
->  	if {$args eq {}} {
->  		return $_gitdir
->  	}
-> -	return [eval [list file join $_gitdir] $args]
+> +       for (i = 1; i < argc; i++)
+> +               add_pattern(argv[i], empty_base, 0, &pl, 0);
 > +
-> +	set args [eval [list file join] $args]
-> +	if {![info exists _gitdir_cache($args)]} {
-> +		if {[package vcompare $::_git_version 2.5.0] >= 0} {
-> +			set _gitdir_cache($args) [git rev-parse --git-path $args]
-> +		} else {
-> +			set _gitdir_cache($args) [file join $_gitdir $args]
-> +		}
-> +	}
+> +       result = write_patterns_and_update(&pl);
 > +
-> +	return $_gitdir_cache($args)
->  }
->  
->  proc gitexec {args} {
-> @@ -1242,7 +1290,7 @@ if {[catch {
->  	&& [catch {
->  		# beware that from the .git dir this sets _gitdir to .
->  		# and _prefix to the empty string
-> -		set _gitdir [git rev-parse --git-dir]
-> +		prime_gitdir_cache
->  		set _prefix [git rev-parse --show-prefix]
->  	} err]} {
->  	load_config 1
-
-Looks good till here.
-
-> @@ -1453,10 +1501,16 @@ proc rescan {after {honor_trustmtime 1}} {
->  	global HEAD PARENT MERGE_HEAD commit_type
->  	global ui_index ui_workdir ui_comm
->  	global rescan_active file_states
-> -	global repo_config
-> +	global repo_config _gitdir_cache
->  
->  	if {$rescan_active > 0 || ![lock_index read]} return
->  
-> +	# Only re-prime gitdir cache on a full rescan
-> +	if {$after ne "ui_ready"} {
-
-What do you mean by a "full rescan"? I assume you use it as the 
-differentiator between `ui_do_rescan` (called when you hit F5 or choose 
-rescan from the menu) and `do_rescan` (called when you revert a line or 
-hunk), and a "full rescan" refers to `ui_do_rescan`.
-
-Well in that case, this check is incorrect. `do_rescan` passes only 
-"ui_ready" and `ui_do_rescan` passes "force_first_diff ui_ready".
-
-But either way, I'm not a big fan of this. This check makes assumptions 
-about the behaviour of its callers based on what they pass to $after. 
-The way I see it, $after should be a black box to `rescan`, and it 
-should make absolutely no assumptions about it.
-
-Doing it this way is really brittle, and would break as soon as someone 
-changes the behaviour of `ui_do_rescan`. If someone in the future passes 
-a different value in $after, this would stop working as intended and 
-would not refresh the cached list on a rescan.
-
-So, I think a better place for this if statement would be in 
-`ui_do_rescan`. This would mean adding a new function that does this. 
-But if we unset _gitdir_cache in prime_gitdir_cache (I see no reason not 
-to), we can get away with just something like:
-
-  proc ui_do_rescan {} {
-  	rescan {prime_gitdir_cache; ui_ready}
-  }
-
-Though since `prime_gitdir_cache` does not really depend on the rescan 
-being finished, something like this would also work fine:
-
-  proc ui_do_rescan {} {
-  	rescan ui_ready
-  	prime_gitdir_cache
-  }
-
-This would allow us to do these two things in parallel since `rescan` is 
-asynchronous. But that would also mean it is possible that the status 
-bar would show "Ready" while `prime_gitdir_cache` is still executing.
-
-I can't really make up my mind on what is better. I'm inclining on using 
-the latter way, effectively trading a bit of UI inconsistency for 
-performance (at least in theory).
-
-Thoughts?
-
-> +		array unset _gitdir_cache
-> +		prime_gitdir_cache
-> +	}
+> +       clear_pattern_list(&pl);
+> +       return result;
+> +}
 > +
->  	repository_state newType newHEAD newMERGE_HEAD
->  	if {[string match amend* $commit_type]
->  		&& $newType eq {normal}
+>  int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
+>  {
+>         static struct option builtin_sparse_checkout_options[] = {
+> @@ -162,6 +193,8 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
+>                         return sparse_checkout_list(argc, argv);
+>                 if (!strcmp(argv[0], "init"))
+>                         return sparse_checkout_init(argc, argv);
+> +               if (!strcmp(argv[0], "set"))
+> +                       return sparse_checkout_set(argc, argv, prefix);
+>         }
+>
+>         usage_with_options(builtin_sparse_checkout_usage,
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> index d4c145a3af..19e8673c6b 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -101,4 +101,23 @@ test_expect_success 'clone --sparse' '
+>         test_cmp expect dir
+>  '
+>
+> +test_expect_success 'set sparse-checkout using builtin' '
+> +       git -C repo sparse-checkout set "/*" "!/*/" "*folder*" &&
+> +       cat >expect <<-EOF &&
+> +               /*
+> +               !/*/
+> +               *folder*
+> +       EOF
+> +       git -C repo sparse-checkout list >actual &&
+> +       test_cmp expect actual &&
+> +       test_cmp expect repo/.git/info/sparse-checkout &&
+> +       ls repo >dir  &&
+> +       cat >expect <<-EOF &&
+> +               a
+> +               folder1
+> +               folder2
+> +       EOF
+> +       test_cmp expect dir
+> +'
+> +
+>  test_done
+> --
 
--- 
-Regards,
-Pratyush Yadav
+Looks good, thanks for the fixes.  I'm still slightly worried about
+folks not looking at the docs and calling sparse-checkout set without
+calling init, and then being negatively surprised.  It's a minor
+issue, but a warning might be helpful.
