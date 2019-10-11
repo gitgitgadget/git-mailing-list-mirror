@@ -2,85 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F4001F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 20:12:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0781E1F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 20:39:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729675AbfJKUKg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 16:10:36 -0400
-Received: from mx0b-002e3701.pphosted.com ([148.163.143.35]:46982 "EHLO
-        mx0b-002e3701.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729659AbfJKUKg (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 11 Oct 2019 16:10:36 -0400
-Received: from pps.filterd (m0134424.ppops.net [127.0.0.1])
-        by mx0b-002e3701.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id x9BK7qnp003971
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 20:10:35 GMT
-Received: from g9t5009.houston.hpe.com (g9t5009.houston.hpe.com [15.241.48.73])
-        by mx0b-002e3701.pphosted.com with ESMTP id 2vjqj1suy6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 20:10:34 +0000
-Received: from g9t2301.houston.hpecorp.net (g9t2301.houston.hpecorp.net [16.220.97.129])
-        by g9t5009.houston.hpe.com (Postfix) with ESMTP id 47C0455
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 20:10:34 +0000 (UTC)
-Received: from [10.33.153.10] (yehat.americas.hpqcorp.net [10.33.153.10])
-        by g9t2301.houston.hpecorp.net (Postfix) with ESMTP id 2DE5C48
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 20:10:34 +0000 (UTC)
-To:     git@vger.kernel.org
-From:   Brent Casavant <brent.casavant@hpe.com>
-Subject: bug: "rev-parse --short" with "--not --remote"
-Organization: Hewlett Packard Enterprise
-Message-ID: <83e4f54f-190b-115f-b31b-7177c681128b@hpe.com>
-Date:   Fri, 11 Oct 2019 15:10:33 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1729012AbfJKUjr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 16:39:47 -0400
+Received: from mail-vs1-f54.google.com ([209.85.217.54]:35442 "EHLO
+        mail-vs1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728976AbfJKUjr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 16:39:47 -0400
+Received: by mail-vs1-f54.google.com with SMTP id s7so7092224vsl.2
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 13:39:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=R98CQHJsw2wqVh2T2b6QbnussWSj8waH37OHbPF1iXQ=;
+        b=X87C546NM8GralBiElgoBSAo8OJM4v7yTwFq+kMgo43o63rrh33Jv8ootNIsTREmp8
+         8Y4f9MufzOm1Lr1JLSAbbE3L5jkFfWHNomJgdODDeo68sdP/aWgYHf6gmTS83at+9eRC
+         wymA1j9b2fFzxvSRBsbgKqZLEZWGZfeC6ZbOBWAqlNpu25TBOtKdHWg9uJ8Xy/GYEvoe
+         jc76lbD0609DjOgsKJQUHWkBq3s5XQGpTCfzZ3ilKtlH5o4TQ7EDPIjHnAxWDrwIWigH
+         jjtOSD5JJdFb/kms8GtMM+Z+nk3X7R/+0AekLY5/UqrcEEZ4ERVBaVyfLbzjATY6ce3+
+         A6JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=R98CQHJsw2wqVh2T2b6QbnussWSj8waH37OHbPF1iXQ=;
+        b=MGo72Ni7DEYX5dpjSVqg3oNoh45bR91KAMLp287b6VgQ2ezxGWBXIwf7XW7QFRoNU5
+         yjVxhMD5OwdyxRc4PPLQbZ5ERH0TPiFJrAxF90fmcnhIkzlcItdINR6cvmgxfTw59BSz
+         m8ZAOTyjDRsm3IErmh7FGNFITHHB7e1Jjb5aRjXzEJJfv9Nwwn2YAcFrr4SaiSbc6mHT
+         GfDMj7+taIbMtfk81JpOUPZWxgQE0vusnCrJ2BgQtLlBqfdAL5G/V3CR2OukKFoC3Y2+
+         G4EkFMvGh9Igyem1LE1KLPDKR1By1p3f5PRZp8tpxBF8AaT7I4B8N+RDPPGG7sZyEL/8
+         fE6g==
+X-Gm-Message-State: APjAAAWBE/g9BZlPSs1tot2bSHCIs0eTmOpVggW7IxunBujuBHc0syys
+        Ldf+Au+KgGZHlwNeNMN6msRkH0xcOdJNlV7XQF8=
+X-Google-Smtp-Source: APXvYqx8Mt92cvez/XqNDEl8CLulnP0CvSVkvmFVkT5ROTx/KOW3Uxp/3orpzzKhq75YpYj/w3vqB3TtDDCqrHxoYJ8=
+X-Received: by 2002:a67:f84d:: with SMTP id b13mr9681748vsp.136.1570826385721;
+ Fri, 11 Oct 2019 13:39:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-HPE-SCL: -1
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,1.0.8
- definitions=2019-10-11_10:2019-10-10,2019-10-11 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=1
- bulkscore=0 impostorscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0
- spamscore=0 mlxlogscore=638 priorityscore=1501 clxscore=1011 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-1908290000
- definitions=main-1910110161
+References: <xmqq8sprhgzc.fsf@gitster-ct.c.googlers.com> <CABPp-BE4f5f3HyZu9wOyq599JN-n0EMF08di+2V51uxDMEwuGQ@mail.gmail.com>
+ <xmqq4l0fgroj.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq4l0fgroj.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 11 Oct 2019 13:39:32 -0700
+Message-ID: <CABPp-BF346QbjCyWP7HSP9Lh7mDRgtwtPC8b4mqNv4znUHoGFw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2019, #03; Fri, 11)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Fri, Oct 11, 2019 at 9:42 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> >> * en/fast-imexport-nested-tags (2019-10-04) 8 commits
+> >>   (merged to 'next' on 2019-10-07 at 3e75779e10)
+> >>  + fast-export: handle nested tags
+> >>  ...
+> >>  + fast-export: fix exporting a tag and nothing else
+> >>
+> >>  Updates to fast-import/export.
+> >>
+> >>  Will merge to 'master'.
+> >
+> > Any chance this will merge down before 2.24.0?  I'd really like to see
+> > and use it within filter-repo.
+>
+> A few general guidelines I use are that a typical topic spends 1
+> week in 'next' (a trivial one-liner may be there for much shorter
+> time, an involved multi-patch topic that touches the core part of
+> the system may have to spend more), that an involved topic that is
+> not in 'master' by rc0 would not appear in the next release, and
+> that any topic that is not in 'master' by rc1 needs compelling
+> reason to be in the next release.  So it is cutting a bit too close
+> for this topic, it seems, but we'll see.
 
-I noticed what appears to be a bug in rev-parse with an admittedly somewhat unusual combination of arguments.
+:-(
 
-Compare the output of the following:
+Did I shoot myself in the foot by being quick to jump on Rene's couple
+of cosmetic touch-up suggestions he posted over a week after the
+series was originally posted?  In other words, if I hadn't stopped you
+from merging the series down to next to incorporate those
+clean-ups[1], would the story have been different?
 
-% git rev-parse HEAD --not --remotes=origin
-3de09080eb219149a8596dc21915d5a496cba171
-^4fb157bf360413fe3fad38d03b02ce7232d12961
-^757cfa6938c3d510d1597096d9f0b6878b884270
-
-To this:
-
-% git rev-parse --short HEAD --not --remotes=origin
-^4fb157b
-^757cfa6
-^3de0908
-
-In the first case rev-parse emits the commit-id of HEAD, followed by negated commit-ids of all remote branches in origin.  I believe this is the correct and intended behavior.
-
-In the second case rev-parse emits the negated short commit-ids of all remote branches in origin, followed by the negated short commit-id of HEAD.  This is inconsistent with the results of the (presumably correct) prior example.
-
-I would expect both commands to emit the same output, modulo the number of characters emitted for the commit-id.
-
-Thank you,
-Brent Casavant
-
--- 
-Brent Casavant
-Hewlett Packard Enterprise
+[1] https://public-inbox.org/git/CABPp-BHvzyLf=Wwhv45qKdKjiTVwHtsMdfA0hd5Ejf5fmhHyPg@mail.gmail.com/
