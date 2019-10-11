@@ -2,68 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 263A71F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 18:05:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B23001F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 18:17:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728620AbfJKSFJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 14:05:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46016 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728374AbfJKSFJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 14:05:09 -0400
-Received: (qmail 16090 invoked by uid 109); 11 Oct 2019 18:05:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 Oct 2019 18:05:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3599 invoked by uid 111); 11 Oct 2019 18:08:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Oct 2019 14:08:03 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 11 Oct 2019 14:05:07 -0400
-From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>,
+        id S1728718AbfJKSRR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 14:17:17 -0400
+Received: from mail.fsf.org ([209.51.188.13]:47824 "EHLO mail.fsf.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728470AbfJKSRR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 14:17:17 -0400
+X-Greylist: delayed 2456 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Oct 2019 14:17:17 EDT
+Received: from mail.iankelling.org ([72.14.176.105]:41446)
+        by mail.fsf.org with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+        (Exim 4.69)
+        (envelope-from <iank@fsf.org>)
+        id 1iIypu-0007S1-5d; Fri, 11 Oct 2019 13:36:18 -0400
+Received: from iank by mail.iankelling.org with local (Exim 4.90_1)
+        (envelope-from <iank@fsf.org>)
+        id 1iIyps-0007NO-Oo; Fri, 11 Oct 2019 13:36:16 -0400
+References: <20191010062047.21549-1-ajd@linux.ibm.com>
+ <c942d9ce-d8fe-32ca-bedd-1cdb3837823d@linux.ibm.com>
+ <7c2f16e3-1397-9ced-e334-a52e99b27e9b@linux.ibm.com>
+ <6574162.ouEm0onZRE@silver>
+User-agent: mu4e 1.1.0; emacs 27.0.50
+From:   Ian Kelling <iank@fsf.org>
+To:     Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc:     Andrew Donnellan <ajd@linux.ibm.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [RFC PATCH 04/10] ewah/bitmap: always allocate 2 more words
-Message-ID: <20191011180507.GB20601@sigill.intra.peff.net>
-References: <20190913130226.7449-5-chriscool@tuxfamily.org>
- <20191010234040.168894-1-jonathantanmy@google.com>
- <CAP8UFD0-NHCj6KcbdMG3bCwWp=wUdoYugLggsbnpvr1d6-P4yg@mail.gmail.com>
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        patchwork@lists.ozlabs.org,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Eric Blake <eblake@redhat.com>, git@vger.kernel.org
+Subject: Re: [PATCH] parser: Unmangle From: headers that have been mangled
+ for DMARC purposes
+In-reply-to: <6574162.ouEm0onZRE@silver>
+Date:   Fri, 11 Oct 2019 13:36:16 -0400
+Message-ID: <871rvjdw1b.fsf@fsf.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD0-NHCj6KcbdMG3bCwWp=wUdoYugLggsbnpvr1d6-P4yg@mail.gmail.com>
+Content-Type: text/plain
+X-detected-operating-system: by mail.fsf.org: GNU/Linux 2.2.x-3.x [generic] [fuzzy]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 11, 2019 at 09:49:53AM +0200, Christian Couder wrote:
 
-> > I think this should be squashed with patch 3, adding to that commit
-> > message "since word_alloc might be 0, we need to change the growth
-> > function". (Or just make the minimum word_alloc be 1 or 32 or something
-> > positive, if that's possible.)
-> 
-> Yeah, thank you for the suggestion. I still wonder why 2 is added
-> instead of just 1 though.
+Christian Schoenebeck <qemu_oss@crudebyte.com> writes:
 
-Yeah, I think it should be squashed. I think it is not intentionally 2,
-it is just that adding "1" to block makes sure we always make forward
-progress. It could equally well be:
+> 4. MTA's should also address this DKIM issue more accurately.
 
-  self->word_alloc = block ? block * 2 : 1;
+I agree that Exim should be changed as you suggest.
 
-I think. Or probably this whole thing could be ALLOC_GROW(), as the
-numbers aren't particularly important. I guess we need to make sure the
-grown part is zero'd, so probably using alloc_nr() directly would make
-more sense.
+>
+> By taking these things into account, emails of domains with strict DMARC 
+> policies are no longer munged on gnu lists.
 
--Peff
+Additional info: Migration of many gnu/nongnu.gnu.org lists is still in
+progress for another week or so, then that will be true for most of
+them. For a minority of lists, the list administrators have set weird
+settings like making all messages have from: rewritten as from this
+list, and we are leaving them as is since the list administrators opted
+in to that at some point. But if the list deals with patches and not
+modifying the headers is useful to the people on the list, I think a
+request to change the list settings is likely to be accepted by the list
+admin.
+
+-- 
+Ian Kelling | Senior Systems Administrator, Free Software Foundation
+GPG Key: B125 F60B 7B28 7FF6 A2B7  DF8F 170A F0E2 9542 95DF
+https://fsf.org | https://gnu.org
