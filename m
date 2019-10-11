@@ -2,159 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FB211F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 08:52:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09BD91F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 12:31:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727470AbfJKIwZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 04:52:25 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39085 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727032AbfJKIwZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 04:52:25 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r3so10952189wrj.6
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 01:52:23 -0700 (PDT)
+        id S1727974AbfJKMbh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 08:31:37 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:44350 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727549AbfJKMbh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 08:31:37 -0400
+Received: by mail-qt1-f196.google.com with SMTP id u40so13532568qth.11
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 05:31:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9+4VjDUUMRqFUxo0WUycwaMCDArqJYT10+LqRYvkx/c=;
-        b=UmmayxfpXyepqv1SVO4uXCXJZ+7KnrGivpIo7Etz7dFCfRdy2pCk7m+8Nmj3XgL9jM
-         qsMFPhXxPPsXz4AqYb+Bx3wvImT79reXdsfDmM+ZTCIw9l6Ops3sCy2dxWZRJNiHPrx1
-         pM3OBxdsqOOLEPx5NCj0H8Cp2CUg4jRy+jLvhwcWNbj/ZfUDs9C1eA3f71OPg6m8MEp4
-         HE2oQOOgDknN/mxE+CF56HHJiwL8JeNStCQcw6zndJlihxP9Uop0MudQJgAKVBmE97w3
-         AenxI7XlUTgbq0gTUWMVA3S0J2PCSIecb8OSZ1JuLK8EoYUetGlIlv87nK9IvBy1CdGC
-         R9cQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=gX+ipP0C2/C5B+CmmIBW81JqS9ZvdWAh0lTzO+n830o=;
+        b=kudNisynpGQJ4yPNx6gTQtAvmNZnaEoNkJJqDKSQyg4VBTIN5HgEPvycPWPKAenCED
+         ltPmwk5ZcqmdGd2NSbErbByOBiYoj3unrdGnn2M36D0NAQiQU06gujsC+UZedVgfxAgD
+         MGjEeFh1TyWQsz1sWiljfH1qWgSOmbT941Q+rtHNoY0z//EmwyGOhvpLVIt54g9PLlYp
+         6XdlP2g/xOT8ghHO5gKLWBrsHj5nV/AMds29Qh0bMc2ccutFLkOsSaCBCMGTqCkx+xr+
+         iTI7wbip1MI46Fg6JX4vjCG6oJOhzc8+90mFuRumNhjwUfm6SmujZvzWMgpbRyvhBjcE
+         3YUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9+4VjDUUMRqFUxo0WUycwaMCDArqJYT10+LqRYvkx/c=;
-        b=J1zA24B4eL7D9FmBKL65PGTnXPJI2fkfOR3Ovop4Oka7arHazGWrvm1asEehZRL6Vl
-         pWfMr9BMuhSE8f82FZUvvYTM4i2qnYYEWAvGVe2Ok3d1ezf2I/pSZgExC/Udbcy+vXvg
-         0Uemg2lK6TPng4rTnLJ1ZaILJKbTxjGHaQMyk3jjOsISiJTu7H83JLL3WwXF96pboabr
-         rzPmJT8vCjI0fwME7kRrJ+vAQS3CjveLDLgdAoQjLAksOeCIZ3SAGnJTgO/sFDjq00GO
-         +nOH8jqyRHzjq+WVMeKu4skryZbGps5DMX8Cos2Q8DLfr8fPXwkRbkhLmnwcdM9Hbdil
-         6gYA==
-X-Gm-Message-State: APjAAAWYV8x2QpCeY9G6vwWwx/P7JZnsUqJaSVLwmpMNyvb8x9R2rLo7
-        021OCgCaa6bAGvdtIO/n2Vs=
-X-Google-Smtp-Source: APXvYqxjnB1tX5+79N2UozEnW3fJjXW63srH/6pdUwNMluj83H277sRjc41nJSupmwUjYRu8S7mszA==
-X-Received: by 2002:a5d:540d:: with SMTP id g13mr8935786wrv.8.1570783942725;
-        Fri, 11 Oct 2019 01:52:22 -0700 (PDT)
-Received: from wambui ([197.237.61.225])
-        by smtp.gmail.com with ESMTPSA id d15sm8843922wru.50.2019.10.11.01.52.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Oct 2019 01:52:22 -0700 (PDT)
-Date:   Fri, 11 Oct 2019 11:52:17 +0300
-From:   Wambui Karuga <wambui.karugax@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [Outreachy] [PATCH] blame: Convert pickaxe_blame defined
- constants to enums
-Message-ID: <20191011085217.GA8481@wambui>
-Reply-To: 20191010184439.94173-1-jonathantanmy@google.com
-References: <20191010115230.10623-1-wambui.karugax@gmail.com>
- <20191010184439.94173-1-jonathantanmy@google.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=gX+ipP0C2/C5B+CmmIBW81JqS9ZvdWAh0lTzO+n830o=;
+        b=rZwK8SuEkygzlbLOEfZDRlJKvmjYYi+d3ldCGR8b+7syiMkrGwkuEdKjj55YGbdlEB
+         O9Rr3jc6Q9YSJpYayO9xQ3QYIiBzc+d53VdMZCipTfBTw/Az9Hdo4MhCwVhI35NyB49E
+         YM/cN2DQRONFIFJmDMOaVHr/evw77i8H1I2KvnG+Ode5Pa56UuYgApl9dGuCWp5Q3k8Z
+         HIpGGIwRutqH932KV7GjpHSWG4DCo78P1RYDqRhSEe26cdWK2Bp+IG72YKt/NqKnQKjN
+         IinF4vWx0cWARiW3H9fCeMwJt0kd7YcKibEZXnsqYqCtBbRQIMPWu/lRKmQJOpZYYdE7
+         qt2w==
+X-Gm-Message-State: APjAAAWCocMC2eMFPAtxsNIjCUvjY7ILvJUuSa/Nu+kVERFteU2i/ekY
+        NOLmalmJHNg3QOBGg8rq6q4=
+X-Google-Smtp-Source: APXvYqzLSMzkWmxh4NfZpP7KyX1HZ9NBTQ+QIO3xVKDYdy+Pnu8ts6oQz4ijDhNc7tUydV3yHH5IVw==
+X-Received: by 2002:ac8:2a66:: with SMTP id l35mr17159675qtl.340.1570797094388;
+        Fri, 11 Oct 2019 05:31:34 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:2da2:a6da:62ea:75d9? ([2001:4898:a800:1012:ded5:a6da:62ea:75d9])
+        by smtp.gmail.com with ESMTPSA id l48sm5124497qtb.50.2019.10.11.05.31.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Oct 2019 05:31:33 -0700 (PDT)
+Subject: Re: [PATCH v2] send-pack: never fetch when checking exclusions
+To:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+References: <xmqqzhibnahi.fsf@gitster-ct.c.googlers.com>
+ <20191008183739.194714-1-jonathantanmy@google.com>
+ <20191011061257.GD20094@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <a87cf3ce-fbff-ef4e-941e-bd2da0bf182f@gmail.com>
+Date:   Fri, 11 Oct 2019 08:31:30 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191010184439.94173-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20191011061257.GD20094@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 10, 2019 at 11:44:39AM -0700, Jonathan Tan wrote:
-> > Convert pickaxe_blame preprocessor constants in blame.h to an enum.
-> > Also replace previous instances of the constants with the new enum values.
+On 10/11/2019 2:12 AM, Jeff King wrote:
+> On Tue, Oct 08, 2019 at 11:37:39AM -0700, Jonathan Tan wrote:
 > 
-> First of all, thanks for your initiative in finding a microproject and
-> making a patch for it!
+>> When building the packfile to be sent, send_pack() is given a list of
+>> remote refs to be used as exclusions. For each ref, it first checks if
+>> the ref exists locally, and if it does, passes it with a "^" prefix to
+>> pack-objects. However, in a partial clone, the check may trigger a lazy
+>> fetch.
+>>
+>> The additional commit ancestry information obtained during such fetches
+>> may show that certain objects that would have been sent are already
+>> known to the server, resulting in a smaller pack being sent. But this is
+>> at the cost of fetching from many possibly unrelated refs, and the lazy
+>> fetches do not help at all in the typical case where the client is
+>> up-to-date with the upstream of the branch being pushed.
+>>
+>> Ensure that these lazy fetches do not occur.
 > 
-> About your commit message title, I know that 50 characters is a soft
-> limit, but we should adhere to it if possible. Also, in Git, the letter
-> following the colon is usually in lowercase. So I would write it like:
-> 
->   blame: make PICKAXE_BLAME_* an enum
-> 
-> (Feel free to use that or think of a different one.)
-Okay, thanks for the suggestion. I'll use it.
-> 
-> > -	if ((opt & PICKAXE_BLAME_COPY_HARDEST)
-> > -	    || ((opt & PICKAXE_BLAME_COPY_HARDER)
-> > +	if ((opt & BLAME_COPY_HARDEST)
-> > +	    || ((opt & BLAME_COPY_HARDER)
-> 
-> Any reason why the names are renamed to omit "PICKAXE_"? In particular,
-> these names are still global, so it is good to retain the extra context.
-> 
-> (This doesn't mean that you are wrong to remove them - I just gave my
-> opinion, and a reason for my opinion. If you had a reason to remove
-> them, you can mention that, and we can discuss this together. Or, if you
-> read my reason and agree with it, you can say that and put the
-> "PICKAXE_" back.)
-> 
-I wasn't really sure about omitting the "PICKAXE_" prefix, but I looked
-at some of the other defined enums and it seemed like what would act as
-the prefix in #defines was only used in the enum declaration. For
-example I looked at:
-	enum apply_ws_error_action {
-		nowarn_ws_error,
-		warn_on_ws_error,
-		die_on_ws_error,
-		correct_ws_error
-	};
+> That makes sense. For similar reasons, should we be using
+> OBJECT_INFO_QUICK here? If the other side has a bunch of ref tips that
+> we don't have, we'll end up re-scanning the pack directory over and over
+> (which is _usually_ pretty quick, but can be slow if you have a lot of
+> packs locally). And it's OK if we racily miss out on an exclusion due to
+> somebody else repacking simultaneously.
 
-For comparison, I took "apply_" as the prefix that would translate to 
-"#define APPLY_" which isn't included in the member variables.
-I do agree about retaining the extra context though, so I can definitely put the
-"PICKAXE_" back.
+That's a good idea. We can hint to the object store that we don't expect
+misses to be due to a concurrent repack, so we don't want to reprepare
+pack-files.
 
-> > -#define PICKAXE_BLAME_MOVE		01
-> > -#define PICKAXE_BLAME_COPY		02
-> > -#define PICKAXE_BLAME_COPY_HARDER	04
-> > -#define PICKAXE_BLAME_COPY_HARDEST	010
-> > -
-> >  #define BLAME_DEFAULT_MOVE_SCORE	20
-> >  #define BLAME_DEFAULT_COPY_SCORE	40
-> >  
-> > +enum pickaxe_blame_action {
-> > +	BLAME_MOVE = 01,
-> > +	BLAME_COPY,
-> > +	BLAME_COPY_HARDER = 04,
-> > +	BLAME_COPY_HARDEST = 010,
-> > +};
-> 
-> In Git, we often look at historical commits, so it is good to keep
-> history as clean as possible. In particular, we shouldn't move things
-> around unless we have another reason to. Here, for example, you are
-> moving the constants from above BLAME_DEFAULT_* to below. You should
-> move them back. (Or if you have a reason for moving, mention that and we
-> can discuss it.)
-> 
-I'll move them back. I have experience with all the "#define" constants
-being immediately after the "#includes" which is why I moved them, but I'll try to stick to the
-convention from now on.
+-Stolee
 
-> Also, I have a slight preference for putting "= 02" on the BLAME_COPY
-> line but that is not necessary.
-> 
-Noted.
-
-> Apart from all that, one thing that I expected in this patch is the
-> changing of the type of local variables and parameters. For example, in
-> blame.c, I would have expected find_copy_in_parent() (for example) to
-> have its "opt" parameter changed from "int" to "enum
-> pickaxe_blame_option". One of the reasons why we want to use enums is
-> for type safety, and that can only be done if we use the enum type when
-> possible.
-I overlooked this, sorry for that.
-I'll send an updated patch with these corrections.
-
-Thanks!
