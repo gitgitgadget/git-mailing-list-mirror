@@ -7,55 +7,68 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B734B1F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 16:11:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 873B61F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 16:15:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728252AbfJKQLO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 12:11:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45850 "HELO cloud.peff.net"
+        id S1728154AbfJKQPG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 12:15:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45862 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726666AbfJKQLN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 12:11:13 -0400
-Received: (qmail 15579 invoked by uid 109); 11 Oct 2019 16:11:13 -0000
+        id S1726692AbfJKQPG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 12:15:06 -0400
+Received: (qmail 15609 invoked by uid 109); 11 Oct 2019 16:15:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 Oct 2019 16:11:13 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 Oct 2019 16:15:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2503 invoked by uid 111); 11 Oct 2019 16:14:08 -0000
+Received: (qmail 2535 invoked by uid 111); 11 Oct 2019 16:18:01 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Oct 2019 12:14:08 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Oct 2019 12:18:01 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 11 Oct 2019 12:11:12 -0400
+Date:   Fri, 11 Oct 2019 12:15:05 -0400
 From:   Jeff King <peff@peff.net>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] git-rev-list.txt: prune options in synopsis
-Message-ID: <20191011161112.GA19741@sigill.intra.peff.net>
-References: <645cc54c4c86493c855ec6b0b892a0bc8e999249.1570234118.git.liu.denton@gmail.com>
- <20191011060457.GC20094@sigill.intra.peff.net>
- <c9e7fbd6-7ad6-bce9-1e17-6391ab3e0630@iee.email>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH v2] send-pack: never fetch when checking exclusions
+Message-ID: <20191011161504.GB19741@sigill.intra.peff.net>
+References: <xmqqzhibnahi.fsf@gitster-ct.c.googlers.com>
+ <20191008183739.194714-1-jonathantanmy@google.com>
+ <20191011061257.GD20094@sigill.intra.peff.net>
+ <a87cf3ce-fbff-ef4e-941e-bd2da0bf182f@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c9e7fbd6-7ad6-bce9-1e17-6391ab3e0630@iee.email>
+In-Reply-To: <a87cf3ce-fbff-ef4e-941e-bd2da0bf182f@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 11, 2019 at 05:02:33PM +0100, Philip Oakley wrote:
+On Fri, Oct 11, 2019 at 08:31:30AM -0400, Derrick Stolee wrote:
 
-> Another case, of a different style, is that of `git bundle --all` which does
-> need mentioning that particular rev-list option as a major usage (I couldn't
-> manage to understand the three layers of man page that needed reading).
+> >> Ensure that these lazy fetches do not occur.
+> > 
+> > That makes sense. For similar reasons, should we be using
+> > OBJECT_INFO_QUICK here? If the other side has a bunch of ref tips that
+> > we don't have, we'll end up re-scanning the pack directory over and over
+> > (which is _usually_ pretty quick, but can be slow if you have a lot of
+> > packs locally). And it's OK if we racily miss out on an exclusion due to
+> > somebody else repacking simultaneously.
 > 
-> I had proposed a patch many years ago [1] but the feedback wasn't positive,
-> though my SO question continues [2] to get votes.
+> That's a good idea. We can hint to the object store that we don't expect
+> misses to be due to a concurrent repack, so we don't want to reprepare
+> pack-files.
 
-Yeah, I agree that "git bundle" could be more clear about this. I think
-just adding an example like this might help:
+As a general rule (and why I'm raising this issue in reply to Jonathan's
+patch), I think most or all sites that want OBJECT_INFO_QUICK will want
+SKIP_FETCH_OBJECT as well, and vice versa. The reasoning is generally
+the same:
 
-  # generate a bundle similar to what "git clone" would produce
-  git bundle create file.bundle --branches --tags
+  - it's OK to racily have a false negative (we'll still be correct, but
+    possibly a little less optimal)
+
+  - it's expected and normal to be missing the object, so spending time
+    double-checking the pack store wastes measurable time in real-world
+    cases
 
 -Peff
