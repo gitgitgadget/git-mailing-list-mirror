@@ -2,129 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 115F31F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 06:34:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8BF81F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 07:40:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727160AbfJKGep (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 02:34:45 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45424 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726481AbfJKGep (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 02:34:45 -0400
-Received: (qmail 13395 invoked by uid 109); 11 Oct 2019 06:34:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 Oct 2019 06:34:44 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30810 invoked by uid 111); 11 Oct 2019 06:37:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Oct 2019 02:37:38 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 11 Oct 2019 02:34:43 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: Git in Outreachy December 2019?
-Message-ID: <20191011063443.GB25741@sigill.intra.peff.net>
-References: <nycvar.QRO.7.76.6.1909171158090.15067@tvgsbejvaqbjf.bet>
- <20190917120230.GA27531@szeder.dev>
- <nycvar.QRO.7.76.6.1909231444590.15067@tvgsbejvaqbjf.bet>
- <20190923165828.GA27068@szeder.dev>
- <nycvar.QRO.7.76.6.1909261257160.15067@tvgsbejvaqbjf.bet>
- <20190926132852.GF2637@szeder.dev>
- <nycvar.QRO.7.76.6.1909262138450.15067@tvgsbejvaqbjf.bet>
- <20190926214448.GI2637@szeder.dev>
- <20190927221857.GB31237@sigill.intra.peff.net>
- <20191009172551.GI29845@szeder.dev>
+        id S1727652AbfJKHkM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 03:40:12 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:44962 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727272AbfJKHkM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 03:40:12 -0400
+Received: by mail-ed1-f68.google.com with SMTP id r16so7768028edq.11
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 00:40:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=trQh1wdOJX1tpPfDr3FoQYeT47h9WQwJfcXlJ9Nshiw=;
+        b=HIEyMmjErgvXxWvsv17PZzjBaWt9xmdeIjsHUPWz0hE5rz9DPKJSGFkmmD7m1mkFun
+         oyFt3OpaAyFJPhLZ2AKdsTfv+mzP8mYsYSZDzRv3SCUnmCdSSbWqIE6T6+MN8Qrn6ufF
+         pVYA/LCgbJSSgWGBDBCLZsLbjzuYhjBZCOF43c+shlmKsX7B8zgXMdAMNdFxTdexiMSZ
+         CgAJKhpbboQgo/UPCz1DKozmNijetWeScGZFsAkzVbO1eFiSWwr8Raud+g/yDXOD6pJ7
+         SSFKOGxDiaxgS5T2diP8YiYZqr/+cB/Vv+ZFH2HTI24wA1Je0GneNww+eimTZoXEica6
+         aIdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=trQh1wdOJX1tpPfDr3FoQYeT47h9WQwJfcXlJ9Nshiw=;
+        b=I8ECr2iSmGQ/WeUSNjKqjT+djy1TbxfRWqjpPvGVD/Nj3vU2BGW/Xmi1LvZiU/9h3f
+         YKOzvDuzjyB/S4D12zQqpfpquYR7Ru2/RfiO3+fsorzJ0RZWLbn81acPYa1o+s8B7KN3
+         +zSU1T7C1hiIPthUgX4h5WE9PF+wWeOH0yPjzRfJJdAUSee+vIoQyqcORTWbsZDXI9BJ
+         OWvcVU+GD/MvHCc1n4+3I6eWrKyKybiXAk6PD6Jw2NovAczB9swHx6RK/nZEt9MUr4rj
+         EPcfhrqs8X47WHFp+TE1BMB5nwMs5R9WQ+7W+1BRIxL5u60mPh608OAXpNrU3YaoHBL2
+         Y8Ag==
+X-Gm-Message-State: APjAAAVpbdxey1o9cdcN5Y7ZarGz+kwxWehPIuuwWvmd4e7MHy71/gbR
+        /etG8gTHzdp2isc7ntbEgFfeTJj5BGEuJ4VO9Aln0cGbM7o=
+X-Google-Smtp-Source: APXvYqwtxVvOw0d8WNwZ0r/QD3LRWQ6JEMgEduAiQYbx1si7BOoo7AB7xkn1IG5PcGC2G2semYDhjsegyoBg44rOE70=
+X-Received: by 2002:aa7:c48c:: with SMTP id m12mr12145453edq.280.1570779610515;
+ Fri, 11 Oct 2019 00:40:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191009172551.GI29845@szeder.dev>
+References: <20190913130226.7449-11-chriscool@tuxfamily.org> <20191010235952.174426-1-jonathantanmy@google.com>
+In-Reply-To: <20191010235952.174426-1-jonathantanmy@google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 11 Oct 2019 09:39:58 +0200
+Message-ID: <CAP8UFD0yefCapgLG78bqBY0ZNWNiifJZUxQ=MGDa8AVJJrWBFg@mail.gmail.com>
+Subject: Re: [RFC PATCH 10/10] pack-objects: improve partial packfile reuse
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 09, 2019 at 07:25:51PM +0200, SZEDER Gábor wrote:
+On Fri, Oct 11, 2019 at 1:59 AM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> I'm going to start with pack-bitmap.h, then builtin/pack-objects.c.
+>
+> >  int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
+> >                                      struct packed_git **packfile,
+> > -                                    uint32_t *entries, off_t *up_to);
+> > +                                    uint32_t *entries,
+> > +                                    struct bitmap **bitmap);
+>
+> Makes sense. The existing code determines if the given packfile is
+> suitable, and if yes, the span of the packfile to use. With this patch,
+> we resolve to use the given packfile, and want to compute which objects
+> to use, storing the computation result in an uncompressed bitmap.
+> (Resolving to use the given packfile is not that much different from
+> existing behavior, as far as I know, since we currently only consider
+> one packfile at most anyway.)
+>
+> So replacing the out param makes sense, although a more descriptive name
+> than "bitmap" would be nice.
 
-> > Probably they'd be easy enough to fix (and they're out of tree anyway),
-> > so I'm not really arguing against the escape hatch exactly. Mostly I'm
-> > just surprised that if I introduced 3 cases (out of probably a dozen
-> > scripts), I'm surprised that more contributors aren't accidentally doing
-> > so upstream.
-> 
-> I see it a bit differently.  Over a decade we gathered about
-> twenty-something such tests cases: that's about two cases per year.
-> You added three such cases in about a year and a half: that's two
-> cases per year.  The numbers add up perfectly, you singlehandedly took
-> care of everything ;)
+Yeah, in pack-bitmap.c this argument is called "reuse_out", so the
+same name could be used in pack-bitmap.c too. I changed that on my
+current version.
 
-Those cases are actually much older than that. I just didn't bother to
-clean them up until recently. So my rate is even lower :)
+> > +/*
+> > + * Record the offsets needed in our reused packfile chunks due to
+> > + * "gaps" where we omitted some objects.
+> > + */
+> > +static struct reused_chunk {
+> > +     off_t start;
+> > +     off_t offset;
+> > +} *reused_chunks;
+> > +static int reused_chunks_nr;
+> > +static int reused_chunks_alloc;
+>
+> This makes sense - offsets may be different when we omit objects from
+> the packfile. I think this can be computed by calculating the number of
+> zero bits between the current object's index and the nth object prior
+> (where n is the offset) in the bitmap resulting from
+> reuse_partial_packfile_from_bitmap() above, thus eliminating the need
+> for this array, but I haven't tested it.
 
->   - Some shells do include file descriptor redirections in the trace
->     output, and it varies between implementations to which fd the
->     trace of the redirection goes.
->     
->       - 'ksh/ksh93' and NetBSD's /bin/sh send the trace of
->         redirections to the "wrong" fd, in the sense that e.g. the
->         trace of commands invoked in 'test_must_fail' goes to the
->         function's standard error, and checking its stderr with
->         'test_cmp' would then fail.
->  
->         (But 'ksh/ksh93' doesn't really matter, because they don't
->         support the 'local' keyword, so they fail a bunch of tests
->         even without '-x' anyway.)
-> 
->         I don't think we can do anything about these shells.
+Thanks for the idea. I will let others comment on that though before
+maybe trying to implement it. I think it could come as a further
+optimization in a following patch if it makes things faster or reduce
+memory usage.
 
-Yeah, unless somebody is complaining, I don't know that it's worth
-worrying about too much. The test suite is certainly useful without
-being able to use "-x" on every single test run (you can still run it
-without "-x" obviously, or selectively use "-x" to debug a single test
-or script). So if it is only unreliable on a few tests on a few obscure
-shells, we can probably live with it until somebody demonstrates a
-real-world problem (e.g., that they're running automated CI on an
-obscure platform that is stuck with an old shell, and really want "-x
---verbose-log" to get more verbose failures).
+> > +                     if (0) {
+> > +                             off_t expected_size = cur - offset;
+> > +
+> > +                             if (len + ofs_len < expected_size) {
+> > +                                     unsigned max_pad = (len >= 4) ? 9 : 5;
+> > +                                     header[len - 1] |= 0x80;
+> > +                                     while (len < max_pad && len + ofs_len < expected_size)
+> > +                                             header[len++] = 0x80;
+> > +                                     header[len - 1] &= 0x7F;
+> > +                             }
+> > +                     }
+>
+> This if(0) should be deleted.
 
->   - We do call 'test_have_prereq' from within test cases as well,
->     notably from the 'test_i18ngrep', 'test_i18ncmp' and
->     'test_ln_s_add' helper functions.  In those cases all trace output
->     from 'test_have_prereq' is included in the test case's trace
->     output, which means that during the first invocation:
-> 
->       - there is lots of distracting and confusing trace output, as
->         the script evaluating the prereq is passed around to a bunch
->         of functions.
+Yeah, good eyes. I removed it on my current version.
 
-Yeah, I think this is probably an issue even with bash.
+> > @@ -1002,6 +1132,10 @@ static int have_duplicate_entry(const struct object_id *oid,
+> >  {
+> >       struct object_entry *entry;
+> >
+> > +     if (reuse_packfile_bitmap &&
+> > +         bitmap_walk_contains(bitmap_git, reuse_packfile_bitmap, oid))
+> > +             return 1;
+>
+> Hmm...why did we previously not need to check the reuse information, but
+> we do now? I gave the code a cursory glance but couldn't find the
+> answer.
+>
+> > @@ -2571,7 +2706,9 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+> >
+> >  static int obj_is_packed(const struct object_id *oid)
+> >  {
+> > -     return !!packlist_find(&to_pack, oid, NULL);
+> > +     return packlist_find(&to_pack, oid, NULL) ||
+> > +             (reuse_packfile_bitmap &&
+> > +              bitmap_walk_contains(bitmap_git, reuse_packfile_bitmap, oid));
+>
+> Same question here - why do we need to check the reuse information?
 
->     As far as 'test_i18ngrep' is concerned, which accounts for the
->     majority of 'test_have_prereq' invocations within test cases, I
->     don't understand why it uses 'test_have_prereq' in the first place
->     instead of checking the GIT_TEST_GETTEXT_POISON environment
->     variable; and 6cdccfce1e (i18n: make GETTEXT_POISON a runtime
->     option, 2018-11-08) doesn't give me any insight.
+Maybe a reuse bitmap makes it cheap enough to check that information?
 
-I think it's just that checking the environment variable is non-trivial:
-we invoke env--helper to handle bool interpretation. So we'd prefer to
-cache the result (and not to run it at all if a test script doesn't use
-i18ngrep, though it's perhaps ubiquitous enough that we should just run
-it up front for every script).
-
->     I recall that some months ago we discussed the idea of how to
->     disable trace output from within test helper functions; that would
->     help with this 'test_have_prereq' issue as well, at least in case
->     of the more "common" shells.
-
-That might be worth doing, though IIRC it got kind of hairy. :)
-
--Peff
+Thank you for the review,
+Christian.
