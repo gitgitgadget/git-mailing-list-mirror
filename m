@@ -2,226 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DC491F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 08:36:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FB211F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 08:52:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726706AbfJKIgr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 04:36:47 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:50454 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726397AbfJKIgr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 04:36:47 -0400
-Received: by mail-wm1-f67.google.com with SMTP id 5so9521102wmg.0
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 01:36:45 -0700 (PDT)
+        id S1727470AbfJKIwZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 04:52:25 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39085 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727032AbfJKIwZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 04:52:25 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r3so10952189wrj.6
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 01:52:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/cXMO3PinVYgqSLEFFm2db7pEvb/AG+LxHFEx2G8Ffg=;
-        b=cS8UdQL872yIneVQc2pKwnu3Q8tLi8Gn8BMSvMNDzC7ApUpKwH7w5ZvHpLLwgBQDpA
-         7pmg4ZItRcpq8MSuEcevldJoszVostw11b1ryax8svyfDuOAF1QY3HzcE9j+6sY2kc4b
-         U1kDaG3tUp1nVie63+i6Ffty08GHtJCd/jh95JWzeGKa7Kx50Bix3vPX0q5w9jzBzdDC
-         DvF4eG7lTR9BIY7hCrh3ZQsvw1JC2+ekTDEgymBLWRfa6OhsOIYTG5N2CsaLgvS6hKsH
-         S1wQsWaPmMwrrtOZeNgKsznFF9+joWBo6ixL5ER2C8gZwlRy6gBVVKo+YqK8LTlOZZyo
-         DBGg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=9+4VjDUUMRqFUxo0WUycwaMCDArqJYT10+LqRYvkx/c=;
+        b=UmmayxfpXyepqv1SVO4uXCXJZ+7KnrGivpIo7Etz7dFCfRdy2pCk7m+8Nmj3XgL9jM
+         qsMFPhXxPPsXz4AqYb+Bx3wvImT79reXdsfDmM+ZTCIw9l6Ops3sCy2dxWZRJNiHPrx1
+         pM3OBxdsqOOLEPx5NCj0H8Cp2CUg4jRy+jLvhwcWNbj/ZfUDs9C1eA3f71OPg6m8MEp4
+         HE2oQOOgDknN/mxE+CF56HHJiwL8JeNStCQcw6zndJlihxP9Uop0MudQJgAKVBmE97w3
+         AenxI7XlUTgbq0gTUWMVA3S0J2PCSIecb8OSZ1JuLK8EoYUetGlIlv87nK9IvBy1CdGC
+         R9cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/cXMO3PinVYgqSLEFFm2db7pEvb/AG+LxHFEx2G8Ffg=;
-        b=UVBDZCMOt2UurOCeJ3tDa+9IUWdd2XxNLujSB7tFpMVGJXY0V6OW4X4AbEuzzWZHzL
-         eg5g6QbWfa+OhzOIi2OP9AeeztA5X797bHsJFdB1G9di26xCGUH9o4869YtO6+93Eld0
-         XKJsHlLh/BnALqDvlDgo4awE1QJmnIR9edfa7gZU4URhQdtGItLMJDKyf/7ocN6Lhj40
-         IAJeSUH48OvP1iID/uvh+8D9kBqtpKwwXGtSfxXVWXQsQrBG+moQ8Pt9zA9SKznTVhbO
-         d38QWN4485XWZacVKpHudp38dJkLqm/YCa7dHqilV+dfLPUKoQEF6ano00FrYPka5QkR
-         wIVw==
-X-Gm-Message-State: APjAAAXMgmJdHXmkauuujBFnhbcJW3s40g/2jUA3689rK3uT4kVinW6l
-        h5QT8G54boSdEU5uGoM=
-X-Google-Smtp-Source: APXvYqxD3dHbl8Q873I7KbpoNmw9af+f6UfMAmbxqY7g+dUnw/ZwVFkg0iw6rVwXWxoK2gZRdBj3hw==
-X-Received: by 2002:a05:600c:2201:: with SMTP id z1mr2298110wml.169.1570783004653;
-        Fri, 11 Oct 2019 01:36:44 -0700 (PDT)
-Received: from localhost (m221.zih.tu-dresden.de. [141.30.68.221])
-        by smtp.gmail.com with ESMTPSA id q10sm15990337wrd.39.2019.10.11.01.36.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 11 Oct 2019 01:36:44 -0700 (PDT)
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-To:     git@vger.kernel.org
-Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
-        Alexander Kuleshov <kuleshovmail@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 2/2] format-patch: configure a command to generate the output directory name
-Date:   Fri, 11 Oct 2019 10:36:42 +0200
-Message-Id: <bdca9086256c6723f13712b1e80b0f1e29dafe9b.1570782773.git.bert.wesarg@googlemail.com>
-X-Mailer: git-send-email 2.23.0.13.g28bc381d7c
-In-Reply-To: <b172eba0b748c3f0f638786a5cfba905aca385cc.1570782773.git.bert.wesarg@googlemail.com>
-References: <30278644805925935d05ae877c4b14843e37e40c.1570469582.git.bert.wesarg@googlemail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=9+4VjDUUMRqFUxo0WUycwaMCDArqJYT10+LqRYvkx/c=;
+        b=J1zA24B4eL7D9FmBKL65PGTnXPJI2fkfOR3Ovop4Oka7arHazGWrvm1asEehZRL6Vl
+         pWfMr9BMuhSE8f82FZUvvYTM4i2qnYYEWAvGVe2Ok3d1ezf2I/pSZgExC/Udbcy+vXvg
+         0Uemg2lK6TPng4rTnLJ1ZaILJKbTxjGHaQMyk3jjOsISiJTu7H83JLL3WwXF96pboabr
+         rzPmJT8vCjI0fwME7kRrJ+vAQS3CjveLDLgdAoQjLAksOeCIZ3SAGnJTgO/sFDjq00GO
+         +nOH8jqyRHzjq+WVMeKu4skryZbGps5DMX8Cos2Q8DLfr8fPXwkRbkhLmnwcdM9Hbdil
+         6gYA==
+X-Gm-Message-State: APjAAAWYV8x2QpCeY9G6vwWwx/P7JZnsUqJaSVLwmpMNyvb8x9R2rLo7
+        021OCgCaa6bAGvdtIO/n2Vs=
+X-Google-Smtp-Source: APXvYqxjnB1tX5+79N2UozEnW3fJjXW63srH/6pdUwNMluj83H277sRjc41nJSupmwUjYRu8S7mszA==
+X-Received: by 2002:a5d:540d:: with SMTP id g13mr8935786wrv.8.1570783942725;
+        Fri, 11 Oct 2019 01:52:22 -0700 (PDT)
+Received: from wambui ([197.237.61.225])
+        by smtp.gmail.com with ESMTPSA id d15sm8843922wru.50.2019.10.11.01.52.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Oct 2019 01:52:22 -0700 (PDT)
+Date:   Fri, 11 Oct 2019 11:52:17 +0300
+From:   Wambui Karuga <wambui.karugax@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [Outreachy] [PATCH] blame: Convert pickaxe_blame defined
+ constants to enums
+Message-ID: <20191011085217.GA8481@wambui>
+Reply-To: 20191010184439.94173-1-jonathantanmy@google.com
+References: <20191010115230.10623-1-wambui.karugax@gmail.com>
+ <20191010184439.94173-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191010184439.94173-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The 'format.outputDirectory' configuration is only able to store constant
-directory names. Though some may use
+On Thu, Oct 10, 2019 at 11:44:39AM -0700, Jonathan Tan wrote:
+> > Convert pickaxe_blame preprocessor constants in blame.h to an enum.
+> > Also replace previous instances of the constants with the new enum values.
+> 
+> First of all, thanks for your initiative in finding a microproject and
+> making a patch for it!
+> 
+> About your commit message title, I know that 50 characters is a soft
+> limit, but we should adhere to it if possible. Also, in Git, the letter
+> following the colon is usually in lowercase. So I would write it like:
+> 
+>   blame: make PICKAXE_BLAME_* an enum
+> 
+> (Feel free to use that or think of a different one.)
+Okay, thanks for the suggestion. I'll use it.
+> 
+> > -	if ((opt & PICKAXE_BLAME_COPY_HARDEST)
+> > -	    || ((opt & PICKAXE_BLAME_COPY_HARDER)
+> > +	if ((opt & BLAME_COPY_HARDEST)
+> > +	    || ((opt & BLAME_COPY_HARDER)
+> 
+> Any reason why the names are renamed to omit "PICKAXE_"? In particular,
+> these names are still global, so it is good to retain the extra context.
+> 
+> (This doesn't mean that you are wrong to remove them - I just gave my
+> opinion, and a reason for my opinion. If you had a reason to remove
+> them, you can mention that, and we can discuss this together. Or, if you
+> read my reason and agree with it, you can say that and put the
+> "PICKAXE_" back.)
+> 
+I wasn't really sure about omitting the "PICKAXE_" prefix, but I looked
+at some of the other defined enums and it seemed like what would act as
+the prefix in #defines was only used in the enum declaration. For
+example I looked at:
+	enum apply_ws_error_action {
+		nowarn_ws_error,
+		warn_on_ws_error,
+		die_on_ws_error,
+		correct_ws_error
+	};
 
-   $ git format-patch -o $(createdir) …
+For comparison, I took "apply_" as the prefix that would translate to 
+"#define APPLY_" which isn't included in the member variables.
+I do agree about retaining the extra context though, so I can definitely put the
+"PICKAXE_" back.
 
-to name the directory dynamically. Provide a new configuration to be able
-to store such a command too.
+> > -#define PICKAXE_BLAME_MOVE		01
+> > -#define PICKAXE_BLAME_COPY		02
+> > -#define PICKAXE_BLAME_COPY_HARDER	04
+> > -#define PICKAXE_BLAME_COPY_HARDEST	010
+> > -
+> >  #define BLAME_DEFAULT_MOVE_SCORE	20
+> >  #define BLAME_DEFAULT_COPY_SCORE	40
+> >  
+> > +enum pickaxe_blame_action {
+> > +	BLAME_MOVE = 01,
+> > +	BLAME_COPY,
+> > +	BLAME_COPY_HARDER = 04,
+> > +	BLAME_COPY_HARDEST = 010,
+> > +};
+> 
+> In Git, we often look at historical commits, so it is good to keep
+> history as clean as possible. In particular, we shouldn't move things
+> around unless we have another reason to. Here, for example, you are
+> moving the constants from above BLAME_DEFAULT_* to below. You should
+> move them back. (Or if you have a reason for moving, mention that and we
+> can discuss it.)
+> 
+I'll move them back. I have experience with all the "#define" constants
+being immediately after the "#includes" which is why I moved them, but I'll try to stick to the
+convention from now on.
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> Also, I have a slight preference for putting "= 02" on the BLAME_COPY
+> line but that is not necessary.
+> 
+Noted.
 
----
-Changes in v2:
- * rephrase motivation
+> Apart from all that, one thing that I expected in this patch is the
+> changing of the type of local variables and parameters. For example, in
+> blame.c, I would have expected find_copy_in_parent() (for example) to
+> have its "opt" parameter changed from "int" to "enum
+> pickaxe_blame_option". One of the reasons why we want to use enums is
+> for type safety, and that can only be done if we use the enum type when
+> possible.
+I overlooked this, sorry for that.
+I'll send an updated patch with these corrections.
 
-Changes in v3:
- * remove RFC
-
-Changes in v4:
- * based on dl/format-patch-doc-test-cleanup and adopt it
-
-Cc: Alexander Kuleshov <kuleshovmail@gmail.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Denton Liu <liu.denton@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config/format.txt    |  5 +++++
- Documentation/git-format-patch.txt |  6 +++++-
- builtin/log.c                      | 24 +++++++++++++++++++++++-
- t/t4014-format-patch.sh            | 26 ++++++++++++++++++++++++++
- 4 files changed, 59 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
-index 40cad9278f..420188a1c6 100644
---- a/Documentation/config/format.txt
-+++ b/Documentation/config/format.txt
-@@ -83,6 +83,11 @@ format.outputDirectory::
- 	Set a custom directory to store the resulting files instead of the
- 	current working directory. All directory components will be created.
- 
-+format.outputDirectoryCmd::
-+	The command which is used to name a custom directory to store the
-+	resulting files instead of the current working directory. All directory
-+	components will be created.
-+
- format.useAutoBase::
- 	A boolean value which lets you enable the `--base=auto` option of
- 	format-patch by default.
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 2035d4d5d5..4936b9f91d 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -67,7 +67,11 @@ can be set with the `format.outputDirectory` configuration option.
- The `-o` option takes precedence over `format.outputDirectory`.
- To store patches in the current working directory even when
- `format.outputDirectory` points elsewhere, use `-o .`. All directory
--components will be created.
-+components will be created. The 'format.outputDirectoryCmd' configuration can
-+be used to name a command to produce the directory name programmatically. The
-+command should produce the name to its standard output. The
-+`format.outputDirectory` configuration takes precedence over
-+`format.outputDirectoryCmd`.
- 
- By default, the subject of a single patch is "[PATCH] " followed by
- the concatenation of lines from the commit message up to the first blank
-diff --git a/builtin/log.c b/builtin/log.c
-index 8d08632858..3eb507c02f 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -774,6 +774,7 @@ static const char *signature = git_version_string;
- static const char *signature_file;
- static int config_cover_letter;
- static const char *config_output_directory;
-+static const char *config_output_directory_cmd;
- 
- enum {
- 	COVER_UNSET,
-@@ -856,6 +857,8 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 	}
- 	if (!strcmp(var, "format.outputdirectory"))
- 		return git_config_string(&config_output_directory, var, value);
-+	if (!strcmp(var, "format.outputdirectorycmd"))
-+		return git_config_string(&config_output_directory_cmd, var, value);
- 	if (!strcmp(var, "format.useautobase")) {
- 		base_auto = git_config_bool(var, value);
- 		return 0;
-@@ -1756,8 +1759,27 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	if (rev.show_notes)
- 		init_display_notes(&rev.notes_opt);
- 
--	if (!output_directory && !use_stdout)
-+	if (!output_directory && !use_stdout) {
-+		// outputDirectoryCmd can be preceeded by outputDirectory
-+		if (!config_output_directory && config_output_directory_cmd) {
-+			struct child_process cp = CHILD_PROCESS_INIT;
-+			const char *argv[1];
-+			struct strbuf buf = STRBUF_INIT;
-+			int rc;
-+
-+			argv[0] = config_output_directory_cmd;
-+			cp.argv = argv;
-+			cp.use_shell = 1;
-+			rc = capture_command(&cp, &buf, PATH_MAX);
-+			if (rc)
-+				die(_("outputDirectoryCmd command failed: "
-+				      "'%s'"), config_output_directory_cmd);
-+			strbuf_setlen(&buf, strcspn(buf.buf, "\r\n"));
-+			config_output_directory = strbuf_detach(&buf, NULL);
-+		}
-+
- 		output_directory = config_output_directory;
-+	}
- 
- 	if (!use_stdout)
- 		output_directory = set_outdir(prefix, output_directory);
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 9facc3a79e..14c8f5e854 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1646,6 +1646,32 @@ test_expect_success 'format-patch -o overrides format.outputDirectory' '
- 	test_path_is_dir patchset
- '
- 
-+test_expect_success 'format-patch format.outputDirectoryCmd option' '
-+	test_config format.outputDirectoryCmd "echo patches" &&
-+	rm -fr patches &&
-+	git format-patch master..side &&
-+	count=$(git rev-list --count master..side) &&
-+	ls patches >list &&
-+	test_line_count = $count list
-+'
-+
-+test_expect_success 'format-patch format.outputDirectory overrides format.outputDirectoryCmd' '
-+	test_config format.outputDirectoryCmd "echo patches" &&
-+	test_config format.outputDirectory patchset &&
-+	rm -fr patches patchset &&
-+	git format-patch master..side &&
-+	test_path_is_missing patches &&
-+	test_path_is_dir patchset
-+'
-+
-+test_expect_success 'format-patch -o overrides format.outputDirectoryCmd' '
-+	test_config format.outputDirectoryCmd "echo patches" &&
-+	rm -fr patches patchset &&
-+	git format-patch -o patchset master..side &&
-+	test_path_is_missing patches &&
-+	test_path_is_dir patchset
-+'
-+
- test_expect_success 'format-patch --base' '
- 	git checkout patchid &&
- 
--- 
-2.23.0.13.g28bc381d7c
-
+Thanks!
