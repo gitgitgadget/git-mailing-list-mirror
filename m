@@ -2,73 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC7511F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 04:39:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 407991F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 04:50:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726281AbfJKEjc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 00:39:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62035 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726187AbfJKEjb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 00:39:31 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4FA2525451;
-        Fri, 11 Oct 2019 00:39:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rUN2J4D31Hv5egHpEFNMu+MdbKA=; b=n3+cD1
-        T29XVbGx3T3a88d0F2j9vQSDJLnoDa5RfKdLuHjby/2QLyD6HioANLBnKtFsEpaw
-        UkPbtoa3cjZBREykV2prGfCFH1+29gpsR6HbCEsTCjiwpnYlpa578bypUsQL78K3
-        +MmtG9p/c9NxBs94cmu2pu/NZHe6I4Vvrt02I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=SoQ8UIWOjmqAN0HKEjYW73KHC8yJ/nGp
-        fJxa6FImmccdhOmQZ50aU4SPHEppfx3ZCS3Dn2qGIY7pIbCvqlGTZacszKjE02Tz
-        sd6uwGLd4wUFJBNoAVq8Eqn79OI1Xx9TMPoxPvGpdKBAiyuBrJtz+gI8Lyq8w8Yn
-        00c2con7D9I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4324925450;
-        Fri, 11 Oct 2019 00:39:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726243AbfJKEuZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 00:50:25 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1]:53562 "EHLO
+        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726099AbfJKEuZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 11 Oct 2019 00:50:25 -0400
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x9B4n7G3066467
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 00:50:24 -0400
+Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
+        by mx0a-001b2d01.pphosted.com with ESMTP id 2vjjjbgn2w-1
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 00:50:23 -0400
+Received: from localhost
+        by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
+        for <git@vger.kernel.org> from <ajd@linux.ibm.com>;
+        Fri, 11 Oct 2019 05:50:21 +0100
+Received: from b06cxnps3074.portsmouth.uk.ibm.com (9.149.109.194)
+        by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
+        (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+        Fri, 11 Oct 2019 05:50:18 +0100
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
+        by b06cxnps3074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id x9B4oHt928835930
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 11 Oct 2019 04:50:17 GMT
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 68E3FA4060;
+        Fri, 11 Oct 2019 04:50:17 +0000 (GMT)
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 0976CA405C;
+        Fri, 11 Oct 2019 04:50:17 +0000 (GMT)
+Received: from ozlabs.au.ibm.com (unknown [9.192.253.14])
+        by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+        Fri, 11 Oct 2019 04:50:16 +0000 (GMT)
+Received: from [10.61.2.125] (haven.au.ibm.com [9.192.254.114])
+        (using TLSv1.2 with cipher AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A4C4B2544F;
-        Fri, 11 Oct 2019 00:39:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: Re: Raise your hand to Ack jk/code-of-conduct if your Ack fell thru cracks
-References: <xmqq36g5444k.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1910082111220.46@tvgsbejvaqbjf.bet>
-        <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com>
-Date:   Fri, 11 Oct 2019 13:39:28 +0900
-In-Reply-To: <xmqqd0f6n5a4.fsf_-_@gitster-ct.c.googlers.com> (Junio
-        C. Hamano's message of "Wed, 09 Oct 2019 09:14:59 +0900")
-Message-ID: <xmqq7e5bj3pb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by ozlabs.au.ibm.com (Postfix) with ESMTPSA id 24A23A01C1;
+        Fri, 11 Oct 2019 15:50:14 +1100 (AEDT)
+Subject: Re: [PATCH] parser: Unmangle From: headers that have been mangled for
+ DMARC purposes
+From:   Andrew Donnellan <ajd@linux.ibm.com>
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, patchwork@lists.ozlabs.org,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Eric Blake <eblake@redhat.com>,
+        Christian Schoenebeck <qemu_oss@crudebyte.com>,
+        git@vger.kernel.org
+References: <20191010062047.21549-1-ajd@linux.ibm.com>
+ <20191010194132.GA191800@google.com>
+ <20191010225405.GA19475@sigill.intra.peff.net>
+ <xmqqblunj461.fsf@gitster-ct.c.googlers.com>
+ <c942d9ce-d8fe-32ca-bedd-1cdb3837823d@linux.ibm.com>
+Date:   Fri, 11 Oct 2019 15:50:14 +1100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1D8463E2-EBE1-11E9-B06A-C28CBED8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <c942d9ce-d8fe-32ca-bedd-1cdb3837823d@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-AU
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+x-cbid: 19101104-0016-0000-0000-000002B70C4D
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19101104-0017-0000-0000-000033181C29
+Message-Id: <7c2f16e3-1397-9ced-e334-a52e99b27e9b@linux.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-10-11_02:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=645 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1910110043
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 11/10/19 3:36 pm, Andrew Donnellan wrote:
+> It would be nice if Mailman could adopt X-Original-Sender too. As it is, 
 
-> ... but I'd still wait for a few
-> days for people who expressed their Acks but your scan missed, or
-> those who wanted to give their Acks but forgot to do so, to raise
-> their hands on this thread.
+(which I have gone ahead and reported as 
+https://gitlab.com/mailman/mailman/issues/641)
 
-Now, two days and four hours have passed, so I'll merge the result
-to 'next' (and thusly this poll is now closed).
+-- 
+Andrew Donnellan              OzLabs, ADL Canberra
+ajd@linux.ibm.com             IBM Australia Limited
 
-Thanks, all.
