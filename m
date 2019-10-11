@@ -2,290 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27C741F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 00:00:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 938CF1F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 00:11:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726707AbfJJX77 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Oct 2019 19:59:59 -0400
-Received: from mail-vk1-f201.google.com ([209.85.221.201]:45832 "EHLO
-        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725951AbfJJX77 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Oct 2019 19:59:59 -0400
-Received: by mail-vk1-f201.google.com with SMTP id q84so2787303vkb.12
-        for <git@vger.kernel.org>; Thu, 10 Oct 2019 16:59:58 -0700 (PDT)
+        id S1727476AbfJKALG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Oct 2019 20:11:06 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:44872 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726474AbfJKALG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Oct 2019 20:11:06 -0400
+Received: by mail-lj1-f196.google.com with SMTP id m13so7963714ljj.11
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 17:11:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=EUzrvPJhy/M9DVr44zt1/VlWBlxf6299V5s1WsQ+4Yw=;
-        b=lwy8ZGMHOaqFNdbLYldlhnmQ1xeXoxB8XeTDjdiYznNIju8/xyjw5dGwPxUToUj0dJ
-         Rhh4bEDsyPbzsNoFyKaWBwZygF56Cvu1F1ynAclJCDv8fvPFNH9mwu8RB9jnPYl0hEii
-         Qnug8VihtTVwwc9XSyHviFNeH0iBDtfRjgWYtBE3gcSwwP/Vd1xEtKTOQ9she7jxogLI
-         5OaPDgpR/zXWK1QJ8iVIklcPuGO1ZSQzV4BTbg6wTh6nP3/C/yHZgLB5GMBDAnmxDTmR
-         lyWeHkUcX6a3JYGt8eTz/mP6lvot2rXOOfxpf3l7UzBtovgrL/hewAds73LVL/1eugNA
-         a2BA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=DCaadtoTYo9FkdqDkeioOpYcQKjRt90yplvgLHztZCA=;
+        b=dWa+AR99UQCOjXvvuh6EYcOqi5Lk7fo9fsu96jI6KdlTghFPzq3KMYtG5bNg8ma/LK
+         MTG4JwOWCvdLqdVCqRX4MxVu40m30Kf4ZUswFHuOpSO85vWCWtc3UWWhnFhT6G+l35ia
+         44KMFUSAMuSRDnySrhJmXvl6eaEg/Rs7NB/KtVBvUJWkPqIN799jL5Dj69yx3zv4vnmS
+         5tgfz0fytnO5OcHs4u9SQuQz1MMNQHAuLC/HKh3JrliQgtfUwgvvoTvhwmpgr+d18TKl
+         tOFIBysyDA3WzVeuARZ7suBhSeACmTY1y4utM/HNw2SRPDZt2Qqemvu7rZOLrSrFYKdO
+         c95g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=EUzrvPJhy/M9DVr44zt1/VlWBlxf6299V5s1WsQ+4Yw=;
-        b=F3XFOx/dZUDUoUljgGcNRP4k0rK0u1lNuZS3R6usVMRViqCKrQaexoKmQQzcA6Pdic
-         8ugxzdrJu7i7swc2dz62pXRhe5l13mSsxG7dDGE28srAIVZxlCMHHB6r5UsUY+FPtc42
-         yk9ZfKJqID5NVvFIB3/MQ2Yvyun0Onm7RAA24EO38yF7xHp+L5CN317tSD52MjzwGZs+
-         bwlKUiXF9EcM8wvGRZf6LSYgeZ2y7eBp1ivS75vzTkr6YSG5biDSytl7V98zuN3mFNRR
-         zpChZvrpaxzH2L+0FkQv3su4xWU592ZoXUqjHZ/eaBfyP1eQUL2+GXMnLbHUa86jeegY
-         IHWg==
-X-Gm-Message-State: APjAAAU1C3I0WC0KgKyIsaS9ODC4r9gWFgY1BAIcC4MfV8sOLV8H9kNe
-        MLhQY3NXiIN2amLwma4WzQM/D7ueVL+LixcPbLli
-X-Google-Smtp-Source: APXvYqyrOElxFRCLtWsn5RezCIfYYkEoJ0dPiR4BdQQ+BnnjsHBiCNVS1l8lu/qYB0/BfOmxlYp+U21e9DkkBjOjO1+U
-X-Received: by 2002:a05:6102:20cf:: with SMTP id i15mr976613vsr.124.1570751997616;
- Thu, 10 Oct 2019 16:59:57 -0700 (PDT)
-Date:   Thu, 10 Oct 2019 16:59:52 -0700
-In-Reply-To: <20190913130226.7449-11-chriscool@tuxfamily.org>
-Message-Id: <20191010235952.174426-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190913130226.7449-11-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.23.0.581.g78d2f28ef7-goog
-Subject: Re: [RFC PATCH 10/10] pack-objects: improve partial packfile reuse
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     christian.couder@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        chriscool@tuxfamily.org, ramsay@ramsayjones.plus.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DCaadtoTYo9FkdqDkeioOpYcQKjRt90yplvgLHztZCA=;
+        b=dxkFVXvR2YIuG8jU/EwoMyBgFj/oCwN6qbRIJsNcjPoFnDYHBY3wrbyG3mf1d7E5S1
+         nKsvSUFDHMGQaNr+CAwX93dPQI2q1btEPpQL/45mpQ8IUHoj14RD9M6d+pVKfWN2hh4w
+         /tJfgAsr+nYPiq+gNdnTkbkjEA2V7mqyiWS7UfMDokjm5mRNg1GVYhEII7nG+OovEzOQ
+         khGfIYz1t6BUsaDpCGsJeMJ1SBRmU8Nt0t8q+ACc6cvkGlhVBuPUld5Q/ILuSoZkZxup
+         5L4JlKc66ZkwP0JF+83m8X5wku46NGup+BWbub78BI1TnVT8HM6UV4KTxnAff8JukCnm
+         /cwA==
+X-Gm-Message-State: APjAAAU7fHXYtvLJ3yqFgQ6KrdqYoPldOT3+wqgLZRzy8ye2M9N8fk6X
+        stHuTMMZ8aeceolUluoSPo4Wdvu2
+X-Google-Smtp-Source: APXvYqx2W9u79CarrpV4TfjmLoDSM98rneb8CnO7DU0HGuOFVEy30KB/6gsJF8KCwp/VtS8iysP0/w==
+X-Received: by 2002:a2e:1214:: with SMTP id t20mr7989152lje.240.1570752664053;
+        Thu, 10 Oct 2019 17:11:04 -0700 (PDT)
+Received: from OJAN-PAAVO.localdomain ([213.80.106.30])
+        by smtp.gmail.com with ESMTPSA id y26sm1778915ljj.90.2019.10.10.17.11.03
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Oct 2019 17:11:03 -0700 (PDT)
+Date:   Fri, 11 Oct 2019 02:11:14 +0200
+From:   Jakob Jarmar <jakob.j@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH v2] stash: avoid recursive hard reset on submodules
+Message-ID: <20191011001114.GB640501@OJAN-PAAVO.localdomain>
+References: <CA+xNDHtVc7pJr=SdihKDKiLE9TE_TcpEWWmPq+N9+fFcfM36wA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+xNDHtVc7pJr=SdihKDKiLE9TE_TcpEWWmPq+N9+fFcfM36wA@mail.gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm going to start with pack-bitmap.h, then builtin/pack-objects.c.
+git stash push does not recursively stash submodules, but if
+submodule.recurse is set, it may recursively reset --hard them. Having
+only the destructive action recurse is likely to be surprising
+behaviour, and unlikely to be desirable, so the easiest fix should be to
+ensure that the call to git reset --hard never recurses into submodules.
 
->  int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
->  				       struct packed_git **packfile,
-> -				       uint32_t *entries, off_t *up_to);
-> +				       uint32_t *entries,
-> +				       struct bitmap **bitmap);
+This matches the behavior of check_changes_tracked_files, which ignores
+submodules.
 
-Makes sense. The existing code determines if the given packfile is
-suitable, and if yes, the span of the packfile to use. With this patch,
-we resolve to use the given packfile, and want to compute which objects
-to use, storing the computation result in an uncompressed bitmap.
-(Resolving to use the given packfile is not that much different from
-existing behavior, as far as I know, since we currently only consider
-one packfile at most anyway.)
+Signed-off-by: Jakob Jarmar <jakob@jarmar.se>
+---
 
-So replacing the out param makes sense, although a more descriptive name
-than "bitmap" would be nice.
+Sorry for sending a patch with messed up whitespace. This one should be
+correct.
 
-Skipping pack-bitmaps.c for now.
+ builtin/stash.c     | 2 +-
+ git-legacy-stash.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-OK, builtin/pack-objects.c.
+diff --git a/builtin/stash.c b/builtin/stash.c
+index b5a301f24d..c986c258f2 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1383,7 +1383,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 			struct child_process cp = CHILD_PROCESS_INIT;
+ 			cp.git_cmd = 1;
+ 			argv_array_pushl(&cp.args, "reset", "--hard", "-q",
+-					 NULL);
++					 "--no-recurse-submodules", NULL);
+ 			if (run_command(&cp)) {
+ 				ret = -1;
+ 				goto done;
+diff --git a/git-legacy-stash.sh b/git-legacy-stash.sh
+index f60e9b3e87..07ad4a5459 100755
+--- a/git-legacy-stash.sh
++++ b/git-legacy-stash.sh
+@@ -370,7 +370,7 @@ push_stash () {
+ 			git diff-index -p --cached --binary HEAD -- "$@" |
+ 			git apply --index -R
+ 		else
+-			git reset --hard -q
++			git reset --hard -q --no-recurse-submodules
+ 		fi
+ 
+ 		if test "$keep_index" = "t" && test -n "$i_tree"
+-- 
+2.23.0
 
-> +/*
-> + * Record the offsets needed in our reused packfile chunks due to
-> + * "gaps" where we omitted some objects.
-> + */
-> +static struct reused_chunk {
-> +	off_t start;
-> +	off_t offset;
-> +} *reused_chunks;
-> +static int reused_chunks_nr;
-> +static int reused_chunks_alloc;
-
-This makes sense - offsets may be different when we omit objects from
-the packfile. I think this can be computed by calculating the number of
-zero bits between the current object's index and the nth object prior
-(where n is the offset) in the bitmap resulting from
-reuse_partial_packfile_from_bitmap() above, thus eliminating the need
-for this array, but I haven't tested it.
-
-> +static void write_reused_pack_one(size_t pos, struct hashfile *out,
-> +				  struct pack_window **w_curs)
-> +{
-> +	off_t offset, next, cur;
-> +	enum object_type type;
-> +	unsigned long size;
->  
-> +	offset = reuse_packfile->revindex[pos].offset;
-> +	next = reuse_packfile->revindex[pos + 1].offset;
->  
-> +	record_reused_object(offset, offset - hashfile_total(out));
->  
-> +	cur = offset;
-> +	type = unpack_object_header(reuse_packfile, w_curs, &cur, &size);
-> +	assert(type >= 0);
->  
-> +	if (type == OBJ_OFS_DELTA) {
-> +		off_t base_offset;
-> +		off_t fixup;
-> +
-> +		unsigned char header[MAX_PACK_OBJECT_HEADER];
-> +		unsigned len;
-> +
-> +		base_offset = get_delta_base(reuse_packfile, w_curs, &cur, type, offset);
-> +		assert(base_offset != 0);
-> +
-> +		/* Convert to REF_DELTA if we must... */
-> +		if (!allow_ofs_delta) {
-> +			int base_pos = find_revindex_position(reuse_packfile, base_offset);
-> +			const unsigned char *base_sha1 =
-> +				nth_packed_object_sha1(reuse_packfile,
-> +						       reuse_packfile->revindex[base_pos].nr);
-> +
-> +			len = encode_in_pack_object_header(header, sizeof(header),
-> +							   OBJ_REF_DELTA, size);
-> +			hashwrite(out, header, len);
-> +			hashwrite(out, base_sha1, 20);
-> +			copy_pack_data(out, reuse_packfile, w_curs, cur, next - cur);
-> +			return;
-> +		}
->  
-> +		/* Otherwise see if we need to rewrite the offset... */
-> +		fixup = find_reused_offset(offset) -
-> +			find_reused_offset(base_offset);
-> +		if (fixup) {
-> +			unsigned char ofs_header[10];
-> +			unsigned i, ofs_len;
-> +			off_t ofs = offset - base_offset - fixup;
-> +
-> +			len = encode_in_pack_object_header(header, sizeof(header),
-> +							   OBJ_OFS_DELTA, size);
-> +
-> +			i = sizeof(ofs_header) - 1;
-> +			ofs_header[i] = ofs & 127;
-> +			while (ofs >>= 7)
-> +				ofs_header[--i] = 128 | (--ofs & 127);
-> +
-> +			ofs_len = sizeof(ofs_header) - i;
-> +
-> +			if (0) {
-> +				off_t expected_size = cur - offset;
-> +
-> +				if (len + ofs_len < expected_size) {
-> +					unsigned max_pad = (len >= 4) ? 9 : 5;
-> +					header[len - 1] |= 0x80;
-> +					while (len < max_pad && len + ofs_len < expected_size)
-> +						header[len++] = 0x80;
-> +					header[len - 1] &= 0x7F;
-> +				}
-> +			}
-
-This if(0) should be deleted.
-
-> +
-> +			hashwrite(out, header, len);
-> +			hashwrite(out, ofs_header + sizeof(ofs_header) - ofs_len, ofs_len);
-> +			copy_pack_data(out, reuse_packfile, w_curs, cur, next - cur);
-> +			return;
-> +		}
-> +
-> +		/* ...otherwise we have no fixup, and can write it verbatim */
-> +	}
-> +
-> +	copy_pack_data(out, reuse_packfile, w_curs, offset, next - offset);
-> +}
-
-I didn't look into detail, but this looks like it's writing a single
-object. In particular, it can convert OFS into REF, something that the
-existing code cannot do.
-
-> +static size_t write_reused_pack_verbatim(struct hashfile *out,
-> +					 struct pack_window **w_curs)
-> +{
-> +	size_t pos = 0;
-> +
-> +	while (pos < reuse_packfile_bitmap->word_alloc &&
-> +			reuse_packfile_bitmap->words[pos] == (eword_t)~0)
-> +		pos++;
-> +
-> +	if (pos) {
-> +		off_t to_write;
-> +
-> +		written = (pos * BITS_IN_EWORD);
-> +		to_write = reuse_packfile->revindex[written].offset
-> +			- sizeof(struct pack_header);
-> +
-> +		record_reused_object(sizeof(struct pack_header), 0);
-> +		hashflush(out);
-> +		copy_pack_data(out, reuse_packfile, w_curs,
-> +			sizeof(struct pack_header), to_write);
->  
->  		display_progress(progress_state, written);
->  	}
-> +	return pos;
-> +}
-
-I presume this optimization is needed for the case where we are using
-*all* objects of a packfile, as is typical during a clone.
-
-> +static void write_reused_pack(struct hashfile *f)
-> +{
-> +	size_t i = 0;
-> +	uint32_t offset;
-> +	struct pack_window *w_curs = NULL;
-> +
-> +	if (allow_ofs_delta)
-> +		i = write_reused_pack_verbatim(f, &w_curs);
-> +
-> +	for (; i < reuse_packfile_bitmap->word_alloc; ++i) {
-> +		eword_t word = reuse_packfile_bitmap->words[i];
-> +		size_t pos = (i * BITS_IN_EWORD);
-> +
-> +		for (offset = 0; offset < BITS_IN_EWORD; ++offset) {
-> +			if ((word >> offset) == 0)
-> +				break;
-> +
-> +			offset += ewah_bit_ctz64(word >> offset);
-> +			write_reused_pack_one(pos + offset, f, &w_curs);
-> +			display_progress(progress_state, ++written);
-> +		}
-> +	}
->  
-> +	unuse_pack(&w_curs);
->  }
-
-I didn't look into detail, but it looks like a straightforward loop.
-
-> @@ -1002,6 +1132,10 @@ static int have_duplicate_entry(const struct object_id *oid,
->  {
->  	struct object_entry *entry;
->  
-> +	if (reuse_packfile_bitmap &&
-> +	    bitmap_walk_contains(bitmap_git, reuse_packfile_bitmap, oid))
-> +		return 1;
-
-Hmm...why did we previously not need to check the reuse information, but
-we do now? I gave the code a cursory glance but couldn't find the
-answer.
-
-> @@ -2571,7 +2706,9 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
->  
->  static int obj_is_packed(const struct object_id *oid)
->  {
-> -	return !!packlist_find(&to_pack, oid, NULL);
-> +	return packlist_find(&to_pack, oid, NULL) ||
-> +		(reuse_packfile_bitmap &&
-> +		 bitmap_walk_contains(bitmap_git, reuse_packfile_bitmap, oid));
-
-Same question here - why do we need to check the reuse information?
-
-> @@ -3061,7 +3199,6 @@ static void loosen_unused_packed_objects(void)
->  static int pack_options_allow_reuse(void)
->  {
->  	return pack_to_stdout &&
-> -	       allow_ofs_delta &&
->  	       !ignore_packed_keep_on_disk &&
->  	       !ignore_packed_keep_in_core &&
->  	       (!local || !have_non_local_packs) &&
-
-Relaxing of the allow_ofs_delta condition - makes sense given (as above)
-we can convert OFS to REF.
-
-Overall I think that this makes sense, except for my unanswered
-questions (and the presence of reused_chunk).
