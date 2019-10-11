@@ -2,100 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 407991F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 04:50:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D7AD1F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 05:01:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726243AbfJKEuZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 00:50:25 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1]:53562 "EHLO
-        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726099AbfJKEuZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 11 Oct 2019 00:50:25 -0400
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x9B4n7G3066467
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 00:50:24 -0400
-Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
-        by mx0a-001b2d01.pphosted.com with ESMTP id 2vjjjbgn2w-1
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 00:50:23 -0400
-Received: from localhost
-        by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
-        for <git@vger.kernel.org> from <ajd@linux.ibm.com>;
-        Fri, 11 Oct 2019 05:50:21 +0100
-Received: from b06cxnps3074.portsmouth.uk.ibm.com (9.149.109.194)
-        by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
-        (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
-        Fri, 11 Oct 2019 05:50:18 +0100
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
-        by b06cxnps3074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id x9B4oHt928835930
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 11 Oct 2019 04:50:17 GMT
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 68E3FA4060;
-        Fri, 11 Oct 2019 04:50:17 +0000 (GMT)
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 0976CA405C;
-        Fri, 11 Oct 2019 04:50:17 +0000 (GMT)
-Received: from ozlabs.au.ibm.com (unknown [9.192.253.14])
-        by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTP;
-        Fri, 11 Oct 2019 04:50:16 +0000 (GMT)
-Received: from [10.61.2.125] (haven.au.ibm.com [9.192.254.114])
-        (using TLSv1.2 with cipher AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by ozlabs.au.ibm.com (Postfix) with ESMTPSA id 24A23A01C1;
-        Fri, 11 Oct 2019 15:50:14 +1100 (AEDT)
-Subject: Re: [PATCH] parser: Unmangle From: headers that have been mangled for
- DMARC purposes
-From:   Andrew Donnellan <ajd@linux.ibm.com>
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, patchwork@lists.ozlabs.org,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Eric Blake <eblake@redhat.com>,
-        Christian Schoenebeck <qemu_oss@crudebyte.com>,
-        git@vger.kernel.org
-References: <20191010062047.21549-1-ajd@linux.ibm.com>
- <20191010194132.GA191800@google.com>
- <20191010225405.GA19475@sigill.intra.peff.net>
- <xmqqblunj461.fsf@gitster-ct.c.googlers.com>
- <c942d9ce-d8fe-32ca-bedd-1cdb3837823d@linux.ibm.com>
-Date:   Fri, 11 Oct 2019 15:50:14 +1100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726255AbfJKFBR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 01:01:17 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:45531 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726099AbfJKFBR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 01:01:17 -0400
+Received: by mail-pl1-f196.google.com with SMTP id u12so3864754pls.12
+        for <git@vger.kernel.org>; Thu, 10 Oct 2019 22:01:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HZmUHEqJ03WfpjNmzrMCrjldrnjxZOo3dRnkd3E1jSk=;
+        b=mAvCaPGFoxIL9U+UWS4so48YZt7RQSNxKBkwaiNeguQqekkaZlsqKmRCJsZPlQ7wnQ
+         N6S8d0GweWq+6AUJ3gAS6ZcNJV9LV6u0exv799Vn9SPQK9S1/WgEox0tb84ZTVyd/yyt
+         lqXFrQ2+p6wrP2CAaG0ZEg3HRJU7dO2oX8FCBYCR1jNL81No3AF16wUvH25uKPWpuRW2
+         uoFKjb3+1wu/rJ96k9iskoADI2mU8S5XSMz7qr+e+1kQK2z1pc99kII+hOUtv59S1dyT
+         klQd24N+s8gyWH1FaMXcs5SrgR5kkSQEH/gkkggonFH30GfT/IjpNQN8KmHvj9uFjElF
+         neVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HZmUHEqJ03WfpjNmzrMCrjldrnjxZOo3dRnkd3E1jSk=;
+        b=HRE8V4Uv42KNJSTW2gS4YzBzGIpzMYgFHwLu/rwK3mWIOBTQwVPnlzxgQEIEkR6ypU
+         2VDxlaKdfEh9a7n7wP/zrC30GMtt/jouaNOOYJjanE1x+A5hLNhaxJy2zWvLJJOYNkVM
+         wST+lkVaDPcbZpGP8NojbpFxH/gy91T7L2CufjQscGsvbHKhj54nHO6eKnnAlNb+bYU7
+         mcRVjEJSNVTmwp3Fp8Vimng95H9sEjcrmD+AZl/GvBOOCplHXncFwhDWXi05aKUm/yj+
+         MaYeACJt+h39JXU1XCmKnL/UfoPdEIaMeiENHiHlyJphcGME/fN3I8IIeQy5nIiV4+xH
+         dtkA==
+X-Gm-Message-State: APjAAAWWvsFAXuZ6YM9xzPVmDYPhba051shiWjtQ+Hm/p5GVIXC+sQPW
+        koiVH6Nqe7ZHN3KVHWU58HPkH+Ba
+X-Google-Smtp-Source: APXvYqzWUUwP03t4PrjDHpM72dueuUhZvJdeCoL9ArUdihN2fWPBzFEIOT0LJ7WJNbnMhwUoMDSz4g==
+X-Received: by 2002:a17:902:8497:: with SMTP id c23mr13452810plo.84.1570770074804;
+        Thu, 10 Oct 2019 22:01:14 -0700 (PDT)
+Received: from generichostname ([2601:646:280:1b30:80db:d816:4d15:ae2a])
+        by smtp.gmail.com with ESMTPSA id y66sm7641033pgy.23.2019.10.10.22.01.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Oct 2019 22:01:13 -0700 (PDT)
+Date:   Thu, 10 Oct 2019 22:01:11 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        James Coglan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, James Coglan <jcoglan@gmail.com>
+Subject: Re: [PATCH 01/11] graph: automatically track visible width of
+ `strbuf`
+Message-ID: <20191011050111.GA94866@generichostname>
+References: <pull.383.git.gitgitgadget@gmail.com>
+ <4bc0a0596164212aa9d29d6dd0d7a0d8ab1b9dd0.1570724021.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.1910102303330.46@tvgsbejvaqbjf.bet>
+ <20191010230550.GA42541@generichostname>
+ <xmqq7e5cjbwj.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <c942d9ce-d8fe-32ca-bedd-1cdb3837823d@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-AU
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-x-cbid: 19101104-0016-0000-0000-000002B70C4D
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19101104-0017-0000-0000-000033181C29
-Message-Id: <7c2f16e3-1397-9ced-e334-a52e99b27e9b@linux.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-10-11_02:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=645 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1910110043
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq7e5cjbwj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/10/19 3:36 pm, Andrew Donnellan wrote:
-> It would be nice if Mailman could adopt X-Original-Sender too. As it is, 
+On Fri, Oct 11, 2019 at 10:42:20AM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> > 	static int calculate_width(const struct strbuf *row)
+> > 	{
+> > 		int in_termcode = 0;
+> > 		int width = 0;
+> > 		int i;
+> >
+> > 		for (i = 0; i < row.len; i++) {
+> > 			if (row.buf[i] == '\033')
+> > 				in_termcode = 1;
+> >
+> > 			if (!in_termcode)
+> > 				width++;
+> > 			else if (row.buf[i] == 'm')
+> > 				in_termcode = 0;
+> > 		}
+> > 	}
+> 
+> Not every byte that is outside the escape sequence contributes to
+> one display columns.  You would want to take a look at utf8_width()
+> for inspiration.
+> 
 
-(which I have gone ahead and reported as 
-https://gitlab.com/mailman/mailman/issues/641)
+Heh, I guess you're right. Looking right below the definition of
+utf8_width, I realised we have the utf8_strnwidth function. We should be
+able to just call
 
--- 
-Andrew Donnellan              OzLabs, ADL Canberra
-ajd@linux.ibm.com             IBM Australia Limited
-
+	utf8_strnwidth(row.buf, row.len, 1);
