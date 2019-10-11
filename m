@@ -8,108 +8,108 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70DC61F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 18:44:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4F6F1F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 18:48:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728812AbfJKSor (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 14:44:47 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:35133 "EHLO
+        id S1728783AbfJKSsH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 14:48:07 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:36072 "EHLO
         mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728666AbfJKSor (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 14:44:47 -0400
-Received: by mail-pf1-f202.google.com with SMTP id r7so8153780pfg.2
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 11:44:45 -0700 (PDT)
+        with ESMTP id S1728374AbfJKSsH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 14:48:07 -0400
+Received: by mail-pf1-f202.google.com with SMTP id 194so8163586pfu.3
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 11:48:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=r/5kb+JRaO6slyJh71ESbUPwNTB2hpY7OVqKu4C3Cy0=;
-        b=Iic61DadRrtdhLCe05Gqp1b140j2VAIsErt6BDbK81GUZDNfnoD9B/gLamYK4lVPSV
-         RBrEX2IR4HlNpg0BiBrojKdq7GilrXKqc6Gb0xwvmIZu2mwQX+suiJvP8+2FT6Qxt85x
-         HL53JGFnh1LH3yWLvbKF6oLoGndinKAbF8vT99F+OUfe9P6RN5sCjYhiA2z0edPLHhP/
-         E/2TjG/0KaP5W/QQAgA4xEu1X4B1ZEJOrxOGqV2kvaGdCvAyqccXKNNaOAyGhlOnkagV
-         v8PzuM4ssJX4K7SDK08/qxJ8LjwmpHvgrRcrtKKkVFx7Q89eWibFlIdYZ4jWbrNDE0tV
-         GM2g==
+         :cc;
+        bh=8nFuKfqgIXaliAhDWDZy80f5XgRD+N261+vFN9/FXCo=;
+        b=niUAAaDy8t7K0nbmTg43ACj7DJk4o9hNMyr8dj6xCBIvlTq7uMKZW8nN743gYJAJuF
+         PoDA2Ei2A0VR4uOlDY+wCkucgcm+8JzuDJ3w9V/uDdIem943F1VbYekuHpVwJxJvKxT+
+         g8gO/6CtKI/vBdhMS3tnRxJ17rQxieRxAYYzSCMcUb4okzqzyIkodhzvi3co143Evu33
+         d4zI3jPHmkS7SAfVn+phbE+BsLDEUhi2cgppK3GRGHZKmKdgglClf6hpllTWfurEgbH3
+         +RnPuLm7cZJfxUDwfj2PpPDVrnV4OSrvC9IrV10AFdPbcaOjqTHieupFtPzotcDQ1hWv
+         6z9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=r/5kb+JRaO6slyJh71ESbUPwNTB2hpY7OVqKu4C3Cy0=;
-        b=VjZ8NVXIePqcoa0hBydq3f+k0KxzoZwddjUYlgtMQy4HiKlUktFOBsKtOrCGsONoe/
-         en5l9PI29f7mIfoLg5LY/pK4pwrrLe/IiZ3YHcfAitQpLYC3pOBgc8F+ndGv7uiLn1i4
-         80McHTTax5PRp+R4erz3fj1ZQyy+H7BKfX44KCrQ5IXam+IaAuizeNaNpMYPXX7m7F7m
-         UuJMWEpvWTILsENmPZoMzuUWZGMgx1YfHY9CNMmhtQGWVNWhS09SpY2dkZgbEFx+wfuY
-         LNVTPiuqD3dnSdbu14oN7rvzNILsyad+KU4IUHO3dBjphov9qz7RSYam9uQl2z11vV/Y
-         U3rw==
-X-Gm-Message-State: APjAAAUlw343PlY2Dp+y9knVjBfnKb0V5yKwVmpLfq3GCrtib4RbsIp5
-        KgJbdYges1ZVlIRPEIn90Sww4Cl+JFWhI/smHjsG
-X-Google-Smtp-Source: APXvYqxd3nBf1LD9YtacpNMYe0XPiI6j6/7MzuyM/W1bIw1X+uClyCIjWytXzRYZ0tFwnq1r8wwpeA15hCImrUyC3Gg/
-X-Received: by 2002:a63:5618:: with SMTP id k24mr18142088pgb.443.1570819485081;
- Fri, 11 Oct 2019 11:44:45 -0700 (PDT)
-Date:   Fri, 11 Oct 2019 11:44:41 -0700
-In-Reply-To: <xmqqsgnzj4vs.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20191011184441.103527-1-jonathantanmy@google.com>
+         :references:subject:from:to:cc;
+        bh=8nFuKfqgIXaliAhDWDZy80f5XgRD+N261+vFN9/FXCo=;
+        b=JEWFnUkwpamR3aWSfDDfYN/m9NOwUMhjmFUAt+fgM73IUUrhWr7yYACaSpjDe1ivjR
+         rC/0JIPG0FRExcgoxEqkND4oHW3OKjZ+iKtsLTlD3mNSlPSEVj9r7OFBn/0958oCnvib
+         PNQL9CxtpAaKTTCEnqikosWuaFoj50zFVmCT0ZORID0WJRd+85NERR5f+65PE8aq1VQY
+         Cw1pcuXPB1gtfoQ/oaOPlpIeSTi024hKxXkJzhS1cXwPEddX0rvZ9epLJdMIGwckIpGV
+         90cuYuF0ecUNho4IraNgpxfWO711csmfEPYCjQTUD4YD9o8hEKMDhbKnTvpBJo6t3/8F
+         W+yg==
+X-Gm-Message-State: APjAAAV9FsuWRj1Rw2kI/CC02p1gKXm7VKRTUfjN3iZalMglbKahdeYb
+        u3dxhK2C1bh4JSI1urOuQYFtjCRK4+y0nH85hCli
+X-Google-Smtp-Source: APXvYqxc6KJnJ1GPF6hJiIM2ISEiVeYag/9Xfwv7c5H5DSuOen/5dr8gB3Q3rsaw1RYQ2NvVFPreuPPICIxBXvupoMdF
+X-Received: by 2002:a63:1c24:: with SMTP id c36mr18140858pgc.292.1570819686853;
+ Fri, 11 Oct 2019 11:48:06 -0700 (PDT)
+Date:   Fri, 11 Oct 2019 11:48:03 -0700
+In-Reply-To: <20191011085217.GA8481@wambui>
+Message-Id: <20191011184803.104907-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <xmqqsgnzj4vs.fsf@gitster-ct.c.googlers.com>
+References: <20191011085217.GA8481@wambui>
 X-Mailer: git-send-email 2.23.0.700.g56cf767bdb-goog
 Subject: Re: [Outreachy] [PATCH] blame: Convert pickaxe_blame defined
  constants to enums
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, wambui.karugax@gmail.com,
-        git@vger.kernel.org
+To:     wambui.karugax@gmail.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
->=20
-> >> -	if ((opt & PICKAXE_BLAME_COPY_HARDEST)
-> >> -	    || ((opt & PICKAXE_BLAME_COPY_HARDER)
-> >> +	if ((opt & BLAME_COPY_HARDEST)
-> >> +	    || ((opt & BLAME_COPY_HARDER)
-> >
 > > Any reason why the names are renamed to omit "PICKAXE_"? In particular,
-> > these names are still global, so it is good to retain the extra context=
-.
->=20
-> Absolutely.  Removing them is wrong, I would have to say.
+> > these names are still global, so it is good to retain the extra context.
+> > 
+> > (This doesn't mean that you are wrong to remove them - I just gave my
+> > opinion, and a reason for my opinion. If you had a reason to remove
+> > them, you can mention that, and we can discuss this together. Or, if you
+> > read my reason and agree with it, you can say that and put the
+> > "PICKAXE_" back.)
+> > 
+> I wasn't really sure about omitting the "PICKAXE_" prefix, but I looked
+> at some of the other defined enums and it seemed like what would act as
+> the prefix in #defines was only used in the enum declaration. For
+> example I looked at:
+> 	enum apply_ws_error_action {
+> 		nowarn_ws_error,
+> 		warn_on_ws_error,
+> 		die_on_ws_error,
+> 		correct_ws_error
+> 	};
+> 
+> For comparison, I took "apply_" as the prefix that would translate to 
+> "#define APPLY_" which isn't included in the member variables.
+> I do agree about retaining the extra context though, so I can definitely put the
+> "PICKAXE_" back.
 
-Thanks for clarifying.
+[snip]
 
-> >>  #define BLAME_DEFAULT_MOVE_SCORE	20
-> >>  #define BLAME_DEFAULT_COPY_SCORE	40
-> >> =20
-> >> +enum pickaxe_blame_action {
-> >> +	BLAME_MOVE =3D 01,
-> >> +	BLAME_COPY,
-> >> +	BLAME_COPY_HARDER =3D 04,
-> >> +	BLAME_COPY_HARDEST =3D 010,
-> >> +};
->=20
-> We had a bit of discussion recently about using (or rather, not
-> abusing) enum for set of bits on a different topic.
+> > In Git, we often look at historical commits, so it is good to keep
+> > history as clean as possible. In particular, we shouldn't move things
+> > around unless we have another reason to. Here, for example, you are
+> > moving the constants from above BLAME_DEFAULT_* to below. You should
+> > move them back. (Or if you have a reason for moving, mention that and we
+> > can discuss it.)
+> > 
+> I'll move them back. I have experience with all the "#define" constants
+> being immediately after the "#includes" which is why I moved them, but I'll
+> try to stick to the
+> convention from now on.
 
-For reference, the discussion is here [1]. Szeder G=C3=A1bor has a dissenti=
-ng
-argument in [2] that makes sense to me (gdb on my desktop also shows an
-enum used as a bitset as "(A | B)"). But in any case, perhaps we should
-decide if it's fine to use an enum here before Wambui Karuga continues
-development.
+Thanks for providing your justifications.
 
-[1] https://public-inbox.org/git/xmqqsgobg0rv.fsf@gitster-ct.c.googlers.com=
-/
-[2] https://public-inbox.org/git/20191007171249.GB11529@szeder.dev/
-
-> > Also, I have a slight preference for putting "=3D 02" on the BLAME_COPY
+> > Also, I have a slight preference for putting "= 02" on the BLAME_COPY
 > > line but that is not necessary.
->=20
-> That is absolutely necessary; it is not like "we do not care what
-> exact value _COPY gets; it can be any value as long as it is _MOVE
-> plus 1", as these are used in set of bits (and again, I do not think
-> it is such a brilliant idea to use enum for such a purpose).
+> > 
+> Noted.
 
-Good point.
+Well, Junio provides a good reason for putting "= 02" [1], so please do
+that.
+
+[1] https://public-inbox.org/git/xmqqsgnzj4vs.fsf@gitster-ct.c.googlers.com/
