@@ -8,65 +8,64 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2869A1F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 17:04:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1A771F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 17:08:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728445AbfJKRE1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 13:04:27 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38713 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726331AbfJKRE1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 13:04:27 -0400
-Received: by mail-wm1-f66.google.com with SMTP id 3so10912352wmi.3
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 10:04:23 -0700 (PDT)
+        id S1728191AbfJKRIx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 13:08:53 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44544 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727149AbfJKRIx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 13:08:53 -0400
+Received: by mail-wr1-f65.google.com with SMTP id z9so12729292wrl.11
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 10:08:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=kf0rLawfb3sgdh6j418/wiAWZ/m2sXSnLVRiF7ozmnI=;
-        b=MZUWLdmhA6TE6jze1vMP5eP2UCKTUqiffRopCrGCED8OS2eAMkpjbc5QiMBwPx8Min
-         ta35SA5bMCDlwsNXVhXnxNJrrRKvC+3R2O5RuArd3pNltXEB8Lxhdjl2WjYgP5Hj1iUb
-         PDgc9Xr8+npv7oR0m2sulxpCwQrjm/BJAEC1BMEdDGoKJtNnZXJwqJyTlnMzWRfCQGrz
-         A8rnkaZPIkdIUvNmnXeOLkNaukkxDsza8BdU0APjZpvbNNyxBUik3bupKcNomPNQPu5h
-         /wxk15sww5BQIyT98owVkSMAvkDB9IGCHn54ilmXl/DLAgWVLsH9TOnAKaJYrsxo5oa/
-         x5MA==
+        bh=9QcgPVFmppsA3xG3PF5c3sURmboZqnPSLo6Dv8CbMAg=;
+        b=WbNUFuWwD/zYKjjCK2c4AsgIKQx5pKtIqDbfTWd21tjtr9kqSaWHHy1y1rVD3sIUGA
+         glItSBYjm7EWmqNXBpVVImuiBiRflNfvGNzb84wSd/dgytXFbskQcLzm2tT44i1ac+Xg
+         9oQEXkth2by6jn7XTTvo8ps/XExuv6trv0XpUnX1C1KCFTyubI5QBKnEtbijGlwMnK9z
+         a05X0WmvvNH+ONRyW3IGxpXUBr422GPQ2zqo7HifRUdHe+c9bTI4idAUdUR5aorZkilT
+         T+PwdnFskC1j6r0lqyNFDR3/RELQz28ajmi8kr37sLSWm25dm/fnpO7yKL6kxjNXwOpe
+         6z9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=kf0rLawfb3sgdh6j418/wiAWZ/m2sXSnLVRiF7ozmnI=;
-        b=apGXMtanRPvqQhwsGKXxNmxBLwPB7w61RksepAYDmzZpzmBiqlL8us5uaLdXM1+D1y
-         05sb18ZiOFwngtec2kOJ2L3sEny5tDos+wuCviAUqO5/aNhMIG42a7lUnReI+4qMe6jY
-         IxBskiURWSAV/91C1hTXqe2pGQCH9bGo6PZxQQSY26S6cHP9PEF5MDL7C2z0O1gsxJ9X
-         N31oJWOUP5uRl8jeKrpAyOSwf3+hUpvxLeUK7AgElzaqSlXlK2akjhNB23URlcmvLdRN
-         LbIxeEE/UYHyd2dIkSMQ4ouG2Ixz5upbzYzJ/e6njSpZXDarwU+M88Py0MGy26zgTGk7
-         3dKw==
-X-Gm-Message-State: APjAAAXEra4d5KeZyu7wX4/NLQkQY6M3W7n5ogOOq6tbWqxx2c+L9NDi
-        H7GkBXnPIwZVbLE66luELUA=
-X-Google-Smtp-Source: APXvYqw5X2uu/varH6omLYW6HDpREIADAV1VseKa5fVL3uxW6VSLX7PR3iqy0ZxmkA35Gguz+W7ajg==
-X-Received: by 2002:a7b:c395:: with SMTP id s21mr4270435wmj.114.1570813462974;
-        Fri, 11 Oct 2019 10:04:22 -0700 (PDT)
+        bh=9QcgPVFmppsA3xG3PF5c3sURmboZqnPSLo6Dv8CbMAg=;
+        b=gKJVF80SP2PKpogTB5qn49osH3SdNf3tFNY9rNPjP7UcwKae/X/qaTB+kCFHj2YY3O
+         FxLkpxKXErkxtPeTk/3fRFJ8nmJgtY4UvBlyXxJkhv4ZyajCyuKj/q2wrVOJWdYg9znF
+         k6ylBS7BJJFzbTwkg5o7GYURawK1GgqqYEo9u338ak25BAcMo3G3zrW3eB8LEXM6A1Lx
+         yiza16XoKzw/M4C98azR3CQa3b1GY4vJa7dkxeUPpYhz3ikE7oPl7OtPsH1jyVx4JOHI
+         0+3TTKFEEEESqY6kE5ePemesPRMdfKnVY9byviasKzKYzyyGI+uSULBvLr0R6q6KzXnz
+         gf0A==
+X-Gm-Message-State: APjAAAVp+nO394OgQv2U0iFQ8ifnP6vhRxOvjlP9jPAa8qJaJzdu1dT4
+        fZVR5OjjjxrCZt//RXNiKY0=
+X-Google-Smtp-Source: APXvYqwNCqHZUtjGmI9TrAMR34CKQKHPnkZA84l+jHJ/OlbTNgvZHFTPQM/arHMGr08VZPqQA+9mvQ==
+X-Received: by 2002:adf:ef0f:: with SMTP id e15mr1873665wro.385.1570813729052;
+        Fri, 11 Oct 2019 10:08:49 -0700 (PDT)
 Received: from liskov.home (host109-157-47-110.range109-157.btcentralplus.com. [109.157.47.110])
-        by smtp.gmail.com with ESMTPSA id z9sm10514663wrp.26.2019.10.11.10.04.21
+        by smtp.gmail.com with ESMTPSA id o70sm12792801wme.29.2019.10.11.10.08.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Oct 2019 10:04:22 -0700 (PDT)
-Subject: Re: [PATCH 07/11] graph: commit and post-merge lines for left-skewed
- merges
-To:     Derrick Stolee <stolee@gmail.com>,
-        James Coglan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+        Fri, 11 Oct 2019 10:08:48 -0700 (PDT)
+Subject: Re: [PATCH 01/11] graph: automatically track visible width of
+ `strbuf`
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        James Coglan via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 References: <pull.383.git.gitgitgadget@gmail.com>
- <6c173663aac37f1d314db8637cf4a243066b8078.1570724021.git.gitgitgadget@gmail.com>
- <9fe7f2d9-2108-5cf6-dcd7-06d91e74e98b@gmail.com>
+ <4bc0a0596164212aa9d29d6dd0d7a0d8ab1b9dd0.1570724021.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.1910102303330.46@tvgsbejvaqbjf.bet>
 From:   James Coglan <jcoglan@gmail.com>
-Message-ID: <204c7479-c78d-54ff-5ece-397b4c31804c@gmail.com>
-Date:   Fri, 11 Oct 2019 18:04:21 +0100
+Message-ID: <16547350-2997-d250-d48b-43c6ae49b3c3@gmail.com>
+Date:   Fri, 11 Oct 2019 18:08:47 +0100
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:68.0)
  Gecko/20100101 Thunderbird/68.1.1
 MIME-Version: 1.0
-In-Reply-To: <9fe7f2d9-2108-5cf6-dcd7-06d91e74e98b@gmail.com>
+In-Reply-To: <nycvar.QRO.7.76.6.1910102303330.46@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -75,402 +74,378 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/10/2019 18:49, Derrick Stolee wrote:
-> On 10/10/2019 12:13 PM, James Coglan via GitGitGadget wrote:
+Hi Johannes,
+
+On 10/10/2019 22:07, Johannes Schindelin wrote:
+> Hi James,
+> 
+> On Thu, 10 Oct 2019, James Coglan via GitGitGadget wrote:
+> 
 >> From: James Coglan <jcoglan@gmail.com>
 >>
->> Following the introduction of "left-skewed" merges, which are merges
->> whose first parent fuses with another edge to its left, we have some
->> more edge cases to deal with in the display of commit and post-merge
->> lines.
+>> All the output functions in `graph.c` currently keep track of how many
+>> printable chars they've written to the buffer, before calling
+>> `graph_pad_horizontally()` to pad the line with spaces. Some functions
+>> do this by incrementing a counter whenever they write to the buffer, and
+>> others do it by encoding an assumption about how many chars are written,
+>> as in:
 >>
->> The current graph code handles the following cases for edges appearing
->> to the right of the commit (*) on commit lines. A 2-way merge is usually
->> followed by vertical lines:
+>>     graph_pad_horizontally(graph, sb, graph->num_columns * 2);
 >>
->>         | | |
->>         | * |
->>         | |\ \
+>> This adds a fair amount of noise to the functions' logic and is easily
+>> broken if one forgets to increment the right counter or update the
+>> calculations used for padding.
 >>
->> An octopus merge (more than two parents) is always followed by edges
->> sloping to the right:
+>> To make this easier to use, I'm adding a `width` field to `strbuf` that
+>> tracks the number of printing characters added after the line prefix.
+> 
+> This is a big heavy-handed: adding a `width` field to `struct strbuf`
+> and maintaining it _just_ for the purpose of `graph.c` puts an
+> unnecssary load on every other `strbuf` user (of which there are a
+> _lot_).
+
+I was anticipating there might be objections to modifying a widely used struct. There are other idea I had for solving this that I can share -- I'll post an alternative to this patch shortly that does not involve changing `strbuf`.
+ 
+> So my obvious question is: what makes `width` different from `len`?
+> Since we exclusively use ASCII characters for the graph part, we should
+> be able to use the already-existing `len`, for free, no?
+
+`len` counts the number of bytes in the buffer, which may include non-printing bytes used to apply color formatting. For padding graph lines, we need to know the number of display columns the buffer will use, and that's what `width` was added for.
+
+> I could imagine that the `strbuf` might receive more than one line, but
+> then we still would only need to remember the offset of the last newline
+> character in that `strbuf`, no?
+
+As far as I know, it does not contain multiple lines when used in graph.c, but I agree the implementation I've submitted here is obviously wrong if you wanted to use it to get the width of multi-line text. Putting code in strbuf that only works in graph.c and not more broadly was probably a mistake on my part.
+> 
+>> It's set to 0 at the start of `graph_next_line()`, and then various
+>> `strbuf` functions update it as follows:
 >>
->>         | |  \          | |    \
->>         | *-. \         | *---. \
->>         | |\ \ \        | |\ \ \ \
+>> - `strbuf_write_column()` increments `width` by 1
 >>
->> A 2-way merge is followed by a right-sloping edge if the commit line
->> immediately follows a post-merge line for a commit that appears in the
->> same column as the current commit, or any column to the left of that:
+>> - `strbuf_setlen()` changes `width` by the amount added to `len` if
+>>   `len` is increased, or makes `width` and `len` the same if it's
+>>   decreased
 >>
->>         | *             | * |
->>         | |\            | |\ \
->>         | * \           | | * \
->>         | |\ \          | | |\ \
+>> - `strbuf_addch()` increments `width` by 1
 >>
->> This commit introduces the following new cases for commit lines. If a
->> 2-way merge skews to the left, then the edges to its right are always
->> vertical lines, even if the commit follows a post-merge line:
->>
->>         | | |           | |\
->>         | * |           | * |
->>         |/| |           |/| |
->>
->> A commit with 3 parents that skews left is followed by vertical edges:
->>
->>         | | |
->>         | * |
->>         |/|\ \
->>
->> If a 3-way left-skewed merge commit appears immediately after a
->> post-merge line, then it may be followed the right-sloping edges, just
->> like a 2-way merge that is not skewed.
->>
->>         | |\
->>         | * \
->>         |/|\ \
->>
->> Octopus merges with 4 or more parents that skew to the left will always
->> be followed by right-sloping edges, because the existing columns need to
->> expand around the merge.
->>
->>         | |  \
->>         | *-. \
->>         |/|\ \ \
->>
->> On post-merge lines, usually all edges following the current commit
->> slope to the right:
->>
->>         | * | |
->>         | |\ \ \
->>
->> However, if the commit is a left-skewed 2-way merge, the edges to its
->> right remain vertical. We also need to display a space after the
->> vertical line descending from the commit marker, whereas this line would
->> normally be followed by a backslash.
->>
->>         | * | |
->>         |/| | |
->>
->> If a left-skewed merge has more than 2 parents, then the edges to its
->> right are still sloped as they bend around the edges introduced by the
->> merge.
->>
->>         | * | |
->>         |/|\ \ \
->>
->> To handle these new cases, we need to know not just how many parents
->> each commit has, but how many new columns it adds to the display; this
->> quantity is recorded in the `edges_added` field for the current commit,
->> and `prev_edges_added` field for the previous commit.
->>
->> Here, "column" refers to visual columns, not the logical columns of the
->> `columns` array. This is because even if all the commit's parents end up
->> fusing with existing edges, they initially introduce distinct edges in
->> the commit and post-merge lines before those edges collapse. For
->> example, a 3-way merge whose 2nd and 3rd parents fuse with existing
->> edges still introduces 2 visual columns that affect the display of edges
->> to their right.
->>
->>         | | |  \
->>         | | *-. \
->>         | | |\ \ \
->>         | |_|/ / /
->>         |/| | / /
->>         | | |/ /
->>         | |/| |
->>         | | | |
->>
->> This merge does not introduce any *logical* columns; there are 4 edges
->> before and after this commit once all edges have collapsed. But it does
->> initially introduce 2 new edges that need to be accommodated by the
->> edges to their right.
+>> This is enough to ensure that the functions used by `graph.c` update
+>> `strbuf->width` correctly, and `graph_pad_horizontally()` can then use
+>> this field instead of taking `chars_written` as a parameter.
 >>
 >> Signed-off-by: James Coglan <jcoglan@gmail.com>
 >> ---
->>  graph.c                      |  63 +++++++++++++--
->>  t/t4215-log-skewed-merges.sh | 151 +++++++++++++++++++++++++++++++++++
->>  2 files changed, 209 insertions(+), 5 deletions(-)
+>>  graph.c  | 68 ++++++++++++++++++++++----------------------------------
+>>  strbuf.h |  8 ++++++-
+>>  2 files changed, 33 insertions(+), 43 deletions(-)
 >>
 >> diff --git a/graph.c b/graph.c
->> index 9136173e03..fb2e42850f 100644
+>> index f53135485f..c56fdec1fc 100644
 >> --- a/graph.c
 >> +++ b/graph.c
->> @@ -197,6 +197,46 @@ struct git_graph {
->>  	 * 		|/| | | | |		| | | | | *
->>  	 */
->>  	int merge_layout;
+>> @@ -115,11 +115,20 @@ static const char *column_get_color_code(unsigned short color)
+>>  static void strbuf_write_column(struct strbuf *sb, const struct column *c,
+>>  				char col_char)
+>>  {
 >> +	/*
->> +	 * The number of columns added to the graph by the current commit. For
->> +	 * 2-way and octopus merges, this is is usually one less than the
->> +	 * number of parents:
->> +	 *
->> +	 * 		| | |			| |    \
->> +	 *		| * |			| *---. \
->> +	 *		| |\ \			| |\ \ \ \
->> +	 *		| | | |         	| | | | | |
->> +	 *
->> +	 *		num_parents: 2		num_parents: 4
->> +	 *		edges_added: 1		edges_added: 3
->> +	 *
->> +	 * For left-skewed merges, the first parent fuses with its neighbor and
->> +	 * so one less column is added:
->> +	 *
->> +	 *		| | |			| |  \
->> +	 *		| * |			| *-. \
->> +	 *		|/| |			|/|\ \ \
->> +	 *		| | |			| | | | |
->> +	 *
->> +	 *		num_parents: 2		num_parents: 4
->> +	 *		edges_added: 0		edges_added: 2
->> +	 *
->> +	 * This number determines how edges to the right of the merge are
->> +	 * displayed in commit and post-merge lines; if no columns have been
->> +	 * added then a vertical line should be used where a right-tracking
->> +	 * line would otherwise be used.
->> +	 *
->> +	 *		| * \			| * |
->> +	 *		| |\ \			|/| |
->> +	 *		| | * \			| * |
+>> +	 * Remember the buffer's width as we're about to add non-printing
+>> +	 * content to it, and we want to avoid counting the byte length
+>> +	 * of this content towards the buffer's visible width
 >> +	 */
->> +	int edges_added;
->> +	/*
->> +	 * The number of columns added by the previous commit, which is used to
->> +	 * smooth edges appearing to the right of a commit in a commit line
->> +	 * following a post-merge line.
->> +	 */
->> +	int prev_edges_added;
->>  	/*
->>  	 * The maximum number of columns that can be stored in the columns
->>  	 * and new_columns arrays.  This is also half the number of entries
->> @@ -309,6 +349,8 @@ struct git_graph *graph_init(struct rev_info *opt)
->>  	graph->commit_index = 0;
->>  	graph->prev_commit_index = 0;
->>  	graph->merge_layout = 0;
->> +	graph->edges_added = 0;
->> +	graph->prev_edges_added = 0;
->>  	graph->num_columns = 0;
->>  	graph->num_new_columns = 0;
->>  	graph->mapping_size = 0;
->> @@ -670,6 +712,9 @@ void graph_update(struct git_graph *graph, struct commit *commit)
->>  	 */
->>  	graph_update_columns(graph);
->>  
->> +	graph->prev_edges_added = graph->edges_added;
->> +	graph->edges_added = graph->num_parents + graph->merge_layout - 2;
+>> +	size_t prev_width = sb->width;
 >> +
->>  	graph->expansion_row = 0;
->>  
+>>  	if (c->color < column_colors_max)
+>>  		strbuf_addstr(sb, column_get_color_code(c->color));
+>>  	strbuf_addch(sb, col_char);
+>>  	if (c->color < column_colors_max)
+>>  		strbuf_addstr(sb, column_get_color_code(column_colors_max));
+>> +
+>> +	sb->width = prev_width + 1;
+>>  }
+>>
+>>  struct git_graph {
+>> @@ -686,8 +695,7 @@ static int graph_is_mapping_correct(struct git_graph *graph)
+>>  	return 1;
+>>  }
+>>
+>> -static void graph_pad_horizontally(struct git_graph *graph, struct strbuf *sb,
+>> -				   int chars_written)
+>> +static void graph_pad_horizontally(struct git_graph *graph, struct strbuf *sb)
+>>  {
 >>  	/*
->> @@ -943,12 +988,13 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
->>  
->>  			if (graph->num_parents > 2)
->>  				graph_draw_octopus_merge(graph, sb);
->> -		} else if (seen_this && (graph->num_parents > 2)) {
->> +		} else if (seen_this && (graph->edges_added > 1)) {
->>  			strbuf_write_column(sb, col, '\\');
->> -		} else if (seen_this && (graph->num_parents == 2)) {
->> +		} else if (seen_this && (graph->edges_added == 1)) {
+>>  	 * Add additional spaces to the end of the strbuf, so that all
+>> @@ -696,8 +704,8 @@ static void graph_pad_horizontally(struct git_graph *graph, struct strbuf *sb,
+>>  	 * This way, fields printed to the right of the graph will remain
+>>  	 * aligned for the entire commit.
+>>  	 */
+>> -	if (chars_written < graph->width)
+>> -		strbuf_addchars(sb, ' ', graph->width - chars_written);
+>> +	if (sb->width < graph->width)
+>> +		strbuf_addchars(sb, ' ', graph->width - sb->width);
+>>  }
+>>
+>>  static void graph_output_padding_line(struct git_graph *graph,
+>> @@ -723,7 +731,7 @@ static void graph_output_padding_line(struct git_graph *graph,
+>>  		strbuf_addch(sb, ' ');
+>>  	}
+>>
+>> -	graph_pad_horizontally(graph, sb, graph->num_new_columns * 2);
+>> +	graph_pad_horizontally(graph, sb);
+>>  }
+>>
+>>
+>> @@ -740,7 +748,7 @@ static void graph_output_skip_line(struct git_graph *graph, struct strbuf *sb)
+>>  	 * of the graph is missing.
+>>  	 */
+>>  	strbuf_addstr(sb, "...");
+>> -	graph_pad_horizontally(graph, sb, 3);
+>> +	graph_pad_horizontally(graph, sb);
+>>
+>>  	if (graph->num_parents >= 3 &&
+>>  	    graph->commit_index < (graph->num_columns - 1))
+>> @@ -754,7 +762,6 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+>>  {
+>>  	int num_expansion_rows;
+>>  	int i, seen_this;
+>> -	int chars_written;
+>>
+>>  	/*
+>>  	 * This function formats a row that increases the space around a commit
+>> @@ -777,14 +784,12 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+>>  	 * Output the row
+>>  	 */
+>>  	seen_this = 0;
+>> -	chars_written = 0;
+>>  	for (i = 0; i < graph->num_columns; i++) {
+>>  		struct column *col = &graph->columns[i];
+>>  		if (col->commit == graph->commit) {
+>>  			seen_this = 1;
+>>  			strbuf_write_column(sb, col, '|');
+>>  			strbuf_addchars(sb, ' ', graph->expansion_row);
+>> -			chars_written += 1 + graph->expansion_row;
+>>  		} else if (seen_this && (graph->expansion_row == 0)) {
 >>  			/*
->> -			 * This is a 2-way merge commit.
->> -			 * There is no GRAPH_PRE_COMMIT stage for 2-way
->> +			 * This is either a right-skewed 2-way merge
->> +			 * commit, or a left-skewed 3-way merge.
->> +			 * There is no GRAPH_PRE_COMMIT stage for such
->>  			 * merges, so this is the first line of output
->>  			 * for this commit.  Check to see what the previous
->>  			 * line of output was.
->> @@ -960,6 +1006,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
->>  			 * makes the output look nicer.
->>  			 */
->>  			if (graph->prev_state == GRAPH_POST_MERGE &&
->> +			    graph->prev_edges_added > 0 &&
->>  			    graph->prev_commit_index < i)
+>>  			 * This is the first line of the pre-commit output.
+>> @@ -800,19 +805,15 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
 >>  				strbuf_write_column(sb, col, '\\');
 >>  			else
->> @@ -1031,8 +1078,14 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf
->>  				else
->>  					idx++;
->>  			}
->> +			if (graph->edges_added == 0)
->> +				strbuf_addch(sb, ' ');
->> +
->>  		} else if (seen_this) {
->> -			strbuf_write_column(sb, col, '\\');
->> +			if (graph->edges_added > 0)
->> +				strbuf_write_column(sb, col, '\\');
->> +			else
->> +				strbuf_write_column(sb, col, '|');
->>  			strbuf_addch(sb, ' ');
+>>  				strbuf_write_column(sb, col, '|');
+>> -			chars_written++;
+>>  		} else if (seen_this && (graph->expansion_row > 0)) {
+>>  			strbuf_write_column(sb, col, '\\');
+>> -			chars_written++;
 >>  		} else {
 >>  			strbuf_write_column(sb, col, '|');
->> diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
->> index cfaba40f97..e479d6e676 100755
->> --- a/t/t4215-log-skewed-merges.sh
->> +++ b/t/t4215-log-skewed-merges.sh
->> @@ -39,4 +39,155 @@ test_expect_success 'log --graph with left-skewed merge' '
->>  	test_cmp expect actual
->>  '
->>  
->> +test_expect_success 'setup nested left-skewed merge' '
->> +	git checkout --orphan 1_p &&
->> +	test_commit 1_A &&
->> +	test_commit 1_B &&
->> +	test_commit 1_C &&
->> +	git checkout -b 1_q @^ && test_commit 1_D &&
->> +	git checkout 1_p && git merge --no-ff 1_q -m 1_E &&
->> +	git checkout -b 1_r @~3 && test_commit 1_F &&
->> +	git checkout 1_p && git merge --no-ff 1_r -m 1_G &&
->> +	git checkout @^^ && git merge --no-ff 1_p -m 1_H
->> +'
->> +
->> +cat > expect <<\EOF
->> +*   1_H
->> +|\
->> +| *   1_G
->> +| |\
->> +| | * 1_F
->> +| * | 1_E
->> +|/| |
->> +| * | 1_D
->> +* | | 1_C
->> +|/ /
->> +* | 1_B
->> +|/
->> +* 1_A
->> +EOF
->> +
->> +test_expect_success 'log --graph with nested left-skewed merge' '
->> +	git log --graph --pretty=tformat:%s | sed "s/ *$//" > actual &&
->> +	test_cmp expect actual
->> +'
-> 
-> I should have noticed in your earlier commits, but why don't you keep
-> the output inside the test suite? You can start with "cat >expect <<-EOF"
-> to have it ignore leading whitespace. Sorry if there's something else about
-> this that is causing issues.
-
-I was following a pattern used in t/t4202-log.sh. I believe it was easier to debug these tests with the setup and expectations split into separate blocks, but I wouldn't be opposed to merging them.
-
->> +
->> +test_expect_success 'setup nested left-skewed merge following normal merge' '
->> +	git checkout --orphan 2_p &&
->> +	test_commit 2_A &&
->> +	test_commit 2_B &&
->> +	test_commit 2_C &&
->> +	git checkout -b 2_q @^^ &&
->> +	test_commit 2_D &&
->> +	test_commit 2_E &&
->> +	git checkout -b 2_r @^ && test_commit 2_F &&
->> +	git checkout 2_q &&
->> +	git merge --no-ff 2_r -m 2_G &&
->> +	git merge --no-ff 2_p^ -m 2_H &&
->> +	git checkout -b 2_s @^^ && git merge --no-ff 2_q -m 2_J &&
->> +	git checkout 2_p && git merge --no-ff 2_s -m 2_K
->> +'
->> +
->> +cat > expect <<\EOF
->> +*   2_K
->> +|\
->> +| *   2_J
->> +| |\
->> +| | *   2_H
->> +| | |\
->> +| | * | 2_G
->> +| |/| |
->> +| | * | 2_F
->> +| * | | 2_E
->> +| |/ /
->> +| * | 2_D
->> +* | | 2_C
->> +| |/
->> +|/|
->> +* | 2_B
->> +|/
->> +* 2_A
->> +EOF
->> +
->> +test_expect_success 'log --graph with nested left-skewed merge following normal merge' '
->> +	git log --graph --pretty=tformat:%s | sed "s/ *$//" > actual &&
->> +	test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'setup nested right-skewed merge following left-skewed merge' '
->> +	git checkout --orphan 3_p &&
->> +	test_commit 3_A &&
->> +	git checkout -b 3_q &&
->> +	test_commit 3_B &&
->> +	test_commit 3_C &&
->> +	git checkout -b 3_r @^ &&
->> +	test_commit 3_D &&
->> +	git checkout 3_q && git merge --no-ff 3_r -m 3_E &&
->> +	git checkout 3_p && git merge --no-ff 3_q -m 3_F &&
->> +	git checkout 3_r && test_commit 3_G &&
->> +	git checkout 3_p && git merge --no-ff 3_r -m 3_H &&
->> +	git checkout @^^ && git merge --no-ff 3_p -m 3_J
->> +'
->> +
->> +cat > expect <<\EOF
->> +*   3_J
->> +|\
->> +| *   3_H
->> +| |\
->> +| | * 3_G
->> +| * | 3_F
->> +|/| |
->> +| * |   3_E
->> +| |\ \
->> +| | |/
->> +| | * 3_D
->> +| * | 3_C
->> +| |/
->> +| * 3_B
->> +|/
->> +* 3_A
->> +EOF
->> +
->> +test_expect_success 'log --graph with nested right-skewed merge following left-skewed merge' '
->> +	git log --graph --pretty=tformat:%s | sed "s/ *$//" > actual &&
->> +	test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'setup right-skewed merge following a left-skewed one' '
->> +	git checkout --orphan 4_p &&
->> +	test_commit 4_A &&
->> +	test_commit 4_B &&
->> +	test_commit 4_C &&
->> +	git checkout -b 4_q @^^ && test_commit 4_D &&
->> +	git checkout -b 4_r 4_p^ && git merge --no-ff 4_q -m 4_E &&
->> +	git checkout -b 4_s 4_p^^ &&
->> +	git merge --no-ff 4_r -m 4_F &&
->> +	git merge --no-ff 4_p -m 4_G &&
->> +	git checkout @^^ && git merge --no-ff 4_s -m 4_H
->> +'
->> +
->> +cat > expect <<\EOF
->> +*   4_H
->> +|\
->> +| *   4_G
->> +| |\
->> +| * | 4_F
->> +|/| |
->> +| * |   4_E
->> +| |\ \
->> +| | * | 4_D
->> +| |/ /
->> +|/| |
->> +| | * 4_C
->> +| |/
->> +| * 4_B
->> +|/
->> +* 4_A
->> +EOF
->> +
->> +test_expect_success 'log --graph with right-skewed merge following a left-skewed one' '
->> +	git log --graph --date-order --pretty=tformat:%s | sed "s/ *$//" > actual &&
->> +	test_cmp expect actual
->> +'
->> +
->>  test_done
+>> -			chars_written++;
+>>  		}
+>>  		strbuf_addch(sb, ' ');
+>> -		chars_written++;
+>>  	}
 >>
-> 
+>> -	graph_pad_horizontally(graph, sb, chars_written);
+>> +	graph_pad_horizontally(graph, sb);
+>>
+>>  	/*
+>>  	 * Increment graph->expansion_row,
+>> @@ -842,11 +843,9 @@ static void graph_output_commit_char(struct git_graph *graph, struct strbuf *sb)
+>>  }
+>>
+>>  /*
+>> - * Draw the horizontal dashes of an octopus merge and return the number of
+>> - * characters written.
+>> + * Draw the horizontal dashes of an octopus merge.
+>>   */
+>> -static int graph_draw_octopus_merge(struct git_graph *graph,
+>> -				    struct strbuf *sb)
+>> +static void graph_draw_octopus_merge(struct git_graph *graph, struct strbuf *sb)
+>>  {
+>>  	/*
+>>  	 * Here dashless_parents represents the number of parents which don't
+>> @@ -890,13 +889,12 @@ static int graph_draw_octopus_merge(struct git_graph *graph,
+>>  		strbuf_write_column(sb, &graph->new_columns[i+first_col],
+>>  				    i == dashful_parents-1 ? '.' : '-');
+>>  	}
+>> -	return 2 * dashful_parents;
+>>  }
+>>
+>>  static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+>>  {
+>>  	int seen_this = 0;
+>> -	int i, chars_written;
+>> +	int i;
+>>
+>>  	/*
+>>  	 * Output the row containing this commit
+>> @@ -906,7 +904,6 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+>>  	 * children that we have already processed.)
+>>  	 */
+>>  	seen_this = 0;
+>> -	chars_written = 0;
+>>  	for (i = 0; i <= graph->num_columns; i++) {
+>>  		struct column *col = &graph->columns[i];
+>>  		struct commit *col_commit;
+>> @@ -921,14 +918,11 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+>>  		if (col_commit == graph->commit) {
+>>  			seen_this = 1;
+>>  			graph_output_commit_char(graph, sb);
+>> -			chars_written++;
+>>
+>>  			if (graph->num_parents > 2)
+>> -				chars_written += graph_draw_octopus_merge(graph,
+>> -									  sb);
+>> +				graph_draw_octopus_merge(graph, sb);
+>>  		} else if (seen_this && (graph->num_parents > 2)) {
+>>  			strbuf_write_column(sb, col, '\\');
+>> -			chars_written++;
+>>  		} else if (seen_this && (graph->num_parents == 2)) {
+>>  			/*
+>>  			 * This is a 2-way merge commit.
+>> @@ -948,16 +942,13 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+>>  				strbuf_write_column(sb, col, '\\');
+>>  			else
+>>  				strbuf_write_column(sb, col, '|');
+>> -			chars_written++;
+>>  		} else {
+>>  			strbuf_write_column(sb, col, '|');
+>> -			chars_written++;
+>>  		}
+>>  		strbuf_addch(sb, ' ');
+>> -		chars_written++;
+>>  	}
+>>
+>> -	graph_pad_horizontally(graph, sb, chars_written);
+>> +	graph_pad_horizontally(graph, sb);
+>>
+>>  	/*
+>>  	 * Update graph->state
+>> @@ -984,12 +975,11 @@ static struct column *find_new_column_by_commit(struct git_graph *graph,
+>>  static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf *sb)
+>>  {
+>>  	int seen_this = 0;
+>> -	int i, j, chars_written;
+>> +	int i, j;
+>>
+>>  	/*
+>>  	 * Output the post-merge row
+>>  	 */
+>> -	chars_written = 0;
+>>  	for (i = 0; i <= graph->num_columns; i++) {
+>>  		struct column *col = &graph->columns[i];
+>>  		struct commit *col_commit;
+>> @@ -1017,7 +1007,6 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf
+>>  			assert(par_column);
+>>
+>>  			strbuf_write_column(sb, par_column, '|');
+>> -			chars_written++;
+>>  			for (j = 0; j < graph->num_parents - 1; j++) {
+>>  				parents = next_interesting_parent(graph, parents);
+>>  				assert(parents);
+>> @@ -1026,19 +1015,16 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf
+>>  				strbuf_write_column(sb, par_column, '\\');
+>>  				strbuf_addch(sb, ' ');
+>>  			}
+>> -			chars_written += j * 2;
+>>  		} else if (seen_this) {
+>>  			strbuf_write_column(sb, col, '\\');
+>>  			strbuf_addch(sb, ' ');
+>> -			chars_written += 2;
+>>  		} else {
+>>  			strbuf_write_column(sb, col, '|');
+>>  			strbuf_addch(sb, ' ');
+>> -			chars_written += 2;
+>>  		}
+>>  	}
+>>
+>> -	graph_pad_horizontally(graph, sb, chars_written);
+>> +	graph_pad_horizontally(graph, sb);
+>>
+>>  	/*
+>>  	 * Update graph->state
+>> @@ -1181,7 +1167,7 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct strbuf
+>>  		}
+>>  	}
+>>
+>> -	graph_pad_horizontally(graph, sb, graph->mapping_size);
+>> +	graph_pad_horizontally(graph, sb);
+>>
+>>  	/*
+>>  	 * Swap mapping and new_mapping
+>> @@ -1199,6 +1185,8 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct strbuf
+>>
+>>  int graph_next_line(struct git_graph *graph, struct strbuf *sb)
+>>  {
+>> +	sb->width = 0;
+>> +
+>>  	switch (graph->state) {
+>>  	case GRAPH_PADDING:
+>>  		graph_output_padding_line(graph, sb);
+>> @@ -1227,7 +1215,6 @@ int graph_next_line(struct git_graph *graph, struct strbuf *sb)
+>>  static void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
+>>  {
+>>  	int i;
+>> -	int chars_written = 0;
+>>
+>>  	if (graph->state != GRAPH_COMMIT) {
+>>  		graph_next_line(graph, sb);
+>> @@ -1245,19 +1232,16 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
+>>  		struct column *col = &graph->columns[i];
+>>
+>>  		strbuf_write_column(sb, col, '|');
+>> -		chars_written++;
+>>
+>>  		if (col->commit == graph->commit && graph->num_parents > 2) {
+>>  			int len = (graph->num_parents - 2) * 2;
+>>  			strbuf_addchars(sb, ' ', len);
+>> -			chars_written += len;
+>>  		} else {
+>>  			strbuf_addch(sb, ' ');
+>> -			chars_written++;
+>>  		}
+>>  	}
+>>
+>> -	graph_pad_horizontally(graph, sb, chars_written);
+>> +	graph_pad_horizontally(graph, sb);
+>>
+>>  	/*
+>>  	 * Update graph->prev_state since we have output a padding line
+>> diff --git a/strbuf.h b/strbuf.h
+>> index f62278a0be..3a98147321 100644
+>> --- a/strbuf.h
+>> +++ b/strbuf.h
+>> @@ -66,11 +66,12 @@ struct string_list;
+>>  struct strbuf {
+>>  	size_t alloc;
+>>  	size_t len;
+>> +	size_t width;
+>>  	char *buf;
+>>  };
+>>
+>>  extern char strbuf_slopbuf[];
+>> -#define STRBUF_INIT  { .alloc = 0, .len = 0, .buf = strbuf_slopbuf }
+>> +#define STRBUF_INIT  { .alloc = 0, .len = 0, .width = 0, .buf = strbuf_slopbuf }
+>>
+>>  /*
+>>   * Predeclare this here, since cache.h includes this file before it defines the
+>> @@ -161,6 +162,10 @@ static inline void strbuf_setlen(struct strbuf *sb, size_t len)
+>>  {
+>>  	if (len > (sb->alloc ? sb->alloc - 1 : 0))
+>>  		die("BUG: strbuf_setlen() beyond buffer");
+>> +	if (len > sb->len)
+>> +		sb->width += len - sb->len;
+>> +	else
+>> +		sb->width = len;
+>>  	sb->len = len;
+>>  	if (sb->buf != strbuf_slopbuf)
+>>  		sb->buf[len] = '\0';
+>> @@ -231,6 +236,7 @@ static inline void strbuf_addch(struct strbuf *sb, int c)
+>>  		strbuf_grow(sb, 1);
+>>  	sb->buf[sb->len++] = c;
+>>  	sb->buf[sb->len] = '\0';
+>> +	sb->width++;
+>>  }
+>>
+>>  /**
+>> --
+>> gitgitgadget
+>>
+>>
