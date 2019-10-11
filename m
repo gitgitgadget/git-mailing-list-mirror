@@ -7,34 +7,33 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 075501F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 18:36:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49B121F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 18:36:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728821AbfJKSgJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 14:36:09 -0400
-Received: from mail-gateway-shared13.cyon.net ([194.126.200.66]:56364 "EHLO
+        id S1728827AbfJKSgK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 14:36:10 -0400
+Received: from mail-gateway-shared13.cyon.net ([194.126.200.66]:56370 "EHLO
         mail-gateway-shared13.cyon.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728689AbfJKSgI (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 11 Oct 2019 14:36:08 -0400
-X-Greylist: delayed 674 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Oct 2019 14:36:08 EDT
+        by vger.kernel.org with ESMTP id S1728689AbfJKSgK (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 11 Oct 2019 14:36:10 -0400
 Received: from s019.cyon.net ([149.126.4.28])
         by mail-gateway-shared13.cyon.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim)
         (envelope-from <bb@drbeat.li>)
-        id 1iIzat-0005Yw-1C
-        for git@vger.kernel.org; Fri, 11 Oct 2019 20:24:52 +0200
-Received: from [10.20.10.232] (port=32634 helo=mail.cyon.ch)
+        id 1iIzb0-0005ZL-8o
+        for git@vger.kernel.org; Fri, 11 Oct 2019 20:25:00 +0200
+Received: from [10.20.10.230] (port=35630 helo=mail.cyon.ch)
         by s019.cyon.net with esmtpa (Exim 4.92)
         (envelope-from <bb@drbeat.li>)
-        id 1iIzar-0007BC-FE; Fri, 11 Oct 2019 20:24:49 +0200
+        id 1iIzaz-0007DL-2Y; Fri, 11 Oct 2019 20:24:57 +0200
 Received: by drbeat.li (Postfix, from userid 1000)
-        id 35BF718003C; Fri, 11 Oct 2019 20:24:49 +0200 (CEST)
+        id CF32618003C; Fri, 11 Oct 2019 20:24:56 +0200 (CEST)
 From:   Beat Bolli <dev+git@drbeat.li>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH] utf8: use ARRAY_SIZE() in git_wcwidth()
-Date:   Fri, 11 Oct 2019 20:24:48 +0200
-Message-Id: <20191011182448.11420-1-dev+git@drbeat.li>
+Subject: [PATCH] git-compat-util: fix documentation syntax
+Date:   Fri, 11 Oct 2019 20:24:54 +0200
+Message-Id: <20191011182454.11495-1-dev+git@drbeat.li>
 X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -54,41 +53,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This macro has been available globally since b4f2a6ac92 ("Use #define
-ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))", 2006-03-09), so let's use it.
+The parameter marker for x was garbled in its introduction in 89c855ed3c
+("git-compat-util.h: implement a different ARRAY_SIZE macro for for
+safely deriving the size of array", 2015-04-30).
 
 Signed-off-by: Beat Bolli <dev+git@drbeat.li>
 ---
-It's idle to speculate about why the macro wasn't used in the original
-9e83266525 ("commit-tree: encourage UTF-8 commit messages.", 2006-12-22)
-or why it hasn't been cleaned up since then. Possible reasons may be the
-line wrap within the division or the fact that one sizeof() takes the
-variable while the other one takes the type. Either of these would make
-a normal search fail.
+ git-compat-util.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- utf8.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/utf8.c b/utf8.c
-index 3b42fadffd..164e20c817 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -95,13 +95,11 @@ static int git_wcwidth(ucs_char_t ch)
- 		return -1;
- 
- 	/* binary search in table of non-spacing characters */
--	if (bisearch(ch, zero_width, sizeof(zero_width)
--				/ sizeof(struct interval) - 1))
-+	if (bisearch(ch, zero_width, ARRAY_SIZE(zero_width) - 1)
- 		return 0;
- 
- 	/* binary search in table of double width characters */
--	if (bisearch(ch, double_width, sizeof(double_width)
--				/ sizeof(struct interval) - 1))
-+	if (bisearch(ch, double_width, ARRAY_SIZE(double_width) - 1)
- 		return 2;
- 
- 	return 1;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8b8b29a867..607dca7534 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -77,7 +77,7 @@
+ #endif
+ /*
+  * ARRAY_SIZE - get the number of elements in a visible array
+- *  <at> x: the array whose size you want.
++ * @x: the array whose size you want.
+  *
+  * This does not work on pointers, or arrays declared as [], or
+  * function parameters.  With correct compiler support, such usage
 -- 
 2.21.0.1020.gf2820cf01a
 
