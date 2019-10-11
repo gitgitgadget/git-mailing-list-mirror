@@ -2,102 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 590DF1F4C1
-	for <e@80x24.org>; Fri, 11 Oct 2019 20:58:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E9EB1F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 21:04:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729082AbfJKU6d (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 16:58:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46206 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726281AbfJKU6d (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 16:58:33 -0400
-Received: (qmail 16856 invoked by uid 109); 11 Oct 2019 20:58:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 Oct 2019 20:58:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4814 invoked by uid 111); 11 Oct 2019 21:01:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Oct 2019 17:01:28 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 11 Oct 2019 16:58:32 -0400
-From:   Jeff King <peff@peff.net>
-To:     Brent Casavant <brent.casavant@hpe.com>
-Cc:     git@vger.kernel.org
-Subject: Re: bug: "rev-parse --short" with "--not --remote"
-Message-ID: <20191011205831.GA30244@sigill.intra.peff.net>
-References: <83e4f54f-190b-115f-b31b-7177c681128b@hpe.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <83e4f54f-190b-115f-b31b-7177c681128b@hpe.com>
+        id S1726982AbfJKVEi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 17:04:38 -0400
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:51744 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726603AbfJKVEi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 17:04:38 -0400
+Received: by mail-pg1-f202.google.com with SMTP id u30so3945339pgl.18
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 14:04:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=gD3ngcTuYqUTGK29t9GNqz2h+lNfnNYeWm2E0ywNIUM=;
+        b=LiIJmxmZYylOkjj9ERb99Sqk4xB0a28PStUnFn+3NX/FJB7cZ4gy1k3IfSXu0gBu7W
+         ivoy1mJlE2j5TiS6N5ufgUlN5nG9QQ8XUTml58cKlH9CxOjAsWYSBlT2ljS3LOVlsONM
+         ar84clPtxQoelLT+QmuIKq07GwftdmoW3NRWqZIrodwAd3bDukcMuhofutAz6aT//3it
+         G9GrPUsBeoWgAbayYQS93heSo3OLVHS2QvEGAfH5r61sSjTJIwINNOlcff8G89kE0tnM
+         rOulrQlUVzVUzXPBIhFBVhlS0XYZ4MvzDNMI8TDo0hESHXJR8C/ePhFW99GzeitgxxME
+         aoTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=gD3ngcTuYqUTGK29t9GNqz2h+lNfnNYeWm2E0ywNIUM=;
+        b=Sd4C+t680IjlHg/lURiaZBwkMewLniloHh8GJo6BEtTK925/n5i9xtUBNQbLwhlLO+
+         kG3+M5xsKC3zC6+BKBgWLDs1yCu/iS2oCnYznqGYtu7Ybp/EfUQWJ75b89lmxbiQ/IRp
+         AjzV4NatR/4oqpWVHhVf4ldSoG9ZAdSYDaV4CpoPcQIgc6oBs9OdyB85h+t6m+J6iu4x
+         0/SBxFsxgiW0bPWjVQqGznU4PWa2/AymCwiAj1Hpnb29azkJVEcf13mqrdoiBQN4YnrZ
+         o2G+jPcUhM8GFdGTDDY8OY+9OYpK8zWEOwGg6QfQXV+N2PgdfQ7ipl+zbQvKViOsJ+KI
+         +i4w==
+X-Gm-Message-State: APjAAAV+tbxpYQC/zsrMcsO57rVtvDw2/w6OFgVb1VperA6WHCZAD0O+
+        f1XNoxIkDF9/Lh80bIiaF1mEHmr11+j1VH6CDWaW
+X-Google-Smtp-Source: APXvYqyGGkjZULzw25pvRskeGoBfB3IHze89tEcRf03f0ksQWKfmq6iTxOjfZiik6yTak8+IuDWeyxBcIQfY9Ai/xlwP
+X-Received: by 2002:a63:2d43:: with SMTP id t64mr18774312pgt.428.1570827877277;
+ Fri, 11 Oct 2019 14:04:37 -0700 (PDT)
+Date:   Fri, 11 Oct 2019 14:04:34 -0700
+In-Reply-To: <20191011180125.GA20601@sigill.intra.peff.net>
+Message-Id: <20191011210434.140296-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20191011180125.GA20601@sigill.intra.peff.net>
+X-Mailer: git-send-email 2.23.0.700.g56cf767bdb-goog
+Subject: Re: [RFC PATCH 10/10] pack-objects: improve partial packfile reuse
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     peff@peff.net
+Cc:     jonathantanmy@google.com, christian.couder@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com, chriscool@tuxfamily.org,
+        ramsay@ramsayjones.plus.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 11, 2019 at 03:10:33PM -0500, Brent Casavant wrote:
-
-> I noticed what appears to be a bug in rev-parse with an admittedly
-> somewhat unusual combination of arguments.
+> > This makes sense - offsets may be different when we omit objects from
+> > the packfile. I think this can be computed by calculating the number of
+> > zero bits between the current object's index and the nth object prior
+> > (where n is the offset) in the bitmap resulting from
+> > reuse_partial_packfile_from_bitmap() above, thus eliminating the need
+> > for this array, but I haven't tested it.
 > 
-> Compare the output of the following:
+> You need to know not just the number of zero bits, but the accumulated
+> offset due to those missing objects. So you'd end up having to walk over
+> the revindex for that set of objects. This array is basically caching
+> those accumulated offsets (for the parts we _do_ include) so we don't
+> have to compute them repeatedly.
+
+Ah...yes. For some reason I thought that the offset was a number of
+objects, but it is actually a number of bytes. The patch makes sense
+now.
+
+> There's also a more subtle issue with entry sizes; see below.
+
+Good point.
+
+> > > @@ -1002,6 +1132,10 @@ static int have_duplicate_entry(const struct object_id *oid,
+> > >  {
+> > >  	struct object_entry *entry;
+> > >  
+> > > +	if (reuse_packfile_bitmap &&
+> > > +	    bitmap_walk_contains(bitmap_git, reuse_packfile_bitmap, oid))
+> > > +		return 1;
+> > 
+> > Hmm...why did we previously not need to check the reuse information, but
+> > we do now? I gave the code a cursory glance but couldn't find the
+> > answer.
 > 
-> % git rev-parse HEAD --not --remotes=origin
-> 3de09080eb219149a8596dc21915d5a496cba171
-> ^4fb157bf360413fe3fad38d03b02ce7232d12961
-> ^757cfa6938c3d510d1597096d9f0b6878b884270
-> 
-> To this:
-> 
-> % git rev-parse --short HEAD --not --remotes=origin
-> ^4fb157b
-> ^757cfa6
-> ^3de0908
-> 
-> In the first case rev-parse emits the commit-id of HEAD, followed by
-> negated commit-ids of all remote branches in origin.  I believe this
-> is the correct and intended behavior.
-> 
-> In the second case rev-parse emits the negated short commit-ids of all
-> remote branches in origin, followed by the negated short commit-id of
-> HEAD.  This is inconsistent with the results of the (presumably
-> correct) prior example.
-> 
-> I would expect both commands to emit the same output, modulo the
-> number of characters emitted for the commit-id.
+> I think the original code may simply have been buggy and nobody noticed.
+> Here's what I wrote when this line was added in our fork:
 
-That's what I'd have naively expected, too, but that's not what
-"--short" is documented to do:
+[snip explanation]
 
-  $ git help rev-parse | grep -A2 -e --short
-         --short[=length]
-	     Same as --verify but shortens the object name to a unique
-	     prefix with at least length characters. The minimum length
-	     is 4, the default is the effective value of the core.abbrev
-	     configuration variable (see git-config(1)).
+Thanks - I'll also take a look if I have time.
 
-and --verify itself is a bit magical:
+> Thanks for looking at it. I still have to take a careful pass over the
+> whole split, but I've tried to at least answer your questions in the
+> meantime.
 
-  $ git help rev-parse | grep -m1 -A2 -e --verify
-         --verify
-	     Verify that exactly one parameter is provided, and that it
-	     can be turned into a raw 20-byte SHA-1 that can be used to
-	     access the object database. If so, emit it to the standard
-	     output; otherwise, error out.
-
-You can see the same weirdness with --verify (e.g., `git rev-parse
---verify HEAD --not --remotes=origin`). And I think it is kind of buggy,
-in that I'd expect it to complain about seeing more than one parameter.
-
-I'm not sure exactly what you're trying to do. If you actually want a
-traversal, you probably should be using rev-list (with --abbrev-commit
-if you want to abbreviate). If you just want to resolve some names
-without traversing, you might be better off using for-each-ref or
-similar.
-
--Peff
+Thanks for your responses. Also thanks to Christian for splitting it in
+the first place, making it easier to review.
