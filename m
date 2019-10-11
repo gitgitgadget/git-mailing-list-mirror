@@ -2,125 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A93D51F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 22:08:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 792811F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 22:14:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729335AbfJKWI0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 18:08:26 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:49514 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729206AbfJKWI0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 18:08:26 -0400
-Received: by mail-pg1-f202.google.com with SMTP id l6so7889659pgq.16
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 15:08:26 -0700 (PDT)
+        id S1729384AbfJKWOx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 18:14:53 -0400
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:44460 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728719AbfJKWOx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 18:14:53 -0400
+Received: by mail-vs1-f66.google.com with SMTP id w195so7194890vsw.11
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 15:14:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=XTyagDPFsil+mL9bh2FPs+o9QI3DaStQfQBXiYgpsEg=;
-        b=Cn6HPkwhQ04MOYGmkEKj1O3awdHifDpyXicSdw8IbgqIQ7RDlYrGlgndb7KG3rPfHu
-         XP4fXayIQrYfagZN/jB/BVluUf2dqF2xFRV0plD+ew8C8p9TG0QChceq8vm6/o0MKxr9
-         P9zBgXLt94PLJ5DPESNgidIEWmJ4MR6/J/mtt5xcZHcukoa/gRpiSQbJQmmUxWfr8/mq
-         Z4arys/yam6VOMrURdsZbbuMeANU/GaYWtPxePdlnzF3eE0O9iD4iISHXEpOrdBIuV+F
-         MwdSxjlmIpUZdm6+9OlheFdmgvE1WS6iOwl4fZ3bCXTUAAoL6VzziPB1aySCQG7G97te
-         BQjg==
+        bh=N4i/HhdXSeJKhyNWnNX8fFyhomf+pQowTAqcfLbAI6A=;
+        b=VuiJ8dHM1RLymll7guX7BQg6YlUDtvQKD2E7/JgLY4uDEkzrHRXMvtpozIBKMFScGP
+         uu0jpu1hr2X200NUV201yp5yOIdYcrnZlbsvVCF+rgu6G+zDE6XfIqjZZ3DtvVH2OZF+
+         EBnINUptxe7K9FuU1VXnPTjw74Xv+EQcTzLcFW911oa4hYFgsrKmWnckI0Hpmds34awm
+         BfbbLtw3lxjGe5uTzCw/dG9yaH26jJqQwHYY5ETEPzmVTrArGz2Vx925XkznLoyhJtxG
+         VAjpuALgvrqjdpG9iA3m/+smY+OGmVwURdKHt28XWD5y32YnTFXD2iid29ioxnOHg8T+
+         yt5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=XTyagDPFsil+mL9bh2FPs+o9QI3DaStQfQBXiYgpsEg=;
-        b=ShrEtD0BwkGGbl0M4Br/XvKoSTyW+bnn3st6FGv8up8VCSet1D1tYQc/sJnYd4+Xoo
-         KYoHCW12iA4cOptpo6xRrMNq7p3qAZCtH5WDqi3psW+c+vxNxpoa726kZmTAyNPW6Pg9
-         kVUDyP+XtbmlHfA2iSR3AVBOuTmoWZukELPei+xUVHB7Rkby0Gp7U/upIpjOhIRavNf5
-         2gNVDQnek4jNklZUiJIASmWapX94oUWiEpjqM8Ky4EKcMbx9Cbab7gMAbHSt0Oxz8rHD
-         ARxejrWy6YjRQegDe6L7C2gpKBGcPrwmWruQfc7ePSsUYackDdDwdYVjTwNMN3L4cW3j
-         T3sQ==
-X-Gm-Message-State: APjAAAUpsbyvcFBgDTDg9tcBfWdg7RypCEIrcfuGhUIze5ee1z9dUctQ
-        LGX4RCPMmqdxUI1zaFp8D2diPPPsFMgqdZ1l8mDi
-X-Google-Smtp-Source: APXvYqw/0dl44RLX6OuuYvYAw9bt2jxA/nDBLyn/aLWUkyzWj1uHHBZRchz3/IX8o0c4T6j50dnuHhaUvDfZzGgA5YNo
-X-Received: by 2002:a65:5b02:: with SMTP id y2mr19712445pgq.365.1570831705728;
- Fri, 11 Oct 2019 15:08:25 -0700 (PDT)
-Date:   Fri, 11 Oct 2019 15:08:22 -0700
-In-Reply-To: <20191011161504.GB19741@sigill.intra.peff.net>
-Message-Id: <20191011220822.154063-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20191011161504.GB19741@sigill.intra.peff.net>
-X-Mailer: git-send-email 2.23.0.700.g56cf767bdb-goog
-Subject: Re: [PATCH v2] send-pack: never fetch when checking exclusions
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     peff@peff.net
-Cc:     stolee@gmail.com, jonathantanmy@google.com, git@vger.kernel.org,
-        gitster@pobox.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=N4i/HhdXSeJKhyNWnNX8fFyhomf+pQowTAqcfLbAI6A=;
+        b=jbFv9AkZAA5dLRNBBHm5jUatCG+BbQUXWBdeR0PM8yifJ/Mgz8JKyQSlEcdUSV/KvY
+         1GvAocFoQYZyNZ4pLWaW3/aG9G7FCAkeJvOh0TEr9XU/mkXOq6HcTJTxmh6e0t8nD3S0
+         TxH9Usk+ZG4y9SwualR9Bx6mk6rJaDdw9FxTShlUsyITZP48m/SKms2Fe/lLCyq+kxNG
+         9m4AQ2tv2CNisCdC21aMKyYkL+8Oaewy6Pg9JpTfnnkFG9mdPxJn5uuE0cIh7xoyw5P0
+         r+8y0wMMWl4ZKiA0wqtaNXxdc/ThMjbHhD/ADLXCVxyRgSd98fneChE2cMOI3q0SH++Y
+         P4WQ==
+X-Gm-Message-State: APjAAAUUqSNGOR1ibRrL6Bz/aGGhU1a9yeThm1KgYOUrfya2z5SIfXxl
+        wyxiY8mIzHpnN0gcthErQwrDPY4uUTpD+6c8Xko=
+X-Google-Smtp-Source: APXvYqwJjqjIhS4q4qZdo8vAGpyPy+PTULVNzJrQ2WW7cx9xp2JjPmE0nmNPpx2J9Pmd+pt6Qz1RVj8RT3xqHr21O/U=
+X-Received: by 2002:a67:f98b:: with SMTP id b11mr10269655vsq.53.1570832090766;
+ Fri, 11 Oct 2019 15:14:50 -0700 (PDT)
+MIME-Version: 1.0
+References: <pull.316.v2.git.gitgitgadget@gmail.com> <pull.316.v3.git.gitgitgadget@gmail.com>
+ <08bb6fb7f31b92395df4db10bf47e9a9c01257f4.1570478905.git.gitgitgadget@gmail.com>
+In-Reply-To: <08bb6fb7f31b92395df4db10bf47e9a9c01257f4.1570478905.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 11 Oct 2019 15:14:39 -0700
+Message-ID: <CABPp-BHd9sJ=HcM-VQaGpd5TV-A0JL5NWG6zdDReUJrMnE+FwA@mail.gmail.com>
+Subject: Re: [PATCH v3 02/17] sparse-checkout: create 'init' subcommand
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> As a general rule (and why I'm raising this issue in reply to Jonathan's
-> patch), I think most or all sites that want OBJECT_INFO_QUICK will want
-> SKIP_FETCH_OBJECT as well, and vice versa. The reasoning is generally
-> the same:
-> 
->   - it's OK to racily have a false negative (we'll still be correct, but
->     possibly a little less optimal)
-> 
->   - it's expected and normal to be missing the object, so spending time
->     double-checking the pack store wastes measurable time in real-world
->     cases
+On Mon, Oct 7, 2019 at 1:08 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> ++
+> +The init subcommand also enables the 'extensions.worktreeConfig' setting
+> +and sets the `core.sparseCheckout` setting in the worktree-specific config
+> +file. This prevents the sparse-checkout feature from interfering with other
+> +worktrees.
 
-I took a look on "next" and it's true for these reasons in most cases
-but not all.
+I'm afraid that might be mis-parsed by future readers.  Perhaps something like:
 
-QUICK implies SKIP_FETCH_OBJECT:
+The init subcommand also enables the `core.sparseCheckout` setting.
+To avoid interfering with other worktrees, it first enables the
+`extensions.worktreeConfig` setting and makes sure to set the
+`core.sparseCheckout` setting in the worktree-specific config file.
 
-  fetch-pack.c: Run with fetch_if_missing=0 (from builtin/fetch.c,
-  builtin/fetch-pack.c, or through a lazy fetch) so OK.
-  
-  builtin/index-pack.c: Run with fetch_if_missing=0, so OK.
-  
-  builtin/fetch.c: Run with fetch_if_missing=0, so OK.
-  
-  object-store.h, sha1-file.c: Definition and implementation of this
-  flag.
+> +enum sparse_checkout_mode {
+> +       MODE_NONE = 0,
+> +       MODE_FULL = 1,
+> +};
 
-Everything is OK here. Now, SKIP_FETCH_OBJECT implies QUICK:
+So MODE_FULL is "true" and MODE_NONE is "false".  MODE_NONE seems
+confusing to me, but let's keep reading...
 
-  cache-tree.c: I added this recently in f981ec18cf ("cache-tree: do not
-  lazy-fetch tentative tree", 2019-09-09). No problem with a false
-  negative, since we know how to reconstruct the tree. OK.
-  
-  object-store.h, sha1-file.c: Definition and implementation of this
-  flag.
-  
-  send-pack.c: This patch (which is already in "next"). If we have a
-  false negative, we might accidentally send more than we need. But that
-  is not too bad.
-  
-  promisor-remote.c: This is the slightly tricky one. We use this
-  information to determine if we got our lazily-fetched object from the
-  most recent lazy fetch, or if we should continue attempting to fetch the
-  given object from other promisor remotes; so this information is
-  important. However, adding QUICK doesn't lose us anything because the
-  lack of QUICK only helps us when there is another process packing
-  loose objects: if we got our object, our object will be in a pack
-  (because of the way the fetch is implemented - in particular, we need
-  a pack because we need the ".promisor" file).
+> +
+> +static int sc_set_config(enum sparse_checkout_mode mode)
+> +{
+> +       struct argv_array argv = ARGV_ARRAY_INIT;
+> +
+> +       if (git_config_set_gently("extensions.worktreeConfig", "true")) {
+> +               error(_("failed to set extensions.worktreeConfig setting"));
+> +               return 1;
+> +       }
+> +
+> +       argv_array_pushl(&argv, "config", "--worktree", "core.sparseCheckout", NULL);
+> +
+> +       if (mode)
+> +               argv_array_pushl(&argv, "true", NULL);
+> +       else
+> +               argv_array_pushl(&argv, "false", NULL);
 
-So everything is OK except for promisor-remote.c, but even that is OK
-for another reason.
+Wait, what?  MODE_FULL is used to specify that you want a sparse
+checkout, and MODE_NONE is used to denote that you want a full (i.e.
+non-sparse) checkout?  These are *very* confusing names.
 
-Having said that, perhaps we should consider promisor-remote.c as
-low-level code and expect it to know that objects are fetched into a
-packfile (as opposed to loose objects), so it can safely use QUICK
-(which is documented as checking packed after packed and loose). If no
-one disagrees, I can make such a patch after jt/push-avoid-lazy-fetch is
-merged to master (as is the plan, according to What's Cooking [1]).
 
-[1] https://public-inbox.org/git/xmqq8sprhgzc.fsf@gitster-ct.c.googlers.com/
+> +static int sparse_checkout_init(int argc, const char **argv)
+> +{
+> +       struct pattern_list pl;
+> +       char *sparse_filename;
+> +       FILE *fp;
+> +       int res;
+> +
+> +       if (sc_set_config(MODE_FULL))
+> +               return 1;
+
+Seems confusing here too.
+
+
+Everything else in the patch looks good, though.
