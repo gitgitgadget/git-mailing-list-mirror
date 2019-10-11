@@ -2,113 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4155E1F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 16:17:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 590EC1F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 16:38:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728394AbfJKQRN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 12:17:13 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:38165 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726666AbfJKQRN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 12:17:13 -0400
-Received: by mail-wm1-f65.google.com with SMTP id 3so10787296wmi.3
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 09:17:11 -0700 (PDT)
+        id S1728489AbfJKQiq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 12:38:46 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:46883 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727149AbfJKQiq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 12:38:46 -0400
+Received: by mail-pl1-f195.google.com with SMTP id q24so4694039plr.13
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 09:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=sbcuKOAwVi4CZqwZa09bkBPm/Cd2lVaugl7U66QceNY=;
-        b=s0CM2Wc8Ghig8FSgTNHtCaJh0wU6RYciZrVCN0D8L5guctGdo8R6LfmQjutQ+OTd4+
-         EKIq54QUjxy6HLkGLHVUX6Cx/sWB73jEXniF9iMi0VdeVkBx0Ej9m6V9oQ3Creom9vBc
-         imZjmveoxIIJ45PLov7qE3JYd8Fl+kxn48P9fXfM7hNDNmtAYA7CzPHCHbumGLMiODqx
-         Bi1p1UXKWIB+QEwVx0gLv4xVRMrE10VweK08u3oUrlDuI06m853wFTvSSUScQTiTmS5q
-         HiJCQAQGEcZm2bMO579oAedrVvaOF+uwpQgt+q8KDGJ/vtz2PS03WrPmfBYp2nX3UhSU
-         AedA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=P6VM0dklpsQvAaBFm5IpdhGT4TSLt+4Vu9u4Cztiu1I=;
+        b=MZES5+O8FAcVhs2/k4zzlrQXZ14VNgHaF0xDxBfrPcDpBojRND2DkM38z9PGPM7MXZ
+         u2az6G/u0y1zsLq2uKN34e1bWQrC6BcEAN9AB6yAj53ZQ2dptGX5kxXTeRsShH52n+xC
+         ffRy4QsudRRthgkE5zb/k1IrLq+jlPt7DoYCw7fGmXW6NKNVg1UrvfS9ipfP8KWAbxOu
+         jOqNW7SAWEI0rc9jWTT9DRniX+vO9m4OA3z5lVAPdxa7E17Okp5KEJwawEzporHyJ2AR
+         5SnNyNYiECUsrnW8qZUfq/4+8NbgJyN6tGPgryY2o/aiqX5I6RG2SquDLeA79V1FQ+3j
+         yIjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=sbcuKOAwVi4CZqwZa09bkBPm/Cd2lVaugl7U66QceNY=;
-        b=eZ85BqA5P50Y85uVgkfvG531jA3iL9Hdt2gUp+7vfp0OvyHJEoEpTZPRyrFg0nb7Ov
-         977kgGPkuZTFqOQcJeG5xj7TWlbxFshATWjnko86QETVtDO1J3IUKiDIfLx9or86kqxG
-         vrCTKaqwMHBx5m2PuGjYscaU4UN9X+c0wHMATqCxyvTcAXNGoeYyb0zRBLZz8lI98n71
-         OYZGRT7NJKpONTfM2CC2PajU2ItR7trRQ4O+9XRLehJ3/jRsry6DGIB7ps9G2Z2zbgA6
-         6GyUlpaBd6ZfK6ku1K17IAVIIqluKHJFlrbtCVC54H4nQ9NIu7NZKhKoa7WDE+7ipRAD
-         Z2IQ==
-X-Gm-Message-State: APjAAAXRTPPdz+9ZvRWXkfO/TE2Z3GbgbzXJEOF7C/vXmGkAiqam/36Q
-        NI9IC6BRaUlgTFV2TqBlTmM=
-X-Google-Smtp-Source: APXvYqzotyfP9GtOu7eQAszg0fvJlU7RoLU0si7MJu6sS0joFezmMY7yRZsEVQWT8aOsgnj9EzygFg==
-X-Received: by 2002:a7b:c924:: with SMTP id h4mr4019794wml.46.1570810631153;
-        Fri, 11 Oct 2019 09:17:11 -0700 (PDT)
-Received: from szeder.dev (x4db30d3a.dyn.telefonica.de. [77.179.13.58])
-        by smtp.gmail.com with ESMTPSA id y14sm13713849wrd.84.2019.10.11.09.17.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Oct 2019 09:17:10 -0700 (PDT)
-Date:   Fri, 11 Oct 2019 18:17:07 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Denton Liu <liu.denton@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 1/2] format-patch: create leading components of output
- directory
-Message-ID: <20191011161707.GN29845@szeder.dev>
-References: <b172eba0b748c3f0f638786a5cfba905aca385cc.1570782773.git.bert.wesarg@googlemail.com>
- <20191011144650.GM29845@szeder.dev>
- <CAKPyHN0s8Rc8Sbp7ubyJ5cTDC5oh4Re+wqyTUWUo+3HgpKfECg@mail.gmail.com>
- <CAKPyHN22-SnZ2_o1MO6EXuWk7S2AAWGQSjxu0OrhDq4pw=ap=g@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=P6VM0dklpsQvAaBFm5IpdhGT4TSLt+4Vu9u4Cztiu1I=;
+        b=Sa+6tz7s4qrnS06QTcQBN+LuR/g3n8mqXisPveLOMUnN6LAoX6Iu2Auj8f0n/JcFg2
+         yd6b/xl7zoHt2smkCOOP8s9hU1+0cacl5UprlrljdDxXSCOqeFhfEsLYM6AA8kA4wUbC
+         7QAoUje2kTxUMwdY2D9PUKtLdlMqmxIhZYbMPuD3JhptJkevMe9O1m+sR19ZcE4jdJxd
+         BtqGb2qr85/9mpKQeihQxrq2hMzSKcPrMfllxWHezjmDlUIu9PbBYhORtwbG9yFBiSnC
+         AuOWdRpERs61KyTSwxMRsYJMTZdFBwf3Hp9Ry8hIXYLl9STzLPD6bG4YtJMqsLSWf1Fu
+         +VIg==
+X-Gm-Message-State: APjAAAXcMXVc/PjkCLebMrl1dN4gubzLhpbYxL/gRvuagVDgT2Dn8BtU
+        sk0R/0qnOtWlESnMReUDB+U=
+X-Google-Smtp-Source: APXvYqzuISN70gaCv0G14zehfd78+RIHGf3QCnUzXZeeTHKLfwRjBcs89PX763U+/lp1IDPDzZPCYw==
+X-Received: by 2002:a17:902:b58f:: with SMTP id a15mr15785130pls.149.1570811923689;
+        Fri, 11 Oct 2019 09:38:43 -0700 (PDT)
+Received: from BE-SB2-MIFELIX.europe.corp.microsoft.com (50-47-110-187.evrt.wa.frontiernet.net. [50.47.110.187])
+        by smtp.gmail.com with ESMTPSA id 4sm7952868pja.29.2019.10.11.09.38.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Oct 2019 09:38:42 -0700 (PDT)
+Subject: Re: [PATCH v2 1/1] fsmonitor: don't fill bitmap with entries to be
+ removed
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        William Baker via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, Johannes.Schindelin@gmx.de,
+        jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>,
+        William Baker <William.Baker@microsoft.com>
+References: <pull.372.git.gitgitgadget@gmail.com>
+ <pull.372.v2.git.gitgitgadget@gmail.com>
+ <08741d986c2b51828f115ab50f178d62e9982978.1570654810.git.gitgitgadget@gmail.com>
+ <20191010110732.GJ29845@szeder.dev> <20191010112204.GK29845@szeder.dev>
+From:   William Baker <williamtbakeremail@gmail.com>
+Message-ID: <9c012ff1-182b-d71b-cd50-9c476f26748c@gmail.com>
+Date:   Fri, 11 Oct 2019 09:38:41 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.1.0
 MIME-Version: 1.0
+In-Reply-To: <20191010112204.GK29845@szeder.dev>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAKPyHN22-SnZ2_o1MO6EXuWk7S2AAWGQSjxu0OrhDq4pw=ap=g@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 11, 2019 at 05:47:44PM +0200, Bert Wesarg wrote:
-> > > > +test_expect_success 'format-patch -o with no leading directories' '
-> > > > +     rm -fr patches &&
-> > > > +     git format-patch -o patches master..side &&
-> > > > +     count=$(git rev-list --count master..side) &&
-> > > > +     ls patches >list &&
-> > > > +     test_line_count = $count list
-> > > > +'
-> > > > +
-> > > > +test_expect_success 'format-patch -o with leading existing directories' '
-> > > > +     git format-patch -o patches/side master..side &&
-> > >
-> > > The previous test case creates the 'patches' directory and leaves it
-> > > behind, and this test implicitly relies on that directory to check
-> > > that 'format-patch -o' can deal with already existing directories.  So
-> > > if the previous test case were to fail early or were not run at all
-> > > (e.g. './t4014-format-patch.sh -r 1,137'), then that directory
-> > > wouldn't exist, and, consequently, this test case would not check what
-> > > it was supposed to.
-> > >
-> > > I think it would be better to be more explicit and self-contained
-> > > about it, and create a leading directory in this test case:
-> > >
-> > >    mkdir existing-dir &&
-> > >    git format-patch -o existing-dir/side master..size &&
-> > >    ls existing-dir/side >list &&
+On 10/10/19 4:22 AM, SZEDER Gábor wrote:
+>>> +# This test covers staging/unstaging files that appear at the end of the index.
+>>> +# Test files with names beginning with 'z' are used under the assumption that
+>>> +# earlier tests do not add/leave index entries that sort below them. 
 > 
-> one question: How about removing this directory first, just to be
-> sure, that mkdir does create a directory?
+> I just read through Junio's comments on the first version of this
+> patch, in particular his remarks about this comment.
+> 
+> If this new test case below were run in a dedicated repository, then
+> this comment wouldn't be necessary, and all my comments below about
+> that not-really-initial commit would be moot, too.
+> 
 
-I'm not sure I understand...
+Thanks for this suggestion!  I will submit a v3 version of the patch
+with an update to the test script.
 
-Do you mean that a previous test might have already created and left a
-directory with the same name behind, and then this 'mkdir' would error
-out and thus fail the test?  If yes, then you're right with your
-nitpicking on my nitpicking ;)  Though instead of 'rm -rf'ing that
-directory I would suggest 'mkdir -p' to simply ignore it if it were to
-exist.
+- William
 
