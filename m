@@ -2,96 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 590EC1F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 16:38:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3DFD1F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 16:42:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728489AbfJKQiq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 12:38:46 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:46883 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727149AbfJKQiq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 12:38:46 -0400
-Received: by mail-pl1-f195.google.com with SMTP id q24so4694039plr.13
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 09:38:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=P6VM0dklpsQvAaBFm5IpdhGT4TSLt+4Vu9u4Cztiu1I=;
-        b=MZES5+O8FAcVhs2/k4zzlrQXZ14VNgHaF0xDxBfrPcDpBojRND2DkM38z9PGPM7MXZ
-         u2az6G/u0y1zsLq2uKN34e1bWQrC6BcEAN9AB6yAj53ZQ2dptGX5kxXTeRsShH52n+xC
-         ffRy4QsudRRthgkE5zb/k1IrLq+jlPt7DoYCw7fGmXW6NKNVg1UrvfS9ipfP8KWAbxOu
-         jOqNW7SAWEI0rc9jWTT9DRniX+vO9m4OA3z5lVAPdxa7E17Okp5KEJwawEzporHyJ2AR
-         5SnNyNYiECUsrnW8qZUfq/4+8NbgJyN6tGPgryY2o/aiqX5I6RG2SquDLeA79V1FQ+3j
-         yIjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=P6VM0dklpsQvAaBFm5IpdhGT4TSLt+4Vu9u4Cztiu1I=;
-        b=Sa+6tz7s4qrnS06QTcQBN+LuR/g3n8mqXisPveLOMUnN6LAoX6Iu2Auj8f0n/JcFg2
-         yd6b/xl7zoHt2smkCOOP8s9hU1+0cacl5UprlrljdDxXSCOqeFhfEsLYM6AA8kA4wUbC
-         7QAoUje2kTxUMwdY2D9PUKtLdlMqmxIhZYbMPuD3JhptJkevMe9O1m+sR19ZcE4jdJxd
-         BtqGb2qr85/9mpKQeihQxrq2hMzSKcPrMfllxWHezjmDlUIu9PbBYhORtwbG9yFBiSnC
-         AuOWdRpERs61KyTSwxMRsYJMTZdFBwf3Hp9Ry8hIXYLl9STzLPD6bG4YtJMqsLSWf1Fu
-         +VIg==
-X-Gm-Message-State: APjAAAXcMXVc/PjkCLebMrl1dN4gubzLhpbYxL/gRvuagVDgT2Dn8BtU
-        sk0R/0qnOtWlESnMReUDB+U=
-X-Google-Smtp-Source: APXvYqzuISN70gaCv0G14zehfd78+RIHGf3QCnUzXZeeTHKLfwRjBcs89PX763U+/lp1IDPDzZPCYw==
-X-Received: by 2002:a17:902:b58f:: with SMTP id a15mr15785130pls.149.1570811923689;
-        Fri, 11 Oct 2019 09:38:43 -0700 (PDT)
-Received: from BE-SB2-MIFELIX.europe.corp.microsoft.com (50-47-110-187.evrt.wa.frontiernet.net. [50.47.110.187])
-        by smtp.gmail.com with ESMTPSA id 4sm7952868pja.29.2019.10.11.09.38.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Oct 2019 09:38:42 -0700 (PDT)
-Subject: Re: [PATCH v2 1/1] fsmonitor: don't fill bitmap with entries to be
- removed
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        William Baker via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, Johannes.Schindelin@gmx.de,
-        jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>,
-        William Baker <William.Baker@microsoft.com>
-References: <pull.372.git.gitgitgadget@gmail.com>
- <pull.372.v2.git.gitgitgadget@gmail.com>
- <08741d986c2b51828f115ab50f178d62e9982978.1570654810.git.gitgitgadget@gmail.com>
- <20191010110732.GJ29845@szeder.dev> <20191010112204.GK29845@szeder.dev>
-From:   William Baker <williamtbakeremail@gmail.com>
-Message-ID: <9c012ff1-182b-d71b-cd50-9c476f26748c@gmail.com>
-Date:   Fri, 11 Oct 2019 09:38:41 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.1.0
+        id S1728429AbfJKQmM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 12:42:12 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50232 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726331AbfJKQmL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 12:42:11 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BB2989D6E4;
+        Fri, 11 Oct 2019 12:42:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yHoLdX0Is9EnU0rXWPQZZsOm8Ek=; b=Sbea/U
+        LHTcQF23Q6sF0tvpAJBkbglPTRM4wiX3TGjMn535JkoSgAceugl081OZrCQps2vd
+        YoNd04kE3R+xSBnOb0RIrY1BlqmuxULa+sWFuyzpVhZxz/yU3VvBab5nu/H1aSeV
+        OFw2U5RrAYhdliO9zYqvTByMy9OYZiFcSwZF0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eczn0mP3y4FmlCUM3a4cTtLNT2MijUBB
+        VdoRNR1ut7jsMVymHDgfGtu8gfnIV2bEM7QmzEa6qF7354CAa7uMvzLHNLVU9Ysc
+        F15KbCQpMxnw/lIN3i8QOLH5GldsPOpxgG0EdupQRN+BdmSaDwyn04+9OPCCHA+b
+        bjnHLJm8eYE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B427D9D6E3;
+        Fri, 11 Oct 2019 12:42:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DCD859D6E1;
+        Fri, 11 Oct 2019 12:42:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Oct 2019, #03; Fri, 11)
+References: <xmqq8sprhgzc.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BE4f5f3HyZu9wOyq599JN-n0EMF08di+2V51uxDMEwuGQ@mail.gmail.com>
+Date:   Sat, 12 Oct 2019 01:42:04 +0900
+In-Reply-To: <CABPp-BE4f5f3HyZu9wOyq599JN-n0EMF08di+2V51uxDMEwuGQ@mail.gmail.com>
+        (Elijah Newren's message of "Fri, 11 Oct 2019 08:44:50 -0700")
+Message-ID: <xmqq4l0fgroj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20191010112204.GK29845@szeder.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0FD7DCE6-EC46-11E9-9D08-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/10/19 4:22 AM, SZEDER Gábor wrote:
->>> +# This test covers staging/unstaging files that appear at the end of the index.
->>> +# Test files with names beginning with 'z' are used under the assumption that
->>> +# earlier tests do not add/leave index entries that sort below them. 
-> 
-> I just read through Junio's comments on the first version of this
-> patch, in particular his remarks about this comment.
-> 
-> If this new test case below were run in a dedicated repository, then
-> this comment wouldn't be necessary, and all my comments below about
-> that not-really-initial commit would be moot, too.
-> 
+Elijah Newren <newren@gmail.com> writes:
 
-Thanks for this suggestion!  I will submit a v3 version of the patch
-with an update to the test script.
+>> * en/fast-imexport-nested-tags (2019-10-04) 8 commits
+>>   (merged to 'next' on 2019-10-07 at 3e75779e10)
+>>  + fast-export: handle nested tags
+>>  ...
+>>  + fast-export: fix exporting a tag and nothing else
+>>
+>>  Updates to fast-import/export.
+>>
+>>  Will merge to 'master'.
+>
+> Any chance this will merge down before 2.24.0?  I'd really like to see
+> and use it within filter-repo.
 
-- William
+A few general guidelines I use are that a typical topic spends 1
+week in 'next' (a trivial one-liner may be there for much shorter
+time, an involved multi-patch topic that touches the core part of
+the system may have to spend more), that an involved topic that is
+not in 'master' by rc0 would not appear in the next release, and
+that any topic that is not in 'master' by rc1 needs compelling
+reason to be in the next release.  So it is cutting a bit too close
+for this topic, it seems, but we'll see.
 
