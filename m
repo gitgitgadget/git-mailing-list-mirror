@@ -3,103 +3,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09BD91F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 12:31:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 434E91F4C0
+	for <e@80x24.org>; Fri, 11 Oct 2019 13:14:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727974AbfJKMbh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 08:31:37 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:44350 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727549AbfJKMbh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 08:31:37 -0400
-Received: by mail-qt1-f196.google.com with SMTP id u40so13532568qth.11
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 05:31:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gX+ipP0C2/C5B+CmmIBW81JqS9ZvdWAh0lTzO+n830o=;
-        b=kudNisynpGQJ4yPNx6gTQtAvmNZnaEoNkJJqDKSQyg4VBTIN5HgEPvycPWPKAenCED
-         ltPmwk5ZcqmdGd2NSbErbByOBiYoj3unrdGnn2M36D0NAQiQU06gujsC+UZedVgfxAgD
-         MGjEeFh1TyWQsz1sWiljfH1qWgSOmbT941Q+rtHNoY0z//EmwyGOhvpLVIt54g9PLlYp
-         6XdlP2g/xOT8ghHO5gKLWBrsHj5nV/AMds29Qh0bMc2ccutFLkOsSaCBCMGTqCkx+xr+
-         iTI7wbip1MI46Fg6JX4vjCG6oJOhzc8+90mFuRumNhjwUfm6SmujZvzWMgpbRyvhBjcE
-         3YUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=gX+ipP0C2/C5B+CmmIBW81JqS9ZvdWAh0lTzO+n830o=;
-        b=rZwK8SuEkygzlbLOEfZDRlJKvmjYYi+d3ldCGR8b+7syiMkrGwkuEdKjj55YGbdlEB
-         O9Rr3jc6Q9YSJpYayO9xQ3QYIiBzc+d53VdMZCipTfBTw/Az9Hdo4MhCwVhI35NyB49E
-         YM/cN2DQRONFIFJmDMOaVHr/evw77i8H1I2KvnG+Ode5Pa56UuYgApl9dGuCWp5Q3k8Z
-         HIpGGIwRutqH932KV7GjpHSWG4DCo78P1RYDqRhSEe26cdWK2Bp+IG72YKt/NqKnQKjN
-         IinF4vWx0cWARiW3H9fCeMwJt0kd7YcKibEZXnsqYqCtBbRQIMPWu/lRKmQJOpZYYdE7
-         qt2w==
-X-Gm-Message-State: APjAAAWCocMC2eMFPAtxsNIjCUvjY7ILvJUuSa/Nu+kVERFteU2i/ekY
-        NOLmalmJHNg3QOBGg8rq6q4=
-X-Google-Smtp-Source: APXvYqzLSMzkWmxh4NfZpP7KyX1HZ9NBTQ+QIO3xVKDYdy+Pnu8ts6oQz4ijDhNc7tUydV3yHH5IVw==
-X-Received: by 2002:ac8:2a66:: with SMTP id l35mr17159675qtl.340.1570797094388;
-        Fri, 11 Oct 2019 05:31:34 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:2da2:a6da:62ea:75d9? ([2001:4898:a800:1012:ded5:a6da:62ea:75d9])
-        by smtp.gmail.com with ESMTPSA id l48sm5124497qtb.50.2019.10.11.05.31.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Oct 2019 05:31:33 -0700 (PDT)
-Subject: Re: [PATCH v2] send-pack: never fetch when checking exclusions
-To:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-References: <xmqqzhibnahi.fsf@gitster-ct.c.googlers.com>
- <20191008183739.194714-1-jonathantanmy@google.com>
- <20191011061257.GD20094@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <a87cf3ce-fbff-ef4e-941e-bd2da0bf182f@gmail.com>
-Date:   Fri, 11 Oct 2019 08:31:30 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        id S1728220AbfJKNOT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 09:14:19 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229]:44745 "EHLO
+        kylie.crudebyte.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728093AbfJKNOT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 09:14:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+        MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+        Content-ID:Content-Description;
+        bh=QYVvRbXn3eQpwUXG2b3Wgmd1Zn7PYhzLQh0rtyOGiH8=; b=WKyPtGGrGJ9d46yfGaJWbf3HaV
+        rNZyNVfAraLive3v38F8xuBqZznpGunZc8gUo981GMs/DfKhRUQwME7K7898TDOOnkECcW6719MEe
+        vFfzWS7MtLRCQ3groMucPGr7gDnzloBffQDy54gNr+wVNnWCCE8V5CSp0egVJHJgk8rs14f7YeiOZ
+        sOoJul8McI37oV86YnwszU/fmuObw9KBpyE57fS2MkJ/GehQutSDiFE1buSIzYft4BjIgx4tU8LDC
+        FVA0nGltXhHECUTGJWoOv6Y+EluBbaPcQstNFh8xBDiUUkxUkSztNvjlnjGq0me4Kjpi+LfD9Cdeo
+        +6axK1IyqUeVUh2UNKJwWya98E6gujb08Ft2MWTAHbUFLrV7XG2LJr2CD2aCgWxnAiW5V7ZYhz/ww
+        IxUHypWEAlQAKgReBL6i2snSqBXA78QvP99j3PXub5OuzxqxlMltEbu6c8vSv4hFKmqEc6xv7uvJZ
+        OiQ2eeCiMzZRIuvXHnllkGZ205kjmvvpmS02MYO3gIbsDnbot0sac0q2EcNgjeqNd3J1fWM9ho6xn
+        rgyFrBkKHtgqD7ruUDBXmlNUd22nBgQSwjwvlhEloxqOfvEnGjjl/r6SHfYNNx1OvQOcGnDMQbyXq
+        K5DF3ISm2D03RncHxfk2R8nxa012CPIGl7XaO5emE=;
+From:   Christian Schoenebeck <qemu_oss@crudebyte.com>
+To:     Andrew Donnellan <ajd@linux.ibm.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        patchwork@lists.ozlabs.org,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Eric Blake <eblake@redhat.com>,
+        Christian Schoenebeck <qemu_oss@crudebyte.com>,
+        git@vger.kernel.org, Ian Kelling <iank@fsf.org>
+Subject: Re: [PATCH] parser: Unmangle From: headers that have been mangled for DMARC purposes
+Date:   Fri, 11 Oct 2019 15:13:50 +0200
+Message-ID: <6574162.ouEm0onZRE@silver>
+In-Reply-To: <7c2f16e3-1397-9ced-e334-a52e99b27e9b@linux.ibm.com>
+References: <20191010062047.21549-1-ajd@linux.ibm.com> <c942d9ce-d8fe-32ca-bedd-1cdb3837823d@linux.ibm.com> <7c2f16e3-1397-9ced-e334-a52e99b27e9b@linux.ibm.com>
 MIME-Version: 1.0
-In-Reply-To: <20191011061257.GD20094@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/11/2019 2:12 AM, Jeff King wrote:
-> On Tue, Oct 08, 2019 at 11:37:39AM -0700, Jonathan Tan wrote:
+On Freitag, 11. Oktober 2019 06:50:14 CEST Andrew Donnellan wrote:
+> On 11/10/19 3:36 pm, Andrew Donnellan wrote:
+> > It would be nice if Mailman could adopt X-Original-Sender too. As it is,
 > 
->> When building the packfile to be sent, send_pack() is given a list of
->> remote refs to be used as exclusions. For each ref, it first checks if
->> the ref exists locally, and if it does, passes it with a "^" prefix to
->> pack-objects. However, in a partial clone, the check may trigger a lazy
->> fetch.
->>
->> The additional commit ancestry information obtained during such fetches
->> may show that certain objects that would have been sent are already
->> known to the server, resulting in a smaller pack being sent. But this is
->> at the cost of fetching from many possibly unrelated refs, and the lazy
->> fetches do not help at all in the typical case where the client is
->> up-to-date with the upstream of the branch being pushed.
->>
->> Ensure that these lazy fetches do not occur.
-> 
-> That makes sense. For similar reasons, should we be using
-> OBJECT_INFO_QUICK here? If the other side has a bunch of ref tips that
-> we don't have, we'll end up re-scanning the pack directory over and over
-> (which is _usually_ pretty quick, but can be slow if you have a lot of
-> packs locally). And it's OK if we racily miss out on an exclusion due to
-> somebody else repacking simultaneously.
+> (which I have gone ahead and reported as
+> https://gitlab.com/mailman/mailman/issues/641)
 
-That's a good idea. We can hint to the object store that we don't expect
-misses to be due to a concurrent repack, so we don't want to reprepare
-pack-files.
+Not stopping you from doing that, since I still think that it'd be helpful if 
+mailman added some kind X-Original-Sender header in case the email has to be 
+munged for some reason. Just some notes about status & consensus we had:
 
--Stolee
+1. On GNU lists the default mailman settings are now to prevent munging in 
+first place (if possible):
+https://lists.gnu.org/archive/html/qemu-devel/2019-09/msg00416.html
+
+2. If any list member has the "nodup" mailman option turned on, mailman would 
+still munge emails due to that. Ian (on CC) worked on a patch to override that 
+individual user setting automatically if necessary:
+https://bugs.launchpad.net/mailman/+bug/1845751
+
+3. On git side it was suggested to add some kind of "always_use_in_body_from" 
+option:
+https://public-inbox.org/git/20190923222415.GA22495@sigill.intra.peff.net/
+
+Unless that git option exists, this little trick proofed as usable workaround 
+for git patch submitters suffering from munging:
+https://lists.gnu.org/archive/html/qemu-devel/2019-09/msg00932.html
+
+4. MTA's should also address this DKIM issue more accurately. For instance 
+Exim is currently by default filling the "dkim h=..." header with "all header 
+names listed in RFC4871 will be used, whether or not each header is present in 
+the message":
+https://www.exim.org/exim-html-current/doc/html/spec_html/ch-dkim_and_spf.html
+That "h=" tag in email's dkim header lists all email headers which were 
+included by MTA for signing the message. However IMO MTA's should not list any 
+"List-*" header name in "dkim h=..." (at least not if not present in message), 
+otherwise mailman is forced to munge any of such messages when adding its 
+required List-* headers.
+
+BTW section 5.5. (page 38) of that RFC4871 actually sais these headers "SHOULD 
+be included in the signature, if they are present in the message being 
+signed".
+
+For now you can override this setting, e.g. by using Exim's 
+"dkim_sign_headers" setting and providing your own list of header names, but 
+from security point of view that's suboptimal, since admins probably leave 
+that untouched for years and new security relevant headers might not be 
+included for signing at some point in future. So IMO it would make sense to 
+add more fine graded MTA DKIM config options like:
+"include these headers for dkim signing only if present in message"
+and/or
+"use default header names except of these".
+
+By taking these things into account, emails of domains with strict DMARC 
+policies are no longer munged on gnu lists.
+
+Best regards,
+Christian Schoenebeck
+
 
