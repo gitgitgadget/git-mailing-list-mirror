@@ -2,1038 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E068E1F4C0
-	for <e@80x24.org>; Fri, 11 Oct 2019 23:56:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE4601F4C0
+	for <e@80x24.org>; Sat, 12 Oct 2019 00:07:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728446AbfJKX4D (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 19:56:03 -0400
-Received: from mail-qk1-f201.google.com ([209.85.222.201]:38302 "EHLO
-        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728394AbfJKX4C (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 19:56:02 -0400
-Received: by mail-qk1-f201.google.com with SMTP id s28so10596919qkm.5
-        for <git@vger.kernel.org>; Fri, 11 Oct 2019 16:55:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=yYMKYYjmWGxTZksHWgmo/aqwKFOP0bAlww/15+25VJs=;
-        b=l96xbGVHGiY+C+XqX0iCKoRwOxRzJVxS+H1kwm/cspCfLmhtGoR3bzKwUjohnpBDU3
-         LObDFXsE3P4vZtHKqSAQ3t08jjmwIq9/mIEV+FPG0DELQ0a+RUVE/rmAtIX7uhpEbr0y
-         RgwAsS8LlGM89C0XYJUYj2KWza8W+uNwEQjzrqA7oNpnPzGC53B4TZmcVQdik/yRIuPS
-         U27Ifu5vhTyRp6IkjIOH27uNXkXcFOPtFndDt0f7mxoeOsl0MYON8pn6d2iMcDRHgyO+
-         dDTRYMIsZ0Hjs0DuSPcO1nxNmgSrzYoi4NEx1y748sefCSs4jsuIHzBAjlQhRbc335Zo
-         tMQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc;
-        bh=yYMKYYjmWGxTZksHWgmo/aqwKFOP0bAlww/15+25VJs=;
-        b=qenBiqD9eTU/5fa0vysyFFf/0Q9Ly1oauh+TW7bYhTgWJzWC9DC6vw61OWl/u3+oEW
-         KlElrZ43HSnkGb7CwjIGfoym/oz2pN/5i4mz/dZ1SO2brkkPPjzEr61UOIGtPy01SJo4
-         aeZj5BT5DkXvSlBXadmeKjM3oWFExrB2u/mLuNSRgD/d4JI0Dzgxx3zXY73QN7uyEgga
-         K8kIwxM3fRSEyYoQW8FEvaBfh2uZVosThm1Hegp5Op9mVbWCcBHie05JoSDDXp6YFVYN
-         pHNBaN6xK9rIGMVlYIPq4u0RTzMFY16KekwLpHd/GJftoPePF0gJgID5btuYsyoX/PDX
-         2/WQ==
-X-Gm-Message-State: APjAAAVGlrsz4VzYTkzgFodF/q0twMPCxKajd1DbUfdcvW77mh8i82q2
-        m0Q656gV+68Ai/vkrPnDBKYagFpls7EiAfc8urJrnV8oeIKJsuWcI8U9gTOx+wIS7K/0NZFM3L5
-        TO1llD432s1ukf0cfukYMz/+rOIRpjfdxwfj7tyMuMhD+6rAoI+bXsF69djdZoqOk7b/9IYwvDA
-        ==
-X-Google-Smtp-Source: APXvYqzgH9SkpY7AOavzNvyuQNMwqgz3UmKiJ8UdTSPvcL153lqNBxflRwATkK0xYrPE7ui7VRpZTXGAnBxqJG8pT7o=
-X-Received: by 2002:ac8:2670:: with SMTP id v45mr16369339qtv.233.1570838158512;
- Fri, 11 Oct 2019 16:55:58 -0700 (PDT)
-Date:   Fri, 11 Oct 2019 16:55:54 -0700
-In-Reply-To: <20191010151932.2716-1-emilyshaffer@google.com>
-Message-Id: <20191011235554.138337-1-emilyshaffer@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.23.0.700.g56cf767bdb-goog
-Subject: [PATCH v6] documentation: add tutorial for object walking
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        "=?UTF-8?q?SZEDER=20G=C3=A1bor?=" <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1728481AbfJLAFE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 20:05:04 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52339 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726458AbfJLAFD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 20:05:03 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BB3AD2D3A8;
+        Fri, 11 Oct 2019 20:05:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xizHWtd3cvRlw8n3OOiA5lGmphk=; b=F/7oQd
+        tF5XJtZU+JvQnToU9bCL8dAQIq7dCeIA6ayQxvuwpptWeHF1cInOazse4ivhwvyL
+        sjdo7EvpJoFGLPA+wCKIeUHjB6IJJ/FhMSCrFK+jtaMCOlD994c6t59FQ1ED31U/
+        3DnaW9woAkw+Sms1k8yNaza/vFA9k26z0rq6c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OkCf0Wdqt57EI8Cl0FkpxU9XCbPhf2QT
+        9rL3V5ALpRhinfRo54gsDMfgzAvBFtVriKapsz/ysWqiAwkViCYBze6LM6p+zQo8
+        UB92GPvQ12xAUBq/4P9qB8LqJvltBz65j1lsGDGrOtVzgCBiD9atrm3PiBC46JP1
+        Kfchf0e+l0w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F8122D3A6;
+        Fri, 11 Oct 2019 20:05:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B9F762D3A5;
+        Fri, 11 Oct 2019 20:04:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        christian.couder@gmail.com, git@vger.kernel.org,
+        chriscool@tuxfamily.org, ramsay@ramsayjones.plus.com
+Subject: Re: [RFC PATCH 10/10] pack-objects: improve partial packfile reuse
+References: <20190913130226.7449-11-chriscool@tuxfamily.org>
+        <20191010235952.174426-1-jonathantanmy@google.com>
+        <20191011180125.GA20601@sigill.intra.peff.net>
+Date:   Sat, 12 Oct 2019 09:04:58 +0900
+In-Reply-To: <20191011180125.GA20601@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 11 Oct 2019 14:01:25 -0400")
+Message-ID: <xmqqsgnyg76d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: EE8081A4-EC83-11E9-8525-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Existing documentation on object walks seems to be primarily intended
-as a reference for those already familiar with the procedure. This
-tutorial attempts to give an entry-level guide to a couple of bare-bones
-object walks so that new Git contributors can learn the concepts
-without having to wade through options parsing or special casing.
+Jeff King <peff@peff.net> writes:
 
-The target audience is a Git contributor who is just getting started
-with the concept of object walking. The goal is to prepare this
-contributor to be able to understand and modify existing commands which
-perform revision walks more easily, although it will also prepare
-contributors to create new commands which perform walks.
+> The current code does so by creating a new entry in the reused_chunks
+> array. In the worst case that can grow to have the same number of
+> entries as we have objects. So this code was an attempt to pad the
+> header of a shrunken entry to keep it the same size. I don't remember
+> all the problems we ran into with that, but in the end we found that it
+> didn't actually help much, because in practice we don't end up with a
+> lot of chunks anyway.
 
-The tutorial covers a basic overview of the structs involved during
-object walk, setting up a basic commit walk, setting up a basic
-all-object walk, and adding some configuration changes to both walk
-types. It intentionally does not cover how to create new commands or
-search for options from the command line or gitconfigs.
+Hmm, I am kind of surprised that the decoding side allowed such a
+padding.
 
-There is an associated patchset at
-https://github.com/nasamuffin/git/tree/revwalk that contains a reference
-implementation of the code generated by this tutorial.
+> For instance, packing torvalds/linux on our servers just now reused 6.5M
+> objects, but only needed ~50k chunks.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
----
-Since v5 only a couple small changes:
+OK, that's a good argument for not trying to optimize.
 
-The opening paragraph was reworked per Junio's comments to hopefully
-make more sense for this document's new life as an object walking
-tutorial (instead of a revision walking one).
+> I think the original code may simply have been buggy and nobody noticed.
+> Here's what I wrote when this line was added in our fork:
+>
+>       pack-objects: check reused pack bitmap for duplicate objects
+>   
+>       If a client both asks for a tag by sha1 and specifies
+>       "include-tag", we may end up including the tag in the reuse
+>       bitmap (due to the first thing), and then later adding it to
+>       the packlist (due to the second). This results in duplicate
+>       objects in the pack, which git chokes on. We should notice
+>       that we are already including it when doing the include-tag
+>       portion, and avoid adding it to the packlist.
+>   
+>       The simplest place to fix this is right in add_ref_tag,
+>       where we could avoid peeling the tag at all if we know that
+>       we are already including it. However, I've pushed the check
+>       instead into have_duplicate_entry. This fixes not only this
+>       case, but also means that we cannot have any similar
+>       problems lurking in other code.
+>   
+>       No tests, because git does not actually exhibit this "ask
+>       for it and also include-tag" behavior. We do one or the
+>       other on clone, depending on whether --single-branch is set.
+>       However, libgit2 does both.
+>
+> I'm not sure why we didn't notice it with the older reuse code. It may
+> simply have been that it hardly ever triggered on our servers.
 
-The title formatting line was changed from "underlining" with === to
-being prepended with a single "=", to both silence a warning and match
-the headers through the rest of the document.
+Impressed by the careful thinking here.
 
-Thanks!
- - Emily
-
- Documentation/Makefile              |   1 +
- Documentation/MyFirstObjectWalk.txt | 906 ++++++++++++++++++++++++++++
- 2 files changed, 907 insertions(+)
- create mode 100644 Documentation/MyFirstObjectWalk.txt
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 06d85ad958..8fe829cc1b 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -77,6 +77,7 @@ API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technica
- SP_ARTICLES += $(API_DOCS)
- 
- TECH_DOCS += MyFirstContribution
-+TECH_DOCS += MyFirstObjectWalk
- TECH_DOCS += SubmittingPatches
- TECH_DOCS += technical/hash-function-transition
- TECH_DOCS += technical/http-protocol
-diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-new file mode 100644
-index 0000000000..4d24daeb9f
---- /dev/null
-+++ b/Documentation/MyFirstObjectWalk.txt
-@@ -0,0 +1,906 @@
-+= My First Object Walk
-+
-+== What's an Object Walk?
-+
-+The object walk is a key concept in Git - this is the process that underpins
-+operations like object transfer and fsck. Beginning from a given commit, the
-+list of objects is found by walking parent relationships between commits (commit
-+X based on commit W) and containment relationships between objects (tree Y is
-+contained within commit X, and blob Z is located within tree Y, giving our
-+working tree for commit X something like `y/z.txt`).
-+
-+A related concept is the revision walk, which is focused on commit objects and
-+their parent relationships and does not delve into other object types. The
-+revision walk is used for operations like `git log`.
-+
-+=== Related Reading
-+
-+- `Documentation/user-manual.txt` under "Hacking Git" contains some coverage of
-+  the revision walker in its various incarnations.
-+- `Documentation/technical/api-revision-walking.txt`
-+- https://eagain.net/articles/git-for-computer-scientists/[Git for Computer Scientists]
-+  gives a good overview of the types of objects in Git and what your object
-+  walk is really describing.
-+
-+== Setting Up
-+
-+Create a new branch from `master`.
-+
-+----
-+git checkout -b revwalk origin/master
-+----
-+
-+We'll put our fiddling into a new command. For fun, let's name it `git walken`.
-+Open up a new file `builtin/walken.c` and set up the command handler:
-+
-+----
-+/*
-+ * "git walken"
-+ *
-+ * Part of the "My First Object Walk" tutorial.
-+ */
-+
-+#include "builtin.h"
-+
-+int cmd_walken(int argc, const char **argv, const char *prefix)
-+{
-+	trace_printf(_("cmd_walken incoming...\n"));
-+	return 0;
-+}
-+----
-+
-+NOTE: `trace_printf()` differs from `printf()` in that it can be turned on or
-+off at runtime. For the purposes of this tutorial, we will write `walken` as
-+though it is intended for use as a "plumbing" command: that is, a command which
-+is used primarily in scripts, rather than interactively by humans (a "porcelain"
-+command). So we will send our debug output to `trace_printf()` instead. When
-+running, enable trace output by setting the environment variable `GIT_TRACE`.
-+
-+Add usage text and `-h` handling, like all subcommands should consistently do
-+(our test suite will notice and complain if you fail to do so).
-+
-+----
-+int cmd_walken(int argc, const char **argv, const char *prefix)
-+{
-+	const char * const walken_usage[] = {
-+		N_("git walken"),
-+		NULL,
-+	}
-+	struct option options[] = {
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options, walken_usage, 0);
-+
-+	...
-+}
-+----
-+
-+Also add the relevant line in `builtin.h` near `cmd_whatchanged()`:
-+
-+----
-+int cmd_walken(int argc, const char **argv, const char *prefix);
-+----
-+
-+Include the command in `git.c` in `commands[]` near the entry for `whatchanged`,
-+maintaining alphabetical ordering:
-+
-+----
-+{ "walken", cmd_walken, RUN_SETUP },
-+----
-+
-+Add it to the `Makefile` near the line for `builtin/worktree.o`:
-+
-+----
-+BUILTIN_OBJS += builtin/walken.o
-+----
-+
-+Build and test out your command, without forgetting to ensure the `DEVELOPER`
-+flag is set, and with `GIT_TRACE` enabled so the debug output can be seen:
-+
-+----
-+$ echo DEVELOPER=1 >>config.mak
-+$ make
-+$ GIT_TRACE=1 ./bin-wrappers/git walken
-+----
-+
-+NOTE: For a more exhaustive overview of the new command process, take a look at
-+`Documentation/MyFirstContribution.txt`.
-+
-+NOTE: A reference implementation can be found at
-+https://github.com/nasamuffin/git/tree/revwalk.
-+
-+=== `struct rev_cmdline_info`
-+
-+The definition of `struct rev_cmdline_info` can be found in `revision.h`.
-+
-+This struct is contained within the `rev_info` struct and is used to reflect
-+parameters provided by the user over the CLI.
-+
-+`nr` represents the number of `rev_cmdline_entry` present in the array.
-+
-+`alloc` is used by the `ALLOC_GROW` macro. Check
-+`Documentation/technical/api-allocation-growing.txt` - this variable is used to
-+track the allocated size of the list.
-+
-+Per entry, we find:
-+
-+`item` is the object provided upon which to base the object walk. Items in Git
-+can be blobs, trees, commits, or tags. (See `Documentation/gittutorial-2.txt`.)
-+
-+`name` is the object ID (OID) of the object - a hex string you may be familiar
-+with from using Git to organize your source in the past. Check the tutorial
-+mentioned above towards the top for a discussion of where the OID can come
-+from.
-+
-+`whence` indicates some information about what to do with the parents of the
-+specified object. We'll explore this flag more later on; take a look at
-+`Documentation/revisions.txt` to get an idea of what could set the `whence`
-+value.
-+
-+`flags` are used to hint the beginning of the revision walk and are the first
-+block under the `#include`s in `revision.h`. The most likely ones to be set in
-+the `rev_cmdline_info` are `UNINTERESTING` and `BOTTOM`, but these same flags
-+can be used during the walk, as well.
-+
-+=== `struct rev_info`
-+
-+This one is quite a bit longer, and many fields are only used during the walk
-+by `revision.c` - not configuration options. Most of the configurable flags in
-+`struct rev_info` have a mirror in `Documentation/rev-list-options.txt`. It's a
-+good idea to take some time and read through that document.
-+
-+== Basic Commit Walk
-+
-+First, let's see if we can replicate the output of `git log --oneline`. We'll
-+refer back to the implementation frequently to discover norms when performing
-+an object walk of our own.
-+
-+To do so, we'll first find all the commits, in order, which preceded the current
-+commit. We'll extract the name and subject of the commit from each.
-+
-+Ideally, we will also be able to find out which ones are currently at the tip of
-+various branches.
-+
-+=== Setting Up
-+
-+Preparing for your object walk has some distinct stages.
-+
-+1. Perform default setup for this mode, and others which may be invoked.
-+2. Check configuration files for relevant settings.
-+3. Set up the `rev_info` struct.
-+4. Tweak the initialized `rev_info` to suit the current walk.
-+5. Prepare the `rev_info` for the walk.
-+6. Iterate over the objects, processing each one.
-+
-+==== Default Setups
-+
-+Before examining configuration files which may modify command behavior, set up
-+default state for switches or options your command may have. If your command
-+utilizes other Git components, ask them to set up their default states as well.
-+For instance, `git log` takes advantage of `grep` and `diff` functionality, so
-+its `init_log_defaults()` sets its own state (`decoration_style`) and asks
-+`grep` and `diff` to initialize themselves by calling each of their
-+initialization functions.
-+
-+For our first example within `git walken`, we don't intend to use any other
-+components within Git, and we don't have any configuration to do.  However, we
-+may want to add some later, so for now, we can add an empty placeholder. Create
-+a new function in `builtin/walken.c`:
-+
-+----
-+static void init_walken_defaults(void)
-+{
-+	/*
-+	 * We don't actually need the same components `git log` does; leave this
-+	 * empty for now.
-+	 */
-+}
-+----
-+
-+Make sure to add a line invoking it inside of `cmd_walken()`.
-+
-+----
-+int cmd_walken(int argc, const char **argv, const char *prefix)
-+{
-+	init_walken_defaults();
-+}
-+----
-+
-+==== Configuring From `.gitconfig`
-+
-+Next, we should have a look at any relevant configuration settings (i.e.,
-+settings readable and settable from `git config`). This is done by providing a
-+callback to `git_config()`; within that callback, you can also invoke methods
-+from other components you may need that need to intercept these options. Your
-+callback will be invoked once per each configuration value which Git knows about
-+(global, local, worktree, etc.).
-+
-+Similarly to the default values, we don't have anything to do here yet
-+ourselves; however, we should call `git_default_config()` if we aren't calling
-+any other existing config callbacks.
-+
-+Add a new function to `builtin/walken.c`:
-+
-+----
-+static int git_walken_config(const char *var, const char *value, void *cb)
-+{
-+	/*
-+	 * For now, we don't have any custom configuration, so fall back to
-+	 * the default config.
-+	 */
-+	return git_default_config(var, value, cb);
-+}
-+----
-+
-+Make sure to invoke `git_config()` with it in your `cmd_walken()`:
-+
-+----
-+int cmd_walken(int argc, const char **argv, const char *prefix)
-+{
-+	...
-+
-+	git_config(git_walken_config, NULL);
-+
-+	...
-+}
-+----
-+
-+==== Setting Up `rev_info`
-+
-+Now that we've gathered external configuration and options, it's time to
-+initialize the `rev_info` object which we will use to perform the walk. This is
-+typically done by calling `repo_init_revisions()` with the repository you intend
-+to target, as well as the `prefix` argument of `cmd_walken` and your `rev_info`
-+struct.
-+
-+Add the `struct rev_info` and the `repo_init_revisions()` call:
-+----
-+int cmd_walken(int argc, const char **argv, const char *prefix)
-+{
-+	/* This can go wherever you like in your declarations.*/
-+	struct rev_info rev;
-+	...
-+
-+	/* This should go after the git_config() call. */
-+	repo_init_revisions(the_repository, &rev, prefix);
-+
-+	...
-+}
-+----
-+
-+==== Tweaking `rev_info` For the Walk
-+
-+We're getting close, but we're still not quite ready to go. Now that `rev` is
-+initialized, we can modify it to fit our needs. This is usually done within a
-+helper for clarity, so let's add one:
-+
-+----
-+static void final_rev_info_setup(struct rev_info *rev)
-+{
-+	/*
-+	 * We want to mimic the appearance of `git log --oneline`, so let's
-+	 * force oneline format.
-+	 */
-+	get_commit_format("oneline", rev);
-+
-+	/* Start our object walk at HEAD. */
-+	add_head_to_pending(rev);
-+}
-+----
-+
-+[NOTE]
-+====
-+Instead of using the shorthand `add_head_to_pending()`, you could do
-+something like this:
-+----
-+	struct setup_revision_opt opt;
-+
-+	memset(&opt, 0, sizeof(opt));
-+	opt.def = "HEAD";
-+	opt.revarg_opt = REVARG_COMMITTISH;
-+	setup_revisions(argc, argv, rev, &opt);
-+----
-+Using a `setup_revision_opt` gives you finer control over your walk's starting
-+point.
-+====
-+
-+Then let's invoke `final_rev_info_setup()` after the call to
-+`repo_init_revisions()`:
-+
-+----
-+int cmd_walken(int argc, const char **argv, const char *prefix)
-+{
-+	...
-+
-+	final_rev_info_setup(&rev);
-+
-+	...
-+}
-+----
-+
-+Later, we may wish to add more arguments to `final_rev_info_setup()`. But for
-+now, this is all we need.
-+
-+==== Preparing `rev_info` For the Walk
-+
-+Now that `rev` is all initialized and configured, we've got one more setup step
-+before we get rolling. We can do this in a helper, which will both prepare the
-+`rev_info` for the walk, and perform the walk itself. Let's start the helper
-+with the call to `prepare_revision_walk()`, which can return an error without
-+dying on its own:
-+
-+----
-+static void walken_commit_walk(struct rev_info *rev)
-+{
-+	if (prepare_revision_walk(rev))
-+		die(_("revision walk setup failed"));
-+}
-+----
-+
-+NOTE: `die()` prints to `stderr` and exits the program. Since it will print to
-+`stderr` it's likely to be seen by a human, so we will localize it.
-+
-+==== Performing the Walk!
-+
-+Finally! We are ready to begin the walk itself. Now we can see that `rev_info`
-+can also be used as an iterator; we move to the next item in the walk by using
-+`get_revision()` repeatedly. Add the listed variable declarations at the top and
-+the walk loop below the `prepare_revision_walk()` call within your
-+`walken_commit_walk()`:
-+
-+----
-+static void walken_commit_walk(struct rev_info *rev)
-+{
-+	struct commit *commit;
-+	struct strbuf prettybuf = STRBUF_INIT;
-+
-+	...
-+
-+	while ((commit = get_revision(rev))) {
-+		if (!commit)
-+			continue;
-+
-+		strbuf_reset(&prettybuf);
-+		pp_commit_easy(CMIT_FMT_ONELINE, commit, &prettybuf);
-+		puts(prettybuf.buf);
-+	}
-+	strbuf_release(&prettybuf);
-+}
-+----
-+
-+NOTE: `puts()` prints a `char*` to `stdout`. Since this is the part of the
-+command we expect to be machine-parsed, we're sending it directly to stdout.
-+
-+Give it a shot.
-+
-+----
-+$ make
-+$ ./bin-wrappers/git walken
-+----
-+
-+You should see all of the subject lines of all the commits in
-+your tree's history, in order, ending with the initial commit, "Initial revision
-+of "git", the information manager from hell". Congratulations! You've written
-+your first revision walk. You can play with printing some additional fields
-+from each commit if you're curious; have a look at the functions available in
-+`commit.h`.
-+
-+=== Adding a Filter
-+
-+Next, let's try to filter the commits we see based on their author. This is
-+equivalent to running `git log --author=<pattern>`. We can add a filter by
-+modifying `rev_info.grep_filter`, which is a `struct grep_opt`.
-+
-+First some setup. Add `init_grep_defaults()` to `init_walken_defaults()` and add
-+`grep_config()` to `git_walken_config()`:
-+
-+----
-+static void init_walken_defaults(void)
-+{
-+	init_grep_defaults(the_repository);
-+}
-+
-+...
-+
-+static int git_walken_config(const char *var, const char *value, void *cb)
-+{
-+	grep_config(var, value, cb);
-+	return git_default_config(var, value, cb);
-+}
-+----
-+
-+Next, we can modify the `grep_filter`. This is done with convenience functions
-+found in `grep.h`. For fun, we're filtering to only commits from folks using a
-+`gmail.com` email address - a not-very-precise guess at who may be working on
-+Git as a hobby. Since we're checking the author, which is a specific line in the
-+header, we'll use the `append_header_grep_pattern()` helper. We can use
-+the `enum grep_header_field` to indicate which part of the commit header we want
-+to search.
-+
-+In `final_rev_info_setup()`, add your filter line:
-+
-+----
-+static void final_rev_info_setup(int argc, const char **argv,
-+		const char *prefix, struct rev_info *rev)
-+{
-+	...
-+
-+	append_header_grep_pattern(&rev->grep_filter, GREP_HEADER_AUTHOR,
-+		"gmail");
-+	compile_grep_patterns(&rev->grep_filter);
-+
-+	...
-+}
-+----
-+
-+`append_header_grep_pattern()` adds your new "gmail" pattern to `rev_info`, but
-+it won't work unless we compile it with `compile_grep_patterns()`.
-+
-+NOTE: If you are using `setup_revisions()` (for example, if you are passing a
-+`setup_revision_opt` instead of using `add_head_to_pending()`), you don't need
-+to call `compile_grep_patterns()` because `setup_revisions()` calls it for you.
-+
-+NOTE: We could add the same filter via the `append_grep_pattern()` helper if we
-+wanted to, but `append_header_grep_pattern()` adds the `enum grep_context` and
-+`enum grep_pat_token` for us.
-+
-+=== Changing the Order
-+
-+There are a few ways that we can change the order of the commits during a
-+revision walk. Firstly, we can use the `enum rev_sort_order` to choose from some
-+typical orderings.
-+
-+`topo_order` is the same as `git log --topo-order`: we avoid showing a parent
-+before all of its children have been shown, and we avoid mixing commits which
-+are in different lines of history. (`git help log`'s section on `--topo-order`
-+has a very nice diagram to illustrate this.)
-+
-+Let's see what happens when we run with `REV_SORT_BY_COMMIT_DATE` as opposed to
-+`REV_SORT_BY_AUTHOR_DATE`. Add the following:
-+
-+----
-+static void final_rev_info_setup(int argc, const char **argv,
-+		const char *prefix, struct rev_info *rev)
-+{
-+	...
-+
-+	rev->topo_order = 1;
-+	rev->sort_order = REV_SORT_BY_COMMIT_DATE;
-+
-+	...
-+}
-+----
-+
-+Let's output this into a file so we can easily diff it with the walk sorted by
-+author date.
-+
-+----
-+$ make
-+$ ./bin-wrappers/git walken > commit-date.txt
-+----
-+
-+Then, let's sort by author date and run it again.
-+
-+----
-+static void final_rev_info_setup(int argc, const char **argv,
-+		const char *prefix, struct rev_info *rev)
-+{
-+	...
-+
-+	rev->topo_order = 1;
-+	rev->sort_order = REV_SORT_BY_AUTHOR_DATE;
-+
-+	...
-+}
-+----
-+
-+----
-+$ make
-+$ ./bin-wrappers/git walken > author-date.txt
-+----
-+
-+Finally, compare the two. This is a little less helpful without object names or
-+dates, but hopefully we get the idea.
-+
-+----
-+$ diff -u commit-date.txt author-date.txt
-+----
-+
-+This display indicates that commits can be reordered after they're written, for
-+example with `git rebase`.
-+
-+Let's try one more reordering of commits. `rev_info` exposes a `reverse` flag.
-+Set that flag somewhere inside of `final_rev_info_setup()`:
-+
-+----
-+static void final_rev_info_setup(int argc, const char **argv, const char *prefix,
-+		struct rev_info *rev)
-+{
-+	...
-+
-+	rev->reverse = 1;
-+
-+	...
-+}
-+----
-+
-+Run your walk again and note the difference in order. (If you remove the grep
-+pattern, you should see the last commit this call gives you as your current
-+HEAD.)
-+
-+== Basic Object Walk
-+
-+So far we've been walking only commits. But Git has more types of objects than
-+that! Let's see if we can walk _all_ objects, and find out some information
-+about each one.
-+
-+We can base our work on an example. `git pack-objects` prepares all kinds of
-+objects for packing into a bitmap or packfile. The work we are interested in
-+resides in `builtins/pack-objects.c:get_object_list()`; examination of that
-+function shows that the all-object walk is being performed by
-+`traverse_commit_list()` or `traverse_commit_list_filtered()`. Those two
-+functions reside in `list-objects.c`; examining the source shows that, despite
-+the name, these functions traverse all kinds of objects. Let's have a look at
-+the arguments to `traverse_commit_list_filtered()`, which are a superset of the
-+arguments to the unfiltered version.
-+
-+- `struct list_objects_filter_options *filter_options`: This is a struct which
-+  stores a filter-spec as outlined in `Documentation/rev-list-options.txt`.
-+- `struct rev_info *revs`: This is the `rev_info` used for the walk.
-+- `show_commit_fn show_commit`: A callback which will be used to handle each
-+  individual commit object.
-+- `show_object_fn show_object`: A callback which will be used to handle each
-+  non-commit object (so each blob, tree, or tag).
-+- `void *show_data`: A context buffer which is passed in turn to `show_commit`
-+  and `show_object`.
-+- `struct oidset *omitted`: A linked-list of object IDs which the provided
-+  filter caused to be omitted.
-+
-+It looks like this `traverse_commit_list_filtered()` uses callbacks we provide
-+instead of needing us to call it repeatedly ourselves. Cool! Let's add the
-+callbacks first.
-+
-+For the sake of this tutorial, we'll simply keep track of how many of each kind
-+of object we find. At file scope in `builtin/walken.c` add the following
-+tracking variables:
-+
-+----
-+static int commit_count;
-+static int tag_count;
-+static int blob_count;
-+static int tree_count;
-+----
-+
-+Commits are handled by a different callback than other objects; let's do that
-+one first:
-+
-+----
-+static void walken_show_commit(struct commit *cmt, void *buf)
-+{
-+	commit_count++;
-+}
-+----
-+
-+The `cmt` argument is fairly self-explanatory. But it's worth mentioning that
-+the `buf` argument is actually the context buffer that we can provide to the
-+traversal calls - `show_data`, which we mentioned a moment ago.
-+
-+Since we have the `struct commit` object, we can look at all the same parts that
-+we looked at in our earlier commit-only walk. For the sake of this tutorial,
-+though, we'll just increment the commit counter and move on.
-+
-+The callback for non-commits is a little different, as we'll need to check
-+which kind of object we're dealing with:
-+
-+----
-+static void walken_show_object(struct object *obj, const char *str, void *buf)
-+{
-+	switch (obj->type) {
-+	case OBJ_TREE:
-+		tree_count++;
-+		break;
-+	case OBJ_BLOB:
-+		blob_count++;
-+		break;
-+	case OBJ_TAG:
-+		tag_count++;
-+		break;
-+	case OBJ_COMMIT:
-+		BUG("unexpected commit object in walken_show_object\n");
-+	default:
-+		BUG("unexpected object type %s in walken_show_object\n",
-+			type_name(obj->type));
-+	}
-+}
-+----
-+
-+Again, `obj` is fairly self-explanatory, and we can guess that `buf` is the same
-+context pointer that `walken_show_commit()` receives: the `show_data` argument
-+to `traverse_commit_list()` and `traverse_commit_list_filtered()`. Finally,
-+`str` contains the name of the object, which ends up being something like
-+`foo.txt` (blob), `bar/baz` (tree), or `v1.2.3` (tag).
-+
-+To help assure us that we aren't double-counting commits, we'll include some
-+complaining if a commit object is routed through our non-commit callback; we'll
-+also complain if we see an invalid object type. Since those two cases should be
-+unreachable, and would only change in the event of a semantic change to the Git
-+codebase, we complain by using `BUG()` - which is a signal to a developer that
-+the change they made caused unintended consequences, and the rest of the
-+codebase needs to be updated to understand that change. `BUG()` is not intended
-+to be seen by the public, so it is not localized.
-+
-+Our main object walk implementation is substantially different from our commit
-+walk implementation, so let's make a new function to perform the object walk. We
-+can perform setup which is applicable to all objects here, too, to keep separate
-+from setup which is applicable to commit-only walks.
-+
-+We'll start by enabling all types of objects in the `struct rev_info`.  We'll
-+also turn on `tree_blobs_in_commit_order`, which means that we will walk a
-+commit's tree and everything it points to immediately after we find each commit,
-+as opposed to waiting for the end and walking through all trees after the commit
-+history has been discovered. With the appropriate settings configured, we are
-+ready to call `prepare_revision_walk()`.
-+
-+----
-+static void walken_object_walk(struct rev_info *rev)
-+{
-+	rev->tree_objects = 1;
-+	rev->blob_objects = 1;
-+	rev->tag_objects = 1;
-+	rev->tree_blobs_in_commit_order = 1;
-+
-+	if (prepare_revision_walk(rev))
-+		die(_("revision walk setup failed"));
-+
-+	commit_count = 0;
-+	tag_count = 0;
-+	blob_count = 0;
-+	tree_count = 0;
-+----
-+
-+Let's start by calling just the unfiltered walk and reporting our counts.
-+Complete your implementation of `walken_object_walk()`:
-+
-+----
-+	traverse_commit_list(rev, walken_show_commit, walken_show_object, NULL);
-+
-+	printf("commits %d\nblobs %d\ntags %d\ntrees %d\n", commit_count,
-+		blob_count, tag_count, tree_count);
-+}
-+----
-+
-+NOTE: This output is intended to be machine-parsed. Therefore, we are not
-+sending it to `trace_printf()`, and we are not localizing it - we need scripts
-+to be able to count on the formatting to be exactly the way it is shown here.
-+If we were intending this output to be read by humans, we would need to localize
-+it with `_()`.
-+
-+Finally, we'll ask `cmd_walken()` to use the object walk instead. Discussing
-+command line options is out of scope for this tutorial, so we'll just hardcode
-+a branch we can change at compile time. Where you call `final_rev_info_setup()`
-+and `walken_commit_walk()`, instead branch like so:
-+
-+----
-+	if (1) {
-+		add_head_to_pending(&rev);
-+		walken_object_walk(&rev);
-+	} else {
-+		final_rev_info_setup(argc, argv, prefix, &rev);
-+		walken_commit_walk(&rev);
-+	}
-+----
-+
-+NOTE: For simplicity, we've avoided all the filters and sorts we applied in
-+`final_rev_info_setup()` and simply added `HEAD` to our pending queue. If you
-+want, you can certainly use the filters we added before by moving
-+`final_rev_info_setup()` out of the conditional and removing the call to
-+`add_head_to_pending()`.
-+
-+Now we can try to run our command! It should take noticeably longer than the
-+commit walk, but an examination of the output will give you an idea why. Your
-+output should look similar to this example, but with different counts:
-+
-+----
-+Object walk completed. Found 55733 commits, 100274 blobs, 0 tags, and 104210 trees.
-+----
-+
-+This makes sense. We have more trees than commits because the Git project has
-+lots of subdirectories which can change, plus at least one tree per commit. We
-+have no tags because we started on a commit (`HEAD`) and while tags can point to
-+commits, commits can't point to tags.
-+
-+NOTE: You will have different counts when you run this yourself! The number of
-+objects grows along with the Git project.
-+
-+=== Adding a Filter
-+
-+There are a handful of filters that we can apply to the object walk laid out in
-+`Documentation/rev-list-options.txt`. These filters are typically useful for
-+operations such as creating packfiles or performing a partial clone. They are
-+defined in `list-objects-filter-options.h`. For the purposes of this tutorial we
-+will use the "tree:1" filter, which causes the walk to omit all trees and blobs
-+which are not directly referenced by commits reachable from the commit in
-+`pending` when the walk begins. (`pending` is the list of objects which need to
-+be traversed during a walk; you can imagine a breadth-first tree traversal to
-+help understand. In our case, that means we omit trees and blobs not directly
-+referenced by `HEAD` or `HEAD`'s history, because we begin the walk with only
-+`HEAD` in the `pending` list.)
-+
-+First, we'll need to `#include "list-objects-filter-options.h`" and set up the
-+`struct list_objects_filter_options` at the top of the function.
-+
-+----
-+static void walken_object_walk(struct rev_info *rev)
-+{
-+	struct list_objects_filter_options filter_options = {};
-+
-+	...
-+----
-+
-+For now, we are not going to track the omitted objects, so we'll replace those
-+parameters with `NULL`. For the sake of simplicity, we'll add a simple
-+build-time branch to use our filter or not. Replace the line calling
-+`traverse_commit_list()` with the following, which will remind us which kind of
-+walk we've just performed:
-+
-+----
-+	if (0) {
-+		/* Unfiltered: */
-+		trace_printf(_("Unfiltered object walk.\n"));
-+		traverse_commit_list(rev, walken_show_commit,
-+				walken_show_object, NULL);
-+	} else {
-+		trace_printf(
-+			_("Filtered object walk with filterspec 'tree:1'.\n"));
-+		parse_list_objects_filter(&filter_options, "tree:1");
-+
-+		traverse_commit_list_filtered(&filter_options, rev,
-+			walken_show_commit, walken_show_object, NULL, NULL);
-+	}
-+----
-+
-+`struct list_objects_filter_options` is usually built directly from a command
-+line argument, so the module provides an easy way to build one from a string.
-+Even though we aren't taking user input right now, we can still build one with
-+a hardcoded string using `parse_list_objects_filter()`.
-+
-+With the filter spec "tree:1", we are expecting to see _only_ the root tree for
-+each commit; therefore, the tree object count should be less than or equal to
-+the number of commits. (For an example of why that's true: `git commit --revert`
-+points to the same tree object as its grandparent.)
-+
-+=== Counting Omitted Objects
-+
-+We also have the capability to enumerate all objects which were omitted by a
-+filter, like with `git log --filter=<spec> --filter-print-omitted`. Asking
-+`traverse_commit_list_filtered()` to populate the `omitted` list means that our
-+object walk does not perform any better than an unfiltered object walk; all
-+reachable objects are walked in order to populate the list.
-+
-+First, add the `struct oidset` and related items we will use to iterate it:
-+
-+----
-+static void walken_object_walk(
-+	...
-+
-+	struct oidset omitted;
-+	struct oidset_iter oit;
-+	struct object_id *oid = NULL;
-+	int omitted_count = 0;
-+	oidset_init(&omitted, 0);
-+
-+	...
-+----
-+
-+Modify the call to `traverse_commit_list_filtered()` to include your `omitted`
-+object:
-+
-+----
-+	...
-+
-+		traverse_commit_list_filtered(&filter_options, rev,
-+			walken_show_commit, walken_show_object, NULL, &omitted);
-+
-+	...
-+----
-+
-+Then, after your traversal, the `oidset` traversal is pretty straightforward.
-+Count all the objects within and modify the print statement:
-+
-+----
-+	/* Count the omitted objects. */
-+	oidset_iter_init(&omitted, &oit);
-+
-+	while ((oid = oidset_iter_next(&oit)))
-+		omitted_count++;
-+
-+	printf("commits %d\nblobs %d\ntags %d\ntrees%d\nomitted %d\n",
-+		commit_count, blob_count, tag_count, tree_count, omitted_count);
-+----
-+
-+By running your walk with and without the filter, you should find that the total
-+object count in each case is identical. You can also time each invocation of
-+the `walken` subcommand, with and without `omitted` being passed in, to confirm
-+to yourself the runtime impact of tracking all omitted objects.
-+
-+=== Changing the Order
-+
-+Finally, let's demonstrate that you can also reorder walks of all objects, not
-+just walks of commits. First, we'll make our handlers chattier - modify
-+`walken_show_commit()` and `walken_show_object()` to print the object as they
-+go:
-+
-+----
-+static void walken_show_commit(struct commit *cmt, void *buf)
-+{
-+	trace_printf("commit: %s\n", oid_to_hex(&cmt->object.oid));
-+	commit_count++;
-+}
-+
-+static void walken_show_object(struct object *obj, const char *str, void *buf)
-+{
-+	trace_printf("%s: %s\n", type_name(obj->type), oid_to_hex(&obj->oid));
-+
-+	...
-+}
-+----
-+
-+NOTE: Since we will be examining this output directly as humans, we'll use
-+`trace_printf()` here. Additionally, since this change introduces a significant
-+number of printed lines, using `trace_printf()` will allow us to easily silence
-+those lines without having to recompile.
-+
-+(Leave the counter increment logic in place.)
-+
-+With only that change, run again (but save yourself some scrollback):
-+
-+----
-+$ GIT_TRACE=1 ./bin-wrappers/git walken | head -n 10
-+----
-+
-+Take a look at the top commit with `git show` and the object ID you printed; it
-+should be the same as the output of `git show HEAD`.
-+
-+Next, let's change a setting on our `struct rev_info` within
-+`walken_object_walk()`. Find where you're changing the other settings on `rev`,
-+such as `rev->tree_objects` and `rev->tree_blobs_in_commit_order`, and add the
-+`reverse` setting at the bottom:
-+
-+----
-+	...
-+
-+	rev->tree_objects = 1;
-+	rev->blob_objects = 1;
-+	rev->tag_objects = 1;
-+	rev->tree_blobs_in_commit_order = 1;
-+	rev->reverse = 1;
-+
-+	...
-+----
-+
-+Now, run again, but this time, let's grab the last handful of objects instead
-+of the first handful:
-+
-+----
-+$ make
-+$ GIT_TRACE=1 ./bin-wrappers git walken | tail -n 10
-+----
-+
-+The last commit object given should have the same OID as the one we saw at the
-+top before, and running `git show <oid>` with that OID should give you again
-+the same results as `git show HEAD`. Furthermore, if you run and examine the
-+first ten lines again (with `head` instead of `tail` like we did before applying
-+the `reverse` setting), you should see that now the first commit printed is the
-+initial commit, `e83c5163`.
-+
-+== Wrapping Up
-+
-+Let's review. In this tutorial, we:
-+
-+- Built a commit walk from the ground up
-+- Enabled a grep filter for that commit walk
-+- Changed the sort order of that filtered commit walk
-+- Built an object walk (tags, commits, trees, and blobs) from the ground up
-+- Learned how to add a filter-spec to an object walk
-+- Changed the display order of the filtered object walk
--- 
-2.23.0.700.g56cf767bdb-goog
-
+Thanks.
