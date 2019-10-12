@@ -2,108 +2,310 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB64E1F4C0
-	for <e@80x24.org>; Sat, 12 Oct 2019 22:31:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 295D71F4C0
+	for <e@80x24.org>; Sat, 12 Oct 2019 22:57:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727492AbfJLWbE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Oct 2019 18:31:04 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:37709 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727109AbfJLWbE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Oct 2019 18:31:04 -0400
-Received: by mail-qt1-f196.google.com with SMTP id n17so65956qtr.4
-        for <git@vger.kernel.org>; Sat, 12 Oct 2019 15:31:03 -0700 (PDT)
+        id S1727605AbfJLW52 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Oct 2019 18:57:28 -0400
+Received: from mail-vk1-f194.google.com ([209.85.221.194]:35787 "EHLO
+        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727189AbfJLW52 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Oct 2019 18:57:28 -0400
+Received: by mail-vk1-f194.google.com with SMTP id d66so2865594vka.2
+        for <git@vger.kernel.org>; Sat, 12 Oct 2019 15:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+DcXg6P5YJswP3f8iF8ZrA8auirdQXhfS4l5a7MdF0Q=;
-        b=jOlirelfqPHoYjR8QlCKZYtgKI9crlPSJstXQhvoRB6/G3SoVB8KG2a3RsaUQVtHca
-         TlNQrDLyr46KbXvxYqQoXcmVx3XMJE1mvkmeUHshT8aZfw5jxa/k4RrX9D2ydQ8vGKL7
-         hqmbDWh9ZfLROXFfSN1JzIKG6JoShqoXr55DZbbf4ONtXpMWDVkKnp9BD4KJYOEFYK1j
-         eVkLdE86k1y+k92PsILsfjk5p9cwt2uBYNRY3dXi03sfQyJN8pmDxuo61lWhvFWDLSL7
-         yWlZwxnX7krVmxHOlAnM/RtyuviKo5gG/HixKgTiaa3QTJ8dVqAGdq267UiPTrgtlKSm
-         V9fw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Zy24Zd7t0hUH43WwamGwvqSHtbtGTtOVEiLmN5RUp6U=;
+        b=H9O9dRmqGwDrofJmScL5KL0guGOkNPCketMC9at7PiP5QdaQEXvZPKo5/gmfYDXNLg
+         2vrhNrstwCiK8XK6FmZlhsY3M1pB66licpqBrBGIOEeHNW+m/KE/HnGURbBC3qBfUByz
+         24zUDKhl4yunKDHQ1Q+tGDt3cxcwf2j44sQSn+Zuprb3chkMVAVIDgVYbeVyNsg+heT9
+         7ASJ1pOuvXxze9Kj3n+5lJzEqKv5d5LggJueLb8m/+fXngZP2SK9//0VRfg2oI9qCEL/
+         +j58URAGSQbXLhFY82TVfBrxHzzHhBu6P4NHVDwqRFncx8l3IkAo8ULilphnULKFT4If
+         5lOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+DcXg6P5YJswP3f8iF8ZrA8auirdQXhfS4l5a7MdF0Q=;
-        b=egeQ+vYeDouy1bsK91Rmgm5BYkD5y8mWnuF469o25Y+XpOLCa0zzjChdgzOMcZLwES
-         fZjQ2RbSUVVw/AgkvfVl7RbSKw12CB6f8IWSYOQ0Ej4UR1y1B6mRTxbz6xNRzXi4DTc7
-         f0oPgRUB7T2VTiPaFf+vMI7shYPSmraPN14pzxv5FFXazdH7ybTLKNKVdwIptbrvttkc
-         0EeUgu1GAgY1xGIcXV01+tAZqJilt8BWiMwDD2lPRePJoJYqkNnsXBz2bt1aHmb5wWid
-         SwHGmVbOFDtRC03w/pev5ytLcw4wkws1zHkY6ZCQyoXo6NYzdGG91HoWXVf6wwpqz/fg
-         UEfQ==
-X-Gm-Message-State: APjAAAUUXaQ4u8zVq/6DvJLrGeyyuOkkDWk/ifRtNBCLaQVa7Ms44fSQ
-        GbIwDhHmO/Zgx3Q0MJGLpmO/Cdge
-X-Google-Smtp-Source: APXvYqxVwdiev8WL+dCjKF1RI9cD6S3XedvaZSEaZZaxNfY7TqfTTbwxUWbre7YCQyYayEpBzMT0og==
-X-Received: by 2002:ac8:67c1:: with SMTP id r1mr21911943qtp.83.1570919463042;
-        Sat, 12 Oct 2019 15:31:03 -0700 (PDT)
-Received: from food (pool-108-5-136-214.nwrknj.fios.verizon.net. [108.5.136.214])
-        by smtp.gmail.com with ESMTPSA id g192sm6498011qke.52.2019.10.12.15.31.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Oct 2019 15:31:02 -0700 (PDT)
-Date:   Sat, 12 Oct 2019 18:31:02 -0400
-From:   Teddy Reed <teddy.reed@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>
-Subject: Cannot shallow clone using GitHub tag refs after commit 34066f06
-Message-Id: <20191012183102.337fe74d728a4942a7de5ab7@gmail.com>
-X-Mailer: Sylpheed 3.5.1 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Zy24Zd7t0hUH43WwamGwvqSHtbtGTtOVEiLmN5RUp6U=;
+        b=dzGgA/MzSD5Qhsuw62/6MvOIXSKXGDgbnJgQPWJSu49tQJXznCg9KCgIpzcHWvbU8T
+         XzOQF/gilewAudgaAS6qZ3GPXDhOtBI7SYqsXsrShkmnkq9yBpYFr3MvXUn9GtlZAUGe
+         8+NqiIi/8/p9ZD18c5Mfs7644gjPNerFHGW60/dWWAC0SaGukpvQlpRhTNzAsRjpeSEI
+         3eCdSjkNUB66f04ojHRgBl+5spDWOp/e0CcdyGSX6j/QSixU8v2IoFdJ9G0kPr3LqQXd
+         Yk1tixcM0dkVxPuE1miXKSIdmAW+uCV8y97yhxu72LKmlY282UZXVXHyetYJxu3w+A8a
+         o8hA==
+X-Gm-Message-State: APjAAAUHiD0ot/JFiNGK9f+NgNRyACQeRKdXoEcMIdW886TydjZNHK69
+        POiKdhn4cLUhNlturk+IBfB1e+m/rhl/4d8xxRI=
+X-Google-Smtp-Source: APXvYqyb9o0dBgCBsro1k3BKswKQwLbwYkqnJhMJq/AT93xpgO9TSU+t5oZRLGmgREjQb9SAm/szyMkTwnyfa7xUpjE=
+X-Received: by 2002:a1f:2013:: with SMTP id g19mr12522129vkg.88.1570921045757;
+ Sat, 12 Oct 2019 15:57:25 -0700 (PDT)
+MIME-Version: 1.0
+References: <pull.316.v2.git.gitgitgadget@gmail.com> <pull.316.v3.git.gitgitgadget@gmail.com>
+ <a6f17e9a77d86f8ec856ea08617d1c1af2853d54.1570478905.git.gitgitgadget@gmail.com>
+In-Reply-To: <a6f17e9a77d86f8ec856ea08617d1c1af2853d54.1570478905.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 12 Oct 2019 15:57:14 -0700
+Message-ID: <CABPp-BF+JWYZfDqp2Tn4AEKVp4b0YMA=Mbz4Nz62D-gGgiduYQ@mail.gmail.com>
+Subject: Re: [PATCH v3 15/17] sparse-checkout: update working directory in-process
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello, I am trying to debug an issue where a shallow clone (--depth=1) fails when the reference is the tip of a tag on a GitHub repository.
+On Mon, Oct 7, 2019 at 1:08 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The sparse-checkout builtin used 'git read-tree -mu HEAD' to update the
+> skip-worktree bits in the index and to update the working directory.
+> This extra process is overly complex, and prone to failure. It also
+> requires that we write our changes to the sparse-checkout file before
+> trying to update the index.
+>
+> Remove this extra process call by creating a direct call to
+> unpack_trees() in the same way 'git read-tree -mu HEAD' does. In
+> adition, provide an in-memory list of patterns so we can avoid
 
-The git client works on versions below 2.22.0-rc0 up until commit 34066f06, "fetch: do not consider peeled tags as advertised tips". That commit peels refs in the form of "refs/tags/v2.2.2^{}". My question is if the intention was to peel these refs and break this functionality? I do not know enough about git to understand if the behavior before commit 34066f06 was unintended.
+s/adition/addition/
 
-Here is a method to reproduce the previous behavior:
+> reading from the sparse-checkout file. This allows us to test a
+> proposed change to the file before writing to it.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  builtin/read-tree.c                |  2 +-
+>  builtin/sparse-checkout.c          | 85 +++++++++++++++++++++++++-----
+>  t/t1091-sparse-checkout-builtin.sh | 17 ++++++
+>  unpack-trees.c                     |  5 +-
+>  unpack-trees.h                     |  3 +-
+>  5 files changed, 95 insertions(+), 17 deletions(-)
+>
+> diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+> index 69963d83dc..d7eeaa26ec 100644
+> --- a/builtin/read-tree.c
+> +++ b/builtin/read-tree.c
+> @@ -186,7 +186,7 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
+>
+>         if (opts.reset || opts.merge || opts.prefix) {
+>                 if (read_cache_unmerged() && (opts.prefix || opts.merge))
+> -                       die("You need to resolve your current index first");
+> +                       die(_("You need to resolve your current index first"));
 
-$ mkdir test-repo
-$ cd test-repo
-$ git init
-$ git submodule add https://github.com/gflags/gflags gflags
-$ (cd gflags; git checkout v2.2.2)
-$ git add .
-$ git commit -m 'Add gflags submodule'
+A good change, but isn't this unrelated to the current commit?
 
-Then with git client version 2.21.0:
+>                 stage = opts.merge = 1;
+>         }
+>         resolve_undo_clear();
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index 25786f8bb0..542d57fac6 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -7,6 +7,11 @@
+>  #include "run-command.h"
+>  #include "strbuf.h"
+>  #include "string-list.h"
+> +#include "cache.h"
+> +#include "cache-tree.h"
+> +#include "lockfile.h"
+> +#include "resolve-undo.h"
+> +#include "unpack-trees.h"
+>
+>  static char const * const builtin_sparse_checkout_usage[] = {
+>         N_("git sparse-checkout [init|list|set|disable] <options>"),
+> @@ -60,18 +65,53 @@ static int sparse_checkout_list(int argc, const char **argv)
+>         return 0;
+>  }
+>
+> -static int update_working_directory(void)
+> +static int update_working_directory(struct pattern_list *pl)
+>  {
+> -       struct argv_array argv = ARGV_ARRAY_INIT;
+>         int result = 0;
+> -       argv_array_pushl(&argv, "read-tree", "-m", "-u", "HEAD", NULL);
+> +       struct unpack_trees_options o;
+> +       struct lock_file lock_file = LOCK_INIT;
+> +       struct object_id oid;
+> +       struct tree *tree;
+> +       struct tree_desc t;
+> +       struct repository *r = the_repository;
+>
+> -       if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
+> -               error(_("failed to update index with new sparse-checkout paths"));
+> -               result = 1;
+> +       if (repo_read_index_unmerged(r))
+> +               die(_("You need to resolve your current index first"));
 
-$ git clone test-repo test-repo2
-$ cd test-repo2
-$ git submodule update --init --depth=1
+Well, at least that ensures that the user gets a good error message.
+I'm not sure I like the error, because e.g. if a user hits a conflict
+while merging in a sparse checkout and wants to return to a non-sparse
+checkout because they think other files might help them resolve the
+conflicts, then they ought to be able to do it.  Basically, unless
+they are trying use sparsification to remove entries from the working
+directory that differ from the index (and conflicted entries always
+differ), then it seems like we should be able to support
+sparsification despite the presence of conflicts.
 
-Submodule 'gflags' (https://github.com/gflags/gflags) registered for path 'gflags'
-Cloning into '/tmp/test-repo2/gflags'...
-remote: Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
-remote: Enumerating objects: 17, done.
-remote: Counting objects: 100% (17/17), done.
-remote: Compressing objects: 100% (9/9), done.
-remote: Total 9 (delta 8), reused 1 (delta 0), pack-reused 0
-Unpacking objects: 100% (9/9), done.
-From https://github.com/gflags/gflags
- * branch            e171aa2d15ed9eb17054558e0b3a6a413bb01067 -> FETCH_HEAD
-Submodule path 'gflags': checked out 'e171aa2d15ed9eb17054558e0b3a6a413bb01067'
+Your series is long enough, doesn't make this problem any worse (and
+appears to make it slightly better), and so you really don't need to
+tackle that problem in this series. I'm just stating a gripe with
+sparse checkouts again.  :-)
 
-And attempting with newer versions of the git client:
+[...]
 
-Cloning into '/tmp/test-repo2/gflags'...
-error: Server does not allow request for unadvertised object e171aa2d15ed9eb17054558e0b3a6a413bb01067
-Fetched in submodule path 'gflags', but it did not contain e171aa2d15ed9eb17054558e0b3a6a413bb01067. Direct fetching of that commit failed.
+>  static void insert_recursive_pattern(struct pattern_list *pl, struct strbuf *path)
+>  {
+> -       struct pattern_entry *e = xmalloc(sizeof(struct pattern_entry));
+> +       struct pattern_entry *e = xmalloc(sizeof(*e));
 
-Thanks for the help!
+This is a good fix, but shouldn't it be squashed into the
+"sparse-checkout: init and set in cone mode" commit from earlier in
+your series?
 
--- 
-Teddy Reed <teddy.reed@gmail.com>
+> @@ -262,12 +308,21 @@ static int write_patterns_and_update(struct pattern_list *pl)
+>  {
+>         char *sparse_filename;
+>         FILE *fp;
+> -
+> +       int result;
+> +
+
+Trailing whitespace that should be cleaned up.
+
+>         if (!core_apply_sparse_checkout) {
+>                 warning(_("core.sparseCheckout is disabled, so changes to the sparse-checkout file will have no effect"));
+>                 warning(_("run 'git sparse-checkout init' to enable the sparse-checkout feature"));
+>         }
+>
+> +       result = update_working_directory(pl);
+> +
+> +       if (result) {
+> +               clear_pattern_list(pl);
+> +               update_working_directory(NULL);
+> +               return result;
+> +       }
+> +
+>         sparse_filename = get_sparse_checkout_filename();
+>         fp = fopen(sparse_filename, "w");
+>
+> @@ -277,9 +332,11 @@ static int write_patterns_and_update(struct pattern_list *pl)
+>                 write_patterns_to_file(fp, pl);
+>
+>         fclose(fp);
+> +
+>         free(sparse_filename);
+> +       clear_pattern_list(pl);
+>
+> -       return update_working_directory();
+> +       return 0;
+>  }
+>
+>  static void strbuf_to_cone_pattern(struct strbuf *line, struct pattern_list *pl)
+> @@ -330,6 +387,7 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+>                 struct strbuf line = STRBUF_INIT;
+>                 hashmap_init(&pl.recursive_hashmap, pl_hashmap_cmp, NULL, 0);
+>                 hashmap_init(&pl.parent_hashmap, pl_hashmap_cmp, NULL, 0);
+> +               pl.use_cone_patterns = 1;
+>
+>                 if (set_opts.use_stdin) {
+>                         while (!strbuf_getline(&line, stdin))
+> @@ -375,7 +433,8 @@ static int sparse_checkout_disable(int argc, const char **argv)
+>         fprintf(fp, "/*\n");
+>         fclose(fp);
+>
+> -       if (update_working_directory())
+> +       core_apply_sparse_checkout = 1;
+> +       if (update_working_directory(NULL))
+>                 die(_("error while refreshing working directory"));
+>
+>         unlink(sparse_filename);
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> index ee4d361787..82eb5fb2f8 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -199,11 +199,13 @@ test_expect_success 'cone mode: init and set' '
+>                 a
+>                 deep
+>         EOF
+> +       test_cmp dir expect &&
+>         ls repo/deep >dir  &&
+>         cat >expect <<-EOF &&
+>                 a
+>                 deeper1
+>         EOF
+> +       test_cmp dir expect &&
+>         ls repo/deep/deeper1 >dir  &&
+>         cat >expect <<-EOF &&
+>                 a
+> @@ -245,4 +247,19 @@ test_expect_success 'cone mode: set with nested folders' '
+>         test_cmp repo/.git/info/sparse-checkout expect
+>  '
+>
+> +test_expect_success 'revert to old sparse-checkout on bad update' '
+> +       echo update >repo/deep/deeper2/a &&
+> +       cp repo/.git/info/sparse-checkout expect &&
+> +       test_must_fail git -C repo sparse-checkout set deep/deeper1 2>err &&
+> +       test_i18ngrep "Cannot update sparse checkout" err &&
+> +       test_cmp repo/.git/info/sparse-checkout expect &&
+> +       ls repo/deep >dir &&
+> +       cat >expect <<-EOF &&
+> +               a
+> +               deeper1
+> +               deeper2
+> +       EOF
+> +       test_cmp dir expect
+> +'
+> +
+>  test_done
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index edf0fb4673..f0fee5adf2 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -1508,7 +1508,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+>         memset(&pl, 0, sizeof(pl));
+>         if (!core_apply_sparse_checkout || !o->update)
+>                 o->skip_sparse_checkout = 1;
+> -       if (!o->skip_sparse_checkout) {
+> +       if (!o->skip_sparse_checkout && !o->pl) {
+>                 char *sparse = git_pathdup("info/sparse-checkout");
+>                 pl.use_cone_patterns = core_sparse_checkout_cone;
+>                 if (add_patterns_from_file_to_list(sparse, "", 0, &pl, NULL) < 0)
+> @@ -1681,7 +1681,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+>
+>  done:
+>         trace_performance_leave("unpack_trees");
+> -       clear_pattern_list(&pl);
+> +       if (!o->keep_pattern_list)
+> +               clear_pattern_list(&pl);
+>         return ret;
+>
+>  return_failed:
+> diff --git a/unpack-trees.h b/unpack-trees.h
+> index f2eee0c7c5..ca94a421a5 100644
+> --- a/unpack-trees.h
+> +++ b/unpack-trees.h
+> @@ -59,7 +59,8 @@ struct unpack_trees_options {
+>                      quiet,
+>                      exiting_early,
+>                      show_all_errors,
+> -                    dry_run;
+> +                    dry_run,
+> +                    keep_pattern_list;
+>         const char *prefix;
+>         int cache_bottom;
+>         struct dir_struct *dir;
+> --
+
+The rest looks reasonable.
