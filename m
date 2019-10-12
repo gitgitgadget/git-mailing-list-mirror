@@ -8,297 +8,155 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0C821F4C0
-	for <e@80x24.org>; Sat, 12 Oct 2019 20:37:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11E641F4C0
+	for <e@80x24.org>; Sat, 12 Oct 2019 21:24:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729717AbfJLUhs (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Oct 2019 16:37:48 -0400
-Received: from mout.gmx.net ([212.227.15.18]:33695 "EHLO mout.gmx.net"
+        id S1729653AbfJLVYa (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Oct 2019 17:24:30 -0400
+Received: from mout.gmx.net ([212.227.17.22]:45305 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729463AbfJLUhr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Oct 2019 16:37:47 -0400
+        id S1729169AbfJLVYa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Oct 2019 17:24:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570912662;
-        bh=RM9fKlP6NcDlLfKyvk0jbJ9PdcWzYJ4tZNO2cAm9AtQ=;
+        s=badeba3b8450; t=1570915468;
+        bh=/8K28y+SFtAnvOjf2ru8ayHx6FR9bH/+j2lLPZmYdi8=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=X8SotETDSe4zn6ZyhidhxVntOXfBlb2FpdB8Rax8BzD+96zTvgJVDwa6iapT5EqlQ
-         qqDaZKeTayLzkCzgVw9fQ+Pe847D9eTtPl7aBY5bRZRK9VuIGzfRTrlCbbHh6ETK/9
-         Q+p589ctf/WbxgKfhcUb3xoms2kj7Sf1UZgmLTxk=
+        b=FEBkMoWdM0cYq2UE6Aw0fF9YSPF7w4UY02ACoLbzSUF3CcqLtHQpHM5ZMBhV/D2KR
+         rONXNqQotDfIV4PqEM4DJCH+0nz/bKZZydIIXaM0TyLVxO+9vCGkwQwknC/CRilZfi
+         nQaupq2sbS8l9CgygqG7j9RcAuhETzGzTsF3fvr0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MWAOW-1iYFTQ02d0-00XaC8; Sat, 12
- Oct 2019 22:37:42 +0200
-Date:   Sat, 12 Oct 2019 22:37:26 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKbkC-1ieEbo0edw-00KyBK; Sat, 12
+ Oct 2019 23:24:28 +0200
+Date:   Sat, 12 Oct 2019 23:24:12 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 2/2] merge-recursive: fix merging a subdirectory into
- the root directory
-In-Reply-To: <37aee862e14b1352eb08485f15ea06bab33679df.1570826543.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910122152210.3272@tvgsbejvaqbjf.bet>
-References: <pull.390.git.gitgitgadget@gmail.com> <37aee862e14b1352eb08485f15ea06bab33679df.1570826543.git.gitgitgadget@gmail.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH v4 1/1] Make gitdir work with worktrees, respect
+ core.hooksPath, etc
+In-Reply-To: <20191011222611.le5lyf6mr5lmvbbd@yadavpratyush.com>
+Message-ID: <nycvar.QRO.7.76.6.1910122321211.3272@tvgsbejvaqbjf.bet>
+References: <pull.361.v3.git.gitgitgadget@gmail.com> <pull.361.v4.git.gitgitgadget@gmail.com> <2f55d6fb2a158c5b26b93ddb9c144ce1af5d9c32.1570534405.git.gitgitgadget@gmail.com> <20191011222611.le5lyf6mr5lmvbbd@yadavpratyush.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ofLgLm8vKi8g4T2tK0NWs+OV3Idm7CsWvezZBtHCDS6AE0kwC3X
- UjFUlSWwtUAYEUHzhc8NuBgHghChDLuG36oJ4U8p5s+U3l+d3sNzmSjUxSq0aNbEeJtFBU0
- gFhS6ZzNe6Fi7HwlOLFjp17VFv61RGlb4KI8w0moNpW8a+zhULLKZfYVKxltR9W30ihwuvu
- itDq2nC30BnB5+kdlRdyQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SGQJEykr2u4=:y9vi7jFSoH/NVHTMdDFNP0
- kGlMLAT++fcft2MycSJlU9rGeBrwQiUlulzUv43CioPjy2gOZMG30wAbxLPPQvvk5Vvh04pTz
- eadVGRJBsPSlD7UhhmnwZekBSh8CEV0NsiW9V52sKEQAThhsuBluiEwChiLbMdJcJH8ZCLcYD
- VSqeImDJBd2nw6jSAwH2i7EAACRUQH1jJ6tPZnnaiCLqE3hwVVY3XGpdMTCdHe/c/TegrfLFn
- e5LYCLa12jI4Sz48344dOCv8YvYA9obb7mfM+ZP4Lr96kS/BoU9xSJLLj1N5G+LSFXyA4oV43
- 2vFXgkCnDUAqbJmvlze3ChQyA3co6HaDJdpbm2rosaowLtCHXJ9ciedilyhe2oWz/sYeHx+4F
- KIDx5hERVxrvu9qZHs4ZrAMExtQgHG/RbzGfel4C0RRly8lz7Av/XDmIzxn22mC6sw6ONsJkr
- qHr299dSGkGaMuzhIFqYSCbpUYfU0xCgzLWkMuli7bLXDXR/R7y8vTOfeRMYpgsjsDs4tIvr3
- dXHmU3woOoPcDs/ugEbEU3OXFzclC+kqSxOu5xG3T95nRlUu2BVkqxIZgo/ZL1OIb8QLjOOe4
- oMkoeYtEqr3+3zb7ad00psEWby6TswMizw3BeFLp9yNoDkpRSLNlOqrTp3CKUfIqhW/2TzFEr
- 7jPhbjihARZ+LHaNPP+0LHptdyQjVylEySPnA403+hlokNHWm9FX/H56mYWAKAh3Vh9RR8f+n
- eQWohQ4OERVOzvyL2sfGoT3XZxx3Vrqc5bXzqLSMu9AWPWywxrr3Ms4QbJt6NHYJou0DhwO+z
- xamZA6RU2UTPDX2BrGN6uDNfNHa/5LXvUgYgeR+ObuK5cmSvH/5uAf9HeOy29Of1sTSqZ2KL9
- BAqDRyMPVzaPhMQepMZrJive8rrody1turOwg5/sO5gkV/i5d46Isj6mgU1S6Z4G1IHRith62
- RH+sqLmKzn7EGH+KVnzoEjXqOgIKtimlrHPseSgwbIE4c8iv1yOyKCKorP2CU7QsBqo3PxuNs
- Ijjx51Yp+NDy1yFje7Zij7omMgxKny4hha9R0wafL5rRx64piyNnte7lfmUVqWlEn0nV84X3B
- u1CXIhSruY9Qx9Y6wc+y3hZL4OmtVxxbugW/2bmbyXH9IQadgvfzIbPyA41CnhJHxT9ysvXKd
- 4fjwjKgHHvg2P1itOdfYoYrYUIhQ0GywjZV2n7aK9XJOUNXTXMe3IOptWKgfAp7//v3bx3WoD
- QEunG7Vh+SC69EiENkip0HEtfEqI+qpt+lIMqLrZFRiK/Goibce21p98j9k4=
+X-Provags-ID: V03:K1:G3EKXLJL4yRXz4QWtI945phwfs0LxLfNZQFe+5WIzXN2EMjpaKe
+ RRJi4OsKUdQAkKpHcgZLlm1qGFY1oZgUdnjpkHE3nExMvtfJ5P8Uz4AfVRJ0vCU1Fnjo4OW
+ odeIqYm1nMhybVqm6LNPMP3efl6p1ICPaz0zKRgej9i53T8d3u86MRSfDvn0eUaJ0vXugDf
+ 1mx/4gtCUUsH0VP/9uctw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:A1ZhstK+xkA=:gnyJfQoOfRGuvcm8D3TMxv
+ KeTdKoRimJO+pvPCl4nhqISvibWM5ciZ4h4FnGwiEuDTG8uN2MBLIrE8iUcY1UmOkh3PfcDoI
+ ezvUZ8yy0BCMb3IvTK4BL4ie4Btltk/192AzMvCIAcznRAbPckVrbyMMLd9e0c+ey0ExQ+Jgw
+ K+karAMD4+6al45PuKWuxAUW9gvNHOdKux4u0FncYcJzBEO4AEJ5QgXBm5GW2NQOlB3R1sj1E
+ eP7haKgCn5ARdxvyRVZVnyEjMf5CNgCGqw1UXqLPUJwh6oHrXUS3PGOg4L/KP7tIJhTB9Gp3Z
+ 1BFuVLI+ory4ncjtew3w9uOPLKAhmK0OeCSTN0YO33NHLV/ZTV534IYN+DrZLJ8xd8WAu2w5q
+ i5SlTVPzoN0M7sxmr1Azl5TJy7JCrl9MkLRiHJxpewT2FT3Sb0zp9uvKnTmaMIlJTr1Vej1sF
+ 1hxdczc4WOiyopNNmHlBD/g35zOusrALdShmdFWwA6+wDZBwGLytB+eMhfXufA/cpv27Tjp6G
+ Jkg1y6r3vibMxcZL4nklV5WVNwHAJQMgw1w8uHFM8WVvwPwd/wzoMMIyL5vFe0FSpz+TjuEie
+ ur+gMoEfna50yQktc8Xu59F0bOm7gIdtKPR8japFOMa5djKrsqXjRT5JUEkKKlAEsV1rnbGv4
+ KVpsuCyFc0fnfawAcQZpVzcQu5W426fXANie4d36Iq6NrPqbsWnzwFYOvOvGWAPw/T++FG8wZ
+ fw3hn0zOwKdRHbxuBrEFS5Yo+0gHM3pkr+Av5NQfwGmctT4zTFY9GHMB05a2loJtIhaNQ6UTi
+ 8zeUuuZov18M679yEJeCMAHEAIyC2yNKvnfa1aQUTq6/biVG3fWWSIGbNS33seGov7cwxICO2
+ bSpnB40OKCw29pZOL7OeuTEg83yHKSIXna9Og9rnDfga9dCioDGjREhGFI+afUSmtNGI3z4vS
+ IGYVay57ljp1y7ddDk5uzXPt9s2xI7AYzpwy8MeLVxZmumqicb35dG/Qt5cBD+C9vv2FivC7a
+ UG5Us9/cTFKikJRXEVe6V5vqPxGX3aIhwaupStC69yzxzyhNzMvG1uukBIuZdeHtOHgOWIQmG
+ AVvpf137uNzjlxwViFZErJwhgFB+Wuc5tsCQwK6T8pXAO1Ewp++XMgSE/Vo9p49M2P4qQ1/74
+ JXPw/JOC/obsmzFkR2UDpoF3gzjYSNa6F7bhqM6iPahCm4KWLg+JIxDZdH5pm5BAVGY7VsJzL
+ cc0yluiMmpMtIFCooC4d7hQFa1K2HT+vA8p0WdNymLm4TnFNPgbC/fRoIaz4=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi Pratyush,
 
-On Fri, 11 Oct 2019, Elijah Newren via GitGitGadget wrote:
+On Sat, 12 Oct 2019, Pratyush Yadav wrote:
 
-> From: Elijah Newren <newren@gmail.com>
+> On 08/10/19 04:33AM, Johannes Schindelin via GitGitGadget wrote:
 >
-> We allow renaming all entries in e.g. a directory named z/ into a
-> directory named y/ to be detected as a z/ -> y/ rename, so that if the
-> other side of history adds any files to the directory z/ in the mean
-> time, we can provide the hint that they should be moved to y/.
+> > @@ -1453,10 +1501,16 @@ proc rescan {after {honor_trustmtime 1}} {
+> >  	global HEAD PARENT MERGE_HEAD commit_type
+> >  	global ui_index ui_workdir ui_comm
+> >  	global rescan_active file_states
+> > -	global repo_config
+> > +	global repo_config _gitdir_cache
+> >
+> >  	if {$rescan_active > 0 || ![lock_index read]} return
+> >
+> > +	# Only re-prime gitdir cache on a full rescan
+> > +	if {$after ne "ui_ready"} {
 >
-> There is no reason to not allow 'y/' to be the root directory, but the
-> code did not handle that case correctly.  Add a testcase and the
-> necessary special checks to support this case.
+> What do you mean by a "full rescan"? I assume you use it as the
+> differentiator between `ui_do_rescan` (called when you hit F5 or choose
+> rescan from the menu) and `do_rescan` (called when you revert a line or
+> hunk), and a "full rescan" refers to `ui_do_rescan`.
 >
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-
-This makes sense.
-
-> ---
->  merge-recursive.c                   | 29 +++++++++++++++
->  t/t6043-merge-rename-directories.sh | 56 +++++++++++++++++++++++++++++
-
-It is good to have a test case verifying this!
-
-FWIW I frequently run into those same issues because I have to use --
-quite often! -- `contrib/fast-import/import-tars.perl` in the Git for
-Windows project (in the MSYS2 part thereof, to be precise), and the
-`pax_global_header` and I will probably never become friends, so I often
-have to move files into the top-level directory...
-
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index f80e48f623..7bd4a7cf10 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -1931,6 +1931,16 @@ static char *apply_dir_rename(struct dir_rename_e=
-ntry *entry,
->  		return NULL;
+> Well in that case, this check is incorrect. `do_rescan` passes only
+> "ui_ready" and `ui_do_rescan` passes "force_first_diff ui_ready".
 >
->  	oldlen =3D strlen(entry->dir);
-> +	if (entry->new_dir.len =3D=3D 0)
-> +		/*
-> +		 * If someone renamed/merged a subdirectory into the root
-> +		 * directory (e.g. 'some/subdir' -> ''), then we want to
-> +		 * avoid returning
-> +		 *     '' + '/filename'
-> +		 * as the rename; we need to make old_path + oldlen advance
-> +		 * past the '/' character.
-> +		 */
-> +		oldlen++;
-
-This makes sense to me.
-
->  	newlen =3D entry->new_dir.len + (strlen(old_path) - oldlen) + 1;
->  	strbuf_grow(&new_path, newlen);
->  	strbuf_addbuf(&new_path, &entry->new_dir);
-> @@ -1980,6 +1990,25 @@ static void get_renamed_dir_portion(const char *o=
-ld_path, const char *new_path,
->  	    *end_of_old =3D=3D *end_of_new)
->  		return; /* We haven't modified *old_dir or *new_dir yet. */
+> But either way, I'm not a big fan of this. This check makes assumptions
+> about the behaviour of its callers based on what they pass to $after.
+> The way I see it, $after should be a black box to `rescan`, and it
+> should make absolutely no assumptions about it.
 >
-> +	/*
-> +	 * If end_of_new got back to the beginning of its string, and
-> +	 * end_of_old got back to the beginning of some subdirectory, then
-> +	 * we have a rename/merge of a subdirectory into the root, which
-> +	 * needs slightly special handling.
-> +	 *
-> +	 * Note: There is no need to consider the opposite case, with a
-> +	 * rename/merge of the root directory into some subdirectory.
-> +	 * Our rule elsewhere that a directory which still exists is not
-> +	 * considered to have been renamed means the root directory can
-> +	 * never be renamed (because the root directory always exists).
-> +	 */
-> +	if (end_of_new =3D=3D new_path &&
-> +	    end_of_old !=3D old_path && end_of_old[-1] =3D=3D '/') {
-> +		*old_dir =3D xstrndup(old_path, end_of_old-1 - old_path);
-> +		*new_dir =3D xstrndup(new_path, end_of_new - new_path);
-
-However, here we write something convoluted that essentially amounts to
-`xstrdup("")`. I would rather have that simple call than the convoluted
-one that would puzzle me every time I have to look at this part of the
-code.
-
-While at it, would you mind either surrounding the `-` and the `1` by
-spaces, or even write `--end_of_old - old_path`?
-
-> +		return;
-> +	}
-> +
->  	/*
->  	 * We've found the first non-matching character in the directory
->  	 * paths.  That means the current characters we were looking at
-> diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-=
-directories.sh
-> index c966147d5d..b920bb0850 100755
-> --- a/t/t6043-merge-rename-directories.sh
-> +++ b/t/t6043-merge-rename-directories.sh
-> @@ -4051,6 +4051,62 @@ test_expect_success '12c-check: Moving one direct=
-ory hierarchy into another w/ c
->  	)
->  '
+> Doing it this way is really brittle, and would break as soon as someone
+> changes the behaviour of `ui_do_rescan`. If someone in the future passes
+> a different value in $after, this would stop working as intended and
+> would not refresh the cached list on a rescan.
 >
-> +# Testcase 12d, Rename/merge of subdirectory into the root
-> +#   Commit O: a/b/{foo.c}
-> +#   Commit A: foo.c
-> +#   Commit B: a/b/{foo.c,bar.c}
-> +#   Expected: a/b/{foo.c,bar.c}
-> +
-> +test_expect_success '12d-setup: Rename (merge) of subdirectory into the=
- root' '
-> +	test_create_repo 12d &&
-> +	(
-> +		cd 12d &&
-> +
-> +		mkdir -p a/b/subdir &&
-> +		test_commit a/b/subdir/foo.c &&
+> So, I think a better place for this if statement would be in
+> `ui_do_rescan`. This would mean adding a new function that does this.
+> But if we unset _gitdir_cache in prime_gitdir_cache (I see no reason not
+> to), we can get away with just something like:
+>
+>   proc ui_do_rescan {} {
+>   	rescan {prime_gitdir_cache; ui_ready}
+>   }
+>
+> Though since `prime_gitdir_cache` does not really depend on the rescan
+> being finished, something like this would also work fine:
+>
+>   proc ui_do_rescan {} {
+>   	rescan ui_ready
+>   	prime_gitdir_cache
+>   }
 
-Why `.c`? That's a little distracting.
+That was my first attempt. However, there is a very important piece of
+code that is even still quoted above: that `if {$rescan_active > 0 ||
+![lock_index read]} return` part.
 
-> +
-> +		git branch O &&
+I do _not_ want to interfere with an actively-going-on rescan. If there
+is an active one, I don't want to re-prime the `_gitdir` cache.
 
-Might be simpler just to use `master` subsequently and not "waste" a new
-ref on that.
+That was the reason why I put the additional code into `rescan` rather
+than into `ui_do_rescan()`.
 
-> +		git branch A &&
+Ciao,
+Johannes
 
-Might make more sense to create it below, via the `-b` option of `git
-checkout`.
-
-Or, for extra brownie points, via the `-c` option of `git switch`.
-
-> +		git branch B &&
-
-Likewise, this might want to be created below, via replacing `git
-checkout B` with `git switch -c B master`.
-
-> +
-> +		git checkout A &&
-> +		mkdir subdir &&
-> +		git mv a/b/subdir/foo.c.t subdir/foo.c.t &&
-> +		test_tick &&
-> +		git commit -m "A" &&
-> +
-> +		git checkout B &&
-> +		test_commit a/b/bar.c
-> +	)
-> +'
-> +
-> +test_expect_success '12d-check: Rename (merge) of subdirectory into the=
- root' '
-
-For the record: I am still a huge anti-fan of splitting `setup` test
-cases from the test cases that do actual things, _unless_ it is _one_,
-and _only one_, big, honking `setup` test case that is the very first
-one in the test script.
-
-Splitting things into two inevitably leads to unnecessary churn when
-investigating test failures.
-
-And that's really what test cases need to be optimized for: when they
-report breakages. They need to help as much as they can to investigate
-why things break. Nobody cares when test cases succeed. The ~150k test
-cases that pass on every CI build: nobody is interested. When a test
-case reports failure, that's when people pay attention. At least some,
-including me.
-
-The most common case for me (and every other lazy person who relies on
-CI/PR builds) is when a build breaks, and then I usually get to the
-trace of the actually failing test case very quickly. The previous test
-case's trace, not so easy. Clicks involved. Now I lose context. Not
-good.
-
-A less common case for me is when I run test scripts locally, with `-i
--v -x`. Still, I need to scroll back to get context. And then, really, I
-already lost context.
-
-> +	(
-> +		cd 12d &&
-> +
-> +		git checkout A^0 &&
-> +
-> +		git -c merge.directoryRenames=3Dtrue merge -s recursive B^0 &&
-> +
-> +		git ls-files -s >out &&
-> +		test_line_count =3D 2 out &&
-
-Isn't this a bit overzealous?
-
-> +
-> +		git rev-parse >actual \
-> +			HEAD:subdir/foo.c.t   HEAD:bar.c.t &&
-> +		git rev-parse >expect \
-> +			O:a/b/subdir/foo.c.t  B:a/b/bar.c.t &&
-> +		test_cmp expect actual &&
-
-Likewise?
-
-> +
-> +		git hash-object bar.c.t >actual &&
-> +		git rev-parse B:a/b/bar.c.t >expect &&
-> +		test_cmp expect actual &&
-
-Likewise?
-
-> +
-> +		test_must_fail git rev-parse HEAD:a/b/subdir/foo.c.t &&
-> +		test_must_fail git rev-parse HEAD:a/b/bar.c.t &&
-> +		test_path_is_missing a/
-
-Makes sense, but the part that I am missing is
-
-		test_path_is_file bar.c.t
-
-I.e. the _most_ important outcome of this test is: the rename was
-detected, and the added file was correctly placed into the target
-directory of the rename.
-
-Thanks,
-Dscho
-
-> +	)
-> +'
-> +
->  #######################################################################=
-####
->  # SECTION 13: Checking informational and conflict messages
->  #
+>
+> This would allow us to do these two things in parallel since `rescan` is
+> asynchronous. But that would also mean it is possible that the status
+> bar would show "Ready" while `prime_gitdir_cache` is still executing.
+>
+> I can't really make up my mind on what is better. I'm inclining on using
+> the latter way, effectively trading a bit of UI inconsistency for
+> performance (at least in theory).
+>
+> Thoughts?
+>
+> > +		array unset _gitdir_cache
+> > +		prime_gitdir_cache
+> > +	}
+> > +
+> >  	repository_state newType newHEAD newMERGE_HEAD
+> >  	if {[string match amend* $commit_type]
+> >  		&& $newType eq {normal}
+>
 > --
-> gitgitgadget
+> Regards,
+> Pratyush Yadav
 >
