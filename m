@@ -8,104 +8,117 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7264F1F4C0
-	for <e@80x24.org>; Sat, 12 Oct 2019 16:22:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F8F91F4C0
+	for <e@80x24.org>; Sat, 12 Oct 2019 18:41:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729220AbfJLQWd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Oct 2019 12:22:33 -0400
-Received: from mout.gmx.net ([212.227.15.15]:47927 "EHLO mout.gmx.net"
+        id S1729324AbfJLSlc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Oct 2019 14:41:32 -0400
+Received: from mout.gmx.net ([212.227.17.20]:38981 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727502AbfJLQWd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Oct 2019 12:22:33 -0400
+        id S1728636AbfJLSlc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Oct 2019 14:41:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570897345;
-        bh=ddHha/0sepI27CIxlZp+qfHW8+ysvIFGCla8UKWEyV8=;
+        s=badeba3b8450; t=1570905686;
+        bh=CdtrmlWMZFuWw+EvxyXdfnLsDzaLNIZBn12NL+gxvbk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ZHt3nKDZ2o+P3qfvfp/ZHk7biFWv8ikZ4JZJa2+QYZda9mGUzChIrd8J/xHuyCZUi
-         6lLW1EVLWs2NN1pGj76nmCHGTn3wy6Fr1Zsn8tNjwHVfFsf7be/KY5XDy26JkEwBpP
-         ajDZjYMXE23+706t7CRlXgnxOMrNKR4qMX+6mPYY=
+        b=Z3KbPFVpB0kL2epEG2mcvOQtGYPYfB659dPNOwuCqLl8WvUW9KIwtv9hG3DqYpIWM
+         gmyBSE8vBvI44ElOKxzlSDvvzPu6JhLsKhFje1fftPuIbkx7gNqXN2s7ydy19c6n6d
+         GclP0ltyQCbeUPhZLjGQ7mDeulLkF2kiZRu604uA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1McH5a-1hnH8H2QoO-00cj7p; Sat, 12
- Oct 2019 18:22:25 +0200
-Date:   Sat, 12 Oct 2019 18:22:09 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MORAU-1ii8yW1wEQ-00PrR2; Sat, 12
+ Oct 2019 20:41:26 +0200
+Date:   Sat, 12 Oct 2019 20:41:11 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     James Coglan <jcoglan@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        James Coglan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 01/11] graph: automatically track visible width of
- `strbuf`
-In-Reply-To: <xmqqo8ymg64c.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1910121817180.46@tvgsbejvaqbjf.bet>
-References: <pull.383.git.gitgitgadget@gmail.com> <4bc0a0596164212aa9d29d6dd0d7a0d8ab1b9dd0.1570724021.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.1910102303330.46@tvgsbejvaqbjf.bet> <20191010230550.GA42541@generichostname> <xmqq7e5cjbwj.fsf@gitster-ct.c.googlers.com>
- <20191011050111.GA94866@generichostname> <nycvar.QRO.7.76.6.1910111800220.46@tvgsbejvaqbjf.bet> <79463ee5-a171-53a8-4903-84a825c4e8d8@gmail.com> <xmqqo8ymg64c.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Dir rename fixes
+In-Reply-To: <pull.390.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910122035350.46@tvgsbejvaqbjf.bet>
+References: <pull.390.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:t2jSq4ZiNOWW49CIUVeCdChbnSXcSx4CuNtQqsw4gsKMZouL6/Y
- owv/8sknnyu6bznq3/sImmP+XYBr4zUIkG1zMJ3kTghtRyLZXp0r9s48EHoMoOtL6Ygc72y
- XYRYCeklMvkr+IW4B8ItYbN6lQ7wiop9Sue4hoItvyOwmbRtqvXaN7k1b3OcEFm15DXIEX7
- uLOyrD0X+BiN/JWLCmArg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:x9+Rpbmrb54=:duMtQuZ/pjj/usYWqz8jj6
- em3uJDVPhRy3Zq8ZnmMAddUldAKJgB7BnQgwWf4rAM9qVJrk9yqDN2T7cCizuXar1BOQLAXL4
- 3DxTouEADS2UB3pmz2qYiQk2wH9Hlbe/f7q8akaQcK5N5LqqE+THnzClw4Q0TyB7ZlRdY1xMb
- fUyjYoZYh7aXv/JqbxTh6e2aBQvfPBbXTdMA7Xucl/4cxm5+KSigpZnN1mBlBLOaquKttfdgT
- 18u50xbIZ0TVT9QEYyr1tFB9+UDJUXVsuLkdpCrtRS6QrnnOdr5WFzgPb8544PuMzB6+TtgSI
- d07Z6RVFAHuzdduBx4USBSFZ23Q/XlxgGCspQG0zvyskmswTXWnsN+qa3kPanX5Bt/8ENUUAv
- 5vcZHxUaMbxcBTrHmRhEZm7yqDkeyXaFaijpx5obZkWQPxc+UTPzKjKmQtVxGSgrhkLvwCJhG
- 0zpWxuLe3R8k1hqnLe3DRCcsXP+xj2qnYDPwtqwKOs1wWx4JDriOCMzmFJBWiQ0xjmQ5nXkZs
- FcAKSY5grN5699cJlRMyedC47dpMxgmFn8s4PVU/B+QZ52pH7dV3kmYeHdwhMT6HYWvbFHaM4
- 6XkI1P5VaLa6rKwZLR8qH8y+qwA/xIy+RH/792HGGXlpWkBLh53l7Mog3B8qSaQT3s2BLWPjD
- SwUw6laM80XMVbbi/0SeYcUrLxdN7iA+Mx1jYBgiMZLLoq2DYSZPz3PnN8arONPf0+OcC5D3+
- 6VqUxkdCKROxtCCljoiCWvFq/523PDnRS7P79sr29xaw2Q4HknX8PZhaV70IVy3PzRehP7v8i
- 7YcPPBihx0i3YP5RqoCxlt8mu2D3EZpjFsb0h0EaJttgynoGrhvyyq4FJyatnEfGox21Y75MG
- /xW6IFb/N+I6DZZDw1rAxly0rJvNWuuAqX6wpaiMgTPIizL3GbyDmI7UWNGyWE/8VJjQkM0E1
- WStuTD5L0TlMdBk4nsVmggMXEsgemmGxVHFG1bS0GaFbzVlMUxDyBZCmQ2MoBY9dSsIDiiW9U
- M74pRPD8Rcd3IbOn3OMyFgqKh8/fpBPj5ATAhE6I/4iFosCba9r8gQQcoGVEJZKwOvv8+Gtct
- u1rT+bNFD5ZE8/Ni9ftuspQh5F2mqSLjTqJYklCSrqzX06FEPmAyjUPH7Pm7wkgckG5FrPzve
- s9TJqkYPl2cM5r7NDFQm5QcOv402O5zghPZISy/Y6fed+34m17L7Q0UGnqRvXi9xabhXC/sI8
- QlliuBQpkHIGuagmwtBCeZO6PnIxU50CnI/TkgXyIFg9YOTE6kjwQC5K+FG8=
+X-Provags-ID: V03:K1:4kiqUUxixEBOXX49VQScfAu2a/EcGrsYKsMQqrWyos41Y+HMSqs
+ mG2W17V3Dubod0QIsgicG57OG793UzODgafT/luZPsXlnwcVBmPJowSh3PwX4wY2m4zIG8l
+ 2NxrGelsk/d7Qk7PTi1Y+RLmWaEX87XFA/pfHxVexbtgbOb2RL4Jo8r0swGCFlBb3DrmmmF
+ e938OiI1Ohl9uhcnnOmcg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:wLUVc3xBbM8=:aqCSqbYvqMbr0vzt3WPefQ
+ TUcPHoG72MHZWwOf3fEeBZjNQkojvf0EgC89dNLPLrKrM/oIh6vFi2vNDDusLWPm9Sjm87Tjo
+ ZmYBzmjQMcq5XTaHHEiqVhbD+DGGFK95HtOpykKkzJ2rYn08g6X1iF5Aoaz+CKqctzGnPxwqJ
+ PnIIFR77KT6CfpoPFfNb/V0kvhwXvF7ZQEtQVlt+pq1DTdtsdEvWa0CrgM6ICcB5R0lFZyWgq
+ 74/z6B6d8pCvm+AHXddhX/DSiYiagDnFmDKf7fKzEMYHPFr/CBQFeqTwwlpRLG+PovXSuGrzq
+ 89MiZ4eFGhAmm8wyA8eJcTTtbNl3fOlhBu4ytCzw1VRK9ZwITdvVHnEWFGHL58mnc7lvbQVhx
+ 35pA8jE5EA0u8yfgmpiQSkO3tFeRpPvw7mrhWrCRQ7Fhk/9b0Gn73clH3nxHc0pKjs4xf6M2l
+ hAwgpJrpkEnj7q1qrLITECyFc6WKuKpGlwz+K4enYyaZtJ9y9PuCnCositaWc5xLTpjetylTT
+ qwfV1G//ormMGbTPgAyF+e9aAHaDVr/YLqPaW8sVRPgePhJxEZnU47cU/bt3+ihvtOT+SHoiw
+ hj15nMAI3SJOWW1zB2PAiDQJTTW6+cUR5aj7IVQN4xLzI+k9G0oqQmIZImn/rs3uvOayS3r8V
+ +Nm435nuYCFVIv5oAhQrePp5zGnCLrSZkOwoctb3D20A4UIDYrTaG3wQyR4Nh/rkIh9/7YJJU
+ 4pgE9/y+x4+Y8QwqVpfXr1tfm3m9W9hKhPORaG0vgBDAzn1y4GfH5s6c8iYE7CmerQz9GbueB
+ JPiMKBjcWyB05DCkuaZzff+iYX3/ue7mEPWlwO/8V/LDr1BAJHUvK45olN8dh2Vuiv7TCnrw9
+ q089VFCkodcfhCVV+Mfh8feCy5MDcykk5td0+qu0lu9mK7bN9ULWkRh+Qof5dJemMwwG4GriA
+ CstUvgyHD/SRH0Eb5f2mQA2iSMyh8gJ8AIZ1DENxbbIFtL423TbB/X0EH35WuTLeyDZMTG84D
+ fp5Mjw8Ftxd+cUyakuAo8rdHZtrwToOtEgh2Qhdq5Gl05P87sKpuLij022Cab+TPfWreTD+sn
+ dbp6C0oZyjX91lw77qcEaGXmCj1dA4t/BiE3K0EhxWBrLLBFpLmNo8k68N/x4Z1J6QetWGzQH
+ k87TwmLO6q5xOEcKHuuZto3mVMX/1yEmqE64eyGaTpwc2qHtylC3lnPx4+bEXefCuueJq+8gV
+ zOG2lrHKjeE9QUkqunyZ4v7KVVB1LeGiZw36dR0Qx6dB2sJRyYd87Fa7usX0=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Elijah,
 
-I just realized that I completely failed to offer my enthusiasm not only
-for the idea of this patch series and the resulting graphs, but also at
-the really high quality of the contribution. Thanks, James, for working
-on this!
+On Fri, 11 Oct 2019, Elijah Newren via GitGitGadget wrote:
 
-And now just quickly...
-
-On Sat, 12 Oct 2019, Junio C Hamano wrote:
-
-> James Coglan <jcoglan@gmail.com> writes:
+> This series improves a couple things found after looking into things Dsc=
+ho
+> flagged:
 >
-> > - We only need to consider the width of a small set of characters:
-> > { | / \ _ - . * }. We don't need to worry about Unicode, and the
-> > simple character counting in graph.c was working fine.
+>  * clarify and slightly restructure code in the get_renamed_dir_portion(=
+)
+>    function
 >
-> I have to warn you that we saw attempts to step outside these ASCII
-> graphics and use Unicode characters for prettier output in the past.
-> If you can do so without too much complexity, I'd suggest you try
-> not to close the door to those people who follow your footsteps to
-> further improve the system by pursuing the avenue further.
+>  * extend support of detecting renaming/merging of one directory into
+>    another to support the root directory as a target directory
 
-That is a very valid point, I think. There are really pretty Unicode
-characters out there that I could totally see in a nice commit graph.
+Will have a look in a moment,
 
-At that stage, we would have to use `int utf8_strnwidth(const char
-*string, int len, int skip_ansi)` anyway (because of the `skip_ansi`
-that saves us _a lot_ of work). In this case, I doubt that it makes
-sense to keep a running tally of the width. It would be faster, or at
-least similarly fast, to just run `utf8_strnwidth()` on the final string
-that we want to measure.
+> First patch best viewed with a --histogram diff, which I sadly don't kno=
+w
+> how to make gitgitgadget generate.
+
+Currently, there is no way to do that yet. It should not be too
+difficult to implement code to pick up a footer in the PR description to
+do that, I just don't have the time right now to do so.
+
+Essentially, it would have to imitate the already-existing code path
+that picks up the `Cc:` footer in the PR description.
+
+If you're interested, have a look at the `parsePullRequestDescription()`
+function in `lib/patch-series.ts` in
+https://github.com/gitgitgadget/gitgitgadget/.
 
 Ciao,
 Dscho
+
+> Elijah Newren (2):
+>   merge-recursive: clean up get_renamed_dir_portion()
+>   merge-recursive: fix merging a subdirectory into the root directory
+>
+>  merge-recursive.c                   | 89 +++++++++++++++++++++--------
+>  t/t6043-merge-rename-directories.sh | 56 ++++++++++++++++++
+>  2 files changed, 121 insertions(+), 24 deletions(-)
+>
+>
+> base-commit: 08da6496b61341ec45eac36afcc8f94242763468
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-390%2F=
+newren%2Fdir-rename-fixes-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-390/newre=
+n/dir-rename-fixes-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/390
+> --
+> gitgitgadget
+>
