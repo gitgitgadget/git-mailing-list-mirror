@@ -2,149 +2,303 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3533A1F4C0
-	for <e@80x24.org>; Sat, 12 Oct 2019 20:34:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0C821F4C0
+	for <e@80x24.org>; Sat, 12 Oct 2019 20:37:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729494AbfJLUeL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Oct 2019 16:34:11 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:11533 "EHLO smtp.hosts.co.uk"
+        id S1729717AbfJLUhs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Oct 2019 16:37:48 -0400
+Received: from mout.gmx.net ([212.227.15.18]:33695 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728579AbfJLUeL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Oct 2019 16:34:11 -0400
-Received: from [92.7.169.237] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1iJO5W-0000HC-81; Sat, 12 Oct 2019 21:34:07 +0100
-Subject: Re: Git Gui: Branch->create currently fails...
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <bfe78474-0eb9-fc5e-1371-3b055308169a@iee.email>
- <20191008000003.qlulu5ie36eij4uq@yadavpratyush.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <e0b45696-7945-4b7d-62e7-bff46eb8129a@iee.email>
-Date:   Sat, 12 Oct 2019 21:34:06 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1729463AbfJLUhr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Oct 2019 16:37:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570912662;
+        bh=RM9fKlP6NcDlLfKyvk0jbJ9PdcWzYJ4tZNO2cAm9AtQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=X8SotETDSe4zn6ZyhidhxVntOXfBlb2FpdB8Rax8BzD+96zTvgJVDwa6iapT5EqlQ
+         qqDaZKeTayLzkCzgVw9fQ+Pe847D9eTtPl7aBY5bRZRK9VuIGzfRTrlCbbHh6ETK/9
+         Q+p589ctf/WbxgKfhcUb3xoms2kj7Sf1UZgmLTxk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MWAOW-1iYFTQ02d0-00XaC8; Sat, 12
+ Oct 2019 22:37:42 +0200
+Date:   Sat, 12 Oct 2019 22:37:26 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/2] merge-recursive: fix merging a subdirectory into
+ the root directory
+In-Reply-To: <37aee862e14b1352eb08485f15ea06bab33679df.1570826543.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910122152210.3272@tvgsbejvaqbjf.bet>
+References: <pull.390.git.gitgitgadget@gmail.com> <37aee862e14b1352eb08485f15ea06bab33679df.1570826543.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20191008000003.qlulu5ie36eij4uq@yadavpratyush.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ofLgLm8vKi8g4T2tK0NWs+OV3Idm7CsWvezZBtHCDS6AE0kwC3X
+ UjFUlSWwtUAYEUHzhc8NuBgHghChDLuG36oJ4U8p5s+U3l+d3sNzmSjUxSq0aNbEeJtFBU0
+ gFhS6ZzNe6Fi7HwlOLFjp17VFv61RGlb4KI8w0moNpW8a+zhULLKZfYVKxltR9W30ihwuvu
+ itDq2nC30BnB5+kdlRdyQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SGQJEykr2u4=:y9vi7jFSoH/NVHTMdDFNP0
+ kGlMLAT++fcft2MycSJlU9rGeBrwQiUlulzUv43CioPjy2gOZMG30wAbxLPPQvvk5Vvh04pTz
+ eadVGRJBsPSlD7UhhmnwZekBSh8CEV0NsiW9V52sKEQAThhsuBluiEwChiLbMdJcJH8ZCLcYD
+ VSqeImDJBd2nw6jSAwH2i7EAACRUQH1jJ6tPZnnaiCLqE3hwVVY3XGpdMTCdHe/c/TegrfLFn
+ e5LYCLa12jI4Sz48344dOCv8YvYA9obb7mfM+ZP4Lr96kS/BoU9xSJLLj1N5G+LSFXyA4oV43
+ 2vFXgkCnDUAqbJmvlze3ChQyA3co6HaDJdpbm2rosaowLtCHXJ9ciedilyhe2oWz/sYeHx+4F
+ KIDx5hERVxrvu9qZHs4ZrAMExtQgHG/RbzGfel4C0RRly8lz7Av/XDmIzxn22mC6sw6ONsJkr
+ qHr299dSGkGaMuzhIFqYSCbpUYfU0xCgzLWkMuli7bLXDXR/R7y8vTOfeRMYpgsjsDs4tIvr3
+ dXHmU3woOoPcDs/ugEbEU3OXFzclC+kqSxOu5xG3T95nRlUu2BVkqxIZgo/ZL1OIb8QLjOOe4
+ oMkoeYtEqr3+3zb7ad00psEWby6TswMizw3BeFLp9yNoDkpRSLNlOqrTp3CKUfIqhW/2TzFEr
+ 7jPhbjihARZ+LHaNPP+0LHptdyQjVylEySPnA403+hlokNHWm9FX/H56mYWAKAh3Vh9RR8f+n
+ eQWohQ4OERVOzvyL2sfGoT3XZxx3Vrqc5bXzqLSMu9AWPWywxrr3Ms4QbJt6NHYJou0DhwO+z
+ xamZA6RU2UTPDX2BrGN6uDNfNHa/5LXvUgYgeR+ObuK5cmSvH/5uAf9HeOy29Of1sTSqZ2KL9
+ BAqDRyMPVzaPhMQepMZrJive8rrody1turOwg5/sO5gkV/i5d46Isj6mgU1S6Z4G1IHRith62
+ RH+sqLmKzn7EGH+KVnzoEjXqOgIKtimlrHPseSgwbIE4c8iv1yOyKCKorP2CU7QsBqo3PxuNs
+ Ijjx51Yp+NDy1yFje7Zij7omMgxKny4hha9R0wafL5rRx64piyNnte7lfmUVqWlEn0nV84X3B
+ u1CXIhSruY9Qx9Y6wc+y3hZL4OmtVxxbugW/2bmbyXH9IQadgvfzIbPyA41CnhJHxT9ysvXKd
+ 4fjwjKgHHvg2P1itOdfYoYrYUIhQ0GywjZV2n7aK9XJOUNXTXMe3IOptWKgfAp7//v3bx3WoD
+ QEunG7Vh+SC69EiENkip0HEtfEqI+qpt+lIMqLrZFRiK/Goibce21p98j9k4=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pratyus,
-On 08/10/2019 01:00, Pratyush Yadav wrote:
-> On 07/10/19 11:02PM, Philip Oakley wrote:
->> I'd never used the Branch:Create before (this is via mouse) and it threw an
->> error, which appears to be repeatable, so I'm reporting it at the moment so
-> I'm afraid I can't reproduce it. I tested by creating a worktree of
-> git.git by running:
->
->    git worktree add ../git-2
->
-> Then I opened git-gui in the worktree and clicked the "Create" option
-> under the "Branch" menu.
->
-> The dialog opened just fine, which I assume is what your error is. But
-> just to be sure, I created a branch too, and that also works pretty
-> well.
->
-> Same behaviour with a "normal" branch, which is not inside a worktree.
->
-> So is there anything else in your setup that would cause this problem?
->
->> I don't forget ...
->> (I'm chasing down other issue at the moment ;-)
->>
->> This is with the version 0.21.GI git version 2.23.0.windows.1 Tcl/Tck 8.6.9
->>
->>
->> missing "
->> missing "
->>      while executing
->> "list "refs/heads/redo-v0" [list ""
->>      ("eval" body line 1)
->>      invoked from within
->> "eval $line"
->>      (procedure "_new" line 87)
->>      invoked from within
->> "_new $path 0 $title"
->>      (procedure "::choose_rev::new" line 2)
->>      invoked from within
->> "::choose_rev::new $w.rev [mc "Starting Revision"]"
->>      (procedure "branch_create::dialog" line 35)
->>      invoked from within
->> "branch_create::dialog"
->>      (menu invoke)
-> Looking at the log, the culprit seems to be the line:
->
->    set line [eval $line]
->
-> over at lib/choose_rev.tcl:159. The $line comes from reading the output
-> of a call to `git for-each-ref` with '--tcl' passed in. Looking at the
-> man page for 'for-each-ref', the description of the option is:
->
->    --shell, --perl, --python, --tcl
->      If given, strings that substitute %(fieldname) placeholders are
->      quoted as string literals suitable for the specified host language.
->      This is meant to produce a scriptlet that
->      can directly be `eval`ed.
->
-> So this might possibly me an upstream bug.
->
-> If I had to guess a fix, I'd suggest trying to wrap the $line in
-> lib/choose_rev.tcl:159 in quotes like so:
->
->    set line [eval "$line"]
->
-> If this doesn't fix it, see if you can find out which $line is causing
-> problem by printing the variable before 'eval'ing it by adding a:
->
->    puts "$line"
->
-> before the call to eval.
->
-I've tried both parts and seen that this looks like some form of buffer 
-overrun or size limit
+Hi Elijah,
 
-with the mods I ran:
-$ git gui > branch_create.txt
+On Fri, 11 Oct 2019, Elijah Newren via GitGitGadget wrote:
 
-which produced the 'same' error missing ", but with a slightly different 
-fragment.
+> From: Elijah Newren <newren@gmail.com>
+>
+> We allow renaming all entries in e.g. a directory named z/ into a
+> directory named y/ to be detected as a z/ -> y/ rename, so that if the
+> other side of history adds any files to the directory z/ in the mean
+> time, we can provide the hint that they should be moved to y/.
+>
+> There is no reason to not allow 'y/' to be the root directory, but the
+> code did not handle that case correctly.  Add a testcase and the
+> necessary special checks to support this case.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
 
-The branch_create.txt file is size 1.43 MB (1,502,103 bytes) (from the 
-windows explorer file properties dialog..)
-opening in Notepad++ it's 4900 lines long with the final line trucated 
-at col 188 (shorter than other lines). There is an empty line 4901 (CRLF)
+This makes sense.
 
-the last two lines are:
-list "refs/heads/branch-patterns" [list "commit" 
-"b2453cea29b58f2ec57f9627b2456b41568ba5da" [concat "" "Philip Oakley"] 
-[reformat_date [concat "" "Tue May 28 20:22:09 2019 +0100"]] "squash! 
-doc branch: provide examples for listing remote tracking branches"] 
-[list "" "" "" [reformat_date ""] ""]
-list "refs/heads/MSVC-README" [list "commit" 
-"056fb95c8e983ec07e9f5f8baa0b119bf3d13fed" [concat "" "Philip Oakley"] 
-[reformat_date [concat "" "Sun May 19 22:33:37 2019 +0100"]] "compat/vc
+> ---
+>  merge-recursive.c                   | 29 +++++++++++++++
+>  t/t6043-merge-rename-directories.sh | 56 +++++++++++++++++++++++++++++
 
-the file starts with 1018 lines of refs/tags before listing the 
-refs/remotes and finally the refs/heads.
+It is good to have a test case verifying this!
 
-The repo is my local Git repo with multiple remotes (git.git, G-f-W, 
-ggg, junio, gitster, dscho, t-b, tboeg, me), so plenty of refs there!
+FWIW I frequently run into those same issues because I have to use --
+quite often! -- `contrib/fast-import/import-tars.perl` in the Git for
+Windows project (in the MSYS2 part thereof, to be precise), and the
+`pax_global_header` and I will probably never become friends, so I often
+have to move files into the top-level directory...
 
-So it does look to be specific to repos with a large number of 
-refs/tags, refs/remotes, and refs/heads.
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index f80e48f623..7bd4a7cf10 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -1931,6 +1931,16 @@ static char *apply_dir_rename(struct dir_rename_e=
+ntry *entry,
+>  		return NULL;
+>
+>  	oldlen =3D strlen(entry->dir);
+> +	if (entry->new_dir.len =3D=3D 0)
+> +		/*
+> +		 * If someone renamed/merged a subdirectory into the root
+> +		 * directory (e.g. 'some/subdir' -> ''), then we want to
+> +		 * avoid returning
+> +		 *     '' + '/filename'
+> +		 * as the rename; we need to make old_path + oldlen advance
+> +		 * past the '/' character.
+> +		 */
+> +		oldlen++;
 
-something for the back-burner?
+This makes sense to me.
 
-Philip
+>  	newlen =3D entry->new_dir.len + (strlen(old_path) - oldlen) + 1;
+>  	strbuf_grow(&new_path, newlen);
+>  	strbuf_addbuf(&new_path, &entry->new_dir);
+> @@ -1980,6 +1990,25 @@ static void get_renamed_dir_portion(const char *o=
+ld_path, const char *new_path,
+>  	    *end_of_old =3D=3D *end_of_new)
+>  		return; /* We haven't modified *old_dir or *new_dir yet. */
+>
+> +	/*
+> +	 * If end_of_new got back to the beginning of its string, and
+> +	 * end_of_old got back to the beginning of some subdirectory, then
+> +	 * we have a rename/merge of a subdirectory into the root, which
+> +	 * needs slightly special handling.
+> +	 *
+> +	 * Note: There is no need to consider the opposite case, with a
+> +	 * rename/merge of the root directory into some subdirectory.
+> +	 * Our rule elsewhere that a directory which still exists is not
+> +	 * considered to have been renamed means the root directory can
+> +	 * never be renamed (because the root directory always exists).
+> +	 */
+> +	if (end_of_new =3D=3D new_path &&
+> +	    end_of_old !=3D old_path && end_of_old[-1] =3D=3D '/') {
+> +		*old_dir =3D xstrndup(old_path, end_of_old-1 - old_path);
+> +		*new_dir =3D xstrndup(new_path, end_of_new - new_path);
+
+However, here we write something convoluted that essentially amounts to
+`xstrdup("")`. I would rather have that simple call than the convoluted
+one that would puzzle me every time I have to look at this part of the
+code.
+
+While at it, would you mind either surrounding the `-` and the `1` by
+spaces, or even write `--end_of_old - old_path`?
+
+> +		return;
+> +	}
+> +
+>  	/*
+>  	 * We've found the first non-matching character in the directory
+>  	 * paths.  That means the current characters we were looking at
+> diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-=
+directories.sh
+> index c966147d5d..b920bb0850 100755
+> --- a/t/t6043-merge-rename-directories.sh
+> +++ b/t/t6043-merge-rename-directories.sh
+> @@ -4051,6 +4051,62 @@ test_expect_success '12c-check: Moving one direct=
+ory hierarchy into another w/ c
+>  	)
+>  '
+>
+> +# Testcase 12d, Rename/merge of subdirectory into the root
+> +#   Commit O: a/b/{foo.c}
+> +#   Commit A: foo.c
+> +#   Commit B: a/b/{foo.c,bar.c}
+> +#   Expected: a/b/{foo.c,bar.c}
+> +
+> +test_expect_success '12d-setup: Rename (merge) of subdirectory into the=
+ root' '
+> +	test_create_repo 12d &&
+> +	(
+> +		cd 12d &&
+> +
+> +		mkdir -p a/b/subdir &&
+> +		test_commit a/b/subdir/foo.c &&
+
+Why `.c`? That's a little distracting.
+
+> +
+> +		git branch O &&
+
+Might be simpler just to use `master` subsequently and not "waste" a new
+ref on that.
+
+> +		git branch A &&
+
+Might make more sense to create it below, via the `-b` option of `git
+checkout`.
+
+Or, for extra brownie points, via the `-c` option of `git switch`.
+
+> +		git branch B &&
+
+Likewise, this might want to be created below, via replacing `git
+checkout B` with `git switch -c B master`.
+
+> +
+> +		git checkout A &&
+> +		mkdir subdir &&
+> +		git mv a/b/subdir/foo.c.t subdir/foo.c.t &&
+> +		test_tick &&
+> +		git commit -m "A" &&
+> +
+> +		git checkout B &&
+> +		test_commit a/b/bar.c
+> +	)
+> +'
+> +
+> +test_expect_success '12d-check: Rename (merge) of subdirectory into the=
+ root' '
+
+For the record: I am still a huge anti-fan of splitting `setup` test
+cases from the test cases that do actual things, _unless_ it is _one_,
+and _only one_, big, honking `setup` test case that is the very first
+one in the test script.
+
+Splitting things into two inevitably leads to unnecessary churn when
+investigating test failures.
+
+And that's really what test cases need to be optimized for: when they
+report breakages. They need to help as much as they can to investigate
+why things break. Nobody cares when test cases succeed. The ~150k test
+cases that pass on every CI build: nobody is interested. When a test
+case reports failure, that's when people pay attention. At least some,
+including me.
+
+The most common case for me (and every other lazy person who relies on
+CI/PR builds) is when a build breaks, and then I usually get to the
+trace of the actually failing test case very quickly. The previous test
+case's trace, not so easy. Clicks involved. Now I lose context. Not
+good.
+
+A less common case for me is when I run test scripts locally, with `-i
+-v -x`. Still, I need to scroll back to get context. And then, really, I
+already lost context.
+
+> +	(
+> +		cd 12d &&
+> +
+> +		git checkout A^0 &&
+> +
+> +		git -c merge.directoryRenames=3Dtrue merge -s recursive B^0 &&
+> +
+> +		git ls-files -s >out &&
+> +		test_line_count =3D 2 out &&
+
+Isn't this a bit overzealous?
+
+> +
+> +		git rev-parse >actual \
+> +			HEAD:subdir/foo.c.t   HEAD:bar.c.t &&
+> +		git rev-parse >expect \
+> +			O:a/b/subdir/foo.c.t  B:a/b/bar.c.t &&
+> +		test_cmp expect actual &&
+
+Likewise?
+
+> +
+> +		git hash-object bar.c.t >actual &&
+> +		git rev-parse B:a/b/bar.c.t >expect &&
+> +		test_cmp expect actual &&
+
+Likewise?
+
+> +
+> +		test_must_fail git rev-parse HEAD:a/b/subdir/foo.c.t &&
+> +		test_must_fail git rev-parse HEAD:a/b/bar.c.t &&
+> +		test_path_is_missing a/
+
+Makes sense, but the part that I am missing is
+
+		test_path_is_file bar.c.t
+
+I.e. the _most_ important outcome of this test is: the rename was
+detected, and the added file was correctly placed into the target
+directory of the rename.
+
+Thanks,
+Dscho
+
+> +	)
+> +'
+> +
+>  #######################################################################=
+####
+>  # SECTION 13: Checking informational and conflict messages
+>  #
+> --
+> gitgitgadget
+>
