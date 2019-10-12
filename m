@@ -2,179 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8916C1F4C0
-	for <e@80x24.org>; Sat, 12 Oct 2019 15:40:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7264F1F4C0
+	for <e@80x24.org>; Sat, 12 Oct 2019 16:22:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729041AbfJLPiV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Oct 2019 11:38:21 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:40263 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727402AbfJLPiV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Oct 2019 11:38:21 -0400
-Received: by mail-lj1-f193.google.com with SMTP id 7so12600003ljw.7
-        for <git@vger.kernel.org>; Sat, 12 Oct 2019 08:38:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=a1zx4n4Y3/4CbkSycUaLDyOZaTzsqcWnUIGi2jj5Ils=;
-        b=Or+hSLmyfbkKb6verfwCywsD0PuNNmy+nL2GcpEb+gyvf7Iald27A0Jo6ZAuXfYSZD
-         Sl6ZVGUSsjZOFgIxtIEaxZPFsmmrH/GN94CSrsJeMR9REWchfh1Gb+CsXfgvTPSVgZSL
-         ry/pNFEp42jdLWhi+9ehzI0m1KMUa9SuEKOMiHWObEHvgy4ko1y+EqjeG8ptNiCsyPWC
-         FfTTcuIaFHV9vSHR//s8iMTk0N+itfRoN2tvREFTZ/evlCWGCX69ggVh7bE+2YGWowvE
-         3rtG1DDZDcxvoq0e3K5SpiZp1h5pqQYUivxCnYYq39d+4RG/hPBH8OExKSBE44sDzNcG
-         5EXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=a1zx4n4Y3/4CbkSycUaLDyOZaTzsqcWnUIGi2jj5Ils=;
-        b=Y2qNkXj/Htc4AvKYLiUfwJ8N84gIsj3/LcQSB5c7T7obuDMXoGu69v5zXgdKAHpoAV
-         lqZJqnYL2b7Ab5IgXfJcJ31A8xfC0D8yobD6QgblS9vyar1EFEYf1TLUs/QCAYka4YEC
-         gu+c0v6s2ijIAVpSjlRLj2LmllwifVuY2NSD07S6ziUHj4GNKRMm5mvYrhsCTSMRxDaC
-         WQ5zSvDA6cNev+/16+YfE/3RMdgI+D01dVsS7krSQjJ3aaCXOVBouaU/ZVk/0cODz8gR
-         dutpqbIj+DATATJEAhe4FqZr/gzgvXSAdrP3IyCZUjoulo0T1N/TqCn9U4umxRY6Lq2E
-         OiEA==
-X-Gm-Message-State: APjAAAX6htHtb/ekCiWga18DklASd4hZVRnnqxV2C4AoQMHpxOsXDiiQ
-        ca6C2HNojuhwr4wE7HusZT8=
-X-Google-Smtp-Source: APXvYqw+x2cd3opVpQEEqO0vdCwZf8RyK300FFH8ojkXPz+27LKzOyYOT7ehBSl+IeWpyRZPPDFVsw==
-X-Received: by 2002:a2e:3003:: with SMTP id w3mr12705590ljw.208.1570894699012;
-        Sat, 12 Oct 2019 08:38:19 -0700 (PDT)
-Received: from OJAN-PAAVO.localdomain ([213.80.106.30])
-        by smtp.gmail.com with ESMTPSA id b6sm3171632lfi.72.2019.10.12.08.38.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Oct 2019 08:38:18 -0700 (PDT)
-Date:   Sat, 12 Oct 2019 17:38:29 +0200
-From:   Jakob Jarmar <jakob.j@gmail.com>
+        id S1729220AbfJLQWd (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Oct 2019 12:22:33 -0400
+Received: from mout.gmx.net ([212.227.15.15]:47927 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727502AbfJLQWd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Oct 2019 12:22:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570897345;
+        bh=ddHha/0sepI27CIxlZp+qfHW8+ysvIFGCla8UKWEyV8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ZHt3nKDZ2o+P3qfvfp/ZHk7biFWv8ikZ4JZJa2+QYZda9mGUzChIrd8J/xHuyCZUi
+         6lLW1EVLWs2NN1pGj76nmCHGTn3wy6Fr1Zsn8tNjwHVfFsf7be/KY5XDy26JkEwBpP
+         ajDZjYMXE23+706t7CRlXgnxOMrNKR4qMX+6mPYY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1McH5a-1hnH8H2QoO-00cj7p; Sat, 12
+ Oct 2019 18:22:25 +0200
+Date:   Sat, 12 Oct 2019 18:22:09 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: [PATCH v4] stash: avoid recursive hard reset on submodules
-Message-ID: <20191012153829.GB743557@OJAN-PAAVO.localdomain>
-References: <CA+xNDHtVc7pJr=SdihKDKiLE9TE_TcpEWWmPq+N9+fFcfM36wA@mail.gmail.com>
- <20191011001114.GB640501@OJAN-PAAVO.localdomain>
- <xmqqeezjhlad.fsf@gitster-ct.c.googlers.com>
- <20191011222448.GA650182@OJAN-PAAVO.localdomain>
- <xmqqsgnyenwj.fsf@gitster-ct.c.googlers.com>
+cc:     James Coglan <jcoglan@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        James Coglan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 01/11] graph: automatically track visible width of
+ `strbuf`
+In-Reply-To: <xmqqo8ymg64c.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910121817180.46@tvgsbejvaqbjf.bet>
+References: <pull.383.git.gitgitgadget@gmail.com> <4bc0a0596164212aa9d29d6dd0d7a0d8ab1b9dd0.1570724021.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.1910102303330.46@tvgsbejvaqbjf.bet> <20191010230550.GA42541@generichostname> <xmqq7e5cjbwj.fsf@gitster-ct.c.googlers.com>
+ <20191011050111.GA94866@generichostname> <nycvar.QRO.7.76.6.1910111800220.46@tvgsbejvaqbjf.bet> <79463ee5-a171-53a8-4903-84a825c4e8d8@gmail.com> <xmqqo8ymg64c.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqsgnyenwj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:t2jSq4ZiNOWW49CIUVeCdChbnSXcSx4CuNtQqsw4gsKMZouL6/Y
+ owv/8sknnyu6bznq3/sImmP+XYBr4zUIkG1zMJ3kTghtRyLZXp0r9s48EHoMoOtL6Ygc72y
+ XYRYCeklMvkr+IW4B8ItYbN6lQ7wiop9Sue4hoItvyOwmbRtqvXaN7k1b3OcEFm15DXIEX7
+ uLOyrD0X+BiN/JWLCmArg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:x9+Rpbmrb54=:duMtQuZ/pjj/usYWqz8jj6
+ em3uJDVPhRy3Zq8ZnmMAddUldAKJgB7BnQgwWf4rAM9qVJrk9yqDN2T7cCizuXar1BOQLAXL4
+ 3DxTouEADS2UB3pmz2qYiQk2wH9Hlbe/f7q8akaQcK5N5LqqE+THnzClw4Q0TyB7ZlRdY1xMb
+ fUyjYoZYh7aXv/JqbxTh6e2aBQvfPBbXTdMA7Xucl/4cxm5+KSigpZnN1mBlBLOaquKttfdgT
+ 18u50xbIZ0TVT9QEYyr1tFB9+UDJUXVsuLkdpCrtRS6QrnnOdr5WFzgPb8544PuMzB6+TtgSI
+ d07Z6RVFAHuzdduBx4USBSFZ23Q/XlxgGCspQG0zvyskmswTXWnsN+qa3kPanX5Bt/8ENUUAv
+ 5vcZHxUaMbxcBTrHmRhEZm7yqDkeyXaFaijpx5obZkWQPxc+UTPzKjKmQtVxGSgrhkLvwCJhG
+ 0zpWxuLe3R8k1hqnLe3DRCcsXP+xj2qnYDPwtqwKOs1wWx4JDriOCMzmFJBWiQ0xjmQ5nXkZs
+ FcAKSY5grN5699cJlRMyedC47dpMxgmFn8s4PVU/B+QZ52pH7dV3kmYeHdwhMT6HYWvbFHaM4
+ 6XkI1P5VaLa6rKwZLR8qH8y+qwA/xIy+RH/792HGGXlpWkBLh53l7Mog3B8qSaQT3s2BLWPjD
+ SwUw6laM80XMVbbi/0SeYcUrLxdN7iA+Mx1jYBgiMZLLoq2DYSZPz3PnN8arONPf0+OcC5D3+
+ 6VqUxkdCKROxtCCljoiCWvFq/523PDnRS7P79sr29xaw2Q4HknX8PZhaV70IVy3PzRehP7v8i
+ 7YcPPBihx0i3YP5RqoCxlt8mu2D3EZpjFsb0h0EaJttgynoGrhvyyq4FJyatnEfGox21Y75MG
+ /xW6IFb/N+I6DZZDw1rAxly0rJvNWuuAqX6wpaiMgTPIizL3GbyDmI7UWNGyWE/8VJjQkM0E1
+ WStuTD5L0TlMdBk4nsVmggMXEsgemmGxVHFG1bS0GaFbzVlMUxDyBZCmQ2MoBY9dSsIDiiW9U
+ M74pRPD8Rcd3IbOn3OMyFgqKh8/fpBPj5ATAhE6I/4iFosCba9r8gQQcoGVEJZKwOvv8+Gtct
+ u1rT+bNFD5ZE8/Ni9ftuspQh5F2mqSLjTqJYklCSrqzX06FEPmAyjUPH7Pm7wkgckG5FrPzve
+ s9TJqkYPl2cM5r7NDFQm5QcOv402O5zghPZISy/Y6fed+34m17L7Q0UGnqRvXi9xabhXC/sI8
+ QlliuBQpkHIGuagmwtBCeZO6PnIxU50CnI/TkgXyIFg9YOTE6kjwQC5K+FG8=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git stash push does not recursively stash submodules, but if
-submodule.recurse is set, it may recursively reset --hard them. Having
-only the destructive action recurse is likely to be surprising
-behaviour, and unlikely to be desirable, so the easiest fix should be to
-ensure that the call to git reset --hard never recurses into submodules.
+Hi,
 
-This matches the behavior of check_changes_tracked_files, which ignores
-submodules.
+I just realized that I completely failed to offer my enthusiasm not only
+for the idea of this patch series and the resulting graphs, but also at
+the really high quality of the contribution. Thanks, James, for working
+on this!
 
-Signed-off-by: Jakob Jarmar <jakob@jarmar.se>
----
+And now just quickly...
 
-Notes:
-    1. Added space between function name and parentheses
-    2. Moved test_when_finished cleanup to top of setup_basic
+On Sat, 12 Oct 2019, Junio C Hamano wrote:
 
- builtin/stash.c            |  2 +-
- git-legacy-stash.sh        |  2 +-
- t/t3906-stash-submodule.sh | 42 +++++++++++++++++++++++++++++++++++++-
- 3 files changed, 43 insertions(+), 3 deletions(-)
+> James Coglan <jcoglan@gmail.com> writes:
+>
+> > - We only need to consider the width of a small set of characters:
+> > { | / \ _ - . * }. We don't need to worry about Unicode, and the
+> > simple character counting in graph.c was working fine.
+>
+> I have to warn you that we saw attempts to step outside these ASCII
+> graphics and use Unicode characters for prettier output in the past.
+> If you can do so without too much complexity, I'd suggest you try
+> not to close the door to those people who follow your footsteps to
+> further improve the system by pursuing the avenue further.
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index b5a301f24d..c986c258f2 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1383,7 +1383,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
- 			struct child_process cp = CHILD_PROCESS_INIT;
- 			cp.git_cmd = 1;
- 			argv_array_pushl(&cp.args, "reset", "--hard", "-q",
--					 NULL);
-+					 "--no-recurse-submodules", NULL);
- 			if (run_command(&cp)) {
- 				ret = -1;
- 				goto done;
-diff --git a/git-legacy-stash.sh b/git-legacy-stash.sh
-index f60e9b3e87..07ad4a5459 100755
---- a/git-legacy-stash.sh
-+++ b/git-legacy-stash.sh
-@@ -370,7 +370,7 @@ push_stash () {
- 			git diff-index -p --cached --binary HEAD -- "$@" |
- 			git apply --index -R
- 		else
--			git reset --hard -q
-+			git reset --hard -q --no-recurse-submodules
- 		fi
- 
- 		if test "$keep_index" = "t" && test -n "$i_tree"
-diff --git a/t/t3906-stash-submodule.sh b/t/t3906-stash-submodule.sh
-index d7219d6f8f..b93d1d74da 100755
---- a/t/t3906-stash-submodule.sh
-+++ b/t/t3906-stash-submodule.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
- 
--test_description='stash apply can handle submodules'
-+test_description='stash can handle submodules'
- 
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
-@@ -21,4 +21,44 @@ KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1
- KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
- test_submodule_switch "git_stash"
- 
-+setup_basic () {
-+	test_when_finished "rm -rf main sub" &&
-+	git init sub &&
-+	(
-+		cd sub &&
-+		test_commit sub_file
-+	) &&
-+	git init main &&
-+	(
-+		cd main &&
-+		git submodule add ../sub &&
-+		test_commit main_file
-+	)
-+}
-+
-+test_expect_success 'stash push with submodule.recurse=true preserves dirty submodule worktree' '
-+	setup_basic &&
-+	(
-+		cd main &&
-+		git config submodule.recurse true &&
-+		echo "x" >main_file.t &&
-+		echo "y" >sub/sub_file.t &&
-+		git stash push &&
-+		test_must_fail git -C sub diff --quiet
-+	)
-+'
-+
-+test_expect_success 'stash push and pop with submodule.recurse=true preserves dirty submodule worktree' '
-+	setup_basic &&
-+	(
-+		cd main &&
-+		git config submodule.recurse true &&
-+		echo "x" >main_file.t &&
-+		echo "y" >sub/sub_file.t &&
-+		git stash push &&
-+		git stash pop &&
-+		test_must_fail git -C sub diff --quiet
-+	)
-+'
-+
- test_done
--- 
-2.23.0
+That is a very valid point, I think. There are really pretty Unicode
+characters out there that I could totally see in a nice commit graph.
 
+At that stage, we would have to use `int utf8_strnwidth(const char
+*string, int len, int skip_ansi)` anyway (because of the `skip_ansi`
+that saves us _a lot_ of work). In this case, I doubt that it makes
+sense to keep a running tally of the width. It would be faster, or at
+least similarly fast, to just run `utf8_strnwidth()` on the final string
+that we want to measure.
+
+Ciao,
+Dscho
