@@ -2,80 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 912521F4C0
-	for <e@80x24.org>; Sat, 12 Oct 2019 04:18:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED3061F4C0
+	for <e@80x24.org>; Sat, 12 Oct 2019 10:47:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726407AbfJLESs (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Oct 2019 00:18:48 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60299 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725855AbfJLESs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Oct 2019 00:18:48 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2DD732BA6A;
-        Sat, 12 Oct 2019 00:18:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sjRb20dgeZg76+xZYixYyCshbtg=; b=ARs+o0
-        eIY2GxluCde6euDv2NiI61OUr2gdmiMDkDl7Jezqkdl/jpDD1FRp4ZRwfcy9iCst
-        mVhqqMhnfWceUQBMhBx5EJMNJPzuiiDKY2pTHdp/wN9m8Qu3ty1wh/5sj/R4PoDn
-        f1qXJ28VjdqO9AA8I6Hc1b8IeFAUadBCd2jKE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LeJ38C5GSOqiq0RT/v1Criohvylqpr1l
-        0HvAweYE9bkR1AQIyTqJyEDn95QU+FkD8T+LVeMHbzb9ZqfCO9in+ucWtvGPbQli
-        Xv7uSBf2IvxOI+xzWFrZPoog6N4R+GU5EZRHQHjjtxtFfi50xx4BwqOHijIY4Oki
-        K9w7hiISd0w=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 13D512BA69;
-        Sat, 12 Oct 2019 00:18:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6362A2BA68;
-        Sat, 12 Oct 2019 00:18:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v4 0/3] format-patch: learn --cover-from-description option
-References: <cover.1566285151.git.liu.denton@gmail.com>
-        <cover.1570821015.git.liu.denton@gmail.com>
-Date:   Sat, 12 Oct 2019 13:18:44 +0900
-In-Reply-To: <cover.1570821015.git.liu.denton@gmail.com> (Denton Liu's message
-        of "Fri, 11 Oct 2019 12:12:49 -0700")
-Message-ID: <xmqq8spqeguz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728882AbfJLKrD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Oct 2019 06:47:03 -0400
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:41300 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727083AbfJLKpC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Oct 2019 06:45:02 -0400
+Received: by mail-vs1-f66.google.com with SMTP id l2so7854130vsr.8
+        for <git@vger.kernel.org>; Sat, 12 Oct 2019 03:45:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=me1tYhkBP+/GboDXYy0PclWAF27EYbA35iKQi0+BoXI=;
+        b=GwbsDMRo2sSm0gMRaZmwSqBOPH60F4QU22Bq+yzoZWcK/6R2/yzXkAnqDpXZSvaZtm
+         ZPlVxRVsF6RWq5tXiyO9Vt4L/SRvRIiEiEPVK4LX6tAydMytQirB10nzVP07s5uAeHDs
+         GPsOKY6mGSFokqfE+NkQwsltOfX/OBuniz0wqeWI/WOiERZhTE9/cwsJdqUsXFV/pyCI
+         o0LFw8WEZpouSkBYtpmarXgWY5w+8j3b7vAtfg918TY+d6aAKrPMA7/zztlmPn8RVubn
+         b3P0rvtgjrOJuPtMhB5JHtryNmlu1oIwmYCAafVEFDmcs/J1ce62wBkiETTl9yh+kLG4
+         iNwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=me1tYhkBP+/GboDXYy0PclWAF27EYbA35iKQi0+BoXI=;
+        b=ap/T09LWVmdsgcJeY0HAi7ratTz94w12G9yIuGRwkFezgaI9tYcGCtu3l1Lq3rEAOh
+         e/8ODlK/7zsIlvy96DprflQ8DYJy3GZgfmOKmHvJ6xI+ZZvt/wXnMTB2zAtvU5cfJ5YI
+         s2Pynrp7uMFSXhr+fQCGZhfmclVPAoXLXJSD1plgTqF4Y1u+/xHvzPiZFR+/q1gjpLYc
+         uZLsik73HM6mhbIWIt/l7BD11gWKMZkTa6i9kJFn53/KkLa3BS4uW+uBmADJhEm4JN3T
+         FCxIhAof9A7es7QVgHBhx6CPVR1vLqtPbJvAyLFYBc7QqWr005Yz8evB/Nz1vTzaXJts
+         zmlg==
+X-Gm-Message-State: APjAAAVnpOuesf8sw4sTrF4RKnwmm5pBUYhZEa2sIpOgworW2g9IqXQp
+        4KlSMkD6WPuzXw0EzXgcjuOr/jC1FIv/2JuwrJo=
+X-Google-Smtp-Source: APXvYqxISHY9bFTCHUKpRcnru5SBB7jfmpchvDru+3HyP+NUXCOhzi+UQmE5cnVEOiXDgLEUtjd0awEqiOmUzYyE+Nk=
+X-Received: by 2002:a05:6102:232e:: with SMTP id b14mr11271823vsa.75.1570877101673;
+ Sat, 12 Oct 2019 03:45:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 61B1CEDA-ECA7-11E9-B9E8-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+References: <20191004221052.23313-1-me@yadavpratyush.com> <20191008121735.29531-1-me@yadavpratyush.com>
+ <20191011213524.i2zo4oxkpui3tzth@yadavpratyush.com>
+In-Reply-To: <20191011213524.i2zo4oxkpui3tzth@yadavpratyush.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Sat, 12 Oct 2019 12:44:50 +0200
+Message-ID: <CAKPyHN3tvho9Hs4Tt7pZiT46X+AoRajPdUS3RgcpNbJPPmkJdg@mail.gmail.com>
+Subject: Re: [PATCH v3] git-gui: add a readme
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
-
-> Changes since v3:
+On Fri, Oct 11, 2019 at 11:35 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
 >
-> * Change --infer-cover-subject to --cover-from-description
+> I'll take the silence to mean there are no further objections, and will
+> merge this version in to 'master'.
+
+correct. FWIW
+
+Acked-by: Bert Wesarg <bert.wesarg@googlemail.com>
+
 >
-> * No more test cleanup patches (they were merged in
->   'dl/format-patch-doc-test-cleanup')
-
-With these patches, t4013 and t9902 seem to break, when queued on
-top of dl/format-patch-doc-test-cleanup and also when merged to
-'pu'.
-
-Thanks.
+> On 08/10/19 05:47PM, Pratyush Yadav wrote:
+> > It is a good idea to have a readme so people finding the project can
+> > know more about it, and know how they can get involved.
+> >
+> > Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+> > ---
+> > Changes in v3:
+> > - Reword the first paragraph to avoid some repetition. Suggested by
+> >   Junio.
+> > - Do not mention "written in Tcl" in the intro. Suggested by Junio.
+> > - Add a list of dependencies.
+>
+> --
+> Regards,
+> Pratyush Yadav
