@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F8F91F4C0
-	for <e@80x24.org>; Sat, 12 Oct 2019 18:41:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C41BD1F4C0
+	for <e@80x24.org>; Sat, 12 Oct 2019 19:24:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729324AbfJLSlc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Oct 2019 14:41:32 -0400
-Received: from mout.gmx.net ([212.227.17.20]:38981 "EHLO mout.gmx.net"
+        id S1729659AbfJLTYR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Oct 2019 15:24:17 -0400
+Received: from mout.gmx.net ([212.227.17.20]:35137 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728636AbfJLSlc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Oct 2019 14:41:32 -0400
+        id S1729384AbfJLTYQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Oct 2019 15:24:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570905686;
-        bh=CdtrmlWMZFuWw+EvxyXdfnLsDzaLNIZBn12NL+gxvbk=;
+        s=badeba3b8450; t=1570908253;
+        bh=BR+uld6pZvpjcQVGFL0PNCjWz2GPrrxe5QOOz0YjjO0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Z3KbPFVpB0kL2epEG2mcvOQtGYPYfB659dPNOwuCqLl8WvUW9KIwtv9hG3DqYpIWM
-         gmyBSE8vBvI44ElOKxzlSDvvzPu6JhLsKhFje1fftPuIbkx7gNqXN2s7ydy19c6n6d
-         GclP0ltyQCbeUPhZLjGQ7mDeulLkF2kiZRu604uA=
+        b=i1Okz6vyW8imuecRKNzhocsIEfqV8qrOqAvkM8WQMa8iNWEcCK2rgCMz1NulB8+Vb
+         n23ZeRC/0zUU6+WdiTVnZs8IOhNYvTCeuJT9bR77WQGUzQXZfav7t6FjRIboLsFRKB
+         K4+5ntWFQQtpLOiQiQ2JNCULDYDP5IwgTjR1igzY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MORAU-1ii8yW1wEQ-00PrR2; Sat, 12
- Oct 2019 20:41:26 +0200
-Date:   Sat, 12 Oct 2019 20:41:11 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MYvY8-1iWcWr21lQ-00Uprq; Sat, 12
+ Oct 2019 21:24:13 +0200
+Date:   Sat, 12 Oct 2019 21:23:58 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Dir rename fixes
-In-Reply-To: <pull.390.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910122035350.46@tvgsbejvaqbjf.bet>
-References: <pull.390.git.gitgitgadget@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v10 18/36] merge-recursive: add get_directory_renames()
+In-Reply-To: <CABPp-BFrFrm1-MdttBDRHMmun++HxwV1tySoDb75f58ObwMwfg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910122122520.3272@tvgsbejvaqbjf.bet>
+References: <20180419175823.7946-1-newren@gmail.com> <20180419175823.7946-19-newren@gmail.com> <nycvar.QRO.7.76.6.1910092044590.46@tvgsbejvaqbjf.bet> <CABPp-BFrFrm1-MdttBDRHMmun++HxwV1tySoDb75f58ObwMwfg@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4kiqUUxixEBOXX49VQScfAu2a/EcGrsYKsMQqrWyos41Y+HMSqs
- mG2W17V3Dubod0QIsgicG57OG793UzODgafT/luZPsXlnwcVBmPJowSh3PwX4wY2m4zIG8l
- 2NxrGelsk/d7Qk7PTi1Y+RLmWaEX87XFA/pfHxVexbtgbOb2RL4Jo8r0swGCFlBb3DrmmmF
- e938OiI1Ohl9uhcnnOmcg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:wLUVc3xBbM8=:aqCSqbYvqMbr0vzt3WPefQ
- TUcPHoG72MHZWwOf3fEeBZjNQkojvf0EgC89dNLPLrKrM/oIh6vFi2vNDDusLWPm9Sjm87Tjo
- ZmYBzmjQMcq5XTaHHEiqVhbD+DGGFK95HtOpykKkzJ2rYn08g6X1iF5Aoaz+CKqctzGnPxwqJ
- PnIIFR77KT6CfpoPFfNb/V0kvhwXvF7ZQEtQVlt+pq1DTdtsdEvWa0CrgM6ICcB5R0lFZyWgq
- 74/z6B6d8pCvm+AHXddhX/DSiYiagDnFmDKf7fKzEMYHPFr/CBQFeqTwwlpRLG+PovXSuGrzq
- 89MiZ4eFGhAmm8wyA8eJcTTtbNl3fOlhBu4ytCzw1VRK9ZwITdvVHnEWFGHL58mnc7lvbQVhx
- 35pA8jE5EA0u8yfgmpiQSkO3tFeRpPvw7mrhWrCRQ7Fhk/9b0Gn73clH3nxHc0pKjs4xf6M2l
- hAwgpJrpkEnj7q1qrLITECyFc6WKuKpGlwz+K4enYyaZtJ9y9PuCnCositaWc5xLTpjetylTT
- qwfV1G//ormMGbTPgAyF+e9aAHaDVr/YLqPaW8sVRPgePhJxEZnU47cU/bt3+ihvtOT+SHoiw
- hj15nMAI3SJOWW1zB2PAiDQJTTW6+cUR5aj7IVQN4xLzI+k9G0oqQmIZImn/rs3uvOayS3r8V
- +Nm435nuYCFVIv5oAhQrePp5zGnCLrSZkOwoctb3D20A4UIDYrTaG3wQyR4Nh/rkIh9/7YJJU
- 4pgE9/y+x4+Y8QwqVpfXr1tfm3m9W9hKhPORaG0vgBDAzn1y4GfH5s6c8iYE7CmerQz9GbueB
- JPiMKBjcWyB05DCkuaZzff+iYX3/ue7mEPWlwO/8V/LDr1BAJHUvK45olN8dh2Vuiv7TCnrw9
- q089VFCkodcfhCVV+Mfh8feCy5MDcykk5td0+qu0lu9mK7bN9ULWkRh+Qof5dJemMwwG4GriA
- CstUvgyHD/SRH0Eb5f2mQA2iSMyh8gJ8AIZ1DENxbbIFtL423TbB/X0EH35WuTLeyDZMTG84D
- fp5Mjw8Ftxd+cUyakuAo8rdHZtrwToOtEgh2Qhdq5Gl05P87sKpuLij022Cab+TPfWreTD+sn
- dbp6C0oZyjX91lw77qcEaGXmCj1dA4t/BiE3K0EhxWBrLLBFpLmNo8k68N/x4Z1J6QetWGzQH
- k87TwmLO6q5xOEcKHuuZto3mVMX/1yEmqE64eyGaTpwc2qHtylC3lnPx4+bEXefCuueJq+8gV
- zOG2lrHKjeE9QUkqunyZ4v7KVVB1LeGiZw36dR0Qx6dB2sJRyYd87Fa7usX0=
+X-Provags-ID: V03:K1:98pPAsJRyToJY261ZkMeokOqkP2e47RNiEd6OQ09EI+XjCdrTd5
+ RBKDlTOx78todR1Zlpo+b9PPdaBR0VMgjWjgzAcpm8cXn0/ZqNNtNkd8p9r2WX+0dXpzIVZ
+ hfvthgsirWuN+1yNZTfM3xeZf+xnVUVEh9e+J0aPKBsdRqflGtiM6N52Qk8UAUNu76pE2BE
+ 2J5QGF7ftUdvJNGoJfsaQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PHjtpbJuT4k=:EWlSbnqBILTWbk0cdbvYwF
+ N8nGHFPmD+4If6qmFHxosOe3g+38xZO0JDBKvllzprTZnXWI24oD0H1o5ptkazstVQvVdx+Yo
+ ZnhBLbS6gyRrIYwqo/kpipv3xMbCbLLrpXAYzWg2oDXDB5wATvKwaO9W1yJB5J+ztOY0WkvLM
+ G6kWAZB/x03jAPCnBVbbaYlH2AWjmNYkBq+IgtzpL0Sl6+D66svwcrAxpFjL9ZSqpFnFR2Nod
+ s3CSXxSUJNDCp4ICa3N///6+/e4XgrcEtzeq6gCUYi08RrVkZ0F0JXxw5Od76O7+N10pMQTCd
+ rB96p92b6Cx8llqgVaF/EWFeM5/Fhn1m70g+56585lElyscPE581SuLfv5t/3/el7t8i3G4er
+ 8ANHxyhdmdePmnl1lrKKtN9vfdRgjQuzo8wdsr2mQH0lmZ+6nc0ryBnoR15j0plCsVKEALwix
+ jE1vXCeaXN7+5XdvCzCjf4hvHggR2zw/JpP3KlsxI+EFVBkqKvXk2jPHvIjTR9Owr3shmJ4bm
+ Bx7S8JJTiZ1JzHCqIKbWdLriw7//BKKxQfcunC/doDvChl5CKuMONeP6zyGWpetvJIt8kkpOl
+ R1yrN0/+0wYykaRTsIHXju+XcKZU0nQ+mbl6tkY0mXmXAwBCx3KH9Dfw0dzNfhoYq3IRmlA13
+ ZG2fAWQB5bfCxeuhgg6OY25Mw0BbkYOasnGfFiBCWSkAYhTAqbQytvkWwPiR9DGYrQp+F7pLz
+ ItjPqeVNch4ZFgPpmId7hkJPtPihkDbk2uht/XBuSRNVtUtmS5BHaboL0LnRdQZAp6pTHnp1Y
+ AEhq1fcaEuScobvvM0T51b2Nj1YWoFbv9fAMEbW4ugUAE2/o8R9Wr7UL6kH/g18uiwvIVjhiL
+ GrZCLWJXjh/ISlEo3IiL3dLv1G/HP+llZRTm4quOlavKKOLnvHjMXwCqHJzR3HjEA6Rd+iARG
+ yqeNUPq2nWtGg5Y5kHGZTtbS7VJ64eJcBWU+Mu/MyHjpeorS4A2KbCGFDSsmTARcgVSCiJp0C
+ xw7RtD8rCtjpFR+Es55+8j/0i4aki2E/SAfQiyntzBI3umZDD1g5obzkiFSB2yr8kPX37TdA0
+ 776U7kKNUabTGT09KDIBUu3xtrAP45YrW5IF2qftuUtF0b712O/mnsrG7D9uX1rh1FywsQofk
+ BaVv0oC5DgPuBjxhRjwr4SMIrHQGfJaLq5ZEWjyqiA9BXcb1XxhxqB7TF8iQBLYHRE1Np+m97
+ scdnbRtx414xSBELujzInxnn6r9IUJ9xEEKRmmjyK0bgDZ4w0CFNtXdxf9lY=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -71,54 +71,218 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Elijah,
 
-On Fri, 11 Oct 2019, Elijah Newren via GitGitGadget wrote:
+On Fri, 11 Oct 2019, Elijah Newren wrote:
 
-> This series improves a couple things found after looking into things Dsc=
-ho
-> flagged:
+> On Wed, Oct 9, 2019 at 1:39 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > sorry about the blast from the past, but I just stumbled over somethin=
+g
+> > I could not even find any discussion about:
 >
->  * clarify and slightly restructure code in the get_renamed_dir_portion(=
-)
->    function
->
->  * extend support of detecting renaming/merging of one directory into
->    another to support the root directory as a target directory
+> I'm curious what brought you to this part of the codebase, but either
+> way, thanks for sending an email with your findings.
 
-Will have a look in a moment,
+Well, you know, it's a loooooong story.
 
-> First patch best viewed with a --histogram diff, which I sadly don't kno=
-w
-> how to make gitgitgadget generate.
+> More comments below...
 
-Currently, there is no way to do that yet. It should not be too
-difficult to implement code to pick up a footer in the PR description to
-do that, I just don't have the time right now to do so.
-
-Essentially, it would have to imitate the already-existing code path
-that picks up the `Cc:` footer in the PR description.
-
-If you're interested, have a look at the `parsePullRequestDescription()`
-function in `lib/patch-series.ts` in
-https://github.com/gitgitgadget/gitgitgadget/.
+Thank you so much, they unpuzzled me quite a bit.
 
 Ciao,
 Dscho
 
-> Elijah Newren (2):
->   merge-recursive: clean up get_renamed_dir_portion()
->   merge-recursive: fix merging a subdirectory into the root directory
 >
->  merge-recursive.c                   | 89 +++++++++++++++++++++--------
->  t/t6043-merge-rename-directories.sh | 56 ++++++++++++++++++
->  2 files changed, 121 insertions(+), 24 deletions(-)
+> [...]
+> > > @@ -1357,6 +1395,169 @@ static struct diff_queue_struct *get_diffpai=
+rs(struct merge_options *o,
+> > >       return ret;
+> > >  }
+> > >
+> > > +static void get_renamed_dir_portion(const char *old_path, const cha=
+r *new_path,
+> > > +                                 char **old_dir, char **new_dir)
+> > > +{
+> > > +     char *end_of_old, *end_of_new;
+> > > +     int old_len, new_len;
+> > > +
+> > > +     *old_dir =3D NULL;
+> > > +     *new_dir =3D NULL;
+> > > +
+> > > +     /*
+> > > +      * For
+> > > +      *    "a/b/c/d/e/foo.c" -> "a/b/some/thing/else/e/foo.c"
+> > > +      * the "e/foo.c" part is the same, we just want to know that
+> > > +      *    "a/b/c/d" was renamed to "a/b/some/thing/else"
+> > > +      * so, for this example, this function returns "a/b/c/d" in
+> > > +      * *old_dir and "a/b/some/thing/else" in *new_dir.
+> > > +      *
+> > > +      * Also, if the basename of the file changed, we don't care.  =
+We
+> > > +      * want to know which portion of the directory, if any, change=
+d.
+> > > +      */
+> > > +     end_of_old =3D strrchr(old_path, '/');
+> > > +     end_of_new =3D strrchr(new_path, '/');
+> > > +
+> > > +     if (end_of_old =3D=3D NULL || end_of_new =3D=3D NULL)
+> > > +             return;
+> > > +     while (*--end_of_new =3D=3D *--end_of_old &&
+> > > +            end_of_old !=3D old_path &&
+> > > +            end_of_new !=3D new_path)
+> > > +             ; /* Do nothing; all in the while loop */
+> > > +     /*
+> > > +      * We've found the first non-matching character in the directo=
+ry
+> > > +      * paths.  That means the current directory we were comparing
+> > > +      * represents the rename.  Move end_of_old and end_of_new back
+> > > +      * to the full directory name.
+> > > +      */
+> > > +     if (*end_of_old =3D=3D '/')
+> > > +             end_of_old++;
+> > > +     if (*end_of_old !=3D '/')
+> > > +             end_of_new++;
+> >
+> > Is this intentional? Even after thinking about it for fifteen minutes,=
+ I
+> > think it was probable meant to test for `*end_of_new =3D=3D '/'` inste=
+ad of
+> > `*end_of_old !=3D '/'`. And...
+>
+> Yeah, looks like a mess-up, and yes your suspicion is correct about
+> what was intended.
+>
+> Hilariously, though, no bug results from this.  Since these are paths,
+> as canonicalized by git (i.e. not as specified by the user where they
+> might accidentally type multiple consecutive slashes), there will
+> never be two slashes in a row (because we can't have directories with
+> an empty name).  Thus, it is guaranteed at this point that *end_of_old
+> !=3D '/', and end_of_new is thus unconditionally advanced.  Further,
+> since we wanted to find the _next_ '/' character after end_of_new,
+> then there were two cases: (1) end_of_new already pointed at a slash
+> character in which case we needed it to be advanced, or (2) end_of_new
+> didn't point to a slash character so it wouldn't hurt at all to
+> advance it.
+>
+> > > +     end_of_old =3D strchr(end_of_old, '/');
+> > > +     end_of_new =3D strchr(end_of_new, '/');
+> >
+> > ... while I satisfied myself that these calls cannot return `NULL` at
+> > this point, it took quite a few minutes of reasoning.
+> >
+> > So I think we might want to rewrite these past 6 lines, to make
+> > everything quite a bit more obvious, like this:
+> >
+> >         if (end_of_old !=3D old_path)
+> >                 while (*(++end_of_old) !=3D '/')
+> >                         ; /* keep looking */
+> >         if (end_of_new !=3D new_path)
+> >                 while (*(++end_of_new) !=3D '/')
+> >                         ; /* keep looking */
+>
+> I think your if-checks here are not correct.  Let's say that old_path
+> was "tar/foo.c" and new_path was "star/foo.c".  The initial strrchr
+> will bring both end_of_* variables back to the slash.  The moving left
+> while equal will move end_of_old back to old_path (i.e. pointing to
+> the "t") and end_of_new back to pointing at "t" as well.  Here's where
+> your six alternate lines would kick in, and would leave end_of_old at
+> old_path, while moving end_of_new to the '/', making it look like we
+> had a rename of "" (the empty string or root directory) to "star"
+> instead of a rename of "tar" to "star".  If you dropped your if-checks
+> (just having the while loops), then I think it does the right thing.
+>
+> > There is _still_ one thing that makes this harder than trivial to reas=
+on
+> > about: the case where one of `*end_of_old` and `*end_of_new` is a slas=
+h.
+> > At this point, we assume that `*end_of_old !=3D *end_of_new` (more abo=
+ut
+> > that assumption in the next paragraph), therefore only one of them can
+> > be a slash, and we want to advance beyond it. But even if the pointer
+> > does not point at a slash, we want to look for one, so we want to
+> > advance beyond it.
+>
+> I should probably add a comment that we want to advance BOTH to the
+> next slash.  I would have just used strchr() but it wouldn't advance
+> the string if it already points to what I'm looking for.  Actually, I
+> guess I could simplify the code by unconditionally advancing by one
+> character, then calling strchr().  In other words, simplifying these
+> six lines to just
+>
+>        end_of_old =3D strchr(++end_of_old, '/');
+>        end_of_new =3D strchr(++end_of_new, '/');
+>
+> > I also think that we need an extra guard: we do not handle the case
+> > `a/b/c` -> `a/b/d` well. As stated a few lines above, "if the basename
+> > of the file changed, we don't care". So we start looking at the last
+> > slash, then go backwards, and since everything matches, end up with
+> > `end_of_old =3D=3D old_path` and `end_of_new =3D=3D new_path`. The cur=
+rent code
+> > will advance `end_of_new` (which I think is wrong) and then looks for
+> > the next slash in both `end_of_new` and `end_of_old` (which is also
+> > wrong).
+>
+> The current code is slightly convoluted, but I would say it's not
+> wrong for this case.  If we renamed a/b/c -> a/b/d, then there isn't a
+> directory rename; the leading directory (a/b/) is the same for both.
+> You are right that the advancing of end_of_old and end_of_new to the
+> next slash would result in what looks like a rename of "a" to "a", but
+> the checks at the end checked for this case and only returned
+> something for *old_dir and *new_dir if these didn't match; in fact,
+> it's the part of the code at the end of your email that you didn't
+> comment on, here:
+>
+> > > +
+> > > +     /*
+> > > +      * It may have been the case that old_path and new_path were t=
+he same
+> > > +      * directory all along.  Don't claim a rename if they're the s=
+ame.
+> > > +      */
+> > > +     old_len =3D end_of_old - old_path;
+> > > +     new_len =3D end_of_new - new_path;
+> > > +
+> > > +     if (old_len !=3D new_len || strncmp(old_path, new_path, old_le=
+n)) {
+> > > +             *old_dir =3D xstrndup(old_path, old_len);
+> > > +             *new_dir =3D xstrndup(new_path, new_len);
+> > > +     }
+> > > +}
+> > > [...]
+>
+> However, we could drop this late check by just doing a simpler earlier
+> check to see if end_of_old =3D=3D old_path and end_of_new =3D=3D new_pat=
+h
+> after the "find first non-equal character" step and before advancing
+> to the next '/', and if that condition is found, then return early
+> with no match.
 >
 >
-> base-commit: 08da6496b61341ec45eac36afcc8f94242763468
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-390%2F=
-newren%2Fdir-rename-fixes-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-390/newre=
-n/dir-rename-fixes-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/390
-> --
-> gitgitgadget
+> However, since you highlighted this code, there are two other special
+> cases that might be interesting:
+>
+> 1) What if we are renaming e.g. foo/bar/baz.c ->
+> leading/dir/foo/bar/baz.c?  Then after trying to find the first
+> non-matching char we'll have end_of_old =3D=3D old_path and *end_of_new =
+=3D=3D
+> 'f', and the advancing makes it look like "foo" being renamed to
+> "leading/dir/foo".  Since the root directory cannot be renamed (it
+> always exists on both sides of history), this probably makes sense as
+> the right thing to return.
+> 2) What if the renaming went the other way, from
+> leading/dir/foo/bar/baz.c -> foo/bar/baz.c?  The whole advancing thing
+> makes this look like "leading/dir/foo" being renamed to "foo", instead
+> of "leading/dir" being renamed to "" (the root directory).  If we
+> don't detect it as "leading/dir" being renamed (merged into) the root
+> directory, then new files added directly within leading/dir/ on the
+> other side of history won't be moved by directory rename detection
+> into the root directory.
+>
+> > Is my reading correct?
+>
+> I'm not sure if I've answered your questions; let me know if not.  I
+> have generated a couple patches to (1) make the code easier to follow,
+> and (2) support the rename/merge of a subdirectory into the root
+> directory.  They're waiting for the gitgitgadget CI checks right now,
+> then I'll send them to the list.
 >
