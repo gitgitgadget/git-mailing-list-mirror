@@ -7,80 +7,76 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C60821F4C1
-	for <e@80x24.org>; Sat, 12 Oct 2019 00:47:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D1621F4C0
+	for <e@80x24.org>; Sat, 12 Oct 2019 00:50:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727721AbfJLAr1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 20:47:27 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58829 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727262AbfJLAr1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 20:47:27 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6B21481C19;
-        Fri, 11 Oct 2019 20:47:25 -0400 (EDT)
+        id S1727594AbfJLAua (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 20:50:30 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60168 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726269AbfJLAua (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 20:50:30 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 74EB9A0B6C;
+        Fri, 11 Oct 2019 20:50:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CO9axGqz1y4LEQdJXXUZrblVOo4=; b=aCu6XY
-        UuJG29W2z3kI5nhqEiy/Ras6srHTVB1OwwyKIgvrrLAHwLGMT5w+QaUitACpqqTt
-        vJROSKlWKuB+YhhWKte9Ol6KON5DVlrGwq+3B7XUFRIucR/sbn8mPh5qyVhomYk4
-        NWf1tCJB41H9b6TjchJ24HMKYKTsL8AeLbjc8=
+        :content-type; s=sasl; bh=33di4WfwMvkBqhUeisIAnwQx9o4=; b=ZgflIw
+        i+VKw5V2cdB8RxFjqG0xaXAJc9oEdB0Ejv3hayzfQ2zCX8KFvGrCHOswFULCmEJZ
+        E3xTNjKyXoBP5GyscGnaS4KnT94rCk1pqPSDUfHr4mERWSUtzvsf1Qxf5IEjT/05
+        +fdERyxn/ecL8PWf0I6J0WiCuNRXy9RKp860k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZxhcXCiTukN8+xB6THW/l94iJ2PjLRiY
-        XvHR32JBla5Gqrd/n5Xox9MsQ3Ju9tGqecZBIBGhe0E2DaxHZ+xd1hprrzTGLT+v
-        s/IBAmKZSFCir5Cvq3GjRcCFwwmiCGqcw0sJjBlRFoCIDTazPK4N6soetVCTomnC
-        q+CEctwT4AY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6263E81C18;
-        Fri, 11 Oct 2019 20:47:25 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=RCtfQAtOq/dAAkmZ8PrUpeglbJCwnw7Y
+        jOQn4OrMT+g2XS8FkQbk6y1OMPSU+FKKNmMFSdOJfFF5w9FHjCyPVZ9rgFQEV4GR
+        Vd+/oC6WNXZic2NNJU94tcorqCwRupUdtOUHIYG3a6azerx0dwmxGM3iuCRUiZAd
+        HdqcaeM8i8A=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6DA8FA0B6B;
+        Fri, 11 Oct 2019 20:50:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8EE5181C15;
-        Fri, 11 Oct 2019 20:47:22 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9E606A0B69;
+        Fri, 11 Oct 2019 20:50:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2] send-pack: never fetch when checking exclusions
-References: <xmqqzhibnahi.fsf@gitster-ct.c.googlers.com>
-        <20191008183739.194714-1-jonathantanmy@google.com>
-        <20191011061257.GD20094@sigill.intra.peff.net>
-        <a87cf3ce-fbff-ef4e-941e-bd2da0bf182f@gmail.com>
-        <20191011161504.GB19741@sigill.intra.peff.net>
-Date:   Sat, 12 Oct 2019 09:47:20 +0900
-In-Reply-To: <20191011161504.GB19741@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 11 Oct 2019 12:15:05 -0400")
-Message-ID: <xmqqftjyg57r.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Oct 2019, #03; Fri, 11)
+References: <xmqq8sprhgzc.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BE4f5f3HyZu9wOyq599JN-n0EMF08di+2V51uxDMEwuGQ@mail.gmail.com>
+        <xmqq4l0fgroj.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BF346QbjCyWP7HSP9Lh7mDRgtwtPC8b4mqNv4znUHoGFw@mail.gmail.com>
+        <xmqqwodag7rd.fsf@gitster-ct.c.googlers.com>
+Date:   Sat, 12 Oct 2019 09:50:23 +0900
+In-Reply-To: <xmqqwodag7rd.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Sat, 12 Oct 2019 08:52:22 +0900")
+Message-ID: <xmqqblumg52o.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DA24B094-EC89-11E9-B714-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 474134EA-EC8A-11E9-B5A6-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> As a general rule (and why I'm raising this issue in reply to Jonathan's
-> patch), I think most or all sites that want OBJECT_INFO_QUICK will want
-> SKIP_FETCH_OBJECT as well, and vice versa. The reasoning is generally
-> the same:
+> By the way, I think I made a mistake in my calendar math.
 >
->   - it's OK to racily have a false negative (we'll still be correct, but
->     possibly a little less optimal)
->
->   - it's expected and normal to be missing the object, so spending time
->     double-checking the pack store wastes measurable time in real-world
->     cases
+> This topic was merged to 'next' on the 7th and it is not especially
+> tricky; unless I (or somebody else) find glaring issues in it during
+> the final sanity check before merging it to 'master' during the next
+> batch, it would take the normal course to 'master' before the 18th,
+> on which the rc0 is planned.
 
-31f5256c ("sha1-file: split OBJECT_INFO_FOR_PREFETCH", 2019-05-28)
-separated SKIP_FETCH_OBJECT out of FOR_PREFETCH, the latter of which
-was and is SKIP_FETCH and QUICK combined.  Use SKIP_FETCH_OBJECT
-alone may need to be re-examined and discouraged?
+Unless I lose power or net due to typhoon, I plan to examine topics
+that were merged to 'next' to see which ones should be part of the
+next batch over the weekend.  This will be among those topics.
+
+Thanks.
 
