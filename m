@@ -7,76 +7,133 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D1621F4C0
-	for <e@80x24.org>; Sat, 12 Oct 2019 00:50:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D0921F4C0
+	for <e@80x24.org>; Sat, 12 Oct 2019 01:04:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727594AbfJLAua (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 20:50:30 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60168 "EHLO
+        id S1728009AbfJLBEC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 21:04:02 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52770 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726269AbfJLAua (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 20:50:30 -0400
+        with ESMTP id S1726863AbfJLBEC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 21:04:02 -0400
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 74EB9A0B6C;
-        Fri, 11 Oct 2019 20:50:28 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AB9C7A0D62;
+        Fri, 11 Oct 2019 21:03:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=33di4WfwMvkBqhUeisIAnwQx9o4=; b=ZgflIw
-        i+VKw5V2cdB8RxFjqG0xaXAJc9oEdB0Ejv3hayzfQ2zCX8KFvGrCHOswFULCmEJZ
-        E3xTNjKyXoBP5GyscGnaS4KnT94rCk1pqPSDUfHr4mERWSUtzvsf1Qxf5IEjT/05
-        +fdERyxn/ecL8PWf0I6J0WiCuNRXy9RKp860k=
+        :content-type; s=sasl; bh=AG8/ny0bOqLBVnK/kb0oM4TV0PQ=; b=lJS9tT
+        LhJRIHQalL/JVnXZrJUfFR2CPN2yo/Cl2noGFEJM3D8/es2kO26OKGza/zeaxT4Q
+        Dms+97wxYRO4ulUk07cDK1SsxxGb3DFjWkoqFxwEOctO9PJAnTEOZv5l9YByU6JO
+        8scaWCjRacVQH3QAb84PcxO3LGcw8IxkpZt9Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RCtfQAtOq/dAAkmZ8PrUpeglbJCwnw7Y
-        jOQn4OrMT+g2XS8FkQbk6y1OMPSU+FKKNmMFSdOJfFF5w9FHjCyPVZ9rgFQEV4GR
-        Vd+/oC6WNXZic2NNJU94tcorqCwRupUdtOUHIYG3a6azerx0dwmxGM3iuCRUiZAd
-        HdqcaeM8i8A=
+        :content-type; q=dns; s=sasl; b=HdQekOEBHeKmlKbY6wtFiJFOFvj/prFm
+        /DTTZUXDtGHExV9RqLhqkapbCHmjZ5q/XtzM2qG6O+9ON2gOmyk+88fSxOEEeaqk
+        bcW0vq5iZIeCEDge6FKaQS0Y3ARADYx+HoawamiznyX/JLqtjreBcbKjvwRP4TQl
+        cl1YROEYp6U=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6DA8FA0B6B;
-        Fri, 11 Oct 2019 20:50:28 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A36C9A0D61;
+        Fri, 11 Oct 2019 21:03:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9E606A0B69;
-        Fri, 11 Oct 2019 20:50:25 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D0778A0D60;
+        Fri, 11 Oct 2019 21:03:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Oct 2019, #03; Fri, 11)
-References: <xmqq8sprhgzc.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BE4f5f3HyZu9wOyq599JN-n0EMF08di+2V51uxDMEwuGQ@mail.gmail.com>
-        <xmqq4l0fgroj.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BF346QbjCyWP7HSP9Lh7mDRgtwtPC8b4mqNv4znUHoGFw@mail.gmail.com>
-        <xmqqwodag7rd.fsf@gitster-ct.c.googlers.com>
-Date:   Sat, 12 Oct 2019 09:50:23 +0900
-In-Reply-To: <xmqqwodag7rd.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Sat, 12 Oct 2019 08:52:22 +0900")
-Message-ID: <xmqqblumg52o.fsf@gitster-ct.c.googlers.com>
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Adding a line after the signed-off git am -s
+References: <6797ef7d-5444-4c77-59e6-1d78fd3ccb0c@linaro.org>
+Date:   Sat, 12 Oct 2019 10:03:54 +0900
+In-Reply-To: <6797ef7d-5444-4c77-59e6-1d78fd3ccb0c@linaro.org> (Daniel
+        Lezcano's message of "Fri, 11 Oct 2019 16:43:45 +0200")
+Message-ID: <xmqq7e5ag4g5.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 474134EA-EC8A-11E9-B5A6-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 2AC5D77E-EC8C-11E9-904A-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Daniel Lezcano <daniel.lezcano@linaro.org> writes:
 
-> By the way, I think I made a mistake in my calendar math.
+> I would like to do something:
 >
-> This topic was merged to 'next' on the 7th and it is not especially
-> tricky; unless I (or somebody else) find glaring issues in it during
-> the final sanity check before merging it to 'master' during the next
-> batch, it would take the normal course to 'master' before the 18th,
-> on which the rc0 is planned.
+> git am -s -l "Link: https://lore.kernel.org/r/<msgid>"
+>
+> Which will give:
+>
+> blabla
+>
+> Signed-off-by: author@kairnail.org
+> Signed-off-by: commiter@kairnail.org
+> Link: https://lore.kernel.org/r/<msgid>
+>
+> This way it is compatible with patchwork, git-pw, etc...
 
-Unless I lose power or net due to typhoon, I plan to examine topics
-that were merged to 'next' to see which ones should be part of the
-next batch over the weekend.  This will be among those topics.
+There is the post-applypatch hook you can define after the patch
+gets applied and produces a commit.
 
-Thanks.
+I use it to maintain the amlog notes in my repository (iow, I do not
+amend the commit, but add notes to the resulting commit so that I
+can tell, given a commit, which message resulted in it).  
 
+If you want to amend the resulting commit instead, the place to do
+so would be where I call "git notes --ref amlog" in the sample
+script.
+
+-- >8 -- post-applypatch hook example -- >8 --
+#!/bin/sh
+
+GIT_DIR=.git
+dotest="$GIT_DIR/rebase-apply"
+
+prec=4 &&
+this=$(cat 2>/dev/null "$dotest/next") &&
+msgnum=$(printf "%0${prec}d" $this) &&
+test -f "$dotest/$msgnum" &&
+message_id=$(sed -ne '
+	/^[ 	]/{
+		# Append continuation line to hold space
+		H
+		# Swap hold and pattern
+		x
+		# Remove the LF, making it a single line
+		s/\n//
+		# Swap hold and pattern back
+		x
+		# Discard the pattern and go on
+		n
+	}
+	# Hold this new line, and look at what is in the hold space
+	x
+	# Is it the Message-ID line?  If so, spit it out and finish.
+	/^[Mm][Ee][Ss][Ss][Aa][Gg][Ee]-[Ii][Dd]:[ 	]*/{
+		s///p
+		q
+	}
+	# Otherwise, check if this new line is empty
+	x
+	# Is it?  Then we are done with the header
+	/^$/b end
+	# Otherwise we need to hold onto this header line
+	x
+	# And start the next cycle
+	b
+: end
+	# ??? do we want to check if we held onto the last message-id line
+	# and process it here if we did???
+	q
+' "$dotest/$msgnum") &&
+
+if	test -n "$message_id" &&
+	head=$(git rev-parse --verify HEAD 2>/dev/null)
+then
+	echo "$head $message_id" >>"$GIT_DIR"/am.log &&
+	git notes --ref amlog add -f -m "Message-Id: $message_id" "$head"
+fi
