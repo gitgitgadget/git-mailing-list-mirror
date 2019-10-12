@@ -2,76 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A9E91F4C0
-	for <e@80x24.org>; Sat, 12 Oct 2019 01:36:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 891D01F4C0
+	for <e@80x24.org>; Sat, 12 Oct 2019 01:36:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728772AbfJLBgA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Oct 2019 21:36:00 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58196 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726903AbfJLBgA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Oct 2019 21:36:00 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2EA1EA1025;
-        Fri, 11 Oct 2019 21:35:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TQxd0tvuGNgAzmO7GCeNZkA0piw=; b=YGM2fd
-        C0DMennYx09J6T9xTxsigWUWpusCNnvJtLMNTO+/gizlNHq1HXb6zdJgsCKLufbv
-        kmYoS0/9A0v10+5KsRxY7sHSrBleOrOO1Mhl3ZDMY4UumY9KTT2Qe0YuYiGFcyiZ
-        WMHzTCIFkry/VDWDkEIUdPUDDoBqaBX+zyV3U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kk9CNhH4Huoc51LpiAPnl0mMLvv7svZI
-        ruwQ/aSWaGHmTE/LZFYHJKr2oxAxvlJFPVK4QoJbPu+a+skPoehzIoVvflrDM72F
-        NujatXXRt8ZzsrMYGg0Vw6c4YFaV1kuHdMLEjYmMU54qBBZyB+UoOTgOaWl03w2L
-        szPXNHThUfw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2836BA1024;
-        Fri, 11 Oct 2019 21:35:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 57F73A1023;
-        Fri, 11 Oct 2019 21:35:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Maxim Belsky via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Max Belsky <public.belsky@gmail.com>
-Subject: Re: [PATCH v2 1/1] doc: Change zsh git completion file name
-References: <pull.367.git.gitgitgadget@gmail.com>
-        <pull.367.v2.git.gitgitgadget@gmail.com>
-        <3f994f3b9a49c42bb8b605459817e54479327dc7.1570816467.git.gitgitgadget@gmail.com>
-Date:   Sat, 12 Oct 2019 10:35:53 +0900
-In-Reply-To: <3f994f3b9a49c42bb8b605459817e54479327dc7.1570816467.git.gitgitgadget@gmail.com>
-        (Maxim Belsky via GitGitGadget's message of "Fri, 11 Oct 2019 10:54:28
-        -0700 (PDT)")
-Message-ID: <xmqqwodaeoee.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728852AbfJLBg5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Oct 2019 21:36:57 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:37524 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726829AbfJLBg5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Oct 2019 21:36:57 -0400
+Received: by mail-qt1-f193.google.com with SMTP id l49so2613920qtc.4
+        for <git@vger.kernel.org>; Fri, 11 Oct 2019 18:36:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=JaWnBOwxNvbeqMA9v8xMl042D6zVR2U3n85zzgHOvsA=;
+        b=KmsJU+BF0p+dZ5mdhh5U71mnBYBLtw80iSj6uFwGRJ1q/6crYIvX+3v/QKfNdEvZ4c
+         zyde+OpJnyvJKha4pLMXIL5/2KxUjl8nFcjY5ydWoRUNZrnDMMWuit9lNeuE2a6vmkZt
+         +LxWwLEpB0tPSNrWlrK32sRGJ8iMqSp7MGxisDqBDiGLbTTmlGvfXPbxw5cu0KRxXoDF
+         Ws6xTpHimOiqVZg010s96GI8fyhfbAU6vslH6AJyxWZU4ciJdRkrLRRRnJdLn/krV0Eb
+         SuGfHbeBXLRBITnwLi6fM9jxLLl7gxnKCrUFCjiYChxzvDtDHDJC3U1cNco1urBhZK3i
+         KDuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=JaWnBOwxNvbeqMA9v8xMl042D6zVR2U3n85zzgHOvsA=;
+        b=sRV+3HpV2D581gGqhXQP0Nlh9OXkjnLBUygR92uud0T+JwNBhtbm3O+wUQQltJbeVi
+         RNqa2rF5BW98SQ2PrV4tLpI2lCkIEjzVZJB1oKXRekhPcr4ojwmT0wO3hbj2ToCbfFjr
+         pfSPgaxacaNdIAa4L0FjiFwtqW+/gI0XNm/h1keHVnTkjuWAlFpf8Is1mj8ti42eoITF
+         LbOz5KoEXfZyiSlOPUNm+uYmwiF7svjeLYMBw3oZ85sNdrLG4mUvgA6TzP8u9WdZkCVU
+         D8G4Tr9ffksvi5Fl7B9d/EMjJppuxIs5bXNStcL2RRPc/9UORRmWsYikS23e0/e5xggK
+         uJbg==
+X-Gm-Message-State: APjAAAU35pxPEMuJ9GrVHiQHrRDfJ1BUGdUeGNVpYPUfahiqzm2YjYFL
+        5udaiHcOLDyBo8KPlmgF7qE=
+X-Google-Smtp-Source: APXvYqxRigDxuiHceJka/XSF03ELhWSue+yd94DzYMzufDZORZlPC00ZhKolhRJXZOYFkFvZoNbnHg==
+X-Received: by 2002:aed:30d1:: with SMTP id 75mr20534780qtf.163.1570844214863;
+        Fri, 11 Oct 2019 18:36:54 -0700 (PDT)
+Received: from [10.0.1.21] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id u43sm5711233qte.19.2019.10.11.18.36.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Oct 2019 18:36:53 -0700 (PDT)
+Subject: Re: [PATCH 06/11] graph: tidy up display of left-skewed merges
+To:     James Coglan <jcoglan@gmail.com>,
+        James Coglan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <pull.383.git.gitgitgadget@gmail.com>
+ <12c0916cb1ef033f917dc065cc1f18c0477296b8.1570724021.git.gitgitgadget@gmail.com>
+ <5c688030-6351-93a3-89bd-e666d02d12d9@gmail.com>
+ <494a92ba-00ab-b5d8-ee66-4007647f8483@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <ece84770-edcb-e6dd-488e-629cd7d8b698@gmail.com>
+Date:   Fri, 11 Oct 2019 21:36:46 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A24A9E8E-EC90-11E9-9286-8D86F504CC47-77302942!pb-smtp21.pobox.com
+In-Reply-To: <494a92ba-00ab-b5d8-ee66-4007647f8483@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Maxim Belsky via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 10/11/2019 12:50 PM, James Coglan wrote:
+> On 10/10/2019 18:19, Derrick Stolee wrote:
+>> On 10/10/2019 12:13 PM, James Coglan via GitGitGadget wrote:
+>>> +++ b/t/t4215-log-skewed-merges.sh
+>>> @@ -0,0 +1,42 @@
+>>> +#!/bin/sh
+>>> +
+>>> +test_description='git log --graph of skewed merges'
+>>> +
+>>> +. ./test-lib.sh
+>>> +
+>>> +test_expect_success 'setup left-skewed merge' '
+>>
+>>
+>> Could you skew this example to include a left-skewed octopus merge
+>> (and use fewer Git processes) with the following:
+>>
+>> 	git checkout --orphan _a && test_commit A &&
+>> 	git switch -c _b _a && test_commit B &&
+>> 	git switch -c _c _a && test_commit C &&
+>> 	git switch -c _d _a && test_commit D &&	git switch -c _e _b && git merge --no-ff _c _d E &&
+>> 	git switch -c _f _a && git merge --no-ff _d -m F &&	git checkout _a && git merge --no-ff _b _c _e _f -m G
+>> and I think the resulting output will be:
+>>
+>> *-----.   G
+>> |\ \ \ \
+>> | | | | * F
+>> | |_|_|/|
+>> |/| | | |
+>> | | | * | E
+>> | |_|/|\|
+>> |/| | | |
+>> | | |/  * D
+>> | |_|__/
+>> |/| |
+>> | | * C
+>> | |/
+>> |/|
+>> | * B
+>> |/
+>> * A
+> 
+> At this point in the history, commit E won't render like that -- this is before the change that flattens edges that fuse with the merge's last parent. I think the display of this history at this point will be:
+> 
+> 	*-----.   G
+> 	|\ \ \ \
+> 	| | | | * F
+> 	| |_|_|/|
+> 	|/| | | |
+> 	| | | * |   E
+> 	| |_|/|\ \
+> 	|/| |/ / /
+> 	| | | | /
+> 	| | | |/
+> 	| | | * D
+> 	| |_|/
+> 	|/| |
+> 	| | * C
+> 	| |/
+> 	|/|
+> 	| * B
+> 	|/
+> 	* A
+> 
+> Is there a particular reason for wanting to include this test case? What particular combination of states is it designed to test? (My guess is that it includes an octopus merge where the original test does not.) I'd be happy to add it at the appropriate point in the history if it's adding coverage not provided by the other tests.
 
-> Signed-off-by: Maxim Belsky <public.belsky@gmail.com>
-> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
+Thanks for correcting my test case. It also helps that you would show the change in behavior in your later commits.
 
-No need to resend (as I'll fix it up locally while queuing), but
-your sign-off comes last, as we keep these things chronological.
-With help from others, you wrote the patch and finally signed it off
-to be applied.
+My reason to include this test is because it includes a regular merge and an octopus merge, both of which have a skewed render. Many times logic that applies to a normal merge breaks with octopus merges, so I try to include them whenever possible.
 
-Thanks for working on this.
+Thanks,
+-Stolee
