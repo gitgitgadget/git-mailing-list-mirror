@@ -8,111 +8,107 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03EEB1F4C0
-	for <e@80x24.org>; Sun, 13 Oct 2019 12:49:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EFDA1F4C0
+	for <e@80x24.org>; Sun, 13 Oct 2019 12:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728789AbfJMMts (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Oct 2019 08:49:48 -0400
-Received: from mout.web.de ([212.227.17.12]:35373 "EHLO mout.web.de"
+        id S1729048AbfJMMt4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Oct 2019 08:49:56 -0400
+Received: from mout.web.de ([217.72.192.78]:54081 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728159AbfJMMts (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Oct 2019 08:49:48 -0400
+        id S1728159AbfJMMt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Oct 2019 08:49:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1570970982;
-        bh=XZpFvCIqU/OBVgzBjG43dg2+NDTEoNXcdC3C1l5uXHQ=;
+        s=dbaedf251592; t=1570970990;
+        bh=vtybe+SqnjvzSpHkdVvNNo3KwnkS8IElkvJho5b1cHE=;
         h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=LRidhVIXoFaaHGTICzlpK1r1Y/ejt+4zZfosSvNa8h79Mhj7J9ApB1MGBQXKX9AEY
-         yqthRSQtDBKprPt1Eb6ePMYK8we4ra2RObM1npVfW/Ozrabjg2L+rF73Sk9ShWtFd/
-         qIR8CcyyuaYC03Urbsl+4R6qG34YqQIfcKtGjLX4=
+        b=llRixqbpvmVnDzLingnchsLFchp9axtgEf7RM4BHOFdi4xdsdTZFTJTIjnuxkKhyv
+         EV5N+VUUOA9QZRvOQATTWSEJwXHd7B8y3OpOYlM2KTSEWyblOMNz2BSIY/fvKE/0re
+         2eaMMu05+uW0N/7VzVLNQkcrirVuzhBoxGjD+KL0=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MSaZk-1iTdB43GPk-00RVzD; Sun, 13
- Oct 2019 14:49:42 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Ls95v-1hvwFl2aYp-013t66; Sun, 13
+ Oct 2019 14:49:50 +0200
 To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] http-push: simplify deleting a list item
-Message-ID: <3739b392-ee45-98c2-c5fa-e4c36e585166@web.de>
-Date:   Sun, 13 Oct 2019 14:49:17 +0200
+Subject: [PATCH] column: use utf8_strnwidth() to strip out ANSI color escapes
+Message-ID: <9b3f6960-ea75-c3a7-3a24-0554320bb359@web.de>
+Date:   Sun, 13 Oct 2019 14:49:50 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:0sLogKY5CarveVwwiIsE6cFIXM/FQ/HPBDOuJAnni5ZccFKylKi
- SMAQujqyaqG15davOpa5MnDKftIFoq23Wbsm9PjXk8rnvDFvJvOkN+vg0t0tyBTY/4DZras
- mggeNoMHpeQU330O6fBJjsakINfG5/ZnNhXW2Mt2UN07vaSr8IZJ+TmXR/Ai38+x/uGLP+V
- K5ZoyumNztueCejPR5kwg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:gL8wu/df+6g=:q1rlDTWKH1x6oanHPNilUP
- G6G04DJtsoBOILIi8c3oYx6+VkJQPVujBZIheFj2A3jOBTw8ie1MSnh2H+IgJw++BnTmA/cxw
- KsopJQvLPxmWZ1kxndz83jWxzK5e9bjBWje/zDjVuenNOg1wXsq8xk7yWbVsuSt+u+y6E9K2Q
- yu4cy6TZWDffQHKg5wjeoYvJbAExvCiUom4E7sU202bkRBEOasNehS7Ah/zE6wgD7dL5Yt0ie
- Hzrq+cpSqU93xqFvyAiOq79yGG25tZnkvjmcr43Cru2/aaVz2whMOpPXHFgCGx0D2jY6BiH3D
- /YCrnQuEimaq4nqxaHUF+5wxmrLLrvAuLo9MLIUwSjPa7pVyX+PrQhzefBNuY6wUqiGszvuoD
- vNbF+1+vZzvJAlUqeA8xPM0/jXCG/fdpBh+cTX9f2eb6n+ZvW0PoeC8b2ydgWe5cOPKpF//i5
- oo04tfTFgHpP6LNwUVh0u3v5SHpiRYAR19sinG+oZIC6X3P0DwcwSbmadkyD/6VWfVXx1fwUG
- lHkA54V+I6I6TjxV4tQNolAuW/qSdgdvOHwK28+R0EwnUJQIFXMhCyeGP/7qa7vE7VZJx7j7Z
- PzwUrTOkHPUhcVbrlClArSXTjLfxdzZVpEBeC0QtWbldR7dZ5oVH9BT/Mwg7203vu2N0u5O6z
- G9GS7srs85vd/fEj5QlVjWRVNp60+UTFnvK/fEzd4gayeZfC6xpBBrr0oa3vo2H5/ryt0HCg+
- wPCD26bnIOVZV6BzqWJ+wESMdC/NmGlfPOzEphAEDqhu0kMvvLd4SR2NjV0LrqPc8NjwnjBre
- pi17xZnubG+qY9hi4uLkOO7DQOgm4ndf9ZIt28IKDQYysZlLsYE3XiN/sj8lxj7lgxf+fxOX0
- Ry1KDTi6dZrF4b8EgQPfLJx/N+yw0r+BblxDoZTnsC4JEk061GBrNYM26r02JTrNzt7tlnLCa
- yg+h0vT+2e1NUB0OS6w3Iv5fda99vT+iYBVz3FXqfrMVNKPllH4cHKsxqx3xC7RrL9sFWXXxe
- fCfAJ+sKcooTFkZL5ogRW2n9uM/Is67iVc7QkuN6Wnv8PGQidbHiScBwjeKIG2lAcWll2+mab
- uw9kJSngnF3nzkN1WCkRzX6r8Z9TMVQ4nWcVngzRWMTVmgY5bU1eBwfyl/2P2fBUvN6ENIaqo
- 4c7SoZuuW3mzZIaX/N9RGivWMv+vmWO5DfnWfjG9EiUtQKmHaDt+BTSfCbZSia28AiyasO6Cs
- HKIY3M7uwn274AdYf/RNCrRmIzboYrfMt1Nugkg==
+X-Provags-ID: V03:K1:qRmmnHy3IaliOqXY6IGA13mA6heya0Tak9ptWl1WAYvaIlzlnAz
+ 0yAsSMAMCdbmquaaP6tmFuXoY3CLJAyyvunRHv5o4CL/VEpfQvjeLTnMHxwsRk8QO5vl4ES
+ YXTQIwBpKiU6Ye4dSVZUK+NrXDfB5XaEfP/ruLQR9GMCJ0K7vTWE5SUmmML1PXkMrecQv7N
+ rG76y01jNGSQK+FIp0WUQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:z/VjRqrFPZQ=:xqOGU35ymOSJ6uF+xYMILh
+ FnwowjVkMHTOVA3rNeqhUXxUOasur9l5+ca72oec99IH9CVfIBWZpMleOgP1yPvBcgKrMS8MW
+ LEqs17quhtFymlKAZodigAVr1ESbGxdrCFeJ2asgpN3ybk8G/bAEPt5rmlhdiY8Xx5jAb4KeK
+ iPBakFMdmNcCOohb4+Bx49BzwxSuUrCY0X8sn1LSOkju+IcSgV8GfBtLT27mVNuJQijnC8Y8p
+ Heb5qiSBbmAfw+JAjqh/CxatNhL8l1gWc2tnFl+gBEkFX9uDrWFKKT9Z5R08+XDdS3kZ/gipY
+ OzV+Laqi1jts8Af6Y7f4QCztBeHzJ/Ccq6krsarThpKjtkVQsNwZq3jJmqo3f2CidtMLh6DiI
+ xGiUDHwcrKyP2Q/LLguQ9NOktAv0p6xmO+JogOtsaGuUlzpQJo2bTzFzgGSV/fBRa7aK+kNX2
+ SmMW2fxqKVzaqtcUCd3b0boZ4F9oqAA+/2xWsbgW1Gm1HCNxZat2dI8smjI1LyApojsGQyLGK
+ HINXzr6qdobDfBuYWtW68CDo53nAs2GObosVOiNidE3VkQmZISAgBTiNd6ebhw7cnpw4LvBVf
+ R3CccYOqCjGrdkpq+uyfFcFA8NHiqnzGh5u9KKrPj6fHy+u7KG/RTSYtO34A4EMF//NvRoOP5
+ WXoU5Nd7CJc39/qLOC1Y0Jl1r0ecVRe6aQByP4TE57VgNvUvQlYSnbtf98bAc/cE4F8qkHauC
+ r8OexwDdYVzg4JezMqM0xdK9h73I59ldfEVLMLhPdda8YaB+Jm0CusTu18y/5wQ2bShmaii37
+ uUmSf5DfGxjIv+AvqRO3cZeSZwdZYhiBE0MJH9wE0uV6D2LuCo21bY+sle/jptKNhhLWV2CPU
+ qRb9P3v3hFbBUDPR57kZ2s89tcBxLhFiTOAvbcJfuXpJRXM7hHofWO5axypCAZe1c/xB0arHM
+ 5l1jpLo1aTnBRpBJbVCPnJnymozZCVTC2oYivH6IQ15jtooMJZTBSFeu+Li4Ii1JNFUX+oar8
+ iH7kMSQHiP9Z6LR2GntI/15UwkKpO8k6QCfCYurE6g9M5nVJwW3hbshwmH/SMIZ8un6d7VWul
+ wAqJ5Dy1XN24c3GIoGWq+Qd9RUZim6J/IrZK6bGDQtsIiHQGohoerUyUj+cOVTt7R9GuJ43X9
+ VlfwwL7LbCgGuTKNI9lFoV85ZJ/wwPNW/QcCN5r1yaPMVcoa+NEj7roRUTSX+cHdUfg+eEwuP
+ dlFaCC91eAbB40atsR9V7XXMNIgyCyT7I2Wfo5w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The first step for deleting an item from a linked list is to locate the
-item preceding it.  Be more careful in release_request() and handle an
-empty list.  This only has consequences for invalid delete requests
-(removing the same item twice, or deleting an item that was never added
-to the list), but simplifies the loop condition as well as the check
-after the loop.
+Make use of utf8_strnwidth()'s feature to skip ANSI escape sequences
+instead of open-coding it.  This shortens the code and makes it more
+consistent.
 
-Once we found the item's predecessor in the list, update its next
-pointer to skip over the item, which removes it from the list.  In other
-words: Make the item's successor the successor of its predecessor.
-(At this point entry->next =3D=3D request and prev->next =3D=3D lock,
-respectively.)  This is a bit simpler and saves a pointer dereference.
+This changes the behavior, though: The old code skips all kinds of
+Control Sequence Introducer sequences, while utf8_strnwidth() only skips
+the Select Graphic Rendition kind, i.e. those ending with "m".  They are
+used for specifying color and font attributes like boldness.  The only
+other kind of escape sequence we print in Git is Erase in Line, ending
+with "K".  That's not used for columnar output, so this difference
+actually doesn't matter here.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- http-push.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ column.c | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index 0353f9f514..822f326599 100644
-=2D-- a/http-push.c
-+++ b/http-push.c
-@@ -501,10 +501,10 @@ static void release_request(struct transfer_request =
-*request)
- 	if (request =3D=3D request_queue_head) {
- 		request_queue_head =3D request->next;
- 	} else {
--		while (entry->next !=3D NULL && entry->next !=3D request)
-+		while (entry && entry->next !=3D request)
- 			entry =3D entry->next;
--		if (entry->next =3D=3D request)
--			entry->next =3D entry->next->next;
-+		if (entry)
-+			entry->next =3D request->next;
- 	}
+diff --git a/column.c b/column.c
+index 7a17c14b82..4a38eed322 100644
+=2D-- a/column.c
++++ b/column.c
+@@ -23,18 +23,7 @@ struct column_data {
+ /* return length of 's' in letters, ANSI escapes stripped */
+ static int item_length(const char *s)
+ {
+-	int len, i =3D 0;
+-	struct strbuf str =3D STRBUF_INIT;
+-
+-	strbuf_addstr(&str, s);
+-	while ((s =3D strstr(str.buf + i, "\033[")) !=3D NULL) {
+-		int len =3D strspn(s + 2, "0123456789;");
+-		i =3D s - str.buf;
+-		strbuf_remove(&str, i, len + 3); /* \033[<len><func char> */
+-	}
+-	len =3D utf8_strwidth(str.buf);
+-	strbuf_release(&str);
+-	return len;
++	return utf8_strnwidth(s, -1, 1);
+ }
 
- 	free(request->url);
-@@ -981,7 +981,7 @@ static int unlock_remote(struct remote_lock *lock)
- 		while (prev && prev->next !=3D lock)
- 			prev =3D prev->next;
- 		if (prev)
--			prev->next =3D prev->next->next;
-+			prev->next =3D lock->next;
- 	}
-
- 	free(lock->owner);
+ /*
 =2D-
 2.23.0
