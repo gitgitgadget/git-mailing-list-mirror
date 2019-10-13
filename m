@@ -8,107 +8,149 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EFDA1F4C0
-	for <e@80x24.org>; Sun, 13 Oct 2019 12:49:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E4C31F4C1
+	for <e@80x24.org>; Sun, 13 Oct 2019 13:39:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729048AbfJMMt4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Oct 2019 08:49:56 -0400
-Received: from mout.web.de ([217.72.192.78]:54081 "EHLO mout.web.de"
+        id S1729032AbfJMNhs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Oct 2019 09:37:48 -0400
+Received: from mout.web.de ([212.227.17.11]:33153 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728159AbfJMMt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Oct 2019 08:49:56 -0400
+        id S1728732AbfJMNhs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Oct 2019 09:37:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1570970990;
-        bh=vtybe+SqnjvzSpHkdVvNNo3KwnkS8IElkvJho5b1cHE=;
+        s=dbaedf251592; t=1570973859;
+        bh=eQoFcSAN3hO4FVFgJhRvJigJg7D8g3uR1pD3kuCJGL8=;
         h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=llRixqbpvmVnDzLingnchsLFchp9axtgEf7RM4BHOFdi4xdsdTZFTJTIjnuxkKhyv
-         EV5N+VUUOA9QZRvOQATTWSEJwXHd7B8y3OpOYlM2KTSEWyblOMNz2BSIY/fvKE/0re
-         2eaMMu05+uW0N/7VzVLNQkcrirVuzhBoxGjD+KL0=
+        b=aZaB/GDvw8mNa0cKIyUVR2UTB179N4HGdyMDX1byOuqtIWecbjnzrz+XlkUOTqzat
+         TSoyO9aIeba9BtEaY7uiXYxedPtOeLUh+Tm1iA8o5Qw9LViC6NvoUjEy3LGiXNuJ1E
+         JB/GQLOnAf2cgdruqWOrK2lTQimxUBiaPwjlAcq8=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Ls95v-1hvwFl2aYp-013t66; Sun, 13
- Oct 2019 14:49:50 +0200
+Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MFt8s-1iFmi53410-00EtTJ; Sun, 13
+ Oct 2019 15:37:39 +0200
 To:     Git Mailing List <git@vger.kernel.org>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] column: use utf8_strnwidth() to strip out ANSI color escapes
-Message-ID: <9b3f6960-ea75-c3a7-3a24-0554320bb359@web.de>
-Date:   Sun, 13 Oct 2019 14:49:50 +0200
+Subject: [PATCH] remote-curl: use argv_array in parse_push()
+Message-ID: <f0eda0fb-7aae-cd64-194e-44a66eabd225@web.de>
+Date:   Sun, 13 Oct 2019 15:37:39 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:qRmmnHy3IaliOqXY6IGA13mA6heya0Tak9ptWl1WAYvaIlzlnAz
- 0yAsSMAMCdbmquaaP6tmFuXoY3CLJAyyvunRHv5o4CL/VEpfQvjeLTnMHxwsRk8QO5vl4ES
- YXTQIwBpKiU6Ye4dSVZUK+NrXDfB5XaEfP/ruLQR9GMCJ0K7vTWE5SUmmML1PXkMrecQv7N
- rG76y01jNGSQK+FIp0WUQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:z/VjRqrFPZQ=:xqOGU35ymOSJ6uF+xYMILh
- FnwowjVkMHTOVA3rNeqhUXxUOasur9l5+ca72oec99IH9CVfIBWZpMleOgP1yPvBcgKrMS8MW
- LEqs17quhtFymlKAZodigAVr1ESbGxdrCFeJ2asgpN3ybk8G/bAEPt5rmlhdiY8Xx5jAb4KeK
- iPBakFMdmNcCOohb4+Bx49BzwxSuUrCY0X8sn1LSOkju+IcSgV8GfBtLT27mVNuJQijnC8Y8p
- Heb5qiSBbmAfw+JAjqh/CxatNhL8l1gWc2tnFl+gBEkFX9uDrWFKKT9Z5R08+XDdS3kZ/gipY
- OzV+Laqi1jts8Af6Y7f4QCztBeHzJ/Ccq6krsarThpKjtkVQsNwZq3jJmqo3f2CidtMLh6DiI
- xGiUDHwcrKyP2Q/LLguQ9NOktAv0p6xmO+JogOtsaGuUlzpQJo2bTzFzgGSV/fBRa7aK+kNX2
- SmMW2fxqKVzaqtcUCd3b0boZ4F9oqAA+/2xWsbgW1Gm1HCNxZat2dI8smjI1LyApojsGQyLGK
- HINXzr6qdobDfBuYWtW68CDo53nAs2GObosVOiNidE3VkQmZISAgBTiNd6ebhw7cnpw4LvBVf
- R3CccYOqCjGrdkpq+uyfFcFA8NHiqnzGh5u9KKrPj6fHy+u7KG/RTSYtO34A4EMF//NvRoOP5
- WXoU5Nd7CJc39/qLOC1Y0Jl1r0ecVRe6aQByP4TE57VgNvUvQlYSnbtf98bAc/cE4F8qkHauC
- r8OexwDdYVzg4JezMqM0xdK9h73I59ldfEVLMLhPdda8YaB+Jm0CusTu18y/5wQ2bShmaii37
- uUmSf5DfGxjIv+AvqRO3cZeSZwdZYhiBE0MJH9wE0uV6D2LuCo21bY+sle/jptKNhhLWV2CPU
- qRb9P3v3hFbBUDPR57kZ2s89tcBxLhFiTOAvbcJfuXpJRXM7hHofWO5axypCAZe1c/xB0arHM
- 5l1jpLo1aTnBRpBJbVCPnJnymozZCVTC2oYivH6IQ15jtooMJZTBSFeu+Li4Ii1JNFUX+oar8
- iH7kMSQHiP9Z6LR2GntI/15UwkKpO8k6QCfCYurE6g9M5nVJwW3hbshwmH/SMIZ8un6d7VWul
- wAqJ5Dy1XN24c3GIoGWq+Qd9RUZim6J/IrZK6bGDQtsIiHQGohoerUyUj+cOVTt7R9GuJ43X9
- VlfwwL7LbCgGuTKNI9lFoV85ZJ/wwPNW/QcCN5r1yaPMVcoa+NEj7roRUTSX+cHdUfg+eEwuP
- dlFaCC91eAbB40atsR9V7XXMNIgyCyT7I2Wfo5w==
+X-Provags-ID: V03:K1:6LMRJfxQzjmIDghG4g+UDZ+4JSwuNe99emftWK7FIuIjIW0/OGv
+ 4RzHQPxWF5x3kUsOWsNZZCT1jBG1pQ3VzD7RqeRqVlyAYplke8HTLtyWDgtFcO3N1dt+QZC
+ /fZ9/Fa0hWLQeOihmmamvTpxXGCXFuo6TrtmQ0l+jNwHuOSL/4+fHHQgwoj0Iu6N3JRUpoO
+ qmTOFJqMix+yainEjxYcw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:eGX5XD+oNK8=:1BVkyaMgkyvbraOo3NLsp7
+ pUgu4scn+nkCvHte84ShS9AO42EJxUh0zwP57Q45xtmzIde/G0E9aJRVpU+hM6rHhrA8CeW7B
+ /GBnIyAO79NKWEb0ycpSYUUXCWtx/uTwpwtoX4xFoVQxUBoaC+zfsLnlb/vVLMkvghxsE5dL2
+ kNk2FsJskJHId95UfA6I8h7GhMfy5q9pdgm7FvicVT8Xa+KoecBf0mxL7oasODTDCX0GjO9kG
+ xdvfYp6EXXEh/1ePIuuEYFa4hRMMSN4J3xnJYHD3HXl9tHV1HL4s4bTJ7AGwvO7Y/BcgXpcE/
+ 6HzU8FZZOyiLZemQz7rhxY6BEpteRzfKujqefhou94+pFzJBEY9ekm9KagbQnluvOcjKIQ9a5
+ MkGh4jGKq8sRYrk1lfJeKBM1IG9oFnZL5QL80+j9T+J2sO1UUtVugWfkggUMvEPac/Qug9Y+e
+ c2V2qU97okNk5cXpt+hxtO3Vm8bPG+Efv9upxMfZgvpL9wNYr2AbMRBa5mWUqGA2sKF76qzwR
+ RwZVqhXQoDeKVlrdUa59JTKf6eie7cStFRwZfy4q77nobap1vHfrZPcpIRJiwSI4sDsb9zyAU
+ 0NFGPL+e4G4Fix2+UzTO16DCmaXvmGfnWJFQbnGoBAd4i9jyhLFBz2TZEdlx3x81+yj/orNGY
+ RqnfrrnKTtbjNN9cOupChwUhIrXo5iLLB6vuvCLUKFoWJqkzT2UBwLt1/ncFBkw4OoZhV/vHg
+ F3uolS9hlyEVk0kAertw8nxTW5kimdvOFc2AlO7kKOe1c172QdDRc2VvKtShlnTbCOLDclArw
+ 3+6eP/ex69rgPkjQwZszjbhKxoQdHtybdR2gRPO6yZkjpkl0AOqcvanLsjqB89vTzA3e1d45+
+ ef1satwKNa+LjP8Tl+/7zrxK9hLjfJ6DsjFI+Rf2uqG7Wh98nP/W7uyRtTpW38e0jAW5eq7Cs
+ G6pZH0gkNr4uNw0cVZSdKXM7GQsZgolvYtO1qBexFH/jBpjA0gGVYBJD8YTNNu3D58v13akpY
+ cRcd4h5+ceo9PxvJRES1kMHZr4HN0saYQTT0sRcUaw/dOkz0B8xK8meev8LH0tZUb7ipXt1q/
+ 4QzyuqVWyLYDp4q2DkT2jKP0Opy9MVmErWNxFajHTHEiG+CoRcpzPdNpdZ3d50wo2EQOja0Bb
+ vUUKeMVSTD+bDyKt1jo+jHvmfR4+YiMgE8vwOS6P5/3fDtN1EJ13QpZNoV25Elu7Wvhl2Ed+b
+ 9ChqwdjWgZ+cTuPCJyi98aE2F/m682ssjFMMoKw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make use of utf8_strnwidth()'s feature to skip ANSI escape sequences
-instead of open-coding it.  This shortens the code and makes it more
-consistent.
+Use argv_array to build an array of strings instead of open-coding it.
+This simplifies the code a bit.
 
-This changes the behavior, though: The old code skips all kinds of
-Control Sequence Introducer sequences, while utf8_strnwidth() only skips
-the Select Graphic Rendition kind, i.e. those ending with "m".  They are
-used for specifying color and font attributes like boldness.  The only
-other kind of escape sequence we print in Git is Erase in Line, ending
-with "K".  That's not used for columnar output, so this difference
-actually doesn't matter here.
+We also need to make the specs parameter of push(), push_dav() and
+push_git() const to match the argv member of the argv_array.  That's
+fine, as all three only actually read from the specs array anyway.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- column.c | 13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
+ remote-curl.c | 22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/column.c b/column.c
-index 7a17c14b82..4a38eed322 100644
-=2D-- a/column.c
-+++ b/column.c
-@@ -23,18 +23,7 @@ struct column_data {
- /* return length of 's' in letters, ANSI escapes stripped */
- static int item_length(const char *s)
- {
--	int len, i =3D 0;
--	struct strbuf str =3D STRBUF_INIT;
--
--	strbuf_addstr(&str, s);
--	while ((s =3D strstr(str.buf + i, "\033[")) !=3D NULL) {
--		int len =3D strspn(s + 2, "0123456789;");
--		i =3D s - str.buf;
--		strbuf_remove(&str, i, len + 3); /* \033[<len><func char> */
--	}
--	len =3D utf8_strwidth(str.buf);
--	strbuf_release(&str);
--	return len;
-+	return utf8_strnwidth(s, -1, 1);
+diff --git a/remote-curl.c b/remote-curl.c
+index 051f26629d..1612e7f52d 100644
+=2D-- a/remote-curl.c
++++ b/remote-curl.c
+@@ -1154,7 +1154,7 @@ static void parse_fetch(struct strbuf *buf)
+ 	strbuf_reset(buf);
  }
 
- /*
+-static int push_dav(int nr_spec, char **specs)
++static int push_dav(int nr_spec, const char **specs)
+ {
+ 	struct child_process child =3D CHILD_PROCESS_INIT;
+ 	size_t i;
+@@ -1175,7 +1175,7 @@ static int push_dav(int nr_spec, char **specs)
+ 	return 0;
+ }
+
+-static int push_git(struct discovery *heads, int nr_spec, char **specs)
++static int push_git(struct discovery *heads, int nr_spec, const char **sp=
+ecs)
+ {
+ 	struct rpc_state rpc;
+ 	int i, err;
+@@ -1225,7 +1225,7 @@ static int push_git(struct discovery *heads, int nr_=
+spec, char **specs)
+ 	return err;
+ }
+
+-static int push(int nr_spec, char **specs)
++static int push(int nr_spec, const char **specs)
+ {
+ 	struct discovery *heads =3D discover_refs("git-receive-pack", 1);
+ 	int ret;
+@@ -1240,14 +1240,12 @@ static int push(int nr_spec, char **specs)
+
+ static void parse_push(struct strbuf *buf)
+ {
+-	char **specs =3D NULL;
+-	int alloc_spec =3D 0, nr_spec =3D 0, i, ret;
++	struct argv_array specs =3D ARGV_ARRAY_INIT;
++	int ret;
+
+ 	do {
+-		if (starts_with(buf->buf, "push ")) {
+-			ALLOC_GROW(specs, nr_spec + 1, alloc_spec);
+-			specs[nr_spec++] =3D xstrdup(buf->buf + 5);
+-		}
++		if (starts_with(buf->buf, "push "))
++			argv_array_push(&specs, buf->buf + 5);
+ 		else
+ 			die(_("http transport does not support %s"), buf->buf);
+
+@@ -1258,7 +1256,7 @@ static void parse_push(struct strbuf *buf)
+ 			break;
+ 	} while (1);
+
+-	ret =3D push(nr_spec, specs);
++	ret =3D push(specs.argc, specs.argv);
+ 	printf("\n");
+ 	fflush(stdout);
+
+@@ -1266,9 +1264,7 @@ static void parse_push(struct strbuf *buf)
+ 		exit(128); /* error already reported */
+
+  free_specs:
+-	for (i =3D 0; i < nr_spec; i++)
+-		free(specs[i]);
+-	free(specs);
++	argv_array_clear(&specs);
+ }
+
+ static int stateless_connect(const char *service_name)
 =2D-
 2.23.0
