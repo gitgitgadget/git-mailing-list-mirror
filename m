@@ -7,132 +7,121 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DF0D1F4C0
-	for <e@80x24.org>; Sun, 13 Oct 2019 18:55:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E8331F4C0
+	for <e@80x24.org>; Sun, 13 Oct 2019 19:17:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729367AbfJMSzp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Oct 2019 14:55:45 -0400
-Received: from relay5-d.mail.gandi.net ([217.70.183.197]:51225 "EHLO
-        relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729355AbfJMSzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Oct 2019 14:55:45 -0400
+        id S1729478AbfJMTRP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Oct 2019 15:17:15 -0400
+Received: from relay8-d.mail.gandi.net ([217.70.183.201]:47897 "EHLO
+        relay8-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728982AbfJMTRP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Oct 2019 15:17:15 -0400
 X-Originating-IP: 1.186.12.3
 Received: from localhost (unknown [1.186.12.3])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id B56691C0003;
-        Sun, 13 Oct 2019 18:55:42 +0000 (UTC)
-Date:   Mon, 14 Oct 2019 00:25:40 +0530
+        by relay8-d.mail.gandi.net (Postfix) with ESMTPSA id B22E21BF206;
+        Sun, 13 Oct 2019 19:17:12 +0000 (UTC)
+Date:   Mon, 14 Oct 2019 00:47:10 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH v4 1/1] Make gitdir work with worktrees, respect
- core.hooksPath, etc
-Message-ID: <20191013185540.fwyn4ox5dbyxgvnh@yadavpratyush.com>
-References: <pull.361.v3.git.gitgitgadget@gmail.com>
- <pull.361.v4.git.gitgitgadget@gmail.com>
- <2f55d6fb2a158c5b26b93ddb9c144ce1af5d9c32.1570534405.git.gitgitgadget@gmail.com>
- <20191011222611.le5lyf6mr5lmvbbd@yadavpratyush.com>
- <nycvar.QRO.7.76.6.1910122321211.3272@tvgsbejvaqbjf.bet>
+To:     Harish Karumuthil <harish2704@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] Feature: custom guitool commands can now have custom
+ keyboard shortcuts
+Message-ID: <20191013191710.535nho3pec2c5wlk@yadavpratyush.com>
+References: <01020153c22ab06b-e195b148-37cc-4f89-92f3-f4bed1915eb9-000000@eu-west-1.amazonses.com>
+ <20160331164137.GA11150@gmail.com>
+ <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com>
+ <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com>
+ <20191003214422.d4nocrxadxt47smg@yadavpratyush.com>
+ <nycvar.QRO.7.76.6.1910041046000.46@tvgsbejvaqbjf.bet>
+ <20191004120107.kpskplwhflnsamwu@yadavpratyush.com>
+ <149a83fd40b71896b134b16c2b499ff472c6234e.camel@gmail.com>
+ <20191005210127.uinrgazj5ezyqftj@yadavpratyush.com>
+ <1dbb69d96229fa9400d7eae0b4fd467ab9706815.camel@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1910122321211.3272@tvgsbejvaqbjf.bet>
+In-Reply-To: <1dbb69d96229fa9400d7eae0b4fd467ab9706815.camel@gmail.com>
 User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/10/19 11:24PM, Johannes Schindelin wrote:
-> Hi Pratyush,
-> 
-> On Sat, 12 Oct 2019, Pratyush Yadav wrote:
-> 
-> > On 08/10/19 04:33AM, Johannes Schindelin via GitGitGadget wrote:
-> >
-> > > @@ -1453,10 +1501,16 @@ proc rescan {after {honor_trustmtime 1}} {
-> > >  	global HEAD PARENT MERGE_HEAD commit_type
-> > >  	global ui_index ui_workdir ui_comm
-> > >  	global rescan_active file_states
-> > > -	global repo_config
-> > > +	global repo_config _gitdir_cache
-> > >
-> > >  	if {$rescan_active > 0 || ![lock_index read]} return
-> > >
-> > > +	# Only re-prime gitdir cache on a full rescan
-> > > +	if {$after ne "ui_ready"} {
-> >
-> > What do you mean by a "full rescan"? I assume you use it as the
-> > differentiator between `ui_do_rescan` (called when you hit F5 or choose
-> > rescan from the menu) and `do_rescan` (called when you revert a line or
-> > hunk), and a "full rescan" refers to `ui_do_rescan`.
-> >
-> > Well in that case, this check is incorrect. `do_rescan` passes only
-> > "ui_ready" and `ui_do_rescan` passes "force_first_diff ui_ready".
-> >
-> > But either way, I'm not a big fan of this. This check makes assumptions
-> > about the behaviour of its callers based on what they pass to $after.
-> > The way I see it, $after should be a black box to `rescan`, and it
-> > should make absolutely no assumptions about it.
-> >
-> > Doing it this way is really brittle, and would break as soon as someone
-> > changes the behaviour of `ui_do_rescan`. If someone in the future passes
-> > a different value in $after, this would stop working as intended and
-> > would not refresh the cached list on a rescan.
-> >
-> > So, I think a better place for this if statement would be in
-> > `ui_do_rescan`. This would mean adding a new function that does this.
-> > But if we unset _gitdir_cache in prime_gitdir_cache (I see no reason not
-> > to), we can get away with just something like:
-> >
-> >   proc ui_do_rescan {} {
-> >   	rescan {prime_gitdir_cache; ui_ready}
-> >   }
-> >
-> > Though since `prime_gitdir_cache` does not really depend on the rescan
-> > being finished, something like this would also work fine:
-> >
-> >   proc ui_do_rescan {} {
-> >   	rescan ui_ready
-> >   	prime_gitdir_cache
-> >   }
-> 
-> That was my first attempt. However, there is a very important piece of
-> code that is even still quoted above: that `if {$rescan_active > 0 ||
-> ![lock_index read]} return` part.
-> 
-> I do _not_ want to interfere with an actively-going-on rescan. If there
-> is an active one, I don't want to re-prime the `_gitdir` cache.
+Hi Harish,
 
-Good catch! In that case I suppose refreshing the cache in $after would 
-be the way to go (IOW, the former of my two suggestions). Anything 
-$after won't get executed if we return early from that check.
+Sorry for the late reply. Couldn't find much time last few days.
+
+On 07/10/19 11:43AM, Harish Karumuthil wrote:
+> Hi Pratyush, Regarding your messages,
+> 
+> >On Sun, 2019-10-06 at 02:31 +0530, Pratyush Yadav wrote:
+> > You don't need to "set up" an email client with git-send-email. 
+> > git-send-email is an email client itself. Well, one which can only send 
+> > emails.
+> 
+> For now, I am sticking with a mail client ( evolution ) which does minimal
+> ( or atleast transparent ) preprocessing  ( Tab => space conversion , line
+> wrapping  etc ).
+> Now I can send patches using the output of `git diff --patch-with-stat`
+> command and I hope is it enough for now.
+> Personaly I dont' like any solution which requires storing our mail password
+> as a plain text file.
+
+I'm afraid this won't work. The '.patch' file that `git-format-patch` 
+generates also contains your commit message and the author information. 
+All those are needed to properly convert your patch to a commit in my 
+repo. The output of `git diff --patch-with-stat` won't be enough.
+
+As for not wanting to store your mail password in a plain text file, 
+check out [0].
+
+And then there is GitGitGadget too, which I'd recommend since you seem 
+to be having trouble sending patches directly :).
  
-> That was the reason why I put the additional code into `rescan` rather
-> than into `ui_do_rescan()`.
+> > You haven't sent '/submit' over there, so those emails aren't in the 
+> > list (and my inbox) yet. You need to comment with '/submit' (without 
+> > the quotes) to tell GitGitGadget to send your PR as email.
 > 
-> Ciao,
-> Johannes
+> I thought, lets finalize discussion about all the changes here in mail
+> thread   it self before submitting the patch. Otherwise, That is why I didn't
+> submitted the patch.
+
+Makes sense.
+ 
+> > One point I forgot to mention earlier was that I'm honestly not a big 
+> > fan of separating the binding and accelerator label. I understand that 
+> > you might not have the time to do this, but I think it is still worth 
+> > mentioning. Maybe I will implement something like that over your patch. 
+> > But it would certainly be nice if you can figure it out :).
 > 
-> >
-> > This would allow us to do these two things in parallel since `rescan` is
-> > asynchronous. But that would also mean it is possible that the status
-> > bar would show "Ready" while `prime_gitdir_cache` is still executing.
-> >
-> > I can't really make up my mind on what is better. I'm inclining on using
-> > the latter way, effectively trading a bit of UI inconsistency for
-> > performance (at least in theory).
-> >
-> > Thoughts?
-> >
-> > > +		array unset _gitdir_cache
-> > > +		prime_gitdir_cache
-> > > +	}
-> > > +
-> > >  	repository_state newType newHEAD newMERGE_HEAD
-> > >  	if {[string match amend* $commit_type]
-> > >  		&& $newType eq {normal}
+> I think there is a small missunderstanind in that point.
+> 
+> I agree that, in the initial implementation ( which I did @ 2016 ) menu
+> labels were separated from binding keys. But in the last update, it is not
+> like that.
+> 
+> Currently, user only need to specify single config value which is
+> `guitool.<name>.gitgui-shortcut` and don't have to specify accel-lable
+> separatly.
+> Label is generated from the shortcut.
+
+Thanks for clarifying. It indeed was a misunderstanding.
+ 
+> > Either ways, detecting an existing shortcut is pretty easy. The `bind` 
+> > man page [1] says:
+> > 
+> >   If sequence is specified without a script, then the script currently 
+> >   bound to sequence is returned, or an empty string is returned if there 
+> >   is no binding for sequence.
+> > 
+> > So you can use this to find out if there is a binding conflict, and warn 
+> > the user.
+> 
+> Will try this. Thanks!
+
+[0] https://www.softwaredeveloper.blog/git-credential-storage-libsecret
 
 -- 
 Regards,
