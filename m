@@ -7,65 +7,98 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C88E01F4C0
-	for <e@80x24.org>; Sun, 13 Oct 2019 06:56:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D2831F4C0
+	for <e@80x24.org>; Sun, 13 Oct 2019 07:18:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728198AbfJMG4L (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Oct 2019 02:56:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46864 "HELO cloud.peff.net"
+        id S1728080AbfJMHPC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Oct 2019 03:15:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46882 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728080AbfJMG4L (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Oct 2019 02:56:11 -0400
-Received: (qmail 5715 invoked by uid 109); 13 Oct 2019 06:56:10 -0000
+        id S1727738AbfJMHPC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Oct 2019 03:15:02 -0400
+Received: (qmail 5904 invoked by uid 109); 13 Oct 2019 07:15:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 13 Oct 2019 06:56:10 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 13 Oct 2019 07:15:01 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15774 invoked by uid 111); 13 Oct 2019 06:59:08 -0000
+Received: (qmail 15872 invoked by uid 111); 13 Oct 2019 07:17:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 13 Oct 2019 02:59:08 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 13 Oct 2019 03:17:59 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 13 Oct 2019 02:56:10 -0400
+Date:   Sun, 13 Oct 2019 03:15:01 -0400
 From:   Jeff King <peff@peff.net>
-To:     James Coglan <jcoglan@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        James Coglan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 07/11] graph: commit and post-merge lines for left-skewed
- merges
-Message-ID: <20191013065609.GA30601@sigill.intra.peff.net>
+To:     James Coglan via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     James Coglan <jcoglan@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/11] Improve the readability of log --graph output
+Message-ID: <20191013071500.GA30652@sigill.intra.peff.net>
 References: <pull.383.git.gitgitgadget@gmail.com>
- <6c173663aac37f1d314db8637cf4a243066b8078.1570724021.git.gitgitgadget@gmail.com>
- <9fe7f2d9-2108-5cf6-dcd7-06d91e74e98b@gmail.com>
- <204c7479-c78d-54ff-5ece-397b4c31804c@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <204c7479-c78d-54ff-5ece-397b4c31804c@gmail.com>
+In-Reply-To: <pull.383.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 11, 2019 at 06:04:21PM +0100, James Coglan wrote:
+On Thu, Oct 10, 2019 at 09:13:42AM -0700, James Coglan via GitGitGadget wrote:
 
-> > I should have noticed in your earlier commits, but why don't you keep
-> > the output inside the test suite? You can start with "cat >expect <<-EOF"
-> > to have it ignore leading whitespace. Sorry if there's something else about
-> > this that is causing issues.
+> A final addition to that set of changes fixes the coloring of dashes that
+> are drawn next to octopus merges, in a manner compatible with all these
+> changes. The early commits in this set are refactorings that make the
+> functional changes easier to introduce.
+
+As somebody who has pondered the octopus coloring code (for an
+embarrassingly long time considering that it still has some bugs!), let
+me just say thank you for taking this on. :)
+
+Moreover, I'll echo Dscho's comments elsewhere on the quality of this
+series. It's a tricky topic to explain, and the way you've broken it up,
+along with the commit messages, comments, and diagrams made it much
+easier to follow.
+
+Others have already commented on things I saw while reading it, so I'll
+just add a few more thoughts.
+
+> This series of patches are designed to improve the output of the log --graph
+> command; their effect can be summed up in the following diagram:
 > 
-> I was following a pattern used in t/t4202-log.sh. I believe it was
-> easier to debug these tests with the setup and expectations split into
-> separate blocks, but I wouldn't be opposed to merging them.
+>     Before                    After
+>     ------                    -----
+> 
+>     *
+>     |\
+>     | *                       *
+>     | |\                      |\
+>     | | *                     | *
+>     | | |                     | |\
+>     | |  \                    | | *
+>     | *-. \                   | * |
+>     | |\ \ \                  |/|\|
+>     |/ / / /                  | | *
+>     | | | /                   | * |
+>     | | |/                    | |/
+>     | | *                     * /
+>     | * |                     |/
+>     | |/                      *
+>     * |
+>     |/
+>     *
 
-Some of the older tests used that style, but we've been slowly
-modernizing (I know, it's hard to pick up the style by example in such
-cases!). The usual style these days is making sure everything goes in a
-test_expect_* block, with "<<-" to indent here-documents.
+I wondered if anybody would prefer the sparseness of the "before"
+diagram, and if that would merit having two modes that could selected at
+runtime. I'm not sure I'd want to carry the code for both types, though;
+it seems like a recipe for the non-default output format to accrue a
+bunch of bugs (since the graph code has proven itself to be a magnet for
+off-by-ones and other weirdness).
 
-Another minor style nit that you picked up from t4202:
+Diffing the output of "git diff --color --graph --oneline" on git.git
+both before and after your patch, the changes all look generally
+positive to me. The graph above is pretty dense, but that's not really
+what real-world graphs look like; it was designed to show off the
+changes.
 
-> >> +cat > expect <<\EOF
-
-We'd omit the space after ">" here.
+That plus the fact that you're fixing real bugs (like the octopus
+coloring) makes me inclined to just move to your suggested output.
 
 -Peff
