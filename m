@@ -2,91 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4A221F4C0
-	for <e@80x24.org>; Sun, 13 Oct 2019 07:38:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78CF21F4C0
+	for <e@80x24.org>; Sun, 13 Oct 2019 11:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728349AbfJMHix (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Oct 2019 03:38:53 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46910 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728198AbfJMHix (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Oct 2019 03:38:53 -0400
-Received: (qmail 6148 invoked by uid 109); 13 Oct 2019 07:38:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 13 Oct 2019 07:38:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16007 invoked by uid 111); 13 Oct 2019 07:41:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 13 Oct 2019 03:41:51 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 13 Oct 2019 03:38:52 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        christian.couder@gmail.com, git@vger.kernel.org,
-        chriscool@tuxfamily.org, ramsay@ramsayjones.plus.com
-Subject: Re: [RFC PATCH 10/10] pack-objects: improve partial packfile reuse
-Message-ID: <20191013073851.GA7001@sigill.intra.peff.net>
-References: <20190913130226.7449-11-chriscool@tuxfamily.org>
- <20191010235952.174426-1-jonathantanmy@google.com>
- <20191011180125.GA20601@sigill.intra.peff.net>
- <xmqqsgnyg76d.fsf@gitster-ct.c.googlers.com>
+        id S1728902AbfJMLF6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Oct 2019 07:05:58 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5]:3192 "EHLO
+        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728620AbfJMLF6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 13 Oct 2019 07:05:58 -0400
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+        by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x9DAvEMl060643
+        for <git@vger.kernel.org>; Sun, 13 Oct 2019 07:05:57 -0400
+Received: from e06smtp01.uk.ibm.com (e06smtp01.uk.ibm.com [195.75.94.97])
+        by mx0b-001b2d01.pphosted.com with ESMTP id 2vkveqq056-1
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Sun, 13 Oct 2019 07:05:56 -0400
+Received: from localhost
+        by e06smtp01.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
+        for <git@vger.kernel.org> from <ajd@linux.ibm.com>;
+        Sun, 13 Oct 2019 12:05:55 +0100
+Received: from b06cxnps4074.portsmouth.uk.ibm.com (9.149.109.196)
+        by e06smtp01.uk.ibm.com (192.168.101.131) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
+        (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+        Sun, 13 Oct 2019 12:05:52 +0100
+Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com [9.149.105.58])
+        by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id x9DB5pm548300184
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Sun, 13 Oct 2019 11:05:51 GMT
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 8C8454C050;
+        Sun, 13 Oct 2019 11:05:51 +0000 (GMT)
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 390B94C04A;
+        Sun, 13 Oct 2019 11:05:51 +0000 (GMT)
+Received: from ozlabs.au.ibm.com (unknown [9.192.253.14])
+        by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+        Sun, 13 Oct 2019 11:05:51 +0000 (GMT)
+Received: from [9.102.57.136] (unknown [9.102.57.136])
+        (using TLSv1.2 with cipher AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by ozlabs.au.ibm.com (Postfix) with ESMTPSA id ED0CAA00F3;
+        Sun, 13 Oct 2019 22:05:48 +1100 (AEDT)
+Subject: Re: [PATCH] parser: Unmangle From: headers that have been mangled for
+ DMARC purposes
+To:     Jeff King <peff@peff.net>, Daniel Axtens <dja@axtens.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Christian Schoenebeck <qemu_oss@crudebyte.com>,
+        patchwork@lists.ozlabs.org, Eric Blake <eblake@redhat.com>,
+        git@vger.kernel.org
+References: <20191010062047.21549-1-ajd@linux.ibm.com>
+ <20191010194132.GA191800@google.com>
+ <20191010225405.GA19475@sigill.intra.peff.net>
+ <06541640-7eca-bc40-5c4b-9aa682d774a8@linux.ibm.com>
+ <87pnj3thja.fsf@dja-thinkpad.axtens.net>
+ <20191011155151.GA19395@sigill.intra.peff.net>
+From:   Andrew Donnellan <ajd@linux.ibm.com>
+Date:   Sun, 13 Oct 2019 22:05:49 +1100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqsgnyg76d.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20191011155151.GA19395@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-AU
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+x-cbid: 19101311-4275-0000-0000-00000371A509
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19101311-4276-0000-0000-00003884B201
+Message-Id: <a59c318f-476b-c3ab-fa6b-5067503820a3@linux.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-10-13_05:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1910130112
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 12, 2019 at 09:04:58AM +0900, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+On 12/10/19 2:51 am, Jeff King wrote:
+> On Sat, Oct 12, 2019 at 02:42:49AM +1100, Daniel Axtens wrote:
 > 
-> > The current code does so by creating a new entry in the reused_chunks
-> > array. In the worst case that can grow to have the same number of
-> > entries as we have objects. So this code was an attempt to pad the
-> > header of a shrunken entry to keep it the same size. I don't remember
-> > all the problems we ran into with that, but in the end we found that it
-> > didn't actually help much, because in practice we don't end up with a
-> > lot of chunks anyway.
+>>>> where a possible solution was to get senders to use in-body From
+>>>> headers even when sending their own patches.
+>> [...]
+>> I'm not sure this solution is correct.
+>>
+>> If I take a patch from Andrew, backport it, and send to the list, Andrew
+>> will be listed in the in-body From. However, he shouldn't be the sender
+>> from the Patchwork point of view: he shouldn't get the patch status
+>> notification emails - I should. We don't want to spam an original author
+>> if their patch is backported to several different releases, or picked up
+>> and resent in someone else's series, etc etc. So unless I've
+>> misunderstood something, we can't rely on the in-body from matching
+>> Patchwork's understanding of the sender.
 > 
-> Hmm, I am kind of surprised that the decoding side allowed such a
-> padding.
+> Yeah, it may be that patchwork and git have two different priorities
+> here. From my perspective, the problem is getting the patch into a git
+> repo with the right author name. But patchwork may want to make the
+> distinction between author and sender.
+> 
 
-IIRC, the "padding" is just a sequence of 0-length-plus-continuation-bit
-varint bytes. And for some reason it worked for the size but not for the
-delta offset value. So the decoder wasn't aware of it, but simply hadn't
-explicitly enforced that there weren't pointless bytes.
+Yes, I was referring to the git am case, not the Patchwork case.
 
-But yeah, it seems like a pretty hacky thing to rely on. I don't think
-we ever even ran that code in production, and the if(0) was just
-leftover experimental cruft.
+-- 
+Andrew Donnellan              OzLabs, ADL Canberra
+ajd@linux.ibm.com             IBM Australia Limited
 
-> > I think the original code may simply have been buggy and nobody noticed.
-> > Here's what I wrote when this line was added in our fork:
-> [...]
-> Impressed by the careful thinking here.
-
-It's unfortunate that the reasoning there wasn't part of the earlier
-submission. I'm not sure how to reconcile that. The patches as
-originally written can't be applied now (they were munged over the years
-during merges with upstream). And some of them are just "oops, fix this
-dumb bug" trash that we wouldn't want to take anyway.
-
-So I think at best they're something for somebody to manually look at
-and try to incorporate into the commit messages of the revised patch
-series. But I didn't give them to Christian to work with because it's
-hard to even figure out which patches are still relevant. I wish I had a
-better tooling there. I've been playing with something that looks at a
-diff and then tries to blame each of the touched lines. Which is sort of
-like the "-L" line-log, I guess, but for a very non-contiguous set of
-lines.
-
--Peff
