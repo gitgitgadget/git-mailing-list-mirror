@@ -2,91 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A73121F4C0
-	for <e@80x24.org>; Mon, 14 Oct 2019 01:35:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3B151F4C0
+	for <e@80x24.org>; Mon, 14 Oct 2019 02:55:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729495AbfJNBfZ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Oct 2019 21:35:25 -0400
-Received: from mail-40133.protonmail.ch ([185.70.40.133]:13862 "EHLO
-        mail-40133.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729444AbfJNBfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Oct 2019 21:35:25 -0400
-Date:   Mon, 14 Oct 2019 01:35:16 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=default; t=1571016922;
-        bh=eEON2EeDZ7HPeFKlA9j7sPvrMMnvnLOJrd0yoGNYX8g=;
-        h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
-         From;
-        b=BIypkmDK0w3e2SZqkmv9k1FYInD/lyXGoKQRylTO+9OexBbwIQthtbllLKWWtjXg7
-         fz4la5Bho6cObg2jydjDZgK+iMJWYgSoyAjvH+uxjevmpXXj7Swof7LzhEPuPSWOq2
-         F7uELyj93JWHHDxmtDVMNtEySZ2JWeRqour3KwVo=
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   Ron <ronazek@protonmail.com>
-Reply-To: Ron <ronazek@protonmail.com>
-Subject: Re: Local Config File: Submodule initialization looks broken with the --recurse-submodules option when cloning a repository
-Message-ID: <ZkLbpInDB0A-uWL3lVcy67PplIX56Pr7qakiHnXnP4OInRFs20ZPH3wDZl-LNoCNRv-_4HlTwa9LLkrWjdVFPshEi-JXVAhHwsLdp2ivJew=@protonmail.com>
-In-Reply-To: <Otial29UjnjP-PuGN9Mwnd8k4q8Alof6wWOxFqYv_mXpNbumrljWGN44RvNZYIkC-in7KSXzjFjbceYglTW4iACRcven7CyHUUSUcPCWbL4=@protonmail.com>
-References: <Otial29UjnjP-PuGN9Mwnd8k4q8Alof6wWOxFqYv_mXpNbumrljWGN44RvNZYIkC-in7KSXzjFjbceYglTW4iACRcven7CyHUUSUcPCWbL4=@protonmail.com>
-Feedback-ID: RMis9b9KHKlvsb8KKkeurfBt3UTu5TN-1L1t5jXjkqXfFdr8BIyQs5Ws7O_ywm8jXx2U-EI3XDzu_Y-JlzMpfw==:Ext:ProtonMail
+        id S1729825AbfJNCzV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Oct 2019 22:55:21 -0400
+Received: from mail-qt1-f182.google.com ([209.85.160.182]:40733 "EHLO
+        mail-qt1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729749AbfJNCzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Oct 2019 22:55:21 -0400
+Received: by mail-qt1-f182.google.com with SMTP id m61so23395130qte.7
+        for <git@vger.kernel.org>; Sun, 13 Oct 2019 19:55:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=JqG8FztTwkR3wttfYb0m0bzhvxDjdmYPIQHTIB3O6us=;
+        b=p2c3Lc8ljMQlKJvjAdYj4FmrgjzRpyi1zszOtNz7LGkkXgP4b6ZzUO68vsWgEa7xTu
+         +rChH1MLpy+I5AGL8dmPVJsc0jmTdXwg2p9deT5Re0c+i8M9lIsJ/vYFA03o1mYWQ3v7
+         dZVAtVF9Is5jQVyFoL5FgjhWw3Lc9Dsf39mXJHcBqKAfF6pMUB/nEgXrVrhI8/l0cxEH
+         pLBOsazWU2ocsfZdc0idunISfoyEMQEz6Zm4sz+2dHTbKsZfze2uT9eIoilh4vUm45zQ
+         4WSKZJRk0o/OJ4cU0NjWor/GEC+YqGXWXgOU2l7V0XRI98FhrBs4FDzjEUJtISJn/O30
+         M7Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=JqG8FztTwkR3wttfYb0m0bzhvxDjdmYPIQHTIB3O6us=;
+        b=r9bHXhBfPITIljteQCZ1YL6aixjuBzHNbphjlAaZ0R5pqR8fsZ+EVkMsYASHwKlEh2
+         n83bKuUGyDJpy1JIiusFHYf31J+YaLXxw2LmXCDZg626VQX77DFKlfHJ1PiAvIHOEeWk
+         wAcJvllLiwuwfDpzyn1IOXbiYMXoMF6JHXLyUBZ1ZAsKhK6HU+A2Xu7mQ/EZOiR3qm20
+         mv8lZoGocuDGJb4zXEMLmKYJhWtz0ws8ijQvVJb/h6KawOQ7IFXS+VPYqGdsvHipSMLA
+         hd56IfTBFEPGk51BX8Azoi5AziLBp97rLJq0NSz7pGFlrSQjoCLRbrTfKNA5lEjJ9HVG
+         8eTA==
+X-Gm-Message-State: APjAAAWFjYKVt+U2xHEAM0cMm9tNH0oRD0c7zW7Mdxz05Jlh68yRFsYq
+        ia0+vO01HBnnPFY3YYI5/Lk542iPip7dXJ3eCGg=
+X-Google-Smtp-Source: APXvYqz7ahi8fqOCjEt8089TJKujlPjmr02Ob6+cgaP9qpoQZzC/Sk3Q7b4tE9FKcoelxawJx036xR8qUqxCwIqhN7c=
+X-Received: by 2002:ad4:5847:: with SMTP id de7mr2468276qvb.168.1571021719002;
+ Sun, 13 Oct 2019 19:55:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <f5eba6e8-b51a-d1a0-0d8f-0aed76d803c9@naver.com>
+In-Reply-To: <f5eba6e8-b51a-d1a0-0d8f-0aed76d803c9@naver.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Mon, 14 Oct 2019 10:55:07 +0800
+Message-ID: <CANYiYbF3T=1e-ro5mOBWYjhvRWyr8--mZCa8JQMoPB52w505vQ@mail.gmail.com>
+Subject: Re: Is GIT GUI still in progress?
+To:     =?UTF-8?B?6rmA6rG07Jqw?= <rlarjsdn122@naver.com>,
+        Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Initially reported for GFW on version 2.20.1, I have tested with Linux Mi=
-nt Mate 19.1 Tessa which by default uses git version 2.17.1
+=EA=B9=80=EA=B1=B4=EC=9A=B0 <rlarjsdn122@naver.com> =E4=BA=8E2019=E5=B9=B41=
+0=E6=9C=8810=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=8D=8812:02=E5=86=99=E9=
+=81=93=EF=BC=9A
 >
-> It produces a config file with the relevant submodule entries looking lik=
-e this:
+> Hello.
 >
-> -------------------------------------------------------------------------=
----------------------------------------------------------------------------=
--------------------------------------------------------------------
+> I have a question whether the GIT GUI project still in progress or not
+> because I want to contribute to translating GIT GUI into Korean. I asked
+> prati0100 who is a maintainer of GIT GUI on
+> Github(https://github.com/prati0100/git-gui), but he doesn't know the
+> project is on.
+> If the project is in progress, please reply this E-mail with how to
+> contribute the GIT GUI for translation.
 >
-> [submodule]
-> active =3D .
+> Thank you.
 >
-> [submodule "Submodule/Path"]
-> url =3D https://github.com/organization/submodule.git
+> --
+> Signed-off-by: Kim Geonwoo (=EA=B9=80=EA=B1=B4=EC=9A=B0)<rlarjsdn122@nave=
+r.com>
 >
-> -------------------------------------------------------------------------=
---------------------------------
->
-> Instead of that, which is produced by manually initializing a submodule a=
-nytime after cloning:
->
-> -------------------------------------------------------------------------=
-------------------------
->
-> [submodule "Submodule/Path"]
-> active =3D true
-> url =3D https://github.com/organization/submodule.git
->
-> -------------------------------------------------------------------------=
-----------------------
->
-> Sent with ProtonMail Secure Email.
 
-I've got someone to test this with the latest 2.23.0 version on archlinux.
+Git GUI is a stand-alone project which is periodically merged to Git
+project by a subtree merge. According to the latest
+SubmittingPatches[1] documentation, git-gui is managed by Pratyush
+Yadav in a separate project[2].
 
-It is still happening:
+As a separate  project, the git-l10n project will merge l10n
+contributions into itself and then merge them to Git as a whole
+through a subtree merge. As what README.md[3] of git-gui says,
+contributing to git-gui should using mailing list. This means l10n
+contributors for git-guil, have to use git-format-patch and git
+send-email commands to send patches to the mailing list, which is
+inconvenience for git-gui l10n contributors. I suppose using a
+dedicate git-guil l10n coordinator repository or simply using pull
+requests of "prati0100/git-gui" as the l10n contribution workflow,
+@Yadav.
 
-git clone --depth=3D1 --recurse-submodules --origin upstream https://github=
-.com/git-for-windows/git;
-git -C git config --get submodule.active
-expected true, got .
-
-
-Anything more I need to add to help this get solved?
-
-Sent with ProtonMail Secure Email.
-
+[1] https://github.com/git/git/blob/master/Documentation/SubmittingPatches#=
+L375
+[2] https://github.com/prati0100/git-gui
+[3] https://github.com/prati0100/git-gui/blob/master/README.md
