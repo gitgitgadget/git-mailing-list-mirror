@@ -2,109 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0B761F4C0
-	for <e@80x24.org>; Mon, 14 Oct 2019 17:51:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B6801F4C0
+	for <e@80x24.org>; Mon, 14 Oct 2019 17:58:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731897AbfJNRvl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Oct 2019 13:51:41 -0400
-Received: from relay1-d.mail.gandi.net ([217.70.183.193]:48033 "EHLO
-        relay1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731835AbfJNRvk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Oct 2019 13:51:40 -0400
-X-Originating-IP: 1.186.12.3
+        id S1730878AbfJNR6D (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Oct 2019 13:58:03 -0400
+Received: from relay12.mail.gandi.net ([217.70.178.232]:44881 "EHLO
+        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730864AbfJNR6D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Oct 2019 13:58:03 -0400
 Received: from localhost (unknown [1.186.12.3])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay1-d.mail.gandi.net (Postfix) with ESMTPSA id 80054240008;
-        Mon, 14 Oct 2019 17:51:38 +0000 (UTC)
-Date:   Mon, 14 Oct 2019 23:21:36 +0530
+        by relay12.mail.gandi.net (Postfix) with ESMTPSA id 55CB9200002;
+        Mon, 14 Oct 2019 17:58:00 +0000 (UTC)
+Date:   Mon, 14 Oct 2019 23:27:48 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     kdnakt via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        kdnakt <a.kid.1985@gmail.com>
-Subject: Re: [PATCH 1/1] Improve Japanese translation
-Message-ID: <20191014175135.mbrmwyydnnktkqap@yadavpratyush.com>
-References: <pull.396.git.1571016698.gitgitgadget@gmail.com>
- <3dc8687d9f93a08cdb9e7de8d159df6aa0b05c02.1571016698.git.gitgitgadget@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: Git Gui: Branch->create currently fails...
+Message-ID: <20191014175747.llstv7oxba2c23qy@yadavpratyush.com>
+References: <bfe78474-0eb9-fc5e-1371-3b055308169a@iee.email>
+ <20191008000003.qlulu5ie36eij4uq@yadavpratyush.com>
+ <e0b45696-7945-4b7d-62e7-bff46eb8129a@iee.email>
+ <20191013185007.hogizh23jomaswzx@yadavpratyush.com>
+ <fccde9f3-7c5c-f8fb-1af2-bd56f48f7877@iee.email>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <3dc8687d9f93a08cdb9e7de8d159df6aa0b05c02.1571016698.git.gitgitgadget@gmail.com>
+In-Reply-To: <fccde9f3-7c5c-f8fb-1af2-bd56f48f7877@iee.email>
 User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi kdnakt,
-
-I updated the commit message subject locally to "git-gui: improve 
-Japanese translation" to match our commit message style.
-
-On 14/10/19 01:31AM, kdnakt via GitGitGadget wrote:
-> From: kdnakt <a.kid.1985@gmail.com>
+On 14/10/19 01:45PM, Philip Oakley wrote:
+> Hi Pratyush,
+> On 13/10/2019 19:50, Pratyush Yadav wrote:
+> > Just to be sure it is a git-gui/Tcl issue and not an upstream 
+> > git.git
+> > issue, can you run:
+> > 
+> >    fmt='list %(refname) [list %(objecttype) %(objectname) [concat %(taggername) %(authorname)] [reformat_date [concat %(taggerdate) %(authordate)]] %(subject)] [list %(*objecttype) %(*objectname) %(*authorname) [reformat_date %(*authordate)] %(*subject)]'
+> >    git for-each-ref --tcl --format="$fmt" --sort=-taggerdate refs/heads refs/remotes refs/tags
+> > 
+> > and see if the output contains that truncated line? If it does, then
+> > that means the bug is in git-for-each-ref. Note that this is bash
+> > syntax, and I did a test run on Linux. Do adjust it for Windows and your
+> > shell if needed.
 > 
-> Signed-off-by: kdnakt <a.kid.1985@gmail.com>
-> ---
->  git-gui/po/ja.po | 9 +++++----
-
-You based this patch on the git.git repo. For now, I munged the patch 
-and applied to my tree, but for future contributions, please base your 
-patches on the git-gui tree. That would mean your paths in the diff 
-would look like: 'po/ja.po' instead of 'git-gui/po/ja.po/'. The 
-instructions to do that in GitGitGadget can be found at [0].
-
->  1 file changed, 5 insertions(+), 4 deletions(-)
+> ran that bit of code (as distinct commands), and got (last two lines):
 > 
-> diff --git a/git-gui/po/ja.po b/git-gui/po/ja.po
-> index 208651c1af..2f61153ab9 100644
-> --- a/git-gui/po/ja.po
-> +++ b/git-gui/po/ja.po
-> @@ -4,14 +4,15 @@
->  #
->  # しらいし ななこ <nanako3@bluebottle.com>, 2007.
->  # Satoshi Yasushima <s.yasushima@gmail.com>, 2016.
-> +# KIDANI Akito <a.kid.1985@gmail.com>, 2019.
->  #
->  msgid ""
->  msgstr ""
->  "Project-Id-Version: git-gui\n"
->  "Report-Msgid-Bugs-To: \n"
->  "POT-Creation-Date: 2016-05-27 17:52+0900\n"
-> -"PO-Revision-Date: 2016-06-22 12:50+0900\n"
-> -"Last-Translator: Satoshi Yasushima <s.yasushima@gmail.com>\n"
-> +"PO-Revision-Date: 2019-10-13 23:20+0900\n"
-> +"Last-Translator: KIDANI Akito <a.kid.1985@gmail.com>\n"
->  "Language-Team: Japanese\n"
->  "Language: ja\n"
->  "MIME-Version: 1.0\n"
-> @@ -661,7 +662,7 @@ msgstr ""
->  #: lib/merge.tcl:108
->  #, tcl-format
->  msgid "%s of %s"
-> -msgstr "%s の %s ブランチ"
-> +msgstr "%2$s の %1$s ブランチ"
->  
->  #: lib/merge.tcl:122
->  #, tcl-format
-> @@ -956,7 +957,7 @@ msgstr "エラー: コマンドが失敗しました"
->  #: lib/checkout_op.tcl:85
->  #, tcl-format
->  msgid "Fetching %s from %s"
-> -msgstr "%s から %s をフェッチしています"
-> +msgstr "%2$s から %1$s をフェッチしています"
->  
->  #: lib/checkout_op.tcl:133
->  #, tcl-format
+> [list "" "" "" [reformat_date ""] ""]
+> list "refs/heads/branch-patterns-v2" [list "commit"
+> "d5a799d8833b0ae195915eefd5365f3fc4c7c0a4" [concat "" "Philip Oakley"]
+> [reformat_date [concat "" "Sat Jun 8 22:50:06 2019 +0100"]]
+> "t3203-branch-output: test -a & -r pattern options"] [list "" "" ""
+> [reformat_date ""] ""]
+> list "refs/heads/branch-patterns" [list "commit"
+> "b2453cea29b58f2ec57f9627b2456b41568ba5da" [concat "" "Philip Oakley"]
+> [reformat_date [concat "" "Tue May 28 20:22:09 2019 +0100"]] "squash! doc
+> branch: provide examples for listing remote tracking branches"] [list "" ""
+> "" [reformat_date ""] ""]
+> list "refs/heads/MSVC-README" [list "commit"
+> "056fb95c8e983ec07e9f5f8baa0b119bf3d13fed" [concat "" "Philip Oakley"]
+> [reformat_date [concat "" "Sun May 19 22:33:37 2019 +0100"]]
+> "compat/vcSegmentation fault
+> 
+> 
+> Not exactly the same, but almost. Ends the same place, with as similar short
+> line.
+> This is run inside the bash that is started directly by the git-for-windows
+> sdk start icon. (Target: C:\git-sdk-64\git-bash.exe�� Stat in:
+> C:/git-sdk-64/)
+> 
+> so looks to be MSYS2/bash related.
 
-Thanks for the translation update. Will queue.
-
-[0] https://github.com/prati0100/git-gui#using-gitgitgadget
+Ah, so it is an upstream issue. I guess we can just report it and wait 
+for them to fix it.
 
 -- 
 Regards,
