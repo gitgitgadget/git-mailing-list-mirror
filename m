@@ -2,82 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15CAD1F4C0
-	for <e@80x24.org>; Mon, 14 Oct 2019 21:46:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A3351F4C0
+	for <e@80x24.org>; Mon, 14 Oct 2019 22:02:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730340AbfJNVqf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Oct 2019 17:46:35 -0400
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:44631 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729054AbfJNVqe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Oct 2019 17:46:34 -0400
-Received: by mail-pf1-f201.google.com with SMTP id b204so14287125pfb.11
-        for <git@vger.kernel.org>; Mon, 14 Oct 2019 14:46:34 -0700 (PDT)
+        id S1731190AbfJNWCM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Oct 2019 18:02:12 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:44154 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730180AbfJNWCM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Oct 2019 18:02:12 -0400
+Received: by mail-pg1-f196.google.com with SMTP id e10so6841549pgd.11
+        for <git@vger.kernel.org>; Mon, 14 Oct 2019 15:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=C8VqkIMNyWf3PI9ss2hco14HvPoa/3UaI2eTagCPP/g=;
-        b=v9HXerdz58B+dctsv2A7Bx47vhAsT1cBcmuC9XETyHlzWG9oSx608/1N240C5Y5Y40
-         ADqykTgzIyJW2A8jpKgIcLDSWsnt+xSPqG/nSX56fpmBRQUww2eS6jnDDOJXGxLtl3TQ
-         1qWMEMjtwfdzfDXj7CSqRPbbhr8rVawdKnFUm60PL7EUTN/nWOCoqh7m8NGWmwsXxSia
-         I4bbkTs3Pqi2N5enffGN08TEHPvJ+QIhqea+dtab/zEqKFBcq22Obg+uykBXOEU2RuJA
-         PL2bl+ffkLndre3bG08iZlrWLhANPkDQQnAYbUu3ufj1/STTjuARQn/9ACOMhV5ZRbK4
-         4dUQ==
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ePGzaa4aPCqZWT7KObo8HuG58RUOB5ElK1ZJzLglmyk=;
+        b=DmAu9YYYwmO3IERpb4frzYD6jz/ehSh21W2QWTwnQP6LGLvSq8BSGbIgrHSpcZCnP6
+         0ChQtu8uiqONHseQudZNKcOWTEVzLUyO8Vt4Nk7qAX0VVKciz5Cfk8M1syeba373HQgy
+         erbf0VZGxTbutM16kV/dc5qhzj8LeKjkZ0OYmwLsPQPI8rsdGIsm/aLvRkiDyosbIUy8
+         PWk4OZJkj0vvqHTMiHvP1nPdt3mKj+ALaVjZnQdN3BgBjkz9dfM0r9yBo01zSFUrvT2w
+         cANdhAENt6F9L3DunYpYsrATxo8k8IT2puptvJizkcFoN7VMUfg7RXq7e+hDoSK8/d8c
+         533A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=C8VqkIMNyWf3PI9ss2hco14HvPoa/3UaI2eTagCPP/g=;
-        b=YbidtFJfBlZ2YDpE3EJpfzQJX9KVsZh1+mW2AwBfkIMo1LHZl5DRQHfOW891HGjbC7
-         msJPriDTz/H02MTQiPCeGtyYMPxQnTsYD4PXjbiI43gwqOdQuj4wF/OBACRT3IkfllYl
-         bYjdQglz+FNTrugzLbfLjEuS1vqvSzi9K9bf6jzPEJJdJ2uryube3fCSt1yiwU6IZhf+
-         Ge/aVjSojBt+P6GZou3ixvtzdqxZr7AAQ3QXhHimy/dbfNrdOpQeRF0jf+5ATs8KKXSZ
-         LJtV36rGOPyAeEk9HnSsCZ+9ifz7S4hTCRA92m6AWdqD6McYSyzFClo2XGukYWIM7xC5
-         uwQQ==
-X-Gm-Message-State: APjAAAV5uCLMzWlX19HA5Elvwb0Q6wDX29sxqo0FmyQ5ZXU88MU89QQD
-        37Lvpts3XRVqcDnd/nafEyohw5RYGItNrLjgRNtR
-X-Google-Smtp-Source: APXvYqw8bfpTkylcKlxO99TLzSPNo6ZaRaCLVCTJCHX5pFOMLlFVr78xrZqJTzqnzPGJJSsH9BnF0AqbSxG3zDg+Auvv
-X-Received: by 2002:a65:5345:: with SMTP id w5mr26994147pgr.213.1571089593408;
- Mon, 14 Oct 2019 14:46:33 -0700 (PDT)
-Date:   Mon, 14 Oct 2019 14:46:29 -0700
-In-Reply-To: <20191014193734.GA13706@wambui>
-Message-Id: <20191014214629.134882-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20191014193734.GA13706@wambui>
-X-Mailer: git-send-email 2.23.0.700.g56cf767bdb-goog
-Subject: Re: [Outreachy] [PATCH] blame: Convert pickaxe_blame defined
- constants to enums
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     wambui.karugax@gmail.com
-Cc:     jonathantanmy@google.com, gitster@pobox.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ePGzaa4aPCqZWT7KObo8HuG58RUOB5ElK1ZJzLglmyk=;
+        b=o97uJQrqGv0bRJnUDoCI+0me8RLqKuxjXiN/xw+UtsVWPy0Grl2LKgnIvXG/bhhp+y
+         /4PJxeNc3DfSeXb4AZoRa3JoaQd3J4SzbarX8Rp+c0g5OFqo6XsP5M+THJBQ4mjw+zaO
+         3L9GDnE4rFjgLlwb/LY3+6iuq5OKEP2+b0ThbopvE4auIbHgZzVVf7fobfFv27GVlJfb
+         WpfmhT3U8GCPU09lDoAkv2rqx3OD9XjoXs54F3iNsq/Wd8xdy1gIwLh6VxXT5bkU7kEv
+         SCw0bCc1iQoDL5v122L5AjIvRHWXgHqyRqlzOrypAPM6jRnaB9MQy1X3ZwUHZ56489er
+         e5rA==
+X-Gm-Message-State: APjAAAXwIUBT1Ybqp4ve6hwKNal2r48OZvANQMOerLwOJyranem2jdMB
+        qKxpvYyRJqsuSASXANXdxWBLDwXvNp0=
+X-Google-Smtp-Source: APXvYqxM5HEy5fnitxq4JODP+Dnn1bwuEAnWzJrkY7iGaBEdrpWOWfAONm0r9CqW6ggb8smaj71tWw==
+X-Received: by 2002:aa7:8b02:: with SMTP id f2mr35600964pfd.31.1571090530866;
+        Mon, 14 Oct 2019 15:02:10 -0700 (PDT)
+Received: from wink-desktop.hsd1.ca.comcast.net ([2601:647:cb00:1b0::c0a9])
+        by smtp.gmail.com with ESMTPSA id p11sm20518895pgb.1.2019.10.14.15.02.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Oct 2019 15:02:09 -0700 (PDT)
+From:   Wink Saville <wink@saville.com>
+To:     git@vger.kernel.org
+Cc:     Wink Saville <wink@saville.com>, jacob.keller@gmail.com,
+        Johannes.Schindelin@gmx.de
+Subject: [RFC PATCH 0/1] Teach remote add a --prefix-tags option
+Date:   Mon, 14 Oct 2019 15:00:59 -0700
+Message-Id: <cover.1571089481.git.wink@saville.com>
+X-Mailer: git-send-email 2.16.2.7164.g7daebe18fb
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > Well, I agree that it could be better, but with the C language as we
-> > have it now, I still slightly prefer an enum to a list of #define. Both
-> > ways, we still have to manually enter values for each flag, but with
-> > enum, we get better debugger display (at least in gdb) and in the
-> > function declaration and definition, we can put a specific type (instead
-> > of "unsigned" or "int"). gdb supports the notion that a few people use
-> > enums this way too, but if we decide as a project to not use enums in
-> > this way, that's fine too. For what it's worth, I tried doing a search
-> > online, but most of the results I got was for C# (where it is
-> > recommended - they have a "[Flags]" attribute for enums), so maybe I am
-> > indeed in the minority.
-> 
-> I'll try to pick another set of constants to convert - before this is
-> agreed on.
+Hello,
 
-Thanks - perhaps that's the best way to proceed for now. Do you remember
-where you found the idea to convert #define to enum? Maybe I could add a
-note there to avoid converting bitsets/bitflags.
+This patch was originally created as a pull request on github [1] and
+then languisheh as I forgot about it. Recently I was asked to revive it
+and have done so. I've rebased on top of master and validated it still
+works.
+
+Please review.
+
+-- Wink
+
+[1]: https://github.com/git/git/pull/486
+
+Wink Saville (1):
+  Teach remote add the --prefix-tags option
+
+ Documentation/git-remote.txt |  8 +++++--
+ builtin/remote.c             | 42 ++++++++++++++++++++++++++++++++----
+ remote.c                     |  2 ++
+ 3 files changed, 46 insertions(+), 6 deletions(-)
+
+-- 
+2.16.2.7164.g7daebe18fb
+
