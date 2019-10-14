@@ -2,117 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF02E1F4C0
-	for <e@80x24.org>; Mon, 14 Oct 2019 01:31:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A73121F4C0
+	for <e@80x24.org>; Mon, 14 Oct 2019 01:35:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729659AbfJNBbn (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Oct 2019 21:31:43 -0400
-Received: from mail-wr1-f44.google.com ([209.85.221.44]:46487 "EHLO
-        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729359AbfJNBbn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Oct 2019 21:31:43 -0400
-Received: by mail-wr1-f44.google.com with SMTP id o18so17621992wrv.13
-        for <git@vger.kernel.org>; Sun, 13 Oct 2019 18:31:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=DwLUJ4MGpFfhsw0SfXGx04J6PxqISS5OC9Wletorryo=;
-        b=fc2uv0FVK2uLBlcFkl5EHVLP2Y44atRWNBbcnAVKxY7WewVVh2QewgqRL3hCs46pOx
-         vWhMmi77MUaHMnwT8VKjOjU7JDaTkdz2DMpUXRbx+mIcKqpZ7m0vP7uvSfxib+l7E+68
-         NdcuzcfGpHsoBpwMES+rE/WDLLbGgGMG4TXzmOa2tRfJ5n2CADjm432qD3yDqY0ABid5
-         /riOglibXa+PLhZCQNV6CXKSYlgPnLOw/Eq5Tqbb98M+xaLwttI1HvofdyuvRar7rIXC
-         Gb/kWJXJgmAJQuwREAvkEWayLV+UjLIMh24q1C/GqF+EXCgbeGJ09Q1naVG2DGJDDju6
-         HiTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DwLUJ4MGpFfhsw0SfXGx04J6PxqISS5OC9Wletorryo=;
-        b=NaA84yjb15iVNi0IoGKnnN/ZvwZHZOJE+gNujNIrDGmRepqIuUgJs7C/RGLiaGeJRt
-         iVmv5HojiQqRGTCn6JZXJY5htAUporb6bFqwLcSbLQmGzqRIV/skftod+2bUQ6FTF9OE
-         UkuwtYoTKYvi9thk1NRNEcBUZDSERKggX92QlKE6EnCrdic6yQ/tnnvxkL0JtHrQkQNN
-         cqA5m+7KoAdd+5PW4cu2AdavVjJYtVM+Ce4dcA1i81UHD0RrxalptaLK3K79JRgdYtTD
-         Yk1f3urfTp7zKYciz0+bSEtH2TiOY4Rg1eGZtfOJatXCtNkjGze5wPgEo2QXJfodIzXN
-         1S/Q==
-X-Gm-Message-State: APjAAAXJV6rzL5CUl+er5Gm1mMMcKHoSFRhAXTmMX3fCmTJ8zLpI3JNq
-        WOtHKYDYdxJhJMerUkJUAaY5QCTe
-X-Google-Smtp-Source: APXvYqxJkkSHQ9npLnwFFXQkC7wkCuiNCDLBpEgy1EDEPVqTYZBZJrdqvsIbWv78mAIBO44NfjVLbA==
-X-Received: by 2002:adf:b219:: with SMTP id u25mr22641523wra.327.1571016700630;
-        Sun, 13 Oct 2019 18:31:40 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z142sm26133956wmc.24.2019.10.13.18.31.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 13 Oct 2019 18:31:40 -0700 (PDT)
-Message-Id: <3dc8687d9f93a08cdb9e7de8d159df6aa0b05c02.1571016698.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.396.git.1571016698.gitgitgadget@gmail.com>
-References: <pull.396.git.1571016698.gitgitgadget@gmail.com>
-From:   "kdnakt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 14 Oct 2019 01:31:38 +0000
-Subject: [PATCH 1/1] Improve Japanese translation
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729495AbfJNBfZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Oct 2019 21:35:25 -0400
+Received: from mail-40133.protonmail.ch ([185.70.40.133]:13862 "EHLO
+        mail-40133.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729444AbfJNBfZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Oct 2019 21:35:25 -0400
+Date:   Mon, 14 Oct 2019 01:35:16 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=default; t=1571016922;
+        bh=eEON2EeDZ7HPeFKlA9j7sPvrMMnvnLOJrd0yoGNYX8g=;
+        h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
+         From;
+        b=BIypkmDK0w3e2SZqkmv9k1FYInD/lyXGoKQRylTO+9OexBbwIQthtbllLKWWtjXg7
+         fz4la5Bho6cObg2jydjDZgK+iMJWYgSoyAjvH+uxjevmpXXj7Swof7LzhEPuPSWOq2
+         F7uELyj93JWHHDxmtDVMNtEySZ2JWeRqour3KwVo=
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Ron <ronazek@protonmail.com>
+Reply-To: Ron <ronazek@protonmail.com>
+Subject: Re: Local Config File: Submodule initialization looks broken with the --recurse-submodules option when cloning a repository
+Message-ID: <ZkLbpInDB0A-uWL3lVcy67PplIX56Pr7qakiHnXnP4OInRFs20ZPH3wDZl-LNoCNRv-_4HlTwa9LLkrWjdVFPshEi-JXVAhHwsLdp2ivJew=@protonmail.com>
+In-Reply-To: <Otial29UjnjP-PuGN9Mwnd8k4q8Alof6wWOxFqYv_mXpNbumrljWGN44RvNZYIkC-in7KSXzjFjbceYglTW4iACRcven7CyHUUSUcPCWbL4=@protonmail.com>
+References: <Otial29UjnjP-PuGN9Mwnd8k4q8Alof6wWOxFqYv_mXpNbumrljWGN44RvNZYIkC-in7KSXzjFjbceYglTW4iACRcven7CyHUUSUcPCWbL4=@protonmail.com>
+Feedback-ID: RMis9b9KHKlvsb8KKkeurfBt3UTu5TN-1L1t5jXjkqXfFdr8BIyQs5Ws7O_ywm8jXx2U-EI3XDzu_Y-JlzMpfw==:Ext:ProtonMail
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, kdnakt <a.kid.1985@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: kdnakt <a.kid.1985@gmail.com>
+> Initially reported for GFW on version 2.20.1, I have tested with Linux Mi=
+nt Mate 19.1 Tessa which by default uses git version 2.17.1
+>
+> It produces a config file with the relevant submodule entries looking lik=
+e this:
+>
+> -------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+-------------------------------------------------------------------
+>
+> [submodule]
+> active =3D .
+>
+> [submodule "Submodule/Path"]
+> url =3D https://github.com/organization/submodule.git
+>
+> -------------------------------------------------------------------------=
+--------------------------------
+>
+> Instead of that, which is produced by manually initializing a submodule a=
+nytime after cloning:
+>
+> -------------------------------------------------------------------------=
+------------------------
+>
+> [submodule "Submodule/Path"]
+> active =3D true
+> url =3D https://github.com/organization/submodule.git
+>
+> -------------------------------------------------------------------------=
+----------------------
+>
+> Sent with ProtonMail Secure Email.
 
-Signed-off-by: kdnakt <a.kid.1985@gmail.com>
----
- git-gui/po/ja.po | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+I've got someone to test this with the latest 2.23.0 version on archlinux.
 
-diff --git a/git-gui/po/ja.po b/git-gui/po/ja.po
-index 208651c1af..2f61153ab9 100644
---- a/git-gui/po/ja.po
-+++ b/git-gui/po/ja.po
-@@ -4,14 +4,15 @@
- #
- # しらいし ななこ <nanako3@bluebottle.com>, 2007.
- # Satoshi Yasushima <s.yasushima@gmail.com>, 2016.
-+# KIDANI Akito <a.kid.1985@gmail.com>, 2019.
- #
- msgid ""
- msgstr ""
- "Project-Id-Version: git-gui\n"
- "Report-Msgid-Bugs-To: \n"
- "POT-Creation-Date: 2016-05-27 17:52+0900\n"
--"PO-Revision-Date: 2016-06-22 12:50+0900\n"
--"Last-Translator: Satoshi Yasushima <s.yasushima@gmail.com>\n"
-+"PO-Revision-Date: 2019-10-13 23:20+0900\n"
-+"Last-Translator: KIDANI Akito <a.kid.1985@gmail.com>\n"
- "Language-Team: Japanese\n"
- "Language: ja\n"
- "MIME-Version: 1.0\n"
-@@ -661,7 +662,7 @@ msgstr ""
- #: lib/merge.tcl:108
- #, tcl-format
- msgid "%s of %s"
--msgstr "%s の %s ブランチ"
-+msgstr "%2$s の %1$s ブランチ"
- 
- #: lib/merge.tcl:122
- #, tcl-format
-@@ -956,7 +957,7 @@ msgstr "エラー: コマンドが失敗しました"
- #: lib/checkout_op.tcl:85
- #, tcl-format
- msgid "Fetching %s from %s"
--msgstr "%s から %s をフェッチしています"
-+msgstr "%2$s から %1$s をフェッチしています"
- 
- #: lib/checkout_op.tcl:133
- #, tcl-format
--- 
-gitgitgadget
+It is still happening:
+
+git clone --depth=3D1 --recurse-submodules --origin upstream https://github=
+.com/git-for-windows/git;
+git -C git config --get submodule.active
+expected true, got .
+
+
+Anything more I need to add to help this get solved?
+
+Sent with ProtonMail Secure Email.
+
