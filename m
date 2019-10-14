@@ -2,109 +2,239 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-9.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C9011F4C0
-	for <e@80x24.org>; Mon, 14 Oct 2019 22:15:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABC9D1F4C1
+	for <e@80x24.org>; Mon, 14 Oct 2019 22:27:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731126AbfJNWO7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Oct 2019 18:14:59 -0400
-Received: from mout.gmx.net ([212.227.15.15]:41987 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730369AbfJNWO7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Oct 2019 18:14:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1571091288;
-        bh=E4lRbj3omoLX2arWucmsQJ1IIAA0QlT1AMEpdWkpK88=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HPDa2cwAS5Bpw8kT4JmV8UEB6eD89WT4Cdh9TMFzDkIvqLD1DPoGIzAtatgOmi11o
-         Zc8OstUxUxjKlYbzOzp2wmMKD5PUXVGaKRSui0qm+Lxml7+Lb+qOgX3jJIUtBHTSAk
-         kFd2+iAUpedUd3Yp7wQSiG4xByeVaZq1FpLjjAB4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MJmGZ-1ie9Mv0tE9-00KCTK; Tue, 15
- Oct 2019 00:14:48 +0200
-Date:   Tue, 15 Oct 2019 00:14:32 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood <phillip.wood123@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 2/3] sequencer: use run_commit_hook()
-In-Reply-To: <7a56faf1-a0e3-98ad-bdfe-e9ba0b97b5c2@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910150013010.46@tvgsbejvaqbjf.bet>
-References: <pull.388.git.gitgitgadget@gmail.com> <420ecf442c729878da5219f3c718dd136e4fa2b4.1570732608.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.1910102314390.46@tvgsbejvaqbjf.bet> <xmqqk19bj4dk.fsf@gitster-ct.c.googlers.com>
- <7a56faf1-a0e3-98ad-bdfe-e9ba0b97b5c2@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1731965AbfJNW16 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Oct 2019 18:27:58 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:45548 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731861AbfJNW16 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Oct 2019 18:27:58 -0400
+Received: by mail-pl1-f194.google.com with SMTP id u12so8576723pls.12
+        for <git@vger.kernel.org>; Mon, 14 Oct 2019 15:27:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=sfzYwtmWmeUEf828RI+2km6hjvbceYDexyuRt+W8jG0=;
+        b=lMgbsQqcuyjehlr7KZte2jedE5aNY8mHTzmdwc4z32ea6+xcg/Vmbv9wm5IsXns4Fs
+         1cLO1/sgqN4fOFIa6lQVvoNu4Sh2eHr3ZKaHzxlHLKA9jQ2vXIZZOzXP0bFiTkkb2LCJ
+         KwNqZ6OTZW1yxKECO/VLy7JrAetJkubC7ESSqu3IVe7c030EFeBnIrbM2Dh6y92yUNAP
+         g/P7kHPkiAsvE+WiFbjZZpdScUxHohSOIvFLlv9pdo+4W5xxQgt1UR1EllJ+sjF4zPNU
+         I5Q7zP7AeW8PMxoSbWqxC+dND5qTtoNzLbb/PRuhCn/6/jyRaxXtsmYUD/6P4wQN4mg1
+         Sb+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=sfzYwtmWmeUEf828RI+2km6hjvbceYDexyuRt+W8jG0=;
+        b=N2rgeiNa6mjQYNAqCZ2FFa4yJSJdntVZ7NltZDKEgzJ1JZt6P+/O+rZo8pffOeqBD8
+         DiP35elZVZXkS6oH5OanWGwajriMenRmvgyDC4MS+98GeeULvDlXoDtmo8f+n6kt6OtL
+         BuIbPysRhCgEsP9lV0CH8Q2gfbQh7nTTUJDOGTZKK/IsGLfDs64Av8kSzoVqSu0f/I3/
+         GICu2JNV7QqQoEzbIr4WthPz+GSJT2fs6MeFSbZ9gohFgTFyoJjmwPMMVsAgXndXyYWi
+         rj2QqAWmf3HuNZHcm5TMfzOdTZk3ZhPxtO5+MfAgu6qPDqMGBB0x6LS5GYXhi2C0+pH3
+         377Q==
+X-Gm-Message-State: APjAAAW2FquFguxgnr2+MZqyvBzg1ZBOEQhLfCurMTEWFZgRa+l5nfG+
+        UU+Gk2k5/mw8htJf4PfnTbgKdT04JH1Mfg==
+X-Google-Smtp-Source: APXvYqzz1ePF3NQe+uhNfS+2NcPhRfHQENYPQC2DK88VhIiFOCKkIV4d4h5kMrP/nr1zf/1DXBUOYw==
+X-Received: by 2002:a17:902:aa46:: with SMTP id c6mr32962776plr.197.1571092076740;
+        Mon, 14 Oct 2019 15:27:56 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:ece8:7fe:c1f1:a20f])
+        by smtp.gmail.com with ESMTPSA id o64sm41326540pjb.24.2019.10.14.15.27.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Oct 2019 15:27:55 -0700 (PDT)
+Date:   Mon, 14 Oct 2019 15:27:49 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: write fetched refs to .promisor
+Message-ID: <20191014222749.GB233821@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+References: <20190826214737.164132-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:aAgaiBvEaVkIDhooaQRz7n/HvI5qFK7pTNkFVitCuk5j6hyB+qe
- xbSWaiiYo7JfDDpYI//6uJWD2dv5l/R++IS32mBIWeUeNHFEjsTuBWaA2kqION6Tmviz8Xx
- +LaAjP8DU5GhFrVC7h5t+cSwoYL8/tBBdpsYFK+sZqTxYDD8aVf+9xtR7R4Z/kF8tt3H3ja
- Ysprq66AHbfaJ4gDHpZ/A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BNhBWUFF26I=:UHUdbMFYKZS/+4pk3EBTXQ
- X+aClkG6wi3BGRvbReMaUyr2/mNsj0d5ii+Z/kZnVNNnJ85+Vx483kQfEvfcnyKWaTYxL7/UQ
- FI9MtXYwuYwkb1dIDixSr502NLaE2++wl7u2/Iiw7ZlTbzO83lb4YeJxXLAfSl3QY6J5+n2lM
- m2Ms9v8LFBBlTj3NEJ2rp37PvyqTxTYNdAWA2PtGVrMdHibomDirWfraOmudP18M1SOebCRNX
- cq0pMdaCld4LgQCPJDAMtlnUtt9MSxWgpzQguLmIO7s7OaMKRRpk8U38sjZUHgyt+9mkB7rcc
- ROQg2EQ8PZR5tG7NA50rT/+htE7VaBINQEYrA1SbRnPL4PD3899udQFRVys7ShcRWF0vi6Pwb
- LQ10EjJEF0wuP8yhRdeEhqB8P4LstKTzS9tI3sA+blTRzqK9CNTMooQp2aAmFO4iatrqpFeB/
- x+XP6/gzPr0snzieVfBStWoR2ZRkM08Fr8ZK6iuNbw9eguEk8uE5CbDq2+kykv68QYmiEKCN4
- TogaXHsdqtSeEULJuK91rhidRt0LZsuT8h4CWfut7B9hOYQE4JNCSLnogSZkqk5oBaOyO4k7w
- jtssZ47kFXM2NJrfwoBQUcqVFokSXQZBpQKnQ75E3LqGEcUOIhhl0un6iccxKrloi3efOs62l
- P+XHaCs1tqxOq6mjwnfBAoJzajFKIxih37bydxqzjbZbs/u3Ru7oN1IHE1K+Vn7bnLtyip6B7
- IyHbYxB3ioODcBmKKraTvazkQ9NB9lkj84cX8ZSIpEyRNvFNvG/ZTKtx2MKXd9KUph/o/caOB
- bmUTwFLXmvpQpDx8uUhRfdSBNF1XBt33qsyraQYcAeUIc+R29yig/dNETYc0czO3+OcShIZma
- 06te8KdojXvWK5+5pxYk92xNNDajdJCqsfFBA5NuPqyCKyIS+8y3lob8Ks4WFWIjBbAiT0tpA
- XmAEYM7KZnKn03l5Z0WPErkSc/58O167FbaMosSS4Mh/m+N7eb1YEQsMW0s8doHi0Uq1CHUEq
- bwkQLWckmS5otLpszesVNnggq9KdKdKNrrChjnti+0NQ2z33GOo1NWYErSUulL/f1OetqPVCF
- aHfEurV4tYLkOBhHLE0ePLUlR0B20jTnQGCZYOJ3LPyhaQ8GVCbiaL9liaZCbJsUR+UlFc9cz
- JJp5cXjdcAdIy9RdTeyc1aitM01nmXFTpE25+KGzRADUSdLBnSiRPcpVucIbP6ETBhZM/szF1
- AscUzDEx+eKUvCXDKO/uXEr27N3VpzaAq9I2P7hxjoCo+CFT/kLLSbHiBqqo=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190826214737.164132-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+I have a few questions below, but they're probably due to lack of a full
+understanding on my part of how packfiles are managed.
 
-On Mon, 14 Oct 2019, Phillip Wood wrote:
+On 2019.08.26 14:47, Jonathan Tan wrote:
+> The specification of promisor packfiles (in partial-clone.txt) states
+> that the .promisor files that accompany packfiles do not matter (just
+> like .keep files), so whenever a packfile is fetched from the promisor
+> remote, Git has been writing empty .promisor files. But these files
+> could contain more useful information.
+> 
+> So instead of writing empty files, write the refs fetched to these
+> files. This makes it easier to debug issues with partial clones, as we
+> can identify what refs (and their associated hashes) were fetched at the
+> time the packfile was downloaded, and if necessary, compare those hashes
+> against what the promisor remote reports now.
+> 
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> As written in the NEEDSWORK comment, repack does not preserve the
+> contents of .promisor files, but I thought I'd send this out anyway as
+> this change is already useful for users who don't run repack much.
+> ---
+>  builtin/repack.c         |  5 +++++
+>  fetch-pack.c             | 41 ++++++++++++++++++++++++++++++++++++----
+>  t/t5616-partial-clone.sh |  8 ++++++++
+>  3 files changed, 50 insertions(+), 4 deletions(-)
+> 
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index 632c0c0a79..8c1621d414 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -232,6 +232,11 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
+>  		/*
+>  		 * pack-objects creates the .pack and .idx files, but not the
+>  		 * .promisor file. Create the .promisor file, which is empty.
+> +		 *
+> +		 * NEEDSWORK: fetch-pack generates non-empty .promisor files,
+> +		 * but this would not preserve their contents. Maybe
+> +		 * concatenate the contents of all .promisor files instead of
+> +		 * just creating a new empty file.
+>  		 */
+>  		promisor_name = mkpathdup("%s-%s.promisor", packtmp,
+>  					  line.buf);
 
-> Hi Dscho & Junio
->
-> On 11/10/2019 05:24, Junio C Hamano wrote:
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >
-> >>>  builtin/commit.c | 22 ----------------------
-> >>>  commit.h         |  3 ---
-> >>>  sequencer.c      | 45 ++++++++++++++++++++++++++++++++++-----------
-> >>>  sequencer.h      |  2 ++
-> >>>  4 files changed, 36 insertions(+), 36 deletions(-)
-> >>
-> >> Hmm. I would have thought that `commit.c` would be a more logical hom=
-e
-> >> for that function (and that the declaration could remain in `commit.h=
-`)?
-> >
-> > Good correction.
->
-> There are some other public commit related functions in sequencer.c -
-> print_commit_summary(), commit_post_rewrite(), rest_is_empty(),
-> cleanup_message(), message_is_empty(), template_untouched(),
-> update_head_with_reflog() . Would you like to see them moved to commit.c
-> (probably as a separate series)?
+Since this is just diagnostic information, it seems fine. Maybe
+explicitly note in the comment what information is being lost?
 
-I don't think that it is necessary to move any of those functions out of
-their existing habitat just yet. While I haven't looked more closely
-which of these functions are specific to the sequencer and which are
-more generic, I would argue that moving any of them is outside of the
-goals of your patch series.
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 65be043f2a..07029e1bbf 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -758,8 +758,33 @@ static int sideband_demux(int in, int out, void *data)
+>  	return ret;
+>  }
+>  
+> +static void write_promisor_file(const char *keep_name,
+> +				struct ref **sought, int nr_sought)
+> +{
+> +	struct strbuf promisor_name = STRBUF_INIT;
+> +	int suffix_stripped;
+> +	FILE *output;
+> +	int i;
+> +
+> +	strbuf_addstr(&promisor_name, keep_name);
+> +	suffix_stripped = strbuf_strip_suffix(&promisor_name, ".keep");
+> +	if (!suffix_stripped)
+> +		BUG("name of pack lockfile should end with .keep (was '%s')",
+> +		    keep_name);
+> +	strbuf_addstr(&promisor_name, ".promisor");
+> +
+> +	output = xfopen(promisor_name.buf, "w");
+> +	for (i = 0; i < nr_sought; i++)
+> +		fprintf(output, "%s %s\n", oid_to_hex(&sought[i]->old_oid),
+> +			sought[i]->name);
+> +	fclose(output);
+> +
+> +	strbuf_release(&promisor_name);
+> +}
+> +
 
-Thanks,
-Dscho
+I am not sure why we want to tie creating the .promisor to creating the
+lockfile. I'll keep reading and see if it becomes clear later. Other
+than that, the logic here seems clear.
+
+>  static int get_pack(struct fetch_pack_args *args,
+> -		    int xd[2], char **pack_lockfile)
+> +		    int xd[2], char **pack_lockfile,
+> +		    struct ref **sought, int nr_sought)
+>  {
+>  	struct async demux;
+>  	int do_keep = args->keep_pack;
+> @@ -821,7 +846,13 @@ static int get_pack(struct fetch_pack_args *args,
+>  		}
+>  		if (args->check_self_contained_and_connected)
+>  			argv_array_push(&cmd.args, "--check-self-contained-and-connected");
+> -		if (args->from_promisor)
+> +		/*
+> +		 * If we're obtaining the filename of a lockfile, we'll use
+> +		 * that filename to write a .promisor file with more
+> +		 * information below. If not, we need index-pack to do it for
+> +		 * us.
+> +		 */
+> +		if (!(do_keep && pack_lockfile) && args->from_promisor)
+>  			argv_array_push(&cmd.args, "--promisor");
+>  	}
+>  	else {
+
+This makes me wonder why we don't also change index-pack to write a
+similar message to the .promisor. I guess there's potentially too much
+information to shove all the refs on the command-line?
+
+> @@ -859,6 +890,8 @@ static int get_pack(struct fetch_pack_args *args,
+>  		die(_("fetch-pack: unable to fork off %s"), cmd_name);
+>  	if (do_keep && pack_lockfile) {
+>  		*pack_lockfile = index_pack_lockfile(cmd.out);
+> +		if (args->from_promisor)
+> +			write_promisor_file(*pack_lockfile, sought, nr_sought);
+>  		close(cmd.out);
+>  	}
+>  
+
+Apart from using the lockfile name as the base for the .promisor
+filename, I'm still not seeing why we need to tie this to the fact that
+we're creating a lockfile. Could we instead just unconditionally create
+the .promisor when args->from_promisor is set, and then remove the logic
+in the previous chunk that adds the "--promisor" flag to the index-pack
+call?
+
+> @@ -1009,7 +1042,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+>  		alternate_shallow_file = setup_temporary_shallow(si->shallow);
+>  	else
+>  		alternate_shallow_file = NULL;
+> -	if (get_pack(args, fd, pack_lockfile))
+> +	if (get_pack(args, fd, pack_lockfile, sought, nr_sought))
+>  		die(_("git fetch-pack: fetch failed."));
+>  
+>   all_done:
+> @@ -1458,7 +1491,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  
+>  			/* get the pack */
+>  			process_section_header(&reader, "packfile", 0);
+> -			if (get_pack(args, fd, pack_lockfile))
+> +			if (get_pack(args, fd, pack_lockfile, sought, nr_sought))
+>  				die(_("git fetch-pack: fetch failed."));
+>  
+>  			state = FETCH_DONE;
+> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+> index 565254558f..486db27ee0 100755
+> --- a/t/t5616-partial-clone.sh
+> +++ b/t/t5616-partial-clone.sh
+> @@ -46,6 +46,14 @@ test_expect_success 'do partial clone 1' '
+>  	test "$(git -C pc1 config --local core.partialclonefilter)" = "blob:none"
+>  '
+>  
+> +test_expect_success 'verify that .promisor file contains refs fetched' '
+> +	ls pc1/.git/objects/pack/pack-*.promisor >promisorlist &&
+> +	test_line_count = 1 promisorlist &&
+> +	git -C srv.bare rev-list HEAD >headhash &&
+> +	grep "$(cat headhash) HEAD" $(cat promisorlist) &&
+> +	grep "$(cat headhash) refs/heads/master" $(cat promisorlist)
+> +'
+> +
+>  # checkout master to force dynamic object fetch of blobs at HEAD.
+>  test_expect_success 'verify checkout with dynamic object fetch' '
+>  	git -C pc1 rev-list --quiet --objects --missing=print HEAD >observed &&
+> -- 
+> 2.23.0.187.g17f5b7556c-goog
+> 
