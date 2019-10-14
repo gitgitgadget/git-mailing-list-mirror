@@ -2,69 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 345B61F4C0
-	for <e@80x24.org>; Mon, 14 Oct 2019 11:18:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9015C1F4C0
+	for <e@80x24.org>; Mon, 14 Oct 2019 11:46:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728816AbfJNLSL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Oct 2019 07:18:11 -0400
-Received: from mout.gmx.net ([212.227.15.19]:34715 "EHLO mout.gmx.net"
+        id S1730905AbfJNLq4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Oct 2019 07:46:56 -0400
+Received: from mout.gmx.net ([212.227.15.15]:57185 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726351AbfJNLSL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Oct 2019 07:18:11 -0400
+        id S1730178AbfJNLq4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Oct 2019 07:46:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1571051885;
-        bh=1yaofTn9rfnBksnQjRmjs207NvrEE3OcxZAyWby7Ohk=;
+        s=badeba3b8450; t=1571053611;
+        bh=+rCw0dPMoUbZjv6lhFTEXJVC3SBFZ8qWseN6v8BUfD4=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Rnef4V1IOEBMnZJJBcOydfHUbF3qLfi35iMb5NcsK1GA5rPufoKaW+SuyFFScqjMk
-         mKetTifxMPJ9ANeoQxHIRU+brGn02bsKgjthp7mpL3AbeWo2lIZAlEnz/6R4kCNdCV
-         pTq9iy7LusxY4ASq7pTbLHG/UN7SD04ERdh104Pk=
+        b=IYsVs6NMFUCyLv2Vgh0DyWxMIVoxH5O5SxhFA55/7srZO5+kw05k+tBH3VdSZ4uyg
+         h0oOtjJkG2l2RjjIUm0OKkvmpqfzm2EvJn+UHaIqN+fENghd1ryjq8ua4oEick8a+6
+         bjZbUjupE65CK+1ajj3jQxJrOMLSylthq67QRKZg=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MwQT9-1i1cYz45Bd-00sRPD; Mon, 14
- Oct 2019 13:18:05 +0200
-Date:   Mon, 14 Oct 2019 13:17:49 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQvCv-1ifexw2POp-00Nw23; Mon, 14
+ Oct 2019 13:46:51 +0200
+Date:   Mon, 14 Oct 2019 13:46:35 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     kdnakt via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        kdnakt <a.kid.1985@gmail.com>,
-        Pratyush Yadav <me@yadavpratyush.com>
-Subject: Re: [PATCH 1/1] Improve Japanese translation
-In-Reply-To: <3dc8687d9f93a08cdb9e7de8d159df6aa0b05c02.1571016698.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910141317190.46@tvgsbejvaqbjf.bet>
-References: <pull.396.git.1571016698.gitgitgadget@gmail.com> <3dc8687d9f93a08cdb9e7de8d159df6aa0b05c02.1571016698.git.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/3] mingw: bump the minimum Windows version to Vista
+In-Reply-To: <xmqq8t35gfw2.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910141344160.46@tvgsbejvaqbjf.bet>
+References: <pull.44.git.gitgitgadget@gmail.com> <2b127d9669aa7b73ced7611b6e77044f5efed11d.1538595818.git.gitgitgadget@gmail.com> <87zhvlevxt.fsf@evledraar.gmail.com> <xmqq8t35gfw2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1573521775-1571051885=:46"
-X-Provags-ID: V03:K1:1UxWWqrxrG52bgVMhJp0WEJEyAz5q86uYAXCboS3mBVfak/mIx/
- Hfbnkn4uMSHlguAJfAwlTNQ7mvHqOO8SnFfyMVDGISLz5tg6TBHqrxnAWY9UVxLz+HXSXuL
- iZF5yPyML5/3x8cYKULd/3adJgmNoeLy9ak8SYgtdz8vgd5VzzlPgoVWLkXF5X5k6iwUrBw
- LwyU9joKhpaCDkfspF86w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XShrCEEDQtQ=:TuI1mPtQzJPNEPAPGVJimS
- Xe/FuudlLc2Uq4yBe9iQz+1rquwzwMnX96KfNn/WKWwZC3FglZjC+u4YQoU5EnuTwGgiyYKAK
- R+HZFmP2l8x4LSrW+mxAV89GaSqCclguIojKb8a/7RfJtQmI2BmvEBEMsnjmIedHuzAQK5JPv
- RXL+5uAUTYOvW3yvCY2JTgxApjG+Xc5B4H5hw+IiCw6gmwDUAJnvPLjrhVhu1jDZYjcXvcXvm
- 4LR653puc8JiI4E20uj55jlcQ+9lUiOYfgT1zUQJzliRoRQ8YqWUcyRXp9oxLoRfzrt6ZBApq
- iPFnf55BTSxusmUYhazvIjYI1ug4uzBTBZeSpsBCeyA7Ic+xWN8PBA/cqETsDPc40ZMWNl65S
- ayYZQb1BQS20t58NT47OYE7tInYM41O1BZhZm3+cAUTuWW1FMNrXtPIp4+lLG/myEp+31Q+OZ
- MHs3lzq4IODheHPl/E7KBzn+SinGHTE1Q4ffIro5G2iBCNL2IOKXLbRIDQZaFuvgSIV4VDwA7
- USvU3vX840+ONI46caGJ75/hc9X4zXRz9qQMrsWFIHMmeumEECeAcRzeYkO/h9HMl8G1gXLYj
- gDHGb26yPUiQcBTSalhJn7GBaXEY8URycx7xQyDLQuKMrI5FcxpYIm4WeycK2h/ecj3dgrqsX
- kbQD2kLThalr38uGU98+q3fUv/wMx5/zKAtOKc/R04SrpQyF4jNfGnB16QIiMuM4fFuAB4xcP
- EIFuN5vWWiArsu1UjWQs0HWMBYftWJDjSwePzxtIn4Pfb4137QIVkbIrpZthZOOlQMyFUI7VR
- SY0p6EPcQAEoFXdm6u+tRvRzG43PBd27i+Elaz80F9jmw0cgpHqrRkqESe5zJ2hkninheQdKM
- P1WG/uCIwsV54AhYXdGgYV+3GJgmFcAM/bNJbxBM9zLfRTp6e/2Er3Eop0KDqYAS2r/TaPM1K
- SUUJZ7Iz0jOoc6nMUaJTTdZbD0Fs2BqPfXpWiEuZqDMsV95UoMnvHJ8411YuKhW/PK7uDyr43
- Ds4PR3FOExLkgG9wM4KZ6SM5rzq1Xe89c5e/Yp5rbfJotXkuQ9Aehpk+HqnwydAjMeK/vSOuN
- RO/A8dUcOSQSs5rQbtxt9NWF4ooDZ4WZJoXXi3T6+HQa2BuGL+/2Tsv7zQVP8lfmf+c76VjjI
- Cgqu5dGO/P55pBQQN2cBTAajjl8bV+RhdB9frrWledAbTZ4AWwJz22pBWPAv0ghnjJFtg0+ti
- oZUezX26AayOgmbIvKM3Fkud/iN4G7RTWFjfaCWaYDFUiVG9MrnUsg797Qy0=
+Content-Type: multipart/mixed; boundary="8323328-1583907793-1571053612=:46"
+X-Provags-ID: V03:K1:K7ySxDQ6QGC58v4uVuafWLtWqFz1oSU1Bytex5Qc/gMo2bd8Vle
+ GUlgfhGQKMn4HXGd5WLA+1gXWvhsyh0y2GPtfRrGgo4eefnmHaVVlyH/dP8ol/4ekyPNVmb
+ +FyCad024fTUr2jz3rLLu/3t48I5FG4rjQXBKVvn7eGjg6euv/as77AhRZLGuQ8oGYOvcY2
+ uy5wf0Z7kRG9uYiVln12w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GGYVaTCumbk=:e+YuulSYK9j5Ygmz1/5YYu
+ FHD9ylohE2hZxf0Zw8fnSW43mG+t9Oj/PjI3b5bzx2V7Byo8P8Y/i9nRAnDhST6M6b1hEap6q
+ En6Ya4LQ81YM/g1tqU0evb9Aeqjq+pmmHjTEu5xuPCqzlG92NaNwxB0y90tksgIc0+mZqck13
+ iyyqGraiX3vDPxjYAtKk21rOses0MrIXh52M6nca+IDEMOEyMDe1HaJp+EjGzgUJfSUO6DZE8
+ dFL349gmw63p9poQLzmlmBl4cVM1epAPDz+pZAtpAxOABU5bK+Y1oCG3F/SoQQ43uOtAQEAio
+ pB2uqttG/lj/gRmUfSi+lI0hYKfKnSAjPzYnuH1/Gz6tLFNEMZgKbOc+UeUkmLQ6kdov5UkTx
+ 3zP4KrAAAHefjcvkCtGRZkMSpJ5VBAsH4zyAwRyEdA1jVci/Dj0h9Q6htr/KJGHwIW1ozZYQw
+ rMmtI18ufUpkNGmgm3ykg/Oau3uCob+abNHlBX+lzMRyz85mzYUuh5a3zTxo5f/zVuaPP+GUo
+ 0d0IpqsKHxXBqXjvP4JGSBACc/0oxeEbLMyG0OYJKMS/0PulUkBjjrZmJwZn+jwM1rKidsW+m
+ DAC4uD07XYKkkUldz6eF63ex1VC+d0jY8rZfDPL76CKYJfjkoYYm56jnSppKUUm+6NJjwkpq9
+ MJCNEqwRiyYw3/uW/7wkJ9x2+GwR0hR03UofaR2mk0H4SpFVBUWNgSICGS9yxY/oGpshT3OEx
+ FNjqcxa6IIRBLwUKZAeXxk6NdffFmAOlnOAiYZkHVVm4UntNmtvCzEIJcdI3MUJct4OUawkW9
+ tgIpyfax5Ky/C5gsRrFet5zIGdhf5SQawClQ2AzpLauoYtGlSAKSEcKI0alZKVNMJZVCQfhSa
+ vAB27+p7c6oYokq3qwOYIeZhLycKFod9eqxixtHE9gTNClZWW6aDU/nIL3+/OOJnEyNes+z/U
+ 9AmaPlLwjhHV1NrVObY++pWYnAOK1PDQTFjYfaoN2uT/+PPA0+wpr46D6pnAHIikE31zwqq7E
+ Ew9pafEaA1YNuRVwrmdxGGfWN+Hq7uv0790FJS9c0OyjcpKh4IoqEYZLI8tenDRnxE5TPpijp
+ Y7TGcdoU/6V7bybTNtVUTqFdlePTy5LXzHFRfoWYXyJPOBplO92NvmasVbVDpYgJGthWNOwi8
+ uAg3erHNbN4gmFsvBClERehMgdqWpiFXAfx4k3icjHyD2I6/9tlKUXHSpnwpHL38cvXOBTz14
+ QcggCTMkOwZPh7cGiUJ57E3VE9mesQQX146I1MAB4Y5Hg4QluovYcPRqqS9Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,69 +74,58 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1573521775-1571051885=:46
+--8323328-1583907793-1571053612=:46
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-[Cc:ing the Git GUI maintainer]
+Hi,
 
+[sorry about the blast from the past, I just noticed that I had not
+answered]
 
-On Mon, 14 Oct 2019, kdnakt via GitGitGadget wrote:
+On Thu, 11 Oct 2018, Junio C Hamano wrote:
 
-> From: kdnakt <a.kid.1985@gmail.com>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> Signed-off-by: kdnakt <a.kid.1985@gmail.com>
-> ---
->  git-gui/po/ja.po | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+> >> It also means that we no longer need the inet_pton() and inet_ntop()
+> >> emulation, which is nice.
+> >
+> > Earlier in this series you add a:
+> >
+> > #if defined(_WIN32_WINNT) && _WIN32_WINNT >=3D 0x600
+> > ...
+> > #endif
+> >
+> > Shouldn't that now be something like:
+> >
+> > #if defined(_WIN32_WINNT)
+> > #if _WIN32_WINNT >=3D 0x600
+> > ...
+> > #else
+> > #error "You need at least Windows Vista to build Git!"
+> > #endif
+> > #endif
+> >
+> > Or do we catch users building on non-supported versions earlier someho=
+w
+> > (i.e. not just with a flood of compilation errors).
 >
-> diff --git a/git-gui/po/ja.po b/git-gui/po/ja.po
-> index 208651c1af..2f61153ab9 100644
-> --- a/git-gui/po/ja.po
-> +++ b/git-gui/po/ja.po
-> @@ -4,14 +4,15 @@
->  #
->  # =E3=81=97=E3=82=89=E3=81=84=E3=81=97 =E3=81=AA=E3=81=AA=E3=81=93 <nan=
-ako3@bluebottle.com>, 2007.
->  # Satoshi Yasushima <s.yasushima@gmail.com>, 2016.
-> +# KIDANI Akito <a.kid.1985@gmail.com>, 2019.
->  #
->  msgid ""
->  msgstr ""
->  "Project-Id-Version: git-gui\n"
->  "Report-Msgid-Bugs-To: \n"
->  "POT-Creation-Date: 2016-05-27 17:52+0900\n"
-> -"PO-Revision-Date: 2016-06-22 12:50+0900\n"
-> -"Last-Translator: Satoshi Yasushima <s.yasushima@gmail.com>\n"
-> +"PO-Revision-Date: 2019-10-13 23:20+0900\n"
-> +"Last-Translator: KIDANI Akito <a.kid.1985@gmail.com>\n"
->  "Language-Team: Japanese\n"
->  "Language: ja\n"
->  "MIME-Version: 1.0\n"
-> @@ -661,7 +662,7 @@ msgstr ""
->  #: lib/merge.tcl:108
->  #, tcl-format
->  msgid "%s of %s"
-> -msgstr "%s =E3=81=AE %s =E3=83=96=E3=83=A9=E3=83=B3=E3=83=81"
-> +msgstr "%2$s =E3=81=AE %1$s =E3=83=96=E3=83=A9=E3=83=B3=E3=83=81"
+> That sounds like a reasonable thing to be curious about.
+
+I specifically wanted to leave the door open for people who might want
+to put in the effort of keeping Windows XP support alive.
+
+But I guess this does not make any sense anymore, what with Windows
+_Vista_ being at its end of its life in 3 months.
+
+Thanks! Will prepare a patch,
+Dscho
+
 >
->  #: lib/merge.tcl:122
->  #, tcl-format
-> @@ -956,7 +957,7 @@ msgstr "=E3=82=A8=E3=83=A9=E3=83=BC: =E3=82=B3=E3=83=
-=9E=E3=83=B3=E3=83=89=E3=81=8C=E5=A4=B1=E6=95=97=E3=81=97=E3=81=BE=E3=81=
-=97=E3=81=9F"
->  #: lib/checkout_op.tcl:85
->  #, tcl-format
->  msgid "Fetching %s from %s"
-> -msgstr "%s =E3=81=8B=E3=82=89 %s =E3=82=92=E3=83=95=E3=82=A7=E3=83=83=
-=E3=83=81=E3=81=97=E3=81=A6=E3=81=84=E3=81=BE=E3=81=99"
-> +msgstr "%2$s =E3=81=8B=E3=82=89 %1$s =E3=82=92=E3=83=95=E3=82=A7=E3=83=
-=83=E3=83=81=E3=81=97=E3=81=A6=E3=81=84=E3=81=BE=E3=81=99"
->
->  #: lib/checkout_op.tcl:133
->  #, tcl-format
-> --
-> gitgitgadget
+> > Both of the above are just questions I was curious about since I saw
+> > your <nycvar.QRO.7.76.6.1810101502220.2034@tvgsbejvaqbjf.bet>, and
+> > shouldn't bee seen as bumping this to "this needs a re-roll" or it
+> > should be delayed in getting to master.
 >
 
---8323328-1573521775-1571051885=:46--
+--8323328-1583907793-1571053612=:46--
