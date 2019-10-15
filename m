@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6515F1F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 23:48:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 270541F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 23:48:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388085AbfJOXsK (ORCPT <rfc822;e@80x24.org>);
+        id S2388179AbfJOXsL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 19:48:11 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:38027 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387977AbfJOXsK (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 15 Oct 2019 19:48:10 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45291 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387915AbfJOXsH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 19:48:07 -0400
-Received: by mail-wr1-f65.google.com with SMTP id r5so25755821wrm.12
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 16:48:05 -0700 (PDT)
+Received: by mail-wm1-f67.google.com with SMTP id 3so760371wmi.3
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 16:48:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Q7b/i3Xb0kijYWup0bUqi2CCJrfOTxII6ebnsGHNGQ8=;
-        b=GcaUK2Ys8Rd9Qdv/RzL16ZkxfN81RFtXeDdhHyXBN+ZjXF8/NUmGq7tJTIShvpMyd4
-         0yZ5xsleTWjkx4Kl4FVYFCyOHlpxwzF+PDpqaiKUqhwqUxcdmJwqOGUcM28bYsMaVOG0
-         a6Ct73xfOYMv938eUkq8/nazJNpajjYScG3QKlQgui4eo0EZVIMXlo0VzynC+bjCzCzt
-         0eJkRHZNqgpr1MDhDo4+9FijzMoFxWhLoEoggk18/YL2LXfqZnb2aZw1jqL7ubYRIFEt
-         ZdBgX3jjOB7lYwOnVvF4voZKdLtVMOBPxhg5rRya0m0o5fpRyqvNc9RvTxMrztEy2DAT
-         w66g==
+        bh=6e9aX7IEwCjnBgusYHs0U9RPMTaHhSHiWahJ3XWTD2k=;
+        b=Tqyv1HTFtlvBWFApIE+a5Ya9TSdAKjAW77l8QxvrjV6h/oqt4PyOKqY2slk97YMNbz
+         9AMC5L3m2Qk8kbb7dZjDd4YMvD+HVfPL+rvY+Fyutcfb/itL9FfsoJNgULBPKPRBZBeH
+         CmwrFg8WAkPObLdQgrhkvWdyjsGbf1NYvkqxkgXlSAN8dCMU0Hy7Px8Mk3LgX6Wj8+LT
+         00b/1onYLeL8ay/1SrmPupdTqN1mCL6TqbXuUUhjWoly2VAbKycmEtQ5Al+Ys+j1RE8p
+         ZTRMpJUYCkD5Lzp0ltRcNlKfYEyLRRWt/hNMSIP95kkbx6Sxrkse7IlPzZMHQzFaRcWl
+         1C2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Q7b/i3Xb0kijYWup0bUqi2CCJrfOTxII6ebnsGHNGQ8=;
-        b=GWu1Fx2DApUko5hEH8sRiZeCF81URgaU6PGedbekxGn72xn67qsv1jh6yOEfYbv6RV
-         QyEs/w+IKSWVZJnD6aEtjIvEhoi+JEFPr8NtR/P8SmlGP83RgGrCISWun8e2ql6yxcRh
-         KHflUDoWWmqaRdapHjBC2I4hi9v6+N0t7IBFasFoDbJlJjib9Gaz7OrbsGDDyUgxCRS1
-         C9sHpPj6uxpoCERStlQ1C7rzQbPJeUlngQl+kjD81XWp1gJITwLtNs6c4k/2/yETfQtR
-         VG5X8zLj5A7GqyZAaucJoNZ3P4Gctch889RhA2hzNKhRYNdg55BJmk7bJ67crzg/CovA
-         qWTg==
-X-Gm-Message-State: APjAAAX3gzqm78FxFJ0AjUtbv/qgOCgI/owOZ/e2LDcaIdVKrKAGcpUq
-        gwXivO8RxhqSQnKuDgcybPRaLjuM
-X-Google-Smtp-Source: APXvYqyCkEfGLLXaNVobyeo/NaPzLCEaZZOujryqjK6zV+9ITV8i4CqLc1NE8y0PHcrjkOvc98rEWw==
-X-Received: by 2002:adf:f4c2:: with SMTP id h2mr3429wrp.69.1571183284910;
-        Tue, 15 Oct 2019 16:48:04 -0700 (PDT)
+        bh=6e9aX7IEwCjnBgusYHs0U9RPMTaHhSHiWahJ3XWTD2k=;
+        b=f89k8xcru11j+xglcnkiR37SqaihF42QFkFoB4B1O+7yNe6cd2OTYj93U5V/q0+Or8
+         EUjqgHwS991xcEnj7NinSXCyrzVO8Qqojy5/smZY3dyb01XyfdVGFhIjNkRZqGUdMQ1v
+         TI6Lhmpagm54VrzANlsNsr2KIoqCJ6aBG1GBEtQd0Nmg13EtPLG7aFa7f+OnjyTjLDQA
+         VdxFTei3sfrmaxoKljRDV7KfuDJ+/VmN+YytZIBD8aBoAZJO062gCcTayGuq5cPdbESi
+         PemxIVRFTrBUhh5JZiLfWp7HNLfwiHRThbs1n5GxZczP5t9aATRZuruz2JAtRPToTtuf
+         8aQA==
+X-Gm-Message-State: APjAAAXbreJF760bfNCS2q82wFipyGdhqXfz/SX1Xe97WQ2tf52krX+E
+        gSMVAhY8e8L6/I2mmJbI43AG+UAq
+X-Google-Smtp-Source: APXvYqwHrREPMPwbaOaTAv6mfbXJaK9tZAVOM7pm8rbDboxbm+FZZC3bp0fSz3PlKio+oyZsyk95Hg==
+X-Received: by 2002:a1c:1d15:: with SMTP id d21mr749477wmd.5.1571183286613;
+        Tue, 15 Oct 2019 16:48:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z13sm17785624wrm.64.2019.10.15.16.48.04
+        by smtp.gmail.com with ESMTPSA id b5sm609983wmj.18.2019.10.15.16.48.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Oct 2019 16:48:04 -0700 (PDT)
-Message-Id: <6a4717bf05d7cf9fa37fab824634c79394e76476.1571183279.git.gitgitgadget@gmail.com>
+        Tue, 15 Oct 2019 16:48:06 -0700 (PDT)
+Message-Id: <8ed32b1c743282716bd2bc1f2ce19218119629d9.1571183279.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.383.v3.git.1571183279.gitgitgadget@gmail.com>
 References: <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
         <pull.383.v3.git.1571183279.gitgitgadget@gmail.com>
 From:   "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Oct 2019 23:47:50 +0000
-Subject: [PATCH v3 04/13] graph: reduce duplication in
- `graph_insert_into_new_columns()`
+Date:   Tue, 15 Oct 2019 23:47:52 +0000
+Subject: [PATCH v3 06/13] graph: extract logic for moving to GRAPH_PRE_COMMIT
+ state
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,55 +72,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: James Coglan <jcoglan@gmail.com>
 
-I will shortly be making some changes to this function and so am trying
-to simplify it. It currently contains some duplicated logic; both
-branches the function can take assign the commit's column index into
-the `mapping` array and increment `mapping_index`.
-
-Here I change the function so that the only conditional behaviour is
-that it appends the commit to `new_columns` if it's not present. All
-manipulation of `mapping` now happens on a single code path.
+This computation is repeated in a couple of places and I need to add
+another condition to it to implement a further improvement to the graph
+rendering, so I'm extracting this into a function.
 
 Signed-off-by: James Coglan <jcoglan@gmail.com>
 ---
- graph.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ graph.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/graph.c b/graph.c
-index c9646d9e00..512ae16535 100644
+index d724ef25c3..bd7403065e 100644
 --- a/graph.c
 +++ b/graph.c
-@@ -478,23 +478,17 @@ static void graph_insert_into_new_columns(struct git_graph *graph,
- 	int i = graph_find_new_column_by_commit(graph, commit);
- 
- 	/*
--	 * If the commit is already in the new_columns list, we don't need to
--	 * add it.  Just update the mapping correctly.
-+	 * If the commit is not already in the new_columns array, then add it
-+	 * and record it as being in the final column.
- 	 */
--	if (i >= 0) {
--		graph->mapping[*mapping_index] = i;
--		*mapping_index += 2;
--		return;
-+	if (i < 0) {
-+		i = graph->num_new_columns++;
-+		graph->new_columns[i].commit = commit;
-+		graph->new_columns[i].color = graph_find_commit_color(graph, commit);
- 	}
- 
--	/*
--	 * This commit isn't already in new_columns.  Add it.
--	 */
--	graph->new_columns[graph->num_new_columns].commit = commit;
--	graph->new_columns[graph->num_new_columns].color = graph_find_commit_color(graph, commit);
--	graph->mapping[*mapping_index] = graph->num_new_columns;
-+	graph->mapping[*mapping_index] = i;
- 	*mapping_index += 2;
--	graph->num_new_columns++;
+@@ -588,6 +588,12 @@ static void graph_update_columns(struct git_graph *graph)
+ 		graph->mapping_size--;
  }
  
- static void graph_update_width(struct git_graph *graph,
++static int graph_needs_pre_commit_line(struct git_graph *graph)
++{
++	return graph->num_parents >= 3 &&
++	       graph->commit_index < (graph->num_columns - 1);
++}
++
+ void graph_update(struct git_graph *graph, struct commit *commit)
+ {
+ 	struct commit_list *parent;
+@@ -643,8 +649,7 @@ void graph_update(struct git_graph *graph, struct commit *commit)
+ 	 */
+ 	if (graph->state != GRAPH_PADDING)
+ 		graph->state = GRAPH_SKIP;
+-	else if (graph->num_parents >= 3 &&
+-		 graph->commit_index < (graph->num_columns - 1))
++	else if (graph_needs_pre_commit_line(graph))
+ 		graph->state = GRAPH_PRE_COMMIT;
+ 	else
+ 		graph->state = GRAPH_COMMIT;
+@@ -714,8 +719,7 @@ static void graph_output_skip_line(struct git_graph *graph, struct graph_line *l
+ 	 */
+ 	graph_line_addstr(line, "...");
+ 
+-	if (graph->num_parents >= 3 &&
+-	    graph->commit_index < (graph->num_columns - 1))
++	if (graph_needs_pre_commit_line(graph))
+ 		graph_update_state(graph, GRAPH_PRE_COMMIT);
+ 	else
+ 		graph_update_state(graph, GRAPH_COMMIT);
 -- 
 gitgitgadget
 
