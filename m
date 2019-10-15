@@ -2,137 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B6961F4C1
-	for <e@80x24.org>; Tue, 15 Oct 2019 16:37:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6ED931F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 16:40:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388156AbfJOQhN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 12:37:13 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:36486 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726776AbfJOQhM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 12:37:12 -0400
-Received: by mail-pg1-f195.google.com with SMTP id 23so12480131pgk.3
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 09:37:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=VyzSCRt0zvpwaXWv7f44EZ1PtFcPzYiM4w4+E1GJkeU=;
-        b=drRxIrMklLp0IseHcjQskRLzOjjMEtgg5voDwbmYLA7gNp4GlSek1j9dR5eyP3vI0Z
-         XIoN+NR+nMwb+MLsD1qiDTWeK7iMflai78EXPZbUO8FVhp20Q31BqEDgZREnsw/Rqbqc
-         XSmaVyAnhGzyM3X3d/NTU/Nh7iIGPoynhLLigh+LpgdcH05OVBqTSL7p0HJ3sI01pIiF
-         y0GOysooWZeWxXBEn97KGzKnVi/7M6T6/AWmREzr6jhKC4xmbspYgXXQqcgo5ba4uVZy
-         RlvDZ1HomdO45+fFtSbnseNB5y5Z2UVNgEMdpvHYWpEO5px7s9z7m09VKlJjgVW1eQWD
-         c8vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=VyzSCRt0zvpwaXWv7f44EZ1PtFcPzYiM4w4+E1GJkeU=;
-        b=FU8qXNbJmPVZYUulz/j8CPpfOmDEqqfLmjQvjMT/QnEbePmiWIyypYaf4vvxQJcvtS
-         fd+ytrcdhNv8DzMtwYL5noD1gSZFxS21B7+92O7Ue8ckS6ZkrLagSkF3OCuUbmm1eeQU
-         8yEsdoBUt4mk6Dm3lp1afh/H+nz1Vzouvt7RZPEHYQN0UX2t20sG99B+jzuxxZKvOxfL
-         E0OYoGTTzRh6J+sFlqnOqmfbdFvwm36Iob/gJltWvFHR+CtNAE/vMzx2wC1iMaykFPWb
-         FjWp8t5faOY/FqWh8zsHP0BrIib1u7q2ntMFOD0u8HI9xeUvjNpvgFkeab1UIDASEnpT
-         i4yg==
-X-Gm-Message-State: APjAAAWmgJAsRGbKSen+fkwXRHNUd+DbKOz4r+UZQ3qo1x0IEHXWzjNw
-        Hj0EgsL5QHlF7qNBdhtNbGe7ONrU
-X-Google-Smtp-Source: APXvYqwAc31LKia3xQt4CZr09nlmfnfMJe255i1mjD9ceUzwuaCuToYVwweIgdik9X95tHQXvV2/mQ==
-X-Received: by 2002:a63:5b07:: with SMTP id p7mr40722734pgb.416.1571157431611;
-        Tue, 15 Oct 2019 09:37:11 -0700 (PDT)
-Received: from localhost.localdomain ([2402:800:6375:2b61:f51c:7233:c8a4:1e74])
-        by smtp.gmail.com with ESMTPSA id c8sm9347151pjo.1.2019.10.15.09.37.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Oct 2019 09:37:11 -0700 (PDT)
-From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>
-Subject: [PATCH 1/1] notes: copy notes to HEAD by default
-Date:   Tue, 15 Oct 2019 23:36:31 +0700
-Message-Id: <20191015163631.21808-2-congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20191015163631.21808-1-congdanhqx@gmail.com>
-References: <20191015163631.21808-1-congdanhqx@gmail.com>
+        id S1728338AbfJOQka (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 12:40:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48714 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727994AbfJOQka (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 12:40:30 -0400
+Received: (qmail 19708 invoked by uid 109); 15 Oct 2019 16:40:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Oct 2019 16:40:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3554 invoked by uid 111); 15 Oct 2019 16:43:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 15 Oct 2019 12:43:32 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 15 Oct 2019 12:40:29 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] remote-curl: pass on atomic capability to remote side
+Message-ID: <20191015164028.GA4710@sigill.intra.peff.net>
+References: <20191015010759.2259-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191015010759.2259-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The target objects for copying notes was defaulted to HEAD from very
-early stage of git-notes.
+On Tue, Oct 15, 2019 at 01:07:59AM +0000, brian m. carlson wrote:
 
-However, that default was limited by commit bbb1b8a35a, ("notes: check
-number of parameters to "git notes copy"", 2010-06-28).
+> Fix this by passing the option from the transport code through to remote
+> helpers, and from the HTTP remote helper down to send-pack.  With this
+> change, we can detect if the server side rejects the push and report
+> back appropriately.  Note the difference in the messages: the remote
+> side reports "atomic transaction failed", while our own checking rejects
+> pushes with the message "atomic push failed".
 
-Lift that limitation by adjust the check for numbers of arguments.
+Good find. The patch looks good to me, except for one minor style nit in
+the documentation (see below).
 
-Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
----
- Documentation/git-notes.txt | 6 +++---
- builtin/notes.c             | 2 +-
- t/t3301-notes.sh            | 4 ++++
- 3 files changed, 8 insertions(+), 4 deletions(-)
+> Document the atomic option in the remote helper documentation, so other
+> implementers can implement it if they like.
 
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index f56a5a9197..ced2e8280e 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- [verse]
- 'git notes' [list [<object>]]
- 'git notes' add [-f] [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
--'git notes' copy [-f] ( --stdin | <from-object> <to-object> )
-+'git notes' copy [-f] ( --stdin | <from-object> [<to-object>] )
- 'git notes' append [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
- 'git notes' edit [--allow-empty] [<object>]
- 'git notes' show [<object>]
-@@ -68,8 +68,8 @@ add::
- 	subcommand).
- 
- copy::
--	Copy the notes for the first object onto the second object.
--	Abort if the second object already has notes, or if the first
-+	Copy the notes for the first object onto the second object (defaults to
-+	HEAD). Abort if the second object already has notes, or if the first
- 	object has none (use -f to overwrite existing notes to the
- 	second object). This subcommand is equivalent to:
- 	`git notes add [-f] -C $(git notes list <from-object>) <to-object>`
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 02e97f55c5..95456f3165 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -513,7 +513,7 @@ static int copy(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	if (argc < 2) {
-+	if (argc < 1) {
- 		error(_("too few parameters"));
- 		usage_with_options(git_notes_copy_usage, options);
- 	}
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index d3fa298c6a..a8f9a0f36c 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -908,6 +908,10 @@ test_expect_success 'allow overwrite with "git notes copy -f"' '
- 	git notes copy -f HEAD~2 HEAD &&
- 	git log -1 >actual &&
- 	test_cmp expect actual &&
-+	test "$(git notes list HEAD)" = "$(git notes list HEAD~2)" &&
-+	git notes copy -f HEAD~2 &&
-+	git log -1 >actual &&
-+	test_cmp expect actual &&
- 	test "$(git notes list HEAD)" = "$(git notes list HEAD~2)"
- '
- 
--- 
-2.23.0
+I wondered what would happen for existing helpers that do not implement
+the option, but the behavior here:
 
+> +	if (flags & TRANSPORT_PUSH_ATOMIC)
+> +		if (set_helper_option(transport, TRANS_OPT_ATOMIC, "true") != 0)
+> +			die(_("helper %s does not support --atomic"), name);
+> +
+
+looks like the right thing.
+
+> As I mentioned in the commit message, to my knowledge, this
+> functionality has been broken since the atomic capability was introduced
+> circa 2.4.0.
+
+Yeah, I tried this with v2.4.0 and it had the same problem (plus it's
+very clear from your patch that it's not a regression, but just that
+nobody bothered to implement it in the first place).
+
+> diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+> index a5c3c04371..670d72c174 100644
+> --- a/Documentation/gitremote-helpers.txt
+> +++ b/Documentation/gitremote-helpers.txt
+> @@ -509,6 +509,11 @@ set by Git if the remote helper has the 'option' capability.
+>  	Indicate that only the objects wanted need to be fetched, not
+>  	their dependents.
+>  
+> +'option atomic' {'true'|'false'}::
+> +  When pushing, request the remote server to update refs in a single atomic
+> +  transaction.  If successful, all refs will be updated, or none will.  If the
+> +  remote side does not support this capability, the push will fail.
+> +
+
+This is implemented with a single space, but the rest of the option
+bodies are indented with a tab. Asciidoc seems to format it identically
+either way, though.
+
+-Peff
