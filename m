@@ -7,106 +7,78 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82D4B1F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 03:07:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DB491F4C1
+	for <e@80x24.org>; Tue, 15 Oct 2019 03:20:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727057AbfJODHP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Oct 2019 23:07:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55191 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726970AbfJODHP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Oct 2019 23:07:15 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F0A20268FD;
-        Mon, 14 Oct 2019 23:07:09 -0400 (EDT)
+        id S1727630AbfJODU1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Oct 2019 23:20:27 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52818 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726259AbfJODU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Oct 2019 23:20:27 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0BD1E96377;
+        Mon, 14 Oct 2019 23:20:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9vORkLyS0KQujNAfJ9jhcbjwnNI=; b=lVWKxP
-        1y0yxEjniNrkbCKyW7Nj6zAawwN9AW6Ta9O46LHtp12CT4jVf++hnVsFfnay5pC8
-        DK5AT26e5nSzGIk8wnvu6T7LE57nEJGXPCDAyWMlD+Ag9d7kRVD5pUbOE0UdPEpD
-        ZrCIH0/sdBGahEodlIgrOH1GKpHypSV6WPk08=
+        :content-type; s=sasl; bh=H7hHxnoPIAjM3U7NzYKDFgvwEyU=; b=j+JYfl
+        cp0N/P4RWrL3XpC64eyY4a8kS+WhbN9t7CoFhFQAr/zXJtVPE7rJiiP4nmRhwYo9
+        k/BKmH+FplDDc0NH1H9IjUl8OWPxP0QHht1x3u/JnFvVZH7RW5CdFmxndDbfwDw2
+        6dPprf7YNQlaPv3EvbVjHLJG/d9wr8/liFwGI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=I+8sg4Bq7xErXoey7cpdwXdbcr2yNlEo
-        Kf/7ItF6xSDWSkhLIvSb63jpOKBn67lhoRNOQGDbqbcKyuA7csl24Kw/wtivSnoV
-        biRnDbieUJokPDwNXYiuVPNFohZF+0q+jVu0tUfEL6sz7bFJyUUHLcOMRP5oKqig
-        g2jCPqBfAc4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E971E268FC;
-        Mon, 14 Oct 2019 23:07:09 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=LqorXosZ0yJHSscEIeRlLk3mj6zO/wWP
+        Kpr1kSWXn/6yeFlT0n+0mIB0q1ltM+r1PyWKUHmMruxJqSO574gYH07wsRKZn4qe
+        X47pzd32/bT2guLrQtYq1opv+ez9YmS653uJ6WRlSrurN/ADwTVUcs4WobQVOBxN
+        gEBMfA/cgfo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 042A196375;
+        Mon, 14 Oct 2019 23:20:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 585EF268FB;
-        Mon, 14 Oct 2019 23:07:09 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2A55396372;
+        Mon, 14 Oct 2019 23:20:22 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Wink Saville <wink@saville.com>
-Cc:     git@vger.kernel.org, jacob.keller@gmail.com,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [RFC PATCH 1/1] Teach remote add the --prefix-tags option
-References: <cover.1571089481.git.wink@saville.com>
-        <d47c5de5fc812b1fbd04bb259a522e453d4b21e2.1571089481.git.wink@saville.com>
-Date:   Tue, 15 Oct 2019 12:07:08 +0900
-In-Reply-To: <d47c5de5fc812b1fbd04bb259a522e453d4b21e2.1571089481.git.wink@saville.com>
-        (Wink Saville's message of "Mon, 14 Oct 2019 15:01:00 -0700")
-Message-ID: <xmqq4l0ad7vn.fsf@gitster-ct.c.googlers.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: ds/sparse-cone, was Re: What's cooking in git.git (Oct 2019, #03; Fri, 11)
+References: <xmqq8sprhgzc.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1910122327250.3272@tvgsbejvaqbjf.bet>
+        <20191015015052.GA19636@dcvr>
+Date:   Tue, 15 Oct 2019 12:20:19 +0900
+In-Reply-To: <20191015015052.GA19636@dcvr> (Eric Wong's message of "Tue, 15
+        Oct 2019 01:50:52 +0000")
+Message-ID: <xmqqzhi2bsp8.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E04B2464-EEF8-11E9-9997-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: B8D74DF2-EEFA-11E9-906D-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wink Saville <wink@saville.com> writes:
+Eric Wong <e@80x24.org> writes:
 
-> When --prefix-tags is passed to `git remote add` the tagopt is set to
-> --prefix-tags and a second fetch line is added so tags are placed in
-> a separate hierarchy per remote.
+> I just took a brief look, but that appears to leak memory.
+>
+> "hashmap_free(var, 1)" should be replaced with
+> "hashmap_free_entries(var, struct foo, member)"
+>
+> Only "hashmap_free(var, 0)" can become "hashmap_free(var)"
 
+I deliberately avoided merge-time band-aid fixups on this topic and
+ew/hashmap exactly because I was sure that I'd introduce a similar
+bugs by doing so myself.  Using evil merges can be a great way to
+help multiple topics polished independently at the same time, but
+when overused, can hide this kind of gotchas quite easily.
 
-In the olden days, there was no refs/remotes/$remoteName/ hiearchy,
-and until we made it the default at around Git 1.5.0, such a modern
-layout for the branches were called the "separate remote" layout,
-and can be opted into with "clone --use-separate-remote" by early
-adopters.
+A reroll on top of ew/hashmap would be desirable, now that topic is
+ready for 'master'.
 
-I doubt that use of refs/tags/$remoteName/ is a good design if we
-want to achieve similar isolation between local tags and and tags
-obtained from each remote.
-
-An obvious alternative, refs/remotes/$remoteName/tags/, is not a
-good design for exactly the same reason.  You cannot tell between a
-local tag foo/bar and a tag bar obtained from remote foo when you
-see refs/tags/foo/bar, and you cannot tell between a branch tag/bar
-obtained from remote foo and a tag bar obtained from remote foo when
-you see refs/remotes/foo/tags/bar.  In the past, people suggested to
-use refs/remoteTags/$remoteName/ for proper isolation, and it might
-be a better middle-ground than either of the two, at least in the
-shorter term, but not ideal.
-
-In short, if you truly want to see "separate hierarchy per remote",
-you should consider how you can reliably implement an equivalent of
-"git branch --list --remote"; a design that does not allow it is a
-failure.
-
-A better solution with longer lifetime would probably be to use
-
-	refs/remotes/$remoteName/{heads,tags,...}/
-
-when core.useTotallySeparateRemote configuration exists (and
-eventually at Git 3.0 make the layout the default).  It would
-involve changes in the refname look-up rules, but it would not have
-to pollute refs/ namespace like the refs/remoteTags/ half-ground
-design, which would require us to add refs/remoteNotes/ and friends,
-who knows how many more we would end up having to support if we go
-that route.
-
-Thanks.
-
-
-
+Thanks.  
