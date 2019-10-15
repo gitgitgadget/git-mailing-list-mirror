@@ -2,93 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6ED931F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 16:40:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE1C81F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 16:44:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728338AbfJOQka (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 12:40:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48714 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727994AbfJOQka (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 12:40:30 -0400
-Received: (qmail 19708 invoked by uid 109); 15 Oct 2019 16:40:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Oct 2019 16:40:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3554 invoked by uid 111); 15 Oct 2019 16:43:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 15 Oct 2019 12:43:32 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 15 Oct 2019 12:40:29 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] remote-curl: pass on atomic capability to remote side
-Message-ID: <20191015164028.GA4710@sigill.intra.peff.net>
-References: <20191015010759.2259-1-sandals@crustytoothpaste.net>
+        id S1728594AbfJOQoJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 12:44:09 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:42502 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728083AbfJOQoJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 12:44:09 -0400
+Received: by mail-pg1-f196.google.com with SMTP id f14so7365502pgi.9
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 09:44:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5TuZx4A7Y7/dyKYPRb+DDLdDJdv324EXmTQdv5FXnzs=;
+        b=c6ZrVq8ufbZ4+UYtdhxZa5L3wXSo1sV2Db4OjLl7Y9NqAR5EsfC84FzTpNHI7FOMVg
+         CXSnz0tK/zODDJgRwEqywvSQXz0KWfI7A8KCY9vyTiUSy8dMkjKvsldphm94RRidT5i1
+         SUr5yLDL4IeEpZSAlJYcbul0Rg63x8Hveyw2DWC9DrrYr5HCbuQcyxupk08lKWyo/Smi
+         nFMLNLoYhgvHkewcM3hM6wzjekY+uXmMbHymMvwpZEgG39SCvS26uMKk7+vSEIHTJ7gS
+         9x9qQ94WJFcAzPxL9ByLLThb9dS0VSdubSWDU7In2LjtsJZIZZ7buk2Wn+SaAYine3ES
+         cA5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5TuZx4A7Y7/dyKYPRb+DDLdDJdv324EXmTQdv5FXnzs=;
+        b=Ecc17HUx1A0MOp6oROSAhId+MvgLxA9Fb73/1cikRaYH1wdNwu4wU5VOCpIQbhOLmF
+         bbusv2d5OWwcPvwY5i+YviveaICZVFq0B3EMWqg7S/SlLXyPvgvgB8PiJg+QTvCuhMZd
+         0MR4F1CUNxL83i0bi7kyGbZ/nwKetOXRMvNtDKxL11ILaysWIEYd/5ma6JfL2bttRUas
+         RoqmxjKIbHEHYujbEuqomgEVNJYvSVx2hsPBXehPrJSbkkUikT/hfiWydhjHh+HzGJI7
+         IkNQAr3/RaUwRf42pO5MoNV3VajtxZBdZLIpePdW0+R+NrjJ3L1mtKDqRxzNZSGCFaWF
+         mESQ==
+X-Gm-Message-State: APjAAAWs4nzDbJ7fBDye2v+vHjzraco9jEyBC5UbcndhzpQP6K25tjof
+        u3+5lbzqe1I0p5AKuPCnK487egJl
+X-Google-Smtp-Source: APXvYqypo4sSdjuvBw9Ho/9+vc/7efWJ/vYP2F7bdi/B4OxZYGubcz4Lblc6wNSTZqF9QQaT0hqQjw==
+X-Received: by 2002:a62:fc12:: with SMTP id e18mr21874033pfh.111.1571157422481;
+        Tue, 15 Oct 2019 09:37:02 -0700 (PDT)
+Received: from localhost.localdomain ([2402:800:6375:2b61:f51c:7233:c8a4:1e74])
+        by smtp.gmail.com with ESMTPSA id c8sm9347151pjo.1.2019.10.15.09.37.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Oct 2019 09:37:01 -0700 (PDT)
+From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>
+Subject: [PATCH 0/1] Allow default value for target of git-notes copy
+Date:   Tue, 15 Oct 2019 23:36:30 +0700
+Message-Id: <20191015163631.21808-1-congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191015010759.2259-1-sandals@crustytoothpaste.net>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 15, 2019 at 01:07:59AM +0000, brian m. carlson wrote:
+As an alternate for the incoming patch,
+this snippet could be used to eliminate some dead code in builtin/notes.c
+Since `argc' will always be 2 in the removed condition.
 
-> Fix this by passing the option from the transport code through to remote
-> helpers, and from the HTTP remote helper down to send-pack.  With this
-> change, we can detect if the server side rejects the push and report
-> back appropriately.  Note the difference in the messages: the remote
-> side reports "atomic transaction failed", while our own checking rejects
-> pushes with the message "atomic push failed".
+Also:
 
-Good find. The patch looks good to me, except for one minor style nit in
-the documentation (see below).
 
-> Document the atomic option in the remote helper documentation, so other
-> implementers can implement it if they like.
+Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
+---
 
-I wondered what would happen for existing helpers that do not implement
-the option, but the behavior here:
+ builtin/notes.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-> +	if (flags & TRANSPORT_PUSH_ATOMIC)
-> +		if (set_helper_option(transport, TRANS_OPT_ATOMIC, "true") != 0)
-> +			die(_("helper %s does not support --atomic"), name);
-> +
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 02e97f55c5..641ae66f75 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -488,7 +488,6 @@ static int copy(int argc, const char **argv, const char *prefix)
+ {
+ 	int retval = 0, force = 0, from_stdin = 0;
+ 	const struct object_id *from_note, *note;
+-	const char *object_ref;
+ 	struct object_id object, from_obj;
+ 	struct notes_tree *t;
+ 	const char *rewrite_cmd = NULL;
+@@ -525,10 +524,8 @@ static int copy(int argc, const char **argv, const char *prefix)
+ 	if (get_oid(argv[0], &from_obj))
+ 		die(_("failed to resolve '%s' as a valid ref."), argv[0]);
+ 
+-	object_ref = 1 < argc ? argv[1] : "HEAD";
+-
+-	if (get_oid(object_ref, &object))
+-		die(_("failed to resolve '%s' as a valid ref."), object_ref);
++	if (get_oid(argv[1], &object))
++		die(_("failed to resolve '%s' as a valid ref."), argv[1]);
+ 
+ 	t = init_notes_check("copy", NOTES_INIT_WRITABLE);
+ 	note = get_note(t, &object);
+-- 
+2.23.0
 
-looks like the right thing.
-
-> As I mentioned in the commit message, to my knowledge, this
-> functionality has been broken since the atomic capability was introduced
-> circa 2.4.0.
-
-Yeah, I tried this with v2.4.0 and it had the same problem (plus it's
-very clear from your patch that it's not a regression, but just that
-nobody bothered to implement it in the first place).
-
-> diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-> index a5c3c04371..670d72c174 100644
-> --- a/Documentation/gitremote-helpers.txt
-> +++ b/Documentation/gitremote-helpers.txt
-> @@ -509,6 +509,11 @@ set by Git if the remote helper has the 'option' capability.
->  	Indicate that only the objects wanted need to be fetched, not
->  	their dependents.
->  
-> +'option atomic' {'true'|'false'}::
-> +  When pushing, request the remote server to update refs in a single atomic
-> +  transaction.  If successful, all refs will be updated, or none will.  If the
-> +  remote side does not support this capability, the push will fail.
-> +
-
-This is implemented with a single space, but the rest of the option
-bodies are indented with a tab. Asciidoc seems to format it identically
-either way, though.
-
--Peff
