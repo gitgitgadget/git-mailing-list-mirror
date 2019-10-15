@@ -2,110 +2,272 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82F831F4C1
-	for <e@80x24.org>; Tue, 15 Oct 2019 12:55:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 367351F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 13:56:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727179AbfJOMzC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 08:55:02 -0400
-Received: from mail-qt1-f176.google.com ([209.85.160.176]:47062 "EHLO
-        mail-qt1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726004AbfJOMzC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 08:55:02 -0400
-Received: by mail-qt1-f176.google.com with SMTP id u22so30328854qtq.13
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 05:55:00 -0700 (PDT)
+        id S1732273AbfJON4M (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 09:56:12 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52873 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732229AbfJON4M (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 09:56:12 -0400
+Received: by mail-wm1-f65.google.com with SMTP id r19so20998074wmh.2
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 06:56:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/Ql7653ctIE/HsWN7SxvK1Co8DZfECD01NXgqDwMxp8=;
-        b=T9q+KzlHEzIz2j6ETdiuG8PBigHPl3q88DTsGpm5yy39Q5SR4A8qTfn3TfAxqfVNnY
-         FXpedsUuqzIairXzjBkgfPS/8Y4FiYjm9ftYEUdXrrAj17XvLo8NNdaGEzhtboNtDONj
-         83nCmxeREISMMmSnvzquRbjplnEQfk2zJv4rEec2bdMLdMDJmnoggoH4JIWo6iMBMrQd
-         QPbG84sXMgYcW1IX+6J6QNjsPhOrm38MfzMMhtN/KtC5l9lhIT+CBCmNBFCdYVr9Qqfh
-         rDaEL59doxY6wHmpwAec5QFlR0UyKOv8g4zNXsLJ6i1GJ7R25pQ8ZKTOo6G0AvczBxlx
-         7+8g==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Byw8ehyrPE+IxHgcdaigirzAjJqYnFExcpGO8N8R1cw=;
+        b=hXLlORly4J8PKNelo1W5KeFuKAU7oG+nFS0m53eMSBpxf3Xj/T2qjmo7t/bOVIRPRj
+         bkoVJh1VaEo+9IEZ/woDnRY2ko7EzvFIgNro9uJ9ZVkGGO+Bt7fN13rgV/SOUFGpUlQV
+         +HkPj6nE++zIp4HKBz8DZ8rmxei2xbLRd5jORs9UUxKPZB7N0BfvsPnkv/z0NOqS53cH
+         TH4prk9/H/mMqxdLuZF/hVJ2E3dluneclSsgqyLgU8ThkfKtBrEmDnRIez14g2hBuuww
+         kMvD4Eyt2vpIVahmLEYZLul7IpdvubjAWIqTtsfcl0G6LDcruNVLaUIS9SDURL0XpDHC
+         DTEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/Ql7653ctIE/HsWN7SxvK1Co8DZfECD01NXgqDwMxp8=;
-        b=E0yrRMHMBLhKyY8ZsvqutqofUYerx4zitoWHnsbo6Pl7dpplndJli2YlzXtRf8yTEf
-         W3GcZx9zVJFzJdehhLiyYD/hFcnOCMpzusASKGKluh7GuKf+0th5NuSNb7WKJoS1gdGQ
-         qTB8jLuFq9Ak7W/K+HyXa49hNzK8NH57zFx8vyXRC7p8rIheIzN9+iAaO6xvF6tg7XX6
-         hbvBbe0KWPkT6kQrOCRzski+ygcwdhkc2ovy0VFCLDCjiJDrqAuLAuu1BJC2ZT+oBAO5
-         hiMVstC8ULt1Xf/PuditpX9oskUOv+Ru3YEfnkSEQBGapE21OXxqfiH1kneDd84EHk0T
-         pASQ==
-X-Gm-Message-State: APjAAAUPHEPPYU450B0n7m2KfeYouEOlq46tCEMPDskxf/E3zK1ju06B
-        7+zODECy90T1q9/mX5cJuQE+WA9alRw=
-X-Google-Smtp-Source: APXvYqw4rtZLyO6AwoYFD0cAzQEYu6+Z554dIztSpUZKoUEtceQzZUgjSi1ane9dLVFgzkERGilrRQ==
-X-Received: by 2002:a0c:fde6:: with SMTP id m6mr17324111qvu.173.1571144099054;
-        Tue, 15 Oct 2019 05:54:59 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:889a:fc09:50a4:b190? ([2001:4898:a800:1012:39ce:fc09:50a4:b190])
-        by smtp.gmail.com with ESMTPSA id o14sm14212134qtk.52.2019.10.15.05.54.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Oct 2019 05:54:58 -0700 (PDT)
-Subject: Re: ds/sparse-cone, was Re: What's cooking in git.git (Oct 2019, #03;
- Fri, 11)
-To:     Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-References: <xmqq8sprhgzc.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1910122327250.3272@tvgsbejvaqbjf.bet>
- <20191015015052.GA19636@dcvr> <xmqqzhi2bsp8.fsf@gitster-ct.c.googlers.com>
- <20191015071126.GA908@dcvr>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <fdea4b03-3810-1317-7fe3-5100482f7b34@gmail.com>
-Date:   Tue, 15 Oct 2019 08:54:58 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Byw8ehyrPE+IxHgcdaigirzAjJqYnFExcpGO8N8R1cw=;
+        b=PuxWfyFg25JipxRDx7vNq2+Oca8i/9gL2T2ad5d3QRupe5UVdK21anbIn46PqrTdTc
+         rxiRV48Rme/mXUxo5fWIFw2WC4DgvaSCfFiWuWVoWuVA+ZW3RJdLihknIcls74R0JanS
+         uy959sIMfOsjB9ztJYGcAWaBTpstaTSMxTduERh5g7BdnNa4eAb2eNtlFGk9GntAcrc5
+         3CzsByKzohAedAmnrDcj5TDOCZ9iW5mc3U5LAiiJ5IPU180wvi+XPIhMQaxt8u+rzjiy
+         4GDaknZ3KTAqDqLvTV5pIIsPWreVuWbL8JuVUtDUpWIIxyjRYr6+j+6XJdvTZfhM0ejX
+         1+dA==
+X-Gm-Message-State: APjAAAV9TJzNVczP3b86RBnwffVVgSrVlBeYMguLdK15Gzta6lfoDo9n
+        lqcrepoPQP8JXW3kCt7C/dblWvUL
+X-Google-Smtp-Source: APXvYqyKFZDjKjMkh0ZzJdnqoN3DEu8tzSdhpmEwTLuSjixSISAzddhg99x3Yc4S4vdqBPS4EB5/ag==
+X-Received: by 2002:a1c:7418:: with SMTP id p24mr18631788wmc.132.1571147768780;
+        Tue, 15 Oct 2019 06:56:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o18sm2556134wrm.11.2019.10.15.06.56.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Oct 2019 06:56:08 -0700 (PDT)
+Message-Id: <65d26de1c2724750a51592d02466a4b9ecdea743.1571147765.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
+References: <pull.316.v3.git.gitgitgadget@gmail.com>
+        <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 15 Oct 2019 13:55:49 +0000
+Subject: [PATCH v4 02/17] sparse-checkout: create 'init' subcommand
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <20191015071126.GA908@dcvr>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     newren@gmail.com, Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/15/2019 3:11 AM, Eric Wong wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
->> Eric Wong <e@80x24.org> writes:
->>
->>> I just took a brief look, but that appears to leak memory.
->>>
->>> "hashmap_free(var, 1)" should be replaced with
->>> "hashmap_free_entries(var, struct foo, member)"
->>>
->>> Only "hashmap_free(var, 0)" can become "hashmap_free(var)"
->>
->> I deliberately avoided merge-time band-aid fixups on this topic and
->> ew/hashmap exactly because I was sure that I'd introduce a similar
->> bugs by doing so myself.  Using evil merges can be a great way to
->> help multiple topics polished independently at the same time, but
->> when overused, can hide this kind of gotchas quite easily.
->>
->> A reroll on top of ew/hashmap would be desirable, now that topic is
->> ready for 'master'.
-> 
-> Just to be clear, that reroll should come from Stolee (+Cc-ed), right?
-> I'll be around to help answer questions, but also pretty busy
-> with other stuff and I think Stolee knows this API pretty well :>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-I'm working on the re-roll, yes. I was waiting for ew/hashmap to merge
-with history that included ds/include-exclude. Now the current 'master'
-has both, so I can rebase and check everything carefully. v4 should
-have every commit compile with the new hashmap API.
+Getting started with a sparse-checkout file can be daunting. Help
+users start their sparse enlistment using 'git sparse-checkout init'.
+This will set 'core.sparseCheckout=true' in their config, write
+an initial set of patterns to the sparse-checkout file, and update
+their working directory.
 
-Thanks for pointing out the bugs with the suggested fixups. I'll
-be careful as I adapt the new API.
+Make sure to use the `extensions.worktreeConfig` setting and write
+the sparse checkout config to the worktree-specific config file.
+This avoids confusing interactions with other worktrees.
 
--Stolee
+The use of running another process for 'git read-tree' is sub-
+optimal. This will be removed in a later change.
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Documentation/git-sparse-checkout.txt | 11 ++++
+ builtin/sparse-checkout.c             | 79 ++++++++++++++++++++++++++-
+ t/t1091-sparse-checkout-builtin.sh    | 41 ++++++++++++++
+ 3 files changed, 130 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index 46d3dc3cb1..d5fbbf17a0 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -28,6 +28,17 @@ COMMANDS
+ 'list'::
+ 	Provide a list of the contents in the sparse-checkout file.
+ 
++'init'::
++	Enable the `core.sparseCheckout` setting. If the
++	sparse-checkout file does not exist, then populate it with
++	patterns that match every file in the root directory and
++	no other directories, then will remove all directories tracked
++	by Git. Add patterns to the sparse-checkout file to
++	repopulate the working directory.
+++
++To avoid interfering with other worktrees, it first enables the
++`extensions.worktreeConfig` setting and makes sure to set the
++`core.sparseCheckout` setting in the worktree-specific config file.
+ 
+ SPARSE CHECKOUT
+ ----------------
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index eed9625a05..1d2327111a 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -8,7 +8,7 @@
+ #include "strbuf.h"
+ 
+ static char const * const builtin_sparse_checkout_usage[] = {
+-	N_("git sparse-checkout [list]"),
++	N_("git sparse-checkout [init|list]"),
+ 	NULL
+ };
+ 
+@@ -59,6 +59,81 @@ static int sparse_checkout_list(int argc, const char **argv)
+ 	return 0;
+ }
+ 
++static int update_working_directory(void)
++{
++	struct argv_array argv = ARGV_ARRAY_INIT;
++	int result = 0;
++	argv_array_pushl(&argv, "read-tree", "-m", "-u", "HEAD", NULL);
++
++	if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
++		error(_("failed to update index with new sparse-checkout paths"));
++		result = 1;
++	}
++
++	argv_array_clear(&argv);
++	return result;
++}
++
++enum sparse_checkout_mode {
++	MODE_NO_PATTERNS = 0,
++	MODE_ALL_PATTERNS = 1,
++};
++
++static int sc_set_config(enum sparse_checkout_mode mode)
++{
++	struct argv_array argv = ARGV_ARRAY_INIT;
++
++	if (git_config_set_gently("extensions.worktreeConfig", "true")) {
++		error(_("failed to set extensions.worktreeConfig setting"));
++		return 1;
++	}
++
++	argv_array_pushl(&argv, "config", "--worktree", "core.sparseCheckout", NULL);
++
++	if (mode)
++		argv_array_pushl(&argv, "true", NULL);
++	else
++		argv_array_pushl(&argv, "false", NULL);
++
++	if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
++		error(_("failed to enable core.sparseCheckout"));
++		return 1;
++	}
++
++	return 0;
++}
++
++static int sparse_checkout_init(int argc, const char **argv)
++{
++	struct pattern_list pl;
++	char *sparse_filename;
++	FILE *fp;
++	int res;
++
++	if (sc_set_config(MODE_ALL_PATTERNS))
++		return 1;
++
++	memset(&pl, 0, sizeof(pl));
++
++	sparse_filename = get_sparse_checkout_filename();
++	res = add_patterns_from_file_to_list(sparse_filename, "", 0, &pl, NULL);
++
++	/* If we already have a sparse-checkout file, use it. */
++	if (res >= 0) {
++		free(sparse_filename);
++		goto reset_dir;
++	}
++
++	/* initial mode: all blobs at root */
++	fp = fopen(sparse_filename, "w");
++	free(sparse_filename);
++	fprintf(fp, "/*\n!/*/\n");
++	fclose(fp);
++
++reset_dir:
++	return update_working_directory();
++}
++
+ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
+ {
+ 	static struct option builtin_sparse_checkout_options[] = {
+@@ -79,6 +154,8 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
+ 	if (argc > 0) {
+ 		if (!strcmp(argv[0], "list"))
+ 			return sparse_checkout_list(argc, argv);
++		if (!strcmp(argv[0], "init"))
++			return sparse_checkout_init(argc, argv);
+ 	}
+ 
+ 	usage_with_options(builtin_sparse_checkout_usage,
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index a9b04b1a88..c70085a759 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -47,4 +47,45 @@ test_expect_success 'git sparse-checkout list (populated)' '
+ 	test_cmp expect list
+ '
+ 
++test_expect_success 'git sparse-checkout init' '
++	git -C repo sparse-checkout init &&
++	cat >expect <<-EOF &&
++		/*
++		!/*/
++	EOF
++	test_cmp expect repo/.git/info/sparse-checkout &&
++	git -C repo config --list >config &&
++	test_i18ngrep "core.sparsecheckout=true" config &&
++	ls repo >dir  &&
++	echo a >expect &&
++	test_cmp expect dir
++'
++
++test_expect_success 'git sparse-checkout list after init' '
++	git -C repo sparse-checkout list >actual &&
++	cat >expect <<-EOF &&
++		/*
++		!/*/
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'init with existing sparse-checkout' '
++	echo "*folder*" >> repo/.git/info/sparse-checkout &&
++	git -C repo sparse-checkout init &&
++	cat >expect <<-EOF &&
++		/*
++		!/*/
++		*folder*
++	EOF
++	test_cmp expect repo/.git/info/sparse-checkout &&
++	ls repo >dir  &&
++	cat >expect <<-EOF &&
++		a
++		folder1
++		folder2
++	EOF
++	test_cmp expect dir
++'
++
+ test_done
+-- 
+gitgitgadget
 
