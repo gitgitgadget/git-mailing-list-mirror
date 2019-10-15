@@ -2,124 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACB761F4C1
-	for <e@80x24.org>; Tue, 15 Oct 2019 18:34:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FE951F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 18:48:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731819AbfJOSeH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 14:34:07 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:37566 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726144AbfJOSeH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 14:34:07 -0400
-Received: by mail-ed1-f66.google.com with SMTP id r4so18983141edy.4
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 11:34:05 -0700 (PDT)
+        id S1728965AbfJOSsT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 14:48:19 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44059 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728258AbfJOSsS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 14:48:18 -0400
+Received: by mail-wr1-f65.google.com with SMTP id z9so25109240wrl.11
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 11:48:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1dFA9HcXdkgh3JkbTasRvTobm1zEpaXP58E8CBXpjh0=;
-        b=PT9UtH82HIX5BFIKkeDw0ljKyMrGnvzvmsrx7atbNRrPE8f9N3bzi3Gs+Y8tSBr909
-         YoqYr1vMDB8yjopjT3sL6MJCOAoI6TOtg/wvHFeUlNsiHnWohOwVoyX1v9wH//v+2Bp1
-         osjA9qytMawuJW+gKyq7sxC4H3eNY2cHEnh2cRVsgHnHxWgzijvTvR5RaRiasB/2CZ2m
-         Kc6gfhVTYI0cLy5DR9VWtcujhGAfiMB+nFPsXCJNyt2wiCbw1x1vtuwPDjEr+EpPvjY8
-         dWOz5QD8Ae1kg2y6uE7YY7S+PcKgk2dhW/iohoZ9ZLDfv9KuH7dEUsY2Of0kGIRGbk81
-         pPmA==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=E/MYZTeMbrot2G5/y1m7G/c0mnD/iFN7fhJLd/8LHOA=;
+        b=DFAoPScTqbhq1pqYfFVGYdPkzcsnXl9+W/kUcKjSh1U/dN+oJUskvSBG8WoT4bUo99
+         bI20OK+VpPDGUjZ4vGt/aNTDkwTLWZysmgfh9/zKA3q2YgAuJXlYRJ5gh3PsYPfl7Rn4
+         /8zEb5tiTHovrlR3oNhwCfy04nFesMJ9/5fYOmNcw7mSQ5wcJMt6hEfBR14QcYzA+RL3
+         jYt6eO8GjNgCU4MTXIeuyTQvCWaqFvq7jkp9nktevUqwP9AnnPfTNj5P4AW4w2vMe4Cm
+         6lhLFGxSa8jfrXooMB4XDGXSon0lz4N4PkRdYD3Ir0/fcvdICzreJF+AMgYLJolKYwxR
+         gUlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1dFA9HcXdkgh3JkbTasRvTobm1zEpaXP58E8CBXpjh0=;
-        b=CfAfZlxNFx9kGDqQbouF7CGfYW4CE2Ql0ZF9JhgEyD1BKUf7IK1PfD97PLKe1bsZ3v
-         wTTER1a1jR0BUUk3l39bcBVGgDb2pyr8hE52AQRdywS26cTnoYlNHWwDSDPqJJwNSTsQ
-         z67D3tLLLUig3yeihuqdFilvprwtv+3RmiHxOQ/MjMdxrGJtaa+3HM05sjsZsnSrwitV
-         xxp9UFZV0NBqFhx/qp4YAURvtpmQiFzR8wHqnGgo9cGH1hqf7Uk4GAFgdcK365jT68bC
-         bcln8BzRRmJ6DCyH75pn6qP8HR9/cYwWasEn+gFidwMhAhFBxj+tBkAY4WYm3ikIGx9k
-         t5/A==
-X-Gm-Message-State: APjAAAWQQIaE0T8rynKhGtmEfliq1o2ja7tyUMcdwuROUO5rP8BLzobu
-        ejEovCEH3+VRLikTlfG3UMqUm7ptVzlA2EfghcE=
-X-Google-Smtp-Source: APXvYqzCU2pC8zpFIYfWfc9+/s77vxgekm9sLJHr+tSlgHJ+7mWWMco9sph5qcGaY07HNgBSBu8ExhNQ/JNaFf5b8Vs=
-X-Received: by 2002:a17:906:f54:: with SMTP id h20mr36311757ejj.55.1571164444263;
- Tue, 15 Oct 2019 11:34:04 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=E/MYZTeMbrot2G5/y1m7G/c0mnD/iFN7fhJLd/8LHOA=;
+        b=D830XNdz7l5Lv5GQKN5kA1zhZjvchMxBCdAZtDfdRxKIBgKzDAiVxuYkMC2+GIzd3L
+         WV3k9lJLCTXNKtofTqgw5Cm92iDJJO0NW3iJvoUdTx08uMJUAfrHwORtjePZkV7HZk/h
+         kB1Fk7SaPvp9EBfIb87bh/x5VvhPaqk/zImC+skPt/HC6c4swOITwQygn+LCvdZzGtHx
+         4En3feArsO03S87whpS9kIPd1eLygrf0bf/YcCx+aZUV23hWcCOkv5QljDET86aHx8C/
+         o060spdJCOXNKkzZP0v7ZDVsNAnigR69MAvNfNxWLTmfvZ78w8J6X6n1kjgmNqeNmjgo
+         XrBw==
+X-Gm-Message-State: APjAAAUH67d8Iuwh1RyM5FSsA5nJWuMgYx8cJEYbhMHhMGrkEPdMkeMp
+        aUtUm2hGfVDOMfQbB1pQsb6bu7GQ
+X-Google-Smtp-Source: APXvYqywU59Ah9HgIIiz7ElelR6HFIgzWUmx0nfsa1znkxgauBlx7ynQgSgzYPcg0vCA5j+n46oxJw==
+X-Received: by 2002:adf:f50b:: with SMTP id q11mr2294770wro.310.1571165295499;
+        Tue, 15 Oct 2019 11:48:15 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g185sm150754wme.10.2019.10.15.11.48.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Oct 2019 11:48:14 -0700 (PDT)
+Message-Id: <pull.367.v3.git.1571165293.gitgitgadget@gmail.com>
+In-Reply-To: <pull.367.v2.git.gitgitgadget@gmail.com>
+References: <pull.367.v2.git.gitgitgadget@gmail.com>
+From:   "Max Belsky via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 15 Oct 2019 18:48:12 +0000
+Subject: [PATCH v3 0/1] doc: Add a note about ~/.zsh/_git file
 MIME-Version: 1.0
-References: <cover.1571089481.git.wink@saville.com> <d47c5de5fc812b1fbd04bb259a522e453d4b21e2.1571089481.git.wink@saville.com>
- <xmqq4l0ad7vn.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq4l0ad7vn.fsf@gitster-ct.c.googlers.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 15 Oct 2019 11:33:52 -0700
-Message-ID: <CA+P7+xr-4WXuDFL-D8pmoxFvLB0Rkm4zsGO9=aOy5-3o=m=5Tg@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/1] Teach remote add the --prefix-tags option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Wink Saville <wink@saville.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Max Belsky <public.belsky@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 14, 2019 at 8:07 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Wink Saville <wink@saville.com> writes:
->
-> > When --prefix-tags is passed to `git remote add` the tagopt is set to
-> > --prefix-tags and a second fetch line is added so tags are placed in
-> > a separate hierarchy per remote.
->
->
-> In the olden days, there was no refs/remotes/$remoteName/ hiearchy,
-> and until we made it the default at around Git 1.5.0, such a modern
-> layout for the branches were called the "separate remote" layout,
-> and can be opted into with "clone --use-separate-remote" by early
-> adopters.
->
-> I doubt that use of refs/tags/$remoteName/ is a good design if we
-> want to achieve similar isolation between local tags and and tags
-> obtained from each remote.
->
-> An obvious alternative, refs/remotes/$remoteName/tags/, is not a
-> good design for exactly the same reason.  You cannot tell between a
-> local tag foo/bar and a tag bar obtained from remote foo when you
-> see refs/tags/foo/bar, and you cannot tell between a branch tag/bar
-> obtained from remote foo and a tag bar obtained from remote foo when
-> you see refs/remotes/foo/tags/bar.  In the past, people suggested to
-> use refs/remoteTags/$remoteName/ for proper isolation, and it might
-> be a better middle-ground than either of the two, at least in the
-> shorter term, but not ideal.
->
-> In short, if you truly want to see "separate hierarchy per remote",
-> you should consider how you can reliably implement an equivalent of
-> "git branch --list --remote"; a design that does not allow it is a
-> failure.
->
-> A better solution with longer lifetime would probably be to use
->
->         refs/remotes/$remoteName/{heads,tags,...}/
->
-> when core.useTotallySeparateRemote configuration exists (and
-> eventually at Git 3.0 make the layout the default).  It would
-> involve changes in the refname look-up rules, but it would not have
-> to pollute refs/ namespace like the refs/remoteTags/ half-ground
-> design, which would require us to add refs/remoteNotes/ and friends,
-> who knows how many more we would end up having to support if we go
-> that route.
->
-> Thanks.
->
+Hey,
 
-Something like this makes sense and I've thought about the problem for
-a long time. Unfortunately it's quite a bit trickier to do this.
+Today I've spent a few hours to understand why git-completion doesn't work
+in my zsh shell. It was because I thought ~/.zsh/_git should be a dictionary
+with git-completion.zsh file. 
 
-It would solve the problem more generally though, and definitely seems
-like the right approach.. but at least for me, every time I looked at
-trying this I got lost. I haven't had time to investigate it recently
-:(
+I think this change may save some hours for someone else.
 
-Thanks,
-Jake
+Maxim Belsky (1):
+  doc: Change zsh git completion file name
+
+ contrib/completion/git-completion.zsh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+
+base-commit: 108b97dc372828f0e72e56bbb40cae8e1e83ece6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-367%2Fmbelsky%2Fpatch-1-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-367/mbelsky/patch-1-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/367
+
+Range-diff vs v2:
+
+ 1:  3f994f3b9a ! 1:  7919addea8 doc: Change zsh git completion file name
+     @@ -8,9 +8,10 @@
+      
+          There is a small update to clarify it.
+      
+     -    Signed-off-by: Maxim Belsky <public.belsky@gmail.com>
+          Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+          Helped-by: Junio C Hamano <gitster@pobox.com>
+     +    Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+     +    Signed-off-by: Maxim Belsky <public.belsky@gmail.com>
+      
+       diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+       --- a/contrib/completion/git-completion.zsh
+     @@ -22,8 +23,8 @@
+      -# The recommended way to install this script is to copy to '~/.zsh/_git', and
+      -# then add the following to your ~/.zshrc file:
+      +# The recommended way to install this script is to make a copy of it in
+     -+# ~/.zsh/ directory as ~/.zsh/git-completion.zsh and then add the following
+     -+# to your ~/.zshrc file:
+     ++# '~/.zsh/' directory as '~/.zsh/_git' and then add the following to your
+     ++# ~/.zshrc file:
+       #
+       #  fpath=(~/.zsh $fpath)
+       
+
+-- 
+gitgitgadget
