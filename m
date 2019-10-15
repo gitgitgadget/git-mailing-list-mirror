@@ -8,92 +8,122 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1529B1F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 03:31:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 273FB1F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 03:45:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727857AbfJODbc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Oct 2019 23:31:32 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:53246 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727810AbfJODbb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Oct 2019 23:31:31 -0400
-Received: by mail-wm1-f66.google.com with SMTP id r19so19114454wmh.2
-        for <git@vger.kernel.org>; Mon, 14 Oct 2019 20:31:30 -0700 (PDT)
+        id S1727901AbfJODpv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Oct 2019 23:45:51 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:45921 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727647AbfJODpu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Oct 2019 23:45:50 -0400
+Received: by mail-pf1-f193.google.com with SMTP id y72so11532275pfb.12
+        for <git@vger.kernel.org>; Mon, 14 Oct 2019 20:45:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=FqNp4juXy36DOc2Eajdera6WYFQ0jhTIiYn1rESRxY4=;
-        b=VrkQoVjiim+B8qjZybBOe13lSlnpqwe2xsHGYY2EwLajfrfUr/ArtsKna7vAr6IVOZ
-         paPXr/PABr3ALUTZU6XwAdewJxuUaz+bVzui6k8hVI1z/NUFFt7mArhVwUHJBuX27X93
-         L7uRE+e3uL7WDT5MaPvBeo2PmoJOjH+H8CAt/SNxbw/V54iXmHvvwbfaV3PxnzZhRSo/
-         4qUJCQi89qthCdBHFmhpGoLwhTXZgi7sYB4LH8iptJwjT+C1vmKk3YmJVbH+5pIK6UQR
-         J7wodgignQ6YOQCsd6GOK//nRWqW4Uupm+t8fLxr+SXxeuzxL8wfSar+KHPIgVGrln5/
-         7FWw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=FxNnuaHn1FJ5s3/i6xS7aV0o3YxDMaVEEtw0MSoeqEY=;
+        b=aHR0htCJV3NtfX0cq4JVEjq17EQlDh46L6xfmAt8BQnmMD7pqu8XhpWYs+rDLRq14s
+         RpfzP6zRCMpaiG0MTsuqdWLbu4MywGoQubWh9XRSqkx4UHpm3CfWKsbRELktjTKdhfbQ
+         27A8rHoPA6sxe2xBSK7HhfmjUyqJ3sew14IbCDs0rOhhzr9AOYWrmJ5aaF5bMi+6Hew4
+         TisGrlklB+1QFCVbJZC8aChEK/EfZSoUPEl4Mc3mNhd4p4RkTphLd69n6xge1urRsIVe
+         YPC6XCfKmd77IKui97CZMfA4eXFFkSW6axrUymUGw655sGV06KVEHv9oFSi48uxpB2gj
+         kNfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FqNp4juXy36DOc2Eajdera6WYFQ0jhTIiYn1rESRxY4=;
-        b=HyHldTCMx4IBZSOaSAEflZzv/ppulnBqPjp2AlXzyUiMQA96ufzOEl5qPDvPQ3j5sf
-         nSqJtTSRgcC+Cz0iorWjqZr3hEWGZeTyVRGbIhRp6GNGhhw6LVFkD4PX2h4XmfJq2sdk
-         QXZhhz6I4paatvQun6Jlo9gXWaMAE4B2Gd2RwshJ9fQR3sXA6vTB/AhRnwQpZV96uCCC
-         Sey0zZPxd8UCMOeYV7ytzBYVzTWrsZaRUK9sOwQpcvT9FANm3inQ/Ea8oOp2h3NqIMTk
-         3oOjyb/LXPjDAF7Ii4nzF4Z6g+wpES/bEbunlJ+NvkXMJnizFoquIa5xDr8tisa8Hymg
-         89iA==
-X-Gm-Message-State: APjAAAW9Qrk7DnkFK6EBs0//OqQpysbDzmdel22jZu+rQwE+k0XWo6X5
-        feMs8SMHN14a6YJruxMJstM42PVS
-X-Google-Smtp-Source: APXvYqx9frFsUfjOMNaKe25HfSfP/O0GKCIVgRsfRYpDT3eZAO61Mmx1K5chF/VYok8US/LmtCQOig==
-X-Received: by 2002:a05:600c:22ce:: with SMTP id 14mr16868272wmg.71.1571110289466;
-        Mon, 14 Oct 2019 20:31:29 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 74sm12328142wrm.92.2019.10.14.20.31.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 14 Oct 2019 20:31:29 -0700 (PDT)
-Message-Id: <2823d4d360b2f53c1d63ba742808eaee80ede1e4.1571110286.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.397.git.1571110286.gitgitgadget@gmail.com>
-References: <pull.397.git.1571110286.gitgitgadget@gmail.com>
-From:   "Norman Rasmussen via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Oct 2019 03:31:26 +0000
-Subject: [PATCH 1/1] diff-highlight: fix a whitespace nit
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FxNnuaHn1FJ5s3/i6xS7aV0o3YxDMaVEEtw0MSoeqEY=;
+        b=rLq0iE9N6oKtwOFNUgWW4HzLwZd2zrsi+i6bOU/oWvX/YGGNtbjESwR2l9MSLxPeEe
+         pIQzT+E+GWm0SdOnbsWaVY2gLoj32GNwwMEVtUBPFgoostlRtS9dISNDIcHMUg8WdbeS
+         g0KU206TdpM0KH1Z+mDwmjn6OlrMsICbuAGC7LDFYc1DLmfa2v2gYn4Zw3d5uVh4V2nz
+         ZhEzo4T7nstcPxOG/0xM4z8RYUoMtJLfofJ3HNPINBrc6Oxl629p6bx12kPYDZxvMAM6
+         adVVd9q6oE7gbEttQXX8WGMknEvlTjd8dYbd9aue7pipYR70q2n9lzf+2LSimWryN613
+         JxSg==
+X-Gm-Message-State: APjAAAVuvrM4r88Sl/xocbGssH1f/XUWVtR8wuW1TmkmZbq48bsLNKs9
+        PaqxMwbYAXoOPC9rXViGQ9jEEsZ3
+X-Google-Smtp-Source: APXvYqxI+L/WROgymyjQS1w+oIsmsQkbbAyY3fcPf6VMv+fBCM4DeJR7no7322tPGrYlqfrw/AFpng==
+X-Received: by 2002:a17:90a:db4a:: with SMTP id u10mr40017982pjx.30.1571111149993;
+        Mon, 14 Oct 2019 20:45:49 -0700 (PDT)
+Received: from generichostname ([2601:646:280:1b30:80db:d816:4d15:ae2a])
+        by smtp.gmail.com with ESMTPSA id 71sm28468110pfw.147.2019.10.14.20.45.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Oct 2019 20:45:48 -0700 (PDT)
+Date:   Mon, 14 Oct 2019 20:45:46 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v5 1/3] format-patch: change erroneous and condition
+Message-ID: <20191015034546.GA61505@generichostname>
+References: <cover.1570821015.git.liu.denton@gmail.com>
+ <cover.1571085952.git.liu.denton@gmail.com>
+ <56fb230ad271dc9aa91c0f43ac8e4e7085c15775.1571085952.git.liu.denton@gmail.com>
+ <xmqqeezeda7w.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Norman Rasmussen <norman@rasmussen.co.za>,
-        Junio C Hamano <gitster@pobox.com>,
-        Norman Rasmussen <norman@rasmussen.co.za>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqeezeda7w.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Norman Rasmussen <norman@rasmussen.co.za>
+Hi Junio,
 
-This changes the indent from
-  "<tab><sp><sp><sp><sp><sp><sp><sp><sp>"
-to
-  "<tab><tab>"
-so that the statement lines up with the rest of the block.
+Thanks for the feedback.
 
-Signed-off-by: Norman Rasmussen <norman@rasmussen.co.za>
----
- contrib/diff-highlight/DiffHighlight.pm | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Tue, Oct 15, 2019 at 11:16:35AM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> > .... Since this
+> > seems to be a Python-ism that's mistakenly leaked into our code, convert
+> 
+> The conclusion is OK, but as the inventor of format-patch and a
+> non-pythonista, I do not think the above claim is correct, and even
+> if Thomas thought it was a good idea to follow Python style in
+> 30984ed2 ("format-patch: support deep threading", 2009-02-19), which
+> I doubt he did, I do not think there is much point in speculating.
 
-diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
-index 7440aa1c46..e2589922a6 100644
---- a/contrib/diff-highlight/DiffHighlight.pm
-+++ b/contrib/diff-highlight/DiffHighlight.pm
-@@ -72,7 +72,7 @@ sub handle_line {
- 	      (?:$COLOR?\|$COLOR?[ ])* # zero or more trailing "|"
- 	                         [ ]*  # trailing whitespace for merges
- 	    /x) {
--	        my $graph_prefix = $&;
-+		my $graph_prefix = $&;
- 
- 		# We must flush before setting graph indent, since the
- 		# new commit may be indented differently from what we
--- 
-gitgitgadget
+I agree, I probably shouldn't be putting speculation in the log
+messages. I'll change this for the next reroll.
+
+> 
+> Both the log message and the patch text in the previous round were
+> better than this round, I would have to say.
+
+I'll probably keep the patch text, however. In the previous version, we
+were implicitly relying on the value of THREAD_SHALLOW to be 1. This
+seems a little bit flimsy to me since it's possible that the enum can be
+changed in the future and it may invalidate that assumption.
+
+I'll keep it explicit so that it's a little bit more robust and also, so
+that it's more obvious to future readers what's going on.
+
+Thanks,
+
+Denton
+
+> 
+> Thanks.
+> 
+> 
+> 
+> > diff --git a/builtin/log.c b/builtin/log.c
+> > index 44b10b3415..351f4ffcfd 100644
+> > --- a/builtin/log.c
+> > +++ b/builtin/log.c
+> > @@ -835,7 +835,7 @@ static int git_format_config(const char *var, const char *value, void *cb)
+> >  			thread = THREAD_SHALLOW;
+> >  			return 0;
+> >  		}
+> > -		thread = git_config_bool(var, value) && THREAD_SHALLOW;
+> > +		thread = git_config_bool(var, value) ? THREAD_SHALLOW : THREAD_UNSET;
+> >  		return 0;
+> >  	}
+> >  	if (!strcmp(var, "format.signoff")) {
