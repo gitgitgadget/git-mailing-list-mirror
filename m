@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AF301F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 13:56:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAF5E1F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 13:56:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732298AbfJON4U (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 09:56:20 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:36421 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732277AbfJON4O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 09:56:14 -0400
-Received: by mail-wm1-f68.google.com with SMTP id m18so20400639wmc.1
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 06:56:13 -0700 (PDT)
+        id S1732313AbfJON4X (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 09:56:23 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39501 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732287AbfJON4S (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 09:56:18 -0400
+Received: by mail-wr1-f67.google.com with SMTP id r3so24016065wrj.6
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 06:56:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jp9fCPiVi8uv07s6DelseXp9idVSa4eBTh9PuKubi+E=;
-        b=MIKsDubBW2l7uG1zBrY8Kqax+tTUKhnBWzx56CWn35g9LPyNFm0aeJ1Z6qU221FAAt
-         ql5PrLHNjxMGNWTAR0658MwZVHLno6X3f/3x289zg0GHiJujsAMUFA1djzi5kHVj72iZ
-         88E5qHU0sfszkaOMfyKU4HW7yaZQdjm7TYyUpAfvOeyqYIoTRdaJ9tzkDduRz7PRmNYf
-         HJg2PX5WpDJKZbtibrWGFjpeRIU7rfJQj88oHO/EINFnFGO8ZPaMASY/kLYD/DrCBK2w
-         iyjOlP0mtjJZGs8KNl37XY6n8w61tWod0Izwyi1YpF7S2SXVJg3k26E0fFnT4WEO3o2C
-         AT9Q==
+        bh=Ips6wWu7Xdah4SBzOLvtoLKr422mshCSp/ecYyPpC+c=;
+        b=WSjx8MSbr6ps16PET3/SfRZ5Ijsb5l8/eu+3IKTMAHM0kZL+d6O7V9X6U7t3fH328Q
+         m2aNbZWQPPaQJhpbL2k0ebiCNfhSEgvphz+/51c1kYoyVtgD1ca7iL1bSXKWd1lHQrX8
+         0yHaBJ+353rEajkdUpQWAzXs5jglAlMM5k61g5ck2Q1P04gUxhKu6ShmAiGtizz/LeQ6
+         mg1vkHIetNGNvZ9PSop7BSa2EecZqfobhuZw4BhAJIKHdp0EuMRCQ63DGtY9WH73Kwee
+         x/MPSio4CdcjQnLCeWrY43pKCMNGQZSFLZvO+ussmqDEG3NuobxvdWtoayLwV5rJDfzs
+         zd2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jp9fCPiVi8uv07s6DelseXp9idVSa4eBTh9PuKubi+E=;
-        b=oBnhfSe8ecYbaSdYw6b8bmHYEjEvJMBW2wGSgIBxFAo3ipDC9FYHYhrHmwwtJp0f6S
-         K6UG2lw5ER2o7I0tytWG0fwy7pMnHu0olXbF+WVTq4bf0ykGFThF5sM08iaoozhYHJDY
-         1LYrjAFff0wzS9AV5j3C9EWDrC4dkXDwDVijcXbPk8cHxp8n586yV1oGvFwbmoihmK8U
-         hPEVokKZtDZ096uPGgH1uw3NgFJfVLyo2E2yqEopBwnDqSmA9/0MAhfq58eK8aRl5jjv
-         e7FHGtCewBpcTmHcTsUtMCntWVGv8MBP4iKrGswiGfz5ks/E88iVeYhO1LKznWsDfMbL
-         LVug==
-X-Gm-Message-State: APjAAAUmUnLhkHdZVVqVGlctCEQkKCl4CArFeUsFGOLkxgrNa6wJoznv
-        zf+ZT46CdaLRI88iMljpqXOXRHpl
-X-Google-Smtp-Source: APXvYqw4wSYPM8Ly6Yu/5nXh+oMTanW5ddkNRa2Q77KjXz4L/NjsO5w1O+PFLrfXiD5PIgcDjMO4fw==
-X-Received: by 2002:a1c:4805:: with SMTP id v5mr20488525wma.130.1571147773036;
-        Tue, 15 Oct 2019 06:56:13 -0700 (PDT)
+        bh=Ips6wWu7Xdah4SBzOLvtoLKr422mshCSp/ecYyPpC+c=;
+        b=IyutqXeeVS7EuAiBdyC+mZC4Ui0E+DEuJ1HLCkaKjHekNqfI3mPtu99jODwtWHEmHa
+         vkyzB1w/V2vOYfLuE8YZcYqciyr1vpusNdbL7Zmo823kInTXrcKM9oXLuUZ5iPGw0Wc9
+         0InYnO3QNr8vFgzmoNDm/IllWVid6ypAaLObqd/Bi40/K9tUiImR1UeuL5LjN3bhSv9c
+         nO3/KHNkvKzAHnrfhzI7xsT1k0bNA1qCpAm4CbDtRArxBkFbDNmdQBgOlBL0w932hFK2
+         fyf3w0LHKhc1mbYS0uPAD8iYbKBCLMu8hV/qzwkRsD0K/7VQrhsRN+GFBCY+Ubzbj4ky
+         BcTg==
+X-Gm-Message-State: APjAAAWxR29TtplHLaHY6+LydbkVKbr2oyWFk6F/HyAvopzDJAnE0qYW
+        /Pn8xuQbZ3uvo9NZefDpGWj2PPYi
+X-Google-Smtp-Source: APXvYqx0H8UBeFTPF6gNf7ObAwroTAnVgIgO6VKDlu+yMswnJ5qL8BeWuTFR84p6UjHtwX3rO3CeyA==
+X-Received: by 2002:a5d:5092:: with SMTP id a18mr28624411wrt.376.1571147776715;
+        Tue, 15 Oct 2019 06:56:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s12sm23775974wra.82.2019.10.15.06.56.12
+        by smtp.gmail.com with ESMTPSA id z9sm23669049wrp.26.2019.10.15.06.56.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Oct 2019 06:56:12 -0700 (PDT)
-Message-Id: <3d8f2f20077767da7f4198daaa44c6721fd01db2.1571147765.git.gitgitgadget@gmail.com>
+        Tue, 15 Oct 2019 06:56:16 -0700 (PDT)
+Message-Id: <fefd1e17447dae54d98db6412ed3484be6a2292e.1571147765.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
 References: <pull.316.v3.git.gitgitgadget@gmail.com>
         <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Oct 2019 13:55:54 +0000
-Subject: [PATCH v4 07/17] trace2: add region in clear_ce_flags
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 15 Oct 2019 13:55:58 +0000
+Subject: [PATCH v4 11/17] unpack-trees: hash less in cone mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,59 +64,125 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     newren@gmail.com, Derrick Stolee <dstolee@microsoft.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-When Git updates the working directory with the sparse-checkout
-feature enabled, the unpack_trees() method calls clear_ce_flags()
-to update the skip-wortree bits on the cache entries. This
-check can be expensive, depending on the patterns used.
+The sparse-checkout feature in "cone mode" can use the fact that
+the recursive patterns are "connected" to the root via parent
+patterns to decide if a directory is entirely contained in the
+sparse-checkout or entirely removed.
 
-Add trace2 regions around the method, including some flag
-information, so we can get granular performance data during
-experiments. This data will be used to measure improvements
-to the pattern-matching algorithms for sparse-checkout.
+In these cases, we can skip hashing the paths within those
+directories and simply set the skipworktree bit to the correct
+value.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- unpack-trees.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ dir.c          |  4 ++--
+ dir.h          |  1 +
+ unpack-trees.c | 38 +++++++++++++++++++++++---------------
+ 3 files changed, 26 insertions(+), 17 deletions(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 33ea7810d8..01a05ff66d 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1407,15 +1407,23 @@ static int clear_ce_flags(struct index_state *istate,
- 			  struct pattern_list *pl)
- {
- 	static struct strbuf prefix = STRBUF_INIT;
-+	char label[100];
-+	int rval;
+diff --git a/dir.c b/dir.c
+index 35c1ca9e24..2ef92a50a0 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1270,7 +1270,7 @@ enum pattern_match_result path_matches_pattern_list(
  
- 	strbuf_reset(&prefix);
+ 	if (hashmap_contains_path(&pl->recursive_hashmap,
+ 				  &parent_pathname)) {
+-		result = MATCHED;
++		result = MATCHED_RECURSIVE;
+ 		goto done;
+ 	}
  
--	return clear_ce_flags_1(istate,
-+	xsnprintf(label, sizeof(label), "clear_ce_flags(0x%08lx,0x%08lx)",
-+		  (unsigned long)select_mask, (unsigned long)clear_mask);
-+	trace2_region_enter("unpack_trees", label, the_repository);
-+	rval = clear_ce_flags_1(istate,
- 				istate->cache,
- 				istate->cache_nr,
- 				&prefix,
- 				select_mask, clear_mask,
- 				pl, 0);
-+	trace2_region_leave("unpack_trees", label, the_repository);
-+
-+	return rval;
- }
+@@ -1292,7 +1292,7 @@ enum pattern_match_result path_matches_pattern_list(
+ 	if (hashmap_contains_parent(&pl->recursive_hashmap,
+ 				    pathname,
+ 				    &parent_pathname))
+-		result = MATCHED;
++		result = MATCHED_RECURSIVE;
+ 
+ done:
+ 	strbuf_release(&parent_pathname);
+diff --git a/dir.h b/dir.h
+index 8e232085cd..77a43dbf89 100644
+--- a/dir.h
++++ b/dir.h
+@@ -264,6 +264,7 @@ enum pattern_match_result {
+ 	UNDECIDED = -1,
+ 	NOT_MATCHED = 0,
+ 	MATCHED = 1,
++	MATCHED_RECURSIVE = 2,
+ };
  
  /*
+diff --git a/unpack-trees.c b/unpack-trees.c
+index a90d71845d..c0dca20865 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1283,15 +1283,17 @@ static int clear_ce_flags_dir(struct index_state *istate,
+ 	struct cache_entry **cache_end;
+ 	int dtype = DT_DIR;
+ 	int rc;
+-	enum pattern_match_result ret;
+-	ret = path_matches_pattern_list(prefix->buf, prefix->len,
+-					basename, &dtype, pl, istate);
++	enum pattern_match_result ret, orig_ret;
++	orig_ret = path_matches_pattern_list(prefix->buf, prefix->len,
++					     basename, &dtype, pl, istate);
+ 
+ 	strbuf_addch(prefix, '/');
+ 
+ 	/* If undecided, use matching result of parent dir in defval */
+-	if (ret == UNDECIDED)
++	if (orig_ret == UNDECIDED)
+ 		ret = default_match;
++	else
++		ret = orig_ret;
+ 
+ 	for (cache_end = cache; cache_end != cache + nr; cache_end++) {
+ 		struct cache_entry *ce = *cache_end;
+@@ -1299,17 +1301,23 @@ static int clear_ce_flags_dir(struct index_state *istate,
+ 			break;
+ 	}
+ 
+-	/*
+-	 * TODO: check pl, if there are no patterns that may conflict
+-	 * with ret (iow, we know in advance the incl/excl
+-	 * decision for the entire directory), clear flag here without
+-	 * calling clear_ce_flags_1(). That function will call
+-	 * the expensive path_matches_pattern_list() on every entry.
+-	 */
+-	rc = clear_ce_flags_1(istate, cache, cache_end - cache,
+-			      prefix,
+-			      select_mask, clear_mask,
+-			      pl, ret);
++	if (pl->use_cone_patterns && orig_ret == MATCHED_RECURSIVE) {
++		struct cache_entry **ce = cache;
++		rc = (cache_end - cache) / sizeof(struct cache_entry *);
++
++		while (ce < cache_end) {
++			(*ce)->ce_flags &= ~clear_mask;
++			ce++;
++		}
++	} else if (pl->use_cone_patterns && orig_ret == NOT_MATCHED) {
++		rc = (cache_end - cache) / sizeof(struct cache_entry *);
++	} else {
++		rc = clear_ce_flags_1(istate, cache, cache_end - cache,
++				      prefix,
++				      select_mask, clear_mask,
++				      pl, ret);
++	}
++
+ 	strbuf_setlen(prefix, prefix->len - 1);
+ 	return rc;
+ }
 -- 
 gitgitgadget
 
