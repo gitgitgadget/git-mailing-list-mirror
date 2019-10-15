@@ -8,55 +8,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAF5E1F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 13:56:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1EB51F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 13:56:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732313AbfJON4X (ORCPT <rfc822;e@80x24.org>);
+        id S1732316AbfJON4Y (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 09:56:24 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51594 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732308AbfJON4X (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 15 Oct 2019 09:56:23 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:39501 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732287AbfJON4S (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 09:56:18 -0400
-Received: by mail-wr1-f67.google.com with SMTP id r3so24016065wrj.6
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 06:56:17 -0700 (PDT)
+Received: by mail-wm1-f68.google.com with SMTP id 7so21019343wme.1
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 06:56:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Ips6wWu7Xdah4SBzOLvtoLKr422mshCSp/ecYyPpC+c=;
-        b=WSjx8MSbr6ps16PET3/SfRZ5Ijsb5l8/eu+3IKTMAHM0kZL+d6O7V9X6U7t3fH328Q
-         m2aNbZWQPPaQJhpbL2k0ebiCNfhSEgvphz+/51c1kYoyVtgD1ca7iL1bSXKWd1lHQrX8
-         0yHaBJ+353rEajkdUpQWAzXs5jglAlMM5k61g5ck2Q1P04gUxhKu6ShmAiGtizz/LeQ6
-         mg1vkHIetNGNvZ9PSop7BSa2EecZqfobhuZw4BhAJIKHdp0EuMRCQ63DGtY9WH73Kwee
-         x/MPSio4CdcjQnLCeWrY43pKCMNGQZSFLZvO+ussmqDEG3NuobxvdWtoayLwV5rJDfzs
-         zd2g==
+        bh=rHoy5XLBWfbjNZXziz0bjrE5Oji7sBiSNTBdxx6SchQ=;
+        b=AiCupem7kCgvp9yAqDIgUjX8D2kURiF3XgOkd8c8/rqltUA6mldYvEPYU7OlHcLDMj
+         tU6teoQBxJJV1YLjKqZ60fJNFZb4cHmmilamZbnAHb0zimFetRENYFGofheKoD/3IKe1
+         GJZAa49nevI9BSYNWbnc7RRCBnxhrFWNgzdTeEO9d2/dT6w2KDplO2/+g8hBo8dzn67d
+         B5c5p0WbmOn8LN9xMsXFayLc+mYeuZB6vSxPnxeEPVyTSnyT/6bZl+W0B2Do1oQ/In3I
+         V7HjRlOt8ErLo/uFk97GhbT681M0mvfnTMme29v+lB57rAk0BxY+vdynoxIPAYoByTds
+         tpIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Ips6wWu7Xdah4SBzOLvtoLKr422mshCSp/ecYyPpC+c=;
-        b=IyutqXeeVS7EuAiBdyC+mZC4Ui0E+DEuJ1HLCkaKjHekNqfI3mPtu99jODwtWHEmHa
-         vkyzB1w/V2vOYfLuE8YZcYqciyr1vpusNdbL7Zmo823kInTXrcKM9oXLuUZ5iPGw0Wc9
-         0InYnO3QNr8vFgzmoNDm/IllWVid6ypAaLObqd/Bi40/K9tUiImR1UeuL5LjN3bhSv9c
-         nO3/KHNkvKzAHnrfhzI7xsT1k0bNA1qCpAm4CbDtRArxBkFbDNmdQBgOlBL0w932hFK2
-         fyf3w0LHKhc1mbYS0uPAD8iYbKBCLMu8hV/qzwkRsD0K/7VQrhsRN+GFBCY+Ubzbj4ky
-         BcTg==
-X-Gm-Message-State: APjAAAWxR29TtplHLaHY6+LydbkVKbr2oyWFk6F/HyAvopzDJAnE0qYW
-        /Pn8xuQbZ3uvo9NZefDpGWj2PPYi
-X-Google-Smtp-Source: APXvYqx0H8UBeFTPF6gNf7ObAwroTAnVgIgO6VKDlu+yMswnJ5qL8BeWuTFR84p6UjHtwX3rO3CeyA==
-X-Received: by 2002:a5d:5092:: with SMTP id a18mr28624411wrt.376.1571147776715;
-        Tue, 15 Oct 2019 06:56:16 -0700 (PDT)
+        bh=rHoy5XLBWfbjNZXziz0bjrE5Oji7sBiSNTBdxx6SchQ=;
+        b=okkCQpbA9Mj04fs5mEe3eGz/fQgk07m/x8MoqnmvhvHA6f7LPkaViDOZ8dFTSLsRKp
+         txTMuRqdeoy11AHt/rVWhVOE8ti9IoqHfp1CY2g8WI1SWZToe4oZmFZmYc3dLBg2xeMK
+         v16zrb8Fu0bVdXIa7Z39RTym2c2+kYpEHCTxH6p8s5tBcoFNexw0kEdOnFZ2V6gNunsq
+         8RwMTsVrNAxUYSM/3Op+/iFWvWVPelPa8cRmPtpP7LqTi+5GeBV5htlSmF1PAANJoxcY
+         s9RdhSp9Tsa+9eTIzSRilsWSF3OcMawroQdi0sVWwYEYYct5ihz7WSnGljwyr9O6emIk
+         XAIA==
+X-Gm-Message-State: APjAAAVu8b/EAge0TswWhEOkCgx/B1lbcY37m9rHIfRdIfNT4THjmIwh
+        d0NiQRX8fQ7CMrzSscP8xjxsJ3TV
+X-Google-Smtp-Source: APXvYqwAToFjjByPBi98xc8RbFIzo8HGI15j38XUA1u5CGvlCVATdy6Lyas5PTsPC4u1ci+Nh+GOMA==
+X-Received: by 2002:a05:600c:2549:: with SMTP id e9mr18300748wma.74.1571147781651;
+        Tue, 15 Oct 2019 06:56:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z9sm23669049wrp.26.2019.10.15.06.56.16
+        by smtp.gmail.com with ESMTPSA id 33sm39113631wra.41.2019.10.15.06.56.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Oct 2019 06:56:16 -0700 (PDT)
-Message-Id: <fefd1e17447dae54d98db6412ed3484be6a2292e.1571147765.git.gitgitgadget@gmail.com>
+        Tue, 15 Oct 2019 06:56:21 -0700 (PDT)
+Message-Id: <ed1f148763437925248684b37a0c8b70f837d40b.1571147765.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
 References: <pull.316.v3.git.gitgitgadget@gmail.com>
         <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Oct 2019 13:55:58 +0000
-Subject: [PATCH v4 11/17] unpack-trees: hash less in cone mode
+Date:   Tue, 15 Oct 2019 13:56:04 +0000
+Subject: [PATCH v4 17/17] sparse-checkout: cone mode should not interact with
+ .gitignore
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,117 +73,33 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The sparse-checkout feature in "cone mode" can use the fact that
-the recursive patterns are "connected" to the root via parent
-patterns to decide if a directory is entirely contained in the
-sparse-checkout or entirely removed.
-
-In these cases, we can skip hashing the paths within those
-directories and simply set the skipworktree bit to the correct
-value.
+During the development of the sparse-checkout "cone mode" feature,
+an incorrect placement of the initializer for "use_cone_patterns = 1"
+caused warnings to show up when a .gitignore file was present with
+non-cone-mode patterns. This was fixed in the original commit
+introducing the cone mode, but now we should add a test to avoid
+hitting this problem again in the future.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- dir.c          |  4 ++--
- dir.h          |  1 +
- unpack-trees.c | 38 +++++++++++++++++++++++---------------
- 3 files changed, 26 insertions(+), 17 deletions(-)
+ t/t1091-sparse-checkout-builtin.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/dir.c b/dir.c
-index 35c1ca9e24..2ef92a50a0 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1270,7 +1270,7 @@ enum pattern_match_result path_matches_pattern_list(
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 48493e1012..14141b8f54 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -269,4 +269,11 @@ test_expect_success 'fail when lock is taken' '
+ 	test_i18ngrep "File exists" err
+ '
  
- 	if (hashmap_contains_path(&pl->recursive_hashmap,
- 				  &parent_pathname)) {
--		result = MATCHED;
-+		result = MATCHED_RECURSIVE;
- 		goto done;
- 	}
- 
-@@ -1292,7 +1292,7 @@ enum pattern_match_result path_matches_pattern_list(
- 	if (hashmap_contains_parent(&pl->recursive_hashmap,
- 				    pathname,
- 				    &parent_pathname))
--		result = MATCHED;
-+		result = MATCHED_RECURSIVE;
- 
- done:
- 	strbuf_release(&parent_pathname);
-diff --git a/dir.h b/dir.h
-index 8e232085cd..77a43dbf89 100644
---- a/dir.h
-+++ b/dir.h
-@@ -264,6 +264,7 @@ enum pattern_match_result {
- 	UNDECIDED = -1,
- 	NOT_MATCHED = 0,
- 	MATCHED = 1,
-+	MATCHED_RECURSIVE = 2,
- };
- 
- /*
-diff --git a/unpack-trees.c b/unpack-trees.c
-index a90d71845d..c0dca20865 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1283,15 +1283,17 @@ static int clear_ce_flags_dir(struct index_state *istate,
- 	struct cache_entry **cache_end;
- 	int dtype = DT_DIR;
- 	int rc;
--	enum pattern_match_result ret;
--	ret = path_matches_pattern_list(prefix->buf, prefix->len,
--					basename, &dtype, pl, istate);
-+	enum pattern_match_result ret, orig_ret;
-+	orig_ret = path_matches_pattern_list(prefix->buf, prefix->len,
-+					     basename, &dtype, pl, istate);
- 
- 	strbuf_addch(prefix, '/');
- 
- 	/* If undecided, use matching result of parent dir in defval */
--	if (ret == UNDECIDED)
-+	if (orig_ret == UNDECIDED)
- 		ret = default_match;
-+	else
-+		ret = orig_ret;
- 
- 	for (cache_end = cache; cache_end != cache + nr; cache_end++) {
- 		struct cache_entry *ce = *cache_end;
-@@ -1299,17 +1301,23 @@ static int clear_ce_flags_dir(struct index_state *istate,
- 			break;
- 	}
- 
--	/*
--	 * TODO: check pl, if there are no patterns that may conflict
--	 * with ret (iow, we know in advance the incl/excl
--	 * decision for the entire directory), clear flag here without
--	 * calling clear_ce_flags_1(). That function will call
--	 * the expensive path_matches_pattern_list() on every entry.
--	 */
--	rc = clear_ce_flags_1(istate, cache, cache_end - cache,
--			      prefix,
--			      select_mask, clear_mask,
--			      pl, ret);
-+	if (pl->use_cone_patterns && orig_ret == MATCHED_RECURSIVE) {
-+		struct cache_entry **ce = cache;
-+		rc = (cache_end - cache) / sizeof(struct cache_entry *);
++test_expect_success '.gitignore should not warn about cone mode' '
++	git -C repo config --worktree core.sparseCheckoutCone true &&
++	echo "**/bin/*" >repo/.gitignore &&
++	git -C repo reset --hard 2>err &&
++	test_i18ngrep ! "disabling cone patterns" err
++'
 +
-+		while (ce < cache_end) {
-+			(*ce)->ce_flags &= ~clear_mask;
-+			ce++;
-+		}
-+	} else if (pl->use_cone_patterns && orig_ret == NOT_MATCHED) {
-+		rc = (cache_end - cache) / sizeof(struct cache_entry *);
-+	} else {
-+		rc = clear_ce_flags_1(istate, cache, cache_end - cache,
-+				      prefix,
-+				      select_mask, clear_mask,
-+				      pl, ret);
-+	}
-+
- 	strbuf_setlen(prefix, prefix->len - 1);
- 	return rc;
- }
+ test_done
 -- 
 gitgitgadget
-
