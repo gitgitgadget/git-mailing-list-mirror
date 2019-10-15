@@ -2,179 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B4941F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 20:00:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 240311F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 22:59:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727782AbfJOUAs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 16:00:48 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:32855 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726421AbfJOUAs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 16:00:48 -0400
-Received: by mail-pf1-f195.google.com with SMTP id q10so13175986pfl.0
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 13:00:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=duE75I+o6PCrL7aEu3phsFRdZRF7Jg5P1//6eNuTe+0=;
-        b=bNhvT4JFR/1ozdQ6waKpFA7w4wpkK+R5PuB0IGtotR39s+uMvDTBETZgjZt6w807ZU
-         iMMpYr2a3COfUVOY6NrWo6f4QvbL/RUbLE6JQtq7BXI7h22Y3VmOMXwHFnHTU8Aoo3wE
-         AX3HHdIwAGC+sX+nAU6cP0gK70H3iVszRwOxvrhujd+JKE2c0J6Uyr0LzirNl9qbuMJ7
-         1SP0mRPtUVeOOjpd+A5QE/sie9A9nNuYs3PfiHCdfoEeF9OAnkgaQWWO5iGoh9UvZml1
-         l1RdC4TGL03TyMHOhL09ExhHRjuyjE5TmU5QD/pguDy0bSxURsJoqx8wrj/SVxFPSA6T
-         fU5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=duE75I+o6PCrL7aEu3phsFRdZRF7Jg5P1//6eNuTe+0=;
-        b=arjsSRssRXDXvQuKb5jIdfC8/MZB+IwupUSu5hYpPa7UfGP4KoeAKps65jU9m/NbnF
-         P+F4QE5/Il9sHqF8Ke+cC2dwamONA6ks9QvxhBrnQn3k/tMoGrN2XQ96xgUZ27tFPR+1
-         Kf8OPzI1++FIkKynR85FwI2ZvfvpjZtSfyxyIGuLBJJB6yXiipmxtVtGfN3uKVEjUZyY
-         zLhLjNjl2Fa4frYJ/J/nRJlkZRnMZPmCLIkKl4CreO+5P4f3j7NmJKW/qHAJJpXVoSKC
-         jp8yP8vODEz1sYW1eHZMskr+RjsWNwJUJknHNXYY6Nl9n+qb746YkaCUZWLtjj6VcfeZ
-         vV5g==
-X-Gm-Message-State: APjAAAXpJtelh+T5Wf3l8IEpDspVu4Q2C7CNLkM/07jy3Waf8Eb73eXF
-        alSQ1obaDY6+O0PD3DdRI4I=
-X-Google-Smtp-Source: APXvYqxyXdXNDl+y3X4WSAYGHDKQJ4IKW0WhnBPeCHrONJxuZ2uhKGGkrg2dZbTtbE4MItEfQ/nEVQ==
-X-Received: by 2002:aa7:8249:: with SMTP id e9mr39535458pfn.46.1571169647493;
-        Tue, 15 Oct 2019 13:00:47 -0700 (PDT)
-Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:7:edf1:7ee7:ed2b:8e04])
-        by smtp.gmail.com with ESMTPSA id p11sm23182177pgs.51.2019.10.15.13.00.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Oct 2019 13:00:46 -0700 (PDT)
-Subject: Re: [PATCH v2 1/6] midx: add MIDX_PROGRESS flag <snip>
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     William Baker via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, jeffhost@microsoft.com,
-        William Baker <William.Baker@microsoft.com>
-References: <pull.337.git.gitgitgadget@gmail.com>
- <pull.337.v2.git.gitgitgadget@gmail.com>
- <6badd9ceaf4851b2984e78a5cfd0cb8ec0c810f5.1568998427.git.gitgitgadget@gmail.com>
- <20190921121104.GA6787@szeder.dev>
- <xmqqlfu9krzv.fsf@gitster-ct.c.googlers.com>
- <20191007172951.GC11529@szeder.dev>
- <xmqqk19fn9jp.fsf@gitster-ct.c.googlers.com>
- <20191009013231.GF29845@szeder.dev>
-From:   William Baker <williamtbakeremail@gmail.com>
-Message-ID: <04342d12-fffc-afb6-fa4e-c2e2bf88d1b6@gmail.com>
-Date:   Tue, 15 Oct 2019 13:00:45 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.1.0
+        id S2387459AbfJOW7D (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 18:59:03 -0400
+Received: from mail-gateway-shared12.cyon.net ([194.126.200.65]:51350 "EHLO
+        mail-gateway-shared12.cyon.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727120AbfJOW7D (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 Oct 2019 18:59:03 -0400
+X-Greylist: delayed 383 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Oct 2019 18:59:02 EDT
+Received: from s019.cyon.net ([149.126.4.28])
+        by mail-gateway-shared12.cyon.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1iKVgA-0004h2-Ce
+        for git@vger.kernel.org; Wed, 16 Oct 2019 00:52:38 +0200
+Received: from [10.20.10.233] (port=16832 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.92)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1iKVg9-0007eG-67; Wed, 16 Oct 2019 00:52:33 +0200
+Subject: Re: Adding a line after the signed-off git am -s
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>, git@vger.kernel.org
+References: <6797ef7d-5444-4c77-59e6-1d78fd3ccb0c@linaro.org>
+From:   Beat Bolli <dev+git@drbeat.li>
+Message-ID: <8089dfce-0183-b7fb-cab8-0a71404b6584@drbeat.li>
+Date:   Wed, 16 Oct 2019 00:52:32 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <20191009013231.GF29845@szeder.dev>
+In-Reply-To: <6797ef7d-5444-4c77-59e6-1d78fd3ccb0c@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-OutGoing-Spam-Status: No, score=-1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/8/19 6:32 PM, SZEDER Gábor wrote:
->>> No, they tend to show (PROGRESS | REGRESS), at least both gdb and lldb
->>> do.
+On 11.10.19 16:43, Daniel Lezcano wrote:
 > 
-> I was wrong here, gdb does this, but lldb, unfortunately, doesn't; see
-> my other reply in this thread.
->
->> What I was worried about is that the constants that are used to
->> represent something that are *NOT* set of bits (hence "PROGRESS * 3"
->> may be perfectly a reasonable thing for such an application)
+> Hi all,
 > 
-> I don't really see how that could be reasonable, it's prone to break
-> when changing the values of the enum constants.
+> Is there a way to specify a line to be added in the change-log after the
+> SOB with git-am ?
 > 
->> may be
->> mistaken by an overly clever debugger and "3" may end up getting
->> shown as "PROGRESS | REGRESS".  When there are only two constants
->> (PROGRESS=1 and REGRESS=2), we humans nor debuggers can tell if that
->> is to represent two bits that can be or'ed together, or it is an
->> enumeration.
->>
->> Until we gain the third constant, that is, at which time the third
->> one may likely be 3 (if enumeration) or 4 (if bits).
+> I would like to do something:
 > 
-> Humans benefit from context: they understand the name of the enum type
-> (e.g. does it end with "_flags"?), the name of the enum constants, and
-> the comment above the enum's definition (if any), and can then infer
-> whether those constants represent OR-able bits or not.  If they can't
-> find this out, then that enum is poorly named and/or documented, which
-> should be fixed.  As for the patch that I originally commented on, I
-> would expect the enum to be called e.g. 'midx_flags', and thus already
-> with that single constant in there it'll be clear that it is intended
-> as a collection of related OR-able bits.
+> git am -s -l "Link: https://lore.kernel.org/r/<msgid>"
 > 
-> As for the debugger, if it sees a variable of an enum type whose value
-> doesn't match any of the enum constants, then there are basically
-> three possibilities:
+> Which will give:
 > 
->   - All constants in that enum have power-of-two values.  In this case
->     it's reasonable from the debugger to assume that those constants
->     are OR'ed together, and is extremely helpful to display the value
->     that way.
+> blabla
 > 
->   - The constants are just a set of values (1, 2, 3, 42, etc).  In
->     this case the variable shouldn't have a value that doesn't match
->     one of the constants in the first place, and I would first suspect
->     that the program might be buggy.
+> Signed-off-by: author@kairnail.org
+> Signed-off-by: commiter@kairnail.org
+> Link: https://lore.kernel.org/r/<msgid>
 > 
->   - A "mostly" power-of-two enum might contain shorthand constants for
->     combinations of a set of other constants, e.g.:
-> 
->       enum flags {
->               BIT0 = (1 << 0),
->               BIT1 = (1 << 1),
->               BIT2 = (1 << 2),
-> 
->               FIRST_TWO = (BIT0 | BIT1),
->       };
->       enum flags f0 = BIT0;
->       enum flags f1 = BIT0 | BIT1;
->       enum flags f2 = BIT0 | BIT2;
->       enum flags f3 = BIT0 | BIT1 | BIT2;
-> 
->     In this case, sadly, gdb shows only matching constants:
-> 
->       (gdb) p f0
->       $1 = BIT0
->       (gdb) p f1
->       $2 = FIRST_TWO
->       (gdb) p f2
->       $3 = 5
->       (gdb) p f3
->       $4 = 7
-> 
+> This way it is compatible with patchwork, git-pw, etc...
 
-I believe this is the last open thread/discussion on the "midx: add MIDX_PROGRESS
-flag" patch series.  
+I think something like
 
-A quick summary of where the discussion stands:
+    git interpret-trailer --trailer Link:https://lore.kernel.irg/r/msgid
+<patch | git am -
 
-- The patch series currently uses #define for the new MIDX_PROGRESS flag.
-- The git codebase uses both #defines and enums for flags.
-- The debugger always shows the enum value's name if there is a match, if values
-  are OR-ed together there a few possibilities (see discussion above and earlier
-  in the thread).
-- There are concerns regarding misinterpreting constants that are not a set of
-  bits (e.g. "PROGRESS * 3").
+should work.
 
-Are there any other details I can provide that would help in reaching a
-conclusion as to how to proceed?
 
-At this time there are no other MIDX_* flags and so there's always the option
-to revisit the best way to handle multiple MIDX_* flags if/when additional
-flags are added.
-
-Thanks,
-William
-
+Cheers,
+Beat
