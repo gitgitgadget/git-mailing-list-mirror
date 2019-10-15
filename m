@@ -2,121 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E4E31F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 19:07:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E7F51F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 19:40:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389269AbfJOTHn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 15:07:43 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:37415 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726478AbfJOTHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 15:07:42 -0400
-Received: by mail-pf1-f194.google.com with SMTP id y5so13081703pfo.4
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 12:07:42 -0700 (PDT)
+        id S1732411AbfJOTk0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 15:40:26 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:40317 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727856AbfJOTk0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 15:40:26 -0400
+Received: by mail-pf1-f196.google.com with SMTP id x127so13114762pfb.7
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 12:40:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=tI0ZU6SnPrwynbQk78Vg4KePXmxPPI3dvLORb2Zcqzo=;
-        b=mAqqT1Gw1sTcosl54bAdY6KAPXJlnbc9d1qBJik/Ibqr8PrZ7yD+PxJA27lYc5x8Ay
-         0/SKAgHSHrqwDdONU9uciChz1gRHZ1aSNpJV+xQ5rhwg2/CWfeitTnkj1vu1+dP2bzQK
-         fWeBkAXxClq6Q2vQQYJ3yiN4mZ0Xm0j3162cZdIgWXWE+sxbaBXheGJHBRC0Mek+raAy
-         5j7ln3wNPp3JKaEizyT5uES0yaDN0Y5r222SwyCc0MU39pp/OGP9zmkU76/XColgxcPe
-         tLXLiXj0MJuGBidlDN2BJPcHB0Lf7aC2SIo1LslqWIYefQtKgIWauqirUNo/5flKbwbb
-         5ULw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=i08RXMeO9BQqNh382Gy/mCujyg9G5yvKiwal5Bq/u7I=;
+        b=RKpi/yEdG+q+Z0Ip+7r8YevdtEmNIXlUzvNO+L1J3ETfbuFz+64KBm0pa9wdZ76C32
+         wfP1d4a1VBYPwLDoWxisnyRvLn3idJr+ZESA9yJPY70XpwBQPDIyZqKgnY5IvDEbA89H
+         k3kXs7SZi8BauOebdPhnZT5PnRQ+EB8pEa2UcnYCCQpUgrcs+Q8aCtbyhKBMTf/wEJ5f
+         66IoWJx2tkA12gHVA/+dS6szJQ3PQvNK1Wq5MAagO7bzqNNs6SRjINitA3KAAdUhvh73
+         fJnbw1dbrd9MX0PrnHEEpOuASsCjjbgoj2KzZAik85F8atJfExG9n/MlkA80YvFOaiub
+         OmyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=tI0ZU6SnPrwynbQk78Vg4KePXmxPPI3dvLORb2Zcqzo=;
-        b=hRv/V0m2hBY5xih5AnKa4eo0bFdnGEbVYd37MG3JMlPiuGTGY5VU7S0XS8AQH1FN7r
-         jdam/hV82fDNNk29ujNEA+OXTzKDdpBp/rhPm17YSlP88YitBAD0b5jBip9jOT1uLADS
-         zCSYBwXPOp/c6t8HKiRWeFi8obchXt5TXDaCzCiW6MhtqySMsGMd8SfNST1h9C4T9sAp
-         7EsTZH0T4TJ8cFbHExV2/N0Qn12Z6Uow6As/6Qd6AKlF8zTCKzCbeWmkHZAvU1SSIetS
-         YExpk6rrkyqYGeh/eNG7WiQG596+rz2Qpsb4686VDx1HawHU5nD0Y2EetKvnBJPYUAr9
-         xr1Q==
-X-Gm-Message-State: APjAAAVMeXgMEAnkgLq62qjAj6w/qLZw4Cw7hbXWnqKGqZBJf1ydz1hZ
-        EdLV9T11BkkZr30RsCCwlSS+/gj6
-X-Google-Smtp-Source: APXvYqwbMxBPPSTM9T97Nal+ObkU1LprmarvSjK1H+K9Xd4mi/9q2wRhl7U7VT2NUrasPrQvssTp6Q==
-X-Received: by 2002:aa7:90da:: with SMTP id k26mr39794718pfk.145.1571166462251;
-        Tue, 15 Oct 2019 12:07:42 -0700 (PDT)
-Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:8:edf0:7ee7:ed2b:8e04])
-        by smtp.gmail.com with ESMTPSA id 62sm24986564pfg.164.2019.10.15.12.07.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Oct 2019 12:07:41 -0700 (PDT)
-Subject: Re: [PATCH v3 1/1] fsmonitor: don't fill bitmap with entries to be
- removed
-To:     Junio C Hamano <gitster@pobox.com>,
-        William Baker via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, Johannes.Schindelin@gmx.de,
-        jeffhost@microsoft.com, William Baker <William.Baker@microsoft.com>
-References: <pull.372.v2.git.gitgitgadget@gmail.com>
- <pull.372.v3.git.gitgitgadget@gmail.com>
- <840972e08b2178e89b2c3ed77eb20c91ead894ad.1570824681.git.gitgitgadget@gmail.com>
- <xmqq1rvig3fb.fsf@gitster-ct.c.googlers.com>
-From:   William Baker <williamtbakeremail@gmail.com>
-Message-ID: <3d3b290c-bc15-4bd5-e0c0-1377c9ec3ff9@gmail.com>
-Date:   Tue, 15 Oct 2019 12:07:39 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.1.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=i08RXMeO9BQqNh382Gy/mCujyg9G5yvKiwal5Bq/u7I=;
+        b=XoU71iHk9Rae3PTPpLBskubOe6kH8dZuzGPBpH94jjC97w7P8SjgaGKo8AoWb3kfV1
+         hQkC7rv5nPSaoZdMMfM7PCgFGSPi9pCXUfPXnO4k0qPReG4tTiywxvWk/AFaYI/sErIM
+         YOnvTXYsrRQJyrxO+SyJOtcd/Wxt6EqUbQe9/Vhvav0nYKJ97mvl3nliBy/vCO7SZwbm
+         Z+TA6y6iiaVJXbny/bf1DC0kU9mdAWoKsearyABIyxk1456maq3QMzu6mOH8V+VzdLpR
+         P9c4SiSYuibbGFWQf8cZpO+jZU6meypx8fK8LXfOG1tnq//D9Wwjq+qqQrTBc1qETmuD
+         PTjQ==
+X-Gm-Message-State: APjAAAW4zg/RIBViI31zyoIn35VKqZ/OP/N+Y9IAI1Qh1pXzrG+RCpzG
+        S7KM8BD+D+0akwgfxMZDEXYI/A==
+X-Google-Smtp-Source: APXvYqwSwjS5y7JVZ1Aidzp2VtCcpzh630UkeSTOSgJUXf2OA5EpfahjMiOlCVQh4wVjUddFKJ16VQ==
+X-Received: by 2002:a62:3441:: with SMTP id b62mr41508842pfa.233.1571168425206;
+        Tue, 15 Oct 2019 12:40:25 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:ece8:7fe:c1f1:a20f])
+        by smtp.gmail.com with ESMTPSA id 206sm21130577pge.80.2019.10.15.12.40.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Oct 2019 12:40:24 -0700 (PDT)
+Date:   Tue, 15 Oct 2019 12:40:19 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] fetch-pack: write fetched refs to .promisor
+Message-ID: <20191015194019.GC233821@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+References: <20190826214737.164132-1-jonathantanmy@google.com>
+ <20191015001231.97272-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq1rvig3fb.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191015001231.97272-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/11/19 6:26 PM, Junio C Hamano wrote:
-> "William Baker via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 2019.10.14 17:12, Jonathan Tan wrote:
+> The specification of promisor packfiles (in partial-clone.txt) states
+> that the .promisor files that accompany packfiles do not matter (just
+> like .keep files), so whenever a packfile is fetched from the promisor
+> remote, Git has been writing empty .promisor files. But these files
+> could contain more useful information.
 > 
->> +# Test staging/unstaging files that appear at the end of the index.  Test
->> +# file names begin with 'z' so that they are sorted to the end of the index. 
+> So instead of writing empty files, write the refs fetched to these
+> files. This makes it easier to debug issues with partial clones, as we
+> can identify what refs (and their associated hashes) were fetched at the
+> time the packfile was downloaded, and if necessary, compare those hashes
+> against what the promisor remote reports now.
 > 
-> Well, the test is now done in a freshly created repository, so the
-> z* files are the only thing you have in here---technically they are
-> at the end of the index, but so they are at the beginning, too.
+> This is implemented by teaching fetch-pack to write its own non-empty
+> .promisor file whenever it knows the name of the pack's lockfile. This
+> covers the case wherein the user runs "git fetch" with an internal
+> protocol or HTTP protocol v2 (fetch_refs_via_pack() in transport.c sets
+> lock_pack) and with HTTP protocol v0/v1 (fetch_git() in remote-curl.c
+> passes "--lock-pack" to "fetch-pack").
 > 
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> Changes from v1:
+>  - commit message explains scope of change ("it knows the name of the
+>    pack's lockfile)
+>  - explained what .promisor contains in comment in builtin/repack.c
+>  - moved .promisor writing until after we know that index-pack succeeded
+> ---
 
-There is one other file in the index created by 'test_commit', however,
-the point still stands that there are almost no other entries in the
-index now that the test is using its own repository.
-
-> Would it affect the effectiveness of the test that you do not have
-> any other paths in the working tree or in the index, unlike the test
-> in the previous rounds that did not use a newly created test
-> repository?  
-
-The test still validates the scenario that we're concerned about,
-namely that the new index that's written has less entries than
-the index of the last entry in the old index that's is not flagged
-with CE_FSMONITOR_VALID but is flagged for removal (CE_REMOVE).
-
-> This is not a rhetorical question, but purely asking. "no, this
-> still tests what we want to test and shows breakage when the fix to
-> the code in the patch gets reverted" is perfectly a good answer, but
-> in that case, is "the end of" the most important trait of the
-> condition this test is checking?  Wouldn't the bug be exposed as
-> long as we remove sufficiently large number of entries (like
-> "removing more paths than the paths still in the index at the end"
-> or something like that)?
-
-This is exactly right.  The most important trait is that the last
-entry flagged with CE_REMOVE does not have CE_FSMONITOR_VALID set
-and has an index >= the number of entries in the new index being
-written.
-
-I will send out a patch on top of 'wb/fsmonitor-bitmap-fix' with
-an update to the comment for this test.
-
-Thanks,
-William
+Thanks, this looks good to me.
