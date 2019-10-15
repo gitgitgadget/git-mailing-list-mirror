@@ -8,99 +8,115 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 884AD1F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 18:48:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E4E31F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 19:07:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728915AbfJOSsS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 14:48:18 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:52482 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726144AbfJOSsS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 14:48:18 -0400
-Received: by mail-wm1-f67.google.com with SMTP id r19so186871wmh.2
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 11:48:17 -0700 (PDT)
+        id S2389269AbfJOTHn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 15:07:43 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:37415 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726478AbfJOTHm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 15:07:42 -0400
+Received: by mail-pf1-f194.google.com with SMTP id y5so13081703pfo.4
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 12:07:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=88gHHwmjWhDrBsBBSNyMtJ1JMTDZP99ITHJrxQFUvQQ=;
-        b=YMLiNmGlG+SilCG/k+VFjHdd2fXA/UpfgzlXqkn2eir2CBsWwZHLWus3M2P4fvyx8f
-         dUn9rF0r4w7P0ckDIZ0xppaqg1ZIyouOSEIt9+0m0b/twBRuL0jPrHErj7H0svMrEy79
-         XsUFVxaJUEtCMLH6eatyjyNiFp7lEdE+GxPO8cf1GnvPJiDCin+ZzJcSplRIbMhZeNLu
-         QgzQ2K0LXZ6ghdo3atCIALZMgMflgfOwAO+3cddB5QqZ8QIKFMwF291rnhp8vLOUHdRH
-         FxOUhPo+5VzQ53OM7S9km41Ss84NoMn033vgA6svfygaWlG6AKGsdpXuWNwQ78Owju8n
-         3UZA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tI0ZU6SnPrwynbQk78Vg4KePXmxPPI3dvLORb2Zcqzo=;
+        b=mAqqT1Gw1sTcosl54bAdY6KAPXJlnbc9d1qBJik/Ibqr8PrZ7yD+PxJA27lYc5x8Ay
+         0/SKAgHSHrqwDdONU9uciChz1gRHZ1aSNpJV+xQ5rhwg2/CWfeitTnkj1vu1+dP2bzQK
+         fWeBkAXxClq6Q2vQQYJ3yiN4mZ0Xm0j3162cZdIgWXWE+sxbaBXheGJHBRC0Mek+raAy
+         5j7ln3wNPp3JKaEizyT5uES0yaDN0Y5r222SwyCc0MU39pp/OGP9zmkU76/XColgxcPe
+         tLXLiXj0MJuGBidlDN2BJPcHB0Lf7aC2SIo1LslqWIYefQtKgIWauqirUNo/5flKbwbb
+         5ULw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=88gHHwmjWhDrBsBBSNyMtJ1JMTDZP99ITHJrxQFUvQQ=;
-        b=J5ijk5ITe79Bq7iFFb6QViqGvfbQ0iCwql3xQYyjffoiPjYwwqlHaQmudb/BbSlddx
-         Dznk/RizmRlbZWHgXMydgGBPeMMi/tT7zNEEOKTUtBV9HU1DG68dlBOAk7C3Qd90/SgB
-         JhsIxbgc78weWoT+2fZkgMF8CD/+JGCT6sgm43Yi2EMkh5hwUadWL39xKO4IGRb2iRnY
-         RrXF/0LIrvAZemqnixX5br2wTMmQXFYjVMCRu+qWjf9H7Wl8UPgS4JiaEBD2uRsuJA9k
-         6GXTY6dYLdzXvylehlDn7CGYHwRWpXA4oOHLQ4KJbhdGFWBRqvNCerhgUcVmfrHCxaqI
-         oiMQ==
-X-Gm-Message-State: APjAAAUp9GutkUzNcv2C53sd6l8SducGU36t0pDO2gBp7StCzQvKqnwK
-        NaBTtcF6KWndTwOhvgp4qb5yOKmM
-X-Google-Smtp-Source: APXvYqwW2lke4BKWzSCSsTVWxJx+NV8QLKeUhsc40mEW1/5qEZ4yX3HcC+OtgW8++nT2n4FPNd2O4w==
-X-Received: by 2002:a7b:cf05:: with SMTP id l5mr19964406wmg.119.1571165296296;
-        Tue, 15 Oct 2019 11:48:16 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w5sm21293015wrs.34.2019.10.15.11.48.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Oct 2019 11:48:15 -0700 (PDT)
-Message-Id: <7919addea85597c3c910a09cbc1d931c6f71c544.1571165293.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.367.v3.git.1571165293.gitgitgadget@gmail.com>
-References: <pull.367.v2.git.gitgitgadget@gmail.com>
-        <pull.367.v3.git.1571165293.gitgitgadget@gmail.com>
-From:   "Maxim Belsky via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Oct 2019 18:48:13 +0000
-Subject: [PATCH v3 1/1] doc: Change zsh git completion file name
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=tI0ZU6SnPrwynbQk78Vg4KePXmxPPI3dvLORb2Zcqzo=;
+        b=hRv/V0m2hBY5xih5AnKa4eo0bFdnGEbVYd37MG3JMlPiuGTGY5VU7S0XS8AQH1FN7r
+         jdam/hV82fDNNk29ujNEA+OXTzKDdpBp/rhPm17YSlP88YitBAD0b5jBip9jOT1uLADS
+         zCSYBwXPOp/c6t8HKiRWeFi8obchXt5TXDaCzCiW6MhtqySMsGMd8SfNST1h9C4T9sAp
+         7EsTZH0T4TJ8cFbHExV2/N0Qn12Z6Uow6As/6Qd6AKlF8zTCKzCbeWmkHZAvU1SSIetS
+         YExpk6rrkyqYGeh/eNG7WiQG596+rz2Qpsb4686VDx1HawHU5nD0Y2EetKvnBJPYUAr9
+         xr1Q==
+X-Gm-Message-State: APjAAAVMeXgMEAnkgLq62qjAj6w/qLZw4Cw7hbXWnqKGqZBJf1ydz1hZ
+        EdLV9T11BkkZr30RsCCwlSS+/gj6
+X-Google-Smtp-Source: APXvYqwbMxBPPSTM9T97Nal+ObkU1LprmarvSjK1H+K9Xd4mi/9q2wRhl7U7VT2NUrasPrQvssTp6Q==
+X-Received: by 2002:aa7:90da:: with SMTP id k26mr39794718pfk.145.1571166462251;
+        Tue, 15 Oct 2019 12:07:42 -0700 (PDT)
+Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:8:edf0:7ee7:ed2b:8e04])
+        by smtp.gmail.com with ESMTPSA id 62sm24986564pfg.164.2019.10.15.12.07.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Oct 2019 12:07:41 -0700 (PDT)
+Subject: Re: [PATCH v3 1/1] fsmonitor: don't fill bitmap with entries to be
+ removed
+To:     Junio C Hamano <gitster@pobox.com>,
+        William Baker via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, Johannes.Schindelin@gmx.de,
+        jeffhost@microsoft.com, William Baker <William.Baker@microsoft.com>
+References: <pull.372.v2.git.gitgitgadget@gmail.com>
+ <pull.372.v3.git.gitgitgadget@gmail.com>
+ <840972e08b2178e89b2c3ed77eb20c91ead894ad.1570824681.git.gitgitgadget@gmail.com>
+ <xmqq1rvig3fb.fsf@gitster-ct.c.googlers.com>
+From:   William Baker <williamtbakeremail@gmail.com>
+Message-ID: <3d3b290c-bc15-4bd5-e0c0-1377c9ec3ff9@gmail.com>
+Date:   Tue, 15 Oct 2019 12:07:39 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.1.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Max Belsky <public.belsky@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Maxim Belsky <public.belsky@gmail.com>
+In-Reply-To: <xmqq1rvig3fb.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Maxim Belsky <public.belsky@gmail.com>
+On 10/11/19 6:26 PM, Junio C Hamano wrote:
+> "William Baker via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> +# Test staging/unstaging files that appear at the end of the index.  Test
+>> +# file names begin with 'z' so that they are sorted to the end of the index. 
+> 
+> Well, the test is now done in a freshly created repository, so the
+> z* files are the only thing you have in here---technically they are
+> at the end of the index, but so they are at the beginning, too.
+> 
 
-The original comment does not describe type of ~/.zsh/_git explicitly
-and zsh does not warn or fail if a user create it as a dictionary.
-So unexperienced users could be misled by the original comment.
+There is one other file in the index created by 'test_commit', however,
+the point still stands that there are almost no other entries in the
+index now that the test is using its own repository.
 
-There is a small update to clarify it.
+> Would it affect the effectiveness of the test that you do not have
+> any other paths in the working tree or in the index, unlike the test
+> in the previous rounds that did not use a newly created test
+> repository?  
 
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Maxim Belsky <public.belsky@gmail.com>
----
- contrib/completion/git-completion.zsh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+The test still validates the scenario that we're concerned about,
+namely that the new index that's written has less entries than
+the index of the last entry in the old index that's is not flagged
+with CE_FSMONITOR_VALID but is flagged for removal (CE_REMOVE).
 
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 886bf95d1f..b480e3f316 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -11,8 +11,9 @@
- #
- #  zstyle ':completion:*:*:git:*' script ~/.git-completion.zsh
- #
--# The recommended way to install this script is to copy to '~/.zsh/_git', and
--# then add the following to your ~/.zshrc file:
-+# The recommended way to install this script is to make a copy of it in
-+# '~/.zsh/' directory as '~/.zsh/_git' and then add the following to your
-+# ~/.zshrc file:
- #
- #  fpath=(~/.zsh $fpath)
- 
--- 
-gitgitgadget
+> This is not a rhetorical question, but purely asking. "no, this
+> still tests what we want to test and shows breakage when the fix to
+> the code in the patch gets reverted" is perfectly a good answer, but
+> in that case, is "the end of" the most important trait of the
+> condition this test is checking?  Wouldn't the bug be exposed as
+> long as we remove sufficiently large number of entries (like
+> "removing more paths than the paths still in the index at the end"
+> or something like that)?
+
+This is exactly right.  The most important trait is that the last
+entry flagged with CE_REMOVE does not have CE_FSMONITOR_VALID set
+and has an index >= the number of entries in the new index being
+written.
+
+I will send out a patch on top of 'wb/fsmonitor-bitmap-fix' with
+an update to the comment for this test.
+
+Thanks,
+William
