@@ -8,55 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 761B51F4C1
-	for <e@80x24.org>; Tue, 15 Oct 2019 23:41:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 140951F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 23:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728219AbfJOXlL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 19:41:11 -0400
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:38513 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726549AbfJOXlK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 19:41:10 -0400
-Received: by mail-wr1-f46.google.com with SMTP id y18so16348297wrn.5
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 16:41:08 -0700 (PDT)
+        id S2388022AbfJOXlN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 19:41:13 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37828 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387879AbfJOXlM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 19:41:12 -0400
+Received: by mail-wr1-f66.google.com with SMTP id p14so25786417wro.4
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 16:41:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=XBLSeEbCZJi3a97YnUR8SrXveD2f/uZSt7006TnKdzY=;
-        b=tB3DEEdcFAWY2zsmBOvRVf6NWbGx5fQENUen5Iq8hYHEA5TdKz50gUo//nn85S1DiV
-         QfSfdqBZXAYDPQklbNv9+6FoNQPhGcZWW9YoEA6G+MTBm6ewAFwXhFPX3TTGYUcE4cCO
-         nt4Cy208FAsNUYIIRIlGObdMRGfy3DCdGU55BK2yLgxM38I2UsWyCh9tcecEIoQ8NBGn
-         L7RS3ufjLqKiHOmfW9GFjouBRRx3Bkv3M7n3xFwsBrv9v4lCDJ6P0iuQAwXwC/tlcMr9
-         y+Oj/6jM0RpXBWl7cstgkMFlWmuTkIu8mzCPB01lO3alvZzGgUK2tjDU+FER2Gvy+gj+
-         18Ng==
+        bh=6e9aX7IEwCjnBgusYHs0U9RPMTaHhSHiWahJ3XWTD2k=;
+        b=HtpHUOpFQ+orXgeoQGIkrMw2H9mA3qcu+WX/g2ZTGozloqKQU4zyLpwu4I6N/M75Xc
+         zX6qcQlCclax69evOH1cYCGify654Q66CyjEfuKaUTfAmogUGZKopvaJ3ateFfOp+PDc
+         kOdGBvYR5Cq8nT2aEsKNvGoNkj5U26A/fdsa2ZlsbS0aeZI8O9/K/rqMrW1k6h/Ji/Gu
+         xZIv38LU2ASJ1bpnL7dJ1SczszVnGts2sOit8bPp/NEvQEfk0mjeGGyZd70TlD4liQec
+         nJnOgAo+dJRSjKev9ufEx+QuE+oGiVg3bdIs21R8ZokHkqRljXfmei0r5MrvwmKTSrSi
+         5UkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XBLSeEbCZJi3a97YnUR8SrXveD2f/uZSt7006TnKdzY=;
-        b=nQ/CCBPFcatkqJ2EU9OXpSAKNfCE5a9net/ZcGC8wI9J8+UvbqBeTdb3njBEtHLcqW
-         O9xpIJELv9stUvtFQlzkAdvuGHkjt5roti2HKTpBjO18U0YG7f+Bjiq4axyPwHvK06Jm
-         CCaUHDwwbMH9ZXaio2CXZUHFaymJhCxOMvMf255csR5gW8RzoFm2OKqYFFN8ScgpTltJ
-         C9wiUcCRHzOReTELqpDJbKL9szXYtHgUdUE1C2uoqM9Sz8qfYXiUYzgMzBixpoUk6chB
-         tBA4E8MYII1mwyh//brtgdL4JJ2auolefzxYReOwAA9NVErc7zCpTzHCrUdNn33wxT3f
-         pX9Q==
-X-Gm-Message-State: APjAAAVESg9JvOv0QW7Vp6Id2XK8ZAGVX7qM/wLjBGnhElyEP1aQSr8B
-        ZS361HgjAQ1C3AhFbAUdLPLkFec6
-X-Google-Smtp-Source: APXvYqyxuVyk2P859DYDU5+NpeG6wHXh1U99epb7ETX34ubyDg4UZhEVH2JWzPPZTmUZPguktS1dZg==
-X-Received: by 2002:a5d:6ac3:: with SMTP id u3mr1998wrw.206.1571182867840;
-        Tue, 15 Oct 2019 16:41:07 -0700 (PDT)
+        bh=6e9aX7IEwCjnBgusYHs0U9RPMTaHhSHiWahJ3XWTD2k=;
+        b=PFYxsT5atxqjn5/ltn1+wX3UIsBr83dzvMjggNIWZsheMKW6vYLl1Qze3lo06ro3pX
+         gPcbITAa+zGkyx43jwl8JMzVCqH6b7g/24geM9VPF8Lo/1G1b1q9aW+zw+qqhAGtWrC1
+         gYyBzU1yzQKkb69AhBC+8tEFcPykZPQyecWVE0GzL0L6kU+vI3c0VQaZD9y2uwVzRCE4
+         0gxlqiCA8J5kIyU5Y1iVDxmzPdbuSumxR06HtW1AcHG/AmZUB1mmgNBvtAAVD3zKYSHQ
+         fQ3SWLXkm0mBZzaMdRNYQognRS9nwzSexOvCjGj3HUwd85dtxAw0RC5pzf/F92sw4RXr
+         vIKA==
+X-Gm-Message-State: APjAAAVh7BjXKiiq9EJhQq3NZ1FFFCUfmgw8eP34w7UvdS40WZgXJKM3
+        rGP+LcxiqFP2cFzZWigiSBY1UNE1
+X-Google-Smtp-Source: APXvYqzSRNP2MyzRPlEydIhmGEwJbfbkkAVjDUa70jWRW2KPPmxYoeo++qxIql/zfG/U76YAs7Rmog==
+X-Received: by 2002:adf:e78c:: with SMTP id n12mr21400wrm.351.1571182871126;
+        Tue, 15 Oct 2019 16:41:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b144sm774921wmb.3.2019.10.15.16.41.07
+        by smtp.gmail.com with ESMTPSA id z9sm25203219wrp.26.2019.10.15.16.41.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Oct 2019 16:41:07 -0700 (PDT)
-Message-Id: <d962eb2e029fcee66dd25a59746d36cf953d2a2e.1571182864.git.gitgitgadget@gmail.com>
+        Tue, 15 Oct 2019 16:41:10 -0700 (PDT)
+Message-Id: <163600585c4425d9173faac3a2807088335701c2.1571182864.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
 References: <pull.383.git.gitgitgadget@gmail.com>
         <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
 From:   "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Oct 2019 23:40:53 +0000
-Subject: [PATCH v2 02/13] graph: handle line padding in `graph_next_line()`
+Date:   Tue, 15 Oct 2019 23:40:57 +0000
+Subject: [PATCH v2 06/13] graph: extract logic for moving to GRAPH_PRE_COMMIT
+ state
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,151 +72,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: James Coglan <jcoglan@gmail.com>
 
-Now that the display width of graph lines is implicitly tracked via the
-`graph_line` interface, the calls to `graph_pad_horizontally()` no
-longer need to be located inside the individual output functions, where
-the character counting was previously being done.
+This computation is repeated in a couple of places and I need to add
+another condition to it to implement a further improvement to the graph
+rendering, so I'm extracting this into a function.
 
-All the functions called by `graph_next_line()` generate a line of
-output, then call `graph_pad_horizontally()`, and finally change the
-graph state if necessary. As padding is the final change to the output
-done by all these functions, it can be removed from all of them and done
-in `graph_next_line()` instead.
-
-I've also moved the guard in `graph_output_padding_line()` that checks
-the graph has a commit; this function is only called by
-`graph_next_line()` and we must not pad the `graph_line` if no commit is
-set.
+Signed-off-by: James Coglan <jcoglan@gmail.com>
 ---
- graph.c | 49 ++++++++++++++++++++-----------------------------
- 1 file changed, 20 insertions(+), 29 deletions(-)
+ graph.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/graph.c b/graph.c
-index 2f81a5d23d..4c68557b17 100644
+index d724ef25c3..bd7403065e 100644
 --- a/graph.c
 +++ b/graph.c
-@@ -732,16 +732,6 @@ static void graph_output_padding_line(struct git_graph *graph,
- {
- 	int i;
- 
--	/*
--	 * We could conceivable be called with a NULL commit
--	 * if our caller has a bug, and invokes graph_next_line()
--	 * immediately after graph_init(), without first calling
--	 * graph_update().  Return without outputting anything in this
--	 * case.
--	 */
--	if (!graph->commit)
--		return;
--
- 	/*
- 	 * Output a padding row, that leaves all branch lines unchanged
- 	 */
-@@ -749,8 +739,6 @@ static void graph_output_padding_line(struct git_graph *graph,
- 		graph_line_write_column(line, &graph->new_columns[i], '|');
- 		graph_line_addch(line, ' ');
- 	}
--
--	graph_pad_horizontally(graph, line);
+@@ -588,6 +588,12 @@ static void graph_update_columns(struct git_graph *graph)
+ 		graph->mapping_size--;
  }
  
- 
-@@ -767,7 +755,6 @@ static void graph_output_skip_line(struct git_graph *graph, struct graph_line *l
- 	 * of the graph is missing.
++static int graph_needs_pre_commit_line(struct git_graph *graph)
++{
++	return graph->num_parents >= 3 &&
++	       graph->commit_index < (graph->num_columns - 1);
++}
++
+ void graph_update(struct git_graph *graph, struct commit *commit)
+ {
+ 	struct commit_list *parent;
+@@ -643,8 +649,7 @@ void graph_update(struct git_graph *graph, struct commit *commit)
+ 	 */
+ 	if (graph->state != GRAPH_PADDING)
+ 		graph->state = GRAPH_SKIP;
+-	else if (graph->num_parents >= 3 &&
+-		 graph->commit_index < (graph->num_columns - 1))
++	else if (graph_needs_pre_commit_line(graph))
+ 		graph->state = GRAPH_PRE_COMMIT;
+ 	else
+ 		graph->state = GRAPH_COMMIT;
+@@ -714,8 +719,7 @@ static void graph_output_skip_line(struct git_graph *graph, struct graph_line *l
  	 */
  	graph_line_addstr(line, "...");
--	graph_pad_horizontally(graph, line);
  
- 	if (graph->num_parents >= 3 &&
- 	    graph->commit_index < (graph->num_columns - 1))
-@@ -832,8 +819,6 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
- 		graph_line_addch(line, ' ');
- 	}
- 
--	graph_pad_horizontally(graph, line);
--
- 	/*
- 	 * Increment graph->expansion_row,
- 	 * and move to state GRAPH_COMMIT if necessary
-@@ -967,8 +952,6 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
- 		graph_line_addch(line, ' ');
- 	}
- 
--	graph_pad_horizontally(graph, line);
--
- 	/*
- 	 * Update graph->state
- 	 */
-@@ -1043,8 +1026,6 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
- 		}
- 	}
- 
--	graph_pad_horizontally(graph, line);
--
- 	/*
- 	 * Update graph->state
- 	 */
-@@ -1186,8 +1167,6 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
- 		}
- 	}
- 
--	graph_pad_horizontally(graph, line);
--
- 	/*
- 	 * Swap mapping and new_mapping
- 	 */
-@@ -1204,31 +1183,43 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
- 
- int graph_next_line(struct git_graph *graph, struct strbuf *sb)
- {
-+	int shown_commit_line = 0;
- 	struct graph_line line = { .buf = sb, .width = 0 };
- 
-+	/*
-+	 * We could conceivable be called with a NULL commit
-+	 * if our caller has a bug, and invokes graph_next_line()
-+	 * immediately after graph_init(), without first calling
-+	 * graph_update().  Return without outputting anything in this
-+	 * case.
-+	 */
-+	if (!graph->commit)
-+		return -1;
-+
- 	switch (graph->state) {
- 	case GRAPH_PADDING:
- 		graph_output_padding_line(graph, &line);
--		return 0;
-+		break;
- 	case GRAPH_SKIP:
- 		graph_output_skip_line(graph, &line);
--		return 0;
-+		break;
- 	case GRAPH_PRE_COMMIT:
- 		graph_output_pre_commit_line(graph, &line);
--		return 0;
-+		break;
- 	case GRAPH_COMMIT:
- 		graph_output_commit_line(graph, &line);
--		return 1;
-+		shown_commit_line = 1;
-+		break;
- 	case GRAPH_POST_MERGE:
- 		graph_output_post_merge_line(graph, &line);
--		return 0;
-+		break;
- 	case GRAPH_COLLAPSING:
- 		graph_output_collapsing_line(graph, &line);
--		return 0;
-+		break;
- 	}
- 
--	assert(0);
--	return 0;
-+	graph_pad_horizontally(graph, &line);
-+	return shown_commit_line;
- }
- 
- static void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
+-	if (graph->num_parents >= 3 &&
+-	    graph->commit_index < (graph->num_columns - 1))
++	if (graph_needs_pre_commit_line(graph))
+ 		graph_update_state(graph, GRAPH_PRE_COMMIT);
+ 	else
+ 		graph_update_state(graph, GRAPH_COMMIT);
 -- 
 gitgitgadget
 
