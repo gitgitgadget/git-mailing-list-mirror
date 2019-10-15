@@ -2,102 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E7F51F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 19:40:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B4941F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 20:00:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732411AbfJOTk0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 15:40:26 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:40317 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727856AbfJOTk0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 15:40:26 -0400
-Received: by mail-pf1-f196.google.com with SMTP id x127so13114762pfb.7
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 12:40:26 -0700 (PDT)
+        id S1727782AbfJOUAs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 16:00:48 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:32855 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726421AbfJOUAs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 16:00:48 -0400
+Received: by mail-pf1-f195.google.com with SMTP id q10so13175986pfl.0
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 13:00:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=i08RXMeO9BQqNh382Gy/mCujyg9G5yvKiwal5Bq/u7I=;
-        b=RKpi/yEdG+q+Z0Ip+7r8YevdtEmNIXlUzvNO+L1J3ETfbuFz+64KBm0pa9wdZ76C32
-         wfP1d4a1VBYPwLDoWxisnyRvLn3idJr+ZESA9yJPY70XpwBQPDIyZqKgnY5IvDEbA89H
-         k3kXs7SZi8BauOebdPhnZT5PnRQ+EB8pEa2UcnYCCQpUgrcs+Q8aCtbyhKBMTf/wEJ5f
-         66IoWJx2tkA12gHVA/+dS6szJQ3PQvNK1Wq5MAagO7bzqNNs6SRjINitA3KAAdUhvh73
-         fJnbw1dbrd9MX0PrnHEEpOuASsCjjbgoj2KzZAik85F8atJfExG9n/MlkA80YvFOaiub
-         OmyA==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=duE75I+o6PCrL7aEu3phsFRdZRF7Jg5P1//6eNuTe+0=;
+        b=bNhvT4JFR/1ozdQ6waKpFA7w4wpkK+R5PuB0IGtotR39s+uMvDTBETZgjZt6w807ZU
+         iMMpYr2a3COfUVOY6NrWo6f4QvbL/RUbLE6JQtq7BXI7h22Y3VmOMXwHFnHTU8Aoo3wE
+         AX3HHdIwAGC+sX+nAU6cP0gK70H3iVszRwOxvrhujd+JKE2c0J6Uyr0LzirNl9qbuMJ7
+         1SP0mRPtUVeOOjpd+A5QE/sie9A9nNuYs3PfiHCdfoEeF9OAnkgaQWWO5iGoh9UvZml1
+         l1RdC4TGL03TyMHOhL09ExhHRjuyjE5TmU5QD/pguDy0bSxURsJoqx8wrj/SVxFPSA6T
+         fU5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=i08RXMeO9BQqNh382Gy/mCujyg9G5yvKiwal5Bq/u7I=;
-        b=XoU71iHk9Rae3PTPpLBskubOe6kH8dZuzGPBpH94jjC97w7P8SjgaGKo8AoWb3kfV1
-         hQkC7rv5nPSaoZdMMfM7PCgFGSPi9pCXUfPXnO4k0qPReG4tTiywxvWk/AFaYI/sErIM
-         YOnvTXYsrRQJyrxO+SyJOtcd/Wxt6EqUbQe9/Vhvav0nYKJ97mvl3nliBy/vCO7SZwbm
-         Z+TA6y6iiaVJXbny/bf1DC0kU9mdAWoKsearyABIyxk1456maq3QMzu6mOH8V+VzdLpR
-         P9c4SiSYuibbGFWQf8cZpO+jZU6meypx8fK8LXfOG1tnq//D9Wwjq+qqQrTBc1qETmuD
-         PTjQ==
-X-Gm-Message-State: APjAAAW4zg/RIBViI31zyoIn35VKqZ/OP/N+Y9IAI1Qh1pXzrG+RCpzG
-        S7KM8BD+D+0akwgfxMZDEXYI/A==
-X-Google-Smtp-Source: APXvYqwSwjS5y7JVZ1Aidzp2VtCcpzh630UkeSTOSgJUXf2OA5EpfahjMiOlCVQh4wVjUddFKJ16VQ==
-X-Received: by 2002:a62:3441:: with SMTP id b62mr41508842pfa.233.1571168425206;
-        Tue, 15 Oct 2019 12:40:25 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:ece8:7fe:c1f1:a20f])
-        by smtp.gmail.com with ESMTPSA id 206sm21130577pge.80.2019.10.15.12.40.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Oct 2019 12:40:24 -0700 (PDT)
-Date:   Tue, 15 Oct 2019 12:40:19 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] fetch-pack: write fetched refs to .promisor
-Message-ID: <20191015194019.GC233821@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-References: <20190826214737.164132-1-jonathantanmy@google.com>
- <20191015001231.97272-1-jonathantanmy@google.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=duE75I+o6PCrL7aEu3phsFRdZRF7Jg5P1//6eNuTe+0=;
+        b=arjsSRssRXDXvQuKb5jIdfC8/MZB+IwupUSu5hYpPa7UfGP4KoeAKps65jU9m/NbnF
+         P+F4QE5/Il9sHqF8Ke+cC2dwamONA6ks9QvxhBrnQn3k/tMoGrN2XQ96xgUZ27tFPR+1
+         Kf8OPzI1++FIkKynR85FwI2ZvfvpjZtSfyxyIGuLBJJB6yXiipmxtVtGfN3uKVEjUZyY
+         zLhLjNjl2Fa4frYJ/J/nRJlkZRnMZPmCLIkKl4CreO+5P4f3j7NmJKW/qHAJJpXVoSKC
+         jp8yP8vODEz1sYW1eHZMskr+RjsWNwJUJknHNXYY6Nl9n+qb746YkaCUZWLtjj6VcfeZ
+         vV5g==
+X-Gm-Message-State: APjAAAXpJtelh+T5Wf3l8IEpDspVu4Q2C7CNLkM/07jy3Waf8Eb73eXF
+        alSQ1obaDY6+O0PD3DdRI4I=
+X-Google-Smtp-Source: APXvYqxyXdXNDl+y3X4WSAYGHDKQJ4IKW0WhnBPeCHrONJxuZ2uhKGGkrg2dZbTtbE4MItEfQ/nEVQ==
+X-Received: by 2002:aa7:8249:: with SMTP id e9mr39535458pfn.46.1571169647493;
+        Tue, 15 Oct 2019 13:00:47 -0700 (PDT)
+Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:7:edf1:7ee7:ed2b:8e04])
+        by smtp.gmail.com with ESMTPSA id p11sm23182177pgs.51.2019.10.15.13.00.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Oct 2019 13:00:46 -0700 (PDT)
+Subject: Re: [PATCH v2 1/6] midx: add MIDX_PROGRESS flag <snip>
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     William Baker via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com, jeffhost@microsoft.com,
+        William Baker <William.Baker@microsoft.com>
+References: <pull.337.git.gitgitgadget@gmail.com>
+ <pull.337.v2.git.gitgitgadget@gmail.com>
+ <6badd9ceaf4851b2984e78a5cfd0cb8ec0c810f5.1568998427.git.gitgitgadget@gmail.com>
+ <20190921121104.GA6787@szeder.dev>
+ <xmqqlfu9krzv.fsf@gitster-ct.c.googlers.com>
+ <20191007172951.GC11529@szeder.dev>
+ <xmqqk19fn9jp.fsf@gitster-ct.c.googlers.com>
+ <20191009013231.GF29845@szeder.dev>
+From:   William Baker <williamtbakeremail@gmail.com>
+Message-ID: <04342d12-fffc-afb6-fa4e-c2e2bf88d1b6@gmail.com>
+Date:   Tue, 15 Oct 2019 13:00:45 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.1.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191015001231.97272-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20191009013231.GF29845@szeder.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019.10.14 17:12, Jonathan Tan wrote:
-> The specification of promisor packfiles (in partial-clone.txt) states
-> that the .promisor files that accompany packfiles do not matter (just
-> like .keep files), so whenever a packfile is fetched from the promisor
-> remote, Git has been writing empty .promisor files. But these files
-> could contain more useful information.
+On 10/8/19 6:32 PM, SZEDER Gábor wrote:
+>>> No, they tend to show (PROGRESS | REGRESS), at least both gdb and lldb
+>>> do.
 > 
-> So instead of writing empty files, write the refs fetched to these
-> files. This makes it easier to debug issues with partial clones, as we
-> can identify what refs (and their associated hashes) were fetched at the
-> time the packfile was downloaded, and if necessary, compare those hashes
-> against what the promisor remote reports now.
+> I was wrong here, gdb does this, but lldb, unfortunately, doesn't; see
+> my other reply in this thread.
+>
+>> What I was worried about is that the constants that are used to
+>> represent something that are *NOT* set of bits (hence "PROGRESS * 3"
+>> may be perfectly a reasonable thing for such an application)
 > 
-> This is implemented by teaching fetch-pack to write its own non-empty
-> .promisor file whenever it knows the name of the pack's lockfile. This
-> covers the case wherein the user runs "git fetch" with an internal
-> protocol or HTTP protocol v2 (fetch_refs_via_pack() in transport.c sets
-> lock_pack) and with HTTP protocol v0/v1 (fetch_git() in remote-curl.c
-> passes "--lock-pack" to "fetch-pack").
+> I don't really see how that could be reasonable, it's prone to break
+> when changing the values of the enum constants.
 > 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> Changes from v1:
->  - commit message explains scope of change ("it knows the name of the
->    pack's lockfile)
->  - explained what .promisor contains in comment in builtin/repack.c
->  - moved .promisor writing until after we know that index-pack succeeded
-> ---
+>> may be
+>> mistaken by an overly clever debugger and "3" may end up getting
+>> shown as "PROGRESS | REGRESS".  When there are only two constants
+>> (PROGRESS=1 and REGRESS=2), we humans nor debuggers can tell if that
+>> is to represent two bits that can be or'ed together, or it is an
+>> enumeration.
+>>
+>> Until we gain the third constant, that is, at which time the third
+>> one may likely be 3 (if enumeration) or 4 (if bits).
+> 
+> Humans benefit from context: they understand the name of the enum type
+> (e.g. does it end with "_flags"?), the name of the enum constants, and
+> the comment above the enum's definition (if any), and can then infer
+> whether those constants represent OR-able bits or not.  If they can't
+> find this out, then that enum is poorly named and/or documented, which
+> should be fixed.  As for the patch that I originally commented on, I
+> would expect the enum to be called e.g. 'midx_flags', and thus already
+> with that single constant in there it'll be clear that it is intended
+> as a collection of related OR-able bits.
+> 
+> As for the debugger, if it sees a variable of an enum type whose value
+> doesn't match any of the enum constants, then there are basically
+> three possibilities:
+> 
+>   - All constants in that enum have power-of-two values.  In this case
+>     it's reasonable from the debugger to assume that those constants
+>     are OR'ed together, and is extremely helpful to display the value
+>     that way.
+> 
+>   - The constants are just a set of values (1, 2, 3, 42, etc).  In
+>     this case the variable shouldn't have a value that doesn't match
+>     one of the constants in the first place, and I would first suspect
+>     that the program might be buggy.
+> 
+>   - A "mostly" power-of-two enum might contain shorthand constants for
+>     combinations of a set of other constants, e.g.:
+> 
+>       enum flags {
+>               BIT0 = (1 << 0),
+>               BIT1 = (1 << 1),
+>               BIT2 = (1 << 2),
+> 
+>               FIRST_TWO = (BIT0 | BIT1),
+>       };
+>       enum flags f0 = BIT0;
+>       enum flags f1 = BIT0 | BIT1;
+>       enum flags f2 = BIT0 | BIT2;
+>       enum flags f3 = BIT0 | BIT1 | BIT2;
+> 
+>     In this case, sadly, gdb shows only matching constants:
+> 
+>       (gdb) p f0
+>       $1 = BIT0
+>       (gdb) p f1
+>       $2 = FIRST_TWO
+>       (gdb) p f2
+>       $3 = 5
+>       (gdb) p f3
+>       $4 = 7
+> 
 
-Thanks, this looks good to me.
+I believe this is the last open thread/discussion on the "midx: add MIDX_PROGRESS
+flag" patch series.  
+
+A quick summary of where the discussion stands:
+
+- The patch series currently uses #define for the new MIDX_PROGRESS flag.
+- The git codebase uses both #defines and enums for flags.
+- The debugger always shows the enum value's name if there is a match, if values
+  are OR-ed together there a few possibilities (see discussion above and earlier
+  in the thread).
+- There are concerns regarding misinterpreting constants that are not a set of
+  bits (e.g. "PROGRESS * 3").
+
+Are there any other details I can provide that would help in reaching a
+conclusion as to how to proceed?
+
+At this time there are no other MIDX_* flags and so there's always the option
+to revisit the best way to handle multiple MIDX_* flags if/when additional
+flags are added.
+
+Thanks,
+William
+
