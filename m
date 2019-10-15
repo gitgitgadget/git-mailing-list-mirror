@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17C3C1F4C0
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D2E11F4C0
 	for <e@80x24.org>; Tue, 15 Oct 2019 23:41:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388062AbfJOXlR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 19:41:17 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46219 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388049AbfJOXlP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 19:41:15 -0400
-Received: by mail-wr1-f67.google.com with SMTP id o18so25745145wrv.13
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 16:41:12 -0700 (PDT)
+        id S2388091AbfJOXlS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 19:41:18 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53442 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388053AbfJOXlS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 19:41:18 -0400
+Received: by mail-wm1-f65.google.com with SMTP id i16so820881wmd.3
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 16:41:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Z58UUK9zGq2a+qFVs6BqdNlFfOWi4CvsYdZWz2yJUqo=;
-        b=FMPJt55Xh4e119G++5qIy5htsrWDI+sUF3UWz8eVYG0TQ2UbAAclQx5Rf2Up4cAPe/
-         UQVYP2TangGmEAs83p0HaSbJJuHs0pnPLHblO1nXGyrqOr1md1OYGNlWbj7PdaqsMoat
-         rRZrkW2n2W4lQKwiyA0JH753gCBX43ccMzd60cmKvOPDOUj9L6cC/XNeKPBZEnHOzxCY
-         1D7bhxGcmyIbAldN1n/FVVSpX3BROApRUsvQAiB1JlS6kW2xvmL77EfJGzhau+dMif2N
-         Rj8QaKYV63v3P/kIM2LEx2efas4y/6iSXmgsg+AdyWH0sW2Y+aXksAtZyMsF4g3c/43i
-         wmjQ==
+        bh=7so7AoHa+hyi07UslMDITnDeXFtMOAH2NyRzX0pksbA=;
+        b=EoYRSKhGbTFtC2rJtCcrP5WSyq5Npc9wPRAVE2TqwSfoxLo6qUK2EvCbDOteLsChRR
+         UIXX97AbFCHYD6otSrAyOJCobe9pTiJpIOWkYrAmi3T8xkXpIrOjc+HKO2hHmjXKaTLk
+         6mzbreytV5ObF8SibpDyOGpA5t68b8CyGST2AfnirqzhGFFRn9UeWdkkQ3BmDtpZQcIH
+         CHuVp0ytDQtmRrrPk+yxuzvpkE0Cc7+N/hkZ7E9F2FN+EAra/WXYz5REsZNd3/ruYn5r
+         5iiuk+YEH46wRO/2jDXMdG7NocQEO1uTpkRhIeJNdsyaaWQMFuYb21x3tJ7Ny0b63oYL
+         9ZUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Z58UUK9zGq2a+qFVs6BqdNlFfOWi4CvsYdZWz2yJUqo=;
-        b=L5F0E6PHVrTV0iSBQajG8WEoqDZPLCntkoUCmJst0zGQP3hazWG0oTfRn6aY14U9LR
-         HDCgkNxPU44OsqZxk6enun2t2eEQGDOsJdccjrJdqAmlBZA4l6ZkeJp+tIRjJwfHiA16
-         BLKKJ3elUYnowphNoJFnwN6LGEbBbjMMYI69lL//ORBH1dyshwVWnmqm0K4qyLNTnpXh
-         snEIBRM6tIAI6Ewnd0k46nj4TtxiqB9rtY9Dwa+TQT+BLnZmuTrfXCdfieVX4tfmeHsa
-         QqfHyq9sbo8cvGmXpXtfnV1eMMWPyI9UHY7YX7jfP1a4YyLcrO3XBJkgupxnICfkY9q/
-         kTOw==
-X-Gm-Message-State: APjAAAXjuUANfLDb1biVX5aPX3ahHvTI81NQOgLrul4RrKJgCxLUz7CM
-        oV9L+CwcTWHan3YDpOrHAP+zzAiw
-X-Google-Smtp-Source: APXvYqwoox+TPs3ljlNDZX7UhKda0E+NygxAnKKkU0aNFfxgjkspRCwh257TjBIKKYcUVsPGkdXU7w==
-X-Received: by 2002:a5d:6745:: with SMTP id l5mr38256wrw.51.1571182871792;
-        Tue, 15 Oct 2019 16:41:11 -0700 (PDT)
+        bh=7so7AoHa+hyi07UslMDITnDeXFtMOAH2NyRzX0pksbA=;
+        b=Rt6+tFbMD7KdAvZjexTR52E4tqY9p19IoBKFnvzNScgiW1z6GoiJDuYw/wFcVRFd1c
+         sg8qtIN+C/zVboHPbtqAKtdGAWqz4N594CR1hc3tDIamsvmkofCr6M9nU4Xe79mlRATu
+         yH7AfPobFBHIBU+Y9I43zhPapD96F+6bNfpctvhQDfEG1KgvblXml4OT1xQqZsmELO2k
+         weT4582PVrRYqcqdyjbtFOxAelQFliR/PF8jvA0JUd3YrNnsndgYvjteHe+NqG6tPsCX
+         iAtaTH8KXYYp3cpAB6lhaGWQoqkKi/Tob7JS4JLj/bLdsn0DeB0uufYNplcAHIFhQnHO
+         lAEA==
+X-Gm-Message-State: APjAAAVCxjEgbOXdxg8CWzshDY6Msr50OcfTqVBHJV5/UNoqZiSIVpS0
+        tjX626u5GB7UDp6bOHeNirVKp84b
+X-Google-Smtp-Source: APXvYqyIzjs3U9+6FSYpLy8f2uM8iaO0w4K8SclkODVWSPw9bGyURTSOLLtpkUHps8blFPPqvsDI4g==
+X-Received: by 2002:a7b:c4d4:: with SMTP id g20mr725553wmk.123.1571182875657;
+        Tue, 15 Oct 2019 16:41:15 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r65sm598828wmr.9.2019.10.15.16.41.11
+        by smtp.gmail.com with ESMTPSA id m62sm567765wmm.35.2019.10.15.16.41.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Oct 2019 16:41:11 -0700 (PDT)
-Message-Id: <51495be940a571c9f0ca501f668dde641e023ab3.1571182864.git.gitgitgadget@gmail.com>
+        Tue, 15 Oct 2019 16:41:15 -0700 (PDT)
+Message-Id: <67051ec31a6262a263a4ab4760f53dff8ea7bce2.1571182864.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
 References: <pull.383.git.gitgitgadget@gmail.com>
         <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
 From:   "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Oct 2019 23:40:58 +0000
-Subject: [PATCH v2 07/13] graph: example of graph output that can be
- simplified
+Date:   Tue, 15 Oct 2019 23:41:02 +0000
+Subject: [PATCH v2 11/13] graph: smooth appearance of collapsing edges on
+ commit lines
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,143 +72,282 @@ X-Mailing-List: git@vger.kernel.org
 
 From: James Coglan <jcoglan@gmail.com>
 
-The commits following this one introduce a series of improvements to the
-layout of graphs, tidying up a few edge cases, namely:
+When a graph contains edges that are in the process of collapsing to the
+left, but those edges cross a commit line, the effect is that the edges
+have a jagged appearance:
 
-- merge whose first parent fuses with an existing column to the left
-- merge whose last parent fuses with its immediate neighbor on the right
-- edges that collapse to the left above and below a commit line
+        *
+        |\
+        | *
+        |  \
+        *-. \
+        |\ \ \
+        | | * |
+        | * | |
+        | |/ /
+        * | |
+        |/ /
+        * |
+        |/
+        *
 
-This test case exemplifies these cases and provides a motivating example
-of the kind of history I'm aiming to clear up.
+We already takes steps to smooth edges like this when they're expanding;
+when an edge appears to the right of a merge commit marker on a
+GRAPH_COMMIT line immediately following a GRAPH_POST_MERGE line, we
+render it as a `\`:
 
-The first parent of merge E is the same as the parent of H, so those
-edges fuse together.
-
-        * H
-        |
-        | *-.   E
+        * \
+        |\ \
+        | * \
         | |\ \
-        |/ / /
-        |
-        * B
 
-We can "skew" the display of this merge so that it doesn't introduce
-additional columns that immediately collapse:
+We can make a similar improvement to collapsing edges, making them
+easier to follow and giving the overall graph a feeling of increased
+symmetry:
 
-        * H
-        |
-        | *   E
-        |/|\
-        |
-        * B
-
-The last parent of E is D, the same as the parent of F which is the edge
-to the right of the merge.
-
-            * F
-            |
-             \
-          *-. \   E
-          |\ \ \
-         / / / /
-            | /
-            |/
-            * D
-
-The two edges leading to D could be fused sooner: rather than expanding
-the F edge around the merge and then letting the edges collapse, the F
-edge could fuse with the E edge in the post-merge line:
-
-            * F
-            |
-             \
-          *-. | E
-          |\ \|
-         / / /
-            |
-            * D
-
-If this is combined with the "skew" effect above, we get a much cleaner
-graph display for these edges:
-
-            * F
-            |
-          * | E
-         /|\|
-            |
-            * D
-
-Finally, the edge leading from C to A appears jagged as it passes
-through the commit line for B:
-
-        | * | C
-        | |/
-        * | B
+        *
+        |\
+        | *
+        |  \
+        *-. \
+        |\ \ \
+        | | * |
+        | * | |
+        | |/ /
+        * / /
+        |/ /
+        * /
         |/
-        * A
+        *
 
-This can be smoothed out so that such edges are easier to read:
+To do this, we introduce a new special case for edges on GRAPH_COMMIT
+lines that immediately follow a GRAPH_COLLAPSING line. By retaining a
+copy of the `mapping` array used to render the GRAPH_COLLAPSING line in
+the `old_mapping` array, we can determine that an edge is collapsing
+through the GRAPH_COMMIT line and should be smoothed.
 
-        | * | C
-        | |/
-        * / B
-        |/
-        * A
+Signed-off-by: James Coglan <jcoglan@gmail.com>
 ---
- t/t4215-log-skewed-merges.sh | 43 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
- create mode 100755 t/t4215-log-skewed-merges.sh
+ graph.c                                    | 17 +++++++++---
+ t/t3430-rebase-merges.sh                   |  2 +-
+ t/t4202-log.sh                             |  2 +-
+ t/t4214-log-graph-octopus.sh               | 32 +++++++++++-----------
+ t/t4215-log-skewed-merges.sh               |  4 +--
+ t/t6016-rev-list-graph-simplify-history.sh |  4 +--
+ 6 files changed, 35 insertions(+), 26 deletions(-)
 
+diff --git a/graph.c b/graph.c
+index 2315f3604d..63f8d18baa 100644
+--- a/graph.c
++++ b/graph.c
+@@ -297,10 +297,10 @@ struct git_graph {
+ 	 */
+ 	int *mapping;
+ 	/*
+-	 * A temporary array for computing the next mapping state
+-	 * while we are outputting a mapping line.  This is stored as part
+-	 * of the git_graph simply so we don't have to allocate a new
+-	 * temporary array each time we have to output a collapsing line.
++	 * A copy of the contents of the mapping array from the last commit,
++	 * which we use to improve the display of columns that are tracking
++	 * from right to left through a commit line.  We also use this to
++	 * avoid allocating a fresh array when we compute the next mapping.
+ 	 */
+ 	int *old_mapping;
+ 	/*
+@@ -1015,6 +1015,10 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
+ 				graph_line_write_column(line, col, '\\');
+ 			else
+ 				graph_line_write_column(line, col, '|');
++		} else if (graph->prev_state == GRAPH_COLLAPSING &&
++			   graph->old_mapping[2 * i + 1] == i &&
++			   graph->mapping[2 * i] < i) {
++			graph_line_write_column(line, col, '/');
+ 		} else {
+ 			graph_line_write_column(line, col, '|');
+ 		}
+@@ -1211,6 +1215,11 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
+ 		}
+ 	}
+ 
++	/*
++	 * Copy the current mapping array into old_mapping
++	 */
++	COPY_ARRAY(graph->old_mapping, graph->mapping, graph->mapping_size);
++
+ 	/*
+ 	 * The new mapping may be 1 smaller than the old mapping
+ 	 */
+diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+index 9efcf4808a..a30d27e9f3 100755
+--- a/t/t3430-rebase-merges.sh
++++ b/t/t3430-rebase-merges.sh
+@@ -408,7 +408,7 @@ test_expect_success 'octopus merges' '
+ 	| | * three
+ 	| * | two
+ 	| |/
+-	* | one
++	* / one
+ 	|/
+ 	o before-octopus
+ 	EOF
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index e803ba402e..ab0d021365 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -667,7 +667,7 @@ cat > expect <<\EOF
+ * | | fifth
+ * | | fourth
+ |/ /
+-* | third
++* / third
+ |/
+ * second
+ * initial
+diff --git a/t/t4214-log-graph-octopus.sh b/t/t4214-log-graph-octopus.sh
+index 1b96276894..21bc600a82 100755
+--- a/t/t4214-log-graph-octopus.sh
++++ b/t/t4214-log-graph-octopus.sh
+@@ -31,9 +31,9 @@ test_expect_success 'log --graph with tricky octopus merge, no color' '
+ 	| | | * 4
+ 	| | * | 3
+ 	| | |/
+-	| * | 2
++	| * / 2
+ 	| |/
+-	* | 1
++	* / 1
+ 	|/
+ 	* initial
+ 	EOF
+@@ -51,9 +51,9 @@ test_expect_success 'log --graph with tricky octopus merge with colors' '
+ 	<RED>|<RESET> <YELLOW>|<RESET> <BLUE>|<RESET> * 4
+ 	<RED>|<RESET> <YELLOW>|<RESET> * <MAGENTA>|<RESET> 3
+ 	<RED>|<RESET> <YELLOW>|<RESET> <MAGENTA>|<RESET><MAGENTA>/<RESET>
+-	<RED>|<RESET> * <MAGENTA>|<RESET> 2
++	<RED>|<RESET> * <MAGENTA>/<RESET> 2
+ 	<RED>|<RESET> <MAGENTA>|<RESET><MAGENTA>/<RESET>
+-	* <MAGENTA>|<RESET> 1
++	* <MAGENTA>/<RESET> 1
+ 	<MAGENTA>|<RESET><MAGENTA>/<RESET>
+ 	* initial
+ 	EOF
+@@ -72,9 +72,9 @@ test_expect_success 'log --graph with normal octopus merge, no color' '
+ 	| | | * 4
+ 	| | * | 3
+ 	| | |/
+-	| * | 2
++	| * / 2
+ 	| |/
+-	* | 1
++	* / 1
+ 	|/
+ 	* initial
+ 	EOF
+@@ -90,9 +90,9 @@ test_expect_success 'log --graph with normal octopus merge with colors' '
+ 	<RED>|<RESET> <GREEN>|<RESET> <YELLOW>|<RESET> * 4
+ 	<RED>|<RESET> <GREEN>|<RESET> * <BLUE>|<RESET> 3
+ 	<RED>|<RESET> <GREEN>|<RESET> <BLUE>|<RESET><BLUE>/<RESET>
+-	<RED>|<RESET> * <BLUE>|<RESET> 2
++	<RED>|<RESET> * <BLUE>/<RESET> 2
+ 	<RED>|<RESET> <BLUE>|<RESET><BLUE>/<RESET>
+-	* <BLUE>|<RESET> 1
++	* <BLUE>/<RESET> 1
+ 	<BLUE>|<RESET><BLUE>/<RESET>
+ 	* initial
+ 	EOF
+@@ -110,9 +110,9 @@ test_expect_success 'log --graph with normal octopus merge and child, no color'
+ 	| | | * 4
+ 	| | * | 3
+ 	| | |/
+-	| * | 2
++	| * / 2
+ 	| |/
+-	* | 1
++	* / 1
+ 	|/
+ 	* initial
+ 	EOF
+@@ -129,9 +129,9 @@ test_expect_failure 'log --graph with normal octopus and child merge with colors
+ 	<GREEN>|<RESET> <YELLOW>|<RESET> <BLUE>|<RESET> * 4
+ 	<GREEN>|<RESET> <YELLOW>|<RESET> * <MAGENTA>|<RESET> 3
+ 	<GREEN>|<RESET> <YELLOW>|<RESET> <MAGENTA>|<RESET><MAGENTA>/<RESET>
+-	<GREEN>|<RESET> * <MAGENTA>|<RESET> 2
++	<GREEN>|<RESET> * <MAGENTA>/<RESET> 2
+ 	<GREEN>|<RESET> <MAGENTA>|<RESET><MAGENTA>/<RESET>
+-	* <MAGENTA>|<RESET> 1
++	* <MAGENTA>/<RESET> 1
+ 	<MAGENTA>|<RESET><MAGENTA>/<RESET>
+ 	* initial
+ 	EOF
+@@ -150,9 +150,9 @@ test_expect_success 'log --graph with tricky octopus merge and its child, no col
+ 	| | | * 4
+ 	| | * | 3
+ 	| | |/
+-	| * | 2
++	| * / 2
+ 	| |/
+-	* | 1
++	* / 1
+ 	|/
+ 	* initial
+ 	EOF
+@@ -171,9 +171,9 @@ test_expect_failure 'log --graph with tricky octopus merge and its child with co
+ 	<RED>|<RESET> <BLUE>|<RESET> <MAGENTA>|<RESET> * 4
+ 	<RED>|<RESET> <BLUE>|<RESET> * <CYAN>|<RESET> 3
+ 	<RED>|<RESET> <BLUE>|<RESET> <CYAN>|<RESET><CYAN>/<RESET>
+-	<RED>|<RESET> * <CYAN>|<RESET> 2
++	<RED>|<RESET> * <CYAN>/<RESET> 2
+ 	<RED>|<RESET> <CYAN>|<RESET><CYAN>/<RESET>
+-	* <CYAN>|<RESET> 1
++	* <CYAN>/<RESET> 1
+ 	<CYAN>|<RESET><CYAN>/<RESET>
+ 	* initial
+ 	EOF
 diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
-new file mode 100755
-index 0000000000..4582ba066a
---- /dev/null
+index e673cdb6f7..1745b3b64c 100755
+--- a/t/t4215-log-skewed-merges.sh
 +++ b/t/t4215-log-skewed-merges.sh
-@@ -0,0 +1,43 @@
-+#!/bin/sh
-+
-+test_description='git log --graph of skewed merges'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'log --graph with merge fusing with its left and right neighbors' '
-+	cat >expect <<-\EOF &&
-+	*   H
-+	|\
-+	| *   G
-+	| |\
-+	| | * F
-+	| | |
-+	| |  \
-+	| *-. \   E
-+	| |\ \ \
-+	|/ / / /
-+	| | | /
-+	| | |/
-+	| | * D
-+	| * | C
-+	| |/
-+	* | B
-+	|/
-+	* A
-+	EOF
-+
-+	git checkout --orphan _p &&
-+	test_commit A &&
-+	test_commit B &&
-+	git checkout -b _q @^ && test_commit C &&
-+	git checkout -b _r @^ && test_commit D &&
-+	git checkout _p && git merge --no-ff _q _r -m E &&
-+	git checkout _r && test_commit F &&
-+	git checkout _p && git merge --no-ff _r -m G &&
-+	git checkout @^^ && git merge --no-ff _p -m H &&
-+
-+	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
+@@ -17,7 +17,7 @@ test_expect_success 'log --graph with merge fusing with its left and right neigh
+ 	| | * D
+ 	| * | C
+ 	| |/
+-	* | B
++	* / B
+ 	|/
+ 	* A
+ 	EOF
+@@ -85,7 +85,7 @@ test_expect_success 'log --graph with nested left-skewed merge' '
+ 	| * | 1_D
+ 	* | | 1_C
+ 	|/ /
+-	* | 1_B
++	* / 1_B
+ 	|/
+ 	* 1_A
+ 	EOF
+diff --git a/t/t6016-rev-list-graph-simplify-history.sh b/t/t6016-rev-list-graph-simplify-history.sh
+index f7181d1d6a..ca1682f29b 100755
+--- a/t/t6016-rev-list-graph-simplify-history.sh
++++ b/t/t6016-rev-list-graph-simplify-history.sh
+@@ -154,7 +154,7 @@ test_expect_success '--graph --full-history -- bar.txt' '
+ 	echo "* |   $A4" >> expected &&
+ 	echo "|\\ \\  " >> expected &&
+ 	echo "| |/  " >> expected &&
+-	echo "* | $A3" >> expected &&
++	echo "* / $A3" >> expected &&
+ 	echo "|/  " >> expected &&
+ 	echo "* $A2" >> expected &&
+ 	git rev-list --graph --full-history --all -- bar.txt > actual &&
+@@ -255,7 +255,7 @@ test_expect_success '--graph --boundary ^C3' '
+ 	echo "* | | | $A3" >> expected &&
+ 	echo "o | | | $A2" >> expected &&
+ 	echo "|/ / /  " >> expected &&
+-	echo "o | | $A1" >> expected &&
++	echo "o / / $A1" >> expected &&
+ 	echo " / /  " >> expected &&
+ 	echo "| o $C3" >> expected &&
+ 	echo "|/  " >> expected &&
 -- 
 gitgitgadget
 
