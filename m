@@ -8,91 +8,104 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B169E1F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 12:06:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82F831F4C1
+	for <e@80x24.org>; Tue, 15 Oct 2019 12:55:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729567AbfJOMGd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 08:06:33 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39026 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727383AbfJOMGd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 08:06:33 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r3so23556792wrj.6
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 05:06:31 -0700 (PDT)
+        id S1727179AbfJOMzC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 08:55:02 -0400
+Received: from mail-qt1-f176.google.com ([209.85.160.176]:47062 "EHLO
+        mail-qt1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726004AbfJOMzC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 08:55:02 -0400
+Received: by mail-qt1-f176.google.com with SMTP id u22so30328854qtq.13
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 05:55:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=iXFaGoMP3uJvDjRmqMy2OpXtZ4WY2d2TVm8ojdrYaZE=;
-        b=AxAPoFd8K/TKEcmmAbYpoA5VbNOS9ToXnL5vqv/6xw2eYLiDdwSnPlkayGQQ8EhR6A
-         maLxo4mFHviKeoq0vRddElhvjCdOshC7Brn7DXL4UyCJZ0moIZlH/gUygirIbtV87ASg
-         fYEwSbpz0MZ/rRipDQoTNLS7alVdMFQBCHwhynz5lqfVhAw7fwPJiv7R9ZmnO6QhshvZ
-         l2x0OiugCZVTROlkNw/iJLk095Ng3J8iy15HKhwnxgpeP5DLe+pl85We1xWwog1ob7cn
-         4ReAIEMWQ9UAgNqRuNwe6YzEikqBce5g+FWf1sKGjJ5bEwKaCLTNwb/U53HTxe4MCSOz
-         C7sw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=/Ql7653ctIE/HsWN7SxvK1Co8DZfECD01NXgqDwMxp8=;
+        b=T9q+KzlHEzIz2j6ETdiuG8PBigHPl3q88DTsGpm5yy39Q5SR4A8qTfn3TfAxqfVNnY
+         FXpedsUuqzIairXzjBkgfPS/8Y4FiYjm9ftYEUdXrrAj17XvLo8NNdaGEzhtboNtDONj
+         83nCmxeREISMMmSnvzquRbjplnEQfk2zJv4rEec2bdMLdMDJmnoggoH4JIWo6iMBMrQd
+         QPbG84sXMgYcW1IX+6J6QNjsPhOrm38MfzMMhtN/KtC5l9lhIT+CBCmNBFCdYVr9Qqfh
+         rDaEL59doxY6wHmpwAec5QFlR0UyKOv8g4zNXsLJ6i1GJ7R25pQ8ZKTOo6G0AvczBxlx
+         7+8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=iXFaGoMP3uJvDjRmqMy2OpXtZ4WY2d2TVm8ojdrYaZE=;
-        b=mviYCFNCuLGX8EKldqo3qzGKVWPob8nwEx9cnUbgK1HDxNqCf3zbyokJ45+NPc3T8X
-         roWNMUDvk0Yww23vM5IrLcH1z/tkG9JoWntLZZa94pQu4XBp0NrRHFbmRJw+SjGTLRMP
-         8eMV4brGXZRyJiB6bDQ+ZGI51S3Q83zNtU634IgU8nd9Wd1Ex26+KMAoTpGx7e/F36J1
-         2XiYjKvjnx/EuLTj/Ngtut7TPaeBGqlpzbYwSIaUpcfJK9K805J9OsVZp+903D2HLS/k
-         VaQIUCxC90aczy4Acglq76YxwpLtcFmXNp3yebxzjmzeMndFFPEB8kFD2A/ASj2BpilB
-         1bCg==
-X-Gm-Message-State: APjAAAW+GIBHt3CWa+bTL+Bckz+mao3rDq30sPAjZcnZ5Klt6jUOmiMG
-        rHIbuho7s0ethdXqegVGuU0=
-X-Google-Smtp-Source: APXvYqwwvAWOaWyUJOlUWyMnyedHDxaYXr7e0WF8gtGXL65phfXmjoTfQTrritdcKdzq8DTkaMd0Wg==
-X-Received: by 2002:adf:ec84:: with SMTP id z4mr30365755wrn.254.1571141191053;
-        Tue, 15 Oct 2019 05:06:31 -0700 (PDT)
-Received: from wambui ([197.254.95.158])
-        by smtp.gmail.com with ESMTPSA id q66sm26623590wme.39.2019.10.15.05.06.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Oct 2019 05:06:30 -0700 (PDT)
-Date:   Tue, 15 Oct 2019 15:06:26 +0300
-From:   Wambui Karuga <wambui.karugax@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [Outreachy] [PATCH] blame: Convert pickaxe_blame defined
- constants to enums
-Message-ID: <20191015120626.GA21821@wambui>
-Reply-To: 20191014214629.134882-1-jonathantanmy@google.com
-References: <20191014193734.GA13706@wambui>
- <20191014214629.134882-1-jonathantanmy@google.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=/Ql7653ctIE/HsWN7SxvK1Co8DZfECD01NXgqDwMxp8=;
+        b=E0yrRMHMBLhKyY8ZsvqutqofUYerx4zitoWHnsbo6Pl7dpplndJli2YlzXtRf8yTEf
+         W3GcZx9zVJFzJdehhLiyYD/hFcnOCMpzusASKGKluh7GuKf+0th5NuSNb7WKJoS1gdGQ
+         qTB8jLuFq9Ak7W/K+HyXa49hNzK8NH57zFx8vyXRC7p8rIheIzN9+iAaO6xvF6tg7XX6
+         hbvBbe0KWPkT6kQrOCRzski+ygcwdhkc2ovy0VFCLDCjiJDrqAuLAuu1BJC2ZT+oBAO5
+         hiMVstC8ULt1Xf/PuditpX9oskUOv+Ru3YEfnkSEQBGapE21OXxqfiH1kneDd84EHk0T
+         pASQ==
+X-Gm-Message-State: APjAAAUPHEPPYU450B0n7m2KfeYouEOlq46tCEMPDskxf/E3zK1ju06B
+        7+zODECy90T1q9/mX5cJuQE+WA9alRw=
+X-Google-Smtp-Source: APXvYqw4rtZLyO6AwoYFD0cAzQEYu6+Z554dIztSpUZKoUEtceQzZUgjSi1ane9dLVFgzkERGilrRQ==
+X-Received: by 2002:a0c:fde6:: with SMTP id m6mr17324111qvu.173.1571144099054;
+        Tue, 15 Oct 2019 05:54:59 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:889a:fc09:50a4:b190? ([2001:4898:a800:1012:39ce:fc09:50a4:b190])
+        by smtp.gmail.com with ESMTPSA id o14sm14212134qtk.52.2019.10.15.05.54.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Oct 2019 05:54:58 -0700 (PDT)
+Subject: Re: ds/sparse-cone, was Re: What's cooking in git.git (Oct 2019, #03;
+ Fri, 11)
+To:     Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <xmqq8sprhgzc.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1910122327250.3272@tvgsbejvaqbjf.bet>
+ <20191015015052.GA19636@dcvr> <xmqqzhi2bsp8.fsf@gitster-ct.c.googlers.com>
+ <20191015071126.GA908@dcvr>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <fdea4b03-3810-1317-7fe3-5100482f7b34@gmail.com>
+Date:   Tue, 15 Oct 2019 08:54:58 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191014214629.134882-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20191015071126.GA908@dcvr>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 14, 2019 at 02:46:29PM -0700, Jonathan Tan wrote:
-> > > Well, I agree that it could be better, but with the C language as we
-> > > have it now, I still slightly prefer an enum to a list of #define. Both
-> > > ways, we still have to manually enter values for each flag, but with
-> > > enum, we get better debugger display (at least in gdb) and in the
-> > > function declaration and definition, we can put a specific type (instead
-> > > of "unsigned" or "int"). gdb supports the notion that a few people use
-> > > enums this way too, but if we decide as a project to not use enums in
-> > > this way, that's fine too. For what it's worth, I tried doing a search
-> > > online, but most of the results I got was for C# (where it is
-> > > recommended - they have a "[Flags]" attribute for enums), so maybe I am
-> > > indeed in the minority.
-> > 
-> > I'll try to pick another set of constants to convert - before this is
-> > agreed on.
+On 10/15/2019 3:11 AM, Eric Wong wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
+>> Eric Wong <e@80x24.org> writes:
+>>
+>>> I just took a brief look, but that appears to leak memory.
+>>>
+>>> "hashmap_free(var, 1)" should be replaced with
+>>> "hashmap_free_entries(var, struct foo, member)"
+>>>
+>>> Only "hashmap_free(var, 0)" can become "hashmap_free(var)"
+>>
+>> I deliberately avoided merge-time band-aid fixups on this topic and
+>> ew/hashmap exactly because I was sure that I'd introduce a similar
+>> bugs by doing so myself.  Using evil merges can be a great way to
+>> help multiple topics polished independently at the same time, but
+>> when overused, can hide this kind of gotchas quite easily.
+>>
+>> A reroll on top of ew/hashmap would be desirable, now that topic is
+>> ready for 'master'.
 > 
-> Thanks - perhaps that's the best way to proceed for now. Do you remember
-> where you found the idea to convert #define to enum? Maybe I could add a
-> note there to avoid converting bitsets/bitflags.
+> Just to be clear, that reroll should come from Stolee (+Cc-ed), right?
+> I'll be around to help answer questions, but also pretty busy
+> with other stuff and I think Stolee knows this API pretty well :>
 
-I found it in a mailing list thread[1], but seems that a comment on bit
-field values was added to a similar issue on GitGitGadget[2].
+I'm working on the re-roll, yes. I was waiting for ew/hashmap to merge
+with history that included ds/include-exclude. Now the current 'master'
+has both, so I can rebase and check everything carefully. v4 should
+have every commit compile with the new hashmap API.
 
-[1] https://public-inbox.org/git/20190923180649.GA2886@szeder.dev/
-[2] https://github.com/gitgitgadget/git/issues/357
+Thanks for pointing out the bugs with the suggested fixups. I'll
+be careful as I adapt the new API.
+
+-Stolee
 
