@@ -8,491 +8,255 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1E311F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 23:41:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B03CE1F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 23:48:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388115AbfJOXlU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 19:41:20 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:34486 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388039AbfJOXlQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 19:41:16 -0400
-Received: by mail-wr1-f66.google.com with SMTP id j11so25820199wrp.1
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 16:41:13 -0700 (PDT)
+        id S2387870AbfJOXsE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 19:48:04 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46780 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727439AbfJOXsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 19:48:04 -0400
+Received: by mail-wr1-f68.google.com with SMTP id o18so25754376wrv.13
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 16:48:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=K2sLCObK61J1vAfGhtXO3Z3duI3+qXEY8qtHSV+5oro=;
-        b=aYUlh4ibndd4oghBpumD+xhwu5jTiRHXrLo9wSfvwWYDpVoQ9x/kpt9Ldsk6ovC57/
-         LeTe0SXDuzGfPlCqLsOwgsUlj2j5IqWja8dGHC6UC1sjHf2PJ37zegh0CdbLtruYvqv5
-         B9LUVA+oZkyATJK9hDrUNyaZtBMB4V2IXFdJkLeboN+t5K1orG3HShyCzODgpWDDCvMG
-         vhAmAIAmC2RVs3zpxCjkZmvEUUJUQW+sqlvp5Q8eyYE2ZSBYp7+d2KNHKFSjfFFcbCO9
-         ID0XCaV8b2M7/aRkck8t7sFtMbgsLAQ/GBzbfSzCdrNJfpXe4xBmxg2g8vtyxvF+UhGZ
-         N6NA==
+        bh=BGT3EbO9ZYLqBk7hrLAJ7Xd8yRe8CXHs2mhfVF3MO0E=;
+        b=CPEDPQhnJh7GSiX10z1t4N4cL+d3kyUwkt486WtTAeXsRpI06ZBPDxwnHakkeSupqC
+         6ntm9MsPbTNYqS294TZkA9sdv7GxhU70La+aIO/+exq5F99vf12483LQ35V1FNAcn3aY
+         lDDtaaAzKvAVZ40EVTB//tLtIc0lu1DoTeEnICDpQ530B5GUu3XU0Jjiv/x1ZPul1rGL
+         FSUuERSbcBb2bAj657ABcX55UNUszDO5/aOqQjPh72qddkZUi2J4K1gkZQ4uUxbqC5RP
+         oUKPJ3utHpQlnaJUAwT1FApyFMWheQqxs8DLYjSepRNQTLCKgJ3u5X2V+a491h/TLWwi
+         FFQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=K2sLCObK61J1vAfGhtXO3Z3duI3+qXEY8qtHSV+5oro=;
-        b=HWfgPyKprAw+YSpyMxSiRO0r0PtlMBebYYsLSeKtLJ2uSsj1vbHFqWCxTZTNQuLcmL
-         AEb61SLFyQRdO7voeJNatcsh/g2V1upFJ3cVJSq9I9C0g15iAwAZjLOkT0gevdJmogxd
-         2kgf/hzfAq3hLcPXcV2fkJPdqqp4pJs1b4LSpvG4cErcRFZDQ6WDN3bnPAkyDzcJOhUB
-         c5aRfNmIwDN9J5tjIe4me1XmAE0dQB1Nu3koCQXuIzqMjpP1VQScZN/QiYvsgVfpC9FP
-         F/SUMnsK0PQNHoOaUW5GCgLrn0Tp5LjXDuc47gUVP0PRnqGAyrCgpo27dpEX7WztJIqa
-         KqcQ==
-X-Gm-Message-State: APjAAAXaJfZsODAWBoDopR1qabR3rcqmglGZHS96WLEP4ZwO5047xqM0
-        tEk6OfCXsuhEvNX3ywbTdbxQEJg+
-X-Google-Smtp-Source: APXvYqxQHy/2+6XTJIEYhZYMME9sfI78YNM5vQr7UCIFkGydgaxnaNIgEMcG0Tjj/WaUm/lNxgxdJw==
-X-Received: by 2002:a05:6000:44:: with SMTP id k4mr37929wrx.121.1571182872658;
-        Tue, 15 Oct 2019 16:41:12 -0700 (PDT)
+        bh=BGT3EbO9ZYLqBk7hrLAJ7Xd8yRe8CXHs2mhfVF3MO0E=;
+        b=oq9lh/wQ8j0leuk87quaLKxnrH4chVXvamlaLEdvn1xaBfclPQjRZq6qLTU9YPYSNe
+         I+Dut97NhM10UO27SR/4ye9CJPog/te2Dml/rsglxpH7uZk4JdI9cubkI4G4F3WuunfX
+         /ByFqSqSGpD5KgYA9sX9104Y5ITuW7yOUs8TJxSxKZlYW1t/4p/E51pbHE8fdaQ6Ehsw
+         Z2uUtIN+5LNXnNY79IHZvEV8oyePl/qAYITGvoS7zG0JIzFZ0EF0O2I7lUPA71R/iALa
+         Txnd7WcK3G8GUqe9o/PGgWRPJLCV8cUIS/9xurfps7uGRM6Gyb0eeSxyiEJ28hKfvWZb
+         CefQ==
+X-Gm-Message-State: APjAAAVIj2CBLu3iQNZw/qqj2r/0Lwgvzk0gTEfjOqtaCKkfHpR52oIN
+        gH6csKhK4W4BC7kUbKfAvKueV0Ko
+X-Google-Smtp-Source: APXvYqwqQMh9vqjNw5cqqHTGmMYqwwpA+927z15R45DDUi4dlVAWIEDBlib0uNKhxXSmsKht5jKf8Q==
+X-Received: by 2002:adf:fbc8:: with SMTP id d8mr44560wrs.205.1571183281078;
+        Tue, 15 Oct 2019 16:48:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c4sm22707071wru.31.2019.10.15.16.41.11
+        by smtp.gmail.com with ESMTPSA id n1sm29199164wrg.67.2019.10.15.16.48.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Oct 2019 16:41:12 -0700 (PDT)
-Message-Id: <2ab0f9775ba57b544a767bd8eebb41ff64d3d6d5.1571182864.git.gitgitgadget@gmail.com>
+        Tue, 15 Oct 2019 16:48:00 -0700 (PDT)
+Message-Id: <pull.383.v3.git.1571183279.gitgitgadget@gmail.com>
 In-Reply-To: <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
-References: <pull.383.git.gitgitgadget@gmail.com>
-        <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
+References: <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
 From:   "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Oct 2019 23:40:59 +0000
-Subject: [PATCH v2 08/13] graph: tidy up display of left-skewed merges
+Date:   Tue, 15 Oct 2019 23:47:46 +0000
+Subject: [PATCH v3 00/13] Improve the readability of log --graph output
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        James Coglan <jcoglan@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: James Coglan <jcoglan@gmail.com>
+This series of patches are designed to improve the output of the log --graph
+command; their effect can be summed up in the following diagram:
 
-Currently, when we display a merge whose first parent is already present
-in a column to the left of the merge commit, we display the first parent
-as a vertical pipe `|` in the GRAPH_POST_MERGE line and then immediately
-enter the GRAPH_COLLAPSING state. The first-parent line tracks to the
-left and all the other parent lines follow it; this creates a "kink" in
-those lines:
+    Before                    After
+    ------                    -----
 
-        | *---.
-        | |\ \ \
-        |/ / / /
-        | | | *
+    *
+    |\
+    | *                       *
+    | |\                      |\
+    | | *                     | *
+    | | |                     | |\
+    | |  \                    | | *
+    | *-. \                   | * |
+    | |\ \ \                  |/|\|
+    |/ / / /                  | | *
+    | | | /                   | * |
+    | | |/                    | |/
+    | | *                     * /
+    | * |                     |/
+    | |/                      *
+    * |
+    |/
+    *
 
-This change tidies the display of such commits such that if the first
-parent appears to the left of the merge, we render it as a `/` and the
-second parent as a `|`. This reduces the horizontal and vertical space
-needed to render the merge, and makes the resulting lines easier to
-read.
+These changes aim to make the edges in graph diagrams easier to read, by
+straightening lines and making certain kinds of topologies display more
+compactly. Three distinct changes are included.
 
-        | *-.
-        |/|\ \
-        | | | *
+First, if the first parent of a merge fuses with an edge to the left of the
+commit, then we display that by making the edges fuse immediately rather
+than by drawing a line straight down and then having it track to the left.
+That is, where we currently display these graphs:
 
-If the first parent is separated from the merge by several columns, a
-horizontal line is drawn in a similar manner to how the GRAPH_COLLAPSING
-state displays the line.
+    | *             | | | *
+    | |\            | | | |\
+    |/ /            | |_|/ /
+    | |             |/| | |
 
-        | | | *-.
-        | |_|/|\ \
-        |/| | | | *
+We will now display these merges as follows:
 
-This effect is applied to both "normal" two-parent merges, and to
-octopus merges. It also reduces the vertical space needed for pre-commit
-lines, as the merge occupies one less column than usual.
+    | *             | | | *
+    |/|             | |_|/|
+    | |             |/| | |
 
-        Before:         After:
+This transformation is applied to merges with any number of parents, for
+example we currently display 3-parent merges like this:
 
-        | *             | *
-        | |\            | |\
-        | | \           | * \
-        | |  \          |/|\ \
-        | *-. \
-        | |\ \ \
+    | *-.           | | | *-.
+    | |\ \          | | | |\ \
+    |/ / /          | |_|/ / /
+    | | |           |/| | | |
 
-Signed-off-by: James Coglan <jcoglan@gmail.com>
----
- graph.c                      | 125 +++++++++++++++++++++++++++--------
- t/t4214-log-graph-octopus.sh |  20 +++---
- t/t4215-log-skewed-merges.sh |  45 +++++++++++--
- 3 files changed, 144 insertions(+), 46 deletions(-)
+And we will now display them like this:
 
-diff --git a/graph.c b/graph.c
-index bd7403065e..e37127f5ab 100644
---- a/graph.c
-+++ b/graph.c
-@@ -202,6 +202,20 @@ struct git_graph {
- 	 * previous commit.
- 	 */
- 	int prev_commit_index;
-+	/*
-+	 * Which layout variant to use to display merge commits. If the
-+	 * commit's first parent is known to be in a column to the left of the
-+	 * merge, then this value is 0 and we use the layout on the left.
-+	 * Otherwise, the value is 1 and the layout on the right is used. This
-+	 * field tells us how many columns the first parent occupies.
-+	 *
-+	 * 		0)			1)
-+	 *
-+	 * 		| | | *-.		| | *---.
-+	 * 		| |_|/|\ \		| | |\ \ \
-+	 * 		|/| | | | |		| | | | | *
-+	 */
-+	int merge_layout;
- 	/*
- 	 * The maximum number of columns that can be stored in the columns
- 	 * and new_columns arrays.  This is also half the number of entries
-@@ -313,6 +327,7 @@ struct git_graph *graph_init(struct rev_info *opt)
- 	graph->prev_state = GRAPH_PADDING;
- 	graph->commit_index = 0;
- 	graph->prev_commit_index = 0;
-+	graph->merge_layout = 0;
- 	graph->num_columns = 0;
- 	graph->num_new_columns = 0;
- 	graph->mapping_size = 0;
-@@ -472,9 +487,11 @@ static int graph_find_new_column_by_commit(struct git_graph *graph,
- }
- 
- static void graph_insert_into_new_columns(struct git_graph *graph,
--					  struct commit *commit)
-+					  struct commit *commit,
-+					  int idx)
- {
- 	int i = graph_find_new_column_by_commit(graph, commit);
-+	int mapping_idx;
- 
- 	/*
- 	 * If the commit is not already in the new_columns array, then add it
-@@ -486,8 +503,26 @@ static void graph_insert_into_new_columns(struct git_graph *graph,
- 		graph->new_columns[i].color = graph_find_commit_color(graph, commit);
- 	}
- 
--	graph->mapping[graph->width] = i;
--	graph->width += 2;
-+	if (graph->num_parents > 1 && idx > -1 && graph->merge_layout == -1) {
-+		/*
-+		 * If this is the first parent of a merge, choose a layout for
-+		 * the merge line based on whether the parent appears in a
-+		 * column to the left of the merge
-+		 */
-+		int dist, shift;
-+
-+		dist = idx - i;
-+		shift = (dist > 1) ? 2 * dist - 3 : 1;
-+
-+		graph->merge_layout = (dist > 0) ? 0 : 1;
-+		mapping_idx = graph->width + (graph->merge_layout - 1) * shift;
-+		graph->width += 2 * graph->merge_layout;
-+	} else {
-+		mapping_idx = graph->width;
-+		graph->width += 2;
-+	}
-+
-+	graph->mapping[mapping_idx] = i;
- }
- 
- static void graph_update_columns(struct git_graph *graph)
-@@ -553,6 +588,7 @@ static void graph_update_columns(struct git_graph *graph)
- 		if (col_commit == graph->commit) {
- 			seen_this = 1;
- 			graph->commit_index = i;
-+			graph->merge_layout = -1;
- 			for (parent = first_interesting_parent(graph);
- 			     parent;
- 			     parent = next_interesting_parent(graph, parent)) {
-@@ -565,7 +601,7 @@ static void graph_update_columns(struct git_graph *graph)
- 				    !is_commit_in_columns) {
- 					graph_increment_column_color(graph);
- 				}
--				graph_insert_into_new_columns(graph, parent->item);
-+				graph_insert_into_new_columns(graph, parent->item, i);
- 			}
- 			/*
- 			 * We always need to increment graph->width by at
-@@ -576,7 +612,7 @@ static void graph_update_columns(struct git_graph *graph)
- 			if (graph->num_parents == 0)
- 				graph->width += 2;
- 		} else {
--			graph_insert_into_new_columns(graph, col_commit);
-+			graph_insert_into_new_columns(graph, col_commit, -1);
- 		}
- 	}
- 
-@@ -588,10 +624,36 @@ static void graph_update_columns(struct git_graph *graph)
- 		graph->mapping_size--;
- }
- 
-+static int graph_num_expansion_rows(struct git_graph *graph)
-+{
-+	/*
-+	 * Normally, we need two expansion rows for each dashed parent line from
-+	 * an octopus merge:
-+	 *
-+	 * 		| *
-+	 * 		| |\
-+	 * 		| | \
-+	 * 		| |  \
-+	 * 		| *-. \
-+	 * 		| |\ \ \
-+	 *
-+	 * If the merge is skewed to the left, then its parents occupy one less
-+	 * column, and we don't need as many expansion rows to route around it;
-+	 * in some cases that means we don't need any expansion rows at all:
-+	 *
-+	 * 		| *
-+	 * 		| |\
-+	 * 		| * \
-+	 * 		|/|\ \
-+	 */
-+	return (graph->num_parents + graph->merge_layout - 3) * 2;
-+}
-+
- static int graph_needs_pre_commit_line(struct git_graph *graph)
- {
- 	return graph->num_parents >= 3 &&
--	       graph->commit_index < (graph->num_columns - 1);
-+	       graph->commit_index < (graph->num_columns - 1) &&
-+	       graph->expansion_row < graph_num_expansion_rows(graph);
- }
- 
- void graph_update(struct git_graph *graph, struct commit *commit)
-@@ -728,7 +790,6 @@ static void graph_output_skip_line(struct git_graph *graph, struct graph_line *l
- static void graph_output_pre_commit_line(struct git_graph *graph,
- 					 struct graph_line *line)
- {
--	int num_expansion_rows;
- 	int i, seen_this;
- 
- 	/*
-@@ -739,14 +800,13 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
- 	 * We need 2 extra rows for every parent over 2.
- 	 */
- 	assert(graph->num_parents >= 3);
--	num_expansion_rows = (graph->num_parents - 2) * 2;
- 
- 	/*
- 	 * graph->expansion_row tracks the current expansion row we are on.
- 	 * It should be in the range [0, num_expansion_rows - 1]
- 	 */
- 	assert(0 <= graph->expansion_row &&
--	       graph->expansion_row < num_expansion_rows);
-+	       graph->expansion_row < graph_num_expansion_rows(graph));
- 
- 	/*
- 	 * Output the row
-@@ -786,7 +846,7 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
- 	 * and move to state GRAPH_COMMIT if necessary
- 	 */
- 	graph->expansion_row++;
--	if (graph->expansion_row >= num_expansion_rows)
-+	if (!graph_needs_pre_commit_line(graph))
- 		graph_update_state(graph, GRAPH_COMMIT);
- }
- 
-@@ -824,7 +884,7 @@ static void graph_draw_octopus_merge(struct git_graph *graph, struct graph_line
- 	 * x 0 1 2 3
- 	 *
- 	 */
--	const int dashless_parents = 2;
-+	const int dashless_parents = 3 - graph->merge_layout;
- 	int dashful_parents = graph->num_parents - dashless_parents;
- 
- 	/*
-@@ -832,9 +892,9 @@ static void graph_draw_octopus_merge(struct git_graph *graph, struct graph_line
- 	 * above) but sometimes the first parent goes into an existing column,
- 	 * like this:
- 	 *
--	 * | *---.
--	 * | |\ \ \
--	 * |/ / / /
-+	 * | *-.
-+	 * |/|\ \
-+	 * | | | |
- 	 * x 0 1 2
- 	 *
- 	 * In which case the number of parents will be one greater than the
-@@ -925,10 +985,15 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
- 		graph_update_state(graph, GRAPH_COLLAPSING);
- }
- 
-+const char merge_chars[] = {'/', '|', '\\'};
-+
- static void graph_output_post_merge_line(struct git_graph *graph, struct graph_line *line)
- {
- 	int seen_this = 0;
--	int i, j;
-+	int i;
-+
-+	struct commit_list *first_parent = first_interesting_parent(graph);
-+	int seen_parent = 0;
- 
- 	/*
- 	 * Output the post-merge row
-@@ -951,30 +1016,34 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
- 			 * new_columns and use those to format the
- 			 * edges.
- 			 */
--			struct commit_list *parents = NULL;
-+			struct commit_list *parents = first_parent;
- 			int par_column;
-+			int idx = graph->merge_layout;
-+			char c;
- 			seen_this = 1;
--			parents = first_interesting_parent(graph);
--			assert(parents);
--			par_column = graph_find_new_column_by_commit(graph, parents->item);
--			assert(par_column >= 0);
--
--			graph_line_write_column(line, &graph->new_columns[par_column], '|');
--			for (j = 0; j < graph->num_parents - 1; j++) {
--				parents = next_interesting_parent(graph, parents);
--				assert(parents);
-+
-+			for (; parents; parents = next_interesting_parent(graph, parents)) {
- 				par_column = graph_find_new_column_by_commit(graph, parents->item);
- 				assert(par_column >= 0);
--				graph_line_write_column(line, &graph->new_columns[par_column], '\\');
--				graph_line_addch(line, ' ');
-+
-+				c = merge_chars[idx];
-+				graph_line_write_column(line, &graph->new_columns[par_column], c);
-+				if (idx == 2)
-+					graph_line_addch(line, ' ');
-+				else
-+					idx++;
- 			}
- 		} else if (seen_this) {
- 			graph_line_write_column(line, col, '\\');
- 			graph_line_addch(line, ' ');
- 		} else {
- 			graph_line_write_column(line, col, '|');
--			graph_line_addch(line, ' ');
-+			if (graph->merge_layout != 0 || i != graph->commit_index - 1)
-+				graph_line_addch(line, seen_parent ? '_' : ' ');
- 		}
-+
-+		if (col_commit == first_parent->item)
-+			seen_parent = 1;
- 	}
- 
- 	/*
-diff --git a/t/t4214-log-graph-octopus.sh b/t/t4214-log-graph-octopus.sh
-index 3ae8e51e50..1b96276894 100755
---- a/t/t4214-log-graph-octopus.sh
-+++ b/t/t4214-log-graph-octopus.sh
-@@ -26,9 +26,8 @@ test_expect_success 'set up merge history' '
- test_expect_success 'log --graph with tricky octopus merge, no color' '
- 	cat >expect.uncolored <<-\EOF &&
- 	* left
--	| *---.   octopus-merge
--	| |\ \ \
--	|/ / / /
-+	| *-.   octopus-merge
-+	|/|\ \
- 	| | | * 4
- 	| | * | 3
- 	| | |/
-@@ -47,9 +46,8 @@ test_expect_success 'log --graph with tricky octopus merge with colors' '
- 	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
- 	cat >expect.colors <<-\EOF &&
- 	* left
--	<RED>|<RESET> *<BLUE>-<RESET><BLUE>-<RESET><MAGENTA>-<RESET><MAGENTA>.<RESET>   octopus-merge
--	<RED>|<RESET> <RED>|<RESET><YELLOW>\<RESET> <BLUE>\<RESET> <MAGENTA>\<RESET>
--	<RED>|<RESET><RED>/<RESET> <YELLOW>/<RESET> <BLUE>/<RESET> <MAGENTA>/<RESET>
-+	<RED>|<RESET> *<MAGENTA>-<RESET><MAGENTA>.<RESET>   octopus-merge
-+	<RED>|<RESET><RED>/<RESET><YELLOW>|<RESET><BLUE>\<RESET> <MAGENTA>\<RESET>
- 	<RED>|<RESET> <YELLOW>|<RESET> <BLUE>|<RESET> * 4
- 	<RED>|<RESET> <YELLOW>|<RESET> * <MAGENTA>|<RESET> 3
- 	<RED>|<RESET> <YELLOW>|<RESET> <MAGENTA>|<RESET><MAGENTA>/<RESET>
-@@ -147,9 +145,8 @@ test_expect_success 'log --graph with tricky octopus merge and its child, no col
- 	cat >expect.uncolored <<-\EOF &&
- 	* left
- 	| * after-merge
--	| *---.   octopus-merge
--	| |\ \ \
--	|/ / / /
-+	| *-.   octopus-merge
-+	|/|\ \
- 	| | | * 4
- 	| | * | 3
- 	| | |/
-@@ -169,9 +166,8 @@ test_expect_failure 'log --graph with tricky octopus merge and its child with co
- 	cat >expect.colors <<-\EOF &&
- 	* left
- 	<RED>|<RESET> * after-merge
--	<RED>|<RESET> *<MAGENTA>-<RESET><MAGENTA>-<RESET><CYAN>-<RESET><CYAN>.<RESET>   octopus-merge
--	<RED>|<RESET> <RED>|<RESET><BLUE>\<RESET> <MAGENTA>\<RESET> <CYAN>\<RESET>
--	<RED>|<RESET><RED>/<RESET> <BLUE>/<RESET> <MAGENTA>/<RESET> <CYAN>/<RESET>
-+	<RED>|<RESET> *<CYAN>-<RESET><CYAN>.<RESET>   octopus-merge
-+	<RED>|<RESET><RED>/<RESET><BLUE>|<RESET><MAGENTA>\<RESET> <CYAN>\<RESET>
- 	<RED>|<RESET> <BLUE>|<RESET> <MAGENTA>|<RESET> * 4
- 	<RED>|<RESET> <BLUE>|<RESET> * <CYAN>|<RESET> 3
- 	<RED>|<RESET> <BLUE>|<RESET> <CYAN>|<RESET><CYAN>/<RESET>
-diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
-index 4582ba066a..dc187b5caf 100755
---- a/t/t4215-log-skewed-merges.sh
-+++ b/t/t4215-log-skewed-merges.sh
-@@ -11,12 +11,8 @@ test_expect_success 'log --graph with merge fusing with its left and right neigh
- 	| *   G
- 	| |\
- 	| | * F
--	| | |
--	| |  \
--	| *-. \   E
--	| |\ \ \
--	|/ / / /
--	| | | /
-+	| * \   E
-+	|/|\ \
- 	| | |/
- 	| | * D
- 	| * | C
-@@ -40,4 +36,41 @@ test_expect_success 'log --graph with merge fusing with its left and right neigh
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'log --graph with left-skewed merge' '
-+	cat >expect <<-\EOF &&
-+	*-----.   0_H
-+	|\ \ \ \
-+	| | | | * 0_G
-+	| |_|_|/|
-+	|/| | | |
-+	| | | * \   0_F
-+	| |_|/|\ \
-+	|/| | | |/
-+	| | | | * 0_E
-+	| |_|_|/
-+	|/| | |
-+	| | * | 0_D
-+	| | |/
-+	| | * 0_C
-+	| |/
-+	|/|
-+	| * 0_B
-+	|/
-+	* 0_A
-+	EOF
-+
-+	git checkout --orphan 0_p && test_commit 0_A &&
-+	git checkout -b 0_q 0_p && test_commit 0_B &&
-+	git checkout -b 0_r 0_p &&
-+	test_commit 0_C &&
-+	test_commit 0_D &&
-+	git checkout -b 0_s 0_p && test_commit 0_E &&
-+	git checkout -b 0_t 0_p && git merge --no-ff 0_r^ 0_s -m 0_F &&
-+	git checkout 0_p && git merge --no-ff 0_s -m 0_G &&
-+	git checkout @^ && git merge --no-ff 0_q 0_r 0_t 0_p -m 0_H &&
-+
-+	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+    | *             | | | *
+    |/|\            | |_|/|\
+    | | |           |/| | | |
+
+If the edge the first parent fuses with is separated from the commit by
+multiple columns, a horizontal edge is drawn just as we currently do in the
+'collapsing' state. This change also affects the display of commit and
+post-merge lines in subtle ways that are more thoroughly described in the
+relevant commits.
+
+The second change is that if the final parent of a merge fuses with the edge
+to the right of the commit, then we can remove the zig-zag effect that
+currently results. We currently display these merges like this:
+
+    * |
+    |\ \
+    | |/
+    | *
+
+After these changes, this merge will now be displayed like so:
+
+    * |
+    |\|
+    | *
+
+If the final parent fuses with an edge that's further to the right, its
+display is unchanged and it will still display like this:
+
+    * | | |
+    |\ \ \ \
+    | | |_|/
+    | |/| |
+    | * | |
+
+The final structural change smooths out lines that are collapsing through
+commit lines. For example, consider the following history:
+
+    *-. \
+    |\ \ \
+    | | * |
+    | * | |
+    | |/ /
+    * | |
+    |/ /
+    * |
+    |/
+    *
+
+This is now rendered so that commit lines display an edge using / instead of
+|, if that edge is tracking to the left both above and below the commit
+line. That results in this improved display:
+
+    *-. \
+    |\ \ \
+    | | * |
+    | * | |
+    | |/ /
+    * / /
+    |/ /
+    * /
+    |/
+    *
+
+Taken together, these changes produce the change shown in the first diagram
+above, with the current rendering on the left and the new rendering on the
+right.
+
+A final addition to that set of changes fixes the coloring of dashes that
+are drawn next to octopus merges, in a manner compatible with all these
+changes. The early commits in this set are refactorings that make the
+functional changes easier to introduce.
+
+James Coglan (13):
+  graph: automatically track display width of graph lines
+  graph: handle line padding in `graph_next_line()`
+  graph: reuse `find_new_column_by_commit()`
+  graph: reduce duplication in `graph_insert_into_new_columns()`
+  graph: remove `mapping_idx` and `graph_update_width()`
+  graph: extract logic for moving to GRAPH_PRE_COMMIT state
+  graph: example of graph output that can be simplified
+  graph: tidy up display of left-skewed merges
+  graph: commit and post-merge lines for left-skewed merges
+  graph: rename `new_mapping` to `old_mapping`
+  graph: smooth appearance of collapsing edges on commit lines
+  graph: flatten edges that fuse with their right neighbor
+  graph: fix coloring of octopus dashes
+
+ graph.c                                    | 646 ++++++++++++---------
+ t/t3430-rebase-merges.sh                   |   2 +-
+ t/t4202-log.sh                             |   2 +-
+ t/t4214-log-graph-octopus.sh               |  62 +-
+ t/t4215-log-skewed-merges.sh               | 257 ++++++++
+ t/t6016-rev-list-graph-simplify-history.sh |  30 +-
+ 6 files changed, 673 insertions(+), 326 deletions(-)
+ create mode 100755 t/t4215-log-skewed-merges.sh
+
+
+base-commit: 108b97dc372828f0e72e56bbb40cae8e1e83ece6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-383%2Fjcoglan%2Fjc%2Fsimplify-graph-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-383/jcoglan/jc/simplify-graph-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/383
+
+Range-diff vs v2:
+
+  1:  c30f5bb43b =  1:  722ab8973a graph: automatically track display width of graph lines
+  2:  d962eb2e02 !  2:  056c95d4ed graph: handle line padding in `graph_next_line()`
+     @@ -18,6 +18,8 @@
+          `graph_next_line()` and we must not pad the `graph_line` if no commit is
+          set.
+      
+     +    Signed-off-by: James Coglan <jcoglan@gmail.com>
+     +
+       diff --git a/graph.c b/graph.c
+       --- a/graph.c
+       +++ b/graph.c
+  3:  ecfcfbfd5c =  3:  376236ab0b graph: reuse `find_new_column_by_commit()`
+  4:  50ce875ed9 =  4:  6a4717bf05 graph: reduce duplication in `graph_insert_into_new_columns()`
+  5:  d2e8958eed =  5:  678b53b671 graph: remove `mapping_idx` and `graph_update_width()`
+  6:  163600585c =  6:  8ed32b1c74 graph: extract logic for moving to GRAPH_PRE_COMMIT state
+  7:  51495be940 !  7:  631ee3cecb graph: example of graph output that can be simplified
+     @@ -86,6 +86,8 @@
+                  |/
+                  * A
+      
+     +    Signed-off-by: James Coglan <jcoglan@gmail.com>
+     +
+       diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+       new file mode 100755
+       --- /dev/null
+  8:  2ab0f9775b =  8:  c34a5eb160 graph: tidy up display of left-skewed merges
+  9:  0e37c88c60 =  9:  2f75c697be graph: commit and post-merge lines for left-skewed merges
+ 10:  9bbf738e6d = 10:  f5c2791436 graph: rename `new_mapping` to `old_mapping`
+ 11:  67051ec31a = 11:  9b24893de6 graph: smooth appearance of collapsing edges on commit lines
+ 12:  503c846d2b = 12:  04ba5169bc graph: flatten edges that fuse with their right neighbor
+ 13:  07ddd509c5 = 13:  cd761b3a32 graph: fix coloring of octopus dashes
+
 -- 
 gitgitgadget
-
