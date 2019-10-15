@@ -2,88 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 240311F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 22:59:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E5961F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 23:41:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387459AbfJOW7D (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 18:59:03 -0400
-Received: from mail-gateway-shared12.cyon.net ([194.126.200.65]:51350 "EHLO
-        mail-gateway-shared12.cyon.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727120AbfJOW7D (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 Oct 2019 18:59:03 -0400
-X-Greylist: delayed 383 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Oct 2019 18:59:02 EDT
-Received: from s019.cyon.net ([149.126.4.28])
-        by mail-gateway-shared12.cyon.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1iKVgA-0004h2-Ce
-        for git@vger.kernel.org; Wed, 16 Oct 2019 00:52:38 +0200
-Received: from [10.20.10.233] (port=16832 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.92)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1iKVg9-0007eG-67; Wed, 16 Oct 2019 00:52:33 +0200
-Subject: Re: Adding a line after the signed-off git am -s
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>, git@vger.kernel.org
-References: <6797ef7d-5444-4c77-59e6-1d78fd3ccb0c@linaro.org>
-From:   Beat Bolli <dev+git@drbeat.li>
-Message-ID: <8089dfce-0183-b7fb-cab8-0a71404b6584@drbeat.li>
-Date:   Wed, 16 Oct 2019 00:52:32 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.0
+        id S1728687AbfJOXlL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 19:41:11 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:50309 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727996AbfJOXlL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 19:41:11 -0400
+Received: by mail-wm1-f67.google.com with SMTP id 5so835262wmg.0
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 16:41:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=HXmfTzuGDcxSZRem1KTJTPVU/hP7EWsRKyXZZcwlY/4=;
+        b=AuHe5dmD+Fo3ZTbjL5fM2KuIgB60tmlLEM58zLDt0OKe2R6TgrMkwVj7vnTO886gs6
+         P+7twXza5ITbJ+DsDxuVfEUu8Nxy4b+O9BWzi+VVdek9YoM9k6Yl9+8EKvZQ7V+9wsFI
+         sWD4BOMZD2v/jLiBbSnEWD1u6zK0Q9CeSL68M7NBHs4J2lkFI9H2sEXDY7nGCOlcIjiE
+         7aF3nXjZLEq1qvd9DsMxM854I+gI6Gtwx/avbRF/SGCLlR/bG4acL21oDpAzqYcigLbp
+         uRcnOs7ecPYkIGTtjKdfKPNPYhEJpDWyXx/BqvLZ3g7fC9Wto60ziwdq1CKvUnaaNYNK
+         chBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=HXmfTzuGDcxSZRem1KTJTPVU/hP7EWsRKyXZZcwlY/4=;
+        b=ikzjyNFYyZM1QzRCPM48A25e8zSfOMOPs3rD+s0Cm/nNk03eUipIr3Fs/nzEBDe1PN
+         NPaRNGT8jGZo5adQG7cmIOKNRT2WdBCGtLAph43UGgRFGoLnaPl3JFdpdthU7CAF0J/G
+         G4TyickdvErxwXSVRse9YGRyMcTirUZJqZUldBZkpUgjK4m6u/UqWHvicqtoMcB6HaMz
+         a/uYnaTks/1vgiA/PVS/wMuhGXRKOq93WI+2i0EjoDQDUwKnW1yFtKZ5HX4UfXx9BRxA
+         ic/CciaU697UAg4HEcieZLFIJ3EAh+lJrfQpn2CVLpTA8Uijl/bOUV4rbI0MGv6qKLsN
+         i0+A==
+X-Gm-Message-State: APjAAAUd/rtOC1HdW++Ln2zWfdhYu/cC0gNq32wvgy/r6r3lpt+w1s8G
+        kJnuEh+CMuEJYkh99aWUMLSIAMfD
+X-Google-Smtp-Source: APXvYqz2iJsJnQrrrc5I7VIhcBkSwCtIprc8UJYYwgK4eR0nYpbid9a12IudsBFcCORclP5qDS5GPw==
+X-Received: by 2002:a1c:ed0d:: with SMTP id l13mr822317wmh.76.1571182868686;
+        Tue, 15 Oct 2019 16:41:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q15sm45448262wrg.65.2019.10.15.16.41.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Oct 2019 16:41:08 -0700 (PDT)
+Message-Id: <ecfcfbfd5cfc54a7c005dadc9eb2b82a036c31b5.1571182864.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
+References: <pull.383.git.gitgitgadget@gmail.com>
+        <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
+From:   "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 15 Oct 2019 23:40:54 +0000
+Subject: [PATCH v2 03/13] graph: reuse `find_new_column_by_commit()`
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <6797ef7d-5444-4c77-59e6-1d78fd3ccb0c@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-OutGoing-Spam-Status: No, score=-1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        James Coglan <jcoglan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11.10.19 16:43, Daniel Lezcano wrote:
-> 
-> Hi all,
-> 
-> Is there a way to specify a line to be added in the change-log after the
-> SOB with git-am ?
-> 
-> I would like to do something:
-> 
-> git am -s -l "Link: https://lore.kernel.org/r/<msgid>"
-> 
-> Which will give:
-> 
-> blabla
-> 
-> Signed-off-by: author@kairnail.org
-> Signed-off-by: commiter@kairnail.org
-> Link: https://lore.kernel.org/r/<msgid>
-> 
-> This way it is compatible with patchwork, git-pw, etc...
+From: James Coglan <jcoglan@gmail.com>
 
-I think something like
+I will shortly be making some changes to
+`graph_insert_into_new_columns()` and so am trying to simplify it. One
+possible simplification is that we can extract the loop for finding the
+element in `new_columns` containing the given commit.
 
-    git interpret-trailer --trailer Link:https://lore.kernel.irg/r/msgid
-<patch | git am -
+`find_new_column_by_commit()` contains a very similar loop but it
+returns a `struct column *` rather than an `int` offset into the array.
+Here I'm introducing a version that returns `int` and using that in
+`graph_insert_into_new_columns()` and `graph_output_post_merge_line()`.
 
-should work.
+Signed-off-by: James Coglan <jcoglan@gmail.com>
+---
+ graph.c | 48 +++++++++++++++++++++++-------------------------
+ 1 file changed, 23 insertions(+), 25 deletions(-)
 
+diff --git a/graph.c b/graph.c
+index 4c68557b17..c9646d9e00 100644
+--- a/graph.c
++++ b/graph.c
+@@ -460,22 +460,31 @@ static unsigned short graph_find_commit_color(const struct git_graph *graph,
+ 	return graph_get_current_column_color(graph);
+ }
+ 
++static int graph_find_new_column_by_commit(struct git_graph *graph,
++					   struct commit *commit)
++{
++	int i;
++	for (i = 0; i < graph->num_new_columns; i++) {
++		if (graph->new_columns[i].commit == commit)
++			return i;
++	}
++	return -1;
++}
++
+ static void graph_insert_into_new_columns(struct git_graph *graph,
+ 					  struct commit *commit,
+ 					  int *mapping_index)
+ {
+-	int i;
++	int i = graph_find_new_column_by_commit(graph, commit);
+ 
+ 	/*
+ 	 * If the commit is already in the new_columns list, we don't need to
+ 	 * add it.  Just update the mapping correctly.
+ 	 */
+-	for (i = 0; i < graph->num_new_columns; i++) {
+-		if (graph->new_columns[i].commit == commit) {
+-			graph->mapping[*mapping_index] = i;
+-			*mapping_index += 2;
+-			return;
+-		}
++	if (i >= 0) {
++		graph->mapping[*mapping_index] = i;
++		*mapping_index += 2;
++		return;
+ 	}
+ 
+ 	/*
+@@ -963,17 +972,6 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
+ 		graph_update_state(graph, GRAPH_COLLAPSING);
+ }
+ 
+-static struct column *find_new_column_by_commit(struct git_graph *graph,
+-						struct commit *commit)
+-{
+-	int i;
+-	for (i = 0; i < graph->num_new_columns; i++) {
+-		if (graph->new_columns[i].commit == commit)
+-			return &graph->new_columns[i];
+-	}
+-	return NULL;
+-}
+-
+ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_line *line)
+ {
+ 	int seen_this = 0;
+@@ -1001,20 +999,20 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
+ 			 * edges.
+ 			 */
+ 			struct commit_list *parents = NULL;
+-			struct column *par_column;
++			int par_column;
+ 			seen_this = 1;
+ 			parents = first_interesting_parent(graph);
+ 			assert(parents);
+-			par_column = find_new_column_by_commit(graph, parents->item);
+-			assert(par_column);
++			par_column = graph_find_new_column_by_commit(graph, parents->item);
++			assert(par_column >= 0);
+ 
+-			graph_line_write_column(line, par_column, '|');
++			graph_line_write_column(line, &graph->new_columns[par_column], '|');
+ 			for (j = 0; j < graph->num_parents - 1; j++) {
+ 				parents = next_interesting_parent(graph, parents);
+ 				assert(parents);
+-				par_column = find_new_column_by_commit(graph, parents->item);
+-				assert(par_column);
+-				graph_line_write_column(line, par_column, '\\');
++				par_column = graph_find_new_column_by_commit(graph, parents->item);
++				assert(par_column >= 0);
++				graph_line_write_column(line, &graph->new_columns[par_column], '\\');
+ 				graph_line_addch(line, ' ');
+ 			}
+ 		} else if (seen_this) {
+-- 
+gitgitgadget
 
-Cheers,
-Beat
