@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1A631F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 13:56:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 603141F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 13:56:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732327AbfJON42 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 09:56:28 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36040 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732027AbfJON4V (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 09:56:21 -0400
-Received: by mail-wr1-f68.google.com with SMTP id y19so24019122wrd.3
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 06:56:20 -0700 (PDT)
+        id S1732332AbfJON4b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 09:56:31 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:46779 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729525AbfJON4U (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 09:56:20 -0400
+Received: by mail-wr1-f67.google.com with SMTP id o18so23949048wrv.13
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 06:56:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RpAQ8CkiTeX0a4BxWyRnHmJk9+q6ciw0GxRYhB2+/Wg=;
-        b=mx1r4eYWRZ5l/lJ4Tq6rxjLaH00jJsGtsOzjY9bi/yE8wBHU97zQE4T7R8BG4JAsKm
-         4KiEKp7Lj0dq/BEBPu7b9F15IyYYM19CXIs74wNEk/76bQwVfG6AZbTg232xfBeXBYXe
-         LmD67BEuytlaoK0gmF5oGNE+SvM+cPTw4AwMK+BjNC5gCHt21c1StIoyVAxvky7fqh+5
-         sjSIgtibUZPUDWW5a/JlOQB4MzN7w1xJ20xG6hQdJ4h3WiAx/CNdMNx6N7GShX432ut6
-         nk6iqc6dVGr5VaVEOOBgvcEkULBBB4MYVxZS5xqyveVu/zeVW1WQeueXchb5QwBfl42v
-         LWow==
+        bh=T4b8TadolwlSOZvHpfmF35nObWmTrbh1mpJa/MQa9ds=;
+        b=CaHln6eA6MhA1xdGU5Rsoh/8GExn9+7TPiUuJnhbCd/AMPTHIEnT1TF7tfgIJUGDNx
+         0fqY3XBOxwQ0rGW18LfnvguK82wmmEnx5ZILRsvi/XcjRu0Zjnl1UU0j27nIyGHjOyiX
+         hEBRMZo/CF9hSUA7tyHnhnhrFGBd8FSvpyhsDLX0NzAjYwh9b/DkOo2yPVkvHOpsBDEo
+         BF/ap7UJFLWBHaCzjgxNAoi3Ufd38Negt6BcZmU+Dx0b2g8V0etQ51mWU7cEVIfJAJja
+         gun0+0VK8wmqbwv8h/hmyhgPgrV391oultawJ0xu2/493uzaKDzffI5OWZuu22ycnNI1
+         QaOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RpAQ8CkiTeX0a4BxWyRnHmJk9+q6ciw0GxRYhB2+/Wg=;
-        b=YxgXLFNUoYsH3jL8AV5X96T/e6qf34MzpXhkA2ATtvvyYVFdp/IIFmxTOj73fA4/ND
-         cg2KhlC1c2FseW5zrDHSMI+QIy7raTrNPTVormUfFmHuDp+iHuTf1a5UFod3RovkL2nk
-         CzLiTd1FVR+PCKCdUn7FjUsZiBva/bNqdk6h4PriZrvdcKM/rQhz9C5gZcYRoe9PmqjK
-         nDrbWCiJiqKvah7AwhSH+MadWCEJ6YtpzNLlEyzDHjlIYN1VVQtnB9vbsQaTYjw2sTq5
-         AVNBakeY76UZAjkWOzgjCyuWXhXkqVny30Sc7HexCe0kzX4S7sXumxzQyIh2Ke7LX+4K
-         X8VA==
-X-Gm-Message-State: APjAAAXjaweLNW14ArMY2vJo3jdhCdq2TtiaOMUOuIrJ0nqFQEy1tbPP
-        6HLftNVfE4vbTo6ha5pQin9oQeft
-X-Google-Smtp-Source: APXvYqwOf5epbDsLYAokaXa7bQ2cgcXU7H3qMThGy7XYmVK0VeGGU5DYAcyzm/dU7Q95WiR9zKS10g==
-X-Received: by 2002:adf:bd8f:: with SMTP id l15mr30265109wrh.362.1571147779509;
-        Tue, 15 Oct 2019 06:56:19 -0700 (PDT)
+        bh=T4b8TadolwlSOZvHpfmF35nObWmTrbh1mpJa/MQa9ds=;
+        b=pK2m44fg6AOGa5UCZiVo/ZWgiTa30U9/EDBecgkhg/3OEl8VdDRgDKz17B0B0cqyIZ
+         hinXVfacmYs8BZUhxgjG8xMrZXCFLAXwwq5AJ1Ug5JpTqBwTCfOHxqS3kVPHLS9gUWe1
+         QGlZLPpEosZ8aHeN5/8+YzuP674JLf/r4urmi0UgtB4v5J21aYfamt+OUD/GzfJLcILu
+         jl4HUspEH91b98Pf07jmGRMDoo9FhToGVNznzUtCt8l9Yz/55kWN1WKfdqhC6n4Tmg1K
+         Eivf5PtWKONQd/zrCxGcIStWGgm8zrgObw8TDl9T1s9HYflMPk70eSV/RlwTUaeoYVSC
+         ggng==
+X-Gm-Message-State: APjAAAX3Uf9WlvSfXilgQjsgCKkSfW6YhFCO2bi5gOCzGCo65u4iEk9P
+        toRGQFcJH/6+jkWAR/Gl1gPunpqK
+X-Google-Smtp-Source: APXvYqzupRXC9XIPpldmmpgchSYtcODP4QcBTdbyylqZiLbttBeJVpnPirBvqsSy3dTtCocz1ksQbA==
+X-Received: by 2002:adf:e40c:: with SMTP id g12mr32274604wrm.216.1571147777713;
+        Tue, 15 Oct 2019 06:56:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h14sm31088077wro.44.2019.10.15.06.56.18
+        by smtp.gmail.com with ESMTPSA id r13sm32358115wrn.0.2019.10.15.06.56.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Oct 2019 06:56:18 -0700 (PDT)
-Message-Id: <44c30780290e31103d333b914b33882fc01b70ad.1571147765.git.gitgitgadget@gmail.com>
+        Tue, 15 Oct 2019 06:56:17 -0700 (PDT)
+Message-Id: <034fbd31bdd614af4e1d98365079be5c44c4c8d7.1571147765.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
 References: <pull.316.v3.git.gitgitgadget@gmail.com>
         <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Oct 2019 13:56:01 +0000
-Subject: [PATCH v4 14/17] sparse-checkout: sanitize for nested folders
+Date:   Tue, 15 Oct 2019 13:55:59 +0000
+Subject: [PATCH v4 12/17] unpack-trees: add progress to clear_ce_flags()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,95 +72,206 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-If a user provides folders A/ and A/B/ for inclusion in a cone-mode
-sparse-checkout file, the parsing logic will notice that A/ appears
-both as a "parent" type pattern and as a "recursive" type pattern.
-This is unexpected and hence will complain via a warning and revert
-to the old logic for checking sparse-checkout patterns.
+When a large repository has many sparse-checkout patterns, the
+process for updating the skip-worktree bits can take long enough
+that a user gets confused why nothing is happening. Update the
+clear_ce_flags() method to write progress.
 
-Prevent this from happening accidentally by sanitizing the folders
-for this type of inclusion in the 'git sparse-checkout' builtin.
-This happens in two ways:
-
-1. Do not include any parent patterns that also appear as recursive
-   patterns.
-
-2. Do not include any recursive patterns deeper than other recursive
-   patterns.
-
-In order to minimize duplicate code for scanning parents, create
-hashmap_contains_parent() method. It takes a strbuf buffer to
-avoid reallocating a buffer when calling in a tight loop.
-
-Helped-by: Eric Wong <e@80x24.org>
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/sparse-checkout.c          | 22 ++++++++++++++++++----
- t/t1091-sparse-checkout-builtin.sh | 11 +++++++++++
- 2 files changed, 29 insertions(+), 4 deletions(-)
+ cache.h        |  2 ++
+ unpack-trees.c | 56 ++++++++++++++++++++++++++++++++++++--------------
+ 2 files changed, 43 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 95d9a90b84..40b6c599dc 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -212,9 +212,17 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
- 	struct pattern_entry *pe;
- 	struct hashmap_iter iter;
- 	struct string_list sl = STRING_LIST_INIT_DUP;
-+	struct strbuf parent_pattern = STRBUF_INIT;
+diff --git a/cache.h b/cache.h
+index 4980ee198e..d3c89e7a53 100644
+--- a/cache.h
++++ b/cache.h
+@@ -304,6 +304,7 @@ static inline unsigned int canon_mode(unsigned int mode)
  
--	hashmap_for_each_entry(&pl->parent_hashmap, &iter, pe, ent)
--		string_list_insert(&sl, pe->pattern);
-+	hashmap_for_each_entry(&pl->parent_hashmap, &iter, pe, ent) {
-+		if (hashmap_get_entry(&pl->recursive_hashmap, pe, ent, NULL))
-+			continue;
+ struct split_index;
+ struct untracked_cache;
++struct progress;
+ 
+ struct index_state {
+ 	struct cache_entry **cache;
+@@ -326,6 +327,7 @@ struct index_state {
+ 	uint64_t fsmonitor_last_update;
+ 	struct ewah_bitmap *fsmonitor_dirty;
+ 	struct mem_pool *ce_mem_pool;
++	struct progress *progress;
+ };
+ 
+ /* Name hashing */
+diff --git a/unpack-trees.c b/unpack-trees.c
+index c0dca20865..8bb684ad62 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1269,7 +1269,8 @@ static int clear_ce_flags_1(struct index_state *istate,
+ 			    struct strbuf *prefix,
+ 			    int select_mask, int clear_mask,
+ 			    struct pattern_list *pl,
+-			    enum pattern_match_result default_match);
++			    enum pattern_match_result default_match,
++			    int progress_nr);
+ 
+ /* Whole directory matching */
+ static int clear_ce_flags_dir(struct index_state *istate,
+@@ -1278,7 +1279,8 @@ static int clear_ce_flags_dir(struct index_state *istate,
+ 			      char *basename,
+ 			      int select_mask, int clear_mask,
+ 			      struct pattern_list *pl,
+-			      enum pattern_match_result default_match)
++			      enum pattern_match_result default_match,
++			      int progress_nr)
+ {
+ 	struct cache_entry **cache_end;
+ 	int dtype = DT_DIR;
+@@ -1315,7 +1317,8 @@ static int clear_ce_flags_dir(struct index_state *istate,
+ 		rc = clear_ce_flags_1(istate, cache, cache_end - cache,
+ 				      prefix,
+ 				      select_mask, clear_mask,
+-				      pl, ret);
++				      pl, ret,
++				      progress_nr);
+ 	}
+ 
+ 	strbuf_setlen(prefix, prefix->len - 1);
+@@ -1342,7 +1345,8 @@ static int clear_ce_flags_1(struct index_state *istate,
+ 			    struct strbuf *prefix,
+ 			    int select_mask, int clear_mask,
+ 			    struct pattern_list *pl,
+-			    enum pattern_match_result default_match)
++			    enum pattern_match_result default_match,
++			    int progress_nr)
+ {
+ 	struct cache_entry **cache_end = cache + nr;
+ 
+@@ -1356,8 +1360,11 @@ static int clear_ce_flags_1(struct index_state *istate,
+ 		int len, dtype;
+ 		enum pattern_match_result ret;
+ 
++		display_progress(istate->progress, progress_nr);
 +
-+		if (!hashmap_contains_parent(&pl->recursive_hashmap,
-+					     pe->pattern,
-+					     &parent_pattern))
-+			string_list_insert(&sl, pe->pattern);
-+	}
+ 		if (select_mask && !(ce->ce_flags & select_mask)) {
+ 			cache++;
++			progress_nr++;
+ 			continue;
+ 		}
  
- 	string_list_sort(&sl);
- 	string_list_remove_duplicates(&sl, 0);
-@@ -230,8 +238,14 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
+@@ -1378,20 +1385,26 @@ static int clear_ce_flags_1(struct index_state *istate,
+ 						       prefix,
+ 						       prefix->buf + prefix->len - len,
+ 						       select_mask, clear_mask,
+-						       pl, default_match);
++						       pl, default_match,
++						       progress_nr);
  
- 	string_list_clear(&sl, 0);
+ 			/* clear_c_f_dir eats a whole dir already? */
+ 			if (processed) {
+ 				cache += processed;
++				progress_nr += processed;
+ 				strbuf_setlen(prefix, prefix->len - len);
+ 				continue;
+ 			}
  
--	hashmap_for_each_entry(&pl->recursive_hashmap, &iter, pe, ent)
--		string_list_insert(&sl, pe->pattern);
-+	hashmap_for_each_entry(&pl->recursive_hashmap, &iter, pe, ent) {
-+		if (!hashmap_contains_parent(&pl->recursive_hashmap,
-+					     pe->pattern,
-+					     &parent_pattern))
-+			string_list_insert(&sl, pe->pattern);
-+	}
+ 			strbuf_addch(prefix, '/');
+-			cache += clear_ce_flags_1(istate, cache, cache_end - cache,
+-						  prefix,
+-						  select_mask, clear_mask, pl,
+-						  default_match);
++			processed = clear_ce_flags_1(istate, cache, cache_end - cache,
++						     prefix,
++						     select_mask, clear_mask, pl,
++						     default_match, progress_nr);
 +
-+	strbuf_release(&parent_pattern);
- 
- 	string_list_sort(&sl);
- 	string_list_remove_duplicates(&sl, 0);
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 3a4c0e6f5d..e752f3ba0f 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -236,4 +236,15 @@ test_expect_success 'cone mode: init and set' '
- 	test_cmp expect dir
- '
- 
-+test_expect_success 'cone mode: set with nested folders' '
-+	git -C repo sparse-checkout set deep deep/deeper1/deepest 2>err &&
-+	test_line_count = 0 err &&
-+	cat >expect <<-EOF &&
-+		/*
-+		!/*/
-+		/deep/
-+	EOF
-+	test_cmp repo/.git/info/sparse-checkout expect
-+'
++			cache += processed;
++			progress_nr += processed;
 +
- test_done
+ 			strbuf_setlen(prefix, prefix->len - len - 1);
+ 			continue;
+ 		}
+@@ -1406,19 +1419,27 @@ static int clear_ce_flags_1(struct index_state *istate,
+ 		if (ret == MATCHED)
+ 			ce->ce_flags &= ~clear_mask;
+ 		cache++;
++		progress_nr++;
+ 	}
++
++	display_progress(istate->progress, progress_nr);
+ 	return nr - (cache_end - cache);
+ }
+ 
+ static int clear_ce_flags(struct index_state *istate,
+ 			  int select_mask, int clear_mask,
+-			  struct pattern_list *pl)
++			  struct pattern_list *pl,
++			  int show_progress)
+ {
+ 	static struct strbuf prefix = STRBUF_INIT;
+ 	char label[100];
+ 	int rval;
+ 
+ 	strbuf_reset(&prefix);
++	if (show_progress)
++		istate->progress = start_delayed_progress(
++					_("Updating index flags"),
++					istate->cache_nr);
+ 
+ 	xsnprintf(label, sizeof(label), "clear_ce_flags(0x%08lx,0x%08lx)",
+ 		  (unsigned long)select_mask, (unsigned long)clear_mask);
+@@ -1428,9 +1449,10 @@ static int clear_ce_flags(struct index_state *istate,
+ 				istate->cache_nr,
+ 				&prefix,
+ 				select_mask, clear_mask,
+-				pl, 0);
++				pl, 0, 0);
+ 	trace2_region_leave("unpack_trees", label, the_repository);
+ 
++	stop_progress(&istate->progress);
+ 	return rval;
+ }
+ 
+@@ -1439,7 +1461,8 @@ static int clear_ce_flags(struct index_state *istate,
+  */
+ static void mark_new_skip_worktree(struct pattern_list *pl,
+ 				   struct index_state *istate,
+-				   int select_flag, int skip_wt_flag)
++				   int select_flag, int skip_wt_flag,
++				   int show_progress)
+ {
+ 	int i;
+ 
+@@ -1463,7 +1486,7 @@ static void mark_new_skip_worktree(struct pattern_list *pl,
+ 	 * 2. Widen worktree according to sparse-checkout file.
+ 	 * Matched entries will have skip_wt_flag cleared (i.e. "in")
+ 	 */
+-	clear_ce_flags(istate, select_flag, skip_wt_flag, pl);
++	clear_ce_flags(istate, select_flag, skip_wt_flag, pl, show_progress);
+ }
+ 
+ static int verify_absent(const struct cache_entry *,
+@@ -1525,7 +1548,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	 * Sparse checkout loop #1: set NEW_SKIP_WORKTREE on existing entries
+ 	 */
+ 	if (!o->skip_sparse_checkout)
+-		mark_new_skip_worktree(o->pl, o->src_index, 0, CE_NEW_SKIP_WORKTREE);
++		mark_new_skip_worktree(o->pl, o->src_index, 0,
++				       CE_NEW_SKIP_WORKTREE, o->verbose_update);
+ 
+ 	if (!dfc)
+ 		dfc = xcalloc(1, cache_entry_size(0));
+@@ -1590,7 +1614,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		 * If the will have NEW_SKIP_WORKTREE, also set CE_SKIP_WORKTREE
+ 		 * so apply_sparse_checkout() won't attempt to remove it from worktree
+ 		 */
+-		mark_new_skip_worktree(o->pl, &o->result, CE_ADDED, CE_SKIP_WORKTREE | CE_NEW_SKIP_WORKTREE);
++		mark_new_skip_worktree(o->pl, &o->result,
++				       CE_ADDED, CE_SKIP_WORKTREE | CE_NEW_SKIP_WORKTREE,
++				       o->verbose_update);
+ 
+ 		ret = 0;
+ 		for (i = 0; i < o->result.cache_nr; i++) {
 -- 
 gitgitgadget
 
