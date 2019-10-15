@@ -8,293 +8,307 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3C411F4C0
-	for <e@80x24.org>; Tue, 15 Oct 2019 10:25:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1D371F4C0
+	for <e@80x24.org>; Tue, 15 Oct 2019 10:25:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730547AbfJOKZl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 06:25:41 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46015 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730514AbfJOKZj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 06:25:39 -0400
-Received: by mail-wr1-f65.google.com with SMTP id r5so23107658wrm.12
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 03:25:37 -0700 (PDT)
+        id S1728405AbfJOKZn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Oct 2019 06:25:43 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37218 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728427AbfJOKZh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Oct 2019 06:25:37 -0400
+Received: by mail-wr1-f68.google.com with SMTP id p14so23149934wro.4
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 03:25:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qBZ/KlGOBA15srT14zFmcGz1oDS00rztj8OBfm6oPQg=;
-        b=qWNcd41AoRZCAuLEvQTm4t/JcXwULqtkxsy+o133tSC8ON9WEGbPjSBqTAoylFBPtw
-         1nmngvZvNIiIN8xypkEKMEmM9rIvIRw1fb+0/pTuhugbxYPSl7vhbIQkOacgwrgpgXlA
-         oz2zefZWrzwU9DYl4gB4ZJRwJjLRAGYhkrLNz6iRyOM01tA2Qq9hvycTmPpsyLPguZow
-         t8+GdYgsAPtvZxbPVEVsP0ktDJ10tN9/iXI84IuUKsml0BrpUxMlxeZad4PNJQQKX1aQ
-         HZQV7PXKLrFfuKsKMfvbmq7+59t17ohpj/71sRmv4kYrIylCdJ+xsKsuLAozlRva/pQf
-         POPQ==
+        bh=ZAczrY0RMfLqoAl0e/TLHcwhEDTh3E4CS7ZZCKRgsFs=;
+        b=fba0TllWC7oY3spHRALowgLtF1WQRQDWRy5TZOxMuRHvrpx5Ento0G/SmrxjUlUDyM
+         AgD+jVoTpAc4b+M/B9Tc/TfNeVnVLswUdCjJ/ISxMmngkhaIAOUPHBYhkvSNM+Wnf3VY
+         SCskFIiSWGjvxMlk9/Wn3F6+JQUkiqXW7gXAIgJN1DGiVRkx4EPE/d4orDpZmifvhESi
+         MfWvS7trEW1S4lj26YHU1KhOHFmMKJIItYu1bEZP0IhUWco7skjjkObFlAx6sYh8/g+s
+         Uv1RPNA4tOlwOAAHE6BzuKjU+VwlycXSzVj8WZYipG6KcLh7dn/dM5ia2+JMh34x3407
+         GAdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qBZ/KlGOBA15srT14zFmcGz1oDS00rztj8OBfm6oPQg=;
-        b=sv79qsl8fpah+EfX8xFjGzgwAwB6UtT/bFLbHpxSKbIVvem/c5heWNihEY7rUXdRbj
-         vm1ggwAdJ1iFi4c5xxpSC8mBZxZ29GOGzmP31/84emPV3iOaD+x7U6HUnuhB88tdnFYV
-         RoL6jRdpMym7X14Lj0FyCVYaEW6Piq5TBzf0mAhTEGVGAAcanZiwsV7837CQmI0tHklA
-         k8JkdqcHxv0W/hfJDR7hw8ggjcLmQCcXknW3A8n8BLPQVxBIGfMV0PYTPEQLgUB7j5EX
-         /ctBulKN5Or8N4tsrnB2B/pTMm+56NDJ5JXJGVLNJ8Mw/8BaY96414hNrTHNTwz7nVdh
-         gzwA==
-X-Gm-Message-State: APjAAAVYtMpH6o+vpHbL31gOqh8h4WmJhJKwuKyD/sA41jL6YJJ0gX1q
-        Yn8vXb+WN3MUzO139wv6ROQgwVYQ
-X-Google-Smtp-Source: APXvYqxWrx7shab3lvCqdEeKPuJkqwTN+jHFjLkfgOP5a2imWmlo3nCmiNu4Yg7t9AIRfgzbIsQA9g==
-X-Received: by 2002:adf:f188:: with SMTP id h8mr29622682wro.38.1571135136707;
-        Tue, 15 Oct 2019 03:25:36 -0700 (PDT)
+        bh=ZAczrY0RMfLqoAl0e/TLHcwhEDTh3E4CS7ZZCKRgsFs=;
+        b=guInR2/iZ+1Tu0C3304Ki4WKrDmejNfYG8gxSkgru5gKBiOgTUHY15ioEnGVX+81OT
+         sR8lUSHHWFaqC7lx73dXGVjuM6ftNlHn0+FtXrOAkmP9cPADHoqxJ9iBBb2oPo6AEu+7
+         hzmlwotz4riI/BEXoHmdpSVBBW8b/wujgcJEP2Zq2Iifp6Rp2GlUfzz205shJwdIBuOt
+         nZGtNWl6qw7ghnpifLV2fXUo7iUiYSbiTwnqwKFvFXChjwTeLk7lA/Utan+6HGRucsqg
+         ByQP7227vf+muGaApHkXTGjSlpcvoH9ZqwXUpEftc4rS+sWi9TUJqjw2iMZtgRSVACC5
+         U9zg==
+X-Gm-Message-State: APjAAAUP20+8VW3ZRhgbjEyTdv+vBJnKLSTmJadFFUjNOH5SxVjdZEs9
+        RKEPu5GGqBo6SorgsIjfcie0XGo5
+X-Google-Smtp-Source: APXvYqwbzl+kFPRJxBLaG3YBw1hQBNDTppQj8a7JIrKnEkt1DKz6++Ru874tMEsOxFM5n46pzpyRRA==
+X-Received: by 2002:a5d:630f:: with SMTP id i15mr7032791wru.226.1571135134540;
+        Tue, 15 Oct 2019 03:25:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r27sm59699223wrc.55.2019.10.15.03.25.36
+        by smtp.gmail.com with ESMTPSA id g3sm25684863wro.14.2019.10.15.03.25.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Oct 2019 03:25:36 -0700 (PDT)
-Message-Id: <09857dee784910b2123764be8cced9364dac4844.1571135132.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.388.v2.git.1571135132.gitgitgadget@gmail.com>
+        Tue, 15 Oct 2019 03:25:33 -0700 (PDT)
+Message-Id: <pull.388.v2.git.1571135132.gitgitgadget@gmail.com>
+In-Reply-To: <pull.388.git.gitgitgadget@gmail.com>
 References: <pull.388.git.gitgitgadget@gmail.com>
-        <pull.388.v2.git.1571135132.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Oct 2019 10:25:29 +0000
-Subject: [PATCH v2 3/6] t3404: remove uneeded calls to set_fake_editor
+Date:   Tue, 15 Oct 2019 10:25:26 +0000
+Subject: [PATCH v2 0/6] sequencer: start running post-commit hook again
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+When I converted the sequencer to avoid forking git commit i forgot about
+the post-commit hook. These patches are based on
+pw/rebase-i-show-HEAD-to-reword, otherwise the new test fails as that branch
+changes the number of commits we make.
 
-Some tests were calling set_fake_editor to ensure they had a sane no-op
-editor set. Now that all the editor setting is done in subshells these
-tests can rely on EDITOR=: and so do not need to call set_fake_editor.
+Thanks to Dscho & Junio for their comments on V1. I've made the following
+changes:
 
-Also add a test at the end to detect any future additions messing with
-the exported value of $EDITOR.
+Patches 1-3 These are new patches in response to Dscho's request to set
+$EDITOR in a subshell. There were ~80 other tests that weren't doing that
+and they are fixed in these patches. Patch 2 contains the main action,
+unfortunately due to a combination of having to remove the trailing ' &&'
+from the last line moved into the subshell and re-wrapping some lines due to
+the increased indentation --color-moved and --color-moved-ws are of limited
+use when viewing this patch.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- t/lib-rebase.sh               | 28 ++++++++++++++++++++++++++++
- t/t3404-rebase-interactive.sh | 25 +++++--------------------
- 2 files changed, 33 insertions(+), 20 deletions(-)
+Patch 4 (was 1) Unchanged
 
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index 7ea30e5006..e4554db85e 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -118,3 +118,31 @@ make_empty () {
- 	git commit --allow-empty -m "$1" &&
- 	git tag "$1"
- }
-+
-+# Call this (inside test_expect_success) at the end of a test file to
-+# check that no tests have changed editor related environment
-+# variables or config settings
-+test_editor_unchanged () {
-+	# We're only interested in exported variables hence 'sh -c'
-+	sh -c 'cat >actual <<-EOF
-+	EDITOR=$EDITOR
-+	FAKE_COMMIT_AMEND=$FAKE_COMMIT_AMEND
-+	FAKE_COMMIT_MESSAGE=$FAKE_COMMIT_MESSAGE
-+	FAKE_LINES=$FAKE_LINES
-+	GIT_EDITOR=$GIT_EDITOR
-+	GIT_SEQUENCE_EDITOR=$GIT_SEQUENCE_EDITOR
-+	core.editor=$(git config core.editor)
-+	sequence.editor=$(git config sequence.editor)
-+	EOF'
-+	cat >expect <<-\EOF
-+	EDITOR=:
-+	FAKE_COMMIT_AMEND=
-+	FAKE_COMMIT_MESSAGE=
-+	FAKE_LINES=
-+	GIT_EDITOR=
-+	GIT_SEQUENCE_EDITOR=
-+	core.editor=
-+	sequence.editor=
-+	EOF
-+	test_cmp expect actual
-+}
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index cb9b210000..c5d0326825 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -189,7 +189,6 @@ test_expect_success 'implicit interactive rebase does not invoke sequence editor
- 
- test_expect_success 'no changes are a nop' '
- 	git checkout branch2 &&
--	set_fake_editor &&
- 	git rebase -i F &&
- 	test "$(git symbolic-ref -q HEAD)" = "refs/heads/branch2" &&
- 	test $(git rev-parse I) = $(git rev-parse HEAD)
-@@ -199,7 +198,6 @@ test_expect_success 'test the [branch] option' '
- 	git checkout -b dead-end &&
- 	git rm file6 &&
- 	git commit -m "stop here" &&
--	set_fake_editor &&
- 	git rebase -i F branch2 &&
- 	test "$(git symbolic-ref -q HEAD)" = "refs/heads/branch2" &&
- 	test $(git rev-parse I) = $(git rev-parse branch2) &&
-@@ -208,7 +206,6 @@ test_expect_success 'test the [branch] option' '
- 
- test_expect_success 'test --onto <branch>' '
- 	git checkout -b test-onto branch2 &&
--	set_fake_editor &&
- 	git rebase -i --onto branch1 F &&
- 	test "$(git symbolic-ref -q HEAD)" = "refs/heads/test-onto" &&
- 	test $(git rev-parse HEAD^) = $(git rev-parse branch1) &&
-@@ -218,7 +215,6 @@ test_expect_success 'test --onto <branch>' '
- test_expect_success 'rebase on top of a non-conflicting commit' '
- 	git checkout branch1 &&
- 	git tag original-branch1 &&
--	set_fake_editor &&
- 	git rebase -i branch2 &&
- 	test file6 = $(git diff --name-only original-branch1) &&
- 	test "$(git symbolic-ref -q HEAD)" = "refs/heads/branch1" &&
-@@ -264,7 +260,6 @@ test_expect_success 'stop on conflicting pick' '
- 	>>>>>>> 5d18e54... G
- 	EOF
- 	git tag new-branch1 &&
--	set_fake_editor &&
- 	test_must_fail git rebase -i master &&
- 	test "$(git rev-parse HEAD~3)" = "$(git rev-parse master)" &&
- 	test_cmp expect .git/rebase-merge/patch &&
-@@ -293,7 +288,6 @@ test_expect_success 'abort' '
- test_expect_success 'abort with error when new base cannot be checked out' '
- 	git rm --cached file1 &&
- 	git commit -m "remove file in base" &&
--	set_fake_editor &&
- 	test_must_fail git rebase -i master > output 2>&1 &&
- 	test_i18ngrep "The following untracked working tree files would be overwritten by checkout:" \
- 		output &&
-@@ -308,7 +302,6 @@ test_expect_success 'retain authorship' '
- 	test_tick &&
- 	GIT_AUTHOR_NAME="Twerp Snog" git commit -m "different author" &&
- 	git tag twerp &&
--	set_fake_editor &&
- 	git rebase -i --onto master HEAD^ &&
- 	git show HEAD | grep "^Author: Twerp Snog"
- '
-@@ -326,7 +319,6 @@ test_expect_success 'retain authorship w/ conflicts' '
- 	test_commit b conflict b conflict-b &&
- 	GIT_AUTHOR_NAME=$oGIT_AUTHOR_NAME &&
- 
--	set_fake_editor &&
- 	test_must_fail git rebase -i conflict-a &&
- 	echo resolved >conflict &&
- 	git add conflict &&
-@@ -357,7 +349,6 @@ test_expect_success 'retain authorship when squashing' '
- 
- test_expect_success REBASE_P '-p handles "no changes" gracefully' '
- 	HEAD=$(git rev-parse HEAD) &&
--	set_fake_editor &&
- 	git rebase -i -p HEAD^ &&
- 	git update-index --refresh &&
- 	git diff-files --quiet &&
-@@ -404,7 +395,6 @@ test_expect_success REBASE_P 'preserve merges with -p' '
- 	git commit -m M file1 &&
- 	git checkout -b to-be-rebased &&
- 	test_tick &&
--	set_fake_editor &&
- 	git rebase -i -p --onto branch1 master &&
- 	git update-index --refresh &&
- 	git diff-files --quiet &&
-@@ -450,7 +440,6 @@ test_expect_success '--continue tries to commit' '
- test_expect_success 'verbose flag is heeded, even after --continue' '
- 	git reset --hard master@{1} &&
- 	test_tick &&
--	set_fake_editor &&
- 	test_must_fail git rebase -v -i --onto new-branch1 HEAD^ &&
- 	echo resolved > file1 &&
- 	git add file1 &&
-@@ -750,7 +739,6 @@ test_expect_success 'do "noop" when there is nothing to cherry-pick' '
- 	GIT_EDITOR=: git commit --amend \
- 		--author="Somebody else <somebody@else.com>" &&
- 	test $(git rev-parse branch3) != $(git rev-parse branch4) &&
--	set_fake_editor &&
- 	git rebase -i branch3 &&
- 	test $(git rev-parse branch3) = $(git rev-parse branch4)
- 
-@@ -775,7 +763,6 @@ test_expect_success 'submodule rebase setup' '
- 		git commit -a -m "submodule second"
- 	) &&
- 	test_tick &&
--	set_fake_editor &&
- 	git commit -a -m "Three changes submodule"
- '
- 
-@@ -800,7 +787,6 @@ test_expect_success 'submodule conflict setup' '
- '
- 
- test_expect_success 'rebase -i continue with only submodule staged' '
--	set_fake_editor &&
- 	test_must_fail git rebase -i submodule-base &&
- 	git add sub &&
- 	git rebase --continue &&
-@@ -810,7 +796,6 @@ test_expect_success 'rebase -i continue with only submodule staged' '
- test_expect_success 'rebase -i continue with unstaged submodule' '
- 	git checkout submodule-topic &&
- 	git reset --hard &&
--	set_fake_editor &&
- 	test_must_fail git rebase -i submodule-base &&
- 	git reset &&
- 	git rebase --continue &&
-@@ -823,7 +808,6 @@ test_expect_success 'avoid unnecessary reset' '
- 	test-tool chmtime =123456789 file3 &&
- 	git update-index --refresh &&
- 	HEAD=$(git rev-parse HEAD) &&
--	set_fake_editor &&
- 	git rebase -i HEAD~4 &&
- 	test $HEAD = $(git rev-parse HEAD) &&
- 	MTIME=$(test-tool chmtime --get file3) &&
-@@ -858,7 +842,6 @@ test_expect_success 'rebase -i can copy notes' '
- 	test_commit n2 &&
- 	test_commit n3 &&
- 	git notes add -m"a note" n3 &&
--	set_fake_editor &&
- 	git rebase -i --onto n1 n2 &&
- 	test "a note" = "$(git notes show HEAD)"
- '
-@@ -896,7 +879,6 @@ test_tick # Ensure that the rebased commits get a different timestamp.
- test_expect_success 'always cherry-pick with --no-ff' '
- 	git checkout no-ff-branch &&
- 	git tag original-no-ff-branch &&
--	set_fake_editor &&
- 	git rebase -i --no-ff A &&
- 	for p in 0 1 2
- 	do
-@@ -1044,7 +1026,6 @@ test_expect_success 'rebase --exec works without -i ' '
- 
- test_expect_success 'rebase -i --exec without <CMD>' '
- 	git reset --hard execute &&
--	set_fake_editor &&
- 	test_must_fail git rebase -i --exec 2>actual &&
- 	test_i18ngrep "requires a value" actual &&
- 	git checkout master
-@@ -1180,7 +1161,6 @@ test_expect_success 'rebase --edit-todo can be used to modify todo' '
- test_expect_success 'rebase -i produces readable reflog' '
- 	git reset --hard &&
- 	git branch -f branch-reflog-test H &&
--	set_fake_editor &&
- 	git rebase -i --onto I F branch-reflog-test &&
- 	cat >expect <<-\EOF &&
- 	rebase -i (finish): returning to refs/heads/branch-reflog-test
-@@ -1603,4 +1583,9 @@ test_expect_success 'valid author header when author contains single quote' '
- 	test_cmp expected actual
- '
- 
-+# This must be the last test in this file
-+test_expect_success '$EDITOR and friends are unchanged' '
-+	test_editor_unchanged
-+'
-+
- test_done
+Patch 5 (was 2) I've moved the function definition to commit.c rather than
+sequencer.c as suggested. I've also removed an unused struct argv_array from
+run_prepare_commit_msg_hook() (There wasn't a compiler warning as it was
+still calling argv_array_clear() at the end of the function) and reworded
+the commit message.
+
+Patch 6 (was 3) I've tided up the test and removed the wrapper function for
+running the post-commit hook as suggested.
+
+Phillip Wood (6):
+  t3404: remove unnecessary subshell
+  t3404: set $EDITOR in subshell
+  t3404: remove uneeded calls to set_fake_editor
+  sequencer.h fix placement of #endif
+  move run_commit_hook() to libgit and use it there
+  sequencer: run post-commit hook
+
+ builtin/commit.c              |  22 --
+ commit.c                      |  24 ++
+ sequencer.c                   |  24 +-
+ sequencer.h                   |   3 +-
+ t/lib-rebase.sh               |  28 ++
+ t/t3404-rebase-interactive.sh | 596 +++++++++++++++++++++-------------
+ 6 files changed, 432 insertions(+), 265 deletions(-)
+
+
+base-commit: b0a3186140dbc7bd64cbc6ef733386a0f1eb6a4d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-388%2Fphillipwood%2Fwip%2Frebase-commit-hooks-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-388/phillipwood/wip/rebase-commit-hooks-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/388
+
+Range-diff vs v1:
+
+ -:  ---------- > 1:  b9689e85e5 t3404: remove unnecessary subshell
+ -:  ---------- > 2:  96432cd0f0 t3404: set $EDITOR in subshell
+ -:  ---------- > 3:  09857dee78 t3404: remove uneeded calls to set_fake_editor
+ 1:  7305f8d8e8 = 4:  0eac3ede02 sequencer.h fix placement of #endif
+ 2:  420ecf442c ! 5:  f394a0e163 sequencer: use run_commit_hook()
+     @@ -1,9 +1,11 @@
+      Author: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+     -    sequencer: use run_commit_hook()
+     +    move run_commit_hook() to libgit and use it there
+      
+     -    This simplifies the implementation of run_prepare_commit_msg_hook() and
+     -    will be used in the next commit.
+     +    This function was declared in commit.h but was implemented in
+     +    builtin/commit.c so was not part of libgit. Move it to libgit so we can
+     +    use it in the sequencer. This simplifies the implementation of
+     +    run_prepare_commit_msg_hook() and will be used in the next commit.
+      
+          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+     @@ -40,25 +42,22 @@
+       {
+       	const char *argv_gc_auto[] = {"gc", "--auto", NULL};
+      
+     - diff --git a/commit.h b/commit.h
+     - --- a/commit.h
+     - +++ b/commit.h
+     + diff --git a/commit.c b/commit.c
+     + --- a/commit.c
+     + +++ b/commit.c
+      @@
+     - int compare_commits_by_commit_date(const void *a_, const void *b_, void *unused);
+     - int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused);
+     + #include "advice.h"
+     + #include "refs.h"
+     + #include "commit-reach.h"
+     ++#include "run-command.h"
+     + 
+     + static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
+       
+     --LAST_ARG_MUST_BE_NULL
+     --int run_commit_hook(int editor_is_used, const char *index_file, const char *name, ...);
+     --
+     - #endif /* COMMIT_H */
+     -
+     - diff --git a/sequencer.c b/sequencer.c
+     - --- a/sequencer.c
+     - +++ b/sequencer.c
+      @@
+     - 	run_rewrite_hook(&old_head->object.oid, new_head);
+     + 	}
+     + 	return boc ? len - boc : len - cutoff;
+       }
+     - 
+     ++
+      +int run_commit_hook(int editor_is_used, const char *index_file,
+      +		    const char *name, ...)
+      +{
+     @@ -81,12 +80,15 @@
+      +
+      +	return ret;
+      +}
+     -+
+     - static int run_prepare_commit_msg_hook(struct repository *r,
+     +
+     + diff --git a/sequencer.c b/sequencer.c
+     + --- a/sequencer.c
+     + +++ b/sequencer.c
+     +@@
+       				       struct strbuf *msg,
+       				       const char *commit)
+       {
+     - 	struct argv_array hook_env = ARGV_ARRAY_INIT;
+     +-	struct argv_array hook_env = ARGV_ARRAY_INIT;
+      -	int ret;
+      -	const char *name;
+      +	int ret = 0;
+     @@ -114,18 +116,7 @@
+      +	if (run_commit_hook(0, r->index_file, "prepare-commit-msg", name,
+      +			    arg1, arg2, NULL))
+       		ret = error(_("'prepare-commit-msg' hook failed"));
+     -+
+     - 	argv_array_clear(&hook_env);
+     +-	argv_array_clear(&hook_env);
+       
+       	return ret;
+     -
+     - diff --git a/sequencer.h b/sequencer.h
+     - --- a/sequencer.h
+     - +++ b/sequencer.h
+     -@@
+     - void sequencer_post_commit_cleanup(struct repository *r);
+     - int sequencer_get_last_command(struct repository* r,
+     - 			       enum replay_action *action);
+     -+LAST_ARG_MUST_BE_NULL
+     -+int run_commit_hook(int editor_is_used, const char *index_file, const char *name, ...);
+     - #endif /* SEQUENCER_H */
+     + }
+ 3:  acaa086a48 ! 6:  67a711754e sequencer: run post-commit hook
+     @@ -10,52 +10,18 @@
+      
+          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+     - diff --git a/builtin/commit.c b/builtin/commit.c
+     - --- a/builtin/commit.c
+     - +++ b/builtin/commit.c
+     -@@
+     - 
+     - 	repo_rerere(the_repository, 0);
+     - 	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+     --	run_commit_hook(use_editor, get_index_file(), "post-commit", NULL);
+     -+	run_post_commit_hook(use_editor, get_index_file());
+     - 	if (amend && !no_post_rewrite) {
+     - 		commit_post_rewrite(the_repository, current_head, &oid);
+     - 	}
+     -
+       diff --git a/sequencer.c b/sequencer.c
+       --- a/sequencer.c
+       +++ b/sequencer.c
+     -@@
+     - 	return ret;
+     - }
+     - 
+     -+void run_post_commit_hook(int editor_is_used, const char *index_file) {
+     -+	run_commit_hook(editor_is_used, index_file, "post-commit", NULL);
+     -+}
+     -+
+     - static const char implicit_ident_advice_noconfig[] =
+     - N_("Your name and email address were configured automatically based\n"
+     - "on your username and hostname. Please check that they are accurate.\n"
+      @@
+       		goto out;
+       	}
+       
+     -+	run_post_commit_hook(0, r->index_file);
+     ++	run_commit_hook(0, r->index_file, "post-commit", NULL);
+       	if (flags & AMEND_MSG)
+       		commit_post_rewrite(r, current_head, oid);
+       
+      
+     - diff --git a/sequencer.h b/sequencer.h
+     - --- a/sequencer.h
+     - +++ b/sequencer.h
+     -@@
+     - 			       enum replay_action *action);
+     - LAST_ARG_MUST_BE_NULL
+     - int run_commit_hook(int editor_is_used, const char *index_file, const char *name, ...);
+     -+void run_post_commit_hook(int editor_is_used, const char *index_file);
+     - #endif /* SEQUENCER_H */
+     -
+       diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+       --- a/t/t3404-rebase-interactive.sh
+       +++ b/t/t3404-rebase-interactive.sh
+     @@ -64,20 +30,24 @@
+       '
+       
+      +test_expect_success 'post-commit hook is called' '
+     -+	test_when_finished "rm -f .git/hooks/post-commit commits" &&
+     ++	test_when_finished "rm -f .git/hooks/post-commit" &&
+     ++	>actual &&
+      +	mkdir -p .git/hooks &&
+      +	write_script .git/hooks/post-commit <<-\EOS &&
+     -+	git rev-parse HEAD >>commits
+     ++	git rev-parse HEAD >>actual
+      +	EOS
+     -+	set_fake_editor &&
+     -+	FAKE_LINES="edit 4 1 reword 2 fixup 3" git rebase -i A E &&
+     -+	echo x>file3 &&
+     -+	git add file3 &&
+     -+	FAKE_COMMIT_MESSAGE=edited git rebase --continue &&
+     -+	# rev-list does not support -g --reverse
+     -+	git rev-list --no-walk=unsorted HEAD@{5} HEAD@{4} HEAD@{3} HEAD@{2} \
+     -+		HEAD@{1} HEAD >expected &&
+     -+	test_cmp expected commits
+     ++	(
+     ++		set_fake_editor &&
+     ++		FAKE_LINES="edit 4 1 reword 2 fixup 3" git rebase -i A E &&
+     ++		echo x>file3 &&
+     ++		git add file3 &&
+     ++		FAKE_COMMIT_MESSAGE=edited git rebase --continue
+     ++	) &&
+     ++	git rev-parse HEAD@{5} HEAD@{4} HEAD@{3} HEAD@{2} HEAD@{1} HEAD \
+     ++		>expect &&
+     ++	test_cmp expect actual
+      +'
+      +
+     - test_done
+     + # This must be the last test in this file
+     + test_expect_success '$EDITOR and friends are unchanged' '
+     + 	test_editor_unchanged
+
 -- 
 gitgitgadget
-
