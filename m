@@ -2,75 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEEE01F4C0
-	for <e@80x24.org>; Wed, 16 Oct 2019 05:11:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D17A11F4C0
+	for <e@80x24.org>; Wed, 16 Oct 2019 05:17:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732620AbfJPFLC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Oct 2019 01:11:02 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53055 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730411AbfJPFLC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Oct 2019 01:11:02 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 184097DF07;
-        Wed, 16 Oct 2019 01:11:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JsTfC69Ep2Sr9QX++Mlyu0gzcQE=; b=V6qo9T
-        CCUdLD/D3IgUAvvAk3HISOh9wBicDkvyy+ksZZyMoL2B2bpgZQKoP0ZbHFw/0p7D
-        VV47tbRZjBJ7+3otJtIo+Bx8kDORQFOepnulKza3WhiDDwgNktfX8GFojsXuqhdN
-        PWeewpGhg3dZ0AvsLXRepJgiSXDK1p67wv894=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vFzYsxpZpHGWE35a4arvOX/xc/UOfITl
-        7tt+owKcjQ5365tE6h+q9hAFAAPxoHnutWdz++W1cbYU83IB21xWsGS8XkG3Qn/7
-        gGYrIrb64Gn7c0QQ3o+E/PUx76co/rSc9wR7vCNg2bHgneFizSjoagllruIHZ1k7
-        nTfD/dSqlag=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 016977DF04;
-        Wed, 16 Oct 2019 01:11:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1C7657DF02;
-        Wed, 16 Oct 2019 01:10:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, James Coglan <jcoglan@gmail.com>
-Subject: Re: [PATCH v3 01/13] graph: automatically track display width of graph lines
-References: <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
-        <pull.383.v3.git.1571183279.gitgitgadget@gmail.com>
-        <722ab8973ace92aeef8669eced2919a144240cc0.1571183279.git.gitgitgadget@gmail.com>
-        <xmqq8spl9xcd.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 16 Oct 2019 14:10:56 +0900
-In-Reply-To: <xmqq8spl9xcd.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 16 Oct 2019 12:35:14 +0900")
-Message-ID: <xmqqo8yh8ecf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1731240AbfJPFRX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Oct 2019 01:17:23 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:45372 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727806AbfJPFRW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Oct 2019 01:17:22 -0400
+Received: by mail-pf1-f194.google.com with SMTP id y72so13912717pfb.12
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 22:17:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fxxjjZ32rB6eM/uCFN7WMmQ2zU+vDNho0T8P9PNqvVM=;
+        b=tpu8ewRBcfO0RZgvTOn6fvf28d1y1owFX5apwzxjaCne/WTZW5Us8dEmB6OV9itzl1
+         vS6ESuiY3fAmNXT/5H87fuuK9enLJqHYdavVR5vpuWkrd8OzRTFB6nG2zs5zNScAP867
+         4qETibBxOEtQqdEqT1uXQj97mbAbURZ3Ua6vr2a0e9hu+rxBdrImryxC3V8NLLTZFSma
+         phfJkkO6WCdoIRTQUr+3NVxUAGt51xPL5YmLap6Oq7wHznrECbywkBsAdVv1NxtSquyv
+         UQM2iJj1PMKERR3PIxl1EK2jOZ3e0RyCUSOsZjNG2qVkSZKcdHc/dcF+BdgwX9+4g+Br
+         3akg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fxxjjZ32rB6eM/uCFN7WMmQ2zU+vDNho0T8P9PNqvVM=;
+        b=tmdtjISUeE/fn5IURqxc1uuus7pj0HLj4xF+gdkXYi5bfg9uAiFTuADMasY3W3c4QB
+         cwVMFuhpUFapJNPdiVWsvBRjfYiPos09yDsgdzc7bMYgjS/19A0AfP50aH4EbP6NA563
+         vhdfjT8tyqUXVipYm83E/Vurbz5LJhCKsVaauHmnl6RRZQwVOR+fVv7LTzsVUIm6BueZ
+         mlPGCcZLlX3JsIijhnUbVTdO44w4PvvFsbuTiL9o87EWNEd3LPcUgepocxGGgn4mi4w6
+         abs6ef/dJI8J8janDmEwFiiHOG/wJzsBPBQp3P3v5o9E5binBZosqyOdqb4VnFaVk+J0
+         C67Q==
+X-Gm-Message-State: APjAAAWzzzWKH7U0cM9VLHD1aCg6wh091XupIzCno6xf95LlEmJcU3A0
+        7BlJgQ7LemcK9F8xmr/1kKo=
+X-Google-Smtp-Source: APXvYqxmAGZvxirvpMBSioGOBAnDunFLn2aBvyZKKf3T2nCYCyE5y05L1BKdQCTKIH2M0WVG0H2qPQ==
+X-Received: by 2002:a63:cf46:: with SMTP id b6mr42397886pgj.90.1571203041567;
+        Tue, 15 Oct 2019 22:17:21 -0700 (PDT)
+Received: from localhost ([2402:800:6375:2b61:f51c:7233:c8a4:1e74])
+        by smtp.gmail.com with ESMTPSA id f89sm1050288pje.20.2019.10.15.22.17.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Oct 2019 22:17:20 -0700 (PDT)
+Date:   Wed, 16 Oct 2019 12:17:18 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] notes: copy notes to HEAD by default
+Message-ID: <20191016051718.GA2034@danh.dev>
+References: <20191015163631.21808-1-congdanhqx@gmail.com>
+ <20191015163631.21808-2-congdanhqx@gmail.com>
+ <xmqqpnixa1oh.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 572EFAD0-EFD3-11E9-9E84-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqpnixa1oh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 2019-10-16 11:01:34 +0900, Junio C Hamano wrote:
+> Doan Tran Cong Danh <congdanhqx@gmail.com> writes:
+> 
+> > The target objects for copying notes was defaulted to HEAD from very
+> > early stage of git-notes.
+> >
+> > However, that default was limited by commit bbb1b8a35a, ("notes: check
+> > number of parameters to "git notes copy"", 2010-06-28).
+> 
+> Sorry, I don't quite get the above.  The said commit made sure 'git
+> notes copy' gets the right number of arguments, saying """Otherwise
+> we may segfault with too few parameters."""  I take that as a sign
+> that before that commit it was not defaulting to HEAD but attempting
+> to access the missing argv[2] (or whatever the index the <to-object>
+> should be at) and dereferencing a NULL?
+> 
+>     ... goes and digs ...
+> 
+> I think v1.6.6.1-458-g74884b524e is the commit that made the command
+> line parsing into the current shape, i.e. one parse_options() call
+> in each of the subcommand that gets dispatched, and you are right
+> that with that version a single argument given on the command line
+> is taken as the <from-object> and <to-object> defaults to HEAD.
+> 
+> So... what happend between that vesrion and v1.7.1-200-gbbb1b8a35a?
+> 
+>     ... goes and looks at bbb1b8a35a again ...
+> 
+> Ah, I think there is an off-by-one.  When not from-stdin and not
+> using rewrite-cmd, before that patch, we did not even check if
+> from-obj exists, so in that sense, the commit had a right idea that
+> it must check for "too few parameters", but it shouldn't have
+> insisted that we have at least two.  It is OK to have just one,
+> i.e. only the from-obj, for our purpose.
 
->>  int graph_next_line(struct git_graph *graph, struct strbuf *sb)
->
-> I just noticed it but does this have to be extern?  Nobody outside
-> graph.[ch] seems to have any reference to it.
+Yes, this is my intention.
 
-I was stupid; strike this part out.
+> > diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+> > index d3fa298c6a..a8f9a0f36c 100755
+> > --- a/t/t3301-notes.sh
+> > +++ b/t/t3301-notes.sh
+> > @@ -908,6 +908,10 @@ test_expect_success 'allow overwrite with "git notes copy -f"' '
+> >  	git notes copy -f HEAD~2 HEAD &&
+> >  	git log -1 >actual &&
+> >  	test_cmp expect actual &&
+> > +	test "$(git notes list HEAD)" = "$(git notes list HEAD~2)" &&
+> > +	git notes copy -f HEAD~2 &&
+> > +	git log -1 >actual &&
+> > +	test_cmp expect actual &&
+> >  	test "$(git notes list HEAD)" = "$(git notes list HEAD~2)"
+> >  '
+> 
+> This I am not sure is a good test to add to, especially as a fix to
 
-Thanks.
+I was writing this patch just before my bed time, just to get some
+comments on the directions, e.g:
+- loosen the argc requirements; or
+- do the code cleanup
 
+> bbb1b8a, which added this test:
+> 
+> diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+> index 64f32ad94d..2d67a40fc1 100755
+> --- a/t/t3301-notes.sh
+> +++ b/t/t3301-notes.sh
+> @@ -1044,4 +1044,10 @@ test_expect_success 'GIT_NOTES_REWRITE_REF overrides config' '
+>  	git log -1 > output &&
+>  	test_cmp expect output
+>  '
+> +
+> +test_expect_success 'git notes copy diagnoses too many or too few parameters' '
+> +	test_must_fail git notes copy &&
+> +	test_must_fail git notes copy one two three
+> +'
+> +
+>  test_done
+> 
+> The lack of testing that "git notes copy <from-obj>" succeeding is
+> why the off-by-one bug was not noticed, so I think that test (which
+> still exists to this day) is the right place to add a test to
+> protect this fix.
+
+I don't think this is a good place to add this test either,
+since the test description specificaly said it diagnoses too many or
+too few parameters.
+
+Anyway, the test `git notes copy one two three` still fails if we
+accidentally allow 3 arguments since one two three isn't valid ref.
+I'm gonna add a statement to assert the diagnose message.
+
+Since I don't want to update the commit id (e.g. 10th, 11th, etc..)
+of other test cases, I think it'd be better to modify the current test:
+
+- for the test case without '-f' flag, remove HEAD if it's the target,
+  and add a test-case to copy to somewhere else. Well, all of our current
+  test cases only test with HEAD as target-object.
+- for the test case with '-f' flag, I think I'll keep my current
+  approach.
+
+> 
+> As to the log message, here is how I would explain/justify the
+> change, if I were writing it.
+
+I'll update the commit message.
+
+-- 
+Danh
