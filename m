@@ -8,54 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 195421F4C0
-	for <e@80x24.org>; Wed, 16 Oct 2019 12:07:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CD2A1F4C0
+	for <e@80x24.org>; Wed, 16 Oct 2019 12:10:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389530AbfJPMHC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Oct 2019 08:07:02 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42378 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389066AbfJPMG7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Oct 2019 08:06:59 -0400
-Received: by mail-wr1-f65.google.com with SMTP id n14so27700304wrw.9
-        for <git@vger.kernel.org>; Wed, 16 Oct 2019 05:06:58 -0700 (PDT)
+        id S2392885AbfJPMK2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Oct 2019 08:10:28 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37616 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392879AbfJPMK2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Oct 2019 08:10:28 -0400
+Received: by mail-wr1-f68.google.com with SMTP id p14so27753238wro.4
+        for <git@vger.kernel.org>; Wed, 16 Oct 2019 05:10:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=Holr5Whn4FU3Ir4OeV6g9EcEnpLAUwMwoNU0V/n9YHo=;
-        b=VkFrBa27KNovmkgm6712X7FfwNoOImgrB3ytw+Zt7abtSa/UWjY+h0ZUJeI0oL5vAu
-         wPIFrIdhAo2+2zmyJOAYxG4nqMmaLeTUzcERmAdmWnzVEQD++1150vIPR8kY4et0B0ge
-         bYoncuAFfmkRpc3NqYCSCM3qTLp0d9E2+CfZf9liwMczz7AdsPu4gUv9FwhhmkqmU5RR
-         6dEa97AzjRUMcDWrbND0T0slXJIUl1uVEvbud1CSDBQfW3bz+CGScWmzddY1IqBOt0wh
-         oj303qWsBh14+FWZ/613JBbRPs6tEfwOoqZO/Q+I+MYS/C5hN5L7vcOAImoRKhoirG6n
-         nTQA==
+        bh=iI5VI+0lKQc3UKwM4Gc7CeBNVJTaOZnmwGZxYSqOkqE=;
+        b=i+dKmHjwF9q5J3yrI8YEi0tRSfFOgwS8EIW7HrxdYTCYIudulI53rQ7ybT77F8FOam
+         SQoC/hEKWxxbJbsGEqZq0lbBIRVjud0xUI6Oa0AGDWbo7Qe8XLaUKCtihLlMSTGSh2v5
+         8B18IAr93Dn9yIVirs+Sz7deEG9pLxcmMbCIobmvnUSTPACIhDQCaCGHWWRDRXByrGkO
+         J2xz5SoY7BgGfpD47bUvPys4VEvOWsTZzD7zxUHO+Ucy+ZhEdVBoUw4nzR1rJaFsQUuZ
+         QhhmUc3qSHHNfvsse3rQe484M36Q5gUhYlpN03j1rkmQXxi80MQM+SYyqNTmh6v1PsI6
+         qp9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=Holr5Whn4FU3Ir4OeV6g9EcEnpLAUwMwoNU0V/n9YHo=;
-        b=NHCpqsPKMDuXa9xGjFHRpo1YnEpfvr5OWQKa6LLrQCLHTFpxoknCaTTV+pn9rZ1/OZ
-         QlleYVLY7JCzOjKHdVEhXE3rJhVjHOwg1dG62gEE/cpV9vzM4p+bQOfG3bsmvXA1i6Pb
-         sV0TAR1NC0ohThG0tBVUquwIKn3T8NEGXd3coJ18XEx5z805nbRT/ZFh2JyMxEBx/ZMR
-         Zep5jWm7KFNSi2Va4tSF1X+voy36byq2DdjQGGZrb/yLJ34/iOmytuWgTbyQZPGQaE9/
-         v99up7+FB8iULwkoqzSzxPl6Au2U8RjwOX2i8T7DaRwZFxNsiniXSGzKDr3jquII/Uw4
-         i4gg==
-X-Gm-Message-State: APjAAAUC0sE8U8FtdxS4alTM+0vpS+yv/JvNqx/FGazB5bHf5yb+Sfkr
-        yxlLq0BUgTw2nTXMgH+z1huqPrle
-X-Google-Smtp-Source: APXvYqzAhD/8c814Z6DH2cI71HG3I9JqadxdAC5c+Gb+qKyfjVH4htRCFzfojjcLYASlf46BzOQbXQ==
-X-Received: by 2002:a5d:56c4:: with SMTP id m4mr2320402wrw.195.1571227617496;
-        Wed, 16 Oct 2019 05:06:57 -0700 (PDT)
+        bh=iI5VI+0lKQc3UKwM4Gc7CeBNVJTaOZnmwGZxYSqOkqE=;
+        b=P9BoOcmyiTrlPMsVp/lZuS+oApLd/kP8bCyaO3WnCdyFxWZXiP3DV4v4Jl85ev/HHW
+         lNCIeSYFWtjORTdpb8qjACeMKttqpnf8MK/Q5ForxP9cY0CGijoDFHpMnoftfM3l0TOf
+         GtbEQDSmNAxJ56Ff5cODrUaSzaq4WSVt3JwwFmBaszOMLDIu8VWurjhC10w792a3wLxe
+         kRQb6CCbm7OH2R7EkyT3L4WqU8gu4MPd1X5ftvsTSTEFCaQSRSwzqLm8CyRETG0ioYjI
+         /Z4ZXmDDg5THba7vxrYJ//Ck63IfDWyiGiiGQAqO+vmIXMe4AJXmKrLD3K9xQ4VyxTFU
+         oGvw==
+X-Gm-Message-State: APjAAAVWNdEN04H5XE8vLlF8Oj0vgx7qUyfAZHEUNwycZ1HN7PA/2onK
+        WPUQuDAHNqtMs6y5TY9lvs4Vm0TI
+X-Google-Smtp-Source: APXvYqwP7/clp+OlpyppS0YVs5j7JVP5dIyyxwpUmMwhZhBYYyNyCVAMviFnkdsp5lllsAZFC249og==
+X-Received: by 2002:adf:dc82:: with SMTP id r2mr2623241wrj.74.1571227826075;
+        Wed, 16 Oct 2019 05:10:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q19sm50160566wra.89.2019.10.16.05.06.56
+        by smtp.gmail.com with ESMTPSA id r2sm4117031wma.1.2019.10.16.05.10.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Oct 2019 05:06:56 -0700 (PDT)
-Message-Id: <f21b2c9eb5881396303de4b607631205142cf389.1571227613.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.402.git.1571227613.gitgitgadget@gmail.com>
+        Wed, 16 Oct 2019 05:10:25 -0700 (PDT)
+Message-Id: <4feb8cc83a6d0b73bd7e47a513b91ce193c6ed6f.1571227824.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.402.v2.git.1571227824.gitgitgadget@gmail.com>
 References: <pull.402.git.1571227613.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 16 Oct 2019 12:06:53 +0000
-Subject: [PATCH 3/3] grep: avoid leak of chartables in PCRE2
+        <pull.402.v2.git.1571227824.gitgitgadget@gmail.com>
+From:   "=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Wed, 16 Oct 2019 12:10:22 +0000
+Subject: [PATCH v2 1/3] grep: make PCRE1 aware of custom allocator
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,72 +66,70 @@ To:     git@vger.kernel.org
 Cc:     Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
 
-94da9193a6 ("grep: add support for PCRE v2", 2017-06-01) introduced
-a small memory leak visible with valgrind in t7813.
+63e7e9d8b6 ("git-grep: Learn PCRE", 2011-05-09) didn't include a way
+to override the system alocator, and so it is incompatible with
+USE_NED_ALLOCATOR as reported by Dscho[1] (in similar code from PCRE2)
 
-Complete the creation of a PCRE2 specific variable that was missing from
-the original change and free the generated table just like it is done
-for PCRE1.
+Note that nedmalloc, as well as other custom allocators like jemalloc
+and mi-malloc, can be configured at runtime (via `LD_PRELOAD`),
+therefore we cannot know at compile time whether a custom allocator is
+used or not.
+
+Make the minimum change possible to ensure this combination is supported
+by extending `grep_init()` to set the PCRE1 specific functions to Git's
+idea of `malloc()` and `free()` and therefore making sure all
+allocations are done inside PCRE1 with the same allocator than the rest
+of Git.
+
+This change has negligible performance impact: PCRE needs to allocate
+memory once per program run for the character table and for each pattern
+compilation. These are both rare events compared to matching patterns
+against lines. Actual measurements[2] show that the impact is lost in
+the noise.
+
+[1] https://public-inbox.org/git/pull.306.git.gitgitgadget@gmail.com
+[2] https://public-inbox.org/git/7f42007f-911b-c570-17f6-1c6af0429586@web.de
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- grep.c | 7 ++++---
- grep.h | 1 +
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ grep.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/grep.c b/grep.c
-index 296edbb56f..9556d13dc1 100644
+index cd952ef5d3..db6e0d895f 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -525,7 +525,6 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 	PCRE2_UCHAR errbuf[256];
- 	PCRE2_SIZE erroffset;
- 	int options = PCRE2_MULTILINE;
--	const uint8_t *character_tables = NULL;
- 	int jitret;
- 	int patinforet;
- 	size_t jitsizearg;
-@@ -539,9 +538,10 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 		if (has_non_ascii(p->pattern)) {
- 			if (!pcre2_global_context)
- 				BUG("pcre2_global_context uninitialized");
--			character_tables = pcre2_maketables(pcre2_global_context);
-+			p->pcre2_tables = pcre2_maketables(pcre2_global_context);
- 			p->pcre2_compile_context = pcre2_compile_context_create(NULL);
--			pcre2_set_character_tables(p->pcre2_compile_context, character_tables);
-+			pcre2_set_character_tables(p->pcre2_compile_context,
-+							p->pcre2_tables);
- 		}
- 		options |= PCRE2_CASELESS;
- 	}
-@@ -645,6 +645,7 @@ static void free_pcre2_pattern(struct grep_pat *p)
- 	pcre2_match_data_free(p->pcre2_match_data);
- 	pcre2_jit_stack_free(p->pcre2_jit_stack);
- 	pcre2_match_context_free(p->pcre2_match_context);
-+	free((void *)p->pcre2_tables);
- }
- #else /* !USE_LIBPCRE2 */
- static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt)
-diff --git a/grep.h b/grep.h
-index 526c2db9ef..533165c21a 100644
---- a/grep.h
-+++ b/grep.h
-@@ -96,6 +96,7 @@ struct grep_pat {
- 	pcre2_compile_context *pcre2_compile_context;
- 	pcre2_match_context *pcre2_match_context;
- 	pcre2_jit_stack *pcre2_jit_stack;
-+	const uint8_t *pcre2_tables;
- 	uint32_t pcre2_jit_on;
- 	kwset_t kws;
- 	unsigned fixed:1;
+@@ -150,12 +150,20 @@ int grep_config(const char *var, const char *value, void *cb)
+  * Initialize one instance of grep_opt and copy the
+  * default values from the template we read the configuration
+  * information in an earlier call to git_config(grep_config).
++ *
++ * If using PCRE, make sure that the library is configured
++ * to use the same allocator as Git (e.g. nedmalloc on Windows).
+  */
+ void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix)
+ {
+ 	struct grep_opt *def = &grep_defaults;
+ 	int i;
+ 
++#ifdef USE_LIBPCRE1
++	pcre_malloc = malloc;
++	pcre_free = free;
++#endif
++
+ 	memset(opt, 0, sizeof(*opt));
+ 	opt->repo = repo;
+ 	opt->prefix = prefix;
 -- 
 gitgitgadget
+
