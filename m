@@ -3,85 +3,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68C301F4C0
-	for <e@80x24.org>; Wed, 16 Oct 2019 05:02:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEEE01F4C0
+	for <e@80x24.org>; Wed, 16 Oct 2019 05:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730894AbfJPFC5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Oct 2019 01:02:57 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:33798 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726769AbfJPFC5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Oct 2019 01:02:57 -0400
-Received: by mail-ed1-f65.google.com with SMTP id j8so8560175eds.1
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 22:02:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FWjUlED1169FGphJKDGV/k6040WdNU6m+4JkebWBSO4=;
-        b=TspUbRR1vutLnIs5Gwa4wO/c1QaTinSRcUK/UMH375Wod2t4ppelb9VGmNr8WZAUAy
-         +3W73uPSK1/covdyZSjWJ9o30RmGSfUjQpmn32VWO7UgU856SSOdsOXj2K/oEvDYX5HK
-         E5xnNuYLZJvBFGZGmwW4zaCGSBnQtIv0aY5hEZmDXfJ1sgkgHxHeuyBOi9N7QLxbVpOG
-         EKeaEwKJHvwWT0FJHVWNeKCl2RV+ZVuzg/3vWIMhwkKAcVEk/hzqy0o6ZQDVEIwyxmHu
-         GbrSDBRbWxku6RG1tBkhr0+aY058K8poN4j6jnPyGEJB3PaU51qmWgvVl3I8HB+gD8N3
-         GadA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FWjUlED1169FGphJKDGV/k6040WdNU6m+4JkebWBSO4=;
-        b=j07FO4rTemDIP9HGVVjTGZxKX/JjfgN9qTD+C9hEMw4fbmRVBllZ4rZjSrkB0RDBLV
-         ZIv5f3qa9k1eUhOHa5PHUeS1sZwYDrx/Fhr8oOP8+aTeq7yqddEMBZaYV9CH9SvIJVBX
-         NhBQGkOWqsteneN+r61GWPaKTmNHCDu+eSlBc5fzWCw15YcoBY39eJ2neOsGmD3pHOAE
-         pEerWY5gBguOUNv/N0Sqe4ZH+vslNmLPoJCRSeGREK754NbOaywMVEoHP1NPmPRElu7I
-         J9gCKw0dJ1xlcV08zgrjePJfzjPfaWDqQwKqTNRoNkUxIuIhbMqbGoRAFcwY2uA9y4uk
-         b7PA==
-X-Gm-Message-State: APjAAAWM7ZLUm5MFk7DBWm5IcnNDFwqts49mhR/VcYbEnBvfCt2gnhKt
-        yVgX4EEjiaRLbDMFBLRqyWflXJ+2Ap6NB82k7zQ=
-X-Google-Smtp-Source: APXvYqx+lWDGvzI3XxPJJNzo++x3WHnntUW8JRst4Ni9AehztB1LBbgHBsr57GR5FotvzcoAp9bQKHcOKVY2pQpmZgg=
-X-Received: by 2002:a17:906:364f:: with SMTP id r15mr38855062ejb.194.1571202175547;
- Tue, 15 Oct 2019 22:02:55 -0700 (PDT)
+        id S1732620AbfJPFLC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Oct 2019 01:11:02 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53055 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730411AbfJPFLC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Oct 2019 01:11:02 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 184097DF07;
+        Wed, 16 Oct 2019 01:11:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JsTfC69Ep2Sr9QX++Mlyu0gzcQE=; b=V6qo9T
+        CCUdLD/D3IgUAvvAk3HISOh9wBicDkvyy+ksZZyMoL2B2bpgZQKoP0ZbHFw/0p7D
+        VV47tbRZjBJ7+3otJtIo+Bx8kDORQFOepnulKza3WhiDDwgNktfX8GFojsXuqhdN
+        PWeewpGhg3dZ0AvsLXRepJgiSXDK1p67wv894=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vFzYsxpZpHGWE35a4arvOX/xc/UOfITl
+        7tt+owKcjQ5365tE6h+q9hAFAAPxoHnutWdz++W1cbYU83IB21xWsGS8XkG3Qn/7
+        gGYrIrb64Gn7c0QQ3o+E/PUx76co/rSc9wR7vCNg2bHgneFizSjoagllruIHZ1k7
+        nTfD/dSqlag=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 016977DF04;
+        Wed, 16 Oct 2019 01:11:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1C7657DF02;
+        Wed, 16 Oct 2019 01:10:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, James Coglan <jcoglan@gmail.com>
+Subject: Re: [PATCH v3 01/13] graph: automatically track display width of graph lines
+References: <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
+        <pull.383.v3.git.1571183279.gitgitgadget@gmail.com>
+        <722ab8973ace92aeef8669eced2919a144240cc0.1571183279.git.gitgitgadget@gmail.com>
+        <xmqq8spl9xcd.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 16 Oct 2019 14:10:56 +0900
+In-Reply-To: <xmqq8spl9xcd.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 16 Oct 2019 12:35:14 +0900")
+Message-ID: <xmqqo8yh8ecf.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1571089481.git.wink@saville.com> <d47c5de5fc812b1fbd04bb259a522e453d4b21e2.1571089481.git.wink@saville.com>
- <xmqq4l0ad7vn.fsf@gitster-ct.c.googlers.com> <CA+P7+xr-4WXuDFL-D8pmoxFvLB0Rkm4zsGO9=aOy5-3o=m=5Tg@mail.gmail.com>
- <CAKk8isrcR2TgiQ9B8nYgfKKLoLSs9moLrqQ007+NA5VzOG3Evg@mail.gmail.com>
-In-Reply-To: <CAKk8isrcR2TgiQ9B8nYgfKKLoLSs9moLrqQ007+NA5VzOG3Evg@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 15 Oct 2019 22:02:45 -0700
-Message-ID: <CA+P7+xpdYMA8L-_Y+W5q7_zbj9RNcH1erY=dVbDG-EDOiHhTwA@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/1] Teach remote add the --prefix-tags option
-To:     Wink Saville <wink@saville.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 572EFAD0-EFD3-11E9-9E84-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 15, 2019 at 2:13 PM Wink Saville <wink@saville.com> wrote:
->>
->> Something like this makes sense and I've thought about the problem for
->> a long time. Unfortunately it's quite a bit trickier to do this.
->>
->> It would solve the problem more generally though, and definitely seems
->> like the right approach.. but at least for me, every time I looked at
->> trying this I got lost. I haven't had time to investigate it recently
->> :(
->>
->> Thanks,
->> Jake
->
->
-> Give it a go, you'll learn something at a minimum :)
+Junio C Hamano <gitster@pobox.com> writes:
 
-I've started a couple of times, but mostly it's lack of time to
-invest, since $DAYJOB hasn't given me cycles to try at the moment.
+>>  int graph_next_line(struct git_graph *graph, struct strbuf *sb)
+>
+> I just noticed it but does this have to be extern?  Nobody outside
+> graph.[ch] seems to have any reference to it.
 
-Thanks,
-Jake
+I was stupid; strike this part out.
+
+Thanks.
+
