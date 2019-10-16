@@ -8,57 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3712A1F4C0
-	for <e@80x24.org>; Wed, 16 Oct 2019 17:26:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FC491F4C0
+	for <e@80x24.org>; Wed, 16 Oct 2019 17:26:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388127AbfJPR0h (ORCPT <rfc822;e@80x24.org>);
+        id S2388734AbfJPR0j (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Oct 2019 13:26:39 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:37297 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388525AbfJPR0h (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 16 Oct 2019 13:26:37 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:33736 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387941AbfJPR0f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Oct 2019 13:26:35 -0400
-Received: by mail-pf1-f194.google.com with SMTP id q10so15162361pfl.0
-        for <git@vger.kernel.org>; Wed, 16 Oct 2019 10:26:35 -0700 (PDT)
+Received: by mail-pf1-f196.google.com with SMTP id y5so15156912pfo.4
+        for <git@vger.kernel.org>; Wed, 16 Oct 2019 10:26:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=8A9qudQ1oIBNUUDRSP5hm+so4OZ3iATI8W1lr5yAcuI=;
-        b=and5sIimPsscgwjjG5KVy+gu4hqCXqG5GSR5gGDlpGxUENL4nJofBZ55i5WUoxNF35
-         LOqKuzqS/B91wayDXdAeAJfs8rn61a5eAD03+ZU81dRt5eTAvSU+vMcbxZIsF9nduD/3
-         yujGwvlUAAkpqtY+vrCaq8GCovh6JJFMe0IXDvVqR0xFNYtGZp199FLxHKVgc43XMGd9
-         uqxFI5iPv85e3Cich0uaxOVaCAnleq/dp/2MP7gdOG67IUY0ZM18wfJzhiLFJkbFqwvK
-         0/exvY27+qmjJjibygrGx7X4xXC3ebeCsKvRKBBg0pyDa5rnWXMRLh9/laYpbps1YNKw
-         XW1g==
+        bh=fu1dpc9XKUP03S1WoDVX5vWi9ZpeyFSpINZzMSV6kC4=;
+        b=amXmmYNwAELGaxARdDhRp3Qc5259UXlwAI5FyrdH8/Iy5R0mttW5iifp2Ppu3VOfbQ
+         Iaxy2uKJpKSIbsPrCXz3pddy3Y3sFiooyZ14KEPHL54JBidrKNPKFsxv+7DcguISiuFv
+         j1F3qjp62L+lgKbak40Y9Uy7JvG0P+gsBXNCynET7aSepZWP5SbwX19mI9IGKtx3p90s
+         qhN9BSYNRrKpdQVHA9S5sH0L2WYUpZfehbtckF4ug1YAKWAEK91dDMu4tLQ3zTFoCwyK
+         /HZXD8NE1rly6D8iJjro3LUdWoCkE57TyrNo/xvrbb810FTcIkdOeHW33DMHuFfugTlN
+         hjaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8A9qudQ1oIBNUUDRSP5hm+so4OZ3iATI8W1lr5yAcuI=;
-        b=GxYgc45fEjEvZeGt/qudQ0eStcwOXXdzi5cR7QKBEhNXDIYMQWDW5XSuWKqboY89UM
-         bN5MlMz6r+eeEdvDC15wqfBH/tlcBHCEOGsBv15zMGTe5QBfWpAQlvS7B0vsptsOLblG
-         0s4U/X3CoiW7XsDmnSB+0B2eMKyxgtBXX98gDMlrC7yWBBTSyqT9/9/pBnV/KRzBXoXh
-         /f/UsqDBtQRi0MgtbngSpnKi7hs4kHoRkUk8RJ96mpk5BiXu+my8lrNzcQsm3qdiwqV8
-         FsZNE7bkfgS/ZYCJIbpVpubrJSpnPeBo+iZM1koBHwayw4KFe5MOji6iYbBepcaRWyC1
-         H/Ng==
-X-Gm-Message-State: APjAAAX1LzDjbc6BfujODqCd8HXYmTnnHEwqBeaFro6c8noHjzB4UMKh
-        N5N3YKZT26Wi/VjvwzlzPxAFj18H
-X-Google-Smtp-Source: APXvYqx0frcEIVkpn/pQlYBQ7EBU68bSHyP1q/PMOKZM3dxhIIrMSKZ3MiQZTMyrCkkSIGqcqKkI+w==
-X-Received: by 2002:a17:90a:f001:: with SMTP id bt1mr6522721pjb.2.1571246794498;
-        Wed, 16 Oct 2019 10:26:34 -0700 (PDT)
+        bh=fu1dpc9XKUP03S1WoDVX5vWi9ZpeyFSpINZzMSV6kC4=;
+        b=Ht3POW6WMa0iCH+XGAPnVRU42x4Zq2zh+BjHgNDOzim2v9YXkV4i7sgCxopunoJMf3
+         5w+VTZ50fzwtJG+l9LJ6MuIKTNehONnYkYoZpNrNP3kesOrn1CyXdVuNBQVjgsfdcptR
+         8y1FpULISSRxT1+IQ1RHLNKpw2C47OEBi3vFvFlh535y6yNJI5T+aOKVfbSKcBElZuAu
+         vDYHHmtdaqkteQJA8hPW28zj502e4iX7Kmh76y5DV6CytBRznTIbWHPZnqCgcq5SfX0k
+         nbsU2cFZM8fvbEk48q2CYzdhM8ZObU7MBBIJWp7P4h+Pp0XMcmdpFGVEAYQPWH8kcKIJ
+         C+AQ==
+X-Gm-Message-State: APjAAAUjn8MUhOZHh8cmzahtW+ozkR19O3YKp7T57u2tbAeO+sH/CQ19
+        sFO+8wp+sTfOgOBPlGk6CKVWLfZF
+X-Google-Smtp-Source: APXvYqzoHmogXBRwM/4X+Y7CcrFjbNPmoBTUte1jXSrnAPd/PfPWUsrDW6COMByXvDqpDcY6yFMmdw==
+X-Received: by 2002:a17:90a:f001:: with SMTP id bt1mr6522936pjb.2.1571246796677;
+        Wed, 16 Oct 2019 10:26:36 -0700 (PDT)
 Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id b9sm23392934pfo.105.2019.10.16.10.26.33
+        by smtp.gmail.com with ESMTPSA id v8sm9290338pje.6.2019.10.16.10.26.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Oct 2019 10:26:34 -0700 (PDT)
-Date:   Wed, 16 Oct 2019 10:26:32 -0700
+        Wed, 16 Oct 2019 10:26:36 -0700 (PDT)
+Date:   Wed, 16 Oct 2019 10:26:34 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [RFC PATCH 6/7] autostash.c: undefine
- USE_THE_INDEX_COMPATIBILITY_MACROS
-Message-ID: <73607c2e00a87b05da0e374734eb5c4d7d377d84.1571246693.git.liu.denton@gmail.com>
+Subject: [RFC PATCH 7/7] merge: teach --autostash option
+Message-ID: <f43c10e4818c91a8c6e9d5e0ce2a04710db3e300.1571246693.git.liu.denton@gmail.com>
 References: <cover.1571246693.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -70,46 +69,147 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since autostash.c was recently introduced, we should avoid
-USE_THE_INDEX_COMPATIBILITY_MACROS since we are trying to move away from
-this in the rest of the codebase. Rewrite the autostash code to not need
-it and remove its definition.
+In rebase, one can pass the `--autostash` option to cause the worktree
+to be automatically stashed before continuing with the rebase. This
+option is missing in merge, however.
 
+Implement the `--autostash` option and corresponding `merge.autoStash`
+option in merge which stashes before merging and then pops after.
+
+Reported-by: Alban Gruin <alban.gruin@gmail.com>
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- autostash.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ builtin/merge.c | 13 +++++++++++++
+ builtin/pull.c  |  9 +++++----
+ t/t5520-pull.sh |  8 --------
+ 3 files changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/autostash.c b/autostash.c
-index 722cf78b12..0a1f00d2e5 100644
---- a/autostash.c
-+++ b/autostash.c
-@@ -1,5 +1,3 @@
--#define USE_THE_INDEX_COMPATIBILITY_MACROS
--
- #include "git-compat-util.h"
- #include "autostash.h"
- #include "cache-tree.h"
-@@ -46,7 +44,7 @@ int reset_head(struct object_id *oid, const char *action,
- 	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
- 		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 062e911441..d1a5eaad0d 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -40,6 +40,7 @@
+ #include "branch.h"
+ #include "commit-reach.h"
+ #include "wt-status.h"
++#include "autostash.h"
  
--	if (!refs_only && hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0) {
-+	if (!refs_only && repo_hold_locked_index(the_repository, &lock, LOCK_REPORT_ON_ERROR) < 0) {
- 		ret = -1;
- 		goto leave_reset_head;
+ #define DEFAULT_TWOHEAD (1<<0)
+ #define DEFAULT_OCTOPUS (1<<1)
+@@ -58,6 +59,8 @@ static const char * const builtin_merge_usage[] = {
+ 	NULL
+ };
+ 
++static GIT_PATH_FUNC(merge_autostash, "MERGE_AUTOSTASH")
++
+ static int show_diffstat = 1, shortlog_len = -1, squash;
+ static int option_commit = -1;
+ static int option_edit = -1;
+@@ -81,6 +84,7 @@ static int show_progress = -1;
+ static int default_to_upstream = 1;
+ static int signoff;
+ static const char *sign_commit;
++static int autostash;
+ static int no_verify;
+ 
+ static struct strategy all_strategy[] = {
+@@ -285,6 +289,8 @@ static struct option builtin_merge_options[] = {
+ 	OPT_SET_INT(0, "progress", &show_progress, N_("force progress reporting"), 1),
+ 	{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
+ 	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
++	OPT_BOOL(0, "autostash", &autostash,
++	      N_("automatically stash/stash pop before and after")),
+ 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
+ 	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
+ 	OPT_BOOL(0, "no-verify", &no_verify, N_("bypass pre-merge-commit and commit-msg hooks")),
+@@ -440,6 +446,7 @@ static void finish(struct commit *head_commit,
+ 		strbuf_addf(&reflog_message, "%s: %s",
+ 			getenv("GIT_REFLOG_ACTION"), msg);
  	}
-@@ -157,8 +155,8 @@ void perform_autostash(const char *path)
- 	struct lock_file lock_file = LOCK_INIT;
- 	int fd;
++	apply_autostash(merge_autostash());
+ 	if (squash) {
+ 		squash_message(head_commit, remoteheads);
+ 	} else {
+@@ -631,6 +638,9 @@ static int git_merge_config(const char *k, const char *v, void *cb)
+ 	} else if (!strcmp(k, "commit.gpgsign")) {
+ 		sign_commit = git_config_bool(k, v) ? "" : NULL;
+ 		return 0;
++	} else if (!strcmp(k, "merge.autostash")) {
++		autostash = git_config_bool(k, v);
++		return 0;
+ 	}
  
--	fd = hold_locked_index(&lock_file, 0);
--	refresh_cache(REFRESH_QUIET);
-+	fd = repo_hold_locked_index(the_repository, &lock_file, 0);
-+	refresh_index(the_repository->index, REFRESH_QUIET, NULL, NULL, NULL);
- 	if (0 <= fd)
- 		repo_update_index_if_able(the_repository, &lock_file);
- 	rollback_lock_file(&lock_file);
+ 	status = fmt_merge_msg_config(k, v, cb);
+@@ -724,6 +734,8 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 		for (j = common; j; j = j->next)
+ 			commit_list_insert(j->item, &reversed);
+ 
++		if (autostash)
++			perform_autostash(merge_autostash());
+ 		hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
+ 		clean = merge_recursive(&o, head,
+ 				remoteheads->item, reversed, &result);
+@@ -1288,6 +1300,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 
+ 		/* Invoke 'git reset --merge' */
+ 		ret = cmd_reset(nargc, nargv, prefix);
++		apply_autostash(merge_autostash());
+ 		goto done;
+ 	}
+ 
+diff --git a/builtin/pull.c b/builtin/pull.c
+index d25ff13a60..ee186781ae 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -183,7 +183,7 @@ static struct option pull_options[] = {
+ 		N_("verify that the named commit has a valid GPG signature"),
+ 		PARSE_OPT_NOARG),
+ 	OPT_BOOL(0, "autostash", &opt_autostash,
+-		N_("automatically stash/stash pop before and after rebase")),
++		N_("automatically stash/stash pop before and after")),
+ 	OPT_PASSTHRU_ARGV('s', "strategy", &opt_strategies, N_("strategy"),
+ 		N_("merge strategy to use"),
+ 		0),
+@@ -671,6 +671,10 @@ static int run_merge(void)
+ 	argv_array_pushv(&args, opt_strategy_opts.argv);
+ 	if (opt_gpg_sign)
+ 		argv_array_push(&args, opt_gpg_sign);
++	if (opt_autostash == 0)
++		argv_array_push(&args, "--no-autostash");
++	else if (opt_autostash == 1)
++		argv_array_push(&args, "--autostash");
+ 	if (opt_allow_unrelated_histories > 0)
+ 		argv_array_push(&args, "--allow-unrelated-histories");
+ 
+@@ -918,9 +922,6 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	if (get_oid("HEAD", &orig_head))
+ 		oidclr(&orig_head);
+ 
+-	if (!opt_rebase && opt_autostash != -1)
+-		die(_("--[no-]autostash option is only valid with --rebase."));
+-
+ 	autostash = config_autostash;
+ 	if (opt_rebase) {
+ 		if (opt_autostash != -1)
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index cf4cc32fd0..75f162495a 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -365,14 +365,6 @@ test_expect_success 'pull --rebase --no-autostash & rebase.autostash unset' '
+ 	test_pull_autostash_fail --rebase --no-autostash
+ '
+ 
+-for i in --autostash --no-autostash
+-do
+-	test_expect_success "pull $i (without --rebase) is illegal" '
+-		test_must_fail git pull $i . copy 2>err &&
+-		test_i18ngrep "only valid with --rebase" err
+-	'
+-done
+-
+ test_expect_success 'pull.rebase' '
+ 	git reset --hard before-rebase &&
+ 	test_config pull.rebase true &&
 -- 
 2.23.0.897.g0a19638b1e
 
