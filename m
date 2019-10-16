@@ -3,122 +3,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F5011F4C0
-	for <e@80x24.org>; Wed, 16 Oct 2019 04:00:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68C301F4C0
+	for <e@80x24.org>; Wed, 16 Oct 2019 05:02:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725797AbfJPEAr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Oct 2019 00:00:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57875 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725263AbfJPEAr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Oct 2019 00:00:47 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C4D6380F7;
-        Wed, 16 Oct 2019 00:00:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7OGsuS8Lf2RkUWAUq4I476fqGfI=; b=b8z90B
-        ATkf6v0xTa0HlYKveEyZi8Dplg0rVWXRcgPiJEhKdnnqSjQTCoPKM4yt6H9JZtMJ
-        xp8eVw/hrl5fo5wdzaDc0fP5XNR6kCRYI28IkyjFgZjw+HQGh+HWawJaJ4+8ZAVO
-        Li/Yr9TU8BEVbBmW3e8XqymbKRdxZJGWjpEPY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kffC+p1tr5z/rWt0Vp+vAHxBqHQWdZfF
-        I3Z/ORxZ5+mHjKUrry5fsPmCCkKajFegzkThMb6DkqkYay2yxymX8SV7JpscdxEQ
-        NfBW5ZNjm5GiGKqQYPhw/tCyMwyxSCvBxo2av9TB13PqlDs5qm9KD5asep6Fanr1
-        QkUCXGkaCjc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 54895380F6;
-        Wed, 16 Oct 2019 00:00:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C2C86380F5;
-        Wed, 16 Oct 2019 00:00:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, James Coglan <jcoglan@gmail.com>
-Subject: Re: [PATCH v3 08/13] graph: tidy up display of left-skewed merges
-References: <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
-        <pull.383.v3.git.1571183279.gitgitgadget@gmail.com>
-        <c34a5eb160310613cbde6313cda6cff753d6d7fd.1571183279.git.gitgitgadget@gmail.com>
-Date:   Wed, 16 Oct 2019 13:00:42 +0900
-In-Reply-To: <c34a5eb160310613cbde6313cda6cff753d6d7fd.1571183279.git.gitgitgadget@gmail.com>
-        (James Coglan via GitGitGadget's message of "Tue, 15 Oct 2019 23:47:54
-        +0000")
-Message-ID: <xmqqsgnt8hlh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1730894AbfJPFC5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Oct 2019 01:02:57 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:33798 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726769AbfJPFC5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Oct 2019 01:02:57 -0400
+Received: by mail-ed1-f65.google.com with SMTP id j8so8560175eds.1
+        for <git@vger.kernel.org>; Tue, 15 Oct 2019 22:02:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FWjUlED1169FGphJKDGV/k6040WdNU6m+4JkebWBSO4=;
+        b=TspUbRR1vutLnIs5Gwa4wO/c1QaTinSRcUK/UMH375Wod2t4ppelb9VGmNr8WZAUAy
+         +3W73uPSK1/covdyZSjWJ9o30RmGSfUjQpmn32VWO7UgU856SSOdsOXj2K/oEvDYX5HK
+         E5xnNuYLZJvBFGZGmwW4zaCGSBnQtIv0aY5hEZmDXfJ1sgkgHxHeuyBOi9N7QLxbVpOG
+         EKeaEwKJHvwWT0FJHVWNeKCl2RV+ZVuzg/3vWIMhwkKAcVEk/hzqy0o6ZQDVEIwyxmHu
+         GbrSDBRbWxku6RG1tBkhr0+aY058K8poN4j6jnPyGEJB3PaU51qmWgvVl3I8HB+gD8N3
+         GadA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FWjUlED1169FGphJKDGV/k6040WdNU6m+4JkebWBSO4=;
+        b=j07FO4rTemDIP9HGVVjTGZxKX/JjfgN9qTD+C9hEMw4fbmRVBllZ4rZjSrkB0RDBLV
+         ZIv5f3qa9k1eUhOHa5PHUeS1sZwYDrx/Fhr8oOP8+aTeq7yqddEMBZaYV9CH9SvIJVBX
+         NhBQGkOWqsteneN+r61GWPaKTmNHCDu+eSlBc5fzWCw15YcoBY39eJ2neOsGmD3pHOAE
+         pEerWY5gBguOUNv/N0Sqe4ZH+vslNmLPoJCRSeGREK754NbOaywMVEoHP1NPmPRElu7I
+         J9gCKw0dJ1xlcV08zgrjePJfzjPfaWDqQwKqTNRoNkUxIuIhbMqbGoRAFcwY2uA9y4uk
+         b7PA==
+X-Gm-Message-State: APjAAAWM7ZLUm5MFk7DBWm5IcnNDFwqts49mhR/VcYbEnBvfCt2gnhKt
+        yVgX4EEjiaRLbDMFBLRqyWflXJ+2Ap6NB82k7zQ=
+X-Google-Smtp-Source: APXvYqx+lWDGvzI3XxPJJNzo++x3WHnntUW8JRst4Ni9AehztB1LBbgHBsr57GR5FotvzcoAp9bQKHcOKVY2pQpmZgg=
+X-Received: by 2002:a17:906:364f:: with SMTP id r15mr38855062ejb.194.1571202175547;
+ Tue, 15 Oct 2019 22:02:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 86A7C800-EFC9-11E9-A710-C28CBED8090B-77302942!pb-smtp1.pobox.com
+References: <cover.1571089481.git.wink@saville.com> <d47c5de5fc812b1fbd04bb259a522e453d4b21e2.1571089481.git.wink@saville.com>
+ <xmqq4l0ad7vn.fsf@gitster-ct.c.googlers.com> <CA+P7+xr-4WXuDFL-D8pmoxFvLB0Rkm4zsGO9=aOy5-3o=m=5Tg@mail.gmail.com>
+ <CAKk8isrcR2TgiQ9B8nYgfKKLoLSs9moLrqQ007+NA5VzOG3Evg@mail.gmail.com>
+In-Reply-To: <CAKk8isrcR2TgiQ9B8nYgfKKLoLSs9moLrqQ007+NA5VzOG3Evg@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 15 Oct 2019 22:02:45 -0700
+Message-ID: <CA+P7+xpdYMA8L-_Y+W5q7_zbj9RNcH1erY=dVbDG-EDOiHhTwA@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/1] Teach remote add the --prefix-tags option
+To:     Wink Saville <wink@saville.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"James Coglan via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> This effect is applied to both "normal" two-parent merges, and to
-> octopus merges. It also reduces the vertical space needed for pre-commit
-> lines, as the merge occupies one less column than usual.
+On Tue, Oct 15, 2019 at 2:13 PM Wink Saville <wink@saville.com> wrote:
+>>
+>> Something like this makes sense and I've thought about the problem for
+>> a long time. Unfortunately it's quite a bit trickier to do this.
+>>
+>> It would solve the problem more generally though, and definitely seems
+>> like the right approach.. but at least for me, every time I looked at
+>> trying this I got lost. I haven't had time to investigate it recently
+>> :(
+>>
+>> Thanks,
+>> Jake
 >
->         Before:         After:
 >
->         | *             | *
->         | |\            | |\
->         | | \           | * \
->         | |  \          |/|\ \
->         | *-. \
->         | |\ \ \
+> Give it a go, you'll learn something at a minimum :)
 
-Looking at these drawings reminded me of a tangent that is brought
-up from time to time.  We do not do great job when showing multiple
-roots.
+I've started a couple of times, but mostly it's lack of time to
+invest, since $DAYJOB hasn't given me cycles to try at the moment.
 
-If you have a history like this:
-
-      A---D---E
-         /
-    B---C
-
-drawing the graph _with_ the merge gives a reasonable representation
-of the entire topology.
-
-    * 46f67dd E
-    *   6f89516 D
-    |\  
-    | * e6277a9 C
-    | * 13ae9b2 B
-    * afee005 A
-
-But if you start drawing from parents of D (excluding D), you'd get
-this:
-
-    * e6277a9 C
-    * 13ae9b2 B
-    * afee005 A
-
-and the fact that B and A do not share parent-child relationships is
-lost.  An easy way to show that would be to draw the bottom three
-lines of the full history output we saw earlier:
-
-    | * e6277a9 C
-    | * 13ae9b2 B
-    * afee005 A
-
-either with or without the vertical bar to imply that A may have a
-child.
-
-This is not something that has to be done as part of this series,
-but I am hoping that the internal simplification and code
-restructuring that is done by this series would make it easier to
-enhance the system to allow such an output.
-
-Thanks.
+Thanks,
+Jake
