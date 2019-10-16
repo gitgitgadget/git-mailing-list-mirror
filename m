@@ -7,119 +7,230 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E53A1F4C0
-	for <e@80x24.org>; Wed, 16 Oct 2019 23:43:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9BC11F4C0
+	for <e@80x24.org>; Wed, 16 Oct 2019 23:45:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729333AbfJPXnM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Oct 2019 19:43:12 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:45316 "EHLO
+        id S2391663AbfJPXpp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Oct 2019 19:45:45 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:45342 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726642AbfJPXnM (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 16 Oct 2019 19:43:12 -0400
+        by vger.kernel.org with ESMTP id S1726642AbfJPXpo (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 16 Oct 2019 19:45:44 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5C80060424;
-        Wed, 16 Oct 2019 23:43:10 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2D0D96049B;
+        Wed, 16 Oct 2019 23:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1571269390;
-        bh=0g8AQ6cnEC6GKizulL2UuAlKhvBHrbyLo/TrMMp1h9w=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=mN5lpGivUzDQND6bRTqAlg6KnADrzh5EYiPvyU9ukoVczb7jFyiE2Vb+4m9/KUJQW
-         HUr+XdodC+Am5ZW+6853+RiqEEIfa2MQA8Xa6/NNR4gG5VDE1dSVY4KJ2jaMartxcO
-         haVnwoqV1UWvngoCYz+0oFwepdF0y3mBwy33VPQwh9SdDkwtpi0Jl7CJts8wZcvyBH
-         LXA1UuI5d/9xX6A2YNcF46JGV3rIRpnfpyE7LuJik3GJ+jQAuHpmI7afrjyDyRytpt
-         tUBs3uM5dQ7YRZMPXUv/ZXuzTHXKhCt4mPf+nwLlmAaLHQC4ERlD7zJEFpYbTwsOA8
-         zJ3Avi07E7ZIDVSYbIxIPII6K4Im39D/SXS7UMZP5kvBVMaNDkAfgCUsEDFdTMBkXz
-         G27D1aneBSU/zhDs6m3wC5IanrJLXfXePK876SZlgV+qP77H8uCD6eEISNoqtR4sjK
-         nPjijoMT59SxW06MEfFk0OYSmIt/jWIlftUs/An1abMDj3U631+
-Date:   Wed, 16 Oct 2019 23:43:06 +0000
+        s=default; t=1571269542;
+        bh=/SE2EwjeBCT4+BGXm/LbfYi4R1iWOLuz4GHCJC04A6I=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=PpDdyYvebCaqOOABpEsqfd6uOlsiV2ZQfKhm4J+1qODY4+2bfNWe21AOd7O9doge3
+         gGBzbye2R0T6vSYy9tzdjgQ3tJqcsvH/VNs4yGAG8uSQgRQJRnwkCZIpiGGHlen4ON
+         hfl62g0y4yRLbYx5enFKdeaMbmJJsqGQiRvztSYlpBXqp490pZ2icSFlB4FBfERPOn
+         zJUNO4LflqZqb5Ij7wUk76kdYQ/FwW1RZ9UOiEUNkEKOrpYo5z8gybg5Nnttg/FuCh
+         1Qfvk3Rnf0jVA01CxnDK4WpD+ddc2T3GCFFWhY2Rzwm6MsrIRUW9hnOvCcrZ96mgoH
+         TqySPyZEewdzCm1lJdMMJ7t291eZ07wrM3NmiO2HvNqUwWrGi0yWMflGa9alGfp0dC
+         zuPu1Zb5Ma6QxFa7iKCxcy7782ldrI61RiW15ksAqLI2qmPJ1S50vYzODdsmStHZXU
+         b1sq4jJi12dx9e4+K0zBhkuzQGRF9QRvBhAck2SNl4NpyYLLZ0F
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+To:     <git@vger.kernel.org>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-curl: pass on atomic capability to remote side
-Message-ID: <20191016234306.tqaszjc2sfxqg3zr@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2] remote-curl: pass on atomic capability to remote side
+Date:   Wed, 16 Oct 2019 23:45:34 +0000
+Message-Id: <20191016234534.1836-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.23.0.866.gb869b98d4c
+In-Reply-To: <20191015010759.2259-1-sandals@crustytoothpaste.net>
 References: <20191015010759.2259-1-sandals@crustytoothpaste.net>
- <20191015164028.GA4710@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="cwtfdwcwzrh6j2kc"
-Content-Disposition: inline
-In-Reply-To: <20191015164028.GA4710@sigill.intra.peff.net>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-trunk-amd64)
-User-Agent: NeoMutt/20180716
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When pushing more than one reference with the --atomic option, the
+server is supposed to perform a single atomic transaction to update the
+references, leaving them either all to succeed or all to fail.  This
+works fine when pushing locally or over SSH, but when pushing over HTTP,
+we fail to pass the atomic capability to the remote side.  In fact, we
+have not reported this capability to any remote helpers during the life
+of the feature.
 
---cwtfdwcwzrh6j2kc
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Now normally, things happen to work nevertheless, since we actually
+check for most types of failures, such as non-fast-forward updates, on
+the client side, and just abort the entire attempt.  However, if the
+server side reports a problem, such as the inability to lock a ref, the
+transaction isn't atomic, because we haven't passed the appropriate
+capability over and the remote side has no way of knowing that we wanted
+atomic behavior.
 
-On 2019-10-15 at 16:40:29, Jeff King wrote:
-> On Tue, Oct 15, 2019 at 01:07:59AM +0000, brian m. carlson wrote:
-> > diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitrem=
-ote-helpers.txt
-> > index a5c3c04371..670d72c174 100644
-> > --- a/Documentation/gitremote-helpers.txt
-> > +++ b/Documentation/gitremote-helpers.txt
-> > @@ -509,6 +509,11 @@ set by Git if the remote helper has the 'option' c=
-apability.
-> >  	Indicate that only the objects wanted need to be fetched, not
-> >  	their dependents.
-> > =20
-> > +'option atomic' {'true'|'false'}::
-> > +  When pushing, request the remote server to update refs in a single a=
-tomic
-> > +  transaction.  If successful, all refs will be updated, or none will.=
-  If the
-> > +  remote side does not support this capability, the push will fail.
-> > +
->=20
-> This is implemented with a single space, but the rest of the option
-> bodies are indented with a tab. Asciidoc seems to format it identically
-> either way, though.
+Fix this by passing the option from the transport code through to remote
+helpers, and from the HTTP remote helper down to send-pack.  With this
+change, we can detect if the server side rejects the push and report
+back appropriately.  Note the difference in the messages: the remote
+side reports "atomic transaction failed", while our own checking rejects
+pushes with the message "atomic push failed".
 
-Yeah, my default editor configuration for AsciiDoc is two spaces.  I
-noticed that Junio's already picked it up for next, but I'll send a v2
-with this fixed in case he wants to merge the fixed version to master
-instead.
+Document the atomic option in the remote helper documentation, so other
+implementers can implement it if they like.
 
-If it's more convenient, I can send a follow-up patch fixing the whitespace.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+Changes from v1:
+* Use tabs instead of spaces in docs.
 
---cwtfdwcwzrh6j2kc
-Content-Type: application/pgp-signature; name="signature.asc"
+ Documentation/gitremote-helpers.txt |  5 ++++
+ remote-curl.c                       | 13 +++++++++-
+ t/t5541-http-push-smart.sh          | 40 +++++++++++++++++++++++++++--
+ transport-helper.c                  |  4 +++
+ transport.h                         |  3 +++
+ 5 files changed, 62 insertions(+), 3 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl2nqwoACgkQv1NdgR9S
-9ovlrg//cB9mFUZXS119y3uIImBpLkakxyziBfa3MBkKtMFpFoGXLzkEvBskXBh/
-Hlt/8Oz4NLvryccj88bIjLDmXsOOgwK054pkBf9WhEc9YIzi5BtvlsyTLm/6X0Aa
-1rq0F76OOvUrR+Hy+UcXn+y4RQzLr4TtSXvLWYCb7/18qAmAY0Dg9zgukQSU9lIx
-sDJASgalGOVtzrjajDhtyagYNvmifEGnKGWHA01F2tBBAKOXxjHJ1mmZafO6IHL8
-OEYZLOaN5IsGElwgxhn5s81s9Vxz/k1Lq+ZyVyMRxngz+C/VE49p68XVIqhwSQal
-EcufU38PG58ocucOEyY1p6iFPWb7HVDfEQ6bmqtlqLrnMpOqTu5njabsRE4vqCcI
-pgWZKeVOOQ7yS7N+f6C6m8Umpqzxy1ewNGIzEzhOER9oNvLzucmblD1aClkbHdxL
-WcWQiaS6rGcNXNt2G86SFDO4FSHiGWXLfEHPm7qyXQqB1X+okwP8iFSHk6jQjjVb
-dv777QElVzCVuYbcGV4GCo9VIlK+Pmr7MpqAJOfNqVAtZLIE3anTVFEUj90VEe2M
-njFA60N/nJtfP9xk1KbE9RN06ZSYbx4e3sMIeKr1qlb7zXKuwzY4qP3JGdfwG2FD
-jqmVXpVIcc0/XgYNzU5D4DIUrzWWoWyvwakibnOKDBqfQDkX7fY=
-=Hu5F
------END PGP SIGNATURE-----
-
---cwtfdwcwzrh6j2kc--
+diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+index a5c3c04371..f48a031dc3 100644
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -509,6 +509,11 @@ set by Git if the remote helper has the 'option' capability.
+ 	Indicate that only the objects wanted need to be fetched, not
+ 	their dependents.
+ 
++'option atomic' {'true'|'false'}::
++	When pushing, request the remote server to update refs in a single atomic
++	transaction.  If successful, all refs will be updated, or none will.  If the
++	remote side does not support this capability, the push will fail.
++
+ SEE ALSO
+ --------
+ linkgit:git-remote[1]
+diff --git a/remote-curl.c b/remote-curl.c
+index 051f26629d..5232ed84b6 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -40,7 +40,8 @@ struct options {
+ 		push_cert : 2,
+ 		deepen_relative : 1,
+ 		from_promisor : 1,
+-		no_dependents : 1;
++		no_dependents : 1,
++		atomic : 1;
+ };
+ static struct options options;
+ static struct string_list cas_options = STRING_LIST_INIT_DUP;
+@@ -148,6 +149,14 @@ static int set_option(const char *name, const char *value)
+ 		else
+ 			return -1;
+ 		return 0;
++	} else if (!strcmp(name, "atomic")) {
++		if (!strcmp(value, "true"))
++			options.atomic = 1;
++		else if (!strcmp(value, "false"))
++			options.atomic = 0;
++		else
++			return -1;
++		return 0;
+ 	} else if (!strcmp(name, "push-option")) {
+ 		if (*value != '"')
+ 			string_list_append(&options.push_options, value);
+@@ -1196,6 +1205,8 @@ static int push_git(struct discovery *heads, int nr_spec, char **specs)
+ 		argv_array_push(&args, "--signed=yes");
+ 	else if (options.push_cert == SEND_PACK_PUSH_CERT_IF_ASKED)
+ 		argv_array_push(&args, "--signed=if-asked");
++	if (options.atomic)
++		argv_array_push(&args, "--atomic");
+ 	if (options.verbosity == 0)
+ 		argv_array_push(&args, "--quiet");
+ 	else if (options.verbosity > 1)
+diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
+index 92bac43257..4c970787b0 100755
+--- a/t/t5541-http-push-smart.sh
++++ b/t/t5541-http-push-smart.sh
+@@ -184,11 +184,12 @@ test_expect_success 'push --atomic also prevents branch creation, reports collat
+ 	test_config -C "$d" http.receivepack true &&
+ 	up="$HTTPD_URL"/smart/atomic-branches.git &&
+ 
+-	# Tell "$up" about two branches for now
++	# Tell "$up" about three branches for now
+ 	test_commit atomic1 &&
+ 	test_commit atomic2 &&
+ 	git branch collateral &&
+-	git push "$up" master collateral &&
++	git branch other &&
++	git push "$up" master collateral other &&
+ 
+ 	# collateral is a valid push, but should be failed by atomic push
+ 	git checkout collateral &&
+@@ -226,6 +227,41 @@ test_expect_success 'push --atomic also prevents branch creation, reports collat
+ 	grep "^ ! .*rejected.* collateral -> collateral .*atomic push failed" output
+ '
+ 
++test_expect_success 'push --atomic fails on server-side errors' '
++	# Use previously set up repository
++	d=$HTTPD_DOCUMENT_ROOT_PATH/atomic-branches.git &&
++	test_config -C "$d" http.receivepack true &&
++	up="$HTTPD_URL"/smart/atomic-branches.git &&
++
++	# break ref updates for other on the remote site
++	mkdir "$d/refs/heads/other.lock" &&
++
++	# add the new commit to other
++	git branch -f other collateral &&
++
++	# --atomic should cause entire push to be rejected
++	test_must_fail git push --atomic "$up" atomic other 2>output  &&
++
++	# the new branch should not have been created upstream
++	test_must_fail git -C "$d" show-ref --verify refs/heads/atomic &&
++
++	# upstream should still reflect atomic2, the last thing we pushed
++	# successfully
++	git rev-parse atomic2 >expected &&
++	# ...to other.
++	git -C "$d" rev-parse refs/heads/other >actual &&
++	test_cmp expected actual &&
++
++	# the new branch should not have been created upstream
++	test_must_fail git -C "$d" show-ref --verify refs/heads/atomic &&
++
++	# the failed refs should be indicated to the user
++	grep "^ ! .*rejected.* other -> other .*atomic transaction failed" output &&
++
++	# the collateral failure refs should be indicated to the user
++	grep "^ ! .*rejected.* atomic -> atomic .*atomic transaction failed" output
++'
++
+ test_expect_success 'push --all can push to empty repo' '
+ 	d=$HTTPD_DOCUMENT_ROOT_PATH/empty-all.git &&
+ 	git init --bare "$d" &&
+diff --git a/transport-helper.c b/transport-helper.c
+index 9e1279b928..a9d690297e 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -854,6 +854,10 @@ static void set_common_push_options(struct transport *transport,
+ 			die(_("helper %s does not support --signed=if-asked"), name);
+ 	}
+ 
++	if (flags & TRANSPORT_PUSH_ATOMIC)
++		if (set_helper_option(transport, TRANS_OPT_ATOMIC, "true") != 0)
++			die(_("helper %s does not support --atomic"), name);
++
+ 	if (flags & TRANSPORT_PUSH_OPTIONS) {
+ 		struct string_list_item *item;
+ 		for_each_string_list_item(item, transport->push_options)
+diff --git a/transport.h b/transport.h
+index 0b5f7806f6..e0131daab9 100644
+--- a/transport.h
++++ b/transport.h
+@@ -208,6 +208,9 @@ void transport_check_allowed(const char *type);
+ /* Filter objects for partial clone and fetch */
+ #define TRANS_OPT_LIST_OBJECTS_FILTER "filter"
+ 
++/* Request atomic (all-or-nothing) updates when pushing */
++#define TRANS_OPT_ATOMIC "atomic"
++
+ /**
+  * Returns 0 if the option was used, non-zero otherwise. Prints a
+  * message to stderr if the option is not used.
