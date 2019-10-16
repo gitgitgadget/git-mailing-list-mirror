@@ -2,161 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD45D1F4C0
-	for <e@80x24.org>; Wed, 16 Oct 2019 15:39:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6343A1F4C0
+	for <e@80x24.org>; Wed, 16 Oct 2019 16:47:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405331AbfJPPjv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Oct 2019 11:39:51 -0400
-Received: from mx0b-00256a01.pphosted.com ([67.231.153.242]:42170 "EHLO
-        mx0b-00256a01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726796AbfJPPjv (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 16 Oct 2019 11:39:51 -0400
-X-Greylist: delayed 3268 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Oct 2019 11:39:50 EDT
-Received: from pps.filterd (m0119692.ppops.net [127.0.0.1])
-        by mx0b-00256a01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id x9GEfpK9189837
-        for <git@vger.kernel.org>; Wed, 16 Oct 2019 10:45:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=date : from : to : cc :
- subject : message-id : references : mime-version : content-type :
- in-reply-to; s=20180315; bh=Z4cb3+GRXA9EqnJmXpWc8AtTCxFf8v08NwzkNafzhnA=;
- b=eeOw7gMdwRVxg7ksrGYu1MBX1C/Vo3u8vJ2ROJyF28UNw2PX/IH5BId1U/XQguclm758
- YEh7I1Ah5Q2JuVhVMv+bCi/Twd1U4kowlclW1PvPiBTM+kBTnDVKg3tMGI/b22Mgluc5
- ZR8/xqgl0VSCDkSO5FrD0DCRHanRloFvEqwlbZhcE9PQUktWryRem1+XasSUd/XrSJMr
- KZKqlgP+W+kIe8ts/SxT0/mmysr6atlLtFcxwCX8EeWvIbssCAqB87o/GjM+wFD9y4/x
- KxHW/GVnNYM6oNIsfCLd8lCoR+3dcDsRhUYfImkg1EoFxxEki1shOY6Jam26qZqlqJJl QQ== 
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-        by mx0b-00256a01.pphosted.com with ESMTP id 2vnp4sbvv9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Wed, 16 Oct 2019 10:45:21 -0400
-Received: by mail-qk1-f198.google.com with SMTP id s3so23953400qkd.6
-        for <git@vger.kernel.org>; Wed, 16 Oct 2019 07:45:21 -0700 (PDT)
+        id S2406111AbfJPQrN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Oct 2019 12:47:13 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33079 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404582AbfJPQrN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Oct 2019 12:47:13 -0400
+Received: by mail-wr1-f67.google.com with SMTP id b9so28894653wrs.0
+        for <git@vger.kernel.org>; Wed, 16 Oct 2019 09:47:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Z4cb3+GRXA9EqnJmXpWc8AtTCxFf8v08NwzkNafzhnA=;
-        b=FZtT2DgPvEk1dkdNAE/kX2k6ChkotaFixMGtcRbkpI1FXXd4CdCa7q82FdboZMcjus
-         4tQO6+ls9zVGEfZZEdhmiTKa8FKKfZ0euojGxBQ4ywgmccynSf55I0PrvObiXBoKSN0O
-         OcGsSuTN/8FNOTzndxikMia8wWCu8TmstMExVTXTdIFG11cAZQB0I5hZyQn411CUyjFb
-         i/e1z52/FXzPWFjcq/2vP1+zymZRCzTYtA3mPzXi1sjY//dFmh6U50ynfuPvMxTgYDQk
-         Vopum7uId5rLepOnzqpiYDmyJRrFQOzTtxXqkdxHaMpXOKm6FC2Y4p4rd4YnAtvEXb9i
-         LRyA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=rZIlXpg81sDQFvOeN2JbTnMK3E2SoKV+lkYiX6K36MA=;
+        b=W0WrPDMBg628x3RDa8mnRyeSgkPwV5tHFZkC5nUpaCWY2ud+HWklpum5zn6IbELuJL
+         CZPAgZquO3/72tuItJFIJqk5fs5T21EOHD1fO584jiZyRm/GXp3bdANsKvQl21yenHbB
+         aRykmalNT2mJW2uVgU/RBJWQ1jpwTxevNjjMz9ic0MRVqeR/Q/pbqdn0pt65NjJGKkjN
+         7rW+P1A43d7WVMxBmsAytJFciqbf2RVDAwjp6S5Mmb12vKstTzrOGNpX99qC+W8pJlvG
+         EHKrkCVAHA+93twXSCJVzaLaHAQHxzbArnmrRm1wLq/mmxk9NsmtOpACnhYo7xv51x46
+         aB7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Z4cb3+GRXA9EqnJmXpWc8AtTCxFf8v08NwzkNafzhnA=;
-        b=JPwz5dmTzV+0IvNQPHRXtLm6p0NOmnwkriROdDOcLfcL5GAWZzMgqbZU1sVvwenmjl
-         t+ta6vMcUsh9M+ACC8O9eZbl3ZCtkoSCVFQ0Nq0J6DGQfiIZQ4LxTddPDoqjeZSTrv08
-         OPDNMU0T4zpCi50BFeD2BdeIgojQZC5hrpKewJg5JVA0mjD/y0bJD+IqgBroSN5KEOi2
-         aeq7zfNKxvQdZKzLgjFllb4upwWG3x2jbaK5IZXO2A5xGcCs4hp17A2OCB9kLTWYqjhn
-         h+9uCPEt0H4xfvzjXdxoq8e9a+CZ/3Oai8fpEQdQEPnPoSKk/VqatP7mxMnyLIxj1c9m
-         VpsQ==
-X-Gm-Message-State: APjAAAXdigeNPIKNVwtUipCX8aPfWQO9E5FDKARx+oMNZ9VGvuZ1H+pY
-        n8RwIQQ5dOWHnYDcmGeBtbS/zeVZbJnXfrMut74JkW7HD+T5X4+OrmQ88iIaz5ey6WhqUqGzdMq
-        UyJEqZN4St/k=
-X-Received: by 2002:a0c:eda2:: with SMTP id h2mr41542111qvr.190.1571237121340;
-        Wed, 16 Oct 2019 07:45:21 -0700 (PDT)
-X-Google-Smtp-Source: APXvYqwthW6i4sYOEjqqa1DXH6trpqn8KkEK3rR31znEaiBCZutvDbhx1JX7Db1PsHhjbjJyGnuUmw==
-X-Received: by 2002:a0c:eda2:: with SMTP id h2mr41542092qvr.190.1571237121103;
-        Wed, 16 Oct 2019 07:45:21 -0700 (PDT)
-Received: from LykOS.localdomain (216-165-95-148.natpool.nyu.edu. [216.165.95.148])
-        by smtp.gmail.com with ESMTPSA id d127sm11208279qke.54.2019.10.16.07.45.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Oct 2019 07:45:20 -0700 (PDT)
-Date:   Wed, 16 Oct 2019 10:45:19 -0400
-From:   Santiago Torres Arias <santiago@nyu.edu>
-To:     Willy Tarreau <w@1wt.eu>
-Cc:     Vegard Nossum <vegard.nossum@oracle.com>,
-        workflows@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Eric Wong <e@80x24.org>
-Subject: Re: email as a bona fide git transport
-Message-ID: <20191016144517.giwip4yuaxtcd64g@LykOS.localdomain>
-References: <b9fb52b8-8168-6bf0-9a72-1e6c44a281a5@oracle.com>
- <20191016111009.GE13154@1wt.eu>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rZIlXpg81sDQFvOeN2JbTnMK3E2SoKV+lkYiX6K36MA=;
+        b=Pbnm4HC4X6eQeEHKNSYzb3jT75U0eXLJUSDA+o5U+wYCxdkskBXGt5OpImh738cHoC
+         EWKkk8AxnO6CKdOKnXVpLyAThfTQ0r1z5L/WLL2CFeVYGt+6jRkjrV/JE+E0JGvHolkO
+         F+yQyzZhdDACE1eNPAyg6MBKl25oEjlvWU1pCD6RCI+pV0lMB0ib+aka3KKqwAvWH8s6
+         DzgE/gNyNDk9AtYRq8LT3qQNdDr3d4TgQcWPIQttoF/w2pTJc5wWWLKdTmaZRmG4LdcX
+         ZnQv4Npd30pj+sXdYvlvl93Qw1J3X58dT+XdPAmGHIyp+2Gis4PvsxhtaCKugNVgC6lJ
+         mT3A==
+X-Gm-Message-State: APjAAAWdMlVCrWsDDqXSabajjUgaJQygk9MlN5igHKYRPQRVomkKYExz
+        GYeZ/PIFWHqC+Kd/i6OAegm/YUXu
+X-Google-Smtp-Source: APXvYqz2N6iBvBKBmB7oTrBfZRinixWIu1bA6spqdJVlIsxnmVnP8PuEICa8K39g7s0pFmCYPo6HgA==
+X-Received: by 2002:a5d:6a52:: with SMTP id t18mr3716999wrw.318.1571244430756;
+        Wed, 16 Oct 2019 09:47:10 -0700 (PDT)
+Received: from szeder.dev (x4d0c5ad0.dyn.telefonica.de. [77.12.90.208])
+        by smtp.gmail.com with ESMTPSA id a204sm4133785wmh.21.2019.10.16.09.47.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 16 Oct 2019 09:47:10 -0700 (PDT)
+Date:   Wed, 16 Oct 2019 18:47:07 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     GitList <git@vger.kernel.org>
+Subject: Re: [RFC PATCH v1] t/README: the test repo does not have global or
+ system configs
+Message-ID: <20191016164707.GW29845@szeder.dev>
+References: <20191016124515.1807-1-philipoakley@iee.email>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="mrjm34jdre4iu7ux"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20191016111009.GE13154@1wt.eu>
-X-Orig-IP: 209.85.222.198
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 malwarescore=0 mlxlogscore=846 spamscore=0 suspectscore=7
- adultscore=0 bulkscore=0 mlxscore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1908290000 definitions=main-1910160128
+In-Reply-To: <20191016124515.1807-1-philipoakley@iee.email>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Oct 16, 2019 at 01:45:15PM +0100, Philip Oakley wrote:
+> Signed-off-by: Philip Oakley <philipoakley@iee.email>
+> ---
+> 
+> While tring to get to grips with some Git-for-Windows config settings
+> for testing >4GiB files, I couldn't find any note in the readme about
+> the test system config file sources. 
 
---mrjm34jdre4iu7ux
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The path of the system config file is determined at compile time, with
+no way to override it at runtime.  Since we don't want external config
+files influencing our tests, the only choice we have is to ignore the
+system config file; that's why our test framework sets
+GIT_CONFIG_NOSYSTEM=1.
 
-Hi Willy, Vegard.
+> Is this the right place for the information, is it complete enough,
+> and is the default config template special?
+> 
+>  t/README | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/t/README b/t/README
+> index 60d5b77bcc..3daa1fa182 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -485,6 +485,9 @@ This test harness library does the following things:
+>     the --root option documented above, and a '.stress-<N>' suffix
+>     appended by the --stress option.
+>  
+> + - The --global and --system config files are ignored, and
+> +   a basic --local config is created in the tst repository.
 
-On Wed, Oct 16, 2019 at 01:10:09PM +0200, Willy Tarreau wrote:
-> Hi Vegard,
->=20
-> On Wed, Oct 16, 2019 at 12:22:54PM +0200, Vegard Nossum wrote:
-> > (cross-posted to git, LKML, and the kernel workflows mailing lists.)
-> >=20
-> > Hi all,
-> >=20
-> > I've been following Konstantin Ryabitsev's quest for better development
-> > and communication tools for the kernel [1][2][3], and I would like to
-> > propose a relatively straightforward idea which I think could bring a
-> > lot to the table.
-> >=20
-> > Step 1:
-> >=20
-> > * git send-email needs to include parent SHA1s and generally all the
-> >   information needed to perfectly recreate the commit when applied so
-> >   that all the SHA1s remain the same
-> >=20
-> > * git am (or an alternative command) needs to recreate the commit
-> >   perfectly when applied, including applying it to the correct parent
-> >=20
-> > Having these two will allow a perfect mapping between email and git;
-> > essentially email just becomes a transport for git. There are a lot of
-> > advantages to this, particularly that you have a stable way to refer to
-> > a patch or commit (despite it appearing on a mailing list), and there
-> > is no need for "changeset IDs" or whatever, since you can just use the
-> > git SHA1 which is unique, unambiguous, and stable.
+s/tst/test/
 
-I wonder if it'd be also possible to then embed gpg signatures over
-send-mail payloads so as they can be transparently transferred to the
-commit.
+However, note that the global config file isn't really ignored, but
+different.  The path of the global config file depends on the values
+of the env variables $XDG_CONFIG_HOME and $HOME, and, again, to avoid
+external influences, our test framework unsets the former, and
+overrides the latter with HOME="$TRASH_DIRECTORY".  IOW the global
+config file in our tests is '.../t/trash directory.t1234-foo/.gitconfig'.
 
--Santiago
-
---mrjm34jdre4iu7ux
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAl2nLP0ACgkQRo8SLOgW
-IpUWCQ//UFA5stuXzMxzWIKHQD+H0TuHkdaljhkWkD/PJkKg38VK0qyxCwqszoVd
-wRfV3HZa/hoPkY6pnoqIm+VfqbuEnZ5K93I7mGvsKnY9lAOh7GXYjETV62XN0sT7
-goQPqxoBM+a9hEBYSccYARaq2EGmDHojhEYJjLIR2br4XXMn+Mrd0VQ90Kph2ozn
-WwwoBeqNQaA2gH2fBeYmWKfpuY+0yIRxQfX2gflOx7IDVQAm9NiPqV2FakfZ5Kq8
-W8QhGRIpDvIIzmqpGpuETPBtXt/eABENOyoa+E8iFviEM471N6ww3PVQAD6ZJ9k+
-LofGz4XhiNOgAHWRKIh4v6zYZgxXfXtIojAZLDR2TGSrfWDj4l9EJ0nNNI2pYspV
-1xFkCYEUwoLORs1BLo1Zn2mO4XhiAcsQvrJwRdHvT6MFDDOl59SpQQkCJ77udupr
-oCwHoJ4Ew/zHn8y+H7PRoNc9cIqhIUbBTqSJ9lNczOjOaliSBGDQ46CsEfEoT2eT
-hxtkOiZQBpLKifJ9oPxGKqD1yPRFI+mNYCkye/yx7BN8Mgo/wqei4ypu+pmdpai8
-LF41nXT1flRHt/ffTJSUP4JqpJXH96Kkz+PCUsBQ3x6zf0eMQNaVY59lXdXN44Wy
-TYRbjZx4va+x+wkmRl6Z+7WefkAqrL3H2l6XjBvTkXYfZneLuGg=
-=LpIO
------END PGP SIGNATURE-----
-
---mrjm34jdre4iu7ux--
+> +
+>   - Defines standard test helper functions for your scripts to
+>     use.  These functions are designed to make all scripts behave
+>     consistently when command line arguments --verbose (or -v),
+> -- 
+> 2.23.0.windows.1.21.g947f504ebe8.dirty
+> 
