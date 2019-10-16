@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70C731F4C0
-	for <e@80x24.org>; Wed, 16 Oct 2019 03:37:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F5011F4C0
+	for <e@80x24.org>; Wed, 16 Oct 2019 04:00:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727487AbfJPDhX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Oct 2019 23:37:23 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56749 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726998AbfJPDhX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Oct 2019 23:37:23 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 650797D2B3;
-        Tue, 15 Oct 2019 23:37:21 -0400 (EDT)
+        id S1725797AbfJPEAr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Oct 2019 00:00:47 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57875 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725263AbfJPEAr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Oct 2019 00:00:47 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C4D6380F7;
+        Wed, 16 Oct 2019 00:00:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oHpRKzOzb9JRX+zrnr0aTWl2AF8=; b=k28ejw
-        3I9qw40kLX8LPx2wcQ93G5NzbiLGXkHDSPMab00FzYLwu6Oq0/7P6Gp1jxZMQwP5
-        BtcqLWP0anjNbWKn9Fs8f7s1H39fF/7E/qHI23/pIzNh+GotOszY1A1X+Ov9xGjj
-        eocMWdfIwWNosbfP8cnY1AHQnv8aK3E/TJowY=
+        :content-type; s=sasl; bh=7OGsuS8Lf2RkUWAUq4I476fqGfI=; b=b8z90B
+        ATkf6v0xTa0HlYKveEyZi8Dplg0rVWXRcgPiJEhKdnnqSjQTCoPKM4yt6H9JZtMJ
+        xp8eVw/hrl5fo5wdzaDc0fP5XNR6kCRYI28IkyjFgZjw+HQGh+HWawJaJ4+8ZAVO
+        Li/Yr9TU8BEVbBmW3e8XqymbKRdxZJGWjpEPY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=k0Tgak6MKHorVQwuf55XJt87p7sRz7wX
-        ydwt4dTwYZ6mZSy5qDZZJeVozecpQxBC//hq/HjpKztTPZl+53ZwtrmODCzvKlJ5
-        u0+K8asaX6qLj7qv7NZKpVjv32wbKPZalF9S12ZVSW8r7evvUM066Ewf8e6FqXoU
-        oACaGlJqWlQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5DB247D2B2;
-        Tue, 15 Oct 2019 23:37:21 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=kffC+p1tr5z/rWt0Vp+vAHxBqHQWdZfF
+        I3Z/ORxZ5+mHjKUrry5fsPmCCkKajFegzkThMb6DkqkYay2yxymX8SV7JpscdxEQ
+        NfBW5ZNjm5GiGKqQYPhw/tCyMwyxSCvBxo2av9TB13PqlDs5qm9KD5asep6Fanr1
+        QkUCXGkaCjc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 54895380F6;
+        Wed, 16 Oct 2019 00:00:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8F1E67D2B0;
-        Tue, 15 Oct 2019 23:37:18 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C2C86380F5;
+        Wed, 16 Oct 2019 00:00:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "James Coglan via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, James Coglan <jcoglan@gmail.com>
-Subject: Re: [PATCH v3 02/13] graph: handle line padding in `graph_next_line()`
+Subject: Re: [PATCH v3 08/13] graph: tidy up display of left-skewed merges
 References: <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
         <pull.383.v3.git.1571183279.gitgitgadget@gmail.com>
-        <056c95d4edc8748c513db8c159c5e3d347ffc894.1571183279.git.gitgitgadget@gmail.com>
-Date:   Wed, 16 Oct 2019 12:37:16 +0900
-In-Reply-To: <056c95d4edc8748c513db8c159c5e3d347ffc894.1571183279.git.gitgitgadget@gmail.com>
-        (James Coglan via GitGitGadget's message of "Tue, 15 Oct 2019 23:47:48
+        <c34a5eb160310613cbde6313cda6cff753d6d7fd.1571183279.git.gitgitgadget@gmail.com>
+Date:   Wed, 16 Oct 2019 13:00:42 +0900
+In-Reply-To: <c34a5eb160310613cbde6313cda6cff753d6d7fd.1571183279.git.gitgitgadget@gmail.com>
+        (James Coglan via GitGitGadget's message of "Tue, 15 Oct 2019 23:47:54
         +0000")
-Message-ID: <xmqq4l099x8z.fsf@gitster-ct.c.googlers.com>
+Message-ID: <xmqqsgnt8hlh.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4115C4C0-EFC6-11E9-995C-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 86A7C800-EFC9-11E9-A710-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,17 +65,60 @@ X-Mailing-List: git@vger.kernel.org
 
 "James Coglan via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: James Coglan <jcoglan@gmail.com>
+> This effect is applied to both "normal" two-parent merges, and to
+> octopus merges. It also reduces the vertical space needed for pre-commit
+> lines, as the merge occupies one less column than usual.
 >
-> Now that the display width of graph lines is implicitly tracked via the
-> `graph_line` interface, the calls to `graph_pad_horizontally()` no
-> longer need to be located inside the individual output functions, where
-> the character counting was previously being done.
+>         Before:         After:
 >
-> All the functions called by `graph_next_line()` generate a line of
-> output, then call `graph_pad_horizontally()`, and finally change the
-> graph state if necessary. As padding is the final change to the output
-> done by all these functions, it can be removed from all of them and done
-> in `graph_next_line()` instead.
+>         | *             | *
+>         | |\            | |\
+>         | | \           | * \
+>         | |  \          |/|\ \
+>         | *-. \
+>         | |\ \ \
 
-Very well explained.
+Looking at these drawings reminded me of a tangent that is brought
+up from time to time.  We do not do great job when showing multiple
+roots.
+
+If you have a history like this:
+
+      A---D---E
+         /
+    B---C
+
+drawing the graph _with_ the merge gives a reasonable representation
+of the entire topology.
+
+    * 46f67dd E
+    *   6f89516 D
+    |\  
+    | * e6277a9 C
+    | * 13ae9b2 B
+    * afee005 A
+
+But if you start drawing from parents of D (excluding D), you'd get
+this:
+
+    * e6277a9 C
+    * 13ae9b2 B
+    * afee005 A
+
+and the fact that B and A do not share parent-child relationships is
+lost.  An easy way to show that would be to draw the bottom three
+lines of the full history output we saw earlier:
+
+    | * e6277a9 C
+    | * 13ae9b2 B
+    * afee005 A
+
+either with or without the vertical bar to imply that A may have a
+child.
+
+This is not something that has to be done as part of this series,
+but I am hoping that the internal simplification and code
+restructuring that is done by this series would make it easier to
+enhance the system to allow such an output.
+
+Thanks.
