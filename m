@@ -2,101 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC4701F4C0
-	for <e@80x24.org>; Wed, 16 Oct 2019 06:57:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0BAD1F4C0
+	for <e@80x24.org>; Wed, 16 Oct 2019 07:07:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387855AbfJPG5q (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Oct 2019 02:57:46 -0400
-Received: from mail-vk1-f173.google.com ([209.85.221.173]:33589 "EHLO
-        mail-vk1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731974AbfJPG5q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Oct 2019 02:57:46 -0400
-Received: by mail-vk1-f173.google.com with SMTP id s21so4933510vkm.0
-        for <git@vger.kernel.org>; Tue, 15 Oct 2019 23:57:46 -0700 (PDT)
+        id S2389364AbfJPHHW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Oct 2019 03:07:22 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:39732 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389122AbfJPHHW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Oct 2019 03:07:22 -0400
+Received: by mail-wm1-f67.google.com with SMTP id v17so1467009wml.4
+        for <git@vger.kernel.org>; Wed, 16 Oct 2019 00:07:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ymk8DOueijenwSMprYL4qCUMddKajYdMz2ocBmwqjLo=;
-        b=O8z6QUOdFiO+bdbaSAvgFdhF/516Uz/GjC7tiEag/Z4ro/JE1sdw5rdUzrrAwfHzO8
-         lP33MFFYrJFfUsWcgudAjN1qbX2MqbjwiIR7zvZ49PthWsXlPbfnA+McdnImxuM2clXb
-         f5cwbx451Rhu1vQx6myVz4e92KXYOkOPTZwsx4DRZIOtXLKzctsiYOFneKFftH4YRfxf
-         ccRZnlQbHKATAz1G0NdSPied5Ins9V4ZbSTqw7KreZNppX+ihILqqtJ6BvrZa4V37mC9
-         VPu2spxwn4wJCqJDiB/eJ/R+Zcvup4s1nmgTxO8KkF8sFi3csduPCM2C5FXb72h0RbzA
-         Epyw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Z6O0LxUrJwYuVGjxRR7DUhT/1ZDDCrOsg+uVNxrCuxk=;
+        b=PxqeFme3XGMonycMMprDXb0Q2VYeKmWVeuuIQ2pKf1UP+NI8a7GOIyO/lqUn8WfkG7
+         wjyWt5SQpV06izXvB27LKAmgpZr42yZ6RVhPAQfMdm3ZCRiCsKuIUf8hN0RYVWEiCRFY
+         wtHN/CpU3oLcpRmXw5DqaYjcrXubk4MY+xlAOasla8H1Go7GSKQ1dFfsTxFweAN3XMSA
+         dVR3szEIXC9QkYtmpbx8M8mBAFeCSK+dpfFcF5U56bKX0xeDzuOJissf64QrCrvsLaJV
+         7aXwDdkN019OOLYl+nti7GQn03E7nTsm080JvlsUOgKEJI2C/uwMKyIzjFS5fmKdisk6
+         hwTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ymk8DOueijenwSMprYL4qCUMddKajYdMz2ocBmwqjLo=;
-        b=XxtEQoR3DGUkXYPeUWy88yIj35TByr3CX/YYGJo7aEtNxv4TSUhlykvI5qDb7a0X13
-         IRDMs4czQvnV6PlPJc2Ekh8k/P4TPVaGW6/l7upMpD2WXfz3hRcdCrp4Dr9OlHmHFuka
-         tk/Cp+wXc7DFtxQd6rVeL09tHoza1pKo9OlL3XodFA3vBYQTB4TWVy+T3TqJ67OawNHS
-         dFhvD6nvkC8GLIW5rQ7VhxaolRDR6/QfTyj7CjGU70Y58luTCP6H5m5mkbBWItS2A4Bx
-         kY4nKzRI1I36bGdpV5Z9NMSss3lob2P5MvxzOYM0HWXAVAi42ZAvQMuAskfPA30n0ncs
-         3uiA==
-X-Gm-Message-State: APjAAAWGPvqXTAWAOoVGb87sHwKo5mVe+053cU5ZR3x3TX1OnUypOXwT
-        2MMNR/seogkalZgbRIcA+cCi+4dDnBEzCbuhsTg=
-X-Google-Smtp-Source: APXvYqyoD2+gD0g4Euh6SOVNGOM+7UlqLOW4rdUwCqkqC+u8qE0wc4iXcG2gtP6cs6NXA8KO2Z/DGXMUzpY+UFjSN1Q=
-X-Received: by 2002:a1f:c105:: with SMTP id r5mr21543744vkf.9.1571209065230;
- Tue, 15 Oct 2019 23:57:45 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Z6O0LxUrJwYuVGjxRR7DUhT/1ZDDCrOsg+uVNxrCuxk=;
+        b=r4X/xzfa+wbervlzGqTC84Wo8JWbn53qPtXicJ7rM41gZWkH+bG+ZYh0VbuqDxmkWx
+         /SFxW5ImuAS8C3/TPeY77LS3JbJCdNh/bwyQX8DBWcKvuVSYuLQLsEJyLefFjIAD6lNK
+         kfy8B1RpCmwTmLO72cZtp8e0UsbO73gY/Yc3bMiVHwIzGCpAf/NtSC+owiQZTm2Aw3yE
+         5JT9Ii0EqyuiL3+oTXsIMmNJGO9LXJxofZ/iqYJk85tBhTTcC0hoMTmdv/R2RWQ2x9k2
+         rEie5BgZf3VflxiDmMseC1AHE/Ph3PXov01wwXcoLkpeOmq+jcIAGjeNhaj0zRzfi2QN
+         miJw==
+X-Gm-Message-State: APjAAAVdiKzO8ZVno/9y0ExfLnvWx+UlaaAVAcF0rmNz3uuz5rpXt+36
+        gfeM3AJfP4ED/1jkEgE/egA+bWba
+X-Google-Smtp-Source: APXvYqzsBQKwSCJCctzgc3og5OzLAs+T1WKy2459mlX1oIsSfX2gJ1TEXqe/GiwH9p5j9XhEz790WA==
+X-Received: by 2002:a05:600c:21c8:: with SMTP id x8mr1783827wmj.123.1571209640088;
+        Wed, 16 Oct 2019 00:07:20 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o18sm5284505wrm.11.2019.10.16.00.07.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 16 Oct 2019 00:07:19 -0700 (PDT)
+Message-Id: <cf97c5182eb98cc0ae72f94d4331abcb4486ca83.1571209637.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.401.git.1571209637.gitgitgadget@gmail.com>
+References: <pull.401.git.1571209637.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 16 Oct 2019 07:07:16 +0000
+Subject: [PATCH 1/2] t1400: wrap setup code in test case
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <xmqqh84abmjm.fsf@gitster-ct.c.googlers.com> <CABPp-BHnSG+PtnU=jKHW2_hfLtBK1Sib_W+nqY08gGj8yHGCgw@mail.gmail.com>
- <xmqq8splbhxf.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq8splbhxf.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 15 Oct 2019 23:57:34 -0700
-Message-ID: <CABPp-BE5WmqXuiyQgMxcRXyjnPu141KD56ddfneVqoGdXLKSoA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Oct 2019, #04; Tue, 15)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 15, 2019 at 6:25 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> >> * en/merge-recursive-directory-rename-fixes (2019-10-12) 2 commits
-> >>   (merged to 'next' on 2019-10-15 at ebfdc3ff7b)
-> >>  + merge-recursive: fix merging a subdirectory into the root directory
-> >>  + merge-recursive: clean up get_renamed_dir_portion()
-> >>
-> >>  A few glitches in the heuristic in merge-recursive to infer file
-> >>  movements based on movements of other files in the same directory
-> >>  have been corrected.
-> >>
-> >>  Will merge to 'master'.
-> >
-> > I'm surprised this one was merged straight down to next; perhaps I
-> > should have highlighted my plans a bit clearer in the thread?
->
-> My mistake.  I am willing to revert the merge to give the topic a
-> clean slate.  Just tell me so.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Yeah, let's revert it.
+Without this, you cannot use `--run=<...>` to skip that part, and a run
+with `--run=0` (which is a common way to determine the test case number
+corresponding to a given test case title).
 
-> > Also, a very minor point but "glitches" may be misleading; it suggests
-> > (to me at least) a malfunction rather than a failure to trigger,...
->
-> I used the word to mean a failure to trigger (after all, a heuristic
-> that fails to trigger when most people would naturelly expect it to
-> is showing a glitch in that case).  A better phrasing, please?
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t1400-update-ref.sh | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-Oh, I guess I just had a different connotation for glitch.  I guess
-what you had is fine then, but alternatively we could spell it out
-just a little more:
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 1fbd940408..69a7f27311 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -344,14 +344,16 @@ test_expect_success "verifying $m's log (logged by config)" '
+ 	test_cmp expect .git/logs/$m
+ '
+ 
+-git update-ref $m $D
+-cat >.git/logs/$m <<EOF
+-$Z $C $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 -0500
+-$C $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150350 -0500
+-$A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 -0500
+-$F $Z $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150680 -0500
+-$Z $E $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 -0500
+-EOF
++test_expect_success 'set up for querying the reflog' '
++	git update-ref $m $D &&
++	cat >.git/logs/$m <<-EOF
++	$Z $C $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 -0500
++	$C $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150350 -0500
++	$A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 -0500
++	$F $Z $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150680 -0500
++	$Z $E $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 -0500
++	EOF
++'
+ 
+ ed="Thu, 26 May 2005 18:32:00 -0500"
+ gd="Thu, 26 May 2005 18:33:00 -0500"
+-- 
+gitgitgadget
 
-When all files from some subdirectory were renamed to the root
-directory, the directory rename heuristics would fail to detect that
-as a rename/merge of the subdirectory to the root directory, which has
-been corrected.
