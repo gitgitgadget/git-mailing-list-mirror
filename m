@@ -7,107 +7,97 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75ED41F4C0
-	for <e@80x24.org>; Wed, 16 Oct 2019 19:10:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 538121F4C0
+	for <e@80x24.org>; Wed, 16 Oct 2019 19:25:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436527AbfJPTKS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Oct 2019 15:10:18 -0400
-Received: from relay9-d.mail.gandi.net ([217.70.183.199]:39877 "EHLO
-        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732084AbfJPTKS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Oct 2019 15:10:18 -0400
+        id S2406252AbfJPTZw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Oct 2019 15:25:52 -0400
+Received: from relay1-d.mail.gandi.net ([217.70.183.193]:59825 "EHLO
+        relay1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403999AbfJPTZv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Oct 2019 15:25:51 -0400
 X-Originating-IP: 1.186.12.12
 Received: from localhost (unknown [1.186.12.12])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 14ED7FF805;
-        Wed, 16 Oct 2019 19:10:14 +0000 (UTC)
-Date:   Thu, 17 Oct 2019 00:40:12 +0530
+        by relay1-d.mail.gandi.net (Postfix) with ESMTPSA id 882DF240007;
+        Wed, 16 Oct 2019 19:25:49 +0000 (UTC)
+Date:   Thu, 17 Oct 2019 00:55:46 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Hariom Verma via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Hariom Verma <hariom18599@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] builtin/blame.c: constants into bit shift format
-Message-ID: <20191016191012.ij3zbexu7pxupdho@yadavpratyush.com>
-References: <pull.382.git.1571250635.gitgitgadget@gmail.com>
- <3b4b8e0353d705ea649c9fb608c021b35e6d8f5b.1571250635.git.gitgitgadget@gmail.com>
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] git-gui: select staged on ui_comm focus
+Message-ID: <20191016192546.znhulmgxqqsjxy2u@yadavpratyush.com>
+References: <CAGr--=KXpt7GzqPpm1BCrsc1jhfaXeCT-XrWKNvq2pLtgAbSwQ@mail.gmail.com>
+ <20191007171145.1259-1-birger.sp@gmail.com>
+ <20191007171145.1259-2-birger.sp@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3b4b8e0353d705ea649c9fb608c021b35e6d8f5b.1571250635.git.gitgitgadget@gmail.com>
+In-Reply-To: <20191007171145.1259-2-birger.sp@gmail.com>
 User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/10/19 06:30PM, Hariom Verma via GitGitGadget wrote:
-> From: Hariom Verma <hariom18599@gmail.com>
+On 07/10/19 07:11PM, Birger Skogeng Pedersen wrote:
+> When the user focuses the Commit Message widget (to write a message), the
+> diff view may be blank.
 > 
-> We are looking at bitfield constants, and elsewhere in the Git source
-> code, such cases are handled via bit shift operators rather than octal
-> numbers, which also makes it easier to spot holes in the range
-> (if, say, 1<<5 was missing, it is easier to spot it between 1<<4
-> and 1<<6 than it is to spot a missing 040 between a 020 and a 0100).
+> With this patch a staged file is automatically selected when the Commit
+> Message widget is focused, if no other file is selected (i.e. diff view
+> is blank).
 > 
-> Signed-off-by: Hariom Verma <hariom18599@gmail.com>
+> Signed-off-by: Birger Skogeng Pedersen <birger.sp@gmail.com>
 > ---
->  builtin/blame.c | 24 ++++++++++++------------
->  1 file changed, 12 insertions(+), 12 deletions(-)
+>  git-gui.sh | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 > 
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index e946ba6cd9..a57020acf9 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -319,18 +319,18 @@ static const char *format_time(timestamp_t time, const char *tz_str,
->  	return time_buf.buf;
+> diff --git a/git-gui.sh b/git-gui.sh
+> index b7f4d1e..70b846a 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -2700,6 +2700,15 @@ proc toggle_commit_type {} {
+>  	do_select_commit_type
 >  }
 >  
-> -#define OUTPUT_ANNOTATE_COMPAT	001
-> -#define OUTPUT_LONG_OBJECT_NAME	002
-> -#define OUTPUT_RAW_TIMESTAMP	004
-> -#define OUTPUT_PORCELAIN	010
-> -#define OUTPUT_SHOW_NAME	020
-> -#define OUTPUT_SHOW_NUMBER	040
-> -#define OUTPUT_SHOW_SCORE	0100
-> -#define OUTPUT_NO_AUTHOR	0200
-> -#define OUTPUT_SHOW_EMAIL	0400
-> -#define OUTPUT_LINE_PORCELAIN	01000
-> -#define OUTPUT_COLOR_LINE	02000
-> -#define OUTPUT_SHOW_AGE_WITH_COLOR	04000
-> +#define OUTPUT_ANNOTATE_COMPAT      (1<<0)
-> +#define OUTPUT_LONG_OBJECT_NAME     (1<<1)
-> +#define OUTPUT_RAW_TIMESTAMP        (1<<2)
-> +#define OUTPUT_PORCELAIN            (1<<3)
-> +#define OUTPUT_SHOW_NAME            (1<<4)
-> +#define OUTPUT_SHOW_NUMBER          (1<<5)
-> +#define OUTPUT_SHOW_SCORE           (1<<6)
-> +#define OUTPUT_NO_AUTHOR            (1<<7)
-> +#define OUTPUT_SHOW_EMAIL           (1<<8)
-> +#define OUTPUT_LINE_PORCELAIN       (1<<9)
-> +#define OUTPUT_COLOR_LINE           (1<<10)
-> +#define OUTPUT_SHOW_AGE_WITH_COLOR  (1<<11)
+> +proc check_diff_selected {} {
+> +	global current_diff_path file_lists
+> +	# If no diff path selected, select a staged file
+> +	if {$current_diff_path eq {}
+> +		&& [llength $file_lists($::ui_index)] > 0} {
 
-Nitpick: In the code you remove, tabs were used for alignment. Here, you 
-use spaces. Unless there is any specific reason to do it this way, might 
-as well keep the older style.
+Nitpick: Please declare ui_index to be global. That way we can just use 
+$ui_index instead of the more tedious $::ui_index.
 
-There was some discussion recently about converting these related 
-#defines to enums [0]. We might consider doing that here.
-
-If you read through that entire thread, you'd see that there were some 
-disagreements about whether using enums for sets of bits is a good idea 
-([1] and [2]), but it is at least something worth considering while we 
-are on this topic.
-
-FWIW, I think it is a good idea to use an enum here.
-
+> +		select_path_in_widget $::ui_index
+> +	}
+> +}
+> +
+>  ######################################################################
+>  ##
+>  ## ui construction
+> @@ -3437,6 +3446,8 @@ pack .vpane.lower.commarea.buffer.header -side top -fill x
+>  pack .vpane.lower.commarea.buffer.frame -side left -fill y
+>  pack .vpane.lower.commarea.buffer -side left -fill y
 >  
->  static void emit_porcelain_details(struct blame_origin *suspect, int repeat)
->  {
+> +bind $ui_comm <FocusIn> {check_diff_selected}
+> +
 
-[0] https://public-inbox.org/git/20191010115230.10623-1-wambui.karugax@gmail.com/
-[1] https://public-inbox.org/git/20191014182754.82302-1-jonathantanmy@google.com/
-[2] https://public-inbox.org/git/xmqqk19ag60g.fsf@gitster-ct.c.googlers.com/
+This would mean the diff shows _only_ when you switch focus to the 
+commit message buffer. If the buffer is already in focus, and you stage 
+all files via Ctrl-I, the staged diff would not show.
+
+IIRC you were having some trouble with this. A quick suggestion without 
+looking too much into the problem is to try putting the logic inside 
+`do_add_all` instead of inside the bind event handler.
+
+>  # -- Commit Message Buffer Context Menu
+>  #
+>  set ctxm .vpane.lower.commarea.buffer.ctxm
+> -- 
+> 2.23.0.windows.1
+> 
 
 -- 
 Regards,
