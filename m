@@ -2,81 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 989CD1F4C0
-	for <e@80x24.org>; Wed, 16 Oct 2019 20:07:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B61F1F4C0
+	for <e@80x24.org>; Wed, 16 Oct 2019 20:24:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387813AbfJPUHc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Oct 2019 16:07:32 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:33469 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387601AbfJPUHc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Oct 2019 16:07:32 -0400
-Received: by mail-vs1-f67.google.com with SMTP id p13so27632vso.0
-        for <git@vger.kernel.org>; Wed, 16 Oct 2019 13:07:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=V+33cFGycmFgNDXAfrzF+UFmeSO2HSktxhPG11b6yVw=;
-        b=Y/mL4SS5Hswm1GxDKRRebwN6ICRSsPxgOjF8eTQfvJLDgDGbmE01uA8CpKLRpPYE8Q
-         HxllLP8gWbStOhM+ZNZAmsQGYhQLBNtNyl6y3C5u9IIurwzDLeAt4ri4/DAcQLxg/GQL
-         T7yVMqv6E5bX2wt9ELW/ws9iZIRzzWOjpkOxiKIEbJ/RSnsIGLwYz1LorNaH+q/A9ux7
-         S+BthNckZEh1kSgoidUWuZIm7S563r/G+/KU393ZpKHUCf5GvBlMjHPEAxEI4b/jr4UZ
-         L7jxJYQibCVP8HsBcaSCpvt73G1HEhJXlMe+1y2ugPgnC+fuNGtL7JqOvbWRnwynn7Pd
-         S3yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=V+33cFGycmFgNDXAfrzF+UFmeSO2HSktxhPG11b6yVw=;
-        b=bxMV825CGb63sakfHAWZzfjlJ5aFu5rTidqMat9Lx0Mq8fYpZq3OXySmY1dqcVK52c
-         Y32Sz/JD+BYSZUI8KRqHRssL+qpyGNialdHBAPQ7oTCTvUieGl7daWoct6lQhcmhCn89
-         nM+kGxXN1le0kOjWi1OVqIYgZVfpFXpyaavdYvTBR+gZJNecD1w/NYuSTszc3N03X86b
-         Qm+bQJPnHbUeXfzUc+/sOjMGi/ZpJhPRg9lkm0UvtKSEEcQynpe4rXhpwgG0IVS0KyH/
-         hVeAmZimE4hNFhytvWnztpWLqt182PrFx/DBa8sl8QkBAW2bbeJ+j4DWHn7MqlmUFQz0
-         wUvg==
-X-Gm-Message-State: APjAAAU5cMYGKwSNk42YRb1NcrddwepQfNiVR+fnShOwgpiWUbsPS5Oa
-        NQ6pIRVWTGnR2Oqd6zTVlE0yIKi7pVRQzZJJUrzKAA==
-X-Google-Smtp-Source: APXvYqyw/jZ85o721+XbYCr22r3WakQx5/cqkpHXxOXbq2sZ4Q0mwY/WXcMFHql63B0jtJ5Kp5M/YmFR4NVsADMcBDQ=
-X-Received: by 2002:a67:f84d:: with SMTP id b13mr24185876vsp.136.1571256451298;
- Wed, 16 Oct 2019 13:07:31 -0700 (PDT)
+        id S2437105AbfJPUYY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Oct 2019 16:24:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59168 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388251AbfJPUYY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Oct 2019 16:24:24 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3B5FF21835;
+        Wed, 16 Oct 2019 20:24:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1571257463;
+        bh=654k4bM86cMPVbhxD+IMxc4Z4DAQA6mCjJMdgRCfKwk=;
+        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
+        b=xKlgv2aIYZ2rSMV2vshSW0PI7TjlcA8FrFs50XNIfy3Jzy08Vuk4oxt84OOnXk8kS
+         soz0lBlZl1HaeSVzadyUNpMK7n18PUVVLE/6HyZ2xqxfTZ6qRLmK/BVVJ3xUDC3NjT
+         doRa/y7B6bSHLRSpQUKY8a+WdJ6sf99nQHM3MuWM=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <pull.316.v3.git.gitgitgadget@gmail.com> <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
-In-Reply-To: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 16 Oct 2019 13:07:20 -0700
-Message-ID: <CABPp-BHkjx-qVNXAF4eiwa2Uer0_=epqhfOTMyigU_MpJ8xk4w@mail.gmail.com>
-Subject: Re: [PATCH v4 00/17] New sparse-checkout builtin and "cone" mode
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ab9b0dba-5c5b-5a97-07c5-ce8344cd74cd@kdbg.org>
+References: <20191004213029.145027-1-sboyd@kernel.org> <c3a054d9-2646-e440-40c5-b0aecf21e690@kdbg.org> <20191008144306.B2B0820659@mail.kernel.org> <ab9b0dba-5c5b-5a97-07c5-ce8344cd74cd@kdbg.org>
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org, Adrian Johnson <ajohnson@redneon.com>,
+        William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
+        Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+        Junio C Hamano <gitster@pobox.com>,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>
+Subject: Re: [PATCH] userdiff: Fix some corner cases in dts regex
+User-Agent: alot/0.8.1
+Date:   Wed, 16 Oct 2019 13:24:22 -0700
+Message-Id: <20191016202423.3B5FF21835@mail.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 15, 2019 at 6:56 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Updates in V4:
->
->  * Updated hashmap API usage to respond to ew/hashmap
->
->
->  * Responded to detailed review by Elijah. Thanks!
->
->
->  * Marked the feature as experimental in git-sparse-checkout.txt the same
->    way that git-switch.txt does.
+Quoting Johannes Sixt (2019-10-12 05:54:00)
+> Am 08.10.19 um 16:43 schrieb Stephen Boyd:
+> > Quoting Johannes Sixt (2019-10-05 07:09:11)
+> >> Am 04.10.19 um 23:30 schrieb Stephen Boyd:
+> >>> --- /dev/null
+> >>> +++ b/t/t4018/dts-nodes-multiline-prop
+> >>> @@ -0,0 +1,12 @@
+> >>> +/ {
+> >>> +     label_1: node1@ff00 {
+> >>> +             RIGHT@deadf00,4000 {
+> >>> +                     multilineprop =3D <3>,
+> >>> +                                     <4>;
+> >>
+> >> You could insert more lines to demonstrate that "<x>," on a line by
+> >> itself is not picked up.
+> >=20
+> > Maybe I should add another test?
+>=20
+> This is is the _multi_line test case, right? ;) Just add one or two
+> lines between the <3> and the <4> that look like common real-world cases
+> to show that those lines won't be picked up. I don't think that another
+> test file is required.
 
-I read through the range-diff, and it all looks good to me other than
-one issue I flagged on patch 1.
+Ok got it!
 
-Nice work!
+>=20
+> >>> +/ { RIGHT /* Technically just supposed to be a slash and brace */
+> >>
+> >> Devil's advocate here: insert ';' or '=3D' in the comment, and the line
+> >> would not be picked up. Does that hurt in practice?
+> >=20
+> > I don't think it hurts in practice so I'd like to ignore it.
+>=20
+> Sure, no problem.
+>=20
+> >>>  PATTERNS("dts",
+> >>>        "!;\n"
+> >>> +      "!.*=3D.*\n"
+> >>
+> >> This behaves the same way as just
+> >>
+> >>         "!=3D\n"
+> >>
+> >> no?
+> >>
+> >=20
+> > Not exactly. Properties don't always get assigned.
+>=20
+> I was just refering to the added line, not the combination of the two lin=
+es.
+
+Ah ok. I'll reduce the line as you suggest then. Thanks.
+
+>=20
+> But while you are speaking of it:
+>=20
+> > There are boolean
+> > properties that can be tested for by the presence of some string with an
+> > ending semi-colon, like 'this-is-true;'. If we just check for not equal
+> > to a line with a semicolon and newline then we'll see boolean
+> > properties. Should I add that as another test?
+>=20
+> I agree that a test case with a Boolean property would be great.
+>=20
+
+Alright I'll work on that and resend.
+
