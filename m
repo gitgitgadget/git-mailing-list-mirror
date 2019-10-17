@@ -2,86 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A2721F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 07:17:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE5C81F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 07:25:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391197AbfJQHPh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 03:15:37 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64818 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726208AbfJQHPh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 03:15:37 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5CB838A7C0;
-        Thu, 17 Oct 2019 03:15:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=RT/dARsSNJqO
-        B7itAPcUDjW//3Q=; b=ub1t+3X1a4ePnlunuzzkhew2RCW3DTOr7xceUhpVjQnl
-        bmKVvjOfV/vULTeSTAMT+GdQVS+GrsrqeMelX15YZk9Fs7C3JFwo2pXVi9bO2MLN
-        6l2c/cINrvTILYgnnEIA9IAl+h/LSUjfgblZl5rkmXLTpTrMpi+6IOEjj5ZBO8s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=qSYMIs
-        Oc6Nj1jaT41+opIvXBO0ZVeMsiqM/ZrIReR9lHqqlc8h4ZO4yz8robaKnF8cw4zb
-        2CXvNC/HpB6WXehw2aveMks/JNwN7C4GVDUMl1CYV0OxudkGJ6/1FfIWCe+JZVcu
-        dq7uBHEVA1at9sD9FdedOYM55Uufsmd+zSwZg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 542FB8A7BF;
-        Thu, 17 Oct 2019 03:15:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7E2028A7BB;
-        Thu, 17 Oct 2019 03:15:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] git_path(): handle `.lock` files correctly
-References: <pull.401.git.1571209637.gitgitgadget@gmail.com>
-        <f08c90ea02f6811b310a01301acf46da133f38a9.1571209637.git.gitgitgadget@gmail.com>
-        <20191016110440.GV29845@szeder.dev>
-Date:   Thu, 17 Oct 2019 16:15:31 +0900
-In-Reply-To: <20191016110440.GV29845@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message of
-        "Wed, 16 Oct 2019 13:04:40 +0200")
-Message-ID: <xmqqzhhz7sh8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2405114AbfJQHX1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 03:23:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50596 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727132AbfJQHX1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 03:23:27 -0400
+Received: (qmail 22894 invoked by uid 109); 17 Oct 2019 07:23:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 17 Oct 2019 07:23:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6579 invoked by uid 111); 17 Oct 2019 07:26:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 17 Oct 2019 03:26:32 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 17 Oct 2019 03:23:26 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        christian.couder@gmail.com, git@vger.kernel.org,
+        chriscool@tuxfamily.org, ramsay@ramsayjones.plus.com
+Subject: Re: [RFC PATCH 10/10] pack-objects: improve partial packfile reuse
+Message-ID: <20191017072326.GA14045@sigill.intra.peff.net>
+References: <20190913130226.7449-11-chriscool@tuxfamily.org>
+ <20191010235952.174426-1-jonathantanmy@google.com>
+ <20191011180125.GA20601@sigill.intra.peff.net>
+ <xmqqsgnyg76d.fsf@gitster-ct.c.googlers.com>
+ <20191013073851.GA7001@sigill.intra.peff.net>
+ <xmqq8spj97mj.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E8AF5D1C-F0AD-11E9-9D39-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqq8spj97mj.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+On Thu, Oct 17, 2019 at 04:03:00PM +0900, Junio C Hamano wrote:
 
-> However, I'm not sure what the right path should be in the first
-> place, given that each working tree has its own 'logs' directory, but
-> only for HEAD's reflog, while everything else goes to the main working
-> tree's 'logs' directory.
+> Jeff King <peff@peff.net> writes:
+> 
+> >> Hmm, I am kind of surprised that the decoding side allowed such a
+> >> padding.
+> >
+> > IIRC, the "padding" is just a sequence of 0-length-plus-continuation-bit
+> > varint bytes. And for some reason it worked for the size but not for the
+> > delta offset value.
+> 
+> I think the reason is because they use different varint definition.
+> 
+> The encoding used in builtin/pack-objects.c::write_no_reuse_object()
+> is for offsets, and it came much later and with an improvement over
+> the encoding used for delta size in diff-delta.c::create_delta().
+> The more recent encoding does not allow padding (when I compare the
+> decoders for these two encodings, I notice there is +1 for each
+> 7-bit iteration; this essentially declares that a byte with "not the
+> final byte" bit set with all other bits clear does not mean 0 but it
+> means 1, which breaks the idea of padding to encode filler zero
+> bits).
 
-As all worktrees should share the same view of where 'master' (for
-example) branch points at, what commit it was pointing at before,
-etc., the reflogs should also be shared for refs.  The exception is
-the HEAD where each worktree can point at its own commit (when detached)
-or a branch (when not).
+Yeah, that sounds right. I think the "old" one is actually the pack size
+header in unpack_object_header_buffer(), not the delta size header.
 
-The above "should" does not mean "I know the code works that way so
-if your git behaves differently your compiler is wrong"; it just
-means "that's the logical conclusion of the basic design, and if
-your git does not behave that way, we have a bug (or two)".
+At any rate, it seems like a terrible idea, so I'll be glad to see the
+code dropped. :)
 
-Thanks.
+-Peff
