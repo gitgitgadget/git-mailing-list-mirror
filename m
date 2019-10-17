@@ -7,52 +7,54 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8FD61F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 22:20:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBB781F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 22:55:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438377AbfJQWUp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 18:20:45 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:46116 "EHLO
+        id S2438120AbfJQWzg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 18:55:36 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:46142 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388926AbfJQWUo (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 17 Oct 2019 18:20:44 -0400
+        by vger.kernel.org with ESMTP id S2389846AbfJQWzf (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 17 Oct 2019 18:55:35 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0E5F96049B;
-        Thu, 17 Oct 2019 22:20:42 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E04F360459;
+        Thu, 17 Oct 2019 22:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1571350843;
-        bh=3h1YeqBjSUHipN5u6zeB/AwZev3oeUcuAkokDimMXBw=;
+        s=default; t=1571352934;
+        bh=gwDdVO1Lr/qZ50BKhGFrpLR0+2bTpWkl2E+SMC+cdSQ=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=ppGMe7pzPrJe4xz5TM+oxVpy2URRaObdDjj3Ib8ojy+Ih6DfWKYba5v3JZD5lzBfk
-         KcMKT4Zvg4JDFztpvmmxkfH3MUEuoaDFCUZOLDMZUvBjs+ebE5gVi1ZwJZkf7cgBeI
-         Rf819okMWDNJXsPBuw7N+ov9Ou/HQdCnrHDGxDVWhCoxMO/JGJ+m0yC8zJjRWH1Wiw
-         iLuSPcakcmBE8gFUROnuuwXZxUvKaTbw4g7+H+OeO48uKuqNfo20lBcLU/HnEvK+wk
-         l4B5GMbdwMYXi73Vg9UOt4AF1CglXLwCmxwAjd08iNrV/9RbrVuFdrGhDln/ZHI1wD
-         AU3kPZNLis6xxsrkbbZxjqLUWaPY2QOME4kLDqE8I2w5gOzoa+MpJyrAsCAronK9pG
-         0kJVsGLFLeaWSi3/HbFQ6YSvIB2JeYDglwg6j7cL0uSCY/z8r1glKB63T+yC8XeZly
-         IJHaih62TTIPEZPxe0PoyECMsCYi4nmCvfy9ELkti7l9qBbtIhI
-Date:   Thu, 17 Oct 2019 22:20:38 +0000
+        b=Ig0CgEX0mxpqCodxQQOR5ciVuFM9cbc6AXS/LX8RZkrekBqQ6Nwo0ccRBoPstQedY
+         +IXPfV3fhDQq6zIEdhyTzpDOtVxhBYYQZG5AbyhzwVHOIFquc2DLtQ8aFcAvy3ZuEs
+         w+/YFcmpGxND3rhQjt/TNuemacWxyVctrad1lyqzzsQ66ASFexeE5CW2jnRLi8KiJN
+         KNseK1pY+6I7N7/2jE3OjjsOiGy4w2YBBZVzCUWQRJo9Q+ULsqbYVNAWMJRBVaeSOP
+         3aeFE9ipb5JrUUVcbV0ZzmVKu8moj5nbEnON1YtJFyHoGFE6XO2roulyJ/vlWHOHvj
+         OVYigkTDSB+Kg8DNsD/Oq4zG1PV3DYrdOKtnXOdCawYa6FKC15MbZkRixGBIZJmZI7
+         gTt8VWG8fzI/glaPA22I8Kb8Dcz+uTFC3NPRaPFdubC0TitXe1Ox/WQ2SM7sTJCMhO
+         8G9nJpmLvLXTHlWlOHK7W0YR7GlWMYxRyoEK/PtP0bUzGlsXfYT
+Date:   Thu, 17 Oct 2019 22:55:29 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/3] doc: provide guidance on user.name format
-Message-ID: <20191017222038.t2qlqderp44q2m7v@camp.crustytoothpaste.net>
+To:     Ralph Ewig <ralph.phd@protonmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: git smart http + apache mod_auth_openidc
+Message-ID: <20191017225529.sg37cxvyssbaitfw@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-References: <20191017005330.9021-1-sandals@crustytoothpaste.net>
- <20191017005330.9021-2-sandals@crustytoothpaste.net>
- <20191017054051.GA10253@sigill.intra.peff.net>
+        Ralph Ewig <ralph.phd@protonmail.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+References: <4eb22ffc-77a1-4cd7-2277-bdc57d31186b@protonmail.com>
+ <20191016233319.3rhmekasi5csytyl@camp.crustytoothpaste.net>
+ <1320f616-ddcc-0eed-22f2-e28eb0abf039@protonmail.com>
+ <20191017060322.GA10373@sigill.intra.peff.net>
+ <5a2cc6f5-a8d0-356b-ff4e-a716aa5675b1@protonmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="7l5lk3cysmzemj44"
+        protocol="application/pgp-signature"; boundary="y724fijyu7q4opnb"
 Content-Disposition: inline
-In-Reply-To: <20191017054051.GA10253@sigill.intra.peff.net>
+In-Reply-To: <5a2cc6f5-a8d0-356b-ff4e-a716aa5675b1@protonmail.com>
 X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
  5.3.0-trunk-amd64)
 User-Agent: NeoMutt/20180716
@@ -62,78 +64,55 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---7l5lk3cysmzemj44
+--y724fijyu7q4opnb
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2019-10-17 at 05:40:52, Jeff King wrote:
-> On Thu, Oct 17, 2019 at 12:53:28AM +0000, brian m. carlson wrote:
->=20
-> > It's a frequent misconception that the user.name variable controls
-> > authentication in some way, and as a result, beginning users frequently
-> > attempt to change it when they're having authentication troubles.
-> > Document that the convention is that this variable represents some form
-> > of a human's personal name, although that is not required.  In addition,
-> > address concerns about whether Unicode is supported.
-> >=20
-> > Use the term "personal name" as this is likely to draw the intended
-> > contrast, be applicable across cultures which may have different naming
-> > conventions, and be easily understandable to people who do not speak
-> > English as their first language.  Indicate that "some form" is
-> > conventionally used, as people may use a nickname or preferred name
-> > instead of a full legal name.
-> >=20
-> > Point users who may be confused about authentication to an appropriate
-> > configuration option instead.
->=20
-> I think this is a good distinction to draw, but...
->=20
-> >  Documentation/git-commit-tree.txt | 6 ++++++
-> >  1 file changed, 6 insertions(+)
->=20
-> ...I was surprised to see it here, where I think most users wouldn't
-> find it. Would it make sense in git-commit(1), or in the description of
-> the user.name config?
+On 2019-10-17 at 14:33:38, Ralph Ewig wrote:
+> Quick follow up question: can the git client pass
+> a token read from a cookie with a request? That
+> would enable users to sign-in via a browser, store
+> the cookie, and then use that as the access token
+> to authenticate a git request.
 
-So the user.name config description points to git-commit-tree(1), which
-describes these in detail, which is why I put it there.  I agree that
-it's not a super discoverable place, since I don't know anyone that
-actually uses git commit-tree these days.  git-commit(1) doesn't
-describe these options at all.
+Git has an option, http.cookieFile, that can read a cookie from a file,
+yes.  That does, of course, require that you're able to put the cookie
+in a file from a web browser.  I'm not aware of any web browsers that
+easily provide an option to dump cookies into a file.
 
-There are, of course, options.  I can add this text into the `user.name`
-option in git-config(5) nevertheless, which will likely be more
-discoverable, but it will split the documentation on those into two
-separate locations.  Or we can leave it in git-commit-tree(1) anyway to
-keep it together.
+Also, just as a note, this approach definitely won't work for automated
+systems you have, such as CI systems.  That's why I suggested Kerberos:
+because you can have services that have principals and you can use those
+credentials in your CI systems to access code and run jobs.
 
-Since you and Junio think this is an odd place (and I agree), I think
-it's fine to separate the text out, and I'll reroll with that change
-unless someone speaks up strongly against it.
+Clearly you know your infrastructure and users better than I do, but I
+don't recommend having a web-based sign-on as your only form of
+authentication for a Git server.  It's going to cause a lot of pain and
+inconvenience on all sides.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---7l5lk3cysmzemj44
+--y724fijyu7q4opnb
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.17 (GNU/Linux)
 
-iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl2o6TYACgkQv1NdgR9S
-9ouT3BAAuwigUF+qcea3uo/CB+qyq2gNCikyiRrFVCoG7r04Rn+SSOOWHNXhGeMa
-BrJLuSjKSMX7cCPxGCVUf43x/uheKHzgejGjaUCZ9ieBRTHgJbJTOhkieyuO2wbD
-EwOsalu9P46HMNKLUteA9yXZCwl/blUaO326Pm44x5dDX7UWGCR9G9zs4IjhZ3+F
-kiDCGkAh7zGEx7pbUiiUrJZwCWnSjg+k/6vBD/eL8p4IkLbYq9MhJKEdbvB1YDZs
-szf5piB4lxRNtMBNPl6efkNafaB+90uaFQJttGggc5Ak1WdJmKJUMfQIX3mIKwLl
-Q+904b5o26EwEo9QBeEHj//I9eBVHhhonTUHYt77ZQFUmAuorkO17RSTftdHgANR
-BjciELMMV1QiK/u0/aT1WjwJx1YAWRg92pirebNiDEKU6/ZOSCc0iXQFbzGmSgOx
-NbKn9G7mDYg66zMhG0dCSj+6K+TQKqyxVxJdbt3bd0OB7KNoUnojPj6WmyhSStHd
-xAaQz/6wkud9t/hdVHDQGBMBjkwOyvnq3IV7rWY+dC0xIQJ2S1WSDBhdDvLI1Kw7
-HnTrkmBLvciA3k6bZYrc/zE8TrQs1HcnWeL+e25IFfNwphG9jpiRJWvQyZYA3tyM
-RIjYKasnKr7QMiyAhlybDFAZvg1dnM+kHLTdPiurKLZHzKQSjN8=
-=ZKWa
+iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl2o8WEACgkQv1NdgR9S
+9osG3xAA0BQmoDvNasg02PK7Onx88NOzNPMEmSH64XeYiXQrxwfnxMBsU+JkLLhK
+gYjEhtLqwN1grULj5/mv/t0ZaNn+G8ehIULG2NoSBBh4myhSItrr5N6bfsUTNfn+
+GPn6GzUAl0RBtDjcUwE21IcT4TbonY4nQv0GGgZBI9e9Vq7ShlgT7/njnVXYObzH
+FOWmHrhl3CQMlL3LsDe/Z73YJFXwRwF3AqkG82ePwql4WdijeY/4rx8qOOpKXO0m
+nTKYGBIPA1j2IoVo60s20c1U8hbdmsJ0sLUXjvwruOh6YkDYiyZMkD/Buc693eQ+
+t4kZws5zvZrpcVe4rnHjf32MaxhQ5vQXLtVH2Gof2dvtWFMjVMCcIa9pl/12b5iO
+eVSEkqzgU7DX76ic4GZxtL8lqeR9LmyunlJDuHQv44qXVrMQ8YX036hA8O8LCb80
++ksN7imlg5HQOhn6osaxIi07Wxqk5ExDKbAnYvC6fZ6Zzfr8BBBaRoAzDQoAgd2a
+PrD21LyYvjhAsbHtv3GXi4iHQ7piO79UA3wUWXelkUYl6wLTwr7s8aABElHmFu/O
+emCwASBPw6a/YtEjb3eG5k7NnW3zVeZek+UA0TuH3suMHnsHqtEFsGEEsEwnMs1N
+WjkQ9wtcjzde99xvGRrNqsAQrAybXF0TIICL+jfhj/6BgwH5Oyk=
+=6K6h
 -----END PGP SIGNATURE-----
 
---7l5lk3cysmzemj44--
+--y724fijyu7q4opnb--
