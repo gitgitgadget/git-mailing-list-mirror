@@ -7,82 +7,72 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4A6D1F4C1
-	for <e@80x24.org>; Thu, 17 Oct 2019 07:38:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 942DD1F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 07:39:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438315AbfJQHiz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 03:38:55 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59855 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727257AbfJQHiy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 03:38:54 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B62108AACA;
-        Thu, 17 Oct 2019 03:38:53 -0400 (EDT)
+        id S2388686AbfJQHjw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 03:39:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59324 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726372AbfJQHjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 03:39:52 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 78FAB1CFD7;
+        Thu, 17 Oct 2019 03:39:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9CicVFcvR988xP+vMVa2A8+v9FY=; b=fAljEi
-        3STTR5w581xKGnJ/SHor+19Zq4IN+WnMrZdxUu3kkuTmKnqAD758EKb0k/xP9uu8
-        E0wX4iJsfpDvViFUHpPc4KVS5QmQLWFutLmxTwgkl4EGlDRBQs4V7hZ5ISWm+mFv
-        HUz2zvaQoSlQnrcZSPfwsB9WcP8tAUKmPRl0I=
+        :content-type; s=sasl; bh=BcE4436srP+0gwe09XXKI3GMC0U=; b=gVoL1t
+        Og1ik4b/DXGTQJ+4YQeQYt0/p8Y5MZetmIQx8eQcRj6hATh4ghuszX1XrHKFjEcV
+        +VNh2TaUIq0wh2r3VTs/J/nBAjTOXfsrlXtxrlnvUnA/W4p50mxf23yQmiNeU7Gh
+        mwVc0BV6TPEZD1Uou+uF4VeNQFCDfI0opNTyE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FaIUhDISdZIowVeu3R9iLMhGZjIzoaw1
-        5cYOXMs0RsttoYESF8Bj4Y39fgD46vmQ4qmtjYQEBDNdvZqFRbeZOqQQccw+gBHP
-        gwzB0Zdj37dFBsFXLGO6RcOiTY9cIb5QeNZfKZ35liRp33v4ByXbP2x9OYlY/5bC
-        AClSycIk9Fc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A39978AAC9;
-        Thu, 17 Oct 2019 03:38:53 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=qRAwTYODkhs2bPI8N0lR629+eIdMScxx
+        LUruZEfPVvUVDlWFiz8ZSrIFKppByCEnlRf87vNCjn4rMNwSN5/+DwEzjn0McGKX
+        nZtnYErk/hxf9QCurHIsazt7A6mTRwquX8q7fWILdN0pnD8vvzBdgXY8jYxMeeSo
+        4grG0lAH8ss=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6FDBB1CFD6;
+        Thu, 17 Oct 2019 03:39:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C57288AAC7;
-        Thu, 17 Oct 2019 03:38:50 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C26761CFD5;
+        Thu, 17 Oct 2019 03:39:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Hariom Verma <hariom18599@gmail.com>
-Subject: Re: [PATCH 1/1] builtin/blame.c: constants into bit shift format
-References: <pull.382.git.1571250635.gitgitgadget@gmail.com>
-        <3b4b8e0353d705ea649c9fb608c021b35e6d8f5b.1571250635.git.gitgitgadget@gmail.com>
-Date:   Thu, 17 Oct 2019 16:38:48 +0900
-In-Reply-To: <3b4b8e0353d705ea649c9fb608c021b35e6d8f5b.1571250635.git.gitgitgadget@gmail.com>
-        (Hariom Verma via GitGitGadget's message of "Wed, 16 Oct 2019 18:30:35
-        +0000")
-Message-ID: <xmqqr23b7ref.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] doc: provide guidance on user.name format
+References: <20191017005330.9021-1-sandals@crustytoothpaste.net>
+        <20191017005330.9021-2-sandals@crustytoothpaste.net>
+        <20191017054051.GA10253@sigill.intra.peff.net>
+Date:   Thu, 17 Oct 2019 16:39:48 +0900
+In-Reply-To: <20191017054051.GA10253@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 17 Oct 2019 01:40:52 -0400")
+Message-ID: <xmqqmudz7rcr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2989275C-F0B1-11E9-9CEA-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 4CB24092-F0B1-11E9-AA80-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> -#define OUTPUT_SHOW_AGE_WITH_COLOR	04000
-> +#define OUTPUT_ANNOTATE_COMPAT      (1<<0)
-> +#define OUTPUT_LONG_OBJECT_NAME     (1<<1)
-> +#define OUTPUT_RAW_TIMESTAMP        (1<<2)
-> +#define OUTPUT_PORCELAIN            (1<<3)
-> +#define OUTPUT_SHOW_NAME            (1<<4)
-> +#define OUTPUT_SHOW_NUMBER          (1<<5)
-> +#define OUTPUT_SHOW_SCORE           (1<<6)
-> +#define OUTPUT_NO_AUTHOR            (1<<7)
-> +#define OUTPUT_SHOW_EMAIL           (1<<8)
-> +#define OUTPUT_LINE_PORCELAIN       (1<<9)
-> +#define OUTPUT_COLOR_LINE           (1<<10)
-> +#define OUTPUT_SHOW_AGE_WITH_COLOR  (1<<11)
+> I think this is a good distinction to draw, but...
+>
+>>  Documentation/git-commit-tree.txt | 6 ++++++
+>>  1 file changed, 6 insertions(+)
+>
+> ...I was surprised to see it here, where I think most users wouldn't
+> find it. Would it make sense in git-commit(1), or in the description of
+> the user.name config?
 
-For these small shift counts it probably would not matter, but it
-may be a good discipline to make sure they are treated as constants
-of an unsigned type (i.e. write them as (1U<<0) etc.).  It probably
-starts to matter when you reach 1<<31 if these are bits stuffed into
-"unsigned int" on 32-bit arch.
-
-One advantage of octal and hexadecimal notations have is that
-0x80000000 is automatically unsigned, IIRC, on such an archtecture.
+Yeah, I had the same reaction as you had, both positive and negative
+(eh, rather "surprised").
