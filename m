@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49D6C1F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 23:17:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8908A1F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 23:17:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441762AbfJQXRJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 19:17:09 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:33450 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2441747AbfJQXRI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 19:17:08 -0400
-Received: by mail-pg1-f195.google.com with SMTP id i76so2243626pgc.0
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 16:17:06 -0700 (PDT)
+        id S2441768AbfJQXRN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 19:17:13 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:40369 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2441759AbfJQXRM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 19:17:12 -0400
+Received: by mail-pl1-f194.google.com with SMTP id d22so1876501pll.7
+        for <git@vger.kernel.org>; Thu, 17 Oct 2019 16:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=N0RwbgMT7qOjOuF5P7xPwNJhhBdM1tVI5e8f7ty9QxQ=;
-        b=nHyEbUzEjx94SZN7R+34n9OM6StRsYw78bASZti1RyF/pIV8PtO9lWllsOH9oSurrq
-         KH+5/5IRIjJGcf10bWkUNZ5tIBxCzV5JLtI4uSAcJ0GMI1VUiOGCqKDWEMwcdjDrnUZB
-         95Dz3VbNdTGsjwjYOlHaDGfyqmG9vXLPOfM2rceDcstSUTs4Cb9LRW1rqVM3oEQhNx2y
-         8HC13B6pxkhDrsfwJPaNwebdS9zn0dK0McppXonZBpU9vtnNdrUKf8eid+ZAsQAZNpaI
-         bbFdetAZDblqxQ3cDyA0Grha7m8vvF4ENUWpzA3S6Bxp/VMXvEdiROn15OgqlzMfv7MO
-         LG4g==
+        bh=78tdwGBH29xMqPEh9T+22n06BVtR/cM8Z4/9MKcDpYk=;
+        b=SZ3pbfA216e6MnIvmnhUwMp4yO65lCjtETD987OdKBK7iOdpEdor/TV7/1EM63A3cj
+         qkk5/Hzh2BRcXHml68+TZZDXsxrfYCnloO6gHR1F/mZSw3tPMj9bYC3lUZv4SZ91RnoN
+         EMTldmDdsp0NQNBzNzLmsrdgESF9dU7cafhBph7o60w8IX2By6a7dRBcx0aNhIp6rcI0
+         4+euhrH8QGzc9EZ3+QQPC/e6L2ZX2IeTfXeY3iOIx0dtEDulWbOKkhYcVhDfrmWhTp7b
+         AIzSCYew7hvxJwjiTuh7MNdmc0s0Tk4urm7uUObMAzHSliUvK0AgJu8bqd5IMF6gnQaL
+         3/Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=N0RwbgMT7qOjOuF5P7xPwNJhhBdM1tVI5e8f7ty9QxQ=;
-        b=ldgpVJerSix/RerBnOIYLTnCOGlBcwKQDnegA+ncD9Hj+WiswY5R7jlN1Yvx6O3hX6
-         UdDfFeXSGb9UpgbdQ3Gv+32/0qKYa8qlxZz887G2wE6IEzmz6CdMGLRcRXVa4MA9rAGW
-         HItF1/XrnlVEicWbOGe9NU2BBX3smCqV+J7U6poRpzHYpp1l5cKd+IYumdUIVcwYrF5y
-         L3xVA/uaj2lZq/+Ja6ElpX9AGAn3FtFX8Lx+nWyu2pOE1mqgvWEpuVZ7rvZX+sCuLALz
-         jmcZ7IefgYRnUaRa/X75q1sVPUf8bgLF0m0/zKaMsyyWA9hBhDp8BKeshMtefElHDhhK
-         IThg==
-X-Gm-Message-State: APjAAAUEyltxlELuZCnyLnR7TUdlgsCN4eQCHnbpP0o/0ibnhAPBxMGf
-        BEaLoLhCTcwlcpiVOK32tK1yckND
-X-Google-Smtp-Source: APXvYqw8wazkRjMb7bjxIoADUWJX7e5LYS896RySMPVaS9zw/gXqF048jC6B+8s7LitHLQK5ruhZ4w==
-X-Received: by 2002:a17:90a:246e:: with SMTP id h101mr7238477pje.133.1571354225335;
-        Thu, 17 Oct 2019 16:17:05 -0700 (PDT)
+        bh=78tdwGBH29xMqPEh9T+22n06BVtR/cM8Z4/9MKcDpYk=;
+        b=rPhzKDHsqJsJDP0d7ZIy8NkAV7pUIbQ37rjC+DEt0MObIWkttb/l0CZOwYORCPSEsx
+         6EYhT96iPzi3xj94dBunwrBB3hHOr8X3QU4N+MT3CSQuHa/qJPpuEhtL3SDyIGxf/gg5
+         dOhHL1ZDcK5G6sPc7lUUqvmudRIHZXevfCgk6xv7XB8AxsFvWiaLPYaLyIswu5adnjlU
+         WNIcMlNHmyZtLrZYAGZAJfWE3gRFO2+HjlNCbQllxTLVxLJrqIoalPRFLj470Djq9P8z
+         b75fDc6e6emwO6miFJWa3EKltrtrkc2Q1CfLrJ+caZ+3ms2k3J0/lvD1leWaqKry5bzC
+         k7YA==
+X-Gm-Message-State: APjAAAUXow4cATxJhqB7j8CKMsDf2nkh7xaKzrIy75CU2UyPJa1scx08
+        Qz5LF6LPggwujfqf6aphB5t94cl1
+X-Google-Smtp-Source: APXvYqzXsVnVb7+aUrawpK9pPWywN6u6i3owazWrPmnOMgw0U0n76P8t9CSfz5iLuZjX4a/UJ7KXiQ==
+X-Received: by 2002:a17:902:9a44:: with SMTP id x4mr6629755plv.127.1571354229611;
+        Thu, 17 Oct 2019 16:17:09 -0700 (PDT)
 Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id 4sm3394188pja.29.2019.10.17.16.17.04
+        by smtp.gmail.com with ESMTPSA id b9sm3946280pfo.105.2019.10.17.16.17.08
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2019 16:17:04 -0700 (PDT)
-Date:   Thu, 17 Oct 2019 16:17:03 -0700
+        Thu, 17 Oct 2019 16:17:09 -0700 (PDT)
+Date:   Thu, 17 Oct 2019 16:17:07 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 04/12] t5520: replace test -f with test_path_is_file
-Message-ID: <f3cb583110f508b4a421326ea6667280e848930d.1571354136.git.liu.denton@gmail.com>
+Subject: [PATCH 06/12] t5520: use test_line_count where possible
+Message-ID: <7ffbbc329f0d49f63cf5fafc211a964e8238650c.1571354136.git.liu.denton@gmail.com>
 References: <cover.1571354136.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -67,48 +67,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Although `test -f` has the same functionality as test_path_is_file(), in
-the case where test_path_is_file() fails, we get much better debugging
-information. Replace `test -f` with test_path_is_file so that future
-developers will have a better experience debugging these test cases.
+Instead of rolling our own functionality to test the number of lines a
+command outputs, use test_line_count() which provides better debugging
+information in the case of a failure.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5520-pull.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t5520-pull.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 55560ce3cd..5ab5ec508a 100755
+index 68b8822db2..9452779f40 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -39,8 +39,8 @@ test_expect_success 'pulling into void' '
- 		cd cloned &&
- 		git pull ..
- 	) &&
--	test -f file &&
--	test -f cloned/file &&
-+	test_path_is_file file &&
-+	test_path_is_file cloned/file &&
- 	test_cmp file cloned/file
- '
- 
-@@ -50,8 +50,8 @@ test_expect_success 'pulling into void using master:master' '
- 		cd cloned-uho &&
- 		git pull .. master:master
- 	) &&
--	test -f file &&
--	test -f cloned-uho/file &&
-+	test_path_is_file file &&
-+	test_path_is_file cloned-uho/file &&
- 	test_cmp file cloned-uho/file
- '
- 
-@@ -99,7 +99,7 @@ test_expect_success 'pulling into void must not create an octopus' '
+@@ -699,7 +699,8 @@ test_expect_success 'git pull --rebase does not reapply old patches' '
  	(
- 		cd cloned-octopus &&
- 		test_must_fail git pull .. master master &&
--		! test -f file
-+		test_must_fail test_path_is_file file
+ 		cd dst &&
+ 		test_must_fail git pull --rebase &&
+-		test 1 = $(find .git/rebase-apply -name "000*" | wc -l)
++		find .git/rebase-apply -name "000*" >patches &&
++		test_line_count = 1 patches
  	)
  '
  
