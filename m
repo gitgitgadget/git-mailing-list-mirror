@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C321A1F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 23:17:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49D6C1F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 23:17:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441764AbfJQXRK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 19:17:10 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:39331 "EHLO
+        id S2441762AbfJQXRJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 19:17:09 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:33450 "EHLO
         mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2441759AbfJQXRI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S2441747AbfJQXRI (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 17 Oct 2019 19:17:08 -0400
-Received: by mail-pg1-f195.google.com with SMTP id p12so2227481pgn.6
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 16:17:08 -0700 (PDT)
+Received: by mail-pg1-f195.google.com with SMTP id i76so2243626pgc.0
+        for <git@vger.kernel.org>; Thu, 17 Oct 2019 16:17:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=YC4fNJbTJjmIdhF80DE7oVpxjmUfghRQyvty2Bht8KY=;
-        b=L/h27Ep2h0whu510TamX0oI5Q+wB+wFL7u4vVWfJnZLjpyu4nE4A4FVaLN25iriskI
-         mlm9Dp9C6q1lpbk7F/j20bUsRJVAuVNcshYjZqS5MivEL6d7qSsUV0hNjdhSUucYJE0g
-         6uxIitS0vr5hwrJpoN44Dcvb0Ig1Ed1+huwedMs1MAlgpWArhH1JYYDEv0Jrj0WEc71Q
-         a6ks50EVE5yiQd2YPWXDB1FIcFsvq1Ad33eGRLigkMIVC3gworp1NTYwpo+k/wWJkEkU
-         hvGqbTmSKDYdF1zkc7FrrKaYRZvjrXQP8qeRotbhqYddjm+rrcq0SQrmN+8u/aNlKhAf
-         FXZg==
+        bh=N0RwbgMT7qOjOuF5P7xPwNJhhBdM1tVI5e8f7ty9QxQ=;
+        b=nHyEbUzEjx94SZN7R+34n9OM6StRsYw78bASZti1RyF/pIV8PtO9lWllsOH9oSurrq
+         KH+5/5IRIjJGcf10bWkUNZ5tIBxCzV5JLtI4uSAcJ0GMI1VUiOGCqKDWEMwcdjDrnUZB
+         95Dz3VbNdTGsjwjYOlHaDGfyqmG9vXLPOfM2rceDcstSUTs4Cb9LRW1rqVM3oEQhNx2y
+         8HC13B6pxkhDrsfwJPaNwebdS9zn0dK0McppXonZBpU9vtnNdrUKf8eid+ZAsQAZNpaI
+         bbFdetAZDblqxQ3cDyA0Grha7m8vvF4ENUWpzA3S6Bxp/VMXvEdiROn15OgqlzMfv7MO
+         LG4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YC4fNJbTJjmIdhF80DE7oVpxjmUfghRQyvty2Bht8KY=;
-        b=GOsaDAHDixcFcKuf5f74TFOT8XdXHhiiLj8c0UYh4uYUwsZDgbkLY2oytbLpsI5kUE
-         bS7xPGZndmLcPaoZcL0pT3fHdxHQjmKeOUSZ0HkaKoUEytxfmgWER3SPXagU16QcLpY9
-         fIpeiQ+GizuzFTpgV8FDQ7JbJ2/CfMF5r6ADx5IuQoQ33fjwDel9QNoSBOZxeB4ZsaH0
-         Zk7MRJmq6IuK1iTSYVDJuBvumvINHQrLBPOV81fNYX3d5/nYnINHxO+Na2Vd3gTnINmR
-         M7Dmigtg9SsPMqbVlugbBA0jokORkeMSBXx1uUoewG5io65fhj6ZvXHiNPgRrArla0Rs
-         qE7w==
-X-Gm-Message-State: APjAAAVPnyKyhjnaFTsB2ig4fHh2+r3gxdgrpDVuZ2avwsq7+rq7gjEH
-        EnKwNlX2nzps1tb+prItgya4zIzv
-X-Google-Smtp-Source: APXvYqznwbuj/QnJVLrhTQ51N3w+nkUc1dBGc4wXmlfsoYIgQw5OAaTt2vq6/sIjDBx3vE/qzyOeXw==
-X-Received: by 2002:aa7:870f:: with SMTP id b15mr3055635pfo.123.1571354227365;
-        Thu, 17 Oct 2019 16:17:07 -0700 (PDT)
+        bh=N0RwbgMT7qOjOuF5P7xPwNJhhBdM1tVI5e8f7ty9QxQ=;
+        b=ldgpVJerSix/RerBnOIYLTnCOGlBcwKQDnegA+ncD9Hj+WiswY5R7jlN1Yvx6O3hX6
+         UdDfFeXSGb9UpgbdQ3Gv+32/0qKYa8qlxZz887G2wE6IEzmz6CdMGLRcRXVa4MA9rAGW
+         HItF1/XrnlVEicWbOGe9NU2BBX3smCqV+J7U6poRpzHYpp1l5cKd+IYumdUIVcwYrF5y
+         L3xVA/uaj2lZq/+Ja6ElpX9AGAn3FtFX8Lx+nWyu2pOE1mqgvWEpuVZ7rvZX+sCuLALz
+         jmcZ7IefgYRnUaRa/X75q1sVPUf8bgLF0m0/zKaMsyyWA9hBhDp8BKeshMtefElHDhhK
+         IThg==
+X-Gm-Message-State: APjAAAUEyltxlELuZCnyLnR7TUdlgsCN4eQCHnbpP0o/0ibnhAPBxMGf
+        BEaLoLhCTcwlcpiVOK32tK1yckND
+X-Google-Smtp-Source: APXvYqw8wazkRjMb7bjxIoADUWJX7e5LYS896RySMPVaS9zw/gXqF048jC6B+8s7LitHLQK5ruhZ4w==
+X-Received: by 2002:a17:90a:246e:: with SMTP id h101mr7238477pje.133.1571354225335;
+        Thu, 17 Oct 2019 16:17:05 -0700 (PDT)
 Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id b18sm3794972pfi.157.2019.10.17.16.17.06
+        by smtp.gmail.com with ESMTPSA id 4sm3394188pja.29.2019.10.17.16.17.04
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2019 16:17:06 -0700 (PDT)
-Date:   Thu, 17 Oct 2019 16:17:05 -0700
+        Thu, 17 Oct 2019 16:17:04 -0700 (PDT)
+Date:   Thu, 17 Oct 2019 16:17:03 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 05/12] t5520: remove spaces after redirect operator
-Message-ID: <60ee00535e95400bedc76300efdf781c83cfc8aa.1571354136.git.liu.denton@gmail.com>
+Subject: [PATCH 04/12] t5520: replace test -f with test_path_is_file
+Message-ID: <f3cb583110f508b4a421326ea6667280e848930d.1571354136.git.liu.denton@gmail.com>
 References: <cover.1571354136.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -67,8 +67,10 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The style for tests in Git is to have the redirect operator attached to
-the filename with no spaces. Fix test cases where this is not the case.
+Although `test -f` has the same functionality as test_path_is_file(), in
+the case where test_path_is_file() fails, we get much better debugging
+information. Replace `test -f` with test_path_is_file so that future
+developers will have a better experience debugging these test cases.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
@@ -76,44 +78,40 @@ Signed-off-by: Denton Liu <liu.denton@gmail.com>
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 5ab5ec508a..68b8822db2 100755
+index 55560ce3cd..5ab5ec508a 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -243,10 +243,10 @@ test_expect_success 'fast-forward fails with conflicting work tree' '
+@@ -39,8 +39,8 @@ test_expect_success 'pulling into void' '
+ 		cd cloned &&
+ 		git pull ..
+ 	) &&
+-	test -f file &&
+-	test -f cloned/file &&
++	test_path_is_file file &&
++	test_path_is_file cloned/file &&
+ 	test_cmp file cloned/file
+ '
  
- test_expect_success '--rebase' '
- 	git branch to-rebase &&
--	echo modified again > file &&
-+	echo modified again >file &&
- 	git commit -m file file &&
- 	git checkout to-rebase &&
--	echo new > file2 &&
-+	echo new >file2 &&
- 	git add file2 &&
- 	git commit -m "new file" &&
- 	git tag before-rebase &&
-@@ -542,10 +542,10 @@ test_expect_success '--rebase with rebased upstream' '
- 	git checkout copy &&
- 	git tag copy-orig &&
- 	git reset --hard HEAD^ &&
--	echo conflicting modification > file &&
-+	echo conflicting modification >file &&
- 	git commit -m conflict file &&
- 	git checkout to-rebase &&
--	echo file > file2 &&
-+	echo file >file2 &&
- 	git commit -m to-rebase file2 &&
- 	git tag to-rebase-orig &&
- 	git pull --rebase me copy &&
-@@ -591,7 +591,7 @@ test_expect_success 'pull --rebase dies early with dirty working directory' '
- 	test_config branch.to-rebase.remote me &&
- 	test_config branch.to-rebase.merge refs/heads/copy &&
- 	test_config branch.to-rebase.rebase true &&
--	echo dirty >> file &&
-+	echo dirty >>file &&
- 	git add file &&
- 	test_must_fail git pull &&
- 	test "$COPY" = "$(git rev-parse --verify me/copy)" &&
+@@ -50,8 +50,8 @@ test_expect_success 'pulling into void using master:master' '
+ 		cd cloned-uho &&
+ 		git pull .. master:master
+ 	) &&
+-	test -f file &&
+-	test -f cloned-uho/file &&
++	test_path_is_file file &&
++	test_path_is_file cloned-uho/file &&
+ 	test_cmp file cloned-uho/file
+ '
+ 
+@@ -99,7 +99,7 @@ test_expect_success 'pulling into void must not create an octopus' '
+ 	(
+ 		cd cloned-octopus &&
+ 		test_must_fail git pull .. master master &&
+-		! test -f file
++		test_must_fail test_path_is_file file
+ 	)
+ '
+ 
 -- 
 2.23.0.897.g0a19638b1e
 
