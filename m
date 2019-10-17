@@ -2,116 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 205A51F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 17:28:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 678251F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 17:35:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403977AbfJQR2W (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 13:28:22 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52799 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728639AbfJQR2W (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 13:28:22 -0400
-Received: by mail-wm1-f68.google.com with SMTP id r19so3404143wmh.2
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 10:28:20 -0700 (PDT)
+        id S2436639AbfJQRfM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 13:35:12 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34097 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728639AbfJQRfM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 13:35:12 -0400
+Received: by mail-wr1-f68.google.com with SMTP id j11so3333388wrp.1
+        for <git@vger.kernel.org>; Thu, 17 Oct 2019 10:35:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wU6udtJLxIS2hE5eQ+GhSllpnGME+kZvACQIpKKREmM=;
+        b=f/aAzui/cG+zTOF28bMfFMNwr2kuBHsWnx+0EN88Huezb9qpPjDzqMvukD382SPy8A
+         RXSfIUy1nHO0JyNaYgQtpsymWlqZ7Ufeok4DGPRkLggo4cFlDgdwyQOktSmXISZQseGX
+         bxoMrwoLuEqZ298ue1KH8zi+BjGZ4piBuzVEmCfdTDsfRCQWJbuDjd3pYuLaqOvFpm2U
+         aFlcYqG3kyc3sbsh1Bn0XkjGLt2+lHqCbKJ9mKWReOUmt3akQR2jA26BS8xaFHsgNrmX
+         wtPgDHjqACimGeK5KJYd9QxBb9p/wXaoyhz6DQI+Oj0DWoS6yG9ep4JxMIwzV7mOtXEU
+         efWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dUWcsTJHZHmcSXepfpEECXu3NjOoJXr8XP8JBzZUIFw=;
-        b=hit2QdkT0QjH/XXkkuyM8ttJNv+FGtdyOtMSpRxNsW4sxWBAq4un5qdGgY34bpUwzQ
-         8W8aFL/79PlB2Y81onFJcDl/pAxrl2twx+TR9DtKOJ7pMEfXui3mF6vey3JmfaYRROaU
-         tQoZg8K7XVh8e8DWJnH7Euc6vPEPEEFuYWhz/5EfmGPrUqaBjyGMpN1ESQibOXHasYOc
-         ZOykxcGvYH+SY3k8LmdZZo+3Ilp5ToVcuZ6GgLVRkBJPJfEL8Iz3sTTmh9AlbItFXZRH
-         PR4p35lL27abvASXsKrnhkZCrMxR3xV1LylD1C4IkWDtRUdraMUZ2e0+5gQppQ8oWq4N
-         MtLg==
-X-Gm-Message-State: APjAAAWvlp1YQlMjimXB709cnOIg9+UXlJQE7zFNdb/maYtr+8d94RJ9
-        pRTArZ+j5/G7T30mahOC0JbQiMde2KcbcUpBrfokXkP+
-X-Google-Smtp-Source: APXvYqxqlkbYjtuyn9ridv9BC892HTqfY5BHN5kDxBhCvM8XGEwVHkzA/xoeXgHtMjSytGkjBsHuUxNUMFcAuHZEwF4=
-X-Received: by 2002:a1c:9dcf:: with SMTP id g198mr3969285wme.101.1571333299647;
- Thu, 17 Oct 2019 10:28:19 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wU6udtJLxIS2hE5eQ+GhSllpnGME+kZvACQIpKKREmM=;
+        b=AEAt/leuEZehR1Dh+K3Jw7JEL70w3xCbYkpcuAD3L4xxPoHHPvbaVCNqZ+PYrTgxRE
+         I7d//ygfOI+sNwn8wOJMBbp5BlAZz3xsLn/P2ci91JP5HQfYaexo2hmP/pcAhcMjj7hq
+         CdcGTsUcg4F51LXbphepFKfJItD/yuj/KCsx38U+gov/pdP/NuVqdaOczDUjtj91T+tn
+         dz/7Y0fqqiUBieADNEQb11R9igDr9AAj8CACIbFMNzz4k3NxoJOAs6c8doWDXe65dHnL
+         dXMhTIOXRbSr/4CGvZoL7p7lYfbDjYUCfLHJJRjrBvVt6HZamvJjSm3XoZGfWV1fer7Z
+         29Dg==
+X-Gm-Message-State: APjAAAUyYV6GM6UN3ld+ZuHOYl/E+SCC/B8gnFQTEhYlWEOldPvNDkGT
+        aK84dkFRe5waaWk0UzmBmak=
+X-Google-Smtp-Source: APXvYqyjCtT408pz72oTkcTnSfRqsHPROSAxg0fMSQ7nhOLIWjEIRC/ovle7LxkSg/5COptoi0p2lg==
+X-Received: by 2002:adf:a497:: with SMTP id g23mr3889578wrb.135.1571333709684;
+        Thu, 17 Oct 2019 10:35:09 -0700 (PDT)
+Received: from localhost.localdomain (x4db41bda.dyn.telefonica.de. [77.180.27.218])
+        by smtp.gmail.com with ESMTPSA id f20sm2599876wmb.6.2019.10.17.10.35.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 17 Oct 2019 10:35:08 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 0/6] completion: improve completion for 'git worktree'
+Date:   Thu, 17 Oct 2019 19:34:55 +0200
+Message-Id: <20191017173501.3198-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.23.0.1084.gae250eaa40
 MIME-Version: 1.0
-References: <20191017162826.1064257-1-pjones@redhat.com> <20191017162826.1064257-2-pjones@redhat.com>
-In-Reply-To: <20191017162826.1064257-2-pjones@redhat.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 17 Oct 2019 13:28:09 -0400
-Message-ID: <CAPig+cS6SzLdgmzffNkg72YSiDQ9eQRqTK12NsraKpGbkJFY_w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] Make "git branch -d" prune missing worktrees automatically.
-To:     Peter Jones <pjones@redhat.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 17, 2019 at 12:28 PM Peter Jones <pjones@redhat.com> wrote:
-> Currently, if you do:
->
-> $ git branch zonk origin/master
-> $ git worktree add zonk zonk
-> $ rm -rf zonk
-> $ git branch -d zonk
->
-> You get the following error:
->
-> $ git branch -d zonk
-> error: Cannot delete branch 'zonk' checked out at '/home/pjones/devel/kernel.org/git/zonk'
->
-> It isn't meaningfully checked out, the repo's data is just stale and no
-> longer reflects reality.
+Complete paths of working trees and refs for 'git worktree's various
+subcommands.
 
-Echoing SEZDER's comment on patch 1/2, this behavior is an intentional
-design choice and safety feature of the worktree implementation since
-worktrees may exist on removable media or remote filesystems which
-might not always be mounted; hence, the presence of commands "git
-worktree prune" and "git worktree remove".
+The last two patches do the actual improvements, the first four are
+preparatory steps.
 
-A couple comment regarding this patch...
+An early version of the last patch was already sent to the list as a
+PoC over four years ago [1], but I didn't like the part completing
+options for 'git worktree add', and thus never seriously submitted it.
+I still don't really like that part :), but it is really useful when
+working with working trees, and at least other parts of the completion
+function got simpler (thanks to automagically completing --options
+via parse-options, and after the preparatory steps in this series).
 
-> Signed-off-by: Peter Jones <pjones@redhat.com>
-> ---
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> @@ -133,6 +133,20 @@ static int prune_worktree(const char *id, struct strbuf *reason)
-> +int prune_worktree_if_missing(const struct worktree *wt)
-> +{
-> +       struct strbuf reason = STRBUF_INIT;
-> +
-> +       if (access(wt->path, F_OK) >= 0 ||
-> +           (errno != ENOENT && errno == ENOTDIR)) {
-> +               errno = EEXIST;
-> +               return -1;
-> +       }
-> +
-> +       strbuf_addf(&reason, _("Removing worktrees/%s: worktree directory is not present"), wt->id);
-> +       return prune_worktree(wt->id, &reason);
-> +}
 
-"git worktree" tries to clean up after itself as much as possible. For
-instance, it is careful to remove the .git/worktrees directory when
-the last worktree itself is removed (or pruned). So, the caller of
-this function would also want to call delete_worktrees_dir_if_empty()
-to follow suit.
+[1] https://public-inbox.org/git/1440190256-21794-1-git-send-email-szeder@ira.uka.de/
 
-> diff --git a/worktree.h b/worktree.h
-> @@ -132,4 +132,10 @@ void strbuf_worktree_ref(const struct worktree *wt,
-> +/*
-> + * Prune a worktree if it is no longer present at the checked out location.
-> + * Returns < 0 if the checkout is there or if pruning fails.
-> + */
-> +int prune_worktree_if_missing(const struct worktree *wt);
 
-It's rather ugly that this function is declared in top-level
-worktree.h whereas the actual implementation is in builtin/worktree.c.
-I'd expect to see a preparatory patch which moves prune_worktree()
-(and probably delete_worktrees_dir_if_empty()) to top-level
-worktree.c.
+SZEDER Gábor (6):
+  t9902-completion: add tests for the __git_find_on_cmdline() helper
+  completion: clean up the __git_find_on_cmdline() helper function
+  completion: return the index of found word from
+    __git_find_on_cmdline()
+  completion: simplify completing 'git worktree' subcommands and options
+  completion: list existing working trees for 'git worktree' subcommands
+  completion: list paths and refs for 'git worktree add'
 
-These minor implementation comments aside, before considering this
-patch series, it would be nice to see a compelling argument as to why
-this change of behavior, which undercuts a deliberate design decision,
-is really desirable.
+ contrib/completion/git-completion.bash | 117 +++++++++++++++++++------
+ t/t9902-completion.sh                  |  57 ++++++++++++
+ 2 files changed, 148 insertions(+), 26 deletions(-)
+
+-- 
+2.23.0.1084.gae250eaa40
+
