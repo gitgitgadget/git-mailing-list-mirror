@@ -2,93 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E09D1F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 13:12:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D6501F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 13:33:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394313AbfJQNL5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 09:11:57 -0400
-Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:36897 "EHLO
-        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726898AbfJQNL5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 09:11:57 -0400
-Received: from callcc.thunk.org (guestnat-104-133-0-98.corp.google.com [104.133.0.98] (may be forged))
-        (authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id x9HDBe3l008991
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 17 Oct 2019 09:11:41 -0400
-Received: by callcc.thunk.org (Postfix, from userid 15806)
-        id 977A6420458; Thu, 17 Oct 2019 09:11:40 -0400 (EDT)
-Date:   Thu, 17 Oct 2019 09:11:40 -0400
-From:   "Theodore Y. Ts'o" <tytso@mit.edu>
-To:     Vegard Nossum <vegard.nossum@oracle.com>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>, workflows@vger.kernel.org,
-        Git Mailing List <git@vger.kernel.org>,
+        id S2388054AbfJQNdM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 09:33:12 -0400
+Received: from userp2130.oracle.com ([156.151.31.86]:52356 "EHLO
+        userp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729175AbfJQNdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 09:33:11 -0400
+Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
+        by userp2130.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x9HDNtRw096635;
+        Thu, 17 Oct 2019 13:33:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=corp-2019-08-05;
+ bh=lJRbZTgg/EUbW624nJ8C/GRS6p8r210DOZWdtGIn12Q=;
+ b=ixhQd+P4HH325gdVOLqTwNwpm/iyMGHswVh4cSD/6YN+fn5iBERv3YP0Qsca/2zOsyf1
+ utxLQ8cRhuMaXw0VM67xhUzxOBBymZS4CBpm41jdJyF0Fz0vnwxfOiSIZ6yhoRW7CFoQ
+ F0ChLBkkETkiP02mtnu2oTfAv+lZXSDWAV4je2I7C/4plxAnlXVDuSxghGW2r2YeoMDq
+ jJCbqeHUv/lcLT/lHfU18tMN1za6iNgJQ/LKej+2F49ymPj6nWKsunedzHzEa9qREVXa
+ 5wRSGzfEwIly5XcyWFxyAjNLrZvzETNTL0g6pjOy1MpcYqpGi/kHxZQyb/GUCtie/yEw Fw== 
+Received: from userp3030.oracle.com (userp3030.oracle.com [156.151.31.80])
+        by userp2130.oracle.com with ESMTP id 2vk68uxcgv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 17 Oct 2019 13:33:04 +0000
+Received: from pps.filterd (userp3030.oracle.com [127.0.0.1])
+        by userp3030.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x9HDMtei139849;
+        Thu, 17 Oct 2019 13:31:04 GMT
+Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
+        by userp3030.oracle.com with ESMTP id 2vp3bkrdyb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 17 Oct 2019 13:31:04 +0000
+Received: from abhmp0012.oracle.com (abhmp0012.oracle.com [141.146.116.18])
+        by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id x9HDV1H1023731;
+        Thu, 17 Oct 2019 13:31:01 GMT
+Received: from [10.175.56.189] (/10.175.56.189)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Thu, 17 Oct 2019 13:31:01 +0000
+Subject: Re: email as a bona fide git transport
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     workflows@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
         LKML <linux-kernel@vger.kernel.org>,
         Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
         Eric Wong <e@80x24.org>
-Subject: Re: email as a bona fide git transport
-Message-ID: <20191017131140.GG25548@mit.edu>
 References: <b9fb52b8-8168-6bf0-9a72-1e6c44a281a5@oracle.com>
- <20191016150020.cr6jgfpd2c6fyg7t@yadavpratyush.com>
- <a1c33600-14e6-be37-c026-8d8b8e4bad92@oracle.com>
+ <xmqqeezc83i6.fsf@gitster-ct.c.googlers.com>
+From:   Vegard Nossum <vegard.nossum@oracle.com>
+Message-ID: <9ec63ec0-c322-610c-e1b8-b673b983dc74@oracle.com>
+Date:   Thu, 17 Oct 2019 15:30:54 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a1c33600-14e6-be37-c026-8d8b8e4bad92@oracle.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <xmqqeezc83i6.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9412 signatures=668684
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1908290000 definitions=main-1910170122
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9412 signatures=668684
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1908290000
+ definitions=main-1910170122
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 17, 2019 at 02:23:58PM +0200, Vegard Nossum wrote:
-> Of course, this relies strongly on actually having (correct) sha1
-> references to previous versions inside the changelog. In my original
-> idea, this reference would only appear inside the merge commit that
-> binds the patchset together to minimise churn, although maybe it is
-> feasible to also append it to each patch -- in that case, the "patchset"
-> command from my first email is not sufficient to create a new version of
-> a patchset.
+On 10/17/19 5:17 AM, Junio C Hamano wrote:
+> Vegard Nossum <vegard.nossum@oracle.com> writes:
+> 
+>> Step 1:
+>>
+>> * git send-email needs to include parent SHA1s and generally all the
+>>    information needed to perfectly recreate the commit when applied so
+>>    that all the SHA1s remain the same
+>>
+>> * git am (or an alternative command) needs to recreate the commit
+>>    perfectly when applied, including applying it to the correct parent
+> 
+> You can record and convey the commit object name a series is meant
+> to be applied on top already, and it in general is a good way to
+> give a wider context in order to explain and justify the series.
+> 
+> On the other hand, "all the information needed to recreate..." is
+> not very useful.  If you want the commit object to be exactly what
+> you want to see at the tip of the end result, you are better off
+> asking your upstream to pull.  Using e-mail for that makes you and
+> project participants give up a lot of benefits the workflow based on
+> e-mail gives you, the biggest of which is the ease of giving
+> suggestions for improvements.  Once you insist "perfectly recreate
+> the commit", you are not willing to take any input from the
+> sidelines---worse yet, you are even dictating when the upstream
+> runs "git am" to turn them into commits, and do so without reading
+> the patches (there is no point reviewing as the person who runs "git
+> am" is not even allowed to fix typo or make obvious fixes to the
+> code, which will fail to perfectly recreate the commit).
+> 
+> In short, one should resist temptation to bring up "perfect
+> reproduction" when one talks about e-mail workflow.
 
-This also relies on the base of the commit actually being a public
-SHA1.  Sometimes developers will cherry-pick in a patch that they need
-so that the kernel will actually *boot* (or otherwise fix problems
-that have been fixed in other subsystems, but not yet landed in -rc2
-or -rc3).
+Please see what I wrote to Pratyush Yadav here:
 
-Of course, we could tell people that they should always create their
-patches off of the last stable version (but then there may have been
-changes pulled in via the last merge window that makes their patch not
-apply), or they could be told to develop against -rc2 or -rc3, and
-then cherry pick the required fix-up patches on top of -rc2 and -rc3,
-but then they have to do a lot more rebuilding.
+https://public-inbox.org/git/a1c33600-14e6-be37-c026-8d8b8e4bad92@oracle.com/
 
-So there are no perfect solutions here, and while in the ideal world,
--rc2 and -rc3 should be perfectly stable enough for developers so that
-they never need to manually patch in stablization patches, we need to
-live in the real world.  I believe that Darrick told me that in the
-previous development cycle, he had to wait until -rc4 before the tree
-was stable enough for him to start building xfs patches on top
-mainline.
+TL;DR: the goal is not necessarily for maintainers to be able to merge
+the patchset with the same SHA1 that the submitter had, but for the
+patchset to have a definite SHA1 that lives in git, and which can be
+used by all the participants -- submitter, reviewers, bots (including
+potentially testing/CI infrastructure), and maintainers.
 
-(This is also true for this development cycle if you enable
-CONFIG_KMEMLEAK, although fortunately, the workaround that worked for
-me was to just CONFIG_KMEMLEAK --- although of course, if I do have to
-run a KMEMLEAK test run, I'll need to cherry-pick the fix which landed
-this week on top of the ext4 git tree.)
+I am definitely not proposing to get rid of the email workflow -- on the
+contrary, this it the workflow I want to preserve! :-) The "workflows"
+mailing list was created for the purpose of discussing this topic (in
+the context of Linux kernel development) and right now there are many
+proposals that either completely cut out email or reduce it to something
+like pull requests. My proposal keeps almost everything the same, except
+for a few lines of extra metadata before the actual diff.
 
-What this all might mean is that sometimes it will make sense to allow
-the user to override the base commit so such stablization patches can
-be elided.  Of course, we could force the user to create a separate
-branch and rebase, but can be quite painful and slow --- and they
-won't be able to test the rebased branch anyway, unless we then want
-to tell them to cherry pick the stablization patches on top, and then
-remove them before running "git send-email".
+(I will answer the rest of your email separately.)
 
-						- Ted
+
+Vegard
