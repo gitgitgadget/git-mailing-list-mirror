@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 270D11F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 20:17:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AE891F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 20:17:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437020AbfJQUR1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 16:17:27 -0400
-Received: from mail-yb1-f201.google.com ([209.85.219.201]:36501 "EHLO
-        mail-yb1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731007AbfJQUR1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 16:17:27 -0400
-Received: by mail-yb1-f201.google.com with SMTP id w2so2737466ybo.3
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 13:17:27 -0700 (PDT)
+        id S2437218AbfJQURd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 16:17:33 -0400
+Received: from mail-vk1-f201.google.com ([209.85.221.201]:38142 "EHLO
+        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731007AbfJQURd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 16:17:33 -0400
+Received: by mail-vk1-f201.google.com with SMTP id k132so1412042vka.5
+        for <git@vger.kernel.org>; Thu, 17 Oct 2019 13:17:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=wuw9pHIBKMwZZl6lzf8ADfjXz2feiVGcfVtWSouL+7U=;
-        b=ggm9QlXv5qVhk2DYeiXA1Llzj6OQWq03PHX3SQUAkcEGFMf9//sBnM2uKg9uo8vZgc
-         4dEuE1lSVq6XBAZftqM1VBbXqT/GHamZwpKZunYMbMoptuDYv2QeKCLrd7KyBzVufoEQ
-         iLu7L8CFKdjfG7KkWIB4GlL4+MaAcDdCTKFzSH8BGrTrzz2ETGJjSZCeLPRuboZ8ThFv
-         lSFex7Qz7vkWbuboopRN4y2geL4MSE6jyhRcZJYR6UZafOzMtQeR9w6Rg9Nn7aSNoRCv
-         u/Af29MlGVOpG6QQ+Nvnf9bZRBi7+Zqz3XIrJ7XLvOsbOCT3fJIg8RgDcCut6V7QqtiJ
-         R7tg==
+        bh=SkWoFSW9/ZnGBNqh9eBUlPVU68AMoA32DFzs1tDlqsg=;
+        b=nO05626in75120Wd8npkKPuwJzxImKKqqAbbVwFtPzmY70Yjp3sDjDGPpLqk0qxEvK
+         aJGrGPXmR05Ei8UGks+9NMdrDhoGlGmUB7rC+5yeTE+T2Zu+/BgOt4C/c21WzJtIt0bE
+         umJiX1vVQmZxwyDB0+VzLfEFSTjUZEQjS1vJM2jIrWxZvJM2I5X2pd+7+LwKZPn45vuF
+         lAxylsBjUO8kIlUkN63LYNFW1tKh977nLt7S/bbETpejg2QBXAdoQ9robrUT9wCit1ow
+         I1aDnI8PHeVK22LZiy3yFhh7PyLx7ph6ztg4p4AXd/l/45ZGUYOwmYGk02MYT9m7o6U/
+         I6jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=wuw9pHIBKMwZZl6lzf8ADfjXz2feiVGcfVtWSouL+7U=;
-        b=m1lsaO/+qPMoZmg7BJBWRNYmPhGejN8kfeBZ00UlZjSGnXo/AKX/BYe37zLP94rmFB
-         c7lvxkx0uca1wkPqQMf0fgrRd7gmZsC2pYbICkR7UPSToQWA84xL0NjDRMqnBZhbAozx
-         ND/1j2OIKZT9MSzaWcf5ttCxQLNBckJGOk5d5nt691yi4ElZc2G9sgFHD9F4mPFk1b51
-         Lof9rmOd1/230IurIFG3w0HkrWndVIxvHKkT5YnWgAv/9TzARo1FzpM2pI62UQsvFOKH
-         BWMNdwFUNI/7IkRxacrexe2E2j72f7RwPbnvwUNNTEuzsGBVvO6Pw6YzNfg2YVBYnR2W
-         LCjw==
-X-Gm-Message-State: APjAAAWzZjXfXzAyssUNxKBiwBOi8og3Pjh+jc57q/yfDLXj8rP7o515
-        CuNCmLz1U/55Ab6CFy5sVATK+DDKAD5rBGxi100DK0ZUEf/zXUwWtDoN/8jZUVvr1LaSUc0ecqN
-        Nud1/EDZR/KpsNPsymGKn4KmAjCXKcdoGsvAt2KB9ILbvBrsqo/sTZmegDdaegS5F4S8T5z0EvI
-        aH
-X-Google-Smtp-Source: APXvYqw7AkKXb/6lQM+LSgUD2izGMLyXCy7iD6fD7NY9I5nyg7F8vE1yb1DrHZ/OWfspMJd4dWP90sKryqtocFtqtcc/
-X-Received: by 2002:a81:6cd3:: with SMTP id h202mr4067022ywc.223.1571343446632;
- Thu, 17 Oct 2019 13:17:26 -0700 (PDT)
-Date:   Thu, 17 Oct 2019 13:17:11 -0700
+        bh=SkWoFSW9/ZnGBNqh9eBUlPVU68AMoA32DFzs1tDlqsg=;
+        b=QDDPGDNp5v84k957DvtAN885WbAj7UjWDHCrVInOrxVTSxuRs6RQNH6NtEDHxfSrkV
+         O3lo/vjUcFtHGwi526Q9ydgaMjsVDYVSi8jJfgiy7zAu3KLqXCTbh4x4CAzTLXLBSXO2
+         Db8ZVoNAoWBk/7YRyBb77Gct2Iyz6Xu4xmBSucmp+Twi/6i7RczeTOwb6+yztApsVfM1
+         OM0zjC0SFTNLBIj8/Zd2m2BhJ69aw1dUb/PYbF8a5CZxpbtVgLFMewlxLcZHTOGnfN7W
+         9exKsMueiH0K6y4UJnFN9+IF6x+AECnOttr7VWjmZ57Q6Ik/oGXiVQBEBG0JRCnssOjI
+         9tAA==
+X-Gm-Message-State: APjAAAV7Y42K4tpkvYd5kyu5NI7OF4tDHSGGV1acAisEDLPz6iQuA+Ys
+        85IgXUmrBhBDcpM71Wj0xi80vwo+rXURPovynTslytUO6R8TnTGyLZggeXL4CJ6HA70SC87Lwwg
+        ByXJWnIK20MiDdQPaaT0sqws+PPALYBkrD/Z1gT9tGPRt8ky8h0rgDQOa6gDFd9CB69k0pAespe
+        dD
+X-Google-Smtp-Source: APXvYqyKLGcLNwLaAB8ka+0W4Mx06xipzUfUwuEOKIC9MOlMOXQH2kDn6CR/C+eq+C42mE6Oeo/9sDqCR6Ffijm/2M33
+X-Received: by 2002:ab0:55c8:: with SMTP id w8mr3288316uaa.66.1571343451775;
+ Thu, 17 Oct 2019 13:17:31 -0700 (PDT)
+Date:   Thu, 17 Oct 2019 13:17:13 -0700
 In-Reply-To: <cover.1571343096.git.jonathantanmy@google.com>
-Message-Id: <b19d6131e01692e47eafd58bb5a9b0cd2a8c88ee.1571343096.git.jonathantanmy@google.com>
+Message-Id: <3359b66b841e7eabdc45d3d937e97208b22e2901.1571343096.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1570663470.git.jonathantanmy@google.com> <cover.1571343096.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.23.0.866.gb869b98d4c-goog
-Subject: [PATCH v2 2/7] index-pack: unify threaded and unthreaded code
+Subject: [PATCH v2 4/7] index-pack: remove redundant child field
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com,
@@ -65,32 +65,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is refactoring 1 of 2 to simplify struct base_data.
+
+In index-pack, each thread maintains a doubly-linked list of the delta
+chain that it is currently processing (the "base" and "child" pointers
+in struct base_data). When a thread exceeds the delta base cache limit
+and needs to reclaim memory, it uses the "child" pointers to traverse
+the lineage, reclaiming the memory of the eldest delta bases first.
+
+A subsequent patch will perform memory reclaiming in a different way and
+will thus no longer need the "child" pointer. Because the "child"
+pointer is redundant even now, remove it so that the aforementioned
+subsequent patch will be clearer. In the meantime, reclaim memory in the
+reverse order of the "base" pointers.
+
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/index-pack.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ builtin/index-pack.c | 41 ++++++++++++++++++++++-------------------
+ 1 file changed, 22 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 60a5591039..df6b3b8cf6 100644
+index 296804230c..220e1e3693 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -1210,15 +1210,7 @@ static void resolve_deltas(void)
- 		cleanup_thread();
- 		return;
+@@ -34,7 +34,6 @@ struct object_stat {
+ 
+ struct base_data {
+ 	struct base_data *base;
+-	struct base_data *child;
+ 	struct object_entry *obj;
+ 	void *data;
+ 	unsigned long size;
+@@ -44,7 +43,6 @@ struct base_data {
+ 
+ struct thread_local {
+ 	pthread_t thread;
+-	struct base_data *base_cache;
+ 	size_t base_cache_used;
+ 	int pack_fd;
+ };
+@@ -380,27 +378,37 @@ static void free_base_data(struct base_data *c)
  	}
--
--	for (i = 0; i < nr_objects; i++) {
--		struct object_entry *obj = &objects[i];
--
--		if (is_delta_type(obj->type))
--			continue;
--		resolve_base(obj);
--		display_progress(progress, nr_resolved_deltas);
--	}
-+	threaded_second_pass(&nothread_data);
  }
  
- /*
+-static void prune_base_data(struct base_data *retain)
++static void prune_base_data(struct base_data *youngest_child)
+ {
+ 	struct base_data *b;
+ 	struct thread_local *data = get_thread_data();
+-	for (b = data->base_cache;
+-	     data->base_cache_used > delta_base_cache_limit && b;
+-	     b = b->child) {
+-		if (b->data && b != retain)
+-			free_base_data(b);
++	struct base_data **ancestry = NULL;
++	size_t nr = 0, alloc = 0;
++	ssize_t i;
++
++	if (data->base_cache_used <= delta_base_cache_limit)
++		return;
++
++	/*
++	 * Free all ancestors of youngest_child until we have enough space,
++	 * starting with the oldest. (We cannot free youngest_child itself.)
++	 */
++	for (b = youngest_child->base; b != NULL; b = b->base) {
++		ALLOC_GROW(ancestry, nr + 1, alloc);
++		ancestry[nr++] = b;
+ 	}
++	for (i = nr - 1;
++	     i >= 0 && data->base_cache_used > delta_base_cache_limit;
++	     i--) {
++		if (ancestry[i]->data)
++			free_base_data(ancestry[i]);
++	}
++	free(ancestry);
+ }
+ 
+ static void link_base_data(struct base_data *base, struct base_data *c)
+ {
+-	if (base)
+-		base->child = c;
+-	else
+-		get_thread_data()->base_cache = c;
+-
+ 	c->base = base;
+-	c->child = NULL;
+ 	if (c->data)
+ 		get_thread_data()->base_cache_used += c->size;
+ 	prune_base_data(c);
+@@ -408,11 +416,6 @@ static void link_base_data(struct base_data *base, struct base_data *c)
+ 
+ static void unlink_base_data(struct base_data *c)
+ {
+-	struct base_data *base = c->base;
+-	if (base)
+-		base->child = NULL;
+-	else
+-		get_thread_data()->base_cache = NULL;
+ 	free_base_data(c);
+ }
+ 
 -- 
 2.23.0.866.gb869b98d4c-goog
 
