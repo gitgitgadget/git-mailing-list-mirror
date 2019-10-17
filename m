@@ -8,65 +8,64 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9698E1F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 12:30:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28FB51F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 12:35:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405812AbfJQMam (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 08:30:42 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:40471 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727054AbfJQMam (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 08:30:42 -0400
-Received: by mail-qt1-f196.google.com with SMTP id m61so3254284qte.7
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 05:30:42 -0700 (PDT)
+        id S2502389AbfJQMe7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 08:34:59 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:33385 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727291AbfJQMe6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 08:34:58 -0400
+Received: by mail-qk1-f194.google.com with SMTP id x134so1700871qkb.0
+        for <git@vger.kernel.org>; Thu, 17 Oct 2019 05:34:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=YJ8Oe01eRYbcsfWzZmyZLdt4XCgtD14eDiiJ45tf5GI=;
-        b=V66ewJr78x8Snsaq6r2XCQEnP2nWRtaiiViqYhK8J2Il1Dp9xmTA0N4ndZV9m6++jm
-         7OFJ9QUdYgBi9F11HIOAAQQRwH2hHUlSyHoeyrOstzEqTo/7Tt6kNIJs1N732L813YoT
-         TT4B6hrFfT43FRHAN7PTxP+8hU7U2aAb+wt4EU8hTKJsjQo/Y0gWYqzoLTfP5lAWwuDL
-         ZicppoAEpg6F+vU1cvqYDFo7GF6C13my65ZJitSa4JrBiORmLCRerNDhD3//ytC+PRDa
-         BCvjRrFcFTWhrnMBE5bmwQ8wE0fIt/bHj0X7YYIGPzm5DlMzcsoERwjmMz8EDbZnQ4Nd
-         c8nA==
+        bh=Cjqetd8rMxntq4QmPvsuKKZSV3V5oFQaS5tv5T0F95w=;
+        b=c7Ld7En0C8y5xvdUXMI+VxxvZGY+RtMXzEKRxs/ExjYIRQP5d9p2cUPy2B+xEQIu1T
+         jpQ506z5fWCeYL1tbmJRIVNTqB2pffcZ7iq1FBuMJHVb8D4H7GDv3FmrRvm1o8Zdtu9S
+         6jIkCEqNdNav9Ft9NiiMDwXugl6eHtFiNJYZAmTicnDJETx9lw8i/k0qORhWUFE6Nz1o
+         938DIsOGBKjkge02ex/oG7XwGw3vQU1NnVBAnLqjM3LJwdrJSimy2hCMYd1UfSkce94u
+         06oTW4x1QIXkfS84MSmMZEg5+0vjPeNoeWX/lT6ZLHVT3czWyNPh5qWOX+718yZXpzaQ
+         mNrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=YJ8Oe01eRYbcsfWzZmyZLdt4XCgtD14eDiiJ45tf5GI=;
-        b=WhuMEjZWx3/zjbO2fJwHOZL/kfhwk1y2dW6qCJJs5s2RO3weAavoph0GKqfuHgteAP
-         3MosF7mdC3NuH+ZiZ63ATtmGb0AnuIbJpaXPCUpruWV/+wioEqcpJYLyR8Sxg1jrpjAp
-         3LJ8Jh2IM3tS5mQ6f7BIwhs6bLJC7VAh9cSbAGJQyJQP5+s4rCYU7GCEVadABTts2yJJ
-         GTusFc1mA4ixyRciezovNBWa8YzgGZzeSOsFK2AFDWD4E9mQatPKl1+IIN669PQiK1ju
-         Ba2Px/FOVW6ypnqYEvtkVPe41MXvbcGisOlQOm/7rFBlnjh2Z3zS22JpsVplH7FpbZjK
-         U7og==
-X-Gm-Message-State: APjAAAXuwqpLcHMKkBcPPv6dTNSjwXXGWw9bF7nwjVIJ8f+4/grJqMCL
-        etE3CH24rUyB5BRQPbkZPis=
-X-Google-Smtp-Source: APXvYqzO7nPZ1htrIFeOiGFI26rH6ZnwUVciK+xqIxcX2QUSmOK0EM1gQg6YWVRuHvzjKnJje/DnSg==
-X-Received: by 2002:ac8:6a06:: with SMTP id t6mr3434829qtr.169.1571315441468;
-        Thu, 17 Oct 2019 05:30:41 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:bc90:dbe5:6d1f:a2b3? ([2001:4898:a800:1010:6dc6:dbe5:6d1f:a2b3])
-        by smtp.gmail.com with ESMTPSA id p3sm882078qkm.52.2019.10.17.05.30.40
+        bh=Cjqetd8rMxntq4QmPvsuKKZSV3V5oFQaS5tv5T0F95w=;
+        b=q/b4J0usWW0TUvFXKc+12HBczm8SDt414xNjzoH+oWtRCyaGG4QnKno8Vt23bQeGHR
+         +woNmQe9xpOfSvMKTr32fiFLC2vfulUnSmvtNJUrBOLmirgA9QvLG5ZH2pZokhEPj+hK
+         8NsNtsiWCATjKSzDoWi025jT6qii5J6ky7/i0sbKJ9k09FL4v24AE47IdRhWc5qsPw5h
+         oRdoNjHZbFM0ARhts7bmgYaq1vqzndOHMovckrRc5WH9iptc0bJ925z4/PbZQV0Kabpr
+         AHaKGp3gWpVvqEesSjrSRf8WZgFRnX787AP4YD+rZdzHyqA0iBnI5CQU9vQMPcCnvAwB
+         ut1A==
+X-Gm-Message-State: APjAAAX1+xtaHhymXeJhK/UvsUwQzrr0CllVWb8BTinEfdkdlSuyqpa7
+        LjPlbvhLyGgq/1q9JRyGOWs=
+X-Google-Smtp-Source: APXvYqwp0I850X8rM5keZTugr4lJqH9zb2sSUWcDmzPMvbgiKKQiE88ulnIac2VRxpnmPUukefxxwA==
+X-Received: by 2002:a37:84c3:: with SMTP id g186mr3015786qkd.398.1571315697354;
+        Thu, 17 Oct 2019 05:34:57 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:bc90:dbe5:6d1f:a2b3? ([2001:4898:a800:1012:6dc4:dbe5:6d1f:a2b3])
+        by smtp.gmail.com with ESMTPSA id t40sm1226957qta.36.2019.10.17.05.34.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Oct 2019 05:30:40 -0700 (PDT)
-Subject: Re: [PATCH v3 07/13] graph: example of graph output that can be
- simplified
-To:     James Coglan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        James Coglan <jcoglan@gmail.com>
+        Thu, 17 Oct 2019 05:34:56 -0700 (PDT)
+Subject: Re: [PATCH v3 08/13] graph: tidy up display of left-skewed merges
+To:     Junio C Hamano <gitster@pobox.com>,
+        James Coglan via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, James Coglan <jcoglan@gmail.com>
 References: <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
  <pull.383.v3.git.1571183279.gitgitgadget@gmail.com>
- <631ee3cecb68d9f776d4a8fb30c1bca70797ba14.1571183279.git.gitgitgadget@gmail.com>
+ <c34a5eb160310613cbde6313cda6cff753d6d7fd.1571183279.git.gitgitgadget@gmail.com>
+ <xmqqsgnt8hlh.fsf@gitster-ct.c.googlers.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3dfddde2-05e9-01ca-2ce8-d504f49b72bc@gmail.com>
-Date:   Thu, 17 Oct 2019 08:30:40 -0400
+Message-ID: <863fb1b9-8829-64db-d355-56a97e979427@gmail.com>
+Date:   Thu, 17 Oct 2019 08:34:56 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
  Thunderbird/70.0
 MIME-Version: 1.0
-In-Reply-To: <631ee3cecb68d9f776d4a8fb30c1bca70797ba14.1571183279.git.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqsgnt8hlh.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -75,61 +74,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/15/2019 7:47 PM, James Coglan via GitGitGadget wrote:
-> diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
-> new file mode 100755
-> index 0000000000..4582ba066a
-> --- /dev/null
-> +++ b/t/t4215-log-skewed-merges.sh
-> @@ -0,0 +1,43 @@
-> +#!/bin/sh
-> +
-> +test_description='git log --graph of skewed merges'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'log --graph with merge fusing with its left and right neighbors' '
-> +	cat >expect <<-\EOF &&
-> +	*   H
-> +	|\
-> +	| *   G
-> +	| |\
-> +	| | * F
-> +	| | |
-> +	| |  \
-> +	| *-. \   E
-> +	| |\ \ \
-> +	|/ / / /
-> +	| | | /
-> +	| | |/
-> +	| | * D
-> +	| * | C
-> +	| |/
-> +	* | B
-> +	|/
-> +	* A
-> +	EOF
-
-Thanks for adding this test! I really think it helps show some
-of your improvements later as this test is mutated.
-
--Stolee
-
-> +
-> +	git checkout --orphan _p &&
-> +	test_commit A &&
-> +	test_commit B &&
-> +	git checkout -b _q @^ && test_commit C &&
-> +	git checkout -b _r @^ && test_commit D &&
-> +	git checkout _p && git merge --no-ff _q _r -m E &&
-> +	git checkout _r && test_commit F &&
-> +	git checkout _p && git merge --no-ff _r -m G &&
-> +	git checkout @^^ && git merge --no-ff _p -m H &&
-> +
-> +	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_done
+On 10/16/2019 12:00 AM, Junio C Hamano wrote:
+> "James Coglan via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
+>> This effect is applied to both "normal" two-parent merges, and to
+>> octopus merges. It also reduces the vertical space needed for pre-commit
+>> lines, as the merge occupies one less column than usual.
+>>
+>>         Before:         After:
+>>
+>>         | *             | *
+>>         | |\            | |\
+>>         | | \           | * \
+>>         | |  \          |/|\ \
+>>         | *-. \
+>>         | |\ \ \
+> 
+> Looking at these drawings reminded me of a tangent that is brought
+> up from time to time.  We do not do great job when showing multiple
+> roots.
+> 
+> If you have a history like this:
+> 
+>       A---D---E
+>          /
+>     B---C
+> 
+> drawing the graph _with_ the merge gives a reasonable representation
+> of the entire topology.
+> 
+>     * 46f67dd E
+>     *   6f89516 D
+>     |\  
+>     | * e6277a9 C
+>     | * 13ae9b2 B
+>     * afee005 A
+> 
+> But if you start drawing from parents of D (excluding D), you'd get
+> this:
+> 
+>     * e6277a9 C
+>     * 13ae9b2 B
+>     * afee005 A
+
+I hit this very situation recently when I was experimenting with
+'git fast-import' and accidentally created many parallel, independent
+histories. Running "git log --graph --all --simplify-by-decoration"
+made it look like all the refs were in a line, but they were not.
+(The one way I knew something was up: the base commits also appeared
+without a decoration. That was the only clue that the histories did
+not continue in a line.)
+
+> 
+> and the fact that B and A do not share parent-child relationships is
+> lost.  An easy way to show that would be to draw the bottom three
+> lines of the full history output we saw earlier:
+> 
+>     | * e6277a9 C
+>     | * 13ae9b2 B
+>     * afee005 A
+> 
+> either with or without the vertical bar to imply that A may have a
+> child.
+The natural extension of this would be multiple columns:
+
+ | | | | | *
+ | | | | *
+ | | | *
+ | | *
+ | *
+ *
+
+This does not appear too cumbersome, and such a situation should
+be rare.
+
+> This is not something that has to be done as part of this series,
+> but I am hoping that the internal simplification and code
+> restructuring that is done by this series would make it easier to
+> enhance the system to allow such an output.
+
+I agree. An excellent idea for a follow-up.
+
+Thanks,
+-Stolee
 
