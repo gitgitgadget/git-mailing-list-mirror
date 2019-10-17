@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8908A1F4C0
+	by dcvr.yhbt.net (Postfix) with ESMTP id A03991F4C1
 	for <e@80x24.org>; Thu, 17 Oct 2019 23:17:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441768AbfJQXRN (ORCPT <rfc822;e@80x24.org>);
+        id S2441770AbfJQXRN (ORCPT <rfc822;e@80x24.org>);
         Thu, 17 Oct 2019 19:17:13 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:40369 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2441759AbfJQXRM (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:43010 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2441765AbfJQXRM (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 17 Oct 2019 19:17:12 -0400
-Received: by mail-pl1-f194.google.com with SMTP id d22so1876501pll.7
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 16:17:10 -0700 (PDT)
+Received: by mail-pf1-f196.google.com with SMTP id a2so2594171pfo.10
+        for <git@vger.kernel.org>; Thu, 17 Oct 2019 16:17:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=78tdwGBH29xMqPEh9T+22n06BVtR/cM8Z4/9MKcDpYk=;
-        b=SZ3pbfA216e6MnIvmnhUwMp4yO65lCjtETD987OdKBK7iOdpEdor/TV7/1EM63A3cj
-         qkk5/Hzh2BRcXHml68+TZZDXsxrfYCnloO6gHR1F/mZSw3tPMj9bYC3lUZv4SZ91RnoN
-         EMTldmDdsp0NQNBzNzLmsrdgESF9dU7cafhBph7o60w8IX2By6a7dRBcx0aNhIp6rcI0
-         4+euhrH8QGzc9EZ3+QQPC/e6L2ZX2IeTfXeY3iOIx0dtEDulWbOKkhYcVhDfrmWhTp7b
-         AIzSCYew7hvxJwjiTuh7MNdmc0s0Tk4urm7uUObMAzHSliUvK0AgJu8bqd5IMF6gnQaL
-         3/Tw==
+        bh=WrkHF6VXC/KRRw3Bgr2hbKey64ERTswQGxFUFEFU2dc=;
+        b=nzx2PMc38T3oLKAoiUSLaGDR4jwQOig+crvEp3qo1xn7VLle3rfWu2FlXpgsvT+YYP
+         AkqDVddC/OErkPwyLEt1xsV7EJ6wp6VknNDmv8mh19WUP90GRDaw9HZZFcGDG6G6nyTU
+         rtYX4ohpF3T/0mO2kkcrEF4E+SCUQXHqseWnToH4LNnmxi9Wlbx+MsRbt+7LXMdJrNt5
+         +fsqmRym0cwiXlYyj0CEJxL9RPR39lT7iDIeNtXaLFdWO1+NgX/SmYNMsX2Kk3Mjv63o
+         N7UYYQvIGkHD5Dd/1BcO8xtsyN8MUxCTPwTSGPdf0iZegartpYDX06U7wwu8UTj5gqjZ
+         v0JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=78tdwGBH29xMqPEh9T+22n06BVtR/cM8Z4/9MKcDpYk=;
-        b=rPhzKDHsqJsJDP0d7ZIy8NkAV7pUIbQ37rjC+DEt0MObIWkttb/l0CZOwYORCPSEsx
-         6EYhT96iPzi3xj94dBunwrBB3hHOr8X3QU4N+MT3CSQuHa/qJPpuEhtL3SDyIGxf/gg5
-         dOhHL1ZDcK5G6sPc7lUUqvmudRIHZXevfCgk6xv7XB8AxsFvWiaLPYaLyIswu5adnjlU
-         WNIcMlNHmyZtLrZYAGZAJfWE3gRFO2+HjlNCbQllxTLVxLJrqIoalPRFLj470Djq9P8z
-         b75fDc6e6emwO6miFJWa3EKltrtrkc2Q1CfLrJ+caZ+3ms2k3J0/lvD1leWaqKry5bzC
-         k7YA==
-X-Gm-Message-State: APjAAAUXow4cATxJhqB7j8CKMsDf2nkh7xaKzrIy75CU2UyPJa1scx08
-        Qz5LF6LPggwujfqf6aphB5t94cl1
-X-Google-Smtp-Source: APXvYqzXsVnVb7+aUrawpK9pPWywN6u6i3owazWrPmnOMgw0U0n76P8t9CSfz5iLuZjX4a/UJ7KXiQ==
-X-Received: by 2002:a17:902:9a44:: with SMTP id x4mr6629755plv.127.1571354229611;
-        Thu, 17 Oct 2019 16:17:09 -0700 (PDT)
+        bh=WrkHF6VXC/KRRw3Bgr2hbKey64ERTswQGxFUFEFU2dc=;
+        b=HTbrV8Nr6gix7b5Bv/OQvUpm6tzRvXVsZidZPW5yVfalaqfZ/Wl6u/7i0+XqD8FbfQ
+         JhhpZ8vQPtW2smyG8LigUV5yMMcs+s3M2a6I/9s1nBnNlY05yxchfAXgehKsfiYt85s7
+         P97Kujt9wM15oG66xK2d0PFxyx4WgI2M/wDfz6YW+/fmeLHvKwSaNYISYoxQBhOYekfB
+         06Q1/8JZYfYbwDBphFT87oniyzdY4svFKX01bqJSpTsO+OX1y52DCJbArHMMdmmF+bBM
+         l12tF6gnw03Y8nLTwyxo8YxLSD74TM1vio/CP0nZOaEx/aDatKudMOinfJ0km6TP3nWy
+         tZ8Q==
+X-Gm-Message-State: APjAAAWHbJsYRbwXqpuDZ6MHUwDkRKl0+KrBrrzIBe/4lf+b1zxsMS/H
+        A5VS2T+MgSMkxsi3S4CC9SbZF8L7
+X-Google-Smtp-Source: APXvYqx77vbxfOaRWB1L2Aw0UQEG0aIdIaYp/gwn2xEj9bNhel3s+436sRPcrTcEQ/MKtIWeSzo+DA==
+X-Received: by 2002:a65:4907:: with SMTP id p7mr6879071pgs.429.1571354231630;
+        Thu, 17 Oct 2019 16:17:11 -0700 (PDT)
 Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id b9sm3946280pfo.105.2019.10.17.16.17.08
+        by smtp.gmail.com with ESMTPSA id c16sm3884719pja.2.2019.10.17.16.17.11
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2019 16:17:09 -0700 (PDT)
-Date:   Thu, 17 Oct 2019 16:17:07 -0700
+        Thu, 17 Oct 2019 16:17:11 -0700 (PDT)
+Date:   Thu, 17 Oct 2019 16:17:09 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 06/12] t5520: use test_line_count where possible
-Message-ID: <7ffbbc329f0d49f63cf5fafc211a964e8238650c.1571354136.git.liu.denton@gmail.com>
+Subject: [PATCH 07/12] t5520: replace test -{n,z} with test-lib functions
+Message-ID: <d6b74c5e58d9a45ca8b915ba699cafe08f300723.1571354136.git.liu.denton@gmail.com>
 References: <cover.1571354136.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -67,26 +67,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of rolling our own functionality to test the number of lines a
-command outputs, use test_line_count() which provides better debugging
-information in the case of a failure.
+Instead of using `test -n` or `test -z`, replace them respectively with
+invocations of test_file_not_empty() and test_must_be_empty().
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5520-pull.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t5520-pull.sh | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 68b8822db2..9452779f40 100755
+index 9452779f40..c7797b13e6 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -699,7 +699,8 @@ test_expect_success 'git pull --rebase does not reapply old patches' '
+@@ -206,15 +206,18 @@ test_expect_success 'fail if the index has unresolved entries' '
+ 	test_when_finished "git checkout -f copy && git branch -D third" &&
+ 	test "$(cat file)" = file &&
+ 	test_commit modified2 file &&
+-	test -z "$(git ls-files -u)" &&
++	git ls-files -u >unmerged &&
++	test_must_be_empty unmerged &&
+ 	test_must_fail git pull . second &&
+-	test -n "$(git ls-files -u)" &&
++	git ls-files -u >unmerged &&
++	test_file_not_empty unmerged &&
+ 	cp file expected &&
+ 	test_must_fail git pull . second 2>err &&
+ 	test_i18ngrep "Pulling is not possible because you have unmerged files." err &&
+ 	test_cmp expected file &&
+ 	git add file &&
+-	test -z "$(git ls-files -u)" &&
++	git ls-files -u >unmerged &&
++	test_must_be_empty unmerged &&
+ 	test_must_fail git pull . second 2>err &&
+ 	test_i18ngrep "You have not concluded your merge" err &&
+ 	test_cmp expected file
+@@ -667,7 +670,8 @@ test_expect_success 'git pull --rebase detects upstreamed changes' '
  	(
  		cd dst &&
- 		test_must_fail git pull --rebase &&
--		test 1 = $(find .git/rebase-apply -name "000*" | wc -l)
-+		find .git/rebase-apply -name "000*" >patches &&
-+		test_line_count = 1 patches
+ 		git pull --rebase &&
+-		test -z "$(git ls-files -u)"
++		git ls-files -u >untracked &&
++		test_must_be_empty untracked
  	)
  '
  
