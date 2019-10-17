@@ -2,107 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58A891F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 17:52:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 494631F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 18:07:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394878AbfJQRwl convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 17 Oct 2019 13:52:41 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38703 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727018AbfJQRwl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 13:52:41 -0400
-Received: by mail-wr1-f67.google.com with SMTP id o15so2934480wru.5
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 10:52:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=H3iPwXabJawTiD0TxmATpW1mXB3SrfybQSNjXiT/Uyc=;
-        b=btEVEckkUdJOGzbsWN0AecukFbrzmkIjoYuA45RKhJ8JASJ7TLSCszPKCz1ZWqQlbP
-         HzgkbTQQ/XkxhQP6tLyxNKMhxS3qlu3nH58Hd9hpXjR2Fq54kF8Vql+jCz3VJbhuN2Uu
-         44LKJLRCoiZIcod8+YNIhIN0pt5P8c0Nrt96Prm8bdlQkPXVo2culNxR4tEF3JEAcuXZ
-         L2Ru9aRQJHKIOnWzc9NNmveXtcwwGTpd25BSCNwupfGUkr+JVygfk8xhAD26N1RZWt/U
-         wYvfjPGmN70O4qe89Ght8J/jB7Kd/RWruCcSFcdRBK5dlMtEqz0+s6IYxATI0zU7mXa7
-         Nuzg==
-X-Gm-Message-State: APjAAAWljWoZ9J8IR5hzI5XKjbGX6+AsTnY6+khDSTL/Y/uWUjX7dcD+
-        ZFqL/cd7dy+KXSsE934h9GWoac61LFhPojqoBxg=
-X-Google-Smtp-Source: APXvYqx2hBCwSJpa0VC3WQqeekOq+2LB5eQ9+KWABewZj3UbHwdGj0EObUr2Bqfw0vUa/eINtfDqXS8BgzDGzCraE1Y=
-X-Received: by 2002:adf:f010:: with SMTP id j16mr4203782wro.317.1571334758804;
- Thu, 17 Oct 2019 10:52:38 -0700 (PDT)
+        id S2395320AbfJQSHc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 14:07:32 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55164 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388188AbfJQSHc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 14:07:32 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F2BB890A68;
+        Thu, 17 Oct 2019 14:07:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jAoOZe3ttPG3v25YEcZSgNO6xHA=; b=YE9o+g
+        IwoZUQ8C/1nawbyqvKYGboGBoel4IFo6XbV5wYtSzl7Z2D3itCODQ0F6n/sFbSXL
+        cEBzfZGw6BDYFccg3DfGfmQKUDTbbLur15+u9y1X3XJ8I6sGB06ivvmUkzEZjYy5
+        BUHq2vLL9P9q7OSyeb8UrFzWObKSVQpIAqW2s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=x9W398PY+1aQP+oy+jtmPwZNX9d+/vfJ
+        I0uKNbrh9JxXc54nKv+mggr5XJj2c11+CHxS0A/4bTaky6QOlk2K2s7Uy1mXa5/H
+        kkDwt8e65JBGtXzTra91DblfNt99wm/pIPGg7lLz7JZyc0G7ofrS6QjF4eowpD7X
+        V57I6pEUQ70=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EB5EF90A67;
+        Thu, 17 Oct 2019 14:07:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1B84690A63;
+        Thu, 17 Oct 2019 14:07:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [RFC PATCH 1/7] Makefile: alphabetically sort += lists
+References: <cover.1571246693.git.liu.denton@gmail.com>
+        <02a16f9bdf740841d9a4be765e72b9fa5ae5d75c.1571246693.git.liu.denton@gmail.com>
+Date:   Fri, 18 Oct 2019 03:07:24 +0900
+In-Reply-To: <02a16f9bdf740841d9a4be765e72b9fa5ae5d75c.1571246693.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Wed, 16 Oct 2019 10:26:21 -0700")
+Message-ID: <xmqqimon6yar.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20191017173501.3198-1-szeder.dev@gmail.com> <20191017173501.3198-4-szeder.dev@gmail.com>
-In-Reply-To: <20191017173501.3198-4-szeder.dev@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 17 Oct 2019 13:52:27 -0400
-Message-ID: <CAPig+cTLCTPtUWHKVBQEaP9GkrmrnHPwfef8KnktOSqYQY-jPA@mail.gmail.com>
-Subject: Re: [PATCH 3/6] completion: return the index of found word from __git_find_on_cmdline()
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: FA348872-F108-11E9-94E2-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 17, 2019 at 1:35 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> When using the __git_find_on_cmdline() helper function so far we've
-> only been interested in which one of a set of words appear on the
-> command line.  To complete options for some of 'git worktree's
-> subcommands in the following patches we'll need not only that, but the
-> index of that word on the command line as well.
->
-> Extend __git_find_on_cmdline() to optionally show the index of the
-> found word on the command line (IOW in the $words array) when the
-> '--show-idx' option is given.
->
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> ---
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> @@ -1069,18 +1069,32 @@ __git_aliased_command ()
->  # Check whether one of the given words is present on the command line,
->  # and print the first word found.
-> +#
-> +# Usage: __git_find_on_cmdline [<option>]... "<wordlist>"
-> +# --show-idx: Optionally show the index of the found word in the $words array.
->  __git_find_on_cmdline ()
->  {
-> -       local word c=1
-> +       local word c=1 show_idx
-> +
-> +       while test $# -gt 1; do
-> +               case "$1" in
-> +               --show-idx)     show_idx=y ;;
-> +               *)              return 1 ;;
+Denton Liu <liu.denton@gmail.com> writes:
 
-Should this emit an error message to aid a person debugging a test
-which fails on a call to __git_find_on_cmdline()? For instance:
+> There are many += lists in the Makefile and, over time, they have gotten
+> slightly out of order, alphabetically. Alphabetically sort all += lists
+> to bring them back in order.
+> ...
 
-    echo "unrecognized option/argument: $1" >&2
-    return 1
-    ;;
+Hmm.  I like the general thrust, but ...
 
-or something...
+>  LIB_OBJS += combine-diff.o
+> -LIB_OBJS += commit.o
+>  LIB_OBJS += commit-graph.o
+>  LIB_OBJS += commit-reach.o
+> +LIB_OBJS += commit.o
 
-> +               esac
-> +               shift
-> +       done
->         local wordlist="$1"
->
->         while [ $c -lt $cword ]; do
->                 for word in $wordlist; do
->                         if [ "$word" = "${words[c]}" ]; then
-> -                               echo "$word"
-> +                               if [ -n "$show_idx" ]; then
-> +                                       echo "$c $word"
-> +                               else
-> +                                       echo "$word"
-> +                               fi
->                                 return
->                         fi
->                 done
+... I do not particularly see this change (there may be similar
+ones) desirable.  I'd find it it be much more natural to sort
+"commit-anything" after "commit", and that is true with or without
+the common extension ".o" added to these entries.
+
+In short, flipping these entries because '.' sorts later than '-' is
+making the result look "less sorted", at least to me.
+
+Thanks.
