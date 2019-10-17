@@ -2,81 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42FFE1F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 06:59:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DC781F4C1
+	for <e@80x24.org>; Thu, 17 Oct 2019 07:04:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404892AbfJQG53 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 02:57:29 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:43649 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392711AbfJQG52 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 02:57:28 -0400
-Received: by mail-lj1-f194.google.com with SMTP id n14so1284463ljj.10
-        for <git@vger.kernel.org>; Wed, 16 Oct 2019 23:57:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=I2stNz/ligYjvCHQhbid9R0OxIjr8s5DzxuPE8sKj+g=;
-        b=tHlbs5/EyVxhS6PVi/4qTLxvYpMudAWY3EJyO49IbkQl4JBMA1SEZ8EB9sQtiZnTuw
-         tYEU1J6iT/JJznaZYjh4a4M8llzq42bgODZ93hh7bgFqZ8BtszJyEHrt5tB49Y63/qA7
-         O54AKYDFbaFCLd1x0j6S9xCMe/QWbjXo1KgGNKjzkthp8M490AUI0DL6U310XzTQk9wO
-         YEgbkTD+mV4HV5+1DV7ndcxUiXtJfgSxI+ks1FUozoyzxMawkoGAB1NtspkuvggrsAqo
-         h0KEKuyKVT+ZshE8hiyZd1cV0+XtQFJ82CJ2JcGwug9vHPKITQZL0bHIWpzopG91ck0+
-         4mIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=I2stNz/ligYjvCHQhbid9R0OxIjr8s5DzxuPE8sKj+g=;
-        b=sDGRsNtynNLKcG9DH1tGWXdgvFQHpk7BvuG5vCCFeEGlt+0CNZLoL1lPCyrvyFnm0g
-         7Tvah8DNZrLfWoMj27/jU+7BI/uqmyfrxqRmqJRamupR5J33JBq9UloU1Vi9+6Y9Tyfr
-         UAnfi9JgK7u29oJyR7XxzUFw9+MHAE8i60aLmmBieDK5O/FXbQR8MbhuBgGumhTczZvj
-         uTYOAq0GrlmcG7cAgy+iYAJb/3ucnpeMHaFib0PXrvFVKYy/SEmA2TWv3dkL7gTkcLZS
-         6fA1De2ts/aTmJ04UPeJuSjryt9bGhmjaCBNaydUlXtCch19CHdEtTeOPWVJPmGgoRiz
-         HQhw==
-X-Gm-Message-State: APjAAAVnuPyj0FpMLU6Q4v3C3UN8GxIg6vKMHmWrVYPDADKFEGT2wSO3
-        a8uNa8j4YxpQlrT5pB53zfY+CZLXR4yagz6yc1/pCZsX0b0=
-X-Google-Smtp-Source: APXvYqy3b9H9be9Przm8wY0k2OHLeKmzdot8iB+n/ConN3V3FVvU4v4fCPtts0Ka7r2LKDVvNeZl8geK4VEe13fJajY=
-X-Received: by 2002:a2e:a415:: with SMTP id p21mr1316910ljn.59.1571295446711;
- Wed, 16 Oct 2019 23:57:26 -0700 (PDT)
+        id S2407885AbfJQHDJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 03:03:09 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59918 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390955AbfJQHDJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 03:03:09 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D8DEF8C347;
+        Thu, 17 Oct 2019 03:03:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=V8A59eBnaz1DLe2UM+w+KaN3nR4=; b=s9SfXf
+        F8fq8zo7b/M48q+XkPuQcvJX2KEvCLmcllJvFLpDNT1xq1XhuKq/osfh0R1Ccl1h
+        csIw0cgBUxQco4d3nHXQPZvUlI8M/DJ9Sd9PNROXv1xDB58kCZoHSY3IVxNaoILs
+        B6m7KQMcv5m+Hdjz2ZNlTPzI1ayW3eZxBPSz8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nS2hd7LpE3kv4jJI2lUMTpE0ohSR7Tqy
+        EtqPVzEfcbBh1eqGrroeFzN3Uoca1QaOKjh75ZG3Jm6RSpVgeG6V3FGLqjcMKTQN
+        3IPLQ7f3Wv973zfaKu8DbJZsB3rcBBU5JLx+nlgwjOkpqIn+wTAnBQbn5vdq9qU0
+        ias2L13V8Jc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D11198C346;
+        Thu, 17 Oct 2019 03:03:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ABFF58C342;
+        Thu, 17 Oct 2019 03:03:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        christian.couder@gmail.com, git@vger.kernel.org,
+        chriscool@tuxfamily.org, ramsay@ramsayjones.plus.com
+Subject: Re: [RFC PATCH 10/10] pack-objects: improve partial packfile reuse
+References: <20190913130226.7449-11-chriscool@tuxfamily.org>
+        <20191010235952.174426-1-jonathantanmy@google.com>
+        <20191011180125.GA20601@sigill.intra.peff.net>
+        <xmqqsgnyg76d.fsf@gitster-ct.c.googlers.com>
+        <20191013073851.GA7001@sigill.intra.peff.net>
+Date:   Thu, 17 Oct 2019 16:03:00 +0900
+In-Reply-To: <20191013073851.GA7001@sigill.intra.peff.net> (Jeff King's
+        message of "Sun, 13 Oct 2019 03:38:52 -0400")
+Message-ID: <xmqq8spj97mj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CAGr--=KXpt7GzqPpm1BCrsc1jhfaXeCT-XrWKNvq2pLtgAbSwQ@mail.gmail.com>
- <20191007171145.1259-1-birger.sp@gmail.com> <20191013202110.z3gyx7eikackvmzb@yadavpratyush.com>
- <CAGr--=K8beYCwRgjFdokyCkjguXTJu8wMoxMAMG_H7CVgmEA=g@mail.gmail.com>
- <20191016192819.5fxbwdediomj7gaz@yadavpratyush.com> <CAGr--=Ltx2JPexfVSWRrAdT0zHs0RWaZdS7OZD-TWJv2y7K-PA@mail.gmail.com>
- <86d8ea9c-f27e-8ab8-c7f6-b3fd1eb3895d@kdbg.org>
-In-Reply-To: <86d8ea9c-f27e-8ab8-c7f6-b3fd1eb3895d@kdbg.org>
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-Date:   Thu, 17 Oct 2019 08:54:22 +0200
-Message-ID: <CAGr--=KBSDjmYEprs6tvTTTv-7K-ApziQ4-xvJacMjNx+dKGPw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] git-gui: implement proc select_path_in_widget
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 292AAC5E-F0AC-11E9-8B82-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Jeff King <peff@peff.net> writes:
 
-On Thu, Oct 17, 2019 at 7:33 AM Johannes Sixt <j6t@kdbg.org> wrote:
-> FWIW, I would prefer to experiment with the feature for a few weeks
-> before it (or a configuration that enables it by default) is baked in.
+>> Hmm, I am kind of surprised that the decoding side allowed such a
+>> padding.
+>
+> IIRC, the "padding" is just a sequence of 0-length-plus-continuation-bit
+> varint bytes. And for some reason it worked for the size but not for the
+> delta offset value.
 
-Yes please do. Obviously I'm glad someone other than me will be
-actually testing it.
-(As I mentioned earlier) I'm all for it when it comes to using a
-config setting, rather than having this as default behaviour. I
-propose "gui.autoFocusStaged" as a variable name for the setting.
-I'll be doing a re-roll once I get some more spare time.
+I think the reason is because they use different varint definition.
 
-Birger
+The encoding used in builtin/pack-objects.c::write_no_reuse_object()
+is for offsets, and it came much later and with an improvement over
+the encoding used for delta size in diff-delta.c::create_delta().
+The more recent encoding does not allow padding (when I compare the
+decoders for these two encodings, I notice there is +1 for each
+7-bit iteration; this essentially declares that a byte with "not the
+final byte" bit set with all other bits clear does not mean 0 but it
+means 1, which breaks the idea of padding to encode filler zero
+bits).
