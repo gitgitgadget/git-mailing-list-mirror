@@ -2,79 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97F721F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 23:49:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E96001F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 00:01:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441835AbfJQXtO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 19:49:14 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37466 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2441728AbfJQXtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 19:49:14 -0400
-Received: by mail-wr1-f66.google.com with SMTP id p14so4231079wro.4
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 16:49:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tybt1OKfvYMxUC4ys/J7mhehwruq1Q0Jj7Bqv4K2rkI=;
-        b=icW71CRqxGNpMdbJu6o2jbCIu247hzgxvpDKpUW+vXsXE4OPwgtCyqQ+fQ80KFyqX3
-         DlI6QrVXHga/YHKnO+/P+WesprjcxPWqNsNzfXXdF9og54gSCaDKy8moDH9PgPz02cU/
-         K8p3qEFEfVxY7WK+KEcMetOScS1LSTuxE7uhskHbsvM+w54JTTIDdU31nTPkVD5gcDpY
-         7jU1+zicI2w7DtqreRUry3Rt+2vsukDaNHE8zApy7iBsr3T/m17oXKEnbhbnZw3j8n12
-         CPVRD8CYcJfavqfYlZxtnPRMnhkl8J86F1Gj1fogDokbKBEbdtr9cHTlwBxf8Hqp8EP7
-         xl3g==
-X-Gm-Message-State: APjAAAUm8EY1rVR/vTLgf5CL+SjzagkFmXCezurUA4svq0fATtAfdGCl
-        UOVNVTKw2lf+cTIKmLLnAxw9eOJYkA0vrhmpzyU=
-X-Google-Smtp-Source: APXvYqz3aj3KqpDKFp65a+gJo77WP9btByZiEQ0xti91/WBmi+1Fnx+9/D1OGglls0g2lCP6zKdyJ3oQ+394X8bIYgc=
-X-Received: by 2002:a5d:430d:: with SMTP id h13mr5066393wrq.163.1571356152151;
- Thu, 17 Oct 2019 16:49:12 -0700 (PDT)
+        id S2441857AbfJRABs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 20:01:48 -0400
+Received: from smtp81.iad3b.emailsrvr.com ([146.20.161.81]:59537 "EHLO
+        smtp81.iad3b.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2441828AbfJRABr (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 17 Oct 2019 20:01:47 -0400
+X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Oct 2019 20:01:47 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=g001.emailsrvr.com;
+        s=20190322-9u7zjiwi; t=1571356425;
+        bh=hnrHhzp+alviO5H2pCYzFeFCSwD4M18lSo49H6U89Mg=;
+        h=Subject:To:From:Date:From;
+        b=mD5kLEJZpEKys6R3nDGZriMBwjWqgGP7E6/3OR4K3WMNO89aYNjYOay3/bOqDJZro
+         +hI4EQK+B7zRQpgvfPbpGy4ipG1FWxuP0MtwJ/9JNMAP4LuCwNERr8sGf/g1d92T3p
+         AIG81GnJCtCObCAJE8yD0VyksI1z1Y625tsfMJBw=
+X-Auth-ID: jon@jonsimons.org
+Received: by smtp19.relay.iad3b.emailsrvr.com (Authenticated sender: jon-AT-jonsimons.org) with ESMTPSA id 198EA40184;
+        Thu, 17 Oct 2019 19:53:45 -0400 (EDT)
+X-Sender-Id: jon@jonsimons.org
+Received: from simonsj-mba2.hsd1.ca.comcast.net (c-73-223-68-105.hsd1.ca.comcast.net [73.223.68.105])
+        (using TLSv1.2 with cipher AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Thu, 17 Oct 2019 19:53:45 -0400
+Subject: Re: [PATCH v4 00/17] New sparse-checkout builtin and "cone" mode
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     newren@gmail.com, Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.316.v3.git.gitgitgadget@gmail.com>
+ <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
+From:   Jon Simons <jon@jonsimons.org>
+Message-ID: <1ea216d8-e706-ec4c-a3f3-954e57e0458c@jonsimons.org>
+Date:   Thu, 17 Oct 2019 16:53:44 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.0
 MIME-Version: 1.0
-References: <cover.1571354136.git.liu.denton@gmail.com> <f1b515fc0ed431f03244eefbe9f8f34921f4c62d.1571354136.git.liu.denton@gmail.com>
-In-Reply-To: <f1b515fc0ed431f03244eefbe9f8f34921f4c62d.1571354136.git.liu.denton@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 17 Oct 2019 19:49:01 -0400
-Message-ID: <CAPig+cTkqu6mmBV2sfXzfnxomkji1bhH-u=OToGkLQMVF1CRMQ@mail.gmail.com>
-Subject: Re: [PATCH 09/12] t5520: test single-line files by git with test_cmp
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 17, 2019 at 7:17 PM Denton Liu <liu.denton@gmail.com> wrote:
-> In case an invocation of a Git command fails within the subshell, the
-> failure will be masked. Replace the subshell with a file-redirection and
-> a call to test_cmp.
->
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> @@ -622,10 +648,16 @@ test_expect_success 'pull --rebase fails on unborn branch with staged changes' '
->                 git add staged-file &&
-> -               test "$(git ls-files)" = staged-file &&
-> +               echo staged-file >expect &&
-> +               git ls-files >actual &&
-> +               test_cmp expect actual &&
->                 test_must_fail git pull --rebase .. master 2>err &&
-> -               test "$(git ls-files)" = staged-file &&
-> -               test "$(git show :staged-file)" = staged-file &&
-> +               echo staged-file >expect &&
-> +               git ls-files >actual &&
-> +               test_cmp expect actual &&
-> +               echo staged-file >expect &&
-> +               git show :staged-file >actual &&
-> +               test_cmp expect actual &&
+On 10/15/19 6:55 AM, Derrick Stolee via GitGitGadget wrote:
+> V4 UPDATE: Rebased on latest master to include ew/hashmap and
+> ds/include-exclude in the base.
 
-Nit: I'm not convinced that it makes sense to re-create the "expect"
-file with the exact same content repeatedly in this one test. There is
-some value in creating the file once and then _using_ it repeatedly
-since that shows intent that the the result of these various commands
-is not expected to change.
+I did a partial review of the v4 patches out of curiosity and I notice
+in sparse-checkout.c there are a couple of unchecked `fopen` call sites
+that could be converted to `xfopen` to die gracefully upon error, and
+one unchecked `fdopen` that can likewise be `xfdopen`.
+
+
+-Jon
