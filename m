@@ -2,117 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBB781F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 22:55:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D55F1F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 23:04:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438120AbfJQWzg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 18:55:36 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:46142 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2389846AbfJQWzf (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 17 Oct 2019 18:55:35 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E04F360459;
-        Thu, 17 Oct 2019 22:55:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1571352934;
-        bh=gwDdVO1Lr/qZ50BKhGFrpLR0+2bTpWkl2E+SMC+cdSQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Ig0CgEX0mxpqCodxQQOR5ciVuFM9cbc6AXS/LX8RZkrekBqQ6Nwo0ccRBoPstQedY
-         +IXPfV3fhDQq6zIEdhyTzpDOtVxhBYYQZG5AbyhzwVHOIFquc2DLtQ8aFcAvy3ZuEs
-         w+/YFcmpGxND3rhQjt/TNuemacWxyVctrad1lyqzzsQ66ASFexeE5CW2jnRLi8KiJN
-         KNseK1pY+6I7N7/2jE3OjjsOiGy4w2YBBZVzCUWQRJo9Q+ULsqbYVNAWMJRBVaeSOP
-         3aeFE9ipb5JrUUVcbV0ZzmVKu8moj5nbEnON1YtJFyHoGFE6XO2roulyJ/vlWHOHvj
-         OVYigkTDSB+Kg8DNsD/Oq4zG1PV3DYrdOKtnXOdCawYa6FKC15MbZkRixGBIZJmZI7
-         gTt8VWG8fzI/glaPA22I8Kb8Dcz+uTFC3NPRaPFdubC0TitXe1Ox/WQ2SM7sTJCMhO
-         8G9nJpmLvLXTHlWlOHK7W0YR7GlWMYxRyoEK/PtP0bUzGlsXfYT
-Date:   Thu, 17 Oct 2019 22:55:29 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Ralph Ewig <ralph.phd@protonmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: git smart http + apache mod_auth_openidc
-Message-ID: <20191017225529.sg37cxvyssbaitfw@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ralph Ewig <ralph.phd@protonmail.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-References: <4eb22ffc-77a1-4cd7-2277-bdc57d31186b@protonmail.com>
- <20191016233319.3rhmekasi5csytyl@camp.crustytoothpaste.net>
- <1320f616-ddcc-0eed-22f2-e28eb0abf039@protonmail.com>
- <20191017060322.GA10373@sigill.intra.peff.net>
- <5a2cc6f5-a8d0-356b-ff4e-a716aa5675b1@protonmail.com>
+        id S2438486AbfJQXE6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 19:04:58 -0400
+Received: from mail-pg1-f177.google.com ([209.85.215.177]:44748 "EHLO
+        mail-pg1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389846AbfJQXE6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 19:04:58 -0400
+Received: by mail-pg1-f177.google.com with SMTP id e10so2197051pgd.11
+        for <git@vger.kernel.org>; Thu, 17 Oct 2019 16:04:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=runtime-io.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=7klBL7j0vLhDJbtjx22QGYbfrw5UHsfppY8scNp5Lmc=;
+        b=Wauc2DXoYskJL7p4cNjtj9l5rpJU862UG63wyeRSHejs+kgZFU3O5UQT6a3S+Be/1F
+         3n5a3/HPOKDOumeDfsAfs0aWnzL2PTFQUm2BWl/09pnZ12DxOdSsDVdVeQIMSO6BSOz2
+         GCY/txupa2eG0K3bAQoqcsFau7L8dBbjVcys3ve4a9xP5hffZ6NC/mG3a01aXlhN4LIl
+         hvrHrCt5EWOuXChli/o3PkhSuOaAKfaiSffPNUafyfHANDuIocyM2o7X2Z72B+MQrjhR
+         yTlrVoPb/SY+ZzaRb3x0KZI0ZXgp83tFeBKsmUn+/Kte1adwg35/qm1kTg9VwHYx4aK0
+         cm5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=7klBL7j0vLhDJbtjx22QGYbfrw5UHsfppY8scNp5Lmc=;
+        b=o2dVNLDdttH4mv3GTJBzlBxn0igHuJJTDVX2uIf/xhBRsjbs+LgqIqW2SnTEIZtVAJ
+         pkDaDCF2vn5UfMKuYyAhh433/x1Ljx4FOA1RfyVBvf9aGKTrBwB/m8iE0Fkz8BRiEnLn
+         0sQmRXuDCcI9Yhzx24LFP4YmUcPX+YQbYDL+/ftkADFPiNQsC/7ZS2G99So2FGNdkfZy
+         ytGTQu0BQoIG/Wnf754xQVkdTEVtivECg8CW2hOHMFWgUFd06sUWVm6Lwd1OgI3EQrij
+         yUgn3VkuQPuiako6b5/O3yz9XU1qf0ImKyT4jDqm8KQmEFOMwuelMFXTdCSJSRdzs1Mq
+         1Upg==
+X-Gm-Message-State: APjAAAU9R5HA8PkmFFcKOf92YYtSvwgScSF3L3TuxCFEssY+m2g3BlTd
+        nqYUP5X09raDT1WKb1+lSAOir/ighrQ=
+X-Google-Smtp-Source: APXvYqyfY1gsGEQEd4IhewGqZsFTbvboy79cZR4BeCV762Q1f3FMla/0Dpyj+/x8M3WX11UJK+4hWg==
+X-Received: by 2002:a63:1609:: with SMTP id w9mr6910364pgl.184.1571353495185;
+        Thu, 17 Oct 2019 16:04:55 -0700 (PDT)
+Received: from localhost ([209.160.126.106])
+        by smtp.gmail.com with ESMTPSA id u3sm3546442pfn.134.2019.10.17.16.04.53
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Oct 2019 16:04:54 -0700 (PDT)
+Date:   Thu, 17 Oct 2019 16:07:51 -0700
+From:   Christopher Collins <chris@runtime.io>
+To:     git@vger.kernel.org
+Subject: bug: Directory replaced by submodule -> checkout fails
+Message-ID: <20191017230751.GC4049@pseudoephedrine.nightmare-heaven.no-ip.biz>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="y724fijyu7q4opnb"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5a2cc6f5-a8d0-356b-ff4e-a716aa5675b1@protonmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-trunk-amd64)
-User-Agent: NeoMutt/20180716
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello all,
 
---y724fijyu7q4opnb
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+### Environment:
 
-On 2019-10-17 at 14:33:38, Ralph Ewig wrote:
-> Quick follow up question: can the git client pass
-> a token read from a cookie with a request? That
-> would enable users to sign-in via a browser, store
-> the cookie, and then use that as the access token
-> to authenticate a git request.
+$ git --version
+git version 2.21.0
 
-Git has an option, http.cookieFile, that can read a cookie from a file,
-yes.  That does, of course, require that you're able to put the cookie
-in a file from a web browser.  I'm not aware of any web browsers that
-easily provide an option to dump cookies into a file.
+### Reproduce:
 
-Also, just as a note, this approach definitely won't work for automated
-systems you have, such as CI systems.  That's why I suggested Kerberos:
-because you can have services that have principals and you can use those
-credentials in your CI systems to access code and run jobs.
+git clone git@github.com:JuulLabs-OSS/mcuboot.git
+cd mcuboot
+git submodule init
+git submodule update
+git checkout ae01f153b11637feaedbc9d9042172fba2e080c0
 
-Clearly you know your infrastructure and users better than I do, but I
-don't recommend having a web-based sign-on as your only form of
-authentication for a Git server.  It's going to cause a lot of pain and
-inconvenience on all sides.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+### Discussion:
 
---y724fijyu7q4opnb
-Content-Type: application/pgp-signature; name="signature.asc"
+In the above sequence, the last step (checkout) fails with this error:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+    error: The following untracked working tree files would be overwritten by checkout:
+            ext/mbedtls/include/mbedtls/asn1.h
+            ext/mbedtls/include/mbedtls/bignum.h
+            ext/mbedtls/include/mbedtls/check_config.h
+            ext/mbedtls/include/mbedtls/config.h
+            ext/mbedtls/include/mbedtls/ecdsa.h
+            ext/mbedtls/include/mbedtls/ecp.h
+            ext/mbedtls/include/mbedtls/md.h
+            ext/mbedtls/include/mbedtls/oid.h
+            ext/mbedtls/include/mbedtls/pk.h
+            ext/mbedtls/include/mbedtls/platform.h
+            ext/mbedtls/include/mbedtls/platform_util.h
+            ext/mbedtls/include/mbedtls/threading.h
+    Please move or remove them before you switch branches.
+    Aborting
 
-iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl2o8WEACgkQv1NdgR9S
-9osG3xAA0BQmoDvNasg02PK7Onx88NOzNPMEmSH64XeYiXQrxwfnxMBsU+JkLLhK
-gYjEhtLqwN1grULj5/mv/t0ZaNn+G8ehIULG2NoSBBh4myhSItrr5N6bfsUTNfn+
-GPn6GzUAl0RBtDjcUwE21IcT4TbonY4nQv0GGgZBI9e9Vq7ShlgT7/njnVXYObzH
-FOWmHrhl3CQMlL3LsDe/Z73YJFXwRwF3AqkG82ePwql4WdijeY/4rx8qOOpKXO0m
-nTKYGBIPA1j2IoVo60s20c1U8hbdmsJ0sLUXjvwruOh6YkDYiyZMkD/Buc693eQ+
-t4kZws5zvZrpcVe4rnHjf32MaxhQ5vQXLtVH2Gof2dvtWFMjVMCcIa9pl/12b5iO
-eVSEkqzgU7DX76ic4GZxtL8lqeR9LmyunlJDuHQv44qXVrMQ8YX036hA8O8LCb80
-+ksN7imlg5HQOhn6osaxIi07Wxqk5ExDKbAnYvC6fZ6Zzfr8BBBaRoAzDQoAgd2a
-PrD21LyYvjhAsbHtv3GXi4iHQ7piO79UA3wUWXelkUYl6wLTwr7s8aABElHmFu/O
-emCwASBPw6a/YtEjb3eG5k7NnW3zVeZek+UA0TuH3suMHnsHqtEFsGEEsEwnMs1N
-WjkQ9wtcjzde99xvGRrNqsAQrAybXF0TIICL+jfhj/6BgwH5Oyk=
-=6K6h
------END PGP SIGNATURE-----
+In the mcuboot repo, a regular directory was recently replaced with a
+submodule.  This was done with two separate commits:
 
---y724fijyu7q4opnb--
+1. (b748f6) Rename `ext/mbedtls` --> `ext/mbedtls-asn1`
+2. (f984b9) Add submodule `ext/mbedtls`
+
+Git reports an error when you use `git checkout` to "jump over" these
+two commits.  The sequence above shows what happens when you go from
+post-replace to pre-replace (master to ae01f1).
+
+When you do the reverse (pre-replace to post-replace), the checkout
+operation succeeds, but git emits the following warning:
+
+    warning: unable to rmdir 'sim/mcuboot-sys/mbedtls': Directory not empty
+
+This leaves the repo in a dirty state.
+
+The problem is easy to work around by hand:
+
+    rm -rf ext/mbedtls sim/mcuboot-sys/mbedtls
+    git checkout ae01f153b11637feaedbc9d9042172fba2e080c0
+
+Unfortunately it is not easy for automated tools to work around the
+issue.
+
+Thanks,
+Chris
