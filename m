@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B9591F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 00:53:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75C341F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 00:53:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391716AbfJQAxp (ORCPT <rfc822;e@80x24.org>);
+        id S2391708AbfJQAxp (ORCPT <rfc822;e@80x24.org>);
         Wed, 16 Oct 2019 20:53:45 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:45398 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:45392 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388082AbfJQAxp (ORCPT
+        by vger.kernel.org with ESMTP id S2391498AbfJQAxp (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 16 Oct 2019 20:53:45 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6FB3762060;
-        Thu, 17 Oct 2019 00:53:44 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0666761C70;
+        Thu, 17 Oct 2019 00:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1571273624;
-        bh=8uACwxOTNjAioSjtOo6DvauA73ALKLFLnoMsRHY/DjI=;
+        bh=XvxHqqXYF2VCra9Gh2vBVGrCRmeaXe0OsjwMcS+RWcQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Tn+7ORNAtUACUq/9U2BzwjmwQKKEMqIP22IM+OEQOvpbDY5X1yuU3ZEtLG/y3FgNj
-         h1Z0IRCo0XZWfmGC3/uBV0N8adu9kWYPLbLnjah6JpMll10vPbzRmZcWfdhB8/e3in
-         dlUbK4eQ2xyvokwLUtYTd4uB/DfVEciIxaGhnlSJUeMniFhmMNFk1SaQdUy97BK9+u
-         9ybk0wJgMpR1z6uPL1GsgQ0lAE9cgYJ4b4UbzqmmAqseJaoCgTSfJAhQOTMHA0G6W8
-         CdgjHbUMPE1BxyYTalNkCUSBzrRaJ6z9AvqcCpnPXJWYep+E80PZzAZoAJM+l8R7Uy
-         j1Tu7dhR9grCfsoPAzoESVRehW9WyzY+B3q3dfjJRALZcKxbadOtNDbHqFza+wKLxz
-         mVE4R2XzYZQpjnFwdR1B3DPo1Oupp4ofPBy7z45aKSVF9tKSEGYZhQQzXaQfYkqfSa
-         04u/7ETG4y/Pdc3ltmvp3KO1ew5mUeHWIA3xmJLTUrnsx0l4TCU
+        b=iZ9CdI+wadsTvt4BD5jnkSACqsmVOD6yJbMxxOo1kFg3iS9M75a57fcvjDAP2F4yn
+         yhme6dVMMb9xZmKnV2kL0ggZzsaU/C1aXW9esSdbhdrakPx+Eopuob+UtFPdQrxG4g
+         7Cry1MKj/rK903cIuy5z4uqp/niISonAYB54eOLJk4YYFPXxTJp0OZDKfYovkDjwUA
+         mlIozR1ztd/fHrPaHAVl3zDYv1o00evzJp2B0xmAFaSNnmKDYppJb/1W11ME9YrkVP
+         iZcTdm1839iRvPKEBouHsWhE8/YTAkNiM0UuPNK+ur2pxZHf4kBVVYippkPFye3PK6
+         bt9Bm+wtEblzP9PbI6FxzdLJMiCyorpoNn6MbVCO2cL8kkvRslyG4/r2aQeY7kVHIF
+         hdPPnKRH1WdWYwD1D1AbrroywJ+/LLo+AIx9IMTDIsrLfV13H7qrFjl6Xn8ylH4MDC
+         fMQ9Wnk+7n97RCU5UpAUwoVX2kz5q8L47ZjmVjGPjgmxInDS/7S
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/3] docs: mention when increasing http.postBuffer is valuable
-Date:   Thu, 17 Oct 2019 00:53:30 +0000
-Message-Id: <20191017005330.9021-4-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 2/3] doc: dissuade users from trying to ignore tracked files
+Date:   Thu, 17 Oct 2019 00:53:29 +0000
+Message-Id: <20191017005330.9021-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.23.0.866.gb869b98d4c
 In-Reply-To: <20191017005330.9021-1-sandals@crustytoothpaste.net>
 References: <20191017005330.9021-1-sandals@crustytoothpaste.net>
@@ -51,41 +51,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Users in a wide variety of situations find themselves with HTTP push
-problems.  Oftentimes these issues are due to antivirus software,
-filtering proxies, or other man-in-the-middle situations; other times,
-they are due to simple unreliability of the network.
+It is quite common for users to want to ignore the changes to a file
+that Git tracks.  Common scenarios for this case are IDE settings and
+configuration files, which should generally not be tracked and possibly
+generated from tracked files using a templating mechanism.
 
-However, a common solution to HTTP push problems found online is to
-increase http.postBuffer.  This works for none of the aforementioned
-situations and is only useful in a small, highly restricted number of
-cases: essentially, when the connection does not properly support
-HTTP/1.1.
+However, users learn about the assume-unchanged and skip-worktree bits
+and try to use them to do this anyway.  This is problematic, because
+when these bits are set, many operations behave as the user expects, but
+they usually do not help when git checkout needs to replace a file.
 
-Document when raising this value is appropriate and what it actually
-does, and discourage people from using it as a general solution for push
-problems, since it is not effective there.
+There is no sensible behavior in this case, because sometimes the data
+is precious, such as certain configuration files, and sometimes it is
+irrelevant data that the user would be happy to discard.
+
+Since this is not a supported configuration and users are prone to
+misuse the existing features for unintended purposes, causing general
+sadness and confusion, let's document the existing behavior and the
+pitfalls in the documentation for git update-index so that users know
+they should explore alternate solutions.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/config/http.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/git-update-index.txt | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
-index 5a32f5b0a5..ba7198846d 100644
---- a/Documentation/config/http.txt
-+++ b/Documentation/config/http.txt
-@@ -199,6 +199,13 @@ http.postBuffer::
- 	Transfer-Encoding: chunked is used to avoid creating a
- 	massive pack file locally.  Default is 1 MiB, which is
- 	sufficient for most requests.
-++
-+Note that raising this limit is only effective for disabling chunked
-+transfer encoding and therefore should be used only where the remote
-+server or a proxy only supports HTTP/1.0 or is noncompliant with the
-+HTTP standard.  Raising this is not, in general, an effective solution
-+for most push problems, but can increase memory consumption
-+significantly.
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index 1c4d146a41..502e06abc0 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -543,6 +543,16 @@ The untracked cache extension can be enabled by the
+ `core.untrackedCache` configuration variable (see
+ linkgit:git-config[1]).
  
- http.lowSpeedLimit, http.lowSpeedTime::
- 	If the HTTP transfer speed is less than 'http.lowSpeedLimit'
++NOTES
++-----
++
++Users often try to use the ``assume unchanged'' and skip-worktree bits
++to tell Git to ignore changes to files that are tracked.  This does not
++work as expected, since Git may still check working tree files against
++the index when performing certain operations.  In general, Git does not
++provide a way to ignore changes to tracked files, so alternate solutions
++are recommended.
++
+ SEE ALSO
+ --------
+ linkgit:git-config[1],
