@@ -2,230 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 318A31F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 22:05:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E04DC1F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 22:08:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2503727AbfJQWFo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 18:05:44 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54895 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2503724AbfJQWFo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 18:05:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1571349936;
-        bh=v41wIEZ+GSsWlXp3lRWkZdVai8Ou+oEryYMuYbYuBLw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gzlmkDrropjYO/mrjAAj1IHD2o6QqXG5ksZA2Hi12crFBQIJHxz9zwZhjsZz33YzJ
-         QbMnnkwhhjDoKEAvurQb71+14N55AYlB9/IvI8FnJTLlSlPi57ZylWH0KuWz1uYgZV
-         hiZr8buNPHJOYHHBb//dG+9aTSUlH90fJ9jVuOhM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MIdiZ-1iIAx3260j-00EhhU; Fri, 18
- Oct 2019 00:05:36 +0200
-Date:   Fri, 18 Oct 2019 00:05:20 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git_path(): handle `.lock` files correctly
-In-Reply-To: <20191016110440.GV29845@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1910172333360.46@tvgsbejvaqbjf.bet>
-References: <pull.401.git.1571209637.gitgitgadget@gmail.com> <f08c90ea02f6811b310a01301acf46da133f38a9.1571209637.git.gitgitgadget@gmail.com> <20191016110440.GV29845@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2395541AbfJQWIA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 18:08:00 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37446 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727050AbfJQWIA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 18:08:00 -0400
+Received: by mail-wr1-f68.google.com with SMTP id p14so4046602wro.4
+        for <git@vger.kernel.org>; Thu, 17 Oct 2019 15:07:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=38cSmOB7ljePAj3fZ6wGAgymB/uOzsYIYzXZw+k3D28=;
+        b=M3goQwb0VENzy+NlOXLEqOo0T3astQrZBbzMM9c7R57gHmMSFCCxyhdjOWn2Y56H1+
+         +IT0JpagsSR7+887C5z0xjpPR4VG56PG8lGSo/ZG5hEd003crUz++yD2cs7nF5h0oy82
+         nRVcuobu82TLy4dAZPkqk5DgJ0d5Mon52w57urI8BCbmfMbW9LFJlZgG7awMkg4v5rvt
+         eK3oBRgmdT7B0ZZENWAE0OfiiCKMV9nl766exmBT8ooXXRHK8jTP/hN6oa9EqAldpoeS
+         fY02Zshf0/xI6y6SoE799A/Ea/ELvtUJVMJlx/11pQWfIxOgyu2fpFmVB0ECx2a8dsr8
+         bAbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=38cSmOB7ljePAj3fZ6wGAgymB/uOzsYIYzXZw+k3D28=;
+        b=t5nHp4Wn54LruL8bcp1iN57jKaIN/1wj7Tkfy22fTge4WKEfppEnmPLa0jOba8o3p5
+         Wz6Cg+jqGGEEUi1Vs32Auvm2+Nl98/knn8JEL/Du5cl8LHq9v3+mLJNUH1vJf1BgxkrC
+         nRhRVliPo4wB0oF+p4cUhjK4IqKzoG6NBf84IyHhJgfZ78v26c/cECj0B2TVvJBgqyWc
+         KUs66MupE3LF1lFmDVJtxIGt2ZFHcdP/ld20kgOuCW1MC/BeUxIQhArxKJ0jLDaCpE5G
+         pXFxtRclgz54XbYv6FEweqOs30+csR6o/8oV8xQEYo0EHhOTFt0ZEXqvOhxFzZigiRsm
+         VDvg==
+X-Gm-Message-State: APjAAAXTFOSQK4gwlhsIQGkjbM7rNn+NPDIpNL/iWs/tN1RCWtBnEIL1
+        IlTjYwY8cIzKLsIDTlgug1QZvqXi
+X-Google-Smtp-Source: APXvYqwTAd/mIbwIRD8PDMLE3fYTXBSgyA4Pxe0/ET1GyM9UIKBf0Pw1hnRXzyJwDqLsV4oe+ux4Dw==
+X-Received: by 2002:adf:aacc:: with SMTP id i12mr4840402wrc.15.1571350078430;
+        Thu, 17 Oct 2019 15:07:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e15sm3930519wrs.49.2019.10.17.15.07.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 17 Oct 2019 15:07:57 -0700 (PDT)
+Message-Id: <pull.401.v2.git.1571350077.gitgitgadget@gmail.com>
+In-Reply-To: <pull.401.git.1571209637.gitgitgadget@gmail.com>
+References: <pull.401.git.1571209637.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 17 Oct 2019 22:07:55 +0000
+Subject: [PATCH v2 0/2] Handle git_path() with lock files correctly in worktrees
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-166488448-1571349936=:46"
-X-Provags-ID: V03:K1:VG+CqaJ5zVJFmIrP7KqiK+4HFy1LyM87hK7MAk3fm4/CmPz1VN6
- +vrRN7a1jS9sDKXZ5l2mUdMzl07Y50BZAnxo+5AsJZkRH81XPcFVkeVrzoMYmOazyH0pdk5
- 2gmRs4wz5h+uVSNejMpu+KB/2rbTM2ERirWekZCYvyhfd85WxuGUGqhM2QBIK5MFW5nUjKH
- u3s14gHKUsm19bxGxqrgQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ZIp38VdBKrE=:sbirG2QbgQ935DnA6OwE8J
- hIpMwC4BSGhinRFoD6edo3VL3D3zZqwgZZNBNv9YPjsvmRc3+d4Nl30eDmeRc4faGzxLiSZJA
- Wsub/cMTR0bYt8HJHDlv0AshW4DgzU8mThNyUUfxSL8fDXrPXVEa7TAYLtSliW8A1L+mwsmC9
- pZ9HaTUR/w6QOKNxpmLqweWG85VZc5bNTWiw4twQZrCAsFdqLqQ0KLbkY34ukpNjzia8aQhFb
- IhbEZUh5AVYpwOAIxYmqq32Z9e49QtmI7y+dQrZc6WB4mp+mrrRzHQJDOJK3XGtReugwWtr6R
- J1zmluFS69OebCjBiXbx4Yih7eWbVUBIYgcGZnWABBNCS3TPgpdvGGENwK36BXA+j8sKzI+9u
- PzvLW3IcDTMCEnxOylmxejpSQs7tBNn1pCAFBsKrQ+wRsSH2Y0rkzbtjzXmOr4pVTwgJxNKBs
- otOxeOUwcg0TdmSOCquWwX2hXMCrooobPsjq9PmUK3PbzXVoIiEn3mJ4/DfF3lPHfcLNXSOxM
- ZY6lg3F8ikH9aKkVlOGKxAFVueyxwXkBvoql+iAAtmxTTOB1mrgDIcUk9Oh1UywAczITlAgTK
- gh8b2hMjZ3ZogwUpyXbGJLsO4zzrM4eZskRPekC8Dgdn5ldWTcSnfIbKonC0kcs9RSEAMyU2n
- HfiZ4AB5BRaxIqfaCirjff0mwnJhnlANEVlPRdDDevGNxjxd92yCFgMMYX8gEH3KHZptSH4b1
- zPk/+97WfeDR/f5tES6pRn9zVTKRgdEtTGeIn13e/7ztXDxX9659DXVF2U7vur+vZL/ws19iP
- 7uG7Nji8qpEsV1vtF0N/Fw6352cD7tVpRK6X6UpKD9JCy3MojnWokbE7geo3MG+n/eSNWr/jo
- V4kYWRg4IzaKDbbyNaG30Fe7nvN+vflfDqA5VfqRk4f3FlucR4dMV2j1IEOueI9Tl33x9mC6I
- sEIYu7Zzb34sj0CX0jFVY7gyufZWUIf2DbCBFfgjeVrN4EFCa9F3cYZZYYXmS2bpd0VcRRhmI
- S+Ni4iFV6XCm6UF80NXRnPZiC3qUz99WCS9ZQwp6oiF6pWZ/cJr5EF8u6HBUuaNR3DZBHHFCZ
- fYweBbSqnCw44MiuZW9+Fq2gL9iVzbf0R5pBki5R25l8/bd/YQ6kppRDxfACkFr19HZN2YzB+
- e5CMNicVXvJq2meU7CsFhIe3VYyFaGU9TicLuaAMO9aGxfNXIFyC8PfHxOAuGWaXmL7AN+QxB
- Idvj1R8KyWgsBX/qRXuHczT2icmCUFGcBJQd+Vdhi/mBxkNPrg97MpjJC0Dg=
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+I stumbled over this during my recent work in Git GUI
+[https://github.com/gitgitgadget/git/pull/361] that was originally really
+only intended to use the correct hooks directory.
 
---8323328-166488448-1571349936=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+It turns out that my fears that index.lock was mishandled were unfounded,
+hence this patch series has a lot lower priority for me than "OMG we must
+push this into v2.24.0!".
 
-Hi G=C3=A1bor,
+Technically, the first patch is not needed (because I decided against adding
+a test to t1400 in the end, in favor of t1500), but it shouldn't hurt,
+either.
 
-On Wed, 16 Oct 2019, SZEDER G=C3=A1bor wrote:
+Changes since v1:
 
-> On Wed, Oct 16, 2019 at 07:07:17AM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > Ever since worktrees were introduced, the `git_path()` function _reall=
-y_
-> > needed to be called e.g. to get at the `index`. However, the wrong pat=
-h
-> > is returned for `index.lock`.
->
-> Could you give an example where it returns the wrong path for
-> 'index.lock'?
+ * Clarified the commit message to state that index.lock is fine, it is 
+   logs/HEAD.lock that isn't.
 
-Oh wow, this was a left-over from an early draft, before I got the
-regression test to work... What I meant was of course logs/HEAD.lock.
-Will fix.
+Johannes Schindelin (2):
+  t1400: wrap setup code in test case
+  git_path(): handle `.lock` files correctly
 
-> I tried to reproduce this issue in a working tree, but
-> no matter what I've tried, 'git rev-parse --git-dir index.lock' always
-> returned the right path.
+ path.c                |  4 ++--
+ t/t1400-update-ref.sh | 18 ++++++++++--------
+ t/t1500-rev-parse.sh  | 15 +++++++++++++++
+ 3 files changed, 27 insertions(+), 10 deletions(-)
 
-With `s/--git-dir/--git-path/`, I agree.
 
-> > This does not matter as long as the Git executable is doing the asking=
-,
-> > as the path for that `index.lock` file is constructed from
-> > `git_path("index")` by appending the `.lock` suffix.
-> >
-> > However, Git GUI just learned to use `--git-path` instead of appending
-> > relative paths to what `git rev-parse --git-dir` returns (and as a
-> > consequence not only using the correct hooks directory, but also using
-> > the correct paths in worktrees other than the main one). And one of th=
-e
-> > paths it is looking for is... you guessed it... `index.lock`.
-> >
-> > So let's make that work as script writers would expect it to.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  path.c               |  4 ++--
-> >  t/t1500-rev-parse.sh | 15 +++++++++++++++
-> >  2 files changed, 17 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/path.c b/path.c
-> > index e3da1f3c4e..ff85692b45 100644
-> > --- a/path.c
-> > +++ b/path.c
-> > @@ -268,7 +268,7 @@ static int trie_find(struct trie *root, const char=
- *key, match_fn fn,
-> >  	int result;
-> >  	struct trie *child;
-> >
-> > -	if (!*key) {
-> > +	if (!*key || !strcmp(key, ".lock")) {
-> >  		/* we have reached the end of the key */
-> >  		if (root->value && !root->len)
-> >  			return fn(key, root->value, baton);
-> > @@ -288,7 +288,7 @@ static int trie_find(struct trie *root, const char=
- *key, match_fn fn,
-> >
-> >  	/* Matched the entire compressed section */
-> >  	key +=3D i;
-> > -	if (!*key)
-> > +	if (!*key || !strcmp(key, ".lock"))
-> >  		/* End of key */
-> >  		return fn(key, root->value, baton);
-> >
-> > diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-> > index 01abee533d..d318a1eeef 100755
-> > --- a/t/t1500-rev-parse.sh
-> > +++ b/t/t1500-rev-parse.sh
-> > @@ -116,6 +116,21 @@ test_expect_success 'git-path inside sub-dir' '
-> >  	test_cmp expect actual
-> >  '
-> >
-> > +test_expect_success 'git-path in worktree' '
-> > +	test_tick &&
-> > +	git commit --allow-empty -m empty &&
-> > +	git worktree add --detach wt &&
-> > +	test_write_lines >expect \
-> > +		"$(pwd)/.git/worktrees/wt/logs/HEAD" \
-> > +		"$(pwd)/.git/worktrees/wt/logs/HEAD.lock" \
-> > +		"$(pwd)/.git/worktrees/wt/index" \
-> > +		"$(pwd)/.git/worktrees/wt/index.lock" &&
-> > +	git -C wt rev-parse >actual \
-> > +		--git-path logs/HEAD --git-path logs/HEAD.lock \
-> > +		--git-path index --git-path index.lock &&
-> > +	test_cmp expect actual
->
-> Without the fix applied this test fails with:
->
->   + test_cmp expect actual
->   --- expect      2019-10-16 10:20:31.047229423 +0000
->   +++ actual      2019-10-16 10:20:31.051229519 +0000
->   @@ -1,4 +1,4 @@
->    /home/szeder/src/git/t/trash directory.t1500-rev-parse/.git/worktrees=
-/wt/logs/HEAD
->   -/home/szeder/src/git/t/trash directory.t1500-rev-parse/.git/worktrees=
-/wt/logs/HEAD.lock
->   +/home/szeder/src/git/t/trash directory.t1500-rev-parse/.git/logs/HEAD=
-.lock
->    /home/szeder/src/git/t/trash directory.t1500-rev-parse/.git/worktrees=
-/wt/index
->    /home/szeder/src/git/t/trash directory.t1500-rev-parse/.git/worktrees=
-/wt/index.lock
->   error: last command exited with $?=3D1
->
-> So the path of 'index.lock' seems to be fine already, it's the path of
-> the lockfile for HEAD's reflog that's indeed wrong and makes the test
-> fail.
+base-commit: 108b97dc372828f0e72e56bbb40cae8e1e83ece6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-401%2Fdscho%2Flock-files-in-worktrees-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-401/dscho/lock-files-in-worktrees-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/401
 
-Indeed, and this makes this patch much less important than I previosly
-thought. It's not like it would break Git GUI in worktrees, which is
-what I thought, which in turn is the reason I sent this so close to
--rc0.
+Range-diff vs v1:
 
-> On a related note, I'm not sure whether the path of the reflogs
-> directory is right while in a different working tree...  Both with and
-> without this patch I get a path pointing to the main working tree:
->
->   $ ./git -C WT/ rev-parse --git-path logs
->   /home/szeder/src/git/.git/logs
->
-> However, I'm not sure what the right path should be in the first
-> place, given that each working tree has its own 'logs' directory, but
-> only for HEAD's reflog, while everything else goes to the main working
-> tree's 'logs' directory.
+ 1:  cf97c5182e = 1:  cf97c5182e t1400: wrap setup code in test case
+ 2:  f08c90ea02 ! 2:  93dba5a3a3 git_path(): handle `.lock` files correctly
+     @@ -3,8 +3,9 @@
+          git_path(): handle `.lock` files correctly
+      
+          Ever since worktrees were introduced, the `git_path()` function _really_
+     -    needed to be called e.g. to get at the `index`. However, the wrong path
+     -    is returned for `index.lock`.
+     +    needed to be called e.g. to get at the path to `logs/HEAD` (`HEAD` is
+     +    specific to the worktree). However, the wrong path is returned for
+     +    `logs/HEAD.lock`.
+      
+          This does not matter as long as the Git executable is doing the asking,
+          as the path for that `index.lock` file is constructed from
+     @@ -13,10 +14,12 @@
+          However, Git GUI just learned to use `--git-path` instead of appending
+          relative paths to what `git rev-parse --git-dir` returns (and as a
+          consequence not only using the correct hooks directory, but also using
+     -    the correct paths in worktrees other than the main one). And one of the
+     -    paths it is looking for is... you guessed it... `index.lock`.
+     +    the correct paths in worktrees other than the main one). While it does
+     +    not seem as if Git GUI in particular is asking for `logs/HEAD.lock`,
+     +    let's be safe rather than sorry.
+      
+     -    So let's make that work as script writers would expect it to.
+     +    Side note: Git GUI _does_ ask for `index.lock`, but that is already
+     +    resolved correctly.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
 
-It's like Junio said, the reflog for `HEAD` is special because `HEAD` is
-special. Look for `common_list` in `path.c` (it is a bit confusing, I
-admit, you have to look for the 3rd column of numbers: if it is a `1`,
-then it is a worktree-specific path, if it is `0`, it is supposed to
-live in the "commondir", i.e. in the gitdir of the main worktree).
-
-Thanks,
-Dscho
-
->
-> > +'
-> > +
-> >  test_expect_success 'rev-parse --is-shallow-repository in shallow rep=
-o' '
-> >  	test_commit test_commit &&
-> >  	echo true >expect &&
-> > --
-> > gitgitgadget
->
-
---8323328-166488448-1571349936=:46--
+-- 
+gitgitgadget
