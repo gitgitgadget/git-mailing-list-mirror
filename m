@@ -8,31 +8,31 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2291D1F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 14:21:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64A381F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 14:33:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394967AbfJQOV0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 10:21:26 -0400
-Received: from mail2.protonmail.ch ([185.70.40.22]:44801 "EHLO
+        id S2440305AbfJQOdq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 10:33:46 -0400
+Received: from mail2.protonmail.ch ([185.70.40.22]:16605 "EHLO
         mail2.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731664AbfJQOVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 10:21:25 -0400
-Date:   Thu, 17 Oct 2019 14:21:17 +0000
+        with ESMTP id S1726583AbfJQOdq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 10:33:46 -0400
+Date:   Thu, 17 Oct 2019 14:33:38 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=default; t=1571322082;
-        bh=7yTpdQKIoNR0IPouWBsALqdxef4GHogYr7U099KsX+M=;
+        s=default; t=1571322822;
+        bh=ClJIRQQ02QLgdKrYuViatoh0HAkdN6ZJjiH7lkF5Jas=;
         h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
          Feedback-ID:From;
-        b=hdBsvfIR2ajBc6qxib6NJUToaIt2Y+9PgRewgFq4EnB8hCcm7NKMX6aOxJ35Zl/v6
-         GifOod2TqTiFOdYNP7HDxbQGz4UUEoE/LLZvBuMrgOx1qSSfxIHYhuxnHcDnTgAACr
-         bE3sAXFwudPDWLdd81Hw55wlIiN5IKODWtmYgvmA=
+        b=RcL1EBqFDfm+TvPvIxpvRm6HSBePJjKuPZIiSFZeTirJrOVZMeBWbkcZzEifdYtka
+         yyvAzvHKK318XUzQuL61jYo5qgdQV8LBm2GIBrOOELqOwRl+RFBxEjUXk8Ise3axmo
+         9NwvVlRECRNEnZDWmVTzpi49sHlhSBOykM9FIM4c=
 To:     Jeff King <peff@peff.net>
 From:   Ralph Ewig <ralph.phd@protonmail.com>
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org
 Reply-To: Ralph Ewig <ralph.phd@protonmail.com>
 Subject: Re: git smart http + apache mod_auth_openidc
-Message-ID: <8d06b57a-8d02-1d05-fb12-00a01d776200@protonmail.com>
+Message-ID: <5a2cc6f5-a8d0-356b-ff4e-a716aa5675b1@protonmail.com>
 In-Reply-To: <20191017060322.GA10373@sigill.intra.peff.net>
 References: <4eb22ffc-77a1-4cd7-2277-bdc57d31186b@protonmail.com>
  <20191016233319.3rhmekasi5csytyl@camp.crustytoothpaste.net>
@@ -47,21 +47,11 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Interesting ... I have not looked at access tokens=20
-before, but did find some documentation online=20
-that describes how Azure AD Jason Web Tokens can=20
-be used to authenticate a headless API=20
-(https://docs.microsoft.com/en-us/azure/active-directory/develop/id-tokens)=
-,=20
-
-
-This seems to be a fit in this scenario, but=C2=A0 is=20
-admittedly a bit deeper into the weeds than I'm=20
-familiar with. I'll keep digging in to see if I=20
-can find a solution along that route. Really=20
-appreciate the pointer!
-
-Ralph
+Quick follow up question: can the git client pass=20
+a token read from a cookie with a request? That=20
+would enable users to sign-in via a browser, store=20
+the cookie, and then use that as the access token=20
+to authenticate a git request.
 
 
 On 10/16/2019 11:03 PM, Jeff King wrote:
