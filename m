@@ -2,104 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64A381F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 14:33:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA9C81F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 14:47:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440305AbfJQOdq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 10:33:46 -0400
-Received: from mail2.protonmail.ch ([185.70.40.22]:16605 "EHLO
-        mail2.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726583AbfJQOdq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 10:33:46 -0400
-Date:   Thu, 17 Oct 2019 14:33:38 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=default; t=1571322822;
-        bh=ClJIRQQ02QLgdKrYuViatoh0HAkdN6ZJjiH7lkF5Jas=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
-         Feedback-ID:From;
-        b=RcL1EBqFDfm+TvPvIxpvRm6HSBePJjKuPZIiSFZeTirJrOVZMeBWbkcZzEifdYtka
-         yyvAzvHKK318XUzQuL61jYo5qgdQV8LBm2GIBrOOELqOwRl+RFBxEjUXk8Ise3axmo
-         9NwvVlRECRNEnZDWmVTzpi49sHlhSBOykM9FIM4c=
-To:     Jeff King <peff@peff.net>
-From:   Ralph Ewig <ralph.phd@protonmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Reply-To: Ralph Ewig <ralph.phd@protonmail.com>
-Subject: Re: git smart http + apache mod_auth_openidc
-Message-ID: <5a2cc6f5-a8d0-356b-ff4e-a716aa5675b1@protonmail.com>
-In-Reply-To: <20191017060322.GA10373@sigill.intra.peff.net>
-References: <4eb22ffc-77a1-4cd7-2277-bdc57d31186b@protonmail.com>
- <20191016233319.3rhmekasi5csytyl@camp.crustytoothpaste.net>
- <1320f616-ddcc-0eed-22f2-e28eb0abf039@protonmail.com>
- <20191017060322.GA10373@sigill.intra.peff.net>
-Feedback-ID: JbhSByWnCQwiafGbFv64IeMW95YrXE9PqRMglI51uN_uNsIp7h5EnYZeviw8UgH0DtxilqFslLTcJ61CqL2H5Q==:Ext:ProtonMail
+        id S2502553AbfJQOrV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 10:47:21 -0400
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:56365 "EHLO
+        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S2440344AbfJQOrU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 10:47:20 -0400
+Received: from callcc.thunk.org (guestnat-104-133-0-98.corp.google.com [104.133.0.98] (may be forged))
+        (authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id x9HEl8g9010903
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 17 Oct 2019 10:47:10 -0400
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id 6B6B7420458; Thu, 17 Oct 2019 10:47:08 -0400 (EDT)
+Date:   Thu, 17 Oct 2019 10:47:08 -0400
+From:   "Theodore Y. Ts'o" <tytso@mit.edu>
+To:     Vegard Nossum <vegard.nossum@oracle.com>
+Cc:     Pratyush Yadav <me@yadavpratyush.com>, workflows@vger.kernel.org,
+        Git Mailing List <git@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Eric Wong <e@80x24.org>
+Subject: Re: email as a bona fide git transport
+Message-ID: <20191017144708.GI25548@mit.edu>
+References: <b9fb52b8-8168-6bf0-9a72-1e6c44a281a5@oracle.com>
+ <20191016150020.cr6jgfpd2c6fyg7t@yadavpratyush.com>
+ <a1c33600-14e6-be37-c026-8d8b8e4bad92@oracle.com>
+ <20191017131140.GG25548@mit.edu>
+ <507d7293-964a-048b-2de6-98e7e7982cfb@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <507d7293-964a-048b-2de6-98e7e7982cfb@oracle.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Quick follow up question: can the git client pass=20
-a token read from a cookie with a request? That=20
-would enable users to sign-in via a browser, store=20
-the cookie, and then use that as the access token=20
-to authenticate a git request.
+On Thu, Oct 17, 2019 at 04:01:33PM +0200, Vegard Nossum wrote:
+> 
+> In your example, couldn't Darrick simply base his xfs work on the latest
+> xfs branch that was pulled by Linus? That should be up to date with all
+> things xfs without having any of the things that made Linus's tree not
+> work for him.
 
+Sure, but sometimes there are changes in subsystems which the file
+system depends upon that were also merged by Linus.  So for example,
+the ext4 branch might be based on v5.3-rc4, and gets pulled after v5.3
+is released, along with a huge number of other subsystem trees, so the
+delta between v5.3 and v5.3-rc1 is ***huge***.
 
-On 10/16/2019 11:03 PM, Jeff King wrote:
-> On Thu, Oct 17, 2019 at 03:00:58AM +0000, Ralph Ewig wrote:
->
->> Thanks for the reply. I was hoping the Git GUI
->> might be able to handle the OpenID authentication
->> flow, but it makes sense that it would be
->> inconsistent with other git clients.
-> I don't think we'd ever do the full flow, but it might be that it's
-> possible to use a token generated by the flow in a separate browser
-> session. This is easy to do if you can provide the token to the server
-> in place of a password. E.g., if you use 2FA on GitHub, you can generate
-> a limited token that allows you to connect for Git operations.
->
-> You can also use time-limited tokens and feed them from a custom
-> credential helper, which does the full authentication flow from a web
-> browser. I think Google does (or did) have such a thing internally, but
-> I don't think any part of it was made public (it was discussed on the
-> list a couple times in the early days of credential helpers).
->
-> That would still have to end up with a token "password" to send over
-> basic auth, I think. There was some discussion a while back of letting
-> credential helpers pass back content for HTTP "Authorization" headers,
-> but I don't think anything was ever merged.
->
->>>>    =C2=A0=C2=A0=C2=A0 C:\Users\void>git clone --progress -v
->>>> "https://git.xxx.xxx/WebApps.git"
->>>>    =C2=A0=C2=A0=C2=A0 Cloning into 'WebApps'...
->>>>    =C2=A0=C2=A0=C2=A0 fatal: unable to update url base from
->>>> redirection:
->>>>    =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 asked for:
->>>> https://git.xxx.xxx/WebApps.git/info/refs?service=3Dgit-upload-pack
->>>>    =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 redirect:
->>>> https://login.microsoftonline.com/xxx/oauth2/authorize?response_type=
-=3Dcode&scope=3Dopenid&client_id=3Dxxx&state=3Dxxx&redirect_uri=3Dhttps%3A%=
-2F%2Fgit.xxx.xxx%2Fredirect&nonce=3Dxxx
-> You're running into one other complexity here, which is that we don't
-> allow cross-server redirects during the initial conversation. So even if
-> you did have an auth flow where we could somehow provide all the
-> information via Git, we'd still be unhappy about bouncing between
-> multiple servers.
->
-> Mostly that's there to avoid leaking credentials. We only have one
-> notion of "the username and password we're using" for a given fetch, so
-> we want to avoid leaking it if we're redirected to another server. But
-> obviously Git _could_ be smarter there, if this was the only blocker
-> remaining (but from my understanding of OpenID, it's not).
->
-> -Peff
+So while I could base my development on my previous ext4.git branch
+(based off of v5.3-rc4), at *some* point I need to be able to sync up
+with upstream.  And the usual way to do this is to start a new
+development branch based on (for example) v5.4-rc2, or in some cases
+v5.4-rc4.
 
+We could keep the development branch on based off of v5.3-rc4, and
+wait until things stablize, and *then* merge in v5.4-rcX, when
+v5.4-rcX is finally stable, but that makes for a more complex merge,
+and so it means that things like "git log origin..master" don't really
+work any more.  So the preferred development practice is very much....
+
+   rc2 o --> patch 1 --> patch 2 --> ... --> patch N 
+(origin)                                     (master)
+
+Where the "master" branch gets merged into the rewinding "dev" branch
+(which works much like git's pu branch), and where the "master" branch
+is what Linus will merge at the next merge window.
+
+> Otherwise, you could apply the stabilisation patches and then do your
+> final testing in a branch that merges that with your patchset, like so:
+> 
+>    rc1 o -----> fixup A ------> fixup B ---->o merge (tested)
+> (base)  \                                   /
+>          \                                 /
+>           ---> patch 001 --> patch 002 -->o patchset (submitted)
+
+I cloud do that, but remember that the checked out kernel tree is
+about a gigabyte (this assumes using git clone --shared, so it doesn't
+include the git pack files, and this is source only; the object files
+are another 2.6 GB).  I could keep separate checked out trees, and
+separate build trees, but that burns a lot of disk/SSD space.  Or I
+could switch back and forth by using "git checkout" between the
+development branch and the branch with the stablization patches, but
+then I'm constantly having to rebuild the object files, and ccache
+only helps so much.
+
+So it's much simpler to put the fixup patches at the on top of the
+origin, and then mail them out without having to play git branch
+rebasing gymnastics.  When the patch series is finally ready to roll,
+then the maintainer will apply the patch series on a clean branch,
+since hopefully by then -rc3 or -rc4 is finally stable enough to use
+as an origin point.
+
+So the idea is that developer might be sending out revisions of their
+patches on top of -rc1 plus fixup patches, but then the final version
+of the patch series, after a few rounds of review, gets applied on top
+of -rc3 or -rc4.
+
+> I think the more difficult problem to solve might be how to ensure that
+> the base commit is actually public/reachable when this is the intention.
+> A bot watching the mailing list could always respond with a "Hey, I
+> don't have that, could you rebase the series or push it somewhere?". But
+> it would be even better if git could tell you when you're about to
+> submit a patch. Maybe something like:
+> 
+>   git send-email --ensure-reachable-from [remote] rev^^..
+> 
+> In the worst case, I guess the base commit will just not be available --
+> the email will still have a sha1 on it, though, and which might still be
+> usable as an identifier for the patch/patchset. If not, it's still not
+> worse than the current workflow (which would still work).
+
+... or what we can do is allow the developer to specify the intended
+base --- e.g., -rc1, even though his patchset was against "-rc1 plus fixups".
+
+	     	       	     	  	     - Ted
