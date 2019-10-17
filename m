@@ -2,66 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CADF81F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 05:33:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C70021F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 05:40:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390603AbfJQFdI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 01:33:08 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:35581 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731603AbfJQFdI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 01:33:08 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 46tyVp2mYMz5tlJ;
-        Thu, 17 Oct 2019 07:33:06 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 7DE9D20A1;
-        Thu, 17 Oct 2019 07:33:05 +0200 (CEST)
-Subject: Re: [PATCH 1/2] git-gui: implement proc select_path_in_widget
-To:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <CAGr--=KXpt7GzqPpm1BCrsc1jhfaXeCT-XrWKNvq2pLtgAbSwQ@mail.gmail.com>
- <20191007171145.1259-1-birger.sp@gmail.com>
- <20191013202110.z3gyx7eikackvmzb@yadavpratyush.com>
- <CAGr--=K8beYCwRgjFdokyCkjguXTJu8wMoxMAMG_H7CVgmEA=g@mail.gmail.com>
- <20191016192819.5fxbwdediomj7gaz@yadavpratyush.com>
- <CAGr--=Ltx2JPexfVSWRrAdT0zHs0RWaZdS7OZD-TWJv2y7K-PA@mail.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <86d8ea9c-f27e-8ab8-c7f6-b3fd1eb3895d@kdbg.org>
-Date:   Thu, 17 Oct 2019 07:33:05 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.1
+        id S2394134AbfJQFkx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 01:40:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50416 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1731603AbfJQFkx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 01:40:53 -0400
+Received: (qmail 19802 invoked by uid 109); 17 Oct 2019 05:40:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 17 Oct 2019 05:40:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5981 invoked by uid 111); 17 Oct 2019 05:43:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 17 Oct 2019 01:43:57 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 17 Oct 2019 01:40:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] doc: provide guidance on user.name format
+Message-ID: <20191017054051.GA10253@sigill.intra.peff.net>
+References: <20191017005330.9021-1-sandals@crustytoothpaste.net>
+ <20191017005330.9021-2-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-In-Reply-To: <CAGr--=Ltx2JPexfVSWRrAdT0zHs0RWaZdS7OZD-TWJv2y7K-PA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <20191017005330.9021-2-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 17.10.19 um 07:08 schrieb Birger Skogeng Pedersen:
-> Hi Pratyush,
-> 
-> On Wed, Oct 16, 2019 at 9:28 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
->> I mentioned this earlier, and I'll mention this again: I'm not sure
->> whether this feature would be a good thing for the larger population. So
->> this _might_ not end up being accepted depending on how people react to
->> the proposal. I thought I'd let you know to avoid any nasty surprises
->> later.
-> 
-> Could you please elaborate on why you think the feature might be
-> undesired? Why would users not want a staged file to be selected
-> automatically?
+On Thu, Oct 17, 2019 at 12:53:28AM +0000, brian m. carlson wrote:
 
-FWIW, I would prefer to experiment with the feature for a few weeks
-before it (or a configuration that enables it by default) is baked in.
+> It's a frequent misconception that the user.name variable controls
+> authentication in some way, and as a result, beginning users frequently
+> attempt to change it when they're having authentication troubles.
+> Document that the convention is that this variable represents some form
+> of a human's personal name, although that is not required.  In addition,
+> address concerns about whether Unicode is supported.
+> 
+> Use the term "personal name" as this is likely to draw the intended
+> contrast, be applicable across cultures which may have different naming
+> conventions, and be easily understandable to people who do not speak
+> English as their first language.  Indicate that "some form" is
+> conventionally used, as people may use a nickname or preferred name
+> instead of a full legal name.
+> 
+> Point users who may be confused about authentication to an appropriate
+> configuration option instead.
 
--- Hannes
+I think this is a good distinction to draw, but...
+
+>  Documentation/git-commit-tree.txt | 6 ++++++
+>  1 file changed, 6 insertions(+)
+
+...I was surprised to see it here, where I think most users wouldn't
+find it. Would it make sense in git-commit(1), or in the description of
+the user.name config?
+
+-Peff
