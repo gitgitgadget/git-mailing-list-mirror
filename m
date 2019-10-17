@@ -2,64 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 871321F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 05:54:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F75E1F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 06:03:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394044AbfJQFw5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 01:52:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50446 "HELO cloud.peff.net"
+        id S2404720AbfJQGDY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 02:03:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50452 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2392533AbfJQFw4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 01:52:56 -0400
-Received: (qmail 20170 invoked by uid 109); 17 Oct 2019 05:52:57 -0000
+        id S2392244AbfJQGDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 02:03:24 -0400
+Received: (qmail 20466 invoked by uid 109); 17 Oct 2019 06:03:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 17 Oct 2019 05:52:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 17 Oct 2019 06:03:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6033 invoked by uid 111); 17 Oct 2019 05:56:01 -0000
+Received: (qmail 6074 invoked by uid 111); 17 Oct 2019 06:06:29 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 17 Oct 2019 01:56:01 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 17 Oct 2019 02:06:29 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 17 Oct 2019 01:52:55 -0400
+Date:   Thu, 17 Oct 2019 02:03:23 -0400
 From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] docs: mention when increasing http.postBuffer is
- valuable
-Message-ID: <20191017055254.GC10253@sigill.intra.peff.net>
-References: <20191017005330.9021-1-sandals@crustytoothpaste.net>
- <20191017005330.9021-4-sandals@crustytoothpaste.net>
+To:     Ralph Ewig <ralph.phd@protonmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: git smart http + apache mod_auth_openidc
+Message-ID: <20191017060322.GA10373@sigill.intra.peff.net>
+References: <4eb22ffc-77a1-4cd7-2277-bdc57d31186b@protonmail.com>
+ <20191016233319.3rhmekasi5csytyl@camp.crustytoothpaste.net>
+ <1320f616-ddcc-0eed-22f2-e28eb0abf039@protonmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20191017005330.9021-4-sandals@crustytoothpaste.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1320f616-ddcc-0eed-22f2-e28eb0abf039@protonmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 17, 2019 at 12:53:30AM +0000, brian m. carlson wrote:
+On Thu, Oct 17, 2019 at 03:00:58AM +0000, Ralph Ewig wrote:
 
-> Users in a wide variety of situations find themselves with HTTP push
-> problems.  Oftentimes these issues are due to antivirus software,
-> filtering proxies, or other man-in-the-middle situations; other times,
-> they are due to simple unreliability of the network.
-> 
-> However, a common solution to HTTP push problems found online is to
-> increase http.postBuffer.  This works for none of the aforementioned
-> situations and is only useful in a small, highly restricted number of
-> cases: essentially, when the connection does not properly support
-> HTTP/1.1.
-> 
-> Document when raising this value is appropriate and what it actually
-> does, and discourage people from using it as a general solution for push
-> problems, since it is not effective there.
+> Thanks for the reply. I was hoping the Git GUI 
+> might be able to handle the OpenID authentication 
+> flow, but it makes sense that it would be 
+> inconsistent with other git clients.
 
-Yeah, I've run into some voodoo advice about this config option before.
-I think your advice neatly explains the situation.
+I don't think we'd ever do the full flow, but it might be that it's
+possible to use a token generated by the flow in a separate browser
+session. This is easy to do if you can provide the token to the server
+in place of a password. E.g., if you use 2FA on GitHub, you can generate
+a limited token that allows you to connect for Git operations.
+
+You can also use time-limited tokens and feed them from a custom
+credential helper, which does the full authentication flow from a web
+browser. I think Google does (or did) have such a thing internally, but
+I don't think any part of it was made public (it was discussed on the
+list a couple times in the early days of credential helpers).
+
+That would still have to end up with a token "password" to send over
+basic auth, I think. There was some discussion a while back of letting
+credential helpers pass back content for HTTP "Authorization" headers,
+but I don't think anything was ever merged.
+
+> >>       C:\Users\void>git clone --progress -v
+> >> "https://git.xxx.xxx/WebApps.git"
+> >>       Cloning into 'WebApps'...
+> >>       fatal: unable to update url base from
+> >> redirection:
+> >>         asked for:
+> >> https://git.xxx.xxx/WebApps.git/info/refs?service=git-upload-pack
+> >>          redirect:
+> >> https://login.microsoftonline.com/xxx/oauth2/authorize?response_type=code&scope=openid&client_id=xxx&state=xxx&redirect_uri=https%3A%2F%2Fgit.xxx.xxx%2Fredirect&nonce=xxx
+
+You're running into one other complexity here, which is that we don't
+allow cross-server redirects during the initial conversation. So even if
+you did have an auth flow where we could somehow provide all the
+information via Git, we'd still be unhappy about bouncing between
+multiple servers.
+
+Mostly that's there to avoid leaking credentials. We only have one
+notion of "the username and password we're using" for a given fetch, so
+we want to avoid leaking it if we're redirected to another server. But
+obviously Git _could_ be smarter there, if this was the only blocker
+remaining (but from my understanding of OpenID, it's not).
 
 -Peff
