@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AE891F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 20:17:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D645C1F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 20:17:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437218AbfJQURd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 16:17:33 -0400
-Received: from mail-vk1-f201.google.com ([209.85.221.201]:38142 "EHLO
-        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731007AbfJQURd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 16:17:33 -0400
-Received: by mail-vk1-f201.google.com with SMTP id k132so1412042vka.5
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 13:17:32 -0700 (PDT)
+        id S2437324AbfJQURh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 16:17:37 -0400
+Received: from mail-yb1-f201.google.com ([209.85.219.201]:45129 "EHLO
+        mail-yb1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731007AbfJQURh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 16:17:37 -0400
+Received: by mail-yb1-f201.google.com with SMTP id y6so2722098ybm.12
+        for <git@vger.kernel.org>; Thu, 17 Oct 2019 13:17:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=SkWoFSW9/ZnGBNqh9eBUlPVU68AMoA32DFzs1tDlqsg=;
-        b=nO05626in75120Wd8npkKPuwJzxImKKqqAbbVwFtPzmY70Yjp3sDjDGPpLqk0qxEvK
-         aJGrGPXmR05Ei8UGks+9NMdrDhoGlGmUB7rC+5yeTE+T2Zu+/BgOt4C/c21WzJtIt0bE
-         umJiX1vVQmZxwyDB0+VzLfEFSTjUZEQjS1vJM2jIrWxZvJM2I5X2pd+7+LwKZPn45vuF
-         lAxylsBjUO8kIlUkN63LYNFW1tKh977nLt7S/bbETpejg2QBXAdoQ9robrUT9wCit1ow
-         I1aDnI8PHeVK22LZiy3yFhh7PyLx7ph6ztg4p4AXd/l/45ZGUYOwmYGk02MYT9m7o6U/
-         I6jg==
+        bh=4Uo3j7qHAfJI4XLY4La7B3jbu9qzZn2r38Y90Vqt5I4=;
+        b=g0zr3Ax2fN7Da6Ey/9d98AFYpBfC3K2O2KeoxerhKDaVlb51v59UVe4lQkYQ+VqSCs
+         3FnMFH9YcTfRaLFMh34OQhXpYFX+hKKXLrKK+2yIvzbpkTv+mz2qx3e9AY+H0Xt/XY/Y
+         Oeg+7HULYW8TG74lwRnlEkPW5ubo1wmAY/lyYomY61Uw4dSj/ABHull88f24i9P7m5GS
+         nWT3rvABWbmEt6VAo7WaNtFwRLHNHgxNZ/IQ3DgagzfQgTrSfynMRfqlMC8d6vjWvZlI
+         WIGUVIB1e+STcgfsc5KyCtEfUnaKcemGEL4s6lxFMg3OfG/CqyBJVzF4WgLuNZRw65Ov
+         /AQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=SkWoFSW9/ZnGBNqh9eBUlPVU68AMoA32DFzs1tDlqsg=;
-        b=QDDPGDNp5v84k957DvtAN885WbAj7UjWDHCrVInOrxVTSxuRs6RQNH6NtEDHxfSrkV
-         O3lo/vjUcFtHGwi526Q9ydgaMjsVDYVSi8jJfgiy7zAu3KLqXCTbh4x4CAzTLXLBSXO2
-         Db8ZVoNAoWBk/7YRyBb77Gct2Iyz6Xu4xmBSucmp+Twi/6i7RczeTOwb6+yztApsVfM1
-         OM0zjC0SFTNLBIj8/Zd2m2BhJ69aw1dUb/PYbF8a5CZxpbtVgLFMewlxLcZHTOGnfN7W
-         9exKsMueiH0K6y4UJnFN9+IF6x+AECnOttr7VWjmZ57Q6Ik/oGXiVQBEBG0JRCnssOjI
-         9tAA==
-X-Gm-Message-State: APjAAAV7Y42K4tpkvYd5kyu5NI7OF4tDHSGGV1acAisEDLPz6iQuA+Ys
-        85IgXUmrBhBDcpM71Wj0xi80vwo+rXURPovynTslytUO6R8TnTGyLZggeXL4CJ6HA70SC87Lwwg
-        ByXJWnIK20MiDdQPaaT0sqws+PPALYBkrD/Z1gT9tGPRt8ky8h0rgDQOa6gDFd9CB69k0pAespe
-        dD
-X-Google-Smtp-Source: APXvYqyKLGcLNwLaAB8ka+0W4Mx06xipzUfUwuEOKIC9MOlMOXQH2kDn6CR/C+eq+C42mE6Oeo/9sDqCR6Ffijm/2M33
-X-Received: by 2002:ab0:55c8:: with SMTP id w8mr3288316uaa.66.1571343451775;
- Thu, 17 Oct 2019 13:17:31 -0700 (PDT)
-Date:   Thu, 17 Oct 2019 13:17:13 -0700
+        bh=4Uo3j7qHAfJI4XLY4La7B3jbu9qzZn2r38Y90Vqt5I4=;
+        b=SZRDxFMt5LDOmNhvolCsSbcONHfBzdDrCdgS0rn2cu+pLSTze7upNLPun3ilsIWXy4
+         52DH4AzQKjLMZd3BrvZHkdKPS7+0okcSR3zSRwYK34aD7eSgd+j2zrhwbqxLD7DSOGnL
+         Bxi4r/airW0uXyEettfO4r+xTVNQxVwMNQLxbNDYkfg8OvMGXWbwkpfRnEK1OVkreOLW
+         ckgy2ZYCZ2uIBj9pvVKkqvXQSPQqI85cWRGb9tLaDzFHNrhQ9qat6dbiaCepaHyRAZc/
+         xhjGKq19YiB5GG/ule3KDaRZiSs0lnoyceVXU3N+egajU8lSWmoxLzMSnwH+yiDnSk+g
+         zAVg==
+X-Gm-Message-State: APjAAAVwx/0hnUMShPUt4hHd+gMuVjAbq1r7axFlLQDKcTd+ifZozXiK
+        OPPFf7Y7d37ycVJSE+gR8MPHXO7PLPkeFHV1GbmMMhQ96eolDNVcC2PDRLdDbdpDXuvBXJAXc0k
+        /pSYh91NuQFQY8oj55JonIlBqQTpKq3+sl9ufQf035sOwKKZIO1m96FPCjp2QNG/P37jKnVeUVk
+        JT
+X-Google-Smtp-Source: APXvYqyrK0BNpc8tgBVbD4XRDrS+HZnpYtPfMfz2D/8zFd+uta8gqStxTxnlmTkFAqK7e2wZsXJNUpCu99dbnPWUmWvF
+X-Received: by 2002:a25:d048:: with SMTP id h69mr3435849ybg.458.1571343454716;
+ Thu, 17 Oct 2019 13:17:34 -0700 (PDT)
+Date:   Thu, 17 Oct 2019 13:17:14 -0700
 In-Reply-To: <cover.1571343096.git.jonathantanmy@google.com>
-Message-Id: <3359b66b841e7eabdc45d3d937e97208b22e2901.1571343096.git.jonathantanmy@google.com>
+Message-Id: <7f18480c45193d2a54832705cd29353911ad5b83.1571343096.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1570663470.git.jonathantanmy@google.com> <cover.1571343096.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.23.0.866.gb869b98d4c-goog
-Subject: [PATCH v2 4/7] index-pack: remove redundant child field
+Subject: [PATCH v2 5/7] index-pack: calculate {ref,ofs}_{first,last} early
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com,
@@ -65,107 +65,250 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is refactoring 1 of 2 to simplify struct base_data.
+This is refactoring 2 of 2 to simplify struct base_data.
 
-In index-pack, each thread maintains a doubly-linked list of the delta
-chain that it is currently processing (the "base" and "child" pointers
-in struct base_data). When a thread exceeds the delta base cache limit
-and needs to reclaim memory, it uses the "child" pointers to traverse
-the lineage, reclaiming the memory of the eldest delta bases first.
+Whenever we make a struct base_data, immediately calculate its delta
+children. This eliminates confusion as to when the
+{ref,ofs}_{first,last} fields are initialized.
 
-A subsequent patch will perform memory reclaiming in a different way and
-will thus no longer need the "child" pointer. Because the "child"
-pointer is redundant even now, remove it so that the aforementioned
-subsequent patch will be clearer. In the meantime, reclaim memory in the
-reverse order of the "base" pointers.
+Before this patch, the delta children were calculated at the last
+possible moment. This allowed the members of struct base_data to be
+populated in any order, superficially useful when we have the object
+contents before the struct object_entry. But this makes reasoning about
+the state of struct base_data more complicated, hence this patch.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/index-pack.c | 41 ++++++++++++++++++++++-------------------
- 1 file changed, 22 insertions(+), 19 deletions(-)
+ builtin/index-pack.c | 125 +++++++++++++++++++++----------------------
+ 1 file changed, 61 insertions(+), 64 deletions(-)
 
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 296804230c..220e1e3693 100644
+index 220e1e3693..d21353757d 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -34,7 +34,6 @@ struct object_stat {
+@@ -33,12 +33,15 @@ struct object_stat {
+ };
  
  struct base_data {
++	/* Initialized by make_base(). */
  	struct base_data *base;
--	struct base_data *child;
  	struct object_entry *obj;
- 	void *data;
- 	unsigned long size;
-@@ -44,7 +43,6 @@ struct base_data {
+-	void *data;
+-	unsigned long size;
+ 	int ref_first, ref_last;
+ 	int ofs_first, ofs_last;
++
++	/* Not initialized by make_base(). */
++	void *data;
++	unsigned long size;
+ };
  
  struct thread_local {
- 	pthread_t thread;
--	struct base_data *base_cache;
- 	size_t base_cache_used;
- 	int pack_fd;
- };
-@@ -380,27 +378,37 @@ static void free_base_data(struct base_data *c)
- 	}
+@@ -362,14 +365,6 @@ static void set_thread_data(struct thread_local *data)
+ 		pthread_setspecific(key, data);
  }
  
--static void prune_base_data(struct base_data *retain)
-+static void prune_base_data(struct base_data *youngest_child)
- {
- 	struct base_data *b;
- 	struct thread_local *data = get_thread_data();
--	for (b = data->base_cache;
--	     data->base_cache_used > delta_base_cache_limit && b;
--	     b = b->child) {
--		if (b->data && b != retain)
--			free_base_data(b);
-+	struct base_data **ancestry = NULL;
-+	size_t nr = 0, alloc = 0;
-+	ssize_t i;
-+
-+	if (data->base_cache_used <= delta_base_cache_limit)
-+		return;
-+
-+	/*
-+	 * Free all ancestors of youngest_child until we have enough space,
-+	 * starting with the oldest. (We cannot free youngest_child itself.)
-+	 */
-+	for (b = youngest_child->base; b != NULL; b = b->base) {
-+		ALLOC_GROW(ancestry, nr + 1, alloc);
-+		ancestry[nr++] = b;
- 	}
-+	for (i = nr - 1;
-+	     i >= 0 && data->base_cache_used > delta_base_cache_limit;
-+	     i--) {
-+		if (ancestry[i]->data)
-+			free_base_data(ancestry[i]);
-+	}
-+	free(ancestry);
- }
- 
- static void link_base_data(struct base_data *base, struct base_data *c)
- {
--	if (base)
--		base->child = c;
--	else
--		get_thread_data()->base_cache = c;
+-static struct base_data *alloc_base_data(void)
+-{
+-	struct base_data *base = xcalloc(1, sizeof(struct base_data));
+-	base->ref_last = -1;
+-	base->ofs_last = -1;
+-	return base;
+-}
 -
- 	c->base = base;
--	c->child = NULL;
- 	if (c->data)
- 		get_thread_data()->base_cache_used += c->size;
- 	prune_base_data(c);
-@@ -408,11 +416,6 @@ static void link_base_data(struct base_data *base, struct base_data *c)
- 
- static void unlink_base_data(struct base_data *c)
+ static void free_base_data(struct base_data *c)
  {
--	struct base_data *base = c->base;
--	if (base)
--		base->child = NULL;
--	else
--		get_thread_data()->base_cache = NULL;
- 	free_base_data(c);
+ 	if (c->data) {
+@@ -406,19 +401,6 @@ static void prune_base_data(struct base_data *youngest_child)
+ 	free(ancestry);
  }
  
+-static void link_base_data(struct base_data *base, struct base_data *c)
+-{
+-	c->base = base;
+-	if (c->data)
+-		get_thread_data()->base_cache_used += c->size;
+-	prune_base_data(c);
+-}
+-
+-static void unlink_base_data(struct base_data *c)
+-{
+-	free_base_data(c);
+-}
+-
+ static int is_delta_type(enum object_type type)
+ {
+ 	return (type == OBJ_REF_DELTA || type == OBJ_OFS_DELTA);
+@@ -928,10 +910,25 @@ static void *get_base_data(struct base_data *c)
+ 	return c->data;
+ }
+ 
+-static void resolve_delta(struct object_entry *delta_obj,
+-			  struct base_data *base, struct base_data *result)
++static struct base_data *make_base(struct object_entry *obj,
++				   struct base_data *parent)
+ {
+-	void *base_data, *delta_data;
++	struct base_data *base = xcalloc(1, sizeof(struct base_data));
++	base->base = parent;
++	base->obj = obj;
++	find_ref_delta_children(&obj->idx.oid,
++				&base->ref_first, &base->ref_last);
++	find_ofs_delta_children(obj->idx.offset,
++				&base->ofs_first, &base->ofs_last);
++	return base;
++}
++
++static struct base_data *resolve_delta(struct object_entry *delta_obj,
++				       struct base_data *base)
++{
++	void *base_data, *delta_data, *result_data;
++	struct base_data *result;
++	unsigned long result_size;
+ 
+ 	if (show_stat) {
+ 		int i = delta_obj - objects;
+@@ -945,19 +942,31 @@ static void resolve_delta(struct object_entry *delta_obj,
+ 	}
+ 	delta_data = get_data_from_pack(delta_obj);
+ 	base_data = get_base_data(base);
+-	result->obj = delta_obj;
+-	result->data = patch_delta(base_data, base->size,
+-				   delta_data, delta_obj->size, &result->size);
++	result_data = patch_delta(base_data, base->size,
++				  delta_data, delta_obj->size, &result_size);
+ 	free(delta_data);
+-	if (!result->data)
++	if (!result_data)
+ 		bad_object(delta_obj->idx.offset, _("failed to apply delta"));
+-	hash_object_file(result->data, result->size,
++	hash_object_file(result_data, result_size,
+ 			 type_name(delta_obj->real_type), &delta_obj->idx.oid);
+-	sha1_object(result->data, NULL, result->size, delta_obj->real_type,
++	sha1_object(result_data, NULL, result_size, delta_obj->real_type,
+ 		    &delta_obj->idx.oid);
++
++	result = make_base(delta_obj, base);
++	if (result->ref_last == -1 && result->ofs_last == -1) {
++		free(result_data);
++	} else {
++		result->data = result_data;
++		result->size = result_size;
++		get_thread_data()->base_cache_used += result->size;
++		prune_base_data(result);
++	}
++
+ 	counter_lock();
+ 	nr_resolved_deltas++;
+ 	counter_unlock();
++
++	return result;
+ }
+ 
+ /*
+@@ -983,30 +992,15 @@ static int compare_and_swap_type(signed char *type,
+ static struct base_data *find_unresolved_deltas_1(struct base_data *base,
+ 						  struct base_data *prev_base)
+ {
+-	if (base->ref_last == -1 && base->ofs_last == -1) {
+-		find_ref_delta_children(&base->obj->idx.oid,
+-					&base->ref_first, &base->ref_last);
+-
+-		find_ofs_delta_children(base->obj->idx.offset,
+-					&base->ofs_first, &base->ofs_last);
+-
+-		if (base->ref_last == -1 && base->ofs_last == -1) {
+-			free(base->data);
+-			return NULL;
+-		}
+-
+-		link_base_data(prev_base, base);
+-	}
+-
+ 	if (base->ref_first <= base->ref_last) {
+ 		struct object_entry *child = objects + ref_deltas[base->ref_first].obj_no;
+-		struct base_data *result = alloc_base_data();
++		struct base_data *result;
+ 
+ 		if (!compare_and_swap_type(&child->real_type, OBJ_REF_DELTA,
+ 					   base->obj->real_type))
+ 			BUG("child->real_type != OBJ_REF_DELTA");
+ 
+-		resolve_delta(child, base, result);
++		result = resolve_delta(child, base);
+ 		if (base->ref_first == base->ref_last && base->ofs_last == -1)
+ 			free_base_data(base);
+ 
+@@ -1016,11 +1010,11 @@ static struct base_data *find_unresolved_deltas_1(struct base_data *base,
+ 
+ 	if (base->ofs_first <= base->ofs_last) {
+ 		struct object_entry *child = objects + ofs_deltas[base->ofs_first].obj_no;
+-		struct base_data *result = alloc_base_data();
++		struct base_data *result;
+ 
+ 		assert(child->real_type == OBJ_OFS_DELTA);
+ 		child->real_type = base->obj->real_type;
+-		resolve_delta(child, base, result);
++		result = resolve_delta(child, base);
+ 		if (base->ofs_first == base->ofs_last)
+ 			free_base_data(base);
+ 
+@@ -1028,7 +1022,7 @@ static struct base_data *find_unresolved_deltas_1(struct base_data *base,
+ 		return result;
+ 	}
+ 
+-	unlink_base_data(base);
++	free_base_data(base);
+ 	return NULL;
+ }
+ 
+@@ -1071,9 +1065,8 @@ static int compare_ref_delta_entry(const void *a, const void *b)
+ 
+ static void resolve_base(struct object_entry *obj)
+ {
+-	struct base_data *base_obj = alloc_base_data();
+-	base_obj->obj = obj;
+-	base_obj->data = NULL;
++	struct base_data *base_obj = make_base(obj, NULL);
++
+ 	find_unresolved_deltas(base_obj);
+ }
+ 
+@@ -1367,21 +1360,25 @@ static void fix_unresolved_deltas(struct hashfile *f)
+ 	for (i = 0; i < nr_ref_deltas; i++) {
+ 		struct ref_delta_entry *d = sorted_by_pos[i];
+ 		enum object_type type;
+-		struct base_data *base_obj = alloc_base_data();
++		struct base_data *base;
++		void *data;
++		unsigned long size;
++		struct object_entry *obj;
+ 
+ 		if (objects[d->obj_no].real_type != OBJ_REF_DELTA)
+ 			continue;
+-		base_obj->data = read_object_file(&d->oid, &type,
+-						  &base_obj->size);
+-		if (!base_obj->data)
++		data = read_object_file(&d->oid, &type, &size);
++		if (!data)
+ 			continue;
+ 
+-		if (check_object_signature(&d->oid, base_obj->data,
+-				base_obj->size, type_name(type)))
++		if (check_object_signature(&d->oid, data,
++					   size, type_name(type)))
+ 			die(_("local object %s is corrupt"), oid_to_hex(&d->oid));
+-		base_obj->obj = append_obj_to_pack(f, d->oid.hash,
+-					base_obj->data, base_obj->size, type);
+-		find_unresolved_deltas(base_obj);
++		obj = append_obj_to_pack(f, d->oid.hash, data, size, type);
++		base = make_base(obj, NULL);
++		base->data = data;
++		base->size = size;
++		find_unresolved_deltas(base);
+ 		display_progress(progress, nr_resolved_deltas);
+ 	}
+ 	free(sorted_by_pos);
 -- 
 2.23.0.866.gb869b98d4c-goog
 
