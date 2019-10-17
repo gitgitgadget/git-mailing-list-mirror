@@ -2,148 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0470B1F4C0
-	for <e@80x24.org>; Thu, 17 Oct 2019 22:08:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8FD61F4C0
+	for <e@80x24.org>; Thu, 17 Oct 2019 22:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438191AbfJQWIC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 18:08:02 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:32852 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727050AbfJQWIC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 18:08:02 -0400
-Received: by mail-wr1-f68.google.com with SMTP id b9so4062557wrs.0
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 15:08:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=UXwdHtGcenEpDWeqv3zB9IME53ZvSIPkiOcJngEl2KU=;
-        b=Jsui0UGT3a17sc6nhF9Qu4fVyDvDuxeh+XCA589E5Anjn61FGNPylUvX9LpxRZfdnM
-         6VAhaoh0hio7vrZS4cJ+uRWNIVyYiPcgg8hJAjnz+neGEa3jKS0xmWF5NDnHYQhwZNRn
-         CnkA/vG7ohwL9ZyLtwOZ1AeDaIv3uLVBNtKuQWkKTmcWNjKpwr78P3qRN2ZZktHH/vz7
-         9hUCvUhkx2xxI+30FOzM2ZCwYAupbA88ZoJTLXY6HLneG8Rp39/cVPs1YZPZj6XbHv2o
-         nRM6gLxl7syzK5lM7XEHw/gBbK00YwRHSNkxxiI6qGv1b0YrFbehzKMFXWvHW/uPd5UA
-         /Wig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UXwdHtGcenEpDWeqv3zB9IME53ZvSIPkiOcJngEl2KU=;
-        b=HYg+bwYN+8LxNyVjNBYDC5S3ljfAne2qeFvINBhfT8wjvrNyXKssfwQjtfQ6LimKWf
-         fxf0UeY8hhGnRKjCx75IIDYsCj54SpHXkWdoBWyhzw9OY8XxMjgbcu3XGNTwYlH0EHEY
-         WVhHaqB9V0kq+17+NDbzoVynboSpJCgvS5ar7AoIBBe0HM4fPnxlJC9TWpwk+QOL6fG4
-         KC380mVJV+7WQBMINRiLa1NtJqZALBQUnlFP25vGoDRtyNRL6HJTcZsR+k83+RP9m/q6
-         RtTcqbgifZq759XM7B30KAj5S9g0X8UsYWpBvUwK9sXh3tNxgHjjF1Nn53AQI4Um2hgI
-         wSSA==
-X-Gm-Message-State: APjAAAXN7ODxa3l+0Gk+IjVmR61zdIYD08ycLR1MuFTpyxcyC5P4tp16
-        Aj1ffDj4x9WiGaHFXUQcWcmwAct3
-X-Google-Smtp-Source: APXvYqyEMBPRS2KRqKTs095iElUyI+AknaaTtlbA/y7pO4rZvGIZbkjHVG0CUr7HOGR7tWw0vKUyQw==
-X-Received: by 2002:a5d:5052:: with SMTP id h18mr5133141wrt.143.1571350080368;
-        Thu, 17 Oct 2019 15:08:00 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y3sm13609573wmg.2.2019.10.17.15.07.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Oct 2019 15:07:59 -0700 (PDT)
-Message-Id: <93dba5a3a38d75ba79329383a1d50419a1990c8d.1571350077.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.401.v2.git.1571350077.gitgitgadget@gmail.com>
-References: <pull.401.git.1571209637.gitgitgadget@gmail.com>
-        <pull.401.v2.git.1571350077.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 17 Oct 2019 22:07:57 +0000
-Subject: [PATCH v2 2/2] git_path(): handle `.lock` files correctly
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2438377AbfJQWUp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 18:20:45 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:46116 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2388926AbfJQWUo (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 17 Oct 2019 18:20:44 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0E5F96049B;
+        Thu, 17 Oct 2019 22:20:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1571350843;
+        bh=3h1YeqBjSUHipN5u6zeB/AwZev3oeUcuAkokDimMXBw=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=ppGMe7pzPrJe4xz5TM+oxVpy2URRaObdDjj3Ib8ojy+Ih6DfWKYba5v3JZD5lzBfk
+         KcMKT4Zvg4JDFztpvmmxkfH3MUEuoaDFCUZOLDMZUvBjs+ebE5gVi1ZwJZkf7cgBeI
+         Rf819okMWDNJXsPBuw7N+ov9Ou/HQdCnrHDGxDVWhCoxMO/JGJ+m0yC8zJjRWH1Wiw
+         iLuSPcakcmBE8gFUROnuuwXZxUvKaTbw4g7+H+OeO48uKuqNfo20lBcLU/HnEvK+wk
+         l4B5GMbdwMYXi73Vg9UOt4AF1CglXLwCmxwAjd08iNrV/9RbrVuFdrGhDln/ZHI1wD
+         AU3kPZNLis6xxsrkbbZxjqLUWaPY2QOME4kLDqE8I2w5gOzoa+MpJyrAsCAronK9pG
+         0kJVsGLFLeaWSi3/HbFQ6YSvIB2JeYDglwg6j7cL0uSCY/z8r1glKB63T+yC8XeZly
+         IJHaih62TTIPEZPxe0PoyECMsCYi4nmCvfy9ELkti7l9qBbtIhI
+Date:   Thu, 17 Oct 2019 22:20:38 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] doc: provide guidance on user.name format
+Message-ID: <20191017222038.t2qlqderp44q2m7v@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+References: <20191017005330.9021-1-sandals@crustytoothpaste.net>
+ <20191017005330.9021-2-sandals@crustytoothpaste.net>
+ <20191017054051.GA10253@sigill.intra.peff.net>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="7l5lk3cysmzemj44"
+Content-Disposition: inline
+In-Reply-To: <20191017054051.GA10253@sigill.intra.peff.net>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.3.0-trunk-amd64)
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Ever since worktrees were introduced, the `git_path()` function _really_
-needed to be called e.g. to get at the path to `logs/HEAD` (`HEAD` is
-specific to the worktree). However, the wrong path is returned for
-`logs/HEAD.lock`.
+--7l5lk3cysmzemj44
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This does not matter as long as the Git executable is doing the asking,
-as the path for that `index.lock` file is constructed from
-`git_path("index")` by appending the `.lock` suffix.
+On 2019-10-17 at 05:40:52, Jeff King wrote:
+> On Thu, Oct 17, 2019 at 12:53:28AM +0000, brian m. carlson wrote:
+>=20
+> > It's a frequent misconception that the user.name variable controls
+> > authentication in some way, and as a result, beginning users frequently
+> > attempt to change it when they're having authentication troubles.
+> > Document that the convention is that this variable represents some form
+> > of a human's personal name, although that is not required.  In addition,
+> > address concerns about whether Unicode is supported.
+> >=20
+> > Use the term "personal name" as this is likely to draw the intended
+> > contrast, be applicable across cultures which may have different naming
+> > conventions, and be easily understandable to people who do not speak
+> > English as their first language.  Indicate that "some form" is
+> > conventionally used, as people may use a nickname or preferred name
+> > instead of a full legal name.
+> >=20
+> > Point users who may be confused about authentication to an appropriate
+> > configuration option instead.
+>=20
+> I think this is a good distinction to draw, but...
+>=20
+> >  Documentation/git-commit-tree.txt | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+>=20
+> ...I was surprised to see it here, where I think most users wouldn't
+> find it. Would it make sense in git-commit(1), or in the description of
+> the user.name config?
 
-However, Git GUI just learned to use `--git-path` instead of appending
-relative paths to what `git rev-parse --git-dir` returns (and as a
-consequence not only using the correct hooks directory, but also using
-the correct paths in worktrees other than the main one). While it does
-not seem as if Git GUI in particular is asking for `logs/HEAD.lock`,
-let's be safe rather than sorry.
+So the user.name config description points to git-commit-tree(1), which
+describes these in detail, which is why I put it there.  I agree that
+it's not a super discoverable place, since I don't know anyone that
+actually uses git commit-tree these days.  git-commit(1) doesn't
+describe these options at all.
 
-Side note: Git GUI _does_ ask for `index.lock`, but that is already
-resolved correctly.
+There are, of course, options.  I can add this text into the `user.name`
+option in git-config(5) nevertheless, which will likely be more
+discoverable, but it will split the documentation on those into two
+separate locations.  Or we can leave it in git-commit-tree(1) anyway to
+keep it together.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- path.c               |  4 ++--
- t/t1500-rev-parse.sh | 15 +++++++++++++++
- 2 files changed, 17 insertions(+), 2 deletions(-)
+Since you and Junio think this is an odd place (and I agree), I think
+it's fine to separate the text out, and I'll reroll with that change
+unless someone speaks up strongly against it.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-diff --git a/path.c b/path.c
-index e3da1f3c4e..ff85692b45 100644
---- a/path.c
-+++ b/path.c
-@@ -268,7 +268,7 @@ static int trie_find(struct trie *root, const char *key, match_fn fn,
- 	int result;
- 	struct trie *child;
- 
--	if (!*key) {
-+	if (!*key || !strcmp(key, ".lock")) {
- 		/* we have reached the end of the key */
- 		if (root->value && !root->len)
- 			return fn(key, root->value, baton);
-@@ -288,7 +288,7 @@ static int trie_find(struct trie *root, const char *key, match_fn fn,
- 
- 	/* Matched the entire compressed section */
- 	key += i;
--	if (!*key)
-+	if (!*key || !strcmp(key, ".lock"))
- 		/* End of key */
- 		return fn(key, root->value, baton);
- 
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index 01abee533d..d318a1eeef 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -116,6 +116,21 @@ test_expect_success 'git-path inside sub-dir' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'git-path in worktree' '
-+	test_tick &&
-+	git commit --allow-empty -m empty &&
-+	git worktree add --detach wt &&
-+	test_write_lines >expect \
-+		"$(pwd)/.git/worktrees/wt/logs/HEAD" \
-+		"$(pwd)/.git/worktrees/wt/logs/HEAD.lock" \
-+		"$(pwd)/.git/worktrees/wt/index" \
-+		"$(pwd)/.git/worktrees/wt/index.lock" &&
-+	git -C wt rev-parse >actual \
-+		--git-path logs/HEAD --git-path logs/HEAD.lock \
-+		--git-path index --git-path index.lock &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'rev-parse --is-shallow-repository in shallow repo' '
- 	test_commit test_commit &&
- 	echo true >expect &&
--- 
-gitgitgadget
+--7l5lk3cysmzemj44
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl2o6TYACgkQv1NdgR9S
+9ouT3BAAuwigUF+qcea3uo/CB+qyq2gNCikyiRrFVCoG7r04Rn+SSOOWHNXhGeMa
+BrJLuSjKSMX7cCPxGCVUf43x/uheKHzgejGjaUCZ9ieBRTHgJbJTOhkieyuO2wbD
+EwOsalu9P46HMNKLUteA9yXZCwl/blUaO326Pm44x5dDX7UWGCR9G9zs4IjhZ3+F
+kiDCGkAh7zGEx7pbUiiUrJZwCWnSjg+k/6vBD/eL8p4IkLbYq9MhJKEdbvB1YDZs
+szf5piB4lxRNtMBNPl6efkNafaB+90uaFQJttGggc5Ak1WdJmKJUMfQIX3mIKwLl
+Q+904b5o26EwEo9QBeEHj//I9eBVHhhonTUHYt77ZQFUmAuorkO17RSTftdHgANR
+BjciELMMV1QiK/u0/aT1WjwJx1YAWRg92pirebNiDEKU6/ZOSCc0iXQFbzGmSgOx
+NbKn9G7mDYg66zMhG0dCSj+6K+TQKqyxVxJdbt3bd0OB7KNoUnojPj6WmyhSStHd
+xAaQz/6wkud9t/hdVHDQGBMBjkwOyvnq3IV7rWY+dC0xIQJ2S1WSDBhdDvLI1Kw7
+HnTrkmBLvciA3k6bZYrc/zE8TrQs1HcnWeL+e25IFfNwphG9jpiRJWvQyZYA3tyM
+RIjYKasnKr7QMiyAhlybDFAZvg1dnM+kHLTdPiurKLZHzKQSjN8=
+=ZKWa
+-----END PGP SIGNATURE-----
+
+--7l5lk3cysmzemj44--
