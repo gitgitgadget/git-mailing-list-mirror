@@ -8,122 +8,116 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A40A1F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 11:36:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 037EF1F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 11:42:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406095AbfJRLgD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 07:36:03 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40199 "EHLO
+        id S2436663AbfJRLmJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 07:42:09 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41087 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729803AbfJRLgC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 07:36:02 -0400
-Received: by mail-wr1-f68.google.com with SMTP id o28so5885126wro.7
-        for <git@vger.kernel.org>; Fri, 18 Oct 2019 04:36:00 -0700 (PDT)
+        with ESMTP id S1729803AbfJRLmJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 07:42:09 -0400
+Received: by mail-wr1-f68.google.com with SMTP id p4so5898254wrm.8
+        for <git@vger.kernel.org>; Fri, 18 Oct 2019 04:42:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=2KjvHYAJ6rozB4J+i8f7Ucs+TVS90kSVPvEBNV8lgHE=;
-        b=N0M5Bo7Npq0Dtxwxxa94wglAH/5WeqViVtb7eflIVKk3+fx2wpzVe4QRDVm8SsUIjj
-         nQz00iP2iMGn6Z9ych9WHzLEr42DNqxpVLW6wixnLXWJ+7en9wDeq7QA9kdO/EErYusM
-         nvNCtTxMCDrSnN76r6IOShHoby2/ijQyVY50oIWDYehjbUeBjtOVpQC79zqOYUwwxBKS
-         eXpnCJNWJS8Mp1P28ckzW9gRMIt+bY/L0O2g4Gv7R/c3KR7V0sOXzS8pxGgQ8Dm+EXBy
-         UleY75Bl6t4rjWqK/Zl3yUC1WE7yxA4Z1v0qzwpBGONVYiuJXlQJhbqg5cz/GV1w/jrk
-         nXLw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4W/wkMkunrrCHXuaOkllrsvW/tolMfkAU6MJxM9tVtY=;
+        b=g0a/gZHqRKj6WXeL4MKoQ6a011PYAiEjUUABt9kkTKdU/4dLIpaDhsvQUE1DJXb+Sx
+         gy/kIiN/SfE/GGXMzCnuLig85AJaSJ36SeVdlax0aeaeA8KS00bNqk7v1LoyCGRTAqCt
+         wzVBhZaNn/Q4MyC09hgz4kNzXUlG7U69C+dINQHk6ntyaJQTx1jPe4aMa4jhbk3WXVs/
+         v3udtHqpgVG3CXVkKPfkYFBQPu5kMsZDWA6tY4jzzeW41/FNUa7UiS+w1FKN/Z7SNPfK
+         gvlikNWh+8rXZBpfxmlR+p5Kv22h4ShV8I6vyKeJu+1ZHyhCVTe0g7L0zKi7csp6PnkL
+         ZV5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=2KjvHYAJ6rozB4J+i8f7Ucs+TVS90kSVPvEBNV8lgHE=;
-        b=kKsRjJqlMa8nvcR07BgbDyDjpSBVbqWGS4mFxzbp9QlKxqekrMwqsk/lXDF8nNXZ3S
-         wPCWuX/+VJ4syTU+PiSu29WRTWeFMJAlJLpneJLL/pjZ3yrxIdki+pe5rxCHx38qRMIS
-         NUTOCsu+NPXqUpnmSg2CaiRf9ziQYOwWyLQ5bKcx6XAJaxkYLOnBcODMzFRR4Nz49Dn+
-         OjnjqBoKwE0AfA+voP9Q1uL9tL82n+zvT94r/VkE7Y1L5k88+EsISR6mtSjrQD5JN69d
-         xUcJWeLi5Ossfxts5gaP5UBWtTsvfMiMr3BhXzQ4bJqbunRxwxBf+YLk3pZvefTS1eie
-         TgAQ==
-X-Gm-Message-State: APjAAAUUcMBhVKk27/H3jG952DWaBaZ47N+Ba41uQS1KGOzeO78S6zSp
-        4Qbg28BKn35Nnn0nz9SHMv4=
-X-Google-Smtp-Source: APXvYqxBRNjG7lBeh0e6Jo9qdvNQ4YOgKL7VqwKpZpbdYmPbkV/roB/WsYRUdB12G3q5KULToUW17w==
-X-Received: by 2002:adf:e78c:: with SMTP id n12mr7134077wrm.351.1571398560329;
-        Fri, 18 Oct 2019 04:36:00 -0700 (PDT)
-Received: from szeder.dev (x4dbd7267.dyn.telefonica.de. [77.189.114.103])
-        by smtp.gmail.com with ESMTPSA id a14sm4482677wmm.44.2019.10.18.04.35.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Oct 2019 04:35:59 -0700 (PDT)
-Date:   Fri, 18 Oct 2019 13:35:57 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git_path(): handle `.lock` files correctly
-Message-ID: <20191018113557.GA29845@szeder.dev>
-References: <pull.401.git.1571209637.gitgitgadget@gmail.com>
- <f08c90ea02f6811b310a01301acf46da133f38a9.1571209637.git.gitgitgadget@gmail.com>
- <20191016110440.GV29845@szeder.dev>
- <nycvar.QRO.7.76.6.1910172333360.46@tvgsbejvaqbjf.bet>
- <20191018110618.GZ29845@szeder.dev>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4W/wkMkunrrCHXuaOkllrsvW/tolMfkAU6MJxM9tVtY=;
+        b=FpHbWdwzhD1CtDIZ9cFHBqCKHcc5ZEuR5sdC8nb7gFb/jl5i+Ma5+tE1KuIv0wG0U1
+         FNbu9rIyKRQY9GYuxiKm3zsr81llfm0POiim9HJHOELuPwfocbPmoAtSEJMS9psb3RFL
+         ni0TqD68AN9C6FJUIGHaY3FMbngZ0j2ceNSoVyxctXx4FBO/yENFNn63nSae9efqBWww
+         mP5Q16HbBNPNplmJLmuFRdoVKDL4G/r5HEb8CtZlfJffkb64ODksXIV9iKRHbQ55GMf0
+         BESsnFuoyhlNqCMCkyxb1zWk+mYBy1R0PdiAx7FaPQFPTEvfet8tw2LDeYV7XG7tajoh
+         zmUA==
+X-Gm-Message-State: APjAAAUWsG4qahKZiqRW3USHDhi/ZgGdC+7PURJi+TrKMb69FbCAzL+s
+        y5gaZYNtPN43QT/XVSrPURs=
+X-Google-Smtp-Source: APXvYqyRU9P4wZ0VNSJcaR6c7XFzTxcmvW/B+KOEXZGa4R6JGKINpbpzgxZWBQb+FGcy2ZSMPl+jbw==
+X-Received: by 2002:adf:e886:: with SMTP id d6mr7731155wrm.188.1571398927358;
+        Fri, 18 Oct 2019 04:42:07 -0700 (PDT)
+Received: from localhost.localdomain (x4dbd7267.dyn.telefonica.de. [77.189.114.103])
+        by smtp.gmail.com with ESMTPSA id e9sm14611523wme.3.2019.10.18.04.42.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 18 Oct 2019 04:42:06 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 1/2] path.c: fix field name in 'struct common_dir'
+Date:   Fri, 18 Oct 2019 13:42:01 +0200
+Message-Id: <20191018114202.5452-2-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.23.0.1084.gae250eaa40
+In-Reply-To: <20191018114202.5452-1-szeder.dev@gmail.com>
+References: <20191018110618.GZ29845@szeder.dev>
+ <20191018114202.5452-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191018110618.GZ29845@szeder.dev>
-User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 18, 2019 at 01:06:18PM +0200, SZEDER Gábor wrote:
-> > > On a related note, I'm not sure whether the path of the reflogs
-> > > directory is right while in a different working tree...  Both with and
-> > > without this patch I get a path pointing to the main working tree:
-> > >
-> > >   $ ./git -C WT/ rev-parse --git-path logs
-> > >   /home/szeder/src/git/.git/logs
-> > >
-> > > However, I'm not sure what the right path should be in the first
-> > > place, given that each working tree has its own 'logs' directory, but
-> > > only for HEAD's reflog, while everything else goes to the main working
-> > > tree's 'logs' directory.
-> > 
-> > It's like Junio said, the reflog for `HEAD` is special because `HEAD` is
-> > special. Look for `common_list` in `path.c` (it is a bit confusing, I
-> > admit, you have to look for the 3rd column of numbers: if it is a `1`,
-> > then it is a worktree-specific path, if it is `0`, it is supposed to
-> > live in the "commondir", i.e. in the gitdir of the main worktree).
-> 
-> OK, got it.
-> 
-> I didn't look yesterday at all, but now I did, and, unfortunately, see
-> two more bugs, and one of them is a "proper" bug leading to bogus
-> output:
-> 
->   $ git -C WT/ rev-parse --git-path logs/refs --git-path logs/refs/
->   /home/szeder/src/git/.git/logs/refs
->   /home/szeder/src/git/.git/worktrees/WT/logs/refs/
+An array of 'struct common_dir' instances is used to specify whether
+various paths in the '.git' directory are worktree-specific or belong
+to the main worktree.  Confusingly, the path is recorded in the
+struct's 'dirname' field, even though it can be a regular file, e.g.
+'gc.pid'.
 
-This one-liner below fixes it, but I haven't yet made up my mind about
-whether this is the right fix or whether there could be any fallout
-(at least the test suite doesn't show any).
+Rename this 'dirname' field to 'path' to avoid future confusion.
 
-  $ ./git -C WT/ rev-parse --git-path logs/refs --git-path logs/refs/
-  /home/szeder/src/git/.git/logs/refs
-  /home/szeder/src/git/.git/logs/refs/
-
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ path.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/path.c b/path.c
-index 04b69b9feb..9019169418 100644
+index e3da1f3c4e..eeb43e1d25 100644
 --- a/path.c
 +++ b/path.c
-@@ -335,7 +335,7 @@ static int check_common(const char *unmatched, void *value, void *baton)
- 	struct common_dir *dir = value;
+@@ -103,7 +103,7 @@ struct common_dir {
+ 	unsigned is_dir:1;
+ 	/* Not common even though its parent is */
+ 	unsigned exclude:1;
+-	const char *dirname;
++	const char *path;
+ };
  
- 	if (!dir)
--		return 0;
-+		return -1;
+ static struct common_dir common_list[] = {
+@@ -320,8 +320,8 @@ static void init_common_trie(void)
+ 	if (common_trie_done_setup)
+ 		return;
  
- 	if (dir->is_dir && (unmatched[0] == 0 || unmatched[0] == '/'))
- 		return !dir->exclude;
+-	for (p = common_list; p->dirname; p++)
+-		add_to_trie(&common_trie, p->dirname, p);
++	for (p = common_list; p->path; p++)
++		add_to_trie(&common_trie, p->path, p);
+ 
+ 	common_trie_done_setup = 1;
+ }
+@@ -365,8 +365,8 @@ void report_linked_checkout_garbage(void)
+ 		return;
+ 	strbuf_addf(&sb, "%s/", get_git_dir());
+ 	len = sb.len;
+-	for (p = common_list; p->dirname; p++) {
+-		const char *path = p->dirname;
++	for (p = common_list; p->path; p++) {
++		const char *path = p->path;
+ 		if (p->ignore_garbage)
+ 			continue;
+ 		strbuf_setlen(&sb, len);
+-- 
+2.23.0.1084.gae250eaa40
 
