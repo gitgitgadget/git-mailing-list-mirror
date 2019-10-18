@@ -2,92 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C04B71F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 22:54:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EC771F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 23:11:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726718AbfJRWyN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 18:54:13 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:41630 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726240AbfJRWyN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 18:54:13 -0400
-Received: by mail-pf1-f194.google.com with SMTP id q7so4719552pfh.8
-        for <git@vger.kernel.org>; Fri, 18 Oct 2019 15:54:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=2k3ZAV1SL+UgMgJZkBrlYlE17xAy8PiibQ8LpZKqvbc=;
-        b=qZwLKYCXr/iw2JeG8DTp1tnSLLGSv+s8xbu/YomrnVQQ9a649PZqY1Xce1KU0Y2k7Q
-         gpe60BcpvjloIus1pupR/x+oGTWvS7l32Jkt4UzZYqQ4eVT31fVJTZQTGRYSLT8pwRbv
-         BVAeZln7ce0mynClC1ZjYxlVv7W/O6l7NaGVIkSwQjpwT0v5bGXzErpARf/8f7KeyhRJ
-         2LMHKM3YaQDn6G11T2VgULYhe4tThzbO6WqyMmKPGhiqDkyCuMv5weEArPHaghBNONy3
-         aNcnhO7DwKElYwiB/VU8UWQ74RtETL59dTsQhi1BvWFPs10GEhN+GvWAKS9doCuMe4np
-         SHtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=2k3ZAV1SL+UgMgJZkBrlYlE17xAy8PiibQ8LpZKqvbc=;
-        b=M32MWi5xhQt8Ctp3ex5dvv+MPg3GjIgWp05v17Vdi4WZYDAyAesWnYWRXTssX9hqRf
-         g9ooNcaaM925dcPT7VepfHqeNrROMhj+8kfvgVHa1QuY3+bidju860DMf9Q0/r12TjAo
-         tpI1ReISs+aqOfKsb+sCVzlNvta1WEd94UWFaxv7IBNX4qyeNmgdq2Lfs2ntnOXXLSX0
-         /RWecILlVGry9ivg9ixp3aQxKU6/Qv7bnJLym6R9nfXBrTOZ1sQ7zb3jd6sLDfyxBGqa
-         N+Pv3DqvWjjH9vSuYEVP78NGwcPH1tcFxKD/RZYAHA9ungT2ZMtKdEWlJ4bdfTqQRqJ2
-         xSmA==
-X-Gm-Message-State: APjAAAX3AIp7Iac9JOo2akv+bocyJh1PSDXn0nqXMKODQG2+9tA1QuD0
-        zwL6cDwaR+aJHzbe4UG3jJ3/nA==
-X-Google-Smtp-Source: APXvYqxVRLa68DT8Fh82Srld516Ky2alSKUa+BaYtW2X6K1O7CjbCD4OfvsfwFUtw5qvkiUfcznS/A==
-X-Received: by 2002:aa7:9e8d:: with SMTP id p13mr9144843pfq.171.1571439252468;
-        Fri, 18 Oct 2019 15:54:12 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id i37sm6741836pje.23.2019.10.18.15.54.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2019 15:54:11 -0700 (PDT)
-Date:   Fri, 18 Oct 2019 15:54:07 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v6 1/2] documentation: add tutorial for first contribution
-Message-ID: <20191018225407.GB9323@google.com>
-References: <20190517190359.21676-1-emilyshaffer@google.com>
- <20190517190701.49722-2-emilyshaffer@google.com>
- <20191018164027.GI29845@szeder.dev>
+        id S1729395AbfJRXLd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 19:11:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57555 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728582AbfJRXLd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 19:11:33 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8AA852C7F7;
+        Fri, 18 Oct 2019 19:11:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=PRNzi5Ls1/i4
+        oNCvSM/HDCqRB1Q=; b=HtULJcBJ5VlSfUDE1JHFmu5P6+PPhTC50oLqdIp7ln2f
+        TKadO0NhebxsVhz0rFxcWUldOhOQB1uC2uCooUeV2MKlfr6kGhJMKCT/9BCWdjJ+
+        Y56gLhVW8Nw15BZzDQevrAGPmAJluklj+4SXhG4JWZrSPrcHqASdPF8OKoSiWlY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=iZCYAr
+        ic2l6/GNuoKKWgRtzWWMgl5J3TBYCzeDwZgdPTgbirFunLR/L9ddRUbXMJIUzMlV
+        rvgtgvAcSbFsUeHWpzuT519HsDrzH0rcLtmbiw2esrdAkgalF/GjaEL/T8mvvHtC
+        u1MhkpgUUlNc7O0+yIeUoC2nAceB0PK6cAbe0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 80EC92C7F6;
+        Fri, 18 Oct 2019 19:11:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B45D62C7F5;
+        Fri, 18 Oct 2019 19:11:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     GitList <git@vger.kernel.org>
+Subject: Re: [PATCH v1] config/branch: state that <name>.merge is the remote ref
+References: <20191016112822.1701-1-philipoakley@iee.email>
+        <xmqqwod26dp7.fsf@gitster-ct.c.googlers.com>
+        <c96f4dbd-ebc6-b743-716e-e1e17333c06b@iee.email>
+Date:   Sat, 19 Oct 2019 08:11:29 +0900
+In-Reply-To: <c96f4dbd-ebc6-b743-716e-e1e17333c06b@iee.email> (Philip Oakley's
+        message of "Fri, 18 Oct 2019 21:53:02 +0100")
+Message-ID: <xmqq8sphodi6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191018164027.GI29845@szeder.dev>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 9F42D1F4-F1FC-11E9-989C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 18, 2019 at 06:40:27PM +0200, SZEDER Gábor wrote:
-> 
-> Just leaving a quick note here: an entry about the new command should
-> be added to 'command-list.txt' as well, so it will be included in the
-> list of available commands in 'git help -a' or even in 'git help'
-> and in completion, if the command is marked with the necessary
-> attributes.
->  
+Philip Oakley <philipoakley@iee.email> writes:
 
-Yeah, I agree - I didn't know about this until fairly recently, and I
-want to highlight it!
+> branch.<name>.merge::
+> =C2=A0=C2=A0=C2=A0 Defines, for the local branch <name>, the upstream b=
+ranch ref
+> =C2=A0=C2=A0=C2=A0 _on the remote_ (as given by branch.<name>.remote).
+> =C2=A0=C2=A0=C2=A0 The upstream ref may be different from the local bra=
+nch ref.
+>
+> optionally s/different from/ same as/ ?
 
-I have at least one other change I want to send for this document in the
-coming week, so I'll try and make a change for this too. Thanks for the
-callout, SZEDER.
+That "optionally" part is exactly why I said "upstream and remote
+tracking names may or may not differ is irrelevant information".
 
- - Emily
+>>      The name of the branch at the remote `branch.<name>.remote` that
+>>      is used as the upstream branch for the given branch.  It tells
+>>      `git fetch`, etc., which branch to merge and ...
+>>
+> If this, should we also say it (the key value) is that of the upstream
+> branch _ref_?
+
+Yeah, that makes it clear that readers should not write "master" and
+use "refs/heads/master" instead.  It may even be more (technically)
+correct to say just "ref" without branch (this ref does not have to
+be a branch at the remote repository at all).  I am not sure if we
+want to go that far to make it more correct and also make it hint
+that using a non-branch ref is a valid configuration to readers, but
+I agree it is a good idea to avoid saying "name" (which implies
+that "master" is OK, which is not).
+
+Thanks.
+
+
