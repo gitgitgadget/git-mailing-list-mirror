@@ -2,99 +2,240 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DCA51F4C1
-	for <e@80x24.org>; Fri, 18 Oct 2019 01:54:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C5F41F4C4
+	for <e@80x24.org>; Fri, 18 Oct 2019 04:54:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727350AbfJRByv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 21:54:51 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:37559 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407134AbfJRByu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 21:54:50 -0400
-Received: by mail-qk1-f193.google.com with SMTP id u184so3892168qkd.4
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 18:54:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3auhKvuKP51CazAFw/ZQ6kZs7gPKtasQpSNKpkuAgas=;
-        b=aHvukMC+I42J0tLrfVVGW4aXbe5FW8pSPHw72Ppxd9LwjKYhIjpREkZ3QkKj+7bkFd
-         gyxo/xKRnfQKKSWJqyFVq8Uzd0yMTLVpWuGV32lRhDX0HkxhpV+KmdBcA5dsXcgZYGON
-         os0PdWT4ngsHYsWxRVdw2SjREt+q3UEpxPr70=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=3auhKvuKP51CazAFw/ZQ6kZs7gPKtasQpSNKpkuAgas=;
-        b=QOamsQShGlKV/+InS1SygrqdZOO1BH+EgJKYd/nOSfaruEDWKXULAhMLe3o5z5dNT7
-         yyYBaYx6wmCoRa7xCYBfO13xkor25EPXET4BgP5UT2/RtHNM8FduXV+S7/GeEvuTPoQj
-         8Lt4faRwLIZDllgTFmEFrGQeb9yGTn/6IV0DfxtCzvLXI9whouMS4N9I1pYsMOlfh475
-         fUOHQp5LA+5+P5QVyhmmM9lSVPpi00Jrq9YSyTV9gnATeacUvZBWpTEV+Jvr1F3in6+X
-         xgP/hUyVU0FbqhRGmC6P+Pi4xqVVRT/A+PmTiA3gPAWXM9jZWISN84sTuwPdyTSdaGhB
-         nGJQ==
-X-Gm-Message-State: APjAAAVYiyEOwXNKUAUkiKzD+KSwfTU9VElSsEfJS5X0bBsbgW+hxf/t
-        XR7aNCx0LyTdsCnRbdxHZaml8g==
-X-Google-Smtp-Source: APXvYqwLLb+h/QZFXCl09cOrHAXP/i2RNRv109OUAZ3gs48s7CJtS8nEhvvJZ7GrtrHTMXpbYxXqAA==
-X-Received: by 2002:ae9:ea17:: with SMTP id f23mr6238401qkg.49.1571363689689;
-        Thu, 17 Oct 2019 18:54:49 -0700 (PDT)
-Received: from chatter.i7.local (192-0-228-88.cpe.teksavvy.com. [192.0.228.88])
-        by smtp.gmail.com with ESMTPSA id v4sm2212270qkj.28.2019.10.17.18.54.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2019 18:54:49 -0700 (PDT)
-Date:   Thu, 17 Oct 2019 21:54:47 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Greg KH <greg@kroah.com>
-Cc:     Santiago Torres Arias <santiago@nyu.edu>, Willy Tarreau <w@1wt.eu>,
-        Vegard Nossum <vegard.nossum@oracle.com>,
-        workflows@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>, Eric Wong <e@80x24.org>
-Subject: Re: email as a bona fide git transport
-Message-ID: <20191018015447.GB6446@chatter.i7.local>
-Mail-Followup-To: Greg KH <greg@kroah.com>,
-        Santiago Torres Arias <santiago@nyu.edu>, Willy Tarreau <w@1wt.eu>,
-        Vegard Nossum <vegard.nossum@oracle.com>, workflows@vger.kernel.org,
-        Git Mailing List <git@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>, Eric Wong <e@80x24.org>
-References: <b9fb52b8-8168-6bf0-9a72-1e6c44a281a5@oracle.com>
- <20191016111009.GE13154@1wt.eu>
- <20191016144517.giwip4yuaxtcd64g@LykOS.localdomain>
- <20191017204343.GA1132188@kroah.com>
- <20191017204532.GA6446@chatter.i7.local>
- <20191018013029.GA1167832@kroah.com>
+        id S2441842AbfJREyP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 00:54:15 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51666 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728053AbfJREyN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 00:54:13 -0400
+Received: (qmail 9389 invoked by uid 109); 18 Oct 2019 04:54:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 18 Oct 2019 04:54:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14121 invoked by uid 111); 18 Oct 2019 04:57:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Oct 2019 00:57:18 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 18 Oct 2019 00:54:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH 08/23] fsck: require an actual buffer for non-blobs
+Message-ID: <20191018045412.GH17879@sigill.intra.peff.net>
+References: <20191018044103.GA17625@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20191018013029.GA1167832@kroah.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20191018044103.GA17625@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 17, 2019 at 06:30:29PM -0700, Greg KH wrote:
->> It could only possibly work if nobody ever adds their own 
->> "Signed-Off-By" or
->> any other bylines. I expect this is a deal-breaker for most maintainers.
->
->Yeah it is :(
->
->But, if we could just have the signature on the code change, not the
->changelog text, that would help with that issue.
+The fsck_object() function takes in a buffer, but also a "struct
+object". The rules for using these vary between types:
 
-We totally should, and I even mused on how we would do that here:
-https://public-inbox.org/git/20190910121324.GA6867@pure.paranoia.local/
+  - for a commit, we'll use the provided buffer; if it's NULL, we'll
+    fall back to get_commit_buffer(), which loads from either an
+    in-memory cache or from disk. If the latter fails, we'd die(), which
+    is non-ideal for fsck.
 
-However, since git's PGP signatures are made for the content in the 
-actual commit record (tree hash, parent, author, commit message, etc), 
-the only way we could preserve them between the email and the git tree 
-is if we never modify any of that data. The SOB and other trailers would 
-have to only be applied to the merge commit, or migrate into commit 
-notes.
+  - for a tag, a NULL buffer will fall back to loading the object from
+    disk (and failure would lead to an fsck error)
 
--K
+  - for a tree, we _never_ look at the provided buffer, and always use
+    tree->buffer
+
+  - for a blob, we usually don't look at the buffer at all, unless it
+    has been marked as a .gitmodule file. In that case we check the
+    buffer given to us, or assume a NULL buffer is a very large blob
+    (and complain about it)
+
+This is much more complex than it needs to be. It turns out that nobody
+ever feeds a NULL buffer that isn't a blob:
+
+  - git-fsck calls fsck_object() only from fsck_obj(). That in turn is
+    called by one of:
+
+      - fsck_obj_buffer(), which is a callback to verify_pack(), which
+	unpacks everything except large blobs into a buffer (see
+	pack-check.c, lines 131-141).
+
+      - fsck_loose(), which hits a BUG() on non-blobs with a NULL buffer
+	(builtin/fsck.c, lines 639-640)
+
+    And in either case, we'll have just called parse_object_buffer()
+    anyway, which would segfault on a NULL buffer for commits or tags
+    (not for trees, but it would install a NULL tree->buffer which would
+    later cause a segfault)
+
+  - git-index-pack asserts that the buffer is non-NULL unless the object
+    is a blob (see builtin/index-pack.c, line 832)
+
+  - git-unpack-objects always writes a non-NULL buffer into its
+    obj_buffer hash, which is then fed to fsck_object(). (There is
+    actually a funny thing here where it does not store blob buffers at
+    all, nor does it call fsck on them; it does check any needed blobs
+    via fsck_finish() though).
+
+Let's make the rules simpler, which reduces the amount of code and gives
+us more flexibility in refactoring the fsck code. The new rules are:
+
+  - only blobs are allowed to pass a NULL buffer
+
+  - we always use the provided buffer, never pulling information from
+    the object struct
+
+We don't have to adjust any callers, because they were already adhering
+to these. Note that we do drop a few fsck identifiers for missing tags,
+but that was all dead code (because nobody passed a NULL tag buffer).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ fsck.c | 51 +++++++++------------------------------------------
+ fsck.h |  6 +++++-
+ 2 files changed, 14 insertions(+), 43 deletions(-)
+
+diff --git a/fsck.c b/fsck.c
+index 79ce3a97c8..347a0ef5c9 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -49,13 +49,11 @@ static struct oidset gitmodules_done = OIDSET_INIT;
+ 	FUNC(MISSING_SPACE_BEFORE_EMAIL, ERROR) \
+ 	FUNC(MISSING_TAG, ERROR) \
+ 	FUNC(MISSING_TAG_ENTRY, ERROR) \
+-	FUNC(MISSING_TAG_OBJECT, ERROR) \
+ 	FUNC(MISSING_TREE, ERROR) \
+ 	FUNC(MISSING_TREE_OBJECT, ERROR) \
+ 	FUNC(MISSING_TYPE, ERROR) \
+ 	FUNC(MISSING_TYPE_ENTRY, ERROR) \
+ 	FUNC(MULTIPLE_AUTHORS, ERROR) \
+-	FUNC(TAG_OBJECT_NOT_TAG, ERROR) \
+ 	FUNC(TREE_NOT_SORTED, ERROR) \
+ 	FUNC(UNKNOWN_TYPE, ERROR) \
+ 	FUNC(ZERO_PADDED_DATE, ERROR) \
+@@ -541,7 +539,9 @@ static int verify_ordered(unsigned mode1, const char *name1, unsigned mode2, con
+ 	return c1 < c2 ? 0 : TREE_UNORDERED;
+ }
+ 
+-static int fsck_tree(struct tree *item, struct fsck_options *options)
++static int fsck_tree(struct tree *item,
++		     const char *buffer, unsigned long size,
++		     struct fsck_options *options)
+ {
+ 	int retval = 0;
+ 	int has_null_sha1 = 0;
+@@ -558,7 +558,7 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
+ 	unsigned o_mode;
+ 	const char *o_name;
+ 
+-	if (init_tree_desc_gently(&desc, item->buffer, item->size)) {
++	if (init_tree_desc_gently(&desc, buffer, size)) {
+ 		retval += report(options, &item->object, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
+ 		return retval;
+ 	}
+@@ -733,8 +733,8 @@ static int fsck_ident(const char **ident, struct object *obj, struct fsck_option
+ 	return 0;
+ }
+ 
+-static int fsck_commit_buffer(struct commit *commit, const char *buffer,
+-	unsigned long size, struct fsck_options *options)
++static int fsck_commit(struct commit *commit, const char *buffer,
++		       unsigned long size, struct fsck_options *options)
+ {
+ 	struct object_id tree_oid, oid;
+ 	unsigned author_count;
+@@ -788,47 +788,15 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
+ 	return 0;
+ }
+ 
+-static int fsck_commit(struct commit *commit, const char *data,
+-	unsigned long size, struct fsck_options *options)
+-{
+-	const char *buffer = data ?  data : get_commit_buffer(commit, &size);
+-	int ret = fsck_commit_buffer(commit, buffer, size, options);
+-	if (!data)
+-		unuse_commit_buffer(commit, buffer);
+-	return ret;
+-}
+-
+-static int fsck_tag(struct tag *tag, const char *data,
++static int fsck_tag(struct tag *tag, const char *buffer,
+ 		    unsigned long size, struct fsck_options *options)
+ {
+ 	struct object_id oid;
+ 	int ret = 0;
+-	const char *buffer;
+-	char *to_free = NULL, *eol;
++	char *eol;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	const char *p;
+ 
+-	if (data)
+-		buffer = data;
+-	else {
+-		enum object_type type;
+-
+-		buffer = to_free =
+-			read_object_file(&tag->object.oid, &type, &size);
+-		if (!buffer)
+-			return report(options, &tag->object,
+-				FSCK_MSG_MISSING_TAG_OBJECT,
+-				"cannot read tag object");
+-
+-		if (type != OBJ_TAG) {
+-			ret = report(options, &tag->object,
+-				FSCK_MSG_TAG_OBJECT_NOT_TAG,
+-				"expected tag got %s",
+-			    type_name(type));
+-			goto done;
+-		}
+-	}
+-
+ 	ret = verify_headers(buffer, size, &tag->object, options);
+ 	if (ret)
+ 		goto done;
+@@ -889,7 +857,6 @@ static int fsck_tag(struct tag *tag, const char *data,
+ 
+ done:
+ 	strbuf_release(&sb);
+-	free(to_free);
+ 	return ret;
+ }
+ 
+@@ -979,7 +946,7 @@ int fsck_object(struct object *obj, void *data, unsigned long size,
+ 	if (obj->type == OBJ_BLOB)
+ 		return fsck_blob((struct blob *)obj, data, size, options);
+ 	if (obj->type == OBJ_TREE)
+-		return fsck_tree((struct tree *) obj, options);
++		return fsck_tree((struct tree *) obj, data, size, options);
+ 	if (obj->type == OBJ_COMMIT)
+ 		return fsck_commit((struct commit *) obj, (const char *) data,
+ 			size, options);
+diff --git a/fsck.h b/fsck.h
+index b95595ae5f..e479461075 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -52,7 +52,11 @@ struct fsck_options {
+  *    0		everything OK
+  */
+ int fsck_walk(struct object *obj, void *data, struct fsck_options *options);
+-/* If NULL is passed for data, we assume the object is local and read it. */
++
++/*
++ * Blob objects my pass a NULL data pointer, which indicates they are too large
++ * to fit in memory. All other types must pass a real buffer.
++ */
+ int fsck_object(struct object *obj, void *data, unsigned long size,
+ 	struct fsck_options *options);
+ 
+-- 
+2.23.0.1228.gee29b05929
+
