@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF8271F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 22:11:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02A471F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 22:11:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390822AbfJRWKy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 18:10:54 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:42940 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390784AbfJRWKx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 18:10:53 -0400
-Received: by mail-pg1-f194.google.com with SMTP id f14so4068159pgi.9
-        for <git@vger.kernel.org>; Fri, 18 Oct 2019 15:10:53 -0700 (PDT)
+        id S2390907AbfJRWLQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 18:11:16 -0400
+Received: from mail-pl1-f169.google.com ([209.85.214.169]:36063 "EHLO
+        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390635AbfJRWKq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 18:10:46 -0400
+Received: by mail-pl1-f169.google.com with SMTP id j11so3502951plk.3
+        for <git@vger.kernel.org>; Fri, 18 Oct 2019 15:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=JFj037VppACIW60EHUgaVAhKbhf9QHZDzfY/bCKf8EA=;
-        b=SqwaAmGhd8Ktxd05KAono/fcu5jhjNiiLkzUoKsBs7AsGgJ9JBP1WIH2EdJRKeDS74
-         JH0zz+Ro6CKM/E2ki8j8zriXoNYzWPuNFA9OTCC15qWjFSKuEMdLQSD1GuDFz3PwB8JK
-         R4jLcZfWTtI6/ar+lAqHFrY3Nc+vYV+MYpI6go5o+sVboWB2UXmdtW3E/30IANldM7p5
-         rLiiIcfDA8GTDCbAbVNIM1NqDPRn6MqiiD+oNKeuFc3vbJ703rqzqJDZaWud0NJ9+I9x
-         poT7pi2GRxSPa0thxTrDa5rB+ef6OHZZbHjRpBnbuc5sMsQY1Us7PhxDIJF8Z+QNqI6Z
-         bbDg==
+        bh=1kH/H9/UmTiuH43xd3spo4dKsgimlvugG7wwdcA5ZSk=;
+        b=OfAqurwDJcrY/wJwMwuuFadx0Uq+nZBTIK8g2dDIjzPMBcpuMvbbP4m29mVYEaahV7
+         Km7MqfV4DkWG+DJ5wfEtz3K/Ul46qWAbOGf1cW3e4U3cbsj80crnWWyGWFBR0IYJI+41
+         AVHvABrKacwhnF2e8m4l34KXY/088WcqnRvdizKrt7mugoMSfkoO3upKWcNe/3SMM23w
+         dJj3wQzFLeF+DjeXJ7Jq0fZbm4SF0Yzat5/uQA8klVDxzGEpmf3kwKToJW8QsRtpBtH+
+         dN8mxqnOKGatyvDwMhcPK80n/9yGXIxuUKGWJ3S/GM4q3TxxgxjufxUzI7dZtQKagAGK
+         y6Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JFj037VppACIW60EHUgaVAhKbhf9QHZDzfY/bCKf8EA=;
-        b=M9HSG0xepI0V3IpUILX9znEWvp0XqMbCoGpnwbbVgY4K4Qbhr+vHD5UetbkOAaGTRr
-         Siy3SUNlA0qBrnqwSLvhkehGOVQbLl+SaMvvf6axMChg+C2nUjLLUOt4TIPgdW3vTTSB
-         TZo11zgrUUxf72/ML4pWeHNmG7Nf/fFIRjlISlcwed6+J7vQmVoaenrG+AkYWPC63NYS
-         9L6hSKIEluUJ5P8Dt1EEyMSRJ3E71/lD/YEQiigOExLFMLW4yY9fZk6WfepPx86blvuk
-         6nkg3NzTgI/JOSLJ+oQenuDTG4Q7xhpqLsvAVXY3npk0qU6TkFmH6JIlCkIEygU/qE++
-         2mOg==
-X-Gm-Message-State: APjAAAXrK9rZftreZ3HdGbVv7mT1TXIkjEsWfmDOiWLvCNx0TzaYxTOh
-        ETVmjABFiu4gRmRHamlFouN2moo3
-X-Google-Smtp-Source: APXvYqymRQo32JoiGPEa53XlD7D4iaK6zuuaC7ezNPlV64QojWRA8eP3iMgYB62DLgPL5k9kuByTGw==
-X-Received: by 2002:a17:90a:ff0f:: with SMTP id ce15mr14235025pjb.14.1571436652498;
-        Fri, 18 Oct 2019 15:10:52 -0700 (PDT)
+        bh=1kH/H9/UmTiuH43xd3spo4dKsgimlvugG7wwdcA5ZSk=;
+        b=RTjrZ0IMV086cWqtn5d3bL4Fs/S87Q9OJXYXobOjMoT9AFz1PvMLY7UfghcKIxeN5F
+         v2+pU3oT82abN9JS3RRvFGxqcDk1iYVUQWfgzjPCriMzsOomcDx8UsIh3AolQAvTnsJG
+         T3xMUZ2fnWKvFDqklmQOruICBNQ1BQdHr93k4bPgYKeyWTwfg7JXBBS8MQAolLwSH6H8
+         IZOoTGgp/7m7Wl+/pGs1UV9Bibgi9ARSkuqMxl/lFMBgXM9nDNbndf3j0WX5lY/2ViCo
+         xPcXt+ciA7nKVu5WlbgooSn1QfyAdYW64FGFj+frQTLsp72rXJ7P2MgqXXgwUq8IzDkf
+         A++w==
+X-Gm-Message-State: APjAAAVAwZJLhCRGrQulek4vrs6m3W06wFJdzjwmgO8x5Zz41lE+1vsj
+        GhqOb4KsV0BhPRb2V64n0UZtQ/uJ
+X-Google-Smtp-Source: APXvYqyzCYUK09v/RTfLDLmjk/ZRjrakuNU+jrEm+TeckcIyLlZJINyxx394Zx0uwlSp2HiaG/R2hQ==
+X-Received: by 2002:a17:902:bd06:: with SMTP id p6mr11325957pls.120.1571436645270;
+        Fri, 18 Oct 2019 15:10:45 -0700 (PDT)
 Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id f13sm7122974pgr.6.2019.10.18.15.10.51
+        by smtp.gmail.com with ESMTPSA id i187sm9449067pfc.177.2019.10.18.15.10.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2019 15:10:51 -0700 (PDT)
-Date:   Fri, 18 Oct 2019 15:10:50 -0700
+        Fri, 18 Oct 2019 15:10:44 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 15:10:42 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 13/15] t5520: replace subshell cat comparison with test_cmp
-Message-ID: <b2d0ce21c8cd5fa3e2eb7003a9c56b2289cb5de4.1571435195.git.liu.denton@gmail.com>
+Subject: [PATCH v2 10/15] t5520: use test_cmp_rev where possible
+Message-ID: <1a54db1d5ce6dde8f3526d19b617b7587acba851.1571435195.git.liu.denton@gmail.com>
 References: <cover.1571354136.git.liu.denton@gmail.com>
  <cover.1571435195.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -68,283 +68,217 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We currently have many instances of `test <line> = $(cat <file>)` and
-`test $(cat <file>) = <line>`.  In the case where this fails, it will be
-difficult for a developer to debug since the output will be masked.
-Replace these instances with invocations of test_cmp().
+In case an invocation of `git rev-list` fails within the subshell, the
+failure will be masked. Remove the subshell and use test_cmp_rev() so
+that failures can be discovered.
 
-This change was done with the following GNU sed expressions:
+This change was done with the following sed expressions:
 
-	s/\(\s*\)test \([^=]*\)= "$(cat \([^)]*\))"/\1echo \2>expect \&\&\n\1test_cmp expect \3/
-	s/\(\s*\)test "$(cat \([^)]*\))" = \([^&]*\)\( &&\)\?$/\1echo \3 >expect \&\&\n\1test_cmp expect \2\4/
-
-A future patch will clean up situations where we have multiple duplicate
-statements within a test case. This is done to keep this patch purely
-mechanical.
+	s/test "$(git rev-parse.* \([^)]*\))" = "$(git rev-parse \([^)]*\))"/test_cmp_rev \1 \2/
+	s/test \([^ ]*\) = "$(git rev-parse.* \([^)]*\))"/test_cmp_rev \1 \2/
+	s/test "$(git rev-parse.* \([^)]*\))" != "$(git rev-parse.* \([^)]*\))"/test_cmp_rev ! \1 \2/
+	s/test \([^ ]*\) != "$(git rev-parse.* \([^)]*\))"/test_cmp_rev ! \1 \2/
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5520-pull.sh | 105 ++++++++++++++++++++++++++++++++----------------
- 1 file changed, 70 insertions(+), 35 deletions(-)
+ t/t5520-pull.sh | 50 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 8ddf89e550..c9e4eec004 100755
+index 18225d8430..1af6ea06ee 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -15,8 +15,10 @@ test_pull_autostash () {
- 	git add new_file &&
- 	git pull "$@" . copy &&
- 	test_cmp_rev HEAD^ copy &&
--	test "$(cat new_file)" = dirty &&
--	test "$(cat file)" = "modified again"
-+	echo dirty >expect &&
-+	test_cmp expect new_file &&
-+	echo "modified again" >expect &&
-+	test_cmp expect file
- }
- 
- test_pull_autostash_fail () {
-@@ -110,9 +112,11 @@ test_expect_success 'test . as a remote' '
- 	echo updated >file &&
- 	git commit -a -m updated &&
- 	git checkout copy &&
--	test "$(cat file)" = file &&
-+	echo file >expect &&
-+	test_cmp expect file &&
- 	git pull &&
--	test "$(cat file)" = updated &&
-+	echo updated >expect &&
-+	test_cmp expect file &&
- 	git reflog -1 >reflog.actual &&
- 	sed "s/^[0-9a-f][0-9a-f]*/OBJID/" reflog.actual >reflog.fuzzy &&
- 	echo "OBJID HEAD@{0}: pull: Fast-forward" >reflog.expected &&
-@@ -125,9 +129,11 @@ test_expect_success 'the default remote . should not break explicit pull' '
- 	git commit -a -m modified &&
- 	git checkout copy &&
- 	git reset --hard HEAD^ &&
--	test "$(cat file)" = file &&
-+	echo file >expect &&
-+	test_cmp expect file &&
- 	git pull . second &&
--	test "$(cat file)" = modified &&
-+	echo modified >expect &&
-+	test_cmp expect file &&
- 	git reflog -1 >reflog.actual &&
- 	sed "s/^[0-9a-f][0-9a-f]*/OBJID/" reflog.actual >reflog.fuzzy &&
- 	echo "OBJID HEAD@{0}: pull . second: Fast-forward" >reflog.expected &&
-@@ -137,10 +143,12 @@ test_expect_success 'the default remote . should not break explicit pull' '
- test_expect_success 'fail if wildcard spec does not match any refs' '
- 	git checkout -b test copy^ &&
- 	test_when_finished "git checkout -f copy && git branch -D test" &&
--	test "$(cat file)" = file &&
-+	echo file >expect &&
-+	test_cmp expect file &&
- 	test_must_fail git pull . "refs/nonexisting1/*:refs/nonexisting2/*" 2>err &&
- 	test_i18ngrep "no candidates for merging" err &&
--	test "$(cat file)" = file
-+	echo file >expect &&
-+	test_cmp expect file
- '
- 
- test_expect_success 'fail if no branches specified with non-default remote' '
-@@ -148,11 +156,13 @@ test_expect_success 'fail if no branches specified with non-default remote' '
- 	test_when_finished "git remote remove test_remote" &&
- 	git checkout -b test copy^ &&
- 	test_when_finished "git checkout -f copy && git branch -D test" &&
--	test "$(cat file)" = file &&
-+	echo file >expect &&
-+	test_cmp expect file &&
- 	test_config branch.test.remote origin &&
- 	test_must_fail git pull test_remote 2>err &&
- 	test_i18ngrep "specify a branch on the command line" err &&
--	test "$(cat file)" = file
-+	echo file >expect &&
-+	test_cmp expect file
- '
- 
- test_expect_success 'fail if not on a branch' '
-@@ -160,10 +170,12 @@ test_expect_success 'fail if not on a branch' '
- 	test_when_finished "git remote remove origin" &&
- 	git checkout HEAD^ &&
- 	test_when_finished "git checkout -f copy" &&
--	test "$(cat file)" = file &&
-+	echo file >expect &&
-+	test_cmp expect file &&
- 	test_must_fail git pull 2>err &&
- 	test_i18ngrep "not currently on a branch" err &&
--	test "$(cat file)" = file
-+	echo file >expect &&
-+	test_cmp expect file
- '
- 
- test_expect_success 'fail if no configuration for current branch' '
-@@ -172,10 +184,12 @@ test_expect_success 'fail if no configuration for current branch' '
- 	git checkout -b test copy^ &&
- 	test_when_finished "git checkout -f copy && git branch -D test" &&
- 	test_config branch.test.remote test_remote &&
--	test "$(cat file)" = file &&
-+	echo file >expect &&
-+	test_cmp expect file &&
- 	test_must_fail git pull 2>err &&
- 	test_i18ngrep "no tracking information" err &&
--	test "$(cat file)" = file
-+	echo file >expect &&
-+	test_cmp expect file
- '
- 
- test_expect_success 'pull --all: fail if no configuration for current branch' '
-@@ -184,10 +198,12 @@ test_expect_success 'pull --all: fail if no configuration for current branch' '
- 	git checkout -b test copy^ &&
- 	test_when_finished "git checkout -f copy && git branch -D test" &&
- 	test_config branch.test.remote test_remote &&
--	test "$(cat file)" = file &&
-+	echo file >expect &&
-+	test_cmp expect file &&
- 	test_must_fail git pull --all 2>err &&
- 	test_i18ngrep "There is no tracking information" err &&
--	test "$(cat file)" = file
-+	echo file >expect &&
-+	test_cmp expect file
- '
- 
- test_expect_success 'fail if upstream branch does not exist' '
-@@ -195,16 +211,19 @@ test_expect_success 'fail if upstream branch does not exist' '
- 	test_when_finished "git checkout -f copy && git branch -D test" &&
- 	test_config branch.test.remote . &&
- 	test_config branch.test.merge refs/heads/nonexisting &&
--	test "$(cat file)" = file &&
-+	echo file >expect &&
-+	test_cmp expect file &&
- 	test_must_fail git pull 2>err &&
- 	test_i18ngrep "no such ref was fetched" err &&
--	test "$(cat file)" = file
-+	echo file >expect &&
-+	test_cmp expect file
- '
- 
- test_expect_success 'fail if the index has unresolved entries' '
- 	git checkout -b third second^ &&
- 	test_when_finished "git checkout -f copy && git branch -D third" &&
--	test "$(cat file)" = file &&
-+	echo file >expect &&
-+	test_cmp expect file &&
- 	test_commit modified2 file &&
- 	git ls-files -u >unmerged &&
- 	test_must_be_empty unmerged &&
-@@ -226,21 +245,25 @@ test_expect_success 'fail if the index has unresolved entries' '
- test_expect_success 'fast-forwards working tree if branch head is updated' '
- 	git checkout -b third second^ &&
- 	test_when_finished "git checkout -f copy && git branch -D third" &&
--	test "$(cat file)" = file &&
-+	echo file >expect &&
-+	test_cmp expect file &&
+@@ -230,7 +230,7 @@ test_expect_success 'fast-forwards working tree if branch head is updated' '
  	git pull . second:third 2>err &&
  	test_i18ngrep "fetch updated the current branch head" err &&
--	test "$(cat file)" = modified &&
-+	echo modified >expect &&
-+	test_cmp expect file &&
- 	test_cmp_rev third second
+ 	test "$(cat file)" = modified &&
+-	test "$(git rev-parse third)" = "$(git rev-parse second)"
++	test_cmp_rev third second
  '
  
  test_expect_success 'fast-forward fails with conflicting work tree' '
- 	git checkout -b third second^ &&
- 	test_when_finished "git checkout -f copy && git branch -D third" &&
--	test "$(cat file)" = file &&
-+	echo file >expect &&
-+	test_cmp expect file &&
- 	echo conflict >file &&
+@@ -241,7 +241,7 @@ test_expect_success 'fast-forward fails with conflicting work tree' '
  	test_must_fail git pull . second:third 2>err &&
  	test_i18ngrep "Cannot fast-forward your working tree" err &&
--	test "$(cat file)" = conflict &&
-+	echo conflict >expect &&
-+	test_cmp expect file &&
- 	test_cmp_rev third second
+ 	test "$(cat file)" = conflict &&
+-	test "$(git rev-parse third)" = "$(git rev-parse second)"
++	test_cmp_rev third second
  '
  
-@@ -501,7 +524,8 @@ test_expect_success 'pull.rebase=interactive' '
- 	test_set_editor "$TRASH_DIRECTORY/fake-editor" &&
- 	test_when_finished "test_might_fail git rebase --abort" &&
- 	test_must_fail git pull --rebase=interactive . copy &&
--	test "I was here" = "$(cat fake.out)"
-+	echo "I was here" >expect &&
-+	test_cmp expect fake.out
+ test_expect_success '--rebase' '
+@@ -254,7 +254,7 @@ test_expect_success '--rebase' '
+ 	git commit -m "new file" &&
+ 	git tag before-rebase &&
+ 	git pull --rebase . copy &&
+-	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
++	test_cmp_rev HEAD^ copy &&
+ 	test new = "$(git show HEAD:file2)"
  '
  
- test_expect_success 'pull --rebase=i' '
-@@ -512,7 +536,8 @@ test_expect_success 'pull --rebase=i' '
- 	test_set_editor "$TRASH_DIRECTORY/fake-editor" &&
- 	test_when_finished "test_might_fail git rebase --abort" &&
- 	test_must_fail git pull --rebase=i . copy &&
--	test "I was here, too" = "$(cat fake.out)"
-+	echo "I was here, too" >expect &&
-+	test_cmp expect fake.out
+@@ -266,7 +266,7 @@ test_expect_success '--rebase fast forward' '
+ 
+ 	git checkout to-rebase &&
+ 	git pull --rebase . ff &&
+-	test "$(git rev-parse HEAD)" = "$(git rev-parse ff)" &&
++	test_cmp_rev HEAD ff &&
+ 
+ 	# The above only validates the result.  Did we actually bypass rebase?
+ 	git reflog -1 >reflog.actual &&
+@@ -290,7 +290,7 @@ test_expect_success '--rebase --autostash fast forward' '
+ 	git checkout behind &&
+ 	echo dirty >file &&
+ 	git pull --rebase --autostash . to-rebase-ff &&
+-	test "$(git rev-parse HEAD)" = "$(git rev-parse to-rebase-ff)"
++	test_cmp_rev HEAD to-rebase-ff
  '
  
- test_expect_success 'pull.rebase=invalid fails' '
-@@ -578,16 +603,20 @@ test_expect_success '--rebase with rebased upstream' '
- 	git commit -m to-rebase file2 &&
- 	git tag to-rebase-orig &&
- 	git pull --rebase me copy &&
--	test "conflicting modification" = "$(cat file)" &&
--	test file = "$(cat file2)"
-+	echo "conflicting modification" >expect &&
-+	test_cmp expect file &&
-+	echo file >expect &&
-+	test_cmp expect file2
+ test_expect_success '--rebase with conflicts shows advice' '
+@@ -328,7 +328,7 @@ test_expect_success 'failed --rebase shows advice' '
+ test_expect_success '--rebase fails with multiple branches' '
+ 	git reset --hard before-rebase &&
+ 	test_must_fail git pull --rebase . copy master 2>err &&
+-	test "$(git rev-parse HEAD)" = "$(git rev-parse before-rebase)" &&
++	test_cmp_rev HEAD before-rebase &&
+ 	test_i18ngrep "Cannot rebase onto multiple branches" err &&
+ 	test modified = "$(git show HEAD:file)"
+ '
+@@ -380,7 +380,7 @@ test_expect_success 'pull.rebase' '
+ 	git reset --hard before-rebase &&
+ 	test_config pull.rebase true &&
+ 	git pull . copy &&
+-	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
++	test_cmp_rev HEAD^ copy &&
+ 	test new = "$(git show HEAD:file2)"
  '
  
- test_expect_success '--rebase -f with rebased upstream' '
- 	test_when_finished "test_might_fail git rebase --abort" &&
- 	git reset --hard to-rebase-orig &&
- 	git pull --rebase -f me copy &&
--	test "conflicting modification" = "$(cat file)" &&
--	test file = "$(cat file2)"
-+	echo "conflicting modification" >expect &&
-+	test_cmp expect file &&
-+	echo file >expect &&
-+	test_cmp expect file2
+@@ -398,7 +398,7 @@ test_expect_success 'branch.to-rebase.rebase' '
+ 	git reset --hard before-rebase &&
+ 	test_config branch.to-rebase.rebase true &&
+ 	git pull . copy &&
+-	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
++	test_cmp_rev HEAD^ copy &&
+ 	test new = "$(git show HEAD:file2)"
  '
  
- test_expect_success '--rebase with rebased default upstream' '
-@@ -595,8 +624,10 @@ test_expect_success '--rebase with rebased default upstream' '
- 	git checkout --track -b to-rebase2 me/copy &&
- 	git reset --hard to-rebase-orig &&
- 	git pull --rebase &&
--	test "conflicting modification" = "$(cat file)" &&
--	test file = "$(cat file2)"
-+	echo "conflicting modification" >expect &&
-+	test_cmp expect file &&
-+	echo file >expect &&
-+	test_cmp expect file2
+@@ -407,14 +407,14 @@ test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
+ 	test_config pull.rebase true &&
+ 	test_config branch.to-rebase.rebase false &&
+ 	git pull . copy &&
+-	test "$(git rev-parse HEAD^)" != "$(git rev-parse copy)" &&
++	test_cmp_rev ! HEAD^ copy &&
+ 	test new = "$(git show HEAD:file2)"
  '
  
- test_expect_success 'rebased upstream + fetch + pull --rebase' '
-@@ -607,8 +638,10 @@ test_expect_success 'rebased upstream + fetch + pull --rebase' '
- 	git reset --hard to-rebase-orig &&
- 	git fetch &&
- 	git pull --rebase &&
--	test "conflicting modification" = "$(cat file)" &&
--	test file = "$(cat file2)"
-+	echo "conflicting modification" >expect &&
-+	test_cmp expect file &&
-+	echo file >expect &&
-+	test_cmp expect file2
- 
+ test_expect_success 'pull --rebase warns on --verify-signatures' '
+ 	git reset --hard before-rebase &&
+ 	git pull --rebase --verify-signatures . copy 2>err &&
+-	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
++	test_cmp_rev HEAD^ copy &&
+ 	test new = "$(git show HEAD:file2)" &&
+ 	test_i18ngrep "ignoring --verify-signatures for rebase" err
+ '
+@@ -422,7 +422,7 @@ test_expect_success 'pull --rebase warns on --verify-signatures' '
+ test_expect_success 'pull --rebase does not warn on --no-verify-signatures' '
+ 	git reset --hard before-rebase &&
+ 	git pull --rebase --no-verify-signatures . copy 2>err &&
+-	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
++	test_cmp_rev HEAD^ copy &&
+ 	test new = "$(git show HEAD:file2)" &&
+ 	test_i18ngrep ! "verify-signatures" err
+ '
+@@ -443,8 +443,8 @@ test_expect_success 'pull.rebase=false create a new merge commit' '
+ 	git reset --hard before-preserve-rebase &&
+ 	test_config pull.rebase false &&
+ 	git pull . copy &&
+-	test "$(git rev-parse HEAD^1)" = "$(git rev-parse before-preserve-rebase)" &&
+-	test "$(git rev-parse HEAD^2)" = "$(git rev-parse copy)" &&
++	test_cmp_rev HEAD^1 before-preserve-rebase &&
++	test_cmp_rev HEAD^2 copy &&
+ 	test file3 = "$(git show HEAD:file3.t)"
  '
  
-@@ -744,8 +777,10 @@ test_expect_success 'git pull --rebase does not reapply old patches' '
- test_expect_success 'git pull --rebase against local branch' '
- 	git checkout -b copy2 to-rebase-orig &&
- 	git pull --rebase . to-rebase &&
--	test "conflicting modification" = "$(cat file)" &&
--	test file = "$(cat file2)"
-+	echo "conflicting modification" >expect &&
-+	test_cmp expect file &&
-+	echo file >expect &&
-+	test_cmp expect file2
+@@ -452,7 +452,7 @@ test_expect_success 'pull.rebase=true flattens keep-merge' '
+ 	git reset --hard before-preserve-rebase &&
+ 	test_config pull.rebase true &&
+ 	git pull . copy &&
+-	test "$(git rev-parse HEAD^^)" = "$(git rev-parse copy)" &&
++	test_cmp_rev HEAD^^ copy &&
+ 	test file3 = "$(git show HEAD:file3.t)"
  '
  
- test_done
+@@ -460,7 +460,7 @@ test_expect_success 'pull.rebase=1 is treated as true and flattens keep-merge' '
+ 	git reset --hard before-preserve-rebase &&
+ 	test_config pull.rebase 1 &&
+ 	git pull . copy &&
+-	test "$(git rev-parse HEAD^^)" = "$(git rev-parse copy)" &&
++	test_cmp_rev HEAD^^ copy &&
+ 	test file3 = "$(git show HEAD:file3.t)"
+ '
+ 
+@@ -469,8 +469,8 @@ test_expect_success REBASE_P \
+ 	git reset --hard before-preserve-rebase &&
+ 	test_config pull.rebase preserve &&
+ 	git pull . copy &&
+-	test "$(git rev-parse HEAD^^)" = "$(git rev-parse copy)" &&
+-	test "$(git rev-parse HEAD^2)" = "$(git rev-parse keep-merge)"
++	test_cmp_rev HEAD^^ copy &&
++	test_cmp_rev HEAD^2 keep-merge
+ '
+ 
+ test_expect_success 'pull.rebase=interactive' '
+@@ -505,8 +505,8 @@ test_expect_success '--rebase=false create a new merge commit' '
+ 	git reset --hard before-preserve-rebase &&
+ 	test_config pull.rebase true &&
+ 	git pull --rebase=false . copy &&
+-	test "$(git rev-parse HEAD^1)" = "$(git rev-parse before-preserve-rebase)" &&
+-	test "$(git rev-parse HEAD^2)" = "$(git rev-parse copy)" &&
++	test_cmp_rev HEAD^1 before-preserve-rebase &&
++	test_cmp_rev HEAD^2 copy &&
+ 	test file3 = "$(git show HEAD:file3.t)"
+ '
+ 
+@@ -514,7 +514,7 @@ test_expect_success '--rebase=true rebases and flattens keep-merge' '
+ 	git reset --hard before-preserve-rebase &&
+ 	test_config pull.rebase preserve &&
+ 	git pull --rebase=true . copy &&
+-	test "$(git rev-parse HEAD^^)" = "$(git rev-parse copy)" &&
++	test_cmp_rev HEAD^^ copy &&
+ 	test file3 = "$(git show HEAD:file3.t)"
+ '
+ 
+@@ -523,8 +523,8 @@ test_expect_success REBASE_P \
+ 	git reset --hard before-preserve-rebase &&
+ 	test_config pull.rebase true &&
+ 	git pull --rebase=preserve . copy &&
+-	test "$(git rev-parse HEAD^^)" = "$(git rev-parse copy)" &&
+-	test "$(git rev-parse HEAD^2)" = "$(git rev-parse keep-merge)"
++	test_cmp_rev HEAD^^ copy &&
++	test_cmp_rev HEAD^2 keep-merge
+ '
+ 
+ test_expect_success '--rebase=invalid fails' '
+@@ -536,7 +536,7 @@ test_expect_success '--rebase overrides pull.rebase=preserve and flattens keep-m
+ 	git reset --hard before-preserve-rebase &&
+ 	test_config pull.rebase preserve &&
+ 	git pull --rebase . copy &&
+-	test "$(git rev-parse HEAD^^)" = "$(git rev-parse copy)" &&
++	test_cmp_rev HEAD^^ copy &&
+ 	test file3 = "$(git show HEAD:file3.t)"
+ '
+ 
+@@ -597,10 +597,10 @@ test_expect_success 'pull --rebase dies early with dirty working directory' '
+ 	echo dirty >>file &&
+ 	git add file &&
+ 	test_must_fail git pull &&
+-	test "$COPY" = "$(git rev-parse --verify me/copy)" &&
++	test_cmp_rev "$COPY" me/copy &&
+ 	git checkout HEAD -- file &&
+ 	git pull &&
+-	test "$COPY" != "$(git rev-parse --verify me/copy)"
++	test_cmp_rev ! "$COPY" me/copy
+ '
+ 
+ test_expect_success 'pull --rebase works on branch yet to be born' '
 -- 
 2.23.0.897.g0a19638b1e
 
