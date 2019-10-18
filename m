@@ -2,79 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD6A81F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 00:12:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8247A1F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 00:19:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438941AbfJRAMJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 20:12:09 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:52233 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727941AbfJRAMJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 20:12:09 -0400
-Received: by mail-wm1-f65.google.com with SMTP id r19so4293797wmh.2
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 17:12:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+C/jJiMI7vkealUUa2Pgd+zeHOjxZosbO9mmBV58rT8=;
-        b=VPUbDlmQ9z1fh9+7IHWNL9Jm6jOJVUni+nnWF8tEAiYk1Vexg/E+PzSL12i0YI9NPj
-         /W7OlQi2qFas395veLt/KvSmnLwU8KCDbKySp7UPu3c9+eXJ/qmyjYX9izQqzpPfWQd1
-         j5yy9dMJJ6UOa/Xd01e8hwkAkXt6FppH5Tg0Eb+spSMkki6HnBkzpyhdeynJptgNcRTe
-         w38JdlWZzTWxQniez0ObFw1kO74dNJx5Rtz+BkKNG2VrGXf/xMPfl7MwdE8qRdpbS+yP
-         Zuitd+icnObGi3Lh1AuWLchBHk63Fn57c2pPGRHjFfc8ugwQo5S0NQH4UfqNUGFR9xH9
-         YU+g==
-X-Gm-Message-State: APjAAAUV1Pa8MturkbQFLia/HxVunt/rXUxSdQ0TR4LyuekSpbjO3AL9
-        RBqSyBAGFyC221h7Z5tT0+cMnIxUJvhp+xnqKcn4xWkQ
-X-Google-Smtp-Source: APXvYqx1aM6Nr6yJ8GEaIUo+6USuamA4CNm37PS8HbZOgx5qX7S/B7o64NZQOXmgXQhuL9qRSALiNeKzQiAFYiPQMhg=
-X-Received: by 2002:a1c:9dcf:: with SMTP id g198mr5164928wme.101.1571357527026;
- Thu, 17 Oct 2019 17:12:07 -0700 (PDT)
+        id S2503799AbfJRATl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 20:19:41 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:46196 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2438805AbfJRATl (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 17 Oct 2019 20:19:41 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2B10C60459;
+        Fri, 18 Oct 2019 00:19:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1571357979;
+        bh=Hxgv+jEN/MdZcPg8+BdURgUHK+AVY7X3YE0s8ZzUiEQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=zJMcUcuJ9mDndtJFEm8P6hf+58QPSqgrQAQZ30U+m5xmd1BLSKUkHTDEEjbuz3B4W
+         7617q9QWmDfwgmhlznQni325DhwtLk2uUdlXYNKulUibKB6rtlbvd694HAZPeQlrlF
+         mLkkBRLVau+p91w2s3Eqg4jkgy6yZXZJjU4MXieA1bTUdcA3cPJi5Eb/28qgZbDei6
+         dfG9ThOBpRdb2q6ud4ub2BVnBgwNen2aaDbfsD3J9id/QUozXcZHxccky4S6Xuc4oK
+         hDgvi7ZLC8PEZg3C3awysfnZXaZvn+Xgv8vhHl2mvH6MioCKgpT7mgbx1E+fUErCmo
+         3jtFmzXddNL2qyB8JfR8Vj3t4MwaFbKAM4ItttHrSdw+J+c2GnjWWA0guPAyqkqKOS
+         4KKdAeXZpcpgXGSQ2gALVm3NyWsCZsorM59Aym1NMoMQDpnANI2EE1hud+lGIl6Zyv
+         iJ0nOMUNmrI1qZt5+EaQIDVGhnkoYBLfUxrzy7H6NpwgJSt8sUX
+Date:   Fri, 18 Oct 2019 00:19:35 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Manoj Sterex <*@sterex.in>
+Cc:     git@vger.kernel.org
+Subject: Re: Commits with --no-verify option
+Message-ID: <20191018001934.cq2bqcron32ql2ux@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Manoj Sterex <*@sterex.in>, git@vger.kernel.org
+References: <CAJoS+LqqeD3zLYi=jnxc9A=bLT_bpTrjP1bZMPX4NMehd2V3cQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <f3cb583110f508b4a421326ea6667280e848930d.1571354136.git.liu.denton@gmail.com>
- <542cd04c2ebda88b8fa63dc4dcb1c42d10afc844.1571355109.git.liu.denton@gmail.com>
-In-Reply-To: <542cd04c2ebda88b8fa63dc4dcb1c42d10afc844.1571355109.git.liu.denton@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 17 Oct 2019 20:11:56 -0400
-Message-ID: <CAPig+cTEHkWn528uMfrMNxrFFMnj8942wP0XmAEGuv_jZ1-6Lw@mail.gmail.com>
-Subject: Re: [PATCH 4.5/12] t5520: replace test -f with test-lib functions
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="6fvkoatj5xw3ttlz"
+Content-Disposition: inline
+In-Reply-To: <CAJoS+LqqeD3zLYi=jnxc9A=bLT_bpTrjP1bZMPX4NMehd2V3cQ@mail.gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.3.0-trunk-amd64)
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 17, 2019 at 7:35 PM Denton Liu <liu.denton@gmail.com> wrote:
-> Although `test -f` has the same functionality as test_path_is_file(), in
-> the case where test_path_is_file() fails, we get much better debugging
-> information.
->
-> Replace `test -f` with test_path_is_file() so that future developers
-> will have a better experience debugging these test cases. Also, in the
-> case of `! test -f`, replace it with test_path_is_missing().
->
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
-> I just realised that test_path_is_missing() is a much better replacement
-> than `test_must_fail test_path_is_file`.
 
-That depends upon context...
+--6fvkoatj5xw3ttlz
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> @@ -99,7 +99,7 @@ test_expect_success 'pulling into void must not create an octopus' '
-> -               ! test -f file
-> +               test_path_is_missing file
+On 2019-10-17 at 08:56:34, Manoj Sterex wrote:
+> Hi all,
+>=20
+> Currently, AFAIK, there is no way to know if a commit was done with or
+> without using the '--no-verify' option. That is, git does not track if
+> hooks were skipped when the commit happened.
+>=20
+> Is there some way to track this in the log?
 
-There is a semantic difference between checking that "file" is not a
-_file_ versus checking that the a path itself (which may be a
-directory or a "special file") does not exist. In this particular
-test, the difference doesn't matter, so the conversion is sensible
-enough, but it would save reviewers time if you, as author of the
-patch, state that you carefully considered the distinction before
-making each change.
+No, there isn't, and even if there were, it would be trivial to bypass
+(such as by using git commit-tree, which does not run hooks).
+
+You haven't elaborated on why you want this, but typically the reason
+people ask for this is that they do some sort of data checking (testing
+or linting) in the pre-commit hook.  Since that code runs on the
+author's system and is trivially bypassed (by simply deleting the hook),
+it isn't a good way to enforce policy; usually that should be done in a
+test or CI infrastructure.
+
+In addition, it's common for advanced users to make a series of
+temporary commits to save state and then squash them later.  It wouldn't
+be reasonable for a pre-commit hook to enforce certain policies, such as
+a commit message syntax policy, in such a case, so --no-verify exists
+for users who know what they're doing and would like to bypass standard
+checking.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--6fvkoatj5xw3ttlz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl2pBRYACgkQv1NdgR9S
+9ou7iw//S21TqrZHrC/4sGomWG8FDbqt12U66dVyiO+b46jTaLRr/6S7xRyfJxU6
+PGLfRDjumdeJQTbmcxwuQckzTgGX5wyIZhx+FHana4SR3HpZRfaWmaoeBlqz1BWF
+tLqDkJF+kWkDdAun7/J6W0jPqNuJQgEpCBtczEoh5YdjSDCY4JRjcGC5Vx6jqe2r
+JIKGFV6+tmLGE/ECMo+ls1yE8597d9S2kh5o61qiczVKvaMan4TOaHdJAyBwyfAN
+GP+MXxirGBo2OL2jO6xeoR536ZGK41R9/4hbFinS1rIctTPbsM36vyOQOPfkPwzr
+kVzsQUy5MszsynKfqbmyS/aWMvXCl7RVSMtYVup3nBZEoYNqYax3zN9rQZ7hkzBA
+l4vV057qcN+Tjv3V2axKjq9p2d9zGUanmcWt3DGYTJUQYztjulf/r7FmWePxksSh
+HCtidfUDJH5q3weZqIU9Akhru9aZ/g8N4t32c4t2zFrd7YIs7aUbmZkBj+WoDlQj
+cmdaoKg0SUI0k1jgzgbSEi9nivyFP+81QODhuwaubN++I7o3CyYWhWQOJelr4sVK
+Zhx8HUBokSXS35604vKkbs8h/qBo/UlQDuXFe1YpNn2H/GRHahUqpg0zboanDGTv
+3dQwaCebXRoX0tKruVvfkjws1eT71SPeddMaxEL9GnoDCh+NFfA=
+=+mhK
+-----END PGP SIGNATURE-----
+
+--6fvkoatj5xw3ttlz--
