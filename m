@@ -2,72 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6C011F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 16:16:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAAB61F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 16:27:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388010AbfJRQQX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 12:16:23 -0400
-Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:56824 "EHLO
-        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726520AbfJRQQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 12:16:23 -0400
-Received: from callcc.thunk.org (guestnat-104-133-0-98.corp.google.com [104.133.0.98] (may be forged))
-        (authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id x9IGFm1F012637
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 18 Oct 2019 12:15:48 -0400
-Received: by callcc.thunk.org (Postfix, from userid 15806)
-        id D0DDB420458; Fri, 18 Oct 2019 12:15:47 -0400 (EDT)
-Date:   Fri, 18 Oct 2019 12:15:47 -0400
-From:   "Theodore Y. Ts'o" <tytso@mit.edu>
-To:     Vegard Nossum <vegard.nossum@oracle.com>
-Cc:     Santiago Torres Arias <santiago@nyu.edu>, Willy Tarreau <w@1wt.eu>,
-        workflows@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Eric Wong <e@80x24.org>
-Subject: Re: email as a bona fide git transport
-Message-ID: <20191018161547.GG21137@mit.edu>
-References: <b9fb52b8-8168-6bf0-9a72-1e6c44a281a5@oracle.com>
- <20191016111009.GE13154@1wt.eu>
- <20191016144517.giwip4yuaxtcd64g@LykOS.localdomain>
- <56664222-6c29-09dc-ef78-7b380b113c4a@oracle.com>
+        id S2394844AbfJRQ1O (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 12:27:14 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:34722 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732948AbfJRQ1N (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 12:27:13 -0400
+Received: by mail-pg1-f194.google.com with SMTP id k20so3664157pgi.1
+        for <git@vger.kernel.org>; Fri, 18 Oct 2019 09:27:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=runtime-io.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=OjMNOmOvMJuVzHPdIQZ9FE9QCIsIQ/4OmmSTMKq035A=;
+        b=lmW2CVCyEPpuVHi++1tzgr7oBr3n+8yKsJTSsFRxJEchoan/pmA+BnYueudmrsVVLF
+         nEMF0wOkKH6jMKS+2oom+AG1O7dmfD9gwBQ0XZ5ZlktnyC3ZZkWLksSlFqL0FAqPE0w/
+         Se27JmQKGIdhht59N7bBi595/DAzPUcI3nI4NsmII2GpsoiJPGD4uV3bHIEQrxQOSxjY
+         yPAZRai79YUMJBsscq7OpeoG5KD1RA6ZR4YnJ8T14y9il3Oc415aISvRshKLURGYXjir
+         4NqJmfF7029+lR2jWueTfgCprwvjHYxpESnqcGYfK4OiRjclM6Atjkw5Ld4g+Ieyf+0J
+         ESpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=OjMNOmOvMJuVzHPdIQZ9FE9QCIsIQ/4OmmSTMKq035A=;
+        b=GgDF3TvoYohfnWPguvchpljalk9i0AXIFMdK9fOcQ56ZgcTuGq5aUbMDTJElymJl91
+         5cb4tL+vbecNBxiVIBAJkpZ04/KDQ08zInZ79CGzBMIhKbGvW4O80SbWNAzc5MtQ0TFx
+         7tD2Wgz+SqxgnW9mERyZcxo9WS7rViFVX9f7SY5I5yRMkYU5PE95/P2yO15kUbVOu1eA
+         f7CG/rbQwMruXzBOV+oK5KxrTUyTJRoCOVQ827qXMDsRptoN8PzvimWcbUQ0G0iPrssO
+         P8jW9kvH9TbUzC7liJmltOG9KXuhlvTLnqdZHIBS8tZkLHnd/L2ZCPuuEMvgkzCRh4ji
+         fokg==
+X-Gm-Message-State: APjAAAVehBWyj9840eGDQqBKBwXcWTc8FRVXNe60gqIQKXTL9DuqHXuO
+        qWjodrxY7Mc9bHllxib5SlV2htfXIko=
+X-Google-Smtp-Source: APXvYqzkCJRWwKOw0EI8StOWQu3KI/cSwlwj38zJiQEzHGUGv1fUXgzwK/N/svk7PoxT170eAiBMIQ==
+X-Received: by 2002:a62:7689:: with SMTP id r131mr7450704pfc.68.1571416033190;
+        Fri, 18 Oct 2019 09:27:13 -0700 (PDT)
+Received: from localhost (c-24-23-248-29.hsd1.ca.comcast.net. [24.23.248.29])
+        by smtp.gmail.com with ESMTPSA id 7sm5613950pgx.26.2019.10.18.09.27.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Oct 2019 09:27:12 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 09:30:11 -0700
+From:   Christopher Collins <chris@runtime.io>
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Cc:     git@vger.kernel.org
+Subject: Re: bug: Directory replaced by submodule -> checkout fails
+Message-ID: <20191018163011.GF4049@pseudoephedrine.nightmare-heaven.no-ip.biz>
+References: <20191017230751.GC4049@pseudoephedrine.nightmare-heaven.no-ip.biz>
+ <f66f0587-4d61-71e8-fc87-3278f1023e3d@virtuell-zuhause.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <56664222-6c29-09dc-ef78-7b380b113c4a@oracle.com>
+In-Reply-To: <f66f0587-4d61-71e8-fc87-3278f1023e3d@virtuell-zuhause.de>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 18, 2019 at 04:27:48PM +0200, Vegard Nossum wrote:
-> commit ac30b08065cd55362a7244a3bbc8df3563cefaaa
-> tree 8f09d9d6ed78f8617b2fe54fe9712990ba808546
-> parent 108b97dc372828f0e72e56bbb40cae8e1e83ece6
-> author Vegard Nossum <vegard.nossum@oracle.com> 1570284959 +0200
-> committer Vegard Nossum <vegard.nossum@oracle.com> 1571408340 +0200
-> gpgsig -----BEGIN PGP SIGNATURE-----
-	...
+Hi Thomas,
 
-Would it perhaps be possible to put some or all of these headers after
-the patch, as a set of "trailers"?  That would make it easier for
-human readers of the e-mail to get the bits that they most care
-about.... namely, the patch itself.  :-)
+On Fri, Oct 18, 2019 at 02:02:29PM +0200, Thomas Braun wrote:
+> This is a known bug unfortunately. See
+> https://public-inbox.org/git/CAGZ79kYTY6U0eNwvU0PcDyt_QXGyYGm5VkDvWLtuQgQG6BbtFA@mail.gmail.com/
+> for reference.
 
-If we move the PGP signature to the end, then the fact that it is so
-big and bulky becomes much less of an issue.  A mini-sig might still
-be a cool thing, from a space savings perspective both in the mail
-archives, and in the git repo itself, if we start signing all commits.
-But that seems like a separable issue.
+Good to know.  Thanks for the reference.
 
-Thanks,
-
-					- Ted
+Chris
