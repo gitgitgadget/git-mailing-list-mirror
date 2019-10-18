@@ -7,29 +7,28 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A66A1F4C4
-	for <e@80x24.org>; Fri, 18 Oct 2019 04:59:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02BF51F4C4
+	for <e@80x24.org>; Fri, 18 Oct 2019 04:59:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395281AbfJRE7a (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 00:59:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51740 "HELO cloud.peff.net"
+        id S2395205AbfJRE7z (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 00:59:55 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51746 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727020AbfJRE7a (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 00:59:30 -0400
-Received: (qmail 9486 invoked by uid 109); 18 Oct 2019 04:59:31 -0000
+        id S1726315AbfJRE7z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 00:59:55 -0400
+Received: (qmail 9494 invoked by uid 109); 18 Oct 2019 04:59:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 18 Oct 2019 04:59:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 18 Oct 2019 04:59:56 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14413 invoked by uid 111); 18 Oct 2019 05:02:35 -0000
+Received: (qmail 14429 invoked by uid 111); 18 Oct 2019 05:03:00 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Oct 2019 01:02:35 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Oct 2019 01:03:00 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 18 Oct 2019 00:59:29 -0400
+Date:   Fri, 18 Oct 2019 00:59:54 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 16/23] fsck: accept an oid instead of a "struct blob" for
- fsck_blob()
-Message-ID: <20191018045928.GP17879@sigill.intra.peff.net>
+Subject: [PATCH 17/23] fsck: drop blob struct from fsck_finish()
+Message-ID: <20191018045953.GQ17879@sigill.intra.peff.net>
 References: <20191018044103.GA17625@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -40,115 +39,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We don't actually need any information from the object struct except its
-oid (and the type, of course, but that's implicitly OBJ_BLOB). This
-gives our callers more flexibility to drop the object structs, too.
+Since fsck_blob() no longer requires us to have a "struct blob", we
+don't need to create one. Which also means we don't need to worry about
+handling the case that lookup_blob() returns NULL (we'll still catch
+wrongly-identified blobs when we read the actual object contents and
+type from disk).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- fsck.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ fsck.c | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
 diff --git a/fsck.c b/fsck.c
-index 465247be71..6e9640a1a6 100644
+index 6e9640a1a6..4ff0ceb4ac 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -890,7 +890,7 @@ static int fsck_tag(struct tag *tag, const char *buffer,
- }
+@@ -1013,7 +1013,6 @@ int fsck_finish(struct fsck_options *options)
  
- struct fsck_gitmodules_data {
--	struct object *obj;
-+	const struct object_id *oid;
- 	struct fsck_options *options;
- 	int ret;
- };
-@@ -909,21 +909,21 @@ static int fsck_gitmodules_fn(const char *var, const char *value, void *vdata)
- 	name = xmemdupz(subsection, subsection_len);
- 	if (check_submodule_name(name) < 0)
- 		data->ret |= report(data->options,
--				    &data->obj->oid, data->obj->type,
-+				    data->oid, OBJ_BLOB,
- 				    FSCK_MSG_GITMODULES_NAME,
- 				    "disallowed submodule name: %s",
- 				    name);
- 	if (!strcmp(key, "url") && value &&
- 	    looks_like_command_line_option(value))
- 		data->ret |= report(data->options,
--				    &data->obj->oid, data->obj->type,
-+				    data->oid, OBJ_BLOB,
- 				    FSCK_MSG_GITMODULES_URL,
- 				    "disallowed submodule url: %s",
- 				    value);
- 	if (!strcmp(key, "path") && value &&
- 	    looks_like_command_line_option(value))
- 		data->ret |= report(data->options,
--				    &data->obj->oid, data->obj->type,
-+				    data->oid, OBJ_BLOB,
- 				    FSCK_MSG_GITMODULES_PATH,
- 				    "disallowed submodule path: %s",
- 				    value);
-@@ -932,17 +932,17 @@ static int fsck_gitmodules_fn(const char *var, const char *value, void *vdata)
- 	return 0;
- }
+ 	oidset_iter_init(&gitmodules_found, &iter);
+ 	while ((oid = oidset_iter_next(&iter))) {
+-		struct blob *blob;
+ 		enum object_type type;
+ 		unsigned long size;
+ 		char *buf;
+@@ -1021,31 +1020,22 @@ int fsck_finish(struct fsck_options *options)
+ 		if (oidset_contains(&gitmodules_done, oid))
+ 			continue;
  
--static int fsck_blob(struct blob *blob, const char *buf,
-+static int fsck_blob(const struct object_id *oid, const char *buf,
- 		     unsigned long size, struct fsck_options *options)
- {
- 	struct fsck_gitmodules_data data;
- 	struct config_options config_opts = { 0 };
- 
--	if (!oidset_contains(&gitmodules_found, &blob->object.oid))
-+	if (!oidset_contains(&gitmodules_found, oid))
- 		return 0;
--	oidset_insert(&gitmodules_done, &blob->object.oid);
-+	oidset_insert(&gitmodules_done, oid);
- 
--	if (object_on_skiplist(options, &blob->object.oid))
-+	if (object_on_skiplist(options, oid))
- 		return 0;
- 
- 	if (!buf) {
-@@ -951,18 +951,18 @@ static int fsck_blob(struct blob *blob, const char *buf,
- 		 * blob too gigantic to load into memory. Let's just consider
- 		 * that an error.
- 		 */
--		return report(options, &blob->object.oid, blob->object.type,
-+		return report(options, oid, OBJ_BLOB,
- 			      FSCK_MSG_GITMODULES_LARGE,
- 			      ".gitmodules too large to parse");
- 	}
- 
--	data.obj = &blob->object;
-+	data.oid = oid;
- 	data.options = options;
- 	data.ret = 0;
- 	config_opts.error_action = CONFIG_ERROR_SILENT;
- 	if (git_config_from_mem(fsck_gitmodules_fn, CONFIG_ORIGIN_BLOB,
- 				".gitmodules", buf, size, &data, &config_opts))
--		data.ret |= report(options, &blob->object.oid, blob->object.type,
-+		data.ret |= report(options, oid, OBJ_BLOB,
- 				   FSCK_MSG_GITMODULES_PARSE,
- 				   "could not parse gitmodules blob");
- 
-@@ -976,7 +976,7 @@ int fsck_object(struct object *obj, void *data, unsigned long size,
- 		return report(options, NULL, OBJ_NONE, FSCK_MSG_BAD_OBJECT_SHA1, "no valid object to fsck");
- 
- 	if (obj->type == OBJ_BLOB)
--		return fsck_blob((struct blob *)obj, data, size, options);
-+		return fsck_blob(&obj->oid, data, size, options);
- 	if (obj->type == OBJ_TREE)
- 		return fsck_tree((struct tree *) obj, data, size, options);
- 	if (obj->type == OBJ_COMMIT)
-@@ -1042,7 +1042,7 @@ int fsck_finish(struct fsck_options *options)
+-		blob = lookup_blob(the_repository, oid);
+-		if (!blob) {
+-			struct object *obj = lookup_unknown_object(oid);
+-			ret |= report(options, &obj->oid, obj->type,
+-				      FSCK_MSG_GITMODULES_BLOB,
+-				      "non-blob found at .gitmodules");
+-			continue;
+-		}
+-
+ 		buf = read_object_file(oid, &type, &size);
+ 		if (!buf) {
+-			if (is_promisor_object(&blob->object.oid))
++			if (is_promisor_object(oid))
+ 				continue;
+ 			ret |= report(options,
+-				      &blob->object.oid, blob->object.type,
++				      oid, OBJ_BLOB,
+ 				      FSCK_MSG_GITMODULES_MISSING,
+ 				      "unable to read .gitmodules blob");
+ 			continue;
  		}
  
  		if (type == OBJ_BLOB)
--			ret |= fsck_blob(blob, buf, size, options);
-+			ret |= fsck_blob(&blob->object.oid, buf, size, options);
+-			ret |= fsck_blob(&blob->object.oid, buf, size, options);
++			ret |= fsck_blob(oid, buf, size, options);
  		else
  			ret |= report(options,
- 				      &blob->object.oid, blob->object.type,
+-				      &blob->object.oid, blob->object.type,
++				      oid, type,
+ 				      FSCK_MSG_GITMODULES_BLOB,
+ 				      "non-blob found at .gitmodules");
+ 		free(buf);
 -- 
 2.23.0.1228.gee29b05929
 
