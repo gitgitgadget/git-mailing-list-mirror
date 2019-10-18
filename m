@@ -2,101 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DDDD1F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 01:18:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A35F71F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 01:23:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409288AbfJRBSR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 21:18:17 -0400
-Received: from mail4.protonmail.ch ([185.70.40.27]:24333 "EHLO
-        mail4.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391934AbfJRBSR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 21:18:17 -0400
-Date:   Fri, 18 Oct 2019 01:18:04 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=default; t=1571361494;
-        bh=XL9cYADVOcQJFyHrv89xNShvr4NnKt7Np+FEXxUpnjk=;
-        h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
-         From;
-        b=URN1lc6pPYIFEfYzvV4wcNB7hQZJ09H4YjWYgJBZXwky85EY5zeET4+Ejbvj13xBC
-         nSaFJBdPdModrr3zTPl18tP8E1O6acoDKNw/OvaOly6Vc8jWphsEr8T39xOeOf9X44
-         aXTkTXdkH5G6AL2nPWTZwmHmn/HziaKJTWRm+gRI=
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-From:   Ralph Ewig <ralph.phd@protonmail.com>
-Reply-To: Ralph Ewig <ralph.phd@protonmail.com>
-Subject: Re: git smart http + apache mod_auth_openidc
-Message-ID: <20b6729f-a05e-b658-2cd4-70cb7a9d17b7@protonmail.com>
-In-Reply-To: <20191017225529.sg37cxvyssbaitfw@camp.crustytoothpaste.net>
-References: <4eb22ffc-77a1-4cd7-2277-bdc57d31186b@protonmail.com>
- <20191016233319.3rhmekasi5csytyl@camp.crustytoothpaste.net>
- <1320f616-ddcc-0eed-22f2-e28eb0abf039@protonmail.com>
- <20191017060322.GA10373@sigill.intra.peff.net>
- <5a2cc6f5-a8d0-356b-ff4e-a716aa5675b1@protonmail.com>
- <20191017225529.sg37cxvyssbaitfw@camp.crustytoothpaste.net>
-Feedback-ID: JbhSByWnCQwiafGbFv64IeMW95YrXE9PqRMglI51uN_uNsIp7h5EnYZeviw8UgH0DtxilqFslLTcJ61CqL2H5Q==:Ext:ProtonMail
+        id S2409324AbfJRBXH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 21:23:07 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59111 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391934AbfJRBXH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 21:23:07 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4A52A94552;
+        Thu, 17 Oct 2019 21:23:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ql9ZjzC1WIvguAcr6nM1HOlVRkw=; b=rIY5tH
+        1XfuAZ1Cr4vsSjhs0+rHqyuRKnD0IWHlesfxc2rmQ5nBnGRwtoB3sQvEZ1XH25zY
+        vC2vglofDwOu9tatSSYnwQVCb6wII0QZ3syR9Kp/NJAC1vibZ3yZSTeiiqwIRtoz
+        qk1SN8YFRm4BY2ySR/pUX1dnlV7Ileur8DFNw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=BAvZf+nSVaYwdwx9tyL8OLY4c1W3Z/Jo
+        v9UKoaHCVHKCcO9/Z1Xg2zsF2xLUXjNYwmE6eGZjoblIRnYUlMEcKfgDSXIzT/JT
+        2LogZpbdnxrjjFnEOQW0HBpa5d1Juyntrh6N5E7HFv7UOa2qsyKmx93vbEGRjH8w
+        rpTCZg8ReiY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4227D94551;
+        Thu, 17 Oct 2019 21:23:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 631A79454F;
+        Thu, 17 Oct 2019 21:23:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/2] git_path(): handle `.lock` files correctly
+References: <pull.401.git.1571209637.gitgitgadget@gmail.com>
+        <pull.401.v2.git.1571350077.gitgitgadget@gmail.com>
+        <93dba5a3a38d75ba79329383a1d50419a1990c8d.1571350077.git.gitgitgadget@gmail.com>
+Date:   Fri, 18 Oct 2019 10:23:00 +0900
+In-Reply-To: <93dba5a3a38d75ba79329383a1d50419a1990c8d.1571350077.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Thu, 17 Oct 2019
+        22:07:57 +0000")
+Message-ID: <xmqq1rva7sp7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D40D7400-F145-11E9-8A72-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Understood (and agree).
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-We do use git for source code (where we use SSH=20
-and key authentication for CI/CD), but also for=20
-configuration control of other files like=20
-financial reports, engineering drawings, etc.=20
-where access is via HTTPS.=C2=A0 In that 2nd group the=20
-challenge is to make it as "not coding like" as=20
-possible so the non-developer crowd isn't scared off.
-
-Since we use trac for project management company=20
-wide (all verticals), my latest idea is to=20
-intercept the git http request on the server side=20
-to authenticate against the trac session info=20
-stored in the db (using a custom php script),=C2=A0 and=20
-then pass it on to git-http-backend or throw an=20
-error prompting the user to sign into trac first.=20
-Most users are signed into trac 24/7 anyway since=20
-its central to our workflow.
-
-in the end paying the extra fee for MS Domain=20
-Services to get SSO via LDAP or Kerberos might be=20
-the right answer though - just trying to be=20
-scrappy if I can since it's an early stage=20
-startup. Nonetheless really appreciate the=20
-exchange of ideas!
-
-Ralph
-
-
-On 10/17/2019 3:55 PM, brian m. carlson wrote:
-> On 2019-10-17 at 14:33:38, Ralph Ewig wrote:
->> Quick follow up question: can the git client pass
->> a token read from a cookie with a request? That
->> would enable users to sign-in via a browser, store
->> the cookie, and then use that as the access token
->> to authenticate a git request.
-> Git has an option, http.cookieFile, that can read a cookie from a file,
-> yes.  That does, of course, require that you're able to put the cookie
-> in a file from a web browser.  I'm not aware of any web browsers that
-> easily provide an option to dump cookies into a file.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> Also, just as a note, this approach definitely won't work for automated
-> systems you have, such as CI systems.  That's why I suggested Kerberos:
-> because you can have services that have principals and you can use those
-> credentials in your CI systems to access code and run jobs.
+> Ever since worktrees were introduced, the `git_path()` function _really_
+> needed to be called e.g. to get at the path to `logs/HEAD` (`HEAD` is
+> specific to the worktree). However, the wrong path is returned for
+> `logs/HEAD.lock`.
 >
-> Clearly you know your infrastructure and users better than I do, but I
-> don't recommend having a web-based sign-on as your only form of
-> authentication for a Git server.  It's going to cause a lot of pain and
-> inconvenience on all sides.
+> This does not matter as long as the Git executable is doing the asking,
+> as the path for that `index.lock` file is constructed from
+> `git_path("index")` by appending the `.lock` suffix.
 
+Is this still git_path("index") or is it now HEAD?
+
+> Side note: Git GUI _does_ ask for `index.lock`, but that is already
+> resolved correctly.
+
+Is that s/but/and/?
+
+> diff --git a/path.c b/path.c
+> index e3da1f3c4e..ff85692b45 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -268,7 +268,7 @@ static int trie_find(struct trie *root, const char *key, match_fn fn,
+>  	int result;
+>  	struct trie *child;
+>  
+> -	if (!*key) {
+> +	if (!*key || !strcmp(key, ".lock")) {
+
+We only do strcmp for the tail part at the end of the path, so this
+should probably OK from performance point of view but semantically
+it is not very satisfying to see a special case for a single .suffix
+this deep in the callchain.  I wonder if it is nicer to have the
+higher level callers notice ".lock" or whatever other suffixes they
+care about and ask the lower layer for a key with the suffix
+stripped?
+
+Will queue.
+
+Thanks.
