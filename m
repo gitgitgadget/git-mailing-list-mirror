@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2659D1F4C1
-	for <e@80x24.org>; Fri, 18 Oct 2019 22:11:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81D201F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 22:11:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391031AbfJRWLV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 18:11:21 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:32978 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390488AbfJRWKi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 18:10:38 -0400
-Received: by mail-pg1-f195.google.com with SMTP id i76so4098684pgc.0
-        for <git@vger.kernel.org>; Fri, 18 Oct 2019 15:10:38 -0700 (PDT)
+        id S2390372AbfJRWKe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 18:10:34 -0400
+Received: from mail-pg1-f182.google.com ([209.85.215.182]:42006 "EHLO
+        mail-pg1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390334AbfJRWKd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 18:10:33 -0400
+Received: by mail-pg1-f182.google.com with SMTP id f14so4067777pgi.9
+        for <git@vger.kernel.org>; Fri, 18 Oct 2019 15:10:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=maL13i5pQgo46tW4TDfni+FU/nTl5BeKKSciXlHc0Fo=;
-        b=VxtAUHInqCZkLjbqXfxUI9iM3IUJaZV9XUg0RS5Pho3qcZSwQjqeIC3LdAonGt9y5x
-         /kUKCfvVpbDqIqxt/95VLLC9QTYRbji0zwgJ+x/YJlYXkHqFqzP23OfVBIi3b/YDR0IO
-         A5O9hLH7/I01q6WKNP5KJWzdC2wmyJr5ahvltJYBhsTg/lKmztl9o0w05aCDESlrq0Tc
-         PpW63O6HobcH6kBdS+da5jWzQLodmBDHkapk8GOUxB0al0AWM7zKjx0uo7POp+8vKU7F
-         zA3KpNrDr6ZWyp4sYuJ9JXkINxBYvQnZqBdk+8ZFLHcAG6b4BLqQO+s5SuiEqD1dpzTu
-         zdeA==
+        bh=YktZpmrJifjA99PNTOVnRtSLaAx+iks0dLQmMQ/JKCw=;
+        b=ABIZ3UDOrnViUxVX8Mfyu6RJjUOMeKU0AKOT8BVpzSU7xk0XAvOkQwSdYZXtaUC2Cs
+         aBWZOdgJ/Kc/RjC30nA402HU1KHcd0q6uP3MqDYpGEDvphXPf//N92n2fzRzbZZvAkSD
+         r0tFVnyAxgFzOAvzsZ+T+GaIQk6wEhNBoPDk59Cx5a7kz0/24vvkVswX9q2hpTL9GNO9
+         /owVslqtndjD7OjyfC0A5MBKP23xfiTfDfb3r2xT1WMmkXcYpUpOZPIj1JDud39neB+N
+         ce23BFFIJ3Im/LkzQXZaKs28YGJmwweOkG4ikC/XtnziFfDpSAfKGIe6JMxXNK3xQGBe
+         gWJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=maL13i5pQgo46tW4TDfni+FU/nTl5BeKKSciXlHc0Fo=;
-        b=NZsjan8U+YvhobGDl9lAcKYUEenXHWDy6jnrAJ7Z27aginHboe+2sCbCs7PH57XJQV
-         p3QIiYr0TmmGKbWzP4jwshyHqg3YAD0J8N5rRqpZTpQKjHZ+M3+w797gAXb3dvxfl/e7
-         1gqHkIsGzmUE4HhTzP4qIAXUSs465QY4TueqSG6bqUsh3LxLjF3oXxVjzLsWl32Dc09E
-         UecV6m8NgNzY/o7JbL4JnVjy/d4eFdbow9nDbbkLW7wEIz8BLJum/Rbjs+zEmsld8fZ8
-         xMUWni/QRIk9BHXnd+cFieGLp5YNFnU5BA0xU92SVtxjFUY1f4mHeEr4UYxiyRHKBHN1
-         lIiQ==
-X-Gm-Message-State: APjAAAU7QAlfTgeYOKlqAQ3FU0rC0vUgz4o7YtGACCv0Emb9srRtU9Oc
-        QwDFZRII/GbTekblL4pPpUuUyS+J
-X-Google-Smtp-Source: APXvYqwl9iNu5pXGRSdb6bFQhwbnsBd8o3Zl8vrEvwscySW9z5bAHD875+AKYiWK55A87HacJAqONQ==
-X-Received: by 2002:a62:a504:: with SMTP id v4mr8917375pfm.243.1571436637224;
-        Fri, 18 Oct 2019 15:10:37 -0700 (PDT)
+        bh=YktZpmrJifjA99PNTOVnRtSLaAx+iks0dLQmMQ/JKCw=;
+        b=EXD/MjOypRqi/1+bLj4P0+hdWs+/tOZUSgbx3Yktbm1LlPYtji9skFa+CXOtHHmq77
+         HdcryuBqHjatIs6+SdMOrwWSxSQ4Suat9pg3N9Qd6bDwmmvDR1W8mRcyA0oI+8bU4ITc
+         hgd1JXZyKfNqXqZFa1QR1cC2wTh/jnsAmLBIlFPFlFOdlJkyHQuRCtG2sOINLYqQhgEg
+         6EaeJiAUGytTJ69v+4UR70jB8lyRaoC5jDaQMHLrkJgGyzLWPOS7YOtwA6GjZ/JRAUGI
+         mFRV2Ljd0xlkwmgdJEA+1zEA7scrU44ZzqVqasuyR7nbfKSUy1T2J1f10JqZAAQF3V9r
+         TJQA==
+X-Gm-Message-State: APjAAAXTFYUfO4SHm08tQTWCbujOC9YmeETQAGXqV6TuZE5iEUlLdsWa
+        GpgDima9S/vNyCz1y+uDJHAAhHzh
+X-Google-Smtp-Source: APXvYqxMiJ2mSLCGYcezMf6n/2r/m7FDljkiaziZwQIZvJKg9B9HChovdDrjuHfHhQeri6OEW6f8mw==
+X-Received: by 2002:aa7:86d6:: with SMTP id h22mr9313371pfo.72.1571436632231;
+        Fri, 18 Oct 2019 15:10:32 -0700 (PDT)
 Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id c128sm8075381pfc.166.2019.10.18.15.10.36
+        by smtp.gmail.com with ESMTPSA id n66sm11601022pfn.90.2019.10.18.15.10.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2019 15:10:36 -0700 (PDT)
-Date:   Fri, 18 Oct 2019 15:10:34 -0700
+        Fri, 18 Oct 2019 15:10:31 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 15:10:29 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 07/15] t5520: remove spaces after redirect operator
-Message-ID: <830a8212ae78e2bb3f1001dc11cf6ba2edb85561.1571435195.git.liu.denton@gmail.com>
+Subject: [PATCH v2 05/15] t5520: let sed open its own input
+Message-ID: <9fac3dff833624c458cd0bf14d811ea49ac1ee30.1571435195.git.liu.denton@gmail.com>
 References: <cover.1571354136.git.liu.denton@gmail.com>
  <cover.1571435195.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -68,53 +68,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The style for tests in Git is to have the redirect operator attached to
-the filename with no spaces. Fix test cases where this is not the case.
+We were using a redirection operator to feed input into sed. However,
+since sed is capable of opening its own files, make sed open its own
+files instead of redirecting input into it.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5520-pull.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t5520-pull.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 004d5884cd..7bb9031140 100755
+index a3de2e19b6..55560ce3cd 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -243,10 +243,10 @@ test_expect_success 'fast-forward fails with conflicting work tree' '
+@@ -5,7 +5,7 @@ test_description='pulling into void'
+ . ./test-lib.sh
  
- test_expect_success '--rebase' '
- 	git branch to-rebase &&
--	echo modified again > file &&
-+	echo modified again >file &&
- 	git commit -m file file &&
- 	git checkout to-rebase &&
--	echo new > file2 &&
-+	echo new >file2 &&
- 	git add file2 &&
- 	git commit -m "new file" &&
- 	git tag before-rebase &&
-@@ -542,10 +542,10 @@ test_expect_success '--rebase with rebased upstream' '
- 	git checkout copy &&
- 	git tag copy-orig &&
- 	git reset --hard HEAD^ &&
--	echo conflicting modification > file &&
-+	echo conflicting modification >file &&
- 	git commit -m conflict file &&
- 	git checkout to-rebase &&
--	echo file > file2 &&
-+	echo file >file2 &&
- 	git commit -m to-rebase file2 &&
- 	git tag to-rebase-orig &&
- 	git pull --rebase me copy &&
-@@ -591,7 +591,7 @@ test_expect_success 'pull --rebase dies early with dirty working directory' '
- 	test_config branch.to-rebase.remote me &&
- 	test_config branch.to-rebase.merge refs/heads/copy &&
- 	test_config branch.to-rebase.rebase true &&
--	echo dirty >> file &&
-+	echo dirty >>file &&
- 	git add file &&
- 	test_must_fail git pull &&
- 	test "$COPY" = "$(git rev-parse --verify me/copy)" &&
+ modify () {
+-	sed -e "$1" <"$2" >"$2.x" &&
++	sed -e "$1" "$2" >"$2.x" &&
+ 	mv "$2.x" "$2"
+ }
+ 
 -- 
 2.23.0.897.g0a19638b1e
 
