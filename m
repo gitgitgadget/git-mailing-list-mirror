@@ -2,108 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A35F71F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 01:23:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 869F61F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 01:30:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409324AbfJRBXH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 21:23:07 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59111 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391934AbfJRBXH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 21:23:07 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4A52A94552;
-        Thu, 17 Oct 2019 21:23:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ql9ZjzC1WIvguAcr6nM1HOlVRkw=; b=rIY5tH
-        1XfuAZ1Cr4vsSjhs0+rHqyuRKnD0IWHlesfxc2rmQ5nBnGRwtoB3sQvEZ1XH25zY
-        vC2vglofDwOu9tatSSYnwQVCb6wII0QZ3syR9Kp/NJAC1vibZ3yZSTeiiqwIRtoz
-        qk1SN8YFRm4BY2ySR/pUX1dnlV7Ileur8DFNw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BAvZf+nSVaYwdwx9tyL8OLY4c1W3Z/Jo
-        v9UKoaHCVHKCcO9/Z1Xg2zsF2xLUXjNYwmE6eGZjoblIRnYUlMEcKfgDSXIzT/JT
-        2LogZpbdnxrjjFnEOQW0HBpa5d1Juyntrh6N5E7HFv7UOa2qsyKmx93vbEGRjH8w
-        rpTCZg8ReiY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4227D94551;
-        Thu, 17 Oct 2019 21:23:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 631A79454F;
-        Thu, 17 Oct 2019 21:23:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 2/2] git_path(): handle `.lock` files correctly
-References: <pull.401.git.1571209637.gitgitgadget@gmail.com>
-        <pull.401.v2.git.1571350077.gitgitgadget@gmail.com>
-        <93dba5a3a38d75ba79329383a1d50419a1990c8d.1571350077.git.gitgitgadget@gmail.com>
-Date:   Fri, 18 Oct 2019 10:23:00 +0900
-In-Reply-To: <93dba5a3a38d75ba79329383a1d50419a1990c8d.1571350077.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Thu, 17 Oct 2019
-        22:07:57 +0000")
-Message-ID: <xmqq1rva7sp7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2438932AbfJRBad (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 21:30:33 -0400
+Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:35093 "EHLO
+        wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2409455AbfJRBad (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 17 Oct 2019 21:30:33 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id 5E6052FA;
+        Thu, 17 Oct 2019 21:30:31 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Thu, 17 Oct 2019 21:30:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+        date:from:to:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm2; bh=pq7JnPVH1qpjTz0L7yOcPLAoIVZ
+        Xm4EsT9Idpgnd1I4=; b=rXeFk8m6yRHaRUuZ7dH4yi8NKBxBdyuwUXLPzaKrlIF
+        BYMuqS1ydTbYquvOZPff7j5NSpwqd/iKC7SuFsA7I7RlVXUCSgZoSeqP8AnTvOAM
+        yC31tI/gPgHnSXNFe3uymosBYlV/8gU6lI2tJaLZy63FmgrR2af+FnMfYp2SuoJO
+        WF30Y00Uqvyfpq5W7gdWjUlc9ZOcs/a4v0x128TQZHG5eY5tC/Vh0UsIc1IDkMhE
+        3f42Q0ejexzHGdNurWSo/zsIlsvcTlpBec6AnAfsRJohVChbKGiPbZHDVfrlQZa2
+        wZLLTG4AUZQONOhz/GagxUVp5a+xo4WjrXAUAGgb8Fg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=pq7JnP
+        VH1qpjTz0L7yOcPLAoIVZXm4EsT9Idpgnd1I4=; b=tmq8jDKuKozJEIjsoPgsxW
+        LKKy6Vs/EA+EokNQwlI4uG6UFQGg/V+ZG70GfBTKG/6itCyXoi2n4W2U9ompFd/V
+        TI7/ZOell+jp9bomTGgazNNJ2HZbanPx/k+xTCckeo/H35t2RBWdnlY7RqkeTLen
+        wvWFepzwmLnrO9zH9NZZDqWF+2QSPTA523EOku3C8RqXpr0Ucr52HaQyd/SXw0mT
+        1FXqd+DOxZiBKgHUxPwDMybZIKDqGIauiZszERfgC2/pvvUCc0s5g79d5yFF5RQj
+        zVxfjyPmjs73gJYolGIsiTUuu/155JfgJhjVzy5g4TepQ5dSecmNZRo4aemixMEA
+        ==
+X-ME-Sender: <xms:thWpXUV7Tgir_8Q3LCPydsDL_-0BqqLQz1S9OeCw0YqSOXt6-ToXMA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjeekgdegfecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvuffkfhggtggujggfsehttdertddtredvnecuhfhrohhmpefirhgvghcu
+    mffjuceoghhrvghgsehkrhhorghhrdgtohhmqeenucfkphepuddtgedrudefvddrtddrud
+    dtleenucfrrghrrghmpehmrghilhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhmnecu
+    vehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:thWpXSMtW2FEOhuejp4R1JVWN-qMtTcGHJeSi8uPB6JYMXcbLY_QhA>
+    <xmx:thWpXYahdQaCOdVo3BgPMQNVOVQRUymotLl_Xb-2kGs3y_ANYPG_xg>
+    <xmx:thWpXWoyOr9GjzqUkLmaZ3kU4fp6m8YX1AsdsgkVBxBNnvQP3gCvkw>
+    <xmx:txWpXcYbXojnSSNJ1-senbnByNSglnvEcq0lXsA3mMDFt6uW-Y9h8Q>
+Received: from localhost (unknown [104.132.0.109])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 37504D6005D;
+        Thu, 17 Oct 2019 21:30:30 -0400 (EDT)
+Date:   Thu, 17 Oct 2019 18:30:29 -0700
+From:   Greg KH <greg@kroah.com>
+To:     Santiago Torres Arias <santiago@nyu.edu>, Willy Tarreau <w@1wt.eu>,
+        Vegard Nossum <vegard.nossum@oracle.com>,
+        workflows@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, Eric Wong <e@80x24.org>
+Subject: Re: email as a bona fide git transport
+Message-ID: <20191018013029.GA1167832@kroah.com>
+References: <b9fb52b8-8168-6bf0-9a72-1e6c44a281a5@oracle.com>
+ <20191016111009.GE13154@1wt.eu>
+ <20191016144517.giwip4yuaxtcd64g@LykOS.localdomain>
+ <20191017204343.GA1132188@kroah.com>
+ <20191017204532.GA6446@chatter.i7.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D40D7400-F145-11E9-8A72-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191017204532.GA6446@chatter.i7.local>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Thu, Oct 17, 2019 at 04:45:32PM -0400, Konstantin Ryabitsev wrote:
+> On Thu, Oct 17, 2019 at 01:43:43PM -0700, Greg KH wrote:
+> > > I wonder if it'd be also possible to then embed gpg signatures over
+> > > send-mail payloads so as they can be transparently transferred to the
+> > > commit.
+> > 
+> > That's a crazy idea.  It would be nice if we could do that, I like it :)
+> 
+> It could only possibly work if nobody ever adds their own "Signed-Off-By" or
+> any other bylines. I expect this is a deal-breaker for most maintainers.
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Ever since worktrees were introduced, the `git_path()` function _really_
-> needed to be called e.g. to get at the path to `logs/HEAD` (`HEAD` is
-> specific to the worktree). However, the wrong path is returned for
-> `logs/HEAD.lock`.
->
-> This does not matter as long as the Git executable is doing the asking,
-> as the path for that `index.lock` file is constructed from
-> `git_path("index")` by appending the `.lock` suffix.
+Yeah it is :(
 
-Is this still git_path("index") or is it now HEAD?
+But, if we could just have the signature on the code change, not the
+changelog text, that would help with that issue.
 
-> Side note: Git GUI _does_ ask for `index.lock`, but that is already
-> resolved correctly.
+thanks,
 
-Is that s/but/and/?
-
-> diff --git a/path.c b/path.c
-> index e3da1f3c4e..ff85692b45 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -268,7 +268,7 @@ static int trie_find(struct trie *root, const char *key, match_fn fn,
->  	int result;
->  	struct trie *child;
->  
-> -	if (!*key) {
-> +	if (!*key || !strcmp(key, ".lock")) {
-
-We only do strcmp for the tail part at the end of the path, so this
-should probably OK from performance point of view but semantically
-it is not very satisfying to see a special case for a single .suffix
-this deep in the callchain.  I wonder if it is nicer to have the
-higher level callers notice ".lock" or whatever other suffixes they
-care about and ask the lower layer for a key with the suffix
-stripped?
-
-Will queue.
-
-Thanks.
+rgeg k-h
