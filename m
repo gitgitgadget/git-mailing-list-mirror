@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1185F1F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 22:10:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 642B51F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 22:10:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390779AbfJRWKw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 18:10:52 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:39129 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390733AbfJRWKv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 18:10:51 -0400
-Received: by mail-pg1-f193.google.com with SMTP id p12so4082349pgn.6
-        for <git@vger.kernel.org>; Fri, 18 Oct 2019 15:10:50 -0700 (PDT)
+        id S2390924AbfJRWK6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 18:10:58 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:46379 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390879AbfJRWK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 18:10:57 -0400
+Received: by mail-pg1-f194.google.com with SMTP id e15so4060336pgu.13
+        for <git@vger.kernel.org>; Fri, 18 Oct 2019 15:10:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=thwPGOD7mKEo0w/iIlnc1rVQeffLBQTg9Iga9wO9L14=;
-        b=Xjnr4h8yqo7+aC0N8LTooE2O7oFlt5RjuGoMxW0wajX2pbgIyKaFOvvLnAoMTeXtDy
-         tIO1bSPs3PjP79KZ/JX3/CKrUADxWUeQa4lXenKvxfRS4CqW8M+NXO8cN9TgbOVCdosP
-         39gKdIenP2II5+oWOy8GFqWnXL9ZGOUzmumEOLSos4i2bbEWzTsO5U8ipfvlVIsZIRGX
-         vjR156bXzr4eMyLd7JNztc4r/x92og66dBBmp5nNVl5YuZ0onYVPjyEY3oxeRjleVOvf
-         9wBWNc/b6wSNkFm+m+rL6H2Rpb4uu3YQzZw9lV4IplP4vjj03Kg2hQ2hj5s2fxKVd+I5
-         MQgA==
+        bh=erkiYgyZVZjHdJVDwgrPyczAgjqKYZih12Jmuwj7u5M=;
+        b=m7moutVCwVhy2qefMQdy+uiM4mq/HYT25ridoIBTYweE1C9iZ436zPHVwddhtQoCQx
+         th6xXtQ/6fc5cM/bNk9Gg9pu63Z4Sxf/oFh3wUNS8Yg5adjSGGfI4oRwAgW1bXbP5K6U
+         qJIPHGT3ghAaoEbb6iSZeo+eUCvgyz3GzrJMFaq/H5pMWiNFbob4lF30rY+K25aRzKx2
+         4WczgXDFrb3ZVd4JHD0kyS5wThhKVNw2aVZXz+krbEZzXsZ6ESq2YBfhAOZ76RymGAxt
+         RMwfdXMmsKOGMlKzxkE9CW26U2aITMewd0eGzPrtJvqdY1Svbo8QyedQ43AQxMecUFqY
+         IUaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=thwPGOD7mKEo0w/iIlnc1rVQeffLBQTg9Iga9wO9L14=;
-        b=VEiq1DHKfEFw9ytOOXsdoxv5R2+wJv0Ri+FtB3BA2/aBlPGG4kb4PSZ8pEtHfGI6UH
-         bInHbWcWGcDJm9HjqP3NcweLr/gAaZyGzsU2BcwDcTfUPG1x42x5B7T+LWrKObWlpMly
-         MBBEVBU3dxZZZvSumH14ePRUc5KWKoTBekaOYNAbiS7jzwPQbmiTarRrj3djKl5Bo6iB
-         GxjFC1W/Lhyg98+T4G0SwgAElwuDmuHsrD6B2Hic9rEXvv7QPDBAu64tg3mpq8wDXHGK
-         rKTKClxd+K2PyxYByoSAQdVG1e9UY2hK+c927M3N7C77SsyrPIZovpWI8RvwxyiixfbA
-         VpZg==
-X-Gm-Message-State: APjAAAVtY5b37Vxnjq3U75QBiE1frnyfq4EM+a8NvMivJjcO7k6zb4AK
-        xDn/JL9z4PQLBpMgIOyzvdQ/jmPA
-X-Google-Smtp-Source: APXvYqwlyoJBFlV3y3gwK2BsiLRZl0+HSQkdoMZfkn4JbyjeWd4imUdxL0sAcpD3gCkO5tW8ToqOjg==
-X-Received: by 2002:a63:1242:: with SMTP id 2mr12258893pgs.288.1571436650212;
-        Fri, 18 Oct 2019 15:10:50 -0700 (PDT)
+        bh=erkiYgyZVZjHdJVDwgrPyczAgjqKYZih12Jmuwj7u5M=;
+        b=nY/0fhhvcvG6iOFLlNNFzblgT/LUzdsk54LtzhAwYxnM0kIBVM5idwH3M1RnIWaGBa
+         4H38v20dW0eGPjJFfrDvrZY1KelzwaXUHevlBbBS2h2o2ubuH2IzV3bvPrgPfpKS0w3H
+         o6NLqSWsYNU6pk3okksKTL2kkhJy7+z5uqst00/Zs+jdyON+p9dJsoRNCqtnGr+/fCMd
+         3OL5b2aEp/Js6qgnHzOOtlWDTQH00vkD+hJg1GDDv93mbSmv/WdSavadU8BS9bj7eoe1
+         EtmiPC/pH3WBkpd5OFLNGoBTnP2s5gkGs1IR6mcHBcYaEmypVFRkFyRapBX0kIXZOyVv
+         E2qw==
+X-Gm-Message-State: APjAAAX5zixtZR37Xa1/0mCZ2nSvj9yQI0QAwGXTOSW93uZStEzZFbfS
+        hJyLReElF2BXUPtDLRNolgllKwCA
+X-Google-Smtp-Source: APXvYqxx7qt1Tf1d8MVJcNCWjuEBqwSyeFp0oXyTSdBnGFhALoY5XfYIyBn+Ci3TlYJCnOHyY0RmQw==
+X-Received: by 2002:aa7:838f:: with SMTP id u15mr8873497pfm.13.1571436655435;
+        Fri, 18 Oct 2019 15:10:55 -0700 (PDT)
 Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id s73sm6815612pjb.15.2019.10.18.15.10.49
+        by smtp.gmail.com with ESMTPSA id b5sm8134514pfp.38.2019.10.18.15.10.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2019 15:10:49 -0700 (PDT)
-Date:   Fri, 18 Oct 2019 15:10:47 -0700
+        Fri, 18 Oct 2019 15:10:54 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 15:10:52 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 12/15] t5520: don't put git in upstream of pipe
-Message-ID: <0cfabb201c5a79f665e79252edcfc28aa3df59ff.1571435195.git.liu.denton@gmail.com>
+Subject: [PATCH v2 14/15] t5520: remove redundant lines in test cases
+Message-ID: <5aac40a029a95f0a72415f80b546310a3940f053.1571435195.git.liu.denton@gmail.com>
 References: <cover.1571354136.git.liu.denton@gmail.com>
  <cover.1571435195.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -68,30 +68,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before, if the invocation of git failed, it would be masked by the pipe
-since only the return code of the last element of a pipe is used.
-Rewrite the test to put the Git command on its own line so its return
-code is not masked.
+In the previous patches, the mechanical application of changes left some
+duplicate statements in the test case which were not strictly incorrect
+but were redundant and possibly misleading. Remove these duplicate
+statements so that it is clear that the intent behind the tests are that
+the content of the file stays the same throughout the whole test case.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5520-pull.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t5520-pull.sh | 8 --------
+ 1 file changed, 8 deletions(-)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 8b7e7ae55d..8ddf89e550 100755
+index c9e4eec004..ef3dbc201a 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -668,7 +668,8 @@ test_expect_success 'pull --rebase fails on corrupt HEAD' '
- 	(
- 		cd corrupt &&
- 		test_commit one &&
--		obj=$(git rev-parse --verify HEAD | sed "s#^..#&/#") &&
-+		git rev-parse --verify HEAD >head &&
-+		obj=$(sed "s#^..#&/#" head) &&
- 		rm -f .git/objects/$obj &&
- 		test_must_fail git pull --rebase
- 	)
+@@ -147,7 +147,6 @@ test_expect_success 'fail if wildcard spec does not match any refs' '
+ 	test_cmp expect file &&
+ 	test_must_fail git pull . "refs/nonexisting1/*:refs/nonexisting2/*" 2>err &&
+ 	test_i18ngrep "no candidates for merging" err &&
+-	echo file >expect &&
+ 	test_cmp expect file
+ '
+ 
+@@ -161,7 +160,6 @@ test_expect_success 'fail if no branches specified with non-default remote' '
+ 	test_config branch.test.remote origin &&
+ 	test_must_fail git pull test_remote 2>err &&
+ 	test_i18ngrep "specify a branch on the command line" err &&
+-	echo file >expect &&
+ 	test_cmp expect file
+ '
+ 
+@@ -174,7 +172,6 @@ test_expect_success 'fail if not on a branch' '
+ 	test_cmp expect file &&
+ 	test_must_fail git pull 2>err &&
+ 	test_i18ngrep "not currently on a branch" err &&
+-	echo file >expect &&
+ 	test_cmp expect file
+ '
+ 
+@@ -188,7 +185,6 @@ test_expect_success 'fail if no configuration for current branch' '
+ 	test_cmp expect file &&
+ 	test_must_fail git pull 2>err &&
+ 	test_i18ngrep "no tracking information" err &&
+-	echo file >expect &&
+ 	test_cmp expect file
+ '
+ 
+@@ -202,7 +198,6 @@ test_expect_success 'pull --all: fail if no configuration for current branch' '
+ 	test_cmp expect file &&
+ 	test_must_fail git pull --all 2>err &&
+ 	test_i18ngrep "There is no tracking information" err &&
+-	echo file >expect &&
+ 	test_cmp expect file
+ '
+ 
+@@ -215,7 +210,6 @@ test_expect_success 'fail if upstream branch does not exist' '
+ 	test_cmp expect file &&
+ 	test_must_fail git pull 2>err &&
+ 	test_i18ngrep "no such ref was fetched" err &&
+-	echo file >expect &&
+ 	test_cmp expect file
+ '
+ 
+@@ -685,10 +679,8 @@ test_expect_success 'pull --rebase fails on unborn branch with staged changes' '
+ 		git ls-files >actual &&
+ 		test_cmp expect actual &&
+ 		test_must_fail git pull --rebase .. master 2>err &&
+-		echo staged-file >expect &&
+ 		git ls-files >actual &&
+ 		test_cmp expect actual &&
+-		echo staged-file >expect &&
+ 		git show :staged-file >actual &&
+ 		test_cmp expect actual &&
+ 		test_i18ngrep "unborn branch with changes added to the index" err
 -- 
 2.23.0.897.g0a19638b1e
 
