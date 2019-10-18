@@ -2,75 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 324931F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 01:03:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DDDD1F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 01:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441920AbfJRBDZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Oct 2019 21:03:25 -0400
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:40604 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2438932AbfJRBDZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Oct 2019 21:03:25 -0400
-Received: by mail-ed1-f48.google.com with SMTP id v38so3250763edm.7
-        for <git@vger.kernel.org>; Thu, 17 Oct 2019 18:03:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=ZE5BBoYQO0HQMSOpUcPPjK95wvlFyE43kZjtoOnmEZ8=;
-        b=WVmdzQe1iJv5SWtRsgBZxIstePSHfeVxNuqy7rcWYGVvQb3qnJmFmTBhb25cbaSoVq
-         JwFYSFCwm//CNSOytzjrQgXFJ1aM25alnQH4BdAJOQRigJQLAXp/OKV1/2UdFWtGWaME
-         kd4qAqyesheVZU9heyKcOJzUpfv1wnoskih8rEQmx+a1qcKGkTE5XhOYRDB81c+65yZs
-         FkQk7kQKfdpfHx1sj0Hh6gVCXc83OhTuhhD4UmKgprygc89ruj9SvwlX7Lyb7plfKHB6
-         QmcskmPgN9DEHXTQHDr0VPp/g85WVlQvpQO7KJIx9ZwNkiuWIqH9bSqx/cEaRsplJEbe
-         /5ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=ZE5BBoYQO0HQMSOpUcPPjK95wvlFyE43kZjtoOnmEZ8=;
-        b=nVRaClODsNGjRcFNLRUZ8U7d6pOC6HF5X1XOHXQH53+JS19rYcF5L4lULBIXAsW6bV
-         gBONAI/K2qMHuMmkyRIp+VWH28dkO6ZeGzVrgsNcxor/m+f81u8OtI8BMiM+hWiMsvKB
-         O9Y6goD6VeyOrQBV4pRngcXHrs4efvvi1aZwoTEMGV8jARFy06WQmE0wuELeGsiI9l3S
-         vSLAa9HbudHcrgrAGQ4eM6YgdS2cpJNomorrUHXA2Xw5hmxsonMEqyqqKDZEe/XQmlbV
-         syox+Bz7BGjZM07TtNBmLc7ie017nVEHI+3OYpVV5tbxBxZ8Z18OSCiMoN2q9d0jWATq
-         m5bA==
-X-Gm-Message-State: APjAAAWWdif1z4NP303cQVczyHh18XqgKUUbtbuuyu23OKJm+wvOoMJb
-        vQYVgVXW6/lHVUlnB+8rgQ64Gmvj+bECBFYBP4FhUHTME4A=
-X-Google-Smtp-Source: APXvYqzJZyQVrRv6+4h27AzeP4gaX0+NmV59wVqeAJj6R51tkgXjsBECwfl2Zh0CMOGuBxC7QQc3nFMGwPl1eTO7x84=
-X-Received: by 2002:a17:906:7c57:: with SMTP id g23mr6384651ejp.116.1571360603159;
- Thu, 17 Oct 2019 18:03:23 -0700 (PDT)
+        id S2409288AbfJRBSR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Oct 2019 21:18:17 -0400
+Received: from mail4.protonmail.ch ([185.70.40.27]:24333 "EHLO
+        mail4.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391934AbfJRBSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Oct 2019 21:18:17 -0400
+Date:   Fri, 18 Oct 2019 01:18:04 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=default; t=1571361494;
+        bh=XL9cYADVOcQJFyHrv89xNShvr4NnKt7Np+FEXxUpnjk=;
+        h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
+         From;
+        b=URN1lc6pPYIFEfYzvV4wcNB7hQZJ09H4YjWYgJBZXwky85EY5zeET4+Ejbvj13xBC
+         nSaFJBdPdModrr3zTPl18tP8E1O6acoDKNw/OvaOly6Vc8jWphsEr8T39xOeOf9X44
+         aXTkTXdkH5G6AL2nPWTZwmHmn/HziaKJTWRm+gRI=
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org
+From:   Ralph Ewig <ralph.phd@protonmail.com>
+Reply-To: Ralph Ewig <ralph.phd@protonmail.com>
+Subject: Re: git smart http + apache mod_auth_openidc
+Message-ID: <20b6729f-a05e-b658-2cd4-70cb7a9d17b7@protonmail.com>
+In-Reply-To: <20191017225529.sg37cxvyssbaitfw@camp.crustytoothpaste.net>
+References: <4eb22ffc-77a1-4cd7-2277-bdc57d31186b@protonmail.com>
+ <20191016233319.3rhmekasi5csytyl@camp.crustytoothpaste.net>
+ <1320f616-ddcc-0eed-22f2-e28eb0abf039@protonmail.com>
+ <20191017060322.GA10373@sigill.intra.peff.net>
+ <5a2cc6f5-a8d0-356b-ff4e-a716aa5675b1@protonmail.com>
+ <20191017225529.sg37cxvyssbaitfw@camp.crustytoothpaste.net>
+Feedback-ID: JbhSByWnCQwiafGbFv64IeMW95YrXE9PqRMglI51uN_uNsIp7h5EnYZeviw8UgH0DtxilqFslLTcJ61CqL2H5Q==:Ext:ProtonMail
 MIME-Version: 1.0
-From:   Heba Waly <heba.waly@gmail.com>
-Date:   Fri, 18 Oct 2019 14:03:12 +1300
-Message-ID: <CACg5j25riLDN2H8U_ZLE2xJLYwK7LDYXs0X3nirejpn8P6i31w@mail.gmail.com>
-Subject: [Outreachy] Intro
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello everyone,
+Understood (and agree).
 
-My name is Heba and I=E2=80=99m one of the Outreachy applicants. I=E2=80=99=
-ve selected
-the =E2=80=98moving the doc to comments=E2=80=99 microproject, and I=E2=80=
-=99ll be submitting
-several patches addressing this area during the next week or two. The
-first one is already out there waiting for feedback (yey)
-https://public-inbox.org/git/pull.405.git.1571357219.gitgitgadget@gmail.com=
-.
+We do use git for source code (where we use SSH=20
+and key authentication for CI/CD), but also for=20
+configuration control of other files like=20
+financial reports, engineering drawings, etc.=20
+where access is via HTTPS.=C2=A0 In that 2nd group the=20
+challenge is to make it as "not coding like" as=20
+possible so the non-developer crowd isn't scared off.
 
-I=E2=80=99m looking forward to working with you all.
+Since we use trac for project management company=20
+wide (all verticals), my latest idea is to=20
+intercept the git http request on the server side=20
+to authenticate against the trac session info=20
+stored in the db (using a custom php script),=C2=A0 and=20
+then pass it on to git-http-backend or throw an=20
+error prompting the user to sign into trac first.=20
+Most users are signed into trac 24/7 anyway since=20
+its central to our workflow.
 
-Heba Waly
+in the end paying the extra fee for MS Domain=20
+Services to get SSO via LDAP or Kerberos might be=20
+the right answer though - just trying to be=20
+scrappy if I can since it's an early stage=20
+startup. Nonetheless really appreciate the=20
+exchange of ideas!
+
+Ralph
+
+
+On 10/17/2019 3:55 PM, brian m. carlson wrote:
+> On 2019-10-17 at 14:33:38, Ralph Ewig wrote:
+>> Quick follow up question: can the git client pass
+>> a token read from a cookie with a request? That
+>> would enable users to sign-in via a browser, store
+>> the cookie, and then use that as the access token
+>> to authenticate a git request.
+> Git has an option, http.cookieFile, that can read a cookie from a file,
+> yes.  That does, of course, require that you're able to put the cookie
+> in a file from a web browser.  I'm not aware of any web browsers that
+> easily provide an option to dump cookies into a file.
+>
+> Also, just as a note, this approach definitely won't work for automated
+> systems you have, such as CI systems.  That's why I suggested Kerberos:
+> because you can have services that have principals and you can use those
+> credentials in your CI systems to access code and run jobs.
+>
+> Clearly you know your infrastructure and users better than I do, but I
+> don't recommend having a web-based sign-on as your only form of
+> authentication for a Git server.  It's going to cause a lot of pain and
+> inconvenience on all sides.
+
