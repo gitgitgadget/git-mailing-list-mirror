@@ -2,74 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 119C11F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 20:59:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5491C1F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 21:01:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405871AbfJRU7n (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 16:59:43 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:4692 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732529AbfJRU7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 16:59:43 -0400
-Received: from localhost.localdomain ([92.30.121.54])
-        by smtp.talktalk.net with SMTP
-        id LZLZijkPcnuQZLZLZirrs6; Fri, 18 Oct 2019 21:59:42 +0100
-X-Originating-IP: [92.30.121.54]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=echDgIMH c=1 sm=1 tr=0 a=/cLN2YrzNMz5fcHgWq8JfQ==:117
- a=/cLN2YrzNMz5fcHgWq8JfQ==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=MKtGQD3n3ToA:10 a=1oJP67jkp3AA:10 a=ldyaYNNxDcoA:10 a=ZZnuYtJkoWoA:10
- a=Y_rLTfa585dEHHUE3isA:9 a=pHzHmUro8NiASowvMSCR:22 a=Ew2E2A-JSTLzCXPT_086:22
-From:   Philip Oakley <philipoakley@iee.email>
-To:     GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Cc:     Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH v2] config/branch: state that <name>.merge is the remote ref
-Date:   Fri, 18 Oct 2019 21:59:35 +0100
-Message-Id: <20191018205935.2529-1-philipoakley@iee.email>
-X-Mailer: git-send-email 2.23.0.windows.1.21.g947f504ebe8.dirty
-In-Reply-To: <c96f4dbd-ebc6-b743-716e-e1e17333c06b@iee.email>
-References: <c96f4dbd-ebc6-b743-716e-e1e17333c06b@iee.email>
+        id S2506037AbfJRVB5 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 18 Oct 2019 17:01:57 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51745 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728410AbfJRVB5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 17:01:57 -0400
+Received: by mail-wm1-f68.google.com with SMTP id q70so295001wme.1
+        for <git@vger.kernel.org>; Fri, 18 Oct 2019 14:01:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=yzBfWVuv72l4gE4tKAidWIznwJ89s4/v5S0LNwZUOfI=;
+        b=CCByk8m825touIod+vrpPDDII84ZY0U/MjwMOtjxy6Xbb80LMmxlK5oJIBxWXv29MV
+         0jvPKi0nIoeAzOCoSV2HfKHNLaC9+ps7cniBRzbPal8mO9DNKhlvfOoeufbZyyaB0E9/
+         vpbZg1qVfwC5Mb/htVMtG/MszRC1vx58F+c1a+hvJmoxWhnCA6o8GbLRtWYiVKqNTznl
+         5/swbuzmtpF5KB9cM9IVUOuYKu0wtkaYzEu5MfV3z79qFG0jtC+vXpn0Mr4kDXmXthp2
+         mv8SyIuxiRZwrDsjhTi1oTdbbf52kvwUMO+p25aajdl33XG4PtORW4ZprMhi+yK4koqe
+         TtCw==
+X-Gm-Message-State: APjAAAVSBrrIDt6Vy8TUMDiLrZgsrm5YhU4cMvj4s95geLD2KZA1rQqf
+        F3cUvNkQKVtpq9ihUxoZnunU+HjzCQ+U2UkeqFY=
+X-Google-Smtp-Source: APXvYqyn6Nm/pOsajnCEYQqwPoGRaO934bv1EtjxBxPZLg5V8yObfNSkStG9/TS6aRj8qEvh1iwY2T8y79YgEZkikU4=
+X-Received: by 2002:a7b:ca4d:: with SMTP id m13mr9373483wml.95.1571432514679;
+ Fri, 18 Oct 2019 14:01:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfItmO0SYBQu/L0HOmPyiFrWNMWaV+csGpAw/wMA/6n896l43L71qfvtMbTUr9wHxs+BcCZuTsQvHkkOWK8l54lUMcl/rA2uuHDO34Mg9+aHLZ7dRpynS
- QATwqLV86tGg2jp0u6ByKvr9Gu5nzFsuznUm43lMb84ABMEPQRRQKKHQGqQaWTDcgd8QtKAY595uoynI5y0zezRl96k61a689IfSqXMZN3I8uivwiDKsIWAs
- kRqxY2dZRv+0ejAczClGaA==
+References: <20191017173501.3198-1-szeder.dev@gmail.com> <20191017173501.3198-4-szeder.dev@gmail.com>
+ <CAPig+cTLCTPtUWHKVBQEaP9GkrmrnHPwfef8KnktOSqYQY-jPA@mail.gmail.com> <20191018143728.GC29845@szeder.dev>
+In-Reply-To: <20191018143728.GC29845@szeder.dev>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 18 Oct 2019 17:01:42 -0400
+Message-ID: <CAPig+cRSGfaRggDhauSvJyrO1Zu7ZFSG+gfF134z8UV1ovSuEw@mail.gmail.com>
+Subject: Re: [PATCH 3/6] completion: return the index of found word from __git_find_on_cmdline()
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The branch.<name>.merge value typically looks just like a
-local ref. Tell the reader it is the ref name at the remote,
-which may be different.
+On Fri, Oct 18, 2019 at 10:37 AM SZEDER Gábor <szeder.dev@gmail.com> wrote:
+> On Thu, Oct 17, 2019 at 01:52:27PM -0400, Eric Sunshine wrote:
+> > > +               case "$1" in
+> > > +               --show-idx)     show_idx=y ;;
+> > > +               *)              return 1 ;;
+> >
+> > Should this emit an error message to aid a person debugging a test
+> > which fails on a call to __git_find_on_cmdline()? [...]
+>
+> And printing anything to standard error during completion is
+> inherently bad: it disrupts the command line, can't be deleted [...]
+> Remaining silent about the unrecognized option
+> is in my opinion better, because then the completion script usually
+> does nothing, and Bash falls back to filename completion.  Yeah,
+> that's not ideal, but at least the user can easily correct it and
+> finish entering the command.
 
-Signed-off-by: Philip Oakley <philipoakley@iee.email>
----
- Documentation/config/branch.txt | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+I had tunnel-vision and was thinking about this only in the context of
+the tests. However, while I agree that spewing errors during
+completion is not ideal, aren't there two different classes of errors
+to consider? Some errors can crop up via normal usage of Git commands
+in Real World situations; those errors should be suppressed since they
+are expected and can be tolerated. However, the second class of error
+(such as passing a bogus option to this internal function) is an
+outright programming mistake by a maintainer of the completion script
+itself, and it would be helpful to let the programmer know as early as
+possible about the mistake.
 
-diff --git a/Documentation/config/branch.txt b/Documentation/config/branch.txt
-index a592d522a7..cdc19edaaf 100644
---- a/Documentation/config/branch.txt
-+++ b/Documentation/config/branch.txt
-@@ -52,8 +52,10 @@ branch.<name>.pushRemote::
- 	option to override it for a specific branch.
- 
- branch.<name>.merge::
--	Defines, together with branch.<name>.remote, the upstream branch
--	for the given branch. It tells 'git fetch'/'git pull'/'git rebase' which
-+	The name of the branch ref at the remote `branch.<name>.remote`
-+	that is used as the upstream branch for the given branch <name>.
-++
-+	It tells 'git fetch'/'git pull'/'git rebase' which
- 	branch to merge and can also affect 'git push' (see push.default).
- 	When in branch <name>, it tells 'git fetch' the default
- 	refspec to be marked for merging in FETCH_HEAD. The value is
--- 
-2.23.0.windows.1.21.g947f504ebe8.dirty
-
+Or, are there backward-compatibility or other concerns which would
+make emitting error messages undesirable even for outright programmer
+mistakes?
