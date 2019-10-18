@@ -2,83 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F8F51F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 14:47:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5B621F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 15:00:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408535AbfJROrU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 10:47:20 -0400
-Received: from mail-lj1-f174.google.com ([209.85.208.174]:33060 "EHLO
-        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405365AbfJROrU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 10:47:20 -0400
-Received: by mail-lj1-f174.google.com with SMTP id a22so6530371ljd.0
-        for <git@vger.kernel.org>; Fri, 18 Oct 2019 07:47:19 -0700 (PDT)
+        id S2408680AbfJRPAL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 11:00:11 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43634 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392463AbfJRPAL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 11:00:11 -0400
+Received: by mail-wr1-f68.google.com with SMTP id c2so1376424wrr.10
+        for <git@vger.kernel.org>; Fri, 18 Oct 2019 08:00:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=/oXXcNAyNIZYEwltgJihOu7z7D3kmOaNa27coe/Y25k=;
-        b=tagduvNmeld1IpC2lM1uU7W+rdJ00/q3AQyZUv35KZUV0k2+XTNDMHkoZ35+Q771H9
-         /ktiZB9e++NUj0DIz1++vST80yg0RDJMO9j53NujmJJRFzwXnKEgwNb4QI1RQq6Wz+i+
-         pZEYrAbLf+wmuTc6LiSO0GOkSqg3Co6iJdD/GfFIIURAWBNwLv7qWy2IGIrshsfXnIby
-         twALLlEIKVLbpS6CxailJ3J5wZN+GuPT3DLOqrfe4zUlNQ7wSfakrtOJlOVGpV4zUCxU
-         0tkDEj2bgdf+H2SX63suW5cixMYt7bxUOJLrxfD588Qg7m3Q1spUyqZZ+FrhoeWXY6/A
-         2vHA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=ZHOLlT6ElbvKX3xOpuAZCZxRpvpJW3gqedm7MwJ36/A=;
+        b=KXVJt5KMoSz97E6XQ+QpQtvR1v9qpfoQwGzKDWnait/9jcMSZfTNQGF25CJkNfnRp1
+         9VeiDY5S5o8+yE//26ce2SJuH+EoY33No1HrbXxiKVwXS55WNd/MSvYt5YhbNUe6xO9T
+         Nmd52/ZgWiEYTyFuDSQ36oWlnuIoEDS/m6+jHpLSU7TsxC/2SpIZuuoQlMMvIS250mUD
+         J2SKG60+qyyOzJo6dqLyab9/V5QgEB76Die1FHcXXjVnZn7INQbHcRdKP6mjUPjtUhs5
+         3eJKvGgjNgMMrq0PM9WCBvovdn/oRagCcAuep6Ne6k/7zwFT3n3COh0GNL70l+Mnr6YR
+         Rjkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=/oXXcNAyNIZYEwltgJihOu7z7D3kmOaNa27coe/Y25k=;
-        b=DJdxrxpOajVPs8wBzwrDpGuLO0b5hL7APD6HBkIfmPMP+cHSqhwomVbIwb44yfDUAq
-         R2VjNszOcnUbLxtEXNY80c45kepgaCjsye4BTdubCNrxb+0DQx0yCZidMJotAcVdSiAO
-         HeC/qsiu9/aHLUQgJfkAwa6173vilC8poBO4KpykbbtmnqSw2F3RCiwlOedI2FCXLOXL
-         FKEWEhR1Or1KwvDD6TOjHR91cVl75isNQ+CZsvx0a/MmtsyfytlNhrC7h0wu74W1i0MD
-         twCbeTfk7jYNnqeYlYM3YccdDq+yqxOBykYTMsyQ+bcPvgktqVgkveFbWUJGYaiC14RH
-         4GhA==
-X-Gm-Message-State: APjAAAUnW7yVgHrZrutXJixxBd7/Mo+EoUrXpmmezEV9R9V7gFf5Rz4V
-        rtaT8VqQ8MfZZ9jRVZFFn3toS+GolAfGmWCjZMYbF5wY
-X-Google-Smtp-Source: APXvYqzWIttCbdqwFUtoUDjCpx8vbA/mZ8JQsIMGINiTbk+T4GaZQYcRHcetvDPaJcZs++ZlTtEF9kM6k/YB4c3d5hM=
-X-Received: by 2002:a2e:8941:: with SMTP id b1mr6429999ljk.40.1571410037988;
- Fri, 18 Oct 2019 07:47:17 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ZHOLlT6ElbvKX3xOpuAZCZxRpvpJW3gqedm7MwJ36/A=;
+        b=e50on5KQT3Ra1DaQGvq95gaVsTuRLfes5B9OA/GksSENZ35AUwWfiBqG1KwCmqYgHH
+         iOoGgXx8pbX4jxTJXhHn4tHygH/H35toG4aBKlzHQwf6Bawp3zb1K/O/4xLZyKaqgKzj
+         txsZ09nIm1+ceNdZenNacgQVqEWCYYbs2ZToEELn0OuiODTSsl8Pc1GXTw1NpKf6hFlh
+         QNYz30/Liuh9yab2qOIWImsKwr05HJdMrX5CA19hJlT+OGyAMUA/s3eYBTZ/7rfZ3/bc
+         bNbkzmtkfnjGCpMlHiHlvNCpb6z6yYxiiTIksaKGfRmhRzlGFDkE2KTgOWkmI+4XDZsg
+         pWMg==
+X-Gm-Message-State: APjAAAXx/x5Kq0p/dZd6NtpyuWEyvL9JzSWzAoX+DQ2lAfK1NoUMC8Vp
+        kINcRBWrCkb4yVkw1WtmJuw=
+X-Google-Smtp-Source: APXvYqximH7T3jmR7LvtYpj9vujlVap0HwhPob7Y7xFjFVI4AwXEaBQGpznpUXqVGG+LnDGBRX4cKw==
+X-Received: by 2002:adf:8526:: with SMTP id 35mr8898661wrh.266.1571410809543;
+        Fri, 18 Oct 2019 08:00:09 -0700 (PDT)
+Received: from szeder.dev (x4dbd7267.dyn.telefonica.de. [77.189.114.103])
+        by smtp.gmail.com with ESMTPSA id o22sm7667760wra.96.2019.10.18.08.00.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Oct 2019 08:00:08 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 17:00:06 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 5/6] completion: list existing working trees for 'git
+ worktree' subcommands
+Message-ID: <20191018150006.GD29845@szeder.dev>
+References: <20191017173501.3198-1-szeder.dev@gmail.com>
+ <20191017173501.3198-6-szeder.dev@gmail.com>
+ <CAPig+cSGXqJuaZPhUhOVX5X=LMrjVfv8ye_6ncMUbyKox1i7QA@mail.gmail.com>
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Fri, 18 Oct 2019 09:47:06 -0500
-X-Google-Sender-Auth: 32cB9syGFkRXwCUPB6-0Z5LPsWg
-Message-ID: <CAHd499BWRQxBBNpiP1LaudKFZ8+cot=QW6W52tB6bNPxznyOPw@mail.gmail.com>
-Subject: merge.ff with and squash merge
-To:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cSGXqJuaZPhUhOVX5X=LMrjVfv8ye_6ncMUbyKox1i7QA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If I do this:
+On Thu, Oct 17, 2019 at 02:08:12PM -0400, Eric Sunshine wrote:
+> On Thu, Oct 17, 2019 at 1:35 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
+> > Complete the paths of existing working trees for 'git worktree's
+> > 'move', 'remove', 'lock', and 'unlock' subcommands.
+> > [...]
+> > Arguably 'git worktree unlock <TAB>' should only complete locked
+> > working trees, but 'git worktree list --porcelain' doesn't indicate
+> > which working trees are locked.  So for now it will complete the paths
+> > of all existing working trees, including non-locked ones as well.
+> 
+> It is a long-standing To-Do[1] for "git worktree list [--porcelain]"
+> to indicate whether a worktree is locked, prunable, etc. Looking at
+> the implementation of builtin/worktree.c:show_worktree_porcelain(), it
+> should be easy enough to add.
 
-$ git config merge.ff false
+I didn't look at the implementation, but only at the docs, which says:
 
-And then:
+  --porcelain
+      With list, output in an easy-to-parse format for scripts. This
+      format will remain stable across Git versions and regardless of
+      user configuration. See below for details.
 
-$ git merge --squash topic
+I'm not sure whether introducing a new boolean attribute (i.e. a line
+containing only "locked") would still be considered acceptable, or
+would count as changing the format.  I can imagine that a too strict
+parser would barf upon encountering the unrecognized "locked"
+attribute; but yeah, no sensible parser should be that strict IMO.
 
-I get:
+Furthermore, I'm not sure what to do with the reason for locking.  In
+general I would think that it makes sense to display the reason in an
+easy-to-parse format as well.  However, doing so will inherently make
+the format less easy to parse, because the reason could span multiple
+lines, so without some sort of encoding/escaping it would violate the
+"a line per attribute" format.
 
-> fatal: You cannot combine --squash with --no-ff.
+I would say that this is beyong the scope of this patch series :)
 
-I can work around this by executing:
+> > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> > @@ -2981,10 +2981,21 @@ _git_whatchanged ()
+> > +__git_complete_worktree_paths ()
+> > +{
+> > +       local IFS=$'\n'
+> > +       __gitcomp_nl "$(git worktree list --porcelain |
+> > +               sed -n -e '2,$ s/^worktree //p')"
+> > +}
+> 
+> I know that the commit message talks about it, but it might deserve an
+> in-code comment
 
-$ git merge --squash --ff topic
-
-Which essentially negates the `merge.ff` configuration. In this
-scenario, wouldn't it make sense for `--squash` to always imply
-`--ff`? I mean, I think the configuration is there to help me in the
-general case, but when I state I want a squash merge I'm pretty
-explicitly asking for a commit and not a fast forward.
-
-Thoughts?
+OK.
