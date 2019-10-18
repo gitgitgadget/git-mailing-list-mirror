@@ -2,134 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D2BE1F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 15:16:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C7CF1F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 15:21:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2442415AbfJRPQF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 11:16:05 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:62990 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727297AbfJRPQF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 11:16:05 -0400
-Received: from localhost.localdomain ([92.30.121.54])
-        by smtp.talktalk.net with SMTP
-        id LTyziQNMYWIpcLTyzidjVW; Fri, 18 Oct 2019 16:16:02 +0100
-X-Originating-IP: [92.30.121.54]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=W6NGqiek c=1 sm=1 tr=0 a=/cLN2YrzNMz5fcHgWq8JfQ==:117
- a=/cLN2YrzNMz5fcHgWq8JfQ==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=MKtGQD3n3ToA:10 a=1oJP67jkp3AA:10 a=ldyaYNNxDcoA:10 a=ZZnuYtJkoWoA:10
- a=xtxXYLxNAAAA:8 a=DW29gNylpxWPYbZ9eGUA:9 a=xts0dhWdiJbonKbuqhAr:22
- a=pHzHmUro8NiASowvMSCR:22 a=Ew2E2A-JSTLzCXPT_086:22
-From:   Philip Oakley <philipoakley@iee.email>
-To:     GitList <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v3] Doc: Bundle file usage
-Date:   Fri, 18 Oct 2019 16:15:55 +0100
-Message-Id: <20191018151555.2277-1-philipoakley@iee.email>
-X-Mailer: git-send-email 2.23.0.windows.1.21.g947f504ebe8.dirty
-In-Reply-To: <20191016210957.GA28981@sigill.intra.peff.net>
-References: <20191016210957.GA28981@sigill.intra.peff.net>
+        id S2633071AbfJRPV0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 11:21:26 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:46749 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389421AbfJRPV0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 11:21:26 -0400
+Received: by mail-wr1-f67.google.com with SMTP id o18so6667444wrv.13
+        for <git@vger.kernel.org>; Fri, 18 Oct 2019 08:21:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=eZHHUtagNmYDVOtBPLyrNxU2j/zOoKbMVKDghFLOzjk=;
+        b=A2oAsi6RBcs85DN+xgUrQnfCPzFPlyZdaQunwmD/3XbsoXN6y3HuFqmhPKXo14xfQM
+         Ut4FPntYz2O3sgV3k+vfazJHBRQJl2cRVdiJeRHOFOejiwszJTlI8osE0PhejGBcVp/w
+         DvHU2ZypUxsWtb4HGIcyKRB9oQaA/01kIqogsZxHnXYW01JHJmQ8tz73tZ/9Vt0uDvg9
+         KJwo136hmXy5DKMQjp/+2BPTlAQPUq4owF4xBiyJ0DvgmR4rtw2hhOu38/NWjjB1h+kj
+         +mX+RhWAksrJQpINr0Ve8xaCN3Db1YZ6El/zfqdc+4LBmveGtmopGdcyJYdLXhbjNOvf
+         oSnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=eZHHUtagNmYDVOtBPLyrNxU2j/zOoKbMVKDghFLOzjk=;
+        b=n0YqtxqNHcvCy2Iy74dahFX6x9JgpUsYd1EAeVhqpcxXH8N/nZo0QXc8YrRsd1kCb+
+         ISOiEo9SJQMMP4PnQaaJOXAfeSur0qd0poVhR5lNmsuITi2oQAai6fnMozpF0dBARWvI
+         YklITryYsbztuNqY8CjMsMH2E+zMuJ4Wa4WIWVX0V0rvaNLSb7x3MUr1bBaJf5AYndvX
+         UMeiE2O8iZrI/bq0pShToyEAy2e/T2lj6D1NZRUPZND0Ds9pkihA5LbtoQf/JWdGyfpx
+         zW4BZw4GACkcxne3FQeOZHBayVjH3sZSnYsdFvz72XB+8PSC6+EwpsI6QFbQt+pU7eds
+         Jeiw==
+X-Gm-Message-State: APjAAAVMkt+sVyAlqNVQlaBYTgPEPgkVwZJObUdjswgELVJb2xVZ1bFI
+        6xPYbnQl+sPzUwmcDPRo7BDp25gP
+X-Google-Smtp-Source: APXvYqxb84qEtFr7GGsuDP76wCKLAPlNYyOFLEUGsiNFcLrkkjwD2XvdbGMnSbcMblWRWaVjqmU6/A==
+X-Received: by 2002:adf:f010:: with SMTP id j16mr8502780wro.317.1571412083939;
+        Fri, 18 Oct 2019 08:21:23 -0700 (PDT)
+Received: from szeder.dev (x4dbd7267.dyn.telefonica.de. [77.189.114.103])
+        by smtp.gmail.com with ESMTPSA id q19sm7432195wra.89.2019.10.18.08.21.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Oct 2019 08:21:23 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 17:21:21 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     James Coglan via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        James Coglan <jcoglan@gmail.com>
+Subject: Re: [PATCH v3 07/13] graph: example of graph output that can be
+ simplified
+Message-ID: <20191018152121.GE29845@szeder.dev>
+References: <pull.383.v2.git.1571182864.gitgitgadget@gmail.com>
+ <pull.383.v3.git.1571183279.gitgitgadget@gmail.com>
+ <631ee3cecb68d9f776d4a8fb30c1bca70797ba14.1571183279.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfPTPwmerZEv7ej0qNbvV6dOVaEtTocEzm9uYBPjTT8J1T8OHA6gCAgY8c1WjxOiuKspMvXa64CeBPSyUFQgStUFVVfenH1wOdYHR5qRHuxeMv7Blz6EE
- OBmvjHqGdR75+58S+vp+ERxe4OYWTyMSCUebiXEDA6cXiA50LMhFSxRqek8C124yVvn5F/fmlHccTFsJC8Rk5DGM0cYZjlZIT3UiSYSGIa17C+ekvg/+9M20
- hJT8DKMG1D1MGKNsCtgJC3Z04S5DMXjfyWsEeD2GyA//sXTvwuHda5xZCrC7em5x
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <631ee3cecb68d9f776d4a8fb30c1bca70797ba14.1571183279.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philip Oakley <philipoakley@iee.org>
+On Tue, Oct 15, 2019 at 11:47:53PM +0000, James Coglan via GitGitGadget wrote:
+> diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+> new file mode 100755
+> index 0000000000..4582ba066a
+> --- /dev/null
+> +++ b/t/t4215-log-skewed-merges.sh
+> @@ -0,0 +1,43 @@
+> +#!/bin/sh
+> +
+> +test_description='git log --graph of skewed merges'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'log --graph with merge fusing with its left and right neighbors' '
+> +	cat >expect <<-\EOF &&
+> +	*   H
+> +	|\
+> +	| *   G
+> +	| |\
+> +	| | * F
+> +	| | |
+> +	| |  \
+> +	| *-. \   E
+> +	| |\ \ \
+> +	|/ / / /
+> +	| | | /
+> +	| | |/
+> +	| | * D
+> +	| * | C
+> +	| |/
+> +	* | B
+> +	|/
+> +	* A
+> +	EOF
+> +
+> +	git checkout --orphan _p &&
+> +	test_commit A &&
+> +	test_commit B &&
+> +	git checkout -b _q @^ && test_commit C &&
+> +	git checkout -b _r @^ && test_commit D &&
+> +	git checkout _p && git merge --no-ff _q _r -m E &&
+> +	git checkout _r && test_commit F &&
+> +	git checkout _p && git merge --no-ff _r -m G &&
+> +	git checkout @^^ && git merge --no-ff _p -m H &&
+> +
+> +	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
 
-Improve the command description, including paragraph spacing.
+Please don't pipe 'git log --graph's output, but use an intermediate
+file instead:
 
-Git URLs can accept bundle files for fetch, pull and clone, include
-in that section. Include git clone in the bundle usage description.
-Correct the quoting of <git-rev-list-args>.
+  git log --graph ... >out &&
+  sed s/// out >actual &&
+  test_cmp expect actual
 
-Detail the <git-rev-list-args> options for cloning a complete repo.
+The exit code of a pipeline is the exit code of the last process in
+the pipeline, and the exit codes of processes upstream of a pipe are
+ignored.  Consequently, if 'git log --graph' produced the expected
+output but were to fail during housekeeping before exiting (segfault,
+double free(), whatever), then that failure would go unnoticed.
 
-Signed-off-by: Philip Oakley <philipoakley@iee.email>
----
-The new paragraph uses the more modern back-ticks while elsewhere
-the quote style is matched locally.
+This applies to several (all?) new tests added in this patch series as
+well.
 
-Includes peff's suggestions.
----
- Documentation/git-bundle.txt | 23 +++++++++++++++++------
- Documentation/urls.txt       |  3 +++
- 2 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 7d6c9dcd17..a441a13d58 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -20,11 +20,14 @@ DESCRIPTION
- Some workflows require that one or more branches of development on one
- machine be replicated on another machine, but the two machines cannot
- be directly connected, and therefore the interactive Git protocols (git,
--ssh, http) cannot be used.  This command provides support for
--'git fetch' and 'git pull' to operate by packaging objects and references
--in an archive at the originating machine, then importing those into
--another repository using 'git fetch' and 'git pull'
--after moving the archive by some means (e.g., by sneakernet).  As no
-+ssh, http) cannot be used.
-+
-+The 'git bundle' command packages objects and references in an archive
-+at the originating machine, which can then be imported into another
-+repository using 'git fetch', 'git pull', or 'git clone',
-+after moving the archive by some means (e.g., by sneakernet).
-+
-+As no
- direct connection between the repositories exists, the user must specify a
- basis for the bundle that is held by the destination repository: the
- bundle assumes that all objects in the basis are already in the
-@@ -35,7 +38,7 @@ OPTIONS
- 
- create <file>::
- 	Used to create a bundle named 'file'.  This requires the
--	'git-rev-list-args' arguments to define the bundle contents.
-+	'<git-rev-list-args>' arguments to define the bundle contents.
- 
- verify <file>::
- 	Used to check that a bundle file is valid and will apply
-@@ -92,6 +95,14 @@ It is okay to err on the side of caution, causing the bundle file
- to contain objects already in the destination, as these are ignored
- when unpacking at the destination.
- 
-+`git clone` can use any bundle created without negative refspecs
-+(e.g., `new`, but not `old..new`).
-+If you want to match `git clone --mirror`, which would clone other
-+refs such as `refs/remotes/*`, use `--all`.
-+If you want to provide the same set of refs that a clone directly
-+from the source repository would get, use `--branches --tags` for
-+the `<git-rev-list-args>`.
-+
- EXAMPLES
- --------
- 
-diff --git a/Documentation/urls.txt b/Documentation/urls.txt
-index bc354fe2dc..1c229d7581 100644
---- a/Documentation/urls.txt
-+++ b/Documentation/urls.txt
-@@ -53,6 +53,9 @@ These two syntaxes are mostly equivalent, except the former implies
- --local option.
- endif::git-clone[]
- 
-+'git clone', 'git fetch' and 'git pull', but not 'git push', will also
-+accept a suitable bundle file. See linkgit:git-bundle[1].
-+
- When Git doesn't know how to handle a certain transport protocol, it
- attempts to use the 'remote-<transport>' remote helper, if one
- exists. To explicitly request a remote helper, the following syntax
--- 
-2.23.0.windows.1.21.g947f504ebe8.dirty
+I'd like to join the praises from others: this is one excellent
+first-time submission, thanks.
+
 
