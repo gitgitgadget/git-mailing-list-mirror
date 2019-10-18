@@ -2,146 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B05C41F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 21:05:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E44581F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 21:35:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406276AbfJRVFF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 17:05:05 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:29543 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406165AbfJRVFF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 17:05:05 -0400
-Received: from [92.30.121.54] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1iLZQl-0003U8-82; Fri, 18 Oct 2019 22:05:04 +0100
-Subject: Re: Git Gui: Branch->create currently fails...
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <bfe78474-0eb9-fc5e-1371-3b055308169a@iee.email>
- <20191008000003.qlulu5ie36eij4uq@yadavpratyush.com>
- <e0b45696-7945-4b7d-62e7-bff46eb8129a@iee.email>
- <20191013185007.hogizh23jomaswzx@yadavpratyush.com>
- <fccde9f3-7c5c-f8fb-1af2-bd56f48f7877@iee.email>
- <20191014175747.llstv7oxba2c23qy@yadavpratyush.com>
- <dc8a9b93-a2e7-4fbf-0ea7-f1a855f4b926@iee.email>
- <20191016185221.hufjb4uavacumbmc@yadavpratyush.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <6648dd51-ab60-c462-b800-c6e68fe325a3@iee.email>
-Date:   Fri, 18 Oct 2019 22:05:03 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S2634611AbfJRVfs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 17:35:48 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:35208 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729496AbfJRVfr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 17:35:47 -0400
+Received: by mail-pf1-f193.google.com with SMTP id 205so4640708pfw.2
+        for <git@vger.kernel.org>; Fri, 18 Oct 2019 14:35:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=oay/Q2+HxtI8QstPIPkv1ZEKlXEv9TrUQhyFzPAo2Yk=;
+        b=JPSYuhr4Popg+oO/zPSquspW0gXvnW8PLkiX1XsYwtoaxWQVqPkKe5+kFJbVq6SlFK
+         Ucw/7Esx6N8Uv8luoAPn4swwZ39ogGp424mnpHn6mNZcfo0YFp2UgN8c//h7Oufvp8Sw
+         iFBXgHS51UJjExLkbCST8yaHDd1zJipTX107erl7+L+Zllejg1LzLMb34L+eaJNf0sEV
+         Oix3MozJIz33Mf4Rt7ZLRM1DsNaSV7QDd7YNaYBqiRtz4Q25UPOvDgR6yy3MtYWqUU+X
+         J9Y75VB4pQsvlgMjvDlVTvig6odnuVHYZnWcd+Bd4wqIOfFyCyvVd8HTw2AYgZbFeFV1
+         gKHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=oay/Q2+HxtI8QstPIPkv1ZEKlXEv9TrUQhyFzPAo2Yk=;
+        b=dAQTsAfkw7ZiAuDD0y2Z1yGr0Wg5lK3FAnaMaQAtt4Q1qEgDgNcsjzbJCjSKM+xVHc
+         Hq9i8OqJV6OaT2QLvIhifnXygOhe6BnW0cL/nOdWsDm9On2KxyMMNmIwnMcmvZTK56XR
+         7kgmfK1JhUE1PCPE8qDvi8pn9BMPvz8TppN6Zcp071PZOya7kkxqHH30sSfxdeODnBJi
+         2x/Y6QKjIb64i4IzB3k/NPA5O5ybe3j5ZE6q8JxuGWBA0Ap/ZNwvl+TkOT/XxCpi5JWP
+         BtCEteQr/DpNh7WW/kLIs6gZ69B9v5qwiWEiThz+FU/WFHnLof9mjZ0qber96c1m89FX
+         onqQ==
+X-Gm-Message-State: APjAAAVFDrtjeOi27MWosz9X7LHnALTea1kS+EQdzPlIu0hoI9MJVudZ
+        MXevX/AdGKtN8ssh31CBNUE=
+X-Google-Smtp-Source: APXvYqwo197XL57ot1Z8lWEThrXNgQyLLr5ck7d/kD6tpWRWxziJLjfQ7PKy6kzJn4AGOy8zmN0wsA==
+X-Received: by 2002:a63:215c:: with SMTP id s28mr11046333pgm.302.1571434547088;
+        Fri, 18 Oct 2019 14:35:47 -0700 (PDT)
+Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:2:7aeb:a117:de9a:c18d])
+        by smtp.gmail.com with ESMTPSA id b22sm6945817pfo.85.2019.10.18.14.35.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Oct 2019 14:35:46 -0700 (PDT)
+Subject: Re: [PATCH v2 1/6] midx: add MIDX_PROGRESS flag <snip>
+From:   William Baker <williamtbakeremail@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        William Baker via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com, jeffhost@microsoft.com,
+        William Baker <William.Baker@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <pull.337.git.gitgitgadget@gmail.com>
+ <pull.337.v2.git.gitgitgadget@gmail.com>
+ <6badd9ceaf4851b2984e78a5cfd0cb8ec0c810f5.1568998427.git.gitgitgadget@gmail.com>
+ <20190921121104.GA6787@szeder.dev>
+ <xmqqlfu9krzv.fsf@gitster-ct.c.googlers.com>
+ <20191007172951.GC11529@szeder.dev>
+ <xmqqk19fn9jp.fsf@gitster-ct.c.googlers.com>
+ <20191009013231.GF29845@szeder.dev>
+ <04342d12-fffc-afb6-fa4e-c2e2bf88d1b6@gmail.com>
+ <xmqqh849a1b4.fsf@gitster-ct.c.googlers.com>
+ <35cd8f8c-de66-819e-0a9f-c0905255721d@gmail.com>
+Message-ID: <ca215a07-79b4-7b7f-7dbe-a0541120cde0@gmail.com>
+Date:   Fri, 18 Oct 2019 14:35:45 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.1.0
 MIME-Version: 1.0
-In-Reply-To: <20191016185221.hufjb4uavacumbmc@yadavpratyush.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+In-Reply-To: <35cd8f8c-de66-819e-0a9f-c0905255721d@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pratyush
+On 10/16/19 12:48 PM, William Baker wrote:>> I do not care too deeply either way, but if you wrote it in one way,
+>> how about completing the series without changing it in the middle,
+>> and leave the clean-ups to a follow-up series (if needed)?
+> 
+> 
+> That plan sounds good to me.  The most recent series (v3) should be ready
+> to go, I don't believe there is any outstanding feedback to address.
 
-On 16/10/2019 19:52, Pratyush Yadav wrote:
-> On 14/10/19 11:11PM, Philip Oakley wrote:
->> On 14/10/2019 18:57, Pratyush Yadav wrote:
->>>> list "refs/heads/MSVC-README" [list "commit"
->>>> "056fb95c8e983ec07e9f5f8baa0b119bf3d13fed" [concat "" "Philip Oakley"]
->>>> [reformat_date [concat "" "Sun May 19 22:33:37 2019 +0100"]]
->>>> "compat/vcSegmentation fault
->>>>
->>>>
->>>> Not exactly the same, but almost. Ends the same place, with as similar short
->>>> line.
->>>> This is run inside the bash that is started directly by the git-for-windows
->>>> sdk start icon. (Target: C:\git-sdk-64\git-bash.exe   Stat in:
->>>> C:/git-sdk-64/)
->>>>
->>>> so looks to be MSYS2/bash related.
->>> Ah, so it is an upstream issue. I guess we can just report it and wait
->>> for them to fix it.
->> I'd missed the final 'Segmentation fault' on the last line in the bash
->> output that wasn't there for the captured file.
->>
->> That was repeatable in re-testing.
->> But failed if I changed the $fmt string to a plain text 500 char string
->> ("1234567890123...").
->>
->> I've still to trim down the complicated $fmt string to see if I can see
->> where that seg fault starts (i.e. some form of MVCE), so that it can be
->> investigated.
->> Possibly should check if the --tcl flag actually invokes any tcl! Otherwise
->> it's fully in the Git/G-f-W zone.
-> A quick look tells me '--tcl' does not invoke any Tcl. It is just used
-> to output properly formatted strings for Tcl. The option sets the value
-> of 'format.quote_style' in for-each-ref (builtin/for-each-ref.c:33).
-> That value is later indirectly ends up being used in the function
-> ref_filter.c::quote_formatting.
->
-> The Tcl code we execute comes from the long $fmt string, which is built
-> in git-gui/choose_rev.tcl:133-147. `for-each-ref` just fills in the
-> placeholder values, properly formatting them for use in Tcl.
->
-> As an experiment, you can try removing '--tcl' from the `for-each-ref`
-> command that segfaults, just to be sure. It would probably output
-> invalid Tcl, but since we don't do anything with that output, it doesn't
-> really matter, and would let us know if '--tcl' is really the culprit.
-Command reminder:
-fmt='list %(refname) [list %(objecttype) %(objectname) [concat 
-%(taggername) %(authorname)] [reformat_date [concat %(taggerdate) 
-%(authordate)]] %(subject)] [list %(*objecttype) %(*objectname) 
-%(*authorname) [reformat_date %(*authordate)] %(*subject)]'
+Follow-up question on this patch series.
 
-git for-each-ref --format="$fmt" --sort=-taggerdate refs/heads 
-refs/remotes refs/tags
--
-Removing the '--tcl' still seg faults.
+I noticed there is a branch named 'wb/midx-progress' in
+https://github.com/gitster/git but it does not appear to have the commits
+from this patch series and I have not seen it mentioned in
+"What's cooking in git.git" emails.
 
-Removing the  --sort=-taggerdate  *stops* the segfault.
+Is there anything else I should do to get these changes picked up in 'pu'?
 
-Removing instead the final 'refs/tags' (i.e. a shorter list) also 
-*stops* the seg fault (still with the --sort=..)
-
-If instead I drop the initial refs/heads (a limited number of branch 
-heads!) it segfaults (still with --sort) so looks like it's a size issue.
-
-Alternative approach - trim the fmt string, dropping all the '*' types.
-$ fmt='list %(refname) [list %(objecttype) %(objectname) [concat 
-%(taggername) %(authorname)] [reformat_date [concat %(taggerdate) 
-%(authordate)]] %(subject)]'
-
-The full for-each-ref command now works, BUT the last line of output is 
-short, rather than being a seg fault. (with or without the --sortdate)
-
-so all in all rather weird. Sometimes it seg faults and sometimes it 
-simply terminates early.
->> ...
->> Just rebuilt (I hope) the Windows Subsystem for Linux (WSL) with git v2.23.0
->> installed and got:
->>
->> list "refs/heads/MSVC-README" [list "commit"
->> "056fb95c8e983ec07e9f5f8baa0b119bf3d13fed" [concat "" "Philip Oakley"]
->> [reformat_date [concat "" "Sun May 19 22:33:37 2019 +0100"]]
->> "compat/vcbuild/README: clean/update 'vcpkg' env for Visual Studio updates"]
->> [list "" "" "" [reformat_date ""] ""]
->> munmap_chunk(): invalid pointer
-> A quick Google search tells me munmap_chunk() is probably related to an
-> invalid pointer being freed. Either a double free or a free on a pointer
-> not allocated by malloc or something similar.
->
->> Aborted (core dumped)
->> root@Philip-Win10:/mnt/c/git-sdk-64/usr/src/git#
->>
->>
->> That said, haven't got the gitk and git gui to work yet on the WSL because
->> it doesn't like the tcl/tk.
->>
->> It's a bit of a hole digging exercise.
-The hole that keeps digging...
-P.
+Thanks again,
+William
