@@ -8,98 +8,89 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E44581F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 21:35:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDAAD1F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 22:04:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2634611AbfJRVfs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 17:35:48 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:35208 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729496AbfJRVfr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 17:35:47 -0400
-Received: by mail-pf1-f193.google.com with SMTP id 205so4640708pfw.2
-        for <git@vger.kernel.org>; Fri, 18 Oct 2019 14:35:47 -0700 (PDT)
+        id S1727840AbfJRWEK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 18:04:10 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:36619 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727804AbfJRWEJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 18:04:09 -0400
+Received: by mail-pg1-f195.google.com with SMTP id 23so4083424pgk.3
+        for <git@vger.kernel.org>; Fri, 18 Oct 2019 15:04:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=oay/Q2+HxtI8QstPIPkv1ZEKlXEv9TrUQhyFzPAo2Yk=;
-        b=JPSYuhr4Popg+oO/zPSquspW0gXvnW8PLkiX1XsYwtoaxWQVqPkKe5+kFJbVq6SlFK
-         Ucw/7Esx6N8Uv8luoAPn4swwZ39ogGp424mnpHn6mNZcfo0YFp2UgN8c//h7Oufvp8Sw
-         iFBXgHS51UJjExLkbCST8yaHDd1zJipTX107erl7+L+Zllejg1LzLMb34L+eaJNf0sEV
-         Oix3MozJIz33Mf4Rt7ZLRM1DsNaSV7QDd7YNaYBqiRtz4Q25UPOvDgR6yy3MtYWqUU+X
-         J9Y75VB4pQsvlgMjvDlVTvig6odnuVHYZnWcd+Bd4wqIOfFyCyvVd8HTw2AYgZbFeFV1
-         gKHw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=bbf9inHo0I4t73aUKSW0KXTGxunKjYwC2acEh6a5lp8=;
+        b=Oh8QtdWSzoc0KeXwXNnyEZl45WMsgukbU4dEuGEK7W25y66IO1XPDsodMqj3sUei4q
+         Ul79xrAJhQmSUKdJI6Scx4tlFBRDML9hH0DWMiuakjDlW+s/7EHSjPydhBc504HT+Sn0
+         OE6VhegbKJdIPzIvgfy+x6086dWUygQwWePfPkbGxQohPqwS8QF4WGiBbHrwBwK1CiDQ
+         KsULsal/kZToErgvyN2uNhFg04mf0/3Q7e+31Vivmr1P969CB3cYnS0IgUzBeK7F60Px
+         H2W69TgRupa7qgydg4qUV516TKWQx6DBomrO0YDPOZeufp+UcN1ldcza3Hf0Io0xZ0RB
+         +L7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=oay/Q2+HxtI8QstPIPkv1ZEKlXEv9TrUQhyFzPAo2Yk=;
-        b=dAQTsAfkw7ZiAuDD0y2Z1yGr0Wg5lK3FAnaMaQAtt4Q1qEgDgNcsjzbJCjSKM+xVHc
-         Hq9i8OqJV6OaT2QLvIhifnXygOhe6BnW0cL/nOdWsDm9On2KxyMMNmIwnMcmvZTK56XR
-         7kgmfK1JhUE1PCPE8qDvi8pn9BMPvz8TppN6Zcp071PZOya7kkxqHH30sSfxdeODnBJi
-         2x/Y6QKjIb64i4IzB3k/NPA5O5ybe3j5ZE6q8JxuGWBA0Ap/ZNwvl+TkOT/XxCpi5JWP
-         BtCEteQr/DpNh7WW/kLIs6gZ69B9v5qwiWEiThz+FU/WFHnLof9mjZ0qber96c1m89FX
-         onqQ==
-X-Gm-Message-State: APjAAAVFDrtjeOi27MWosz9X7LHnALTea1kS+EQdzPlIu0hoI9MJVudZ
-        MXevX/AdGKtN8ssh31CBNUE=
-X-Google-Smtp-Source: APXvYqwo197XL57ot1Z8lWEThrXNgQyLLr5ck7d/kD6tpWRWxziJLjfQ7PKy6kzJn4AGOy8zmN0wsA==
-X-Received: by 2002:a63:215c:: with SMTP id s28mr11046333pgm.302.1571434547088;
-        Fri, 18 Oct 2019 14:35:47 -0700 (PDT)
-Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:2:7aeb:a117:de9a:c18d])
-        by smtp.gmail.com with ESMTPSA id b22sm6945817pfo.85.2019.10.18.14.35.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Oct 2019 14:35:46 -0700 (PDT)
-Subject: Re: [PATCH v2 1/6] midx: add MIDX_PROGRESS flag <snip>
-From:   William Baker <williamtbakeremail@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        William Baker via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, jeffhost@microsoft.com,
-        William Baker <William.Baker@microsoft.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <pull.337.git.gitgitgadget@gmail.com>
- <pull.337.v2.git.gitgitgadget@gmail.com>
- <6badd9ceaf4851b2984e78a5cfd0cb8ec0c810f5.1568998427.git.gitgitgadget@gmail.com>
- <20190921121104.GA6787@szeder.dev>
- <xmqqlfu9krzv.fsf@gitster-ct.c.googlers.com>
- <20191007172951.GC11529@szeder.dev>
- <xmqqk19fn9jp.fsf@gitster-ct.c.googlers.com>
- <20191009013231.GF29845@szeder.dev>
- <04342d12-fffc-afb6-fa4e-c2e2bf88d1b6@gmail.com>
- <xmqqh849a1b4.fsf@gitster-ct.c.googlers.com>
- <35cd8f8c-de66-819e-0a9f-c0905255721d@gmail.com>
-Message-ID: <ca215a07-79b4-7b7f-7dbe-a0541120cde0@gmail.com>
-Date:   Fri, 18 Oct 2019 14:35:45 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.1.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=bbf9inHo0I4t73aUKSW0KXTGxunKjYwC2acEh6a5lp8=;
+        b=rQRN8vA64LGxnI0KrRpj4wnb9U5M5OyrHAFr3wgDd3QKokOcne4TZzum8eBIR/h7Uk
+         q3ro1svV9Z1Jefvsi17Tej5tSuL8fajjfzS4dYGUn2SmSAerViPT0MAPsJCu3hC8wsO3
+         K5szcT3635tycHGa0PPj9356IXf33km/ugWK5u9EOXsPiMUhl8DquOn7jhP1VjLBGNJQ
+         EbZCFwRq6tFpn4NvpE7JLfHI3eUsc74LR3OWwV/iPLwQaS52Bk5JHU2qybLHh+08BASR
+         jvB+xHZT2cHvjir+IdkZIpe2MNna0PVhPR46f5jPe9iffH2d5XBJtEKuUy3Use4At5UY
+         DshA==
+X-Gm-Message-State: APjAAAW4siNXXyxrVfkYpNn+4fVrMPWpJgBCagKFIOCtQvoa9CzYR5Om
+        mSq4kfKeKipfoJVQ6wBqtGb5QH2O
+X-Google-Smtp-Source: APXvYqx6679xEnjABmYssjePQvtJmLOrVjOnGpuj9rUU0EQ2FpOrID1GEYHjGX3RycFCMQirv8YKPg==
+X-Received: by 2002:a17:90a:23b0:: with SMTP id g45mr13073597pje.127.1571436248365;
+        Fri, 18 Oct 2019 15:04:08 -0700 (PDT)
+Received: from generichostname ([204.14.239.54])
+        by smtp.gmail.com with ESMTPSA id 206sm6750715pge.80.2019.10.18.15.04.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Oct 2019 15:04:07 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 15:04:06 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 01/15] t7408: replace `test_must_fail test_path_is_file`
+Message-ID: <987fee4652ae1bd8d3eb50ed51f7c9694d567dfc.1571435195.git.liu.denton@gmail.com>
+References: <cover.1571354136.git.liu.denton@gmail.com>
+ <cover.1571435195.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <35cd8f8c-de66-819e-0a9f-c0905255721d@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1571435195.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/16/19 12:48 PM, William Baker wrote:>> I do not care too deeply either way, but if you wrote it in one way,
->> how about completing the series without changing it in the middle,
->> and leave the clean-ups to a follow-up series (if needed)?
-> 
-> 
-> That plan sounds good to me.  The most recent series (v3) should be ready
-> to go, I don't believe there is any outstanding feedback to address.
+According to t/README, test_must_fail() should only be used to test for
+failure in git commands. Replace the only invocation of
+`test_must_fail test_path_is_file` with `test_path_is_missing` since in
+this test case, the path should not exist at all.
 
-Follow-up question on this patch series.
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ t/t7408-submodule-reference.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I noticed there is a branch named 'wb/midx-progress' in
-https://github.com/gitster/git but it does not appear to have the commits
-from this patch series and I have not seen it mentioned in
-"What's cooking in git.git" emails.
+diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
+index 34ac28c056..9e62d43cac 100755
+--- a/t/t7408-submodule-reference.sh
++++ b/t/t7408-submodule-reference.sh
+@@ -123,7 +123,7 @@ test_expect_success 'missing submodule alternate fails clone and submodule updat
+ 		test_must_fail git submodule update --init &&
+ 		# and we have no alternates:
+ 		test_must_fail test_alternate_is_used .git/modules/sub/objects/info/alternates sub &&
+-		test_must_fail test_path_is_file sub/file1
++		test_path_is_missing sub/file1
+ 	)
+ '
+ 
+-- 
+2.23.0.897.g0a19638b1e
 
-Is there anything else I should do to get these changes picked up in 'pu'?
-
-Thanks again,
-William
