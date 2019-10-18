@@ -7,132 +7,121 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93C471F4C4
-	for <e@80x24.org>; Fri, 18 Oct 2019 05:02:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3BD21F4C4
+	for <e@80x24.org>; Fri, 18 Oct 2019 05:07:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390336AbfJRFCJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 01:02:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51784 "HELO cloud.peff.net"
+        id S2409611AbfJRFHp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 01:07:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51790 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726139AbfJRFCJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 01:02:09 -0400
-Received: (qmail 9542 invoked by uid 109); 18 Oct 2019 05:02:10 -0000
+        id S1728253AbfJRFHp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 01:07:45 -0400
+Received: (qmail 9304 invoked by uid 109); 18 Oct 2019 04:41:05 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 18 Oct 2019 05:02:10 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 18 Oct 2019 04:41:05 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14542 invoked by uid 111); 18 Oct 2019 05:05:14 -0000
+Received: (qmail 14020 invoked by uid 111); 18 Oct 2019 04:44:09 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Oct 2019 01:05:14 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Oct 2019 00:44:09 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 18 Oct 2019 01:02:08 -0400
+Date:   Fri, 18 Oct 2019 00:41:03 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 23/23] fsck: accept an oid instead of a "struct tree" for
- fsck_tree()
-Message-ID: <20191018050208.GW17879@sigill.intra.peff.net>
-References: <20191018044103.GA17625@sigill.intra.peff.net>
+Subject: [PATCH 0/23] parsing and fsck cleanups
+Message-ID: <20191018044103.GA17625@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20191018044103.GA17625@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We don't actually look at the tree struct in fsck_tree() beyond its oid
-and type (which is obviously OBJ_TREE). Just taking an oid gives our
-callers more flexibility to avoid creating a struct, and makes it clear
-that we are fscking just what is in the buffer, not any pre-parsed bits
-from the struct.
+The thread starting at:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- fsck.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+  https://public-inbox.org/git/xmqqo8zxnz0m.fsf@gitster-ct.c.googlers.com/
 
-diff --git a/fsck.c b/fsck.c
-index f8c5bbe891..ac4ba4c8e8 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -566,7 +566,7 @@ static int verify_ordered(unsigned mode1, const char *name1, unsigned mode2, con
- 	return c1 < c2 ? 0 : TREE_UNORDERED;
- }
- 
--static int fsck_tree(struct tree *item,
-+static int fsck_tree(const struct object_id *oid,
- 		     const char *buffer, unsigned long size,
- 		     struct fsck_options *options)
- {
-@@ -586,7 +586,7 @@ static int fsck_tree(struct tree *item,
- 	const char *o_name;
- 
- 	if (init_tree_desc_gently(&desc, buffer, size)) {
--		retval += report(options, &item->object.oid, item->object.type, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
-+		retval += report(options, oid, OBJ_TREE, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
- 		return retval;
- 	}
- 
-@@ -613,13 +613,13 @@ static int fsck_tree(struct tree *item,
- 				oidset_insert(&gitmodules_found, oid);
- 			else
- 				retval += report(options,
--						 &item->object.oid, item->object.type,
-+						 oid, OBJ_TREE,
- 						 FSCK_MSG_GITMODULES_SYMLINK,
- 						 ".gitmodules is a symbolic link");
- 		}
- 
- 		if (update_tree_entry_gently(&desc)) {
--			retval += report(options, &item->object.oid, item->object.type, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
-+			retval += report(options, oid, OBJ_TREE, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
- 			break;
- 		}
- 
-@@ -664,25 +664,25 @@ static int fsck_tree(struct tree *item,
- 	}
- 
- 	if (has_null_sha1)
--		retval += report(options, &item->object.oid, item->object.type, FSCK_MSG_NULL_SHA1, "contains entries pointing to null sha1");
-+		retval += report(options, oid, OBJ_TREE, FSCK_MSG_NULL_SHA1, "contains entries pointing to null sha1");
- 	if (has_full_path)
--		retval += report(options, &item->object.oid, item->object.type, FSCK_MSG_FULL_PATHNAME, "contains full pathnames");
-+		retval += report(options, oid, OBJ_TREE, FSCK_MSG_FULL_PATHNAME, "contains full pathnames");
- 	if (has_empty_name)
--		retval += report(options, &item->object.oid, item->object.type, FSCK_MSG_EMPTY_NAME, "contains empty pathname");
-+		retval += report(options, oid, OBJ_TREE, FSCK_MSG_EMPTY_NAME, "contains empty pathname");
- 	if (has_dot)
--		retval += report(options, &item->object.oid, item->object.type, FSCK_MSG_HAS_DOT, "contains '.'");
-+		retval += report(options, oid, OBJ_TREE, FSCK_MSG_HAS_DOT, "contains '.'");
- 	if (has_dotdot)
--		retval += report(options, &item->object.oid, item->object.type, FSCK_MSG_HAS_DOTDOT, "contains '..'");
-+		retval += report(options, oid, OBJ_TREE, FSCK_MSG_HAS_DOTDOT, "contains '..'");
- 	if (has_dotgit)
--		retval += report(options, &item->object.oid, item->object.type, FSCK_MSG_HAS_DOTGIT, "contains '.git'");
-+		retval += report(options, oid, OBJ_TREE, FSCK_MSG_HAS_DOTGIT, "contains '.git'");
- 	if (has_zero_pad)
--		retval += report(options, &item->object.oid, item->object.type, FSCK_MSG_ZERO_PADDED_FILEMODE, "contains zero-padded file modes");
-+		retval += report(options, oid, OBJ_TREE, FSCK_MSG_ZERO_PADDED_FILEMODE, "contains zero-padded file modes");
- 	if (has_bad_modes)
--		retval += report(options, &item->object.oid, item->object.type, FSCK_MSG_BAD_FILEMODE, "contains bad file modes");
-+		retval += report(options, oid, OBJ_TREE, FSCK_MSG_BAD_FILEMODE, "contains bad file modes");
- 	if (has_dup_entries)
--		retval += report(options, &item->object.oid, item->object.type, FSCK_MSG_DUPLICATE_ENTRIES, "contains duplicate file entries");
-+		retval += report(options, oid, OBJ_TREE, FSCK_MSG_DUPLICATE_ENTRIES, "contains duplicate file entries");
- 	if (not_properly_sorted)
--		retval += report(options, &item->object.oid, item->object.type, FSCK_MSG_TREE_NOT_SORTED, "not properly sorted");
-+		retval += report(options, oid, OBJ_TREE, FSCK_MSG_TREE_NOT_SORTED, "not properly sorted");
- 	return retval;
- }
- 
-@@ -982,7 +982,7 @@ int fsck_object(struct object *obj, void *data, unsigned long size,
- 	if (obj->type == OBJ_BLOB)
- 		return fsck_blob(&obj->oid, data, size, options);
- 	if (obj->type == OBJ_TREE)
--		return fsck_tree((struct tree *) obj, data, size, options);
-+		return fsck_tree(&obj->oid, data, size, options);
- 	if (obj->type == OBJ_COMMIT)
- 		return fsck_commit(&obj->oid, data, size, options);
- 	if (obj->type == OBJ_TAG)
--- 
-2.23.0.1228.gee29b05929
+discusses some issues with our handling of corrupt objects, as well as
+some weirdness in fsck. This series is my attempt to clean it up. The
+number of patches is a little daunting, but the early ones are the most
+interesting. The latter half is part of a big refactor/cleanup that's
+mostly mechanical (and isn't strictly necessary; see below for
+discussion).
+
+  [01/23]: parse_commit_buffer(): treat lookup_commit() failure as parse error
+  [02/23]: parse_commit_buffer(): treat lookup_tree() failure as parse error
+  [03/23]: parse_tag_buffer(): treat NULL tag pointer as parse error
+  [04/23]: remember commit/tag parse failures
+
+    These ones are tightening up our parser to report failures more
+    consistently. The first one definitely fixes a demonstrable bug, and
+    I suspect the rest of them are fixing hard-to-trigger but lurking
+    segfaults.
+
+  [05/23]: fsck: stop checking commit->tree value
+  [06/23]: fsck: stop checking commit->parent counts
+  [07/23]: fsck: stop checking tag->tagged
+  [08/23]: fsck: require an actual buffer for non-blobs
+
+    These ones clean up weirdness where fsck is dependent on the results
+    of parse_commit(), etc, rather than just looking at the buffer we
+    gave it. I don't think they're _hurting_ anything, but it certainly
+    makes following the fsck logic more confusing.
+
+  [09/23]: fsck: unify object-name code
+
+    Cleanup that fixes a few minor bugs.
+
+  [10/23]: fsck_describe_object(): build on our get_object_name() primitive
+  [11/23]: fsck: use oids rather than objects for object_name API
+  [12/23]: fsck: don't require full object structs for display functions
+  [13/23]: fsck: only provide oid/type in fsck_error callback
+  [14/23]: fsck: only require an oid for skiplist functions
+  [15/23]: fsck: don't require an object struct for report()
+  [16/23]: fsck: accept an oid instead of a "struct blob" for fsck_blob()
+  [17/23]: fsck: drop blob struct from fsck_finish()
+  [18/23]: fsck: don't require an object struct for fsck_ident()
+  [19/23]: fsck: don't require an object struct in verify_headers()
+  [20/23]: fsck: rename vague "oid" local variables
+  [21/23]: fsck: accept an oid instead of a "struct tag" for fsck_tag()
+  [22/23]: fsck: accept an oid instead of a "struct commit" for fsck_commit()
+  [23/23]: fsck: accept an oid instead of a "struct tree" for fsck_tree()
+
+    This a string of refactors that ends up with all of the
+    type-specific fsck functions not getting an object struct at all.
+    My goal there was two-fold:
+
+       - it makes it harder to introduce weirdness like we saw in
+	 patches 5-8.
+
+       - it _could_ make things less awkward for callers like index-pack
+	 which don't necessarily have object structs. And at the end, we
+	 basically have an fsck_object() that doesn't need an object
+	 struct. But index-pack still calls fsck_walk(), which does (and
+	 which relies on the parsed values to traverse). It's not
+	 entirely clear to me whether index-pack needs to be doing
+	 fsck_walk() in the first place, or if it should be relying on
+	 the usual connectivity check.
+
+	 So I'm undecided whether this is worth taking on its own, or if
+	 trying to avoid object structs in the fsck code is just a
+	 fool's errand. I do think the result isn't too bad to look at,
+	 though and there are some minor improvements along the way
+	 (e.g., patch 17 is able to drop some awkwardness).
+
+    Most of the patches are pretty mechanical. There are so many because
+    I split it by call stack layer. If A calls B calls C, then I
+    converted "C" away from "struct object" first, which enables
+    converting "B", and so on.
+
+ builtin/fsck.c                         | 126 ++++----
+ commit-graph.c                         |   3 -
+ commit.c                               |  33 ++-
+ fsck.c                                 | 386 +++++++++++--------------
+ fsck.h                                 |  39 ++-
+ t/t1450-fsck.sh                        |   2 +-
+ t/t5318-commit-graph.sh                |   2 +-
+ t/t6102-rev-list-unexpected-objects.sh |   2 +-
+ tag.c                                  |  21 +-
+ 9 files changed, 312 insertions(+), 302 deletions(-)
+
