@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 273CE1F4C0
-	for <e@80x24.org>; Fri, 18 Oct 2019 22:12:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 728FA1F4C0
+	for <e@80x24.org>; Fri, 18 Oct 2019 22:14:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391439AbfJRWMM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 18:12:12 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:42909 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390067AbfJRWKY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 18:10:24 -0400
-Received: by mail-pg1-f195.google.com with SMTP id f14so4067630pgi.9
-        for <git@vger.kernel.org>; Fri, 18 Oct 2019 15:10:24 -0700 (PDT)
+        id S2392260AbfJRWOd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 18:14:33 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:36381 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732431AbfJRWOc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 18:14:32 -0400
+Received: by mail-pg1-f194.google.com with SMTP id 23so4095318pgk.3
+        for <git@vger.kernel.org>; Fri, 18 Oct 2019 15:14:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=UX+VZk0QQaKTngJZjkzDxOa8HNh61474k9NXQNCELQY=;
-        b=dwSamf8OvRchljafoRfpoTvXu1DlRd+iw1Jwy7ZTaVqHIl9kZzT3KVH1pnmxbJ29P5
-         OGKcrC0XIgEV3rJfbrL6Ud1ngyNZHELsHgzcXpAb0xNAklEQdYifgADAoU0KetxtNurR
-         DBFvhnCoOHXRnBMvtM4Yq2RQ6eQKfiM56yLuouXeB9fQgCtoOdc7vpeCT3yXeZlnD7jX
-         gmGD2onLTmt5hvXT5PK/dro9TjdIyPNErW2do3ZgUGf4ikDnCmn68Jun7phjuUSqvHlz
-         WTu8WQ51UJPuY0gTO8ktr5++zOEG6IIo/WFLuAeHfcVQenVUMtkmKgzl5y58RqzslCT0
-         XVpQ==
+        bh=ObasyHwZo6qRqX0/FuoNYgWtmKowrJy2UTYJxg8IPq0=;
+        b=b4xXkeoqWbBQW1PYUWq1QNXSqyypE7Xjb4WGGnn8bHxuL7Vo5kM2UCMUVGbM19qKFJ
+         74Kn3siLPIocBKTRwz5Mlg8tO4zWSkCncxe1eBvb/f9lwcFVJpRuHXofBq41Sg8K3YjE
+         WDmi+rv+YHieeOBMg/5XmqWSu0P4TPUt0ioEseovUNtbUyBoiHS8FTY9OtXpeK7lJ1o0
+         dXVf7p0MHeyUq36l5GDNaYNeezzacCOSbaF7oz+r1/t4GVH/8nEQ69w2XHfMLbVhuYyw
+         gje1Hn1FTelWrYz+MmNfOt/mnNHEmPmQ8FrhQbE7CfW6u7dKDrF3/TCjUvIQjEV/ymmt
+         hQGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UX+VZk0QQaKTngJZjkzDxOa8HNh61474k9NXQNCELQY=;
-        b=dNhRT3fADo32ebHDTevXV0R4CDrWfjLYTlzYDSRJ+A/fvFboooUVni58jmHEWiSu5G
-         +uDMDQN6mVjIr2vjh0sde64rqb9MBQEGNl8Iz6OQyTZaXSPk/cZqUC7XiuSh5ODL6iLX
-         6DA7JwPiFYcUe+6xF0HIhiwCHYVGdiAdP2oENoxj8wc1wkm0abnv3/KHXUTPjtdYlsxj
-         GjsNoQGkULIT9EK4g1XYFyWgXcrEqovx/QE3ShYt5v6BibCWd8w9NwS3F2OUv4GJXDzW
-         o3x9ikW0mwlJmR8ZNXLrp5qNKQcuvEbD/sO41GpbGF+KzX/SFDAUZJmgv+gaZhSKaRZE
-         AEbQ==
-X-Gm-Message-State: APjAAAUNN4yY0VOb1TxqVUXQ10XFhfxnop9wooVP73y/YnlqmaC2rjXw
-        EYlZOklPp3/o1397Obv/6Z6eNvAP
-X-Google-Smtp-Source: APXvYqyJZCLM8lO/3WbiuZ5mT+rHJsE3mQs+YrQVmEjb4afnrb29kg79cHOiIIqLNdJ1NgYfZPx+zw==
-X-Received: by 2002:aa7:955a:: with SMTP id w26mr9569314pfq.193.1571436623595;
-        Fri, 18 Oct 2019 15:10:23 -0700 (PDT)
+        bh=ObasyHwZo6qRqX0/FuoNYgWtmKowrJy2UTYJxg8IPq0=;
+        b=XpBWUpFJMVAuXIWU/5J9VC1zz7F6qhbe5F1bfdmyTbojMU83orJ3dRuhqu7oz+SR4D
+         K2P78jQNOe1UAuA8ssO57Rvz2huKylXakuyZBq38Fogd+RekN6yBzwJM5nLI3Ol0Cl/J
+         ccqweqqum1ywAaFbbpjGwtXa8V1mDU3t2fUYKuolB+lRchZPABAHHzMIg0HsnAsif/5v
+         08pR6PYJGTuL4w16w6oIph7EqQP9hEpVk4OoCCrPLRuOjQEtAf4wxzxLdef9lwvrK0Kt
+         aka56MhKSofSfYdeHZl9xDcizFOtAM80OZXBlJx/kS9ABj7r9visvEL7PDziTinPxj9D
+         YoYg==
+X-Gm-Message-State: APjAAAUbiRpYic0PwASW3iJgJcxddrzN/V8MAghDgUYtdEVu/9msy5Op
+        XWJRlwKZy6It/pBIP0J7aUxaIC8D
+X-Google-Smtp-Source: APXvYqy5aFOASgKzlyz8Fm0Jp6xESqO6QTcHb7PyHVwOvOKoRbtgyOVFMvY2aNRWsb1WC9jr44In9Q==
+X-Received: by 2002:a17:90a:9406:: with SMTP id r6mr14418156pjo.0.1571436871553;
+        Fri, 18 Oct 2019 15:14:31 -0700 (PDT)
 Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id o64sm15771698pjb.24.2019.10.18.15.10.22
+        by smtp.gmail.com with ESMTPSA id f21sm5563095pgh.85.2019.10.18.15.14.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2019 15:10:22 -0700 (PDT)
-Date:   Fri, 18 Oct 2019 15:10:21 -0700
+        Fri, 18 Oct 2019 15:14:30 -0700 (PDT)
+Date:   Fri, 18 Oct 2019 15:14:29 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 02/15] t: teach test_cmp_rev to accept ! for not-equals
-Message-ID: <417e808466ee3e61a1719faa319fe0e796d5d271.1571435195.git.liu.denton@gmail.com>
+Subject: Re: [PATCH v2 00/15] t5520: various test cleanup
+Message-ID: <20191018221429.GA20245@generichostname>
 References: <cover.1571354136.git.liu.denton@gmail.com>
  <cover.1571435195.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -68,182 +68,178 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, in the case where we are using test_cmp_rev() to report
-not-equals, we write `! test_cmp_rev`. However, since test_cmp_rev()
-contains
+Sorry for the double-send. public-inbox and MARC both showed that
+only 3 messages got through the in the first send so I sent it again.
+Seems to have gotten through find the second time around.
 
-	r1=$(git rev-parse --verify "$1") &&
-	r2=$(git rev-parse --verify "$2") &&
-
-In the case where `git rev-parse` segfaults and dies unexpectedly, the
-failure will be ignored.
-
-Rewrite test_cmp_rev() to optionally accept "!" as the first argument to
-do a not-equals comparison. Rewrite `! test_cmp_rev` to `test_cmp_rev !`
-in all tests to take advantage of this new functionality.
-
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- t/t2400-worktree-add.sh             |  4 ++--
- t/t3400-rebase.sh                   |  2 +-
- t/t3421-rebase-topology-linear.sh   |  6 +++---
- t/t3430-rebase-merges.sh            |  2 +-
- t/t3432-rebase-fast-forward.sh      |  2 +-
- t/t3501-revert-cherry-pick.sh       |  2 +-
- t/t3508-cherry-pick-many-commits.sh |  2 +-
- t/test-lib-functions.sh             | 13 +++++++++++--
- 8 files changed, 21 insertions(+), 12 deletions(-)
-
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index e819ba741e..52d476979b 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -438,7 +438,7 @@ test_expect_success 'git worktree add does not match remote' '
- 		cd foo &&
- 		test_must_fail git config "branch.foo.remote" &&
- 		test_must_fail git config "branch.foo.merge" &&
--		! test_cmp_rev refs/remotes/repo_a/foo refs/heads/foo
-+		test_cmp_rev ! refs/remotes/repo_a/foo refs/heads/foo
- 	)
- '
- 
-@@ -483,7 +483,7 @@ test_expect_success 'git worktree --no-guess-remote option overrides config' '
- 		cd foo &&
- 		test_must_fail git config "branch.foo.remote" &&
- 		test_must_fail git config "branch.foo.merge" &&
--		! test_cmp_rev refs/remotes/repo_a/foo refs/heads/foo
-+		test_cmp_rev ! refs/remotes/repo_a/foo refs/heads/foo
- 	)
- '
- 
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index ab18ac5f28..f267f6cd54 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -64,7 +64,7 @@ test_expect_success 'rebase sets ORIG_HEAD to pre-rebase state' '
- 	pre="$(git rev-parse --verify HEAD)" &&
- 	git rebase master &&
- 	test_cmp_rev "$pre" ORIG_HEAD &&
--	! test_cmp_rev "$pre" HEAD
-+	test_cmp_rev ! "$pre" HEAD
- '
- 
- test_expect_success 'rebase, with <onto> and <upstream> specified as :/quuxery' '
-diff --git a/t/t3421-rebase-topology-linear.sh b/t/t3421-rebase-topology-linear.sh
-index b847064f91..325072b0a3 100755
---- a/t/t3421-rebase-topology-linear.sh
-+++ b/t/t3421-rebase-topology-linear.sh
-@@ -61,7 +61,7 @@ test_run_rebase () {
- 	test_expect_$result "rebase $* -f rewrites even if upstream is an ancestor" "
- 		reset_rebase &&
- 		git rebase $* -f b e &&
--		! test_cmp_rev e HEAD &&
-+		test_cmp_rev ! e HEAD &&
- 		test_cmp_rev b HEAD~2 &&
- 		test_linear_range 'd e' b..
- 	"
-@@ -78,7 +78,7 @@ test_run_rebase () {
- 	test_expect_$result "rebase $* -f rewrites even if remote upstream is an ancestor" "
- 		reset_rebase &&
- 		git rebase $* -f branch-b branch-e &&
--		! test_cmp_rev branch-e origin/branch-e &&
-+		test_cmp_rev ! branch-e origin/branch-e &&
- 		test_cmp_rev branch-b HEAD~2 &&
- 		test_linear_range 'd e' branch-b..
- 	"
-@@ -368,7 +368,7 @@ test_run_rebase () {
- 	test_expect_$result "rebase $* -f --root on linear history causes re-write" "
- 		reset_rebase &&
- 		git rebase $* -f --root c &&
--		! test_cmp_rev a HEAD~2 &&
-+		test_cmp_rev ! a HEAD~2 &&
- 		test_linear_range 'a b c' HEAD
- 	"
- }
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 9efcf4808a..abbdc26b1b 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -346,7 +346,7 @@ test_expect_success 'A root commit can be a cousin, treat it that way' '
- 	git merge --allow-unrelated-histories khnum &&
- 	test_tick &&
- 	git rebase -f -r HEAD^ &&
--	! test_cmp_rev HEAD^2 khnum &&
-+	test_cmp_rev ! HEAD^2 khnum &&
- 	test_cmp_graph HEAD^.. <<-\EOF &&
- 	*   Merge branch '\''khnum'\'' into asherah
- 	|\
-diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
-index 034ffc7e76..92f95b57da 100755
---- a/t/t3432-rebase-fast-forward.sh
-+++ b/t/t3432-rebase-fast-forward.sh
-@@ -64,7 +64,7 @@ test_rebase_same_head_ () {
- 			test_cmp_rev \$oldhead \$newhead
- 		elif test $cmp = diff
- 		then
--			! test_cmp_rev \$oldhead \$newhead
-+			test_cmp_rev ! \$oldhead \$newhead
- 		fi
- 	"
- }
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index d1c68af8c5..1c51a9131d 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -106,7 +106,7 @@ test_expect_success 'cherry-pick on unborn branch' '
- 	rm -rf * &&
- 	git cherry-pick initial &&
- 	git diff --quiet initial &&
--	! test_cmp_rev initial HEAD
-+	test_cmp_rev ! initial HEAD
- '
- 
- test_expect_success 'cherry-pick "-" to pick from previous branch' '
-diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
-index b457333e18..23070a7b73 100755
---- a/t/t3508-cherry-pick-many-commits.sh
-+++ b/t/t3508-cherry-pick-many-commits.sh
-@@ -5,7 +5,7 @@ test_description='test cherry-picking many commits'
- . ./test-lib.sh
- 
- check_head_differs_from() {
--	! test_cmp_rev HEAD "$1"
-+	test_cmp_rev ! HEAD "$1"
- }
- 
- check_head_equals() {
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index b299ecc326..76dce5f8ee 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1012,8 +1012,17 @@ test_must_be_empty () {
- 	fi
- }
- 
--# Tests that its two parameters refer to the same revision
-+# Tests that its two parameters refer to the same revision, or if '!' is
-+# provided first, that its other two parameters refer to different
-+# revisions.
- test_cmp_rev () {
-+	local inverted_op
-+	inverted_op='!='
-+	if test $# -ge 1 && test "x$1" = 'x!'
-+	then
-+	    inverted_op='='
-+	    shift
-+	fi
- 	if test $# != 2
- 	then
- 		error "bug in the test script: test_cmp_rev requires two revisions, but got $#"
-@@ -1021,7 +1030,7 @@ test_cmp_rev () {
- 		local r1 r2
- 		r1=$(git rev-parse --verify "$1") &&
- 		r2=$(git rev-parse --verify "$2") &&
--		if test "$r1" != "$r2"
-+		if test "$r1" "$inverted_op" "$r2"
- 		then
- 			cat >&4 <<-EOF
- 			error: two revisions point to different objects:
--- 
-2.23.0.897.g0a19638b1e
-
+On Fri, Oct 18, 2019 at 03:04:03PM -0700, Denton Liu wrote:
+> Like earlier patchsets, I want to implement a feature that involves
+> modifications to the test suite. Since that feature will probably take a
+> while to polish up, however, let's clean up the test suite in a separate
+> patchset first so it's not blocked by the feature work.
+> 
+> 1/15 is a cleanup to an unrelated test that I found while addressing
+> some of Eric's comments.
+> 
+> 2/15 is a general improvement to test_rev_cmp() that will be used later
+> in the series.
+> 
+> Changes since v1:
+> 
+> * Incorporate Eric's feedback
+> 
+> Denton Liu (15):
+>   t7408: replace `test_must_fail test_path_is_file`
+>   t: teach test_cmp_rev to accept ! for not-equals
+>   t5520: improve test style
+>   t5520: use sq for test case names
+>   t5520: let sed open its own input
+>   t5520: replace test -f with test-lib functions
+>   t5520: remove spaces after redirect operator
+>   t5520: use test_line_count where possible
+>   t5520: replace test -{n,z} with test-lib functions
+>   t5520: use test_cmp_rev where possible
+>   t5520: test single-line files by git with test_cmp
+>   t5520: don't put git in upstream of pipe
+>   t5520: replace subshell cat comparison with test_cmp
+>   t5520: remove redundant lines in test cases
+>   t5520: replace `! git` with `test_must_fail git`
+> 
+>  t/t2400-worktree-add.sh             |   4 +-
+>  t/t3400-rebase.sh                   |   2 +-
+>  t/t3421-rebase-topology-linear.sh   |   6 +-
+>  t/t3430-rebase-merges.sh            |   2 +-
+>  t/t3432-rebase-fast-forward.sh      |   2 +-
+>  t/t3501-revert-cherry-pick.sh       |   2 +-
+>  t/t3508-cherry-pick-many-commits.sh |   2 +-
+>  t/t5520-pull.sh                     | 343 +++++++++++++++++-----------
+>  t/t7408-submodule-reference.sh      |   2 +-
+>  t/test-lib-functions.sh             |  13 +-
+>  10 files changed, 227 insertions(+), 151 deletions(-)
+> 
+> Range-diff against v1:
+>  -:  ---------- >  1:  987fee4652 t7408: replace `test_must_fail test_path_is_file`
+>  -:  ---------- >  2:  417e808466 t: teach test_cmp_rev to accept ! for not-equals
+>  1:  0bc54dd330 =  3:  0a56980857 t5520: improve test style
+>  2:  a5dee82ecc =  4:  dfa89ba1cb t5520: use sq for test case names
+>  3:  58cc2fcda3 =  5:  9fac3dff83 t5520: let sed open its own input
+>  4:  d2946208d3 !  6:  c6ca45eb17 t5520: replace test -f with test_path_is_file
+>     @@ Metadata
+>      Author: Denton Liu <liu.denton@gmail.com>
+>      
+>       ## Commit message ##
+>     -    t5520: replace test -f with test_path_is_file
+>     +    t5520: replace test -f with test-lib functions
+>      
+>          Although `test -f` has the same functionality as test_path_is_file(), in
+>          the case where test_path_is_file() fails, we get much better debugging
+>     -    information. Replace `test -f` with test_path_is_file so that future
+>     -    developers will have a better experience debugging these test cases.
+>     +    information.
+>     +
+>     +    Replace `test -f` with test_path_is_file() so that future developers
+>     +    will have a better experience debugging these test cases.
+>     +
+>     +    Also, in the case of `! test -f`, not only should that path not be a
+>     +    file, it shouldn't exist at all so replace it with
+>     +    test_path_is_missing().
+>      
+>          Signed-off-by: Denton Liu <liu.denton@gmail.com>
+>      
+>     @@ t/t5520-pull.sh: test_expect_success 'pulling into void must not create an octop
+>       		cd cloned-octopus &&
+>       		test_must_fail git pull .. master master &&
+>      -		! test -f file
+>     -+		test_must_fail test_path_is_file file
+>     ++		test_path_is_missing file
+>       	)
+>       '
+>       
+>  5:  5b4c1dd291 =  7:  830a8212ae t5520: remove spaces after redirect operator
+>  6:  26fea15950 =  8:  3d982230be t5520: use test_line_count where possible
+>  7:  3fc0354c9c !  9:  2bca4f046d t5520: replace test -{n,z} with test-lib functions
+>     @@ Metadata
+>       ## Commit message ##
+>          t5520: replace test -{n,z} with test-lib functions
+>      
+>     +    When wrapping a Git command in a subshell within another command, we
+>     +    throw away the Git command's exit code. In case the Git command fails,
+>     +    we would like to know about it rather than the failure being silent.
+>     +    Extract Git commands so that their exit codes are not lost.
+>     +
+>          Instead of using `test -n` or `test -z`, replace them respectively with
+>     -    invocations of test_file_not_empty() and test_must_be_empty().
+>     +    invocations of test_file_not_empty() and test_must_be_empty() so that we
+>     +    get better debugging information in the case of a failure.
+>      
+>          Signed-off-by: Denton Liu <liu.denton@gmail.com>
+>      
+>  8:  f4eb80c9ac ! 10:  1a54db1d5c t5520: use test_cmp_rev where possible
+>     @@ Commit message
+>      
+>                  s/test "$(git rev-parse.* \([^)]*\))" = "$(git rev-parse \([^)]*\))"/test_cmp_rev \1 \2/
+>                  s/test \([^ ]*\) = "$(git rev-parse.* \([^)]*\))"/test_cmp_rev \1 \2/
+>     -            s/test "$(git rev-parse.* \([^)]*\))" != "$(git rev-parse.* \([^)]*\))"/test_must_fail test_cmp_rev \1 \2/
+>     -            s/test \([^ ]*\) != "$(git rev-parse.* \([^)]*\))"/test_must_fail test_cmp_rev \1 \2/
+>     +            s/test "$(git rev-parse.* \([^)]*\))" != "$(git rev-parse.* \([^)]*\))"/test_cmp_rev ! \1 \2/
+>     +            s/test \([^ ]*\) != "$(git rev-parse.* \([^)]*\))"/test_cmp_rev ! \1 \2/
+>      
+>          Signed-off-by: Denton Liu <liu.denton@gmail.com>
+>      
+>     @@ t/t5520-pull.sh: test_expect_success 'branch.to-rebase.rebase should override pu
+>       	test_config branch.to-rebase.rebase false &&
+>       	git pull . copy &&
+>      -	test "$(git rev-parse HEAD^)" != "$(git rev-parse copy)" &&
+>     -+	test_must_fail test_cmp_rev HEAD^ copy &&
+>     ++	test_cmp_rev ! HEAD^ copy &&
+>       	test new = "$(git show HEAD:file2)"
+>       '
+>       
+>     @@ t/t5520-pull.sh: test_expect_success 'pull --rebase dies early with dirty workin
+>       	git checkout HEAD -- file &&
+>       	git pull &&
+>      -	test "$COPY" != "$(git rev-parse --verify me/copy)"
+>     -+	test_must_fail test_cmp_rev "$COPY" me/copy
+>     ++	test_cmp_rev ! "$COPY" me/copy
+>       '
+>       
+>       test_expect_success 'pull --rebase works on branch yet to be born' '
+>  9:  bd3ec4239c ! 11:  52cf4f0d0f t5520: test single-line files by git with test_cmp
+>     @@ Commit message
+>                  s/\(\s*\)test \([^ ]*\) = "$(\(git [^)]*\))"/\1echo \2 >expect \&\&\n\1\3 >actual \&\&\n\1test_cmp expect actual/
+>                  s/\(\s*\)test "$(\(git [^)]*\))" = \([^ ]*\)/\1echo \3 >expect \&\&\n\1\2 >actual \&\&\n\1test_cmp expect actual/
+>      
+>     +    A future patch will clean up situations where we have multiple duplicate
+>     +    statements within a test case. This is done to keep this patch purely
+>     +    mechanical.
+>     +
+>          Signed-off-by: Denton Liu <liu.denton@gmail.com>
+>      
+>       ## t/t5520-pull.sh ##
+>     @@ t/t5520-pull.sh: test_expect_success 'branch.to-rebase.rebase' '
+>      @@ t/t5520-pull.sh: test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
+>       	test_config branch.to-rebase.rebase false &&
+>       	git pull . copy &&
+>     - 	test_must_fail test_cmp_rev HEAD^ copy &&
+>     + 	test_cmp_rev ! HEAD^ copy &&
+>      -	test new = "$(git show HEAD:file2)"
+>      +	echo new >expect &&
+>      +	git show HEAD:file2 >actual &&
+> 10:  61b4df0f7c = 12:  0cfabb201c t5520: don't put git in upstream of pipe
+> 11:  f3429bbb57 ! 13:  b2d0ce21c8 t5520: replace subshell cat comparison with test_cmp
+>     @@ Commit message
+>                  s/\(\s*\)test \([^=]*\)= "$(cat \([^)]*\))"/\1echo \2>expect \&\&\n\1test_cmp expect \3/
+>                  s/\(\s*\)test "$(cat \([^)]*\))" = \([^&]*\)\( &&\)\?$/\1echo \3 >expect \&\&\n\1test_cmp expect \2\4/
+>      
+>     +    A future patch will clean up situations where we have multiple duplicate
+>     +    statements within a test case. This is done to keep this patch purely
+>     +    mechanical.
+>     +
+>          Signed-off-by: Denton Liu <liu.denton@gmail.com>
+>      
+>       ## t/t5520-pull.sh ##
+>  -:  ---------- > 14:  5aac40a029 t5520: remove redundant lines in test cases
+> 12:  3e6c591b2b = 15:  2c0d3ac416 t5520: replace `! git` with `test_must_fail git`
+> -- 
+> 2.23.0.897.g0a19638b1e
+> 
