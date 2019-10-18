@@ -7,28 +7,28 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C5F41F4C4
-	for <e@80x24.org>; Fri, 18 Oct 2019 04:54:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A84661F4C4
+	for <e@80x24.org>; Fri, 18 Oct 2019 04:54:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441842AbfJREyP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Oct 2019 00:54:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51666 "HELO cloud.peff.net"
+        id S1726032AbfJREyE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Oct 2019 00:54:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51664 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728053AbfJREyN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Oct 2019 00:54:13 -0400
-Received: (qmail 9389 invoked by uid 109); 18 Oct 2019 04:54:14 -0000
+        id S1725973AbfJREyD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Oct 2019 00:54:03 -0400
+Received: (qmail 9346 invoked by uid 109); 18 Oct 2019 04:47:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 18 Oct 2019 04:54:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 18 Oct 2019 04:47:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14121 invoked by uid 111); 18 Oct 2019 04:57:18 -0000
+Received: (qmail 14054 invoked by uid 111); 18 Oct 2019 04:50:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Oct 2019 00:57:18 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Oct 2019 00:50:27 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 18 Oct 2019 00:54:12 -0400
+Date:   Fri, 18 Oct 2019 00:47:21 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 08/23] fsck: require an actual buffer for non-blobs
-Message-ID: <20191018045412.GH17879@sigill.intra.peff.net>
+Subject: [PATCH 04/23] remember commit/tag parse failures
+Message-ID: <20191018044721.GD17879@sigill.intra.peff.net>
 References: <20191018044103.GA17625@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,202 +39,143 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The fsck_object() function takes in a buffer, but also a "struct
-object". The rules for using these vary between types:
+If we can't parse a commit, then parse_commit() will return an error
+code. But it _also_ sets the "parsed" flag, which tells us not to bother
+trying to re-parse the object. That means that subsequent parses have no
+idea that the information in the struct may be bogus.  I.e., doing this:
 
-  - for a commit, we'll use the provided buffer; if it's NULL, we'll
-    fall back to get_commit_buffer(), which loads from either an
-    in-memory cache or from disk. If the latter fails, we'd die(), which
-    is non-ideal for fsck.
+  parse_commit(commit);
+  ...
+  if (parse_commit(commit) < 0)
+          die("commit is broken");
 
-  - for a tag, a NULL buffer will fall back to loading the object from
-    disk (and failure would lead to an fsck error)
+will never trigger the die(). The second parse_commit() will see the
+"parsed" flag and quietly return success.
 
-  - for a tree, we _never_ look at the provided buffer, and always use
-    tree->buffer
+There are two obvious ways to fix this:
 
-  - for a blob, we usually don't look at the buffer at all, unless it
-    has been marked as a .gitmodule file. In that case we check the
-    buffer given to us, or assume a NULL buffer is a very large blob
-    (and complain about it)
+  1. Stop setting "parsed" until we've successfully parsed.
 
-This is much more complex than it needs to be. It turns out that nobody
-ever feeds a NULL buffer that isn't a blob:
+  2. Keep a second "corrupt" flag to indicate that we saw an error (and
+     when the parsed flag is set, return 0/-1 depending on the corrupt
+     flag).
 
-  - git-fsck calls fsck_object() only from fsck_obj(). That in turn is
-    called by one of:
+This patch does option 1. The obvious downside versus option 2 is that
+we might continually re-parse a broken object. But in practice,
+corruption like this is rare, and we typically die() or return an error
+in the caller. So it's OK not to worry about optimizing for corruption.
+And it's much simpler: we don't need to use an extra bit in the object
+struct, and callers which check the "parsed" flag don't need to learn
+about the corrupt bit, too.
 
-      - fsck_obj_buffer(), which is a callback to verify_pack(), which
-	unpacks everything except large blobs into a buffer (see
-	pack-check.c, lines 131-141).
+There's no new test here, because this case is already covered in t5318.
+Note that we do need to update the expected message there, because we
+now detect the problem in the return from "parse_commit()", and not with
+a separate check for a NULL tree. In fact, we can now ditch that
+explicit tree check entirely, as we're covered robustly by this change
+(and the previous recent change to treat a NULL tree as a parse error).
 
-      - fsck_loose(), which hits a BUG() on non-blobs with a NULL buffer
-	(builtin/fsck.c, lines 639-640)
-
-    And in either case, we'll have just called parse_object_buffer()
-    anyway, which would segfault on a NULL buffer for commits or tags
-    (not for trees, but it would install a NULL tree->buffer which would
-    later cause a segfault)
-
-  - git-index-pack asserts that the buffer is non-NULL unless the object
-    is a blob (see builtin/index-pack.c, line 832)
-
-  - git-unpack-objects always writes a non-NULL buffer into its
-    obj_buffer hash, which is then fed to fsck_object(). (There is
-    actually a funny thing here where it does not store blob buffers at
-    all, nor does it call fsck on them; it does check any needed blobs
-    via fsck_finish() though).
-
-Let's make the rules simpler, which reduces the amount of code and gives
-us more flexibility in refactoring the fsck code. The new rules are:
-
-  - only blobs are allowed to pass a NULL buffer
-
-  - we always use the provided buffer, never pulling information from
-    the object struct
-
-We don't have to adjust any callers, because they were already adhering
-to these. Note that we do drop a few fsck identifiers for missing tags,
-but that was all dead code (because nobody passed a NULL tag buffer).
+We'll also give tags the same treatment. I don't know offhand of any
+cases where the problem can be triggered (it implies somebody ignoring a
+parse error earlier in the process), but consistently returning an error
+should cause the least surprise.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- fsck.c | 51 +++++++++------------------------------------------
- fsck.h |  6 +++++-
- 2 files changed, 14 insertions(+), 43 deletions(-)
+ commit-graph.c          |  3 ---
+ commit.c                | 14 +++++++++++++-
+ t/t5318-commit-graph.sh |  2 +-
+ tag.c                   | 12 +++++++++++-
+ 4 files changed, 25 insertions(+), 6 deletions(-)
 
-diff --git a/fsck.c b/fsck.c
-index 79ce3a97c8..347a0ef5c9 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -49,13 +49,11 @@ static struct oidset gitmodules_done = OIDSET_INIT;
- 	FUNC(MISSING_SPACE_BEFORE_EMAIL, ERROR) \
- 	FUNC(MISSING_TAG, ERROR) \
- 	FUNC(MISSING_TAG_ENTRY, ERROR) \
--	FUNC(MISSING_TAG_OBJECT, ERROR) \
- 	FUNC(MISSING_TREE, ERROR) \
- 	FUNC(MISSING_TREE_OBJECT, ERROR) \
- 	FUNC(MISSING_TYPE, ERROR) \
- 	FUNC(MISSING_TYPE_ENTRY, ERROR) \
- 	FUNC(MULTIPLE_AUTHORS, ERROR) \
--	FUNC(TAG_OBJECT_NOT_TAG, ERROR) \
- 	FUNC(TREE_NOT_SORTED, ERROR) \
- 	FUNC(UNKNOWN_TYPE, ERROR) \
- 	FUNC(ZERO_PADDED_DATE, ERROR) \
-@@ -541,7 +539,9 @@ static int verify_ordered(unsigned mode1, const char *name1, unsigned mode2, con
- 	return c1 < c2 ? 0 : TREE_UNORDERED;
- }
+diff --git a/commit-graph.c b/commit-graph.c
+index fc4a43b8d6..852b9c39e6 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -855,9 +855,6 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+ 			die(_("unable to parse commit %s"),
+ 				oid_to_hex(&(*list)->object.oid));
+ 		tree = get_commit_tree_oid(*list);
+-		if (!tree)
+-			die(_("unable to get tree for %s"),
+-				oid_to_hex(&(*list)->object.oid));
+ 		hashwrite(f, tree->hash, hash_len);
  
--static int fsck_tree(struct tree *item, struct fsck_options *options)
-+static int fsck_tree(struct tree *item,
-+		     const char *buffer, unsigned long size,
-+		     struct fsck_options *options)
- {
- 	int retval = 0;
- 	int has_null_sha1 = 0;
-@@ -558,7 +558,7 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
- 	unsigned o_mode;
- 	const char *o_name;
+ 		parent = (*list)->parents;
+diff --git a/commit.c b/commit.c
+index 810419a168..e12e7998ad 100644
+--- a/commit.c
++++ b/commit.c
+@@ -405,7 +405,18 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
  
--	if (init_tree_desc_gently(&desc, item->buffer, item->size)) {
-+	if (init_tree_desc_gently(&desc, buffer, size)) {
- 		retval += report(options, &item->object, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
- 		return retval;
- 	}
-@@ -733,8 +733,8 @@ static int fsck_ident(const char **ident, struct object *obj, struct fsck_option
- 	return 0;
- }
- 
--static int fsck_commit_buffer(struct commit *commit, const char *buffer,
--	unsigned long size, struct fsck_options *options)
-+static int fsck_commit(struct commit *commit, const char *buffer,
-+		       unsigned long size, struct fsck_options *options)
- {
- 	struct object_id tree_oid, oid;
- 	unsigned author_count;
-@@ -788,47 +788,15 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
- 	return 0;
- }
- 
--static int fsck_commit(struct commit *commit, const char *data,
--	unsigned long size, struct fsck_options *options)
--{
--	const char *buffer = data ?  data : get_commit_buffer(commit, &size);
--	int ret = fsck_commit_buffer(commit, buffer, size, options);
--	if (!data)
--		unuse_commit_buffer(commit, buffer);
--	return ret;
--}
--
--static int fsck_tag(struct tag *tag, const char *data,
-+static int fsck_tag(struct tag *tag, const char *buffer,
- 		    unsigned long size, struct fsck_options *options)
- {
- 	struct object_id oid;
- 	int ret = 0;
--	const char *buffer;
--	char *to_free = NULL, *eol;
-+	char *eol;
- 	struct strbuf sb = STRBUF_INIT;
- 	const char *p;
- 
--	if (data)
--		buffer = data;
--	else {
--		enum object_type type;
--
--		buffer = to_free =
--			read_object_file(&tag->object.oid, &type, &size);
--		if (!buffer)
--			return report(options, &tag->object,
--				FSCK_MSG_MISSING_TAG_OBJECT,
--				"cannot read tag object");
--
--		if (type != OBJ_TAG) {
--			ret = report(options, &tag->object,
--				FSCK_MSG_TAG_OBJECT_NOT_TAG,
--				"expected tag got %s",
--			    type_name(type));
--			goto done;
--		}
--	}
--
- 	ret = verify_headers(buffer, size, &tag->object, options);
- 	if (ret)
- 		goto done;
-@@ -889,7 +857,6 @@ static int fsck_tag(struct tag *tag, const char *data,
- 
- done:
- 	strbuf_release(&sb);
--	free(to_free);
- 	return ret;
- }
- 
-@@ -979,7 +946,7 @@ int fsck_object(struct object *obj, void *data, unsigned long size,
- 	if (obj->type == OBJ_BLOB)
- 		return fsck_blob((struct blob *)obj, data, size, options);
- 	if (obj->type == OBJ_TREE)
--		return fsck_tree((struct tree *) obj, options);
-+		return fsck_tree((struct tree *) obj, data, size, options);
- 	if (obj->type == OBJ_COMMIT)
- 		return fsck_commit((struct commit *) obj, (const char *) data,
- 			size, options);
-diff --git a/fsck.h b/fsck.h
-index b95595ae5f..e479461075 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -52,7 +52,11 @@ struct fsck_options {
-  *    0		everything OK
-  */
- int fsck_walk(struct object *obj, void *data, struct fsck_options *options);
--/* If NULL is passed for data, we assume the object is local and read it. */
+ 	if (item->object.parsed)
+ 		return 0;
+-	item->object.parsed = 1;
 +
-+/*
-+ * Blob objects my pass a NULL data pointer, which indicates they are too large
-+ * to fit in memory. All other types must pass a real buffer.
-+ */
- int fsck_object(struct object *obj, void *data, unsigned long size,
- 	struct fsck_options *options);
++	if (item->parents) {
++		/*
++		 * Presumably this is leftover from an earlier failed parse;
++		 * clear it out in preparation for us re-parsing (we'll hit the
++		 * same error, but that's good, since it lets our caller know
++		 * the result cannot be trusted.
++		 */
++		free_commit_list(item->parents);
++		item->parents = NULL;
++	}
++
+ 	tail += size;
+ 	if (tail <= bufptr + tree_entry_len + 1 || memcmp(bufptr, "tree ", 5) ||
+ 			bufptr[tree_entry_len] != '\n')
+@@ -462,6 +473,7 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
+ 	if (check_graph)
+ 		load_commit_graph_info(r, item);
+ 
++	item->object.parsed = 1;
+ 	return 0;
+ }
+ 
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index d42b3efe39..127b404856 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -660,7 +660,7 @@ test_expect_success 'corrupt commit-graph write (missing tree)' '
+ 		git commit-tree -p "$broken" -m "good" "$tree" >good &&
+ 		test_must_fail git commit-graph write --stdin-commits \
+ 			<good 2>test_err &&
+-		test_i18ngrep "unable to get tree for" test_err
++		test_i18ngrep "unable to parse commit" test_err
+ 	)
+ '
+ 
+diff --git a/tag.c b/tag.c
+index 6a51efda8d..71b544467e 100644
+--- a/tag.c
++++ b/tag.c
+@@ -141,7 +141,16 @@ int parse_tag_buffer(struct repository *r, struct tag *item, const void *data, u
+ 
+ 	if (item->object.parsed)
+ 		return 0;
+-	item->object.parsed = 1;
++
++	if (item->tag) {
++		/*
++		 * Presumably left over from a previous failed parse;
++		 * clear it out in preparation for re-parsing (we'll probably
++		 * hit the same error, which lets us tell our current caller
++		 * about the problem).
++		 */
++		FREE_AND_NULL(item->tag);
++	}
+ 
+ 	if (size < the_hash_algo->hexsz + 24)
+ 		return -1;
+@@ -192,6 +201,7 @@ int parse_tag_buffer(struct repository *r, struct tag *item, const void *data, u
+ 	else
+ 		item->date = 0;
+ 
++	item->object.parsed = 1;
+ 	return 0;
+ }
  
 -- 
 2.23.0.1228.gee29b05929
