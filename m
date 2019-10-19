@@ -8,59 +8,62 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D1381F4C0
-	for <e@80x24.org>; Sat, 19 Oct 2019 10:35:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 827311F4C0
+	for <e@80x24.org>; Sat, 19 Oct 2019 10:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725856AbfJSKfw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Oct 2019 06:35:52 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:43222 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725777AbfJSKfw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Oct 2019 06:35:52 -0400
-Received: by mail-wr1-f68.google.com with SMTP id c2so3495218wrr.10
-        for <git@vger.kernel.org>; Sat, 19 Oct 2019 03:35:50 -0700 (PDT)
+        id S1725995AbfJSKfx (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Oct 2019 06:35:53 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37713 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725812AbfJSKfx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Oct 2019 06:35:53 -0400
+Received: by mail-wm1-f67.google.com with SMTP id f22so8338808wmc.2
+        for <git@vger.kernel.org>; Sat, 19 Oct 2019 03:35:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jMmCozbUr/QVQyVyEsFlszBE917s8M+G60xNdUWxY4E=;
-        b=cS5pP5N3EDFB3lKOBAKBsNX3ZWJpsWSpI+xUgiOLWiZKhj9BpMP+zWDG5s5A8oWp8w
-         FTq0pNOtWr4vVe551vg+KH9RqttGiIE7ZlRNRDq1Euf7UInfgf9cE1Ez+67mKqGjW3T+
-         9QZ+YZZkm2e2ZtUg+xxp6vxHIRLCanxyL1GYAuBcR8LVGJZo3cHX2/MuAG8merUr+YIW
-         RYEzmtUrbXWputXKkwRHNHpHf99hszQdM42Lz40TCrMxbIpxER3wX3wcYYCY/+Pux+uh
-         7qpX1vroquo6ioR/wUaiVyBYgbanLzdlHZpI4QOjYTYjYZuMjh/zhYmmkBOZ5EV14m/a
-         zjyA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=p7QrJej4PYv8ghfmPIe507A12jbjBI0M2hwH9c1bPdM=;
+        b=jD/P+iw8fm2U/gWF8GkohESc+hSzKipG1ro1nfBoUYIio9JUcJgGJsJJ2AF/GUULG1
+         QJAm+eCB9GUiAV0rNyvAYFm4PF83Ymzu4isW/NniRhYath/AGx85pCqf4YWNMHWVOsjv
+         CAzOsLpz1fBLYapi03dODnmO0krqX7HUZ/pfsEoO7+ce2EZNFEFTf7dz6cWYk/vhVSbg
+         tP0CjAhbeTyWmS+Fb/vb/qMq6LI+8OmG+L8vEbofNp1l03F9Lf0Z/CmARJPUK99/WFG4
+         YDlrmSaZVArqCxt/oCRp7L5ULYtoXzwWsROJAAdBBjaFemIA+CuvZbqU6wuu3Vbw1AuT
+         AT2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jMmCozbUr/QVQyVyEsFlszBE917s8M+G60xNdUWxY4E=;
-        b=d4xKZwpj23NgMZFpGp75foRDXZ18MDx7W0l9/IB6mL4B/dKi5899d7tKMvBkO5mVPo
-         U0AQQnXf2sVj7YbznkFUPAFRElE10/05E9otpYanRrqECwzUfkh9AeFy4a/8XQUH/yyK
-         KZFWHmT51hNz48anAaHJ+Z+wxnFPsJQcjk0dg2I3avyntwVGgRr4MYIcEHgUgYYoNRJY
-         0Z2dYu8/pKvX6Uc0SyBk+z3lo34/7wiRSDvgtozU560q4W+hhEvC22Dz20wGuolgSW+u
-         IsSrgHavkxpJYWBrLw8/9ZE/OFQmMZEbnonSPdiTfpAtyfs5cIz5wyikSaDlUXCnFV9t
-         gjPQ==
-X-Gm-Message-State: APjAAAX+/ZBA8QYL+Qs6t0CtsEd9gHID7KYelcJ1jpDUX5gL93l9AdEJ
-        jJ23cxNgHGiGcZnICripkyfDpgJmeLXO1A==
-X-Google-Smtp-Source: APXvYqyoZi/VPxno9dk3Mo0PrBAH/AmKf0IrYFnunitlzfLG5Q9iJL/PQM/jV4DJqrSMFuGKFr28pQ==
-X-Received: by 2002:adf:db42:: with SMTP id f2mr12388235wrj.287.1571481349419;
-        Sat, 19 Oct 2019 03:35:49 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=p7QrJej4PYv8ghfmPIe507A12jbjBI0M2hwH9c1bPdM=;
+        b=LPJAqmlrJQOqtfeWu3AS/Xt4Ula+F4DuTk/14fNHORPfLVFPaqyz3wq2kmlreuNzRI
+         og22Qf9CJwgzGh//UD41DaKy6eb5F5fuZgQqJwGZCMeCbcmjBsqVc/BIXreZcqp2VsbL
+         /NyjnLs79NHjyos+b30JClz3/wbEbwtdxus6TQamf8aY/e4r5fnh9yJi3b8tgRlHm4Vf
+         JC7WMqlKhXJUCAJsIRJ/FxROlOjZNusOOeRcLaT4oNpG4MLWJCL7BoZsM5XXJSzKFkiL
+         OmyYvdTu0Iqvv8NtOHSn5woxJMQ3za9LqPoiRlzS18+MHEHwsk9CH2S693XLlwbm++9V
+         Q0Aw==
+X-Gm-Message-State: APjAAAV9m4dzIyg3n9xWgHzx78lB2QP5HKtaIqhUPK0JNAhsw4Z8gFOr
+        UUiDfQhWktHpm8SX7+DG7X30nu5A2nmc9A==
+X-Google-Smtp-Source: APXvYqxjg6fE6FG51JJWJRzC+OiIkXbiOCyDhFZcYM3jRp+81hFeB4/1iUH9ztQyA+z3Ch63Hb0jUQ==
+X-Received: by 2002:a1c:5409:: with SMTP id i9mr11496820wmb.120.1571481350918;
+        Sat, 19 Oct 2019 03:35:50 -0700 (PDT)
 Received: from localhost.localdomain ([80.214.68.206])
-        by smtp.gmail.com with ESMTPSA id p68sm6383086wme.0.2019.10.19.03.35.48
+        by smtp.gmail.com with ESMTPSA id p68sm6383086wme.0.2019.10.19.03.35.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Oct 2019 03:35:48 -0700 (PDT)
+        Sat, 19 Oct 2019 03:35:50 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH v2 0/9] Rewrite packfile reuse code
-Date:   Sat, 19 Oct 2019 12:35:22 +0200
-Message-Id: <20191019103531.23274-1-chriscool@tuxfamily.org>
+        Jonathan Tan <jonathantanmy@google.com>,
+        James Ramsay <james@jramsay.com.au>
+Subject: [PATCH v2 1/9] builtin/pack-objects: report reused packfile objects
+Date:   Sat, 19 Oct 2019 12:35:23 +0200
+Message-Id: <20191019103531.23274-2-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.24.0.rc0.9.gef620577e2
+In-Reply-To: <20191019103531.23274-1-chriscool@tuxfamily.org>
+References: <20191019103531.23274-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -68,96 +71,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series is rewriting the code that tries to reuse existing
-packfiles.
+From: Jeff King <peff@peff.net>
 
-The code in this patch series was written by GitHub, and Peff nicely
-provided it in the following discussion:
+To see when packfile reuse kicks in or not, it is useful to
+show reused packfile objects statistics in the output of
+upload-pack.
 
-https://public-inbox.org/git/3E56B0FD-EBE8-4057-A93A-16EBB09FBCE0@jramsay.com.au/
+Helped-by: James Ramsay <james@jramsay.com.au>
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/pack-objects.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-The first version of this patch series was also discussed:
-
-https://public-inbox.org/git/20190913130226.7449-1-chriscool@tuxfamily.org/
-
-Thanks to the reviewers!
-
-According to Peff this new code is a lot smarter than what it
-replaces. It allows "holes" in the chunks of packfile to be reused,
-and skips over them. It rewrites OFS_DELTA offsets as it goes to
-account for the holes. So it's basically a linear walk over the
-packfile, but with the important distinction that we don't add those
-objects to the object_entry array, which makes them very lightweight
-(especially in memory use, but they also aren't considered bases for
-finding new deltas, etc). It seems like a good compromise between the
-cost to serve a clone and the quality of the resulting packfile.
-
-Changes since the previous patch series are the following:
-
-  - Rebased onto current master (v2.24.0-rc0), which means that
-    conflicts due to dropping the last argument of packlist_find() are
-    resolved.
-
-  - Replaced "in a following patch" with "in a following commit" in
-    commit messages.
-
-  - Squashed previous patchs 3/10 and 4/10 into new patch 3/9 as
-    suggested by Peff and Jonathan.
-
-  - Changed commit message of patch 3/9, so that the justification
-    should be correct now.
-
-  - Also in patch 3/9, `block ? block * 2 : 1` is now used to compute
-    the number of words that should be allocated.
-
-  - Changed commit message of patch 4/9 (previously 5/10), so that the
-    justification should be correct now.
-
-  - Document pack.allowPackReuse in patch 7/9.
-
-  - Also in patch 7/9 move using the `allow_pack_reuse` variable into
-    pack_options_allow_reuse() as suggested by Junio.
-
-  - Improved commit message in patch 9/9 a lot by adding many comments
-    made by Peff about it.
-
-  - In patch 9/9 removed `if (0) { ... }` code.
-
-  - Also in patch 9/9 changed parameter name from
-    `struct bitmap **bitmap` to `struct bitmap **reuse_out` in
-    pack-bitmap.h as suggested by Jonathan.
-
-I tried to use `git range-diff` to see if I could send its output to
-compare this patch series with the previous one, but it looks like it
-unfortunately thinks that new patch 7/9 is completely different than
-previous patch 8/10, and also it shows a lot more changes from patch
-10/10 to patch 9/9 than necessary for some reason. So I decided not to
-send it, but if you want it anyway please tell me.
-
-I have put Peff as the author of all the commits.
-
-Jeff King (9):
-  builtin/pack-objects: report reused packfile objects
-  packfile: expose get_delta_base()
-  ewah/bitmap: introduce bitmap_word_alloc()
-  pack-bitmap: don't rely on bitmap_git->reuse_objects
-  pack-bitmap: introduce bitmap_walk_contains()
-  csum-file: introduce hashfile_total()
-  pack-objects: introduce pack.allowPackReuse
-  builtin/pack-objects: introduce obj_is_packed()
-  pack-objects: improve partial packfile reuse
-
- Documentation/config/pack.txt |   4 +
- builtin/pack-objects.c        | 235 +++++++++++++++++++++++++++-------
- csum-file.h                   |   9 ++
- ewah/bitmap.c                 |  13 +-
- ewah/ewok.h                   |   1 +
- pack-bitmap.c                 | 178 +++++++++++++++++--------
- pack-bitmap.h                 |   6 +-
- packfile.c                    |  10 +-
- packfile.h                    |   3 +
- 9 files changed, 349 insertions(+), 110 deletions(-)
-
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 5876583220..f2c2703090 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3509,7 +3509,9 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	if (progress)
+ 		fprintf_ln(stderr,
+ 			   _("Total %"PRIu32" (delta %"PRIu32"),"
+-			     " reused %"PRIu32" (delta %"PRIu32")"),
+-			   written, written_delta, reused, reused_delta);
++			     " reused %"PRIu32" (delta %"PRIu32"),"
++			     " pack-reused %"PRIu32),
++			   written, written_delta, reused, reused_delta,
++			   reuse_packfile_objects);
+ 	return 0;
+ }
 -- 
 2.24.0.rc0.9.gef620577e2
 
