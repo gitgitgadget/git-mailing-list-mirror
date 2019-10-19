@@ -7,77 +7,79 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A2441F4C0
-	for <e@80x24.org>; Sat, 19 Oct 2019 23:18:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 021E91F4C0
+	for <e@80x24.org>; Sat, 19 Oct 2019 23:23:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726162AbfJSXSi (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Oct 2019 19:18:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53066 "HELO cloud.peff.net"
+        id S1726148AbfJSXXY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Oct 2019 19:23:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53096 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726145AbfJSXSh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Oct 2019 19:18:37 -0400
-Received: (qmail 20386 invoked by uid 109); 19 Oct 2019 23:18:37 -0000
+        id S1726143AbfJSXXY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Oct 2019 19:23:24 -0400
+Received: (qmail 20455 invoked by uid 109); 19 Oct 2019 23:23:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 19 Oct 2019 23:18:37 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 19 Oct 2019 23:23:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27031 invoked by uid 111); 19 Oct 2019 23:21:42 -0000
+Received: (qmail 27056 invoked by uid 111); 19 Oct 2019 23:26:29 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 19 Oct 2019 19:21:42 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 19 Oct 2019 19:26:29 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 19 Oct 2019 19:18:36 -0400
+Date:   Sat, 19 Oct 2019 19:23:23 -0400
 From:   Jeff King <peff@peff.net>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Philip Oakley <philipoakley@iee.email>, git <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2 5/9] pack-bitmap: introduce bitmap_walk_contains()
-Message-ID: <20191019231836.GA32408@sigill.intra.peff.net>
+Subject: Re: [PATCH v2 9/9] pack-objects: improve partial packfile reuse
+Message-ID: <20191019232322.GB32408@sigill.intra.peff.net>
 References: <20191019103531.23274-1-chriscool@tuxfamily.org>
- <20191019103531.23274-6-chriscool@tuxfamily.org>
- <dce8e0b5-c4ea-f4f6-6275-1322f2d7200b@iee.email>
+ <20191019103531.23274-10-chriscool@tuxfamily.org>
+ <6e4ad9bb-20d7-4ae5-8768-326f5c455c3c@iee.email>
+ <CAP8UFD2rsZj3=KoPCEWw2sTXFhNkynrJLeAGWK2vEbD5GU8chA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <dce8e0b5-c4ea-f4f6-6275-1322f2d7200b@iee.email>
+In-Reply-To: <CAP8UFD2rsZj3=KoPCEWw2sTXFhNkynrJLeAGWK2vEbD5GU8chA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 19, 2019 at 04:25:19PM +0100, Philip Oakley wrote:
+On Sat, Oct 19, 2019 at 09:20:11PM +0200, Christian Couder wrote:
 
-> > +int bitmap_walk_contains(struct bitmap_index *bitmap_git,
-> > +			 struct bitmap *bitmap, const struct object_id *oid)
-> > +{
-> > +	int idx;
-> Excuse my ignorance here...
+> > > +static void write_reused_pack_one(size_t pos, struct hashfile *out,
+> > > +                               struct pack_window **w_curs)
+> > > +{
+> > > +     off_t offset, next, cur;
+> > > +     enum object_type type;
+> > > +     unsigned long size;
+> >
+> > Is this a mem_sized size or a counter for less that 4GiB items?
 > 
-> For the case on Windows (int/long 32 bit), is this return value guaranteed
-> to be less than 2GiB, i.e. not a memory offset?
+> What I can see is that `&size` is passed as the last argument to
+> unpack_object_header() below. And unpack_object_header() is defined in
+> packfile.h like this:
 > 
-> I'm just thinking ahead to the resolution of the 4GiB file limit issue on
-> Git-for-Windows (https://github.com/git-for-windows/git/pull/2179)
+> int unpack_object_header(struct packed_git *, struct pack_window **,
+> off_t *, unsigned long *);
+> 
+> since at least 336226c259 (packfile.h: drop extern from function
+> declarations, 2019-04-05)
+> 
+> So fixing this, if it needs to be fixed, should probably be part of a
+> separate topic fixing unpack_object_header().
 
-Yes, it's not a memory offset.
-
-This "idx" here (and the return value of bitmap_position) represents a
-position within an array of objects. This isn't strictly limited to the
-objects in a single pack (because a traversal might extend to objects
-outside the bitmapped pack), but we can use that as a general ballpark.
-And it's limited to a 4-byte object count already.
-
-So the "best" type here would be a uint32_t (which is used elsewhere
-in the pack code), but we use signedness to indicate that the object
-wasn't found.
-
-That's probably OK. The biggest repos I've seen have on the order of
-10-100M objects. That still gives us a factor of 20 before we hit 2^31.
-If we imagine those repos took 10 years or so to accrue that many
-objects, then we probably still have 200 years of growth left. Of course
-growth accelerates over time, but I suspect repos with 2B objects will
-run into other scaling problems first. So I don't think it's worth
-worrying about too much for now.
+Yeah, this one definitely should be moved to whatever we used to
+represent object sizes in the future (size_t, or I guess off_t if we
+really want to handle huge objects on 32-bit systems too). But
+definitely it shouldn't happen in this series, and I don't think anybody
+interested in the other topic (converting the integer type for object
+sizes) needs to keep tabs on it. When they convert
+unpack_object_header(), the compiler will complain because of passing
+it as a pointer (the more insidious ones will be where we return an
+unsigned long to represent an object type, and somebody will have to
+look into every caller).
 
 -Peff
