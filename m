@@ -8,59 +8,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 827311F4C0
-	for <e@80x24.org>; Sat, 19 Oct 2019 10:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ED121F4C0
+	for <e@80x24.org>; Sat, 19 Oct 2019 10:35:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725995AbfJSKfx (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Oct 2019 06:35:53 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37713 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725812AbfJSKfx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Oct 2019 06:35:53 -0400
-Received: by mail-wm1-f67.google.com with SMTP id f22so8338808wmc.2
-        for <git@vger.kernel.org>; Sat, 19 Oct 2019 03:35:51 -0700 (PDT)
+        id S1726008AbfJSKfy (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Oct 2019 06:35:54 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:34527 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725940AbfJSKfy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Oct 2019 06:35:54 -0400
+Received: by mail-wr1-f66.google.com with SMTP id t16so3608875wrr.1
+        for <git@vger.kernel.org>; Sat, 19 Oct 2019 03:35:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=p7QrJej4PYv8ghfmPIe507A12jbjBI0M2hwH9c1bPdM=;
-        b=jD/P+iw8fm2U/gWF8GkohESc+hSzKipG1ro1nfBoUYIio9JUcJgGJsJJ2AF/GUULG1
-         QJAm+eCB9GUiAV0rNyvAYFm4PF83Ymzu4isW/NniRhYath/AGx85pCqf4YWNMHWVOsjv
-         CAzOsLpz1fBLYapi03dODnmO0krqX7HUZ/pfsEoO7+ce2EZNFEFTf7dz6cWYk/vhVSbg
-         tP0CjAhbeTyWmS+Fb/vb/qMq6LI+8OmG+L8vEbofNp1l03F9Lf0Z/CmARJPUK99/WFG4
-         YDlrmSaZVArqCxt/oCRp7L5ULYtoXzwWsROJAAdBBjaFemIA+CuvZbqU6wuu3Vbw1AuT
-         AT2w==
+        bh=oK2HzqZ7FBuvcugKHc3SgF2RSQEtsp+Lq2fa+TU6eF4=;
+        b=fumtNEiJ2e4xH1wBcBSiL2S3/GeV6g++FIiqFzyRrbhTTeXRwjrNDlHXZSjGcf21tq
+         YC3frSwp1TQ1q+1jjcD0tkjiO4VPJuUWLVhhuuTrNHdYmnmkvd4x+b7wt5DdI9WW9D6L
+         cGCP+LM2bFOq3rvSz/5dkgFs6QWK+GbqtkIhwxTgDIaunXFv23m4Duh7WvTA9/YgM6vQ
+         bEVVqdOUtLoY92dovHxDZ4NBGCOdTezkUTYRNuR0KQHLfHQ2bKQd/Sx67Htwzbebn06u
+         o27OhZUdt22nCtOASKgmENyuyPOBAgqJshUvyOJIYaHcp7d7PHY214Iv8BIqMqzPnW+a
+         Yb1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=p7QrJej4PYv8ghfmPIe507A12jbjBI0M2hwH9c1bPdM=;
-        b=LPJAqmlrJQOqtfeWu3AS/Xt4Ula+F4DuTk/14fNHORPfLVFPaqyz3wq2kmlreuNzRI
-         og22Qf9CJwgzGh//UD41DaKy6eb5F5fuZgQqJwGZCMeCbcmjBsqVc/BIXreZcqp2VsbL
-         /NyjnLs79NHjyos+b30JClz3/wbEbwtdxus6TQamf8aY/e4r5fnh9yJi3b8tgRlHm4Vf
-         JC7WMqlKhXJUCAJsIRJ/FxROlOjZNusOOeRcLaT4oNpG4MLWJCL7BoZsM5XXJSzKFkiL
-         OmyYvdTu0Iqvv8NtOHSn5woxJMQ3za9LqPoiRlzS18+MHEHwsk9CH2S693XLlwbm++9V
-         Q0Aw==
-X-Gm-Message-State: APjAAAV9m4dzIyg3n9xWgHzx78lB2QP5HKtaIqhUPK0JNAhsw4Z8gFOr
-        UUiDfQhWktHpm8SX7+DG7X30nu5A2nmc9A==
-X-Google-Smtp-Source: APXvYqxjg6fE6FG51JJWJRzC+OiIkXbiOCyDhFZcYM3jRp+81hFeB4/1iUH9ztQyA+z3Ch63Hb0jUQ==
-X-Received: by 2002:a1c:5409:: with SMTP id i9mr11496820wmb.120.1571481350918;
-        Sat, 19 Oct 2019 03:35:50 -0700 (PDT)
+        bh=oK2HzqZ7FBuvcugKHc3SgF2RSQEtsp+Lq2fa+TU6eF4=;
+        b=BZFL0O65mmeVK/L7qb6pLyNRVKtuK/DmT2W8P5GM/bBpt+UcSQ1kjAoMm+zlrIcHcS
+         wBWIhcmNd+qyts962DelZgA3AxCFE+PGv9u7OGMDe7JcoOQ0IbtbG/1/IPGbU8HlLA6O
+         ijgGOJ4ODV12m7ToaLs9TAcwWYjhhHNm1YBDAwUtbe4LvGczD5WlsEp+40f3W94IfRyp
+         AgcJ6UTc4xJQ8N+PSd9G3fNw1GuzR7r0SMnd+pyBEtaoikpk8uF4UFXqzNcE9vj0o/ov
+         Uf4Arp1Aav6FS7ed8wne9Szqt3cutKsgDeIpKHBI2QDp9RwXeAdpbeDI0sOXw1Fe/lqC
+         w9HQ==
+X-Gm-Message-State: APjAAAWeCK8+TGNOZQVybQfaVJeZROopFP8d6l9bsfuYRrkLCp4OdUu6
+        GJM9nwIWhleQYhZq+MsMJxAfKrZpBlf/PQ==
+X-Google-Smtp-Source: APXvYqxEYKGDv83kUuTyuZ55B9Ky1YBAu7mNtXku6qaukSGhGmcDuKtr4eqo/Ttuo83UWKv8vwPGbw==
+X-Received: by 2002:adf:f004:: with SMTP id j4mr12372879wro.68.1571481352293;
+        Sat, 19 Oct 2019 03:35:52 -0700 (PDT)
 Received: from localhost.localdomain ([80.214.68.206])
-        by smtp.gmail.com with ESMTPSA id p68sm6383086wme.0.2019.10.19.03.35.49
+        by smtp.gmail.com with ESMTPSA id p68sm6383086wme.0.2019.10.19.03.35.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Oct 2019 03:35:50 -0700 (PDT)
+        Sat, 19 Oct 2019 03:35:51 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        James Ramsay <james@jramsay.com.au>
-Subject: [PATCH v2 1/9] builtin/pack-objects: report reused packfile objects
-Date:   Sat, 19 Oct 2019 12:35:23 +0200
-Message-Id: <20191019103531.23274-2-chriscool@tuxfamily.org>
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH v2 2/9] packfile: expose get_delta_base()
+Date:   Sat, 19 Oct 2019 12:35:24 +0200
+Message-Id: <20191019103531.23274-3-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.24.0.rc0.9.gef620577e2
 In-Reply-To: <20191019103531.23274-1-chriscool@tuxfamily.org>
 References: <20191019103531.23274-1-chriscool@tuxfamily.org>
@@ -73,33 +72,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-To see when packfile reuse kicks in or not, it is useful to
-show reused packfile objects statistics in the output of
-upload-pack.
+In a following commit get_delta_base() will be used outside
+packfile.c, so let's make it non static and declare it in
+packfile.h.
 
-Helped-by: James Ramsay <james@jramsay.com.au>
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/pack-objects.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ packfile.c | 10 +++++-----
+ packfile.h |  3 +++
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 5876583220..f2c2703090 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3509,7 +3509,9 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (progress)
- 		fprintf_ln(stderr,
- 			   _("Total %"PRIu32" (delta %"PRIu32"),"
--			     " reused %"PRIu32" (delta %"PRIu32")"),
--			   written, written_delta, reused, reused_delta);
-+			     " reused %"PRIu32" (delta %"PRIu32"),"
-+			     " pack-reused %"PRIu32),
-+			   written, written_delta, reused, reused_delta,
-+			   reuse_packfile_objects);
- 	return 0;
+diff --git a/packfile.c b/packfile.c
+index 355066de17..81e66847bf 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1173,11 +1173,11 @@ const struct packed_git *has_packed_and_bad(struct repository *r,
+ 	return NULL;
  }
+ 
+-static off_t get_delta_base(struct packed_git *p,
+-				    struct pack_window **w_curs,
+-				    off_t *curpos,
+-				    enum object_type type,
+-				    off_t delta_obj_offset)
++off_t get_delta_base(struct packed_git *p,
++		     struct pack_window **w_curs,
++		     off_t *curpos,
++		     enum object_type type,
++		     off_t delta_obj_offset)
+ {
+ 	unsigned char *base_info = use_pack(p, w_curs, *curpos, NULL);
+ 	off_t base_offset;
+diff --git a/packfile.h b/packfile.h
+index fc7904ec81..ec536a4ae5 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -151,6 +151,9 @@ void *unpack_entry(struct repository *r, struct packed_git *, off_t, enum object
+ unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
+ unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
+ int unpack_object_header(struct packed_git *, struct pack_window **, off_t *, unsigned long *);
++off_t get_delta_base(struct packed_git *p, struct pack_window **w_curs,
++		     off_t *curpos, enum object_type type,
++		     off_t delta_obj_offset);
+ 
+ void release_pack_memory(size_t);
+ 
 -- 
 2.24.0.rc0.9.gef620577e2
 
