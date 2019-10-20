@@ -7,92 +7,139 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 952211F4C0
-	for <e@80x24.org>; Sun, 20 Oct 2019 00:20:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF78B1F4C0
+	for <e@80x24.org>; Sun, 20 Oct 2019 00:26:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726275AbfJTAUH (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Oct 2019 20:20:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56617 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726195AbfJTAUH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Oct 2019 20:20:07 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EBE1519939;
-        Sat, 19 Oct 2019 20:20:04 -0400 (EDT)
+        id S1726192AbfJTA04 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Oct 2019 20:26:56 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52546 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725710AbfJTA04 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Oct 2019 20:26:56 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8B63891D0B;
+        Sat, 19 Oct 2019 20:26:54 -0400 (EDT)
         (envelope-from tmz@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
         :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=n5t5TzHVHLHF4
-        OzGLq7wRzx2qNo=; b=Y6a8C7TjiIyt18/owmBfrBbo2QAYo6wGKdcFCCpM/RCg9
-        i4naJZ+w/KhlrCei1Jz9Q+25JwuI+/FhJjnYt4qAw+RmgS1DX4DCepVRz8bxrIvt
-        19kD7TDuGaHlc7eTBQfg/S+K1YUyiMWCskx4AwhMLCxLQAyCr3dIBiBHnovTeg=
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=gUp3lMbjOAkU8
+        ZkmGped/Oz6YlI=; b=LkLei8AjkCm3cWgoD1f6QbTn03mFu6vzoNIKlX1oezQuY
+        DpbipcqpmnmuFLK/Zae1v0EaQWdbwctD7PuzYMi2Ca59HAFBvP3vPHOP+xUuuPWd
+        Oria/0CCJZdWUAM6AxZUPZi1a81adOuCWMKIQ6L+BePQVVwUibS74k+jrpfBYo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
         :subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=L2UsTYc
-        MzPyCxDEg2EMEPe+mqO9amt1Lc0XK1q38pC4kX6A4Ls1Rf7/s2krOQvC0XQkLePi
-        kQgzVXlMi9tfy5ZQNjmIm7JhlU/ToFn0TWpY/8hsO7qxS2lEfoFovrftw7mqh7l2
-        5ZKkol92kvg9CtV9Posx22wmulPN4KY/487I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A927D19938;
-        Sat, 19 Oct 2019 20:20:04 -0400 (EDT)
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=RGTfxoL
+        /jdKbkJIY/OmMqKq9evFk7dnWilnjsejsjHlZ2v8EnMy3hjqDbnCfr2fGj4x8HtQ
+        zdsY/o83Ni00KKxEt/rYhuBhrPiYm4fumdPwgUJk1c319lD3RaPc/ktx0mxtLYe0
+        rK5tvwRhTNDsbctI3P2q0TCxJT8R4UhUOzcw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 83AB691D0A;
+        Sat, 19 Oct 2019 20:26:54 -0400 (EDT)
         (envelope-from tmz@pobox.com)
 Received: from pobox.com (unknown [173.67.141.44])
         (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5DFE819932;
-        Sat, 19 Oct 2019 20:20:02 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 616A491D09;
+        Sat, 19 Oct 2019 20:26:51 -0400 (EDT)
         (envelope-from tmz@pobox.com)
-Date:   Sat, 19 Oct 2019 20:19:59 -0400
+Date:   Sat, 19 Oct 2019 20:26:48 -0400
 From:   Todd Zullinger <tmz@pobox.com>
 To:     John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] test-progress: fix test failures on big-endian systems
-Message-ID: <20191020001959.GY10893@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [BUG]: Testsuite failures on big-endian targets
+Message-ID: <20191020002648.GZ10893@pobox.com>
 References: <b0bec82e-ad0a-32f6-e2e6-e1f0e6920639@physik.fu-berlin.de>
  <20190731071755.GF4545@pobox.com>
  <f1ce445e-6954-8e7b-2dca-3a566ce689a5@physik.fu-berlin.de>
- <20191019233706.GM29845@szeder.dev>
- <f0d216a8-95ee-bdec-4116-012906117aad@physik.fu-berlin.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <f0d216a8-95ee-bdec-4116-012906117aad@physik.fu-berlin.de>
+In-Reply-To: <f1ce445e-6954-8e7b-2dca-3a566ce689a5@physik.fu-berlin.de>
 User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: 5BD5BF84-F2CF-11E9-ADA4-C28CBED8090B-09356542!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 4FB9AC3C-F2D0-11E9-843F-B0405B776F7B-09356542!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hello,
+
+[+cc: =C6var]
 
 John Paul Adrian Glaubitz wrote:
-> Hi G=E1bor!
+> The testsuite is failing again on s390x and all other big-endian target=
+s in
+> Debian. For a full build log on s390x see [1].
 >=20
-> On 10/20/19 1:37 AM, SZEDER G=E1bor wrote:
->> On Sat, Oct 19, 2019 at 11:38:40PM +0200, John Paul Adrian Glaubitz wr=
-ote:
->>> The testsuite is failing again on s390x and all other big-endian targ=
-ets in
->>> Debian. For a full build log on s390x see [1].
->>=20
->> Gah, my progress display fixes strike again...
->>=20
->> I think the patch below should fix it, but I could only test it on
->> little-endian systems.  Could you please confirm that it indeed works
->> on big-endian as well?
-[...]
-> I can confirm that your patch fixes the testsuite for me on Debian
-> unstable/ppc64 (big-endian).
+> Adrian
 >=20
-> Tested-By: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+>> [1] https://buildd.debian.org/status/fetch.php?pkg=3Dgit&arch=3Ds390x&=
+ver=3D1%3A2.24.0%7Erc0-1&stamp=3D1571440098&raw=3D0
 
-Yep, that worked well on the Fedora s390x builders as well
-(unsurprisingly).
+With t0500 resolved by <20191019233706.GM29845@szeder.dev>,
+that just leaves the one failure in t7812.
 
-Thanks!
+    Test Summary Report
+    -------------------
+    t7812-grep-icase-non-ascii.sh                    (Wstat: 256 Tests: 1=
+1 Failed: 1)
+      Failed test:  11
+      Non-zero exit status: 1
+    Files=3D879, Tests=3D21880, 404 wallclock secs ( 3.38 usr  1.15 sys +=
+ 440.87 cusr 729.29 csys =3D 1174.69 CPU)
+    Result: FAIL
+
+The failing test output:
+
+    expecting success of 7812.11 'PCRE v2: grep non-ASCII from invalid UT=
+F-8 data with -i':=20
+        test_might_fail git grep -hi "=C6" invalid-0x80 >actual &&
+        test_cmp expected actual &&
+        test_must_fail git grep -hi "(*NO_JIT)=C6" invalid-0x80 &&
+        test_cmp expected actual
+    ++ test_might_fail git grep -hi =C6 invalid-0x80
+    ++ test_must_fail ok=3Dsuccess git grep -hi =C6 invalid-0x80
+    ++ case "$1" in
+    ++ _test_ok=3Dsuccess
+    ++ shift
+    ++ git grep -hi =C6 invalid-0x80
+    fatal: pcre2_match failed with error code -22: UTF-8 error: isolated =
+byte with 0x80 bit set
+    ++ exit_code=3D128
+    ++ test 128 -eq 0
+    ++ test_match_signal 13 128
+    ++ test 128 =3D 141
+    ++ test 128 =3D 269
+    ++ return 1
+    ++ test 128 -gt 129
+    ++ test 128 -eq 127
+    ++ test 128 -eq 126
+    ++ return 0
+    ++ test_cmp expected actual
+    ++ diff -u expected actual
+    --- expected    2019-10-19 21:56:08.634252012 +0000
+    +++ actual      2019-10-19 21:56:08.714252012 +0000
+    @@ -1 +0,0 @@
+    -=E6var
+    error: last command exited with $?=3D1
+    not ok 11 - PCRE v2: grep non-ASCII from invalid UTF-8 data with -i
+    #      =20
+    #               test_might_fail git grep -hi "=C6" invalid-0x80 >actu=
+al &&
+    #               test_cmp expected actual &&
+    #               test_must_fail git grep -hi "(*NO_JIT)=C6" invalid-0x=
+80 &&
+    #               test_cmp expected actual
+    #      =20
+    # failed 1 among 11 test(s)
+
+I'm not flush on time to even try to look much; but I'd be
+kidding myself if I said I was likely to find the issue
+quickly. ;)
+
+But I'm pretty sure it will be obvious to someone here.
 
 --=20
 Todd
