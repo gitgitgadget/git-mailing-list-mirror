@@ -2,90 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CF8C1F4C0
-	for <e@80x24.org>; Sun, 20 Oct 2019 11:26:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20CA81F4C0
+	for <e@80x24.org>; Sun, 20 Oct 2019 18:27:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726294AbfJTL0G (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Oct 2019 07:26:06 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:13129 "EHLO smtp.hosts.co.uk"
+        id S1726711AbfJTS1K (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Oct 2019 14:27:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60846 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726194AbfJTL0G (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Oct 2019 07:26:06 -0400
-Received: from [92.30.121.54] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1iM9LW-0006a1-3c; Sun, 20 Oct 2019 12:26:04 +0100
-Subject: Re: [PATCH v2 9/9] pack-objects: improve partial packfile reuse
-To:     Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-References: <20191019103531.23274-1-chriscool@tuxfamily.org>
- <20191019103531.23274-10-chriscool@tuxfamily.org>
- <6e4ad9bb-20d7-4ae5-8768-326f5c455c3c@iee.email>
- <CAP8UFD2rsZj3=KoPCEWw2sTXFhNkynrJLeAGWK2vEbD5GU8chA@mail.gmail.com>
- <20191019232322.GB32408@sigill.intra.peff.net>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <ac89d8ed-5a57-6297-5fc2-cf562c8da812@iee.email>
-Date:   Sun, 20 Oct 2019 12:26:01 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726559AbfJTS1K (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Oct 2019 14:27:10 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id CC74A218BA;
+        Sun, 20 Oct 2019 18:27:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1571596029;
+        bh=7uPdkhMCeJbTYfsMFo9NsHhaa959Mg+36iP5wUWxRjQ=;
+        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
+        b=18Vz+9ZNoM6G+2XpMf63vIF0Dx6rKp/G3DtmTD8TzU5l8puFfTi8rKWmFo16MIYxe
+         EeKF8w8QuGvI4iVCWcfw9io9Xro/+vVb42H0ur7wHMdEsQMSk4sETlBmRJuPufTHDP
+         Ue7YEFGFnJ3f78bcub0vUkcgR6/yqdmy+0rDv8fA=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20191019232322.GB32408@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <4f8e8a13-c41f-558f-18c3-b2bda178a06b@kdbg.org>
+References: <20191016203239.212174-1-sboyd@kernel.org> <4f8e8a13-c41f-558f-18c3-b2bda178a06b@kdbg.org>
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org, Adrian Johnson <ajohnson@redneon.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>
+Subject: Re: [PATCH v2] userdiff: Fix some corner cases in dts regex
+User-Agent: alot/0.8.1
+Date:   Sun, 20 Oct 2019 11:27:08 -0700
+Message-Id: <20191020182709.CC74A218BA@mail.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/10/2019 00:23, Jeff King wrote:
-> On Sat, Oct 19, 2019 at 09:20:11PM +0200, Christian Couder wrote:
->
->>>> +static void write_reused_pack_one(size_t pos, struct hashfile *out,
->>>> +                               struct pack_window **w_curs)
->>>> +{
->>>> +     off_t offset, next, cur;
->>>> +     enum object_type type;
->>>> +     unsigned long size;
->>> Is this a mem_sized size or a counter for less that 4GiB items?
->> What I can see is that `&size` is passed as the last argument to
->> unpack_object_header() below. And unpack_object_header() is defined in
->> packfile.h like this:
->>
->> int unpack_object_header(struct packed_git *, struct pack_window **,
->> off_t *, unsigned long *);
->>
->> since at least 336226c259 (packfile.h: drop extern from function
->> declarations, 2019-04-05)
->>
->> So fixing this, if it needs to be fixed, should probably be part of a
->> separate topic fixing unpack_object_header().
-> Yeah, this one definitely should be moved to whatever we used to
-> represent object sizes in the future (size_t, or I guess off_t if we
-> really want to handle huge objects on 32-bit systems too). But
-> definitely it shouldn't happen in this series, and I don't think anybody
-> interested in the other topic (converting the integer type for object
-> sizes) needs to keep tabs on it. When they convert
-> unpack_object_header(), the compiler will complain because of passing
-> it as a pointer (the more insidious ones will be where we return an
-> unsigned long to represent an object type, and somebody will have to
-> look into every caller).
->
-Thanks, I'll add that one to my list of size values that I should check 
-when rebasing my current series.
+Quoting Johannes Sixt (2019-10-16 14:10:09)
+> [Removed bouncing addresses of Matthieu Moy and William Duclot from Cc]
+>=20
+> Am 16.10.19 um 22:32 schrieb Stephen Boyd:
+> > diff --git a/t/t4018/dts-nodes-multiline-prop b/t/t4018/dts-nodes-multi=
+line-prop
+> > new file mode 100644
+> > index 000000000000..db4b4bdda686
+> > --- /dev/null
+> > +++ b/t/t4018/dts-nodes-multiline-prop
+> > @@ -0,0 +1,14 @@
+> > +/ {
+> > +     label_1: node1@ff00 {
+> > +             RIGHT@deadf00,4000 {
+> > +                     multilineprop =3D <3>,
+> > +
+> > +
+> > +                                     <4>;
+>=20
+> I was actually thinking about something like
+>=20
+>                         multilineprop =3D <3>,
+>                                         <0xabcd>,
+>                                         "text",
+>                                         name,
+>                                         <4>;
+>=20
+> or something like that -- whatever occurs in the real world.
+>=20
 
-If I understand correctly gcc is no longer detecting those size 
-conversions, but clang has -Wshorten-64-to-32 but I've still to check if 
-it catches some of these conversion issues (esp when int (32) is 
-extended to 64 bit size_t, rather than being 64 bit in the first place)
+Ok sure. I can have a list of numbers that spans four or five lines.
 
-Philip
+> > +
+> > +
+> > +
+> > +                     ChangeMe =3D <0xffeedd00>;
+> > +             };
+> > +     };
+> > +};
+>=20
+> Apart from that, the patch looks good.
+>=20
+
+Cool. I'll resend.
+
