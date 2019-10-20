@@ -8,83 +8,107 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EA041F4C0
-	for <e@80x24.org>; Sun, 20 Oct 2019 20:39:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C5CC1F4C0
+	for <e@80x24.org>; Sun, 20 Oct 2019 20:39:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726482AbfJTUje (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Oct 2019 16:39:34 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45343 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726005AbfJTUje (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Oct 2019 16:39:34 -0400
-Received: by mail-wr1-f65.google.com with SMTP id q13so6549126wrs.12
-        for <git@vger.kernel.org>; Sun, 20 Oct 2019 13:39:32 -0700 (PDT)
+        id S1726520AbfJTUjg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Oct 2019 16:39:36 -0400
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:37111 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726130AbfJTUjf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Oct 2019 16:39:35 -0400
+Received: by mail-wr1-f43.google.com with SMTP id e11so2808373wrv.4
+        for <git@vger.kernel.org>; Sun, 20 Oct 2019 13:39:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=lXamC4cw7Pp9RDTrkBkcwPvmCsK184oNBg6fArHezck=;
-        b=anISdxXxebOo8ZsRy8yGGT4a/u0fkGq8nv5FdtREcR4ndwrVnrcATbbpTC4LvcRBay
-         /AFbjrY9bVoLHI05Y+/gkr2O1HoBw2CH7ZFfw8ul+qbvE7z/Gloqw2gj06/18xkMTmhr
-         9D0B6nY8+r8qkXxilX2TCVE75lvlKo6R7/QMjstrHRjK+QJtX8Xo/XSYBxOFXBwU5Qi8
-         vWxZqy7muqqq0hvl74QOJEAU7Gj/H/CBa2ppm2w4MmDvYiqDms4w+1sz785m5t3MmDpw
-         FXKecy0xsfTlUuQY8Y86H+hCvVFFBa+uc9iwLzED5gZXGdkg6rdkW4T0AUwTrzQxZfj9
-         GzoA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=LrApvkCjFWvhGISvjPaB1ghpvPuI5naNWtBbYQ9hscM=;
+        b=ajBKdhoL82mN+3VsbzKnTk0Bfmd6n/mALbOFYpHAiUbMwanfxqarHRO4f9Dz2bQhiw
+         Tu/nWcYR3OCE+loI9eM38gtByAbzfsAe+puv3dShvxb0ykL2SsGSkddUHNNEjNlRLBqP
+         HURW8AWxstbd3Am3/6PHE11mEiXoxxmCru5L12Dh41vYmWhUANDypsJW+5/2MWmns7TN
+         yN2tGZIGBlb/yUeDdtbsASRaKy7VmzoePUzNKrBziy5frVQj2w3dDAlZxhuSioD2WEwF
+         JXG9vP4Pj5snurudbVdIpjO0Fco14gkoeI8rmAQ2qngxND8yctdLieNyNJJ80hRsasBv
+         JP/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=lXamC4cw7Pp9RDTrkBkcwPvmCsK184oNBg6fArHezck=;
-        b=LcwPnYG+pEreuR1UbwKImvdCBgvzBtvjrptZVUsq7TgcPNPQE9XZ2fYpD0ypFBtVLU
-         mAzZC5QUwFUAxurSkIrhsvpShVFI8AqweXTkg0RASyxNHfA8gqADJe9sXC5k+qP8qYWF
-         byGkKVzZ/39NTYURocAQC9ThCCddPqdgORcG6/nwSjrGOpUKz0F6/bKkW+TAvDdt1EnQ
-         fzUs6EM87nUqi3xx3IVweReEif1GqAN7ayCDsTKJ1vXcy82kv48FVqhpGX2MAHJ4JDI8
-         zcsWj0sKUz2ORIyxKsHauGFqakIioeYm0DeUPa6dvWV+3evBK/O3U0L+wrwZD55q6+jO
-         88sg==
-X-Gm-Message-State: APjAAAW8UR1yLWhpUR2D3ZzLzfP+drJRtFd/t1mnrYOxKNs62CKhOkIE
-        C2muxLygA3ykfulTIxQ2RXsiQmi+
-X-Google-Smtp-Source: APXvYqyTRYu3RaMvrNyfBzr0PSvyYOccAIy/Uo2W9QR++zBqquxYBA8J4WxqWSr3+sWUhONYz6AOtQ==
-X-Received: by 2002:adf:db4c:: with SMTP id f12mr15391271wrj.379.1571603971848;
-        Sun, 20 Oct 2019 13:39:31 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=LrApvkCjFWvhGISvjPaB1ghpvPuI5naNWtBbYQ9hscM=;
+        b=PUfsU2vQvpsdiI+CLqwdEHurHEkdBRAc2HGK0Y76yg8+WTVYAMs9+OPhRh9BiZVJwp
+         sB5qCo1UdaduyqpZCaDQrkz9ixw3nsvNQLhahEQfUVcH5Ii9A32R5+8OP+eGM0LQHeu0
+         iGZLfUa7KDVaHkXuga7YlGKP/p/5/PEP6gK3qhIHsfTV/0OlD/ADAi8524RmnwQ4iozO
+         FWUJqlTmwrUWG4Z0/Jfue5YS/G9K0V1hDMiZg1w4io2l6oRbMEd4EdVa/t2noaNIVv8A
+         6U7H/jwmBu09M1HKlXtz6bWnRdgThqTh+ZfjoIqefLw14aOR+jTHYBItO0Fy3549ySEu
+         6wfA==
+X-Gm-Message-State: APjAAAWdgUOl8SQNSZxZlRQw+JUE1sx3AFEizdnYLZpPU0POfBI9+5cY
+        HufqeaVPAqpZdS4ZYl9NQUnZT2XE
+X-Google-Smtp-Source: APXvYqxkwusQd+QpWzf8hO0ISJc4p3QdeLM9/NVaxXAU83dkhXh2qcAguVwwsHXspJ+KVs+xanWz0Q==
+X-Received: by 2002:adf:e78c:: with SMTP id n12mr16007966wrm.351.1571603973317;
+        Sun, 20 Oct 2019 13:39:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o6sm3980682wrx.89.2019.10.20.13.39.31
+        by smtp.gmail.com with ESMTPSA id v20sm10549894wml.26.2019.10.20.13.39.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 20 Oct 2019 13:39:31 -0700 (PDT)
-Message-Id: <pull.410.git.1571603970.gitgitgadget@gmail.com>
+        Sun, 20 Oct 2019 13:39:32 -0700 (PDT)
+Message-Id: <e3343d174008a3fe21c159c197913ce749e21589.1571603970.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.410.git.1571603970.gitgitgadget@gmail.com>
+References: <pull.410.git.1571603970.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 20 Oct 2019 20:39:28 +0000
-Subject: [PATCH 0/2] Fix the speed of the CI (Visual Studio) tests
+Date:   Sun, 20 Oct 2019 20:39:30 +0000
+Subject: [PATCH 2/2] ci(visual-studio): actually run the tests in parallel
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I made a mistake when converting the make/prove-based test job to a 
-test-tool run-command testsuite one: I lost the parallelization, resulting
-in way slower CI runs.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Also, I forgot to build with DEVELOPER=1, i.e. with stricter compile flags.
+Originally, the CI/PR builds that build and test using Visual Studio
+were implemented imitating `linux-clang`, i.e. still using the
+`Makefile`-based build infrastructure.
 
-This pair of patches fixes both issues.
+Later (but still before the patches made their way into git.git's
+`master`), however, this was changed to generate Visual Studio project
+files and build the binaries using `MSBuild`, as this reflects more
+accurately how Visual Studio users would want to build Git (internally,
+Visual Studio uses `MSBuild`, or at least something very similar).
 
-Johannes Schindelin (2):
-  ci(visual-studio): use strict compile flags, and optimization
-  ci(visual-studio): actually run the tests in parallel
+During that transition, we needed to implement a new way to run the test
+suite in parallel, as Visual Studio users typically will only have a Git
+Bash available (which does not ship with `make` nore with support for
+`prove`): we simply implemented a new test helper to run the test suite.
 
- azure-pipelines.yml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+This helper even knows how to run the tests in parallel, but due to a
+mistake on this developer's part, it was never turned on in the CI/PR
+builds. This results in 2x-3x longer run times of the test phase.
 
+Let's use the `--jobs=10` option to fix this.
 
-base-commit: d966095db01190a2196e31195ea6fa0c722aa732
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-410%2Fdscho%2Faccelerate-ci-vs-test-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-410/dscho/accelerate-ci-vs-test-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/410
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ azure-pipelines.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/azure-pipelines.yml b/azure-pipelines.yml
+index 457c6fee31..af2a5ea484 100644
+--- a/azure-pipelines.yml
++++ b/azure-pipelines.yml
+@@ -255,7 +255,7 @@ jobs:
+ 
+         cd t &&
+         PATH=\"`$PWD/helper:`$PATH\" &&
+-        test-tool.exe run-command testsuite -V -x --write-junit-xml \
++        test-tool.exe run-command testsuite --jobs=10 -V -x --write-junit-xml \
+                 `$(test-tool.exe path-utils slice-tests \
+                         `$SYSTEM_JOBPOSITIONINPHASE `$SYSTEM_TOTALJOBSINPHASE t[0-9]*.sh)
+       "@
 -- 
 gitgitgadget
