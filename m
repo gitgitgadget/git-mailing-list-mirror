@@ -8,50 +8,51 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B621F1F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 11:44:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32C821F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 11:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728532AbfJULoi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 07:44:38 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:45529 "EHLO
+        id S1727970AbfJUL7h (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 07:59:37 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:40336 "EHLO
         mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728305AbfJULoh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 07:44:37 -0400
-Received: by mail-qt1-f193.google.com with SMTP id c21so20452303qtj.12
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 04:44:37 -0700 (PDT)
+        with ESMTP id S1726767AbfJUL7g (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 07:59:36 -0400
+Received: by mail-qt1-f193.google.com with SMTP id o49so12723355qta.7
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 04:59:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=8Xo+pFC/9xj139iPGOV2x6PHDpID59zBX6YcBtG0Scs=;
-        b=jP386Mfgb4CdWfSczpJqllhFGRG6NUnsblKxC3YkSRBCbQVCAfnJJouTzeOZJt5D6d
-         tsa7Vc5OrPXqnvaFg9D7SrscQizLMa6cS3bQ0PihFSLcKSwRekxiLvfLD3250qLNeC9G
-         +XIOMmovUoZQv6ziNRO1rOvN5/THUt8K5C1v1m8ehHgZy9ERvFcgL6MYLmM/jWLNtpF8
-         NpFoAAMxWr8BruU46ejJ9HWrSUJXZOmDIfn6egd+00hs2ii5NuiDlOOGs3zQoo/S4Gs2
-         N0wUc6QgN384g5JqK5jX08MD7sTBVMz9DvFFlv7yyoBjBRkX1H0BbSJnRtWQH0h7aVKN
-         oftA==
+        bh=nPpheCQGQnQeXXq+J3HPutpJhKABT3oJtUj+j6HtxQY=;
+        b=XILC2raRsxKSPwHw2XfEtrJ4NQCAK+8Uf8turO9A0766SPzdCsLIs8/ppT6SxLIOqH
+         rTfCktyVQ0cPAgdWIQ9XYnEUDiZ+2Kt43kUH1nIpxLYj+EPTKnrEruAVxeG6Cf4WDjNR
+         YgVcsrY5yV7DF+39rucp3tuWAaq08vTnXqEowaKfqKs/61rlwNmS5JlnPGxls4CUOU0P
+         meusRb2aeHEg7oNEkpr67FbhwUTdCFxERfHqkepDxKd7XT1Za6rIZBCr/48J2lDuNqCQ
+         s7gDsmixszOK65IqpOwYPNgc0KBlwimeMhJ+DfxChEZdyh/7WxX6zEBYel0AMD5sVt7H
+         MUYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=8Xo+pFC/9xj139iPGOV2x6PHDpID59zBX6YcBtG0Scs=;
-        b=EedV3HWqUg0/9NtiObksHMjL+PlCglRTM3PuMqlrk0x5mw6bZwVKij05Asf3m5NcSh
-         A62FWNR/JNdeXfJmVWMn003PHN7gnhQfbkMCW2Qs1noPkXawLpAdec+7Nni5/VM9uIpJ
-         MLxPl+0yhLstPRTeDD8vbt6vETUBHNfXKv4w+mOJIPVKHYEe/YwjzYlRk4pahYp6XOE8
-         0EpyNjUC2gr1+u9OVNROaZuL7RQk4hWcCHF1ap6iNrq0FNvI+KopJFlDfn+uqbwkqoGv
-         JAaHX5PBqD1478/dAR5xLQmyVpOL9ajp40Kyv0ZrIOXKaFL+Rd/qhS3IX1Tz+D2TE6JZ
-         76Fw==
-X-Gm-Message-State: APjAAAVVeC1wMB3Og8ZX0OwMz8547MngcVBPHZmfxjcOBO4A4dWnSC9q
-        LGnmT2DEtMcrGQnuX9zp9JE=
-X-Google-Smtp-Source: APXvYqzjfAPv8wHz3V+kRvUHInmX2JyhR273bU8se4Og2IROo4lecT5yCWRV3uIJWqzur2KvLsuI+w==
-X-Received: by 2002:ac8:6bc5:: with SMTP id b5mr23919100qtt.144.1571658276569;
-        Mon, 21 Oct 2019 04:44:36 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:6d2d:aeab:9f95:a7f6? ([2001:4898:a800:1012:1e61:aeab:9f95:a7f6])
-        by smtp.gmail.com with ESMTPSA id x9sm7072682qkl.75.2019.10.21.04.44.35
+        bh=nPpheCQGQnQeXXq+J3HPutpJhKABT3oJtUj+j6HtxQY=;
+        b=DggMyjz91x58ZjcZEXfUu6eJcNuv1SjYbiUir0rp3xUBG57FjbO0c5gXOZ1rwsWijU
+         WnVVY3DQsNdLP7Z5/IYXMo3Prvzt1MoJEcMobBCRGfS94wYjuQVBx20Lk143SYVB1iTk
+         qnSpVge7bY6ADSoa1RAJVG4JVe6UhmeaLdGtyH1l6XorAfaJEhNtXXwHKdqaWDsiTMg5
+         z9YwoUiUcjSgCIN2hGFtikNrezKX3QbuMDjH1p6efKQ7FiIatvPwTI+jrHSWnmYFyTcu
+         9btpD0I4SYRmBtRBIf992oj0ulMx0BuCUqYBwrFgEBJgA3pXCbLpdDSxDbecZsloS+D4
+         ctyw==
+X-Gm-Message-State: APjAAAVKRZbDpaJwaC+sxubbiShljsol9lzf3ozjppL8Hy+InEr2wcMC
+        FtakOjsLXIBVmIDNCIXb1Z0=
+X-Google-Smtp-Source: APXvYqxakNXs1TROXdp51FWhfakWM1jDx2ZB/WsazvyIPRak+AHBZyZ/r+T+93ZuCCW25Jq6bIHx/Q==
+X-Received: by 2002:ac8:901:: with SMTP id t1mr19910627qth.47.1571659174002;
+        Mon, 21 Oct 2019 04:59:34 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:4018:ebea:d287:d7b3? ([2001:4898:a800:1010:f14d:ebea:d287:d7b3])
+        by smtp.gmail.com with ESMTPSA id s42sm8329344qtk.60.2019.10.21.04.59.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Oct 2019 04:44:36 -0700 (PDT)
-Subject: Re: [PATCH v4 09/17] sparse-checkout: use hashmaps for cone patterns
+        Mon, 21 Oct 2019 04:59:33 -0700 (PDT)
+Subject: Re: [PATCH v4 15/17] sparse-checkout: update working directory
+ in-process
 To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, newren@gmail.com,
@@ -59,15 +60,15 @@ Cc:     git@vger.kernel.org, newren@gmail.com,
         Junio C Hamano <gitster@pobox.com>
 References: <pull.316.v3.git.gitgitgadget@gmail.com>
  <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
- <28606a152c79c4e399c5a9c77038888eda34341d.1571147765.git.gitgitgadget@gmail.com>
- <20191018153112.GF29845@szeder.dev>
+ <9ccec3ca9a1efe038da6d69f076f32cc407bcf9f.1571147765.git.gitgitgadget@gmail.com>
+ <20191018202421.GJ29845@szeder.dev> <20191018204032.GK29845@szeder.dev>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d063d58b-2e4b-5fbe-0aba-8086215fd9b9@gmail.com>
-Date:   Mon, 21 Oct 2019 07:44:30 -0400
+Message-ID: <2dd417e0-2fc6-67ca-68c5-e9afceb7e496@gmail.com>
+Date:   Mon, 21 Oct 2019 07:59:32 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
  Thunderbird/70.0
 MIME-Version: 1.0
-In-Reply-To: <20191018153112.GF29845@szeder.dev>
+In-Reply-To: <20191018204032.GK29845@szeder.dev>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -76,20 +77,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/18/2019 11:31 AM, SZEDER Gábor wrote:
-> On Tue, Oct 15, 2019 at 01:55:56PM +0000, Derrick Stolee via GitGitGadget wrote:
->> Running 'git read-tree -mu HEAD' on this file had the following
->> performance:
+On 10/18/2019 4:40 PM, SZEDER Gábor wrote:
+> On Fri, Oct 18, 2019 at 10:24:21PM +0200, SZEDER Gábor wrote:
+>> On Tue, Oct 15, 2019 at 01:56:02PM +0000, Derrick Stolee via GitGitGadget wrote:
+>>> From: Derrick Stolee <dstolee@microsoft.com>
+>>>
+>>> The sparse-checkout builtin used 'git read-tree -mu HEAD' to update the
+>>> skip-worktree bits in the index and to update the working directory.
+>>> This extra process is overly complex, and prone to failure. It also
+>>> requires that we write our changes to the sparse-checkout file before
+>>> trying to update the index.
+>>>
+>>> Remove this extra process call by creating a direct call to
+>>> unpack_trees() in the same way 'git read-tree -mu HEAD' does. In
+>>> addition, provide an in-memory list of patterns so we can avoid
+>>> reading from the sparse-checkout file. This allows us to test a
+>>> proposed change to the file before writing to it.
 >>
->> 	core.sparseCheckout=false: 0.21 s (0.00 s)
->> 	 core.sparseCheckout=true: 3.75 s (3.50 s)
->> 	 core.sparseCheckout=cone: 0.23 s (0.01 s)
+>> Starting with this patch there is an issue with locking the index:
+>>
+>>   $ git init
+>>   Initialized empty Git repository in /home/szeder/src/git/tmp/SC/.git/
+>>   $ >file
 > 
-> The previous patch added 'core.sparseCheckoutCone', so this last line
-> should be 'core.sparseCheckoutCone=true', shouldn't it?
+>   $ git add file
+> 
+> Forgot to copy that command...
+> 
+>>   $ git commit -m initial
+>>   [master (root-commit) 5d80b9c] initial
+>>    1 file changed, 0 insertions(+), 0 deletions(-)
+>>    create mode 100644 file
+>>   $ ls .git/index.lock
+>>   ls: cannot access '.git/index.lock': No such file or directory
+>>   $ git sparse-checkout set nope
+>>   warning: core.sparseCheckout is disabled, so changes to the sparse-checkout file will have no effect
+>>   warning: run 'git sparse-checkout init' to enable the sparse-checkout feature
+>>   error: Sparse checkout leaves no entry on working directory
+>>   fatal: Unable to create '/home/szeder/src/git/tmp/SC/.git/index.lock':
+>>   File exists.
+>>
+>>   Another git process seems to be running in this repository, e.g.
+>>   an editor opened by 'git commit'. Please make sure all processes
+>>   are terminated then try again. If it still fails, a git process
+>>   may have crashed in this repository earlier:
+>>   remove the file manually to continue.
+>>   $ ls .git/index.lock
+>>   ls: cannot access '.git/index.lock': No such file or directory
+> 
+> I would add that building the previous patch and running the same
+> sequence of commands works, in the sense that 'git sparse-checkout
+> set' writes the non-existing filename to the 'sparse-checkout' file
+> and it prints the same two warnings, and doesn't (seem to) attempt to
+> update the working tree and the index.
 
-Good catch! Thanks.
+Thank you for catching this! The issue is that I was not rolling the
+index back on this kind of failed update, and then trying to replay
+the "old" sparse-checkout hit the existing .git/index.lock file.
 
+Here is the test I added that breaks on the current patch, but
+passes when adding a rollback_lock_file() call:
+
+test_expect_success 'revert to old sparse-checkout on empty update' '
+	git init empty-test &&
+	(
+		echo >file &&
+		git add file &&
+		git commit -m "test" &&
+		test_must_fail git sparse-checkout set nothing 2>err &&
+		test_i18ngrep "Sparse checkout leaves no entry on working directory" err &&
+		test_i18ngrep ! ".git/index.lock" err &&
+		git sparse-checkout set file
+	)
+'
+
+It also has the following problem: because we are setting the
+patterns in-memory, this update acts like core.sparseCheckout is
+enabled, even when it is not. So, I'm finally convinced that
+the 'set' command should enable the config setting if it is
+called even without 'init'.
+
+Thanks,
 -Stolee
-
 
