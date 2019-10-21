@@ -2,254 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B82F81F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 09:16:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B32571F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 09:30:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727110AbfJUJQ5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 05:16:57 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:33683 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726181AbfJUJQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 05:16:57 -0400
-Received: by mail-ua1-f67.google.com with SMTP id u31so3586945uah.0
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 02:16:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=a0T7NQiq1BbVDvYeICgcf/flwiT2dsnhRDnlsvYC9u4=;
-        b=fmV5JIEqfwB69cxIHsf/nOZhf5SoNhPFFmT1UgGljkIpwmXOf9ZGTwU/crFXazdWyF
-         IBEtvf42UD308my884IpMHZSdnr03guwuknd96IUDeg9WiqgGRwqtPilHQZFQHzW5WVJ
-         hTAGd7b21Vxrjf+9WqEo+K/EFmpFx3Q9eZSdTljSwm1eJ226Dbp/SSOgqG6ePkUvnVBP
-         eQ7aewkVpbrvROwpCkMWnDyNT1QHjDC3tI38h/gtOLndKTxMk76W1OspACu32+veRoMs
-         O4vHia55+h5Fs1/N5yBKV7RVTh3qf5dMG3O+3iyVDpYQ+iqcPcUY7ihaSCWNAycoHvJF
-         qz/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a0T7NQiq1BbVDvYeICgcf/flwiT2dsnhRDnlsvYC9u4=;
-        b=lSiBHWqCxbxjzJ0grEE6pfJke1UP0OXeTKDaFZtB9AyZnd3ZV0JlqY7NSyaLhVJw2q
-         nJaQhznqV/ImBVUOiWmDD+q5Z+NNLeF+EUOs5EPneUmVQxsIKoWrEVKq3RGywY4kkFzJ
-         bbc4xEsUP736asjO2J3R6afkmJX+fE8YKd4efYqgfNtVArKQbVyO13iR3YHQjjaZtJwl
-         nusNqGdVZzIO4D8aSF4zmHJQPPJM3L6K+5MbOrjddGC0KtRpL1svkJzZhmevbQYbs0Wk
-         1V7LzvhQephHOE1jCwvhyDqMPq34rsUwXv2Onci13f4pXjQLLDudoPP5nCTQZtKfrnW+
-         oR/Q==
-X-Gm-Message-State: APjAAAVlRNJAevHJZsE0ZurSqVDByMYkBZqtmr3WOcROlw//RpRyhWew
-        ZtsLyTEnxkMtWeY8ISOlJR6oG23lKmulhjp6K2c=
-X-Google-Smtp-Source: APXvYqwQNg0URGZ1wNe1J8NggvHzAiNJ2pq+/SZzy4jvpBdBJ9yoLWMMIBx4CF/VuCjnMhOfOsyc01IKgBI+pE301Rs=
-X-Received: by 2002:ab0:6519:: with SMTP id w25mr11904507uam.76.1571649415432;
- Mon, 21 Oct 2019 02:16:55 -0700 (PDT)
+        id S1726981AbfJUJaq convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 21 Oct 2019 05:30:46 -0400
+Received: from mail-eopbgr1380071.outbound.protection.outlook.com ([40.107.138.71]:61824
+        "EHLO IND01-MA1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726725AbfJUJaq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 05:30:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=D/ttMt/jspC6aFZaSxjvlRgozDLQyMjqNn38991vmWknBih65yA7fSNFG+59770oT/ahSlFbrUSb1+tH1OMWhGLdBBCQVVGM99npot8ca1C0qPBcskVc7SZ9DWg4gCEViMc9Q0BxK9wtq1MaANJJsqiRiQ3yU+sBh4b9afhhLHGXqoki/HF4otojW19p43qpUT79LjLjjyY6N0E9fK9YlDbv6l8g1f/Ne51s4W3BAuI/5nZ02W5j1AwAJ3ee5VZRAtm9Psix0/D7kjTjMGxWilE8fVGpIUoUJ486SH+mCvgvUCKECnGowHMya9IC5XTdIS+Dodypjfu2LwK8QLC8+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CRSNLn3t19aytlwav9Wei8SfLsgY7cIT/wkH8DEh0I8=;
+ b=e/4yLZqA3Qi9PHwPVdkCakORORRPR9Q1nftqY0YR/KfuF1ojX/tTChnaWuYaP/DAQswVYmjStM1E9aeSJo5KUC0lKZrl5hlrGX0/j1vpd9NAOA3muwE3f+c6kDQsZ7Uoqq687sX1Eh8Nxr81UF+3Lp3fKqWgFw1a4866B28gcfZdrES8J5pUpt2FutVQR3DaBOxxHNMIo9q7405JG8GcOTpAOcB1n2dE2p12g0TmnxO0PE2R8qS3y+5c2VM4HLScCWAOfodbaCZDrtrhJAleX0CFrhbLqhbT4tzdSEvT029jggJVcMu+oljO6JuqYSVYuABHDnYqTNVEwwJL/GBgVA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=worlddigitallinks.com; dmarc=pass action=none
+ header.from=worlddigitallinks.com; dkim=pass header.d=worlddigitallinks.com;
+ arc=none
+Received: from MAXPR01MB2557.INDPRD01.PROD.OUTLOOK.COM (52.134.155.78) by
+ MAXPR01MB3453.INDPRD01.PROD.OUTLOOK.COM (52.134.156.82) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2347.22; Mon, 21 Oct 2019 09:30:41 +0000
+Received: from MAXPR01MB2557.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::ec90:e9f:d0fc:4374]) by MAXPR01MB2557.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::ec90:e9f:d0fc:4374%7]) with mapi id 15.20.2347.029; Mon, 21 Oct 2019
+ 09:30:41 +0000
+From:   Alicia Alvarado <alicia.alvarado@worlddigitallinks.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: FMB 2019
+Thread-Topic: FMB 2019
+Thread-Index: AdWH8fl8jaNSCfu/TsG9P9+zRRC7WA==
+Date:   Mon, 21 Oct 2019 09:30:40 +0000
+Message-ID: <!&!AAAAAAAAAAAYAAAAAAAAALggoawTybVGmg+cyhiMji7CgAAAEAAAADblyA9Vb7FNpU7YX5H/JbYBAAAAAA==@worlddigitallinks.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: MA1PR01CA0159.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a00:71::29) To MAXPR01MB2557.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a00:59::14)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=alicia.alvarado@worlddigitallinks.com; 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-mailer: Microsoft Outlook 15.0
+x-originating-ip: [49.207.49.57]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 2d907447-0e26-4f8e-e81d-08d7560956d6
+x-ms-traffictypediagnostic: MAXPR01MB3453:
+x-microsoft-antispam-prvs: <MAXPR01MB34530FC33977E7940AD018ACFD690@MAXPR01MB3453.INDPRD01.PROD.OUTLOOK.COM>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-forefront-prvs: 0197AFBD92
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(136003)(366004)(39840400004)(396003)(346002)(376002)(34096005)(189003)(199004)(7116003)(86362001)(5640700003)(99286004)(61296003)(7736002)(305945005)(2351001)(486006)(626008)(25786009)(44832011)(256004)(14444005)(6512007)(2616005)(52116002)(316002)(476003)(71190400001)(5660300002)(508600001)(102836004)(71200400001)(55236004)(36756003)(66946007)(66476007)(66556008)(64756008)(66446008)(2501003)(50226002)(9476002)(26005)(8676002)(1730700003)(186003)(14454004)(8936002)(81156014)(81166006)(6486002)(3846002)(6116002)(66066001)(88246002)(6436002)(6916009)(2906002)(6506007)(386003)(130950200001);DIR:OUT;SFP:1101;SCL:1;SRVR:MAXPR01MB3453;H:MAXPR01MB2557.INDPRD01.PROD.OUTLOOK.COM;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: worlddigitallinks.com does not
+ designate permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: +Ag+THujJ8ae0N+DyB5ny+A9iroz/XZ+BjcVaYwOVz6U9J1321e+7/qg88k+UmNw/WmKr2uyIj+J11HU/xzA47pSWRsHrMayYCCpt7BVJgOW/SxCaaiPkwY0znxa7vg+F3zp0a3biCM+99X9Hj4saxXQBB+kHcTJ/gKejhmbsl9fhn/gVUdvprB0mTOhrjgIw+WJsSMk67eZbO4sBE6aRHuwznOHpPKKfAFbN9nowiOvx2jH1Vk8ZDCIJ2MndLAbl7q9tAM17a8HfQqHlmt4V6KO9s29PVFESb+Xkf927G+S3cQ3rkmZ+KX/1fZwLbZugoh050thrUVATMokZuwbcq1SSekc9Ui4VqYU4XSCryRSUSi0FbH5ba8/6OM2P1GW12Ts1sQmdBGb7RTkvPDHyxg6gZ/s6einB3rntp8Lp/Rms4/2G890Nu4jHMI8jtqA
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <1EB5C78FFBCA6B488BD991F25DE014F1@INDPRD01.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-References: <20190819214110.26461-1-me@yadavpratyush.com> <20190828215725.13376-1-me@yadavpratyush.com>
- <20190828215725.13376-5-me@yadavpratyush.com>
-In-Reply-To: <20190828215725.13376-5-me@yadavpratyush.com>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Mon, 21 Oct 2019 11:16:42 +0200
-Message-ID: <CAKPyHN0Kh8eKjzXink3YtE6wRrOgpzTYyPmLnbpbxPt3LFsvig@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] git-gui: allow undoing last revert
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: worlddigitallinks.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2d907447-0e26-4f8e-e81d-08d7560956d6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Oct 2019 09:30:40.9032
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 78d36868-8221-4fc9-829c-9529bac331e3
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 8Rd1Xc0eMlyrY+lLAJlXlLEsJx23OhpG+sCVf0aEyO45DjZxMC5z4/RsWP9bQv6G+Ufqk1MDznnxKGC/zFN7K8PktYauW2nrQT2Bu+ZBjNzClcOwp00t0rjG1Nut6+he
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAXPR01MB3453
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Pratyush,
+Hi,
+ 
+We wanted to check if you would be interested in acquiring the Attendees
+list of FMB 2019 (International Trade Show for Mechanical Engineering,
+Automotive, Lightweight Engineering, Aerospace, Logistics and IT Services
+2019) to increase more prospect flow to your booth in the Show.
 
-I just noticed that the 'Revert Last Hunk' menu entry is enabled in
-the stage-list. But I think it should be disabled, like the 'Revert
-Hunk' and 'Revert Line' menu entry.
+Venue:  Messe Ostwestfalen GmbH, Bad Salzuflen, Germany
 
-Can you confirm this?
+Expected Visitors: 5000 
 
-Thanks.
+Information Provided: - Company name, URL, Contact name, Job title, Phone
+number, fax number, physical address, Company size, Email address etc.
 
-Bert
+Our list is the best source for awareness and can be used for Booth Invites
+- Marketing initiatives - Product launch - Brand awareness - increase in
+revenue etc.
 
+Please let me know if you are interested. So, that I can provide you with
+the number of Counts and the cost.
 
+Kind Regards,
+Alicia Alvarado
+B2B Marketing & Tradeshow Specialist
 
-On Wed, Aug 28, 2019 at 11:57 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
->
-> Accidental clicks on the revert hunk/lines buttons can cause loss of
-> work, and can be frustrating. So, allow undoing the last revert.
->
-> Right now, a stack or deque are not being used for the sake of
-> simplicity, so only one undo is possible. Any reverts before the
-> previous one are lost.
->
-> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
-> ---
->  git-gui.sh   | 18 +++++++++++++++++-
->  lib/diff.tcl | 53 ++++++++++++++++++++++++++++++++++++++++++++++++----
->  2 files changed, 66 insertions(+), 5 deletions(-)
->
-> diff --git a/git-gui.sh b/git-gui.sh
-> index 1592544..e03a2d2 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -1350,6 +1350,8 @@ set is_submodule_diff 0
->  set is_conflict_diff 0
->  set selected_commit_type new
->  set diff_empty_count 0
-> +set last_revert {}
-> +set last_revert_enc {}
->
->  set nullid "0000000000000000000000000000000000000000"
->  set nullid2 "0000000000000000000000000000000000000001"
-> @@ -3601,6 +3603,11 @@ $ctxm add command \
->         -command {apply_or_revert_range_or_line $cursorX $cursorY 1; do_rescan}
->  set ui_diff_revertline [$ctxm index last]
->  lappend diff_actions [list $ctxm entryconf $ui_diff_revertline -state]
-> +$ctxm add command \
-> +       -label [mc "Undo Last Revert"] \
-> +       -command {undo_last_revert; do_rescan}
-> +set ui_diff_undorevert [$ctxm index last]
-> +lappend diff_actions [list $ctxm entryconf $ui_diff_undorevert -state]
->  $ctxm add separator
->  $ctxm add command \
->         -label [mc "Show Less Context"] \
-> @@ -3680,7 +3687,7 @@ proc has_textconv {path} {
->  }
->
->  proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
-> -       global current_diff_path file_states
-> +       global current_diff_path file_states last_revert
->         set ::cursorX $x
->         set ::cursorY $y
->         if {[info exists file_states($current_diff_path)]} {
-> @@ -3694,6 +3701,7 @@ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
->                 tk_popup $ctxmsm $X $Y
->         } else {
->                 set has_range [expr {[$::ui_diff tag nextrange sel 0.0] != {}}]
-> +               set u [mc "Undo Last Revert"]
->                 if {$::ui_index eq $::current_diff_side} {
->                         set l [mc "Unstage Hunk From Commit"]
->                         set h [mc "Revert Hunk"]
-> @@ -3739,12 +3747,20 @@ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
->                         }
->                 }
->
-> +               if {$last_revert eq {}} {
-> +                       set undo_state disabled
-> +               } else {
-> +                       set undo_state normal
-> +               }
-> +
->                 $ctxm entryconf $::ui_diff_applyhunk -state $s -label $l
->                 $ctxm entryconf $::ui_diff_applyline -state $s -label $t
->                 $ctxm entryconf $::ui_diff_revertline -state $revert_state \
->                         -label $r
->                 $ctxm entryconf $::ui_diff_reverthunk -state $revert_state \
->                         -label $h
-> +               $ctxm entryconf $::ui_diff_undorevert -state $undo_state \
-> +                       -label $u
->
->                 tk_popup $ctxm $X $Y
->         }
-> diff --git a/lib/diff.tcl b/lib/diff.tcl
-> index 0659029..96288fc 100644
-> --- a/lib/diff.tcl
-> +++ b/lib/diff.tcl
-> @@ -569,7 +569,7 @@ proc read_diff {fd conflict_size cont_info} {
->
->  proc apply_or_revert_hunk {x y revert} {
->         global current_diff_path current_diff_header current_diff_side
-> -       global ui_diff ui_index file_states
-> +       global ui_diff ui_index file_states last_revert last_revert_enc
->
->         if {$current_diff_path eq {} || $current_diff_header eq {}} return
->         if {![lock_index apply_hunk]} return
-> @@ -610,18 +610,25 @@ proc apply_or_revert_hunk {x y revert} {
->                 set e_lno end
->         }
->
-> +       set wholepatch "$current_diff_header[$ui_diff get $s_lno $e_lno]"
-> +
->         if {[catch {
->                 set enc [get_path_encoding $current_diff_path]
->                 set p [eval git_write $apply_cmd]
->                 fconfigure $p -translation binary -encoding $enc
-> -               puts -nonewline $p $current_diff_header
-> -               puts -nonewline $p [$ui_diff get $s_lno $e_lno]
-> +               puts -nonewline $p $wholepatch
->                 close $p} err]} {
->                 error_popup "$failed_msg\n\n$err"
->                 unlock_index
->                 return
->         }
->
-> +       if {$revert} {
-> +               # Save a copy of this patch for undoing reverts.
-> +               set last_revert $wholepatch
-> +               set last_revert_enc $enc
-> +       }
-> +
->         $ui_diff conf -state normal
->         $ui_diff delete $s_lno $e_lno
->         $ui_diff conf -state disabled
-> @@ -653,7 +660,7 @@ proc apply_or_revert_hunk {x y revert} {
->
->  proc apply_or_revert_range_or_line {x y revert} {
->         global current_diff_path current_diff_header current_diff_side
-> -       global ui_diff ui_index file_states
-> +       global ui_diff ui_index file_states last_revert
->
->         set selected [$ui_diff tag nextrange sel 0.0]
->
-> @@ -852,5 +859,43 @@ proc apply_or_revert_range_or_line {x y revert} {
->                 return
->         }
->
-> +       if {$revert} {
-> +               # Save a copy of this patch for undoing reverts.
-> +               set last_revert $current_diff_header$wholepatch
-> +               set last_revert_enc $enc
-> +       }
-> +
-> +       unlock_index
-> +}
-> +
-> +# Undo the last line/hunk reverted. When hunks and lines are reverted, a copy
-> +# of the diff applied is saved. Re-apply that diff to undo the revert.
-> +#
-> +# Right now, we only use a single variable to hold the copy, and not a
-> +# stack/deque for simplicity, so multiple undos are not possible. Maybe this
-> +# can be added if the need for something like this is felt in the future.
-> +proc undo_last_revert {} {
-> +       global last_revert current_diff_path current_diff_header
-> +       global last_revert_enc
-> +
-> +       if {$last_revert eq {}} return
-> +       if {![lock_index apply_hunk]} return
-> +
-> +       set apply_cmd {apply --whitespace=nowarn}
-> +       set failed_msg [mc "Failed to undo last revert."]
-> +
-> +       if {[catch {
-> +               set enc $last_revert_enc
-> +               set p [eval git_write $apply_cmd]
-> +               fconfigure $p -translation binary -encoding $enc
-> +               puts -nonewline $p $last_revert
-> +               close $p} err]} {
-> +               error_popup "$failed_msg\n\n$err"
-> +               unlock_index
-> +               return
-> +       }
-> +
-> +       set last_revert {}
-> +
->         unlock_index
->  }
-> --
-> 2.21.0
->
+Note: We can run an E-mail Campaign on your behalf which will be at no cost
+if you buy B2B Data or Attendees list.
+
+If you do not wish to receive the attendees list, please reply as 'Opt-out'
+
