@@ -2,154 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DEBC1F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 18:49:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7DA01F4C1
+	for <e@80x24.org>; Mon, 21 Oct 2019 18:53:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730069AbfJUSt4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 14:49:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54112 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726672AbfJUSt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 14:49:56 -0400
-Received: (qmail 19534 invoked by uid 109); 21 Oct 2019 18:49:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 21 Oct 2019 18:49:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9552 invoked by uid 111); 21 Oct 2019 18:53:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Oct 2019 14:53:02 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 21 Oct 2019 14:49:55 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-        Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] test-progress: fix test failures on big-endian systems
-Message-ID: <20191021184954.GA2526@sigill.intra.peff.net>
-References: <b0bec82e-ad0a-32f6-e2e6-e1f0e6920639@physik.fu-berlin.de>
- <20190731071755.GF4545@pobox.com>
- <f1ce445e-6954-8e7b-2dca-3a566ce689a5@physik.fu-berlin.de>
- <20191019233706.GM29845@szeder.dev>
- <xmqq36fmor7o.fsf@gitster-ct.c.googlers.com>
- <20191021032144.GB13083@sigill.intra.peff.net>
- <xmqqftjmlbvb.fsf@gitster-ct.c.googlers.com>
+        id S1729930AbfJUSx5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 14:53:57 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:40129 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729906AbfJUSx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 14:53:56 -0400
+Received: by mail-pg1-f195.google.com with SMTP id 15so2999748pgt.7
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 11:53:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rAODEZ3EZo2IytbB6I5Wufgbq/JHWRUgiu7ktZmDobk=;
+        b=Yk7n9Urrc+phQxkCHeST8URCtBuWGqZgZBVR3j2NhGJ2bq/yjGMPMzTvnoEHTiAExu
+         13tBhvqQKQPKesMIbfvA78mcE/g9eHsZSU/f2TuSme+goyJlbevtmCj5llBMM/XVNJhh
+         NCMP27ehIiOf6AfEkQMUdZsKCtlh4UjfPizyx5HWm2uhQKbkBac/G6wmbJmgCHJmjZFv
+         cN4xXK2lgYhwh00beMWRXBvwcqLBX5GOMdlSyqgpwFDb4iJZt7nwbfq783Wu/XevGtsM
+         dQEAaDc1GQS7J94l92qpNdrUh31+UsjSEpn9vFFJennNuG5/3VkbFWUt2UifE8peHawZ
+         SKXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rAODEZ3EZo2IytbB6I5Wufgbq/JHWRUgiu7ktZmDobk=;
+        b=fYt/dmLU82cFbfz+hCIH2/vdUcMTq/y56PtzEo4jYDnuxTdRa/MMb1l1dlKrJOx1II
+         9V/4wVHTIFy7wrcb3227bTdADnEIpBiwsytDLE7kom2/ZYdpOe1LjGGLOArPvprgHhIb
+         NtMOwqCr/+uXTUq/NqoaqkpZvGUdlYUDTGSvXQl7HlnGJozK9cgl4VhvsZMjsVQUAkaZ
+         URBjKQ0QQi4j8/QMxEARWCfpymGDsC6l70rlN7D5/0b/b20ZYQYIlz86hb7oqgy9K3p8
+         YYIuaNkzOyHqrT9DiheXj/QVGzjQ1Iv5IolVcxb6Xi4YjeHc24nqEj9aDzTeJbqJSlAZ
+         Adqg==
+X-Gm-Message-State: APjAAAU1bLwgse3Udy1PJL2LaVXTOrFp+1t0L0HuJ8u680DsaJbL06AD
+        q25ILIizj9y408Vpru36KHm6zCYx
+X-Google-Smtp-Source: APXvYqyb5Jav288u/9Vx/xvLnyJSWNTYVF5m/WQwZJzwVMnSwiBPg0EtVezUp9z23HHktL3za6rFlQ==
+X-Received: by 2002:a17:90a:2484:: with SMTP id i4mr30880405pje.117.1571684035664;
+        Mon, 21 Oct 2019 11:53:55 -0700 (PDT)
+Received: from generichostname ([204.14.239.53])
+        by smtp.gmail.com with ESMTPSA id 126sm15609256pgg.10.2019.10.21.11.53.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2019 11:53:54 -0700 (PDT)
+Date:   Mon, 21 Oct 2019 11:53:52 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: Re: [RFC PATCH 1/7] Makefile: alphabetically sort += lists
+Message-ID: <20191021185352.GA69085@generichostname>
+References: <cover.1571246693.git.liu.denton@gmail.com>
+ <02a16f9bdf740841d9a4be765e72b9fa5ae5d75c.1571246693.git.liu.denton@gmail.com>
+ <xmqqimon6yar.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1910212043200.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqftjmlbvb.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <nycvar.QRO.7.76.6.1910212043200.46@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 05:51:52PM +0900, Junio C Hamano wrote:
+Hi Johannes,
 
-> > -	void *value;
-> > +	union {
-> > +		int *intp;
-> > +		const char *strp;
-> > +	} value;
-> [...]
-> The side that actually use .vale would need to change for obvious
-> reasons, which may be painful, but I agree it would have easily
-> prevented the regression from happening in the first place.
+On Mon, Oct 21, 2019 at 08:44:40PM +0200, Johannes Schindelin wrote:
+> Hi Junio,
+> 
+> On Fri, 18 Oct 2019, Junio C Hamano wrote:
+> 
+> > Denton Liu <liu.denton@gmail.com> writes:
+> >
+> > > There are many += lists in the Makefile and, over time, they have gotten
+> > > slightly out of order, alphabetically. Alphabetically sort all += lists
+> > > to bring them back in order.
+> > > ...
+> >
+> > Hmm.  I like the general thrust, but ...
+> >
+> > >  LIB_OBJS += combine-diff.o
+> > > -LIB_OBJS += commit.o
+> > >  LIB_OBJS += commit-graph.o
+> > >  LIB_OBJS += commit-reach.o
+> > > +LIB_OBJS += commit.o
+> >
+> > ... I do not particularly see this change (there may be similar
+> > ones) desirable.  I'd find it it be much more natural to sort
+> > "commit-anything" after "commit", and that is true with or without
+> > the common extension ".o" added to these entries.
+> >
+> > In short, flipping these entries because '.' sorts later than '-' is
+> > making the result look "less sorted", at least to me.
+> 
+> The problem with this argument is that it disagrees with ASCII, as `-`
+> has code 0x2d while `.` has code 0x2e, i.e. it is lexicographically
+> _larger_.
+> 
+> So Denton's patch does the correct thing.
 
-I was curious just how painful, so here's what I found.
+I actually agree with Junio on this one. Without the prefixes, "commit"
+would go before "commit-graph" so I think it would make more sense to
+order with the prefixes removed instead of taking the naive ordering by
+just sorting each block.
 
-The conversion is indeed annoying. There are 330 sites that need
-touched to handle the switch to a union (both declarations and places
-that access the variables).
+Thanks,
 
-Most of the declarations are hidden by the OPT_*() macros, but there's a
-fair bit of changes like this sprinkled around:
+Denton
 
-@@ -4952,13 +4952,13 @@ int apply_parse_options(int argc, const char **argv,
-                        const char * const *apply_usage)
- {
-        struct option builtin_apply_options[] = {
--               { OPTION_CALLBACK, 0, "exclude", state, N_("path"),
-+               { OPTION_CALLBACK, 0, "exclude", { .voidp = state }, N_("path"),
-                        N_("don't apply changes matching the given path"),
-                        PARSE_OPT_NONEG, apply_option_parse_exclude },
--               { OPTION_CALLBACK, 0, "include", state, N_("path"),
-+               { OPTION_CALLBACK, 0, "include", { .voidp = state }, N_("path"),
-                        N_("apply changes matching the given path"),
-                        PARSE_OPT_NONEG, apply_option_parse_include },
--               { OPTION_CALLBACK, 'p', NULL, state, N_("num"),
-+               { OPTION_CALLBACK, 'p', NULL, { .voidp = state }, N_("num"),
-                        N_("remove <num> leading slashes from traditional diff paths"),
-                        0, apply_option_parse_p },
-                OPT_BOOL(0, "no-add", &state->no_add,
-
-which is strictly worse syntactically, and doesn't give us any type
-safety (and won't ever, because parse-options is never going to learn
-about "struct apply_state").
-
-Likewise the access side gets slightly uglier, but not too bad:
-
-@@ -4768,7 +4768,7 @@ static int apply_patch(struct apply_state *state,
- static int apply_option_parse_exclude(const struct option *opt,
-                                      const char *arg, int unset)
- {
--       struct apply_state *state = opt->value;
-+       struct apply_state *state = opt->value.voidp;
- 
-        BUG_ON_OPT_NEG(unset);
- 
-
-For things that actually use intp, I think the access side is fine (and
-possibly even slightly nicer):
-
-@@ -101,65 +101,65 @@ static enum parse_opt_result get_value(struct parse_opt_ctx_t *p,
- 
-        case OPTION_BIT:
-                if (unset)
--                       *(int *)opt->value &= ~opt->defval;
-+                       *opt->value.intp &= ~opt->defval;
-                else
--                       *(int *)opt->value |= opt->defval;
-+                       *opt->value.intp |= opt->defval;
-                return 0;
- 
-
-The declaration side is mostly handled by OPT_INTEGER(), etc, but
-hand-written ones still need to adjust as you'd expect:
-
-@@ -298,7 +298,7 @@ static struct option builtin_add_options[] = {
-        OPT_BOOL(0, "renormalize", &add_renormalize, N_("renormalize EOL of tracked files (implies -u)")),
-        OPT_BOOL('N', "intent-to-add", &intent_to_add, N_("record only the fact that the path will be added later")),
-        OPT_BOOL('A', "all", &addremove_explicit, N_("add changes from all tracked and untracked files")),
--       { OPTION_CALLBACK, 0, "ignore-removal", &addremove_explicit,
-+       { OPTION_CALLBACK, 0, "ignore-removal", { .intp = &addremove_explicit },
-          NULL /* takes no arguments */,
-          N_("ignore paths removed in the working tree (same as --no-all)"),
-          PARSE_OPT_NOARG, ignore_removal_cb },
-
-That's ugly, but at least we're getting some type safety out of it.
-
-But here's where it gets tricky. In addition to catching any size
-mismatches, this will also catch signedness problems. I.e., if we make
-OPT_INTEGER() use "intp", then everybody passing in &unsigned_var now
-gets a compiler warning. Which maybe is a good thing, I dunno. But it
-triggers a lot of warnings. We probably ought to be using a "uintp" for
-OPT_BIT(), etc, but that just complains about callers passing in signed
-integers. ;)
-
-So that's where I gave up. Converting between signed and unsigned
-variables needs to be done very carefully, as there are often subtle
-impacts (e.g., loop terminations). And because we have so many sign
-issues already, compiling with "-Wsign-compare", etc, isn't likely to
-help.
-
-But if anybody wants to take a stab at it, the work I've done so far is
-can be fetched from:
-
-  https://github.com/peff/git jk/parseopt-intp-wip
-
--Peff
+> 
+> Ciao,
+> Dscho
