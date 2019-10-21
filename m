@@ -2,110 +2,254 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99EC21F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 08:51:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B82F81F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 09:16:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726915AbfJUIv4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 04:51:56 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63217 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726181AbfJUIv4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 04:51:56 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EED0B2199C;
-        Mon, 21 Oct 2019 04:51:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wnWamjQh8KKI+XbDHOTcu5gbMzc=; b=dRZSCD
-        zsvCTJ3fNaTcbqUbT4mSWfbR5N2IDMGFh3vdOtF8rMnx0Ew/9TLhELRhvfw9HqY0
-        puqs1gMxiFUxUVaF+P9K/twrZbtQ2nLRDrRQ9+dnubgD6cxbUHbUuzYeOaa9536A
-        svk861Q/psCQ8n1fh1tCw8Y77R726FvaJ/tZE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=edkBizJ/ps4NiFLDv/UJgUqEoGTHVCcP
-        f/Z6Qi+Ga+JL7lyP5DvIlVlgFO7AMIc165JLckGjAvlk3/d2vwAPbn3IqMlbVPg7
-        CKs5xi0J/ZM74QuuWsQCUIEa+rEg8OIpk57M2WC3lpvA6h2rW2kAzVBF6yYLL4fb
-        NqJdAQoyr28=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E5D502199B;
-        Mon, 21 Oct 2019 04:51:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 521BA2199A;
-        Mon, 21 Oct 2019 04:51:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-        Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] test-progress: fix test failures on big-endian systems
-References: <b0bec82e-ad0a-32f6-e2e6-e1f0e6920639@physik.fu-berlin.de>
-        <20190731071755.GF4545@pobox.com>
-        <f1ce445e-6954-8e7b-2dca-3a566ce689a5@physik.fu-berlin.de>
-        <20191019233706.GM29845@szeder.dev>
-        <xmqq36fmor7o.fsf@gitster-ct.c.googlers.com>
-        <20191021032144.GB13083@sigill.intra.peff.net>
-Date:   Mon, 21 Oct 2019 17:51:52 +0900
-In-Reply-To: <20191021032144.GB13083@sigill.intra.peff.net> (Jeff King's
-        message of "Sun, 20 Oct 2019 23:21:44 -0400")
-Message-ID: <xmqqftjmlbvb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727110AbfJUJQ5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 05:16:57 -0400
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:33683 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726181AbfJUJQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 05:16:57 -0400
+Received: by mail-ua1-f67.google.com with SMTP id u31so3586945uah.0
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 02:16:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=a0T7NQiq1BbVDvYeICgcf/flwiT2dsnhRDnlsvYC9u4=;
+        b=fmV5JIEqfwB69cxIHsf/nOZhf5SoNhPFFmT1UgGljkIpwmXOf9ZGTwU/crFXazdWyF
+         IBEtvf42UD308my884IpMHZSdnr03guwuknd96IUDeg9WiqgGRwqtPilHQZFQHzW5WVJ
+         hTAGd7b21Vxrjf+9WqEo+K/EFmpFx3Q9eZSdTljSwm1eJ226Dbp/SSOgqG6ePkUvnVBP
+         eQ7aewkVpbrvROwpCkMWnDyNT1QHjDC3tI38h/gtOLndKTxMk76W1OspACu32+veRoMs
+         O4vHia55+h5Fs1/N5yBKV7RVTh3qf5dMG3O+3iyVDpYQ+iqcPcUY7ihaSCWNAycoHvJF
+         qz/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=a0T7NQiq1BbVDvYeICgcf/flwiT2dsnhRDnlsvYC9u4=;
+        b=lSiBHWqCxbxjzJ0grEE6pfJke1UP0OXeTKDaFZtB9AyZnd3ZV0JlqY7NSyaLhVJw2q
+         nJaQhznqV/ImBVUOiWmDD+q5Z+NNLeF+EUOs5EPneUmVQxsIKoWrEVKq3RGywY4kkFzJ
+         bbc4xEsUP736asjO2J3R6afkmJX+fE8YKd4efYqgfNtVArKQbVyO13iR3YHQjjaZtJwl
+         nusNqGdVZzIO4D8aSF4zmHJQPPJM3L6K+5MbOrjddGC0KtRpL1svkJzZhmevbQYbs0Wk
+         1V7LzvhQephHOE1jCwvhyDqMPq34rsUwXv2Onci13f4pXjQLLDudoPP5nCTQZtKfrnW+
+         oR/Q==
+X-Gm-Message-State: APjAAAVlRNJAevHJZsE0ZurSqVDByMYkBZqtmr3WOcROlw//RpRyhWew
+        ZtsLyTEnxkMtWeY8ISOlJR6oG23lKmulhjp6K2c=
+X-Google-Smtp-Source: APXvYqwQNg0URGZ1wNe1J8NggvHzAiNJ2pq+/SZzy4jvpBdBJ9yoLWMMIBx4CF/VuCjnMhOfOsyc01IKgBI+pE301Rs=
+X-Received: by 2002:ab0:6519:: with SMTP id w25mr11904507uam.76.1571649415432;
+ Mon, 21 Oct 2019 02:16:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0761CFDA-F3E0-11E9-BEAC-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+References: <20190819214110.26461-1-me@yadavpratyush.com> <20190828215725.13376-1-me@yadavpratyush.com>
+ <20190828215725.13376-5-me@yadavpratyush.com>
+In-Reply-To: <20190828215725.13376-5-me@yadavpratyush.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Mon, 21 Oct 2019 11:16:42 +0200
+Message-ID: <CAKPyHN0Kh8eKjzXink3YtE6wRrOgpzTYyPmLnbpbxPt3LFsvig@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] git-gui: allow undoing last revert
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Dear Pratyush,
 
-> I wondered if we could be a bit more clever with the definition of
-> "struct option". Something like:
->
-> diff --git a/parse-options.h b/parse-options.h
-> index 38a33a087e..99c7ff466d 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -126,7 +126,10 @@ struct option {
->  	enum parse_opt_type type;
->  	int short_name;
->  	const char *long_name;
-> -	void *value;
-> +	union {
-> +		int *intp;
-> +		const char *strp;
-> +	} value;
->  	const char *argh;
->  	const char *help;
->  
->
-> which would let the compiler complain about the type mismatch (of course
-> it can't help you if you assign to "intp" while trying to parse a
-> string).
->
-> Initializing the union from a compound literal becomes more painful,
-> but:
->
->   1. That's mostly hidden behind OPT_INTEGER(), etc.
->
->   2. I think we're OK with named initializers these days. I.e., I think:
->
->         { OPTION_INTEGER, 'f', "--foo", { .intp = &foo } }
->
->      would work OK.
+I just noticed that the 'Revert Last Hunk' menu entry is enabled in
+the stage-list. But I think it should be disabled, like the 'Revert
+Hunk' and 'Revert Line' menu entry.
 
-The side that actually use .vale would need to change for obvious
-reasons, which may be painful, but I agree it would have easily
-prevented the regression from happening in the first place.
+Can you confirm this?
 
-Thanks for a food for thought.
+Thanks.
+
+Bert
+
+
+
+On Wed, Aug 28, 2019 at 11:57 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+>
+> Accidental clicks on the revert hunk/lines buttons can cause loss of
+> work, and can be frustrating. So, allow undoing the last revert.
+>
+> Right now, a stack or deque are not being used for the sake of
+> simplicity, so only one undo is possible. Any reverts before the
+> previous one are lost.
+>
+> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+> ---
+>  git-gui.sh   | 18 +++++++++++++++++-
+>  lib/diff.tcl | 53 ++++++++++++++++++++++++++++++++++++++++++++++++----
+>  2 files changed, 66 insertions(+), 5 deletions(-)
+>
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 1592544..e03a2d2 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -1350,6 +1350,8 @@ set is_submodule_diff 0
+>  set is_conflict_diff 0
+>  set selected_commit_type new
+>  set diff_empty_count 0
+> +set last_revert {}
+> +set last_revert_enc {}
+>
+>  set nullid "0000000000000000000000000000000000000000"
+>  set nullid2 "0000000000000000000000000000000000000001"
+> @@ -3601,6 +3603,11 @@ $ctxm add command \
+>         -command {apply_or_revert_range_or_line $cursorX $cursorY 1; do_rescan}
+>  set ui_diff_revertline [$ctxm index last]
+>  lappend diff_actions [list $ctxm entryconf $ui_diff_revertline -state]
+> +$ctxm add command \
+> +       -label [mc "Undo Last Revert"] \
+> +       -command {undo_last_revert; do_rescan}
+> +set ui_diff_undorevert [$ctxm index last]
+> +lappend diff_actions [list $ctxm entryconf $ui_diff_undorevert -state]
+>  $ctxm add separator
+>  $ctxm add command \
+>         -label [mc "Show Less Context"] \
+> @@ -3680,7 +3687,7 @@ proc has_textconv {path} {
+>  }
+>
+>  proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
+> -       global current_diff_path file_states
+> +       global current_diff_path file_states last_revert
+>         set ::cursorX $x
+>         set ::cursorY $y
+>         if {[info exists file_states($current_diff_path)]} {
+> @@ -3694,6 +3701,7 @@ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
+>                 tk_popup $ctxmsm $X $Y
+>         } else {
+>                 set has_range [expr {[$::ui_diff tag nextrange sel 0.0] != {}}]
+> +               set u [mc "Undo Last Revert"]
+>                 if {$::ui_index eq $::current_diff_side} {
+>                         set l [mc "Unstage Hunk From Commit"]
+>                         set h [mc "Revert Hunk"]
+> @@ -3739,12 +3747,20 @@ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
+>                         }
+>                 }
+>
+> +               if {$last_revert eq {}} {
+> +                       set undo_state disabled
+> +               } else {
+> +                       set undo_state normal
+> +               }
+> +
+>                 $ctxm entryconf $::ui_diff_applyhunk -state $s -label $l
+>                 $ctxm entryconf $::ui_diff_applyline -state $s -label $t
+>                 $ctxm entryconf $::ui_diff_revertline -state $revert_state \
+>                         -label $r
+>                 $ctxm entryconf $::ui_diff_reverthunk -state $revert_state \
+>                         -label $h
+> +               $ctxm entryconf $::ui_diff_undorevert -state $undo_state \
+> +                       -label $u
+>
+>                 tk_popup $ctxm $X $Y
+>         }
+> diff --git a/lib/diff.tcl b/lib/diff.tcl
+> index 0659029..96288fc 100644
+> --- a/lib/diff.tcl
+> +++ b/lib/diff.tcl
+> @@ -569,7 +569,7 @@ proc read_diff {fd conflict_size cont_info} {
+>
+>  proc apply_or_revert_hunk {x y revert} {
+>         global current_diff_path current_diff_header current_diff_side
+> -       global ui_diff ui_index file_states
+> +       global ui_diff ui_index file_states last_revert last_revert_enc
+>
+>         if {$current_diff_path eq {} || $current_diff_header eq {}} return
+>         if {![lock_index apply_hunk]} return
+> @@ -610,18 +610,25 @@ proc apply_or_revert_hunk {x y revert} {
+>                 set e_lno end
+>         }
+>
+> +       set wholepatch "$current_diff_header[$ui_diff get $s_lno $e_lno]"
+> +
+>         if {[catch {
+>                 set enc [get_path_encoding $current_diff_path]
+>                 set p [eval git_write $apply_cmd]
+>                 fconfigure $p -translation binary -encoding $enc
+> -               puts -nonewline $p $current_diff_header
+> -               puts -nonewline $p [$ui_diff get $s_lno $e_lno]
+> +               puts -nonewline $p $wholepatch
+>                 close $p} err]} {
+>                 error_popup "$failed_msg\n\n$err"
+>                 unlock_index
+>                 return
+>         }
+>
+> +       if {$revert} {
+> +               # Save a copy of this patch for undoing reverts.
+> +               set last_revert $wholepatch
+> +               set last_revert_enc $enc
+> +       }
+> +
+>         $ui_diff conf -state normal
+>         $ui_diff delete $s_lno $e_lno
+>         $ui_diff conf -state disabled
+> @@ -653,7 +660,7 @@ proc apply_or_revert_hunk {x y revert} {
+>
+>  proc apply_or_revert_range_or_line {x y revert} {
+>         global current_diff_path current_diff_header current_diff_side
+> -       global ui_diff ui_index file_states
+> +       global ui_diff ui_index file_states last_revert
+>
+>         set selected [$ui_diff tag nextrange sel 0.0]
+>
+> @@ -852,5 +859,43 @@ proc apply_or_revert_range_or_line {x y revert} {
+>                 return
+>         }
+>
+> +       if {$revert} {
+> +               # Save a copy of this patch for undoing reverts.
+> +               set last_revert $current_diff_header$wholepatch
+> +               set last_revert_enc $enc
+> +       }
+> +
+> +       unlock_index
+> +}
+> +
+> +# Undo the last line/hunk reverted. When hunks and lines are reverted, a copy
+> +# of the diff applied is saved. Re-apply that diff to undo the revert.
+> +#
+> +# Right now, we only use a single variable to hold the copy, and not a
+> +# stack/deque for simplicity, so multiple undos are not possible. Maybe this
+> +# can be added if the need for something like this is felt in the future.
+> +proc undo_last_revert {} {
+> +       global last_revert current_diff_path current_diff_header
+> +       global last_revert_enc
+> +
+> +       if {$last_revert eq {}} return
+> +       if {![lock_index apply_hunk]} return
+> +
+> +       set apply_cmd {apply --whitespace=nowarn}
+> +       set failed_msg [mc "Failed to undo last revert."]
+> +
+> +       if {[catch {
+> +               set enc $last_revert_enc
+> +               set p [eval git_write $apply_cmd]
+> +               fconfigure $p -translation binary -encoding $enc
+> +               puts -nonewline $p $last_revert
+> +               close $p} err]} {
+> +               error_popup "$failed_msg\n\n$err"
+> +               unlock_index
+> +               return
+> +       }
+> +
+> +       set last_revert {}
+> +
+>         unlock_index
+>  }
+> --
+> 2.21.0
+>
