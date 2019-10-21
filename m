@@ -2,604 +2,473 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_20,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 079CD1F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 20:32:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57D8F1F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 20:43:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730052AbfJUUcp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 16:32:45 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:45206 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728914AbfJUUcp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 16:32:45 -0400
-Received: by mail-qt1-f194.google.com with SMTP id c21so23184167qtj.12
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 13:32:43 -0700 (PDT)
+        id S1730317AbfJUUnH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 16:43:07 -0400
+Received: from mail-qt1-f182.google.com ([209.85.160.182]:42653 "EHLO
+        mail-qt1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730308AbfJUUnH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 16:43:07 -0400
+Received: by mail-qt1-f182.google.com with SMTP id w14so23253175qto.9
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 13:43:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Kk0GHOMxQPyozghxeX8Ug505SoUoWV4Uyk2nQNHg72w=;
-        b=H2RLX3n2ncCu/ZNipOCeovLfcrrfp9z+w8Eny/kjfCHv+wrC2XsKkC01BXu2b6rVW1
-         ITPhfufEif8GfwfvpQuuGvNEPYBf+U/jsebFPqZhRjWRRN6Oq3bYOBqFxSos/fCF07FF
-         bxeYbiJBUUmqEb77kMc0MdnG63QvB5z3T37JlwMG2Pt9nw2OnNAwUQCygDEaVpOvOaIj
-         zsjK+U9axcOfRKRoIusxpKZmOWCu3CeQ2wQCOmRGSp3ohAFeWBLW52AlXqXY9j1xuwHw
-         lL0cpVxz9pMhfs46Oef7Wr/5tcFc6nufAzQ1CeLTau3zp6W5aq61wEkOUcXgM5sbzJji
-         uVdA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JvtLZLWnbnx/2Zl8ZDGYv9DiVBIV1gKTvfWUQBOpAIs=;
+        b=rV43quh3FKc9BKuCVHJtOO1YixgRf5l2huZ1ncPILECgRQcNIPqCyZ5bbTgu/OffxM
+         BW3wtVOV3xBK99UTzHOsbvZlazFEv1J8WDNCsapGs0yDefXqszPLbk2SDjXAoZU1x35R
+         rF9PTryyzpyj32L6KoGrAlKxwyQ033fq534MrYlqL8LX1t2sK0FqSLp8AwFV4NaEHIHm
+         FovEW0Ino+2Im2nzbPB2a1ONqcYTkFQDek1YTHdGCqTG17eC71tnYKsrLo8SFcHgk+vr
+         6mkH2wjCcAmovFBrJm2vWUJ3SL1LUmSZ4fJagaLp4DUQo9IR5EEFNhXiMROCWH4EHaaX
+         RHxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Kk0GHOMxQPyozghxeX8Ug505SoUoWV4Uyk2nQNHg72w=;
-        b=SNBSytbNliLgNVuhA6uclXSKC2I9HfkGNvSwXYbSyqFKaoM15/xy/r6DEy0NDCpD8E
-         m5STCjxY+KLoF9ReAuDk8J1yHCZCR1AwMNaS+VDLZvNsSaWBs/uw4DJFSXcIRoZ0rGkp
-         xO+QdPN8VRka2AbiL3M4HOTq8IyMcL3lXHLfR7M0q0mIzSkoUqG7YbHwV2mGo6Te0k+/
-         GGCuqbNgjBjVyJKJFebJYfguuXvDDaHdMHkspckGrKzw+ODTS4kSDnyve0XYMuyXyw7f
-         kPn4Mvhs2sx3Wq48yb90DWbytlI5XQLfc2cBBiUCDKhVaOHULORw1meSl9YN2N1ZqtBX
-         ZQhQ==
-X-Gm-Message-State: APjAAAWDMCF+i5DkfWnyGZLk6tu40Of/vZXnTSWY1gFqpZgefp9zAuZV
-        +zLFFjjD53kZtIRfLbTYKS8=
-X-Google-Smtp-Source: APXvYqwOXPJKy9z6rHODFCMleqLHYQ3oZXCrFX0CaZ/NL7dMbjvpYp3rwgTccH1X7du1h2HfjHHyzw==
-X-Received: by 2002:ac8:534a:: with SMTP id d10mr15998739qto.349.1571689962762;
-        Mon, 21 Oct 2019 13:32:42 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:4018:ebea:d287:d7b3? ([2001:4898:a800:1010:f14d:ebea:d287:d7b3])
-        by smtp.gmail.com with ESMTPSA id m63sm8537242qkc.72.2019.10.21.13.32.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Oct 2019 13:32:42 -0700 (PDT)
-Subject: Re: [Git Developer Blog] [PATCH] post: a tour of git's object types
-To:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Cc:     pedro rijo <pedrorijo91@gmail.com>,
-        James Ramsay <james@jramsay.com.au>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Andrew Ardill <andrew.ardill@gmail.com>
-References: <20191019002045.148579-1-emilyshaffer@google.com>
+        bh=JvtLZLWnbnx/2Zl8ZDGYv9DiVBIV1gKTvfWUQBOpAIs=;
+        b=WvidI9RPPoEP2E7avs+Pko+IBlRiCwgqQQHKxY2dWvoRiO9KLnu+ANs4A2OdhsnXfZ
+         59njxKd5fYuZtSwTG04s1Xzax7DoBxaqnHH3ueMO+LEwAL5hXgloY8mgQFN4CGMwo8sf
+         luBYFTcXd33Lw7OReRlI5BnbnAD4oI+dm86tzrwuQ9w0wgo6eoMFt2yk4RXQyVfB2V3T
+         4e8ZwIZAPX6I0VbcYigu9JytopXPixBc9Kj9KlgVz3L6xvYqFaQKsnqWkssiQAsHLOV8
+         vNbTUc839QaCouRCmgHesU1uLalGdCuT2/ZVCJLiZsnKQ76M9q8oeFK0sb+8ul0Wsp1k
+         90yw==
+X-Gm-Message-State: APjAAAV0k15hetjQKC0qL+9fdu3mh6/tIAbZTJdrX/bu6sjZp2ACgyiZ
+        g4gESoh0VAODBolWkXHLt13rICoAP/Y=
+X-Google-Smtp-Source: APXvYqzVDf4xwtjFQFKhgLQTuY7oMX99sVQTDWTamEMukPuU3UPXNHDZ5p4M5hdT+s1cOHVBWfivZA==
+X-Received: by 2002:a05:6214:192:: with SMTP id q18mr3160730qvr.36.1571690584546;
+        Mon, 21 Oct 2019 13:43:04 -0700 (PDT)
+Received: from localhost.localdomain ([2001:4898:a800:1010:f14d:ebea:d287:d7b3])
+        by smtp.gmail.com with ESMTPSA id n65sm8927753qkb.19.2019.10.21.13.43.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Oct 2019 13:43:04 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <5dab3dc6-3942-422e-d29d-3e8682ebc4df@gmail.com>
-Date:   Mon, 21 Oct 2019 16:32:41 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     emilyshaffer@google.com, me@jramsay.com.au,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: [Git Developer Blog] [Blog Post] Updates to the Git Commit Graph Feature
+Date:   Mon, 21 Oct 2019 16:42:53 -0400
+Message-Id: <20191021204253.10196-1-dstolee@microsoft.com>
+X-Mailer: git-send-email 2.23.0.vfs.1.1.87.g1f3c9be
 MIME-Version: 1.0
-In-Reply-To: <20191019002045.148579-1-emilyshaffer@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/18/2019 8:20 PM, Emily Shaffer wrote:
-> An overview of what Git object types mean and how they loosely translate
-> into filesystem types users are already familiar with is a good start to
-> making Git's internals less scary to users. This post is an interactive
-> overview of the various types, demonstrating subcommands which show what
-> the objects look like and how their names are generated.
-> 
-> This is related to https://gitlab.com/git-scm/blog/issues/15
-> 
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
-> Hi all,
-> 
-> In the hopes of getting some more momentum on the developer blog, here's
-> a crosspost from my personal blog some months ago, targeted for the Git
-> Developer Blog (as discussed in the Virtual Contributor Summit and
-> on-list). During those conversations I emphasized my wish to make sure
-> posts on this developer blog are vetted by the Git development community
-> - to that end, the textual contents of this blog post are being sent to
-> the vger.kernel.org list in their entirety. Feel free to provide
-> comments here, or on the merge request in GitLab:
-> https://gitlab.com/git-scm/blog/merge_requests/4
-> Or, if you have another idea about how you'd like this review process to
-> look, we may as well discuss it on this patch too.
-> 
-> I hope this post also shows what I hoped to achieve with the Git
-> Developer Blog - in-depth, accurate information presented in a casual
-> tone which helps users better understand Git.
-> 
-> At this time I've simply copied the blog post verbatim from my personal
-> blog; I didn't do a lot of review on it because I was hoping to focus on
-> the process of getting posts reviewed and accepted to the GitLab repo.
-> It's probable that the tone is actually more conversational than we want
-> for a developer blog, and the post itself didn't go through any kind of
-> peer review, so I welcome comments on any and all aspects of the post.
+In this blog post, we discuss updates in to the Git commit-graph
+feature since it was announced shortly after Git 2.18.0. This
+answers the following:
 
-Thanks for getting the conversation started (again)! I've got a post that
-I've been tinkering with for some time now, and you gave me the motivation
-to actually finish it.
+1. What is the commit-graph?
+2. Why should I enable the commit-graph?
+3. How do I enable it now, or disable in time for 2.24.0?
+4. How do I write it during fetch?
+5. What is a commit-graph chain?
 
-> +Naming is one of the hard problems in computer science, right? It's hard for
-> +Git developers too. One of the more arcane concepts in Git - object
-> +reachability - becomes simpler to understand with a little bit of naming
-> +indirection.
-> +
-> +Reachability is an important concept in Git. It's how the server determines
-> +what objects you need in order to get it up to what the server itself knows.
-> +It's also how merges and rebases work. With all this big stuff riding on
-> +reachability, it seems intimidating to try to understand - but it turns out if
-> +we give it a slightly simpler name, things become a little clearer.
-> +
-> +## Git's four object types
-> +
-> +Under the covers, Git is mostly a directed graph of objects. Those objects come
-> +in four flavors; from root to leaf (generally), those flavors are:
-> +
-> +- Tag
-> +- Commit
-> +- Tree
-> +- Blob
-> +
-> +We'll take a closer look in the opposite order, though.
-> +
-> +# Blob
-> +
-> +Surprise! It's a file. Well, kind of - it can also be a symlink to a file - but
-> +this is the most atomic type of object. We'll explore these a little more later,
-> +but really, it's just a file.
+I intended the post to start at a level that any experienced Git
+user could understand, but then it ramps up in detail by the end
+to include some very deep technical details. I expect most readers
+to give up after the first couple sections, but those who stick
+to the end will learn something valuable.
 
-When I teach people about blobs [1], I take special care to point out that
-a blob is only the file _content_. It does not actually store any information about
-the filename or permissions.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
 
-It could help to describe an example: maybe `git cat-file -p HEAD:README` for a
-well-known repo? I'm using "HEAD:<path>" here because it is easier to understand
-where the file reference comes from, but perhaps it would be better to use a
-"git rev-parse" and "git cat-file" pair:
+Inspired by Emily's first contribution in the space [1], I now finished this
+post that I've been working on here-and-there since Git 2.23.0. Now that 2.24.0
+is imminent, the post is even more relevant. This is available as a Merge
+Request [2] on the git-blog repo. You should be able to see the markdown style
+and the SVG better there.
 
-$ git rev-parse HEAD:README.md
-88f126184c52bfe4859ec189d018872902e02a84
+To create the image, I used Inkscape, then SVGMinify.com to reduce the file
+size, which hopefully makes this patch less obnoxious.
 
-$ git cat-file -p 88f126184c52bfe4859ec189d018872902e02a84
-[![Build Status](https://dev.azure.com/git/git/_apis/build/status/git.git)](https://dev.azure.com/git/git/_build/latest?definitionId=11)
+[1] https://public-inbox.org/git/20191019002045.148579-1-emilyshaffer@google.com/
 
-Git - fast, scalable, distributed revision control system
-=========================================================
+[2] https://gitlab.com/git-scm/blog/merge_requests/5/diffs#241fcd5d0d81901ba224af0d603905f593aaf821
 
-...
+ .../post/2019-10-31-commit-graph-updates.md   | 268 ++++++++++++++++++
+ content/post/img/2019-commit-graph-chain.svg  |  85 ++++++
+ 2 files changed, 353 insertions(+)
+ create mode 100644 content/post/2019-10-31-commit-graph-updates.md
+ create mode 100644 content/post/img/2019-commit-graph-chain.svg
 
-[1] https://stolee.dev/docs/git.pptx
-
-> +
-> +# Tree
-> +
-> +A tree references zero or more trees or blobs. Said another way, a tree holds
-Perhaps "A tree references blobs and other trees." Saying "zero or more" makes
-me get spun up about what it would mean for a tree to have zero entries, which
-is not possible in porcelain Git.
-
-> +one or more trees or files. This sounds familiar - basically, a tree is a
-> +directory. (Okay, or a symlink to a directory.) It points to more trees
-> +(subdirectories) or blobs (files). It can also point to commits in the case
-> +of submodules, but that's another conversation.
-
-Here is a great time to mention that filenames happen in a tree. You can
-use `git cat-file -p HEAD:docs/` (or something) to show more contents of a tree.
-
-> +By the way, "tree" is one that gets a little sticky, because we also talk about
-> +"working tree" as well as "worktree". We'll touch back on that in a minute.
-
-This paragraph did not seem particularly useful to me. Instead, you could take
-some time to mention that the tree is separated from where in the file system
-the corresponding folder would live.
-
-> +
-> +# Commit
-> +
-> +This is the one we're all familiar with - commits are those things we write at
-> +1am, angry at a pesky bug, and label with something like "really fix it this
-> +time", right?
-> +
-> +A commit references exactly one tree. That's the root directory of your project.
-
-"That's the root directory of your project." could be better stated as "That tree
-is a snapshot of the root directory of our project." I've found describing commits
-as "snapshots" and "NOT DIFFS" is extremely important. That is the critical reason
-people still ask for things like "it would be nice if 'git rebase' preserved commit
-ids".
-
-> +It also references zero or more other commits - and this is where we diverge
-> +from the filesystem parallel, because the other commits it references are its
-> +parent(s), each of which has its own copy of the project at that commit's point
-> +in time. (Commits with more than one parent are merge commits; otherwise, your
-> +commit only has the one parent.)
-> +
-> +Commits represent a specific state of the repository which someone thought was
-> +worth saving - a new feature, or a small step of progress which you don't want
-> +to lose as you're hacking your way through that homework assignment. Each commit
-> +points to a complete image of the repository - but that's not as bad as it
-> +sounds, as we'll see when we try it out.
-> +
-> +# Tag
-> +
-> +Tags are a little lackluster after all the exciting types up until now. They are
-> +essentially a label; they serve as an entry point into the graph and point to
-> +either another tag or a commit. They're generally used to mark releases, and you
-> +can see them pretty easily with `git log --oneline --decorate=full`.
-
-I usually ignore tags when I talk to people about Git objects. They are confusing,
-and this paragraph doesn't really warn enough about how strange they are:
-
-1. A tag is a ref in "refs/tags/".
-
-2. An annotated tag is an object in the repo that contains a message and an object
-   reference. That referenced object can be _anything_, including a tree or blob.
-   (That has bit me a number of times working on server code.)
-
-For these "complications", I recommend ignoring them OR presenting a "this is
-complicated" warning. (Maybe even at the very end, as you don't need tags to
-describe a typical workflow.)
-
-> +# A quick return to an overloaded word
-> +
-> +"Tree", "worktree", and "working tree" seem to refer to different concepts. A
-> +tree is a folder. Your working tree is your project state (and we can talk about
-> +having a "clean" working tree, which means you don't have any staged or unstaged
-> +changes pending). And "worktree" is a way for you to work on multiple branches
-> +simultaneously in a different directory in a safe way (read `git help worktree`
-> +for more - worktrees are awesome). But they're all named tree!
-
-Add a link: https://git-scm.com/docs/git-worktree
-
-> +It's a little clearer now that we know that every commit points to one tree -
-> +the root of the project, a.k.a. your working tree, a.k.a. your worktree. `git
-> +worktree` lets you put the tree associated with the commit at the tip of your
-> +current branch in a different directory than the one you cloned into, and
-
-"current branch" is incorrect: you cannot have multiple worktrees checking out
-the same branch. You can detach at your current HEAD, or check out a different
-branch.
-
-> +having a clean working tree means that your filesystem is the same as the tree
-> +your `HEAD` points to.
-> +
-> +## Try It And See<sup>TM</sup>
-> +
-> +It turns out the details of what objects Git knows about and what those objects
-> +contain isn't as opaque as we might think. Git exposes a number of "plumbing
-> +commands" which aren't so handy for interactive use but which are very useful
-> +for scripting, as they describe the state of the repository in a concise and
-> +predictable way. Let's walk through creating a pretty basic repository and
-> +examining it with some low-level plumbing commands!
-> +
-> +# An empty repo
-> +
-> +For starters, we'll make a new, shiny, totally empty repo.
-> +
-> +{% highlight shell_session %}
-> +$ mkdir demo
-> +$ cd demo
-> +$ git init
-> +{% endhighlight %}
-> +
-> +We've got nothing. If we try `git log`, we'll be assured that we have no
-> +commits, and if we try `git branch -a` we'll see we have no branches, either.
-> +So let's make a very simple first commit.
-> +
-> +# A single commit
-> +
-> +{% highlight shell_session %}
-> +$ echo "abcd" >foo.txt
-> +$ git add foo.txt
-> +$ git commit -m "first commit"
-> +{% endhighlight %}
-> +
-> +I know this is boring, but bear with me and run `git ls-tree HEAD`.
-> +
-> +Hey, look, a blob! You'll see the object mode, the type, the _object ID_, and
-> +the name of the file. For the rest of the post, I'll refer to the object ID as
-> +the OID.
-> +
-> +The OID is a hash of the file contents. You can verify this for yourself with
-> +`git hash-object foo.txt` - it's the same as your new blob's OID. The new blob
-> +is literally just your file foo.txt, which you can verify by running `git
-> +cat-file -p <oid>`:
-> +
-> +{% highlight shell_session %}
-> +$ git ls-tree HEAD
-> +100644 blob acbe86c7c89586e0912a0a851bacf309c595c308	foo.txt
-> +$ git cat-file -p acbe86c7c89586e0912a0a851bacf309c595c308
-> +abcd
-> +{% endhighlight %}
-> +
-> +While we're here, we can also take a look at the commit object. Use `git log`
-> +to determine your commit's OID, then use `git cat-file -p` to print the
-> +contents:
-> +
-> +{% highlight shell_session %}
-> +$ git log
-> +commit a491754d3256b5823607d7ea4afb835c07f9fc2c (HEAD -> master)
-> +Author: Emily Shaffer <nasamuffin@gmail.com>
-> +Date:   Wed Jun 5 22:56:25 2019 -0700
-> +
-> +    first commit
-> +$ git cat-file -p a491754d3256b5823607d7ea4afb835c07f9fc2c
-> +tree 7376230624de9a38f4ea6ca4c41d47e41304b1bd
-> +author Emily Shaffer <nasamuffin@gmail.com> 1559800585 -0700
-> +committer Emily Shaffer <nasamuffin@gmail.com> 1559800585 -0700
-> +
-> +first commit
-> +{% endhighlight %}
-> +
-> +This gave us the OID of our root tree, which we can also examine:
-> +
-> +{% highlight shell_session %}
-> +emily@xenaTWP:~/demo$ git cat-file -p 7376230624de9a38f4ea6ca4c41d47e41304b1bd
-> +100644 blob acbe86c7c89586e0912a0a851bacf309c595c308	foo.txt
-> +{% endhighlight %}
-> +
-> +And what do you know - it's precisely the same output as `git ls-tree HEAD`.
-> +Because we are literally printing the tree pointed to by HEAD.
-> +
-> +# A new file
-> +
-> +Let's see what happens when we add another file.
-> +
-> +{% highlight shell_session %}
-> +$ echo "efgh" >bar.txt
-> +$ git add bar.txt
-> +$ git commit -m "The noise you make after too much time at the bar."
-> +[master acc255b] The noise you make after too much time at the bar.
-> + 1 file changed, 1 insertion(+)
-> + create mode 100644 bar.txt
-> +{% endhighlight %}
-> +
-> +Now we'll take a look at `git ls-tree HEAD` again and compare it to the output
-> +from the prior commit (if you've scrolled past, you can run `git ls-tree
-> +HEAD^`).
-> +
-> +{% highlight shell_session %}
-> +$ git ls-tree HEAD^
-> +100644 blob acbe86c7c89586e0912a0a851bacf309c595c308	foo.txt
-> +$ git ls-tree HEAD
-> +100644 blob ac38e5aa3826c56e2f32df05d23d2c27f09e7782	bar.txt
-> +100644 blob acbe86c7c89586e0912a0a851bacf309c595c308	foo.txt
-> +{% endhighlight %}
-> +
-> +It looks like we didn't actually create a new blob for foo.txt. That's why this
-> +concept of each commit containing a copy of every file in the repository is
-> +actually okay - the only new objects of substance being created are new copies
-> +of whatever thing you've changed. (This is also why it's historically a bad idea
-> +to check in your compiled binaries - someone doing `git clone` with no arguments
-> +will get not just your latest release binary, but every release binary you ever
-> +checked in. Oof.)
-> +
-> +But wait - if we shouldn't check in our 50MB release build, why is it okay for
-> +us to check in our 5000-line legacy monolithic class? (Don't be embarrassed. It
-> +happens to all of us.) It turns out that I'm not being totally honest when I say
-> +we store "a copy of every file". All the objects are stored in `.git/objects/`,
-> +so we can have a look with `cat
-> +.git/objects/ac/be86c7c89586e0912a0a851bacf309c595c308`. Breathe a sigh of
-> +relief; blobs are stored in a compressed state and `git cat-file` unpacks it for
-> +us. The issue here is that your binary is much more difficult to compress than
-> +a text file.
-> +
-> +# A modified file
-> +
-> +So what happens when we modify a file?
-> +
-> +{% highlight shell_session %}
-> +$ echo "aaaa" >foo.txt
-> +$ git add foo.txt
-> +$ git commit -m "the scream of despair"
-> +$ git ls-tree HEAD
-> +100644 blob ac38e5aa3826c56e2f32df05d23d2c27f09e7782	bar.txt
-> +100644 blob 5d308e1d060b0c387d452cf4747f89ecb9935851	foo.txt
-> +{% endhighlight %}
-> +
-> +Looks like our bar.txt object remains, but we've got a new OID for foo.txt. So
-> +what exactly lives in the blob of a file modification?
-> +
-> +{% highlight shell_session %}
-> +$ git cat-file -p 5d308e1d060b0c387d452cf4747f89ecb9935851
-> +aaaa
-> +{% endhighlight %}
-> +
-> +No diff. It's the whole file. And our old version isn't gone; we can still pull
-> +out the OID we used to know about:
-> +
-> +{% highlight shell_session %}
-> +$ git cat-file -p acbe86c7c89586e0912a0a851bacf309c595c308
-> +abcd
-> +{% endhighlight %}
-> +
-> +# A subdirectory
-> +
-> +We mentioned earlier that trees can point to trees. Let's put it into practice:
-> +
-> +{% highlight shell_session %}
-> +$ mdkir baz
-> +$ echo frotz >baz/zork.txt
-> +$ git add baz
-> +$ git commit -m "ran out of placeholder words"
-> +{% endhighlight %}
-> +
-> +So we expect to see a new tree and a new blob. A first crack at `git ls-tree
-> +HEAD` doesn't go so well:
-> +
-> +{% highlight shell_session %}
-> +$ git ls-tree HEAD
-> +100644 blob ac38e5aa3826c56e2f32df05d23d2c27f09e7782	bar.txt
-> +040000 tree 22741c26d13c9539d0ab7476ce09074dbd62a977	baz
-> +100644 blob 5d308e1d060b0c387d452cf4747f89ecb9935851	foo.txt
-> +{% endhighlight %}
-> +
-> +What happened to `zork.txt`? It's still there:
-> +
-> +{% highlight shell_session %}
-> +$ git ls-tree 22741c26d13c9539d0ab7476ce09074dbd62a977
-> +100644 blob 8e4020bb5a8d8c873b25de15933e75cc0fc275df	zork.txt
-> +{% endhighlight %}
-> +
-> +By default, `git ls-tree` kind of behaves like `ls` - it doesn't recurse into
-> +the trees it finds.  So we'll ask it to recurse (`-r`) and to also show the
-> +names of tags it's recursing into (`-t`):
-> +
-> +{% highlight shell_session %}
-> +$ git ls-tree -rt HEAD
-> +100644 blob ac38e5aa3826c56e2f32df05d23d2c27f09e7782	bar.txt
-> +040000 tree 22741c26d13c9539d0ab7476ce09074dbd62a977	baz
-> +100644 blob 8e4020bb5a8d8c873b25de15933e75cc0fc275df	baz/zork.txt
-> +100644 blob 5d308e1d060b0c387d452cf4747f89ecb9935851	foo.txt
-> +{% endhighlight %}
-> +
-> +# Summary
-> +
-> +In the end, we have four commits:
-> +
-> +{% highlight shell_session %}
-> +$ git log --oneline
-> +230a4e9 (HEAD -> master) ran out of placeholder words
-> +a0aa5e4 the scream of despair
-> +acc255b The noise you make after too much time at the bar.
-> +a491754 first commit
-> +{% endhighlight %}
-> +
-> +Each one has its own tree:
-> +
-> +{% highlight shell_session %}
-> +$ git ls-tree 230a4e9
-> +100644 blob ac38e5aa3826c56e2f32df05d23d2c27f09e7782	bar.txt
-> +040000 tree 22741c26d13c9539d0ab7476ce09074dbd62a977	baz
-> +100644 blob 5d308e1d060b0c387d452cf4747f89ecb9935851	foo.txt
-> +$ git ls-tree a0aa5e4
-> +100644 blob ac38e5aa3826c56e2f32df05d23d2c27f09e7782	bar.txt
-> +100644 blob 5d308e1d060b0c387d452cf4747f89ecb9935851	foo.txt
-> +$ git ls-tree acc255b
-> +100644 blob ac38e5aa3826c56e2f32df05d23d2c27f09e7782	bar.txt
-> +100644 blob acbe86c7c89586e0912a0a851bacf309c595c308	foo.txt
-> +$ git ls-tree a491754
-> +100644 blob acbe86c7c89586e0912a0a851bacf309c595c308	foo.txt
-> +{% endhighlight %}
-> +
-> +And in total, we should have **4** blob objects (two versions of `foo.txt` and
-> +one version each of `bar.txt` and `zork.txt`), referenced by **5** tree objects
-> +(one tree per commit, plus one tree for `baz/`), which are tracked through time
-> +by **4** commits, giving us a total of 13 objects.
-> +
-> +We can check:
-> +
-> +{% highlight shell_session %}
-> +$ git rev-list --all --objects
-> +230a4e968f007b822d780c70e2f145f5b46ed170
-> +a0aa5e491bb62906dc746aa10c548566e5dc8e4c
-> +acc255b3a1ba1a3471133ff3aa7c2630437dd38c
-> +a491754d3256b5823607d7ea4afb835c07f9fc2c
-> +f2e243fb4052f01287a1d2225a231f9131af6840 
-> +ac38e5aa3826c56e2f32df05d23d2c27f09e7782 bar.txt
-> +22741c26d13c9539d0ab7476ce09074dbd62a977 baz
-> +8e4020bb5a8d8c873b25de15933e75cc0fc275df baz/zork.txt
-> +5d308e1d060b0c387d452cf4747f89ecb9935851 foo.txt
-> +5a684389c10291eb7a187d37c5fb5e6ae6e44b3a 
-> +076c36567233c1e9c22becf6008a96af7f6e865d 
-> +acbe86c7c89586e0912a0a851bacf309c595c308 foo.txt
-> +7376230624de9a38f4ea6ca4c41d47e41304b1bd 
-> +$ git rev-list --all --objects | wc -l
-> +13
-> +{% endhighlight %}
-> +
-> +We can prove it to ourselves a little more easily with some pretty formatting:
-> +
-> +{% highlight shell_session %}
-> +$ git rev-list --all --objects --header
-> +230a4e968f007b822d780c70e2f145f5b46ed170
-> +tree f2e243fb4052f01287a1d2225a231f9131af6840
-> +parent a0aa5e491bb62906dc746aa10c548566e5dc8e4c
-> +author Emily Shaffer <nasamuffin@gmail.com> 1559803688 -0700
-> +committer Emily Shaffer <nasamuffin@gmail.com> 1559803688 -0700
-> +
-> +    ran out of placeholder words
-> +a0aa5e491bb62906dc746aa10c548566e5dc8e4c
-> +tree 5a684389c10291eb7a187d37c5fb5e6ae6e44b3a
-> +parent acc255b3a1ba1a3471133ff3aa7c2630437dd38c
-> +author Emily Shaffer <nasamuffin@gmail.com> 1559802687 -0700
-> +committer Emily Shaffer <nasamuffin@gmail.com> 1559802687 -0700
-> +
-> +    the scream of despair
-> +acc255b3a1ba1a3471133ff3aa7c2630437dd38c
-> +tree 076c36567233c1e9c22becf6008a96af7f6e865d
-> +parent a491754d3256b5823607d7ea4afb835c07f9fc2c
-> +author Emily Shaffer <nasamuffin@gmail.com> 1559801779 -0700
-> +committer Emily Shaffer <nasamuffin@gmail.com> 1559801779 -0700
-> +
-> +    The noise you make after too much time at the bar.
-> +a491754d3256b5823607d7ea4afb835c07f9fc2c
-> +tree 7376230624de9a38f4ea6ca4c41d47e41304b1bd
-> +author Emily Shaffer <nasamuffin@gmail.com> 1559800585 -0700
-> +committer Emily Shaffer <nasamuffin@gmail.com> 1559800585 -0700
-> +
-> +    first commit
-> +f2e243fb4052f01287a1d2225a231f9131af6840 
-> +ac38e5aa3826c56e2f32df05d23d2c27f09e7782 bar.txt
-> +22741c26d13c9539d0ab7476ce09074dbd62a977 baz
-> +8e4020bb5a8d8c873b25de15933e75cc0fc275df baz/zork.txt
-> +5d308e1d060b0c387d452cf4747f89ecb9935851 foo.txt
-> +5a684389c10291eb7a187d37c5fb5e6ae6e44b3a 
-> +076c36567233c1e9c22becf6008a96af7f6e865d 
-> +acbe86c7c89586e0912a0a851bacf309c595c308 foo.txt
-> +7376230624de9a38f4ea6ca4c41d47e41304b1bd 
-> +{% endhighlight %}
-
-This section has some good details. My earlier comments about adding 'git cat-file'
-commands are not super-relevant any more. The only thing I can say is that I prefer
-the "examples first" [2] direction. Readers could tune out and get lost in the weeds
-without some more concrete examples in-line.
-
-[2] https://gowers.wordpress.com/2007/10/19/my-favourite-pedagogical-principle-examples-first/
-
-> +## Back to reachability
-> +
-> +We're usually worried about finding out which objects are accessible from which
-> +other objects. It turns out that "reachability" can be described in a couple
-> +ways. Most succinctly, we can say it means that an object can be reached from
-> +another object during a revision walk. But we can also describe it by explaining
-> +what reachability means for each type of object.
-> +
-> +- Tag A is reachable from tag B if tag B can eventually be dereferenced to tag
-> +A. Tags can be thought of as pointers, so if `*b==a` or `***b==a` or so on is
-> +true, then tag A is reachable by tag B.
-> +
-> +- Commit A is reachable from commit B if commit A is an ancestor of commit B.
-> +For commits, "reachability" is synonymous with "ancestry".
-> +
-> +- Tree A is reachable from tree B if it is a subdirectory of the directory tree
-> +B is talking about. That is, if `find b-dir -name a-dir -type d` would succeed.
-> +
-> +- Blobs don't point to other blobs. But blob A is reachable from tree B if blob
-> +A is contained within the directory of tree B - that is, if `find b-dir -name
-> +a-file -type f` would succeed.
-> +
-> +- Tree A is reachable from commit B if it's commit B's root tree, or if it's a
-> +subdirectory of that root tree.
-> +
-> +- Commit A is reachable from tag B if tag B can eventually be dereferenced to a
-> +tag which points directly to commit A, since tags can point to other tags or to
-> +commits.
-> +
-> +So while it means something a little different for each object, it's ultimately
-> +trying to answer the question: "Somewhere in my history, did I know about this
-> +object?"
-
-Thanks for this! I hope my comments are helpful. They do not all
-require a response.
-
-What I like most about this post is that it communicates a personal voice.
-This is _not_ documentation. The Git book has that kind of prose [3] (maybe
-include a link for those who want to dig further?) A blog is temporary:
-it exists to be a person saying "this is interesting at this moment!"
-Having those extra flourishes keep some readers' interest more than
-formal style.
-
-[3] https://git-scm.com/book/en/v2/Git-Internals-Git-Objects
-
-
-Thanks,
--Stolee
-
+diff --git a/content/post/2019-10-31-commit-graph-updates.md b/content/post/2019-10-31-commit-graph-updates.md
+new file mode 100644
+index 0000000..abf6a14
+--- /dev/null
++++ b/content/post/2019-10-31-commit-graph-updates.md
+@@ -0,0 +1,268 @@
++---
++title: Updates to the Git Commit Graph Feature
++author: Derrick Stolee, Microsoft
++date: '2019-10-31'
++draft: true
++categories:
++  - Feature Announcement
++tags:
++  - commit-graph
++  - performance
++  - features
++---
++
++In [a previous blog series](https://devblogs.microsoft.com/devops/supercharging-the-git-commit-graph/),
++we announced that Git has a new _commit graph_ feature, and described some
++future directions. Since then, the commit-graph feature has grown and evolved.
++In the upcoming Git version 2.24.0, [the commit-graph will be enabled by default!](https://github.com/git/git/commit/31b1de6a09bad59cc0d88419925486afc7add277#diff-ec15845924b3ae854680823745518271)
++Today, we discuss what you should know about the feature, and what you can
++expect when you upgrade.
++
++# What is the commit-graph, and what is it good for?
++
++The commit-graph file is a binary file format that creates a structured
++representation of Git's commit history. At minimum, the commit-graph file
++is [faster to parse](https://github.com/git/git/blob/master/commit-graph.c#L606-L668)
++than decompressing commit files and [parsing them](https://github.com/git/git/blob/master/commit.c#L395-L455)
++to find their parents and root trees. This faster parsing can lead to 10x
++performance improvements.
++
++To get even more performance benefits, Git does not just use the commit-graph
++file to parse commits faster, but the commit-graph includes extra information
++to help avoid parsing some commits altogether. The critical idea is that an
++extra value -- the [generation number](https://devblogs.microsoft.com/devops/supercharging-the-git-commit-graph-iii-generations/)
++of a commit -- can significantly reduce the number of commits we need to walk
++to decide reachability. Since Git 2.19.0, the commit-graph
++[stores generation numbers](https://github.com/git/git/commit/3258c66332abaf6e3e8fd81cab07ae804760cd08).
++
++Since then, multiple algorithms were introduced to speed up Git commands such as
++[force push](https://github.com/git/git/commit/1e3497a24cf13fe907b247d1b93a997d6537cca1) or
++[fetch negotiation](https://github.com/git/git/commit/4fbcca4effc1c6f8431120f88f5a4bd1c8e38ca3).
++
++Finally, the most immediately visible improvement is the time it takes to sort
++commits by topological order. This algorithm is the critical path for `git log
++--graph`. Before the commit-graph, Git needed to walk every reachable commit
++before returning a single result.
++
++For example, here is a run of `git log --graph` in the Linux repository without
++the commit-graph feature, timing how long it takes to return ten results:
++
++```
++$ time git -c core.commitGraph=false log --graph --oneline -10 >/dev/null
++
++real    0m6.103s
++user    0m5.803s
++sys     0m0.300s
++```
++
++The reason it takes so long is because [Kahn's algorithm](https://en.wikipedia.org/wiki/Topological_sorting#Kahn's_algorithm)
++computes the "in-degrees" of every reachable commit before it can start to
++select commits of in-degree zero for output. When the commit-graph is present
++with generation numbers, Git now [uses an iterative version of Kahn's algorithm](https://github.com/git/git/commit/b45424181e9e8b2284a48c6db7b8db635bbfccc8)
++to avoid walking too far before knowing that some of the commits have in-degree
++zero and can be sent to output.
++
++Here is that same command again, this time with the commit-graph feature enabled:
++
++```
++$ time git -c core.commitGraph=true log --graph --oneline -10 >/dev/null
++
++real    0m0.009s
++user    0m0.000s
++sys     0m0.008s
++```
++
++Six seconds to nine milliseconds is a 650x speedup! Since most users asking
++for `git log --graph` actually see the result in a paged terminal window,
++this allows Git to load the first page of results almost instantaneously, and
++the next pages are available as you scroll through the history.
++
++The incremental nature of the algorithm can really be seen in real-time by
++using `git log --graph -- <file>` to investigate file history. When asking for
++a file that is not edited frequently, Git will still need to walk many commits
++to return the few results. For example, the Linux kernel `README` was edited
++in 46 of the 870,000+ commits of the repo. Running `git log --graph -- README`
++takes 0.33 seconds, but even in that time you can see the commits filling the
++page one-by-one. Without the commit-graph, the command pauses while it computes,
++then all results fill the page at the same time.
++
++# Sounds Great! What do I need to do?
++
++If you are using Git 2.23.0 or later, then you have all of these benefits
++available to you! You just need to enable the following config settings:
++
++* `git config --global core.commitGraph true`: this enables every Git repo to
++  use the commit-graph file, if present.
++
++* `git config --global gc.writeCommitGraph true`: this setting tells the `git gc`
++  command to write the commit-graph file whenever you do non-trivial garbage
++  collection. Rewriting the commit-graph file is a relatively small operation
++  compared to a full GC operation.
++
++* `git commit-graph write --reachable`: this command will update your
++  commit-graph file to contain all reachable commits. You can run this to create
++  the commit-graph file immediately, instead of waiting for your first GC operation.
++
++In the upcoming Git version 2.24.0, `core.commitGraph` and `gc.writeCommitGraph` 
++are [on by default](https://github.com/git/git/commit/31b1de6a09bad59cc0d88419925486afc7add277),
++so you don't need to set the config manually. If you _don't_ want commit-graph
++files, then explicitly disable these settings.
++
++# Write during fetch
++
++The point of the `gc.writeCommitGraph` is to keep your commit-graph updated
++with some frequency. As you add commits to your repo, the commit-graph gets
++further and further behind. That means your commit walks will parse more
++commits the old-fashioned way until finally reaching the commits in the
++commit-graph file.
++
++When working in a Git repo with many collaborators, the primary source of
++commits is not your own `git commit` calls, but your `git fetch` calls.
++However, if your repo is large enough, writing the commit-graph after each
++fetch can actually make a significant impact on your performance. Perhaps
++you downloaded a thousand new commits, but your repo has a million total
++commits. Writing the full commit-graph operates on the size of your repo,
++not on the size of your fetch, so writing those million commits is costly.
++
++During garbage collection, you are already paying for a full repack of all
++of your Git objects. That operation is already on the scale of your entire
++repository, so adding a full commit-graph write on top of that is not
++a problem.
++
++There is a solution: don't write the whole commit-graph every time! We'll
++go into how this works in more detail in the next section, but first you
++can enable the [`fetch.writeCommitGraph`](https://github.com/git/git/commit/50f26bd035816c2bb79582b834d59b49292502a9#diff-ec15845924b3ae854680823745518271)
++config setting to write the commit-graph after every `git fetch` command:
++
++```
++git config --global fetch.writeCommitGraph true
++```
++
++This ensures that your commit-graph is updated frequently and your Git
++commands are always as fast as possible.
++
++# Incremental Commit-Graph Format
++
++Before getting too far into the inremental file format, we need to refresh some
++details about the commit-graph file itself.
++
++## A Single Commit-Graph File
++
++The [commit-graph file format](https://github.com/git/git/blob/master/Documentation/technical/commit-graph-format.txt)
++stores commit data in a set of tables.
++
++One table is a sorted list of commit IDs. This row number of a commit ID in this
++table defines the _lexicographical position_ -- _lex_ position for short -- of
++a commit in the file.
++
++Another table contains metadata about the commits. The _n_th row of the metadata
++table corresponds to the commit with lex position _n_. This table contains the
++root tree ID, commit time, generation number, and information on the first two
++parents of the commit. We use special constants to say "this commit does not
++have a second parent", and use a pointer to a third "extra edges" table in the
++case of octopus merges.
++
++The two parent columns are stored as integers, and this is very important! If
++we store parents as commit IDs, then we waste a lot of space. Further, if we
++only have a commit ID, then we need to perform a binary search on the commit
++list to find the lex position. By storing the position of a parent, we can
++navigate to the metadata row for that parent as a random-access lookup.
++
++For that reason, the commit-graph file is _closed under reachability_, meaning
++that if a commit is in the file, then so is its parent. Otherwise, we could not
++refer to the parent using an integer.
++
++Before incremental writes, Git stored the commit-graph file as
++`.git/objects/info/commit-graph`. Git looks for that file, and parses the data
++there if it exists.
++
++## Multiple Commit-Graph Files
++
++If the single `.git/objects/info/commit-graph` file does not exist, Git looks
++for a file called `.git/objects/info/commit-graphs/commit-graph-chain`. This file
++contains a list of SHA-1 hashes separated by newlines. To demonstrate, we
++will use this list of placeholders:
++
++```
++{hash0}
++{hash1}
++{hash2}
++```
++
++These hashes correspond to files named
++`.git/objects/info/commit-graphs/graph-{hash0}.graph`. The chain of the three
++files combine to describe a set of commits.
++
++The first graph file, `graph-{hash0}.graph`, is a normal commit-graph file. It
++does not refer to any other commit-graph and is closed under reachability.
++
++The second graph file, `graph-{hash1}.graph` is no longer a normal commit-graph
++file. To start, it contains a pointer to `graph-{hash0}.graph` by storing an
++extra "base graphs" table containing only "{hash0}". Second, the parents of the
++commits in `graph-{hash1}.graph` may exist in that file _or_ in `graph-{hash0}.graph`.
++Each graph file stores the commits in lexicographic order, but we now need a
++second term for the position of a commit in the combined order.
++
++We say the _graph position_ of a commit in the commit-graph chain is the lex
++position of a commit in the sorted list plus the number of commits in the base
++commmit-graph files. We now modify our definition of a parent position to use
++the graph position. This allows the `graph-{hash1}.graph` file to not be closed
++under reachability: the parents can exist in either file.
++
++Extending to `graph-{hash2}.graph`, the parents of those commits can be in any
++of the three commit-graph files. The figure below shows this stack of files and
++how one commit row in `graph-{hash2}.graph` can have parents in `graph-{hash1}.graph`
++and `graph-{hash0}.graph`.
++
++![A chain of three commit-graphs](img/2019-commit-graph-chain.svg)
++
++To create your own commit-graph chain, you can start with an existing commit-graph
++file (created by `git commit-graph write --reachable`, for instance) then create
++new commits and run `git commit-graph write --reachable --split`. The `--split`
++option enables creating a chain of commit-graph files. If you ever run the command
++without the `--split` option, then the chain will merge into a single file.
++
++If you enable `fetch.writeCommitGraph`, then Git will write a commit-graph
++chain after every `git fetch` command. This is much faster than rewriting the
++entire file, since the top layer of the chain can consist of only the new
++commits. At least, it will _usually_ be faster.
++
++The figure above hints at the sizes of the commit-graph files in a chain. The
++base file is large and contains most of the commits. As we look higher in the
++chain, the sizes should shrink.
++
++There is a problem, though. What happens when we fetch 100 times? Will we get
++a chain of 100 commit-graph files? Will our commit lookups suddenly get much
++slower? The way to avoid this is to occasionally merge layers of the chain.
++This results in better [amortized time](https://en.wikipedia.org/wiki/Amortized_analysis),
++but will sometimes result in a full rewrite of the entire commit-graph file.
++
++## Merging Commit-Graph Files
++
++To ensure that the commit-graph chain does not get too long, Git will occasionally
++merge layers of the chain. This merge operation is always due to some number of
++incoming commits causing the "top" of the chain to be too large. There are two
++reasons Git would merge layers, given by these options to `git commit-graph
++write`:
++
++1. `--size-multiple=<X>`: Ensure that a commit-graph file is `X` times larger
++   than any commit-graph file "above" it. `X` defaults to 2.
++
++2. `--max-commits=<M>`: When specified, make sure that only the base layer
++   has more than `M` commits.
++
++The size-multiple option ensures that the commit-graph chain never has more
++than log(_N_) layers, where _N_ is total number of commits in the repo. If those
++chains seem to be too long, the max-commits setting (in conjunction with size-multiple)
++guarantees that there are a constant number of possible layers.
++
++In all, you should not see the incremental commit-graph taking very long during
++a fetch. You are more likely to see the automatic garbage collection trigger, and
++that will cause your commit-graph chain to collapse to a single layer.
++
++# Try it Yourself!
++
++We would love your feedback on the feature! Please test out the `--split` option
++for writing commit-graphs in Git 2.23.0 or later, and the `fetch.writeCommitGraph`
++option in Git 2.24.0. Release candidates for Git 2.24.0 are out now, and ready
++for testing!
+diff --git a/content/post/img/2019-commit-graph-chain.svg b/content/post/img/2019-commit-graph-chain.svg
+new file mode 100644
+index 0000000..b426853
+--- /dev/null
++++ b/content/post/img/2019-commit-graph-chain.svg
+@@ -0,0 +1,85 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<svg width="5.6894in" height="5.2459in" version="1.1" viewBox="0 0 144.51104 133.24566" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
++<defs>
++<marker id="b" overflow="visible" orient="auto">
++<path transform="matrix(-.4 0 0 -.4 -4 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill-rule="evenodd" stroke="#000" stroke-width="1pt"/>
++</marker>
++<marker id="g" overflow="visible" orient="auto">
++<path transform="matrix(-.4 0 0 -.4 -4 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill-rule="evenodd" stroke="#000" stroke-width="1pt"/>
++</marker>
++<marker id="c" overflow="visible" orient="auto">
++<path transform="scale(.8)" d="m0 5.65v-11.3" fill="none" stroke="#000" stroke-width="1pt"/>
++</marker>
++<marker id="d" overflow="visible" orient="auto">
++<path transform="scale(.8)" d="m0 5.65v-11.3" fill="none" stroke="#000" stroke-width="1pt"/>
++</marker>
++<marker id="e" overflow="visible" orient="auto">
++<path transform="scale(.8)" d="m0 5.65v-11.3" fill="none" stroke="#000" stroke-width="1pt"/>
++</marker>
++<marker id="f" overflow="visible" orient="auto">
++<path transform="scale(.8)" d="m0 5.65v-11.3" fill="none" stroke="#000" stroke-width="1pt"/>
++</marker>
++<marker id="a" overflow="visible" orient="auto">
++<path transform="scale(.8)" d="m0 5.65v-11.3" fill="none" stroke="#000" stroke-width="1pt"/>
++</marker>
++</defs>
++<metadata>
++<rdf:RDF>
++<cc:Work rdf:about="">
++<dc:format>image/svg+xml</dc:format>
++<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
++<dc:title/>
++</cc:Work>
++</rdf:RDF>
++</metadata>
++<g transform="translate(4.2812 -168.05)">
++<rect x="-4.21" y="168.04" width="144.45" height="133.58" fill="#fff" stroke="#fff" stroke-width=".31055"/>
++<path d="m121.93 180.78h5.6241c1.662 0 3 1.338 3 3v28.341c0 1.662-1.338 3-3 3h-3.5074" fill="none" marker-end="url(#g)" stroke="#000" stroke-width=".3"/>
++<path d="m121.93 180.78h8.7991c1.662 0 3 1.338 3 3v62.208c0 1.662-1.338 3-3 3h-6.6824" fill="none" marker-end="url(#b)" stroke="#000" stroke-width=".3"/>
++<path d="m27.217 173.08h94.37c0.554 0 1 0.446 1 1v13.612c0 0.554-0.446 1-1 1h-94.37c-0.554 0-1-0.446-1-1v-13.612c0-0.554 0.446-1 1-1z" fill="#f2f2f2" stroke="#000"/>
++<path d="m27.217 196.28h94.37c0.554 0 1 0.446 1 1v29.487c0 0.554-0.446 1-1 1h-94.37c-0.554 0-1-0.446-1-1v-29.487c0-0.554 0.446-1 1-1z" fill="#f2f2f2" stroke="#000"/>
++<path d="m27.217 235.44h94.37c0.554 0 1 0.446 1 1v61.766c0 0.554-0.446 1-1 1h-94.37c-0.554 0-1-0.446-1-1v-61.766c0-0.554 0.446-1 1-1z" fill="#f2f2f2" stroke="#000"/>
++<path d="m26.414 178.35h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 183.64h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 201.63h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 206.93h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 212.22h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 217.51h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 222.8h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 240.79h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 246.08h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 251.38h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 256.67h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 261.96h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 267.25h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 272.54h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 277.83h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 283.13h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 288.42h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m26.414 293.71h95.909" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m21.281 188.13v-9.7292" fill="none" marker-end="url(#a)" marker-start="url(#a)" stroke="#000" stroke-width=".265"/>
++<path d="m8.0517 299.26v-120.85" fill="none" marker-end="url(#e)" marker-start="url(#f)" stroke="#000" stroke-width=".265"/>
++<path d="m21.281 299.26v-103.39" fill="none" marker-end="url(#c)" marker-start="url(#d)" stroke="#000" stroke-width=".265"/>
++<text transform="rotate(-90)" x="-230.33467" y="6.1092191" fill="#000000" font-family="Arial" font-size="7.0556px" letter-spacing="0px" stroke-width=".26458" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-230.33467" y="6.1092191" font-size="5.6444px" stroke-width=".26458">graph position</tspan></text>
++<text transform="rotate(-90)" x="-239.95189" y="19.898293" fill="#000000" font-family="Arial" font-size="7.0556px" letter-spacing="0px" stroke-width=".26458" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-239.95189" y="19.898293" font-size="5.6444px" stroke-width=".26458">number of base commits</tspan></text>
++<text transform="rotate(-90)" x="-178.97917" y="18.012175" fill="#000000" font-family="Arial" font-size="7.0556px" letter-spacing="0px" stroke-width=".26458" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-178.97917" y="18.012175" font-size="5.6444px" stroke-width=".26458" style="line-height:0">position</tspan></text>
++<text transform="rotate(-90)" x="-184.98222" y="13.381416" fill="#000000" font-family="Arial" font-size="7.0556px" letter-spacing="0px" stroke-width=".26458" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-184.98222" y="13.381416" font-size="5.6444px" stroke-width=".26458" style="line-height:0">lex</tspan></text>
++<rect x="26.414" y="178.35" width="95.909" height="5.2917" fill="#fca" stroke="#000" stroke-width=".3026"/>
++<text x="40.151272" y="182.74898" fill="#000000" font-family="Arial" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="40.151272" y="182.74898" font-size="4.9389px" stroke-width=".26458" style="line-height:0">commit id</tspan></text>
++<text x="69.255447" y="182.74898" fill="#000000" font-family="Arial" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="69.255447" y="182.74898" font-size="4.9389px" stroke-width=".26458" style="line-height:0">tree id</tspan></text>
++<text x="101.99261" y="182.67987" fill="#000000" font-family="Arial" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="101.99261" y="182.67987" font-size="4.9389px" stroke-width=".26458" style="line-height:0">parent positions</tspan></text>
++<path d="m56.847 173.34v15.348" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m81.718 173.34v15.348" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m56.847 196.62v30.694" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m81.718 196.62v30.694" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m56.847 235.78v63.502" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m81.718 235.78v63.502" fill="none" stroke="#000" stroke-width=".26458px"/>
++<path d="m103.41 173.34v15.348" fill="none" stroke="#000" stroke-dasharray="2.1199999, 2.1199999" stroke-width=".265"/>
++<path d="m103.41 196.62v31.223" fill="none" stroke="#000" stroke-dasharray="2.1199999, 2.1199999" stroke-width=".265"/>
++<path d="m103.41 235.78v62.973" fill="none" stroke="#000" stroke-dasharray="2.1199999, 2.1199999" stroke-width=".265"/>
++<text x="44.008171" y="171.36497" fill="#000000" font-family="Arial" font-size="4.4781px" letter-spacing="0px" stroke-width=".16793" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="44.008171" y="171.36497" font-size="3.5825px" stroke-width=".16793" style="line-height:0">graph-{hash2}.graph</tspan></text>
++<text x="44.008171" y="171.36497" fill="#000000" font-family="Arial" font-size="4.4781px" letter-spacing="0px" stroke-width=".16793" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="44.008171" y="171.36497" font-size="3.5825px" stroke-width=".16793" style="line-height:0">graph-{hash2}.graph</tspan></text>
++<text x="44.008171" y="195.17746" fill="#000000" font-family="Arial" font-size="4.4781px" letter-spacing="0px" stroke-width=".16793" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="44.008171" y="195.17746" font-size="3.5825px" stroke-width=".16793" style="line-height:0">graph-{hash1}.graph</tspan></text>
++<text x="44.008171" y="234.3358" fill="#000000" font-family="Arial" font-size="4.4781px" letter-spacing="0px" stroke-width=".16793" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="44.008171" y="234.3358" font-size="3.5825px" stroke-width=".16793" style="line-height:0">graph-{hash0}.graph</tspan></text>
++</g>
++</svg>
+-- 
+2.23.0.vfs.1.1.87.g1f3c9be
 
