@@ -8,55 +8,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C72391F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 13:56:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC4B91F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 13:56:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729233AbfJUN4k (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 09:56:40 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:44061 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729189AbfJUN4g (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 09:56:36 -0400
-Received: by mail-wr1-f68.google.com with SMTP id z9so14107988wrl.11
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 06:56:34 -0700 (PDT)
+        id S1729269AbfJUN4s (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 09:56:48 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36149 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729257AbfJUN4o (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 09:56:44 -0400
+Received: by mail-wr1-f65.google.com with SMTP id w18so13574822wrt.3
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 06:56:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HlIZIXXEGIo6p95Tf1uQT0iuIhvv91TiapywK9qe7Vw=;
-        b=BB6hmjmmQB7Za6LpjR06iN/2ednnCeyv2AMuAxd18GnwjbDJYXuJTAy+Tu09wd+oGb
-         PCWn8sLsQUcdinfnx5RcoC11yIF2hMUkB3bKil/+pib5cCF55n+7iHkuEIcsJkEQ5jsn
-         FU+YlL1k0LfZs0/xpGla+Nsx7RuM9WwSzbOQ6T8GSUB8hbmhc5kDF0HKQxDuBpc6/oPx
-         9I72wT6IxRZfFWpF09LcYekEmXIGzPsBkimNGPIVwT3dAcwQNlvtKVxwGnyJfvwUIRT6
-         mU7dZLhMjH3Agr41hA9+f8hw6unbjtMKfeRIFjIcoPiHjvOexWfeLPT42O03X3M/4/i1
-         Ut2g==
+        bh=2OSiW1tIz6I5ZXpwz9+l07iHgNNKzetcZNlUCdKH8oM=;
+        b=p61dO9mBxgWdq6aQQ7Ouf9Ss7o8V0ocZtXXLX90U8cWyveGF6T8kyIT3M+sP91B/09
+         GHvX32uhLvGqrIDtDgI3vAg1kUMsFELnnovPBAPh2C72TUPIxk0R5RiRERH4mWHgR16Z
+         /KLC9yj96T4iWul58rOw3xVW2e8zjwr+vTw44CmgpUZaIaLJFElHGy0oEwe+L3ynobbL
+         yRCGB9fKN2kIzko9T7ER5hBI8XsB4D5GbacenwHIHs1z7GOPkUOrOcX1y4uO+KVNkSwb
+         glh73otvxNKY+Yj633mkmA+cRiCsrKwX9KM5AYPi3I9pCx3l4B7Uh1S9VFHo4p8T9MJ7
+         nFJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HlIZIXXEGIo6p95Tf1uQT0iuIhvv91TiapywK9qe7Vw=;
-        b=NUl3id25FuQZC14ZOqU9v+nwz09FugXlq+cWqH0a/tlPkhpbKwX3STYleLb9JOlbdX
-         sjPocfOUhOi6rwuszucO+Z6nkurDz7E+JCV3PdprVlGpI7sEQSWlPs4haz6qP5Z9l1i8
-         EzfAOCjZwLUg8e+kqFDxigqp/PezqTGei+YMGzP+7z6VtT5fxKpTNralTLVASamYq8an
-         j3BlQTfVMdITVvm+jxGD4F6bsWwqFn/WTN85JwcrHgp5kNzG3JdUuC1+6vQSRjQNzic2
-         7niW2CXG220EIVpGFhWw5rpoUhzB1sNuxpxTv7hIbGwOGWVoEFoHYrAXNK/mOWM7olb8
-         rUSA==
-X-Gm-Message-State: APjAAAWqPb6XeG7CPMRJmHvpzRPooF+rTVpW09nqAqX1WMFrzIxd6BLW
-        wubZ2epdIiggldYi6xvqGT5lwjL5
-X-Google-Smtp-Source: APXvYqze5g4p3H+Me7aWSkWZR1ESwbyGLNaP29+Kdg4dSzvOg7JrSWAwhfBhhvOylRuGpA35zGetaA==
-X-Received: by 2002:adf:db0e:: with SMTP id s14mr16208321wri.341.1571666193894;
-        Mon, 21 Oct 2019 06:56:33 -0700 (PDT)
+        bh=2OSiW1tIz6I5ZXpwz9+l07iHgNNKzetcZNlUCdKH8oM=;
+        b=QZJ4lhpj4Rs/ckcQdHUl0a3UoeVQpySPRZY/siLsf1dnatNM/A+jWCTAKmUFIxwUrJ
+         1sL8/DaDmtkY0wS837B7CCUhzSZs1x2NFNGy8P0o0q5pZ7C9cCCM1o/oEIvdwOitZl9+
+         qNTd/n3mIh12Y8KcdLcDjR3fAymHOfGW1oVg4vh7ZmUQSR2mFKxhhgwR1Wdh8FKCXUjz
+         CrnFklKZVydWxKP1AxKmO+ytJ67HC3HPYNQWVMXXmL6G63NZbVgb7RqCDcAvK4Z9b9G4
+         5+7ToI3k2osLgO4jGP5l/98RjTWprRH/Zn2xjoUii8T7sMZ5UFxlo3viIhT6YszTWpaP
+         +jVg==
+X-Gm-Message-State: APjAAAVPpveGbxJq8eHK+y6aoh143nOhZWAxKxqBa/KQhPFiyVE4OzbQ
+        9hnv5r0zOd2EwThtfAi5+XaX3Jix
+X-Google-Smtp-Source: APXvYqy1s115QDglSeNbtYvKwyob3szIL//xWa2z4o43Tcmz8OXU/AufMCrHfj0MZR9TNhZ1R8Z+/A==
+X-Received: by 2002:adf:b21a:: with SMTP id u26mr20896633wra.119.1571666202149;
+        Mon, 21 Oct 2019 06:56:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f17sm3191187wrs.66.2019.10.21.06.56.33
+        by smtp.gmail.com with ESMTPSA id o70sm21075723wme.29.2019.10.21.06.56.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Oct 2019 06:56:33 -0700 (PDT)
-Message-Id: <c48535cd5c00310403ffccac7507f399fca5a8a4.1571666187.git.gitgitgadget@gmail.com>
+        Mon, 21 Oct 2019 06:56:41 -0700 (PDT)
+Message-Id: <ab20c11d71a98def1c29e949cb267cdae822e5dc.1571666187.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
 References: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
         <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Oct 2019 13:56:15 +0000
-Subject: [PATCH v5 06/17] sparse-checkout: create 'disable' subcommand
+Date:   Mon, 21 Oct 2019 13:56:26 +0000
+Subject: [PATCH v5 17/17] sparse-checkout: cone mode should not interact with
+ .gitignore
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,145 +74,33 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The instructions for disabling a sparse-checkout to a full
-working directory are complicated and non-intuitive. Add a
-subcommand, 'git sparse-checkout disable', to perform those
-steps for the user.
+During the development of the sparse-checkout "cone mode" feature,
+an incorrect placement of the initializer for "use_cone_patterns = 1"
+caused warnings to show up when a .gitignore file was present with
+non-cone-mode patterns. This was fixed in the original commit
+introducing the cone mode, but now we should add a test to avoid
+hitting this problem again in the future.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-sparse-checkout.txt | 27 ++++++++++++---------------
- builtin/sparse-checkout.c             | 26 +++++++++++++++++++++++++-
- t/t1091-sparse-checkout-builtin.sh    | 15 +++++++++++++++
- 3 files changed, 52 insertions(+), 16 deletions(-)
+ t/t1091-sparse-checkout-builtin.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-index b933043b3d..f794d4797a 100644
---- a/Documentation/git-sparse-checkout.txt
-+++ b/Documentation/git-sparse-checkout.txt
-@@ -48,6 +48,10 @@ To avoid interfering with other worktrees, it first enables the
- 	working directory to match the new patterns. Enable the
- 	core.sparseCheckout config setting if it is not already enabled.
- 
-+'disable'::
-+	Remove the sparse-checkout file, set `core.sparseCheckout` to
-+	`false`, and restore the working directory to include all files.
-+
- SPARSE CHECKOUT
- ---------------
- 
-@@ -65,6 +69,14 @@ directory, it updates the skip-worktree bits in the index based
- on this file. The files matching the patterns in the file will
- appear in the working directory, and the rest will not.
- 
-+To enable the sparse-checkout feature, run `git sparse-checkout init` to
-+initialize a simple sparse-checkout file and enable the `core.sparseCheckout`
-+config setting. Then, run `git sparse-checkout set` to modify the patterns in
-+the sparse-checkout file.
-+
-+To repopulate the working directory with all files, use the
-+`git sparse-checkout disable` command.
-+
- ## FULL PATTERN SET
- 
- By default, the sparse-checkout file uses the same syntax as `.gitignore`
-@@ -79,21 +91,6 @@ using negative patterns. For example, to remove the file `unwanted`:
- !unwanted
- ----------------
- 
--Another tricky thing is fully repopulating the working directory when you
--no longer want sparse checkout. You cannot just disable "sparse
--checkout" because skip-worktree bits are still in the index and your working
--directory is still sparsely populated. You should re-populate the working
--directory with the `$GIT_DIR/info/sparse-checkout` file content as
--follows:
--
------------------
--/*
------------------
--
--Then you can disable sparse checkout. Sparse checkout support in 'git
--checkout' and similar commands is disabled by default. You need to
--set `core.sparseCheckout` to `true` in order to have sparse checkout
--support.
- 
- SEE ALSO
- --------
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index f2e2bd772d..9fdcc6c4ef 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -8,7 +8,7 @@
- #include "strbuf.h"
- 
- static char const * const builtin_sparse_checkout_usage[] = {
--	N_("git sparse-checkout (init|list|set) <options>"),
-+	N_("git sparse-checkout (init|list|set|disable) <options>"),
- 	NULL
- };
- 
-@@ -212,6 +212,28 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
- 	return result;
- }
- 
-+static int sparse_checkout_disable(int argc, const char **argv)
-+{
-+	char *sparse_filename;
-+	FILE *fp;
-+
-+	if (sc_set_config(MODE_ALL_PATTERNS))
-+		die(_("failed to change config"));
-+
-+	sparse_filename = get_sparse_checkout_filename();
-+	fp = xfopen(sparse_filename, "w");
-+	fprintf(fp, "/*\n");
-+	fclose(fp);
-+
-+	if (update_working_directory())
-+		die(_("error while refreshing working directory"));
-+
-+	unlink(sparse_filename);
-+	free(sparse_filename);
-+
-+	return sc_set_config(MODE_NO_PATTERNS);
-+}
-+
- int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
- {
- 	static struct option builtin_sparse_checkout_options[] = {
-@@ -236,6 +258,8 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
- 			return sparse_checkout_init(argc, argv);
- 		if (!strcmp(argv[0], "set"))
- 			return sparse_checkout_set(argc, argv, prefix);
-+		if (!strcmp(argv[0], "disable"))
-+			return sparse_checkout_disable(argc, argv);
- 	}
- 
- 	usage_with_options(builtin_sparse_checkout_usage,
 diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index a9ff5eb9ec..583c232e9e 100755
+index 2db706a9e4..4205e03449 100755
 --- a/t/t1091-sparse-checkout-builtin.sh
 +++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -148,4 +148,19 @@ test_expect_success 'set sparse-checkout using --stdin' '
- 	test_cmp expect dir
+@@ -283,4 +283,11 @@ test_expect_success 'fail when lock is taken' '
+ 	test_i18ngrep "File exists" err
  '
  
-+test_expect_success 'sparse-checkout disable' '
-+	git -C repo sparse-checkout disable &&
-+	test_path_is_missing repo/.git/info/sparse-checkout &&
-+	git -C repo config --list >config &&
-+	test_i18ngrep "core.sparsecheckout=false" config &&
-+	ls repo >dir &&
-+	cat >expect <<-EOF &&
-+		a
-+		deep
-+		folder1
-+		folder2
-+	EOF
-+	test_cmp expect dir
++test_expect_success '.gitignore should not warn about cone mode' '
++	git -C repo config --worktree core.sparseCheckoutCone true &&
++	echo "**/bin/*" >repo/.gitignore &&
++	git -C repo reset --hard 2>err &&
++	test_i18ngrep ! "disabling cone patterns" err
 +'
 +
  test_done
 -- 
 gitgitgadget
-
