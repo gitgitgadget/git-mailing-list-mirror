@@ -2,66 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	PDS_TONAME_EQ_TOLOCAL_SHORT,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 777541F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 16:56:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2B4A1F4C7
+	for <e@80x24.org>; Mon, 21 Oct 2019 17:14:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727328AbfJUQ4R (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 12:56:17 -0400
-Received: from mail-ua1-f43.google.com ([209.85.222.43]:35481 "EHLO
-        mail-ua1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726276AbfJUQ4Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 12:56:16 -0400
-Received: by mail-ua1-f43.google.com with SMTP id n41so4030120uae.2
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 09:56:16 -0700 (PDT)
+        id S1727847AbfJUROU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 13:14:20 -0400
+Received: from mail-il1-f172.google.com ([209.85.166.172]:39690 "EHLO
+        mail-il1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726672AbfJUROT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 13:14:19 -0400
+Received: by mail-il1-f172.google.com with SMTP id i12so2216776ils.6
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 10:14:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=+koYw5tUGPorxCXvqYsTmsHIVv6SR8KNcG8p3wVYNBA=;
-        b=IxDqleKp6mQU19nU5DyqfG7ZMgm5MepVg3g+DqbfapyhaUV6oOmOy5ouqk0eh5jLtt
-         /Q7jP7F4VFv/xZIsj2IcsiS2zOvnaNX/ZcB9UZyL2gwqjo4yw1WihZu/p05BAUccfR8A
-         fo2mdBYwuzlALSoQWXOlmWq6c8XHENpmPsPT7aGtVEXo9/pV903JhcM13XVxrBProKTn
-         n6ZHuolwuGyFOUhpO6b4gk1oWtu4XD0GG0mKsNBmp3iRiFBaxKREnpK0BkcgrBO4nG4f
-         Awx3D1f0VgdJckIDdRkWbWNCR9ye+4/VWWmfbUCajL6PGD/P5QKtxtWIed/rrv5LM6KR
-         iTCQ==
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=FdR3mAFy735QPVo9Nw0JwWiilqsxcSF37tHE83WL2nE=;
+        b=YFIghqEfyt/K+dOpnK/9E0Rn33Fs0Ee1gWTLf56k9JLmBHoYJMRPgrON/ghpX18zXs
+         8aQHIJZk/MPiJXqAWglN8Vna8L2yY/IMKvpxqgTBdhkj0UlOVMaHXRusT1k43xFnqgv9
+         t5CcBx4ehLjcOsvj9DFOl86JpQtRwhQpxJcdhR97L0mGMtr0iDOzD3Yob2hoJEXAMN9s
+         RsIKZfuVhdlKtcAoa1BZMUKII6VtgteghQY4ywECvCeX3lbA1dy/qUdKpV1WIQ1N+t3x
+         HxALztfVZQLAjBtwTn7l+ZfG5DwIAbZP7/SqPFKChgdlS702Yqgr9aEZrQaNjrlO4PL8
+         LKwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=+koYw5tUGPorxCXvqYsTmsHIVv6SR8KNcG8p3wVYNBA=;
-        b=Dj6AwetdQLCFSzXzAymHzoFyCG2ZbgkqgL4/dXak7fNXTs934vv/oyf98gS/Hw/lXe
-         WbNc+f6gHy64kuma6eC9YhhAhIBQ90wK2wTShZBnm9hV5DnvPUzgf9mNvMPkXLdmQaJ1
-         PP5oqoPUxHyX2F3SLldOjCkLKxYk2R/NoyvZrIGh46Kw92KdiFdnEZVZAtmR2N1nrZ44
-         ggXojd3Fyk9dxwBsj0YJz6NwPohNy5aA+kV6S2FPp1ahbcqe+bFxtsc2JW4q/HzetS/l
-         AG5AGnZTzsQcq7UGiFS4xzPYu6c2rND4jMzfAmwj/1u5vJpZJw/XaqM4TtLHHqH6/iIx
-         8mtQ==
-X-Gm-Message-State: APjAAAUd95CjYFRtN9q64OknNux9pPKSJ/H0nLScEF24zvVzxsi2r5ol
-        P6Zci+kSSqjZ+DYczRcMmsdRoDTd90FIreC89AbVtFVG9L/HeQ==
-X-Google-Smtp-Source: APXvYqysQe9gJk2/9kainoySEkIEmhK365v9PDxavaPB3VNTUNp3K3MDnCA8ZzYZe56P6Qttzo1ZNNWKanbkBLrMYhw=
-X-Received: by 2002:ab0:393:: with SMTP id 19mr760335uau.58.1571676975851;
- Mon, 21 Oct 2019 09:56:15 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=FdR3mAFy735QPVo9Nw0JwWiilqsxcSF37tHE83WL2nE=;
+        b=NPREdwwxmtFXgBQi+IJ28O09uv5ZKcsIPfMz4ecSa/1zhf/Cnv0j8fsgmmZmmNVQ1Y
+         kgRTLFwUlPeWep8BpQtvQ+M7h90naXOPiEqNDN+xooqdueTcL6eio6EGhOasOKfTVY0X
+         iNqqMRUCHYX4LfAMTRXPuJ5YxoGLq4uaHuNiiCS5ZzXJAIRqHEM+ycVpH8Vqum7YaOBR
+         82HK9Dy+qvYLaM4lPRsgTMbYWEuFQ12HHk74KSjCNAuWhr9h+wwNwvPthKceFYLS/MMS
+         BS3k/A4lV7bGWWbWclUyOVX8egtSyVv9HI/yKt+GwhgtgMCTCP787qVhkLD4x1FMk1vl
+         oxaQ==
+X-Gm-Message-State: APjAAAUx0STTQS5Ira1AqxlTmJw9hqcCRqJRKlW2M3+1aepNfd104Fjo
+        xs1km4TLn9rjWNQXBbe5BFucXHij0uo0WpnmqhYGi7B0lIg=
+X-Google-Smtp-Source: APXvYqwzMfMz4oH1lc0rgFFV2GpTV77w8J+SJxBAE5Fv0HwLGxEYkCTK8zxwS/vcpkrE9ChRD++ykpUjaj5VapldoFQ=
+X-Received: by 2002:a92:b00f:: with SMTP id x15mr3788054ilh.280.1571678058368;
+ Mon, 21 Oct 2019 10:14:18 -0700 (PDT)
 MIME-Version: 1.0
-From:   Karina Saucedo <karina.saucedogza@gmail.com>
-Date:   Mon, 21 Oct 2019 11:56:05 -0500
-Message-ID: <CAJxDvStLi2usG_X7e8FeOSjKCXN4Yb+b_JCpUc8Y0HZ-GuTUgw@mail.gmail.com>
-Subject: Outreachy Winter 2019
-To:     git@vger.kernel.org
-Cc:     emilyshaffer@google.com
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Mon, 21 Oct 2019 14:14:07 -0300
+Message-ID: <CAHd-oW5WHwZCoXtJ5an-8hnHfMsFxKyr6YfHFFg0Pm8Yt5DtrQ@mail.gmail.com>
+Subject: [GSoC] Follow-up post
+To:     git <git@vger.kernel.org>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello, my name is Karina and I'm and Outreachy applicant.
-I=C2=B4m interested in applying to the project 'Add did you mean hints=C2=
-=B4 and
-I was wondering how can I start contributing since there seem to be no
-issues on the github page. Thank you!
+Hi, everyone
+
+I wrote a small follow-up post to talk about the conclusion of my GSoC
+project. I believe the main remaining tasks are now finally complete
+:) If you would be interested in taking a look, the post is at
+https://matheustavares.gitlab.io/posts/gsoc-follow-ups
+
+Thanks,
+Matheus
