@@ -2,70 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A11E1F4C0
-	for <e@80x24.org>; Sun, 20 Oct 2019 21:23:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 507A21F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 00:52:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726506AbfJTVXh (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Oct 2019 17:23:37 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53844 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726301AbfJTVXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Oct 2019 17:23:37 -0400
-Received: by mail-wm1-f65.google.com with SMTP id i16so11076357wmd.3
-        for <git@vger.kernel.org>; Sun, 20 Oct 2019 14:23:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9cEmbGctWj4DUJs7vmRCKdWp8qYlUCl50XGgzmkg+YA=;
-        b=QUED5HP9Htec5UO+ptdnYnmGGiN28LtFkPknUhG5iUr4u2M55XJC5En9tweaTiGTXm
-         P1bqKcSWsgUpnkD/l68Pz0cow8z0GwK2dHPv4jr+MibAQ0xR/hRtnXXlVY8jgpCU/1bG
-         J6YaGrS7YFjYVxeyUvUmMKNBH1qr2N8Rl/yOdh0ewvW2oLI4JHsl2Ga5Jq/G8O/JJ1NJ
-         r1kvkRpPOL6MPkwOY2TpE0I+PM5YaMx/ivXEcSCZ/y/INNAogsxiD4mawlsD0qF7y2ki
-         HRqokgvhh1j3BKINzAzIphQtQdc6RWAGF4nEO4q7PRnQO4nyVf/WXT2O6fPb54GQ6U7X
-         cyIg==
-X-Gm-Message-State: APjAAAWh0gxIf27aIWfyp6ZeNvUuCrL1hxMTfPqXt3Y0mNX3ZTez8xb7
-        /jJILzBQD/muQBZ8vYmmFJTALHYbSv4ikhLiga8=
-X-Google-Smtp-Source: APXvYqzGk5bA/Z9SoZ1njKGt/AdgsjNv9f1GtuYIly0EOJ6bD2HuNDtVrHr1Ywe3xw/Z9Sd8HAWIcGphNUK9GcrdvmU=
-X-Received: by 2002:a7b:cd86:: with SMTP id y6mr3116731wmj.101.1571606614192;
- Sun, 20 Oct 2019 14:23:34 -0700 (PDT)
+        id S1726738AbfJUAwR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Oct 2019 20:52:17 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58335 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726641AbfJUAwR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Oct 2019 20:52:17 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B42999AC62;
+        Sun, 20 Oct 2019 20:52:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Tbdl4p2m0HrO
+        IPrlbqoJaIpaHOE=; b=lA2EMRF2xeqEX9sT4Ig/5z9xOkEJRhno0K5k1pbGgZ76
+        ZHhfyfe/J4dwAB9zZlfVjaXVyHSC449x9Tj5PfrgPVGQXPDXoNNFoElyiqJaP3aY
+        yltBx7VnV/JAYzm3lZ+pR8/qucAuEH93gjQ4uAZKSyi3EtpGdv3uOVdSCT7f4Co=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=a7/rY3
+        Jcg62x2BP3o3vkuoi0NX7GXFPnr2ulu07TJrntaP8DgyNG35I4y+yhSbTn6DcwRX
+        X/XjHRPRAXeOOV7qjzyYCqQ1eIh0rZ+3saXYSpPtPc54CnJbkI+1raDmsY4GWOTM
+        n7rqBnaEKvFyEPOPjM8aaAgIR9RlnWYEBTf44=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AC04E9AC61;
+        Sun, 20 Oct 2019 20:52:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D6C1A9AC5F;
+        Sun, 20 Oct 2019 20:52:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+        Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] test-progress: fix test failures on big-endian systems
+References: <b0bec82e-ad0a-32f6-e2e6-e1f0e6920639@physik.fu-berlin.de>
+        <20190731071755.GF4545@pobox.com>
+        <f1ce445e-6954-8e7b-2dca-3a566ce689a5@physik.fu-berlin.de>
+        <20191019233706.GM29845@szeder.dev>
+Date:   Mon, 21 Oct 2019 09:52:11 +0900
+In-Reply-To: <20191019233706.GM29845@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Sun, 20 Oct 2019 01:37:06 +0200")
+Message-ID: <xmqq36fmor7o.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.410.git.1571603970.gitgitgadget@gmail.com> <e3343d174008a3fe21c159c197913ce749e21589.1571603970.git.gitgitgadget@gmail.com>
-In-Reply-To: <e3343d174008a3fe21c159c197913ce749e21589.1571603970.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 20 Oct 2019 17:23:23 -0400
-Message-ID: <CAPig+cRZ07OGB4kKO=fozh8fRnCLa0ZrxuUFD3By9c62DZe9BA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] ci(visual-studio): actually run the tests in parallel
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 057BFE0E-F39D-11E9-902E-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 20, 2019 at 4:39 PM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> [...]
-> During that transition, we needed to implement a new way to run the test
-> suite in parallel, as Visual Studio users typically will only have a Git
-> Bash available (which does not ship with `make` nore with support for
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-s/nore/nor/
+> The reason for that bogus value is that '--total's parameter is parsed
+> via parse-options's OPT_INTEGER into a uint64_t variable [1]...
+>
+> Change the type of that variable from uint64_t to int, to match what
+> parse-options expects; in the tests of the progress output we won't
+> use values that don't fit into an int anyway.
 
-> `prove`): we simply implemented a new test helper to run the test suite.
->
-> This helper even knows how to run the tests in parallel, but due to a
-> mistake on this developer's part, it was never turned on in the CI/PR
-> builds. This results in 2x-3x longer run times of the test phase.
->
-> Let's use the `--jobs=10` option to fix this.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+OK, so when the call to start_progress() is made, the second
+argument (i.e. "total" which now is int) is promoted to what the
+callee expects, so there needs no other change.  Makes sense.
+
+> [1] start_progress() expects the total number as an uint64_t, that's
+>     why I chose the same type when declaring the variable holding the
+>     value given on the command line.
+
+I can sympathize, but I do not think it is worth inventing OPT_U64()
+or adding "int total_i" whose value is assigned to "u64 total" after
+parsing a command line arg with OPT_INTEGER() into the former.
+
+Catching a pointer whose type is not "int*" passed at the third
+position of OPT_INTGER() mechanically may be worth it, though.
+Would Coccinelle be a suitable tool for that kind of thing?
+
+>  int cmd__progress(int argc, const char **argv)
+>  {
+> -	uint64_t total =3D 0;
+> +	int total =3D 0;
+>  	const char *title;
+>  	struct strbuf line =3D STRBUF_INIT;
+>  	struct progress *progress;
