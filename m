@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 769F71F4C0
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15FBA1F4C0
 	for <e@80x24.org>; Mon, 21 Oct 2019 13:56:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729263AbfJUN4n (ORCPT <rfc822;e@80x24.org>);
+        id S1729260AbfJUN4n (ORCPT <rfc822;e@80x24.org>);
         Mon, 21 Oct 2019 09:56:43 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39695 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729203AbfJUN4l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 09:56:41 -0400
-Received: by mail-wr1-f66.google.com with SMTP id c6so1903228wrm.6
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 06:56:38 -0700 (PDT)
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38740 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727152AbfJUN4k (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 09:56:40 -0400
+Received: by mail-wr1-f65.google.com with SMTP id v9so2863661wrq.5
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 06:56:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=T4b8TadolwlSOZvHpfmF35nObWmTrbh1mpJa/MQa9ds=;
-        b=CKhZ/5xbU6hxSGJw55XhDmpAMkAiFr6eX6YdLo7yRhRxSIR1zdscCQo33OQIxTnFq3
-         de4KS1BPncnMdj21XS2Z0O6nC9yY9+rWx6mjHRgSQ5aCwyd9Z5mRm3ySk69n/PHmC1ST
-         R5EKAC2tQyLZH50hbcUgarBJoREgZH3DnzEMsFtfnFG9At7EfTD85yg2r1y5YyohhzM7
-         1CquIRAWpki1D73glkoj4ogRUAzKj+9ya9v7mJWlrgO5IViWX4SbbYkEE/QvHkTi6iJP
-         msr99k8g9ad5OVfDWRUIVzAGAXhlWtjTn2ZjHK5avV3Tdxl9zpcdoCxidDMllYDT+IQk
-         0V3g==
+        bh=mO+or5JG+DSecj8vOEGlNCblM9TvT5SCVngeLbH9uOo=;
+        b=k/R3ELZHa4emUUetMIo3JaSkUAuUdSV++2N2t/worEtWvK0laBXicbzFOe9DT4Ovu+
+         1R0s+6ZSHOwwP1CK6U7Frmrsx9AZazag7HbsqzwnYHcnxGHGohTzuBX+1qEIAubv0vVd
+         gio7AYx5Jjg/oR0edx+PTiKImqCuTlBVru+AAhqk1uiEBiDJASsk/q4hhxijlCwqHyFj
+         37iHzKccfNa7O9KjFyjc+WGW4VugY2qJyRepaKnCVBThkV4EkQn+TV//ht3Z+35pKlem
+         n1sam/Z0OnIlYg/LhoSX3f5ni7bAQRjjNLAcV/oTJZsxx7HOra8Z7rC8ZTgz2ONvGFtP
+         3X8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=T4b8TadolwlSOZvHpfmF35nObWmTrbh1mpJa/MQa9ds=;
-        b=Q3cB3uAKtBn0yXdMgSw97M+EpPplJI2EhrRW3d1InDlWApMfyrkG6fD+5y0OyZxogg
-         PGh6A41lmqXVWfpt8MwUxXcaReEaWVd1Xn+MbhbmsxrD2SE6U2ZWzZI2VsgNrvieeNSm
-         FEIVu/mWtQfkukBH1/od/f2Xp0Sm5dnUx1JXQiUNVo5robs7hGXmXTCwS652Hm4/eOtF
-         HVPetbs3Sd+sycC1N8rDxnj+V2euv1zqxH73BI1mkW4JLTEraq2H1SHyxiX99UTb/u49
-         BmV9f4zplFPBiSfeIP3hGWLtxZhYTT7pGZ46c6jMM27WhevyEkJfS33D8/zDPfYjfEd7
-         65WA==
-X-Gm-Message-State: APjAAAVJeXl/DDnmk0iCZlMw+XJUbrKbjlKCMtjF1uHX/s8zd5eT3UAJ
-        9F9xGQITWBSYCRQRK+3JB+UQAH7r
-X-Google-Smtp-Source: APXvYqz9y3/h/sDRNG2N5p1dSiN5T177vyShFGaxhXlPB4u9bKC+CHbilqDl6Wj8jFj6rzzPbplWzA==
-X-Received: by 2002:adf:d84c:: with SMTP id k12mr428635wrl.235.1571666198129;
-        Mon, 21 Oct 2019 06:56:38 -0700 (PDT)
+        bh=mO+or5JG+DSecj8vOEGlNCblM9TvT5SCVngeLbH9uOo=;
+        b=hkJmC+kb1MbrnhW4ubeMN33aS9y6dWWU1K5h90c4O/OuQ5+UHlzj1pktIC0gdN56NP
+         EEslNhz50t8PCtHOmiQEeP86J35P3GLrMo2VJF2n7sTsLcUdZEsPyIPFPcb1V6U3mheN
+         tLz3Jamg5Nn4EFpfFdb0Z7tT+OMWhETpMRetKyW4EZFsZMqPUv7kr9Y58JrPRMfWX9Ys
+         VpfGveGLqJF5Vp4wnkddTKPjtK3ww002z/BDhj+IIgegPSPH9N0H2ZZ5u5SyXYERa5il
+         XM1PRzyC5dW8j9y89FXlOTf8YItGHvmxNLPFh6iRh38LpAELYZOdRF8VKs1ilwF5rv8R
+         s+oA==
+X-Gm-Message-State: APjAAAVY825voFMo3BQzM5NoBjxQF9NiBLxcGvMprJZtZm6Xxo/HuiP4
+        gFXgvHv6UZRO4kWrfjTyHl0cjXWf
+X-Google-Smtp-Source: APXvYqylKRtp4aIF/cxXMAdp4midmFrJA6pS6HuyO2wfHyr0rlSQzexSpvfRH0GuyhASlwlazNabeA==
+X-Received: by 2002:adf:f004:: with SMTP id j4mr21589039wro.68.1571666196814;
+        Mon, 21 Oct 2019 06:56:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c16sm1363835wrw.32.2019.10.21.06.56.37
+        by smtp.gmail.com with ESMTPSA id x21sm1440345wmj.42.2019.10.21.06.56.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Oct 2019 06:56:37 -0700 (PDT)
-Message-Id: <386f4f8eb5d12d9d089684841d57ea66447cf675.1571666187.git.gitgitgadget@gmail.com>
+        Mon, 21 Oct 2019 06:56:36 -0700 (PDT)
+Message-Id: <0258ee80265f5f27a7de9b81eaf166648b4511d4.1571666187.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
 References: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
         <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Oct 2019 13:56:21 +0000
-Subject: [PATCH v5 12/17] unpack-trees: add progress to clear_ce_flags()
+Date:   Mon, 21 Oct 2019 13:56:19 +0000
+Subject: [PATCH v5 10/17] sparse-checkout: init and set in cone mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,206 +73,356 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When a large repository has many sparse-checkout patterns, the
-process for updating the skip-worktree bits can take long enough
-that a user gets confused why nothing is happening. Update the
-clear_ce_flags() method to write progress.
+To make the cone pattern set easy to use, update the behavior of
+'git sparse-checkout [init|set]'.
 
+Add '--cone' flag to 'git sparse-checkout init' to set the config
+option 'core.sparseCheckoutCone=true'.
+
+When running 'git sparse-checkout set' in cone mode, a user only
+needs to supply a list of recursive folder matches. Git will
+automatically add the necessary parent matches for the leading
+directories.
+
+When testing 'git sparse-checkout set' in cone mode, check the
+error stream to ensure we do not see any errors. Specifically,
+we want to avoid the warning that the patterns do not match
+the cone-mode patterns.
+
+Helped-by: Eric Wong <e@80x24.org>
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- cache.h        |  2 ++
- unpack-trees.c | 56 ++++++++++++++++++++++++++++++++++++--------------
- 2 files changed, 43 insertions(+), 15 deletions(-)
+ builtin/sparse-checkout.c          | 159 +++++++++++++++++++++++++++--
+ dir.c                              |   8 +-
+ dir.h                              |   4 +
+ t/t1091-sparse-checkout-builtin.sh |  51 +++++++++
+ 4 files changed, 208 insertions(+), 14 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 4980ee198e..d3c89e7a53 100644
---- a/cache.h
-+++ b/cache.h
-@@ -304,6 +304,7 @@ static inline unsigned int canon_mode(unsigned int mode)
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 9fdcc6c4ef..6c3bf68c89 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -6,6 +6,7 @@
+ #include "repository.h"
+ #include "run-command.h"
+ #include "strbuf.h"
++#include "string-list.h"
  
- struct split_index;
- struct untracked_cache;
-+struct progress;
- 
- struct index_state {
- 	struct cache_entry **cache;
-@@ -326,6 +327,7 @@ struct index_state {
- 	uint64_t fsmonitor_last_update;
- 	struct ewah_bitmap *fsmonitor_dirty;
- 	struct mem_pool *ce_mem_pool;
-+	struct progress *progress;
+ static char const * const builtin_sparse_checkout_usage[] = {
+ 	N_("git sparse-checkout (init|list|set|disable) <options>"),
+@@ -77,11 +78,13 @@ static int update_working_directory(void)
+ enum sparse_checkout_mode {
+ 	MODE_NO_PATTERNS = 0,
+ 	MODE_ALL_PATTERNS = 1,
++	MODE_CONE_PATTERNS = 2,
  };
  
- /* Name hashing */
-diff --git a/unpack-trees.c b/unpack-trees.c
-index c0dca20865..8bb684ad62 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1269,7 +1269,8 @@ static int clear_ce_flags_1(struct index_state *istate,
- 			    struct strbuf *prefix,
- 			    int select_mask, int clear_mask,
- 			    struct pattern_list *pl,
--			    enum pattern_match_result default_match);
-+			    enum pattern_match_result default_match,
-+			    int progress_nr);
- 
- /* Whole directory matching */
- static int clear_ce_flags_dir(struct index_state *istate,
-@@ -1278,7 +1279,8 @@ static int clear_ce_flags_dir(struct index_state *istate,
- 			      char *basename,
- 			      int select_mask, int clear_mask,
- 			      struct pattern_list *pl,
--			      enum pattern_match_result default_match)
-+			      enum pattern_match_result default_match,
-+			      int progress_nr)
+ static int sc_set_config(enum sparse_checkout_mode mode)
  {
- 	struct cache_entry **cache_end;
- 	int dtype = DT_DIR;
-@@ -1315,7 +1317,8 @@ static int clear_ce_flags_dir(struct index_state *istate,
- 		rc = clear_ce_flags_1(istate, cache, cache_end - cache,
- 				      prefix,
- 				      select_mask, clear_mask,
--				      pl, ret);
-+				      pl, ret,
-+				      progress_nr);
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
++	struct argv_array cone_argv = ARGV_ARRAY_INIT;
+ 
+ 	if (git_config_set_gently("extensions.worktreeConfig", "true")) {
+ 		error(_("failed to set extensions.worktreeConfig setting"));
+@@ -100,9 +103,31 @@ static int sc_set_config(enum sparse_checkout_mode mode)
+ 		return 1;
  	}
  
- 	strbuf_setlen(prefix, prefix->len - 1);
-@@ -1342,7 +1345,8 @@ static int clear_ce_flags_1(struct index_state *istate,
- 			    struct strbuf *prefix,
- 			    int select_mask, int clear_mask,
- 			    struct pattern_list *pl,
--			    enum pattern_match_result default_match)
-+			    enum pattern_match_result default_match,
-+			    int progress_nr)
++	argv_array_pushl(&cone_argv, "config", "--worktree",
++			 "core.sparseCheckoutCone", NULL);
++
++	if (mode == MODE_CONE_PATTERNS)
++		argv_array_push(&cone_argv, "true");
++	else
++		argv_array_push(&cone_argv, "false");
++
++	if (run_command_v_opt(cone_argv.argv, RUN_GIT_CMD)) {
++		error(_("failed to enable core.sparseCheckoutCone"));
++		return 1;
++	}
++
+ 	return 0;
+ }
+ 
++static char const * const builtin_sparse_checkout_init_usage[] = {
++	N_("git sparse-checkout init [--cone]"),
++	NULL
++};
++
++static struct sparse_checkout_init_opts {
++	int cone_mode;
++} init_opts;
++
+ static int sparse_checkout_init(int argc, const char **argv)
  {
- 	struct cache_entry **cache_end = cache + nr;
+ 	struct pattern_list pl;
+@@ -110,8 +135,21 @@ static int sparse_checkout_init(int argc, const char **argv)
+ 	FILE *fp;
+ 	int res;
+ 	struct object_id oid;
++	int mode;
  
-@@ -1356,8 +1360,11 @@ static int clear_ce_flags_1(struct index_state *istate,
- 		int len, dtype;
- 		enum pattern_match_result ret;
- 
-+		display_progress(istate->progress, progress_nr);
+-	if (sc_set_config(MODE_ALL_PATTERNS))
++	static struct option builtin_sparse_checkout_init_options[] = {
++		OPT_BOOL(0, "cone", &init_opts.cone_mode,
++			 N_("initialize the sparse-checkout in cone mode")),
++		OPT_END(),
++	};
 +
- 		if (select_mask && !(ce->ce_flags & select_mask)) {
- 			cache++;
-+			progress_nr++;
- 			continue;
++	argc = parse_options(argc, argv, NULL,
++			     builtin_sparse_checkout_init_options,
++			     builtin_sparse_checkout_init_usage, 0);
++
++	mode = init_opts.cone_mode ? MODE_CONE_PATTERNS : MODE_ALL_PATTERNS;
++
++	if (sc_set_config(mode))
+ 		return 1;
+ 
+ 	memset(&pl, 0, sizeof(pl));
+@@ -140,6 +178,70 @@ static int sparse_checkout_init(int argc, const char **argv)
+ 	return update_working_directory();
+ }
+ 
++static void insert_recursive_pattern(struct pattern_list *pl, struct strbuf *path)
++{
++	struct pattern_entry *e = xmalloc(sizeof(*e));
++	e->patternlen = path->len;
++	e->pattern = strbuf_detach(path, NULL);
++	hashmap_entry_init(&e->ent, memhash(e->pattern, e->patternlen));
++
++	hashmap_add(&pl->recursive_hashmap, &e->ent);
++
++	while (e->patternlen) {
++		char *slash = strrchr(e->pattern, '/');
++		char *oldpattern = e->pattern;
++		size_t newlen;
++
++		if (slash == e->pattern)
++			break;
++
++		newlen = slash - e->pattern;
++		e = xmalloc(sizeof(struct pattern_entry));
++		e->patternlen = newlen;
++		e->pattern = xstrndup(oldpattern, newlen);
++		hashmap_entry_init(&e->ent, memhash(e->pattern, e->patternlen));
++
++		if (!hashmap_get_entry(&pl->parent_hashmap, e, ent, NULL))
++			hashmap_add(&pl->parent_hashmap, &e->ent);
++	}
++}
++
++static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
++{
++	int i;
++	struct pattern_entry *pe;
++	struct hashmap_iter iter;
++	struct string_list sl = STRING_LIST_INIT_DUP;
++
++	hashmap_for_each_entry(&pl->parent_hashmap, &iter, pe, ent)
++		string_list_insert(&sl, pe->pattern);
++
++	string_list_sort(&sl);
++	string_list_remove_duplicates(&sl, 0);
++
++	fprintf(fp, "/*\n!/*/\n");
++
++	for (i = 0; i < sl.nr; i++) {
++		char *pattern = sl.items[i].string;
++
++		if (strlen(pattern))
++			fprintf(fp, "%s/\n!%s/*/\n", pattern, pattern);
++	}
++
++	string_list_clear(&sl, 0);
++
++	hashmap_for_each_entry(&pl->recursive_hashmap, &iter, pe, ent)
++		string_list_insert(&sl, pe->pattern);
++
++	string_list_sort(&sl);
++	string_list_remove_duplicates(&sl, 0);
++
++	for (i = 0; i < sl.nr; i++) {
++		char *pattern = sl.items[i].string;
++		fprintf(fp, "%s/\n", pattern);
++	}
++}
++
+ static int write_patterns_and_update(struct pattern_list *pl)
+ {
+ 	char *sparse_filename;
+@@ -147,13 +249,33 @@ static int write_patterns_and_update(struct pattern_list *pl)
+ 
+ 	sparse_filename = get_sparse_checkout_filename();
+ 	fp = fopen(sparse_filename, "w");
+-	write_patterns_to_file(fp, pl);
++
++	if (core_sparse_checkout_cone)
++		write_cone_to_file(fp, pl);
++	else
++		write_patterns_to_file(fp, pl);
++
+ 	fclose(fp);
+ 	free(sparse_filename);
+ 
+ 	return update_working_directory();
+ }
+ 
++static void strbuf_to_cone_pattern(struct strbuf *line, struct pattern_list *pl)
++{
++	strbuf_trim(line);
++
++	strbuf_trim_trailing_dir_sep(line);
++
++	if (!line->len)
++		return;
++
++	if (line->buf[0] != '/')
++		strbuf_insert(line, 0, "/", 1);
++
++	insert_recursive_pattern(pl, line);
++}
++
+ static char const * const builtin_sparse_checkout_set_usage[] = {
+ 	N_("git sparse-checkout set [--stdin|<patterns>]"),
+ 	NULL
+@@ -184,17 +306,34 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+ 			     builtin_sparse_checkout_set_usage,
+ 			     PARSE_OPT_KEEP_UNKNOWN);
+ 
+-	if (set_opts.use_stdin) {
++	if (core_sparse_checkout_cone) {
+ 		struct strbuf line = STRBUF_INIT;
+-
+-		while (!strbuf_getline(&line, stdin)) {
+-			size_t len;
+-			char *buf = strbuf_detach(&line, &len);
+-			add_pattern(buf, empty_base, 0, &pl, 0);
++		hashmap_init(&pl.recursive_hashmap, pl_hashmap_cmp, NULL, 0);
++		hashmap_init(&pl.parent_hashmap, pl_hashmap_cmp, NULL, 0);
++
++		if (set_opts.use_stdin) {
++			while (!strbuf_getline(&line, stdin))
++				strbuf_to_cone_pattern(&line, &pl);
++		} else {
++			for (i = 0; i < argc; i++) {
++				strbuf_setlen(&line, 0);
++				strbuf_addstr(&line, argv[i]);
++				strbuf_to_cone_pattern(&line, &pl);
++			}
  		}
- 
-@@ -1378,20 +1385,26 @@ static int clear_ce_flags_1(struct index_state *istate,
- 						       prefix,
- 						       prefix->buf + prefix->len - len,
- 						       select_mask, clear_mask,
--						       pl, default_match);
-+						       pl, default_match,
-+						       progress_nr);
- 
- 			/* clear_c_f_dir eats a whole dir already? */
- 			if (processed) {
- 				cache += processed;
-+				progress_nr += processed;
- 				strbuf_setlen(prefix, prefix->len - len);
- 				continue;
- 			}
- 
- 			strbuf_addch(prefix, '/');
--			cache += clear_ce_flags_1(istate, cache, cache_end - cache,
--						  prefix,
--						  select_mask, clear_mask, pl,
--						  default_match);
-+			processed = clear_ce_flags_1(istate, cache, cache_end - cache,
-+						     prefix,
-+						     select_mask, clear_mask, pl,
-+						     default_match, progress_nr);
+ 	} else {
+-		for (i = 0; i < argc; i++)
+-			add_pattern(argv[i], empty_base, 0, &pl, 0);
++		if (set_opts.use_stdin) {
++			struct strbuf line = STRBUF_INIT;
 +
-+			cache += processed;
-+			progress_nr += processed;
-+
- 			strbuf_setlen(prefix, prefix->len - len - 1);
- 			continue;
- 		}
-@@ -1406,19 +1419,27 @@ static int clear_ce_flags_1(struct index_state *istate,
- 		if (ret == MATCHED)
- 			ce->ce_flags &= ~clear_mask;
- 		cache++;
-+		progress_nr++;
++			while (!strbuf_getline(&line, stdin)) {
++				size_t len;
++				char *buf = strbuf_detach(&line, &len);
++				add_pattern(buf, empty_base, 0, &pl, 0);
++			}
++		} else {
++			for (i = 0; i < argc; i++)
++				add_pattern(argv[i], empty_base, 0, &pl, 0);
++		}
  	}
+ 
+ 	if (!core_apply_sparse_checkout) {
+diff --git a/dir.c b/dir.c
+index dfabf9982f..35c1ca9e24 100644
+--- a/dir.c
++++ b/dir.c
+@@ -611,10 +611,10 @@ void parse_path_pattern(const char **pattern,
+ 	*patternlen = len;
+ }
+ 
+-static int pl_hashmap_cmp(const void *unused_cmp_data,
+-			  const struct hashmap_entry *a,
+-			  const struct hashmap_entry *b,
+-			  const void *key)
++int pl_hashmap_cmp(const void *unused_cmp_data,
++		   const struct hashmap_entry *a,
++		   const struct hashmap_entry *b,
++		   const void *key)
+ {
+ 	const struct pattern_entry *ee1 =
+ 			container_of(a, struct pattern_entry, ent);
+diff --git a/dir.h b/dir.h
+index f8edbca72b..8e232085cd 100644
+--- a/dir.h
++++ b/dir.h
+@@ -299,6 +299,10 @@ int is_excluded(struct dir_struct *dir,
+ 		struct index_state *istate,
+ 		const char *name, int *dtype);
+ 
++int pl_hashmap_cmp(const void *unused_cmp_data,
++		   const struct hashmap_entry *a,
++		   const struct hashmap_entry *b,
++		   const void *key);
+ int hashmap_contains_parent(struct hashmap *map,
+ 			    const char *path,
+ 			    struct strbuf *buffer);
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 9907278fc1..ae99803d40 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -186,4 +186,55 @@ test_expect_success 'sparse-checkout disable' '
+ 	test_cmp expect dir
+ '
+ 
++test_expect_success 'cone mode: init and set' '
++	git -C repo sparse-checkout init --cone &&
++	git -C repo config --list >config &&
++	test_i18ngrep "core.sparsecheckoutcone=true" config &&
++	ls repo >dir  &&
++	echo a >expect &&
++	test_cmp expect dir &&
++	git -C repo sparse-checkout set deep/deeper1/deepest/ 2>err &&
++	test_line_count = 0 err &&
++	ls repo >dir  &&
++	cat >expect <<-EOF &&
++		a
++		deep
++	EOF
++	test_cmp expect dir &&
++	ls repo/deep >dir  &&
++	cat >expect <<-EOF &&
++		a
++		deeper1
++	EOF
++	test_cmp expect dir &&
++	ls repo/deep/deeper1 >dir  &&
++	cat >expect <<-EOF &&
++		a
++		deepest
++	EOF
++	test_cmp expect dir &&
++	cat >expect <<-EOF &&
++		/*
++		!/*/
++		/deep/
++		!/deep/*/
++		/deep/deeper1/
++		!/deep/deeper1/*/
++		/deep/deeper1/deepest/
++	EOF
++	test_cmp expect repo/.git/info/sparse-checkout &&
++	git -C repo sparse-checkout set --stdin 2>err <<-EOF &&
++		folder1
++		folder2
++	EOF
++	test_line_count = 0 err &&
++	cat >expect <<-EOF &&
++		a
++		folder1
++		folder2
++	EOF
++	ls repo >dir &&
++	test_cmp expect dir
++'
 +
-+	display_progress(istate->progress, progress_nr);
- 	return nr - (cache_end - cache);
- }
- 
- static int clear_ce_flags(struct index_state *istate,
- 			  int select_mask, int clear_mask,
--			  struct pattern_list *pl)
-+			  struct pattern_list *pl,
-+			  int show_progress)
- {
- 	static struct strbuf prefix = STRBUF_INIT;
- 	char label[100];
- 	int rval;
- 
- 	strbuf_reset(&prefix);
-+	if (show_progress)
-+		istate->progress = start_delayed_progress(
-+					_("Updating index flags"),
-+					istate->cache_nr);
- 
- 	xsnprintf(label, sizeof(label), "clear_ce_flags(0x%08lx,0x%08lx)",
- 		  (unsigned long)select_mask, (unsigned long)clear_mask);
-@@ -1428,9 +1449,10 @@ static int clear_ce_flags(struct index_state *istate,
- 				istate->cache_nr,
- 				&prefix,
- 				select_mask, clear_mask,
--				pl, 0);
-+				pl, 0, 0);
- 	trace2_region_leave("unpack_trees", label, the_repository);
- 
-+	stop_progress(&istate->progress);
- 	return rval;
- }
- 
-@@ -1439,7 +1461,8 @@ static int clear_ce_flags(struct index_state *istate,
-  */
- static void mark_new_skip_worktree(struct pattern_list *pl,
- 				   struct index_state *istate,
--				   int select_flag, int skip_wt_flag)
-+				   int select_flag, int skip_wt_flag,
-+				   int show_progress)
- {
- 	int i;
- 
-@@ -1463,7 +1486,7 @@ static void mark_new_skip_worktree(struct pattern_list *pl,
- 	 * 2. Widen worktree according to sparse-checkout file.
- 	 * Matched entries will have skip_wt_flag cleared (i.e. "in")
- 	 */
--	clear_ce_flags(istate, select_flag, skip_wt_flag, pl);
-+	clear_ce_flags(istate, select_flag, skip_wt_flag, pl, show_progress);
- }
- 
- static int verify_absent(const struct cache_entry *,
-@@ -1525,7 +1548,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	 * Sparse checkout loop #1: set NEW_SKIP_WORKTREE on existing entries
- 	 */
- 	if (!o->skip_sparse_checkout)
--		mark_new_skip_worktree(o->pl, o->src_index, 0, CE_NEW_SKIP_WORKTREE);
-+		mark_new_skip_worktree(o->pl, o->src_index, 0,
-+				       CE_NEW_SKIP_WORKTREE, o->verbose_update);
- 
- 	if (!dfc)
- 		dfc = xcalloc(1, cache_entry_size(0));
-@@ -1590,7 +1614,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		 * If the will have NEW_SKIP_WORKTREE, also set CE_SKIP_WORKTREE
- 		 * so apply_sparse_checkout() won't attempt to remove it from worktree
- 		 */
--		mark_new_skip_worktree(o->pl, &o->result, CE_ADDED, CE_SKIP_WORKTREE | CE_NEW_SKIP_WORKTREE);
-+		mark_new_skip_worktree(o->pl, &o->result,
-+				       CE_ADDED, CE_SKIP_WORKTREE | CE_NEW_SKIP_WORKTREE,
-+				       o->verbose_update);
- 
- 		ret = 0;
- 		for (i = 0; i < o->result.cache_nr; i++) {
+ test_done
 -- 
 gitgitgadget
 
