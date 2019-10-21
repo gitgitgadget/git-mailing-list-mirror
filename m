@@ -2,181 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A87421F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 18:46:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DEBC1F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 18:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728056AbfJUSqi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 14:46:38 -0400
-Received: from mout.gmx.net ([212.227.15.18]:39485 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726672AbfJUSqi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 14:46:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1571683590;
-        bh=irULlh8BE4PcSsFHgkqFwYMf3TkT5IL6QAlMPWdddDM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=BJ1B/UnnLhPDemK++icdhZoLR5TnsckErR4BYUcLWPm0K5f06s+UQXlEX74kjomIL
-         fdYIEoCAWnDAbqNFDFzhjQrQhDiQGrTdGcdSscCNLDbBgWaRE/it3zTEtHnSbn1eV/
-         uxUDicjYzO3qC7zAx+je3GhRdvQX7XoXRn+ITsKg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MOA3P-1ig3GZ13kn-00OUvL; Mon, 21
- Oct 2019 20:46:30 +0200
-Date:   Mon, 21 Oct 2019 20:46:14 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     phillip.wood@dunelm.org.uk
-cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 2/7] autostash: extract read_one() from rebase
-In-Reply-To: <49b1ed2e-b1b9-b593-2657-e59f61925e20@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910212045490.46@tvgsbejvaqbjf.bet>
-References: <cover.1571246693.git.liu.denton@gmail.com> <bbd46ad8d27ab547c8efa6b55c1777becbab7302.1571246693.git.liu.denton@gmail.com> <49b1ed2e-b1b9-b593-2657-e59f61925e20@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730069AbfJUSt4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 14:49:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54112 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726672AbfJUSt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 14:49:56 -0400
+Received: (qmail 19534 invoked by uid 109); 21 Oct 2019 18:49:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 21 Oct 2019 18:49:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9552 invoked by uid 111); 21 Oct 2019 18:53:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Oct 2019 14:53:02 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 21 Oct 2019 14:49:55 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+        Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] test-progress: fix test failures on big-endian systems
+Message-ID: <20191021184954.GA2526@sigill.intra.peff.net>
+References: <b0bec82e-ad0a-32f6-e2e6-e1f0e6920639@physik.fu-berlin.de>
+ <20190731071755.GF4545@pobox.com>
+ <f1ce445e-6954-8e7b-2dca-3a566ce689a5@physik.fu-berlin.de>
+ <20191019233706.GM29845@szeder.dev>
+ <xmqq36fmor7o.fsf@gitster-ct.c.googlers.com>
+ <20191021032144.GB13083@sigill.intra.peff.net>
+ <xmqqftjmlbvb.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Ec1hkuaBey71whVtnuK6Jlq9cobatfZnzLQr7EKfMJt8zAotOpQ
- ifQpLIWLrCidFp+difQH/vQp/TuZ5htKhUA2heTlPa3xWCX3prvIhIyOSeMMRHNieO4nT/J
- iVNisHG7z0fFYwRu+vFDyJmt+fS+gMg6mgkRi6NcU3I22rprOsLDvopSSKiXqH5S6L7lPTP
- IXYvkd3VOCsUMkfWF11BA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7vJLV8bGBZA=:NRl6UYJzVPXJWLqpWrbNgm
- qSwxU2zFUADnpVgQcvlfA22SbUyvg+yzdcHVgkG7ScOW6wif9ac4EhJA0fBc17GggKMlZ6Fii
- wub1VMRCgCD77m8qsDuyIzn9lvtPor+sz60BLEVWgwfuWtyGnuvwviziqUVCS67LgZANS2v+r
- Si0yMg4Pi8aIanwNaP05kzaP8s0pRjXxOBPbjOTMuQAc6lo0+CWTZ2Ycu63IkxP3ETfAl7NQ8
- S0bSqVJI5SldyRSaUPEPKmxXa9dku35EEgqxRHQTFTnxdn5YYPpuX9cWkwWYoadWGGLHZaUj3
- /zIi0KhuehUrz9c0GsURueqA0Ba/Q5jGvwvpESfLkTD6YfWdHyMEtMesnEYQ0E4Df9oag0AkL
- RlKt15NtFed4ofSCuXQSeXYXdX3UFOQPz7qf4jLjPn/+5HcT89htdJy7ZOjPd5Npr8GrTwKcM
- VKYC8LDCFztY5tFANmVwC77VxhpyV27R4to7NAVXPqJcQJgQ1YkqSQZDQfx9zmHbMYiooKgBJ
- gjeEzWHbjwRaAk790dlhHrux4obCCE6wG66I8S2BYTrc/VSrAYHvtR4+Log3cG9a4hTf2ebIH
- oy3PrqA+dA9MgLAG8/5Vwrghytry1WIeegVSaOI6XiCR18mPME3YJ/2zWn1vrB6L0KQfZSyM8
- 0E08QIJ7mOhHNNg0oUnprGjzq1a5F//Wfaj1zwmFA7b5FM0iZthYTkm7xCtnznKQmKkWPZ+Ys
- 2tLeJTPPm5TZTjZ50y3lnwVeiP3sT+XpRDv93uQUbp3omUXT2h4S9rF4SlTtnCN0HiseVxEUC
- kN25LaRuyM77dIFBDpYk38uFwoHykVSMqwerPWzz/ZmGhmcIO0hzAfWpg4DfuYEwL7yzH2dvM
- LoR5ivL5rPJQ2ID1fVYhsnRZYsIEGwkr37sg+gxdPJSzR62glkWujnLSKVS+A3uz1GNJfSq30
- mVDr+6/Y6S9OVelvlR/h06MFaOrrQxl9ZT6z3owprAhTj0NYtANNCG6fPwryiY/I/Ipy5N0Uf
- crQDY8udiCqdv3rCgqNhR/XAHsTpfQcnI/PC+uH/TkRUjoW9CXbiTclRy+nmP8A7SQvIbv3M3
- oOvLWfv1MpONu/VccOMvjr4aQtskCnAWY/R0bjDRG/xKxv2S6pVWdVTTcJbDBtUaTZElHChh4
- BfjNkm06Sgokg3EyPwjk2a5qnBIB5oU3fX1mb/QQJs5zRdfSxf15rn4mY3Ixie7jBe7iM7zbF
- /JB+ABWftLb6nGWN4zBVrQ+Zfk5Y0+PfmIfsbP1mfa0A3O1nHymhH894d+DI=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqftjmlbvb.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Oct 21, 2019 at 05:51:52PM +0900, Junio C Hamano wrote:
 
-On Fri, 18 Oct 2019, Phillip Wood wrote:
+> > -	void *value;
+> > +	union {
+> > +		int *intp;
+> > +		const char *strp;
+> > +	} value;
+> [...]
+> The side that actually use .vale would need to change for obvious
+> reasons, which may be painful, but I agree it would have easily
+> prevented the regression from happening in the first place.
 
-> Hi Denton
->
-> On 16/10/2019 18:26, Denton Liu wrote:
-> > Begin the process of lib-ifying the autostash code. In a future commit=
-,
-> > this will be used to implement `--autostash` in other builtins.
-> >
-> > This patch is best viewed with `--color-moved` and
-> > `--color-moved-ws=3Dallow-indentation-change`.
-> >
-> > Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> > ---
-> >   autostash.c      | 12 ++++++++++++
-> >   autostash.h      |  9 +++++++++
-> >   builtin/rebase.c | 10 +---------
-> >   3 files changed, 22 insertions(+), 9 deletions(-)
-> >   create mode 100644 autostash.c
-> >   create mode 100644 autostash.h
-> >
-> > diff --git a/autostash.c b/autostash.c
-> > new file mode 100644
-> > index 0000000000..a6898e0fda
-> > --- /dev/null
-> > +++ b/autostash.c
-> > @@ -0,0 +1,12 @@
-> > +#include "git-compat-util.h"
-> > +#include "autostash.h"
-> > +#include "gettext.h"
-> > +#include "strbuf.h"
-> > +
-> > +int read_one(const char *path, struct strbuf *buf)
-> > +{
-> > +	if (strbuf_read_file(buf, path, 0) < 0)
-> > +		return error_errno(_("could not read '%s'"), path);
-> > +	strbuf_trim_trailing_newline(buf);
-> > +	return 0;
-> > +}
->
-> This looks like it's doing a similar job to read_oneliner() in sequencer=
-.c, is
-> it possible to make that public and use it instead? (There may be a diff=
-erence
-> if the file is missing but that function already takes a flag so it coul=
-d
-> probably be modified easily enough.)
+I was curious just how painful, so here's what I found.
 
-Oh, I would _love_ to see those two functions reconciled.
+The conversion is indeed annoying. There are 330 sites that need
+touched to handle the switch to a union (both declarations and places
+that access the variables).
 
-Thanks,
-Dscho
+Most of the declarations are hidden by the OPT_*() macros, but there's a
+fair bit of changes like this sprinkled around:
 
->
-> Best Wishes
->
-> Phillip
->
->
-> > diff --git a/autostash.h b/autostash.h
-> > new file mode 100644
-> > index 0000000000..4a8f504f12
-> > --- /dev/null
-> > +++ b/autostash.h
-> > @@ -0,0 +1,9 @@
-> > +#ifndef AUTOSTASH_H
-> > +#define AUTOSTASH_H
-> > +
-> > +#include "strbuf.h"
-> > +
-> > +/* Read one file, then strip line endings */
-> > +int read_one(const char *path, struct strbuf *buf);
-> > +
-> > +#endif
-> > diff --git a/builtin/rebase.c b/builtin/rebase.c
-> > index 4a20582e72..9fd7de6b2f 100644
-> > --- a/builtin/rebase.c
-> > +++ b/builtin/rebase.c
-> > @@ -27,6 +27,7 @@
-> >   #include "branch.h"
-> >   #include "sequencer.h"
-> >   #include "rebase-interactive.h"
-> > +#include "autostash.h"
-> >
-> >   static char const * const builtin_rebase_usage[] =3D {
-> >   	N_("git rebase [-i] [options] [--exec <cmd>] "
-> > @@ -561,15 +562,6 @@ static const char *state_dir_path(const char *fil=
-ename,
-> > struct rebase_options *o
-> >   	return path.buf;
-> >   }
-> >
-> > -/* Read one file, then strip line endings */
-> > -static int read_one(const char *path, struct strbuf *buf)
-> > -{
-> > -	if (strbuf_read_file(buf, path, 0) < 0)
-> > -		return error_errno(_("could not read '%s'"), path);
-> > -	strbuf_trim_trailing_newline(buf);
-> > -	return 0;
-> > -}
-> > -
-> >   /* Initialize the rebase options from the state directory. */
-> >   static int read_basic_state(struct rebase_options *opts)
-> >   {
-> >
->
+@@ -4952,13 +4952,13 @@ int apply_parse_options(int argc, const char **argv,
+                        const char * const *apply_usage)
+ {
+        struct option builtin_apply_options[] = {
+-               { OPTION_CALLBACK, 0, "exclude", state, N_("path"),
++               { OPTION_CALLBACK, 0, "exclude", { .voidp = state }, N_("path"),
+                        N_("don't apply changes matching the given path"),
+                        PARSE_OPT_NONEG, apply_option_parse_exclude },
+-               { OPTION_CALLBACK, 0, "include", state, N_("path"),
++               { OPTION_CALLBACK, 0, "include", { .voidp = state }, N_("path"),
+                        N_("apply changes matching the given path"),
+                        PARSE_OPT_NONEG, apply_option_parse_include },
+-               { OPTION_CALLBACK, 'p', NULL, state, N_("num"),
++               { OPTION_CALLBACK, 'p', NULL, { .voidp = state }, N_("num"),
+                        N_("remove <num> leading slashes from traditional diff paths"),
+                        0, apply_option_parse_p },
+                OPT_BOOL(0, "no-add", &state->no_add,
+
+which is strictly worse syntactically, and doesn't give us any type
+safety (and won't ever, because parse-options is never going to learn
+about "struct apply_state").
+
+Likewise the access side gets slightly uglier, but not too bad:
+
+@@ -4768,7 +4768,7 @@ static int apply_patch(struct apply_state *state,
+ static int apply_option_parse_exclude(const struct option *opt,
+                                      const char *arg, int unset)
+ {
+-       struct apply_state *state = opt->value;
++       struct apply_state *state = opt->value.voidp;
+ 
+        BUG_ON_OPT_NEG(unset);
+ 
+
+For things that actually use intp, I think the access side is fine (and
+possibly even slightly nicer):
+
+@@ -101,65 +101,65 @@ static enum parse_opt_result get_value(struct parse_opt_ctx_t *p,
+ 
+        case OPTION_BIT:
+                if (unset)
+-                       *(int *)opt->value &= ~opt->defval;
++                       *opt->value.intp &= ~opt->defval;
+                else
+-                       *(int *)opt->value |= opt->defval;
++                       *opt->value.intp |= opt->defval;
+                return 0;
+ 
+
+The declaration side is mostly handled by OPT_INTEGER(), etc, but
+hand-written ones still need to adjust as you'd expect:
+
+@@ -298,7 +298,7 @@ static struct option builtin_add_options[] = {
+        OPT_BOOL(0, "renormalize", &add_renormalize, N_("renormalize EOL of tracked files (implies -u)")),
+        OPT_BOOL('N', "intent-to-add", &intent_to_add, N_("record only the fact that the path will be added later")),
+        OPT_BOOL('A', "all", &addremove_explicit, N_("add changes from all tracked and untracked files")),
+-       { OPTION_CALLBACK, 0, "ignore-removal", &addremove_explicit,
++       { OPTION_CALLBACK, 0, "ignore-removal", { .intp = &addremove_explicit },
+          NULL /* takes no arguments */,
+          N_("ignore paths removed in the working tree (same as --no-all)"),
+          PARSE_OPT_NOARG, ignore_removal_cb },
+
+That's ugly, but at least we're getting some type safety out of it.
+
+But here's where it gets tricky. In addition to catching any size
+mismatches, this will also catch signedness problems. I.e., if we make
+OPT_INTEGER() use "intp", then everybody passing in &unsigned_var now
+gets a compiler warning. Which maybe is a good thing, I dunno. But it
+triggers a lot of warnings. We probably ought to be using a "uintp" for
+OPT_BIT(), etc, but that just complains about callers passing in signed
+integers. ;)
+
+So that's where I gave up. Converting between signed and unsigned
+variables needs to be done very carefully, as there are often subtle
+impacts (e.g., loop terminations). And because we have so many sign
+issues already, compiling with "-Wsign-compare", etc, isn't likely to
+help.
+
+But if anybody wants to take a stab at it, the work I've done so far is
+can be fetched from:
+
+  https://github.com/peff/git jk/parseopt-intp-wip
+
+-Peff
