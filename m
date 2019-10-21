@@ -2,98 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 797371F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 17:40:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 697901F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 18:35:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727344AbfJURkB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 13:40:01 -0400
-Received: from egyptian.birch.relay.mailchannels.net ([23.83.209.56]:61436
-        "EHLO egyptian.birch.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726289AbfJURkB (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 21 Oct 2019 13:40:01 -0400
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id E26ED340B44;
-        Mon, 21 Oct 2019 17:39:59 +0000 (UTC)
-Received: from pdx1-sub0-mail-a58.g.dreamhost.com (100-96-171-212.trex.outbound.svc.cluster.local [100.96.171.212])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id 3271E34046A;
-        Mon, 21 Oct 2019 17:39:59 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from pdx1-sub0-mail-a58.g.dreamhost.com ([TEMPUNAVAIL].
- [64.90.62.162])
-        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
-        by 0.0.0.0:2500 (trex/5.18.5);
-        Mon, 21 Oct 2019 17:39:59 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|novalis@novalis.org
-X-MailChannels-Auth-Id: dreamhost
-X-Tasty-Hysterical: 1bccac4727f12a45_1571679599519_780658091
-X-MC-Loop-Signature: 1571679599519:99310828
-X-MC-Ingress-Time: 1571679599519
-Received: from pdx1-sub0-mail-a58.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a58.g.dreamhost.com (Postfix) with ESMTP id 6CDD384935;
-        Mon, 21 Oct 2019 10:39:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
-        :subject:from:to:cc:date:in-reply-to:references:content-type
-        :mime-version:content-transfer-encoding; s=novalis.org; bh=olSGM
-        vjazwid1Jgr4LN6Ubo+Tdw=; b=rvIF5GCu4TNUrmzxxra/wqoBXsBa24Dp8I0IW
-        xIaiWchC6efYBpkNPXbosNpU0quY5SppoKoADPPAXz7+MP6vQZgyLIzMWRp6/2+5
-        /cCklQvpWEFNuwmz1ewglwaVUF9sAs5giiH9x8hJMKnex6Myxxtr2ABW4uJ3Cq/i
-        TSR82I=
-Received: from corey (unknown [38.27.161.17])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by pdx1-sub0-mail-a58.g.dreamhost.com (Postfix) with ESMTPSA id 6ACF48492A;
-        Mon, 21 Oct 2019 10:39:54 -0700 (PDT)
-Message-ID: <0f62325e46901322346184b47329940f7700a1e3.camel@novalis.org>
-Subject: Re: [PATCH 5/5] path.c: don't call the match function without value
- in trie_find()
-X-DH-BACKEND: pdx1-sub0-mail-a58
-From:   David Turner <novalis@novalis.org>
-To:     SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Date:   Mon, 21 Oct 2019 13:39:53 -0400
-In-Reply-To: <20191021160043.701-6-szeder.dev@gmail.com>
-References: <20191021160043.701-1-szeder.dev@gmail.com>
-         <20191021160043.701-6-szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5-1.1 
+        id S1727953AbfJUSfZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 14:35:25 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:43535 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727110AbfJUSfZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 14:35:25 -0400
+Received: by mail-pg1-f193.google.com with SMTP id l24so3387056pgh.10
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 11:35:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=gKNVpGfDraDeObTF5LQpWYMeQHWVeOtzVwLp1PKI8ag=;
+        b=eNwKhfyvgD+RHpFX65lBx5ggnJXHk9uzzmKHUB0y+k0guQphU2F+5PmG5uKnpl7Esz
+         TjYm8vnc8t/oaAyI35pNBFAdF7dvLYW23O/6PjqTf/gDLvycblKVZEvfq53pN9ervg64
+         mn89nnJ9K3mkADxnV0m3DsD2uQOjMDm0CebfzKSvdJym0doWjoystFpIcXffLOY8H5eD
+         vcoK6ICatp0F52oDjHbyZVsodwk7rmrQC0ixsQ99cYFHG+J0nxaBUWonrgnSXXcRXsYA
+         0katdvr855xB/GdFQX0/ZwvGrb8J0pDmPc4ue9fM2IyBkx1ndO7y49AjAY2qBMRI2T/E
+         0faA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=gKNVpGfDraDeObTF5LQpWYMeQHWVeOtzVwLp1PKI8ag=;
+        b=mwoxMy59fU1HGT1pp9S0bo8HKPrt3Cb+jQIjnuGpp0l3Lfm9Uib/Opqr9prvlVdHI/
+         dUdj1wzdSrOMk2sN46stsql3/ukZLcx8DJt3uVSF1tXe3m51bKaUXqbB3ZmqcJWa5VYa
+         JuxRo2RO1/2ZTltbOa5EgOfRu+eqlPzhkctBHj92E4kuHNIBgsOJDPY8Y4uGe5+zQcln
+         Y3M1jw/Od6yGJOHeSYSaSlLEIpcl5/sLCa/l0UeHkK1LEDOydj5du2/FZN+I1RzDkAa9
+         3bBzjyKDPnKFmNx3vv5GiPlozI5dtpG8ox8sRf4rJLvAboIZmdEoMDY+wsjhYMyIDEXE
+         zZ8A==
+X-Gm-Message-State: APjAAAXFPtnbB2r0UoUtDwgJQfFwSnVq+oi+eFyHzLQXursyZYmz43rr
+        02Q1fvu1+Bv2GaNw2YWiaP1djg==
+X-Google-Smtp-Source: APXvYqw45sysZ9MIMvSS6EVy6NwGKiLwuyaiU3hWwiYZgV9CQqvv7UzH7plyCrZU2q8dp0in2y6JFA==
+X-Received: by 2002:a17:90a:ba86:: with SMTP id t6mr31721152pjr.56.1571682923885;
+        Mon, 21 Oct 2019 11:35:23 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id p189sm17229180pfp.163.2019.10.21.11.35.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2019 11:35:23 -0700 (PDT)
+Date:   Mon, 21 Oct 2019 11:35:19 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     "Miriam R." <mirucam@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [Outreachy] First contribution
+Message-ID: <20191021183519.GA139951@google.com>
+References: <CAN7CjDCacSKzN8fXgUe4ejNqM+AAe1o7NaDaFgM5WcYYV0bQ9g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN7CjDCacSKzN8fXgUe4ejNqM+AAe1o7NaDaFgM5WcYYV0bQ9g@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2019-10-21 at 18:00 +0200, SZEDER G=C3=A1bor wrote:
-> Add the missing condition to trie_find() so it will never invoke the
-> match function with a non-existing value.  check_common() will then
-> no
-> longer have to check that it got a non-NULL value, so remove that
-> condition.
-...
-> =20
->  	/* Partial path normalization: skip consecutive slashes */
->  	while (key[0] =3D=3D '/' && key[1] =3D=3D '/')
-> @@ -345,9 +349,6 @@ static int check_common(const char *unmatched,
-> void *value, void *baton)
->  {
->  	struct common_dir *dir =3D value;
-> =20
-> -	if (!dir)
-> -		return 0;
+On Mon, Oct 21, 2019 at 12:39:16PM +0200, Miriam R. wrote:
+> Dear Git developers,
+> I’m an Outreachy applicant, I would like to make my contribution to
+> apply to this Outreachy internship period.
 
+Welcome, Miriam! Good to hear from you.
 
-Do we want to assert(dir) here?
+> 
+> I have found this issue tagged as open and goodfirstissue:
+> https://github.com/gitgitgadget/git/issues/230
+> 
+> But there is a PR from 4 months ago:
+> https://github.com/gitgitgadget/git/pull/271  and I don't know how to
+> find out if a patch including that change already exists or if it
+> makes sense to do it.
 
-Overall, LGTM.  Thanks for the clean-up.
+GitGitGadget exists to repackage PRs (which Git project doesn't use)
+into emailed patches (which Git project does use) when the author writes
+/submit on the PR comment chain. In that PR I see Johannes asking for a
+/submit, but no submit; next I would check if a patch with the same
+title came through in the mailing list by searching on the
+public-inbox.org mirror:
 
+https://public-inbox.org/git/?q=is_directory+dir_exists
+
+Looks like, no, a patch with those hotwords wasn't mailed. Finally, I
+would check the project to see if it's still an issue:
+
+  $ cd my-git-dir/
+  $ git grep is_directory
+
+I still see 30 instances of is_directory in the codebase, so looks like
+we haven't made this change. :)
+
+> 
+> In case this issue is not suitable for my first contribution,  I have
+> also found this:
+> https://github.com/gitgitgadget/git/issues/379
+
+This is also a fine change if you want to make it.
+
+Good luck, and remember it's fine to ask the mentor for the project you
+ultimately want to help on for help, code review in advance, etc.
+
+ - Emily
