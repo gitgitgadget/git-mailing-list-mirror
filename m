@@ -2,186 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E21081F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 18:40:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 909F81F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 18:43:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730042AbfJUSkP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 14:40:15 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37647 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727110AbfJUSkJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 14:40:09 -0400
-Received: by mail-wm1-f67.google.com with SMTP id f22so13803904wmc.2
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 11:40:06 -0700 (PDT)
+        id S1728056AbfJUSn0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 14:43:26 -0400
+Received: from mail-pf1-f181.google.com ([209.85.210.181]:44680 "EHLO
+        mail-pf1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727211AbfJUSn0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 14:43:26 -0400
+Received: by mail-pf1-f181.google.com with SMTP id q21so8946736pfn.11
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 11:43:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=v39AxgsUJWCtoo28oG5e7SZiH85biK3fNdmLjIsRJU8=;
-        b=jr3hkz2qXx+5V4C3hmsBbMfURuaOlCrb1kYd9mLumI/ewNoOvU54HNCNuTrPyxcTtS
-         GACfPSGxJq1le5Kps4OrHfTh9xyNXRDG2fxSHr8z7vgVeeL5/HwJr0iLElc91Q/K+KgF
-         LvS7PbRT6FTKc301YpgOXisxcAnBvro81c1sMqb9yWqRVvPMMHlgOiOoJPPyhe2KWL6g
-         r65OOjIVaG/nXjASgviI6lym2ZFVITjGBo9CspAeZ1NfqGlY42HZHAUbvsBBERggOPIt
-         VFVrnNYlHOioIvV4kWAqyFTU+mnzC9U43AI5rS9fQVgzbBjVcW2xxTuS1PkQrG4+TtU+
-         QX1Q==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=WRXxdJBjof2b0wNaeY+vn+n0IlLselMzI+hyKgXvzms=;
+        b=c5g3ofale21GVCCg0mrvQHfN16IWbFvyUNdkO1Wj7+5M5R4MfQQgf8iN5bZhRIdE/E
+         5uDeMeR97I71vFdztS0d56MEkJCOWGJzlK9Sr6Xf2+0reubqJCbtcmhgbi8v5YKnstMQ
+         CwQ0stX77Iaf1WF8AxGgWKfgb7zYYMj/XmO9lJY1VwE6JRrDvB/IL99FKD45goeaa8MN
+         4KIDxwC6c6avgqVrQ7/qjYXwy59QILEnGedKoiDn+/GWxG/RFH+N2tTcRNFbKaPn9oyF
+         ncfs2QGZioj15Hp/O8X82svwFgkhdeVFFp47GxD2PYBTRpx2OkizlJ3mKLPFwAdgRFPK
+         tHoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=v39AxgsUJWCtoo28oG5e7SZiH85biK3fNdmLjIsRJU8=;
-        b=bTUWWWItZHIXlqgrnh57Iz0Pou6o2CsE9yKdr7ELgjUokJK5cPWEFUhFZBlLPHM/yT
-         b7vEzJdNfq1UbU3G3U5MCg+ZtW4ui9hsfvGjrgsAbBT5/564tH+AEn+UA8GVR9YESEnQ
-         DncBvlSE7uN6sVSTA6aH9T4uWsIJFqOOVEG7sZQvmnWIJ3vZLSpqnWEg+wurQHz5Kris
-         NebuJ25Moj1f+myTmP/UyMG7CCXReF+ldi0xiTDh+bSrI9FKnAS1UC7CIqyPEMKPZO7z
-         1lIOKMO4JNcBULx3NVmC47myJsA+dbVd6mlW9Da3BuSMb66q+rYEJYf2WS0jIAZfGWwh
-         0zxQ==
-X-Gm-Message-State: APjAAAUDC1omcHMUX4BXY6phmfDDUKAz5WL+Xo3b0YXmRaq0RmxgmAyz
-        PGJE2cUIh+Cnl8V5Sg9L6B9mUlh4
-X-Google-Smtp-Source: APXvYqzVMCXz+BU3JVcbOyeig4/sfh/3+W7+wCV7ZOT/j46H8Z/gT+pZe02mj/lKYmyp0VrnrjK/XA==
-X-Received: by 2002:a1c:4c02:: with SMTP id z2mr6702060wmf.78.1571683205958;
-        Mon, 21 Oct 2019 11:40:05 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o1sm13707403wmc.38.2019.10.21.11.40.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Oct 2019 11:40:05 -0700 (PDT)
-Message-Id: <37768f58860d113e21730f2640ca773ebb54dff0.1571683203.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.337.v4.git.1571683203.gitgitgadget@gmail.com>
-References: <pull.337.v3.git.gitgitgadget@gmail.com>
-        <pull.337.v4.git.1571683203.gitgitgadget@gmail.com>
-From:   "William Baker via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Oct 2019 18:39:59 +0000
-Subject: [PATCH v4 2/6] midx: add progress to write_midx_file
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=WRXxdJBjof2b0wNaeY+vn+n0IlLselMzI+hyKgXvzms=;
+        b=UzIq6LfYMXJnfI2CBk2JxFuG387GKv6VJ2NlLww2y1h1FW9SNuyZ+T0FglKr2GxZ+Y
+         /ZBnK6b4zU859M/lkLyEUTp6ZWYVuZYqI8dZ3e37hh/aSvwGsEKxyEsd+VFY1pvoSFAQ
+         DF70ELAb/eb48KJZJa4JRGHqC5pV7jgdyibJ/7TWwFdI/BwoO70PQXG9nktCt6A41k7O
+         4pIVn8CmDJSCV4ej+iUNaI7wnGCOBFvtBJe3d3v+Lk4wLYnvCzRaQmHpiBTv0n0kyXhj
+         4sz7gGEbIvJW3pPG7iNRYUK8agCDiR678SuuqnmjqnYpE7DA9koJvsjIeQZvp9zLapjW
+         ryuw==
+X-Gm-Message-State: APjAAAVuFWMHkYsMtypgrcy3SJu1S314APcNqTpIWvYuvhsIaTXwyR9f
+        x56FFOtTBE2pXh7RQF6YDF2iMw==
+X-Google-Smtp-Source: APXvYqwReOg1eUV2+jWCf/pbC3K/zi0qlQBv4UjFxRje6qUln5zREBZ/q5g7rjPVZaeibTGkTJzpzg==
+X-Received: by 2002:a62:ae06:: with SMTP id q6mr24536062pff.96.1571683404954;
+        Mon, 21 Oct 2019 11:43:24 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id b4sm13980282pju.16.2019.10.21.11.43.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2019 11:43:24 -0700 (PDT)
+Date:   Mon, 21 Oct 2019 11:43:20 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Karina Saucedo <karina.saucedogza@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Outreachy Winter 2019
+Message-ID: <20191021184320.GB139951@google.com>
+References: <CAJxDvSsZLz+oxPQ15YiGatURSyuxnriiL5TjXMay0W7VPVjNsQ@mail.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     williamtbakeremail@gmail.com, stolee@gmail.com,
-        jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>,
-        William Baker <William.Baker@microsoft.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJxDvSsZLz+oxPQ15YiGatURSyuxnriiL5TjXMay0W7VPVjNsQ@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: William Baker <William.Baker@microsoft.com>
+On Mon, Oct 21, 2019 at 11:54:01AM -0500, Karina Saucedo wrote:
+> Hello, my name is Karina and I'm and Outreachy applicant. I´m interested in
+> applying to the project 'Add did you mean hints´ and I was wondering how
+> can I start contributing since there seem to be no issues on the github
+> page. Thank you!
 
-Add progress to write_midx_file.  Progress is displayed
-when the MIDX_PROGRESS flag is set.
+Hi Karina!
 
-Signed-off-by: William Baker <William.Baker@microsoft.com>
----
- midx.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+It's best to start on a microproject; some of the other applicants are
+already doing so as well. You can search this list for "outreachy" (try
+it from public-inbox.org/git) to see some of the discussions with other
+applicants and what they are or are not working on; there are also some
+good-first-issues in the GitGitGadget bug tracker
+(github.com/gitgitgadget/git/issues). Git project doesn't use Github to
+organize bugs itself; the bug trackers are all abstractions of
+conversation on the list (such as this one -
+https://public-inbox.org/git/20190916184208.GB17913@google.com/ -
+explaining some possible Outreachy microprojects).
 
-diff --git a/midx.c b/midx.c
-index f169a681dd..006f36b570 100644
---- a/midx.c
-+++ b/midx.c
-@@ -448,6 +448,8 @@ struct pack_list {
- 	uint32_t nr;
- 	uint32_t alloc;
- 	struct multi_pack_index *m;
-+	struct progress *progress;
-+	unsigned pack_paths_checked;
- };
- 
- static void add_pack_to_midx(const char *full_path, size_t full_path_len,
-@@ -456,6 +458,7 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
- 	struct pack_list *packs = (struct pack_list *)data;
- 
- 	if (ends_with(file_name, ".idx")) {
-+		display_progress(packs->progress, ++packs->pack_paths_checked);
- 		if (packs->m && midx_contains_pack(packs->m, file_name))
- 			return;
- 
-@@ -785,7 +788,7 @@ static size_t write_midx_large_offsets(struct hashfile *f, uint32_t nr_large_off
- }
- 
- static int write_midx_internal(const char *object_dir, struct multi_pack_index *m,
--			       struct string_list *packs_to_drop)
-+			       struct string_list *packs_to_drop, unsigned flags)
- {
- 	unsigned char cur_chunk, num_chunks = 0;
- 	char *midx_name;
-@@ -799,6 +802,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	uint64_t chunk_offsets[MIDX_MAX_CHUNKS + 1];
- 	uint32_t nr_entries, num_large_offsets = 0;
- 	struct pack_midx_entry *entries = NULL;
-+	struct progress *progress = NULL;
- 	int large_offsets_needed = 0;
- 	int pack_name_concat_len = 0;
- 	int dropped_packs = 0;
-@@ -832,8 +836,15 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 			packs.nr++;
- 		}
- 	}
-+	
-+	packs.pack_paths_checked = 0;
-+	if (flags & MIDX_PROGRESS)
-+		packs.progress = start_progress(_("Adding packfiles to multi-pack-index"), 0);
-+	else
-+		packs.progress = NULL;
- 
- 	for_each_file_in_pack_dir(object_dir, add_pack_to_midx, &packs);
-+	stop_progress(&packs.progress);
- 
- 	if (packs.m && packs.nr == packs.m->num_packs && !packs_to_drop)
- 		goto cleanup;
-@@ -958,6 +969,9 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 		written += MIDX_CHUNKLOOKUP_WIDTH;
- 	}
- 
-+	if (flags & MIDX_PROGRESS)
-+		progress = start_progress(_("Writing chunks to multi-pack-index"),
-+					  num_chunks);
- 	for (i = 0; i < num_chunks; i++) {
- 		if (written != chunk_offsets[i])
- 			BUG("incorrect chunk offset (%"PRIu64" != %"PRIu64") for chunk id %"PRIx32,
-@@ -990,7 +1004,10 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 				BUG("trying to write unknown chunk id %"PRIx32,
- 				    chunk_ids[i]);
- 		}
-+
-+		display_progress(progress, i + 1);
- 	}
-+	stop_progress(&progress);
- 
- 	if (written != chunk_offsets[num_chunks])
- 		BUG("incorrect final offset %"PRIu64" != %"PRIu64,
-@@ -1018,7 +1035,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 
- int write_midx_file(const char *object_dir, unsigned flags)
- {
--	return write_midx_internal(object_dir, NULL, NULL);
-+	return write_midx_internal(object_dir, NULL, NULL, flags);
- }
- 
- void clear_midx_file(struct repository *r)
-@@ -1221,7 +1238,7 @@ int expire_midx_packs(struct repository *r, const char *object_dir, unsigned fla
- 	free(count);
- 
- 	if (packs_to_drop.nr)
--		result = write_midx_internal(object_dir, m, &packs_to_drop);
-+		result = write_midx_internal(object_dir, m, &packs_to_drop, flags);
- 
- 	string_list_clear(&packs_to_drop, 0);
- 	return result;
-@@ -1370,7 +1387,7 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 		goto cleanup;
- 	}
- 
--	result = write_midx_internal(object_dir, m, NULL);
-+	result = write_midx_internal(object_dir, m, NULL, flags);
- 	m = NULL;
- 
- cleanup:
--- 
-gitgitgadget
+Thanks and good luck - I'm the mentor for "Did you mean" so you can feel
+free to ask me directly if there's something you're not sure of and you
+don't want to ask the list. :) Although, of course the list will be
+happy to answer your questions as well.
 
+ - Emily
