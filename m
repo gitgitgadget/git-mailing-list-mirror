@@ -2,108 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A4161F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 19:35:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C9E31F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 19:49:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730026AbfJUTfW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 15:35:22 -0400
-Received: from mout.gmx.net ([212.227.17.20]:41987 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727211AbfJUTfW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 15:35:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1571686516;
-        bh=fIH73jW8zsnReWJkAnzmDUnc1CrU6NWOQsNK2H+M0rw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ikC4cXrgc2q2lCsMKmCErrv4ESWg6Axiv7ZuRtzBKSu+DcPsONa4TaMTBJCWt2Hoq
-         2yDygLHuAcVVbY5JGbXRzXCJRXaravaBBYt0Y4kuO3n6D9ANS4YjLpTGP0I/IPN595
-         Lcb/nolzxEX76gRksQ84BVI/mnxM8w5xJsmzTSqk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MYeR1-1iZgO71jRz-00Vg1S; Mon, 21
- Oct 2019 21:35:16 +0200
-Date:   Mon, 21 Oct 2019 21:35:00 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/2] path.c: minor common_list fixes
-In-Reply-To: <20191018114202.5452-1-szeder.dev@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910212133540.46@tvgsbejvaqbjf.bet>
-References: <20191018110618.GZ29845@szeder.dev> <20191018114202.5452-1-szeder.dev@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730104AbfJUTtW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 15:49:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63653 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728543AbfJUTtW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 15:49:22 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7AA962AE70;
+        Mon, 21 Oct 2019 15:49:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cnzzhl9a7MEiVWj9XyVOOV+5fTk=; b=xUmP62
+        qNGPGR0q3ex435ToprAsApx7D7WMnJT8n3IaJ2tyPwp38jtpalTDQ7OHipN8b6Z1
+        ViTjJjO6GSm48F9FD/X2Ua3yt/0VSS9c+QyPbslfdI6g7Z/lqkrrWGHj7gPuaA0M
+        23oL25VwPkQBU/J3NVSoy5IfAvoFK5D4SMNEg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GzCqTFYP40IHB9Oue9Se6vhM/CetJh84
+        EJ1VylAbuwrDyit3PynbRkC1ew1WHX85ldjrvZHFeCSbUcKLk1dyBr6s5CNWsogc
+        OStHllILxvgYJg6QUio11f1ES+J4ho/Vd/X1bbqj6pXwtTw3nfSnXGrCTsakjIMK
+        W5Qo804zKlI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E6C02AE6F;
+        Mon, 21 Oct 2019 15:49:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C64522AE6E;
+        Mon, 21 Oct 2019 15:49:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: Re: [RFC PATCH 1/7] Makefile: alphabetically sort += lists
+References: <cover.1571246693.git.liu.denton@gmail.com>
+        <02a16f9bdf740841d9a4be765e72b9fa5ae5d75c.1571246693.git.liu.denton@gmail.com>
+        <xmqqimon6yar.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1910212043200.46@tvgsbejvaqbjf.bet>
+Date:   Tue, 22 Oct 2019 04:49:19 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1910212043200.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 21 Oct 2019 20:44:40 +0200 (CEST)")
+Message-ID: <xmqqblu9lw00.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1958295104-1571686517=:46"
-X-Provags-ID: V03:K1:A/mDGzH6R/8GUHfdiSqiCwwwl6G60fLoWbmMQ7FxNEnEGBp3iAC
- 0EAR8TuhBsI0v70+nSkU7GRXvzQCQxDWrfszbnFaudlK6tSOWVGvjs8gVdzWh/PS1k2NK6e
- YQ+NScztaa8FsKEP+uSgKvvo+J8hOLBw4iQMzDcTMKl/EzoFNAMhUkKB+kdvNs6c5Z9cAao
- Fpm5IZ6GueE32OzLRnnIw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8rsElG9EK5A=:pb1Kx9RqPT56Xz3aqgFkcf
- fPmvwomGw2tfiGOC8VBpQ6iYjKhXsPvd6Mkw0MGFyO53YfI8FviPou8K2lGo0rtgUMC+Gtbrf
- ouiQEYkNYMdb89FSRu1dXA/gmKtQsAaMXc419Zaf/WeYjMU2uVrQoOv0YO42yZ063x2PVt/Se
- INGQPe0Gx/xm4o1uyJ3JRXuMGtPaUyu5JLs742lhInnEJ5sx/rSFiBvhiWbpRXJGoJep4YPMy
- T72ILTN/W8/GgWym1rJ+jk8RNm6jMmWgR14seKkaAWMHdKGEJuyiYt5xkZIzuGNENVQEv+W7T
- zj3fU+4BkkXc1ncUch0qexTnUV6Ggf4fOTyCeTrrraOr0G2DZcxBPyfm8n39APcUEkMcD0c5L
- hV8r7IzKWWz9Mwt4GTjddZJcSpi9TC5pUUTCpvYW9tUOhE6NM9D3/ot0yLpYwt4UVyvtg/6QN
- ovviyLONQdosIZPcSIVoc5vKr4SzELEyLVrTZuzDrv4aCt7UIrbBXr0iihbk9X8rjqxY6gi29
- wqxni2xDlcFXCjTpljNxw0RZo8K61zWZs2aZiQSvR5HHQwO/9+gsW8T28yZq4jX9+NEPoWGaI
- 7Y7NvF71toZOBhFVvQW8HQjVtZfvaAngjgxfFNduj/um/uReDjepuMvVQIeWwXV5WG5sNUXqa
- uub+rUlX9UR4dKCsgngvZqIByUA+h6r+eKJERAQmnGexiSdkFthsXyPYc1pPOEY6dEyVsj3+C
- wE0wT/DHLMVWgHhOQa5dQjogZX8/tZy0PFQiDrQLq/uwnWd+d+2Um7NbJduGkoNG3edoatn0T
- N1+wOCZBzG0rzvlNrYJ/DQ9n7QjX3RiANEFtFiHdjNBagljzcjRm3x8z/spq5y9kDL1dXwYsX
- 6HJowgK40XpoKsXt6/819emAaVmagfMLMEZ88xIccqno9uvnLTRW0P4ig30mlvIE9G8NHKM79
- iee/ttjd/2Lc5R0BgAVIZRPR3p2jE8VauSGz48jFyPtV5Q02Rx3mMCg1r11XomuxMBsweuZY2
- CKtnV2BQmHzWOyuhp8vHvTxmAZgNXDd2KPa6dExVRuEFA0dhO7/l2hSSBcvTlq+x7dFXbke9W
- LtScOPLcvnqncZJQLfX3Gfy0iSUeSEMPZ9fKBdn3NYcECOH7qHKnWFRVuj6b4bNYqO/BNV9wo
- UXr71xE0fsxdd6UcHRzpavFrm7sHYLNxTKeWXpAlFloHBHnHCxDnQVUVUMC2CwNoW/h/2kc/z
- xO9DtMLM2GUEWMWqmyYHCNL2ILa4P9C4VlMQTq4V9iq83UBMDDgCPIiezcPU=
+Content-Type: text/plain
+X-Pobox-Relay-ID: DFE82786-F43B-11E9-963D-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---8323328-1958295104-1571686517=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi G=C3=A1bor,
-
-On Fri, 18 Oct 2019, SZEDER G=C3=A1bor wrote:
-
-> On Fri, Oct 18, 2019 at 01:06:18PM +0200, SZEDER G=C3=A1bor wrote:
-> > I didn't look yesterday at all, but now I did, and, unfortunately, see
-> > two more bugs
+>> ... I do not particularly see this change (there may be similar
+>> ones) desirable.  I'd find it it be much more natural to sort
+>> "commit-anything" after "commit", and that is true with or without
+>> the common extension ".o" added to these entries.
+>>
+>> In short, flipping these entries because '.' sorts later than '-' is
+>> making the result look "less sorted", at least to me.
 >
-> The second patch is kind of a bugfix, though luckily the bug doesn't
-> actually manifest in undesired behavior.
-> The first is a minor cleanup, so future readers won't have a 'Huh?'
-> moment like I just did.
->
-> SZEDER G=C3=A1bor (2):
->   path.c: fix field name in 'struct common_dir'
->   path.c: mark 'logs/HEAD' in 'common_list' as file
+> The problem with this argument is that it disagrees with ASCII, as `-`
+> has code 0x2d while `.` has code 0x2e, i.e. it is lexicographically
+> _larger_.
 
-Those patches look very reasonable to me.
+I am saying that sorting these in ASCII order did not produce result
+that is easy to the eyes.
 
-Thanks,
-Dscho
+You are saying that Denton's patch sorted these lines in ASCII order.
 
->
->  path.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
->
-> --
-> 2.23.0.1084.gae250eaa40
->
->
+I agree with you that it did correctly sort them in ASCII order.
 
---8323328-1958295104-1571686517=:46--
+That does not make the patch right ;-)
+
