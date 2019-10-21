@@ -8,107 +8,120 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C44571F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 18:40:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE9041F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 18:40:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728943AbfJUSkG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 14:40:06 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:40249 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726672AbfJUSkG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 14:40:06 -0400
-Received: by mail-wm1-f65.google.com with SMTP id b24so13785737wmj.5
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 11:40:05 -0700 (PDT)
+        id S1729945AbfJUSkJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 14:40:09 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35539 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726672AbfJUSkH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 14:40:07 -0400
+Received: by mail-wr1-f66.google.com with SMTP id l10so14738547wrb.2
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 11:40:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pW8pS6G2719q+zzOrXEH7KQeJ4JNJqRA2w3EaBCANzw=;
-        b=AKCo6ZN8+cftLNVsvZFOb7r7PPuLcqkcwJ+Csm93WZZ+tVQ+91HXf+943or46zero1
-         +Tj0FnE8ap+PajKX3Tfy4Dfomm7iL7xM53apRitNO3jlAMOvn4r+LnLSHnccjmxhocyi
-         7DxSYJfD/5MRv4eciRCe4UVOqYKL4A7FZqt72bLFeoQVPkTEwN0wNOjH60Eez7YtoVvW
-         AIlPrvt854g3eRqhxff9RWKpn1vCvb5m2/NqUZsjqoEZZg+k99QXhHut6ylFyIF2R/Ca
-         E7QfV0LKMkpyTEQmjGVTkC4TfUdlwKJNULQy9HwV9SuElH1DZ9km9zBTeXDyo3EJsxLy
-         EwQw==
+        bh=gJp2xqy63/C8ct2GGPsWDLBKXQPX2IIv7PxniheFSEM=;
+        b=D4LCeqqIFJ5fzRS3D69JR97YMaSO+EUX8FAO4J9GvHvpVjJS7vqmIVeLk3Hla1XDH7
+         c1fB1bzRd1wRBI8uGgqAlgWAkY/P74eGd2ALO1PYX7RlGwMTTyPRQj6q0aqfPG3ap/m/
+         JL/B/S5tVep5T9S7NbCvv6ql7KRFq6ptHDwTcIt3G/xjqwKt3hR1fzKHqQdLY2Z5xFIe
+         /tCCv1JwaQdWx5J+b2of9s1w3eCKRHLED3ZQlDix7R0NfzLPHGtZldL+1KaY0+KIc+o9
+         euitl86mpEYAOhC56fnZDWPPqM+jGHq8s2MQGMVzHtNpF+l1w5tU96Nqd36Q0bLctFZW
+         iEsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pW8pS6G2719q+zzOrXEH7KQeJ4JNJqRA2w3EaBCANzw=;
-        b=nMyhXUc7RFNO0v2pr5abKXkp5/Opm6Mgt7NoRm33BlVJPuIBN77HZ2gej0hFinN6w7
-         yf0NIdcNYQADwAkEiJ8wwXDwAO34gaqWbGjTk2lctsEQkCVAClKFOUeMl29I50XgQ8Mr
-         WN58yRJFjPbqHm8k6Q1V+HKXme5dAqRwuPt6jQjUnNKvg0QPDWFfO7OzLsE85PeCw37Z
-         +sctOG3uG3WKA3FhEx6zguiKGKKq0HzQieGcHfqiVnV6D03V3bbLFJC2vr/LlLrPCKf0
-         yCsunxEwGJw0TWR6Pn7mlhK2XJAhfjpAX2PTTBBjeV5UGXVdrwkX++bLqJmHwBrV7bRU
-         Ig3w==
-X-Gm-Message-State: APjAAAWjibY7cLRYM1BXaEP2oXPaSgI5L2Y7dk4MjPPMI0zBlzRm/UJH
-        2lll0H80aLf1aC8kQhVhpolrSIOh
-X-Google-Smtp-Source: APXvYqzrTDeV6AQVMRLoJT7pJF7sbSRejNmFxXm08Si1l22f+NtyQCUtm7XcCNCGNn4gxXJyapxb6Q==
-X-Received: by 2002:a05:600c:219a:: with SMTP id e26mr16446493wme.147.1571683204408;
-        Mon, 21 Oct 2019 11:40:04 -0700 (PDT)
+        bh=gJp2xqy63/C8ct2GGPsWDLBKXQPX2IIv7PxniheFSEM=;
+        b=eebZKYFvx6g9TvZGMkZ5wLtAdlJgABIS6Go7lTfM4QLXZo9wyxJG4xVPpFkhe0ynBl
+         9VD2x41k8JofPnPLiosoxFdhhMKUzMUo4AaF1ijmqW84ZtV5uyQp7kxgaJuvvXqZNjuH
+         prnx26Pw+cx3+HfGJYQX2KanmRx7mHWLynpROYkwOXiO5w97fAm6zpeaAOuF4FzhRBqO
+         UccBGcTSwx6lQgYev4MaIZwPELD2c7aiW1v7Kdu+jl0SzYgFs8DONIukhAZdxzDNTLO/
+         4aKws4DeqS6CBN/mhjAg4aUQ3Ie+oRpWPbw400sCRSJ3rtfWKXBqX0Fa2mRuWF5PGdI9
+         iBzQ==
+X-Gm-Message-State: APjAAAVYuf9wSC3Bv0XWt1uIFc+VoJ3+dDSUAT0rJYrY8Gucq8SFHfNJ
+        vJcOcxoP+S6SxX+ocleQKPn8rQ3L
+X-Google-Smtp-Source: APXvYqxvaLMeAqk2NlgslFP3yBsvhYeGzEjSgD/Zzdf6uQYEBmnCgHXanomM6fdhquWtw/ajGo33/A==
+X-Received: by 2002:a5d:55c2:: with SMTP id i2mr21517388wrw.176.1571683206656;
+        Mon, 21 Oct 2019 11:40:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r13sm25578669wra.74.2019.10.21.11.40.03
+        by smtp.gmail.com with ESMTPSA id a9sm21561602wmf.14.2019.10.21.11.40.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Oct 2019 11:40:03 -0700 (PDT)
-Message-Id: <pull.337.v4.git.1571683203.gitgitgadget@gmail.com>
-In-Reply-To: <pull.337.v3.git.gitgitgadget@gmail.com>
+        Mon, 21 Oct 2019 11:40:06 -0700 (PDT)
+Message-Id: <4ac9527d984bffea22a399506500a18823b4bd53.1571683203.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.337.v4.git.1571683203.gitgitgadget@gmail.com>
 References: <pull.337.v3.git.gitgitgadget@gmail.com>
+        <pull.337.v4.git.1571683203.gitgitgadget@gmail.com>
 From:   "William Baker via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Oct 2019 18:39:57 +0000
-Subject: [PATCH v4 0/6] multi-pack-index: add --no-progress
+Date:   Mon, 21 Oct 2019 18:40:00 +0000
+Subject: [PATCH v4 3/6] midx: add progress to expire_midx_packs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     williamtbakeremail@gmail.com, stolee@gmail.com,
-        jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>
+        jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>,
+        William Baker <William.Baker@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Git contributors,
+From: William Baker <William.Baker@microsoft.com>
 
-This is the fourth iteration of changes for adding support for
---[no-]progress to multi-pack-index. 
+Add progress to expire_midx_packs.  Progress is
+displayed when the MIDX_PROGRESS flag is set.
 
-I'm resubmitting the series after a discussion regarding 'MIDX_PROGRESS'
-that concluded with a decision to stick with the original changes in the v3
-patch.
+Signed-off-by: William Baker <William.Baker@microsoft.com>
+---
+ midx.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Thanks, William
-
-William Baker (6):
-  midx: add MIDX_PROGRESS flag
-  midx: add progress to write_midx_file
-  midx: add progress to expire_midx_packs
-  midx: honor the MIDX_PROGRESS flag in verify_midx_file
-  midx: honor the MIDX_PROGRESS flag in midx_repack
-  multi-pack-index: add [--[no-]progress] option.
-
- Documentation/git-multi-pack-index.txt |  6 ++-
- builtin/multi-pack-index.c             | 18 +++++--
- builtin/repack.c                       |  2 +-
- midx.c                                 | 71 ++++++++++++++++++++------
- midx.h                                 | 10 ++--
- t/t5319-multi-pack-index.sh            | 69 +++++++++++++++++++++++++
- 6 files changed, 149 insertions(+), 27 deletions(-)
-
-
-base-commit: d966095db01190a2196e31195ea6fa0c722aa732
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-337%2Fwilbaker%2Fmulti-pack-index-progress-toggle-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-337/wilbaker/multi-pack-index-progress-toggle-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/337
-
-Range-diff vs v3:
-
- 1:  cd041107de = 1:  e7b1cc633b midx: add MIDX_PROGRESS flag
- 2:  0117f55c9d = 2:  37768f5886 midx: add progress to write_midx_file
- 3:  d741dc60bc = 3:  4ac9527d98 midx: add progress to expire_midx_packs
- 4:  f208c09639 = 4:  3468acf39a midx: honor the MIDX_PROGRESS flag in verify_midx_file
- 5:  7566090769 = 5:  d6ae4e1c54 midx: honor the MIDX_PROGRESS flag in midx_repack
- 6:  a3c50948d9 = 6:  ea4f869780 multi-pack-index: add [--[no-]progress] option.
-
+diff --git a/midx.c b/midx.c
+index 006f36b570..7157259ca2 100644
+--- a/midx.c
++++ b/midx.c
+@@ -1205,18 +1205,29 @@ int expire_midx_packs(struct repository *r, const char *object_dir, unsigned fla
+ 	uint32_t i, *count, result = 0;
+ 	struct string_list packs_to_drop = STRING_LIST_INIT_DUP;
+ 	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
++	struct progress *progress = NULL;
+ 
+ 	if (!m)
+ 		return 0;
+ 
+ 	count = xcalloc(m->num_packs, sizeof(uint32_t));
++
++	if (flags & MIDX_PROGRESS)
++		progress = start_progress(_("Counting referenced objects"), 
++					  m->num_objects);
+ 	for (i = 0; i < m->num_objects; i++) {
+ 		int pack_int_id = nth_midxed_pack_int_id(m, i);
+ 		count[pack_int_id]++;
++		display_progress(progress, i + 1);
+ 	}
++	stop_progress(&progress);
+ 
++	if (flags & MIDX_PROGRESS)
++		progress = start_progress(_("Finding and deleting unreferenced packfiles"),
++					  m->num_packs);
+ 	for (i = 0; i < m->num_packs; i++) {
+ 		char *pack_name;
++		display_progress(progress, i + 1);
+ 
+ 		if (count[i])
+ 			continue;
+@@ -1234,6 +1245,7 @@ int expire_midx_packs(struct repository *r, const char *object_dir, unsigned fla
+ 		unlink_pack_path(pack_name, 0);
+ 		free(pack_name);
+ 	}
++	stop_progress(&progress);
+ 
+ 	free(count);
+ 
 -- 
 gitgitgadget
+
