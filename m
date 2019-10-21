@@ -8,104 +8,108 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A3A91F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 20:00:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3ADD71F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 20:00:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387403AbfJUUAE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 16:00:04 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:35430 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730104AbfJUUAD (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2387399AbfJUUAD (ORCPT <rfc822;e@80x24.org>);
         Mon, 21 Oct 2019 16:00:03 -0400
-Received: by mail-wm1-f65.google.com with SMTP id 14so7335659wmu.0
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 13:00:00 -0700 (PDT)
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:34682 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730065AbfJUUAD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 16:00:03 -0400
+Received: by mail-wr1-f49.google.com with SMTP id t16so10242727wrr.1
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 13:00:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ed7W/LZ04Y89yVcbfKU8idjFqRsxwHbWt1U3Y9+i0HA=;
-        b=lT4pUEhSKp1xbKEKIFkVIQpfRIovjfcUJ6VvmTjvFlZXbjIbbDxGnqRXg+QNwvK6EV
-         dsFu2RghI67LtKwBE1udw2K2rQrkoh2b/1hl7kgZkxKSVLm/tjA3UfdcWrmUqpclPNBL
-         o4oCMQXeFBfb0YYlWeYBPcR9f/rwnLz310DijTwGvA/eEkJdkf9CSHmeFALWoKbe5i2E
-         Iup591vbkub9WV9hSasoh2wEf+meZDLnlr+BX3WZia9gU7mnhoWaYBtOpGEv4yFQArvT
-         59AwecsJGidDDceASLdc/b72qX93ShJCvqpGSlI8z556qaFyGe2e50nUJnqyytorHQL4
-         tRnw==
+        bh=ia5vpcTDxayZTdmXb7CSMyaLiZeSCWzSncv+d1c/QWA=;
+        b=npXwzdHGluZ5m2WdpQWQZVEF6i3mz14qXuHmGYeb4KmsbDh9/rgvzhwHUUYCqzezkz
+         Spd2nYx/tw9GPl1ZpA9MiiADyaHkfzPiEnoKj2gfcoiu1kCaiV0CHywaLKqfLtYaHLMo
+         1yf7tispmvgj3aXzIRscLFYV7juvaws/7bHVuJEMPG9HgDIyISohK0ytVwzrLlE3UbR8
+         RB0jffYShrTNLvEmprXbJs+/PUn6pcBdaf7ULqXw6lc6CqZiF3sYkpwJCSSMwIIQ+/zV
+         fQcFWa7G+i4QIw3kA4XAqN7uD3fJ6vcDR+dkjTTY/DxiLYo1Mgq7DAyw5ZtXHBLo98bw
+         Deqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ed7W/LZ04Y89yVcbfKU8idjFqRsxwHbWt1U3Y9+i0HA=;
-        b=j3Xsp9wO0QR+MrbycxTNivbKTF+2HWCbGZ6HXbG4RIaKxTF5+dajzM+lwqkmNwp/Sl
-         m2Eap1w65e5GTeY3EssaEwYjw3teSBf3HdrTmCtMFUB7kmjcT7wQ26Gc7DbmUz0dHEW9
-         Y8ySTuPWQJhPfa1XcEV23immjBue8NO2t2+vOX5l/K/jzAqgbhv+td8IQfiiDjvL08Pe
-         LQfeuSgolWW9JYTjY9rAY+yPx/5pFjKEwKTLB4OfneVdRm7bzd1z+WgYeaU7oJDI8+71
-         P3VJavdKRlgXZ59ffUuenCOoDVWhgpqH9BA/3xrCiQxru/uLZcNkG435wzWZqueWV8/V
-         HvqQ==
-X-Gm-Message-State: APjAAAWYp/4ARqG63atqtXFXnjkOsfBXbbqOwHubULbhe2iim2OSv+J4
-        9eN4yUiSIwDn+3uaTOCChPw/6I+7
-X-Google-Smtp-Source: APXvYqyeT8R1t18Q+ex4p5gIQl72KyQXlrI0PPUDcPf3sk//IcIuIPs2Bj5zqGbjDJYe1qLdJ5hmFg==
-X-Received: by 2002:a7b:c413:: with SMTP id k19mr22227824wmi.175.1571687999997;
-        Mon, 21 Oct 2019 12:59:59 -0700 (PDT)
+        bh=ia5vpcTDxayZTdmXb7CSMyaLiZeSCWzSncv+d1c/QWA=;
+        b=OgTCHQBspjVdV8LxsrXDrYsQ/+vRHA5+3Fka/KhlwEW6J1z72MjqzPyfmap45plRlQ
+         c5pte5KGPNzGSvD9Fiz/H5pkv+WdZQEt7c9s9+BaThWkC1J4iHM+a1L/gght1Cmg6xgq
+         b22II8dj3iwqQ/zM8onTRzX7ApgKU5ZrnhQq7fopRLp8t4TC9z+iwySHb8M/9OVUpJFE
+         0ymoVzrZTaV0WVBN8B9MQMKaKO+ZCeCrtB45lO2ADtod4+vebry8SevyljWghZApUM0d
+         cXcK41rvHJCSO9zjYhvodmu7J8TNJ85lst3ZmiioH26DI1IHJOa03Kfi++jSdYsBKuj8
+         LMUg==
+X-Gm-Message-State: APjAAAXpkbTy6pX+019/pKXcOtVbGSQ9pbRFuPdkTt90BUfZ9BTD5nr8
+        PSHZwlDfSFsfBj0CL8hd/5pEsr7b
+X-Google-Smtp-Source: APXvYqwxDgaEPwEufW6snJQO1B3JiqAZYAq/2kzhhfyYcMSfbyUKgIGrgtJiUWFuQ9f9CI8DBxNXCg==
+X-Received: by 2002:adf:f40a:: with SMTP id g10mr44400wro.228.1571688001501;
+        Mon, 21 Oct 2019 13:00:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l6sm19228783wmg.2.2019.10.21.12.59.59
+        by smtp.gmail.com with ESMTPSA id h17sm17125026wme.6.2019.10.21.13.00.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Oct 2019 12:59:59 -0700 (PDT)
-Message-Id: <pull.410.v2.git.1571687999.gitgitgadget@gmail.com>
-In-Reply-To: <pull.410.git.1571603970.gitgitgadget@gmail.com>
+        Mon, 21 Oct 2019 13:00:01 -0700 (PDT)
+Message-Id: <07749ab720af05b3f666e325e9bc3c4c5d8196e5.1571687999.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.410.v2.git.1571687999.gitgitgadget@gmail.com>
 References: <pull.410.git.1571603970.gitgitgadget@gmail.com>
+        <pull.410.v2.git.1571687999.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Oct 2019 19:59:56 +0000
-Subject: [PATCH v2 0/2] Fix the speed of the CI (Visual Studio) tests
+Date:   Mon, 21 Oct 2019 19:59:58 +0000
+Subject: [PATCH v2 2/2] ci(visual-studio): actually run the tests in parallel
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I made a mistake when converting the make/prove-based test job to a 
-test-tool run-command testsuite one: I lost the parallelization, resulting
-in way slower CI runs.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Also, I forgot to build with DEVELOPER=1, i.e. with stricter compile flags.
+Originally, the CI/PR builds that build and test using Visual Studio
+were implemented imitating `linux-clang`, i.e. still using the
+`Makefile`-based build infrastructure.
 
-This pair of patches fixes both issues.
+Later (but still before the patches made their way into git.git's
+`master`), however, this was changed to generate Visual Studio project
+files and build the binaries using `MSBuild`, as this reflects more
+accurately how Visual Studio users would want to build Git (internally,
+Visual Studio uses `MSBuild`, or at least something very similar).
 
-Changes since v1:
+During that transition, we needed to implement a new way to run the test
+suite in parallel, as Visual Studio users typically will only have a Git
+Bash available (which does not ship with `make` nor with support for
+`prove`): we simply implemented a new test helper to run the test suite.
 
- * Fixed typo "nore" -> "nor" in the commit message.
+This helper even knows how to run the tests in parallel, but due to a
+mistake on this developer's part, it was never turned on in the CI/PR
+builds. This results in 2x-3x longer run times of the test phase.
 
-Johannes Schindelin (2):
-  ci(visual-studio): use strict compile flags, and optimization
-  ci(visual-studio): actually run the tests in parallel
+Let's use the `--jobs=10` option to fix this.
 
- azure-pipelines.yml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ azure-pipelines.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-base-commit: d966095db01190a2196e31195ea6fa0c722aa732
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-410%2Fdscho%2Faccelerate-ci-vs-test-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-410/dscho/accelerate-ci-vs-test-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/410
-
-Range-diff vs v1:
-
- 1:  6fba3b1c76 = 1:  6fba3b1c76 ci(visual-studio): use strict compile flags, and optimization
- 2:  e3343d1740 ! 2:  07749ab720 ci(visual-studio): actually run the tests in parallel
-     @@ -14,7 +14,7 @@
-      
-          During that transition, we needed to implement a new way to run the test
-          suite in parallel, as Visual Studio users typically will only have a Git
-     -    Bash available (which does not ship with `make` nore with support for
-     +    Bash available (which does not ship with `make` nor with support for
-          `prove`): we simply implemented a new test helper to run the test suite.
-      
-          This helper even knows how to run the tests in parallel, but due to a
-
+diff --git a/azure-pipelines.yml b/azure-pipelines.yml
+index 457c6fee31..af2a5ea484 100644
+--- a/azure-pipelines.yml
++++ b/azure-pipelines.yml
+@@ -255,7 +255,7 @@ jobs:
+ 
+         cd t &&
+         PATH=\"`$PWD/helper:`$PATH\" &&
+-        test-tool.exe run-command testsuite -V -x --write-junit-xml \
++        test-tool.exe run-command testsuite --jobs=10 -V -x --write-junit-xml \
+                 `$(test-tool.exe path-utils slice-tests \
+                         `$SYSTEM_JOBPOSITIONINPHASE `$SYSTEM_TOTALJOBSINPHASE t[0-9]*.sh)
+       "@
 -- 
 gitgitgadget
