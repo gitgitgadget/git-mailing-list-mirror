@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D20E41F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 13:56:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3BC21F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 13:56:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729197AbfJUN4d (ORCPT <rfc822;e@80x24.org>);
+        id S1729201AbfJUN4e (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 09:56:34 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45819 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729189AbfJUN4d (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 21 Oct 2019 09:56:33 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:37455 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729188AbfJUN4c (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 09:56:32 -0400
-Received: by mail-wm1-f66.google.com with SMTP id f22so12912550wmc.2
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 06:56:31 -0700 (PDT)
+Received: by mail-wr1-f66.google.com with SMTP id q13so9141484wrs.12
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 06:56:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+Dtd3kEyatD2qmW8hj5YNKVLqty3loyNp8hGKo37c+A=;
-        b=YERgy5PD0yPaxirKuYDNqvi/SHwBlx5Y/Cfn39U91wpFLFAssXsPo6Ellm+u191YRc
-         nvscjXeMY9kRxxvTA3z9wu6jxvaA33yebEcXBVC1COF1ejHcgGcH6ZmkIfic8SI+hmj6
-         Qgo8dyhVfftJcYLhiFdN364GnIuxsW+ucfkZsC5Lhqq704yxG3FVvnvKIFvEVgnJyjmG
-         3+ReDLJD4NmTsMby/rvu/T4jEjmqTbLTDrLciXRqQLOTsVMv1kgHS0gzrcuO/3p93PJq
-         AKsrEHz2ouKTROq14+oGuFWg8jkrbqGLRCd5+6FIckWV5mGkPJv5aDU/eJA45XTk6c4H
-         K0gw==
+        bh=/ZKw8/obR5Ihbs8rwzjjHOhiY4JwaEHKEy7Urcr0ub0=;
+        b=nI7wlu0tOUsHDSXZ0HcxjIroHu/pOXGD81cVeU3vZJe0IVKegp+1u+QUxNn/xcY08C
+         pXulam3QHpptIiBB39OC267a92veymUabpTC3V/QxLcB2TP41PD1a58LpOEokw6ORp7S
+         jsto5YF/LwZuKs2AMAesNgCYiyuhhR89kR97e7BAWZwRsW8JscLFC9gspvNZVao359pr
+         fFwYGPDFTtvVFxDCl22wRwAz8v610hkJ4KvKlvxm/0BdVZKBWq+6eed5RntE9xma6IZW
+         bFH6kQvkLc4VWrDEVyueDws67Kgv7LH6QOHCI5l9K48iQsv0402dTJ11tTlGNyoTA1gQ
+         rZhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+Dtd3kEyatD2qmW8hj5YNKVLqty3loyNp8hGKo37c+A=;
-        b=gLXQkrB624A4bCoL23nkxj8P2LtECVzdUCmo+reNFtmEsverk0dbZxF9qUsYpneNo0
-         Zd7TB7jYblLfR7S/FLBacswS7YIJnN7hlOa5S7VthO068GkpqN0RTlFIk1tZJ6iUBchw
-         i2b7Dc04Vtp/9eWC2LVSG4vDs4ASred6sZWl0H3GLMbXAJpcOZKnOTSGF77QDgVYdvGh
-         8sXoE6wGif4/oeotd8Gb0GJXAul7BcyWVNW1EGLy3xi8u9cDE69QuaF7mqnfw6l1p4pl
-         nA42u6nHJr3Vz4+iLTv8zSp2YwmyDpt0CI2HwDGlI+XNpuk04+xC9RcZmcDPqD/YP1Fq
-         uLZQ==
-X-Gm-Message-State: APjAAAWewnrvA+COqJrSLHTFYo+8H282/Gc2u0l+aPAhpoN6ft0PG89l
-        a66zD0GJAF7/QdWAXvWzt7A8si8X
-X-Google-Smtp-Source: APXvYqwaATFgIbw7UceScGMz49CUGDnBBJRcNUJ1DzS+XZYuLHwX+xVf8uIMbmalAfUTPy/ck49ILQ==
-X-Received: by 2002:a7b:cb0b:: with SMTP id u11mr135040wmj.125.1571666191146;
-        Mon, 21 Oct 2019 06:56:31 -0700 (PDT)
+        bh=/ZKw8/obR5Ihbs8rwzjjHOhiY4JwaEHKEy7Urcr0ub0=;
+        b=XZ5rye9NKt3f3XA0uYyqJyjxtGb/C8WHylpvb7LRVERdmLwzh4YDAwsLActr8eFOri
+         TnWv2gLFXFVRP3ifOeOnsSpCsibhnKlI9rN6L86GPfABbUZZBAjQ6ywZofEajubgn7pD
+         Arly5ek3mv3Af8pBA9W4I9E9G+9VK8BmdObXjdvMQca0JSiPD5B8iPqIARpfP/ETI6q7
+         immB9sBtheEFvr7UgWOtW1I4nMd9xO6xqwYER4MC+z9BMWXBYJKhKqcOp9oSjZ9nao36
+         eyoEzUC+ksND4Vj76Q5NUSfJMfG+Y1zUARBeVvRKin2LQXPxJ3NPls9JKim52nUHPzEb
+         u22w==
+X-Gm-Message-State: APjAAAXz6SYOoxZ9CbD/6DCDbQBjm4y4tgj0FBQLlsZd6abyK6ZNtCS+
+        nxpSFsw91cdoDQaaHMmRVG8VDzZ7
+X-Google-Smtp-Source: APXvYqxJn3Y+jAp6cJGeDh5LcNLzeZxqeRRqbYKugqGgOg99qHDi4L+NFeijssQAYF04I8n03vcKtw==
+X-Received: by 2002:a5d:6585:: with SMTP id q5mr19879289wru.74.1571666192124;
+        Mon, 21 Oct 2019 06:56:32 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b1sm7330874wru.83.2019.10.21.06.56.30
+        by smtp.gmail.com with ESMTPSA id q196sm10478742wme.23.2019.10.21.06.56.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Oct 2019 06:56:30 -0700 (PDT)
-Message-Id: <cd150853b7e4323c0a471d016800e614b3a62679.1571666186.git.gitgitgadget@gmail.com>
+        Mon, 21 Oct 2019 06:56:31 -0700 (PDT)
+Message-Id: <7d9d66a89f473244af3601e13caa713d929a202d.1571666186.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
 References: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
         <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Oct 2019 13:56:12 +0000
-Subject: [PATCH v5 03/17] clone: add --sparse mode
+Date:   Mon, 21 Oct 2019 13:56:13 +0000
+Subject: [PATCH v5 04/17] sparse-checkout: 'set' subcommand
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,165 +73,151 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When someone wants to clone a large repository, but plans to work
-using a sparse-checkout file, they either need to do a full
-checkout first and then reduce the patterns they included, or
-clone with --no-checkout, set up their patterns, and then run
-a checkout manually. This requires knowing a lot about the repo
-shape and how sparse-checkout works.
+The 'git sparse-checkout set' subcommand takes a list of patterns
+as arguments and writes them to the sparse-checkout file. Then, it
+updates the working directory using 'git read-tree -mu HEAD'.
 
-Add a new '--sparse' option to 'git clone' that initializes the
-sparse-checkout file to include the following patterns:
+The 'set' subcommand will replace the entire contents of the
+sparse-checkout file. The write_patterns_and_update() method is
+extracted from cmd_sparse_checkout() to make it easier to implement
+'add' and/or 'remove' subcommands in the future.
 
-	/*
-	!/*/
-
-These patterns include every file in the root directory, but
-no directories. This allows a repo to include files like a
-README or a bootstrapping script to grow enlistments from that
-point.
-
-During the 'git sparse-checkout init' call, we must first look
-to see if HEAD is valid, since 'git clone' does not have a valid
-HEAD at the point where it initializes the sparse-checkout. The
-following checkout within the clone command will create the HEAD
-ref and update the working directory correctly.
+If the core.sparseCheckout config setting is disabled, then enable
+the config setting in the worktree config. If we set the config
+this way and the sparse-checkout fails, then re-disable the config
+setting.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-clone.txt        |  8 +++++++-
- builtin/clone.c                    | 27 +++++++++++++++++++++++++++
- builtin/sparse-checkout.c          |  6 ++++++
- t/t1091-sparse-checkout-builtin.sh | 13 +++++++++++++
- 4 files changed, 53 insertions(+), 1 deletion(-)
+ Documentation/git-sparse-checkout.txt |  6 ++++
+ builtin/sparse-checkout.c             | 45 ++++++++++++++++++++++++++-
+ t/t1091-sparse-checkout-builtin.sh    | 32 +++++++++++++++++++
+ 3 files changed, 82 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 34011c2940..0fe91d2f04 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -15,7 +15,7 @@ SYNOPSIS
- 	  [--dissociate] [--separate-git-dir <git dir>]
- 	  [--depth <depth>] [--[no-]single-branch] [--no-tags]
- 	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
--	  [--[no-]remote-submodules] [--jobs <n>] [--] <repository>
-+	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--] <repository>
- 	  [<directory>]
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index 930a361567..b933043b3d 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -42,6 +42,12 @@ To avoid interfering with other worktrees, it first enables the
+ `extensions.worktreeConfig` setting and makes sure to set the
+ `core.sparseCheckout` setting in the worktree-specific config file.
  
- DESCRIPTION
-@@ -156,6 +156,12 @@ objects from the source repository into a pack in the cloned repository.
- 	used, neither remote-tracking branches nor the related
- 	configuration variables are created.
- 
-+--sparse::
-+	Initialize the sparse-checkout file so the working
-+	directory starts with only the files in the root
-+	of the repository. The sparse-checkout file can be
-+	modified to grow the working directory as needed.
++'set'::
++	Write a set of patterns to the sparse-checkout file, as given as
++	a list of arguments following the 'set' subcommand. Update the
++	working directory to match the new patterns. Enable the
++	core.sparseCheckout config setting if it is not already enabled.
 +
- --mirror::
- 	Set up a mirror of the source repository.  This implies `--bare`.
- 	Compared to `--bare`, `--mirror` not only maps local branches of the
-diff --git a/builtin/clone.c b/builtin/clone.c
-index c46ee29f0a..4348d962c9 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -59,6 +59,7 @@ static const char *real_git_dir;
- static char *option_upload_pack = "git-upload-pack";
- static int option_verbosity;
- static int option_progress = -1;
-+static int option_sparse_checkout;
- static enum transport_family family;
- static struct string_list option_config = STRING_LIST_INIT_NODUP;
- static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
-@@ -146,6 +147,8 @@ static struct option builtin_clone_options[] = {
- 	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
- 	OPT_BOOL(0, "remote-submodules", &option_remote_submodules,
- 		    N_("any cloned submodules will use their remote-tracking branch")),
-+	OPT_BOOL(0, "sparse", &option_sparse_checkout,
-+		    N_("initialize sparse-checkout file to include only files at root")),
- 	OPT_END()
+ SPARSE CHECKOUT
+ ---------------
+ 
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 6c336b7ab3..834ee421f0 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -8,7 +8,7 @@
+ #include "strbuf.h"
+ 
+ static char const * const builtin_sparse_checkout_usage[] = {
+-	N_("git sparse-checkout (init|list)"),
++	N_("git sparse-checkout (init|list|set) <options>"),
+ 	NULL
  };
  
-@@ -733,6 +736,27 @@ static void update_head(const struct ref *our, const struct ref *remote,
- 	}
+@@ -140,6 +140,47 @@ static int sparse_checkout_init(int argc, const char **argv)
+ 	return update_working_directory();
  }
  
-+static int git_sparse_checkout_init(const char *repo)
++static int write_patterns_and_update(struct pattern_list *pl)
 +{
-+	struct argv_array argv = ARGV_ARRAY_INIT;
-+	int result = 0;
-+	argv_array_pushl(&argv, "-C", repo, "sparse-checkout", "init", NULL);
++	char *sparse_filename;
++	FILE *fp;
 +
-+	/*
-+	 * We must apply the setting in the current process
-+	 * for the later checkout to use the sparse-checkout file.
-+	 */
-+	core_apply_sparse_checkout = 1;
++	sparse_filename = get_sparse_checkout_filename();
++	fp = fopen(sparse_filename, "w");
++	write_patterns_to_file(fp, pl);
++	fclose(fp);
++	free(sparse_filename);
 +
-+	if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
-+		error(_("failed to initialize sparse-checkout"));
-+		result = 1;
++	return update_working_directory();
++}
++
++static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
++{
++	static const char *empty_base = "";
++	int i;
++	struct pattern_list pl;
++	int result;
++	int set_config = 0;
++	memset(&pl, 0, sizeof(pl));
++
++	for (i = 1; i < argc; i++)
++		add_pattern(argv[i], empty_base, 0, &pl, 0);
++
++	if (!core_apply_sparse_checkout) {
++		sc_set_config(MODE_ALL_PATTERNS);
++		core_apply_sparse_checkout = 1;
++		set_config = 1;
 +	}
 +
-+	argv_array_clear(&argv);
++	result = write_patterns_and_update(&pl);
++
++	if (result && set_config)
++		sc_set_config(MODE_NO_PATTERNS);
++
++	clear_pattern_list(&pl);
 +	return result;
 +}
 +
- static int checkout(int submodule_progress)
+ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
  {
- 	struct object_id oid;
-@@ -1106,6 +1130,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	if (option_required_reference.nr || option_optional_reference.nr)
- 		setup_reference();
+ 	static struct option builtin_sparse_checkout_options[] = {
+@@ -162,6 +203,8 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
+ 			return sparse_checkout_list(argc, argv);
+ 		if (!strcmp(argv[0], "init"))
+ 			return sparse_checkout_init(argc, argv);
++		if (!strcmp(argv[0], "set"))
++			return sparse_checkout_set(argc, argv, prefix);
+ 	}
  
-+	if (option_sparse_checkout && git_sparse_checkout_init(repo))
-+		return 1;
-+
- 	remote = remote_get(option_origin);
- 
- 	strbuf_addf(&default_refspec, "+%s*:%s*", src_ref_prefix,
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 77aa52ca01..6c336b7ab3 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -109,6 +109,7 @@ static int sparse_checkout_init(int argc, const char **argv)
- 	char *sparse_filename;
- 	FILE *fp;
- 	int res;
-+	struct object_id oid;
- 
- 	if (sc_set_config(MODE_ALL_PATTERNS))
- 		return 1;
-@@ -130,6 +131,11 @@ static int sparse_checkout_init(int argc, const char **argv)
- 	fprintf(fp, "/*\n!/*/\n");
- 	fclose(fp);
- 
-+	if (get_oid("HEAD", &oid)) {
-+		/* assume we are in a fresh repo */
-+		return 0;
-+	}
-+
- reset_dir:
- 	return update_working_directory();
- }
+ 	usage_with_options(builtin_sparse_checkout_usage,
 diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index cd56cc384b..cb74715ca6 100755
+index cb74715ca6..bf2dc55bb1 100755
 --- a/t/t1091-sparse-checkout-builtin.sh
 +++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -83,4 +83,17 @@ test_expect_success 'init with existing sparse-checkout' '
+@@ -96,4 +96,36 @@ test_expect_success 'clone --sparse' '
  	test_cmp expect dir
  '
  
-+test_expect_success 'clone --sparse' '
-+	git clone --sparse repo clone &&
-+	git -C clone sparse-checkout list >actual &&
++test_expect_success 'set enables config' '
++	git init empty-config &&
++	(
++		cd empty-config &&
++		test_commit test file &&
++		test_path_is_missing .git/config.worktree &&
++		test_must_fail git sparse-checkout set nothing &&
++		test_i18ngrep "sparseCheckout = false" .git/config.worktree &&
++		git sparse-checkout set "/*" &&
++		test_i18ngrep "sparseCheckout = true" .git/config.worktree
++	)
++'
++
++test_expect_success 'set sparse-checkout using builtin' '
++	git -C repo sparse-checkout set "/*" "!/*/" "*folder*" &&
 +	cat >expect <<-EOF &&
 +		/*
 +		!/*/
++		*folder*
 +	EOF
++	git -C repo sparse-checkout list >actual &&
 +	test_cmp expect actual &&
-+	ls clone >dir &&
-+	echo a >expect &&
++	test_cmp expect repo/.git/info/sparse-checkout &&
++	ls repo >dir  &&
++	cat >expect <<-EOF &&
++		a
++		folder1
++		folder2
++	EOF
 +	test_cmp expect dir
 +'
 +
