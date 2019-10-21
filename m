@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91FAD1F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 18:40:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E72631F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 18:40:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729994AbfJUSkK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 14:40:10 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:34015 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729461AbfJUSkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1730014AbfJUSkM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 14:40:12 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:55284 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729270AbfJUSkJ (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 21 Oct 2019 14:40:09 -0400
-Received: by mail-wr1-f66.google.com with SMTP id t16so10024544wrr.1
+Received: by mail-wm1-f68.google.com with SMTP id p7so14496279wmp.4
         for <git@vger.kernel.org>; Mon, 21 Oct 2019 11:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=WUpeJMgyy8fKbeOw6Sq7AaWXprsMCft/2VGzHfaDTDE=;
-        b=QLmUA4vlp1avtnR2BnvptDxpoObyW9o77qqDQt6aJ2jt5GzWldiaQkzi9Dmbk8AK4h
-         8jc7E7usETTSUqKo2MLWu3cNqesUkc427urtAE3Mp+fCAov2QqUP9e+NPRGbs7X5NasX
-         wcTDtCed4YO2z2XWh8tYGzqOfT453qXn88W269s49AknxDC4+IB3lpfsScKUTtDGJI8f
-         LrlfoLKK4X19Uf1droM7iQ28yXPQn7ePvLyHVr1bcw6KadhOUSQWoepJn5DRT7HurxWt
-         CEK6bjjC5OcCDYcfhTGeKNUCXDaa2mas36zrwK8f83QrVfVpPiOuOlN+AKHKYZhgFQm7
-         XdSQ==
+        bh=s2N3OnQLzGbRCdiLvra04EcslzOwFrgjzXd+WEP7hX0=;
+        b=G2nizgGkmcFvRlK3qljIjQeEhL68cr/AUiPckn+DFexxNXGH80Z71rLcYOQLFFLrLR
+         q3PxLI4KGTX+urYmZR+cLVMqjvOPqjO7nEdafjZM0EJSmZSEkGefD4ynQ9SENfa0YUDM
+         p87icBMqj8E3gEXzcbKiVJdDmkzThvpieNRpHERv90TU6cGcWw3gQl9OG4sKe2gUy2q4
+         6qCwQeaiA8fuC7UOzsokFX0EgVOBj6NAcLutQJbmzb5yQg2JTiKarlIe1Iz4nZ3x5ONa
+         ZkS/Pyhb1kRJ5XKwGv+keEZRQEWtnqz7IhaGraRT+EzmLJG4usyc+gb4RRayn41CLtyb
+         G6gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WUpeJMgyy8fKbeOw6Sq7AaWXprsMCft/2VGzHfaDTDE=;
-        b=nk/WkoKncVoKN7c+Ik1JZ9gb2n4fnIxVsTwYp19UNGlFiy6xeLQrBRCf1MZRDTQ4yt
-         CSvgsBfLdHfguonMy7vgfd9iiavOQt1JYOtaIAVYI4lfXjkqK0MgmujYzl5m46jIP7hr
-         s8ulBqhKtlv7e4xqn1N7nas8ETcLzRJPyJI/m1CND0k1q3vAS3LQN6W1azjoZhT/9kFq
-         mIyiMHw+ckitwxhrBcHMb0HjQ7ee3q+puWzy7IOqe16E5HRJO8TdZv3itS6W9b6M7Aa6
-         LM+JhntKgG2ap/r7deVRAcGPP5zgaIXvhNPUIsNl+1dQRzf7YbpWAIlXAIJjBWMhf5gd
-         4C8g==
-X-Gm-Message-State: APjAAAXQU7EtMaTL9PwkIZ0XsedPgJVtVakrYbhz0WJ2FVGJAkGwyee2
-        ZDT/xroKnAnWDe0otmE23GtPzyu2
-X-Google-Smtp-Source: APXvYqxuNpM+U53+qRKlQhvgkw8dV3Ze+wXM3OMh7fm892LQeuiyefSsA6NR7+HGJ8hUk6hYjYyUCg==
-X-Received: by 2002:adf:bad3:: with SMTP id w19mr23052344wrg.17.1571683208037;
-        Mon, 21 Oct 2019 11:40:08 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b196sm8161324wmd.24.2019.10.21.11.40.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=s2N3OnQLzGbRCdiLvra04EcslzOwFrgjzXd+WEP7hX0=;
+        b=U/hBKF5AKg4vFPqiREiSWiiSJzOwh6jjGyyPE+FiLSJOm0eaNSMK203twnbLlqW0uv
+         KnrakdYFJV6Ltkc7UhC6V/qqAJY5sTAcWNuxd98DDXqlZ6Dn2xPBKEDM1bP6tMjGPEQS
+         /lxq4qplKp42xT4Tffidv9fHP/KSeQWeR+7EMg6n8V0ExehPCFqzw7YCoioWQnZDWi42
+         8AVBxB3EgzFx9KLbKJboVjp1G5d0ZRAsHjfPkgQg822wsjBQwJs99IXJpK0rS6iuej5z
+         pXfU7koO0JpQq5yuvk6Unc/FFxRL9krNPN7UVNztxe7GjadcGdf2v5Eb6aV2BUiGdtBN
+         sfxA==
+X-Gm-Message-State: APjAAAXtdtPzdnNv4mMs0FULtRfcX5xv6fKFpBkvZO7TGPn6ydDL5R78
+        RSaW/3gJfcpBiTaHhE/Y8fgZjs7f
+X-Google-Smtp-Source: APXvYqwQhcIuUfA9MVT+8q+o4UnH3gm+c+Oc2Ctl4f6cy3fb87B0fGRBX8qW6crSab7Z4loSqU1/zw==
+X-Received: by 2002:a05:600c:2291:: with SMTP id 17mr19016859wmf.171.1571683207393;
         Mon, 21 Oct 2019 11:40:07 -0700 (PDT)
-Message-Id: <d6ae4e1c54b50d33571ce0529da43ba1d41a630e.1571683203.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t16sm15554088wrq.52.2019.10.21.11.40.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Oct 2019 11:40:06 -0700 (PDT)
+Message-Id: <3468acf39ad402826878136f3c3ba7ab076ec0c3.1571683203.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.337.v4.git.1571683203.gitgitgadget@gmail.com>
 References: <pull.337.v3.git.gitgitgadget@gmail.com>
         <pull.337.v4.git.1571683203.gitgitgadget@gmail.com>
 From:   "William Baker via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Oct 2019 18:40:02 +0000
-Subject: [PATCH v4 5/6] midx: honor the MIDX_PROGRESS flag in midx_repack
+Date:   Mon, 21 Oct 2019 18:40:01 +0000
+Subject: [PATCH v4 4/6] midx: honor the MIDX_PROGRESS flag in verify_midx_file
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,31 +72,69 @@ X-Mailing-List: git@vger.kernel.org
 
 From: William Baker <William.Baker@microsoft.com>
 
-Update midx_repack to only display progress when
+Update verify_midx_file to only display progress when
 the MIDX_PROGRESS flag is set.
 
 Signed-off-by: William Baker <William.Baker@microsoft.com>
 ---
- midx.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ midx.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
 diff --git a/midx.c b/midx.c
-index 35bdc5f72c..b5f7f1c54a 100644
+index 7157259ca2..35bdc5f72c 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -1373,6 +1373,12 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 	strbuf_addstr(&base_name, object_dir);
- 	strbuf_addstr(&base_name, "/pack/pack");
- 	argv_array_push(&cmd.args, base_name.buf);
-+
-+	if (flags & MIDX_PROGRESS)
-+		argv_array_push(&cmd.args, "--progress");
-+	else
-+		argv_array_push(&cmd.args, "-q");
-+
- 	strbuf_release(&base_name);
+@@ -1097,15 +1097,16 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
+ {
+ 	struct pair_pos_vs_id *pairs = NULL;
+ 	uint32_t i;
+-	struct progress *progress;
++	struct progress *progress = NULL;
+ 	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
+ 	verify_midx_error = 0;
  
- 	cmd.git_cmd = 1;
+ 	if (!m)
+ 		return 0;
+ 
+-	progress = start_progress(_("Looking for referenced packfiles"),
+-				  m->num_packs);
++	if (flags & MIDX_PROGRESS)
++		progress = start_progress(_("Looking for referenced packfiles"),
++				 	  m->num_packs);
+ 	for (i = 0; i < m->num_packs; i++) {
+ 		if (prepare_midx_pack(r, m, i))
+ 			midx_report("failed to load pack in position %d", i);
+@@ -1123,8 +1124,9 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
+ 				    i, oid_fanout1, oid_fanout2, i + 1);
+ 	}
+ 
+-	progress = start_sparse_progress(_("Verifying OID order in MIDX"),
+-					 m->num_objects - 1);
++	if (flags & MIDX_PROGRESS)
++		progress = start_sparse_progress(_("Verifying OID order in multi-pack-index"),
++						 m->num_objects - 1);
+ 	for (i = 0; i < m->num_objects - 1; i++) {
+ 		struct object_id oid1, oid2;
+ 
+@@ -1151,13 +1153,15 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
+ 		pairs[i].pack_int_id = nth_midxed_pack_int_id(m, i);
+ 	}
+ 
+-	progress = start_sparse_progress(_("Sorting objects by packfile"),
+-					 m->num_objects);
++	if (flags & MIDX_PROGRESS)
++		progress = start_sparse_progress(_("Sorting objects by packfile"),
++						 m->num_objects);
+ 	display_progress(progress, 0); /* TODO: Measure QSORT() progress */
+ 	QSORT(pairs, m->num_objects, compare_pair_pos_vs_id);
+ 	stop_progress(&progress);
+ 
+-	progress = start_sparse_progress(_("Verifying object offsets"), m->num_objects);
++	if (flags & MIDX_PROGRESS)
++		progress = start_sparse_progress(_("Verifying object offsets"), m->num_objects);
+ 	for (i = 0; i < m->num_objects; i++) {
+ 		struct object_id oid;
+ 		struct pack_entry e;
 -- 
 gitgitgadget
 
