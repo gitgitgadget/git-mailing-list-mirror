@@ -2,105 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 133541F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 12:10:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A6CE1F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 12:23:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728276AbfJUMKo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 08:10:44 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:46400 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728134AbfJUMKn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 08:10:43 -0400
-Received: by mail-qk1-f196.google.com with SMTP id e66so12298652qkf.13
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 05:10:43 -0700 (PDT)
+        id S1728401AbfJUMX3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 08:23:29 -0400
+Received: from mail-oi1-f175.google.com ([209.85.167.175]:39159 "EHLO
+        mail-oi1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727322AbfJUMX3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 08:23:29 -0400
+Received: by mail-oi1-f175.google.com with SMTP id w144so10841116oia.6
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 05:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=AZg9PA4+WXYBM8hDv9ZvTkuGQ6MkNVyi1oOAwtIOnQY=;
-        b=AwvDfWK/jugO72VvR3q2Cw69qvNfNSFH3EBZdVeddKiD58P+M51/B82CvTIOPCYedu
-         4LhcICDoDx19ENV5Tu14mgy8AGjNhhlu8T3yqqtSxCk8TKq8zPAvVypGvPzOtxe7azds
-         gtU3w8QdXPjWuGnFswKL62AWonMyImDYaDn2uKtfRvmXXPzux8ttfHfWFLGfb7DXXyyH
-         R/W1SPymkfyzuidoUzdQIGw16HrppURzxZ4FSQ33LeHewewJ3BXx1RHZstSBTkCfBLG1
-         nW1CE41jW25d8Ur8gVy6TmQ3tw/o7idvq2cmw74hsk9fleGZFM/Q2Yfq7snFAeq426q0
-         SIzA==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ubjVEnolkCaa1dbxHy9H3Ej2x5fvCojYAXxFzCtMrFg=;
+        b=efArYJadMYmgsd5P5ReFH/jx4Z7JfM2OtZHdtflrVRKP4qFLWxkHt2SPSaKKrFalGw
+         XPbsC1P2I8W7NtKFifpEocEFzUdTYA56o0Fcrhf9xTi4FFDrQtf97S4Wh2hziPI1Tidg
+         8uFFZE5UFhus6AyHMtyMu+C7ucbOCe7MnIuW9qwDnMKc4QpHXUoCIOdvRLIkKqgcO081
+         CKFCSQqVmLdbhI79Y/gTWXFbfi6RPkW267Ztu6Jt4LpqWw22YPbtJ1G+kFPyZWDi0p95
+         7z/RruS/cohffcYvcAWcne6WRAf276vOQTNDNgYOStcXz2MRhrNiTfvyduPcqd0r6Moj
+         E2jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=AZg9PA4+WXYBM8hDv9ZvTkuGQ6MkNVyi1oOAwtIOnQY=;
-        b=XUgYtmCy4/oGjMF7j6PNmWg5I2XV2ZOj1FC9RTroA8S2WU86V0WBbmuTwkQUgyKznh
-         PnNzGHsoIODyiITGYMhnB1bedVbs0Komm1obskLDfRO3R/fXQij/GxgcbzY/GMdjCRXF
-         4Wl9BgnFFyBS2Mpyzn9UUUrEt0221om5Df4+DudClgDVguxPLIa77HPw6bt/DCgN4xXK
-         sk6Ulwc1PXSjX6q3ZT2OX6zLYglT7TzFNRCAFFmO+ApKGlWcf2ZdvuhG54YrbgdDX+OW
-         OWYl0r+2+T6k7KeUgUxBT9fKZ22fWdZmHDUQnNI5/M87gl4PDY/hSJyiSHFs8uH63b9m
-         gKIg==
-X-Gm-Message-State: APjAAAXVXgVFhcjVFePtzGf5ec9Ot+WV7B2wO6j2JSyb1+q/CPvPPirP
-        1yL86p606+WjxG5jMq9yM9w4TBdCibs=
-X-Google-Smtp-Source: APXvYqy4/6PIUpmhD9P6Jh4lTABgWzKiOxE+KkxTBPzFwg3Cv3KIF3zbOM50q3uzeSs3keIri2u9og==
-X-Received: by 2002:a05:620a:1123:: with SMTP id p3mr20964479qkk.6.1571659842699;
-        Mon, 21 Oct 2019 05:10:42 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:4018:ebea:d287:d7b3? ([2001:4898:a800:1010:f14d:ebea:d287:d7b3])
-        by smtp.gmail.com with ESMTPSA id a9sm7983639qkb.94.2019.10.21.05.10.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Oct 2019 05:10:41 -0700 (PDT)
-Subject: Re: [PATCH v4 01/17] sparse-checkout: create builtin with 'list'
- subcommand
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.316.v3.git.gitgitgadget@gmail.com>
- <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
- <63626e109767c268ee81b50abd21b95b1f1b5bfb.1571147765.git.gitgitgadget@gmail.com>
- <CABPp-BEryfaeYhuUsiDTaYdRKpK6GRi7hgZ5XSTVkoHVkx2qQA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <01f02ca8-00a6-6b48-1cc5-345547c2d5e4@gmail.com>
-Date:   Mon, 21 Oct 2019 08:10:41 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        bh=ubjVEnolkCaa1dbxHy9H3Ej2x5fvCojYAXxFzCtMrFg=;
+        b=lhszpyFPeu20Xi2iI2VTTi8a1Jr8GVELHCc1ZMDjVCKDr2CGex53D0ul+9r1+9aFER
+         2hLJOM8PJ4Vg6/k0Sgu2dLve2/Ii90gfdQDexAXO/F4gD37Ev7s2XVe5CS3WWSj6gnFA
+         4GBX6mYr427IcxmN7c54P6ZLjSCWTvCbsazVih9R+9rsQevGNR/oNH3P2pbq7W8Qe0Am
+         WJTTk3DV7m9rC4tRVzczyoDfofPqhaeyKabiU6QiOopEM9SA1vFz2CgPFXZ+jzqRQ04M
+         6lexVebht7JcskD0OsK7oA0ogpA2zBFAMsafN0RloiHfYe/3LOFfHxX9QnhcZRXy9dxU
+         CdmA==
+X-Gm-Message-State: APjAAAW4zKGc/tXsPLhRgvdNUdxn17IlLndWWNhBMl9yQNeq9lzWlfR4
+        vvkQUIc8f9MDS0ZRDvJX0pdTIkIe
+X-Google-Smtp-Source: APXvYqwXShLfnMEXnGcgTEDV8bYt2FKUxEIhD5gr7BISHIRw5ppqIT6enGpWBDXtCTI5EHAQMJfg9Q==
+X-Received: by 2002:aca:6701:: with SMTP id z1mr14775517oix.64.1571660608448;
+        Mon, 21 Oct 2019 05:23:28 -0700 (PDT)
+Received: from localhost.localdomain ([205.204.117.25])
+        by smtp.gmail.com with ESMTPSA id s1sm4028995otd.49.2019.10.21.05.23.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Oct 2019 05:23:27 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+X-Google-Original-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+To:     Git List <git@vger.kernel.org>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.24.0 round #1
+Date:   Mon, 21 Oct 2019 20:23:16 +0800
+Message-Id: <20191021122316.56219-1-zhiyou.jx@alibaba-inc.com>
+X-Mailer: git-send-email 2.23.0.3.g72fac68ab1.dirty
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BEryfaeYhuUsiDTaYdRKpK6GRi7hgZ5XSTVkoHVkx2qQA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/16/2019 3:00 PM, Elijah Newren wrote:
-> On Tue, Oct 15, 2019 at 6:56 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> +DESCRIPTION
->> +-----------
->> +
->> +Initialize and modify the sparse-checkout configuration, which reduces
->> +the checkout to a set of directories given by a list of prefixes.
->> +
->> +THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-> 
-> I think the wording needs to be a bit more detailed; you copied the
-> wording from git-switch.txt, but usage of git-switch is not expected
-> to modify the behavior of other commands.  sparse-checkout, by
-> contrast, is designed to affect other commands: at the very least
-> checkout & switch, and likely will affect grep, diff, log, and a host
-> of others.  Perhaps something like:
-> 
-> THIS COMMAND IS EXPERIMENTAL.  ITS BEHAVIOR, AND THE BEHAVIOR OF OTHER
-> COMMANDS IN THE PRESENCE OF SPARSE-CHECKOUTS, WILL LIKELY CHANGE IN
-> THE FUTURE.
+From: Jiang Xin <worldhello.net@gmail.com>
 
-Thanks. I was taking your comment to mean "this builtin is experimental"
-but what you really mean is "the sparse-checkout feature is (still)
-experimental".
+Hi,
 
--Stolee
+Git v2.24.0-rc0 has been released, and it's time to start new round of git l10n.
+This time there are 35 updated messages need to be translated since last update:
+
+    l10n: git.pot: v2.24.0 round 1 (35 new, 16 removed)
+    
+    Generate po/git.pot from v2.24.0-rc0 for git v2.24.0 l10n round 1.
+    
+    Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+
+You can get it from the usual place:
+
+    https://github.com/git-l10n/git-po/
+
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in "po/README" file.
+
+--
+Jiang Xin
