@@ -8,472 +8,237 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5CCB1F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 18:56:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE35E1F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 19:01:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728543AbfJUS4g (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 14:56:36 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59259 "EHLO mout.gmx.net"
+        id S1730026AbfJUTBR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 15:01:17 -0400
+Received: from mout.gmx.net ([212.227.17.20]:46345 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727767AbfJUS4f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 14:56:35 -0400
+        id S1729918AbfJUTBR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 15:01:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1571684185;
-        bh=BhXRP7fKIlni6RHnPmRRcOKlfw8RAt6t/jR1ZGjq3T8=;
+        s=badeba3b8450; t=1571684469;
+        bh=xQqqmcZnzVZGaggKd/yhh9kJ+JL1gvHE67IrnVuF9kU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dwbnnydeEgLfzfL21OvhSGNHIOCsnG4bygd8dJi3TWzoqtT+qyYvvharcd/za+4l3
-         5RTyB/BqXYmgKcHwSbnZHTl96zYpGDIGqf/04vMMbQOGIrqNet7Zu1ez0Py3kis9e0
-         sWaVvyM3efTg8i804wFAtlvVd2cHP5OeDI/WDwkE=
+        b=Fq+E+xhcmtUjCEzsBThFOmvHXroMz8BsFtio2eOm0caz36LAt0O+O1G591Bz3jQGL
+         GdIIft7Umgcdgwk6KvTeMt+VkxN38R0Jbpl0GXzQXpw/lenUqBIBP3IDUoE5cUsF9z
+         IOJzLK3W6YXqc03K8Y9m42b2KB7VVSPayxxr6v2U=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDQeK-1iDEfX1GSc-00AYqy; Mon, 21
- Oct 2019 20:56:25 +0200
-Date:   Mon, 21 Oct 2019 20:56:10 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MsYqp-1i2ltW1wSZ-00u4eb; Mon, 21
+ Oct 2019 21:01:09 +0200
+Date:   Mon, 21 Oct 2019 21:00:54 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     phillip.wood@dunelm.org.uk
-cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
+To:     Denton Liu <liu.denton@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
         Alban Gruin <alban.gruin@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 4/7] autostash: extract reset_head() from rebase
-In-Reply-To: <ab064a01-eed3-f90b-df47-1f372a063e30@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910212055280.46@tvgsbejvaqbjf.bet>
-References: <cover.1571246693.git.liu.denton@gmail.com> <5e0dcd7cbeb3481beef04f1d145474739f8bdea3.1571246693.git.liu.denton@gmail.com> <ab064a01-eed3-f90b-df47-1f372a063e30@gmail.com>
+Subject: Re: [RFC PATCH 5/7] autostash: extract perform_autostash() from
+ rebase
+In-Reply-To: <0518b0b187245e807987457cd558a1ab38476c5c.1571246693.git.liu.denton@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910212057460.46@tvgsbejvaqbjf.bet>
+References: <cover.1571246693.git.liu.denton@gmail.com> <0518b0b187245e807987457cd558a1ab38476c5c.1571246693.git.liu.denton@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QUV7EsYYMNYu6xKmCKfE7WUCwBqNycYW09qdKZPGIe2qmUC16WP
- P9hgd8n/lYNIGXxU85QLuspeZ28kxJMHYiP8P0vO6gOvBbZs3g8bhj9vyA2/U5IBk574bB+
- 7p6OE08jA5i2nWsU95QSzEry5zDrbziDpdKmpPtD1tlf5RW6rgALsEyV+NpXDZwIOWXK6qZ
- qFB99lPubvkkwEw2h6cpA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:j1TiIUR4Jlk=:OoGaxl0q8Vgy3vLM3uUC9S
- RH0ZZYRDUjDFyDag3fdeq8wn99+yfhwQqp8+++p8BtvwJfCMUnytaabHx5Ca0VNMFD2f01hts
- fcbNMBNt2MIxXwTcrOfLAgV3GiMLQrdWz+8HOYXvJadUD9xL3Bed6a0QHgMFFEu1FiBepqQT7
- 0aFULtVsrbgH0kzvTsnvy9h0zjLh8s+UgFs6zhlgXcjW/hqGjhjn0bv+JWl9OOpAnKnkiGDHG
- aOmQkSBiQ2/iQ3xUejUk8xXxc3p5J7SWKxQD7nM8Q8/2VqB19g/O62HvXOk9isfax0JscDqzN
- qSp27MXWJaQbXUjYgsdREjB7xuS1qVhH0N4ffHYBsgyw/s3DvnkXEBuG4LlGQk3x3h6y5rIFg
- NyZi4pCRv40Zgl+d78ynm27UoxPTnc1doCaniLnvSFrq876yv+vSO5kLqtqOQowRDFh88piDj
- 00cSvuPjKI7QLeKlsTFU3RsDUi3LOKMkRBCUxqADqpda3IsK5E/usM/E4zY6UINMavaSZ2jO4
- va7vsVF1bAYPxkENnwDkBADsbAA+omwgMeZZLoX3muwELTSUSGC9I72/gxbFDMqi9pXd30g/X
- EnOteo9JG1btCaSzmgpQfrGDWT/ia4r4L0yG2IQap7sZfL4Fm8j9PLiuslq5jIpyxbV+9n7+V
- k6eFG0Ml3mnvm/I92RekpNzBYQ9pskFwT0mUNQ3ph49xsMVPGHKt4WKq1H2jiBmAlxzbAb0vt
- YMn5ZIeANkksqcPt9e9Xf/unqfZv42V+nzVW+3sgJPdHIf60XUHFr4w8wHTR00ua9XP1o25ve
- H0X0Hpdd9II8ehqlKzwXHLdIvvuyK64w3Vxf1xPvPJnjG7ghptjHaGdYWAlozmcomlxu0IzOn
- Cl79IS8in+l18lcwV6JJFUskp7XxgD5nM19UnZ8KyYQUNeUrdjGfpEJ/Gh3eZuEslLin0cROP
- n4SE1x32XWdWrI6bYyh1AhNohdRuyuDUuxpDusbeNZ1Pf15kJO1TMaDm03W+iSjvnRE/Qphaf
- Xg9LYtg9A5oBNK0wzd8H6edkrV/b+PEkLKVIpKnQXB4qJ0EVOWvkDRGRu7iFEBe8rFc/3Lpad
- DIPscRKLo9hzjrhlR7tIaryq1hqS7COnFCb5siv2T7GTvXR0Gmvbr/DPaFbidRN5JnI6g+/6S
- X3DSGv0a4tmnnp6B+GShPiSQSb2MDrWjBlydAwIhw6qNJSYexd8foEWQe8qM9RqLnVsxOFpHv
- S9wHL7ajPHaEPysOF1ctFyGn8pwcFulcKVvJTe9T/JgnVldlb3Gmms7h1/rE=
+X-Provags-ID: V03:K1:MPdNXNy8OFY7z8X3mYlSPH6ICvTI7tDb0x5voz3Jk3VRAT44qbp
+ XN9s42T1fegkJDD1KnMm2Xb7OKG8Nk5cNVPKR2cFvZV8ooFH5gjDXYq2K0Orvdun3cj8aZI
+ 5dJNr4ws086WXUHaWYLQg4+U00V8ep1K7gurPF4wFOJhjf6Yd/AaYuSW9tK4OrJbuHdH+X1
+ ng1g8JZ11fW03AT6wzaig==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OvCAi60QfHs=:oBa3+snJOMkl2C4ikmB1/v
+ aPv1/6hMrnEILg5UwcKZTJdWG0r406xviEUORyRL+gdpceptC6Ltv0SwlX5z6eG8xMYFJEA5E
+ hmLd+Wskl2vacQW5VUKOb4ZTr0BF8X33/lEqz4y8VY20JBuo22T27/0qXdefxwSVMycy7lgGz
+ tGCU9q0Py1Pbtv7bTnJb6ZW2NRX/MbjRkwLUgPrK1it6DFx1Xajw9tZQbIbnbGL+nEhvKLjfK
+ 2U/Bk4s+4fQNtpevBMS7I8UBoBdX2oJkxbygtp4twNzZIYOLXtNjC8lLV2p+xHIKaKSfZO8Wm
+ Dd4cfUBYX+CXRdLCysiMcN2ubkiBf7CQpuX1YHZN5LoSA5htCkDYwIbD94Obf0+oRjuNJT83A
+ d9vRHzwdksXLZRHLALMIQAXHvOh40ny45gq6SWg/iO7uj5jNisVBOUKzfmneKdOsaavsqgj19
+ QF4ykUz2BDZCYnEr4r+imy5vatu3rPSKEjdmsuFPfoy4ZAMj/JT9Sp+boEZ2DvI5zSDRZxgJF
+ 3pWkr1QYv3zegP1DKAGfyEVmYaL1bUbeJnHYcF4u1dV02uiHkJ592GX0+6GJLCtm2NLpOO//m
+ 9h78ZzfCYRpucA1X0ua83OgtKPFIFqHVq0YsuS1dP3woOKs48VLbHO23mxhn1HIVxwMgvyGwH
+ Y11O6RBIe3RLY1P45uY+NfSUXQf1KCCNEvvlwsvHtPa4EZQaJYYh7Vu4FdcY1YsPiUA4kcKP1
+ y1eKs3nD5JEHIrd2lu2ONTHYk55dpK83eFH9SIj9jRhjj3I+8Euut+mv+8IlOH+WgUmwjoEQY
+ 6NH9LAP62sfZwvi31Sfz5TY5f1s9oyLqtCHo/PygIn+32iubp0IqOWPIe/qDaR0nLE5Tgar3X
+ ohx9mfDFLpJqBVM1ejgyZEZzCteJWD9OopgyxKUiiCW1jPmmIAA5BPzrrwNKlwpvrqy25mXfc
+ DO3JntexWsnTZoK0loOdQT0BnxbQ0b7t87q8ukq7nUt1JYxTGci/8mxLgQAtsfAkOHMbaspP4
+ Tye6pLCrlSnwS9omu9UbxL2I4prUEnJgZATa/jmwr7l7rshq1sNH2JmA9wDA2FAh9PsgRX7ib
+ ATJvR8f14KQDR/MjNQ1HjcSI2h+tataF/rB6Hh7zJ1GSwmVRoqV6yho+KILq9ZdEKHJ6Xbemx
+ acbclr+EiEF7Gnoz9846GbpLVvVvg0ow8ICXN5MJt083cEZ9NkRv+ipcOUMZRDv9Rpj/uyTlG
+ e/RPtMbmcV9d//xIAGci2SiUCXebhGIWGA5NX1GfAUaKpEVkYrjiYxPvQ+w0=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Denton,
 
-[sorry, Phillip, my reply-all fu deserts me today, apparently.]
+On Wed, 16 Oct 2019, Denton Liu wrote:
 
-
-On Fri, 18 Oct 2019, Phillip Wood wrote:
-
-> Hi Denton
+> Continue the process of lib-ifying the autostash code. In a future
+> commit, this will be used to implement `--autostash` in other builtins.
 >
-> It's great to see this being libified, I've had it in mind to do this so=
- we
-> can avoid forking 'git checkout' in sequencer.c
+> This patch is best viewed with `--color-moved` and
+> `--color-moved-ws=3Dallow-indentation-change`.
 >
-> On 16/10/2019 18:26, Denton Liu wrote:
-> > Begin the process of lib-ifying the autostash code. In a future commit=
-,
-> >
-> > This patch is best viewed with `--color-moved` and
-> > `--color-moved-ws=3Dallow-indentation-change`.
-> > this will be used to implement `--autostash` in other builtins.
-> >
-> > Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> > ---
-> >   autostash.c      | 137 +++++++++++++++++++++++++++++++++++++++++++++=
-++
-> >   autostash.h      |  12 +++++
-> >   builtin/rebase.c | 137 ---------------------------------------------=
---
-> >   3 files changed, 149 insertions(+), 137 deletions(-)
-> >
-> > diff --git a/autostash.c b/autostash.c
-> > index 62ec7a7c80..eb58e0c8a4 100644
-> > --- a/autostash.c
-> > +++ b/autostash.c
-> > @@ -1,9 +1,17 @@
-> > +#define USE_THE_INDEX_COMPATIBILITY_MACROS
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  autostash.c      | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+>  autostash.h      |  1 +
+>  builtin/rebase.c | 44 +-------------------------------------------
+>  3 files changed, 48 insertions(+), 43 deletions(-)
 >
-> It might be nicer to have a preparatory step that fixes this by adding a
-> 'struct repository *r' argument to the function in builtin/rebase.c befo=
-re
-> moving the function. You could also do the same for next patch and then =
-move
-> both functions together.
+> diff --git a/autostash.c b/autostash.c
+> index eb58e0c8a4..722cf78b12 100644
+> --- a/autostash.c
+> +++ b/autostash.c
+> @@ -12,6 +12,7 @@
+>  #include "tree-walk.h"
+>  #include "tree.h"
+>  #include "unpack-trees.h"
+> +#include "wt-status.h"
+>
+>  int read_one(const char *path, struct strbuf *buf)
+>  {
+> @@ -150,6 +151,51 @@ int reset_head(struct object_id *oid, const char *a=
+ction,
+>  	return ret;
+>  }
+>
+> +void perform_autostash(const char *path)
 
-In addition to that, I think that `reset_head()`
+Maybe we can find a better name than "perform_autostash"? It is not
+clear whether this is the "saving" or "applying" part of the autostash,
+I think.
 
-- should live in its own file, not be hidden in `autostash.c`,
+Maybe `save_autostash()`? And maybe instead of `path`, the parameter
+could be `save_hash_to_path` or something similar?
 
-- its default reflog action should _not_ be "rebase".
+Now that I think of it, I forgot to mention in a reply to an earlier
+patch in this series that `reset_head()` might be too generic a name to
+be a global function...
 
-- ideally be made the working horse of `builtin/reset.c`,
-
-- in addition to that `struct repository *r`, it should probably accept
-  a `struct index_state *index` and a `const char *worktree_directory`,
-  but that can easily come in the future, as needed.
-
-Thanks,
+Ciao,
 Dscho
 
-
+> +{
+> +	struct strbuf buf =3D STRBUF_INIT;
+> +	struct lock_file lock_file =3D LOCK_INIT;
+> +	int fd;
+> +
+> +	fd =3D hold_locked_index(&lock_file, 0);
+> +	refresh_cache(REFRESH_QUIET);
+> +	if (0 <=3D fd)
+> +		repo_update_index_if_able(the_repository, &lock_file);
+> +	rollback_lock_file(&lock_file);
+> +
+> +	if (has_unstaged_changes(the_repository, 1) ||
+> +	    has_uncommitted_changes(the_repository, 1)) {
+> +		struct child_process stash =3D CHILD_PROCESS_INIT;
+> +		struct object_id oid;
+> +
+> +		argv_array_pushl(&stash.args,
+> +				 "stash", "create", "autostash", NULL);
+> +		stash.git_cmd =3D 1;
+> +		stash.no_stdin =3D 1;
+> +		if (capture_command(&stash, &buf, GIT_MAX_HEXSZ))
+> +			die(_("Cannot autostash"));
+> +		strbuf_trim_trailing_newline(&buf);
+> +		if (get_oid(buf.buf, &oid))
+> +			die(_("Unexpected stash response: '%s'"),
+> +			    buf.buf);
+> +		strbuf_reset(&buf);
+> +		strbuf_add_unique_abbrev(&buf, &oid, DEFAULT_ABBREV);
+> +
+> +		if (safe_create_leading_directories_const(path))
+> +			die(_("Could not create directory for '%s'"),
+> +			    path);
+> +		write_file(path, "%s", oid_to_hex(&oid));
+> +		printf(_("Created autostash: %s\n"), buf.buf);
+> +		if (reset_head(NULL, "reset --hard",
+> +			       NULL, RESET_HEAD_HARD, NULL, NULL) < 0)
+> +			die(_("could not reset --hard"));
+> +
+> +		if (discard_index(the_repository->index) < 0 ||
+> +			repo_read_index(the_repository) < 0)
+> +			die(_("could not read index"));
+> +	}
+> +}
+> +
+>  int apply_autostash(const char *path)
+>  {
+>  	struct strbuf autostash =3D STRBUF_INIT;
+> diff --git a/autostash.h b/autostash.h
+> index 1406638166..e08ccb9881 100644
+> --- a/autostash.h
+> +++ b/autostash.h
+> @@ -18,6 +18,7 @@ int reset_head(struct object_id *oid, const char *acti=
+on,
+>  	       const char *switch_to_branch, unsigned flags,
+>  	       const char *reflog_orig_head, const char *reflog_head);
 >
-> Best Wishes
+> +void perform_autostash(const char *path);
+>  int apply_autostash(const char *path);
 >
-> Phillip
+>  #endif
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index c3165896cc..c4decdfb5b 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1797,49 +1797,7 @@ int cmd_rebase(int argc, const char **argv, const=
+ char *prefix)
+>  		die(_("could not read index"));
 >
-> > +
-> >   #include "git-compat-util.h"
-> >   #include "autostash.h"
-> > +#include "cache-tree.h"
-> >   #include "dir.h"
-> >   #include "gettext.h"
-> > +#include "lockfile.h"
-> > +#include "refs.h"
-> >   #include "run-command.h"
-> >   #include "strbuf.h"
-> > +#include "tree-walk.h"
-> > +#include "tree.h"
-> > +#include "unpack-trees.h"
-> >
-> >   int read_one(const char *path, struct strbuf *buf)
-> >   {
-> > @@ -13,6 +21,135 @@ int read_one(const char *path, struct strbuf *buf)
-> >   	return 0;
-> >   }
-> >
-> > +int reset_head(struct object_id *oid, const char *action,
-> > +	       const char *switch_to_branch, unsigned flags,
-> > +	       const char *reflog_orig_head, const char *reflog_head)
-> > +{
-> > +	unsigned detach_head =3D flags & RESET_HEAD_DETACH;
-> > +	unsigned reset_hard =3D flags & RESET_HEAD_HARD;
-> > +	unsigned run_hook =3D flags & RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
-> > +	unsigned refs_only =3D flags & RESET_HEAD_REFS_ONLY;
-> > +	unsigned update_orig_head =3D flags & RESET_ORIG_HEAD;
-> > +	struct object_id head_oid;
-> > +	struct tree_desc desc[2] =3D { { NULL }, { NULL } };
-> > +	struct lock_file lock =3D LOCK_INIT;
-> > +	struct unpack_trees_options unpack_tree_opts;
-> > +	struct tree *tree;
-> > +	const char *reflog_action;
-> > +	struct strbuf msg =3D STRBUF_INIT;
-> > +	size_t prefix_len;
-> > +	struct object_id *orig =3D NULL, oid_orig,
-> > +		*old_orig =3D NULL, oid_old_orig;
-> > +	int ret =3D 0, nr =3D 0;
-> > +
-> > +	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
-> > +		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
-> > +
-> > +	if (!refs_only && hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0=
-)
-> > {
-> > +		ret =3D -1;
-> > +		goto leave_reset_head;
-> > +	}
-> > +
-> > +	if ((!oid || !reset_hard) && get_oid("HEAD", &head_oid)) {
-> > +		ret =3D error(_("could not determine HEAD revision"));
-> > +		goto leave_reset_head;
-> > +	}
-> > +
-> > +	if (!oid)
-> > +		oid =3D &head_oid;
-> > +
-> > +	if (refs_only)
-> > +		goto reset_head_refs;
-> > +
-> > +	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
-> > +	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
-> > +	unpack_tree_opts.head_idx =3D 1;
-> > +	unpack_tree_opts.src_index =3D the_repository->index;
-> > +	unpack_tree_opts.dst_index =3D the_repository->index;
-> > +	unpack_tree_opts.fn =3D reset_hard ? oneway_merge : twoway_merge;
-> > +	unpack_tree_opts.update =3D 1;
-> > +	unpack_tree_opts.merge =3D 1;
-> > +	if (!detach_head)
-> > +		unpack_tree_opts.reset =3D 1;
-> > +
-> > +	if (repo_read_index_unmerged(the_repository) < 0) {
-> > +		ret =3D error(_("could not read index"));
-> > +		goto leave_reset_head;
-> > +	}
-> > +
-> > +	if (!reset_hard && !fill_tree_descriptor(the_repository, &desc[nr++]=
-,
-> > &head_oid)) {
-> > +		ret =3D error(_("failed to find tree of %s"),
-> > +			    oid_to_hex(&head_oid));
-> > +		goto leave_reset_head;
-> > +	}
-> > +
-> > +	if (!fill_tree_descriptor(the_repository, &desc[nr++], oid)) {
-> > +		ret =3D error(_("failed to find tree of %s"), oid_to_hex(oid));
-> > +		goto leave_reset_head;
-> > +	}
-> > +
-> > +	if (unpack_trees(nr, desc, &unpack_tree_opts)) {
-> > +		ret =3D -1;
-> > +		goto leave_reset_head;
-> > +	}
-> > +
-> > +	tree =3D parse_tree_indirect(oid);
-> > +	prime_cache_tree(the_repository, the_repository->index, tree);
-> > +
-> > +	if (write_locked_index(the_repository->index, &lock, COMMIT_LOCK) < =
-0)
-> > {
-> > +		ret =3D error(_("could not write index"));
-> > +		goto leave_reset_head;
-> > +	}
-> > +
-> > +reset_head_refs:
-> > +	reflog_action =3D getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
-> > +	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : "rebase");
-> > +	prefix_len =3D msg.len;
-> > +
-> > +	if (update_orig_head) {
-> > +		if (!get_oid("ORIG_HEAD", &oid_old_orig))
-> > +			old_orig =3D &oid_old_orig;
-> > +		if (!get_oid("HEAD", &oid_orig)) {
-> > +			orig =3D &oid_orig;
-> > +			if (!reflog_orig_head) {
-> > +				strbuf_addstr(&msg, "updating ORIG_HEAD");
-> > +				reflog_orig_head =3D msg.buf;
-> > +			}
-> > +			update_ref(reflog_orig_head, "ORIG_HEAD", orig,
-> > +				   old_orig, 0, UPDATE_REFS_MSG_ON_ERR);
-> > +		} else if (old_orig)
-> > +			delete_ref(NULL, "ORIG_HEAD", old_orig, 0);
-> > +	}
-> > +
-> > +	if (!reflog_head) {
-> > +		strbuf_setlen(&msg, prefix_len);
-> > +		strbuf_addstr(&msg, "updating HEAD");
-> > +		reflog_head =3D msg.buf;
-> > +	}
-> > +	if (!switch_to_branch)
-> > +		ret =3D update_ref(reflog_head, "HEAD", oid, orig,
-> > +				 detach_head ? REF_NO_DEREF : 0,
-> > +				 UPDATE_REFS_MSG_ON_ERR);
-> > +	else {
-> > +		ret =3D update_ref(reflog_head, switch_to_branch, oid,
-> > +				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
-> > +		if (!ret)
-> > +			ret =3D create_symref("HEAD", switch_to_branch,
-> > +					    reflog_head);
-> > +	}
-> > +	if (run_hook)
-> > +		run_hook_le(NULL, "post-checkout",
-> > +			    oid_to_hex(orig ? orig : &null_oid),
-> > +			    oid_to_hex(oid), "1", NULL);
-> > +
-> > +leave_reset_head:
-> > +	strbuf_release(&msg);
-> > +	rollback_lock_file(&lock);
-> > +	while (nr)
-> > +		free((void *)desc[--nr].buffer);
-> > +	return ret;
-> > +}
-> > +
-> >   int apply_autostash(const char *path)
-> >   {
-> >   	struct strbuf autostash =3D STRBUF_INIT;
-> > diff --git a/autostash.h b/autostash.h
-> > index 5f4e4bd22c..1406638166 100644
-> > --- a/autostash.h
-> > +++ b/autostash.h
-> > @@ -6,6 +6,18 @@
-> >   /* Read one file, then strip line endings */
-> >   int read_one(const char *path, struct strbuf *buf);
-> >
-> > +#define GIT_REFLOG_ACTION_ENVIRONMENT "GIT_REFLOG_ACTION"
-> > +
-> > +#define RESET_HEAD_DETACH (1<<0)
-> > +#define RESET_HEAD_HARD (1<<1)
-> > +#define RESET_HEAD_RUN_POST_CHECKOUT_HOOK (1<<2)
-> > +#define RESET_HEAD_REFS_ONLY (1<<3)
-> > +#define RESET_ORIG_HEAD (1<<4)
-> > +
-> > +int reset_head(struct object_id *oid, const char *action,
-> > +	       const char *switch_to_branch, unsigned flags,
-> > +	       const char *reflog_orig_head, const char *reflog_head);
-> > +
-> >   int apply_autostash(const char *path);
-> >
-> >   #endif
-> > diff --git a/builtin/rebase.c b/builtin/rebase.c
-> > index 661928d427..c3165896cc 100644
-> > --- a/builtin/rebase.c
-> > +++ b/builtin/rebase.c
-> > @@ -734,143 +734,6 @@ static void add_var(struct strbuf *buf, const ch=
-ar
-> > *name, const char *value)
-> >   	}
-> >   }
-> >
-> > -#define GIT_REFLOG_ACTION_ENVIRONMENT "GIT_REFLOG_ACTION"
-> > -
-> > -#define RESET_HEAD_DETACH (1<<0)
-> > -#define RESET_HEAD_HARD (1<<1)
-> > -#define RESET_HEAD_RUN_POST_CHECKOUT_HOOK (1<<2)
-> > -#define RESET_HEAD_REFS_ONLY (1<<3)
-> > -#define RESET_ORIG_HEAD (1<<4)
-> > -
-> > -static int reset_head(struct object_id *oid, const char *action,
-> > -		      const char *switch_to_branch, unsigned flags,
-> > -		      const char *reflog_orig_head, const char *reflog_head)
-> > -{
-> > -	unsigned detach_head =3D flags & RESET_HEAD_DETACH;
-> > -	unsigned reset_hard =3D flags & RESET_HEAD_HARD;
-> > -	unsigned run_hook =3D flags & RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
-> > -	unsigned refs_only =3D flags & RESET_HEAD_REFS_ONLY;
-> > -	unsigned update_orig_head =3D flags & RESET_ORIG_HEAD;
-> > -	struct object_id head_oid;
-> > -	struct tree_desc desc[2] =3D { { NULL }, { NULL } };
-> > -	struct lock_file lock =3D LOCK_INIT;
-> > -	struct unpack_trees_options unpack_tree_opts;
-> > -	struct tree *tree;
-> > -	const char *reflog_action;
-> > -	struct strbuf msg =3D STRBUF_INIT;
-> > -	size_t prefix_len;
-> > -	struct object_id *orig =3D NULL, oid_orig,
-> > -		*old_orig =3D NULL, oid_old_orig;
-> > -	int ret =3D 0, nr =3D 0;
-> > -
-> > -	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
-> > -		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
-> > -
-> > -	if (!refs_only && hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0=
-)
-> > {
-> > -		ret =3D -1;
-> > -		goto leave_reset_head;
-> > -	}
-> > -
-> > -	if ((!oid || !reset_hard) && get_oid("HEAD", &head_oid)) {
-> > -		ret =3D error(_("could not determine HEAD revision"));
-> > -		goto leave_reset_head;
-> > -	}
-> > -
-> > -	if (!oid)
-> > -		oid =3D &head_oid;
-> > -
-> > -	if (refs_only)
-> > -		goto reset_head_refs;
-> > -
-> > -	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
-> > -	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
-> > -	unpack_tree_opts.head_idx =3D 1;
-> > -	unpack_tree_opts.src_index =3D the_repository->index;
-> > -	unpack_tree_opts.dst_index =3D the_repository->index;
-> > -	unpack_tree_opts.fn =3D reset_hard ? oneway_merge : twoway_merge;
-> > -	unpack_tree_opts.update =3D 1;
-> > -	unpack_tree_opts.merge =3D 1;
-> > -	if (!detach_head)
-> > -		unpack_tree_opts.reset =3D 1;
-> > -
-> > -	if (repo_read_index_unmerged(the_repository) < 0) {
-> > -		ret =3D error(_("could not read index"));
-> > -		goto leave_reset_head;
-> > -	}
-> > -
-> > -	if (!reset_hard && !fill_tree_descriptor(the_repository, &desc[nr++]=
-,
-> > &head_oid)) {
-> > -		ret =3D error(_("failed to find tree of %s"),
-> > -			    oid_to_hex(&head_oid));
-> > -		goto leave_reset_head;
-> > -	}
-> > -
-> > -	if (!fill_tree_descriptor(the_repository, &desc[nr++], oid)) {
-> > -		ret =3D error(_("failed to find tree of %s"), oid_to_hex(oid));
-> > -		goto leave_reset_head;
-> > -	}
-> > -
-> > -	if (unpack_trees(nr, desc, &unpack_tree_opts)) {
-> > -		ret =3D -1;
-> > -		goto leave_reset_head;
-> > -	}
-> > -
-> > -	tree =3D parse_tree_indirect(oid);
-> > -	prime_cache_tree(the_repository, the_repository->index, tree);
-> > -
-> > -	if (write_locked_index(the_repository->index, &lock, COMMIT_LOCK) < =
-0)
-> > {
-> > -		ret =3D error(_("could not write index"));
-> > -		goto leave_reset_head;
-> > -	}
-> > -
-> > -reset_head_refs:
-> > -	reflog_action =3D getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
-> > -	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : "rebase");
-> > -	prefix_len =3D msg.len;
-> > -
-> > -	if (update_orig_head) {
-> > -		if (!get_oid("ORIG_HEAD", &oid_old_orig))
-> > -			old_orig =3D &oid_old_orig;
-> > -		if (!get_oid("HEAD", &oid_orig)) {
-> > -			orig =3D &oid_orig;
-> > -			if (!reflog_orig_head) {
-> > -				strbuf_addstr(&msg, "updating ORIG_HEAD");
-> > -				reflog_orig_head =3D msg.buf;
-> > -			}
-> > -			update_ref(reflog_orig_head, "ORIG_HEAD", orig,
-> > -				   old_orig, 0, UPDATE_REFS_MSG_ON_ERR);
-> > -		} else if (old_orig)
-> > -			delete_ref(NULL, "ORIG_HEAD", old_orig, 0);
-> > -	}
-> > -
-> > -	if (!reflog_head) {
-> > -		strbuf_setlen(&msg, prefix_len);
-> > -		strbuf_addstr(&msg, "updating HEAD");
-> > -		reflog_head =3D msg.buf;
-> > -	}
-> > -	if (!switch_to_branch)
-> > -		ret =3D update_ref(reflog_head, "HEAD", oid, orig,
-> > -				 detach_head ? REF_NO_DEREF : 0,
-> > -				 UPDATE_REFS_MSG_ON_ERR);
-> > -	else {
-> > -		ret =3D update_ref(reflog_head, switch_to_branch, oid,
-> > -				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
-> > -		if (!ret)
-> > -			ret =3D create_symref("HEAD", switch_to_branch,
-> > -					    reflog_head);
-> > -	}
-> > -	if (run_hook)
-> > -		run_hook_le(NULL, "post-checkout",
-> > -			    oid_to_hex(orig ? orig : &null_oid),
-> > -			    oid_to_hex(oid), "1", NULL);
-> > -
-> > -leave_reset_head:
-> > -	strbuf_release(&msg);
-> > -	rollback_lock_file(&lock);
-> > -	while (nr)
-> > -		free((void *)desc[--nr].buffer);
-> > -	return ret;
-> > -}
-> > -
-> >   static int move_to_original_branch(struct rebase_options *opts)
-> >   {
-> >    struct strbuf orig_head_reflog =3D STRBUF_INIT, head_reflog =3D STR=
-BUF_INIT;
-> >
+>  	if (options.autostash) {
+> -		struct lock_file lock_file =3D LOCK_INIT;
+> -		int fd;
+> -
+> -		fd =3D hold_locked_index(&lock_file, 0);
+> -		refresh_cache(REFRESH_QUIET);
+> -		if (0 <=3D fd)
+> -			repo_update_index_if_able(the_repository, &lock_file);
+> -		rollback_lock_file(&lock_file);
+> -
+> -		if (has_unstaged_changes(the_repository, 1) ||
+> -		    has_uncommitted_changes(the_repository, 1)) {
+> -			const char *autostash =3D
+> -				state_dir_path("autostash", &options);
+> -			struct child_process stash =3D CHILD_PROCESS_INIT;
+> -			struct object_id oid;
+> -
+> -			argv_array_pushl(&stash.args,
+> -					 "stash", "create", "autostash", NULL);
+> -			stash.git_cmd =3D 1;
+> -			stash.no_stdin =3D 1;
+> -			strbuf_reset(&buf);
+> -			if (capture_command(&stash, &buf, GIT_MAX_HEXSZ))
+> -				die(_("Cannot autostash"));
+> -			strbuf_trim_trailing_newline(&buf);
+> -			if (get_oid(buf.buf, &oid))
+> -				die(_("Unexpected stash response: '%s'"),
+> -				    buf.buf);
+> -			strbuf_reset(&buf);
+> -			strbuf_add_unique_abbrev(&buf, &oid, DEFAULT_ABBREV);
+> -
+> -			if (safe_create_leading_directories_const(autostash))
+> -				die(_("Could not create directory for '%s'"),
+> -				    options.state_dir);
+> -			write_file(autostash, "%s", oid_to_hex(&oid));
+> -			printf(_("Created autostash: %s\n"), buf.buf);
+> -			if (reset_head(NULL, "reset --hard",
+> -				       NULL, RESET_HEAD_HARD, NULL, NULL) < 0)
+> -				die(_("could not reset --hard"));
+> -
+> -			if (discard_index(the_repository->index) < 0 ||
+> -				repo_read_index(the_repository) < 0)
+> -				die(_("could not read index"));
+> -		}
+> +		perform_autostash(state_dir_path("autostash", &options));
+>  	}
+>
+>  	if (require_clean_work_tree(the_repository, "rebase",
+> --
+> 2.23.0.897.g0a19638b1e
+>
 >
