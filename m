@@ -2,109 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E91491F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 20:57:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC8731F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 21:54:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730273AbfJUU5J (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 16:57:09 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:44891 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727264AbfJUU5I (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 16:57:08 -0400
-Received: by mail-wr1-f68.google.com with SMTP id z9so15515373wrl.11
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 13:57:07 -0700 (PDT)
+        id S1730402AbfJUVyr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 17:54:47 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35105 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730368AbfJUVyq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 17:54:46 -0400
+Received: by mail-wr1-f65.google.com with SMTP id l10so15239420wrb.2
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 14:54:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=7kEFRYpTe/jcTdR4R6UfrSHTlVTb0zjnLbv/simF0e8=;
-        b=vYPf9VucpuVlNcN7ZCEizMCx04R5LsGnfZr2Wy2XxSM6ipbCfwtQc75JSkvKFUrXbe
-         5kyX5l3HYQGIoC7BG+Z7LKi0sHQbTlPQdf3rLHZZme4NRaeGecshz1b4m9jkVCi+su2z
-         PfA3Oio/PPtokFXnHvDdMZMMqW+olyZ77b6PXSrd5VL3yRoM4niwQYcR0xIbv1JL1FL+
-         K7ApgHdHWlIZSdaO4pejJUh2ea9bgiy0B5gHuMgjc+NSR7khL3NzNHG1vTeIquj6frn2
-         lCxSbkWiZTqfQyRAyiTS+DpnlyEBfhfC166XdPz2zBQrtD8H3+ZomTMpJvLdjAq7XoU0
-         1WsA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Z6O0LxUrJwYuVGjxRR7DUhT/1ZDDCrOsg+uVNxrCuxk=;
+        b=ZjCH1BvxVr6vqqzoBh1WNPRZbONN4P6swxMg+4Oo2XfBWkjsGKGg14fHMqxSN09Lnh
+         IqwQ3XFDnnIgz4+BpXZm+iMPoJjOX/CkAfjFlvIBR38fHNI6m4beDGeAziZBb1nK9jiR
+         yzwFJOKvAk1d5GJUqIogejfeXbRiHluKboiUEUDTr9WZcFkfyV9A3E43Hnn+yZ4kwn9g
+         E/frcku0bP4HUJS4GHgqKXX2NS7rOeqbyCutZDYKoh2fQRRMX/9GCp1e17vz/WOgG0Ko
+         c+pS5oE9eR7yxMZOOPWTL25iLiN6/9JTf68pMw9IL6W65Hja07bgPNtOFUrU/whnY9Se
+         uJ/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=7kEFRYpTe/jcTdR4R6UfrSHTlVTb0zjnLbv/simF0e8=;
-        b=uBhp6GSqVPtFqgfMVZCEGRH/rEX1FwchFGxKFjCAGKUWUM0sMMR4FxU1kT3afsWp86
-         R4s7bwCyZa1+S8g8zszV7ojdhLpYNC3g0863orA8OEIWhfBkixhxNfwcBfQYzBkIcADF
-         eP9ObFi9miGDCt1hcT5kwpQxUiqi/D8IPk6eEllkRO2ifwD8bQky3jF5rfihMmB+CoYJ
-         l3tShz6WAFkJsHxog6iG2SjYSOeHcowx9VTflas65dSLcK5b83mRhi1gG6lCVm1AgjM0
-         vUy+7GYiz5Nk2opYQDxr000i7GPEcJbPURBf3LO9dRIej5OmPSv8aicHC3tT74DLYv2p
-         L3Cw==
-X-Gm-Message-State: APjAAAVJ/uOYrPnRpyI0ydGtemS1tfiivbUEB/gdy41PPBUVFO7bE+gb
-        JqjqQR1fL2ZkkfJnC3NqQeI=
-X-Google-Smtp-Source: APXvYqziOkihPp0pxAcoPAEJNHEjzUDNhWkuO73z3ZfTl7oraq8ZMTmWqLSQSMYc++yeglAQjEBpKw==
-X-Received: by 2002:a5d:6cc3:: with SMTP id c3mr201035wrc.202.1571691426754;
-        Mon, 21 Oct 2019 13:57:06 -0700 (PDT)
-Received: from szeder.dev (x4db66cac.dyn.telefonica.de. [77.182.108.172])
-        by smtp.gmail.com with ESMTPSA id 65sm9104358wrs.9.2019.10.21.13.57.05
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Z6O0LxUrJwYuVGjxRR7DUhT/1ZDDCrOsg+uVNxrCuxk=;
+        b=VtLXqv2sjGikJu/0Vhm+yo9nrkqaofjLP/R2g18rT1LKztKlUksepcts6BoFiG7DSu
+         sghLKCoaz90UsOzf//RKHXlVzCxbzkP2EwpcHOQDx4royH+Z0hvN9TyXfarCRzetR0YK
+         H5E8OCO2plgT+mUMTEXYycGXkyTIsq0zACHeLWEld51htJ9+7QZgh9sy1k6o5d4tw5gA
+         pM52bPRu36udvqxgQTEX/wGXT8zNOBxsFDr9qt+n9hqTFUtnMAdsRk0Vn+VDs5KrQ/N7
+         ojc99DsQnE1pjsH7njc8ebaBOA93rdN2xpZNWsPMgHO+ak+XE77lTRptLZZKAuRWiCgI
+         TyeA==
+X-Gm-Message-State: APjAAAXT72L/i3dYaxnfGUKVuhMgbpYGv1eyPRJrmQMVGltfp/gdNxNv
+        M2cHipyluqMoLWYW7/W1T+LFiK1A
+X-Google-Smtp-Source: APXvYqw98LGN7HDAdEq8muz7tJUl11alfRaG0OUV3LR2VKOYX8Cw2eoGbmpX/3AjMnl54c62wrQAEg==
+X-Received: by 2002:adf:e903:: with SMTP id f3mr362235wrm.121.1571694884671;
+        Mon, 21 Oct 2019 14:54:44 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s21sm17470204wrb.31.2019.10.21.14.54.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Oct 2019 13:57:05 -0700 (PDT)
-Date:   Mon, 21 Oct 2019 22:57:03 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     David Turner <novalis@novalis.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 5/5] path.c: don't call the match function without value
- in trie_find()
-Message-ID: <20191021205703.GB4348@szeder.dev>
-References: <20191021160043.701-1-szeder.dev@gmail.com>
- <20191021160043.701-6-szeder.dev@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        Mon, 21 Oct 2019 14:54:44 -0700 (PDT)
+Message-Id: <cf97c5182eb98cc0ae72f94d4331abcb4486ca83.1571694882.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.401.v3.git.1571694882.gitgitgadget@gmail.com>
+References: <pull.401.v2.git.1571350077.gitgitgadget@gmail.com>
+        <pull.401.v3.git.1571694882.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 21 Oct 2019 21:54:41 +0000
+Subject: [PATCH v3 1/2] t1400: wrap setup code in test case
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191021160043.701-6-szeder.dev@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 06:00:43PM +0200, SZEDER Gábor wrote:
-> 'logs/refs' is not a working tree-specific path, but since commit
-> b9317d55a3 (Make sure refs/rewritten/ is per-worktree, 2019-03-07)
-> 'git rev-parse --git-path' has been returning a bogus path if a
-> trailing '/' is present:
-> 
->   $ git -C WT/ rev-parse --git-path logs/refs --git-path logs/refs/
->   /home/szeder/src/git/.git/logs/refs
->   /home/szeder/src/git/.git/worktrees/WT/logs/refs/
-> 
-> We use a trie data structure to efficiently decide whether a path
-> belongs to the common dir or is working tree-specific.  As it happens
-> b9317d55a3 triggered a bug that is as old as the trie implementation
-> itself, added in 4e09cf2acf (path: optimize common dir checking,
-> 2015-08-31).
-> 
->   - According to the comment describing trie_find(), it should only
->     call the given match function 'fn' for a "/-or-\0-terminated
->     prefix of the key for which the trie contains a value".  This is
->     not true: there are three places where trie_find() calls the match
->     function, but one of them is missing the check for value's
->     existence.
-> 
->   - b9317d55a3 added two new keys to the trie: 'logs/refs/rewritten'
->     and 'logs/refs/worktree', next to the already existing
->     'logs/refs/bisect'.  This resulted in a trie node with the path
->     'logs/refs', which didn't exist before, and which doesn't have a
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Oops, I missed the trailing slash, that must be 'logs/refs/'!
+Without this, you cannot use `--run=<...>` to skip that part, and a run
+with `--run=0` (which is a common way to determine the test case number
+corresponding to a given test case title).
 
->     value attached.  A query for 'logs/refs/' finds this node and then
->     hits that one callsite of the match function which doesn't check
->     for the value's existence, and thus invokes the match function
->     with NULL as value.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t1400-update-ref.sh | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 1fbd940408..69a7f27311 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -344,14 +344,16 @@ test_expect_success "verifying $m's log (logged by config)" '
+ 	test_cmp expect .git/logs/$m
+ '
+ 
+-git update-ref $m $D
+-cat >.git/logs/$m <<EOF
+-$Z $C $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 -0500
+-$C $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150350 -0500
+-$A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 -0500
+-$F $Z $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150680 -0500
+-$Z $E $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 -0500
+-EOF
++test_expect_success 'set up for querying the reflog' '
++	git update-ref $m $D &&
++	cat >.git/logs/$m <<-EOF
++	$Z $C $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 -0500
++	$C $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150350 -0500
++	$A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 -0500
++	$F $Z $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150680 -0500
++	$Z $E $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 -0500
++	EOF
++'
+ 
+ ed="Thu, 26 May 2005 18:32:00 -0500"
+ gd="Thu, 26 May 2005 18:33:00 -0500"
+-- 
+gitgitgadget
+
