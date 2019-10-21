@@ -2,116 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 697901F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 18:35:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C44571F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 18:40:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727953AbfJUSfZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 14:35:25 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:43535 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727110AbfJUSfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 14:35:25 -0400
-Received: by mail-pg1-f193.google.com with SMTP id l24so3387056pgh.10
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 11:35:24 -0700 (PDT)
+        id S1728943AbfJUSkG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 14:40:06 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:40249 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726672AbfJUSkG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 14:40:06 -0400
+Received: by mail-wm1-f65.google.com with SMTP id b24so13785737wmj.5
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 11:40:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=gKNVpGfDraDeObTF5LQpWYMeQHWVeOtzVwLp1PKI8ag=;
-        b=eNwKhfyvgD+RHpFX65lBx5ggnJXHk9uzzmKHUB0y+k0guQphU2F+5PmG5uKnpl7Esz
-         TjYm8vnc8t/oaAyI35pNBFAdF7dvLYW23O/6PjqTf/gDLvycblKVZEvfq53pN9ervg64
-         mn89nnJ9K3mkADxnV0m3DsD2uQOjMDm0CebfzKSvdJym0doWjoystFpIcXffLOY8H5eD
-         vcoK6ICatp0F52oDjHbyZVsodwk7rmrQC0ixsQ99cYFHG+J0nxaBUWonrgnSXXcRXsYA
-         0katdvr855xB/GdFQX0/ZwvGrb8J0pDmPc4ue9fM2IyBkx1ndO7y49AjAY2qBMRI2T/E
-         0faA==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=pW8pS6G2719q+zzOrXEH7KQeJ4JNJqRA2w3EaBCANzw=;
+        b=AKCo6ZN8+cftLNVsvZFOb7r7PPuLcqkcwJ+Csm93WZZ+tVQ+91HXf+943or46zero1
+         +Tj0FnE8ap+PajKX3Tfy4Dfomm7iL7xM53apRitNO3jlAMOvn4r+LnLSHnccjmxhocyi
+         7DxSYJfD/5MRv4eciRCe4UVOqYKL4A7FZqt72bLFeoQVPkTEwN0wNOjH60Eez7YtoVvW
+         AIlPrvt854g3eRqhxff9RWKpn1vCvb5m2/NqUZsjqoEZZg+k99QXhHut6ylFyIF2R/Ca
+         E7QfV0LKMkpyTEQmjGVTkC4TfUdlwKJNULQy9HwV9SuElH1DZ9km9zBTeXDyo3EJsxLy
+         EwQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=gKNVpGfDraDeObTF5LQpWYMeQHWVeOtzVwLp1PKI8ag=;
-        b=mwoxMy59fU1HGT1pp9S0bo8HKPrt3Cb+jQIjnuGpp0l3Lfm9Uib/Opqr9prvlVdHI/
-         dUdj1wzdSrOMk2sN46stsql3/ukZLcx8DJt3uVSF1tXe3m51bKaUXqbB3ZmqcJWa5VYa
-         JuxRo2RO1/2ZTltbOa5EgOfRu+eqlPzhkctBHj92E4kuHNIBgsOJDPY8Y4uGe5+zQcln
-         Y3M1jw/Od6yGJOHeSYSaSlLEIpcl5/sLCa/l0UeHkK1LEDOydj5du2/FZN+I1RzDkAa9
-         3bBzjyKDPnKFmNx3vv5GiPlozI5dtpG8ox8sRf4rJLvAboIZmdEoMDY+wsjhYMyIDEXE
-         zZ8A==
-X-Gm-Message-State: APjAAAXFPtnbB2r0UoUtDwgJQfFwSnVq+oi+eFyHzLQXursyZYmz43rr
-        02Q1fvu1+Bv2GaNw2YWiaP1djg==
-X-Google-Smtp-Source: APXvYqw45sysZ9MIMvSS6EVy6NwGKiLwuyaiU3hWwiYZgV9CQqvv7UzH7plyCrZU2q8dp0in2y6JFA==
-X-Received: by 2002:a17:90a:ba86:: with SMTP id t6mr31721152pjr.56.1571682923885;
-        Mon, 21 Oct 2019 11:35:23 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id p189sm17229180pfp.163.2019.10.21.11.35.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2019 11:35:23 -0700 (PDT)
-Date:   Mon, 21 Oct 2019 11:35:19 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     "Miriam R." <mirucam@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [Outreachy] First contribution
-Message-ID: <20191021183519.GA139951@google.com>
-References: <CAN7CjDCacSKzN8fXgUe4ejNqM+AAe1o7NaDaFgM5WcYYV0bQ9g@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=pW8pS6G2719q+zzOrXEH7KQeJ4JNJqRA2w3EaBCANzw=;
+        b=nMyhXUc7RFNO0v2pr5abKXkp5/Opm6Mgt7NoRm33BlVJPuIBN77HZ2gej0hFinN6w7
+         yf0NIdcNYQADwAkEiJ8wwXDwAO34gaqWbGjTk2lctsEQkCVAClKFOUeMl29I50XgQ8Mr
+         WN58yRJFjPbqHm8k6Q1V+HKXme5dAqRwuPt6jQjUnNKvg0QPDWFfO7OzLsE85PeCw37Z
+         +sctOG3uG3WKA3FhEx6zguiKGKKq0HzQieGcHfqiVnV6D03V3bbLFJC2vr/LlLrPCKf0
+         yCsunxEwGJw0TWR6Pn7mlhK2XJAhfjpAX2PTTBBjeV5UGXVdrwkX++bLqJmHwBrV7bRU
+         Ig3w==
+X-Gm-Message-State: APjAAAWjibY7cLRYM1BXaEP2oXPaSgI5L2Y7dk4MjPPMI0zBlzRm/UJH
+        2lll0H80aLf1aC8kQhVhpolrSIOh
+X-Google-Smtp-Source: APXvYqzrTDeV6AQVMRLoJT7pJF7sbSRejNmFxXm08Si1l22f+NtyQCUtm7XcCNCGNn4gxXJyapxb6Q==
+X-Received: by 2002:a05:600c:219a:: with SMTP id e26mr16446493wme.147.1571683204408;
+        Mon, 21 Oct 2019 11:40:04 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r13sm25578669wra.74.2019.10.21.11.40.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Oct 2019 11:40:03 -0700 (PDT)
+Message-Id: <pull.337.v4.git.1571683203.gitgitgadget@gmail.com>
+In-Reply-To: <pull.337.v3.git.gitgitgadget@gmail.com>
+References: <pull.337.v3.git.gitgitgadget@gmail.com>
+From:   "William Baker via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 21 Oct 2019 18:39:57 +0000
+Subject: [PATCH v4 0/6] multi-pack-index: add --no-progress
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN7CjDCacSKzN8fXgUe4ejNqM+AAe1o7NaDaFgM5WcYYV0bQ9g@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     williamtbakeremail@gmail.com, stolee@gmail.com,
+        jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 12:39:16PM +0200, Miriam R. wrote:
-> Dear Git developers,
-> I’m an Outreachy applicant, I would like to make my contribution to
-> apply to this Outreachy internship period.
+Hello Git contributors,
 
-Welcome, Miriam! Good to hear from you.
+This is the fourth iteration of changes for adding support for
+--[no-]progress to multi-pack-index. 
 
-> 
-> I have found this issue tagged as open and goodfirstissue:
-> https://github.com/gitgitgadget/git/issues/230
-> 
-> But there is a PR from 4 months ago:
-> https://github.com/gitgitgadget/git/pull/271  and I don't know how to
-> find out if a patch including that change already exists or if it
-> makes sense to do it.
+I'm resubmitting the series after a discussion regarding 'MIDX_PROGRESS'
+that concluded with a decision to stick with the original changes in the v3
+patch.
 
-GitGitGadget exists to repackage PRs (which Git project doesn't use)
-into emailed patches (which Git project does use) when the author writes
-/submit on the PR comment chain. In that PR I see Johannes asking for a
-/submit, but no submit; next I would check if a patch with the same
-title came through in the mailing list by searching on the
-public-inbox.org mirror:
+Thanks, William
 
-https://public-inbox.org/git/?q=is_directory+dir_exists
+William Baker (6):
+  midx: add MIDX_PROGRESS flag
+  midx: add progress to write_midx_file
+  midx: add progress to expire_midx_packs
+  midx: honor the MIDX_PROGRESS flag in verify_midx_file
+  midx: honor the MIDX_PROGRESS flag in midx_repack
+  multi-pack-index: add [--[no-]progress] option.
 
-Looks like, no, a patch with those hotwords wasn't mailed. Finally, I
-would check the project to see if it's still an issue:
+ Documentation/git-multi-pack-index.txt |  6 ++-
+ builtin/multi-pack-index.c             | 18 +++++--
+ builtin/repack.c                       |  2 +-
+ midx.c                                 | 71 ++++++++++++++++++++------
+ midx.h                                 | 10 ++--
+ t/t5319-multi-pack-index.sh            | 69 +++++++++++++++++++++++++
+ 6 files changed, 149 insertions(+), 27 deletions(-)
 
-  $ cd my-git-dir/
-  $ git grep is_directory
 
-I still see 30 instances of is_directory in the codebase, so looks like
-we haven't made this change. :)
+base-commit: d966095db01190a2196e31195ea6fa0c722aa732
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-337%2Fwilbaker%2Fmulti-pack-index-progress-toggle-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-337/wilbaker/multi-pack-index-progress-toggle-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/337
 
-> 
-> In case this issue is not suitable for my first contribution,  I have
-> also found this:
-> https://github.com/gitgitgadget/git/issues/379
+Range-diff vs v3:
 
-This is also a fine change if you want to make it.
+ 1:  cd041107de = 1:  e7b1cc633b midx: add MIDX_PROGRESS flag
+ 2:  0117f55c9d = 2:  37768f5886 midx: add progress to write_midx_file
+ 3:  d741dc60bc = 3:  4ac9527d98 midx: add progress to expire_midx_packs
+ 4:  f208c09639 = 4:  3468acf39a midx: honor the MIDX_PROGRESS flag in verify_midx_file
+ 5:  7566090769 = 5:  d6ae4e1c54 midx: honor the MIDX_PROGRESS flag in midx_repack
+ 6:  a3c50948d9 = 6:  ea4f869780 multi-pack-index: add [--[no-]progress] option.
 
-Good luck, and remember it's fine to ask the mentor for the project you
-ultimately want to help on for help, code review in advance, etc.
-
- - Emily
+-- 
+gitgitgadget
