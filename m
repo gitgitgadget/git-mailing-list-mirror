@@ -2,96 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 909F81F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 18:43:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A6EC1F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 18:45:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728056AbfJUSn0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 14:43:26 -0400
-Received: from mail-pf1-f181.google.com ([209.85.210.181]:44680 "EHLO
-        mail-pf1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727211AbfJUSn0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 14:43:26 -0400
-Received: by mail-pf1-f181.google.com with SMTP id q21so8946736pfn.11
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 11:43:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=WRXxdJBjof2b0wNaeY+vn+n0IlLselMzI+hyKgXvzms=;
-        b=c5g3ofale21GVCCg0mrvQHfN16IWbFvyUNdkO1Wj7+5M5R4MfQQgf8iN5bZhRIdE/E
-         5uDeMeR97I71vFdztS0d56MEkJCOWGJzlK9Sr6Xf2+0reubqJCbtcmhgbi8v5YKnstMQ
-         CwQ0stX77Iaf1WF8AxGgWKfgb7zYYMj/XmO9lJY1VwE6JRrDvB/IL99FKD45goeaa8MN
-         4KIDxwC6c6avgqVrQ7/qjYXwy59QILEnGedKoiDn+/GWxG/RFH+N2tTcRNFbKaPn9oyF
-         ncfs2QGZioj15Hp/O8X82svwFgkhdeVFFp47GxD2PYBTRpx2OkizlJ3mKLPFwAdgRFPK
-         tHoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=WRXxdJBjof2b0wNaeY+vn+n0IlLselMzI+hyKgXvzms=;
-        b=UzIq6LfYMXJnfI2CBk2JxFuG387GKv6VJ2NlLww2y1h1FW9SNuyZ+T0FglKr2GxZ+Y
-         /ZBnK6b4zU859M/lkLyEUTp6ZWYVuZYqI8dZ3e37hh/aSvwGsEKxyEsd+VFY1pvoSFAQ
-         DF70ELAb/eb48KJZJa4JRGHqC5pV7jgdyibJ/7TWwFdI/BwoO70PQXG9nktCt6A41k7O
-         4pIVn8CmDJSCV4ej+iUNaI7wnGCOBFvtBJe3d3v+Lk4wLYnvCzRaQmHpiBTv0n0kyXhj
-         4sz7gGEbIvJW3pPG7iNRYUK8agCDiR678SuuqnmjqnYpE7DA9koJvsjIeQZvp9zLapjW
-         ryuw==
-X-Gm-Message-State: APjAAAVuFWMHkYsMtypgrcy3SJu1S314APcNqTpIWvYuvhsIaTXwyR9f
-        x56FFOtTBE2pXh7RQF6YDF2iMw==
-X-Google-Smtp-Source: APXvYqwReOg1eUV2+jWCf/pbC3K/zi0qlQBv4UjFxRje6qUln5zREBZ/q5g7rjPVZaeibTGkTJzpzg==
-X-Received: by 2002:a62:ae06:: with SMTP id q6mr24536062pff.96.1571683404954;
-        Mon, 21 Oct 2019 11:43:24 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id b4sm13980282pju.16.2019.10.21.11.43.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2019 11:43:24 -0700 (PDT)
-Date:   Mon, 21 Oct 2019 11:43:20 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Karina Saucedo <karina.saucedogza@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Outreachy Winter 2019
-Message-ID: <20191021184320.GB139951@google.com>
-References: <CAJxDvSsZLz+oxPQ15YiGatURSyuxnriiL5TjXMay0W7VPVjNsQ@mail.gmail.com>
+        id S1728375AbfJUSpC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 14:45:02 -0400
+Received: from mout.gmx.net ([212.227.17.21]:34573 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727211AbfJUSpC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 14:45:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1571683496;
+        bh=Q7q6V75NRqU9GGCZeoBPMRUfkS3Dt/ynFT9aVI4sA0Q=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=EsSUNknHPmfC46ybbs/C82ZgyHwjAmu0G7GmEU25/MzfLQJPvXUrJCr6lgzQBi4lp
+         XsKlB3MS+GEAVBWlz7KfC7d2Dw3gJGOuXwbOWYs6MQnCnOLJUyCZVuLs1futZv5HfR
+         GIWQ5Wl1M0e7QBSR6Z1xxDgr6anP4RsWqZBcOFbk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M9o21-1iPcx30DSP-005rdW; Mon, 21
+ Oct 2019 20:44:56 +0200
+Date:   Mon, 21 Oct 2019 20:44:40 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: Re: [RFC PATCH 1/7] Makefile: alphabetically sort += lists
+In-Reply-To: <xmqqimon6yar.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910212043200.46@tvgsbejvaqbjf.bet>
+References: <cover.1571246693.git.liu.denton@gmail.com>        <02a16f9bdf740841d9a4be765e72b9fa5ae5d75c.1571246693.git.liu.denton@gmail.com> <xmqqimon6yar.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJxDvSsZLz+oxPQ15YiGatURSyuxnriiL5TjXMay0W7VPVjNsQ@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:aras8c779Pgy7vvIBk/i3hdjY3YlXy4zptuoeCrdCg+gD5AAnVd
+ W1Umena1iMwxQ0k4tZyzbOe+jLd95lAdu8S2vWAGZOL98StYxhVGGtnQC1uLD3PTKYyLjO0
+ MJFxJExteXMHZdiPr+ExYJn+fzF/zQc/p31AmH3yYoMUCVZ30x13mmY7IWD2ulQgUskZbgC
+ mrz6nA1hX04w+hDK/1yMg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:uMqot5ESepI=:yYBifdUbqL0Yv/oYskk7Z2
+ eopijAm4MWRtrY6ZIQeP5u5KN00ShNvjTTL9uiGD0jOV9YYvKI9ZOc9h0iFpRkouVITETWtPm
+ g24i42SQ/BsNZj08FUzoxc4hqFkrocww0SBJ+GNLknB3Qa+MA9i0s9vZlz3TYbDfhg2Jg5Kg4
+ dNecILn4VpNknWlUQ4mad12Jz5+80yBqX8wBcFR2JSjCy5SfO4Ca27USynGN57euPQgT7QEMR
+ neEw6a6PLJxHxmk+liafYrvDhpl5alvadm9uDtCQr06CoHwNteJvUhpTYUMvA5JojTIQMqyri
+ Bk+o3rCSRVnzeI641QknjTLQiswyLmS0QrEhwFt2Ikff/N6dftHyeWXbN/B7YSftFet9qWIy3
+ latmMS87cjajg1obQB0aNXkK7ZEkYBvNNd8ugVxTSzq/J2kv8b1xfkQu/s0oSiHkuHYpH2hBE
+ WDyuL8Vzv1Tktf6mB7zRuKAR+YAQhfer/ppY7n7CzWKbji3qtFwchHXkCQxp4Q30c2M9rznFc
+ bMjLrIVLRQhCW8QgapDaIste7Ypf0GTOVulT1DoYeO+FeKdw48sKd3vrRErY7JwSIacEEYjuf
+ EVxDzIPfhWDhfmtHI3SpPRnRc48v5/+pb8wc6RaaujesS4bh4IOvPNu5m1J8pzJqh+/rAgA7D
+ B4ctvbAsey2R+cZnsb9ty7XIc4aMPt6AtsmVb+fKadPj7Nvv7Bj+ZimFN2PhybcHTTqTayh90
+ ECKrJrlQSx4jZcBTZs6o9m1y8yRAhNkjmPLTzwXwHQIBlrE2glc0o1VCYwbZI2zwrooEwJfdm
+ vuXhkRilUjj3sHb8vflR65npHww6sc5nlFGUf0V+6efWJN4uDo6NqVZd0wrSSrPZVanv4O0sD
+ eNkJ44+oqfkXo8wtGNOiVujXPHVMrdWdeA30hvMUPa9aHoGmUZYQ4xBbmrC8+SkMUMxlPuhdQ
+ qCb9/Xn7Pj8Sq1jNWZ/Z/ign1VNCy1DjIowlCt7gljOtvU93WJMdIsxqg01mOOLYWlRZPv5Ka
+ A5eW7QdPuXruixk9n+hex64PVUqVWiv9wtmbM2i1oBs7k1c0SVtzIfw808jZDCtTogYFeKV7p
+ sd4A8lqxCJZDzXjhQ7SAjqmSR38vxtmImOlsYs7vle86dUBEN3oTHk+DDAUhxz9JbSfa3u7TO
+ ZueNB3cQ/S9lON7ZtIHC4NUqfqT5fJnQA1vJ3GE0+SX69FJEUIEeFOwLJVMRKAHtkiHDNj91Z
+ U6jy6i6j6X7ts8A+p4NnPazPUKZgL7BY1NSDTQGQO88vspGQ1ZQbhfPJW0TM=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 11:54:01AM -0500, Karina Saucedo wrote:
-> Hello, my name is Karina and I'm and Outreachy applicant. I´m interested in
-> applying to the project 'Add did you mean hints´ and I was wondering how
-> can I start contributing since there seem to be no issues on the github
-> page. Thank you!
+Hi Junio,
 
-Hi Karina!
+On Fri, 18 Oct 2019, Junio C Hamano wrote:
 
-It's best to start on a microproject; some of the other applicants are
-already doing so as well. You can search this list for "outreachy" (try
-it from public-inbox.org/git) to see some of the discussions with other
-applicants and what they are or are not working on; there are also some
-good-first-issues in the GitGitGadget bug tracker
-(github.com/gitgitgadget/git/issues). Git project doesn't use Github to
-organize bugs itself; the bug trackers are all abstractions of
-conversation on the list (such as this one -
-https://public-inbox.org/git/20190916184208.GB17913@google.com/ -
-explaining some possible Outreachy microprojects).
+> Denton Liu <liu.denton@gmail.com> writes:
+>
+> > There are many +=3D lists in the Makefile and, over time, they have go=
+tten
+> > slightly out of order, alphabetically. Alphabetically sort all +=3D li=
+sts
+> > to bring them back in order.
+> > ...
+>
+> Hmm.  I like the general thrust, but ...
+>
+> >  LIB_OBJS +=3D combine-diff.o
+> > -LIB_OBJS +=3D commit.o
+> >  LIB_OBJS +=3D commit-graph.o
+> >  LIB_OBJS +=3D commit-reach.o
+> > +LIB_OBJS +=3D commit.o
+>
+> ... I do not particularly see this change (there may be similar
+> ones) desirable.  I'd find it it be much more natural to sort
+> "commit-anything" after "commit", and that is true with or without
+> the common extension ".o" added to these entries.
+>
+> In short, flipping these entries because '.' sorts later than '-' is
+> making the result look "less sorted", at least to me.
 
-Thanks and good luck - I'm the mentor for "Did you mean" so you can feel
-free to ask me directly if there's something you're not sure of and you
-don't want to ask the list. :) Although, of course the list will be
-happy to answer your questions as well.
+The problem with this argument is that it disagrees with ASCII, as `-`
+has code 0x2d while `.` has code 0x2e, i.e. it is lexicographically
+_larger_.
 
- - Emily
+So Denton's patch does the correct thing.
+
+Ciao,
+Dscho
