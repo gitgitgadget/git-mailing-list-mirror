@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB7C01F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 18:40:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E21081F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 18:40:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730007AbfJUSkM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 14:40:12 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:33668 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729995AbfJUSkK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 14:40:10 -0400
-Received: by mail-wm1-f65.google.com with SMTP id 6so1973413wmf.0
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 11:40:09 -0700 (PDT)
+        id S1730042AbfJUSkP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 14:40:15 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37647 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727110AbfJUSkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 14:40:09 -0400
+Received: by mail-wm1-f67.google.com with SMTP id f22so13803904wmc.2
+        for <git@vger.kernel.org>; Mon, 21 Oct 2019 11:40:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SvwofeYTqREFHlTGQn30PKnEAMTDsdYqWXxwdwYSFAw=;
-        b=vYtfax0MFI1bNFHqvKT7/rMKyATUJRP6b0Odg54LcNReFlfY2Y1IlNRIIFMTGgkgnY
-         aha067yRs9sQu04m+KH2sLiQ7NY5YjvDtjOJmC4T+tRz7hpT7CbwJIhpK3oX3pZJPBml
-         1VcSUAsvSGw5EVbymG8E880+0E+uSEIunKDeq8nUXAlxFUFsKZ3Bv9Wktuk83CB9fGT9
-         BchRYpP7iy7a7x7RHpxKsdOB8rBvOKmhMHYgQHwDgK2D266yvQuPH4yer/GQYrE5P0L8
-         d0N1j22dvIU4I53tph/mNwpQSh+5SgOxdul6afLlmFC/fhaMl52jfKcXmdc3KGUjslL0
-         RO4w==
+        bh=v39AxgsUJWCtoo28oG5e7SZiH85biK3fNdmLjIsRJU8=;
+        b=jr3hkz2qXx+5V4C3hmsBbMfURuaOlCrb1kYd9mLumI/ewNoOvU54HNCNuTrPyxcTtS
+         GACfPSGxJq1le5Kps4OrHfTh9xyNXRDG2fxSHr8z7vgVeeL5/HwJr0iLElc91Q/K+KgF
+         LvS7PbRT6FTKc301YpgOXisxcAnBvro81c1sMqb9yWqRVvPMMHlgOiOoJPPyhe2KWL6g
+         r65OOjIVaG/nXjASgviI6lym2ZFVITjGBo9CspAeZ1NfqGlY42HZHAUbvsBBERggOPIt
+         VFVrnNYlHOioIvV4kWAqyFTU+mnzC9U43AI5rS9fQVgzbBjVcW2xxTuS1PkQrG4+TtU+
+         QX1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SvwofeYTqREFHlTGQn30PKnEAMTDsdYqWXxwdwYSFAw=;
-        b=ihnU8lT5KXEbxfp2oExSKXaPjG5oaIpAbRX3cNIX5pOgiUyLFM9EnuvPpp0EpRH8zF
-         y6kq2roxHd5gz+2pw4p03H8KTCiTXaObXosnE5rL/v3iQAvpietbtXSIzAquV6P/i92i
-         T8tsupQJ6biW+khtrBKrZ5C+qytB+VWZ7Tpo5lN2c4BjRZazfT+uycM87KFGe6XL5Tzv
-         AO4/axz69BH8JC4EdGG117iJHnUPIxde3/DuhkXA24U06xoRROAco51dpnbVu7EDoVr7
-         c6hXQETx5Pp1aWq/WAfVyZczqeDqcM9l04982ljSkEa+NCLQA0p3WuaDTAqmM8lpT5mo
-         KKBw==
-X-Gm-Message-State: APjAAAWdeb4lv9JqRdTlZd5kWS1CLP1sYM4MefsNR9zZCfB08cCytamL
-        NZl1wCFaGx8A9otwxiC+6a1J9yc3
-X-Google-Smtp-Source: APXvYqyvdC5aBDWL2Z2ReW1Y4JBMNEtK3KixmMRNG04hwKkA7WUscjpGb8obFech9B4NiYKQp9zASw==
-X-Received: by 2002:a1c:4c03:: with SMTP id z3mr21364091wmf.174.1571683208687;
-        Mon, 21 Oct 2019 11:40:08 -0700 (PDT)
+        bh=v39AxgsUJWCtoo28oG5e7SZiH85biK3fNdmLjIsRJU8=;
+        b=bTUWWWItZHIXlqgrnh57Iz0Pou6o2CsE9yKdr7ELgjUokJK5cPWEFUhFZBlLPHM/yT
+         b7vEzJdNfq1UbU3G3U5MCg+ZtW4ui9hsfvGjrgsAbBT5/564tH+AEn+UA8GVR9YESEnQ
+         DncBvlSE7uN6sVSTA6aH9T4uWsIJFqOOVEG7sZQvmnWIJ3vZLSpqnWEg+wurQHz5Kris
+         NebuJ25Moj1f+myTmP/UyMG7CCXReF+ldi0xiTDh+bSrI9FKnAS1UC7CIqyPEMKPZO7z
+         1lIOKMO4JNcBULx3NVmC47myJsA+dbVd6mlW9Da3BuSMb66q+rYEJYf2WS0jIAZfGWwh
+         0zxQ==
+X-Gm-Message-State: APjAAAUDC1omcHMUX4BXY6phmfDDUKAz5WL+Xo3b0YXmRaq0RmxgmAyz
+        PGJE2cUIh+Cnl8V5Sg9L6B9mUlh4
+X-Google-Smtp-Source: APXvYqzVMCXz+BU3JVcbOyeig4/sfh/3+W7+wCV7ZOT/j46H8Z/gT+pZe02mj/lKYmyp0VrnrjK/XA==
+X-Received: by 2002:a1c:4c02:: with SMTP id z2mr6702060wmf.78.1571683205958;
+        Mon, 21 Oct 2019 11:40:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v10sm8787929wrm.26.2019.10.21.11.40.08
+        by smtp.gmail.com with ESMTPSA id o1sm13707403wmc.38.2019.10.21.11.40.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Oct 2019 11:40:08 -0700 (PDT)
-Message-Id: <ea4f869780fc95ccaf00fa9b95a0df3a53f88951.1571683203.git.gitgitgadget@gmail.com>
+        Mon, 21 Oct 2019 11:40:05 -0700 (PDT)
+Message-Id: <37768f58860d113e21730f2640ca773ebb54dff0.1571683203.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.337.v4.git.1571683203.gitgitgadget@gmail.com>
 References: <pull.337.v3.git.gitgitgadget@gmail.com>
         <pull.337.v4.git.1571683203.gitgitgadget@gmail.com>
 From:   "William Baker via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Oct 2019 18:40:03 +0000
-Subject: [PATCH v4 6/6] multi-pack-index: add [--[no-]progress] option.
+Date:   Mon, 21 Oct 2019 18:39:59 +0000
+Subject: [PATCH v4 2/6] midx: add progress to write_midx_file
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,214 +72,116 @@ X-Mailing-List: git@vger.kernel.org
 
 From: William Baker <William.Baker@microsoft.com>
 
-Add the --[no-]progress option to git multi-pack-index.
-Pass the MIDX_PROGRESS flag to the subcommand functions
-when progress should be displayed by multi-pack-index.
-The progress feature was added to 'verify' in 144d703
-("multi-pack-index: report progress during 'verify'", 2018-09-13)
-but some subcommands were not updated to display progress, and
-the ability to opt-out was overlooked.
+Add progress to write_midx_file.  Progress is displayed
+when the MIDX_PROGRESS flag is set.
 
 Signed-off-by: William Baker <William.Baker@microsoft.com>
 ---
- Documentation/git-multi-pack-index.txt |  6 ++-
- builtin/multi-pack-index.c             | 18 +++++--
- t/t5319-multi-pack-index.sh            | 69 ++++++++++++++++++++++++++
- 3 files changed, 87 insertions(+), 6 deletions(-)
+ midx.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index 233b2b7862..d7a02cc6fa 100644
---- a/Documentation/git-multi-pack-index.txt
-+++ b/Documentation/git-multi-pack-index.txt
-@@ -9,7 +9,7 @@ git-multi-pack-index - Write and verify multi-pack-indexes
- SYNOPSIS
- --------
- [verse]
--'git multi-pack-index' [--object-dir=<dir>] <subcommand>
-+'git multi-pack-index' [--object-dir=<dir>] [--[no-]progress] <subcommand>
- 
- DESCRIPTION
- -----------
-@@ -23,6 +23,10 @@ OPTIONS
- 	`<dir>/packs/multi-pack-index` for the current MIDX file, and
- 	`<dir>/packs` for the pack-files to index.
- 
-+--[no-]progress::
-+	Turn progress on/off explicitly. If neither is specified, progress is 
-+	shown if standard error is connected to a terminal.
-+
- The following subcommands are available:
- 
- write::
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index e86b8cd17d..1730b21901 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -6,21 +6,25 @@
- #include "trace2.h"
- 
- static char const * const builtin_multi_pack_index_usage[] = {
--	N_("git multi-pack-index [--object-dir=<dir>] (write|verify|expire|repack --batch-size=<size>)"),
-+	N_("git multi-pack-index [<options>] (write|verify|expire|repack --batch-size=<size>)"),
- 	NULL
+diff --git a/midx.c b/midx.c
+index f169a681dd..006f36b570 100644
+--- a/midx.c
++++ b/midx.c
+@@ -448,6 +448,8 @@ struct pack_list {
+ 	uint32_t nr;
+ 	uint32_t alloc;
+ 	struct multi_pack_index *m;
++	struct progress *progress;
++	unsigned pack_paths_checked;
  };
  
- static struct opts_multi_pack_index {
- 	const char *object_dir;
- 	unsigned long batch_size;
-+	int progress;
- } opts;
+ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
+@@ -456,6 +458,7 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
+ 	struct pack_list *packs = (struct pack_list *)data;
  
- int cmd_multi_pack_index(int argc, const char **argv,
- 			 const char *prefix)
- {
-+	unsigned flags = 0;
-+
- 	static struct option builtin_multi_pack_index_options[] = {
- 		OPT_FILENAME(0, "object-dir", &opts.object_dir,
- 		  N_("object directory containing set of packfile and pack-index pairs")),
-+		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
- 		OPT_MAGNITUDE(0, "batch-size", &opts.batch_size,
- 		  N_("during repack, collect pack-files of smaller size into a batch that is larger than this size")),
- 		OPT_END(),
-@@ -28,12 +32,15 @@ int cmd_multi_pack_index(int argc, const char **argv,
+ 	if (ends_with(file_name, ".idx")) {
++		display_progress(packs->progress, ++packs->pack_paths_checked);
+ 		if (packs->m && midx_contains_pack(packs->m, file_name))
+ 			return;
  
- 	git_config(git_default_config, NULL);
- 
-+	opts.progress = isatty(2);
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_multi_pack_index_options,
- 			     builtin_multi_pack_index_usage, 0);
- 
- 	if (!opts.object_dir)
- 		opts.object_dir = get_object_directory();
-+	if (opts.progress)
-+		flags |= MIDX_PROGRESS;
- 
- 	if (argc == 0)
- 		usage_with_options(builtin_multi_pack_index_usage,
-@@ -47,16 +54,17 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 	trace2_cmd_mode(argv[0]);
- 
- 	if (!strcmp(argv[0], "repack"))
--		return midx_repack(the_repository, opts.object_dir, (size_t)opts.batch_size, 0);
-+		return midx_repack(the_repository, opts.object_dir, 
-+			(size_t)opts.batch_size, flags);
- 	if (opts.batch_size)
- 		die(_("--batch-size option is only for 'repack' subcommand"));
- 
- 	if (!strcmp(argv[0], "write"))
--		return write_midx_file(opts.object_dir, 0);
-+		return write_midx_file(opts.object_dir, flags);
- 	if (!strcmp(argv[0], "verify"))
--		return verify_midx_file(the_repository, opts.object_dir, 0);
-+		return verify_midx_file(the_repository, opts.object_dir, flags);
- 	if (!strcmp(argv[0], "expire"))
--		return expire_midx_packs(the_repository, opts.object_dir, 0);
-+		return expire_midx_packs(the_repository, opts.object_dir, flags);
- 
- 	die(_("unrecognized subcommand: %s"), argv[0]);
+@@ -785,7 +788,7 @@ static size_t write_midx_large_offsets(struct hashfile *f, uint32_t nr_large_off
  }
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index c72ca04399..cd2f87be6a 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -147,6 +147,21 @@ test_expect_success 'write midx with two packs' '
  
- compare_results_with_midx "two packs"
+ static int write_midx_internal(const char *object_dir, struct multi_pack_index *m,
+-			       struct string_list *packs_to_drop)
++			       struct string_list *packs_to_drop, unsigned flags)
+ {
+ 	unsigned char cur_chunk, num_chunks = 0;
+ 	char *midx_name;
+@@ -799,6 +802,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 	uint64_t chunk_offsets[MIDX_MAX_CHUNKS + 1];
+ 	uint32_t nr_entries, num_large_offsets = 0;
+ 	struct pack_midx_entry *entries = NULL;
++	struct progress *progress = NULL;
+ 	int large_offsets_needed = 0;
+ 	int pack_name_concat_len = 0;
+ 	int dropped_packs = 0;
+@@ -832,8 +836,15 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 			packs.nr++;
+ 		}
+ 	}
++	
++	packs.pack_paths_checked = 0;
++	if (flags & MIDX_PROGRESS)
++		packs.progress = start_progress(_("Adding packfiles to multi-pack-index"), 0);
++	else
++		packs.progress = NULL;
  
-+test_expect_success 'write progress off for redirected stderr' '
-+	git multi-pack-index --object-dir=$objdir write 2>err &&
-+	test_line_count = 0 err
-+'
-+
-+test_expect_success 'write force progress on for stderr' '
-+	git multi-pack-index --object-dir=$objdir --progress write 2>err &&
-+	test_file_not_empty err
-+'
-+
-+test_expect_success 'write with the --no-progress option' '
-+	git multi-pack-index --object-dir=$objdir --no-progress write 2>err &&
-+	test_line_count = 0 err
-+'
-+
- test_expect_success 'add more packs' '
- 	for j in $(test_seq 11 20)
- 	do
-@@ -169,6 +184,21 @@ test_expect_success 'verify multi-pack-index success' '
- 	git multi-pack-index verify --object-dir=$objdir
- '
+ 	for_each_file_in_pack_dir(object_dir, add_pack_to_midx, &packs);
++	stop_progress(&packs.progress);
  
-+test_expect_success 'verify progress off for redirected stderr' '
-+	git multi-pack-index verify --object-dir=$objdir 2>err &&
-+	test_line_count = 0 err
-+'
-+
-+test_expect_success 'verify force progress on for stderr' '
-+	git multi-pack-index verify --object-dir=$objdir --progress 2>err &&
-+	test_file_not_empty err
-+'
-+
-+test_expect_success 'verify with the --no-progress option' '
-+	git multi-pack-index verify --object-dir=$objdir --no-progress 2>err &&
-+	test_line_count = 0 err
-+'
-+
- # usage: corrupt_midx_and_verify <pos> <data> <objdir> <string>
- corrupt_midx_and_verify() {
- 	POS=$1 &&
-@@ -284,6 +314,21 @@ test_expect_success 'git-fsck incorrect offset' '
- 		"git -c core.multipackindex=true fsck"
- '
+ 	if (packs.m && packs.nr == packs.m->num_packs && !packs_to_drop)
+ 		goto cleanup;
+@@ -958,6 +969,9 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 		written += MIDX_CHUNKLOOKUP_WIDTH;
+ 	}
  
-+test_expect_success 'repack progress off for redirected stderr' '
-+	git multi-pack-index --object-dir=$objdir repack 2>err &&
-+	test_line_count = 0 err
-+'
++	if (flags & MIDX_PROGRESS)
++		progress = start_progress(_("Writing chunks to multi-pack-index"),
++					  num_chunks);
+ 	for (i = 0; i < num_chunks; i++) {
+ 		if (written != chunk_offsets[i])
+ 			BUG("incorrect chunk offset (%"PRIu64" != %"PRIu64") for chunk id %"PRIx32,
+@@ -990,7 +1004,10 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 				BUG("trying to write unknown chunk id %"PRIx32,
+ 				    chunk_ids[i]);
+ 		}
 +
-+test_expect_success 'repack force progress on for stderr' '
-+	git multi-pack-index --object-dir=$objdir --progress repack 2>err &&
-+	test_file_not_empty err
-+'
-+
-+test_expect_success 'repack with the --no-progress option' '
-+	git multi-pack-index --object-dir=$objdir --no-progress repack 2>err &&
-+	test_line_count = 0 err
-+'
-+
- test_expect_success 'repack removes multi-pack-index' '
- 	test_path_is_file $objdir/pack/multi-pack-index &&
- 	GIT_TEST_MULTI_PACK_INDEX=0 git repack -adf &&
-@@ -413,6 +458,30 @@ test_expect_success 'expire does not remove any packs' '
- 	)
- '
++		display_progress(progress, i + 1);
+ 	}
++	stop_progress(&progress);
  
-+test_expect_success 'expire progress off for redirected stderr' '
-+	(
-+		cd dup &&
-+		git multi-pack-index expire 2>err &&
-+		test_line_count = 0 err
-+	)
-+'
-+
-+test_expect_success 'expire force progress on for stderr' '
-+	(
-+		cd dup &&
-+		git multi-pack-index --progress expire 2>err &&
-+		test_file_not_empty err
-+	)
-+'
-+
-+test_expect_success 'expire with the --no-progress option' '
-+	(
-+		cd dup &&
-+		git multi-pack-index --no-progress expire 2>err &&
-+		test_line_count = 0 err
-+	)
-+'
-+
- test_expect_success 'expire removes unreferenced packs' '
- 	(
- 		cd dup &&
+ 	if (written != chunk_offsets[num_chunks])
+ 		BUG("incorrect final offset %"PRIu64" != %"PRIu64,
+@@ -1018,7 +1035,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 
+ int write_midx_file(const char *object_dir, unsigned flags)
+ {
+-	return write_midx_internal(object_dir, NULL, NULL);
++	return write_midx_internal(object_dir, NULL, NULL, flags);
+ }
+ 
+ void clear_midx_file(struct repository *r)
+@@ -1221,7 +1238,7 @@ int expire_midx_packs(struct repository *r, const char *object_dir, unsigned fla
+ 	free(count);
+ 
+ 	if (packs_to_drop.nr)
+-		result = write_midx_internal(object_dir, m, &packs_to_drop);
++		result = write_midx_internal(object_dir, m, &packs_to_drop, flags);
+ 
+ 	string_list_clear(&packs_to_drop, 0);
+ 	return result;
+@@ -1370,7 +1387,7 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
+ 		goto cleanup;
+ 	}
+ 
+-	result = write_midx_internal(object_dir, m, NULL);
++	result = write_midx_internal(object_dir, m, NULL, flags);
+ 	m = NULL;
+ 
+ cleanup:
 -- 
 gitgitgadget
+
