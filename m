@@ -2,149 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAE551F4C0
-	for <e@80x24.org>; Mon, 21 Oct 2019 21:54:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3DDA1F4C0
+	for <e@80x24.org>; Mon, 21 Oct 2019 22:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730408AbfJUVys (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Oct 2019 17:54:48 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40381 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730355AbfJUVyr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Oct 2019 17:54:47 -0400
-Received: by mail-wr1-f65.google.com with SMTP id o28so15655711wro.7
-        for <git@vger.kernel.org>; Mon, 21 Oct 2019 14:54:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=LRtur35fZsOeyCr+k9zLM1Aq/gErx+cVDNNZ7kPmhsA=;
-        b=G/7ZlrsUHzYn5+0Nk/wKiFYUQRmJ1pih78BZxcVovQqsHFbJUIkN8jrkwLQ/U6g1fP
-         /9ayUm5OU1/E+yg9pojWhlaBfGUkbr9T1CATYFGjZoxEzxEd6uxa+9XBQssZekngWSNS
-         Szf/2/qaJf8J53WTY9L5ptNF498RePK97c6yBTH+JCUZUISb/hNTlSNKu3bd0b/Xq2Gy
-         qJTeGjeQfzgAj/eoBaRWN2CUvubnPXmdYC0kQPwRDFF5lE8dpesclmLwOOdNOEwJUstr
-         ElJf4KJ+G4XcWIqW2FX5ZhqFYyosLfqnuGWK7ONIe7/dGo1J/khelOHa5yFOH5kLCvMQ
-         Nm5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=LRtur35fZsOeyCr+k9zLM1Aq/gErx+cVDNNZ7kPmhsA=;
-        b=tf3jCtsHq1WwY8zxFd8M1xTMjRUIkwrlHNmcwYn92Yxuv/7UlKuZzivF9VmMdqXvq3
-         Fzhkb7ZVrjJhsfLRU25AxMmXEtMIEsed0BLmHqU3MRDVfYEo9ffYwa8A0U77MJkz6Vlg
-         j4pCCINito2hCr9oZFBe1U96DujEPxZ5R8gCGFRITnHcKQ7mjWLNxN9wOoXpAXFQ/GuB
-         LWoiHGxsJcJo/8Qi7zqlWFxXxOfhSDjFSNxFGLzt7vga7T7KWE9+62Av3o8TLFd+cAXj
-         6cpKzAvkcpYNPXr8ahqq2IhY+6rQ+wyuAT4MicNRAMWzCyY+Ltm9uPXK9C8gM4AuQwhy
-         fgsQ==
-X-Gm-Message-State: APjAAAWrIsV8UiBAFMT5ieOTOu0MLCj30LQmxAPWG0jCzuDr1wmqpGbV
-        1Y4iqgGeIjt+jnySEOJ/6zlluV3q
-X-Google-Smtp-Source: APXvYqwD8AD2Wyyp/bXdoKNO2rlemzt4F3/8Qxw0gf/HgqjYesQe78hTiwyd8eTI6MHQxnZjap8s1Q==
-X-Received: by 2002:adf:8068:: with SMTP id 95mr361165wrk.249.1571694885457;
-        Mon, 21 Oct 2019 14:54:45 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n17sm4114733wrt.25.2019.10.21.14.54.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Oct 2019 14:54:44 -0700 (PDT)
-Message-Id: <8b1f4f089a6d4a2293507a1a77668c828598e84f.1571694882.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.401.v3.git.1571694882.gitgitgadget@gmail.com>
-References: <pull.401.v2.git.1571350077.gitgitgadget@gmail.com>
-        <pull.401.v3.git.1571694882.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Oct 2019 21:54:42 +0000
-Subject: [PATCH v3 2/2] git_path(): handle `.lock` files correctly
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1730069AbfJUWFr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Oct 2019 18:05:47 -0400
+Received: from mout.gmx.net ([212.227.17.22]:39717 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726672AbfJUWFq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Oct 2019 18:05:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1571695541;
+        bh=mb4uvaYWxD+n+wfSu6XCT5pu4A7BLL3/giphn4DEokY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FYgBKHEwtXedcfPZAErENmV4Tcclw5Mp0kWZiDm+91X+FFvdIJM+oM9DSGgpQ4FKn
+         UL9yqvGKGMH0HZ3Tyk0zObNK5atZlikZWDf/n0xvW5D3ERETS/jparqWzM4nUwMAIC
+         kXm+6V7Vu/umQYI7F6TbjlNPaLcwfemjmlH5a79w=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQe5u-1ih6tn1xtW-00Nfa8; Tue, 22
+ Oct 2019 00:05:41 +0200
+Date:   Tue, 22 Oct 2019 00:05:26 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Subject: Git for Windows v2.24.0-rc0, was Re: [ANNOUNCE] Git v2.24.0-rc0
+In-Reply-To: <xmqq4l065zx5.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910220004190.46@tvgsbejvaqbjf.bet>
+References: <xmqq4l065zx5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:1E9WpF/r9p5wdnAymRclGnIBrW41nntvATOJMc2j/OoKG8ixzK5
+ ISKKOde/AhpR5sqJw/a+7fUubiPXgj6lCcnBT4Z0VdA3eMHivf7/imPSD1KC4YAsSaDNcN/
+ BKoJCSM04yOQL52EJYdZ7rD86JAsq/UTEgsBCBHaFbYb4e37bsDw+kWdFIL/M9HKInhY0f+
+ M/6opfla0sr3AoL+Ui69Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:wQvTt5/AW4s=:a/M/Ws+gTmtrbImDl50EWM
+ BInIE3jS+Y1Be//6WDM/obqwgJh3MRbsd1hjWoJVk/IcIY6pcA+clLOOA2DQ9Y/q7VdRKO8kL
+ lJrxTOQtwrf6QKM2NJBWKLpLNc179VQpfW9RrxqQsLn4xqQlQFAKRkQwW2/O4e2/7MYfGuIq/
+ vKqFVm2j++xiwOm1BsU/2X9UubSwjQ/Akv1gTzyLWSra1gkI3xNf14lKKyLXXFOZFTeeo18Co
+ Sg5VVypUolF6S0pCgZkxh9v9NTCHfVFejK+EEFZd0jkDkfsk3CuMLLkOqFXEXClkUrS7t0tSp
+ LES7Op2hF4zBwFqDMXVghDoAWnPlK34F9nv2GtmL9gdb4pDzara5e0qvd40gfkcKxSQpzaY3a
+ 511+0HBWuGJKQ8Y7rsR9JiF9+NQIMRORA2PTeRkggSCeFY2zSRBWLWaUXaQ1e5RnWawe4pyjk
+ pFSIpY2NU7HLEF9hqN2gxyqBaWJIXdLGFPp8izsFiwQvM/fC+7CerPp16Md2Q1zV3sLUV6oy9
+ BcPP7E98MQCIG2y0N3hoK5POiPqgiFFCM2k4HrLqEVpmigyZ9QHWNm8+oMtxPIxwug5h0bmD9
+ v5BRU21iivy9zxt8Desy/1KM+jVAqwiTX0azXkTC+Y+OTltqBlHrZeyKqdk65pT0FnYCA7qRW
+ LgOlVcA33Wq15hPiaoXF2myZKcI7jJaSGmGAn++A34TFBqvFv9NtY0zB1OgZ771Zj/YmZVXOv
+ i6tH7YKh5hRa8zGPZ7Szyj5ic3kDDTJVUTTV5xvnpywPRY1k/a9DoTgInF//SKcLErOJL2tDl
+ t9fVFU0j0Uzl+IkD57NEtvTT/sBX/D49miTgBbx1Arxdt2B+RtLJSHho/8IgDXatXzrnDhvqO
+ D+BvW0BaUR6W5Say/w4pTPmzZVsgJiaBPVJzhGZe4OV+Jv+MZpNlH3NI55xpPViakkksyUzRn
+ 3I5A43WD5G1H8SKhejhqKqJwltk2ul7tDZYbC+BdzzFds7IZ6ab6ShI5HrRlcVPOpiofja5ey
+ bb87pJwgroGPZly1uLsC6/lDeHLXVWUPNWPyABs2fsY4F3DZtSuj/EH8LaE1Bqnvd5D7NefpJ
+ mTrBId/HAi9wd7MP2+QB+ciUle43BDNiOjsZgeO8bKQKpfOZBu55GZhTIQ2oOmnoB9V8M3GHL
+ oT+wOf2ArUd22yWNnyhpDMj0Mzt2tTl5sLNhIhQrk926f6EeY2At5YTJLARvqBc3FJUoCc7WH
+ DliRJ0ySM6QL3jaqbPqdDaBzW1LNsrZE2K3fSD8CyzzBvvDKkoYNRld+74e8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Team,
 
-Ever since worktrees were introduced, the `git_path()` function _really_
-needed to be called e.g. to get at the path to `logs/HEAD` (`HEAD` is
-specific to the worktree, and therefore so is its reflog). However, the
-wrong path is returned for `logs/HEAD.lock`.
+a couple of days later than I wanted, but at least it is now here:
+https://github.com/git-for-windows/git/releases/tag/v2.24.0-rc0.windows.1
 
-This does not matter as long as the Git executable is doing the asking,
-as the path for that `logs/HEAD.lock` file is constructed from
-`git_path("logs/HEAD")` by appending the `.lock` suffix.
+Please test...
 
-However, Git GUI just learned to use `--git-path` instead of appending
-relative paths to what `git rev-parse --git-dir` returns (and as a
-consequence not only using the correct hooks directory, but also using
-the correct paths in worktrees other than the main one). While it does
-not seem as if Git GUI in particular is asking for `logs/HEAD.lock`,
-let's be safe rather than sorry.
+Thank you,
+Johannes
 
-Side note: Git GUI _does_ ask for `index.lock`, but that is already
-resolved correctly, due to `update_common_dir()` preferring to leave
-unknown paths in the (worktree-specific) git directory.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- path.c               |  8 +++++++-
- t/t1500-rev-parse.sh | 15 +++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
-
-diff --git a/path.c b/path.c
-index e3da1f3c4e..5ff64e7a8a 100644
---- a/path.c
-+++ b/path.c
-@@ -349,10 +349,16 @@ static int check_common(const char *unmatched, void *value, void *baton)
- static void update_common_dir(struct strbuf *buf, int git_dir_len,
- 			      const char *common_dir)
- {
--	char *base = buf->buf + git_dir_len;
-+	char *base = buf->buf + git_dir_len, *base2 = NULL;
-+
-+	if (ends_with(base, ".lock"))
-+		base = base2 = xstrndup(base, strlen(base) - 5);
-+
- 	init_common_trie();
- 	if (trie_find(&common_trie, base, check_common, NULL) > 0)
- 		replace_dir(buf, git_dir_len, common_dir);
-+
-+	free(base2);
- }
- 
- void report_linked_checkout_garbage(void)
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index 01abee533d..d318a1eeef 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -116,6 +116,21 @@ test_expect_success 'git-path inside sub-dir' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'git-path in worktree' '
-+	test_tick &&
-+	git commit --allow-empty -m empty &&
-+	git worktree add --detach wt &&
-+	test_write_lines >expect \
-+		"$(pwd)/.git/worktrees/wt/logs/HEAD" \
-+		"$(pwd)/.git/worktrees/wt/logs/HEAD.lock" \
-+		"$(pwd)/.git/worktrees/wt/index" \
-+		"$(pwd)/.git/worktrees/wt/index.lock" &&
-+	git -C wt rev-parse >actual \
-+		--git-path logs/HEAD --git-path logs/HEAD.lock \
-+		--git-path index --git-path index.lock &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'rev-parse --is-shallow-repository in shallow repo' '
- 	test_commit test_commit &&
- 	echo true >expect &&
--- 
-gitgitgadget
