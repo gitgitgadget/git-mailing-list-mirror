@@ -2,100 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B83CC1F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 20:33:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA19C1F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 20:39:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731461AbfJVUdR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 16:33:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55194 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1730979AbfJVUdR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 16:33:17 -0400
-Received: (qmail 31756 invoked by uid 109); 22 Oct 2019 20:33:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 22 Oct 2019 20:33:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18600 invoked by uid 111); 22 Oct 2019 20:36:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Oct 2019 16:36:23 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 22 Oct 2019 16:33:16 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] commit-graph: fix writing first commit-graph during
- fetch
-Message-ID: <20191022203316.GC12270@sigill.intra.peff.net>
-References: <pull.415.git.1571765335.gitgitgadget@gmail.com>
- <a1e5280d4b61a972426063574f1ea890a7dab73b.1571765336.git.gitgitgadget@gmail.com>
+        id S1731273AbfJVUj1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 16:39:27 -0400
+Received: from mail-qt1-f172.google.com ([209.85.160.172]:34958 "EHLO
+        mail-qt1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725788AbfJVUj0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 16:39:26 -0400
+Received: by mail-qt1-f172.google.com with SMTP id m15so28965210qtq.2
+        for <git@vger.kernel.org>; Tue, 22 Oct 2019 13:39:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=X5+vJAcXo5AWWvGMPvdC5ZBpuFThkAM1KYBG4i3dse4=;
+        b=Qz5qNBvL1tkefypL//gHgO8E4NWAXGPWPNhhUdcbmpGve1+gsBs/ijUExJft2MaAsU
+         UshSGFGL7fAiPDJaYtBcr0NDQMBcQQURgnGrFSta7yv7+Yuie2a8Rbg2uWE3OCEe3aiX
+         120ZE3JyVu4uvTZXupE9OCzTOKAxHVGD4uYY4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=X5+vJAcXo5AWWvGMPvdC5ZBpuFThkAM1KYBG4i3dse4=;
+        b=kNvPL0OiAXK/0IYDIvdvvqJtcIwVehw0dOUtDo4Mb1tfUl2Hhi1aUbWan1IdlwKlXm
+         YX2x0fY2sseWHog42ROCdqFgANSdKxQf13pd/evaMmCYmVdkcSmpn/oU7BQmz5LKp0m5
+         eyGxIVZyozZ5JMqEtmUz7mcVqAsV0Zrpstc5iIxaMUc1DFV06eQNIRr9Ot2x50ahinMO
+         7y4bd14mrCC7Y9FgwmhEX1/8HdCnYqZ5AFclOMiYMLZH3D3kXFzFBnXuHYhVib5xecp5
+         ZaqMpc5rR/BEgC2n6id8/FqV4DBkJnhERjgpYzI8gDGeGIlWAbiGZFIlT89Ezw6vVfu0
+         VZkg==
+X-Gm-Message-State: APjAAAUZjcwfvOlAQHbsQzVXqHaTQXeO5FPEOwVs7UP2kuG4SdVSvNQn
+        a/Hs7TjxjHC5p2pa/O3SD8VW7H7R/qAjdA==
+X-Google-Smtp-Source: APXvYqxUFGof5gmRRXmjtsKx6NEA+w1WQu1gbBEZ1dQFk7HjmCUa6ZYyr5yL64+rsjitxzJGul4jQg==
+X-Received: by 2002:ac8:7646:: with SMTP id i6mr5615640qtr.251.1571776765711;
+        Tue, 22 Oct 2019 13:39:25 -0700 (PDT)
+Received: from chatter.i7.local (192-0-228-88.cpe.teksavvy.com. [192.0.228.88])
+        by smtp.gmail.com with ESMTPSA id h23sm9692010qkk.128.2019.10.22.13.39.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Oct 2019 13:39:25 -0700 (PDT)
+Date:   Tue, 22 Oct 2019 16:39:23 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: is commitGraph useful on the server side?
+Message-ID: <20191022203923.GA3020@chatter.i7.local>
+Mail-Followup-To: Jeff King <peff@peff.net>,
+        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+References: <20191022165112.GA4960@chatter.i7.local>
+ <e0e294a7-bd3c-2174-a922-c5893b0945c2@gmail.com>
+ <20191022200615.GA12270@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <a1e5280d4b61a972426063574f1ea890a7dab73b.1571765336.git.gitgitgadget@gmail.com>
+In-Reply-To: <20191022200615.GA12270@sigill.intra.peff.net>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 22, 2019 at 05:28:55PM +0000, Derrick Stolee via GitGitGadget wrote:
+On Tue, Oct 22, 2019 at 04:06:16PM -0400, Jeff King wrote:
+>> I'm biased, but I think the commit-graph is generally really good to 
+>> have
+>> in almost all cases. I actually do not know of a good reason to _not_ have
+>> it.
+>
+>A lot depends on how much you do on the server. If you're serving a web
+>interface that runs things like `rev-list`, or `for-each-ref
+>--contains`, etc, then you should see a big improvement.
 
-> However, the UNINTERESTING flag is used in lots of places in the
-> codebase. This flag usually means some barrier to stop a commit walk,
-> such as in revision-walking to compare histories. It is not often
-> cleared after the walk completes because the starting points of those
-> walks do not have the UNINTERESTING flag, and clear_commit_marks() would
-> stop immediately.
+Ah, good to know, so something like cgit would see an improvement if 
+there are commit graphs generated for the repos it serves.
 
-Oof. Nicely explained, and your fix makes sense.
+>If you're _just_ serving fetches with `upload-pack`, you might see some
+>small improvement during fetch negotiation. But I suspect it would be
+>dwarfed by the cost of actually generating packs. Likewise, the
+>traversal there will be dominated by accessing trees (and if that is
+>expensive, then you ought to be using reachability bitmaps).
 
-The global-ness of revision flags always makes me nervous about doing
-more things in-process (this isn't the first such bug we've had).
+We do generate bitmaps on a routine basis.
 
-I have a dream of converting most uses of flags into using a
-commit-slab. That provides cheap access to an auxiliary structure, so
-each traversal, etc, could keep its own flag structure. I'm not sure if
-it would have a performance impact, though. Even though it's O(1), it is
-an indirect lookup, which could have some memory-access impact (though
-my guess is it would be lost in the noise).
+OK, I think I'm convinced that enabling commitgraph and generating them 
+regularly is going to be a net win.
 
-One of the sticking points is that all object types, not just commits,
-use flags. But we only assign slab ids to commits. I noticed recently
-that "struct object" has quite a few spare bits in it these days,
-because the switch to a 32-byte oid means 64-bit machines now have an
-extra 4 bytes of padding. I wonder if we could use that to store an
-index field.
+Thanks, everyone.
 
-Anyway, that's getting far off the topic; clearly we need a fix in the
-meantime, and what you have here looks good to me.
+-K
 
-> I tested running clear_commit_marks_many() to clear the UNINTERESTING
-> flag inside close_reachable(), but the tips did not have the flag, so
-> that did nothing.
-
-Another option would be clear_object_flags(), which just walks all of
-the in-memory structs. Your REACHABLE solution is cheaper, though.
-
-> Instead, I finally arrived on the conclusion that I should use a flag
-> that is not used in any other part of the code. In commit-reach.c, a
-> number of flags were defined for commit walk algorithms. The REACHABLE
-> flag seemed like it made the most sense, and it seems it was not
-> actually used in the file.
-
-Yeah, being able to remove it from commit-reach.c surprised me for a
-moment. To further add to the confusion, builtin/fsck.c has its own
-REACHABLE flag (with a different bit and a totally different purpose). I
-don't think there's any practical problem there, though.
-
-> I have failed to produce a test using the file:// protocol that
-> demonstrates this bug.
-
-Hmm, from the description, it sounds like it should be easy. I might
-poke at it a bit.
-
--Peff
