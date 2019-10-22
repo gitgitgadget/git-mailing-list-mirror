@@ -2,139 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 758F21F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 23:33:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 754F11F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 23:36:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389701AbfJVXd4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 19:33:56 -0400
-Received: from mout.gmx.net ([212.227.15.18]:47535 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729635AbfJVXd4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 19:33:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1571787231;
-        bh=ifrFOQ+JYtFy7PuyqvsjoqZlTa8ABPWjw705qn+avps=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=BRI517flFfGGRqNKKFvfxvdvD1S23aSwxOYB8KgLN/gFNUPJ4pQZAbOhhtQRCrXV8
-         cnj7M0dt90wiXK2SM1Es6PegMgEQfF6dsHrPv3sDi+kg438pBL6S2NXbfs3uwEMbFq
-         7iVneDiZnyzNCyjTJDnX67nVhF1SHlt4dcz1KfLw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mk0Ne-1hclYV1S9I-00kPy7; Wed, 23
- Oct 2019 01:33:51 +0200
-Date:   Wed, 23 Oct 2019 01:33:37 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: Re: [RFC PATCH 1/7] Makefile: alphabetically sort += lists
-In-Reply-To: <20191021185352.GA69085@generichostname>
-Message-ID: <nycvar.QRO.7.76.6.1910230132260.46@tvgsbejvaqbjf.bet>
-References: <cover.1571246693.git.liu.denton@gmail.com> <02a16f9bdf740841d9a4be765e72b9fa5ae5d75c.1571246693.git.liu.denton@gmail.com> <xmqqimon6yar.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910212043200.46@tvgsbejvaqbjf.bet>
- <20191021185352.GA69085@generichostname>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2389667AbfJVXgC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 19:36:02 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:38733 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732792AbfJVXgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 19:36:02 -0400
+Received: by mail-wm1-f66.google.com with SMTP id 3so17747219wmi.3
+        for <git@vger.kernel.org>; Tue, 22 Oct 2019 16:36:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wG05NeEZdQT2Qxu6qNuUk0OaiJf2oro5Xom4bSxHp5A=;
+        b=XxP7oXi0Q2gy2AguHkv7Q9R20tDU6IL7VTJJxS7wfOmtz9ThDAhXOA3dUkpI4VYtF1
+         6G2K0nZ2Bwelhz+qpjTk3Vga6URfqZfwreH74tL9J/3kAH/+raQy52TyrYqdm+N5eYU7
+         SqCDa1FMBIwdyPwrkkPmPHC0PvRzW/JVJC70yyW5vQ7oIJ/GYbfO93GiViv3ovqjd3Pp
+         LX3gk11GODvn+pk+rGaOgahxdRM+de+J4DTtzS5yFHTdMMnlcCU5hnY+JB8bGyMEj2UG
+         34efDnKsSLLPraGFHx4GNlvyVtHrkudauMh7+Uyh3M3X50srqMeGrRInRGZP27+VlRxm
+         ZKqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wG05NeEZdQT2Qxu6qNuUk0OaiJf2oro5Xom4bSxHp5A=;
+        b=HWQ04TaqGErTH/BTjPFBfGM6urg33c0PJT/NlA9TIUvr+vcKt0yO8i6RtGw+5fKYnz
+         FdmtE3296lJ3fsA7N3GUBlNxH87l0fjRLVKdZpIpxfpCSCqV/uTtzhe2ps8PanJakxqo
+         B0cP520i7tf3vYNyACeSfVcOIay6b2+pz0OSlpdD81fEvIa2SEK4rdzwkLUCegNKaOJd
+         qB9OyZWcew2au1514O/WAhIYb6hoMkrn98GSMMTwLFRj4u1h52u1kqP2ZyYieQD9ytEw
+         4XcgsRjrfTwi0i4woXrz8/w7WtJ3SWgu+J/RlBNUghM3ccwoSvbU+WBT/czJhpoiCJTs
+         VqUA==
+X-Gm-Message-State: APjAAAWHb/RZNnRO5ozJHowLuXutppaAFeuwPLV1lXhmKIg52w0wXxhQ
+        wOf3ogsLqAmS5VBk+bs+4Dc=
+X-Google-Smtp-Source: APXvYqwp1Jl71eGIbveFKUKANE0sJT4SSWJcteapxjcF7ONZpqOtnqzaJ9l+0nNbiu8igc1hTuCTHw==
+X-Received: by 2002:a1c:4046:: with SMTP id n67mr5032842wma.2.1571787359789;
+        Tue, 22 Oct 2019 16:35:59 -0700 (PDT)
+Received: from szeder.dev (x4dbe0456.dyn.telefonica.de. [77.190.4.86])
+        by smtp.gmail.com with ESMTPSA id p12sm7471268wrt.7.2019.10.22.16.35.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 Oct 2019 16:35:58 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 01:35:56 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] commit-graph: fix writing first commit-graph during
+ fetch
+Message-ID: <20191022233556.GF4348@szeder.dev>
+References: <pull.415.git.1571765335.gitgitgadget@gmail.com>
+ <a1e5280d4b61a972426063574f1ea890a7dab73b.1571765336.git.gitgitgadget@gmail.com>
+ <20191022203316.GC12270@sigill.intra.peff.net>
+ <20191022214553.GA18314@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:9Uj0Kmf8j6CcgLOrNUEUBVe1Ftb0eOu19tjNcGq7GSRtcuAzzmR
- aMtpV8ujm7wkUxd7rDyk+dQPXhZHjmA7gyIzblrgVUktximfisV36Q1J/jxd5sGQepiKn5R
- VpkUPYB/O5ooFs4LVP42/oeaWrPfeMVUpAF01ng3kWsLZeXbjSeaSAr1Z/WBITevCIVv4mX
- BbMYZH1kBi57k+rQCx+cA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:qUu/gn/PI/I=:irPBlKn7JpbVJJzvWB3aKE
- zvEJf9Do1DfD37MdizSEfxCx8H6Dh9U3/tCRxY/J+ROmnYFrOYPWBqgrghW3MAA5UWjkEldxw
- sWwwc+FIAe/zcpuhVn7bw7CONzFdrlaXrkNn/TT/hplUVp672C/1LFpaJl92vEGWc8WAVcXpH
- 525y+KlirKB4aQnAPnF5ZvrtePWjpmzv6M9D+thc5RWlYYNRySGJwQ8huA3vvCx85mJ7NLXEb
- VYJhFqpsiN0WkR8tREXWpepncGqXwL+cawXcFHgic0oPw4/XqaPcmni86nFCa4tEUsuTBUGN7
- zzTgthCknlF/j4RsS59F++TNulCwocj+naI7E1poMDdhEb31YeK3YSz8ZX1O338mnsdrMnfTy
- RU/tvsh2Oj0N8/JOZyLPbGVSesQ62eb1iNl1uF8tjhjzmT2nbzCJODHINxdhMjsDUlBjn0wCq
- gbhsfJQWSJZQJbM2cxFjKPHSeSYGjiMvxDz1pAbvlazEsdzm1fJKAHUvu0WHb99gzDYFdA6LJ
- RSk5nRG2qnvVrOm+5P8qvNEHcpr6OPSXHVDic5bE9jEui3+DW0bHfhKvr3xWidKz5D9Oc9KoC
- 3VIQyjLJtcGoBiw3qRUucsZPD6Y6J2o/utMMCeSQst3E2mi2dCSprrbeTaP8vQOaYXp85duYc
- IiFKIVHy3UQE6FLX5xJMQISsPImuk0cINQg9KcivDf0zMLelGNu5Rclt7nDoN07332libQK8J
- XpBpHCNYb8+XYV45kven25buGhowAo4HdS1N8xTBNmYFwFd38e/NBiiPiYFwn3sJZHdLJWihg
- kzoKbxpM+Z9jItMsSqSrAaam5YdhcSMlBht/4gvPFtTQUzOuqIdbAsBpGQQA9imK1FPPsk914
- v02wCbJW6y2bZDjCBs8+mcVIfbG16RoM4iG3IKyeFsC6HqEXkHn9rbWYq4OAMgbCqLe99wrdn
- PP2jbJ4H80zL09s2hlYCvaH5s9Yc3gcJaP7S6kEfwRBm87RbrRCmkFZH8jeWDodidqeHbQ7YC
- K0HxEdhiXHDVkRcEmd2lMnsS7SUDWmihKITffOiptykLJmDgBaEUHwAaP0/w1zVAPHpnKAdLn
- A8fjOcwgo2Y1NWr/4VCeSw15krLAkbXYadhx5tFo1rTgGD0v82UX/PdlXZAwWRz/C5NlouEkN
- N9+hWMmfdyWz+alSu4erbMNDkMc3ZKSX6tNPSfgWfVPIVe/XalNGK7W3hh6Y4UfdBB7a8tq9p
- 6a0+E1Vff0RKzoqX7bIvnxKumaYvCzM8BelXcqHJyxBisEfXsN35Zz5IOhK0=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191022214553.GA18314@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Oct 22, 2019 at 05:45:54PM -0400, Jeff King wrote:
+> On Tue, Oct 22, 2019 at 04:33:16PM -0400, Jeff King wrote:
+> 
+> > > I have failed to produce a test using the file:// protocol that
+> > > demonstrates this bug.
+> > 
+> > Hmm, from the description, it sounds like it should be easy. I might
+> > poke at it a bit.
+> 
+> Hmph. I can reproduce it here, but it seems to depend on the repository.
+> If I do this:
+> 
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index ecabbe1616..8d473a456f 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -583,6 +583,14 @@ test_expect_success 'fetch.writeCommitGraph' '
+>  	)
+>  '
+>  
+> +test_expect_success 'fetch.writeCommitGraph with a bigger repo' '
+> +	git clone "$TEST_DIRECTORY/.." repo &&
+> +	(
+> +		cd repo &&
+> +		git -c fetch.writeCommitGraph fetch origin
+> +	)
+> +'
+> +
+>  # configured prune tests
+>  
+>  set_config_tristate () {
+> 
+> it reliably triggers the bug. But if I make a synthetic repo, even it
+> has a lot of commits (thousands or more), it doesn't trigger. I thought
+> maybe it had to do with having commits that were not at tips (since the
+> tip ones presumably _are_ fed into the graph generation process). But
+> that doesn't seem to help.
+> 
+> Puzzling...
 
-On Mon, 21 Oct 2019, Denton Liu wrote:
+Submodules?
 
-> Hi Johannes,
->
-> On Mon, Oct 21, 2019 at 08:44:40PM +0200, Johannes Schindelin wrote:
-> > Hi Junio,
-> >
-> > On Fri, 18 Oct 2019, Junio C Hamano wrote:
-> >
-> > > Denton Liu <liu.denton@gmail.com> writes:
-> > >
-> > > > There are many +=3D lists in the Makefile and, over time, they hav=
-e gotten
-> > > > slightly out of order, alphabetically. Alphabetically sort all +=
-=3D lists
-> > > > to bring them back in order.
-> > > > ...
-> > >
-> > > Hmm.  I like the general thrust, but ...
-> > >
-> > > >  LIB_OBJS +=3D combine-diff.o
-> > > > -LIB_OBJS +=3D commit.o
-> > > >  LIB_OBJS +=3D commit-graph.o
-> > > >  LIB_OBJS +=3D commit-reach.o
-> > > > +LIB_OBJS +=3D commit.o
-> > >
-> > > ... I do not particularly see this change (there may be similar
-> > > ones) desirable.  I'd find it it be much more natural to sort
-> > > "commit-anything" after "commit", and that is true with or without
-> > > the common extension ".o" added to these entries.
-> > >
-> > > In short, flipping these entries because '.' sorts later than '-' is
-> > > making the result look "less sorted", at least to me.
-> >
-> > The problem with this argument is that it disagrees with ASCII, as `-`
-> > has code 0x2d while `.` has code 0x2e, i.e. it is lexicographically
-> > _larger_.
-> >
-> > So Denton's patch does the correct thing.
->
-> I actually agree with Junio on this one. Without the prefixes, "commit"
-> would go before "commit-graph" so I think it would make more sense to
-> order with the prefixes removed instead of taking the naive ordering by
-> just sorting each block.
+  $ cd ~/src/git/
+  $ git quotelog 86cfd61e6b
+  86cfd61e6b (sha1dc: optionally use sha1collisiondetection as a submodule, 2017-07-01)
+  $ git init --bare good.git
+  Initialized empty Git repository in /home/szeder/src/git/good.git/
+  $ git push -q good.git 86cfd61e6b^:refs/heads/master
+  $ git clone good.git good-clone
+  Cloning into 'good-clone'...
+  done.
+  $ git -c fetch.writeCommitGraph -C good-clone fetch origin
+  Computing commit graph generation numbers: 100% (46958/46958), done.
+  $ git init --bare bad.git
+  Initialized empty Git repository in /home/szeder/src/git/bad.git/
+  $ git push -q bad.git 86cfd61e6b:refs/heads/master
+  $ git clone bad.git bad-clone
+  Cloning into 'bad-clone'...
+  done.
+  $ git -c fetch.writeCommitGraph -C bad-clone fetch origin
+  Computing commit graph generation numbers: 100% (1/1), done.
+  BUG: commit-graph.c:886: missing parent 9936c1b52a39fa14fca04f937df3e75f7498ac66 for commit 86cfd61e6bc12745751c43b4f69886b290cd85cb
+  Aborted
 
-That will make it harder on other contributors like me, who prefer to
-mark the lines in `vim` and then call `:sort` on them, and then not care
-about it any further.
+In the cover letter Derrick mentioned that he used
+https://github.com/derrickstolee/numbers for testing, and that repo
+has a submodule as well.
 
-Any decision that makes automating tedious tasks harder puts more burden
-on human beings. I don't like that.
-
-Ciao,
-Dscho
-
->
-> Thanks,
->
-> Denton
->
-> >
-> > Ciao,
-> > Dscho
->
