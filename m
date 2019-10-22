@@ -2,105 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 009201F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 10:20:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B79B81F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 11:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731837AbfJVKUd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 06:20:33 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:41912 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727101AbfJVKUc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 06:20:32 -0400
-Received: by mail-pg1-f196.google.com with SMTP id t3so9659018pga.8
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 03:20:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YIiffT/wTCLcDiOOUgSgbOKq+qcZ+pfAGNxqb45C5s8=;
-        b=RpC39L0b96f4ZCwh978V1GR1Q+L0OWdUwBt3N0QRIQgYmQ41pb9W8qPFGVyatbhGqu
-         WopQOtmlKjrAjQvzKINTfRK1EmeEQ9g3GN55+Yy7/rbq/4YqUMbC4glLl6kglUOXS6J0
-         eLcxu4N4gqzM8e4Wdh+cFdatr6NUuRkUgmxBn4SG03eMHoLJILyPfLA1SUEFxc65uG0a
-         y5+IU8WZFNx/oOFkOT36OIYD3o3auGNBIdWBVO3j6bRb+/5TzHjQbsgXD/222X4itILv
-         ZEEHIOaKq9Ep4OAoptoRTQsKpKbVkwvjmoCaAprt/6mMbFfXR7c2f5DcR3+xNCwJzFcn
-         H93g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YIiffT/wTCLcDiOOUgSgbOKq+qcZ+pfAGNxqb45C5s8=;
-        b=HV35LrAxgVV34T7ysENY9VsmZvBigjQCrcxx5nr1/k05BJNYwVjqRWSJd6umZ6isE8
-         DjNbGghR8gGjNSVbHvaeJKyOpjhGF8+lLoWeqjlBSTXNb+WLfmY5SMPt/U8A8BsLpf96
-         s4MSonWQaQLdEoWrDpl466K8xde+3T/1T7U3nOrXiPOIhuQQVbl2lReccI7Y84M5v5nI
-         IEVxqPJ6Q5anSDaK6SyxXIj9hOl0rr9HCslHOxsC5QrtSw0YH5cTMauB8R9z8D6duaci
-         1XdanKq5+VTu0jv8cqlMCL7XGCxc3MSs2ulVp1vyCPydw83R+BhMEkJclca74apEB/ce
-         4IBg==
-X-Gm-Message-State: APjAAAUPoHw4MqX1mdsSLhg5cafUcQI5mFO2ubhW1CpPS8B5rfTVZJxz
-        pI4cC9NMIjgA9Z3X697N2xpaESRF
-X-Google-Smtp-Source: APXvYqxTGG4kTTDCGyuI18Wfij5BbmibWQeM592KYMZKIViY6pV8ML43pJAW+FS27kcptUHGBb5UHQ==
-X-Received: by 2002:a65:4189:: with SMTP id a9mr2904334pgq.380.1571739631558;
-        Tue, 22 Oct 2019 03:20:31 -0700 (PDT)
-Received: from generichostname ([2601:646:280:1b30:80db:d816:4d15:ae2a])
-        by smtp.gmail.com with ESMTPSA id m2sm23850443pff.154.2019.10.22.03.20.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Oct 2019 03:20:30 -0700 (PDT)
-Date:   Tue, 22 Oct 2019 03:20:29 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 14/14] t5520: replace `! git` with `test_must_fail git`
-Message-ID: <a721d5f119c18c13584f648cabfbffecf9b0db21.1571739459.git.liu.denton@gmail.com>
-References: <cover.1571435195.git.liu.denton@gmail.com>
- <cover.1571739459.git.liu.denton@gmail.com>
+        id S2388703AbfJVLe2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 07:34:28 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57816 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388698AbfJVLe2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 07:34:28 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2649D2E757;
+        Tue, 22 Oct 2019 07:34:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=lNEosA2Fuz6BkfjJft9AydmQS+0=; b=KCTTM1
+        E0E7p7WM3SRV1lPU2Q401gHQ4wBy4uKHyx3LLxeHxpWaZqd4iO+nqtCT8dj/g1JZ
+        KlPclP3Co8P4VqUOJP8KE8rApmyxRVhhBwA12A2ZBlAnzR0AKgm+ku3agbH87w0b
+        60oR6jpK+nt8zja+YU5F3yik8h5PkuUWuiE70=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=h5CpAOQQ8gvI/UU+/ilHZMoBtGWALGF9
+        2A1YuBh+bSXUKgZ9x2d41Zs83EgPXVyD7mjLlFDwZMEfwruXlngERVgdE863qEu9
+        xaehxRb2w/HluixCpGBbFW1DhWkyrns9qu/hzuw/JRkREfkzPS4ltrhqCpu5Dtq3
+        Ch8732gtirY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E9EA2E755;
+        Tue, 22 Oct 2019 07:34:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 827DA2E754;
+        Tue, 22 Oct 2019 07:34:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: Re: [RFC PATCH 1/7] Makefile: alphabetically sort += lists
+References: <cover.1571246693.git.liu.denton@gmail.com>
+        <02a16f9bdf740841d9a4be765e72b9fa5ae5d75c.1571246693.git.liu.denton@gmail.com>
+        <xmqqimon6yar.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1910212043200.46@tvgsbejvaqbjf.bet>
+        <xmqqblu9lw00.fsf@gitster-ct.c.googlers.com>
+        <20191021195413.GB3959@sigill.intra.peff.net>
+Date:   Tue, 22 Oct 2019 20:34:24 +0900
+In-Reply-To: <20191021195413.GB3959@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 21 Oct 2019 15:54:13 -0400")
+Message-ID: <xmqq7e4xko8v.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1571739459.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: E68E3BE6-F4BF-11E9-92BC-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, if a Git command fails in an unexpected way, such as a
-segfault, it will be masked and ignored. Replace the ! with
-test_must_fail so that only expected failures pass.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- t/t5520-pull.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+>> ...
+>> I agree with you that it did correctly sort them in ASCII order.
+>
+> What's the purpose of sorting them, though? I thought it was less for
+> aesthetics and more to to keep lines deterministic (to avoid two
+> branches adding the same line in different places, thus causing
+> weirdness when the two are merged). In that case, I think we care less
+> about the exact order and more that anybody can easily reproduce the
+> same sort (by running "10:!sort" or whatever you weird emacs-types would
+> type).
 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index ef3dbc201a..602d996a33 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -537,7 +537,7 @@ test_expect_success 'pull --rebase=i' '
- test_expect_success 'pull.rebase=invalid fails' '
- 	git reset --hard before-preserve-rebase &&
- 	test_config pull.rebase invalid &&
--	! git pull . copy
-+	test_must_fail git pull . copy
- '
- 
- test_expect_success '--rebase=false create a new merge commit' '
-@@ -572,7 +572,7 @@ test_expect_success REBASE_P \
- 
- test_expect_success '--rebase=invalid fails' '
- 	git reset --hard before-preserve-rebase &&
--	! git pull --rebase=invalid . copy
-+	test_must_fail git pull --rebase=invalid . copy
- '
- 
- test_expect_success '--rebase overrides pull.rebase=preserve and flattens keep-merge' '
--- 
-2.24.0.rc0.197.g0926ab8072
+In the ideal world, "sort" would have a handy option we can tell it
+to reshuffle the ASCII table in such a way that all punctuations
+come before alphanumeric, making sure "/" and "." are the first two
+letters in the alphabet, and everybody can use it to sort the lines
+reproducibly and also readably.  But I do not know of such a widely
+used implementation of "sort", so...
 
+If we had known better, we would have used such a custom sort order
+to sort the index entries, making sure that slash sorts before any
+other byte ;-)
