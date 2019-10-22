@@ -2,161 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1D161F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 18:19:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6ECA1F4C1
+	for <e@80x24.org>; Tue, 22 Oct 2019 19:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732316AbfJVSTl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 14:19:41 -0400
-Received: from mail-wr1-f49.google.com ([209.85.221.49]:39097 "EHLO
-        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727226AbfJVSTl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 14:19:41 -0400
-Received: by mail-wr1-f49.google.com with SMTP id a11so3072797wra.6
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 11:19:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=SpydsUTdlyT3dGF4+a0Ds/TQ2CqVIMtv00tIKMCFNow=;
-        b=WIDD3GCcJgDW0qA6gJiRu68FJLRK6VLZudtJdSBVoRn96rVzhxKh+nLVs7NhoR3x08
-         qeIMLaNE01pEGVuW9X3Dvvlw4/dbqo07+ZLEEozC3qT4mDG1uO+QLjgU8OF44Cwu/1Zb
-         e78GxwjLjUzqBDjJr9RiNkwe7JBTaYPN0RMcDKX5qz/7v2Gwn+asOAyJoewXyeerpVBd
-         qxCORBrfdR6AQ0PwUtHyTkcLXCoe0OXyDW2inUlFSsSR56oggL8vZySMt3fVYV1W1r4A
-         PZicINejloOZ6CaJal5oJvuYBmK6hgFGEn8YwUc9bh9N/707V8Y+xp8Z8OVbDZC/BE0T
-         Raeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SpydsUTdlyT3dGF4+a0Ds/TQ2CqVIMtv00tIKMCFNow=;
-        b=bBo+Fjcz3wjSPiTQ1DjLDq63L5jBsigJmNdFXLSCNVFlFFPtnbFmfgLaAooUwyketS
-         FVqUiL56hszvusFsjrVTHHVyotZUJYgj5k26wdqC9Dz/OGRT80tA8siiuYS3JwYzxr9T
-         e96N4oTK4dfKIKjzfsba9A7Rdt68zSGTQ9+GqxfDTWyx1eWITZ70w0P1IJWTNzZcexb+
-         A6dcQb8b93UIP+jB14CGMs2lIZRZWbpvnYgbkqO/ccJWMv0/Pa+6YOGNwufVaoQTQCNn
-         kepqWnj9nruaRq9qB8X43dhUVnzRl7jtkVoaEbKFIcWMoDknAHXV2C+0RrrosB0CshHA
-         LOhQ==
-X-Gm-Message-State: APjAAAVWkShG1j2DBoBPzpGH29k+7VyKCHl6g3evxmgaqze3eGQub0id
-        7+5WhiN1+cCtbZ/tdzN1LVKrqz3+
-X-Google-Smtp-Source: APXvYqzemUQqSecxkYaPZHle7lvw6XA63n2NmQfvh451iw/76adMr9NLh5RrIa4D4SKsrGlVtlLleQ==
-X-Received: by 2002:a5d:4803:: with SMTP id l3mr4696962wrq.381.1571768377784;
-        Tue, 22 Oct 2019 11:19:37 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s12sm19587224wra.82.2019.10.22.11.19.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Oct 2019 11:19:37 -0700 (PDT)
-Message-Id: <ffdde613d8ea2dc57719594aa0f89b6d6177b636.1571768375.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.412.git.1571768375.gitgitgadget@gmail.com>
-References: <pull.412.git.1571768375.gitgitgadget@gmail.com>
-From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Oct 2019 18:19:35 +0000
-Subject: [PATCH 1/1] documentation: remove empty doc files
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1732863AbfJVTBb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 15:01:31 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:53062 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732843AbfJVTB3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 15:01:29 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id A57891F4C0;
+        Tue, 22 Oct 2019 19:01:28 +0000 (UTC)
+Date:   Tue, 22 Oct 2019 19:01:27 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Vegard Nossum <vegard.nossum@oracle.com>
+Cc:     Willy Tarreau <w@1wt.eu>, "Theodore Y. Ts'o" <tytso@mit.edu>,
+        Santiago Torres Arias <santiago@nyu.edu>,
+        workflows@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Subject: Re: email as a bona fide git transport
+Message-ID: <20191022190127.GA697@dcvr>
+References: <b9fb52b8-8168-6bf0-9a72-1e6c44a281a5@oracle.com>
+ <20191016111009.GE13154@1wt.eu>
+ <20191016144517.giwip4yuaxtcd64g@LykOS.localdomain>
+ <56664222-6c29-09dc-ef78-7b380b113c4a@oracle.com>
+ <20191018161547.GG21137@mit.edu>
+ <de49fe5e-85cb-9fb0-f9f4-c294d72e356c@oracle.com>
+ <20191018191456.GI21137@mit.edu>
+ <20191020031716.GA17475@1wt.eu>
+ <1a259d8d-b3d1-b64e-07c3-ba143b42c442@oracle.com>
+ <de6dd8b5-5c28-d0b2-d3fc-e72a6d643105@oracle.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Heba Waly <heba.waly@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Heba Waly <heba.waly@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <de6dd8b5-5c28-d0b2-d3fc-e72a6d643105@oracle.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Heba Waly <heba.waly@gmail.com>
+Vegard Nossum <vegard.nossum@oracle.com> wrote:
+> I sent v2 of the patches (with metadata _after_ the diff) to the git
+> list here:
+> 
+> https://public-inbox.org/git/20191022114518.32055-1-vegard.nossum@oracle.com/T/#u
+> 
+> As I wrote in there, we could already today start using
+> 
+>    git am --message-id
+> 
+> when applying patches and this would provide something that a bot could
+> annotate with git notes pointing to lore/LKML/LWN/whatever. I think that
+> would already be a pretty nice improvement over today's situation.
+> 
+> Sadly, since the beginning of 2018, this was only used for a measly
+> ~0.14% of all non-merge commits in the kernel:
 
-Remove empty and redundant documentation files from the
-Documentation/technical/ directory.
+--message-id helps provide a concrete reference, yes.  However,
+being able to search for commit subjects in the mail archives is
+already implemented via cgit filter.  An example is here:
 
-As part of moving the documentation from Documentation/technical/api-* to
-header files, the following files are deleted because they include only
-TODO messages with no documentation to be moved:
-Documentation/technical/api-grep.txt
-Documentation/technical/api-object-access.txt
-Documentation/technical/api-quote.txt
-Documentation/technical/api-xdiff-interface.txt
+https://80x24.org/mirrors/git.git/commit/?id=8da56a484800023a545d7a7c022473f5aa9e720f
 
-Signed-off-by: Heba Waly <heba.waly@gmail.com>
----
- Documentation/technical/api-grep.txt            |  8 --------
- Documentation/technical/api-object-access.txt   | 15 ---------------
- Documentation/technical/api-quote.txt           | 10 ----------
- Documentation/technical/api-xdiff-interface.txt |  7 -------
- 4 files changed, 40 deletions(-)
- delete mode 100644 Documentation/technical/api-grep.txt
- delete mode 100644 Documentation/technical/api-object-access.txt
- delete mode 100644 Documentation/technical/api-quote.txt
- delete mode 100644 Documentation/technical/api-xdiff-interface.txt
+The link at "userdiff: fix some corner cases in dts regex" makes a link to:
 
-diff --git a/Documentation/technical/api-grep.txt b/Documentation/technical/api-grep.txt
-deleted file mode 100644
-index a69cc8964d..0000000000
---- a/Documentation/technical/api-grep.txt
-+++ /dev/null
-@@ -1,8 +0,0 @@
--grep API
--========
--
--Talk about <grep.h>, things like:
--
--* grep_buffer()
--
--(JC)
-diff --git a/Documentation/technical/api-object-access.txt b/Documentation/technical/api-object-access.txt
-deleted file mode 100644
-index 5b29622d00..0000000000
---- a/Documentation/technical/api-object-access.txt
-+++ /dev/null
-@@ -1,15 +0,0 @@
--object access API
--=================
--
--Talk about <sha1-file.c> and <object.h> family, things like
--
--* read_sha1_file()
--* read_object_with_reference()
--* has_sha1_file()
--* write_sha1_file()
--* pretend_object_file()
--* lookup_{object,commit,tag,blob,tree}
--* parse_{object,commit,tag,blob,tree}
--* Use of object flags
--
--(JC, Shawn, Daniel, Dscho, Linus)
-diff --git a/Documentation/technical/api-quote.txt b/Documentation/technical/api-quote.txt
-deleted file mode 100644
-index e8a1bce94e..0000000000
---- a/Documentation/technical/api-quote.txt
-+++ /dev/null
-@@ -1,10 +0,0 @@
--quote API
--=========
--
--Talk about <quote.h>, things like
--
--* sq_quote and unquote
--* c_style quote and unquote
--* quoting for foreign languages
--
--(JC)
-diff --git a/Documentation/technical/api-xdiff-interface.txt b/Documentation/technical/api-xdiff-interface.txt
-deleted file mode 100644
-index 6296ecad1d..0000000000
---- a/Documentation/technical/api-xdiff-interface.txt
-+++ /dev/null
-@@ -1,7 +0,0 @@
--xdiff interface API
--===================
--
--Talk about our calling convention to xdiff library, including
--xdiff_emit_consume_fn.
--
--(Dscho, JC)
--- 
-gitgitgadget
+https://public-inbox.org/git/?x=t&q=%22userdiff:+fix+some+corner+cases+in+dts+regex%22
+(side note: not sure if that "x=t" to expand the whole message is good...)
+
+That link is generated by examples/cgit-commit-filter.lua in the
+ public-inbox source:
+
+https://public-inbox.org/meta/1677253/s/?b=examples/cgit-commit-filter.lua
+
+My longer term plan is to be able to use the post-image blob OIDs
+from cgit to generate a search query for public-inbox such as:
+
+https://public-inbox.org/git/?q=dfpost:afc6b5b404+dfpost:072d58b69d+dfpost:4353b8220c+dfpost:333a625c70+dfpost:e187d356f6
+
+Which finds all versions of the userdiff patch posted.  But AFAIK
+there's no easy way to get at blob OIDs from cgit to a Lua filter...
