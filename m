@@ -8,108 +8,95 @@ X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7875F1F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 21:05:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2F5E1F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 21:16:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732360AbfJVVFE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 17:05:04 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:33332 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725874AbfJVVFE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 17:05:04 -0400
-Received: by mail-pg1-f195.google.com with SMTP id u23so8667pgo.0
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 14:05:04 -0700 (PDT)
+        id S1732777AbfJVVQr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 17:16:47 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:44970 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725874AbfJVVQr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 17:16:47 -0400
+Received: by mail-pf1-f195.google.com with SMTP id q21so11408265pfn.11
+        for <git@vger.kernel.org>; Tue, 22 Oct 2019 14:16:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Cw0WBu18s+GIN4haQtiFtpQd2zZmJDCofc5x0cJ/Wv4=;
-        b=aAdGnaC4eSaZo7CCliCT34glUTWlpOAItinrYg1Ntzhlw/FCnyRR+NlwwSvjJb7Ekt
-         pKbCpJVq999cifN7IDzz50xs677Gd2xQFo7jUUTzzaxhefySuJf20J38F1hNokSVK0lm
-         +j7yT6Ohs84gRUsC2EwFePN9VO7+dIdlwXIjTDYoRAGB3rNNhhqAvxbdKes8cCxcxCi2
-         K4XdJvFBFfNuihF7ekgqmBB16ne6emeLt57Bo2sPzE/fMoEyAFahkce9Px4iU/Yd10Aa
-         a6WItVVQUpZ+wNkKxIvDXdrljiA/n3xFBdeLS3andTmqlTpLoPZCYHV5Ul9jwvfscyG1
-         dJuA==
+        bh=64ZKeIa0GzfLE8QA6OC+HU6WzaJ4+tlU47KbC0T7Rqs=;
+        b=m4NNug5fKjtflaKo9rCQqZo8PEpc/ozFCZDHM09iHgVdtiAbrEHLelEw/IcOETjHdG
+         A9FEiObOeN7hnxKLJMoXhGRpDD2HLsfJL3kj+t7nM+nsmosQKVXQL6h2Zn3UQRGXInPC
+         ZZdoCtNSYyF3BlukmTcN6jdd1uUROvhCyH2teKvy6hUhzCcRX/fHtl4yYpCpc0tpZFet
+         s7w+QzQzjK22Hnd07G+tLrlEiUiI1X/KLJ+iwMW+YxwaHJAsHpO2L+upoVVsW7X6E3S6
+         CjLxV85JXfgYc+zFEDvN1rSn41I+Tgnn4kP0h4SuNLwXs/dRYB2kOspjG7ElW11Dy9gm
+         EijA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Cw0WBu18s+GIN4haQtiFtpQd2zZmJDCofc5x0cJ/Wv4=;
-        b=cZDB3sR2ZD1kzSBRMMFPQQx4Nn46b/BiHEyixtoz0MMXguOA7XIHux9b2cUOUfrfhC
-         trQcd07VFVCVsPtIsJefLeUGzRFhmyUiAZGl4/APFDK293FIanCgpUZ1Zi8WTGxOQ2Qi
-         41xEHz+/qYOsXL2h+qcKEhEWgoh1jZXV/orMxvZx0YJb735Ey71sItdBZ2Uw3+nYMk8U
-         gEpVAcFxIM3wTTDxPvrJGczCd3gjtelrpgtTp/Ru6nOVyNDhy7r/VI2wnxdahsNirhtw
-         flFvcqyAI+nrNHxl0y1GkHqrKMjznnGJZZSCxTrinAtZzwQHOnkut8hXUM3aSUy6/U6d
-         ZLng==
-X-Gm-Message-State: APjAAAU242EvQa/S7Hq9iFUcYWYZxPDqkTZlMre2SUvqsuuy9MRJaMWG
-        d+ffLgp91BDESmBy47b9qFtyJw==
-X-Google-Smtp-Source: APXvYqzQ31FvQYXIENP7CFVCndevVnPos30ev8H4rKthBV75mVtEjvGrcEYsIUGx/Nl7bkanI4QW5Q==
-X-Received: by 2002:a17:90a:17ad:: with SMTP id q42mr7298096pja.100.1571778303267;
-        Tue, 22 Oct 2019 14:05:03 -0700 (PDT)
+        bh=64ZKeIa0GzfLE8QA6OC+HU6WzaJ4+tlU47KbC0T7Rqs=;
+        b=eRcT8dBsc5FY/p6HVuN4uS//31vMcTZWgSxcFeGbCH4WkGJQQAKx/T89nTY7D8z2UE
+         jjaNJID5yqddVsrxEw81vV/vDhDbn//IIXIPeSESwX0lkEGOAWQ8DA9fMrnsWCZqjgHv
+         1kVmh99nh1wPhxu/IYY3cwKU0eUFUif84W9P/l2u1EBwjqTfQWMu5G/hPu3gESlt3ID7
+         k/5/T4rKneQNHhdJIzoptwA4TQXfbG5ZzqdW6a3RTbJ4/ys9Y8sS7O1kwwJqiI0snnCw
+         3b/ts41m1ntTI8UDRfNbKxLa+ORR3QaGetKLkepcBcss8fn+QOs2nTaEYbNigZ0zLc07
+         B1ZQ==
+X-Gm-Message-State: APjAAAVQYr6KmPZ3ptJV1dkKfnZhOwH2Kq262O7hVgKZjAL0STe0A0c0
+        T+RLXoq0B/YFtjv67wsrn6cHDQ==
+X-Google-Smtp-Source: APXvYqy3IDxwh6/m8eSyNBjkALhNJuWLYbwnbRzpnPEEYZpDY42Gmf7L8UszG973H7o0fuJTpMZUXg==
+X-Received: by 2002:a63:8f41:: with SMTP id r1mr1623668pgn.83.1571779004518;
+        Tue, 22 Oct 2019 14:16:44 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id b24sm4402513pfo.4.2019.10.22.14.05.02
+        by smtp.gmail.com with ESMTPSA id 4sm18968806pja.29.2019.10.22.14.16.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Oct 2019 14:05:02 -0700 (PDT)
-Date:   Tue, 22 Oct 2019 14:04:58 -0700
+        Tue, 22 Oct 2019 14:16:43 -0700 (PDT)
+Date:   Tue, 22 Oct 2019 14:16:39 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] documentation: remove empty doc files
-Message-ID: <20191022210458.GE9323@google.com>
-References: <pull.412.git.1571768375.gitgitgadget@gmail.com>
- <ffdde613d8ea2dc57719594aa0f89b6d6177b636.1571768375.git.gitgitgadget@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     peff@peff.net, git@vger.kernel.org
+Subject: Re: Git in Outreachy December 2019?
+Message-ID: <20191022211639.GF9323@google.com>
+References: <20190913205148.GA8799@sigill.intra.peff.net>
+ <20190920170448.226942-1-jonathantanmy@google.com>
+ <20190921014701.GA191795@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ffdde613d8ea2dc57719594aa0f89b6d6177b636.1571768375.git.gitgitgadget@gmail.com>
+In-Reply-To: <20190921014701.GA191795@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 22, 2019 at 06:19:35PM +0000, Heba Waly via GitGitGadget wrote:
-> From: Heba Waly <heba.waly@gmail.com>
+On Fri, Sep 20, 2019 at 06:47:01PM -0700, Emily Shaffer wrote:
+> On Fri, Sep 20, 2019 at 10:04:48AM -0700, Jonathan Tan wrote:
+> > > Prospective mentors need to sign up on that site, and should propose a
+> > > project they'd be willing to mentor.
+> > 
+> > [snip]
+> > 
+> > > I'm happy to discuss possible projects if anybody has an idea but isn't
+> > > sure how to develop it into a proposal.
+> > 
+> > I'm new to Outreachy and programs like this, so does anyone have an
+> > opinion on my draft proposal below? It does not have any immediate
+> > user-facing benefit, but it does have a definite end point.
 > 
-> Remove empty and redundant documentation files from the
-> Documentation/technical/ directory.
-> 
-> As part of moving the documentation from Documentation/technical/api-* to
-> header files, the following files are deleted because they include only
-> TODO messages with no documentation to be moved:
-> Documentation/technical/api-grep.txt
-> Documentation/technical/api-object-access.txt
-> Documentation/technical/api-quote.txt
-> Documentation/technical/api-xdiff-interface.txt
+> I'd appreciate similar opinion if anybody has it - and I'd also really
+> feel more comfortable with a co-mentor.
 
-Same thing as I mentioned in your other review; what you've added to
-your commit message now doesn't say anything you didn't say with the
-diff. I can see that you removed empty documentation files; I can see
-that those files include only TODO.
+I know early on in this thread about Outreachy projects some folks
+expressed interest in comentoring. Is anybody still interested in doing
+so?
 
-Maybe you can explain why it's a bad developer experience to stumble
-across these, and that those files sat untouched for years in the
-TODO(contributor-name) state.
-
-> 
-> Signed-off-by: Heba Waly <heba.waly@gmail.com>
-> ---
->  Documentation/technical/api-grep.txt            |  8 --------
->  Documentation/technical/api-object-access.txt   | 15 ---------------
->  Documentation/technical/api-quote.txt           | 10 ----------
->  Documentation/technical/api-xdiff-interface.txt |  7 -------
->  4 files changed, 40 deletions(-)
->  delete mode 100644 Documentation/technical/api-grep.txt
->  delete mode 100644 Documentation/technical/api-object-access.txt
->  delete mode 100644 Documentation/technical/api-quote.txt
->  delete mode 100644 Documentation/technical/api-xdiff-interface.txt
-
-As for the content of this change, I absolutely approve. I've stumbled
-across some of these empty docs while looking for answers before and
-found it really demoralizing - the community is so interested in
-teaching me how to contribute that they've sat on a TODO for 12 years?
-:( I even held up api-grep.txt as a (bad) example in a talk I gave this
-year. I'm happy to see these files go.
+For context, I've been in contact with 3 applicants who have either sent
+their first patch already or are getting ready to (and have needed some
+involved discussion or help) plus another few applicants who have
+inquired and may or may not send patches in the future. I've also
+received quite a few mails outside of my timezone working hours (I
+usually am awake/working 18:00GMT-02:00GMT), which I feel badly about
+not being able to respond to in a timely fashion. If anybody wants to
+comentor I would be so excited to have the help :)
 
  - Emily
