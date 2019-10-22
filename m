@@ -2,111 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D04051F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 10:18:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6B531F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 10:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731822AbfJVKSJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 06:18:09 -0400
-Received: from mail-eopbgr800045.outbound.protection.outlook.com ([40.107.80.45]:7104
-        "EHLO NAM03-DM3-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1731769AbfJVKSG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 06:18:06 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bAqUMaJVoUZIGkGqNSoJmdYVkX26LHoBV9D4Txrr++YzY9b56xggH5eOGSDDQw1zim58aq51H3CmAj5c9tHPn6Sy/+d2EdMLpT4npBKVawO9XV1nmQISuXNwX3eoTg3UgW+BEaqc7lTTcdAfYIk5fWU1B8dsI+pblAbLTubybT404aISf5MQ/f+37t0wcVyVn+L1xxUsv3AUFLGlroV6AaScwytmxwwo+iORSZUXXKSPZWL/+vRyI8deuu17/rPGfAWtSgp+a9tc5dR4jziVWRKZGDwSMn9bx7DChcOPJNdUQpkSBBtTWL4ruubPu1h8dh3K5Wxxm2nPJcUfOMz+Qg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GMXsW2433j5Gxh8Tiiah6xIGiAFekjzspTIfgQ3b+a8=;
- b=D8d3FiwHEEFaUuT0+nwImaER4tXLvX+U+842BjaF1G+JgrCnKjAWOrX8SHi2rNV9XfGgOsEy6vgfd6rygHZjuQvV6txlxSbw+y0+GHPhUNJGALPcRwpRBXOEMwqKlTsh9M2YE5rb1Ys/LZa81qi3uyVMNqKu9qg+UfJqoDUqUPwkq4yhCSluZnBuwdxHegKl3cjsaOp4nl/ZyZiHKGdjHeZ9d1v6Qpo5ziNcC9EMoG0jBX/MmqL7ezMcI1lID0gv/IQozhIPJ4XW1bcT6W+NxghwGJK8YDwe+a1sFYLF3Pleh3MGw7V4Ve+y1Qcke5LtL4QdXa8ztAAJ8LTvYfGM8A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=silabs.com; dmarc=pass action=none header.from=silabs.com;
- dkim=pass header.d=silabs.com; arc=none
+        id S1730026AbfJVKTz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 06:19:55 -0400
+Received: from mail-pg1-f182.google.com ([209.85.215.182]:42405 "EHLO
+        mail-pg1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727101AbfJVKTz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 06:19:55 -0400
+Received: by mail-pg1-f182.google.com with SMTP id f14so9649339pgi.9
+        for <git@vger.kernel.org>; Tue, 22 Oct 2019 03:19:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=silabs.onmicrosoft.com; s=selector2-silabs-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GMXsW2433j5Gxh8Tiiah6xIGiAFekjzspTIfgQ3b+a8=;
- b=pLxU86EHEUonoIuqbnCwHEb8JfLbo+xwJKAy76+4+pQutlGVr0BLjI/R+5PxH5g9xOLM5K/5yHoRU3ZdY/8qOJ8ZCTaLsqR+qwi49miRWNZzEeQiogNx9su03Nn/xSWP5Iaxr0obphdC3ngNjbNVIJL4Bm9/B6OKQlrk8ZTkPXo=
-Received: from MN2PR11MB4063.namprd11.prod.outlook.com (10.255.180.22) by
- MN2PR11MB3711.namprd11.prod.outlook.com (20.178.254.154) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2347.16; Tue, 22 Oct 2019 10:18:03 +0000
-Received: from MN2PR11MB4063.namprd11.prod.outlook.com
- ([fe80::ac8c:fc55:d1e2:465f]) by MN2PR11MB4063.namprd11.prod.outlook.com
- ([fe80::ac8c:fc55:d1e2:465f%5]) with mapi id 15.20.2347.029; Tue, 22 Oct 2019
- 10:18:03 +0000
-From:   Jerome Pouiller <Jerome.Pouiller@silabs.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [BUG] "--show-current-patch" return a mail instead of a patch
-Thread-Topic: [BUG] "--show-current-patch" return a mail instead of a patch
-Thread-Index: AQHViMH8W7ZVg6yI2Uq8GUvXcCiKxA==
-Date:   Tue, 22 Oct 2019 10:18:03 +0000
-Message-ID: <2154192.LVDMpRDY2h@pc-42>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Jerome.Pouiller@silabs.com; 
-x-originating-ip: [37.71.187.125]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 637341b7-74f1-491d-8c41-08d756d91fa0
-x-ms-traffictypediagnostic: MN2PR11MB3711:
-x-microsoft-antispam-prvs: <MN2PR11MB371145FC98D395FF66F9BD0793680@MN2PR11MB3711.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 01986AE76B
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(7916004)(136003)(366004)(376002)(346002)(39850400004)(396003)(189003)(199004)(53754006)(4744005)(6116002)(25786009)(6436002)(186003)(2351001)(5640700003)(8676002)(6486002)(81166006)(1730700003)(33716001)(9686003)(2906002)(5660300002)(6512007)(26005)(71190400001)(66476007)(64756008)(66556008)(316002)(66946007)(66446008)(71200400001)(81156014)(66066001)(486006)(86362001)(478600001)(8936002)(476003)(256004)(14454004)(6916009)(91956017)(76116006)(2501003)(7736002)(102836004)(3846002)(6506007)(99286004)(305945005)(39026011);DIR:OUT;SFP:1101;SCL:1;SRVR:MN2PR11MB3711;H:MN2PR11MB4063.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: silabs.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: PmyUhiTiIwnrJOTkz7aXD7LBixpInvIY5GaC716JGMf/5G6fAzFZo/VtblQM2CB/vPuBgsoLN7fOTuHHiReLQ4fvimN+hFxGbRhVGAovagtwi/CbB2Vwg0Ddvkj3vD1Q6g9C3ZBpypkA2RcwTw6KAE8jFP0qK6AoNwBrCSrwbLedRQ8+tkXDEFQObV+wVcs4mdegcB0sjG816mWyT5B+1hFIJj7fHJB4djrQtb9q+tgxWlJ7BzuErMZpNu0j6HSY6autpUwlCm++udSr0wYToCvUi03rucarAMtRmOxfvZIpz7pjj0ajgsebpDlwZdYmInLlt7be7BsPJjR5eetYifwr5QvekATymjQZxWRNaWXlPrGx+82OW6fkpJI9Zzsp8aVdrFdHWFa1ydmh31lWHlP+yuCXRdYe13av5Z0LU6A=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-1"
-Content-ID: <C0726B4D6A505540BDF4925F5D72A244@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Y1I1ZzNx6RQcNzwweqjhBxufSItFNEYOMJYpV/KHzyk=;
+        b=sqIp0p0Z3/dMpeRO9nCTeKxm+gxAnxNDiaZIe0IE/o8U/3NoURh5z/jvVhVr5W4fFs
+         L9Y9i0kGYTOmBCQ4EGHpbNMQ9mM76dA0geIlYJ1d/9QMthPx8auEvsKcot+kkv6pcG5G
+         xpOfB/q/MD7TmpqmPRdU6+E2MzLnYrctOuUy8XY3jcbLQmBSkT0GP4IM9u0RWpIbz/lx
+         Aj2lHrhXTv34liQMuCuRAJ8+h4mufAkNQVjdRsBXKxnsNaWCoaZUrIBWKA/k7qqghzXW
+         qCcXrTimmZiKegGbkKwQG5hpV/R+aPcnjmGKeGzMvKY3vmsQ7xNEuFQxXUKEX8sAqxBt
+         XytA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Y1I1ZzNx6RQcNzwweqjhBxufSItFNEYOMJYpV/KHzyk=;
+        b=BW72ImrvkPTUFB5Sbe14svJ2nw0+8xrx1LaRY9A8eLu9fCt9vPJ/BY5lgA7ksJIH+N
+         V2Zh/BWYrTn99Qh5skxCXxp4FOS1XkTFE7P68aifiolAQjKXTfvRVjKebXLDdpWyWWZX
+         b/ESZoMX3WOXSrZG5kFUc2n4X70kflCGayUjT4HFO4tSlKsM7EuXP7XtVkTYIf7fyUtX
+         AZYCYa3y18pJ7qPTGGEUDiRGBr8/OcyXn71Ykufki874NQ8jqUUQkxEDXQTUpgoWvd/P
+         dhDfgNKCMXiOFqFIUxkx6jHoSIkVXdqu6mwEn9Rhy8iqiU/rGMJhqx6CqtBA8eoXn+Ur
+         Ffhw==
+X-Gm-Message-State: APjAAAVQgfdsGEy7zTshd6dd2X0zrWB9m3ADPCktbSc0X5aRxY2rBzfW
+        E0LWdiSGbYv8pkJHkr//birqpSei
+X-Google-Smtp-Source: APXvYqw/ygnkRTwtuDCRZz5XNMZRQljQKiqeq2fdToAM0I4f2xzfXo59VoS0Dfqm/3xFSWd//skFYw==
+X-Received: by 2002:a62:5305:: with SMTP id h5mr3432798pfb.121.1571739594319;
+        Tue, 22 Oct 2019 03:19:54 -0700 (PDT)
+Received: from generichostname ([2601:646:280:1b30:80db:d816:4d15:ae2a])
+        by smtp.gmail.com with ESMTPSA id u7sm18582653pfn.61.2019.10.22.03.19.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Oct 2019 03:19:53 -0700 (PDT)
+Date:   Tue, 22 Oct 2019 03:19:51 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: [PATCH v3 00/14] t5520: various test cleanup
+Message-ID: <cover.1571739459.git.liu.denton@gmail.com>
+References: <cover.1571435195.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: silabs.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 637341b7-74f1-491d-8c41-08d756d91fa0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Oct 2019 10:18:03.2962
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 54dbd822-5231-4b20-944d-6f4abcd541fb
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 9Tufz2KZSMijkPQh7ZB7VXcFyJFsNCjo8j9+1z7niWXOfolkT+G8DFHhQxphgFcp/ylsP+axQjFgrtjoxFFdpA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB3711
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1571435195.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+Like earlier patchsets, I want to implement a feature that involves
+modifications to the test suite. Since that feature will probably take a
+while to polish up, however, let's clean up the test suite in a separate
+patchset first so it's not blocked by the feature work.
 
-I try to use "git am" to apply a patch sent using "git send-email". This
-patch does not apply properly. I try to use "git am --show-current-patch"
-to understand the problem. However, since original mail is encoded in quote=
-d-
-printable, data returned by --show-current-patch is not a valid patch.
+1/15 is a general improvement to test_rev_cmp() that will be used later
+in the series.
 
-I expected that --show-current-patch would return decoded version of origin=
-al=20
-mail or something that looks like the output of "git format-patch" or at le=
-ast=20
-a valid patch. Thus, it could be processed with "git apply" or "patch".
+Changes since v2:
 
-Currently I run "git mailinfo" manually to get the patch, but it is not ver=
-y=20
-handy.
+* Drop 't7408: replace `test_must_fail test_path_is_file`' since it's
+  not a rabbit hole we want to go into right now
 
-(I use git version 2.20.1 from Debian buster)
+* Fix the output of `test_cmp_rev !` when revs are actually equal
 
-Thank you,
+* Rebase against the latest master since this topic hasn't been picked
+  up yet
 
---=20
-J=E9r=F4me Pouiller
+Changes since v1:
+
+* Incorporate Eric's feedback
+
+Denton Liu (14):
+  t: teach test_cmp_rev to accept ! for not-equals
+  t5520: improve test style
+  t5520: use sq for test case names
+  t5520: let sed open its own input
+  t5520: replace test -f with test-lib functions
+  t5520: remove spaces after redirect operator
+  t5520: use test_line_count where possible
+  t5520: replace test -{n,z} with test-lib functions
+  t5520: use test_cmp_rev where possible
+  t5520: test single-line files by git with test_cmp
+  t5520: don't put git in upstream of pipe
+  t5520: replace subshell cat comparison with test_cmp
+  t5520: remove redundant lines in test cases
+  t5520: replace `! git` with `test_must_fail git`
+
+ t/t2400-worktree-add.sh             |   4 +-
+ t/t3400-rebase.sh                   |   2 +-
+ t/t3421-rebase-topology-linear.sh   |   6 +-
+ t/t3430-rebase-merges.sh            |   2 +-
+ t/t3432-rebase-fast-forward.sh      |   2 +-
+ t/t3501-revert-cherry-pick.sh       |   2 +-
+ t/t3508-cherry-pick-many-commits.sh |   2 +-
+ t/t5520-pull.sh                     | 343 +++++++++++++++++-----------
+ t/test-lib-functions.sh             |  22 +-
+ 9 files changed, 234 insertions(+), 151 deletions(-)
+
+Range-diff against v2:
+ 1:  987fee4652 <  -:  ---------- t7408: replace `test_must_fail test_path_is_file`
+ 2:  417e808466 !  1:  9a96f113e7 t: teach test_cmp_rev to accept ! for not-equals
+    @@ t/test-lib-functions.sh: test_cmp_rev () {
+     -		if test "$r1" != "$r2"
+     +		if test "$r1" "$inverted_op" "$r2"
+      		then
+    ++			local comp_out
+    ++			if "x$inverted_op" = 'x='
+    ++			then
+    ++				comp_out='the same'
+    ++			else
+    ++				comp_out='different'
+    ++			fi
+      			cat >&4 <<-EOF
+    - 			error: two revisions point to different objects:
+    +-			error: two revisions point to different objects:
+    ++			error: two revisions point to $comp_out objects:
+    + 			  '$1': $r1
+    + 			  '$2': $r2
+    + 			EOF
+ 3:  0a56980857 =  2:  dfc86a8d9b t5520: improve test style
+ 4:  dfa89ba1cb =  3:  a1071038f5 t5520: use sq for test case names
+ 5:  9fac3dff83 =  4:  0af3f5027b t5520: let sed open its own input
+ 6:  c6ca45eb17 =  5:  b696ff0a67 t5520: replace test -f with test-lib functions
+ 7:  830a8212ae =  6:  d2e49fd990 t5520: remove spaces after redirect operator
+ 8:  3d982230be =  7:  fcfc3226f8 t5520: use test_line_count where possible
+ 9:  2bca4f046d =  8:  86dafc7b54 t5520: replace test -{n,z} with test-lib functions
+10:  1a54db1d5c =  9:  bf9b5023a3 t5520: use test_cmp_rev where possible
+11:  52cf4f0d0f = 10:  bfabf8ceff t5520: test single-line files by git with test_cmp
+12:  0cfabb201c = 11:  56bcbf3047 t5520: don't put git in upstream of pipe
+13:  b2d0ce21c8 = 12:  e9d50b8bb0 t5520: replace subshell cat comparison with test_cmp
+14:  5aac40a029 = 13:  9db0fc2156 t5520: remove redundant lines in test cases
+15:  2c0d3ac416 = 14:  a721d5f119 t5520: replace `! git` with `test_must_fail git`
+-- 
+2.24.0.rc0.197.g0926ab8072
 
