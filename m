@@ -2,165 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02F341F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 16:01:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B48631F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 16:30:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389010AbfJVQBN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 12:01:13 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:39925 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387746AbfJVQBM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 12:01:12 -0400
-Received: by mail-wm1-f66.google.com with SMTP id r141so7109247wme.4
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 09:01:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6lWBdDQulmMPcNxOU3ipuFhAi6IYPgxiJGzdC5sCce0=;
-        b=rpa4dtEtswFLmdNAmL1oA4jTmAsWd96OlLZqes8W5lsraLFuPFY62cdhRmv61VtWS8
-         AYYjXaPftupH7TWPwiuoMwis2ZoFTJn35SthT/6khZ8U8PxA1y/xqZuziYXd0SyeCPYS
-         hbD9ixUO3Sy0/kem90nAavxWR716UHvNfcUbmGrr/0FImUiL5JgOJ3nEf1LBp9p+4Dc9
-         yMxAP4u6ES4SSZIy2GZe8+U/ITUF2UxRvzG5Vih9jFkzEMrS0bIfaCcq6L4Az4BRiFDB
-         o72mN15q0UlgHzZ/+7BCk5OszV7XjHWZ1QBe99Pp2pessAaTXpEoE9mkeWt05lXgUgbb
-         X2hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6lWBdDQulmMPcNxOU3ipuFhAi6IYPgxiJGzdC5sCce0=;
-        b=ONCCwIn/ej5obC5s6J2Ez6UnWCWRi9hlANgAMPY/JFAI2hRpL4FfDcYVLZJiGs2V2H
-         Z/sFglva8BOTNJoBzvDy8GCeV8xVcHC2vcakgfkjBHitGL89aCMqDza4dIXXPB6Ix1SZ
-         vcNi+5OL/iQIWKaTYEx+MNa+sbfLs4X6OtukkQ7HgG0RTzaLaL1P9oDj0Gt/i4+fIPt1
-         4S4DAqTlLt5iCFlOGCLPgfhi4nidH4gNNw4q+JXDO+2d1TET59dkL5WxlHfgLpCI9sOs
-         dmDf4XPCd0wbYXsYB6tQOuqEwI4QGftQX84REKWVteU1wewibtNK48EPrVdlpzQErLnY
-         34qw==
-X-Gm-Message-State: APjAAAX4pkoXaIdxXz/WAfG0LLXH0zQ4AcGHAh0f5u00e2XBiuy3r1TE
-        t0H8yM7ibqfmrbnOnRdctlY=
-X-Google-Smtp-Source: APXvYqzdgWBDWXqV/ZYUqKVb3usXCeOMLB4WCV4Lc5a7S9Naj9w5oQ1qC6ArsF/Z8YQYqGYvPUgt0w==
-X-Received: by 2002:a1c:4456:: with SMTP id r83mr3566849wma.2.1571760068557;
-        Tue, 22 Oct 2019 09:01:08 -0700 (PDT)
-Received: from szeder.dev (x4dbe0456.dyn.telefonica.de. [77.190.4.86])
-        by smtp.gmail.com with ESMTPSA id g69sm5937598wme.31.2019.10.22.09.01.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Oct 2019 09:01:07 -0700 (PDT)
-Date:   Tue, 22 Oct 2019 18:01:05 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] git_path(): handle `.lock` files correctly
-Message-ID: <20191022160105.GE4348@szeder.dev>
-References: <pull.401.v2.git.1571350077.gitgitgadget@gmail.com>
- <pull.401.v3.git.1571694882.gitgitgadget@gmail.com>
- <8b1f4f089a6d4a2293507a1a77668c828598e84f.1571694882.git.gitgitgadget@gmail.com>
+        id S2388366AbfJVQaX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 12:30:23 -0400
+Received: from userp2120.oracle.com ([156.151.31.85]:36112 "EHLO
+        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387873AbfJVQaW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 12:30:22 -0400
+Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
+        by userp2120.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x9MGSuKD165257;
+        Tue, 22 Oct 2019 16:29:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=corp-2019-08-05;
+ bh=aGu1aHzafMqFrU5v6bmC0bZUGDBIxfBU5FS6beFKAV4=;
+ b=lI37fSWrTn9vVdOmdpBjEJGThnaTTpKR11O4uvEIwaQ1/NdWEE/Ipn2i7uVL7rhsQWq8
+ lVm+fj4SJpy0Eejilmx60PyC39LXfx4Cq+TOYyTPJx2pZZBH2FMn9PbsPjsaS02vjIoG
+ 5yPkHfuouWceRyr+vK58Az1dkGkZNBQxdseedeOjvORlw91qbdMIS91ZNgoyNT+dF9Ha
+ LHZgVvtE8gu0KHXv62vxZOHEIOML2gPIcPIs7SqiXD5xwvAN1ZNggzjeYQJO9BmlyRlD
+ UovC5s+xsF+NB3qpOU1q08qoOAGH9F6pC6hOzSfCvp6gR7AN/PSohPROXx3ARZ/LiHs0 iQ== 
+Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
+        by userp2120.oracle.com with ESMTP id 2vqu4qqsx7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 22 Oct 2019 16:29:48 +0000
+Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
+        by aserp3020.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x9MGStG0064556;
+        Tue, 22 Oct 2019 16:29:47 GMT
+Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
+        by aserp3020.oracle.com with ESMTP id 2vt2hdbqb0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 22 Oct 2019 16:29:47 +0000
+Received: from abhmp0014.oracle.com (abhmp0014.oracle.com [141.146.116.20])
+        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id x9MGThJN023491;
+        Tue, 22 Oct 2019 16:29:43 GMT
+Received: from [10.175.28.77] (/10.175.28.77)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Tue, 22 Oct 2019 09:29:43 -0700
+Subject: Re: email as a bona fide git transport
+To:     "Theodore Y. Ts'o" <tytso@mit.edu>
+Cc:     Willy Tarreau <w@1wt.eu>, Santiago Torres Arias <santiago@nyu.edu>,
+        workflows@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Eric Wong <e@80x24.org>
+References: <b9fb52b8-8168-6bf0-9a72-1e6c44a281a5@oracle.com>
+ <20191016111009.GE13154@1wt.eu>
+ <20191016144517.giwip4yuaxtcd64g@LykOS.localdomain>
+ <56664222-6c29-09dc-ef78-7b380b113c4a@oracle.com>
+ <20191018161547.GG21137@mit.edu>
+ <de49fe5e-85cb-9fb0-f9f4-c294d72e356c@oracle.com>
+ <20191018191456.GI21137@mit.edu> <20191020031716.GA17475@1wt.eu>
+ <1a259d8d-b3d1-b64e-07c3-ba143b42c442@oracle.com>
+ <de6dd8b5-5c28-d0b2-d3fc-e72a6d643105@oracle.com>
+ <20191022135344.GC23268@mit.edu>
+From:   Vegard Nossum <vegard.nossum@oracle.com>
+Message-ID: <eed119a2-1561-131e-9d3d-d4d5aadee825@oracle.com>
+Date:   Tue, 22 Oct 2019 18:29:34 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <8b1f4f089a6d4a2293507a1a77668c828598e84f.1571694882.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20191022135344.GC23268@mit.edu>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9418 signatures=668684
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1908290000 definitions=main-1910220139
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9418 signatures=668684
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1908290000
+ definitions=main-1910220139
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 09:54:42PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> Ever since worktrees were introduced, the `git_path()` function _really_
-> needed to be called e.g. to get at the path to `logs/HEAD` (`HEAD` is
-> specific to the worktree, and therefore so is its reflog). However, the
-> wrong path is returned for `logs/HEAD.lock`.
-> 
-> This does not matter as long as the Git executable is doing the asking,
-> as the path for that `logs/HEAD.lock` file is constructed from
-> `git_path("logs/HEAD")` by appending the `.lock` suffix.
-> 
-> However, Git GUI just learned to use `--git-path` instead of appending
-> relative paths to what `git rev-parse --git-dir` returns (and as a
-> consequence not only using the correct hooks directory, but also using
-> the correct paths in worktrees other than the main one). While it does
-> not seem as if Git GUI in particular is asking for `logs/HEAD.lock`,
-> let's be safe rather than sorry.
-> 
-> Side note: Git GUI _does_ ask for `index.lock`, but that is already
-> resolved correctly, due to `update_common_dir()` preferring to leave
-> unknown paths in the (worktree-specific) git directory.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  path.c               |  8 +++++++-
->  t/t1500-rev-parse.sh | 15 +++++++++++++++
->  2 files changed, 22 insertions(+), 1 deletion(-)
-> 
-> diff --git a/path.c b/path.c
-> index e3da1f3c4e..5ff64e7a8a 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -349,10 +349,16 @@ static int check_common(const char *unmatched, void *value, void *baton)
->  static void update_common_dir(struct strbuf *buf, int git_dir_len,
->  			      const char *common_dir)
->  {
-> -	char *base = buf->buf + git_dir_len;
-> +	char *base = buf->buf + git_dir_len, *base2 = NULL;
-> +
-> +	if (ends_with(base, ".lock"))
-> +		base = base2 = xstrndup(base, strlen(base) - 5);
 
-Hm, this adds the magic number 5 and calls strlen(base) twice, because
-ends_with() calls strip_suffix(), which calls strlen().  Calling
-strip_suffix() directly would allow us to avoid the magic number and
-the second strlen():
+On 10/22/19 3:53 PM, Theodore Y. Ts'o wrote:
+> On Tue, Oct 22, 2019 at 02:11:22PM +0200, Vegard Nossum wrote:
+>>
+>> As I wrote in there, we could already today start using
+>>
+>>    git am --message-id
+>>
+>> when applying patches and this would provide something that a bot could
+>> annotate with git notes pointing to lore/LKML/LWN/whatever. I think that
+>> would already be a pretty nice improvement over today's situation.
+>>
+>> Sadly, since the beginning of 2018, this was only used for a measly
+>> ~0.14% of all non-merge commits in the kernel:
+>>
+>> $ git rev-list --count --no-merges --since='2018-01-01' --grep 'Message-Id:
+>> ' linus/master
+>> 178
+> 
+> You might also want to count commits which have a link tag with a
+> Message-Id:
+> 
+> Link: https://lore.kernel.org/r/c3438dad66a34a7d4e7509a5dd64c2326340a52a.1571647180.git.mbobrowski@mbobrowski.org
+> 
+> That's because some kernel developers have been using a hook script like this:
+> 
+> #!/bin/sh
+> # For .git/hooks/applypatch-msg
+> #
+> # You must have the following in .git/config:
+> # [am]
+> #	messageid = true
+> 	
+> . git-sh-setup
+> perl -pi -e 's|^Message-Id:\s*<?([^>]+)>?$|Link: https://lore.kernel.org/r/$1|g;' "$1"
+> test -x "$GIT_DIR/hooks/commit-msg" &&
+> 	exec "$GIT_DIR/hooks/commit-msg" ${1+"$@"}
+> :
+> 
+> .... as we had reached rough consensus that this was the best way to
+> incorprate the message id (since it could made to be a clickable link
+> in tools like gitk, for example).  This rough consensus has only been
+> in place since around the time of the Maintainer's Summit in Lisbon,
+> so uptake is still probably a bit slow.  I'd expect to see a lot more
+> of this in the next merge window, though.
 
-  size_t len;
-  if (strip_suffix(base, ".lock", &len))
-          base = base2 = xstrndup(base, len);
+Thanks, I was not aware of this!
 
->  	init_common_trie();
->  	if (trie_find(&common_trie, base, check_common, NULL) > 0)
->  		replace_dir(buf, git_dir_len, common_dir);
-> +
-> +	free(base2);
->  }
->  
->  void report_linked_checkout_garbage(void)
-> diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-> index 01abee533d..d318a1eeef 100755
-> --- a/t/t1500-rev-parse.sh
-> +++ b/t/t1500-rev-parse.sh
-> @@ -116,6 +116,21 @@ test_expect_success 'git-path inside sub-dir' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'git-path in worktree' '
-> +	test_tick &&
-> +	git commit --allow-empty -m empty &&
-> +	git worktree add --detach wt &&
-> +	test_write_lines >expect \
-> +		"$(pwd)/.git/worktrees/wt/logs/HEAD" \
-> +		"$(pwd)/.git/worktrees/wt/logs/HEAD.lock" \
-> +		"$(pwd)/.git/worktrees/wt/index" \
-> +		"$(pwd)/.git/worktrees/wt/index.lock" &&
-> +	git -C wt rev-parse >actual \
-> +		--git-path logs/HEAD --git-path logs/HEAD.lock \
-> +		--git-path index --git-path index.lock &&
-> +	test_cmp expect actual
-> +'
+Seems like something that should go in Documentation/maintainer/,
+right?
 
-I think this test better fits into 't0060-path-utils.sh': it already
-checks 'logs/HEAD' and 'index' in a different working tree (well, with
-GIT_COMMON_DIR set, but that's the same), and it has a helper function
-to make each of the two new .lock tests a one-liner.
+The figure is much better, 16.7% on all non-merges since 2018-01-01.
+This should help and we can maybe already do some interesting things
+with git notes and lore/public-inbox.
 
->  test_expect_success 'rev-parse --is-shallow-repository in shallow repo' '
->  	test_commit test_commit &&
->  	echo true >expect &&
-> -- 
-> gitgitgadget
+
+Vegard
