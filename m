@@ -2,280 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62AC11F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 14:45:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5EA211F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 14:50:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732029AbfJVOpn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 10:45:43 -0400
-Received: from mail-wm1-f54.google.com ([209.85.128.54]:52362 "EHLO
-        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731810AbfJVOpm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 10:45:42 -0400
-Received: by mail-wm1-f54.google.com with SMTP id r19so17637112wmh.2
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 07:45:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=TaiKICDMgkTwwb0jCA6Tn9+wxesEhvai57d6KEqFDQc=;
-        b=QYy57k9YPqhpTAvLqUDgJQEbkCdlwhj3xovelGExK6QIxbh6TQqkqX/jtaMoaA59fL
-         0AxGIJy4L/MDxw/0ho/u5b/dHbOcxtxbPcOIBltjWEJk27fT4B+7YksKnjRrL3CDzw3w
-         cBwWDVRN56gmdTqhh0BdQ/Yn5J6BPD5R9NPz255uQyOPNvnGSp04xPw4bTEASDPEgF+7
-         s/4LLTUOxcnIjL3yUOIE2JUSlCxcqOil0axBxuGgwqr6ef+asudzhi6pA6bIe0V01jyo
-         sa4LHGz5DeMVgyEAXCAlx5OLKbZHRFsDKN4UJh90TIAVF2ety8zDJAhdfIpdm1xxd8A0
-         JYrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TaiKICDMgkTwwb0jCA6Tn9+wxesEhvai57d6KEqFDQc=;
-        b=GWHPh/ckKXIKVEQgwR4UFavIzHZwZVTQovAD6Yy/ldQNdqcvHuDddpK8M5QtZMXYzN
-         MN/cbc43AYBhS78KKN4gdF+wpWj0CHuLMGxggMKg/dWbDqfQqcPr+0WrrL/tRFLctzFc
-         l9R/q7pRZYlmFPvLhDmEdkEuWeU86xUnQeaKen950yzRSmpWau+3XRvJQx53L4iFnLzV
-         +SGdDBYm5WLh6fZXAyhIlb9A6EL2w87VbB0gZ8ADHwladbck3/wjNpabZkHKd7PzMNgq
-         oisaPXFIqGaigUg/+YRNCS9Hik0k/WmBbX5DxM0rcX/XsFBz2fNGVnVFLirT79t6fQwR
-         ez3Q==
-X-Gm-Message-State: APjAAAWtKvYXBHPaMIey4MLyUhFKUySBc2RB6ERU9CCBM/C4liWklVEH
-        +CRSbchhKGpqEPxtFDn1N9P6GudL
-X-Google-Smtp-Source: APXvYqycWVj1PrF6L0rimMM45wEs8D6GT7uopOUFrNNd/Qu3BxMDGNTuSN4NzKIBHEYU4hA5O5MLFg==
-X-Received: by 2002:a7b:c444:: with SMTP id l4mr3396740wmi.49.1571755539586;
-        Tue, 22 Oct 2019 07:45:39 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w15sm10034041wro.65.2019.10.22.07.45.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Oct 2019 07:45:39 -0700 (PDT)
-Message-Id: <54f0d6f6b53dd4fdd6e4129c942de8002459fd88.1571755538.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.407.v2.git.1571755538.gitgitgadget@gmail.com>
-References: <pull.407.git.1571755147.gitgitgadget@gmail.com>
-        <pull.407.v2.git.1571755538.gitgitgadget@gmail.com>
-From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Oct 2019 14:45:37 +0000
-Subject: [PATCH v2 1/1] vreportf: Fix interleaving issues, remove 4096
- limitation
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1731549AbfJVOua (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 10:50:30 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:39205 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727531AbfJVOua (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 10:50:30 -0400
+Received: from [92.30.121.54] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1iMvUR-0001yG-5Y; Tue, 22 Oct 2019 15:50:27 +0100
+Subject: Re: [git-for-windows] Git for Windows v2.24.0-rc0, was Re: [ANNOUNCE]
+ Git v2.24.0-rc0
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+References: <xmqq4l065zx5.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1910220004190.46@tvgsbejvaqbjf.bet>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <74f50326-e613-8545-2c69-65cd29dd3cfb@iee.email>
+Date:   Tue, 22 Oct 2019 15:50:28 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+In-Reply-To: <nycvar.QRO.7.76.6.1910220004190.46@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Hi Dscho,
 
-This also fixes t5516 on Windows VS build.
-For detailed explanation please refer to code comments in this commit.
+Install went Ok.
 
-There was a lot of back-and-forth already in vreportf():
-d048a96e (2007-11-09) - 'char msg[256]' is introduced to avoid interleaving
-389d1767 (2009-03-25) - Buffer size increased to 1024 to avoid truncation
-625a860c (2009-11-22) - Buffer size increased to 4096 to avoid truncation
-f4c3edc0 (2015-08-11) - Buffer removed to avoid truncation
-b5a9e435 (2017-01-11) - Reverts f4c3edc0 to be able to replace control
-                        chars before sending to stderr
+Did a quick test on the config locations and `git config -l 
+-show-origin` has 'lost' the ProgramData location as planned.
 
-This fix attempts to solve all issues:
-1) avoid multiple fprintf() interleaving
-2) avoid truncation
-3) avoid char interleaving in fprintf() on some platforms
-4) avoid buffer block interleaving when output is large
-5) avoid out-of-order messages
-6) replace control characters in output
+The minor pedant did notice that the new location is listed slightly 
+differently from the release notes.
+`file:C:/Program Files/Git/mingw64/../etc/gitconfig`  --system,
+while the release notes simplify the path to C:/Program 
+Files/Git/etc/gitconfig
 
-Other commits worthy of notice:
-9ac13ec9 (2006-10-11) - Another attempt to solve interleaving.
-                        This is seemingly related to d048a96e.
-137a0d0e (2007-11-19) - Addresses out-of-order for display()
-34df8aba (2009-03-10) - Switches xwrite() to fprintf() in recv_sideband()
-                        to support UTF-8 emulation
-eac14f89 (2012-01-14) - Removes the need for fprintf() for UTF-8 emulation,
-                        so it's safe to use xwrite() again
-5e5be9e2 (2016-06-28) - recv_sideband() uses xwrite() again
+Dunno if that's worth a minor fix to the release notes to clarify for 
+the broader Windows community. Maybe others can comment if they think 
+it's even worth it.
 
-Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
----
- usage.c | 154 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 148 insertions(+), 6 deletions(-)
+Philip
 
-diff --git a/usage.c b/usage.c
-index 2fdb20086b..ccdd91a7b9 100644
---- a/usage.c
-+++ b/usage.c
-@@ -6,17 +6,159 @@
- #include "git-compat-util.h"
- #include "cache.h"
- 
-+static void replace_control_chars(char* str, size_t size, char replacement)
-+{
-+	size_t i;
-+
-+	for (i = 0; i < size; i++) {
-+    		if (iscntrl(str[i]) && str[i] != '\t' && str[i] != '\n')
-+			str[i] = replacement;
-+	}
-+}
-+
-+/*
-+ * Atomically report (prefix + vsnprintf(err, params) + '\n') to stderr.
-+ * Always returns desired buffer size.
-+ * Doesn't write to stderr if content didn't fit.
-+ *
-+ * This function composes everything into a single buffer before
-+ * sending to stderr. This is to defeat various non-atomic issues:
-+ * 1) If stderr is fully buffered:
-+ *    the ordering of stdout and stderr messages could be wrong,
-+ *    because stderr output waits for the buffer to become full.
-+ * 2) If stderr has any type of buffering:
-+ *    buffer has fixed size, which could lead to interleaved buffer
-+ *    blocks when two threads/processes write at the same time.
-+ * 3) If stderr is not buffered:
-+ *    There are two problems, one with atomic fprintf() and another
-+ *    for non-atomic fprintf(), and both occur depending on platform
-+ *    (see details below). If atomic, this function still writes 3
-+ *    parts, which could get interleaved with multiple threads. If
-+ *    not atomic, then fprintf() will basically write char-by-char,
-+ *    which leads to unreadable char-interleaved writes if two
-+ *    processes write to stderr at the same time (threads are OK
-+ *    because fprintf() usually locks file in current process). This
-+ *    for example happens in t5516 where 'git-upload-pack' detects
-+ *    an error, reports it to parent 'git fetch' and both die() at the
-+ *    same time.
-+ *
-+ *    Behaviors, at the moment of writing:
-+ *    a) libc - fprintf()-interleaved
-+ *       fprintf() enables temporary stream buffering.
-+ *       See: buffered_vfprintf()
-+ *    b) VC++ - char-interleaved
-+ *       fprintf() enables temporary stream buffering, but only if
-+ *       stream was not set to no buffering. This has no effect,
-+ *       because stderr is not buffered by default, and git takes
-+ *       an extra step to ensure that in swap_osfhnd().
-+ *       See: _iob[_IOB_ENTRIES],
-+ *            __acrt_stdio_temporary_buffering_guard,
-+ *            has_any_buffer()
-+ *    c) MinGW - char-interleaved (console), full buffering (file)
-+ *       fprintf() obeys stderr buffering. But it uses old MSVCRT.DLL,
-+ *       which eventually calls _flsbuf(), which enables buffering unless
-+ *       isatty(stderr) or buffering is disabled. Buffering is not disabled
-+ *       by default for stderr. Therefore, buffering is enabled for
-+ *       file-redirected stderr.
-+ *       See: __mingw_vfprintf(),
-+ *            __pformat_wcputs(),
-+ *            _fputc_nolock(),
-+ *            _flsbuf(),
-+ *            _iob[_IOB_ENTRIES]
-+ * 4) If stderr is line buffered: MinGW/VC++ will enable full
-+ *    buffering instead. See MSDN setvbuf().
-+ */
-+static size_t vreportf_buf(char *buf, size_t buf_size, const char *prefix, const char *err, va_list params)
-+{
-+	int printf_ret = 0;
-+	size_t prefix_size = 0;
-+	size_t total_size = 0;
-+
-+	/*
-+	 * NOTE: Can't use strbuf functions here, because it can be called when
-+	 * malloc() is no longer possible, and strbuf will recurse die().
-+	 */
-+
-+	/* Prefix */
-+	prefix_size = strlen(prefix);
-+	if (total_size + prefix_size <= buf_size)
-+		memcpy(buf + total_size, prefix, prefix_size);
-+	
-+	total_size += prefix_size;
-+
-+	/* Formatted message */
-+	if (total_size <= buf_size)
-+		printf_ret = vsnprintf(buf + total_size, buf_size - total_size, err, params);
-+	else
-+		printf_ret = vsnprintf(NULL, 0, err, params);
-+
-+	if (printf_ret < 0)
-+		BUG("your vsnprintf is broken (returned %d)", printf_ret);
-+
-+	/*
-+	 * vsnprintf() returns _desired_ size (without terminating null).
-+	 * If vsnprintf() was truncated that will be seen when appending '\n'.
-+	 */
-+	total_size += printf_ret;
-+
-+	/* Trailing \n */
-+	if (total_size + 1 <= buf_size)
-+		buf[total_size] = '\n';
-+
-+	total_size += 1;
-+
-+	/* Send the buffer, if content fits */
-+	if (total_size <= buf_size) {
-+	    replace_control_chars(buf, total_size, '?');
-+	    fwrite(buf, total_size, 1, stderr);
-+	}
-+
-+	return total_size;
-+}
-+
- void vreportf(const char *prefix, const char *err, va_list params)
- {
-+	size_t res = 0;
-+	char *buf = NULL;
-+	size_t buf_size = 0;
-+
-+	/*
-+	 * NOTE: This can be called from failed xmalloc(). Any malloc() can
-+	 * fail now. Let's try to report with a fixed size stack based buffer.
-+	 * Also, most messages should fit, and this path is faster.
-+	 */
- 	char msg[4096];
--	char *p;
-+	res = vreportf_buf(msg, sizeof(msg), prefix, err, params);
-+	if (res <= sizeof(msg)) {
-+		/* Success */
-+		return;
-+	}
- 
--	vsnprintf(msg, sizeof(msg), err, params);
--	for (p = msg; *p; p++) {
--		if (iscntrl(*p) && *p != '\t' && *p != '\n')
--			*p = '?';
-+	/*
-+	 * Try to allocate a suitable sized malloc(), if possible.
-+	 * NOTE: Do not use xmalloc(), because on failure it will call
-+	 * die() or warning() and lead to recursion.
-+	 */
-+	buf_size = res;
-+	buf = malloc(buf_size);
-+	if (buf) {
-+		res = vreportf_buf(buf, buf_size, prefix, err, params);
-+		FREE_AND_NULL(buf);
-+
-+		if (res <= buf_size) {
-+			/* Success */
-+			return;
-+		}
- 	}
--	fprintf(stderr, "%s%s\n", prefix, msg);
-+
-+	/* 
-+	 * When everything fails, report in parts.
-+	 * This can have all problems prevented by vreportf_buf().
-+	 */
-+	fprintf(stderr, "vreportf: not enough memory (tried to allocate %lu bytes)\n", (unsigned long)buf_size);
-+	fputs(prefix, stderr);
-+	vfprintf(stderr, err, params);
-+	fputc('\n', stderr);
- }
- 
- static NORETURN void usage_builtin(const char *err, va_list params)
--- 
-gitgitgadget
+On 21/10/2019 23:05, Johannes Schindelin wrote:
+> Team,
+>
+> a couple of days later than I wanted, but at least it is now here:
+> https://github.com/git-for-windows/git/releases/tag/v2.24.0-rc0.windows.1
+>
+> Please test...
+>
+> Thank you,
+> Johannes
+>
+>
+
