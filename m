@@ -2,134 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DD601F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 23:29:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E607E1F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 23:30:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732759AbfJVX3D (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 19:29:03 -0400
-Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:60945 "EHLO
-        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1729635AbfJVX3C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 19:29:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1571786941;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=oohvQFoDeOE40Z3g3dzNL6Gt5UGuPwSAK86SUmOLWjA=;
-        b=Skjy1wEFaqIgtR2bp91La04NB3X/ZyPf9WrA+snGRonsSGNP323MglS5wf7YHj4ZcFWZqE
-        1Vggy6/1nClpq18bXq4hLSwQjaJIta8cmbrXYs7hXk+unQRr+WGJmFLpvNhZJIzuUIfAUw
-        QGFo608TdNx4aFQr42zqb+JZXQIUGsA=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-374-1uF9Eu0gMfSL4ewxSkfrRg-1; Tue, 22 Oct 2019 19:28:58 -0400
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com [10.5.11.16])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id C31D01005509
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 23:28:57 +0000 (UTC)
-Received: from prarit.bos.redhat.com (prarit-guest.khw1.lab.eng.bos.redhat.com [10.16.200.63])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 68B2E5C1D4;
-        Tue, 22 Oct 2019 23:28:57 +0000 (UTC)
-From:   Prarit Bhargava <prarit@redhat.com>
-To:     git@vger.kernel.org
-Cc:     Prarit Bhargava <prarit@redhat.com>
-Subject: [PATCH] pretty: Add "%aU"|"%au" option to output author's username
-Date:   Tue, 22 Oct 2019 19:28:47 -0400
-Message-Id: <20191022232847.5212-1-prarit@redhat.com>
+        id S2389693AbfJVXaZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 19:30:25 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:43927 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731847AbfJVXaZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 19:30:25 -0400
+Received: by mail-wr1-f65.google.com with SMTP id c2so14666891wrr.10
+        for <git@vger.kernel.org>; Tue, 22 Oct 2019 16:30:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=NYkEtQMGzQaGImc7m/LN9UFBvEXl0auGDuAlwDWwUQg=;
+        b=WcpHLHxL+N05jD3OPj2YtYlsoHM8mXlvVy+9ejq4b6F8BsP2EvZCaPBkAAR0fJ9F+6
+         o+0RghGGPma0wZKNcmqr8RCPa5uEQHyOSnYK/YS2cVZfi8Lyf2mVMcyBmle/X5fvqX8S
+         X8FE3sKGm9Aro3QxhnBMHsCXeQ/z5S3GPm5k6LTZjBkQ77tJomsp17Euv5gQTqzMDNXr
+         p4w/CFfwkFcNwv2/RCiPO9VqzKY4raN5lJOxP0Yk+LYcnc91Pp8wo10nRuF3STjAHPd3
+         /Hew84tXwGdUhQUp09jPxxLoC5TW6XMNNvDkVwVADXfwIJjvv8wdZKfxqYAZiQ2Sb8Sd
+         Lk4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=NYkEtQMGzQaGImc7m/LN9UFBvEXl0auGDuAlwDWwUQg=;
+        b=RJs1yPrP/sEY93SCDc9ZBCLG1HzSN6WWjXko2vFje9wKxqoQV1aM8Qkn0tEk0VF3g/
+         +D51iFNqU0RBZ6oDhDRJG0m7bdxjj7+/90jz2QkEUiF3AGiHwt0vgiGHir4STkXHYeQG
+         ueduu7BWYDB3I6uSG4bIRfawETLYjPNnjFwGrpKwfz44DxdO83mj6Q+0x84kCAlV3N6l
+         kn2fvgJpm7/6RtXqBhMz9EoAHEE7N/J9q69pMuZbQRJwIJ0vDqk8oaI7KpMw8OQHKt+g
+         962Qs3XtFuR+88ThaGTuR+OCnOCWl4yIxUxtCJOBNoYFmRz5KbHz3PuuYHulZkjAWPLX
+         8UaQ==
+X-Gm-Message-State: APjAAAUOpXBpyjnWn0h5TZYCjsxxKw4XhlGn/Mmf+bogAyBRh7j5dmp/
+        /0kUpNezC/7wwzVvVI62hXJXAK8A
+X-Google-Smtp-Source: APXvYqzKjhO6rOO9m1HMfMYqN7W9N0ngdQJk7yZiedXSUn2K3lVGdjciSndCugpWkTInL01KOBNIag==
+X-Received: by 2002:adf:d1aa:: with SMTP id w10mr5311503wrc.127.1571787023554;
+        Tue, 22 Oct 2019 16:30:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v16sm19034927wrt.12.2019.10.22.16.30.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 Oct 2019 16:30:23 -0700 (PDT)
+Message-Id: <pull.417.git.1571787022.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 22 Oct 2019 23:30:19 +0000
+Subject: [PATCH 0/3] commit: fix advice for empty commits during rebases
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-MC-Unique: 1uF9Eu0gMfSL4ewxSkfrRg-1
-X-Mimecast-Spam-Score: 0
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In many projects the number of contributors is low enough that users know
-each other and the full email address doesn't need to be displayed.
-Displaying only the author's username saves a lot of columns on the screen.
-For example displaying "prarit" instead of "prarit@redhat.com" saves 11
-columns.
+In dcb500dc16c (cherry-pick/revert: advise using --skip, 2019-07-02), we
+introduced a helpful message that suggests to run git cherry-pick --skip 
+(instead of the previous message that talked about git reset) when a
+cherry-pick failed due to an empty patch.
 
-Add a "%aU"|"%au" option that outputs the author's email username.
+However, the same message is displayed during a rebase, when the patch
+to-be-committed is empty. In this case, git reset would also have worked,
+but git cherry-pick --skip does not work. This is a regression introduced in
+this cycle.
 
-Also add tests for "%ae" and "%an".
+Let's be more careful here.
 
-Signed-off-by: Prarit Bhargava <prarit@redhat.com>
----
- Documentation/pretty-formats.txt |  3 +++
- pretty.c                         |  5 +++++
- t/t4202-log.sh                   | 16 ++++++++++++++++
- 3 files changed, 24 insertions(+)
+Johannes Schindelin (3):
+  cherry-pick: add test for `--skip` advice in `git commit`
+  sequencer: export the function to get the path of `.git/rebase-merge/`
+  commit: give correct advice for empty commit during a rebase
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-format=
-s.txt
-index b87e2e83e6d0..479a15a8ab12 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -163,6 +163,9 @@ The placeholders are:
- '%ae':: author email
- '%aE':: author email (respecting .mailmap, see linkgit:git-shortlog[1]
- =09or linkgit:git-blame[1])
-+'%au':: author username
-+'%aU':: author username (respecting .mailmap, see linkgit:git-shortlog[1]
-+=09or linkgit:git-blame[1])
- '%ad':: author date (format respects --date=3D option)
- '%aD':: author date, RFC2822 style
- '%ar':: author date, relative
-diff --git a/pretty.c b/pretty.c
-index b32f0369531c..2a5b93022050 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -706,6 +706,11 @@ static size_t format_person_part(struct strbuf *sb, ch=
-ar part,
- =09=09strbuf_add(sb, mail, maillen);
- =09=09return placeholder_len;
- =09}
-+=09if (part =3D=3D 'u' || part =3D=3D 'U') {=09/* username */
-+=09=09maillen =3D strstr(s.mail_begin, "@") - s.mail_begin;
-+=09=09strbuf_add(sb, mail, maillen);
-+=09=09return placeholder_len;
-+=09}
-=20
- =09if (!s.date_begin)
- =09=09goto skip;
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index e803ba402e9e..2fee0c067197 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1729,4 +1729,20 @@ test_expect_success 'log --end-of-options' '
-        test_cmp expect actual
- '
-=20
-+test_expect_success 'log pretty %an %ae %au' '
-+=09git checkout -b anaeau &&
-+=09test_commit anaeau_test anaeau_test_file &&
-+=09git log --pretty=3D"%an" > actual &&
-+=09git log --pretty=3D"%ae" >> actual &&
-+=09git log --pretty=3D"%au" >> actual &&
-+=09git log > full &&
-+=09name=3D$(cat full | grep "^Author: " | awk -F "Author: " " { print \$2 =
-} " | awk -F " <" " { print \$1 } ") &&
-+=09email=3D$(cat full | grep "^Author: " | awk -F "<" " { print \$2 } " | =
-awk -F ">" " { print \$1 } ") &&
-+=09username=3D$(cat full | grep "^Author: " | awk -F "<" " { print \$2 } "=
- | awk -F ">" " { print \$1 } " | awk -F "@" " { print \$1 } " ) &&
-+=09echo "${name}" > expect &&
-+=09echo "${email}" >> expect &&
-+=09echo "${username}" >> expect &&
-+=09test_cmp expect actual
-+'
-+
- test_done
---=20
-2.21.0
+ builtin/commit.c                | 33 ++++++++++++++++++++++++---------
+ sequencer.c                     |  4 ++--
+ sequencer.h                     |  1 +
+ t/t3403-rebase-skip.sh          |  9 +++++++++
+ t/t3510-cherry-pick-sequence.sh |  3 ++-
+ 5 files changed, 38 insertions(+), 12 deletions(-)
 
+
+base-commit: d966095db01190a2196e31195ea6fa0c722aa732
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-417%2Fdscho%2Ffix-commit-advice-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-417/dscho/fix-commit-advice-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/417
+-- 
+gitgitgadget
