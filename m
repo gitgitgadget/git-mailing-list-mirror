@@ -2,135 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 351751F4C1
-	for <e@80x24.org>; Tue, 22 Oct 2019 08:16:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C38B11F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 08:17:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388326AbfJVIQc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 04:16:32 -0400
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:54211 "EHLO
-        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388061AbfJVIQb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 04:16:31 -0400
-Received: from pty.hi.pengutronix.de ([2001:67c:670:100:1d::c5])
-        by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1iMpL8-0006mc-Dk; Tue, 22 Oct 2019 10:16:26 +0200
-Received: from ukl by pty.hi.pengutronix.de with local (Exim 4.89)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1iMpL6-0003pF-L0; Tue, 22 Oct 2019 10:16:24 +0200
-Date:   Tue, 22 Oct 2019 10:16:24 +0200
-From:   Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Ingo Molnar <mingo@kernel.org>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux ARM Kernel Mailing List 
-        <linux-arm-kernel@lists.infradead.org>, git@vger.kernel.org
-Subject: Re: [GIT PULL] arm64: Fixes for -rc4
-Message-ID: <20191022081624.4tmumskeoayt4bzg@pengutronix.de>
-References: <20191017234348.wcbbo2njexn7ixpk@willie-the-truck>
- <CAHk-=wjPZYxiTs3F0Vbrd3kRizJGq-rQ_jqH1+8XR9Ai_kBoXg@mail.gmail.com>
- <20191018174153.slpmkvsz45hb6cts@willie-the-truck>
- <CAHk-=whmtB98b8=YL2b8HzPKRadk2A9pL0aasmvgebhePrDP9w@mail.gmail.com>
- <20191021064658.GB22042@gmail.com>
+        id S2388228AbfJVIRk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 04:17:40 -0400
+Received: from mail-vs1-f47.google.com ([209.85.217.47]:42096 "EHLO
+        mail-vs1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387928AbfJVIRj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 04:17:39 -0400
+Received: by mail-vs1-f47.google.com with SMTP id m22so10713030vsl.9
+        for <git@vger.kernel.org>; Tue, 22 Oct 2019 01:17:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Fxa5Pbg31ZX1W2IfBRPsvc7wzQJzGHqTD4vNHpfCak8=;
+        b=a0f4/feOVYiYUm+dbySZY1ZeJuwNYtBibT3vifg9T2XQRfTlBUh7zg4enF8i/kQgJU
+         4cnAhuVdW7ECAmpuc5aScZxgzpZv6c4beZahsqwUSVB1T9cEOZT9/em4BlXAik6LwlRB
+         oDgN9pu/1IgUP2jTI1pJSFixx80mbrwk8SIcICp3Wkf4rWCbKBYySGR6psUXpgv7uXlz
+         dIHe1ASJCuCLJrEtai78A9XvOxJDyJT7JmunlF8RzQsJv3H5BfqVve6ksyySyn4194Au
+         Y1lrdWjqqNmLgBHy/ecZT2jjefOBzxK/tCiyGsJhkWuHYw+41agvznCNUCxuvtdOUVsa
+         taMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Fxa5Pbg31ZX1W2IfBRPsvc7wzQJzGHqTD4vNHpfCak8=;
+        b=pUCCh4Kus0qThXFvFXmd16UIydv1qidolov9mDOwTDfUu+vV8oZxSZmNUHhCWzgsOq
+         peJ9C2B7Yx7m9Trwn3JET+QybxXB6oNOPDphDmsPt+Q7/hl/A//sv59lu3J89GmO3E73
+         WtUFyqzuwGEhO/LNe8u7Mwx9D1uRO+yWeM2lhHISVvUm6FSgmnwqfeam0tpfFsGxvXxr
+         JIjP0UMz9mDDBy9Y3RpAezSOuE3awAfOxqn+joId5qMa0vBMCJD9fYCb6vRztOI5ADZD
+         npmieMYdZ934nGZr8tOXbcd67YqasyvY78f+SYVMniG0pz2dnNN7I6Lx91bUneonBH9/
+         QtRA==
+X-Gm-Message-State: APjAAAV2mhBXJpDow5mKeCrDIR5Y8Pl9kEbdE+GeE61yfYEsugVk/pO2
+        HZHYZZQFqdySB3JpQU4mjFtPp+u230jYzSWpYUgHkm7z
+X-Google-Smtp-Source: APXvYqw+dXuKxGEV59oeM727k+cnZSCivnqnC5mcI7uvktoqS0zIOU6OmPV+rG7IVQiwoF6beCFBcqbPobx5lfyQCP8=
+X-Received: by 2002:a67:f7c9:: with SMTP id a9mr1011793vsp.85.1571732258594;
+ Tue, 22 Oct 2019 01:17:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191021064658.GB22042@gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c5
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+References: <20190819214110.26461-1-me@yadavpratyush.com> <20190828215725.13376-1-me@yadavpratyush.com>
+ <20190828215725.13376-5-me@yadavpratyush.com> <CAKPyHN0Kh8eKjzXink3YtE6wRrOgpzTYyPmLnbpbxPt3LFsvig@mail.gmail.com>
+ <20191021190448.34vs3zsqvqc5hryl@yadavpratyush.com>
+In-Reply-To: <20191021190448.34vs3zsqvqc5hryl@yadavpratyush.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Tue, 22 Oct 2019 10:17:27 +0200
+Message-ID: <CAKPyHN2b1=2GefMDB987h5J4zXN7YWGsyLw7FADs+M5CgEUYow@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] git-gui: allow undoing last revert
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Mon, Oct 21, 2019 at 9:04 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+>
+> On 21/10/19 11:16AM, Bert Wesarg wrote:
+> > Dear Pratyush,
+> >
+> > I just noticed that the 'Revert Last Hunk' menu entry is enabled in
+> > the stage-list. But I think it should be disabled, like the 'Revert
+> > Hunk' and 'Revert Line' menu entry.
+>
+> I'm not sure what you mean. There is no "Revert Last Hunk" menu entry (I
+> assume you are talking about the context menu in the diff view that we
+> open by right clicking).
+>
+> My guess is that you mean the "Undo Last Revert" option. And you want it
+> disabled if the diff shown is of a staged file, correct?
+>
+> I'm not sure if disabling it would be a good idea.
+>
+> Say I revert a hunk or line while the file is not staged, and stage the
+> rest of the file. This would mean that file is no longer in the
+> "Unstaged Changes" widget. Now if I choose the file from the "Staged
+> Changes" widget, I get the option to undo the last revert. If I hit
+> that, it will put whatever I reverted in the "Unstaged Changes" widget.
+> So, now part of the file that was reverted is in "Unstaged Changes", and
+> the rest in "Unstaged Changes".
+>
 
-I added the git list to Cc:. For the new readers: The context of this
-thread can be found at
-https://lwn.net/ml/linux-kernel/20191017234348.wcbbo2njexn7ixpk@willie-the-truck/
+Sorry for this confusion.
 
-On Mon, Oct 21, 2019 at 08:46:58AM +0200, Ingo Molnar wrote:
-> Anyway, a small Git feature request: it would be super useful if "git 
-> request-pull" output was a bit more dependable and at least warned about 
-> this and didn't include what is, from the viewpoint of the person doing 
-> the merge, a bogus diffstat. (Generating the correct diffstat is probably 
-> beyond request-pull's abilities: it would require changing the working 
-> tree to actually perform the merge - while request-pull is a read-only 
-> operation right now. But detecting the condition and warning about it 
-> should be possible?)
+> IIUC, this is what you think should not happen, correct? What's wrong
+> with allowing the user to undo reverts from anywhere?
 
-I think Will's case is still an easy one compared with what could
-actually happen.
+The 'Undo' changes the worktree not the staged content,.
 
-The related history looks as follows:
+>
+> The way I see it, it doesn't really matter what file is selected or
+> whether it is staged or not, the action of the undo remains the same, so
+> it makes sense to me to allow it from anywhere.
 
-             ,-.     ,-.              ,-.    ,-.    ,-.
-  v5.4-rc1 --| |-...-| |-- v5.4-rc2 --| |-..-| |-..-| |-- v5.4-rc3
-      \      `-'     `-'       \      `-'    /-'    `-'
-       \   ,-.     ,-.          \         ,-/    ,-.     ,-.
-        `--| |-...-| |--------------------|*|----| |-...-|H|
-           `-'     `-'            \       `-'    `-'     /-'
-                                   \   ,-.     ,-.      /
-                                    `--| |-...-| |-----'
-                                       `-'     `-'
+It would make sense to undo the revert on the staged content, if there
+are no more changes to this file in the worktree. I.e., you wont be
+able to apply the 'undo' anymore to the worktree file if it is not
+listed anymore. Though even that case should be able to implement.
+Though the undo is currently not bound to a specific path. This may be
+the cause of our different view. I though the undo is bound to the
+path it was recorded, thus also would only be available when showing a
+diff on this path again. Therefore I think, having the 'Undo Last
+Revert' in the context menu may not be the best place to begin with,
+or at least indicate that this 'undo' operation does not necceseritly
+operate on the file currently shown.
 
-Will asked Linus to merge the Commit marked 'H', the two merge bases are
-v5.4-rc2 and '*'.
+Bertt
 
-(FTR:
-  * = 3e7c93bd04edfb0cae7dad1215544c9350254b8f
-  H = 777d062e5bee0e3c0751cdcbce116a76ee2310ec
-, they can be found in
-git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git)
-
-The formally correct way to create the diffstat is to merge v5.4-rc2 and
-'*' (in general: all merge bases) and calculate the diff between this
-merge and the to-be-merged-commit. Compared to what Will did (i.e. merge
-Linus' HEAD and this branch and then diff @~ with @) doing it the way I
-described has the advantage(?) that commits that conflict with this
-merge request in Linus' tree since the merge bases are not in the way.
-
-In this case this can be done automatically:
-
-	$ git read-tree --index-output=tralala v5.4-rc2 3e7c93bd04edfb0cae7dad1215544c9350254b8f
-	$ GIT_INDEX=tralala git write-tree
-	6a2acfd1870d9da3c330ea9b648a7e858b5ee39f
-	$ git diff --stat 6a2acfd1870d9da3c330ea9b648a7e858b5ee39f 777d062e5bee0e3c0751cdcbce116a76ee2310ec
-	 Documentation/arm64/silicon-errata.rst |  2 ++
-	 arch/arm64/Kconfig                     | 17 ++++++++++++++
-	 arch/arm64/include/asm/asm-uaccess.h   |  7 +++---
-	 arch/arm64/include/asm/cpucaps.h       |  4 +++-
-	 arch/arm64/include/asm/memory.h        | 10 ++++++--
-	 arch/arm64/include/asm/pgtable.h       |  3 ---
-	 arch/arm64/include/asm/sysreg.h        |  2 +-
-	 arch/arm64/kernel/cpu_errata.c         | 38 +++++++++++++++++++++++++++++++
-	 arch/arm64/kernel/cpufeature.c         | 15 ++++++++----
-	 arch/arm64/kernel/entry.S              |  8 ++++---
-	 arch/arm64/kernel/hibernate.c          |  9 +++++++-
-	 arch/arm64/kernel/process.c            | 18 +++++++++++++++
-	 arch/arm64/kvm/hyp/switch.c            | 69 ++++++++++++++++++++++++++++++++++++++++++++++++++++++--
-	 arch/arm64/mm/fault.c                  |  6 ++++-
-	 include/linux/sched.h                  |  1 +
-	 15 files changed, 186 insertions(+), 23 deletions(-)
-
-Would be great if git-request-pull learned to do that.
-
-Best regards
-Uwe
-
--- 
-Pengutronix e.K.                           | Uwe Kleine-König            |
-Industrial Linux Solutions                 | http://www.pengutronix.de/  |
+>
+> > Can you confirm this?
+> >
+> > On Wed, Aug 28, 2019 at 11:57 PM Pratyush Yadav <me@yadavpratyush.com>
+> > wrote:
+> > >
+> > > Accidental clicks on the revert hunk/lines buttons can cause loss of
+> > > work, and can be frustrating. So, allow undoing the last revert.
+> > >
+> > > Right now, a stack or deque are not being used for the sake of
+> > > simplicity, so only one undo is possible. Any reverts before the
+> > > previous one are lost.
+> > >
+> > > Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+>
+> --
+> Regards,
+> Pratyush Yadav
