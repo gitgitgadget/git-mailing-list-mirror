@@ -2,210 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 829151F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 23:30:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 758F21F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 23:33:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389700AbfJVXa2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 19:30:28 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:47005 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731847AbfJVXa1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 19:30:27 -0400
-Received: by mail-wr1-f66.google.com with SMTP id n15so9111986wrw.13
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 16:30:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=9kiJBPjXBiY57qM+looaZ5N10i1Ax8FM7j53JmFqfO0=;
-        b=WZUrcV5fWUH2S2Mdj14rTK3C1Fe50RgUmdKOQwTFcOfpTL5H47lwFGuLZjKxAOo7NP
-         xXOCMil+AX47FHQjsRHoYWex8A1vNGhCV2xW3JSdhL5GHlySEW7z/vb/rp9mQBUzs6mq
-         YPiqm8P3WeU5YixZitdU9wj7ZK4XZE1Z+Y7bJUgei/vFcgRHG0nEryKv7bm3FGKHycKz
-         F13PJ7B4gVl/Kt5QFuKNVYpCLYv7HCHqvsu3vbrZdHVi9CDm5E0YwZ17GkxtsYTBGoqP
-         E3wbVPZtxXdP2sK3KPUFE1aaTo4ZMmNuR4/WKWXcweVQOHLxQC0tPYv3HdzSczdv80CD
-         +rCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9kiJBPjXBiY57qM+looaZ5N10i1Ax8FM7j53JmFqfO0=;
-        b=nbxwR9r7dJqcCbprbIXXx02ZvmKFuSGKwoJ/kzmFNIFA+XMYAYd1inslcbx5uTkjdD
-         fLaLlQzdumTcRHhslchXYIFq0Z/au9OMNemb0MD6GCm4fVM/Z5bHwO/odJFs7wN4Y+aP
-         /fUWViYZ2qxOUFcuMINYktyYkJDo22LmJY5T2wJiOElQK0NgMegqarKnRxZZaqLic4oA
-         FeLsmamOu2jId6ypKyCI9umaVYOiX+6LH3op6JgnF8T6ab909XbzQ8aPCoCweUNtXluv
-         Kv9za1mc8bghkT37QxSDjuNaLj2UuiU8kcQ25x1V1EA2rn7WH2O84kl7tjDd1BMau9lR
-         /vwA==
-X-Gm-Message-State: APjAAAVkDCXIRYA8hZLWM7UEK7LuK7AUOGi0N39lQW8yzjEw6x2xwGIu
-        8XoZwWkoGFs8gndbLmGku1RXagYN
-X-Google-Smtp-Source: APXvYqzU1osrW0M7ofjTKo0bC130GoFnjgc34FLZW6EdbXxnEa1sX2SsRGLMPlZCrMznaGizMlNvQQ==
-X-Received: by 2002:adf:e2c5:: with SMTP id d5mr5306612wrj.283.1571787025522;
-        Tue, 22 Oct 2019 16:30:25 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m7sm21069770wrv.40.2019.10.22.16.30.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Oct 2019 16:30:25 -0700 (PDT)
-Message-Id: <0d168b4a75c65e786f4b14f5da723957c32fa390.1571787022.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.417.git.1571787022.gitgitgadget@gmail.com>
-References: <pull.417.git.1571787022.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Oct 2019 23:30:22 +0000
-Subject: [PATCH 3/3] commit: give correct advice for empty commit during a
- rebase
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2389701AbfJVXd4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 19:33:56 -0400
+Received: from mout.gmx.net ([212.227.15.18]:47535 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729635AbfJVXd4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 19:33:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1571787231;
+        bh=ifrFOQ+JYtFy7PuyqvsjoqZlTa8ABPWjw705qn+avps=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=BRI517flFfGGRqNKKFvfxvdvD1S23aSwxOYB8KgLN/gFNUPJ4pQZAbOhhtQRCrXV8
+         cnj7M0dt90wiXK2SM1Es6PegMgEQfF6dsHrPv3sDi+kg438pBL6S2NXbfs3uwEMbFq
+         7iVneDiZnyzNCyjTJDnX67nVhF1SHlt4dcz1KfLw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mk0Ne-1hclYV1S9I-00kPy7; Wed, 23
+ Oct 2019 01:33:51 +0200
+Date:   Wed, 23 Oct 2019 01:33:37 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Denton Liu <liu.denton@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: Re: [RFC PATCH 1/7] Makefile: alphabetically sort += lists
+In-Reply-To: <20191021185352.GA69085@generichostname>
+Message-ID: <nycvar.QRO.7.76.6.1910230132260.46@tvgsbejvaqbjf.bet>
+References: <cover.1571246693.git.liu.denton@gmail.com> <02a16f9bdf740841d9a4be765e72b9fa5ae5d75c.1571246693.git.liu.denton@gmail.com> <xmqqimon6yar.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910212043200.46@tvgsbejvaqbjf.bet>
+ <20191021185352.GA69085@generichostname>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:9Uj0Kmf8j6CcgLOrNUEUBVe1Ftb0eOu19tjNcGq7GSRtcuAzzmR
+ aMtpV8ujm7wkUxd7rDyk+dQPXhZHjmA7gyIzblrgVUktximfisV36Q1J/jxd5sGQepiKn5R
+ VpkUPYB/O5ooFs4LVP42/oeaWrPfeMVUpAF01ng3kWsLZeXbjSeaSAr1Z/WBITevCIVv4mX
+ BbMYZH1kBi57k+rQCx+cA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qUu/gn/PI/I=:irPBlKn7JpbVJJzvWB3aKE
+ zvEJf9Do1DfD37MdizSEfxCx8H6Dh9U3/tCRxY/J+ROmnYFrOYPWBqgrghW3MAA5UWjkEldxw
+ sWwwc+FIAe/zcpuhVn7bw7CONzFdrlaXrkNn/TT/hplUVp672C/1LFpaJl92vEGWc8WAVcXpH
+ 525y+KlirKB4aQnAPnF5ZvrtePWjpmzv6M9D+thc5RWlYYNRySGJwQ8huA3vvCx85mJ7NLXEb
+ VYJhFqpsiN0WkR8tREXWpepncGqXwL+cawXcFHgic0oPw4/XqaPcmni86nFCa4tEUsuTBUGN7
+ zzTgthCknlF/j4RsS59F++TNulCwocj+naI7E1poMDdhEb31YeK3YSz8ZX1O338mnsdrMnfTy
+ RU/tvsh2Oj0N8/JOZyLPbGVSesQ62eb1iNl1uF8tjhjzmT2nbzCJODHINxdhMjsDUlBjn0wCq
+ gbhsfJQWSJZQJbM2cxFjKPHSeSYGjiMvxDz1pAbvlazEsdzm1fJKAHUvu0WHb99gzDYFdA6LJ
+ RSk5nRG2qnvVrOm+5P8qvNEHcpr6OPSXHVDic5bE9jEui3+DW0bHfhKvr3xWidKz5D9Oc9KoC
+ 3VIQyjLJtcGoBiw3qRUucsZPD6Y6J2o/utMMCeSQst3E2mi2dCSprrbeTaP8vQOaYXp85duYc
+ IiFKIVHy3UQE6FLX5xJMQISsPImuk0cINQg9KcivDf0zMLelGNu5Rclt7nDoN07332libQK8J
+ XpBpHCNYb8+XYV45kven25buGhowAo4HdS1N8xTBNmYFwFd38e/NBiiPiYFwn3sJZHdLJWihg
+ kzoKbxpM+Z9jItMsSqSrAaam5YdhcSMlBht/4gvPFtTQUzOuqIdbAsBpGQQA9imK1FPPsk914
+ v02wCbJW6y2bZDjCBs8+mcVIfbG16RoM4iG3IKyeFsC6HqEXkHn9rbWYq4OAMgbCqLe99wrdn
+ PP2jbJ4H80zL09s2hlYCvaH5s9Yc3gcJaP7S6kEfwRBm87RbrRCmkFZH8jeWDodidqeHbQ7YC
+ K0HxEdhiXHDVkRcEmd2lMnsS7SUDWmihKITffOiptykLJmDgBaEUHwAaP0/w1zVAPHpnKAdLn
+ A8fjOcwgo2Y1NWr/4VCeSw15krLAkbXYadhx5tFo1rTgGD0v82UX/PdlXZAwWRz/C5NlouEkN
+ N9+hWMmfdyWz+alSu4erbMNDkMc3ZKSX6tNPSfgWfVPIVe/XalNGK7W3hh6Y4UfdBB7a8tq9p
+ 6a0+E1Vff0RKzoqX7bIvnxKumaYvCzM8BelXcqHJyxBisEfXsN35Zz5IOhK0=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi,
 
-In dcb500dc16c (cherry-pick/revert: advise using --skip, 2019-07-02),
-`git commit` learned to suggest to run `git cherry-pick --skip` when
-trying to cherry-pick an empty patch.
+On Mon, 21 Oct 2019, Denton Liu wrote:
 
-However, it was overlooked that there are more conditions than just a
-`git cherry-pick` when this advice is printed (which originally
-suggested the neutral `git reset`): the same can happen during a rebase.
+> Hi Johannes,
+>
+> On Mon, Oct 21, 2019 at 08:44:40PM +0200, Johannes Schindelin wrote:
+> > Hi Junio,
+> >
+> > On Fri, 18 Oct 2019, Junio C Hamano wrote:
+> >
+> > > Denton Liu <liu.denton@gmail.com> writes:
+> > >
+> > > > There are many +=3D lists in the Makefile and, over time, they hav=
+e gotten
+> > > > slightly out of order, alphabetically. Alphabetically sort all +=
+=3D lists
+> > > > to bring them back in order.
+> > > > ...
+> > >
+> > > Hmm.  I like the general thrust, but ...
+> > >
+> > > >  LIB_OBJS +=3D combine-diff.o
+> > > > -LIB_OBJS +=3D commit.o
+> > > >  LIB_OBJS +=3D commit-graph.o
+> > > >  LIB_OBJS +=3D commit-reach.o
+> > > > +LIB_OBJS +=3D commit.o
+> > >
+> > > ... I do not particularly see this change (there may be similar
+> > > ones) desirable.  I'd find it it be much more natural to sort
+> > > "commit-anything" after "commit", and that is true with or without
+> > > the common extension ".o" added to these entries.
+> > >
+> > > In short, flipping these entries because '.' sorts later than '-' is
+> > > making the result look "less sorted", at least to me.
+> >
+> > The problem with this argument is that it disagrees with ASCII, as `-`
+> > has code 0x2d while `.` has code 0x2e, i.e. it is lexicographically
+> > _larger_.
+> >
+> > So Denton's patch does the correct thing.
+>
+> I actually agree with Junio on this one. Without the prefixes, "commit"
+> would go before "commit-graph" so I think it would make more sense to
+> order with the prefixes removed instead of taking the naive ordering by
+> just sorting each block.
 
-Let's suggest the correct command, even during a rebase.
+That will make it harder on other contributors like me, who prefer to
+mark the lines in `vim` and then call `:sort` on them, and then not care
+about it any further.
 
-While at it, we adjust more places in `builtin/commit.c` that
-incorrectly assumed that the presence of a `CHERRY_PICK_HEAD` meant that
-surely this must be a `cherry-pick` in progress.
+Any decision that makes automating tedious tasks harder puts more burden
+on human beings. I don't like that.
 
-Note: we take pains to handle the situation when a user runs a `git
-cherry-pick` _during_ a rebase. This is quite valid (e.g. in an `exec`
-line in an interactive rebase). On the other hand, it is not possible to
-run a rebase during a cherry-pick, meaning: if both `rebase-merge/` and
-`sequencer/` exist, we still want to advise to use `git cherry-pick
---skip`.
+Ciao,
+Dscho
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/commit.c       | 33 ++++++++++++++++++++++++---------
- t/t3403-rebase-skip.sh |  9 +++++++++
- 2 files changed, 33 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index e588bc6ad3..2beae13620 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -59,6 +59,9 @@ N_("The previous cherry-pick is now empty, possibly due to conflict resolution.\
- "    git commit --allow-empty\n"
- "\n");
- 
-+static const char empty_rebase_advice[] =
-+N_("Otherwise, please use 'git rebase --skip'\n");
-+
- static const char empty_cherry_pick_advice_single[] =
- N_("Otherwise, please use 'git cherry-pick --skip'\n");
- 
-@@ -122,7 +125,7 @@ static enum commit_msg_cleanup_mode cleanup_mode;
- static const char *cleanup_arg;
- 
- static enum commit_whence whence;
--static int sequencer_in_use;
-+static int sequencer_in_use, rebase_in_progress;
- static int use_editor = 1, include_status = 1;
- static int have_option_m;
- static struct strbuf message = STRBUF_INIT;
-@@ -183,6 +186,8 @@ static void determine_whence(struct wt_status *s)
- 		whence = FROM_CHERRY_PICK;
- 		if (file_exists(git_path_seq_dir()))
- 			sequencer_in_use = 1;
-+		if (file_exists(git_path_rebase_merge_dir()))
-+			rebase_in_progress = 1;
- 	}
- 	else
- 		whence = FROM_COMMIT;
-@@ -453,8 +458,11 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
- 	if (whence != FROM_COMMIT) {
- 		if (whence == FROM_MERGE)
- 			die(_("cannot do a partial commit during a merge."));
--		else if (whence == FROM_CHERRY_PICK)
-+		else if (whence == FROM_CHERRY_PICK) {
-+			if (rebase_in_progress && !sequencer_in_use)
-+				die(_("cannot do a partial commit during a rebase."));
- 			die(_("cannot do a partial commit during a cherry-pick."));
-+		}
- 	}
- 
- 	if (list_paths(&partial, !current_head ? NULL : "HEAD", &pathspec))
-@@ -950,10 +958,12 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 			fputs(_(empty_amend_advice), stderr);
- 		else if (whence == FROM_CHERRY_PICK) {
- 			fputs(_(empty_cherry_pick_advice), stderr);
--			if (!sequencer_in_use)
--				fputs(_(empty_cherry_pick_advice_single), stderr);
--			else
-+			if (sequencer_in_use)
- 				fputs(_(empty_cherry_pick_advice_multi), stderr);
-+			else if (rebase_in_progress)
-+				fputs(_(empty_rebase_advice), stderr);
-+			else
-+				fputs(_(empty_cherry_pick_advice_single), stderr);
- 		}
- 		return 0;
- 	}
-@@ -1156,8 +1166,11 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	if (amend && whence != FROM_COMMIT) {
- 		if (whence == FROM_MERGE)
- 			die(_("You are in the middle of a merge -- cannot amend."));
--		else if (whence == FROM_CHERRY_PICK)
-+		else if (whence == FROM_CHERRY_PICK) {
-+			if (rebase_in_progress && !sequencer_in_use)
-+				die(_("You are in the middle of a rebase -- cannot amend."));
- 			die(_("You are in the middle of a cherry-pick -- cannot amend."));
-+		}
- 	}
- 	if (fixup_message && squash_message)
- 		die(_("Options --squash and --fixup cannot be used together"));
-@@ -1628,9 +1641,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 			reduce_heads_replace(&parents);
- 	} else {
- 		if (!reflog_msg)
--			reflog_msg = (whence == FROM_CHERRY_PICK)
--					? "commit (cherry-pick)"
--					: "commit";
-+			reflog_msg = (whence != FROM_CHERRY_PICK)
-+					? "commit"
-+					: rebase_in_progress && !sequencer_in_use
-+					? "commit (rebase)"
-+					: "commit (cherry-pick)";
- 		commit_list_insert(current_head, &parents);
- 	}
- 
-diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
-index 1f5122b632..77b03ac49f 100755
---- a/t/t3403-rebase-skip.sh
-+++ b/t/t3403-rebase-skip.sh
-@@ -76,4 +76,13 @@ test_expect_success 'moved back to branch correctly' '
- 
- test_debug 'gitk --all & sleep 1'
- 
-+test_expect_success 'correct advice upon empty commit' '
-+	git checkout -b rebase-skip &&
-+	test_commit a1 &&
-+	test_tick &&
-+	git commit --amend -m amended --no-edit &&
-+	test_must_fail git rebase -m --onto a1 HEAD^ 2>err &&
-+	test_i18ngrep "git rebase --skip" err
-+'
-+
- test_done
--- 
-gitgitgadget
+>
+> Thanks,
+>
+> Denton
+>
+> >
+> > Ciao,
+> > Dscho
+>
