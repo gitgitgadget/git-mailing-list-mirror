@@ -2,165 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BC581F4C1
-	for <e@80x24.org>; Tue, 22 Oct 2019 19:18:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E7AE1F4C1
+	for <e@80x24.org>; Tue, 22 Oct 2019 19:36:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732615AbfJVTS4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 15:18:56 -0400
-Received: from mout.gmx.net ([212.227.15.15]:42631 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730186AbfJVTS4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 15:18:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1571771929;
-        bh=Q8Dfdz7XAO1sRb87hpPbu30wGeOzHIQ6V5KR436WrvE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=QuiEAsYbfrgilG7IZv0j2ofXKspLoiYu7a82059NPzIf5CvK/g5R3FR0wV2umMv6C
-         rTk5ET8iPUIXBBUQWxN5EYslDyuwG/2mZuSdvTv4rRhtB7IS87+OwpAh3CG3z+VXBb
-         57flJYPqtvqUw1lWxr8hxpfhFViSA6XTnmfIb2a0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MdNcA-1hnvyb2JPs-00ZRVX; Tue, 22
- Oct 2019 21:18:49 +0200
-Date:   Tue, 22 Oct 2019 21:18:35 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Wong <e@80x24.org>
-cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
+        id S2387791AbfJVTgD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 15:36:03 -0400
+Received: from mail-qt1-f175.google.com ([209.85.160.175]:45072 "EHLO
+        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732691AbfJVTgD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 15:36:03 -0400
+Received: by mail-qt1-f175.google.com with SMTP id c21so28538101qtj.12
+        for <git@vger.kernel.org>; Tue, 22 Oct 2019 12:36:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=QIeUJEQuhMGYb0EekYhy8faEPJ35Ol6kL+2z1Cnkmnk=;
+        b=GoKWlJ35URfpPFJsg+Ecyp3wyxM3V9c1nASt72cSVrYDa7bvnm0UYRCI+dXzisSyHF
+         x33PqEN/Zt2qJVs3wlbu9LhI3VTMtOUdfQGGhrpaA6dNHzQ6fToupngHEVeoiTGjka6e
+         OdwlHcu9rIdTLYdPbBKZ8zBw767XFy5zPEC1M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=QIeUJEQuhMGYb0EekYhy8faEPJ35Ol6kL+2z1Cnkmnk=;
+        b=au9VPbgUASDR39MvfXJdhgeJGk3X9jxv2mf6B1/OG2esSNKv7UWSPmsPICEoo6AN6j
+         a2n0OGiD9Nx461FxlmgO0VMeW9T312oJMm+i8M87tAi60H/wjmrbZdyYCiNybH0fqrC2
+         RrijrTxdSN0+PAgbu3kzNiXz12NvM/zED4UEm7WGrZ/ttgVJntn2xLyZyN2jt/ELtiMj
+         sPMhPYLquhAzK2Ghcc74YN6J+j/qqzGzKh7SnNIPbs8Aaw+uPpr4OTYrc9K0BycIpMg7
+         2ZEoSIU87xaqQUR+hC3kdvpQP488xu4ovkHVF+WdEQ4WRQD+co3nP4p33pzL7M37fNSE
+         wgZA==
+X-Gm-Message-State: APjAAAVuoO6HUhbE+7Ioaul7DsconOZfua/lHbs00wm4BtcgAQ3BwAVU
+        dKRAZt4LcCiPDE27R+BHVirGOQ==
+X-Google-Smtp-Source: APXvYqyX7IRstYRlks9ANN/WYt5fcrGZTc0QhGPHEE+uX2UiY+S8d8ymL+kLoHu3WlpmCfDHXTggOQ==
+X-Received: by 2002:ac8:183:: with SMTP id x3mr5175573qtf.279.1571772961965;
+        Tue, 22 Oct 2019 12:36:01 -0700 (PDT)
+Received: from chatter.i7.local (192-0-228-88.cpe.teksavvy.com. [192.0.228.88])
+        by smtp.gmail.com with ESMTPSA id t65sm9611258qkh.23.2019.10.22.12.36.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Oct 2019 12:36:00 -0700 (PDT)
+Date:   Tue, 22 Oct 2019 15:35:58 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org,
+        Thomas Gummerer <t.gummerer@gmail.com>
 Subject: Re: [RFC/WIP] range-diff: show old/new blob OIDs in comments
-In-Reply-To: <20191017121045.GA15364@dcvr>
-Message-ID: <nycvar.QRO.7.76.6.1910222111430.46@tvgsbejvaqbjf.bet>
+Message-ID: <20191022193558.GC4960@chatter.i7.local>
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Wong <e@80x24.org>, git@vger.kernel.org,
+        Thomas Gummerer <t.gummerer@gmail.com>
 References: <20191017121045.GA15364@dcvr>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+ <nycvar.QRO.7.76.6.1910222111430.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:t6itgSt1lX/CUgJtjav+uXnCRQuSupCDs3uMepBSlMZ7sJxr91C
- iOZFnoCrqpSM73Vaejhuy4Dwk5VEcCclwDoWkgVwkGfFyK8REuNsmKeOunrTG3ud30bPhPw
- 4MouZKyo+lGl5pj0jRHwGNm1x0ellyGkMnEirU/8ZT07O+5Q2dUerES7MnZQe2RTmPlCYwD
- YfQLo8uFVcqJPrzeP4N8A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:gDn/V3tJ53I=:ar7qBdEJscuXw1Uy+oRzbS
- wsguUNDIzdpjNzMiWU6gpA2qMTvWWD271gKJEFGWII/TdfEuy34oH/puVT6uxpVa5LSqmrPDi
- XBrKYrwB9iI2QKnJwrFdm2/LIpPNyxF1KA3CoJIEql5X4sacQtSPpqfJyppz2ME9LlYN8qT7N
- XoRFV8DfjBAhEdcZUsL6QX8PdpDvNEJwcnEdDJ/8HSCyknbJsHeEuq3sF6aZAiGzjBH7N5hHF
- aQRzU2OLTX6zTd3P69wWQTipwQd38ShD4Xn2vMSHkL7Vnnn7TpQHi4OR/jT9pnqlVfCT8pvEw
- gaZIcB4hAcJTOeVQPs/npOVhkXCBdpV3nF8me2F7vdTeK+FLAJTWXhsfTWzVQ+1WbDXgzmnvt
- 0VDD8Zsr2kjHefuP6nQpP76v60Nex76NfxZrsyPCSeaWvXRz/RQs8ppM8mJuMJlFS1qboCLUF
- y7GU21sh97G77Zhdq4w9CHCp6ftwMCcit+WdUym8jWdPQm3a+PV2A/nUr0AsO7Bz0Xyjz9yKj
- 110gFBdtevL/L8+gBQVmpwZp6GgVoKUwGlhuvQ8Zp6nfCX0Yommhu/IFeeCrJHbKQ/lBvlggb
- sG6pyLsKT9a9SW6zM4uD4QrbKr/1+gSWz/0AFwHeg8uj1EZWrETGJvm625fl7hTpKtYL3lbYl
- GfrWuoH/MwxCBfp+rByWKNo3Phi6j/aNTfziFijHarjxqBu0lamqN2XFx71diB/ZA3yKlJDXl
- UMzmTBGF7eUhz4Ww5KTQifZegIL60xgtSt9qBT7bbXuXCLjRmvVZMN3PoY6Xx5r9rKVS1/6O5
- 3PGeGnSuZOuho4PsdWYwT9rSkTWf+aP7uwH07Hsg8RPM1lY+5uvKU93ibmAgP7xaDj6DZqyqY
- BdBmY/zDhyM69hXeGrEC+MCQCuCsd3jriCfsSGlxXFVpJwOyJbStYe3OnxDB7PP74pF1mjZsx
- iDnijTqLyEuOcF0hMsKyesIf0OAJz7R6e8M726yq5cuZtfjqfpEUCuHIJ/apWHS62uU1+JWA1
- AXVdkVgQbo1XDIPypIAInvlqY8Puc24p9r3UVbPo1H+0Ue12Sro23nydhqdgOzISrnrJVdG7v
- ZhtnYWvIwI0iLveAA24veNSSrXUonn1IYCquzDkcjaJ27RJa9LsOEpvSjRTniUo8ILhW7DshI
- 3m2O8p+M0lYLafEjf6/JXPLaWJWdx94X9Vgb1J03U3rYV+xe3P8raCQ9fChEtz5cDcNRiBtce
- 9TSw1jJ7+Mz6CQ5Vq2wlnlQtWHopXp+doO6NNoMmm/wEqne45Occ7X/OEvHI=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1910222111430.46@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+On Tue, Oct 22, 2019 at 09:18:35PM +0200, Johannes Schindelin wrote:
+>As to recreating blobs from mails: Wow. That's quite a length you're
+>going, and I think it is a shame that you have to. If only every
+>contribution came accompanied with a pullable branch in a public
+>repository.
 
+Trouble is, those public repositories are transient and may be gone soon 
+after the pull request is performed. The goal is to be able to 
+reconstruct full code history prior to when it is merged into the 
+official repository.
 
-On Thu, 17 Oct 2019, Eric Wong wrote:
+>Instead, we will have to rely on your centralized, non-distributed
+>service...
 
-> (WIP, mostly stream-of-concious notes + reasoning)
->
-> When using "git format-patch --range-diff", the pre and
-> post-image blob OIDs are in each email, while the exact
-> commit OIDs are rarely shared via emails (only the tip
-> commit from "git request-pull").
->
-> These blob OIDs make it easy to search for or lookup the
-> full emails which create them, or the blob itself once
-> it's fetched via git.
->
-> public-inbox indexes and allows querying specifically for blob
-> OIDs via dfpre:/dfpost: since June 2017.  As of Jan 2019,
-> public-inbox also supports recreating blobs out of patch emails
-> (querying internally with dfpre:/dfpost: and doing "git apply")
->
-> Searching on these blob OIDs also makes it easier to find
-> previous versions of the patch sets using any mail search
-> engine.
->
-> Future changes to public-inbox may allow generating custom
-> diffs out of any blobs it can find or recreate.
->
-> Most of this is pretty public-inbox-specific and would've
-> made some future changes to public-inbox much easier....
-> (if we had this from the start of range-diff).
->
-> Unfortunately, it won't help with cases where range-diffs
-> are already published, but range-diff isn't too old.
+It's actually neither, because mirroring and distributing public-inbox 
+repositories is already easy, and we hope to make it easier in the near 
+future.
 
-I guess your patch won't hurt.
-
-As to recreating blobs from mails: Wow. That's quite a length you're
-going, and I think it is a shame that you have to. If only every
-contribution came accompanied with a pullable branch in a public
-repository.
-
-Instead, we will have to rely on your centralized, non-distributed
-service...
-
-Ciao,
-Dscho
-
->
-> I'm also still learning my way around git's C internals, but
-> using patch.{old,new}_oid_prefix seems alright...
->
-> FIXME: tests, t3206 needs updating
->
-> Not-signed-off-by: Eric Wong <e@80x24.org>
-> ---
->  range-diff.c | 19 +++++++++++++++----
->  1 file changed, 15 insertions(+), 4 deletions(-)
->
-> diff --git a/range-diff.c b/range-diff.c
-> index 7fed5a3b4b..85d2f1f58f 100644
-> --- a/range-diff.c
-> +++ b/range-diff.c
-> @@ -118,13 +118,24 @@ static int read_patches(const char *range, struct =
-string_list *list)
->  				die(_("could not parse git header '%.*s'"), (int)len, line);
->  			strbuf_addstr(&buf, " ## ");
->  			if (patch.is_new > 0)
-> -				strbuf_addf(&buf, "%s (new)", patch.new_name);
-> +				strbuf_addf(&buf, "%s (new %s)",
-> +						patch.new_name,
-> +						patch.new_oid_prefix);
->  			else if (patch.is_delete > 0)
-> -				strbuf_addf(&buf, "%s (deleted)", patch.old_name);
-> +				strbuf_addf(&buf, "%s (deleted %s)",
-> +						patch.old_name,
-> +						patch.old_oid_prefix);
->  			else if (patch.is_rename)
-> -				strbuf_addf(&buf, "%s =3D> %s", patch.old_name, patch.new_name);
-> +				strbuf_addf(&buf, "%s =3D> %s (%s..%s)",
-> +						patch.old_name,
-> +						patch.new_name,
-> +						patch.old_oid_prefix,
-> +						patch.new_oid_prefix);
->  			else
-> -				strbuf_addstr(&buf, patch.new_name);
-> +				strbuf_addf(&buf, "%s (%s..%s)",
-> +						patch.new_name,
-> +						patch.old_oid_prefix,
-> +						patch.new_oid_prefix);
->
->  			free(current_filename);
->  			if (patch.is_delete > 0)
->
->
+-K
