@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA9EF1F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 10:20:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49BD01F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 10:20:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731778AbfJVKUG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 06:20:06 -0400
-Received: from mail-pf1-f179.google.com ([209.85.210.179]:39602 "EHLO
-        mail-pf1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727101AbfJVKUF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 06:20:05 -0400
-Received: by mail-pf1-f179.google.com with SMTP id v4so10364527pff.6
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 03:20:05 -0700 (PDT)
+        id S1731789AbfJVKUJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 06:20:09 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:44981 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727101AbfJVKUI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 06:20:08 -0400
+Received: by mail-pf1-f193.google.com with SMTP id q21so10348742pfn.11
+        for <git@vger.kernel.org>; Tue, 22 Oct 2019 03:20:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=UPmxpvz5/PCY/O3qjCziVp4k19Ep1/zOzUcfziyRfrg=;
-        b=JJh16r6t5PdZK1ZBLwD721ecDcqqwQCnG9HkuNbyAcTN9bbn3/JrVzdqE+z1kuwGG8
-         WdRBWab2Pfjd2aEfbQOtDZHxiRAvMMRO/b53sLpVHG+8OnWim+UIqXutBwoZHG8RVmey
-         W/tqMTEYDAWrUjsCSwlnzYra5zK9Lj8g8Tdd+Tc8b+sNljCEr4wzfJBQvlanpaQCFcwT
-         tvJKkxTrjrYkuBjDnhS92OoskUYXFwFRsFSzdp6boWxX+LV78Cxx6J5ByE9xbX+On4o1
-         cLTU4BHul0/0cFhC7md+2MBR9Ad+RGOd4raZz8m/6n20PZQ+KF/etyN8Il3/4wmPoeab
-         R7yQ==
+        bh=WfTfRLFhXz1RU/LqEDa8JaobLYBGmAz3HY+wZYyQVow=;
+        b=ugCXjhN0yTfUcREmP2IW4rVrFzN6wu049rYkFEJN1yzZuusA48oWz0A53eYcmJz2zG
+         Jg5Xsb6VtY3v+MJuZZTQ8ruIZoTCJEws7OvhLOrcMzzsUIQCCYSspOWDLK3lNBWH9kuB
+         kMFM06RKs5RDjjXVn2P8UKiWx3bwoA2UMU2uAIKt8vE8JzSmQbXmGM/iM5xdELzhEAFE
+         t9VH0MW33ctgkw7CsFym1Lh+m/NAlycdjkMhnmtjcubsZaCryBDA2Loxg5CTj+GzQzyv
+         5amYcNSW9CSdeiKKJW3F7eDqLFPh0ZbrbPe8Rco510mbGHUF0kBt7KfsjsZjA8L00ruL
+         LEUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UPmxpvz5/PCY/O3qjCziVp4k19Ep1/zOzUcfziyRfrg=;
-        b=oB+Rzm0z1UCocK3LpgYoiJSyCrWGigLdoUZjzgtDGNDfyBMd7swHD9DQYFWsPdypuC
-         tZYI6Sth37MUqOQZx1yiqHwpBIQPVI+0Glje/TF0R46PU7UhUaQpZn6UkJz2DvpUcBlw
-         4KUNsdizZHlBYo/f65sbiHDhNAMY4ohsLKmZHMKg4U65zw81K1FjAoYYFuSbWXpjMRFo
-         eZE6t33xnhlC3YSuA0hrU2hYRUH4XQ3cynGDyMs+4UFMfo1MOkWL5z7PafyGpuoNie/H
-         Z6+9gOQ5Bp5FTYQXUUlUaw7+B7ZlUzWR88qx6p4DqaQ0u6dtTt8y3ekzTs6w8TeTgz89
-         GvpA==
-X-Gm-Message-State: APjAAAW0/9W8IGUPQCACP8TLscYPUIKpwMl1lK5qDtiUcDvo1IakvKal
-        lPY7zQDThWP7S8xScdM/xOc5ENUI
-X-Google-Smtp-Source: APXvYqwcuK3HX40EyI+laDbv3xcUzPmA4LshDqbWwx35nt+fxksL5TTlZPykZT1N2W6FZv3DszM+Ng==
-X-Received: by 2002:a63:b24c:: with SMTP id t12mr3058938pgo.340.1571739604791;
-        Tue, 22 Oct 2019 03:20:04 -0700 (PDT)
+        bh=WfTfRLFhXz1RU/LqEDa8JaobLYBGmAz3HY+wZYyQVow=;
+        b=GhX6cyp0oK1guzdSJVsEMc1fshxyZpHTTgqohvhmLaecSEjDWgP4IvF24hFHWHguR7
+         kSs9GO0Ml7OiORhEQbLelbcepHOp/gn1REsmPrGU72bgUbM1/Sbf8iyW8unkvKobOfq3
+         EF2C/pCMTDf+GTcklY5zRN9c4la/gOPHMea+l7TRWO8gGpqg3eJp0lL6zkE6ZcQxn/IO
+         8c/Lya6bN5T06oN2qabYrs6oD9xfnM/IWklD8bqYt1CmCT7T2EnLJMxfm+nxHFlwXC/N
+         RpH3LQ6fj1F5bsYpv9fax5iIo4JkzipenWH5Wbtsro2YqrWvozrI3yoxhx93uhqhBQo6
+         ZecA==
+X-Gm-Message-State: APjAAAXbWEv/HGZmfHdyokt7tfZsR+LBZzdmwMMYHbR78Ajp6Jp4sR8k
+        +ipfNvKIGE+nEAnmu6HCetlv8Ibp
+X-Google-Smtp-Source: APXvYqw/bUxtCmhVWo7JTgw5/pqqCRiJ7QGRbsOZ6epCcoEhCTCpxyAGd2n5ewJrbECHMWtFxsNLsg==
+X-Received: by 2002:a63:6989:: with SMTP id e131mr2952593pgc.190.1571739607429;
+        Tue, 22 Oct 2019 03:20:07 -0700 (PDT)
 Received: from generichostname ([2601:646:280:1b30:80db:d816:4d15:ae2a])
-        by smtp.gmail.com with ESMTPSA id c125sm18575934pfa.107.2019.10.22.03.20.03
+        by smtp.gmail.com with ESMTPSA id c10sm20679196pfo.49.2019.10.22.03.20.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Oct 2019 03:20:04 -0700 (PDT)
-Date:   Tue, 22 Oct 2019 03:20:02 -0700
+        Tue, 22 Oct 2019 03:20:06 -0700 (PDT)
+Date:   Tue, 22 Oct 2019 03:20:05 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 04/14] t5520: let sed open its own input
-Message-ID: <0af3f5027ba9aa68da631afd21b32b534cc80cfa.1571739459.git.liu.denton@gmail.com>
+Subject: [PATCH v3 05/14] t5520: replace test -f with test-lib functions
+Message-ID: <b696ff0a67024749b458902ed15f44cfaa4a68bf.1571739459.git.liu.denton@gmail.com>
 References: <cover.1571435195.git.liu.denton@gmail.com>
  <cover.1571739459.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -70,27 +70,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We were using a redirection operator to feed input into sed. However,
-since sed is capable of opening its own files, make sed open its own
-files instead of redirecting input into it.
+Although `test -f` has the same functionality as test_path_is_file(), in
+the case where test_path_is_file() fails, we get much better debugging
+information.
+
+Replace `test -f` with test_path_is_file() so that future developers
+will have a better experience debugging these test cases.
+
+Also, in the case of `! test -f`, not only should that path not be a
+file, it shouldn't exist at all so replace it with
+test_path_is_missing().
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5520-pull.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5520-pull.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index a3de2e19b6..55560ce3cd 100755
+index 55560ce3cd..004d5884cd 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -5,7 +5,7 @@ test_description='pulling into void'
- . ./test-lib.sh
+@@ -39,8 +39,8 @@ test_expect_success 'pulling into void' '
+ 		cd cloned &&
+ 		git pull ..
+ 	) &&
+-	test -f file &&
+-	test -f cloned/file &&
++	test_path_is_file file &&
++	test_path_is_file cloned/file &&
+ 	test_cmp file cloned/file
+ '
  
- modify () {
--	sed -e "$1" <"$2" >"$2.x" &&
-+	sed -e "$1" "$2" >"$2.x" &&
- 	mv "$2.x" "$2"
- }
+@@ -50,8 +50,8 @@ test_expect_success 'pulling into void using master:master' '
+ 		cd cloned-uho &&
+ 		git pull .. master:master
+ 	) &&
+-	test -f file &&
+-	test -f cloned-uho/file &&
++	test_path_is_file file &&
++	test_path_is_file cloned-uho/file &&
+ 	test_cmp file cloned-uho/file
+ '
+ 
+@@ -99,7 +99,7 @@ test_expect_success 'pulling into void must not create an octopus' '
+ 	(
+ 		cd cloned-octopus &&
+ 		test_must_fail git pull .. master master &&
+-		! test -f file
++		test_path_is_missing file
+ 	)
+ '
  
 -- 
 2.24.0.rc0.197.g0926ab8072
