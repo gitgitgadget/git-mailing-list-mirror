@@ -7,92 +7,105 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 662A31F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 23:38:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18C301F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 23:46:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389755AbfJVXiC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 19:38:02 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64068 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731847AbfJVXiC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 19:38:02 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D24834D78;
-        Tue, 22 Oct 2019 19:38:01 -0400 (EDT)
+        id S1732878AbfJVXq4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 19:46:56 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63649 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731847AbfJVXqz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 19:46:55 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CDA61AE8F1;
+        Tue, 22 Oct 2019 19:46:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pApbpEXi3VP09+hWXEpakjbxIAM=; b=g7HmPN
-        NXfr4rr3pMQYoD03ZggHaXkZoi/Th4PrJTNksoIXuANj11f3bDWXorkoiwRaFkL6
-        LEEPeO4q8n2uBjba57LsgXsBsaQSNsGJ0WWzr11LHyV3MZw2/b8n0GgNsbsqC9Gv
-        W4LeqDYyubcv5TMxL7bxmaNoc6ezzaYNRn5c4=
+        :content-type; s=sasl; bh=4QxSH3pZ+76wNZ1barb50BtBP88=; b=O4Ke4Q
+        iE20Lx80MAyEsVpZMuUOKiy7ISYh79mx0KX0qsz818+mE1Km3t+mNl8q6pQanii/
+        twPfZjjuheV9Qe5N6aIZbURClFeaeiomPz3bzJtBaRjcMFfjZAhYJkiXQVidTubF
+        uztE6KAPTVux76D+R7j9XTXBPIoHNBkgxQxhc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=T6b3EDROSXnbK/S8GJplwnOu0l+J8fZ+
-        eKLjBk851pijYhOpuwdi/DT8YXy3KgDfhqp+rrUvxNMoc3sIAlDVOeWB5lUUvJi4
-        rEr/LIPg8cc9NoB9lltQuvnXB7WWhoS7rvrrKEd4vil9J70kR6C2EvZn05nifylJ
-        SAIDrriSQps=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3550334D77;
-        Tue, 22 Oct 2019 19:38:01 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=pH8pwK9I7G/qm6KNGRTQB80xIxXXA4Ey
+        IyWWbqK5GJ+NEHtvcTtONehLmOyPw37btadEDeD71+/AoBmmvkMeT4e69QzRIDtQ
+        76FnicNNrpRopybEwYZ0WU0yzEkkBFDZHOU/SWnrnz8SA21FVgf/dglbPSDoELFX
+        5rYjoXvHpro=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B5F73AE8F0;
+        Tue, 22 Oct 2019 19:46:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 648C434D76;
-        Tue, 22 Oct 2019 19:38:00 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AEE24AE8ED;
+        Tue, 22 Oct 2019 19:46:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 1/1] ci(osx): use new location of the `perforce` cask
-References: <pull.400.git.1571160721.gitgitgadget@gmail.com>
-        <pull.400.v2.git.1571316454.gitgitgadget@gmail.com>
-        <372ab24acffbc956407cd93ed34135f83156e10d.1571316454.git.gitgitgadget@gmail.com>
-        <20191018105143.GY29845@szeder.dev>
-        <xmqqeez6n8j7.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1910230123540.46@tvgsbejvaqbjf.bet>
-Date:   Wed, 23 Oct 2019 08:37:58 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1910230123540.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 23 Oct 2019 01:28:03 +0200 (CEST)")
-Message-ID: <xmqq36fkl5bd.fsf@gitster-ct.c.googlers.com>
+To:     Prarit Bhargava <prarit@redhat.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] pretty: Add "%aU"|"%au" option to output author's username
+References: <20191022232847.5212-1-prarit@redhat.com>
+Date:   Wed, 23 Oct 2019 08:46:47 +0900
+In-Reply-To: <20191022232847.5212-1-prarit@redhat.com> (Prarit Bhargava's
+        message of "Tue, 22 Oct 2019 19:28:47 -0400")
+Message-ID: <xmqqy2xcjqc8.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: FBD7F7E8-F524-11E9-BC5C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 3753B9BE-F526-11E9-9536-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Prarit Bhargava <prarit@redhat.com> writes:
 
->> This is already in 'next' X-<; reverting a merge is cheap but I
->> prefer to do so when we already have a replacement.
->
-> I force-pushed (see https://github.com/gitgitgadget/git/pull/400), and
-> once Stolee approves, he will submit v3. This will only change the
-> commit message, though, as I disagree that hard-coding the URL would be
-> an improvement: the nice thing about a package management system is that
-> the user does not need to know the details (or need to know if the
-> details change, like, ever).
+> Subject: Re: [PATCH] pretty: Add "%aU"|"%au" option to output author's username
 
-If this were meant for the upcoming release, I would rather see us
-copy a butt-ugly-but-known-working procedure if we have one this
-close to -rc1.  If the hard-coded URL ever changes, the procedure
-we would be copying from would be broken anyway.
+Downcase "Add" (see "git shortlog --no-merges -100 master" and
+mimick the project convention).
 
-But I agree 100% that we should take a conceptually cleaner approach
-for the longer term.  Let's replace the original one with this and
-cook in 'next'---it would be ideal if the ugly-but-know-working one
-be updated to match in the meantime, but if it is bypassing package
-management for a reason (the upstream just publishes the URL to
-download from without packaging it properly, for example?), that
-would not be possible, and it is OK if that is the case.
+> Add a "%aU"|"%au" option that outputs the author's email username.
 
-Thanks.
+Even though I personally do not see the use for it, I agree it would
+make sense to have an option to show the local part only where the
+e-mail address is shown.  
 
+I do not know if u/U is a good mnemonic; it hints too strongly that
+it may come from GIT_{AUTHOR/COMMITTER}_NAME but that is not what
+you are doing---isn't there a letter that better conveys that this
+is about RFC 2822 local-part (cf. page 16 ieft.org/rfc/rfc2822.txt)?
 
+> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+> index b87e2e83e6d0..479a15a8ab12 100644
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -163,6 +163,9 @@ The placeholders are:
+>  '%ae':: author email
+>  '%aE':: author email (respecting .mailmap, see linkgit:git-shortlog[1]
+>  	or linkgit:git-blame[1])
+> +'%au':: author username
+> +'%aU':: author username (respecting .mailmap, see linkgit:git-shortlog[1]
+> +	or linkgit:git-blame[1])
+>  '%ad':: author date (format respects --date= option)
+>  '%aD':: author date, RFC2822 style
+>  '%ar':: author date, relative
 
+> diff --git a/pretty.c b/pretty.c
+> index b32f0369531c..2a5b93022050 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -706,6 +706,11 @@ static size_t format_person_part(struct strbuf *sb, char part,
+>  		strbuf_add(sb, mail, maillen);
+>  		return placeholder_len;
+>  	}
+> +	if (part == 'u' || part == 'U') {	/* username */
+> +		maillen = strstr(s.mail_begin, "@") - s.mail_begin;
+> +		strbuf_add(sb, mail, maillen);
+> +		return placeholder_len;
+> +	}
+
+I think users get %eu and %eU for free with this change, which should
+be documented.
