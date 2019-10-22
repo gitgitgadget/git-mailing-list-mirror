@@ -7,340 +7,142 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9F591F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 11:48:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9FD01F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 12:12:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388843AbfJVLsW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 07:48:22 -0400
-Received: from userp2130.oracle.com ([156.151.31.86]:36870 "EHLO
-        userp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387893AbfJVLsV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 07:48:21 -0400
-Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
-        by userp2130.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x9MBcsXp106002;
-        Tue, 22 Oct 2019 11:48:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=corp-2019-08-05;
- bh=KYzS++9lAA+38b2bQnAmAV7JCso+dWX+ChClkasrb6E=;
- b=LKpVDv5Da2NIGsk5HnavwmdjIle+7mbznXaBmsu0DC8OQpgLP5J3dobtHLZvJpKQhOLG
- rddhf6d74Ei1agjGfNnwO/myYQ7uY6UktZoDj3qD/R58lr1zQYJ0A4MeSCtur/gBStyM
- zDKH8sofQJh0DY60wCMta990Hb0wgCWRvNIrGinVKWmhptNBZV4yiTj24Fv55FA6YPq+
- vS9SPWKMPQDoJFzOfn14E2A2vYgzPIMO2BJR4CIRFiMTe5gwoKZJ/XjaYw7rS3pm6a7f
- 49fm4kUAtp2G78LdUktitE0AmgCI28j2x3qPmMz0ZS5BYFuZhSJSTFHwfvokAEF7dJns yg== 
-Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
-        by userp2130.oracle.com with ESMTP id 2vqswte57s-1
+        id S2388975AbfJVMMH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 08:12:07 -0400
+Received: from aserp2120.oracle.com ([141.146.126.78]:53088 "EHLO
+        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388960AbfJVMMG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 08:12:06 -0400
+Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
+        by aserp2120.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x9MC8tCn113199;
+        Tue, 22 Oct 2019 12:11:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=subject : from : to :
+ cc : references : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=corp-2019-08-05;
+ bh=MFJzMYNcFvDsXyams3WVY/szvOVOHehPEPgrKljIzhc=;
+ b=bp60qwlbt9nzMsjtdt9HiuUcE5bkuVIY3/S6BWCxKWwdv9U9/lhQcG/A/+aeudq0GXmH
+ nt/k/rQKYyVRl3Ss2EdxNXrTuxxhYNllr6aPxugzRRNupLwst3z50/Z8E6YtnTmlvqOm
+ IjNEQiiy1ZlKklOjSEACe05aD4iH1vtIhuZuDXVLsVtgHxUTssn7ldu2ja6F8PdYzw8A
+ Qw7FcjPj9U7XU6n02Npi3CrqoZvXgGept8ESk7nljs2C44Gs/uIKqAOFuKT9HO448cbF
+ oxve13v/F6Ywc+nulsOX6sJXlfqME/fdUFb9LtKgvYHlrdk1xXqPSYGWUVHlsrMlL+Mf IQ== 
+Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
+        by aserp2120.oracle.com with ESMTP id 2vqtepp5pt-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 22 Oct 2019 11:48:06 +0000
-Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
-        by aserp3030.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x9MBcBrX092757;
-        Tue, 22 Oct 2019 11:48:06 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by aserp3030.oracle.com with ESMTP id 2vsx22jnq1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 22 Oct 2019 11:48:06 +0000
-Received: from aserp3030.oracle.com (aserp3030.oracle.com [127.0.0.1])
-        by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x9MBm0hU115832;
-        Tue, 22 Oct 2019 11:48:05 GMT
-Received: from t460.home (dhcp-10-175-28-77.vpn.oracle.com [10.175.28.77])
-        by aserp3030.oracle.com with ESMTP id 2vsx22jmx3-4;
-        Tue, 22 Oct 2019 11:48:05 +0000
+        Tue, 22 Oct 2019 12:11:33 +0000
+Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
+        by aserp3020.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x9MC8J4q100829;
+        Tue, 22 Oct 2019 12:11:33 GMT
+Received: from aserv0121.oracle.com (aserv0121.oracle.com [141.146.126.235])
+        by aserp3020.oracle.com with ESMTP id 2vrc01rnte-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 22 Oct 2019 12:11:33 +0000
+Received: from abhmp0006.oracle.com (abhmp0006.oracle.com [141.146.116.12])
+        by aserv0121.oracle.com (8.14.4/8.13.8) with ESMTP id x9MCBVdT031690;
+        Tue, 22 Oct 2019 12:11:31 GMT
+Received: from [10.175.28.77] (/10.175.28.77)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Tue, 22 Oct 2019 05:11:31 -0700
+Subject: Re: email as a bona fide git transport
 From:   Vegard Nossum <vegard.nossum@oracle.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Paolo Bonzini <pbonzini@redhat.com>,
-        Vegard Nossum <vegard.nossum@oracle.com>,
-        Paul Tan <pyokagan@gmail.com>
-Subject: [RFC PATCH v2 3/3] am: add --exact
-Date:   Tue, 22 Oct 2019 13:45:18 +0200
-Message-Id: <20191022114518.32055-4-vegard.nossum@oracle.com>
-X-Mailer: git-send-email 2.24.0.rc0.3.g4ba423c3c2
-In-Reply-To: <20191022114518.32055-1-vegard.nossum@oracle.com>
-References: <20191022114518.32055-1-vegard.nossum@oracle.com>
+To:     Willy Tarreau <w@1wt.eu>, "Theodore Y. Ts'o" <tytso@mit.edu>
+Cc:     Santiago Torres Arias <santiago@nyu.edu>,
+        workflows@vger.kernel.org, Git Mailing List <git@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Eric Wong <e@80x24.org>
+References: <b9fb52b8-8168-6bf0-9a72-1e6c44a281a5@oracle.com>
+ <20191016111009.GE13154@1wt.eu>
+ <20191016144517.giwip4yuaxtcd64g@LykOS.localdomain>
+ <56664222-6c29-09dc-ef78-7b380b113c4a@oracle.com>
+ <20191018161547.GG21137@mit.edu>
+ <de49fe5e-85cb-9fb0-f9f4-c294d72e356c@oracle.com>
+ <20191018191456.GI21137@mit.edu> <20191020031716.GA17475@1wt.eu>
+ <1a259d8d-b3d1-b64e-07c3-ba143b42c442@oracle.com>
+Message-ID: <de6dd8b5-5c28-d0b2-d3fc-e72a6d643105@oracle.com>
+Date:   Tue, 22 Oct 2019 14:11:22 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1a259d8d-b3d1-b64e-07c3-ba143b42c442@oracle.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9417 signatures=668684
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1908290000 definitions=main-1910220110
 X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9417 signatures=668684
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
- suspectscore=2 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
  lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1908290000
- definitions=main-1910220107
+ definitions=main-1910220110
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This uses exact metadata when creating the commit object, hopefully
-reconstructing the commit with the exact same SHA1.
+On 10/20/19 8:28 AM, Vegard Nossum wrote:
+> 
+> On 10/20/19 5:17 AM, Willy Tarreau wrote:
+>> On Fri, Oct 18, 2019 at 03:14:56PM -0400, Theodore Y. Ts'o wrote:
+>>> On Fri, Oct 18, 2019 at 06:50:51PM +0200, Vegard Nossum wrote:
+>>>> The problem I ran into with putting the metadata at the end was
+>>>> detecting where the diff ends. A comment in 'git apply' suggested that
+>>>> detecting the difference between "--" as a diff/signature separator and
+>>>> as part of the diff is nontrivial in the sense that you need to 
+>>>> actually
+>>>> do some parsing and keep track of hunk sizes.
+>>>
+>>> Could we cheat by having "git format-patch" add a "Diff-size" in the
+>>> header which gives the number of lines in the diff so git am can just
+>>> count lines to find the Trailer section?
+>>
+>> Be careful with this, it starts like this and ends up with non-editable
+>> patches. I'd rather have git-am use best-effort detection of the end.
+> 
+> Expect filesystem developers to come up with a format that uses extents ;-)
+> 
+>> Also when dealing with stable backports, I've done a lot of
+>> "cat foo.diff >> bar.patch" to fixup some patches in which I just had
+>> to move some parts around. Having to count lines and edit a counter
+>> somewhere is going to become really painful.
+> 
+> I almost have some new patches ready for putting the metadata after the
+> patch using a very bare-bones diff parser (it's actually not that bad),
+> I just need to fix a few corner cases that are causing breakage in the
+> git test suite.
 
-Note: In order to be forwards compatible with new commit formats we
-may want a new helper for creating a commit with the exact metadata
-that is present (and then validating the result) as opposed to trying
-to parse the metadata and pass it piecewise to commit_tree().
+I sent v2 of the patches (with metadata _after_ the diff) to the git
+list here:
 
-Previous-version: 3120370db888889f32e07a082edb4722db8feef1
-Cc: Paul Tan <pyokagan@gmail.com>
-Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
----
- Documentation/git-am.txt |   9 +++-
- builtin/am.c             | 111 +++++++++++++++++++++++++++++++++++----
- t/t4150-am.sh            |  30 +++++++++++
- 3 files changed, 138 insertions(+), 12 deletions(-)
+https://public-inbox.org/git/20191022114518.32055-1-vegard.nossum@oracle.com/T/#u
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index fc3b993c33..5b75596aaf 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -9,7 +9,7 @@ git-am - Apply a series of patches from a mailbox
- SYNOPSIS
- --------
- [verse]
--'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8]
-+'git am' [--[no-]exact] [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8]
- 	 [--[no-]3way] [--interactive] [--committer-date-is-author-date]
- 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
- 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
-@@ -31,6 +31,13 @@ OPTIONS
- 	supply this argument, the command reads from the standard input.
- 	If you supply directories, they will be treated as Maildirs.
- 
-+-e::
-+--[no-]exact::
-+	Reconstruct the exact commit that the patch was generated from,
-+	assuming the mail contains complete metadata (i.e. it was generated
-+	using `git format-patch --complete`). This is only possible if all
-+	the parent commits are available in the repository.
-+
- -s::
- --signoff::
- 	Add a `Signed-off-by:` line to the commit message, using
-diff --git a/builtin/am.c b/builtin/am.c
-index 4190383bba..c0fc27a2ae 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -118,6 +118,7 @@ struct am_state {
- 	int allow_rerere_autoupdate;
- 	const char *sign_commit;
- 	int rebasing;
-+	int exact;
- };
- 
- /**
-@@ -399,6 +400,9 @@ static void am_load(struct am_state *state)
- 
- 	state->rebasing = !!file_exists(am_path(state, "rebasing"));
- 
-+	read_state_file(&sb, state, "exact", 1);
-+	state->exact = !strcmp(sb.buf, "t");
-+
- 	strbuf_release(&sb);
- }
- 
-@@ -1005,6 +1009,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 	else
- 		write_state_text(state, "applying", "");
- 
-+	write_state_bool(state, "exact", state->exact);
-+
- 	if (!get_oid("HEAD", &curr_head)) {
- 		write_state_text(state, "abort-safety", oid_to_hex(&curr_head));
- 		if (!state->rebasing)
-@@ -1548,40 +1554,121 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
-  */
- static void do_commit(const struct am_state *state)
- {
-+	struct object_id meta_commit = {};
-+	struct object_id meta_tree = {};
-+
- 	struct object_id tree, parent, commit;
- 	const struct object_id *old_oid;
- 	struct commit_list *parents = NULL;
--	const char *reflog_msg, *author;
-+	const char *reflog_msg, *author = NULL;
- 	struct strbuf sb = STRBUF_INIT;
- 
-+	if (state->exact) {
-+		/*
-+		 * Scan meta file for parents + other data.
-+		 *
-+		 * TODO: Pass everything after the "commit ..." line
-+		 * verbatim to the commit for forwards compatibility
-+		 * (e.g. so we don't need to know about every type of
-+		 * commit attribute that may appear in the future).
-+		 */
-+
-+		struct strbuf line = STRBUF_INIT;
-+		FILE *fp = xfopen(am_path(state, "meta"), "r");
-+
-+		while (!strbuf_getline_lf(&line, fp)) {
-+			const char *rest;
-+
-+			if (skip_prefix(line.buf, "commit ", &rest)) {
-+				if (get_oid_hex(rest, &meta_commit))
-+					die("invalid exact metadata (commit)");
-+			} else if (skip_prefix(line.buf, "tree ", &rest)) {
-+				if (get_oid_hex(rest, &meta_tree))
-+					die("invalid exact metadata (tree)");
-+			} else if (skip_prefix(line.buf, "parent ", &rest)) {
-+				if (get_oid_hex(rest, &parent))
-+					die("invalid exact metadata (parent)");
-+
-+				commit_list_insert(lookup_commit(the_repository, &parent), &parents);
-+			} else if (skip_prefix(line.buf, "author ", &rest)) {
-+				author = strdup(rest);
-+			} else if (skip_prefix(line.buf, "committer ", &rest)) {
-+				char *name_copy;
-+				char *email;
-+				char *email_copy;
-+				char *date;
-+
-+				email = strstr(rest, " <");
-+				if (!email)
-+					die("invalid exact metadata (committer name)");
-+
-+				name_copy = xstrndup(rest, email - rest);
-+				email += 2;
-+				setenv("GIT_COMMITTER_NAME", name_copy, 1);
-+				free(name_copy);
-+
-+				date = strstr(email, "> ");
-+				if (!date)
-+					die("invalid exact metadata (committer email)");
-+
-+				email_copy = xstrndup(email, date - email);
-+				date += 2;
-+				setenv("GIT_COMMITTER_EMAIL", email_copy, 1);
-+				free(email_copy);
-+
-+				setenv("GIT_COMMITTER_DATE", date, 1);
-+			} else if (line.len == 0) {
-+				break;
-+			} else {
-+				die("unknown exact metadata: %.*s", (int) line.len, line.buf);
-+			}
-+		}
-+
-+		fclose(fp);
-+	}
-+
- 	if (run_hook_le(NULL, "pre-applypatch", NULL))
- 		exit(1);
- 
- 	if (write_cache_as_tree(&tree, 0, NULL))
- 		die(_("git write-tree failed to write a tree"));
- 
-+	if (state->exact && !oideq(&tree, &meta_tree))
-+		die("tree mismatch");
-+
- 	if (!get_oid_commit("HEAD", &parent)) {
- 		old_oid = &parent;
--		commit_list_insert(lookup_commit(the_repository, &parent),
--				   &parents);
-+		if (!state->exact) {
-+			commit_list_insert(lookup_commit(the_repository, &parent),
-+					   &parents);
-+		}
- 	} else {
- 		old_oid = NULL;
- 		say(state, stderr, _("applying to an empty history"));
- 	}
- 
--	author = fmt_ident(state->author_name, state->author_email,
--		WANT_AUTHOR_IDENT,
--			state->ignore_date ? NULL : state->author_date,
--			IDENT_STRICT);
--
--	if (state->committer_date_is_author_date)
--		setenv("GIT_COMMITTER_DATE",
--			state->ignore_date ? "" : state->author_date, 1);
-+	if (state->exact) {
-+		/*
-+		 * Already got author above.
-+		 */
-+	} else {
-+		author = fmt_ident(state->author_name, state->author_email,
-+			WANT_AUTHOR_IDENT,
-+				state->ignore_date ? NULL : state->author_date,
-+				IDENT_STRICT);
-+
-+		if (state->committer_date_is_author_date)
-+			setenv("GIT_COMMITTER_DATE",
-+				state->ignore_date ? "" : state->author_date, 1);
-+	}
- 
- 	if (commit_tree(state->msg, state->msg_len, &tree, parents, &commit,
- 			author, state->sign_commit))
- 		die(_("failed to write commit object"));
- 
-+	if (state->exact && !oideq(&commit, &meta_commit))
-+		die("sha1 mismatch");
-+
- 	reflog_msg = getenv("GIT_REFLOG_ACTION");
- 	if (!reflog_msg)
- 		reflog_msg = "am";
-@@ -2182,6 +2269,8 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 			0, PARSE_OPT_NONEG),
- 		OPT_BOOL('c', "scissors", &state.scissors,
- 			N_("strip everything before a scissors line")),
-+		OPT_BOOL('e', "exact", &state.exact,
-+			N_("preserve exact metadata, including sha1")),
- 		OPT_PASSTHRU_ARGV(0, "whitespace", &state.git_apply_opts, N_("action"),
- 			N_("pass it through git-apply"),
- 			0),
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 4f1e24ecbe..56a0804dcb 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -147,6 +147,7 @@ test_expect_success setup '
- 		git diff-tree --no-commit-id -p second
- 	} >patch1-hg.eml &&
- 
-+	git format-patch --stdout --complete first >patch1-complete &&
- 
- 	echo file >file &&
- 	git add file &&
-@@ -1061,6 +1062,35 @@ test_expect_success 'am --quit keeps HEAD where it is' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'am --no-exact with metadata succeeds' '
-+	rm -fr .git/rebase-apply &&
-+	git reset --hard &&
-+	git checkout first &&
-+	git am --no-exact patch1-complete
-+'
-+
-+test_expect_success 'am --exact without metadata fails' '
-+	rm -fr .git/rebase-apply &&
-+	git reset --hard &&
-+	git checkout first &&
-+	test_must_fail git am --exact patch1
-+'
-+
-+test_expect_success 'am --exact with metadata preserves sha1' '
-+	rm -fr .git/rebase-apply &&
-+	git reset --hard &&
-+	git checkout first &&
-+	git am --exact patch1-complete &&
-+	test_cmp_rev second HEAD
-+'
-+
-+test_expect_success 'am --exact with metadata applied to the wrong tree fails' '
-+	rm -fr .git/rebase-apply &&
-+	git reset --hard &&
-+	git checkout second &&
-+	test_must_fail git am --exact patch1-complete
-+'
-+
- test_expect_success 'am and .gitattibutes' '
- 	test_create_repo attributes &&
- 	(
---
-commit 429e6ce36ee1fb8e020c76756894bf7e196e7c4e
-tree 69ec15522af90642ea38dc761510fd1fa82bdfb2
-parent 53da20012e763a65071bfe0a42fbf4968d0e1e49
-author Vegard Nossum <vegard.nossum@oracle.com> 1571186178 +0200
-committer Vegard Nossum <vegard.nossum@oracle.com> 1571740256 +0200
+As I wrote in there, we could already today start using
 
--- 
-2.24.0.rc0.3.g4ba423c3c2
+   git am --message-id
 
+when applying patches and this would provide something that a bot could
+annotate with git notes pointing to lore/LKML/LWN/whatever. I think that
+would already be a pretty nice improvement over today's situation.
+
+Sadly, since the beginning of 2018, this was only used for a measly
+~0.14% of all non-merge commits in the kernel:
+
+$ git rev-list --count --no-merges --since='2018-01-01' --grep 
+'Message-Id: ' linus/master
+178
+
+$ git rev-list --count --no-merges --since='2018-01-01' linus/master
+130777
+
+So how can we spread the word about --message-id and get maintainers to
+actually use it? I don't suppose it's reasonable to change the 'git am'
+default setting?
+
+
+Vegard
