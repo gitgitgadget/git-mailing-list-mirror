@@ -2,142 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 754F11F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 23:36:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 662A31F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 23:38:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389667AbfJVXgC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 19:36:02 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38733 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732792AbfJVXgC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 19:36:02 -0400
-Received: by mail-wm1-f66.google.com with SMTP id 3so17747219wmi.3
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 16:36:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wG05NeEZdQT2Qxu6qNuUk0OaiJf2oro5Xom4bSxHp5A=;
-        b=XxP7oXi0Q2gy2AguHkv7Q9R20tDU6IL7VTJJxS7wfOmtz9ThDAhXOA3dUkpI4VYtF1
-         6G2K0nZ2Bwelhz+qpjTk3Vga6URfqZfwreH74tL9J/3kAH/+raQy52TyrYqdm+N5eYU7
-         SqCDa1FMBIwdyPwrkkPmPHC0PvRzW/JVJC70yyW5vQ7oIJ/GYbfO93GiViv3ovqjd3Pp
-         LX3gk11GODvn+pk+rGaOgahxdRM+de+J4DTtzS5yFHTdMMnlcCU5hnY+JB8bGyMEj2UG
-         34efDnKsSLLPraGFHx4GNlvyVtHrkudauMh7+Uyh3M3X50srqMeGrRInRGZP27+VlRxm
-         ZKqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wG05NeEZdQT2Qxu6qNuUk0OaiJf2oro5Xom4bSxHp5A=;
-        b=HWQ04TaqGErTH/BTjPFBfGM6urg33c0PJT/NlA9TIUvr+vcKt0yO8i6RtGw+5fKYnz
-         FdmtE3296lJ3fsA7N3GUBlNxH87l0fjRLVKdZpIpxfpCSCqV/uTtzhe2ps8PanJakxqo
-         B0cP520i7tf3vYNyACeSfVcOIay6b2+pz0OSlpdD81fEvIa2SEK4rdzwkLUCegNKaOJd
-         qB9OyZWcew2au1514O/WAhIYb6hoMkrn98GSMMTwLFRj4u1h52u1kqP2ZyYieQD9ytEw
-         4XcgsRjrfTwi0i4woXrz8/w7WtJ3SWgu+J/RlBNUghM3ccwoSvbU+WBT/czJhpoiCJTs
-         VqUA==
-X-Gm-Message-State: APjAAAWHb/RZNnRO5ozJHowLuXutppaAFeuwPLV1lXhmKIg52w0wXxhQ
-        wOf3ogsLqAmS5VBk+bs+4Dc=
-X-Google-Smtp-Source: APXvYqwp1Jl71eGIbveFKUKANE0sJT4SSWJcteapxjcF7ONZpqOtnqzaJ9l+0nNbiu8igc1hTuCTHw==
-X-Received: by 2002:a1c:4046:: with SMTP id n67mr5032842wma.2.1571787359789;
-        Tue, 22 Oct 2019 16:35:59 -0700 (PDT)
-Received: from szeder.dev (x4dbe0456.dyn.telefonica.de. [77.190.4.86])
-        by smtp.gmail.com with ESMTPSA id p12sm7471268wrt.7.2019.10.22.16.35.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Oct 2019 16:35:58 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 01:35:56 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] commit-graph: fix writing first commit-graph during
- fetch
-Message-ID: <20191022233556.GF4348@szeder.dev>
-References: <pull.415.git.1571765335.gitgitgadget@gmail.com>
- <a1e5280d4b61a972426063574f1ea890a7dab73b.1571765336.git.gitgitgadget@gmail.com>
- <20191022203316.GC12270@sigill.intra.peff.net>
- <20191022214553.GA18314@sigill.intra.peff.net>
+        id S2389755AbfJVXiC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 19:38:02 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64068 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731847AbfJVXiC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 19:38:02 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D24834D78;
+        Tue, 22 Oct 2019 19:38:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pApbpEXi3VP09+hWXEpakjbxIAM=; b=g7HmPN
+        NXfr4rr3pMQYoD03ZggHaXkZoi/Th4PrJTNksoIXuANj11f3bDWXorkoiwRaFkL6
+        LEEPeO4q8n2uBjba57LsgXsBsaQSNsGJ0WWzr11LHyV3MZw2/b8n0GgNsbsqC9Gv
+        W4LeqDYyubcv5TMxL7bxmaNoc6ezzaYNRn5c4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=T6b3EDROSXnbK/S8GJplwnOu0l+J8fZ+
+        eKLjBk851pijYhOpuwdi/DT8YXy3KgDfhqp+rrUvxNMoc3sIAlDVOeWB5lUUvJi4
+        rEr/LIPg8cc9NoB9lltQuvnXB7WWhoS7rvrrKEd4vil9J70kR6C2EvZn05nifylJ
+        SAIDrriSQps=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3550334D77;
+        Tue, 22 Oct 2019 19:38:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 648C434D76;
+        Tue, 22 Oct 2019 19:38:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 1/1] ci(osx): use new location of the `perforce` cask
+References: <pull.400.git.1571160721.gitgitgadget@gmail.com>
+        <pull.400.v2.git.1571316454.gitgitgadget@gmail.com>
+        <372ab24acffbc956407cd93ed34135f83156e10d.1571316454.git.gitgitgadget@gmail.com>
+        <20191018105143.GY29845@szeder.dev>
+        <xmqqeez6n8j7.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1910230123540.46@tvgsbejvaqbjf.bet>
+Date:   Wed, 23 Oct 2019 08:37:58 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1910230123540.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 23 Oct 2019 01:28:03 +0200 (CEST)")
+Message-ID: <xmqq36fkl5bd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191022214553.GA18314@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: FBD7F7E8-F524-11E9-BC5C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 22, 2019 at 05:45:54PM -0400, Jeff King wrote:
-> On Tue, Oct 22, 2019 at 04:33:16PM -0400, Jeff King wrote:
-> 
-> > > I have failed to produce a test using the file:// protocol that
-> > > demonstrates this bug.
-> > 
-> > Hmm, from the description, it sounds like it should be easy. I might
-> > poke at it a bit.
-> 
-> Hmph. I can reproduce it here, but it seems to depend on the repository.
-> If I do this:
-> 
-> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> index ecabbe1616..8d473a456f 100755
-> --- a/t/t5510-fetch.sh
-> +++ b/t/t5510-fetch.sh
-> @@ -583,6 +583,14 @@ test_expect_success 'fetch.writeCommitGraph' '
->  	)
->  '
->  
-> +test_expect_success 'fetch.writeCommitGraph with a bigger repo' '
-> +	git clone "$TEST_DIRECTORY/.." repo &&
-> +	(
-> +		cd repo &&
-> +		git -c fetch.writeCommitGraph fetch origin
-> +	)
-> +'
-> +
->  # configured prune tests
->  
->  set_config_tristate () {
-> 
-> it reliably triggers the bug. But if I make a synthetic repo, even it
-> has a lot of commits (thousands or more), it doesn't trigger. I thought
-> maybe it had to do with having commits that were not at tips (since the
-> tip ones presumably _are_ fed into the graph generation process). But
-> that doesn't seem to help.
-> 
-> Puzzling...
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Submodules?
+>> This is already in 'next' X-<; reverting a merge is cheap but I
+>> prefer to do so when we already have a replacement.
+>
+> I force-pushed (see https://github.com/gitgitgadget/git/pull/400), and
+> once Stolee approves, he will submit v3. This will only change the
+> commit message, though, as I disagree that hard-coding the URL would be
+> an improvement: the nice thing about a package management system is that
+> the user does not need to know the details (or need to know if the
+> details change, like, ever).
 
-  $ cd ~/src/git/
-  $ git quotelog 86cfd61e6b
-  86cfd61e6b (sha1dc: optionally use sha1collisiondetection as a submodule, 2017-07-01)
-  $ git init --bare good.git
-  Initialized empty Git repository in /home/szeder/src/git/good.git/
-  $ git push -q good.git 86cfd61e6b^:refs/heads/master
-  $ git clone good.git good-clone
-  Cloning into 'good-clone'...
-  done.
-  $ git -c fetch.writeCommitGraph -C good-clone fetch origin
-  Computing commit graph generation numbers: 100% (46958/46958), done.
-  $ git init --bare bad.git
-  Initialized empty Git repository in /home/szeder/src/git/bad.git/
-  $ git push -q bad.git 86cfd61e6b:refs/heads/master
-  $ git clone bad.git bad-clone
-  Cloning into 'bad-clone'...
-  done.
-  $ git -c fetch.writeCommitGraph -C bad-clone fetch origin
-  Computing commit graph generation numbers: 100% (1/1), done.
-  BUG: commit-graph.c:886: missing parent 9936c1b52a39fa14fca04f937df3e75f7498ac66 for commit 86cfd61e6bc12745751c43b4f69886b290cd85cb
-  Aborted
+If this were meant for the upcoming release, I would rather see us
+copy a butt-ugly-but-known-working procedure if we have one this
+close to -rc1.  If the hard-coded URL ever changes, the procedure
+we would be copying from would be broken anyway.
 
-In the cover letter Derrick mentioned that he used
-https://github.com/derrickstolee/numbers for testing, and that repo
-has a submodule as well.
+But I agree 100% that we should take a conceptually cleaner approach
+for the longer term.  Let's replace the original one with this and
+cook in 'next'---it would be ideal if the ugly-but-know-working one
+be updated to match in the meantime, but if it is bypassing package
+management for a reason (the upstream just publishes the URL to
+download from without packaging it properly, for example?), that
+would not be possible, and it is OK if that is the case.
+
+Thanks.
+
+
 
