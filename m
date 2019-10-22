@@ -2,89 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E7AE1F4C1
-	for <e@80x24.org>; Tue, 22 Oct 2019 19:36:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 173CA1F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 19:44:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387791AbfJVTgD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 15:36:03 -0400
-Received: from mail-qt1-f175.google.com ([209.85.160.175]:45072 "EHLO
-        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732691AbfJVTgD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 15:36:03 -0400
-Received: by mail-qt1-f175.google.com with SMTP id c21so28538101qtj.12
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 12:36:02 -0700 (PDT)
+        id S1732615AbfJVTob (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 15:44:31 -0400
+Received: from mail-qk1-f175.google.com ([209.85.222.175]:38911 "EHLO
+        mail-qk1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731703AbfJVToa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 15:44:30 -0400
+Received: by mail-qk1-f175.google.com with SMTP id p4so17478318qkf.5
+        for <git@vger.kernel.org>; Tue, 22 Oct 2019 12:44:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QIeUJEQuhMGYb0EekYhy8faEPJ35Ol6kL+2z1Cnkmnk=;
-        b=GoKWlJ35URfpPFJsg+Ecyp3wyxM3V9c1nASt72cSVrYDa7bvnm0UYRCI+dXzisSyHF
-         x33PqEN/Zt2qJVs3wlbu9LhI3VTMtOUdfQGGhrpaA6dNHzQ6fToupngHEVeoiTGjka6e
-         OdwlHcu9rIdTLYdPbBKZ8zBw767XFy5zPEC1M=
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=KhAcCrm0jpV1eb7QnjQGcAK7dKAFC2LwiH3l5UdND3Q=;
+        b=KWjNP0B9hRDuoxvJctZ6BnirbnJMfXDes7xgkCS4rZT7U0v42o5Ch/OD9GPu37HeiE
+         65djN1DC+Tlk36tzW6c51aCXg+b0oWlcnt8x6uRW03ssIDNP/fptKtBxt3mPJpMXzBS3
+         o3BK3DnI2zWqrPpOE5xttQKydXys2SWCL3I2pj1/V4cHZiLPf9fl8MDGdJSR4ytebwYK
+         w5Ow6t9n2pY/CMluZeWS+VqfX0GOhqOnG0XLjjNJmxLS9YxaszcmPvQHJWtlsgoZOOlQ
+         TftXrWW4SO/Mfudo/HLUGNA8aJruQ9nIUCjgYlPfyy0H7gEjPIwVcvzf9lEFQ7LnDWNP
+         6GNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=QIeUJEQuhMGYb0EekYhy8faEPJ35Ol6kL+2z1Cnkmnk=;
-        b=au9VPbgUASDR39MvfXJdhgeJGk3X9jxv2mf6B1/OG2esSNKv7UWSPmsPICEoo6AN6j
-         a2n0OGiD9Nx461FxlmgO0VMeW9T312oJMm+i8M87tAi60H/wjmrbZdyYCiNybH0fqrC2
-         RrijrTxdSN0+PAgbu3kzNiXz12NvM/zED4UEm7WGrZ/ttgVJntn2xLyZyN2jt/ELtiMj
-         sPMhPYLquhAzK2Ghcc74YN6J+j/qqzGzKh7SnNIPbs8Aaw+uPpr4OTYrc9K0BycIpMg7
-         2ZEoSIU87xaqQUR+hC3kdvpQP488xu4ovkHVF+WdEQ4WRQD+co3nP4p33pzL7M37fNSE
-         wgZA==
-X-Gm-Message-State: APjAAAVuoO6HUhbE+7Ioaul7DsconOZfua/lHbs00wm4BtcgAQ3BwAVU
-        dKRAZt4LcCiPDE27R+BHVirGOQ==
-X-Google-Smtp-Source: APXvYqyX7IRstYRlks9ANN/WYt5fcrGZTc0QhGPHEE+uX2UiY+S8d8ymL+kLoHu3WlpmCfDHXTggOQ==
-X-Received: by 2002:ac8:183:: with SMTP id x3mr5175573qtf.279.1571772961965;
-        Tue, 22 Oct 2019 12:36:01 -0700 (PDT)
-Received: from chatter.i7.local (192-0-228-88.cpe.teksavvy.com. [192.0.228.88])
-        by smtp.gmail.com with ESMTPSA id t65sm9611258qkh.23.2019.10.22.12.36.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Oct 2019 12:36:00 -0700 (PDT)
-Date:   Tue, 22 Oct 2019 15:35:58 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [RFC/WIP] range-diff: show old/new blob OIDs in comments
-Message-ID: <20191022193558.GC4960@chatter.i7.local>
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Wong <e@80x24.org>, git@vger.kernel.org,
-        Thomas Gummerer <t.gummerer@gmail.com>
-References: <20191017121045.GA15364@dcvr>
- <nycvar.QRO.7.76.6.1910222111430.46@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=KhAcCrm0jpV1eb7QnjQGcAK7dKAFC2LwiH3l5UdND3Q=;
+        b=f4iPnZq8g0EuETng5S3U0A2ij+HLj5uOuzkO3jVCJix7GVGQOH3qhfmV6MMl38FIdz
+         e07rkgf/fgngq6nCUbbnRGbk9aNvZk83tNAfTHurU3Ih+2E0kItxNIuJnxbWNrg33+aD
+         hvqza76/ngR56zeqs2vvjcOBEkymwOAcEldOT4+oW8RRGPHXs6+BM685te680MHWliUt
+         Cxq0MyLh6CwBCY+njZ/idijo2NRV72V44ChHma3P6oubKSP6e/kNwAe/xWUZtD5XlbaV
+         GrqG8lUR7yiCzVnNU5WA5YdZM6OuLVrohiZXU/Kx8pBXkJ24Bs6EE+hCnZRXTbGu30EY
+         2x8A==
+X-Gm-Message-State: APjAAAU9RZh0ErhfMWugsrTnM8dzJ/MO3S+qqpMKC++nZ85rnUxUZbs7
+        P9DV7Ds+53+5lE1f6cZ4g1fFzhvVTVw=
+X-Google-Smtp-Source: APXvYqzx35KF+wD/d8+R/ElnBcndCIjhqqwm48qKTaZiFV94KiTza+K0N0e58zB/18ymWbUjBP716Q==
+X-Received: by 2002:ae9:e50d:: with SMTP id w13mr161164qkf.297.1571773469676;
+        Tue, 22 Oct 2019 12:44:29 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:39e3:4dff:5642:8160? ([2001:4898:a800:1010:eb18:4dff:5642:8160])
+        by smtp.gmail.com with ESMTPSA id t17sm16821953qtt.57.2019.10.22.12.44.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Oct 2019 12:44:28 -0700 (PDT)
+Subject: Re: is commitGraph useful on the server side?
+To:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+References: <20191022165112.GA4960@chatter.i7.local>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <e0e294a7-bd3c-2174-a922-c5893b0945c2@gmail.com>
+Date:   Tue, 22 Oct 2019 15:44:28 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1910222111430.46@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20191022165112.GA4960@chatter.i7.local>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 22, 2019 at 09:18:35PM +0200, Johannes Schindelin wrote:
->As to recreating blobs from mails: Wow. That's quite a length you're
->going, and I think it is a shame that you have to. If only every
->contribution came accompanied with a pullable branch in a public
->repository.
+On 10/22/2019 12:51 PM, Konstantin Ryabitsev wrote:
+> Hi, all:
+> 
+> I've read the docs on commitGraph and it's not 100% clear to me if turning it on and generating commit graphs would be useful on the server-side. I know it's going to be enabled by default and automatically generated whenever "git gc" runs, so I'm trying to figure out if it'll be useful for git-daemon operations.
+> 
+> Thanks in advance for your help.
 
-Trouble is, those public repositories are transient and may be gone soon 
-after the pull request is performed. The goal is to be able to 
-reconstruct full code history prior to when it is merged into the 
-official repository.
+I've CC'd Taylor Blau for more information here.
 
->Instead, we will have to rely on your centralized, non-distributed
->service...
+I'm biased, but I think the commit-graph is generally really good to have
+in almost all cases. I actually do not know of a good reason to _not_ have
+it.
 
-It's actually neither, because mirroring and distributing public-inbox 
-repositories is already easy, and we hope to make it easier in the near 
-future.
+If you are managing reachability bitmaps, then most of the server-side
+stuff will use the bitmaps instead. However, creating those bitmaps will
+be slightly faster with the commit-graph.
 
--K
+If you don't use bitmaps, then the commit-graph will help fetch negotiation
+and many other commit-walk experiences.
+
+If you have a lot of machinery around your server maintenance, then you
+can schedule commit-graph updates more frequently than bitmap computations,
+and you would get benefit by parsing commits faster in the zone "above" the
+bitmaps.
+
+Thanks,
+-Stolee
