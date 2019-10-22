@@ -8,131 +8,93 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C38B11F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 08:17:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4695B1F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 09:28:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388228AbfJVIRk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 04:17:40 -0400
-Received: from mail-vs1-f47.google.com ([209.85.217.47]:42096 "EHLO
-        mail-vs1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387928AbfJVIRj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 04:17:39 -0400
-Received: by mail-vs1-f47.google.com with SMTP id m22so10713030vsl.9
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 01:17:39 -0700 (PDT)
+        id S1731439AbfJVJ2S (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 05:28:18 -0400
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:36270 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730312AbfJVJ2S (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 05:28:18 -0400
+Received: by mail-ed1-f45.google.com with SMTP id h2so12334300edn.3
+        for <git@vger.kernel.org>; Tue, 22 Oct 2019 02:28:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Fxa5Pbg31ZX1W2IfBRPsvc7wzQJzGHqTD4vNHpfCak8=;
-        b=a0f4/feOVYiYUm+dbySZY1ZeJuwNYtBibT3vifg9T2XQRfTlBUh7zg4enF8i/kQgJU
-         4cnAhuVdW7ECAmpuc5aScZxgzpZv6c4beZahsqwUSVB1T9cEOZT9/em4BlXAik6LwlRB
-         oDgN9pu/1IgUP2jTI1pJSFixx80mbrwk8SIcICp3Wkf4rWCbKBYySGR6psUXpgv7uXlz
-         dIHe1ASJCuCLJrEtai78A9XvOxJDyJT7JmunlF8RzQsJv3H5BfqVve6ksyySyn4194Au
-         Y1lrdWjqqNmLgBHy/ecZT2jjefOBzxK/tCiyGsJhkWuHYw+41agvznCNUCxuvtdOUVsa
-         taMA==
+         :cc:content-transfer-encoding;
+        bh=YjBl5nXM2YvtSxdSfuNxR0jjZWnYCCb25eBFh+PlWis=;
+        b=S2M3MS3ONBJZyhS4r1OvtofA28n+kc55TSzaLG8Dd90vBELoqbT0Tj3jGdjmahzwE/
+         SgvGD9zdGxeJSYX3LctXNeXxEpIJuJDWXMP9DvIrHYqlOex0oWqPLCG++SwrdeOsMNxs
+         bVpzOyALkZGR1zouoZqO67K51ykBALJPH2MpG19K7p2WirR9kkTWJyY7c4mRnn96RinT
+         2VdQcWoWcEWO0e19Pz63LEeSbxGy5TMW+Y7CVahdxPDV/twhxOulvjyN551xsUeP7MDO
+         7YgwVkHtnU6NH9RGeaDJ9DNCJF/eYyL4GC8IBXRXBlmYDSbdgarmkD6HDb9VkKptPvb+
+         SZdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Fxa5Pbg31ZX1W2IfBRPsvc7wzQJzGHqTD4vNHpfCak8=;
-        b=pUCCh4Kus0qThXFvFXmd16UIydv1qidolov9mDOwTDfUu+vV8oZxSZmNUHhCWzgsOq
-         peJ9C2B7Yx7m9Trwn3JET+QybxXB6oNOPDphDmsPt+Q7/hl/A//sv59lu3J89GmO3E73
-         WtUFyqzuwGEhO/LNe8u7Mwx9D1uRO+yWeM2lhHISVvUm6FSgmnwqfeam0tpfFsGxvXxr
-         JIjP0UMz9mDDBy9Y3RpAezSOuE3awAfOxqn+joId5qMa0vBMCJD9fYCb6vRztOI5ADZD
-         npmieMYdZ934nGZr8tOXbcd67YqasyvY78f+SYVMniG0pz2dnNN7I6Lx91bUneonBH9/
-         QtRA==
-X-Gm-Message-State: APjAAAV2mhBXJpDow5mKeCrDIR5Y8Pl9kEbdE+GeE61yfYEsugVk/pO2
-        HZHYZZQFqdySB3JpQU4mjFtPp+u230jYzSWpYUgHkm7z
-X-Google-Smtp-Source: APXvYqw+dXuKxGEV59oeM727k+cnZSCivnqnC5mcI7uvktoqS0zIOU6OmPV+rG7IVQiwoF6beCFBcqbPobx5lfyQCP8=
-X-Received: by 2002:a67:f7c9:: with SMTP id a9mr1011793vsp.85.1571732258594;
- Tue, 22 Oct 2019 01:17:38 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=YjBl5nXM2YvtSxdSfuNxR0jjZWnYCCb25eBFh+PlWis=;
+        b=InMuiLy+YcJ7kgDuTtWq6BtvYOgMnVmT3mAkgjbs2a7PLDMy1+XMKReGRzBBZdwLwj
+         xN2R6/J4YTg8rZ0GW+9AdbPwunkJmnDK/oUdR5z3LggDxAlxa8EH9Gx5jU05iKaxs+82
+         uRdoAPX3C9pC77lbq51EyHHcgY+0JV/qJhitWYq3r0Rb0Wsa+uiyyh039HZR68lrmmEd
+         ap5gsCpCa0dQ/n5T/xag6ClHA3jsIwXJD29ptVDvHrbm/zlHUGcHU5NYJaZU0id2M/MV
+         EYpvyNYBCF7D4DvzO90oJyE1Sv+SZSqOkqUEs6kYMw+MD0fecvl6YMvvBfxqKxZj+vRz
+         uCHg==
+X-Gm-Message-State: APjAAAUZDj9x1Q4n6qx3gwrmzyanEJCKbGY5rb/wHlkl6f/zxEyCf5rZ
+        oPGtJj7wjYxgJZY2fQDYGQ5jMIT0lHlIruaw+2c=
+X-Google-Smtp-Source: APXvYqxndfPI6I8w/tvAQmV9Dtk5i0gBHwsSRJm1EqmauEHeTc4TDaN7u3Fo+4dCf62AxDcb57QL88TcdZ424/tcYQg=
+X-Received: by 2002:a17:906:1ec6:: with SMTP id m6mr25976034ejj.6.1571736496360;
+ Tue, 22 Oct 2019 02:28:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190819214110.26461-1-me@yadavpratyush.com> <20190828215725.13376-1-me@yadavpratyush.com>
- <20190828215725.13376-5-me@yadavpratyush.com> <CAKPyHN0Kh8eKjzXink3YtE6wRrOgpzTYyPmLnbpbxPt3LFsvig@mail.gmail.com>
- <20191021190448.34vs3zsqvqc5hryl@yadavpratyush.com>
-In-Reply-To: <20191021190448.34vs3zsqvqc5hryl@yadavpratyush.com>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Tue, 22 Oct 2019 10:17:27 +0200
-Message-ID: <CAKPyHN2b1=2GefMDB987h5J4zXN7YWGsyLw7FADs+M5CgEUYow@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] git-gui: allow undoing last revert
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>
+References: <CAJxDvStLi2usG_X7e8FeOSjKCXN4Yb+b_JCpUc8Y0HZ-GuTUgw@mail.gmail.com>
+In-Reply-To: <CAJxDvStLi2usG_X7e8FeOSjKCXN4Yb+b_JCpUc8Y0HZ-GuTUgw@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 22 Oct 2019 11:28:04 +0200
+Message-ID: <CAP8UFD0PGPVwq0vWq19knuQ_23ToOG-nqbgkJuCUXswtpQe48A@mail.gmail.com>
+Subject: Re: Outreachy Winter 2019
+To:     Karina Saucedo <karina.saucedogza@gmail.com>
+Cc:     git <git@vger.kernel.org>, Emily Shaffer <emilyshaffer@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 9:04 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
->
-> On 21/10/19 11:16AM, Bert Wesarg wrote:
-> > Dear Pratyush,
-> >
-> > I just noticed that the 'Revert Last Hunk' menu entry is enabled in
-> > the stage-list. But I think it should be disabled, like the 'Revert
-> > Hunk' and 'Revert Line' menu entry.
->
-> I'm not sure what you mean. There is no "Revert Last Hunk" menu entry (I
-> assume you are talking about the context menu in the diff view that we
-> open by right clicking).
->
-> My guess is that you mean the "Undo Last Revert" option. And you want it
-> disabled if the diff shown is of a staged file, correct?
->
-> I'm not sure if disabling it would be a good idea.
->
-> Say I revert a hunk or line while the file is not staged, and stage the
-> rest of the file. This would mean that file is no longer in the
-> "Unstaged Changes" widget. Now if I choose the file from the "Staged
-> Changes" widget, I get the option to undo the last revert. If I hit
-> that, it will put whatever I reverted in the "Unstaged Changes" widget.
-> So, now part of the file that was reverted is in "Unstaged Changes", and
-> the rest in "Unstaged Changes".
->
+Hi Karina,
 
-Sorry for this confusion.
+Please see my answer below.
 
-> IIUC, this is what you think should not happen, correct? What's wrong
-> with allowing the user to undo reverts from anywhere?
-
-The 'Undo' changes the worktree not the staged content,.
-
+On Mon, Oct 21, 2019 at 6:59 PM Karina Saucedo
+<karina.saucedogza@gmail.com> wrote:
 >
-> The way I see it, it doesn't really matter what file is selected or
-> whether it is staged or not, the action of the undo remains the same, so
-> it makes sense to me to allow it from anywhere.
+> Hello, my name is Karina and I'm and Outreachy applicant.
+> I=C2=B4m interested in applying to the project 'Add did you mean hints=C2=
+=B4 and
+> I was wondering how can I start contributing since there seem to be no
+> issues on the github page. Thank you!
 
-It would make sense to undo the revert on the staged content, if there
-are no more changes to this file in the worktree. I.e., you wont be
-able to apply the 'undo' anymore to the worktree file if it is not
-listed anymore. Though even that case should be able to implement.
-Though the undo is currently not bound to a specific path. This may be
-the cause of our different view. I though the undo is bound to the
-path it was recorded, thus also would only be available when showing a
-diff on this path again. Therefore I think, having the 'Undo Last
-Revert' in the context menu may not be the best place to begin with,
-or at least indicate that this 'undo' operation does not necceseritly
-operate on the file currently shown.
+Thank you for your introduction email and for your interest in Git!
 
-Bertt
+Emily posted some interesting information on the Git mailing list that
+you can see in the archives there:
 
->
-> > Can you confirm this?
-> >
-> > On Wed, Aug 28, 2019 at 11:57 PM Pratyush Yadav <me@yadavpratyush.com>
-> > wrote:
-> > >
-> > > Accidental clicks on the revert hunk/lines buttons can cause loss of
-> > > work, and can be frustrating. So, allow undoing the last revert.
-> > >
-> > > Right now, a stack or deque are not being used for the sake of
-> > > simplicity, so only one undo is possible. Any reverts before the
-> > > previous one are lost.
-> > >
-> > > Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
->
-> --
-> Regards,
-> Pratyush Yadav
+https://public-inbox.org/git/20191007203654.GA20450@google.com/
+
+We require Outreachy (and GSoC) applicants to work on a microproject
+before they can be selected. There are microproject suggestions in
+Emily's email and the following discussions.
+
+Unfortunately we only have a web page that we prepared for the last
+Google Summer of Code:
+
+https://git.github.io/SoC-2019-Microprojects/
+
+So it might not be up to date but you can still find interesting
+information on top of what Emily posted.
+
+Don't hesitate to ask if you have any further questions.
+
+Best,
+Christian.
