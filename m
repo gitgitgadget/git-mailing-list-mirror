@@ -2,98 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5B941F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 07:46:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 351751F4C1
+	for <e@80x24.org>; Tue, 22 Oct 2019 08:16:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388018AbfJVHqx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 03:46:53 -0400
-Received: from mail-vs1-f51.google.com ([209.85.217.51]:38067 "EHLO
-        mail-vs1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387929AbfJVHqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 03:46:53 -0400
-Received: by mail-vs1-f51.google.com with SMTP id b123so10692081vsb.5
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 00:46:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=K6s7E65XjdFm/LkuU4U/8CCR9+jBjvK48wWF6LKyrYw=;
-        b=emM5DJ0gTjVlMXTG7E2Xq0aMsdpQE68WuU6tIIxH6phmw2crPMLivFWTEmDstze1dz
-         CsAINXwbSzeSn58mYl1EW92sXk4o2Dtvs/K0xhycz9Jhn+3o01X2Z4SS5W4hDdEPhmdA
-         OUCfhdghOMgMIDJ8mRkfCxFKsLR41T13qK102HlBfGwLMf8mCf5KVQqAjYa/jMvq0U6t
-         SJKHYSu9jldwoFn0LjLAwqtgKvXB1OLCd0SPl22/FqgimfbYH1MHRGDavDHzAdTTzvuq
-         muyfULFsnrtadUPICINRgppLkrEosSvjZIPwkt3g2I9RBo6isZMHQ+EiKlnPFIkolNDk
-         /HGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=K6s7E65XjdFm/LkuU4U/8CCR9+jBjvK48wWF6LKyrYw=;
-        b=kc2LYEnynTWHVwpRCyOLfI6hYjpuUlf7iCJ3839YeFYTXrpDwRp7lSsBsIVH0R05TT
-         VCT59qVUAUNrhyErw2rI83WiJ8jxlK9SdD+nVcSHumJuUPVyI91oIBLLBZrVLiBRAKcU
-         TB0OsXZnAqvGnUojn8BEnDBfthom5oYQBNzh5YKngeio9F7Gs2BFrMg0Of3NrRb9xrBX
-         h7OveCysTQP1D64IKcixQypgb+n7AwMv9moj1uahaeCicUyb1qjy+dK1I8hCrsD0HfrU
-         8DMRmosaLfghPvhxKUr08H7Mienyjoltw1NGJO3oTw+L1MzCq7RrphSx1pzzQjCzhtQF
-         0RoA==
-X-Gm-Message-State: APjAAAXGEuYkhts+baSHs2nPZ/U2p5WFYYvUMQvbj41heWJf8XivwRGd
-        FlwzfhhuwsTDeOL/bFuqz8/cYL9nYTGq4xPwyO4=
-X-Google-Smtp-Source: APXvYqx1yOUAwQYKvO7Eak7gS36V/hDs0fMvroCCNJca1pzfrF3rIoS0+r3Mm4bGIP6WZKy0K5b+z29jPWSNIjHcKpY=
-X-Received: by 2002:a67:2c4d:: with SMTP id s74mr1083683vss.75.1571730411854;
- Tue, 22 Oct 2019 00:46:51 -0700 (PDT)
+        id S2388326AbfJVIQc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 04:16:32 -0400
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:54211 "EHLO
+        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388061AbfJVIQb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 04:16:31 -0400
+Received: from pty.hi.pengutronix.de ([2001:67c:670:100:1d::c5])
+        by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1iMpL8-0006mc-Dk; Tue, 22 Oct 2019 10:16:26 +0200
+Received: from ukl by pty.hi.pengutronix.de with local (Exim 4.89)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1iMpL6-0003pF-L0; Tue, 22 Oct 2019 10:16:24 +0200
+Date:   Tue, 22 Oct 2019 10:16:24 +0200
+From:   Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Ingo Molnar <mingo@kernel.org>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux ARM Kernel Mailing List 
+        <linux-arm-kernel@lists.infradead.org>, git@vger.kernel.org
+Subject: Re: [GIT PULL] arm64: Fixes for -rc4
+Message-ID: <20191022081624.4tmumskeoayt4bzg@pengutronix.de>
+References: <20191017234348.wcbbo2njexn7ixpk@willie-the-truck>
+ <CAHk-=wjPZYxiTs3F0Vbrd3kRizJGq-rQ_jqH1+8XR9Ai_kBoXg@mail.gmail.com>
+ <20191018174153.slpmkvsz45hb6cts@willie-the-truck>
+ <CAHk-=whmtB98b8=YL2b8HzPKRadk2A9pL0aasmvgebhePrDP9w@mail.gmail.com>
+ <20191021064658.GB22042@gmail.com>
 MIME-Version: 1.0
-References: <20190819214110.26461-1-me@yadavpratyush.com> <20190828215725.13376-1-me@yadavpratyush.com>
- <20190828215725.13376-5-me@yadavpratyush.com> <CAKPyHN0Kh8eKjzXink3YtE6wRrOgpzTYyPmLnbpbxPt3LFsvig@mail.gmail.com>
- <5b62b4a7-67ad-9e5f-d4a1-9dce7bcfcb6b@kdbg.org>
-In-Reply-To: <5b62b4a7-67ad-9e5f-d4a1-9dce7bcfcb6b@kdbg.org>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Tue, 22 Oct 2019 09:46:40 +0200
-Message-ID: <CAKPyHN1V+gDdL=9eGvHmC7sv_bJPwv9kCvDu2f8sL_kPhAzRAg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] git-gui: allow undoing last revert
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20191021064658.GB22042@gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c5
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 9:35 PM Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Am 21.10.19 um 11:16 schrieb Bert Wesarg:
-> > Dear Pratyush,
-> >
-> > I just noticed that the 'Revert Last Hunk' menu entry is enabled in
-> > the stage-list. But I think it should be disabled, like the 'Revert
-> > Hunk' and 'Revert Line' menu entry.
-> >
-> > Can you confirm this?
->
-> Technically, it need not be disabled because the hunk being reverted
-> does not depend on the contents of any of diffs that can be shown.
->
-> The entry should be disabled if reverting the stored hunk fails. But to
-> know that, it would have to be tried: the file could have been edited
-> since the hunk was generated so that the reversal of the hunk fails.
+Hello,
 
-But the "Undo" changes the worktree not the stage, sure it indirectly
-also changes the view of the staged content, but that is only a
-secondary effect. As I only can revert in the worktree list, I think
-we should be consistent and also only allow to undo the revert in the
-worktree list.
+I added the git list to Cc:. For the new readers: The context of this
+thread can be found at
+https://lwn.net/ml/linux-kernel/20191017234348.wcbbo2njexn7ixpk@willie-the-truck/
 
-And I think it is independent of 'does the undo apply at all' question.
+On Mon, Oct 21, 2019 at 08:46:58AM +0200, Ingo Molnar wrote:
+> Anyway, a small Git feature request: it would be super useful if "git 
+> request-pull" output was a bit more dependable and at least warned about 
+> this and didn't include what is, from the viewpoint of the person doing 
+> the merge, a bogus diffstat. (Generating the correct diffstat is probably 
+> beyond request-pull's abilities: it would require changing the working 
+> tree to actually perform the merge - while request-pull is a read-only 
+> operation right now. But detecting the condition and warning about it 
+> should be possible?)
 
-Bert
+I think Will's case is still an easy one compared with what could
+actually happen.
 
->
-> Not sure what to do, though.
->
-> -- Hannes
+The related history looks as follows:
+
+             ,-.     ,-.              ,-.    ,-.    ,-.
+  v5.4-rc1 --| |-...-| |-- v5.4-rc2 --| |-..-| |-..-| |-- v5.4-rc3
+      \      `-'     `-'       \      `-'    /-'    `-'
+       \   ,-.     ,-.          \         ,-/    ,-.     ,-.
+        `--| |-...-| |--------------------|*|----| |-...-|H|
+           `-'     `-'            \       `-'    `-'     /-'
+                                   \   ,-.     ,-.      /
+                                    `--| |-...-| |-----'
+                                       `-'     `-'
+
+Will asked Linus to merge the Commit marked 'H', the two merge bases are
+v5.4-rc2 and '*'.
+
+(FTR:
+  * = 3e7c93bd04edfb0cae7dad1215544c9350254b8f
+  H = 777d062e5bee0e3c0751cdcbce116a76ee2310ec
+, they can be found in
+git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git)
+
+The formally correct way to create the diffstat is to merge v5.4-rc2 and
+'*' (in general: all merge bases) and calculate the diff between this
+merge and the to-be-merged-commit. Compared to what Will did (i.e. merge
+Linus' HEAD and this branch and then diff @~ with @) doing it the way I
+described has the advantage(?) that commits that conflict with this
+merge request in Linus' tree since the merge bases are not in the way.
+
+In this case this can be done automatically:
+
+	$ git read-tree --index-output=tralala v5.4-rc2 3e7c93bd04edfb0cae7dad1215544c9350254b8f
+	$ GIT_INDEX=tralala git write-tree
+	6a2acfd1870d9da3c330ea9b648a7e858b5ee39f
+	$ git diff --stat 6a2acfd1870d9da3c330ea9b648a7e858b5ee39f 777d062e5bee0e3c0751cdcbce116a76ee2310ec
+	 Documentation/arm64/silicon-errata.rst |  2 ++
+	 arch/arm64/Kconfig                     | 17 ++++++++++++++
+	 arch/arm64/include/asm/asm-uaccess.h   |  7 +++---
+	 arch/arm64/include/asm/cpucaps.h       |  4 +++-
+	 arch/arm64/include/asm/memory.h        | 10 ++++++--
+	 arch/arm64/include/asm/pgtable.h       |  3 ---
+	 arch/arm64/include/asm/sysreg.h        |  2 +-
+	 arch/arm64/kernel/cpu_errata.c         | 38 +++++++++++++++++++++++++++++++
+	 arch/arm64/kernel/cpufeature.c         | 15 ++++++++----
+	 arch/arm64/kernel/entry.S              |  8 ++++---
+	 arch/arm64/kernel/hibernate.c          |  9 +++++++-
+	 arch/arm64/kernel/process.c            | 18 +++++++++++++++
+	 arch/arm64/kvm/hyp/switch.c            | 69 ++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+	 arch/arm64/mm/fault.c                  |  6 ++++-
+	 include/linux/sched.h                  |  1 +
+	 15 files changed, 186 insertions(+), 23 deletions(-)
+
+Would be great if git-request-pull learned to do that.
+
+Best regards
+Uwe
+
+-- 
+Pengutronix e.K.                           | Uwe Kleine-König            |
+Industrial Linux Solutions                 | http://www.pengutronix.de/  |
