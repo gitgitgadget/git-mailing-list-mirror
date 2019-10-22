@@ -8,105 +8,108 @@ X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DCA51F4C0
-	for <e@80x24.org>; Tue, 22 Oct 2019 20:59:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7875F1F4C0
+	for <e@80x24.org>; Tue, 22 Oct 2019 21:05:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731872AbfJVU7s (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 16:59:48 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:38602 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730146AbfJVU7r (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 16:59:47 -0400
-Received: by mail-pl1-f194.google.com with SMTP id w8so8919426plq.5
-        for <git@vger.kernel.org>; Tue, 22 Oct 2019 13:59:47 -0700 (PDT)
+        id S1732360AbfJVVFE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 17:05:04 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:33332 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725874AbfJVVFE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 17:05:04 -0400
+Received: by mail-pg1-f195.google.com with SMTP id u23so8667pgo.0
+        for <git@vger.kernel.org>; Tue, 22 Oct 2019 14:05:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=ZRD6Ju2Bo+/eReBN7/va7i25bx/cW7ZrpHotWOhfp1g=;
-        b=PWSU3D5e/Y7jjEmOltUKH9xsCw6b/+AWF8pKzU0YjBFEOI4+CzlFg3HPSnDDycY9sh
-         CG5WIo09/Dm2kODNxGpekdVhyPCeHGvuuv5HGrKtXPa3eLCLsHGQv2vIh/XsqFWc3vwj
-         maGqMPY1Q7o/E8JenWdUP+Z+UI8Ws6ilh6zKtmpS/iCxTJPgaAq7shAiMk686knippEe
-         LilSwhFigJQ8p88arJDtHI4pG9jBA9BNCf75oLoSl0wWpoHAj6vDmT27pAT+Hf/UbK1o
-         Xmmfp7s/jXd2zqC+sMt3DrkM67oKydyHUfs9vRmBZEDSvqpASz+wKZp/nms7SdMyFG7i
-         oKsw==
+        bh=Cw0WBu18s+GIN4haQtiFtpQd2zZmJDCofc5x0cJ/Wv4=;
+        b=aAdGnaC4eSaZo7CCliCT34glUTWlpOAItinrYg1Ntzhlw/FCnyRR+NlwwSvjJb7Ekt
+         pKbCpJVq999cifN7IDzz50xs677Gd2xQFo7jUUTzzaxhefySuJf20J38F1hNokSVK0lm
+         +j7yT6Ohs84gRUsC2EwFePN9VO7+dIdlwXIjTDYoRAGB3rNNhhqAvxbdKes8cCxcxCi2
+         K4XdJvFBFfNuihF7ekgqmBB16ne6emeLt57Bo2sPzE/fMoEyAFahkce9Px4iU/Yd10Aa
+         a6WItVVQUpZ+wNkKxIvDXdrljiA/n3xFBdeLS3andTmqlTpLoPZCYHV5Ul9jwvfscyG1
+         dJuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZRD6Ju2Bo+/eReBN7/va7i25bx/cW7ZrpHotWOhfp1g=;
-        b=Lj0S84BF0y3md6o64NpW+lbCW5Vgy96uwYasL+qN0g3t5nFgRqWtVOp9rjkBKfyShd
-         bIynFD4lvPYPgUbZReROQC+KJR2QmTOodLmZt5MH6Mrs7l6PemKmiQPnIBSqMwYw26w6
-         GKRsV8GTM3gsbvld/AsBPM0WM/c6heFSbUfVZStFBQ4SNGWIqyOacageMVrJrplDba76
-         FLBkbGKKA0fyLaflTR7RceMBAfbDH804tM9Fk1ao9eDRiyY+rwTkVatplr1aKEtIqh3H
-         HmhU3Q2qOvAHqFoK+sE+iJZ/rH9b35bRHgb8SfaZ9EMgtFmpy8/nuqVuZBDygzM3HmcR
-         Iscg==
-X-Gm-Message-State: APjAAAWwqbptDZBIFoNvj08mCHtM7Tflyurg3sM/KCSUGD2bPCAAFbAX
-        SQIp8Rjvlc+mHdCMEvaNamVsdw==
-X-Google-Smtp-Source: APXvYqynwnYZG2lweXUgfvVPiiD/h0dgLDVXOhbY4kDpNJQPPlGChAv6xhH/HbkeLCONst3Ont8eZw==
-X-Received: by 2002:a17:902:7084:: with SMTP id z4mr5603433plk.15.1571777986369;
-        Tue, 22 Oct 2019 13:59:46 -0700 (PDT)
+        bh=Cw0WBu18s+GIN4haQtiFtpQd2zZmJDCofc5x0cJ/Wv4=;
+        b=cZDB3sR2ZD1kzSBRMMFPQQx4Nn46b/BiHEyixtoz0MMXguOA7XIHux9b2cUOUfrfhC
+         trQcd07VFVCVsPtIsJefLeUGzRFhmyUiAZGl4/APFDK293FIanCgpUZ1Zi8WTGxOQ2Qi
+         41xEHz+/qYOsXL2h+qcKEhEWgoh1jZXV/orMxvZx0YJb735Ey71sItdBZ2Uw3+nYMk8U
+         gEpVAcFxIM3wTTDxPvrJGczCd3gjtelrpgtTp/Ru6nOVyNDhy7r/VI2wnxdahsNirhtw
+         flFvcqyAI+nrNHxl0y1GkHqrKMjznnGJZZSCxTrinAtZzwQHOnkut8hXUM3aSUy6/U6d
+         ZLng==
+X-Gm-Message-State: APjAAAU242EvQa/S7Hq9iFUcYWYZxPDqkTZlMre2SUvqsuuy9MRJaMWG
+        d+ffLgp91BDESmBy47b9qFtyJw==
+X-Google-Smtp-Source: APXvYqzQ31FvQYXIENP7CFVCndevVnPos30ev8H4rKthBV75mVtEjvGrcEYsIUGx/Nl7bkanI4QW5Q==
+X-Received: by 2002:a17:90a:17ad:: with SMTP id q42mr7298096pja.100.1571778303267;
+        Tue, 22 Oct 2019 14:05:03 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id e127sm23588776pfe.37.2019.10.22.13.59.45
+        by smtp.gmail.com with ESMTPSA id b24sm4402513pfo.4.2019.10.22.14.05.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Oct 2019 13:59:45 -0700 (PDT)
-Date:   Tue, 22 Oct 2019 13:59:41 -0700
+        Tue, 22 Oct 2019 14:05:02 -0700 (PDT)
+Date:   Tue, 22 Oct 2019 14:04:58 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/1] config: move documentation to config.h
-Message-ID: <20191022205941.GD9323@google.com>
-References: <pull.405.git.1571357219.gitgitgadget@gmail.com>
- <pull.405.v2.git.1571727906.gitgitgadget@gmail.com>
- <1a9aa33b4649e2b723a6107520c2b5ad70774714.1571727906.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 1/1] documentation: remove empty doc files
+Message-ID: <20191022210458.GE9323@google.com>
+References: <pull.412.git.1571768375.gitgitgadget@gmail.com>
+ <ffdde613d8ea2dc57719594aa0f89b6d6177b636.1571768375.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1a9aa33b4649e2b723a6107520c2b5ad70774714.1571727906.git.gitgitgadget@gmail.com>
+In-Reply-To: <ffdde613d8ea2dc57719594aa0f89b6d6177b636.1571768375.git.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 22, 2019 at 07:05:06AM +0000, Heba Waly via GitGitGadget wrote:
+On Tue, Oct 22, 2019 at 06:19:35PM +0000, Heba Waly via GitGitGadget wrote:
 > From: Heba Waly <heba.waly@gmail.com>
 > 
-> Move the documentation from Documentation/technical/api-config.txt into
-> config.h
+> Remove empty and redundant documentation files from the
+> Documentation/technical/ directory.
+> 
+> As part of moving the documentation from Documentation/technical/api-* to
+> header files, the following files are deleted because they include only
+> TODO messages with no documentation to be moved:
+> Documentation/technical/api-grep.txt
+> Documentation/technical/api-object-access.txt
+> Documentation/technical/api-quote.txt
+> Documentation/technical/api-xdiff-interface.txt
 
-This is still a little thin for what we usually want from commit
-messages. Try to imagine that five years from now, you find this commit
-by running `git blame` on config.h and then examining the commit which
-introduced all these comments with `git show <commit-id>` - what would
-you want to know?
+Same thing as I mentioned in your other review; what you've added to
+your commit message now doesn't say anything you didn't say with the
+diff. I can see that you removed empty documentation files; I can see
+that those files include only TODO.
 
-Typically we want to know "why" the change was made, because the diff
-shows "what". We can see from the diff that you're moving comments from
-A to B, but if you explain why you did so (not "because my Outreachy
-mentor told me to" ;) but "because it is useful to see usage information
-next to code" or "this is best practice as described by blah blah") - I
-wouldn't be able to know that reasoning just from looking at your diff.
+Maybe you can explain why it's a bad developer experience to stumble
+across these, and that those files sat untouched for years in the
+TODO(contributor-name) state.
 
+> 
+> Signed-off-by: Heba Waly <heba.waly@gmail.com>
+> ---
+>  Documentation/technical/api-grep.txt            |  8 --------
+>  Documentation/technical/api-object-access.txt   | 15 ---------------
+>  Documentation/technical/api-quote.txt           | 10 ----------
+>  Documentation/technical/api-xdiff-interface.txt |  7 -------
+>  4 files changed, 40 deletions(-)
+>  delete mode 100644 Documentation/technical/api-grep.txt
+>  delete mode 100644 Documentation/technical/api-object-access.txt
+>  delete mode 100644 Documentation/technical/api-quote.txt
+>  delete mode 100644 Documentation/technical/api-xdiff-interface.txt
 
-> diff --git a/config.h b/config.h
-> index f0ed464004..02f78ffc2b 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -4,6 +4,23 @@
->  #include "hashmap.h"
->  #include "string-list.h"
->  
-> +
-> +/**
-> + * The config API gives callers a way to access Git configuration files
-> + * (and files which have the same syntax). See linkgit:git-config[1] for a
-
-Ah, here's another place where the Asciidoc link isn't going to do
-anything anymore.
-
-Otherwise I didn't still see anything jumping out. When the commit
-message is cleaned up I'm ready to add my Reviewed-by line.
+As for the content of this change, I absolutely approve. I've stumbled
+across some of these empty docs while looking for answers before and
+found it really demoralizing - the community is so interested in
+teaching me how to contribute that they've sat on a TODO for 12 years?
+:( I even held up api-grep.txt as a (bad) example in a talk I gave this
+year. I'm happy to see these files go.
 
  - Emily
