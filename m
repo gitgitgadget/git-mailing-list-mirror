@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A65CF1F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 13:32:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B7641F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 13:41:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392012AbfJWNcj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 09:32:39 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46774 "EHLO
+        id S2405965AbfJWNlJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 09:41:09 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37851 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389224AbfJWNcj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 09:32:39 -0400
-Received: by mail-wr1-f68.google.com with SMTP id n15so11327154wrw.13
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 06:32:38 -0700 (PDT)
+        with ESMTP id S1732361AbfJWNlJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 09:41:09 -0400
+Received: by mail-wr1-f68.google.com with SMTP id e11so13444720wrv.4
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 06:41:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=V+gHBYjbFzEHq6w/KuEJxJh+yRTP73SlsqiNMAviJXM=;
-        b=HcVouhFGrMdMwQbrhioBTXayFnzzl98Ys/lpVZqIEN+kUmoUS9DwCg1Bkgjw4XISak
-         pDCfap3xEdVhBC+80ipo8+UmZNHDXSfbny/GQBRTuuGymdYvS0kwvlWQr6hD319XkFXD
-         06tI5j/FiRZMklZa8RFutywhWHNhhqrEswnAg/en969U9fE1MAcUiDp+5Ca/dwZJkijk
-         bCYLwhnFF98rgZBsr1OblRS8RvpR9GAR/dECQmCbQXsl4G8KWEQUJZecwGI932HNCa4I
-         Qb312nY+NRzn12JWpoANOgaODwvUMRmxk4IqJLyYS0OG+jmAG/q6gz35k40SIg/RVIye
-         XIDQ==
-X-Gm-Message-State: APjAAAUmU/B1KyxyVnTap18hhC5LMAYQHrnhZPfQXdtHK6ixInu4jzsR
-        +i/+uwuW2bGczjTxcR7XlsNX7yFEintsI2TRP2M=
-X-Google-Smtp-Source: APXvYqz5mTJCUvViOD0so9aui8KV0ybzBUyEhNSq8twFwKdUzCqbQVOB31wGaEY2ndLOBpE7sdj+MvLr+GdbJcDJM2Y=
-X-Received: by 2002:adf:f44e:: with SMTP id f14mr8217198wrp.56.1571837557193;
- Wed, 23 Oct 2019 06:32:37 -0700 (PDT)
+        bh=QezBoIVLMZlctMZfsI4mBUDO87qNhOm2d3n5pzkf53Q=;
+        b=eCHgm+mOa09kFXjyQgplMw1h/DmE/5ZoP2MMH2prektrYRjRhH/erOmbiPzDtdFPUv
+         VTlW/eEpfasmSZ4t0dD1qwHd1FxNBEw23uPQvVGwaU9gTTQl5ooP1UQ7KE8UwlmhROxG
+         hHSrLmpTNf1DkVS6EQEQGmUY8IK6SowsDJKRB3o+mpvvqJ2IastHT0zu4J342+WSeAfw
+         lpqVU/OVpVDwnQ2xkCUximTXmBOYIvYNDoFJxxYbfHxTDyay4s9g+z9hHnNmCyitpVaU
+         BdwNPL974UjZ0KjQgwo09QdNojDUBjKxwZzZPISgr0DOdc0ww8dxpsfkfxSBQe3M6LXc
+         HNxw==
+X-Gm-Message-State: APjAAAUwNH1bp+bHyHTLGTOyYlgn4a8xb8xjdXtxhjBme3mYIHHhjXHe
+        jblivB2tWbY520mI4Y04i9wkU2GDP2weeUsBdfk=
+X-Google-Smtp-Source: APXvYqwqfhR+FrTj9i2uxCNd5PXDHSbpKeUNGUjx8yrgHYKkPHqUI9rN4YIBJJesZMiLGK4XsQgsJ54AcSN6oRA/RVM=
+X-Received: by 2002:adf:f44e:: with SMTP id f14mr8253579wrp.56.1571838067703;
+ Wed, 23 Oct 2019 06:41:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1571832176.git.liu.denton@gmail.com> <9d915748c1953cc2683fa3189c3c98b1e9a1e299.1571832176.git.liu.denton@gmail.com>
-In-Reply-To: <9d915748c1953cc2683fa3189c3c98b1e9a1e299.1571832176.git.liu.denton@gmail.com>
+References: <cover.1571832176.git.liu.denton@gmail.com> <5feddf15978e77b19d8b3e2e5761e394e0bda3e7.1571832177.git.liu.denton@gmail.com>
+In-Reply-To: <5feddf15978e77b19d8b3e2e5761e394e0bda3e7.1571832177.git.liu.denton@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 23 Oct 2019 09:32:26 -0400
-Message-ID: <CAPig+cQ6RCMOaf4ZtOKNtiDdKu1JED=zMKZ8afwSr0cvE2zMgw@mail.gmail.com>
-Subject: Re: [PATCH 2/5] t4108: remove git command upstream of pipe
+Date:   Wed, 23 Oct 2019 09:40:56 -0400
+Message-ID: <CAPig+cQF+0mTLgva0YRAJ81Aj2Z_oJ+q4kzezREEyCZuv=2XKQ@mail.gmail.com>
+Subject: Re: [PATCH 4/5] t4108: demonstrate bug in apply
 To:     Denton Liu <liu.denton@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
@@ -51,43 +51,54 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Wed, Oct 23, 2019 at 8:04 AM Denton Liu <liu.denton@gmail.com> wrote:
-> Before, the output of `git diff HEAD` would always be piped to
-> sanitize_conflicted_diff(). However, since the Git command was upstream
-> of the pipe, in case the Git command fails, the return code would be
-> lost. Rewrite into separate statements so that the return code is no
-> longer lost.
+> Currently, apply does not respect the merge.conflictStyle setting.
+> Demonstrate this by making the 'apply with --3way' test case generic and
+> extending it to show that the configuration of
+> merge.conflictStyle = diff3 causes a breakage.
 >
-> Since only the command `git diff HEAD` was being piped to
-> sanitize_conflicted_diff(), move the command into the function and rename
-> it to print_sanitized_diff().
+> Change print_sanitized_diff() to also sanitize `|||||||` conflict markers.
 >
 > Signed-off-by: Denton Liu <liu.denton@gmail.com>
 > ---
 > diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
-> @@ -4,11 +4,12 @@ test_description='git apply --3way'
-> -sanitize_conflicted_diff () {
-> +print_sanitized_diff () {
-> +       git diff HEAD >diff.raw &&
->         sed -e '
->                 /^index /d
->                 s/^\(+[<>][<>][<>][<>]*\) .*/\1/
-> -       '
-> +       ' diff.raw
->  }
+> @@ -46,28 +46,42 @@ test_expect_success 'apply without --3way' '
+> +test_apply_with_3way () {
+> +       status="$1" &&
+> +       shift &&
+> +       description="$1" &&
+> +       shift &&
+> +       preamble="$1" &&
+> +       shift &&
+> +
+> +       test_expect_$status "apply with --3way ($description)" "
+> +               $preamble &&
+> +
+> +               # Merging side should be similar to applying this patch
+> +               git diff ...side >P.diff &&
+> +               [...]
+> +       "
+> +}
+>
+> +test_apply_with_3way success default true
+> +test_apply_with_3way failure 'merge.conflictStyle = diff3' 'test_config merge.conflictStyle diff3'
 
-Nit: By hard-coding "HEAD" in this function, you lose the flexibility
-of the original. An alternative would have been to accept the ref
-against which to diff as an argument to this function:
+This isn't the prettiest way to achieve this; the "success"/"failure"
+arguments, especially, are somewhat ugly. A perhaps more palatable
+alternative which gives you the same benefit of re-using the common
+code but avoids the ugliness while still allowing customization (now
+and in the future):
 
-    print_sanitized_diff () {
-        git diff "$@" >diff.raw &&
-        ...
+    test_apply_with_3way () {
+        # Merging side should be similar to applying this patch
+        git diff ...side >P.diff &&
+        [...]
+    }
 
-Or, better yet, keep the original design and pass the diff in as the
-shell function's input, so a caller would say:
+    test_expect_success 'apply with --3way (default)' '
+        test_apply_with_3way
+    '
 
-    git diff HEAD >diff.raw &&
-    sanitize_conflicted_diff <diff.raw >expect.diff &&
-
-However, not necessarily worth a re-roll if we never expect anyone to
-pass anything other than "HEAD".
+    test_expect_failure 'apply with --3way (merge.conflictStyle = diff3)' '
+        test_config merge.conflictStyle diff3 &&
+        test_apply_with_3way
+    '
