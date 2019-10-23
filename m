@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF3BC1F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 23:32:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFF991F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 23:32:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408042AbfJWXcc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 19:32:32 -0400
-Received: from mail-pg1-f170.google.com ([209.85.215.170]:43882 "EHLO
-        mail-pg1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408036AbfJWXcc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 19:32:32 -0400
-Received: by mail-pg1-f170.google.com with SMTP id l24so8110483pgh.10
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 16:32:32 -0700 (PDT)
+        id S2408045AbfJWXcg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 19:32:36 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:43965 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2408036AbfJWXcg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 19:32:36 -0400
+Received: by mail-pg1-f193.google.com with SMTP id l24so8110536pgh.10
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 16:32:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=i4lYL+FdZdQg3HbyjMUx8yf919PYm5gHxe4ZudLcAm0=;
-        b=rTfK4jj/xWklZ0YDDLBip0gS5hZL2rCkcDSruob3NAf9oz0A4eJ7JYgELYf49XC5j0
-         /FKTpo4sH7qGpbVIBk8KP5gFGTs1XROXLF4vhUjzvGV7JUp6Ncc25zIbeFJZAgtPZb7R
-         xJJ2ULJ9gxez+lfOP410p0IoRNuimZNvkDWJ7N9LjwvoPioaJWUaHyHEjpmy3QEUKlQA
-         gIGhJdfcs+sMWb5NTspMnSaEEyW2TJ2823I8BZw93mv+f2lrElH4rPVHaTVLW0WGiLwL
-         zfdXvjZ2+qkMLu1qcVcH0hyVbxyS731m9lktaqwBMK+zn9og4TQazBdLUTonuAcHKMzj
-         +9bA==
+        bh=2/nXqdMV8csPSlFhj2q6znfLQ3y9pzAG2dcfAuHj8qg=;
+        b=WV5S6QxDUpDvWQxZPEu0Mi+/2y7GJHAIr6DCyLwYFdTnubmDuAZVFYuf/dDFCpQtah
+         hACG4yIm2pa/WzYODcDtEDDj7OfiN+ajPwSMj/A1pGd9ma9wAszDgf0/6x0+MDxnmsvy
+         VIR4+Ks+G+mAfYg2UJOba3UuGPqcbyDY70LsUTkONli1LqVheG0FrvNEktup03GnDJns
+         KEncFktAP2XBImZ+tQ5Gf6Y8a5E6uikUcTNsrhkmPTAtDdvAQULuIMLBPz5rNhvUqJb2
+         RpinFxFocRlFwXW+j/CKhZ90ts2C/QbKMrKiZG9RF0Y7kqWhdYzXi8FpOW/CPzT5Grrs
+         eL5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=i4lYL+FdZdQg3HbyjMUx8yf919PYm5gHxe4ZudLcAm0=;
-        b=dfmNCLpT+zKEe7F0Ac2GMMHajUSSwsps0nA2/nJ2dYNGMz4o0NzQ6eaMRdvmtaGooM
-         TOsptLl+VuVNFvJwUkTRdF4DuidtHv4EREhMwxhSOqutf5sM8Og4/GBHrF2TZr8UeXin
-         oXrQ1CWkg53f2RtZL7N4RhU2PynI9PSq4nNx2EIOUsrRmoTbk2YeSVDerW4JLxTbab8u
-         SzVEelsFOQb54KE82L1ECoCse0WVyeUvd/WO3125OuT4quo/OTcOrLNvf/xGZmRipUh3
-         ufBR4XDj+GsXfe8ULvRrpdEAqU4A3mzFoF0VbdVfplrtmiDpJXPWyUBzBI4WIpbl809N
-         yENA==
-X-Gm-Message-State: APjAAAUczz6VtmzxGXNmCTNokTrZ5flXyBBSN6DuhDs7wSFB7JqPX7JY
-        hIIGViY2RT8IAOf30dcPsI66F4VR
-X-Google-Smtp-Source: APXvYqyCGU4BjDi2w6Vg82LXccrL1RbJbyWo7I9rwqH1Ftdch/Tn9HQJ3Lo1F+XdectpKSS5+faCoA==
-X-Received: by 2002:a17:90a:1b45:: with SMTP id q63mr3207626pjq.106.1571873551004;
-        Wed, 23 Oct 2019 16:32:31 -0700 (PDT)
+        bh=2/nXqdMV8csPSlFhj2q6znfLQ3y9pzAG2dcfAuHj8qg=;
+        b=qdEzC8j/i/Zs+ifBX4GGQ79X4jOUWAtH4iUrlhh3/hpPSJL0HLez2zEhujXf8uJu1q
+         BN4Gr+RPGw/rZjM0J6JWwVQtysjWnxHRg1VErxwmb1VppddHBI9uPo7s7StEphxVyMKZ
+         cCizAxrDhydaiVXkJ59ImMJefDTKDx2Gq4nugsUnk7Vzx/PL7JhnzVnZiqPjsWGIVun5
+         lBa467kUcMD9jpoGxEQXLbd63uDki56rRo7wYp/Nw7wt2I0OQBcY4V1xM2GUpaLAfvHe
+         ACTo3NvF6NX0kRsK4J6700UM76GXPhXk161occuag8HKwUHoipRcLatitWCO7HQC0N1N
+         Zt7A==
+X-Gm-Message-State: APjAAAUKVyEjtqtCG5qIirKYOgVVH/vdXcgq5f/QN7IUfzL/mgFjt1DZ
+        lCuZLz+aMHMi0n0cRdeTtM1DOxo8
+X-Google-Smtp-Source: APXvYqyXv0TVjnrKHetrWgFUwqYEnDT/tyifaARlpYQ9WnklVfSkAKurUO9o7OPDQGrzC0S8EJBlaQ==
+X-Received: by 2002:a62:1517:: with SMTP id 23mr698930pfv.236.1571873553793;
+        Wed, 23 Oct 2019 16:32:33 -0700 (PDT)
 Received: from generichostname ([204.14.239.55])
-        by smtp.gmail.com with ESMTPSA id l23sm355993pjy.12.2019.10.23.16.32.30
+        by smtp.gmail.com with ESMTPSA id c1sm235568pjc.23.2019.10.23.16.32.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2019 16:32:30 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 16:32:28 -0700
+        Wed, 23 Oct 2019 16:32:33 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 16:32:31 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 1/5] t4108: replace create_file with test_write_lines
-Message-ID: <84fe1614a3c807e3604549ec012535ce6bd17228.1571873435.git.liu.denton@gmail.com>
+Subject: [PATCH v2 2/5] t4108: remove git command upstream of pipe
+Message-ID: <fd1b770c0cd466acec8bfd2b0f202cfef758a0e1.1571873435.git.liu.denton@gmail.com>
 References: <cover.1571832176.git.liu.denton@gmail.com>
  <cover.1571873435.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -69,90 +69,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since the locally defined create_file() duplicates the functionality of
-the test_write_lines() helper function, remove create_file() and replace
-all instances with test_write_lines(). While we're at it, move
-redirection operators to the end of the command which is the more
-conventional place to put it.
+Before, the output of `git diff HEAD` would always be piped to
+sanitize_conflicted_diff(). However, since the Git command was upstream
+of the pipe, in case the Git command fails, the return code would be
+lost. Rewrite into separate statements so that the return code is no
+longer lost.
+
+Since only the command `git diff HEAD` was being piped to
+sanitize_conflicted_diff(), move the command into the function and rename
+it to print_sanitized_conflicted_diff().
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4108-apply-threeway.sh | 27 ++++++++++-----------------
- 1 file changed, 10 insertions(+), 17 deletions(-)
+ t/t4108-apply-threeway.sh | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
-index fa5d4efb89..b109ecbd9f 100755
+index b109ecbd9f..3c0ddacddf 100755
 --- a/t/t4108-apply-threeway.sh
 +++ b/t/t4108-apply-threeway.sh
-@@ -4,13 +4,6 @@ test_description='git apply --3way'
+@@ -4,11 +4,12 @@ test_description='git apply --3way'
  
  . ./test-lib.sh
  
--create_file () {
--	for i
--	do
--		echo "$i"
--	done
--}
--
- sanitize_conflicted_diff () {
+-sanitize_conflicted_diff () {
++print_sanitized_conflicted_diff () {
++	git diff HEAD >diff.raw &&
  	sed -e '
  		/^index /d
-@@ -20,7 +13,7 @@ sanitize_conflicted_diff () {
+ 		s/^\(+[<>][<>][<>][<>]*\) .*/\1/
+-	'
++	' diff.raw
+ }
  
  test_expect_success setup '
- 	test_tick &&
--	create_file >one 1 2 3 4 5 6 7 &&
-+	test_write_lines 1 2 3 4 5 6 7 >one &&
- 	cat one >two &&
- 	git add one two &&
- 	git commit -m initial &&
-@@ -28,13 +21,13 @@ test_expect_success setup '
- 	git branch side &&
- 
- 	test_tick &&
--	create_file >one 1 two 3 4 5 six 7 &&
--	create_file >two 1 two 3 4 5 6 7 &&
-+	test_write_lines 1 two 3 4 5 six 7 >one &&
-+	test_write_lines 1 two 3 4 5 6 7 >two &&
- 	git commit -a -m master &&
- 
- 	git checkout side &&
--	create_file >one 1 2 3 4 five 6 7 &&
--	create_file >two 1 2 3 4 five 6 7 &&
-+	test_write_lines 1 2 3 4 five 6 7 >one &&
-+	test_write_lines 1 2 3 4 five 6 7 >two &&
- 	git commit -a -m side &&
- 
- 	git checkout master
-@@ -87,7 +80,7 @@ test_expect_success 'apply with --3way with rerere enabled' '
+@@ -54,14 +55,14 @@ test_expect_success 'apply with --3way' '
+ 	git checkout master^0 &&
  	test_must_fail git merge --no-commit side &&
+ 	git ls-files -s >expect.ls &&
+-	git diff HEAD | sanitize_conflicted_diff >expect.diff &&
++	print_sanitized_conflicted_diff >expect.diff &&
  
- 	# Manually resolve and record the resolution
--	create_file 1 two 3 4 five six 7 >one &&
-+	test_write_lines 1 two 3 4 five six 7 >one &&
- 	git rerere &&
- 	cat one >expect &&
- 
-@@ -104,14 +97,14 @@ test_expect_success 'apply -3 with add/add conflict setup' '
+ 	# should fail to apply
  	git reset --hard &&
+ 	git checkout master^0 &&
+ 	test_must_fail git apply --index --3way P.diff &&
+ 	git ls-files -s >actual.ls &&
+-	git diff HEAD | sanitize_conflicted_diff >actual.diff &&
++	print_sanitized_conflicted_diff >actual.diff &&
  
- 	git checkout -b adder &&
--	create_file 1 2 3 4 5 6 7 >three &&
--	create_file 1 2 3 4 5 6 7 >four &&
-+	test_write_lines 1 2 3 4 5 6 7 >three &&
-+	test_write_lines 1 2 3 4 5 6 7 >four &&
- 	git add three four &&
- 	git commit -m "add three and four" &&
+ 	# The result should resemble the corresponding merge
+ 	test_cmp expect.ls actual.ls &&
+@@ -114,7 +115,7 @@ test_expect_success 'apply -3 with add/add conflict setup' '
+ 	git checkout adder^0 &&
+ 	test_must_fail git merge --no-commit another &&
+ 	git ls-files -s >expect.ls &&
+-	git diff HEAD | sanitize_conflicted_diff >expect.diff
++	print_sanitized_conflicted_diff >expect.diff
+ '
  
- 	git checkout -b another adder^ &&
--	create_file 1 2 3 4 5 6 7 >three &&
--	create_file 1 2 3 four 5 6 7 >four &&
-+	test_write_lines 1 2 3 4 5 6 7 >three &&
-+	test_write_lines 1 2 3 four 5 6 7 >four &&
- 	git add three four &&
- 	git commit -m "add three and four" &&
+ test_expect_success 'apply -3 with add/add conflict' '
+@@ -124,7 +125,7 @@ test_expect_success 'apply -3 with add/add conflict' '
+ 	test_must_fail git apply --index --3way P.diff &&
+ 	# ... and leave conflicts in the index and in the working tree
+ 	git ls-files -s >actual.ls &&
+-	git diff HEAD | sanitize_conflicted_diff >actual.diff &&
++	print_sanitized_conflicted_diff >actual.diff &&
  
+ 	# The result should resemble the corresponding merge
+ 	test_cmp expect.ls actual.ls &&
 -- 
 2.24.0.rc0.197.g0926ab8072
 
