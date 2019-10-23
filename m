@@ -2,133 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E29F1F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 08:55:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC69A1F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 10:04:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390348AbfJWIzK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 04:55:10 -0400
-Received: from mail-pl1-f171.google.com ([209.85.214.171]:46233 "EHLO
-        mail-pl1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387829AbfJWIzK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 04:55:10 -0400
-Received: by mail-pl1-f171.google.com with SMTP id q21so1687101plr.13
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 01:55:10 -0700 (PDT)
+        id S2403847AbfJWKEz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 06:04:55 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53300 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390973AbfJWKEz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 06:04:55 -0400
+Received: by mail-wm1-f65.google.com with SMTP id i13so5253177wmd.3
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 03:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=lAmmrptvnDAfSXggk84tJ0DOHH/cXrpDcDXJhpiJIwY=;
-        b=o+/Y09v68NrlJMiOdqpqpKAv6k5aXprKmC3rY0nNqBJYz59maJb9Xe1SV5XwSCMifr
-         NhsmF9yiEgm1JkONDqyBHVjlaMNpJP3kyCvLetI2xE+NKRG3nQKAaQWVEI1BD3vYl0G8
-         O0oqx4u5l44APnkFGKKYTIdrm+WAvTT2uBpznx8iI9Gyp0OevftI4jpBn2PFEBmkJMlu
-         5BrjWpOBrZodOFE7JwlZglhuruL6ZD5OA1uZNNopy8RDztxdwUHTdzxfTdFO+13tcLcD
-         gMbm35qQDqQkbLAus4Zsah/iztPWHe2ZW3dkkSYoEr+K7AGnKSdOTZ8bvMqmVOKri6rL
-         u3Jg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=31fB6m8R7OM53zUiPp6PCJ0rhzx64qkVhdZ3JnekEvU=;
+        b=AudsYywyetLdUC/xGmQ1egASQ2UOtvai/wsLTPeIziDzFBf3H6HFIjPUucRm5UIPMY
+         onwx/FhtnaIgNZfPd0+Gmagj3huv2DLJUjHktUVVQPL0qWvhXug9PurNbc51F7V9aqxZ
+         9aBrnOLhcq8gBpbQxYH+klpauEuT8yTPDLkKpjcX/o9W2yqk8CDKv4vLF7zmiHBHd7fI
+         4Kj58H+xFzbfna41qieIk6YO8D7FBUdm75jrsLYkZslU6QpNaEC0/m5Adhay1CdzEnGU
+         Un7MjUoSgZapdryT5vU+KPS6U41NmxVbiEjeyMHAcvQW6WYSFu35yNDHaVYwJjip9m2/
+         REvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=lAmmrptvnDAfSXggk84tJ0DOHH/cXrpDcDXJhpiJIwY=;
-        b=dASHZ+XYMfhV+7cd02MBN3bTVnb5qRjJZ36qYnbvEWC/UDZP4lptJGHmWPpLeNob5M
-         dozU8WdlhcTHAtwqJIeYLlhYunqE+Y7Vh33Wv7WdC8BA3Z9esjp6a0hxiHfJk6RSIJ+i
-         IzAslzQfIs93NItS5Wt15jnwRHEiog8x6hiwOjlM5c7+yQcTElsVdvnyOgoeS76JApfG
-         riLKAZ+DLd96/N99GyBc5W1ib6AH7//rhWwOnIabAyNcNmrdoPlvpBGKpXZ+YrPqLQsJ
-         Ok5q0cOEnJXI8GCZbe0c9L3kZ20Sq+L0WCq2djKHqZkHqqoqmDQosVJwbrLWP9a4wUYu
-         AAsw==
-X-Gm-Message-State: APjAAAXaISxoSE8sRnCBW4H3Aqc6wJB9SAuy2kexkq2VYZnoa/WJaZxl
-        gBM6rUbuazstNPOjF1/LBPA=
-X-Google-Smtp-Source: APXvYqzo/ggsBPhS6llQRp63ERFU9cW+rRfDnMZxeEE+T53saI8twShhIYoMXScRVeajCrhcS5U8Tg==
-X-Received: by 2002:a17:902:b489:: with SMTP id y9mr8508619plr.9.1571820909073;
-        Wed, 23 Oct 2019 01:55:09 -0700 (PDT)
-Received: from generichostname ([2601:646:280:1b30:80db:d816:4d15:ae2a])
-        by smtp.gmail.com with ESMTPSA id x23sm22428394pfq.140.2019.10.23.01.55.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2019 01:55:06 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 01:55:03 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Jerome Pouiller <Jerome.Pouiller@silabs.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [BUG] "--show-current-patch" return a mail instead of a patch
-Message-ID: <20191023085503.GA652469@generichostname>
-References: <2154192.LVDMpRDY2h@pc-42>
- <xmqqzhhsi4g5.fsf@gitster-ct.c.googlers.com>
- <1791353.RaUiIlXgNR@pc-42>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=31fB6m8R7OM53zUiPp6PCJ0rhzx64qkVhdZ3JnekEvU=;
+        b=VauuIKHWeWGQWyBm6rGb3o7mjMbU2C/iholNkbTCuupRBLyx/e2pE/61WvwzgA06vG
+         Vdu1RTYKsrvvavHPyvn7mOwex66n3iNUw5SkQw760gHsWlcFsJapCzVb1Sqykfa7ifwe
+         u9CTbJFXOp1YffjxvDuBgROswDqbfdxnbIm9EcHxVOfcwL6VP1wgArwv/uxUWHbsTnYL
+         UylD9PxZnyFsyXIhchGKZ16kK6CBsKLhHUDEwYhLo0M4m+9X0+xV81nGuIYN2so9qOt2
+         NE/p+JJQfMERgKXfQpNwYB8rsJqcjSGL8NZLfpRM8QCkl4piM1Q/ma+aTb0ZliAlPwZp
+         ZIaQ==
+X-Gm-Message-State: APjAAAUWWv3ZEFcTnke5UGpJVOYDSyGE+gI3ec1fgHNXlHitmdLUDAAh
+        QOqaUNiy2pilFxMtgr57SZhO01gv
+X-Google-Smtp-Source: APXvYqzgvNc2dRbsSNXPGMzslAm8OOiBzY7pbS2EZ7LZpZ/4Lo0+Uac3oSY5PptsOidpcIcBiJ+xhA==
+X-Received: by 2002:a1c:1f4b:: with SMTP id f72mr6594306wmf.22.1571825093114;
+        Wed, 23 Oct 2019 03:04:53 -0700 (PDT)
+Received: from szeder.dev (x4db97b71.dyn.telefonica.de. [77.185.123.113])
+        by smtp.gmail.com with ESMTPSA id l5sm3654178wmj.44.2019.10.23.03.04.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Oct 2019 03:04:52 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 12:04:49 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Aleksey Mikhaylov <almikhailov@plesk.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Issue: "Could not access submodule" error when pulling
+ recursively with Git 2.22.0
+Message-ID: <20191023100449.GH4348@szeder.dev>
+References: <AM5PR0902MB1953988602B657C3D0BB9B17A36B0@AM5PR0902MB1953.eurprd09.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1791353.RaUiIlXgNR@pc-42>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <AM5PR0902MB1953988602B657C3D0BB9B17A36B0@AM5PR0902MB1953.eurprd09.prod.outlook.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jerome,
+On Wed, Oct 23, 2019 at 07:22:12AM +0000, Aleksey Mikhaylov wrote:
+> "Could not access submodule" error when pulling recursively with Git 2.22.0.
+> This issue causes if there is submodule in submodule.
 
-On Wed, Oct 23, 2019 at 08:49:41AM +0000, Jerome Pouiller wrote:
-> On Wednesday 23 October 2019 04:24:58 CEST Junio C Hamano wrote:
-> > Jerome Pouiller <Jerome.Pouiller@silabs.com> writes:
-> > > I try to use "git am" to apply a patch sent using "git send-email". This
-> > > patch does not apply properly. I try to use "git am --show-current-patch"
-> > > to understand the problem. However, since original mail is encoded in quoted-
-> > > printable, data returned by --show-current-patch is not a valid patch.
-> > 
-> > I agree that --show-current-patch is a misdesigned feature.  We'd be
-> > doing a better service to our users if we documented that the patch
-> > and log message are found at .git/rebase-apply/{patch,msg} instead
-> > of trying to hide the path.
-> > 
-> > Unfortunately, it is likely that those who added that feature have
-> > built their tooling around it to depend on its output being the full
-> > e-mail message "am" was fed (and split by "git mailsplit").  So I do
-> > not think we will be changing the output to the patch file only.
-> > 
-> > But even then, the documentation can be fixed without any backward
-> > compatibility issues.  Perhaps like this?
-> > 
-> >  Documentation/git-am.txt | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-> > index 6f6c34b0f4..f63b70325c 100644
-> > --- a/Documentation/git-am.txt
-> > +++ b/Documentation/git-am.txt
-> > @@ -172,7 +172,7 @@ default.   You can use `--no-utf8` to override this.
-> >         untouched.
-> > 
-> >  --show-current-patch::
-> > -       Show the patch being applied when "git am" is stopped because
-> > +       Show the entire e-mail message "git am" has stopped at, because
-> >         of conflicts.
+> Please use my simple test repository to reproduce the problem:
+> https://github.com/agmikhailov/example2361.git
 > 
-> I agree with you: I think that manpage and/or output of "git am" should
-> mention ".git/rebase-apply/patch" (that is exactly what I was looking
-> for).
+> It is just an empty repository with one submodule (https://github.com/agmikhailov/example2361M1.git) 
+> and one submodule of submodule (https://github.com/agmikhailov/example2361M2.git):
+> 
+> git clone https://github.com/agmikhailov/example2361.git
+> cd example2361/
+> git submodule init
 
-I am currently have a WIP patchset that will print the location of the
-failed patch file (.git/rebase-apply/patch) in the case of a failure as
-well as the line number. Will this be sufficient for your purposes?
+According to the docs of 'git submodule init', it "initializes the
+submodules recorded in the index".  Therefore, it can only initialize
+the submodule in 'example2361M1', because at this point we have no
+idea that there is a nested submodule in there.
 
-Thanks,
+  $ git submodule init
+  Submodule 'example2361M1' (https://github.com/agmikhailov/example2361M1.git) registered for path 'example2361M1'
 
-Denton
+> git submodule update
 
+This command clones 'example2361M1':
+
+  $ git submodule update --recursive
+  Cloning into '/tmp/example2361/example2361M1'...
+  Submodule path 'example2361M1': checked out '6a9be24a1c0ebd44d91ae4dcf1fd62580b936540'
+
+Only at this point can we finally see that there is a nested
+submodule, and can initialize and clone it with:
+
+  $ cd example2361M1
+  $ git submodule init
+  Submodule 'example2361M2' (https://github.com/agmikhailov/example2361M2.git) registered for path 'example2361M2'
+  $ git submodule update
+  Cloning into '/tmp/example2361/example2361M1/example2361M2'...
+  Submodule path 'example2361M2': checked out '9ed39cf1fe0a8cf34e72d2e7ebff1ea9d4a63ac1'
+
+> git pull --recurse-submodules=true
+
+And after that:
+
+  $ cd ../..
+  $ git pull --recurse-submodules=true
+  Fetching submodule example2361M1
+  Fetching submodule example2361M1/example2361M2
+  Already up to date.
+
+
+> ACTUAL RESULT
 > 
-> Maybe documentation of --show-current-patch should be clarified with a
-> note like "This option is mainly for internal purpose. If you want to
-> get current patch, rely on .git/rebase-apply/patch".
+> "git --recurse-submodules=true" command fails with message "Could not access submodule":
 > 
+> $ git --recurse-submodules=true
+> Fetching submodule example2361M1
+> Could not access submodule 'example2361M2'
 > 
-> -- 
-> Jérôme Pouiller
+> EXPECTED RESULT
 > 
+> All submodules are successfully updated by "git --recurse-submodules=true" command.
+> 
+> ADDITIONAL INFORMATION
+> 
+> Git version 2.20.1 does not have this problem. 
+> So we had to downgrade Git to work with submodules.
+
+The behavior was indeed different with v2.20.1, but that version
+didn't show the behavior you expected.  When running your commands
+with v2.20.1 I get:
+
+  $ ~/src/git/bin-wrappers/git pull --recurse-submodules=true
+  Fetching submodule example2361M1
+  Already up to date.
+  $ find example2361M1/example2361M2/
+  example2361M1/example2361M2/
+
+So while that 'git pull' didn't error out, it didn't even look at the
+nested submodule, which is still uninitialized and empty.
+
+FWIW, bisecting shows that the behavior changed with commit
+a62387b3fc, but, unfortunately, the commit message doesn't seem to be
+very helpful to me, but perhaps others with more experience with
+submodules can make something out of it.
+
+commit a62387b3fc9f5aeeb04a2db278121d33a9caafa7
+Author: Stefan Beller <sbeller@google.com>
+Date:   Wed Nov 28 16:27:55 2018 -0800
+
+    submodule.c: fetch in submodules git directory instead of in worktree
+    
+    Keep the properties introduced in 10f5c52656 (submodule: avoid
+    auto-discovery in prepare_submodule_repo_env(), 2016-09-01), by fixating
+    the git directory of the submodule.
+    
+    Signed-off-by: Stefan Beller <sbeller@google.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+ submodule.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+
