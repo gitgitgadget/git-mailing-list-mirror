@@ -2,77 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED5741F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 13:54:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FC471F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 14:18:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406125AbfJWNyK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 09:54:10 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38410 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404484AbfJWNyK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 09:54:10 -0400
-Received: by mail-wr1-f68.google.com with SMTP id v9so10940919wrq.5
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 06:54:08 -0700 (PDT)
+        id S2404361AbfJWOSV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 10:18:21 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:54092 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392077AbfJWOSV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 10:18:21 -0400
+Received: by mail-wm1-f68.google.com with SMTP id i13so6181320wmd.3
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 07:18:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=hIsXMjihAeurmF8DuCsRE6Tf2rWlIF7LgOq1ebpDTM0=;
+        b=IjnQneyOCM5A1a4LJehkNbAvt8IucpfvLFGAkIhBXC/utW62+1t4jF9u/J8c0kOr+U
+         69iJwXeEuCWWrc/3+Et7vpavRmyrq2HlA6zgVC1O/0dU675CO4BjEWJise9CTXEB8jYb
+         FANq92c91EaYwEINRdpHQuLhWww0ecpQ9dE4xALRCg6GSzAWxhxlaTT1nPEUq4L5gmwj
+         BrGPRkQcHlC1oG0IIvd1G2UAjFm4HC3HWgQyuI6rwKBYSiNg4fG1sqdwFrgE6WOqP6Yr
+         VfVn/poipnrjJfecXJKJtITGzwMuBRBKgzhEUiIcsbP1fXvekbu9r+T0AFJsVcYuiLed
+         rG9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ngHsC660Mw5P43jIj5IOTRtCqSh/fsEz8VdllzuITGw=;
-        b=K2aQ7xc1pZuQGV6g3axN5PtXf8EsBBpZJTtBXUNHFRm2+Gc01zKR0Wg2D3ZZgf7Ftc
-         4MK+Q7ljBpPayRctCeglhho/FtuHk1EMdsgVASTiBwN4e6dMblZi5G8LK9Y8XRmfuS8O
-         54GTtw5Kktu4b3MuchN0H5kxNA5A90IMcFnFjpfUIvBBA9S/ZUQswhQb/7TXSIIIh0XX
-         5iCOWGs62t+HXOfpnM6dSv4gIokbiEmZp5s8watnOmyXOpwUC5yo5M7Kwc5fXChpT4jD
-         oay01QnyLb6XBwfcVq06nu2AIVagPcFLvty3uiHWFf6sV5iZrO+V4+sFuM4Sk0e5Mz0V
-         /BJQ==
-X-Gm-Message-State: APjAAAWZ9j7kRDsxA6KbErsh+NlE+s6X6PFV6U6DPSR81wKp/7pz0YH/
-        D0nUN4g3bVB8qkYa5sR019TSiZLSLHdCuc8U1q4=
-X-Google-Smtp-Source: APXvYqxDqFkxZH4gvfdgfdbX3Qn5chbgH/GoQuRcx6B98yQys0eiE11Vmm0w4QyRogojoaFDnvxAPSSg0uE1E764HkE=
-X-Received: by 2002:adf:f010:: with SMTP id j16mr8843642wro.317.1571838847990;
- Wed, 23 Oct 2019 06:54:07 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=hIsXMjihAeurmF8DuCsRE6Tf2rWlIF7LgOq1ebpDTM0=;
+        b=rsMHHih7VE4Zkbo61NA+38B7mLYUd9ffwWwCa1X45sVE9yHUcm8mfQfapZHZvFAcHk
+         RPH/yPCp1qHmHLlAE2c+ssYkD/9ZdkX5M28jiL7NfaVE2ntOrNJc3V/9sTRMWqaR992X
+         Ot2acu7s4OztPd5nQFNG8uVpCxwX6F1QHaJqccHqTOlvzrYWfW5rQXWrlHbW2RZolSOm
+         FnwM2mSaqanWT+u6EFgK9EZ5Pc54GXVUfkrc5N0e0ZeMJRLIZYZKirZRIKp8WiVe6nXX
+         qq+cyAnHfCMvs4K4j/W6yfTLb3Eih2FxIqv4fi6DYfwC/E+r7+95ynkrW1y4A9aAGIyu
+         QuMg==
+X-Gm-Message-State: APjAAAVn0JkciRoRoKRpjDmZL2AR/Vu2wpUmN8Khzez3gF1M1LLndDTv
+        2JPbIoVWdfZJePzVrcILFzs=
+X-Google-Smtp-Source: APXvYqztaSqHRr1MMsskb+kd+cvccA+4SAcu5PEgsRQUEPXbzJnwZCXjXwy2e9rijiRRZqOBCB6PDQ==
+X-Received: by 2002:a1c:1f4b:: with SMTP id f72mr164185wmf.22.1571840298889;
+        Wed, 23 Oct 2019 07:18:18 -0700 (PDT)
+Received: from szeder.dev (x4db97b71.dyn.telefonica.de. [77.185.123.113])
+        by smtp.gmail.com with ESMTPSA id d8sm8629901wrr.71.2019.10.23.07.18.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Oct 2019 07:18:18 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 16:18:13 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/2] t5510-fetch.sh: demonstrate
+ fetch.writeCommitGraph bug
+Message-ID: <20191023141813.GA26017@szeder.dev>
+References: <pull.415.git.1571765335.gitgitgadget@gmail.com>
+ <pull.415.v2.git.1571835695.gitgitgadget@gmail.com>
+ <6ac0a05746df8ac3b1dd788f525b2620bc4d9a08.1571835695.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <cover.1571354136.git.liu.denton@gmail.com> <ff05a0a8f7dc91d988e290b7d606e8a64f5daf54.1571354136.git.liu.denton@gmail.com>
- <CAPig+cRF0taNhmZVu0z+P+Oe3em11Jz33GY8eBZRTGkx3z=TOw@mail.gmail.com> <20191018185227.GA74877@generichostname>
-In-Reply-To: <20191018185227.GA74877@generichostname>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 23 Oct 2019 09:53:57 -0400
-Message-ID: <CAPig+cQgE=7Ac+NRaxGRjDwFv4PR1sP8FLHNJfKXJC4QmR4Dhg@mail.gmail.com>
-Subject: Re: [PATCH 08/12] t5520: use test_cmp_rev where possible
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6ac0a05746df8ac3b1dd788f525b2620bc4d9a08.1571835695.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 18, 2019 at 2:52 PM Denton Liu <liu.denton@gmail.com> wrote:
-> On Thu, Oct 17, 2019 at 07:41:44PM -0400, Eric Sunshine wrote:
-> > On Thu, Oct 17, 2019 at 7:17 PM Denton Liu <liu.denton@gmail.com> wrote:
-> > > -       test "$COPY" = "$(git rev-parse --verify me/copy)" &&
-> > > +       test_cmp_rev "$COPY" me/copy &&
-> >
-> > This transformation doesn't look correct. COPY already holds the
-> > result of a git-rev-parse invocation:
-> >
-> >     COPY="$(git rev-parse --verify me/copy)" &&
-> >
-> > so passing it to test_cmp_rev() -- which applies its own git-rev-parse
-> > invocation -- doesn't make sense.
->
-> So after grokking the test case, it seems like the the transformation is
-> indeed correct. Maybe we can replace the last line with
->
->         test_cmp_rev copy me/copy
->
-> but I think I'll leave it unless you have any strong opinions.
+On Wed, Oct 23, 2019 at 01:01:34PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> While dogfooding, Johannes found a bug in the fetch.writeCommitGraph
+> config behavior. His example initially happened during a clone with
+> --recurse-submodules, we found that this happens with the first fetch
+> after cloning a repository that contains a submodule:
+> 
+> 	$ git clone <url> test
+> 	$ cd test
+> 	$ git -c fetch.writeCommitGraph=true fetch origin
+> 	Computing commit graph generation numbers: 100% (12/12), done.
+> 	BUG: commit-graph.c:886: missing parent <hash1> for commit <hash2>
+> 	Aborted (core dumped)
+> 
+> In the repo I had cloned, there were really 60 commits to scan, but
+> only 12 were in the list to write when calling
+> compute_generation_numbers(). A commit in the list expects to see a
+> parent, but that parent is not in the list.
+> 
+> A follow-up will fix the bug, but first we create a test that
+> demonstrates the problem.
+> 
+> I used "test_expect_failure" for the entire test instead of
+> "test_must_fail" only on the command that I expect to fail. This is
+> because the BUG() returns an exit code so test_must_fail complains.
 
-For some reason, I had it in my mind that test_cmp_rev() was primarily
-meant for comparing _named_ revisions, but of course there is nothing
-about the function which even suggests that that is its intended
-use-case. In retrospect, using it to compare an OID against a named
-revision is a sensible use-case too, so I withdraw the objection.
+I don't think this paragraph is necessary; using 'test_expect_failure'
+is the way to demonstrate a known breakage.
+
+'test_must_fail' should only be used when the failure is the desired
+behavior of a git command.  (I used the word "desired" here, because
+you just used the word "expect" above in the sense that "I expect it
+to fail, because I know it's buggy, and I want to demonstrate that
+bug")
+
+> Helped-by: Jeff King <peff@peff.net>
+> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Helped-by: Szeder Gábor <szeder.dev@gmail.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  t/t5510-fetch.sh | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+> 
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index ecabbe1616..e8ae3af0b6 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -583,6 +583,23 @@ test_expect_success 'fetch.writeCommitGraph' '
+>  	)
+>  '
+>  
+> +test_expect_failure 'fetch.writeCommitGraph with submodules' '
+> +	pwd="$(pwd)" &&
+> +	git clone dups super &&
+> +	(
+> +		cd super &&
+> +		git submodule add "file://$pwd/three" &&
+
+Nits: couldn't the URL simply be file://$TRASH_DIRECTORY/three ?
+
+> +		git commit -m "add submodule"
+> +	) &&
+> +	git clone "super" writeError &&
+
+There is a write error now, because we have a bug, but after the next
+patch the bug will be fixed and we won't have a write error anymore.
+
+> +	(
+> +		cd writeError &&
+> +		test_path_is_missing .git/objects/info/commit-graphs/commit-graph-chain &&
+> +		git -c fetch.writeCommitGraph=true fetch origin &&
+> +		test_path_is_file .git/objects/info/commit-graphs/commit-graph-chain
+> +	)
+> +'
+> +
+>  # configured prune tests
+>  
+>  set_config_tristate () {
+> -- 
+> gitgitgadget
+> 
