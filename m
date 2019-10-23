@@ -8,80 +8,149 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E21FE1F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 12:03:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C2C01F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 12:03:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405181AbfJWMDv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 08:03:51 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:39203 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731954AbfJWMDv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 08:03:51 -0400
-Received: by mail-pg1-f195.google.com with SMTP id p12so12033637pgn.6
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 05:03:49 -0700 (PDT)
+        id S2405185AbfJWMDw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 08:03:52 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:47069 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731954AbfJWMDw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 08:03:52 -0400
+Received: by mail-pl1-f196.google.com with SMTP id q21so1915727plr.13
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 05:03:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=gSGRaXHZ8FEiOYGtaDvzOnduKOGDoTO1z1YH2n+jAdY=;
-        b=mgH8rIPIUBQ5bqf/1Ng9oWHzA2hRpGgUVtD+/sDqCTa9fi5rSPiFKB5nLG5eAaPDc8
-         AfBv0xRiARLVoGKNVy3VWXSAMJ8P3CpXEQkDUubh+H1JYkkV7YAoD6ZfpOeDS9+xZRCq
-         tT6JHRNsc98bMcPrGeZRIzyg9Rkca5qQBXeRdJTzW/2L7ilj14fIx1FxOW3pGkU1ZNYJ
-         OFap29cIPwKt/dDmGroqjtBzSg9paxKEBmi5V/j2KxM1/MwMYeZ0Aa7eiRrfy8zKbtTc
-         SB0BolAvSNGbIGz+5sGNWQzabXYorEVUmeKGNFr+mzkEXI70HqmY8hn+kaNxrNvxVJgR
-         uq8w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=i4lYL+FdZdQg3HbyjMUx8yf919PYm5gHxe4ZudLcAm0=;
+        b=COOGTVOdlvquHMTsdPXCKgPoIF9NtLi0EwmL9V00MBkTT2CRwXNy/cbccKhN36aTMv
+         fwRczdgjoT9zw7/dpzARt29DSNL8FfJU5M4uIpor5uyoONS6n7EjltzVVG0SjC6Fg1xu
+         0bVbh/g//XMZqOwTJ7tfAeLe7KlQ1uRrSY451oEo0WwdR7pEEQy/ve7e5aDaRZgcblcL
+         rl3gd6t8zef0aB/zeWUbppOZJRRI4JMKFEpzTPkuWxjigT6/Ng1E7bXukLLrGequ4gLz
+         S5ReFt+gSckg9WBBC+DBhNlm6EgPMeNbWXVjxzu1GFRIQQa0WXenqeR0lUXHA/LMDWaC
+         QnsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=gSGRaXHZ8FEiOYGtaDvzOnduKOGDoTO1z1YH2n+jAdY=;
-        b=X+t5dl269kNuH7WRDFdchAB3BrXRoKhHltyW9AII7RfcEmgT34L6/MZKzd9NsNitvO
-         drQ2NTMd3XaeFoO/3Rd0zoJoY6kl4pFyZNvv5ADzhtczglAsV8ygU19uTKcsJkEmaqZk
-         BAIFOXnKH2Wzd+1CL00+uXIvqN1pRXodVNtsAoPRqoDOtSy7uG+OhFxGbiBCVjLZm3Rq
-         dCTtN7xAfpCN98dvMR24Drn31rhJfEqxFbDkyYEnmTOIRfz0/Xu/54LVFVzTXGRnoApb
-         g73xmGCnziqHlW648wc6/cLeUjoDvUVF20fySmKVHDQ68SKt4FBHcMJOXdo4vPaqM5s2
-         t25A==
-X-Gm-Message-State: APjAAAVtvaHB0eGPygCqpZ8LRD29KspYlZpGSPGcFwOxdahUsms90rzv
-        CvOoNtQRAuX1iHi99ONMzWqoVTDp
-X-Google-Smtp-Source: APXvYqyt0rKiv6sRAPiPtr5gqmKA/SaRCpvWEJlaVsUZGzVv3GnhpxgRG8iUwjP4bEWWt2tglE5xrg==
-X-Received: by 2002:a63:6cf:: with SMTP id 198mr5544749pgg.259.1571832228253;
-        Wed, 23 Oct 2019 05:03:48 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=i4lYL+FdZdQg3HbyjMUx8yf919PYm5gHxe4ZudLcAm0=;
+        b=CCSzHdw5JusSi4nF1dAdZ6Fks9xXaHOC7C0woGJlI45rfWaKw4CIL0tftDOXfYIvSH
+         gyDY5VXvl7hLJPgyJS82PO7xc2A4YCwk9aN3J1mDkR2g/+N3TljqZDez1kr1gS2w7o2C
+         ONMgv/hhPPSQlE2LPXacwNs9s036bJPz7nPI8d4z3fAugmP36Iz1+G/sgjeqBLFo8vGS
+         vUyJJbXrQgpL8b7xp1rZWXzQf5ZxN3WV7uu14147L76KaX2McexTHM67rlO1cwFsMHOP
+         4Tjch0TDz25UHIr2N79CVNQa870PDDbUWZxtcV9QWjnI2LxS7OcWPY0GEiXnRUy7bnZ2
+         OHmA==
+X-Gm-Message-State: APjAAAX+QZvX2vIc3w1xlaGlq2MJbhXEu7VdQrFBbj4NeDdR7zGhyw3Y
+        k1LkbxPVw//zeZmxCaOVz6A605AO
+X-Google-Smtp-Source: APXvYqyP6DWdykHqg3y1YmVMgcQ3Y24Spb3m16O4ziKpptiWo5R9c3+IJiy6g2KqbQ2584EBe8eo/g==
+X-Received: by 2002:a17:902:b20a:: with SMTP id t10mr9191482plr.277.1571832230913;
+        Wed, 23 Oct 2019 05:03:50 -0700 (PDT)
 Received: from generichostname ([2601:646:280:1b30:80db:d816:4d15:ae2a])
-        by smtp.gmail.com with ESMTPSA id o67sm21623021pje.17.2019.10.23.05.03.45
+        by smtp.gmail.com with ESMTPSA id l72sm27837826pjb.7.2019.10.23.05.03.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2019 05:03:46 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 05:03:44 -0700
+        Wed, 23 Oct 2019 05:03:49 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 05:03:48 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/5] apply: fix merge.conflictStyle bug in --3way
-Message-ID: <cover.1571832176.git.liu.denton@gmail.com>
+Subject: [PATCH 1/5] t4108: replace create_file with test_write_lines
+Message-ID: <84fe1614a3c807e3604549ec012535ce6bd17228.1571832176.git.liu.denton@gmail.com>
+References: <cover.1571832176.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <cover.1571832176.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This fixes a bug where even if `merge.conflictStyle = diff3`, running
-`git apply --3way` would not output the base.
+Since the locally defined create_file() duplicates the functionality of
+the test_write_lines() helper function, remove create_file() and replace
+all instances with test_write_lines(). While we're at it, move
+redirection operators to the end of the command which is the more
+conventional place to put it.
 
-Patches 1-3 are general cleanup for t4108, 4 demonstrates the bug and 5
-actually fixes it.
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ t/t4108-apply-threeway.sh | 27 ++++++++++-----------------
+ 1 file changed, 10 insertions(+), 17 deletions(-)
 
-Denton Liu (5):
-  t4108: replace create_file with test_write_lines
-  t4108: remove git command upstream of pipe
-  t4108: use `test_config` instead of `git config`
-  t4108: demonstrate bug in apply
-  apply: respect merge.conflictStyle in --3way
-
- apply.c                   |  2 +-
- t/t4108-apply-threeway.sh | 96 +++++++++++++++++++++------------------
- 2 files changed, 53 insertions(+), 45 deletions(-)
-
+diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
+index fa5d4efb89..b109ecbd9f 100755
+--- a/t/t4108-apply-threeway.sh
++++ b/t/t4108-apply-threeway.sh
+@@ -4,13 +4,6 @@ test_description='git apply --3way'
+ 
+ . ./test-lib.sh
+ 
+-create_file () {
+-	for i
+-	do
+-		echo "$i"
+-	done
+-}
+-
+ sanitize_conflicted_diff () {
+ 	sed -e '
+ 		/^index /d
+@@ -20,7 +13,7 @@ sanitize_conflicted_diff () {
+ 
+ test_expect_success setup '
+ 	test_tick &&
+-	create_file >one 1 2 3 4 5 6 7 &&
++	test_write_lines 1 2 3 4 5 6 7 >one &&
+ 	cat one >two &&
+ 	git add one two &&
+ 	git commit -m initial &&
+@@ -28,13 +21,13 @@ test_expect_success setup '
+ 	git branch side &&
+ 
+ 	test_tick &&
+-	create_file >one 1 two 3 4 5 six 7 &&
+-	create_file >two 1 two 3 4 5 6 7 &&
++	test_write_lines 1 two 3 4 5 six 7 >one &&
++	test_write_lines 1 two 3 4 5 6 7 >two &&
+ 	git commit -a -m master &&
+ 
+ 	git checkout side &&
+-	create_file >one 1 2 3 4 five 6 7 &&
+-	create_file >two 1 2 3 4 five 6 7 &&
++	test_write_lines 1 2 3 4 five 6 7 >one &&
++	test_write_lines 1 2 3 4 five 6 7 >two &&
+ 	git commit -a -m side &&
+ 
+ 	git checkout master
+@@ -87,7 +80,7 @@ test_expect_success 'apply with --3way with rerere enabled' '
+ 	test_must_fail git merge --no-commit side &&
+ 
+ 	# Manually resolve and record the resolution
+-	create_file 1 two 3 4 five six 7 >one &&
++	test_write_lines 1 two 3 4 five six 7 >one &&
+ 	git rerere &&
+ 	cat one >expect &&
+ 
+@@ -104,14 +97,14 @@ test_expect_success 'apply -3 with add/add conflict setup' '
+ 	git reset --hard &&
+ 
+ 	git checkout -b adder &&
+-	create_file 1 2 3 4 5 6 7 >three &&
+-	create_file 1 2 3 4 5 6 7 >four &&
++	test_write_lines 1 2 3 4 5 6 7 >three &&
++	test_write_lines 1 2 3 4 5 6 7 >four &&
+ 	git add three four &&
+ 	git commit -m "add three and four" &&
+ 
+ 	git checkout -b another adder^ &&
+-	create_file 1 2 3 4 5 6 7 >three &&
+-	create_file 1 2 3 four 5 6 7 >four &&
++	test_write_lines 1 2 3 4 5 6 7 >three &&
++	test_write_lines 1 2 3 four 5 6 7 >four &&
+ 	git add three four &&
+ 	git commit -m "add three and four" &&
+ 
 -- 
 2.24.0.rc0.197.g0926ab8072
 
