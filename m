@@ -2,148 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2061F1F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 16:35:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C7491F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 17:00:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404841AbfJWQfM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 12:35:12 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35864 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733188AbfJWQfL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 12:35:11 -0400
-Received: by mail-wr1-f65.google.com with SMTP id w18so22294455wrt.3
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 09:35:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=pUJDmHDV2n/zbwqHBBQuFoDwH5GZza/FNyon7xSCFKU=;
-        b=aZDz8PmGLCbA6KZ8f8Kxlz1J25cYpxhXWizDmkZwx+l3p9CGdSKemWhqZe5/LYcSd1
-         o5/hiystmWC3Px9FW/4J1MHjBL/DWZM2sovvconVpbOSlvvtigcx2UHe6lBozbnhIkbc
-         1k72QilDWWGKnVB8eNmkOzQKwB96mh1BhNc7PcEmDlSMWAl54Ep/sNuJmJoJ65nJhszo
-         UICryQ7UUD4I0BnZCpedB3Mc1XjxyAeFHQMZlEoJFI+E1JkV+Srr7XhCULcXY8X8XRT9
-         a6sKq9Yy1IuOh/F4dL4CmTr8asGj2It/mcbgtL5k2aX9Z4w76DbqYk5X0eH9EtoZwB8E
-         CZmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=pUJDmHDV2n/zbwqHBBQuFoDwH5GZza/FNyon7xSCFKU=;
-        b=EfUVoXpMcfpqG1ToqlK6DEOKYSU5qHdwzG3KzXaGplQz+FifHuaXLe9tpEzNVgd/lK
-         UZkS+kUbEKFzQdJjXVXGZ+yuB+7PmgSJ7He9hjBpCszfJcKzzexzuUe5lPJ6zeKx7LNg
-         jfGXtNRYG7foL/AubYQe17lacS057iHCdo7PmJotvqIrt8ciMt4tFEPCPtm0DxEY/lHP
-         0IR5rmG9AXEXqCGUrZzptYMbAFWOik80i0Jx/hixEOJgr+Ltxl1d6ceD/hbKq4PRzkGo
-         GV6hNtF70stoaOhzrw2RkKX6rfU9uhTFoUcmhK226Mhrm+Nul3WrCjuYh14oX7YH85lU
-         4IGQ==
-X-Gm-Message-State: APjAAAXQOqrixWMO5oNpIQgQvuySHXiOX7L6o6hx7lpc/I33nr6mkBxF
-        Sq5DJa5/cE+m6JUfbbFW9wY=
-X-Google-Smtp-Source: APXvYqzZXqE+vZZhITlknUB/evbSKhs57JPHMin9w+AEpWdwbvhfSI5mOGMSJnOS4MKo8S0OGVJMNg==
-X-Received: by 2002:adf:fe81:: with SMTP id l1mr9061137wrr.165.1571848509370;
-        Wed, 23 Oct 2019 09:35:09 -0700 (PDT)
-Received: from szeder.dev (x4db97b71.dyn.telefonica.de. [77.185.123.113])
-        by smtp.gmail.com with ESMTPSA id v8sm25156019wra.79.2019.10.23.09.35.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Oct 2019 09:35:08 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 18:35:06 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, johannes.schindelin@gmx.de,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 1/1] ci(osx): use new location of the `perforce` cask
-Message-ID: <20191023163506.GJ4348@szeder.dev>
-References: <pull.400.v2.git.1571316454.gitgitgadget@gmail.com>
- <pull.400.v3.git.1571789978.gitgitgadget@gmail.com>
- <9d80e845bf923c4543c49f9947aacb10c59ff6ce.1571789978.git.gitgitgadget@gmail.com>
- <xmqqsgnjhj5b.fsf@gitster-ct.c.googlers.com>
+        id S1726882AbfJWRAz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 13:00:55 -0400
+Received: from mout.web.de ([212.227.15.3]:41755 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726316AbfJWRAy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 13:00:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1571850050;
+        bh=KG6OtXqW2qXBm9xG2uSzYDNkWvNkxuujchoWIwtIhXI=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=eDc1cjfMPvMyPMP5UFZpVsRkJJbWw4nBkO23tze3MUwn7EsfOZLeClHmYWI2wlqqh
+         vLXcVJVSJ1qo9dnE4mJ4UO2t1HwybLtp/qruff74i0+7NKDg1Oc22qF2SRxWhq/1WP
+         uHdpa7G/4bUrAkR6jtPsOiXE4ennGqvft+26xwmU=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MCIYT-1iEpYe3UiP-0098vz; Wed, 23
+ Oct 2019 19:00:49 +0200
+Date:   Wed, 23 Oct 2019 19:00:49 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: Git Test Coverage Report (October 11)
+Message-ID: <20191023170049.hnzb22iiflrigyfs@tb-raspi4>
+References: <c863c09b-f0ed-19c6-356e-12a3ecbc08b9@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqsgnjhj5b.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <c863c09b-f0ed-19c6-356e-12a3ecbc08b9@gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:IvAPKB4eCMFvN5yY4hFco20ARVCZtjBC2T/McK1ZD7nxFZx9uC1
+ TTq9Vg+B0isFxcqyRaNNJhH5+HFYk9Ce33uFwCsIcAP7Eu7lrQZhWKxcR9PIBIteld90QF7
+ HaLXpZo6c0aUjyzulwg5zWf92TF6Y/ZyikXgc2aNs1DeVexw4fBnT3qGfNg4lyv2OU2/Pl1
+ 5SdzFI52hzd7kTngBMqdQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rcBDZJjR0V0=:8wZB/k7mtbgng8pE6jZFsL
+ omPauOxtyBE3Aegk6mksxJmcPpaEd7AcNV+o9L7KlmSbJ1ZltPWKlxB9FpHy2nXGwWW85d/o1
+ abncazkTk+krXnmQCk9/rZjtgEZD+V0Zeo96+d776wrdxEjJr9n/4/Ol6nQ9+RgbXekM++jj+
+ F5dwEhw8VpZblKbeDVmgHQasRygdVs3D5Z76maRoKgLDstcrPQpNItWQWZEGHLdG23yQU9r4s
+ EuB2mQuCsnTNmUKvU4A1kbfx7rLTMJjKuqdsPJP/Sw2bj0JVNhTuhEwmfRFITBStfMW9qJzHi
+ b8NHzBOXmUjCy3ZNFyJX7c131WeV6uZjZu7E9UVhw4Cy8pDYdfIkT3lfFq5m3rfX8HHywK5H3
+ 9bI1DcoLzKBNCtYbrrmM/w7A5+hIbabkt+go5bKNG1esgkT4Q6Co2MgiOAX8qDv8lamxOPCCf
+ 0/KGv32KrN7WdFRo/adyJk5NnccMObg8MxqdpIQCrjDJ2vUOisGuptqbJfFW0PWN93KeWNNL0
+ tIIexagLNm3uu6dixPV8od06ez9otiXDN9mW/5rO8HCczOjKzwwXb1KjvQ6BI1bnIxhLgzyhA
+ SjAcMmtcuFjeAbtU9thjQQ52n+RfT4iaQU81AQaOuIxiqjWG4e/C0sFajpECqVnRSG1xb52CH
+ PZs5yPYGX21srXueUz1lGgJYicHPaY6xJc0rr/4UH5T+HQ/DGRJwjK9RYJnTiYVvk8t8xLxgJ
+ 1JNpezUHV1l/lrD+b1t+xHXwZOWAGTwVyM4r6Eq101JwRTKGw0jvf60RUKUReEu/zYXS0m6Ly
+ VOxHlBgBvYOYwSi5sRNEPixlUmwhBnUXRlQm2jnj+fxumpVEHY8lYn2ElV5c0ZIGnIgtqOJ0d
+ N9ay8wGLdZ7sBBUMO0Q4EQxOmDX7NUYv+PJGDRx1WZCVwd4nMRRCeqp+nZ8o2sEnXp+zLnXo3
+ 5wzTkue4CrVMbCglsLdqtPu1yH4XYIjpyOJt0MWBZ7jWMYSDHEbFp14kGaqVoct4kJi4LN/C7
+ pHMYNJPepQyKAZ7imlX96IO4OvCyuBmU3/TqoDs5G1Y5fD8Qkvgyk+txIpNeQyfjLThv2mIpN
+ J9kgZuvPpmgCLkL8fVP1Gj2N5SPsSp8bqG3ve7Ihq6iDdVY1+q/pMIkX/oNFVj+5ZcYWq3zyh
+ HoaL/Y5GLADC8NOZM6p/1JAb+FZ/hUUfDyIP0IPmups/80EkNYL2wksAFJeuUbj1cQmX98jhn
+ bgX4Yi/2FdvhXNzlcqFMhTcTEncaFukdu+a2kOg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 23, 2019 at 07:05:04PM +0900, Junio C Hamano wrote:
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > The Azure Pipelines builds are failing for macOS due to a change in the
-> > location of the perforce cask. The command outputs the following error:
-> >
-> >     + brew install caskroom/cask/perforce
-> >     Error: caskroom/cask was moved. Tap homebrew/cask-cask instead.
-> > ...
-> > In any case, as the error message at the top of this commit message
-> > shows, 'brew install caskroom/cask/perforce' has stopped working
-> > recently, but 'brew cask install perforce' still does, so let's use
-> > that.
-> 
-> It appears that OSX jobs at Travis are getting hit by this issue.
-> Here is what our failed build ends with, for example:
-> 
->     +brew install caskroom/cask/perforce
->     Error: caskroom/cask was moved. Tap homebrew/cask-cask instead.
-> 
->     cf. https://travis-ci.org/git/git/jobs/601697815
-> 
-> Today's 'pu' has this topic queued, and it seems to help even the
-> builds at Travis ('pu' seems to fail the test for totally different
-> reason, though):
-> 
->     +brew link gcc@8
->     Error: No such keg: /usr/local/Cellar/gcc@8
-> 
->     cf. https://travis-ci.org/git/git/jobs/601697903
+On Fri, Oct 11, 2019 at 09:33:11AM -0400, Derrick Stolee wrote:
+> Here is today's test coverage report. The usual report format is
+> available online [1], [2]. The report listed below is a new format
+> that groups lines by the commit that introduced them [3]. Thanks
+> Peff for the feedback on that idea.
+>
 
-Yeah, that's a new one, so we don't get too bored.  We'll need the
-patch below as well:
+[]
+>
+> Torsten B=F6gershausen	ebb8d2c9 mingw: support UNC in git clone file://s=
+erver/share/repo
+> connect.c
+> ebb8d2c9 921) path =3D host - 2; /* include the leading "//" */
+>
 
- --- >8 ---
+I actually looked into this one, and my understanding is that the code pat=
+h
+makes only sense for windows and is only tested on Windows in t5500.
+(Linux/Unix/POSIX don't use UNC path names starting with "//" )
 
-Subject: [PATCH] ci: fix GCC install in the GCC OSX job
+How can we avoid those "not covered by test" warnings?
 
-A few days ago Travis CI updated their existing OSX images, including
-the Homebrew database in the xcode10.1 OSX image that we use.  Since
-then installing dependencies in the 'osx-gcc' job fails when it tries
-to link gcc@8:
+One solution could be to use
 
-  + brew link gcc@8
-  Error: No such keg: /usr/local/Cellar/gcc@8
+#ifndef has_dos_drive_prefix
+#define has_dos_drive_prefix(a) 0
+#endif
 
-Apparently 'brew link gcc' works, so let's do that then, and fall back
-to linking gcc@8 if it doesn't.
+in git-compat-util.h and hope that the compiler is smart enough
+to optimize away that line of code.
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- ci/install-dependencies.sh | 1 +
- 1 file changed, 1 insertion(+)
+Another way could be to have #ifdefs in connect.c, so that it
+is clear "this is Windows only".
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index ce149ed39c..4e64a19112 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -48,6 +48,7 @@ osx-clang|osx-gcc)
- 	brew install caskroom/cask/perforce
- 	case "$jobname" in
- 	osx-gcc)
-+		brew link gcc ||
- 		brew link gcc@8
- 		;;
- 	esac
--- 
-2.24.0.rc0.502.g7008375535
+Or make a comment for the "cover report" saying "not covered".
+
+Are there any good or better thoughts on this ?
+
+
+
 
