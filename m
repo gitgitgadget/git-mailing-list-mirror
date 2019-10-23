@@ -2,160 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60CBB1F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 20:46:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B0231F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 21:03:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404100AbfJWUqp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 16:46:45 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:33836 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391748AbfJWUqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 16:46:44 -0400
-Received: by mail-qt1-f194.google.com with SMTP id e14so14492275qto.1
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 13:46:44 -0700 (PDT)
+        id S2391817AbfJWVDb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 17:03:31 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:46711 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390638AbfJWVDb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 17:03:31 -0400
+Received: by mail-pg1-f196.google.com with SMTP id e15so12826874pgu.13
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 14:03:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=QQKS7lLenexWy6vqFN3sNHd1ugNuTfoQZHO2ZTtRn4k=;
-        b=lKEIPWfCp7+S2TkoW/FKQP6PNrUyYB2UGCxv5DrT0jec/Kmg2Ts54Mr791ZGyGRR36
-         wtfJQPauiqrWYo1ONDCyXfnpCVcQDpYXQ7lB07PCP+g0/ev4KBKT03EP1IfI6vSirqKv
-         P1uDgL/YijErtZO4eRKQVbYoCnHwmmM94WgljKsBsY7eXJIMWeOASTnquDtrqcmfq0aK
-         FhfHT2htFj/hbgjmscIlWk3ZCO03cVDUjl8u9Hc56NV90HcNJg1wKdGIcfeddQPO6puy
-         NeHYL7zo9+XORRT8c5Cn8gr0hdZwngTBtjyno4Pp0MIzP2dLyn/+sYRrnRTn7vRi+hGI
-         MkFg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Y4uGdqdicX5BIgOLaEespFiRmd4pKkiKoIUDmB3rkKs=;
+        b=bgQ+fy4JMdhcDzN5s9Pks7S7+BCGibSzueK6uUFlrijbeMa4J4YMX/iynT2+orsUZu
+         pIqxqA4q6UktheK6x+q6t1vGQYRy5Bi5+JzYUTXQQMjEeAq2MJOwE8KhJ8VLAaqQ2opj
+         p7RNuU1N+k9sxJefXFvpOg9+HwAz8YZLiWvRHREjp5B6gwUSY0qimxZSyBZnhA00VbDg
+         heMyYryGoSqtRzzUGtaxIt/qhEn+rq8Di9NeX6Vyj6oCtbQb/CHHL25VTE5ZLdnupYs7
+         wAxYM3FhCbq0R+Q/bhgaJ0fncsH/vt711AELxex/t65WY0WrS5xwFssZ1RNRxUJ6AV0v
+         DQRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=QQKS7lLenexWy6vqFN3sNHd1ugNuTfoQZHO2ZTtRn4k=;
-        b=K3hjc08wrqP90MI4LFckFYRbN3pwzYLApksetZ3++2X6WA0MR15w5Q7j+pPFUyb8SI
-         oyvi0UG0ML2uiwP6hgeF3f2rwAOSulK1+zNg34coqIhSeo2d/QGA2Rz3DmAE3lGm2K5s
-         EXHO0R1/TkFzUNhLnc5cO44SmRcKbZwNINUZLU/HL98eQzCGqRUrE3nELiwqo6K3NqgP
-         YDiKCh+lufa7rZQHFYftepWWGHQWJ9F+iONlTwpZOUHxNdPJ2WMFUsA3OciRlYGoO7sn
-         9nwy1t2a/K8jCtA/OcTiDm+zu6IOpqozvXjSktCLrN2HySfjSiavfknclVLSU1u8R83y
-         XFtA==
-X-Gm-Message-State: APjAAAWAzO9YJZIzVNIyge6+ehVzEDAMOJ3MtXDgibbMEgfzn4pw2BjM
-        vG6lL4Sivfh0Dw7DbXxhNCs=
-X-Google-Smtp-Source: APXvYqwOmBksp6pf/4ppmdY8t9QMHsfKkgktmN8rSH8MHZT4KqXJ4pw94coLD4fplB1XniAW3fYB6w==
-X-Received: by 2002:ac8:32c3:: with SMTP id a3mr537263qtb.320.1571863603690;
-        Wed, 23 Oct 2019 13:46:43 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:bd19:92e0:6c87:b219? ([2001:4898:a800:1012:6e4d:92e0:6c87:b219])
-        by smtp.gmail.com with ESMTPSA id s42sm14523485qtk.60.2019.10.23.13.46.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Oct 2019 13:46:43 -0700 (PDT)
-Subject: Re: [PATCH v2 1/2] t5510-fetch.sh: demonstrate fetch.writeCommitGraph
- bug
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.415.git.1571765335.gitgitgadget@gmail.com>
- <pull.415.v2.git.1571835695.gitgitgadget@gmail.com>
- <6ac0a05746df8ac3b1dd788f525b2620bc4d9a08.1571835695.git.gitgitgadget@gmail.com>
- <20191023141813.GA26017@szeder.dev>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <a9ba6007-aeb9-96b4-9436-8e956798be59@gmail.com>
-Date:   Wed, 23 Oct 2019 16:46:42 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
- Thunderbird/70.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Y4uGdqdicX5BIgOLaEespFiRmd4pKkiKoIUDmB3rkKs=;
+        b=BGkt5RePAvqucMb1LvQx8IVW3VUbV4/FYrEy3gMEFQMlXClatl/jkLdmlwTMtkcSWT
+         /r05VMuQQF7dzUt1TrYi+yRdt1gFuwJI+zoiSTg67SSKiOk4yZveuHvRnCYBWGQo3/mK
+         EBdG1nROaG5ktnTCNqaESd1GMAyFv8fHzIrfNnFayIT5DFQAgrQts8vKT54vveXwPxzC
+         W7oCMUDitxa13cccFuFslm80ALtXqH088FWA+KiWZfEq7GbcwR3OdSoyXbk8oUtOY+8c
+         FnF4t0GjQ50+cuKIylv+cvsbg7mTwN+MoXpodJxCn5iZ7GWXuGPVtzUfc7zVk9mdcpsZ
+         7UCQ==
+X-Gm-Message-State: APjAAAUT2olpAVfjDIZ3y2xAI1hFLXNbQPlejsa/q54N7gCps+35ETwx
+        ZSzXDZiODlyvx0BZQiVvhQlrTg==
+X-Google-Smtp-Source: APXvYqwYzgzX5p8yqFvrs20ewsAbT1IcqyZNi7liAp8iBFbig/vgBx7fkPkDCWd/OaHIYl8A/euBwA==
+X-Received: by 2002:aa7:9ad0:: with SMTP id x16mr10951160pfp.51.1571864609945;
+        Wed, 23 Oct 2019 14:03:29 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id b4sm170997pju.16.2019.10.23.14.03.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Oct 2019 14:03:29 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 14:03:24 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch: delay fetch_if_missing=0 until after config
+Message-ID: <20191023210324.GC139951@google.com>
+References: <20191007181825.13463-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-In-Reply-To: <20191023141813.GA26017@szeder.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191007181825.13463-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/23/2019 10:18 AM, SZEDER Gábor wrote:
-> On Wed, Oct 23, 2019 at 01:01:34PM +0000, Derrick Stolee via GitGitGadget wrote:
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> While dogfooding, Johannes found a bug in the fetch.writeCommitGraph
->> config behavior. His example initially happened during a clone with
->> --recurse-submodules, we found that this happens with the first fetch
->> after cloning a repository that contains a submodule:
->>
->> 	$ git clone <url> test
->> 	$ cd test
->> 	$ git -c fetch.writeCommitGraph=true fetch origin
->> 	Computing commit graph generation numbers: 100% (12/12), done.
->> 	BUG: commit-graph.c:886: missing parent <hash1> for commit <hash2>
->> 	Aborted (core dumped)
->>
->> In the repo I had cloned, there were really 60 commits to scan, but
->> only 12 were in the list to write when calling
->> compute_generation_numbers(). A commit in the list expects to see a
->> parent, but that parent is not in the list.
->>
->> A follow-up will fix the bug, but first we create a test that
->> demonstrates the problem.
->>
->> I used "test_expect_failure" for the entire test instead of
->> "test_must_fail" only on the command that I expect to fail. This is
->> because the BUG() returns an exit code so test_must_fail complains.
+On Mon, Oct 07, 2019 at 11:18:25AM -0700, Jonathan Tan wrote:
+> When running "git fetch" in a partial clone with no blobs, for example,
+> by:
 > 
-> I don't think this paragraph is necessary; using 'test_expect_failure'
-> is the way to demonstrate a known breakage.
+>   git clone --filter=blob:none --no-checkout \
+>     https://kernel.googlesource.com/pub/scm/git/git
+>   git -C git fetch
 > 
-> 'test_must_fail' should only be used when the failure is the desired
-> behavior of a git command.  (I used the word "desired" here, because
-> you just used the word "expect" above in the sense that "I expect it
-> to fail, because I know it's buggy, and I want to demonstrate that
-> bug")
+> "git fetch" will fail to load the config blob object, printing "unable
+> to load config blob object".
 
-I guess that I prefer pointing out which line of the test fails, and
-making that part of the test (that must otherwise pass). However, you
-are right that test_expect_failure does a good job of communicating that
-the test script shows an existing bug. Those are not always cleaned up
-immediately, but at least we can find them easily.
+I'm having some trouble figuring out which object is actually missing.
+Is this the .git/config object? (That doesn't make much sense to me...)
+Is it .gitmodules?
 
->> Helped-by: Jeff King <peff@peff.net>
->> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> Helped-by: Szeder Gábor <szeder.dev@gmail.com>
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->>  t/t5510-fetch.sh | 17 +++++++++++++++++
->>  1 file changed, 17 insertions(+)
->>
->> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
->> index ecabbe1616..e8ae3af0b6 100755
->> --- a/t/t5510-fetch.sh
->> +++ b/t/t5510-fetch.sh
->> @@ -583,6 +583,23 @@ test_expect_success 'fetch.writeCommitGraph' '
->>  	)
->>  '
->>  
->> +test_expect_failure 'fetch.writeCommitGraph with submodules' '
->> +	pwd="$(pwd)" &&
->> +	git clone dups super &&
->> +	(
->> +		cd super &&
->> +		git submodule add "file://$pwd/three" &&
 > 
-> Nits: couldn't the URL simply be file://$TRASH_DIRECTORY/three ?
+> This is because fetch_if_missing is set to 0 before the config is
+> processed. Git must set fetch_if_missing to 0 before the fetch because
+> as part of the fetch, packfile negotiation happens (and we do not want
+> to fetch any missing objects when checking existence of objects), but we
+> do not need to set it so early. Move the setting of fetch_if_missing to
+> the earliest possible point in cmd_fetch(), right before any fetching
+> happens.
 
-True, that would be better. Thanks!
+Doubts aside about what's actually failing, I definitely agree with the
+premise of not setting this until the last moment we need it. Plus, I
+may be alone here, but it'd make it easier for me to understand the code
+if I saw a note explaining *why* we don't want to fetch_if_missing in
+this case.
 
- 
->> +		git commit -m "add submodule"
->> +	) &&
->> +	git clone "super" writeError &&
+By the way, I think I understand that this is OK to go in
+unconditionally because:
+ - In the full clone case, it's a no-op; we haven't got anything that's
+   missing, so who cares.
+ - In the filter case, it's as you said - we don't want to
+   fetch_if_missing because that will turn someone's partial clone into
+   a a full clone.
+   - This probably applies to bare checkout, too.
+
+Of course if I'm wrong I'd like to know, but that's how I understand it
+at the moment.
+
+> ---
+> This is not a full solution, but this helps in the use case described in
+> the commit message. The full solution probably will involve teaching the
+> fetch mechanism to support arbitrary struct repository objects, and by
+> moving fetch_if_missing into the repository object. (Alternatively, we
+> could add the equivalent of OBJECT_INFO_SKIP_FETCH_OBJECT to functions
+> like parse_commit() that are used by files like negotiator/default.c, or
+> split up commit parsing into object reading - which already has that
+> flag - and commit parsing.)
+
+Ah, I remember this was listed as one of the potential intern projects -
+I think we dismissed it as being too tech-debt-y for an intern to feel
+good about. :(
+
+> ---
+>  builtin/fetch.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> There is a write error now, because we have a bug, but after the next
-> patch the bug will be fixed and we won't have a write error anymore.
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 24d382b2fb..865ae6677d 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1666,8 +1666,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  
+>  	packet_trace_identity("fetch");
+>  
+> -	fetch_if_missing = 0;
+> -
+>  	/* Record the command line for the reflog */
+>  	strbuf_addstr(&default_rla, "fetch");
+>  	for (i = 1; i < argc; i++)
+> @@ -1734,6 +1732,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  		}
+>  	}
+>  
+> +	fetch_if_missing = 0;
+> +
+>  	if (remote) {
+>  		if (filter_options.choice || has_promisor_remote())
+>  			fetch_one_setup_partial(remote);
+> -- 
+> 2.23.0.581.g78d2f28ef7-goog
+> 
 
-Good point.
+The diff, though, looks fine for me.
 
-Thanks!
--Stolee
+ - Emily
