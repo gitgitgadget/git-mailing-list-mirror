@@ -2,111 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A95151F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 12:47:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 199BC1F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 12:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405384AbfJWMrn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 08:47:43 -0400
-Received: from mail-eopbgr770073.outbound.protection.outlook.com ([40.107.77.73]:24386
-        "EHLO NAM02-SN1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S2405381AbfJWMrn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 08:47:43 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZP+8bDEoJbn2lTjUg1ax091SykNCTYDJU2Bwzu4UpclOkg3QTkGV5e9yTHYNIlkvBW/aPLLcHiZUoFXpU1r8n9sWxtI3679WPl9lschRKDjL5BEnB/zZqD66tUSHhSJRdCeh1tTgl521dGnNoxuR0n1ym2vU/Z1pz/i3XKYW87r3imPhji9Jvs+XEpfQNXafuQyJnmwcPP9OnUD9Lma/z9sA7hDzVr2c9Kb7egh6nI5jpBG+w/vcAeargojRlS7WJCaoJgh8yWASA+vWjHVzg1crvhT5tGhcibiq3X90D7Mv9JSU1z4MS3/Oiz5IXcY3x2/yByeZpx/7nDv5aH/Fyg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Wj0eFsaMA2jjeHmqIL3GqyCnt5/3iYknzS9US50kRos=;
- b=NwScSA3wy7NxHZHR+TSB61PPZf/xVAYAjDjyhTzdbP8ERDMggtbJasfnRZnUfH8PLu0kewe785C+PcddBKbHaDKTey7teFOeRLfw8mRgUPbwzy+t7AAUECIWd2O68DMQsw0hXc0mkp9es5SJ9lKYhu5/z3/N9HTDhjfgHc20Ul8bzm0iTqoyoMqZESlSz0QFEan/f5kNgwvOea/TVOizAb2V326nr+2Lr1EWLCueiQmCRPZneberkFlvEMIjePwA5I+zPVlehGVS6vKUvYbUY8W9P9dpRtEfLzC+73xkLo5CwuGpBQ5F43qTSNIENzVrAfe11IFdoZQjCi3agqpqvA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=silabs.com; dmarc=pass action=none header.from=silabs.com;
- dkim=pass header.d=silabs.com; arc=none
+        id S2391618AbfJWMuD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 08:50:03 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:37283 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390892AbfJWMuD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 08:50:03 -0400
+Received: by mail-qk1-f194.google.com with SMTP id u184so19618553qkd.4
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 05:50:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=silabs.onmicrosoft.com; s=selector2-silabs-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Wj0eFsaMA2jjeHmqIL3GqyCnt5/3iYknzS9US50kRos=;
- b=ZFBm3qX4bKy4Xk0J34/6pVfCV1tIvyoJsJMgnv/dRmWCWmyt0EYdMzhiiJ8vxeIpdQT54/Q30xbuv1QjW1LR9Tz0JZ7eYAYpiR5tBb912quU3ldtsM8LSrEFoaU9mx3OQlBZY3naGK1ry0GqCRSmIieUaOQiX/sv4F6XwT0lneg=
-Received: from MN2PR11MB4063.namprd11.prod.outlook.com (10.255.180.22) by
- MN2PR11MB4253.namprd11.prod.outlook.com (52.135.38.11) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2367.24; Wed, 23 Oct 2019 12:47:39 +0000
-Received: from MN2PR11MB4063.namprd11.prod.outlook.com
- ([fe80::ac8c:fc55:d1e2:465f]) by MN2PR11MB4063.namprd11.prod.outlook.com
- ([fe80::ac8c:fc55:d1e2:465f%5]) with mapi id 15.20.2387.021; Wed, 23 Oct 2019
- 12:47:39 +0000
-From:   Jerome Pouiller <Jerome.Pouiller@silabs.com>
-To:     Denton Liu <liu.denton@gmail.com>
-CC:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [BUG] "--show-current-patch" return a mail instead of a patch
-Thread-Topic: [BUG] "--show-current-patch" return a mail instead of a patch
-Thread-Index: AQHViMH8W7ZVg6yI2Uq8GUvXcCiKxKdngKj6gABrcACAAAGBgIAAFmgAgAAPQoCAABtSAA==
-Date:   Wed, 23 Oct 2019 12:47:39 +0000
-Message-ID: <2928191.nfgCUvMfDQ@pc-42>
-References: <2154192.LVDMpRDY2h@pc-42> <2720546.GJdFeal64i@pc-42>
- <20191023110951.GA716725@generichostname>
-In-Reply-To: <20191023110951.GA716725@generichostname>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Jerome.Pouiller@silabs.com; 
-x-originating-ip: [37.71.187.125]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 2c2d1634-88b5-4d37-e1ac-08d757b7301e
-x-ms-traffictypediagnostic: MN2PR11MB4253:
-x-microsoft-antispam-prvs: <MN2PR11MB4253439E9B93E394C7A19C6C936B0@MN2PR11MB4253.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:6430;
-x-forefront-prvs: 019919A9E4
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(7916004)(39850400004)(396003)(346002)(136003)(376002)(366004)(199004)(189003)(64756008)(76116006)(91956017)(66446008)(66556008)(66946007)(14444005)(256004)(486006)(5660300002)(316002)(66476007)(86362001)(3846002)(6916009)(476003)(11346002)(4744005)(446003)(54906003)(7736002)(305945005)(66574012)(81156014)(81166006)(8676002)(6116002)(2906002)(33716001)(99286004)(66066001)(102836004)(229853002)(6246003)(25786009)(6486002)(4326008)(26005)(478600001)(76176011)(186003)(6506007)(71200400001)(14454004)(6436002)(9686003)(6512007)(71190400001)(8936002);DIR:OUT;SFP:1101;SCL:1;SRVR:MN2PR11MB4253;H:MN2PR11MB4063.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: silabs.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 9fBs1ae1VdHRXdL0X8z5F60ptrV63VO+DLAsu2bdKYotWRlZ749aZTz1PxG8g5sybm1fxvQPiXFUixPZDWELWqVJzenhB/5M4D4/ycJfcMWFUttokKr2MB+vu3JXbcXWYyb1uDeRyrsU68iN3Z96vZFWgL0bkTAAhNPmoGqmYMZ4TrFOAe3KKamDe3vUjTS0Kjdbi/0Ql01ORxbp3uLzA5goJ/qa4aB4pACtkvd+WnGRODO/oXtt62mTWsqD8rd7E2bPV12i2izvaUnc8wzifxzLrx2RsGbPZJB0pVU/Wkm3kE3k5T0uVJxO6ep/FfwWwUP1VPsMvloHg0+1+zBs3rGK01S04lhX0Hw3roYLFV3bdov3LAVUuMgzV8ao3XcXP7acD0cvA3YE5ECkoclDrM2AE+2zp8kHYNr+hEt/XNn/WvgfrbO5K0KD4loVDuoM
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-1"
-Content-ID: <7839E08EF7F8EE4A8FD6384E40C90540@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mFpQu86MSqRszRMqnwBjcIIDalicbMkQwWZjnF7tcOI=;
+        b=CxDbgtcYZWljd2dnUFf5Iuzjs17ouM7Qi//cLHOae0iVeAJTLsNJqbzbCzL6s7pscY
+         V5hmTZz8MQdRG/lQxRYANSDRQbdSdNnIHP1C9DIwDsuwjUG32IkUvycEUkalHGdL1jar
+         TpAB4QCslgZ2MkQPJIUS++dpkKUrjPMxBLS6aYGWKp8rnB2j538LkJZN/WtNXddHKoTu
+         UEZZvG8tLcX3q0GKw1t3bjplU2kM2FN+xMwwA4MmTuvOFYXasbLaiqWenjlOfyYHikN/
+         wZzYnCGQW+Fu3P2R3f9OtY/l5G30ohfNpZi8Fx8NWwMZugMATliWO2l2kSKcSFywMsGX
+         SS8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=mFpQu86MSqRszRMqnwBjcIIDalicbMkQwWZjnF7tcOI=;
+        b=iG5t4Ki64zRo5SP2q2cuxvTfI3SBsx6nTtcinpsDXZ9fGas6kvuTcagzSs9pmEBDvN
+         5yyA/SQN1z6lh+QeomtLK9kL4w7cxQVhcFKihWJH9xxQRV7w2Us+wM3SbVC6xo6oWie5
+         tD/aNFCRrkE1SfZ6lrRGoboxe/uy33zc27OZ4RnMjlEtye/i60YqqlgXNrh0Qc7IIvvr
+         ME+ApzjKRUO2uXWPITDqr0GgGqbarzMzO9xhSvtLEaXvxniIbKHilY/KM4r67U6qstxH
+         PIX1owGN2gObCu++RHGT9b+rxamr6ZL+4Jk0nU1dFH3Lo10pU1TF0S6l65LY/ZWejGVc
+         C42w==
+X-Gm-Message-State: APjAAAUUFPvEgZzGGjudRq8pmY7zCFuAbSvik78UT70MC+beWcP/wWIf
+        lvu7MlyekyDYenVkMxX9pQc=
+X-Google-Smtp-Source: APXvYqy32aG/Wcn3hw8VKH+dC5Ib4bNpowikhnlQMRHgKthvO7cDyMU4PHWe7Yl1J3a0dx4OdUz6Mg==
+X-Received: by 2002:a37:7ec1:: with SMTP id z184mr7703758qkc.76.1571835002016;
+        Wed, 23 Oct 2019 05:50:02 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:bd19:92e0:6c87:b219? ([2001:4898:a800:1010:6e4f:92e0:6c87:b219])
+        by smtp.gmail.com with ESMTPSA id x125sm14289699qkc.24.2019.10.23.05.50.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Oct 2019 05:50:01 -0700 (PDT)
+Subject: Re: [PATCH v5 13/17] read-tree: show progress by default
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     phillip.wood@dunelm.org.uk,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, newren@gmail.com, jon@jonsimons.org,
+        szeder.dev@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+References: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
+ <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
+ <a229e1ee0cb96c5f8c2c5d430641c386bc082a2d.1571666187.git.gitgitgadget@gmail.com>
+ <3de0f590-c75c-2470-232f-73a07876df88@gmail.com>
+ <857e23df-c447-7297-df74-3546424386d9@gmail.com>
+ <xmqqimogi0kq.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <07f6288a-21c3-bd61-ef74-fea129d12c76@gmail.com>
+Date:   Wed, 23 Oct 2019 08:50:00 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-X-OriginatorOrg: silabs.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2c2d1634-88b5-4d37-e1ac-08d757b7301e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Oct 2019 12:47:39.2697
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 54dbd822-5231-4b20-944d-6f4abcd541fb
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: VRwsp9OLN4Z2EbgSDoSNghSYE8zouF3d+/qjpjkvGo9MP6cYQgR6whMBZ28OiLuzRyAVz+ph3IqaB2rmRYMcAw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB4253
+In-Reply-To: <xmqqimogi0kq.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 23 October 2019 13:09:51 CEST Denton Liu wrote:
-> On Wed, Oct 23, 2019 at 10:15:15AM +0000, Jerome Pouiller wrote:
-> > On Wednesday 23 October 2019 10:55:03 CEST Denton Liu wrote:
-> > > I am currently have a WIP patchset that will print the location of th=
-e
-> > > failed patch file (.git/rebase-apply/patch) in the case of a failure =
-as
-> > > well as the line number. Will this be sufficient for your purposes?
-> >
-> > It would be a clear improvement (the perfection would be to be able to
-> > use mergetool with git-am :) ).
->=20
-> You should be able to do that with the --3way (-3) flag.
+On 10/22/2019 11:48 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>>> I'm slightly wary of changing the output of plumbing commands
+>>> like this. If a script wants progress output it can already get
+>>> it by passing --verbose. With this change a script that does not
+>>> want that output now has to pass --no-verbose.
+>>
+>> If a script is calling this, then won't stderr not be a terminal window, and
+>> isatty(2) return 0?
+> 
+> Unless the script tries to capture the error output and react
+> differently depending on the error message from the plumbing (which
+> is not localized), iow most of the time, standard error stream is
+> left unredirected and likely to be connected to the terminal if the
+> script is driven from a terminal command line.
+> 
+>> Or, if the script is run with stderr passing through to
+>> a terminal, then the user would see progress while running the script, which
+>> seems like a side-effect but not one that will cause a broken script.
+> 
+> It will show unwanted output to the end users, no?  That is the
+> complaint about having to pass --no-verbose, if I understand
+> correctly, if the script does not want to show the progress output.
 
-AFAIK, it only works if index is found in local repository, which is
-rarely the case :(
+I'm happy to have attempted the change and start this discussion. It
+sounds like this one patch could be ejected to no loss to the full
+series.
 
---=20
-J=E9r=F4me Pouiller
-
+Thanks,
+-Stolee
