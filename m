@@ -7,105 +7,97 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B40F1F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 01:22:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DAA31F4C1
+	for <e@80x24.org>; Wed, 23 Oct 2019 01:56:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732686AbfJWBW6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 21:22:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55518 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727140AbfJWBW6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 21:22:58 -0400
-Received: (qmail 1876 invoked by uid 109); 23 Oct 2019 01:22:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 23 Oct 2019 01:22:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20293 invoked by uid 111); 23 Oct 2019 01:26:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Oct 2019 21:26:04 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 22 Oct 2019 21:22:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] commit-graph: fix writing first commit-graph during
- fetch
-Message-ID: <20191023012256.GA24104@sigill.intra.peff.net>
-References: <pull.415.git.1571765335.gitgitgadget@gmail.com>
- <a1e5280d4b61a972426063574f1ea890a7dab73b.1571765336.git.gitgitgadget@gmail.com>
- <20191022203316.GC12270@sigill.intra.peff.net>
- <20191022214553.GA18314@sigill.intra.peff.net>
- <20191022233556.GF4348@szeder.dev>
- <b7473363-b257-c00b-7338-a7e1d51bb01b@gmail.com>
- <20191023004820.GA19611@sigill.intra.peff.net>
+        id S2388216AbfJWB4a (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 21:56:30 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:48336 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727582AbfJWB4a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 21:56:30 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id CF6C91F4C0;
+        Wed, 23 Oct 2019 01:56:29 +0000 (UTC)
+Date:   Wed, 23 Oct 2019 01:56:29 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [RFC/WIP] range-diff: show old/new blob OIDs in comments
+Message-ID: <20191023015629.GA15495@dcvr>
+References: <20191017121045.GA15364@dcvr>
+ <nycvar.QRO.7.76.6.1910222111430.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20191023004820.GA19611@sigill.intra.peff.net>
+In-Reply-To: <nycvar.QRO.7.76.6.1910222111430.46@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 22, 2019 at 08:48:20PM -0400, Jeff King wrote:
-
-> I admit I am puzzled, though, _why_ the presence of the submodule
-> matters. That is, from your explanation, I thought the issue was simply
-> that `fetch` walked (and marked) some commits, and the flags overlapped
-> with what the commit-graph code expected.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi Eric,
 > 
-> I could guess that the presence of the submodule triggers some analysis
-> for --recurse-submodules. But then we don't actually recurse (maybe
-> because they're not activated? In which case maybe we shouldn't be doing
-> that extra walk to look for submodules if there aren't any activated
-> ones in our local repo).
+> 
+> On Thu, 17 Oct 2019, Eric Wong wrote:
+> 
+> > (WIP, mostly stream-of-concious notes + reasoning)
+> >
+> > When using "git format-patch --range-diff", the pre and
+> > post-image blob OIDs are in each email, while the exact
+> > commit OIDs are rarely shared via emails (only the tip
+> > commit from "git request-pull").
+> >
+> > These blob OIDs make it easy to search for or lookup the
+> > full emails which create them, or the blob itself once
+> > it's fetched via git.
+> >
+> > public-inbox indexes and allows querying specifically for blob
+> > OIDs via dfpre:/dfpost: since June 2017.  As of Jan 2019,
+> > public-inbox also supports recreating blobs out of patch emails
+> > (querying internally with dfpre:/dfpost: and doing "git apply")
+> >
+> > Searching on these blob OIDs also makes it easier to find
+> > previous versions of the patch sets using any mail search
+> > engine.
+> >
+> > Future changes to public-inbox may allow generating custom
+> > diffs out of any blobs it can find or recreate.
+> >
+> > Most of this is pretty public-inbox-specific and would've
+> > made some future changes to public-inbox much easier....
+> > (if we had this from the start of range-diff).
+> >
+> > Unfortunately, it won't help with cases where range-diffs
+> > are already published, but range-diff isn't too old.
+> 
+> I guess your patch won't hurt.
 
-Indeed, that seems to be it. If I do this:
+Cool, will update tests and resend.
 
-  git init repo
-  cd repo
-  cat >.gitmodules <<\EOF
-  [submodule "foo"]
-  path = foo
-  url = https://example.com
-  EOF
-  time git fetch /path/to/git.git
+> As to recreating blobs from mails: Wow. That's quite a length you're
+> going, and I think it is a shame that you have to. If only every
+ contribution came accompanied with a pullable branch in a public
+> repository.
 
-then we end up traversing the whole git.git history a second time, even
-though we should know off the bat that there are no active submodules
-that we would recurse to.
+What Konstantin said about git repos being transient.
+It wasn't too much work to recreate those blobs from
+scratch since git-apply has done it since 2005.
+Just add search :)
 
-Doing this makes the problem go away:
+We could get around transient repos with automatic mirroring
+bots which never deletes or overwrites anything published.
+That includes preserving pre-force-push data in case of
+force pushes.
 
-diff --git a/submodule.c b/submodule.c
-index 0f199c5137..0db2f18b93 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1193,7 +1193,7 @@ static void calculate_changed_submodule_paths(struct repository *r,
- 	struct string_list_item *name;
- 
- 	/* No need to check if there are no submodules configured */
--	if (!submodule_from_path(r, NULL, NULL))
-+	if (!is_submodule_active(r, NULL))
- 		return;
- 
- 	argv_array_push(&argv, "--"); /* argv[0] program name */
+> Instead, we will have to rely on your centralized, non-distributed
+> service...
 
-but causes some tests to fail (I think that in some cases we're supposed
-to auto-initialize, and we'd probably need to cover that case, too).
+I'm curious how you came to believe that, since that's the
+opposite of what public-inbox has always been intended to be.
 
-All of this is outside of your fix, of course, but:
-
-  1. I'm satisfied now that I understand why the test triggers the
-     problem.
-
-  2. You may want have a real activated submodule in your test. Right
-     now we'll trigger the submodule-recursion check even without that,
-     but in the future we might do something like the hunk above. In
-     which case your test wouldn't be checking anything interesting
-     anymore.
-
--Peff
+The only thing that's centralized and not reproducible by
+mirrors is the domain name (and I also have Tor .onion mirrors
+with no dependency on ICAAN).  Memorable naming is a tricky
+problem in decentralized systems, though...
