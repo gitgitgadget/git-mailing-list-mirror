@@ -8,95 +8,96 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C87AA1F4C3
-	for <e@80x24.org>; Wed, 23 Oct 2019 16:10:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD64D1F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 16:20:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407050AbfJWQKR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 12:10:17 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:36512 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404582AbfJWQKQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 12:10:16 -0400
-Received: by mail-ed1-f66.google.com with SMTP id h2so16206904edn.3
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 09:10:15 -0700 (PDT)
+        id S2407180AbfJWQUx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 12:20:53 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:34880 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407057AbfJWQUx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 12:20:53 -0400
+Received: by mail-wm1-f65.google.com with SMTP id v6so3265702wmj.0
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 09:20:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=RhEC+EZQqSyuThrDwmj0eNSaBsD+zHEsRh4HNDtFcRs=;
-        b=aeIrl0ruNueRg60t+MDMvyOQM7ENI59aPVBQJCQlAQje4+mNTKcsVqhsIyphnSR7ed
-         CLKKawu2j1D2C78OoIrPbfrJRIgv8C/DDsaPk6FTao+I4UPYeuXbR/72AzQeWlDINL2y
-         qx/ZMwq1WBWwfTREYpgCaz8VC1Ew2TlaoI1/KrDgVc0nZdNHJxoT6MZ2dLVu/0oqm04f
-         E+GcuQzgbgdAeMyPlDflryinY6rUSDaGe1xkKzOD+QeD6AlOp0OtDYoeqWF0Im95n4bF
-         tEWmY1nyJD7DWbYRR21hxMJ2c590+2y8n0pqSiLzI3A6xkD4rFgJd0xDEiUtLTa4pn0h
-         /aZg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=uR5dWTsh6JLEeuJUvNX3VsKN+7xtLJWZvvfGTdQHFwg=;
+        b=s3SzkQfsND4JEG8xui7Z5mbGP8AIjUD1rTJl5rjfVmtpOYM+Nm+B3pDg7LqH86zaMK
+         lOOpRdk94I6wzo6lbKTfti/gofF5LrDz3dRxmHduibzPG/PNbvS17eBjquh8TaHtmvkN
+         GcclS1J5oorqxgKBqmvvHuNaiREH8Oxxy/ugv0tOm4H2QdsixOOjCe+4RuqBGGuamjrn
+         Z0hYsOhyPSarSwgYmF4p3o92PGzQ4OyV2+lNMMnvCo053qFN1sDYUSNbON2a6zOJs1o9
+         CTnRseumPAVCsoM4wwmwcC+NbVHqeX7wzEMn+4tj/2asGS1Mm/9Ox0DU9HyQYNgB31oY
+         tBAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=RhEC+EZQqSyuThrDwmj0eNSaBsD+zHEsRh4HNDtFcRs=;
-        b=bLV1QhRV2WF0igyFDYGpJAbIFaP+tfeMt2J+l+Lk0gFxddvFfGynCWf1AD3EIdkVUp
-         fIeizPSVx7dZmCOfjiZSEYwVmCrNt3Ug+SVTSPHQ6JSBOrDPPKMQQzxAqCtKprVoiai4
-         qNbiO6t9EF4411e2hVGpg0cdJ9yzcxBuV1216xUH5WhMk0pj4vdFhZOD/+Bg/6O5E52x
-         dmdIBawZ6voND2uMGcU5R8DN9Q8eSIbneD+BoemcRfltRkhpPBhSLpftxDKjb6x1AC1w
-         9V2f8mv+1ogxw5c8LKvHCCtuwsb2Xg3z8cMcu2szhVGn9qFMenlEHGP/v8+E2cxq0jqf
-         sD5Q==
-X-Gm-Message-State: APjAAAV+qGOjtr7PYDoK+qhCTGOMRXlGhjMotAu6ts3IeQ5MbbjuNGpl
-        A41L0mKky/63lGYxv/1vb36c4NoriNqwASUdovFa6guY4Zk=
-X-Google-Smtp-Source: APXvYqzWdzj3Jdp+eOaHMxFohm+RdbH/N6FZFBfrg/e7EfRRO5UJDARQP9qRR2gnZDIaezffIp9ok77wFib4lbllhrk=
-X-Received: by 2002:a17:906:70d2:: with SMTP id g18mr22514129ejk.18.1571847014597;
- Wed, 23 Oct 2019 09:10:14 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=uR5dWTsh6JLEeuJUvNX3VsKN+7xtLJWZvvfGTdQHFwg=;
+        b=E8kSU8sqklKvEhzWJYlQb5PJE24nizGxmey2yAj9ciKjNDIcJBjjj6lJfpVU6U8MKi
+         riuH0HpL8cGhST10CYFLprnMDPc9G9cMMpw4q0FdWL5QgAuZ0H1QwVE9tFXEF7gZGje6
+         /ZMEGkyTUDssYSWS1OAJZxVGJJFKavxgq/15m1qNLbLwTGy2Mchn4qcsZuiwu2OEapHm
+         8xNKGAUgUWfrn+MT19ZRLFm02+dCJ+Qh126W3HfGVTgyGLqLou7ACz1aRZXU+VF3uSiF
+         UY7LEGdB7HRryiB1EFBRjreJhg0Uo9JLcz4dGRMvBVIxHvsG5vuS4Eji4Cv39/aE9PDU
+         Uzxg==
+X-Gm-Message-State: APjAAAW8pkQ7YEPlJx1MyypdrQlmp9dr0uKQAkO1ubQ73SnpWqMXM3n9
+        I1JWGe7dG7lDiBFzKcxWy9iCDHRi
+X-Google-Smtp-Source: APXvYqzbaaBve6gWAX0LNqadM2ZrjOGbMaqHeTU5oJgRV76nNvYWdHA+YZ1uRN/KtcrK3uthzP2DmQ==
+X-Received: by 2002:a1c:4d14:: with SMTP id o20mr700098wmh.7.1571847651334;
+        Wed, 23 Oct 2019 09:20:51 -0700 (PDT)
+Received: from szeder.dev (x4db97b71.dyn.telefonica.de. [77.185.123.113])
+        by smtp.gmail.com with ESMTPSA id d11sm25193251wrf.80.2019.10.23.09.20.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Oct 2019 09:20:50 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 18:20:48 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     David Turner <novalis@novalis.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 5/5] path.c: don't call the match function without value
+ in trie_find()
+Message-ID: <20191023162048.GI4348@szeder.dev>
+References: <20191021160043.701-1-szeder.dev@gmail.com>
+ <20191021160043.701-6-szeder.dev@gmail.com>
+ <20191021205703.GB4348@szeder.dev>
+ <xmqqa79si003.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 23 Oct 2019 18:10:03 +0200
-Message-ID: <CAP8UFD1T3mwZna7YXn=povc1wma48BxkSppkrW4k0EV2ODixPA@mail.gmail.com>
-Subject: Draft of Git Rev News edition 56
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Elijah Newren <newren@gmail.com>,
-        Garima Singh <garimasigit@gmail.com>,
-        Pierre Tardy <tardyp@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Wong <e@80x24.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqa79si003.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+On Wed, Oct 23, 2019 at 01:01:00PM +0900, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+> >>   - b9317d55a3 added two new keys to the trie: 'logs/refs/rewritten'
+> >>     and 'logs/refs/worktree', next to the already existing
+> >>     'logs/refs/bisect'.  This resulted in a trie node with the path
+> >>     'logs/refs', which didn't exist before, and which doesn't have a
+> >
+> > Oops, I missed the trailing slash, that must be 'logs/refs/'!
+> >
+> >>     value attached.  A query for 'logs/refs/' finds this node and then
+> >>     hits that one callsite of the match function which doesn't check
+> >>     for the value's existence, and thus invokes the match function
+> >>     with NULL as value.
+> 
+> Given that the trie is maintained by hand in common_list[], I wonder
+> if we can mechanically catch errors like the one b9317d55a3 added,
+> by perhaps having a self-test function that a t/helper/ program
+> calls to perform consistency check after the "git" gets built.
 
-A draft of a new Git Rev News edition is available here:
+I'm not sure what you mean by "consistency check".  The resulting trie
+looked as expected both before and after b9317d55a3, i.e. each trie
+node had the right contents, value, and children, as far as I could
+tell.  The issue was in the lookup function.
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-56.md
-
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
-
-  https://github.com/git/git.github.io/issues/399
-
-You can also reply to this email.
-
-In general all kinds of contribution, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
-
-I tried to cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Gabriel and me plan to publish this edition on Saturday
-October 26th. Yeah this is a bit unusual as we usually try to publish
-on Wednesdays, sorry about that!
-
-Thanks,
-Christian.
