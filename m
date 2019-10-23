@@ -2,110 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA7671F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 21:44:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B19F51F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 21:44:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392063AbfJWVoL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 17:44:11 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:46690 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391173AbfJWVoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 17:44:10 -0400
-Received: by mail-pl1-f196.google.com with SMTP id q21so2676188plr.13
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 14:44:10 -0700 (PDT)
+        id S2392664AbfJWVod (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 17:44:33 -0400
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:47451 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733202AbfJWVoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 17:44:32 -0400
+Received: by mail-pg1-f202.google.com with SMTP id 196so2520303pge.14
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 14:44:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=u0K+jBeW50eaoSIxmt1Vp/UH1OUKBs2pK52ZDfPj4DM=;
-        b=I+xHA/grMljRdsCvCjJzL5wpo3L5BDgL7YXAWI+uR89HT8hEEzEFl3W5kBnj74Y5mj
-         HPgwmVRr2+xtdNFrKJ7WY2gR3XCpffO0cEWmyQFNVX+zT+kCLQnSUMpJMzoPgcw8dzvk
-         pBWjdARZdq47YO0DMEpj2a9LKjpus+LZzNdhjWCQ0gawPdq8YnFSGSE8tvKtAT9tEcAe
-         EVcZk3yqdq+GFgCSzDjBOxvoHJhIFCU66i5EN6I5zf6pqVCTce0Lw4Cs2nm6kNTERdBL
-         B3hlnMZvqgEFl/qcYZZblRmVa+hIaaHZhN0AYTNX7ybRmujZLGyRpEUw+jKG4aNvGKMc
-         aXlw==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=Sp3+YO/oNG8kwH1RONCurVKNVuvZ1h13hHP20NTkzks=;
+        b=gz4NYAKXay1OGHRvbqYwz//E7Y0GHLw6CPeEtOPhmxtRhYjbpg8cvbnXOMQ//ulq6y
+         XMcKJ07ohJITRGdKW4XrIrQdHCmFD2NnOKe5jFFreerO6DEBITIFMgx5SBGeJnngu0+Q
+         dcAeOWCnIiK5NFCVHiTRA0zg7B9QqUdq2fNlVF3DJynl61tVgYpjIAPwL1IJJHMketvY
+         tKlohJ8am4C2pwGqLE4ZsvcAZIXsIjEp7GHFbW+s2ZR1yRvKYUUs5fII8QSQJE2gdkLh
+         HLgyNOsirEkngoi+V04F+LCR4wmV87WSa9R6WidTLRZmR4/4zq5+Cb7mFX+9lxsboRb2
+         FQ3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=u0K+jBeW50eaoSIxmt1Vp/UH1OUKBs2pK52ZDfPj4DM=;
-        b=tjCTarOKF8ZDm6RmXICiXaH/5sGUKsQzY7/o/spAG1lltJADq7B765TOtGDKQmxZMs
-         Xwd4IMEY/H4V+FgzExblNavXSSOrAxbI+XV15JX8jHUYdAgVBLo3mtMMMmu4V3sOoM+d
-         /fKNnmDe4nng9jrFGNwGOJRlRNyc6IK2mx21wvTYtN5OwUO6u+w3T+QXkbP2FAhJLNGN
-         a7w8z+IIArGs4fdmvlFvcPTdCOaYwTgy94Z1/sgN/1pZGc/D6A2J9EU4FC8vQIzQ1VLu
-         SEQBpSwM9MEE9Q6OVqwoj67lZMFMGNk4uvQVtqsiyCuBWm+DybOf31WAVD2JzxdMnv1T
-         dOYw==
-X-Gm-Message-State: APjAAAUb7RlKNlPbDH42V+KyvOf2gzueNcYuSoGpSX02jIUlgQZ9c0NF
-        K3CUMdWbFx/KUSmStnjuixyOkQ==
-X-Google-Smtp-Source: APXvYqzKOOVqFgFNdp/sGeUWN9z3OshV1j4MxZdHDU02qpe/FULd47U63u0stdZ2xXHgKqHEkLt42w==
-X-Received: by 2002:a17:902:690c:: with SMTP id j12mr11745937plk.183.1571867049542;
-        Wed, 23 Oct 2019 14:44:09 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id a24sm7336755pgd.93.2019.10.23.14.44.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2019 14:44:08 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 14:44:04 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/1] documentation: remove empty doc files
-Message-ID: <20191023214404.GB124161@google.com>
-References: <pull.412.git.1571768375.gitgitgadget@gmail.com>
- <pull.412.v2.git.1571815556.gitgitgadget@gmail.com>
- <5cd79e24fe6bde7c5d10e1c2cae660858e3c4051.1571815556.git.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5cd79e24fe6bde7c5d10e1c2cae660858e3c4051.1571815556.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Sp3+YO/oNG8kwH1RONCurVKNVuvZ1h13hHP20NTkzks=;
+        b=TOW2lmKULfWl3gog5EOCwbr0XKEQeErdhcCAVIZal9mrIKoiIA1IEgzx6Vo0nT4ly3
+         mpVwBnnfY2WQ4k+UIFZWYrlDgN8KHA8nqwAfWgmRd6oDd5EjYd3Kl3AB8fvq2RSvIbyn
+         8Q4gxcCCHALyMH2dZmtgGDB8G8SOt2UHOj1M4I1JODpzs63sNe/DLhUJ8N7vN1iZVwSX
+         iZDrlrZ9tZWJ0IWvbJ4fcWAsYMXf73z6jeowWg3x/dlumc0V4l2Efkf2tFC3VOFc00hg
+         21BIp48ManL+Ci66xr9vRpJa0iieqx2AgQgkEpluykf3yEDthY7eYYieN1GH2nYe78Az
+         NJJA==
+X-Gm-Message-State: APjAAAVsU+qloXevwALhuRCWv4qeGtCMrT5ykfPYIsI+WV5hpVf48grP
+        hEDxKW6ifKJ7EyrMSp3Ht0GosACoSghGQyq9ROM3VwIzyvRThwRf1vyv2JMfYmET3XO7dZ0oSnL
+        HiO41haBsInx9NYvJFih1eBk/5N3mXn6H0Ey4rgomTpFNrHnoAXOqrNEXgUVE+VC51cwX0bQe6t
+        Ve
+X-Google-Smtp-Source: APXvYqwzlnQ0N0U4r0nd/NC159i+HGmFRXKeAS0SVreqvB+ULdw49rwU4D7h4aBketf+GqxXLYu3CtFMpQUIMql7i0Tp
+X-Received: by 2002:a63:ff1c:: with SMTP id k28mr9074776pgi.281.1571867071672;
+ Wed, 23 Oct 2019 14:44:31 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 14:44:28 -0700
+In-Reply-To: <20191007181825.13463-1-jonathantanmy@google.com>
+Message-Id: <20191023214428.129593-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20191007181825.13463-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.23.0.866.gb869b98d4c-goog
+Subject: [PATCH v2] fetch: delay fetch_if_missing=0 until after config
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, emilyshaffer@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 23, 2019 at 07:25:56AM +0000, Heba Waly via GitGitGadget wrote:
-> From: Heba Waly <heba.waly@gmail.com>
-> 
-> Remove empty and redundant documentation files from the
-> Documentation/technical/ directory.
-> 
-> The empty doc files included only TODO messages with no documentation for
-> years. Instead an approach is being taken to keep all doc beside the code
-> in the relevant header files.
-> Having empty doc files is confusing and disappointing to anybody looking
-> for information, besides having the documentation in header files makes it
-> easier for developers to find the information they are looking for.
-> 
-> here's a list of the files removed and if the info can be found in the
-> corresponding header file:
-I think you can remove the above; in lots of composition contexts it
-tends to be bad form to say "Here is <something>: <something>" - don't
-warn us that you're going to present it, just present it. :) (Or, at
-least, this has been drilled into my head by many high school English
-teachers...)
+Suppose, from a repository that has ".gitmodules", we clone with
+--filter=blob:none:
 
-Maybe you could say something like, "Some of the content which could
-have gone here already exists elsewhere:"  If you take that suggestion,
-you can probably move grep.h to the bottom, as it's the exception which
-doesn't have content that exists elsewhere.
+  git clone --filter=blob:none --no-checkout \
+    https://kernel.googlesource.com/pub/scm/git/git
 
-> 1- Documentation/technical/api-grep.txt -> grep.h does not have enough
-> documentation at the moment.
-> 2- Documentation/technical/api-object-access.txt -> sha1-file.c and
-> object.h have some details
-> 3- Documentation/technical/api-quote.txt -> quote.h has some details.
-> 4- Documentation/technical/api-xdiff-interface.txt -> xdiff-interface.h has
-> some details.
+Then we fetch:
 
-For this list, I think you can remove the numbered bullet, and the
-leading "Documentation/technical/" - we can see the files deleted from
-the diff.
+  git -C git fetch
 
- - Emily
+This will cause a "unable to load config blob object", because the
+fetch_config_from_gitmodules() invocation in cmd_fetch() will attempt to
+load ".gitmodules" (which Git knows to exist because the client has the
+tree of HEAD) while fetch_if_missing is set to 0.
+
+fetch_if_missing is set to 0 too early - ".gitmodules" here should be
+lazily fetched.  Git must set fetch_if_missing to 0 before the fetch
+because as part of the fetch, packfile negotiation happens (and we do
+not want to fetch any missing objects when checking existence of
+objects), but we do not need to set it so early. Move the setting of
+fetch_if_missing to the earliest possible point in cmd_fetch(), right
+before any fetching happens.
+---
+No changes from v1 except that I improved the commit message.
+
+Thanks, Emily, for taking a look.
+
+> I'm having some trouble figuring out which object is actually missing.
+> Is this the .git/config object? (That doesn't make much sense to me...)
+> Is it .gitmodules?
+
+Yes, it is indeed .gitmodules. I improved the commit message to further
+explain what is going on.
+
+> By the way, I think I understand that this is OK to go in
+> unconditionally because:
+>  - In the full clone case, it's a no-op; we haven't got anything that's
+>    missing, so who cares.
+>  - In the filter case, it's as you said - we don't want to
+>    fetch_if_missing because that will turn someone's partial clone into
+>    a a full clone.
+>    - This probably applies to bare checkout, too.
+
+Yes, that is correct. What do you mean by bare checkout? If you mean the
+checkout that happens after clone (that we can suppress with
+--no-checkout), that indeed happens after fetch_if_missing=0, so we
+shouldn't have a problem there.
+
+ builtin/fetch.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 0c345b5dfe..863c858fde 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1755,8 +1755,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 
+ 	packet_trace_identity("fetch");
+ 
+-	fetch_if_missing = 0;
+-
+ 	/* Record the command line for the reflog */
+ 	strbuf_addstr(&default_rla, "fetch");
+ 	for (i = 1; i < argc; i++)
+@@ -1824,6 +1822,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
++	fetch_if_missing = 0;
++
+ 	if (remote) {
+ 		if (filter_options.choice || has_promisor_remote())
+ 			fetch_one_setup_partial(remote);
+-- 
+2.23.0.866.gb869b98d4c-goog
+
