@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B42A1F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 23:32:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C91A61F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 23:32:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408051AbfJWXck (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 19:32:40 -0400
-Received: from mail-pg1-f169.google.com ([209.85.215.169]:43887 "EHLO
-        mail-pg1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408036AbfJWXcj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 19:32:39 -0400
-Received: by mail-pg1-f169.google.com with SMTP id l24so8110623pgh.10
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 16:32:39 -0700 (PDT)
+        id S2408054AbfJWXcm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 19:32:42 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:41465 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2408036AbfJWXcm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 19:32:42 -0400
+Received: by mail-pf1-f196.google.com with SMTP id q7so13874523pfh.8
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 16:32:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=10YvjY7Ta9Jm6OaROgx1hG/5XbFCaRDQ+WuYUk/GN3E=;
-        b=L2tyjdX7AL6jplyVPYAd3fK0tz/9kKugBKnu5oXUaZy2jOTNuFzon3bQObwcpULQnn
-         U0jLauXiyaR8kRohjbHcKr+/LF+5imyByWbPuQM38I17Qx8A1OqyEwlTwH6EMb06GVWV
-         tspa7YG97G8wMgPUa9hqRXFtlYo+PwlIbhjqknumKfa4GTLLoyKpCrmeWwc8XlibYxnO
-         MKrE3KHcA6Ku4E8ZDMV2aKxehC9Ce3cJ1wcE2aPreQr3dZsiU9pyfAKVQhtOP1fhHj3n
-         hP4OkO5hJK7Onhp4QqdYi3m0LvlrFyBDXtf9j87/R/x+0LDsVgo/k24jNLYYLtje/IwC
-         GeSQ==
+        bh=Mbjj1m20QOj4nkFUOudnTseLtoXjcUB6i8SafQ1KKXM=;
+        b=CYQXNeAtEPGHljoMZwCYJWoM1r1AW3//r4mhw7j8dXYs9QvELJ4EP1Uta6dZGf1RQx
+         a+8+L0aG71zKAAGz8EJo0f8i4/37Ls0yMQPqfEVSc0BUbEpi4IU8tFCzYbCqpGu0g0UH
+         P4jAlcI37907u/Zv+oCRVJ1LpTTdb3iH49mporUrQdbs63sqX+RayopYeoK0hPB0Kl+H
+         rqgTKVGLVo4CEhdleASw00FAjqH2FwyVAbHoiYGkLKHsLt5U68XZGmkWs89sBqpRYmGm
+         62nAfXQRRdq3gtxQU6VI6duQCrUjqLt9F6/GhyJfEBbqY2YpIvKv1G4pSuKAn7qxnsXY
+         h/CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=10YvjY7Ta9Jm6OaROgx1hG/5XbFCaRDQ+WuYUk/GN3E=;
-        b=BdfbZUTnxnDNzIe4vHb/lBjGvfS+kKzYE2fsiNinu/+BEanuahBXN0izaG/RgeG7Og
-         MtrPLNKAmhvtJyAabrp6Ia8S3KSZaW+wi7P/Vf910x7pZUaA3RIQmJgSLumwHun034r0
-         RA23Ru+b9rhmTtM8PoOYGOPqSdz1Fuh0xk5Q4LirvE7TxVGrYVpItt/7btcKT8vxKfv1
-         rSM/ulcBq0YLABQQXxHaEVh8rMEABXPwwv+pD2Kg2pSY85Wc9IJiC/zCJEdg27xPJe1G
-         FptZXWme/SQjN/LJb75/TyITwueu+CimF+nd2t41jJgvvXopL+AzRQFN6b5sgJaUueXz
-         gPCQ==
-X-Gm-Message-State: APjAAAXgKn/NMvKAHM4/Pz2XHxb+XnkYw/gJljE6NZcSgjimiuAUC5h4
-        yMcOgHyVOkWJjPDbBUzchLXXqeRh
-X-Google-Smtp-Source: APXvYqx9AagpDhuE/QWkFvB29WUbGoC526MpcVj5RNJPnyYUJZ8LitXxN4MOBhtOWId7mnGMZEPPAg==
-X-Received: by 2002:a62:b504:: with SMTP id y4mr13684564pfe.124.1571873558743;
-        Wed, 23 Oct 2019 16:32:38 -0700 (PDT)
+        bh=Mbjj1m20QOj4nkFUOudnTseLtoXjcUB6i8SafQ1KKXM=;
+        b=beQd6yhuzq+SvZw5LKCbJU8lG2e6P+I8lBgT1j2NBwM+SvoRgyjmu62XO8T/QafPH2
+         baz50DRmYt/K1ovfPFkwGOYIrRrw/fk6azG5bz7IdfSLutvYclt/V04Ynz6fWuB2Waxw
+         tUCSny2kctXqJijxrLKKdnS68FfozaBXyDCKuAYZNPyATnU9eT289eXM35zXFlRxObLw
+         Re1CJssv1mBMJCmTqKU4Xe85DwMLawprPinFIraIQR2hKbIf7ta/UbKUC90qyZW+teI+
+         vy+N5ir1zXh9dAfFHxfF3YIrvuQnsKNSE/IMdAOQj7zVqAbea0Bnv5KT+qsZAPOp8UrN
+         ji4w==
+X-Gm-Message-State: APjAAAWrFhcPY7Y2Inw3aXyfO0qcSqMj7oOdrHbF3HkqrNRfHOUUAuwj
+        9Gt/czHvhDsX9eHb79rFP3RBomv1
+X-Google-Smtp-Source: APXvYqwptUeEM2eyigFi2I94tl9Y+aEIFqZq5bgDWRrmTvSwZacW8FWwAJDtXXXZp30Nux1Q2Ob0Fw==
+X-Received: by 2002:a62:7c4d:: with SMTP id x74mr13624366pfc.259.1571873560987;
+        Wed, 23 Oct 2019 16:32:40 -0700 (PDT)
 Received: from generichostname ([204.14.239.55])
-        by smtp.gmail.com with ESMTPSA id o15sm333923pjs.14.2019.10.23.16.32.37
+        by smtp.gmail.com with ESMTPSA id a11sm23393889pgw.64.2019.10.23.16.32.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2019 16:32:38 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 16:32:36 -0700
+        Wed, 23 Oct 2019 16:32:40 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 16:32:38 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 4/5] t4108: demonstrate bug in apply
-Message-ID: <58d32e2618420e22a5418f87cd474a9347386098.1571873435.git.liu.denton@gmail.com>
+Subject: [PATCH v2 5/5] apply: respect merge.conflictStyle in --3way
+Message-ID: <5412dc9153d10c4f7769b24433b05c6809904655.1571873435.git.liu.denton@gmail.com>
 References: <cover.1571832176.git.liu.denton@gmail.com>
  <cover.1571873435.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -69,57 +69,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, apply does not respect the merge.conflictStyle setting.
-Demonstrate this by making the 'apply with --3way' test case generic and
-extending it to show that the configuration of
-merge.conflictStyle = diff3 causes a breakage.
+Before, when doing a 3-way merge, the merge.conflictStyle option was not
+respected and the "merge" style was always used, even if "diff3" was
+specified.
 
-Change print_sanitized_conflicted_diff() to also sanitize `|||||||`
-conflict markers.
+Call git_xmerge_config() at the end of git_apply_config() so that the
+merge.conflictStyle config is read.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4108-apply-threeway.sh | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ apply.c                   | 2 +-
+ t/t4108-apply-threeway.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
-index 7f96ae9101..bffe37f1ba 100755
---- a/t/t4108-apply-threeway.sh
-+++ b/t/t4108-apply-threeway.sh
-@@ -8,7 +8,7 @@ print_sanitized_conflicted_diff () {
- 	git diff HEAD >diff.raw &&
- 	sed -e '
- 		/^index /d
--		s/^\(+[<>][<>][<>][<>]*\) .*/\1/
-+		s/^\(+[<>|][<>|][<>|][<>|]*\) .*/\1/
- 	' diff.raw
+diff --git a/apply.c b/apply.c
+index f8a046a6a5..b9291f5f7b 100644
+--- a/apply.c
++++ b/apply.c
+@@ -32,7 +32,7 @@ static void git_apply_config(void)
+ {
+ 	git_config_get_string_const("apply.whitespace", &apply_default_whitespace);
+ 	git_config_get_string_const("apply.ignorewhitespace", &apply_default_ignorewhitespace);
+-	git_config(git_default_config, NULL);
++	git_config(git_xmerge_config, NULL);
  }
  
-@@ -46,7 +46,7 @@ test_expect_success 'apply without --3way' '
- 	git diff-index --exit-code --cached HEAD
+ static int parse_whitespace_option(struct apply_state *state, const char *option)
+diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
+index bffe37f1ba..d7349ced6b 100755
+--- a/t/t4108-apply-threeway.sh
++++ b/t/t4108-apply-threeway.sh
+@@ -73,7 +73,7 @@ test_expect_success 'apply with --3way' '
+ 	test_apply_with_3way
  '
  
--test_expect_success 'apply with --3way' '
-+test_apply_with_3way () {
- 	# Merging side should be similar to applying this patch
- 	git diff ...side >P.diff &&
- 
-@@ -67,6 +67,15 @@ test_expect_success 'apply with --3way' '
- 	# The result should resemble the corresponding merge
- 	test_cmp expect.ls actual.ls &&
- 	test_cmp expect.diff actual.diff
-+}
-+
-+test_expect_success 'apply with --3way' '
-+	test_apply_with_3way
-+'
-+
-+test_expect_failure 'apply with --3way with merge.conflictStyle = diff3' '
-+	test_config merge.conflictStyle diff3 &&
-+	test_apply_with_3way
+-test_expect_failure 'apply with --3way with merge.conflictStyle = diff3' '
++test_expect_success 'apply with --3way with merge.conflictStyle = diff3' '
+ 	test_config merge.conflictStyle diff3 &&
+ 	test_apply_with_3way
  '
- 
- test_expect_success 'apply with --3way with rerere enabled' '
 -- 
 2.24.0.rc0.197.g0926ab8072
 
