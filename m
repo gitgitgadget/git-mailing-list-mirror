@@ -8,151 +8,83 @@ X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B0231F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 21:03:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0F521F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 21:38:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391817AbfJWVDb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 17:03:31 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:46711 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390638AbfJWVDb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 17:03:31 -0400
-Received: by mail-pg1-f196.google.com with SMTP id e15so12826874pgu.13
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 14:03:30 -0700 (PDT)
+        id S2407561AbfJWVil (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 17:38:41 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:36620 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405894AbfJWVik (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 17:38:40 -0400
+Received: by mail-pf1-f196.google.com with SMTP id y22so13739356pfr.3
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 14:38:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Y4uGdqdicX5BIgOLaEespFiRmd4pKkiKoIUDmB3rkKs=;
-        b=bgQ+fy4JMdhcDzN5s9Pks7S7+BCGibSzueK6uUFlrijbeMa4J4YMX/iynT2+orsUZu
-         pIqxqA4q6UktheK6x+q6t1vGQYRy5Bi5+JzYUTXQQMjEeAq2MJOwE8KhJ8VLAaqQ2opj
-         p7RNuU1N+k9sxJefXFvpOg9+HwAz8YZLiWvRHREjp5B6gwUSY0qimxZSyBZnhA00VbDg
-         heMyYryGoSqtRzzUGtaxIt/qhEn+rq8Di9NeX6Vyj6oCtbQb/CHHL25VTE5ZLdnupYs7
-         wAxYM3FhCbq0R+Q/bhgaJ0fncsH/vt711AELxex/t65WY0WrS5xwFssZ1RNRxUJ6AV0v
-         DQRQ==
+        bh=4pahPvXlkKIJQ2nWR9NzRiCqVF7ntTTc6VVkzJIJzbI=;
+        b=gBTQaQ3gj6qr/YMN9kldF49OYR4Sjsyr/a7CoYCjZWQNsKF18Jvq8hmzLL776TFad4
+         5sXwc0P4zAhlIbuVpWN+BiPNugRUNm/bkkL67sDdJoVrt6zTucorKNhZ14A71EhJGUUN
+         tQqanEjNowgz29FUpx/D0x+LDEG/b7cjWlrCMmooTNkNZN6kcSzzgfwXWhBiDN52mi5M
+         xYBGaTb1VGdfxZRLqhkIzVjHOo34nhfx6CpERdtdl8oy3/BsfS3pMBp+VdHIPhUv9IvO
+         WrCE3kBVyRFf88ZKPdajaHT3FkKcLvl1RYd3v4akZv0KNODOsNdYfoGXy1333iRUNG/Y
+         bKQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Y4uGdqdicX5BIgOLaEespFiRmd4pKkiKoIUDmB3rkKs=;
-        b=BGkt5RePAvqucMb1LvQx8IVW3VUbV4/FYrEy3gMEFQMlXClatl/jkLdmlwTMtkcSWT
-         /r05VMuQQF7dzUt1TrYi+yRdt1gFuwJI+zoiSTg67SSKiOk4yZveuHvRnCYBWGQo3/mK
-         EBdG1nROaG5ktnTCNqaESd1GMAyFv8fHzIrfNnFayIT5DFQAgrQts8vKT54vveXwPxzC
-         W7oCMUDitxa13cccFuFslm80ALtXqH088FWA+KiWZfEq7GbcwR3OdSoyXbk8oUtOY+8c
-         FnF4t0GjQ50+cuKIylv+cvsbg7mTwN+MoXpodJxCn5iZ7GWXuGPVtzUfc7zVk9mdcpsZ
-         7UCQ==
-X-Gm-Message-State: APjAAAUT2olpAVfjDIZ3y2xAI1hFLXNbQPlejsa/q54N7gCps+35ETwx
-        ZSzXDZiODlyvx0BZQiVvhQlrTg==
-X-Google-Smtp-Source: APXvYqwYzgzX5p8yqFvrs20ewsAbT1IcqyZNi7liAp8iBFbig/vgBx7fkPkDCWd/OaHIYl8A/euBwA==
-X-Received: by 2002:aa7:9ad0:: with SMTP id x16mr10951160pfp.51.1571864609945;
-        Wed, 23 Oct 2019 14:03:29 -0700 (PDT)
+        bh=4pahPvXlkKIJQ2nWR9NzRiCqVF7ntTTc6VVkzJIJzbI=;
+        b=MRMjci/P5XlqCOkPMaOtpMHrn0ruQHIjBocVvaj9gTwHkffADbqZpwatAhVED/7Tkl
+         Zmtdbq6pUx2FsIw5fKbLsHYFFphn9rJmbRidZ3G16kvvWnSCeJ4utb4E2bFF9z1JMPy8
+         9qhlsGzqqNF84UPeO4BTXlysFOh0cEtdPm5Y8AsCnvBm9hsukhEH2YYYnhxW1U5Z9tWc
+         KMwjRIjVnmFcEgBM6Hqkth5XX5LxXb4REqG9Zd6sVprSNXmf4JR1kUWDdFCgKFuzbG80
+         jO3mVWdXAGMJt1l/DadY72YoUkZG9uEFQoN2EWbVTCMXZap8AvD/xbsm6yhrA9sqQR31
+         kwtw==
+X-Gm-Message-State: APjAAAW+93junUCRxWwKKesv2yPtmeT1Sqql8ZbHFJfSLtZ5f645JTs9
+        7bNZnp+AevC9ytCH7kbGmSxJyg==
+X-Google-Smtp-Source: APXvYqyZdamsdzuMSiipIGwn4SgYo4p1Hwl6mV6bPhOwPTI68zhmH6bzrLOqRJ9EMN96xFlHHb+cvQ==
+X-Received: by 2002:a17:90a:bd8e:: with SMTP id z14mr2634067pjr.40.1571866719754;
+        Wed, 23 Oct 2019 14:38:39 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id b4sm170997pju.16.2019.10.23.14.03.28
+        by smtp.gmail.com with ESMTPSA id h8sm25946305pfo.64.2019.10.23.14.38.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2019 14:03:29 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 14:03:24 -0700
+        Wed, 23 Oct 2019 14:38:38 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 14:38:34 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] fetch: delay fetch_if_missing=0 until after config
-Message-ID: <20191023210324.GC139951@google.com>
-References: <20191007181825.13463-1-jonathantanmy@google.com>
+To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/1] config: move documentation to config.h
+Message-ID: <20191023213834.GA124161@google.com>
+References: <pull.405.v2.git.1571727906.gitgitgadget@gmail.com>
+ <pull.405.v3.git.1571808652.gitgitgadget@gmail.com>
+ <d6cbb3197af2c59f0222c7806ab6a6fcdf83869a.1571808652.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191007181825.13463-1-jonathantanmy@google.com>
+In-Reply-To: <d6cbb3197af2c59f0222c7806ab6a6fcdf83869a.1571808652.git.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 07, 2019 at 11:18:25AM -0700, Jonathan Tan wrote:
-> When running "git fetch" in a partial clone with no blobs, for example,
-> by:
+On Wed, Oct 23, 2019 at 05:30:52AM +0000, Heba Waly via GitGitGadget wrote:
+> From: Heba Waly <heba.waly@gmail.com>
 > 
->   git clone --filter=blob:none --no-checkout \
->     https://kernel.googlesource.com/pub/scm/git/git
->   git -C git fetch
+> Move the documentation from Documentation/technical/api-config.txt into
+> config.h as it's easier for the developers to find the usage information
+> beside the code instead of looking for it in another doc file, also
+> documentation/technical/api-config.txt is removed because the information
+> it has is now redundant and it'll be hard to keep it up to date and
+> syncronized with the documentation in config.h
 > 
-> "git fetch" will fail to load the config blob object, printing "unable
-> to load config blob object".
+> Signed-off-by: Heba Waly <heba.waly@gmail.com>
 
-I'm having some trouble figuring out which object is actually missing.
-Is this the .git/config object? (That doesn't make much sense to me...)
-Is it .gitmodules?
+Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
 
-> 
-> This is because fetch_if_missing is set to 0 before the config is
-> processed. Git must set fetch_if_missing to 0 before the fetch because
-> as part of the fetch, packfile negotiation happens (and we do not want
-> to fetch any missing objects when checking existence of objects), but we
-> do not need to set it so early. Move the setting of fetch_if_missing to
-> the earliest possible point in cmd_fetch(), right before any fetching
-> happens.
-
-Doubts aside about what's actually failing, I definitely agree with the
-premise of not setting this until the last moment we need it. Plus, I
-may be alone here, but it'd make it easier for me to understand the code
-if I saw a note explaining *why* we don't want to fetch_if_missing in
-this case.
-
-By the way, I think I understand that this is OK to go in
-unconditionally because:
- - In the full clone case, it's a no-op; we haven't got anything that's
-   missing, so who cares.
- - In the filter case, it's as you said - we don't want to
-   fetch_if_missing because that will turn someone's partial clone into
-   a a full clone.
-   - This probably applies to bare checkout, too.
-
-Of course if I'm wrong I'd like to know, but that's how I understand it
-at the moment.
-
-> ---
-> This is not a full solution, but this helps in the use case described in
-> the commit message. The full solution probably will involve teaching the
-> fetch mechanism to support arbitrary struct repository objects, and by
-> moving fetch_if_missing into the repository object. (Alternatively, we
-> could add the equivalent of OBJECT_INFO_SKIP_FETCH_OBJECT to functions
-> like parse_commit() that are used by files like negotiator/default.c, or
-> split up commit parsing into object reading - which already has that
-> flag - and commit parsing.)
-
-Ah, I remember this was listed as one of the potential intern projects -
-I think we dismissed it as being too tech-debt-y for an intern to feel
-good about. :(
-
-> ---
->  builtin/fetch.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 24d382b2fb..865ae6677d 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1666,8 +1666,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
->  
->  	packet_trace_identity("fetch");
->  
-> -	fetch_if_missing = 0;
-> -
->  	/* Record the command line for the reflog */
->  	strbuf_addstr(&default_rla, "fetch");
->  	for (i = 1; i < argc; i++)
-> @@ -1734,6 +1732,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
->  		}
->  	}
->  
-> +	fetch_if_missing = 0;
-> +
->  	if (remote) {
->  		if (filter_options.choice || has_promisor_remote())
->  			fetch_one_setup_partial(remote);
-> -- 
-> 2.23.0.581.g78d2f28ef7-goog
-> 
-
-The diff, though, looks fine for me.
+Thanks for the effort, Heba. (I guess you are an expert on git-config
+now!)
 
  - Emily
