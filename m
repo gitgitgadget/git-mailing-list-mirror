@@ -7,80 +7,87 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF1741F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 03:39:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D3051F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 03:48:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732897AbfJWDjH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Oct 2019 23:39:07 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51065 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730768AbfJWDjG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Oct 2019 23:39:06 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DA03D80412;
-        Tue, 22 Oct 2019 23:39:04 -0400 (EDT)
+        id S1732665AbfJWDsk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Oct 2019 23:48:40 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60203 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731534AbfJWDsk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Oct 2019 23:48:40 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 558C03B6D1;
+        Tue, 22 Oct 2019 23:48:39 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=WrKYhEC3HWcP
-        PagrZU98rsIhAoc=; b=STyBp0Zne9xGQiRsHtgfGTKoDKdrG8cJWGPARuC94sis
-        5by8QVwi3Mf7YUKmuMgiDSEpvWwjJ+5SfPjMfSI9uKCEHV26QTSpE/CiorVIolyG
-        VHzvvadRQ1hZzm9VSJj0Gf3zfKilAw4fQeYHaUcr5Or+86xbJAjRVmDWvUu3UVQ=
+        :content-type; s=sasl; bh=l3sWnWLEd+EZ6dNSnviePiIopQM=; b=T2EYxf
+        jIyS+BeYRDUE4NQw5Ih49u8nPCISiyqMz4uUZIyuaD3VFp0JWKli3gWl0JgfcfuQ
+        /rlrfh1J1JVDmnHrOaPuWCUh+1jplk5LE4gZOdlKMf+ge7IlYYAcA9WkQ35ArD0i
+        1L6b8l6eWNwfHIXKWqdlOfy5ulNHe/zN3Lhtk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Gg1W0g
-        Fb/v964o2Gmib9Opb1dYUjmUc010vVokedfvzo+4/oNJfYfuHKvst5l3kdnrdI9+
-        /AJW5uf0IvmvBdkiJt8txB9rmNc+fc0rnCpGS0XVv8COLMf1mG9Ezfy+32Rtcx66
-        Qpp56Fv80s0Mcu67zDsC7otlUNiJgJ/trPzNg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D1BEC80411;
-        Tue, 22 Oct 2019 23:39:04 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=fbl6zpB5TNsRBy9Xa+jwQpisjw0eS3nv
+        IKTabH9WVxfo3Urc10vC1hF0uBnoWP8908ComHXgXLJJVjbAoSp68v22PXbBNnEo
+        lZ1e3I+oTB8dhexI9POWXHPI+qWvFwcF8orRe2pOKS3ThVYx2QIpnth3hICCBKJx
+        FFyQ0yZ5da4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4CCE93B6D0;
+        Tue, 22 Oct 2019 23:48:39 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0C7918040D;
-        Tue, 22 Oct 2019 23:39:01 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B29683B6CF;
+        Tue, 22 Oct 2019 23:48:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/2] git_path(): handle `.lock` files correctly
-References: <pull.401.v2.git.1571350077.gitgitgadget@gmail.com>
-        <pull.401.v3.git.1571694882.gitgitgadget@gmail.com>
-        <8b1f4f089a6d4a2293507a1a77668c828598e84f.1571694882.git.gitgitgadget@gmail.com>
-        <20191022160105.GE4348@szeder.dev>
-Date:   Wed, 23 Oct 2019 12:38:59 +0900
-In-Reply-To: <20191022160105.GE4348@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-        "Tue, 22 Oct 2019 18:01:05 +0200")
-Message-ID: <xmqqmudsi10s.fsf@gitster-ct.c.googlers.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, newren@gmail.com, jon@jonsimons.org,
+        szeder.dev@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v5 13/17] read-tree: show progress by default
+References: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
+        <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
+        <a229e1ee0cb96c5f8c2c5d430641c386bc082a2d.1571666187.git.gitgitgadget@gmail.com>
+        <3de0f590-c75c-2470-232f-73a07876df88@gmail.com>
+        <857e23df-c447-7297-df74-3546424386d9@gmail.com>
+Date:   Wed, 23 Oct 2019 12:48:37 +0900
+In-Reply-To: <857e23df-c447-7297-df74-3546424386d9@gmail.com> (Derrick
+        Stolee's message of "Mon, 21 Oct 2019 11:14:08 -0400")
+Message-ID: <xmqqimogi0kq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A7A57CA0-F546-11E9-9E54-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: FF60E514-F547-11E9-91E0-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
->> +	char *base =3D buf->buf + git_dir_len, *base2 =3D NULL;
->> +
->> +	if (ends_with(base, ".lock"))
->> +		base =3D base2 =3D xstrndup(base, strlen(base) - 5);
+>> I'm slightly wary of changing the output of plumbing commands
+>> like this. If a script wants progress output it can already get
+>> it by passing --verbose. With this change a script that does not
+>> want that output now has to pass --no-verbose.
 >
-> Hm, this adds the magic number 5 and calls strlen(base) twice, because
-> ends_with() calls strip_suffix(), which calls strlen().  Calling
-> strip_suffix() directly would allow us to avoid the magic number and
-> the second strlen():
->
->   size_t len;
->   if (strip_suffix(base, ".lock", &len))
->           base =3D base2 =3D xstrndup(base, len);
+> If a script is calling this, then won't stderr not be a terminal window, and
+> isatty(2) return 0?
 
-Makes sense, and is easy to squash in.
+Unless the script tries to capture the error output and react
+differently depending on the error message from the plumbing (which
+is not localized), iow most of the time, standard error stream is
+left unredirected and likely to be connected to the terminal if the
+script is driven from a terminal command line.
+
+> Or, if the script is run with stderr passing through to
+> a terminal, then the user would see progress while running the script, which
+> seems like a side-effect but not one that will cause a broken script.
+
+It will show unwanted output to the end users, no?  That is the
+complaint about having to pass --no-verbose, if I understand
+correctly, if the script does not want to show the progress output.
+
