@@ -8,83 +8,104 @@ X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0F521F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 21:38:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA7671F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 21:44:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407561AbfJWVil (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 17:38:41 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:36620 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405894AbfJWVik (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 17:38:40 -0400
-Received: by mail-pf1-f196.google.com with SMTP id y22so13739356pfr.3
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 14:38:40 -0700 (PDT)
+        id S2392063AbfJWVoL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 17:44:11 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:46690 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391173AbfJWVoK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 17:44:10 -0400
+Received: by mail-pl1-f196.google.com with SMTP id q21so2676188plr.13
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 14:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=4pahPvXlkKIJQ2nWR9NzRiCqVF7ntTTc6VVkzJIJzbI=;
-        b=gBTQaQ3gj6qr/YMN9kldF49OYR4Sjsyr/a7CoYCjZWQNsKF18Jvq8hmzLL776TFad4
-         5sXwc0P4zAhlIbuVpWN+BiPNugRUNm/bkkL67sDdJoVrt6zTucorKNhZ14A71EhJGUUN
-         tQqanEjNowgz29FUpx/D0x+LDEG/b7cjWlrCMmooTNkNZN6kcSzzgfwXWhBiDN52mi5M
-         xYBGaTb1VGdfxZRLqhkIzVjHOo34nhfx6CpERdtdl8oy3/BsfS3pMBp+VdHIPhUv9IvO
-         WrCE3kBVyRFf88ZKPdajaHT3FkKcLvl1RYd3v4akZv0KNODOsNdYfoGXy1333iRUNG/Y
-         bKQA==
+        bh=u0K+jBeW50eaoSIxmt1Vp/UH1OUKBs2pK52ZDfPj4DM=;
+        b=I+xHA/grMljRdsCvCjJzL5wpo3L5BDgL7YXAWI+uR89HT8hEEzEFl3W5kBnj74Y5mj
+         HPgwmVRr2+xtdNFrKJ7WY2gR3XCpffO0cEWmyQFNVX+zT+kCLQnSUMpJMzoPgcw8dzvk
+         pBWjdARZdq47YO0DMEpj2a9LKjpus+LZzNdhjWCQ0gawPdq8YnFSGSE8tvKtAT9tEcAe
+         EVcZk3yqdq+GFgCSzDjBOxvoHJhIFCU66i5EN6I5zf6pqVCTce0Lw4Cs2nm6kNTERdBL
+         B3hlnMZvqgEFl/qcYZZblRmVa+hIaaHZhN0AYTNX7ybRmujZLGyRpEUw+jKG4aNvGKMc
+         aXlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4pahPvXlkKIJQ2nWR9NzRiCqVF7ntTTc6VVkzJIJzbI=;
-        b=MRMjci/P5XlqCOkPMaOtpMHrn0ruQHIjBocVvaj9gTwHkffADbqZpwatAhVED/7Tkl
-         Zmtdbq6pUx2FsIw5fKbLsHYFFphn9rJmbRidZ3G16kvvWnSCeJ4utb4E2bFF9z1JMPy8
-         9qhlsGzqqNF84UPeO4BTXlysFOh0cEtdPm5Y8AsCnvBm9hsukhEH2YYYnhxW1U5Z9tWc
-         KMwjRIjVnmFcEgBM6Hqkth5XX5LxXb4REqG9Zd6sVprSNXmf4JR1kUWDdFCgKFuzbG80
-         jO3mVWdXAGMJt1l/DadY72YoUkZG9uEFQoN2EWbVTCMXZap8AvD/xbsm6yhrA9sqQR31
-         kwtw==
-X-Gm-Message-State: APjAAAW+93junUCRxWwKKesv2yPtmeT1Sqql8ZbHFJfSLtZ5f645JTs9
-        7bNZnp+AevC9ytCH7kbGmSxJyg==
-X-Google-Smtp-Source: APXvYqyZdamsdzuMSiipIGwn4SgYo4p1Hwl6mV6bPhOwPTI68zhmH6bzrLOqRJ9EMN96xFlHHb+cvQ==
-X-Received: by 2002:a17:90a:bd8e:: with SMTP id z14mr2634067pjr.40.1571866719754;
-        Wed, 23 Oct 2019 14:38:39 -0700 (PDT)
+        bh=u0K+jBeW50eaoSIxmt1Vp/UH1OUKBs2pK52ZDfPj4DM=;
+        b=tjCTarOKF8ZDm6RmXICiXaH/5sGUKsQzY7/o/spAG1lltJADq7B765TOtGDKQmxZMs
+         Xwd4IMEY/H4V+FgzExblNavXSSOrAxbI+XV15JX8jHUYdAgVBLo3mtMMMmu4V3sOoM+d
+         /fKNnmDe4nng9jrFGNwGOJRlRNyc6IK2mx21wvTYtN5OwUO6u+w3T+QXkbP2FAhJLNGN
+         a7w8z+IIArGs4fdmvlFvcPTdCOaYwTgy94Z1/sgN/1pZGc/D6A2J9EU4FC8vQIzQ1VLu
+         SEQBpSwM9MEE9Q6OVqwoj67lZMFMGNk4uvQVtqsiyCuBWm+DybOf31WAVD2JzxdMnv1T
+         dOYw==
+X-Gm-Message-State: APjAAAUb7RlKNlPbDH42V+KyvOf2gzueNcYuSoGpSX02jIUlgQZ9c0NF
+        K3CUMdWbFx/KUSmStnjuixyOkQ==
+X-Google-Smtp-Source: APXvYqzKOOVqFgFNdp/sGeUWN9z3OshV1j4MxZdHDU02qpe/FULd47U63u0stdZ2xXHgKqHEkLt42w==
+X-Received: by 2002:a17:902:690c:: with SMTP id j12mr11745937plk.183.1571867049542;
+        Wed, 23 Oct 2019 14:44:09 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id h8sm25946305pfo.64.2019.10.23.14.38.38
+        by smtp.gmail.com with ESMTPSA id a24sm7336755pgd.93.2019.10.23.14.44.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2019 14:38:38 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 14:38:34 -0700
+        Wed, 23 Oct 2019 14:44:08 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 14:44:04 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/1] config: move documentation to config.h
-Message-ID: <20191023213834.GA124161@google.com>
-References: <pull.405.v2.git.1571727906.gitgitgadget@gmail.com>
- <pull.405.v3.git.1571808652.gitgitgadget@gmail.com>
- <d6cbb3197af2c59f0222c7806ab6a6fcdf83869a.1571808652.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v2 1/1] documentation: remove empty doc files
+Message-ID: <20191023214404.GB124161@google.com>
+References: <pull.412.git.1571768375.gitgitgadget@gmail.com>
+ <pull.412.v2.git.1571815556.gitgitgadget@gmail.com>
+ <5cd79e24fe6bde7c5d10e1c2cae660858e3c4051.1571815556.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d6cbb3197af2c59f0222c7806ab6a6fcdf83869a.1571808652.git.gitgitgadget@gmail.com>
+In-Reply-To: <5cd79e24fe6bde7c5d10e1c2cae660858e3c4051.1571815556.git.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 23, 2019 at 05:30:52AM +0000, Heba Waly via GitGitGadget wrote:
+On Wed, Oct 23, 2019 at 07:25:56AM +0000, Heba Waly via GitGitGadget wrote:
 > From: Heba Waly <heba.waly@gmail.com>
 > 
-> Move the documentation from Documentation/technical/api-config.txt into
-> config.h as it's easier for the developers to find the usage information
-> beside the code instead of looking for it in another doc file, also
-> documentation/technical/api-config.txt is removed because the information
-> it has is now redundant and it'll be hard to keep it up to date and
-> syncronized with the documentation in config.h
+> Remove empty and redundant documentation files from the
+> Documentation/technical/ directory.
 > 
-> Signed-off-by: Heba Waly <heba.waly@gmail.com>
+> The empty doc files included only TODO messages with no documentation for
+> years. Instead an approach is being taken to keep all doc beside the code
+> in the relevant header files.
+> Having empty doc files is confusing and disappointing to anybody looking
+> for information, besides having the documentation in header files makes it
+> easier for developers to find the information they are looking for.
+> 
+> here's a list of the files removed and if the info can be found in the
+> corresponding header file:
+I think you can remove the above; in lots of composition contexts it
+tends to be bad form to say "Here is <something>: <something>" - don't
+warn us that you're going to present it, just present it. :) (Or, at
+least, this has been drilled into my head by many high school English
+teachers...)
 
-Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+Maybe you could say something like, "Some of the content which could
+have gone here already exists elsewhere:"  If you take that suggestion,
+you can probably move grep.h to the bottom, as it's the exception which
+doesn't have content that exists elsewhere.
 
-Thanks for the effort, Heba. (I guess you are an expert on git-config
-now!)
+> 1- Documentation/technical/api-grep.txt -> grep.h does not have enough
+> documentation at the moment.
+> 2- Documentation/technical/api-object-access.txt -> sha1-file.c and
+> object.h have some details
+> 3- Documentation/technical/api-quote.txt -> quote.h has some details.
+> 4- Documentation/technical/api-xdiff-interface.txt -> xdiff-interface.h has
+> some details.
+
+For this list, I think you can remove the numbered bullet, and the
+leading "Documentation/technical/" - we can see the files deleted from
+the diff.
 
  - Emily
