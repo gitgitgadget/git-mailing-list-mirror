@@ -8,122 +8,154 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BFB61F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 20:39:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60CBB1F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 20:46:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405975AbfJWUjC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 16:39:02 -0400
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:40273 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405522AbfJWUjA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 16:39:00 -0400
-Received: by mail-wm1-f51.google.com with SMTP id b24so292252wmj.5
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 13:38:59 -0700 (PDT)
+        id S2404100AbfJWUqp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 16:46:45 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:33836 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391748AbfJWUqo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 16:46:44 -0400
+Received: by mail-qt1-f194.google.com with SMTP id e14so14492275qto.1
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 13:46:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=iiHG0bAdCt5r4BN5/Zj/jbA/xKnBZ5t8na8H+mTk9+s=;
-        b=NULTVX5zNcp8+fFdLKsrmIWOX2i4AimtKRTGrVSUbUlbeUdagbHFFHVM5kMFwOnECp
-         rFnNhI7bXu6SFKrxBy8tO0CxiGepc1mWTRZGcxsCE+4oD0e+OO/gVDNqYtju19FhM2/v
-         WF4tXYxNtcRT23CeqS6RkkoAilfu2kCpzawSf3yZREuF2SFZWR+acWcg/P96U0mz37f2
-         7JeuAaW2iQXswtMQzXTdTuOqw6HRPkpfEl/jGDc9CdippXH/q0iWDp4gp3NVcwo/JugE
-         W07ju/PsS6whGZXYjeOBJ6K2jjAMgL6Ihcp+mdMFDHF/UGTU7lD8fC/bX3YDfP/c5FGY
-         68ww==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=QQKS7lLenexWy6vqFN3sNHd1ugNuTfoQZHO2ZTtRn4k=;
+        b=lKEIPWfCp7+S2TkoW/FKQP6PNrUyYB2UGCxv5DrT0jec/Kmg2Ts54Mr791ZGyGRR36
+         wtfJQPauiqrWYo1ONDCyXfnpCVcQDpYXQ7lB07PCP+g0/ev4KBKT03EP1IfI6vSirqKv
+         P1uDgL/YijErtZO4eRKQVbYoCnHwmmM94WgljKsBsY7eXJIMWeOASTnquDtrqcmfq0aK
+         FhfHT2htFj/hbgjmscIlWk3ZCO03cVDUjl8u9Hc56NV90HcNJg1wKdGIcfeddQPO6puy
+         NeHYL7zo9+XORRT8c5Cn8gr0hdZwngTBtjyno4Pp0MIzP2dLyn/+sYRrnRTn7vRi+hGI
+         MkFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=iiHG0bAdCt5r4BN5/Zj/jbA/xKnBZ5t8na8H+mTk9+s=;
-        b=Rfe6Hi5NPXHV7l5ek38/dMhPEIh5/Qf0o+/Ccau6jLXCbSM8L44b9Grs0QjxAAE/gC
-         PjdvKFAYzJGZ8oDjaN4e4j0PIj5/OjeRqfoqpnSc05bfFm3ehzz69rZlFe+gxEOXOg/g
-         UfKGo6jumsRjq87YV97z8iS09sxX/t2aILryrBy0F/U/rc8mQXNGJOM563c/gQ2xM/QW
-         1n6lEmo61IZw/gF94kZd23+6NQX6e0RJBCi7BSidtAi5GavFyU6Iow8VnmbkCDgW3hjf
-         GzDHxnsfhw9z1MXWO1D2g9v8VNLKP0j3E1peUcjIsqGjDdczP9Ez7C1OxW2Akej4o0BG
-         F08w==
-X-Gm-Message-State: APjAAAVD+MsAWX5dOdMxyPHtLbdz3A4WRVBzztdgMUDXOuP46Wxirnv6
-        LymLwFKsErvmOyO4wXJTUF8TUQJa
-X-Google-Smtp-Source: APXvYqy+0F90IniN9gOQ5AJgKZT9XG5vV0Rd72vp1vDjjIsPnpOpHCNxZkMMkGGmoWDMjkXhMdLIcA==
-X-Received: by 2002:a1c:7719:: with SMTP id t25mr1567033wmi.56.1571863138966;
-        Wed, 23 Oct 2019 13:38:58 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 62sm7709219wre.38.2019.10.23.13.38.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Oct 2019 13:38:58 -0700 (PDT)
-Message-Id: <095b43f606a352527c9e0551adbd8a6af2061176.1571863137.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.420.git.1571863137.gitgitgadget@gmail.com>
-References: <pull.420.git.1571863137.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Oct 2019 20:38:57 +0000
-Subject: [PATCH 1/1] repo-settings: read an int for index.version
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=QQKS7lLenexWy6vqFN3sNHd1ugNuTfoQZHO2ZTtRn4k=;
+        b=K3hjc08wrqP90MI4LFckFYRbN3pwzYLApksetZ3++2X6WA0MR15w5Q7j+pPFUyb8SI
+         oyvi0UG0ML2uiwP6hgeF3f2rwAOSulK1+zNg34coqIhSeo2d/QGA2Rz3DmAE3lGm2K5s
+         EXHO0R1/TkFzUNhLnc5cO44SmRcKbZwNINUZLU/HL98eQzCGqRUrE3nELiwqo6K3NqgP
+         YDiKCh+lufa7rZQHFYftepWWGHQWJ9F+iONlTwpZOUHxNdPJ2WMFUsA3OciRlYGoO7sn
+         9nwy1t2a/K8jCtA/OcTiDm+zu6IOpqozvXjSktCLrN2HySfjSiavfknclVLSU1u8R83y
+         XFtA==
+X-Gm-Message-State: APjAAAWAzO9YJZIzVNIyge6+ehVzEDAMOJ3MtXDgibbMEgfzn4pw2BjM
+        vG6lL4Sivfh0Dw7DbXxhNCs=
+X-Google-Smtp-Source: APXvYqwOmBksp6pf/4ppmdY8t9QMHsfKkgktmN8rSH8MHZT4KqXJ4pw94coLD4fplB1XniAW3fYB6w==
+X-Received: by 2002:ac8:32c3:: with SMTP id a3mr537263qtb.320.1571863603690;
+        Wed, 23 Oct 2019 13:46:43 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:bd19:92e0:6c87:b219? ([2001:4898:a800:1012:6e4d:92e0:6c87:b219])
+        by smtp.gmail.com with ESMTPSA id s42sm14523485qtk.60.2019.10.23.13.46.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Oct 2019 13:46:43 -0700 (PDT)
+Subject: Re: [PATCH v2 1/2] t5510-fetch.sh: demonstrate fetch.writeCommitGraph
+ bug
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.415.git.1571765335.gitgitgadget@gmail.com>
+ <pull.415.v2.git.1571835695.gitgitgadget@gmail.com>
+ <6ac0a05746df8ac3b1dd788f525b2620bc4d9a08.1571835695.git.gitgitgadget@gmail.com>
+ <20191023141813.GA26017@szeder.dev>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <a9ba6007-aeb9-96b4-9436-8e956798be59@gmail.com>
+Date:   Wed, 23 Oct 2019 16:46:42 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+In-Reply-To: <20191023141813.GA26017@szeder.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On 10/23/2019 10:18 AM, SZEDER Gábor wrote:
+> On Wed, Oct 23, 2019 at 01:01:34PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> While dogfooding, Johannes found a bug in the fetch.writeCommitGraph
+>> config behavior. His example initially happened during a clone with
+>> --recurse-submodules, we found that this happens with the first fetch
+>> after cloning a repository that contains a submodule:
+>>
+>> 	$ git clone <url> test
+>> 	$ cd test
+>> 	$ git -c fetch.writeCommitGraph=true fetch origin
+>> 	Computing commit graph generation numbers: 100% (12/12), done.
+>> 	BUG: commit-graph.c:886: missing parent <hash1> for commit <hash2>
+>> 	Aborted (core dumped)
+>>
+>> In the repo I had cloned, there were really 60 commits to scan, but
+>> only 12 were in the list to write when calling
+>> compute_generation_numbers(). A commit in the list expects to see a
+>> parent, but that parent is not in the list.
+>>
+>> A follow-up will fix the bug, but first we create a test that
+>> demonstrates the problem.
+>>
+>> I used "test_expect_failure" for the entire test instead of
+>> "test_must_fail" only on the command that I expect to fail. This is
+>> because the BUG() returns an exit code so test_must_fail complains.
+> 
+> I don't think this paragraph is necessary; using 'test_expect_failure'
+> is the way to demonstrate a known breakage.
+> 
+> 'test_must_fail' should only be used when the failure is the desired
+> behavior of a git command.  (I used the word "desired" here, because
+> you just used the word "expect" above in the sense that "I expect it
+> to fail, because I know it's buggy, and I want to demonstrate that
+> bug")
 
-Several config options were combined into a repo_settings struct in
-ds/feature-macros, including a move of the "index.version" config
-setting in 7211b9e (repo-settings: consolidate some config settings,
-2019-08-13).
+I guess that I prefer pointing out which line of the test fails, and
+making that part of the test (that must otherwise pass). However, you
+are right that test_expect_failure does a good job of communicating that
+the test script shows an existing bug. Those are not always cleaned up
+immediately, but at least we can find them easily.
 
-Unfortunately, that file looked like a lot of boilerplate and what is
-clearly a factor of copy-paste overload, the config setting is parsed
-with repo_config_ge_bool() instead of repo_config_get_int(). This means
-that a setting "index.version=4" would not register correctly and would
-revert to the default version of 3.
+>> Helped-by: Jeff King <peff@peff.net>
+>> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> Helped-by: Szeder Gábor <szeder.dev@gmail.com>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>> ---
+>>  t/t5510-fetch.sh | 17 +++++++++++++++++
+>>  1 file changed, 17 insertions(+)
+>>
+>> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+>> index ecabbe1616..e8ae3af0b6 100755
+>> --- a/t/t5510-fetch.sh
+>> +++ b/t/t5510-fetch.sh
+>> @@ -583,6 +583,23 @@ test_expect_success 'fetch.writeCommitGraph' '
+>>  	)
+>>  '
+>>  
+>> +test_expect_failure 'fetch.writeCommitGraph with submodules' '
+>> +	pwd="$(pwd)" &&
+>> +	git clone dups super &&
+>> +	(
+>> +		cd super &&
+>> +		git submodule add "file://$pwd/three" &&
+> 
+> Nits: couldn't the URL simply be file://$TRASH_DIRECTORY/three ?
 
-I caught this while incorporating v2.24.0-rc0 into the VFS for Git
-codebase, where we really care that the index is in version 4.
+True, that would be better. Thanks!
 
-This was not caught by the codebase because the version checks placed
-in t1600-index.sh did not test the "basic" scenario enough. Here, we
-modify the test to include these normal settings to not be overridden by
-features.manyFiles or GIT_INDEX_VERSION. While the "default" version is
-3, this is demoted to version 2 in do_write_index() when not necessary.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- repo-settings.c  | 2 +-
- t/t1600-index.sh | 4 ++++
- 2 files changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/repo-settings.c b/repo-settings.c
-index 05546db98e..a703e407a3 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -22,7 +22,7 @@ void prepare_repo_settings(struct repository *r)
- 	UPDATE_DEFAULT_BOOL(r->settings.core_commit_graph, 1);
- 	UPDATE_DEFAULT_BOOL(r->settings.gc_write_commit_graph, 1);
  
--	if (!repo_config_get_bool(r, "index.version", &value))
-+	if (!repo_config_get_int(r, "index.version", &value))
- 		r->settings.index_version = value;
- 	if (!repo_config_get_maybe_bool(r, "core.untrackedcache", &value)) {
- 		if (value == 0)
-diff --git a/t/t1600-index.sh b/t/t1600-index.sh
-index c77721b580..b7c31aa86a 100755
---- a/t/t1600-index.sh
-+++ b/t/t1600-index.sh
-@@ -87,6 +87,10 @@ test_index_version () {
- }
- 
- test_expect_success 'index version config precedence' '
-+	test_index_version 0 false 0 2 &&
-+	test_index_version 2 false 0 2 &&
-+	test_index_version 3 false 0 2 &&
-+	test_index_version 4 false 0 4 &&
- 	test_index_version 2 false 4 4 &&
- 	test_index_version 2 true 0 2 &&
- 	test_index_version 0 true 0 4 &&
--- 
-gitgitgadget
+>> +		git commit -m "add submodule"
+>> +	) &&
+>> +	git clone "super" writeError &&
+> 
+> There is a write error now, because we have a bug, but after the next
+> patch the bug will be fixed and we won't have a write error anymore.
+
+Good point.
+
+Thanks!
+-Stolee
