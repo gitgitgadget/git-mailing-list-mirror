@@ -8,168 +8,151 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA5AF1F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 23:32:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF3BC1F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 23:32:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408039AbfJWXca (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 19:32:30 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:38511 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408036AbfJWXca (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 19:32:30 -0400
-Received: by mail-pg1-f195.google.com with SMTP id w3so13041977pgt.5
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 16:32:29 -0700 (PDT)
+        id S2408042AbfJWXcc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 19:32:32 -0400
+Received: from mail-pg1-f170.google.com ([209.85.215.170]:43882 "EHLO
+        mail-pg1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2408036AbfJWXcc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 19:32:32 -0400
+Received: by mail-pg1-f170.google.com with SMTP id l24so8110483pgh.10
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 16:32:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=lk9rbtacKOjoMtiz228I4j8lZNuDQ72bK9JeYsmBwag=;
-        b=IsBdYc7+F33v6sfQ1ewwE6Ex66/kSjA2JzQkvmG+aflbvWB5WUoEV32M1aw3gf4TpX
-         nM6iBic7H0aPZ93sABQweLSDzCuW9tCmVbLm86AaoA9RMsKneVGnbaosBUwk99dvqGku
-         Qn7RQ2HRPghq07L02ALFtNulciAxKXz36JEC1GHnWLGaq+E8utUNnJPjbxr/YCQWomIU
-         KRAR9WgZAmA9EPBUcjOsOVw37rxpLENLVDV9/AOKHL99cPyeebHwXK8a/NdAgVvl69tP
-         /VYMqY1kwaYZUTp5Ziyu5StMTrVDrHfB5JUhApzaJykQrVckk3R+8KdgNTuFHvkwmTGb
-         NlGw==
+        bh=i4lYL+FdZdQg3HbyjMUx8yf919PYm5gHxe4ZudLcAm0=;
+        b=rTfK4jj/xWklZ0YDDLBip0gS5hZL2rCkcDSruob3NAf9oz0A4eJ7JYgELYf49XC5j0
+         /FKTpo4sH7qGpbVIBk8KP5gFGTs1XROXLF4vhUjzvGV7JUp6Ncc25zIbeFJZAgtPZb7R
+         xJJ2ULJ9gxez+lfOP410p0IoRNuimZNvkDWJ7N9LjwvoPioaJWUaHyHEjpmy3QEUKlQA
+         gIGhJdfcs+sMWb5NTspMnSaEEyW2TJ2823I8BZw93mv+f2lrElH4rPVHaTVLW0WGiLwL
+         zfdXvjZ2+qkMLu1qcVcH0hyVbxyS731m9lktaqwBMK+zn9og4TQazBdLUTonuAcHKMzj
+         +9bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lk9rbtacKOjoMtiz228I4j8lZNuDQ72bK9JeYsmBwag=;
-        b=tOzoX5GgmdcwiexkxASMw9ILTQk19MpF+OuGP9gFJUT81BZdYuxRDpZ9ltqw/Oq4TW
-         zhy3IRuFHu1nFOGX8/4xrTAEzkiCpMztYQbc2wuz7XtylCU+WgtO4s8pYZXPfPNalMcB
-         JuwWehYMn+P6NGrukzIv4pYfSDMpvKj8Cx4YOh5dNMnnu3kFvmie4DHT0UM7Trn5ndHE
-         s4gZFg730x3phBFRV88QrMZ2eh7raqrUzke3X7PVIlpR6S6uAXh+FjXkxo/ZX9Jqy7T3
-         m/V6V6DuGi5KA4PBe3U9OdcOhU/JL3wUg/Kcy6CeR+DFfA/xicwxILAAPeWHAnghy6yG
-         RA7w==
-X-Gm-Message-State: APjAAAUEmHaaZ5pftPHqAGSOYF+u1yvsbxHiRnrIlscSAZzivi4EmTgu
-        4C6Owf98V7bB3bbyiZg/jIjRTYmw
-X-Google-Smtp-Source: APXvYqzanX72csJnlkAkM0UO62IzNbi6YxHAxOjRWK52b0zkjphvnCAspEwuuV6HLiNZTf+vzRHYeA==
-X-Received: by 2002:a63:d65:: with SMTP id 37mr13142917pgn.386.1571873548549;
-        Wed, 23 Oct 2019 16:32:28 -0700 (PDT)
+        bh=i4lYL+FdZdQg3HbyjMUx8yf919PYm5gHxe4ZudLcAm0=;
+        b=dfmNCLpT+zKEe7F0Ac2GMMHajUSSwsps0nA2/nJ2dYNGMz4o0NzQ6eaMRdvmtaGooM
+         TOsptLl+VuVNFvJwUkTRdF4DuidtHv4EREhMwxhSOqutf5sM8Og4/GBHrF2TZr8UeXin
+         oXrQ1CWkg53f2RtZL7N4RhU2PynI9PSq4nNx2EIOUsrRmoTbk2YeSVDerW4JLxTbab8u
+         SzVEelsFOQb54KE82L1ECoCse0WVyeUvd/WO3125OuT4quo/OTcOrLNvf/xGZmRipUh3
+         ufBR4XDj+GsXfe8ULvRrpdEAqU4A3mzFoF0VbdVfplrtmiDpJXPWyUBzBI4WIpbl809N
+         yENA==
+X-Gm-Message-State: APjAAAUczz6VtmzxGXNmCTNokTrZ5flXyBBSN6DuhDs7wSFB7JqPX7JY
+        hIIGViY2RT8IAOf30dcPsI66F4VR
+X-Google-Smtp-Source: APXvYqyCGU4BjDi2w6Vg82LXccrL1RbJbyWo7I9rwqH1Ftdch/Tn9HQJ3Lo1F+XdectpKSS5+faCoA==
+X-Received: by 2002:a17:90a:1b45:: with SMTP id q63mr3207626pjq.106.1571873551004;
+        Wed, 23 Oct 2019 16:32:31 -0700 (PDT)
 Received: from generichostname ([204.14.239.55])
-        by smtp.gmail.com with ESMTPSA id a11sm23393624pgw.64.2019.10.23.16.32.26
+        by smtp.gmail.com with ESMTPSA id l23sm355993pjy.12.2019.10.23.16.32.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2019 16:32:27 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 16:32:25 -0700
+        Wed, 23 Oct 2019 16:32:30 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 16:32:28 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 0/5] This fixes a bug where even if `merge.conflictStyle =
- diff3`, running `git apply --3way` would not output the base.
-Message-ID: <cover.1571873435.git.liu.denton@gmail.com>
+Subject: [PATCH v2 1/5] t4108: replace create_file with test_write_lines
+Message-ID: <84fe1614a3c807e3604549ec012535ce6bd17228.1571873435.git.liu.denton@gmail.com>
 References: <cover.1571832176.git.liu.denton@gmail.com>
+ <cover.1571873435.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1571832176.git.liu.denton@gmail.com>
+In-Reply-To: <cover.1571873435.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patches 1-3 are general cleanup for t4108, 4 demonstrates the bug and 5
-actually fixes it.
+Since the locally defined create_file() duplicates the functionality of
+the test_write_lines() helper function, remove create_file() and replace
+all instances with test_write_lines(). While we're at it, move
+redirection operators to the end of the command which is the more
+conventional place to put it.
 
-Changes since v1:
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ t/t4108-apply-threeway.sh | 27 ++++++++++-----------------
+ 1 file changed, 10 insertions(+), 17 deletions(-)
 
-* Pretty up 4/5 using Eric's suggestion
-
-* Rename print_sanitized_diff() to print_santized_conflicted_diff()
-
-Denton Liu (5):
-  t4108: replace create_file with test_write_lines
-  t4108: remove git command upstream of pipe
-  t4108: use `test_config` instead of `git config`
-  t4108: demonstrate bug in apply
-  apply: respect merge.conflictStyle in --3way
-
- apply.c                   |  2 +-
- t/t4108-apply-threeway.sh | 55 +++++++++++++++++++++------------------
- 2 files changed, 30 insertions(+), 27 deletions(-)
-
-Range-diff against v1:
-1:  9d915748c1 ! 1:  fd1b770c0c t4108: remove git command upstream of pipe
-    @@ Commit message
-     
-         Since only the command `git diff HEAD` was being piped to
-         sanitize_conflicted_diff(), move the command into the function and rename
-    -    it to print_sanitized_diff().
-    +    it to print_sanitized_conflicted_diff().
-     
-      ## t/t4108-apply-threeway.sh ##
-     @@ t/t4108-apply-threeway.sh: test_description='git apply --3way'
-    @@ t/t4108-apply-threeway.sh: test_description='git apply --3way'
-      . ./test-lib.sh
-      
-     -sanitize_conflicted_diff () {
-    -+print_sanitized_diff () {
-    ++print_sanitized_conflicted_diff () {
-     +	git diff HEAD >diff.raw &&
-      	sed -e '
-      		/^index /d
-    @@ t/t4108-apply-threeway.sh: test_expect_success 'apply with --3way' '
-      	test_must_fail git merge --no-commit side &&
-      	git ls-files -s >expect.ls &&
-     -	git diff HEAD | sanitize_conflicted_diff >expect.diff &&
-    -+	print_sanitized_diff >expect.diff &&
-    ++	print_sanitized_conflicted_diff >expect.diff &&
-      
-      	# should fail to apply
-      	git reset --hard &&
-    @@ t/t4108-apply-threeway.sh: test_expect_success 'apply with --3way' '
-      	test_must_fail git apply --index --3way P.diff &&
-      	git ls-files -s >actual.ls &&
-     -	git diff HEAD | sanitize_conflicted_diff >actual.diff &&
-    -+	print_sanitized_diff >actual.diff &&
-    ++	print_sanitized_conflicted_diff >actual.diff &&
-      
-      	# The result should resemble the corresponding merge
-      	test_cmp expect.ls actual.ls &&
-    @@ t/t4108-apply-threeway.sh: test_expect_success 'apply -3 with add/add conflict s
-      	test_must_fail git merge --no-commit another &&
-      	git ls-files -s >expect.ls &&
-     -	git diff HEAD | sanitize_conflicted_diff >expect.diff
-    -+	print_sanitized_diff >expect.diff
-    ++	print_sanitized_conflicted_diff >expect.diff
-      '
-      
-      test_expect_success 'apply -3 with add/add conflict' '
-    @@ t/t4108-apply-threeway.sh: test_expect_success 'apply -3 with add/add conflict'
-      	# ... and leave conflicts in the index and in the working tree
-      	git ls-files -s >actual.ls &&
-     -	git diff HEAD | sanitize_conflicted_diff >actual.diff &&
-    -+	print_sanitized_diff >actual.diff &&
-    ++	print_sanitized_conflicted_diff >actual.diff &&
-      
-      	# The result should resemble the corresponding merge
-      	test_cmp expect.ls actual.ls &&
-2:  d77c5f4199 = 2:  43c42b299e t4108: use `test_config` instead of `git config`
-3:  5feddf1597 < -:  ---------- t4108: demonstrate bug in apply
--:  ---------- > 3:  58d32e2618 t4108: demonstrate bug in apply
-4:  56c31310db ! 4:  5412dc9153 apply: respect merge.conflictStyle in --3way
-    @@ apply.c: static void git_apply_config(void)
-      static int parse_whitespace_option(struct apply_state *state, const char *option)
-     
-      ## t/t4108-apply-threeway.sh ##
-    -@@ t/t4108-apply-threeway.sh: test_apply_with_3way () {
-    - }
-    +@@ t/t4108-apply-threeway.sh: test_expect_success 'apply with --3way' '
-    + 	test_apply_with_3way
-    + '
-      
-    - test_apply_with_3way success default true
-    --test_apply_with_3way failure 'merge.conflictStyle = diff3' 'test_config merge.conflictStyle diff3'
-    -+test_apply_with_3way success 'merge.conflictStyle = diff3' 'test_config merge.conflictStyle diff3'
-    - 
-    - test_expect_success 'apply with --3way with rerere enabled' '
-    - 	test_config rerere.enabled true &&
-    +-test_expect_failure 'apply with --3way with merge.conflictStyle = diff3' '
-    ++test_expect_success 'apply with --3way with merge.conflictStyle = diff3' '
-    + 	test_config merge.conflictStyle diff3 &&
-    + 	test_apply_with_3way
-    + '
+diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
+index fa5d4efb89..b109ecbd9f 100755
+--- a/t/t4108-apply-threeway.sh
++++ b/t/t4108-apply-threeway.sh
+@@ -4,13 +4,6 @@ test_description='git apply --3way'
+ 
+ . ./test-lib.sh
+ 
+-create_file () {
+-	for i
+-	do
+-		echo "$i"
+-	done
+-}
+-
+ sanitize_conflicted_diff () {
+ 	sed -e '
+ 		/^index /d
+@@ -20,7 +13,7 @@ sanitize_conflicted_diff () {
+ 
+ test_expect_success setup '
+ 	test_tick &&
+-	create_file >one 1 2 3 4 5 6 7 &&
++	test_write_lines 1 2 3 4 5 6 7 >one &&
+ 	cat one >two &&
+ 	git add one two &&
+ 	git commit -m initial &&
+@@ -28,13 +21,13 @@ test_expect_success setup '
+ 	git branch side &&
+ 
+ 	test_tick &&
+-	create_file >one 1 two 3 4 5 six 7 &&
+-	create_file >two 1 two 3 4 5 6 7 &&
++	test_write_lines 1 two 3 4 5 six 7 >one &&
++	test_write_lines 1 two 3 4 5 6 7 >two &&
+ 	git commit -a -m master &&
+ 
+ 	git checkout side &&
+-	create_file >one 1 2 3 4 five 6 7 &&
+-	create_file >two 1 2 3 4 five 6 7 &&
++	test_write_lines 1 2 3 4 five 6 7 >one &&
++	test_write_lines 1 2 3 4 five 6 7 >two &&
+ 	git commit -a -m side &&
+ 
+ 	git checkout master
+@@ -87,7 +80,7 @@ test_expect_success 'apply with --3way with rerere enabled' '
+ 	test_must_fail git merge --no-commit side &&
+ 
+ 	# Manually resolve and record the resolution
+-	create_file 1 two 3 4 five six 7 >one &&
++	test_write_lines 1 two 3 4 five six 7 >one &&
+ 	git rerere &&
+ 	cat one >expect &&
+ 
+@@ -104,14 +97,14 @@ test_expect_success 'apply -3 with add/add conflict setup' '
+ 	git reset --hard &&
+ 
+ 	git checkout -b adder &&
+-	create_file 1 2 3 4 5 6 7 >three &&
+-	create_file 1 2 3 4 5 6 7 >four &&
++	test_write_lines 1 2 3 4 5 6 7 >three &&
++	test_write_lines 1 2 3 4 5 6 7 >four &&
+ 	git add three four &&
+ 	git commit -m "add three and four" &&
+ 
+ 	git checkout -b another adder^ &&
+-	create_file 1 2 3 4 5 6 7 >three &&
+-	create_file 1 2 3 four 5 6 7 >four &&
++	test_write_lines 1 2 3 4 5 6 7 >three &&
++	test_write_lines 1 2 3 four 5 6 7 >four &&
+ 	git add three four &&
+ 	git commit -m "add three and four" &&
+ 
 -- 
 2.24.0.rc0.197.g0926ab8072
 
