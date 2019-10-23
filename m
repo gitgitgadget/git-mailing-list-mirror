@@ -8,116 +8,120 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 642491F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 17:11:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20BE31F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 18:07:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728051AbfJWRL1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 13:11:27 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:42376 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728036AbfJWRLZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 13:11:25 -0400
-Received: by mail-pg1-f195.google.com with SMTP id f14so12496085pgi.9
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 10:11:25 -0700 (PDT)
+        id S2387944AbfJWSHX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 14:07:23 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:42373 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732144AbfJWSHW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Oct 2019 14:07:22 -0400
+Received: by mail-qk1-f195.google.com with SMTP id m4so3722307qke.9
+        for <git@vger.kernel.org>; Wed, 23 Oct 2019 11:07:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IZhQYVrS1eVcPN54wLWEz8VVXV5XRnl1pG+qXIJXCss=;
-        b=PjvuSD+SEuRO/z5YfnX6IwHNQhfQDTFQer0Vg2aY8tSf4rMyEWKCuQ0d5QmtWC0xqT
-         hNq3tyM8go3va949ZWUr//JEifqzgZWhRZWgD4nRhDkMkfLomgjpNeKLH/ObTs/RY4jX
-         pEhTsvXxbVVC5BMbWJgu+cHg6dvBbtREnt+TbsNbeuIENHahjQq5VUkvw918eeOMsrJN
-         arJfN4SnSv2VGpyOg2BpF7XDxVoFuNntclVHQM3uvpRC8ctwGAmap/Cz1VXEpUPFwZJZ
-         RXDcJb96ELfU3VwYFI/wZ1QRu7UYBkLVQbrb9lBm0yZQ8RyzcKAAWkVjkBAj3d0btSmt
-         1jLg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=1CUcFTsUyrwY9H2eulEwheyueX6dBb7sThYjRivUu5E=;
+        b=lk2Iw14oWcoGiRZRQZ/jJS+ATpeHZLsBhKe6M2z+4L3QpMzBxxWkEb1Rfw6LbI1lW+
+         z0byhbcRQBuOTUUr7hfsmD+h91tAG0/coCPaqPAlVY9KuONooE28XR0WIv3vOo7zv76I
+         j7QqADTGZZIKt+37J9cVAExarK/Sh8o6JA4kp6DhleaEhvh/j/NJEAtgKQ46HuTnV4t3
+         MkeAbJrGwY48aqHefisGIvLEsNQHoNSNOqSj6/bu/OQklkyf/D61I7sh/fsVhx6beayY
+         zMDI9RUsZmUsB0MMVky4Y4gevJRk+CzNNMOVCwM7VgTuP0IoBgWesbTpupcEiUnrDWvF
+         kBsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IZhQYVrS1eVcPN54wLWEz8VVXV5XRnl1pG+qXIJXCss=;
-        b=HBWlICQUwGIf8QD8F184ra0EJZu7BxWZe3SQjQUrC5Saz+HZYB2ZVBj/5HANiDhE+L
-         JX/QZa1IbbRbGqBvffxgGc/eTjqLT+7klqWVjeG9KvfKltUlCL+bAxsHHP1Xn0uX+827
-         nFweY7ZiVKpS/i3dEXnRwdyTeHqJoeP9mszz7NmIY2bBf3zWZ7dRstvQBlMs20ji1tO+
-         NuS3aj0qgT84xgoB65QwcGwtiIJkwS/tFvfoDuLF8VYDe62p5acmDOGMXHGogNW4fNfk
-         MWK8igayCQABGr4BqAdWFSX9aMUu5GSXBNs7bfnZqd1oTNW0gjEPpxRVThzf9/vBWdk1
-         w1Fg==
-X-Gm-Message-State: APjAAAWunM2DDOI20YrTBKSr978Y+0WxrDhXrRDb3sQlRwfoAjgP3aVq
-        Q4bLZy0Ys/J1cnftSonIPcY=
-X-Google-Smtp-Source: APXvYqz9BIbKE4w/uIgBVUlNHD2JCLOwwAIGz05iVfABCGgYTEukzkLTPMr8N4ze0qeHknmYaGyRCg==
-X-Received: by 2002:a62:ed01:: with SMTP id u1mr1293741pfh.122.1571850684309;
-        Wed, 23 Oct 2019 10:11:24 -0700 (PDT)
-Received: from generichostname ([204.14.239.55])
-        by smtp.gmail.com with ESMTPSA id d10sm23046826pfh.8.2019.10.23.10.11.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2019 10:11:22 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 10:11:20 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/5] t4108: remove git command upstream of pipe
-Message-ID: <20191023171120.GA87013@generichostname>
-References: <cover.1571832176.git.liu.denton@gmail.com>
- <9d915748c1953cc2683fa3189c3c98b1e9a1e299.1571832176.git.liu.denton@gmail.com>
- <CAPig+cQ6RCMOaf4ZtOKNtiDdKu1JED=zMKZ8afwSr0cvE2zMgw@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=1CUcFTsUyrwY9H2eulEwheyueX6dBb7sThYjRivUu5E=;
+        b=TAZOxnoE35PhL9Xqo9aoJdiJpyJ/iEVF1F5MwRLHkA5k8aGMLTrgoSsRkF4nUZr2vF
+         plgUebl+mPgsrNVATE4w5QXd+vnGf+iVxj47TktLZ2dXcc0mDOShWGUiFBu3PHHA4/U5
+         ZS7ZtfiwC6oqa50NZupB5NkTXvQWheqLLHkXh/yf0Qgw33cCWIuSTtWN8UFVNvaB0zfQ
+         xyYZNdG/xb1zClY1PeXl0mcbFXQJyr4ws8ltAk81xIGMqddJJxOZI/wJzpJ5EKMWmyN7
+         qNo/IrR43pElYluTNKDmWS2bamIqlV24M2h7+M4EKl2iJHQDp+2DLlAJJHBWx6ULYA6J
+         ya0Q==
+X-Gm-Message-State: APjAAAW1CBpaDH2BKBfADGnLdjWIR9OV+AKOmNDGmteC9Mt5g/MemoJ7
+        /WiyDLnV3y9V0VLTcR/kKJ+vRfMcBbA=
+X-Google-Smtp-Source: APXvYqxfZ3Rm1IpT73jsOFANX0O/B/XJF0iwHDK6zHQYlL/AAvXPnvi4MTvBXN2EGuOAXAliSanpXQ==
+X-Received: by 2002:a37:c44b:: with SMTP id h11mr9635264qkm.150.1571854041564;
+        Wed, 23 Oct 2019 11:07:21 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:bd19:92e0:6c87:b219? ([2001:4898:a800:1012:6e4d:92e0:6c87:b219])
+        by smtp.gmail.com with ESMTPSA id h3sm6094053qte.62.2019.10.23.11.07.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Oct 2019 11:07:20 -0700 (PDT)
+Subject: Re: Git Test Coverage Report (October 11)
+To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+References: <c863c09b-f0ed-19c6-356e-12a3ecbc08b9@gmail.com>
+ <20191023170049.hnzb22iiflrigyfs@tb-raspi4>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <ebe33082-976d-7146-1450-925e4785faf1@gmail.com>
+Date:   Wed, 23 Oct 2019 14:07:20 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQ6RCMOaf4ZtOKNtiDdKu1JED=zMKZ8afwSr0cvE2zMgw@mail.gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20191023170049.hnzb22iiflrigyfs@tb-raspi4>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 23, 2019 at 09:32:26AM -0400, Eric Sunshine wrote:
-> On Wed, Oct 23, 2019 at 8:04 AM Denton Liu <liu.denton@gmail.com> wrote:
-> > Before, the output of `git diff HEAD` would always be piped to
-> > sanitize_conflicted_diff(). However, since the Git command was upstream
-> > of the pipe, in case the Git command fails, the return code would be
-> > lost. Rewrite into separate statements so that the return code is no
-> > longer lost.
-> >
-> > Since only the command `git diff HEAD` was being piped to
-> > sanitize_conflicted_diff(), move the command into the function and rename
-> > it to print_sanitized_diff().
-> >
-> > Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> > ---
-> > diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
-> > @@ -4,11 +4,12 @@ test_description='git apply --3way'
-> > -sanitize_conflicted_diff () {
-> > +print_sanitized_diff () {
-> > +       git diff HEAD >diff.raw &&
-> >         sed -e '
-> >                 /^index /d
-> >                 s/^\(+[<>][<>][<>][<>]*\) .*/\1/
-> > -       '
-> > +       ' diff.raw
-> >  }
+On 10/23/2019 1:00 PM, Torsten Bögershausen wrote:
+> On Fri, Oct 11, 2019 at 09:33:11AM -0400, Derrick Stolee wrote:
+>> Here is today's test coverage report. The usual report format is
+>> available online [1], [2]. The report listed below is a new format
+>> that groups lines by the commit that introduced them [3]. Thanks
+>> Peff for the feedback on that idea.
+>>
 > 
-> Nit: By hard-coding "HEAD" in this function, you lose the flexibility
-> of the original. An alternative would have been to accept the ref
-> against which to diff as an argument to this function:
+> []
+>>
+>> Torsten Bögershausen	ebb8d2c9 mingw: support UNC in git clone file://server/share/repo
+>> connect.c
+>> ebb8d2c9 921) path = host - 2; /* include the leading "//" */
+>>
 > 
->     print_sanitized_diff () {
->         git diff "$@" >diff.raw &&
->         ...
+> I actually looked into this one, and my understanding is that the code path
+> makes only sense for windows and is only tested on Windows in t5500.
+> (Linux/Unix/POSIX don't use UNC path names starting with "//" )
 > 
-> Or, better yet, keep the original design and pass the diff in as the
-> shell function's input, so a caller would say:
+> How can we avoid those "not covered by test" warnings?
 > 
->     git diff HEAD >diff.raw &&
->     sanitize_conflicted_diff <diff.raw >expect.diff &&
+> One solution could be to use
 > 
-> However, not necessarily worth a re-roll if we never expect anyone to
-> pass anything other than "HEAD".
+> #ifndef has_dos_drive_prefix
+> #define has_dos_drive_prefix(a) 0
+> #endif
+> 
+> in git-compat-util.h and hope that the compiler is smart enough
+> to optimize away that line of code.
+> 
+> Another way could be to have #ifdefs in connect.c, so that it
+> is clear "this is Windows only".
+> 
+> Or make a comment for the "cover report" saying "not covered".
+> 
+> Are there any good or better thoughts on this ?
 
-Since it doesn't really make sense to commmit conflicts, I decided to
-hardcode it to be a diff against HEAD and the worktree since that's the
-only sensible place where the conflict should live.
+One way to avoid this is to add ignored lines to the test-coverage
+repo [1]. These only work if the exact contents match on a specific
+line number, but can be a way to stop noise in the short-term.
 
-Speaking of conflicts, I dropped the "conflicted" part of the old
-function name. I think that removes a lot of clarity so I'll reroll
-renaming the function to print_sanitized_conflicted_diff() or something
-like that.
+For example, I added a few lines to ignore in commit-graph.c [2],
+but I haven't added ignored lines in a while.
+
+I'm happy to take a PR including the lines you want to ignore, or
+I could take inventory of the lines in the current report before regenerating
+a test for -rc1.
+
+Thanks,
+-Stolee
+
+[1] https://github.com/derrickstolee/git-test-coverage
+
+[2] https://github.com/derrickstolee/git-test-coverage/blob/master/ignored/commit-graph.c
