@@ -2,158 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FC471F4C0
-	for <e@80x24.org>; Wed, 23 Oct 2019 14:18:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F8221F4C0
+	for <e@80x24.org>; Wed, 23 Oct 2019 15:03:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404361AbfJWOSV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Oct 2019 10:18:21 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:54092 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392077AbfJWOSV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Oct 2019 10:18:21 -0400
-Received: by mail-wm1-f68.google.com with SMTP id i13so6181320wmd.3
-        for <git@vger.kernel.org>; Wed, 23 Oct 2019 07:18:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=hIsXMjihAeurmF8DuCsRE6Tf2rWlIF7LgOq1ebpDTM0=;
-        b=IjnQneyOCM5A1a4LJehkNbAvt8IucpfvLFGAkIhBXC/utW62+1t4jF9u/J8c0kOr+U
-         69iJwXeEuCWWrc/3+Et7vpavRmyrq2HlA6zgVC1O/0dU675CO4BjEWJise9CTXEB8jYb
-         FANq92c91EaYwEINRdpHQuLhWww0ecpQ9dE4xALRCg6GSzAWxhxlaTT1nPEUq4L5gmwj
-         BrGPRkQcHlC1oG0IIvd1G2UAjFm4HC3HWgQyuI6rwKBYSiNg4fG1sqdwFrgE6WOqP6Yr
-         VfVn/poipnrjJfecXJKJtITGzwMuBRBKgzhEUiIcsbP1fXvekbu9r+T0AFJsVcYuiLed
-         rG9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=hIsXMjihAeurmF8DuCsRE6Tf2rWlIF7LgOq1ebpDTM0=;
-        b=rsMHHih7VE4Zkbo61NA+38B7mLYUd9ffwWwCa1X45sVE9yHUcm8mfQfapZHZvFAcHk
-         RPH/yPCp1qHmHLlAE2c+ssYkD/9ZdkX5M28jiL7NfaVE2ntOrNJc3V/9sTRMWqaR992X
-         Ot2acu7s4OztPd5nQFNG8uVpCxwX6F1QHaJqccHqTOlvzrYWfW5rQXWrlHbW2RZolSOm
-         FnwM2mSaqanWT+u6EFgK9EZ5Pc54GXVUfkrc5N0e0ZeMJRLIZYZKirZRIKp8WiVe6nXX
-         qq+cyAnHfCMvs4K4j/W6yfTLb3Eih2FxIqv4fi6DYfwC/E+r7+95ynkrW1y4A9aAGIyu
-         QuMg==
-X-Gm-Message-State: APjAAAVn0JkciRoRoKRpjDmZL2AR/Vu2wpUmN8Khzez3gF1M1LLndDTv
-        2JPbIoVWdfZJePzVrcILFzs=
-X-Google-Smtp-Source: APXvYqztaSqHRr1MMsskb+kd+cvccA+4SAcu5PEgsRQUEPXbzJnwZCXjXwy2e9rijiRRZqOBCB6PDQ==
-X-Received: by 2002:a1c:1f4b:: with SMTP id f72mr164185wmf.22.1571840298889;
-        Wed, 23 Oct 2019 07:18:18 -0700 (PDT)
-Received: from szeder.dev (x4db97b71.dyn.telefonica.de. [77.185.123.113])
-        by smtp.gmail.com with ESMTPSA id d8sm8629901wrr.71.2019.10.23.07.18.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Oct 2019 07:18:18 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 16:18:13 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] t5510-fetch.sh: demonstrate
- fetch.writeCommitGraph bug
-Message-ID: <20191023141813.GA26017@szeder.dev>
-References: <pull.415.git.1571765335.gitgitgadget@gmail.com>
- <pull.415.v2.git.1571835695.gitgitgadget@gmail.com>
- <6ac0a05746df8ac3b1dd788f525b2620bc4d9a08.1571835695.git.gitgitgadget@gmail.com>
+        id S2406461AbfJWPD4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Oct 2019 11:03:56 -0400
+Received: from us-smtp-2.mimecast.com ([205.139.110.61]:39653 "EHLO
+        us-smtp-delivery-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S2390431AbfJWPD4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 23 Oct 2019 11:03:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1571843034;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=cy3EDS4djcxdRnyFqaKi9iyZ9aRUhpiH3M4IStzyL7I=;
+        b=C9TfRwaEcSUZmwk849kUHvYe8sO6WltXL6ysqc1esS5a95Lgt0TpJG0fK7i++3yDBZ3QxC
+        9JCul701yjYEGdDcKpTtaRWlG88gfTuPLgAL0rTH5KXGFdCHiQ4A+zuSjM5DSIW+BQTNtL
+        UAzd5WLuAgHfnDZfJYG5d62D8e5VQKM=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-220-kAerFoL0O_KIQPzWURFE-A-1; Wed, 23 Oct 2019 11:03:52 -0400
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id A4F49801E5C;
+        Wed, 23 Oct 2019 15:03:51 +0000 (UTC)
+Received: from prarit.bos.redhat.com (prarit-guest.khw1.lab.eng.bos.redhat.com [10.16.200.63])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 5E17D60C5D;
+        Wed, 23 Oct 2019 15:03:51 +0000 (UTC)
+Subject: Re: [PATCH] pretty: Add "%aU"|"%au" option to output author's
+ username
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <20191022232847.5212-1-prarit@redhat.com>
+ <xmqqy2xcjqc8.fsf@gitster-ct.c.googlers.com>
+From:   Prarit Bhargava <prarit@redhat.com>
+Message-ID: <987b7743-df0c-dbcf-6336-23f2903c061a@redhat.com>
+Date:   Wed, 23 Oct 2019 11:03:50 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6ac0a05746df8ac3b1dd788f525b2620bc4d9a08.1571835695.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <xmqqy2xcjqc8.fsf@gitster-ct.c.googlers.com>
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+X-MC-Unique: kAerFoL0O_KIQPzWURFE-A-1
+X-Mimecast-Spam-Score: 0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 23, 2019 at 01:01:34PM +0000, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
-> 
-> While dogfooding, Johannes found a bug in the fetch.writeCommitGraph
-> config behavior. His example initially happened during a clone with
-> --recurse-submodules, we found that this happens with the first fetch
-> after cloning a repository that contains a submodule:
-> 
-> 	$ git clone <url> test
-> 	$ cd test
-> 	$ git -c fetch.writeCommitGraph=true fetch origin
-> 	Computing commit graph generation numbers: 100% (12/12), done.
-> 	BUG: commit-graph.c:886: missing parent <hash1> for commit <hash2>
-> 	Aborted (core dumped)
-> 
-> In the repo I had cloned, there were really 60 commits to scan, but
-> only 12 were in the list to write when calling
-> compute_generation_numbers(). A commit in the list expects to see a
-> parent, but that parent is not in the list.
-> 
-> A follow-up will fix the bug, but first we create a test that
-> demonstrates the problem.
-> 
-> I used "test_expect_failure" for the entire test instead of
-> "test_must_fail" only on the command that I expect to fail. This is
-> because the BUG() returns an exit code so test_must_fail complains.
 
-I don't think this paragraph is necessary; using 'test_expect_failure'
-is the way to demonstrate a known breakage.
 
-'test_must_fail' should only be used when the failure is the desired
-behavior of a git command.  (I used the word "desired" here, because
-you just used the word "expect" above in the sense that "I expect it
-to fail, because I know it's buggy, and I want to demonstrate that
-bug")
+On 10/22/19 7:46 PM, Junio C Hamano wrote:
+> Prarit Bhargava <prarit@redhat.com> writes:
+>=20
+>> Subject: Re: [PATCH] pretty: Add "%aU"|"%au" option to output author's u=
+sername
+>=20
+> Downcase "Add" (see "git shortlog --no-merges -100 master" and
+> mimick the project convention).
 
-> Helped-by: Jeff King <peff@peff.net>
-> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Helped-by: Szeder Gábor <szeder.dev@gmail.com>
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  t/t5510-fetch.sh | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> index ecabbe1616..e8ae3af0b6 100755
-> --- a/t/t5510-fetch.sh
-> +++ b/t/t5510-fetch.sh
-> @@ -583,6 +583,23 @@ test_expect_success 'fetch.writeCommitGraph' '
->  	)
->  '
->  
-> +test_expect_failure 'fetch.writeCommitGraph with submodules' '
-> +	pwd="$(pwd)" &&
-> +	git clone dups super &&
-> +	(
-> +		cd super &&
-> +		git submodule add "file://$pwd/three" &&
+I'll fix that.
 
-Nits: couldn't the URL simply be file://$TRASH_DIRECTORY/three ?
+>=20
+>> Add a "%aU"|"%au" option that outputs the author's email username.
+>=20
+> Even though I personally do not see the use for it, I agree it would
+> make sense to have an option to show the local part only where the
+> e-mail address is shown. =20
+>=20
+> I do not know if u/U is a good mnemonic; it hints too strongly that
+> it may come from GIT_{AUTHOR/COMMITTER}_NAME but that is not what
+> you are doing---isn't there a letter that better conveys that this
+> is about RFC 2822 local-part (cf. page 16 ieft.org/rfc/rfc2822.txt)?
 
-> +		git commit -m "add submodule"
-> +	) &&
-> +	git clone "super" writeError &&
+I'll go with "l" and "L" for local-part as defined on page 16.  I will also
+include a comment in braces that says (the portion of the email address
+preceding the '@' symbol)".  Admittedly that doesn't convey the meaning of =
+the
+mailbox concept of the email address it does tell a user what is going to b=
+e output.
 
-There is a write error now, because we have a bug, but after the next
-patch the bug will be fixed and we won't have a write error anymore.
+>=20
+>> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-for=
+mats.txt
+>> index b87e2e83e6d0..479a15a8ab12 100644
+>> --- a/Documentation/pretty-formats.txt
+>> +++ b/Documentation/pretty-formats.txt
+>> @@ -163,6 +163,9 @@ The placeholders are:
+>>  '%ae':: author email
+>>  '%aE':: author email (respecting .mailmap, see linkgit:git-shortlog[1]
+>>  =09or linkgit:git-blame[1])
+>> +'%au':: author username
+>> +'%aU':: author username (respecting .mailmap, see linkgit:git-shortlog[=
+1]
+>> +=09or linkgit:git-blame[1])
+>>  '%ad':: author date (format respects --date=3D option)
+>>  '%aD':: author date, RFC2822 style
+>>  '%ar':: author date, relative
+>=20
+>> diff --git a/pretty.c b/pretty.c
+>> index b32f0369531c..2a5b93022050 100644
+>> --- a/pretty.c
+>> +++ b/pretty.c
+>> @@ -706,6 +706,11 @@ static size_t format_person_part(struct strbuf *sb,=
+ char part,
+>>  =09=09strbuf_add(sb, mail, maillen);
+>>  =09=09return placeholder_len;
+>>  =09}
+>> +=09if (part =3D=3D 'u' || part =3D=3D 'U') {=09/* username */
+>> +=09=09maillen =3D strstr(s.mail_begin, "@") - s.mail_begin;
+>> +=09=09strbuf_add(sb, mail, maillen);
+>> +=09=09return placeholder_len;
+>> +=09}
+>=20
+> I think users get %eu and %eU for free with this change, which should
+> be documented.
+>=20
 
-> +	(
-> +		cd writeError &&
-> +		test_path_is_missing .git/objects/info/commit-graphs/commit-graph-chain &&
-> +		git -c fetch.writeCommitGraph=true fetch origin &&
-> +		test_path_is_file .git/objects/info/commit-graphs/commit-graph-chain
-> +	)
-> +'
-> +
->  # configured prune tests
->  
->  set_config_tristate () {
-> -- 
-> gitgitgadget
-> 
+Did you mean %cu and %cU?  Or am I missing something with "%e"?
+
+P.
+
