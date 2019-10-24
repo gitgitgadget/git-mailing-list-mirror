@@ -2,118 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 972D81F4C0
-	for <e@80x24.org>; Thu, 24 Oct 2019 23:09:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6432F1F4C0
+	for <e@80x24.org>; Thu, 24 Oct 2019 23:12:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387478AbfJXXJK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 19:09:10 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51740 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388186AbfJXXJJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 24 Oct 2019 19:09:09 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 041D26044E;
-        Thu, 24 Oct 2019 23:09:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1571958548;
-        bh=7zG4Ks3/KXJV9qSTxBpMF2IgyTS/TF2elR3hNkSDzWY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=RvvM1+09yzXWHz2VZLwWKFxkSQSiUVkUvI05E4Q/GK+HjUJA1nFTw9xZfCxvZeSiT
-         ILJ1/LPW53ulitwb4MvVtXo2bhybvm/anOTwZum0yTm6q7Z8Pzs75dnXI6xO1qZp8V
-         Yzb4ryjX3Cj7MEjoK6peTU3TSV4oANq1JdYh5seZWBz93POLwnsiAA4DztnH5sG+Eu
-         t4U2iR2KQsE7baDqTX+QcgohObd1L4mq9OY+v+79yCz9Z4XpzWmJmaHuwhDahaqQWR
-         xqZcFMTgo1+h4zTiD7V40SUDd+dB/0TRc4s4IIPAdUUHDv339Wafs++zwB9GPNtlqW
-         B7LXlGDSDYkehYaeQEfYJ0vVzZCYA7MYlNnFH8w9UixsdEZnrC7ZmGwFf6TiIEZEiW
-         u41n0kEf4AVsv8AaEDYO5q+NlalmRAbWTJrW5ZXKU0QIicuNy5YzSLtuyeRBcFLQL1
-         NdIljBCSYawOgqiN64mnQek1hsUXxbWusdob/jCxyYAFQ5+rYZf
-Date:   Thu, 24 Oct 2019 23:09:03 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2019, #06; Thu, 24)
-Message-ID: <20191024230902.qdy3fv3dh5lvrcz3@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqd0emfzrv.fsf@gitster-ct.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hbu2h2vi3fekghml"
-Content-Disposition: inline
-In-Reply-To: <xmqqd0emfzrv.fsf@gitster-ct.c.googlers.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.2.0-3-amd64)
-User-Agent: NeoMutt/20180716
+        id S1727075AbfJXXMY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 19:12:24 -0400
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:36250 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726740AbfJXXMY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 19:12:24 -0400
+Received: by mail-pg1-f202.google.com with SMTP id q1so263423pgj.3
+        for <git@vger.kernel.org>; Thu, 24 Oct 2019 16:12:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=ZCwzydFqB8fyqmbGuvFlTN5MD+4FG6ju+MvnUT3tgAE=;
+        b=b8E98VWiBcYsOFFkhFj2EGdC4z5ORlNVUz0J+2ipv58rCa2r84FMOPQteazCTOgII/
+         6Xbo46zy3fGe0a0hqciFTwXCQBrTkeu+OqYjLghcWV+vuKJA2MsFEaMXUnk3bso19S6+
+         h1dm3FQPN/8cKC0klAkmNYs70A2liJHmYiJMmBuXxDMNJu2H/9HKg7jqMRgKcsJg2unS
+         l1QPe9kgaLwf2V6UbFCUWLhVUvXMb5YZLRKAoR02ZhCJFLhx9GHEM6KglpvFtCuFek5/
+         r6N2GUhTkK8atWUiqrlsIaDEUwO6fTDHHpqoTP+kNzY1HUVN6yp4TZGO10eToyP4tTRa
+         +mZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=ZCwzydFqB8fyqmbGuvFlTN5MD+4FG6ju+MvnUT3tgAE=;
+        b=TEqyYotpTp2YCOoSqm2bwQ47LZsCgH0+i8m1Ne9h0W55P2UCrgSPM0UBm5vQte3Cjn
+         NxX6vYuSkLoVY7bQnoxjCtes5snfqnj0H1nmOrkos5UEDZg+NPkvCs6OYXb9G2cq0k3n
+         i8891wWvvhUyWfJtRwhSBfctgLO0GYp10WLgXjIvpesowwy1vI0/3TzRxYzMFx2T81Uj
+         NNLKO8iR+m8utp/KTxV9q1LUIAO7Qew/DeEkkb7n0nNxxnC+otDyWUZoJIF0kt7Q71wl
+         zLpv9F1eiY24IWEXurH64y7s1CciCADePYTz8e7OiLv+991ynzx9cndtOfcC/jqvm6VO
+         WS9A==
+X-Gm-Message-State: APjAAAU5LnEn4ka7S0RKlRbnKEh+xd1TcF4ze6pKzYD9tzh8+LXLyUNH
+        XYo3AJf8ObwLm79UHLunyEiDglQ4k4pfRYf0VLDK
+X-Google-Smtp-Source: APXvYqzH+tMzCYMYzsjB2UjmMW8j5896pmQyEwOaN8QFnne5rLcK73RuQvhexOZbXCfF/xHfbwLxD7zz1pZ53jDx4AcR
+X-Received: by 2002:a63:6949:: with SMTP id e70mr603060pgc.226.1571958743096;
+ Thu, 24 Oct 2019 16:12:23 -0700 (PDT)
+Date:   Thu, 24 Oct 2019 16:12:20 -0700
+In-Reply-To: <20191018044328.GB17879@sigill.intra.peff.net>
+Message-Id: <20191024231220.96547-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20191018044328.GB17879@sigill.intra.peff.net>
+X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665-goog
+Subject: Re: [PATCH 02/23] parse_commit_buffer(): treat lookup_tree() failure
+ as parse error
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     peff@peff.net
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> And
+> certainly we _have_ seen real-world cases, such as the one fixed by
+> 806278dead (commit-graph.c: handle corrupt/missing trees, 2019-09-05).
+> 
+> Note that we can't quite drop the check in the caller added by that
+> commit yet, as there's some subtlety with repeated parsings (which will
+> be addressed in a future commit).
 
---hbu2h2vi3fekghml
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I tried figuring out what the subtlety is by undoing the check you
+describe, and did get a segfault in one of the tests, but couldn't
+figure out exactly what is going on. Looking at the code, is it because
+load_tree_for_commit() in commit-graph.c uses the return value of
+lookup_tree() indiscriminately (which is the issue that this patch
+fixes)?
 
-On 2019-10-24 at 06:01:08, Junio C Hamano wrote:
-> * bc/hash-independent-tests-part-6 (2019-10-06) 15 commits
->  - t4048: abstract away SHA-1-specific constants
->  - t4045: make hash-size independent
->  - t4044: update test to work with SHA-256
->  - t4039: abstract away SHA-1-specific constants
->  - t4038: abstract away SHA-1 specific constants
->  - t4034: abstract away SHA-1-specific constants
->  - t4027: make hash-size independent
->  - t4015: abstract away SHA-1-specific constants
->  - t4011: abstract away SHA-1-specific constants
->  - t4010: abstract away SHA-1-specific constants
->  - t3429: remove SHA1 annotation
->  - t1305: avoid comparing extensions
->  - rev-parse: add an --object-format option
->  - t/oid-info: add empty tree and empty blob values
->  - t/oid-info: allow looking up hash algorithm name
->=20
->  Test updates to prepare for SHA-2 transition continues.
->=20
->  May be rerolled.
->  cf. <20191008194012.4s35pbwbh25rblhb@camp.crustytoothpaste.net>
-
-I will indeed reroll this, and I hope to have a new version out soon.
-
-A reroll will also be coming for the documentation series I was working
-on.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---hbu2h2vi3fekghml
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl2yLw4ACgkQv1NdgR9S
-9otBvBAA0EQv76xk48WS+K0lCdBOeT4592WyfIGK39ZKaHocf3dDTfRpQBgtcE09
-UcxCwnR0IV1vvV505XIsh61hfClFRXTeZ3aGwcerED7dl2slbucUUcsgn7fMzDta
-QfClR57ai4ce/2nArDYWfqghWCIW1oMLnOgrPWa7cu5KOXXG53gGzMmyVwGVpzHn
-vsUM2L4hqQk4SoP7GQpsn3EVFbabkOGncOp/Uqo7YZHZwIpzjJtd/OPCa78hKM6h
-uoejCmj2mepwnhNyUUMaIHouIm3wgUrHLd8vtGFGb3UFNndOqcCBVeMbbL2NK3FE
-b3w7+YJH8AT2L+MshOEOc4SuJuMjzQje/g1rxbth2fCaGOVTKS95SsrG3vz3Hiai
-vjxqJFvHwpjnVFFweKSZN7oijvrsMFRBNxz8guKtdG/ZUzv5dEW1n8YhhI8KDTVQ
-j/60O1ELt9Ij0o0ZsgAScJunfZi9By8Yp5ey4EYIdvNaDqUp7arKMjP3dVr00cqK
-qwliGI6BuyZTuXtLoWphbH3IgCZupxU+uvR+ne0hkeRD/JjzR/gfx28LmXi4o12a
-5NN9Ylt7nVghDnlfesnWFSNdI+wlXl2FEe3O9p8hHncrVT7PbjwBi6Foj0P1eDz7
-1pb6yb7FijoXZY7gRM7uCLZ+KkYr6e7OpwU7+AOjrwh8IQaEr7I=
-=ACQF
------END PGP SIGNATURE-----
-
---hbu2h2vi3fekghml--
+This patch itself and patch 1 looks good (with the reasoning in the
+commit message), of course.
