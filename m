@@ -8,87 +8,88 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C41A31F4C0
-	for <e@80x24.org>; Thu, 24 Oct 2019 11:29:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5547D1F4C0
+	for <e@80x24.org>; Thu, 24 Oct 2019 11:29:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438997AbfJXL3P (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 07:29:15 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46410 "EHLO
+        id S2439000AbfJXL3R (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 07:29:17 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37668 "EHLO
         mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390184AbfJXL3P (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 07:29:15 -0400
-Received: by mail-wr1-f67.google.com with SMTP id n15so14863993wrw.13
-        for <git@vger.kernel.org>; Thu, 24 Oct 2019 04:29:13 -0700 (PDT)
+        with ESMTP id S2392504AbfJXL3R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 07:29:17 -0400
+Received: by mail-wr1-f67.google.com with SMTP id e11so16955528wrv.4
+        for <git@vger.kernel.org>; Thu, 24 Oct 2019 04:29:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=VoGIUJ0mNsd6PJee5dDra4xz3vvODE/s+rRcWj5icDY=;
-        b=i2mQ4ur/cilLY2b8jn6XC7PtYkNznvh54lS9EXZ5pReGdm72Ce9RuZ9LO+bnTAj76m
-         aX2zhk9/if6lybz5YzKLvYpqF97RMjHMad79hCRibhJ/SZXSDU/JD+QXVz99hq3qI8J7
-         IdOlr7f32VORP2CLkeIG1Q9GJGaBnHGWA63BLeFrvCOsh4gpK2b8EsNLXcJuXp2TNXQc
-         eW3ju1afwVX8VxW4AyWdRNKKRCHA45MDdHpres+2mWR11ah4kofPt52/uFrUV1DAeewa
-         btk/9o3imifCg8QMalf17nod04SmqgW2QWv2hrumlB53gflnWjOJFMQDylpmAbTTN/Th
-         KzMg==
+        bh=TiabJjyOPqctTJctnLqqxaqXcHDcwJePEB1NhQBango=;
+        b=FEfdgKAj1/e1BhvqzWaokaCF6ro8IW6j3XnsVjnIrdfe4kOAX5lO4BFmCsIRi9d4m6
+         t39NYBp20R+pn0whVPcW1lA19Ljk55NqZ1Mn0+tEEmR6QZaEQAnAW+q/ZVdO3b0YFv2U
+         FwLRaVa+Lty2JJtNQJR9wXtQwiwizBUtm8AmQ8f5CR9Rs7UAOGVnoSBiUBQ9ttLZEb/8
+         +hc4wtu+9KWGd4nO/AIdnbck1MwDTaXVF7ws9eWbCeJPJeY92zakZL93mEzUrOSo0hNx
+         AGTF4ZR9PMX11EUf/vLn+1MsLXIKvhQWDm8fzJLO0cgdlN148bzJrrbrqI/Rebzts0nt
+         MUhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VoGIUJ0mNsd6PJee5dDra4xz3vvODE/s+rRcWj5icDY=;
-        b=JHO6FaTCAZDWeAxGD/qTv+N7cuDX6OhE5pwwZHoDUYlqi7L2j0WIhy0QUIqfuqxMx0
-         6zal1VjL9j3hGrIXqZAzwQhsh9bmiD3qdlALZxGmhA2dIKOj7c92sFvCVkby8dpB8tpo
-         BSoKOJKeByhdboGRBCfXqK0IwmEgA8MslykZeqOH1BUX5XqNLG1yGEW9rQEBIuXUiaQ0
-         RF/n5tbKrkx7uw4nlSu7YB9UR9q1doVNU9pmvsBjzUUFMjxDI2oUW3wseAmYcWCtNf34
-         FKXvbZqi8DlweAyp1d2l97lCd3eo1+sNhQgY5u2O5YESt7UK+kXo1iuCVhPEQk6fkWbP
-         QFwQ==
-X-Gm-Message-State: APjAAAVgKdcftm99wrddzRPScPkVNclfupm/GRCPwLRYE9cDqDNaU7mx
-        fAHKVgapd72fcuoYLeO+cZABTG3g
-X-Google-Smtp-Source: APXvYqwbQpFFz7j/RNZU4tRJqGQQ5ENp7h93T7wCq7y+lSF18IkfqJJUhSudbp/KVeM2ufkFA+ongg==
-X-Received: by 2002:a5d:4ace:: with SMTP id y14mr3473090wrs.131.1571916552810;
-        Thu, 24 Oct 2019 04:29:12 -0700 (PDT)
+        bh=TiabJjyOPqctTJctnLqqxaqXcHDcwJePEB1NhQBango=;
+        b=gDizD7X9JtyCN3bxGerPYf7IypYCHVkp4l/jqafT5qAyywmNCxWC9iwQ4BTQ2WALAz
+         q44mCjcOkK5LgY5NAwMkVXlFgP1EZqYwcPrFqntsyBfWjsljqWwqSN/Ol2itVzycPR/8
+         7SMfP5c8Iz55mRjmHYzLmAuf5JDdUwRrrEUR19COVez/iulbPtgeDjJiJ0vITGK/Nf/0
+         D1gpIEGl4fWRs+S9DwBhc7VR1et5aCbBBarB/3yz8Zj/QTE8UOmoegOzSbRBDQRC7T1T
+         oYAd8+jG/bc1ZXISeqw4RUmwVfdNqnt+4+76yFm97RUHLCoMWHCMY+zmARQPw4aLAa8Y
+         aCBg==
+X-Gm-Message-State: APjAAAXLPnJo4P6m4u2l7vNl4yiUWfZ/bTWMZTZHOI7yrePZEeOrql/h
+        HNgCTLq7cE/q+0UjmeIWGsdCgHBO
+X-Google-Smtp-Source: APXvYqzKgJw4RMRpOHOZSmlLxtj5au7UD/H09e37wGstKo34EEsgOHYYtggRzC6YSYPw01D0fohg0w==
+X-Received: by 2002:a5d:694a:: with SMTP id r10mr3387734wrw.117.1571916553509;
+        Thu, 24 Oct 2019 04:29:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s10sm18617407wrn.46.2019.10.24.04.29.12
+        by smtp.gmail.com with ESMTPSA id v10sm3402023wmg.48.2019.10.24.04.29.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Oct 2019 04:29:12 -0700 (PDT)
-Message-Id: <pull.412.v3.git.1571916551.gitgitgadget@gmail.com>
-In-Reply-To: <pull.412.v2.git.1571815556.gitgitgadget@gmail.com>
+        Thu, 24 Oct 2019 04:29:13 -0700 (PDT)
+Message-Id: <ee64a075d3074718a47da4ed369cee6923d0b460.1571916551.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.412.v3.git.1571916551.gitgitgadget@gmail.com>
 References: <pull.412.v2.git.1571815556.gitgitgadget@gmail.com>
+        <pull.412.v3.git.1571916551.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Oct 2019 11:29:10 +0000
-Subject: [PATCH v3 0/1] [Outreachy] documentation: remove empty doc files
+Date:   Thu, 24 Oct 2019 11:29:11 +0000
+Subject: [PATCH v3 1/1] documentation: remove empty doc files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Heba Waly <heba.waly@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     Heba Waly <heba.waly@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Heba Waly <heba.waly@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Heba Waly <heba.waly@gmail.com>
+
 Remove empty and redundant documentation files from the
 Documentation/technical/ directory.
 
 The empty doc files included only TODO messages with no documentation for
-years. Instead an approach is being taken to keep all doc beside the code in
-the relevant header files. Having empty doc files is confusing and
-disappointing to anybody looking for information, besides having the
-documentation in header files makes it easier for developers to find the
-information they are looking for.
+years. Instead an approach is being taken to keep all doc beside the code
+in the relevant header files.
+Having empty doc files is confusing and disappointing to anybody looking
+for information, besides having the documentation in header files makes it
+easier for developers to find the information they are looking for.
 
 Some of the content which could have gone here already exists elsewhere:
+- api-object-access.txt -> sha1-file.c and object.h have some details.
+- api-quote.txt -> quote.h has some details.
+- api-xdiff-interface.txt -> xdiff-interface.h has some details.
+- api-grep.txt -> grep.h does not have enough documentation at the moment.
 
- * api-object-access.txt -> sha1-file.c and object.h have some details.
- * api-quote.txt -> quote.h has some details.
- * api-xdiff-interface.txt -> xdiff-interface.h has some details.
- * api-grep.txt -> grep.h does not have enough documentation at the moment.
-
-Signed-off-by: Heba Waly heba.waly@gmail.com [heba.waly@gmail.com]
-
-Heba Waly (1):
-  documentation: remove empty doc files
-
+Signed-off-by: Heba Waly <heba.waly@gmail.com>
+---
  Documentation/technical/api-grep.txt            |  8 --------
  Documentation/technical/api-object-access.txt   | 15 ---------------
  Documentation/technical/api-quote.txt           | 10 ----------
@@ -99,36 +100,69 @@ Heba Waly (1):
  delete mode 100644 Documentation/technical/api-quote.txt
  delete mode 100644 Documentation/technical/api-xdiff-interface.txt
 
-
-base-commit: d966095db01190a2196e31195ea6fa0c722aa732
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-412%2FHebaWaly%2Fdelete_empty_docs-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-412/HebaWaly/delete_empty_docs-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/412
-
-Range-diff vs v2:
-
- 1:  5cd79e24fe ! 1:  ee64a075d3 documentation: remove empty doc files
-     @@ -12,15 +12,11 @@
-          for information, besides having the documentation in header files makes it
-          easier for developers to find the information they are looking for.
-      
-     -    here's a list of the files removed and if the info can be found in the
-     -    corresponding header file:
-     -    1- Documentation/technical/api-grep.txt -> grep.h does not have enough
-     -    documentation at the moment.
-     -    2- Documentation/technical/api-object-access.txt -> sha1-file.c and
-     -    object.h have some details
-     -    3- Documentation/technical/api-quote.txt -> quote.h has some details.
-     -    4- Documentation/technical/api-xdiff-interface.txt -> xdiff-interface.h has
-     -    some details.
-     +    Some of the content which could have gone here already exists elsewhere:
-     +    - api-object-access.txt -> sha1-file.c and object.h have some details.
-     +    - api-quote.txt -> quote.h has some details.
-     +    - api-xdiff-interface.txt -> xdiff-interface.h has some details.
-     +    - api-grep.txt -> grep.h does not have enough documentation at the moment.
-      
-          Signed-off-by: Heba Waly <heba.waly@gmail.com>
-      
-
+diff --git a/Documentation/technical/api-grep.txt b/Documentation/technical/api-grep.txt
+deleted file mode 100644
+index a69cc8964d..0000000000
+--- a/Documentation/technical/api-grep.txt
++++ /dev/null
+@@ -1,8 +0,0 @@
+-grep API
+-========
+-
+-Talk about <grep.h>, things like:
+-
+-* grep_buffer()
+-
+-(JC)
+diff --git a/Documentation/technical/api-object-access.txt b/Documentation/technical/api-object-access.txt
+deleted file mode 100644
+index 5b29622d00..0000000000
+--- a/Documentation/technical/api-object-access.txt
++++ /dev/null
+@@ -1,15 +0,0 @@
+-object access API
+-=================
+-
+-Talk about <sha1-file.c> and <object.h> family, things like
+-
+-* read_sha1_file()
+-* read_object_with_reference()
+-* has_sha1_file()
+-* write_sha1_file()
+-* pretend_object_file()
+-* lookup_{object,commit,tag,blob,tree}
+-* parse_{object,commit,tag,blob,tree}
+-* Use of object flags
+-
+-(JC, Shawn, Daniel, Dscho, Linus)
+diff --git a/Documentation/technical/api-quote.txt b/Documentation/technical/api-quote.txt
+deleted file mode 100644
+index e8a1bce94e..0000000000
+--- a/Documentation/technical/api-quote.txt
++++ /dev/null
+@@ -1,10 +0,0 @@
+-quote API
+-=========
+-
+-Talk about <quote.h>, things like
+-
+-* sq_quote and unquote
+-* c_style quote and unquote
+-* quoting for foreign languages
+-
+-(JC)
+diff --git a/Documentation/technical/api-xdiff-interface.txt b/Documentation/technical/api-xdiff-interface.txt
+deleted file mode 100644
+index 6296ecad1d..0000000000
+--- a/Documentation/technical/api-xdiff-interface.txt
++++ /dev/null
+@@ -1,7 +0,0 @@
+-xdiff interface API
+-===================
+-
+-Talk about our calling convention to xdiff library, including
+-xdiff_emit_consume_fn.
+-
+-(Dscho, JC)
 -- 
 gitgitgadget
