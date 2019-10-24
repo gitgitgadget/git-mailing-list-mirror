@@ -2,128 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA6281F4C1
-	for <e@80x24.org>; Thu, 24 Oct 2019 23:36:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 245491F4C0
+	for <e@80x24.org>; Thu, 24 Oct 2019 23:41:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732498AbfJXXgc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 19:36:32 -0400
-Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:29143 "EHLO
-        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1727309AbfJXXga (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 19:36:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1571960189;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=6Rbfjg8jjKhKxyMZMnQVoQJtkdX2yyeBQxAgO1sYJ/Q=;
-        b=RJDXMaH/fsGWC95ACwvOMmuV/n1FFRJIGJEu5Am/A0MO0uR1B57nsp5UAAIEAJDYOF6S/A
-        HNrk+L2g7Wf0e/MU5NcnZhbNm1pXFywSKUXvv5f1P6ExgCml97iGHkaNUo2SaG0RZjp/22
-        lE6sBW4GDYqsRZ993uVIw0rYRhjeDno=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-37-tL8KllvmMoCoQ3c32Wd5gw-1; Thu, 24 Oct 2019 19:36:25 -0400
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 38B481800D6B;
-        Thu, 24 Oct 2019 23:36:24 +0000 (UTC)
-Received: from prarit.bos.redhat.com (prarit-guest.khw1.lab.eng.bos.redhat.com [10.16.200.63])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 76467600C6;
-        Thu, 24 Oct 2019 23:36:23 +0000 (UTC)
-From:   Prarit Bhargava <prarit@redhat.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, peff@peff.net,
-        szeder.dev@gmail.com, Prarit Bhargava <prarit@redhat.com>
-Subject: [PATCH v3 1/3] t6006: Use test-lib.sh definitions
-Date:   Thu, 24 Oct 2019 19:36:15 -0400
-Message-Id: <20191024233617.18716-2-prarit@redhat.com>
-In-Reply-To: <20191024233617.18716-1-prarit@redhat.com>
-References: <20191024233617.18716-1-prarit@redhat.com>
+        id S1732266AbfJXXlN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 19:41:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57776 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1730783AbfJXXlM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 19:41:12 -0400
+Received: (qmail 27154 invoked by uid 109); 24 Oct 2019 23:41:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 24 Oct 2019 23:41:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6670 invoked by uid 111); 24 Oct 2019 23:44:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Oct 2019 19:44:19 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 24 Oct 2019 19:41:11 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 04/23] remember commit/tag parse failures
+Message-ID: <20191024234111.GC32602@sigill.intra.peff.net>
+References: <20191018044721.GD17879@sigill.intra.peff.net>
+ <20191024232546.70565-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-MC-Unique: tL8KllvmMoCoQ3c32Wd5gw-1
-X-Mimecast-Spam-Score: 0
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191024232546.70565-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use name and email definitions from test-lib.sh.
+On Thu, Oct 24, 2019 at 04:25:46PM -0700, Jonathan Tan wrote:
 
-Signed-off-by: Prarit Bhargava <prarit@redhat.com>
----
- t/t6006-rev-list-format.sh | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+> Firstly, this patch is not about remembering, but about not setting
+> anything, so I think that the title should be something like:
+> 
+>   commit, tag: set parsed only if no parsing error
 
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index cfb74d0e0354..1f7d3f7acc9c 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -111,14 +111,14 @@ EOF
- # we don't test relative here
- test_format author %an%n%ae%n%ad%n%aD%n%at <<EOF
- commit $head2
--A U Thor
--author@example.com
-+$GIT_AUTHOR_NAME
-+$GIT_AUTHOR_EMAIL
- Thu Apr 7 15:13:13 2005 -0700
- Thu, 7 Apr 2005 15:13:13 -0700
- 1112911993
- commit $head1
--A U Thor
--author@example.com
-+$GIT_AUTHOR_NAME
-+$GIT_AUTHOR_EMAIL
- Thu Apr 7 15:13:13 2005 -0700
- Thu, 7 Apr 2005 15:13:13 -0700
- 1112911993
-@@ -126,14 +126,14 @@ EOF
-=20
- test_format committer %cn%n%ce%n%cd%n%cD%n%ct <<EOF
- commit $head2
--C O Mitter
--committer@example.com
-+$GIT_COMMITTER_NAME
-+$GIT_COMMITTER_EMAIL
- Thu Apr 7 15:13:13 2005 -0700
- Thu, 7 Apr 2005 15:13:13 -0700
- 1112911993
- commit $head1
--C O Mitter
--committer@example.com
-+$GIT_COMMITTER_NAME
-+$GIT_COMMITTER_EMAIL
- Thu Apr 7 15:13:13 2005 -0700
- Thu, 7 Apr 2005 15:13:13 -0700
- 1112911993
-@@ -410,7 +410,7 @@ test_expect_success 'empty email' '
- =09test_tick &&
- =09C=3D$(GIT_AUTHOR_EMAIL=3D git commit-tree HEAD^{tree} </dev/null) &&
- =09A=3D$(git show --pretty=3Dformat:%an,%ae,%ad%n -s $C) &&
--=09verbose test "$A" =3D "A U Thor,,Thu Apr 7 15:14:13 2005 -0700"
-+=09verbose test "$A" =3D "$GIT_AUTHOR_NAME,,Thu Apr 7 15:14:13 2005 -0700"
- '
-=20
- test_expect_success 'del LF before empty (1)' '
-@@ -495,7 +495,7 @@ test_expect_success '%gd shortens ref name' '
- '
-=20
- test_expect_success 'reflog identity' '
--=09echo "C O Mitter:committer@example.com" >expect &&
-+=09echo "$GIT_COMMITTER_NAME:$GIT_COMMITTER_EMAIL" >expect &&
- =09git log -g -1 --format=3D"%gn:%ge" >actual &&
- =09test_cmp expect actual
- '
---=20
-2.21.0
+True. I had also played with actually remembering via a bit, which I
+think is how I ended up thinking about it that way. You could argue that
+it is "not forgetting", which is remembering. :) But I think your
+suggested title is better.
 
+> Incidentally, the check that you mentioned in PATCH 02 is probably no
+> longer necessary. The tests all pass even with the following diff:
+> 
+> diff --git a/commit.c b/commit.c
+> index e12e7998ad..086011d944 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -359,7 +359,7 @@ struct tree *repo_get_commit_tree(struct repository *r,
+>  struct object_id *get_commit_tree_oid(const struct commit *commit)
+>  {
+>         struct tree *tree = get_commit_tree(commit);
+> -       return tree ? &tree->object.oid : NULL;
+> +       return &tree->object.oid;
+>  }
+
+Ah, I see the confusion you had earlier. The check I meant in patch 2
+(and here) was the one in write_graph_chunk_data(), which checks for a
+non-NULL tree even after we just saw a successful parse.
+
+I agree that getting rid of the check in get_commit_tree_oid() is
+unlikely to cause any bugs, but there are still cases where it could
+help. Namely if I choose to ignore the parse failure (because I want to
+see the parts of the commit struct that we did manage to get), then I'd
+like to be able to ask whether we have a valid tree, like:
+
+  oid = get_commit_tree_oid(commit);
+  if (!oid)
+	do something...
+
+With the revert you showed above, that's dangerous, because we'd get a
+bogus value like "8" (because the oid is offset 8 bytes in the struct
+which we've dereferenced as NULL).
+
+You could obviously use "get_commit_tree()" instead, which would let you
+compare to NULL. But it seemed simpler to leave the extra safety in
+place.
+
+-Peff
