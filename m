@@ -2,92 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 245491F4C0
-	for <e@80x24.org>; Thu, 24 Oct 2019 23:41:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1272B1F4C0
+	for <e@80x24.org>; Thu, 24 Oct 2019 23:49:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732266AbfJXXlN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 19:41:13 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57776 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1730783AbfJXXlM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 19:41:12 -0400
-Received: (qmail 27154 invoked by uid 109); 24 Oct 2019 23:41:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 24 Oct 2019 23:41:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6670 invoked by uid 111); 24 Oct 2019 23:44:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Oct 2019 19:44:19 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 24 Oct 2019 19:41:11 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 04/23] remember commit/tag parse failures
-Message-ID: <20191024234111.GC32602@sigill.intra.peff.net>
-References: <20191018044721.GD17879@sigill.intra.peff.net>
- <20191024232546.70565-1-jonathantanmy@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191024232546.70565-1-jonathantanmy@google.com>
+        id S1732420AbfJXXtf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 19:49:35 -0400
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:37097 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730783AbfJXXtf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 19:49:35 -0400
+Received: by mail-pg1-f202.google.com with SMTP id u20so323281pga.4
+        for <git@vger.kernel.org>; Thu, 24 Oct 2019 16:49:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=N1nMa6PwEAt7NFs4iPjCHvRyKTyjq99dEj2oTJSVZhI=;
+        b=efpXwi25LSiiJPuYNAVQBIbq4PB7eGpBhN1c2vx8Ao1vhxbno99BO5v/KJcACZhNkc
+         4vioRoHBYgdBJDmFY6ndLOx/Uu7sKJs09FJiAKFzvf2eLi0owYuIqNVrgQ3ubipLs/mZ
+         F/F7eOx2LU4KMtJLARI4Aceerqr7P/RuYuSoeBAgjhjWfatLemmS8uH3BZ6r8JfOekIh
+         IwaEuiuHew6GueE/AtGgYKO411pr2yVOA6KyOx2jtolOYLLmdJRsGlFv75hRePLI2rdX
+         bt6Us7Iz0KPJDlWtJu4zdiJSI3TT9WsfGY5sbcqeXeCM+V/V6WaVx6oIxlrxRWvCzwi7
+         OA1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=N1nMa6PwEAt7NFs4iPjCHvRyKTyjq99dEj2oTJSVZhI=;
+        b=QemS3/INquvyIFqY3KJVWCnjpntvw/bzYZgduv8UGSW6WuK3v+AQrFckJ2HAgZwylb
+         sUu8W7hXhUEtO3V6zTvdSVzOp292yhLT4gIX75S+zsTQbcbF/zWpFy8vZNAPQFw42jSy
+         peQ1FdQNLZWq4mJ2GSsBVtbKWnQDCCLbVYDObTcBrSZvdjtNOKQDghre7OchhAwZzUP+
+         9iX2G3AhLi1FJ75EizpvHUJUZ3g/i2RBJrUHLMr0Wx4Uof56p6G6O5trKu80MTt1RQKw
+         Vks+GCu85R1Vp+uL+wKzszoEFC9ukIGMBEcRMiktB2WODGD/ynJdgY7pef3w5R7elmH9
+         jGfA==
+X-Gm-Message-State: APjAAAVJ/32sjjgwrY2s0F9JW83/jSrltKHmOP2m+J9LvgMpGovgP8xP
+        LqAIaYJUQohiBCxE2fQjlsfQS/MkqhsZ8gSSiw7Y
+X-Google-Smtp-Source: APXvYqwPxe9J1nnLwFosLrwcJP/4GxCXTPfjhWBB49efJrK3JRIInVg2Nv3OhkEwQDQZpcsmj4x0zea0gudCylN7k9gQ
+X-Received: by 2002:a63:cf46:: with SMTP id b6mr778011pgj.90.1571960974444;
+ Thu, 24 Oct 2019 16:49:34 -0700 (PDT)
+Date:   Thu, 24 Oct 2019 16:49:31 -0700
+In-Reply-To: <20191018044103.GA17625@sigill.intra.peff.net>
+Message-Id: <20191024234931.44192-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20191018044103.GA17625@sigill.intra.peff.net>
+X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665-goog
+Subject: Re: [PATCH 0/23] parsing and fsck cleanups
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     peff@peff.net
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 24, 2019 at 04:25:46PM -0700, Jonathan Tan wrote:
+I've looked at the rest of the patch set and I think that this set is
+worth taking.
 
-> Firstly, this patch is not about remembering, but about not setting
-> anything, so I think that the title should be something like:
+>     This a string of refactors that ends up with all of the
+>     type-specific fsck functions not getting an object struct at all.
+>     My goal there was two-fold:
 > 
->   commit, tag: set parsed only if no parsing error
-
-True. I had also played with actually remembering via a bit, which I
-think is how I ended up thinking about it that way. You could argue that
-it is "not forgetting", which is remembering. :) But I think your
-suggested title is better.
-
-> Incidentally, the check that you mentioned in PATCH 02 is probably no
-> longer necessary. The tests all pass even with the following diff:
+>        - it makes it harder to introduce weirdness like we saw in
+> 	 patches 5-8.
 > 
-> diff --git a/commit.c b/commit.c
-> index e12e7998ad..086011d944 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -359,7 +359,7 @@ struct tree *repo_get_commit_tree(struct repository *r,
->  struct object_id *get_commit_tree_oid(const struct commit *commit)
->  {
->         struct tree *tree = get_commit_tree(commit);
-> -       return tree ? &tree->object.oid : NULL;
-> +       return &tree->object.oid;
->  }
+>        - it _could_ make things less awkward for callers like index-pack
+> 	 which don't necessarily have object structs. And at the end, we
+> 	 basically have an fsck_object() that doesn't need an object
+> 	 struct. But index-pack still calls fsck_walk(), which does (and
+> 	 which relies on the parsed values to traverse). It's not
+> 	 entirely clear to me whether index-pack needs to be doing
+> 	 fsck_walk() in the first place, or if it should be relying on
+> 	 the usual connectivity check.
+> 
+> 	 So I'm undecided whether this is worth taking on its own, or if
+> 	 trying to avoid object structs in the fsck code is just a
+> 	 fool's errand. I do think the result isn't too bad to look at,
+> 	 though and there are some minor improvements along the way
+> 	 (e.g., patch 17 is able to drop some awkwardness).
 
-Ah, I see the confusion you had earlier. The check I meant in patch 2
-(and here) was the one in write_graph_chunk_data(), which checks for a
-non-NULL tree even after we just saw a successful parse.
-
-I agree that getting rid of the check in get_commit_tree_oid() is
-unlikely to cause any bugs, but there are still cases where it could
-help. Namely if I choose to ignore the parse failure (because I want to
-see the parts of the commit struct that we did manage to get), then I'd
-like to be able to ask whether we have a valid tree, like:
-
-  oid = get_commit_tree_oid(commit);
-  if (!oid)
-	do something...
-
-With the revert you showed above, that's dangerous, because we'd get a
-bogus value like "8" (because the oid is offset 8 bytes in the struct
-which we've dereferenced as NULL).
-
-You could obviously use "get_commit_tree()" instead, which would let you
-compare to NULL. But it seemed simpler to leave the extra safety in
-place.
-
--Peff
+If we can partially avoid object structs in the fsck code, I think
+that's an improvement too.
