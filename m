@@ -2,238 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F6891F4C0
-	for <e@80x24.org>; Thu, 24 Oct 2019 13:40:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 909531F4C0
+	for <e@80x24.org>; Thu, 24 Oct 2019 15:25:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393671AbfJXNkt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 09:40:49 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55107 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393664AbfJXNkt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 09:40:49 -0400
-Received: by mail-wm1-f66.google.com with SMTP id g7so2895161wmk.4
-        for <git@vger.kernel.org>; Thu, 24 Oct 2019 06:40:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=ycXzQZeHnvQNpPkmmmc62gmowDhCHgqheuNpvH9yAqs=;
-        b=Ny9hJHnv9DwVZbRV9MqxuxVk5dTKzcCakpdEykAZsJlaGkNJxUcAgN3644hV3DwvF7
-         rvh2IGxBtg1U0Iah0V6wd3jBZ9oFgUcv3qI5+YMgBLTuHEGwKt2IAetKiwPK9icDCQx6
-         LXkF90JQFyWG5tLlTctJD3m/LPPdihp5UqmskOHk4qGGc6UPm9oqInF1phDR3MoKZGN9
-         2EiNwjCd3LLVKYycjG9Uxp0sqMiuYl9W8IJocaGknOtmE2pEtMwEOUO4XMAhm8nb5qMY
-         RFjcxRdCpzmSdAnFRfQOqLCb5KW7YaqvpSJ8in+TE0ae9XrPCD9Hqt6OCd8p5wTM+ELu
-         sBsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=ycXzQZeHnvQNpPkmmmc62gmowDhCHgqheuNpvH9yAqs=;
-        b=MdK/whQuashmZPqTI2GFkDkuZ1JrDKN3/Yww4Tx2Mj2WuYInVTqdlJGJJ7hYPymWis
-         Gy/EszzDQ4lShwhlcg7UoUA2txHafszlhkCpMQQjAviN+FZ6azk6o9CnOuAqXHAThf6s
-         ko3Bw3xB/vscv/VK+Pgy95iNL+nyLTwnJDkDBUiiVFzyI5aeoBfzUO+H1135Su07gxxv
-         p8fPzuy5J4tVrMXqgXXciPu8xj4X5+hVaHkKr95c9ZpBB2M8T4ejZNVMeG0WjhJFVVJQ
-         jop5vWJ3bIt8IEAy2eOgO9eptabKBq4AHoM+F3OZdZOn/3Qg4IADRSP/FcuZoj0/5Htx
-         9QtA==
-X-Gm-Message-State: APjAAAVFAupJZCcMj605Fd4Qw+sOFx+4u2z1dyQeSgewBkPxppllDZ8c
-        ViAFtBEfAOzWUdavtr/Wgrqgst06
-X-Google-Smtp-Source: APXvYqygq+B/6rKjqPakJIvUoRvL7xjDMLNasStXshugdOAg4TEy4eLVr5VKLMd8dMI+tQ9II8GFcw==
-X-Received: by 2002:a7b:cb54:: with SMTP id v20mr4855057wmj.91.1571924445894;
-        Thu, 24 Oct 2019 06:40:45 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j14sm2703747wrj.35.2019.10.24.06.40.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Oct 2019 06:40:45 -0700 (PDT)
-Message-Id: <6d01e905911bb68b85caa2f151e723aa542eb263.1571924442.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.415.v4.git.1571924442.gitgitgadget@gmail.com>
-References: <pull.415.v3.git.1571919488.gitgitgadget@gmail.com>
-        <pull.415.v4.git.1571924442.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Oct 2019 13:40:42 +0000
-Subject: [PATCH v4 2/2] commit-graph: fix writing first commit-graph during
- fetch
+        id S2503151AbfJXPZR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 11:25:17 -0400
+Received: from mout.web.de ([212.227.17.12]:39709 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2503110AbfJXPZR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 11:25:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1571930709;
+        bh=f1AnLfjtJyFY2xaDrYLmda7Wkps+9Zr2KOG3JEHmPKU=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=ANmunYp9AgdN/wqdvGtNeiwo4RtB98wN1BjVvsD3eu9fIwHmYMxFK5o6zX4+Rb6Vf
+         XK2J/K1prhZrIczScCw0wH3N8HAoKrg7/iizHNa3CPcY531UVYeHf7uDNUcRSe0XSo
+         Fk8FCEHw9ZXxlkv/NAiwmdxdMkMYkNMNxxPHVtlM=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MbhFJ-1ig1JY0HOn-00J6Bi; Thu, 24
+ Oct 2019 17:25:09 +0200
+Date:   Thu, 24 Oct 2019 17:25:08 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: Git Test Coverage Report (October 11)
+Message-ID: <20191024152508.a6vr7nh62wsqzy6u@tb-raspi4>
+References: <c863c09b-f0ed-19c6-356e-12a3ecbc08b9@gmail.com>
+ <20191023170049.hnzb22iiflrigyfs@tb-raspi4>
+ <ebe33082-976d-7146-1450-925e4785faf1@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de, peff@peff.net, szeder.dev@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ebe33082-976d-7146-1450-925e4785faf1@gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:Ud3xKryhAfaYxVBDtHpjVWkZJ4JYDUb4L37tDnwvqyat8tiMHlQ
+ fqY+zooGvvpRpBBXciPEIvm2ktMYGTt+bzBz6h1kmNAI0VMh5xi8ftgj287dNGmZy/sHH2p
+ 7DUJgESI+VnBtxGNH7qIPLHoms7qr+GvngzUTqM4KQhLp/N3EM11O1nwnIlLB4YAvVp3DXR
+ PvWHSOqqjsg4K8iblvrtg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/nYRbNVHAV4=:LxwG4I24o6u/Ypp7c2kGy8
+ vZ2hfmKTEBB1VgD3CsdkamSIv7LlSB0jSDLgYX0pQoasfDwe1gO/1ooEn6bDKZeiB5UFOJw+n
+ xTUPKBUz8rvTsBL74ZzUzk2Cug2QwDK44edGozSHIZVm7VbtyuW6pyXaImnXEDhe+8fj7hsv+
+ Tjcc/rECiAia3EKQyjvL7LjbeD0bRAaBM/5Fpuo3m+abkelJK7q4gOT5ZmLWDBAuN0jfkjjKF
+ meAQFtsg40OG97IJe8tLybmkGR+ebbG9ufec8ni9yWOlg4w5N5myTCrLxxWWa0J5toq/ABIBu
+ bR2m462S+CHzjjiAm9/gq9VVkpU+2DfQUjOxxi+nxGZJIvRHBhhBR7at+PyzHy+WF2B4FC3yp
+ FvDjVOxt6scR1Il1iDm0SJ14KuKJcDVHrfyqb+L5WaHjSUdFZCVLg8/RcQBPU3lg782NUWuTw
+ yuEPVIDeRNGCGst68XdeYNePeS67KQjPaRXBbi8+2zy8ccF1JHc2SNir3P9L0CE/ghvw2B0dA
+ 5192dFY6/O3fKQgF147EVF8kk/n5El3yaqZvZ+isQPuFZzVOfdc8Ps0FtiUKUX6Xrp0lWUuzb
+ hbXq9yqBbnqrb0SQRFj4zpMMHF422N3XTmm+YwnmqM5qfAy/xTq9xepuNEzCgdI4S7Wh/N3KH
+ kMrV42v9QHrZp0K4lGktijrs+1fxzxnNIncymkzO0dvy6zVREap2+mO92cnVZzjQfhkdoU9Q8
+ 85tAWeuteMN2V6cRYy1VOmgXUvR3Srn6eGoKccUN9jrOOkVPw1nfjlYLuPlCiqwGwgGPXEVr/
+ Hy1Ewhry03v8cw06sCWo8VGBxyoYmFwORYG2vB4/XUDcHcdasCX48k+uD94Ts2QJXd11hIvut
+ EnLyZQKjCQMZJmN90Jq1Qpxt2aV6uMjewTOO2sLJolnugNZlwl7nYOcQVFxr63UFEAYqsOYZD
+ IoU6fqEhRWURSUnKY9e9JPe1H+TrIxAR6PeRAYhQfll3kIme43Zu+TFSR3ZsWAuqwvHw7b2DN
+ hOpTDYrkmrDzJRVmEKlb9veMeH0++aD0WpBOaGjfHdX0m0AFcLtR5pvJGI87kd8/BFBTCbXWh
+ 8fZSmidywWXGdGhyCV/QvdKN4aUzAtfNHFoz47pPlV67Jh6XFadnpwPmy7CrzJ14zKWtHdd79
+ xcGKDzL72916sLr7uLxnI/Co6JPcdTfZBRVdl++9ljqsLVdk+B8fraXWQNRvh/UXT9J8PCe0O
+ 7dDqoq/Y+YLtT5Cr3yGAJHs+/ixHcfIq+5qcQZg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On Wed, Oct 23, 2019 at 02:07:20PM -0400, Derrick Stolee wrote:
+> On 10/23/2019 1:00 PM, Torsten B=F6gershausen wrote:
+> > On Fri, Oct 11, 2019 at 09:33:11AM -0400, Derrick Stolee wrote:
+> >> Here is today's test coverage report. The usual report format is
+> >> available online [1], [2]. The report listed below is a new format
+> >> that groups lines by the commit that introduced them [3]. Thanks
+> >> Peff for the feedback on that idea.
+> >>
+> >
+> > []
+> >>
+> >> Torsten B=F6gershausen	ebb8d2c9 mingw: support UNC in git clone file:=
+//server/share/repo
+> >> connect.c
+> >> ebb8d2c9 921) path =3D host - 2; /* include the leading "//" */
+> >>
+> >
+> > I actually looked into this one, and my understanding is that the code=
+ path
+> > makes only sense for windows and is only tested on Windows in t5500.
+> > (Linux/Unix/POSIX don't use UNC path names starting with "//" )
+> >
+> > How can we avoid those "not covered by test" warnings?
+> >
+> > One solution could be to use
+> >
+> > #ifndef has_dos_drive_prefix
+> > #define has_dos_drive_prefix(a) 0
+> > #endif
+> >
+> > in git-compat-util.h and hope that the compiler is smart enough
+> > to optimize away that line of code.
+> >
+> > Another way could be to have #ifdefs in connect.c, so that it
+> > is clear "this is Windows only".
+> >
+> > Or make a comment for the "cover report" saying "not covered".
+> >
+> > Are there any good or better thoughts on this ?
+>
+> One way to avoid this is to add ignored lines to the test-coverage
+> repo [1]. These only work if the exact contents match on a specific
+> line number, but can be a way to stop noise in the short-term.
+>
+> For example, I added a few lines to ignore in commit-graph.c [2],
+> but I haven't added ignored lines in a while.
+>
+> I'm happy to take a PR including the lines you want to ignore, or
+> I could take inventory of the lines in the current report before regener=
+ating
+> a test for -rc1.
+>
+> Thanks,
+> -Stolee
+>
+> [1] https://github.com/derrickstolee/git-test-coverage
+>
+> [2] https://github.com/derrickstolee/git-test-coverage/blob/master/ignor=
+ed/commit-graph.c
 
-The previous commit includes a failing test for an issue around
-fetch.writeCommitGraph and fetching in a repo with a submodule. Here, we
-fix that bug and set the test to "test_expect_success".
+I added a PR as suggested.
+One thing, that came into my mind:
 
-The problem arises with this set of commands when the remote repo at
-<url> has a submodule. Note that --recurse-submodules is not needed to
-demonstrate the bug.
+Would it make sense to loosen the condition:
+921:path =3D host - 2; /* include the leading "//" */
 
-	$ git clone <url> test
-	$ cd test
-	$ git -c fetch.writeCommitGraph=true fetch origin
-	Computing commit graph generation numbers: 100% (12/12), done.
-	BUG: commit-graph.c:886: missing parent <hash1> for commit <hash2>
-	Aborted (core dumped)
+Remove the line number:
+host - 2; /* include the leading "//" */
 
-As an initial fix, I converted the code in builtin/fetch.c that calls
-write_commit_graph_reachable() to instead launch a "git commit-graph
-write --reachable --split" process. That code worked, but is not how we
-want the feature to work long-term.
-
-That test did demonstrate that the issue must be something to do with
-internal state of the 'git fetch' process.
-
-The write_commit_graph() method in commit-graph.c ensures the commits we
-plan to write are "closed under reachability" using close_reachable().
-This method walks from the input commits, and uses the UNINTERESTING
-flag to mark which commits have already been visited. This allows the
-walk to take O(N) time, where N is the number of commits, instead of
-O(P) time, where P is the number of paths. (The number of paths can be
-exponential in the number of commits.)
-
-However, the UNINTERESTING flag is used in lots of places in the
-codebase. This flag usually means some barrier to stop a commit walk,
-such as in revision-walking to compare histories. It is not often
-cleared after the walk completes because the starting points of those
-walks do not have the UNINTERESTING flag, and clear_commit_marks() would
-stop immediately.
-
-This is happening during a 'git fetch' call with a remote. The fetch
-negotiation is comparing the remote refs with the local refs and marking
-some commits as UNINTERESTING.
-
-I tested running clear_commit_marks_many() to clear the UNINTERESTING
-flag inside close_reachable(), but the tips did not have the flag, so
-that did nothing.
-
-It turns out that the calculate_changed_submodule_paths() method is at
-fault. Thanks, Peff, for pointing out this detail! More specifically,
-for each submodule, the collect_changed_submodules() runs a revision
-walk to essentially do file-history on the list of submodules. That
-revision walk marks commits UNININTERESTING if they are simplified away
-by not changing the submodule.
-
-Instead, I finally arrived on the conclusion that I should use a flag
-that is not used in any other part of the code. In commit-reach.c, a
-number of flags were defined for commit walk algorithms. The REACHABLE
-flag seemed like it made the most sense, and it seems it was not
-actually used in the file. The REACHABLE flag was used in early versions
-of commit-reach.c, but was removed by 4fbcca4 (commit-reach: make
-can_all_from_reach... linear, 2018-07-20).
-
-Add the REACHABLE flag to commit-graph.c and use it instead of
-UNINTERESTING in close_reachable(). This fixes the bug in manual
-testing.
-
-Reported-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Szeder Gábor <szeder.dev@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- commit-graph.c   | 11 +++++++----
- commit-reach.c   |  1 -
- object.h         |  3 ++-
- t/t5510-fetch.sh |  2 +-
- 4 files changed, 10 insertions(+), 7 deletions(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index fc4a43b8d6..0aea7b2ae5 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -41,6 +41,9 @@
- #define GRAPH_MIN_SIZE (GRAPH_HEADER_SIZE + 4 * GRAPH_CHUNKLOOKUP_WIDTH \
- 			+ GRAPH_FANOUT_SIZE + the_hash_algo->rawsz)
- 
-+/* Remember to update object flag allocation in object.h */
-+#define REACHABLE       (1u<<15)
-+
- char *get_commit_graph_filename(const char *obj_dir)
- {
- 	char *filename = xstrfmt("%s/info/commit-graph", obj_dir);
-@@ -1030,11 +1033,11 @@ static void add_missing_parents(struct write_commit_graph_context *ctx, struct c
- {
- 	struct commit_list *parent;
- 	for (parent = commit->parents; parent; parent = parent->next) {
--		if (!(parent->item->object.flags & UNINTERESTING)) {
-+		if (!(parent->item->object.flags & REACHABLE)) {
- 			ALLOC_GROW(ctx->oids.list, ctx->oids.nr + 1, ctx->oids.alloc);
- 			oidcpy(&ctx->oids.list[ctx->oids.nr], &(parent->item->object.oid));
- 			ctx->oids.nr++;
--			parent->item->object.flags |= UNINTERESTING;
-+			parent->item->object.flags |= REACHABLE;
- 		}
- 	}
- }
-@@ -1052,7 +1055,7 @@ static void close_reachable(struct write_commit_graph_context *ctx)
- 		display_progress(ctx->progress, i + 1);
- 		commit = lookup_commit(ctx->r, &ctx->oids.list[i]);
- 		if (commit)
--			commit->object.flags |= UNINTERESTING;
-+			commit->object.flags |= REACHABLE;
- 	}
- 	stop_progress(&ctx->progress);
- 
-@@ -1089,7 +1092,7 @@ static void close_reachable(struct write_commit_graph_context *ctx)
- 		commit = lookup_commit(ctx->r, &ctx->oids.list[i]);
- 
- 		if (commit)
--			commit->object.flags &= ~UNINTERESTING;
-+			commit->object.flags &= ~REACHABLE;
- 	}
- 	stop_progress(&ctx->progress);
- }
-diff --git a/commit-reach.c b/commit-reach.c
-index 3ea174788a..4ca7e706a1 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -10,7 +10,6 @@
- #include "commit-reach.h"
- 
- /* Remember to update object flag allocation in object.h */
--#define REACHABLE       (1u<<15)
- #define PARENT1		(1u<<16)
- #define PARENT2		(1u<<17)
- #define STALE		(1u<<18)
-diff --git a/object.h b/object.h
-index 0120892bbd..25f5ab3d54 100644
---- a/object.h
-+++ b/object.h
-@@ -68,7 +68,8 @@ struct object_array {
-  * bisect.c:                                        16
-  * bundle.c:                                        16
-  * http-push.c:                                     16-----19
-- * commit-reach.c:                                15-------19
-+ * commit-graph.c:                                15
-+ * commit-reach.c:                                  16-----19
-  * sha1-name.c:                                              20
-  * list-objects-filter.c:                                      21
-  * builtin/fsck.c:           0--3
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 195781ce8d..4b60282689 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -583,7 +583,7 @@ test_expect_success 'fetch.writeCommitGraph' '
- 	)
- '
- 
--test_expect_failure 'fetch.writeCommitGraph with submodules' '
-+test_expect_success 'fetch.writeCommitGraph with submodules' '
- 	git clone dups super &&
- 	(
- 		cd super &&
--- 
-gitgitgadget
+That would assume, that the line is unique within the file,
+(can be checked with unique) .
+It can give a more robust handling
+when lines are added in the file and file numbers change,
+but the content is the same.
