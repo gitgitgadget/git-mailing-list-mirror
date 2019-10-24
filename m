@@ -2,88 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3E0F1F4C0
-	for <e@80x24.org>; Thu, 24 Oct 2019 18:24:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 281751F4C0
+	for <e@80x24.org>; Thu, 24 Oct 2019 19:07:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2504056AbfJXSYo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 14:24:44 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:39990 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437011AbfJXSYo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 14:24:44 -0400
-Received: by mail-io1-f66.google.com with SMTP id p6so22470491iod.7
-        for <git@vger.kernel.org>; Thu, 24 Oct 2019 11:24:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CLMWHhvpgUt2idX0ww7c2d1MqH++6xG8cl03wLYvlKM=;
-        b=DzLTF/HMP1RwMPtG/xD1D/2jjSa8MmcV0acca9rvSm5gufyagWAQSFIp8OqxMKPg6b
-         EbmLwdbl+QOwk1xpSgVVR6R0Ah87JtPWj+HVGRYGnbB+lAV+zmNHv58MLu7ynUeaoWT7
-         oUiFQOQWkEIo07gVG/kyQa1G+ykBa/p4pyWK0mcvZlAHf0R3QCCopVOZQ+A/kG+hf1Of
-         Vl22g9GcLrBhT+FuvPwiMSpxA9WtWbNImqaz/44Jojdt7Lm1LMGgwH6XVR0RJtAPPZT6
-         7QalfvZj05js9J1t/1J5iOzg67QmXYXyLPxcueFdu2sq3PXglTng1hWH9qAKcNPVU8F4
-         aIGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CLMWHhvpgUt2idX0ww7c2d1MqH++6xG8cl03wLYvlKM=;
-        b=G6yURZgKotH7x3NvKB0PHh4DSPLZ2ICQ7jVoOEFUPdbCgFQlFKq1F8Qmrq/hZp2SGl
-         ga9ooDRNQNxHy8UJH9XFuKd4MezDB/wJ8aEvPx60lWRNbCVkkULerdpLwc/hszCWRq7p
-         mSoXIVZHiNVEBMPDIiwYaKxXyoJ9QqFdUjxhtDHtu3ElH6bYhZUoGv2u+EehYoYM3uPG
-         5udRY2C0jvqmB11B1GOGIC30nQizCiJhuEoIfQoM0S1lGYUyXv+afzI27QQ9vQ3HXUag
-         RpDghPlw3TrGrNthQxG7ja2JYXanPeZVhPkM7sT05HDc4l1ELp7woGID16TWpwNs5q4w
-         yhSA==
-X-Gm-Message-State: APjAAAWY1w0pLyYcjlpysK9g3PRpYUuzmEkkVZ4JTcY4shyW1M5xvLL3
-        ikbVpC34A5agvfMU03DuFUHQ6osYcWcJI2s63F0VAA==
-X-Google-Smtp-Source: APXvYqwM2q4aY714n1o7DCnJ4rMo0lZr/YsWSoWqm4mcg472ZZiZLq7awDKwtmB1GIzSvtV79tH/cFVmUARIpZqBWLs=
-X-Received: by 2002:a6b:f415:: with SMTP id i21mr10827222iog.109.1571941483292;
- Thu, 24 Oct 2019 11:24:43 -0700 (PDT)
+        id S2392400AbfJXTG6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 15:06:58 -0400
+Received: from relay9-d.mail.gandi.net ([217.70.183.199]:42685 "EHLO
+        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390450AbfJXTG6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 15:06:58 -0400
+X-Originating-IP: 1.186.12.46
+Received: from localhost (unknown [1.186.12.46])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 6859DFF807;
+        Thu, 24 Oct 2019 19:06:54 +0000 (UTC)
+Date:   Fri, 25 Oct 2019 00:36:52 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>,
+        Bert Wesarg <bert.wesarg@googlemail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Philip Oakley <philipoakley@iee.email>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: RFC: Moving git-gui development to GitHub
+Message-ID: <20191024190651.6ztytfm7gt2mmfnb@yadavpratyush.com>
+References: <20191023201310.thzpxyoeb3ta55dc@yadavpratyush.com>
+ <xmqqimoehp7u.fsf@gitster-ct.c.googlers.com>
+ <CAGr--=JQXfbJaxvYo1ue__eRHyEgKDd3mjTgxXxT=7seTU_oYA@mail.gmail.com>
+ <20191024171616.GA40755@generichostname>
 MIME-Version: 1.0
-References: <xmqq4l065zx5.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910220004190.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1910220004190.46@tvgsbejvaqbjf.bet>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Thu, 24 Oct 2019 11:24:31 -0700
-Message-ID: <CAGyf7-EyK0COjea2CPM7U5h6uekcFfL1eREQ6tatM3nQ21J_yw@mail.gmail.com>
-Subject: Re: Git for Windows v2.24.0-rc0, was Re: [ANNOUNCE] Git v2.24.0-rc0
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        git-for-windows <git-for-windows@googlegroups.com>,
-        Git Users <git@vger.kernel.org>, git-packagers@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191024171616.GA40755@generichostname>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 3:05 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Team,
->
-> a couple of days later than I wanted, but at least it is now here:
-> https://github.com/git-for-windows/git/releases/tag/v2.24.0-rc0.windows.1
->
-> Please test...
+On 24/10/19 10:16AM, Denton Liu wrote:
+> On Thu, Oct 24, 2019 at 09:37:08AM +0200, Birger Skogeng Pedersen wrote:
+> > - It's a lot easier to get a total overview of all issues. Especially
+> > useful when you'd want to see open issues. Pratyush mentions he has a
+> > text-file on his computer where he lists all the currently open
+> > issues. We can't see this text-file. And even if we could, we'd still
+> > have to navigate the mail archives to find the discussions and read
+> > the emails one page at a time.
+> 
+> I also had one of these text files laying around with my TODOs. Dscho
+> mentioned to me a while back that it might be a good idea to move
+> everything to GitGitGadget's issues. It's worked out pretty well for me
+> so far and I think a couple people have even picked up some work off of
+> there. It might be worth considering moving issues to either git-gui's
+> or GitGitGadget's repo.
+> 
+> If anything, it's no worse than the current situation since if GitHub
+> goes down for whatever reason, then Pratyush's list of issues is private
+> again. But as long as GitHub is up, then it'd be nice to have a public
+> list of issues for people to work on.
 
-I've run both the Linux and Windows 2.24.0-rc0 candidates through
-Bitbucket Server's test matrix (~6,000 forked git processes,
-exercising various commands and verifying behavior/output). No issues
-found.
+That's a pretty good idea. Will do.
 
-Thanks again for these early builds!
-
-Best regards,
-Bryan Turner
-
->
-> Thank you,
-> Johannes
->
->
+-- 
+Regards,
+Pratyush Yadav
