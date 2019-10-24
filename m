@@ -2,146 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 909531F4C0
-	for <e@80x24.org>; Thu, 24 Oct 2019 15:25:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 854051F4C0
+	for <e@80x24.org>; Thu, 24 Oct 2019 16:16:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2503151AbfJXPZR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 11:25:17 -0400
-Received: from mout.web.de ([212.227.17.12]:39709 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2503110AbfJXPZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 11:25:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1571930709;
-        bh=f1AnLfjtJyFY2xaDrYLmda7Wkps+9Zr2KOG3JEHmPKU=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=ANmunYp9AgdN/wqdvGtNeiwo4RtB98wN1BjVvsD3eu9fIwHmYMxFK5o6zX4+Rb6Vf
-         XK2J/K1prhZrIczScCw0wH3N8HAoKrg7/iizHNa3CPcY531UVYeHf7uDNUcRSe0XSo
-         Fk8FCEHw9ZXxlkv/NAiwmdxdMkMYkNMNxxPHVtlM=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MbhFJ-1ig1JY0HOn-00J6Bi; Thu, 24
- Oct 2019 17:25:09 +0200
-Date:   Thu, 24 Oct 2019 17:25:08 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: Git Test Coverage Report (October 11)
-Message-ID: <20191024152508.a6vr7nh62wsqzy6u@tb-raspi4>
-References: <c863c09b-f0ed-19c6-356e-12a3ecbc08b9@gmail.com>
- <20191023170049.hnzb22iiflrigyfs@tb-raspi4>
- <ebe33082-976d-7146-1450-925e4785faf1@gmail.com>
+        id S2436636AbfJXQQM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 12:16:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57186 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2407816AbfJXQQM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 12:16:12 -0400
+Received: (qmail 14578 invoked by uid 109); 24 Oct 2019 16:16:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 24 Oct 2019 16:16:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2103 invoked by uid 111); 24 Oct 2019 16:19:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Oct 2019 12:19:18 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 24 Oct 2019 12:16:11 -0400
+From:   Jeff King <peff@peff.net>
+To:     Prarit Bhargava <prarit@redhat.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2] pretty: add "%aL"|"%al|%cL|%cl" option to output
+ local-part of email addresses
+Message-ID: <20191024161610.GA8448@sigill.intra.peff.net>
+References: <20191024125332.29958-1-prarit@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <ebe33082-976d-7146-1450-925e4785faf1@gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:Ud3xKryhAfaYxVBDtHpjVWkZJ4JYDUb4L37tDnwvqyat8tiMHlQ
- fqY+zooGvvpRpBBXciPEIvm2ktMYGTt+bzBz6h1kmNAI0VMh5xi8ftgj287dNGmZy/sHH2p
- 7DUJgESI+VnBtxGNH7qIPLHoms7qr+GvngzUTqM4KQhLp/N3EM11O1nwnIlLB4YAvVp3DXR
- PvWHSOqqjsg4K8iblvrtg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/nYRbNVHAV4=:LxwG4I24o6u/Ypp7c2kGy8
- vZ2hfmKTEBB1VgD3CsdkamSIv7LlSB0jSDLgYX0pQoasfDwe1gO/1ooEn6bDKZeiB5UFOJw+n
- xTUPKBUz8rvTsBL74ZzUzk2Cug2QwDK44edGozSHIZVm7VbtyuW6pyXaImnXEDhe+8fj7hsv+
- Tjcc/rECiAia3EKQyjvL7LjbeD0bRAaBM/5Fpuo3m+abkelJK7q4gOT5ZmLWDBAuN0jfkjjKF
- meAQFtsg40OG97IJe8tLybmkGR+ebbG9ufec8ni9yWOlg4w5N5myTCrLxxWWa0J5toq/ABIBu
- bR2m462S+CHzjjiAm9/gq9VVkpU+2DfQUjOxxi+nxGZJIvRHBhhBR7at+PyzHy+WF2B4FC3yp
- FvDjVOxt6scR1Il1iDm0SJ14KuKJcDVHrfyqb+L5WaHjSUdFZCVLg8/RcQBPU3lg782NUWuTw
- yuEPVIDeRNGCGst68XdeYNePeS67KQjPaRXBbi8+2zy8ccF1JHc2SNir3P9L0CE/ghvw2B0dA
- 5192dFY6/O3fKQgF147EVF8kk/n5El3yaqZvZ+isQPuFZzVOfdc8Ps0FtiUKUX6Xrp0lWUuzb
- hbXq9yqBbnqrb0SQRFj4zpMMHF422N3XTmm+YwnmqM5qfAy/xTq9xepuNEzCgdI4S7Wh/N3KH
- kMrV42v9QHrZp0K4lGktijrs+1fxzxnNIncymkzO0dvy6zVREap2+mO92cnVZzjQfhkdoU9Q8
- 85tAWeuteMN2V6cRYy1VOmgXUvR3Srn6eGoKccUN9jrOOkVPw1nfjlYLuPlCiqwGwgGPXEVr/
- Hy1Ewhry03v8cw06sCWo8VGBxyoYmFwORYG2vB4/XUDcHcdasCX48k+uD94Ts2QJXd11hIvut
- EnLyZQKjCQMZJmN90Jq1Qpxt2aV6uMjewTOO2sLJolnugNZlwl7nYOcQVFxr63UFEAYqsOYZD
- IoU6fqEhRWURSUnKY9e9JPe1H+TrIxAR6PeRAYhQfll3kIme43Zu+TFSR3ZsWAuqwvHw7b2DN
- hOpTDYrkmrDzJRVmEKlb9veMeH0++aD0WpBOaGjfHdX0m0AFcLtR5pvJGI87kd8/BFBTCbXWh
- 8fZSmidywWXGdGhyCV/QvdKN4aUzAtfNHFoz47pPlV67Jh6XFadnpwPmy7CrzJ14zKWtHdd79
- xcGKDzL72916sLr7uLxnI/Co6JPcdTfZBRVdl++9ljqsLVdk+B8fraXWQNRvh/UXT9J8PCe0O
- 7dDqoq/Y+YLtT5Cr3yGAJHs+/ixHcfIq+5qcQZg==
+In-Reply-To: <20191024125332.29958-1-prarit@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 23, 2019 at 02:07:20PM -0400, Derrick Stolee wrote:
-> On 10/23/2019 1:00 PM, Torsten B=F6gershausen wrote:
-> > On Fri, Oct 11, 2019 at 09:33:11AM -0400, Derrick Stolee wrote:
-> >> Here is today's test coverage report. The usual report format is
-> >> available online [1], [2]. The report listed below is a new format
-> >> that groups lines by the commit that introduced them [3]. Thanks
-> >> Peff for the feedback on that idea.
-> >>
-> >
-> > []
-> >>
-> >> Torsten B=F6gershausen	ebb8d2c9 mingw: support UNC in git clone file:=
-//server/share/repo
-> >> connect.c
-> >> ebb8d2c9 921) path =3D host - 2; /* include the leading "//" */
-> >>
-> >
-> > I actually looked into this one, and my understanding is that the code=
- path
-> > makes only sense for windows and is only tested on Windows in t5500.
-> > (Linux/Unix/POSIX don't use UNC path names starting with "//" )
-> >
-> > How can we avoid those "not covered by test" warnings?
-> >
-> > One solution could be to use
-> >
-> > #ifndef has_dos_drive_prefix
-> > #define has_dos_drive_prefix(a) 0
-> > #endif
-> >
-> > in git-compat-util.h and hope that the compiler is smart enough
-> > to optimize away that line of code.
-> >
-> > Another way could be to have #ifdefs in connect.c, so that it
-> > is clear "this is Windows only".
-> >
-> > Or make a comment for the "cover report" saying "not covered".
-> >
-> > Are there any good or better thoughts on this ?
->
-> One way to avoid this is to add ignored lines to the test-coverage
-> repo [1]. These only work if the exact contents match on a specific
-> line number, but can be a way to stop noise in the short-term.
->
-> For example, I added a few lines to ignore in commit-graph.c [2],
-> but I haven't added ignored lines in a while.
->
-> I'm happy to take a PR including the lines you want to ignore, or
-> I could take inventory of the lines in the current report before regener=
-ating
-> a test for -rc1.
->
-> Thanks,
-> -Stolee
->
-> [1] https://github.com/derrickstolee/git-test-coverage
->
-> [2] https://github.com/derrickstolee/git-test-coverage/blob/master/ignor=
-ed/commit-graph.c
+On Thu, Oct 24, 2019 at 08:53:32AM -0400, Prarit Bhargava wrote:
 
-I added a PR as suggested.
-One thing, that came into my mind:
+> In many projects the number of contributors is low enough that users know
+> each other and the full email address doesn't need to be displayed.
+> Displaying only the author's username saves a lot of columns on the screen.
+> For example displaying "prarit" instead of "prarit@redhat.com" saves 11
+> columns.
+> 
+> Add a "%aL"|"%al|%cL|%cl" option that output the local-part of an email
+> address.
+> 
+> Also add tests for "%ae","%an", "%ce", and "%cn".
 
-Would it make sense to loosen the condition:
-921:path =3D host - 2; /* include the leading "//" */
+Thanks, this is looking better, but I think there are still a few minor
+bits to address.
 
-Remove the line number:
-host - 2; /* include the leading "//" */
+> Changes in v2:
+> - Changed option to 'L' based on https://www.ietf.org/rfc/rfc2822.txt
+>   definition of 'local-part' of email addresses.
+> - added additional information to documentation for %cL and %cl
+> - added mailmap output test
+> - modified code to use mailmap output for "L" option
+> - modified code to check if email address field has '@' symbol
+> - modified tests based on input from Peff
 
-That would assume, that the line is unique within the file,
-(can be checked with unique) .
-It can give a more robust handling
-when lines are added in the file and file numbers change,
-but the content is the same.
+This change list is very welcome, but it should generally go after the
+"---", so that it's not part of the commit message (i.e., it is for
+people reading this email and reviewing now, but people reading "git
+log" later would not know or care about v1).
+
+> Signed-off-by: Prarit Bhargava <prarit@redhat.com>
+> Cc: Junio C Hamano <gitster@pobox.com>
+> Cc: brian m. carlson <sandals@crustytoothpaste.net>
+> Cc: Jeff King <peff@peff.net>
+
+Likewise we do not generally use "cc:" trailers in this project.
+
+> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+> index b87e2e83e6d0..9a1f900f114a 100644
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -163,6 +163,11 @@ The placeholders are:
+>  '%ae':: author email
+>  '%aE':: author email (respecting .mailmap, see linkgit:git-shortlog[1]
+>  	or linkgit:git-blame[1])
+> +'%al':: author local-part (the portion of the email address preceding the '@'
+> +	symbol)
+
+I'm not sure if it is worth saying something like "preceding the @
+symbol, or the whole address if no @ symbol". It's a pretty rare case,
+I'd think, and it does clutter up the wording. So just a thought.
+
+> +'%aL':: author local-part (the portion of the email address preceding the '@'
+> +	symbol, respecting .mailmap, see linkgit:git-shortlog[1] or
+> +	linkgit:git-blame[1])
+
+This description gets pretty long. I wonder if we can simplify by
+referring to earlier formats, which would also make clear to the user
+the relationship between the formats. Perhaps:
+
+  '%aL':: author local-part (see '%al'), respecting .mailmap (see '%aE')
+
+And ditto for %cL.
+
+> diff --git a/pretty.c b/pretty.c
+> index b32f0369531c..93eb6e837071 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -696,7 +696,7 @@ static size_t format_person_part(struct strbuf *sb, char part,
+>  	mail = s.mail_begin;
+>  	maillen = s.mail_end - s.mail_begin;
+>  
+> -	if (part == 'N' || part == 'E') /* mailmap lookup */
+> +	if (part == 'N' || part == 'E' || part == 'L') /* mailmap lookup */
+
+I think this is sufficient to fix the mailmap issue. Good.
+
+> @@ -706,6 +706,13 @@ static size_t format_person_part(struct strbuf *sb, char part,
+>  		strbuf_add(sb, mail, maillen);
+>  		return placeholder_len;
+>  	}
+> +	if (part == 'l' || part == 'L') {	/* local-part */
+> +		const char *at = memchr(mail, '@', maillen);
+> +		if (at)
+> +			maillen = at - mail;
+> +		strbuf_add(sb, mail, maillen);
+> +		return placeholder_len;
+> +	}
+
+And I think this does the counting correctly (mail[maillen] is the "@",
+so we wouldn't include it; good).
+
+> +test_expect_success 'log pretty %an %ae %al %aN %aE %aL' '
+> +	git checkout -b anaeal &&
+> +	test_commit anaeal_test anaeal_test_file &&
+
+Not a big deal, but we could simplify this a bit, I think. There's no
+need to make a new branch. And there's no need to specify the filename
+to test_commit. IMHO it's worth being as simple as possible in the
+tests, because then a reader doesn't have to think about whether those
+details are important or not.
+
+> +	git log --pretty="%an%n%ae%n%al%n%aN%n%aE%n%aL" -1 > actual &&
+
+I didn't think about this before, but...surely we're testing %an, etc
+already?
+
+Indeed, it looks like t6006 already covers that. Maybe you should be
+adding to that test? I note that it just hardcodes "author@example.com"
+in the expectation. I'd be OK with either following the lead there, or
+doing a separate preparatory patch to use $GIT_AUTHOR_EMAIL, etc.
+
+> +	{
+> +		echo "${GIT_AUTHOR_NAME}" &&
+> +		echo "${GIT_AUTHOR_EMAIL}" &&
+> +		echo "${TEST_AUTHOR_LOCALNAME}"
+> +		echo "${GIT_AUTHOR_NAME}" &&
+> +		echo "${GIT_AUTHOR_EMAIL}" &&
+> +		echo "${TEST_AUTHOR_LOCALNAME}"
+> +	} > expect &&
+
+The expectation for %aE is the same as for %ae. So we're not really
+testing that we actually applied the mailmap. It looks like t4203 has
+some tests for %aE; you'd probably want to check %aL there.
+
+> +test_expect_success 'log pretty %cn %ce %cl %cN %cE %cL' '
+
+Likewise, both of the spots I mentioned cover the committer formats,
+too.
+
+> +TEST_AUTHOR_LOCALNAME=author
+> +TEST_AUTHOR_DOMAIN=example.com
+> +GIT_AUTHOR_EMAIL=${TEST_AUTHOR_LOCALNAME}@${TEST_AUTHOR_DOMAIN}
+
+If you follow the lead of t6006 and just hard-code these, then this hunk
+can go away. But if you do keep it, note that...
+
+>  export GIT_MERGE_VERBOSITY GIT_MERGE_AUTOEDIT
+> +export TEST_AUTHOR_LOCALNAME TEST_AUTHOR_DOMAIN
+>  export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
+> +export TEST_COMMITTER_LOCALNAME TEST_COMMITTER_DOMAIN
+
+These lines are unnecessary. We have to export GIT_AUTHOR_EMAIL, etc, so
+that the child git-commit process can read it. But there's no need to do
+so for TEST_*, which are meant to be used by the test scripts
+themselves.
+
+-Peff
