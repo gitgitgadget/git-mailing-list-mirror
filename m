@@ -2,79 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E4441F4C0
-	for <e@80x24.org>; Thu, 24 Oct 2019 18:13:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3E0F1F4C0
+	for <e@80x24.org>; Thu, 24 Oct 2019 18:24:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2504035AbfJXSNq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 14:13:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57298 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2504015AbfJXSNq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 14:13:46 -0400
-Received: (qmail 17652 invoked by uid 109); 24 Oct 2019 18:13:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 24 Oct 2019 18:13:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3609 invoked by uid 111); 24 Oct 2019 18:16:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Oct 2019 14:16:52 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 24 Oct 2019 14:13:45 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Miriam Rubio <mirucam@gmail.com>, git@vger.kernel.org
-Subject: Re: [Outreachy][PATCH] abspath: reconcile `dir_exists()` and
- `is_directory()`
-Message-ID: <20191024181344.GD12892@sigill.intra.peff.net>
-References: <20191024092745.97035-1-mirucam@gmail.com>
- <20191024114148.GK4348@szeder.dev>
+        id S2504056AbfJXSYo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 14:24:44 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:39990 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2437011AbfJXSYo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 14:24:44 -0400
+Received: by mail-io1-f66.google.com with SMTP id p6so22470491iod.7
+        for <git@vger.kernel.org>; Thu, 24 Oct 2019 11:24:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CLMWHhvpgUt2idX0ww7c2d1MqH++6xG8cl03wLYvlKM=;
+        b=DzLTF/HMP1RwMPtG/xD1D/2jjSa8MmcV0acca9rvSm5gufyagWAQSFIp8OqxMKPg6b
+         EbmLwdbl+QOwk1xpSgVVR6R0Ah87JtPWj+HVGRYGnbB+lAV+zmNHv58MLu7ynUeaoWT7
+         oUiFQOQWkEIo07gVG/kyQa1G+ykBa/p4pyWK0mcvZlAHf0R3QCCopVOZQ+A/kG+hf1Of
+         Vl22g9GcLrBhT+FuvPwiMSpxA9WtWbNImqaz/44Jojdt7Lm1LMGgwH6XVR0RJtAPPZT6
+         7QalfvZj05js9J1t/1J5iOzg67QmXYXyLPxcueFdu2sq3PXglTng1hWH9qAKcNPVU8F4
+         aIGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CLMWHhvpgUt2idX0ww7c2d1MqH++6xG8cl03wLYvlKM=;
+        b=G6yURZgKotH7x3NvKB0PHh4DSPLZ2ICQ7jVoOEFUPdbCgFQlFKq1F8Qmrq/hZp2SGl
+         ga9ooDRNQNxHy8UJH9XFuKd4MezDB/wJ8aEvPx60lWRNbCVkkULerdpLwc/hszCWRq7p
+         mSoXIVZHiNVEBMPDIiwYaKxXyoJ9QqFdUjxhtDHtu3ElH6bYhZUoGv2u+EehYoYM3uPG
+         5udRY2C0jvqmB11B1GOGIC30nQizCiJhuEoIfQoM0S1lGYUyXv+afzI27QQ9vQ3HXUag
+         RpDghPlw3TrGrNthQxG7ja2JYXanPeZVhPkM7sT05HDc4l1ELp7woGID16TWpwNs5q4w
+         yhSA==
+X-Gm-Message-State: APjAAAWY1w0pLyYcjlpysK9g3PRpYUuzmEkkVZ4JTcY4shyW1M5xvLL3
+        ikbVpC34A5agvfMU03DuFUHQ6osYcWcJI2s63F0VAA==
+X-Google-Smtp-Source: APXvYqwM2q4aY714n1o7DCnJ4rMo0lZr/YsWSoWqm4mcg472ZZiZLq7awDKwtmB1GIzSvtV79tH/cFVmUARIpZqBWLs=
+X-Received: by 2002:a6b:f415:: with SMTP id i21mr10827222iog.109.1571941483292;
+ Thu, 24 Oct 2019 11:24:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191024114148.GK4348@szeder.dev>
+References: <xmqq4l065zx5.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910220004190.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1910220004190.46@tvgsbejvaqbjf.bet>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Thu, 24 Oct 2019 11:24:31 -0700
+Message-ID: <CAGyf7-EyK0COjea2CPM7U5h6uekcFfL1eREQ6tatM3nQ21J_yw@mail.gmail.com>
+Subject: Re: Git for Windows v2.24.0-rc0, was Re: [ANNOUNCE] Git v2.24.0-rc0
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        git-for-windows <git-for-windows@googlegroups.com>,
+        Git Users <git@vger.kernel.org>, git-packagers@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 24, 2019 at 01:41:48PM +0200, SZEDER Gábor wrote:
+On Mon, Oct 21, 2019 at 3:05 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Team,
+>
+> a couple of days later than I wanted, but at least it is now here:
+> https://github.com/git-for-windows/git/releases/tag/v2.24.0-rc0.windows.1
+>
+> Please test...
 
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > index c46ee29f0a..f89938bf94 100644
-> > --- a/builtin/clone.c
-> > +++ b/builtin/clone.c
-> > @@ -899,12 +899,6 @@ static void dissociate_from_references(void)
-> >  	free(alternates);
-> >  }
-> >  
-> > -static int dir_exists(const char *path)
-> > -{
-> > -	struct stat sb;
-> > -	return !stat(path, &sb);
-> 
-> But look at this, it only checks that the given path exists, but it
-> could be a regular file or any other kind of path other than a
-> directory as well!
-> 
-> So this function clearly doesn't do what it's name suggests.  That's
-> bad.
-> 
-> Unfortunately, it gets worse: some of its callsites in
-> 'builtin/clone.c' do expect it to check the existence of _any_ path,
-> not just a directory.
+I've run both the Linux and Windows 2.24.0-rc0 candidates through
+Bitbucket Server's test matrix (~6,000 forked git processes,
+exercising various commands and verifying behavior/output). No issues
+found.
 
-Yes, that's the reason for the funny name (and the fact that it was
-never re-factored to use is_directory() in the first place). There's
-some more discussion in:
+Thanks again for these early builds!
 
-  https://public-inbox.org/git/xmqqbmi9dw55.fsf@gitster.mtv.corp.google.com/
+Best regards,
+Bryan Turner
 
-and its subthread.
-
--Peff
+>
+> Thank you,
+> Johannes
+>
+>
