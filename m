@@ -2,124 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89A171F4C0
-	for <e@80x24.org>; Thu, 24 Oct 2019 23:05:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8BED1F4C0
+	for <e@80x24.org>; Thu, 24 Oct 2019 23:08:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733299AbfJXXFG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 19:05:06 -0400
-Received: from us-smtp-2.mimecast.com ([205.139.110.61]:26405 "EHLO
-        us-smtp-delivery-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725977AbfJXXFG (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 24 Oct 2019 19:05:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1571958304;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=thvmpFcJgZy5zLhOc2vZCWkcNrjd5UyOcgUW7fbn+GI=;
-        b=TauFSgb/tuT1iTr0bAdyPs1K2pXPZBC1y6oA0cWbDrr1WVz7+I5SwFg0uW58aZuxIesK3e
-        Wfw1xYhlYgAcW7c4XTjy0qnzdAkxsp8pQkRy+aNXaNF0K/iCD1wSGwcWVa/budn9XP3JbE
-        ZuXfzPGMrAAiQ7uonmXCtEl2DmNZsFE=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-346-Vm2vVHExPP2fT3JWotv7nA-1; Thu, 24 Oct 2019 19:05:03 -0400
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com [10.5.11.16])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id B71ED1800D6B;
-        Thu, 24 Oct 2019 23:05:01 +0000 (UTC)
-Received: from prarit.bos.redhat.com (prarit-guest.khw1.lab.eng.bos.redhat.com [10.16.200.63])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 1666B5C1B5;
-        Thu, 24 Oct 2019 23:05:01 +0000 (UTC)
-Subject: Re: [PATCH v2] pretty: add "%aL"|"%al|%cL|%cl" option to output
- local-part of email addresses
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>
-References: <20191024125332.29958-1-prarit@redhat.com>
- <20191024202947.GN4348@szeder.dev>
-From:   Prarit Bhargava <prarit@redhat.com>
-Message-ID: <5d9b8cbe-489e-b3eb-873c-4aee2e2015d0@redhat.com>
-Date:   Thu, 24 Oct 2019 19:05:00 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726395AbfJXXIl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 19:08:41 -0400
+Received: from mout.gmx.net ([212.227.17.20]:59205 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726543AbfJXXIk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 19:08:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1571958512;
+        bh=IiWJLLO/Hld6WFGuKKnuzjiCu+dRNEDR1KpUcv69kyk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=EGHtsll+BopAu6R/kporLdO6UzKbtTo9t/hbkGW0qy1OJ0IYKwBvhv1YNOuTvQrvM
+         SRVrtiDB9YoORI289W/pYgSYKnPizk+QnngljaeiDh0MdlYGwRLvQU704SlnhAbiKK
+         DyKDe+MqzKoEcU0NL87Cux92YFcWbAlo9XcosIPU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MUosT-1iWt0L0rIn-00QkRN; Fri, 25
+ Oct 2019 01:08:32 +0200
+Date:   Fri, 25 Oct 2019 01:08:16 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Philip Oakley <philipoakley@iee.email>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Subject: Re: [git-for-windows] Git for Windows v2.24.0-rc0, was Re: [ANNOUNCE]
+ Git v2.24.0-rc0
+In-Reply-To: <74f50326-e613-8545-2c69-65cd29dd3cfb@iee.email>
+Message-ID: <nycvar.QRO.7.76.6.1910250052350.46@tvgsbejvaqbjf.bet>
+References: <xmqq4l065zx5.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910220004190.46@tvgsbejvaqbjf.bet> <74f50326-e613-8545-2c69-65cd29dd3cfb@iee.email>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20191024202947.GN4348@szeder.dev>
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-MC-Unique: Vm2vVHExPP2fT3JWotv7nA-1
-X-Mimecast-Spam-Score: 0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1818417834-1571958513=:46"
+X-Provags-ID: V03:K1:KKcKzCjyMbvn0jl+Dqk4p5UxwBw6yo9V3uLKZY8lrWU2Sk0in5g
+ 0agNhd2nUPuSC1AR+g15ruOCPO4vGBAAwZjspI8YmPjGPpIUcLX80tHtcJMdb4rb4rstZ11
+ 6407fzrX1NcYi9ie9dmw68i6I1MH7R1krBjlVK3hwwJTNQBMydNK/65aaU+GhO4Q/PPPZU3
+ merbBtKL03RAy0eLDQHIA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:npoUF+i94Z8=:u4SoYd9TzOJVcHUQ54btzg
+ N8rJdxJF3TCg2qjH1cUcdoHx8GLSY3wvXIVEc1AS95IWKjDiGivvdaDc84QfdmFlbrmaEdY1a
+ goy0IuDMro8aBGzeB0nib41UiaQxo56vONVA0AXNCXve0l+fTE5chjNEUsQb8zEPqOqL2SKsi
+ jSQkIAx0vkiXra8TDoda1ufrziXm1i6Gs1gn2WmhvYydSJBORvIpCa+TOrc4nYS/jl6NFo+rV
+ 3/dGCE5PwIRw6/+Mpdxn2KMlVoeESg4Ir2HqbZH2U/tZ9go2lZvIA+xe0QMvlVMBlzpGACUSM
+ QO4Spy2gRoysw0hoXZp4Pk38+O86BTpx1clL2rf35+N9Pr1V82A07hCRje26q0CFODti16Rde
+ pk07LInWnFx6MwyrlNoLIY86p7N3fIkAmx3F87dSyYTFeCIAeZUwXaXHuIfO3q81raOsMtbdn
+ znRAuQhKxK/4BawsSZ4ucKkIdfOEX8gE0j73wFsBdXkTfID76Zjx8b4aYgBJPtuRGwROLABsV
+ SsVwIspG/gpSw5SwZGVFHfHnCXwIdYh223OW3zEssamfQOC+EB/53GTk6kYjmWkxjo9Nnaco9
+ ZRpEtsempOC/CvBMxlqgBYZMkRwCkoU8h/zpbZAfxynUYDg/JnNUDH5iaatc7c5DkkqeEZAke
+ xCMPxvyBoCZu6BbXV1LGYBzlku1UC1h7vPlwWlYfvwqh/SVUAucZKZUOSKr1Juf/smDKueAcq
+ Tv7of4X3BQiiVvex/WqNbXdavl9JJCUT4LydKYlafL6sx3CSwrc76wsLitIMLOqdnNXxYotP5
+ 8EMDTMwrxJA7zToq2a5ivGxqwByC2gjN3Dz22pZGingxa3Z8UbCep8DR0LeszqiKqRpoF13Qx
+ otCNRdsuQSwdHJ6ZmCz//tOy3WRGPV0ngwInHa2Z0s16iCt4gi4fbTvxs5Vyaa/pr+DrAXfzY
+ 3kPi2dCQH50eU1Z4FpNmD+PQeamCrbz3vX+bXir9y84ABXozllssePofTAD7qd+TCTTRgK243
+ 8fRHy4G8PQi6HoIf78oZDmNIHj+DAYXQVCkMuh/898CdbbFl4VrB9tWXG+d9ELzkH+XWRBlJP
+ uxEhBag2EBnVffmku3iJ8A9rbqcGJGgFv0pAYINf0BnZVYvXFwjxe9s9Y6ZPjL4fLNKD6gOIJ
+ zaANoNvQ+E0Rw6NYDU/kCZdDhwakk2fzo8y/GSvEu+WHaFvmWyzXNAntTtW6lMe2Cewyc2hsD
+ pF4qo/HdwR5pMkXudeyX7BDo9hWNsU7sOq6VRJM/TmzYpr4/zaKuigSqHuMQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--8323328-1818417834-1571958513=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On 10/24/19 4:29 PM, SZEDER G=C3=A1bor wrote:
->=20
-> Just a couple of test nits:
->=20
-> On Thu, Oct 24, 2019 at 08:53:32AM -0400, Prarit Bhargava wrote:
->> +test_expect_success 'log pretty %an %ae %al %aN %aE %aL' '
->> +=09git checkout -b anaeal &&
->> +=09test_commit anaeal_test anaeal_test_file &&
->> +=09git log --pretty=3D"%an%n%ae%n%al%n%aN%n%aE%n%aL" -1 > actual &&
->=20
-> Style: no space between redirection and filename, i.e. >actual
->=20
->> +=09{
->> +=09=09echo "${GIT_AUTHOR_NAME}" &&
->> +=09=09echo "${GIT_AUTHOR_EMAIL}" &&
->> +=09=09echo "${TEST_AUTHOR_LOCALNAME}"
->=20
-> Broken &&-chain (though with just a bunch of echos it won't really
-> make much of a difference)
->=20
->> +=09=09echo "${GIT_AUTHOR_NAME}" &&
->> +=09=09echo "${GIT_AUTHOR_EMAIL}" &&
->> +=09=09echo "${TEST_AUTHOR_LOCALNAME}"
->=20
-> All these variables stand on their own, so the curly braces around
-> them are unnecessary.
+Hi Philip,
 
-I've changed this code (based on Peff's suggestions) to other tests, howeve=
-r,
-AFAIK using braces around is considered "good practice".
+On Tue, 22 Oct 2019, Philip Oakley wrote:
 
-It can't harm anything to have braces but if the preferred git coding style=
- is
-to only use them when necessary I will remove them.
+> The minor pedant did notice that the new location is listed slightly
+> differently from the release notes.
+> `file:C:/Program Files/Git/mingw64/../etc/gitconfig`=C2=A0 --system,
+> while the release notes simplify the path to C:/Program
+> Files/Git/etc/gitconfig
 
-P.
+That's a good point. I guess that it would make sense to normalize the
+location of the system gitconfig:
 
->=20
->> +=09} > expect &&
->> +=09test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'log pretty %cn %ce %cl %cN %cE %cL' '
->> +=09git checkout -b cncecl &&
->> +=09test_commit cncecl_test cncecl_test_file &&
->> +=09git log --pretty=3D"%cn%n%ce%n%cl%n%cN%n%cE%n%cL" -1 > actual &&
->> +=09{
->> +=09=09echo "${GIT_COMMITTER_NAME}" &&
->> +=09=09echo "${GIT_COMMITTER_EMAIL}" &&
->> +=09=09echo "${TEST_COMMITTER_LOCALNAME}"
->> +=09=09echo "${GIT_COMMITTER_NAME}" &&
->> +=09=09echo "${GIT_COMMITTER_EMAIL}" &&
->> +=09=09echo "${TEST_COMMITTER_LOCALNAME}"
->> +=09} > expect &&
->> +=09test_cmp expect actual
->> +'
->> +
+=2D- snip --
+Subject: [PATCH] config: normalize the path of the system gitconfig
 
+Git for Windows is compiled with a runtime prefix, and that runtime
+prefix is typically `C:/Program Files/Git/mingw64`. As we want the
+system gitconfig to live in the sibling directory `etc`, we define the
+relative path as `../etc/gitconfig`.
+
+However, as reported by Philip Oakley, the output of `git config
+=2D-show-origin --system -l` looks rather ugly, as it shows the path as
+`file:C:/Program Files/Git/mingw64/../etc/gitconfig`, i.e. with the
+`mingw64/../` part.
+
+By normalizing the path, we get a prettier path.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+=2D--
+ config.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/config.c b/config.c
+index e7052b39773..8e2f4748c49 100644
+=2D-- a/config.c
++++ b/config.c
+@@ -1658,8 +1658,10 @@ static int git_config_from_blob_ref(config_fn_t fn,
+ const char *git_etc_gitconfig(void)
+ {
+ 	static const char *system_wide;
+-	if (!system_wide)
++	if (!system_wide) {
+ 		system_wide =3D system_path(ETC_GITCONFIG);
++		normalize_path_copy((char *)system_wide, system_wide);
++	}
+ 	return system_wide;
+ }
+
+=2D-
+2.24.0.rc1.windows.1
+=2D- snap --
+
+See also https://github.com/git-for-windows/git/pull/2370
+
+Ciao,
+Dscho
+
+--8323328-1818417834-1571958513=:46--
