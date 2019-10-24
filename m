@@ -8,86 +8,100 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DD9E1F4C0
-	for <e@80x24.org>; Thu, 24 Oct 2019 22:46:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47F1A1F4C0
+	for <e@80x24.org>; Thu, 24 Oct 2019 22:52:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731992AbfJXWq3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 18:46:29 -0400
-Received: from mout.gmx.net ([212.227.15.18]:38309 "EHLO mout.gmx.net"
+        id S1732658AbfJXWwg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 18:52:36 -0400
+Received: from mout.gmx.net ([212.227.15.15]:46561 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725897AbfJXWq2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 18:46:28 -0400
+        id S1732600AbfJXWw3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 18:52:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1571957182;
-        bh=TJV8jW+VkB6SuDlCxM3Vtfvn+3rWgjKemEqgNWfZzc0=;
+        s=badeba3b8450; t=1571957540;
+        bh=e5A5c9rER143w4bWr2XYtf7KtJ3gdQGQuSFdIQVOfjU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=eEoJGTc7Qjw1b5y8PAT2yPNvDPzTh5GNhRC5gjmuhBaRbjymAtbw34H4/BcD7zKXC
-         PJy1ZwyRw6TobnXP05grIBejAC3tyzp0rKtDtyf1A8N8O+VrMv1tglkraOB52x+UPL
-         TOOQ1L0/ZgR3Mx/hkNrmLEfh+PRPKs4Cn8ADPClw=
+        b=FgA5u8qzthobYaEWzQHyEdz4o+9RQlTcHVmtRp7qid8mZzgGbcniFrjnPXtd2XxeG
+         YlPIRsKuNWN7hz+pqjIS1VuGL9skuKxxR2e8E6WivpsCqM+ils88dINm8zxF8OPsWI
+         wBtKovF6gXevaIt/PQl+QhJKyuPBhu2pQM+FCcKE=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mj8mV-1hlhpD1aw1-00fEU8; Fri, 25
- Oct 2019 00:46:22 +0200
-Date:   Fri, 25 Oct 2019 00:46:07 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mw9Q6-1i7U8G1DAi-00s2hE; Fri, 25
+ Oct 2019 00:52:20 +0200
+Date:   Fri, 25 Oct 2019 00:52:04 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Subject: Git for Windows v2.24.0-rc1, was Re: [ANNOUNCE] Git v2.24.0-rc1
-In-Reply-To: <xmqqeez2fzsy.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1910250043140.46@tvgsbejvaqbjf.bet>
-References: <xmqqeez2fzsy.fsf@gitster-ct.c.googlers.com>
+To:     Bryan Turner <bturner@atlassian.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        git-for-windows <git-for-windows@googlegroups.com>,
+        Git Users <git@vger.kernel.org>, git-packagers@googlegroups.com
+Subject: Re: Git for Windows v2.24.0-rc0, was Re: [ANNOUNCE] Git
+ v2.24.0-rc0
+In-Reply-To: <CAGyf7-EyK0COjea2CPM7U5h6uekcFfL1eREQ6tatM3nQ21J_yw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910250051450.46@tvgsbejvaqbjf.bet>
+References: <xmqq4l065zx5.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910220004190.46@tvgsbejvaqbjf.bet> <CAGyf7-EyK0COjea2CPM7U5h6uekcFfL1eREQ6tatM3nQ21J_yw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:LimGOaiPwtSycrKeWcrmxyK5aR51+BaNw0CDy6+qZ9MOZEq9Crr
- 7SK4e26YiNIpMydC1ok4/sqMd+tv1NmKFnS6w6K5McOj7k9nhwB7X0COZaXR3J2cYnxWDsa
- W5Zbbedz4Uaq05Pj2h7VJ0QbZmbOeLIDjrll+i8uGdZ/JehLiQ5UFcVlY4+BuonrlGrQasD
- bnzluylb58ByGwv6HjAlA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:WErhESRki+s=:BFF1qG+P58LBrWXdEFAb3a
- 5u2t2jxrySmBFsy9JzcDJFEBceuQhFFjRwLOc+bOZDdzEJWpTDsAMjYWDZ8+oP5VcwSwa3BNx
- DzOe3vGxo0eXA/Kb5LHtYiwMLCZc/Do6RzR+mmJs4CS9toppxHGXa9WwDlUihS0xW7KHfhEgX
- gRzPJ/rG8tl2a02V/LgCjNJwsWOEK/scmW6guObi+0h7SBFO3PWjsGPF9NyoAdMCmRpIQpF/I
- gtxJ1n59N4Nw6c80J+LSr3jbk6YE1P2scEbBd+9vVl8fFx9JdOZS2LSDIfN50B8SbwEkq/qTJ
- T5LUm28IP2AtUeub11hBLM3o5UCEa+IoWp4LUNJtYn7My1lHyy1ovI8ERpVs5Jw/9H+7Yqxcv
- dkcfjivO03DGaQe31bc+twMX2aVUh+2xJvMtf5Ma5AqS7e/P0cyVx0mFIdTdRMHRiMRhuarmM
- PkNmco+vv8WGfIg3Q2JZCRE0C1fjX9YLbulY6iz2lOArCdC4gltfZ+ZMAYC7BM6me+9TN0bWr
- GParWjicfU0myXE8MgsAUjirIOnj4PdnkTZzVG4hnDQxDeDwKuwX731LRc4XVpnRw/eupUMJ2
- z5WPh6fj+Qa95HaKRF1cFyYkSpn3bdOrFpXs9bDstYZ0WOaA81fEMM9EEetAHJR35Qrz44haA
- d4ag1OPoQ7kuwVKLZLQpofrh0x1snwtUJjzBiOIhb4/yAGN18JEsdoZ1R4bwu65/qNeHdgpte
- yddwc1lYJfizs/9k9zB8jZaV6IBBUWRAWi83j+eOBdD3COzBWLBl0TokQEFGktHGlYX3bABCu
- VD7XFjFjnJEg1CzkvyimG3U/fzEVVZNsSPTw4SAsh/hexXcdMnLETXdXvfnrF6SNHfO4iatkn
- GlK8V7+dUXl86YRMUEhCNS9rsxAQfhByk3A+i+Nuwoj8qpBIcgpsz27SLQ/MqKFVnfC67r6/n
- e7Ug0fYfh835Kn6uEPjefU4xVoYlBNksg/9+eQBiTH/R7Lw9nb2+LnIaO5DX1ZQJpXXD6vg3L
- AVDqEXnghyG6ap9c9JtfszXmwpybhFRmyZL1o8xQzJAg38HAnIejGuts7LVNpT/ywKgfqpoUJ
- 4FFmZqJVj4rRBfP2RcIbS0fcvNctfC+shOY7Qs8k1eAo7DFFoeZR/xRNiEQ5cPGxefdfaaJBO
- D/q/2CQjY56P1gRjrptZQ0A0flQZqpmAEaVEyStiD714OTvuyNfOvZKqKhJN17rowQtJp/eiR
- dwX2Jr1CQRL0/XFDGPOq6TaSb4G4novXLtUWijMLmojpI2UCfyF5kzWwQ7cA=
+X-Provags-ID: V03:K1:5hAC2qp3u93+w16GtUOv+3G8OKYpL1LNbcMkTM3esz0HlckqlT3
+ VGyj3BIOpXvxBNxvLgundMV5NlO8tOimhrl5gHqg+sJ4/0V/EIPvU2S/5zGhIx/fI/NBl2+
+ myUBoBhWD8V3QYHV3Dac21emNGMFhKg9Rfn7nVWknBhKFocYQIRWdK4fNyanXtCSuVg2PHW
+ Sx/Gp3ymdb+Cp1j1IDIJw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:cMp7I2h8UDI=:1dxtPt6BZpU6mSWrWFHAI4
+ 1qzsCHLrlpgInYc76w2DJJbaIlz1089exgPxY6aeHBNiJEmnZBAvV/amGRQNI3l/Q2z3VDxP2
+ SPJSKRoP1ojnwIl9Cc9n6mkwSi+zkhenXkhpympUAJ1V2qVN3vO2al1CmzICaeds65uqlNowi
+ v+spusa7V7b4Hhz0yqmBXVFgySYciZkyTSZinbV2DGPSi3HHENEun1nZhyL9+fpTZZVM+ezk/
+ sE/l+YUAq1boRdNyrf9iJnXfP/+8Jg+iU02hAqho+EedRQfl5M37114sNxQvMy+76u/HmkDUr
+ D7zTfTRqDMk4R3QWviQ1cABt9qFBMMumSgGHrbhjkJgUBd2vd9mXseWbKuFPt+N+WIVp6XTNj
+ T5zU181VkUaTU0OCJK9iDUo1A7NVrMVu9Tz8RDK8Ch5RH+2U5kI33lSPMVPvW4uC037L1CCT8
+ fI5JhJsHPr0GUXhmYt9/+/jed/+kUmqlyS/G2aCWkhmJbGFjaCqUXpbBpGtqQflULM5pwzhZm
+ 33HeKRMJLtZQ9Zurv5d21c6waVaFJ4NjH+88DK6AQPrzwks6bjT+skblxM3Ihzi9vC44AXAg7
+ IEadnbxcj5uJEV9KXmb+8w0v7rUzmemrw2Q1qOCCDTVIoB9gxJDEVZ/+NT5wvoXeRLiCv4drd
+ kcgGgedjKYlX0mxROwrWU8XjKJcp9er44wRpMwD4zhXQWFHRjx978lkTLUb64CwTS0auPuvn+
+ LJ+6wG1UkN9511gEeUkQsdhP6B6VacBJPfcn1dJBZ/D4tZGWdxROFlKuW8/Q8ZR+SMba5WJvk
+ bOcNWRk/uUBqMTfSUMWTLNWYXCyCbkdzYtriUvARkUZso7GAqUfq5DAu82LpYYHv0Jb+vnZOP
+ 5wU+nO6tSqE13cn5RncYhSy6ae5MLOHq3qMlzB/1++Nu9VzQkQAx45IiAGU3z+x7vawnZeTem
+ haxkjlamYJoWGeZ18teGsiufYs6U9XfCYSuoR6CjgkcTXcdL9cwk8onGnefXTrPVC9c/feOtO
+ bkM7gUxk+EV70YkyQEC8DGzTf1LOJX1uepenvCy/Tlx+ikjtsd72axf0uvVPHX7bgMVfoKnaW
+ 1FnJYu6e0jjVoMoH0YqEHp1MUzdTkknRmpABeOjVUL7BLn0/cBM2g/20ThA/NVkWXVcGECmsD
+ VzpDj5nLb8auhTiEkz/glTTfu6XVJ0y+Eh9H5Z2Zh67WE70RQl6RJYM8m8WhwA256pYbcFhDE
+ 8dBlJCFlBSVnn0CEptc2URIa0G3XiXddu7vHbdhK60DK8M1WnurWmYQ4jSzk=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Team,
+Hi Bryan,
 
-On Thu, 24 Oct 2019, Junio C Hamano wrote:
+On Thu, 24 Oct 2019, Bryan Turner wrote:
 
-> A release candidate Git v2.24.0-rc1 is now available for testing
-> at the usual places.  It is comprised of 511 non-merge commits
-> since v2.23.0, contributed by 66 people, 18 of which are new faces.
+> On Mon, Oct 21, 2019 at 3:05 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > a couple of days later than I wanted, but at least it is now here:
+> > https://github.com/git-for-windows/git/releases/tag/v2.24.0-rc0.window=
+s.1
+> >
+> > Please test...
+>
+> I've run both the Linux and Windows 2.24.0-rc0 candidates through
+> Bitbucket Server's test matrix (~6,000 forked git processes,
+> exercising various commands and verifying behavior/output). No issues
+> found.
 
-The corresponding Git for Windows v2.24.0-rc1 can be found here:
+Thank you so much!
+Dscho
 
-	https://github.com/git-for-windows/git/releases/tag/v2.24.0-rc1.windows.1
-
-I would be delighted if we could squash bugs in the -rc phase, and the
-more people test this, the more likely we can squash those bugs timely.
-
-The most obvious source of potential problems is the consolidation of
-Git for Windows "two system gitconfigs" into a single one. So if you
-regularly modify those gitconfigs, it might be a good idea to test with
--rc1.
-
-Thanks,
-Johannes
+>
+> Thanks again for these early builds!
+>
+> Best regards,
+> Bryan Turner
+>
+> >
+> > Thank you,
+> > Johannes
+> >
+> >
+>
