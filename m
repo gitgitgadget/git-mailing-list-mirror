@@ -2,203 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B7B71F4C0
-	for <e@80x24.org>; Thu, 24 Oct 2019 20:14:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90CB61F4C0
+	for <e@80x24.org>; Thu, 24 Oct 2019 20:29:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727237AbfJXUOq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 16:14:46 -0400
-Received: from us-smtp-1.mimecast.com ([207.211.31.81]:41935 "EHLO
-        us-smtp-delivery-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727198AbfJXUOq (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 24 Oct 2019 16:14:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1571948085;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=EuNmu0n7jmBxVd/ojA20w2Y6maBXCiIzLZefFzZHyVQ=;
-        b=Ibdzucz1QsQHjQvZOKP9p5IVuCw86E42+Re4K8FBWmEMufqNSq0AyMa4yATatRlg183XPb
-        jp0hjFjHPxGtApHQ1azUzriENpCoF4lsTicdD1CMPLJm7IR8bd8ilAaMwtoYedyKROFqAn
-        I1iTcFB8ktv+hHGw8+CWSQcsSDPjQvQ=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-23-GFV04OCdO_OBba4QYpjAXg-1; Thu, 24 Oct 2019 16:14:41 -0400
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com [10.5.11.16])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id BB6CD476;
-        Thu, 24 Oct 2019 20:14:40 +0000 (UTC)
-Received: from prarit.bos.redhat.com (prarit-guest.khw1.lab.eng.bos.redhat.com [10.16.200.63])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 0B7235C222;
-        Thu, 24 Oct 2019 20:14:39 +0000 (UTC)
+        id S1728164AbfJXU3w (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 16:29:52 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:34334 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727810AbfJXU3w (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 16:29:52 -0400
+Received: by mail-ed1-f67.google.com with SMTP id b72so94553edf.1
+        for <git@vger.kernel.org>; Thu, 24 Oct 2019 13:29:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=M2458B7SVbu49FU/UbS7XZu5GBdsJw/XtAJSAHQCqn0=;
+        b=jgEPSd4+rJYY9+NVdUlslfJE2XesKVgxU3tPwXMVXwFG2X/VrWPHh/isIjH6Yjf1mP
+         25UsuEWtLnn2/WnGGE5xLStY39gkPLsyavF8mDpB5ONOUCyjEVAkIbal0vG8PyHoLhsB
+         doiCMCW4LHjjhjC3VfHizEkgZh3a+7fgxsep5jutzcHsAzBPeB7tqlsgFKD2vzO3XFGT
+         bbs+HvG0SdXhzedOPsr+89oCyKeBWZ6SQQpL8VesvylL9O+VEgRJSZ+hOtBCfrReM351
+         xNw3c7A7XPyEgfp51YDMTedchyk1US16GhbCVMhLnhyb22RakhG9VvuLS+Vby3FsdtMJ
+         Rlow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=M2458B7SVbu49FU/UbS7XZu5GBdsJw/XtAJSAHQCqn0=;
+        b=IDD3gBUMNYdZCrGDx98grJulL7KudidRuam0voNDAtu42ha7PaO0JBRJPczSPpBe5L
+         MBND7FZWhG3mufXaZn0awxLts0B4C9+HFNTNSwCR4jgHOzYYYvUBYBImZRkQu9vuFvlj
+         kTdxu3n+Qj29YfmUy6gMFDjTsVY2zfzrEhGL9HZLLIT4fZ97y6eGc2h3Y/maPM84jQI0
+         xp9/N2aXvZMDh7/bu183wCMTH422db/1/pTbKf/zUQ4YLh9U2qMP2C8GD62E69tT5h8R
+         WHI0q/m2vKS3CcQofEOTzWFvXMjdLav1eMngfVM/qcDMqlOCDRnjrf2fjPB6/7MfU8j9
+         gUOQ==
+X-Gm-Message-State: APjAAAVpX3UoeYTQ2JVDYeImippRfhbneMljDFFiVwHUTnCb1L7074y3
+        S2j09dcQWKHRZaxWp8yLC4c=
+X-Google-Smtp-Source: APXvYqzB9NDH9UtxbI/TAVKcKWPcd9uego3Wie8r1cB5VDTdRU/+uzIl+umL4naHNAGsdYave/aEmA==
+X-Received: by 2002:a17:906:a2d1:: with SMTP id by17mr62515ejb.206.1571948990616;
+        Thu, 24 Oct 2019 13:29:50 -0700 (PDT)
+Received: from szeder.dev (x4dbd3359.dyn.telefonica.de. [77.189.51.89])
+        by smtp.gmail.com with ESMTPSA id f6sm862194edr.12.2019.10.24.13.29.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 24 Oct 2019 13:29:49 -0700 (PDT)
+Date:   Thu, 24 Oct 2019 22:29:47 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Prarit Bhargava <prarit@redhat.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>
 Subject: Re: [PATCH v2] pretty: add "%aL"|"%al|%cL|%cl" option to output
  local-part of email addresses
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
+Message-ID: <20191024202947.GN4348@szeder.dev>
 References: <20191024125332.29958-1-prarit@redhat.com>
- <20191024161610.GA8448@sigill.intra.peff.net>
-From:   Prarit Bhargava <prarit@redhat.com>
-Message-ID: <28711c54-0635-41e1-1c3f-1fc2751c8c4e@redhat.com>
-Date:   Thu, 24 Oct 2019 16:14:39 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <20191024161610.GA8448@sigill.intra.peff.net>
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-MC-Unique: GFV04OCdO_OBba4QYpjAXg-1
-X-Mimecast-Spam-Score: 0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191024125332.29958-1-prarit@redhat.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+Just a couple of test nits:
 
-On 10/24/19 12:16 PM, Jeff King wrote:
-> On Thu, Oct 24, 2019 at 08:53:32AM -0400, Prarit Bhargava wrote:
->
->> In many projects the number of contributors is low enough that users kno=
-w
->> each other and the full email address doesn't need to be displayed.
->> Displaying only the author's username saves a lot of columns on the scre=
-en.
->> For example displaying "prarit" instead of "prarit@redhat.com" saves 11
->> columns.
->>
->> Add a "%aL"|"%al|%cL|%cl" option that output the local-part of an email
->> address.
->>
->> Also add tests for "%ae","%an", "%ce", and "%cn".
->
-> Thanks, this is looking better, but I think there are still a few minor
-> bits to address.
->
+On Thu, Oct 24, 2019 at 08:53:32AM -0400, Prarit Bhargava wrote:
+> +test_expect_success 'log pretty %an %ae %al %aN %aE %aL' '
+> +	git checkout -b anaeal &&
+> +	test_commit anaeal_test anaeal_test_file &&
+> +	git log --pretty="%an%n%ae%n%al%n%aN%n%aE%n%aL" -1 > actual &&
 
-Thanks :)
+Style: no space between redirection and filename, i.e. >actual
 
->> Changes in v2:
->> - Changed option to 'L' based on https://www.ietf.org/rfc/rfc2822.txt
->>   definition of 'local-part' of email addresses.
->> - added additional information to documentation for %cL and %cl
->> - added mailmap output test
->> - modified code to use mailmap output for "L" option
->> - modified code to check if email address field has '@' symbol
->> - modified tests based on input from Peff
->
-> This change list is very welcome, but it should generally go after the
-> "---", so that it's not part of the commit message (i.e., it is for
-> people reading this email and reviewing now, but people reading "git
-> log" later would not know or care about v1).
->
->> Signed-off-by: Prarit Bhargava <prarit@redhat.com>
->> Cc: Junio C Hamano <gitster@pobox.com>
->> Cc: brian m. carlson <sandals@crustytoothpaste.net>
->> Cc: Jeff King <peff@peff.net>
->
-> Likewise we do not generally use "cc:" trailers in this project.
->
->> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-for=
-mats.txt
->> index b87e2e83e6d0..9a1f900f114a 100644
->> --- a/Documentation/pretty-formats.txt
->> +++ b/Documentation/pretty-formats.txt
->> @@ -163,6 +163,11 @@ The placeholders are:
->>  '%ae':: author email
->>  '%aE':: author email (respecting .mailmap, see linkgit:git-shortlog[1]
->>  =09or linkgit:git-blame[1])
->> +'%al':: author local-part (the portion of the email address preceding t=
-he '@'
->> +=09symbol)
->
-> I'm not sure if it is worth saying something like "preceding the @
-> symbol, or the whole address if no @ symbol". It's a pretty rare case,
-> I'd think, and it does clutter up the wording. So just a thought.
->
+> +	{
+> +		echo "${GIT_AUTHOR_NAME}" &&
+> +		echo "${GIT_AUTHOR_EMAIL}" &&
+> +		echo "${TEST_AUTHOR_LOCALNAME}"
 
-After adding the text I've decided to keep it the same.  As you pointed out=
- it
-ended up being too long.
+Broken &&-chain (though with just a bunch of echos it won't really
+make much of a difference)
 
->> +'%aL':: author local-part (the portion of the email address preceding t=
-he '@'
->> +=09symbol, respecting .mailmap, see linkgit:git-shortlog[1] or
->> +=09linkgit:git-blame[1])
->
-> This description gets pretty long. I wonder if we can simplify by
-> referring to earlier formats, which would also make clear to the user
-> the relationship between the formats. Perhaps:
->
->   '%aL':: author local-part (see '%al'), respecting .mailmap (see '%aE')
->
-> And ditto for %cL.
+> +		echo "${GIT_AUTHOR_NAME}" &&
+> +		echo "${GIT_AUTHOR_EMAIL}" &&
+> +		echo "${TEST_AUTHOR_LOCALNAME}"
 
-I have added this for v3.
+All these variables stand on their own, so the curly braces around
+them are unnecessary.
 
-<snip>
-
-> I didn't think about this before, but...surely we're testing %an, etc
-> already?
->
-> Indeed, it looks like t6006 already covers that. Maybe you should be
-> adding to that test? I note that it just hardcodes "author@example.com"
-> in the expectation. I'd be OK with either following the lead there, or
-> doing a separate preparatory patch to use $GIT_AUTHOR_EMAIL, etc.
->
-
-I've done separate preparatory patches for both t6006 and t4203 for v3.
-
->> +=09{
->> +=09=09echo "${GIT_AUTHOR_NAME}" &&
->> +=09=09echo "${GIT_AUTHOR_EMAIL}" &&
->> +=09=09echo "${TEST_AUTHOR_LOCALNAME}"
->> +=09=09echo "${GIT_AUTHOR_NAME}" &&
->> +=09=09echo "${GIT_AUTHOR_EMAIL}" &&
->> +=09=09echo "${TEST_AUTHOR_LOCALNAME}"
->> +=09} > expect &&
->
-> The expectation for %aE is the same as for %ae. So we're not really
-> testing that we actually applied the mailmap. It looks like t4203 has
-> some tests for %aE; you'd probably want to check %aL there.
->
->> +test_expect_success 'log pretty %cn %ce %cl %cN %cE %cL' '
->
-> Likewise, both of the spots I mentioned cover the committer formats,
-> too.
->
->> +TEST_AUTHOR_LOCALNAME=3Dauthor
->> +TEST_AUTHOR_DOMAIN=3Dexample.com
->> +GIT_AUTHOR_EMAIL=3D${TEST_AUTHOR_LOCALNAME}@${TEST_AUTHOR_DOMAIN}
->
-> If you follow the lead of t6006 and just hard-code these, then this hunk
-> can go away. But if you do keep it, note that...
->
-
-I implemented the suggested tests in both test files in v3.
-
->>  export GIT_MERGE_VERBOSITY GIT_MERGE_AUTOEDIT
->> +export TEST_AUTHOR_LOCALNAME TEST_AUTHOR_DOMAIN
->>  export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
->> +export TEST_COMMITTER_LOCALNAME TEST_COMMITTER_DOMAIN
->
-> These lines are unnecessary. We have to export GIT_AUTHOR_EMAIL, etc, so
-> that the child git-commit process can read it. But there's no need to do
-> so for TEST_*, which are meant to be used by the test scripts
-> themselves.
->
-
-Removed in v3.  I will post after running the test suite.
-
-Thanks,
-
-P.
-
+> +	} > expect &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'log pretty %cn %ce %cl %cN %cE %cL' '
+> +	git checkout -b cncecl &&
+> +	test_commit cncecl_test cncecl_test_file &&
+> +	git log --pretty="%cn%n%ce%n%cl%n%cN%n%cE%n%cL" -1 > actual &&
+> +	{
+> +		echo "${GIT_COMMITTER_NAME}" &&
+> +		echo "${GIT_COMMITTER_EMAIL}" &&
+> +		echo "${TEST_COMMITTER_LOCALNAME}"
+> +		echo "${GIT_COMMITTER_NAME}" &&
+> +		echo "${GIT_COMMITTER_EMAIL}" &&
+> +		echo "${TEST_COMMITTER_LOCALNAME}"
+> +	} > expect &&
+> +	test_cmp expect actual
+> +'
+> +
