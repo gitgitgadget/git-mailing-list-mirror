@@ -2,131 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61BD51F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 02:52:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0D471F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 03:05:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391300AbfJYCwN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 22:52:13 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:53537 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732696AbfJYCwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 22:52:13 -0400
-Received: by mail-pf1-f202.google.com with SMTP id h2so755588pfr.20
-        for <git@vger.kernel.org>; Thu, 24 Oct 2019 19:52:11 -0700 (PDT)
+        id S2391605AbfJYDFY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 23:05:24 -0400
+Received: from mail-ed1-f50.google.com ([209.85.208.50]:41876 "EHLO
+        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391593AbfJYDFX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 23:05:23 -0400
+Received: by mail-ed1-f50.google.com with SMTP id a21so639819edj.8
+        for <git@vger.kernel.org>; Thu, 24 Oct 2019 20:05:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=aZQXms7nJG+d3PXGj7MQD2IhqYwTjFVvl0TzUNRQbl4=;
-        b=fA8NnQXc6wx1Ka58xuiCtfHdJm8M809kqEvm6buYtBKtqb4KEjedlRnbR1Fw148gAW
-         zSgXNarRyoN4Wvqukw+bMQHQbWbZL33/gXR7BFmue6WWh2wYD0TJ1RYU3ODEi7U2PqSX
-         pG3Xf7I7za7obzbkj8aeiokHSdk1bAKUZXQbsS/0LHvbeSKESLIso95+92HhQwkQJBg6
-         qg3g5Ln/mIkcsUxU7FsuwYddSyexXC7OhWFDdkj/Tjq8ASCG49GjCkwDCxafOh0hpAGd
-         qOEMJif/KMWbMIgTgH2itRY1WXZ74JGwrNicZNG1c4SAFTtL0mNtb7yEOAvkszZ0VE/V
-         sGGA==
+        d=dropbox.com; s=corp;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=1LvQdOJX15CNX86n56ih2BUyDNLYm+hWkQsi8xeaEHk=;
+        b=kmQYmPVMklETgsCJIR0kBYqdpxUyntuMuiHF78ovzFBmdv5u57IU7Lq99mOjU3inQW
+         1zCbX2d9ccpiIz0uy8ZVojTAdKmBY5fLIdvGOnLronoCMGexxXh8BHSqz2tHHUbIrqAk
+         t5pdzccRD0CDkoHO21U+1ugbPzWLyzG42X/K0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=aZQXms7nJG+d3PXGj7MQD2IhqYwTjFVvl0TzUNRQbl4=;
-        b=ha5sQUn8UfWtS22DSfSEoXysv78cPWKliO9a1IbY7arEeQ5u3n2Yv0U3/m72CbOQD+
-         SlCFGlkrxM3+/6w/bwmYSy7DmYV1KbZt7FqDnc8ESY8hgv3fHZ87NnVLNz32tjep7Qqf
-         mLFAgEpygwB3uKCET7NN+TEeirxQvTIPLyzuBASVaJblSuXl6GDgfEoUkSA8X2gv7dhc
-         gK0PCdPzd0gt7zCz+NJsQs6Lrkm9ZQFZXIB+7c7rW7Ln4IF2NbjQCEs6xkPQGehorlo6
-         XRzLZWP8wFtv0Cbilx62mg2jBpdAXs+NRMMsyMc1vVskgKEkeGiBoaZAmA6P/uwGMJCh
-         2Ukw==
-X-Gm-Message-State: APjAAAX/uUrBraRKTc5l+B9OJDgqq3eN+YFVh8Eo6ExNWxwvZOf3D0O/
-        Un7jTC0NfCbhgG0Iu2sBBkqli6xZJhj+4jieXJDIcJM+fF6Tmt3prbCD62jxkqJBXeNI1nUZE8E
-        rigEAvbQNHBnOSu+A/fmG4oHNetY+nbCxVW2ZkVx77EtWEctvAx3vDwyMrAot30gPTky+qVUBpQ
-        ==
-X-Google-Smtp-Source: APXvYqzKRAN0TTMZ8lU+0Huic7RfUJOxnFjY0QI8tudb2ZrbDT8Ke8ah3P6GyuHK4Aj27mscKoPsPbZc5jH9rfBPIPI=
-X-Received: by 2002:a63:4304:: with SMTP id q4mr1252641pga.218.1571971930857;
- Thu, 24 Oct 2019 19:52:10 -0700 (PDT)
-Date:   Thu, 24 Oct 2019 19:51:29 -0700
-In-Reply-To: <20191025025129.250049-1-emilyshaffer@google.com>
-Message-Id: <20191025025129.250049-10-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20191025025129.250049-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665-goog
-Subject: [PATCH v3 9/9] bugreport: print contents of alternates file
-From:   Emily Shaffer <emilyshaffer@google.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=1LvQdOJX15CNX86n56ih2BUyDNLYm+hWkQsi8xeaEHk=;
+        b=iiDOvHpbPFRS2BIujR0RpkhEUrstC6PRW1d7wjl5+WGV//C70/dZ8anXKXe95bnRk3
+         ytYP6C2DYHw/6TMO67KKDLFXuUD8MnqLjLkTd0T/tfBoFaXmeF3Ui/QPplA+v6kNzmM1
+         RJVvLt31eGiBLx4z1+KLKN53dSVsVYTB8DX5Wu/1gsC72EhPkSFFthicYs6gyboKK3in
+         pwIyz8TTY95nqo5a10qNVME3s9j1n8iC9IMh9yH3OKZLVsC9yBwKVgq4Y+C3efacdMqs
+         biVX9L2MNQOYD928ObL3/lAnJEwy1m8mCLjq2IBErd1XOoVxYHY95EKvR0BRw7XUzLsw
+         00yA==
+X-Gm-Message-State: APjAAAWp6JwG/p8EuhPYMIVcwB+DVoR4bUboQxbbgIBIVmcL0JzFyoxe
+        fNUqUU2x0dw42MUTSTISMR7S8fNXLkVxFKHvrDVKqmAFtBYbnA==
+X-Google-Smtp-Source: APXvYqzKZ3UiJsf+YBaR2Rhgueie+CKy4qB+wZwlZiWWP3E0FhfixXps+7nSVGH5DS3ijFmPEoSDLnHWCsDRO+CsLC0=
+X-Received: by 2002:a17:906:743:: with SMTP id z3mr1276315ejb.142.1571972722049;
+ Thu, 24 Oct 2019 20:05:22 -0700 (PDT)
+MIME-Version: 1.0
+From:   Utsav Shah <utsav@dropbox.com>
+Date:   Thu, 24 Oct 2019 20:05:11 -0700
+Message-ID: <CAPYzU3OEjjFgRrzAM04O3Dmg78FLo=n1X+EU-D_SoThKmiZtsA@mail.gmail.com>
+Subject: Speeding up git stash - help needed
 To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In some cases, it could be that the user is having a problem with an
-object which isn't present in their normal object directory. We can get
-a hint that that might be the case by examining the list of alternates
-where their object may be stored instead.
+There's been some work to improve the performance of commands using
+fsmonitor to skip unnecessary lstats. This has worked wonderfully for
+git status on our repository, and I'm trying to see if we can extend
+that to more commands.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- bugreport.c         | 14 ++++++++++++++
- bugreport.h         |  6 ++++++
- builtin/bugreport.c |  4 ++++
- 3 files changed, 24 insertions(+)
+A profile of git stash on our repository shows a fair bit of time is
+spent in the "git reset --hard" that happens at the end. Most of the
+time there is spent running lstat in unpack-trees.c -> traverse_trees
+-> oneway_merge, which is a fairly generic function and used in a few
+places.
 
-diff --git a/bugreport.c b/bugreport.c
-index ce15904fec..a7bdc72b7f 100644
---- a/bugreport.c
-+++ b/bugreport.c
-@@ -298,3 +298,17 @@ void get_object_info_summary(struct strbuf *obj_info)
- 		strbuf_complete_line(obj_info);
- 	}
- }
-+
-+void get_alternates_file(struct strbuf *alternates_info)
-+{
-+	struct strbuf alternates_path = STRBUF_INIT;
-+
-+	strbuf_addstr(&alternates_path, get_object_directory());
-+	strbuf_complete(&alternates_path, '/');
-+	strbuf_addstr(&alternates_path, "info/alternates");
-+
-+	strbuf_reset(alternates_info);
-+	strbuf_addbuf(alternates_info, &alternates_path);
-+	strbuf_complete_line(alternates_info);
-+	strbuf_read_file(alternates_info, alternates_path.buf, 0);
-+}
-diff --git a/bugreport.h b/bugreport.h
-index 4f5e2d1b9a..74d1f79960 100644
---- a/bugreport.h
-+++ b/bugreport.h
-@@ -36,3 +36,9 @@ void get_packed_object_summary(struct strbuf *obj_info);
-  * previous contents of hook_info will be discarded.
-  */
- void get_object_info_summary(struct strbuf *obj_info);
-+
-+/**
-+ * Adds the contents of '.git/info/alternates'. The previous contents of
-+ * alternates_info will be discarded.
-+ */
-+void get_alternates_file(struct strbuf *alt_info);
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index 8aad33a9b0..0784bdc42a 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -76,6 +76,10 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
- 	get_object_info_summary(&buffer);
- 	strbuf_write(&buffer, report);
- 
-+	add_header(report, "Alternates File");
-+	get_alternates_file(&buffer);
-+	strbuf_write(&buffer, report);
-+
- 	// Close file
- 	// open file in editor
- 	launch_editor(report_path, NULL, NULL);
--- 
-2.24.0.rc0.303.g954a862665-goog
-
+Is there a sane way to try skipping those lstats? Does anyone have an
+approach they'd recommend? Or is it possible to skip the git reset
+--hard in some way? Any suggestions would be welcome.
