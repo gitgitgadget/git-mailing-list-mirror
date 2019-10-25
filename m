@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3121B1F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 02:51:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06E5D1F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 02:52:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391226AbfJYCv5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 22:51:57 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:33365 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732696AbfJYCv5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 22:51:57 -0400
-Received: by mail-pg1-f202.google.com with SMTP id g187so661565pgc.0
-        for <git@vger.kernel.org>; Thu, 24 Oct 2019 19:51:56 -0700 (PDT)
+        id S2391249AbfJYCwB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 22:52:01 -0400
+Received: from mail-vk1-f202.google.com ([209.85.221.202]:46485 "EHLO
+        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732696AbfJYCwB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 22:52:01 -0400
+Received: by mail-vk1-f202.google.com with SMTP id n124so228337vkg.13
+        for <git@vger.kernel.org>; Thu, 24 Oct 2019 19:52:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=bP6thc16j4zFuCStHrLp95eyVnwkGKKniBg+7jQB8PU=;
-        b=tEQKronj8D9JGjbsw+6qWfvFJKyQXrehpQ3p714vWFwdBLWhPDZvAVGpfZaJGHmQz9
-         ipV+Ws05cyXP/2+B1zebWncsmmEcdnFre7WOHdFq4LHRIDgb08BCOeThFZ/5097dXRgn
-         18+4B22kWLiOwqtOD3pBtW7tuNYL1usRSomg+mIPXT4VeGrbLOFtjOanwsVQ8MzVIRjg
-         /vZd+05T1pKmWO5DQwnud7SNYpHP4mHWqtkMuRkFmKeZTXRhPoRBCuLp/9S2DagtqLt8
-         DPwjq6CvUpaF4mvoy2kA/21lPxft5maMK3W44CWMOroIh8Cps8LNIycPqZQHPAyZmA4w
-         38jQ==
+        bh=YCvff+85QpMKmKT6MzrF+anTyQpZ411O2Zun7SX3Zds=;
+        b=Drrpnw2S6/MDa3s+UT+NazLihXtncicUf7E4xpUzI2LLzsO6o7Jlfc9xjDKYfERRGA
+         ow7vb+m+3OQPr0+C+5bfSYTe6PxcjPwtO3MLWLUYFDZP6+m1b4QPKkpSjDT3B+XdwuDm
+         +BCTP+5GpBJdHoBKTKZHzhAGkyy+l0fgqUsBBqrO4RKOynKBC8uXJMafWeyHKb8GcW/I
+         UY/5hamY/xqu0SPTHywUtPGHgwhYBV9uYH8QCFAQzEtosgn9dyfLZYHTn0NoU3gkZSs/
+         J3Iqp5VafozoApAdxr1Dssem4c8pQKIoJAGfj8buAIW0Uf5hSjPAzmltZ42i05GxW9lE
+         Himg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=bP6thc16j4zFuCStHrLp95eyVnwkGKKniBg+7jQB8PU=;
-        b=CSZkWpij82rxNBDoJMC3DpU02NF4LOdvPc7eUNxkI4MsVOHdl/NIPjl64Ms/60CDtX
-         SlPIVWDxsUmmBbVxU5WrBAUbP+lQlHNWgSVtCsx8lT5YJ6c3Ck7/R1AZvzFnTDvSWRxG
-         J7r1MlT/+TRfeDsSemPQbI1EpQM7o9bqQzkZzmT9xdwUgmCcnDVJ2r/UDIhm9aYwokbK
-         q2WSdyKPhf8EBnFWQrABtiqOCP4rKsrrBJpEzA71A6RV/7PSUS9jtxo0EAOLWw+YNima
-         WKzaDnmvXhNiwbBsgMESZmWJBwIDBn5bz7UfoZkJJ7C9VyffAfwXfns0xDS9ovKdNfyX
-         4ShA==
-X-Gm-Message-State: APjAAAUUXAyzVtw+qoC7+X9sIFhGVN34Kziaul9gay96z26EikeBCuog
-        U215lkI8j9m4EPF4SNpPqyOIBCt1lmNn5n1y+ujQYRTVmzHFW2rLvwv+nXSCtIuTv06mufOb3Qs
-        UG71QVfM6X+1bFhP6ho6NVcZrEtWRZ1QJLCTzmx7IjbbzPzoxk5jTBwVY8KPRy8u6jW1uLLbE9w
+        bh=YCvff+85QpMKmKT6MzrF+anTyQpZ411O2Zun7SX3Zds=;
+        b=KJwAJtFKgkT6R77l5mwFliULS6RF6TXATSDwqy4qyDlNA+w9bhOHlPlV5nEznfJXox
+         /c+68U3Wo0VDlK9MrDW0fAiRMXuxW8S0/sHO/Q12Npih8EeTHBRjvbD/nxVJcDuA6HRP
+         6oXaA4U4ncEXBWjqPwV30TbUnvRQLUWtQYo0ZSvTTUh3sJgGgsYj25fKsyvl7f7g7foG
+         Q+qxQ0dehI8/v6CFTqs3XRs2uYPdbSJoenz7Mhca5osL7XHVyHP0WpegXz1+CmTqmevA
+         HhThbRJw1xjXLPuWCskrDniTr2FbOvOZ4Ez9juJCCAx/lrVbBcfFkQewwSegGreHJ9Ft
+         cwJQ==
+X-Gm-Message-State: APjAAAViCVzW2SpPVE9PtXf5qM+ThG4BrXwKrxos4QqFnJawfOG6Zmje
+        rB/Om3M8qTx1ZRh43zpCSrqR33D7IJZV4MtzDzuAuvbnkiyTf4zQGWmIitO/m2VbMNOrcyWDyd6
+        EAFHCbd8aOCUkwRWrG77tlleL/GubKdKTv90e1HbzWnnakmSTHViMbJrWDnT8CfUM07DM3qlMkA
         ==
-X-Google-Smtp-Source: APXvYqxTRsL8OaBhevdbh+ccDVwSRAVwM8ZyBHXa4K0zjyxJAXNUHPI5x/1RY/HYMLWscQzJK5FxooN1olVyq5msMWk=
-X-Received: by 2002:a63:d26:: with SMTP id c38mr1476218pgl.84.1571971915917;
- Thu, 24 Oct 2019 19:51:55 -0700 (PDT)
-Date:   Thu, 24 Oct 2019 19:51:25 -0700
+X-Google-Smtp-Source: APXvYqzlBxqfBWv/FZJm5AIyEW8PwgJ2rqUU6F6V0StbxC2+GQy+IrB0MXujkZWBeWSmRY8qORrq84K1yVppqfF36rg=
+X-Received: by 2002:a67:e316:: with SMTP id j22mr777093vsf.152.1571971919973;
+ Thu, 24 Oct 2019 19:51:59 -0700 (PDT)
+Date:   Thu, 24 Oct 2019 19:51:26 -0700
 In-Reply-To: <20191025025129.250049-1-emilyshaffer@google.com>
-Message-Id: <20191025025129.250049-6-emilyshaffer@google.com>
+Message-Id: <20191025025129.250049-7-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20191025025129.250049-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665-goog
-Subject: [PATCH v3 5/9] bugreport: collect list of populated hooks
+Subject: [PATCH v3 6/9] bugreport: count loose objects
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -64,104 +64,136 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Occasionally a failure a user is seeing may be related to a specific
-hook which is being run, perhaps without the user realizing. While the
-contents of hooks can be sensitive - containing user data or process
-information specific to the user's organization - simply knowing that a
-hook is being run at a certain stage can help us to understand whether
-something is going wrong.
+The number of unpacked objects in a user's repository may help us
+understand the root of the problem they're seeing, especially if a
+command is running unusually slowly.
 
-Without a definitive list of hook names within the code, we compile our
-own list from the documentation. This is likely prone to bitrot. To
-reduce the amount of code humans need to read, we turn the list into a
-string_list and iterate over it (as we are calling the same find_hook
-operation on each string). However, since bugreport should primarily be
-called by the user, the performance loss from massaging the string
-seems acceptable.
+Rather than directly invoking 'git-count-objects', which may sometimes
+fail unexpectedly on Git for Windows, manually count the contents of
+.git/objects. Additionally, since we may wish to inspect other
+directories' contents for bugreport in the future, put the directory
+listing into a helper function.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- bugreport.c         | 44 ++++++++++++++++++++++++++++++++++++++++++++
- bugreport.h         |  6 ++++++
- builtin/bugreport.c |  4 ++++
- 3 files changed, 54 insertions(+)
+ bugreport.c         | 72 +++++++++++++++++++++++++++++++++++++++++++++
+ bugreport.h         |  6 ++++
+ builtin/bugreport.c |  4 +++
+ 3 files changed, 82 insertions(+)
 
 diff --git a/bugreport.c b/bugreport.c
-index afa4836ab1..9d7f44ff28 100644
+index 9d7f44ff28..54e1d47103 100644
 --- a/bugreport.c
 +++ b/bugreport.c
-@@ -103,3 +103,47 @@ void get_whitelisted_config(struct strbuf *config_info)
- 	strbuf_reset(config_info);
- 	strbuf_addbuf(config_info, &configs_and_values);
+@@ -5,8 +5,11 @@
+ #include "exec-cmd.h"
+ #include "help.h"
+ #include "run-command.h"
++#include "strbuf.h"
+ #include "version.h"
+ 
++#include "dirent.h"
++
+ /**
+  * A sorted list of config options which we will add to the bugreport. Managed
+  * by 'gather_whitelist(...)'.
+@@ -147,3 +150,72 @@ void get_populated_hooks(struct strbuf *hook_info)
+ 		}
+ 	}
  }
 +
-+void get_populated_hooks(struct strbuf *hook_info)
++/**
++ * Fill 'contents' with the contents of the dir at 'dirpath'.
++ * If 'filter' is nonzero, the contents are filtered on d_type as 'type' - see
++ * 'man readdir'. opendir() doesn't take string length as an arg, so don't
++ * bother passing it in.
++ */
++void list_contents_of_dir(struct string_list *contents, struct strbuf *dirpath,
++			  int filter, unsigned char type)
 +{
-+	/*
-+	 * Doesn't look like there is a list of all possible hooks; so below is
-+	 * a transcription of `git help hook`.
-+	 */
-+	const char *hooks = "applypatch-msg,"
-+			    "pre-applypatch,"
-+			    "post-applypatch,"
-+			    "pre-commit,"
-+			    "pre-merge-commit,"
-+			    "prepare-commit-msg,"
-+			    "commit-msg,"
-+			    "post-commit,"
-+			    "pre-rebase,"
-+			    "post-checkout,"
-+			    "post-merge,"
-+			    "pre-push,"
-+			    "pre-receive,"
-+			    "update,"
-+			    "post-receive,"
-+			    "post-update,"
-+			    "push-to-checkout,"
-+			    "pre-auto-gc,"
-+			    "post-rewrite,"
-+			    "sendemail-validate,"
-+			    "fsmonitor-watchman,"
-+			    "p4-pre-submit,"
-+			    "post-index-changex";
-+	struct string_list hooks_list = STRING_LIST_INIT_DUP;
-+	struct string_list_item *iter = NULL;
++	struct dirent *dir = NULL;
++	DIR *dh = NULL;
 +
-+	strbuf_reset(hook_info);
-+
-+	string_list_split(&hooks_list, hooks, ',', -1);
-+
-+	for_each_string_list_item(iter, &hooks_list) {
-+		if (find_hook(iter->string)) {
-+			strbuf_addstr(hook_info, iter->string);
-+			strbuf_complete_line(hook_info);
++	dh = opendir(dirpath->buf);
++	while (dh && (dir = readdir(dh))) {
++		if (!filter || type == dir->d_type) {
++			string_list_append(contents, dir->d_name);
 +		}
 +	}
 +}
++
++
++void get_object_counts(struct strbuf *obj_info)
++{
++	struct child_process cp = CHILD_PROCESS_INIT;
++	struct strbuf std_out = STRBUF_INIT;
++
++	argv_array_push(&cp.args, "count-objects");
++	argv_array_push(&cp.args, "-vH");
++	cp.git_cmd = 1;
++	capture_command(&cp, &std_out, 0);
++
++	strbuf_reset(obj_info);
++	strbuf_addstr(obj_info, "git-count-objects -vH:\n");
++	strbuf_addbuf(obj_info, &std_out);
++}
++
++void get_loose_object_summary(struct strbuf *obj_info)
++{
++	struct strbuf dirpath = STRBUF_INIT;
++	struct string_list subdirs = STRING_LIST_INIT_DUP;
++	struct string_list_item *subdir;
++
++	strbuf_reset(obj_info);
++
++	strbuf_addstr(&dirpath, get_object_directory());
++	strbuf_complete(&dirpath, '/');
++
++	list_contents_of_dir(&subdirs, &dirpath, 1, DT_DIR);
++
++	for_each_string_list_item(subdir, &subdirs)
++	{
++		struct strbuf subdir_buf = STRBUF_INIT;
++		struct string_list objects = STRING_LIST_INIT_DUP;
++
++		/*
++		 * Only interested in loose objects - so dirs named with the
++		 * first byte of the object ID
++		 */
++		if (strlen(subdir->string) != 2 || !strcmp(subdir->string, ".."))
++			continue;
++
++		strbuf_addbuf(&subdir_buf, &dirpath);
++		strbuf_addstr(&subdir_buf, subdir->string);
++		list_contents_of_dir(&objects, &subdir_buf, 0, 0);
++		strbuf_addf(obj_info, "%s: %d objects\n", subdir->string,
++			    objects.nr);
++	}
++}
 diff --git a/bugreport.h b/bugreport.h
-index 7413e7e1be..942a5436e3 100644
+index 942a5436e3..09ad0c2599 100644
 --- a/bugreport.h
 +++ b/bugreport.h
-@@ -12,3 +12,9 @@ void get_system_info(struct strbuf *sys_info);
-  * config_info will be discarded.
+@@ -18,3 +18,9 @@ void get_whitelisted_config(struct strbuf *sys_info);
+  * contents of hook_info will be discarded.
   */
- void get_whitelisted_config(struct strbuf *sys_info);
+ void get_populated_hooks(struct strbuf *hook_info);
 +
 +/**
-+ * Adds the paths to all configured hooks (but not their contents). The previous
-+ * contents of hook_info will be discarded.
++ * Adds the output of `git count-object -vH`. The previous contents of hook_info
++ * will be discarded.
 + */
-+void get_populated_hooks(struct strbuf *hook_info);
++void get_loose_object_summary(struct strbuf *obj_info);
 diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index 70fe0d2b85..a0eefba498 100644
+index a0eefba498..b2ab194207 100644
 --- a/builtin/bugreport.c
 +++ b/builtin/bugreport.c
-@@ -60,6 +60,10 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
- 	get_whitelisted_config(&buffer);
+@@ -64,6 +64,10 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 	get_populated_hooks(&buffer);
  	strbuf_write(&buffer, report);
  
-+	add_header(report, "Populated Hooks");
-+	get_populated_hooks(&buffer);
++	add_header(report, "Object Counts");
++	get_loose_object_summary(&buffer);
 +	strbuf_write(&buffer, report);
 +
  	fclose(report);
