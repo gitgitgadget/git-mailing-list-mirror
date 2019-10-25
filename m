@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 333021F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 02:52:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61BD51F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 02:52:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391279AbfJYCwK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 22:52:10 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:44676 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732696AbfJYCwK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 22:52:10 -0400
-Received: by mail-qt1-f201.google.com with SMTP id t16so659534qtp.11
-        for <git@vger.kernel.org>; Thu, 24 Oct 2019 19:52:08 -0700 (PDT)
+        id S2391300AbfJYCwN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 22:52:13 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:53537 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732696AbfJYCwN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 22:52:13 -0400
+Received: by mail-pf1-f202.google.com with SMTP id h2so755588pfr.20
+        for <git@vger.kernel.org>; Thu, 24 Oct 2019 19:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=chedpYzZpSl1sb5bBmFQq5AiopcUWdk/3H89WTN8dl0=;
-        b=PMKrbzKhoUwSMCOjHkpigCTpVshrClxlLEd6iI9c6osQ3IQse8Q4zTYrD/WtBYowtv
-         2c4xatBz21vKcUMT0mvxyhlclDnZHTBr7omHnA6Yw3Vx0CDusp/hN4Q2erzivMeSay0z
-         koK46NfTHtkX0wJHlqtx7xQo2DJfaI+PlzsXnAquex8xYBCfI6ROXy1PORSR6rkyk9rG
-         0XXZ7DpgKZKEM5H00ODmQkF8uW9+wsts7+PsciU/htP0fLt83yDzQu0TR8hOa0U1mn5j
-         +3SheHw2CTnlHeZiju/lO67qKhodl1EgZuSy766fbKHRGbxHjCV1Hq1Ma7kOpnpkT+jY
-         CcPQ==
+        bh=aZQXms7nJG+d3PXGj7MQD2IhqYwTjFVvl0TzUNRQbl4=;
+        b=fA8NnQXc6wx1Ka58xuiCtfHdJm8M809kqEvm6buYtBKtqb4KEjedlRnbR1Fw148gAW
+         zSgXNarRyoN4Wvqukw+bMQHQbWbZL33/gXR7BFmue6WWh2wYD0TJ1RYU3ODEi7U2PqSX
+         pG3Xf7I7za7obzbkj8aeiokHSdk1bAKUZXQbsS/0LHvbeSKESLIso95+92HhQwkQJBg6
+         qg3g5Ln/mIkcsUxU7FsuwYddSyexXC7OhWFDdkj/Tjq8ASCG49GjCkwDCxafOh0hpAGd
+         qOEMJif/KMWbMIgTgH2itRY1WXZ74JGwrNicZNG1c4SAFTtL0mNtb7yEOAvkszZ0VE/V
+         sGGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=chedpYzZpSl1sb5bBmFQq5AiopcUWdk/3H89WTN8dl0=;
-        b=UIhBJfxuL6sKYe6O37FImKQJAkjMs0OIbRaluE5jqfC6IJdk8C3zygpAHbE/+3NY27
-         HjJ/3fQgDaNfrLqrB/40eswzyayA8zzjNbhEZt/ejbgQkpt/zb3zhr3m8/s7JXsyxnVQ
-         2cwBQbqDxtvfspnc6HZ/IniZ2ial5u0vhp7lmW8fFhvxq30esz5fkoEXm0LJ8ZFc1KhJ
-         Wz2gpWju2CiWqXCNc4eBKJGrc23nbPA4iKZcxZ/ZYaY5r1mOnYZgHv6hCWeSmfUrqpkK
-         E3DEOKWGd1TMr4etOYPLb4TcWCmNcu3bsY00x/60Sk9d4u3P/ZIfop31Ke99JiTQWrym
-         PSxQ==
-X-Gm-Message-State: APjAAAVwktmAO60TSSazbtDPsW2YyQEUwV0/eL0LCMf8Nawr5YYvkQdb
-        xiztRiYlDDpd6apb1bs5NhmUzDOtMyYE7kjVEcbbZ4x1VyoeKdEZUWny4QCI+qc24TXORqt9DSj
-        16xXZz3cM87T7fiy7WSzCwjVEg/hKSsH3CnDM+ARapWkIbzajgfqDquiD6l1vbk2qttAQog6jEw
+        bh=aZQXms7nJG+d3PXGj7MQD2IhqYwTjFVvl0TzUNRQbl4=;
+        b=ha5sQUn8UfWtS22DSfSEoXysv78cPWKliO9a1IbY7arEeQ5u3n2Yv0U3/m72CbOQD+
+         SlCFGlkrxM3+/6w/bwmYSy7DmYV1KbZt7FqDnc8ESY8hgv3fHZ87NnVLNz32tjep7Qqf
+         mLFAgEpygwB3uKCET7NN+TEeirxQvTIPLyzuBASVaJblSuXl6GDgfEoUkSA8X2gv7dhc
+         gK0PCdPzd0gt7zCz+NJsQs6Lrkm9ZQFZXIB+7c7rW7Ln4IF2NbjQCEs6xkPQGehorlo6
+         XRzLZWP8wFtv0Cbilx62mg2jBpdAXs+NRMMsyMc1vVskgKEkeGiBoaZAmA6P/uwGMJCh
+         2Ukw==
+X-Gm-Message-State: APjAAAX/uUrBraRKTc5l+B9OJDgqq3eN+YFVh8Eo6ExNWxwvZOf3D0O/
+        Un7jTC0NfCbhgG0Iu2sBBkqli6xZJhj+4jieXJDIcJM+fF6Tmt3prbCD62jxkqJBXeNI1nUZE8E
+        rigEAvbQNHBnOSu+A/fmG4oHNetY+nbCxVW2ZkVx77EtWEctvAx3vDwyMrAot30gPTky+qVUBpQ
         ==
-X-Google-Smtp-Source: APXvYqwu/FtdYmtTsUdzbCnCfckC8lL9LLZmRQENkYZhQktqBHTyYTkDxLkA6LBa6/72G3H5RJb9rFoNpsnHD1APbpE=
-X-Received: by 2002:a0c:eb90:: with SMTP id x16mr1151282qvo.140.1571971927388;
- Thu, 24 Oct 2019 19:52:07 -0700 (PDT)
-Date:   Thu, 24 Oct 2019 19:51:28 -0700
+X-Google-Smtp-Source: APXvYqzKRAN0TTMZ8lU+0Huic7RfUJOxnFjY0QI8tudb2ZrbDT8Ke8ah3P6GyuHK4Aj27mscKoPsPbZc5jH9rfBPIPI=
+X-Received: by 2002:a63:4304:: with SMTP id q4mr1252641pga.218.1571971930857;
+ Thu, 24 Oct 2019 19:52:10 -0700 (PDT)
+Date:   Thu, 24 Oct 2019 19:51:29 -0700
 In-Reply-To: <20191025025129.250049-1-emilyshaffer@google.com>
-Message-Id: <20191025025129.250049-9-emilyshaffer@google.com>
+Message-Id: <20191025025129.250049-10-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20191025025129.250049-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665-goog
-Subject: [PATCH v3 8/9] bugreport: list contents of $OBJDIR/info
+Subject: [PATCH v3 9/9] bugreport: print contents of alternates file
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -64,133 +64,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Miscellaneous information used about the object store can end up in
-.git/objects/info; this can help us understand what may be going on with
-the object store when the user is reporting a bug. Otherwise, it could
-be difficult to track down what is going wrong with an object which
-isn't kept locally to .git/objects/ or .git/objects/pack. Having some
-understanding of where the user's objects may be kept can save us some
-hops during the bug reporting process.
+In some cases, it could be that the user is having a problem with an
+object which isn't present in their normal object directory. We can get
+a hint that that might be the case by examining the list of alternates
+where their object may be stored instead.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- bugreport.c         | 58 +++++++++++++++++++++++++++++++++++++++++++++
- bugreport.h         |  6 +++++
- builtin/bugreport.c |  7 ++++++
- 3 files changed, 71 insertions(+)
+ bugreport.c         | 14 ++++++++++++++
+ bugreport.h         |  6 ++++++
+ builtin/bugreport.c |  4 ++++
+ 3 files changed, 24 insertions(+)
 
 diff --git a/bugreport.c b/bugreport.c
-index 79ddb8baaa..ce15904fec 100644
+index ce15904fec..a7bdc72b7f 100644
 --- a/bugreport.c
 +++ b/bugreport.c
-@@ -6,6 +6,7 @@
- #include "help.h"
- #include "run-command.h"
- #include "strbuf.h"
-+#include "string-list.h"
- #include "version.h"
- 
- #include "dirent.h"
-@@ -171,6 +172,41 @@ void list_contents_of_dir(struct string_list *contents, struct strbuf *dirpath,
- 	}
- }
- 
-+/**
-+ * Fills 'contents' with a list of all directories within the provided
-+ * directory, recursing into each directory.
-+ */
-+void list_contents_of_dir_recursively(struct string_list *contents,
-+				      struct strbuf *dirpath)
-+{
-+	struct string_list current_contents = STRING_LIST_INIT_DUP;
-+	struct string_list current_subdirs = STRING_LIST_INIT_DUP;
-+	struct string_list_item *it;
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	list_contents_of_dir(&current_contents, dirpath, 0, 0);
-+	for_each_string_list_item(it, &current_contents) {
-+		strbuf_reset(&buf);
-+		strbuf_addbuf(&buf, dirpath);
-+		strbuf_complete(&buf, '/');
-+		strbuf_addstr(&buf, it->string);
-+
-+		string_list_append(contents, buf.buf);
-+	}
-+
-+	list_contents_of_dir(&current_subdirs, dirpath, 1, DT_DIR);
-+	for_each_string_list_item(it, &current_subdirs) {
-+		if (strcmp(it->string, ".") == 0
-+		    || strcmp(it->string, "..") == 0)
-+			continue;
-+		strbuf_reset(&buf);
-+		strbuf_addbuf(&buf, dirpath);
-+		strbuf_complete(&buf, '/');
-+		strbuf_addstr(&buf, it->string);
-+
-+		list_contents_of_dir_recursively(contents, &buf);
-+	}
-+}
- 
- void get_object_counts(struct strbuf *obj_info)
- {
-@@ -240,3 +276,25 @@ void get_packed_object_summary(struct strbuf *obj_info)
+@@ -298,3 +298,17 @@ void get_object_info_summary(struct strbuf *obj_info)
  		strbuf_complete_line(obj_info);
  	}
  }
 +
-+void get_object_info_summary(struct strbuf *obj_info)
++void get_alternates_file(struct strbuf *alternates_info)
 +{
-+	// strbuf += GITDIR/info/:
-+	// recursively list contents of $GIT_OBJECT_DIRECTORY/info
-+	struct strbuf dirpath = STRBUF_INIT;
-+	struct string_list contents = STRING_LIST_INIT_DUP;
-+	struct string_list_item *entry;
++	struct strbuf alternates_path = STRBUF_INIT;
 +
-+	strbuf_reset(obj_info);
++	strbuf_addstr(&alternates_path, get_object_directory());
++	strbuf_complete(&alternates_path, '/');
++	strbuf_addstr(&alternates_path, "info/alternates");
 +
-+	strbuf_addstr(&dirpath, get_object_directory());
-+	strbuf_complete(&dirpath, '/');
-+	strbuf_addstr(&dirpath, "info/");
-+
-+	list_contents_of_dir_recursively(&contents, &dirpath);
-+
-+	for_each_string_list_item(entry, &contents) {
-+		strbuf_addstr(obj_info, entry->string);
-+		strbuf_complete_line(obj_info);
-+	}
++	strbuf_reset(alternates_info);
++	strbuf_addbuf(alternates_info, &alternates_path);
++	strbuf_complete_line(alternates_info);
++	strbuf_read_file(alternates_info, alternates_path.buf, 0);
 +}
 diff --git a/bugreport.h b/bugreport.h
-index 11ff7df41b..4f5e2d1b9a 100644
+index 4f5e2d1b9a..74d1f79960 100644
 --- a/bugreport.h
 +++ b/bugreport.h
-@@ -30,3 +30,9 @@ void get_loose_object_summary(struct strbuf *obj_info);
-  * hook_info will be discarded.
+@@ -36,3 +36,9 @@ void get_packed_object_summary(struct strbuf *obj_info);
+  * previous contents of hook_info will be discarded.
   */
- void get_packed_object_summary(struct strbuf *obj_info);
+ void get_object_info_summary(struct strbuf *obj_info);
 +
 +/**
-+ * Adds a list of all contents (recursively) of '.git/objects/info'. The
-+ * previous contents of hook_info will be discarded.
++ * Adds the contents of '.git/info/alternates'. The previous contents of
++ * alternates_info will be discarded.
 + */
-+void get_object_info_summary(struct strbuf *obj_info);
++void get_alternates_file(struct strbuf *alt_info);
 diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index da91a3944e..8aad33a9b0 100644
+index 8aad33a9b0..0784bdc42a 100644
 --- a/builtin/bugreport.c
 +++ b/builtin/bugreport.c
-@@ -72,6 +72,13 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
- 	get_packed_object_summary(&buffer);
+@@ -76,6 +76,10 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 	get_object_info_summary(&buffer);
  	strbuf_write(&buffer, report);
  
-+	add_header(report, "Object Info Data");
-+	get_object_info_summary(&buffer);
++	add_header(report, "Alternates File");
++	get_alternates_file(&buffer);
 +	strbuf_write(&buffer, report);
 +
-+	// Close file
-+	// open file in editor
-+	launch_editor(report_path, NULL, NULL);
- 	fclose(report);
- 
- 	launch_editor(report_path.buf, NULL, NULL);
+ 	// Close file
+ 	// open file in editor
+ 	launch_editor(report_path, NULL, NULL);
 -- 
 2.24.0.rc0.303.g954a862665-goog
 
