@@ -2,97 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D18001F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 08:59:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAA7C1F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 09:43:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408088AbfJYI7y (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 04:59:54 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:41695 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405717AbfJYI7y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 04:59:54 -0400
-Received: by mail-io1-f66.google.com with SMTP id r144so1532279iod.8
-        for <git@vger.kernel.org>; Fri, 25 Oct 2019 01:59:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=c1tMDhXYNUV+jo5B2oXHosJje3l9Cc1832ffn7rXeaY=;
-        b=A1niM2I5uIAEtWuA+Ol2eMVSsV+z0TVD3csTvNOm3qTegaHqO34mjKAd4u5Z63SC/n
-         tsiSeBRY8l/sHItOa4bNRx5w8DX+Q1pww1mwKyfZZEJU1ym7zO6jBEyqFxhN7vKcCgsa
-         SwNx91hPJkOfJXXbWcZ/U4QgiAzPnYeA7ZWWvc/39iNat2UmaZ5jtu5VU4nhQWarhVDO
-         qo9ZSEvsDz9hL2LLIN6PJjgmFVotsUrVraS+/5mQfcA7IsFlJAViRfBGGl54UWY8wzCI
-         TfRnpCG7go54ugv3bklKATD90cRMtK45beDpFNqDsZrgiuJWzZe/WwEDBhvFTWMOMGhU
-         zN3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=c1tMDhXYNUV+jo5B2oXHosJje3l9Cc1832ffn7rXeaY=;
-        b=JkjjyFOguAHIjo2C83yafftha3ShzGjZ4mJb6oZ6HT+ahKvOjIADpbfOMYbUTN7ceQ
-         UDfKgLiY7FaUv0Jz72SquHR7wOOOW0yKNCIAGvZuoWyKawRqlsZlzW0fq4/OxwlpWoOl
-         9XUfcc1u5sqf13n4UWE+uNyDZJhL6M2Ac1icqgjjSt88mg6WwW5MQjztpU1yO3HKtR2H
-         H3Gb0qfp0qGU/4/2/rHC/wqV4urnmF72gNpqoNSnTX/JPUUJNODr4LpVYViQp1o5qIjN
-         cs1lfjIWdOIDOO2py0j5YKktomFCQHm8Fy8hswtvk2ZF58oyjDvhIvy+OPuK1vZxTz9a
-         OgfQ==
-X-Gm-Message-State: APjAAAXg2pe74sGc8yCJgR2ha4eVZqwOWdf6gQx+VQ/mQffPed3uxadt
-        GDL/RJMvoiMzeDno4hubUmEk1IO93BoI3P8Qs7/jivWk
-X-Google-Smtp-Source: APXvYqzRkRlB/WkWOIKZNsz9IAHl4pe/RjYkBjpVlrDOGDkqzFjuCM1oSKyswNtiswRaqR49zOVuZFsH3ro/JgP+NIU=
-X-Received: by 2002:a02:c544:: with SMTP id g4mr2804730jaj.79.1571993993754;
- Fri, 25 Oct 2019 01:59:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <20191024092745.97035-1-mirucam@gmail.com> <20191024114148.GK4348@szeder.dev>
- <xmqqmudpee57.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqmudpee57.fsf@gitster-ct.c.googlers.com>
-From:   "Miriam R." <mirucam@gmail.com>
-Date:   Fri, 25 Oct 2019 10:59:42 +0200
-Message-ID: <CAN7CjDB9mRTNRKRoE8XfLz4in5gV6pxrKrqcjLPfthDHaf20nA@mail.gmail.com>
+        id S2438857AbfJYJns (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 05:43:48 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65424 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2438852AbfJYJns (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 05:43:48 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0EE6825CC8;
+        Fri, 25 Oct 2019 05:43:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WKJcXHo/Pcy1M/Twf9BE8BVOT7A=; b=sMBNfX
+        QxQZPqju3qNU5eKSknkk5RS1oY0z3ExfNthTzL+DIvnUf7DaXks+ihzWBc8qp53A
+        IADqgey55J8Yqm1PxsHxJPqAY6yEiIK5SI2EAx6/+VbuINaClcI/HNwzdE9lYeSO
+        +AEs23UwlFV+n2dg8M1MA3O+YzYRjkKC/mtaU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=h7K4J25R5w7NERce1ArnckjwCmGYpSYv
+        8grUBSXwQALYQijdJcMDXMITYGjgBp1mX6LbMYZd61OuLQftIjJ8T4migQt6S/wZ
+        FTLr/KfLJ/BBUX4XYcf2kr9wDVORg2f1cJuh6shl8waBwMJ0j/lvNQqkAZDb/bcc
+        DY6ImBdssug=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0788025CC6;
+        Fri, 25 Oct 2019 05:43:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 714FD25CC5;
+        Fri, 25 Oct 2019 05:43:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Miriam R." <mirucam@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
 Subject: Re: [Outreachy][PATCH] abspath: reconcile `dir_exists()` and `is_directory()`
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <20191024092745.97035-1-mirucam@gmail.com>
+        <20191024114148.GK4348@szeder.dev>
+        <xmqqmudpee57.fsf@gitster-ct.c.googlers.com>
+        <CAN7CjDB9mRTNRKRoE8XfLz4in5gV6pxrKrqcjLPfthDHaf20nA@mail.gmail.com>
+Date:   Fri, 25 Oct 2019 18:43:46 +0900
+In-Reply-To: <CAN7CjDB9mRTNRKRoE8XfLz4in5gV6pxrKrqcjLPfthDHaf20nA@mail.gmail.com>
+        (Miriam R.'s message of "Fri, 25 Oct 2019 10:59:42 +0200")
+Message-ID: <xmqqzhhpb1nx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: F1327AF0-F70B-11E9-B4AE-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ok, then after discussion, finally the issue tasks would be:
+"Miriam R." <mirucam@gmail.com> writes:
 
-- Add path_exists() that will work same as file_exists(), keeping for
-now the latter.
-- Use path_exists() instead of dir_exists() in builtin/clone.c.
-
-And also:
-- Rename is_directory() to dir_exists(), as it is the equivalent to
-path_exists()/file_exists(), isn't it?
-
-Best,
-Miriam
-
-
-El vie., 25 oct. 2019 a las 4:46, Junio C Hamano (<gitster@pobox.com>) escr=
-ibi=C3=B3:
+> Ok, then after discussion, finally the issue tasks would be:
 >
-> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
->
-> > The first callsite is:
-> >
-> >     dest_exists =3D dir_exists(dir);
-> >     if (dest_exists && !is_empty_dir(dir))
-> >             die(_("destination path '%s' already exists and is not "
-> >                     "an empty directory."), dir);
->
-> Yup.  The primary/original reason why the helper exists is to see if
-> we can create directory there, so the function is asking "is this
-> path taken?"  It might have been cleaner to do all of these without
-> using such a helper function and instead take the safer approach to
-> "try mkdir, and if we fail, complian", which is race-free.  But the
-> above is what we have now X-<.
->
+> - Add path_exists() that will work same as file_exists(), keeping for
+> now the latter.
+> - Use path_exists() instead of dir_exists() in builtin/clone.c.
+
+Sounds about right.
+
+> And also:
+> - Rename is_directory() to dir_exists(), as it is the equivalent to
+> path_exists()/file_exists(), isn't it?
+
+I wouldn't go there in the same series, if I were doing it.  I'd
+expect that such a patch would be more noisy than it is worth if
+done in a single step.  In order to avoid becoming a hindrance to
+other topics in flight, an ideal series to do so would support the
+same functionality with both old and new names, convert code that
+use the old name to use the new name, possibly in multiple patches
+to avoid unnecessary textual conflicts (i.e. some of these patches
+made to areas that are seeing active development will be discarded
+and need to be retried later when the area is more quiet) and then
+finally the function wither the old name gets removed.
+
+You would not want to mix the first two bullet points that are
+relatively isolated with such a long transition.
