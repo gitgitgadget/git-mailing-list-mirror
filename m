@@ -2,67 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0D471F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 03:05:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA781F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 03:11:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391605AbfJYDFY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 23:05:24 -0400
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:41876 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391593AbfJYDFX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 23:05:23 -0400
-Received: by mail-ed1-f50.google.com with SMTP id a21so639819edj.8
-        for <git@vger.kernel.org>; Thu, 24 Oct 2019 20:05:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dropbox.com; s=corp;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=1LvQdOJX15CNX86n56ih2BUyDNLYm+hWkQsi8xeaEHk=;
-        b=kmQYmPVMklETgsCJIR0kBYqdpxUyntuMuiHF78ovzFBmdv5u57IU7Lq99mOjU3inQW
-         1zCbX2d9ccpiIz0uy8ZVojTAdKmBY5fLIdvGOnLronoCMGexxXh8BHSqz2tHHUbIrqAk
-         t5pdzccRD0CDkoHO21U+1ugbPzWLyzG42X/K0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=1LvQdOJX15CNX86n56ih2BUyDNLYm+hWkQsi8xeaEHk=;
-        b=iiDOvHpbPFRS2BIujR0RpkhEUrstC6PRW1d7wjl5+WGV//C70/dZ8anXKXe95bnRk3
-         ytYP6C2DYHw/6TMO67KKDLFXuUD8MnqLjLkTd0T/tfBoFaXmeF3Ui/QPplA+v6kNzmM1
-         RJVvLt31eGiBLx4z1+KLKN53dSVsVYTB8DX5Wu/1gsC72EhPkSFFthicYs6gyboKK3in
-         pwIyz8TTY95nqo5a10qNVME3s9j1n8iC9IMh9yH3OKZLVsC9yBwKVgq4Y+C3efacdMqs
-         biVX9L2MNQOYD928ObL3/lAnJEwy1m8mCLjq2IBErd1XOoVxYHY95EKvR0BRw7XUzLsw
-         00yA==
-X-Gm-Message-State: APjAAAWp6JwG/p8EuhPYMIVcwB+DVoR4bUboQxbbgIBIVmcL0JzFyoxe
-        fNUqUU2x0dw42MUTSTISMR7S8fNXLkVxFKHvrDVKqmAFtBYbnA==
-X-Google-Smtp-Source: APXvYqzKZ3UiJsf+YBaR2Rhgueie+CKy4qB+wZwlZiWWP3E0FhfixXps+7nSVGH5DS3ijFmPEoSDLnHWCsDRO+CsLC0=
-X-Received: by 2002:a17:906:743:: with SMTP id z3mr1276315ejb.142.1571972722049;
- Thu, 24 Oct 2019 20:05:22 -0700 (PDT)
+        id S1731941AbfJYDLL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 23:11:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53911 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729283AbfJYDLL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 23:11:11 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B68522F62;
+        Thu, 24 Oct 2019 23:11:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BWFB6SN6dp0v7r495OCYVctlNAs=; b=FETwLz
+        yB/SGmus3kp2jo9yjBCyf+m1zEdXXeivVs3Sd1VWSGMLYg5NXmPUKCLfnzRqBUgb
+        GF1gIn82JD8iRPMCU0/ibMwdfpOMgWTNOLHzjNpVBcCVMp7Dh5w3ARw0w5giKqR3
+        aCbvPfVdIcPYeR1TZ29r3VnTxm4ljcxds2aXs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VF8wbighjnXeMYEOIpFEOakITeZVlbDB
+        FJ0/y11c0rD9FaDTO5Yw9BYFih+RjgWRH0hi6KRMRyyVD5wdvTf/ouOqzXir++pP
+        qTj9ARTilarE2LZXPbgUQA9UOt/QhfdjJ85Zgoz2QfeXsXKiGEfLfXYJyyd+X8KN
+        zULYwQ1UksE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4415122F61;
+        Thu, 24 Oct 2019 23:11:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F2B0D22F60;
+        Thu, 24 Oct 2019 23:11:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/23] parsing and fsck cleanups
+References: <20191018044103.GA17625@sigill.intra.peff.net>
+Date:   Fri, 25 Oct 2019 12:11:07 +0900
+In-Reply-To: <20191018044103.GA17625@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 18 Oct 2019 00:41:03 -0400")
+Message-ID: <xmqqeez1ecz8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Utsav Shah <utsav@dropbox.com>
-Date:   Thu, 24 Oct 2019 20:05:11 -0700
-Message-ID: <CAPYzU3OEjjFgRrzAM04O3Dmg78FLo=n1X+EU-D_SoThKmiZtsA@mail.gmail.com>
-Subject: Speeding up git stash - help needed
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 17411878-F6D5-11E9-8D29-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There's been some work to improve the performance of commands using
-fsmonitor to skip unnecessary lstats. This has worked wonderfully for
-git status on our repository, and I'm trying to see if we can extend
-that to more commands.
+Jeff King <peff@peff.net> writes:
 
-A profile of git stash on our repository shows a fair bit of time is
-spent in the "git reset --hard" that happens at the end. Most of the
-time there is spent running lstat in unpack-trees.c -> traverse_trees
--> oneway_merge, which is a fairly generic function and used in a few
-places.
+>     This a string of refactors that ends up with all of the
+>     type-specific fsck functions not getting an object struct at all.
+>     My goal there was two-fold:
+>
+>        - it makes it harder to introduce weirdness like we saw in
+> 	 patches 5-8.
 
-Is there a sane way to try skipping those lstats? Does anyone have an
-approach they'd recommend? Or is it possible to skip the git reset
---hard in some way? Any suggestions would be welcome.
+Yup.  I'd see that alone as a reason that makes these worth doing.
+
+And it was a pleasant read.  Thanks.
