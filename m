@@ -8,143 +8,145 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F32B01F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 13:31:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F9A41F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 13:43:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2504729AbfJYNbA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 09:31:00 -0400
-Received: from mout.gmx.net ([212.227.15.19]:41475 "EHLO mout.gmx.net"
+        id S2439667AbfJYNnn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 09:43:43 -0400
+Received: from mout.gmx.net ([212.227.17.22]:38447 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2504607AbfJYNa7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 09:30:59 -0400
+        id S1726453AbfJYNnn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 09:43:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572010254;
-        bh=3qmAJYwfnj0TYVddBPDeew1C3mXT9627u6BWww36LkY=;
+        s=badeba3b8450; t=1572011013;
+        bh=Ql+ltTaNyJIofmx6ue7UW8OfQULIzB8s7xUJA3P2oxY=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Q8FIzSGBrsjPrhmO1U/CyVIORIb+77nAuimXZA2LkVc+jOzu+dxHVnMNp1zctOP8H
-         gR3J4953ahB2Dcfg57s0jQRD9Dp/r5VrAZbKnOJZBptndey8gqk8jN1hH4TfWhunKh
-         /b0rpzBxHVx4Zn0KBLM3H42LTXWRwYQdtevt0q9w=
+        b=f7zhDsljdmZ1+Fo2KjAmuGVUM2dFKpMRNrPxWRzdVt0sjYsxu+6Iz3OsxCLh3uluI
+         oi7uJJ43TsDaKV+KART0eOqGO3EIPS6xq987EQI5dkED/zN1Yi7P/p0pX3Pt5UZvP2
+         ywdDeVJaYGhdJrLiAWwydhGTLkqu2LfLmRwyqlmw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtOKi-1i8wAF3jDC-00upT5; Fri, 25
- Oct 2019 15:30:54 +0200
-Date:   Fri, 25 Oct 2019 15:30:37 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mz9Ux-1i1VJe0AyZ-00wI6C; Fri, 25
+ Oct 2019 15:43:33 +0200
+Date:   Fri, 25 Oct 2019 15:43:16 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] merge-recursive: fix merging a subdirectory into
- the root directory
-In-Reply-To: <CABPp-BHBUKq73Ru3D9HKp6ABo8eQNmkSkz6MjA+4J2a6xxtWjA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910251527440.46@tvgsbejvaqbjf.bet>
-References: <pull.390.git.gitgitgadget@gmail.com> <37aee862e14b1352eb08485f15ea06bab33679df.1570826543.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.1910122152210.3272@tvgsbejvaqbjf.bet> <CABPp-BFNCLJnt4NgFKVxURBGD1Z00gastc5q4ZPjcHmwS=kuFw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1910141211130.46@tvgsbejvaqbjf.bet> <CABPp-BFYWhyLqUktEnk6A7v6135k4TQHO20Wiy32mRQekt-3cg@mail.gmail.com> <nycvar.QRO.7.76.6.1910250020220.46@tvgsbejvaqbjf.bet> <CABPp-BHBUKq73Ru3D9HKp6ABo8eQNmkSkz6MjA+4J2a6xxtWjA@mail.gmail.com>
+To:     Eric Wong <e@80x24.org>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [RFC/WIP] range-diff: show old/new blob OIDs in comments
+In-Reply-To: <20191025001254.GA29496@dcvr>
+Message-ID: <nycvar.QRO.7.76.6.1910251531350.46@tvgsbejvaqbjf.bet>
+References: <20191017121045.GA15364@dcvr> <nycvar.QRO.7.76.6.1910222111430.46@tvgsbejvaqbjf.bet> <20191023015629.GA15495@dcvr> <xmqq5zkghzid.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910250014240.46@tvgsbejvaqbjf.bet> <20191025001254.GA29496@dcvr>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:5Gh84FK7zul865rdF2qfRK4INPAzj8ccFoYJHZU/z59XQ0IXPGj
- XryppxrZQRJjvr3QyHhqRzXbaBVq4B8SPK/A5dRZtkjCOsOrk71MxlvDKryuJfoW1feAlGw
- 0XPJfNo+qZ94o+AmEF0SkQXjpgvM+KyRUFkHUup3ZTanMG+Pq+VVW7QKMtR9nJprkWnrK50
- s9Z1H/qotJN0tklI/WC3w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:D6EOdK4Ssqw=:CWWIcBcQx/B8HCb71uF8iB
- MldSHAHBfkU+NgNhvb/YjQsARFjUnz7000pin9vlunf8oTE10UkXE5PNkfb2zC57caN8MKbgI
- 4nFctKpw5pS5UsiXuxCDnv7yWpl5K7coMXdLwDF2z9Izk9+7r1+kcPrOFWmyZ0lWSeG+Nrd47
- lQksuFJeGvVFee8kq3NoSIag059rmqGxw8b9F6uKMTpeDBWKf0BA3I6cBiDEM1auBYl6Ptvrm
- LPb7Yc1Rn2CU1ecqNg9u4GejalE8lQA4gO/AHSVogQPjOKpzmjfnjwIHKJhkdoGIjz3Kr/ux2
- 4t5F6mnx9k8WFIwKIAOIjd1oNcEKpvRqVnzCgVz+5uWlHgEDy2bZzTmkkuwzfAveNzdE54nhc
- 1e8DSPKkpif0po99sRcPvu9te/4TgMQTkTJ4m5s1iOBcbQPI23sxOJ1Ked6xNfJntxuF3TNUz
- Sp1DypeX23F0KOCeI/WweImcwQQ8S4JsqjQTFsOkSX5hFF+i5fPdDFf+pKkfpSzqIS8S+zz/j
- IyjrbSpT4fD0dvyzRN2sM7Byj8IXtSk4/uDihWkT1m+ChOCEd+8lRuF9gVZrUPq3xUJ+Uiu9F
- quU7c6mby6m6K6Q8mYAeIAfBJ89YxR3M7guCirEklOsj+m3KBWbZ2uT//O2M1A18BeQ6HDMqW
- pBxuMDnmLdF4L445zbz1slJzycYcUxkcMY0jRc4wuedbdQlJVBMX7HXQVn5y02ZjVCKsTVjkJ
- hiPr3PYga8/nJdIU2cjSzNHM7a4bberGfzOYq2elRgBbegpQ6EQhc7a0e/jgvsVJJe9yNgSab
- BT2WQoUzlycGoLyugP6p/KF4mXHTkfeQOSyt1ktEnrGMC4YDA9/kzfASEloHu8IMrV2CGbU52
- OdwT7s1SUv9M+OJYzlXteqfZmPWxaHCipIi45YCCR+rmHHGSvp9BFBcqVK61GGWH0WmQsU4zu
- RSAot8r51i8zskpCAkHAMSH8WEaIfHr7rf/LHKQ2BT7kbfUTipImdDl73gojqFmsBiAPVvXTU
- pHBJ1CXmeMMrEGy9IYnLM1wn7YWDLOT2iAAvN8R5Ka8KcjUSgOuy52eSh8la+MSjaYPWwoA2K
- tBfw0Oi+fuQBe4HAUIfyVdrom+f1vdUiiCgYk2T12Q2wFxYs1wGCMw5xsLP0B+27revdvJqQR
- 1/UQBMqu9Jg6qRmFH+ncnR/kwiEJ6PPhVvCfbFkdjVhy51rk27j/t+Ohsz16CjiwXbhKbQO+4
- qkF/w3UqDR1YLCXIBKVF2c0yFuSEkWzDrAQoMAM6ue4GSs0rHOqBOw/UjDYI=
+X-Provags-ID: V03:K1:t/EVjx5qx1oUgBYsyQAs7MdaypkyjZhcfKxrQZ0ayAPYBUT3pDs
+ 3OqGHulnaJWgbwXMQOWZkjEe/BgTRgSSAqB1nebT/GKKwSpGb907os1viQlNPpyD1MZj0V0
+ 5znkiErB0gI+q4iDjs6ukLkmwTmIcY2aapZZ3G4R0QW1MzagFmNpMjNjTLZr+kw4uE2/epY
+ 5LdIwPZBGT5/LMsCqhxmA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:n3tUUja+YHs=:CtMV4PbuySlOSfrlq1cRhq
+ L1SB63GKC+8ElAmCEbZMv+Zt9qlob7APA5aZNjElnd4LFwyDWrxLKFP+W1RBiunc1fdLc3CIC
+ CZvcMVSq+71ekXbpEfKHaFWggUSN34NyF6oSsTJ/sJhM23NckvN6H5RfWbVZRgddNQnSgM0ez
+ K1Kot6FqAW0P34n1UuC9z6E3AaeazfOgSDe9VR4knihc14nA4XEZIqFFoqbBon4H4J8Qz7F9G
+ h9L31aQtghnb++uTtrsNt/FYGMdAcDHYjs00mc4b5uj2JgD32Ehz5nIjpSNZitfGQgliPGT59
+ VPIrVq+ZefRls9/7nmPA8bk5UaHbCkR/5qjY7/0GEZ99B+wzOlOUqnWYBGUQQI16bbKQAvt6d
+ LwyZBtWorngHmxTp3K3OanogUoANTMoIWrJapqzsGmtwmUdj+pmyjzmLIeAFPYScJrQhATosC
+ H6hnyXhoaRF6yTNHsg0fGMRGC9mjQV3te+q+Fw9ffmjf0tkfCuRLKw87+IXxvQ+ELJHdFu2tR
+ f5PFoCNf9MmoDP1odBhBuF33Hi+3BDfPOBt09xFNmF63DyY95Ev/aNJjVg01uhQBFOpYY/Umk
+ aQ5bYZxxvdViuNA4raXd/cX075kQ7Yo+Vla5KsG1+b/pUm6pwpSSrb9Jws09X0oOqqNXKlOhZ
+ 6yuzhO9rslZdycD9KMmvkGJ25fWYijddfAgvxwI700NVMP8x0/4b81fyNS7Xbhc0meCE1gBNG
+ 9KKjxRJ24Xn2L4OnOZJ8cKSyLUlw8i5TT/WckSO2vT/dC9BFRD6WAINMJpkP7YW+gnS7Llyd7
+ WZT2EKwcIcph1pmo3df/OUAorE86gwqkWzziNJE5rvB+wHHkvyQVKhXDsN2t298dCYxPpYtRG
+ W+FzrP/TpT5IHUCUyv1c8huJlY6bnMEdlS4LMckxJh8DTna9B3+ZQnDTHK1IDyfvEVdtQBBJS
+ jrFO9UjZmfdpUWDOaw97R2Ed1SnF6DPPAqjzy1r7qmaQFwlW98lgof1eCeG7eTfUZsVt8Nh3H
+ W2KvKVRL4XIWQkjHJ6MC0zGsSpoqlOKKJIqxkKNtgyu99BsskMfVojm4j40KUSDGxeTU2ek5o
+ VQBD1nD0g5iiIvkspTs3UbBy6ADl3va2YqEFWzqODmM/wFfqHjyez5kiUN94ziDdVB5ghFGxW
+ CaGuI28F32OGikwUdOLl26hCQBmFR3hr6BuwkrIcSDNvEerfZ/ji1ilkmC+shyUzkTCpfBkWi
+ bQEa1X/2vWqKpjdvmi8XQQHiGtIlIei/ZfjBBcmLPR27isEhIMuojhECV4c0=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi Eric,
 
-On Thu, 24 Oct 2019, Elijah Newren wrote:
+On Fri, 25 Oct 2019, Eric Wong wrote:
 
-> On Thu, Oct 24, 2019 at 3:23 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > On Wed, 23 Oct 2019, Junio C Hamano wrote:
+> > > Eric Wong <e@80x24.org> writes:
+> > > > Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > >> Instead, we will have to rely on your centralized, non-distribute=
+d
+> > > >> service...
+> > > >
+> > > > I'm curious how you came to believe that, since that's the
+> > > > opposite of what public-inbox has always been intended to be.
+> > >
+> > > I think the (mis)perception comes from the fact that the website and
+> > > the newsfeed you give are both too easy to use and directly attract
+> > > end users, instead of enticing them to keep their own mirrors for
+> > > offline use.
+> > >
+> > > Thanks for injecting dose of sanity.
 > >
-> > On Tue, 22 Oct 2019, Elijah Newren wrote:
-> >
-> > > [...]
-> > > Yes, t6043 is pretty long code-wise, and still has over five dozen
-> > > tests after ditching the separate "setup" tests -- but all of those
-> > > tests still run in 3.6s on my box. [...]
-> >
-> > $ time sh t6043-*.sh --quiet
-> > not ok 74 - 9g-check: Renamed directory that only contained immediate =
-subdirs, immediate subdirs renamed # TODO known breakage
-> > not ok 87 - 10e-check: Does git complain about untracked file that is =
-not really in the way? # TODO known breakage
-> > # still have 2 known breakage(s)
-> > # passed all remaining 117 test(s)
-> > 1..119
-> >
-> > real    7m22.393s
-> > user    0m52.115s
-> > sys     3m53.212s
-> >
-> > And this is not a slow box. So yes, those extra spawned processes? The=
-y
-> > accumulate. Spawning processes is what Linux was optimized for. You're
-> > optimizing for Linux.
-> >
-> > Ciao,
-> > Dscho
+> > Maybe your dose of sanity can inject a statement about the case when
+> > public-inbox.org/git differs from a mirror, and not in a
+> > fast-forwardable way? What is the authoritative source of truth, then?
 >
-> Wow, I knew it'd be slower on other platforms but I certainly didn't
-> expect a factor of 122; you've made me eat my words about performance
-> for this case.
+> Why does authoritative source of truth matter?  My
+> anti-authoritarian ethos is what drew me to DVCS in the first
+> place.
+>
+> If senders want to attest to the integrity of their messages;
+> they can sign, and/or publish a copy/log of their sent messages
+> on their homepage/social media/whatever.  That's up to THEM,
+> not anybody else.
+>
+> If somebody wants to fork public-inbox.org/git and run
+> public-inbox-watch from their own Maildir, they're more than
+> welcome to.
 
-I am glad that the numbers are more convincing than I am ;-)
+I am _more_ than happy to rely on public-inbox.org/git. And I will never
+kid myself about relying on a central service, is all.
 
-> Still, I rely pretty heavily on t6036, t6042, t6043, and t6046 for
-> sanity in the face of refactoring and rewriting -- and as mentioned
-> before they have caught refactoring bugs in those areas that appear at
-> first blush as "overzealous", and have done so multiple times.  So,
-> what's the alternative -- mark the tests as linux only?  Do that but
-> also add a second copy that is trimmed down so other platforms can run
-> that one?  Keep a local copy of all these tests?  Jump on the
-> our-testing-pyramid-is-inverted bandwagon when it materializes and
-> provides a way to write unit tests instead of just end-to-end tests
-> (I'm game for that one...)?  Start discussing crazy ideas like a
-> busybox-like shell, possibly with git extensions (a "git shell" if you
-> will, though I know the name is already taken), just for running the
-> git testsuite faster?  Those alternatives all sound either unappealing
-> or like very large projects that'll take a while to materialize (and
-> which I certainly won't be spearheading; I've got too many big
-> backburnered projects already).  This performance is clearly bad, but
-> gutting the tests isn't tenable either.
+> If somebody wants to write their own importers since they don't
+> like the code I write, they are more than welcome to.  There's
+> already mail-archive.com, marc.info, news.gmane.org (which
+> public-inbox.org/git forked from) and some others.
+>
+> Going farther, if people want to fork entire mailing lists and
+> communities, they should be able to do so.  I don't like mail
+> subscriber lists being centralized on any host, either.
+>
+> I have never, ever asked anybody to trust me or public-inbox;
+> in fact, I've stated the opposite and will continue to do so.
 
-One idea would be to try to guard those extra careful tests behind the
-`EXPENSIVE` prereq.
+Well, too bad. I trust you, Eric. I do trust you and will probably
+continue to trust you because I don't expect you to do anything, ever,
+to break that trust. So far, you haven't disappointed me even a single
+time, and we've concurrently been Git contributors for, sheesh, has it
+already been almost 14 years? I have benefitted from your work greatly,
+mostly via `git svn` in the olden days, and I hope that I could return
+the favor every once in a while.
 
-I _do_ agree with you that it makes sense, in particular with the
-recursive merge code, in particular because you are in the middle of
-heavy refactoring, to add really, really overzealous tests.
+Without public-inbox.org/git, GitGitGadget would not be possible. My
+scripts to map commits to mails and vice versa (mirrored to
+https://github.com/gitgitgadget/git as `refs/notes/mail-to-commit` and
+`commit-to-mail`) would remain a pipe dream of mine.
 
-That really helps getting confident in the changes.
+(Yes, yes, there are holes in that mapping, but even if I only have to
+look up manually one out of 30 mails when I want to comment on a
+specific commit, that already saves me so much time, not to mention
+nerves.)
 
-I just don't see that we should pay the price (time-wise, and also
-electricity-wise) of running those expensive tests even after the
-refactoring, or for that matter, even for unrelated patches that are
-more than 99.9% certain not to even touch the recursive merge.
+So please understand that I am deeply grateful that you came up with
+these projects, in particular with public-inbox. It is a life saver. I
+might not share all of your philosophy regarding centralized vs
+decentralized, even so, what you did helps me multiple times every
+single day.
 
-Ciao,
+Therefore: a heart-felt Thank You, I owe you more than one,
 Dscho
