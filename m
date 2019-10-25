@@ -7,80 +7,74 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73E681F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 03:54:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F36011F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 05:08:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404262AbfJYDyd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 23:54:33 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:65236 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391314AbfJYDyd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 23:54:33 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7854CA0D7E;
-        Thu, 24 Oct 2019 23:54:31 -0400 (EDT)
+        id S2392384AbfJYFIR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 01:08:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63836 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391798AbfJYFIQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 01:08:16 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 82EB423D75;
+        Fri, 25 Oct 2019 01:08:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZV6QZ050s/lDHA9+HXECeBlhOzk=; b=jP7FWA
-        wskuDXa1VaB2SEBXwp2wGXIGuTX1RqH0geN7Hr+QYH5bVcwX581t8Tq+7wjdzQyD
-        W2ujgm4e3cZ5sdnYOzSX9XcTa5Am/cNUfr1SOfhzH6vcl9O5w4YHODCFb7c6ElpR
-        O4qJsRWRFx5zSOblkeH+RKwx8B+Zxql3j4nAQ=
+        :content-type; s=sasl; bh=1VCiv25xgJjyQKCJVsmac22r4Ns=; b=u6hOYj
+        sdiSZohI7usWI4vZD7aQGgmM0da7HEhZZ7+7c+ZOrIKHHblD6XhKz4PZnJhQO2qZ
+        i/IVEh8l56G9RdfTRI0MirROxd3ZvFzi6J20rqLm09lla48Y1ryMn4AItkEL6HPm
+        KC8a0bdGx0YjcYdn1wlg9XPC+ZXJSKbd3nlSM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GFs3lvqjg2VuiH32C9+z9/20gAgSITsA
-        7k7/IIs/Gl28pRj3g/VnhqtRCeHQWhQP2x1frSstPT9fxSrxy3O2k6aNEdT7Tuf2
-        76gGVeof8iL/lX5XSX8D3OVjOQjc7mSE3ysJvhDQ/WWS8qE41cQQdPepED94FsQl
-        +k5yMK7AvAc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 70F64A0D7D;
-        Thu, 24 Oct 2019 23:54:31 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=FtVomoPc4lexF4oNscyKNBTh/SfYx0vf
+        jo1gR+1kAuDILHrugtTgzJO9Xsbxgn26oARIoayEBJdYhpTE6rXDCYitB3MXI3TT
+        pDXq1pgHsLXq/IaOkuXCR8A4fImeFmtkgW5nYMdkPl0M3IkM8xwn2BNH+BMDh2Pm
+        ma8EcyQgq78=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A48323D74;
+        Fri, 25 Oct 2019 01:08:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A0163A0D7A;
-        Thu, 24 Oct 2019 23:54:28 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D6FD823D73;
+        Fri, 25 Oct 2019 01:08:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] git-gui: remove unused global declarations
-References: <20191025013255.7367-1-me@yadavpratyush.com>
-        <20191025013255.7367-2-me@yadavpratyush.com>
-Date:   Fri, 25 Oct 2019 12:54:26 +0900
-In-Reply-To: <20191025013255.7367-2-me@yadavpratyush.com> (Pratyush Yadav's
-        message of "Fri, 25 Oct 2019 07:02:55 +0530")
-Message-ID: <xmqq1rv1eaz1.fsf@gitster-ct.c.googlers.com>
+To:     Prarit Bhargava <prarit@redhat.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] pretty: add "%aL"|"%al|%cL|%cl" option to output local-part of email addresses
+References: <20191024125332.29958-1-prarit@redhat.com>
+        <20191024202947.GN4348@szeder.dev>
+        <5d9b8cbe-489e-b3eb-873c-4aee2e2015d0@redhat.com>
+Date:   Fri, 25 Oct 2019 14:08:13 +0900
+In-Reply-To: <5d9b8cbe-489e-b3eb-873c-4aee2e2015d0@redhat.com> (Prarit
+        Bhargava's message of "Thu, 24 Oct 2019 19:05:00 -0400")
+Message-ID: <xmqqwoctcszm.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 24C5AEC2-F6DB-11E9-9199-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 730255AE-F6E5-11E9-A4DE-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratyush Yadav <me@yadavpratyush.com> writes:
+Prarit Bhargava <prarit@redhat.com> writes:
 
->  proc next_diff {{after {}}} {
-> -	global next_diff_p next_diff_w next_diff_i
-> +	global next_diff_p next_diff_w
->  	show_diff $next_diff_p $next_diff_w {} {} $after
->  }
+> It can't harm anything to have braces but if the preferred git coding style is
+> to only use them when necessary I will remove them.
 
-Not in particular about next_diff_i, but seeing a hunk like this
-makes me wonder if you want to go the other way around.  If a future
-fix needs to (re)introduce the use of next_diff_i global variable in
-this proc (it seems that there are two procs that declare the
-variable as global, one of which is this one, and the other one
-assigns to it), the code change must resurrect this declaration;
-otherwise the code would only confuse itself by potentially having
-two variables (one global, one local) with the same name, no?
+It harms readability.  Don't try to be different just for the sake
+of being different, especially when you think "it can't harm
+anything" aka "there is no strong reason to do so (or not to)".
+Instead, help others by making sure that their eyes do not have to
+get distracted for such meaningless differences from existing parts
+of the system.
 
-For next_diff_i in particular, I think the right solution would be
-to remove both global decl and the assignment, as the assignment is
-made to otherwise unused variable.  But the primary point in such a
-change is not "remove unused global decl"; it is "remove unused
-variable".
-
+Thanks.
