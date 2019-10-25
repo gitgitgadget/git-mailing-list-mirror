@@ -2,96 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DBD21F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 14:48:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B4381F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 14:52:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395082AbfJYOsE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 10:48:04 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:38447 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394082AbfJYOsE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 10:48:04 -0400
-Received: by mail-ed1-f68.google.com with SMTP id y8so2044109edu.5
-        for <git@vger.kernel.org>; Fri, 25 Oct 2019 07:48:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gM58WLd6ZV8shHQnC+f8dK5vA2CGhyTdVeF5HBtif0s=;
-        b=rZLCDxRrf9QKmUUZkKvh3sUFDc2gJ2s6V1jhYe+mk9sRtJB3hqNbw3abGTye/0DeIr
-         ZH6Z9gQz/cESPJ8W0Uh2AasGDnuVBpKz14qJ35ReTwbQtJ/B3+JlucbWPhxsBq+vDYS7
-         U224IyXH0LF5RJIBiIrKCgEHsaY39XlyE1MjHYKJUAoN+C6he/rEpXkF5ptegHug8W0q
-         emms5UtUtPoSyIN9E7SM9ux/wSJWnYBy9/rRauOKWJGQu6zWVqcscL9YRypujbC4E+dw
-         10+ws0pjO/vlMmzYYs+f4VQGqtb1pE/qzBcLisqzLhlb2MR/m6RXGuCt59Z5pWPm9vey
-         xe7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gM58WLd6ZV8shHQnC+f8dK5vA2CGhyTdVeF5HBtif0s=;
-        b=qr8pbrKGcZGRlLmMkBT8hcT+c31mbJihOs2naw+azwA9WUZ7l/mgY8qLSui0CrOKhs
-         n/kjxe1iB+rQg3dysI2w8o1QcXUofW/u8sN9mCHs8+hCCTMZNhTmOq0spjrbXwsUDbfq
-         eexL5IHvQeNHPgVp5rfIpffsirt/8ynjbrwCK19Vc1IvPUDZAfmPPXcgmuqKBVAzvu1V
-         N0W7u9WscdqQPiEUf3Hvja+lbaTRZDWUjMNxjrGglss8A8OCQchDpmBptUhRzfa/Lj0H
-         zINk73lNpACGyRqWfd+RuTBjcbdjRTwhefmlC5KiraibvulIa69Yv666BDSOy9/OhAan
-         AhHA==
-X-Gm-Message-State: APjAAAU/fRWJ+Qt9R4cVd7wt3tTJGONxqL+xBftnvkWyIDcygIVqbzz6
-        Skh/16cQJBEkmdGso2MFZL45JxLb6tXsRi90abRl3n8MOwk=
-X-Google-Smtp-Source: APXvYqzyS1K90Spu0OD3zf8CDn8dFwVm1swm6POac4RVEgiEpORPR53s0d5fwx3E18nWWwtb/DfBuqnv/4ieFLjYwz0=
-X-Received: by 2002:a17:906:c801:: with SMTP id cx1mr3982979ejb.266.1572014882099;
- Fri, 25 Oct 2019 07:48:02 -0700 (PDT)
+        id S2389921AbfJYOw1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 10:52:27 -0400
+Received: from mout.gmx.net ([212.227.15.19]:40057 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728985AbfJYOw1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 10:52:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1572015140;
+        bh=dPayqmbYXb+j+VKKZ7BMMitzEC1e2ColsRPpeykEaSg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=eLnBm6J6fEFJkIGJimkgiE8ngT7uxkpxLWOEoaAZkHI56lXE6c4+EtBbVm/rN6p0Y
+         CoOP2s4BPFMAhy8u4ky7IyI+GubT6YqD+3k5Gejz7lm2NvyQUknxlMW/oGTG5l+ACR
+         5ytrb9OIi2p2euxIXPK10/9aBKPwyFKonJYP8iRY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvK4Z-1i6Lfp0dsH-00rDrb; Fri, 25
+ Oct 2019 16:52:20 +0200
+Date:   Fri, 25 Oct 2019 16:52:03 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: js/builtin-add-i, was Re: What's cooking in git.git (Oct 2019, #06;
+ Thu, 24)
+In-Reply-To: <xmqqd0emfzrv.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910251647340.46@tvgsbejvaqbjf.bet>
+References: <xmqqd0emfzrv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20191024092745.97035-1-mirucam@gmail.com> <20191024114148.GK4348@szeder.dev>
- <xmqqmudpee57.fsf@gitster-ct.c.googlers.com> <CAN7CjDB9mRTNRKRoE8XfLz4in5gV6pxrKrqcjLPfthDHaf20nA@mail.gmail.com>
- <xmqqzhhpb1nx.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqzhhpb1nx.fsf@gitster-ct.c.googlers.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 25 Oct 2019 16:47:50 +0200
-Message-ID: <CAP8UFD1_vnjApobt+aN3M12g8mLqOZJGyvr4oqqTax5=cmLhsg@mail.gmail.com>
-Subject: Re: [Outreachy][PATCH] abspath: reconcile `dir_exists()` and `is_directory()`
-To:     "Miriam R." <mirucam@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:VOk2sHObj0NemvWDGUmy0yAKiAUi0YyBeFg8lUWGDwinCvBlKhf
+ gLpwpNUOk7UKwQCHwz6kfqP/g8EgCSQxk53cmFH5TF0F0/otBsFRDXyYYTHtDlvIZacxJPt
+ UD8pU1UrObfSZ1SVHRRqV2r6RVEIPV9jNNhww1253ghFDLMTvQp56LAe2aoo/c43zs4QXw4
+ X0KvIuLMT5Hs0xDbyhyJw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qEyUs7P8leI=:TplchHX6s8JDDUv7woWgf2
+ 0MCrW44fePjZrE0OShKC5cbGDakbABN2OiUdBCmcXj0VW4UrCuZBpPs7zRsMyCCPBeLvWmY8h
+ j7ULD0204Uaj6F5+Z/TSJKJq3BmkpktBE/I0/XuLmZYuch61CT6pc0RMPpTdLPrJ0kpQbsMso
+ XmRpWjuoquoc9wjSSdSC7wh/mOA/vQw+KicjVG9urr1CUj7nHvZPrwW/arrgUSFxOBh/0U89B
+ 5vcQGYcih3SQrZ0LtJlFtnzRcXgPJ0sv4JuakiCqg+9y6S9Yx98v3wNg7UAOyNXmAsUIDaJLa
+ 8UoRY9IWUcRucY/6ZN+XSS/tnT21HREOfWyEr0XPUHbn+z87li32FxI2iDEm5/fFOzoaLWqQC
+ 2AIeriuNOMRl+yUK6pqo/MQp5a9/Hiw3H9rFK5xBjN3BqYpzqZC9BGOe7fgJSk9konFX0kvc1
+ z2P1FRXzJeLeR/BBPKAjFNBBUi+6jvig8y2SA0+UUshCFF0Q46Yw6/7PIBYu+YE+U+dltMUlJ
+ X9eXx1NGQjUi9MYTpnU7XGFDiu84W5yiBEt+huEmSP87UfShYCKyEivHIlzGcfKITbl1Degnf
+ fMfQYS4f6bE6Y0/MC+ZJjHkvz6Vtmc3F62xS2Tb7JL6hYSu3s1DyFqyJM3hLL0eiF6W9+jes/
+ uXNXgCkMxc/+pdQE8NoMFMfkFGTW84I/tT6JJ/9hUGEcBso0laYNKPLBxK6a7D57SvwUs+UHu
+ R/Y6LwfcYEfEQxkc3N6/yOTFIHdQnwtdu00YmyA5bu7Bfqj+Dm31YLwOVISVLiDBtYHcWaXcj
+ bBdJI8EwtuPgSdLMdKLQ8d82Z14TkYdgZg3UUucGKc407UXMYOH+I/o+JjOAEcU66lrTiap0G
+ Odsfe3//tpYNhjwGMjVjfoaHU8CoPnYmiXRT+pHWi5nPxORZ+tizxIhrdAtSQzd371Ks4Z3pO
+ //OeAYm7FGawRp5wCB4oXaI2uKTkv3VDKpJKX9Eg2znHLHthi7a5bTXijrNppd+geePZbiwwd
+ cYXSgIf82O4OJcdSGc4nc7GjJk65uQpEYjmb3e9NmIKAfwCavYKIuPlcBvHJWiG/RnaQzB2EO
+ 2gI3MFSM+xvzDJqEHA//dyWz4Y6ucOYSN7fe4UjCVEEDJKu/0EgtlsRtVpIFcBNAnTQHHDQs1
+ WK0PrY6DsTJFDbqwGlPK1XvkH5LKBTX4Rk1Z9ZuYk6Lw8XZU/FyDR1rR5Kut9eNrlARWNy1OC
+ 3MawsG+BGHyDWUkeB3EqR2C5I6FPVtvIDbaEpny5YgshFTdDeNoTWJeZnGyk=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 25, 2019 at 11:43 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Miriam R." <mirucam@gmail.com> writes:
->
-> > Ok, then after discussion, finally the issue tasks would be:
-> >
-> > - Add path_exists() that will work same as file_exists(), keeping for
-> > now the latter.
-> > - Use path_exists() instead of dir_exists() in builtin/clone.c.
->
-> Sounds about right.
->
-> > And also:
-> > - Rename is_directory() to dir_exists(), as it is the equivalent to
-> > path_exists()/file_exists(), isn't it?
->
-> I wouldn't go there in the same series, if I were doing it.  I'd
-> expect that such a patch would be more noisy than it is worth if
-> done in a single step.  In order to avoid becoming a hindrance to
-> other topics in flight, an ideal series to do so would support the
-> same functionality with both old and new names, convert code that
-> use the old name to use the new name, possibly in multiple patches
-> to avoid unnecessary textual conflicts (i.e. some of these patches
-> made to areas that are seeing active development will be discarded
-> and need to be retried later when the area is more quiet) and then
-> finally the function wither the old name gets removed.
->
-> You would not want to mix the first two bullet points that are
-> relatively isolated with such a long transition.
+Hi Junio,
 
-Yeah, and for a micro-project it is more than enough if you only work
-on the first two bullet points.
+On Thu, 24 Oct 2019, Junio C Hamano wrote:
+
+> * js/builtin-add-i (2019-08-30) 11 commits
+>  . built-in add -i: implement the `help` command
+>  . built-in add -i: use color in the main loop
+>  . built-in add -i: support `?` (prompt help)
+>  . built-in add -i: show unique prefixes of the commands
+>  . Add a function to determine unique prefixes for a list of strings
+>  . built-in add -i: implement the main loop
+>  . built-in add -i: color the header in the `status` command
+>  . built-in add -i: refresh the index before running `status`
+>  . built-in add -i: implement the `status` command
+>  . diff: export diffstat interface
+>  . Start to implement a built-in version of `git add --interactive`
+>
+>  The beginning of rewriting "git add -i" in C.
+>
+>  Expecting a reroll on top of a base with the tg/stash-refresh-index
+>  topic that defines an updated repo_refresh_and_write_index() helper.
+>  cf. <20190911175201.GA11444@cat>
+
+FWIW I am holding off from sending this in order not to distract from
+the -rc (feature freeze) phase.
+
+I will update https://github.com/gitgitgadget/git/pull/170 in the next
+minutes, for interested parties, though, with the plan to send this out
+the _second_ v2.24.0 is out ;-)
+
+Ciao,
+Dscho
