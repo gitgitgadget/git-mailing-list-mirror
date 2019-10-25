@@ -8,397 +8,272 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D8641F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 11:38:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E89131F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 11:48:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730298AbfJYLiA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 07:38:00 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51069 "EHLO mout.gmx.net"
+        id S2393528AbfJYLsg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 07:48:36 -0400
+Received: from mout.gmx.net ([212.227.15.15]:34119 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726463AbfJYLh7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 07:37:59 -0400
+        id S2390097AbfJYLsg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 07:48:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572003470;
-        bh=dmylmp0OuOsNqaCkk43liC6CVY0Up/gQGdqCCfVv/A8=;
+        s=badeba3b8450; t=1572004110;
+        bh=s5RDiYo4128tbQJ4InWOJXf6JPzXhEMkwgXSsfdO15k=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=A9ecjO9oTCj0Qr8mCgoUeisUb0SjkCyXJfHMt31235RKvKjofbpUZnGvBSBnQDNo8
-         G6R2wsv2Nowa2SHKtiXNqnE7Ti2ppiLdtVXl2nFrHsdFBLyvwLRKiSFAEy8rqGaWrO
-         UNKIm2o+tlY5q1J9q1FjQtoae4xawkLIntVulPVg=
+        b=ZHXulou9hA7hgKNC9nsXelyo1owSJWi0pup7bz1muSvH4MJSfqs5W3RUPM+nlRUqt
+         TCxND+gmxMq1M3j8gkHG+hOXiTR+7Nn4j3Iw0/tNsIB3PtDuQ5Uk+Yumu0l+GadgSH
+         x2iesL0Qvf/bJfqgWdic6fjfkzzBFNs910fy1XCw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1My32L-1i4kny2R27-00zWU8; Fri, 25
- Oct 2019 13:37:49 +0200
-Date:   Fri, 25 Oct 2019 13:37:33 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M4s0j-1iOnYg48CV-00221W; Fri, 25
+ Oct 2019 13:48:30 +0200
+Date:   Fri, 25 Oct 2019 13:48:13 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Alexandr Miloslavskiy via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Subject: Re: [PATCH v2 1/1] vreportf: Fix interleaving issues, remove 4096
- limitation
-In-Reply-To: <54f0d6f6b53dd4fdd6e4129c942de8002459fd88.1571755538.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910251034110.46@tvgsbejvaqbjf.bet>
-References: <pull.407.git.1571755147.gitgitgadget@gmail.com>        <pull.407.v2.git.1571755538.gitgitgadget@gmail.com> <54f0d6f6b53dd4fdd6e4129c942de8002459fd88.1571755538.git.gitgitgadget@gmail.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] commit: give correct advice for empty commit during
+ a rebase
+In-Reply-To: <9d550cd9-08a2-eee5-7d7f-63678285accc@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910251341550.46@tvgsbejvaqbjf.bet>
+References: <pull.417.git.1571787022.gitgitgadget@gmail.com> <0d168b4a75c65e786f4b14f5da723957c32fa390.1571787022.git.gitgitgadget@gmail.com> <9d550cd9-08a2-eee5-7d7f-63678285accc@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Nj4jmF+t5p9JB0f9gAsWM0tSzN9it3VIOW0QbHTQorpxvnELEF/
- mmii7dEoKkyMBGHVOUpw4UiR/Pk+ErDKeo522ruIcOz5+mqVO4Bn7ePR+skIU/3HhClos+M
- it754+NfnOGy85tdch0gE8GOOVz8qfaL6MYCgwFdHImqJnIuYqnYo6S2cA8zHmbXyVSvoOn
- wHbL4LrBGoy28lMnPRHhA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RSoBIzXkDTA=:zc7D2h7Tm/cknKf7oeU7Xp
- /f8iYKeG/vEP+ey4Uph5WgETbGqtvDt0Rg7VCwxLuSvK90scst+dSwxfkMnVKmE4IXKIC4GWm
- GegFhx3nx4sQet1GPT0a7oLahbkBudK+rRqI9TseQcJAm5SlCbbukZL4s3GlDu3sjhezoAxzI
- xhhW02P3rcCcZzka+Zc68zY7GOIBNs07rRrfial/e/Jr8q5kRKfl1hIgeab130HdgqcSIMDIP
- HQBAQbC+QA5lgEQFHyLYPvCpao9A3te6BpFsrmDAKj0rHXFv5QD4jJXHISUmMITvmBtSFDlmA
- f/MrUqziJ1NJUxfdknobTRAN7HbF0FHhRQ23ZTfGdtY87th/GCijBuCxeEXPm0ykaYKaMkxPu
- 2orqGtIUj85GN/4PFXtyCJOwqjMk2z/ISIok4/pbyOk5sccirM1+LXVbyzgb7izl5tND1hNRj
- yiPage9lbuFjzZerlOA1p06AxPZ2WphcbOa9X5XB4eLTN70s5VSpgQ2sNjbP7OP4XYP9tWxE/
- cpQ9Ai1O/9vX/cEPM8qJBH9u8Dk5niYJlTAZS9yIHhZhcREqaTf3Kl9eHWFpy5Zqcc4UQapOA
- Y71fhwByEQOP1EQNAe8Xqs9pnfVXZZ5pl8uys1Mp8eA9V2hzeA68vGOcG6ZHcUZnod8cd7kon
- 2/R7lHwVTBAK3qayYK+eM9P/Negw3QNb2/eqd+Rsty8OwO7o/AQ9LInpO6+UdOctUJP0Q1Pq8
- t2aOTxmoUugdXnDc9hVWo9xMkovqOTT8egFwGTK8CgdiMid591Fm3TujnHQHRn45RKyikS75z
- VivrGHNjhGTP/0DUny+fK6qD2z+ioreEdK68nfEkGRF7f7bKAi56OrhELhq10Zmklmv5/eXX4
- 9KuFzj6MduGVJ/8w8blsLGxX1XQ3HNbvp20flHhxmL/ulO8gxPvJu3To/M50EPAb2OnrYoAep
- 1biMIdfvV7qvp0muOPCpNcoQDRd32d6tdKNuGVf31UZj9ZHM/zkwzDeaEhakg82o8/79oIUNK
- Ta8MS2ZZAOHrNhpDkKUbzxMHbsmHFyEThYqiS3jl4wUlVx6dEnJlaRJ6RhKtK8qMoh2RMcJcS
- x9zEfdBUYIolb7d8YNzW2+Njj1GuuuXvy8Ys29zWyfAe7AOjLMcItqs4ssAgcqEhGTwMRfrAJ
- JnNb2ApaCg7mT+hO+4VrazEDDBYN/nawJZU4OXaXvsK8QBzcKt0tDu9M0AAYHa0ZtVQsSz6Xs
- NjV9zbOBdUtmVkQqsdThYkH4qF4QqHIrbrxHs++w1auH6DA0iDB6rGduxwAE=
+X-Provags-ID: V03:K1:l+uOQZC6sexLSeI1B32rgDVzwk2jTnHWmsc9XXPnftddtJthbOr
+ aOFu+vDNyhIyWoxkiiuM2amzFpnzhYg8hyOqmB4+Myzn66WoY+7d5b5fNk8DlQFYKY3z4G5
+ lN8sv2gqnxRGEorKf11Y9kj5kdACNUsQaya9Ug8vNARTsC1WzE7+Fjb1oPS2scLIgV+ttin
+ VUKRhg4r/thREf2DF+HKg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:cyXWKL+VQ78=:ktvD+dMxZPntlh3jBLbV0h
+ z8ODC5iWvkXcHW5g62RAaGkfgq7WgNL6EaMiksYV+6mIsNuavPkTmY9T2be1xdJSY8ElbOXI6
+ qv9HJqB9gDnocQGZxdYW1UqlKdn9II0O+vZwLdR4m8OhbRdTmOCVHAGOf3gJroKxeBy+f213a
+ 1tR6VbwN5EMAxW+F1/gA5q6RTgHYH9kNO6g8s7iY+Z5NmcOXGPYX2iQ6ddJo3TuBkRkZA+Dlc
+ Ze+WfFtzKyxr2Vf53jHlt4GpGOaXuwUR8oyWm0MAOq0nrxfW2rpJNAAjdKrCxR/tp6AgIh9rW
+ n9JvmcK1VKVkP+94fD1tZJmrWiXZ6VFBqiTkojhbR0vXvP6Iu4iShtaUpkntHc3D4wzQdpYX9
+ ojulrxORwNYSIcL7xfVfkXn4YDOd7lXIhZXfBg5crOhBYjxZU+3tLvn3HRYA0fQnpXHBBy5Xq
+ 8Tiu2XwBC5ojJTVpsJWzJUfvx9Nsn+4+Q1cIfqZ/kC6zGNoqE945mH8PtyBUj3yrXOQVbJTjN
+ XmHL38L7qaBgxfmH9tXEFMA1dw7psN3Cxtsvjoo0Sn6gY1IRSwlcdVXEB2sYhAHjamBA4Sj/g
+ l0AcoqvPb9K58gcyXiM3kM2TFAUQ7MVvK3RQPeHxiWhPMg+4MDbd5PUi+UeFVggPk/if5w1ZN
+ 8SxXPpybiCfttxCyORmjnzOEv+94XYp4j8sVd9pSWQpAkwdN+8d2pb56MWQ+RL4mC3LP6EBgP
+ EU923NRjTr9r+4a1bOivRGJFMR68tIlESbavz/peSf6BxSmdeoxNoBzbdi7eqhCeh/jUfBG25
+ +q4IiWP3UnYiqkvSd9nhppxTZ4osA+R6bOazVt9VTRKI6ICWur+D9FVUCQ07ar4aD0RaP27At
+ YDGyLU0OgmDXS4Md4WbGd5OUfj+8SxMGFPzrut4w2t5A/QPNtadpOZDD0EZX0KsHTi9yfPwJg
+ I0qqBkVEvlaoyKI7cRrSuEQGGTRPcY7rWdKjcyTc7xu5L29RNmtnOjPIepiSOU4u5vBWdOTHc
+ woynT7YFGqDxkR0h333y70Da+iUDSx/wLRZbmTxbb6tidPzUHno7Hd/WKhOzRv2lzY4w5nbmP
+ 0jp1cP37oaC/Bhut/PUrxz6cxRFfVRWJ++4CjqIU8UVsmuv+7kr89ZEEOald/KCpmrEpwKEpX
+ 1c5xxi8i7EvNaCn5WcNiI1T5TbFTdY/Dxh8s0vI8RDqaX6EMUnxqOjd10ozVq4kHC8TZrZuG+
+ TRvdchyNJqAKOYpHzYehSq1cyo5w4zav46K0ML/dyb0Iu9QmrmqkJj7TgApg=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex,
+Hi Phillip,
 
+On Thu, 24 Oct 2019, Phillip Wood wrote:
 
-On Tue, 22 Oct 2019, Alexandr Miloslavskiy via GitGitGadget wrote:
-
-> From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+> On 23/10/2019 00:30, Johannes Schindelin via GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > In dcb500dc16c (cherry-pick/revert: advise using --skip, 2019-07-02),
+> > `git commit` learned to suggest to run `git cherry-pick --skip` when
+> > trying to cherry-pick an empty patch.
+> >
+> > However, it was overlooked that there are more conditions than just a
+> > `git cherry-pick` when this advice is printed (which originally
+> > suggested the neutral `git reset`): the same can happen during a rebas=
+e.
+> >
+> > Let's suggest the correct command, even during a rebase.
+> >
+> > While at it, we adjust more places in `builtin/commit.c` that
+> > incorrectly assumed that the presence of a `CHERRY_PICK_HEAD` meant th=
+at
+> > surely this must be a `cherry-pick` in progress.
+> >
+> > Note: we take pains to handle the situation when a user runs a `git
+> > cherry-pick` _during_ a rebase. This is quite valid (e.g. in an `exec`
+> > line in an interactive rebase). On the other hand, it is not possible =
+to
+> > run a rebase during a cherry-pick, meaning: if both `rebase-merge/` an=
+d
+> > `sequencer/` exist, we still want to advise to use `git cherry-pick
+> > --skip`.
 >
-> This also fixes t5516 on Windows VS build.
+> Thanks for working on this. It's unfortunate that rebase does not remove
+> CHERRY_PICK_HEAD for empty commits as it does if the commit is not
+> empty.
 
-Maybe this could do with an example? I could imagine that we might want
-to use the log of
-https://dev.azure.com/git/git/_build/results?buildId=3D1264&view=3Dms.vss-=
-test-web.build-test-results-tab&runId=3D1016906&resultId=3D101011&paneView=
-=3Dattachments:
+Oh, so that's what it is that bites me all the time? I frequently run
+interactive rebases and sometimes mess up authorship (taking authorship
+of patches that I did not, in fact, author). I guess what happens is
+that I `git commit` in the middle of a rebase that was interrupted by
+merge conflicts.
 
-=2D- snip --
-[...]
-++ eval '
-	want_trace && set -x
+So I would actually like to see the _exact opposite_ of what you want to
+see: I want to keep `CHERRY_PICK_HEAD` even in the non-empty case.
 
-mkdir -p "$TRASH_DIRECTORY/prereq-test-dir" &&
-(
-	cd "$TRASH_DIRECTORY/prereq-test-dir" &&
-	! git env--helper --type=3Dbool --default=3D0 --exit-code GIT_TEST_GETTEX=
-T_POISON
+> I think this is because 'rebase --continue' will skip an empty commit
+> so the user _has_ to run 'git commit' manually to keep it. If it had
+> been designed so that 'rebase --continue' kept the empty commit and
+> 'rebase --skip' skipped it then we would not have this problem but
+> it's a bit late to worry about that now.
 
-)'
-+++ want_trace
-+++ test t =3D t
-+++ test '' =3D t
-+++ test t =3D t
-+++ set -x
-+++ mkdir -p '/d/a/1/s/t/trash directory.t5516-fetch-push/prereq-test-dir'
-+++ cd '/d/a/1/s/t/trash directory.t5516-fetch-push/prereq-test-dir'
-+++ git env--helper --type=3Dbool --default=3D0 --exit-code GIT_TEST_GETTE=
-XT_POISON
-prerequisite C_LOCALE_OUTPUT ok
-error: 'grep remote error:.*not our ref.*64ea4c133d59fa98e86a771eda009872d=
-6ab2886$ err' didn't find a match in:
-fatal: git upload-pack: not our ref 64ea4c133d59fa98e86afatal: 771eda00987=
-2d6abremote error: upload-pack2: not our re886
-f 64ea4c133d59fa98e86a771eda009872d6ab2886
-error: last command exited with $?=3D1
-=2D- snap --
+True.
 
-It is quite obvious that this `fatal:` line is garbled ;-)
+> I don't this patch can distinguish between an empty cherry-pick
+> performed by the user while a rebase is in progress and an empty pick
+> performed by rebase as both create CHERRY_PICK_HEAD while
+> .git/rebase-merge exists. It seems to assume that CHERRY_PICK_HEAD was
+> created by rebase and prints advise based on that which may or may not
+> be the correct. I think we could distinguish the two by checking if
+> CHERRY_PICK_HEAD matches .git/rebase-merge/stopped-sha or REBASE_HEAD.
 
-> For detailed explanation please refer to code comments in this commit.
->
-> There was a lot of back-and-forth already in vreportf():
-> d048a96e (2007-11-09) - 'char msg[256]' is introduced to avoid interleav=
-ing
-> 389d1767 (2009-03-25) - Buffer size increased to 1024 to avoid truncatio=
-n
-> 625a860c (2009-11-22) - Buffer size increased to 4096 to avoid truncatio=
-n
-> f4c3edc0 (2015-08-11) - Buffer removed to avoid truncation
-> b5a9e435 (2017-01-11) - Reverts f4c3edc0 to be able to replace control
->                         chars before sending to stderr
->
-> This fix attempts to solve all issues:
-> 1) avoid multiple fprintf() interleaving
-> 2) avoid truncation
-> 3) avoid char interleaving in fprintf() on some platforms
-> 4) avoid buffer block interleaving when output is large
-> 5) avoid out-of-order messages
-> 6) replace control characters in output
->
-> Other commits worthy of notice:
-> 9ac13ec9 (2006-10-11) - Another attempt to solve interleaving.
->                         This is seemingly related to d048a96e.
-> 137a0d0e (2007-11-19) - Addresses out-of-order for display()
-> 34df8aba (2009-03-10) - Switches xwrite() to fprintf() in recv_sideband(=
-)
->                         to support UTF-8 emulation
-> eac14f89 (2012-01-14) - Removes the need for fprintf() for UTF-8 emulati=
-on,
->                         so it's safe to use xwrite() again
-> 5e5be9e2 (2016-06-28) - recv_sideband() uses xwrite() again
+I guess we could, but then, I would rather worry about that in the next
+cycle. In this cycle, I would rather fix the common case, which is that
+a `git rebase -i` fails and tells me to `git cherry-pick --skip` instead
+of `git rebase --skip`.
 
-So far, it makes a lot of sense, and is well-researched. Thank you for
-being very diligent.
+And even if I performed a `git cherry-pick` during a `git rebase` and
+the result would be an empty commit, I'd rather be told to `git rebase
+=2D-skip` to continue...
 
->
-> Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-> ---
->  usage.c | 154 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 148 insertions(+), 6 deletions(-)
->
-> diff --git a/usage.c b/usage.c
-> index 2fdb20086b..ccdd91a7b9 100644
-> --- a/usage.c
-> +++ b/usage.c
-> @@ -6,17 +6,159 @@
->  #include "git-compat-util.h"
->  #include "cache.h"
->
-> +static void replace_control_chars(char* str, size_t size, char replacem=
-ent)
-> +{
-> +	size_t i;
-> +
-> +	for (i =3D 0; i < size; i++) {
-> +    		if (iscntrl(str[i]) && str[i] !=3D '\t' && str[i] !=3D '\n')
-> +			str[i] =3D replacement;
-> +	}
-> +}
-
-So this is just factored out from `vreportf()`, right?
-
-> +
-> +/*
-> + * Atomically report (prefix + vsnprintf(err, params) + '\n') to stderr=
-.
-> + * Always returns desired buffer size.
-> + * Doesn't write to stderr if content didn't fit.
-> + *
-> + * This function composes everything into a single buffer before
-> + * sending to stderr. This is to defeat various non-atomic issues:
-> + * 1) If stderr is fully buffered:
-> + *    the ordering of stdout and stderr messages could be wrong,
-> + *    because stderr output waits for the buffer to become full.
-> + * 2) If stderr has any type of buffering:
-> + *    buffer has fixed size, which could lead to interleaved buffer
-> + *    blocks when two threads/processes write at the same time.
-> + * 3) If stderr is not buffered:
-> + *    There are two problems, one with atomic fprintf() and another
-> + *    for non-atomic fprintf(), and both occur depending on platform
-> + *    (see details below). If atomic, this function still writes 3
-> + *    parts, which could get interleaved with multiple threads. If
-> + *    not atomic, then fprintf() will basically write char-by-char,
-> + *    which leads to unreadable char-interleaved writes if two
-> + *    processes write to stderr at the same time (threads are OK
-> + *    because fprintf() usually locks file in current process). This
-> + *    for example happens in t5516 where 'git-upload-pack' detects
-> + *    an error, reports it to parent 'git fetch' and both die() at the
-> + *    same time.
-> + *
-> + *    Behaviors, at the moment of writing:
-> + *    a) libc - fprintf()-interleaved
-> + *       fprintf() enables temporary stream buffering.
-> + *       See: buffered_vfprintf()
-> + *    b) VC++ - char-interleaved
-> + *       fprintf() enables temporary stream buffering, but only if
-> + *       stream was not set to no buffering. This has no effect,
-> + *       because stderr is not buffered by default, and git takes
-> + *       an extra step to ensure that in swap_osfhnd().
-> + *       See: _iob[_IOB_ENTRIES],
-> + *            __acrt_stdio_temporary_buffering_guard,
-> + *            has_any_buffer()
-> + *    c) MinGW - char-interleaved (console), full buffering (file)
-> + *       fprintf() obeys stderr buffering. But it uses old MSVCRT.DLL,
-> + *       which eventually calls _flsbuf(), which enables buffering unle=
-ss
-> + *       isatty(stderr) or buffering is disabled. Buffering is not disa=
-bled
-> + *       by default for stderr. Therefore, buffering is enabled for
-> + *       file-redirected stderr.
-> + *       See: __mingw_vfprintf(),
-> + *            __pformat_wcputs(),
-> + *            _fputc_nolock(),
-> + *            _flsbuf(),
-> + *            _iob[_IOB_ENTRIES]
-> + * 4) If stderr is line buffered: MinGW/VC++ will enable full
-> + *    buffering instead. See MSDN setvbuf().
-> + */
-> +static size_t vreportf_buf(char *buf, size_t buf_size, const char *pref=
-ix, const char *err, va_list params)
-> +{
-> +	int printf_ret =3D 0;
-> +	size_t prefix_size =3D 0;
-> +	size_t total_size =3D 0;
-> +
-> +	/*
-> +	 * NOTE: Can't use strbuf functions here, because it can be called whe=
-n
-> +	 * malloc() is no longer possible, and strbuf will recurse die().
-> +	 */
-> +
-> +	/* Prefix */
-> +	prefix_size =3D strlen(prefix);
-> +	if (total_size + prefix_size <=3D buf_size)
-> +		memcpy(buf + total_size, prefix, prefix_size);
-> +
-> +	total_size +=3D prefix_size;
-> +
-> +	/* Formatted message */
-> +	if (total_size <=3D buf_size)
-> +		printf_ret =3D vsnprintf(buf + total_size, buf_size - total_size, err=
-, params);
-> +	else
-> +		printf_ret =3D vsnprintf(NULL, 0, err, params);
-> +
-> +	if (printf_ret < 0)
-> +		BUG("your vsnprintf is broken (returned %d)", printf_ret);
-> +
-> +	/*
-> +	 * vsnprintf() returns _desired_ size (without terminating null).
-> +	 * If vsnprintf() was truncated that will be seen when appending '\n'.
-> +	 */
-> +	total_size +=3D printf_ret;
-> +
-> +	/* Trailing \n */
-> +	if (total_size + 1 <=3D buf_size)
-> +		buf[total_size] =3D '\n';
-> +
-> +	total_size +=3D 1;
-> +
-> +	/* Send the buffer, if content fits */
-> +	if (total_size <=3D buf_size) {
-> +	    replace_control_chars(buf, total_size, '?');
-> +	    fwrite(buf, total_size, 1, stderr);
-> +	}
-> +
-> +	return total_size;
-> +}
-> +
->  void vreportf(const char *prefix, const char *err, va_list params)
->  {
-> +	size_t res =3D 0;
-> +	char *buf =3D NULL;
-> +	size_t buf_size =3D 0;
-> +
-> +	/*
-> +	 * NOTE: This can be called from failed xmalloc(). Any malloc() can
-> +	 * fail now. Let's try to report with a fixed size stack based buffer.
-> +	 * Also, most messages should fit, and this path is faster.
-> +	 */
->  	char msg[4096];
-> -	char *p;
-> +	res =3D vreportf_buf(msg, sizeof(msg), prefix, err, params);
-> +	if (res <=3D sizeof(msg)) {
-> +		/* Success */
-> +		return;
-> +	}
->
-> -	vsnprintf(msg, sizeof(msg), err, params);
-> -	for (p =3D msg; *p; p++) {
-> -		if (iscntrl(*p) && *p !=3D '\t' && *p !=3D '\n')
-> -			*p =3D '?';
-> +	/*
-> +	 * Try to allocate a suitable sized malloc(), if possible.
-> +	 * NOTE: Do not use xmalloc(), because on failure it will call
-> +	 * die() or warning() and lead to recursion.
-> +	 */
-> +	buf_size =3D res;
-> +	buf =3D malloc(buf_size);
-
-Why not `alloca()`?
-
-And to take a step back, I think that previous rounds of patches trying
-to essentially address the same problem made the case that it is okay to
-cut off insanely-long messages, so I am not sure we would want to open
-that can of worms again...
-
-> +	if (buf) {
-> +		res =3D vreportf_buf(buf, buf_size, prefix, err, params);
-> +		FREE_AND_NULL(buf);
-> +
-> +		if (res <=3D buf_size) {
-> +			/* Success */
-> +			return;
-> +		}
->  	}
-> -	fprintf(stderr, "%s%s\n", prefix, msg);
-> +
-> +	/*
-> +	 * When everything fails, report in parts.
-> +	 * This can have all problems prevented by vreportf_buf().
-> +	 */
-> +	fprintf(stderr, "vreportf: not enough memory (tried to allocate %lu by=
-tes)\n", (unsigned long)buf_size);
-> +	fputs(prefix, stderr);
-> +	vfprintf(stderr, err, params);
-> +	fputc('\n', stderr);
-
-Quite honestly, I would love to avoid that amount of complexity,
-certainly in a part of the code that we would like to have rock solid
-because it is usually exercised when things go very, very wrong and we
-need to provide the user who is bitten by it enough information to take
-to the Git contributors to figure out the root cause(s).
-
-So let's take another step back and look at the original `vreportf()`:
-
-	void vreportf(const char *prefix, const char *err, va_list params)
-	{
-		char msg[4096];
-		char *p;
-
-		vsnprintf(msg, sizeof(msg), err, params);
-		for (p =3D msg; *p; p++) {
-			if (iscntrl(*p) && *p !=3D '\t' && *p !=3D '\n')
-				*p =3D '?';
-		}
-		fprintf(stderr, "%s%s\n", prefix, msg);
-	}
-
-Is the problem that causes those failures with VS the fact that
-`fprintf(stderr, ...)` might be interleaved with the output of another
-process that _also_ wants to write to `stderr`? I assume that this _is_
-the problem.
-
-Further, I guess that the problem is compounded by the fact that we
-usually run the tests in a Git Bash on Windows, i.e. in a MinTTY that
-emulates a console (there _is_ work under way to support the newly
-introduces ptys, but that work is far from done), so the standard error
-file handle might behave in unexpected ways in that scenario.
-
-But I do wonder whether replacing that `fprintf()` by a `write()` would
-work better. After all, we could write the `prefix` into the `msg`
-already:
-
-		size_t off =3D strlcpy(msg, prefix, sizeof(msg));
-		int ret =3D vsnprintf(msg + off, sizeof(msg) - off, err, params);
-		[...]
-		if (ret > 0)
-			write(2, msg, off + ret);
-
-Would that also work around the problem?
+But if you feel strongly that this should be fixed differently, I'll
+gladly leave it to you ;-)
 
 Ciao,
 Dscho
 
->  }
 >
->  static NORETURN void usage_builtin(const char *err, va_list params)
-> --
-> gitgitgadget
+> Best Wishes
+>
+>
+> Phillip
+>
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  builtin/commit.c       | 33 ++++++++++++++++++++++++---------
+> >  t/t3403-rebase-skip.sh |  9 +++++++++
+> >  2 files changed, 33 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/builtin/commit.c b/builtin/commit.c
+> > index e588bc6ad3..2beae13620 100644
+> > --- a/builtin/commit.c
+> > +++ b/builtin/commit.c
+> > @@ -59,6 +59,9 @@ N_("The previous cherry-pick is now empty, possibly =
+due to conflict resolution.\
+> >  "    git commit --allow-empty\n"
+> >  "\n");
+> >
+> > +static const char empty_rebase_advice[] =3D
+> > +N_("Otherwise, please use 'git rebase --skip'\n");
+> > +
+> >  static const char empty_cherry_pick_advice_single[] =3D
+> >  N_("Otherwise, please use 'git cherry-pick --skip'\n");
+> >
+> > @@ -122,7 +125,7 @@ static enum commit_msg_cleanup_mode cleanup_mode;
+> >  static const char *cleanup_arg;
+> >
+> >  static enum commit_whence whence;
+> > -static int sequencer_in_use;
+> > +static int sequencer_in_use, rebase_in_progress;
+> >  static int use_editor =3D 1, include_status =3D 1;
+> >  static int have_option_m;
+> >  static struct strbuf message =3D STRBUF_INIT;
+> > @@ -183,6 +186,8 @@ static void determine_whence(struct wt_status *s)
+> >  		whence =3D FROM_CHERRY_PICK;
+> >  		if (file_exists(git_path_seq_dir()))
+> >  			sequencer_in_use =3D 1;
+> > +		if (file_exists(git_path_rebase_merge_dir()))
+> > +			rebase_in_progress =3D 1;
+> >  	}
+> >  	else
+> >  		whence =3D FROM_COMMIT;
+> > @@ -453,8 +458,11 @@ static const char *prepare_index(int argc, const =
+char **argv, const char *prefix
+> >  	if (whence !=3D FROM_COMMIT) {
+> >  		if (whence =3D=3D FROM_MERGE)
+> >  			die(_("cannot do a partial commit during a merge."));
+> > -		else if (whence =3D=3D FROM_CHERRY_PICK)
+> > +		else if (whence =3D=3D FROM_CHERRY_PICK) {
+> > +			if (rebase_in_progress && !sequencer_in_use)
+> > +				die(_("cannot do a partial commit during a rebase."));
+> >  			die(_("cannot do a partial commit during a cherry-pick."));
+> > +		}
+> >  	}
+> >
+> >  	if (list_paths(&partial, !current_head ? NULL : "HEAD", &pathspec))
+> > @@ -950,10 +958,12 @@ static int prepare_to_commit(const char *index_f=
+ile, const char *prefix,
+> >  			fputs(_(empty_amend_advice), stderr);
+> >  		else if (whence =3D=3D FROM_CHERRY_PICK) {
+> >  			fputs(_(empty_cherry_pick_advice), stderr);
+> > -			if (!sequencer_in_use)
+> > -				fputs(_(empty_cherry_pick_advice_single), stderr);
+> > -			else
+> > +			if (sequencer_in_use)
+> >  				fputs(_(empty_cherry_pick_advice_multi), stderr);
+> > +			else if (rebase_in_progress)
+> > +				fputs(_(empty_rebase_advice), stderr);
+> > +			else
+> > +				fputs(_(empty_cherry_pick_advice_single), stderr);
+> >  		}
+> >  		return 0;
+> >  	}
+> > @@ -1156,8 +1166,11 @@ static int parse_and_validate_options(int argc,=
+ const char *argv[],
+> >  	if (amend && whence !=3D FROM_COMMIT) {
+> >  		if (whence =3D=3D FROM_MERGE)
+> >  			die(_("You are in the middle of a merge -- cannot amend."));
+> > -		else if (whence =3D=3D FROM_CHERRY_PICK)
+> > +		else if (whence =3D=3D FROM_CHERRY_PICK) {
+> > +			if (rebase_in_progress && !sequencer_in_use)
+> > +				die(_("You are in the middle of a rebase -- cannot amend."));
+> >  			die(_("You are in the middle of a cherry-pick -- cannot amend."));
+> > +		}
+> >  	}
+> >  	if (fixup_message && squash_message)
+> >  		die(_("Options --squash and --fixup cannot be used together"));
+> > @@ -1628,9 +1641,11 @@ int cmd_commit(int argc, const char **argv, con=
+st char *prefix)
+> >  			reduce_heads_replace(&parents);
+> >  	} else {
+> >  		if (!reflog_msg)
+> > -			reflog_msg =3D (whence =3D=3D FROM_CHERRY_PICK)
+> > -					? "commit (cherry-pick)"
+> > -					: "commit";
+> > +			reflog_msg =3D (whence !=3D FROM_CHERRY_PICK)
+> > +					? "commit"
+> > +					: rebase_in_progress && !sequencer_in_use
+> > +					? "commit (rebase)"
+> > +					: "commit (cherry-pick)";
+> >  		commit_list_insert(current_head, &parents);
+> >  	}
+> >
+> > diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
+> > index 1f5122b632..77b03ac49f 100755
+> > --- a/t/t3403-rebase-skip.sh
+> > +++ b/t/t3403-rebase-skip.sh
+> > @@ -76,4 +76,13 @@ test_expect_success 'moved back to branch correctly=
+' '
+> >
+> >  test_debug 'gitk --all & sleep 1'
+> >
+> > +test_expect_success 'correct advice upon empty commit' '
+> > +	git checkout -b rebase-skip &&
+> > +	test_commit a1 &&
+> > +	test_tick &&
+> > +	git commit --amend -m amended --no-edit &&
+> > +	test_must_fail git rebase -m --onto a1 HEAD^ 2>err &&
+> > +	test_i18ngrep "git rebase --skip" err
+> > +'
+> > +
+> >  test_done
+> >
+>
 >
