@@ -2,115 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82B7D1F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 22:11:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A37E31F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 22:21:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726375AbfJYWLU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 18:11:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58782 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725801AbfJYWLU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 18:11:20 -0400
-Received: (qmail 20550 invoked by uid 109); 25 Oct 2019 22:11:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 25 Oct 2019 22:11:20 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14541 invoked by uid 111); 25 Oct 2019 22:14:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Oct 2019 18:14:27 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 25 Oct 2019 18:11:19 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Alexandr Miloslavskiy via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/1] vreportf: Fix interleaving issues, remove 4096
- limitation
-Message-ID: <20191025221118.GA29213@sigill.intra.peff.net>
-References: <pull.407.git.1571755147.gitgitgadget@gmail.com>
- <pull.407.v2.git.1571755538.gitgitgadget@gmail.com>
- <54f0d6f6b53dd4fdd6e4129c942de8002459fd88.1571755538.git.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.1910251034110.46@tvgsbejvaqbjf.bet>
- <e7002f76-65d3-607f-3b5a-e242938374f7@syntevo.com>
- <nycvar.QRO.7.76.6.1910251548560.46@tvgsbejvaqbjf.bet>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1910251548560.46@tvgsbejvaqbjf.bet>
+        id S1726453AbfJYWVB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 18:21:01 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:42724 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725801AbfJYWVB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 18:21:01 -0400
+Received: by mail-wr1-f67.google.com with SMTP id r1so3979519wrs.9
+        for <git@vger.kernel.org>; Fri, 25 Oct 2019 15:20:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=3fNQhvgFkiFUT9VpcfiG0kl1dA2p2Ftw9aIvFNg+0To=;
+        b=lNsXfZkh7piEid7/kiSR8UKRsz3idLnLrQzcLiTSvlTvzQtkRpkjnQ0j9+OvyzR8GW
+         ZdWyqacL/kzRHRAxZjskdwVzVymMciM2lniNZ0S6NqxErnp20dgEbEaj9PSet97REtyg
+         9jF1xwW5kh3Qgps6aSE6qBze/jnIkLq6lVnx678lbaUW9vuUuoCuO7oeVZ6ZdlzgsZ7I
+         SJr9jUI3KjXcI7SrYE5NKoz4a+QD1UZXN4xAhcXm1Yjzv4hm8/0951v55Jt3DBdgkXWt
+         +8cpExJ7CsiuTx4senR237fedNEuSMGdm0Byb69Cc30nLOH9SakM18kAJgQx9LJBIjJt
+         VzcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=3fNQhvgFkiFUT9VpcfiG0kl1dA2p2Ftw9aIvFNg+0To=;
+        b=ESMVUrqIlA7DdkU/RipySJiFno7ONjleTSLo4GpW6sR3JOMM4bmlPFL3Ht2SzRpxL1
+         G2cpGen8IwZwPVzM7mhVRceKmO1o7+mlib2lzCMqWPAJDZ02I/7DiC/1N0u/4OiWBocS
+         x6QpPsQolAM8vhjeO3b/FIbjASSdyRac/uoK+0Ww4VpTea2NVyhAL7zDbzH2yuqF5o1Z
+         0RsRxcDG7sdJ/xvotElMp6QrzQDr5xdFgLEXDfw+AKlPnMUAict67bDrCeU+eVFWSbYS
+         Nax/2jv2mndz872imaSWcSl26MQ0PmBAVajdoA+dn3UL+0ne+aETxeYWY7tJAgGZXGjn
+         ehuA==
+X-Gm-Message-State: APjAAAVwqPKo9A1LwdLkk0AQ0umpR4xWdyTqxb1yPxt/s5Vl10d6SF7f
+        W3S/hjXcJ3B99Mq7I7E9qQt7d/N3
+X-Google-Smtp-Source: APXvYqwXpYtjOwReZUXNIaSTCllDtgBp0o4WXllaqedQKd+7bcdI/tQWW3DSc0L4C9ISkZB6KgkJXA==
+X-Received: by 2002:adf:f342:: with SMTP id e2mr5217787wrp.61.1572042058999;
+        Fri, 25 Oct 2019 15:20:58 -0700 (PDT)
+Received: from evergreen.lan (5.223.75.194.dyn.plus.net. [194.75.223.5])
+        by smtp.gmail.com with ESMTPSA id o187sm8038170wmo.3.2019.10.25.15.20.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 25 Oct 2019 15:20:58 -0700 (PDT)
+From:   Mihail Atanassov <m.atanassov92@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Mihail Atanassov <m.atanassov92@gmail.com>
+Subject: [PATCH] Documentation/git-bisect.txt: add --no-ff to merge command
+Date:   Fri, 25 Oct 2019 23:20:32 +0100
+Message-Id: <20191025222032.3399-1-m.atanassov92@gmail.com>
+X-Mailer: git-send-email 2.16.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 25, 2019 at 04:02:36PM +0200, Johannes Schindelin wrote:
+The hotfix application example uses `git merge --no-commit` to apply
+temporary changes to the working tree during a bisect operation. In some
+situations this can be a fast-forward and `merge` will apply the hotfix
+branch's commits regardless of `--no-commit` (as documented in the `git
+merge` manual).
 
-> ... and indeed, I verified that this patch fixes the problem:
-> 
-> -- snip --
-> diff --git a/usage.c b/usage.c
-> index 2fdb20086bd..7f5bdfb0f40 100644
-> --- a/usage.c
-> +++ b/usage.c
-> @@ -10,13 +10,16 @@ void vreportf(const char *prefix, const char *err, va_list params)
->  {
->  	char msg[4096];
->  	char *p;
-> -
-> -	vsnprintf(msg, sizeof(msg), err, params);
-> +	size_t off = strlcpy(msg, prefix, sizeof(msg));
-> +	int ret = vsnprintf(msg + off, sizeof(msg) - off, err, params);
->  	for (p = msg; *p; p++) {
->  		if (iscntrl(*p) && *p != '\t' && *p != '\n')
->  			*p = '?';
->  	}
-> -	fprintf(stderr, "%s%s\n", prefix, msg);
-> +	if (ret > 0) {
-> +		msg[off + ret] = '\n'; /* we no longer need a NUL */
-> +		write_in_full(2, msg, off + ret + 1);
-> +	}
->  }
+In the pathological case this will make a `git bisect
+run` invocation to loop indefinitely between the first bisect step and
+the fast-forwarded post-merge HEAD.
 
-Heh. This is quite similar to what I posted in:
+Add `--no-ff` to the merge command to avoid this issue, and make a note
+of it for the reader.
 
-  https://public-inbox.org/git/20190828145412.GB14432@sigill.intra.peff.net/
+Signed-off-by: Mihail Atanassov <m.atanassov92@gmail.com>
+---
+ Documentation/git-bisect.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-though I missed the cleverness with "we no longer need a NUL" to get an
-extra byte. ;)
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 4b45d837a7..58b5585874 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -412,8 +412,10 @@ $ cat ~/test.sh
+ #!/bin/sh
+ 
+ # tweak the working tree by merging the hot-fix branch
+-# and then attempt a build
+-if	git merge --no-commit hot-fix &&
++# and then attempt a build. Note the `--no-ff`: `git merge`
++# will otherwise still apply commits if the current HEAD can be
++# fast-forwarded to the hot-fix branch.
++if	git merge --no-commit --no-ff hot-fix &&
+ 	make
+ then
+ 	# run project specific test and report its status
+-- 
+2.16.4
 
-> > except truncation to 4096. Then I would expect a patch to increase
-> > buffer size to 8192 in the next couple years. And if you also try to
-> > solve truncation, it will get you very close to my code.
-> 
-> My point is: I don't want to "fix" truncation. I actually think of it as
-> a feature. An error message that is longer than the average news article
-> I read is too long, period.
-
-Yeah. As the person responsible for many of the "avoid truncation" works
-referenced in the original patch, I have come to the conclusion that it
-is not worth the complexity. Even when we do manage to produce a
-gigantic error message correctly, it's generally not very readable.
-
-That's basically what I came here to say, and I was pleased to find that
-you had already argued for it quite well. So I'll just add my support
-for the direction you've taken the conversation.
-
-I _do_ wish we could do the truncation more intelligently. I'd much
-rather see:
-
-  error: unable to open 'absurdly-long-file-name...': permission denied
-
-than:
-
-  error: unable to open 'absurdly-long-file-name-that-goes-on-forever-and-ev
-
-But I don't think it's possible without reimplementing snprintf
-ourselves.
-
--Peff
