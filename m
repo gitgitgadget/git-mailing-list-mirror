@@ -2,102 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F366E1F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 18:36:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 422AD1F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 18:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726534AbfJYSgN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 14:36:13 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:56221 "EHLO
-        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726030AbfJYSgM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 14:36:12 -0400
-X-Originating-IP: 1.186.12.52
-Received: from localhost (unknown [1.186.12.52])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 03FA560004;
-        Fri, 25 Oct 2019 18:36:07 +0000 (UTC)
-Date:   Sat, 26 Oct 2019 00:06:05 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Bert Wesarg <bert.wesarg@googlemail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: RFC: Moving git-gui development to GitHub
-Message-ID: <20191025183605.zk2g43z2townbigj@yadavpratyush.com>
-References: <20191023201310.thzpxyoeb3ta55dc@yadavpratyush.com>
- <CABPp-BEHy8c3raHwf9aFXvXN0smf_WwCcNiYxQBwh7W6An60qQ@mail.gmail.com>
+        id S1726786AbfJYSqz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 14:46:55 -0400
+Received: from forward501o.mail.yandex.net ([37.140.190.203]:46237 "EHLO
+        forward501o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726079AbfJYSqz (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 25 Oct 2019 14:46:55 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 Oct 2019 14:46:54 EDT
+Received: from mxback18j.mail.yandex.net (mxback18j.mail.yandex.net [IPv6:2a02:6b8:0:1619::94])
+        by forward501o.mail.yandex.net (Yandex) with ESMTP id 1AB6B1E804B6;
+        Fri, 25 Oct 2019 21:40:13 +0300 (MSK)
+Received: from unknown (unknown [::1])
+        by mxback18j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id uOcZdEHFES-eCwiuTNB;
+        Fri, 25 Oct 2019 21:40:12 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1572028812;
+        bh=beDOUePBmP0dAtfqIujwe/IUcCO3OqsCHTVvIcnXaJk=;
+        h=Message-Id:Cc:Subject:In-Reply-To:Date:References:To:From;
+        b=IV4toUU8a/c79XsN2ygUUjD6EH4z7FD5XZtEPSnxPNM2uTG/jWMkQ/aNMgq7TDfMs
+         UzejPSoQCuCmb4/TDq770X0ipvQdRfe08q/IOYveG2Oe85mjKQKQx0bh7Yxq3ppuyE
+         3NdT9F9jFnwwKof5pP6XPniRIefkk3NE8fjhaIrQ=
+Authentication-Results: mxback18j.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by sas2-1c82b59a1818.qloud-c.yandex.net with HTTP;
+        Fri, 25 Oct 2019 21:40:12 +0300
+From:   =?utf-8?B?0LHQtdC3INC40LzQtdC90Lg=?= <mykaralw@yandex.ru>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <20191025180533.ed6du6weja2wfx6c@yadavpratyush.com>
+References: <22757761571993594@vla1-d97dbca235a9.qloud-c.yandex.net>
+         <b9e29a2f-494b-eebc-a3ee-2a2ed4967d7e@iee.email>
+         <24796381572021130@iva7-56e9317134d0.qloud-c.yandex.net> <20191025180533.ed6du6weja2wfx6c@yadavpratyush.com>
+Subject: Re: .git/binary
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABPp-BEHy8c3raHwf9aFXvXN0smf_WwCcNiYxQBwh7W6An60qQ@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Fri, 25 Oct 2019 21:40:12 +0300
+Message-Id: <24145781572028812@sas2-1c82b59a1818.qloud-c.yandex.net>
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24/10/19 12:46PM, Elijah Newren wrote:
-> On Thu, Oct 24, 2019 at 2:45 AM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> >
-> > Hi everyone,
-> >
-> > I recently had some discussions with Dscho about whether it is a better
-> > idea to use GitHub for development instead of email [0]. His argument
-> > was that GitHub makes it easier for newcomers to contribute, since more
-> > people are familiar with GitHub compared to mailing lists. Also, it is
-> > somewhat difficult to set up an email-based workflow.
-> 
-> Interesting; I had been pondering asking the opposite question for
-> filter-repo: Even though filter-repo is tracked externally to git.git
-> (since we seem to want to move to a batteries-not-included model),
-> would it be okay to ask that filter-repo contributors send patches to
-> the git mailing list (possibly specially marked somehow)?
+> Something like this might have trouble working with checkouts of past
+> commits, which is a major reason (at least for me) for using a version
+> control system.
 
-Marking them some way (like we do with git-gui) would probably be a good 
-idea since it allows people to just skip over those threads if they're 
-not interested. It also allows using email filters on those topics.
- 
-> I'm debating between:
->   - Ask contributors to send filter-repo patches to the git mailing
-> list (if okay).
->   - Try out GerritHub (GitHub + Gerrit; see gerrithub.io) and maybe use it
->   - Assume there won't be many contributions (wouldn't be surprising)
-> and put up with GitHub PRs
-> 
-> GitHub is great for ease of creating new repos, learning about other
-> developers, finding similar projects, creation of webhooks, etc.  But
-> it's *awful* for code review.  Gerrit is a lot better at code reviews
-> (though still has problems); so maybe dealing with both GitHub and
-> Gerrit would be reasonable.  (Reviewable also exists, and is kinda
-> decent, but I can't respect anything that doesn't offer reviewability
-> of commit messages.  And it makes me feel bad by making me want to
-> swat butterflies.)  Email is a horrible medium for sending/receiving
-> changes, but at least it gets the overall code review model right
-> (commit-messages-are-first-order-objects-that-can-be-reviewed,
-> review-individual-commits, merge-per-topic, cover-letter included,
-> range-diff for high-level comparison of different iterations,
-> reversing-commit-order-display-based-on-author-timestamps-is-NOT-forgivable,
-> Change-IDs-are-ugly, magic-refs-are-disgusting, etc.), something no
-> GUI tool (yet) does to my knowledge.
-
-Thanks for your perspective. I have never really used GitHub for 
-anything more than one off contributions, and so never really ended up 
-using their review and merge tools too much. In fact, most of the open 
-source projects I have been interested in used mailing lists, which is 
-why I questioned myself if I'm biased towards such a workflow.
- 
-> So...would anyone object if I asked filter-repo contributors to send
-> contributions via email to the git mailing list?
+Good. If such a mechanism seems too problematic for you, then suggest another mechanism for resetting the history of a specific file. Alternatives are even more problematic. If the file placed in the list I proposed will go into the git history only as a link without checking and calculating the amounts, then isolating the file included in the history will change all the amounts.
 
 -- 
-Regards,
-Pratyush Yadav
+zvezdochiot
+
