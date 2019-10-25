@@ -8,102 +8,143 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEAC91F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 13:10:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F32B01F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 13:31:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440385AbfJYNKM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 09:10:12 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53517 "EHLO mout.gmx.net"
+        id S2504729AbfJYNbA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 09:31:00 -0400
+Received: from mout.gmx.net ([212.227.15.19]:41475 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2439018AbfJYNKL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 09:10:11 -0400
+        id S2504607AbfJYNa7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 09:30:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572009009;
-        bh=ZnF/12eJ/x637Q0OsjfdCD1J7cTjgev9AgjjuPQUdlk=;
+        s=badeba3b8450; t=1572010254;
+        bh=3qmAJYwfnj0TYVddBPDeew1C3mXT9627u6BWww36LkY=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=IEGceLoa3vlS7bSBZi23jHiHhYpPfeD2fv5yjWND600I9PYkOrOUTL20wo64TNyiT
-         rYpBfsiNqmhHKKh0l8FACyXuNphe1nigZsduS4HofdzH+K8DIfaiZuSFD+C+KK9xOT
-         uZOkV6Xul+zvtL+c0u3iQIFff/SFKHUe/q012fHI=
+        b=Q8FIzSGBrsjPrhmO1U/CyVIORIb+77nAuimXZA2LkVc+jOzu+dxHVnMNp1zctOP8H
+         gR3J4953ahB2Dcfg57s0jQRD9Dp/r5VrAZbKnOJZBptndey8gqk8jN1hH4TfWhunKh
+         /b0rpzBxHVx4Zn0KBLM3H42LTXWRwYQdtevt0q9w=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTABT-1iZiXe33AF-00Ub5N; Fri, 25
- Oct 2019 15:10:09 +0200
-Date:   Fri, 25 Oct 2019 15:09:53 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtOKi-1i8wAF3jDC-00upT5; Fri, 25
+ Oct 2019 15:30:54 +0200
+Date:   Fri, 25 Oct 2019 15:30:37 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     ydirson@free.fr
-cc:     git <git@vger.kernel.org>
-Subject: Re: [BUG] "git rebase -r" lacks sanitation on merges with arbitrary
- reference syntax
-In-Reply-To: <479118979.-772834452.1571913751603.JavaMail.root@zimbra39-e7>
-Message-ID: <nycvar.QRO.7.76.6.1910251508100.46@tvgsbejvaqbjf.bet>
-References: <479118979.-772834452.1571913751603.JavaMail.root@zimbra39-e7>
+To:     Elijah Newren <newren@gmail.com>
+cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] merge-recursive: fix merging a subdirectory into
+ the root directory
+In-Reply-To: <CABPp-BHBUKq73Ru3D9HKp6ABo8eQNmkSkz6MjA+4J2a6xxtWjA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910251527440.46@tvgsbejvaqbjf.bet>
+References: <pull.390.git.gitgitgadget@gmail.com> <37aee862e14b1352eb08485f15ea06bab33679df.1570826543.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.1910122152210.3272@tvgsbejvaqbjf.bet> <CABPp-BFNCLJnt4NgFKVxURBGD1Z00gastc5q4ZPjcHmwS=kuFw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1910141211130.46@tvgsbejvaqbjf.bet> <CABPp-BFYWhyLqUktEnk6A7v6135k4TQHO20Wiy32mRQekt-3cg@mail.gmail.com> <nycvar.QRO.7.76.6.1910250020220.46@tvgsbejvaqbjf.bet> <CABPp-BHBUKq73Ru3D9HKp6ABo8eQNmkSkz6MjA+4J2a6xxtWjA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:FAU4wexJ6fvsx4oCJKOhc5Pg3wvpaCi0Zt/m7VwoLbUwkxzgiV+
- Tcoc9h5QHJZh1cF246jkpqqCoejnfYgetfkPUba7NtTwDZOIwtbsX/oCuAHECZHE/pSNH1J
- X3Zt7y3WcyXepRBU5Glj4J3oKZ+msRZ3N/ioX4OYKLKu9p3QzZlnLIFUIzp0UQTJiO1FZ6C
- pRP1SJe7xjGp1KTCpE4Jw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:2yBDQaIKZrY=:lhb5ln8DnX+91dRCtyT8be
- psfamkeTAxVYIpspmCL+C2FnuFR1fOJQCI8UTn2+RI2rFLt1l+L9mbcOLaUjeAXLzq2GdtkCu
- Qhi3oVHwsIrOSF761afZnjgn11JWPVOOEfkMb52LKKJTS8ljO5BExzC5NlJg6s6lS9feBYeUO
- /dylyCG0oB0RT7lSTRHMYYtfflj3rX3I3ENKKoCpBFrn/shcpFbJ//yxQJh6uUzTfwifqfmAJ
- e7DztHJ/cs6FTutZmtW+sUvXhjxGNPIdHGjRke+AP3z9CAA7fGZGV+/u1Td5dWKzg8DXFtyvy
- CS4gOLDP2WipxxaYDL8QWcDR+xTuqLf6I7eUB/DDXspCzbb8bW9DyfVE/EPQ7fJqS1reZHjm1
- xKAm8iG7MfzqEB7KIUMj9I8MaPUSqOvtrly99vQLRJa7vQhoCXbXEiTQsvNXY4LIHsvdrlicB
- IlPLOn56u7ZeydHWI58JE+6FNjkeZla3nDQ4ZyuHu4r0U4z/aWBDQAlkmW9xU94G0nvCMqTtA
- FYpE9Ru77Q1Z/j9XKi4U+mRZtIjQPuQGsbw/yXxAVRNFtCyUErSAZi96FYHuKyms8o4Acmjp2
- 9uH1ZqGssjw35HH+WG/RZ5QyOBe+zr1gjcr48E3X02/lebMZQk4UUf5FshaKVfP9PX894uXJx
- tRaKMTiGfX3VnVXFmVm6mNbgwTOzm/Qo4mMdYSBS9I/KqZEWKD2PP4GeYKZywY7u1zSut2uq3
- hg+f2iobBYSpgR+cv8WQUxYQlkMVvWp7lo25Akd6gexBiQMcoGh2AaDnih7q4/oSREgWhTUhn
- 72TTyGCgYidVGTfdv3+FaLGwXLBT/XPM0SdsfCWcY3C6SFPq9KElg1mijuFDG5c7qCjPr6Hgm
- OjQ5gZ47hAP4pvi03CJi0J4FDf/xttvwROhcyG6wvI1/vxvmPBw45O5Dei7/w8rw5KjuXOVGt
- VU3Nm8MUBVrqlGgGcqutY4LxCK3nJB5DoTx10Khi4Y395XdLDC2QIStnCRp8C5GNKwIzt1msK
- MPo2klDGGgbaS29KtQhHpq8A+nOSjswT/JyQUGvfzcmi3P1QyFnPMv8oBdltDAZmcxZef0XnI
- GYSYrHnkC6WDarmOnt2LPdFEgjU/bzdHQbbD5yB1ced6sea/MFCZqxXLzV4tFWDv9GP19T12r
- rOVYAtRonECea+5BhDhx9gnQ3EYYt67LBcpHE6j35PrkuOdz+75tF/QWWHnlCQa0wI1UCrcLU
- nHFpNfR+C7bFIdXFEPpBf7bFa85NzTjPzy8EGfh7G/PTNBQ1jz2CpHiYOgm0=
+X-Provags-ID: V03:K1:5Gh84FK7zul865rdF2qfRK4INPAzj8ccFoYJHZU/z59XQ0IXPGj
+ XryppxrZQRJjvr3QyHhqRzXbaBVq4B8SPK/A5dRZtkjCOsOrk71MxlvDKryuJfoW1feAlGw
+ 0XPJfNo+qZ94o+AmEF0SkQXjpgvM+KyRUFkHUup3ZTanMG+Pq+VVW7QKMtR9nJprkWnrK50
+ s9Z1H/qotJN0tklI/WC3w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:D6EOdK4Ssqw=:CWWIcBcQx/B8HCb71uF8iB
+ MldSHAHBfkU+NgNhvb/YjQsARFjUnz7000pin9vlunf8oTE10UkXE5PNkfb2zC57caN8MKbgI
+ 4nFctKpw5pS5UsiXuxCDnv7yWpl5K7coMXdLwDF2z9Izk9+7r1+kcPrOFWmyZ0lWSeG+Nrd47
+ lQksuFJeGvVFee8kq3NoSIag059rmqGxw8b9F6uKMTpeDBWKf0BA3I6cBiDEM1auBYl6Ptvrm
+ LPb7Yc1Rn2CU1ecqNg9u4GejalE8lQA4gO/AHSVogQPjOKpzmjfnjwIHKJhkdoGIjz3Kr/ux2
+ 4t5F6mnx9k8WFIwKIAOIjd1oNcEKpvRqVnzCgVz+5uWlHgEDy2bZzTmkkuwzfAveNzdE54nhc
+ 1e8DSPKkpif0po99sRcPvu9te/4TgMQTkTJ4m5s1iOBcbQPI23sxOJ1Ked6xNfJntxuF3TNUz
+ Sp1DypeX23F0KOCeI/WweImcwQQ8S4JsqjQTFsOkSX5hFF+i5fPdDFf+pKkfpSzqIS8S+zz/j
+ IyjrbSpT4fD0dvyzRN2sM7Byj8IXtSk4/uDihWkT1m+ChOCEd+8lRuF9gVZrUPq3xUJ+Uiu9F
+ quU7c6mby6m6K6Q8mYAeIAfBJ89YxR3M7guCirEklOsj+m3KBWbZ2uT//O2M1A18BeQ6HDMqW
+ pBxuMDnmLdF4L445zbz1slJzycYcUxkcMY0jRc4wuedbdQlJVBMX7HXQVn5y02ZjVCKsTVjkJ
+ hiPr3PYga8/nJdIU2cjSzNHM7a4bberGfzOYq2elRgBbegpQ6EQhc7a0e/jgvsVJJe9yNgSab
+ BT2WQoUzlycGoLyugP6p/KF4mXHTkfeQOSyt1ktEnrGMC4YDA9/kzfASEloHu8IMrV2CGbU52
+ OdwT7s1SUv9M+OJYzlXteqfZmPWxaHCipIi45YCCR+rmHHGSvp9BFBcqVK61GGWH0WmQsU4zu
+ RSAot8r51i8zskpCAkHAMSH8WEaIfHr7rf/LHKQ2BT7kbfUTipImdDl73gojqFmsBiAPVvXTU
+ pHBJ1CXmeMMrEGy9IYnLM1wn7YWDLOT2iAAvN8R5Ka8KcjUSgOuy52eSh8la+MSjaYPWwoA2K
+ tBfw0Oi+fuQBe4HAUIfyVdrom+f1vdUiiCgYk2T12Q2wFxYs1wGCMw5xsLP0B+27revdvJqQR
+ 1/UQBMqu9Jg6qRmFH+ncnR/kwiEJ6PPhVvCfbFkdjVhy51rk27j/t+Ohsz16CjiwXbhKbQO+4
+ qkF/w3UqDR1YLCXIBKVF2c0yFuSEkWzDrAQoMAM6ue4GSs0rHOqBOw/UjDYI=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Yann,
+Hi Elijah,
 
-On Thu, 24 Oct 2019, ydirson@free.fr wrote:
+On Thu, 24 Oct 2019, Elijah Newren wrote:
 
-> I have a branch which does successive merges from a vendor branch, like:
+> On Thu, Oct 24, 2019 at 3:23 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Tue, 22 Oct 2019, Elijah Newren wrote:
+> >
+> > > [...]
+> > > Yes, t6043 is pretty long code-wise, and still has over five dozen
+> > > tests after ditching the separate "setup" tests -- but all of those
+> > > tests still run in 3.6s on my box. [...]
+> >
+> > $ time sh t6043-*.sh --quiet
+> > not ok 74 - 9g-check: Renamed directory that only contained immediate =
+subdirs, immediate subdirs renamed # TODO known breakage
+> > not ok 87 - 10e-check: Does git complain about untracked file that is =
+not really in the way? # TODO known breakage
+> > # still have 2 known breakage(s)
+> > # passed all remaining 117 test(s)
+> > 1..119
+> >
+> > real    7m22.393s
+> > user    0m52.115s
+> > sys     3m53.212s
+> >
+> > And this is not a slow box. So yes, those extra spawned processes? The=
+y
+> > accumulate. Spawning processes is what Linux was optimized for. You're
+> > optimizing for Linux.
+> >
+> > Ciao,
+> > Dscho
 >
->  git merge vendor/poky-intercepts^{/warrior}'
->  git merge vendor/poky-intercepts^{/zeus}'
->
-> Now if I try to use "rebase -r" across such a merge, the result is:
->
->  error: refusing to update ref with bad name 'refs/rewritten/vendor/poky=
--intercepts^{/warrior}'
->  hint: Could not execute the todo command
->  hint:
->  hint:     label vendor/poky-intercepts^{/warrior}
->  hint:
->  hint: It has been rescheduled; To edit the command before continuing, p=
-lease
->  hint: edit the todo list first:
->  hint:
->  hint:     git rebase --edit-todo
->  hint:     git rebase --continue
->
-> If I manually sanitize the label name, everything's fine.
+> Wow, I knew it'd be slower on other platforms but I certainly didn't
+> expect a factor of 122; you've made me eat my words about performance
+> for this case.
 
-The patch series is stalled a little:
-https://github.com/gitgitgadget/git/pull/327
+I am glad that the numbers are more convincing than I am ;-)
 
-Unfortunately, we are deep in -rc mode for the upcoming v2.24.0, so I
-don't think that this bug fix will make it into that release, there are
-more pressing bugs.
+> Still, I rely pretty heavily on t6036, t6042, t6043, and t6046 for
+> sanity in the face of refactoring and rewriting -- and as mentioned
+> before they have caught refactoring bugs in those areas that appear at
+> first blush as "overzealous", and have done so multiple times.  So,
+> what's the alternative -- mark the tests as linux only?  Do that but
+> also add a second copy that is trimmed down so other platforms can run
+> that one?  Keep a local copy of all these tests?  Jump on the
+> our-testing-pyramid-is-inverted bandwagon when it materializes and
+> provides a way to write unit tests instead of just end-to-end tests
+> (I'm game for that one...)?  Start discussing crazy ideas like a
+> busybox-like shell, possibly with git extensions (a "git shell" if you
+> will, though I know the name is already taken), just for running the
+> git testsuite faster?  Those alternatives all sound either unappealing
+> or like very large projects that'll take a while to materialize (and
+> which I certainly won't be spearheading; I've got too many big
+> backburnered projects already).  This performance is clearly bad, but
+> gutting the tests isn't tenable either.
 
-But it is still on my radar!
+One idea would be to try to guard those extra careful tests behind the
+`EXPENSIVE` prereq.
+
+I _do_ agree with you that it makes sense, in particular with the
+recursive merge code, in particular because you are in the middle of
+heavy refactoring, to add really, really overzealous tests.
+
+That really helps getting confident in the changes.
+
+I just don't see that we should pay the price (time-wise, and also
+electricity-wise) of running those expensive tests even after the
+refactoring, or for that matter, even for unrelated patches that are
+more than 99.9% certain not to even touch the recursive merge.
 
 Ciao,
-Johannes
+Dscho
