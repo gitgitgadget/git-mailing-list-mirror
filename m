@@ -7,74 +7,80 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75B921F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 03:45:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73E681F4C0
+	for <e@80x24.org>; Fri, 25 Oct 2019 03:54:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389968AbfJYDpA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Oct 2019 23:45:00 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57983 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727145AbfJYDo7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Oct 2019 23:44:59 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AEA859772A;
-        Thu, 24 Oct 2019 23:44:57 -0400 (EDT)
+        id S2404262AbfJYDyd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Oct 2019 23:54:33 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65236 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391314AbfJYDyd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Oct 2019 23:54:33 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7854CA0D7E;
+        Thu, 24 Oct 2019 23:54:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=r05W4HLtki4TkwHuDgrokJPXmZk=; b=FdZoYk
-        KE4L2A1LFG/Mk7IYk5r0CdszLFXP/pGO9QSJQ65z9bidvyAFdjpmJQSJ5JUAI9XQ
-        CqbYYjmXsyOPZOnmBA4sYPyPwCcXRsRsBvK/L02VlVQsTMBi1mSJ0DGpGyWJRwGr
-        NAuRE9fmRXcYxMahbrvDGHX5z3xD5zovsFq6k=
+        :content-type; s=sasl; bh=ZV6QZ050s/lDHA9+HXECeBlhOzk=; b=jP7FWA
+        wskuDXa1VaB2SEBXwp2wGXIGuTX1RqH0geN7Hr+QYH5bVcwX581t8Tq+7wjdzQyD
+        W2ujgm4e3cZ5sdnYOzSX9XcTa5Am/cNUfr1SOfhzH6vcl9O5w4YHODCFb7c6ElpR
+        O4qJsRWRFx5zSOblkeH+RKwx8B+Zxql3j4nAQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=K5+KvKy/+DJpnWsgYCDT2X3eLKU28zUB
-        koQ6erhZ7HmuReyM0CMpO5doVg9Tur6wyXPW/9KPLeex0mrwtGINSBc2Gx0hDg4P
-        eRIh4fP1EEFd/GuNA6103TLZmqxyKcv3LrAwhev1EIYGVmHPOZgwkfTENKLss63s
-        P6huDjgY/D8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A6CE297729;
-        Thu, 24 Oct 2019 23:44:57 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=GFs3lvqjg2VuiH32C9+z9/20gAgSITsA
+        7k7/IIs/Gl28pRj3g/VnhqtRCeHQWhQP2x1frSstPT9fxSrxy3O2k6aNEdT7Tuf2
+        76gGVeof8iL/lX5XSX8D3OVjOQjc7mSE3ysJvhDQ/WWS8qE41cQQdPepED94FsQl
+        +k5yMK7AvAc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 70F64A0D7D;
+        Thu, 24 Oct 2019 23:54:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D32DB97727;
-        Thu, 24 Oct 2019 23:44:54 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A0163A0D7A;
+        Thu, 24 Oct 2019 23:54:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3 00/14] t5520: various test cleanup
-References: <cover.1571435195.git.liu.denton@gmail.com>
-        <cover.1571739459.git.liu.denton@gmail.com>
-        <20191024232139.GA76771@generichostname>
-Date:   Fri, 25 Oct 2019 12:44:52 +0900
-In-Reply-To: <20191024232139.GA76771@generichostname> (Denton Liu's message of
-        "Thu, 24 Oct 2019 16:21:39 -0700")
-Message-ID: <xmqq5zkdebez.fsf@gitster-ct.c.googlers.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [PATCH 1/1] git-gui: remove unused global declarations
+References: <20191025013255.7367-1-me@yadavpratyush.com>
+        <20191025013255.7367-2-me@yadavpratyush.com>
+Date:   Fri, 25 Oct 2019 12:54:26 +0900
+In-Reply-To: <20191025013255.7367-2-me@yadavpratyush.com> (Pratyush Yadav's
+        message of "Fri, 25 Oct 2019 07:02:55 +0530")
+Message-ID: <xmqq1rv1eaz1.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CEC42162-F6D9-11E9-88C9-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 24C5AEC2-F6DB-11E9-9199-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Pratyush Yadav <me@yadavpratyush.com> writes:
 
-> There haven't been any comments in a couple days so I think this
-> patchset is ready for inclusion.
+>  proc next_diff {{after {}}} {
+> -	global next_diff_p next_diff_w next_diff_i
+> +	global next_diff_p next_diff_w
+>  	show_diff $next_diff_p $next_diff_w {} {} $after
+>  }
 
-It's not like we are in a hurry that we need to fast-forward a topic
-like this one (i.e. general improvement and clean-up, rather than
-fixing regressions introduced in the cycle), so "a couple of days"
-is probably being too impatient.
+Not in particular about next_diff_i, but seeing a hunk like this
+makes me wonder if you want to go the other way around.  If a future
+fix needs to (re)introduce the use of next_diff_i global variable in
+this proc (it seems that there are two procs that declare the
+variable as global, one of which is this one, and the other one
+assigns to it), the code change must resurrect this declaration;
+otherwise the code would only confuse itself by potentially having
+two variables (one global, one local) with the same name, no?
 
-We'd prefer a positive ack or two.  
+For next_diff_i in particular, I think the right solution would be
+to remove both global decl and the assignment, as the assignment is
+made to otherwise unused variable.  But the primary point in such a
+change is not "remove unused global decl"; it is "remove unused
+variable".
 
-Thanks.
