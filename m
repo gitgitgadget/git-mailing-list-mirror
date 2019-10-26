@@ -2,87 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 834B21F4C0
-	for <e@80x24.org>; Sat, 26 Oct 2019 09:34:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 284981F4C0
+	for <e@80x24.org>; Sat, 26 Oct 2019 11:27:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726151AbfJZJ34 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Oct 2019 05:29:56 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:37255 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726115AbfJZJ3z (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Oct 2019 05:29:55 -0400
-Received: by mail-ed1-f66.google.com with SMTP id e12so3732096edr.4
-        for <git@vger.kernel.org>; Sat, 26 Oct 2019 02:29:54 -0700 (PDT)
+        id S1726206AbfJZL1g (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Oct 2019 07:27:36 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41964 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726190AbfJZL1f (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Oct 2019 07:27:35 -0400
+Received: by mail-wr1-f68.google.com with SMTP id p4so5100253wrm.8
+        for <git@vger.kernel.org>; Sat, 26 Oct 2019 04:27:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=H9Vf9RTrd9bZG9TkKLURdJQUcIZRDnp89wEi55+upyo=;
-        b=iM0WCSIavpyVVYMxhL96cceGe19LDjXzRzh89Mt08hzzKRQlY4yDYQuIZZIpr5JVC5
-         sUoQHCX9LMD5NquiVnzHhtaI6E06eACSUOk/R2KplgVeEf43hiZMwlKyv6e7/f56QOCr
-         b7rUWS59Cek7PZAf+UiCUFcRJzF0+UBfqE/RRLtQlJzdgQ+mM6mNCBCa8JId3owevyXB
-         2yRMXYNmBFhvm1zwadg+KXqI2lsUdbIyQhSLQQKYiFc4xgy8oZ7R1IISkYE/s99RR06e
-         Te8dVLzxD84yvriZxC5uFmDK9ZYbFf0QLhII8HUrpFjjNQ17ChgoRvr+X8VETWufnQ/O
-         apIg==
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xk6ALsNQjgkTQNowkGI1To1qKA+Ssg28CP6b/Ve1oXo=;
+        b=YaZcc3hxq511jR36VFZv/EGFjNWFsFYomiLyr4/XeJxcacIJrLU28mymjZ/PWfCS8A
+         Zj17wnZYXdHAtAjPoricmNh9hEtK8fJQr5v/gbHbK76b3CNCKr3HA3CIQBqrvR1lBmcK
+         iSS2S+PyG8LutDXalDRnhsOaAgV/drGQw9IStZiG9FY4t8wGEU/Ac5NYnd2NqUXBLpCW
+         SZhGNs2WmueAxs5n08Hc0oR2XWO59albuExODfbwxHuSUfsP2BvnwetdRap0SFej1vKI
+         m5Oq3zCd/vIdqPgIWceEGF0Ouh72qCZofn+oWxuTNg4g9Fc0ISTp2FaU80hbvc/+1ocH
+         tZpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=H9Vf9RTrd9bZG9TkKLURdJQUcIZRDnp89wEi55+upyo=;
-        b=NlsEvlnN26Lqi/IBWExU7gZxt2BSw/Ze0T0PMjY5wi+T4zLVZpNUgwfcr45kgvuuJA
-         X0dsqSDV7OFEtFStuSXq0wnEefzWhvY3RHz4V82GPGX/LjSOHl0uCNKzpe108o/dY7be
-         +ewTucubEMb019MinaeaCVFpC6PsNFTwhW1soVQyrBiGlPrPLV5zKh2MEcXRkJrq00lL
-         deEgBuu1pxVO6gFARvIpXS21NbjI+HKLUaN5Y0sd/YNpdVYiRfrQs+2auKAmXTHZDBS5
-         C3yEwJQrjco2+2sESMGw3mJfIdkJid9DIkloZ8+M5RnqEavnM77EW0PY9kmrd/Q7bpGn
-         Ioug==
-X-Gm-Message-State: APjAAAWy6kgygU8c+a6Vksi3v/NCXb+3DP7rFEhI8SPBTVDitA7WuRqY
-        rnFQn58F/cjzHArbWKfBTjVkbbG5Czp4Pxjp7N4=
-X-Google-Smtp-Source: APXvYqwsPJn2WWm28t1WLNHPkq9GWXjXC+97xSacms9HYkBumm1m/ZardZM0Sx4XPIVV/eGCn3w3lso1gloydGuXXdw=
-X-Received: by 2002:a17:906:4d4f:: with SMTP id b15mr7257529ejv.81.1572082194106;
- Sat, 26 Oct 2019 02:29:54 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=xk6ALsNQjgkTQNowkGI1To1qKA+Ssg28CP6b/Ve1oXo=;
+        b=LDx5GIiqxjoD1gZus3b5yWFE+vwHsk+ibURukJuprEElgDoq+Hv278fGC+2IUBEGQh
+         D2UHZTQeSrU2O/g2HNejssuSoEfId4CxYLzwIPuH2BegfsjBex0pKwSsle1rYvai/249
+         I/E6zMt/dzVv/dQfGaMnNw2jrGHYHN3oXGOCYFj7RSZLTn+FOszgstHhhXNaXmKC3I6K
+         5msPAl8I+pnHQcjVtIOy0b49NEN6raZp8brR44seeLcK6kNmCX1sIwXZag4Logx+Vv8A
+         mVEJEiFcfUoIbAcUvmeNriicaGGem7G4KSxChOTDEi3SBHA2YEcUKa0c+P6XBkwjhLkh
+         Ny/w==
+X-Gm-Message-State: APjAAAXVc3l0pfRPlYLE35XTbaebJ8+FnyiwPt3s/kWxvJRMEVIBXJ4G
+        G2vAZY80g31bbrZ3OTIVZXw=
+X-Google-Smtp-Source: APXvYqz98038I7TKZ4A6VlKhaRMmPvMiO6kCuQ648DqrIwvnHd1ITrkHT2eQUmodV2paBTOOVekoWg==
+X-Received: by 2002:adf:fb0b:: with SMTP id c11mr7348020wrr.50.1572089253510;
+        Sat, 26 Oct 2019 04:27:33 -0700 (PDT)
+Received: from [192.168.0.104] (atoulouse-658-1-200-5.w90-60.abo.wanadoo.fr. [90.60.97.5])
+        by smtp.gmail.com with ESMTPSA id u1sm6412353wru.90.2019.10.26.04.27.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 26 Oct 2019 04:27:32 -0700 (PDT)
+Subject: Re: [PATCH v1 5/5] sequencer: directly call pick_commits() from
+ complete_action()
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20190925201315.19722-1-alban.gruin@gmail.com>
+ <20190925201315.19722-6-alban.gruin@gmail.com>
+ <67c98856-55dc-df95-c4a6-61f1af85c480@web.de>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <9b81e879-091b-bbf7-2d1b-51236d19ee9a@gmail.com>
+Date:   Sat, 26 Oct 2019 13:27:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-References: <20191019103531.23274-4-chriscool@tuxfamily.org> <20191022174628.115505-1-jonathantanmy@google.com>
-In-Reply-To: <20191022174628.115505-1-jonathantanmy@google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 26 Oct 2019 11:29:42 +0200
-Message-ID: <CAP8UFD05uH7m7p0iR6g91MEd1QFd8vrJpKeKXsi0Brb9PKVQMg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/9] ewah/bitmap: introduce bitmap_word_alloc()
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <67c98856-55dc-df95-c4a6-61f1af85c480@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 22, 2019 at 7:46 PM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> > From: Jeff King <peff@peff.net>
-> >
-> > In a following commit we will need to allocate a variable
-> > number of bitmap words, instead of always 32, so let's add
-> > bitmap_word_alloc() for this purpose.
-> >
-> > We will also always access at least one word for each bitmap,
-> > so we want to make sure that at least one is always
-> > allocated.
->
-> The last paragraph is not true - we still can allocate 0. (We just ensure
-> that when we grow, we grow to at least 1.) I think we should just
-> delete the last paragraph - the first paragraph is sufficient.
+Hi René,
 
-Ok, I removed the last paragraph in my current version.
+Le 26/10/2019 à 09:47, René Scharfe a écrit :
+> Am 25.09.19 um 22:13 schrieb Alban Gruin:
+>> Currently, complete_action() calls sequencer_continue() to do the
+>> rebase.  Even though the former already has the todo list, the latter
+>> loads it from the disk and parses it.  Calling directly pick_commits()
+>> from complete_action() avoids this unnecessary round trip.
+>>
+>> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+>> ---
+>>  sequencer.c | 8 +++++---
+>>  1 file changed, 5 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/sequencer.c b/sequencer.c
+>> index ec7ea8d9e5..b395dd6e11 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -5140,15 +5140,17 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>>  		return error_errno(_("could not write '%s'"), todo_file);
+>>  	}
+>>
+>> -	todo_list_release(&new_todo);
+>> -
+> 
+> Moving this call down leaks new_todo on error...
+> 
+>>  	if (checkout_onto(r, opts, onto_name, &oid, orig_head))
+>>  		return -1;
+> 
+> ... here ...
+> 
+>>
+>>  	if (require_clean_work_tree(r, "rebase", "", 1, 1))
+>>  		return -1;
+> ... and here.  Perhaps set res to -1 and jump to the end?
+> 
+>>
+>> -	return sequencer_continue(r, opts);
+>> +	todo_list_write_total_nr(&new_todo);
+>> +	res = pick_commits(r, &new_todo, opts);
+>> +	todo_list_release(&new_todo);
+>> +
+>> +	return res;
+>>  }
+>>
+>>  struct subject2item_entry {
+>>
+> 
 
-> Other than that, all patches up to but not including the last one look
-> good, except the ones that just add a new function because I'll have to
-> review the last patch to see how they are used.
+Thank you for the heads up.
 
-Thanks for your review,
-Christian.
+Junio, how do you want me to fix that?  Should I reroll the series
+altogether, send a "fixup!" commit, or send a standalone patch?
+
+Cheers,
+Alban
+
