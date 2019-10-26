@@ -5,56 +5,56 @@ X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4C1C1F4C1
-	for <e@80x24.org>; Sat, 26 Oct 2019 00:54:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB2B21F4C0
+	for <e@80x24.org>; Sat, 26 Oct 2019 00:54:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725927AbfJZAyD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 20:54:03 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:52497 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725865AbfJZAyD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 20:54:03 -0400
-Received: by mail-qk1-f202.google.com with SMTP id g65so4023696qkf.19
-        for <git@vger.kernel.org>; Fri, 25 Oct 2019 17:54:02 -0700 (PDT)
+        id S1725965AbfJZAyH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 20:54:07 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:37236 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725865AbfJZAyH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 20:54:07 -0400
+Received: by mail-pf1-f202.google.com with SMTP id p2so3301845pff.4
+        for <git@vger.kernel.org>; Fri, 25 Oct 2019 17:54:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=+ekzWq15KoliSwRkEP09dQJ8f/viev/bnsz15KmGlyY=;
-        b=XqwadOnsQFIUaAWynwFWC3ctDdIioUW0KOvSTH6OVNf53dOIkLUPY+zdQlfzIaco8F
-         jgMWK3a8OngnpXOFz/qmO43e21v7n+a/8fiBnuUs1kRwG9QT9xcDFCS3BCp+ImGjbhHJ
-         hdEwCMvz1pWzJwLG7d9HC5rS+lo1D9eKmq6RjXspU+bEMXYFHCqh0wbI+2AwH2TBsA1U
-         bMRwQXqlx9lmcmcCS6YfNehOPpreRNeGr7SVLHR7wneHApQ2w34gK37b3fGu4EoV5ZIg
-         AuF1OVN6EdW9gtG84PY+7sWtkblvKCClBTUB1s4k34a+HY1psD2RuAMuVx4lHoaeK6W9
-         r2uQ==
+        bh=Y3Fiac5txPHVx9xTV1cDzfoXLO4V6rxVog7fuQtH0tg=;
+        b=UcwIaaLLmor0+bKZzNfOSpX9pEuWlFXUMSlyGyM3E88FrvW693pwP31yTXBTAgPD9Q
+         KqM18TXcNf5B3yHf6vAJFgbVVqpALW2GxKAOPsyw2QPS0Rm6vyQ9w/Pbh8eA0u0cnEgd
+         H9kUTqojG1cCHMUmq/1DohAT2mIS+EvATasN/z9TNQqsifQ6+4S/FPo9qrG5dj5EqSkl
+         gmJpLU/kJJyXSU49f7veK4Btze3YGRopqlCJMMz3HT8LmQdWU4blTEnSGEAlchWThxRC
+         9+jIyYxorYb0NQW/ix9w18QSTdXVPKVS5yrSGG3oxhWZ9AJ/vzrKxc9BYz65L/ZNQ68u
+         MXjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=+ekzWq15KoliSwRkEP09dQJ8f/viev/bnsz15KmGlyY=;
-        b=sOaQlxndgxS030FQ3FwaFVgPYfLmvVOOUtKmds/Y5/DaM9zYArJHECxoCQY7AgjTCC
-         4sY4TFKk21UZ8kHul7PypY8sY0hRhnLfYmjvhjx1OJq18R42XE2qsNikeZSMyrdYWiOB
-         acMTkA70TMUVuon8f7u0E9A48cBG3z6jwvQ6feIkN6f4M9LeWtGoEwZkXRdmbPgmFY3B
-         ab7LKrIDZKEgTYv4IoBDM0Daj/7qqhRj7l+cmq0ku/Lnd3bIsDGgOhcWLYU9bTWtbAjF
-         uJwiZOOLVEuX6QaONF+qfQK5TnUHylpt4kueXliWT+cyKG4GS6+V+X0hMnHPf8Z9dYqN
-         F8yQ==
-X-Gm-Message-State: APjAAAWAiOHpwbcWBrdY8nhlRWVAcd4NuTWVY3Z8kHH0qzagyee09QkS
-        TvTyNzxHXA31a6SvN3prDCXOetslHjlZj34/ohFoQ2v+E5oAQm0om7tFiQP/qTzTeEKzAa+ZpX3
-        hPrIP2m9tWb3PwnKFGMcgewlDHa6lD0gzJX3TZlqWA3/X40D/JYZl0+RjGaTvJvcPfbG4/sBmkA
+        bh=Y3Fiac5txPHVx9xTV1cDzfoXLO4V6rxVog7fuQtH0tg=;
+        b=Yytj7+GZfqnoNDtJYzxLAsTPYEa0nhMGmdj9IQ29hbUOv57Go7KEBVmIN3H+dhAefG
+         QCCooQWQtK/DbEEnnoFcYmIu3MUpRtbSgqIYgED9WhBI7Fh/y+IlbMxL7rYXzSSH8c0s
+         AVu3U2dhHib1b4Dbwxmo583iupApUyRurBSw4wlC+NzEYhyWBCCyQHiB5PwJMcfvwZJ3
+         gmcVy+v8bBHREhE2r6etQsoULFXiwVyzxYTH+4pP3l5w+PCjTcWxJLhz6joMuWvuJdGw
+         aUbcgX1mSVb26wMj95UzytmbzgmaOGjrGUBnfx/uHsoq8NitB9QOWGcggkOLIAUTlTAA
+         Em6g==
+X-Gm-Message-State: APjAAAWj3j36QYYy2A+DmOhM30hD+O1w9Mp8cCd9+1SJBpLZMVTMrblW
+        UX5SsCspQ1snkJjgqtS+vymOwOKuKQVgLY+JfbcnFr3DmBb5e329ul5i7pn2pecd34vp1+7cZcI
+        0YETDN3aX0mL40P6twAxkSWWmC1ke+byoKODQLBbQsL340Go+AMLFrVUxpu/l3+WxvuQGpWeXkg
         ==
-X-Google-Smtp-Source: APXvYqzltHCz/0Kj+Sx58JBZbTqS+A+SRf23UMKjD7IeTwcd7fKVYqVzo70nHujImVHT6GBm+7hIoTFqqiQwEcGFJ4k=
-X-Received: by 2002:a0c:e70b:: with SMTP id d11mr6388561qvn.51.1572051242063;
- Fri, 25 Oct 2019 17:54:02 -0700 (PDT)
-Date:   Fri, 25 Oct 2019 17:51:57 -0700
+X-Google-Smtp-Source: APXvYqwrJP9TATtHZPNIWjCGXJvSqnLjv57/w+u8z60Gpe8SrrAKPpJ+tS1pfeDAP0igJy0vvvlZ5lBw6hvxv1wMH3g=
+X-Received: by 2002:a63:2c53:: with SMTP id s80mr7459390pgs.377.1572051244482;
+ Fri, 25 Oct 2019 17:54:04 -0700 (PDT)
+Date:   Fri, 25 Oct 2019 17:51:58 -0700
 In-Reply-To: <20191026005159.98405-1-emilyshaffer@google.com>
-Message-Id: <20191026005159.98405-2-emilyshaffer@google.com>
+Message-Id: <20191026005159.98405-3-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20191026005159.98405-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665-goog
-Subject: [PATCH 1/3] myfirstcontrib: add 'psuh' to command-list.txt
+Subject: [PATCH 2/3] myfirstcontrib: add dependency installation step
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -64,60 +64,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Users can discover commands and their brief usage by running 'git help
-git' or 'git help -a'; both of these pages list all available commands
-based on the contents of 'command-list.txt'. That means adding a new
-command there is an important part of the new command process, and
-therefore belongs in the new command tutorial.
-
-Teach new users how to add their command, and include a brief overview
-of how to discover which attributes to place on the command in the list.
-
-Since 'git psuh' prints some workspace info, doesn't modify anything,
-and is targeted as a user-facing porcelain command, list it as a
-'mainporcelain' and 'info' command.
-
-As the usage string is required to generate this documentation, don't
-add the command to the list until after the usage string is added to the
-tutorial.
+Indicate that the user needs some dependencies before the build will run
+happily on their machine; this dependency list doesn't seem to be made
+clear anywhere else in the project documentation. Then, so the user can
+be certain any build failures are due to their code and not their
+environment, perform a build on a clean checkout of 'master'. Also, move
+the note about build parallelization up here, so that it appears next to
+the very first build invocation in the tutorial.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/MyFirstContribution.txt | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ Documentation/MyFirstContribution.txt | 27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-index 5e9b808f5f..12b7256454 100644
+index 12b7256454..b8ffeda07e 100644
 --- a/Documentation/MyFirstContribution.txt
 +++ b/Documentation/MyFirstContribution.txt
-@@ -534,6 +534,28 @@ you want to pass as a parameter something which would usually be interpreted as
- a flag.) `parse_options()` will terminate parsing when it reaches `--` and give
- you the rest of the options afterwards, untouched.
+@@ -38,6 +38,30 @@ $ git clone https://github.com/git/git git
+ $ cd git
+ ----
  
-+Now that you have a usage hint, you can teach Git how to show it in the general
-+command list shown by `git help git` or `git help -a`, which is generated from
-+`command-list.txt`. Find the line for 'git-pull' so you can add your 'git-psuh'
-+line above it in alphabetical order. Now, we can add some attributes about the
-+command which impacts where it shows up in the aforementioned help commands. The
-+top of `command-list.txt` shares some information about what each attribute
-+means; in those help pages, the commands are sorted according to these
-+attributes. `git psuh` is user-facing, or porcelain - so we will mark it as
-+"mainporcelain". For "mainporcelain" commands, the comments at the top of
-+`command-list.txt` indicate we can also optionally add an attribute from another
-+list; since `git psuh` shows some information about the user's workspace but
-+doesn't modify anything, let's mark it as "info". Make sure to keep your
-+attributes in the same style as the rest of `command-list.txt` using spaces to
-+align and delineate them:
++[[dependencies]]
++=== Installing Dependencies
++
++To build Git from source, you need to have a handful of dependencies installed
++on your system. For a hint of what's needed, you can take a look at
++`ci/install-dependencies.sh`.
++
++To install the dependencies needed for a basic build on Linux, run something
++like this (or replace `apt` with your distribution's package manager of choice):
 +
 +----
-+git-prune-packed                        plumbingmanipulators
-+git-psuh                                mainporcelain		info
-+git-pull                                mainporcelain           remote
-+git-push                                mainporcelain           remote
++# apt install libssl-dev zlib1g-dev libcurl4-gnutls-dev libexpat1-dev
 +----
 +
- Build again. Now, when you run with `-h`, you should see your usage printed and
- your command terminated before anything else interesting happens. Great!
++Make sure that your environment has everything you need by building your brand
++new clone of Git from the above step:
++
++----
++$ make
++----
++
++NOTE: The Git build is parallelizable. `-j#` is not included above but you can
++use it as you prefer, here and elsewhere.
++
+ [[identify-problem]]
+ === Identify Problem to Solve
+ 
+@@ -138,9 +162,6 @@ NOTE: When you are developing the Git project, it's preferred that you use the
+ `DEVELOPER` flag; if there's some reason it doesn't work for you, you can turn
+ it off, but it's a good idea to mention the problem to the mailing list.
+ 
+-NOTE: The Git build is parallelizable. `-j#` is not included above but you can
+-use it as you prefer, here and elsewhere.
+-
+ Great, now your new command builds happily on its own. But nobody invokes it.
+ Let's change that.
  
 -- 
 2.24.0.rc0.303.g954a862665-goog
