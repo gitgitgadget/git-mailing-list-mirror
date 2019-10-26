@@ -2,99 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A37E31F4C0
-	for <e@80x24.org>; Fri, 25 Oct 2019 22:21:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EB961F4C0
+	for <e@80x24.org>; Sat, 26 Oct 2019 00:54:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726453AbfJYWVB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 18:21:01 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42724 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725801AbfJYWVB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 18:21:01 -0400
-Received: by mail-wr1-f67.google.com with SMTP id r1so3979519wrs.9
-        for <git@vger.kernel.org>; Fri, 25 Oct 2019 15:20:59 -0700 (PDT)
+        id S1725907AbfJZAyC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 20:54:02 -0400
+Received: from mail-vs1-f74.google.com ([209.85.217.74]:40158 "EHLO
+        mail-vs1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725865AbfJZAyC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 20:54:02 -0400
+Received: by mail-vs1-f74.google.com with SMTP id g126so658571vsg.7
+        for <git@vger.kernel.org>; Fri, 25 Oct 2019 17:54:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=3fNQhvgFkiFUT9VpcfiG0kl1dA2p2Ftw9aIvFNg+0To=;
-        b=lNsXfZkh7piEid7/kiSR8UKRsz3idLnLrQzcLiTSvlTvzQtkRpkjnQ0j9+OvyzR8GW
-         ZdWyqacL/kzRHRAxZjskdwVzVymMciM2lniNZ0S6NqxErnp20dgEbEaj9PSet97REtyg
-         9jF1xwW5kh3Qgps6aSE6qBze/jnIkLq6lVnx678lbaUW9vuUuoCuO7oeVZ6ZdlzgsZ7I
-         SJr9jUI3KjXcI7SrYE5NKoz4a+QD1UZXN4xAhcXm1Yjzv4hm8/0951v55Jt3DBdgkXWt
-         +8cpExJ7CsiuTx4senR237fedNEuSMGdm0Byb69Cc30nLOH9SakM18kAJgQx9LJBIjJt
-         VzcA==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=SGl5fzflk0IBuzYFRv90kNbG+0DG4HFlXr1TQAHDTdg=;
+        b=wMx2CyqaiSirHLJlyC7c3CNGETRekusJfciYUnZEt0BZyqNTJthkhFFZt8MQZDriRP
+         kcIYDV6wmpqTTy5uSVZeCTtM/viyS2x5TFqFX1v6guQkLXw8ACxV4WEKaUyL72kL6qbq
+         uM0SfnBEbdtDkPsD1EPJ2+I8gO6ONLQLSqfEOSfi1pIFlLELt0XgNMI4taPatA1x4vED
+         LmXFEf1HNaUuRpKE8dc84aUquaRmenOQzp1Z1hYILST2JmJMsclaafDB7kKdasq2jw0g
+         cBFnQtoREXlxDl65oockkBl7WR/kaN82sz9JXzC0yZYOmQE2gErRfkdIX11jNnI+FvdM
+         Xsyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=3fNQhvgFkiFUT9VpcfiG0kl1dA2p2Ftw9aIvFNg+0To=;
-        b=ESMVUrqIlA7DdkU/RipySJiFno7ONjleTSLo4GpW6sR3JOMM4bmlPFL3Ht2SzRpxL1
-         G2cpGen8IwZwPVzM7mhVRceKmO1o7+mlib2lzCMqWPAJDZ02I/7DiC/1N0u/4OiWBocS
-         x6QpPsQolAM8vhjeO3b/FIbjASSdyRac/uoK+0Ww4VpTea2NVyhAL7zDbzH2yuqF5o1Z
-         0RsRxcDG7sdJ/xvotElMp6QrzQDr5xdFgLEXDfw+AKlPnMUAict67bDrCeU+eVFWSbYS
-         Nax/2jv2mndz872imaSWcSl26MQ0PmBAVajdoA+dn3UL+0ne+aETxeYWY7tJAgGZXGjn
-         ehuA==
-X-Gm-Message-State: APjAAAVwqPKo9A1LwdLkk0AQ0umpR4xWdyTqxb1yPxt/s5Vl10d6SF7f
-        W3S/hjXcJ3B99Mq7I7E9qQt7d/N3
-X-Google-Smtp-Source: APXvYqwXpYtjOwReZUXNIaSTCllDtgBp0o4WXllaqedQKd+7bcdI/tQWW3DSc0L4C9ISkZB6KgkJXA==
-X-Received: by 2002:adf:f342:: with SMTP id e2mr5217787wrp.61.1572042058999;
-        Fri, 25 Oct 2019 15:20:58 -0700 (PDT)
-Received: from evergreen.lan (5.223.75.194.dyn.plus.net. [194.75.223.5])
-        by smtp.gmail.com with ESMTPSA id o187sm8038170wmo.3.2019.10.25.15.20.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 25 Oct 2019 15:20:58 -0700 (PDT)
-From:   Mihail Atanassov <m.atanassov92@gmail.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=SGl5fzflk0IBuzYFRv90kNbG+0DG4HFlXr1TQAHDTdg=;
+        b=eTe898+OQfVQCa8xKWXhqh+Vp6FY0TgBCYqWscqcWl7W63q/4cJrJCo3J/aU+mZPWL
+         t+/rXn+QCjlbpiG9BalhHyzreYwlolyI6Vwj8LE9TPWIYnwDicBhCrnTtp7pX51QDt/t
+         ZbUlE11FE30MfV9p01qUfWe0e458N0IGzI2yKx6oCxUrNkkAHQyw1I/B7A4+cflatpVg
+         8uNF8p73goiQMn73YsUz6Gs1ovHWG1BNxaUKenvEtM031LUcUV5XTr4aBVAXQnBQJXVl
+         xqT560fBu+xrYNmZeyjmq9m53kGdTS1TdbCb/BksjnMvIcwIWEWHw5yISDsrwZ7+st3j
+         tCnw==
+X-Gm-Message-State: APjAAAX2pqfIIPUxL/V3qyzw4D5Rl/TBl6GqYXp2ukN/N0VDP73Ka6AJ
+        Q35j/oKzuj/6H7C+KZ2C+TJmMAoeQChjUikr8ZVHRQCD8yiOoGN572tfHgXZ1Wp8jzGueCirS77
+        iyEQFKLC3v8F5mIqbyniEdjASfpok0b/8WCFN8yQxMYgStYuAOHtsIDyve2gw+CC5ZHX2NWbZDA
+        ==
+X-Google-Smtp-Source: APXvYqxOWcVu4Pq73XtZoT/YcEHMJLi9mPXC5HX2X+xDAtYVwQJFJxX8Mj5w5XII7rgmsd8Kq33fHc5PNeUa9I56WLo=
+X-Received: by 2002:a1f:b40a:: with SMTP id d10mr3659292vkf.29.1572051239478;
+ Fri, 25 Oct 2019 17:53:59 -0700 (PDT)
+Date:   Fri, 25 Oct 2019 17:51:56 -0700
+Message-Id: <20191026005159.98405-1-emilyshaffer@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665-goog
+Subject: [PATCH 0/3] some clarifications to MyFirstContribution
+From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
-Cc:     Mihail Atanassov <m.atanassov92@gmail.com>
-Subject: [PATCH] Documentation/git-bisect.txt: add --no-ff to merge command
-Date:   Fri, 25 Oct 2019 23:20:32 +0100
-Message-Id: <20191025222032.3399-1-m.atanassov92@gmail.com>
-X-Mailer: git-send-email 2.16.4
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        "=?UTF-8?q?SZEDER=20G=C3=A1bor?=" <szeder.dev@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The hotfix application example uses `git merge --no-commit` to apply
-temporary changes to the working tree during a bisect operation. In some
-situations this can be a fast-forward and `merge` will apply the hotfix
-branch's commits regardless of `--no-commit` (as documented in the `git
-merge` manual).
+Hi all,
 
-In the pathological case this will make a `git bisect
-run` invocation to loop indefinitely between the first bisect step and
-the fast-forwarded post-merge HEAD.
+With the wave of Outreachy participants (hello! welcome!) a few
+shortcomings in the MyFirstContribution tutorial have been noted; plus,
+a comment from SZEDER (thanks!) sent along some weeks ago about a
+missing step in the new command process.
 
-Add `--no-ff` to the merge command to avoid this issue, and make a note
-of it for the reader.
+[1/3] Per SZEDER's comment, we should be adding `git psuh` to the list
+      of commands used by 'git help'.
+[2/3] Outreachy applicant Heba Waly indicated that the tutorial doesn't
+      cover dependencies needed to build Git. However, I don't have a
+      good handle on what's needed for platforms besides Linux, so I
+      really appreciate others suggesting dependency installation steps
+      for other platforms (even if it is a link to another guide).
+[3/3] Per some discussions in #git-devel this week, it's not apparent
+      who to ask for the /allow comment to tell GitGitGadget that you
+      can be trusted. So, add the same hint which is proposed to be
+      shown in GitGitGadget's welcome message.
 
-Signed-off-by: Mihail Atanassov <m.atanassov92@gmail.com>
----
- Documentation/git-bisect.txt | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Emily Shaffer (3):
+  myfirstcontrib: add 'psuh' to command-list.txt
+  myfirstcontrib: add dependency installation step
+  myfirstcontrib: hint to find gitgitgadget allower
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index 4b45d837a7..58b5585874 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -412,8 +412,10 @@ $ cat ~/test.sh
- #!/bin/sh
- 
- # tweak the working tree by merging the hot-fix branch
--# and then attempt a build
--if	git merge --no-commit hot-fix &&
-+# and then attempt a build. Note the `--no-ff`: `git merge`
-+# will otherwise still apply commits if the current HEAD can be
-+# fast-forwarded to the hot-fix branch.
-+if	git merge --no-commit --no-ff hot-fix &&
- 	make
- then
- 	# run project specific test and report its status
+ Documentation/MyFirstContribution.txt | 57 +++++++++++++++++++++++++--
+ 1 file changed, 54 insertions(+), 3 deletions(-)
+
 -- 
-2.16.4
+2.24.0.rc0.303.g954a862665-goog
 
