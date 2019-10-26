@@ -2,103 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-1.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFEB71F4C0
-	for <e@80x24.org>; Sat, 26 Oct 2019 00:54:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D420C1F4C0
+	for <e@80x24.org>; Sat, 26 Oct 2019 01:09:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726030AbfJZAyI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 20:54:08 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:40351 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725865AbfJZAyI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 20:54:08 -0400
-Received: by mail-qk1-f202.google.com with SMTP id m189so4035917qkc.7
-        for <git@vger.kernel.org>; Fri, 25 Oct 2019 17:54:08 -0700 (PDT)
+        id S1726063AbfJZBJA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 21:09:00 -0400
+Received: from mail-pg1-f170.google.com ([209.85.215.170]:35979 "EHLO
+        mail-pg1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725985AbfJZBJA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 21:09:00 -0400
+Received: by mail-pg1-f170.google.com with SMTP id 23so2712657pgk.3
+        for <git@vger.kernel.org>; Fri, 25 Oct 2019 18:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=Sl47+OCDMyQio8nohfNrcu7KZG4VsyZOurIm5I9NE7w=;
-        b=nwObUygZGZkvvmf36/rTcRJKmHjk7vbSxzsxYUmaQ+Woy1zkMzATGxl4AmfIDh8+2c
-         PPg3Cu0yXyk5YbpFCuXrfsNyI1OBzb232SJQoqGH13zSuz73iXOcOuWy4RXjF9Zf2uc3
-         iNQqc+VXhp5iDLO6VAVOMBPpaG6mVTUTq2/37Od9lg9pT9nda+rdpKc4q8sZ7sqfQ5JO
-         VoQQ5cug2Kwg16vcNCF4td3gvfjHMtslWkEM/V82/CUpYXoWaqEh0HRvAUu4dxJjxO0l
-         WwYhfLZjIh4mZSHY5TVms/k1aRsF+Ee2IrgsbIkJEkXXYQdHDFFYXvm+DBWiL0pyoZHP
-         OJmg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=DvoWmM69R04J8jgxB2uocqgbzNqwSp8A1M6WuL/RppQ=;
+        b=GK9aFA3v2tWYd+6wGgIMAOOeNNFypRKbU52A32xhTbKG1WS0ESBTrAPpJ6CBy4mE5E
+         rEZ4H00Ki/JZyETrrIed0fxL9PWB6Pkcg0kA1g+8xmB0OEPMFq+jCxH3Zp17Ig+ppnmO
+         cs0fvU7wKcBsYIY/Ayl45O6lDvH/c2LuJxU+ylKk1EmB58qmwVh6v65JlvdxTGHQoJsC
+         XD7AmqHfUc7AtGqYjT76BHG/s/OLoLm6gUzQP28CXmgSoNgjjnwiQPZcCHWQPoZYxrjB
+         LbneNxan6DJW0nk6q1vZ2yIbYDQU7Vm282tU+yu4VN6/ljIYkPiiYHk7wdg4r3yz65Us
+         K8vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Sl47+OCDMyQio8nohfNrcu7KZG4VsyZOurIm5I9NE7w=;
-        b=eclX+ybl+MiKAA/wfJfrf42kRa75Dio4dShoxucGOYk+dEePsvmCzP5x42tXGeRZ+z
-         fAx+qILcZ+vYtus10hHO+VaF1Wr7HQAFzrL4MWpReUfCEJ4uc9xn2N1DgxfPuxz2rqy1
-         mnWLGrouJIG2bUO+UNokz38bpZJvkKJG/2ERSozepw23h7pEWuJ3a1EGflsppUkrOSUM
-         rG/afrq6N0DmGIok+YWdAa/L+/qxAuGewgrkTUNzBNtNhZq2PlwzkofUBP09FLxBogF7
-         SgTEZc60OIkT0JVu7vki8XkDSceMd5YD6IEVAuzhGu4fkjsM7xWURzIDeUyHoS/IdMX2
-         xEnQ==
-X-Gm-Message-State: APjAAAUR/lpmYlZuLYA2mLJej72fnRQFm006iBC59gHBBAyt34Yec57S
-        fGpr9YTC/4BIFuHnrK5rzcB1SRfoiKg+tBDkO3i2GIN64SSEEC/IdqnO6ZhMRfTeiYTCN64sRpt
-        J7CtX2b/j1AcGjGKQyqTlyWvN4Tp5/bNKLW1Kxrl8l0g2qTSgMtaJLDOCKXdVOFKnnFzaXcxB3Q
-        ==
-X-Google-Smtp-Source: APXvYqwgU7H6nN27jK6a7NBrUiqstxrDG5modJ81Klejr6HWTqSmE5LBFT5K0kl/jvPqXJBwdcp4gS1eEneUKOWIt3M=
-X-Received: by 2002:a05:620a:148f:: with SMTP id w15mr5525579qkj.341.1572051247256;
- Fri, 25 Oct 2019 17:54:07 -0700 (PDT)
-Date:   Fri, 25 Oct 2019 17:51:59 -0700
-In-Reply-To: <20191026005159.98405-1-emilyshaffer@google.com>
-Message-Id: <20191026005159.98405-4-emilyshaffer@google.com>
-Mime-Version: 1.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DvoWmM69R04J8jgxB2uocqgbzNqwSp8A1M6WuL/RppQ=;
+        b=HpxlRDYMnFP3omIqQyxXsRmN1yZDNkb11oZp0uZKriD/Tggol5Ij60q3bC+F2lAyrY
+         2H0wxjn83jtF1MOBgy/lAiUlhecVuJmFihSuLxpSqUMXSPT3jrCEoZTHcQ//8U8Ifv29
+         vZmSpJ+f/ymuQmu1kbPjRISZEG7wdYtIab68IfpySGpe6vWnkXgT30gykWLHcmoRvNWg
+         NKderP9KapQZCSykE3AIEVOTYmHhVK2GAPJCfoUNd0T81z+Cwbm/RlfOyMbrP5gF6Rc6
+         NX3ihV+6SHWTkwYsfWV5IbO6xv+KfMoGDCsN3aBDVzrnbw9CVju/a2Nb9hU5gsfnAcVV
+         RZ+w==
+X-Gm-Message-State: APjAAAXu/HDYaJNI2Bn0QtiSdOU1Nku927NNkUF3zOFkrOWwNEOKBJ36
+        sU5nan67vYskZ0zhwMSDkio=
+X-Google-Smtp-Source: APXvYqxsPDEsSJqMoASfVS9GRlx6f5CmV97cNasVY2qw7XkQXpAjnYYhVc6NU31xJfQzn6aJgXL9Jw==
+X-Received: by 2002:a17:90a:3ac8:: with SMTP id b66mr7911319pjc.9.1572052139618;
+        Fri, 25 Oct 2019 18:08:59 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id t21sm3569346pgi.87.2019.10.25.18.08.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Oct 2019 18:08:59 -0700 (PDT)
+Date:   Fri, 25 Oct 2019 18:08:57 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/3] myfirstcontrib: add 'psuh' to command-list.txt
+Message-ID: <20191026010857.GA39574@google.com>
 References: <20191026005159.98405-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665-goog
-Subject: [PATCH 3/3] myfirstcontrib: hint to find gitgitgadget allower
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+ <20191026005159.98405-2-emilyshaffer@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191026005159.98405-2-emilyshaffer@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-GitGitGadget, a handy tool for converting pull requests against Git into
-Git-mailing-list-friendly-patch-emails, requires as anti-spam that all
-new users be "/allow"ed by an existing user once before it will do
-anything for that new user. While this tutorial explained that
-mechanism, it did not give much hint on how to go about finding someone
-to allow your new pull request. So, teach our new GitGitGadget user
-where to look for someone who can add their name to the list.
+Hi,
 
-The advice in this patch is based on the advice proposed for
-GitGitGadget: https://github.com/gitgitgadget/gitgitgadget/pull/138
+Emily Shaffer wrote:
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- Documentation/MyFirstContribution.txt | 8 ++++++++
- 1 file changed, 8 insertions(+)
+> Users can discover commands and their brief usage by running 'git help
+> git' or 'git help -a'; both of these pages list all available commands
+> based on the contents of 'command-list.txt'. That means adding a new
+> command there is an important part of the new command process, and
+> therefore belongs in the new command tutorial.
 
-diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-index b8ffeda07e..2de06de026 100644
---- a/Documentation/MyFirstContribution.txt
-+++ b/Documentation/MyFirstContribution.txt
-@@ -789,6 +789,14 @@ will automatically run your PRs through the CI even without the permission given
- but you will not be able to `/submit` your changes until someone allows you to
- use the tool.
- 
-+NOTE: You can typically find someone who can `/allow` you on GitGitGadget by
-+either examining recent pull requests where someone has been granted `/allow`
-+(https://github.com/gitgitgadget/git/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+%22%2Fallow%22[Search:
-+is:pr is:open "/allow"]), in which case both the author and the person who
-+granted the `/allow` can now `/allow` you, or by inquiring on the
-+https://webchat.freenode.net/#git-devel[#git-devel] IRC channel on Freenode
-+linking your pull request and asking for someone to `/allow` you.
-+
- If the CI fails, you can update your changes with `git rebase -i` and push your
- branch again:
- 
--- 
-2.24.0.rc0.303.g954a862665-goog
+Makes sense.
 
+Not about this patch: is there a way to detect this automatically?
+E.g. if a command in git.c::commands doesn't appear in
+command-list.txt, could we make Git fail "make test"?
+
+[...]
+> --- a/Documentation/MyFirstContribution.txt
+> +++ b/Documentation/MyFirstContribution.txt
+> @@ -534,6 +534,28 @@ you want to pass as a parameter something which would usually be interpreted as
+>  a flag.) `parse_options()` will terminate parsing when it reaches `--` and give
+>  you the rest of the options afterwards, untouched.
+>  
+> +Now that you have a usage hint, you can teach Git how to show it in the general
+> +command list shown by `git help git` or `git help -a`, which is generated from
+> +`command-list.txt`. Find the line for 'git-pull' so you can add your 'git-psuh'
+> +line above it in alphabetical order. Now, we can add some attributes about the
+> +command which impacts where it shows up in the aforementioned help commands. The
+
+nit: s/impacts/impact/, to agree with "attributes"
+
+> +top of `command-list.txt` shares some information about what each attribute
+> +means; in those help pages, the commands are sorted according to these
+> +attributes. `git psuh` is user-facing, or porcelain - so we will mark it as
+                                             ^^^^^^^^^
+
+optional: This might be an unfamiliar term to people not thinking of the
+plumbing fixture / chrome analogy.  Is there anything we should do to
+help them understand what's going on?
+
+E.g. "git help glossary" says
+
+	Porcelains expose more of a SCM interface than the plumbing.
+
+> +"mainporcelain". For "mainporcelain" commands, the comments at the top of
+> +`command-list.txt` indicate we can also optionally add an attribute from another
+> +list; since `git psuh` shows some information about the user's workspace but
+> +doesn't modify anything, let's mark it as "info". Make sure to keep your
+> +attributes in the same style as the rest of `command-list.txt` using spaces to
+> +align and delineate them:
+> +
+> +----
+> +git-prune-packed                        plumbingmanipulators
+> +git-psuh                                mainporcelain		info
+
+tabs snuck in.
+
+> +git-pull                                mainporcelain           remote
+> +git-push                                mainporcelain           remote
+> +----
+> +
+
+The rest looks good.
+
+Thanks,
+Jonathan
