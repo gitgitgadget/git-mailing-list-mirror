@@ -5,64 +5,64 @@ X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 127711F4C0
-	for <e@80x24.org>; Sat, 26 Oct 2019 01:15:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AE5D1F4C0
+	for <e@80x24.org>; Sat, 26 Oct 2019 01:17:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725977AbfJZBPD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 21:15:03 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:33609 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725899AbfJZBPD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 21:15:03 -0400
-Received: by mail-pg1-f194.google.com with SMTP id u23so2731968pgo.0
-        for <git@vger.kernel.org>; Fri, 25 Oct 2019 18:15:02 -0700 (PDT)
+        id S1726000AbfJZBRS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 21:17:18 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:33227 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725926AbfJZBRS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 21:17:18 -0400
+Received: by mail-pl1-f194.google.com with SMTP id y8so2271854plk.0
+        for <git@vger.kernel.org>; Fri, 25 Oct 2019 18:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=bmnxIHEU1MliF1FiFnoP6R9CI3/EDMQbmGqCQBYxzPU=;
-        b=tr6/OZk/v9pcckhXRKOhDTg7S0BDikg9ErIIIckcjLSRJ1t+K9sUzPgZcqeJSzBUEs
-         5Cj6O2LTJAn60Brg1OPDzPvZ7dLNY07MviOGUPFAZkahDZZNRRTm9zcR0oogxMDxD8qR
-         +Krop5N6/8w2SHy7fbbGCtVEAYOEtAw8TNWUuvdJGDkAUz6XArFS7ONp+QRivN6Ju92+
-         BLxvQY3MbwcSfvFL3h6Pa+PgEdQEktstw6bgX15ATfPJmM8GqVhVtup9H7imlI59r01O
-         OqGK7x79YtLSHweYeUJE0BFLTKlXetmkx58Csj73zHuJQEDUTxBe3DZuMTcF82KRhPfM
-         QeCQ==
+        bh=eKClsnzDXaPVThSHJVSnSaE1k4HnyKX79PaFw3JJVrA=;
+        b=DiZEyXjSlBM3CUtR2w7twiSHV+Weychm9whuzW/OtHuJ+XDTSa6EoIMF2bdj5QF00w
+         Hgq+/oEP5irpfD0AuhMv1ZNjhmjP4dY+WAVZ5WTZuTtOrraMl4TzmrEIVcKo5WvRiF1Q
+         WHjWqn8POF9gWWjW0kuyXHGRAb1ZlWT8xV2w/uBwIAWm4PMiXi83DQ59XEbenvnzZmjF
+         H4IPyQbMhmtI5CNFMsmwmPSx+AoWYUTEEardT8Q3WdGVvVxOj9APKKmIZbacJf6z6e78
+         qwbQUPm8Gs4M5pKA+wUgbMA2g1PrkiTGBO7zi5s9Wjz1bXki1V/8om1DKATuaeMT86Cc
+         UiVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=bmnxIHEU1MliF1FiFnoP6R9CI3/EDMQbmGqCQBYxzPU=;
-        b=OtVFSzrsEK8r6wkeSytdlHYauIBi3zFRvVyHimAH2ulq0qvyD86ICjmuIG9qr5re/P
-         tl03rWv25Hq9nEFB/JGJ8thTLHL6ju7+DV6YzKNtCiLL93ZFcC+m8dc9ojVUycwjJubd
-         53SQaL8mAeD8yFDFse+wlEtiUs8Z19OHR0cfyTffmwMwVogIi/0xGHG87mx5sYi6BX1N
-         Sl+COe4EhxwNNcDkm5FyWuNpTrWFIC7iM88+hv/Yhdm50f022CNUc61EVGdNcIfOQO3b
-         lQRGBLiAusF0LkY5C+PtWjvo1OY/xgMZuzohML/HpEwQShm4xXILjZHyxILWZQAY1LDU
-         x/lg==
-X-Gm-Message-State: APjAAAV58+7kPjnpe40wWwrrs8WKD53ap9Lz7gfFntI46qKD5UYzVWgs
-        bayYqk+GmKk+I0j+RJxutNvDbqrJ
-X-Google-Smtp-Source: APXvYqwn6RVFjMs2vPx1PZ1NlBYexy4AfYdJ8jn/dlYUhyBr/22qn+3aqvnY64LTeIeOrKT930WY2A==
-X-Received: by 2002:a63:ab43:: with SMTP id k3mr7695372pgp.170.1572052502242;
-        Fri, 25 Oct 2019 18:15:02 -0700 (PDT)
+        bh=eKClsnzDXaPVThSHJVSnSaE1k4HnyKX79PaFw3JJVrA=;
+        b=XcbiQhl4eRmOf/JvvNUgt4Smqhq1Wg8vGBZBHyTMJQCVPQU/7GGFox3CTX4UlWtNMb
+         hXknDChFLil4WVGQs8gxYY7VMayXnyrqxzgx6HEt4XiBbgHpRyQzCHe2CPEo8M22xBKu
+         dGZuiVvIQLv7GmcbOt6aWh7UjzrFqbglbZVBg436OEsEyGGJ6hcIS4o2JghxVspjF8R9
+         Hf0Da1EBYLyDAq1J57Oj5aE6o/4/YdzNmZbmOvWcjSl1nsTn3kHqqB5TRhrfTluCCJPT
+         twSi2iKRlII52A01O00F4OW1Ykehpcxcc/phMT6IK6uE0OToFf7whs7IYaIcgDVO3gRO
+         peig==
+X-Gm-Message-State: APjAAAUCeYrKtIli4N5c1V5V+WnjDj+RNWw2NH/WhXklWZcrBb2cBBMO
+        rYB5SRVE+CEigo25FzE7ytk=
+X-Google-Smtp-Source: APXvYqz7NEKlzDAzYvM2kBCp7ZZhRBUGk1vmDpDGCAfq+Ht5O1ksfJJ/MRlJ8TN4i+/xBv9lQHXIXQ==
+X-Received: by 2002:a17:902:8a96:: with SMTP id p22mr6795856plo.272.1572052637341;
+        Fri, 25 Oct 2019 18:17:17 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id i22sm3587378pfa.82.2019.10.25.18.15.01
+        by smtp.gmail.com with ESMTPSA id q23sm3054993pjd.2.2019.10.25.18.17.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Oct 2019 18:15:01 -0700 (PDT)
-Date:   Fri, 25 Oct 2019 18:15:00 -0700
+        Fri, 25 Oct 2019 18:17:16 -0700 (PDT)
+Date:   Fri, 25 Oct 2019 18:17:15 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] myfirstcontrib: hint to find gitgitgadget allower
-Message-ID: <20191026011459.GC39574@google.com>
+Subject: Re: [PATCH 0/3] some clarifications to MyFirstContribution
+Message-ID: <20191026011715.GD39574@google.com>
 References: <20191026005159.98405-1-emilyshaffer@google.com>
- <20191026005159.98405-4-emilyshaffer@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191026005159.98405-4-emilyshaffer@google.com>
+In-Reply-To: <20191026005159.98405-1-emilyshaffer@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -71,43 +71,18 @@ X-Mailing-List: git@vger.kernel.org
 
 Emily Shaffer wrote:
 
-> GitGitGadget, a handy tool for converting pull requests against Git into
-> Git-mailing-list-friendly-patch-emails, requires as anti-spam that all
-> new users be "/allow"ed by an existing user once before it will do
-> anything for that new user. While this tutorial explained that
-> mechanism, it did not give much hint on how to go about finding someone
-> to allow your new pull request. So, teach our new GitGitGadget user
-> where to look for someone who can add their name to the list.
->
-> The advice in this patch is based on the advice proposed for
-> GitGitGadget: https://github.com/gitgitgadget/gitgitgadget/pull/138
->
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
->  Documentation/MyFirstContribution.txt | 8 ++++++++
->  1 file changed, 8 insertions(+)
+> [1/3] Per SZEDER's comment, we should be adding `git psuh` to the list
+>       of commands used by 'git help'.
+> [2/3] Outreachy applicant Heba Waly indicated that the tutorial doesn't
+>       cover dependencies needed to build Git.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Oh!  It's also a good idea to give these people credit for their
+contribution, via a Reported-by in the commit message.
 
-Though I'd appreciate an ack from a gitgitgadget specialist too, so
-cc-ing Dscho.
+Sorry I missed it before (I tend to read the patches first and cover
+letter last, which is good for ensuring the commit messages are self
+contained enough to be helpful when the patch gets dug up in history
+later, but not so good for noticing this kind of thing).
 
-> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-> index b8ffeda07e..2de06de026 100644
-> --- a/Documentation/MyFirstContribution.txt
-> +++ b/Documentation/MyFirstContribution.txt
-> @@ -789,6 +789,14 @@ will automatically run your PRs through the CI even without the permission given
->  but you will not be able to `/submit` your changes until someone allows you to
->  use the tool.
->  
-> +NOTE: You can typically find someone who can `/allow` you on GitGitGadget by
-> +either examining recent pull requests where someone has been granted `/allow`
-> +(https://github.com/gitgitgadget/git/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+%22%2Fallow%22[Search:
-> +is:pr is:open "/allow"]), in which case both the author and the person who
-> +granted the `/allow` can now `/allow` you, or by inquiring on the
-> +https://webchat.freenode.net/#git-devel[#git-devel] IRC channel on Freenode
-> +linking your pull request and asking for someone to `/allow` you.
-> +
->  If the CI fails, you can update your changes with `git rebase -i` and push your
->  branch again:
->  
+Thanks,
+Jonathan
