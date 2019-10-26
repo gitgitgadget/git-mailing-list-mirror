@@ -8,131 +8,106 @@ X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18E361F4C0
-	for <e@80x24.org>; Sat, 26 Oct 2019 01:12:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 127711F4C0
+	for <e@80x24.org>; Sat, 26 Oct 2019 01:15:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726024AbfJZBMy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 21:12:54 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:38321 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725899AbfJZBMy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 21:12:54 -0400
-Received: by mail-pf1-f193.google.com with SMTP id c13so2803404pfp.5
-        for <git@vger.kernel.org>; Fri, 25 Oct 2019 18:12:53 -0700 (PDT)
+        id S1725977AbfJZBPD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 21:15:03 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:33609 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725899AbfJZBPD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 21:15:03 -0400
+Received: by mail-pg1-f194.google.com with SMTP id u23so2731968pgo.0
+        for <git@vger.kernel.org>; Fri, 25 Oct 2019 18:15:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=tGdRXhHZJScjvnV6wSLvv8/EAbgxFVY8xb600ZQrpNo=;
-        b=UJ6bDZBvmkfTR/KvU4C+ZfLoTIaDaq+6+XnDeDFc3MH8AO7aIDvRpHPKybHjCMkENS
-         vfMYjxzBPIkWW45bwlsnr7ZDBf3ncy46fwZm1jCfnJ1pk37+QImpMoGME+sWkJby+dX7
-         /sjGJKPERHI+lZJynzo4FuNRC84MCpLznmO8Dm90irZO08lneOas36GmfksimgsvmpzZ
-         pLiNKcgyCPIhWTXN3K6LMWZHav7OUOHWAKmnkoiCwhByo/CjbzzjUbL4nUhiklvrGA41
-         1bAfZ6vTgGHqWLriTi3bpuG3dnKDe/ON/vyyL5wQ5I9nmKRp74k6d84CmiZDaqcIrQSg
-         a8UQ==
+        bh=bmnxIHEU1MliF1FiFnoP6R9CI3/EDMQbmGqCQBYxzPU=;
+        b=tr6/OZk/v9pcckhXRKOhDTg7S0BDikg9ErIIIckcjLSRJ1t+K9sUzPgZcqeJSzBUEs
+         5Cj6O2LTJAn60Brg1OPDzPvZ7dLNY07MviOGUPFAZkahDZZNRRTm9zcR0oogxMDxD8qR
+         +Krop5N6/8w2SHy7fbbGCtVEAYOEtAw8TNWUuvdJGDkAUz6XArFS7ONp+QRivN6Ju92+
+         BLxvQY3MbwcSfvFL3h6Pa+PgEdQEktstw6bgX15ATfPJmM8GqVhVtup9H7imlI59r01O
+         OqGK7x79YtLSHweYeUJE0BFLTKlXetmkx58Csj73zHuJQEDUTxBe3DZuMTcF82KRhPfM
+         QeCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tGdRXhHZJScjvnV6wSLvv8/EAbgxFVY8xb600ZQrpNo=;
-        b=IDjOi2icT4IM6c6hVs1QgjLTyhIfaT5bXssWFg4YUyVuTExZePnlytia5ZTFmA4p0P
-         tWlOGNutLIlov+ye+zUMnduxCaX2Y/ZkfaBcbWmDMSeG8zb+PuSKvfVR3ugPKTpbA6y3
-         FmuPsBiF2jsoq6A+VyVGUYeI7DdF1eACBK1DMfwXP7vmdHFg7ugsakz33FJ6AG0Vc1sN
-         g5MskqlK70A9csYswJ4lMItamf8POEubJk37NjPQM8KplG8vARDKG6QchgXY8XIn6cvx
-         8FcyTexrtgMp5agBawF7PNuXjWnLvlcn2B7n+0QqkV9MEiDEXJKSQneOEUTCGomHgrhn
-         2wRw==
-X-Gm-Message-State: APjAAAX+7VVCnC4YByJW8v4z2g3CwzyNb6BzJFQ1lC3ZBfmXaCbtzE9q
-        tm5GmtOo6G9m3XmqqITG/wC60LcA
-X-Google-Smtp-Source: APXvYqz27YfA7BP6HwRVS8cDpMG91iXpAtmw07Sa9KjkjewgXcaL56qqGaIwFwDRoo+JohMdZHzT5g==
-X-Received: by 2002:a63:1b0d:: with SMTP id b13mr7773360pgb.312.1572052373103;
-        Fri, 25 Oct 2019 18:12:53 -0700 (PDT)
+        bh=bmnxIHEU1MliF1FiFnoP6R9CI3/EDMQbmGqCQBYxzPU=;
+        b=OtVFSzrsEK8r6wkeSytdlHYauIBi3zFRvVyHimAH2ulq0qvyD86ICjmuIG9qr5re/P
+         tl03rWv25Hq9nEFB/JGJ8thTLHL6ju7+DV6YzKNtCiLL93ZFcC+m8dc9ojVUycwjJubd
+         53SQaL8mAeD8yFDFse+wlEtiUs8Z19OHR0cfyTffmwMwVogIi/0xGHG87mx5sYi6BX1N
+         Sl+COe4EhxwNNcDkm5FyWuNpTrWFIC7iM88+hv/Yhdm50f022CNUc61EVGdNcIfOQO3b
+         lQRGBLiAusF0LkY5C+PtWjvo1OY/xgMZuzohML/HpEwQShm4xXILjZHyxILWZQAY1LDU
+         x/lg==
+X-Gm-Message-State: APjAAAV58+7kPjnpe40wWwrrs8WKD53ap9Lz7gfFntI46qKD5UYzVWgs
+        bayYqk+GmKk+I0j+RJxutNvDbqrJ
+X-Google-Smtp-Source: APXvYqwn6RVFjMs2vPx1PZ1NlBYexy4AfYdJ8jn/dlYUhyBr/22qn+3aqvnY64LTeIeOrKT930WY2A==
+X-Received: by 2002:a63:ab43:: with SMTP id k3mr7695372pgp.170.1572052502242;
+        Fri, 25 Oct 2019 18:15:02 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id t13sm3494054pfh.12.2019.10.25.18.12.52
+        by smtp.gmail.com with ESMTPSA id i22sm3587378pfa.82.2019.10.25.18.15.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Oct 2019 18:12:52 -0700 (PDT)
-Date:   Fri, 25 Oct 2019 18:12:51 -0700
+        Fri, 25 Oct 2019 18:15:01 -0700 (PDT)
+Date:   Fri, 25 Oct 2019 18:15:00 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/3] myfirstcontrib: add dependency installation step
-Message-ID: <20191026011250.GB39574@google.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] myfirstcontrib: hint to find gitgitgadget allower
+Message-ID: <20191026011459.GC39574@google.com>
 References: <20191026005159.98405-1-emilyshaffer@google.com>
- <20191026005159.98405-3-emilyshaffer@google.com>
+ <20191026005159.98405-4-emilyshaffer@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191026005159.98405-3-emilyshaffer@google.com>
+In-Reply-To: <20191026005159.98405-4-emilyshaffer@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
 Emily Shaffer wrote:
 
-> Indicate that the user needs some dependencies before the build will run
-> happily on their machine; this dependency list doesn't seem to be made
-> clear anywhere else in the project documentation.
+> GitGitGadget, a handy tool for converting pull requests against Git into
+> Git-mailing-list-friendly-patch-emails, requires as anti-spam that all
+> new users be "/allow"ed by an existing user once before it will do
+> anything for that new user. While this tutorial explained that
+> mechanism, it did not give much hint on how to go about finding someone
+> to allow your new pull request. So, teach our new GitGitGadget user
+> where to look for someone who can add their name to the list.
+>
+> The advice in this patch is based on the advice proposed for
+> GitGitGadget: https://github.com/gitgitgadget/gitgitgadget/pull/138
+>
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
+>  Documentation/MyFirstContribution.txt | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 
-In theory, this info should be in INSTALL.  I wouldn't be surprised if
-it's missing some info, though.
-
-[...]
-> --- a/Documentation/MyFirstContribution.txt
-> +++ b/Documentation/MyFirstContribution.txt
-> @@ -38,6 +38,30 @@ $ git clone https://github.com/git/git git
->  $ cd git
->  ----
->  
-> +[[dependencies]]
-> +=== Installing Dependencies
-> +
-> +To build Git from source, you need to have a handful of dependencies installed
-> +on your system. For a hint of what's needed, you can take a look at
-> +`ci/install-dependencies.sh`.
-> +
-> +To install the dependencies needed for a basic build on Linux, run something
-> +like this (or replace `apt` with your distribution's package manager of choice):
-
-pedantic nit: s/or replace/replacing/ ("or" would mean rpm is an
-alternative to what came before, but "something like" in the phrase
-before has rpm already included)
-
-> +
-> +----
-> +# apt install libssl-dev zlib1g-dev libcurl4-gnutls-dev libexpat1-dev
-
-Perhaps build-essential, too, in case they're using a system not set up
-for development.
-
-> +----
-> +
-> +Make sure that your environment has everything you need by building your brand
-> +new clone of Git from the above step:
-> +
-> +----
-> +$ make
-> +----
-> +
-> +NOTE: The Git build is parallelizable. `-j#` is not included above but you can
-> +use it as you prefer, here and elsewhere.
-> +
->  [[identify-problem]]
->  === Identify Problem to Solve
->  
-> @@ -138,9 +162,6 @@ NOTE: When you are developing the Git project, it's preferred that you use the
->  `DEVELOPER` flag; if there's some reason it doesn't work for you, you can turn
->  it off, but it's a good idea to mention the problem to the mailing list.
->  
-> -NOTE: The Git build is parallelizable. `-j#` is not included above but you can
-> -use it as you prefer, here and elsewhere.
-> -
->  Great, now your new command builds happily on its own. But nobody invokes it.
->  Let's change that.
-
-With whatever subset of the changes above make sense,
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Thanks.
+Though I'd appreciate an ack from a gitgitgadget specialist too, so
+cc-ing Dscho.
+
+> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+> index b8ffeda07e..2de06de026 100644
+> --- a/Documentation/MyFirstContribution.txt
+> +++ b/Documentation/MyFirstContribution.txt
+> @@ -789,6 +789,14 @@ will automatically run your PRs through the CI even without the permission given
+>  but you will not be able to `/submit` your changes until someone allows you to
+>  use the tool.
+>  
+> +NOTE: You can typically find someone who can `/allow` you on GitGitGadget by
+> +either examining recent pull requests where someone has been granted `/allow`
+> +(https://github.com/gitgitgadget/git/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+%22%2Fallow%22[Search:
+> +is:pr is:open "/allow"]), in which case both the author and the person who
+> +granted the `/allow` can now `/allow` you, or by inquiring on the
+> +https://webchat.freenode.net/#git-devel[#git-devel] IRC channel on Freenode
+> +linking your pull request and asking for someone to `/allow` you.
+> +
+>  If the CI fails, you can update your changes with `git rebase -i` and push your
+>  branch again:
+>  
