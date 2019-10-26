@@ -2,91 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	URIBL_BLOCKED shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7902B1F4C0
-	for <e@80x24.org>; Sat, 26 Oct 2019 02:43:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC4761F4C0
+	for <e@80x24.org>; Sat, 26 Oct 2019 03:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726128AbfJZCnb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Oct 2019 22:43:31 -0400
-Received: from zinan.dashjr.org ([192.3.11.21]:51862 "EHLO zinan.dashjr.org"
+        id S1726060AbfJZDHm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Oct 2019 23:07:42 -0400
+Received: from mout.gmx.net ([212.227.17.21]:37239 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725957AbfJZCnb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Oct 2019 22:43:31 -0400
-Received: from [2001:470:5:265:a45d:823b:2d27:961c] (unknown [IPv6:2001:470:5:265:a45d:823b:2d27:961c])
-        (Authenticated sender: luke-jr)
-        by zinan.dashjr.org (Postfix) with ESMTPSA id E4E2A38A0CDF;
-        Sat, 26 Oct 2019 02:43:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dashjr.org; s=zinan;
-        t=1572057810; bh=ASp1LPgNwcj3kcOZ7QWMOu/w1MDklT0hX8y6A7gBvNs=;
-        h=From:To:Subject:Date:Cc:References:In-Reply-To;
-        b=y0tQla/blKqoPSjNi0vmvN3F9Kr3OrBmwIHI6Z28cEP2zN9K7J3E7hN2eebGjAM7K
-         cIy82fE3qTKaIE6/VCeqRR/duS19NBznHGBCGViX7z1hcgqZfBdYjkZyBosHiWwjLg
-         V82ojH0xHrOFMn6/ysdKbYld3u3aaCBTe+FX5FfI=
-X-Hashcash: 1:25:191026:jrnieder@gmail.com::dcStJ7ko6Ktq+OAh:DoA3
-X-Hashcash: 1:25:191026:git@vger.kernel.org::cPaEAcc51v3tfmGQ:erM8
-From:   Luke Dashjr <luke@dashjr.org>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: GIT_COMMITTER_* and reflog
-Date:   Sat, 26 Oct 2019 02:43:22 +0000
-User-Agent: KMail/1.9.10
-Cc:     git@vger.kernel.org
-References: <201910252149.23787.luke@dashjr.org> <20191026022039.GE39574@google.com>
-In-Reply-To: <20191026022039.GE39574@google.com>
-X-KMail-QuotePrefix: > 
+        id S1725996AbfJZDHl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Oct 2019 23:07:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1572059260;
+        bh=q196ygwhLZn5llxvoAd1tUFtuQL2+TtjpGkcJzJH2Ls=;
+        h=X-UI-Sender-Class:To:From:Subject:Date;
+        b=OTlnhw9CeElVMxSGO/YrXEepD8mj5J4Gyv/AacOa5rjFN4RHpkNpwwqIslCRxqsDV
+         mR+Py1HEiL+z8qBf1s0NUq7fYITLfmTokrWcXvXoMTnIrH7Z8FvukDZZSlGnqU0ZOj
+         EcwTsFtxyQlCz4W93C3gouq1+eKH5E02IvNJeWf8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.3.68] ([77.183.200.49]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MNbox-1icorP1eyx-00P3gV for
+ <git@vger.kernel.org>; Sat, 26 Oct 2019 05:07:40 +0200
+To:     Git List <git@vger.kernel.org>
+From:   Ingo Wolf <ingo.wolf@gmx.de>
+Subject: WebDav WorkDir Windows not working
+Message-ID: <6c355683-726d-c497-d5df-bb7f8ea770d2@gmx.de>
+Date:   Sat, 26 Oct 2019 05:07:39 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-Message-Id: <201910260243.23627.luke@dashjr.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+X-Provags-ID: V03:K1:ht6pbEt3Am9Ghc3fZ+d6MXuBNu+uwzE7zhjE4FYeKCMu3j2/ijk
+ 8aEtbyZuuSd7E7Gl4gWcZddHHy+jliEoEF+dx6Y0wVs2pQYIknnXaZv6VF28m+RzHXL5cu/
+ F4E9hvWstdOdj0bGUn466V1i6c8O5jNntTmLTwOWOnb9EVKR2sIRltg6CQP33Q6mNwuTZeY
+ C/PDN+OOI8NkTgUflVxLg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:yXY+b4rEMkc=:h4USWZRqo84a4FCDJvZVvh
+ qgDve/Yql+zS6da+Is1gu486Wojn5MAXc+hLtjgCSd1/R7RTdHHaZLg5/3qbnDr/EwIHOE2a1
+ Iiv+muX6PFvguwgR2kxD3ML9UPSzDi8SFKMtt+kAG2b3B5Ea+9bE3xcYxH4RHLxBx4p8FAjMX
+ gfg2vVkdqqU2j72lhaKSDWZ0aJ4zNFOWMSmLmIfoB35ByGgBZI/z2wqypuovHY6FLac9/678W
+ R1LYQniFpmzYSwjvoymJpTDS47yrfhBkbjQaag52hIaWx92koZFw2rDAUeVdPQezVc4yFUVur
+ ZIN3lKTHeFj1/XmWRu8MJR4cvl/c4vOnvWn1buorJr2mHDnWJWEn3NuRaX3XnAf2YBvyyoSj3
+ GrpMsiuDbDJ4PGZ5aqUFUOGu2MQq+BjeZEaJ0XoXwVuPtB4bchENDn9Q6NQHpyGEbaka21We5
+ JgpG7Z8D/4QivUMc2GWXQLCyPA6c5vGpu4qTKon4fJ0SSajAZSAHVUb/DLHWani/zo14+5cOs
+ bmfLmIkJnPKZ1l+f1FkE3L+nS7DlFCMIsQ9bVLEebHFKy3zElAZhyz2kMIlr5h+sQWwWhIQX7
+ PW7vDmSL9m7+1u5A/lmxWNfC3O/P3uKSTytaoJYAPjGj17d4nqsKP0HfSWiags3DZJ9nykMAk
+ SoICMGWdZtJu1WGkTTbUHuDbf0EZhuE0PhTaix3cx96pY5IT+xUhyeq7NWXfB2Udp6fi9xZpY
+ c0Wv6h640634S6cgWdiSNHrqubbW4x/CoWk0Ic+HGwPyZCzXplm5whLr4vae0poQORU9UUpXd
+ FiwfxxyKRySI6pF88jkEnyFgsOA73XnmSMFNT2dlqOHu1fRxHg2L7RflHU3KzCrRlEJ59d/X0
+ 8K4+1aMFXcBrmAwsrYlrSW0Uy8fqVdZ+wNzmgCAu01DyRRlQSdJn6BGaVfcCYr5VRNeYN299E
+ j/j/TjavH7473BasbXYoVSBgnWs+kaqA83BxAs3A3xjlkUypuA+FS4e+yi09l1hcHYpobw7UZ
+ VH7BzGy3s1yN/LzYv9jHZaws4a26ZatIMws8zpo00U2vTMmNchn3shGA/Ia5fESfRafuhDAH5
+ LLRWRvM/CgPmdLZGnM5cwt3d58GRztNYJUOdQaqwzFwVzloPSaUNY9AJ7iz6caOjAiZb+iEQg
+ rh9U4J0aShqoT/9XWCY7sDce9NK5qkHX0tWmVsZzow+44i6T0bv5tZ9PUUXnkZwqoMp1SM1DW
+ FkfubvIeDHiaxvLHgTbCvZM0TfdmmBenCTMHUpE2eV+WUWuuH9253eMYG0YQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Saturday 26 October 2019 02:20:39 Jonathan Nieder wrote:
-> Luke Dashjr wrote:
-> > It appears the reflog currently allows its log data (name and date) to be
-> > overridden by the GIT_COMMITTER_* environment variables. At least for my
-> > workflow, this kinda breaks the reflog (as I regularly set
-> > GIT_COMMITTER_DATE to produce deterministic commit objects).
->
-> Can you say more about this?  What is the workflow this is part of?  Can
-> you describe a sequence of steps and how you are affected during those
-> steps?
-
-I maintain a bleeding-edge variant of a more stable project, which is 
-constantly being rebased on the latest stable version. To make this easier, I 
-use a Perl script to generate the bleeding-edge version's git branches:
-    https://github.com/bitcoinknots/assemble-deriv
-It uses GIT_COMMITTER_DATE to ensure that I can repeatedly generate the branch 
-until everything merges successfully, without polluting the repository with 
-hundreds of merge commits each attempt. (Which would be annoying, since I 
-literally never prune.)
-
-Because git's reflog also uses GIT_COMMITTER_DATE, my reflogs (HEAD in 
-particular) get polluted with incorrect timestamps during this process.
-
-> > Is there a need to support this override for the reflog?
->
-> Yes.
->
-> > Is there any reason it can't be changed to use GIT_REFLOG_* instead?
->
-> Would a new GIT_REFLOG_* set of envvars that overrides GIT_COMMITTER_*
-> work for you?  If I understand correctly, you could set
-> GIT_REFLOG_NAME and GIT_REFLOG_EMAIL to an appropriate identity, but
-> you wouldn't have a good value to put in GIT_REFLOG_DATE.
->
-> If GIT_COMMITTER_{NAME,EMAIL} were used when writing reflogs but
-> GIT_COMMITTER_DATE weren't, would that help with your workflow?
-
-Yes, it's really only GIT_COMMITTER_DATE that's messing me up personally.
-I never use GIT_COMMITTER_{NAME,EMAIL}.
-
-Luke
+Hi,
+Git Windows somehow does not work with a Webdav Workdir even wenn
+connected to a Drive-Letter.
+It seems like everything work except stat.
+So I can checkout to the Webdav Workdir and all the files are checked out,
+but git status says the files are deleted even still there.
+I can also commit the files, but next git status says deleted again.
+When I checkout the files again checkout says error files exist.
+This is somehow strange.
+Unfortunately I still can't add a not empty worktree, my workaround is
+add the worktree to another dir and then move the .git file and edit
+the dir name in the worktrees/xyz folder.
+But now I have the strange Webdav Problem...
