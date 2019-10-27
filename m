@@ -7,49 +7,53 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8675D1F4C0
-	for <e@80x24.org>; Sun, 27 Oct 2019 17:58:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8F901F4C0
+	for <e@80x24.org>; Sun, 27 Oct 2019 18:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727484AbfJ0R65 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Oct 2019 13:58:57 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53972 "EHLO
+        id S1727357AbfJ0So5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Oct 2019 14:44:57 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54010 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726930AbfJ0R65 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 27 Oct 2019 13:58:57 -0400
+        by vger.kernel.org with ESMTP id S1727081AbfJ0So4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 27 Oct 2019 14:44:56 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7CC9360459;
-        Sun, 27 Oct 2019 17:58:55 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 846B760458;
+        Sun, 27 Oct 2019 18:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1572199135;
-        bh=X16Ms0JCXIaaWOLjL+mUX5JhJ6qyXWUA//yzaEs1LXc=;
+        s=default; t=1572201895;
+        bh=JSq1N8ODN35aUk7RyPO5PFBYqAxqqZDrgZMt4Blwc8Y=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=Imkhd3NY+DB3rc20PELK1IWxGb1yVbvbxA9n7X1AWN/lxbpdCwUt088SuRqxMtcXf
-         z8bhupJ/eQNppCUU/nyZ08Dvw37WLRiOHsftIRA2X20kk+BbTpbX+h0bbXP0UAVToi
-         51dQBobDIvmXyw15St9kgINJNl803AxulBJ1V6DfsbOgNJBbaWr5QeYtw+JE6G9gva
-         x9JlcRSfItUEtG1x8+RCAe8XIbB+F3RBbkjtqDl2IEiAK5EzoOKyGSp4tVEzXu6CFg
-         M4jtUA04fZg6dPsRu/gE+1C9o8blh2IKdPR9li/neq13yoQrSwfCYWwEEJw6l3btDd
-         /I6DP8l3kbaNI3mb6/RUZ4Fz6hZ8TViH1DVakxsnPrMiZ8ox1N+hhTxeWNcyqzvzMi
-         eT5Zf4O8mTsdP6j7iv1Br4D4abIcct9jVoxuo7zptVHGh4f4iy9dVfHZttGn0J/2ry
-         A+ofk9TVkPcQVjIvrjwuzaA2l+YEm9qMMmnweoR9G2DWFDaGtG9
-Date:   Sun, 27 Oct 2019 17:58:50 +0000
+        b=ktPkV/K7xgUXO/G0lOhNBf/rC1gbSuRc74oMkGdjWzh29yhM/xCIlIXodsDvp83Dm
+         cGHUc4JTv+JNqf0KFOYYejzx92aRNT7LowkdieH/t+EbIno46SItQdvtM2oECLeDDu
+         Kkqtze8KHsP5AslBL2ywFHGxtzNjdvG22UDm2ev6tL6Q+ISK0cOtcQqe8JobzlltzC
+         Um3W4dfCeSyLW/xK0WrO3SshaxuSy1ecDEep8+9VYYWQtTYzEOW/9tazx1A3zqmK7V
+         mBWlfhdXeDPqOTNwfcO1OhveLW5Vy9jd7RUZWth0e8u3HA91eDmmKrbu0k2JL1tNpY
+         RcMqI1OefzXtlOWXQXymJ1ue0g7J9b6jrmOKzacJX6pPxtlLhVxNiP9fV1Vymky14Y
+         vgzf2ULiCFYzJkB1Q3/BiNsjjnrYdBCiD6YKJlADlQ1yUd3wcH1L77J5Gi9HIo6c6c
+         yrYDFQzR9GMgcFhPZP1bPgAA6cm7kKcj0ArY5ENS1HRAsLLgqvr
+Date:   Sun, 27 Oct 2019 18:44:49 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Ingo Wolf <ingo.wolf@gmx.de>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: WebDav WorkDir Windows not working
-Message-ID: <20191027175850.b6le5r3jf3cxtnah@camp.crustytoothpaste.net>
+To:     Vegard Nossum <vegard.nossum@oracle.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [RFC PATCH v2 2/3] mailinfo: collect commit metadata from mail
+Message-ID: <20191027184449.55pk5ga4cjxaxpej@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ingo Wolf <ingo.wolf@gmx.de>, Git List <git@vger.kernel.org>
-References: <6c355683-726d-c497-d5df-bb7f8ea770d2@gmx.de>
+        Vegard Nossum <vegard.nossum@oracle.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Paolo Bonzini <pbonzini@redhat.com>
+References: <20191022114518.32055-1-vegard.nossum@oracle.com>
+ <20191022114518.32055-3-vegard.nossum@oracle.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="3zjlg5r5bexigydd"
+        protocol="application/pgp-signature"; boundary="t4hqdc3dbe5csdao"
 Content-Disposition: inline
-In-Reply-To: <6c355683-726d-c497-d5df-bb7f8ea770d2@gmx.de>
+In-Reply-To: <20191022114518.32055-3-vegard.nossum@oracle.com>
 X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
  5.2.0-3-amd64)
 User-Agent: NeoMutt/20180716
@@ -59,65 +63,75 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---3zjlg5r5bexigydd
+--t4hqdc3dbe5csdao
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2019-10-26 at 03:07:39, Ingo Wolf wrote:
-> Hi,
-> Git Windows somehow does not work with a Webdav Workdir even wenn
-> connected to a Drive-Letter.
-> It seems like everything work except stat.
-> So I can checkout to the Webdav Workdir and all the files are checked out,
-> but git status says the files are deleted even still there.
-> I can also commit the files, but next git status says deleted again.
-> When I checkout the files again checkout says error files exist.
-> This is somehow strange.
-> Unfortunately I still can't add a not empty worktree, my workaround is
-> add the worktree to another dir and then move the .git file and edit
-> the dir name in the worktrees/xyz folder.
-> But now I have the strange Webdav Problem...
+On 2019-10-22 at 11:45:17, Vegard Nossum wrote:
+> diff --git a/t/t5100/meta-meta0001 b/t/t5100/meta-meta0001
+> new file mode 100644
+> index 0000000000..1db7e9f715
+> --- /dev/null
+> +++ b/t/t5100/meta-meta0001
+> @@ -0,0 +1,23 @@
+> +commit 763f9b1cfd69ade5e22dcdcdc35d144697675a93
+> +tree 43a6b213a2891b5a863775771cab0c0dba3730dc
+> +parent 108b97dc372828f0e72e56bbb40cae8e1e83ece6
+> +author Vegard Nossum <vegard.nossum@oracle.com> 1570284959 +0200
+> +committer Vegard Nossum <vegard.nossum@oracle.com> 1571599909 +0200
+> +gpgsig -----BEGIN PGP SIGNATURE-----
+> + Version: GnuPG v1
+> +=20
+> + iQIcBAABAgAGBQJdrLYmAAoJEAvO9Nj+mLpY5zIQAJkdnnZMrCVme64r43M/KMm0
+> + W1fmdeXiIMrI7i0McBdAsQ/KQ5yD4HBvaJWCyI0/g6IeLgVBf9//9xq4Y32iqsKn
+> + XRut2Pk3H3Az0WfUlpLpDJUgzz7er8t/glaKnESb94XR/ac59tEELbePh+bXsFLH
+> + 3+v8Y78zeHJd6ZLKrKmLyq/9ZaJQR+9xmGdKzZdnwM+8seE4aOhM1VtA8ik68Tn6
+> + Tbaofp1jbsXcyY4nBG9GxK14wnb/8OZmQlH4J40LsZT4KDWQNWighGig8ude7SJa
+> + 6FJXWJPLfOB6r2ThiJUnrf/UXeHbvYUWITiYoWOxEVb6c7RfNLqDbbGF9VQfTD0n
+> + SEFO5NqOs6KofaYzALprtgpMrqksRHeLc7Ouh9xgLyLZLx/669I9lo8M1aQ7RJMy
+> + V1KDG6sYbFrgy4gQ/4xqXj3NpBmMb/VcjOnCj3j040wo8q7hlpzb6ev5lcqAFEuP
+> + y1owwhljMjqAdGIBw6sLVn2on+6gEQuIjbkoapBktPDw7xEpOKe9rzTGcWRRyANs
+> + Z+pMWbn8c6TKonokNjERy0iPnu2t2j8x1YpqKdjY+oq8ApNZFMlU1U+UtXFfuLw5
+> + ZKR5DtmXxWzvd+nKBenjzXyOt33v5eq4I/WMfATauXBgFu75mbfiKIFVD5VeMfxq
+> + DoiIqvLtW+DDUkH99zXm
+> + =3D2APb
+> + -----END PGP SIGNATURE-----
 
-Knowing how WebDAV works under the hood, I'm not entirely surprised that
-you're having this problem.  WebDAV is an okay file transfer protocol,
-but it's not very good for expressing rich file system semantics.  Git
-expects a file system that provides most of the POSIX guarantees, case
-sensitivity excepted, and I'm not sure that WebDAV can provide those.
+First, let me say that I'm pleased to see this series.
 
-You can try a couple of things which might help.  You can set
-core.trustctime to "false" and core.checkStat to "minimal", which may
-help with the inconsistent stat information.  It's also possible that
-your WebDAV server has a flaky network connection or is nonconformant,
-which happens sometimes, so you could try a different WebDAV server
-implementation or a different server.
+It would be nice if we could use the test user and test keys, since this
+test data isn't going to work for SHA-256 and I'll need to generate
+suitable test data for this test as part of porting it.  I won't be able
+to forge a signature using your personal key.
 
-If none of these seem to work, then you'll probably have to come up with
-a solution that doesn't involve using repositories or worktrees on a
-WebDAV mount.
+If you wanted to generate that data yourself instead, you're welcome to
+rebase your changes onto the transition-stage-4 branch from
+https://github.com/bk2204/git.git and run the testsuite with
+GIT_TEST_DEFAULT_HASH=3Dsha256 to see where it fails.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---3zjlg5r5bexigydd
+--t4hqdc3dbe5csdao
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.17 (GNU/Linux)
 
-iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl212toACgkQv1NdgR9S
-9os5/w/+OUGnsbNO81VATcEjKgulSf1EPiQ/pNSY8pyPU7WobcKIcSfsj0KLqAw8
-16Yk5SBBcN4vLUCBcN6t4DxO+OAufMizwWHoMDl45hnZc4r6ldeFeUckRAk/7krG
-wKR5ALPp0WVge5DZb+P1BahRXvux5n0KBXn7fKnQyRwPeXI7fdA2sOW2klkMPICH
-xKrnLK05kwuKhCfTmYlRp8So2rFBGtvc7I1QbluoNf1k62wb6PSWmZOVE+F2bvLr
-Idd2+HdHb8Ycyar+ikCjBsVEG7KjNI7qs/YX0UDZuWMIcunjxaiVjOshuj3qCGDj
-RfECyGuqZN3vNJnKUdmLvUYqfTdOBrDn7YOc6oJsQhSkQf2faQI3Ue4+erHT+9EE
-QlaSdQacCv3LWyOFkPEGq8k2nIwJadSUkq7PIp/k1reZAgDCRUD+QITuRZvZIb9s
-y2NQHdNvXdY+8fX6Tr9UkmXxdcexgVqxfoRdsPTzup7HHHVTehtNlbbZ495vhnZm
-bMxkCQ2xtoB8+CKlhvLV/f6LYW8GlM0PMwaSF6fYMp6T6AsmbKxdVkffjTfaaf8u
-7cVFNvCcFMyrLvwgGa5/BU1cA78uouJkQeGEap7Vpi2PKvEwuhmZBSIoJQBKTNnS
-SYkwCz0s1JS9ZULIaE3UPUTqfD3tbGZLZW17Mi8YzPQitSlJNEE=
-=kTpy
+iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl215aEACgkQv1NdgR9S
+9otahA/9Ev7uEZ7bkmgrrgFUYOMlM86/prrWcL3J67Wws7NjR5IgEx/ReiRngrDl
+4sq3/q5tZ7fZkL9oisoJI5orJNxJT1qj6imf4F8/nWQINeCn1ymGnJDmWWSagF5m
+gsIQI3VfGZBW/7pgsv5j0N554RzJZFnW4ipDco9YLO2uifluGLlZGRnkQ6atDUj/
+PfVqdMxykEjgsxbKoheBPv9aC09jkY7G8XCdvh2oIWhJs7gncvtGJnhDM9Z68fAP
+UPVJi6W8Nc/CJQkw/fRkqPun0V2uovipS4SAB70HNCCVWj7xUEBn9zBbVBnatYNo
+GmzzvFCWXFPLxlHTiRe26GLXEDxNYlupFNqfBXdpJ1sYgU66oRdDWCuVnGl79K+z
+tnJdaEFnAOOF/pxb3n9JEvO2F9sJRhl9jknNQhNtFdl1LymFx3QZaZFw2NK0DyiA
+J21JkMzd9dk1oh2/mEK65vl+wnxC3fjLKwAQaeEfy/qtSIDr49Ztc3ZSWSxVEo5x
+33Jed9bIjETCS3rMQsiQypWE635sPJGs0Fj8zR/KOZ13ILLvMYwtSz54joNeqRnP
+eE5Veuqjf+5yZa0hB+tx5vslC3s2a1+QsZMsa9wNny0AtFwAZKGaFmqMq8fMRrDY
+J0JGpJlZRb5jBp1TuL3Ew63iKFy1Jdu0C+lLYNCeTeCvbf6mD2U=
+=H6zx
 -----END PGP SIGNATURE-----
 
---3zjlg5r5bexigydd--
+--t4hqdc3dbe5csdao--
