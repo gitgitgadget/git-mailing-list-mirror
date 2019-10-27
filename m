@@ -2,73 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06F7E1F4C0
-	for <e@80x24.org>; Sat, 26 Oct 2019 23:54:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1E9E1F4C0
+	for <e@80x24.org>; Sun, 27 Oct 2019 01:39:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbfJZXy3 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Oct 2019 19:54:29 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:51218 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726505AbfJZXy3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Oct 2019 19:54:29 -0400
-X-Greylist: delayed 2456 seconds by postgrey-1.27 at vger.kernel.org; Sat, 26 Oct 2019 19:54:28 EDT
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.92.3)
-        (envelope-from <mh@glandium.org>)
-        id 1iOVFS-0001Xm-43
-        for git@vger.kernel.org; Sun, 27 Oct 2019 08:13:30 +0900
-Date:   Sun, 27 Oct 2019 08:13:30 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     git@vger.kernel.org
-Subject: Support for non-ascii urls broken in some cases, help needed for
- Windows
-Message-ID: <20191026231330.yfzml5wrmavtntph@glandium.org>
+        id S1726552AbfJ0BjI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Oct 2019 21:39:08 -0400
+Received: from relay2-d.mail.gandi.net ([217.70.183.194]:53771 "EHLO
+        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726543AbfJ0BjI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Oct 2019 21:39:08 -0400
+X-Originating-IP: 157.45.193.37
+Received: from localhost (unknown [157.45.193.37])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 2D12440003;
+        Sun, 27 Oct 2019 01:39:04 +0000 (UTC)
+Date:   Sun, 27 Oct 2019 07:09:01 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/3] myfirstcontrib: hint to find gitgitgadget allower
+Message-ID: <20191027013900.m7t4u6lo4tc4cdqz@yadavpratyush.com>
+References: <20191026005159.98405-1-emilyshaffer@google.com>
+ <20191026005159.98405-4-emilyshaffer@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+In-Reply-To: <20191026005159.98405-4-emilyshaffer@google.com>
 User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 25/10/19 05:51PM, Emily Shaffer wrote:
+> diff --git a/Documentation/MyFirstContribution.txt 
+> b/Documentation/MyFirstContribution.txt
+> index b8ffeda07e..2de06de026 100644
+> --- a/Documentation/MyFirstContribution.txt
+> +++ b/Documentation/MyFirstContribution.txt
+> @@ -789,6 +789,14 @@ will automatically run your PRs through the CI even without the permission given
+>  but you will not be able to `/submit` your changes until someone allows you to
+>  use the tool.
+>  
+> +NOTE: You can typically find someone who can `/allow` you on GitGitGadget by
+> +either examining recent pull requests where someone has been granted `/allow`
+> +(https://github.com/gitgitgadget/git/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+%22%2Fallow%22[Search:
+> +is:pr is:open "/allow"]), in which case both the author and the person who
+> +granted the `/allow` can now `/allow` you, or by inquiring on the
+> +https://webchat.freenode.net/#git-devel[#git-devel] IRC channel on Freenode
+> +linking your pull request and asking for someone to `/allow` you.
 
-I don't actually know of any git hosting that lives on a non-ascii
-domain and with non-ascii parts in the path, but I nevertheless gave it
-a shot because I was wondering how a conversion of git-cinnabar to
-python 3 should handle them.
+Nit: that's a lot to put in a single sentence. Maybe break it into parts 
+like:
 
-Multiple problems arose when trying `git clone https://テスト.com`:
-- with NO_GETTEXT set, setlocale is never called, and when curl calls
-  libidn for conversion of the domain name, it fails with
-  "Failed to convert テスト.com to ACE; could not convert string to
-  UTF-8" because, while the string *is* UTF-8, it thinks it's ASCII and
-  wants to convert it somehow.
+  NOTE: You can typically find someone who can `/allow` you on 
+  GitGitGadget by looking at recent pull requests where someone has been 
+  `/allow`ed. Both the author of that pull request and the person who 
+  granted the permission can now `/allow` you. You can also inquire on 
+  the IRC channel on Freenode linking your pull request and asking 
+  someone to `/allow` you.
 
-  Calling setlocale(LC_CTYPE, "") before the curl request happens fixes
-  this. It feels like git_setup_gettext in the NO_GETTEXT case should
-  take care of this.
+> +
+>  If the CI fails, you can update your changes with `git rebase -i` and push your
+>  branch again:
 
-- On Windows with a Japanese locale, it fails with the same error.
-  Earlier versions of git failed with a different error message. I
-  suspect 090d1e84771bb4a310e3fe8291ec71b0ddb03d4f is involved in the
-  change in error message but I'm not sure. Anyways, I think the problem
-  here is that what git gets as input from the command line is not UTF-8,
-  and curl fails to convert it however it tries to. However, for
-  non-ascii path parts, it seems a conversion to UTF-8 happens correctly
-  at some stage, so I'm not entirely sure. That is,
-  `git clone http://localhost:8000/テスト` does send a UTF-8 テスト to
-  the HTTP server (which, interestingly, is not what
-  `curl http://localhost:8000/テスト` does).
-
-I'm happy to look at fixing the NO_GETTEXT unix part, but I'm not
-equipped to build git for windows the way it's shipped to look at it
-there.
-
-Mike
+-- 
+Regards,
+Pratyush Yadav
