@@ -2,136 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8F901F4C0
-	for <e@80x24.org>; Sun, 27 Oct 2019 18:44:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FD8C1F4C0
+	for <e@80x24.org>; Sun, 27 Oct 2019 21:37:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727357AbfJ0So5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Oct 2019 14:44:57 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54010 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727081AbfJ0So4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 27 Oct 2019 14:44:56 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 846B760458;
-        Sun, 27 Oct 2019 18:44:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1572201895;
-        bh=JSq1N8ODN35aUk7RyPO5PFBYqAxqqZDrgZMt4Blwc8Y=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=ktPkV/K7xgUXO/G0lOhNBf/rC1gbSuRc74oMkGdjWzh29yhM/xCIlIXodsDvp83Dm
-         cGHUc4JTv+JNqf0KFOYYejzx92aRNT7LowkdieH/t+EbIno46SItQdvtM2oECLeDDu
-         Kkqtze8KHsP5AslBL2ywFHGxtzNjdvG22UDm2ev6tL6Q+ISK0cOtcQqe8JobzlltzC
-         Um3W4dfCeSyLW/xK0WrO3SshaxuSy1ecDEep8+9VYYWQtTYzEOW/9tazx1A3zqmK7V
-         mBWlfhdXeDPqOTNwfcO1OhveLW5Vy9jd7RUZWth0e8u3HA91eDmmKrbu0k2JL1tNpY
-         RcMqI1OefzXtlOWXQXymJ1ue0g7J9b6jrmOKzacJX6pPxtlLhVxNiP9fV1Vymky14Y
-         vgzf2ULiCFYzJkB1Q3/BiNsjjnrYdBCiD6YKJlADlQ1yUd3wcH1L77J5Gi9HIo6c6c
-         yrYDFQzR9GMgcFhPZP1bPgAA6cm7kKcj0ArY5ENS1HRAsLLgqvr
-Date:   Sun, 27 Oct 2019 18:44:49 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Vegard Nossum <vegard.nossum@oracle.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [RFC PATCH v2 2/3] mailinfo: collect commit metadata from mail
-Message-ID: <20191027184449.55pk5ga4cjxaxpej@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Vegard Nossum <vegard.nossum@oracle.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Paolo Bonzini <pbonzini@redhat.com>
-References: <20191022114518.32055-1-vegard.nossum@oracle.com>
- <20191022114518.32055-3-vegard.nossum@oracle.com>
+        id S1728933AbfJ0VFy (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Oct 2019 17:05:54 -0400
+Received: from mout.gmx.net ([212.227.17.20]:56655 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728916AbfJ0VFw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Oct 2019 17:05:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1572210347;
+        bh=JlEnHUZYELJgofnCuaaui6fBz4Bwu1lF6ei90PYWdCY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Myr5WwQXB+BnLltWfp0F93eFGXNNTeg6ThsdrX7QlC0ChN85qqtJb/YBRqvXESjYQ
+         7BeTJWhFxcyIQoqzz+RFUlPH3/iWfMR5sPd4WvnFiEQBce1BGqvt54jY2353V+rKok
+         DreE5xh/vMS0eW3XatYzMuyFPUydoMZd6IHuo/3k=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MF3DM-1iDtUx11oW-00FTlV; Sun, 27
+ Oct 2019 22:05:47 +0100
+Date:   Sun, 27 Oct 2019 22:05:30 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Fix git stash with skip-worktree entries
+In-Reply-To: <pull.355.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910272203360.46@tvgsbejvaqbjf.bet>
+References: <pull.355.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="t4hqdc3dbe5csdao"
-Content-Disposition: inline
-In-Reply-To: <20191022114518.32055-3-vegard.nossum@oracle.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.2.0-3-amd64)
-User-Agent: NeoMutt/20180716
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:mq3h6pG5+4887eHE+u7K8fssMa+cZ9PVmU1/0JV47wZVFz1VVga
+ iOgSl8QUB+9RxdbirEG7HBDKQuL8Y1DHvBQ6hB7pcHSQKvtRDlUp4aOdqwLgTIaMkoGjGDg
+ jTjLuHdU2iyEgXy0C87RKpKsTTPiGhsYP8sTZucz8i7JKoDbgvz9XiBj6GxyvPMiDzRdvHv
+ fhJ9JTTXVT/I2Y7Ac9YKQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:S7NnTK9RxKI=:uH479waAOU3dvEdYTfH9Bx
+ hS6QcmBj4YWARLii1a6nXzys9kI0nrQfjgrDDepZfPgGvZZFoVtLUE5IGP9iYjUHhn/4yvnAc
+ uMxHCww56GuA4B3pxtNGGBcZ0opjo6NHe/+PG17NsRqSn0TRc+9DwAsPCEiLQeLSpivToLdtS
+ 2gsQ6N3euu8Xg8lhNBPmADOq/lYTk4xI345UPXWyeWRfcwKoIxW9+US6030SlxvcGHYZ990XP
+ emOm+MnLcKVTWiO8yHZAnZaVC3G6+zUUj/XksB/fyErVpz7JZRgiDIHR0V4DIfIEPJn4Vjho9
+ K/Z0VXjxxhVsAi2mMKdm7oVLsKMYh10pzrchkI1BelYe92bC+P2Md+kgrYK6aqtqzq5u8Dp6E
+ rvjS8+zg01wU2UjIw5j9aEpBPz4Pm0jBk3136grsn94DqlkVaoa1DBZ7s0Np1WoIx1Aq+NVmU
+ kBsmezpEfE4gwHuUwOJV+05pa0EdOHF2B+x3SojKvhntAcbXAvz0/WHbaDvupX6aqbQX/+U89
+ O5BccJ9GHEecjeagrXrCyFo9BB6SHLC9dBQIrbDzL9uYhocthA+C1q8hbcBVlS14o/RLu+Aro
+ vzVg0JR99bKb+y9Zxw1KC8np/iHVQ1uRDrihhFaKBBhJ585czrgrbs+XOoi8k+6y5aCBbxeD/
+ Kc811nHz+M2DpcYCa1w+YJ5mUnS4o9GOEAO4zNpB/Az8IdX8rEd5DDY0C3ibpT7MvgEnG7jeJ
+ kbYjrk9RCD2VUHjWW5GWyhnrdkU3pebWlcFXxyInMjgBs+8LmuKGOwWj1NR4zJ4WrpnuTuDnv
+ HFU2sXGLoD0OytRJf7/ayrE5SrQp8xs520rrmxul5Wi/hDfHEHbXOISCQXwH3eYXBLfbLCdhI
+ umg62I076wV9EB3T+dWlyft4Lmni+Q2GNKluTwSf+NlmfDWfKJD7NddNZK3ZNJQypZbTgNvl9
+ KXb4zPIFJPjHKlvnhm7/9pikevQ3LKyNCDFOW9HB451QPPZyyGKE2mG5KELEpUv4zt5v5+1ZT
+ g3DK3P+a04IWCcQtFoCqYEMcIWbcJx6HEsZkug/ls4LlzPheB8B7XzEwl30b5m23tzM7J7jtn
+ dEQpGbtBd2yAoTflE8NBGDgTG4h8TDEbGK2kEBxZhoNyXDq29BfJ8fDrU9wPKNc2q9PLk+UIa
+ ab5RUsfYcXuqXN4WK9O83EYg32BAUF6J7CKEOyleTCL5jWQNpxGe+EHASa3xdU9+MIr/CMkXT
+ FqkKD8R1Jhd8NRf+HleAWH61jrrkL9rH94HjqOZJB+TH5ZOqcjs7Rnj7n3nw=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
---t4hqdc3dbe5csdao
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, 26 Sep 2019, Johannes Schindelin via GitGitGadget wrote:
 
-On 2019-10-22 at 11:45:17, Vegard Nossum wrote:
-> diff --git a/t/t5100/meta-meta0001 b/t/t5100/meta-meta0001
-> new file mode 100644
-> index 0000000000..1db7e9f715
-> --- /dev/null
-> +++ b/t/t5100/meta-meta0001
-> @@ -0,0 +1,23 @@
-> +commit 763f9b1cfd69ade5e22dcdcdc35d144697675a93
-> +tree 43a6b213a2891b5a863775771cab0c0dba3730dc
-> +parent 108b97dc372828f0e72e56bbb40cae8e1e83ece6
-> +author Vegard Nossum <vegard.nossum@oracle.com> 1570284959 +0200
-> +committer Vegard Nossum <vegard.nossum@oracle.com> 1571599909 +0200
-> +gpgsig -----BEGIN PGP SIGNATURE-----
-> + Version: GnuPG v1
-> +=20
-> + iQIcBAABAgAGBQJdrLYmAAoJEAvO9Nj+mLpY5zIQAJkdnnZMrCVme64r43M/KMm0
-> + W1fmdeXiIMrI7i0McBdAsQ/KQ5yD4HBvaJWCyI0/g6IeLgVBf9//9xq4Y32iqsKn
-> + XRut2Pk3H3Az0WfUlpLpDJUgzz7er8t/glaKnESb94XR/ac59tEELbePh+bXsFLH
-> + 3+v8Y78zeHJd6ZLKrKmLyq/9ZaJQR+9xmGdKzZdnwM+8seE4aOhM1VtA8ik68Tn6
-> + Tbaofp1jbsXcyY4nBG9GxK14wnb/8OZmQlH4J40LsZT4KDWQNWighGig8ude7SJa
-> + 6FJXWJPLfOB6r2ThiJUnrf/UXeHbvYUWITiYoWOxEVb6c7RfNLqDbbGF9VQfTD0n
-> + SEFO5NqOs6KofaYzALprtgpMrqksRHeLc7Ouh9xgLyLZLx/669I9lo8M1aQ7RJMy
-> + V1KDG6sYbFrgy4gQ/4xqXj3NpBmMb/VcjOnCj3j040wo8q7hlpzb6ev5lcqAFEuP
-> + y1owwhljMjqAdGIBw6sLVn2on+6gEQuIjbkoapBktPDw7xEpOKe9rzTGcWRRyANs
-> + Z+pMWbn8c6TKonokNjERy0iPnu2t2j8x1YpqKdjY+oq8ApNZFMlU1U+UtXFfuLw5
-> + ZKR5DtmXxWzvd+nKBenjzXyOt33v5eq4I/WMfATauXBgFu75mbfiKIFVD5VeMfxq
-> + DoiIqvLtW+DDUkH99zXm
-> + =3D2APb
-> + -----END PGP SIGNATURE-----
+> My colleague Dan Thompson reported a bug in a sparse checkout, where git
+> stash (after resolving merge conflicts and then making up their mind to
+> stash the changes instead of committing them) would "lose" files (and fi=
+les
+> that were not even in the sparse checkout's cone!).
 
-First, let me say that I'm pleased to see this series.
+I only realized _now_ that this patch has not made it anywhere; I would
+like to have it at least in Git for Windows v2.24.0.
 
-It would be nice if we could use the test user and test keys, since this
-test data isn't going to work for SHA-256 and I'll need to generate
-suitable test data for this test as part of porting it.  I won't be able
-to forge a signature using your personal key.
+Could I ask for this to still be picked up into `pu` at least, so that
+it does not fall into oblivion?
 
-If you wanted to generate that data yourself instead, you're welcome to
-rebase your changes onto the transition-stage-4 branch from
-https://github.com/bk2204/git.git and run the testsuite with
-GIT_TEST_DEFAULT_HASH=3Dsha256 to see where it fails.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Thanks,
+Dscho
 
---t4hqdc3dbe5csdao
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl215aEACgkQv1NdgR9S
-9otahA/9Ev7uEZ7bkmgrrgFUYOMlM86/prrWcL3J67Wws7NjR5IgEx/ReiRngrDl
-4sq3/q5tZ7fZkL9oisoJI5orJNxJT1qj6imf4F8/nWQINeCn1ymGnJDmWWSagF5m
-gsIQI3VfGZBW/7pgsv5j0N554RzJZFnW4ipDco9YLO2uifluGLlZGRnkQ6atDUj/
-PfVqdMxykEjgsxbKoheBPv9aC09jkY7G8XCdvh2oIWhJs7gncvtGJnhDM9Z68fAP
-UPVJi6W8Nc/CJQkw/fRkqPun0V2uovipS4SAB70HNCCVWj7xUEBn9zBbVBnatYNo
-GmzzvFCWXFPLxlHTiRe26GLXEDxNYlupFNqfBXdpJ1sYgU66oRdDWCuVnGl79K+z
-tnJdaEFnAOOF/pxb3n9JEvO2F9sJRhl9jknNQhNtFdl1LymFx3QZaZFw2NK0DyiA
-J21JkMzd9dk1oh2/mEK65vl+wnxC3fjLKwAQaeEfy/qtSIDr49Ztc3ZSWSxVEo5x
-33Jed9bIjETCS3rMQsiQypWE635sPJGs0Fj8zR/KOZ13ILLvMYwtSz54joNeqRnP
-eE5Veuqjf+5yZa0hB+tx5vslC3s2a1+QsZMsa9wNny0AtFwAZKGaFmqMq8fMRrDY
-J0JGpJlZRb5jBp1TuL3Ew63iKFy1Jdu0C+lLYNCeTeCvbf6mD2U=
-=H6zx
------END PGP SIGNATURE-----
-
---t4hqdc3dbe5csdao--
+>
+> I first considered changing the behavior of git diff-index to simply ign=
+ore
+> skip-worktree entries. But after re-reading the documentation of the
+> skip-worktree bit, I became convinced that this would be incorrect a fix
+> because the command really does what it advertises to do.
+>
+> Then, I briefly considered introducing a flag that would change the beha=
+vior
+> thusly, but ended up deciding against it.
+>
+> The actual problem, after all, is the git update-index call and that it
+> heeds the --remove (but not the --add) option for skip-worktree entries.
+> "Heeds", I should say, because the idea of the skip-worktree bit really =
+is
+> documented to imply that the worktree files should be considered identic=
+al
+> to their staged versions.
+>
+> So arguably, it could be considered a bug that git update-index --remove
+> even bothers to touch skip-worktree entries. But this behavior has been =
+in
+> place for over 10 years, so I opted to introduce a new mode that does wh=
+at
+> git stash needs in order to fix the bug.
+>
+> Johannes Schindelin (2):
+>   update-index: optionally leave skip-worktree entries alone
+>   stash: handle staged changes in skip-worktree files correctly
+>
+>  Documentation/git-update-index.txt |  6 ++++++
+>  builtin/stash.c                    |  5 +++--
+>  builtin/update-index.c             |  6 +++++-
+>  git-legacy-stash.sh                |  3 ++-
+>  t/t3903-stash.sh                   | 11 +++++++++++
+>  5 files changed, 27 insertions(+), 4 deletions(-)
+>
+>
+> base-commit: 5fa0f5238b0cd46cfe7f6fa76c3f526ea98148d9
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-355%2F=
+dscho%2Ffix-stash-with-skip-worktree-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-355/dscho=
+/fix-stash-with-skip-worktree-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/355
+> --
+> gitgitgadget
+>
+>
