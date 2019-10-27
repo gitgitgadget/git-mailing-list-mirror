@@ -2,193 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA5721F4C1
-	for <e@80x24.org>; Sun, 27 Oct 2019 16:30:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 712821F4C0
+	for <e@80x24.org>; Sun, 27 Oct 2019 17:16:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727082AbfJ0Qap (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Oct 2019 12:30:45 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43291 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726838AbfJ0Qap (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Oct 2019 12:30:45 -0400
-Received: by mail-wr1-f67.google.com with SMTP id c2so7373204wrr.10
-        for <git@vger.kernel.org>; Sun, 27 Oct 2019 09:30:43 -0700 (PDT)
+        id S1727235AbfJ0RQ3 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Oct 2019 13:16:29 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:52472 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726884AbfJ0RQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Oct 2019 13:16:29 -0400
+Received: by mail-wm1-f68.google.com with SMTP id p21so7056000wmg.2
+        for <git@vger.kernel.org>; Sun, 27 Oct 2019 10:16:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lNyDHyiUbk12+Yptcj1kPY5u09pI7jj6Mg9w+PXyxXo=;
-        b=u4s0MSLJoZkdndJEDcUkXYKqdxTxyrI6308qXBKxSUgQtxV9mZSEqiWgyAZr6QDrMZ
-         Hv8dAxbbQGQBxq+gvs7KFasgq7e+np98nGSYpciDFmrhrfcJhAlh9y3i7MWkjOXeS03G
-         2CrIlCX0164qlllk9wCU28H8wRunvUloCh6jaCar6tG9hCnGecMb5SaA9MTcl8nezM3K
-         p3B/Tj70wg27gP+/Z0K/mU7aBrD6pRONOHASo790gM7ea9SpLzhZnUZk/bmnrudoPQiM
-         /O0RPvvYlhPI9sMivQQPDT2NtYBQt9U7FAEn2imhx+w+yzDc9elur2of6+YilfVd4Qh9
-         Gl/w==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=hlHU5Uq5qWrp/mLktMGXihHfEYX9dKl7YGeV7KJDmqo=;
+        b=sIFYWi2fH6KPecA0fMFt7BfYX2pizb1Vt2WQrF5seponQmq9PbSSx1P45FNudXFxsd
+         JOPrRoinmMWDftJ4+Ot9V753Oh9/Z6YYaQe9PCATJijBUXlXFJCxv6x/FTjT1PHR7rNp
+         fuz7I8xvKs2G/6SzyyKnBi5G43A/MRBskaGLMQNg1WGiA6pzc2J9aigbFjg4k+Kc61tX
+         1+TkxyzUVYnsZLKiWOL5722Fiuh4zD0/QdNOGZhF7J5rHpc/uBBwW6zN7QW3a2na5HfC
+         CXsed0lblTnxCIa3zFeaa9+Y9cNEVyXSl9nMoifGtFZpAatbZ/FCsEeTl1jcXxb1Fn1f
+         qh4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lNyDHyiUbk12+Yptcj1kPY5u09pI7jj6Mg9w+PXyxXo=;
-        b=YN24zwmMWdQSJigVXPawU1fZc8JiISBdLImt2iPiw98Icxo93POnV0PlFzTzo3NiRj
-         R4nUWAaPNRQu7FCb03JaO1uNDH+NG0tufQNNwSOlRMxZy6p8DXmxR7qAms6JfjOkzw26
-         13U1ShyVKcfHVVlgQSc07eyLP6647kq100Xm3I2M4pHT/HF76pUwQFL7O9z9NPmddqNi
-         JsdUyr+Nl0RSG6HOoRxjrn84pCOdxtnxNNU2BfXQwXrt2ZzBEYgMszXD668MDBWSvRm4
-         c+L1PugWRpUo2bV4oQepFsmFt4nZfMB0JerImOWzKhZm5IVmUKj4kzBbCBOCOeGovtFQ
-         Dkig==
-X-Gm-Message-State: APjAAAUi9I4i9pxozT+MDnksB6WmCFfjStyueaqnIkJdKGMNC1hTPM7G
-        2DhajZ3x3FkRiHZ7xVNK86eyeBQT
-X-Google-Smtp-Source: APXvYqyQBJF9iRpG9LQlfiKNeOMUzN2HovN/nPKF0iEeReymqgkxAoUeNZqd4rpXEDD0kUeWrunxqQ==
-X-Received: by 2002:a5d:55c7:: with SMTP id i7mr8367470wrw.371.1572193842591;
-        Sun, 27 Oct 2019 09:30:42 -0700 (PDT)
-Received: from localhost.localdomain ([139.47.116.239])
-        by smtp.gmail.com with ESMTPSA id b186sm7866496wmb.21.2019.10.27.09.30.41
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=hlHU5Uq5qWrp/mLktMGXihHfEYX9dKl7YGeV7KJDmqo=;
+        b=sNW04i2JtFVSVo08MeAYAXkIlhmCV/hVKLplGZnaPptg35jMPFjvQqSi+XMfpwFcvT
+         Yg8u7SsxXNCmz7is2kl5Z0b8GHlglv4xvF1iDZuDXPPrpwDQA3fBbTJh3MadiWKtwhKQ
+         mnVmLSAwVYifnQNdq/w6Iqg0c5XzTcTGwxocS9Wa8Fy0ee+z4e9OYlsdjlJhukOfyHK0
+         qwd7UK1r1iYrrre3Y4ZjD6Ny6DCwwo7KnDZCruGHiRDTt6SJ6rCCO/ks+XAl/Wsy2vu9
+         b0LOVmh9Qhu6aFYN3tWWqW52OVIeFhtTZSdUHLsE24+B5rH0qSKtule8n6GdXhedtqud
+         AQ6Q==
+X-Gm-Message-State: APjAAAU8rZDvphx+UbjlkFk8kaqsEgjhvpuRyOU6Mkv0x2RJaH8POoTA
+        9nuDi4/85GGEx3UAV/dzEYYVMM98
+X-Google-Smtp-Source: APXvYqz2LcDenAZm1gzUluIWgcBrDWvAMyxxJUjf5n5YAuj1DDi110RI+Nknup7jEGUjFCSqlqG7vw==
+X-Received: by 2002:a1c:8055:: with SMTP id b82mr12647433wmd.176.1572196587123;
+        Sun, 27 Oct 2019 10:16:27 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 126sm8617277wma.48.2019.10.27.10.16.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 27 Oct 2019 09:30:42 -0700 (PDT)
-From:   Miriam Rubio <mirucam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Miriam Rubio <mirucam@gmail.com>
-Subject: [Outreachy] [PATCH] dir: add new function `path_exists()`
-Date:   Sun, 27 Oct 2019 17:30:38 +0100
-Message-Id: <20191027163038.47409-1-mirucam@gmail.com>
-X-Mailer: git-send-email 2.21.0 (Apple Git-122)
-MIME-Version: 1.0
+        Sun, 27 Oct 2019 10:16:26 -0700 (PDT)
+Message-Id: <pull.430.git.1572196585.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 27 Oct 2019 17:16:24 +0000
+Subject: [PATCH 0/1] worktree: teach "add" to ignore submodule.recurse config
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Added a new function path_exists() that works the same as file_exists()
-but with better descriptive name.
-New calls should use path_exists() instead of file_exists().
+"worktree add" internally calls "reset --hard", but if submodule.recurse is
+set, reset tries to recurse into initialized submodules, which makes
+start_command try to cd into non-existing submodule paths and die.
 
-The dir_exists() function in builtin/clone.c is marked as static, so
-nobody can use it outside builtin/clone.c and can be replaced by new
-function path_exists().
+Fix that by making sure that the call to reset in "worktree add" does not
+recurse.
 
-The static function path_exists() in archive.c have been renamed as
-archive_path_exists() to avoid name collision.
+Some remarks:
 
-Signed-off-by: Miriam Rubio <mirucam@gmail.com>
----
- archive.c       |  6 +++---
- builtin/clone.c | 12 +++---------
- dir.c           |  6 ++++++
- dir.h           |  3 +++
- 4 files changed, 15 insertions(+), 12 deletions(-)
+ 1. This patch is based on maint
+    
+    
+ 2. The 2 Travis CI macOS builds fail (they also fail on maint) with the
+    message:
+    
+    > +brew install caskroom/cask/perforce Error: caskroom/cask was moved. Tap
+    homebrew/cask-cask instead. The command "ci/install-dependencies.sh"
+    failed and exited with 1 during .
+    
+    
+    
+ 3. I'm on OS X 10.11.6 (Apple clang-800.0.42.1) and I get a warning
+    compiling builtin/merge.c : 
+    
+    >     CC builtin/merge.o
+    builtin/merge.c:831:33: warning: data argument not used by format string [-Wformat-extra-args]
+                            no_scissors_editor_comment), comment_line_char);
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~  ^
+    builtin/merge.c:809:4: note: format string is defined here
+    N_("An empty message aborts the commit.\n");
+       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ./gettext.h:86:20: note: expanded from macro 'N_'
+    #define N_(msgid) (msgid)
+                       ^~~~~
+    1 warning generated.
+    
+    
+     This makes me unable to build with DEVELOPER=1.
 
-diff --git a/archive.c b/archive.c
-index a8da0fcc4f..8110a50f17 100644
---- a/archive.c
-+++ b/archive.c
-@@ -338,7 +338,7 @@ static int reject_entry(const struct object_id *oid, struct strbuf *base,
- 	return ret;
- }
- 
--static int path_exists(struct archiver_args *args, const char *path)
-+static int archive_path_exists(struct archiver_args *args, const char *path)
- {
- 	const char *paths[] = { path, NULL };
- 	struct path_exists_context ctx;
-@@ -358,7 +358,7 @@ static void parse_pathspec_arg(const char **pathspec,
- 		struct archiver_args *ar_args)
- {
- 	/*
--	 * must be consistent with parse_pathspec in path_exists()
-+	 * must be consistent with parse_pathspec in archive_path_exists()
- 	 * Also if pathspec patterns are dependent, we're in big
- 	 * trouble as we test each one separately
- 	 */
-@@ -368,7 +368,7 @@ static void parse_pathspec_arg(const char **pathspec,
- 	ar_args->pathspec.recursive = 1;
- 	if (pathspec) {
- 		while (*pathspec) {
--			if (**pathspec && !path_exists(ar_args, *pathspec))
-+			if (**pathspec && !archive_path_exists(ar_args, *pathspec))
- 				die(_("pathspec '%s' did not match any files"), *pathspec);
- 			pathspec++;
- 		}
-diff --git a/builtin/clone.c b/builtin/clone.c
-index c46ee29f0a..20ab535784 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -899,12 +899,6 @@ static void dissociate_from_references(void)
- 	free(alternates);
- }
- 
--static int dir_exists(const char *path)
--{
--	struct stat sb;
--	return !stat(path, &sb);
--}
--
- int cmd_clone(int argc, const char **argv, const char *prefix)
- {
- 	int is_bundle = 0, is_local;
-@@ -981,7 +975,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		dir = guess_dir_name(repo_name, is_bundle, option_bare);
- 	strip_trailing_slashes(dir);
- 
--	dest_exists = dir_exists(dir);
-+	dest_exists = path_exists(dir);
- 	if (dest_exists && !is_empty_dir(dir))
- 		die(_("destination path '%s' already exists and is not "
- 			"an empty directory."), dir);
-@@ -992,7 +986,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		work_tree = NULL;
- 	else {
- 		work_tree = getenv("GIT_WORK_TREE");
--		if (work_tree && dir_exists(work_tree))
-+		if (work_tree && path_exists(work_tree))
- 			die(_("working tree '%s' already exists."), work_tree);
- 	}
- 
-@@ -1020,7 +1014,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (real_git_dir) {
--		if (dir_exists(real_git_dir))
-+		if (path_exists(real_git_dir))
- 			junk_git_dir_flags |= REMOVE_DIR_KEEP_TOPLEVEL;
- 		junk_git_dir = real_git_dir;
- 	} else {
-diff --git a/dir.c b/dir.c
-index 61f559f980..638a783b65 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2353,6 +2353,12 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
- 	return dir->nr;
- }
- 
-+int path_exists(const char *path)
-+{
-+    struct stat sb;
-+    return !stat(path, &sb);
-+}
-+
- int file_exists(const char *f)
- {
- 	struct stat sb;
-diff --git a/dir.h b/dir.h
-index 2fbdef014f..376fa93321 100644
---- a/dir.h
-+++ b/dir.h
-@@ -286,6 +286,9 @@ void clear_pattern_list(struct pattern_list *pl);
- void clear_directory(struct dir_struct *dir);
- 
- int repo_file_exists(struct repository *repo, const char *path);
-+int path_exists(const char *);
-+
-+/* New calls should use path_exists(). */
- int file_exists(const char *);
- 
- int is_inside_dir(const char *dir);
+Philippe Blain (1):
+  worktree: teach "add" to ignore submodule.recurse config
+
+ builtin/worktree.c      |  2 +-
+ t/t2400-worktree-add.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 25 insertions(+), 1 deletion(-)
+
+
+base-commit: 5fa0f5238b0cd46cfe7f6fa76c3f526ea98148d9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-430%2Fphil-blain%2Fworktree-add-recurse-submodule-config-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-430/phil-blain/worktree-add-recurse-submodule-config-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/430
 -- 
-2.21.0 (Apple Git-122)
-
+gitgitgadget
