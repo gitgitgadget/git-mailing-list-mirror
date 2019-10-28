@@ -2,151 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60B791F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 00:11:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 365841F4C1
+	for <e@80x24.org>; Mon, 28 Oct 2019 00:59:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728452AbfJ1AL5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Oct 2019 20:11:57 -0400
-Received: from mail-pl1-f182.google.com ([209.85.214.182]:38513 "EHLO
-        mail-pl1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726909AbfJ1AL5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Oct 2019 20:11:57 -0400
-Received: by mail-pl1-f182.google.com with SMTP id w8so4612225plq.5
-        for <git@vger.kernel.org>; Sun, 27 Oct 2019 17:11:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding:thread-index:content-language;
-        bh=A6meYb6b8lnOKSaOcM2Ag7LccGU4fzqN5870Ey8PDDg=;
-        b=ZcLQY09gg5ZFb6yoIMafT+BpX4WmL+YQ9gPAqd2x0RGm6thQLUjIWUjGfUxwdQoWPm
-         Q6H/KunYXvXrj+J4d22dgefojagzibAi+o72Wz0j4MkH406z8oxXeWDi8DqmsxHPrWSH
-         sroiLHCG4A7hggi1fxVT1WRa28sUl3nGOswH4DDvA39lzNiSmeNdU2q5S3EY2n/jc/Uz
-         Eujn4nBEug0AIz2nfCg7CzeKRpNoDzkOBbt4EggXw3cv6CD/itW3981YA3fiPdQicdH1
-         aOL3O5ZIQPf4MJFTdSyrWX9PX3AqVH6L4LSqumZfjVSwvIInPeJ6rowc6DqqTB6T0o7z
-         kHEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding:thread-index:content-language;
-        bh=A6meYb6b8lnOKSaOcM2Ag7LccGU4fzqN5870Ey8PDDg=;
-        b=T1ksJXrLCRZc6/OH4sV0Y8RaRAKhI3vNQadtvpfimPppRsLbqkJUTQIoYvTDRIBlV4
-         184yPEhp3ycqVhnsE6u+QMnEeOTPNinF6mivqbBPTraKnpxLOlMx3+9xesHjD5YyQR7e
-         MeAwKQqFTON5XUaoKM7gnmsEZ3TcWAcwR0CdgZXkaNgwpeTGcEmt5+qB7SYptP7lritO
-         jxh9UM0+5OP7bGAS8ddu1GUSAlz6pO9Vz/N0H7SZvCp+BOIPE0YCO+ByhEoy3LxR7wic
-         jXVIEszZcMYIOq/sMgav+hq1v4M7uZrB3ZLEDnrz0Wbq5z6X0i0YDGe0MkgANyVCz7at
-         QsEQ==
-X-Gm-Message-State: APjAAAW2vY2UG7mqWbb5fq6e3J8tT4Mab4UB0+4+mOOEsAbpv8bFRGEb
-        GI6iAJvM1Sgr9vGs6jaFLSheTypy
-X-Google-Smtp-Source: APXvYqy3pbE0Mf60jf/aDExXz/t9MAjGD8thglhqRIU/gk1/Qh1CA1dUbfqaP4h5WillOymHuuvNXw==
-X-Received: by 2002:a17:902:36a:: with SMTP id 97mr16456883pld.83.1572221516219;
-        Sun, 27 Oct 2019 17:11:56 -0700 (PDT)
-Received: from LJZDELLPC ([184.103.122.48])
-        by smtp.gmail.com with ESMTPSA id s202sm11029368pfs.24.2019.10.27.17.11.55
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 27 Oct 2019 17:11:55 -0700 (PDT)
-From:   <lyle.ziegelmiller@gmail.com>
-To:     "'git bug report'" <git@vger.kernel.org>
-Subject: unpacking error
-Date:   Sun, 27 Oct 2019 17:11:52 -0700
-Message-ID: <004101d58d24$4daab5b0$e9002110$@gmail.com>
+        id S1728862AbfJ1A7V (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Oct 2019 20:59:21 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54222 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728837AbfJ1A7V (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 27 Oct 2019 20:59:21 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2158060443;
+        Mon, 28 Oct 2019 00:59:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1572224360;
+        bh=hbUax/Brfw3UUW+HWn/sQVe62FaGMPAfh4wpTcq0C0k=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=k3sCdjGWsI0iCkbewNYjpRX05J+H9+pys7j1AULE8MnrOG/fBl/y3R1ap+NKmLAcM
+         AAcIVOSKgpz9EKXoyLdd7i5fARIyBvX+1pRn9tB3eWMhDuVBe+1MXZZflt5NI38vPL
+         qtHQArzzkgsLpOikdIZX+Of6Rrk1ycswuK3hYZpWX4VdIU2ymuqx4ije3yreyfPRW4
+         9BME3wmhadYCtHxDfECBIrg5wRMrDCsVRQXjBIx8Bb80q1DhJRuMakH4n7ReYelhLi
+         b+WOb6+o0zmNFFTmwo2ezQ2ZWhCpCltf9rcU9WMrPtQWv2s1iU4h6ZIvybPKgxT/7+
+         TlUPwfVJDLN3szZQvnBmrkUiYsS8Dpf1Ey9j6ZAGSDdr6wc3SlXOpz3OQg4jLBjZo3
+         bSuEBq1ZONrWQpJ7psnGQnQHfFzxtgZ4dJ2TF0X+ekWzF8lpUGJ6d+vPBjWO6BN/wS
+         Ymc8OvWu++7t6Dk76snpQKyqg17lmC1SgJ86md6X37VMC+6mHRx
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v2 00/15] SHA-256 test fixes, part 6
+Date:   Mon, 28 Oct 2019 00:58:52 +0000
+Message-Id: <20191028005907.24985-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdWNJDiIfjDgERHAQoKm8S5KM08uyA==
-Content-Language: en-us
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This series consists mostly of additional test fixes for SHA-256, plus
+some test framework improvements and a new option to rev-parse.
 
-Hi
+I've opted to change the option from --object-format to
+--show-object-format, since I think this is more consistent with our
+other --show* options in rev-parse and it leaves --object-format as a
+possible additional option for *controlling* (not listing) the output
+format in the future.
 
-I almost always get this error when pushing from my PC to the bare
-repository on my laptop. I'm running Cygwin on Windows 10. I've tried
-everything! chmod -R 777, chown -R <my user id>, etc.
+Of course, opinions on this or other aspects of the series are welcome.
 
-A few more details: I have a Git repository on my PC, and from that, I've
-cloned a bare repository on my laptop, which I then used to clone a regular
-repository on my laptop. The error occurs when I attempt to push changes on
-my PC into the bare repository on my laptop.
+Changes from v1:
+* Improve readability of t4011 by using helper functions.
+* Change rev-parse option name to --show-object-format.
 
-If I delete the old bare repository on my laptop, I'm able to create a new
-bare repository on my laptop from my pc, but then as soon as I try to push
-to it, I get this error again. I've tried disabling the anti-virus, etc.
-I've spent hours Googling solutions. Nothing works! Many others have had
-this same issue. I never had this type of problem with SVN.
+brian m. carlson (15):
+  t/oid-info: allow looking up hash algorithm name
+  t/oid-info: add empty tree and empty blob values
+  rev-parse: add a --show-object-format option
+  t1305: avoid comparing extensions
+  t3429: remove SHA1 annotation
+  t4010: abstract away SHA-1-specific constants
+  t4011: abstract away SHA-1-specific constants
+  t4015: abstract away SHA-1-specific constants
+  t4027: make hash-size independent
+  t4034: abstract away SHA-1-specific constants
+  t4038: abstract away SHA-1 specific constants
+  t4039: abstract away SHA-1-specific constants
+  t4044: update test to work with SHA-256
+  t4045: make hash-size independent
+  t4048: abstract away SHA-1-specific constants
 
-It would be nice if Git would say what's failing when this happens, and it
-would be nice to get this bug fixed. It happens with all my git
-repositories. I don't think it's a network issue or I wouldn't be able to
-create a new repository on my laptop from my PC, as that would encounter the
-same permissions issues.
-
-The two machines are connected with an ethernet cable. I've done everything
-I can to make sure all the Windows permissions are set correctly, etc.
-
-$ git push
-Counting objects: 3, done.
-Delta compression using up to 4 threads.
-Compressing objects: 100% (3/3), done.
-Writing objects: 100% (3/3), 331 bytes | 331.00 KiB/s, done.
-Total 3 (delta 2), reused 0 (delta 0)
-remote: fatal: not a git repository: '.'
-error: remote unpack failed: unpack-objects abnormal exit To
-//lylez-laptop/Users/Administrator/bare-repositories/Tradelab-bare-repositor
-y.git/
- ! [remote rejected] timestamp_testing -> timestamp_testing (unpacker error)
-error: failed to push some refs to
-'//lylez-laptop/Users/Administrator/bare-repositories/Tradelab-bare-reposito
-ry.git/'
-
-
-$ git --version
-git version 2.17.0
-
-------------------
-System Information
-------------------
-      Time of this report: 10/27/2019, 16:53:09
-             Machine name: LJZ-DELLPC
-               Machine Id: {39BC0826-743F-4ECA-AFBE-66A14FBE533C}
-         Operating System: Windows 10 Pro 64-bit (10.0, Build 17134)
-(17134.rs4_release.180410-1804)
-                 Language: English (Regional Setting: English)
-      System Manufacturer: Dell Inc.
-             System Model: Inspiron 3650
-                     BIOS: BIOS Date: 06/17/16 21:14:07 Ver: 05.0000B (type:
-BIOS)
-                Processor: Intel(R) Core(TM) i5-6400 CPU @ 2.70GHz (4 CPUs),
-~2.7GHz
-                   Memory: 8192MB RAM
-      Available OS Memory: 8096MB RAM
-                Page File: 8076MB used, 7243MB available
-              Windows Dir: C:\WINDOWS
-          DirectX Version: DirectX 12
-      DX Setup Parameters: Not found
-         User DPI Setting: 96 DPI (100 percent)
-       System DPI Setting: 96 DPI (100 percent)
-          DWM DPI Scaling: Disabled
-                 Miracast: Available, with HDCP Microsoft Graphics Hybrid:
-Not Supported
-           DxDiag Version: 10.00.17134.0001 64bit Unicode
-
-
-Regards,
-
-Lyle Ziegelmiller
-
-
-
+ Documentation/git-rev-parse.txt     |  7 +++
+ builtin/rev-parse.c                 | 11 ++++
+ t/oid-info/hash-info                |  9 +++
+ t/t1305-config-include.sh           |  2 +-
+ t/t1500-rev-parse.sh                | 15 +++++
+ t/t3429-rebase-edit-todo.sh         |  2 +-
+ t/t4010-diff-pathspec.sh            | 20 ++++---
+ t/t4011-diff-symlink.sh             | 40 +++++++++----
+ t/t4015-diff-whitespace.sh          | 89 ++++++++++++++++-----------
+ t/t4027-diff-submodule.sh           | 16 ++---
+ t/t4034-diff-words.sh               | 93 +++++++++++++++++------------
+ t/t4038-diff-combined.sh            | 19 ++++--
+ t/t4039-diff-assume-unchanged.sh    |  3 +-
+ t/t4044-diff-index-unique-abbrev.sh | 46 +++++++++-----
+ t/t4045-diff-relative.sh            |  2 +-
+ t/t4048-diff-combined-binary.sh     | 58 ++++++++++--------
+ 16 files changed, 277 insertions(+), 155 deletions(-)
 
