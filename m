@@ -2,128 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D19B21F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 10:52:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 742651F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 10:57:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388357AbfJ1Kwt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 06:52:49 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55448 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729177AbfJ1Kwt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 06:52:49 -0400
-Received: by mail-wm1-f66.google.com with SMTP id g24so8900883wmh.5
-        for <git@vger.kernel.org>; Mon, 28 Oct 2019 03:52:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=CX0eeutEi2DRSVOspQsHfjcaBIZxPrc5PfKR4YRgjxo=;
-        b=Xm9OJWvDkLG+1BnTIVscukWlBXM2btl8Qf9IlCKkwNShTEh4hd8Yo8Fuz39pXwUVWw
-         5WJRg677PJ1BpCQv7qRNg2v/Vb2B5eFOMi9smvkkA96G5YSqGM3VELR//Er5d9kLWmLJ
-         09NYuorfQvnE6f7Ua1I0JkcInDPaXZUExceamjxAGvbrlt+H9hpEvKAqShhSS/3/vjS7
-         7/l959vnvsvpG6NKVh9JlNTXSFhYgG41jII41c7KKITL0Ex3yTDtujvRTTjsnJUmUoKY
-         VzRhdCjiNl+ZILV+EXJOvOx8ddPH7FxyvZdaeNVed9hPww2Flgs0QU8YkHbgXGdxEkB+
-         piuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=CX0eeutEi2DRSVOspQsHfjcaBIZxPrc5PfKR4YRgjxo=;
-        b=Qzxjao9sp6rIowD87nhKpaBqcd6KEECDp9o0uFgQ6Saph3/6j1jGDts2tqkOr0D1XX
-         hcdTYZBd3R3mDfCg6jPxI4x1KO3X4mAXwlkrVK4jbkUJP8CWxa68Ne7xp+QXO4S/xpzM
-         DtAa+A64SgX3/JQGYvZO32WhI5FpMREdZGrjjB+HN5AZCSNCQYWtWEk3WMcsf2DNW8kG
-         CLvAxMEPIE0a9327h63DiFexrvSnnvyck5yeFj0TIWXwMwplKW2F3o4T9JwzNMqm7dfD
-         LS5OAaXaQ/DV+ZcY5qz8V6ToVHPG15vHGRl0kUO0YUfDIBaEq+OKbE0liBMpozk1/Piw
-         urmg==
-X-Gm-Message-State: APjAAAVMYytHzeF1A+mt/u7HCxv6HepJiDGkMk/wxzPy59FnUnix2uTl
-        Wz4NfWyOw6FCEK1MIZJq4zw=
-X-Google-Smtp-Source: APXvYqxCo1LwTN0sQhx7i3/0ZpNkY3S1kJU6FpAfhjyeONAlgrbV9X92mqjCoUEGaQo8g/GEH2hg6A==
-X-Received: by 2002:a1c:9d13:: with SMTP id g19mr13996248wme.159.1572259966838;
-        Mon, 28 Oct 2019 03:52:46 -0700 (PDT)
-Received: from localhost.localdomain (x4db30d31.dyn.telefonica.de. [77.179.13.49])
-        by smtp.gmail.com with ESMTPSA id h205sm12562866wmf.35.2019.10.28.03.52.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 28 Oct 2019 03:52:46 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] builtin/blame.c: remove '--indent-heuristic' from usage string
-Date:   Mon, 28 Oct 2019 11:52:41 +0100
-Message-Id: <20191028105242.19260-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.24.0.rc1.538.gfb6e1f15ab
+        id S2388423AbfJ1K5i (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 06:57:38 -0400
+Received: from mout.gmx.net ([212.227.15.19]:58781 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728554AbfJ1K5i (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 06:57:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1572260247;
+        bh=nDDRaGWvShGM4HeBgletuefJl0JgdaqulEEGgnUu22I=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=XGBYqWQWLKshSjXPuYoGsSvXvBit++H55a3cFbsTMXbMA2Nu2AmvC7s7Pwqcy3imY
+         CGMDsL4YdZhy+9U8HzbFhi97OTxFByF6pVWJgPhPcZJM/naQkMATDXaCXNsfuVeugd
+         u9ADVREoFEpE1aLy759JY80MLu5iQbEmuVPiRaf4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MeU4s-1hobxr1Qbk-00aXYy; Mon, 28
+ Oct 2019 11:57:27 +0100
+Date:   Mon, 28 Oct 2019 11:57:10 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        David Turner <novalis@novalis.org>, git@vger.kernel.org
+Subject: Re: [PATCH 5/5] path.c: don't call the match function without value
+ in trie_find()
+In-Reply-To: <20191021160043.701-6-szeder.dev@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910281155220.46@tvgsbejvaqbjf.bet>
+References: <20191021160043.701-1-szeder.dev@gmail.com> <20191021160043.701-6-szeder.dev@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-1182291941-1572260247=:46"
+X-Provags-ID: V03:K1:2pO2VugeG3Xv/wByWZXS4Gk0pJYODrOfmrwqpCRX1/zdAJknm3l
+ LaPT4Wx08JRWVwpWVHoZCSpflsl8Qz8SvEpky2jaV4G409bQyMHvequMXx7D9HUuEApoP5S
+ B6IcnZ10cdGJ7b9dCfGaDpwBEFcWrRdth6fzvZUf4MuQvi3LNDDa7yU1pkewGaebEIUtaXh
+ e451G/iWdNFufJsRjFlqw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kNsmpqLQTcs=:hUC+BtBERk+nYBtdG92u+Y
+ wFkjikIIjksMaZG09S0qmX+klbuV3G5xY4Hps4RbcLfs9S/DtULTIPJhLmRy324ajq4G4nGTo
+ TKehRNRwyUYrT/jS4Px4utvhFSWad3Org+wlbgvUsNKeelilOiMxRO3d6YXCuhSzaF2DF3sV+
+ aQg7N0cItpAZ1gSbNXk50pfdOz8TOkddGXUn9uYg46un3A9j+gCxIsjpp2yoreB+YXJlq/W03
+ 0Eh2QqtKKQcLEnxJNqOECFzLfxW7JVaMgemj9QechjUYbhrvWy80C4olGOa6YqA7Jy/9SAIRf
+ Rx8ILNPf8NMJHSOnUEbEdSPjxJD/RAQkhNJpWFL7ttyMG4Cv78NRtLXwxATGAsza77HYt+WTh
+ p9xzHXdSJJVoKv6SM6gST02nr/MtBz7uYXPM1iUMl+b4117811ZiiB0a0cZO2Zwz9QKcF2Ak2
+ uQExSZ4hOjzlxVuNdFf8OTWZhsS8tZ6kK5xCn7BZwPDRMc83gxMXUI37S+Shwun8bR/pP/XVx
+ 7XWJFZuyogoYznkZ3Lk2CTWcdMSkzU1OEQtKzu40EEJZi073iKPpAbL+Bt+ahfk0HTE/rZ4fw
+ rtay9LXIpmFMLY/+5AEqRqk8nQvaaBXsd6HYty2qTfZkLX1N52Uup44gsjjg14yMXroowTBuF
+ y3KFoErjXKWyOCTFIU8pK4CeEOzphjah2eKsyBmNHIcWcOF0nW/KMZgvPdWe5RLlcDfCRu8W+
+ GutuUubtCfybJEKvTiOpo8zdjQUTszRbDcAv+CilBW/gsq51yHuDBtSa8vR0tqZLOv3NZeXez
+ Zronqb3RLns1xZFu7JcFNW3yZ56S2tIFkMgKxuGxkXpDHjQZrDZvMbZgIpPSI75c8OLmdA8wx
+ vZcxMaduPLvpsXEofABFnv4D5yM99mvE7Iunl/IAXNwdXdTaMc/5mVqzdqq5vWttH/YUbhOrM
+ IyDmxNISLRhZCh3y8DpSSF8v4lg2eRoQ0TWLPJLJ9BoclIDzy0pvkglAbwJXB1xcSkjpQoLPX
+ vbKdAYOLMmNRm5HTZ4yDsqFRY2kSh8OAN+TbQlpSOE1o7AS7FbWkJz/H+hHvo+WgYRHfw1yGG
+ E9O1SUGiJIjVWrODtnTBcI1xpLwHcm9upRlGizwyMx1YloSfQpiiPgwXOYZgTM1ecQype67+F
+ r0F7DnrWAkKRSCPj4p503AXmpvCXffyrhBszQXaXeWwam2L0LeHogmXrrDAisaRDa2OzUp+PL
+ 9JnlwAcJPpl64O8bK40T2GOl3byvTPfowNESbwuodyB2oeVEB78bmdzLyD3g=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The indent heuristic is our default diff heuristic since 33de716387
-(diff: enable indent heuristic by default, 2017-05-08), but the usage
-string of 'git blame' still mentions it as "experimental heuristic".
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-We could simply update the short help associated with the option, but
-according to the comment above the option's declaration it was "only
-included here to get included in the "-h" output".  That made sense
-while the feature was still experimental and we wanted to give it more
-exposure, but nowadays it's unnecessary.
+--8323328-1182291941-1572260247=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-So let's rather remove the '--indent-heuristic' option from 'git
-blame's usage string.  Note that 'git blame' will still accept this
-option, as it is parsed in parse_revision_opt().
+Hi G=C3=A1bor,
 
-Astute readers may notice that this patch removes a comment mentioning
-"the following two options", but it only removes one option.  The
-reason is that the comment is outdated: that other options was
-'--compaction-heuristic', and it has already been removed in
-3cde4e02ee (diff: retire "compaction" heuristics, 2016-12-23), but
-that commit forgot to update this comment.
+On Mon, 21 Oct 2019, SZEDER G=C3=A1bor wrote:
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
+> 'logs/refs' is not a working tree-specific path, but since commit
+> b9317d55a3 (Make sure refs/rewritten/ is per-worktree, 2019-03-07)
+> 'git rev-parse --git-path' has been returning a bogus path if a
+> trailing '/' is present:
+>
+>   $ git -C WT/ rev-parse --git-path logs/refs --git-path logs/refs/
+>   /home/szeder/src/git/.git/logs/refs
+>   /home/szeder/src/git/.git/worktrees/WT/logs/refs/
+>
+> We use a trie data structure to efficiently decide whether a path
+> belongs to the common dir or is working tree-specific.  As it happens
+> b9317d55a3 triggered a bug that is as old as the trie implementation
+> itself, added in 4e09cf2acf (path: optimize common dir checking,
+> 2015-08-31).
+>
+>   - According to the comment describing trie_find(), it should only
+>     call the given match function 'fn' for a "/-or-\0-terminated
+>     prefix of the key for which the trie contains a value".  This is
+>     not true: there are three places where trie_find() calls the match
+>     function, but one of them is missing the check for value's
+>     existence.
+>
+>   - b9317d55a3 added two new keys to the trie: 'logs/refs/rewritten'
+>     and 'logs/refs/worktree', next to the already existing
+>     'logs/refs/bisect'.  This resulted in a trie node with the path
+>     'logs/refs', which didn't exist before, and which doesn't have a
+>     value attached.  A query for 'logs/refs/' finds this node and then
+>     hits that one callsite of the match function which doesn't check
+>     for the value's existence, and thus invokes the match function
+>     with NULL as value.
+>
+>   - When the match function check_common() is invoked with a NULL
+>     value, it returns 0, which indicates that the queried path doesn't
+>     belong to the common directory, ultimately resulting the bogus
+>     path shown above.
+>
+> Add the missing condition to trie_find() so it will never invoke the
+> match function with a non-existing value.  check_common() will then no
+> longer have to check that it got a non-NULL value, so remove that
+> condition.
+>
+> I believe that there are no other paths that could cause similar bogus
+> output.  AFAICT the only other key resulting in the match function
+> being called with a NULL value is 'co' (because of the keys 'common'
+> and 'config').  However, as they are not in a directory that belongs
+> to the common directory the resulting working tree-specific path is
+> expected.
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
 
-Looking at the places listed by 'git grep "indent[ -]\?heuristic",
-this might be the last place where the indent heuristic was marked as
-experimental.
+Thank you for this entire patch series. Just one nit:
 
-In 'diff.c' we have the following option declaration:
 
-  OPT_BIT(0, "indent-heuristic", &options->xdl_opts,
-          N_("heuristic to shift diff hunk boundaries for easy reading"),
+> diff --git a/path.c b/path.c
+> index cf57bd52dd..e21b00c4d4 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -299,9 +299,13 @@ static int trie_find(struct trie *root, const char =
+*key, match_fn fn,
+>
+>  	/* Matched the entire compressed section */
+>  	key +=3D i;
+> -	if (!*key)
+> +	if (!*key) {
+>  		/* End of key */
+> -		return fn(key, root->value, baton);
+> +		if (root->value)
+> +			return fn(key, root->value, baton);
+> +		else
+> +			return -1;
 
-Here we could perhaps mention that it's the default; OTOH this help is
-never shown anywhere (there are just too many diff options to list).
+I would have preferred this:
 
- builtin/blame.c | 8 --------
- 1 file changed, 8 deletions(-)
++		if (!root->value)
++			return -1;
++		return fn(key, root->value, baton);
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 6386fbf189..b184cde4b7 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -861,14 +861,6 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		OPT_STRING_LIST(0, "ignore-revs-file", &ignore_revs_file_list, N_("file"), N_("Ignore revisions from <file>")),
- 		OPT_BIT(0, "color-lines", &output_option, N_("color redundant metadata from previous line differently"), OUTPUT_COLOR_LINE),
- 		OPT_BIT(0, "color-by-age", &output_option, N_("color lines by age"), OUTPUT_SHOW_AGE_WITH_COLOR),
--
--		/*
--		 * The following two options are parsed by parse_revision_opt()
--		 * and are only included here to get included in the "-h"
--		 * output:
--		 */
--		{ OPTION_LOWLEVEL_CALLBACK, 0, "indent-heuristic", NULL, NULL, N_("Use an experimental heuristic to improve diffs"), PARSE_OPT_NOARG, NULL, 0, parse_opt_unknown_cb },
--
- 		OPT_BIT(0, "minimal", &xdl_opts, N_("Spend extra cycles to find better match"), XDF_NEED_MINIMAL),
- 		OPT_STRING('S', NULL, &revs_file, N_("file"), N_("Use revisions from <file> instead of calling git-rev-list")),
- 		OPT_STRING(0, "contents", &contents_from, N_("file"), N_("Use <file>'s contents as the final image")),
--- 
-2.24.0.rc1.538.gfb6e1f15ab
+... as it would more accurately reflect my mental model of an "early
+out".
 
+But as I said, this is just a nit-pick.
+
+Thank you for working on this!
+Dscho
+
+> +	}
+>
+>  	/* Partial path normalization: skip consecutive slashes */
+>  	while (key[0] =3D=3D '/' && key[1] =3D=3D '/')
+> @@ -345,9 +349,6 @@ static int check_common(const char *unmatched, void =
+*value, void *baton)
+>  {
+>  	struct common_dir *dir =3D value;
+>
+> -	if (!dir)
+> -		return 0;
+> -
+>  	if (dir->is_dir && (unmatched[0] =3D=3D 0 || unmatched[0] =3D=3D '/'))
+>  		return dir->is_common;
+>
+> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+> index c7b53e494b..501e1a288d 100755
+> --- a/t/t0060-path-utils.sh
+> +++ b/t/t0060-path-utils.sh
+> @@ -288,6 +288,8 @@ test_git_path GIT_COMMON_DIR=3Dbar index            =
+        .git/index
+>  test_git_path GIT_COMMON_DIR=3Dbar HEAD                     .git/HEAD
+>  test_git_path GIT_COMMON_DIR=3Dbar logs/HEAD                .git/logs/H=
+EAD
+>  test_git_path GIT_COMMON_DIR=3Dbar logs/refs/bisect/foo     .git/logs/r=
+efs/bisect/foo
+> +test_git_path GIT_COMMON_DIR=3Dbar logs/refs                bar/logs/re=
+fs
+> +test_git_path GIT_COMMON_DIR=3Dbar logs/refs/               bar/logs/re=
+fs/
+>  test_git_path GIT_COMMON_DIR=3Dbar logs/refs/bisec/foo      bar/logs/re=
+fs/bisec/foo
+>  test_git_path GIT_COMMON_DIR=3Dbar logs/refs/bisec          bar/logs/re=
+fs/bisec
+>  test_git_path GIT_COMMON_DIR=3Dbar logs/refs/bisectfoo      bar/logs/re=
+fs/bisectfoo
+> --
+> 2.24.0.rc0.472.ga6f06c86b4
+>
+>
+
+--8323328-1182291941-1572260247=:46--
