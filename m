@@ -8,112 +8,91 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F10821F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 21:58:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F17CB1F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 22:01:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389347AbfJ1V6w (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 17:58:52 -0400
-Received: from mail-oi1-f176.google.com ([209.85.167.176]:41330 "EHLO
-        mail-oi1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731405AbfJ1V6v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 17:58:51 -0400
-Received: by mail-oi1-f176.google.com with SMTP id g81so7258249oib.8
-        for <git@vger.kernel.org>; Mon, 28 Oct 2019 14:58:51 -0700 (PDT)
+        id S1727239AbfJ1WBg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 18:01:36 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40532 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727107AbfJ1WBf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 18:01:35 -0400
+Received: by mail-wr1-f67.google.com with SMTP id o28so11497081wro.7
+        for <git@vger.kernel.org>; Mon, 28 Oct 2019 15:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=J0b6lXDLcD9AjU+cC7V/6mXvIJBkn27e4kRYsjVDaO0=;
-        b=azexkeVsQe2oieEkjWMExNaZ0dmDWv5giHf+V9ZK3y82fD+HpY4sOb7ZIA7OJs6VEG
-         1jIPWXT1oB0TBRhG+3K6fFRiJ+eckheQofo/LbjMkY5iouef76825Xwj1v3jp9P5/Pj3
-         qvTKcrGEx0dXF0YgFny1Ufg820kSBe6AzasoEMUsC0qBv7prt81895dor+uls4/5Gtn0
-         LL6RSAOk5vQgmJ3w4SDlCrxlS0fXPRiKuYdlNOZhbftqCNKARroYoQLAq1t4AgHDUHBi
-         GgQdPNfaLpiH/wA3IKw2YjT6ZvyrV/KNPVOQIBoZOoytnhxFfQjjwfy//N/lo8REaUTe
-         JdUg==
+        h=from:to:cc:subject:date:message-id;
+        bh=zCwmD05sku7CiK+/kH+whWWo22bq/8ISANkmtJjm0nI=;
+        b=VAjqKJqOoXIksx5FBh+oc5ZnACjgv2ovzovnKkBrZR2qQT8ctEWmAZYxsLNPZHOtmD
+         rHfc0YdbNxuh8h9B35H7n4n83Gnx+e9AG4zpMGsfjRbftPuWu4Q0t+gWXNz98aklf9cR
+         cr58k9WoDaoYc+fQS7kZ7THXndAB2bV11BIAAJIDWQfvwNmYR0pw7+k1J5mzimIlKW4i
+         BKqHm6O01nouNfGAyEKu7SMOuY/B2Vw0ZULXdtFuxnLtpSzZn7d4fPBI5WKBRjp74XVm
+         BRHNXMbJ+czKucAByuo4SS+P/BAea+FlWrFlL58WRQVL8JFdJtSsAw5hbtifWt1dIUp8
+         9FGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=J0b6lXDLcD9AjU+cC7V/6mXvIJBkn27e4kRYsjVDaO0=;
-        b=KpxWlOyTzh9u4UI9wc9HPV0jA+OS2wPVzZTInuiTtefC8kI2Fq+ee8RzlsHz5tlKZ2
-         2MCFegFB06NVICr6E51+2HFoH28ehuh8rzj/lJJsXSPID3NkahhZo9s6Wo7sPdfnPFq+
-         Uij81diFM6ewaOKHk+ylSAWlZW5m5vtc1Zr3zzLXEji8Wilqqh74TZYgeUGiIblgSu/v
-         H7hifZ543v986SXMQX58d3yW34rNJdWmV9ZeWQVwx882pRZq5RIGzJJeL2KgHcD2Yeg/
-         TnUql5UI8n5YA/3QP85NM480t6ZdXKzdApul66LAHkiUp/2Vh4LCDCW43PeetKlQ+9z1
-         KJAg==
-X-Gm-Message-State: APjAAAWOCvM5Su1fVOmJa7Mq7nSoHKCEsvFZHokjSI4TYkitzW3Q/by6
-        HW4fJeblUhLyaULhlVXYtKcuWcOdkYkNbPd2PH2/4g==
-X-Google-Smtp-Source: APXvYqybGGd0MMAadJ5BGKMJ2Po2J6T6oyTXhUFEtdQlHBo8aTt/oCJWAizye7aj9K2zyqt48rZhNcNeE68KilubLlY=
-X-Received: by 2002:aca:dad6:: with SMTP id r205mr1230399oig.6.1572299930376;
- Mon, 28 Oct 2019 14:58:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAOc6etaQvNChdRZ70xsYQxqtgmZVxaKV9K7_zZeET3JuQ4HEXg@mail.gmail.com>
-In-Reply-To: <CAOc6etaQvNChdRZ70xsYQxqtgmZVxaKV9K7_zZeET3JuQ4HEXg@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 28 Oct 2019 14:58:39 -0700
-Message-ID: <CABPp-BFWKJGiuRiE71yaLGfaOO3zobg4Hammyr37BZMghyXzgA@mail.gmail.com>
-Subject: Re: conflict markers on recursive strategy with diff3 enabled
-To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=zCwmD05sku7CiK+/kH+whWWo22bq/8ISANkmtJjm0nI=;
+        b=Cyo2L3QZ7s05J6As5irnW7srfklwb//XgxJGh2lP1/WK64OW0XHu6UFqIkjBaCy6Ey
+         34P2swYOAYWZGo8lFACROB+d+oVb19KiaGUSOzfKH11nrKJkK5V4mrjtfj/l5qBa8xtP
+         46i/qOyFahqSm7GO/NkKgpXBr0WjAfMt5k4mLGeWFM1eToOyPDS5QhL1eYZUBIwi5Os1
+         MFDYKgYgEFg8ZYW1H+OqHUV7rQSqT+FdSY6vBOHanadcmZuJ+i8wZ4JipsLWPJ5Y4nsL
+         rU2i8a2/HO1j5IQ/t2jjSo1FVa18jMmhfrbB6pZsYUhlVCPh7m7REkK02tNd0ecCfonZ
+         itfw==
+X-Gm-Message-State: APjAAAUKmx01DvMX4OmjPBRu12hVPlYyZdzEZuJ+TDxMFJUTbgyOlY9L
+        3+CW69or2VGTbvcw4nQ0ReFu8tbzRXI=
+X-Google-Smtp-Source: APXvYqw5tQJ7KaAEyUejiIk9cWnWOqSLQyYOeNGqTOPgvcvvEKDeZmfZ2QzjydrES3B0HjxmUyJTzQ==
+X-Received: by 2002:a5d:4dd2:: with SMTP id f18mr16160958wru.4.1572300093628;
+        Mon, 28 Oct 2019 15:01:33 -0700 (PDT)
+Received: from evergreen.lan (91.223.75.194.dyn.plus.net. [194.75.223.91])
+        by smtp.gmail.com with ESMTPSA id i3sm12849586wrw.69.2019.10.28.15.01.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 28 Oct 2019 15:01:32 -0700 (PDT)
+From:   Mihail Atanassov <m.atanassov92@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Mihail Atanassov <m.atanassov92@gmail.com>
+Subject: [PATCH v2] Documentation/git-bisect.txt: add --no-ff to merge command
+Date:   Mon, 28 Oct 2019 22:01:22 +0000
+Message-Id: <20191028220122.21449-1-m.atanassov92@gmail.com>
+X-Mailer: git-send-email 2.16.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Edmundo,
+The hotfix application example uses `git merge --no-commit` to apply
+temporary changes to the working tree during a bisect operation. In some
+situations this can be a fast-forward and `merge` will apply the hotfix
+branch's commits regardless of `--no-commit` (as documented in the `git
+merge` manual).
 
-On Fri, Oct 25, 2019 at 12:19 PM Edmundo Carmona Antoranz
-<eantoranz@gmail.com> wrote:
->
-> Hi!
->
-> I'm sitting down hunting for conflict examples and while looking
-> through past conflicts in git I found one that has a format that I
-> hadn't seen before. When merging the parents of 8b79343fc0 we get
-> this:
->
-> <<<<<<< HEAD
->
-> /*
-> * Unlink the .pack and associated extension files.
-> * Does not unlink if 'force_delete' is false and the pack-file is
-> * marked as ".keep".
-> */
-> extern void unlink_pack_path(const char *pack_name, int force_delete);
-> ||||||| merged common ancestors
-> >>>>>>>>> Temporary merge branch 2
-> =======
-> >>>>>>> 8b79343fc0^2
->
-> That is with merge.conflictStyle set to diff3. What I would like to
-> know is if the details about how the additional information that is
-> not normally seen on a conflict has to be interpreted (to be read as
-> "the part about the temporary branches"). I see some explanation about
-> it in [1] but when checking inside "git help merge" all I see is that
-> when you are using diff3 you will get the content of the parent but
-> there's more stuff than just that. Is it documented somewhere?
+In the pathological case this will make a `git bisect run` invocation
+loop indefinitely between the first bisect step and the fast-forwarded
+post-merge HEAD.
 
-The "||||||| merged common ancestors" section shows the content of the
-merge base, which itself contained conflict markers.
+Add `--no-ff` to the merge command to avoid this issue.
 
-The way the merge base can itself have conflict markers is as follows:
-when you go to merge your two branches, git finds that there isn't a
-unique merge base for doing the three-way merge.  You, in fact, have
-more than one merge base.  And so, it first merges those (and if those
-don't have a unique merge base, then their merge bases must first be
-merged...and so on -- thus the name of "recursive" for the merge
-algorithm).  When the algorithm runs into conflicts while merging the
-merge bases, it simply accepts the version of the file with the
-conflict markers as the correct resolution (because it has to pick
-something, and that is unlikely to erroneously match the outer
-contents on either side).
+Changes since v1:
+ - removed comment change
 
-Thus when using diff3 conflict style, you can sometimes see nested
-conflict markers.  And technically you can construct weird histories
-where you have arbitrarily deeply nested conflict markers as well, but
-it certainly isn't very common.
+Signed-off-by: Mihail Atanassov <m.atanassov92@gmail.com>
+---
+ Documentation/git-bisect.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 4b45d837a7..7586c5a843 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -413,7 +413,7 @@ $ cat ~/test.sh
+ 
+ # tweak the working tree by merging the hot-fix branch
+ # and then attempt a build
+-if	git merge --no-commit hot-fix &&
++if	git merge --no-commit --no-ff hot-fix &&
+ 	make
+ then
+ 	# run project specific test and report its status
+-- 
+2.16.4
 
-Hope that helps,
-Elijah
