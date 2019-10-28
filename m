@@ -2,75 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA1411F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 05:35:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 254681F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 05:58:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730026AbfJ1Ff1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 01:35:27 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57979 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726550AbfJ1Ff1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 01:35:27 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A5204284E3;
-        Mon, 28 Oct 2019 01:35:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gVTPADtt+skxtCgEfagKujiSJH0=; b=PKYJ3D
-        ALabK/ja7KSFWC9F5hGYC5VK4y2R8+iIVvsOYZIGz7MEyrlUK5ZTa05nqld/s/aO
-        nuMd3krJHG51iUD0/D/fscVWVx/pw/7uGSDL+oWMj+vCNzHrofdqbqzFaTh7qLxK
-        kZJ/TsObwhYtbveoCVvFgO8csV7jUUeAW22ww=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pk/ThXWNKlXxpr0ArRgeRy0l9pr+3DmB
-        gy55coD1RCwH5BB6/lCRIz6/+arLd/cCPSQP03Tjm+w5lVMLG3I5BBxUlF1TJ4Bz
-        9uNM03fA7v1jn5OqpKJYL6u4INTmnFUd9ajRyqLnkYMnYSssAjEmqOfVjNu0vK94
-        OVMuOREvTFY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9DC9B284E2;
-        Mon, 28 Oct 2019 01:35:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EAE04284E1;
-        Mon, 28 Oct 2019 01:35:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] stash: handle staged changes in skip-worktree files correctly
-References: <pull.355.git.gitgitgadget@gmail.com>
-        <4c684be1794cd0c62cc19d9c9558981584ec3e9a.1569483748.git.gitgitgadget@gmail.com>
-Date:   Mon, 28 Oct 2019 14:35:23 +0900
-In-Reply-To: <4c684be1794cd0c62cc19d9c9558981584ec3e9a.1569483748.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Thu, 26 Sep 2019
-        00:42:32 -0700 (PDT)")
-Message-ID: <xmqqy2x58mas.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1730265AbfJ1F6t (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 01:58:49 -0400
+Received: from mail-pf1-f180.google.com ([209.85.210.180]:34978 "EHLO
+        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725932AbfJ1F6t (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 01:58:49 -0400
+Received: by mail-pf1-f180.google.com with SMTP id d13so5093120pfq.2
+        for <git@vger.kernel.org>; Sun, 27 Oct 2019 22:58:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FK83Q01sgz6POJt+ag5/aATygdh304LLdL2ztDOyRiE=;
+        b=qmKUYqUo1I7/0tBv0Ezqmo+CY4BrDaU667EeBQSkTKclOMTtVL/5RNOFocg9iYx2/L
+         nZJBASyAr2W0lT/oNYgi83GMk2LLhhchSd90JgKOjoYr9IHN9g6QB+QfYI/yZ5afR4mB
+         7Jqkrhi8fC0Wtgx20gJFq5qlrx2ud7DnvwHiv86QphSxwzxeemTOw46uyOZRPJqCXN00
+         YYXBOKkr87T0jVRzalVrpLCzsNBHuxI9jHBafY0SRSNauzF+6dQVY96+mpvzhAoiexve
+         O8ijo3kMjAm4SIwLTyqlwHzu/2qUGXZVA0nVEWsdEKmV+VTq8V2VbKR3CD+ywzG7A8Rr
+         lmtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FK83Q01sgz6POJt+ag5/aATygdh304LLdL2ztDOyRiE=;
+        b=m8hAVMMuW6yRMEgpM68RNmmCApCma7xpcQxziSopTSOtNzAnvDCkEKv6wd6UYZwGw+
+         NyYiM2Ph/kz7F74i2onqgPTdrHxD+Azp5SVuyUZmODyA2hY8N1G/ahkPpgGIZFrRYN1B
+         mH/BNQw+ssZDszKhYEDwyZPG2QUWKpIlExbeAxneaGdL4NjrC4Oo4Na4cwW3Qho7M994
+         0ceapLuTtuaEWegtjfSg064wwKntHVIvV2hs8G1LcGjRc40OL7pX2iZhwScQpeQ5g2id
+         CW+Q8j8CFxiMjb/qrYAekWXTlTeeBrXEaD3KugbZ7NYqNRbNkAehJDggEs59M0TLskfh
+         QrmA==
+X-Gm-Message-State: APjAAAUVs90v+C7ZOJDXySACK8T6Vjs/XzcxwJ3ZFita6Fq+fep14jQf
+        ltK5YnWF8CCZjzeR3najWMBC1FcwbbGUsw==
+X-Google-Smtp-Source: APXvYqzYad/unasiymyzBv9hCbmWTwa5aYm/UMsBx2w44om7hIe5j3nEljFAB30QWqoYZqeB7rFOlg==
+X-Received: by 2002:a63:d651:: with SMTP id d17mr19846753pgj.106.1572242328694;
+        Sun, 27 Oct 2019 22:58:48 -0700 (PDT)
+Received: from localhost.localdomain ([47.89.83.4])
+        by smtp.gmail.com with ESMTPSA id a23sm9428518pfl.65.2019.10.27.22.58.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 27 Oct 2019 22:58:47 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+X-Google-Original-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+To:     Git List <git@vger.kernel.org>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.24.0 round #2
+Date:   Mon, 28 Oct 2019 13:58:34 +0800
+Message-Id: <20191028055834.96746-1-zhiyou.jx@alibaba-inc.com>
+X-Mailer: git-send-email 2.23.0.3.g72fac68ab1.dirty
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BDDAC74E-F944-11E9-9E09-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+From: Jiang Xin <worldhello.net@gmail.com>
 
-> When calling `git stash` while changes were staged for files that are
-> marked with the `skip-worktree` bit (e.g. files that are excluded in a
-> sparse checkout), the files are recorded as _deleted_ instead.
+Hi,
 
-Assuming that 1/2 makes sense to all of us, I think the changes in
-2/2 make 100% sense.
+Git v2.24.0-rc1 has been released, and it's time to start new round of git l10n.
+This time there is 1 updated message need to be translated since last update:
 
-Will queue.  Thanks.
+    l10n: git.pot: v2.24.0 round 2 (1 new)
+    
+    Generate po/git.pot from v2.24.0-rc1 for git v2.24.0 l10n round 2.
+    
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+
+You can get it from the usual place:
+
+    https://github.com/git-l10n/git-po/
+
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in "po/README" file.
+
+--
+Jiang Xin
