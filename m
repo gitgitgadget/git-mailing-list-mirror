@@ -3,46 +3,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1522A1F4C0
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29ED01F4C0
 	for <e@80x24.org>; Mon, 28 Oct 2019 00:59:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729086AbfJ1A7h (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Oct 2019 20:59:37 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54296 "EHLO
+        id S1729099AbfJ1A7i (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Oct 2019 20:59:38 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54320 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729040AbfJ1A7d (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 27 Oct 2019 20:59:33 -0400
+        by vger.kernel.org with ESMTP id S1729001AbfJ1A7f (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 27 Oct 2019 20:59:35 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6F77862062;
-        Mon, 28 Oct 2019 00:59:31 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5765B61CAF;
+        Mon, 28 Oct 2019 00:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1572224372;
-        bh=w/+wbft3C9E50SobW5TLIelUCHgfvWYMz4HIcJUKMz0=;
+        s=default; t=1572224374;
+        bh=na4mlvcxbHZ7355PqSw5f5f4BecqYOhtOH90JBEPPyE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=LKrH1GF7Vvs1O2DXW3eVCKIQBHTb99qGepPVctMnSlwHLZtx46NbgHuhBc8BDxkS7
-         e8mlt04aCnuxjzLqQVr+CDMbALDLYO0ED5s+C/3UaMPWxixcRAGudb9yZ8FXKhPUar
-         +t/dywHbtJt7Vqzdh812nm1/lVzc0D7feFqn5aJZrvF7azEHtcMDgGBVmvAp1kWIZD
-         c1bkdEI0UvqEOvpdPRd4IY+RmTIUHJQKsRjp3HR9gW1rjNjdXdhufilHxU/IDH4BWj
-         A+wY/shUq9xzS5Sy/qlwzumBVHWroUSDVmYIBrVCyPcguRyk/kqyVqt6W7bc/ngjFm
-         H91StgQBAVAEI1Bj4i99ifXJ46e3edPVnMY3d+PKdCpqGjbsAcFdDm1AirX1xWCsYs
-         XQ1ZgpD8a9Xo/a0v3wpfyzMD0LY4zVNM825/+8FODQ+qZdfAa39puec95uOYzxVK2q
-         nYEx6ApgMQmwoC7R6SS2ky3Rw6CXkadt4X6iGDMUCNuslfpTFj2
+        b=BtGnHQkaX5u+TLOog3KJDyh2f5Mg2XTWq6nDmb0FalVRPyu6rgo+O79ZK2Ysu8Aos
+         5YVCDjHXd0HxpfxXS+g6DwXnEVhqn6ypUbs+cLf8OwEUzHlfet3+aOrXtCt4WbmK48
+         KiBmPHZczeLiPdxqL0c6b7WNAB7Un8IQ2SLNyYXZ10o3CmQYxn26QPgmEGRCFl9LrS
+         iFkkrERnbwNEsmDDhtQB3e3/GtE0qmvhkK8z6Cr95/z/QbvAWlKsqav1lxKAIf3eSt
+         KvbkVIJOnOlvkL+XuaetSCbwWrzYdOguFLpOW0Wq/jBf3LdNK8CJst+PX7/TW2UluY
+         7y0whkxs2LqqusaR3oFEeVqUU21qSpIODlBomDIrCT8xDX8yprDbxcm873NVZkGXu2
+         aiEVQVOrn0mXqUVGjGqLe0lQUkeB/3YPrJEhkXdDlwrJ0fvgSojyH2eFI3ct94ItGM
+         xw9RK9HSUYYdjO+/yHVOAWlwJzOZWeaO1Cmrqru27l8YcRV9DQ6
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         Stefan Beller <stefanbeller@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2 09/15] t4027: make hash-size independent
-Date:   Mon, 28 Oct 2019 00:59:01 +0000
-Message-Id: <20191028005907.24985-10-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 12/15] t4039: abstract away SHA-1-specific constants
+Date:   Mon, 28 Oct 2019 00:59:04 +0000
+Message-Id: <20191028005907.24985-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665
 In-Reply-To: <20191028005907.24985-1-sandals@crustytoothpaste.net>
 References: <20191028005907.24985-1-sandals@crustytoothpaste.net>
@@ -53,63 +53,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of hard-coding the length of an object ID, look this value up
-using the translation tables.  Similarly, compute input data for invalid
-submodule entries using the tables as well.
+Adjust the test so that it computes variables for object IDs instead of
+using hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4027-diff-submodule.sh | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ t/t4039-diff-assume-unchanged.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
-index 9aa8e2b39b..e29deaf4a5 100755
---- a/t/t4027-diff-submodule.sh
-+++ b/t/t4027-diff-submodule.sh
-@@ -6,6 +6,7 @@ test_description='difference in submodules'
- . "$TEST_DIRECTORY"/diff-lib.sh
- 
- test_expect_success setup '
-+	test_oid_init &&
- 	test_tick &&
- 	test_create_repo sub &&
- 	(
-@@ -36,7 +37,8 @@ test_expect_success setup '
+diff --git a/t/t4039-diff-assume-unchanged.sh b/t/t4039-diff-assume-unchanged.sh
+index 53ac44b0f0..0eb0314a8b 100755
+--- a/t/t4039-diff-assume-unchanged.sh
++++ b/t/t4039-diff-assume-unchanged.sh
+@@ -12,6 +12,7 @@ test_expect_success 'setup' '
+ 	git commit -m zero &&
+ 	echo one > one &&
+ 	echo two > two &&
++	blob=$(git hash-object one) &&
+ 	git add one two &&
+ 	git commit -m onetwo &&
+ 	git update-index --assume-unchanged one &&
+@@ -20,7 +21,7 @@ test_expect_success 'setup' '
  '
  
- test_expect_success 'git diff --raw HEAD' '
--	git diff --raw --abbrev=40 HEAD >actual &&
-+	hexsz=$(test_oid hexsz) &&
-+	git diff --raw --abbrev=$hexsz HEAD >actual &&
- 	test_cmp expect actual
+ test_expect_success 'diff-index does not examine assume-unchanged entries' '
+-	git diff-index HEAD^ -- one | grep -q 5626abf0f72e58d7a153368ba57db4c673c0e171
++	git diff-index HEAD^ -- one | grep -q $blob
  '
  
-@@ -245,23 +247,21 @@ test_expect_success 'git diff (empty submodule dir)' '
- '
- 
- test_expect_success 'conflicted submodule setup' '
--
--	# 39 efs
--	c=fffffffffffffffffffffffffffffffffffffff &&
-+	c=$(test_oid ff_1) &&
- 	(
- 		echo "000000 $ZERO_OID 0	sub" &&
- 		echo "160000 1$c 1	sub" &&
- 		echo "160000 2$c 2	sub" &&
- 		echo "160000 3$c 3	sub"
- 	) | git update-index --index-info &&
--	echo >expect.nosub '\''diff --cc sub
-+	echo >expect.nosub "diff --cc sub
- index 2ffffff,3ffffff..0000000
- --- a/sub
- +++ b/sub
- @@@ -1,1 -1,1 +1,1 @@@
--- Subproject commit 2fffffffffffffffffffffffffffffffffffffff
-- -Subproject commit 3fffffffffffffffffffffffffffffffffffffff
--++Subproject commit 0000000000000000000000000000000000000000'\'' &&
-+- Subproject commit 2$c
-+ -Subproject commit 3$c
-+++Subproject commit $ZERO_OID" &&
- 
- 	hh=$(git rev-parse HEAD) &&
- 	sed -e "s/$ZERO_OID/$hh/" expect.nosub >expect.withsub
+ test_expect_success 'diff-files does not examine assume-unchanged entries' '
