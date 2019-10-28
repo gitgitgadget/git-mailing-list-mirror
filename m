@@ -2,91 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 544781F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 16:30:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D00AF1F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 16:55:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732684AbfJ1Q36 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 12:29:58 -0400
-Received: from renault.us.lt ([79.98.26.146]:36166 "EHLO renault.us.lt"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730838AbfJ1Q36 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 12:29:58 -0400
-X-Greylist: delayed 1615 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Oct 2019 12:29:57 EDT
-Received: from 78-58-194-223.static.zebra.lt ([78.58.194.223] helo=arch-usb.localdomain)
-        by renault.us.lt with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.92.3)
-        (envelope-from <kipras@kipras.org>)
-        id 1iP7Tw-0007Z5-Gg; Mon, 28 Oct 2019 18:03:00 +0200
-From:   Kipras Melnikovas <kipras@kipras.org>
-To:     gitster@pobox.com
-Cc:     dev@kipras.org, git@vger.kernel.org,
-        ungureanupaulsebastian@gmail.com
-Subject: Re: Re: [FR] Allow `git stash create` to include untracked changes
-Date:   Mon, 28 Oct 2019 18:03:05 +0200
-Message-Id: <20191028160305.169851-1-kipras@kipras.org>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <xmqqa79lbpte.fsf@gitster-ct.c.googlers.com>
-References: <xmqqa79lbpte.fsf@gitster-ct.c.googlers.com>
+        id S1731786AbfJ1Qza (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 12:55:30 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40417 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726234AbfJ1Qz3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 12:55:29 -0400
+Received: by mail-wr1-f66.google.com with SMTP id o28so10670905wro.7
+        for <git@vger.kernel.org>; Mon, 28 Oct 2019 09:55:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+WQ8pEDbDPbVMCGcWPU5uqvcppNEi1Zbdskk3RWslJo=;
+        b=qRCvVBC/8nJHqlWUib9ZdS5z2IUijUTijtEDY9JkHAidROK+uQO+jEuvSAKtKhS8gv
+         1I67YgO45M3Rk+SycRLlsPiEj6hrD4U6YtFyni4gGh7MjPyBGkK5Y5RxI+VLsULs74+X
+         z1UQI0Kxtm9mYaWKvr1mH9Ds80J+EX8go1vND5Wk9vH4ImBuky9Rn9kPfMEstH/u23wz
+         q/B7ZLtU0QfVLl2Xg5a5P5l91Ft9mFvM1pXByPMbOnLHAVi5r/KByx4iU+842vQ0moqY
+         SeNkHvCQVd04zLcSsRjwmXCMoZGbV1DEjJytbdpWuiNXjhMfV5ZynauCbEiMRn3FA+Up
+         ZrYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+WQ8pEDbDPbVMCGcWPU5uqvcppNEi1Zbdskk3RWslJo=;
+        b=JFj4e8POpumZqDrUyiRfMVeqIifyEqBcoRjZ8owUQg065drZXqeIs9zjL0GgbrJkLU
+         rwwp0KbFDMiJIiw/4s22jjOhlV9J7il9CMcbktDrcEcXMdMzisoQIu1QokBLTawFFXPS
+         QAhwAVj8G26ymuxLQepGadIosuQSdwcS452lWlditaKCcWFWLVLL+M+eYF59rtO5PNxl
+         72Y5GPNlXqFLm0iK4KxqdmtWaiDcp4Vp2FOxtEfpWNcWAPsTwvZfQtKQmjvJF91OQ4j3
+         FSXfxZyVErQyokM01kucSBtUUyQ6RZJSEttnwJY0cfyv2HMgHuEYh0JpEx/3h4zI5Z3M
+         8Ykg==
+X-Gm-Message-State: APjAAAVqca7KPooWrT0QF4sF8eA7KXM9gDhTRBC+Yhmi9d5L68p5hpoY
+        bi+5oewLn5aDVnV+Fsll9D8DeAPm
+X-Google-Smtp-Source: APXvYqzLrpnSjcCb4OlFnfFEufzLpWhXYDeGZKb+JjhWNJYU8QJRB3JlIniFXMoboa/z8ty1LTX00Q==
+X-Received: by 2002:adf:d183:: with SMTP id v3mr11274065wrc.316.1572281727397;
+        Mon, 28 Oct 2019 09:55:27 -0700 (PDT)
+Received: from localhost.localdomain ([139.47.116.205])
+        by smtp.gmail.com with ESMTPSA id u68sm188923wmu.12.2019.10.28.09.55.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 28 Oct 2019 09:55:26 -0700 (PDT)
+From:   Miriam Rubio <mirucam@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Miriam Rubio <mirucam@gmail.com>
+Subject: [Outreachy] [PATCH] clone: rename static function `dir_exists()`.
+Date:   Mon, 28 Oct 2019 17:55:23 +0100
+Message-Id: <20191028165523.84333-1-mirucam@gmail.com>
+X-Mailer: git-send-email 2.21.0 (Apple Git-122)
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authenticated-Id: dev@kipras.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-thank you for the info.
+builtin/clone.c has a static function dir_exists() that
+checks if a given path exists on the filesystem.  It returns
+true (and it is correct for it to return true) when the
+given path exists as a non-directory (e.g. a regular file).
 
-It seems like neither worked:
+This is confusing.  What the caller wants to check, and what
+this function wants to return, is if the path exists, so
+rename it to path_exists().
 
-export GIT_TEST_STASH_USE_BUILTIN=no
-git config --global stash.usebuiltin no
-
-The untracked files are still not stashed with `git stash create -u [some-argument]`, but are stashed successfully with `git stash push -u`,
-so unless I'm doing something wrong, this also doesn't help, sadly.
-
-Also, if there are no modified changes (only untracked ones), then `git stash create [-u [some-arg]]` (the non-builtin stash) will not even give you a commit object's name, thus it probably does not create the commit object at all.
-
-Also, the manual page of git-stash(1) not mention the `--include-untracked` option - this is why I posted in the first place.
-
-$ man git-stash
-...
-git stash create [<message>]
-git stash store [-m|--message <message>] [-q|--quiet] <commit>
-...
-
+Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
+ builtin/clone.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Is there any chance to
-
-* get the builtin stash to support `--include-untracked` option?
-
-* figure out if the legacy stash also works as intended with the `-u [some-arg]` option
-	* when there aren't any changes, except untracked/ignored ones, the commit object doesn't seem to be created (printed) at all
-	* why does it even require an argument?
-
-* update the manual page for git-stash(1)
-
-* check if everything's fine with `git stash store` too, just in case:D
-
-Is there anything else I need to do to get this issue reported or are you guys taking care of it?
-
----
-
-My stuff:
-
-$ git --version
-git version 2.23.0
-
-$ uname -a
-Linux arch-usb 5.3.7-arch1-1-ARCH #1 SMP PREEMPT Fri Oct 18 00:17:03 UTC 2019 x86_64 GNU/Linux
-
-Thank you for your time and support:)
-Kipras
+diff --git a/builtin/clone.c b/builtin/clone.c
+index c46ee29f0a..b24f04cf33 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -899,7 +899,7 @@ static void dissociate_from_references(void)
+ 	free(alternates);
+ }
+ 
+-static int dir_exists(const char *path)
++static int path_exists(const char *path)
+ {
+ 	struct stat sb;
+ 	return !stat(path, &sb);
+@@ -981,7 +981,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		dir = guess_dir_name(repo_name, is_bundle, option_bare);
+ 	strip_trailing_slashes(dir);
+ 
+-	dest_exists = dir_exists(dir);
++	dest_exists = path_exists(dir);
+ 	if (dest_exists && !is_empty_dir(dir))
+ 		die(_("destination path '%s' already exists and is not "
+ 			"an empty directory."), dir);
+@@ -992,7 +992,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		work_tree = NULL;
+ 	else {
+ 		work_tree = getenv("GIT_WORK_TREE");
+-		if (work_tree && dir_exists(work_tree))
++		if (work_tree && path_exists(work_tree))
+ 			die(_("working tree '%s' already exists."), work_tree);
+ 	}
+ 
+@@ -1020,7 +1020,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (real_git_dir) {
+-		if (dir_exists(real_git_dir))
++		if (path_exists(real_git_dir))
+ 			junk_git_dir_flags |= REMOVE_DIR_KEEP_TOPLEVEL;
+ 		junk_git_dir = real_git_dir;
+ 	} else {
+-- 
+2.21.0 (Apple Git-122)
 
