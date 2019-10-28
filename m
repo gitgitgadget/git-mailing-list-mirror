@@ -2,178 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EA4A1F4C1
-	for <e@80x24.org>; Mon, 28 Oct 2019 11:20:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94FF11F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 11:25:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727666AbfJ1LUW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 07:20:22 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36111 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727163AbfJ1LUV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 07:20:21 -0400
-Received: by mail-wr1-f68.google.com with SMTP id w18so9460112wrt.3
-        for <git@vger.kernel.org>; Mon, 28 Oct 2019 04:20:19 -0700 (PDT)
+        id S1731102AbfJ1LZh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 07:25:37 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52227 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727163AbfJ1LZh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 07:25:37 -0400
+Received: by mail-wm1-f65.google.com with SMTP id p21so9030625wmg.2
+        for <git@vger.kernel.org>; Mon, 28 Oct 2019 04:25:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=rf58ctcRegeRy/dZyPcek8fKkPbIZ/4vb0rrrq+UkKA=;
-        b=uqCcDZTENIV7xIApEP+QQkMrsgdFt+8WJWyJDdnb9iSEkpfGDzPOJbixHd9vNC3pjh
-         2P0SDEmX2iBAcW+UE+XHK73PhzOCtBw3QVvsyXRLP1c8BNzswdigAv8n0mSy8MhI2mgo
-         nI6JAW1FO4cz7ykUQm1zZB+LK5mb/lvi7i6vNnl9C93qfaMm+NFphFA1mM4NnygP8TYu
-         WHBfGMw3jCWLyYRW7p+Sfon3emHebX3IcZPDBKPmSvl0ZbjXnXkrP08R01XNaXGOeivg
-         4IenVeEZvJqkNrKv/9GEQIouoXVNN35HYuurf9k5kQifkp2Iur0vicS4GTz+fRW1r8GV
-         5eNg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=IhSeT8bDJ5vPMw2tYFIgP+IlnE7qvxnoQMRk+saC+bk=;
+        b=Tyv9CYscyfINWr6VC9ju820YGRFjnv+49uFp2UJqZc7t/2ERMyP3VGvMW4ID1NxDY8
+         1gTKGWxmQj3pakh2Kbcn6dANWmxNiKcKpnbwIsS//8z2L/cT65bmWZz5VS51flHHLKNO
+         jMjeN+7qN1CanfH1YMpqO+eyStcva3wLV71q8hfDWduz5sRXH/yxXqsQmGFgQ6V09EWd
+         k/NfheDNxuBXgSjHe5FfSuaIPJ2RZSlKgdWc0/lIklRA7dKs3hhly9jpoOfX9mACXbEe
+         EaM4JVWIFb16re7WgDw3Ly9uMK5iR3Kx+DSOd3g3rRtNNsjhBRdim/h6wx+BzDGOKxAC
+         awXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=rf58ctcRegeRy/dZyPcek8fKkPbIZ/4vb0rrrq+UkKA=;
-        b=f8mvyWa4toFfU72FL//CxSfdjYwdnm/mq5kUfQkAtyhKAxHXCwFaaVEa6FLYLX0kPz
-         kCTkaGjXM0QjkIsIW/7nNU+szO/L0FdReOJv5v1kmjPkkz5Hf7TEuQqhZWTleMjfgtIa
-         sY0V70+SvnB2tKBx5ur6zftyr+Audag4c3FCDjd1g3ximI7iKav4Cn8iJh5KKCxzhao5
-         j06NDEbL5NEna3FYgU3HS0o3v+18YDS4U34/FiwEDVq/v6ODpQN6+CdEG+MH/cGwXBgf
-         D+f7UbTUDksPu42U4TBOQ8Nr5xYMF1FfD21MqvZCRou2ozIJZzs1ZcC7Kv5L1K+PU5Hn
-         Spew==
-X-Gm-Message-State: APjAAAXrqDH6TvTXX0S9uqjA3jacZZcTmnbyQjdK5anFQ8U58FMjVyo1
-        NeCsIWNguoE7Cfs0HYPJ9E9RCeXA
-X-Google-Smtp-Source: APXvYqyjWc9IcbqSpecwwD1yNOVjQakmgC7/zp8T67NHdsQsal/xru1t5myCztkCtX9Vv/5PO7B7zA==
-X-Received: by 2002:adf:f010:: with SMTP id j16mr14958969wro.317.1572261617945;
-        Mon, 28 Oct 2019 04:20:17 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z13sm11091903wrm.64.2019.10.28.04.20.17
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=IhSeT8bDJ5vPMw2tYFIgP+IlnE7qvxnoQMRk+saC+bk=;
+        b=WzGH9YKHRA81YgTCtmDcKBWGg7iB6B0I1+TjkowuAaDIG2SM8o8yPU7lDjacgObhWR
+         t/z9HN8crxuSNNhHMxIkr12JNAHLJu+Ub7NEgByXGlD+a5slMP445FF1WAgOxGLg+2Tz
+         VqDmiAwsL1/FjPh+jWuMAl1rdbTQRUR5pfNIb01BVCIvffKk73CJo+QyCkGio8MrDDqT
+         1hB/8JDJr7hDG5pf2+PiFxmBBL/kBAl/jJ8dbNZi45eMTQ48VxLBFshlqrMgPflSXx08
+         Zq+C0CMA2I3Kgr20sryEWoM0LuAd9975ukV+AOcLFvbU1LefoDwETByWqfa2Znds1r02
+         gFFQ==
+X-Gm-Message-State: APjAAAVLqZnkC602DOtJdWHrjdGAWrOu14xpI+i10XEMGZOqh93yyhYg
+        WK6g6iK6VpCCS7ZAwAyLGjY=
+X-Google-Smtp-Source: APXvYqw4owFW1yHhWGY7fcOo+WtOe5ViexGS9mQZdoEyG7miX0fxkc/7IUJ1E2kXGOFY5eZeMrM68Q==
+X-Received: by 2002:a1c:20c9:: with SMTP id g192mr14044961wmg.74.1572261933659;
+        Mon, 28 Oct 2019 04:25:33 -0700 (PDT)
+Received: from szeder.dev (x4db30d31.dyn.telefonica.de. [77.179.13.49])
+        by smtp.gmail.com with ESMTPSA id b1sm11387489wru.83.2019.10.28.04.25.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Oct 2019 04:20:17 -0700 (PDT)
-Message-Id: <86dbb11f159375da281acd6266df019106abeadb.1572261615.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.355.v2.git.1572261615.gitgitgadget@gmail.com>
-References: <pull.355.git.gitgitgadget@gmail.com>
-        <pull.355.v2.git.1572261615.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 28 Oct 2019 11:20:14 +0000
-Subject: [PATCH v2 1/2] update-index: optionally leave skip-worktree entries
- alone
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 28 Oct 2019 04:25:32 -0700 (PDT)
+Date:   Mon, 28 Oct 2019 12:25:30 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] myfirstcontrib: add 'psuh' to command-list.txt
+Message-ID: <20191028112530.GQ4348@szeder.dev>
+References: <20191026005159.98405-1-emilyshaffer@google.com>
+ <20191026005159.98405-2-emilyshaffer@google.com>
+ <20191026010857.GA39574@google.com>
+ <20191026080057.GP4348@szeder.dev>
+ <xmqqmudlbr1s.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqmudlbr1s.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Mon, Oct 28, 2019 at 10:24:31AM +0900, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+> > See that last "no link: git-bisect" line?  That's what happened to
+> > catch my eyes when Derrick forgot to add his new 'sparse-checkout'
+> > builtin to 'command-list.txt'.  I still haven't looked up what that
+> > 'no link' is supposed to mean, but if it were an error, then we would
+> 
+> Build procedure for the Documentation uses ../command-list.txt as
+> its input to produce cmds-<class>.txt files, that are included in
+> git.txt (hence resulting git.1 and git.html).  While it works, it
+> tries to make sure that a command that has its own documentation
+> page at Documentation/git-<command>.txt is listed; otherwise we have
+> a page for <command> to which there is no link from git.{1,html}.
 
-While `git update-index` mostly ignores paths referring to index entries
-whose skip-worktree bit is set, in b4d1690df11 (Teach Git to respect
-skip-worktree bit (reading part), 2009-08-20), for reasons that are not
-entirely obvious, the `--remove` option was made special: it _does_
-remove index entries even if their skip-worktree bit is set.
+Oh, then it doesn't quite do what I thought it does.
 
-Seeing as this behavior has been in place for a decade now, it does not
-make sense to change it.
+> I think "make check-builtins" might also want to sanity check
+> command-list.txt.
 
-However, in preparation for fixing a bug in `git stash` where it
-pretends that skip-worktree entries have actually been removed, we need
-a mode where `git update-index` leaves all skip-worktree entries alone,
-even if the `--remove` option was passed.
+I haven't noticed that we have something like that.  FWIW, our
+documentation CI job runs it already.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git-update-index.txt |  6 ++++++
- builtin/update-index.c             |  6 +++++-
- t/t7012-skip-worktree-writing.sh   | 14 ++++++++++++++
- 3 files changed, 25 insertions(+), 1 deletion(-)
+And indeed it can be easily extended to check 'command-list.txt' as
+well, but then it will find some other builtins not included in
+'command-list.txt', namely:
 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 1c4d146a41..08393445e7 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -16,6 +16,7 @@ SYNOPSIS
- 	     [--chmod=(+|-)x]
- 	     [--[no-]assume-unchanged]
- 	     [--[no-]skip-worktree]
-+	     [--[no-]ignore-skip-worktree-entries]
- 	     [--[no-]fsmonitor-valid]
- 	     [--ignore-submodules]
- 	     [--[no-]split-index]
-@@ -113,6 +114,11 @@ you will need to handle the situation manually.
- 	set and unset the "skip-worktree" bit for the paths. See
- 	section "Skip-worktree bit" below for more information.
- 
-+
-+--[no-]ignore-skip-worktree-entries::
-+	Do not remove skip-worktree (AKA "index-only") entries even when
-+	the `--remove` option was specified.
-+
- --[no-]fsmonitor-valid::
- 	When one of these flags is specified, the object name recorded
- 	for the paths are not updated. Instead, these options
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index dff2f4b837..074d563df0 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -35,6 +35,7 @@ static int verbose;
- static int mark_valid_only;
- static int mark_skip_worktree_only;
- static int mark_fsmonitor_only;
-+static int ignore_skip_worktree_entries;
- #define MARK_FLAG 1
- #define UNMARK_FLAG 2
- static struct strbuf mtime_dir = STRBUF_INIT;
-@@ -381,7 +382,8 @@ static int process_path(const char *path, struct stat *st, int stat_errno)
- 		 * so updating it does not make sense.
- 		 * On the other hand, removing it from index should work
- 		 */
--		if (allow_remove && remove_file_from_cache(path))
-+		if (!ignore_skip_worktree_entries && allow_remove &&
-+		    remove_file_from_cache(path))
- 			return error("%s: cannot remove from the index", path);
- 		return 0;
- 	}
-@@ -1013,6 +1015,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		{OPTION_SET_INT, 0, "no-skip-worktree", &mark_skip_worktree_only, NULL,
- 			N_("clear skip-worktree bit"),
- 			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, UNMARK_FLAG},
-+		OPT_BOOL(0, "ignore-skip-worktree-entries", &ignore_skip_worktree_entries,
-+			 N_("do not touch index-only entries")),
- 		OPT_SET_INT(0, "info-only", &info_only,
- 			N_("add to index only; do not add content to object database"), 1),
- 		OPT_SET_INT(0, "force-remove", &force_remove,
-diff --git a/t/t7012-skip-worktree-writing.sh b/t/t7012-skip-worktree-writing.sh
-index 9d1abe50ef..28b1b0b2b9 100755
---- a/t/t7012-skip-worktree-writing.sh
-+++ b/t/t7012-skip-worktree-writing.sh
-@@ -134,6 +134,20 @@ test_expect_success 'git-clean, dirty case' '
- 	test_i18ncmp expected result
- '
- 
-+test_expect_success '--ignore-skip-worktree-entries leaves worktree alone' '
-+	test_commit geroff-me &&
-+	git update-index --skip-worktree geroff-me.t &&
-+	rm geroff-me.t &&
-+
-+	: ignoring the worktree &&
-+	git update-index --remove --ignore-skip-worktree-entries geroff-me.t &&
-+	git diff-index --cached --exit-code HEAD &&
-+
-+	: not ignoring the worktree, a deletion is staged &&
-+	git update-index --remove geroff-me.t &&
-+	test_must_fail git diff-index --cached --exit-code HEAD
-+'
-+
- #TODO test_expect_failure 'git-apply adds file' false
- #TODO test_expect_failure 'git-apply updates file' false
- #TODO test_expect_failure 'git-apply removes file' false
--- 
-gitgitgadget
+  bisect--helper env--helper fsck-objects init-db merge-ours
+  merge-recursive merge-subtree remote-ext remote-fd submodule--helper
+
+I think it makes sense not to include the '*--helper' commands, or
+'fsck-objects' and 'init-db', but I'm not sure about the others.
+
+OTOH, it won't help if we add a new git-foo script and forgot to
+include it in 'command-list.txt'.
 
