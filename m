@@ -2,122 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D00AF1F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 16:55:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 888181F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 17:34:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731786AbfJ1Qza (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 12:55:30 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:40417 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726234AbfJ1Qz3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 12:55:29 -0400
-Received: by mail-wr1-f66.google.com with SMTP id o28so10670905wro.7
-        for <git@vger.kernel.org>; Mon, 28 Oct 2019 09:55:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+WQ8pEDbDPbVMCGcWPU5uqvcppNEi1Zbdskk3RWslJo=;
-        b=qRCvVBC/8nJHqlWUib9ZdS5z2IUijUTijtEDY9JkHAidROK+uQO+jEuvSAKtKhS8gv
-         1I67YgO45M3Rk+SycRLlsPiEj6hrD4U6YtFyni4gGh7MjPyBGkK5Y5RxI+VLsULs74+X
-         z1UQI0Kxtm9mYaWKvr1mH9Ds80J+EX8go1vND5Wk9vH4ImBuky9Rn9kPfMEstH/u23wz
-         q/B7ZLtU0QfVLl2Xg5a5P5l91Ft9mFvM1pXByPMbOnLHAVi5r/KByx4iU+842vQ0moqY
-         SeNkHvCQVd04zLcSsRjwmXCMoZGbV1DEjJytbdpWuiNXjhMfV5ZynauCbEiMRn3FA+Up
-         ZrYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+WQ8pEDbDPbVMCGcWPU5uqvcppNEi1Zbdskk3RWslJo=;
-        b=JFj4e8POpumZqDrUyiRfMVeqIifyEqBcoRjZ8owUQg065drZXqeIs9zjL0GgbrJkLU
-         rwwp0KbFDMiJIiw/4s22jjOhlV9J7il9CMcbktDrcEcXMdMzisoQIu1QokBLTawFFXPS
-         QAhwAVj8G26ymuxLQepGadIosuQSdwcS452lWlditaKCcWFWLVLL+M+eYF59rtO5PNxl
-         72Y5GPNlXqFLm0iK4KxqdmtWaiDcp4Vp2FOxtEfpWNcWAPsTwvZfQtKQmjvJF91OQ4j3
-         FSXfxZyVErQyokM01kucSBtUUyQ6RZJSEttnwJY0cfyv2HMgHuEYh0JpEx/3h4zI5Z3M
-         8Ykg==
-X-Gm-Message-State: APjAAAVqca7KPooWrT0QF4sF8eA7KXM9gDhTRBC+Yhmi9d5L68p5hpoY
-        bi+5oewLn5aDVnV+Fsll9D8DeAPm
-X-Google-Smtp-Source: APXvYqzLrpnSjcCb4OlFnfFEufzLpWhXYDeGZKb+JjhWNJYU8QJRB3JlIniFXMoboa/z8ty1LTX00Q==
-X-Received: by 2002:adf:d183:: with SMTP id v3mr11274065wrc.316.1572281727397;
-        Mon, 28 Oct 2019 09:55:27 -0700 (PDT)
-Received: from localhost.localdomain ([139.47.116.205])
-        by smtp.gmail.com with ESMTPSA id u68sm188923wmu.12.2019.10.28.09.55.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Oct 2019 09:55:26 -0700 (PDT)
-From:   Miriam Rubio <mirucam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Miriam Rubio <mirucam@gmail.com>
-Subject: [Outreachy] [PATCH] clone: rename static function `dir_exists()`.
-Date:   Mon, 28 Oct 2019 17:55:23 +0100
-Message-Id: <20191028165523.84333-1-mirucam@gmail.com>
-X-Mailer: git-send-email 2.21.0 (Apple Git-122)
+        id S1731914AbfJ1ReO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 13:34:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57729 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729246AbfJ1ReO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 13:34:14 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2E61D27803;
+        Mon, 28 Oct 2019 13:30:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hhUEFLIcEKYo7SUNWgAqNHvYosU=; b=RGq56m
+        8UgsA6L2QFhl9PWxBF0o01513y6D0Mt41YganvOYstq6E65bsq4xBGylRqfGJ6lM
+        EwQ8YuDLIvLLC2NzL8DL7Gwjzy8RbtPR3V7nnqRRzX4vaCew5mRmEQI1C4UxvGA1
+        8lnVr6WyjBK/D+nSNEB0kzktJZbZqrLdWZsJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lE+bz+u/4Mz3Mj98tDfMlj34RZzsUOsg
+        EU8SEN/upkJJHGJNbZOsJoaCvYcZ1xBTzyj10EpzC2SSarlcB+xP/c7jdT/IQtdl
+        i93xAEuiAwKK2cGyevwJ+mulP65nqsTZNJKIRWURmW+StAKgGbl+7UXMR8VevXkb
+        OCtxYwmWps0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1091F27802;
+        Mon, 28 Oct 2019 13:30:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BBF1527800;
+        Mon, 28 Oct 2019 13:30:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] git_path(): handle `.lock` files correctly
+References: <pull.401.v2.git.1571350077.gitgitgadget@gmail.com>
+        <pull.401.v3.git.1571694882.gitgitgadget@gmail.com>
+        <8b1f4f089a6d4a2293507a1a77668c828598e84f.1571694882.git.gitgitgadget@gmail.com>
+        <20191022160105.GE4348@szeder.dev>
+        <nycvar.QRO.7.76.6.1910281225260.46@tvgsbejvaqbjf.bet>
+Date:   Tue, 29 Oct 2019 02:30:18 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1910281225260.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 28 Oct 2019 13:01:49 +0100 (CET)")
+Message-ID: <xmqqtv7s93rp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9D299232-F9A8-11E9-B173-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-builtin/clone.c has a static function dir_exists() that
-checks if a given path exists on the filesystem.  It returns
-true (and it is correct for it to return true) when the
-given path exists as a non-directory (e.g. a regular file).
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This is confusing.  What the caller wants to check, and what
-this function wants to return, is if the path exists, so
-rename it to path_exists().
+>>   size_t len;
+>>   if (strip_suffix(base, ".lock", &len))
+>>           base = base2 = xstrndup(base, len);
+>
+> Actually, we should probably avoid the extra allocation. Earlier, I was
+> concerned about multi-threading issues when attempting to modify the
+> `strbuf`. But then, we modify that `strbuf` a couple of lines later
+> anyway, so my fears were totally unfounded. Therefore, my current
+> version reads like this:
+>
+> -- snip --
+> 	int has_lock_suffix = strbuf_strip_suffix(buf, LOCK_SUFFIX);
+>
+> 	init_common_trie();
+> 	if (trie_find(&common_trie, base, check_common, NULL) > 0)
+> 		replace_dir(buf, git_dir_len, common_dir);
+>
+> 	if (has_lock_suffix)
+> 		strbuf_addstr(buf, LOCK_SUFFIX);
+> -- snap --
 
-Signed-off-by: Miriam Rubio <mirucam@gmail.com>
----
- builtin/clone.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index c46ee29f0a..b24f04cf33 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -899,7 +899,7 @@ static void dissociate_from_references(void)
- 	free(alternates);
- }
- 
--static int dir_exists(const char *path)
-+static int path_exists(const char *path)
- {
- 	struct stat sb;
- 	return !stat(path, &sb);
-@@ -981,7 +981,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		dir = guess_dir_name(repo_name, is_bundle, option_bare);
- 	strip_trailing_slashes(dir);
- 
--	dest_exists = dir_exists(dir);
-+	dest_exists = path_exists(dir);
- 	if (dest_exists && !is_empty_dir(dir))
- 		die(_("destination path '%s' already exists and is not "
- 			"an empty directory."), dir);
-@@ -992,7 +992,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		work_tree = NULL;
- 	else {
- 		work_tree = getenv("GIT_WORK_TREE");
--		if (work_tree && dir_exists(work_tree))
-+		if (work_tree && path_exists(work_tree))
- 			die(_("working tree '%s' already exists."), work_tree);
- 	}
- 
-@@ -1020,7 +1020,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (real_git_dir) {
--		if (dir_exists(real_git_dir))
-+		if (path_exists(real_git_dir))
- 			junk_git_dir_flags |= REMOVE_DIR_KEEP_TOPLEVEL;
- 		junk_git_dir = real_git_dir;
- 	} else {
--- 
-2.21.0 (Apple Git-122)
-
+Makes sense.  Thanks for thinking it through.
