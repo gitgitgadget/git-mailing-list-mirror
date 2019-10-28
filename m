@@ -2,94 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E08DE1F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 10:13:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C5DD1F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 10:14:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732899AbfJ1KNx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 06:13:53 -0400
-Received: from mail-wm1-f50.google.com ([209.85.128.50]:50898 "EHLO
-        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732270AbfJ1KNw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 06:13:52 -0400
-Received: by mail-wm1-f50.google.com with SMTP id 11so8784582wmk.0
-        for <git@vger.kernel.org>; Mon, 28 Oct 2019 03:13:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xrUrJPDNwQHKvFocnXM31RsFlH6TPJVUOvAQX20RX/M=;
-        b=KEnjQekKAIbKfs54wZa2AH3jDz5HODZPlUwR5k4bBhh5mL/3R7O+j+TTg0CL3jgTIv
-         VEIoHoHGEUcEChST5Y+z8SeBsjjX9qhb/fceYdZiR5V/WQljLL1JZqqXwSaVJhHNRSfc
-         UKy8yG/luD9YCOMc96DJmbmnicYEi9HwyQgZI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=xrUrJPDNwQHKvFocnXM31RsFlH6TPJVUOvAQX20RX/M=;
-        b=hL6YcDL8z/oZR3DtptnYrPo6cFaKGwd1BlpwYeUcvEmMjoqLgSuGtVpxjR1iQ0UCos
-         b9fDRm8BRln+Z1dBhphU5JhQHDIwr8QjyVLRR/lCZ3cS3NTyP+C10bXkWEIgkUO4MgaM
-         1VaEKcumktYrhdmlqMt7O1UUoWW3RzbNgI46IlO5F5cu4nk51Mi2T9hpE5tVLEuuZ1tY
-         bHW9Rj85D524tEkw4fpfQadhyPekj62261WgqgZWXOWgXPadzJSmGZxPmF2y7Xc0KWjq
-         IIyPNTIw9phDtvb0I/FWQeVG7fvFnIyJ6Zb5DHUf4da4aXen6Ure4TJ7GDuz1yj4BeJx
-         xJ1A==
-X-Gm-Message-State: APjAAAWN4hmk5kCtYJ82Sp1mOIZ1mdH9v7hG+mKajZx6zTN5jwNEcK49
-        B1M9qP4KQF1AfmfzWG3aHJygXA==
-X-Google-Smtp-Source: APXvYqxbpOFEKcikzZzFqHtZsQ1oles5cnjkjnEaB+IKArkmgs6TwfYXxSN8C84If3Oag//8wdO/+g==
-X-Received: by 2002:a7b:cf36:: with SMTP id m22mr14161194wmg.98.1572257630072;
-        Mon, 28 Oct 2019 03:13:50 -0700 (PDT)
-Received: from pure.paranoia.local ([91.217.168.176])
-        by smtp.gmail.com with ESMTPSA id y3sm16325235wro.36.2019.10.28.03.13.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2019 03:13:49 -0700 (PDT)
-Date:   Mon, 28 Oct 2019 06:13:47 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Pratyush Yadav <me@yadavpratyush.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Bert Wesarg <bert.wesarg@googlemail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: RFC: Moving git-gui development to GitHub
-Message-ID: <20191028101347.pofpm6m3hbxjhwlg@pure.paranoia.local>
-Mail-Followup-To: Jakub Narebski <jnareb@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Pratyush Yadav <me@yadavpratyush.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Bert Wesarg <bert.wesarg@googlemail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Johannes Sixt <j6t@kdbg.org>
-References: <20191023201310.thzpxyoeb3ta55dc@yadavpratyush.com>
- <CABPp-BEHy8c3raHwf9aFXvXN0smf_WwCcNiYxQBwh7W6An60qQ@mail.gmail.com>
- <86k18rbbyz.fsf@gmail.com>
+        id S2388129AbfJ1KOS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 06:14:18 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:41071 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732270AbfJ1KOS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 06:14:18 -0400
+Received: from [92.30.121.54] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1iP22P-0007DE-CI; Mon, 28 Oct 2019 10:14:14 +0000
+Subject: Re: unpacking error
+To:     lyle.ziegelmiller@gmail.com, 'git bug report' <git@vger.kernel.org>
+References: <004101d58d24$4daab5b0$e9002110$@gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <91e5f3d8-d2cf-363c-2407-4b4dfb75e5a8@iee.email>
+Date:   Mon, 28 Oct 2019 10:14:13 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <86k18rbbyz.fsf@gmail.com>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <004101d58d24$4daab5b0$e9002110$@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 26, 2019 at 08:25:40PM +0200, Jakub Narebski wrote:
-> It is unfortunate that we have no tools described in "Patches carved
-> into developer sigchains"[3] wishfull blog post by Konstantin Ryabitsev...
+On 28/10/2019 00:11, lyle.ziegelmiller@gmail.com wrote:
+> Hi
+>
+> I almost always get this error when pushing from my PC to the bare
+> repository on my laptop. I'm running Cygwin on Windows 10. I've tried
+> everything! chmod -R 777, chown -R <my user id>, etc.
+>
+> A few more details: I have a Git repository on my PC, and from that, I've
+> cloned a bare repository on my laptop,
 
-We are working to get us there. It's going to be a long process and we
-are choosing the evolutionary approach as opposed to staging a
-revolution. :)
+How did you clone that bare repository? In particular, how did you 
+provide the path to that repo.
 
--K
+If I understand correctly it must be in a URL format (e.g. file://) to 
+ensure that you get distinct repos, rather than two interrelated repos 
+(thought the docs discuss the issue as being the transport mechanism).
+
+The same issue probably applies to the subsequent clones of the bare repo.
+
+Perhaps focus on the error message and decide if "." is the correct way 
+of thinking about the path.
+
+>   which I then used to clone a regular
+> repository on my laptop. The error occurs when I attempt to push changes on
+> my PC into the bare repository on my laptop.
+>
+> If I delete the old bare repository on my laptop, I'm able to create a new
+> bare repository on my laptop from my pc, but then as soon as I try to push
+> to it, I get this error again. I've tried disabling the anti-virus, etc.
+> I've spent hours Googling solutions. Nothing works! Many others have had
+> this same issue. I never had this type of problem with SVN.
+>
+> It would be nice if Git would say what's failing when this happens, and it
+> would be nice to get this bug fixed. It happens with all my git
+> repositories. I don't think it's a network issue or I wouldn't be able to
+> create a new repository on my laptop from my PC, as that would encounter the
+> same permissions issues.
+>
+> The two machines are connected with an ethernet cable. I've done everything
+> I can to make sure all the Windows permissions are set correctly, etc.
+>
+> $ git push
+> Counting objects: 3, done.
+> Delta compression using up to 4 threads.
+> Compressing objects: 100% (3/3), done.
+> Writing objects: 100% (3/3), 331 bytes | 331.00 KiB/s, done.
+> Total 3 (delta 2), reused 0 (delta 0)
+
+> remote: fatal: not a git repository: '.'
+Why is the remote end of the connection reporting the error that it is 
+looking at "." (as opposed to a proper path/repo)?
+
+I could easily be wrong - I haven't double checked the man pages at all, 
+but thought a comment may help your research.
+> error: remote unpack failed: unpack-objects abnormal exit To
+> //lylez-laptop/Users/Administrator/bare-repositories/Tradelab-bare-repositor
+> y.git/
+>   ! [remote rejected] timestamp_testing -> timestamp_testing (unpacker error)
+> error: failed to push some refs to
+> '//lylez-laptop/Users/Administrator/bare-repositories/Tradelab-bare-reposito
+> ry.git/'
+>
+>
+> $ git --version
+> git version 2.17.0
+>
+> ------------------
+> System Information
+> ------------------
+>        Time of this report: 10/27/2019, 16:53:09
+>               Machine name: LJZ-DELLPC
+>                 Machine Id: {39BC0826-743F-4ECA-AFBE-66A14FBE533C}
+>           Operating System: Windows 10 Pro 64-bit (10.0, Build 17134)
+> (17134.rs4_release.180410-1804)
+>                   Language: English (Regional Setting: English)
+>        System Manufacturer: Dell Inc.
+>               System Model: Inspiron 3650
+>                       BIOS: BIOS Date: 06/17/16 21:14:07 Ver: 05.0000B (type:
+> BIOS)
+>                  Processor: Intel(R) Core(TM) i5-6400 CPU @ 2.70GHz (4 CPUs),
+> ~2.7GHz
+>                     Memory: 8192MB RAM
+>        Available OS Memory: 8096MB RAM
+>                  Page File: 8076MB used, 7243MB available
+>                Windows Dir: C:\WINDOWS
+>            DirectX Version: DirectX 12
+>        DX Setup Parameters: Not found
+>           User DPI Setting: 96 DPI (100 percent)
+>         System DPI Setting: 96 DPI (100 percent)
+>            DWM DPI Scaling: Disabled
+>                   Miracast: Available, with HDCP Microsoft Graphics Hybrid:
+> Not Supported
+>             DxDiag Version: 10.00.17134.0001 64bit Unicode
+>
+>
+> Regards,
+>
+> Lyle Ziegelmiller
+>
+>
+-- 
+Philip
