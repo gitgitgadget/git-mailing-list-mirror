@@ -8,133 +8,98 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D36CD1F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 13:16:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59DBA1F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 13:27:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388012AbfJ1NQK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 09:16:10 -0400
-Received: from mout.gmx.net ([212.227.15.15]:45857 "EHLO mout.gmx.net"
+        id S2389017AbfJ1N1v (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 09:27:51 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50681 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728954AbfJ1NQJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 09:16:09 -0400
+        id S1726691AbfJ1N1v (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 09:27:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572268567;
-        bh=GL2GBXTZSZz0utLqkYB3RujmS4KbnqrGMy+ksJtqAGM=;
+        s=badeba3b8450; t=1572269268;
+        bh=Fw++DueW827kvkH0EJZ/ktpFnUeHsjysButmuZBWGKk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dVe5smU2AL0+7sCMERC/WIim6MwrlW250B0BSF9amO1dapzEIuu+eT9WmCKTiFcZz
-         cHl3PF9t2wE5tU2NADk1Lw3xMCjXBkM1IG/fTmvCsB7n4u1zmvfbN7nHmbR2RfeV7Z
-         GFLK6cdQzJqm0j5Cl2Yb88A3ySlyaacFZeXjmwNo=
+        b=HGzNPduaLhvHbIb5/BAEVnxkWy0rPsxFb2KMdnm4b7/uPG0ATeuSy4ZRQNxDDrBmJ
+         TgDV6IIXUChiI9/CDygUiq2iYg4+w77Q/LXQF9DawJflTs5/kau7t5qtF1UEJwPkVs
+         Ak23pxxfwbGEzK82P6pyoibqt6yUUIPcor9nXhRI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbAh0-1hrvzD2mr2-00beLP; Mon, 28
- Oct 2019 14:16:07 +0100
-Date:   Mon, 28 Oct 2019 14:15:51 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAfYm-1iIRER3ppQ-00B05P; Mon, 28
+ Oct 2019 14:27:48 +0100
+Date:   Mon, 28 Oct 2019 14:27:32 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Pratyush Yadav <me@yadavpratyush.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/1] git-gui: remove unused global declarations
-In-Reply-To: <20191025013255.7367-1-me@yadavpratyush.com>
-Message-ID: <nycvar.QRO.7.76.6.1910281412300.46@tvgsbejvaqbjf.bet>
-References: <20191025013255.7367-1-me@yadavpratyush.com>
+Subject: Re: [PATCH v3 2/9] bugreport: generate config whitelist based on
+ docs
+In-Reply-To: <20191025025129.250049-3-emilyshaffer@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1910281425360.46@tvgsbejvaqbjf.bet>
+References: <20191025025129.250049-1-emilyshaffer@google.com> <20191025025129.250049-3-emilyshaffer@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:s0WA07zWpiCV2XiSWRmaAVsdKa/V0emBh0fZ4Lpd7t6/2gACYmN
- BfLX/F6VqTwgXRu1ASCsNe80qBTzUk/sHWByXDd09Humn7LekD+5bMOdsVB2h2LWQwAKRdB
- IaqRH2u4kB0iHGSBFKcIJkLF/nz9NWB3pERnSb9p2AddOQMsRsQsEiG56rNWhLsjAqHaxW+
- 9g/WGy6sOsue1C/k4q4uA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:FM8JBWu6XVI=:axc0rOX6EAPaGJUf31kMDO
- P0vuSdb+u530fRY9LAfobux2NwVwqkbKDGOJuUkvqy/kDtUfbQHcO17jWUKAKTe+LF55aHZaS
- t9Msqwhvq1SCoZUikHrLBtPF1NZua80UCLrckUTikJHGb1Oz+IaC7+bGxfXD8VtvfQZihOCvg
- 0HazYPQIrmMbBZdJ7kikJCfwwiEnC12Et7zjErKg4dkMEgKy/38qiQqmYALc0ROKMNbHZCM6z
- 2nMIQvfOXhLijbDdCjnFtwgDJ6kxbVrdN2LnixJ5bS+vjjBsM3LTTDYBdJUxcRPRcfz7o2kdt
- F98g/1E9r3DkOse399CVsyxu952n8kQJAbZvPZkIZlOYqVnzxT9siHmVgLy7K+HekUBJ+VOJX
- qYwYpm2JLIY/EijZMo4vFHMV4nV0KGIGq31CE65sSKuquqo8pd+ddQa4ZjE0vz75g0GCHdf4U
- xUoN9vEhMBvwJHXWtHmnxieEuRFm6/XDJ3/KiFvpR0GR8sKz0oa96KBBU0FCCmMGu/Jb5P8ab
- Q6azky2V0wzeDqU5kBksxfMpBL3fkruwrRiqgvTI+TvtNuzZATkOd87Fj5TusRRV9WnbvBR8s
- J9rhRpdgbp8HljbzsJilBE5r5NIGo11ZEb18ID5+ImJzXhjWTgAtTPOsV7VLusBBhpvD+DGpz
- j61Lb5F4eav728Bi1kexPw7ktig4sVbUyB1Wr4t8naDO2ijWmODTnY+09igA44jKoQMjRV2ip
- fbmE+g5Py1fVqMVo2dOh65HG6GGadOgrEoRJc6u1vZ9r+tv26TsMU+WD+WrGw4WHS3PegOajW
- thgKngwHvTX9Qy9QYHkkQp0WKUrtWIgdZ05P5iEYxZk8Hm9Yn3sS5hERM4uAG4KLi64bug7AY
- xW/ANWQgkfkaYGU6FCgbqLF5m3VprhoR3YuNKu3g2HOoJGqZIv17zegl6LpPZmSJOnXujvGD5
- Wdz/S5BntczHwQBIJLtg4PHhpLWDLjARtomHNt5xiMSP0swHxyde2rxT6ZiXmYvfEsnYtUp/P
- cN5b15gVEnyxCFFlfKmDAV0bh4ywDY86h78FPaN+OClIqefpHn1w6ITNHn/CqW7AU5rf4cwYc
- yJUw/+KD7uUWKtIfiuTYhh/xgeCAVQf3+2zN+no5NU8G6+n4USKteTocgY3IfhmvxWcKSrup6
- eqN2H9+qLinC2ya/x5L+BTxSEEtiRcv/9DVXuHSgd9iWVb0K5mqTkenyoneHwfSkbNKkgkmqi
- B8cx5QMFGt+7/d/E/ondvy8Ncvj2qjeGB+eLdtFh6lIhfgP8WyAYI7+vLQps=
+X-Provags-ID: V03:K1:Gc7ivBJ82Rd437SUUoWHE3LfJyOWQDgzBEP1EDvbsTkFBm1W7Ns
+ HYvpaR+u42cQ9uw3eiDLigtZy5UV3bJbcKVaSNbt6jTleoAT5lDZqYxC12TuZq/i8sKiZag
+ lkQGMTg6S+GD8SAO0Qv/OL0P0KXIEi1LB5pbCYQ29XCHgwjTSF12b+suuG571oo6CSFBgnt
+ ozO1DUZjXMpxzbo3JoqNw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:w5pEhDHuwts=:J9XVaaM1T3qHqLbyZ7bCj2
+ qohtlj9h4DRxoGrNE/hf2y3WGrOftJ3Rcx6/aKJrNjhWtBS+YSt/wWEEfvK074WHHEHFRhQuQ
+ Rl6ais1vq+TqlSZo77n9/SoRNHjkVU8KRZRwk9h07uDelxia2Vcp7Yp09rZsTp0y5hI3IMVjC
+ MSxx9OFuYXRLwNG0zKWz7O7IlmG9aXiKgfOWn3xc/gMTONRfQT/47IZUZC3P/vWEoTiglOo9v
+ FQbz6dtmPChl5FQrr+yZdecmK9WPFSVKkYFWDwwtLJFGmqFifX/6QRjvO125vZFS+NfSBDwf+
+ VbkjJFMQGRT4k4lyPzPXJkLIFx2r0J6cCloq+j2pmchnB3ENtWdjZ9pcz0lecXuNZGeu76LKI
+ BHRRZwHK+NsO/Zn0DgoElxzZavfRYMsLfb4j2Cgy5yzqWcU/jI0kOX9nXKJKgIvBEdumuB9px
+ K9DThPDKXG/96xPd/Im0qQGUag2LzhwNqbB5Lkgs0XOSJV8Q8uGVst984Mw5DLQYPuxgQjO+t
+ TSYwCH4vvu+hWiWOPTiiBo7F8w6Arfr8ZMiQgZF69CaoCikwTupMJf3TKTbrvg/iM4/cusswl
+ E87mwLE9jPTGaNV7MGkwhcE0CINstrSL59r7F/gsCI/kuXqV9KwT8UGHTv6BNcRfrBDsFTe2T
+ NyKw1RDH7cjaZhNC2ywQMH9QaF64l81S3TbYiMqiC0dAukaEz3Z3m3AdUHoGdi9V6bGK7KBHo
+ qxByhDkM/yr7Xzu7T/MqmU8XFbHw34aG0HXUeBHxSBBc5uwkVOlZ33vAb4QmWeUNzLIQRyzmS
+ xYX+3tUz5nVwbfNbXsyrZWxbf9LwIJCjPdNTvDwWzWx+HMRJnbx3FJkcJf7o3li3vZgMqYmGI
+ ar0MWZJkkgkAzBidiwdVm7eambVlYo8yEUmi2ZbBSTjRpB5s40GKMeaOaXXtSDNWDT/iTDBk+
+ GI7lm4iUyphR+2CwbSWxzJM6PsJIN5MHQTCpLU++MAA0BzhGVfDzm84E9b84WzkulOW5fGxp/
+ ecoyUtHJlDFes7xMgl7Z3hUPqhRp7RIlaByalocQMZ/zYwjDZVm8Y9EiqI1FP0UDOjfcIGySG
+ 0chUzcMv53mH6iiQAveOgQtEJq3kFMFrgLeYl9JVbTMCGL7V5xpdHJM3AgtAexOWM5GnYisfC
+ 16ErMWw4UeL8ydjhzMSAACA4M6usldFjufr6o3/Kx3MLrzC11jQ/w8ZzyuJaAlnLWmhGqS9wl
+ OENs5rVMvV3uVVcJD7bHSBQp0O7jdougfA8hbCN3M6+f0Ik35baWwZ1mRKLU=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pratyush,
+Hi Emily,
 
-On Fri, 25 Oct 2019, Pratyush Yadav wrote:
+On Thu, 24 Oct 2019, Emily Shaffer wrote:
 
-> A lot of places have unused global variables declared. Remove them.
->
-> It started as a couple of quick fixes and ended up in me writing an ugly
-> hacky script to catch all the instances of unused global declarations.
-> Lot more than I expected.
->
-> The script can be found at [0].
+> diff --git a/bugreport-generate-config-whitelist.sh b/bugreport-generate=
+-config-whitelist.sh
+> new file mode 100755
+> index 0000000000..ca6b232024
+> --- /dev/null
+> +++ b/bugreport-generate-config-whitelist.sh
+> @@ -0,0 +1,4 @@
+> +#!/bin/sh
+> +
+> +grep -RhPo ".*(?=3D:: \/\/ bugreport-include)" Documentation/config \
 
-Wouldn't it make more sense to integrate that script into a Makefile
-target `check`, rather than hiding it in a gist (that might become
-unavailable if GitHub goes away, as some of you seem to fear)?
+I am rather certain that `-P` is not supported by BSD grep (see
+https://man.openbsd.org/grep).
 
-> The script at [0] will only catch the unused globals in 'proc's. But
-> git-gui also has 'method's and 'constructor's. Just change '^proc' to
-> '^constructor' or '^method'.
+Why not something portable, e.g.
 
-Why not use `grep -E -n -e '^(proc|method)'`?
+	find Documentation/config -type f -exec cat {} \; |
+	sed -n 's/^\(.*\):: \/\/ bugreport-include$/\1/p' \
 
-> I manually checked each instance before removing just to be sure I'm not
-> doing something wrong. Still, a bit of testing would be appreciated.
-> Just apply this patch and go on about your business as usual. There
-> _should_ be no change in the behaviour. I tested some basic functions
-> like commit, push, etc, and they work fine for me.
-
-I would, if I used Git GUI regularly ;-)
+?
 
 Ciao,
 Dscho
 
->
-> [0] https://gist.github.com/prati0100/0f3ef903ad1658e76ea0b95f001b4865
->
-> Pratyush Yadav (1):
->   git-gui: remove unused global declarations
->
->  git-gui.sh                | 12 ++++--------
->  lib/about.tcl             |  2 +-
->  lib/blame.tcl             |  3 +--
->  lib/branch_checkout.tcl   |  2 +-
->  lib/branch_create.tcl     |  1 -
->  lib/branch_delete.tcl     |  2 +-
->  lib/browser.tcl           |  2 +-
->  lib/checkout_op.tcl       |  4 +---
->  lib/choose_font.tcl       |  2 +-
->  lib/choose_repository.tcl |  6 +++---
->  lib/class.tcl             |  1 -
->  lib/commit.tcl            | 10 +++-------
->  lib/console.tcl           |  2 +-
->  lib/database.tcl          |  2 +-
->  lib/diff.tcl              | 21 +++++++--------------
->  lib/error.tcl             |  2 +-
->  lib/index.tcl             |  9 ++++-----
->  lib/line.tcl              |  2 +-
->  lib/merge.tcl             |  5 ++---
->  lib/mergetool.tcl         | 10 +++++-----
->  lib/remote_add.tcl        |  5 ++---
->  lib/search.tcl            |  4 ++--
->  lib/sshkey.tcl            |  2 +-
->  lib/tools_dlg.tcl         |  6 +++---
->  24 files changed, 47 insertions(+), 70 deletions(-)
->
+> +  >git-bugreport-config-whitelist
 > --
-> 2.21.0
+> 2.24.0.rc0.303.g954a862665-goog
 >
 >
