@@ -8,108 +8,108 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C61CF1F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 12:57:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C27C61F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 13:05:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729334AbfJ1M5W (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 08:57:22 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:38884 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729284AbfJ1M5W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 08:57:22 -0400
-Received: by mail-wm1-f67.google.com with SMTP id 22so8898468wms.3
-        for <git@vger.kernel.org>; Mon, 28 Oct 2019 05:57:20 -0700 (PDT)
+        id S2388012AbfJ1NFu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 09:05:50 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35570 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726623AbfJ1NFu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 09:05:50 -0400
+Received: by mail-wr1-f68.google.com with SMTP id l10so9809178wrb.2
+        for <git@vger.kernel.org>; Mon, 28 Oct 2019 06:05:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Z6O0LxUrJwYuVGjxRR7DUhT/1ZDDCrOsg+uVNxrCuxk=;
-        b=LXXGx9I/for49OUCePKaQ4fg2xj8iJkcvEhg6R2snhMczIoeX9HK5qnOWwLVcnVygz
-         0/8IYQWNh/DQwA+1aaINDlKfJMfliRVmlK2HaUk1x6iR6mi9j/G1NdbGsVJL6JL7w6Zz
-         69zAwgzJY5skZcejV4lCuKuHL0sqZsQjsuODEQDtCaVplxvEGENhWj9wduPkgnVcsL2g
-         IO6+2foJWecfwCgb91UpapM3TAHZ0/eNuo9QQ3J9lZ+H0SVBVigr1Za8QJz/X4WBMnAE
-         AuFcurDAP7Y8MSmQ+KmS4ujxYmrWzigaFP2MY/lNSoL24ifCpsmZp39Yml1o32776zXw
-         QDvw==
+        bh=VGqYcXIcTL9Sir/TrpJhgTI680UpEeN7NyqzMTgvVvw=;
+        b=GTAzELOPbgQK9FNcd1P46BGG18T8opc1M9mf/NW6VXXa0OkntKfFkqZpfxPMVPgFWy
+         Nv6YIUWlg56DI83R8k58TN1XNtPxoSyQMm9Ve1/EFHqKDOOmfTtKVi3u9thzowwAvaBl
+         pFtPEiMBKHheWzZKlIkbl5SXKGToVfalack5pbte4wH13IpOY7Nz6nZ4t3Ysp+dUGbM3
+         PRh7iUIRB9pl+nuzwiMdn3Zl7u1ZQp8mU6iZnirxhPGUlG1CnzIOmWaMxsdJd0IME/QS
+         B/s/nCIiH1aBe+OSMcWDV6KaCed3ogl1Am7Q4LGqj4920FTifPJZiz1Q3AFAjrXTx8k+
+         gauw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Z6O0LxUrJwYuVGjxRR7DUhT/1ZDDCrOsg+uVNxrCuxk=;
-        b=BYbT/W+oZyMz7S1NBQJUCiHfyHuM9QDooatUvuL4Mq6/zqrW9ZI4kzAmBXNLCDWsgh
-         +QAXLNuCmTFTR7yYZ5odMGAltrrWl/EkY2D4p38ZlYiF/txqr4VPCEl9J9YUUMc8HTxC
-         bkEdli49Z66SRYck+8vUmRUTmFpcE4bY0IaAZMwz30WIapLVXPB6H/VHE2+QX3p2M0Nj
-         KAUtXOd3E3/++gOid3oisGn8KkFJtnm7ibucTk071DZBvCta+5pduuHW+pUMeFy7EOT+
-         GH4EWqyeJAX4LWWzQItZpUKTCeW0WmXq5ZIfsXSXs/VymYDy2ZL5islon3C0wZIIu1pA
-         E6fw==
-X-Gm-Message-State: APjAAAWbofJP2LPFziOV9zSnoO0ia35FrHdvtrDoqoKQT7rQQkzK7cf+
-        GjmsZ3C340D0p8h5QgFh/13HGziD
-X-Google-Smtp-Source: APXvYqxKECXsYW6pxc8G6FsolbiD4xYOBP5PdEiDvZ28ockjeINPLPenTml48BrxfYU9UwYkyRk9UA==
-X-Received: by 2002:a05:600c:24d2:: with SMTP id 18mr15632479wmu.139.1572267440277;
-        Mon, 28 Oct 2019 05:57:20 -0700 (PDT)
+        bh=VGqYcXIcTL9Sir/TrpJhgTI680UpEeN7NyqzMTgvVvw=;
+        b=P2y3ij5jDmz2PBslzpnO9boJdDK0CoFdoMCckBBQjplDDvN+f9/3ZNf2R1//m+zNT1
+         J6xfa3CobCGYD5MYWyQsazN90EA5ePUMaWe3yvSCJ66AOpyBWijbM+X0wMbsDZ2ljXYW
+         YFOzlNYTiGjdyqjLqWp6HvK+yWJCAXr77ZqM9lDpCv5KqS7tbdxUWDDy5SrHeBUP+yF/
+         O6G4Uxp3qEvxEaIYPG3iQEpuKouCvxVIxJWIGx/UgKTq4HTyaDTHnBJkHXI6VC0R9R4y
+         rBBd8qqvphL8xf6GNCZWYpM91MQuzrdpxvVP2gn0Q7s//oH+9BsH+sulD7QvNPbbmz2H
+         EzrA==
+X-Gm-Message-State: APjAAAUjsjMCK8DJ1EkjtRBxoqz9svA66g/TQePMTCLdm/FGIWOFlbW1
+        mhKV02FBd2FjY/UE8fmetBudrl6F
+X-Google-Smtp-Source: APXvYqyAHYezrt1lSN0x217YCn7KQ5EP93T+bk3ZYJaYQ/FUur1P66eT6vgRZDbTszvdT/MIAfoRxw==
+X-Received: by 2002:a5d:4701:: with SMTP id y1mr15954594wrq.385.1572267948320;
+        Mon, 28 Oct 2019 06:05:48 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k3sm10808377wro.77.2019.10.28.05.57.19
+        by smtp.gmail.com with ESMTPSA id a23sm4983840wmj.2.2019.10.28.06.05.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Oct 2019 05:57:19 -0700 (PDT)
-Message-Id: <cf97c5182eb98cc0ae72f94d4331abcb4486ca83.1572267438.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.401.v4.git.1572267438.gitgitgadget@gmail.com>
-References: <pull.401.v3.git.1571694882.gitgitgadget@gmail.com>
-        <pull.401.v4.git.1572267438.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 28 Oct 2019 12:57:17 +0000
-Subject: [PATCH v4 1/2] t1400: wrap setup code in test case
+        Mon, 28 Oct 2019 06:05:47 -0700 (PDT)
+Message-Id: <8026c7e9ab2f60af770fa66097d3220259201d8f.1572267946.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.433.git.1572267946.gitgitgadget@gmail.com>
+References: <pull.433.git.1572267946.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 28 Oct 2019 13:05:46 +0000
+Subject: [PATCH 1/1] help: add gitsubmodules to the list of guides
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-Without this, you cannot use `--run=<...>` to skip that part, and a run
-with `--run=0` (which is a common way to determine the test case number
-corresponding to a given test case title).
+The guide "gitsubmodules" was added in d480345 (submodules: overhaul
+documentation, 2017-06-22), but it was not added to
+command-list.txt when commit 1b81d8c (help: use command-list.txt
+for the source of guides, 2018-05-20) taught "git help" to obtain the
+guide list from this file.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Add it now, and capitalize the first word of the description of
+gitsubmodules, as was done in 1b81d8c (help: use command-list.txt
+for the source of guides, 2018-05-20) for the other guides.
+
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- t/t1400-update-ref.sh | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ Documentation/gitsubmodules.txt | 2 +-
+ command-list.txt                | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 1fbd940408..69a7f27311 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -344,14 +344,16 @@ test_expect_success "verifying $m's log (logged by config)" '
- 	test_cmp expect .git/logs/$m
- '
+diff --git a/Documentation/gitsubmodules.txt b/Documentation/gitsubmodules.txt
+index 0a890205b8..c476f891b5 100644
+--- a/Documentation/gitsubmodules.txt
++++ b/Documentation/gitsubmodules.txt
+@@ -3,7 +3,7 @@ gitsubmodules(7)
  
--git update-ref $m $D
--cat >.git/logs/$m <<EOF
--$Z $C $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 -0500
--$C $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150350 -0500
--$A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 -0500
--$F $Z $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150680 -0500
--$Z $E $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 -0500
--EOF
-+test_expect_success 'set up for querying the reflog' '
-+	git update-ref $m $D &&
-+	cat >.git/logs/$m <<-EOF
-+	$Z $C $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 -0500
-+	$C $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150350 -0500
-+	$A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 -0500
-+	$F $Z $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150680 -0500
-+	$Z $E $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 -0500
-+	EOF
-+'
+ NAME
+ ----
+-gitsubmodules - mounting one repository inside another
++gitsubmodules - Mounting one repository inside another
  
- ed="Thu, 26 May 2005 18:32:00 -0500"
- gd="Thu, 26 May 2005 18:33:00 -0500"
+ SYNOPSIS
+ --------
+diff --git a/command-list.txt b/command-list.txt
+index a9ac72bef4..72e435c5a3 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -203,6 +203,7 @@ gitmodules                              guide
+ gitnamespaces                           guide
+ gitrepository-layout                    guide
+ gitrevisions                            guide
++gitsubmodules                           guide
+ gittutorial-2                           guide
+ gittutorial                             guide
+ gitworkflows                            guide
 -- 
 gitgitgadget
-
