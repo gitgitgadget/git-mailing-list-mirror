@@ -2,136 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC92A1F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 22:24:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D611E1F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 23:42:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727905AbfJ1WYL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 18:24:11 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:43897 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725776AbfJ1WYK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 18:24:10 -0400
-Received: by mail-pg1-f195.google.com with SMTP id l24so7935433pgh.10
-        for <git@vger.kernel.org>; Mon, 28 Oct 2019 15:24:08 -0700 (PDT)
+        id S1726150AbfJ1Xmd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 19:42:33 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:38509 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725879AbfJ1Xmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 19:42:32 -0400
+Received: by mail-wr1-f68.google.com with SMTP id v9so11679256wrq.5
+        for <git@vger.kernel.org>; Mon, 28 Oct 2019 16:42:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=aQ6AFWDETUXHvHBTh/DhtMZ3deQBXNCdYsan0u0UfVc=;
-        b=V7s8eUEUdnhuhexPdLswAlWNjpRMwKSRrEfrf0JCSrUugyGTXPegYliWOI2HXSLzRm
-         CDrhFHahep4TUx+dPjq4TLwQ0x2W6PyWhT/UlAA3/LY8e0rh/wXEKk+uFNIm7TLy3NvZ
-         TrYStRrgPD1y14uVcjYveGnyycFHaSyXxlv0rVh2+w1sa6KIWbNmUkGTUyz4yunUrCzA
-         HNhnbWto8cxm1yFQ21hHnJmIVTYPswtS55tJ1HQQ82aD8GWnTpq4VEXXEVFieki6V38M
-         XTvNjbk+z7cu0N9I4PW23AKv/n/Fy6F/Xp5UNWqB0z9b61GnnoLA+MuL6r7BYUH6vFiH
-         5VVg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=VQzp1r5t5xfRYKmHzAmxZ6YVq1DFmoxB0RkkiEWciNk=;
+        b=QOICIOFmlkMRQup8qrSiNUb0FzaeNd+hF3TDY3mtYsgUZHGH6Xy/myd3+9u9XsUYOb
+         8t3sLD4bgY1QwG3r3omWD0HQEcyPObwgKt6Ux2ujfwhGtOTb9v0sCKrnvZ0xYQIMP8k3
+         IUfEGEXJ3m40GUl1wrF+y+EGnWzc77GyP8da1Ud7mCRvn2PHyLqIiQxm93IAjZ79A4wt
+         qE/JmD8iS4wnNYRPNCPmxWGIn5U8Ai0W3XbZANeK6/4rC26SutqUSo/GPj6oEejIyPEu
+         vkbEXwfjHXLwBtkyznjYhzaIQ6QPKU96lX0ZXORw2w6h74Pagz1VMOYI7MqKMdw2JKBl
+         8GRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=aQ6AFWDETUXHvHBTh/DhtMZ3deQBXNCdYsan0u0UfVc=;
-        b=EGiKS48PFXmcP0qL9JQf9OvL1if3p1ehkhSzChcVqi4oOBu5F4NFSdZAS40AtYo4Ac
-         zOunDAqcM5UJCVx6idiqmOdZGgZrp40yDOrLyy+CbKX1lr+ie3NFs/1Or7is2ZY8Kg7y
-         08r1AOYEC+snVRX5Of5Y8fu2cnj6LYAC2HTebVGAGqOkojE/SvSIR4N+xy1GILjacakV
-         mNLt8AkVbSmd75AdoY+jiHNx8Iw5vDhcUa+A9NFT8c3glMV/iUkjsgAQB+GNpECldI4Z
-         kyaf53Mry6btQ6tVp1/TTN7oJlxXwPnn9CL4tiHoqHYfJJMbsLQXnBBxpnB5deIyAkIC
-         pqQA==
-X-Gm-Message-State: APjAAAWrv0oIHTwpntE0T+PdNoRR8/OMpQZCO6qo7cY+zAmV6HsNdW+T
-        LXTup/09M0z550KX3t8Lxq8=
-X-Google-Smtp-Source: APXvYqyHxnOj85MbTiHnRM4qkcRDr4RKb+4s5nP2HchjHpH6JkRX1WaFegblVPKhG+RgNPRDAWpVfg==
-X-Received: by 2002:a65:46c8:: with SMTP id n8mr23497781pgr.354.1572301447738;
-        Mon, 28 Oct 2019 15:24:07 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id i123sm13875177pfe.145.2019.10.28.15.24.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2019 15:24:07 -0700 (PDT)
-Date:   Mon, 28 Oct 2019 15:24:05 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Mihail Atanassov <m.atanassov92@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Documentation/git-bisect.txt: add --no-ff to merge
- command
-Message-ID: <20191028222405.GE12487@google.com>
-References: <20191025222032.3399-1-m.atanassov92@gmail.com>
- <20191026022655.GF39574@google.com>
- <CALs020+0E=7wy-N46BRLrBcKmMSTpcMyZ9WybmgTzb60aCo5PQ@mail.gmail.com>
- <CALs020KFKOp4mFnY_2Mg5_H8Jc6PPV56O=1S66mriZA+XWd1Hg@mail.gmail.com>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=VQzp1r5t5xfRYKmHzAmxZ6YVq1DFmoxB0RkkiEWciNk=;
+        b=hvsMGUGjLnRxXyyM85P8X/56dIc8e/P2N2UFuiqZM0/UOHi0Q0cmm0NT/REftW+b40
+         ZNqT34yHeLFWdtdOoM7c3/E+QZPXQ1jZRtATfkKs7kHp2BA3FGNlEILQVcplATHRJqm9
+         F8N6uqWkSeoE5saiciyZqKkqp/dN4YFa+jZeW2EXy2btnFPoG4Zoc2lJmo6wlrWVKQ11
+         pTRmhqeBJUcV08S/eIM6PJ3s3V0uU9R701Dh/KjYKMhujIzqNvD03TYZaybg5qMVEnK+
+         Ux6Nd7sDBR1h7C+Ua5ZlSlJb0rdFOJi/oX4HERTTOqTsYvGNRebm++OyqQfVMnnyvpP5
+         TNmA==
+X-Gm-Message-State: APjAAAWpzVj1UkalwRdwmU6ZYESEuQiVMCc6i/g0DQ/TW01aNaFZXYYe
+        pQ/1wgavib5AKdjFqaYrOqBgwiYd
+X-Google-Smtp-Source: APXvYqwrxXZb/07+AAJ+DnjPHt+TNm6qMRwO0xXVUGPKZqbpeWkocgMbDmdnPolimw1S15vH4RPoeQ==
+X-Received: by 2002:adf:d18b:: with SMTP id v11mr647489wrc.308.1572306150775;
+        Mon, 28 Oct 2019 16:42:30 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h124sm1254879wmf.30.2019.10.28.16.42.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 28 Oct 2019 16:42:30 -0700 (PDT)
+Message-Id: <8c088194f604eac3a6b00c48a7fddfdf807571fc.1572306149.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.425.git.1572306149.gitgitgadget@gmail.com>
+References: <pull.425.git.1572306149.gitgitgadget@gmail.com>
+From:   "george espinoza via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 28 Oct 2019 23:42:29 +0000
+Subject: [PATCH 1/1] [Outreachy] merge-ours: include parse-options
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALs020KFKOp4mFnY_2Mg5_H8Jc6PPV56O=1S66mriZA+XWd1Hg@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+To:     git@vger.kernel.org
+Cc:     George Espinoza <gespinoz2019@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        george espinoza <gespinoz2019@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: george espinoza <gespinoz2019@gmail.com>
 
-Mihail Atanassov wrote:
+Teach this command which currently handles its own argv to use
+parse-options instead because parse-options helps make sure we handle
+user input like -h in a standardized way across the project.
+Also deleted the NO_PARSEOPT flag from git.c to coincide with
+the conversion of the structure in this command since merge-ours
+now uses parse-options and needed to update git.c accordingly.
 
-> Thanks for the quick turnaround! And apologies in advance for the delayed
-> and potentially mangled response, I can't get into my gmail account from
-> a sensible MUA...
+Signed-off-by: george espinoza <gespinoz2019@gmail.com>
+---
+ builtin/merge-ours.c | 14 ++++++++++----
+ git.c                |  2 +-
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-Interesting.  https://support.google.com/mail/thread/11736136 tells me
-there's an issue with Kmail's oauth support.  You might want to get in
-touch with the Kmail authors, or, as a fallback, use an application
-specific password or other mail client.
-
-[...]
-> On Sat, 26 Oct 2019 at 03:26, Jonathan Nieder <jrnieder@gmail.com> wrote:
-
->> Hmm.  I think the comment might put a bit too much emphasis on the
->> "how" instead of the "why".
-[...]
->> So I'd be tempted to leave the comment ending with "and then attempt a
->> build".
->
-> Fair point, I actually did spend a bit of time on the fence between your
-> suggestion and what I ultimately submitted. I ended up expanding on it
-> precisely because the '--no-ff' seems a bit arbitrary to the casual observer
-> and requires cross-referencing other documentation (which is how I figured
-> out I ought to produce this patch :)).
->
-> I can't think of any wording that would be any better, so I'll push a v2 with
-> no comment changes, and leave it to the reader's curiosity (or lack thereof).
-
-Thanks, that sounds good to me.
-
-As an orthogonal point, I wonder whether we can start the multi-step
-migration of making --no-commit imply --no-ff by default:
-
- 1. Act as --ff when --no-commit is passed without --ff or --no-ff
-    (the state today)
-
- 2. Warn when performing a fast-forward merge and --no-commit was
-    passed without --ff or --no-ff
-
- 3. Error out instead of performing a fast-forward merge when
-    --no-commit is passed without --ff or --no-ff
-
- 4. Warn and refuse to perform a fast-forward merge when --no-commit
-    is passed without --ff or --no-ff
-
- 5. Refuse to perform a fast-forward merge with --no-commit is passed
-    without --ff or --no-ff, just as though --no-ff were passed.
-
-(A config setting could allow people to get the futuristic behavior
-early.  And it might be possible to skip some steps. :))
-
-[...]
->>> -if   git merge --no-commit hot-fix &&
->>> +if   git merge --no-commit --no-ff hot-fix &&
->>
->> Good.
-
-This part still looks like a good change to me. :)
-
-Sincerely,
-Jonathan
+diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
+index 4594507420..fb3674a384 100644
+--- a/builtin/merge-ours.c
++++ b/builtin/merge-ours.c
+@@ -11,14 +11,20 @@
+ #include "git-compat-util.h"
+ #include "builtin.h"
+ #include "diff.h"
++#include "parse-options.h"
+ 
+-static const char builtin_merge_ours_usage[] =
+-	"git merge-ours <base>... -- HEAD <remote>...";
++static const char * const merge_ours_usage[] = {
++	N_("git merge-ours [<base>...] -- <head> <merge-head>..."),
++	NULL,
++};
+ 
+ int cmd_merge_ours(int argc, const char **argv, const char *prefix)
+ {
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage(builtin_merge_ours_usage);
++	struct option options[] = {
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, options, merge_ours_usage, 0);
+ 
+ 	/*
+ 	 * The contents of the current index becomes the tree we
+diff --git a/git.c b/git.c
+index ce6ab0ece2..6aee0e9477 100644
+--- a/git.c
++++ b/git.c
+@@ -527,7 +527,7 @@ static struct cmd_struct commands[] = {
+ 	{ "merge-base", cmd_merge_base, RUN_SETUP },
+ 	{ "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
+ 	{ "merge-index", cmd_merge_index, RUN_SETUP | NO_PARSEOPT },
+-	{ "merge-ours", cmd_merge_ours, RUN_SETUP | NO_PARSEOPT },
++	{ "merge-ours", cmd_merge_ours, RUN_SETUP },
+ 	{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+-- 
+gitgitgadget
