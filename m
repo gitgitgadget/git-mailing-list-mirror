@@ -2,133 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E516F1F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 06:39:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E54081F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 09:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730484AbfJ1Gj5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 02:39:57 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:39108 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730477AbfJ1Gj4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 02:39:56 -0400
-Received: by mail-ed1-f66.google.com with SMTP id l25so6995347edt.6
-        for <git@vger.kernel.org>; Sun, 27 Oct 2019 23:39:54 -0700 (PDT)
+        id S2388057AbfJ1JqA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 05:46:00 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:41018 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388052AbfJ1JqA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 05:46:00 -0400
+Received: by mail-io1-f65.google.com with SMTP id r144so9945044iod.8
+        for <git@vger.kernel.org>; Mon, 28 Oct 2019 02:46:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dropbox.com; s=corp;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WDKochLXLU5YzXAV7KJr8K4mR7/HgK6j65n05KkeE/U=;
-        b=Qt20ICLnre0bE3uCx80WFIgZ7vi1dk8hDZUYVV/Z5wh0IcLJCXyWyHKjB38qZg1Fut
-         j6FimwRSUOuRKtLRshaAzlz2QrKwpABca07UUApfPpTdyXWpsSLPdmUKK68zNG+Ka91t
-         HQD7I7PLJshu2fmepmNH1fjd+lWEnC/C/QoKk=
+         :cc:content-transfer-encoding;
+        bh=VQZgmHxtHfPKzF+6C5Ofe26Y8KXr+WD2I7S6rHVh4Y8=;
+        b=oiATUk4LYsSSQrDVn6PX07YZiB9rP/EYYGCt8lP03dpKo+2dH2fZH29S1DkRBLDfMl
+         0HaUMgFWCy66gyDu7KFoi+BflVlCUlQQuQSr9GYL1Gm8oJaBZsbjiooQ27b5TqEZg5fo
+         RJBAhHzLQa3XY4hyn4r8E3UxX7m2omlFJfy30Lm+aoLQMTSYO1HTgyIps4ZUE2gV5Zto
+         SEPortFhe7BIV2LDWNKeNYn5lKYtLNGDJIiNQtuxp/R7tCjeb2mCfU+R145NbnGc9MYB
+         vwQ1EMBuaehK86CRMCQRfYRSO6tH56LI88nNcqxqqrcJYEsg7wnHIelqjO9RhO7YFqeu
+         OX9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WDKochLXLU5YzXAV7KJr8K4mR7/HgK6j65n05KkeE/U=;
-        b=BQKnHrQQnhFXJeDwxC4zJ+T0zhC5StQeBni4FBgzb90fuS4yCPk6LrHYbu/Hg9ITE7
-         NPs5AZwrbEBeX2R9X5ecWGL33FChF8KPlny8B3qdoPZU1CBcZNSmqORVmETBACt6Yy/w
-         kNq9IXqhdRZk2uMNXGsFOV2TS53RTG1w1iVfutUks7aiesSvQrSkXgaIRxCrOa4nwJlj
-         aI3/agl2gEY+sKW9BX1cZRYZfBfNIlhhJp+8OJ8zJGDCYfByIlLceC8FxAOM5Bd6Rt1k
-         uBDdo6XVPJlaUywFhI9iasNvPMXj2/p9cBgVcZNIQ1udJw1cUCTOcbFeMihylxlJT3Ye
-         fSSg==
-X-Gm-Message-State: APjAAAWZTJ7hIcKR6Gti0w2RiXJRLfh+LksiXnWCe93nvuxIN+im0VDG
-        Hz3efHUi18FPj09JuVRWVJv13hSA5EkmQofttGnR2CAB3kV2fQ==
-X-Google-Smtp-Source: APXvYqxnKS0A924FIoBJbowgFXTLr52yG7erbUqIptxnRj05jC4LjK8X9YRQWTtYOAhA3BZLrg5x0bSkXSAPOSYKQeQ=
-X-Received: by 2002:a17:906:4347:: with SMTP id z7mr5547029ejm.117.1572244793445;
- Sun, 27 Oct 2019 23:39:53 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=VQZgmHxtHfPKzF+6C5Ofe26Y8KXr+WD2I7S6rHVh4Y8=;
+        b=il6NerH/PBiSwllMIQkvWIJvXuD+Y6xzShO7vvzhe/B7WBypATFtkcY1ze0Qxfb40Q
+         w1eQje0xtxhMJ0jqPlKAZdPyx1QIsMn49HF/HVYntrOlfTOS2EvFWD7HTyHNwQq59T82
+         62Bc5zzyrK14dsRhevKiTVtN8boouWctWWUAWX/o9kOjBm1kXbhzloWgvNElMlGUSr5A
+         GBVq6xD0C6M/LJUfukpTwKwc7EjlPnnjQnTasofc+Bey9TK4uIoppI80/W0y48YutOq+
+         6pr4umYfOVXXkltEN2qZtPwid8/uGEMfNDilFyJYy3R+a4lGmcbeUUs9Je5CDpt2/yWc
+         yb7A==
+X-Gm-Message-State: APjAAAWHHZS8yucrV84rQ0feIsjlw+bEmQmcV5Tv729zlaiz7E+6/86U
+        5KivZO37ukFGgc+6yS5yRvma4c52wz2QbdFTkjo=
+X-Google-Smtp-Source: APXvYqzThnktwFm1epoReU2AbV7pIOvfU6o/LqUm46GH+Eh+TXJ6tCvx7BOZYW1CzWtF9l2zx8hQSHXse3Mpi0xJ1ns=
+X-Received: by 2002:a5d:8c81:: with SMTP id g1mr9425896ion.70.1572255959608;
+ Mon, 28 Oct 2019 02:45:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.424.git.1572017008.gitgitgadget@gmail.com>
- <609c7c5047719a619ba22425dafc6ecd105e2cda.1572017008.git.gitgitgadget@gmail.com>
- <xmqq8sp5a6cd.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq8sp5a6cd.fsf@gitster-ct.c.googlers.com>
-From:   Utsav Shah <utsav@dropbox.com>
-Date:   Sun, 27 Oct 2019 23:39:42 -0700
-Message-ID: <CAPYzU3N9mDfHVogfq=mhJFj6VOjS2z4ui4msnDdK6pOtVBa_QA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] unpack-trees: skip lstat based on fsmonitor
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Utsav Shah via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Utsav Shah <ukshah2@illinois.edu>
+References: <20191027163038.47409-1-mirucam@gmail.com>
+In-Reply-To: <20191027163038.47409-1-mirucam@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Mon, 28 Oct 2019 02:45:48 -0700
+Message-ID: <CAPUEspjGUXC-rbF2gpeOfYcajm4mtGRiVNc+Bc3++JgapDLzxg@mail.gmail.com>
+Subject: Re: [Outreachy] [PATCH] dir: add new function `path_exists()`
+To:     Miriam Rubio <mirucam@gmail.com>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the review.
-
-On Sun, Oct 27, 2019 at 8:37 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Utsav Shah via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Utsav Shah <utsav@dropbox.com>
-> >
-> > git stash runs git reset --hard as its final step, which can be fairly slow on a large repository.
-> > This change lets us skip that if fsmonitor thinks those files aren't modified.
-> >
-> > git stash goes from ~8s -> 2s on my repository after this change.
->
-> Please line-wrap overlong lines.
->
-> More importantly, "stash" may be a mere symptom that does not
-> deserve this much emphasis.  What you improved directly is "git
-> reset --hard" isn't it?
->
->     The fsmonitor may know that a path hasn't been modified but
->     "git reset --hard" did not pay attention to it and performed
->     its own check based on ie_match_stat(), which was inefficient.
->
-> or something like that?
->
-> >       if (old && same(old, a)) {
-> >               int update = 0;
-> > -             if (o->reset && o->update && !ce_uptodate(old) && !ce_skip_worktree(old)) {
-> > +             if (o->reset && o->update && !ce_uptodate(old) && !ce_skip_worktree(old) &&
-> > +                 !(old->ce_flags & CE_FSMONITOR_VALID)) {
->
-> I wonder if !ce_uptodate(old) should say "this one is up to date and
-> not modified" when CE_FSMONITOR_VALID bit is set.  Are there other
-> codepaths that use ce_uptodate(ce) to decide to do X without paying
-> attention to CE_FSMONITOR_VALID bit?  If there are, are they buggy
-> in the same way as you found this instance, or do they have legitimate
-> reason why they only check ce_uptodate(ce) and ignore fsmonitor?
->
-
-Yes, there are other code paths as well. After reading the code some
-more, it seems like there's no legitimate need to ignore fsmonitor.
-
-> If there isn't, would it make sense to get rid of CE_FSMONITOR_VALID
-> bit and have fsmonitor directly set CE_UPTODATE bit instead?  That
-> would make this fix unnecessary and fix other codepaths that check
-> only ce_uptodate() without checking fsmonitor.
->
-
-There's a few issues with replacing it entirely that I've found.
-
-One is the  "CE_MATCH_IGNORE_FSMONITOR" flag. This flag can be set to
-let ie_match_stat skip calling refresh_fsmonitor repeatedly. This is
-set only in one place right now in preload-index, and it's unclear how
-necessary this optimization even is, given that refresh_fsmonitor has
-a check whether it's been called already, and returns if true.
-
-The second is that git ls-files has an "f" option that makes it "use
-lowercase letters for 'fsmonitor clean' files". I think this can
-simply be replaced by checking if a file is up to date instead of
-specifically via fsmonitor.
-
-If we do go ahead with the replace, we will have to be diligent about
-calling refresh_fsmonitor everywhere, or we will have correctness
-issues. I patched git locally to do this, and immediately saw a bug in
-git stash where the underlying git reset --hard skipped modifying a
-file it should have. In my opinion refresh_fsmonitor should be called
-somewhere top level, like an initialization, but I'm not sure if that
-makes sense for all git subcommands.
-
-Do you think it's worth cleaning up and sending this patch instead? It
-will reduce the surface area of bugs and remove a bunch of functions
-like mark_fsmonitor_valid/mark_fsmonitor_invalid
+Reviewed-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
