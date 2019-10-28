@@ -3,258 +3,178 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5B161F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 00:59:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC9C11F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 01:04:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729136AbfJ1A7k (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Oct 2019 20:59:40 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54342 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729001AbfJ1A7k (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 27 Oct 2019 20:59:40 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AA27D62063;
-        Mon, 28 Oct 2019 00:59:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1572224378;
-        bh=v+qOBlhknk2JmCEKxVPu22ZOeyUBzrkh2PeLVzN8pEM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=IQz+9H08zbADqA75orVePuc2bB2+U9I9xMCJp5TS1ig0fFvHSJ1HyNXMdPDMXK0Tp
-         671UnierlwBXH7G7OD7hJJSGvROtRcmqz/MvW/gwZ2jnEujEmT7kbJvCY6JizKIYan
-         ACdyXgbpU8C1gAcGrreuC42hFsDZFkKL6/ZUonN0iwq3+RG2BWkTXSySmi4JAfs1TX
-         wFX0KxuUMe+5W2td/YXndEhuFYkxcSfUTPNfdpnqLyhzU00adCiuqCmHJqqetFtsfz
-         WkyNRlZNL2DMe3CzpNsz1+qVGQMe90GGtZd+f+5NqfzFjK7gtZvxjZcja0yU5e4Aq0
-         8RecpPdZcWcpgd03qgpz8ns/OLmQiOrP7ZzeWMjYNB4BlW9fDKTjrkuanu6tIzFUrh
-         6M0SAjvXac+5xESVSlBuLGtGKVuwYuL3+9aHQUfP9sfwugp/eqJVf2J5GRuQ7uyY9O
-         bZwP2TQ+/W3jPXam+rfZQw9LYaFdFUOUL67+TUflBDXqY5Sc3nl
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2 15/15] t4048: abstract away SHA-1-specific constants
-Date:   Mon, 28 Oct 2019 00:59:07 +0000
-Message-Id: <20191028005907.24985-16-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665
-In-Reply-To: <20191028005907.24985-1-sandals@crustytoothpaste.net>
-References: <20191028005907.24985-1-sandals@crustytoothpaste.net>
+        id S1729154AbfJ1BEe (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Oct 2019 21:04:34 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:46458 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727581AbfJ1BEd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Oct 2019 21:04:33 -0400
+Received: by mail-qt1-f193.google.com with SMTP id u22so12221917qtq.13
+        for <git@vger.kernel.org>; Sun, 27 Oct 2019 18:04:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=f7wMVFNkE35ryavf3nFBG0YIQdodE59Ej98TiXsKOMw=;
+        b=fQWjfoDc5+7Slx897ot3WNJx5LPs07YxmMCGuFn9FjyZWCr78HnAjXVMhZwAovDZq/
+         Awfv+SJz8KwvbP9BKnrm1ZyO4Q1yJmzrAgEy3muN+H/zXRKC9aad+xm7g/H89NJj9jzA
+         snBuV7WZLb3LwRVztnT5MDPuPjvSHTj0IbmgWkqY438Sbgz1jNsmIk/DPqLDbKnO4fl7
+         oaepzDurAijng3eEF7mJ99WiBgwI9kcGdjbRnEoNDgVMFOc1LbAD/ThX5V4RZxm0ap3y
+         00gEAVkb4xXdIEiyoLC3QKni8t3RHJDuAsesZo7hi/PjORqlpU1fd2Pji59KNzntTeWg
+         am1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=f7wMVFNkE35ryavf3nFBG0YIQdodE59Ej98TiXsKOMw=;
+        b=MMAtfcz4CmDmJ6lMobAQay9MdAh35Rakm4nwbGTZwctKYSffNRgvBoYCBaA4WMEYvt
+         6bEALfQJJSy1cS+tdJQEOJwWJ3TCe8T+w+GW5aoCvwoe93e6remZXD5soQLBOFbsAySz
+         55rhv1oH3Riy3TN157pEG0t1NKVSJFAyrLe7orsQ5CAcACDr2AqggeVgfR332EhKul/I
+         8xbxWouh9/YyCA2g7gkTweZvVFQuZVWeToY25NVdHG393Pk6lmahFDrXbQCzoNtBROzs
+         T67dutw/tYmQPGsb0acdG5QT70Yeveh0ox4zH965/4HttHWPum7+dx1VnNfQxq8urjMf
+         r6PQ==
+X-Gm-Message-State: APjAAAWB52lMnJ5rkQ6qX+JqdxdY27lAekZmwGSZentBUSsOOX+KN6hw
+        Mea/DfWMyE5AJOJDRO7KmfBnKkKUrBw=
+X-Google-Smtp-Source: APXvYqwepgw805auVISmvBYOh+U46x19N32+OwUBXwUJiNG+Qv3cUkHijfDZEkqZYtQLu9I1yViBkg==
+X-Received: by 2002:a0c:ec0b:: with SMTP id y11mr13797755qvo.123.1572224671819;
+        Sun, 27 Oct 2019 18:04:31 -0700 (PDT)
+Received: from [192.168.1.3] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id h3sm7207640qte.62.2019.10.27.18.04.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 27 Oct 2019 18:04:31 -0700 (PDT)
+Subject: Re: [BUG] commit-graph path normalization reads uninitialized bytes
+To:     Jeff King <peff@peff.net>, Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org
+References: <20191027042116.GA5801@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <913e40a1-01c6-f740-3aac-c8cdea774a63@gmail.com>
+Date:   Sun, 27 Oct 2019 21:04:29 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101
+ Thunderbird/70.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20191027042116.GA5801@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes variables for object IDs instead of
-using hard-coded hashes.
+On 10/27/2019 12:21 AM, Jeff King wrote:
+> I noticed an interesting bug related to 16110c9348 (commit-graph:
+> normalize commit-graph filenames, 2019-06-18). It calls
+> normalize_path_copy() on the object directory without checking the
+> result. That function can fail when the path can't be normalized (e.g.,
+> a relative path that goes above the cwd, like "../foo"). That leaves
+> nonsense in the destination buffer, which we then call open() on.
+> 
+> Try this from a git.git build:
+> 
+>   (cd t && GIT_DIR=../.git valgrind ./git rev-parse HEAD^)
+> 
+> which yields:
+> 
+>   ==5907== Syscall param openat(filename) points to uninitialised byte(s)
+>   ==5907==    at 0x4914A35: open (open64.c:48)
+>   ==5907==    by 0x31C58B: git_open_cloexec (sha1-file.c:1021)
+>   ==5907==    by 0x217BF1: open_commit_graph (commit-graph.c:107)
+>   ==5907==    by 0x2182BF: load_commit_graph_one (commit-graph.c:314)
+>   ...etc...
+> 
+> This is even triggered in the test suite, but we don't notice because
+> the exit code from that invocation is thrown away. Doing this:
+> 
+> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+> index df34c994d2..eebb49ecc5 100755
+> --- a/t/t7406-submodule-update.sh
+> +++ b/t/t7406-submodule-update.sh
+> @@ -222,7 +222,9 @@ test_expect_success 'submodule update --remote should fetch upstream changes' '
+>  	(cd super &&
+>  	 git submodule update --remote --force submodule &&
+>  	 cd submodule &&
+> -	 test "$(git log -1 --oneline)" = "$(GIT_DIR=../../submodule/.git git log -1 --oneline)"
+> +	 git log -1 --oneline >expect &&
+> +	 GIT_DIR=../../submodule/.git git log -1 --oneline >actual &&
+> +	 test_cmp expect actual
+>  	)
+>  '
+>  
+> 
+> and then running t7406 with --valgrind-only=10 yields a similar error
+> (and a test failure). Interestingly, neither ASan nor MSan seem to catch
+> it. But even more interesting is that it generally does something
+> sensible! If I "strace -e openat" that test, I get:
+> 
+>   openat(AT_FDCWD, "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZB\245\245\245\245\245\245\245\10\261\v", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+>   openat(AT_FDCWD, "../../submodule/.git/objects/info/commit-graphs/commit-graph-chain", O_RDONLY) = -1 ENOENT (No such file or directory)
+> 
+> Whoops. That's obviously nonsense, but the kernel tells us only ENOENT
+> (I suppose if there was no NUL in the uninitialized bytes, it'd perhaps
+> run off the buffer and return EFAULT). But either way, we decide there
+> is no commit-graph file and fall back to operating without it. So we
+> produce the correct output either way. But obviously using uninitialized
+> bytes is bad, and of course it could end up opening some random file
+> (less likely than you might think, if we reuse a heap buffer).
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- t/t4048-diff-combined-binary.sh | 58 ++++++++++++++++++---------------
- 1 file changed, 32 insertions(+), 26 deletions(-)
+These all sound bad. Thanks for finding this issue!
 
-diff --git a/t/t4048-diff-combined-binary.sh b/t/t4048-diff-combined-binary.sh
-index 87a8949500..7f9ad9fa3d 100755
---- a/t/t4048-diff-combined-binary.sh
-+++ b/t/t4048-diff-combined-binary.sh
-@@ -9,24 +9,27 @@ test_expect_success 'setup binary merge conflict' '
- 	git commit -m one &&
- 	echo twoQ2 | q_to_nul >binary &&
- 	git commit -a -m two &&
-+	two=$(git rev-parse --short HEAD:binary) &&
- 	git checkout -b branch-binary HEAD^ &&
- 	echo threeQ3 | q_to_nul >binary &&
- 	git commit -a -m three &&
-+	three=$(git rev-parse --short HEAD:binary) &&
- 	test_must_fail git merge master &&
- 	echo resolvedQhooray | q_to_nul >binary &&
--	git commit -a -m resolved
-+	git commit -a -m resolved &&
-+	res=$(git rev-parse --short HEAD:binary)
- '
- 
--cat >expect <<'EOF'
-+cat >expect <<EOF
- resolved
- 
- diff --git a/binary b/binary
--index 7ea6ded..9563691 100644
-+index $three..$res 100644
- Binary files a/binary and b/binary differ
- resolved
- 
- diff --git a/binary b/binary
--index 6197570..9563691 100644
-+index $two..$res 100644
- Binary files a/binary and b/binary differ
- EOF
- test_expect_success 'diff -m indicates binary-ness' '
-@@ -34,11 +37,11 @@ test_expect_success 'diff -m indicates binary-ness' '
- 	test_cmp expect actual
- '
- 
--cat >expect <<'EOF'
-+cat >expect <<EOF
- resolved
- 
- diff --combined binary
--index 7ea6ded,6197570..9563691
-+index $three,$two..$res
- Binary files differ
- EOF
- test_expect_success 'diff -c indicates binary-ness' '
-@@ -46,11 +49,11 @@ test_expect_success 'diff -c indicates binary-ness' '
- 	test_cmp expect actual
- '
- 
--cat >expect <<'EOF'
-+cat >expect <<EOF
- resolved
- 
- diff --cc binary
--index 7ea6ded,6197570..9563691
-+index $three,$two..$res
- Binary files differ
- EOF
- test_expect_success 'diff --cc indicates binary-ness' '
-@@ -62,23 +65,26 @@ test_expect_success 'setup non-binary with binary attribute' '
- 	git checkout master &&
- 	test_commit one text &&
- 	test_commit two text &&
-+	two=$(git rev-parse --short HEAD:text) &&
- 	git checkout -b branch-text HEAD^ &&
- 	test_commit three text &&
-+	three=$(git rev-parse --short HEAD:text) &&
- 	test_must_fail git merge master &&
- 	test_commit resolved text &&
-+	res=$(git rev-parse --short HEAD:text) &&
- 	echo text -diff >.gitattributes
- '
- 
--cat >expect <<'EOF'
-+cat >expect <<EOF
- resolved
- 
- diff --git a/text b/text
--index 2bdf67a..2ab19ae 100644
-+index $three..$res 100644
- Binary files a/text and b/text differ
- resolved
- 
- diff --git a/text b/text
--index f719efd..2ab19ae 100644
-+index $two..$res 100644
- Binary files a/text and b/text differ
- EOF
- test_expect_success 'diff -m respects binary attribute' '
-@@ -86,11 +92,11 @@ test_expect_success 'diff -m respects binary attribute' '
- 	test_cmp expect actual
- '
- 
--cat >expect <<'EOF'
-+cat >expect <<EOF
- resolved
- 
- diff --combined text
--index 2bdf67a,f719efd..2ab19ae
-+index $three,$two..$res
- Binary files differ
- EOF
- test_expect_success 'diff -c respects binary attribute' '
-@@ -98,11 +104,11 @@ test_expect_success 'diff -c respects binary attribute' '
- 	test_cmp expect actual
- '
- 
--cat >expect <<'EOF'
-+cat >expect <<EOF
- resolved
- 
- diff --cc text
--index 2bdf67a,f719efd..2ab19ae
-+index $three,$two..$res
- Binary files differ
- EOF
- test_expect_success 'diff --cc respects binary attribute' '
-@@ -115,11 +121,11 @@ test_expect_success 'setup textconv attribute' '
- 	git config diff.upcase.textconv "tr a-z A-Z <"
- '
- 
--cat >expect <<'EOF'
-+cat >expect <<EOF
- resolved
- 
- diff --git a/text b/text
--index 2bdf67a..2ab19ae 100644
-+index $three..$res 100644
- --- a/text
- +++ b/text
- @@ -1 +1 @@
-@@ -128,7 +134,7 @@ index 2bdf67a..2ab19ae 100644
- resolved
- 
- diff --git a/text b/text
--index f719efd..2ab19ae 100644
-+index $two..$res 100644
- --- a/text
- +++ b/text
- @@ -1 +1 @@
-@@ -140,11 +146,11 @@ test_expect_success 'diff -m respects textconv attribute' '
- 	test_cmp expect actual
- '
- 
--cat >expect <<'EOF'
-+cat >expect <<EOF
- resolved
- 
- diff --combined text
--index 2bdf67a,f719efd..2ab19ae
-+index $three,$two..$res
- --- a/text
- +++ b/text
- @@@ -1,1 -1,1 +1,1 @@@
-@@ -157,11 +163,11 @@ test_expect_success 'diff -c respects textconv attribute' '
- 	test_cmp expect actual
- '
- 
--cat >expect <<'EOF'
-+cat >expect <<EOF
- resolved
- 
- diff --cc text
--index 2bdf67a,f719efd..2ab19ae
-+index $three,$two..$res
- --- a/text
- +++ b/text
- @@@ -1,1 -1,1 +1,1 @@@
-@@ -174,9 +180,9 @@ test_expect_success 'diff --cc respects textconv attribute' '
- 	test_cmp expect actual
- '
- 
--cat >expect <<'EOF'
-+cat >expect <<EOF
- diff --combined text
--index 2bdf67a,f719efd..2ab19ae
-+index $three,$two..$res
- --- a/text
- +++ b/text
- @@@ -1,1 -1,1 +1,1 @@@
-@@ -190,9 +196,9 @@ test_expect_success 'diff-tree plumbing does not respect textconv' '
- 	test_cmp expect actual
- '
- 
--cat >expect <<'EOF'
-+cat >expect <<EOF
- diff --cc text
--index 2bdf67a,f719efd..0000000
-+index $three,$two..0000000
- --- a/text
- +++ b/text
- @@@ -1,1 -1,1 +1,5 @@@
+> We could "fix" it like this (there are a few other sites, too, so this
+> is just illustrating the idea):
+> 
+> diff --git a/commit-graph.c b/commit-graph.c
+> index fc4a43b8d6..422092d3a9 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -45,7 +45,10 @@ char *get_commit_graph_filename(const char *obj_dir)
+>  {
+>  	char *filename = xstrfmt("%s/info/commit-graph", obj_dir);
+>  	char *normalized = xmalloc(strlen(filename) + 1);
+> -	normalize_path_copy(normalized, filename);
+> +	if (normalize_path_copy(normalized, filename) < 0) {
+> +		free(normalized);
+> +		return filename;
+> +	}
+>  	free(filename);
+>  	return normalized;
+>  }
+> 
+> But it really makes me wonder what we're trying to get out of the
+> normalization. If you want to compare two paths reliably, then you
+> really need to create an absolute path and normalize that. And then
+> you'd probably want to handle symlinks, too, so you'd end using
+> real_path().
+>
+> So it's not clear to me if this is a kind of "best effort"
+> normalization, and the patch above is the right approach. Or if we need
+> to be doing it more carefully.
+
+The reason for the normalization is _mostly_ so we know when to expire a
+commit-graph that is no longer referenced by the current commit-graph-chain
+file. There are some issues around if the commit-graph is in an alternate,
+too, which is likely the reason around this example (it only uses "info/commit-graph"
+instead of "info/commit-graphs/graph-{hash}.graph").
+
+In the case that someone runs `git commit-graph write --split` in a repo
+with an alternate, and the alternate has a commit-graph at
+"{alternate}/info/commit-graph", we want to make sure that file does not
+get moved to ".git/objects/info/commit-graphs/graph-{hash}.graph" to be
+the base of a new split commit-graph in the current repo. The normalization
+seemed to be necessary for that.
+
+With that in mind, I'm not sure your proposed fix is the best solution,
+but the "create an absolute path and normalize that" is really what we
+want. Or maybe I just misunderstood what normalizing did (a canonical
+absolute path would have been sufficient, I think).
+
+Thanks,
+-Stolee
