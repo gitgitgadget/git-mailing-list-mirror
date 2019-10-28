@@ -7,42 +7,42 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A16F1F4C0
+	by dcvr.yhbt.net (Postfix) with ESMTP id A521B1F4C0
 	for <e@80x24.org>; Mon, 28 Oct 2019 00:59:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728909AbfJ1A7X (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Oct 2019 20:59:23 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54232 "EHLO
+        id S1728958AbfJ1A70 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Oct 2019 20:59:26 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54244 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728837AbfJ1A7W (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 27 Oct 2019 20:59:22 -0400
+        by vger.kernel.org with ESMTP id S1728837AbfJ1A7Z (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 27 Oct 2019 20:59:25 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7266561C4E;
-        Mon, 28 Oct 2019 00:59:20 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 69F8C61C4E;
+        Mon, 28 Oct 2019 00:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1572224361;
-        bh=raAhS3PrnzvOKKvzy4YPRvhsXXlEiiTAXRPjU4RjW6c=;
+        s=default; t=1572224364;
+        bh=szYvy2mSpCujZRSSprNcG9wOI3Zrx6ghlQzEQlbpcHY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=IRLMXKTUuzV7W6KZsoxE1qd0rFP7M4LZ+mq4p8Rgwak4TbSdZ8AMBM6qvpMARTWDF
-         CbeHqv4xz2i82YUfKiC4Kjv+LS0X68lxhPv/7W0S2J7LlfLyMj7qRqtvSUmofIroDH
-         yqoWeq/HbBmNWEv5t/fR81MvEeahTh9VcIRaS9GNa2hB8WVzWSH+ajCM8ng0cAgjD+
-         7Pu3TAuLBtaD3mspHxNONXiDtbAp5XV1Ty8noQuwdL052Djm+mx2jFg4T7sLngaPro
-         HRAZqe3BAWpa+9Keh7dIrclIgqf38sU7AS8oEuKG0KLOrZPQ/vC9LhXjXE8/oFWqdF
-         9T9jChMSrAavL7LaMfNH1oRCTrhxrxYdG6EE6EodLOUjfrVSwB7JU6DPKbwW0ikwDV
-         FPa8+cEhW6msTxZXnJltqC10B8tJrio2VrO05w8IkL0a/YQeXbb+Oq8tQ1B7wknVh1
-         m98jCpHt7oQPXpJf8FBD6ZxsWec8pPflfm2vLFENTUmzjVtgK2G
+        b=R45wtL2iMmTZr2TT68/9XCWEtnNzDhgsxlCXH6iEsqnIWCPN7XHNVl1oKq1gTw+9A
+         oaNzf9T48oBjhZliygugvemDy57cbhxta9mzb98cztNyO8S/U2o+Z0Y6fy4OFzFydZ
+         QXWjNi57biWWPzrg3YI8CRuBQzxOaqkHtAxxO4ZKPKvC+z0HA8Jo/aD6r0VsKTk7hk
+         1MsUwU1dwE8uVzYHLFSFZfXHTnKwnU2lnumZg47ZN4LKmWICnMdFTE7hEHyWO3f7JJ
+         2q/+48Xn/AQYYJ+2MktQLPm7NMyETo3pgpZCR9qw+VdAa+cxS8gGO/Gi0SllGyrlx8
+         4lEfNgRPOHYJU/8j26LAeB41BZfaLbcr2Hx4STQ4I6fF7tp4ZQ5PzpJIVd/J5QYEIC
+         iAnBY0hkduS7nmUOOfmvNTHdTYX5JEaJT6RCeGZtheQ0wSU5TfySJV43j6VSj5IVto
+         hBU5zkE6dUR8g170F4uCdPKhYjoTR4d5OAa94ikqp78JZW8Fh0A
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         Stefan Beller <stefanbeller@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2 01/15] t/oid-info: allow looking up hash algorithm name
-Date:   Mon, 28 Oct 2019 00:58:53 +0000
-Message-Id: <20191028005907.24985-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 03/15] rev-parse: add a --show-object-format option
+Date:   Mon, 28 Oct 2019 00:58:55 +0000
+Message-Id: <20191028005907.24985-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665
 In-Reply-To: <20191028005907.24985-1-sandals@crustytoothpaste.net>
 References: <20191028005907.24985-1-sandals@crustytoothpaste.net>
@@ -53,31 +53,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test_oid function provides a mechanism for looking up hash algorithm
-information, but it doesn't specify a way to discover the hash algorithm
-name.  Knowing this information is useful if one wants to invoke the
-test-tool helper for the algorithm in use, such as in our pack
-generation library.
+Add an option to print the object format used for input, output, or
+storage. This allows shell scripts to discover the hash algorithm in
+use.
 
-While it's currently possible to inspect the global variable holding
-this value, in the future we'll allow specifying an algorithm for
-storage and an algorithm for display, so it's better to abstract this
-value away.  To assist with this, provide a named entry in the
-algorithm-specific lookup table that prints the algorithm in use.
+Since the transition plan allows for multiple input algorithms, document
+that we may provide multiple results for input, and the format that the
+results may take. While we don't support this now, documenting it early
+means that script authors can future-proof their scripts for when we do.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/oid-info/hash-info | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/git-rev-parse.txt |  7 +++++++
+ builtin/rev-parse.c             | 11 +++++++++++
+ t/t1500-rev-parse.sh            | 15 +++++++++++++++
+ 3 files changed, 33 insertions(+)
 
-diff --git a/t/oid-info/hash-info b/t/oid-info/hash-info
-index ccdbfdf974..6b5ded0b34 100644
---- a/t/oid-info/hash-info
-+++ b/t/oid-info/hash-info
-@@ -6,3 +6,6 @@ hexsz sha256:64
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index e72d332b83..9985477efe 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -274,6 +274,13 @@ print a message to stderr and exit with nonzero status.
+ 	Show the path to the shared index file in split index mode, or
+ 	empty if not in split-index mode.
  
- zero sha1:0000000000000000000000000000000000000000
- zero sha256:0000000000000000000000000000000000000000000000000000000000000000
++--show-object-format[=(storage|input|output)]::
++	Show the object format (hash algorithm) used for the repository
++	for storage inside the `.git` directory, input, or output. For
++	input, multiple algorithms may be printed, space-separated.
++	If not specified, the default is "storage".
 +
-+algo sha1:sha1
-+algo sha256:sha256
++
+ Other Options
+ ~~~~~~~~~~~~~
+ 
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 308c67e4fc..85ce2095bf 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -919,6 +919,17 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				show_datestring("--min-age=", arg);
+ 				continue;
+ 			}
++			if (opt_with_value(arg, "--show-object-format", &arg)) {
++				const char *val = arg ? arg : "storage";
++
++				if (strcmp(val, "storage") &&
++				    strcmp(val, "input") &&
++				    strcmp(val, "output"))
++					die("unknown mode for --show-object-format: %s",
++					    arg);
++				puts(the_hash_algo->name);
++				continue;
++			}
+ 			if (show_flag(arg) && verify)
+ 				die_no_single_rev(quiet);
+ 			continue;
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 01abee533d..0177fd815c 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -59,6 +59,7 @@ test_rev_parse () {
+ ROOT=$(pwd)
+ 
+ test_expect_success 'setup' '
++	test_oid_init &&
+ 	mkdir -p sub/dir work &&
+ 	cp -R .git repo.git
+ '
+@@ -131,6 +132,20 @@ test_expect_success 'rev-parse --is-shallow-repository in non-shallow repo' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'rev-parse --show-object-format in repo' '
++	echo "$(test_oid algo)" >expect &&
++	git rev-parse --show-object-format >actual &&
++	test_cmp expect actual &&
++	git rev-parse --show-object-format=storage >actual &&
++	test_cmp expect actual &&
++	git rev-parse --show-object-format=input >actual &&
++	test_cmp expect actual &&
++	git rev-parse --show-object-format=output >actual &&
++	test_cmp expect actual &&
++	test_must_fail git rev-parse --show-object-format=squeamish-ossifrage 2>err &&
++	grep "unknown mode for --show-object-format: squeamish-ossifrage" err
++'
++
+ test_expect_success 'showing the superproject correctly' '
+ 	git rev-parse --show-superproject-working-tree >out &&
+ 	test_must_be_empty out &&
