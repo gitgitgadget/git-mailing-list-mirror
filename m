@@ -2,130 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91F161F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 21:30:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A274A1F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 21:44:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730109AbfJ1Var (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 17:30:47 -0400
-Received: from mout.gmx.net ([212.227.15.19]:55995 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726234AbfJ1Var (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 17:30:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572298233;
-        bh=WtPFG8nO5qa5OGKSfykUSBXcRxAE46hJLE2Acm0+UOg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=i3IWoWuUiB8yMa4eNz/5exK4C25jYhXcJ9D1/xkFC02bQyxrwdTad4wm9Jm0BNJDY
-         4O9OYXzoR1U+IQnxQryI98kU8wGKRAUhHRRqm4tGp4Mvjrq+Ny8+8cgZxNKwGLE+X3
-         iQ+AcmcwTfdUnqQgEqnBdRF0nX3cE9bL7I4V1qsQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N4zAs-1hxnm11s0K-010q8w; Mon, 28
- Oct 2019 22:30:33 +0100
-Date:   Mon, 28 Oct 2019 22:30:17 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        David Turner <novalis@novalis.org>, git@vger.kernel.org
-Subject: Re: [PATCH 5/5] path.c: don't call the match function without value
- in trie_find()
-In-Reply-To: <20191028120054.GS4348@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1910282229480.46@tvgsbejvaqbjf.bet>
-References: <20191021160043.701-1-szeder.dev@gmail.com> <20191021160043.701-6-szeder.dev@gmail.com> <nycvar.QRO.7.76.6.1910281155220.46@tvgsbejvaqbjf.bet> <20191028120054.GS4348@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1731791AbfJ1VoB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 17:44:01 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:42032 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730592AbfJ1VoB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 17:44:01 -0400
+Received: by mail-pl1-f196.google.com with SMTP id c16so6354801plz.9
+        for <git@vger.kernel.org>; Mon, 28 Oct 2019 14:44:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=HjbXpPEpnWCZi8fTDCVSZivh6ojHOjERuUo7Qn+cJNY=;
+        b=eQtqA0p1J6rwF2L2+r2F27hOK5vy9Vsjjq9eVIqFs5sESxx6RC4L9n9DeWJ3wM6yMs
+         2hceUlaO+3uLgtZ8RBvaIoK5HH6G141T200hbSUkv/q9gcz023vUdtK+mhfHRg1Qo2tN
+         YA+ie6132MP6xJyKetNKzaQAQSk4LDn9tWp5EvEBHDMdFR8XS4FzWaWcUzeHSFjcOEgc
+         jG308bUq1ZFZSQbtUAYprPy3Upy20fFi+D6/SiYMeKPvaT6mSyouOUVakcrXm8jsVHnq
+         C7Ez5bN1MKy7bBBTruDE9JExmXkJ1+Tojacz+qGkeewe3qHenLnxV1r97sk2HSsc1BmC
+         XE3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=HjbXpPEpnWCZi8fTDCVSZivh6ojHOjERuUo7Qn+cJNY=;
+        b=BtgYbI7xYbquBh1fx7LN/9apnBGtkxVI2qcURCVcMWydRQSK0DLAg424rF0aQuwuW2
+         A3V3JLnCHkMF9DX2vosT/6JoXd9a6Xo/TkHu8lkNgAR6fR0z800veGZK74+cjWgwV68V
+         Z+yVTKxt+KTOICIiBTe38wIeT9xqFK1sJg4TcKsFk8wBvz49P93OuC7YQ96hk6XJ0SCp
+         dzJ/naGwSoFzQT6BU0yhuoZ/oAMJEqpbLK41Nq3Ii642GXcL0yHnNJlzQcEvSPpiDERG
+         8dk5UC8+mqF0CzBBb4rmOq8XUTYeO1AQIye/u4If748iwdMPLydbTsg+F17xODEs5eqg
+         s9Dg==
+X-Gm-Message-State: APjAAAUsWUhxVfuaL8PG2jhOxJtIdskLH5xyvUxEhxvvAfZ+8H344aio
+        vc+9rJ8MpBMSWmRgd56Sat/YBTSL
+X-Google-Smtp-Source: APXvYqydLSg1h7H0iAP7XWKWX178v7AqWJG/kdzBPPn3vvvbWnXZgpRwyyV/8sapxWgcYtZSeUVUaw==
+X-Received: by 2002:a17:902:b205:: with SMTP id t5mr254936plr.126.1572299040160;
+        Mon, 28 Oct 2019 14:44:00 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id r81sm13331892pgr.17.2019.10.28.14.43.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Oct 2019 14:43:59 -0700 (PDT)
+Date:   Mon, 28 Oct 2019 14:43:57 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Michael Felt <aixtools@felt.demon.nl>
+Cc:     git@vger.kernel.org
+Subject: Re: COMMENTS: building git on AIX
+Message-ID: <20191028214357.GB12487@google.com>
+References: <1200106e-b75d-5b15-0608-427cd923578a@felt.demon.nl>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-100152832-1572298233=:46"
-X-Provags-ID: V03:K1:dez3qySyIkTwV0A7A6pnfpeAzOpsKBaeJb2o2AQDM1KqRPix7Vl
- GyLBIOPkkbHN+gQpeW7ljcItL7FCcfi54rVCkRreB9R0dtAxHnsTXDD6IZCWfr7dw9CX1mL
- WKpt1/A/qyYc7i7A/P/5dGqFNd3Ods3bUgNPqnPLmhoduXj71p79GYkjSV2ElliaG8/12xo
- 8hf0ojqX6IGG0w83Z6gLA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:KdciAe8Na8g=:cdvYldbb3yCkfjOEzpKFTh
- Te9WQWeTw/DTZf9o12tpuXOI0lSYhKzW3frFNdvXLDs6viO846EI4EX4qV8yXhtB5CLuMeGzF
- TJGqnWV5Ba/9JJQ/4bo9kLhRgkRN3U4Y9MsdtGa2NnUIr9cNwGJTwdSb2D6ML6+kVTj0R4GMJ
- SUPRjkivefKqHF6x+y+/7IbCWV3CyBFVM8MVEiwmxxS9VAcFPniikCXSvWMMhD2pT/PiXC8uo
- EZc0mXTzS67Zf+mPy101ScdJbTCHB2LJ6t84gri5ROPoy4CQAmnRAyeWTXYZ+n1t2OI77gmt+
- mxTLh64W+PCS7BmLeMNVUp1uvnyZO1NYplhQwE89YqXN4ROYwFH6AqNBv5oDjoMnFkUT4i80R
- XtN/i3zdgT+UBR7jtlseQmZuZz7e0hkKFgrekVa9+2XPJaDaB6w9wAKnc+1mYY9BfAWTgsvlI
- VcwthLuKCBXpWuXyybF2Gw3rTYzHG3pEJB8rnc1bxkpzvzcXmQc4I2lAsXNRnJBxmz37+W0UW
- cYp8MicNRMr5i5hYhTxfzujQMGS+0KAWi/aO3zt1hepxnHSiJzKmWdhlbIGvMVHtquxGyuMMN
- Xz/THzkyCB0ABhui5mFC1GlTbs9etPhXPD5EtUhtsSjQTNd+s+C3urlUh2yT5hd4V3VbddQUY
- GF8Xv0WDsCebZEgisw4AxrrGiEyFtOuyJqgknTucsKSj+XTR0U+kKRg8eST6vIwk9A/MrAXdr
- FQmHIqxx4hqy/d7V7DI61lLnT+RK1TSN5CsWqPB0845uWDv/3AKtTm25Kc8HmUqJtfhu/OrAm
- P7XRuJa5iKgQi3Ge3U9hXY19EG+knZMa9U0by/v4MWJIldFOXFFTd6oAAndbB2+89ip5ohUZG
- +E93Z7uK2RYFP7K3IZqMQzb2v965jwOIonjtaLJjDEbtN5HLr3RjNQu/WPnI0hukqve4NqlYN
- S+dxDbvx7AT6vX+G5ZRs+nmx3KMpqc3zgCaGwtjEbUb7cZ8BM29z/JkScHHgLfePv9zCMqkwO
- Fi0gHNsMkx4u1Wg3KXzyiVZVsa2lX9LCKDAn/df2PRGC/xzZgYrxlGbmR2F5k4hEEa6jmQ2Ii
- 1Nekzr5N/gkeXlmWBPUmPBBSqsYpxvd/UyQzzF2+mHCsQOy6JaJCrgxwkznlNzoPRY2ju4NUz
- JpG6Md4vtlyhh9OEzjGiYdicuK7EhDT1XGk/BfwdYx4PnUlQJOeXoDtRr/1/1NEb/yKg55NFm
- IMNBuR9tuXvAKuaR1Uudq/61j0Vk3fogK0ICZkxOQ3NocEpNOqLQweOXxZNU=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1200106e-b75d-5b15-0608-427cd923578a@felt.demon.nl>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323328-100152832-1572298233=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Michael Felt wrote:
 
-Hi G=C3=A1bor,
-
-On Mon, 28 Oct 2019, SZEDER G=C3=A1bor wrote:
-
-> On Mon, Oct 28, 2019 at 11:57:10AM +0100, Johannes Schindelin wrote:
-> > >   - According to the comment describing trie_find(), it should only
-> > >     call the given match function 'fn' for a "/-or-\0-terminated
-> > >     prefix of the key for which the trie contains a value".  This is
-> > >     not true: there are three places where trie_find() calls the mat=
-ch
-> > >     function, but one of them is missing the check for value's
-> > >     existence.
+> I have, a couple of time, successfully built git for AIX. However, my
+> prior attempt (version 2.18) - I never got around to finishing and today
+> with version 2.23.0 - I am unsure how to proceed without a lot of hacking.
 >
-> > Thank you for this entire patch series. Just one nit:
-> >
-> >
-> > > diff --git a/path.c b/path.c
-> > > index cf57bd52dd..e21b00c4d4 100644
-> > > --- a/path.c
-> > > +++ b/path.c
-> > > @@ -299,9 +299,13 @@ static int trie_find(struct trie *root, const c=
-har *key, match_fn fn,
-> > >
-> > >  	/* Matched the entire compressed section */
-> > >  	key +=3D i;
-> > > -	if (!*key)
-> > > +	if (!*key) {
-> > >  		/* End of key */
-> > > -		return fn(key, root->value, baton);
-> > > +		if (root->value)
-> > > +			return fn(key, root->value, baton);
-> > > +		else
-> > > +			return -1;
-> >
-> > I would have preferred this:
-> >
-> > +		if (!root->value)
-> > +			return -1;
-> > +		return fn(key, root->value, baton);
-> >
-> > ... as it would more accurately reflect my mental model of an "early
-> > out".
+> Just some comments - long long way from calling anything a bug - just
+> not as portable as I would have hoped.
 >
-> The checks at the other two of those three callsites look like this,
-> and I just followed suit for the sake of consistency.
+> The simple issues:
+>
+> 1. The "Makefile" is surprising. I expect to run ./configure (or better,
+> out-of tree, e.g., ../src/git-2.23.0/configure). Just running OOT
+> configure does not result in a "Makefile". So, copy source tree to dest
+> and try again.
 
-Oh, okay. Sorry for the noise, then.
+See INSTALL:
 
-Thanks,
-Dscho
+ [...]
+ Alternatively you can use autoconf generated ./configure script to
+ set up install paths (via config.mak.autogen), so you can write instead
 
---8323328-100152832-1572298233=:46--
+so the output of the configure script is a config.mak.autogen file.
+Keep in mind that most of Git's developers don't use the configure
+script, mostly because it's slow.
+
+I like the idea of teaching the configure script to set up a VPATH
+build.  Would you be interested in working on that?
+
+> 2. Makefile assumes gmake. Standard make does not support :: syntax
+> (fix: install cmake)
+
+I assume that by cmake you mean gmake here.
+
+> 3. The default CFLAGS contains -Wall. Not all compilers support -Wall.
+> "Fixed" by adding CFLAGS="-g -O2". I am also undecided on having -g as a
+> default flag.
+
+Interesting!  That doesn't feel like a recent change:
+
+ $ git log -GWall -- Makefile
+[...]
+ commit b05701c5b4c7983ef04d8c286c65089596553bd6
+ Author: Pavel Roskin <proski@gnu.org>
+ Date:   Sat Aug 6 01:36:15 2005 -0400
+
+     Make CFLAGS overridable from make command line.
+[...]
+ commit 19b2860cba5742ab31fd682b80fefefac19be141
+ Author: Linus Torvalds <torvalds@linux-foundation.org>
+ Date:   Fri Apr 8 09:59:28 2005 -0700
+
+     Use "-Wall -O2" for the compiler to get more warnings.
+
+It seems worth calling out in the INSTALL file (and autodetecting in
+the configure script).
+
+> 4. Must have gettext installed, which needs GNU libiconv - sad to have
+> these libraries as additional dependencies. e.g., bash 4.4 finally
+> removed the gettext and iconv gnu dependencies. -- FYI!
+
+See INSTALL:
+
+ Set NO_GETTEXT to disable localization support and make Git only
+ use English. Under autoconf the configure script will do this
+ automatically if it can't find libintl on the system.
+
+Did the part of the configure script that does this break?
+
+> 5. Another "gcc"? dependency: "git-compat-util.h", line 361.1: 1506-277
+> (S) Syntax error: possible missing ';'
+> FIX: add 'CC=xlc_r' to get language extensions
+
+That's
+
+ static inline int noop_core_config(const char *var, const char *value, void *cb)
+
+Does AIX cc have trouble with "static inline"?
+
+> 6. Needs curl (libcurl and curl.h), but does not check until much later:
+> FIX install curl; FIX2 add -I flag to find $prefix/include to CFLAGS
+> (.e.g., CFLAGS="-g -O2 -I/opt/include") - FYI GNU autotools also fail to
+> include $prefix/include
+
+From INSTALL:
+
+  "libcurl" library is used by git-http-fetch, git-fetch, and, if
+  the curl version >= 7.34.0, for git-imap-send.  You might also
+  want the "curl" executable for debugging purposes. If you do not
+  use http:// or https:// repositories, and do not want to put
+  patches into an IMAP mailbox, you do not have to have them
+  (use NO_CURL).
+
+Would you be interested in improving the configure script's detection
+of this?
+
+> 7. More stuck here. libssh2 is built by curl, but as a static library. I
+> could "hack" the libssh2.o file into the linkage, but unclear how well
+> that will work. Also wonder if libssh2 is "required" or optional. For
+> curl it has been optional (and I think it still is).
+[...]
+> git-imap-send   imap-send.o http.o common-main.o \
+>           -L/opt/lib -lcurl -lssh2 -lssh2 -lssl -lcrypto -lldap -llber
+> -lssl -lcrypto -lz  -lssl  -lcrypto libgit.a xdiff/lib.a  -lz  -liconv
+> -lintl -lpthread
+> ld: 0706-006 Cannot find or open library file: -l ssh2
+
+The "-lssh2" comes from "curl-config --libs" output.  It sounds like
+your copy of $(which curl-config) should have CURLLIBDIR set but
+doesn't.  Should we use "curl-config --static-libs" on AIX instead?
+
+If you know what flags to use to link to curl, you can use
+CURL_LDFLAGS to set that instead.
+
+> Not sure - if I can help - but do hope this already helps in a (small) way.
+
+Thanks for working to keep Git portable.
+
+Hope that helps,
+Jonathan
