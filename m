@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A68571F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 13:49:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 505F91F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 14:15:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388964AbfJ1Ntt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 09:49:49 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50799 "EHLO mout.gmx.net"
+        id S2389962AbfJ1OPH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 10:15:07 -0400
+Received: from mout.gmx.net ([212.227.17.21]:59185 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725774AbfJ1Ntt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 09:49:49 -0400
+        id S1730033AbfJ1OPG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 10:15:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572270585;
-        bh=vYnZB3rrMzDXaltj1c5BRtPe1F4wyG+OE3TSiaQty9s=;
+        s=badeba3b8450; t=1572272091;
+        bh=hCrQn37/DQBxbd0g0IYAw5WGGkWD7I2HBq+gfT/2BHs=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=lCIYgNpfKNYZoXZ4UPoPsjHFGBRGtkFFFUMc2G3/M4Uh3hXTOaH6PcNCZK0tfZ2nQ
-         6Eq4LDCBoydmrV6UITJ5eNAihsmAypd/XuOnvktuGBsGoMlNZXH1MsXSEKGTKyxxLR
-         yoLqhMrNy9Fd/ocn85TJB6OHmLAqZ2QYbwsokifc=
+        b=jaGcNSLAPodAlkE09F/HRqhk7LLaYx3AQGYY5a9QMEnRT7ie9eXhcJ2nyQukwCir3
+         O6qoH3rDZpqAyPiIkdeif+xhylNyso+/EZqDm1ZEyTXbnTa5d3odtcYayYkSzCqUzP
+         qzGZgpJ1RqUJvMPY6b5SRS5ipaxYY0xZMCEqS/6g=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MLi8m-1igcFl12wq-00Hebp; Mon, 28
- Oct 2019 14:49:45 +0100
-Date:   Mon, 28 Oct 2019 14:49:29 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Ma20q-1iSGdz0h7M-00Vtim; Mon, 28
+ Oct 2019 15:14:51 +0100
+Date:   Mon, 28 Oct 2019 15:14:35 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Emily Shaffer <emilyshaffer@google.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 3/9] bugreport: add version and system information
-In-Reply-To: <20191025025129.250049-4-emilyshaffer@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1910281432180.46@tvgsbejvaqbjf.bet>
-References: <20191025025129.250049-1-emilyshaffer@google.com> <20191025025129.250049-4-emilyshaffer@google.com>
+Subject: Re: [PATCH v3 4/9] bugreport: add config values from whitelist
+In-Reply-To: <20191025025129.250049-5-emilyshaffer@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1910281506040.46@tvgsbejvaqbjf.bet>
+References: <20191025025129.250049-1-emilyshaffer@google.com> <20191025025129.250049-5-emilyshaffer@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:BWpSZyhVZ37J+h5EeI5nHMturAJItUXLj85xohteiuqB3M9Pn1+
- syVV9OUQs41rfrfPrlJOv4hDcYDaW9kUb3oR9Pdy1Hg0T8bEYFkjdC08LT7TKrbntkEeKkF
- Xu0EtnJlhMmo+L+VtYtOtjIEHQCMKC1oAY023xu+jAefmuXsn15TlNujYPp+JbfEAi1e7bX
- Q1TRWBKIQb8AGtTn70bSw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:C9rqNL31rw8=:K+Fmxe+eCw55xChKW61lrQ
- 0EghVSUR+sVKkFr1m7/qXWW9geG04Ed25W1ArZLxjZY/Qxn0HcarWnWgnczNFCMdAV2QJq9cv
- y5eIE9ym2V2FuNI6z9/fB4FhI07jeTgZgjp/uTY6+HIN6kiNxLf+u60ahvK+VMK+brts9IDRp
- +t9z/rtYu6raIp5BkOgZj7/1dgeZEEDmmW0vM5dXSxFn8bgS75OwId3p2iUOOO1TR8Tn04+bF
- J5oCMo09Q5KSXtFneyFtvpJ7nmggrp1bt4xZ7Ghw4Wl0gaTmQJwrrQW03GHGEWod33E8pCXZu
- w9NLQWy8WeCn2vq0j/cousjVQnk7b9+yK0LDazoBzxao7VJyfUOjyEkTc05ZFLoDlKTBLwxmQ
- L65aB3PcBnR8q1Lb9nSD4k/UpU89yjy6A80BaSyO1Tt0W9M5lGRfl/HMjsEYFfgNlsOcVz5fk
- WiE+Z+jJOzvoIcu5ikWmlHlNCMA76PPVImJERl/zinlmaU+Eh8EDqvfBZ/Ty6DwoahEQnELiA
- MLmpfTri6Hq1TN0ERjLubv5p4LPeqQPbqBjbuosl0tOqK7hNKSdNLMsD0P/4LP840he658ihn
- tMlu3sdkXnCCyvUrKCrc/B2vE51XHJXa7ZWQLqPn+KTvntE+J6vZu0Aab3DOCtYky4BSjP9K/
- 4VXLMwVrmGHSnAsXLuJPY9+mUyZLBsdcAFA4w1RGAfUAowAQNSsFWPSjM0lrewHN3Z9ga4s7f
- KnGENv/RLhXx3nIWgbHPh8isRSP7ZFxhHoMHfX5MecbJMrl5S/uu6LjXJfNNu8Z0JEd2A+UKS
- ghH4bYvpxL+/Hxx+oCr7EuaXXcmWIxKO0AGSqinAV5CTgXScIKJOEDXw8FEoouJXCP571sQnW
- 9Jb5Xxvj7VhmpEQHrd8+0DJdyOFP+fImGFRn2uF10jR20mRcpWYfshRoj4cuoPCMyqhF8Ngtk
- gN37sztcfhuaVEBh9XS5GwnkgoUbnRZITjCBbe+FJ8sSr1tZ8FF8VJCJ2Mp5w3PMi/cpxzy66
- TU16Ke7xq2BPo1zG4smQgY7JnTZaGQyqXoB7tT975h8quC0pArmBXfCYiwG6/u+sbqkGG8iri
- FR5M9y+dm91yE1FSPsOsNpPdWW9SyyDON+ZrG4EaoRmZCnpZqPzQmdG6/7aNbz3Sjx50zOtfT
- kQGXPcdUZs0+3KoeutgSv2cVKqydBdLJIv0FqZMeUF8f1YHEOCVGde42PhmBMEABS4xhOLE5M
- nzyadn7dUYoVmVcwTDPpBsj9pJtRc2lwmiGtwkgFTYdKQo+mhgdcATvY9t0Q=
+X-Provags-ID: V03:K1:ASYe5c5xdLYVDwBw+F73whBzrc0olz+M13PMzrKWDlLix289opL
+ Dvz+1mRHkHkjWptTic+VzJaj1L/Kiq6jhuLHixo9Hl2YBttArPnvQYvLimDllAYDXmcycRb
+ l1/kZdH+9atzoNwvS7frLaVT9MEqNoGWxlFEE7CAef7IbBRSB/WIqPKKr/lqAnZb7IzaMai
+ Vp9b5HOmmt0l+OWHCPwPg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:wIYIicBVouU=:aYfadOpQ091fry2FWYB/WZ
+ mDOQcnUYLORREjYga2svAPM71F6gvDHjtvNEtyoFWmSbR35mOGKOM++pUAA2BsyzNqMUJLN0Y
+ 0G7PoMpJ9SmogV1LZ0cO6xpodxJSFrxrfZ7FH8q/6q3s9h+oyv/ERRXvwq00JDN1mpwrYFOlz
+ PwvEDb0GjVQdHB6KPQudPRHd3xwK6PLlW+T8zqxceUkVulYVMmYQ0VR3iOo69sxiqFgJMHlsI
+ WVwL49WHVe8Y7SW2gGfa8fL84kCnuSIWPg3bJ/cTq6jOAxQf8G4Y0DUNAVpKHLR85MA52GOal
+ Wj8ygjOAYnFWIwA8Gk+lepe9O2aK1/YfEgnSwaqbRb8Gr752zcVDT2Ys7gzqQtMXGiyxI8KzC
+ twO4rQ+BU1l5NyM7qK57OGV3QhWgDAxcAE+/irqmhm33NGdIpnhFMVGNl05Aygy/nnVzP9CXY
+ Bxgapz8KhlNJO54a5/kCQm478rb38Fc6gFbq+CN8I4odinvqM7pfLsqWebzGs2qQk8xPY0wr4
+ fSsc4tL+/CZ4/6Fw5bdvAiqQ+NBMtXohZKnqodF07p9M9u+4Yvzj+t93gI03lFGzjcGPxbD9r
+ fh3yvKsDo3bshb9dY/R8q5BcuhHrKAJtp16pBuXEC/YsYJDKovoN2luJeYEm6lmaTYvXS5qpL
+ iBstKTEOI+LuYQgU0Y1YBHCdgGbEIXPkEtpli164e4r9w0YJSx4zWaSpPK7sW643EzsL7DoQd
+ iCv84vGdF2O2j3mypl0DFhkqCueb4SKD1ybd83zXVjRyN+dOFPRgd3kzICp49osaeU0aNB/Pf
+ kaiJrMnDy5JOwk/i0IEzFFmyV/4OMaT4H/tD6429T17siMFyOXVzRaoK23vz3MoH7Lqm7GQkW
+ vodjJh0J+S8NyvF5zQq13mg8J4C+TncPits/4PsqZ+b1zGhigSSMjaZ0XHlxmrlf8oY09iZzD
+ 3IymP2D5D7Rnd6EMjYcK5C1tw62vmYe7Lbl8C46ZKazJZFW0uXCCW7PHyBlCJBtU7gRgFf0YQ
+ TZx0CqtDECeeWshpuNo2OB95k9LxLQv8ek9KUIi1F/J8ix2wnKZHCIBFphqUXn5bMLUu7lCmD
+ PJHZ0iiV8rFRy5YXVCzTr7/fiO2A60J7Ox7ORLDEUaZ2PGAy0D6d5hnM8FygH/e19BeALGFPP
+ mYNZVezncPXomkzRIN8RhBtpQtL3MYl6Gfa6PBAi5BM6XNgk61OdF5N44zrehxr5Ei+un/AWg
+ j2qPL9nVGLcbVaSoc8sxhZCQZLb+UyGwPa+Jl13Zak7JW/f4u7PSIv+DDukg=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -73,156 +73,156 @@ Hi Emily,
 
 On Thu, 24 Oct 2019, Emily Shaffer wrote:
 
+> Teach bugreport to gather the values of config options which are present
+> in 'git-bugreport-config-whitelist'.
+>
+> Many config options are sensitive, and many Git add-ons use config
+> options which git-core does not know about; it is better only to gather
+> config options which we know to be safe, rather than excluding options
+> which we know to be unsafe.
+
+Should we still have the `// bugreport-exclude` comments, then?
+
+>
+> Reading the whitelist into memory and sorting it saves us time -
+> since git_config_bugreport() is called for every option the user has
+> configured, limiting the file IO to one open/read/close and performing
+> option lookup in sublinear time is a useful optimization.
+
+Maybe we even want a hashmap? That would reduce the time complexity even
+further.
+
 > diff --git a/bugreport.c b/bugreport.c
-> new file mode 100644
-> index 0000000000..ada54fe583
-> --- /dev/null
+> index ada54fe583..afa4836ab1 100644
+> --- a/bugreport.c
 > +++ b/bugreport.c
-> @@ -0,0 +1,55 @@
-> +#include "cache.h"
+> @@ -1,10 +1,24 @@
+>  #include "cache.h"
+>
+>  #include "bugreport.h"
+> +#include "config.h"
+> +#include "exec-cmd.h"
+>  #include "help.h"
+>  #include "run-command.h"
+>  #include "version.h"
+>
+> +/**
+> + * A sorted list of config options which we will add to the bugreport. =
+Managed
+> + * by 'gather_whitelist(...)'.
+> + */
+> +struct string_list whitelist =3D STRING_LIST_INIT_DUP;
+> +struct strbuf configs_and_values =3D STRBUF_INIT;
 > +
-> +#include "bugreport.h"
-> +#include "help.h"
-> +#include "run-command.h"
-> +#include "version.h"
+> +// git version --build-options
+> +// uname -a
+> +// curl-config --version
+> +// ldd --version
+> +// echo $SHELL
+
+These comments probably want to move to a single, C style comment, and
+they probably want to be introduced together with `get_system_info()`.
+
+I also have to admit that I might have missed where `$SHELL` was added
+to the output...
+
+>  void get_system_info(struct strbuf *sys_info)
+>  {
+>  	struct child_process cp =3D CHILD_PROCESS_INIT;
+> @@ -53,3 +67,39 @@ void get_system_info(struct strbuf *sys_info)
+>  	argv_array_clear(&cp.args);
+>  	strbuf_reset(&std_out);
+>  }
 > +
-> +void get_system_info(struct strbuf *sys_info)
+> +void gather_whitelist(struct strbuf *path)
 > +{
-> +	struct child_process cp =3D CHILD_PROCESS_INIT;
-> +	struct strbuf std_out =3D STRBUF_INIT;
+> +	struct strbuf tmp =3D STRBUF_INIT;
+> +	strbuf_read_file(&tmp, path->buf, 0);
+> +	string_list_init(&whitelist, 1);
+> +	string_list_split(&whitelist, tmp.buf, '\n', -1);
+> +	string_list_sort(&whitelist);
+> +}
 > +
-> +	strbuf_reset(sys_info);
+> +int git_config_bugreport(const char *var, const char *value, void *cb)
+> +{
+> +	if (string_list_has_string(&whitelist, var)) {
+> +		strbuf_addf(&configs_and_values,
+> +			    "%s : %s\n",
+> +			    var, value);
+
+A quite useful piece of information would be the config source. Not sure
+whether we can do that outside of `config.c` yet...
+
+> +	}
 > +
-> +	// get git version from native cmd
-
-Please use C-style comments instead of C++ ones.
-
-> +	strbuf_addstr(sys_info, "git version: ");
-> +	strbuf_addstr(sys_info, git_version_string);
-> +	strbuf_complete_line(sys_info);
+> +	return 0;
+> +}
 > +
-> +	// system call for other version info
-> +	argv_array_push(&cp.args, "uname");
-> +	argv_array_push(&cp.args, "-a");
-> +	capture_command(&cp, &std_out, 0);
-
-Mmmkay. I am not too much of a fan of relying on the `uname` executable,
-as it can very well be a 32-bit `uname.exe` on Windows, which obviously
-would _not_ report the architecture of the machine, but something
-misleading.
-
-Why not use the `uname()` function (that we even define in
-`compat/mingw.c`)?
-
-Also, why not include the same information as `git version
-=2D-build-options`, most importantly `GIT_HOST_CPU`?
-
-In any case, if you are capturing the output of `uname -a`, you
-definitely will want to pass the `RUN_COMMAND_STDOUT_TO_STDERR` flag (in
-case, say, the MSYS2 `uname.exe` fails with those dreaded Cygwin error
-messages like "*** fatal error - add_item
-("\??\D:\git\installation\Git", "/", ...) failed, errno 1").
-
+> +void get_whitelisted_config(struct strbuf *config_info)
+> +{
+> +	struct strbuf path =3D STRBUF_INIT;
 > +
-> +	strbuf_addstr(sys_info, "uname -a: ");
-> +	strbuf_addbuf(sys_info, &std_out);
-> +	strbuf_complete_line(sys_info);
-> +
-> +	argv_array_clear(&cp.args);
-> +	strbuf_reset(&std_out);
-> +
-> +
-> +	argv_array_push(&cp.args, "curl-config");
-> +	argv_array_push(&cp.args, "--version");
-> +	capture_command(&cp, &std_out, 0);
+> +	strbuf_addstr(&path, git_exec_path());
+> +	strbuf_addstr(&path, "/git-bugreport-config-whitelist");
 
-This will be almost certainly be incorrect, as most _regular_ users
-won't have `curl-config`. I know, it is easy to forget that most Git
-users are no hard-core C developers ;-)
+Hmm. I would have expected this patch to come directly after the patch
+2/9 that generates that white-list, and I would also have expected that
+to be pre-sorted, and compiled in.
 
-A better alternative would be to use `curl_version()`, guarded, of
-course, by `#ifndef NO_CURL`...
+Do you want users to _edit_ the file in the exec path? In general, that
+path will be write-protected, though. A better alternative would
+probably be to compile in a hard-coded list, and to allow including more
+values e.g. by offering command-line options to specify config setting
+patterns. But if we allow patterns, we might actually want to have those
+exclusions to prevent sensitive data from being included.
 
 > +
-> +	strbuf_addstr(sys_info, "curl-config --version: ");
-> +	strbuf_addbuf(sys_info, &std_out);
-> +	strbuf_complete_line(sys_info);
+> +	gather_whitelist(&path);
+> +	strbuf_init(&configs_and_values, whitelist.nr);
 > +
-> +	argv_array_clear(&cp.args);
-> +	strbuf_reset(&std_out);
+> +	git_config(git_config_bugreport, NULL);
 > +
-> +
-> +	argv_array_push(&cp.args, "ldd");
-> +	argv_array_push(&cp.args, "--version");
-> +	capture_command(&cp, &std_out, 0);
-
-Again, this command will only be present in few setups. I am not
-actually sure that the output of this is interesting to begin with.
-
-What I _do_ think is that a much more interesting piece of information
-would be the exact GLIBC version, the OS name and the OS version.
-
-> +
-> +	strbuf_addstr(sys_info, "ldd --version: ");
-> +	strbuf_addbuf(sys_info, &std_out);
-> +	strbuf_complete_line(sys_info);
-> +
-> +	argv_array_clear(&cp.args);
-> +	strbuf_reset(&std_out);
+> +	strbuf_reset(config_info);
+> +	strbuf_addbuf(config_info, &configs_and_values);
 > +}
 > diff --git a/bugreport.h b/bugreport.h
-> new file mode 100644
-> index 0000000000..ba216acf3f
-> --- /dev/null
+> index ba216acf3f..7413e7e1be 100644
+> --- a/bugreport.h
 > +++ b/bugreport.h
-> @@ -0,0 +1,7 @@
-> +#include "strbuf.h"
+> @@ -5,3 +5,10 @@
+>   * The previous contents of sys_info will be discarded.
+>   */
+>  void get_system_info(struct strbuf *sys_info);
 > +
 > +/**
-> + * Adds the Git version, `uname -a`, and `curl-config --version` to sys=
-_info.
-> + * The previous contents of sys_info will be discarded.
+
+I also frequently use JavaDoc-style `/**`, but I am not sure that this
+is actually desired in Git's source code ;-)
+
+> + * Adds the values of the config items listed in
+> + * 'git-bugreport-config-whitelist' to config_info. The previous conten=
+ts of
+> + * config_info will be discarded.
 > + */
-> +void get_system_info(struct strbuf *sys_info);
+> +void get_whitelisted_config(struct strbuf *sys_info);
 > diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-> index 2ef16440a0..7232d31be7 100644
+> index 7232d31be7..70fe0d2b85 100644
 > --- a/builtin/bugreport.c
 > +++ b/builtin/bugreport.c
-> @@ -1,4 +1,5 @@
->  #include "builtin.h"
-> +#include "bugreport.h"
->  #include "stdio.h"
->  #include "strbuf.h"
->  #include "time.h"
-> @@ -27,6 +28,13 @@ int get_bug_template(struct strbuf *template)
->  	return 0;
->  }
->
-> +void add_header(FILE *report, const char *title)
-> +{
-> +	struct strbuf buffer =3D STRBUF_INIT;
-> +	strbuf_addf(&buffer, "\n\n[%s]\n", title);
-> +	strbuf_write(&buffer, report);
-
-This leaks `buffer`. Why not write into `report` via `fprintf()`
-directly?
-
-Ciao,
-Dscho
-
-> +}
-> +
->  int cmd_bugreport(int argc, const char **argv, const char *prefix)
->  {
->  	struct strbuf buffer =3D STRBUF_INIT;
-> @@ -43,6 +51,11 @@ int cmd_bugreport(int argc, const char **argv, const =
+> @@ -56,6 +56,10 @@ int cmd_bugreport(int argc, const char **argv, const =
 char *prefix)
->  	get_bug_template(&buffer);
+>  	get_system_info(&buffer);
 >  	strbuf_write(&buffer, report);
 >
-> +	// add other contents
-> +	add_header(report, "System Info");
-> +	get_system_info(&buffer);
+> +	add_header(report, "Whitelisted Config");
+
+Quite honestly, I would like to avoid the term "whitelist" for good. How
+about "Selected config settings" instead?
+
+Thanks,
+Dscho
+
+> +	get_whitelisted_config(&buffer);
 > +	strbuf_write(&buffer, report);
 > +
 >  	fclose(report);
