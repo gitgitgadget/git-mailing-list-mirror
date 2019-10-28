@@ -8,106 +8,88 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94FF11F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 11:25:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4A8E1F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 11:48:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731102AbfJ1LZh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 07:25:37 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:52227 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727163AbfJ1LZh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 07:25:37 -0400
-Received: by mail-wm1-f65.google.com with SMTP id p21so9030625wmg.2
-        for <git@vger.kernel.org>; Mon, 28 Oct 2019 04:25:34 -0700 (PDT)
+        id S1727479AbfJ1Ls4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 07:48:56 -0400
+Received: from mail-wm1-f50.google.com ([209.85.128.50]:37772 "EHLO
+        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726961AbfJ1Lsz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 07:48:55 -0400
+Received: by mail-wm1-f50.google.com with SMTP id q130so8801026wme.2
+        for <git@vger.kernel.org>; Mon, 28 Oct 2019 04:48:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=IhSeT8bDJ5vPMw2tYFIgP+IlnE7qvxnoQMRk+saC+bk=;
-        b=Tyv9CYscyfINWr6VC9ju820YGRFjnv+49uFp2UJqZc7t/2ERMyP3VGvMW4ID1NxDY8
-         1gTKGWxmQj3pakh2Kbcn6dANWmxNiKcKpnbwIsS//8z2L/cT65bmWZz5VS51flHHLKNO
-         jMjeN+7qN1CanfH1YMpqO+eyStcva3wLV71q8hfDWduz5sRXH/yxXqsQmGFgQ6V09EWd
-         k/NfheDNxuBXgSjHe5FfSuaIPJ2RZSlKgdWc0/lIklRA7dKs3hhly9jpoOfX9mACXbEe
-         EaM4JVWIFb16re7WgDw3Ly9uMK5iR3Kx+DSOd3g3rRtNNsjhBRdim/h6wx+BzDGOKxAC
-         awXg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=aIntTn+sHeoHvzpDet+zdIp8N4o3MdW60f+zmnT9Sqc=;
+        b=SM4Jp44ZCv/idzCDP+9mq096v9ygOcpfVMwmOrNJyjwVjfHcGHx7dqO4kIj4zAqINQ
+         qp6DPU86k2YcZE3IFV73bO07zhwZwY9uEsSF12LJZS5M/sOer028J5P4y1GFCUXtJLG2
+         zB3qf+U33bwK4AwjGMeYphCbijxXA8VYaxiarMsyyIGOVWqWKQujEF1LObg+jFq/E7Ou
+         9Fk7wUev1CrWndFUpZHo35xvLNN4mXW+8IleC1s9EAcpYJVo1J0ePX82t2DXEsiHuFmC
+         efk8nsldy4ApVWIvpcwGlQpGqTZ09d3Sbwh18m3U9qiWJHpMqnbe3OLsaSOTZ4+ZVHbn
+         DLEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=IhSeT8bDJ5vPMw2tYFIgP+IlnE7qvxnoQMRk+saC+bk=;
-        b=WzGH9YKHRA81YgTCtmDcKBWGg7iB6B0I1+TjkowuAaDIG2SM8o8yPU7lDjacgObhWR
-         t/z9HN8crxuSNNhHMxIkr12JNAHLJu+Ub7NEgByXGlD+a5slMP445FF1WAgOxGLg+2Tz
-         VqDmiAwsL1/FjPh+jWuMAl1rdbTQRUR5pfNIb01BVCIvffKk73CJo+QyCkGio8MrDDqT
-         1hB/8JDJr7hDG5pf2+PiFxmBBL/kBAl/jJ8dbNZi45eMTQ48VxLBFshlqrMgPflSXx08
-         Zq+C0CMA2I3Kgr20sryEWoM0LuAd9975ukV+AOcLFvbU1LefoDwETByWqfa2Znds1r02
-         gFFQ==
-X-Gm-Message-State: APjAAAVLqZnkC602DOtJdWHrjdGAWrOu14xpI+i10XEMGZOqh93yyhYg
-        WK6g6iK6VpCCS7ZAwAyLGjY=
-X-Google-Smtp-Source: APXvYqw4owFW1yHhWGY7fcOo+WtOe5ViexGS9mQZdoEyG7miX0fxkc/7IUJ1E2kXGOFY5eZeMrM68Q==
-X-Received: by 2002:a1c:20c9:: with SMTP id g192mr14044961wmg.74.1572261933659;
-        Mon, 28 Oct 2019 04:25:33 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=aIntTn+sHeoHvzpDet+zdIp8N4o3MdW60f+zmnT9Sqc=;
+        b=CM255seoqMQ91b/v5jirhBz1RiOWAdJ39uH1Rlm9qMvU/3a+QWhMs1zDPVqtWJBY0i
+         Wt9YGGWqbRFK4mwkMUVbSCwFJrMSJFi6c65kU3iJuUhVxK5vOUrg7uxESMJdVOFAKfWn
+         wZb9zFh/iDtBHlAa0rGipZwg06+hDj9BKFaodukCTz4XaLBz4dQ1RlNSYc5Q3lh5EHKu
+         iWypNeHUXg1a0x2G1iGkytvSig2p8EW/pfw6ga5wM9T+6p7VdMcmWHHKg8ikvAk1R8ar
+         GHFaGy1OOWIiP7ip3d7tFlxUX6xBwOAwDI7lY7mctL5483ZROEqtVxuxJp2wehwMgaY4
+         f5ww==
+X-Gm-Message-State: APjAAAVCh5rZ7mc5NTTWgTaVcx0HdkTyXnY9qBFu297czEfv9gbewOno
+        8QWIzyyqalejATuOL4FrxMhRhnas
+X-Google-Smtp-Source: APXvYqwS7it/3xAEna7fOgddjMbTWnkShrCFk54+6A5WAS5o/b3Bhm3CLZ+cZKW4H8M1WE14UZUiKg==
+X-Received: by 2002:a1c:49c2:: with SMTP id w185mr14745047wma.16.1572263333449;
+        Mon, 28 Oct 2019 04:48:53 -0700 (PDT)
 Received: from szeder.dev (x4db30d31.dyn.telefonica.de. [77.179.13.49])
-        by smtp.gmail.com with ESMTPSA id b1sm11387489wru.83.2019.10.28.04.25.32
+        by smtp.gmail.com with ESMTPSA id g184sm14258852wma.8.2019.10.28.04.48.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Oct 2019 04:25:32 -0700 (PDT)
-Date:   Mon, 28 Oct 2019 12:25:30 +0100
+        Mon, 28 Oct 2019 04:48:52 -0700 (PDT)
+Date:   Mon, 28 Oct 2019 12:48:50 +0100
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/3] myfirstcontrib: add 'psuh' to command-list.txt
-Message-ID: <20191028112530.GQ4348@szeder.dev>
-References: <20191026005159.98405-1-emilyshaffer@google.com>
- <20191026005159.98405-2-emilyshaffer@google.com>
- <20191026010857.GA39574@google.com>
- <20191026080057.GP4348@szeder.dev>
- <xmqqmudlbr1s.fsf@gitster-ct.c.googlers.com>
+To:     randall.s.becker@rogers.com
+Cc:     git@vger.kernel.org, 'Junio C Hamano' <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] Git v2.24.0-rc1 - Test Summary for NonStop
+Message-ID: <20191028114850.GR4348@szeder.dev>
+References: <021601d58c32$4f632a10$ee297e30$@rogers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqmudlbr1s.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <021601d58c32$4f632a10$ee297e30$@rogers.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 28, 2019 at 10:24:31AM +0900, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
+On Sat, Oct 26, 2019 at 03:19:37PM -0400, randall.s.becker@rogers.com wrote:
+> This is the test summary for the HPE NonStop TNS/E platform for git
+> 2.24.0-rc1. All tests passed except as follows:
 > 
-> > See that last "no link: git-bisect" line?  That's what happened to
-> > catch my eyes when Derrick forgot to add his new 'sparse-checkout'
-> > builtin to 'command-list.txt'.  I still haven't looked up what that
-> > 'no link' is supposed to mean, but if it were an error, then we would
-> 
-> Build procedure for the Documentation uses ../command-list.txt as
-> its input to produce cmds-<class>.txt files, that are included in
-> git.txt (hence resulting git.1 and git.html).  While it works, it
-> tries to make sure that a command that has its own documentation
-> page at Documentation/git-<command>.txt is listed; otherwise we have
-> a page for <command> to which there is no link from git.{1,html}.
+> [NEW] 1. t0500-progress-display - failed 7 out of 11. This appears to
+> consistently fail when run under Jenkins but consistently succeeds when run
+> from a non-disconnected real terminal. The difference from a pipe handling
+> standpoint with Jenkins is that it provides a stdout opened using O_WRONLY
+> rather than O_RDWR or other open() modes that might exist - we have seen
+> problems resulting from differences between process initiation under Jenkins
+> and connected terminals in other products. This failure was not present in
+> 2.23.0.
 
-Oh, then it doesn't quite do what I thought it does.
+> It would be nice to understand why t0500 is failing before we release the
+> official build to our community.
 
-> I think "make check-builtins" might also want to sanity check
-> command-list.txt.
+Yeah, that would be nice, but I don't know how we could help, if you
+don't even tell us which 7 tests failed...  The output of the failed
+tests could also be quite useful.
 
-I haven't noticed that we have something like that.  FWIW, our
-documentation CI job runs it already.
-
-And indeed it can be easily extended to check 'command-list.txt' as
-well, but then it will find some other builtins not included in
-'command-list.txt', namely:
-
-  bisect--helper env--helper fsck-objects init-db merge-ours
-  merge-recursive merge-subtree remote-ext remote-fd submodule--helper
-
-I think it makes sense not to include the '*--helper' commands, or
-'fsck-objects' and 'init-db', but I'm not sure about the others.
-
-OTOH, it won't help if we add a new git-foo script and forgot to
-include it in 'command-list.txt'.
+It may or may not be conincidental, but there happens to be 7 tests
+in t0500 that use 'test-tool progress --total=<N>', which was affected
+by an endianness bug that got fixed in 2b6f6ea1bd (test-progress: fix
+test failures on big-endian systems, 2019-10-20).  It would be
+interesting to see whether t0500 failed before that fix as well.
 
