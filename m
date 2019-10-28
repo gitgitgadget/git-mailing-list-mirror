@@ -7,117 +7,117 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D0DC1F4C0
-	for <e@80x24.org>; Mon, 28 Oct 2019 02:03:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BA391F4C0
+	for <e@80x24.org>; Mon, 28 Oct 2019 02:22:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729460AbfJ1CDc (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Oct 2019 22:03:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61984 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727598AbfJ1CDc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Oct 2019 22:03:32 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB9E526DED;
-        Sun, 27 Oct 2019 22:03:29 -0400 (EDT)
+        id S1728455AbfJ1CWv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Oct 2019 22:22:51 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59832 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727598AbfJ1CWv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Oct 2019 22:22:51 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5A32197164;
+        Sun, 27 Oct 2019 22:22:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=S0EuqOO58z7BeuMg5UCWwWlmyZo=; b=wNYlSe
-        r1QMXp2I916JUK4FqwFR6LH6gMmUF1t7uu4YJaSdgx15sSX3VEFp+aTNIzFwmwC0
-        T2uO3bbf5FuDMW2i3FSrgy2qwZh78NtonyEghMNLsdUyPwGTquIcGtrssbijDHx6
-        adcBfPn5ThcvYQu2xAatmbDanYbRp19ROo0vo=
+        :content-type; s=sasl; bh=NTTqNLG00cisRVHf+J7ckncPpbc=; b=jclVUL
+        IdVvuBJiFZS/Ha/t+EY8TW/EJgwqfevd96URU7dbk0TQwU4ag3OdMwaqt8+NXya1
+        +tPDMb4nSKS1JwMwGPXHiCoVE59zxrJKRGNk2C5UbOOOpZr98cauyrlbHY04tEf9
+        p8x1f59bux9tdhLciVXlwtgyfPlNH4rta9ejE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=I6yaTB21WBPE1P3UrxkR6qhOAKMYxplD
-        nFH49dL48rnU4FUshbM67pva3ZmF2heGes0Ighpkytg7IWMRtOisbjzzWxWjIsba
-        8hoH0wOnchkIFWgduyaHvSSED8CO7bDAUfF5N0IIJScEflKenr9AB0MNP2Wv6Uva
-        5kGPoCotZho=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C459526DEC;
-        Sun, 27 Oct 2019 22:03:29 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=SHpwFMBoY7QCU4IFZyBHGlr7lSLOkPlr
+        2nnZc8t8CYOhvStLsD9s8tPSDbjkmhTQdVaZGq4wqhJUJ9yJfiPTX7WE7hddjCbv
+        haJFf9TGTCCl1OTdIZrrIem/qTwdQscRbvD3r3qqCSd4xdQ0OK6qRhAZ6dRpPV42
+        2s8e1Dw1668=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5239497163;
+        Sun, 27 Oct 2019 22:22:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 343FA26DEB;
-        Sun, 27 Oct 2019 22:03:29 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3521F97162;
+        Sun, 27 Oct 2019 22:22:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "qusielle via GitGitGadget" <gitgitgadget@gmail.com>
+To:     Miriam Rubio <mirucam@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/1] add: respect `--ignore-errors` when `lstat()` reports errors
-References: <pull.432.git.1572127149.gitgitgadget@gmail.com>
-        <fd022f88f54f6cf0feb61965b2dc47bca64c0937.1572127149.git.gitgitgadget@gmail.com>
-Date:   Mon, 28 Oct 2019 11:03:28 +0900
-In-Reply-To: <fd022f88f54f6cf0feb61965b2dc47bca64c0937.1572127149.git.gitgitgadget@gmail.com>
-        (qusielle via GitGitGadget's message of "Sat, 26 Oct 2019 21:59:09
-        +0000")
-Message-ID: <xmqq36fdbp8v.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [Outreachy] [PATCH] dir: add new function `path_exists()`
+References: <20191027163038.47409-1-mirucam@gmail.com>
+Date:   Mon, 28 Oct 2019 11:22:40 +0900
+In-Reply-To: <20191027163038.47409-1-mirucam@gmail.com> (Miriam Rubio's
+        message of "Sun, 27 Oct 2019 17:30:38 +0100")
+Message-ID: <xmqqy2x5a9sf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 22AC8284-F927-11E9-A6FF-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: D1EAF2A6-F929-11E9-A3AB-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"qusielle via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Miriam Rubio <mirucam@gmail.com> writes:
 
-> From: qusielle <31454380+qusielle@users.noreply.github.com>
->
-> "git add --ignore-errors" command fails immediately when lstat returns
-> an error, despite the ignore errors' flag is enabled.
-> ...
-> diff --git a/read-cache.c b/read-cache.c
-> index 133f790fa4..67237ecd29 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -801,7 +801,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
->  int add_file_to_index(struct index_state *istate, const char *path, int flags)
->  {
->  	struct stat st;
-> -	if (lstat(path, &st))
-> +	if (lstat(path, &st) && !(flags & ADD_CACHE_IGNORE_ERRORS))
->  		die_errno(_("unable to stat '%s'"), path);
->  	return add_to_index(istate, path, &st, flags);
->  }
+> Added a new function path_exists() that works the same as file_exists()
+> but with better descriptive name.
 
-The only callers of this function that matter calls it and then
-responds to an error return like so:
+"I did this" before justifying why it is a good thing is not a good
+description.
 
-(in builtin/add.c::update_callback())
+	builtin/clone.c has a static funciton dir_exists() that
+	checks if a given path exists on the filesystem.  It returns
+	true (and it is correct for it to return true) when the
+	given path exists as a non-directory (e.g. a regular file).
 
-	if (add_file_to_index(&the_index, path,	data->flags)) {
-		if (!(data->flags & ADD_CACHE_IGNORE_ERRORS))
-			die(_("updating files failed"));
+	This is confusing.  What the caller wants to check, and what
+	this function wants to return, is if the path exists, so
+	rename it to path_exists().
 
+would make sense (and follows our convention to command the codebase
+to "become like so").
 
-(in builtin/add.c::add_files(), where ignore_add_errors was used to
-set the ADD_CACHE_IGNORE_ERRORS to flags in its caller)
+> New calls should use path_exists() instead of file_exists().
 
-	if (add_file_to_index(&the_index, dir->entries[i]->name, flags)) {
-		if (!ignore_add_errors)
-			die(_("adding files failed"));
+This is not a good suggestion in general, and I do not want to see
+such a statement here or (more importantly) not in the header file.
+Calls that want to see if the path exists, regardless of type,
+should use path_exists() instead of file_exists().  Other calls that
+should be checking if a regular file exists there should continue to
+use file_exists().  Once we finished sweeping code, one of two
+things could happen:
 
-So you correctly identified what is the right place to fix.  We
-should not "die_errno()"; we should give the control back to the
-caller instead.
+ (1) there remains no caller to file_exists()---it turns out that
+     everybody wanted to check if there is something at the given
+     path, no matter what type of filesystem entity it is.  In such
+     a case, we can safely remove file_exists().
 
-But after a failed stat, the code with your patch still calls
-add_to_index() using the now undefined stat data, which would
-contaminate the in-core index with wrong data.  
+ (2) there are legitimate callers to file_exists()---these callers
+     used "does stat() succeed?" without checking if the filesystem
+     entity at the path is indeed a regular file, but that was what
+     they wanted to do.  In such a case, we can tighten the check in
+     file_exists() to also make sure that we saw a regular file.
 
-I think we should instead return without touching the index for the
-path we had trouble lstat()ing.
+If you audited all existing callers of file_exists() as a part of
+preparing this topic, and if the result is (1) above, then I think
+this single patch as the whole of this topic is OK.  But if so, the
+proposed log message should state that fact to justify the above
+statement.  Also we may want to remove the implementation of
+file_exists() and replace it with
 
-IOW
+	#define file_exists(path) path_exists(path)
 
-	if (lstat(path, &st)) {
-		if (flags & ADD_CACHE_IGNORE_ERRORS)
-			return -1;
-		else
-			die_errno(_("unable to ..."));
-	}
-	return add_to_index(...);
+in dir.h if we were to go that route.
 
+I actually suspect that you would rather one to go in the other
+direction, i.e. to narrow the scope of this topic and change the
+dir_exists() to path_exists() inside builtin/clone.c, leaving the
+function file-scope static, and stop there.  Unless/until all the
+existing callers of file_exists() have been audited and we know all
+of (or at least "most of") them want to ask "does anything exist at
+this path?", that would be the more sensible thing to do.
+
+Thanks.
