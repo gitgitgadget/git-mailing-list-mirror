@@ -7,64 +7,72 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDF161F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 02:26:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1A8F1F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 02:27:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730691AbfJ2C0L (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 22:26:11 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59038 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728497AbfJ2C0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 22:26:11 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 47988A9375;
-        Mon, 28 Oct 2019 22:26:11 -0400 (EDT)
+        id S1730676AbfJ2C13 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 22:27:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53354 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728497AbfJ2C13 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 22:27:29 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 451902D508;
+        Mon, 28 Oct 2019 22:27:27 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+ylmzMSpM8PE1zmzvzdfk0b2t4k=; b=cnfVfm
-        HSD0FPTbXxr+1RVhWfO1l7weTLzOfVL0Wa7VpnUf6cmjq/5SC6s0O8TNDjoCKlDZ
-        fMVm4SsOLFqtACPh+JhP4ljc2lwSW0u7jKZORQUAUSbzKkjbWhz2t3Bc+AMUfUvt
-        L0ydV7a2oOBlqp+0T1/XSjqxjOt1AH/ABMSgE=
+        :content-type; s=sasl; bh=RYRoiSa8Y9Czz546GLQjy19CaZY=; b=aN7Qlb
+        eV+GDoQoXOtHb1MAusSSWs9LIDMdBdgY65CVKFrcKpz302YY2dM1lIhHHyDL9xTo
+        KKV6kckL1ilaD1bZbuWhJ6rgXp6rbdf9eJ2dO7yOYKJCZdQcY0JObbPgwBFGQyHb
+        jOFiGI62pq8fCYfFs6fz+6f1AFaPaBnNF344k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FceeV+KKihIkGvjlhFS9vgyqcyOoFiPb
-        MeXn2XkLBAFLQV0/NY9rqoMgsHJ0Doe1TSe6GTIZ7q2tDO+UcRhgSd23HFQcEk/c
-        jGM74CRdXQDLwV92Qs5JVTDOEO0P8gpBbVnz6+TGO3RoA0vsnlt7QZ9udqWDRLVU
-        yiOyzMRcwr4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 40024A9374;
-        Mon, 28 Oct 2019 22:26:11 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=MwNLkFh2bYYrZ3Us3LNQyxPUR9toIsFG
+        oFfqVJ42H3BmuSBtwbw1zD5Uf8IA/IOOtfMWO2PCGs5iOhDD33X/AihZvNyPaA+T
+        /3YvbY5eb24UYMsByLnO4Q52v/enGU+bo7MqfVjh2TAJKxpWJBxpZd/ngmJel/7V
+        +Nv+6qBRejc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2CFB02D507;
+        Mon, 28 Oct 2019 22:27:27 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 70243A9373;
-        Mon, 28 Oct 2019 22:26:08 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7D9C52D503;
+        Mon, 28 Oct 2019 22:27:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/15] SHA-256 test fixes, part 6
-References: <20191028005907.24985-1-sandals@crustytoothpaste.net>
-Date:   Tue, 29 Oct 2019 11:26:06 +0900
-In-Reply-To: <20191028005907.24985-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Mon, 28 Oct 2019 00:58:52 +0000")
-Message-ID: <xmqqv9s870e9.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Subject: Re: [PATCH 1/2] update-index: optionally leave skip-worktree entries alone
+References: <pull.355.git.gitgitgadget@gmail.com>
+        <c263eb54b30b3e93abb74662d120d8bb882322bb.1569483748.git.gitgitgadget@gmail.com>
+        <xmqq36fda3i8.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1910282206081.46@tvgsbejvaqbjf.bet>
+Date:   Tue, 29 Oct 2019 11:27:25 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1910282206081.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 28 Oct 2019 22:07:15 +0100 (CET)")
+Message-ID: <xmqqr22w70c2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7742CB56-F9F3-11E9-9A34-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: A5C91886-F9F3-11E9-8309-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> This series consists mostly of additional test fixes for SHA-256, plus
-> some test framework improvements and a new option to rev-parse.
+>> Isn't this something reasonably easy to guard against regression with
+>> a test or two?
+>
+> I sent out a v2 with tests added to 1/2.
 
-All of them looked good to me.  Queued.
+Good; that way, not just "stash" but anything that relies on update-index
+would be protected from regressions.
+
+Thanks.
