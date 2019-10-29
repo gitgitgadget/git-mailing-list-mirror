@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 185961F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 10:01:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F8851F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 10:01:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726757AbfJ2KAz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 06:00:55 -0400
-Received: from mail-wm1-f54.google.com ([209.85.128.54]:36895 "EHLO
-        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726342AbfJ2KAy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 06:00:54 -0400
-Received: by mail-wm1-f54.google.com with SMTP id q130so1692757wme.2
-        for <git@vger.kernel.org>; Tue, 29 Oct 2019 03:00:53 -0700 (PDT)
+        id S1727060AbfJ2KBB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 06:01:01 -0400
+Received: from mail-wr1-f50.google.com ([209.85.221.50]:34528 "EHLO
+        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726099AbfJ2KA4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 06:00:56 -0400
+Received: by mail-wr1-f50.google.com with SMTP id t16so12931275wrr.1
+        for <git@vger.kernel.org>; Tue, 29 Oct 2019 03:00:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=12WZXDvSSSFUqF+tPHhMpooqo/fLyKCbw1DKsKakPTE=;
-        b=Q9XGrqy+mfsGTSo+JUxfLPZjZZ5QkUiWlGOn/ISerB/r4+jxYOGKfx2n/5Y+a12NIJ
-         DwJiJHWr8dAkNzo9eTKIcf7qdus/nAaLaW2a2A0aPKxjq9/UheP58CKWrd4MtnscDFAC
-         TQJib0670N4USbZsXiiAZAjAnBuNZ9EXemmWW0Svvhlee8M54SJ99jJxatKqdHYUXMah
-         UQjlFAmUaNChQJLIV75ZQ64qDwFqCfATWHXKKd90GR+WuA2beWosIKrbTpDMPMqG6QOw
-         +UcQYo26obfCzPiNuL9wQWuup6nYW0/1DAo7p2D/Li1FFzEO/51yb/bc3XoG9JVE8oL/
-         JYvQ==
+        bh=/r3LV3ig26h2jE3K96c9klAmXlWRTCzKv5xNU6JF0nQ=;
+        b=m5+2/Vdy7WWnMQDMiDVM+CKGDNxGg8U0tBEWyMRDRyAH2ymDk7ISGAZTcB2uvSQ8+E
+         orVQIWET7SD8SMZX1IqlyxLZ8o843xzzC1GBitWZ1zAUrhxc4aVoGloP0mfv/N+DYJrt
+         n/V5HfRK1cq4dxPfi+KUBQW/I2lV5m+EV3Ml5hefqShmVTP9aAgyG9nfYaKmvI0Y2aoY
+         vV36XAu+VFDAWpkkMUhtuvZxbPAYlK6fkm0nKIdLi9aZjxEbTI4teHYAtLMFbXBexNJr
+         RBzO1QbYXbi9zQlAhVVzBOK2W/qFjrvcRH+f9KJYmB60wI/OQjzGJJ1Jlzhlyuu7A1zK
+         WHNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=12WZXDvSSSFUqF+tPHhMpooqo/fLyKCbw1DKsKakPTE=;
-        b=A1nb0C5uHj4XRHJhxjy6g5QckjBHLGdkU9GrUfwUYbUSU68DbXf4XZZy27aOuLdig0
-         ekcYT49eK25ndjYZj5u6+IAxTA8eWyJzk5gH7jXy+rutCtfITaHlz8P2dZ58BOVVwuaU
-         q+Y49pNIm02fg6wQXpgE71YH7+sf18eiOeasnW1JNdf2Btj5eX1qqVZej+YHM3nQwNgt
-         EhPo0tlrgH9P+IP1Ghvo6q6LfDTqfafJus/Uqh8VtJgi3MwHvVlwvgs2WpFA24Czz1fW
-         ehBLtovE/pqnn/eAnmyVURuy5mjnN3fwSlugXpYkNkNMoDGWz7zWDXd7/GsumlW+lI1I
-         UDUQ==
-X-Gm-Message-State: APjAAAW1RBw04zvJbtRenPxphP5tTt8JoHEE/vOcxPKCj9uBgaaAYN6r
-        8CIrCgBX3UX937Pp4UNlTU+eGnX3
-X-Google-Smtp-Source: APXvYqwfskp/slbRr430h94OJD6CzhwEO1mjrcjz0Ekntxp/Pcw7QW2EAXed0++7H+0aLZvKsPGHfg==
-X-Received: by 2002:a1c:49d5:: with SMTP id w204mr3331589wma.111.1572343252560;
-        Tue, 29 Oct 2019 03:00:52 -0700 (PDT)
+        bh=/r3LV3ig26h2jE3K96c9klAmXlWRTCzKv5xNU6JF0nQ=;
+        b=innX2ywCz1hmszrIkszgXcyjgFCshMcJl6YlzWuyA0SHr1UDAaJjrwkd3cBkJmroQf
+         oxWGQzwHfzSFLrfbIFWJVx6bhFHDdDSYmKjvDWBnfmcz8IP1dSuWwaIFbHT6mHuSyPyG
+         fxHjIkRAlmEs8u+vMDmZULJvj0CxTi/a9sIIjEH/gdkfJZTlV2g2+zFdK+gyrltS0rdh
+         gIdWUKUKE6tMZ4oVMzVeYkSDibnvG3P1k0c1yF1g5yNOUDmLSAuZ7GUQxkeugfcoo2iy
+         PunwaEOypZwpDTDRePjuhmEkW8MxkluQHrZBFTcVkLBGAr6bc1jUI4n58jM2C27PuoZ8
+         Ht1w==
+X-Gm-Message-State: APjAAAVQQ5SiIjHkK5KF75GNIQCuLEmvcfYZHqTP4s4VklS7Fjc5Pv/c
+        pv+lvYZqmjSF2zcajrn67s5kAQnU
+X-Google-Smtp-Source: APXvYqyZoG3YQGixeRDS2YeSAKiPUmBRhzQW+cwaIVjZ+0PkLJVmqc9LIkEX0irYOU6mDkZHqiHy6Q==
+X-Received: by 2002:a5d:614b:: with SMTP id y11mr1524759wrt.374.1572343254555;
+        Tue, 29 Oct 2019 03:00:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p18sm2558212wmi.42.2019.10.29.03.00.52
+        by smtp.gmail.com with ESMTPSA id x8sm14795758wrr.43.2019.10.29.03.00.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Oct 2019 03:00:52 -0700 (PDT)
-Message-Id: <e16f5b25e9763d31a2c2a9cc8e425e92e9db8275.1572343246.git.gitgitgadget@gmail.com>
+        Tue, 29 Oct 2019 03:00:54 -0700 (PDT)
+Message-Id: <afab6d5f4ed8cbe8e6dcba9a50282a471b542b13.1572343246.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.git.1572343246.gitgitgadget@gmail.com>
 References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Oct 2019 10:00:42 +0000
-Subject: [PATCH 06/10] remote: move doc to remote.h and refspec.h
+Date:   Tue, 29 Oct 2019 10:00:45 +0000
+Subject: [PATCH 09/10] revision: move doc to revision.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,326 +71,200 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-remote.txt to
-remote.h and refspec.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-revision-walking.txt
+to revision.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-N.B. The doc for both push and fetch members of the remote struct aren't
-moved because they are out of date, as the members were changed from arrays
-of rspecs to struct refspec 2 years ago.
-
-Also documentation/technical/api-remote.txt is removed because the
+Also documentation/technical/api-revision-walking.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-remote.txt | 127 -------------------------
- refspec.h                              |  16 ++++
- remote.h                               |  57 ++++++++++-
- 3 files changed, 70 insertions(+), 130 deletions(-)
- delete mode 100644 Documentation/technical/api-remote.txt
+ .../technical/api-revision-walking.txt        | 72 -------------------
+ revision.h                                    | 59 +++++++++++++++
+ 2 files changed, 59 insertions(+), 72 deletions(-)
+ delete mode 100644 Documentation/technical/api-revision-walking.txt
 
-diff --git a/Documentation/technical/api-remote.txt b/Documentation/technical/api-remote.txt
+diff --git a/Documentation/technical/api-revision-walking.txt b/Documentation/technical/api-revision-walking.txt
 deleted file mode 100644
-index f10941b2e8..0000000000
---- a/Documentation/technical/api-remote.txt
+index 03f9ea6ac4..0000000000
+--- a/Documentation/technical/api-revision-walking.txt
 +++ /dev/null
-@@ -1,127 +0,0 @@
--Remotes configuration API
--=========================
+@@ -1,72 +0,0 @@
+-revision walking API
+-====================
 -
--The API in remote.h gives access to the configuration related to
--remotes. It handles all three configuration mechanisms historically
--and currently used by Git, and presents the information in a uniform
--fashion. Note that the code also handles plain URLs without any
--configuration, giving them just the default information.
+-The revision walking API offers functions to build a list of revisions
+-and then iterate over that list.
 -
--struct remote
---------------
+-Calling sequence
+-----------------
 -
--`name`::
+-The walking API has a given calling sequence: first you need to
+-initialize a rev_info structure, then add revisions to control what kind
+-of revision list do you want to get, finally you can iterate over the
+-revision list.
 -
--	The user's nickname for the remote
+-Functions
+----------
 -
--`url`::
+-`repo_init_revisions`::
 -
--	An array of all of the url_nr URLs configured for the remote
+-	Initialize a rev_info structure with default values. The third
+-	parameter may be NULL or can be prefix path, and then the `.prefix`
+-	variable will be set to it. This is typically the first function you
+-	want to call when you want to deal with a revision list. After calling
+-	this function, you are free to customize options, like set
+-	`.ignore_merges` to 0 if you don't want to ignore merges, and so on. See
+-	`revision.h` for a complete list of available options.
 -
--`pushurl`::
+-`add_pending_object`::
 -
--	An array of all of the pushurl_nr push URLs configured for the remote
+-	This function can be used if you want to add commit objects as revision
+-	information. You can use the `UNINTERESTING` object flag to indicate if
+-	you want to include or exclude the given commit (and commits reachable
+-	from the given commit) from the revision list.
+-+
+-NOTE: If you have the commits as a string list then you probably want to
+-use setup_revisions(), instead of parsing each string and using this
+-function.
 -
--`push`::
+-`setup_revisions`::
 -
--	 An array of refspecs configured for pushing, with
--	 push_refspec being the literal strings, and push_refspec_nr
--	 being the quantity.
+-	Parse revision information, filling in the `rev_info` structure, and
+-	removing the used arguments from the argument list. Returns the number
+-	of arguments left that weren't recognized, which are also moved to the
+-	head of the argument list. The last parameter is used in case no
+-	parameter given by the first two arguments.
 -
--`fetch`::
+-`prepare_revision_walk`::
 -
--	An array of refspecs configured for fetching, with
--	fetch_refspec being the literal strings, and fetch_refspec_nr
--	being the quantity.
+-	Prepares the rev_info structure for a walk. You should check if it
+-	returns any error (non-zero return code) and if it does not, you can
+-	start using get_revision() to do the iteration.
 -
--`fetch_tags`::
+-`get_revision`::
 -
--	The setting for whether to fetch tags (as a separate rule from
--	the configured refspecs); -1 means never to fetch tags, 0
--	means to auto-follow tags based on the default heuristic, 1
--	means to always auto-follow tags, and 2 means to fetch all
--	tags.
+-	Takes a pointer to a `rev_info` structure and iterates over it,
+-	returning a `struct commit *` each time you call it. The end of the
+-	revision list is indicated by returning a NULL pointer.
 -
--`receivepack`, `uploadpack`::
+-`reset_revision_walk`::
 -
--	The configured helper programs to run on the remote side, for
--	Git-native protocols.
+-	Reset the flags used by the revision walking api. You can use
+-	this to do multiple sequential revision walks.
 -
--`http_proxy`::
+-Data structures
+----------------
 -
--	The proxy to use for curl (http, https, ftp, etc.) URLs.
+-Talk about <revision.h>, things like:
 -
--`http_proxy_authmethod`::
+-* two diff_options, one for path limiting, another for output;
+-* remaining functions;
 -
--	The method used for authenticating against `http_proxy`.
--
--struct remotes can be found by name with remote_get(), and iterated
--through with for_each_remote(). remote_get(NULL) will return the
--default remote, given the current branch and configuration.
--
--struct refspec
----------------
--
--A struct refspec holds the parsed interpretation of a refspec.  If it
--will force updates (starts with a '+'), force is true.  If it is a
--pattern (sides end with '*') pattern is true.  src and dest are the
--two sides (including '*' characters if present); if there is only one
--side, it is src, and dst is NULL; if sides exist but are empty (i.e.,
--the refspec either starts or ends with ':'), the corresponding side is
--"".
--
--An array of strings can be parsed into an array of struct refspecs
--using parse_fetch_refspec() or parse_push_refspec().
--
--remote_find_tracking(), given a remote and a struct refspec with
--either src or dst filled out, will fill out the other such that the
--result is in the "fetch" specification for the remote (note that this
--evaluates patterns and returns a single result).
--
--struct branch
---------------
--
--Note that this may end up moving to branch.h
--
--struct branch holds the configuration for a branch. It can be looked
--up with branch_get(name) for "refs/heads/{name}", or with
--branch_get(NULL) for HEAD.
--
--It contains:
--
--`name`::
--
--	The short name of the branch.
--
--`refname`::
--
--	The full path for the branch ref.
--
--`remote_name`::
--
--	The name of the remote listed in the configuration.
--
--`merge_name`::
--
--	An array of the "merge" lines in the configuration.
--
--`merge`::
--
--	An array of the struct refspecs used for the merge lines. That
--	is, merge[i]->dst is a local tracking ref which should be
--	merged into this branch by default.
--
--`merge_nr`::
--
--	The number of merge configurations
--
--branch_has_merge_config() returns true if the given branch has merge
--configuration given.
--
--Other stuff
-------------
--
--There is other stuff in remote.h that is related, in general, to the
--process of interacting with remotes.
--
--(Daniel Barkalow)
-diff --git a/refspec.h b/refspec.h
-index 9b6e64a824..3f2bd4aaa5 100644
---- a/refspec.h
-+++ b/refspec.h
-@@ -20,6 +20,22 @@ struct refspec_item {
- #define REFSPEC_INIT_FETCH { .fetch = REFSPEC_FETCH }
- #define REFSPEC_INIT_PUSH { .fetch = REFSPEC_PUSH }
+-(Linus, JC, Dscho)
+diff --git a/revision.h b/revision.h
+index 4134dc6029..983ffc0f12 100644
+--- a/revision.h
++++ b/revision.h
+@@ -9,6 +9,19 @@
+ #include "diff.h"
+ #include "commit-slab-decl.h"
  
 +/**
-+ * A struct refspec holds the parsed interpretation of a refspec.  If it will
-+ * force updates (starts with a '+'), force is true.  If it is a pattern
-+ * (sides end with '*') pattern is true.  src and dest are the two sides
-+ * (including '*' characters if present); if there is only one side, it is src,
-+ * and dst is NULL; if sides exist but are empty (i.e., the refspec either
-+ * starts or ends with ':'), the corresponding side is "".
++ * The revision walking API offers functions to build a list of revisions
++ * and then iterate over that list.
 + *
-+ * An array of strings can be parsed into an array of struct refspecs using
-+ * parse_fetch_refspec() or parse_push_refspec().
++ * Calling sequence
++ * ----------------
 + *
-+ * remote_find_tracking(), given a remote and a struct refspec with either src
-+ * or dst filled out, will fill out the other such that the result is in the
-+ * "fetch" specification for the remote (note that this evaluates patterns and
-+ * returns a single result).
++ * The walking API has a given calling sequence: first you need to initialize
++ * a rev_info structure, then add revisions to control what kind of revision
++ * list do you want to get, finally you can iterate over the revision list.
++ *
 + */
- struct refspec {
- 	struct refspec_item *items;
- 	int alloc;
-diff --git a/remote.h b/remote.h
-index 0e1d2b245b..2277426199 100644
---- a/remote.h
-+++ b/remote.h
-@@ -6,6 +6,14 @@
- #include "hashmap.h"
- #include "refspec.h"
++
+ /* Remember to update object flag allocation in object.h */
+ #define SEEN		(1u<<0)
+ #define UNINTERESTING   (1u<<1)
+@@ -306,11 +319,29 @@ struct setup_revision_opt {
+ #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
+ #define init_revisions(revs, prefix) repo_init_revisions(the_repository, revs, prefix)
+ #endif
++
++/**
++ * Initialize a rev_info structure with default values. The third parameter may
++ * be NULL or can be prefix path, and then the `.prefix` variable will be set
++ * to it. This is typically the first function you want to call when you want
++ * to deal with a revision list. After calling this function, you are free to
++ * customize options, like set `.ignore_merges` to 0 if you don't want to
++ * ignore merges, and so on.
++ */
+ void repo_init_revisions(struct repository *r,
+ 			 struct rev_info *revs,
+ 			 const char *prefix);
++
++/**
++ * Parse revision information, filling in the `rev_info` structure, and
++ * removing the used arguments from the argument list. Returns the number
++ * of arguments left that weren't recognized, which are also moved to the
++ * head of the argument list. The last parameter is used in case no
++ * parameter given by the first two arguments.
++ */
+ int setup_revisions(int argc, const char **argv, struct rev_info *revs,
+ 		    struct setup_revision_opt *);
++
+ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ 			const struct option *options,
+ 			const char * const usagestr[]);
+@@ -319,9 +350,26 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ int handle_revision_arg(const char *arg, struct rev_info *revs,
+ 			int flags, unsigned revarg_opt);
  
 +/**
-+ * The API gives access to the configuration related to remotes. It handles
-+ * all three configuration mechanisms historically and currently used by Git,
-+ * and presents the information in a uniform fashion. Note that the code also
-+ * handles plain URLs without any configuration, giving them just the default
-+ * information.
++ * Reset the flags used by the revision walking api. You can use this to do
++ * multiple sequential revision walks.
 + */
+ void reset_revision_walk(void);
 +
- enum {
- 	REMOTE_UNCONFIGURED = 0,
- 	REMOTE_CONFIG,
-@@ -16,16 +24,22 @@ enum {
- struct remote {
- 	struct hashmap_entry ent;
- 
-+	/* The user's nickname for the remote */
- 	const char *name;
++/**
++ * Prepares the rev_info structure for a walk. You should check if it returns
++ * any error (non-zero return code) and if it does not, you can start using
++ * get_revision() to do the iteration.
++ */
+ int prepare_revision_walk(struct rev_info *revs);
 +
- 	int origin, configured_in_repo;
- 
- 	const char *foreign_vcs;
- 
-+	/* An array of all of the url_nr URLs configured for the remote */
- 	const char **url;
++/**
++ * Takes a pointer to a `rev_info` structure and iterates over it, returning a
++ * `struct commit *` each time you call it. The end of the revision list is
++ * indicated by returning a NULL pointer.
++ */
+ struct commit *get_revision(struct rev_info *revs);
 +
- 	int url_nr;
- 	int url_alloc;
+ char *get_revision_mark(const struct rev_info *revs,
+ 			const struct commit *commit);
+ void put_revision_mark(const struct rev_info *revs,
+@@ -333,8 +381,19 @@ void mark_trees_uninteresting_sparse(struct repository *r, struct oidset *trees)
  
-+	/* An array of all of the pushurl_nr push URLs configured for the remote */
- 	const char **pushurl;
-+
- 	int pushurl_nr;
- 	int pushurl_alloc;
- 
-@@ -34,32 +48,47 @@ struct remote {
- 	struct refspec fetch;
- 
- 	/*
-+	 * The setting for whether to fetch tags (as a separate rule from the
-+	 * configured refspecs);
- 	 * -1 to never fetch tags
- 	 * 0 to auto-follow tags on heuristic (default)
- 	 * 1 to always auto-follow tags
- 	 * 2 to always fetch tags
- 	 */
- 	int fetch_tags;
-+
- 	int skip_default_update;
- 	int mirror;
- 	int prune;
- 	int prune_tags;
- 
-+	/**
-+	 * The configured helper programs to run on the remote side, for
-+	 * Git-native protocols.
-+	 */
- 	const char *receivepack;
- 	const char *uploadpack;
- 
--	/*
--	 * for curl remotes only
--	 */
-+	/* The proxy to use for curl (http, https, ftp, etc.) URLs. */
- 	char *http_proxy;
-+
-+	/* The method used for authenticating against `http_proxy`. */
- 	char *http_proxy_authmethod;
- };
+ void show_object_with_name(FILE *, struct object *, const char *);
  
 +/**
-+ * struct remotes can be found by name with remote_get().
-+ * remote_get(NULL) will return the default remote, given the current branch
-+ * and configuration.
++ * This function can be used if you want to add commit objects as revision
++ * information. You can use the `UNINTERESTING` object flag to indicate if
++ * you want to include or exclude the given commit (and commits reachable
++ * from the given commit) from the revision list.
++ *
++ * NOTE: If you have the commits as a string list then you probably want to
++ * use setup_revisions(), instead of parsing each string and using this
++ * function.
 + */
- struct remote *remote_get(const char *name);
+ void add_pending_object(struct rev_info *revs,
+ 			struct object *obj, const char *name);
 +
- struct remote *pushremote_get(const char *name);
- int remote_is_configured(struct remote *remote, int in_repo);
- 
- typedef int each_remote_fn(struct remote *remote, void *priv);
-+
-+/* iterate through struct remotes */
- int for_each_remote(each_remote_fn fn, void *priv);
- 
- int remote_has_url(struct remote *remote, const char *url);
-@@ -194,16 +223,36 @@ struct ref *get_remote_ref(const struct ref *remote_refs, const char *name);
-  */
- int remote_find_tracking(struct remote *remote, struct refspec_item *refspec);
- 
-+/**
-+ * struct branch holds the configuration for a branch. It can be looked up with
-+ * branch_get(name) for "refs/heads/{name}", or with branch_get(NULL) for HEAD.
-+ */
- struct branch {
-+
-+    /* The short name of the branch. */
- 	const char *name;
-+
-+	/* The full path for the branch ref. */
- 	const char *refname;
- 
-+	/* The name of the remote listed in the configuration. */
- 	const char *remote_name;
-+
- 	const char *pushremote_name;
- 
-+	/* An array of the "merge" lines in the configuration. */
- 	const char **merge_name;
-+
-+	/**
-+	 * An array of the struct refspecs used for the merge lines. That is,
-+	 * merge[i]->dst is a local tracking ref which should be merged into this
-+	 * branch by default.
-+	 */
- 	struct refspec_item **merge;
-+
-+	/* The number of merge configurations */
- 	int merge_nr;
-+
- 	int merge_alloc;
- 
- 	const char *push_tracking_ref;
-@@ -215,7 +264,9 @@ const char *pushremote_for_branch(struct branch *branch, int *explicit);
- const char *remote_ref_for_branch(struct branch *branch, int for_push,
- 				  int *explicit);
- 
-+/* returns true if the given branch has merge configuration given. */
- int branch_has_merge_config(struct branch *branch);
-+
- int branch_merge_matches(struct branch *, int n, const char *);
- 
- /**
+ void add_pending_oid(struct rev_info *revs,
+ 		     const char *name, const struct object_id *oid,
+ 		     unsigned int flags);
 -- 
 gitgitgadget
 
