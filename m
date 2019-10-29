@@ -8,116 +8,107 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 713C41F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 13:06:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96D441F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 13:11:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388118AbfJ2NGz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 09:06:55 -0400
-Received: from mout.gmx.net ([212.227.17.21]:49181 "EHLO mout.gmx.net"
+        id S2388198AbfJ2NLj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 09:11:39 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56765 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728735AbfJ2NGz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 09:06:55 -0400
+        id S2388138AbfJ2NLj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 09:11:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572354413;
-        bh=yMAcyQVh7bsGFeEeupQKYfKRg+/mZz8SXX2KhGwYdKs=;
+        s=badeba3b8450; t=1572354697;
+        bh=Dq+bSWngUE93q5AnS/eVyajQKxXein46dE+V7A+0rdU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=TaHrgwtvBedmVsP8BFKYK7gp8DEI03Za83rSCcW0+KLdkdPJcUdRGK9VhtCj+zICk
-         AA+lCtF8deSMsoWzvhwlt2ojK8rsuT5mdqtl11BAuSAmqIb134t6eKZs6Fu0Jv5Bb/
-         5FV0goHx9687ORXBlFjtWAdIQAJGV9MlCGOt0U1I=
+        b=FfwS6qeLohgEwE69Thhng5TEt48fpyfcwjYatBeJaxh6pZn4f/La7zsrRtLbeAmvs
+         pE2TwmnIofYTpWwJDcSEmElm2/pKvvBgGnADh2YC8WfGSp/25kFnkyMqq5sAtxsrr3
+         zN7HNVlzjCvAjVDEU2/TVi1RTVmI+ooJCLCFbYg4=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MDQeU-1iIGCJ0Mic-00AXDy; Tue, 29
- Oct 2019 14:06:53 +0100
-Date:   Tue, 29 Oct 2019 14:06:38 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQ5rU-1icgqf2hmK-00M2Ui; Tue, 29
+ Oct 2019 14:11:37 +0100
+Date:   Tue, 29 Oct 2019 14:11:23 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] git-diff.txt: document return code of `--no-index`
-In-Reply-To: <3f6d132663cacde01df68bfe88c6ef108cf6cf74.1572337045.git.liu.denton@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910291405090.46@tvgsbejvaqbjf.bet>
-References: <3f6d132663cacde01df68bfe88c6ef108cf6cf74.1572337045.git.liu.denton@gmail.com>
+To:     Davide Berardi <berardi.dav@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Segmentation fault on non-commit objects.
+In-Reply-To: <20191029092735.GA84120@carpenter.lan>
+Message-ID: <nycvar.QRO.7.76.6.1910291408460.46@tvgsbejvaqbjf.bet>
+References: <20191029092735.GA84120@carpenter.lan>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:lM8Ba6FxErXJa0IPvNI9mz8zXCCMWA1QX/S3F+decXJOJblazDr
- KRZHui2EUv6p6esBWWGjis396PlidR+0c9E0gI5/UDSpZVTiT7TEpzhvNownPGp+SAYI3EO
- shZqBQ7NdvSvKI30U+QfmCHZVYJK3AmRZlZHdzsc6DYau2zbMsv3Cr/t9hwyhyPbYgBoFZZ
- XiluRWM1SL+cLqZvSGWIQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xCKPCGgtReE=:35YKxGglE5uEZzpPNmFBI9
- liL0maRi+oQXbPampYeimI0Qg23FcbtQkXvStmsQSpj5DgPEc7uFTKpwiRwNwAYWjjbhrnsvt
- Zk4g8ZDbTmgfXA+M6LgK9FwK6m9vU5k4LorgKD+urkFsonLnaxel2S/2HTOAnLwrxlUGVmWm4
- Xz7MXiJIqJ8kYvNtGcih0UCiaC+oBhwiOTRwIQgtzl3QfzsYYsArQxALlwdCi5EAt9vbde2QG
- RsCkyFSfunswaZ4hnqzOU94oKGJBtM38NPRz+LnLipkGQmyRHp4enuMHDp0+HDr0EkjB9umkA
- 22w9s0fhFgKOCTNBi2rc8M4M/H+11YEPBlno0EXO/QXDjFdXmquB3+SBo7LjwwWS32WR1mko7
- MF+XnY5GuVP4nxwutan0yImtaQLWMeC/UbL8vHsAkLIUl+Jfgd8t6JGcdCdvNqHBaAAUh2XvW
- F/S+rxPI6+91ZGEbz73Ngd472sqCkfG/rLNt5NYKXjvgOJeUrvXlxnnBc+RMyXDJP3QIfQ6GJ
- 58+LNiGIaBQO537cxsDPJJ28NFlsU0nVtE+Izrqt1nXQeus45hzoCu6WlBWfNOiaNT0PHIYNC
- 34NWKzDZola3yUcew2Ka/AVllxSwrCxFwm5Do1gsnjDlQ6KLuIn+i6ol3PLH3roP9aeltHB3B
- rVcqIVVn0dqhgF3YYUaVvKLpk3PaH38CKKO9fBpecpS0UXWwhQAsNvHYcg2aqrpxygTqT5DCC
- sfwZb8DnSKf4T9Xv89uWKMg+kSaoLFvNyLeG1MtLETv1H5z2UlzCT9a4VKa7VFV1EziinqzEc
- lStM53ckVBrccY3clEZLvx8RJ/8V51snkC0UlsA4pWi/WtGkQgynVbItBO+wzdcKOSmN4pJSb
- RASfHIuUnJBIzP0Zm+3AzcmCjxftOus6Dv5pUrrsx9J+Y1q5GTvEJ5HiCKcm5Gc5P+pQarwTB
- FOPPNEbXzzVh69yXhCUf+Ig7aYINtZSyFefXocdlGwOnBuOOrz/Gnn6i93vGxE7HALICl1fed
- oRq5szujmPOtqZ7C8c7aw/mvUErBY2MLHZUxO5kima9SbFaR0woKxIU+Iav3ZexbjIlmhnoLH
- KHQ9yL36atHzy5Hqrfqcj09DgdpCTpxRmO8G0atPg2iOhUui1A20DMgXqN3R/nGQigl+oD85a
- xrgbFNgAty3l/NPqpFj2bhZ/vFIGYiaTFkKyToc2Um4eLlkMIdV96FrVRJeySLr3vb9gZlfz0
- a7cqN0CgoQYmonuLO0R7Kn/WGvZzGdcgqoDC/OttA/jsCpEuUk7/Pa1xpZdE=
+X-Provags-ID: V03:K1:D5gDJ68Q0DdUEkOxHSOvMumiMD1IoB8TvvlAl03QQBp9GqxKtTT
+ NBuzsHrI6pP2143scJke6xOClG8UUJl1VL48xCdBz5R6/npXgDVpLOBy/AnW7o2lhHokyDK
+ N3a736ZcsJTjcxzpYxqQMTx45Iz9NC2CYf5RLb3hkFdi+RYIizg1y6wANWBd+2EfiJdqxrt
+ lkDZWpE3R0ft+r7DesPcA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Sli11RgBuEE=:+PP/pZKlCE97eW/VYYrnQY
+ wcIAy8Y+55cxIEKDp44HxuN/YkgcC7267lF/oYIAPYARKwrxVCtqXVlEYlN6+VPwljv8tWDyS
+ mpCjYAdFQQY91PelDwFGWoNncl75ESAZ9Tylc7+iTh64ntrACvI9cwGGlHxkmh4B1bgy9IvyN
+ BfeBn+g0EnXeiYrtmb57Zdo82JeDdpMaKQCdcQbeKcWu38VbVMO6POl8ZMZZ4C4o050UAF5MZ
+ /w3UBW0X7B3dB9oq18FSSjI/CkZQtA2EZzaCQTazDYIVOBDgEYoYMX1v8wAS2xIdI6/DGn4nK
+ nHOMSFDfX7bvsykgKerNBpDq6mj9+O8NacDFwGZDFgOwIu7/CtXxrCj7TSA5674oezZtIkEeP
+ g4b+WXAhLS42MVq0HI/oatv3+wgl3DAwvlRG3eiqSP0qfkZqgXOcb9G7nTzeiRNp64+tx8Kcu
+ tYNET2wYwUVtauRKVveRWeoZ5jlcTbtnBBXZDN3jLoWU5+7WBMCMz+HYul2qO5ndHe/OvLZ0R
+ HYRhTh0mWZkoA1qqdLvXdQpTykYnDx0hRvp4Zfy+kE/Zj/JEtUM6GWAUjdVYc6S84/ZIjuYFu
+ 5REwIkvIAXnKL342cb+cowgsn/grBz+tBH6xOUD62LhCpeY/Xn4D+atXjbKvaTKHZR/efHLQU
+ Pp+J+kiquxuKWeCC86uEZmDXgAERpLTJcTeoTw9ajU5jZKtmfxRVjcGKnp+827UlpPLfyF2jL
+ lhluALyDuOEbZ4+4ueqL5yq4/KIgwUBYIScpd3xDGEzVdKwlks2KXMjyz/JejU2yOtir4wSwb
+ H7t1OtKDXh66fXG5BlkEEqSGsx2ggITjEK/uuFnAbzl9QG74eoYqIjqygB1+rOHkxZeJbk6cO
+ p3ori4/RPgTzJ2nJitxQOa4sMPkAEH2EnIwITX4m/noQKUDtllWvEwqHyu8/QJdewx2NdHl/w
+ LrNZtGcpYEpiSNn3yqeN2usqka+yMempxgB5I3eyQ4IS7EgGYPDpuCIEbMX4kl0U0Mhg2b2Xr
+ x9SUGDula0kaU+IzAqhQ0v6wbTD/zycTpNI4BU7IR+yL+ob2GtdvrFukLzfHxmyVLamkwssap
+ P0iwjEVpswXjqXoUbjJTGDVYHt2dqep8boXk6apRS6d+iXAzSNFLJXgxFXE7M7Gx89Px7iHGH
+ JMmIcLN14bXnzwyz1wr1y0SvhBuAp1zAiC03F4gFHiW8Q5QDWcITZ2EqxFsyQKichLarEDWq1
+ ra6Wf5zpAYjsJJ4EciIeeQ2oNzZ8oahJBfkU1sgpZQINGV+bFp51iGKhNQk4=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+Hi Davide,
 
-On Tue, 29 Oct 2019, Denton Liu wrote:
+[please remove the trailing period character in the commit subject]
 
-> According to the end of diff_no_index(),
+On Tue, 29 Oct 2019, Davide Berardi wrote:
+
+> Fixed segmentation fault that can be triggered using
+> $ git clone --branch $object $repository
+> with object pointing to a non-commit (e.g. a blob).
 >
-> 	/*
-> 	 * The return code for --no-index imitates diff(1):
-> 	 * 0 =3D no changes, 1 =3D changes, else error
-> 	 */
-> 	return diff_result_code(&revs->diffopt, 0);
->
-> However, this is not properly documented in git-diff.txt.
->
-> Shamelessly steal from the `--exit-code` text and give it to the
-> `--no-index` documentation to explain that the return code is similar to
-> diff(1).
-
-Speaking of `--exit-code`...
-
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> Signed-off-by: Davide Berardi <berardi.dav@gmail.com>
 > ---
->  Documentation/git-diff.txt | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+> builtin/clone.c | 3 +++
+> 1 file changed, 3 insertions(+)
 >
-> diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-> index 72179d993c..1e363bd200 100644
-> --- a/Documentation/git-diff.txt
-> +++ b/Documentation/git-diff.txt
-> @@ -36,7 +36,10 @@ two blob objects, or changes between two files on dis=
-k.
->  	running the command in a working tree controlled by Git and
->  	at least one of the paths points outside the working tree,
->  	or when running the command outside a working tree
-> -	controlled by Git.
-> +	controlled by Git. With `--no-index`,
-> +	the program exits with codes similar to diff(1). That is, it
-> +	exits with 1 if there were differences and 0 means no
-> +	differences.
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index f665b28ccc..6ad2d8fe77 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -720,6 +720,9 @@ static void update_head(const struct ref *our, const
+> struct ref *remote,
+> 	} else if (our) {
+> 		struct commit *c =3D lookup_commit_reference(the_repository,
+> 							   &our->old_oid);
+> +		/* Check if --branch specifies a non-commit. */
+> +		if (c =3D=3D NULL)
+> +			die(_("unable to update HEAD (cannot find commit)"));
 
-... a shorter alternative would be to state: This implies `--exit-code`.
+Could the error message maybe repeat whatever the user specified for
+`$object`? That would probably be more helpful. Maybe even say "not a
+commit"?
 
 Ciao,
-Dscho
+Johannes
 
->
->  'git diff' [<options>] --cached [<commit>] [--] [<path>...]::
->
+> 		/* --branch specifies a non-branch (i.e. tags), detach HEAD */
+> 		update_ref(msg, "HEAD", &c->object.oid, NULL, REF_NO_DEREF,
+> 			   UPDATE_REFS_DIE_ON_ERR);
 > --
-> 2.24.0.rc0.197.g0926ab8072
+> 2.23.0
+>
 >
 >
