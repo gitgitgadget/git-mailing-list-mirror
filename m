@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C6161F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 10:01:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 185961F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 10:01:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726851AbfJ2KA5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 06:00:57 -0400
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:40935 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726510AbfJ2KAz (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726757AbfJ2KAz (ORCPT <rfc822;e@80x24.org>);
         Tue, 29 Oct 2019 06:00:55 -0400
-Received: by mail-wr1-f50.google.com with SMTP id o28so12904686wro.7
-        for <git@vger.kernel.org>; Tue, 29 Oct 2019 03:00:54 -0700 (PDT)
+Received: from mail-wm1-f54.google.com ([209.85.128.54]:36895 "EHLO
+        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726342AbfJ2KAy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 06:00:54 -0400
+Received: by mail-wm1-f54.google.com with SMTP id q130so1692757wme.2
+        for <git@vger.kernel.org>; Tue, 29 Oct 2019 03:00:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=bIQFN7Giyzj0Cp3ZhrwOhNDIUw+bJ062AZKqqcec2l0=;
-        b=IsrexNd73vqmX5joNlytDq2F4BC+T7uC/lJ6DtxhQc23h7YVCUVr4wgyBvY6DT/GYD
-         jXI2/LVysLkSwDDBIY1n9a4Cg2kUV4Zf+z6aeLcEKkCDiQEm+BmShm47BhaMDKLCUdvQ
-         bLDR3xJxkhihsiZBLfbHwDh3fBjYT38RWSOzCPI6SkUMW0cA6TDYO7c/+upUrCqJK9V7
-         3UYXVJgTjkfkZFa7xU4IbfFacXIzuDgqFtIt/QtVVoSWeZALVaPq7YUWO59ZMpxKKZJC
-         Mlx3KrPpzi98t6X/DCbLYaqqCrnkesW96L8x30AHZ0q4egM7jCUOREwQswfFn2E0/OUC
-         uljQ==
+        bh=12WZXDvSSSFUqF+tPHhMpooqo/fLyKCbw1DKsKakPTE=;
+        b=Q9XGrqy+mfsGTSo+JUxfLPZjZZ5QkUiWlGOn/ISerB/r4+jxYOGKfx2n/5Y+a12NIJ
+         DwJiJHWr8dAkNzo9eTKIcf7qdus/nAaLaW2a2A0aPKxjq9/UheP58CKWrd4MtnscDFAC
+         TQJib0670N4USbZsXiiAZAjAnBuNZ9EXemmWW0Svvhlee8M54SJ99jJxatKqdHYUXMah
+         UQjlFAmUaNChQJLIV75ZQ64qDwFqCfATWHXKKd90GR+WuA2beWosIKrbTpDMPMqG6QOw
+         +UcQYo26obfCzPiNuL9wQWuup6nYW0/1DAo7p2D/Li1FFzEO/51yb/bc3XoG9JVE8oL/
+         JYvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bIQFN7Giyzj0Cp3ZhrwOhNDIUw+bJ062AZKqqcec2l0=;
-        b=Umm9dGYeLbOEAyYVhx9SX1JD6b2mm97FttBTnaKrvtK+ib4V2SVvryexZJh0+kPMsa
-         NjxvqfTDC3RddrMrG1xhRr9nhQibhcsb90RzjZ4oE5AuD3ZVevlk/WivPTFQO/Atj/oZ
-         5V6Jpev+mxbO5M/fYmsR1kr/F4s5b/oWn4tUB1aJU36KBCJN7K1DKASMDiE+nWZwLS7s
-         cEOzv4r+GWJqYEbf/CWAWobuq4EFH+TEnZU/VCiqtSbl31mlWUkh84KUky6QnOHcjKDj
-         sF4OwJc3Fa34Xio47niDMr4WnXVcLLRta6R+TeYAHYdXX4MTS2kWHEJxJ1261NZLgH6K
-         t2Sg==
-X-Gm-Message-State: APjAAAUi2DTV/O3ItYzsrvrsYAitzTvwkAi7c6m2yS985MCswoSNfHZ2
-        NULie7xqE5ZfTwzWWfMvIljvc6z1
-X-Google-Smtp-Source: APXvYqxZdWc9eCLntMqviB5iuAGUY6ZUeHWjuhCqgiDEbsBLRaemHSQUKmsKa6Y0bvka78BgTjJcmw==
-X-Received: by 2002:a5d:6a42:: with SMTP id t2mr18509830wrw.155.1572343253118;
-        Tue, 29 Oct 2019 03:00:53 -0700 (PDT)
+        bh=12WZXDvSSSFUqF+tPHhMpooqo/fLyKCbw1DKsKakPTE=;
+        b=A1nb0C5uHj4XRHJhxjy6g5QckjBHLGdkU9GrUfwUYbUSU68DbXf4XZZy27aOuLdig0
+         ekcYT49eK25ndjYZj5u6+IAxTA8eWyJzk5gH7jXy+rutCtfITaHlz8P2dZ58BOVVwuaU
+         q+Y49pNIm02fg6wQXpgE71YH7+sf18eiOeasnW1JNdf2Btj5eX1qqVZej+YHM3nQwNgt
+         EhPo0tlrgH9P+IP1Ghvo6q6LfDTqfafJus/Uqh8VtJgi3MwHvVlwvgs2WpFA24Czz1fW
+         ehBLtovE/pqnn/eAnmyVURuy5mjnN3fwSlugXpYkNkNMoDGWz7zWDXd7/GsumlW+lI1I
+         UDUQ==
+X-Gm-Message-State: APjAAAW1RBw04zvJbtRenPxphP5tTt8JoHEE/vOcxPKCj9uBgaaAYN6r
+        8CIrCgBX3UX937Pp4UNlTU+eGnX3
+X-Google-Smtp-Source: APXvYqwfskp/slbRr430h94OJD6CzhwEO1mjrcjz0Ekntxp/Pcw7QW2EAXed0++7H+0aLZvKsPGHfg==
+X-Received: by 2002:a1c:49d5:: with SMTP id w204mr3331589wma.111.1572343252560;
+        Tue, 29 Oct 2019 03:00:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j14sm17155317wrj.35.2019.10.29.03.00.52
+        by smtp.gmail.com with ESMTPSA id p18sm2558212wmi.42.2019.10.29.03.00.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Tue, 29 Oct 2019 03:00:52 -0700 (PDT)
-Message-Id: <9c900c58a20de7b14c5944f0c09372697634f0dd.1572343246.git.gitgitgadget@gmail.com>
+Message-Id: <e16f5b25e9763d31a2c2a9cc8e425e92e9db8275.1572343246.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.git.1572343246.gitgitgadget@gmail.com>
 References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Oct 2019 10:00:43 +0000
-Subject: [PATCH 07/10] refs: move doc to refs.h
+Date:   Tue, 29 Oct 2019 10:00:42 +0000
+Subject: [PATCH 06/10] remote: move doc to remote.h and refspec.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,187 +71,326 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-ref-iteration.txt
-to refs.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-remote.txt to
+remote.h and refspec.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-ref-iteration.txt is removed because the
+N.B. The doc for both push and fetch members of the remote struct aren't
+moved because they are out of date, as the members were changed from arrays
+of rspecs to struct refspec 2 years ago.
+
+Also documentation/technical/api-remote.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-ref-iteration.txt | 78 -------------------
- refs.h                                        | 51 ++++++++++++
- 2 files changed, 51 insertions(+), 78 deletions(-)
- delete mode 100644 Documentation/technical/api-ref-iteration.txt
+ Documentation/technical/api-remote.txt | 127 -------------------------
+ refspec.h                              |  16 ++++
+ remote.h                               |  57 ++++++++++-
+ 3 files changed, 70 insertions(+), 130 deletions(-)
+ delete mode 100644 Documentation/technical/api-remote.txt
 
-diff --git a/Documentation/technical/api-ref-iteration.txt b/Documentation/technical/api-ref-iteration.txt
+diff --git a/Documentation/technical/api-remote.txt b/Documentation/technical/api-remote.txt
 deleted file mode 100644
-index ad9d019ff9..0000000000
---- a/Documentation/technical/api-ref-iteration.txt
+index f10941b2e8..0000000000
+--- a/Documentation/technical/api-remote.txt
 +++ /dev/null
-@@ -1,78 +0,0 @@
--ref iteration API
--=================
+@@ -1,127 +0,0 @@
+-Remotes configuration API
+-=========================
 -
+-The API in remote.h gives access to the configuration related to
+-remotes. It handles all three configuration mechanisms historically
+-and currently used by Git, and presents the information in a uniform
+-fashion. Note that the code also handles plain URLs without any
+-configuration, giving them just the default information.
 -
--Iteration of refs is done by using an iterate function which will call a
--callback function for every ref. The callback function has this
--signature:
+-struct remote
+--------------
 -
--	int handle_one_ref(const char *refname, const struct object_id *oid,
--			   int flags, void *cb_data);
+-`name`::
 -
--There are different kinds of iterate functions which all take a
--callback of this type. The callback is then called for each found ref
--until the callback returns nonzero. The returned value is then also
--returned by the iterate function.
+-	The user's nickname for the remote
 -
--Iteration functions
---------------------
+-`url`::
 -
--* `head_ref()` just iterates the head ref.
+-	An array of all of the url_nr URLs configured for the remote
 -
--* `for_each_ref()` iterates all refs.
+-`pushurl`::
 -
--* `for_each_ref_in()` iterates all refs which have a defined prefix and
--  strips that prefix from the passed variable refname.
+-	An array of all of the pushurl_nr push URLs configured for the remote
 -
--* `for_each_tag_ref()`, `for_each_branch_ref()`, `for_each_remote_ref()`,
--  `for_each_replace_ref()` iterate refs from the respective area.
+-`push`::
 -
--* `for_each_glob_ref()` iterates all refs that match the specified glob
--  pattern.
+-	 An array of refspecs configured for pushing, with
+-	 push_refspec being the literal strings, and push_refspec_nr
+-	 being the quantity.
 -
--* `for_each_glob_ref_in()` the previous and `for_each_ref_in()` combined.
+-`fetch`::
 -
--* Use `refs_` API for accessing submodules. The submodule ref store could
--  be obtained with `get_submodule_ref_store()`.
+-	An array of refspecs configured for fetching, with
+-	fetch_refspec being the literal strings, and fetch_refspec_nr
+-	being the quantity.
 -
--* `for_each_rawref()` can be used to learn about broken ref and symref.
+-`fetch_tags`::
 -
--* `for_each_reflog()` iterates each reflog file.
+-	The setting for whether to fetch tags (as a separate rule from
+-	the configured refspecs); -1 means never to fetch tags, 0
+-	means to auto-follow tags based on the default heuristic, 1
+-	means to always auto-follow tags, and 2 means to fetch all
+-	tags.
 -
--Submodules
------------
+-`receivepack`, `uploadpack`::
 -
--If you want to iterate the refs of a submodule you first need to add the
--submodules object database. You can do this by a code-snippet like
--this:
+-	The configured helper programs to run on the remote side, for
+-	Git-native protocols.
 -
--	const char *path = "path/to/submodule"
--	if (add_submodule_odb(path))
--		die("Error submodule '%s' not populated.", path);
+-`http_proxy`::
 -
--`add_submodule_odb()` will return zero on success. If you
--do not do this you will get an error for each ref that it does not point
--to a valid object.
+-	The proxy to use for curl (http, https, ftp, etc.) URLs.
 -
--Note: As a side-effect of this you cannot safely assume that all
--objects you lookup are available in superproject. All submodule objects
--will be available the same way as the superprojects objects.
+-`http_proxy_authmethod`::
 -
--Example:
----------
+-	The method used for authenticating against `http_proxy`.
 -
------
--static int handle_remote_ref(const char *refname,
--		const unsigned char *sha1, int flags, void *cb_data)
--{
--	struct strbuf *output = cb_data;
--	strbuf_addf(output, "%s\n", refname);
--	return 0;
--}
+-struct remotes can be found by name with remote_get(), and iterated
+-through with for_each_remote(). remote_get(NULL) will return the
+-default remote, given the current branch and configuration.
 -
--...
+-struct refspec
+---------------
 -
--	struct strbuf output = STRBUF_INIT;
--	for_each_remote_ref(handle_remote_ref, &output);
--	printf("%s", output.buf);
------
-diff --git a/refs.h b/refs.h
-index 730d05ad91..545029c6d8 100644
---- a/refs.h
-+++ b/refs.h
-@@ -310,19 +310,35 @@ int refs_for_each_branch_ref(struct ref_store *refs,
- int refs_for_each_remote_ref(struct ref_store *refs,
- 			     each_ref_fn fn, void *cb_data);
+-A struct refspec holds the parsed interpretation of a refspec.  If it
+-will force updates (starts with a '+'), force is true.  If it is a
+-pattern (sides end with '*') pattern is true.  src and dest are the
+-two sides (including '*' characters if present); if there is only one
+-side, it is src, and dst is NULL; if sides exist but are empty (i.e.,
+-the refspec either starts or ends with ':'), the corresponding side is
+-"".
+-
+-An array of strings can be parsed into an array of struct refspecs
+-using parse_fetch_refspec() or parse_push_refspec().
+-
+-remote_find_tracking(), given a remote and a struct refspec with
+-either src or dst filled out, will fill out the other such that the
+-result is in the "fetch" specification for the remote (note that this
+-evaluates patterns and returns a single result).
+-
+-struct branch
+--------------
+-
+-Note that this may end up moving to branch.h
+-
+-struct branch holds the configuration for a branch. It can be looked
+-up with branch_get(name) for "refs/heads/{name}", or with
+-branch_get(NULL) for HEAD.
+-
+-It contains:
+-
+-`name`::
+-
+-	The short name of the branch.
+-
+-`refname`::
+-
+-	The full path for the branch ref.
+-
+-`remote_name`::
+-
+-	The name of the remote listed in the configuration.
+-
+-`merge_name`::
+-
+-	An array of the "merge" lines in the configuration.
+-
+-`merge`::
+-
+-	An array of the struct refspecs used for the merge lines. That
+-	is, merge[i]->dst is a local tracking ref which should be
+-	merged into this branch by default.
+-
+-`merge_nr`::
+-
+-	The number of merge configurations
+-
+-branch_has_merge_config() returns true if the given branch has merge
+-configuration given.
+-
+-Other stuff
+------------
+-
+-There is other stuff in remote.h that is related, in general, to the
+-process of interacting with remotes.
+-
+-(Daniel Barkalow)
+diff --git a/refspec.h b/refspec.h
+index 9b6e64a824..3f2bd4aaa5 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -20,6 +20,22 @@ struct refspec_item {
+ #define REFSPEC_INIT_FETCH { .fetch = REFSPEC_FETCH }
+ #define REFSPEC_INIT_PUSH { .fetch = REFSPEC_PUSH }
  
-+/* just iterates the head ref. */
- int head_ref(each_ref_fn fn, void *cb_data);
-+
-+/* iterates all refs. */
- int for_each_ref(each_ref_fn fn, void *cb_data);
-+
 +/**
-+ * iterates all refs which have a defined prefix and strips that prefix from
-+ * the passed variable refname.
++ * A struct refspec holds the parsed interpretation of a refspec.  If it will
++ * force updates (starts with a '+'), force is true.  If it is a pattern
++ * (sides end with '*') pattern is true.  src and dest are the two sides
++ * (including '*' characters if present); if there is only one side, it is src,
++ * and dst is NULL; if sides exist but are empty (i.e., the refspec either
++ * starts or ends with ':'), the corresponding side is "".
++ *
++ * An array of strings can be parsed into an array of struct refspecs using
++ * parse_fetch_refspec() or parse_push_refspec().
++ *
++ * remote_find_tracking(), given a remote and a struct refspec with either src
++ * or dst filled out, will fill out the other such that the result is in the
++ * "fetch" specification for the remote (note that this evaluates patterns and
++ * returns a single result).
 + */
- int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
-+
- int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
- 			     each_ref_fn fn, void *cb_data,
- 			     unsigned int broken);
- int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
- 			unsigned int broken);
-+
-+/**
-+ * iterate refs from the respective area.
-+ */
- int for_each_tag_ref(each_ref_fn fn, void *cb_data);
- int for_each_branch_ref(each_ref_fn fn, void *cb_data);
- int for_each_remote_ref(each_ref_fn fn, void *cb_data);
- int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_data);
-+
-+/* iterates all refs that match the specified glob pattern. */
- int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
-+
- int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
- 			 const char *prefix, void *cb_data);
+ struct refspec {
+ 	struct refspec_item *items;
+ 	int alloc;
+diff --git a/remote.h b/remote.h
+index 0e1d2b245b..2277426199 100644
+--- a/remote.h
++++ b/remote.h
+@@ -6,6 +6,14 @@
+ #include "hashmap.h"
+ #include "refspec.h"
  
-@@ -791,6 +807,41 @@ int reflog_expire(const char *refname, const struct object_id *oid,
- int ref_storage_backend_exists(const char *name);
- 
- struct ref_store *get_main_ref_store(struct repository *r);
-+
 +/**
-+ * Submodules
-+ * ----------
-+ *
-+ * If you want to iterate the refs of a submodule you first need to add the
-+ * submodules object database. You can do this by a code-snippet like
-+ * this:
-+ *
-+ * 	const char *path = "path/to/submodule"
-+ * 	if (add_submodule_odb(path))
-+ * 		die("Error submodule '%s' not populated.", path);
-+ *
-+ * `add_submodule_odb()` will return zero on success. If you
-+ * do not do this you will get an error for each ref that it does not point
-+ * to a valid object.
-+ *
-+ * Note: As a side-effect of this you cannot safely assume that all
-+ * objects you lookup are available in superproject. All submodule objects
-+ * will be available the same way as the superprojects objects.
-+ *
-+ * Example:
-+ * --------
-+ *
-+ * ----
-+ * static int handle_remote_ref(const char *refname,
-+ * 		const unsigned char *sha1, int flags, void *cb_data)
-+ * {
-+ * 	struct strbuf *output = cb_data;
-+ * 	strbuf_addf(output, "%s\n", refname);
-+ * 	return 0;
-+ * }
-+ *
++ * The API gives access to the configuration related to remotes. It handles
++ * all three configuration mechanisms historically and currently used by Git,
++ * and presents the information in a uniform fashion. Note that the code also
++ * handles plain URLs without any configuration, giving them just the default
++ * information.
 + */
 +
- /*
-  * Return the ref_store instance for the specified submodule. For the
-  * main repository, use submodule==NULL; such a call cannot fail. For
+ enum {
+ 	REMOTE_UNCONFIGURED = 0,
+ 	REMOTE_CONFIG,
+@@ -16,16 +24,22 @@ enum {
+ struct remote {
+ 	struct hashmap_entry ent;
+ 
++	/* The user's nickname for the remote */
+ 	const char *name;
++
+ 	int origin, configured_in_repo;
+ 
+ 	const char *foreign_vcs;
+ 
++	/* An array of all of the url_nr URLs configured for the remote */
+ 	const char **url;
++
+ 	int url_nr;
+ 	int url_alloc;
+ 
++	/* An array of all of the pushurl_nr push URLs configured for the remote */
+ 	const char **pushurl;
++
+ 	int pushurl_nr;
+ 	int pushurl_alloc;
+ 
+@@ -34,32 +48,47 @@ struct remote {
+ 	struct refspec fetch;
+ 
+ 	/*
++	 * The setting for whether to fetch tags (as a separate rule from the
++	 * configured refspecs);
+ 	 * -1 to never fetch tags
+ 	 * 0 to auto-follow tags on heuristic (default)
+ 	 * 1 to always auto-follow tags
+ 	 * 2 to always fetch tags
+ 	 */
+ 	int fetch_tags;
++
+ 	int skip_default_update;
+ 	int mirror;
+ 	int prune;
+ 	int prune_tags;
+ 
++	/**
++	 * The configured helper programs to run on the remote side, for
++	 * Git-native protocols.
++	 */
+ 	const char *receivepack;
+ 	const char *uploadpack;
+ 
+-	/*
+-	 * for curl remotes only
+-	 */
++	/* The proxy to use for curl (http, https, ftp, etc.) URLs. */
+ 	char *http_proxy;
++
++	/* The method used for authenticating against `http_proxy`. */
+ 	char *http_proxy_authmethod;
+ };
+ 
++/**
++ * struct remotes can be found by name with remote_get().
++ * remote_get(NULL) will return the default remote, given the current branch
++ * and configuration.
++ */
+ struct remote *remote_get(const char *name);
++
+ struct remote *pushremote_get(const char *name);
+ int remote_is_configured(struct remote *remote, int in_repo);
+ 
+ typedef int each_remote_fn(struct remote *remote, void *priv);
++
++/* iterate through struct remotes */
+ int for_each_remote(each_remote_fn fn, void *priv);
+ 
+ int remote_has_url(struct remote *remote, const char *url);
+@@ -194,16 +223,36 @@ struct ref *get_remote_ref(const struct ref *remote_refs, const char *name);
+  */
+ int remote_find_tracking(struct remote *remote, struct refspec_item *refspec);
+ 
++/**
++ * struct branch holds the configuration for a branch. It can be looked up with
++ * branch_get(name) for "refs/heads/{name}", or with branch_get(NULL) for HEAD.
++ */
+ struct branch {
++
++    /* The short name of the branch. */
+ 	const char *name;
++
++	/* The full path for the branch ref. */
+ 	const char *refname;
+ 
++	/* The name of the remote listed in the configuration. */
+ 	const char *remote_name;
++
+ 	const char *pushremote_name;
+ 
++	/* An array of the "merge" lines in the configuration. */
+ 	const char **merge_name;
++
++	/**
++	 * An array of the struct refspecs used for the merge lines. That is,
++	 * merge[i]->dst is a local tracking ref which should be merged into this
++	 * branch by default.
++	 */
+ 	struct refspec_item **merge;
++
++	/* The number of merge configurations */
+ 	int merge_nr;
++
+ 	int merge_alloc;
+ 
+ 	const char *push_tracking_ref;
+@@ -215,7 +264,9 @@ const char *pushremote_for_branch(struct branch *branch, int *explicit);
+ const char *remote_ref_for_branch(struct branch *branch, int for_push,
+ 				  int *explicit);
+ 
++/* returns true if the given branch has merge configuration given. */
+ int branch_has_merge_config(struct branch *branch);
++
+ int branch_merge_matches(struct branch *, int n, const char *);
+ 
+ /**
 -- 
 gitgitgadget
 
