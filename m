@@ -7,78 +7,87 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A3981F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 01:20:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A448C1F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 01:32:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728028AbfJ2BUS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 21:20:18 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57581 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727778AbfJ2BUS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 21:20:18 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 56BBB33928;
-        Mon, 28 Oct 2019 21:20:16 -0400 (EDT)
+        id S1729333AbfJ2BcA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 21:32:00 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59661 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726211AbfJ2BcA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 21:32:00 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 33A9E2CC43;
+        Mon, 28 Oct 2019 21:31:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hptOrTtbPX+lwbHfKvzDy/uDdak=; b=TgN2YK
-        8PYctgbgTKqdGeb4zb2jNLTgHgXa/ZS2DbVRrGSSFtbnm5bsW6YNBOE1F3KWTETe
-        hjukqXxnw3HsTSVW+b7swPRGr8xGivEsE+Gpmj2VI4h4/+FMwCI/kaENq4qj2vwJ
-        Fea74Swd2V0pEMnrYN5NnM7bg+f9uz6JKr4kU=
+        :content-type; s=sasl; bh=LCiPrNs+XNMN/FyI8OVM29yfnWQ=; b=GktTX2
+        jlXLNp5FoLI8CR/fibcBmyJmV1rhI5dv4/p7pFbxCbTWrBXPM1GQPa/jkMiyDlFC
+        1xIoePUnx/oSQKdUATWnsYM+UBqEaZVgC+OAAsisqYQX6Vcl9Yu19RGwdnVsu53w
+        R85C+0Qt2EmrEaqTtUvRZ1UzfLkH3hY+pSZXg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=obS1nal7MWZ3ApWAhXCC6ld4f1U/ly0t
-        nBwdfem1Fr1jjaWVrx8Bj0m0UicFROrU60QyAJzW3RhwzkQXvFs7UWIRlXaJ6h4h
-        X4xK+8SBluV2bw/sXHa4xA49r9zs11sUeI53etfTA173fQt8blUtaH7eQQopmXOI
-        53SVrWrmB8M=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F08833927;
-        Mon, 28 Oct 2019 21:20:16 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=M79aXV4vQ5PUCNGMRL6fqKGCuMRT4cfJ
+        D49n2HiMwcx7IkPg1wS3p+PkzXe4edNNkyp8xifueRiqiZHCQcXvPR1f8jLu4ypH
+        spO5KlZ0ShyaDcDG236J2tr9j5yJlcLLFOugp1UhWl8a3SqgalKnOx3R356OYSal
+        Ly91g7UqQZ8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2AE772CC42;
+        Mon, 28 Oct 2019 21:31:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B60CB33926;
-        Mon, 28 Oct 2019 21:20:15 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8CE192CC3E;
+        Mon, 28 Oct 2019 21:31:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] merge-recursive: fix merging a subdirectory into the root directory
-References: <pull.390.git.gitgitgadget@gmail.com>
-        <37aee862e14b1352eb08485f15ea06bab33679df.1570826543.git.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.1910122152210.3272@tvgsbejvaqbjf.bet>
-        <CABPp-BFNCLJnt4NgFKVxURBGD1Z00gastc5q4ZPjcHmwS=kuFw@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1910141211130.46@tvgsbejvaqbjf.bet>
-        <CABPp-BFYWhyLqUktEnk6A7v6135k4TQHO20Wiy32mRQekt-3cg@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1910250020220.46@tvgsbejvaqbjf.bet>
-        <CABPp-BHBUKq73Ru3D9HKp6ABo8eQNmkSkz6MjA+4J2a6xxtWjA@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1910251527440.46@tvgsbejvaqbjf.bet>
-Date:   Tue, 29 Oct 2019 10:20:14 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1910251527440.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Fri, 25 Oct 2019 15:30:37 +0200 (CEST)")
-Message-ID: <xmqqpnig8i0h.fsf@gitster-ct.c.googlers.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: conflict markers on recursive strategy with diff3 enabled
+References: <CAOc6etaQvNChdRZ70xsYQxqtgmZVxaKV9K7_zZeET3JuQ4HEXg@mail.gmail.com>
+        <e26d24b2-6fca-8546-f2b3-bf4660db8184@iee.email>
+Date:   Tue, 29 Oct 2019 10:31:56 +0900
+In-Reply-To: <e26d24b2-6fca-8546-f2b3-bf4660db8184@iee.email> (Philip Oakley's
+        message of "Mon, 28 Oct 2019 22:13:02 +0000")
+Message-ID: <xmqqlft48hgz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4342B306-F9EA-11E9-B410-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E5955FEA-F9EB-11E9-8646-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Philip Oakley <philipoakley@iee.email> writes:
 
->> Still, I rely pretty heavily on t6036, t6042, t6043, and t6046 for
->> sanity in the face of refactoring and rewriting -- and as mentioned
->> before they have caught refactoring bugs in those areas that appear at
->> first blush as "overzealous", ...
->
-> One idea would be to try to guard those extra careful tests behind the
-> `EXPENSIVE` prereq.
+> I believe this happens when no merge-base is found between the two
+> lines of development that are being merged, so a fake merge-base is
+> created to allow the regular 3-way merge to occur.
 
-Yeah, I like that---I think it is perfectly in line with the spirit
-of EXPENSIVE, too.
+s/no merge-base is/more than one merge-base are/; then a synthetic
+merge base is computed in order to perform the merge the end-user
+requested first, and the computation of that synthetic merge base
+may involve merge conflicts.  After that, the merge logic pretends
+that the two versions being merged both derived from such a common
+ancestor version _with_ conflict markers in it, and may conflict
+with each other around that existing (inner) conflict markers to
+leave a rather messy result.  It is particularly bad when both
+branches did the same thing only on one side the inner merge
+conflicted but not on the other side---one side of inner conflict
+marker (say "<<<<<<<<") may disappear when the merged branches made
+the same change (so "both side changed identically, resolve to their
+same result" 3-way merge rule would apply) and around that area the
+result will not have the conflict marker from the inner merge, and
+the other side will say "one side made into this shape, the other
+side made into that shape, from this common ancestor version" in the
+diff3 format, which would mean that we would see conflict marker
+lines from the inner merge between "|||||" and "=====" lines in the
+outer merge (i.e. the common ancestor version).  The conflict
+markers of the inner merge are longer than those of the outermost
+merge, so you could sift them by careful eyeballing, but it is
+rather hard to read.
+
