@@ -2,113 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96D441F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 13:11:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 139791F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 13:37:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388198AbfJ2NLj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 09:11:39 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56765 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388138AbfJ2NLj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 09:11:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572354697;
-        bh=Dq+bSWngUE93q5AnS/eVyajQKxXein46dE+V7A+0rdU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FfwS6qeLohgEwE69Thhng5TEt48fpyfcwjYatBeJaxh6pZn4f/La7zsrRtLbeAmvs
-         pE2TwmnIofYTpWwJDcSEmElm2/pKvvBgGnADh2YC8WfGSp/25kFnkyMqq5sAtxsrr3
-         zN7HNVlzjCvAjVDEU2/TVi1RTVmI+ooJCLCFbYg4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQ5rU-1icgqf2hmK-00M2Ui; Tue, 29
- Oct 2019 14:11:37 +0100
-Date:   Tue, 29 Oct 2019 14:11:23 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Davide Berardi <berardi.dav@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Segmentation fault on non-commit objects.
-In-Reply-To: <20191029092735.GA84120@carpenter.lan>
-Message-ID: <nycvar.QRO.7.76.6.1910291408460.46@tvgsbejvaqbjf.bet>
-References: <20191029092735.GA84120@carpenter.lan>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2388784AbfJ2Nh5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 09:37:57 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:36386 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388602AbfJ2Nh5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 09:37:57 -0400
+Received: by mail-wr1-f66.google.com with SMTP id w18so13715221wrt.3
+        for <git@vger.kernel.org>; Tue, 29 Oct 2019 06:37:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=fkaoSLPaUyFCyXUYZ2WiqtKApdOntsrWRd/6T2qy5Ws=;
+        b=BhRxswKAfX2PYlWdI1/qf05JgmfPSau8pgnVqiSVr0kUE27ZXpBctQjIFYG6AnJDbf
+         HGeZJV3zBKKIHfR4r3fP4+/omj0DWfFgeBsc0yUecpDPJpSX27TSMb9um1AL1CUE88Zh
+         EwAbRtdRgsN9VnRVxpPLIJmPfDvkGxEo5CPivSQIPHhAkhdB9X9xJ4Yem9j8HsB4PuJH
+         w8ALAQkF+Cra3fn+0pEPDwyIxt67MtnXgvfxZdW+chN8bEs0B/CxlvOtlFd4bpDrvOh7
+         2ZYNTjXdkOgbi9sqN+qiEGjtCZX3jJvZJgMyBRdZr86Nw5t9JEDMQwsYgr7DTqqcITvZ
+         NfWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=fkaoSLPaUyFCyXUYZ2WiqtKApdOntsrWRd/6T2qy5Ws=;
+        b=p2TuVVxHZLVdq4ud+T7N/w7sqA7YQn05H0vFl7d/yCu8WW0r/OV2Up83pgKm37nrig
+         EZvLk+23bYPCmWq08t/0ZN2SgnKevDLkPA3qDsXWvSjXJDY1hQEuRlptKuHG+ShigZmN
+         GutaTm9ya64O1KBsbD2fY1aBPjqqVRR55WSTxzdI3DPTPQyGjwplFvYiidet/yUhl0fz
+         CoKRHqkC2gv3rICf4E20uRt5hsxCLmqRNLtY/6Ko4wBhxb4ATa4bGQ4blM0ExPoUFWnG
+         9IpTrzHlGARppwbMZvzEgnevUJFFMmenV5+33A3sbtMx6W181C7xmQzgykdg6BIzSg9b
+         fInQ==
+X-Gm-Message-State: APjAAAU0EqXDE72+3epZLPljaC0aGLtzpER5sMhauzkTSnZo8+G7bv+M
+        Rj1p05jECj1A924wqgh3l5fDYqdV
+X-Google-Smtp-Source: APXvYqxG3yIRiTUCTz2j55R3zYjVm50QpcsyXEh6JIgToXPbjS5ahfjGdnCotzYwL4fxqWXNtgdtuA==
+X-Received: by 2002:adf:eec9:: with SMTP id a9mr5996490wrp.8.1572356274862;
+        Tue, 29 Oct 2019 06:37:54 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o187sm2927398wmo.20.2019.10.29.06.37.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Oct 2019 06:37:54 -0700 (PDT)
+Message-Id: <e426627e1494e31e548fe044c1c1806ff59340cf.1572356272.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.428.v2.git.1572356272.gitgitgadget@gmail.com>
+References: <pull.428.git.1572274859.gitgitgadget@gmail.com>
+        <pull.428.v2.git.1572356272.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 29 Oct 2019 13:37:52 +0000
+Subject: [PATCH v2 1/1] vreportf(): avoid relying on stdio buffering
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:D5gDJ68Q0DdUEkOxHSOvMumiMD1IoB8TvvlAl03QQBp9GqxKtTT
- NBuzsHrI6pP2143scJke6xOClG8UUJl1VL48xCdBz5R6/npXgDVpLOBy/AnW7o2lhHokyDK
- N3a736ZcsJTjcxzpYxqQMTx45Iz9NC2CYf5RLb3hkFdi+RYIizg1y6wANWBd+2EfiJdqxrt
- lkDZWpE3R0ft+r7DesPcA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Sli11RgBuEE=:+PP/pZKlCE97eW/VYYrnQY
- wcIAy8Y+55cxIEKDp44HxuN/YkgcC7267lF/oYIAPYARKwrxVCtqXVlEYlN6+VPwljv8tWDyS
- mpCjYAdFQQY91PelDwFGWoNncl75ESAZ9Tylc7+iTh64ntrACvI9cwGGlHxkmh4B1bgy9IvyN
- BfeBn+g0EnXeiYrtmb57Zdo82JeDdpMaKQCdcQbeKcWu38VbVMO6POl8ZMZZ4C4o050UAF5MZ
- /w3UBW0X7B3dB9oq18FSSjI/CkZQtA2EZzaCQTazDYIVOBDgEYoYMX1v8wAS2xIdI6/DGn4nK
- nHOMSFDfX7bvsykgKerNBpDq6mj9+O8NacDFwGZDFgOwIu7/CtXxrCj7TSA5674oezZtIkEeP
- g4b+WXAhLS42MVq0HI/oatv3+wgl3DAwvlRG3eiqSP0qfkZqgXOcb9G7nTzeiRNp64+tx8Kcu
- tYNET2wYwUVtauRKVveRWeoZ5jlcTbtnBBXZDN3jLoWU5+7WBMCMz+HYul2qO5ndHe/OvLZ0R
- HYRhTh0mWZkoA1qqdLvXdQpTykYnDx0hRvp4Zfy+kE/Zj/JEtUM6GWAUjdVYc6S84/ZIjuYFu
- 5REwIkvIAXnKL342cb+cowgsn/grBz+tBH6xOUD62LhCpeY/Xn4D+atXjbKvaTKHZR/efHLQU
- Pp+J+kiquxuKWeCC86uEZmDXgAERpLTJcTeoTw9ajU5jZKtmfxRVjcGKnp+827UlpPLfyF2jL
- lhluALyDuOEbZ4+4ueqL5yq4/KIgwUBYIScpd3xDGEzVdKwlks2KXMjyz/JejU2yOtir4wSwb
- H7t1OtKDXh66fXG5BlkEEqSGsx2ggITjEK/uuFnAbzl9QG74eoYqIjqygB1+rOHkxZeJbk6cO
- p3ori4/RPgTzJ2nJitxQOa4sMPkAEH2EnIwITX4m/noQKUDtllWvEwqHyu8/QJdewx2NdHl/w
- LrNZtGcpYEpiSNn3yqeN2usqka+yMempxgB5I3eyQ4IS7EgGYPDpuCIEbMX4kl0U0Mhg2b2Xr
- x9SUGDula0kaU+IzAqhQ0v6wbTD/zycTpNI4BU7IR+yL+ob2GtdvrFukLzfHxmyVLamkwssap
- P0iwjEVpswXjqXoUbjJTGDVYHt2dqep8boXk6apRS6d+iXAzSNFLJXgxFXE7M7Gx89Px7iHGH
- JMmIcLN14bXnzwyz1wr1y0SvhBuAp1zAiC03F4gFHiW8Q5QDWcITZ2EqxFsyQKichLarEDWq1
- ra6Wf5zpAYjsJJ4EciIeeQ2oNzZ8oahJBfkU1sgpZQINGV+bFp51iGKhNQk4=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Davide,
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-[please remove the trailing period character in the commit subject]
+The MSVC runtime behavior differs from glibc's with respect to
+`fprintf(stderr, ...)` in that the former writes out the message
+character by character.
 
-On Tue, 29 Oct 2019, Davide Berardi wrote:
+In t5516, this leads to a funny problem where a `git fetch` process as
+well as the `git upload-pack` process spawned by it _both_ call `die()`
+at the same time. The output can look like this:
 
-> Fixed segmentation fault that can be triggered using
-> $ git clone --branch $object $repository
-> with object pointing to a non-commit (e.g. a blob).
->
-> Signed-off-by: Davide Berardi <berardi.dav@gmail.com>
-> ---
-> builtin/clone.c | 3 +++
-> 1 file changed, 3 insertions(+)
->
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index f665b28ccc..6ad2d8fe77 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -720,6 +720,9 @@ static void update_head(const struct ref *our, const
-> struct ref *remote,
-> 	} else if (our) {
-> 		struct commit *c =3D lookup_commit_reference(the_repository,
-> 							   &our->old_oid);
-> +		/* Check if --branch specifies a non-commit. */
-> +		if (c =3D=3D NULL)
-> +			die(_("unable to update HEAD (cannot find commit)"));
+	fatal: git uploadfata-lp: raemcokte :error:  upload-pnot our arcef k6: n4ot our ea4cr1e3f 36d45ea94fca1398e86a771eda009872d63adb28598f6a9
+	8e86a771eda009872d6ab2886
 
-Could the error message maybe repeat whatever the user specified for
-`$object`? That would probably be more helpful. Maybe even say "not a
-commit"?
+Let's avoid this predicament altogether by rendering the entire message,
+including the prefix and the trailing newline, into the buffer we
+already have (and which is still fixed size) and then write it out via
+`xwrite()`.
 
-Ciao,
-Johannes
+We still clip the message to at most 4095 characters.
 
-> 		/* --branch specifies a non-branch (i.e. tags), detach HEAD */
-> 		update_ref(msg, "HEAD", &c->object.oid, NULL, REF_NO_DEREF,
-> 			   UPDATE_REFS_DIE_ON_ERR);
-> --
-> 2.23.0
->
->
->
+The history of `vreportf()` with regard to this issue includes the
+following commits:
+
+d048a96e (2007-11-09) - 'char msg[256]' is introduced to avoid interleaving
+389d1767 (2009-03-25) - Buffer size increased to 1024 to avoid truncation
+625a860c (2009-11-22) - Buffer size increased to 4096 to avoid truncation
+f4c3edc0 (2015-08-11) - Buffer removed to avoid truncation
+b5a9e435 (2017-01-11) - Reverts f4c3edc0 to be able to replace control
+                        chars before sending to stderr
+9ac13ec9 (2006-10-11) - Another attempt to solve interleaving.
+                        This is seemingly related to d048a96e.
+137a0d0e (2007-11-19) - Addresses out-of-order for display()
+34df8aba (2009-03-10) - Switches xwrite() to fprintf() in recv_sideband()
+                        to support UTF-8 emulation
+eac14f89 (2012-01-14) - Removes the need for fprintf() for UTF-8 emulation,
+                        so it's safe to use xwrite() again
+5e5be9e2 (2016-06-28) - recv_sideband() uses xwrite() again
+
+Note that we print nothing if the `vsnprintf()` call failed to render
+the error message; There is little we can do in that case, and it should
+not happen anyway.
+
+Also please note that we `fflush(stderr)` here to help when running in a
+Git Bash on Windows: in this case, `stderr` is not actually truly
+unbuffered, and needs the extra help.
+
+Helped-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ usage.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/usage.c b/usage.c
+index 2fdb20086b..5dfd38acb8 100644
+--- a/usage.c
++++ b/usage.c
+@@ -9,14 +9,21 @@
+ void vreportf(const char *prefix, const char *err, va_list params)
+ {
+ 	char msg[4096];
+-	char *p;
++	size_t off = strlcpy(msg, prefix, sizeof(msg));
++	char *p, *pend = msg + sizeof(msg);
+ 
+-	vsnprintf(msg, sizeof(msg), err, params);
+-	for (p = msg; *p; p++) {
++	p = msg + off < pend ? msg + off : pend - 1;
++	if (vsnprintf(p, pend - p, err, params) < 0)
++		return; /* vsnprintf() failed, there is nothing we can do */
++
++	for (; p != pend - 1 && *p; p++) {
+ 		if (iscntrl(*p) && *p != '\t' && *p != '\n')
+ 			*p = '?';
+ 	}
+-	fprintf(stderr, "%s%s\n", prefix, msg);
++
++	*(p++) = '\n'; /* we no longer need a NUL */
++	fflush(stderr);
++	xwrite(2, msg, p - msg);
+ }
+ 
+ static NORETURN void usage_builtin(const char *err, va_list params)
+-- 
+gitgitgadget
