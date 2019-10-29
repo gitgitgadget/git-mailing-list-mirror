@@ -2,89 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0117E1F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 14:06:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A59711F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 14:13:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388696AbfJ2OGX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 10:06:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32912 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727255AbfJ2OGX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 10:06:23 -0400
-Received: (qmail 31769 invoked by uid 109); 29 Oct 2019 14:06:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 29 Oct 2019 14:06:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9876 invoked by uid 111); 29 Oct 2019 14:09:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Oct 2019 10:09:31 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 29 Oct 2019 10:06:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     Davide Berardi <berardi.dav@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Segmentation fault on non-commit objects.
-Message-ID: <20191029140621.GC2843@sigill.intra.peff.net>
-References: <20191029092735.GA84120@carpenter.lan>
+        id S2388826AbfJ2ONt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 10:13:49 -0400
+Received: from mout.gmx.net ([212.227.15.15]:40881 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388274AbfJ2ONt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 10:13:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1572358420;
+        bh=1HB8flq81aVv5aV7jDZRDV44sR/JnFPjHo++qCStF6c=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=DvHemfXJdgHONhPqVLZCR3BN6ME0M/yiDbMEoTsI0d/kE2ZZZGzUsuND5MitSzG+u
+         xZqoJPak6w7CKRhJSvRgMM/kVGz2GhWS4AyTzOROb0JwebkxpYlTm0b1qlC5xhdLn6
+         nhs3EGw3Uv4fpDCXgf5E/3a/hmPe//srQHk5Tffk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M6lpM-1iKWIk1zoM-008Ni8; Tue, 29
+ Oct 2019 15:13:40 +0100
+Date:   Tue, 29 Oct 2019 15:13:39 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Subject: Re: [PATCH 1/1] vreportf(): avoid buffered write in favor of unbuffered
+ one
+In-Reply-To: <20191029134932.GA2843@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1910291510330.46@tvgsbejvaqbjf.bet>
+References: <pull.428.git.1572274859.gitgitgadget@gmail.com> <455026ce3ef2b2d7cfecfc4b4bf5b588eebddcfe.1572274859.git.gitgitgadget@gmail.com> <xmqqeeyw6xyr.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910291222500.46@tvgsbejvaqbjf.bet>
+ <20191029134932.GA2843@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191029092735.GA84120@carpenter.lan>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:FDlX1/Vxw6+jzmC6XEuHoHYLX2JZbnVX71IzIkqtWrdO2OFd2ja
+ Y5Q0eTSROox2/zftR1VNWQVJac5+XDDMpARdCqwD4GcgyjmRrKw8f3oL5Etk4aYymWNIqz7
+ /+fMdFnvezhkMizmFoNB+i7IfUWlrxQAflg+F2VQ8X74PNlj3qLsD3+aMXn7GGwv/+QPmUL
+ 1O9vyXU6PUippDmZJpHNw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Y3zliA6Ag88=:pW5/wvHORFny62WhDs/hOI
+ 8E+uDu+etdmPjLj2N1ZsZRJx/SJQDfjTkWq0uuQKvdURmFzDnt7ytm8mz4IIgruGi6VDH2+DR
+ +Qh49DgPEGORZ1SSZ/fedIAZRu4keYkV3NCaIDRQ+7nTC440gxutJMVeHuufJCb9rCCIHBwf4
+ 6Qf+jXRWSW7fLZOWW3uOXDpRu1CpW6PBUlL+FB42JD695s8eWo8JiToKksHSDVYr6gOfPPIlg
+ aFYqHIeJnlG+LCIVJuXRIsnYKxfbNfEBne1VLp3H9yoMkWImREk2sR1AOLqmTtNT7y72xJHY2
+ N8LTKYWmJtWTRxwkyrEpW91axSlpgf7+jqHfk4wIA86t36Elx1e6Xv5c/7aaCSHQCenXyrcMx
+ qBdzb56DkBoTkRdYyUD4PMJVgD2BABDariys8GcY52zvJyJehCQikt1ak/NYSxJKCf0asFSON
+ dIxvYtTrl3NcaLzCHOupLEX/6CWyVitxzLt2S4AiA2x9RcvuuNpTbMijPXYvbex+NHZS+fsoh
+ KDuHcMWZk8kY0cwRtjPsYX2QdWRTGxwM9VMd3tObPOI1HdQLZ46TqIXt2tCr3R5kc+d5Ruu1E
+ RQ2aZfepVtaHWthIKmkNvccOgT5eCPXQek3+XLpn72GS5fXIeY6kGtG5tq55CTOY+puYLCG5R
+ LnKqtQrzQoy8Uwg88M8DNh9ednnzxfP7dzpSL+73FAZqgFmOEj5eMO24/lDZfYHaNqzRzrXFF
+ tvfVTzp+jMnYB8Mad4lO/jUodyDI7rbMhCAiT/RpF0a1/2gp7RSwCTA4n9B+i5Yj0SPWnxgsq
+ 7tuEUTCYkUrsDj60uLlDV56W+5Ct3fe3TNFkS835rtywkDeByRR+BIXgmeo7+IiWtXSJ5EMQC
+ 88QGSdaP56KNH/LsJmNwLbn43XsIiTAMHQ3PNbQufAGGArP5UVXu4TG1f9pGglKWJtHEbrpkb
+ jOuOVQ1ZRXmJszlwTCstc7aESEbzE1byYGf+OQKF9UKEkVAnzkoGtMvMO3SuSuqR2ANF4iIOw
+ qgS/YBxHvIbqL1uRILomW8vTaWkrQXxC9YJh1aXWlHXrvqzuDUFuRli5zrNXjrvBCqlBouu6P
+ CHYkSDfiHQualQaRUdZHEVIy3DUYX0UioHgBCJrN3RBZAqrbtBfIrVSxN2k1yamdCUfBcrpsw
+ ++sZWgZMKaMMlhGXVehrHIEn1U2jOJsYwMTA3AD1Y8Ntf+hBpUX12/VhHgM2i2bx9WfNeY2tr
+ 5FLHWQWxDbGo0qyWhVr5yspa/rnnJKdf6AcBf2ZxBZJHAz/yTloioKVCRVAA=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 29, 2019 at 10:27:35AM +0100, Davide Berardi wrote:
+Hi Peff,
 
-> Fixed segmentation fault that can be triggered using
-> $ git clone --branch $object $repository
-> with object pointing to a non-commit (e.g. a blob).
+On Tue, 29 Oct 2019, Jeff King wrote:
 
-One subtle thing here is that $object still needs to be at the tip of a
-ref (an easy real-world case is "-b junio-gpg-pub" against git.git).
+> On Tue, Oct 29, 2019 at 01:30:51PM +0100, Johannes Schindelin wrote:
+>
+> > > Also, this is only to help output from us that goes via vreportf() a=
+nd
+> > > other codepaths in us that use stdio to write to the standard error
+> > > stream can still get mixed on Windows (I think the answer is yes,
+> > > because we wouldn't need fflush() in this patch if we are covering a=
+ll
+> > > writes to the standard error stream)?
+> >
+> > Yes, `write()` can get interrupted, so there is still a slight chance =
+of
+> > interleaving.
+> >
+> > However, with `fprintf()`, apparently the MSVC runtime essentially
+> > writes and flushes one character at a time, which will make it _much_
+> > more likely that two competing processes write interleaved messages to
+> > `stderr`.
+>
+> Wow, they have truly taken "unbuffered" to a whole new level.
+>
+> I don't mind seeing this for all platforms, though. I can't think of any
+> downside, and having one less moving part to contend with in our
+> error-reporting code seems like a good thing.
+>
+> > > > -	vsnprintf(msg, sizeof(msg), err, params);
+> > > > +	size_t off =3D strlcpy(msg, prefix, sizeof(msg));
+> > >
+> > > Like snprintf(3) the strlcpy() and strlcat() functions return the
+> > > total length of the string they tried to create.  For strlcpy() that
+> > > means the length of src.
+> >
+> > True (I misread `compat/strlcpy.c` and forgot to consult the
+> > documentation). This length can be longer than `msg`, of course.
+>
+> I'd recommend xsnprintf() here. If we have a prefix longer than our
+> vreportf() buffer, I think a BUG() is the right outcome.
 
-It might be nice to cover this with a test.
+But BUG_fl() calls vreportf(). I am worried about an infinite
+recursion...
 
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index f665b28ccc..6ad2d8fe77 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -720,6 +720,9 @@ static void update_head(const struct ref *our, const struct ref *remote,
-> 	} else if (our) {
-> 		struct commit *c = lookup_commit_reference(the_repository,
-> 							   &our->old_oid);
-> +		/* Check if --branch specifies a non-commit. */
-> +		if (c == NULL)
-> +			die(_("unable to update HEAD (cannot find commit)"));
+>
+> > I `git grep`ed and saw that only very short `prefix`es are hard-coded.
+> > So that is a hypothetical concern.
+> >
+> > However, Alex also indicated his discomfort with this, so I will chang=
+e
+> > the code to account for a `prefix` that is too long (the entire error
+> > message will be clipped away in that case, which is unfortunate, but t=
+o
+> > be expected).
+>
+> I'd disagree here. Any caller sending an arbitrarily-large prefix is
+> holding it wrong, and we'd probably want to know as soon as possible
+> (and a BUG() is our best bet there).
 
-This is definitely a strict improvement over the current behavior
-(though I agree with Dscho's comments on the error message). A few
-further thoughts:
+How about truncating already inside the prefix, then? It would miss the
+entire error message... but at least it would print _something_...
 
-  - we'll have successfully completed the rest of the clone at this
-    point. Should we leave the objects and refs in place to allow the
-    user to fix it up, as we do when "git checkout" fails?
-
-    We'd have to leave _something_ in HEAD for it to be a valid repo. I
-    guess just "refs/heads/master" would be fine, or perhaps we could
-    fall back to whatever the other side had in their HEAD (i.e.,
-    pretending that "-b" wasn't specified).
-
-  - there's a related case just above the lines you touched: what
-    happens if the other side feeds us a non-commit in their
-    refs/heads/? That shouldn't happen (i.e., their repo is broken), but
-    should we be protecting ourselves on the receiving side more?
-
-    Likewise in "else" below just above your lines.
-
-    I think in either case we wouldn't segfault (because we don't try to
-    dereference to a commit ourselves), but we'd produce a bogus on-disk
-    state.
-
--Peff
+Ciao,
+Dscho
