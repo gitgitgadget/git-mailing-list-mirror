@@ -8,140 +8,92 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 356E31F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 12:56:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AB981F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 13:00:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387859AbfJ2M4V (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 08:56:21 -0400
-Received: from mout.gmx.net ([212.227.15.19]:58687 "EHLO mout.gmx.net"
+        id S2388106AbfJ2NAp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 09:00:45 -0400
+Received: from mout.gmx.net ([212.227.17.21]:38845 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729253AbfJ2M4V (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 08:56:21 -0400
+        id S2387868AbfJ2NAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 09:00:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572353776;
-        bh=H2UB+S8QjOYH5Qvwwi4WOX2ilsQNojOUQxGSMJyL5bg=;
+        s=badeba3b8450; t=1572354038;
+        bh=asCLmhMUOyNbRTvbR5T2t9Bd44WXPbep0D1vP3+iGAs=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=UGTRwjRfDVf7S9qfLzS6bnow+9vJEnmDCC5lp+vP2W08HwEQIWytdhNFSOUGAegNX
-         Ap5s1yCzcjgPJLTw4BrgZ1dX8g3htBaTzg8h1uo8Y5Vz7sJJY3/Tv9CvgY4t8yBPvG
-         UfLG9UuecKm+PWICRrNmvybR/QLzueQOQYBY0CWw=
+        b=NODlKxW3rYDhmWRkhOfUhAWT8FgjJr4+ffg8WmPQ0AnwwUfTKQk5BPF8eFCNT34mK
+         kxS2g246yVohbS8E59kjBq0msp4L5g/3LRtZ6NFW2mf4uHUJvXbYjCSZy/8yjpehxB
+         opiqdJKnvzrBcQJgCd8QeFszNYiKErtCs5Kpel9k=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MysRk-1i4AlO01z8-00vume; Tue, 29
- Oct 2019 13:56:16 +0100
-Date:   Tue, 29 Oct 2019 13:56:01 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MuDbx-1i7Dlw48S5-00uZLV; Tue, 29
+ Oct 2019 14:00:38 +0100
+Date:   Tue, 29 Oct 2019 14:00:22 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     george espinoza via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, George Espinoza <gespinoz2019@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        george espinoza <gespinoz2019@gmail.com>
-Subject: Re: [PATCH 1/1] [Outreachy] merge-ours: include parse-options
-In-Reply-To: <8c088194f604eac3a6b00c48a7fddfdf807571fc.1572306149.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1910291355070.46@tvgsbejvaqbjf.bet>
-References: <pull.425.git.1572306149.gitgitgadget@gmail.com> <8c088194f604eac3a6b00c48a7fddfdf807571fc.1572306149.git.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Subject: Re: [PATCH 0/3] commit: fix advice for empty commits during
+ rebases
+In-Reply-To: <xmqq8sp48fxl.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910291358420.46@tvgsbejvaqbjf.bet>
+References: <pull.417.git.1571787022.gitgitgadget@gmail.com> <xmqqr234i2q0.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910251402190.46@tvgsbejvaqbjf.bet> <xmqq8sp48fxl.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:I+tPpDobt8RwRof9k+qo2qLeaLyfWUl2TOEvTYziqa5tbiRs7w/
- yX+0YfUe+we7ud/5Z60zVCgzsBNU5m0Xh5yj7axaswEDfjO47GDX1gtRiDVq2hMvI7+/nET
- rgeKLBVMr7QzYXggnT2yq1Wcp+71MtA1M5fPtBVY5GH3HIMqBDz41g9+uQbso8lJpQIykCd
- m8WwgFyIL8GfqCZ1YiaBg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:sbhXJw3Kd7A=:XtIVZaOCROSFUbdl3+sogD
- OdbywCGDstEkPddcl03oe1WYmXhUW0pAf2CQsQx2Tu09h8Wzzrs8ZE7ozKBW86AwJ2lxgU31Z
- CpXAwvxCw5EK1CBTfLA7bExjX+JHxI2lw48rlkP/fkeIgmU9AYUNc7liZzuRRffNrKV73rCjK
- 9tqbg39+m8vYpUQe/UAz5wRjazeI1w6JlQGNthBzqBIMD/dlIefnGt7gp0RZ3AvXiddIQqroJ
- 04PNHqF/UgcneAaEQSYqtyoyvT/dsz/ZtrvbiDsdngmUiGdpaacZ67ggzKSRSWbpgnhnjrBTN
- w8BsO+KqMHYd9XxSMsL/UezWmKNnV08+mIKDFZNz1ZhPHJvrTxKPoH3y19QtkCwubMOOURlT0
- i9aRqgE1wrMqExipD67p37x36j9SQ32aXikfVSU4HYmm9OV9W1FqFD3TjXgAt1njAQVJsguKY
- taw7JuctRhdA2WBqfDP06Vxxt9n+7PGfZ31L9007zCWGnxNF3y8NaNYflZraSkHtVXk77c928
- aG4DSf0QNPAS2+UzNolluIrHArir/mBNt30tqz6ayT6WcfqOgemJHWIudViB3x78GqoCi35eP
- d2NJvqLpxvVsJeRbWCzriBw1HnDMykKqHvhZOEbZ9/ZWsuh7aSOuiATE08/1Sg83q6Ge9t1St
- JF9MNjRg2TXOtEgF4s+PtXQQo6aWvR/h7jSpYYcvc/wFGsUSQYaQftMAdLOqLegt8KzBxRMnA
- +yyD68SePjzPtDrTrIk7z2uI0XL3UA04GRTdReERlHfJQ1mAfcFxDbqtPR2BZX8ijz8NnHGRV
- rICGQug9G8fyMvExedBp8YxP8AWBBXM6RCQCHdrO1YIbIurdtJd+jlVA3Bp2tGrjD0nUcN/sp
- R9OkbDgH2iiM1Qvl0+0Kwk/tPBm+ZT7cbCgVpcvgGOvZB3jmfSccCA/yIe7XMqS6VTDB7vw9B
- 24WJdwOj7cQt4+MSkHteBlqnBSc4rEEKraZTnhbLZvS073HSIrMqDyr4yd07pi00N5JAAxDsU
- 7cxo27X5UmAY3s+frp2W40bwadE04YvYTh2W1phsEK6jPyd5FmJXcw6vU4gOcN0aFg86911TU
- zH+LHaDxZyuTNzWz6BJS0cPDI9nm/ipVsWpgRpay8UlHx7z8Gawqeajs4vXjiXEWCXlpSsgOz
- WePzuzp1H9geBSnLY47o4hFF+BSG5IrWU5MtsEQHGzFl7lq+mhdmdhNFIl2PCo5oC8mBdpVIO
- ZA+Pj0stbQ/C/WAe7Zdv8/aMlyaIRkNaOqKHW+sj3TFZ1iJWMPygNkUErT2Q=
+X-Provags-ID: V03:K1:Wn13W5FsqP54FyCL2jCrQVvGFe1DT/HuDyMde/XMrVySEeHQgZd
+ 48bAdIEvV0KgYfuSDVLeQpdnIA7vBsc7ScDMW+skEfUJULJcDZPXg5UY/qTfmu6xu1etWxU
+ j0B2AKRkuqn/YkxHdIbTAx+jUZrMiTZzDNKG993OFp2mISZXb5tzjQWVrwe5Puodc5ejW+b
+ pv/R8VOXhdB0hMvk3caQg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:8A3PaY8MPbQ=:at5UtGKtP3LbkmZRVKSdYT
+ rakKqkKkoqmydgHxkfRSsjdT7ZA3AawQMh+w2OuX72KUqPJLLIBGX8Ts90yViqEf4nC54ei2E
+ SBzjdN8eHm+l5gtFg/nIEU5Sa8ENqKovk6F+R+LmtuzQYGCSjywEImbp64aU4q23ch43/8Vgm
+ EL8VxX9MstYGN1PNp+gBsA2OgQyOJHXY2GYKSynyDsNE0L4eB3gHmogk2TDX0+RgXbQV5bRIb
+ YRaPkISLQljVQzFoWI4wPe20ox+64doq3XRFotk1bjFcQP+bk9xlJF8QC4fuAca32gSfd+OVu
+ EgIdoa7trFjtROnvZqQ9Q4eMsdguGzuNUZ+uyqwfYu4ur8l+Edaduu1bL9Y6wsxoOLHgXJFzt
+ dl9LU8APQKKhVMd1ywP3Ru2gF+i+tizKrybAzIvLbUCvHG7grSMYfYGxlLaZn06d5XkOEneNd
+ z0gJT2IpX9h4dpBAgXl2CNzP/KmPEWXKSMh/mmB+SFgySnuVZlWLMsHHhxFrRyrjhHNwMYOVq
+ evQOmVYhTb/IidPpef1FPUoA5ONAyvwGOfN3BibZxGsFVQCZ0t0wwhGrD/RyQxNq+QwSHf5cZ
+ Y/DD0s93bZP9j/Q/qhLC4xFNTUMQjWfic/sIRJGMw8tlUj6bJY1D8PA4xK0okQG7Xzg5123gk
+ 6ZWYYQLGgZZGjO0anqNm09M024KwfCNxWo6ipf3+Awhs5qDj/X+2tdyrp6QIGjprn7yTg+jO0
+ 9rXHPkmOWNVKbuWTMh2SRVwpJFwDQXKx3QSPG1aEbhpD8C3eJsbqH+GDeax5StCU+bsU6C6g7
+ SUghnXzQU9Dk9/X1qg85lk4pM90N3vKcZjZK0sb6A25O6dKo+r1xL9sLq7qWb5Na79nivGlUt
+ Iy9BrJcK5haJSxMetRyWhmkOXNsxzjHTZqaplXNEKzcxb3W8WmFGFrogGuqKU0MWPq5MXLHlF
+ /ouJge+shnEyOhCoXjLc56/5GaVzXnXNIAR9T6HzXj7l+hB6jsGXpXELxVJTRMqdgyzO4DLOq
+ dT8cwMxdBNW7DZtP8aoCeEp+LfsDOD35mt+7OlMaBGBBeMCxK6R7v4NPhhq59hupVvV6pPo3N
+ KkoOfG5yLFF//gx8FdfUGlQcSI1AH/NQdA925pHvsEClx2xAU1/gH2sH+eC0LH8TuNdJ5+o2R
+ jbZAZ13NcmntGuG6UZ7WQK3s1S9Lwm2bB/eTfgz/akxJ4s/31TxBdNvDMBvnWDKW99cqM8W2S
+ I68ZuuI5934T70oZ13VoQX5+bVq16ewTmSsUjsrz/FuA/+VOEXgL0k8XufvI=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi george,
+Hi Junio,
 
-On Mon, 28 Oct 2019, george espinoza via GitGitGadget wrote:
+On Tue, 29 Oct 2019, Junio C Hamano wrote:
 
-> From: george espinoza <gespinoz2019@gmail.com>
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> Teach this command which currently handles its own argv to use
-> parse-options instead because parse-options helps make sure we handle
-> user input like -h in a standardized way across the project.
-> Also deleted the NO_PARSEOPT flag from git.c to coincide with
-> the conversion of the structure in this command since merge-ours
-> now uses parse-options and needed to update git.c accordingly.
+> > As the bug was introduced in this cycle, I would like to see the bug f=
+ix
+> > in v2.24.0, though;...
+>
+> Do you mean that before the change you blame for the "bug" things
+> worked better than what we have at the tip of 'master', or do you
+> mean that the change you blame for the "bug" changed the behaviour
+> relative to the previous released version but the updated behavior
+> is not what you consider correct?
 
-The commit message and the patch look good to me!
+What I mean is this: previously, when an interactive rebase interrupted
+due to a now-empty patch, the advice given was correct, of clunky. Now
+it is incorrect.
 
-Thanks,
-Johannes
+(Previously, the advice was to `git reset`, which was not completely
+helpful, but now it suggests to `git cherry-pick --continue`, which is
+incorrect.)
 
->
-> Signed-off-by: george espinoza <gespinoz2019@gmail.com>
-> ---
->  builtin/merge-ours.c | 14 ++++++++++----
->  git.c                |  2 +-
->  2 files changed, 11 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
-> index 4594507420..fb3674a384 100644
-> --- a/builtin/merge-ours.c
-> +++ b/builtin/merge-ours.c
-> @@ -11,14 +11,20 @@
->  #include "git-compat-util.h"
->  #include "builtin.h"
->  #include "diff.h"
-> +#include "parse-options.h"
->
-> -static const char builtin_merge_ours_usage[] =3D
-> -	"git merge-ours <base>... -- HEAD <remote>...";
-> +static const char * const merge_ours_usage[] =3D {
-> +	N_("git merge-ours [<base>...] -- <head> <merge-head>..."),
-> +	NULL,
-> +};
->
->  int cmd_merge_ours(int argc, const char **argv, const char *prefix)
->  {
-> -	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
-> -		usage(builtin_merge_ours_usage);
-> +	struct option options[] =3D {
-> +		OPT_END()
-> +	};
-> +
-> +	argc =3D parse_options(argc, argv, prefix, options, merge_ours_usage, =
-0);
->
->  	/*
->  	 * The contents of the current index becomes the tree we
-> diff --git a/git.c b/git.c
-> index ce6ab0ece2..6aee0e9477 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -527,7 +527,7 @@ static struct cmd_struct commands[] =3D {
->  	{ "merge-base", cmd_merge_base, RUN_SETUP },
->  	{ "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
->  	{ "merge-index", cmd_merge_index, RUN_SETUP | NO_PARSEOPT },
-> -	{ "merge-ours", cmd_merge_ours, RUN_SETUP | NO_PARSEOPT },
-> +	{ "merge-ours", cmd_merge_ours, RUN_SETUP },
->  	{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE |=
- NO_PARSEOPT },
->  	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_T=
-REE | NO_PARSEOPT },
->  	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK=
-_TREE | NO_PARSEOPT },
-> --
-> gitgitgadget
->
+Ciao,
+Dscho
