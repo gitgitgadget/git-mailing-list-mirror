@@ -2,98 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 360BE1F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 12:39:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 356E31F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 12:56:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731583AbfJ2Mjf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 08:39:35 -0400
-Received: from st43p00im-ztbu10073701.me.com ([17.58.63.183]:35949 "EHLO
-        st43p00im-ztbu10073701.me.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729134AbfJ2Mje (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 29 Oct 2019 08:39:34 -0400
-X-Greylist: delayed 370 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Oct 2019 08:39:34 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
-        t=1572352403; bh=eArbg3t6stCLycaAzoJrMrhikYHyarVAEW986ksG8BM=;
-        h=Content-Type:Subject:From:Date:Message-Id:To;
-        b=giN3wVJMoQDVxuL8E6nenFS5JBBMxsaTWFuSy79bfJvqy61uH9aU+DPy/C3Knv/Y4
-         lUnhl7+PHprtmhO2QnRnzMonkvXR7gPJLmRJDAyEtkO43ew0m+y1m1+HxLMH9A2IAi
-         Ju/6RqW/V5TTkiK+LwSu9pJin+noX14Oupmv/uygoFdQgiyKHJSRQYBIN+LwpPp/SV
-         dSbWTmHB7ElW5L36y9mcI0u3fAY5FaFkxO1PTXlKCGg7pwrC2RJFQE9aVBcYTfFnJk
-         dtp8QS900sNduRvfn/JW9gfgr3P3P2G8F4mOLNv/tcwMrTMFTs8GtnrjMU/xRNxyWP
-         H79S2aqG8ZaxA==
-Received: from [192.168.1.127] (unknown [192.222.216.4])
-        by st43p00im-ztbu10073701.me.com (Postfix) with ESMTPSA id 805D04C0EAF;
-        Tue, 29 Oct 2019 12:33:23 +0000 (UTC)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH 0/1] worktree: teach "add" to ignore submodule.recurse config
-From:   Philippe Blain <philippe.blain@me.com>
-In-Reply-To: <xmqqtv7ta9lz.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 29 Oct 2019 08:33:21 -0400
-Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
+        id S2387859AbfJ2M4V (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 08:56:21 -0400
+Received: from mout.gmx.net ([212.227.15.19]:58687 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729253AbfJ2M4V (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 08:56:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1572353776;
+        bh=H2UB+S8QjOYH5Qvwwi4WOX2ilsQNojOUQxGSMJyL5bg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=UGTRwjRfDVf7S9qfLzS6bnow+9vJEnmDCC5lp+vP2W08HwEQIWytdhNFSOUGAegNX
+         Ap5s1yCzcjgPJLTw4BrgZ1dX8g3htBaTzg8h1uo8Y5Vz7sJJY3/Tv9CvgY4t8yBPvG
+         UfLG9UuecKm+PWICRrNmvybR/QLzueQOQYBY0CWw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MysRk-1i4AlO01z8-00vume; Tue, 29
+ Oct 2019 13:56:16 +0100
+Date:   Tue, 29 Oct 2019 13:56:01 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     george espinoza via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, George Espinoza <gespinoz2019@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        george espinoza <gespinoz2019@gmail.com>
+Subject: Re: [PATCH 1/1] [Outreachy] merge-ours: include parse-options
+In-Reply-To: <8c088194f604eac3a6b00c48a7fddfdf807571fc.1572306149.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910291355070.46@tvgsbejvaqbjf.bet>
+References: <pull.425.git.1572306149.gitgitgadget@gmail.com> <8c088194f604eac3a6b00c48a7fddfdf807571fc.1572306149.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:I+tPpDobt8RwRof9k+qo2qLeaLyfWUl2TOEvTYziqa5tbiRs7w/
+ yX+0YfUe+we7ud/5Z60zVCgzsBNU5m0Xh5yj7axaswEDfjO47GDX1gtRiDVq2hMvI7+/nET
+ rgeKLBVMr7QzYXggnT2yq1Wcp+71MtA1M5fPtBVY5GH3HIMqBDz41g9+uQbso8lJpQIykCd
+ m8WwgFyIL8GfqCZ1YiaBg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sbhXJw3Kd7A=:XtIVZaOCROSFUbdl3+sogD
+ OdbywCGDstEkPddcl03oe1WYmXhUW0pAf2CQsQx2Tu09h8Wzzrs8ZE7ozKBW86AwJ2lxgU31Z
+ CpXAwvxCw5EK1CBTfLA7bExjX+JHxI2lw48rlkP/fkeIgmU9AYUNc7liZzuRRffNrKV73rCjK
+ 9tqbg39+m8vYpUQe/UAz5wRjazeI1w6JlQGNthBzqBIMD/dlIefnGt7gp0RZ3AvXiddIQqroJ
+ 04PNHqF/UgcneAaEQSYqtyoyvT/dsz/ZtrvbiDsdngmUiGdpaacZ67ggzKSRSWbpgnhnjrBTN
+ w8BsO+KqMHYd9XxSMsL/UezWmKNnV08+mIKDFZNz1ZhPHJvrTxKPoH3y19QtkCwubMOOURlT0
+ i9aRqgE1wrMqExipD67p37x36j9SQ32aXikfVSU4HYmm9OV9W1FqFD3TjXgAt1njAQVJsguKY
+ taw7JuctRhdA2WBqfDP06Vxxt9n+7PGfZ31L9007zCWGnxNF3y8NaNYflZraSkHtVXk77c928
+ aG4DSf0QNPAS2+UzNolluIrHArir/mBNt30tqz6ayT6WcfqOgemJHWIudViB3x78GqoCi35eP
+ d2NJvqLpxvVsJeRbWCzriBw1HnDMykKqHvhZOEbZ9/ZWsuh7aSOuiATE08/1Sg83q6Ge9t1St
+ JF9MNjRg2TXOtEgF4s+PtXQQo6aWvR/h7jSpYYcvc/wFGsUSQYaQftMAdLOqLegt8KzBxRMnA
+ +yyD68SePjzPtDrTrIk7z2uI0XL3UA04GRTdReERlHfJQ1mAfcFxDbqtPR2BZX8ijz8NnHGRV
+ rICGQug9G8fyMvExedBp8YxP8AWBBXM6RCQCHdrO1YIbIurdtJd+jlVA3Bp2tGrjD0nUcN/sp
+ R9OkbDgH2iiM1Qvl0+0Kwk/tPBm+ZT7cbCgVpcvgGOvZB3jmfSccCA/yIe7XMqS6VTDB7vw9B
+ 24WJdwOj7cQt4+MSkHteBlqnBSc4rEEKraZTnhbLZvS073HSIrMqDyr4yd07pi00N5JAAxDsU
+ 7cxo27X5UmAY3s+frp2W40bwadE04YvYTh2W1phsEK6jPyd5FmJXcw6vU4gOcN0aFg86911TU
+ zH+LHaDxZyuTNzWz6BJS0cPDI9nm/ipVsWpgRpay8UlHx7z8Gawqeajs4vXjiXEWCXlpSsgOz
+ WePzuzp1H9geBSnLY47o4hFF+BSG5IrWU5MtsEQHGzFl7lq+mhdmdhNFIl2PCo5oC8mBdpVIO
+ ZA+Pj0stbQ/C/WAe7Zdv8/aMlyaIRkNaOqKHW+sj3TFZ1iJWMPygNkUErT2Q=
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <85CAC41A-A0EA-4E22-BC22-F57A59D76678@me.com>
-References: <pull.430.git.1572196585.gitgitgadget@gmail.com> <xmqqtv7ta9lz.fsf@gitster-ct.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-10-29_04:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1910290124
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi george,
 
-That indeed makes the trick. Thanks!=20
-Should I send a separate patch series with this patch ?  How would that =
-work ? "Signed-off by" me and "Based-on-patch-by" you ?
+On Mon, 28 Oct 2019, george espinoza via GitGitGadget wrote:
 
-Philippe.
+> From: george espinoza <gespinoz2019@gmail.com>
+>
+> Teach this command which currently handles its own argv to use
+> parse-options instead because parse-options helps make sure we handle
+> user input like -h in a standardized way across the project.
+> Also deleted the NO_PARSEOPT flag from git.c to coincide with
+> the conversion of the structure in this command since merge-ours
+> now uses parse-options and needed to update git.c accordingly.
 
-> Le 27 oct. 2019 =C3=A0 22:26, Junio C Hamano <gitster@pobox.com> a =
-=C3=A9crit :
->=20
-> I am not sure if the compiler needs fixing in this case, but the
-> following may work it around.
->=20
-> builtin/merge.c | 9 ++++++---
-> 1 file changed, 6 insertions(+), 3 deletions(-)
->=20
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index e2ccbc44e2..0746f11df2 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -826,9 +826,12 @@ static void prepare_to_commit(struct commit_list =
-*remoteheads)
-> 			strbuf_commented_addf(&msg, "\n");
-> 		}
-> 		strbuf_commented_addf(&msg, _(merge_editor_comment));
-> -		strbuf_commented_addf(&msg, _(cleanup_mode =3D=3D =
-COMMIT_MSG_CLEANUP_SCISSORS ?
-> -			scissors_editor_comment :
-> -			no_scissors_editor_comment), comment_line_char);
+The commit message and the patch look good to me!
+
+Thanks,
+Johannes
+
+>
+> Signed-off-by: george espinoza <gespinoz2019@gmail.com>
+> ---
+>  builtin/merge-ours.c | 14 ++++++++++----
+>  git.c                |  2 +-
+>  2 files changed, 11 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
+> index 4594507420..fb3674a384 100644
+> --- a/builtin/merge-ours.c
+> +++ b/builtin/merge-ours.c
+> @@ -11,14 +11,20 @@
+>  #include "git-compat-util.h"
+>  #include "builtin.h"
+>  #include "diff.h"
+> +#include "parse-options.h"
+>
+> -static const char builtin_merge_ours_usage[] =3D
+> -	"git merge-ours <base>... -- HEAD <remote>...";
+> +static const char * const merge_ours_usage[] =3D {
+> +	N_("git merge-ours [<base>...] -- <head> <merge-head>..."),
+> +	NULL,
+> +};
+>
+>  int cmd_merge_ours(int argc, const char **argv, const char *prefix)
+>  {
+> -	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
+> -		usage(builtin_merge_ours_usage);
+> +	struct option options[] =3D {
+> +		OPT_END()
+> +	};
 > +
-> +		if (cleanup_mode =3D=3D COMMIT_MSG_CLEANUP_SCISSORS)
-> +			strbuf_commented_addf(&msg, =
-_(scissors_editor_comment));
-> +		else
-> +			strbuf_commented_addf(&msg, =
-_(no_scissors_editor_comment),
-> +					      comment_line_char);
-> 	}
-> 	if (signoff)
-> 		append_signoff(&msg, ignore_non_trailer(msg.buf, =
-msg.len), 0);
-
+> +	argc =3D parse_options(argc, argv, prefix, options, merge_ours_usage, =
+0);
+>
+>  	/*
+>  	 * The contents of the current index becomes the tree we
+> diff --git a/git.c b/git.c
+> index ce6ab0ece2..6aee0e9477 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -527,7 +527,7 @@ static struct cmd_struct commands[] =3D {
+>  	{ "merge-base", cmd_merge_base, RUN_SETUP },
+>  	{ "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
+>  	{ "merge-index", cmd_merge_index, RUN_SETUP | NO_PARSEOPT },
+> -	{ "merge-ours", cmd_merge_ours, RUN_SETUP | NO_PARSEOPT },
+> +	{ "merge-ours", cmd_merge_ours, RUN_SETUP },
+>  	{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE |=
+ NO_PARSEOPT },
+>  	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_T=
+REE | NO_PARSEOPT },
+>  	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK=
+_TREE | NO_PARSEOPT },
+> --
+> gitgitgadget
+>
