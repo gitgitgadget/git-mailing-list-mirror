@@ -8,111 +8,150 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA4F31F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 12:31:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 669A71F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 12:39:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727858AbfJ2MbY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 08:31:24 -0400
-Received: from mout.gmx.net ([212.227.15.19]:50943 "EHLO mout.gmx.net"
+        id S2387664AbfJ2MjQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 08:39:16 -0400
+Received: from mout.gmx.net ([212.227.17.20]:44849 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727387AbfJ2MbX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 08:31:23 -0400
+        id S1731583AbfJ2MjP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 08:39:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572352267;
-        bh=ZcEC/p1j5Lrj7GP9yHg67VfXccIh7oD1U0XIXDLI5hE=;
+        s=badeba3b8450; t=1572352745;
+        bh=fX/GYkNP2u/YZPOrthni4e1SAJ/yjNSfK3M2GldAy6M=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=XFj3A+XAED7uLt1zVxuzzW95c+OYbOMAArHa2eh0GQ3NYt+lNEMreX7COlR4TYPiu
-         +mluEaI3gwcs3T0BXNZrlAsjFP5NkuezrwQZOh2Qxakw5mBiyv+h1CNJ5fEnWXOFkw
-         gKvajCEsGQKJf5KfWYNSiiwSYnBrW3JfZdhLOauM=
+        b=F1l3AI6cD3W30ExEiGoC1TXs9N3fLt5EEwy7zOzwWlb+/pePQ+y4O34GV5rdHcPGT
+         jJ6lxvz6RlG09m6BzeOyZ4U0N40GtTY9I/ZWaU/dVIK7HVNH7d64gxYjFzOKxhRknj
+         cxWVXgU3OZd8KqBe7jmRGpWN8hIu9pzMEL52M6sc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mqs0R-1hdOOp3a53-00mtjB; Tue, 29
- Oct 2019 13:31:06 +0100
-Date:   Tue, 29 Oct 2019 13:30:51 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N9dsb-1hwAPd263p-015biD; Tue, 29
+ Oct 2019 13:39:04 +0100
+Date:   Tue, 29 Oct 2019 13:38:49 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+        Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/1] vreportf(): avoid buffered write in favor of unbuffered
  one
-In-Reply-To: <xmqqeeyw6xyr.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1910291222500.46@tvgsbejvaqbjf.bet>
-References: <pull.428.git.1572274859.gitgitgadget@gmail.com> <455026ce3ef2b2d7cfecfc4b4bf5b588eebddcfe.1572274859.git.gitgitgadget@gmail.com> <xmqqeeyw6xyr.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20191029103842.GV4348@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1910291334210.46@tvgsbejvaqbjf.bet>
+References: <pull.428.git.1572274859.gitgitgadget@gmail.com> <455026ce3ef2b2d7cfecfc4b4bf5b588eebddcfe.1572274859.git.gitgitgadget@gmail.com> <20191029103842.GV4348@szeder.dev>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:cNKW2W2oLlU8uaQea98oekc6ON7RXA6OnXdw/XR/vDvyX/5vWfq
- ucbv5yaXnYI/0zzQP6zOgSGyg9NjwuSq3OP8jPhJzvMfnELq/Wvf9kRK9Z1ZRioq0+novZH
- EAuSaXrsMewgI5KG44465S0xC+vOKsRG2JTk89zOd2NU0b/s7GhmrmYATNjP5VfHWDwyE+r
- dA7lVsaeFhHgxPDGDKFiw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:+4cNR10gLi0=:rHy+CR1flvTPj0J3WWMQJr
- U+GTrfY/hqY0xKuPNMZ4+unHWGMw1Hz+dgOWNLtD/q5x5AAURSW8CBrkNTdJ2zjhKsEeYPKIp
- dwfclKec7tieClfFKxGi6g05c5MNHOAyy+6FNDFtJSpiD1DEtoYgmgoBwmabyIGss2fobqj3H
- 1ALPyWSGX4lzGGYsyeyYOlvvOFywCte4iORzG8aDbpdwUeZWBxq6zEuNdSe9nekdpheaz/HA/
- E9ANiDa8frVJapGbYaO4u82iXps/hi9vCgo6ZEzvydP9+kIIXzIsCYAbC4bSjIY+gfhF96PYT
- mOZAGjPu/EObZgX/LlVU8QhV7/jIp9zDxJbnceI2uXlKHEiZvfEc5qBctoPfBBrmWqa0C7WH3
- 4h8O5anRHkZLqkjwD/M/2tW7jr/Zfd7owK8PGG3NjujmQynbOg0CUtvLbDMo7IWQtNPFdNXDj
- NfBXGeIFJcIlpvnR5vixwOekl/2I7XPKepdBWw6gAcxhO/klLchp8x1v93wCgc9gs7kk900Gy
- E8osicWash4zOatd6pq7qk6+Ren9yfzM9+B7gC4s337mrkYdoPDSd7YHSHxNjgkI0ZvtbF5Xk
- TO13fAiY0UJmkE0BPao4/JKmSqTjx3u3lnGa4T1V5PE2hU+wmC9Z1hXqiUcTb+SAgJS18Ch5y
- kvVdRh2UCQka507Sn32URQJkdXqqiNes9tbeKmU6rch4kkKQykGoJredz6GG/qYLwFhMsrzG9
- HaX9Vs8TQi7bnybODwZwKuG1gSCRo5a/A6hN9Q+0fbLHGJv1umpKyuHBfQZSgV4tVEilWEhRb
- cl20l6420efOfOUBibZtDZh/YFN6OKD0Joarc9QrVXoH488MZe9Rxe+LTbwPozTwgHpOIP+d8
- MzJK5iwRF56wLtg3Y1oY/1XZSoX+HPTbEpIBDQ6MvLK/OuhgmhAY5jWfJ5vQ9lHX8Nu8mVGzy
- zmMxGwV8yAhx22b523Yi4CBKuh1/WAlGwtC5XBRWy9KsMhTkwEJ+rC4yztLROltx1ApHOb0TC
- sSWQfCsF90N2BM4/0LC8SLwnXB8pfJjZ1Lp74d9DxZ/zU+ytnnrrzBjzFja9w92CN/kojZMig
- aTS8AhsFTgULBBwzHj4HrvDWRl+px8sqIVIsYbcMCvRMvGN4a/W3v6GjgYLDVWPJAzQ8Dxm5t
- OWAGqiXLj4XaU9Uxxy8LljwVFAniS4WNtZMqQJTptpjxY/oGoPb2fbhhCkMb3l3PV6jkrLX54
- /AwHM8qBUHaFdDCeZxUPDRV9wpBVAaCqoXP5SQrxGha8vjj90uR9k3AjZOEk=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1064914085-1572352746=:46"
+X-Provags-ID: V03:K1:6Qi0kD58UJzOim94JbWWogQuYCAk9/SCfJ/5MslHDk5ALbTWfzT
+ MLLR/ifZSpLPRCJ8oXt67/Z3RVMx+dlW+XtpZtvKpYIOKFv9cFIs4iI/K0hRfSEvF+qetcj
+ +n47KS3dlZqmwiLOkeiiWjQv/f8Lfs0D5BMDEMh5ldLvEwOzQ8ijUG071l4aFy/4VsetyCF
+ 3Q3UkzQ0ah3pL8Qn+kDaA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:S70aqG2Kwro=:dy/Ugh5rr28KUOAoCAw/UI
+ WFMWu6il+VDSDCigUgY5Mq0nwLdcB4kR/rbHMOQbSKGcqasX2+sOCWAypq19oYg1z3fKQfO4E
+ INRsy+dMgPHnn70i8dcPTDWBJ8BQIpyrQYzn1ik2x/ovVrkUXDMVLQJ1td6kpxGjQ3BUDuAif
+ +ClXkFxX5C5O1V4ptYQ2r7YgUX02m/DUTpe7u/fpekRLSl6XBSjk3jzQeXjG/Drgiwmj3oDdk
+ 19EOLOhig3BHIiVcC+NWJeW059WhaQw3WOvc8VzPMiE0zmTcwz/SXrB8Gf/da/UlkisOFUCF5
+ Nf1J4K3BsdrCOMd+A+g2PPUuul6fAmSOM/TlWoRO53FKj4DeMsQSMidSbLvtymCX4Pj1odfke
+ eAGd//48bvUf1F8Pkx89DYaUosBXjSBpbzV+4Ti2U7WQZbgRSWl52kgENWfOR8O60VKjbeVW5
+ 9LgxlVtOIWuRnPTdAvCsPXiIFD/dOqSii5XrFZzGnShwkRo8EAlqBuYR1Uh8swssQ+YsE4ZLl
+ 8lkOD/ebdWl++20JV+3GsdlvR2chtvhDa54yQb+mOMr+k7DL1SrJ8z7g7AvBX7OAFvowMTnzs
+ xQaCEwNZ1R5u2wDpqqBcUPIXUNOI0K3TpOpmabXVpDucd0Dau8Sew6JLtFcxZEsa3VxLqku/z
+ zTa7AR1LwlU1M7rwzldV7AZm1xeZNjZK1PIkgRFuqTQMdrRLZyxzrvWGEpOO4Fd1gQbLYZL3F
+ sP8MG4uTPZhSD2UzB5Qdt+bMhLsFopGsI3lfv7iHwZH9YTn3bNeWFUnqirf1JKszy4CXsCoOj
+ OexYCqkOixOjyER1v+TyTe1H0jrHUb1MHR4hIjMPMyIxKCzC4gxZ2RwL4A+l4J/6LEqPFUcg0
+ 0LKyvPMEUBxoH+XHhl/BPVtwoV/brl8qLGO4o+T3ovrwzEkVc+HdBGY+K2GeLHiXtxYecNlF+
+ 6RRGpiyWqaybCiT5TZuJ2Tb4Mtrq1k0wOIe+lggAtqGheeXOMCeYqqcJtAp2bUH7rDG/7lK17
+ zxWTDoJjmbM0hovPFnWwS0xkghy3bFyco3XrB9HfTlElAKfw6XJYZqOO0o9InX6H5Cqw9bkQH
+ vh0D0dfyI2pQm3bZOMR1+SQeDxDf9JyoR2YejNsILrDmhehW40RNNo5yo8bm4i+5kAcA4om6G
+ o38ywLwAlHA5a67e/6oN6fycg29fjX8m+lOAtggCDMDFwyVk15z6jOa5AWbNaj9WsSYlaZRV2
+ 5bh6xDPxhKx0vZDsDEpxDlqof01MLIUAbhe55QY+hpuY95dlWUkvyAcNwvNg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 29 Oct 2019, Junio C Hamano wrote:
+--8323328-1064914085-1572352746=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+Hi G=C3=A1bor,
+
+On Tue, 29 Oct 2019, SZEDER G=C3=A1bor wrote:
+
+> On Mon, Oct 28, 2019 at 03:00:59PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > The MSVC runtime behavior differs from glibc's with respect to
+> > `fprintf(stderr, ...)` in that the former writes out the message
+> > character by character.
+> >
+> > In t5516, this leads to a funny problem where a `git fetch` process as
+> > well as the `git upload-pack` process spawned by it _both_ call `die()=
+`
+> > at the same time. The output can look like this:
+> >
+> > 	fatal: git uploadfata-lp: raemcokte :error:  upload-pnot our arcef k6=
+: n4ot our ea4cr1e3f 36d45ea94fca1398e86a771eda009872d63adb28598f6a9
+> > 	8e86a771eda009872d6ab2886
 >
+> Heh.
+
+Yes ;-)
+
+> > Let's avoid this predicament altogether by rendering the entire messag=
+e,
+> > including the prefix and the trailing newline, into the buffer we
+> > already have (and which is still fixed size) and then write it out via
+> > `write_in_full()`.
+>
+> s/write_in_full/xwrite/ perhaps?  Both the cover letter and the patch
+> below use xwrite().
+
+Excellent eyes! I had originally used `write_in_full()` before realizing
+that `xwrite()` would be more appropriate.
+
+Fixed.
+
+Thank you for helping me improve the patch!
+Dscho
+
+> > The history of `vreportf()` with regard to this issue includes the
+> > following commits:
+> >
+> > d048a96e (2007-11-09) - 'char msg[256]' is introduced to avoid interle=
+aving
+> > 389d1767 (2009-03-25) - Buffer size increased to 1024 to avoid truncat=
+ion
+> > 625a860c (2009-11-22) - Buffer size increased to 4096 to avoid truncat=
+ion
+> > f4c3edc0 (2015-08-11) - Buffer removed to avoid truncation
+> > b5a9e435 (2017-01-11) - Reverts f4c3edc0 to be able to replace control
+> >                         chars before sending to stderr
+> > 9ac13ec9 (2006-10-11) - Another attempt to solve interleaving.
+> >                         This is seemingly related to d048a96e.
+> > 137a0d0e (2007-11-19) - Addresses out-of-order for display()
+> > 34df8aba (2009-03-10) - Switches xwrite() to fprintf() in recv_sideban=
+d()
+> >                         to support UTF-8 emulation
+> > eac14f89 (2012-01-14) - Removes the need for fprintf() for UTF-8 emula=
+tion,
+> >                         so it's safe to use xwrite() again
+> > 5e5be9e2 (2016-06-28) - recv_sideband() uses xwrite() again
+> >
+> > Note that we need to be careful to handle the return value of
+> > `vsnprintf()` that indicates the _desired_ byte count.
+> >
 > > Also please note that we `fflush(stderr)` here to help when running in=
  a
 > > Git Bash on Windows: in this case, `stderr` is not actually truly
 > > unbuffered, and needs the extra help.
->
-> Yuck.  So on all systems, vreportf() now totally bypasses stdio?
-
-Yep ;-)
-
-> Also, this is only to help output from us that goes via vreportf() and
-> other codepaths in us that use stdio to write to the standard error
-> stream can still get mixed on Windows (I think the answer is yes,
-> because we wouldn't need fflush() in this patch if we are covering all
-> writes to the standard error stream)?
-
-Yes, `write()` can get interrupted, so there is still a slight chance of
-interleaving.
-
-However, with `fprintf()`, apparently the MSVC runtime essentially
-writes and flushes one character at a time, which will make it _much_
-more likely that two competing processes write interleaved messages to
-`stderr`.
-
-> By the way, I'd retitle the patch to highlight that we are still doing
-> buffered write, if I were doing this topic.  We are just avoiding some
-> implementations of stdio that do not give us buffering and doing the
-> buffering ourselves.
->
->     Subject: vreportf(): don't rely on stdio buffering
->
-> or something like that.
-
-Good idea.
-
+> >
 > > Co-authored-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.c=
 om>
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
@@ -132,48 +171,12 @@ om>
 > > -
 > > -	vsnprintf(msg, sizeof(msg), err, params);
 > > +	size_t off =3D strlcpy(msg, prefix, sizeof(msg));
->
-> Like snprintf(3) the strlcpy() and strlcat() functions return the
-> total length of the string they tried to create.  For strlcpy() that
-> means the length of src.
-
-True (I misread `compat/strlcpy.c` and forgot to consult the
-documentation). This length can be longer than `msg`, of course.
-
-> So "off" would be strlen(prefix), which could be longer than
-> sizeof(msg)?  Then what happens to this vsnprintf() we see below?
-
-A problem.
-
-I `git grep`ed and saw that only very short `prefix`es are hard-coded.
-So that is a hypothetical concern.
-
-However, Alex also indicated his discomfort with this, so I will change
-the code to account for a `prefix` that is too long (the entire error
-message will be clipped away in that case, which is unfortunate, but to
-be expected).
-
 > > +	int ret =3D vsnprintf(msg + off, sizeof(msg) - off, err, params);
 > >  	for (p =3D msg; *p; p++) {
 > >  		if (iscntrl(*p) && *p !=3D '\t' && *p !=3D '\n')
 > >  			*p =3D '?';
 > >  	}
 > > -	fprintf(stderr, "%s%s\n", prefix, msg);
->
-> Strictly speaking this is a breaking change in that control
-> sequences in prefix are now clobbered.  Does any caller call this
-> function with prefix like "^M\033[K<some string>" to overwrite the
-> last output line with the new message?  If not, then probably we do
-> not have to worry about it (and reusing msg[] does feel attractive).
-
-Such a sequence would not exactly be a prefix, but okay, I changed the
-code to replace only characters in the non-prefix part. For good
-measure, I also detect `NUL`s in that part and shorten `ret` in that
-case (think `die("This was an\0unintentional NUL")`).
-
-Thanks for the review!
-Dscho
-
 > > +	if (ret > 0) {
 > > +		if (off + ret > sizeof(msg) - 1)
 > > +			ret =3D sizeof(msg) - 1 - off;
@@ -184,4 +187,8 @@ Dscho
 > >  }
 > >
 > >  static NORETURN void usage_builtin(const char *err, va_list params)
+> > --
+> > gitgitgadget
 >
+
+--8323328-1064914085-1572352746=:46--
