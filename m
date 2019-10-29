@@ -2,146 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 742AD1F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 20:39:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A0F21F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 20:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726416AbfJ2Ujm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 16:39:42 -0400
-Received: from mout.gmx.net ([212.227.17.21]:40865 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725840AbfJ2Ujm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 16:39:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572381576;
-        bh=PeZhqoUeH2bn+zQZ49871aQDUo2v+HwicqMxEhhynhQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dG5GtvyhlJEQpU75iFObU2YiXUgfnVvM06RdHNejVecXz3fPr7toB6drxzPd2fZCv
-         aRtz8HaQg29dzAssX7WpkAmWMBiTa6yb5y3AuxqrYk2Wrb46tFfK4VOJUuQ7VTACXM
-         ssaitiV1bxw0iogNVG4m1taWqDvYgJ3HgEKqDL3s=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MF3DM-1iA90y0Hay-00FTyl; Tue, 29
- Oct 2019 21:39:36 +0100
-Date:   Tue, 29 Oct 2019 21:39:20 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/3] myfirstcontrib: add 'psuh' to command-list.txt
-In-Reply-To: <20191026080057.GP4348@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1910292136080.46@tvgsbejvaqbjf.bet>
-References: <20191026005159.98405-1-emilyshaffer@google.com> <20191026005159.98405-2-emilyshaffer@google.com> <20191026010857.GA39574@google.com> <20191026080057.GP4348@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727034AbfJ2Umi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 16:42:38 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:46244 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725840AbfJ2Umi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 16:42:38 -0400
+Received: by mail-pf1-f194.google.com with SMTP id b25so10453290pfi.13
+        for <git@vger.kernel.org>; Tue, 29 Oct 2019 13:42:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=EBqOaRS+2L/FY10HUQHOrMyeReSaMg/IF5cOVzIZbcY=;
+        b=ZFD+jd7r45DcmnUyzvKi1Jx3K9wpRxs0DTvd2oMSL+dgTmYZpWkgopMkM0YZnLcjkN
+         G8AyrJeNaudWRmeGtaeni+gcjJbV5M1EZx3p27yYDJeRfJgEN2f74jCnXYmKtO8NLLq+
+         erBNGtMza/rkO4zeJ5UsqSkkXALmE7rzNgIsk2GPheYCeYhzrSHapzaUeEuqmglrRWzH
+         Ax7+CCihu7Oztw5EmMjSPhPZWm6p30sCZePgzgN7rGuOFWLGr7ukBhrCcsueq6pKGuii
+         IMFV5m6UX4WPVg1X39kAOGMkALE5Uii0MlFsoxBb4vrMIwtLFEF5OpQP7pKgqkta1O5V
+         cGIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EBqOaRS+2L/FY10HUQHOrMyeReSaMg/IF5cOVzIZbcY=;
+        b=oX1DVJUqK4XmV4L4coPtUC+mxB/ZVaGrWDXNTbyQAEHGhvXBBR8pQMtgO+s4fGJjRi
+         FaMeOwdBfkXdBTiqixRtMfvcBxd9WjqbZURFN8Md4bQIrqL2JoHxcfUVThW3T5N2WFdk
+         72SwksybqO90AXxf/NFI/BtpudRE0FByjXCfIVVu3oGKAzFWStiZtFavYhzvz6eNvWBS
+         01fPddHsY8Ll4tfh8ab+h9lpTHFvfewcKWP45z3xyW1bRw0lb9olOiVVjb60wgNaDev+
+         W8Cc7fJR6aytn+M7Af7IUT5/rWhvPHpFSJDr1eFyj6mZ48JgMCn+RtqwBTmTFa/C2UO3
+         QNFg==
+X-Gm-Message-State: APjAAAVWijhKkjGfNhmzeiWFg07gmFDI8wQB/AcTQCfVhWzIjD+GDa96
+        B3M/Zg1iTWG8rNDaJgqqUtxMOA==
+X-Google-Smtp-Source: APXvYqykeI2h9LP3DpNzEoHg15nXGZAwShqnv0gb+pUTFsVtEe4ZcRk5eJG402QYpg54V1RFTo34Lg==
+X-Received: by 2002:a63:d415:: with SMTP id a21mr28434622pgh.299.1572381756539;
+        Tue, 29 Oct 2019 13:42:36 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id e7sm97163pgr.25.2019.10.29.13.42.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Oct 2019 13:42:33 -0700 (PDT)
+Date:   Tue, 29 Oct 2019 13:42:28 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     george espinoza via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, George Espinoza <gespinoz2019@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] [Outreachy] merge-ours: include parse-options
+Message-ID: <20191029204228.GA229589@google.com>
+References: <pull.425.git.1572306149.gitgitgadget@gmail.com>
+ <8c088194f604eac3a6b00c48a7fddfdf807571fc.1572306149.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1339988948-1572381576=:46"
-X-Provags-ID: V03:K1:9O9FftfbtOZ+gK/7NEkLnQAiEbIggYWjAdQQrDiSUK8I3yyMTtO
- qGXoGiwWqw/hvzYUYv+LjsZunytMxpQyhlHCpr3KM04SWSF7ezUbgEYHLx8ZVi9Z5U3+fu0
- r1OcEf/FowX7mQE7U90RIOGd/SyM7aSNzfgHkB89F/AQEQ0kby3rI4+q78+p2Q491knhiz3
- wizt2cG3Ixedm8iECUcUQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:zLxrfUgrgO4=:PV7p6TOKxnQTwGrwYh6vMe
- eElIC2WYbG/uXiCDpN43zHp4HXhUrrurlfSFyDCDPm2oaPAF4QWFs0I+RZ/AZxtN8hOvBy2NR
- aegMJKJreQBZIUU5u/Cg9tHHZMzXkVpI8G2b7QgZ48tDXmJtIi8pvLP34KPbqhUrpSEDnERsn
- f4t8yW8Z5nt4SrIyS12S+aFrFERCjwIgCN45B6XpnMRSDhFp1CAeTQd9GDU5g5M1x8X53g4je
- GGLJqhexLHkuhBO4XvTSHV1gr70fr0u4HJ2wK4+DP2Kpxxn68ova2/GJ9SgshI7fiTjc+7k6J
- 8Puw/YGQSEULaro/GnTo+UpyoxLgGuv/b3O1euUD0gLN+kYYYcKwGR9+Y6suw/4ZVoZ5soAso
- 6mdCaFgg1ccnxJcY/3uQQ/JaY7+lyWtt9e1xZDe182A4tcwViFUAgWCH9bFjUF12V04spPefA
- bDlNoSC7iSvfvNc42fdQ2DJDSDUWUnRDyhADuHuhyxPn+T+YMQwv136StMq/KUxDJ5xYwCco9
- 1WLD3RtkDO4mQ0GtNrPixaN6BvQ5WFnwXQpf0euRJPRJtX5ACX8FvkYOT1L+gFTi8xXqdK8A0
- 8fk8FUW3lp5uVM03haTUEf8k6BK6fvohcokTkf2RItZom0Za0ZvPhJGuMsR2iczAwB8bSZ8Fs
- gcmQE7tS4Fn8VFsC2q7VqBl37aW+l+8acSpzyhIQtMD472SOHqqyse+5S9O040GRt1zG6Dgv1
- FwZvitzUtji83EpoLS0cnoXy9lmuTO6aEficU891UuDslcE9RqBh9mEmE0udIHgcOi9cfk1TR
- e+n+fw01iYtNiYnQDEbHNCVXHOm1W/SSRtBTbCvXe75gfsubKwHytHqWy5SS7fwka6NMzHQvw
- RhLpucSqCgk4KL7ZJG/uUIKgj1kNpv9j3QV7uBdj+VzKlAMVj8zNpO6VanXVbrqdUu7Sf04Jq
- fE3csy6gF+AViNzLNyHmne/4lMEKWJvCJWvhEVdrHmXFYbTcqzt/Qbsmln0RzTlW/BwaoS5Nn
- gwGgdfWxkh/V1VxbfcNEEPuLOXNwLh2AIjug8QP+jZidCZK8KOB4tzAXyuuy3jV4dpyOE0mqK
- rWwlxuQfUStK7e5/xCiyGtv6vXTYT64qd6vF/pWOS25AXYGYlROxeL6VxFqGnMuN3iA+zxBj7
- nnSQLoYeW7lmVnb//cbLK6O7sUY7M9nvejo87lCPg/XeyXBdXAvRkmtUH+r9VJX+T5VuiKwcD
- Dk0Nf6V3W5IUuGOBYQkhP2c0NE22g6zmu0FtWL7KxbY672/ZLzmfdCh4m00c=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8c088194f604eac3a6b00c48a7fddfdf807571fc.1572306149.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Oct 28, 2019 at 11:42:29PM +0000, george espinoza via GitGitGadget wrote:
+> From: george espinoza <gespinoz2019@gmail.com>
+> 
+> Teach this command which currently handles its own argv to use
+> parse-options instead because parse-options helps make sure we handle
+> user input like -h in a standardized way across the project.
+> Also deleted the NO_PARSEOPT flag from git.c to coincide with
+> the conversion of the structure in this command since merge-ours
+> now uses parse-options and needed to update git.c accordingly.
 
---8323328-1339988948-1572381576=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Hmm, I could still wish for some rephrasing on this commit message. Now
+that you took my example suggestions and pasted them directly into your
+previous sentences, it doesn't flow very nicely. The point comes across
+but it's a little redundant (for example, "also <verb> from git.c ....
+and needed to update git.c" is redundant).
 
-Hi G=C3=A1bor,
+When significant assistance and advice is received it's often good form
+to include a "Helped-by:" line which looks similar to the signoff line,
+to provide credit. Maybe you will consider it as myself and dscho spent
+quite some time helping you in the GitGitGadget PR as well as via
+IRC/mail? :)
 
-On Sat, 26 Oct 2019, SZEDER G=C3=A1bor wrote:
+Otherwise, the code looks OK to me.
 
-> On Fri, Oct 25, 2019 at 06:08:57PM -0700, Jonathan Nieder wrote:
-> > > Users can discover commands and their brief usage by running 'git he=
-lp
-> > > git' or 'git help -a'; both of these pages list all available comman=
-ds
-> > > based on the contents of 'command-list.txt'. That means adding a new
-> > > command there is an important part of the new command process, and
-> > > therefore belongs in the new command tutorial.
-> >
-> > Makes sense.
-> >
-> > Not about this patch: is there a way to detect this automatically?
-> > E.g. if a command in git.c::commands doesn't appear in
-> > command-list.txt, could we make Git fail "make test"?
->
-> We almost detect this already:
->
->   $ sed -i -e '/^git-bisect/d' command-list.txt
->   $ make check-docs
->   make -C Documentation lint-docs
->   make[1]: Entering directory '/home/szeder/src/git/Documentation'
->       GEN cmd-list.made
->       GEN doc.dep
->   make[2]: Entering directory '/home/szeder/src/git'
->   make[2]: 'GIT-VERSION-FILE' is up to date.
->   make[2]: Leaving directory '/home/szeder/src/git'
->   make[2]: Entering directory '/home/szeder/src/git'
->   make[2]: 'GIT-VERSION-FILE' is up to date.
->   make[2]: Leaving directory '/home/szeder/src/git'
->       LINT lint-docs
->   make[1]: Leaving directory '/home/szeder/src/git/Documentation'
->   no link: git-bisect
->   $ echo $?
->   0
->
-> See that last "no link: git-bisect" line?  That's what happened to
-> catch my eyes when Derrick forgot to add his new 'sparse-checkout'
-> builtin to 'command-list.txt'.  I still haven't looked up what that
-> 'no link' is supposed to mean, but if it were an error, then we would
-> have surely detected the missing entry in 'command-list.txt' in out CI
-> builds.
+ - Emily
 
-FWIW I think the only reason that this is not an error in `check-docs`
-(which _is_ run by our CI/PR builds, in the `Documentation` job) is that
-it used to be buggy.
-
-However, I think I managed to address the remaining issues in
-`js/misc-doc-fixes` (and maybe there were a couple spill-overs into
-`js/check-docs-exe`).
-
-In short: I think we can make this type of issue trigger an error in
-`check-docs` now (as in: non-zero exit code).
-
-Ciao,
-Dscho
-
->
-> Another possibility would be to auto-generate that long list of
-> 'cmd_foo()' function declaration in 'builtin.h' from
-> 'command-list.txt', by adding a 'builtin' attribute to mark builtin
-> commands.
->
->
-
---8323328-1339988948-1572381576=:46--
+> 
+> Signed-off-by: george espinoza <gespinoz2019@gmail.com>
+> ---
+>  builtin/merge-ours.c | 14 ++++++++++----
+>  git.c                |  2 +-
+>  2 files changed, 11 insertions(+), 5 deletions(-)
+> 
+> diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
+> index 4594507420..fb3674a384 100644
+> --- a/builtin/merge-ours.c
+> +++ b/builtin/merge-ours.c
+> @@ -11,14 +11,20 @@
+>  #include "git-compat-util.h"
+>  #include "builtin.h"
+>  #include "diff.h"
+> +#include "parse-options.h"
+>  
+> -static const char builtin_merge_ours_usage[] =
+> -	"git merge-ours <base>... -- HEAD <remote>...";
+> +static const char * const merge_ours_usage[] = {
+> +	N_("git merge-ours [<base>...] -- <head> <merge-head>..."),
+> +	NULL,
+> +};
+>  
+>  int cmd_merge_ours(int argc, const char **argv, const char *prefix)
+>  {
+> -	if (argc == 2 && !strcmp(argv[1], "-h"))
+> -		usage(builtin_merge_ours_usage);
+> +	struct option options[] = {
+> +		OPT_END()
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, options, merge_ours_usage, 0);
+>  
+>  	/*
+>  	 * The contents of the current index becomes the tree we
+> diff --git a/git.c b/git.c
+> index ce6ab0ece2..6aee0e9477 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -527,7 +527,7 @@ static struct cmd_struct commands[] = {
+>  	{ "merge-base", cmd_merge_base, RUN_SETUP },
+>  	{ "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
+>  	{ "merge-index", cmd_merge_index, RUN_SETUP | NO_PARSEOPT },
+> -	{ "merge-ours", cmd_merge_ours, RUN_SETUP | NO_PARSEOPT },
+> +	{ "merge-ours", cmd_merge_ours, RUN_SETUP },
+>  	{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+>  	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+>  	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+> -- 
+> gitgitgadget
