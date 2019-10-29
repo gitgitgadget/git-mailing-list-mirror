@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A94E91F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 10:00:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC7BE1F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 10:00:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726538AbfJ2KAy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 06:00:54 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:42211 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726166AbfJ2KAx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 06:00:53 -0400
-Received: by mail-wr1-f68.google.com with SMTP id a15so622755wrf.9
-        for <git@vger.kernel.org>; Tue, 29 Oct 2019 03:00:51 -0700 (PDT)
+        id S1726985AbfJ2KA5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 06:00:57 -0400
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:36053 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725840AbfJ2KA4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 06:00:56 -0400
+Received: by mail-wr1-f51.google.com with SMTP id w18so12932961wrt.3
+        for <git@vger.kernel.org>; Tue, 29 Oct 2019 03:00:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=maRAJuup5abJ1hJXrBJ5YMG/weYvOZoneGLFTTC2A8E=;
-        b=siwJhSBuoexoIVXAicEMGhpgHIfnOku9+4YkQq4Ga1H51rqC9P4kHrTgbiKXCEJ0OU
-         IbIASrmW6nnKqOF6C+oDnfDrQLTrS8w9lurLfiFnulVReEMzaGVnI2ak4sOo0GqYL/He
-         2D3UnmG53u/HmKaAnfrcE3w4K8hOsoWn+nGnLkihE10XCPS/BIJ8JoN/rqlekXtn1C/K
-         pYjCqj+BPtvbdqzuiLDWEM0TlC+6tsxQPjobPGA1Kaxg41oE/RKB/tt4SzDNH2HAbcIo
-         gYmkrvaT4IFUxvEBkRzoqK0ypIy61wTrCQWJQ8po7h6p9LR8H9y7rhvyM4OocfJNfsw2
-         3LKQ==
+        bh=CIlb7vhgvVx3vjpkNksrPt/9jqhoDqOBOGxQUnA8eKA=;
+        b=D+jva+FFTWN3YcvjtGIc4AijeoBGopfzoM3/Y/ikCrDcXW8h0n1VAlvqtEsmaOl5ug
+         gILpFI+fIVbdbsLfYoQ1SzGA6EOnwIgtmBFBo+hNxFeBtgCevTK9W3fmU5CBkdh9tgG3
+         jzmV4gfo0EzZ2qRMlIwfKoTcjrGrAouLynd6GLVHgV4MGw2nFqRA2bPZubTcn3TQXEo8
+         Xx3UCem/v8WZS9xMYFES+gwU3Gn7IHMLjrl39F0gOH4zIs8Qf6HChu6M1RZxXvIj3SAm
+         DWNqfvFMCMKOy9bgcIwE+VzBvrjJaG2V+vmW8GF0UxxS4ANono+M7er3lUN+umkcCwNa
+         SSng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=maRAJuup5abJ1hJXrBJ5YMG/weYvOZoneGLFTTC2A8E=;
-        b=SprlxZhZdwErRt3COZmGtoU0eZDGBoE1KPo5h3RqxrOsjEr0x3HpkXWcIEl7cJRkzr
-         w8uy+Pu3uCUIEsgc/NXMgzi02nM/58VIDvPLH1PhCzfE12bznybImN+7tJu8/pHl2NDp
-         t56foG0GD4fOl7vZ7Rl8JcOxnXp9QpH9injc+dc/d/4aoiK2NwItchh6FmFnG4Udxh1R
-         ODAneq8CPmiJjtwNbGWoQ3k/FGn2Sh+6JdDi/3si4XzvznfLqEBYU30dOPohTWjsmmYM
-         G6pqmNWkwQ/G64Z4IOd1as+gPCzjh+uxOdq6vGyHfaIjEuGsPhNGyCPuwjE0TP0anKLZ
-         CkZw==
-X-Gm-Message-State: APjAAAVGiGIobQK5aYhNHtOXDLEABXEV0FMKMGuMFrZMalLRi9HVtmbt
-        HE0AAB5alsmagLMwkUNOQYQckVIJ
-X-Google-Smtp-Source: APXvYqz0i+pjNZ4G9kWxTAUfGbaK5OT7B7f52PiSdCOxs9XLAgDUHeUlXs63b7yIC3BtDdpuWvBBQA==
-X-Received: by 2002:adf:fcc7:: with SMTP id f7mr19462767wrs.345.1572343250563;
-        Tue, 29 Oct 2019 03:00:50 -0700 (PDT)
+        bh=CIlb7vhgvVx3vjpkNksrPt/9jqhoDqOBOGxQUnA8eKA=;
+        b=YCCncJUDaenlp3u5Gwt4pK6cUHJK/E4PQivLXiASWNkUg1EUW/jNrgsGTJyEkTgf3l
+         +e2Ofe8vcKtaDniiULdbO0tXuoaDJb+9sYgbrm72kpdP5qWgi/4auDDooICNvpDIvjsS
+         gVRTrihYTgjlEm0Qmwl2SF2M3vJDLfEgLbUiEIn+eaRw+Ukqiz+30Ee7HkiTjxkoaHF3
+         d8yU5x+kxtMS0H7xdxUvutbhfhjUioqQs5ABWB1filApoFSIjCP40uRFsrbbxlSOimJb
+         WSVjQJmcwU9ZxUb3AYLIJGswjmYI3VrUwzrLAjGtSTj8fPDUhMdk4GsIrVWeO2YY1hwX
+         bAKA==
+X-Gm-Message-State: APjAAAWz2LxDeEUPo30DfCaKN7nlNxaySqdDM4WIqDkCHj42JfLLjBot
+        xjF/LvimcCnKHustPLS0IKOPm9Gc
+X-Google-Smtp-Source: APXvYqxGKDheyLu/NAEMfp2vm1CiAGuivLPrqmUnLlcOhpcoFpheUIlhs3ycE0bhb6F2TWexUCN3cw==
+X-Received: by 2002:a5d:63c1:: with SMTP id c1mr18135518wrw.332.1572343253914;
+        Tue, 29 Oct 2019 03:00:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 11sm1657747wmb.34.2019.10.29.03.00.50
+        by smtp.gmail.com with ESMTPSA id c8sm1936620wml.44.2019.10.29.03.00.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Oct 2019 03:00:50 -0700 (PDT)
-Message-Id: <dabfe5e60baee8fa4c5ff72a832348125fa410b6.1572343246.git.gitgitgadget@gmail.com>
+        Tue, 29 Oct 2019 03:00:53 -0700 (PDT)
+Message-Id: <052d4e5e56ae7b7d672579efc540d191a101bb2b.1572343246.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.git.1572343246.gitgitgadget@gmail.com>
 References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Oct 2019 10:00:39 +0000
-Subject: [PATCH 03/10] graph: move doc to graph.h and graph.c
+Date:   Tue, 29 Oct 2019 10:00:44 +0000
+Subject: [PATCH 08/10] attr: move doc to attr.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,376 +71,351 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-history-graph.txt to
-graph.h and graph.c as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-gitattributes.txt
+to attr.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-The graph library was already well documented, so few comments were added to
-both graph.h and graph.c
-
-Also documentation/technical/api-history-graph.txt is removed because
-the information it has is now redundant and it'll be hard to keep it up to
+Also documentation/technical/api-gitattributes.txt is removed because the
+information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-history-graph.txt | 173 ------------------
- graph.c                                       |   1 +
- graph.h                                       | 121 ++++++++++++
- 3 files changed, 122 insertions(+), 173 deletions(-)
- delete mode 100644 Documentation/technical/api-history-graph.txt
+ Documentation/technical/api-gitattributes.txt | 154 ------------------
+ attr.h                                        | 141 +++++++++++++++-
+ 2 files changed, 134 insertions(+), 161 deletions(-)
+ delete mode 100644 Documentation/technical/api-gitattributes.txt
 
-diff --git a/Documentation/technical/api-history-graph.txt b/Documentation/technical/api-history-graph.txt
+diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
 deleted file mode 100644
-index d0d1707c8c..0000000000
---- a/Documentation/technical/api-history-graph.txt
+index 45f0df600f..0000000000
+--- a/Documentation/technical/api-gitattributes.txt
 +++ /dev/null
-@@ -1,173 +0,0 @@
--history graph API
+@@ -1,154 +0,0 @@
+-gitattributes API
 -=================
 -
--The graph API is used to draw a text-based representation of the commit
--history.  The API generates the graph in a line-by-line fashion.
+-gitattributes mechanism gives a uniform way to associate various
+-attributes to set of paths.
 -
--Functions
-----------
 -
--Core functions:
--
--* `graph_init()` creates a new `struct git_graph`
--
--* `graph_update()` moves the graph to a new commit.
--
--* `graph_next_line()` outputs the next line of the graph into a strbuf.  It
--  does not add a terminating newline.
--
--* `graph_padding_line()` outputs a line of vertical padding in the graph.  It
--  is similar to `graph_next_line()`, but is guaranteed to never print the line
--  containing the current commit.  Where `graph_next_line()` would print the
--  commit line next, `graph_padding_line()` prints a line that simply extends
--  all branch lines downwards one row, leaving their positions unchanged.
--
--* `graph_is_commit_finished()` determines if the graph has output all lines
--  necessary for the current commit.  If `graph_update()` is called before all
--  lines for the current commit have been printed, the next call to
--  `graph_next_line()` will output an ellipsis, to indicate that a portion of
--  the graph was omitted.
--
--The following utility functions are wrappers around `graph_next_line()` and
--`graph_is_commit_finished()`.  They always print the output to stdout.
--They can all be called with a NULL graph argument, in which case no graph
--output will be printed.
--
--* `graph_show_commit()` calls `graph_next_line()` and
--  `graph_is_commit_finished()` until one of them return non-zero.  This prints
--  all graph lines up to, and including, the line containing this commit.
--  Output is printed to stdout.  The last line printed does not contain a
--  terminating newline.
--
--* `graph_show_oneline()` calls `graph_next_line()` and prints the result to
--  stdout.  The line printed does not contain a terminating newline.
--
--* `graph_show_padding()` calls `graph_padding_line()` and prints the result to
--  stdout.  The line printed does not contain a terminating newline.
--
--* `graph_show_remainder()` calls `graph_next_line()` until
--  `graph_is_commit_finished()` returns non-zero.  Output is printed to stdout.
--  The last line printed does not contain a terminating newline.  Returns 1 if
--  output was printed, and 0 if no output was necessary.
--
--* `graph_show_strbuf()` prints the specified strbuf to stdout, prefixing all
--  lines but the first with a graph line.  The caller is responsible for
--  ensuring graph output for the first line has already been printed to stdout.
--  (This can be done with `graph_show_commit()` or `graph_show_oneline()`.)  If
--  a NULL graph is supplied, the strbuf is printed as-is.
--
--* `graph_show_commit_msg()` is similar to `graph_show_strbuf()`, but it also
--  prints the remainder of the graph, if more lines are needed after the strbuf
--  ends.  It is better than directly calling `graph_show_strbuf()` followed by
--  `graph_show_remainder()` since it properly handles buffers that do not end in
--  a terminating newline.  The output printed by `graph_show_commit_msg()` will
--  end in a newline if and only if the strbuf ends in a newline.
--
--Data structure
+-Data Structure
 ---------------
--`struct git_graph` is an opaque data type used to store the current graph
--state.
 -
--Calling sequence
+-`struct git_attr`::
+-
+-	An attribute is an opaque object that is identified by its name.
+-	Pass the name to `git_attr()` function to obtain the object of
+-	this type.  The internal representation of this structure is
+-	of no interest to the calling programs.  The name of the
+-	attribute can be retrieved by calling `git_attr_name()`.
+-
+-`struct attr_check_item`::
+-
+-	This structure represents one attribute and its value.
+-
+-`struct attr_check`::
+-
+-	This structure represents a collection of `attr_check_item`.
+-	It is passed to `git_check_attr()` function, specifying the
+-	attributes to check, and receives their values.
+-
+-
+-Attribute Values
 -----------------
 -
--* Create a `struct git_graph` by calling `graph_init()`.  When using the
--  revision walking API, this is done automatically by `setup_revisions()` if
--  the '--graph' option is supplied.
+-An attribute for a path can be in one of four states: Set, Unset,
+-Unspecified or set to a string, and `.value` member of `struct
+-attr_check_item` records it.  There are three macros to check these:
 -
--* Use the revision walking API to walk through a group of contiguous commits.
--  The `get_revision()` function automatically calls `graph_update()` each time
--  it is invoked.
+-`ATTR_TRUE()`::
 -
--* For each commit, call `graph_next_line()` repeatedly, until
--  `graph_is_commit_finished()` returns non-zero.  Each call to
--  `graph_next_line()` will output a single line of the graph.  The resulting
--  lines will not contain any newlines.  `graph_next_line()` returns 1 if the
--  resulting line contains the current commit, or 0 if this is merely a line
--  needed to adjust the graph before or after the current commit.  This return
--  value can be used to determine where to print the commit summary information
--  alongside the graph output.
+-	Returns true if the attribute is Set for the path.
 -
--Limitations
-------------
+-`ATTR_FALSE()`::
 -
--* `graph_update()` must be called with commits in topological order.  It should
--  not be called on a commit if it has already been invoked with an ancestor of
--  that commit, or the graph output will be incorrect.
+-	Returns true if the attribute is Unset for the path.
 -
--* `graph_update()` must be called on a contiguous group of commits.  If
--  `graph_update()` is called on a particular commit, it should later be called
--  on all parents of that commit.  Parents must not be skipped, or the graph
--  output will appear incorrect.
--+
--`graph_update()` may be used on a pruned set of commits only if the parent list
--has been rewritten so as to include only ancestors from the pruned set.
+-`ATTR_UNSET()`::
 -
--* The graph API does not currently support reverse commit ordering.  In
--  order to implement reverse ordering, the graphing API needs an
--  (efficient) mechanism to find the children of a commit.
+-	Returns true if the attribute is Unspecified for the path.
 -
--Sample usage
+-If none of the above returns true, `.value` member points at a string
+-value of the attribute for the path.
+-
+-
+-Querying Specific Attributes
+-----------------------------
+-
+-* Prepare `struct attr_check` using attr_check_initl()
+-  function, enumerating the names of attributes whose values you are
+-  interested in, terminated with a NULL pointer.  Alternatively, an
+-  empty `struct attr_check` can be prepared by calling
+-  `attr_check_alloc()` function and then attributes you want to
+-  ask about can be added to it with `attr_check_append()`
+-  function.
+-
+-* Call `git_check_attr()` to check the attributes for the path.
+-
+-* Inspect `attr_check` structure to see how each of the
+-  attribute in the array is defined for the path.
+-
+-
+-Example
+--------
+-
+-To see how attributes "crlf" and "ident" are set for different paths.
+-
+-. Prepare a `struct attr_check` with two elements (because
+-  we are checking two attributes):
+-
+-------------
+-static struct attr_check *check;
+-static void setup_check(void)
+-{
+-	if (check)
+-		return; /* already done */
+-	check = attr_check_initl("crlf", "ident", NULL);
+-}
 -------------
 -
+-. Call `git_check_attr()` with the prepared `struct attr_check`:
+-
 -------------
--struct commit *commit;
--struct git_graph *graph = graph_init(opts);
+-	const char *path;
 -
--while ((commit = get_revision(opts)) != NULL) {
--	while (!graph_is_commit_finished(graph))
--	{
--		struct strbuf sb;
--		int is_commit_line;
+-	setup_check();
+-	git_check_attr(path, check);
+-------------
 -
--		strbuf_init(&sb, 0);
--		is_commit_line = graph_next_line(graph, &sb);
--		fputs(sb.buf, stdout);
+-. Act on `.value` member of the result, left in `check->items[]`:
 -
--		if (is_commit_line)
--			log_tree_commit(opts, commit);
--		else
--			putchar(opts->diffopt.line_termination);
+-------------
+-	const char *value = check->items[0].value;
+-
+-	if (ATTR_TRUE(value)) {
+-		The attribute is Set, by listing only the name of the
+-		attribute in the gitattributes file for the path.
+-	} else if (ATTR_FALSE(value)) {
+-		The attribute is Unset, by listing the name of the
+-		attribute prefixed with a dash - for the path.
+-	} else if (ATTR_UNSET(value)) {
+-		The attribute is neither set nor unset for the path.
+-	} else if (!strcmp(value, "input")) {
+-		If none of ATTR_TRUE(), ATTR_FALSE(), or ATTR_UNSET() is
+-		true, the value is a string set in the gitattributes
+-		file for the path by saying "attr=value".
+-	} else if (... other check using value as string ...) {
+-		...
+-	}
+-------------
+-
+-To see how attributes in argv[] are set for different paths, only
+-the first step in the above would be different.
+-
+-------------
+-static struct attr_check *check;
+-static void setup_check(const char **argv)
+-{
+-	check = attr_check_alloc();
+-	while (*argv) {
+-		struct git_attr *attr = git_attr(*argv);
+-		attr_check_append(check, attr);
+-		argv++;
 -	}
 -}
 -------------
 -
--Sample output
---------------
 -
--The following is an example of the output from the graph API.  This output does
--not include any commit summary information--callers are responsible for
--outputting that information, if desired.
+-Querying All Attributes
+------------------------
 -
--------------
--*
--*
--*
--|\
--* |
--| | *
--| \ \
--|  \ \
--*-. \ \
--|\ \ \ \
--| | * | |
--| | | | | *
--| | | | | *
--| | | | | *
--| | | | | |\
--| | | | | | *
--| * | | | | |
--| | | | | *  \
--| | | | | |\  |
--| | | | * | | |
--| | | | * | | |
--* | | | | | | |
--| |/ / / / / /
--|/| / / / / /
--* | | | | | |
--|/ / / / / /
--* | | | | |
--| | | | | *
--| | | | |/
--| | | | *
--------------
-diff --git a/graph.c b/graph.c
-index f53135485f..eab3af1dc7 100644
---- a/graph.c
-+++ b/graph.c
-@@ -34,6 +34,7 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb);
-  * handle directly. It is assumed that this is the same file handle as the
-  * file specified by the graph diff options. This is necessary so that
-  * graph_show_strbuf can be called even with a NULL graph.
-+ * If a NULL graph is supplied, the strbuf is printed as-is.
-  */
- static void graph_show_strbuf(struct git_graph *graph,
- 			      FILE *file,
-diff --git a/graph.h b/graph.h
-index af623390b6..8313e293c7 100644
---- a/graph.h
-+++ b/graph.h
-@@ -2,6 +2,103 @@
- #define GRAPH_H
- #include "diff.h"
+-To get the values of all attributes associated with a file:
+-
+-* Prepare an empty `attr_check` structure by calling
+-  `attr_check_alloc()`.
+-
+-* Call `git_all_attrs()`, which populates the `attr_check`
+-  with the attributes attached to the path.
+-
+-* Iterate over the `attr_check.items[]` array to examine
+-  the attribute names and values.  The name of the attribute
+-  described by an `attr_check.items[]` object can be retrieved via
+-  `git_attr_name(check->items[i].attr)`.  (Please note that no items
+-  will be returned for unset attributes, so `ATTR_UNSET()` will return
+-  false for all returned `attr_check.items[]` objects.)
+-
+-* Free the `attr_check` struct by calling `attr_check_free()`.
+diff --git a/attr.h b/attr.h
+index b0378bfe5f..404548f028 100644
+--- a/attr.h
++++ b/attr.h
+@@ -1,9 +1,121 @@
+ #ifndef ATTR_H
+ #define ATTR_H
  
 +/**
-+ * The graph API is used to draw a text-based representation of the commit
-+ * history. The API generates the graph in a line-by-line fashion.
++ * gitattributes mechanism gives a uniform way to associate various attributes
++ * to set of paths.
 + *
-+ * Calling sequence
-+ * ----------------
 + *
-+ * - Create a `struct git_graph` by calling `graph_init()`.  When using the
-+ *   revision walking API, this is done automatically by `setup_revisions()` if
-+ *   the '--graph' option is supplied.
++ * Querying Specific Attributes
++ * ----------------------------
 + *
-+ * - Use the revision walking API to walk through a group of contiguous commits.
-+ *   The `get_revision()` function automatically calls `graph_update()` each time
-+ *   it is invoked.
++ * - Prepare `struct attr_check` using attr_check_initl() function, enumerating
++ *   the names of attributes whose values you are interested in, terminated with
++ *   a NULL pointer.  Alternatively, an empty `struct attr_check` can be
++ *   prepared by calling `attr_check_alloc()` function and then attributes you
++ *   want to ask about can be added to it with `attr_check_append()` function.
 + *
-+ * - For each commit, call `graph_next_line()` repeatedly, until
-+ *   `graph_is_commit_finished()` returns non-zero.  Each call to
-+ *   `graph_next_line()` will output a single line of the graph.  The resulting
-+ *   lines will not contain any newlines.  `graph_next_line()` returns 1 if the
-+ *   resulting line contains the current commit, or 0 if this is merely a line
-+ *   needed to adjust the graph before or after the current commit.  This return
-+ *   value can be used to determine where to print the commit summary information
-+ *   alongside the graph output.
++ * - Call `git_check_attr()` to check the attributes for the path.
 + *
-+ * Limitations
-+ * -----------
-+ * - Check the graph_update() function for its limitations.
++ * - Inspect `attr_check` structure to see how each of the attribute in the
++ *   array is defined for the path.
 + *
-+ * - The graph API does not currently support reverse commit ordering.  In
-+ *   order to implement reverse ordering, the graphing API needs an
-+ *   (efficient) mechanism to find the children of a commit.
 + *
-+ * Sample usage
-+ * ------------
++ * Example
++ * -------
++ *
++ * To see how attributes "crlf" and "ident" are set for different paths.
++ *
++ * - Prepare a `struct attr_check` with two elements (because we are checking
++ *   two attributes):
 + *
 + * ------------
-+ * struct commit *commit;
-+ * struct git_graph *graph = graph_init(opts);
-+ *
-+ * while ((commit = get_revision(opts)) != NULL) {
-+ * 	while (!graph_is_commit_finished(graph))
-+ * 	{
-+ * 		struct strbuf sb;
-+ * 		int is_commit_line;
-+ *
-+ * 		strbuf_init(&sb, 0);
-+ * 		is_commit_line = graph_next_line(graph, &sb);
-+ * 		fputs(sb.buf, stdout);
-+ *
-+ * 		if (is_commit_line)
-+ * 			log_tree_commit(opts, commit);
-+ * 		else
-+ * 			putchar(opts->diffopt.line_termination);
-+ * 	}
++ * static struct attr_check *check;
++ * static void setup_check(void)
++ * {
++ * 	if (check)
++ * 		return; // already done
++ * check = attr_check_initl("crlf", "ident", NULL);
 + * }
 + * ------------
-+ * Sample output
-+ * -------------
 + *
-+ * The following is an example of the output from the graph API.  This output does
-+ * not include any commit summary information--callers are responsible for
-+ * outputting that information, if desired.
++ * - Call `git_check_attr()` with the prepared `struct attr_check`:
++ *
 + * ------------
-+ * *
-+ * *
-+ * *
-+ * |\
-+ * * |
-+ * | | *
-+ * | \ \
-+ * |  \ \
-+ * *-. \ \
-+ * |\ \ \ \
-+ * | | * | |
-+ * | | | | | *
-+ * | | | | | *
-+ * | | | | | *
-+ * | | | | | |\
-+ * | | | | | | *
-+ * | * | | | | |
-+ * | | | | | *  \
-+ * | | | | | |\  |
-+ * | | | | * | | |
-+ * | | | | * | | |
-+ * * | | | | | | |
-+ * | |/ / / / / /
-+ * |/| / / / / /
-+ * * | | | | | |
-+ * |/ / / / / /
-+ * * | | | | |
-+ * | | | | | *
-+ * | | | | |/
-+ * | | | | *
++ * const char *path;
++ *
++ * setup_check();
++ * git_check_attr(path, check);
 + * ------------
 + *
++ * - Act on `.value` member of the result, left in `check->items[]`:
++ *
++ * ------------
++ * const char *value = check->items[0].value;
++ *
++ * if (ATTR_TRUE(value)) {
++ * The attribute is Set, by listing only the name of the
++ * attribute in the gitattributes file for the path.
++ * } else if (ATTR_FALSE(value)) {
++ * The attribute is Unset, by listing the name of the
++ *         attribute prefixed with a dash - for the path.
++ * } else if (ATTR_UNSET(value)) {
++ * The attribute is neither set nor unset for the path.
++ * } else if (!strcmp(value, "input")) {
++ * If none of ATTR_TRUE(), ATTR_FALSE(), or ATTR_UNSET() is
++ *         true, the value is a string set in the gitattributes
++ * file for the path by saying "attr=value".
++ * } else if (... other check using value as string ...) {
++ * ...
++ * }
++ * ------------
++ *
++ * To see how attributes in argv[] are set for different paths, only
++ * the first step in the above would be different.
++ *
++ * ------------
++ * static struct attr_check *check;
++ * static void setup_check(const char **argv)
++ * {
++ *     check = attr_check_alloc();
++ *     while (*argv) {
++ *         struct git_attr *attr = git_attr(*argv);
++ *         attr_check_append(check, attr);
++ *         argv++;
++ *     }
++ * }
++ * ------------
++ *
++ *
++ * Querying All Attributes
++ * -----------------------
++ *
++ * To get the values of all attributes associated with a file:
++ *
++ * - Prepare an empty `attr_check` structure by calling `attr_check_alloc()`.
++ *
++ * - Call `git_all_attrs()`, which populates the `attr_check` with the
++ * attributes attached to the path.
++ *
++ * - Iterate over the `attr_check.items[]` array to examine the attribute
++ * names and values. The name of the attribute described by an
++ * `attr_check.items[]` object can be retrieved via
++ * `git_attr_name(check->items[i].attr)`. (Please note that no items will be
++ * returned for unset attributes, so `ATTR_UNSET()` will return false for all
++ * returned `attr_check.items[]` objects.)
++ *
++ * - Free the `attr_check` struct by calling `attr_check_free()`.
 + */
 +
- /* A graph is a pointer to this opaque structure */
- struct git_graph;
+ struct index_state;
  
-@@ -50,6 +147,21 @@ struct git_graph *graph_init(struct rev_info *opt);
-  * If graph_update() is called before graph_is_commit_finished() returns 1,
-  * the next call to graph_next_line() will output an ellipsis ("...")
-  * to indicate that a portion of the graph is missing.
-+ *
-+ * Limitations:
-+ * -----------
-+ *
-+ * - `graph_update()` must be called with commits in topological order.  It should
-+ *   not be called on a commit if it has already been invoked with an ancestor of
-+ *   that commit, or the graph output will be incorrect.
-+ *
-+ * - `graph_update()` must be called on a contiguous group of commits.  If
-+ *   `graph_update()` is called on a particular commit, it should later be called
-+ *   on all parents of that commit.  Parents must not be skipped, or the graph
-+ *   output will appear incorrect.
-+ *
-+ * - `graph_update()` may be used on a pruned set of commits only if the parent list
-+ *   has been rewritten so as to include only ancestors from the pruned set.
-  */
- void graph_update(struct git_graph *graph, struct commit *commit);
+-/* An attribute is a pointer to this opaque structure */
++/**
++ * An attribute is an opaque object that is identified by its name. Pass the
++ * name to `git_attr()` function to obtain the object of this type.
++ * The internal representation of this structure is of no interest to the
++ * calling programs. The name of the attribute can be retrieved by calling
++ * `git_attr_name()`.
++ */
+ struct git_attr;
  
-@@ -62,6 +174,10 @@ void graph_update(struct git_graph *graph, struct commit *commit);
-  * for this commit.  If 0 is returned, graph_next_line() may still be
-  * called without calling graph_update(), and it will merely output
-  * appropriate "vertical padding" in the graph.
-+ *
-+ * If `graph_update()` is called before all lines for the current commit have
-+ * been printed, the next call to `graph_next_line()` will output an ellipsis,
-+ * to indicate that a portion of the graph was omitted.
-  */
- int graph_is_commit_finished(struct git_graph const *graph);
+ /* opaque structures used internally for attribute collection */
+@@ -21,21 +133,36 @@ const struct git_attr *git_attr(const char *);
+ extern const char git_attr__true[];
+ extern const char git_attr__false[];
  
-@@ -112,6 +228,7 @@ void graph_show_padding(struct git_graph *graph);
- /*
-  * If the graph is non-NULL, print the rest of the history graph for this
-  * commit to stdout.  Does not print a terminating newline on the last line.
-+ * Returns 1 if output was printed, and 0 if no output was necessary.
-  */
- int graph_show_remainder(struct git_graph *graph);
- 
-@@ -121,6 +238,10 @@ int graph_show_remainder(struct git_graph *graph);
-  * This is similar to graph_show_strbuf(), but it always prints the
-  * remainder of the graph.
-  *
-+ * It is better than directly calling `graph_show_strbuf()` followed by
-+ * `graph_show_remainder()` since it properly handles buffers that do not end in
-+ * a terminating newline.
+-/* For public to check git_attr_check results */
++/**
++ * Attribute Values
++ * ----------------
 + *
-  * If the strbuf ends with a newline, the output printed by
-  * graph_show_commit_msg() will end with a newline.  If the strbuf is
-  * missing a terminating newline (including if it is empty), the output
++ * An attribute for a path can be in one of four states: Set, Unset, Unspecified
++ * or set to a string, and `.value` member of `struct attr_check_item` records
++ * it. The three macros check these, if none of them returns true, `.value`
++ * member points at a string value of the attribute for the path.
++ */
++
++/* Returns true if the attribute is Set for the path. */
+ #define ATTR_TRUE(v) ((v) == git_attr__true)
++
++/* Returns true if the attribute is Unset for the path. */
+ #define ATTR_FALSE(v) ((v) == git_attr__false)
++
++/* Returns true if the attribute is Unspecified for the path. */
+ #define ATTR_UNSET(v) ((v) == NULL)
+ 
+-/*
+- * Send one or more git_attr_check to git_check_attrs(), and
+- * each 'value' member tells what its value is.
+- * Unset one is returned as NULL.
+- */
++/* This structure represents one attribute and its value. */
+ struct attr_check_item {
+ 	const struct git_attr *attr;
+ 	const char *value;
+ };
+ 
++/**
++ * This structure represents a collection of `attr_check_item`. It is passed to
++ * `git_check_attr()` function, specifying the attributes to check, and
++ * receives their values.
++ */
+ struct attr_check {
+ 	int nr;
+ 	int alloc;
 -- 
 gitgitgadget
 
