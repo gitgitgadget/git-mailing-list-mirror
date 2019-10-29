@@ -2,121 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A75171F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 14:56:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4A401F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 16:44:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389517AbfJ2O4W convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 29 Oct 2019 10:56:22 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:53828 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388713AbfJ2O4W (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 10:56:22 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x9TEuGcd037617
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 29 Oct 2019 10:56:17 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "=?utf-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>
-Cc:     "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-        <git@vger.kernel.org>
-References: <011f01d58ab6$91fee620$b5fcb260$@nexbridge.com> <nycvar.QRO.7.76.6.1910281405000.46@tvgsbejvaqbjf.bet> <026401d58d9a$2bbe7600$833b6200$@nexbridge.com> <20191028145220.GU4348@szeder.dev> <027301d58da3$4a4996a0$dedcc3e0$@nexbridge.com> <20191029101615.GA24010@szeder.dev>
-In-Reply-To: <20191029101615.GA24010@szeder.dev>
-Subject: RE: [BUG] git 2.24.0-rc1 t0500 on NonStop in Jenkins
-Date:   Tue, 29 Oct 2019 10:56:11 -0400
-Message-ID: <006f01d58e69$044070e0$0cc152a0$@nexbridge.com>
+        id S2390630AbfJ2Qou (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 12:44:50 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54562 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390625AbfJ2Qou (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 12:44:50 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B685536FB4;
+        Tue, 29 Oct 2019 12:44:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ygPdjY70t+dIjhakOzkjPRX/m0E=; b=ZxD2/U
+        JQi59WVghtVcQ+UPc5m9cn+1DcV/9rwbSxdp1Ax3GeNJ4M5kRddEd88IDnGT7Fag
+        RdZxrlu7KYgUgg0FMNXSbW+NKfo8zmipetV9WCSS9coR6D/F3/Nn7VEhfS9PpMJk
+        oznAOl7K63Y83DgA7zjHfVehKno6L9MTah1ac=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=BJEwiHAAIPBdZ5cG9aj/Nuqxj5SwM5QB
+        P5DiBQsbKHTTleuNsHZED3yAA50/aPq2FKWAvcXb+XErkJ4+9/pK28WkET31kZ6Y
+        mG7oTh5xGpD/ppcHiQlThAEAXdMxg8YHpxq8/+F6ipd1NtVCyZtNBRrGe+w093T8
+        IOiKqxfB9Hk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE38736FB3;
+        Tue, 29 Oct 2019 12:44:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 13E3736FAD;
+        Tue, 29 Oct 2019 12:44:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Subject: Re: [PATCH 1/1] vreportf(): avoid buffered write in favor of unbuffered one
+References: <pull.428.git.1572274859.gitgitgadget@gmail.com>
+        <455026ce3ef2b2d7cfecfc4b4bf5b588eebddcfe.1572274859.git.gitgitgadget@gmail.com>
+        <xmqqeeyw6xyr.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1910291222500.46@tvgsbejvaqbjf.bet>
+        <20191029134932.GA2843@sigill.intra.peff.net>
+Date:   Wed, 30 Oct 2019 01:44:48 +0900
+In-Reply-To: <20191029134932.GA2843@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 29 Oct 2019 09:49:32 -0400")
+Message-ID: <xmqqtv7r5wn3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHPNYlvTp8HvTWaccQRmuAfB7Lx7gHWySK8AblOW5QChv72xwFtCajbAl8qeNenLzxvcA==
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6BF261D0-FA6B-11E9-8009-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On October 29, 2019 6:16 AM, SZEDER Gábor wrote:
-> On Mon, Oct 28, 2019 at 11:20:48AM -0400, Randall S. Becker wrote:
-> > > > + test_i18ncmp expect out
-> > > > --- expect	2019-10-28 14:11:40 +0000
-> > > > +++ out	2019-10-28 14:11:41 +0000
-> > > > @@ -1,4 +1,2 @@
-> > > > -Working hard:  33% (1/3)<CR>
-> > > > -Working hard:  66% (2/3)<CR>
-> > > > -Working hard: 100% (3/3)<CR>
-> > > > -Working hard: 100% (3/3), done.
-> > > > +Working hard:   0% (1/12884901888)<CR>
-> > > > +Working hard:   0% (3/12884901888), done.
-> > >
-> > > Weird, this looks exactly like the big-endian test failure that was
-> > > fixed in 2b6f6ea1bd (test-progress: fix test failures on big-endian
-> > > systems, 2019-10- 20), but that is already in 2.24.0-rc1 (but not yet in -
-> rc0).
-> > >
-> > > https://public-inbox.org/git/f1ce445e-6954-8e7b-2dca-
-> > > 3a566ce689a5@physik.fu-berlin.de/
-> > >
-> > > Is NonStop big or little-endian?  Does t0500 pass without 2b6f6ea1bd?
-> >
-> > NonStop is big-endian. When t0500 is run from an interactive terminal,
-> > it passes. This failure seems to be a result of being in a
-> > disconnected terminal situation typical of Jenkins, not that the test
-> > result makes any sense with that being the only difference.
-> > t0500 did not exist in 2.23.0, our last build,
-> 
-> Didn't you build v2.24.0-rc0?
+Jeff King <peff@peff.net> writes:
 
-Reporter bonehead moment. Ok, the problem is in v2.24.0-rc0, *NOT* rc1. I am deeply sorry for the confusion. I ran both build test cycles and t0500 in rc1 worked. We are running the full rc1 cycle now.
+> Wow, they have truly taken "unbuffered" to a whole new level.
+>
+> I don't mind seeing this for all platforms, though. I can't think of any
+> downside, and having one less moving part to contend with in our
+> error-reporting code seems like a good thing.
 
-> > so I can't easily get
-> > that answer. Our Jenkins is based off the master branch, so it's a
-> > hard to revert in our pipeline without a serious amount of work - that
-> > and without 2b6f6ea1bd, other things break if I remember from August.
-> >
-> > Does the printf format use positional arguments (%digit$)? That has
-> > known issues on the platform.
-> 
-> The output in question is formatted in display() in progress.c:124:
-> 
->         strbuf_addf(counters_sb,
->                     "%3u%% (%"PRIuMAX"/%"PRIuMAX")%s", percent,
->                     (uintmax_t)n, (uintmax_t)progress->total,
->                     tp);
-> 
-> where both 'n' and 'progress->total' are uint64_t, and 'PRIuMAX' is 'llu'.  All
-> of these are widely used throughout the code base.
-> 
-> > FYI: int/long are 32 bits, long long is 64 bits. 12884901888 is
-> > 0x300000000, surprisingly.
-> 
-> It's not surprising, basically that's what 2b6f6ea1bd is all about.
-> 
-> > > > error: last command exited with $?=1 not ok 2 - progress display
-> > > > with total #
-> > > > #		cat >expect <<-\EOF &&
-> > > > #		Working hard:  33% (1/3)<CR>
-> > > > #		Working hard:  66% (2/3)<CR>
-> > > > #		Working hard: 100% (3/3)<CR>
-> > > > #		Working hard: 100% (3/3), done.
-> > > > #		EOF
-> > > > #
-> > > > #		cat >in <<-\EOF &&
-> > > > #		progress 1
-> > > > #		progress 2
-> > > > #		progress 3
-> > > > #		EOF
-> > > > #		test-tool progress --total=3 "Working hard" <in 2>stderr &&
-> > > > #
-> > > > #		show_cr <stderr >out &&
-> > > > #		test_i18ncmp expect out
-> > > > #
+FWIW, it was my mistake to sound as if I was unhappy to see this
+done on all platforms.  As long as the end result is to reasonably
+buffer, I do not mind us (as opposed to the system library we
+sometimes cannot trust) being the one who implements the buffering.
+
+I very much prefer to see the same code run everywhere than #ifdef
+in this case.
+
+> I'd recommend xsnprintf() here. If we have a prefix longer than our
+> vreportf() buffer, I think a BUG() is the right outcome.
+> ...
+> I'd disagree here. Any caller sending an arbitrarily-large prefix is
+> holding it wrong, and we'd probably want to know as soon as possible
+> (and a BUG() is our best bet there).
+
+Yes.  We are not using an unvetted input as the prefix here, if
+somebody needs to use a larger prefix somewhere, that patch needs to
+argue the pros-and-cons between making the buffer larger or
+shortening that larger prefix.
+
 
