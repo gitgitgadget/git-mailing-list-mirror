@@ -7,89 +7,69 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 947311F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 01:54:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 611041F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 02:05:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729721AbfJ2Byx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Oct 2019 21:54:53 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63914 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728432AbfJ2Byx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Oct 2019 21:54:53 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EC5533E82;
-        Mon, 28 Oct 2019 21:54:51 -0400 (EDT)
+        id S1730444AbfJ2CFO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Oct 2019 22:05:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56231 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726526AbfJ2CFO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Oct 2019 22:05:14 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C8372D24C;
+        Mon, 28 Oct 2019 22:05:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=n573QlTkZgAkfT1/Sct534xcTHE=; b=pRIRt6
-        tW/jxC5VTJYZ5CYY4jSwoofeAZDXt1pK4fbIKbCMDb3vmaeVvIKoavuzQF0iShXE
-        WG12AWt9RV0ctzpVj3Ny21SzpsRvjZIyjCgn+cL0xiFMwByXWSEVut9soMXGiGXm
-        0VuzbLdssrxojFNjSe5G5Ldg2lnULtaGc9uCw=
+        :content-type; s=sasl; bh=nJD18Y2ZUncYRyp0/WiwkJZUabA=; b=uWnQh8
+        ObprVCykhFLN2DqwG4eeUaU9gpGHvgwCaiuuGFCCxo4QpavWzwo2joszJlcl8n+9
+        Qq9Rkgqg+uuRPmUCJI9BkgY8bTWTQDPagI73+B2xCbMRA6p1VkoMZBF9SLcOZIJY
+        2ArdgeEhJBFtBcqopRteA+a9rLw87bhgTBu7Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tAsy/Cf/uzQzIbjCGM75RO5kQlnwSljU
-        +2Q2UAQCOQgSqHa5OpE0CUDPBR9v9NXdofWAv4yDc9FxPYDSYIasjGOwUui5vQ3L
-        u1tA7JppjKdfMjQQBFqlu+DgQh13BO/9OjP0A/6kjjUnUWGr1A7pLcMYJU72AZsY
-        cEQO3RRUdF0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 05C8033E81;
-        Mon, 28 Oct 2019 21:54:51 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=kqzK7a7smKCd6MURn1HkhBhMtSYL7tVC
+        G5gUxUSVYwZtgaDtS3pf/Ln8956WQdUJRibDRJxhcinS/3FadROcqXsZIAGLe/I6
+        KnrKh9teyrjUbhO8ZkLFXrSD3kdH1GH7K5Ort2Vd7xUHHoXUsryAmbmjddZu7yAj
+        oZpuIeczuK0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1318F2D24B;
+        Mon, 28 Oct 2019 22:05:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6395633E80;
-        Mon, 28 Oct 2019 21:54:50 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7B4D22D246;
+        Mon, 28 Oct 2019 22:05:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 0/9] add git-bugreport tool
-References: <20191025025129.250049-1-emilyshaffer@google.com>
-Date:   Tue, 29 Oct 2019 10:54:49 +0900
-In-Reply-To: <20191025025129.250049-1-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Thu, 24 Oct 2019 19:51:20 -0700")
-Message-ID: <xmqqd0eg8geu.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Subject: Re: [PATCH 0/3] commit: fix advice for empty commits during rebases
+References: <pull.417.git.1571787022.gitgitgadget@gmail.com>
+        <xmqqr234i2q0.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1910251402190.46@tvgsbejvaqbjf.bet>
+Date:   Tue, 29 Oct 2019 11:05:10 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1910251402190.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 25 Oct 2019 14:11:13 +0200 (CEST)")
+Message-ID: <xmqq8sp48fxl.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 17DB0E7A-F9EF-11E9-BB2C-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8A0E8F70-F9F0-11E9-A0F3-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Thanks for the patience with the long wait, all. Here's an attempt at
-> the rewrite in C; I think it does verbatim what the sh version did
-> except that this doesn't print the reflog - Jonathan Nieder was good
-> enough to point out to me that folks probably don't want to share their
-> commit subjects all willy-nilly if they're working on something
-> secretive.
+> As the bug was introduced in this cycle, I would like to see the bug fix
+> in v2.24.0, though;...
 
-Is the goal to give a tool the end users can type "git
-bugreport<RET>" and automatically send the result to this mailing
-list (or some bug tracker)?  Or is this only about producing a
-pre-filled bug report template to be slurped into their MUA and then
-further manually edited before sending it out?
-
-It probably is controversial if we exposed contents of hooks scripts
-(I can imagine some people may trigger external process by pinging a
-URL that includes credential material out of laziness), so the
-presence test you have is probably a good stopping point.  I do not
-know how much it helps to know which hooks exist in order to
-diagnose an anomaly without knowing what their contents are, but it
-is a start.
-
-By the way, I doubt that it is the best use of developer time to
-write these in C---taking various pieces of information from
-different places to prepare a text file sounds more suited to
-scripting languages, especially while we are still learning what
-kind of information we want to collect and how we want to present
-the final result (iow, for the first handful of years after
-deploying this command).
-
-Thanks.
+Do you mean that before the change you blame for the "bug" things
+worked better than what we have at the tip of 'master', or do you
+mean that the change you blame for the "bug" changed the behaviour
+relative to the previous released version but the updated behavior
+is not what you consider correct?
