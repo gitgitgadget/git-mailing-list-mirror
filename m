@@ -2,69 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 913111F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 14:34:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A75171F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 14:56:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389201AbfJ2OeV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 10:34:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32984 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2388871AbfJ2OeV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 10:34:21 -0400
-Received: (qmail 31945 invoked by uid 109); 29 Oct 2019 14:34:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 29 Oct 2019 14:34:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10183 invoked by uid 111); 29 Oct 2019 14:37:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Oct 2019 10:37:29 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 29 Oct 2019 10:34:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Luke Dashjr <luke@dashjr.org>, git@vger.kernel.org
-Subject: Re: GIT_COMMITTER_* and reflog
-Message-ID: <20191029143420.GB3683@sigill.intra.peff.net>
-References: <201910252149.23787.luke@dashjr.org>
- <20191026022039.GE39574@google.com>
- <xmqqv9scark1.fsf@gitster-ct.c.googlers.com>
- <20191026173702.GA5522@sigill.intra.peff.net>
- <xmqqr22ybcs7.fsf@gitster-ct.c.googlers.com>
+        id S2389517AbfJ2O4W convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 29 Oct 2019 10:56:22 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:53828 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388713AbfJ2O4W (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 10:56:22 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x9TEuGcd037617
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 29 Oct 2019 10:56:17 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "=?utf-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>
+Cc:     "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
+        <git@vger.kernel.org>
+References: <011f01d58ab6$91fee620$b5fcb260$@nexbridge.com> <nycvar.QRO.7.76.6.1910281405000.46@tvgsbejvaqbjf.bet> <026401d58d9a$2bbe7600$833b6200$@nexbridge.com> <20191028145220.GU4348@szeder.dev> <027301d58da3$4a4996a0$dedcc3e0$@nexbridge.com> <20191029101615.GA24010@szeder.dev>
+In-Reply-To: <20191029101615.GA24010@szeder.dev>
+Subject: RE: [BUG] git 2.24.0-rc1 t0500 on NonStop in Jenkins
+Date:   Tue, 29 Oct 2019 10:56:11 -0400
+Message-ID: <006f01d58e69$044070e0$0cc152a0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqr22ybcs7.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHPNYlvTp8HvTWaccQRmuAfB7Lx7gHWySK8AblOW5QChv72xwFtCajbAl8qeNenLzxvcA==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 27, 2019 at 09:20:24PM +0900, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+On October 29, 2019 6:16 AM, SZEDER Gábor wrote:
+> On Mon, Oct 28, 2019 at 11:20:48AM -0400, Randall S. Becker wrote:
+> > > > + test_i18ncmp expect out
+> > > > --- expect	2019-10-28 14:11:40 +0000
+> > > > +++ out	2019-10-28 14:11:41 +0000
+> > > > @@ -1,4 +1,2 @@
+> > > > -Working hard:  33% (1/3)<CR>
+> > > > -Working hard:  66% (2/3)<CR>
+> > > > -Working hard: 100% (3/3)<CR>
+> > > > -Working hard: 100% (3/3), done.
+> > > > +Working hard:   0% (1/12884901888)<CR>
+> > > > +Working hard:   0% (3/12884901888), done.
+> > >
+> > > Weird, this looks exactly like the big-endian test failure that was
+> > > fixed in 2b6f6ea1bd (test-progress: fix test failures on big-endian
+> > > systems, 2019-10- 20), but that is already in 2.24.0-rc1 (but not yet in -
+> rc0).
+> > >
+> > > https://public-inbox.org/git/f1ce445e-6954-8e7b-2dca-
+> > > 3a566ce689a5@physik.fu-berlin.de/
+> > >
+> > > Is NonStop big or little-endian?  Does t0500 pass without 2b6f6ea1bd?
+> >
+> > NonStop is big-endian. When t0500 is run from an interactive terminal,
+> > it passes. This failure seems to be a result of being in a
+> > disconnected terminal situation typical of Jenkins, not that the test
+> > result makes any sense with that being the only difference.
+> > t0500 did not exist in 2.23.0, our last build,
 > 
-> > If somebody wants to pursue a patch, I suspect the solution is probably
-> > something like this (totally untested):
-> 
-> Looks sensible.  It is very much unsatisfying that datestamp(),
-> which is used by fmt_ident() when no date string is given, seems to
-> totally bypass date.c::get_time(), which means the framework to give
-> fake timestamp via GIT_TEST_DATE_NOW cannot be used to write
-> reproducible tests.
-> 
-> Given that datestamp() is only used by the push certificate and
-> fast-import codepaths and nowhere else, I suspect that "fixing" it
-> retroactively to honor GIT_TEST_DATE_NOW would not have any negative
-> fallout, but that's not something I should be contemplating on
-> during the -rc period ;-)
+> Didn't you build v2.24.0-rc0?
 
-Yeah, I agree datestamp() should respect $GIT_TEST_DATE_NOW. This whole
-topic is not something for the -rc period, I would think.
+Reporter bonehead moment. Ok, the problem is in v2.24.0-rc0, *NOT* rc1. I am deeply sorry for the confusion. I ran both build test cycles and t0500 in rc1 worked. We are running the full rc1 cycle now.
 
--Peff
+> > so I can't easily get
+> > that answer. Our Jenkins is based off the master branch, so it's a
+> > hard to revert in our pipeline without a serious amount of work - that
+> > and without 2b6f6ea1bd, other things break if I remember from August.
+> >
+> > Does the printf format use positional arguments (%digit$)? That has
+> > known issues on the platform.
+> 
+> The output in question is formatted in display() in progress.c:124:
+> 
+>         strbuf_addf(counters_sb,
+>                     "%3u%% (%"PRIuMAX"/%"PRIuMAX")%s", percent,
+>                     (uintmax_t)n, (uintmax_t)progress->total,
+>                     tp);
+> 
+> where both 'n' and 'progress->total' are uint64_t, and 'PRIuMAX' is 'llu'.  All
+> of these are widely used throughout the code base.
+> 
+> > FYI: int/long are 32 bits, long long is 64 bits. 12884901888 is
+> > 0x300000000, surprisingly.
+> 
+> It's not surprising, basically that's what 2b6f6ea1bd is all about.
+> 
+> > > > error: last command exited with $?=1 not ok 2 - progress display
+> > > > with total #
+> > > > #		cat >expect <<-\EOF &&
+> > > > #		Working hard:  33% (1/3)<CR>
+> > > > #		Working hard:  66% (2/3)<CR>
+> > > > #		Working hard: 100% (3/3)<CR>
+> > > > #		Working hard: 100% (3/3), done.
+> > > > #		EOF
+> > > > #
+> > > > #		cat >in <<-\EOF &&
+> > > > #		progress 1
+> > > > #		progress 2
+> > > > #		progress 3
+> > > > #		EOF
+> > > > #		test-tool progress --total=3 "Working hard" <in 2>stderr &&
+> > > > #
+> > > > #		show_cr <stderr >out &&
+> > > > #		test_i18ncmp expect out
+> > > > #
+
