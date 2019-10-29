@@ -2,339 +2,238 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 651061F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 04:48:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7A0F1F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 07:30:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731704AbfJ2EsC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 00:48:02 -0400
-Received: from mail-pf1-f173.google.com ([209.85.210.173]:33669 "EHLO
-        mail-pf1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728238AbfJ2EsB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 00:48:01 -0400
-Received: by mail-pf1-f173.google.com with SMTP id c184so8653912pfb.0
-        for <git@vger.kernel.org>; Mon, 28 Oct 2019 21:47:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:references:in-reply-to:subject:date:message-id:mime-version
-         :content-transfer-encoding:thread-index:content-language;
-        bh=7l3fPMv2Np2/4BhB72cHanpfT8Q8YQfArTQP8kYsKtI=;
-        b=DrglYBIeK4glsYaje2ZFrm9lTDWs1y7uXKkFLdZ0HfrjUOCsc8h559r9v8+eRDfdG4
-         uSPdReCX90YCfenZQX9ptdKkzZ31aBaX3/URIl9JVZ+tZ1ZAwQC/q7XMnIEmnLXVa+Uo
-         ElxF6DxGIHaAxRhJ2pc1/tozCgwzKxoEbsJUHmamEcyqvkCbFg6ka7hdkaDRnkHyKmTY
-         uvUt3KEqTRIdlW56rLqCLV23swzTXQqUnEDTgH2YFPoHJKcHphvW0eih4bQIeUjwIAWm
-         Bt7WXHCamXtNhLXoj2Mu4LOjp0UB8qVxkEw9qZQfwUoO5Q9NTEGxPZ8EKaNIkfXDunDw
-         Bdzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=7l3fPMv2Np2/4BhB72cHanpfT8Q8YQfArTQP8kYsKtI=;
-        b=ezXm/Vw1dZ0qONMjOnTd8SNoV1E9MwpufOvcju9Ds/rH0fNG+CnnmcpNxQE60VlAaW
-         3fn3QB/yLxweVMJatDrR4lyhOB2THzaZqqAhP0dOBpmimpdXgu4CPW6Bo0M2XFXzp0ts
-         ojBxTYbgY/sVMzZcQaac0eP8QnaCcpl6yzbKA45ThPsVWqBpMeY3R5A7OfNYAyYmc6nf
-         IZgJo/XvlOA6vnXjV+Z4x9pQtpnMHDu6pPgNewgSgD54h3ocm/CMRcBJoKv5iYcpIhlH
-         KGn0EMFsiZ/zgiq2dWmBm/P0peIoFz/2VTvSA1hOdzkX7dArwVhQabjMyogh/2CeGFEM
-         9y2g==
-X-Gm-Message-State: APjAAAXW2CCQQTjV88tVO2ndxP7B3n7TvwFnq0pyrCY7BLkgvpsApu51
-        GyPqNOwMlkye4bpeei9rWiGs+SY3
-X-Google-Smtp-Source: APXvYqyOsTB60EUQu6n9DlvdrVpHjRR3upvMi9nlYTD+w/oSUl1Whkrfu6dP7dkQwPfJIUHP6q9sXg==
-X-Received: by 2002:aa7:8421:: with SMTP id q1mr25107855pfn.174.1572324479075;
-        Mon, 28 Oct 2019 21:47:59 -0700 (PDT)
-Received: from LJZDELLPC ([184.103.122.48])
-        by smtp.gmail.com with ESMTPSA id p1sm12403753pfb.112.2019.10.28.21.47.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Oct 2019 21:47:58 -0700 (PDT)
-From:   <lyle.ziegelmiller@gmail.com>
-To:     "'Philip Oakley'" <philipoakley@iee.email>,
-        "'git bug report'" <git@vger.kernel.org>
-References: <004101d58d24$4daab5b0$e9002110$@gmail.com> <91e5f3d8-d2cf-363c-2407-4b4dfb75e5a8@iee.email>
-In-Reply-To: <91e5f3d8-d2cf-363c-2407-4b4dfb75e5a8@iee.email>
-Subject: RE: unpacking error
-Date:   Mon, 28 Oct 2019 21:47:53 -0700
-Message-ID: <005501d58e14$07504990$15f0dcb0$@gmail.com>
+        id S1726108AbfJ2HaC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 03:30:02 -0400
+Received: from mout.gmx.net ([212.227.15.18]:33283 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726088AbfJ2HaB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 03:30:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1572334195;
+        bh=Qug6UisRoUL5NyW9ixatMzaO/ijXpyvwPFqkNfQSJXU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Max2anD93Ji1ien/OSaRvTMhcEsDtun/k/cIFycWcnSSLA1mVYyECjOBrgDpwGYEs
+         mJvX/OYfrnaSTEZ5VznDZaTNXZKJTLuAH0C1olnXnGbtLwa/pllD2CqlEVN5IfwbpI
+         Laqdix/eZzAbQAKcrhMLtqlHILxAC2eyZgdg51Kw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N5mKP-1hvhGq0s4h-017DU1; Tue, 29
+ Oct 2019 08:29:55 +0100
+Date:   Tue, 29 Oct 2019 08:29:39 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     dev@kipras.org,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [FR] Allow `git stash create` to include untracked changes
+In-Reply-To: <xmqqa79lbpte.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1910290806310.46@tvgsbejvaqbjf.bet>
+References: <d02ddc0db596771820b0cfdfae5b1504@kipras.org> <xmqqa79lbpte.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:FgiJoVjbyC4Bu92R8j9qLKWc0WLmEwQW8NEcL+q+o/94K1H/umP
+ 4Jyid7F+7hTSTvaFdRXbZzOJ3FZMSUDloGMPZFH5xrfEAUnisMjCclnYkbVcF08kFCltpRT
+ BvTRpzw50DAU1J0VZW8pbBTv26xBZbSaT1RAM6kv9gA8vKjWB+qIHtE4/m1A1hY5dJkLOMu
+ 7d6KGvVPiBOmJ/ZlcRSXw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:q+ohP3SOP4c=:xMka3raZnl29S9Ed9rHq6v
+ f2dFjs7nxjgS67ZmNyWZcyrRXpAurvwZRF2gwj9pdUdRWgaiYfiQ861cwjAaxVBbgcT7LFdlD
+ RDRvIJA1+xaTER/SoI2ieKY3FEtIKPkljsTQvZN75hv4LaR6zORv8hSZaNzcomprmC2YJEToA
+ WUkTV96GU8KlaIdvmCbeIPrPf8EP5WU8oE5hGoxpCpz2mveBz2Bcr0vCS0V9WdMP0VJyDTQ+F
+ dGCo515yErJXZPEF3NY7pMV5rzeAYHC3zBVgZ193QpcJusybZMOE9OABKV7z5LMzDun0LFDdS
+ BWb3QD9rezMoex3LmgaXfQp27CGirVzGRA8Ysjd4tWbil69diZEPSkwAzT+94PXOvIA+z20iF
+ QF5PacJMY5UUX9cxOnr7DelVoZZT2R3KI9RzLgmdJ+wjC9H5VePOVhp8zPn92uDdao+VNXfGl
+ BFtxMU3msOUy8B2oChFfMKyeVKDYWW1+KEnBABV96xoljbMAdvjXRstgclClUqvuxf1PtyHka
+ 9+Hlp5VPoLGI30cahlsuw0+jVzwLtze/ha+TaeZpSIlHfE82OWYgtfSxK0UbeACpTaKg87ZHt
+ 9OFnB13hXghJomxHZPo5rqWbZ3J5i+An0uIb7qDIIMuPkUiCkRq6k5J8Y/IYhAvaFCl4c8Uip
+ o6Qi+zOXoESO2MHElVLBY4uWAC3ECGKsDHEI4ohSfov2utcqMoWmCzPlTribMPpmHKi8k+9da
+ o1C7TBDRMIFbCvQ9jCZfBB6pdN5SZ8v+3xjTU9kH+XC85Ng99GX5KJWmQ6jLLMlK1Dsdv6949
+ 23RLiHP46uSMebC/d6n96X1CopAhu2DaF86nB98e6huprmcfG4VaKVjhuKDpo3TiV7Hmmes2A
+ WeWppySLsnHnUGdAc//iBU6KW4Hz/K3B2LzU0WilyEBG5Jit/+tx7N5Y0Hm5w9p/gwcJ8AkTN
+ am0+l9eL72+cAWk0qTSH9uk1oiS0/0nMAFYMp/pDrogTmLNcTYqQvJTkQvlbWSNbMftO1X3My
+ ga0E72ABCj/Jy0R7qkqheVH/9JHewpm/ynCWQ0Y9UOcusRqRmBjIK0L4XD/gspflQiX+X61zy
+ qvXoMSa1GgyX6R/KwqKdtZGsZejD/LrKpLnR5pkTNomFt944oB/BskFQs9LxTOeTugEjHWtOj
+ 4iSbjaQNd/kS0+YiQGiLAKD4anAPvUVGH4QjK1B2xrdgWEwI05bzFwx5E1flKXczVZAYjh53O
+ Jb91rBL5tflxFuUj0oyXuS6Q6Gk6iMP5TXxzSG+jcC4UrqvlWV9IL9qWe/PY=
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQG1h2GfhZDeVN3ik89S7UEhF7jkegHN4Q6Up6KnSLA=
-Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-From: Philip Oakley <philipoakley@iee.email>=20
-Sent: Monday, October 28, 2019 3:14 AM
-To: lyle.ziegelmiller@gmail.com; 'git bug report' <git@vger.kernel.org>
-Subject: Re: unpacking error
+On Mon, 28 Oct 2019, Junio C Hamano wrote:
 
-Hi Philip.
-
-Thanks for writing back. Please see below.
-
-Regards
-
-Lyle=20
-
-On 28/10/2019 00:11, lyle.ziegelmiller@gmail.com wrote:
-> Hi
+> dev@kipras.org writes:
 >
-> I almost always get this error when pushing from my PC to the bare=20
-> repository on my laptop. I'm running Cygwin on Windows 10. I've tried=20
-> everything! chmod -R 777, chown -R <my user id>, etc.
+> > Would it be possible for `git stash create` to include untracked
+> > changes (probably the same way `git stash push --include-untracked`
+> > does)?
 >
-> A few more details: I have a Git repository on my PC, and from that,=20
-> I've cloned a bare repository on my laptop,
-
-[Philip] "How did you clone that bare repository? In particular, how did =
-you provide the path to that repo."
-
-I'm recreating the entire process below with a smaller repository on my =
-PC (so it won't take hours to clone, etc):
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$ git clone --bare . =
-//lylez-laptop/Users/Administrator/bare-repositories/budget-bare-reposito=
-ry.git
-Cloning into bare repository =
-'//lylez-laptop/Users/Administrator/bare-repositories/budget-bare-reposit=
-ory.git'...
-done.
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$ echo "line1" > afile.txt
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$ git add afile.txt
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$ git commit -m 'Added afile.txt'
-[master 7fa616b] Added afile.txt
- 1 file changed, 1 insertion(+)
- create mode 100644 afile.txt
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$ git push
-Counting objects: 3, done.
-Delta compression using up to 4 threads.
-Compressing objects: 100% (2/2), done.
-Writing objects: 100% (3/3), 287 bytes | 287.00 KiB/s, done.
-Total 3 (delta 1), reused 0 (delta 0)
-remote: fatal: not a git repository: '.'
-error: remote unpack failed: unpack-objects abnormal exit
-To =
-//lylez-laptop/Users/Administrator/bare-repositories/budget-bare-reposito=
-ry.git
- ! [remote rejected] master -> master (unpacker error)
-error: failed to push some refs to =
-'//lylez-laptop/Users/Administrator/bare-repositories/budget-bare-reposit=
-ory.git'
-
-Note: I'm able to access the remote repository using Cygwin Unix =
-commands on Windows 10:
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$ ls =
-//lylez-laptop/Users/Administrator/bare-repositories/budget-bare-reposito=
-ry.git
-config  description  HEAD  hooks  info  objects  packed-refs  refs
-
-... and I do have write permission:
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$ touch =
-//lylez-laptop/Users/Administrator/bare-repositories/budget-bare-reposito=
-ry.git/anotherFile.txt
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$ echo "line2" >> =
-//lylez-laptop/Users/Administrator/bare-repositories/budget-bare-reposito=
-ry.git/anotherFile.txt
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$ git remote -v
-origin  =
-//lylez-laptop/Users/Administrator/bare-repositories/budget-bare-reposito=
-ry.git (fetch)
-origin  =
-//lylez-laptop/Users/Administrator/bare-repositories/budget-bare-reposito=
-ry.git (push)
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$
-
-So, I can clone the repository, and I can still write to the remote =
-directory using the "touch" and "echo" commands. But I can't push to it. =
-It seems that "clone" can access (create, actually) the remote =
-repository, but "push" cannot access it effectively.
-
-[Philip] "If I understand correctly it must be in a URL format (e.g. =
-file://) to ensure that you get distinct repos, rather than two =
-interrelated repos (thought the docs discuss the issue as being the =
-transport mechanism)."
-
-"file://" is for referring to a local file from within a web browser. =
-"//" is how to begin a path of a file on a remote machine in Windows.
-
-After doing all of this, I created another test file on my laptop =
-(filename: afile2.txt) in the repository on my laptop made by cloning =
-the bare repository that I just created on my laptop, and added the test =
-file afile2.txt to the cloned non-bare git repository, and then did a =
-"git push" on my laptop (the remote machine) to the bare repository on =
-my laptop (the remote machine). Then, back on my PC, I was able to do a =
-git pull even though earlier I could not do a git push:
-
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$ git pull
-remote: Counting objects: 3, done.
-remote: Compressing objects: 100% (2/2), done.
-remote: Total 3 (delta 1), reused 0 (delta 0)
-Unpacking objects: 100% (3/3), done.
-From =
-//lylez-laptop/Users/Administrator/bare-repositories/budget-bare-reposito=
-ry
- + e9d5a3c...cd21f1d master     -> origin/master  (forced update)
-Merge made by the 'recursive' strategy.
- afile2.txt | 1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 afile2.txt
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$ ls
-afile.txt  afile2.txt  backup  Budget.xlsx  Joanne  Scotland.xlsx
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-
-
-And there it is, the new file (afile2.txt).
-
-So Git is able to utilize the remote bare repository for cloning on the =
-remote machine, and on the local machine (my PC) it can pull from the =
-remote bare repository, but it can't push to it.
-
-[Philip] "The same issue probably applies to the subsequent clones of =
-the bare repo."
-
-[Philip] "Perhaps focus on the error message and decide if "." is the =
-correct way of thinking about the path."
-
-"." is the local directory on my PC that was initially cloned. It is =
-where the Git repository reside:
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-$ ls -a
-.  ..  .git  afile.txt  afile2.txt  backup  Budget.xlsx  Joanne  =
-Scotland.xlsx
-
-lylez@LJZ-DELLPC /cygdrive/c/Users/lyle/documents/budget
-
->   which I then used to clone a regular repository on my laptop. The=20
-> error occurs when I attempt to push changes on my PC into the bare=20
-> repository on my laptop.
+> Doesn't the subcommand have -u/--include-untracked option?
 >
-> If I delete the old bare repository on my laptop, I'm able to create a =
-
-> new bare repository on my laptop from my pc, but then as soon as I try =
-
-> to push to it, I get this error again. I've tried disabling the =
-anti-virus, etc.
-> I've spent hours Googling solutions. Nothing works! Many others have=20
-> had this same issue. I never had this type of problem with SVN.
+> ... goes and looks git-stash.sh ...
 >
-> It would be nice if Git would say what's failing when this happens,=20
-> and it would be nice to get this bug fixed. It happens with all my git =
+> create_stash () {
 
-> repositories. I don't think it's a network issue or I wouldn't be able =
+Careful, this is a false friend. It _is_ work horse of `git stash
+create`, but not _quite_ in the way you think:
 
-> to create a new repository on my laptop from my PC, as that would=20
-> encounter the same permissions issues.
->
-> The two machines are connected with an ethernet cable. I've done=20
-> everything I can to make sure all the Windows permissions are set =
-correctly, etc.
->
-> $ git push
-> Counting objects: 3, done.
-> Delta compression using up to 4 threads.
-> Compressing objects: 100% (3/3), done.
-> Writing objects: 100% (3/3), 331 bytes | 331.00 KiB/s, done.
-> Total 3 (delta 2), reused 0 (delta 0)
+=2D- snap --
+create)
+	shift
+	create_stash -m "$*" && echo "$w_commit"
+	;;
+=2D- snap --
 
-> remote: fatal: not a git repository: '.'
-[Philip] "Why is the remote end of the connection reporting the error =
-that it is looking at "." (as opposed to a proper path/repo)?"
+So what is the reason for the existence of this command-line parsing:
 
-I'm not sure. I cloned ".". I think that's a legitimate thing to do.
+>
+> 	prepare_fallback_ident
+>
+> 	stash_msg=3D
+> 	untracked=3D
+> 	while test $# !=3D 0
+> 	do
+> 		case "$1" in
+> 		-m|--message)
+> 			...
+> 			;;
+> 		-u|--include-untracked)
+> 			shift
+> 			untracked=3D${1?"BUG: create_stash () -u requires an argument"}
+> 			;;
+> 		...
+> 	done
+> 	...
 
-All this stuff has worked for me for years. I'm not sure why it's =
-stopped working.
+Why, `push_stash` calls `create_stash` ;-)
 
-[Philip] "I could easily be wrong - I haven't double checked the man =
-pages at all, but thought a comment may help your research."
-> error: remote unpack failed: unpack-objects abnormal exit To=20
-> //lylez-laptop/Users/Administrator/bare-repositories/Tradelab-bare-rep
-> ositor
-> y.git/
->   ! [remote rejected] timestamp_testing -> timestamp_testing (unpacker =
+=2D- snip --
+push_stash () {
+	[...]
+        untracked=3D
+	[...]
+                -u|--include-untracked)
+			untracked=3Duntracked
+			;;
+	[...]
+        create_stash -m "$stash_msg" -u "$untracked" -- "$@"
+	[...]
+=2D- snap --
 
-> error)
-> error: failed to push some refs to
-> '//lylez-laptop/Users/Administrator/bare-repositories/Tradelab-bare-re
-> posito
-> ry.git/'
->
->
-> $ git --version
-> git version 2.17.0
->
-> ------------------
-> System Information
-> ------------------
->        Time of this report: 10/27/2019, 16:53:09
->               Machine name: LJZ-DELLPC
->                 Machine Id: {39BC0826-743F-4ECA-AFBE-66A14FBE533C}
->           Operating System: Windows 10 Pro 64-bit (10.0, Build 17134)
-> (17134.rs4_release.180410-1804)
->                   Language: English (Regional Setting: English)
->        System Manufacturer: Dell Inc.
->               System Model: Inspiron 3650
->                       BIOS: BIOS Date: 06/17/16 21:14:07 Ver: 05.0000B =
-(type:
-> BIOS)
->                  Processor: Intel(R) Core(TM) i5-6400 CPU @ 2.70GHz (4 =
+So the reason that `git stash create -u ...` does not work is that it
+never was designed to work ;-)
 
-> CPUs), ~2.7GHz
->                     Memory: 8192MB RAM
->        Available OS Memory: 8096MB RAM
->                  Page File: 8076MB used, 7243MB available
->                Windows Dir: C:\WINDOWS
->            DirectX Version: DirectX 12
->        DX Setup Parameters: Not found
->           User DPI Setting: 96 DPI (100 percent)
->         System DPI Setting: 96 DPI (100 percent)
->            DWM DPI Scaling: Disabled
->                   Miracast: Available, with HDCP Microsoft Graphics =
-Hybrid:
-> Not Supported
->             DxDiag Version: 10.00.17134.0001 64bit Unicode
+> It is entirely possible that with recent push to rewrite scripted
+> Porcelain commands to builtin/, we may have lost a feature or two
+> by accident.
 >
+>   ... goes and checks ...
 >
-> Regards,
+> And it does appear that builtin/stash.c::create_stash() lacks
+> support for command line arguments since d4788af8 ("stash: convert
+> create to builtin", 2019-02-25).
 >
-> Lyle Ziegelmiller
+> Would doing
 >
+> 	export GIT_TEST_STASH_USE_BUILTIN=3Dno
 >
---
-Philip
+> or
+>
+> 	git config --global stash.usebuiltin no
+>
+> help in the meantime???
 
+Well, given this code in `builtin/stash.c`, I would imagine that `git
+stash push -u ...` works both in the legacy and the built-in version of
+`git stash`:
 
+=2D- snip --
+static int push_stash(int argc, const char **argv, const char *prefix)
+{
+	int keep_index =3D -1;
+	int patch_mode =3D 0;
+	int include_untracked =3D 0;
+	int quiet =3D 0;
+	const char *stash_msg =3D NULL;
+	struct pathspec ps;
+	struct option options[] =3D {
+		OPT_BOOL('k', "keep-index", &keep_index,
+			 N_("keep index")),
+		OPT_BOOL('p', "patch", &patch_mode,
+			 N_("stash in patch mode")),
+		OPT__QUIET(&quiet, N_("quiet mode")),
+		OPT_BOOL('u', "include-untracked", &include_untracked,
+			 N_("include untracked files in stash")),
+		OPT_SET_INT('a', "all", &include_untracked,
+			    N_("include ignore files"), 2),
+		OPT_STRING('m', "message", &stash_msg, N_("message"),
+			   N_("stash message")),
+		OPT_END()
+	};
+
+	if (argc)
+		argc =3D parse_options(argc, argv, prefix, options,
+				     git_stash_push_usage,
+				     0);
+
+	parse_pathspec(&ps, 0, PATHSPEC_PREFER_FULL | PATHSPEC_PREFIX_ORIGIN,
+		       prefix, argv);
+	return do_push_stash(&ps, stash_msg, quiet, keep_index, patch_mode,
+			     include_untracked);
+}
+=2D- snap --
+
+So why does `git stash create -u ...` not work? Because the original
+design of `git stash create` never intended to take any command-line
+arguments other than the stash message. And that design can obviously
+not be fixed without breaking backwards compatibility.
+
+What we _could_ do is to add a new command-line option to `git stash
+push` that would make it behave like the `create` subsubcommand: _not_
+update the `refs/stash` ref but instead print the commit hash.
+
+I am not quite sure how to call this option (`--ephemeral` came to my
+mind, as the created commit is not reachable from anywhere and is hence
+subject to garbage collection).
+
+A completely different approach would be to allow overriding the ref to
+store the stash in, with an empty value triggering the mode where the
+ref is not updated but the commit hash would be printed instead. I am
+thinking of something like `git stash -r '' push ...`, starting with
+this patch:
+
+=2D- snip --
+diff --git a/builtin/stash.c b/builtin/stash.c
+index bb4f6d8d762..43b0a155b1d 100644
+=2D-- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1553,6 +1553,8 @@ int cmd_stash(int argc, const char **argv, const cha=
+r *prefix)
+ 	struct argv_array args =3D ARGV_ARRAY_INIT;
+
+ 	struct option options[] =3D {
++		OPT_STRING('r', "ref", &ref_stash, N_("ref"),
++			   N_("override `refs/stash`")),
+ 		OPT_END()
+ 	};
+
+=2D- snap --
+
+The biggest trick will be to make all the code paths safe that assume
+that `ref_stash` refers to a valid ref ;-)
+
+Ciao,
+Dscho
