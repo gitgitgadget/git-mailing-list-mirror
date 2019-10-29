@@ -2,250 +2,279 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 655961F4C1
-	for <e@80x24.org>; Tue, 29 Oct 2019 23:52:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C03301F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 23:57:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726347AbfJ2Xwy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 19:52:54 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:39300 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725974AbfJ2Xwy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 19:52:54 -0400
-Received: by mail-qt1-f193.google.com with SMTP id t8so724736qtc.6
-        for <git@vger.kernel.org>; Tue, 29 Oct 2019 16:52:48 -0700 (PDT)
+        id S1726135AbfJ2X5n (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 19:57:43 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:44266 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725974AbfJ2X5m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 19:57:42 -0400
+Received: by mail-pg1-f193.google.com with SMTP id e10so179890pgd.11
+        for <git@vger.kernel.org>; Tue, 29 Oct 2019 16:57:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=deltaq.org; s=deltaq;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Lga3K07bB/OBNGgdI7slHDsPzdO/K1V18GZW4VHcl1s=;
-        b=QXHRJ8wDh7f4z5s0XL2yg8vbwRD+vut+Ai54gTqdJSIiEtjlVOan2KgEY6T9c0G3a8
-         NYaxLlorGP4noV8YvVYohVz7XBEXHnWNJ07lSss7Y/JMHKjSsy6Nn/iLdAXGIwGiuQ4O
-         1dTEEiNZG3vg34SGRXun1xmWMpR1uoMdxeSuQ=
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=lW1xECIMtVR1TASOvQBfeqjJMLXeC+94oukf5DGAWh4=;
+        b=FGm8ht0g2nIqpyflJhF/ai8bNc+PvLcGrt9p4Fy8E/wtV9/1u4KVQVGTLUiNeOcvMO
+         S9CDZ2pCqRhv5Zi29qBLIA5ZrZ0qRpuPu5JzA4pJ8B+JQcK8hHOsejc/M1DTWH31TjbK
+         FRxrx0VkXRB03Qb1jkKZ8pjdzNjCitEr0f2pwnZuF/273V18MNgGU/d5d5TBO4EwH/FJ
+         S4lCacyXw9b8oQvbzSZSwm3q+eZrIT1ilG57hLvlb8QDz+7QAdJdQt60ou+7ejZ2MeX5
+         qX/UIZPp0bp06P/vzF0JJGjzJ6RY0+j8hIX4Rv/glsho3/RvJMUZ8Xlq03S9EY3oqwnm
+         tv/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Lga3K07bB/OBNGgdI7slHDsPzdO/K1V18GZW4VHcl1s=;
-        b=ZkmYUBnb017dLROVFp22bp3jY7IdkZ4+FnvjaRsD8lR3dZ/6tO5sIYv+q4GqEyA1Y+
-         h5z2WbBtX6QvSDPPhWDQhEYCO+CI6PGsSaWgwkt8ufhaOAN4fhBUOTWZGfoPmqMK4BDS
-         ekXJ14AOfEf1DUN5RUqBtLcdDC+AafUUtqNEDzEHws234vsFHlaADF1aYpQqixpVe71Y
-         k+s4TYD4eGKAgR9xH3FJ6u1cuUZwvny+7uXb4ZQiddQewHHlkk9CE/YuJyxw9onzr04G
-         DJzqGiHfoF531CtLEBjS2+1QSE6L3+jwztB4OJY0SLcVajRjCjcOfQKrYjKXP509XiG1
-         K8BA==
-X-Gm-Message-State: APjAAAUkwGHhYDo241ocBLlzCZf2glzmgtzHEJRlwyNTEJnG4t/elh/Z
-        J5TVb2UPDIJDsP9sQKlXaBQl7te3MowocliJjndikg==
-X-Google-Smtp-Source: APXvYqxBKcgp7OPj6ldyKRwnzppceu7k3PGuEtjws9COhDTjbJLeD9EjJwIbjl0jTktUhIjkNoU6uEn/wt2yFgiVUB4=
-X-Received: by 2002:ac8:6a04:: with SMTP id t4mr2106034qtr.37.1572393167281;
- Tue, 29 Oct 2019 16:52:47 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=lW1xECIMtVR1TASOvQBfeqjJMLXeC+94oukf5DGAWh4=;
+        b=D/K7/95jhvMbqwSZbIeAanyHFeakREoanIx+rFDaR2BZDq17n8HmP+MUr0LQRV8mAM
+         ubTlKpPCMwNEGrUcO7eNHhKoiXLv5PFlXGhjC74D+bo5fSe+jxrvCfSNBmnc3odOvIOf
+         zoiKLMywKKNS5MZET0kFgCnSQhWlmDAdPzmv9QafsnyQognZV15fwc1uuWLhMt8zsN8+
+         mNeXSVXtZdGfHpgDveQlGydx17Ixbi+GslBs1l5gijqFMc+t8KGHJ06RGkBRiE8Ma6tx
+         SCXE51tfMyDKFT3yUmN+BrsRypjznEcu1A10HwYcUBLoae7FxyZRlwbIe2/LZw7Bg7eC
+         SoGQ==
+X-Gm-Message-State: APjAAAUwtAa2RBwITfyneJWwS129oWxaMIX5pF/rZgPJhCQeoB+viaCK
+        Gz/y4zI6xKvqd+GvzL5oipcjKg==
+X-Google-Smtp-Source: APXvYqwKSKHKaMlCS2I34yk6QIYbmMTom/VVbUAv7WM6l+YzdQmMrIGhbDVfl8ZwkXcLSt6y04QoRQ==
+X-Received: by 2002:a62:3387:: with SMTP id z129mr29100584pfz.253.1572393461096;
+        Tue, 29 Oct 2019 16:57:41 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id o123sm229594pfg.161.2019.10.29.16.57.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Oct 2019 16:57:40 -0700 (PDT)
+Date:   Tue, 29 Oct 2019 16:57:36 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 09/10] revision: move doc to revision.h
+Message-ID: <20191029235736.GB229589@google.com>
+References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
+ <afab6d5f4ed8cbe8e6dcba9a50282a471b542b13.1572343246.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <pull.423.git.1572289087.gitgitgadget@gmail.com>
- <56faba848676ffc5441f373bc2105392fc2a3e11.1572289087.git.gitgitgadget@gmail.com>
- <20191029212734.luledidagh7dnx5y@yadavpratyush.com>
-In-Reply-To: <20191029212734.luledidagh7dnx5y@yadavpratyush.com>
-From:   Jonathan Gilbert <logic@deltaq.org>
-Date:   Tue, 29 Oct 2019 18:52:25 -0500
-Message-ID: <CAPSOpYs7GX6Sg-rYCbhs-s8cTCLkUV=tsfx-JBQhCTP=nSr0_g@mail.gmail.com>
-Subject: Re: [PATCH 1/1] git-gui: Revert untracked files by deleting them
-To:     "Pratyush Yadav me-at-yadavpratyush.com |GitHub Public/Example Allow|" 
-        <172q77k4bxwj0zt@sneakemail.com>
-Cc:     Jonathan Gilbert via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Gilbert <JonathanG@iqmetrix.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <afab6d5f4ed8cbe8e6dcba9a50282a471b542b13.1572343246.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the reply :-)
+On Tue, Oct 29, 2019 at 10:00:45AM +0000, Heba Waly via GitGitGadget wrote:
+> From: Heba Waly <heba.waly@gmail.com>
+> 
+> Move the documentation from Documentation/technical/api-revision-walking.txt
+> to revision.h as it's easier for the developers to find the usage
+> information beside the code instead of looking for it in another doc file.
+> 
+> Also documentation/technical/api-revision-walking.txt is removed because the
+> information it has is now redundant and it'll be hard to keep it up to
+> date and synchronized with the documentation in the header file.
 
-> While git-gui is distributed in the main Git tree, the development
-> happens on a separate repo, and the Git maintainer periodically pulls in
-> changes from that repo. It can be found at [0]. For now, I munged your
-> patch to apply on my tree, but please base it on the git-gui repo for
-> your re-rolls or future patches. You can use GitGitGadget to do that
-> [1].
+This commit looks nice to me.
 
-Alright :-)
+It also looks like new work for me to update
+Documentation/MyFirstObjectWalk.txt to reflect this when it's merged
+later :)
 
-> Now, on to the patch.
->
-> On 28/10/19 06:58PM, Jonathan Gilbert via GitGitGadget wrote:
-> > From: Jonathan Gilbert <JonathanG@iQmetrix.com>
-> >
-> > My development environment sometimes makes automatic changes
-> > that I don't want to keep. In some cases, this involves new
-> > files being added that I don't want to commit or keep. I have
-> > typically had to explicitly delete those files externally to
-> > Git Gui, and I want to be able to just select those newly-
-> > created untracked files and "revert" them into oblivion.
->
-> I think the description of your workflow belongs in the cover letter
-> more than here. The commit message should take a more neutral tone. So,
-> describe the problem in an objective way that not only you, but other
-> git-gui users might face.
+Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
 
-That's totally fair, I was sort of shooting in the dark since this is
-the first such patch I have made. I will reword the commit message.
-
-> > +     # If an action is taken that implicitly unlocks the index, this gets cleared. Either way, it is executed at the end of the procedure.
->
-> The convention is to wrap lines at 80 columns wherever possible. Please
-> follow that. You can look at the rest of the code for examples.
->
-> You have other lines too that are too long. The same comment applies to
-> all those.
-
-Roger.
-
-> > +     set epilogue [list]
-> > +     lappend epilogue {unlock_index}
-> > +
-> > +     proc already_unlocked {} { upvar epilogue epilogue; set epilogue [lsearch -inline -all -not -exact $epilogue {unlock_index}] }
->
-> A procedure defined inside a procedure? Please don't do that. Define it
-> outside.
->
-> Also, what is this procedure supposed to do? It is not very clear at
-> first read.
-
-The name could probably be improved, but this procedure can't live
-outside of the outer proc because it is lexically tied to it. It takes
-an action on state that is in a local variable. If it's flat-out
-disallowed to use a proc to abstract this, then every place that wants
-to indicate that the repository is already unlocked and doesn't need
-to be explicitly unlocked in the epilogue will have to repeat the code
-inside the proc.
-
-This becomes a non-issue if I rework the function so that it doesn't
-end with a dynamic epilogue (see below).
-
-> > +
-> >       set pathList [list]
-> > +     set untrackedList [list]
->
-> Nitpick: Ugh! camelCase in a sea of snake_cases. What's even more
-> unfortunate is that `pathList` itself is in camelCase, so that's
-> probably the reason you went with camelCase in the first place. Maybe
-> re-name `pathList` to `path_list` while we're at it, and then use
-> snake_case everywhere?
-
-Absolutely, yeah I was just copying what I already saw there, but I'm
-all in favour of consistency. :-)
-
-> > +     set numPaths [llength $pathList]
-> > +     set numUntracked [llength $untrackedList]
-
-Will fix this too.
-
-> > +                                     try {
-> > +                                             file delete -- $path
-> > +                                     }
-> > +                                     catch {
-> > +                                             # This is just a best effort, don't annoy the user with failure to remove empty directories.
-> > +                                             break
-> > +                                     }
->
-> The convention in this project is to just use `catch`, and not try. So
-> something like:
->
->   catch {file delete -- $path}
-
-I'm not super familiar with TCL, where does the `break` statement fit into this?
-
-I did a Google search and saw that catch returns a value that you can
-inspect, would I write this?:
-```
-if { [catch {file delete -- $path}] } {
-  break
-}
-```
-
-> > +                                     set path $directoryPath
-> > +                                     set directoryPath [file dirname $path]
->
-> I read this loop as "if all the paths in a directory are removed, remove
-> the empty directory as well". Do I read correctly?
->
-> Will there be problems in deleting the directory? What if the user wants
-> to keep the directory, and just delete the files? Is that even a valid
-> use-case?
-
-Well, Git itself doesn't keep empty directories. As such, I wrote the
-code with an (undocumented) assumption that if there is a directory
-that contains only a single untracked file, then the directory was
-probably created to put the file in it.
-
-> > +                             }
-> > +                     }
-> > +
-> > +                     lappend epilogue {ui_do_rescan}
->
-> A rescan is an expensive operation, so we should use it judiciously. Are
-> you sure it is really needed? The "Revert" code does not do a rescan but
-> still manages to update the list of "unstaged files". How does it manage
-> that? Can the new code do something similar?
-
-I'll look into it, but I'm assuming it's happening as part of `checkout_index`.
-
-> > +             }
-> >       }
-> > +
-> > +     foreach epilogueCommand $epilogue { {*}$epilogueCommand }
->
-> Why not use `eval` [2]? Are there any downsides to that compared to your
-> way? If not, use `eval`. At least it means better readability if nothing
-> else.
-
-I wrote some TCL over a decade ago for Eggdrop bot scripts, and
-haven't touched it until now, so my ambient knowledge of TCL is quite
-limited. I'll look into how to use `eval` for this. :-)
-
-> As far as I see, you use $epilogue for two things: unlocking the index
-> and rescanning. Can you move the control flow around that both can be
-> done in the "normal" way. That is, they are not a part of a list of
-> things to do at the end, but instead are done when needed. For example,
-> just move the call to `unlock_index` at the end instead of putting it in
-> epilogue. Can the same be done for `ui_do_rescan` (if you do go with a
-> rescan instead of doing it like the existing revert does)?
-
-Well, `unlock_index` will presumably throw an error if
-`checkout_index` gets called, but `checkout_index` only gets called if
-the scan finds tracked files with changes _and_ the user opts to
-revert them.
-
-Similarly, `ui_do_rescan` wants to be done exactly once at the end,
-but only if the scan finds untracked files _and_ the user opts to
-delete them.
-
-An alternative to the epilogue could be two booleans
-`need_unlock_index` that starts out true and `need_rescan` that starts
-out false, and then the function's epilogue, instead of being dynamic,
-just checks the booleans and does the things.
-
-> >  }
-> >
-> >  proc do_revert_selection {} {
->
-> While I appreciate the idea of such a feature, I'm surprised by how
-> complex the implementation is. I expected something much simpler. The
-> complexity can probably be managed a bit better by moving the control
-> flow around.
->
-> I couldn't dive in the code as deep as I wanted to because I don't have
-> too much time on my hands. But maybe I'll look further by the time your
-> re-roll arrives. Thanks.
->
-> [0] https://github.com/prati0100/git-gui
-> [1] https://github.com/prati0100/git-gui#using-gitgitgadget
-> [2] https://www.tcl.tk/man/tcl8.6/TclCmd/eval.htm
->
-> --
-> Regards,
-> Pratyush Yadav
+> 
+> Signed-off-by: Heba Waly <heba.waly@gmail.com>
+> ---
+>  .../technical/api-revision-walking.txt        | 72 -------------------
+>  revision.h                                    | 59 +++++++++++++++
+>  2 files changed, 59 insertions(+), 72 deletions(-)
+>  delete mode 100644 Documentation/technical/api-revision-walking.txt
+> 
+> diff --git a/Documentation/technical/api-revision-walking.txt b/Documentation/technical/api-revision-walking.txt
+> deleted file mode 100644
+> index 03f9ea6ac4..0000000000
+> --- a/Documentation/technical/api-revision-walking.txt
+> +++ /dev/null
+> @@ -1,72 +0,0 @@
+> -revision walking API
+> -====================
+> -
+> -The revision walking API offers functions to build a list of revisions
+> -and then iterate over that list.
+> -
+> -Calling sequence
+> -----------------
+> -
+> -The walking API has a given calling sequence: first you need to
+> -initialize a rev_info structure, then add revisions to control what kind
+> -of revision list do you want to get, finally you can iterate over the
+> -revision list.
+> -
+> -Functions
+> ----------
+> -
+> -`repo_init_revisions`::
+> -
+> -	Initialize a rev_info structure with default values. The third
+> -	parameter may be NULL or can be prefix path, and then the `.prefix`
+> -	variable will be set to it. This is typically the first function you
+> -	want to call when you want to deal with a revision list. After calling
+> -	this function, you are free to customize options, like set
+> -	`.ignore_merges` to 0 if you don't want to ignore merges, and so on. See
+> -	`revision.h` for a complete list of available options.
+> -
+> -`add_pending_object`::
+> -
+> -	This function can be used if you want to add commit objects as revision
+> -	information. You can use the `UNINTERESTING` object flag to indicate if
+> -	you want to include or exclude the given commit (and commits reachable
+> -	from the given commit) from the revision list.
+> -+
+> -NOTE: If you have the commits as a string list then you probably want to
+> -use setup_revisions(), instead of parsing each string and using this
+> -function.
+> -
+> -`setup_revisions`::
+> -
+> -	Parse revision information, filling in the `rev_info` structure, and
+> -	removing the used arguments from the argument list. Returns the number
+> -	of arguments left that weren't recognized, which are also moved to the
+> -	head of the argument list. The last parameter is used in case no
+> -	parameter given by the first two arguments.
+> -
+> -`prepare_revision_walk`::
+> -
+> -	Prepares the rev_info structure for a walk. You should check if it
+> -	returns any error (non-zero return code) and if it does not, you can
+> -	start using get_revision() to do the iteration.
+> -
+> -`get_revision`::
+> -
+> -	Takes a pointer to a `rev_info` structure and iterates over it,
+> -	returning a `struct commit *` each time you call it. The end of the
+> -	revision list is indicated by returning a NULL pointer.
+> -
+> -`reset_revision_walk`::
+> -
+> -	Reset the flags used by the revision walking api. You can use
+> -	this to do multiple sequential revision walks.
+> -
+> -Data structures
+> ----------------
+> -
+> -Talk about <revision.h>, things like:
+> -
+> -* two diff_options, one for path limiting, another for output;
+> -* remaining functions;
+> -
+> -(Linus, JC, Dscho)
+> diff --git a/revision.h b/revision.h
+> index 4134dc6029..983ffc0f12 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -9,6 +9,19 @@
+>  #include "diff.h"
+>  #include "commit-slab-decl.h"
+>  
+> +/**
+> + * The revision walking API offers functions to build a list of revisions
+> + * and then iterate over that list.
+> + *
+> + * Calling sequence
+> + * ----------------
+> + *
+> + * The walking API has a given calling sequence: first you need to initialize
+> + * a rev_info structure, then add revisions to control what kind of revision
+> + * list do you want to get, finally you can iterate over the revision list.
+> + *
+> + */
+> +
+>  /* Remember to update object flag allocation in object.h */
+>  #define SEEN		(1u<<0)
+>  #define UNINTERESTING   (1u<<1)
+> @@ -306,11 +319,29 @@ struct setup_revision_opt {
+>  #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
+>  #define init_revisions(revs, prefix) repo_init_revisions(the_repository, revs, prefix)
+>  #endif
+> +
+> +/**
+> + * Initialize a rev_info structure with default values. The third parameter may
+> + * be NULL or can be prefix path, and then the `.prefix` variable will be set
+> + * to it. This is typically the first function you want to call when you want
+> + * to deal with a revision list. After calling this function, you are free to
+> + * customize options, like set `.ignore_merges` to 0 if you don't want to
+> + * ignore merges, and so on.
+> + */
+>  void repo_init_revisions(struct repository *r,
+>  			 struct rev_info *revs,
+>  			 const char *prefix);
+> +
+> +/**
+> + * Parse revision information, filling in the `rev_info` structure, and
+> + * removing the used arguments from the argument list. Returns the number
+> + * of arguments left that weren't recognized, which are also moved to the
+> + * head of the argument list. The last parameter is used in case no
+> + * parameter given by the first two arguments.
+> + */
+>  int setup_revisions(int argc, const char **argv, struct rev_info *revs,
+>  		    struct setup_revision_opt *);
+> +
+>  void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+>  			const struct option *options,
+>  			const char * const usagestr[]);
+> @@ -319,9 +350,26 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+>  int handle_revision_arg(const char *arg, struct rev_info *revs,
+>  			int flags, unsigned revarg_opt);
+>  
+> +/**
+> + * Reset the flags used by the revision walking api. You can use this to do
+> + * multiple sequential revision walks.
+> + */
+>  void reset_revision_walk(void);
+> +
+> +/**
+> + * Prepares the rev_info structure for a walk. You should check if it returns
+> + * any error (non-zero return code) and if it does not, you can start using
+> + * get_revision() to do the iteration.
+> + */
+>  int prepare_revision_walk(struct rev_info *revs);
+> +
+> +/**
+> + * Takes a pointer to a `rev_info` structure and iterates over it, returning a
+> + * `struct commit *` each time you call it. The end of the revision list is
+> + * indicated by returning a NULL pointer.
+> + */
+>  struct commit *get_revision(struct rev_info *revs);
+> +
+>  char *get_revision_mark(const struct rev_info *revs,
+>  			const struct commit *commit);
+>  void put_revision_mark(const struct rev_info *revs,
+> @@ -333,8 +381,19 @@ void mark_trees_uninteresting_sparse(struct repository *r, struct oidset *trees)
+>  
+>  void show_object_with_name(FILE *, struct object *, const char *);
+>  
+> +/**
+> + * This function can be used if you want to add commit objects as revision
+> + * information. You can use the `UNINTERESTING` object flag to indicate if
+> + * you want to include or exclude the given commit (and commits reachable
+> + * from the given commit) from the revision list.
+> + *
+> + * NOTE: If you have the commits as a string list then you probably want to
+> + * use setup_revisions(), instead of parsing each string and using this
+> + * function.
+> + */
+>  void add_pending_object(struct rev_info *revs,
+>  			struct object *obj, const char *name);
+> +
+>  void add_pending_oid(struct rev_info *revs,
+>  		     const char *name, const struct object_id *oid,
+>  		     unsigned int flags);
+> -- 
+> gitgitgadget
+> 
