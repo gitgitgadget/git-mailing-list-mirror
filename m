@@ -2,198 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A0341F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 13:37:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 708331F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 13:49:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388791AbfJ2Nh6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 09:37:58 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:34012 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388578AbfJ2Nh5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 09:37:57 -0400
-Received: by mail-wm1-f67.google.com with SMTP id v3so2015301wmh.1
-        for <git@vger.kernel.org>; Tue, 29 Oct 2019 06:37:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=qsIrXDlMhYI1gdEM9wSsZmLuaEuDzDm3aUUF4qhfpz0=;
-        b=GR5TMjh17/Prybi2xnGe2fAClhOVt0QYMLj5Mnmxaw+aZZC9+2eiQcGUYFYBhorsFe
-         kcD31iTXjXhSwLjf293J3K15hoDxrJnL+P09yuMMtb5xExlXmnwYO5tjo9kbBYwMT0+k
-         Kyw8gzJLw27aVkuY/WrtMBybLAHBFNFS0jm4eMgCfPQto9tWjn1Q7dNNkEI7aMLywz81
-         Zs3Dg9OHuLQ2SoSpWNduEH6tn9X7dGrRCJnLrl1Xqd/ngcCNVu5iLNDfLJp46YBujbaI
-         DM6AvWbeI0z/LXG/rAGbvfdM8DWavqchDgRMZDErL3rJ++9Ujdz5IWrEHzK9jTYCyIJZ
-         1g8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=qsIrXDlMhYI1gdEM9wSsZmLuaEuDzDm3aUUF4qhfpz0=;
-        b=tryUNkbDpeMdglFFNKIzJYg4i8jsiR0J87g2m30rIEtrpRz4aysLPtx8oL9Y5cVHPO
-         g++E2TmzhIsfYcQlRIErMLOEUg9Dgmld8jSO/wthTvVWIBcYjOkbzmFbgnPhBgpM2FU/
-         ABrXIcCstMvniKeCWRLCi0odtNw7feiW84hDAXlBVuFgh8bT4u5v3D5CO52SiDyQo8HN
-         jL7QYPoCKR+yQs2sgkVye8QwvIuTOPrc4AZe91xcDFFqq00ILr+hwIp78amMvoJnhaFG
-         35372GC03U71xNb3N7iphat9BcAM68VvZNvMiJvb9kTTA31zI1/sit5bsGFQyxrF6MVK
-         gnXw==
-X-Gm-Message-State: APjAAAUv+k+ecEVV7AyeE4NXC1aTi4DdB/3C9o842e4m02fv+MRVRMKn
-        piUdj7xIGRP32ZOfbHI0VmT7HJ4V
-X-Google-Smtp-Source: APXvYqwG21XkttdMF4ja+gZLwEhsuiaZ2eWHu3WUtBUtv/KSCPVULn5546XRPr9a13tBjmn8P2MuNw==
-X-Received: by 2002:a1c:1d41:: with SMTP id d62mr4152657wmd.32.1572356273946;
-        Tue, 29 Oct 2019 06:37:53 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u21sm3239375wmu.27.2019.10.29.06.37.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Oct 2019 06:37:53 -0700 (PDT)
-Message-Id: <pull.428.v2.git.1572356272.gitgitgadget@gmail.com>
-In-Reply-To: <pull.428.git.1572274859.gitgitgadget@gmail.com>
+        id S2388780AbfJ2Ntd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 09:49:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:32870 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725776AbfJ2Ntd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 09:49:33 -0400
+Received: (qmail 31646 invoked by uid 109); 29 Oct 2019 13:49:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 29 Oct 2019 13:49:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9748 invoked by uid 111); 29 Oct 2019 13:52:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Oct 2019 09:52:41 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 29 Oct 2019 09:49:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Subject: Re: [PATCH 1/1] vreportf(): avoid buffered write in favor of
+ unbuffered one
+Message-ID: <20191029134932.GA2843@sigill.intra.peff.net>
 References: <pull.428.git.1572274859.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Oct 2019 13:37:51 +0000
-Subject: [PATCH v2 0/1]  Fix t5516 flakiness in Visual Studio builds
+ <455026ce3ef2b2d7cfecfc4b4bf5b588eebddcfe.1572274859.git.gitgitgadget@gmail.com>
+ <xmqqeeyw6xyr.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1910291222500.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1910291222500.46@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Among the flaky tests, it seems that the Azure Pipeline suffers relatively
-frequently from t5516 failing with the Visual Studio builds. Essentially, we
-grep for an error message, but that error message is produced twice, once by
-a fetch and once by the upload-pack spawned from it, and those error
-messages are usually interleaved because of MSVC runtime fprintf() 
-idiosyncracies. 
+On Tue, Oct 29, 2019 at 01:30:51PM +0100, Johannes Schindelin wrote:
 
-The commit message of this patch is based, in part, on 
-https://github.com/gitgitgadget/git/pull/407. The patch itself is a much
-more minimal alternative (using xwrite() instead of fprintf()) to the code
-of https://github.com/gitgitgadget/git/pull/407, avoiding the complexity of
-the part of the code that allows for unlimited messages.
+> > Also, this is only to help output from us that goes via vreportf() and
+> > other codepaths in us that use stdio to write to the standard error
+> > stream can still get mixed on Windows (I think the answer is yes,
+> > because we wouldn't need fflush() in this patch if we are covering all
+> > writes to the standard error stream)?
+> 
+> Yes, `write()` can get interrupted, so there is still a slight chance of
+> interleaving.
+> 
+> However, with `fprintf()`, apparently the MSVC runtime essentially
+> writes and flushes one character at a time, which will make it _much_
+> more likely that two competing processes write interleaved messages to
+> `stderr`.
 
-While it would seem theoretically more elegant to allow for unlimited
-messages, in practice too-long messages cause more problems than they solve,
-and therefore we already clip them, and this patch does not change that
-behavior.
+Wow, they have truly taken "unbuffered" to a whole new level.
 
-This fixes https://github.com/gitgitgadget/git/issues/240.
+I don't mind seeing this for all platforms, though. I can't think of any
+downside, and having one less moving part to contend with in our
+error-reporting code seems like a good thing.
 
-Changes since v1:
+> > > -	vsnprintf(msg, sizeof(msg), err, params);
+> > > +	size_t off = strlcpy(msg, prefix, sizeof(msg));
+> >
+> > Like snprintf(3) the strlcpy() and strlcat() functions return the
+> > total length of the string they tried to create.  For strlcpy() that
+> > means the length of src.
+> 
+> True (I misread `compat/strlcpy.c` and forgot to consult the
+> documentation). This length can be longer than `msg`, of course.
 
- * Changed the oneline to be more accurate (thanks Junio).
- * Improved the commit message (e.g. talking about the xwrite() function
-   this patch uses, rather than the write_in_full() function used by an
-   earlier iteration, thanks Gábor).
- * Revamped the actual code to account for insanely long prefixes (thanks
-   for the advice, Junio).
+I'd recommend xsnprintf() here. If we have a prefix longer than our
+vreportf() buffer, I think a BUG() is the right outcome.
 
-Johannes Schindelin (1):
-  vreportf(): avoid relying on stdio buffering
+> I `git grep`ed and saw that only very short `prefix`es are hard-coded.
+> So that is a hypothetical concern.
+> 
+> However, Alex also indicated his discomfort with this, so I will change
+> the code to account for a `prefix` that is too long (the entire error
+> message will be clipped away in that case, which is unfortunate, but to
+> be expected).
 
- usage.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+I'd disagree here. Any caller sending an arbitrarily-large prefix is
+holding it wrong, and we'd probably want to know as soon as possible
+(and a BUG() is our best bet there).
 
-
-base-commit: 566a1439f6f56c2171b8853ddbca0ad3f5098770
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-428%2Fdscho%2Ffix-t5516-flakiness-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-428/dscho/fix-t5516-flakiness-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/428
-
-Range-diff vs v1:
-
- 1:  455026ce3e ! 1:  e426627e14 vreportf(): avoid buffered write in favor of unbuffered one
-     @@ -1,6 +1,6 @@
-      Author: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-     -    vreportf(): avoid buffered write in favor of unbuffered one
-     +    vreportf(): avoid relying on stdio buffering
-      
-          The MSVC runtime behavior differs from glibc's with respect to
-          `fprintf(stderr, ...)` in that the former writes out the message
-     @@ -16,7 +16,9 @@
-          Let's avoid this predicament altogether by rendering the entire message,
-          including the prefix and the trailing newline, into the buffer we
-          already have (and which is still fixed size) and then write it out via
-     -    `write_in_full()`.
-     +    `xwrite()`.
-     +
-     +    We still clip the message to at most 4095 characters.
-      
-          The history of `vreportf()` with regard to this issue includes the
-          following commits:
-     @@ -36,39 +38,45 @@
-                                  so it's safe to use xwrite() again
-          5e5be9e2 (2016-06-28) - recv_sideband() uses xwrite() again
-      
-     -    Note that we need to be careful to handle the return value of
-     -    `vsnprintf()` that indicates the _desired_ byte count.
-     +    Note that we print nothing if the `vsnprintf()` call failed to render
-     +    the error message; There is little we can do in that case, and it should
-     +    not happen anyway.
-      
-          Also please note that we `fflush(stderr)` here to help when running in a
-          Git Bash on Windows: in this case, `stderr` is not actually truly
-          unbuffered, and needs the extra help.
-      
-     -    Co-authored-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-     +    Helped-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-     +    Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
-     +    Helped-by: Junio C Hamano <gitster@pobox.com>
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       diff --git a/usage.c b/usage.c
-       --- a/usage.c
-       +++ b/usage.c
-      @@
-     + void vreportf(const char *prefix, const char *err, va_list params)
-       {
-       	char msg[4096];
-     - 	char *p;
-     --
-     --	vsnprintf(msg, sizeof(msg), err, params);
-     +-	char *p;
-      +	size_t off = strlcpy(msg, prefix, sizeof(msg));
-     -+	int ret = vsnprintf(msg + off, sizeof(msg) - off, err, params);
-     - 	for (p = msg; *p; p++) {
-     ++	char *p, *pend = msg + sizeof(msg);
-     + 
-     +-	vsnprintf(msg, sizeof(msg), err, params);
-     +-	for (p = msg; *p; p++) {
-     ++	p = msg + off < pend ? msg + off : pend - 1;
-     ++	if (vsnprintf(p, pend - p, err, params) < 0)
-     ++		return; /* vsnprintf() failed, there is nothing we can do */
-     ++
-     ++	for (; p != pend - 1 && *p; p++) {
-       		if (iscntrl(*p) && *p != '\t' && *p != '\n')
-       			*p = '?';
-       	}
-      -	fprintf(stderr, "%s%s\n", prefix, msg);
-     -+	if (ret > 0) {
-     -+		if (off + ret > sizeof(msg) - 1)
-     -+			ret = sizeof(msg) - 1 - off;
-     -+		msg[off + ret] = '\n'; /* we no longer need a NUL */
-     -+		fflush(stderr);
-     -+		xwrite(2, msg, off + ret + 1);
-     -+	}
-     ++
-     ++	*(p++) = '\n'; /* we no longer need a NUL */
-     ++	fflush(stderr);
-     ++	xwrite(2, msg, p - msg);
-       }
-       
-       static NORETURN void usage_builtin(const char *err, va_list params)
-
--- 
-gitgitgadget
+-Peff
