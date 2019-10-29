@@ -2,97 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4A401F4C0
-	for <e@80x24.org>; Tue, 29 Oct 2019 16:44:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7D881F4C0
+	for <e@80x24.org>; Tue, 29 Oct 2019 16:54:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390630AbfJ2Qou (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Oct 2019 12:44:50 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54562 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390625AbfJ2Qou (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Oct 2019 12:44:50 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B685536FB4;
-        Tue, 29 Oct 2019 12:44:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ygPdjY70t+dIjhakOzkjPRX/m0E=; b=ZxD2/U
-        JQi59WVghtVcQ+UPc5m9cn+1DcV/9rwbSxdp1Ax3GeNJ4M5kRddEd88IDnGT7Fag
-        RdZxrlu7KYgUgg0FMNXSbW+NKfo8zmipetV9WCSS9coR6D/F3/Nn7VEhfS9PpMJk
-        oznAOl7K63Y83DgA7zjHfVehKno6L9MTah1ac=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BJEwiHAAIPBdZ5cG9aj/Nuqxj5SwM5QB
-        P5DiBQsbKHTTleuNsHZED3yAA50/aPq2FKWAvcXb+XErkJ4+9/pK28WkET31kZ6Y
-        mG7oTh5xGpD/ppcHiQlThAEAXdMxg8YHpxq8/+F6ipd1NtVCyZtNBRrGe+w093T8
-        IOiKqxfB9Hk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE38736FB3;
-        Tue, 29 Oct 2019 12:44:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 13E3736FAD;
-        Tue, 29 Oct 2019 12:44:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Subject: Re: [PATCH 1/1] vreportf(): avoid buffered write in favor of unbuffered one
-References: <pull.428.git.1572274859.gitgitgadget@gmail.com>
-        <455026ce3ef2b2d7cfecfc4b4bf5b588eebddcfe.1572274859.git.gitgitgadget@gmail.com>
-        <xmqqeeyw6xyr.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1910291222500.46@tvgsbejvaqbjf.bet>
-        <20191029134932.GA2843@sigill.intra.peff.net>
-Date:   Wed, 30 Oct 2019 01:44:48 +0900
-In-Reply-To: <20191029134932.GA2843@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 29 Oct 2019 09:49:32 -0400")
-Message-ID: <xmqqtv7r5wn3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2390595AbfJ2Qyg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Oct 2019 12:54:36 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39213 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390580AbfJ2Qyg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Oct 2019 12:54:36 -0400
+Received: by mail-pf1-f196.google.com with SMTP id v4so9990245pff.6
+        for <git@vger.kernel.org>; Tue, 29 Oct 2019 09:54:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=i9fAyAaIvZ+v1sIiOPoN9H0rLrbx0kCRyd+kDMXMeu0=;
+        b=P038VewfvizR/DCgzFsCIXPDsSQA6UJ5pTn1k+Our+jysORq06HE2PXBjpHTVByIRJ
+         iUFpEZvgKqA+5/Y2NQLqvtRYBRrC2aCPDiwoZfmECFQJJjtDK3TVgyqRBWeRS704s0Kh
+         OrfmVdLkMY48tLb4qZ2j37r2ZzxEl/6PcI1TWoLVAipV+6V3wbWcI+aUUMSPGqMEZaZ4
+         TmWIDS1jNghLiyX9wIDlJcjcHQ7R09yVC+W6vj1jFGgDv/2JzRTBxbdhrMC4LYjKmUOw
+         QHQRHpGKz4MZ21/cXi3mhtAKp6y4aUkv2oURgZyhL9J7sX4eRLVYEKSXSqZlf/XlLVJJ
+         KHdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=i9fAyAaIvZ+v1sIiOPoN9H0rLrbx0kCRyd+kDMXMeu0=;
+        b=nMJAK6qrVvrtq0EuVLejm9sAbmIxiC7cxGUmT3P040zFH+RXJXH2BjoaVZss4uBAEX
+         u21oE11AqsV13Zr9QctUcipf3yKpb9HLm6JJh1oQdBdE7b2d+quVDyD0p9xhF8UaENZ3
+         sapv2j20+UXCMHLXWmAq28au2fjAlNzogRcg0SKAeAQwQgn067C+q9uj6U4FWVpxVFNS
+         ZzP8Bca0+vPQo6pMRjNeBJNu/GeKmh64/FzstyeqDL4oHkmNcA07im5xdmge4Uylh6Ck
+         59mj9dI99Fowc5rEXz9/M/HBH0pvkNQ5r/6TOhjpLVDqaaeh00y0awIpkq0VwE2i0bu4
+         1DqA==
+X-Gm-Message-State: APjAAAUh2EMNeSTRft324fhgiA6yhHp2H5lTZ3deLNQxDAsiv/fQiRs2
+        o9vF7fZHXyeGwlfNeFfOER+PaXJJ
+X-Google-Smtp-Source: APXvYqwTf5DypMOS3rsCNPS8/RshjfuNQxULis3y/iKGsCL4E59VfxxxtJ+NOysnwmYIDOGA8gOezQ==
+X-Received: by 2002:a62:6d41:: with SMTP id i62mr29198068pfc.38.1572368075218;
+        Tue, 29 Oct 2019 09:54:35 -0700 (PDT)
+Received: from generichostname ([204.14.239.53])
+        by smtp.gmail.com with ESMTPSA id f15sm14482452pfd.141.2019.10.29.09.54.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Oct 2019 09:54:34 -0700 (PDT)
+Date:   Tue, 29 Oct 2019 09:54:32 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v2] git-diff.txt: document return code of `--no-index`
+Message-ID: <ed9f16c30a0f3852abaf0053d8c2b4a0ecd12f01.1572367897.git.liu.denton@gmail.com>
+References: <3f6d132663cacde01df68bfe88c6ef108cf6cf74.1572337045.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6BF261D0-FA6B-11E9-8009-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3f6d132663cacde01df68bfe88c6ef108cf6cf74.1572337045.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Within diff_no_index(), we have the following:
 
-> Wow, they have truly taken "unbuffered" to a whole new level.
->
-> I don't mind seeing this for all platforms, though. I can't think of any
-> downside, and having one less moving part to contend with in our
-> error-reporting code seems like a good thing.
+	revs->diffopt.flags.exit_with_status = 1;
 
-FWIW, it was my mistake to sound as if I was unhappy to see this
-done on all platforms.  As long as the end result is to reasonably
-buffer, I do not mind us (as opposed to the system library we
-sometimes cannot trust) being the one who implements the buffering.
+	...
 
-I very much prefer to see the same code run everywhere than #ifdef
-in this case.
+	/*
+	 * The return code for --no-index imitates diff(1):
+	 * 0 = no changes, 1 = changes, else error
+	 */
+	return diff_result_code(&revs->diffopt, 0);
 
-> I'd recommend xsnprintf() here. If we have a prefix longer than our
-> vreportf() buffer, I think a BUG() is the right outcome.
-> ...
-> I'd disagree here. Any caller sending an arbitrarily-large prefix is
-> holding it wrong, and we'd probably want to know as soon as possible
-> (and a BUG() is our best bet there).
+Which means when `git diff` is run in `--no-index` mode, `--exit-code`
+is implied. However, the documentation for this is missing in
+git-diff.txt.
 
-Yes.  We are not using an unvetted input as the prefix here, if
-somebody needs to use a larger prefix somewhere, that patch needs to
-argue the pros-and-cons between making the buffer larger or
-shortening that larger prefix.
+Add a note about how `--exit-code` is implied in the `--no-index`
+documentation to cover this documentation blindspot.
 
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+Thanks for the review, Dscho. I guess it slipped my mind that we could
+write it this way too. Oops!
+
+ Documentation/git-diff.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index 72179d993c..56b396ef81 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -36,7 +36,7 @@ two blob objects, or changes between two files on disk.
+ 	running the command in a working tree controlled by Git and
+ 	at least one of the paths points outside the working tree,
+ 	or when running the command outside a working tree
+-	controlled by Git.
++	controlled by Git. This form implies `--no-exit`.
+ 
+ 'git diff' [<options>] --cached [<commit>] [--] [<path>...]::
+ 
+-- 
+2.24.0.rc0.197.g0926ab8072
 
