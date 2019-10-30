@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48A751F4C0
-	for <e@80x24.org>; Wed, 30 Oct 2019 06:48:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C4FB1F4C0
+	for <e@80x24.org>; Wed, 30 Oct 2019 06:48:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727453AbfJ3Gst (ORCPT <rfc822;e@80x24.org>);
+        id S1727437AbfJ3Gst (ORCPT <rfc822;e@80x24.org>);
         Wed, 30 Oct 2019 02:48:49 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34753 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727258AbfJ3Gst (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:34507 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727377AbfJ3Gst (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Oct 2019 02:48:49 -0400
-Received: by mail-wm1-f65.google.com with SMTP id v3so3562305wmh.1
-        for <git@vger.kernel.org>; Tue, 29 Oct 2019 23:48:46 -0700 (PDT)
+Received: by mail-wr1-f65.google.com with SMTP id t16so971075wrr.1
+        for <git@vger.kernel.org>; Tue, 29 Oct 2019 23:48:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=sbqQKPFLwqefjSeatY3TgmSApYsc1DIwXSJjnSoXqzg=;
-        b=n2v+DK3/SImac6I/cJFukPC5EkV56Txqn/hxUZ/dilb+2Hp6gYU/g02U5WDIFQbkAm
-         AC/yKzMkudjSfVbOnYDdcU72lUNn0RoLa28Y7B57cIO2L+6iz085wpL9eTB71iq45wgU
-         9LnV00DKtCnvCyewqp9x5fcwF43O+BW0p8GbHvnVEEvQpUr1/Rl91hn4RQOb0r7O9RLU
-         2AAgeW/zRup3KqrrOnyvk7sqAZETyXaObq5KvL89JB3nTT0eZNE/Kjt6ZvKmJqutmUeK
-         vCFTz8HKI6kP5GxTkRVJdw84WZkCWYoU8WKY+qZxm2EKDjpDnR8448qhdiA6r9/z6z1v
-         8Ztw==
+        bh=F+rbyI2a7cQT1iNxyupaI1GJFLwhkmuBlbRzCqDyois=;
+        b=KXoNHocddTgXYLy8sDGY1wzjZqNYoDx1i20gFmAK0741Df6VuFOMKwmlKwm1G0VziV
+         oDpoyBQep21oIcUJGkTLfVqlB25elhzfM/Hc2cRe2e3BBgpotaSxcfPTeOLFNNzeacKN
+         ic2jSMGnPRcm0tcMOyCrzBEeHSCChjF8177g/l895nAL8TAtPQfT/UOcdA2lw8RtGfrj
+         J4uoXQVH6vRO5hDBgDxbHgSItrSf43qeShhoL3JVorUqa1muvly8/kSTua0am0f20PKD
+         DnkfZUKlSxM2NPSJJBQrWRn7cSzKfmfxm0WLBXzcc5V5cOEUfdLOz151n19E2lffit+n
+         UQpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sbqQKPFLwqefjSeatY3TgmSApYsc1DIwXSJjnSoXqzg=;
-        b=HFx6opjUmReUsS0rQKuUcSpuofMwTiZgpu8hUHthcjQD5+44gG8GwoC7ue0LEPluvC
-         F0/75op6wzTTWlDlAH9Xp0NoGtbJiRJWViwANJD/gQecIDr6xzY1rIDRwtopZByZU7/c
-         cnjmAuqO0+yIcUsjVgqLR/Q/4BoRSeR/ziETY7Fgxf5V/MaJBYFjqBPRVRHhobvaqQ4S
-         RGmk1HCdmrJouMSnwIneeBzn/v/qEDqcOe/KNsXa+HP2b0nGGx/4xIWdGwd87I7R22Pp
-         4URuxCGVJ9vn28BdqkTFD15D4RwYcyaGA3UtZPO6pqkwFKRI4Q4n1cion6yJ7zpXCke6
-         qyKw==
-X-Gm-Message-State: APjAAAVfwaB7gqd7P/wtEfXQ+CBkNCiZcezP+SO5WXQtxOqNwO5N1K1K
-        KeLPVwoSwaHgXAuH7CX7FMWFaxz1
-X-Google-Smtp-Source: APXvYqz1ok1Gs+WhqNCP73RYqUih35GEvI+qJQ7JzeHBQvMQY8/knJQK370GNSd6kA1N+ueIaSGtLQ==
-X-Received: by 2002:a1c:41c1:: with SMTP id o184mr7317112wma.57.1572418125604;
-        Tue, 29 Oct 2019 23:48:45 -0700 (PDT)
+        bh=F+rbyI2a7cQT1iNxyupaI1GJFLwhkmuBlbRzCqDyois=;
+        b=qe2ECQ0CzhZKr+uPp2muBTRyxjwZ5IwNi04lsSOPWEu8n4KliUJHxUroU7JnIqdh74
+         1hPE1qiQ/YH9Vnn7hObK8O1GJhFqvbiqUlI2XgrtvDod3iOeat9ww6HHIU/6QkAgHHUV
+         qpEtgABIAZReaGou8UlTbbyqB/x8Ly9iq/Ctfn7lhq9iXylXQSyz4VGiZ8FFUJFo0HRk
+         BkG4B3K7c5vJJyVOb2BzgAMksdnLMh5fE1xfkySb7X3qsJ3o0YJHmzfUiny3t0hFfXwb
+         K1mu4zc+cn3XIE7jP6eJoBOCb7y0XIj4AK0EuVpTxWTo5wESUzGOWsLaYxnOsGSPV/yP
+         uCgw==
+X-Gm-Message-State: APjAAAV1J3zlxzdNy3aX17B2MiZ8PueRBFCM7StpCYMKAwL+GzfKMAo6
+        6/KOS6rYn90SdMO7O9gwY6jVdsvz
+X-Google-Smtp-Source: APXvYqyA8iudWXbVupgiyOGH4KauLa0glOLjFgUm/Ny0mXV1Wr5e6kM3GIgFU8hzOS9RJ4/VcEF9NA==
+X-Received: by 2002:a05:6000:1051:: with SMTP id c17mr22468123wrx.124.1572418126195;
+        Tue, 29 Oct 2019 23:48:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t134sm1147562wmt.24.2019.10.29.23.48.45
+        by smtp.gmail.com with ESMTPSA id p12sm1631545wrt.7.2019.10.29.23.48.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Tue, 29 Oct 2019 23:48:45 -0700 (PDT)
-Message-Id: <da1704c56e0bd3f1ac53af96b702e3777bb3eb37.1572418123.git.gitgitgadget@gmail.com>
+Message-Id: <0190f6f2f978a674a29a1e2013d00bc289851c76.1572418123.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.436.git.1572418123.gitgitgadget@gmail.com>
 References: <pull.436.git.1572418123.gitgitgadget@gmail.com>
 From:   "Jonathan Gilbert via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 30 Oct 2019 06:48:42 +0000
-Subject: [PATCH 1/2] git-gui: consolidate naming conventions
+Date:   Wed, 30 Oct 2019 06:48:43 +0000
+Subject: [PATCH 2/2] git-gui: revert untracked files by deleting them
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,302 +71,299 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Gilbert <JonathanG@iQmetrix.com>
 
-A few variables in this file use camelCase, while the overall standard
-is snake_case. A consistent naming scheme will improve readability of
-future changes. To avoid mixing naming changes with semantic changes,
-this commit contains only naming changes.
+Updates the revert_helper procedure to also detect untracked files. If
+files are present, the user is asked if they want them deleted. A new
+proc delete_files with helper delete_helper performs the deletion in
+batches, to allow the UI to remain responsive.
 
 Signed-off-by: Jonathan Gilbert <JonathanG@iQmetrix.com>
 ---
- lib/index.tcl | 92 +++++++++++++++++++++++++--------------------------
- 1 file changed, 46 insertions(+), 46 deletions(-)
+ lib/index.tcl | 255 +++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 222 insertions(+), 33 deletions(-)
 
 diff --git a/lib/index.tcl b/lib/index.tcl
-index e07b7a3762..28d4d2a54e 100644
+index 28d4d2a54e..9661ddb556 100644
 --- a/lib/index.tcl
 +++ b/lib/index.tcl
-@@ -56,15 +56,15 @@ proc _close_updateindex {fd after} {
- 	uplevel #0 $after
- }
+@@ -393,11 +393,20 @@ proc revert_helper {txt paths} {
  
--proc update_indexinfo {msg pathList after} {
-+proc update_indexinfo {msg path_list after} {
- 	global update_index_cp
+ 	if {![lock_index begin-update]} return
  
- 	if {![lock_index update]} return
- 
- 	set update_index_cp 0
--	set pathList [lsort $pathList]
--	set totalCnt [llength $pathList]
--	set batch [expr {int($totalCnt * .01) + 1}]
-+	set path_list [lsort $path_list]
-+	set total_cnt [llength $path_list]
-+	set batch [expr {int($total_cnt * .01) + 1}]
- 	if {$batch > 25} {set batch 25}
- 
- 	$::main_status start $msg [mc "files"]
-@@ -78,26 +78,26 @@ proc update_indexinfo {msg pathList after} {
- 	fileevent $fd writable [list \
- 		write_update_indexinfo \
- 		$fd \
--		$pathList \
--		$totalCnt \
-+		$path_list \
-+		$total_cnt \
- 		$batch \
- 		$after \
- 		]
- }
- 
--proc write_update_indexinfo {fd pathList totalCnt batch after} {
-+proc write_update_indexinfo {fd path_list total_cnt batch after} {
- 	global update_index_cp
- 	global file_states current_diff_path
- 
--	if {$update_index_cp >= $totalCnt} {
-+	if {$update_index_cp >= $total_cnt} {
- 		_close_updateindex $fd $after
- 		return
- 	}
- 
- 	for {set i $batch} \
--		{$update_index_cp < $totalCnt && $i > 0} \
-+		{$update_index_cp < $total_cnt && $i > 0} \
- 		{incr i -1} {
--		set path [lindex $pathList $update_index_cp]
-+		set path [lindex $path_list $update_index_cp]
- 		incr update_index_cp
- 
- 		set s $file_states($path)
-@@ -119,18 +119,18 @@ proc write_update_indexinfo {fd pathList totalCnt batch after} {
- 		display_file $path $new
- 	}
- 
--	$::main_status update $update_index_cp $totalCnt
-+	$::main_status update $update_index_cp $total_cnt
- }
- 
--proc update_index {msg pathList after} {
-+proc update_index {msg path_list after} {
- 	global update_index_cp
- 
- 	if {![lock_index update]} return
- 
- 	set update_index_cp 0
--	set pathList [lsort $pathList]
--	set totalCnt [llength $pathList]
--	set batch [expr {int($totalCnt * .01) + 1}]
-+	set path_list [lsort $path_list]
-+	set total_cnt [llength $path_list]
-+	set batch [expr {int($total_cnt * .01) + 1}]
- 	if {$batch > 25} {set batch 25}
- 
- 	$::main_status start $msg [mc "files"]
-@@ -144,26 +144,26 @@ proc update_index {msg pathList after} {
- 	fileevent $fd writable [list \
- 		write_update_index \
- 		$fd \
--		$pathList \
--		$totalCnt \
-+		$path_list \
-+		$total_cnt \
- 		$batch \
- 		$after \
- 		]
- }
- 
--proc write_update_index {fd pathList totalCnt batch after} {
-+proc write_update_index {fd path_list total_cnt batch after} {
- 	global update_index_cp
- 	global file_states current_diff_path
- 
--	if {$update_index_cp >= $totalCnt} {
-+	if {$update_index_cp >= $total_cnt} {
- 		_close_updateindex $fd $after
- 		return
- 	}
- 
- 	for {set i $batch} \
--		{$update_index_cp < $totalCnt && $i > 0} \
-+		{$update_index_cp < $total_cnt && $i > 0} \
- 		{incr i -1} {
--		set path [lindex $pathList $update_index_cp]
-+		set path [lindex $path_list $update_index_cp]
- 		incr update_index_cp
- 
- 		switch -glob -- [lindex $file_states($path) 0] {
-@@ -190,18 +190,18 @@ proc write_update_index {fd pathList totalCnt batch after} {
- 		display_file $path $new
- 	}
- 
--	$::main_status update $update_index_cp $totalCnt
-+	$::main_status update $update_index_cp $total_cnt
- }
- 
--proc checkout_index {msg pathList after} {
-+proc checkout_index {msg path_list after} {
- 	global update_index_cp
- 
- 	if {![lock_index update]} return
- 
- 	set update_index_cp 0
--	set pathList [lsort $pathList]
--	set totalCnt [llength $pathList]
--	set batch [expr {int($totalCnt * .01) + 1}]
-+	set path_list [lsort $path_list]
-+	set total_cnt [llength $path_list]
-+	set batch [expr {int($total_cnt * .01) + 1}]
- 	if {$batch > 25} {set batch 25}
- 
- 	$::main_status start $msg [mc "files"]
-@@ -221,26 +221,26 @@ proc checkout_index {msg pathList after} {
- 	fileevent $fd writable [list \
- 		write_checkout_index \
- 		$fd \
--		$pathList \
--		$totalCnt \
-+		$path_list \
-+		$total_cnt \
- 		$batch \
- 		$after \
- 		]
- }
- 
--proc write_checkout_index {fd pathList totalCnt batch after} {
-+proc write_checkout_index {fd path_list total_cnt batch after} {
- 	global update_index_cp
- 	global file_states current_diff_path
- 
--	if {$update_index_cp >= $totalCnt} {
-+	if {$update_index_cp >= $total_cnt} {
- 		_close_updateindex $fd $after
- 		return
- 	}
- 
- 	for {set i $batch} \
--		{$update_index_cp < $totalCnt && $i > 0} \
-+		{$update_index_cp < $total_cnt && $i > 0} \
- 		{incr i -1} {
--		set path [lindex $pathList $update_index_cp]
-+		set path [lindex $path_list $update_index_cp]
- 		incr update_index_cp
++	# The index is now locked. Some of the paths below include calls that
++	# unlock the index (e.g. checked_index). If we reach the end and the
++	# index is still locked, we need to unlock it before returning.
++	set need_unlock_index 1
++
+ 	set path_list [list]
++	set untracked_list [list]
+ 	set after {}
+ 	foreach path $paths {
  		switch -glob -- [lindex $file_states($path) 0] {
  		U? {continue}
-@@ -253,7 +253,7 @@ proc write_checkout_index {fd pathList totalCnt batch after} {
- 		}
- 	}
- 
--	$::main_status update $update_index_cp $totalCnt
-+	$::main_status update $update_index_cp $total_cnt
- }
- 
- proc unstage_helper {txt paths} {
-@@ -261,7 +261,7 @@ proc unstage_helper {txt paths} {
- 
- 	if {![lock_index begin-update]} return
- 
--	set pathList [list]
-+	set path_list [list]
- 	set after {}
- 	foreach path $paths {
- 		switch -glob -- [lindex $file_states($path) 0] {
-@@ -269,19 +269,19 @@ proc unstage_helper {txt paths} {
- 		M? -
- 		T? -
- 		D? {
--			lappend pathList $path
-+			lappend path_list $path
- 			if {$path eq $current_diff_path} {
- 				set after {reshow_diff;}
- 			}
- 		}
- 		}
- 	}
--	if {$pathList eq {}} {
-+	if {$path_list eq {}} {
- 		unlock_index
- 	} else {
- 		update_indexinfo \
- 			$txt \
--			$pathList \
-+			$path_list \
- 			[concat $after [list ui_ready]]
- 	}
- }
-@@ -305,7 +305,7 @@ proc add_helper {txt paths} {
- 
- 	if {![lock_index begin-update]} return
- 
--	set pathList [list]
-+	set path_list [list]
- 	set after {}
- 	foreach path $paths {
- 		switch -glob -- [lindex $file_states($path) 0] {
-@@ -321,19 +321,19 @@ proc add_helper {txt paths} {
- 		?M -
- 		?D -
- 		?T {
--			lappend pathList $path
-+			lappend path_list $path
- 			if {$path eq $current_diff_path} {
- 				set after {reshow_diff;}
- 			}
- 		}
- 		}
- 	}
--	if {$pathList eq {}} {
-+	if {$path_list eq {}} {
- 		unlock_index
- 	} else {
- 		update_index \
- 			$txt \
--			$pathList \
-+			$path_list \
- 			[concat $after {ui_status [mc "Ready to commit."]}]
- 	}
- }
-@@ -393,7 +393,7 @@ proc revert_helper {txt paths} {
- 
- 	if {![lock_index begin-update]} return
- 
--	set pathList [list]
-+	set path_list [list]
- 	set after {}
- 	foreach path $paths {
- 		switch -glob -- [lindex $file_states($path) 0] {
-@@ -401,7 +401,7 @@ proc revert_helper {txt paths} {
++		?O {
++			lappend untracked_list $path
++		}
  		?M -
  		?T -
  		?D {
--			lappend pathList $path
-+			lappend path_list $path
- 			if {$path eq $current_diff_path} {
- 				set after {reshow_diff;}
- 			}
-@@ -420,12 +420,12 @@ proc revert_helper {txt paths} {
- 	# as they have quite complex plural-form rules. Unfortunately,
- 	# msgcat doesn't seem to support that kind of string translation.
- 	#
--	set n [llength $pathList]
-+	set n [llength $path_list]
- 	if {$n == 0} {
- 		unlock_index
- 		return
- 	} elseif {$n == 1} {
--		set query [mc "Revert changes in file %s?" [short_path [lindex $pathList]]]
-+		set query [mc "Revert changes in file %s?" [short_path [lindex $path_list]]]
- 	} else {
- 		set query [mc "Revert changes in these %i files?" $n]
+@@ -409,45 +418,225 @@ proc revert_helper {txt paths} {
+ 		}
  	}
-@@ -444,7 +444,7 @@ proc revert_helper {txt paths} {
- 	if {$reply == 1} {
- 		checkout_index \
- 			$txt \
--			$pathList \
-+			$path_list \
- 			[concat $after [list ui_ready]]
+ 
++	set path_cnt [llength $path_list]
++	set untracked_cnt [llength $untracked_list]
+ 
+-	# Split question between singular and plural cases, because
+-	# such distinction is needed in some languages. Previously, the
+-	# code used "Revert changes in" for both, but that can't work
+-	# in languages where 'in' must be combined with word from
+-	# rest of string (in different way for both cases of course).
+-	#
+-	# FIXME: Unfortunately, even that isn't enough in some languages
+-	# as they have quite complex plural-form rules. Unfortunately,
+-	# msgcat doesn't seem to support that kind of string translation.
+-	#
+-	set n [llength $path_list]
+-	if {$n == 0} {
+-		unlock_index
+-		return
+-	} elseif {$n == 1} {
+-		set query [mc "Revert changes in file %s?" [short_path [lindex $path_list]]]
+-	} else {
+-		set query [mc "Revert changes in these %i files?" $n]
+-	}
++	if {$path_cnt > 0} {
++		# Split question between singular and plural cases, because
++		# such distinction is needed in some languages. Previously, the
++		# code used "Revert changes in" for both, but that can't work
++		# in languages where 'in' must be combined with word from
++		# rest of string (in different way for both cases of course).
++		#
++		# FIXME: Unfortunately, even that isn't enough in some languages
++		# as they have quite complex plural-form rules. Unfortunately,
++		# msgcat doesn't seem to support that kind of string
++		# translation.
++		#
++		if {$path_cnt == 1} {
++			set query [mc \
++				"Revert changes in file %s?" \
++				[short_path [lindex $path_list]] \
++				]
++		} else {
++			set query [mc \
++				"Revert changes in these %i files?" \
++				$path_cnt]
++		}
+ 
+-	set reply [tk_dialog \
+-		.confirm_revert \
+-		"[appname] ([reponame])" \
+-		"$query
++		set reply [tk_dialog \
++			.confirm_revert \
++			"[appname] ([reponame])" \
++			"$query
+ 
+ [mc "Any unstaged changes will be permanently lost by the revert."]" \
+-		question \
+-		1 \
+-		[mc "Do Nothing"] \
+-		[mc "Revert Changes"] \
+-		]
+-	if {$reply == 1} {
+-		checkout_index \
+-			$txt \
++			question \
++			1 \
++			[mc "Do Nothing"] \
++			[mc "Revert Changes"] \
++			]
++
++		if {$reply == 1} {
++			checkout_index \
++				$txt \
++				$path_list \
++				[concat $after [list ui_ready]]
++
++			set need_unlock_index 0
++		}
++	}
++
++	if {$need_unlock_index} { unlock_index }
++
++	if {$untracked_cnt > 0} {
++		# Split question between singular and plural cases, because
++		# such distinction is needed in some languages.
++		#
++		# FIXME: Unfortunately, even that isn't enough in some languages
++		# as they have quite complex plural-form rules. Unfortunately,
++		# msgcat doesn't seem to support that kind of string
++		# translation.
++		#
++		if {$untracked_cnt == 1} {
++			set query [mc \
++				"Delete untracked file %s?" \
++				[short_path [lindex $untracked_list]] \
++				]
++		} else {
++			set query [mc \
++				"Delete these %i untracked files?" \
++				$untracked_cnt \
++				]
++		}
++
++		set reply [tk_dialog \
++			.confirm_revert \
++			"[appname] ([reponame])" \
++			"$query
++
++[mc "Files will be permanently deleted."]" \
++			question \
++			1 \
++			[mc "Do Nothing"] \
++			[mc "Delete Files"] \
++			]
++
++		if {$reply == 1} {
++			delete_files $untracked_list
++		}
++	}
++}
++
++# Delete all of the specified files, performing deletion in batches to allow the
++# UI to remain responsive and updated.
++proc delete_files {path_list} {
++	# Enable progress bar status updates
++	$::main_status start [mc "Deleting"] [mc "files"]
++
++	set path_index 0
++	set deletion_errors [list]
++	set deletion_error_path "not yet captured"
++	set batch_size 50
++
++	delete_helper \
++		$path_list \
++		$path_index \
++		$deletion_errors \
++		$deletion_error_path \
++		$batch_size
++}
++
++# Helper function to delete a list of files in batches. Each call deletes one
++# batch of files, and then schedules a call for the next batch after any UI
++# messages have been processed.
++proc delete_helper \
++	{path_list path_index deletion_errors deletion_error_path batch_size} {
++	global file_states
++
++	set path_cnt [llength $path_list]
++
++	set batch_remaining $batch_size
++
++	while {$batch_remaining > 0} {
++		if {$path_index >= $path_cnt} { break }
++
++		set path [lindex $path_list $path_index]
++
++		set deletion_failed [catch {file delete -- $path} deletion_error]
++
++		if {$deletion_failed} {
++			lappend deletion_errors $deletion_error
++
++			# Optimistically capture the path that failed, in case
++			# there's only one.
++			set deletion_error_path $path
++		} else {
++			remove_empty_directories [file dirname $path]
++
++			# Don't assume the deletion worked. Remove the file from
++			# the UI, but only if it no longer exists.
++			if {![lexists $path]} {
++				unset file_states($path)
++				display_file $path __
++			}
++		}
++
++		incr path_index 1
++		incr batch_remaining -1
++	}
++
++	# Update the progress bar to indicate that this batch has been
++	# completed. The update will be visible when this procedure returns
++	# and allows the UI thread to process messages.
++	$::main_status update $path_index $path_cnt
++
++	if {$path_index < $path_cnt} {
++		# The Tcler's Wiki lists this as the best practice for keeping
++		# a UI active and processing messages during a long-running
++		# operation.
++
++		after idle [list after 0 [list \
++			delete_helper \
+ 			$path_list \
+-			[concat $after [list ui_ready]]
++			$path_index \
++			$deletion_errors \
++			$deletion_error_path \
++			$batch_size \
++			]]
  	} else {
- 		unlock_index
+-		unlock_index
++		# Finish the status bar operation.
++		$::main_status stop
++
++		# Report error, if any, based on how many deletions failed.
++		set deletion_error_cnt [llength $deletion_errors]
++
++		if {$deletion_error_cnt == 1} {
++			error_popup [mc \
++				"File %s could not be deleted: %s" \
++				$deletion_error_path \
++				[lindex $deletion_errors 0] \
++				]
++		} elseif {$deletion_error_cnt == $path_cnt} {
++			error_popup [mc \
++				"None of the selected files could be deleted." \
++				]
++		} elseif {$deletion_error_cnt > 1} {
++			error_popup [mc \
++				"%d of the selected files could not be deleted." \
++				$deletion_error_cnt]
++		}
++
++		reshow_diff
++		ui_ready
++	}
++}
++
++# This function is from the TCL documentation:
++#
++#   https://wiki.tcl-lang.org/page/file+exists
++#
++# [file exists] returns false if the path does exist but is a symlink to a path
++# that doesn't exist. This proc returns true if the path exists, regardless of
++# whether it is a symlink and whether it is broken.
++proc lexists name {
++	expr {![catch {file lstat $name finfo}]}
++}
++
++# Remove as many empty directories as we can starting at the specified path.
++# If we encounter a directory that is not empty, or if a directory deletion
++# fails, then we stop the operation and return to the caller. Even if this
++# procedure fails to delete any directories at all, it does not report failure.
++proc remove_empty_directories {directory_path} {
++	set parent_path [file dirname $directory_path]
++
++	while {$parent_path != $directory_path} {
++		set contents [glob -nocomplain -dir $directory_path *]
++
++		if {[llength $contents] > 0} { break }
++		if {[catch {file delete -- $directory_path}]} { break }
++
++		set directory_path $parent_path
++		set parent_path [file dirname $directory_path]
+ 	}
+ }
+ 
 -- 
 gitgitgadget
-
