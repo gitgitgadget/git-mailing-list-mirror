@@ -7,75 +7,64 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7470B1F4C0
-	for <e@80x24.org>; Wed, 30 Oct 2019 20:28:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C2AB1F4C0
+	for <e@80x24.org>; Wed, 30 Oct 2019 20:36:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726808AbfJ3U2h (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Oct 2019 16:28:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34254 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726585AbfJ3U2h (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Oct 2019 16:28:37 -0400
-Received: (qmail 28707 invoked by uid 109); 30 Oct 2019 20:28:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 30 Oct 2019 20:28:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23631 invoked by uid 111); 30 Oct 2019 20:31:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Oct 2019 16:31:45 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 30 Oct 2019 16:28:35 -0400
-From:   Jeff King <peff@peff.net>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: git branch --edit-description a custom file
-Message-ID: <20191030202835.GB29013@sigill.intra.peff.net>
-References: <20191030183950.GA21277@generichostname>
+        id S1726892AbfJ3UgI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Oct 2019 16:36:08 -0400
+Received: from relay9-d.mail.gandi.net ([217.70.183.199]:57673 "EHLO
+        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726527AbfJ3UgI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Oct 2019 16:36:08 -0400
+X-Originating-IP: 1.186.12.42
+Received: from localhost.localdomain (unknown [1.186.12.42])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 5D733FF804
+        for <git@vger.kernel.org>; Wed, 30 Oct 2019 20:36:06 +0000 (UTC)
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     <git@vger.kernel.org>
+Subject: [PATCH] git-shortlog.txt: mention commit filtering options
+Date:   Thu, 31 Oct 2019 02:06:03 +0530
+Message-Id: <20191030203603.27497-1-me@yadavpratyush.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191030183950.GA21277@generichostname>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 30, 2019 at 11:39:50AM -0700, Denton Liu wrote:
+git-shortlog, like git-log, supports options to filter what commits are
+used to generate the log. These options come from git-rev-list. Add a
+pointer to these options in the documentation page so readers can know
+these filtering options can be used with git-shortlog too.
 
-> It seems like everyone working on git.git has their own patch management
-> system. Currently, I keep all of my branch-specific configurations
-> (including CC lists) and patches in a worktree within the repo so that I
-> can keep my configs synced around on different computers.
-> 
-> One thing that's missing about this setup is that I would like to
-> version my branch descriptions as well since I use those to generate
-> cover letters. Unfortunately, `git branch --edit-description` only
-> operates on .git/config.
-> 
-> As a workaround, I rewrote `git branch --edit-description` as a
-> shell-script that can operate on any config file but I feel like a more
-> general solution should be warranted.
-> 
-> Would changing the option to `git branch --edit-description[=<config>]`
-> make sense, where the `<config>` is optional but if it's specified,
-> it'll operate on that file instead of the .git/config.
+Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+---
+Since [0] didn't get any responses, I figured a patch might get some
+more attention since it is something concrete to comment on.
 
-That makes sense to me (though I don't use branch descriptions myself).
-I actually wish a lot of auto-written config (like branch.*.merge) was
-written to a file besides .git/config, and then just included. It would
-make it easier to keep your actual config file cleaner (I usually take
-the opposite route and version-control my own config in a separate file
-that I include from .git/config).
+[0] https://public-inbox.org/git/20191024191709.gqkjljuibyashtma@yadavpratyush.com/
 
-> Alternately, would it make sense to support a $GIT_CONFIG environment
-> variable globally? That is, when $GIT_CONFIG is specified, git will
-> read/write from $GIT_CONFIG instead of .git/config? It'd be a little
-> heavy-handed for me to make the change just for this one use-case but
-> perhaps people may find other uses for it?
+ Documentation/git-shortlog.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-We used to have such a thing, and it opened a lot of weird corner cases.
-Just thinking about the case you mentioned: would people be confused if
-"GIT_CONFIG=foo git branch --edit-description" doesn't respect
-core.editor specified in .git/config?
+diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
+index bc80905a8a..acae695388 100644
+--- a/Documentation/git-shortlog.txt
++++ b/Documentation/git-shortlog.txt
+@@ -76,6 +76,11 @@ them.
+ Paths may need to be prefixed with `--` to separate them from
+ options or the revision range, when confusion arises.
 
--Peff
++In addition to the options above, 'git shortlog' also supports a range of
++options to select which subset of commits will be used to generate the
++shortlog. A list of these options can be found in the "Commit Limiting"
++section of linkgit:git-rev-list[1].
++
+ MAPPING AUTHORS
+ ---------------
+
+--
+2.21.0
+
