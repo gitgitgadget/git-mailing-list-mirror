@@ -2,109 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 961741F4C0
-	for <e@80x24.org>; Wed, 30 Oct 2019 06:34:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6E791F4C0
+	for <e@80x24.org>; Wed, 30 Oct 2019 06:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727227AbfJ3Get (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Oct 2019 02:34:49 -0400
-Received: from mail-oi1-f172.google.com ([209.85.167.172]:46786 "EHLO
-        mail-oi1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726108AbfJ3Get (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Oct 2019 02:34:49 -0400
-Received: by mail-oi1-f172.google.com with SMTP id c2so1001444oic.13
-        for <git@vger.kernel.org>; Tue, 29 Oct 2019 23:34:48 -0700 (PDT)
+        id S1727385AbfJ3Gsq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Oct 2019 02:48:46 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55759 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727377AbfJ3Gsq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Oct 2019 02:48:46 -0400
+Received: by mail-wm1-f67.google.com with SMTP id g24so808781wmh.5
+        for <git@vger.kernel.org>; Tue, 29 Oct 2019 23:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4RgBzXFUW6oMJZpBPCl9h7RQ5aom7oTL1tAj1TzCCLM=;
-        b=dQmTK4URQNS9wr5SQ9ADN2xK9QIrb9ZQFMWA49cAgizzHqQNTdyJQXpKxkUb+4dJxH
-         WrlscBOF3mKrb0W1FIQU/2OvTdS1BaYAunSRfhU/uHDLo39QQs3Bl6NaoyGF+5uKw5N8
-         2Kv4uLdenoB9YZ2beDh5fmM5a6R+aoZcoKuUHOyAO/6cn2/uducKshof9lC0OeNBSa80
-         p/M73Ui5kbK+EQFwyvMCHgUbBbW/THKHHwe0Jbli3WPy+/5vicGJCN7EEgmaXWtG5peM
-         mXt03zQxVwNkZD8KpTUdXt0cEY0ci/FYXy0p094WBo8VqGKepXIV9MHMmL97Nc7fhtuO
-         iWSg==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=XVvgfjDcn54fUYSjzGNVMxitzMAouzE7hQLU+DQulnw=;
+        b=sM9MNRZY5THj9+8DEfM1wXeSspgr2rDLeeukO8ZdEbZMu88PqEeXrEsdBru2FlWHkw
+         L59vj7IaNPAZ+DhcZB3/wOcHcogBN4nryDfGrNWw/DB0NliWmRAkr/DFGzB6B5gUlUih
+         4qAFZ/hNlxqlW2BYBL+thdvn1eMxyNwJ82chfK6TiNXIBRYCjEiQkGuvazbnJvCkh6QE
+         LeyDdtv6QIQ8Gq9ZhXPrvtUTMCpnBXGhKAfAglVNII5yQ2OTLBtUW0knJo6TKESJjgBL
+         aGocKDKtUhLNtE+cHG4YEwq11eKhMHHNqb+clqj6Zypw+Z9Hlg5MZVfuAgAO1sWLlUY9
+         vkSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4RgBzXFUW6oMJZpBPCl9h7RQ5aom7oTL1tAj1TzCCLM=;
-        b=RZvNpLwhOv+a8kjcyM6V1BzW8a1GC3ktdLCBJNfutVFKrrHVjS+wFmLzTxxozuWPvW
-         dUTfYtr43LS6CZ/90rkD5h4ysXOPk/usYXXn7OPZT2EnM1r7iuZ7o3aKTJZLw5xsjFrp
-         A6Hov0jrCYRNidT9mkMmxWgOsTNunfyUiR0e2/So9/h6CpgbVbCZP6f3S6BFhEje6v/A
-         bUeLo4+v4BPAL9AEIDkbDhAEOFPnRCCYAwf5NObCDDKz2LtolNn/i/+S8qGB1HXTyMhe
-         d2nQKugQME9hlxK1byhVvJ4FAIn5ofEnulTBjZu/CXuOUp1KKbpOeQzZAETrslSwSRHx
-         3u7Q==
-X-Gm-Message-State: APjAAAUGh9Of1yxHuqHSqIDVsHJDsXMSlILftpv/gVp9mqCFsHcWOsrR
-        OyFD0ajXPRA8JF/yB4BtPFB4vY3Mq3Fr0HXeTUc=
-X-Google-Smtp-Source: APXvYqyyIdkSIAIUFAG9h1hce36WpCzP7q6fY4vp12fzcC3e42ej2ViZLaKiYMRUSQr/Q+AFIMzdmUEF2OsAmuLfRMA=
-X-Received: by 2002:aca:dad6:: with SMTP id r205mr7167623oig.6.1572417288252;
- Tue, 29 Oct 2019 23:34:48 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=XVvgfjDcn54fUYSjzGNVMxitzMAouzE7hQLU+DQulnw=;
+        b=O+eMzXZB79Hh4AfDtmSuT8xvcJOMNmeIB0yGJffvtZcEcLV4zfR+i853K6Sa3x7PCX
+         OXa0baBGmryQTUik5NXS3NIW9WNYEJy+52kKqg+IENJJlvrLscYMRFNop2LrMePlBG68
+         C+njnDXzdiRNBjlRuagl9XhN/+YU5rvHC+fvFhKUZD/W1diCzSSNwvOekNi809vRVRfe
+         FEl/iG1G/k2yMZ/mmpcrOlNmZ5LnriIWk2907KV5G4+u608PwBle7Qk6kxxHqFXunsYr
+         6kemc/fgAPeI1cnZBQQWfJdmX6xHDkYWVJ3gV5BKggJDenV87FvI/He+0VgfT4lLq1Ak
+         vkFw==
+X-Gm-Message-State: APjAAAVk5INYomquHAKzBM5MfoIkv/nI0Ub7mEjUKkKNZXQLGjmL3EQq
+        GsxtixEhjOQjsSdzBazSx3em3jmp
+X-Google-Smtp-Source: APXvYqwXjseEtfiZ7FT4GcvE458gwVRqrnWRgZhWWe24fBIr7fsxsd2KQUXKg8Ykw6qvkARpwTyFyg==
+X-Received: by 2002:a1c:3843:: with SMTP id f64mr7129815wma.129.1572418124822;
+        Tue, 29 Oct 2019 23:48:44 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 62sm1491579wre.38.2019.10.29.23.48.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Oct 2019 23:48:44 -0700 (PDT)
+Message-Id: <pull.436.git.1572418123.gitgitgadget@gmail.com>
+From:   "Jonathan Gilbert via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 30 Oct 2019 06:48:41 +0000
+Subject: [PATCH 0/2] git-gui: revert untracked files by deleting them
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CAH8yC8=uGb3J+fvkSj7-gdhqy0vtQw90K-MWQ3T1TTMQzAJnJA@mail.gmail.com>
-In-Reply-To: <CAH8yC8=uGb3J+fvkSj7-gdhqy0vtQw90K-MWQ3T1TTMQzAJnJA@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 29 Oct 2019 23:34:37 -0700
-Message-ID: <CABPp-BFzAYmaQ5J0nnN9930UC5kJ1=qyvUJxL0oJNixLX3XQCQ@mail.gmail.com>
-Subject: Re: SELinux context for Git user on Fedora server?
-To:     noloader@gmail.com
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>,
+        Pratyush Yadav <me@yadavpratyush.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+My development environment sometimes makes automatic changes that I don't
+want to keep. In some cases, this involves new files being added that I
+don't want to commit or keep (but I also don't want to outright .gitignore 
+forever). I have typically had to explicitly delete those files externally
+to Git Gui, which is a context switch to a manual operation, and I want to
+be able to just select those newly-created untracked files in the UI and
+"revert" them into oblivion.
 
-On Tue, Oct 29, 2019 at 10:30 PM Jeffrey Walton <noloader@gmail.com> wrote:
->
-> Hi Everyone,
->
-> I'm trying to setup a Git server on Fedora 30 server with SELinux in
-> enforcing mode. I am following
-> https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server
-> .
->
-> At the push on the local machine:
->
->   $ git push -v origin master
->   Pushing to ssh://git@euclid:/var/callboot/source.git
+This change updates the revert_helper proc to check for untracked files as
+well as changes, and then changes to be reverted and untracked files are
+handled by independent blocks of code. The user is prompted independently
+for untracked files, since the underlying action is fundamentally different
+(rm -f). If after deleting untracked files, the directory containing them
+becomes empty, then the directory is removed as well. A new proc 
+delete_files takes care of actually deleting the files, using the Tcler's
+Wiki recommended approach for keeping the UI responsive.
 
-So you're using ssh...
+This is the second revision of this change, which differs from the first
+version in the following ways:
 
->   Enter passphrase for key ...
->   fatal: '/var/callboot/source.git' does not appear to be a git repository
->   fatal: Could not read from remote repository.
->   ...
->
-> I suspect the SELinux labels for /var/callboot/source.git are not
-> quite right. Right now it looks as follows. httpd_sys_content_t is
-> typical for a web server and I think it needs to be something else.
->
->   # ls -Z /var/callboot/source.git
->   unconfined_u:object_r:httpd_sys_content_t:s0 branches
->   unconfined_u:object_r:httpd_sys_content_t:s0 config
->   unconfined_u:object_r:httpd_sys_content_t:s0 description
->   unconfined_u:object_r:httpd_sys_content_t:s0 HEAD
->   unconfined_u:object_r:httpd_sys_content_t:s0 hooks
->   unconfined_u:object_r:httpd_sys_content_t:s0 info
->   unconfined_u:object_r:httpd_sys_content_t:s0 objects
->   unconfined_u:object_r:httpd_sys_content_t:s0 refs
->
-> What should the SELinux labels be for the Git user?
+ * The change is now based on git-gui/master.
+ * With one exception, all lines are at most 80 characters long. The
+   exception has a string literal in it that pushes it to 82 characters. I
+   think it would be messy to try to split it, and I got advice on 
+   #git-devel to just let it go to 82 characters.
+ * camelCase is eliminated. I eliminated it from existing code in a separate
+   commit.
+ * try is no longer used anywhere. The code that cares about the result (had
+   code in a catch after a try) uses [catch].
+ * Deletion of files and removal of empty directories is now handled by
+   separate procs.
+ * The deletion of a large number of files does not block the UI during its
+   execution any more.
+ * The revert_helper code no longer uses an epilogue of generic statements
+   to be evaluated on exit.
+ * When deleting files, the UI is notified about the deletion directly
+   instead of doing a full rescan.
 
-They should be whatever is needed to access via ssh.  I think that's
-something like 'ssh_home_t' (sorry, haven't fought SELinux and SSH for
-a few years now), but the question isn't really anything to do with
-Git but of the combination of SELinux and SSH.
+Jonathan Gilbert (2):
+  git-gui: consolidate naming conventions
+  git-gui: revert untracked files by deleting them
+
+ lib/index.tcl | 343 ++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 266 insertions(+), 77 deletions(-)
 
 
-Hope that helps,
-Elijah
+base-commit: b524f6b399c77b40c8bf2b6217585fde4731472a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-436%2Flogiclrd%2Fgit-gui-revert-untracked-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-436/logiclrd/git-gui-revert-untracked-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/436
+-- 
+gitgitgadget
