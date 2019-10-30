@@ -8,86 +8,78 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79EE11F4C0
-	for <e@80x24.org>; Wed, 30 Oct 2019 20:21:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7C961F4C0
+	for <e@80x24.org>; Wed, 30 Oct 2019 20:21:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726677AbfJ3UVW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Oct 2019 16:21:22 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:36848 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726384AbfJ3UVW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Oct 2019 16:21:22 -0400
-Received: by mail-wr1-f41.google.com with SMTP id w18so3812767wrt.3
-        for <git@vger.kernel.org>; Wed, 30 Oct 2019 13:21:21 -0700 (PDT)
+        id S1726731AbfJ3UVZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Oct 2019 16:21:25 -0400
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:36626 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726612AbfJ3UVX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Oct 2019 16:21:23 -0400
+Received: by mail-wm1-f49.google.com with SMTP id c22so3602178wmd.1
+        for <git@vger.kernel.org>; Wed, 30 Oct 2019 13:21:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=FoQ/QHyXVnd3enKJg10FGUzWOB3LuzxM1zrEUqDKSE0=;
-        b=fw5I8ZmWEPWWai5f/6fOv+hJuy+n/iBu+ZXcHdmqyIDmow7KxCwOwPJMbkCcs4wc1i
-         61Uwgj4+W1EDlyfnKhfpj6/mp9GYEfCwNFxJafJj/OgAmCMjVXhOkze3/+ySHYG1a4l8
-         riDBGobhMtLPwD9Ujzhqsp5t+sG1a/XOGGQRzG4T1ph7QpzERMomp3WSFeFyiz6ytCi/
-         lYZtypAdW+IQUsNus9BE/T2lgEanQSoKK85Bj6xFNP86hfkof9d3VWLMyPBe0NNDHlp0
-         DNFDffYqBn+JwTXiGIbSZZokN5v2cp9TXfInomm45eoMmbV6IkAxq4bwqs9t64mUMpCv
-         Om2Q==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=Oj0Pwgx/DbT64Ae97zx8HNcYpnAr1adyT+mFFmz5A5w=;
+        b=QcySvj9XX3bOZkulgWoPEEIybVFvKU/jtnUESK6A9GdVKL2cU0DE0muIh5D5amWLvr
+         SLiVyTQPNP0AM1SjdZMN8V6ZPvNiiucT0FJ8V6DwkWrmn+ODB/v5MfthSgp2Y8QhrbaV
+         b5B+U+Ws4IRdNsuFpFpMm0wsPt+A/93JTFAye7DdIn4Ccy3DczGfi98zuvpfbL2iltm0
+         kwbEZyT7QYqgtz+N+E2N6aarzgRaIJSwiFmE0xqJxOw+McXF1SEityfYIhxNooVg58wG
+         o2ZYEMLpMtCUhh1o3Hjf/J4hiwFoas/QFWGcSL8zWDvYPXUhg9p5nIg5mgy80zBHEQRD
+         m4ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FoQ/QHyXVnd3enKJg10FGUzWOB3LuzxM1zrEUqDKSE0=;
-        b=qeFUfeXypdjK3kAHcoHQM3IJ4gTwEgXwzzNtphBZlpiXbSUue2lpFNSdVPC06Lwiy1
-         xgj9dTIlo222sKSnLEZMhs/OX0EyJPmz47SgroFsAdE5owZRFpYcYJotnjGt75ucGF+O
-         GhMgoA9ezsHNe5bx61YmB/S8GAvuDepMUNc5vws9fKuGu1JMAwSUU71wuOglEmklRUTR
-         FqQowKnVLEdWhTuAyC+6gpR7qp11PVWTXbC31YzfNHv2An2By1P23rYnXHaLNehTyB4Y
-         HtzVBPISJ0p3/T8of+Z4/keKtU4cX4OZFwAEhyRtrAci5b27IEZpegXO+NgNDhrW/lpc
-         PD+w==
-X-Gm-Message-State: APjAAAUDzBHzL5WsMqI59w/PMlCSHeO9hyJZPJGOax9HKciIYNwB5gss
-        4bJk6ePvTssv+6PjDUweO/dnSrh/
-X-Google-Smtp-Source: APXvYqw9oMEbV26ecz7EZ9JZlMJ/0pv+tfhv/JGkJ/NV+ZTyWsFnSOd19HbAUWismxfFjgVeHvhQxA==
-X-Received: by 2002:a5d:424a:: with SMTP id s10mr1623667wrr.108.1572466880492;
-        Wed, 30 Oct 2019 13:21:20 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Oj0Pwgx/DbT64Ae97zx8HNcYpnAr1adyT+mFFmz5A5w=;
+        b=lnLz8XdzEvCNkg/cOeYr6k6WaMTEuXqhY9ajMiVD3z9/BewQ3Cprx1NcW73Jit00mD
+         LoJGmDE+pvOztVsAELqID3Xl7Xu3Gea2DZJc7FYiBhaUiLFEv7z7VtosaRKPNc31iy33
+         QBx/YwGRCz0P2jmckHS3wjnZDhraAUjNRtKfq1qw99NvplLGMlivHgFh8YkM5OKAF/OK
+         +nMte9jJKLjLnzP6rbLgebL0aUIuGDO1qMrLEggTA7MZHCjX1dEQMbBboq6dqpRaWnal
+         7Zw+CNdhoFcXwZu2y39YmeQO907WTY5ZxgA+aaTmZp6i1RNdogotEJxmEGWwg4Y2BNUN
+         re8A==
+X-Gm-Message-State: APjAAAXNiWmSufWUoOcgweq8nBzz10J6sdLax1C9mLtkVw+J36GJWHgj
+        aTqzpB4V6m0fPfI3ijtebd1XS2PT
+X-Google-Smtp-Source: APXvYqyaRhAgoaal0rUeGXUxAXE4GBgWlIiCTHWpBX/XA1D3SI7O0ZXGdxPcGAHdMvkWCv1JwaNf8w==
+X-Received: by 2002:a1c:c90f:: with SMTP id f15mr1268235wmb.127.1572466879752;
+        Wed, 30 Oct 2019 13:21:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c15sm994354wmb.45.2019.10.30.13.21.19
+        by smtp.gmail.com with ESMTPSA id u10sm1391816wmj.0.2019.10.30.13.21.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Oct 2019 13:21:20 -0700 (PDT)
-Message-Id: <2e1ebe70820fd4cbc40df1f89779c77b9ceea881.1572466878.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.440.git.1572466878.gitgitgadget@gmail.com>
-References: <pull.440.git.1572466878.gitgitgadget@gmail.com>
+        Wed, 30 Oct 2019 13:21:19 -0700 (PDT)
+Message-Id: <pull.440.git.1572466878.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 30 Oct 2019 20:21:17 +0000
-Subject: [PATCH 1/2] RelNotes/2.24.0: typofix
+Date:   Wed, 30 Oct 2019 20:21:16 +0000
+Subject: [PATCH 0/2] 2.24 release note fixups
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+A couple minor fixes to the 2.24 release notes. I split into two trivial
+commits just in case folks don't like the second (perhaps some wording about
+no current plans to remove filter-branch were intended?)
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/RelNotes/2.24.0.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Elijah Newren (2):
+  RelNotes/2.24.0: typofix
+  RelNotes/2.24.0: fix self-contradictory note
 
-diff --git a/Documentation/RelNotes/2.24.0.txt b/Documentation/RelNotes/2.24.0.txt
-index b7083cd6b2..26e018078d 100644
---- a/Documentation/RelNotes/2.24.0.txt
-+++ b/Documentation/RelNotes/2.24.0.txt
-@@ -316,7 +316,7 @@ Fixes since v2.23
-    to access the worktree correctly, which has been corrected.
-    (merge dfd557c978 js/stash-apply-in-secondary-worktree later to maint).
- 
-- * The merge-recursive machiery is one of the most complex parts of
-+ * The merge-recursive machinery is one of the most complex parts of
-    the system that accumulated cruft over time.  This large series
-    cleans up the implementation quite a bit.
-    (merge b657047719 en/merge-recursive-cleanup later to maint).
+ Documentation/RelNotes/2.24.0.txt | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+
+base-commit: f21f8f5d35b09ecdd1a0112f114436fd2eda7df2
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-440%2Fnewren%2F2.24-release-note-fixups-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-440/newren/2.24-release-note-fixups-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/440
 -- 
 gitgitgadget
-
