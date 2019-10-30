@@ -2,104 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BFEC1F4C0
-	for <e@80x24.org>; Wed, 30 Oct 2019 12:39:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7C601F4C0
+	for <e@80x24.org>; Wed, 30 Oct 2019 14:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726667AbfJ3Mj3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Oct 2019 08:39:29 -0400
-Received: from mail-qt1-f175.google.com ([209.85.160.175]:47059 "EHLO
-        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726269AbfJ3Mj3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Oct 2019 08:39:29 -0400
-Received: by mail-qt1-f175.google.com with SMTP id u22so2907480qtq.13
-        for <git@vger.kernel.org>; Wed, 30 Oct 2019 05:39:28 -0700 (PDT)
+        id S1726536AbfJ3Obs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Oct 2019 10:31:48 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:36903 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726377AbfJ3Obr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Oct 2019 10:31:47 -0400
+Received: by mail-wm1-f67.google.com with SMTP id q130so2426136wme.2
+        for <git@vger.kernel.org>; Wed, 30 Oct 2019 07:31:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=NoQuliGaJ6e7Bhw98JZExevv/6zxVBNDIHlyIgx7ZXs=;
-        b=OMTvccYM7HHaGZqI0C80Pj0CfDinrUyHiOJl8ggu28WcYIAeuNFom3C7MxpvSOt+UA
-         rkkywKvQGaGj4Xhr3WXCVmZlPEJRrlE8PooLXHNzdOaAgld73QrPRI+k96MQcaTYswHL
-         HlKNXw6w+CImVLuanrB8tQm5wqLjJV3YpO2lYSOgoeSLK0Sbq0WPG6QKf4+hdOQRe/tP
-         ed/X7vPrUVwwdkNMivZDTdf1fgr4QJBJk+m2XFruc+Sqd/nh7Qf9BkHFYHRzGSJdriLt
-         k59Y9ZgjtYSCYP5HAxdXB5fwM8rC4JbhSJN7Upejzz1oyZELQnAFz02GTJsZ8EwsNiOh
-         dCfQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fImxXu/T7jQUj3R2ZMY3RTKqar/SKnDZE5P9R146Rbo=;
+        b=jO3Ihu8kG4IYIJLbdq2Uyoo+Gmh88sqjtdIDTYXWfPK+4qdZlq8FKqHpMX/ar0TMmL
+         erII0PQ6Djnd2QUOA5y9fE0wZ8CKdy7oAqqkpxx6be6fTtDt3ov9IjgO7xFPfgMbG2xZ
+         fAthvZKw4tbe46Ae81UJWGK0/bOQDnJGlKapwvFAdM+NyikyC5gTs91A4d3YZBTzCT3B
+         yZJ/qzsKI1qncNtsDWn1ozjspGILMdgMSygFxTkoSK9fxwkKR/pmN1Xwn776ud4Bl8si
+         ifZRib+1e7M0077dWLdfoFCRxm4s9aTZi/F8yzfNfKrA2ohpKuBcxbFZC+fM8nFcFgKc
+         anRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=NoQuliGaJ6e7Bhw98JZExevv/6zxVBNDIHlyIgx7ZXs=;
-        b=KEgF3uTZpM+tYl/lP50soBUCGTq2ITpJUdI/tPQagXhaioR2/tzwuia4hDvCWeQ+Wg
-         PXYSdQx/J4DWQ2ANgkMFIjyJefENg34JOIcOHHPG9DTEqwlOA1K01Hno/U915JXTun8w
-         XSTNSDWQ0WZaE58BIF6K5pksEuYFow+dtOlIj9zK6+n2JekAFNDdQEqqNQfb/EU4nlaq
-         N6FPyok2FV9N8MNM3ep0fSFYXijTNlBx4wLo3SjSsBS8a9f9WS16NOkHml9whrwlA4MJ
-         sPrRwVcPl5tz9xXjr33U0wdeBsqJOwd49fW1cBTzs3tjWg0H6FDO6aGyL7Ox4AKPZ/R2
-         nhSg==
-X-Gm-Message-State: APjAAAW9YkwTx3KbPJ+7QffhKzEp/AlZhxDd6mh4vtZ3qWP+EQp9/vz9
-        M24BlXwtbpnUCy8fe9hpxkFdeUHZVfc=
-X-Google-Smtp-Source: APXvYqw9Ax0SY+n3nNN039WdimptW1NnJkKryDCPldlmyol0QJrdbWmm6MQHB9N29k3r225fHnZmYA==
-X-Received: by 2002:a0c:9083:: with SMTP id p3mr26775748qvp.210.1572439167424;
-        Wed, 30 Oct 2019 05:39:27 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:1c91:585f:86b4:347e? ([2001:4898:a800:1010:cdc6:585f:86b4:347e])
-        by smtp.gmail.com with ESMTPSA id z72sm1179639qka.115.2019.10.30.05.39.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Oct 2019 05:39:26 -0700 (PDT)
-Subject: ds/commit-graph-on-fetch (was Re: What's cooking in git.git (Oct
- 2019, #07; Wed, 30))
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqd0ee3du9.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <afec0f94-466a-2901-4dd7-528d0ae587fa@gmail.com>
-Date:   Wed, 30 Oct 2019 08:39:26 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
- Thunderbird/71.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fImxXu/T7jQUj3R2ZMY3RTKqar/SKnDZE5P9R146Rbo=;
+        b=DfrFlBHiE4176WP0y0vr+bJFqOX69qQCfreGRxn4VOZ95n1COFhGsrA9shEviu/Oam
+         mHjJ9zfiwm0KCW+VbjqqE6spfWcVc25tNPBwdRTjUfsoyImVqi6lgcuFRX1pdOi+9KEK
+         qSZth7ao0+Jk+uVYAh7wlO23w8955XriRvwh/EWBjkX/r2p7UgmaCRDN2yGvHidWZBgi
+         sP9X5lE1vbYM2VcNSxdHBE1ADV3wJCNu9wxunYf+fEt8UXDEd79mUx73T4OYAj8rrLas
+         m6jj43k8kVyL8YSNhtTryDDLQOF10nTuZ3xxTW35LbhO+oJUTeD8FDJUDjMonmohsLzY
+         7opQ==
+X-Gm-Message-State: APjAAAXo52Qo7HTWny6rF3tCLMU8G4oxh7mxlga4UPkU56KbFI+rZYrc
+        xdmwQWBKuNcSxhjVZs8qd2w=
+X-Google-Smtp-Source: APXvYqwOE1uCVvOxTKC1ashokdCHLJxTUxAf+4f+oVQXH8VwHPg7yo7yArC/zEhjpg9wIWwTLq2GQw==
+X-Received: by 2002:a1c:ab0a:: with SMTP id u10mr9831479wme.0.1572445905497;
+        Wed, 30 Oct 2019 07:31:45 -0700 (PDT)
+Received: from szeder.dev (x4db90119.dyn.telefonica.de. [77.185.1.25])
+        by smtp.gmail.com with ESMTPSA id a7sm406276wrr.89.2019.10.30.07.31.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 30 Oct 2019 07:31:44 -0700 (PDT)
+Date:   Wed, 30 Oct 2019 15:31:42 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] commit-graph: fix writing first commit-graph
+ during fetch
+Message-ID: <20191030143142.GW4348@szeder.dev>
+References: <pull.415.git.1571765335.gitgitgadget@gmail.com>
+ <pull.415.v2.git.1571835695.gitgitgadget@gmail.com>
+ <ca59b118f1fa4176214f55b8993145b5e1db39a0.1571835695.git.gitgitgadget@gmail.com>
+ <20191023150402.GB26017@szeder.dev>
+ <e2eb7b76-a29b-04c4-e698-f3a67ae56ecc@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqd0ee3du9.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <e2eb7b76-a29b-04c4-e698-f3a67ae56ecc@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/30/2019 3:13 AM, Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
+On Thu, Oct 24, 2019 at 06:39:51AM -0400, Derrick Stolee wrote:
+> >> Instead, I finally arrived on the conclusion that I should use a flag
+> >> that is not used in any other part of the code. In commit-reach.c, a
+> >> number of flags were defined for commit walk algorithms. The REACHABLE
+> >> flag seemed like it made the most sense, and it seems it was not
+> >> actually used in the file. The REACHABLE flag was used in early versions
+> >> of commit-reach.c, but was removed by 4fbcca4 (commit-reach: make
+> >> can_all_from_reach... linear, 2018-07-20).
+> >>
+> >> Add the REACHABLE flag to commit-graph.c and use it instead of
+> >> UNINTERESTING in close_reachable(). This fixes the bug in manual
+> >> testing.
+> > 
+> > I'm inclined to agree that using a flag that is not used anywhere else
+> > is the safest thing to do, and at -rcX time safest is good.  I'm not
+> > sure whether it's the right thing to do in the long term, though.
+> > 
+> > Furthermore, calling this flag REACHABLE is misleading, because the
+> > code actually means SEEN.
+> > Consider the following sequence of commands:
+> > 
+> >   # Create a pack with two commits
+> >   $ git commit --allow-empty -m one &&
+> >   $ git commit --allow-empty -m two &&
+> >   $ git repack -ad &&
+> >   # Make one of those commits unreachable
+> >   $ git reset --hard HEAD^ &&
+> >   # Not even from reflogs!
+> >   $ git reflog expire --expire-unreachable=now --all
+> >   # Now write a commit-graph from that pack file
+> >   $ git commit-graph write
+> >   Computing commit graph generation numbers: 100% (2/2), done.
+> > 
+> > It added two commits to the commit-graph, although one of them is
+> > clearly not reachable anymore, so marking it as REACHABLE while
+> > enumerating all commits feels wrong.
 > 
-> There is the v2.24.0-rc2 tag now; the contents of the release
-> candidate hasn't changed much since the -rc1; hopefully we can see
-> the final thing real soon now.
-
-[snip]
-
-> * ds/commit-graph-on-fetch (2019-10-25) 2 commits
->   (merged to 'next' on 2019-10-30 at 3ca711f743)
->  + commit-graph: fix writing first commit-graph during fetch
->  + t5510-fetch.sh: demonstrate fetch.writeCommitGraph bug
+> Since you are using "git commit-graph write", the command is scanning
+> all pack-files for commits to include. Even in this case, the
+> close_reachable() method needs to walk to see if any commits are missing.
+> (It could be that the root commit is loose for some strange reason.)
 > 
->  "git commit-grph write" hit BUG() in corner cases.
+> In this case, we are marking REACHABLE the commits that can be reached
+> from our "starting" commits. In your example we start with every commit.
 
-s/grph/graph/
+That's exactly my point.  fsck already uses the REACHABLE flag to mark
+objects that are reachable not only from all refs (including the HEADs
+of all worktrees), but their reflogs and the index as well.
 
->  Will cook in 'next'.
+However, in close_unreachable() we start with a bunch of commits and
+then go into a loop adding their parents to an array, while marking
+each parent to prevent them from being added multiple times in a mergy
+history.  We have a good couple of similar traversals in our code
+base, and in revision.c, builtin/describe.c, walker.c,
+negotiator/default.c (and at this point I stopped looking) we mark
+those parents as SEEN.
 
-I had thought this bugfix was worthy of making the release, as it
-may affect more users than I realized (anyone with a submodule, fetching
-after first clone).
+On a somewhat related note: 'git commit-graph write --reachable'
+doesn't include HEAD; should it?
 
-I understand if it is held back because it only affects a new feature
-that is opt-in for this release (the fetch.writeCommitGraph setting).
-Just wanted to check on the decision here.
-
-Thanks,
--Stolee
+> If you had used `git commit-graph write --stdin-packs` and provided a
+> small pack name over stdin, the concept would be similar and even more
+> pronounced: the pack (perhaps downloaded via 'fetch') is not likely to
+> contain every commit, so we need to walk all reachable commits from
+> those included.
+> 
+> I'll have a v3 today with the requested fixes.
+> 
+> Thanks,
+> -Stolee
