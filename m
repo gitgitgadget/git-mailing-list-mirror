@@ -8,92 +8,85 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 164C21F4C0
-	for <e@80x24.org>; Wed, 30 Oct 2019 06:57:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEB271F4C0
+	for <e@80x24.org>; Wed, 30 Oct 2019 07:01:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727299AbfJ3G5D (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Oct 2019 02:57:03 -0400
-Received: from mail-ot1-f45.google.com ([209.85.210.45]:44638 "EHLO
-        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726747AbfJ3G5C (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Oct 2019 02:57:02 -0400
-Received: by mail-ot1-f45.google.com with SMTP id n48so1156406ota.11
-        for <git@vger.kernel.org>; Tue, 29 Oct 2019 23:57:02 -0700 (PDT)
+        id S1726884AbfJ3HBT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Oct 2019 03:01:19 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:42059 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726177AbfJ3HBS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Oct 2019 03:01:18 -0400
+Received: by mail-ot1-f68.google.com with SMTP id b16so1179414otk.9
+        for <git@vger.kernel.org>; Wed, 30 Oct 2019 00:01:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ftWSEJ/7aM7jkQVdDNeyzwz0tlyeUXZv6QRxupjnL30=;
-        b=MICtOHvE0XO0x0MwVj8KZnzhDNxpM9Q3wGHohFcx817uM2TlZ3AQS6itTpMZQhoBgU
-         9YD62YtKeYzqTyzhJPBjX/Rccr0YbgVr/JWRqWMV532lfiKO4mB0zCBxwje/Ea4sFwCa
-         mpQFa6xH8/w+PgSAxOwpe0Gm97E3ndHANKW9MconVAm4uiXjNy5cVLfa0OWwsKvkgUXo
-         XrzjgUcjRJ/DK+qiwwvv+y7d504uczUxKHEyERpcu3LFfyiKD3HIflNL3nsTEcDo83BH
-         lyy4KPs9G3dxiWVbL4z3czn2FTuQ+U8xTzlNYZm2D6WfXdW47Z5xHHzZIrafKg9HeBpA
-         XQoQ==
+        bh=/Vimzu74YLg7q2B6X2HLoDb3ha6wiSR5iD+DtI8i6oU=;
+        b=apwnJTXtIxb3QB+BJB1+KWn3ZvVloRm4MZLdLkZuFBpZkN0jaYn7gDxL2m9eGUziyY
+         T/vYeR7QTjSCYi+m+TzSMjpeRjvcrhyFGqr0m3W41zHj5uZwhJg0kPp+KvqA95m0twav
+         rfrCc83l5Ki/KLjKz+oO34ETOrZ/UnfG477FFyCyS17MadUceGYPMJZcMkQc5GHWGtnw
+         xt+Og9BTZL7NIAfpEmJOVu/HAPtRw2jWIiDgH2y8jR2d4BVMHPT9ox4RzRoK/ePipjX0
+         qClz2WvZvKBD6ChewWaws3kCpU2wiIYUqtlfnmsKV+DjXa5GF1Sjffmk7FJkIGDjmUWU
+         H2iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ftWSEJ/7aM7jkQVdDNeyzwz0tlyeUXZv6QRxupjnL30=;
-        b=QfpEuRU7e28krNTyvqEWfELZY1MjF9e/2fhKBA1bSVaKiUZh2YGXTHjnjILSd/P+tZ
-         9f8J8CaUUzMHbOoi0KYlHYJ6kb5HLec5S4ExrtMiunT2SESlFPpIa+0j4G78XunAjAQb
-         bcCrVSp5YQEaKJt0g0C62EOVOT86AqMg5cNdFln6ZFIxcFNrH99sroDeQPb1SQ+RdgkH
-         Fedqnzv2zFVNGkXecdRK217pVDPaPPjw0MsDFxvGG/l0kMDcYa2ykeUYAtOyHn/I2J65
-         JKXALeV6unoyYNUFYys+g04sobZ6a2vnVmOQtpNYEMaS9leCAy3E74ahFnhyUXaCL6Om
-         BBkw==
-X-Gm-Message-State: APjAAAUruu0YtCiMFRmzbZLdEyV3GHxCBn7Cmr4c4lOYnvTVMVpR2cVU
-        FRiwXnQpZpwveP4P8w9nXq6zZ1ElQoZ4UBvWMgyZJQgZ
-X-Google-Smtp-Source: APXvYqyIFWwAB7STvYJD9aoB5KfV64PCfBZ1bQ1sKa9nNM4zfrVu4WZR1D4UVd9ixJmif4hws5bLEnSXylqeLb9C010=
-X-Received: by 2002:a05:6830:1e4a:: with SMTP id e10mr8318801otj.345.1572418621787;
- Tue, 29 Oct 2019 23:57:01 -0700 (PDT)
+        bh=/Vimzu74YLg7q2B6X2HLoDb3ha6wiSR5iD+DtI8i6oU=;
+        b=cwh8BezpsZi93Dj8rn1+iKVQc9xaOe5fBFAoAw34RBQ/pLnlS/wqg0uCGr1uzUDJII
+         ukle1gj5QipaHttUQlUJo03zt4b3g5tOJfabr/D0l+dtyFejq1m5uBI3vSED0UBbfXRu
+         yTMcXqxnsGMG8Z3X0OntwEzDIMq9LQArpjYah2YfpvCGv4ggIIjwL8UPZ5crjtYN+SuI
+         oQ60/npnlqHLuRrNVibtSOdIFM1IBuzXKNNoIXpu9Jvp/8MphZjGtDu8CtWaXI29U2A5
+         YoqnE6HNsvnbITfM4XGzmVLLKuJqNriDk26dvSu/6KysBYsf4exxQCCT3/UvTHFafYi4
+         BmDQ==
+X-Gm-Message-State: APjAAAWDSLJUl5gcQkwtPaMeBom5Jo22ENc6+pWBZ33rTkeS8gGFVsuK
+        1MoGlcKLCRcRTunHwo+BCC+HM+9oG8Zs+aB1XEk=
+X-Google-Smtp-Source: APXvYqyUaVBJviJ0CTgIjWLAjIMjRZHC1sTtl59aYrJseUVSJwKxh0spaNDSc28PfA6hxgzz8okO8v1We/qproo3UNQ=
+X-Received: by 2002:a05:6830:1e4a:: with SMTP id e10mr8331641otj.345.1572418877615;
+ Wed, 30 Oct 2019 00:01:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqqeez2fzsy.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqeez2fzsy.fsf@gitster-ct.c.googlers.com>
+References: <pull.390.git.gitgitgadget@gmail.com> <37aee862e14b1352eb08485f15ea06bab33679df.1570826543.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.1910122152210.3272@tvgsbejvaqbjf.bet> <CABPp-BFNCLJnt4NgFKVxURBGD1Z00gastc5q4ZPjcHmwS=kuFw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1910141211130.46@tvgsbejvaqbjf.bet> <CABPp-BFYWhyLqUktEnk6A7v6135k4TQHO20Wiy32mRQekt-3cg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1910250020220.46@tvgsbejvaqbjf.bet> <CABPp-BHBUKq73Ru3D9HKp6ABo8eQNmkSkz6MjA+4J2a6xxtWjA@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1910251527440.46@tvgsbejvaqbjf.bet> <xmqqpnig8i0h.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqpnig8i0h.fsf@gitster-ct.c.googlers.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 29 Oct 2019 23:56:50 -0700
-Message-ID: <CABPp-BGV=5FuMfq1pYbbHCMMvyVGQPS_8yTjqhKoqrm7O1KFow@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.24.0-rc1
+Date:   Wed, 30 Oct 2019 00:01:06 -0700
+Message-ID: <CABPp-BHPRrbCs2qM8-zBaiL5pO3+9k5cbjtk3YVhy9_k1d7t+w@mail.gmail.com>
+Subject: Re: [PATCH 2/2] merge-recursive: fix merging a subdirectory into the
+ root directory
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-A couple questions on the release notes...
-
-On Thu, Oct 24, 2019 at 1:35 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Git 2.24 Release Notes (draft)
-> ==============================
+On Mon, Oct 28, 2019 at 6:20 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Updates since v2.23
-> -------------------
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> Backward compatibility note
+> >> Still, I rely pretty heavily on t6036, t6042, t6043, and t6046 for
+> >> sanity in the face of refactoring and rewriting -- and as mentioned
+> >> before they have caught refactoring bugs in those areas that appear at
+> >> first blush as "overzealous", ...
+> >
+> > One idea would be to try to guard those extra careful tests behind the
+> > `EXPENSIVE` prereq.
 >
->  * Although it is not officially deprecated, "filter-branch" is
->    showing its age and alternatives are available.  From this release,
->    we started to discourage its uses and hint people about
->    filter-repo.
+> Yeah, I like that---I think it is perfectly in line with the spirit
+> of EXPENSIVE, too.
 
-What do you mean by deprecation, then?
-
-My understanding has always been that deprecation meant "supported but
-discouraged", which is exactly what we're doing.  We also run the risk
-of people seeing "not officially deprecated" in the release notes,
-then being very confused why the documentation and the program itself
-is discouraging its own use and wonder if they configured things wrong
-or got the wrong version of git ("The release notes says it isn't
-deprecated, but whatever version I'm running definitely does have it
-deprecated.  What'd I do wrong??").
-
->  * The merge-recursive machiery is one of the most complex parts of
-
-I fixed this "machiery" typo in en/doc-typofix but as that hasn't even
-merged down to next yet, I'm wondering if you're planning to include
-that in the release.  Should I provide a subset of those fixes in a
-separate patch for inclusion in the 2.24 release?  Which of the types
-of doc typo fixes would you want to see at this point for including?
+Or perhaps EXPENSIVE_ON_WINDOWS, since it's actually pretty cheap on
+linux and not that bad on Mac  However, if we're going down that
+route, perhaps t9001-send-email.sh could be wrapped in an EXPENSIVE
+prerequisite?  That single test file takes an inordinate percentage of
+overall runtime.  One one box with a few extra cpus, that test both
+starts first and finishes last...and it's not far from that on even
+normal boxes.
