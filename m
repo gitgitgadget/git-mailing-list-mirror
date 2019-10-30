@@ -8,84 +8,134 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A15181F4C0
-	for <e@80x24.org>; Wed, 30 Oct 2019 21:59:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 935FF1F4C0
+	for <e@80x24.org>; Wed, 30 Oct 2019 22:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727346AbfJ3V7B (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Oct 2019 17:59:01 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51855 "EHLO mout.gmx.net"
+        id S1727427AbfJ3WDM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Oct 2019 18:03:12 -0400
+Received: from mout.gmx.net ([212.227.15.19]:48903 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727166AbfJ3V7A (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Oct 2019 17:59:00 -0400
+        id S1726711AbfJ3WDM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Oct 2019 18:03:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572472735;
-        bh=DMFtNAKvF5vEhXOXLpk5B05SC+Z3QmI0LThZBCsYHqY=;
+        s=badeba3b8450; t=1572472985;
+        bh=QOl4UssdArOE0OGA5ejoTILcUFsOOkRJmgtGuYK3rAw=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=h2t6/66rkwL8y7YxCAifV7pPjveGrFcLJKL7sjkiVOFhbqC38VuTAdBMeiVbVHhpg
-         XIYxxhBPuTYIhxHnY5hOgXRUeC+W0se5pb3ZTDZD02PD8tLCLGFOIJaq5Er8G/nxf0
-         OpAJVLwF+yPO+F5tDgnpcyZ4w95FRGNRNP+ts/c8=
+        b=NxL0aj4ZtSs+CcFxWru+U4XCyu+D4LRyacBylh0zwBcIDnzLubQysQPM357mr4Bwb
+         12aRuaNL5b9KgIgOfTu4izahiaXokiHB5oJVwPhVD74No5zVW3vxThljmbXIwx2KIW
+         jdfsOifRkhDCQujcljqJzzhsWcy7yiaMmsrWZRTU=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MCbEp-1iGtJd41Y3-009dQI; Wed, 30
- Oct 2019 22:58:55 +0100
-Date:   Wed, 30 Oct 2019 22:58:39 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQv8n-1ie3MF3bvD-00NyhA; Wed, 30
+ Oct 2019 23:03:04 +0100
+Date:   Wed, 30 Oct 2019 23:02:49 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     george espinoza via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, George Espinoza <gespinoz2019@gmail.com>
-Subject: Re: [PATCH 1/1] [Outreachy] merge-ours: include parse-options
-In-Reply-To: <xmqqk18n3s3i.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1910302257480.46@tvgsbejvaqbjf.bet>
-References: <pull.425.git.1572306149.gitgitgadget@gmail.com>        <8c088194f604eac3a6b00c48a7fddfdf807571fc.1572306149.git.gitgitgadget@gmail.com> <xmqqk18n3s3i.fsf@gitster-ct.c.googlers.com>
+To:     phillip.wood@dunelm.org.uk
+cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-diff.txt: document return code of `--no-index`
+In-Reply-To: <4548d037-3fc5-b625-b7f9-646392392d0c@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910302302060.46@tvgsbejvaqbjf.bet>
+References: <3f6d132663cacde01df68bfe88c6ef108cf6cf74.1572337045.git.liu.denton@gmail.com> <ed9f16c30a0f3852abaf0053d8c2b4a0ecd12f01.1572367897.git.liu.denton@gmail.com> <4548d037-3fc5-b625-b7f9-646392392d0c@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:0FNwER2DZWfTx9Y3mU10fuHT6/tCnrC62XZthOKghIsUnQ59yLf
- u7wNiBEGA+VJagaxODlVwjbr55aOSky/gsOg8B/FUcm4zZzSAdrAjq63CdHgEGDI9iqABJp
- Vs+QeBc3QyM9LJZKUbSOyT4ZQeTMCPuDfdCBL2wkaHVFKV9WPk71K+sbw6TWvCZsJXS2xi3
- 9Xb63EUmG8Kcz6/dgdfHA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ABS9UCmg5Sc=:WgiIyXs8QTWAtY8w8KYGBG
- gAzC0ffVqmOxw40iz+cMO7gvwsF8LiwTTbz2rG4WCFSEMHIEhfqgI3sHZLfeLs18HhNwLKQcF
- uRhSQ6HHzDou6QDnxRzemHUVbDVkgr90KLV3KWrN+ouuI1SWE3nFyJZOIn/Iy8xgd57VnsfvV
- sO4URdss0QJD7zh/NksHU97ZcpAsens+hzFzfZWfcrVwxTRnbZEIv8Mk9WOncYJQz4Qy2LD+1
- ee5AjmfuYtBUswo8W3nhzeSSih3ga6BNOu4DUTwnhAmNjvq4t6CVLMdyiS60b5uEq9ZYm7sv1
- 13wpUGrikRRxY0nD8Fe5QrqtxZejwYPBX7mRYUOGUWDAnlZKNS+Twzv0uyATne7rD3GZzz08s
- aiUgwE7W1tbtN7kUoIN04CC5X5VBS+8NlRjuIcs1E858Nqf5uvFSRswAlj4zd8hCvOXEqt105
- bW3zRlE3J2HPsp/j9ECr6m4zIDYAB3GuOA6VsiI/xbYiJDtJiuKch6UBC++nWC5Ws9+yHCJiP
- mllxzHwPYH+ZB7o4b3jU0roTWczPHyOpxFiWeLmJFdMxRMTCLWQnV1smdPryH8jedy40S2lS8
- vtdFCXWVoG7I5GLGUJq84EyuqtDHyRHcTjDuKQadE6+58nDjHP58WJyrgvMwk4O7a9Ubg/q6D
- W7ILPpr4ETKNqCHkVWZ4syLep/oGIf2Kd2iyhJ2SxPU5FrL4Q+FUPxajT3h/LTDrG9mNMyDOj
- 5dMSNF8Id3zEVI263nrNdx3mGAmDMYphVPblGGEXdDK1VuOHFdb06DWG+QTYdjcei1XWi+qmj
- Y2/+8cLe9UPXArjWaxQkjdp4BrAf8xr5pDSL0EugL46Rv2PjItsi1JNqfiUysk/ARpWHid26X
- gr64zpJVncdMoL0ljtMmiE12u23hg6oE3QWAjwmyFgc+mzrLws/K7UGKwgbTv1dWhB50LiRPZ
- cPxbI2864E5Pcu6rhySG6n5B/M4FSu5NfgTKSpyTP69I+oC9uhRn/2uUh2vLHF13ll9mOOu0D
- m/6LQRjCpLwqNJel2C0hsj9Ohs6NgKMiKRqc3Kxm885QHCe2gA39GgfcKfkM95s5THarqHWtc
- ETMGSh1X64QmLbSRl1RElb9hagPecZ/KFoeE745sjly4CXowb6TWPoNKzAMp1VIzJ/VTUKPUw
- b1Mnwydm/JdWuhOB9TO0+MlVjb2wU//MYyL3EwAH+bIwb1vLkXCG6M9WBiJx0gx8WszqjXNc+
- pmdcxVPMAgYb5mDsXWVIFn/47iXBwaNlvPGDP9L4PSTW+znCP+SZRHy4r/Yo=
+X-Provags-ID: V03:K1:z1n9mv/ie6Dl0XKUScUQbscoTo3CK6RGXr4h+aifrHUPFUK2sFY
+ D9EThk1Eue777nd6n8nm50sdoL1bZ53P0stpClaTQfM3y63wdKrpqB2tjxvV19kidD5FwYq
+ JyCbxa7pSyuaAAvEAxBwSDQCTahxGp/6FkRkTDSWSjJfsu427Gl4lN2x21tYB3XR1uenRMx
+ yivuWIs+PMzMW4HVIbEJQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:N3RXXOFUTD0=:Gz1/wSPJAC9nhZXWvLKjGk
+ Ajurn2gV3FzGYO5CWSbeUtVfCH8cGIgArlOkSvN/y+PXBmaEwBChCA2kKNinfVRNE0LcH+18y
+ ipyx8p5D0WNVnmW6FFHl/Xelgvx290FZ+q712c7V07NTUxK/bSOOyW/bJDPEnIyIDw6/G+2GY
+ ZXrc1JBYbrXRMTsJSVLd1rk4E9uKtdcHOstWVoRlMBnQqya6DTp79YzfscbtkdXhd4ZqX5knp
+ 5Eytr1kRsvAaC+VCznIQq3Uc7MOgnwvMer5jAxHUc3lzmVsnRLbakOYfKtMIRDoran9EReuFw
+ 7alDUL3KbRZPhgakfsoAx+tPnUAnE8vOMx9pk7x181H7JfzUklw7kwe594oUecQX52ZrdvyiE
+ iPCEt48jVAgydmMJJgm0gQVXFWopK+vvZZPSjs3FW8TMOzNP8C2pR0KHz8ZX4v7dgW76AatYR
+ 15w6xVnglFy/YPDSuiWKWIB7HX5zO+Og7KG+DqSG+oP0BtqnwmhcbIA2RjBo975UP3fwJ/S6Q
+ gi0Xc51fLX3mmfPyNq4uzh/HZQfZG5JpdK8tmFyh/fuyuJu8Klvf+zlwDMEciIiIaPxexat8k
+ bC5uydi4zs4Z+mBvt2RNv2b6bwbi7dJcTxz1rxvt9QYVkhCVQAPHy7pu1sW5SZtLxu8J+8yiW
+ i99pwYWF/Oxb2RlKp1l2YuIZrkSl9lhd+1arK54iv3xAiq/QnvITTCqNMqkrZXSNfuaXiQi+t
+ dHiimPZS8oXRosvY0ekX3vp2GR4Lk0xpQ87mPSzOLHLLQLs9GyDsE3U4uS818kt//jSgd5lgg
+ iggAIjf3rHVBiSosR89mRFVJ28p/jV7EkEpSQbyS7PQvdlGZM/WqW08r4S/pFohWVuiQmPHOz
+ F7Ci6f0W5QzmUbiKuUG1wmY2cmCbL3u+22OiAA1rJRw7e10f6SwGglO9wohbppaET9wcnZLwj
+ kzYMi/AR7GcJ2a5bFD+wsWUGoAeTgxIV08ReKGo79MQggLecHGf7bNeDaiVfQ5QVm3stzmzuA
+ zX2kV9PjdWNdJ5aRmK2/E736HjD1lQ3UYKqvegPDzGcYHIUlARUL6XBveXloYah/TjPI1h9uf
+ XOL53BtSC8A8IfqH8IoZBzSXKT6gu1Vyf5y9F29xyQO8Sa8vRppL/ceh2bjd22fnUKx5Aep59
+ g05oae+J6SZVhJGtJWbQ496LHQGPijHPChfnJnwJhDaUj4SA8s2V0fPy5TH68naBWvljsT9nB
+ dQMHPL+JJYiSXNYUOCbjbc4TY12vh9UOo3c/XCmHNN7e+R3kyU4CJrtfLrRM=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Phillip,
 
-On Wed, 30 Oct 2019, Junio C Hamano wrote:
+On Wed, 30 Oct 2019, Phillip Wood wrote:
 
-> "george espinoza via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> Hi Denton
 >
-> > From: george espinoza <gespinoz2019@gmail.com>
+> The description is good, but the patch has a typo
+>
+> On 29/10/2019 16:54, Denton Liu wrote:
+> > Within diff_no_index(), we have the following:
 > >
-> > Teach this command which currently handles its own argv to use
-> > parse-options instead because parse-options helps make sure we handle
-> > user input like -h in a standardized way across the project.
+> >  revs->diffopt.flags.exit_with_status =3D 1;
+> >
+> >  ...
+> >
+> >  /*
+> >   * The return code for --no-index imitates diff(1):
+> >   * 0 =3D no changes, 1 =3D changes, else error
+> >   */
+> >  return diff_result_code(&revs->diffopt, 0);
+> >
+> > Which means when `git diff` is run in `--no-index` mode, `--exit-code`
+> > is implied. However, the documentation for this is missing in
+> > git-diff.txt.
+> >
+> > Add a note about how `--exit-code` is implied in the `--no-index`
+> > documentation to cover this documentation blindspot.
+> >
+> > Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> > ---
+> > Thanks for the review, Dscho. I guess it slipped my mind that we could
+> > write it this way too. Oops!
+> >
+> >   Documentation/git-diff.txt | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+> > index 72179d993c..56b396ef81 100644
+> > --- a/Documentation/git-diff.txt
+> > +++ b/Documentation/git-diff.txt
+> > @@ -36,7 +36,7 @@ two blob objects, or changes between two files on di=
+sk.
+> >    running the command in a working tree controlled by Git and
+> >    at least one of the paths points outside the working tree,
+> >    or when running the command outside a working tree
+> > -	controlled by Git.
+> > +	controlled by Git. This form implies `--no-exit`.
 >
-> Sorry, but why do we even want to do this?
+> s/--no-exit/--exit-code/
 
-It _is_ a command you can run via `git merge-ours` by mistake. Don't you
-think it would be nice for users to at least get a synopsis?
+Oh wow. Did I really type `--no-exit` when I meant `--exit-code`? I
+guess I did. What a serious Freudian.
+
+Thanks for pointing it out.
 
 Ciao,
 Dscho
+
+>
+> Best Wishes
+>
+> Phillip
+>
+> >
+> >   'git diff' [<options>] --cached [<commit>] [--] [<path>...]::
+> >
+> >
+>
