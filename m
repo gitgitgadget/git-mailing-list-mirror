@@ -8,152 +8,149 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AC161F4C0
-	for <e@80x24.org>; Wed, 30 Oct 2019 08:35:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EADAE1F4C0
+	for <e@80x24.org>; Wed, 30 Oct 2019 08:55:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726063AbfJ3IfB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Oct 2019 04:35:01 -0400
-Received: from mout.gmx.net ([212.227.15.18]:43805 "EHLO mout.gmx.net"
+        id S1726065AbfJ3IzZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Oct 2019 04:55:25 -0400
+Received: from mout.gmx.net ([212.227.15.19]:47975 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726028AbfJ3IfB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Oct 2019 04:35:01 -0400
+        id S1726032AbfJ3IzY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Oct 2019 04:55:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572424494;
-        bh=o9yI53A2WVVxyiUwP/SYNu28/RxEoG/cfImNua/1cI4=;
+        s=badeba3b8450; t=1572425708;
+        bh=Bb1cOwwPMpBUcoiRQ0lAh05X3QU2BvtkhupdgjpJZ+M=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=AZg3aV8B4hMLnsflFXdYovwT+1yln1u7P7T5FyJhfUtJtODKngVgPqfVDKv346Hu6
-         UGzhiP1JAXfX8lcecEZQwWxBrqPBm/zCmT7giVHc2FLaRDMhyY1vsnjfmaUj3rcDUQ
-         F4v5RhTbc0f9Amni2EHaPwveaNHz0K92llwNX0Gc=
+        b=V0JtLAjhiko6cugsvXTbmJJqeyCYjI6wFLrOHrDOg6gRPl7EO9N0NIscQQereTWcD
+         CiWDQdHINa1t9Epi0kxkY9+ISvL4TKXS6YtojNiffs9kAf/DUfU05/nw03VAlMFnvr
+         QeJHI6maMvXJne5tn6KClf+2OP86Ga2LyZ2kOu1E=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M8hZD-1iL4c31Fr7-004m1X; Wed, 30
- Oct 2019 09:34:54 +0100
-Date:   Wed, 30 Oct 2019 09:34:38 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mr9Fs-1hfAj417J8-00oGoZ; Wed, 30
+ Oct 2019 09:55:08 +0100
+Date:   Wed, 30 Oct 2019 09:54:52 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] update-index: optionally leave skip-worktree
- entries alone
-In-Reply-To: <xmqq5zk7593d.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1910300930440.46@tvgsbejvaqbjf.bet>
-References: <pull.355.git.gitgitgadget@gmail.com>        <pull.355.v2.git.1572261615.gitgitgadget@gmail.com>        <86dbb11f159375da281acd6266df019106abeadb.1572261615.git.gitgitgadget@gmail.com> <xmqq5zk7593d.fsf@gitster-ct.c.googlers.com>
+        git@vger.kernel.org,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/1] vreportf(): avoid relying on stdio buffering
+In-Reply-To: <20191029203259.GB12337@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1910300947410.46@tvgsbejvaqbjf.bet>
+References: <pull.428.v2.git.1572356272.gitgitgadget@gmail.com> <pull.428.v3.git.1572379280.gitgitgadget@gmail.com> <fce0894ee46f737322551b51edf5cd2a53413a50.1572379280.git.gitgitgadget@gmail.com> <20191029203259.GB12337@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:R173uEe4wEJ79Xtbxd1J3qV67Hda191RL2zMNjpXy+5Of+W8vM6
- QWMKP0kAzHhDPeoviqdfT4H2oeZOSA9Cx3XaqP/pi9byGynYbwEK6RvyosAk0QVBtUqNGUO
- Jwm85uWw4yPpZD+eWOb+gs2T8Sgu+/OkoxvAAvQ+lSCXFaFS1EuEiJsy/yI9M4XhdI0HbU1
- 52gOp2WzLNhbTDUcazBzQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:w8I7vKqcaZA=:iKKRgVeRZz8VFX0Zk52ejz
- 5HLhvPDb4aovLYoeT9EF/Lzz8l3vSG/mFHDEyF1jR8wTEDNtwc8tGKvcamKG6yeOWNQao0NeV
- czqmfMT+pXIvbqJTW9KMOjPbexKHyoe6hsj+yWLIAbXFT/U0fOgLyAc1YQHhkS1NiAG2B2Sn6
- SqNsrhZxm/Y3Lry7czOtjODMaiDPXRNFNBTfBZ740A7REOpvD6yPb4OvKfZ5Q4/Ts4aRmzOEO
- V12HBCbV326wjfJIm/1wZg+iqlnnozhhzhkE295qZI8aSLRTG70KMAXaMElwIppXNxlzDs92s
- kV08iLUd4I8VAuNxzoFT4RXQJ9KE7WlWB+Mu7rJ++1lnfrzu39OJHatMCkEw4SUJ+xi88UjYg
- ZAqrXgLgf3ZH4ngA7X7f9/7U/p5ldPuO05ggUBCoMD1QRyoDlQBN+I/yt/BRwhuAwowXxXhpl
- J3DVFNa9e7Q1e/L5C3P7pLb9dubF22aeXphsuQpUc5mbYwhwn81f42zb1d4P2gDmmkzKHOarC
- Q4/dfKHBdcxjh3veYaB8w6VZ07jEwBrVPE3bRBqMpirEy1gRqIWt4YARQjlZF9G8THaMFz9Fs
- CHIz8ML9ePDTZu87W1A3gn4CA1H0Gtpj/Fel39sYZMe0yWz/+ud1HqSXNDlYHzT6UeJJQG59/
- 0zbr+YeMO+MZDj9v1Cm6U5Hkf6+FFBdm3/AKCEcsEZ1wY6X+FKggR9Q/zKWisqczVezxJdqjQ
- V+TiXx5CcT6cJ127QjEej5bRmHk0sct+dwH3e7tvQ+hjMfxgKBWGGfd5FlKoOszsFaDEvXLSU
- v2YUPIoHkSONew1YpIJHJil+ezunvktl5zVzBihMABwv5qJzth9P8PiM3C7BvGSyKL9dK48Xc
- tbUWyyrc7fv6Gr+EE6rkTLGmCGzoyUB9mWaI6zRV6KgBsOfrovYv4yCZbINSaOL1xnh4UdG77
- 0G+Cm6pmca3A57YhNVuM2WDNiTN2QfimlZe2YsOyaVNzqOqiNDF568SK6YRSJBzfkp4Kwrwdy
- GOaqrv4cYv58uwpbTWD2ATw3ga1QFI5hNZS/2uSchwDeWs8ym8nrW5/7GqcTIotE1A76ULfcp
- B0j+8Usqhq1tup6/0hizwqAKK8ovAh+68Uii5qhNSJKC8aiDVaQPtO43v8xTjQG6md+1Alvfc
- fnyc2k8Arl5pXyRKRnJbNf2REazJ/GUb/pxeTLlgNJ34Apg7Qd65U+18weMiIAZ7G+31faVGX
- 7hUX3EX5KfEkOpxxemmLP+KnvhdNC3o3oAQAS5CRRMeLhweS8HfhR+mFvbG0=
+X-Provags-ID: V03:K1:GArS4UE2RwwjaHKhnG1rO9UTAJrmJr/Pf21P010rJeXnDiKslze
+ IwOjaHURWefEgPJBG1BgelVt9rfqxkjqWrHgvXMjha2ZYKgUckHdA927CCVeQZjqqEQCcgV
+ ASkoML7n/9VVcIFJVjjOCvvTNwNEQRZwHNcfOTBcxdSic5es+1efbmVvF6AHSm0Unrd4Ato
+ OXnvRXmKufKx6eiJdQ02w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:glXhLRrJGks=:fcVe7fxcyly/Mkfyvy/f8V
+ ETrt2rRcGVm7kho7PKcU9zkh/gMInp2jDARr4jEeeiVKFHfoLLcxYhRx24Izqxs3gwF1KrXpT
+ EICairFMoDcjrOf9ZHk6LHjkzv4u8eCYXUQbDde3GEBB9nuo511MWIHfu7XxqaGB/Ch50Yee2
+ 3E4+RIjDzGzXA3p3k9EbtuDVWoTUNffMdV7aT5JJvauetXzzexzna3SWZgB3S/oEt8QP4u1mT
+ 93JlT3EXrRJjyoZPDhrHI/mipO/B0fyEg2aLiabypG7iQ61Ie0IZERgMy068C+LM91UizJWYN
+ J3yqShTYlDyJzu0LQE7/s6PRAzGZ4aKkUpxjXHwpfJPqMOwyZB4LLGxfMxYgah43Jsuma4hWi
+ NR9SpU487PfO/zsptY+bdxTv9tU2pEz/WwuuXS4XL3bNp9qLDyhHTTs3buhYIt0678AVNRxWk
+ 7zXIeZbPvkGma0A/YsFei8qtug8xWx7w60L5vm59Goq4O2rPHq3IJauPcOBFmVLxqzm6RyK+1
+ xL/T9eQMcxgX901prZ0izIUT5U6JDKtiKPXeLYqVyYgYK29Hiz1u2yUr8eeAolhLHd71tTocy
+ /s+Ng3ollST4C3yNDYd45GSBjrnJsyfRDn49YVkw1WMCkPZ7UYp9Ky0ecUvPFvGPCY4oAqMZH
+ 7X+FkpXh4e9wBs2D95KD9SlyRb0ux3ev0SpnYGx/5klK3riShZ7avBDO9tfSv/Dyytzn4CZLJ
+ dTJ981vk8oz1jHRod99OHA1mPIYWnaUrs5jHC8omLZhjcpbVZSvE/j04YTg2RGsVv31kOmvdM
+ rk159oyScu8lpU9iy6ht9cRJ03YXKxSnA0jaPdeECt2tFwBRdt4iBivglQ21uXORCtU3WXExN
+ ozMvciOcOxJ8jXYsOYT6/NYocYQ6Kt1EtOAFb3i7oA+ch4vVzlRlVXHvJM9VT2fslYvROKe/e
+ huNRj2NQFL3PTHVpO/XxxFfwaLUKrkPvGFTv/NSgqvCY8YDQ9U9Wusbx07gYGZQ1KS4Xwo3rn
+ tkFN4XxbkQadBJzPdvHakaAkX/ho04RfbJCzIw9X5BuDeJH6kYYVdPGhJoyhzUY4KHnbatDEi
+ AlPDH6Jgy24tdeqtg4nAkpzyPtij5b4lOYCjhyrXrtlzCkgzlPB4EMJkOo043wU8Dxeqon73x
+ Jg/eNraFixrZjYvGi+V/hwCR9puAqMroowxhbSXMgFV9ZKlgOIF+y9NN0x6vKPWopsx/58G5S
+ 9roWSQ8KgA0JyZ1DNxlhpT5mMvReFDec1QFe7BE6rBeim2fazcOvM4THs2VA=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Peff,
 
-On Wed, 30 Oct 2019, Junio C Hamano wrote:
+On Tue, 29 Oct 2019, Jeff King wrote:
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+> On Tue, Oct 29, 2019 at 08:01:20PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
 >
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > diff --git a/usage.c b/usage.c
+> > index 2fdb20086b..471efb2de9 100644
+> > --- a/usage.c
+> > +++ b/usage.c
+> > @@ -9,14 +9,21 @@
+> >  void vreportf(const char *prefix, const char *err, va_list params)
+> >  {
+> >  	char msg[4096];
+> > -	char *p;
+> > +	size_t off =3D strlcpy(msg, prefix, sizeof(msg));
+> > +	char *p, *pend =3D msg + sizeof(msg);
 > >
-> > While `git update-index` mostly ignores paths referring to index entri=
-es
-> > whose skip-worktree bit is set, in b4d1690df11 (Teach Git to respect
-> > skip-worktree bit (reading part), 2009-08-20), for reasons that are no=
-t
-> > entirely obvious, the `--remove` option was made special: it _does_
-> > remove index entries even if their skip-worktree bit is set.
-> >
-> > Seeing as this behavior has been in place for a decade now, it does no=
-t
-> > make sense to change it.
->
-> If this were end-user facing Porcelain behaviour, even it is a
-> decade old, the story would have been different, but given that it
-> is in an obscure corner in a plumbing command, I agree that it does
-> not make sense to even transition the default over releases.
->
-> > +test_expect_success '--ignore-skip-worktree-entries leaves worktree a=
-lone' '
-> > +	test_commit geroff-me &&
-> > +	git update-index --skip-worktree geroff-me.t &&
-> > +	rm geroff-me.t &&
->
-> I do not see a need to swear with a sample file name.  It may make
-> sense to use words that relate to what the test is checking (e.g.
-> skip-me or something like that), but otherwise meaningless filenames
-> used in other tests (like 1, 2, etc) would be more in line with the
-> existing tests.
-
-I changed this locally to `keep-me`. But then I saw that you merged this
-patch pair to `next` already... Do you want an add-on patch, or revert
-it out of `next`, or leave as-is?
-
-I'd like to know because I still want to merge this into Git for Windows
-v2.24.0-rc2, and I would love to deviate as little as possible from
-git.git there.
-
+> > -	vsnprintf(msg, sizeof(msg), err, params);
+> > -	for (p =3D msg; *p; p++) {
+> > +	p =3D off < pend - msg ? msg + off : pend - 1;
+> > +	if (vsnprintf(p, pend - p, err, params) < 0)
+> > +		*p =3D '\0'; /* vsnprintf() failed, clip at prefix */
 > > +
-> > +	: ignoring the worktree &&
-> > +	git update-index --remove --ignore-skip-worktree-entries geroff-me.t=
- &&
-> > +	git diff-index --cached --exit-code HEAD &&
+> > +	for (; p !=3D pend - 1 && *p; p++) {
+> >  		if (iscntrl(*p) && *p !=3D '\t' && *p !=3D '\n')
+> >  			*p =3D '?';
+> >  	}
 >
-> HEAD has it, working tree does not, and the one in the index should
-> have been kept thanks to the new option added by this patch.  Makes
-> sense.
+> This version looks OK to me. Some bikeshedding:
 >
-> > +	: not ignoring the worktree, a deletion is staged &&
-> > +	git update-index --remove geroff-me.t &&
-> > +	test_must_fail git diff-index --cached --exit-code HEAD
->
-> Testing the other side of the coin (i.e. adding the new feature did
-> not accidentally stop the command from removing by default) is good;
-> "should have no difference" was a good test for the other side, but
-> in contrast, "should have some difference" is a very loose test when
-> the difference we want to see is that the particular path gets removed
-> and no other changes.
+>   - I suspect it may be more readable to just stick to offsets instead
+>     of pointers, since that's what strlcpy() and vsnprintf() give us.
 
-True. I changed it to `test_must_fail git rev-parse :keep-me` locally
-(to test for the staged deletion, although it just occurred to me that I
-would rather want to add the `--diff-filter=3DD` option and filter by the
-file name to really verify that a deletion was staged), but again, I
-noticed that you already merged this to `next`...
+An earlier (unsent) iteration did exactly that, but it was quite a bit
+more unreadable because of the required arithmetics with `sizeof(msg)`.
 
-So: revert out of `next`, add-on patch, or leave as-is?
+>   - I don't think "p =3D=3D pend - 1" can ever trigger, since either
+>     vsnprintf() or we will have just written a NUL.
+
+You are right, but I wanted to make extra sure that this code is robust
+even (or: especially) in the presence of buggy libc functions.
+
+It's not even expensive, I don't think.
+
+>   - Do we need to contend with vsnprintf() return a negative value in
+>     general in our codebase? We already BUG() on it elsewhere. Yes, that
+>     BUG() would try to write via this code path, but it implies to me
+>     that we've already dealt with any such broken vsnprintf()
+>     implementations (via compat/snprintf.c).
+
+It is true that the test suite bails out with a `BUG()` when
+`vsnprintf()` is broken. But I figured that we want to be safe rather
+than sorry. Besides, I have no full picture about what potential reasons
+could make `vsnprintf()` return a negative value: for what I know, an
+invalid format string could trigger that. And I _really_ want this code
+path to be as robust as I can make it.
+
+> If you're sick of bikeshedding, though, I can live without any of those
+> being addressed.
+
+Oh, that's okay, and I would not even call it bikeshedding, I think you
+raised valid concerns.
+
+> > +	*(p++) =3D '\n'; /* we no longer need a NUL */
+> > +	fflush(stderr);
+> > +	write_in_full(2, msg, p - msg);
+>
+> One non-bikeshed question: would fprintf() on some platforms have sent
+> "\r\n", which is no longer happening with our write()? Do we need to
+> care about that?
+
+I am not aware of any platform where `fprintf()` would automatically
+transform `\n` to `\r\n`. Not unless the `FILE *` in question has been
+opened with the `t` flag. And I am rather certain that `stderr` is not
+opened with that flag. And if it was, I would force it off in Git for
+Windows.
 
 Thanks,
 Dscho
-
->
-> > +'
-> > +
-> >  #TODO test_expect_failure 'git-apply adds file' false
-> >  #TODO test_expect_failure 'git-apply updates file' false
-> >  #TODO test_expect_failure 'git-apply removes file' false
->
->
