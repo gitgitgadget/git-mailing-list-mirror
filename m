@@ -8,148 +8,98 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FB491F4C0
-	for <e@80x24.org>; Wed, 30 Oct 2019 10:49:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BFEC1F4C0
+	for <e@80x24.org>; Wed, 30 Oct 2019 12:39:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726860AbfJ3Ktq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Oct 2019 06:49:46 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:54403 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726817AbfJ3Ktn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Oct 2019 06:49:43 -0400
-Received: by mail-wm1-f68.google.com with SMTP id g7so1566734wmk.4
-        for <git@vger.kernel.org>; Wed, 30 Oct 2019 03:49:42 -0700 (PDT)
+        id S1726667AbfJ3Mj3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Oct 2019 08:39:29 -0400
+Received: from mail-qt1-f175.google.com ([209.85.160.175]:47059 "EHLO
+        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726269AbfJ3Mj3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Oct 2019 08:39:29 -0400
+Received: by mail-qt1-f175.google.com with SMTP id u22so2907480qtq.13
+        for <git@vger.kernel.org>; Wed, 30 Oct 2019 05:39:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=pM7YY3+nbTLyNtVGcPr129aqak/7Jp+NtAKY3DSLLPI=;
-        b=ekLHM+u0LbDFfemh4r9P8wG6h3YXn/Q3hna9Uud+gtk/9nQlFEcwy1bbErYWezYzu2
-         EaGYvzFrtj48NKoGkQP+GElyR9BngXaRu3qYt3I9W5pjHAU4scLGf+pdbwkd5QUPD1LJ
-         CpCILWZeBnU8gYvaybnpixp2bJNXlN1eIVo27wKfjKsHvcIM+7UW3wQGJruZLZmm1I/Q
-         c4DSBxgNArX2oFWLhIbbtprODTxzrTOrK7fDbIOY6+69lVosSzlCpVHZSF0CEzacKC6z
-         XHpxj2ebxJk+rqXs5YBeTYN3SFIiWrxT+tTl3dhpKlsOZZyGntx5X2BdXpeXbs3taRVj
-         nteA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=NoQuliGaJ6e7Bhw98JZExevv/6zxVBNDIHlyIgx7ZXs=;
+        b=OMTvccYM7HHaGZqI0C80Pj0CfDinrUyHiOJl8ggu28WcYIAeuNFom3C7MxpvSOt+UA
+         rkkywKvQGaGj4Xhr3WXCVmZlPEJRrlE8PooLXHNzdOaAgld73QrPRI+k96MQcaTYswHL
+         HlKNXw6w+CImVLuanrB8tQm5wqLjJV3YpO2lYSOgoeSLK0Sbq0WPG6QKf4+hdOQRe/tP
+         ed/X7vPrUVwwdkNMivZDTdf1fgr4QJBJk+m2XFruc+Sqd/nh7Qf9BkHFYHRzGSJdriLt
+         k59Y9ZgjtYSCYP5HAxdXB5fwM8rC4JbhSJN7Upejzz1oyZELQnAFz02GTJsZ8EwsNiOh
+         dCfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pM7YY3+nbTLyNtVGcPr129aqak/7Jp+NtAKY3DSLLPI=;
-        b=eTpy5CqHddY1H26uLpcty6WFp+OSzK+S7tHEt2cHudNe9hwNX5NU7zr9DOCysDoJgc
-         rFcaO10UXUlcNrPYUPjT6G64tk4NUIQSGAk7WXfvPDPOH3E7hlWXKRWmPKOIIQpVXuOK
-         y1L4SWaYZvIM2aSudEuurQq1g61c1+P1J7T0BIrf+iR7CzyuIfydjRmFbK1PlW1viRsk
-         /VaVO7RQdvVTLyo7U92sdbobDaZ0RrfGFUCq3OBQM+n8/bp/rtHywiz0D5F4Ikf+vC/8
-         wlzMLSnEME/d0m6AQBfo/VyOJozTV0gFa4YbIutUKX/6TckmFEVIHtgj1Avpfl3cr7H5
-         VhLw==
-X-Gm-Message-State: APjAAAVMxjTWgboRORAZvTFfrfd3UcCE2x9sGIKy9XACWoe8gmHTuQ8J
-        gYg+OnRGIUClOEFYBm2Ajj4xS7Yo
-X-Google-Smtp-Source: APXvYqyH8Xc3PT0MKYyUyEgNJpe+qjhVUDLl72weHIYrSk2psh6n0ERQl32UCT3JhQ860rn0AiKaSg==
-X-Received: by 2002:a1c:41c1:: with SMTP id o184mr8869579wma.81.1572432581490;
-        Wed, 30 Oct 2019 03:49:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 26sm1819224wmi.17.2019.10.30.03.49.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Oct 2019 03:49:40 -0700 (PDT)
-Message-Id: <8f49a393e0ef7fff955a02963ff5229fb9885e89.1572432578.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.355.v3.git.1572432578.gitgitgadget@gmail.com>
-References: <pull.355.v2.git.1572261615.gitgitgadget@gmail.com>
-        <pull.355.v3.git.1572432578.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 30 Oct 2019 10:49:38 +0000
-Subject: [PATCH v3 2/2] stash: handle staged changes in skip-worktree files
- correctly
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=NoQuliGaJ6e7Bhw98JZExevv/6zxVBNDIHlyIgx7ZXs=;
+        b=KEgF3uTZpM+tYl/lP50soBUCGTq2ITpJUdI/tPQagXhaioR2/tzwuia4hDvCWeQ+Wg
+         PXYSdQx/J4DWQ2ANgkMFIjyJefENg34JOIcOHHPG9DTEqwlOA1K01Hno/U915JXTun8w
+         XSTNSDWQ0WZaE58BIF6K5pksEuYFow+dtOlIj9zK6+n2JekAFNDdQEqqNQfb/EU4nlaq
+         N6FPyok2FV9N8MNM3ep0fSFYXijTNlBx4wLo3SjSsBS8a9f9WS16NOkHml9whrwlA4MJ
+         sPrRwVcPl5tz9xXjr33U0wdeBsqJOwd49fW1cBTzs3tjWg0H6FDO6aGyL7Ox4AKPZ/R2
+         nhSg==
+X-Gm-Message-State: APjAAAW9YkwTx3KbPJ+7QffhKzEp/AlZhxDd6mh4vtZ3qWP+EQp9/vz9
+        M24BlXwtbpnUCy8fe9hpxkFdeUHZVfc=
+X-Google-Smtp-Source: APXvYqw9Ax0SY+n3nNN039WdimptW1NnJkKryDCPldlmyol0QJrdbWmm6MQHB9N29k3r225fHnZmYA==
+X-Received: by 2002:a0c:9083:: with SMTP id p3mr26775748qvp.210.1572439167424;
+        Wed, 30 Oct 2019 05:39:27 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:1c91:585f:86b4:347e? ([2001:4898:a800:1010:cdc6:585f:86b4:347e])
+        by smtp.gmail.com with ESMTPSA id z72sm1179639qka.115.2019.10.30.05.39.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Oct 2019 05:39:26 -0700 (PDT)
+Subject: ds/commit-graph-on-fetch (was Re: What's cooking in git.git (Oct
+ 2019, #07; Wed, 30))
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqd0ee3du9.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <afec0f94-466a-2901-4dd7-528d0ae587fa@gmail.com>
+Date:   Wed, 30 Oct 2019 08:39:26 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
+ Thunderbird/71.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <xmqqd0ee3du9.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 10/30/2019 3:13 AM, Junio C Hamano wrote:
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> the integration branches, but I am still holding onto them.
+> 
+> There is the v2.24.0-rc2 tag now; the contents of the release
+> candidate hasn't changed much since the -rc1; hopefully we can see
+> the final thing real soon now.
 
-When calling `git stash` while changes were staged for files that are
-marked with the `skip-worktree` bit (e.g. files that are excluded in a
-sparse checkout), the files are recorded as _deleted_ instead.
+[snip]
 
-The reason is that `git stash` tries to construct the tree reflecting
-the worktree essentially by copying the index to a temporary one and
-then updating the files from the worktree. Crucially, it calls `git
-diff-index` to update also those files that are in the HEAD but have
-been unstaged in the index.
+> * ds/commit-graph-on-fetch (2019-10-25) 2 commits
+>   (merged to 'next' on 2019-10-30 at 3ca711f743)
+>  + commit-graph: fix writing first commit-graph during fetch
+>  + t5510-fetch.sh: demonstrate fetch.writeCommitGraph bug
+> 
+>  "git commit-grph write" hit BUG() in corner cases.
 
-However, when the temporary index is updated via `git update-index --add
---remove`, skip-worktree entries mark the files as deleted by mistake.
+s/grph/graph/
 
-Let's use the newly-introduced `--ignore-skip-worktree-entries` option
-of `git update-index` to prevent exactly this from happening.
+>  Will cook in 'next'.
 
-Note that the regression test case deliberately avoids replicating the
-scenario described above and instead tries to recreate just the symptom.
+I had thought this bugfix was worthy of making the release, as it
+may affect more users than I realized (anyone with a submodule, fetching
+after first clone).
 
-Reported by Dan Thompson.
+I understand if it is held back because it only affects a new feature
+that is opt-in for this release (the fetch.writeCommitGraph setting).
+Just wanted to check on the decision here.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/stash.c     |  5 +++--
- git-legacy-stash.sh |  3 ++-
- t/t3903-stash.sh    | 11 +++++++++++
- 3 files changed, 16 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/stash.c b/builtin/stash.c
-index ab30d1e920..e3962bf73e 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1082,8 +1082,9 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
- 	}
- 
- 	cp_upd_index.git_cmd = 1;
--	argv_array_pushl(&cp_upd_index.args, "update-index", "-z", "--add",
--			 "--remove", "--stdin", NULL);
-+	argv_array_pushl(&cp_upd_index.args, "update-index",
-+			 "--ignore-skip-worktree-entries",
-+			 "-z", "--add", "--remove", "--stdin", NULL);
- 	argv_array_pushf(&cp_upd_index.env_array, "GIT_INDEX_FILE=%s",
- 			 stash_index_path.buf);
- 
-diff --git a/git-legacy-stash.sh b/git-legacy-stash.sh
-index f60e9b3e87..5398a5161d 100755
---- a/git-legacy-stash.sh
-+++ b/git-legacy-stash.sh
-@@ -193,7 +193,8 @@ create_stash () {
- 			GIT_INDEX_FILE="$TMPindex" &&
- 			export GIT_INDEX_FILE &&
- 			git diff-index --name-only -z HEAD -- "$@" >"$TMP-stagenames" &&
--			git update-index -z --add --remove --stdin <"$TMP-stagenames" &&
-+			git update-index --ignore-skip-worktree-entries \
-+				-z --add --remove --stdin <"$TMP-stagenames" &&
- 			git write-tree &&
- 			rm -f "$TMPindex"
- 		) ) ||
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 392954d6dd..57258d5668 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1257,4 +1257,15 @@ test_expect_success 'stash apply should succeed with unmodified file' '
- 	git stash apply
- '
- 
-+test_expect_success 'stash handles skip-worktree entries nicely' '
-+	test_commit A &&
-+	echo changed >A.t &&
-+	git add A.t &&
-+	git update-index --skip-worktree A.t &&
-+	rm A.t &&
-+	git stash &&
-+
-+	git rev-parse --verify refs/stash:A.t
-+'
-+
- test_done
--- 
-gitgitgadget
+Thanks,
+-Stolee
