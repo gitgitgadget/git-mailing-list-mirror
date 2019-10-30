@@ -2,101 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49D5B1F4C0
-	for <e@80x24.org>; Wed, 30 Oct 2019 09:53:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A2021F4C0
+	for <e@80x24.org>; Wed, 30 Oct 2019 10:11:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726150AbfJ3Jx4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Oct 2019 05:53:56 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:46777 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726032AbfJ3Jx4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Oct 2019 05:53:56 -0400
-Received: by mail-qt1-f194.google.com with SMTP id u22so2306939qtq.13
-        for <git@vger.kernel.org>; Wed, 30 Oct 2019 02:53:55 -0700 (PDT)
+        id S1726073AbfJ3KLM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Oct 2019 06:11:12 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:36359 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726046AbfJ3KLM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Oct 2019 06:11:12 -0400
+Received: by mail-wm1-f67.google.com with SMTP id c22so1463361wmd.1
+        for <git@vger.kernel.org>; Wed, 30 Oct 2019 03:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VBrd6RBszFoB/LpSsC2unUw2W5BDtCS5iXA7jVuq1fM=;
-        b=h002i3Y/dij0+9Fkqiy6/MqmMkcE8WHsSc2ViQ8GpLxnHZTZrkhrIyrmGEN2GjU3zx
-         2Y1E3SE4904I65858S2Bq88aRzgRkjZ2zJtS0dBjxPq/HPJhp7nMRtbauLBmRN9tD9aG
-         xRy8kOrWJXQB4lR14xGKTNMxLdFLc5WqyhnICSaWe77BONue6C8DVrbzkynjN/urVY/t
-         PrXBs7jvhwfUwPJH6IyiERC5TWUNMZvJt9DvhO9atnAvQ9SMlfrcAMq58PIpIjPfDxnB
-         e7QqiYnB1tWUEd7m+Pb0/cdyY5B4q3kls1BZBUMKFZVS4j7pLtoWkvlg1s4Wxoyclq8p
-         OtJQ==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=hqKs1TUmLYfRJ9hMy6b8Hv4oPf4C84Mducxj5krLfLQ=;
+        b=WMy+Lu+/OeEGrrIlqEl+0GnoX2FVCGEcQ6O1SZH+myBWBey5bP+guc5sauAxEeOj5f
+         iXMt0iCVBw5IAhf6bj4h2gbJ+1SK5k+VRQiaKaI1WfgwQvoCGz/eH6knSuedD2HhapFl
+         Abvu1SOpE4F3To9GwVpc31NT84J3hIPDzcAnXT3Mm8px7rcLNgQZg1mRIiE8IFWzDkc2
+         D+NplTKp/mTE35WiVNhKAqG2L3CqZzvV1aI5z6k8OJKCQKrKYz+I39H1OKPIErnb8vgk
+         N8x+7v5qgvqJk26ARCaFfkVmJk8LsQGdaviS1nxoNxDSkHBjT2q+FHQRgY2IBv1AD+zp
+         rWLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VBrd6RBszFoB/LpSsC2unUw2W5BDtCS5iXA7jVuq1fM=;
-        b=AEP1Z1SEKmKIINJhhlj1di54qlAfJfyP/5QrmYGHLN33G8fe5kWTrPLkQ9sMFJ5xng
-         reQ68zk4/QwG53O3VuNjF8aQ6St8JAmWNQW3LlScZnsPPhKUoK6DvnKc8rgLn+ji+Nua
-         2mzKfkhcpJfmpgsRWQVy2CcrCUIGzP2K5Itm2E0cWrYOllG7SwWp1dHgiNlp7QrsmJVt
-         mKsFs1Ge3ptMKlSFcIxkh3fDHrVE34LtRzXilmwNTQcJouEsYLzvJ3eiXp4wzBuURPXK
-         pFNapQTp5Dcr6YW0xSaS3hKWrNVmSmK73NIVoWTXeSAbjnIXf5CYoXURrB6poiHta3pA
-         uN5Q==
-X-Gm-Message-State: APjAAAUMeWs8Xxe3QoqoUpM9jMG1utIW5Dy/QEYtRYhIikeHXDc6VVC3
-        M6Wiyfeo5mzpnhUXVRTKIbQL/ybZd+nxYh84bCw=
-X-Google-Smtp-Source: APXvYqx9HQba3Rg/JJTB38ngdMm01FLL4wy2eSxHXrqbMlCaK2VOE7+uAdGTTKp/+TxxSvyVs/yFTdRAWCkyB3o7d64=
-X-Received: by 2002:aed:31e7:: with SMTP id 94mr3123891qth.71.1572429235048;
- Wed, 30 Oct 2019 02:53:55 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=hqKs1TUmLYfRJ9hMy6b8Hv4oPf4C84Mducxj5krLfLQ=;
+        b=TtkCom1eroGF+AOeS2/eK4C9n+NP38uFvmOz0t3ltgkSmLQMYnBIh0QNlKcky2YTsM
+         W7cAZHhVX7Qp86D8uEeq5SISh54wSbv1y47S8h1GNY5+NXnzwavFvAKKwRbsBaoDqjdd
+         QsFRex/U1K/6LAE4fsUx9C0GBd0A1SIuha7fyuqEbqqlHSlGyu6c143xwQ6U0mUOuTRJ
+         6c7ZYUf8pEK88wRTh8yKVqkzsFKia31LBKUR1SXeseK1JM8Kzf2kSnerelcrsEXofVbn
+         oCGHXnORzQQsOSeZLpZL3NVm/5XvBI9jetwbA8Z6r6T45/mqBWwdmdl1eRUFz3nhbmNU
+         XtnA==
+X-Gm-Message-State: APjAAAWRq6nymRoa/LNZIKSIVDG62+n4hpPFwjphdwfmi6DwWOqHufZg
+        ABflETkuKW48QvEkYaI3zog=
+X-Google-Smtp-Source: APXvYqy2VdzuvfLqrJBQSbsXglLOmej9KKBBM0ODOt573mU9rvTUzn3/t6C37WgwaHKheiyeEBIqpA==
+X-Received: by 2002:a7b:cc0c:: with SMTP id f12mr8089088wmh.40.1572430270099;
+        Wed, 30 Oct 2019 03:11:10 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-20-250.as13285.net. [92.22.20.250])
+        by smtp.gmail.com with ESMTPSA id r13sm2439662wra.74.2019.10.30.03.11.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Oct 2019 03:11:09 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] git-diff.txt: document return code of `--no-index`
+To:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <3f6d132663cacde01df68bfe88c6ef108cf6cf74.1572337045.git.liu.denton@gmail.com>
+ <ed9f16c30a0f3852abaf0053d8c2b4a0ecd12f01.1572367897.git.liu.denton@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <4548d037-3fc5-b625-b7f9-646392392d0c@gmail.com>
+Date:   Wed, 30 Oct 2019 10:11:08 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.1
 MIME-Version: 1.0
-References: <pull.425.git.1572306149.gitgitgadget@gmail.com>
- <8c088194f604eac3a6b00c48a7fddfdf807571fc.1572306149.git.gitgitgadget@gmail.com>
- <xmqqk18n3s3i.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqk18n3s3i.fsf@gitster-ct.c.googlers.com>
-From:   George Espinoza <gespinoz2019@gmail.com>
-Date:   Wed, 30 Oct 2019 02:53:43 -0700
-Message-ID: <CAP_ANimgFVuq1U6xB=UMQZ-uQp2PayuD82EBAup20eZK3Fv8AA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] [Outreachy] merge-ours: include parse-options
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     george espinoza via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <ed9f16c30a0f3852abaf0053d8c2b4a0ecd12f01.1572367897.git.liu.denton@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 29, 2019 at 7:05 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "george espinoza via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: george espinoza <gespinoz2019@gmail.com>
-> >
-> > Teach this command which currently handles its own argv to use
-> > parse-options instead because parse-options helps make sure we handle
-> > user input like -h in a standardized way across the project.
->
-> Sorry, but why do we even want to do this?  merge-ours is an
-> implementation detail of "git merge" and is never run directly by
-> end-users.
->
+Hi Denton
 
-Hello Junio, this is my mistake. I am a first time contributor.
-I'm currently working on Micro Project #3 as an Outreachy applicant
-that states, "Teach a command which currently handles its own argv
-how to use parse-options instead."
+The description is good, but the patch has a typo
 
-I was under the impression that all commands with the NOPARSE_OPT
-flag in git.c needed parse-options added. I now see that I should take into
-account for commands that are only ran by end-users :)
+On 29/10/2019 16:54, Denton Liu wrote:
+> Within diff_no_index(), we have the following:
+> 
+> 	revs->diffopt.flags.exit_with_status = 1;
+> 
+> 	...
+> 
+> 	/*
+> 	 * The return code for --no-index imitates diff(1):
+> 	 * 0 = no changes, 1 = changes, else error
+> 	 */
+> 	return diff_result_code(&revs->diffopt, 0);
+> 
+> Which means when `git diff` is run in `--no-index` mode, `--exit-code`
+> is implied. However, the documentation for this is missing in
+> git-diff.txt.
+> 
+> Add a note about how `--exit-code` is implied in the `--no-index`
+> documentation to cover this documentation blindspot.
+> 
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+> Thanks for the review, Dscho. I guess it slipped my mind that we could
+> write it this way too. Oops!
+> 
+>   Documentation/git-diff.txt | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+> index 72179d993c..56b396ef81 100644
+> --- a/Documentation/git-diff.txt
+> +++ b/Documentation/git-diff.txt
+> @@ -36,7 +36,7 @@ two blob objects, or changes between two files on disk.
+>   	running the command in a working tree controlled by Git and
+>   	at least one of the paths points outside the working tree,
+>   	or when running the command outside a working tree
+> -	controlled by Git.
+> +	controlled by Git. This form implies `--no-exit`.
 
-> I am not sure why it even needs "-h" in the first place, but that is
-> already there, so letting sleeping dog lie would be what I would
-> prefer.
->
-> Is there a plan to add some -Xmerge-backend-option to this program,
-> and would use of parse-options API make it easier?  That would be a
-> good reason to start using it in this program, but otherwise...
->
+s/--no-exit/--exit-code/
 
-I will look into finding another command to contribute to instead after
-your feedback so I can fulfill Micro Project #3 since I had not thought of
-further plans past the parse-option replacement. Thank you for your input!
+Best Wishes
+
+Phillip
+
+>   
+>   'git diff' [<options>] --cached [<commit>] [--] [<path>...]::
+>   
+> 
