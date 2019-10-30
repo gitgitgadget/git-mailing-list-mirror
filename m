@@ -8,148 +8,95 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 545521F4C0
-	for <e@80x24.org>; Wed, 30 Oct 2019 09:43:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49D5B1F4C0
+	for <e@80x24.org>; Wed, 30 Oct 2019 09:53:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726246AbfJ3Jnm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Oct 2019 05:43:42 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:40361 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726177AbfJ3Jnm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Oct 2019 05:43:42 -0400
-Received: by mail-qk1-f196.google.com with SMTP id y81so2024809qkb.7
-        for <git@vger.kernel.org>; Wed, 30 Oct 2019 02:43:39 -0700 (PDT)
+        id S1726150AbfJ3Jx4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Oct 2019 05:53:56 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:46777 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726032AbfJ3Jx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Oct 2019 05:53:56 -0400
+Received: by mail-qt1-f194.google.com with SMTP id u22so2306939qtq.13
+        for <git@vger.kernel.org>; Wed, 30 Oct 2019 02:53:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=QQIAsOBrtCurcxb8MziRoaUtTn1qDUgUwDO9gaUlQlQ=;
-        b=b7aSyoBZMhv/TLaNXrl9IQdzHDICmHxLgiG/XNT2RxD3EnEGjOOu70K01UHEJMKDHc
-         r97AY06NutmQeUP8mkUk0nLQ+l5nWweazi0A++Qf7/LbvoCC4MR6XQAaYd7BvH1jsicg
-         wTImXQYGG5fQGn399rJC0IZliDIr+TMlX4hUWBKnsf6fgBf9zGNclr66g1F37X3WyFRG
-         meB09ApVZGDEl6iw7MXl4iQShPOOwaq17kjBcwJJUNxuWJR1jPjGa/PlCUb78LGRxb1K
-         azuRh2+xLUZTfOuaGOvv+2DmjXtF5CJihJQiCP5rkgaRGtpD56qiZYTt/dx3qTM9sdNz
-         QFBA==
+        bh=VBrd6RBszFoB/LpSsC2unUw2W5BDtCS5iXA7jVuq1fM=;
+        b=h002i3Y/dij0+9Fkqiy6/MqmMkcE8WHsSc2ViQ8GpLxnHZTZrkhrIyrmGEN2GjU3zx
+         2Y1E3SE4904I65858S2Bq88aRzgRkjZ2zJtS0dBjxPq/HPJhp7nMRtbauLBmRN9tD9aG
+         xRy8kOrWJXQB4lR14xGKTNMxLdFLc5WqyhnICSaWe77BONue6C8DVrbzkynjN/urVY/t
+         PrXBs7jvhwfUwPJH6IyiERC5TWUNMZvJt9DvhO9atnAvQ9SMlfrcAMq58PIpIjPfDxnB
+         e7QqiYnB1tWUEd7m+Pb0/cdyY5B4q3kls1BZBUMKFZVS4j7pLtoWkvlg1s4Wxoyclq8p
+         OtJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=QQIAsOBrtCurcxb8MziRoaUtTn1qDUgUwDO9gaUlQlQ=;
-        b=mmJlQ7Gfto2bAftxt+A8W1TE76f1YO7o7CIN9jPlzM2BKWtN7rPZAlBCEV+8w4rT1t
-         EA0tQ2XKs/DFh28f4SLhB1eA2Hus+a2SZ7FFWn0ny65KRWf56oTL/zTivqhFGk2x3y4b
-         obz0lHJOKcCdVDq7wVMJW4WaMW9p/ikDdQGK/HZGwKamBSM4bCYM7f4ajfcNiIiYYKhL
-         2sbUM61Qhf5UxI5T9WCF1RsY738F9Fa+3T0k1sGlbOkmjnN4jMUI6724Ht1eOKK6hqho
-         PucTeulXHKUZ7W3Hbed6HVKqyV7o+KZtLzSkuHr6WXKAFyXukhNOh+xSLWrz8tqHPwpW
-         Hcpw==
-X-Gm-Message-State: APjAAAUQ1P2LBWBugtLAsRXP04z/xgyYOmA/0aEx2oMx5zS1jH7wbyIs
-        WwInmFbARNZoUIbViCfqclKRa6NDnjndh6WjRgs2X/e3Tb4=
-X-Google-Smtp-Source: APXvYqw7pQlNzVNBbMO78618aa+v/JOV8ytRZAT7pq77rzZDfo3hRnIBVjCjoq7PHQey0Z/DQXW6HFqYVwwSapLdWb4=
-X-Received: by 2002:a05:620a:1278:: with SMTP id b24mr27287177qkl.206.1572428619446;
- Wed, 30 Oct 2019 02:43:39 -0700 (PDT)
+        bh=VBrd6RBszFoB/LpSsC2unUw2W5BDtCS5iXA7jVuq1fM=;
+        b=AEP1Z1SEKmKIINJhhlj1di54qlAfJfyP/5QrmYGHLN33G8fe5kWTrPLkQ9sMFJ5xng
+         reQ68zk4/QwG53O3VuNjF8aQ6St8JAmWNQW3LlScZnsPPhKUoK6DvnKc8rgLn+ji+Nua
+         2mzKfkhcpJfmpgsRWQVy2CcrCUIGzP2K5Itm2E0cWrYOllG7SwWp1dHgiNlp7QrsmJVt
+         mKsFs1Ge3ptMKlSFcIxkh3fDHrVE34LtRzXilmwNTQcJouEsYLzvJ3eiXp4wzBuURPXK
+         pFNapQTp5Dcr6YW0xSaS3hKWrNVmSmK73NIVoWTXeSAbjnIXf5CYoXURrB6poiHta3pA
+         uN5Q==
+X-Gm-Message-State: APjAAAUMeWs8Xxe3QoqoUpM9jMG1utIW5Dy/QEYtRYhIikeHXDc6VVC3
+        M6Wiyfeo5mzpnhUXVRTKIbQL/ybZd+nxYh84bCw=
+X-Google-Smtp-Source: APXvYqx9HQba3Rg/JJTB38ngdMm01FLL4wy2eSxHXrqbMlCaK2VOE7+uAdGTTKp/+TxxSvyVs/yFTdRAWCkyB3o7d64=
+X-Received: by 2002:aed:31e7:: with SMTP id 94mr3123891qth.71.1572429235048;
+ Wed, 30 Oct 2019 02:53:55 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.425.git.1572306149.gitgitgadget@gmail.com>
  <8c088194f604eac3a6b00c48a7fddfdf807571fc.1572306149.git.gitgitgadget@gmail.com>
- <20191029204228.GA229589@google.com>
-In-Reply-To: <20191029204228.GA229589@google.com>
+ <xmqqk18n3s3i.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqk18n3s3i.fsf@gitster-ct.c.googlers.com>
 From:   George Espinoza <gespinoz2019@gmail.com>
-Date:   Wed, 30 Oct 2019 02:43:27 -0700
-Message-ID: <CAP_ANinZuD645D8CniRJxscCkE3Se-uwAHFCtJCwKgt31+Pcig@mail.gmail.com>
+Date:   Wed, 30 Oct 2019 02:53:43 -0700
+Message-ID: <CAP_ANimgFVuq1U6xB=UMQZ-uQp2PayuD82EBAup20eZK3Fv8AA@mail.gmail.com>
 Subject: Re: [PATCH 1/1] [Outreachy] merge-ours: include parse-options
-To:     Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     george espinoza via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 29, 2019 at 1:42 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+On Tue, Oct 29, 2019 at 7:05 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Mon, Oct 28, 2019 at 11:42:29PM +0000, george espinoza via GitGitGadget wrote:
+> "george espinoza via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
 > > From: george espinoza <gespinoz2019@gmail.com>
 > >
 > > Teach this command which currently handles its own argv to use
 > > parse-options instead because parse-options helps make sure we handle
 > > user input like -h in a standardized way across the project.
-> > Also deleted the NO_PARSEOPT flag from git.c to coincide with
-> > the conversion of the structure in this command since merge-ours
-> > now uses parse-options and needed to update git.c accordingly.
 >
-> Hmm, I could still wish for some rephrasing on this commit message. Now
-> that you took my example suggestions and pasted them directly into your
-> previous sentences, it doesn't flow very nicely. The point comes across
-> but it's a little redundant (for example, "also <verb> from git.c ....
-> and needed to update git.c" is redundant).
+> Sorry, but why do we even want to do this?  merge-ours is an
+> implementation detail of "git merge" and is never run directly by
+> end-users.
 >
-> When significant assistance and advice is received it's often good form
-> to include a "Helped-by:" line which looks similar to the signoff line,
-> to provide credit. Maybe you will consider it as myself and dscho spent
-> quite some time helping you in the GitGitGadget PR as well as via
-> IRC/mail? :)
->
-> Otherwise, the code looks OK to me.
->
->  - Emily
->
-> >
-> > Signed-off-by: george espinoza <gespinoz2019@gmail.com>
-> > ---
-> >  builtin/merge-ours.c | 14 ++++++++++----
-> >  git.c                |  2 +-
-> >  2 files changed, 11 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
-> > index 4594507420..fb3674a384 100644
-> > --- a/builtin/merge-ours.c
-> > +++ b/builtin/merge-ours.c
-> > @@ -11,14 +11,20 @@
-> >  #include "git-compat-util.h"
-> >  #include "builtin.h"
-> >  #include "diff.h"
-> > +#include "parse-options.h"
-> >
-> > -static const char builtin_merge_ours_usage[] =
-> > -     "git merge-ours <base>... -- HEAD <remote>...";
-> > +static const char * const merge_ours_usage[] = {
-> > +     N_("git merge-ours [<base>...] -- <head> <merge-head>..."),
-> > +     NULL,
-> > +};
-> >
-> >  int cmd_merge_ours(int argc, const char **argv, const char *prefix)
-> >  {
-> > -     if (argc == 2 && !strcmp(argv[1], "-h"))
-> > -             usage(builtin_merge_ours_usage);
-> > +     struct option options[] = {
-> > +             OPT_END()
-> > +     };
-> > +
-> > +     argc = parse_options(argc, argv, prefix, options, merge_ours_usage, 0);
-> >
-> >       /*
-> >        * The contents of the current index becomes the tree we
-> > diff --git a/git.c b/git.c
-> > index ce6ab0ece2..6aee0e9477 100644
-> > --- a/git.c
-> > +++ b/git.c
-> > @@ -527,7 +527,7 @@ static struct cmd_struct commands[] = {
-> >       { "merge-base", cmd_merge_base, RUN_SETUP },
-> >       { "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
-> >       { "merge-index", cmd_merge_index, RUN_SETUP | NO_PARSEOPT },
-> > -     { "merge-ours", cmd_merge_ours, RUN_SETUP | NO_PARSEOPT },
-> > +     { "merge-ours", cmd_merge_ours, RUN_SETUP },
-> >       { "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
-> >       { "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
-> >       { "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
-> > --
-> > gitgitgadget
 
-Ah, my sincerest apologies. I should have been more thorough in
-evaluating the importance of a clean original commit message before
-submitting it. I will certainly keep all of that in mind for this
-project and any future projects and contributions. I will edit it
-accordingly to your advice and include credit for the substantial and
-significant assistance you and dscho provided. :) ty.
+Hello Junio, this is my mistake. I am a first time contributor.
+I'm currently working on Micro Project #3 as an Outreachy applicant
+that states, "Teach a command which currently handles its own argv
+how to use parse-options instead."
 
--George
+I was under the impression that all commands with the NOPARSE_OPT
+flag in git.c needed parse-options added. I now see that I should take into
+account for commands that are only ran by end-users :)
+
+> I am not sure why it even needs "-h" in the first place, but that is
+> already there, so letting sleeping dog lie would be what I would
+> prefer.
+>
+> Is there a plan to add some -Xmerge-backend-option to this program,
+> and would use of parse-options API make it easier?  That would be a
+> good reason to start using it in this program, but otherwise...
+>
+
+I will look into finding another command to contribute to instead after
+your feedback so I can fulfill Micro Project #3 since I had not thought of
+further plans past the parse-option replacement. Thank you for your input!
