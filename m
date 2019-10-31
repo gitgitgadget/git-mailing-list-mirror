@@ -2,103 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF8BA1F454
-	for <e@80x24.org>; Thu, 31 Oct 2019 21:04:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DBEB1F454
+	for <e@80x24.org>; Thu, 31 Oct 2019 22:53:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729850AbfJaVEE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Oct 2019 17:04:04 -0400
-Received: from mail-yb1-f202.google.com ([209.85.219.202]:41963 "EHLO
-        mail-yb1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727742AbfJaVEE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Oct 2019 17:04:04 -0400
-Received: by mail-yb1-f202.google.com with SMTP id w13so5541658ybj.8
-        for <git@vger.kernel.org>; Thu, 31 Oct 2019 14:04:04 -0700 (PDT)
+        id S1728074AbfJaWxO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 18:53:14 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:41867 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727707AbfJaWxO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Oct 2019 18:53:14 -0400
+Received: by mail-pl1-f194.google.com with SMTP id t10so3409015plr.8
+        for <git@vger.kernel.org>; Thu, 31 Oct 2019 15:53:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=tPHhH/3Sacnd/5rzrQU5QmR0Tjkepp/0HDWoEcgyad0=;
-        b=U5wCBeHDQkdupyJfmCo6REd8SOb+LTrBo3zQl8qOHi6eT0ohBUqxZu1zBXBWjMPq8u
-         H79Fmr1+WGnNbe8XHsaM9Oqz1MEuAQ/S/fE98A6DKdcjo3npbeOlrjQ14s+qtHgsJAem
-         CxMs5aDCNI5+SXkdus+y9bBUNeGGx4R3aJthI3XfoLLJm9dWxns0Eiz0o9F7p8bfq4Zu
-         L8yCwGLKGFAbnagvpgZK9jSr27ozaWqkZR+r34+fswSyjjTjZZr4a7C6Y16wlKrZtN0R
-         EUj9eWd/EV8/W//wm8xYdDss2l3uR8XT1XCCAJG4xNawm4wdAHugUNXxEeMgX72BdObs
-         VQ9g==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=a+KFNtCEXL0oeLlN1KxMc/M1QbTLLJePQqcnUW1hAKs=;
+        b=nkP4T35mILeaas7kMLrh8oDkj4Fsx+8lrNc8zKCLjxFQ37iPXVFyKHJSwie2HFIvsX
+         lyqAT9v6YjO3+wv9lxVuLEoNGT6zHlMxv3j2e8leiFxzkjBKCSgQDJEUcDpK6GArmDKl
+         0KXObY5XivBzJ9cPDgDw8hfAXZsYAInJoKxefz1OLQWRreVF7cNeBtQY2o+QYXHm+SHg
+         2EpHFVvEvJhFCDW9FGXx0+PWzMEs6o5rX/Kz7WwKvayEvyNKIvsHYuhVk4nL1I15/lcc
+         piG+nEsGI7TLfPivZQW8/1oDMeNgmyD0q0oD9AQN57fLa7SK1xUHE1BezoK4J8nlyPIm
+         rayA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=tPHhH/3Sacnd/5rzrQU5QmR0Tjkepp/0HDWoEcgyad0=;
-        b=tDW0RTMvThd+3HghWUS82Bp82NB4OQc3YHvCIoRdY/KdXAxoKpcqj2JJ+vJK3BkpUv
-         tJ7YaqolMlq5jClcas52OBUGAaAOL1vsZkFBRD3BiWUbm4rItFLx+BU1EI0079JFZ6zF
-         yA5j52v5A9eUIwaCO+2jvU1JPsl8J+yFbMAucHMYN3qHau9gyxovRo0isRDdq3QXyse6
-         uLWxvW2851GurRH+D5ZZEwiYZF9FbQvIEkRD9mzwFF3jHbdMZY5dXyzLFYhb1AmoxuwQ
-         uvt61ACMo/3r2EqHvDafvZQOgadG9o+kM/t4ZUss6IPy4hDd220N+LrK5q1ROGSvB2uZ
-         ylUg==
-X-Gm-Message-State: APjAAAWN/SrRFwq3h+3SOVVWXhEzADduXrsHPj4xpFOJ7+c41P4JKh7i
-        iRgXgI/PjMBxsxpZrzOrl6DDgyJnLkndakPYz56wjvvoCreId9Qm40aI30GkwYPoPDE61Bg2XTA
-        Xd9v3QIYusbBTUmqQ8nsF98qZ7MywMhmyK6sg4OeFItVye/N5W2IljnCVDRjGvhcexe+W3NC42w
-        ==
-X-Google-Smtp-Source: APXvYqyGyyEO0xBYAcT+IOJhvrY/ESGQYtK8cohTc5oMHpb2zQqbfyedV1xnSKqp4oPmAM15i5uI9568llFAsyVReSo=
-X-Received: by 2002:a81:5942:: with SMTP id n63mr5443419ywb.85.1572555843452;
- Thu, 31 Oct 2019 14:04:03 -0700 (PDT)
-Date:   Thu, 31 Oct 2019 14:03:38 -0700
-In-Reply-To: <20191031210338.152529-1-emilyshaffer@google.com>
-Message-Id: <20191031210338.152529-4-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20191031210338.152529-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665-goog
-Subject: [PATCH v2 3/3] myfirstcontrib: hint to find gitgitgadget allower
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=a+KFNtCEXL0oeLlN1KxMc/M1QbTLLJePQqcnUW1hAKs=;
+        b=rotmvhOzaRX9RQmkcT/maNNRjjxID968pEqq4Ux6Xc9PhQ+eINsh6hwrhUmj1NKfqb
+         mJ+l9mNcYivMcNBcwSnJtlbbN8b5GVKA82tILLMfYtjRgsPuxw3K7ma8Amnij1k1zqhC
+         aaoKyg8VcUBXPEYu7WAiI9HvHUq3UBZFnk+aRk4QL1f/HLq37eejDtRkhPvGpWCq6psy
+         yy7KmbsUwPZOA9Jpd9a9QTlvtnxCs0+I8xJJvy7AtLbt1YVLOOnedAMAnE2+29Qow1Vp
+         76CfXIRTNOsbY6PoOJzfiDCCCSmhD4el215ml+FVGwzbWQUtT7jTWYQcmZUg9dFSNAZr
+         z7wQ==
+X-Gm-Message-State: APjAAAXrBO0Z+wTMCg0/RH1aMN+8HSVMVIkO7g1HjY3qM+8YlVyB1kYH
+        Flp8Z3Kf7HTHlBY3LxJsoEs=
+X-Google-Smtp-Source: APXvYqwOHcfQVMU/jxIoGKdKOkxwxVSEAZY3VrlfeUz48Lidn1iaOWf7cX7PG309toQuAsZVjECKww==
+X-Received: by 2002:a17:902:ff0e:: with SMTP id f14mr8961664plj.17.1572562393032;
+        Thu, 31 Oct 2019 15:53:13 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id 205sm1751579pge.56.2019.10.31.15.53.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Oct 2019 15:53:12 -0700 (PDT)
+Date:   Thu, 31 Oct 2019 15:53:10 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Ralf Thielow via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] fetch.c: fix typo in a warning message
+Message-ID: <20191031225310.GA211076@google.com>
+References: <pull.441.git.1572554506.gitgitgadget@gmail.com>
+ <70f10fe44716e50765a9d8f7794116f390f09dbc.1572554506.git.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <70f10fe44716e50765a9d8f7794116f390f09dbc.1572554506.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-GitGitGadget, a handy tool for converting pull requests against Git into
-Git-mailing-list-friendly-patch-emails, requires as anti-spam that all
-new users be "/allow"ed by an existing user once before it will do
-anything for that new user. While this tutorial explained that
-mechanism, it did not give much hint on how to go about finding someone
-to allow your new pull request. So, teach our new GitGitGadget user
-where to look for someone who can add their name to the list.
+Ralf Thielow wrote:
 
-The advice in this patch is based on the advice proposed for
-GitGitGadget: https://github.com/gitgitgadget/gitgitgadget/pull/138
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+>  builtin/fetch.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- Documentation/MyFirstContribution.txt | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-index 5ce94e077c..b55837e646 100644
---- a/Documentation/MyFirstContribution.txt
-+++ b/Documentation/MyFirstContribution.txt
-@@ -785,6 +785,14 @@ will automatically run your PRs through the CI even without the permission given
- but you will not be able to `/submit` your changes until someone allows you to
- use the tool.
- 
-+NOTE: You can typically find someone who can `/allow` you on GitGitGadget by
-+either examining recent pull requests where someone has been granted `/allow`
-+(https://github.com/gitgitgadget/git/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+%22%2Fallow%22[Search:
-+is:pr is:open "/allow"]), in which case both the author and the person who
-+granted the `/allow` can now `/allow` you, or by inquiring on the
-+https://webchat.freenode.net/#git-devel[#git-devel] IRC channel on Freenode
-+linking your pull request and asking for someone to `/allow` you.
-+
- If the CI fails, you can update your changes with `git rebase -i` and push your
- branch again:
- 
--- 
-2.24.0.rc0.303.g954a862665-goog
+> Noticed this while reviewing German translation.
 
+This kind of context tends to be useful in a commit message --- it
+helps clarify the motivation behind the change.
+
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 0c345b5dfe..f9a934f098 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1411,7 +1411,7 @@ static int do_fetch(struct transport *transport,
+>  		for (rm = ref_map; rm; rm = rm->next) {
+>  			if (!rm->peer_ref) {
+>  				if (source_ref) {
+> -					warning(_("multiple branch detected, incompatible with --set-upstream"));
+> +					warning(_("multiple branches detected, incompatible with --set-upstream"));
+
+Long line.
+
+I wonder what this warning is trying to say.  How would I go about
+triggering this message?  The comment before says
+
+	The relevant upstream is the fetched branch that is meant to
+	be merged with the current one, i.e. the one fetched to
+	FETCH_HEAD.
+
+So is this about when I'm fetching with a wildcard or something?
+
+Thanks,
+Jonathan
