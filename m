@@ -2,156 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71F561F4C0
-	for <e@80x24.org>; Thu, 31 Oct 2019 18:19:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D70B1F4C0
+	for <e@80x24.org>; Thu, 31 Oct 2019 19:26:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729290AbfJaSTZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Oct 2019 14:19:25 -0400
-Received: from mail-pf1-f182.google.com ([209.85.210.182]:39869 "EHLO
-        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729146AbfJaSTZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Oct 2019 14:19:25 -0400
-Received: by mail-pf1-f182.google.com with SMTP id x28so1698868pfo.6
-        for <git@vger.kernel.org>; Thu, 31 Oct 2019 11:19:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Mcik4lcIZ1y28TCf3ymbadTNay8dyte5vodS6dDO4ok=;
-        b=XeNAYaIkmZ37iXgAbZBaKk3YLztaZDacrRkppiiKXDlGhof5drhYU70o0oQUbR/7BC
-         C2EG2DkI8Rw1GtsGr63Ahq+0xHz81ai+9Tv8dexZ9IYDCWehxFVE1vQmbUDJ5+uUbIiu
-         51MHq0MRAn0v+bNjfI2orjxDnxJSPWcxD289xKf50bBFuVLQbwiV0WcspQIvv82kuLjZ
-         xI9dE7XDuTZqyDX8NwvAcjK/P2T4kD8wFuSPop0Zg0eVb+kRO8rS4bS8xR7dvdrbNT8t
-         JFX4dML5iHQY2YqUI3/OBPHkHV5j8aGwDfAtJcSDAZwlrGVt/Ao58ZiD0RZPVi0ZH7zC
-         EPJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Mcik4lcIZ1y28TCf3ymbadTNay8dyte5vodS6dDO4ok=;
-        b=m4y6VG4c3+GWcitxO0Asy1h09jkRF/mW13u5A21JWfshMnnb1iBwLu50XeHlUep1pd
-         6IJX67oHDPM/OyJhc7B+Yg0yCs4oWqdKpXXEvLaCq4rig3+hmNmJuZMgTGywsV5Hyb5G
-         Y/d8r3xWtJBB3D5vI01eaNHayu+GPWXBzszG06VAVm0PWMU809EtXd/uE6/hC1XFxNy+
-         s066e9uwX89G1uPeu7Y8Ydhr8hxHtYqU8rLSigu3tfiG0CgZka/495XzX7saEzU2TF9N
-         55mam4yFzws31UpbsZJAA7A+gz6SDU0XIP4TH1JzhmVkYJjX3PCTMyUuv6IMrMKejuU4
-         gWaQ==
-X-Gm-Message-State: APjAAAX56wRP8beJANsrJuJp0Lwh+iIcNCzcZgLn8s8txYoHlVoQzWh1
-        Wp4eWVhckMLINmMv/1nhhYQ=
-X-Google-Smtp-Source: APXvYqyZ904QPcoOBUhe0xRm/XP6kU2yV2UF+ILg3/x1q6+5G0kFHoEZUqHQLBDUu7FgKOMZh0z4Zw==
-X-Received: by 2002:a17:90a:6d64:: with SMTP id z91mr9358101pjj.44.1572545964061;
-        Thu, 31 Oct 2019 11:19:24 -0700 (PDT)
-Received: from generichostname ([216.52.21.197])
-        by smtp.gmail.com with ESMTPSA id d16sm4713017pfo.75.2019.10.31.11.19.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Oct 2019 11:19:23 -0700 (PDT)
-Date:   Thu, 31 Oct 2019 11:19:20 -0700
-From:   Denton Liu <liu.denton@gmail.com>
+        id S1729598AbfJaT0v (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 15:26:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35290 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729347AbfJaT0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Oct 2019 15:26:51 -0400
+Received: (qmail 19314 invoked by uid 109); 31 Oct 2019 19:26:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 31 Oct 2019 19:26:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4566 invoked by uid 111); 31 Oct 2019 19:30:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Oct 2019 15:30:00 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 31 Oct 2019 15:26:50 -0400
+From:   Jeff King <peff@peff.net>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: git branch --edit-description a custom file
-Message-ID: <20191031181920.GB70819@generichostname>
-References: <20191030183950.GA21277@generichostname>
- <20191030202835.GB29013@sigill.intra.peff.net>
- <20191030224328.GB44961@generichostname>
- <20191031061832.GA20830@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1910311119080.46@tvgsbejvaqbjf.bet>
+Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] sequencer: reencode to utf-8 before arrange rebase's
+ todo list
+Message-ID: <20191031192650.GA12834@sigill.intra.peff.net>
+References: <20191031092618.29073-1-congdanhqx@gmail.com>
+ <20191031092618.29073-4-congdanhqx@gmail.com>
+ <nycvar.QRO.7.76.6.1910311134011.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1910311119080.46@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.1910311134011.46@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+On Thu, Oct 31, 2019 at 11:38:14AM +0100, Johannes Schindelin wrote:
 
-On Thu, Oct 31, 2019 at 11:22:16AM +0100, Johannes Schindelin wrote:
-> Hi Peff,
+> On Thu, 31 Oct 2019, Doan Tran Cong Danh wrote:
 > 
-> On Thu, 31 Oct 2019, Jeff King wrote:
-> 
-> > On Wed, Oct 30, 2019 at 03:43:28PM -0700, Denton Liu wrote:
+> > On musl libc, ISO-2022-JP encoder is too eager to switch back to
+> > 1 byte encoding, musl's iconv always switch back after every combining
+> > character. Comparing glibc and musl's output for this command
+> > $ sed q t/t3900/ISO-2022-JP.txt| iconv -f ISO-2022-JP -t utf-8 |
+> > 	iconv -f utf-8 -t ISO-2022-JP | xxd
 > >
-> > > On Wed, Oct 30, 2019 at 04:28:35PM -0400, Jeff King wrote:
-> > > Dscho brought up in the GGG thread[1] that perhaps we want to treat
-> > > branch descriptions like notes and have them all under something like
-> > > `refs/notes/branches`. This would certainly solve my problem of
-> > > having versioned descriptions and it would probably do it in a much more
-> > > general way than having a versioned included config.
-> > >
-> > > Anyone see any potential problems with this approach?
+> > glibc:
+> > 00000000: 1b24 4224 4f24 6c24 5224 5b24 551b 2842  .$B$O$l$R$[$U.(B
+> > 00000010: 0a                                       .
 > >
-> > I don't think it would be `refs/notes/`, as that is assumed to contain
-> > mappings of object ids (and if I understand correctly, this would be a
-> > mapping of branch names to data.
+> > musl:
+> > 00000000: 1b24 4224 4f1b 2842 1b24 4224 6c1b 2842  .$B$O.(B.$B$l.(B
+> > 00000010: 1b24 4224 521b 2842 1b24 4224 5b1b 2842  .$B$R.(B.$B$[.(B
+> > 00000020: 1b24 4224 551b 2842 0a                   .$B$U.(B.
 > >
-> > You could just have "refs/meta/descriptions/foo" pointing to a blob
-> > which contains the description of "refs/heads/foo". That makes it easy
-> > to edit descriptions, even if you don't like using "git branch
-> > --edit-description".
+> > Although musl iconv's output isn't optimal, it's still correct.
+> >
+> > From commit 7d509878b8, ("pretty.c: format string with truncate respects
+> > logOutputEncoding", 2014-05-21), we're encoding the message to utf-8
+> > first, then format it and convert the message to the actual output
+> > encoding on git commit --squash.
+> >
+> > Thus, t3900 is failing on Linux with musl libc.
+> >
+> > Reencode to utf-8 before arranging rebase's todo list.
 > 
-> The only problem with this is that it's not really versioned, as it
-> would be hard to go back to previous versions and/or share the history
-> via pushing to a remote repository.
-> 
-> But I guess that a very simple pseudo branch would do it, where
-> `refs/meta/<branch-name>` would point to a commit that has a tree
-> with a single file in it: `description.txt`.
+> Since the re-encoded commit messages are only used for figuring out the
+> relationships between the `fixup!`/`squash!` commits and their targets,
+> but are not used in any of the lines that are written out, this change
+> looks good to me.
 
-So how would you envision the workflow for this? Would it be something
-like,
+I'm confused about a few things here, though. I agree with you that the
+subjects here are only used for finding the fixup/squash relationships.
+But I don't understand the musl connection.
 
-	$ git checkout feature-1
+Wouldn't failure to reencode here always be a problem? E.g., if I do:
 
-	$ git branch --edit-description=ref # instead of =config
-	# editor opens up, :wq
+  for encoding in utf-8 iso-8859-1; do
+    # commit using the encoding
+    echo $encoding >file && git add file
+    echo "éñcödèd with $encoding" | iconv -f utf-8 -t $encoding |
+      git -c i18n.commitEncoding=$encoding commit -F -
+    # and then fixup without it
+    echo "$encoding fixed" >file && git add file
+    git commit --fixup HEAD
+  done
+  
+  GIT_EDITOR='echo; grep -v ^#' git rebase -i --root --autosquash
 
-	# is it find to have an autogenerated commit message?
-	$ git show refs/meta/feature-1
-	commit 80dfea1dc4492aaabc80d23fbaffe86da55ee098 (refs/meta/feature-1)
-	Author: Denton Liu <liu.denton@gmail.com>
-	Date:   42 seconds ago
+then the resulting todo-list output (on my glibc system) is:
 
-	    Update ref description
+  pick 3a5bace éñcödèd with utf-8
+  fixup aa9f09c fixup! éñcödèd with utf-8
+  pick 6e85d32 éñcödèd with iso-8859-1
+  pick 3ceac05 fixup! éñcödèd with iso-8859-1
 
-	diff --git a/description.txt b/description.txt
-	new file mode 100644
-	index 0000000..ed03a4b
-	--- /dev/null
-	+++ b/description.txt
-	@@ -0,0 +1 @@
-	+this is a description
+I.e., we don't actually match up the second pair, and I think we
+probably ought to.
 
-I have some open questions about this, though:
+I guess the test in t3900 is less exotic; it uses the same encoding for
+both commits. And it's just that "foo" and "!fixup foo" can (and do in
+musl) end up with different encodings (because of the specific language,
+and the vagaries of each iconv implementation).
 
-* Since we're planning on sharing these descriptions with the outside
-  world, how would the ref layout look like? If we're not using the
-  refs/remotes namespace will it make fetching and merging notes harder?
-  I know that collaborating with notes is a pain so how do we avoid
-  making the same mistake?
+Would we have similar problems in all of the other functions which use
+get_commit_buffer() without reencoding? For instance if I do this:
 
-* On the above point, what if local descriptions are at
-  refs/meta/heads/feature-1 while remote descriptions are at
-  refs/meta/remotes/*/feature-1?
+  echo base >file && git add file && git commit -m base
+  for encoding in utf-8 iso-8859-1; do
+    echo $encoding >file && git add file
+    echo "éñcödèd with $encoding" | iconv -f utf-8 -t $encoding |
+      git -c i18n.commitEncoding=$encoding commit -F -
+  done
+  git checkout -b side HEAD~2
+  git cherry-pick master master^
+  cat .git/sequencer/todo
 
-* What would a merge workflow look like? Would we have wrapper commands
-  for it or do users just have to checkout the description branch
-  themselves?
+then the resulting todo file has a mix of iso-8859-1 and utf-8.
 
-Thanks,
+It seems to me that we should always be working with the subjects in a
+single encoding internally, and likewise outputting in that format
+(which should probably be git_log_output_encoding(), for the instances
+where we show it to the user).
 
-Denton
+I.e., we should always call logmsg_reencode() instead of
+get_commit_buffer().
 
-> 
-> I now like that idea a lot better than my original notes idea.
-> 
-> Ciao,
-> Dscho
+-Peff
