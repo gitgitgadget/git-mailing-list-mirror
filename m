@@ -2,246 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5C141F4C0
-	for <e@80x24.org>; Thu, 31 Oct 2019 19:35:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 216901F4C0
+	for <e@80x24.org>; Thu, 31 Oct 2019 19:51:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727382AbfJaTfR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Oct 2019 15:35:17 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:44177 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726728AbfJaTfQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Oct 2019 15:35:16 -0400
-Received: by mail-ed1-f67.google.com with SMTP id b18so5790923edr.11
-        for <git@vger.kernel.org>; Thu, 31 Oct 2019 12:35:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4qszOq07L1WK2hNVqIqDsHj3rVOm/BvwfbCw96Rc/PQ=;
-        b=D+CvZl2tgiFcMzN9mJGgkAxMkB+kueSPOLYyak7wYMvLuBoBtGgm1S52kGsUCQRzXK
-         a0Ac2vs/xDqOcbEMYNwh+iqU6EJo4kldzTDJGEalr1Uu/7DEQg0T5WvkjIZ4uKWEM1vn
-         ZJnOsA+H3ZWORnAJnvfrW5dHc16vEze5/aL0nQHALddnKIOsUfxiQ/UmdJTYiezrmDow
-         lxONbHKAzMJ4mLz+RmvYx9d4d4mnD94VGlPF26hflMqeU9AashovJyDluhmu+s7yhlpB
-         nBd6TtgAFG8mZlbUQKSqNAfIx+c9AZxwF1a4uf6Sl2+o6k3TkZ4KfvNu9RwY694daJc2
-         Gk6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4qszOq07L1WK2hNVqIqDsHj3rVOm/BvwfbCw96Rc/PQ=;
-        b=r1kEm6lR3ki3FNOT9gkzxt94t9kEzhai2NDX61zS6kFSpDfT5sZMaDPTVXxVuBJQ4N
-         wzMoJodDOMZ07E3FZ3iYHldOrKl1znGo1TdT6oIJ4X8kx5b8c7i3wK3jGdKWG2Uv0p7/
-         OQ0zPF+f0b2N77JgwZbOVnwCdGqZsiU1zWBYW6my40vMcDs24IPBn8mhEI4k6+DAg1ko
-         35cAPcJ75zkTRmjkT5/wh1NnuHl6nbwMjqjlTLXO9vP7a1naU6cEWNTmgOVdcjc64vkI
-         PkdD1n97kzpjZAek9Jd5Vq13c4FGGeMlzP+uHtV03dIrdP1UIAegY7eRKLvbzP0ceWHa
-         sjlQ==
-X-Gm-Message-State: APjAAAUPM4gdc1VWOBY7qrCLMM/YXga+2TCW9/iuADxYxmXTMNZGunT8
-        73IA2NtQFYx5u86izeYvs0R2OFzrlcnvWey9St8=
-X-Google-Smtp-Source: APXvYqy48ijVjD90bDNvC0JZuw5vqw+edO4OLOqo5M7S6FXlppYxnhrf+5A/p+iUkf/HGZyk7P+dzi/SIIf4F/tCiPc=
-X-Received: by 2002:a17:906:7e48:: with SMTP id z8mr5892674ejr.116.1572550514344;
- Thu, 31 Oct 2019 12:35:14 -0700 (PDT)
+        id S1727976AbfJaTvF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 15:51:05 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57450 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727528AbfJaTvF (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 31 Oct 2019 15:51:05 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 515C860423;
+        Thu, 31 Oct 2019 19:51:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1572551463;
+        bh=QSkP8nc6eg546wY+gDDzk1WbUMEe1rpaKzzl36NUi7I=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=bnKa7nItdbkN9ZwYnoJ/nlFKL92aGj0PaSB+tJv6rUWGn+rtf7IDg3+2OQ2yFYy0S
+         UTwUeXJvIPH4JPOvgfRtVuh2e6d7zBh8jmoQzTEp+CPU9Un8C8x7vL20bEIV8U8dt3
+         8em/g1J+/5DhQiltZCAYM9knJjsxnuWAuiRkSsCuE3DUw0bhZj/1h5o/3jiVVvJms3
+         l3qQ+V6U7fhhOiUwCyOqp1UD5YttZbKdOGslDFxoi7UNc3DBl5SUwOKpKHDNGoiRvG
+         htw8Vyk/hALM7eTVC4WGHdNvjn+LmMqo2l01d/1Ow0E0SsoXA5p3eIGwXF2u0eAgmR
+         LvMJKBDocwKyyI+i4eJVyJOKdPlz4jWJi6+VbzVoI80UXkcXctpQufq9nmJeotQNfm
+         IRl0NteVMvEvIfQGP7hFxx873GqAd6LKUJbnepIazmRsHgDAGTkFIJoOWYJUo5MgJX
+         NKzDkSmypEmZfVL90Hp2wZ1XEeojoDpXSJdUYQQGr76Ns6FW2An
+Date:   Thu, 31 Oct 2019 19:50:58 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Doan Tran Cong Danh <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/3] t0028: eliminate non-standard usage of printf
+Message-ID: <20191031195058.prp6cpx6ivf57lz7@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Doan Tran Cong Danh <congdanhqx@gmail.com>, git@vger.kernel.org
+References: <20191031092618.29073-1-congdanhqx@gmail.com>
+ <20191031092618.29073-2-congdanhqx@gmail.com>
 MIME-Version: 1.0
-References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
- <504f1f7c892c8bfc4774ac5fec912855e74e38a5.1572343246.git.gitgitgadget@gmail.com>
- <CABPp-BEYeCwTKXLTdaORrBGAFYb0X13rMMiQXwXv=UDSBKHnYQ@mail.gmail.com>
-In-Reply-To: <CABPp-BEYeCwTKXLTdaORrBGAFYb0X13rMMiQXwXv=UDSBKHnYQ@mail.gmail.com>
-From:   Heba Waly <heba.waly@gmail.com>
-Date:   Fri, 1 Nov 2019 08:35:02 +1300
-Message-ID: <CACg5j25WCHf8_pMVPeakYx-sdSG+-naPPchqUCesfaNQHVCCNQ@mail.gmail.com>
-Subject: Re: [PATCH 04/10] merge: move doc to ll-merge.h
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="6lvyyxu6nt3idem6"
+Content-Disposition: inline
+In-Reply-To: <20191031092618.29073-2-congdanhqx@gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.3.0-1-amd64)
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 31, 2019 at 11:09 AM Elijah Newren <newren@gmail.com> wrote:
->
-> Hi Heba,
-> Thanks for the contribution.  I know you weren't the original author
-> of most this stuff, but I was curious if it really all belonged in
-> ll-merge.c and then noticed other issues...
 
-Hi Elijah, thanks a lot for the feedback.
-This is my first interaction with the merge API, so I wasn't
-completely sure where the intro of the doc needed to go, looks like
-ll-merge.h is not the perfect place, is there a top level merge file
-where this generic intro would be more suitable and helpful?
+--6lvyyxu6nt3idem6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Tue, Oct 29, 2019 at 11:49 AM Heba Waly via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> [...]
-> > diff --git a/ll-merge.h b/ll-merge.h
-> > index e78973dd55..ec3617c627 100644
-> > --- a/ll-merge.h
-> > +++ b/ll-merge.h
-> > @@ -7,16 +7,94 @@
-> >
-> >  #include "xdiff/xdiff.h"
-> >
-> > +/**
-> > + * The merge API helps a program to reconcile two competing sets of
->
-> Is this talking about xdiff/xmerge.c, ll_merge.c, merge-recursive.c,
-> or builtin/merge.c?  Those are all different level of "merge API" and
-> it's not clear.  Perhaps "The Low Level Merge API" or something like
-> that since you are moving it into ll-merge.h?
+On 2019-10-31 at 09:26:16, Doan Tran Cong Danh wrote:
+> diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-enco=
+ding.sh
+> index 7aa0945d8d..bfc4fb9af5 100755
+> --- a/t/t0028-working-tree-encoding.sh
+> +++ b/t/t0028-working-tree-encoding.sh
+> @@ -17,7 +17,7 @@ test_lazy_prereq NO_UTF32_BOM '
+>  write_utf16 () {
+>  	if test_have_prereq NO_UTF16_BOM
+>  	then
+> -		printf '\xfe\xff'
+> +		printf '\376\377'
+>  	fi &&
+>  	iconv -f UTF-8 -t UTF-16
+>  }
+> @@ -25,7 +25,7 @@ write_utf16 () {
+>  write_utf32 () {
+>  	if test_have_prereq NO_UTF32_BOM
+>  	then
+> -		printf '\x00\x00\xfe\xff'
+> +		printf '\0\0\376\377'
+>  	fi &&
+>  	iconv -f UTF-8 -t UTF-32
+>  }
 
-Yea, that's why I'm thinking maybe move this paragraph to another
-top-level file?
+Yeah, this patch looks obviously correct.  For some reason, I knew that
+printf(1) didn't accept hex sequences and yet I still wrote them.
 
-> > + * improvements to some files (e.g., unregistered changes from the work
-> > + * tree versus changes involved in switching to a new branch), reporting
-> > + * conflicts if found.
->
-> Seems weird to bring up checkout -m without mentioning in by name
-> given that it isn't the default checkout behavior.  Would seem more
-> natural to mention a merge or rebase case.
+As Peff pointed out, this is because we only trigger this case on musl;
+musl is the only known implementation of iconv that produces big-endian
+data without a BOM for UTF-16 and UTF-32.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-I agree with you, can change the example if we agreed on keeping this paragraph.
+--6lvyyxu6nt3idem6
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> > + *   The library called through this API is
-> > + * responsible for a few things.
-> > + *
-> > + *  - determining which trees to merge (recursive ancestor consolidation);
->
-> Um, that's done at the merge-recursive.c level, not at the ll-merge.c
-> level.  I'm confused why it'd be mentioned here.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
 
-you're right.
+iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl27OyIACgkQv1NdgR9S
+9ovAGA/+Iig7qwVycIhaNOabBeZIGLKxOtkYMFnLjTmYHXUdPmWMre985TJoqKaQ
+UEgecn0kZX4tIpQLBY2eaRtrYMPQEAgUUwf3hiOeagbFO3p2X8VpQlRFTX3ARdA5
+EybNSG6db3H90EkqK+P8g/nSiY5n77Csg/fmeSTQIf/zP3ayfujP0W6clCUqfvF5
+rP73Ct4bxs1s2KcI9zxYm3CCttaaQ+aqE4YBk4BpdK1tS0nKROFc/pLV4eU+Ztwu
+rRBaP7et6glwj1AIjAjBl/sOHxzOqMKhmeguHZ3+QEwj9lpPfOe30y0P8hydfRdV
++lJ83KUx94SziljrRQ0TPLTtbIx8GMwu8809NPKFhWO1i5AErrIYoZU9xNGG8Zhn
+CYyewfojeFxII0HB933Lkno4Yjr6cfZhNzaPanboieDRxU3LQysLY540YkQIjrT4
+wfwDpSzaH5HyKCvyA/NxNK3/4vXZPgR+2k5QoNY0r4/fZYGd2BwbU05EykDSHWaf
+xZewNPr6ZcUgAhDckMWSPAb65mf+zHBADcaDr3aWkiyXsvdc2gD2z7OYboVDga9B
+MSC7z9D5uQU1nzegA6xmKfDnSqz8jnmHQE3yxxp88XSr1bTjWH9EY4ap3sb5kzX+
+VhNP6pi0YfKAOGaV65EAgWnEpE+v/f8ri+1R60sYMyLqNg8uxiw=
+=Vxl3
+-----END PGP SIGNATURE-----
 
-> > + *  - lining up corresponding files in the trees to be merged (rename
-> > + *    detection, subtree shifting), reporting edge cases like add/add
-> > + *    and rename/rename conflicts to the user;
->
-> All of that is also clearly stuff for merge-recursive.c; I'm not sure
-> why it'd be mentioned in the Low-Level merge file.
-
-got it.
-
-> > + *  - performing a three-way merge of corresponding files, taking
-> > + *    path-specific merge drivers (specified in `.gitattributes`)
-> > + *    into account.
->
-> This, however, is ll-merge.c stuff.
-
-So, move the whole paragraph to another file?
-because, I think the paragraph is helpful as a whole, and I don't see
-the value in dividing it between merge-recursive and ll-merge.
-What do you think?
-
-> > + *
-> > + * Calling sequence:
-> > + * ----------------
-> > + *
-> > + * - Prepare a `struct ll_merge_options` to record options.
-> > + *   If you have no special requests, skip this and pass `NULL`
-> > + *   as the `opts` parameter to use the default options.
-> > + *
-> > + * - Allocate an mmbuffer_t variable for the result.
-> > + *
-> > + * - Allocate and fill variables with the file's original content
-> > + *   and two modified versions (using `read_mmfile`, for example).
-> > + *
-> > + * - Call `ll_merge()`.
-> > + *
-> > + * - Read the merged content from `result_buf.ptr` and `result_buf.size`.
-> > + *
-> > + * - Release buffers when finished.  A simple
-> > + *   `free(ancestor.ptr); free(ours.ptr); free(theirs.ptr);
-> > + *   free(result_buf.ptr);` will do.
-> > + *
-> > + * If the modifications do not merge cleanly, `ll_merge` will return a
-> > + * nonzero value and `result_buf` will generally include a description of
-> > + * the conflict bracketed by markers such as the traditional `<<<<<<<`
-> > + * and `>>>>>>>`.
-> > + *
-> > + * The `ancestor_label`, `our_label`, and `their_label` parameters are
-> > + * used to label the different sides of a conflict if the merge driver
-> > + * supports this.
-> > + */
->
-> This part looks good.
->
-> > +/**
-> > + * This describes the set of options the calling program wants to affect
-> > + * the operation of a low-level (single file) merge.
-> > + */
-> >  struct ll_merge_options {
-> > +
-> > +    /**
-> > +     * Behave as though this were part of a merge between common ancestors in
-> > +     * a recursive merge. If a helper program is specified by the
-> > +        * `[merge "<driver>"] recursive` configuration, it will be used.
-> > +     */
->
-> This kind of leaves out the why.  Maybe add "(merges of binary files
-> may need to be handled differently in such cases, for example)" to the
-> end of the first sentence?
-
-Yes, ok.
-
-> >         unsigned virtual_ancestor : 1;
-> > -       unsigned variant : 2;   /* favor ours, favor theirs, or union merge */
-> > +
-> > +       /**
-> > +        * Resolve local conflicts automatically in favor of one side or the other
-> > +        * (as in 'git merge-file' `--ours`/`--theirs`/`--union`).  Can be `0`,
-> > +        * `XDL_MERGE_FAVOR_OURS`, `XDL_MERGE_FAVOR_THEIRS`,
-> > +        * or `XDL_MERGE_FAVOR_UNION`.
-> > +        */
-> > +       unsigned variant : 2;
-> > +
-> > +       /**
-> > +        * Resmudge and clean the "base", "theirs" and "ours" files before merging.
-> > +        * Use this when the merge is likely to have overlapped with a change in
-> > +        * smudge/clean or end-of-line normalization rules.
-> > +        */
-> >         unsigned renormalize : 1;
->
-> All looks good.
->
-> > +
-> >         unsigned extra_marker_size;
->
-> No documentation for this one?  Perhaps:
->
-> /*
->  * Increase the length of conflict markers so that nested conflicts
->  * can be differentiated.
->  */
-
-sure.
-
-> >         long xdl_opts;
->
-> Perhaps document this one with:
->
-> /* Extra xpparam_t flags as defined in xdiff/xdiff.h. */
-
-great. thanks!
-
->
->
-> >  };
-> >
-> > +/**
-> > + * Perform a three-way single-file merge in core.  This is a thin wrapper
-> > + * around `xdl_merge` that takes the path and any merge backend specified in
-> > + * `.gitattributes` or `.git/info/attributes` into account.
-> > + * Returns 0 for a clean merge.
-> > + */
-> >  int ll_merge(mmbuffer_t *result_buf,
-> >              const char *path,
-> >              mmfile_t *ancestor, const char *ancestor_label,
+--6lvyyxu6nt3idem6--
