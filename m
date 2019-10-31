@@ -2,129 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F06961F454
-	for <e@80x24.org>; Thu, 31 Oct 2019 20:02:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD9011F454
+	for <e@80x24.org>; Thu, 31 Oct 2019 20:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728133AbfJaUCV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Oct 2019 16:02:21 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57456 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726741AbfJaUCU (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 31 Oct 2019 16:02:20 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EFBF76052F;
-        Thu, 31 Oct 2019 20:02:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1572552139;
-        bh=9CC8h+azO/qQXUMhOX1gUSuzroLWQc/qL2LCzm/OqXw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=tPDzeRfksgHOooOh51FMJvxXoWTB8VLzt6oGTYXDUOCquG2KW7qFQoKvKdisrFOjX
-         pz6OYG4XbkBFA33jqSCDGlVSI9U7JOK3QdevRv7P7qJiH8iHnfmKa6zNvqFl4+VBF8
-         AJXsvW3FEZXSwRUOjOqhePdDY7COiJK0+iEqSMNwHVZ1wIs0pQTeZD75gGLR9Mhxrk
-         bI/68wafqeZnOvAmCRednAx31wBwrTL9ZYoOODS5Tx4btAM10FKhvGP6J9gH/vYHx+
-         RO7kM4a5Zm2N4JCNR3v2lPL6ZqlnFJIIGbedqu+31BT3SeXtTsL1pE0PYdoJgn5LMM
-         HDtqmk0u/F8Hv9ZfobD9TXf4sjfgE/5Q5kSme+RHQkQxl5al/JWiMcHqE373p0t2CG
-         wpRH53HXoCzp+7u16sxFY+yn6Tk2+/0O1oaO+zFoLWq1dZ88BRORtBlMMEJ+xAwQhS
-         A/3zbtbXHz5kD2LAv0+uEmedCFBbbaIvf+Ho2B4SB9rDGtpyWL2
-Date:   Thu, 31 Oct 2019 20:02:14 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/3] configure.ac: define ICONV_OMITS_BOM if necessary
-Message-ID: <20191031200214.h63elcyhzknd65hs@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        Doan Tran Cong Danh <congdanhqx@gmail.com>, git@vger.kernel.org
-References: <20191031092618.29073-1-congdanhqx@gmail.com>
- <20191031092618.29073-3-congdanhqx@gmail.com>
- <20191031181116.GC2133@sigill.intra.peff.net>
+        id S1729703AbfJaUEF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 16:04:05 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:37313 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726741AbfJaUEF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Oct 2019 16:04:05 -0400
+Received: by mail-wm1-f65.google.com with SMTP id q130so7143143wme.2
+        for <git@vger.kernel.org>; Thu, 31 Oct 2019 13:04:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=8Vpme1XVRK7sFiGrANLyPP+0iv/2Y369lAGi9hCZduE=;
+        b=WtUto5NBi/rICNmi//Sy/MyASpFpvwe/wpHl7UITIq7N0LBF59XiKEUqh1b/3eEWqH
+         GKauuh4ODXSrDNN1+yl6sSRlCNsxsy6dXAGSnoMUKYYQSl2ybvCkoBjy9xeouNOld5dT
+         SZbxF9SuFltx2sbSyh8gk7EBHGcmNbGl6raMhpIzACLo2SN2x4kZjLjjZoE2zUrhWy7J
+         7rc6fHP0nuXg+G4yU+AWhBm6nTSyDwT8GdnvGsycYkJSJeRwIZUot3xYM275fGaNrnmo
+         YGEpVtNVK95bpGw7UR0sTP1VA4oUWHqF1JA6eVlX+Ozk4cEXnkAG1XRWQFdaJnFwGtus
+         KCTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=8Vpme1XVRK7sFiGrANLyPP+0iv/2Y369lAGi9hCZduE=;
+        b=WDy4IpXbpxee94PZSiZ34oIl1mTIhX+sJRuBJEa4GBdpnsqVhGIvHeDpLtwReAVAM/
+         RBe8Qkx8PtzDnXmDHZUyNa+/mt+zLi3ng3nsnxYT1H8bCy9mKmqz76s/4/yYTEKbKzv+
+         8r2BsEAsiPpEWs2Yv6cq4bkDbtW/bnIGCA5cvrgWjvr0M1NEXXS67n3axyjO5WSMqnA7
+         jE5sXOa3Bz2ejKMmlgrT30hYU00GCrtv+Kw+Lqn5jfXRui4oDk7e2pdgHDJ75QPgZ9dU
+         tifpV9dxPLYszYAcZ0qK7kUUNZPNcL9hc4rjQ71e3Z7BmhkMeCB8b7kTZa7ZEYPXrZJS
+         EmhA==
+X-Gm-Message-State: APjAAAVG18i1PkIPGA5wQ9+893GtrDA+/I5UZT/TAdPVbOSBFwOMxQzz
+        8foQGlErmYPh7dh8jze2of40gtHcXdY=
+X-Google-Smtp-Source: APXvYqxBDMbh6KRBYLNWiGzo3pYaJwGbVGpBYL4fO2o6b10gA1Umw/newHq/+2cRIxWxU5jgjLXJOg==
+X-Received: by 2002:a05:600c:1150:: with SMTP id z16mr7115732wmz.153.1572552242822;
+        Thu, 31 Oct 2019 13:04:02 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-20-250.as13285.net. [92.22.20.250])
+        by smtp.gmail.com with ESMTPSA id z10sm4630469wrw.12.2019.10.31.13.04.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Oct 2019 13:04:01 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC] xl command for visualizing recent history
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Emily Shaffer <emilyshaffer@google.com>
+Cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
+        Matthew DeVore <matvore@gmail.com>, matvore@comcast.net,
+        jonathantanmy@google.com, jrnieder@gmail.com, steadmon@google.com
+References: <20191029003023.122196-1-matvore@google.com>
+ <20191031003929.GA22855@google.com>
+ <nycvar.QRO.7.76.6.1910310851300.46@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <b0169b2b-0d8a-ee27-d0f4-6c7a6df55b5d@gmail.com>
+Date:   Thu, 31 Oct 2019 20:04:00 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="vsgghxjq357edf7u"
-Content-Disposition: inline
-In-Reply-To: <20191031181116.GC2133@sigill.intra.peff.net>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-1-amd64)
-User-Agent: NeoMutt/20180716
+In-Reply-To: <nycvar.QRO.7.76.6.1910310851300.46@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi
 
---vsgghxjq357edf7u
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 31/10/2019 08:26, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Wed, 30 Oct 2019, Emily Shaffer wrote:
+> 
+>> On Mon, Oct 28, 2019 at 05:30:23PM -0700, Matthew DeVore wrote:
+>>> From: Matthew DeVore <matvore@gmail.com>
+>>> [...]
+> 
+> In addition, I would think that the introduction of ephemeral refs
+> should deserve its own patch. Such ephemeral refs might come in handy
+> for more things than just `xl` (or whatever better name we find).
+> 
+> The design of such ephemeral refs is thoroughly interesting, too.
 
-On 2019-10-31 at 18:11:16, Jeff King wrote:
-> On Thu, Oct 31, 2019 at 04:26:17PM +0700, Doan Tran Cong Danh wrote:
-> > diff --git a/configure.ac b/configure.ac
-> > index a43b476402..790b53bbdc 100644
-> > --- a/configure.ac
-> > +++ b/configure.ac
-> > @@ -690,6 +690,28 @@ fi
-> > =20
-> >  fi
-> > =20
-> > +#
-> > +# Define ICONV_OMITS_BOM if you are on a system which
-> > +# iconv omits bom for utf-{16,32}
-> > +if test -z "$NO_ICONV"; then
-> > +AC_CACHE_CHECK([whether iconv omits bom for utf-16 and utf-32],
-> > + [ac_cv_iconv_omits_bom],
-> > +[
-> > +if test "x$cross_compiling" =3D xyes; then
-> > +	AC_MSG_FAILURE([please provide ac_cv_iconv_omits_bom])
-> > +elif test `printf a | iconv -f utf-8 -t utf-16 | wc -c` =3D 2; then
->=20
-> The ICONV_OMITS_BOM flag is about the libc iconv that Git will be linked
-> against. But this is checking the iconv tool. For a system that is using
-> musl across the board, that would work. But it might not always be the
-> case (in particular, I don't know if people statically link some
-> binaries against musl; certainly I've seen people do it with dietlibc).
+I agree the ephemeral refs are interesting and could be really useful
 
-Yeah, I think we need to do that, and not only for musl.  There are
-folks for whom the iconv in libc is missing or inadequate and they use
-an additional iconv(3) implementation which may not be the same as
-iconv(1) (or vice versa).
+> One very obvious question is whether you want these refs to be
+> worktree-specific or not. I would tend to answer "yes" to that question.
 
-Granted, as far as we know this option is only needed for musl, but that
-doesn't mean there aren't other environments where this is a problem,
-only that we don't yet know about them.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+If we go for a per-terminal namespace as you suggest below I'm not sure 
+if we want/need them to be per worktree as well. I don't have a clear 
+idea how I'd want to use ephemeral refs if I changed worktree but kept 
+working in the same terminal.
 
---vsgghxjq357edf7u
-Content-Type: application/pgp-signature; name="signature.asc"
+> Further, another obvious question is what to do with those refs after a
+> while. They are _clearly_ intended to be ephemeral, i.e. they should
+> just vanish after a reasonably short time. Which raises the question:
+> what is "reasonably short" in this context? We would probably want to
+> come up with a good default and then offer a config setting to change
+> it.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+Maybe keep them around for a couple of days? Even that might be longer 
+than we need.
 
-iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl27PcYACgkQv1NdgR9S
-9otvaQ/+N8WrKyI4s7t7zU0jK2DQbSFGOAO25XNAFzAYOeZ8r2s5tZ2uen55DYyN
-FBcBS1FqXIweGer0wQ3jNW7EuW9gXJ8X5YRiLKVKSbo/bClywMBU4FB76+cjeIur
-8B4f8NgKko9KBE5Ksb/ojIaPbVmsTBwJjcPAFkTP6lAIwtk72CBt/G7F3UuFRrEc
-bfFHu27LIZN3rxXwWk4LmNU1TMEjSL/VMtlhBuavz99Xl8rUCoFsfLOin1OYj892
-7woHU+lEDWJ5998OkHZZUF/diVR0WoXV+6q0hz9znmbfIbI7GOnFwQaqeDN1Sq1i
-/tp0pw4Lsyx74+o9hC7ZMteZlZY6ODoe403IzNLj+pzqZkuDOl8ffC2m52iSNLMI
-x23CqbOe//1wuP2oJL8yptPOuK7wrwrMDZJSmVuruWpWRSmt0JfSQ58Q6h16vBcw
-Vf3TfA4c/IhsKyxWnTodYRwVUcDV7S+eAyQGKpR4fSLj/T/U5whCtfzpNJL+lcoa
-5HaeIf3M9HcMxlxupFcNxXMHu4rxjTaJWcg/Lo/yl8XNShkQSt91qLKijJA/zYDg
-/qi8ABkYApbK1aTTWwMowBfs5MNXjK7ODs1B3UkTCFcvwTXIH37nxJ8M2XIo4heG
-H2/Fay/jKF3K+4vQRrynXe4eeZkCBwGhTWa4zcJ/7IyxJGmCDSk=
-=qNbc
------END PGP SIGNATURE-----
+> Another important aspect is the naming. The naming schema you chose
+> (`h/<counter>`) is short-and-sweet, and might very well be in use
+> already, for totally different purposes. It would be a really good idea
+> to open that schema to allow for avoiding clashes with already-existing
+> refs.
+> 
+> A better alternative might be to choose a naming schema that cannot
+> clash with existing refs because it would not make for valid ref names.
+> I had a look at the ref name validation, and `^<counter>` might be a
+> better naming schema to begin with: `^1` is not a valid ref name, for
+> example.
 
---vsgghxjq357edf7u--
+That's an interesting idea, it's short and wont tread on anyone's toes.
+
+> Side note: why `h/`? I really tried to think about possible motivations
+> and came up empty.
+> 
+> Another aspect that I think should be considered: why limit these
+> ephemeral refs to `git xl`? I cannot count how often I look through
+> some `git log <complicated-options> -- <sophisticated-magic-refspecs>`
+> to find a certain commit and then need to reference it. I usually move
+> my hand to move the mouse pointer and double click, then Shift-Insert
+> (which is awkward on this here keyboard because Insert is Fn+Delete, so
+> I cannot do that with one hand), and I usually wish for some better way.
+> 
+> A better way might be to introduce an option for generating and
+> displaying such ephemeral refs, in my case it would be good to have a
+> config setting to do that automatically for every `git log` call that
+> uses the pager, i.e. is interactive.
+
+Having them as a feature of the rev listing machinery rather than 
+specific to a particular command sounds like a good way to go.
+
+> Finally, I could imagine that in this context, we would love to have
+> refs that are purely intended for interactive use, and therefore it
+> would make sense to try to bind them to the process ID of the process
+> calling `git`, i.e. the interactive shell. That way, when I have two
+> terminal windows, they would "own" their separate ephemeral refs.
+
+I like that idea, though I think it should probably be based around 
+getsid() rather than getppid() (I'm not sure how that translates to windows)
+
+
+Best Wishes
+
+Phillip
+
+>>> The test cases show non-trivial output which can be used to get an idea
+>>> for what the command is good for, though it doesn't capture the
+>>> coloring.
+>>>
+>>> The primary goals of this command are:
+>>>
+>>>   a) deduce what the user wants to see based on what they haven't pushed
+>>>      upstream yet
+>>>   b) show the active branches spatially rather than as a linear list (as
+>>>      in "git branch")
+>>>   c) allow the user to easily refer to commits that appeared in the
+>>>      output
+>>>
+>>> I considered making the h/# tags stable across invocations such that a
+>>> particular hash will only be tagged with a different number if ~100
+>>> other hashes are tagged since the hash was last tagged. I didn't
+>>> actually implement it this way, instead opting for always re-numbering
+>>> the hashes on each invocation. This means the hash number is
+>>> predictable based on the position the hash appears in the output, which
+>>> is probably better that encouraging users to memorize hash numbers (or
+>>> use them in scripts!).
+>>
+>> If you're worried about folks using something like this in a script (and
+>> I would be, given that it's dynamically assigning nicknames to hashes)
+>> then you probably ought to mark it as a porcelain command in
+>> command-list.txt.
+> 
+> I would like to caution against targeting scripts with this. It is too
+> easy for two concurrently running scripts to stumble over each other.
+> 
+> Scripts should use safer methods that already exist, like grabbing the
+> hash while looking for a specific pattern (`sed`'s hold space comes to
+> mind).
+> 
+> Ciao,
+> Dscho
+> 
