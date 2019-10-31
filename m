@@ -8,95 +8,176 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0290D1F4C1
-	for <e@80x24.org>; Thu, 31 Oct 2019 11:28:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D84511F4C0
+	for <e@80x24.org>; Thu, 31 Oct 2019 11:31:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726602AbfJaL2S (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Oct 2019 07:28:18 -0400
-Received: from mout.gmx.net ([212.227.15.15]:36727 "EHLO mout.gmx.net"
+        id S1726527AbfJaLbS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 07:31:18 -0400
+Received: from mout.gmx.net ([212.227.17.22]:47719 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726476AbfJaL2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Oct 2019 07:28:17 -0400
+        id S1726462AbfJaLbS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Oct 2019 07:31:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572521290;
-        bh=GyUuD0YTj9mgThpMMcrIHDTWgcN7XjtmMG6Dhv0mxq4=;
+        s=badeba3b8450; t=1572521468;
+        bh=EWoBAtf1MlD4u0r+NgDfBNlRr2PS0W9Ga/Gw+4SDhwk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=XZB+JiSDHiHbmDQ2p36mmtUAu2oWZ9VmQySDPYKRGhh0jZoWjaM9O3YptC+nFV3p8
-         OLqHfU1raQHLlzG0vy94uMwhutfUu2HGhUzxRKrtia5FjgwLpSIuewGagT/m08CiV1
-         3mvvdZPO05ugpK4nEr/+FfAnPG3Rd5EYxbrX0jvU=
+        b=fZ+J+sa+G7BJ2G0FpxpBybrNZr9s+eiZjrQRi4vHyj86rbzUoiDBL3W6kQ2s5s3uH
+         oU6uhj+1kZNr8Ev1yZcGFxsYbX/hX8POcitxwlUvOvlsnaD5TVFNIFL++9x2AIisJa
+         xe0hplTlPDBk239P4kOATbRR71VS9gGuMdKxwegA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MRCOE-1ieNgs2FHA-00N9pC; Thu, 31
- Oct 2019 12:28:10 +0100
-Date:   Thu, 31 Oct 2019 12:27:54 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5VD8-1hsRiI14va-016tbi; Thu, 31
+ Oct 2019 12:31:08 +0100
+Date:   Thu, 31 Oct 2019 12:30:52 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Subject: Re: Git for Windows v2.24.0-rc2, was Re: [ANNOUNCE] Git
- v2.24.0-rc2
-In-Reply-To: <1223720779.572910.1572520655053@ox.hosteurope.de>
-Message-ID: <nycvar.QRO.7.76.6.1910311225380.46@tvgsbejvaqbjf.bet>
-References: <xmqqblty3dtx.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910302317430.46@tvgsbejvaqbjf.bet> <1223720779.572910.1572520655053@ox.hosteurope.de>
+To:     phillip.wood@dunelm.org.uk
+cc:     Jeff King <peff@peff.net>, Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git branch --edit-description a custom file
+In-Reply-To: <8b9021fa-f60c-a2e0-1174-a2fc1f11c476@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1910311229150.46@tvgsbejvaqbjf.bet>
+References: <20191030183950.GA21277@generichostname> <20191030202835.GB29013@sigill.intra.peff.net> <20191030224328.GB44961@generichostname> <20191031061832.GA20830@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1910311119080.46@tvgsbejvaqbjf.bet>
+ <8b9021fa-f60c-a2e0-1174-a2fc1f11c476@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:XLT9XKedy/xr6NT5H9I9ALHLef+IX7ysMuLgQNJuBF9kdqX4R55
- XryInW4XrPI+Q4Oj16sQA+GYrk6Lp4FfzzW+EhrPP7jahSsMY6Y7LTxJ5292z6jxfVIEcIO
- EXQHYKTMD7Wi+uAZrV+/q8zJ6BCdGEGY5czqQlpMNIJ4C+A5b8e+PziUdpxmSzM/9pCHKAU
- W4ktgRJ9WO64EAsIJ1lFw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:EHUkaJ9zBos=:qXHYajrkEC26mATz9Ng6KJ
- zcF8BSVILvDBpDKcg+JC1pSVeWWncHpC17gs6JNPU7tVxVDT/G6Us8wXp0sK2PGnyXJ4weTym
- kOGVdKEIQnU7MAPr6ETD7R4WJhBOYCtoiENMq75lQThC+Y65LZaZjFLk5mUf4yN6thiwEmTs0
- 2uUOo3N3V1i2rR4XX8/yEUKLUNFIL8J24sfrjK0RSggT9HyyvoU6gLztQUVc8KkMU/HjsU75e
- YX89idce0eIaqdmHlBMX5P0/gEatzfA7oeDIF8qMAYVFHHdcG2u49Cc9v44sD2QwcbmjYDet+
- w+hrKX3iFc89vfiv2ewdLTVz+jLhEnNGYcqszVbmOsAjC3Jqx5WwHIPOpJnk47dm0pSdQwzfv
- +9JmJSYMiPIJt/r1+Ytbwn6YaEZY2Pj3M0Kmzm2esH6kvnHrxNwciItAdR+3odXXH3YlGR3n3
- 53uwl8fOXyaRT0z4M676SmAd4SznaZiXJULxRZYWgHC7tjZ0lxPSSKxVSjPe4vIdVuwyX24ye
- qsmsGM3jbbB9BepH8SdVKW8uQVqJdjoriPP4EOykUWCGfRdvXJ7UYt2RqOG0qAc4eJ1oEWtgz
- liikY/leQGwBOAT6HKs6/TqeK00uofcpupUrMFv1T3omC9gSlzC6ColOOCrtB9nM46Nkh/PQ1
- bzu/AEm6uiCHMptt+KuDUrvzp1a/P7rQAlpanh82bU3qrVz8bnkc7hOChnKrL1Lm/Pih/QY+5
- NlvXtHRU12GyRWTE/K9n8I6aUNkqEHGV94uzZv18xwoKiZsFKCGu190sl1okNEi3up+O5pVtZ
- uhJ8UJ1vP+dZv7w3uv8hcidSCD+LNHYJVEl8M4j24Gq8nP6Zc5hp2DUXEL78jGasIFShM74Fw
- fdFEhL0eadsYYM+G5U//ejQ9CvaJVKLoXdpQGTuvSSnIqof6UdTgd7hD5WcHblRnkqc8XVdt0
- adsRWZIisfd1AScCVts+wq0DDnIkQo5kMT5+jXgtxr20gyq4jOkWB4FFuZbrSQZfnwIT90y7F
- 4WgD4Mh41gOsWWFsrkEOJFaz4lCsDD7ylwIQwzPiba/q+F8Vv2JV78pJJztJpsTgEKH17fqJ9
- 8t26fgOowrwJ1KYeUZ/+nOqF+YCbhIOsKPUVKVm1MtMOtp+Jb/GwQqlDRz7YLu2bH1C8QJ19T
- iZ8crEurLqzpedxitB8Ra8Rvqaok03e50pnUorkTTf1jpgRozm6NLezekqyp+YXWIOEzAfRK1
- UKOR5o4+iG3d1JNXY0McDQRvlipGh47LDc9r7j4ox0vGZnjjydC3efznbcQg=
+X-Provags-ID: V03:K1:gffMOfHTddt/hu+qK6DF5CYBWaQpKQXyDaIw8iAuTN+4IIjemh7
+ NW6uT+/y/+FlF2s6hc2nYoh0ZfJscJYaCYdA/a7014xBZroKkl2pUwyr3Ks9r3pMpo48J4S
+ ODJ4yVjB5BBLrcVX47BHQ1CftLmBJ1g5uYM6p2lX6+pDKcFp21sqcjkfIfrKKkxziw40NQn
+ je+pad9UxDLRoulu9db+g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GKYhUksJQxU=:hOhPFdSbadAGvmH7Z8Xrk0
+ HQoE8V+KozY7h/51O9AiI/zQBuI2cqrTqSozRNLdyrAjklDpzaFc/6jn4lxDLAqnKE63KuEYa
+ zNy9LIsGRdZ3s/f/Xuf/JTVsje0dj+2Be9L9B3Yr3p5ouR+xmY9za62GJ+7XYW54wcyYcvh77
+ 77PJ018ZKlsWZVrIHXbWV5oChE+vt3qbpoxQH3YBkM73UEBrhrm0o/2u2Mm06iq42p8XJsVl+
+ LbnUhJeG8ycmPreWiyHh4yf5zVCe9nH4oGB4et1eapYtwjv7DS3O0yPOBgQw5oN9dYMJBWcb7
+ qHpZqdjD7f8m0VKONR2TqtCIU3WUonFsJoM3eKkRD/PiY9rDRRmPd0evCoExzCV1gvOCVXh4X
+ DUrt/ukfPOxTFTkaglxcw/8Ch71JnHo7s04uslI2bGbqPdTI2WfxLb2Jd48A0M8tdvmgEni8c
+ kr8zEasUW46jUlf2LdRdjG3mUk8k/ood0QzjNkdC8fun6BM77B8yvLUOknp4uLiAnrjp5n912
+ /cAap4XY5vKFL0ke/R9y90Z4QHytJ5qcu8WfcfjDQGLSFIAMWKqzs/9z42QJjCx1HzmiLgphs
+ B8JMc6MWQ8ASnk5d8ErL9iTbnzLKrnZikKGUIqSrCLFWmdb+bU7sA+YI9S6I0t0kXnQW4L3ZO
+ JtQfvSo8uXd371wsKMn/8U/fTJ80vuJjlWfWwj52Cx7KRrXxUl8ExwgaZS2clEvpdwgV6DDNj
+ 2sc7DZJnfUTQ35+DAgDjKeXUfidgbXUUYs8ntOSl6ABJod0MQWWdkDzWZiJ169jMrV88Ix+xO
+ yimwQ+bejXADqrYR9GFzA2r3R0ka+FxvVxOTuLJUI4CcMEPqUUlnea8BAn5uXRwm/hYNJHHL7
+ WjUyYqExest4mj2eJkmXqv+7iiBc++kKv3SNMCGzIZgGFBhIIvLbOZGDeqgrB+4rBqoeWFnHu
+ E17Kk3+UFmspaKYnQ5ukG33TnTkuE9Si4K3IPUeGKG3/Bqgoiu9b3t0n5jGhBQLCrXQrmm10M
+ do7YNz7aF/AP+R7nt3s7QIvnEftp9rJ2HKLo6/+P7SYk6GAzSPNOvRUw7n7ej6yhc3h5up9bi
+ hzNBiN6npG+WYU6XTZ3YxGPdJ2Z5FgJbmxyKZOoVQtkYekbsmuBWvzdVV1YcjO8xZLGciCtL/
+ KjzP2S+KOahUFSgFiu4l46yiFTSUXqk9YcJQo+0T4TQVsjP4q1p5dDorbEQl2/WRh2xNgHcD+
+ NBeANk3tE5jzib373n3rx8ZfPw0j1/QUyhxZBguVu7ak3IfHdisc00GPl0AE=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas,
+Hi Phillip,
 
-On Thu, 31 Oct 2019, Thomas Braun wrote:
+On Thu, 31 Oct 2019, Phillip Wood wrote:
 
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> hat am 30. Oktober 20=
-19 um 23:23 geschrieben:
+> On 31/10/2019 10:22, Johannes Schindelin wrote:
+> >
+> > On Thu, 31 Oct 2019, Jeff King wrote:
+> >
+> > > On Wed, Oct 30, 2019 at 03:43:28PM -0700, Denton Liu wrote:
+> > >
+> > > > On Wed, Oct 30, 2019 at 04:28:35PM -0400, Jeff King wrote:
+> > > > Dscho brought up in the GGG thread[1] that perhaps we want to trea=
+t
+> > > > branch descriptions like notes and have them all under something l=
+ike
+> > > > `refs/notes/branches`. This would certainly solve my problem of
+> > > > having versioned descriptions and it would probably do it in a muc=
+h more
+> > > > general way than having a versioned included config.
+> > > >
+> > > > Anyone see any potential problems with this approach?
+> > >
+> > > I don't think it would be `refs/notes/`, as that is assumed to conta=
+in
+> > > mappings of object ids (and if I understand correctly, this would be=
+ a
+> > > mapping of branch names to data.
+> > >
+> > > You could just have "refs/meta/descriptions/foo" pointing to a blob
+> > > which contains the description of "refs/heads/foo". That makes it ea=
+sy
+> > > to edit descriptions, even if you don't like using "git branch
+> > > --edit-description".
+> >
+> > The only problem with this is that it's not really versioned, as it
+> > would be hard to go back to previous versions and/or share the history
+> > via pushing to a remote repository.
+> >
+> > But I guess that a very simple pseudo branch would do it, where
+> > `refs/meta/<branch-name>` would point to a commit that has a tree
+> > with a single file in it: `description.txt`.
 >
-> > - The `sendpack.sideband` config setting was re-introduced (I had
-> >   dropped this by mistake, thinking that it was no longer necessary
-> >   because the commit message failed to mention that this config settin=
-g
-> >   is necessary to work around issues when pushing via `git://`).
->
-> I do realize that my understanding of git is now much better than it
-> was 5 years ago when I submitted that patch. The commit message says
-> "dump git protocol" but actually wanted to say "git://".
->
-> Thanks for reintroducing it.
+> Having some way to share branch metadata would be nice. I like the idea =
+of
+> using commits so we can merge changes and revert to a previous version. =
+There
+> is some previous discussion here [1]. I'd really like to be able to shar=
+e the
+> upstream for a branch between two computers as well. I also use a commit
+> containing a tree with a single file stored at refs/todo/<branch> (and f=
+etched
+> to refs/remote/<remote>/todo/<branch>) to share todo lists with notes an=
+d
+> ideas for future commits on branches that I'm working on on more than on=
+e
+> machine. Having them version controlled so they can be merged has been u=
+seful.
 
-Thank you for your original contribution, and thanks to Oliver Schneider
-for reintroducing it!
-
-Now, if we only could make those `git daemon` tests to run on Windows...
-it should not be _all_ that hard, see
-https://github.com/git-for-windows/git/pull/2375#issuecomment-546744192...
+And while we're dreaming: it would be nice to discern between "push
+upstreams" and "base upstreams". Example: when I work on the
+`fix-t5516-flakiness` branch, I target `upstream/master`, but I push to
+`dscho`, i.e. my "push upstream" is `dscho/fix-t5516-flakiness`.
 
 Ciao,
 Dscho
+
+> Best Wishes
+>
+> Phillip
+>
+> [1] https://public-inbox.org/git/1519324188.6391.156.camel@mad-scientist=
+.net/
+>
+>
+> > I now like that idea a lot better than my original notes idea.
+> >
+> > Ciao,
+> > Dscho
+> >
+> > >
+> > > You could also have "refs/meta/descriptions" to point to a _single_ =
+blob
+> > > with all of the descriptions. It could even be in the existing confi=
+g
+> > > format. And then you could include it with "[include] blob =3D ...".=
+ That
+> > > doesn't exist yet, but it would be easy to add (it was something I h=
+ad
+> > > always considered when writing the config-include code, but there wa=
+s
+> > > never really a good use; and you do have to be careful about pointin=
+g to
+> > > untrusted blobs). That's a convoluted way to get where you want, but=
+ I
+> > > wonder if integrating to the existing config system would have any
+> > > benefits. I haven't really thought it through.
+> > >
+> > > (Of course that's also only one step away from having a versioned co=
+nfig
+> > > file in your .git directory, but it might possibly be a bit easier t=
+o
+> > > manage, since it would always be committed).
+> > >
+> > > That's mostly off-the-top-of-my-head rambling, so please disregard
+> > > anything that seems totally off-base. :)
+> > >
+> > > -Peff
+> > >
+>
+>
