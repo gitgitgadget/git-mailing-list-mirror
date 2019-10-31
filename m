@@ -8,52 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61E421F454
-	for <e@80x24.org>; Thu, 31 Oct 2019 20:41:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B78E1F454
+	for <e@80x24.org>; Thu, 31 Oct 2019 20:41:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729757AbfJaUlu (ORCPT <rfc822;e@80x24.org>);
+        id S1729768AbfJaUlv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 16:41:51 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:52417 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727477AbfJaUlu (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 31 Oct 2019 16:41:50 -0400
-Received: from mail-wm1-f44.google.com ([209.85.128.44]:55029 "EHLO
-        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726772AbfJaUlt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Oct 2019 16:41:49 -0400
-Received: by mail-wm1-f44.google.com with SMTP id c12so2821646wml.4
+Received: by mail-wm1-f67.google.com with SMTP id c17so12028wmk.2
         for <git@vger.kernel.org>; Thu, 31 Oct 2019 13:41:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=y0mYp4wOJsmohdAWYP2XP7FiumZU78TXl/B/Ue8fvPw=;
-        b=MZOTDxYe7PsTJslGzHVkYt56r51Mzeky5k90XllRLubSfvmUYhsFcTiamyHrqMrPFc
-         /zyMQHxpmIHrDpU6ld1qnso2eegFxzxX3GlcfQ+nT0iFEErLb2WxDeupeK0qt3D8v4uP
-         a+gYwWZEh9+BtR4hmY2HnQDlzBilRnO0wY2oV9OW9dulgnrhDKneLFBLk2LkyytGYpe8
-         Ls3odpTRApIlWxvQgaILRykayfi36RVNJX5u8j4qFC7toCXODtBjZHZ5NBoHHM3DRPsh
-         jHD9rrMXeZ08fp1/CEUXT97+pFsALfKgVEjZszYfWocUcWC1j5iUklp2k/isCqLPGrg9
-         5R/g==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=gRlYzP/Tdc9TBHQ63b4M2R2CFqE0du0IqxoOrRzDEqM=;
+        b=ubn/NCDkBiV59tW6cXyn5PsqCeNhnCpTtEWeqCWKUQhAP7wKsNFgqncutxU3o0zHY6
+         wpD9VatF/SnwJt5uz0CmawpLNorzgeSkncqGEAMik0T0i1nvfD6bRY12iQD3MYFytswx
+         y5MSW5gJyXoqvoWHerXKp5OC5LTzpa9ZQbIAhRWwcMzkWog2ZS5gkwxdg6LJ8tPF9Ye8
+         v+1MemJqSliTP0IiK3Ox77tSb3fs57lDlM3bkK6mUKRD8jKOdJbeyZt/vkqvWiMnAwR9
+         Ri3XW7vSlWf/HkoL4HGx7eiCTicsMB7MnhQWZHej28BHhu70DaEjRZZB63Z1wEjV4Jcg
+         6ayg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=y0mYp4wOJsmohdAWYP2XP7FiumZU78TXl/B/Ue8fvPw=;
-        b=TXB4pXPMMP9nIJPoMfzJJ48PuGKlUV5kJW1+BWOR3HhFXKZyStgttPLkfjoDSzzvbK
-         EuvpsBWyxV4GVIjXL71yoUwEc+IQf/IRdES8d7bYISEmfGLic6a+ttnSFNT+Cd1rGD2S
-         yRgJZwDkjSz2Hg8fbSMKerG2radh8IghfH7oTVASo/d8/07m2qAXXc6pgIHN0yhVDl/g
-         7SucDHDx+VRwesffkrCVXVdqK+KXV95I402X87OJlR2Xf54d88ljDT8P7DVqyimdo1IO
-         NGWUQarBtWpmDXq3jwoPPHyqBdtxWsP6m7PEEIKoed/vOPSxVPA6Dtz8pJn+J/uL/If3
-         y4pg==
-X-Gm-Message-State: APjAAAWskurE7BXtLnYEa8GKeKH1EckCnIh+rxe+f+ZvAmohIEBAMvEu
-        M0zJSIJhaDPWAV6zT8JFok4WL/Uc
-X-Google-Smtp-Source: APXvYqxXT2krgeIMEfuV6mDqguXHimMTuslLvq2d5cE1aCMdJ2biCuKoNnWN9efg+oMgKkBEc1gz/w==
-X-Received: by 2002:a1c:41c1:: with SMTP id o184mr7384026wma.81.1572554507514;
-        Thu, 31 Oct 2019 13:41:47 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=gRlYzP/Tdc9TBHQ63b4M2R2CFqE0du0IqxoOrRzDEqM=;
+        b=GKonRdJhP0M+CqhsBgcuojS6nuS0P0XTZ4/TzcrXqdyMJfLp9W33R+GmKSjmFtLdzr
+         UMONE46YmEGIwZvUrCwTJOngMxDBGwPH15ekkUyH0x8e1A1beuRfgVEfyZZmp4OA0zis
+         4DPfUJerIGXCdU5Y/CN+8fgc93laO3wfrmM/iS9aqENVOm0oAOgBu0kph3qF496k+rNx
+         52dg7UU57waptFmglV3x4kb+wSlMbKwIq7b7eIe5NuWFAHgcRU5FIA8zU224ESrDqZ3p
+         LcE7v5i3JXM+0Op2Ct8LqgTjACTnW5vYok0A1uhKvG26FhWrTN+IubpHUtW4BhAsVkyF
+         swlg==
+X-Gm-Message-State: APjAAAWncB8tyVc6tl1nrrEjJ5B80gY3YlrZxTpETNgr9NM/AC/YEGAE
+        Ng7R+waZafIYWpQ8TB9UANQukH+F
+X-Google-Smtp-Source: APXvYqwEryIESKpANS5/jrHrKL4eKA6cyT9e78GFnta5khlkF+w16rgk+Bn3vOoBS52mCAq1wd6SdQ==
+X-Received: by 2002:a1c:7d95:: with SMTP id y143mr7286738wmc.143.1572554508194;
+        Thu, 31 Oct 2019 13:41:48 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f14sm5733891wrv.17.2019.10.31.13.41.46
+        by smtp.gmail.com with ESMTPSA id k4sm4398032wmk.26.2019.10.31.13.41.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 31 Oct 2019 13:41:46 -0700 (PDT)
-Message-Id: <pull.441.git.1572554506.gitgitgadget@gmail.com>
+        Thu, 31 Oct 2019 13:41:47 -0700 (PDT)
+Message-Id: <70f10fe44716e50765a9d8f7794116f390f09dbc.1572554506.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.441.git.1572554506.gitgitgadget@gmail.com>
+References: <pull.441.git.1572554506.gitgitgadget@gmail.com>
 From:   "Ralf Thielow via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 31 Oct 2019 20:41:45 +0000
-Subject: [PATCH 0/1] fetch.c: fix typo in a warning message
+Date:   Thu, 31 Oct 2019 20:41:46 +0000
+Subject: [PATCH 1/1] fetch.c: fix typo in a warning message
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,26 +63,32 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>,
         Ralf Thielow <ralf.thielow@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Noticed this while reviewing German translation.
+From: Ralf Thielow <ralf.thielow@gmail.com>
 
-Cc: Matthias Rüster matthias.ruester@gmail.com [matthias.ruester@gmail.com]
-
-Ralf Thielow (1):
-  fetch.c: fix typo in a warning message
-
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
  builtin/fetch.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-base-commit: f21f8f5d35b09ecdd1a0112f114436fd2eda7df2
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-441%2Fralfth%2Ffetch-fix-warning-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-441/ralfth/fetch-fix-warning-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/441
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 0c345b5dfe..f9a934f098 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1411,7 +1411,7 @@ static int do_fetch(struct transport *transport,
+ 		for (rm = ref_map; rm; rm = rm->next) {
+ 			if (!rm->peer_ref) {
+ 				if (source_ref) {
+-					warning(_("multiple branch detected, incompatible with --set-upstream"));
++					warning(_("multiple branches detected, incompatible with --set-upstream"));
+ 					goto skip;
+ 				} else {
+ 					source_ref = rm;
 -- 
 gitgitgadget
