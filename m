@@ -2,123 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 216901F4C0
-	for <e@80x24.org>; Thu, 31 Oct 2019 19:51:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 261621F454
+	for <e@80x24.org>; Thu, 31 Oct 2019 19:53:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727976AbfJaTvF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Oct 2019 15:51:05 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57450 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727528AbfJaTvF (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 31 Oct 2019 15:51:05 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 515C860423;
-        Thu, 31 Oct 2019 19:51:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1572551463;
-        bh=QSkP8nc6eg546wY+gDDzk1WbUMEe1rpaKzzl36NUi7I=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=bnKa7nItdbkN9ZwYnoJ/nlFKL92aGj0PaSB+tJv6rUWGn+rtf7IDg3+2OQ2yFYy0S
-         UTwUeXJvIPH4JPOvgfRtVuh2e6d7zBh8jmoQzTEp+CPU9Un8C8x7vL20bEIV8U8dt3
-         8em/g1J+/5DhQiltZCAYM9knJjsxnuWAuiRkSsCuE3DUw0bhZj/1h5o/3jiVVvJms3
-         l3qQ+V6U7fhhOiUwCyOqp1UD5YttZbKdOGslDFxoi7UNc3DBl5SUwOKpKHDNGoiRvG
-         htw8Vyk/hALM7eTVC4WGHdNvjn+LmMqo2l01d/1Ow0E0SsoXA5p3eIGwXF2u0eAgmR
-         LvMJKBDocwKyyI+i4eJVyJOKdPlz4jWJi6+VbzVoI80UXkcXctpQufq9nmJeotQNfm
-         IRl0NteVMvEvIfQGP7hFxx873GqAd6LKUJbnepIazmRsHgDAGTkFIJoOWYJUo5MgJX
-         NKzDkSmypEmZfVL90Hp2wZ1XEeojoDpXSJdUYQQGr76Ns6FW2An
-Date:   Thu, 31 Oct 2019 19:50:58 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Doan Tran Cong Danh <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/3] t0028: eliminate non-standard usage of printf
-Message-ID: <20191031195058.prp6cpx6ivf57lz7@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Doan Tran Cong Danh <congdanhqx@gmail.com>, git@vger.kernel.org
-References: <20191031092618.29073-1-congdanhqx@gmail.com>
- <20191031092618.29073-2-congdanhqx@gmail.com>
+        id S1729677AbfJaTxY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 15:53:24 -0400
+Received: from mail-wr1-f44.google.com ([209.85.221.44]:42106 "EHLO
+        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727528AbfJaTxX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Oct 2019 15:53:23 -0400
+Received: by mail-wr1-f44.google.com with SMTP id a15so7583614wrf.9
+        for <git@vger.kernel.org>; Thu, 31 Oct 2019 12:53:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=aQWoOMdPRAmEMIRlgMHjh0IvtSKJ4NakxbO/atVTkww=;
+        b=joNC/fviqFgzMfmvhX/u1dSTjARwMC/Nedr4ASRWezMZAgLtlYdRC1Vh9tM5tS5YUm
+         zDL3/72ER4mLu1XpaNDC5duzPvj6FbnzKE2I9q5lRfuqJh06V/9b15CBf2/EJus33fij
+         DEghcyB8PSOaoub9fFiU9jSLs7gAkWKeTEujcZDPzHDAj7E7w4N7mxZ2wVKkn08eLC68
+         PwnPdsWMWAdimpVSU3SUrIsKHj5ng41cAhlUzYmbifk12NrVPrZaR8hokJ4esejXFlDd
+         w8REDjYNnPkVzjeU2GoQowS4V3q2dOi/+Lw3qdZjUeghiQ+2whhyVOPIkJJ0dKxUwGQf
+         VqFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=aQWoOMdPRAmEMIRlgMHjh0IvtSKJ4NakxbO/atVTkww=;
+        b=KAqqQ5PAErn4qcuTXXFp1RZGIrU78zCRkcnLMmIyK8OUV+hOOoh2npL/ssUGju3AjA
+         mFvEKKxBkjKeeYuPZqIs3vvo870IKGIL1fW8KAuik54tWpYo/tGg+vSMDg0Gb1noHJUg
+         h/9T0zWmRnhdiRu8yzmzMJuwUv1BwJFQibz/bGIugoRgXVqLCOrzi69/9bFUhUyM6QPn
+         w6/uWL9znLqG+FJ2c/50wdXqveGyS8KqYf6+cd//y9hUTeUDMXF5NjcKNfwxD7QbZ895
+         CA9gzVGdZhMixeqailh6cggiqIoLcOyAMUvlppFRObcjwfjFMKyTY3X6Tt/oEEV5RImD
+         Z1Ug==
+X-Gm-Message-State: APjAAAUlfqk1xYh6OihM0Ie7HGfEd/hgoCGbgPbyqM0OikcjR0kGh6M6
+        90nHE1LIaHtkH9hO2y0tLrU0cnyy
+X-Google-Smtp-Source: APXvYqw0r84ojXAR2FIPx5SBhnJJNPFzZ+xfs4fEMS/i31N9sbhrGVcnhLn+FJ4LZXgdQ99SfUvmqA==
+X-Received: by 2002:adf:f78f:: with SMTP id q15mr7118968wrp.282.1572551600663;
+        Thu, 31 Oct 2019 12:53:20 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-20-250.as13285.net. [92.22.20.250])
+        by smtp.gmail.com with ESMTPSA id d4sm6846315wrc.54.2019.10.31.12.53.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Oct 2019 12:53:20 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: git branch --edit-description a custom file
+To:     Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+References: <20191030183950.GA21277@generichostname>
+ <20191030202835.GB29013@sigill.intra.peff.net>
+ <20191030224328.GB44961@generichostname>
+ <20191031061832.GA20830@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1910311119080.46@tvgsbejvaqbjf.bet>
+ <20191031181920.GB70819@generichostname>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <4ef79cfb-b970-2b2b-131d-3f47e6b0e308@gmail.com>
+Date:   Thu, 31 Oct 2019 19:53:18 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="6lvyyxu6nt3idem6"
-Content-Disposition: inline
-In-Reply-To: <20191031092618.29073-2-congdanhqx@gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-1-amd64)
-User-Agent: NeoMutt/20180716
+In-Reply-To: <20191031181920.GB70819@generichostname>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Denton & Dscho
 
---6lvyyxu6nt3idem6
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 31/10/2019 18:19, Denton Liu wrote:
+> Hi Dscho,
+> 
+> On Thu, Oct 31, 2019 at 11:22:16AM +0100, Johannes Schindelin wrote:
+>> Hi Peff,
+>>
+>> On Thu, 31 Oct 2019, Jeff King wrote:
+>>
+>>> On Wed, Oct 30, 2019 at 03:43:28PM -0700, Denton Liu wrote:
+>>>
+>>>> On Wed, Oct 30, 2019 at 04:28:35PM -0400, Jeff King wrote:
+>>>> Dscho brought up in the GGG thread[1] that perhaps we want to treat
+>>>> branch descriptions like notes and have them all under something like
+>>>> `refs/notes/branches`. This would certainly solve my problem of
+>>>> having versioned descriptions and it would probably do it in a much more
+>>>> general way than having a versioned included config.
+>>>>
+>>>> Anyone see any potential problems with this approach?
+>>>
+>>> I don't think it would be `refs/notes/`, as that is assumed to contain
+>>> mappings of object ids (and if I understand correctly, this would be a
+>>> mapping of branch names to data.
+>>>
+>>> You could just have "refs/meta/descriptions/foo" pointing to a blob
+>>> which contains the description of "refs/heads/foo". That makes it easy
+>>> to edit descriptions, even if you don't like using "git branch
+>>> --edit-description".
+>>
+>> The only problem with this is that it's not really versioned, as it
+>> would be hard to go back to previous versions and/or share the history
+>> via pushing to a remote repository.
+>>
+>> But I guess that a very simple pseudo branch would do it, where
+>> `refs/meta/<branch-name>` would point to a commit that has a tree
+>> with a single file in it: `description.txt`.
+> 
+> So how would you envision the workflow for this? Would it be something
+> like,
+> 
+> 	$ git checkout feature-1
+> 
+> 	$ git branch --edit-description=ref # instead of =config
 
-On 2019-10-31 at 09:26:16, Doan Tran Cong Danh wrote:
-> diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-enco=
-ding.sh
-> index 7aa0945d8d..bfc4fb9af5 100755
-> --- a/t/t0028-working-tree-encoding.sh
-> +++ b/t/t0028-working-tree-encoding.sh
-> @@ -17,7 +17,7 @@ test_lazy_prereq NO_UTF32_BOM '
->  write_utf16 () {
->  	if test_have_prereq NO_UTF16_BOM
->  	then
-> -		printf '\xfe\xff'
-> +		printf '\376\377'
->  	fi &&
->  	iconv -f UTF-8 -t UTF-16
->  }
-> @@ -25,7 +25,7 @@ write_utf16 () {
->  write_utf32 () {
->  	if test_have_prereq NO_UTF32_BOM
->  	then
-> -		printf '\x00\x00\xfe\xff'
-> +		printf '\0\0\376\377'
->  	fi &&
->  	iconv -f UTF-8 -t UTF-32
->  }
+Personally I'd prefer a config setting that meant --edit-description 
+stored the description in a ref instead of the current config key (or 
+perhaps as well as so format-patch can just get the latest branch 
+description from the config key)
 
-Yeah, this patch looks obviously correct.  For some reason, I knew that
-printf(1) didn't accept hex sequences and yet I still wrote them.
+> 	# editor opens up, :wq
+> 
+> 	# is it find to have an autogenerated commit message?
+> 	$ git show refs/meta/feature-1
+> 	commit 80dfea1dc4492aaabc80d23fbaffe86da55ee098 (refs/meta/feature-1)
+> 	Author: Denton Liu <liu.denton@gmail.com>
+> 	Date:   42 seconds ago
+> 
+> 	    Update ref description
+> 
+> 	diff --git a/description.txt b/description.txt
+> 	new file mode 100644
+> 	index 0000000..ed03a4b
+> 	--- /dev/null
+> 	+++ b/description.txt
+> 	@@ -0,0 +1 @@
+> 	+this is a description
+> 
+> I have some open questions about this, though:
+> 
+> * Since we're planning on sharing these descriptions with the outside
+>    world, how would the ref layout look like? If we're not using the
+>    refs/remotes namespace will it make fetching and merging notes harder?
+>    I know that collaborating with notes is a pain so how do we avoid
+>    making the same mistake?
 
-As Peff pointed out, this is because we only trigger this case on musl;
-musl is the only known implementation of iconv that produces big-endian
-data without a BOM for UTF-16 and UTF-32.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+I'd love to see a consensus around putting remote versions of refs/foo 
+under refs/remote/<remote-name>/foo. To share notes I add a refspec that 
+fetches to refs/remote/<remote-name>/notes. It is a pain that 'git pull' 
+wont merge them for me though.
 
---6lvyyxu6nt3idem6
-Content-Type: application/pgp-signature; name="signature.asc"
+> * On the above point, what if local descriptions are at
+>    refs/meta/heads/feature-1 while remote descriptions are at
+>    refs/meta/remotes/*/feature-1?
+> 
+> * What would a merge workflow look like? Would we have wrapper commands
+>    for it or do users just have to checkout the description branch
+>    themselves?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+Teaching 'git pull' to (configurably) merge things under 
+refs/remote/<remote-name>/foo to refs/foo would be a useful addition, 
+then it could merge notes and any other refs people are sharing.
 
-iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl27OyIACgkQv1NdgR9S
-9ovAGA/+Iig7qwVycIhaNOabBeZIGLKxOtkYMFnLjTmYHXUdPmWMre985TJoqKaQ
-UEgecn0kZX4tIpQLBY2eaRtrYMPQEAgUUwf3hiOeagbFO3p2X8VpQlRFTX3ARdA5
-EybNSG6db3H90EkqK+P8g/nSiY5n77Csg/fmeSTQIf/zP3ayfujP0W6clCUqfvF5
-rP73Ct4bxs1s2KcI9zxYm3CCttaaQ+aqE4YBk4BpdK1tS0nKROFc/pLV4eU+Ztwu
-rRBaP7et6glwj1AIjAjBl/sOHxzOqMKhmeguHZ3+QEwj9lpPfOe30y0P8hydfRdV
-+lJ83KUx94SziljrRQ0TPLTtbIx8GMwu8809NPKFhWO1i5AErrIYoZU9xNGG8Zhn
-CYyewfojeFxII0HB933Lkno4Yjr6cfZhNzaPanboieDRxU3LQysLY540YkQIjrT4
-wfwDpSzaH5HyKCvyA/NxNK3/4vXZPgR+2k5QoNY0r4/fZYGd2BwbU05EykDSHWaf
-xZewNPr6ZcUgAhDckMWSPAb65mf+zHBADcaDr3aWkiyXsvdc2gD2z7OYboVDga9B
-MSC7z9D5uQU1nzegA6xmKfDnSqz8jnmHQE3yxxp88XSr1bTjWH9EY4ap3sb5kzX+
-VhNP6pi0YfKAOGaV65EAgWnEpE+v/f8ri+1R60sYMyLqNg8uxiw=
-=Vxl3
------END PGP SIGNATURE-----
+Best Wishes
 
---6lvyyxu6nt3idem6--
+Phillip
+
+
+> Thanks,
+> 
+> Denton
+> 
+>>
+>> I now like that idea a lot better than my original notes idea.
+>>
+>> Ciao,
+>> Dscho
