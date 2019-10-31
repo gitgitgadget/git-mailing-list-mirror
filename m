@@ -2,218 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 066F51F4C0
-	for <e@80x24.org>; Thu, 31 Oct 2019 08:27:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C70EF1F4C0
+	for <e@80x24.org>; Thu, 31 Oct 2019 08:28:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726858AbfJaI1L (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Oct 2019 04:27:11 -0400
-Received: from mout.gmx.net ([212.227.15.18]:50377 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726774AbfJaI1L (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Oct 2019 04:27:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572510424;
-        bh=zJ1PMNDqz9xEpfsBAP4i/JdyJZUsuXa7e8pt6SYyIJM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ZpyA14xm8n5fQ2HdaZ0F81cqsVSNauPJuCxcM/lsdfdtuYlRMrXLmAuLL2vFIzzGF
-         ep+IT3MXDoDeyiiYNyOZKZpPeXoCX2/sLQUZ6Kd39MLzR3qyCUXD9nKIO/j+vcT+Eg
-         7JgjVqrBjPrH9QmYBZzi4P2pO75o4eZ0s0X2fbnk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQMuR-1idcQw3USf-00MKg1; Thu, 31
- Oct 2019 09:27:03 +0100
-Date:   Thu, 31 Oct 2019 09:26:48 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Emily Shaffer <emilyshaffer@google.com>
-cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
-        Matthew DeVore <matvore@gmail.com>, matvore@comcast.net,
-        jonathantanmy@google.com, jrnieder@gmail.com, steadmon@google.com
-Subject: Re: [RFC] xl command for visualizing recent history
-In-Reply-To: <20191031003929.GA22855@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1910310851300.46@tvgsbejvaqbjf.bet>
-References: <20191029003023.122196-1-matvore@google.com> <20191031003929.GA22855@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726874AbfJaI2J (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 04:28:09 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.218]:23976 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726747AbfJaI2I (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Oct 2019 04:28:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1572510483;
+        s=strato-dkim-0002; d=aepfle.de;
+        h=Message-ID:Subject:To:From:Date:X-RZG-CLASS-ID:X-RZG-AUTH:From:
+        Subject:Sender;
+        bh=BSgS+NBJRuxzI3o+xB6LCAm7KmEphVQz4dmt5Fab5SA=;
+        b=Hxvn7d1l7vA+MHjgqPxbs1+8Gu+9sBjOluQFaAt4Z60QrtP+Uz2Ly0mCyKDhvWApQS
+        tGRmZNYbIZIqJTVeMwCHfeHPDf36M0ceVMGgiNmO4FCHfV4f3kIH+zYA9GBKB9ruV44a
+        39cRV6q3PKtuEh2aEaJGge/kUa0aPs+P5dhkZB95p+wJX+yNJwOMESLVsJiR/+WOvpEi
+        a1Zj9k1VXFcA5H/eaciNvZFJx82Dnc3OwKZVV0sB0ieo0DQaTlr64YMW7aqljS0iQbSl
+        DzymakP+ihV70rb5qWJJUU0FbVK/SsKoE8qCmJoN4+2C6VTR+9TrJbMm7PaKdP7doZ2I
+        xwzw==
+X-RZG-AUTH: ":P2EQZWCpfu+qG7CngxMFH1J+3q8wa/QED/SSGq+wjGiUC4kV1cX92EW4mFvNjTRB"
+X-RZG-CLASS-ID: mo00
+Received: from sender
+        by smtp.strato.de (RZmta 44.29.0 AUTH)
+        with ESMTPSA id 20735bv9V8S39Qc
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
+        (Client did not present a certificate)
+        for <git@vger.kernel.org>;
+        Thu, 31 Oct 2019 09:28:03 +0100 (CET)
+Date:   Thu, 31 Oct 2019 09:27:49 +0100
+From:   Olaf Hering <olaf@aepfle.de>
+To:     git@vger.kernel.org
+Subject: git fsck, badDate: invalid author/committer line - bad date
+Message-ID: <20191031092749.074ed112.olaf@aepfle.de>
+X-Mailer: Claws Mail 2019.05.18 (GTK+ 2.24.32; x86_64-suse-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:M8ugoTG6g/X5DnK1boOC60Q0lVNTLXuj5GjLyj9X1W8plGsUHYK
- 8eRQaY6Oh2LRZYSTV1VjU6otR7t0GfPLLJP5/ScR9VobEbcM+QMwpiKTJOKOK90QBnnKyVL
- NbRwSpPiKy6rY8DouxZytgTcmD993F/saQ4n6ytYwXXwu3+FkG2TkF72jYYVobCHlmq4k2v
- p1Yw5yWl3IvRA4U/i6ySg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:FSk2pF/uHaM=:TDQdOrhRWMptndYewlkJ2n
- nU98FGb5dFYdhkob8+oO/cvg9dJN93uJ6SohUx3NvoxPFsy93n4c1uIuKNzjbqE9WC6gvI9cl
- ZYN+sdk2Q4aptYU6ZpcKnWqEGPHMZ6VMCLa6qjODvUxG3CgstcI3Vo7spnPeoQ6yu9tB63+Pn
- qv7eLOUTVReJPYGx9BrfuWmEpTWTeJn5zUrOsok2puK2fOZbOAJM5t0IJJ2vH72vualqEwnbO
- A6pNbDq4aMjGAdaDKFMnUC02CQCZSgbSGYH8au9S5Q0DVRH6RgiAWCqyTvNBh4hjIy0kqqOxQ
- 3x2BM5xfpgVakvUUDDJBqnPNQqtBc/uoMV0y7kLvlVUNA6QQDxMHGcPam8cWgAEXOU4xl3Vm6
- NA3j/dWnHXhIQoweK0Jl4aMVFtRmWYhTRf3J1RqvUlc4WePKaDh4w3TDZthyc0V5LlRF3931r
- e5G6BEvZRIZxg/0YZCi4FqjOOumN5ncFopyqrseneIOfCLKOkYLR7ShFuS73TRIvFFESe/w9J
- bW9xWvoaDcWJNbXNc2sRqBm+c8vMYMI7mzHYwbWtueFz+8jwvb9P81VlaAoXdqfjnWLu6qlp5
- 5oTIC52EWlWu52wsYZ9BrJfgdfmwx+wPSMIJrH4grUEXllKhgiWDpBajWayX9oxKafHSRqetc
- uJ+ixOII5pcVL1ykazqRxfG/4v0LJZmNs3OotOu5XWAu5Mg37K+pLt1lHuI07VzrxuM6Xj+zp
- BJBYdf8IC+ixcv8rvp4LXuxhrWkGJQQ7PwrEE3ETx57U2wbZXpa1TcoShk088YUVi0mRwiG+4
- oweTTDuq7FImln4fvLcya4+RsSXJP8KblonRrWkrdjt+VWgkoldp/YxX7rAlYfDmhI6kdovdb
- hRiG7C+k6ygx0J+FlDEYV/8MWSO25Go16yHE8Kq1FJP1TK6T7+c5nCAC1OpZrMSTYEZlYg3og
- xJShaWTYyv6JkUFtT1sI6noTfyrKtxVvxhba+h9A60oVeYvC63dtqqbY6s4vxnTFBlzYIi5++
- 95+fysz0A4r6rSk5BLlydUyw3zEpbQJzKzwFS0luZTleQc8UvMSjpLCBzEOsDRRlIfTmKcAdu
- KyVQarLgH6xogjc/yGiwOgQrJ6/ipko9yLS6LSQJtOR+dYPizT6RwMTKs46LctFkAa5a3SFrl
- bOYEAdOkEcqjtM3bMsYNtTeqA1IKQyJlNV2dtYs3E4RblTo/uMaXIxy7PtZ/VwqNKzdxJY13c
- JcNHHq0N7M80FiLmvTsuXRF0fXuU0ArKEQddA8C9Z6uZDd4Rf7m+OsfOgqCw=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ boundary="Sig_/muRiLVKiBrcrkStc=q2BLQA"; protocol="application/pgp-signature"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+--Sig_/muRiLVKiBrcrkStc=q2BLQA
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 30 Oct 2019, Emily Shaffer wrote:
+While preparing changes for git://git.annexia.org/virt-top.git, git push to=
+ github complains:
 
-> On Mon, Oct 28, 2019 at 05:30:23PM -0700, Matthew DeVore wrote:
-> > From: Matthew DeVore <matvore@gmail.com>
->
-> Good to hear from you. One comment - the subject of your mail is "[RFC]"
-> but I think folks are used to receiving mails with RFC patches if the
-> subject line is formatted like it comes out of 'git format-patch' - that
-> is, [RFC PATCH].
->
-> >
-> > "git xl" shows a graph of recent history, including all existing
-> > branches (unless flagged with a config option) and their upstream
-> > counterparts.  It is named such because it is easy to type and the
-> > letter "x" looks like a small graph.
->
-> For me, that's not a very compelling reason to name something, and the
-> only command with such a cryptic name in Git that I can think of is 'git
-> am'. (mv, gc, rm, and p4 are somewhat self explanatory, and everything
-> else besides 'gitk' is named with a full word.)
+remote: error: object c609265ccce27a902b850f5d62e6628710ee2928: badDate: in=
+valid author/committer line - bad date
 
-am stands for "apply mbox", and I think that the only reason it is not
-called `git apply-mbox` is that the Linux maintainer uses it a lot and
-wanted to save on keystrokes.
+Also 'git fsck' is unhappy about a number of commits.
 
-Having said that, I do agree that `xl` is not a good name for this. It
-is neither intuitive, nor is it particularly easy to type (on a
-US-English keyboard, the `x` and the `l` key are far apart), and to add
-insult to injury, _any_ two-letter command is likely to shadow
-already-existing aliases that users might have installed locally.
+What is wrong with these commits, and how can the maintainer of virt-top.gi=
+t repository fix his repo?
 
-Besides, from the description it sounds to me that this would be better
-implemented as a new mode for, say, `show-branch` (I could imagine e.g.
-`git show-branch --unpushed` to be a good name for this operation).
+$  git  --no-pager  log -p -M --stat --pretty=3Dfuller c609265ccce27a902b85=
+0f5d62e6628710ee2928^! | head
+commit c609265ccce27a902b850f5d62e6628710ee2928
+Author:     Richard W.M. Jones <rjones@redhat.com>
+AuthorDate: Mon Oct 5 11:39:28 2009 +0100
+Commit:     Richard W.M. Jones <rjones@redhat.com>
+CommitDate: Mon Oct 5 11:39:28 2009 +0100
 
-> > Like "git branch" it supports filtering the branches shown via
-> > positional arguments.
+Olaf
 
-... or `git branch --show-unpushed`...
+--Sig_/muRiLVKiBrcrkStc=q2BLQA
+Content-Type: application/pgp-signature
+Content-Description: Digitale Signatur von OpenPGP
 
-> > Besides just showing the graph, it also associates refs with all visib=
-le
-> > commits with names in the form of "h/#" where # is an incrementing
-> > index. After showing the graph, these refs can be used to ergonomicall=
-y
-> > invoke some follow-up command like rebase or diff.
->
-> It looks like there's a decent amount of this commit message which
-> really ought to be a note to the reviewers instead. Everything above the
-> '---' goes into the commit message; everything below it will get
-> scrubbed when the patch is applied, so you can give more casual notes
-> there - for example this paragraph, as well as "Omissions I might/will
-> fix".
+-----BEGIN PGP SIGNATURE-----
 
-In addition, I would think that the introduction of ephemeral refs
-should deserve its own patch. Such ephemeral refs might come in handy
-for more things than just `xl` (or whatever better name we find).
+iQIzBAEBCAAdFiEE97o7Um30LT3B+5b/86SN7mm1DoAFAl26mwUACgkQ86SN7mm1
+DoCnDRAAipJ+8RJHpKMZCOLQWo2S8Y7Ig2K5WLZzbrtNYmCCl73kONawZPqQHfZb
+smdGxnWFqOu9T8vg32QX97fyuQkWsNBeKLyWORezB4tLSsBDqv59sRyvJySiTdrF
+8Ywu20CmdU/+dUKD9ZVt9XfqUx2NIg02cee/EN4QM5CgILyNd2y+ICr7tbheKsUf
+MO7aa59KJ9Fw9CSOG5+TRYrtFOqUitlMnf16xHf0f7nVfQ4kE4BPGiRNNS26mmfa
+c8U2Iu4mclMvb9TLZbJ1Nv7sTCJDBgN0a8ik9WnNH2O/1bKVe8FzGMa8CWOJ6SOq
+KCle/ELQrTMgBqsM7X/P3xyOFqd+RhDvZ8tO/TDZ0ODSehupHzICFH4Yg+9995Lf
+KYZ//HLDA/MEz0r2rvPzTZXVVcw12XvjfVs9syqPl9mj4HTlw1+stQjVGYP6oT3r
++SeuqwhPPVxlBwQ+vPd7is4qnsAcUTDOqp4hCR/YFM8XchQiW0c/MkXhb86pLf83
+bjeHEYaQ4MEl8wTumfy3rHIUT1UWhFaDidJXg+ty4tQAxWQi/WYfNgIRlvKZSiQW
+LZ/VQmkIu1E5G+X7bDyVH4qRuAJ3/YbAhz0h9XoqI6ZosmDDSYmWfPBvZ4aVoM8t
+72LbYlQqH7b8oUX0XZp+iKqd93cQ8JqwCTg+LAGPFICMm4CAm2E=
+=YohF
+-----END PGP SIGNATURE-----
 
-The design of such ephemeral refs is thoroughly interesting, too.
-
-One very obvious question is whether you want these refs to be
-worktree-specific or not. I would tend to answer "yes" to that question.
-
-Further, another obvious question is what to do with those refs after a
-while. They are _clearly_ intended to be ephemeral, i.e. they should
-just vanish after a reasonably short time. Which raises the question:
-what is "reasonably short" in this context? We would probably want to
-come up with a good default and then offer a config setting to change
-it.
-
-Another important aspect is the naming. The naming schema you chose
-(`h/<counter>`) is short-and-sweet, and might very well be in use
-already, for totally different purposes. It would be a really good idea
-to open that schema to allow for avoiding clashes with already-existing
-refs.
-
-A better alternative might be to choose a naming schema that cannot
-clash with existing refs because it would not make for valid ref names.
-I had a look at the ref name validation, and `^<counter>` might be a
-better naming schema to begin with: `^1` is not a valid ref name, for
-example.
-
-Side note: why `h/`? I really tried to think about possible motivations
-and came up empty.
-
-Another aspect that I think should be considered: why limit these
-ephemeral refs to `git xl`? I cannot count how often I look through
-some `git log <complicated-options> -- <sophisticated-magic-refspecs>`
-to find a certain commit and then need to reference it. I usually move
-my hand to move the mouse pointer and double click, then Shift-Insert
-(which is awkward on this here keyboard because Insert is Fn+Delete, so
-I cannot do that with one hand), and I usually wish for some better way.
-
-A better way might be to introduce an option for generating and
-displaying such ephemeral refs, in my case it would be good to have a
-config setting to do that automatically for every `git log` call that
-uses the pager, i.e. is interactive.
-
-Finally, I could imagine that in this context, we would love to have
-refs that are purely intended for interactive use, and therefore it
-would make sense to try to bind them to the process ID of the process
-calling `git`, i.e. the interactive shell. That way, when I have two
-terminal windows, they would "own" their separate ephemeral refs.
-
-> > The test cases show non-trivial output which can be used to get an ide=
-a
-> > for what the command is good for, though it doesn't capture the
-> > coloring.
-> >
-> > The primary goals of this command are:
-> >
-> >  a) deduce what the user wants to see based on what they haven't pushe=
-d
-> >     upstream yet
-> >  b) show the active branches spatially rather than as a linear list (a=
-s
-> >     in "git branch")
-> >  c) allow the user to easily refer to commits that appeared in the
-> >     output
-> >
-> > I considered making the h/# tags stable across invocations such that a
-> > particular hash will only be tagged with a different number if ~100
-> > other hashes are tagged since the hash was last tagged. I didn't
-> > actually implement it this way, instead opting for always re-numbering
-> > the hashes on each invocation. This means the hash number is
-> > predictable based on the position the hash appears in the output, whic=
-h
-> > is probably better that encouraging users to memorize hash numbers (or
-> > use them in scripts!).
->
-> If you're worried about folks using something like this in a script (and
-> I would be, given that it's dynamically assigning nicknames to hashes)
-> then you probably ought to mark it as a porcelain command in
-> command-list.txt.
-
-I would like to caution against targeting scripts with this. It is too
-easy for two concurrently running scripts to stumble over each other.
-
-Scripts should use safer methods that already exist, like grabbing the
-hash while looking for a specific pattern (`sed`'s hold space comes to
-mind).
-
-Ciao,
-Dscho
+--Sig_/muRiLVKiBrcrkStc=q2BLQA--
