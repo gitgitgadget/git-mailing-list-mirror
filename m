@@ -8,104 +8,102 @@ X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DBEB1F454
-	for <e@80x24.org>; Thu, 31 Oct 2019 22:53:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86E451F454
+	for <e@80x24.org>; Thu, 31 Oct 2019 23:01:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728074AbfJaWxO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Oct 2019 18:53:14 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:41867 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727707AbfJaWxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Oct 2019 18:53:14 -0400
-Received: by mail-pl1-f194.google.com with SMTP id t10so3409015plr.8
-        for <git@vger.kernel.org>; Thu, 31 Oct 2019 15:53:13 -0700 (PDT)
+        id S1728345AbfJaXBK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 19:01:10 -0400
+Received: from mail-pf1-f173.google.com ([209.85.210.173]:36520 "EHLO
+        mail-pf1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727051AbfJaXBK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Oct 2019 19:01:10 -0400
+Received: by mail-pf1-f173.google.com with SMTP id v19so5560730pfm.3
+        for <git@vger.kernel.org>; Thu, 31 Oct 2019 16:01:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=a+KFNtCEXL0oeLlN1KxMc/M1QbTLLJePQqcnUW1hAKs=;
-        b=nkP4T35mILeaas7kMLrh8oDkj4Fsx+8lrNc8zKCLjxFQ37iPXVFyKHJSwie2HFIvsX
-         lyqAT9v6YjO3+wv9lxVuLEoNGT6zHlMxv3j2e8leiFxzkjBKCSgQDJEUcDpK6GArmDKl
-         0KXObY5XivBzJ9cPDgDw8hfAXZsYAInJoKxefz1OLQWRreVF7cNeBtQY2o+QYXHm+SHg
-         2EpHFVvEvJhFCDW9FGXx0+PWzMEs6o5rX/Kz7WwKvayEvyNKIvsHYuhVk4nL1I15/lcc
-         piG+nEsGI7TLfPivZQW8/1oDMeNgmyD0q0oD9AQN57fLa7SK1xUHE1BezoK4J8nlyPIm
-         rayA==
+        bh=5DenoWT+2YGIKeJ1LKAWwz3UEK7hzLJm2mlG4xbGWkE=;
+        b=N0Ek90Vz8Eo9EkSt3FLmAaGLU9Ne5V39ePbyKiuAEG03nWRHqBL6Ae99Cf34CtS0zp
+         QtqPd428jwHAMWlF3Mw2Ytz+cKtksMCUISws6bJgiLu+6s0oq4LX+AYSrNOBePzt+i4b
+         /Db33jWABrl6JqxjabiMVxZzq/MpRa2oJcP4LBBCHSjZ4+ciTVLTwpj0Pi2bSWEq1Iqi
+         9KftBbpoxkJxrlNEoSZq6tGsnZ1Yt2LVv18DmQFUSVrfCbBoJXZKgIZ0NHd3uOt2TjQk
+         Bn5avSh9GG6fye8rGxPKFfeSUXycTiJFrQToAYxl+CnTM/YbzgTU+V9tXPJ1SMnVr8wj
+         u0vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=a+KFNtCEXL0oeLlN1KxMc/M1QbTLLJePQqcnUW1hAKs=;
-        b=rotmvhOzaRX9RQmkcT/maNNRjjxID968pEqq4Ux6Xc9PhQ+eINsh6hwrhUmj1NKfqb
-         mJ+l9mNcYivMcNBcwSnJtlbbN8b5GVKA82tILLMfYtjRgsPuxw3K7ma8Amnij1k1zqhC
-         aaoKyg8VcUBXPEYu7WAiI9HvHUq3UBZFnk+aRk4QL1f/HLq37eejDtRkhPvGpWCq6psy
-         yy7KmbsUwPZOA9Jpd9a9QTlvtnxCs0+I8xJJvy7AtLbt1YVLOOnedAMAnE2+29Qow1Vp
-         76CfXIRTNOsbY6PoOJzfiDCCCSmhD4el215ml+FVGwzbWQUtT7jTWYQcmZUg9dFSNAZr
-         z7wQ==
-X-Gm-Message-State: APjAAAXrBO0Z+wTMCg0/RH1aMN+8HSVMVIkO7g1HjY3qM+8YlVyB1kYH
-        Flp8Z3Kf7HTHlBY3LxJsoEs=
-X-Google-Smtp-Source: APXvYqwOHcfQVMU/jxIoGKdKOkxwxVSEAZY3VrlfeUz48Lidn1iaOWf7cX7PG309toQuAsZVjECKww==
-X-Received: by 2002:a17:902:ff0e:: with SMTP id f14mr8961664plj.17.1572562393032;
-        Thu, 31 Oct 2019 15:53:13 -0700 (PDT)
+        bh=5DenoWT+2YGIKeJ1LKAWwz3UEK7hzLJm2mlG4xbGWkE=;
+        b=XehUC2+kUAB13bv9Vz/gOFGm1qOO1VBSGhIx8uJe7/aCi8Stj1mUMX8/gklYwd70jc
+         kf9gyCO8vaA5BY2cTGiH0Vkt0qxJz8m+pBu2Xs9FVsfLjZC41ubzTERKx7i6yH+Uzukb
+         fWUR7qCTME9kTDiKbe2EI5YpQET5vjEpXMZQ7S5vslXjXH8W4bCFOdE7yH7kq0YqrI92
+         j81Y86QtmS/Qu+t3dU9mt3arFq25a1G1OrsbSJ6w4VonoFiTI5sTjAwU4a5EdqbiDc7a
+         oNwpirXJ+ACAi+Cwc68jnkSPIS9GiJjWgbMI+EMdNcSufDrcCVUFPdpGP919CCYPz++e
+         Pthw==
+X-Gm-Message-State: APjAAAX3hx/7Bb4XzaEYi3/3HtptZo9+gG7yOs00x/BZuYpC5Q1kODnp
+        Yb0gWMkJ3MmQ0BGMD4ojMsaAKC1h
+X-Google-Smtp-Source: APXvYqxtjMgKsclhQQTtBKcpVDG4ZsDgX/zpV0gj/5wnvbMsbIu9phzD1vaZP8QRsPkkQLDYQlIWjQ==
+X-Received: by 2002:a17:90a:2ec5:: with SMTP id h5mr10958335pjs.87.1572562869310;
+        Thu, 31 Oct 2019 16:01:09 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id 205sm1751579pge.56.2019.10.31.15.53.12
+        by smtp.gmail.com with ESMTPSA id i71sm4999611pfe.103.2019.10.31.16.01.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Oct 2019 15:53:12 -0700 (PDT)
-Date:   Thu, 31 Oct 2019 15:53:10 -0700
+        Thu, 31 Oct 2019 16:01:08 -0700 (PDT)
+Date:   Thu, 31 Oct 2019 16:01:06 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Ralf Thielow via GitGitGadget <gitgitgadget@gmail.com>
+To:     Arkadij Chistyj <arkdchst@gmail.com>
 Cc:     git@vger.kernel.org,
-        Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] fetch.c: fix typo in a warning message
-Message-ID: <20191031225310.GA211076@google.com>
-References: <pull.441.git.1572554506.gitgitgadget@gmail.com>
- <70f10fe44716e50765a9d8f7794116f390f09dbc.1572554506.git.gitgitgadget@gmail.com>
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: Question - .git subdirectories
+Message-ID: <20191031230106.GB211076@google.com>
+References: <CABf25VhaqrbtRTpL5ZNRy59o4JSsiKpF3pk3+54sDCkvzdgAmw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <70f10fe44716e50765a9d8f7794116f390f09dbc.1572554506.git.gitgitgadget@gmail.com>
+In-Reply-To: <CABf25VhaqrbtRTpL5ZNRy59o4JSsiKpF3pk3+54sDCkvzdgAmw@mail.gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ralf Thielow wrote:
+Hi Arkadij,
 
-> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
-> ---
->  builtin/fetch.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Arkadij Chistyj wrote:
+>                                               I just want that git
+> treats my .git/ subdirs as plain dirs with any other names.
+[...]
+> It's very simple functionality but I can't find any simple and right solution.
+> I just want to know is this possible or not? If not possible, then why?
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+To add to what brian wrote:
 
-> Noticed this while reviewing German translation.
+This is one of many things that Git doesn't track:
 
-This kind of context tends to be useful in a commit message --- it
-helps clarify the motivation behind the change.
+- empty directories
+- full permissions for files it's tracking
+- owner, group, other attributes
+- resource fork on filesystems that support multiple forks
 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 0c345b5dfe..f9a934f098 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1411,7 +1411,7 @@ static int do_fetch(struct transport *transport,
->  		for (rm = ref_map; rm; rm = rm->next) {
->  			if (!rm->peer_ref) {
->  				if (source_ref) {
-> -					warning(_("multiple branch detected, incompatible with --set-upstream"));
-> +					warning(_("multiple branches detected, incompatible with --set-upstream"));
+Git was initially designed to handle source code.  Later, people have
+started to use it for tracking other kinds of documents, which has been
+nice.  In general, when push comes to shove, the project has prioritized
+making it work well for tracking source code and other documents.
 
-Long line.
+Sometimes people find other uses for Git (deployment tool! home
+directory tracker! configuration management system!).  It can be
+fun[1]. :)  Ultimately, though, it's useful to keep the main goals of
+Git in mind.
 
-I wonder what this warning is trying to say.  How would I go about
-triggering this message?  The comment before says
+Sometimes people want to track a Git repository in another repository
+as a source of test data for tests they include with their code.  For
+this use, using a "git fast-export" stream or other method for
+generating a repository at test time can work better, or, if one
+really must use a repo-in-repo, using a bare repository.  Brian did a
+good job of describing why.
 
-	The relevant upstream is the fetched branch that is meant to
-	be merged with the current one, i.e. the one fetched to
-	FETCH_HEAD.
-
-So is this about when I'm fetching with a wildcard or something?
-
-Thanks,
+Thanks and hope that helps,
 Jonathan
+
+[1] https://public-inbox.org/git/?q=ugfwiini
