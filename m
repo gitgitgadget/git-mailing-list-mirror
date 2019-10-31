@@ -2,102 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A80651F454
-	for <e@80x24.org>; Thu, 31 Oct 2019 20:07:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C5421F454
+	for <e@80x24.org>; Thu, 31 Oct 2019 20:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729710AbfJaUHk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Oct 2019 16:07:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35370 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726741AbfJaUHk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Oct 2019 16:07:40 -0400
-Received: (qmail 19609 invoked by uid 109); 31 Oct 2019 20:07:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 31 Oct 2019 20:07:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4967 invoked by uid 111); 31 Oct 2019 20:10:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Oct 2019 16:10:49 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 31 Oct 2019 16:07:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: git branch --edit-description a custom file
-Message-ID: <20191031200739.GA19313@sigill.intra.peff.net>
-References: <20191030183950.GA21277@generichostname>
- <20191030202835.GB29013@sigill.intra.peff.net>
- <20191030224328.GB44961@generichostname>
- <20191031061832.GA20830@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1910311119080.46@tvgsbejvaqbjf.bet>
- <20191031181920.GB70819@generichostname>
- <4ef79cfb-b970-2b2b-131d-3f47e6b0e308@gmail.com>
+        id S1728209AbfJaUUW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 16:20:22 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57478 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726741AbfJaUUW (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 31 Oct 2019 16:20:22 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5B28B60458;
+        Thu, 31 Oct 2019 20:20:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1572553220;
+        bh=eFGXgTePMwFz5lG49rbyEVWJl9Yn2qLKANz+QCFBj8I=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Xo2kx9FZ1ZnL0xBavByCaG1AV92VAVN6GCzqdLi9p//EEV/CePULcLdyfyYrW/jJS
+         svYhRA/lhsmQeGs4Sahnkvpiw5kf8YWMVPWmU2Eo9VrBawChhBjpUeIM/a9NtRoafk
+         o3rfENNxmByLcntTOYggS3wifuqSFm/Nyl781qKk8yh++T5lDRrGqTG283DMB4tims
+         AX0VC/bZMGVX3qYAmTQ++JbEeY1pVnHepBokVurR5Xyi/TRPj037KhiOsBFFFumuHk
+         3XJLAYecGgHgw8AsBDx3thhDDKbyFORhwCG17I0TtPs+AtZgx76DmRBoesS+5yDm7Z
+         e6f10cU1okvvylq0Eq0G8SXkN8cHcY+gX9tmPb4xWKecv5aOMbZzFLQbxGoW6JOjWG
+         OAChR/ZQX/XuR/5EAqCpIneVrdEHsMmnzuxsR7frU1dXefAuC2fEioOwoa6xAtGEs1
+         CyJrbKyiD92lH0JaJk9P8diOqOuNzaWVAT3ghPOuZm1visjQ3rb
+Date:   Thu, 31 Oct 2019 20:20:16 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Arkadij Chistyj <arkdchst@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Question - .git subdirectories
+Message-ID: <20191031202015.u5l3wzvn64zypnad@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Arkadij Chistyj <arkdchst@gmail.com>, git@vger.kernel.org
+References: <CABf25VhaqrbtRTpL5ZNRy59o4JSsiKpF3pk3+54sDCkvzdgAmw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ec3cad3d3fbwiiuy"
 Content-Disposition: inline
-In-Reply-To: <4ef79cfb-b970-2b2b-131d-3f47e6b0e308@gmail.com>
+In-Reply-To: <CABf25VhaqrbtRTpL5ZNRy59o4JSsiKpF3pk3+54sDCkvzdgAmw@mail.gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.3.0-1-amd64)
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 31, 2019 at 07:53:18PM +0000, Phillip Wood wrote:
 
-> > So how would you envision the workflow for this? Would it be something
-> > like,
-> > 
-> > 	$ git checkout feature-1
-> > 
-> > 	$ git branch --edit-description=ref # instead of =config
-> 
-> Personally I'd prefer a config setting that meant --edit-description stored
-> the description in a ref instead of the current config key (or perhaps as
-> well as so format-patch can just get the latest branch description from the
-> config key)
+--ec3cad3d3fbwiiuy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, a config option makes much more sense to me. Both the writers and
-readers will need to know where to find the data.
+On 2019-10-29 at 12:26:23, Arkadij Chistyj wrote:
+> Hello. I'm not sure it's correctly to write to this email address.
+> Sorry if it doesn't.
+> Copy of my home directory stores on external disk under git control. I
+> have devel/ directory that contains some of my old projects with git
+> repositories. But main git repository in root of disk is not tracking
+> and storing their contents. I don't want to use submodules or crutches
+> such as renaming all .git/ in subdirectories. I just want that git
+> treats my .git/ subdirs as plain dirs with any other names.
+> It was already described here:
+> https://stackoverflow.com/questions/2317652/nested-git-repositories-witho=
+ut-submodules.
+> It's very simple functionality but I can't find any simple and right solu=
+tion.
+> I just want to know is this possible or not? If not possible, then why?
 
-> > * Since we're planning on sharing these descriptions with the outside
-> >    world, how would the ref layout look like? If we're not using the
-> >    refs/remotes namespace will it make fetching and merging notes harder?
-> >    I know that collaborating with notes is a pain so how do we avoid
-> >    making the same mistake?
-> 
-> I'd love to see a consensus around putting remote versions of refs/foo under
-> refs/remote/<remote-name>/foo. To share notes I add a refspec that fetches
-> to refs/remote/<remote-name>/notes. It is a pain that 'git pull' wont merge
-> them for me though.
+This is not possible.  You can't add a non-bare repository as a part of
+a parent repository without using submodules.  Git uses the .git
+directory to find the working tree and for safety reasons doesn't allow
+files or directories named that to be checked in.  Allowing users to
+check in .git directories would allow configuration and hooks to be
+stored as part of the repository, which would allow the execution of
+arbitrary code if someone cloned it and then changed into the
+subrepository.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-The trouble with that sort of scheme is that it conflicts with the
-current namespace scheme, which puts the remote "notes" branch in
-"refs/remotes/<remote-name>/notes". And it's not just a problem if you
-want to have a branch called "notes". Think about what "git fetch
---prune" would do.
+--ec3cad3d3fbwiiuy
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I do think the world would be a better place if we mapped (all or a
-subset of) the remote "refs/" into "refs/remotes/<remote-name>/". I.e.,
-really creating "refs/remotes/origin/heads" and even
-"refs/remotes/origin/tags". But we'd need to re-adjust the way that some
-ref lookups work (e.g., looking in refs/remotes/*/tags for tags).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
 
-There was some work by Johan Herland around the v1.8 time-frame, but it
-stalled:
+iQIzBAEBCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl27Qf8ACgkQv1NdgR9S
+9ov1tQ/+KnAN3j3Ct3Bh9AKl+xp9ZSJKMDkw7NBPveljWnS9gataKNVDOBhjS6g8
+iqX3WIQWBiuTVm2rfKEkS1MyqMqMl7uIItcrY8IvKk1XmzI2wOdkTBJ8gjr1sykF
+X9Dk9jqMgjM16GY3B02yf0JoHtc3nTehDdwZLOb7YfJjhGsWnJgOMhJtdKwmRYx8
+3/1mgY3n7eU2HLXDX30ihrbk0nkBRrvj0h8Ug2P0bI9qAw4FlKx5eVqjWoL4RfOA
+stOdf7KuAaetREjMe8QJBVy/BFW92sTzHAW3PGSw+Yqigy4LFYKaDCMnm5ylssM2
+LVgOvqXwPws3Qez77f4e3u1u/+qGKwi3q50WtAx1lOX0A3W4rpAsKh2qJeoANNI6
+u83hK+sxuJ0souL43Uq8A0vRAVnIhlXnrEQK9ZvcINkEczMFJDy68+XYunrB3S45
+6xXxDc5N7HUd0C4Et54j2j1MyjWD5Q0gR92FVyzmVlDCRGOlvC0ujp5UMG5RHA3A
+oBslHEC+V/M8LDRnWVimmTI36PYV/p3t4EsNh+zODq6fJ4esjFoQkCP3wEjzjSC+
+Iz5tnNFs75A6uWGYnInVRG2KcSBH+a+AGNGhh3vZNT6JAtSCBoG928mBbo2Xo0D0
+hnfaPM2xwiicHaTxnAIv2VvmIT/bJa9Fcfe9gjmKhOH9lPA5yHw=
+=XDUT
+-----END PGP SIGNATURE-----
 
-  https://public-inbox.org/git/AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com/
-
-And here's some later discussion:
-
-  https://public-inbox.org/git/CA+P7+xpj+8DZ=K0pna299Mu3nsQ4+JV_JUK=WFzzAFnJN+Bkbg@mail.gmail.com/
-
-So in short, I agree very much with the direction you're discussing, but
-I think there's some fundamental work that needs done first.
-
--Peff
+--ec3cad3d3fbwiiuy--
