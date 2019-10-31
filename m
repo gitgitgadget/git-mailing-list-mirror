@@ -2,96 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E05AB1F4C0
-	for <e@80x24.org>; Thu, 31 Oct 2019 13:27:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB24D1F4C0
+	for <e@80x24.org>; Thu, 31 Oct 2019 13:40:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727441AbfJaN1b (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Oct 2019 09:27:31 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.20]:36595 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726836AbfJaN1a (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Oct 2019 09:27:30 -0400
-X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 Oct 2019 09:27:29 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1572528448;
-        s=strato-dkim-0002; d=aepfle.de;
-        h=References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=Wfb/sM0fKzxr/jSPdJ4QqLe78Q9+iucEzSkpOAr2O4g=;
-        b=GU9ZtcJ+16jVs0N+wEqvtQNkuR9Q6Z03g3PlR+A2OuEeooOf4Ul+KgyHwXjoBKLC2D
-        ZB+jvoM2ES88yg960eowKYNTeEqmQws0mV+tUdYy+aBxU5Itow8FBDNX/KeEgH45g0Yh
-        Mk0/sindgMCrYH/HbKw2uFqZTgYcFQP7oldsU6dO7TPdshJQyGCiHNt9ifCe4q5Z/0tW
-        lkg4zV9pZ87Ep5Y8XgfR/yRrV4AYuGfZVCjiaw63jbZYMgTMMUTccnR75AVSTJ/KcdEX
-        Xuenggh8HRFzHkbVXzbDADOZ0O2ZBORag+dVPRdliy5QlDXgJ1bR+EwejpGDKtqWUur9
-        nOuA==
-X-RZG-AUTH: ":P2EQZWCpfu+qG7CngxMFH1J+3q8wa/QED/SSGq+wjGiUC4kV1cX92EW4mFvNjTRB"
-X-RZG-CLASS-ID: mo00
-Received: from sender
-        by smtp.strato.de (RZmta 44.29.0 AUTH)
-        with ESMTPSA id 20735bv9VDLPBAO
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
-        (Client did not present a certificate);
-        Thu, 31 Oct 2019 14:21:25 +0100 (CET)
-Date:   Thu, 31 Oct 2019 14:21:18 +0100
-From:   Olaf Hering <olaf@aepfle.de>
-To:     SZEDER =?UTF-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git fsck, badDate: invalid author/committer line - bad date
-Message-ID: <20191031142118.747693c1.olaf@aepfle.de>
-In-Reply-To: <20191031101539.GY4348@szeder.dev>
-References: <20191031092749.074ed112.olaf@aepfle.de>
-        <20191031101539.GY4348@szeder.dev>
-X-Mailer: Claws Mail 2019.05.18 (GTK+ 2.24.32; x86_64-suse-linux-gnu)
+        id S1727079AbfJaNki (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 09:40:38 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42286 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726803AbfJaNki (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Oct 2019 09:40:38 -0400
+Received: by mail-wr1-f68.google.com with SMTP id a15so6281850wrf.9
+        for <git@vger.kernel.org>; Thu, 31 Oct 2019 06:40:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=t49qoImiM4//RjBDQ/6QzNhjIcKVYNbpFdbIgECXAjA=;
+        b=SOVleKIWHUGKQgBqoXTQmXaQV9hhzEhU8joNNYle0pv9QjFKc1HhUgHfmWxw0r+iLA
+         pBVXMO6UUCakt+u7h9tN92sHhgkzTBOBqNAuHuxQU+G0WWJN+uTDXMuUlhJVF9FBg6Je
+         kPugE/V/qjOOGVFR56Krq1Cm15QddtLPkQNwrm3zba6dpFhstNuaBQeoguwoQ6O5TCq1
+         ktkbzVq+gFYIq8PlKgHLSb/9RPqhClge3hB06xglRW0QluD1FYj1MtuTl3qFro5uCLEu
+         Vtjt/P4sNaGC0pl2y5XLgmReKPH5RQ4dGK5SZXHp1DZtMYKj866/gXIyA7BzDG0T/ojf
+         EIrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=t49qoImiM4//RjBDQ/6QzNhjIcKVYNbpFdbIgECXAjA=;
+        b=IAoOv6NhlTr+9Gb5kN5RsIt0yXvDYMZNoeGZy4ICQMa8pPVOMExgH3sqXI7MDsDbKj
+         bnfw0XZw5nWA2MJhU2SYmCw8TbreLeXDbDwbNOdaxvUbTjM6cZJ5f8XPf1uNAsLLSdxM
+         Q9jY9q2Sw9t2rCx9MyEmXSm7yLQGZdfnmA8JsoLFp5+GXvDJ4PhEVhays7VSi7E6V9lB
+         yHO32h3l0oJduYSqWnE56JVDRQKOJEegPf8W686Dlowz5R8MEEQXifL6r0HQu1Odi1+s
+         Oct7dRHk5OTMn8YF5+JB3p57y7UAS1gVxsBRQG+ZVeN/n10oiAQ+CRy4do0bZdSGMctp
+         d0WA==
+X-Gm-Message-State: APjAAAUFAbfzjTeo6yIO7LNcKVUP/qkFlKFsVNp2zXSAIHs7A9an7gL1
+        s9IfcQEWb6miHa+YCTDuxyA=
+X-Google-Smtp-Source: APXvYqyCOZV3RwiQef64kygG8GHzPWZQwEg3+sA32RFHudgyHh8xqLhlSzVS3hkMx/2wZLfscebfDQ==
+X-Received: by 2002:a5d:6702:: with SMTP id o2mr4982386wru.339.1572529236195;
+        Thu, 31 Oct 2019 06:40:36 -0700 (PDT)
+Received: from localhost ([95.149.189.152])
+        by smtp.gmail.com with ESMTPSA id 65sm5261861wrs.9.2019.10.31.06.40.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 31 Oct 2019 06:40:35 -0700 (PDT)
+Date:   Thu, 31 Oct 2019 13:40:34 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, dev@kipras.org,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [FR] Allow `git stash create` to include untracked changes
+Message-ID: <20191031134034.GA63909@cat>
+References: <d02ddc0db596771820b0cfdfae5b1504@kipras.org>
+ <xmqqa79lbpte.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1910290806310.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/zcoT5ilJrK4E_ZPWZ0ACnuA"; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1910290806310.46@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---Sig_/zcoT5ilJrK4E_ZPWZ0ACnuA
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On 10/29, Johannes Schindelin wrote:
+> So why does `git stash create -u ...` not work? Because the original
+> design of `git stash create` never intended to take any command-line
+> arguments other than the stash message. And that design can obviously
+> not be fixed without breaking backwards compatibility.
 
-Am Thu, 31 Oct 2019 11:15:39 +0100
-schrieb SZEDER G=C3=A1bor <szeder.dev@gmail.com>:
+Yup that's exactly right.  Not breaking this sort of backwards
+compatibility is also why we have both 'git stash save' and 'git stash
+push' nowadays.
 
-> However, I don't know how to tell about the skiplist file to GitHub,
-> or any other Git hosting service for that matter.
+We did have a similar conversation back when 'git stash push' was
+introduced [1].  We almost decided this regression would be okay, but
+in the end went with calling 'create_stash -m "$*"' internally to
+circumvent the problem.  Now that somebody has an actual usecase we
+may or may not find this "regression" acceptable.  I don't have a
+strong opinion about it, so this is just to add a little bit of
+context here.
 
-Thanks for all the details.
+[1]: https://public-inbox.org/git/20170206155606.xgkmhg656vuc6uki@sigill.intra.peff.net/
 
-Is there a way to "replay" a git repository, so that all the commit contents
-and author/committer data are preserved? I think it is more important to ha=
-ve
-a clean repository than to preserve irrelevant commit hashes.
-
-Olaf
-
---Sig_/zcoT5ilJrK4E_ZPWZ0ACnuA
-Content-Type: application/pgp-signature
-Content-Description: Digitale Signatur von OpenPGP
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE97o7Um30LT3B+5b/86SN7mm1DoAFAl26384ACgkQ86SN7mm1
-DoCLgRAAgi41KoL26Ahuh9I4O8t2kQEWubDuXiGxSE9l4Q4mL/R3uCmA5FwGlaWy
-a/Il15IVKJf1NSEvRRFeT03RUo9LDQd0CTjXLUSC5I8R9zCXnMXx7V6eO3k6HiaL
-8vp4Sic5Ji8UJK3PheaGnotrnWhI6EE2j51JH7rKft0Jk1jiTIXT6TfqWJZ83zzu
-Gkjh9lxyaQ7refMrqDLsBl5nGy/KJudgL/1tgpQqY6WzlGIUIPs7VmnT0ecV1Gxg
-D1lW5XvRyagUAYJo1OW0Eu1N1X5e98eJZ+y4RYE8cxm9ZsDMiDMB+ZSUesywUyti
-JpZBruanQQBNc1xHOvYoPI6qHr5afMOVhl6nb7Zg4XcycDzE6y4bF4pYhdMvpaf0
-IAnS2RFxy+ao4XzIh1R7tKwGfGzCOhqL7VN1ao9iqXQH4ddJ7eGAxWq3ZMXkQ0Uf
-H/SlO70Gq6n3vbVwtxoAubGUkX1qxlhgZGpjbQlR4QZslkUhBC8Wau4La+lNkAF2
-/5/FsXEE+plCo1B2B9NPL2pvDJbJ0FQNaWIOu8en6qsmNsA37rSxEm3AY4pU1l3Q
-MhBdVaSMlOpTwke3E3ywDWV0rpk/5kFUy/A4GbFGFQmwmbrTVZ70jpLaAz768A6b
-lrF4agcAB5mnVhojjj6D0zPPDeebGp2/5ZDomPtMysyOlKqCvxw=
-=nJgF
------END PGP SIGNATURE-----
-
---Sig_/zcoT5ilJrK4E_ZPWZ0ACnuA--
+> What we _could_ do is to add a new command-line option to `git stash
+> push` that would make it behave like the `create` subsubcommand: _not_
+> update the `refs/stash` ref but instead print the commit hash.
+> 
+> I am not quite sure how to call this option (`--ephemeral` came to my
+> mind, as the created commit is not reachable from anywhere and is hence
+> subject to garbage collection).
+> 
+> A completely different approach would be to allow overriding the ref to
+> store the stash in, with an empty value triggering the mode where the
+> ref is not updated but the commit hash would be printed instead. I am
+> thinking of something like `git stash -r '' push ...`, starting with
+> this patch:
+> 
+> -- snip --
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index bb4f6d8d762..43b0a155b1d 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -1553,6 +1553,8 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
+>  	struct argv_array args = ARGV_ARRAY_INIT;
+> 
+>  	struct option options[] = {
+> +		OPT_STRING('r', "ref", &ref_stash, N_("ref"),
+> +			   N_("override `refs/stash`")),
+>  		OPT_END()
+>  	};
+> 
+> -- snap --
+> 
+> The biggest trick will be to make all the code paths safe that assume
+> that `ref_stash` refers to a valid ref ;-)
+> 
+> Ciao,
+> Dscho
