@@ -2,81 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C415B1F4C0
-	for <e@80x24.org>; Thu, 31 Oct 2019 06:18:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1015E1F4C0
+	for <e@80x24.org>; Thu, 31 Oct 2019 06:19:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726686AbfJaGSe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Oct 2019 02:18:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34658 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726370AbfJaGSd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Oct 2019 02:18:33 -0400
-Received: (qmail 11900 invoked by uid 109); 31 Oct 2019 06:18:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 31 Oct 2019 06:18:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27443 invoked by uid 111); 31 Oct 2019 06:21:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Oct 2019 02:21:42 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 31 Oct 2019 02:18:32 -0400
-From:   Jeff King <peff@peff.net>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: git branch --edit-description a custom file
-Message-ID: <20191031061832.GA20830@sigill.intra.peff.net>
-References: <20191030183950.GA21277@generichostname>
- <20191030202835.GB29013@sigill.intra.peff.net>
- <20191030224328.GB44961@generichostname>
+        id S1726607AbfJaGTo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 02:19:44 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:37751 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726370AbfJaGTo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Oct 2019 02:19:44 -0400
+Received: by mail-pl1-f195.google.com with SMTP id p13so2204409pll.4
+        for <git@vger.kernel.org>; Wed, 30 Oct 2019 23:19:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=WMAgk3aL5FKMzFlkopHAtgcFi01a2WFVBgToGG+f3WI=;
+        b=ZhXPz2xa9KkJRf/jO74y4evoLGoGkhP1Z2xiLuNoHgoo6fOrqXVo20DL/d/ATTvZpi
+         Uery8eMjbbM+uUiWmmsQcYniXZ1/JVnkfhpDSk41ueWt9YWCNu4B720U/dvOlZoa/C+D
+         pmtYB2atiCIhNskCAg6OjVpEQPnn0KtKLZw0QNwUPY1yRCtWgWsFP96GsG0F6gsI8KsO
+         crbN5gmlI5pLU4DrJ5HfHPuG6Rfi3kENw/Lq+Y8APz8015WdV1rnPguTlEBUom9octl8
+         grmoHwaadFV/MrE/+KM8pCsl8N8zHO8bwjeQLQWRHG1Q0xsxYUZ3QS7GbYz+K04GEIhr
+         8EoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=WMAgk3aL5FKMzFlkopHAtgcFi01a2WFVBgToGG+f3WI=;
+        b=T8LQBINcp3+kv4dPajWqNg7fhaXQBlpFP2BLA5yqOZbejwzFEMXJN5TP2RW7mDUx7D
+         Od4BeG1peQw/08RC/QtZlbeisQ4FTXnZ1/IkUPbOr2PizB5F23fD9YvD1mZJ7I/SqZFB
+         ju/Yo8rvHey3yhPLgk61jbmBTdqJqrThe3hTaqd+S0RQ+zvZyB6ir0XmCLnCo9YKIbUr
+         QOE9D6Jbic3rQjEFsZHcTV/iefoTn5c9vhY4xKyN03g3xy5BbPz2VLche/n/JuSqRe07
+         ELP5RDs+yXFvn1KYkD+zMlDz/rQ2Yqa87F7kNEjFIHTnWjLcjb28L72n5o7RAQHqKrhe
+         GMjA==
+X-Gm-Message-State: APjAAAWWPOPE3d7jPNfECjo3lUE0TznnERgwibyCK6hVPefHbKigvKKn
+        MZinmL1zM5Fvz7gGJMpb7f6XSMrwNQLZ9/Vs1ZM=
+X-Google-Smtp-Source: APXvYqxMvNyg3qcRuoY2CHZFZ29qyodlYnMmeBjI23qzcog1KwGOxsTxwEGAE/SsKqhz7bSw1qmyAcAteK4+oUZIfII=
+X-Received: by 2002:a17:902:9308:: with SMTP id bc8mr4431066plb.178.1572502781712;
+ Wed, 30 Oct 2019 23:19:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191030224328.GB44961@generichostname>
+References: <20191030204104.19603-1-martin.agren@gmail.com> <20191030212422.GE29013@sigill.intra.peff.net>
+In-Reply-To: <20191030212422.GE29013@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 31 Oct 2019 07:19:30 +0100
+Message-ID: <CAN0heSrWqc2cyqOBVaWQOJHs4+48viAGL7YPGP6QnDrf+m_Jpw@mail.gmail.com>
+Subject: Re: [PATCH] manpage-bold-literal.xsl: provide namespaced template for "d:literal"
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 30, 2019 at 03:43:28PM -0700, Denton Liu wrote:
+On Wed, 30 Oct 2019 at 22:24, Jeff King <peff@peff.net> wrote:
+>
+> On Wed, Oct 30, 2019 at 09:41:04PM +0100, Martin =C3=85gren wrote:
+>
+> > We recently regressed our rendering of "literal" elements in our
+> > manpages, i.e, stuff we have placed within `backticks` in order to
+> > render as monospace. In particular, we lost the bold rendering of such
+> > literal text.
+>
+> This is just when rendering with asciidoctor, right? AFAICT the bolding
+> is still fine in pages built with asciidoc.
 
-> On Wed, Oct 30, 2019 at 04:28:35PM -0400, Jeff King wrote:
-> Dscho brought up in the GGG thread[1] that perhaps we want to treat
-> branch descriptions like notes and have them all under something like
-> `refs/notes/branches`. This would certainly solve my problem of
-> having versioned descriptions and it would probably do it in a much more
-> general way than having a versioned included config.
-> 
-> Anyone see any potential problems with this approach?
+Right. Sorry for being unclear. Fixed in v2.
 
-I don't think it would be `refs/notes/`, as that is assumed to contain
-mappings of object ids (and if I understand correctly, this would be a
-mapping of branch names to data.
+> > One reason this was not caught in review is that our doc-diff tool diff=
+s
+> > without any boldness, i.e., it "only" compares text.
+>
+> I don't think this was intentional, but just a consequence of
+> redirecting man's stdout to a non-terminal. Doing:
+>
+>   MAN_KEEP_FORMATTING=3D1 ./doc-diff --asciidoctor HEAD^ HEAD
+>
+> on your patch shows the improvement, though note that the diffed version
+> is kind of ugly. It looks like the bolding is done with ^H characters,
+> and it interacts in a funny way with our diff coloring, as well as with
+> diff-highlight if you use it. Piping the above through "less" looks
+> decent, but it gives me pause on whether we should be setting that
+> variable inside the script.
 
-You could just have "refs/meta/descriptions/foo" pointing to a blob
-which contains the description of "refs/heads/foo". That makes it easy
-to edit descriptions, even if you don't like using "git branch
---edit-description".
+Very interesting! Thanks for this trick.
 
-You could also have "refs/meta/descriptions" to point to a _single_ blob
-with all of the descriptions. It could even be in the existing config
-format. And then you could include it with "[include] blob = ...". That
-doesn't exist yet, but it would be easy to add (it was something I had
-always considered when writing the config-include code, but there was
-never really a good use; and you do have to be careful about pointing to
-untrusted blobs). That's a convoluted way to get where you want, but I
-wonder if integrating to the existing config system would have any
-benefits. I haven't really thought it through.
+> Speaking of annoyances, is it just me, or does the rendering stage of
+> doc-diff not actually proceed in parallel? Doing this seems to help, but
+> I'm not sure why:
+>
+> diff --git a/Documentation/doc-diff b/Documentation/doc-diff
+> index 88a9b20168..1694300e50 100755
+> --- a/Documentation/doc-diff
+> +++ b/Documentation/doc-diff
+> @@ -127,7 +127,7 @@ generate_render_makefile () {
+>         while read src
+>         do
+>                 dst=3D$2/${src#$1/}
+> -               printf 'all:: %s\n' "$dst"
+> +               printf 'all: %s\n' "$dst"
+>                 printf '%s: %s\n' "$dst" "$src"
+>                 printf '\t@echo >&2 "  RENDER $(notdir $@)" && \\\n'
+>                 printf '\tmkdir -p $(dir $@) && \\\n'
+>
 
-(Of course that's also only one step away from having a versioned config
-file in your .git directory, but it might possibly be a bit easier to
-manage, since it would always be committed).
+Hm, didn't look into this. Will try to find the time.
 
-That's mostly off-the-top-of-my-head rambling, so please disregard
-anything that seems totally off-base. :)
+> I also confirmed with the MAN_KEEP_FORMATTING trick above that "doc-diff
+> --asciidoctor" fixes the problem as advertised, and "--asciidoc" has no
+> change at all.
 
--Peff
+Thanks!
+
+> >  There are more manpage-*.xsl -- manpage-suppress-sp.xsl looks like it
+> >  would have the exact same problem. But before diving in too deep, I'd
+> >  rather submit this one to see if it's in the right direction at all.
+>
+> It looks like a lot of them don't actually match on the namespaced
+> tagnames, and so are OK. Some of them require special options to enable,
+> so we wouldn't necessarily notice problems via doc-diff.
+>
+> From my brief look, I think suppress-sp is the only one that needs
+> attention. I kind of wonder if we can just drop it. According to the
+> Makefile comment, it's needed only for docbook 1.69.1-1.71.0. But 1.71.1
+> came out in 2006. Surely even RHEL7 or whatever ancient system people
+> use is past that, right? :)
+
+I also only had a brief look and realized I wouldn't know how to test
+with such a broken version, so I didn't feel comfortable mucking around
+with that file.
+
+> Or alternatively, as I've argued elsewhere, we could simply be a little
+> more aggressive about deprecating old doc build tools. According to the
+> Makefile, no extra settings are needed with docbook >1.73.0. That came
+> out in 2007. I'd be willing to just call that the cutoff point, and
+> anybody without it can install the pre-formatted pages.
+
+Yeah, that makes sense.
+
+Martin
