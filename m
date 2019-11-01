@@ -2,132 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF3A81F454
-	for <e@80x24.org>; Fri,  1 Nov 2019 08:25:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DE5D1F454
+	for <e@80x24.org>; Fri,  1 Nov 2019 09:49:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730329AbfKAIZg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Nov 2019 04:25:36 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:32853 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730098AbfKAIZg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Nov 2019 04:25:36 -0400
-Received: by mail-pl1-f195.google.com with SMTP id y8so4064102plk.0
-        for <git@vger.kernel.org>; Fri, 01 Nov 2019 01:25:36 -0700 (PDT)
+        id S1727600AbfKAJtW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Nov 2019 05:49:22 -0400
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:40508 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725904AbfKAJtV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Nov 2019 05:49:21 -0400
+Received: by mail-ot1-f66.google.com with SMTP id d8so7886433otc.7
+        for <git@vger.kernel.org>; Fri, 01 Nov 2019 02:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GrX1dz8CP07MXMk9VyzYMZ7Phc1XjJjwt03QpqDe3S8=;
-        b=a60PAbBDFmAEwYaCbNNvrUTdjAgaWPYCU+WBw5j1D9jCVOikD/Grm/78/z4Psbro20
-         4aMrj5Ulx4iewm5643G2l9kmkawVFBCFGHxLDbjuzVe/Vju9Jkq9872hQKNJMUOEDPgw
-         uA7fd/l1X9HQmg+ZSda84pQDfPQkX6SN7EyJdO7+bdiqkNK2P74+toGSyGY0lNxKJolJ
-         hJgWSgiBmYJnb67yx9V+Kq/Nf+1sLQFEqD2VDJTBck8g3nDAkCKmQKNoxzDhw1Gyocnb
-         DYXat9b6ul8/GiQljTKNmnvCZZao8dXnXGmY0lX3WnmEG1htcf6WGvdbXigtwzUmVHNg
-         gNow==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+qeZtF75NW5P1AiXVNwAt15VESyYnz+D1x++8hYL50E=;
+        b=Sjc+kA1R6eDSsqIrxqg4kTaeC8EQ3du+8rNtdWNhnvEX2ArI5ZyTGzNT2XCNi0V+W/
+         CTqizu5DU1lEXJPenL7VIFGuQkueWXYuvQj7dJklHhvy9tGkZHlU7osQs7yMu+ISv/Su
+         wrOeuDZ1lZvEJbY832aAo+igKP+DOHmGS+9xywl4LadSZVeDeyLphPSc+arquY+ZE1dG
+         V1Ws3rCyhMo4TeRK1XOwNuHYuEnZfn9qLy8XmGDQHi5PZdQjxr+SznnCkBaQpaSGEtjD
+         ig+WIpmdBle/gtV+9q8XPy6KSLs0ML4rcFptB4rN5eU/jUblmz+3Qh6fNpWuEzYmeXhZ
+         t3bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GrX1dz8CP07MXMk9VyzYMZ7Phc1XjJjwt03QpqDe3S8=;
-        b=EBxbl6XY3TCB9U2lfRf2URESMeuaTEUTdTmD4NTYUmxDdscuOb/vwO0hQ3Gmm8eLbY
-         WogLAk1TEFqy+5tCqw65ovKq5PKt9thGBsdJR6Q/+yv0O5uagU2ASFtVPwP4zm0Jpm2d
-         wOygDy7ddYQbzuFsbCyCqjnUAW9NhjP+lMaxdSwHg9sAUCwIwuHhmogwWpetWZo3u2+w
-         zGzaOPk76vitc5gjPYRKL1U4sQcXJHRD/dP+s5x1XbF0kucniKeOxaCoSvoKIbEe0kgJ
-         BbitzBgL9pp/U1lDP1dASwBfrHVolroEkPKiVMdicIsRueMj9NPoFwiUrOf/D0DjDMeK
-         r+Mg==
-X-Gm-Message-State: APjAAAXdJ3z+jsDwOB8q+wz8GWTor+CFGafA2ataPiXSzc/kzV6NQgvl
-        qD5EMkc8o2foc5pIeYhQC0wLaNoA
-X-Google-Smtp-Source: APXvYqzZ9x9vMsGC09sLALxbRAgTxjN6yaAXwah/Q0T68SnzRCVosLEl9IHK4KUQCEj12dqt4XQRug==
-X-Received: by 2002:a17:902:6f01:: with SMTP id w1mr11546215plk.35.1572596735750;
-        Fri, 01 Nov 2019 01:25:35 -0700 (PDT)
-Received: from localhost.localdomain ([2402:800:6374:e1c2:8c5a:c959:6fca:fa1a])
-        by smtp.gmail.com with ESMTPSA id q13sm17158395pjq.0.2019.11.01.01.25.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Nov 2019 01:25:34 -0700 (PDT)
-From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>
-Subject: [PATCH v2 3/3] sequencer: reencode to utf-8 before arrange rebase's todo list
-Date:   Fri,  1 Nov 2019 15:25:11 +0700
-Message-Id: <b7927b27235422ac53595cfaa63b4f1cbe009013.1572596278.git.congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.24.0.rc2.296.geaf699fcc3
-In-Reply-To: <cover.1572596278.git.congdanhqx@gmail.com>
-References: <20191031092618.29073-1-congdanhqx@gmail.com> <cover.1572596278.git.congdanhqx@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+qeZtF75NW5P1AiXVNwAt15VESyYnz+D1x++8hYL50E=;
+        b=IpguhDeSn49UfZK3l+KuH4zVbBFZ6tS4f3vmkaSs+cETSmingVahlxlzFtcyOegeaY
+         n5rnnKV2TVyWj1GPLI7bQwyDSrl8w25DpEU1ybftXc2WMDip3hB08ky59vmOfQJ8Pzyo
+         ZeeXCSF4YUBuXVcol/MggUdXRflFvuEvH8uxTmBf/kesP8f8zZ6lBYO0no/JwBcYYXqQ
+         Tn6HCha3alQQuite2XXoCPlcwKHXw3aq6fvChEghjQKro3E8k0nDTaU3iqLaqsbj+PLB
+         VmR0TjTCCYF8lBYyCOsbodTim4FyHhoayLrieTBeD9HYzyY11BXYOsRvdU3476gC62ua
+         YsFg==
+X-Gm-Message-State: APjAAAXC2FW53ZafEcMfs7zVaAaDTQ+GJqySzPEV2l+O6TII7WLJxA9R
+        xBEOF+xsRGARWjgjBAQqpWXlgm7qrC/aE1UdLvw=
+X-Google-Smtp-Source: APXvYqwo6mEsPmS53qXmaZVapSgLZGMwojGP3UHIYA9M5ZZNz0jHmgku79f7cVmJKGZ6799ACDKLXjNxFT358iyUr+U=
+X-Received: by 2002:a9d:4801:: with SMTP id c1mr3600383otf.32.1572601760879;
+ Fri, 01 Nov 2019 02:49:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.441.git.1572554506.gitgitgadget@gmail.com>
+ <70f10fe44716e50765a9d8f7794116f390f09dbc.1572554506.git.gitgitgadget@gmail.com>
+ <20191031225310.GA211076@google.com>
+In-Reply-To: <20191031225310.GA211076@google.com>
+From:   Ralf Thielow <ralf.thielow@gmail.com>
+Date:   Fri, 1 Nov 2019 10:48:44 +0100
+Message-ID: <CAN0XMOLDZo06Xa-Q9qVrVNk_J3+b2sP5e30f=_9s3nUw-B_JvQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] fetch.c: fix typo in a warning message
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Ralf Thielow via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On musl libc, ISO-2022-JP encoder is too eager to switch back to
-1 byte encoding, musl's iconv always switch back after every combining
-character. Comparing glibc and musl's output for this command
-$ sed q t/t3900/ISO-2022-JP.txt| iconv -f ISO-2022-JP -t utf-8 |
-	iconv -f utf-8 -t ISO-2022-JP | xxd
+Am Do., 31. Okt. 2019 um 23:53 Uhr schrieb Jonathan Nieder <jrnieder@gmail.com>:
+>
+> I wonder what this warning is trying to say.  How would I go about
+> triggering this message?  The comment before says
+>
+>         The relevant upstream is the fetched branch that is meant to
+>         be merged with the current one, i.e. the one fetched to
+>         FETCH_HEAD.
+>
+> So is this about when I'm fetching with a wildcard or something?
+>
 
-glibc:
-00000000: 1b24 4224 4f24 6c24 5224 5b24 551b 2842  .$B$O$l$R$[$U.(B
-00000010: 0a                                       .
+The message shows up when multiple refspecs/branches are passed,
+like
 
-musl:
-00000000: 1b24 4224 4f1b 2842 1b24 4224 6c1b 2842  .$B$O.(B.$B$l.(B
-00000010: 1b24 4224 521b 2842 1b24 4224 5b1b 2842  .$B$R.(B.$B$[.(B
-00000020: 1b24 4224 551b 2842 0a                   .$B$U.(B.
-
-Although musl iconv's output isn't optimal, it's still correct.
-
-From commit 7d509878b8, ("pretty.c: format string with truncate respects
-logOutputEncoding", 2014-05-21), we're encoding the message to utf-8
-first, then format it and convert the message to the actual output
-encoding on git commit --squash.
-
-Thus, t3900 is failing on Linux with musl libc.
-
-This problem wasn't specific to musl libc. On Linux with glibc, this
-problem can be observed by:
-
-for encoding in utf-8 iso-8859-1; do
-	# commit using the encoding
-	echo $encoding >file && git add file
-	echo "éñcödèd with $encoding" | iconv -f utf-8 -t $encoding |
-	  git -c i18n.commitEncoding=$encoding commit -F -
-	# and then fixup without it
-	echo "$encoding fixed" >file && git add file
-	git commit --fixup HEAD
-done
-git rebase -i --autosquash --root
-
-Reencode to utf-8 before arranging rebase's todo list.
-
-Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
----
-The code that demonstrate the problem on Linux with glibc is written by Jeff.
-But I don't know how to attribute him properly.
-
- sequencer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 9d5964fd81..69430fe23f 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5169,7 +5169,7 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
- 		*commit_todo_item_at(&commit_todo, item->commit) = item;
- 
- 		parse_commit(item->commit);
--		commit_buffer = get_commit_buffer(item->commit, NULL);
-+		commit_buffer = logmsg_reencode(item->commit, NULL, "UTF-8");
- 		find_commit_subject(commit_buffer, &subject);
- 		format_subject(&buf, subject, " ");
- 		subject = subjects[i] = strbuf_detach(&buf, &subject_len);
--- 
-2.24.0.rc2.296.geaf699fcc3
-
+$ git fetch --set-upstream origin master next
+From https://github.com/git/git
+ * branch                  master     -> FETCH_HEAD
+ * branch                  next       -> FETCH_HEAD
+warning: multiple branch detected, incompatible with --set-upstream
