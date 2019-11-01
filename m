@@ -8,111 +8,91 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD9361F454
-	for <e@80x24.org>; Fri,  1 Nov 2019 18:42:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1F321F454
+	for <e@80x24.org>; Fri,  1 Nov 2019 18:58:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727216AbfKASmN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Nov 2019 14:42:13 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50205 "EHLO mout.gmx.net"
+        id S1727597AbfKAS60 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Nov 2019 14:58:26 -0400
+Received: from mout.gmx.net ([212.227.15.18]:37339 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726817AbfKASmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Nov 2019 14:42:13 -0400
+        id S1727372AbfKAS6Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Nov 2019 14:58:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572633717;
-        bh=bPByqO3/ERordNgjG8BCHn33B3nALVL7jk5ntQ8ExEc=;
+        s=badeba3b8450; t=1572634697;
+        bh=k4UnVPAR7L4LNqd8ByUu9xNDCwB4QAB6nyNjPo+WnI0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=idvxAF6RVx57YgzA7k8gRZFPoQ1CDuagmi3X4GPQBKag7N23FVo1mqbuy44lKwyCf
-         q9jjDAZZuA9IvipnFeU62cf7oveZz1B3I890yQCmXMIsSiZAuKE2SLUJOm4UUxKIWp
-         Kpx5Fhn5jpYvhV/7YerZGn4VOxoUz72nRlEoczW0=
+        b=TYTqsKJ15qQJz3Jko+/tDDBV8M/mXQziSa2zjfbqHYTbUjwBf/ggeoB56kywQfQJ+
+         egoiSnFqqnGUC8+L38I1Ibv5isHly5AnIvJEIEorBi4TgehpzDWPoGpSqRRxC2wghR
+         d3WZL1TpHv4WBPjYcuJwj4DWV97K3IZ1u7pNMsyE=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MzQkE-1i4fAL1ekK-00vO8G; Fri, 01
- Nov 2019 19:41:57 +0100
-Date:   Fri, 1 Nov 2019 19:41:40 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1McY8d-1hoGhQ2WPF-00d1Nu; Fri, 01
+ Nov 2019 19:58:17 +0100
+Date:   Fri, 1 Nov 2019 19:58:01 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/1] vreportf(): avoid relying on stdio buffering
-In-Reply-To: <20191031154837.GB30187@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1911011940590.46@tvgsbejvaqbjf.bet>
-References: <pull.428.v2.git.1572356272.gitgitgadget@gmail.com> <pull.428.v3.git.1572379280.gitgitgadget@gmail.com> <fce0894ee46f737322551b51edf5cd2a53413a50.1572379280.git.gitgitgadget@gmail.com> <20191029203259.GB12337@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1910300947410.46@tvgsbejvaqbjf.bet> <20191031062454.GB20830@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1910311123010.46@tvgsbejvaqbjf.bet> <20191031154837.GB30187@sigill.intra.peff.net>
+To:     phillip.wood@dunelm.org.uk
+cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
+        Matthew DeVore <matvore@gmail.com>, matvore@comcast.net,
+        jonathantanmy@google.com, jrnieder@gmail.com, steadmon@google.com
+Subject: Re: [RFC] xl command for visualizing recent history
+In-Reply-To: <b0169b2b-0d8a-ee27-d0f4-6c7a6df55b5d@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1911011956580.46@tvgsbejvaqbjf.bet>
+References: <20191029003023.122196-1-matvore@google.com> <20191031003929.GA22855@google.com> <nycvar.QRO.7.76.6.1910310851300.46@tvgsbejvaqbjf.bet> <b0169b2b-0d8a-ee27-d0f4-6c7a6df55b5d@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:gAU3jdiG6qTH1ojfpYT2HoqxRU6lXJbHdoMbk/7fHXU8p3k5ftq
- tY+dsA6vt3rm3K7BGImeHFDilUVwY2XHQRPuvM/NHBqOGqTeeVI88AACVCZgmi0uoOzefpm
- nVxkDdLf/Knnphwe8s9Qn6BgpJsWqv4W3St8JesK4NyfEjKg0EJe97ouBEJEUXXpTuo2uRt
- 37uwV162m0egGuEZhfDlw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ZLLiQlQ3TfY=:z2Pn2CrYHxJ/GgopfXLC0t
- PcwX4icQqU3biOn32YgX6e3RBMd4MtL8O4C1Cfr+2zsi35KJN4SUEy4L1zp6l3qaIOVXuhFm4
- aAaGIs5up52obmmcyplZiKar4et+rqc0RGqeES4bjvVzZ6Q3atfvxHnz0Bh1fGDp+OPnajUqV
- 5x2S3fUpwRE69bz49lsCjqzPATDJFfiTDaQoyHirfTibSmDYicm60XJJ2WYhqxgG8hlPMy+7j
- njYr+rPhMKdqPEXZYbsgxuXAtEI+99mup/M9LgyekuYiNLZDQz/1oJuGmy0FItBpISZmwHy7+
- SMMt/cjuQG9M0WnS59Odf3xAiXGf9zZOrd8VcVo+wmYyFobfo4vxZAOqAZng+Ww/X9e263aVr
- MaWqRIo+B2o0+mGIS3hexaZ0YIgVZ+Gv159zJEPwm2MGrcHSAeZWCr7cQ9Wpv4m661skCNWyf
- d6p2tQjmGoQb5HaxsQqAgdIdxjWLHq09SMOjNg+bx3dG0PIY2jNgKe0lD18Mr25x8KddIq3kv
- jaJbBQsaUEV3qHvW6LDGbpkzBpwWMgXN/Zfty+JyqFAP85aCYSnc0AlRuAE+3Ni9xD2Hi0OPY
- O39J47zapQJiGzVnv8jhM5qQBUTMf40WjM5u34VlJUmpQA8+bnJtn2DjUb/D/ho2wRoVkwzrs
- 3SgDpRuBRq4WWvlHAsp0p6YYiE6VSJZzsRDsrFw8aaO0+smB2T7NryPYqvrdGZqoeVMqYo8ko
- AcUb/O9kXuaeJ0PmrgW/ZTkPT9FFR+qy5+GlGWXFXSDXrSa0o9pAqbLl9npT8JSHUT08ia+7+
- gc541r0KIzqtT/9d/1g39styLcvqBxLk7QvagpTl+t7T2+N1AsMrjdKrdBlXSFw6sr0zVbsxM
- aGOdBTxlnZbhbhAYl1Kz079oy/1SghWxw7/YmaYgw1J4WiCMrqaENZg9PjieE/uFlc/T2800j
- YA8814DOPZbVx8faEwOj/Re5F0hhesijuFXUxHtN4jPSw60lGUdZ1PfPnwrQmXCN3syH10Jqh
- /+6vAXIlVs6heW6uhizBv38koQs61rojij/xn0R6xAZhyQ3FRQbwr5KUhL5qGoIhz6nZkUYXz
- l7Pnt/RErC3FtyRSx4Pu2ftUM5CaDej5s7XYoQ2LBRe0OkbGGiWcqehe1AJTfE9+jy+6LqCty
- f76/6CMUUTQSYfL30k/gDTyhDB63gAMhAOhUzA3vtoH/PWaryO6XAWPlXDEDhC3EuiJyRxtXw
- 47v1SJWksgKMGUUGuF3pbTHebeb5M/HMuEnLSVtEUjD1GGm9BtA7U776m4ow=
+X-Provags-ID: V03:K1:W98mW6DV8ZVn/cxabAfpvusR/S+HE5OS3KOFN7qw1/TA78hqCoE
+ i3QmT+OUy39eyWTY/irVXmWN274SdFES7GBigNvcERzmzztblxssX2sv6xNrrwBw0gy2P5j
+ Kddz/jZh9ZHsCzlxw6rFizV2cFuCNLgR5BegXwqg85X6q4BszZfERMeeyvqsl/2omfDjKHS
+ DUO5c+Y4zm5fR3Kw4AyaQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:BhaiOzr/Wzo=:21xm33TTtSckNV8P8lAShH
+ mbsosMGenhQITtAVIVAmqtblsZmmbjFsrSnKElOW/AQ+JzJKMwk5l9MIpOD129cK7lvcYi1Wh
+ 2eO3oww2KLWUZN5KdfD8zamwfBikmCOkkywtY+A3nkPzXgMd9gbEZ85ROvI1v3MCa0WbcGoss
+ Jhagc0rVvAEoLWa4CmDCtqwe1q9JY6wZ5bDvFFDfZk67k5Xucm1c/3slQSZDeR26tpmRIOXgz
+ rOHa3YwDFkHK99Mc9Mx4+rYvNQgriTLPhZda5myFgqMWuG8OgfyqERl3qqc0YP3J+Ewnv2QVy
+ fOE6z6YWYm9RLy4W8PFL/JXvQ568Ly28DgSTJDtQJSPT1aZR68VyWK4g593oGKWSw9xDaolZV
+ 2XFpeAahewntz5Uqr+5WgFCX41ZcPZDUnVNUMaSCnW1mA9QzRzVtcS6h0Ay4o8iyxKzoCZBVn
+ xfptjzxEf7/MNnSq7rTTh+ecLNMrZeJru/YE3/HKinXPvTPy6dqlg+ePaEwA4dVrGX/E/NnVB
+ uPUYDG3aIYWDW95UDh9DKSJmPT0VxYDLl/1my9wHaxZ7Jh7n8R89M3CI8QC6IVogmBY+U4x0k
+ Ioj9Df9ZgdfU3zn7qEf+KXT4R1MMLC8jgJcZPZ+04+3VJqp8FwKpXzLY8C2Bo1B9MU5yYqnSE
+ uZ2gHWb+BVx24pQN4CWipLHNtNPubXX7fDhPgM/E/Od2dcBt0uolXaE+QmceiPkEwCxIW+xft
+ 64cHpuBW4r6w5npmxiofrcO90w6lmyJ/ABiNXAeda039AaRUbNGuzvxGvxe7v3KasM9dt2yBD
+ 5AIieOgrBlb5Be24yONYpHAQ4+wUV/CgBj1FG+uNJEQvd+jC4l4AWxH4wjRUvovSXPUJ/vPcR
+ TFNbf5hSf7vXq+ARCIjmZLBP7lns5cKb1c8c/BM3XbGuvbrVvHwb8mq8oXmVXm6MAYkhX2JU+
+ mtP/jJQpaG+YsRvD6PIoqdiILwB3cpH092cl+aa1zY3Eh0NSlYTyx7nfwgtZxoBvL8MqFdngX
+ c0nihjLe1jQSxa1JlghsA225/T6SbRu9d5CccgO3tFlb+7cKBPM8E8nT1m9xAh8iPRRVw1kdg
+ NPoEFdwuq79i2b2DuI6/OXWzN0jF01cBZLPQ1GRVJ/KA2DjqM+kxLxfvIZ/xAE4ILG2vKBi1Y
+ EDcrcUO1sM5QIF/k9QCW4ucK4t2/4MxIhig5UIn3J613Ut0owWrrIVQGpkob54upL6n2J0U3k
+ pS0Fe16dYeN7/UhEWfYAYciu8cNoUCyF3qHbVC7d6UMRMkub6f3I+4ouFm+o=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Phillip,
 
-On Thu, 31 Oct 2019, Jeff King wrote:
+On Thu, 31 Oct 2019, Phillip Wood wrote:
 
-> On Thu, Oct 31, 2019 at 11:26:30AM +0100, Johannes Schindelin wrote:
+> On 31/10/2019 08:26, Johannes Schindelin wrote:
 >
-> > > Another more far-fetched one: IIRC our stdio wrappers on Windows do =
-some
-> > > magic to convert ANSI color codes into actual terminal codes. Could =
-that
-> > > be a problem here? I think we'd kill off any color codes in the actu=
-al
-> > > message due to the control-code replacement. In theory the prefix co=
-uld
-> > > have them. I don't think any code does now, but the PUSH_COLOR_ERROR
-> > > stuff in builtin/push.c is getting close. I wouldn't be surprised fo=
-r
-> > > that to eventually get folded into error().
-> >
-> > A valid concern!
-> >
-> > As per eac14f8909d (Win32: Thread-safe windows console output,
-> > 2012-01-14), `write()` _implicitly_ gets the ANSI emulation of
-> > `winansi.c`.
-> >
-> > So I think we're good.
-> >
-> > Thanks for thinking of all kinds of angles,
+> > Finally, I could imagine that in this context, we would love to have
+> > refs that are purely intended for interactive use, and therefore it
+> > would make sense to try to bind them to the process ID of the
+> > process calling `git`, i.e. the interactive shell. That way, when I
+> > have two terminal windows, they would "own" their separate ephemeral
+> > refs.
 >
-> Good. Thanks for humoring my wild speculation. :)
+> I like that idea, though I think it should probably be based around
+> getsid() rather than getppid() (I'm not sure how that translates to
+> windows)
 
-Of course!
+Good idea.
 
-> I remember being confused by this not too long ago, so I did a quick dig
-> in the archive. And indeed, there was a confusing comment which caught
-> me in 2016, and which you removed back then (via 3d0a83382f26). I even
-> reviewed the patch. Maybe this time I will remember the outcome!
-
-Heh, I won't fault you because I totally forgot about it myself.
+On Windows, we would probably use the `HANDLE` of the associated Win32
+Console.
 
 Ciao,
 Dscho
