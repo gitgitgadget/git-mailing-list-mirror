@@ -8,145 +8,126 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49C391F454
-	for <e@80x24.org>; Fri,  1 Nov 2019 08:25:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF3A81F454
+	for <e@80x24.org>; Fri,  1 Nov 2019 08:25:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730325AbfKAIZd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Nov 2019 04:25:33 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:36721 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730098AbfKAIZd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Nov 2019 04:25:33 -0400
-Received: by mail-pg1-f196.google.com with SMTP id j22so6042816pgh.3
-        for <git@vger.kernel.org>; Fri, 01 Nov 2019 01:25:33 -0700 (PDT)
+        id S1730329AbfKAIZg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Nov 2019 04:25:36 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:32853 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730098AbfKAIZg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Nov 2019 04:25:36 -0400
+Received: by mail-pl1-f195.google.com with SMTP id y8so4064102plk.0
+        for <git@vger.kernel.org>; Fri, 01 Nov 2019 01:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=d7rnjbWDIY6kO3myxSnZo9ZKFXsxPDxv2zjE+QnRhLQ=;
-        b=mTaJXpc3VqwPIw0B5mRLvfiD1OEc9Fh3kfB7mjtBIUjeOKwaF710A5Wx76Vl3KWsHK
-         CMQaKCQmO2rVdHHxeMtKKlPtM4d4ZXXdT0pxSoq8fRmNfNeiGGU02RqMdJPhnRDCav0r
-         WOAvNnYCaVkfZ3CYQKrk8InzFmV2KsJc0YLIllB2F2geUXkJCC/YejzKJ/FbZowrY4G8
-         ABujjw1G0M7wHAcFgTIejDRA2s6qpV7+cNNBgMyoU0VeYDJ5aPkoMludBDis9t+l5mL2
-         yBm7RgMzfSfZ8wWj3GjB2SgMx4tLLD8HST9oDfgia8tTTqXhfV86cI5k1bQxKg7i8z3t
-         iSsA==
+        bh=GrX1dz8CP07MXMk9VyzYMZ7Phc1XjJjwt03QpqDe3S8=;
+        b=a60PAbBDFmAEwYaCbNNvrUTdjAgaWPYCU+WBw5j1D9jCVOikD/Grm/78/z4Psbro20
+         4aMrj5Ulx4iewm5643G2l9kmkawVFBCFGHxLDbjuzVe/Vju9Jkq9872hQKNJMUOEDPgw
+         uA7fd/l1X9HQmg+ZSda84pQDfPQkX6SN7EyJdO7+bdiqkNK2P74+toGSyGY0lNxKJolJ
+         hJgWSgiBmYJnb67yx9V+Kq/Nf+1sLQFEqD2VDJTBck8g3nDAkCKmQKNoxzDhw1Gyocnb
+         DYXat9b6ul8/GiQljTKNmnvCZZao8dXnXGmY0lX3WnmEG1htcf6WGvdbXigtwzUmVHNg
+         gNow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=d7rnjbWDIY6kO3myxSnZo9ZKFXsxPDxv2zjE+QnRhLQ=;
-        b=dWLBRNNlG/l/XkUMDgYHBb7a1bj2N2AqaPt8EbOZMiz2hF7oSb2h5Uea9lI859/tCD
-         TRnCbw/P9fiF37ADM2KvvWxq0QQhvbTUlZHTqRUHys1z0HLKjPKCaOFgR4fGzUwX3QL9
-         tOFRm/4URikZh4hNF0psBsmpGmoc7v9pFGewQrpZpUghiAeFcYVlLTgQ1NT4LypgBGLz
-         Gg6DK1V/8dKv2XVP9g2a6XEfQqTXfSqsG4OxUDNx7Mvg22Q0Zl0E4DY3jjoTUxbG8hi3
-         V4aCIgRBMzVPMECukS/G+9y00tn92xvcqRKdYRouPo83coKfRRrGGfy4tVgYNsEnVMFo
-         U3Tw==
-X-Gm-Message-State: APjAAAXwYZ0n2aKaWZ55N09gTxtswdUhNhrTMxHzv8rEeH1qpL5LKeub
-        4kxe8NqHPXNfdWAFb+0pHqQNBczt
-X-Google-Smtp-Source: APXvYqyWXTyrnfZACWZUk33Dekn/5wqKoihk9pWB0hNabGlqTMsAlX+8pr9qUXuZbPU5p4sEp/FmvQ==
-X-Received: by 2002:a62:1c82:: with SMTP id c124mr12282004pfc.163.1572596732498;
-        Fri, 01 Nov 2019 01:25:32 -0700 (PDT)
+        bh=GrX1dz8CP07MXMk9VyzYMZ7Phc1XjJjwt03QpqDe3S8=;
+        b=EBxbl6XY3TCB9U2lfRf2URESMeuaTEUTdTmD4NTYUmxDdscuOb/vwO0hQ3Gmm8eLbY
+         WogLAk1TEFqy+5tCqw65ovKq5PKt9thGBsdJR6Q/+yv0O5uagU2ASFtVPwP4zm0Jpm2d
+         wOygDy7ddYQbzuFsbCyCqjnUAW9NhjP+lMaxdSwHg9sAUCwIwuHhmogwWpetWZo3u2+w
+         zGzaOPk76vitc5gjPYRKL1U4sQcXJHRD/dP+s5x1XbF0kucniKeOxaCoSvoKIbEe0kgJ
+         BbitzBgL9pp/U1lDP1dASwBfrHVolroEkPKiVMdicIsRueMj9NPoFwiUrOf/D0DjDMeK
+         r+Mg==
+X-Gm-Message-State: APjAAAXdJ3z+jsDwOB8q+wz8GWTor+CFGafA2ataPiXSzc/kzV6NQgvl
+        qD5EMkc8o2foc5pIeYhQC0wLaNoA
+X-Google-Smtp-Source: APXvYqzZ9x9vMsGC09sLALxbRAgTxjN6yaAXwah/Q0T68SnzRCVosLEl9IHK4KUQCEj12dqt4XQRug==
+X-Received: by 2002:a17:902:6f01:: with SMTP id w1mr11546215plk.35.1572596735750;
+        Fri, 01 Nov 2019 01:25:35 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6374:e1c2:8c5a:c959:6fca:fa1a])
-        by smtp.gmail.com with ESMTPSA id q13sm17158395pjq.0.2019.11.01.01.25.31
+        by smtp.gmail.com with ESMTPSA id q13sm17158395pjq.0.2019.11.01.01.25.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Nov 2019 01:25:31 -0700 (PDT)
+        Fri, 01 Nov 2019 01:25:34 -0700 (PDT)
 From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>
-Subject: [PATCH v2 2/3] configure.ac: define ICONV_OMITS_BOM if necessary
-Date:   Fri,  1 Nov 2019 15:25:10 +0700
-Message-Id: <7c2c6f060393abf3ac831837e4bf8ed366c2fa69.1572596278.git.congdanhqx@gmail.com>
+Subject: [PATCH v2 3/3] sequencer: reencode to utf-8 before arrange rebase's todo list
+Date:   Fri,  1 Nov 2019 15:25:11 +0700
+Message-Id: <b7927b27235422ac53595cfaa63b4f1cbe009013.1572596278.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.24.0.rc2.296.geaf699fcc3
 In-Reply-To: <cover.1572596278.git.congdanhqx@gmail.com>
 References: <20191031092618.29073-1-congdanhqx@gmail.com> <cover.1572596278.git.congdanhqx@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From commit 79444c9294, ("utf8: handle systems that don't write BOM for
-UTF-16", 2019-02-12), we're supporting those systems with iconv that
-omits BOM with:
+On musl libc, ISO-2022-JP encoder is too eager to switch back to
+1 byte encoding, musl's iconv always switch back after every combining
+character. Comparing glibc and musl's output for this command
+$ sed q t/t3900/ISO-2022-JP.txt| iconv -f ISO-2022-JP -t utf-8 |
+	iconv -f utf-8 -t ISO-2022-JP | xxd
 
-    make ICONV_OMITS_BOM=Yes
+glibc:
+00000000: 1b24 4224 4f24 6c24 5224 5b24 551b 2842  .$B$O$l$R$[$U.(B
+00000010: 0a                                       .
 
-However, typing the flag all the time is cumbersome and error-prone.
+musl:
+00000000: 1b24 4224 4f1b 2842 1b24 4224 6c1b 2842  .$B$O.(B.$B$l.(B
+00000010: 1b24 4224 521b 2842 1b24 4224 5b1b 2842  .$B$R.(B.$B$[.(B
+00000020: 1b24 4224 551b 2842 0a                   .$B$U.(B.
 
-Add a checking into configure script to detect this flag automatically.
+Although musl iconv's output isn't optimal, it's still correct.
+
+From commit 7d509878b8, ("pretty.c: format string with truncate respects
+logOutputEncoding", 2014-05-21), we're encoding the message to utf-8
+first, then format it and convert the message to the actual output
+encoding on git commit --squash.
+
+Thus, t3900 is failing on Linux with musl libc.
+
+This problem wasn't specific to musl libc. On Linux with glibc, this
+problem can be observed by:
+
+for encoding in utf-8 iso-8859-1; do
+	# commit using the encoding
+	echo $encoding >file && git add file
+	echo "éñcödèd with $encoding" | iconv -f utf-8 -t $encoding |
+	  git -c i18n.commitEncoding=$encoding commit -F -
+	# and then fixup without it
+	echo "$encoding fixed" >file && git add file
+	git commit --fixup HEAD
+done
+git rebase -i --autosquash --root
+
+Reencode to utf-8 before arranging rebase's todo list.
 
 Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
 ---
- configure.ac | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+The code that demonstrate the problem on Linux with glibc is written by Jeff.
+But I don't know how to attribute him properly.
 
-diff --git a/configure.ac b/configure.ac
-index a43b476402..ecba7e6e51 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -844,12 +844,61 @@ AC_MSG_CHECKING([for old iconv()])
- AC_COMPILE_IFELSE([OLDICONVTEST_SRC],
- 	[AC_MSG_RESULT([no])],
- 	[AC_MSG_RESULT([yes])
-+	AC_DEFINE(HAVE_OLD_ICONV, 1)
- 	OLD_ICONV=UnfortunatelyYes])
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 9d5964fd81..69430fe23f 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5169,7 +5169,7 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
+ 		*commit_todo_item_at(&commit_todo, item->commit) = item;
  
- GIT_UNSTASH_FLAGS($ICONVDIR)
- 
- GIT_CONF_SUBST([OLD_ICONV])
- 
-+#
-+# Define ICONV_OMITS_BOM if you are on a system which
-+# iconv omits bom for utf-{16,32}
-+if test -z "$NO_ICONV"; then
-+AC_CACHE_CHECK([whether iconv omits bom for utf-16 and utf-32],
-+ [ac_cv_iconv_omits_bom],
-+[
-+old_LIBS="$LIBS"
-+if test -n "$NEEDS_LIBICONV"; then
-+	LIBS="$LIBS -liconv"
-+fi
-+
-+AC_RUN_IFELSE(
-+	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT
-+	#include <iconv.h>
-+	#ifdef HAVE_OLD_ICONV
-+	typedef const char *iconv_ibp;
-+	#else
-+	typedef char *iconv_ibp;
-+	#endif
-+	],
-+	[[
-+	int v;
-+	iconv_t conv;
-+	char in[] = "a"; iconv_ibp pin = in;
-+	char out[20] = ""; char *pout = out;
-+	size_t isz = sizeof in;
-+	size_t osz = sizeof out;
-+
-+	conv = iconv_open("UTF-16", "UTF-8");
-+	iconv(conv, &pin, &isz, &pout, &osz);
-+	iconv_close(conv);
-+	v = (unsigned char)(out[0]) + (unsigned char)(out[1]);
-+	return v != 0xfe + 0xff;
-+	]])],
-+	[ac_cv_iconv_omits_bom=no],
-+	[ac_cv_iconv_omits_bom=yes])
-+
-+LIBS="$old_LIBS"
-+])
-+if test "x$ac_cv_iconv_omits_bom" = xyes; then
-+	ICONV_OMITS_BOM=Yes
-+else
-+	ICONV_OMITS_BOM=
-+fi
-+GIT_CONF_SUBST([ICONV_OMITS_BOM])
-+fi
-+
- ## Checks for typedefs, structures, and compiler characteristics.
- AC_MSG_NOTICE([CHECKS for typedefs, structures, and compiler characteristics])
- #
+ 		parse_commit(item->commit);
+-		commit_buffer = get_commit_buffer(item->commit, NULL);
++		commit_buffer = logmsg_reencode(item->commit, NULL, "UTF-8");
+ 		find_commit_subject(commit_buffer, &subject);
+ 		format_subject(&buf, subject, " ");
+ 		subject = subjects[i] = strbuf_detach(&buf, &subject_len);
 -- 
 2.24.0.rc2.296.geaf699fcc3
 
