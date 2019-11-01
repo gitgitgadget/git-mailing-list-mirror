@@ -2,57 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40F811F454
-	for <e@80x24.org>; Fri,  1 Nov 2019 19:29:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E4031F4C0
+	for <e@80x24.org>; Fri,  1 Nov 2019 19:36:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727855AbfKAT33 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 1 Nov 2019 15:29:29 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:35113 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727600AbfKAT33 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Nov 2019 15:29:29 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id xA1JTOiq012979
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 1 Nov 2019 15:29:24 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "=?utf-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>
-Cc:     "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-        <git@vger.kernel.org>
-References: <011f01d58ab6$91fee620$b5fcb260$@nexbridge.com> <nycvar.QRO.7.76.6.1910281405000.46@tvgsbejvaqbjf.bet> <026401d58d9a$2bbe7600$833b6200$@nexbridge.com> <20191028145220.GU4348@szeder.dev> <027301d58da3$4a4996a0$dedcc3e0$@nexbridge.com> <20191029101615.GA24010@szeder.dev>
-In-Reply-To: <20191029101615.GA24010@szeder.dev>
-Subject: RE: [BUG] git 2.24.0-rc1 t0500 on NonStop in Jenkins
-Date:   Fri, 1 Nov 2019 15:29:17 -0400
-Message-ID: <026201d590ea$aa6b6690$ff4233b0$@nexbridge.com>
+        id S1727921AbfKATgA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Nov 2019 15:36:00 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36534 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727710AbfKATgA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Nov 2019 15:36:00 -0400
+Received: (qmail 29202 invoked by uid 109); 1 Nov 2019 19:36:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 01 Nov 2019 19:36:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14097 invoked by uid 111); 1 Nov 2019 19:39:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 01 Nov 2019 15:39:10 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 1 Nov 2019 15:35:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Davide Berardi <berardi.dav@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH] Segmentation Fault on non-commit --branch clone
+Message-ID: <20191101193558.GA1169@sigill.intra.peff.net>
+References: <20191101002432.GA49846@carpenter.lan>
+ <nycvar.QRO.7.76.6.1911012000160.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHPNYlvTp8HvTWaccQRmuAfB7Lx7gHWySK8AblOW5QChv72xwFtCajbAl8qeNenNE9EAA==
-Content-Language: en-ca
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1911012000160.46@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-FYI: git 2.24.0-rc2 passes on the NonStop TNS/E platform - except for the usual t9001 and t9020 that never do and can't.
+On Fri, Nov 01, 2019 at 08:08:10PM +0100, Johannes Schindelin wrote:
 
-Thanks to everyone for all the hard work!
-Randall
+> > +static int fallback_on_noncommit(const struct ref *check,
+> > +				 const struct ref *remote,
+> > +				 const char *msg)
+> > +{
+> > +	if (check == NULL)
+> > +		return 1;
+> > +	struct commit *c = lookup_commit_reference_gently(the_repository,
+> > +						   &check->old_oid, 1);
+> > +	if (c == NULL) {
+> > +		/* Fallback HEAD to fallback refs */
+> > +		warning(_("%s is not a valid commit object, HEAD will fallback
+> > to %s"),
+> > +			check->name, FALLBACK_REF);
+> 
+> Quite honestly, I do not think that it is a good idea to fall back in
+> this case. The user asked for something that cannot be accomplished, and
+> the best way to handle this is to exit with an error, i.e. `die()`.
 
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
+The main reason I proposed falling back here is that the user can
+correct the situation without having to redo the clone from scratch
+(which might have been very expensive). And we cannot just leave HEAD
+empty there; we have to put _something_ in it.
 
+I do think it's important, though, that we don't just fall back; we
+should still report an error exit from the program (just as we do for
+the similar case when clone's checkout step fails). Otherwise something
+as simple as:
 
+  git clone -b $url repo &&
+  cd repo &&
+  do_something
 
+could have quite unexpected results.
+
+I don't know how often this would actually help users, though. It _is_ a
+pretty rare situation to ask for a non-commit. So maybe it's all
+over-engineering, and we should start with just die(). If somebody comes
+along later and wants to enhance it, it should be pretty
+straightforward.
+
+-Peff
