@@ -8,77 +8,78 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 490711F454
-	for <e@80x24.org>; Fri,  1 Nov 2019 00:29:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6554B1F454
+	for <e@80x24.org>; Fri,  1 Nov 2019 01:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728579AbfKAA32 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Oct 2019 20:29:28 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52500 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726803AbfKAA31 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Oct 2019 20:29:27 -0400
-Received: by mail-wm1-f68.google.com with SMTP id c17so430036wmk.2
-        for <git@vger.kernel.org>; Thu, 31 Oct 2019 17:29:26 -0700 (PDT)
+        id S1727580AbfKABdL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Oct 2019 21:33:11 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:39534 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726540AbfKABdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Oct 2019 21:33:11 -0400
+Received: by mail-pg1-f193.google.com with SMTP id p12so5368137pgn.6
+        for <git@vger.kernel.org>; Thu, 31 Oct 2019 18:33:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=V+3mf9cX8v9RtoiJqS4cqoMjaIDr/WR8dEzVKhKQKlo=;
-        b=BUWyrJCDQkk63fyegwMpEOezT0CSweIioPb/lmjaBkgn2VGyOKTHTwJ+Cb5FpzVXdQ
-         R1Y/hrUfh1u3uCrLKkGd/HHoxCrp07ocYsdcSei7q5G8LP7zMtl9D5x3OE+QxEuW/WuQ
-         zN+JpvsntQz/wnbdervi6uWsTAanC8w40cAZeI+Xw5l9Vux22qPoK/aY5tlkNI9Hlnsw
-         Sq3tEry3C4u0fy3/Qph46vWwG2UXtCty1XahbgvioC8R7vP1hRYlBSUlSFEUXRi0a+QG
-         PbaoMAbxJyg4E/wuO+hThTOnDKxMQVgd22j2fezVhwpfmtAc6p+W6qJ4G9eg+Ll/0Akr
-         iS7Q==
+        bh=yS/WZziyFFiIngS1jogggMkrHBnF9J2udAjUuac6/0g=;
+        b=FL9+LmdaCErhbEFBmGb2ZBXLXU22cD1/Zf4x9EdYdRahwisE/Z7A+gGAneALJ3C6CL
+         BGC2xMmx9mjHHdAwqY5sFVbb8kVlNFE3Wap5fN3YIiGRUJLjAdWw5dJRglGSJ5mhRyq2
+         vUEb61PmiYi/qUI5gw8K+/dUKT6zlCaG7tVlsnEX6dHmqhR1znsOMFsNZpqfgJ8HFSSq
+         8pII1tdGvnaL5LhCMK2Tgne7guPbq30Dk5eTsxgNrie1gULvTBWLvx81GlgcYIuyWA6k
+         IJDnYdEqcpBJ8FD+EfXJ4PTqNnWum4ZQUh0A6oHg4Arh7qDI4xRNnJXp5OsXNcx1F/ZH
+         /C4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=V+3mf9cX8v9RtoiJqS4cqoMjaIDr/WR8dEzVKhKQKlo=;
-        b=mUQUWT03fC3e7VVpL9N/ofWiWnBU5esySF0JYKcqER3tOO16HCtJZS3VDHjbnaJBwO
-         +VfSIuxV1ldMUzpoKEYHT8j3ruXa+Bg8HAZMiDF+mHBNury7pldLEIf66CuhxSbbJKmo
-         LTSs60cLkInvk8WGvhGqM6rLK/gde0aods4uAOhZqM4DiCdSYdoEIGMHHoKtJw5Ryei4
-         rYh3SjD0xuvqWX5JKEDKp6T0+3bnnK6/RBcpU7Z6Xzs7dnrmdvWkqnDYnL3svgthjSYg
-         i6VMoo1JeC+mKn2FIGyfQrYj1kmupoulKVhExLe/fufqY44wVbaLIle2DYJmRzrMrlAb
-         pSCA==
-X-Gm-Message-State: APjAAAUeLdn9a8UR/sSxj66Wb+bFuizEIpHoamz9hA3ewvaPz9h3LRIN
-        iIrnkfa/4Vi85GiRCP/X0J0=
-X-Google-Smtp-Source: APXvYqwblJt+JhUwO83BOwB7pJRlzKibWwtqVvHL9TRlVNkGLzcZFsJPLY8L7OvFJJNShr0SkzZnRQ==
-X-Received: by 2002:a1c:1d10:: with SMTP id d16mr8127102wmd.14.1572568166154;
-        Thu, 31 Oct 2019 17:29:26 -0700 (PDT)
-Received: from localhost (host96-200-dynamic.171-212-r.retail.telecomitalia.it. [212.171.200.96])
-        by smtp.gmail.com with ESMTPSA id y3sm7579849wro.36.2019.10.31.17.29.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 Oct 2019 17:29:25 -0700 (PDT)
-Date:   Fri, 1 Nov 2019 01:29:24 +0100
-From:   Davide Berardi <berardi.dav@gmail.com>
+        bh=yS/WZziyFFiIngS1jogggMkrHBnF9J2udAjUuac6/0g=;
+        b=arrzSqA1lGZZ87N7hpY8Iu+D+ZiuOr4MvEbmCIgCPs7cist0nPi4cS2qbCs83NL1TF
+         Q+kF2xbimK9Awj3A/U+UA87KOG+zn3Ieh77h45ISGSysgbbmQRS/uZP9GSUbg33CRpbC
+         uPGtHnJ16AVt9Q0f3qip8LCrhhIkckEkOm3JrGGmJ13Enr+zvzba/y1nlZa6BVCdKrKy
+         o1aOZDG0BFce+tsiO/x5RuTrQJ+SMkn0/PXuMbQgVTzzMNEbFda7VuSVEFiNsmUD1pZF
+         H9W/tfoo770kyYaAhyLPR0eJUaX6gMTlX8wvc0YLbSz9/vjfmb9z/mgRb+DpS/dLBsP8
+         fjVQ==
+X-Gm-Message-State: APjAAAU5N6Z9Z8YM1Iqnts3Bip2bczAXO6/eofzvWOgpKMXqwnasMu4h
+        5QDeI1ETLv/IURlGeK8cCjIwzUFG
+X-Google-Smtp-Source: APXvYqwFA3Z1jTYXGMIuASkJUWB/bDEOeMn5/8DbBDC/mNXzPotUlGbHqxuenSMZWv+sHwQGJmFoUA==
+X-Received: by 2002:a63:7247:: with SMTP id c7mr10222082pgn.311.1572571990813;
+        Thu, 31 Oct 2019 18:33:10 -0700 (PDT)
+Received: from localhost ([2402:800:6374:2d45:2809:9830:be60:8e46])
+        by smtp.gmail.com with ESMTPSA id q26sm4188491pgk.60.2019.10.31.18.33.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Oct 2019 18:33:09 -0700 (PDT)
+Date:   Fri, 1 Nov 2019 08:33:07 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] Segmentation fault on non-commit objects.
-Message-ID: <20191101002924.GC49846@carpenter.lan>
-References: <20191029092735.GA84120@carpenter.lan>
- <20191029140621.GC2843@sigill.intra.peff.net>
- <xmqqbltz3qbc.fsf@gitster-ct.c.googlers.com>
- <20191031053733.GA10050@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/3] t0028: eliminate non-standard usage of printf
+Message-ID: <20191101013307.GD30350@danh.dev>
+References: <20191031092618.29073-1-congdanhqx@gmail.com>
+ <20191031092618.29073-2-congdanhqx@gmail.com>
+ <20191031174118.GA2133@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191031053733.GA10050@sigill.intra.peff.net>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <20191031174118.GA2133@sigill.intra.peff.net>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->Davide, do you have an interest in trying to make these code paths a bit
->more robust?
->
-I've tried to implement your comments in a new patch, you can find it
-at[1].  Sorry if this is not the standard procedure to submit a new
-patch and let me know if you have new comments.
+On 2019-10-31 13:41:18 -0400, Jeff King wrote:
+> So I think your patch is the right thing to do (hex escapes in shell
+> printf are definitely not portable), but we might want to note something
+> like:
+> 
+>   This wasn't caught by most people running the tests, even though
+>   common shells like dash don't handle hex escapes, because their
+>   systems don't trigger the NO_UTF16_BOM prereq. But systems with musl
+>   libc do; when combined with dash, the test fails.
 
-Thanks to all.
-Ciao,
-D.
+Make sense. I will take this note in the reroll.
 
-[1] https://public-inbox.org/git/20191101002432.GA49846@carpenter.lan/T/#u
+-- 
+Danh
