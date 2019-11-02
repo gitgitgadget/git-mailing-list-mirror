@@ -7,82 +7,87 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E1F61F454
-	for <e@80x24.org>; Sat,  2 Nov 2019 03:04:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20D4B1F454
+	for <e@80x24.org>; Sat,  2 Nov 2019 03:25:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727574AbfKBDE5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Nov 2019 23:04:57 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62090 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727067AbfKBDE4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Nov 2019 23:04:56 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B16D32D9E4;
-        Fri,  1 Nov 2019 23:04:54 -0400 (EDT)
+        id S1727344AbfKBDZS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Nov 2019 23:25:18 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53118 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727297AbfKBDZS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Nov 2019 23:25:18 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 96E279B280;
+        Fri,  1 Nov 2019 23:25:17 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kSROIQOGI+dNGbXwi+dDkg5S3Bg=; b=FW5v8S
-        lv4yC5P3Tt9O8SveaeVrjvaoo2qPwOKokt2FEik7gOYDke2lBn3oxjaaJzeV3v23
-        CHmSO/a+B2y7DATvca09KNOj5GHBetnzApW2wTQ9MiEt0couYThOxqRfXoLyu+M+
-        Rkuff2+pGD5zQAQdZ0MCbFYzJDfbwZzG9s85g=
+        :content-type; s=sasl; bh=2cPcuVN5qZ4wmaJfti3KSYdzO4g=; b=Smy7Gv
+        imoGwBOQN4NyU0fnTjqM2lizv7xwCp9XgCUh6n3Pv5+2jXX+Vfd1059nNTZ8f8i9
+        6ZITB+RGZlEot5uSguewFYHSqt7rQdS5UgIni3D4G17JlfMAXVAKvlya96et1ynl
+        yLBUI2jS10kurOXZzJ+O6pycbGfXInZdPb3Tk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RqC16p9AjPE/QOVtar/l4ZgGjjbsnRZw
-        o5dk35MaNwABvlIm5efjlSh02Q51fAlfyWWSACl/qleSE8TUH2lbXtj4vUTsDYhd
-        cH8LAVtbD9W7jGnSTtjVk4qGlbMdrEbXlyKWIveYpTptJkjJDOSDqIZ0RyDm5EdZ
-        eNatvxt0Sjs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AA4EC2D9E2;
-        Fri,  1 Nov 2019 23:04:54 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=hu19E2yxA5LHdlREqQF3xl6g7rI97EDA
+        DY2gSeOV5Z1ls1fBdMapyYRwzomMNKdJ44mp0joIvZbz7/9OsjVTUeuvUSX2+G/q
+        jZ1mWuTyTjS0ZxMDcY9L/Lb7vxsmrE1uF4W7WuV1Fau4mqxNs7O95LO8nVuvwWa5
+        D9egL2gunu8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8FECC9B27F;
+        Fri,  1 Nov 2019 23:25:17 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1DF272D9E0;
-        Fri,  1 Nov 2019 23:04:54 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BFB909B27E;
+        Fri,  1 Nov 2019 23:25:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] update-index: optionally leave skip-worktree entries alone
-References: <pull.355.git.gitgitgadget@gmail.com>
-        <pull.355.v2.git.1572261615.gitgitgadget@gmail.com>
-        <86dbb11f159375da281acd6266df019106abeadb.1572261615.git.gitgitgadget@gmail.com>
-        <xmqq5zk7593d.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1910300930440.46@tvgsbejvaqbjf.bet>
-Date:   Sat, 02 Nov 2019 12:04:52 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1910300930440.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 30 Oct 2019 09:34:38 +0100 (CET)")
-Message-ID: <xmqqpnib567f.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [ANNOUNCE] Git v2.24.0-rc1
+References: <xmqqeez2fzsy.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BGV=5FuMfq1pYbbHCMMvyVGQPS_8yTjqhKoqrm7O1KFow@mail.gmail.com>
+Date:   Sat, 02 Nov 2019 12:25:12 +0900
+In-Reply-To: <CABPp-BGV=5FuMfq1pYbbHCMMvyVGQPS_8yTjqhKoqrm7O1KFow@mail.gmail.com>
+        (Elijah Newren's message of "Tue, 29 Oct 2019 23:56:50 -0700")
+Message-ID: <xmqqh83n559j.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8B1DBA50-FD1D-11E9-86CB-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 62B0639E-FD20-11E9-BCCA-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Elijah Newren <newren@gmail.com> writes:
 
+> Hi Junio,
 >
-> I changed this locally to `keep-me`. But then I saw that you merged this
-> patch pair to `next` already... Do you want an add-on patch, or revert
-> it out of `next`, or leave as-is?
+> A couple questions on the release notes...
 >
-> I'd like to know because I still want to merge this into Git for Windows
-> v2.24.0-rc2, and I would love to deviate as little as possible from
-> git.git there.
+> On Thu, Oct 24, 2019 at 1:35 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> Git 2.24 Release Notes (draft)
+>> ==============================
+>>
+>> Updates since v2.23
+>> -------------------
+>>
+>> Backward compatibility note
+>>
+>>  * Although it is not officially deprecated, "filter-branch" is
+>>    showing its age and alternatives are available.  From this release,
+>>    we started to discourage its uses and hint people about
+>>    filter-repo.
+>
+> What do you mean by deprecation, then?
+>
+> My understanding has always been that deprecation meant "supported but
+> discouraged", which is exactly what we're doing.
 
->...
-> So: revert out of `next`, add-on patch, or leave as-is?
-
-Sorry for a late response.  I was under the weather and mostly
-offline for the past few days.
-
-Whichever is easier for GGG is fine, but for the purpose of
-resulting history, I think revert-replace would be the best.
-
-Thanks.
+You probably want to question the "officially" part.  My
+understading is that some vocal members of the community
+may be advocating for the official deprecation, and I am
+more or less in agreement, but haven't heard from enough
+folks to make it "official" community consensus just yet.
