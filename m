@@ -2,200 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7238C1F454
-	for <e@80x24.org>; Sat,  2 Nov 2019 19:26:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14C0F1F454
+	for <e@80x24.org>; Sat,  2 Nov 2019 20:14:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727127AbfKBT0s (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Nov 2019 15:26:48 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:59060 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727090AbfKBT0s (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 2 Nov 2019 15:26:48 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 224A56052F;
-        Sat,  2 Nov 2019 19:26:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1572722806;
-        bh=OHvGqGjWSBPK/11vmEGtTNQs3F7YZqvMQ8Uru0N0QQ0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=igMHWnzSv+vdEoDeTpa7oyBODkyxpkOgL+S47uTeBAL1RmU8D5fkZZodfPO6M89LN
-         HoHL6szpxXZhCb4FXcayKd8GKoiEGA57Xt8A7i4qf00ZwNALzYa5bnMAyFWughwY5P
-         dgPWCC7ESu2bS2AC5f7aGgoMi1at1PkQ9c9nO9ueEJJjQ+wtEhYjVO/rCJ1kB1YMX1
-         wQkd2WeDrsI8HN3fZUzby+DrztQPCRR1V+GtOg7hVoUVx/WU4Y1Hz2v/169UYyB/Ai
-         gmqOr34Ts61eBDF9cF7sCqRdxVOdnPYp/dgiBWQtNXKgVjbeyYAUpae/u8s/kIycLp
-         8ZFwpvLowhmfzwbbjwk1ZuZonEQMZyAQUUAXBDUC/XfjqR3AvmifLW35UDAJQ7byBI
-         MOP018Y817h/Z/k5hrWaKTHhyGxMucifaqXngYhmBoC7ctOxrdUGeQgdEaWVT/Wdc0
-         NeE7hzoOTaY9e/BPc5clBIYAs7VOUL1BDcJ6Y1Rt5pJw9I/Rzc2
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 1/4] doc: move author and committer information to git-commit(1)
-Date:   Sat,  2 Nov 2019 19:26:12 +0000
-Message-Id: <20191102192615.10013-2-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.24.0.rc2.428.g50e10028f1
-In-Reply-To: <20191102192615.10013-1-sandals@crustytoothpaste.net>
-References: <20191102192615.10013-1-sandals@crustytoothpaste.net>
+        id S1726685AbfKBUOh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Nov 2019 16:14:37 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:34567 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726523AbfKBUOh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Nov 2019 16:14:37 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from Madrigal (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id xA2KEJLv073857
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sat, 2 Nov 2019 16:14:21 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   <rsbecker@nexbridge.com>
+To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        <git@vger.kernel.org>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Jeff King'" <peff@peff.net>
+References: <20191102192615.10013-1-sandals@crustytoothpaste.net> <20191102192615.10013-4-sandals@crustytoothpaste.net>
+In-Reply-To: <20191102192615.10013-4-sandals@crustytoothpaste.net>
+Subject: RE: [PATCH v3 3/4] doc: dissuade users from trying to ignore tracked files
+Date:   Sat, 2 Nov 2019 16:14:14 -0400
+Message-ID: <001501d591ba$1d190060$574b0120$@nexbridge.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIMicffZ8Y2oLnk50uXRkxNxJArcAJnsAwQpvcclFA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While at one time it made perfect sense to store information about
-configuring author and committer information in the documentation for
-git commit-tree, in modern Git that operation is seldom used.  Most
-users will use git commit and expect to find comprehensive documentation
-about its use in the manual page for that command.
+On November 2, 2019 3:26 PM, brian m. carlson wrote:
+> It is quite common for users to want to ignore the changes to a file that
+Git
+> tracks.  Common scenarios for this case are IDE settings and configuration
+> files, which should generally not be tracked and possibly generated from
+> tracked files using a templating mechanism.
+> 
+> However, users learn about the assume-unchanged and skip-worktree bits
+> and try to use them to do this anyway.  This is problematic, because when
+> these bits are set, many operations behave as the user expects, but they
+> usually do not help when git checkout needs to replace a file.
+> 
+> There is no sensible behavior in this case, because sometimes the data is
+> precious, such as certain configuration files, and sometimes it is
+irrelevant
+> data that the user would be happy to discard.
+> 
+> Since this is not a supported configuration and users are prone to misuse
+the
+> existing features for unintended purposes, causing general sadness and
+> confusion, let's document the existing behavior and the pitfalls in the
+> documentation for git update-index so that users know they should explore
+> alternate solutions.
+> 
+> In additon, let's provide a recommended solution to dealing with the
+> common case of configuration files, since there are well-known approaches
+> used successfully in many environments.
 
-Considering that there is significant confusion about how one is to use
-the user.name and user.email variables, let's put as much documentation
-as possible into an obvious place where users will be more likely to
-find it.
+Just noodling about a potential solution. If we assume the use case that
+files are modified by an IDE that have no real relevance, but should not
+interfere with other git operations including checkout...
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/config/user.txt     |  2 +-
- Documentation/git-commit-tree.txt | 39 ++++---------------------------
- Documentation/git-commit.txt      | 34 ++++++++++++++++++++++++---
- 3 files changed, 37 insertions(+), 38 deletions(-)
+What if we introduce something like .gitignore.changes, with the same syntax
+as .gitignore. The difference is files listed in this file will not show in
+git status (or could show as "changes ignored" with an option to enable
+that. The only way to have the changes considered would be git add -f, so
+git add . and git commit -a would not pick up the changes. From checkout's
+perspective, the file would be considered unmodified so if a change is
+incoming for that path, checkout replaces it instead of rejecting the
+checkout, otherwise the file is untouched. Pull would act similarly. Branch
+switching would be permitted without stashing the files - they would remain
+unchanged unless the switch modified the files.
 
-diff --git a/Documentation/config/user.txt b/Documentation/config/user.txt
-index 0557cbbceb..a1f80e823c 100644
---- a/Documentation/config/user.txt
-+++ b/Documentation/config/user.txt
-@@ -13,7 +13,7 @@ committer.email::
- 	Also, all of these can be overridden by the `GIT_AUTHOR_NAME`,
- 	`GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_NAME`,
- 	`GIT_COMMITTER_EMAIL` and `EMAIL` environment variables.
--	See linkgit:git-commit-tree[1] for more information.
-+	See linkgit:git-commit[1] for more information.
- 
- user.useConfigOnly::
- 	Instruct Git to avoid trying to guess defaults for `user.email`
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-index 4b90b9c12a..d518dffce0 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -42,6 +42,10 @@ tend to just write the result to the file that is pointed at by
- `.git/HEAD`, so that we can always see what the last committed
- state was.
- 
-+A commit comment is read from stdin. If a changelog
-+entry is not provided via "<" redirection, 'git commit-tree' will just wait
-+for one to be entered and terminated with ^D.
-+
- OPTIONS
- -------
- <tree>::
-@@ -69,40 +73,6 @@ OPTIONS
- 	Do not GPG-sign commit, to countermand a `--gpg-sign` option
- 	given earlier on the command line.
- 
--
--Commit Information
--------------------
--
--A commit encapsulates:
--
--- all parent object ids
--- author name, email and date
--- committer name and email and the commit time.
--
--While parent object ids are provided on the command line, author and
--committer information is taken from the following environment variables,
--if set:
--
--	GIT_AUTHOR_NAME
--	GIT_AUTHOR_EMAIL
--	GIT_AUTHOR_DATE
--	GIT_COMMITTER_NAME
--	GIT_COMMITTER_EMAIL
--	GIT_COMMITTER_DATE
--
--(nb "<", ">" and "\n"s are stripped)
--
--In case (some of) these environment variables are not set, the information
--is taken from the configuration items user.name and user.email, or, if not
--present, the environment variable EMAIL, or, if that is not set,
--system user name and the hostname used for outgoing mail (taken
--from `/etc/mailname` and falling back to the fully qualified hostname when
--that file does not exist).
--
--A commit comment is read from stdin. If a changelog
--entry is not provided via "<" redirection, 'git commit-tree' will just wait
--for one to be entered and terminated with ^D.
--
- include::date-formats.txt[]
- 
- Discussion
-@@ -117,6 +87,7 @@ FILES
- SEE ALSO
- --------
- linkgit:git-write-tree[1]
-+linkgit:git-commit[1]
- 
- GIT
- ---
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index afa7b75a23..f684f7fdc2 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -352,9 +352,6 @@ changes to tracked files.
- 	these files are also staged for the next commit on top
- 	of what have been staged before.
- 
--:git-commit: 1
--include::date-formats.txt[]
--
- EXAMPLES
- --------
- When recording your own work, the contents of modified files in
-@@ -448,6 +445,37 @@ alter the order the changes are committed, because the merge
- should be recorded as a single commit.  In fact, the command
- refuses to run when given pathnames (but see `-i` option).
- 
-+COMMIT INFORMATION
-+------------------
-+
-+A commit encapsulates:
-+
-+- all parent object ids
-+- author name, email and date
-+- committer name and email and the commit time.
-+
-+While parent object ids are provided on the command line, author and
-+committer information is taken from the following environment variables,
-+if set:
-+
-+	GIT_AUTHOR_NAME
-+	GIT_AUTHOR_EMAIL
-+	GIT_AUTHOR_DATE
-+	GIT_COMMITTER_NAME
-+	GIT_COMMITTER_EMAIL
-+	GIT_COMMITTER_DATE
-+
-+(nb "<", ">" and "\n"s are stripped)
-+
-+In case (some of) these environment variables are not set, the information
-+is taken from the configuration items user.name and user.email, or, if not
-+present, the environment variable EMAIL, or, if that is not set,
-+system user name and the hostname used for outgoing mail (taken
-+from `/etc/mailname` and falling back to the fully qualified hostname when
-+that file does not exist).
-+
-+:git-commit: 1
-+include::date-formats.txt[]
- 
- DISCUSSION
- ----------
+OTOH, this is a change that is most relevant to IDE users, so JGit would
+have to implement it as well to really get any real benefit.
+
+This does have some benefit in post-install situations as well as the IDE
+use-case, but for that I might want to consider finer granularity, like some
+way to identify regions of files being ignored. This being a pretty deep
+rabbit hole we'd end up following.
+
+If this idea seems reasonable, it might make a nice small project for
+someone, possibly me, if I could unentangle from my current hellish $DAYJOB
+project.
+
+Just my few coins of thought.
+
+Randall
+
+
