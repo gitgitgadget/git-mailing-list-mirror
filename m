@@ -7,78 +7,70 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7860B1F454
-	for <e@80x24.org>; Sat,  2 Nov 2019 04:25:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 225761F454
+	for <e@80x24.org>; Sat,  2 Nov 2019 04:28:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725820AbfKBEZR (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Nov 2019 00:25:17 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59168 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725268AbfKBEZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Nov 2019 00:25:17 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5E7FEA5AA6;
-        Sat,  2 Nov 2019 00:25:15 -0400 (EDT)
+        id S1725956AbfKBE2n (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Nov 2019 00:28:43 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61953 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725306AbfKBE2m (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Nov 2019 00:28:42 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A3E3F9BEF5;
+        Sat,  2 Nov 2019 00:28:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pZwLgSyNo/kbbstvIkkp6NLpxek=; b=oaa22P
-        piijxIAt2d4IRQGxAN5nwo17FkHJkVcocaSic5dcRo24IPT3dmPswlCw3SPg98gU
-        k3s8oOK4GyJojIlnWj2QVZH2uTx3sKfXVdaK2dm/fhVdJR75dmxHoOb9X3QTHrN/
-        h5QYwsZjCYrbjfm7xnj+IkALRU/tC6s5MwjMM=
+        :content-type; s=sasl; bh=DsNOr/K5vAv+9ykBJTmBGBDLCRM=; b=F4zZbZ
+        TpFhKdiyiX83BJveAGuZXSc9ZBz4Ean+68KCDzygDUNXL7ZxYY/BrBbG9zEQdPF1
+        fbCUjyKyWfqaiFFrR26DwujU8RNBjxPgtntss+GhASa3Pcn1oFXQknVD8kV67/59
+        ARqIyGpNpzdj6gnpH5de2ZVSvw3m6lgNTLNWA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=s7k+ixYZk3wsep4rVEFJiAmOzj9rrPqc
-        qxr0Oq38r6u/v8zAkzy6JL47l71xxXmwybF8dSFgiXINy5BkL5a+4jnnHyPWiXau
-        cRwgNUyinjQRZVnlLPgTkljodIY7xIFWu11PWhBWTOfAn4egm/7oy8ZusKgGkwCc
-        V3D6UPUy4zY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4A47FA5AA5;
-        Sat,  2 Nov 2019 00:25:15 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Sge/IiPJ0mdhFLZlotPstTgpG/l/44R+
+        h18V7TTHV2c/sIDjxZlK8BT4vXDyX0cN86iteuRryHdJld1vQ9yLY37dNz+8ZFF8
+        tX4gk5KJIkfn0wkFg1A3rzWqnv5YG0GEKM+/iGogMrleVdYrF+zpIAYegA5o2GVg
+        yWvc0+TXbhw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9A7E19BEF4;
+        Sat,  2 Nov 2019 00:28:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 69BF1A5AA4;
-        Sat,  2 Nov 2019 00:25:12 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CB9AB9BEF0;
+        Sat,  2 Nov 2019 00:28:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Danh Doan <congdanhqx@gmail.com>
-Subject: Re: [PATCH v3] submodule: teach set-url subcommand
-References: <d8841c6009c91ac921d30b35ed9a441c87b332e2.1572337964.git.liu.denton@gmail.com>
-        <f5f44812af2b43fe3f7ea837f8b07c4747eedcc0.1572368447.git.liu.denton@gmail.com>
-        <xmqqtv7q3hhp.fsf@gitster-ct.c.googlers.com>
-        <20191030175817.GA5120@generichostname>
-Date:   Sat, 02 Nov 2019 13:25:10 +0900
-In-Reply-To: <20191030175817.GA5120@generichostname> (Denton Liu's message of
-        "Wed, 30 Oct 2019 10:58:17 -0700")
-Message-ID: <xmqqzhhe52hl.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Heba Waly <heba.waly@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 04/10] merge: move doc to ll-merge.h
+References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
+        <504f1f7c892c8bfc4774ac5fec912855e74e38a5.1572343246.git.gitgitgadget@gmail.com>
+        <CABPp-BEYeCwTKXLTdaORrBGAFYb0X13rMMiQXwXv=UDSBKHnYQ@mail.gmail.com>
+Date:   Sat, 02 Nov 2019 13:28:36 +0900
+In-Reply-To: <CABPp-BEYeCwTKXLTdaORrBGAFYb0X13rMMiQXwXv=UDSBKHnYQ@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 30 Oct 2019 15:09:42 -0700")
+Message-ID: <xmqqv9s252bv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C30D4754-FD28-11E9-96BF-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 3E14134C-FD29-11E9-9809-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> I think that the problem is that it's a common enough use-case but not
-> common enough that people often forget to "sync" after editing the
-> .gitmodules.
+> Thanks for the contribution.  I know you weren't the original author
+> of most this stuff, but I was curious if it really all belonged in
+> ll-merge.c and then noticed other issues...
+>
 
-Which means that far from deprecating "sync", we should strive for
-imprinting the need for the use of the subcommand deeper in users'
-minds.  I wonder if it makes sense to make sure that .gitmodules
-file starts with something like
+Thanks, both.  Especially thanks Elijah for all good comments.
 
-	# Note that after updating this file, you may want to
-	# run "git submodule sync" so that the URL for the remote
-	# repository etc. are propagated down.
-
-when we create it (via, say "git submodule add")?  Or alternatively,
-warn the users when "git status" notices a local modification, or
-something along that line?
