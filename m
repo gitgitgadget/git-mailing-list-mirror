@@ -2,106 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14C0F1F454
-	for <e@80x24.org>; Sat,  2 Nov 2019 20:14:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2458C1F454
+	for <e@80x24.org>; Sat,  2 Nov 2019 22:50:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726685AbfKBUOh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Nov 2019 16:14:37 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:34567 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726523AbfKBUOh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Nov 2019 16:14:37 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from Madrigal (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id xA2KEJLv073857
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sat, 2 Nov 2019 16:14:21 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   <rsbecker@nexbridge.com>
-To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        <git@vger.kernel.org>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Jeff King'" <peff@peff.net>
-References: <20191102192615.10013-1-sandals@crustytoothpaste.net> <20191102192615.10013-4-sandals@crustytoothpaste.net>
-In-Reply-To: <20191102192615.10013-4-sandals@crustytoothpaste.net>
-Subject: RE: [PATCH v3 3/4] doc: dissuade users from trying to ignore tracked files
-Date:   Sat, 2 Nov 2019 16:14:14 -0400
-Message-ID: <001501d591ba$1d190060$574b0120$@nexbridge.com>
+        id S1727268AbfKBWuu (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Nov 2019 18:50:50 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:50541 "EHLO
+        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727259AbfKBWuu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Nov 2019 18:50:50 -0400
+X-Originating-IP: 1.186.12.57
+Received: from localhost (unknown [1.186.12.57])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id B27CCE0002;
+        Sat,  2 Nov 2019 22:50:47 +0000 (UTC)
+Date:   Sun, 3 Nov 2019 04:20:45 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] git-shortlog.txt: mention commit filtering options
+Message-ID: <20191102225045.zxxomy357zctxhfh@yadavpratyush.com>
+References: <20191030203603.27497-1-me@yadavpratyush.com>
+ <xmqqftj64yv2.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIMicffZ8Y2oLnk50uXRkxNxJArcAJnsAwQpvcclFA=
-Content-Language: en-ca
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqftj64yv2.fsf@gitster-ct.c.googlers.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On November 2, 2019 3:26 PM, brian m. carlson wrote:
-> It is quite common for users to want to ignore the changes to a file that
-Git
-> tracks.  Common scenarios for this case are IDE settings and configuration
-> files, which should generally not be tracked and possibly generated from
-> tracked files using a templating mechanism.
+On 02/11/19 02:43PM, Junio C Hamano wrote:
+> Pratyush Yadav <me@yadavpratyush.com> writes:
 > 
-> However, users learn about the assume-unchanged and skip-worktree bits
-> and try to use them to do this anyway.  This is problematic, because when
-> these bits are set, many operations behave as the user expects, but they
-> usually do not help when git checkout needs to replace a file.
+> > git-shortlog, like git-log, supports options to filter what commits are
+> > used to generate the log. These options come from git-rev-list. Add a
+> > pointer to these options in the documentation page so readers can know
+> > these filtering options can be used with git-shortlog too.
+> >
+> > Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+> > ---
+> > Since [0] didn't get any responses, I figured a patch might get some
+> > more attention since it is something concrete to comment on.
+> >
+> > [0] https://public-inbox.org/git/20191024191709.gqkjljuibyashtma@yadavpratyush.com/
+> >
+> >  Documentation/git-shortlog.txt | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> >
+> > diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
+> > index bc80905a8a..acae695388 100644
+> > --- a/Documentation/git-shortlog.txt
+> > +++ b/Documentation/git-shortlog.txt
+> > @@ -76,6 +76,11 @@ them.
+> >  Paths may need to be prefixed with `--` to separate them from
+> >  options or the revision range, when confusion arises.
+> >
+> > +In addition to the options above, 'git shortlog' also supports a range of
+> > +options to select which subset of commits will be used to generate the
+> > +shortlog. A list of these options can be found in the "Commit Limiting"
+> > +section of linkgit:git-rev-list[1].
 > 
-> There is no sensible behavior in this case, because sometimes the data is
-> precious, such as certain configuration files, and sometimes it is
-irrelevant
-> data that the user would be happy to discard.
+> How does "git log --help" handle the corresponding part of its
+> documentation?  
 > 
-> Since this is not a supported configuration and users are prone to misuse
-the
-> existing features for unintended purposes, causing general sadness and
-> confusion, let's document the existing behavior and the pitfalls in the
-> documentation for git update-index so that users know they should explore
-> alternate solutions.
+> 	... goes and looks ...
 > 
-> In additon, let's provide a recommended solution to dealing with the
-> common case of configuration files, since there are well-known approaches
-> used successfully in many environments.
+> I wonder if it is better to just include rev-list-options.txt like
+> "git-log.txt" does, instead of adding these four lines?
 
-Just noodling about a potential solution. If we assume the use case that
-files are modified by an IDE that have no real relevance, but should not
-interfere with other git operations including checkout...
+Quoting from my initial email [0] about this topic:
 
-What if we introduce something like .gitignore.changes, with the same syntax
-as .gitignore. The difference is files listed in this file will not show in
-git status (or could show as "changes ignored" with an option to enable
-that. The only way to have the changes considered would be git add -f, so
-git add . and git commit -a would not pick up the changes. From checkout's
-perspective, the file would be considered unmodified so if a change is
-incoming for that path, checkout replaces it instead of rejecting the
-checkout, otherwise the file is untouched. Pull would act similarly. Branch
-switching would be permitted without stashing the files - they would remain
-unchanged unless the switch modified the files.
+  rev-list-options.txt is a rather large file and I'm not sure if 
+  including it in both git-log and git-shortlog would be a good idea. 
+  The way I see it, git-log is the "primary" log interface, and 
+  git-shortlog is a "secondary" log interface, so git-log warrants such 
+  a large man page, but git-shortlog doesn't especially since most 
+  options are repeated. So maybe it is a better idea to just include a 
+  pointer to git-rev-list in the shortlog man page. 
 
-OTOH, this is a change that is most relevant to IDE users, so JGit would
-have to implement it as well to really get any real benefit.
+But if you think including the whole thing is better, I don't mind that 
+either. Will re-roll.
 
-This does have some benefit in post-install situations as well as the IDE
-use-case, but for that I might want to consider finer granularity, like some
-way to identify regions of files being ignored. This being a pretty deep
-rabbit hole we'd end up following.
+[0] https://public-inbox.org/git/20191024191709.gqkjljuibyashtma@yadavpratyush.com/
 
-If this idea seems reasonable, it might make a nice small project for
-someone, possibly me, if I could unentangle from my current hellish $DAYJOB
-project.
-
-Just my few coins of thought.
-
-Randall
-
-
+-- 
+Regards,
+Pratyush Yadav
