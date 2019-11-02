@@ -2,111 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 331BE1F454
-	for <e@80x24.org>; Sat,  2 Nov 2019 10:16:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D2BE1F454
+	for <e@80x24.org>; Sat,  2 Nov 2019 12:20:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726396AbfKBKQ1 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Nov 2019 06:16:27 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57846 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726038AbfKBKQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Nov 2019 06:16:27 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CC1653AC8E;
-        Sat,  2 Nov 2019 06:16:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6rOOuSCYTWWdrfqHpiri0AdUo8s=; b=xQLSRU
-        4d5vJ8OYjgJVLgBwibzktORHNx+PrkGVlat9WTdJNFjSDHm+a+caSwKYaUhyh7+Y
-        DDdmjUPWW0xKcoNC0bGxCpJWNE6k1q+qP+PXJyBZSVktd1DHp4e2yzbnrtsG7W9y
-        4bWdxr9ExWpzh0EpSnUOij1kly1Q340zvHz5Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oMOI85e8MNBwMhrYULCPr9MR+VFSwNgW
-        4wxo5lrk/+4OkUF+N4na2jyFKVRkodHdib3MiVbwCbhxSiVizOT6HhYw0Pu+FncC
-        D4abMiopDV7IYWBiqD+jLoHGXeTx7+1B45vONwudCYk5XhF8x6YxfQq7sswVHBfn
-        o76EzeTGjIs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C450A3AC8D;
-        Sat,  2 Nov 2019 06:16:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 305503AC8C;
-        Sat,  2 Nov 2019 06:16:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1726742AbfKBMU1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Nov 2019 08:20:27 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:45997 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726163AbfKBMU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Nov 2019 08:20:27 -0400
+Received: by mail-pl1-f195.google.com with SMTP id y24so5500169plr.12
+        for <git@vger.kernel.org>; Sat, 02 Nov 2019 05:20:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=nB7+sFNtMxsTxmRknuKTVyqXUiQxSo6Qu+cLXsjvC6U=;
+        b=kZ6ArYtsOYKbQ20D3H0y/4djxZuhoW+XNVV8jtb+r8BiqoAdDnsNd7JkWEIwi/+oA1
+         AKblbkPXMorblzB524MVXnQkM9axUv1sXXYP2S/5FXXDcJV067/TtGaqKXgPIICOnTVJ
+         iwaeIfmsezTyWgfHmSJ77xCX7XD6vXxh5FNxfxMLj9lL4jQPuPscU5ATdNlhsYnGe873
+         xii7MRJtW4RlfZWj64tIYSgJyRSP1MOBB21JqtWnOKDY6w566G96t1ACWY/M3wHvlKdy
+         YCBqGE9pSDhLsfnCu6aYovh4zgywXomoeSKyFMdPZl+xYxYBx6OAE7liN+Ny/GOfbkna
+         5GTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=nB7+sFNtMxsTxmRknuKTVyqXUiQxSo6Qu+cLXsjvC6U=;
+        b=kD3S7Y1cjrTivZouxWJa3d/X9jNZYtmudbiHs7ghKGl5FcZPlXek9fa/dN+g71ffgu
+         NHU66dI3pB6UEllWn6bgwmHUkHL8ske3y4QrVH64O3bJjhurwVKoeG4lmCW4oJj9B5M/
+         wtMzg1RrqO+6mtCtyKZywCu3BcWo69+ye/1mOnCq4ynKlXBfbs8W2SPPZklKtWKsg/sX
+         8r+uTCHftVySZDB6/YlaASolO4y8n+WmrreCq4qDc4fGLGIXqaui4WCzThksILmEStVa
+         BHhQiHrwIdnlNuTZEgbPxEdwuNLKtMf+t5MtU3D5UtrMH/kplkoGrZozcGatc398RFgX
+         50gA==
+X-Gm-Message-State: APjAAAUjgMTzewTbbKeiwrqYOLVQhm1Wxn5D6dKst4QcEDhJpPnaNUnw
+        L8JtlvTJo2ApL+RWs/7CRno=
+X-Google-Smtp-Source: APXvYqxwzcUThZfAWt4aAJEpI28bJw4eEMRbDv9iSssEdnZkj8lxwcfoO+cPEOehqr1JadTMbOmwrA==
+X-Received: by 2002:a17:902:8ecc:: with SMTP id x12mr18248723plo.134.1572697226205;
+        Sat, 02 Nov 2019 05:20:26 -0700 (PDT)
+Received: from localhost ([2402:800:6374:e1c2:8c5a:c959:6fca:fa1a])
+        by smtp.gmail.com with ESMTPSA id e17sm8573599pgg.5.2019.11.02.05.20.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Nov 2019 05:20:25 -0700 (PDT)
+Date:   Sat, 2 Nov 2019 19:20:23 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Davide Berardi <berardi.dav@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] Segmentation Fault on non-commit --branch clone
-References: <20191101002432.GA49846@carpenter.lan>
-        <nycvar.QRO.7.76.6.1911012000160.46@tvgsbejvaqbjf.bet>
-        <20191101193558.GA1169@sigill.intra.peff.net>
-Date:   Sat, 02 Nov 2019 19:16:23 +0900
-In-Reply-To: <20191101193558.GA1169@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 1 Nov 2019 15:35:58 -0400")
-Message-ID: <xmqqh83m1t3c.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] sequencer: reencode to utf-8 before arrange
+ rebase's todo list
+Message-ID: <20191102122023.GA7468@danh.dev>
+References: <20191031092618.29073-1-congdanhqx@gmail.com>
+ <cover.1572596278.git.congdanhqx@gmail.com>
+ <b7927b27235422ac53595cfaa63b4f1cbe009013.1572596278.git.congdanhqx@gmail.com>
+ <20191101165921.GD26219@sigill.intra.peff.net>
+ <20191102010215.GB17624@danh.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D2CE3334-FD59-11E9-8A34-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191102010215.GB17624@danh.dev>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 2019-11-02 08:02:15 +0700, Danh Doan wrote:
+> Anyway, if we're going to working with a single encoding internally,
+> can we take other extreme approach: reencode the commit message to
+> utf-8 before writing the commit object? (Is there any codepoint in
+> other encoding that can't be reencoded to utf-8?)
 
-> I don't know how often this would actually help users, though. It _is_ a
-> pretty rare situation to ask for a non-commit. So maybe it's all
-> over-engineering, and we should start with just die(). If somebody comes
-> along later and wants to enhance it, it should be pretty
-> straightforward.
+With this test (added into t3900):
 
-I like that; after update_head() finishes, there are a few clean-up
-things that the caller wants to do besides a checkout() call, but if
-we make update_head() return a failure, perhaps the caller side
-change would be as small as the attached patch.  That would go nicely
-with the "make the result just barely usable" approach of leaving an
-unborn master branch I suggested in a separate message, I would think.
+    git checkout -b fixup-ISO-2022-JP-ISO-8859-1 C0 &&
+    git config i18n.commitencoding ISO-2022-JP &&
+    echo ISO-2022-JP >>F &&
+    git commit -a -F "$TEST_DIRECTORY"/t3900/ISO-2022-JP.txt &&
+    test_tick &&
+    echo intermediate stuff >>G &&
+    git add G &&
+    git commit -a -m "intermediate commit" &&
+    test_tick &&
+    git config i18n.commitencoding ISO-8859-1 &&
+    echo ISO-8859-1-fixup >>F &&
+    git commit -a --fixup HEAD^ &&
+    git config --unset-all i18n.commitencoding &&
+    git rebase --autosquash -i HEAD^^^ &&
+    git rev-list HEAD >actual &&
+    test_line_count = 3 actual
 
- builtin/clone.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+reencode the commit message to utf-8 before writing the commit object
+is (likely) the most simple option to fix it.
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index c46ee29f0a..fa0558fa3e 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1246,7 +1246,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 			   branch_top.buf, reflog_msg.buf, transport,
- 			   !is_local, filter_options.choice);
- 
--	update_head(our_head_points_at, remote_head, reflog_msg.buf);
-+	err = update_head(our_head_points_at, remote_head, reflog_msg.buf) < 0;
- 
- 	/*
- 	 * We want to show progress for recursive submodule clones iff
-@@ -1265,8 +1265,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	junk_mode = JUNK_LEAVE_REPO;
--	fetch_if_missing = 1;
--	err = checkout(submodule_progress);
-+	if (!err) {
-+		fetch_if_missing = 1;
-+		err = checkout(submodule_progress);
-+	}
- 
- 	strbuf_release(&reflog_msg);
- 	strbuf_release(&branch_top);
+At the very least, the commit message for fixup/squash-ing commit must
+be encoded in either utf-8 or the target-commit's encode.
 
-
-
+-- 
+Danh
