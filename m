@@ -7,116 +7,83 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40D341F454
-	for <e@80x24.org>; Sat,  2 Nov 2019 04:49:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7DFD1F454
+	for <e@80x24.org>; Sat,  2 Nov 2019 04:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726044AbfKBEtl (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Nov 2019 00:49:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55655 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726014AbfKBEtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Nov 2019 00:49:40 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DCE336D66;
-        Sat,  2 Nov 2019 00:49:38 -0400 (EDT)
+        id S1726220AbfKBExc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Nov 2019 00:53:32 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50819 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726080AbfKBExb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Nov 2019 00:53:31 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9AAF92F119;
+        Sat,  2 Nov 2019 00:53:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=baniZoXLKucr2lFN08iVm5L43Bg=; b=BXJveI
-        Jf1Hhw7+hbhKfry0fWxGftQsDNZBX+lvv2JpLKYERTl7xoIuqHO+ZuNSvDhLa5eL
-        PLLVnjozOyEjmtDoA8peKKvFUik+BuXn+146vzgtOLVKUHhZi1D26NN0hrjPvkJw
-        hHAMcP1SPHCEq6fdcue6sb7qSo7ozIbi5YX80=
+        :content-type; s=sasl; bh=9f2isN6kbGJqD/7QKvBVtEuHomQ=; b=k2O4Qi
+        0M5akEuTEKN+tN6Q2EL0XXvxo70Jf8onXyMrGdHdFUbJIhYROFnxIdp8TrPlPzAk
+        eAXgck+bjq5dGUJbpprUHfrc12dyebuB98mWPJ5zSPsGECL3Rcf/MLmB4LDXMAo0
+        P3OS7uaxnOFFX+iMS19D8n3F29G9I4OLgcgQY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LHlU62OUD4NDSo/0SALS6wg8D0egeoJp
-        JZWi4zPQCdqTxBGTbtJPNohERAKFfiy5ndr4+9F9bjRp0alchraJGk0ANezhWQg5
-        D5FbKUWw3L1DlO4yx+LJB6qnUMAi3DnD6xdIXFLS4qcU1WjkiD3wNEvbyCgJDjJi
-        DoFGwbniSK8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 75E8536D64;
-        Sat,  2 Nov 2019 00:49:38 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=S6/p56uLhwG8v1c3af0zN6sQepIZ3DUM
+        lpLBS304+YiJxKD+zDe2JUTutLf5kjKmHi2FIjQyRsIwfFsA2lLh7c03gEJOWCib
+        SCEgyRz/Ug5G3PVLU4lFDdqPRPlYK24uoiOSctDUPYR0hAjrACvuCoWg+4Tn9Wms
+        B1LkOuQYOD4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 911D02F118;
+        Sat,  2 Nov 2019 00:53:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D66B836D61;
-        Sat,  2 Nov 2019 00:49:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F31192F117;
+        Sat,  2 Nov 2019 00:53:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Cc:     git@vger.kernel.org
-Subject: Re: 'git reset -- NonExistingFile' succeeds
-References: <f6d853ce-6f27-ed58-a850-d9a6f245509a@syntevo.com>
-Date:   Sat, 02 Nov 2019 13:49:36 +0900
-In-Reply-To: <f6d853ce-6f27-ed58-a850-d9a6f245509a@syntevo.com> (Alexandr
-        Miloslavskiy's message of "Wed, 30 Oct 2019 17:29:13 +0100")
-Message-ID: <xmqqo8xu51cv.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     phillip.wood@dunelm.org.uk, Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git branch --edit-description a custom file
+References: <20191030183950.GA21277@generichostname>
+        <20191030202835.GB29013@sigill.intra.peff.net>
+        <20191030224328.GB44961@generichostname>
+        <20191031061832.GA20830@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1910311119080.46@tvgsbejvaqbjf.bet>
+        <20191031181920.GB70819@generichostname>
+        <4ef79cfb-b970-2b2b-131d-3f47e6b0e308@gmail.com>
+        <20191031200739.GA19313@sigill.intra.peff.net>
+Date:   Sat, 02 Nov 2019 13:53:28 +0900
+In-Reply-To: <20191031200739.GA19313@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 31 Oct 2019 16:07:39 -0400")
+Message-ID: <xmqqk18i516f.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2C86ABAA-FD2C-11E9-858F-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B6489E0C-FD2C-11E9-8B66-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Is that expected?
+> There was some work by Johan Herland around the v1.8 time-frame, but it
+> stalled:
 >
-> Other commands seem to not like that:
+>   https://public-inbox.org/git/AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com/
 >
-> $ git checkout NonExistingFile
-> error: pathspec 'NonExistingFile' did not match any file(s) known to git
+> And here's some later discussion:
+>
+>   https://public-inbox.org/git/CA+P7+xpj+8DZ=K0pna299Mu3nsQ4+JV_JUK=WFzzAFnJN+Bkbg@mail.gmail.com/
+>
+> So in short, I agree very much with the direction you're discussing, but
+> I think there's some fundamental work that needs done first.
 
-It's sort of expected ;-)
+Yes, I think this comes up from time to time in different guise.  I
+thik the latest iteration is in the thread:
 
-"git $subcmd -- pathspec" is defined to perform $subcmd to the paths
-that match the given pathspec.  "git checkout -- pathspec" checks
-out the contents out of the index for such paths and "git reset --
-pathspec" resets the contents in the index to that of HEAD for such
-paths.
-
-Historically, we did not consider it is an error for users to
-specify an empty set (i.e. a pathspec with an element that does not
-match any path).  Because it is easy to mistype "git checkout --
-*.rv", let the shell pass "*.rv" literally (because in a project
-where you meant to say "*.rb", it is very plausible that there is no
-such path for the glob to match) to "git checkout" and nobody would
-give you any indication of an error, we made it an error for "git
-checkout" to be fed a pathspec element that does not match [*1*].
-
-It is expected that other commands that may benefit from a similar
-handholding mechanism against end-user typos have not learned to do
-so, simply because nobody bothered to bring it up ;-).
-
-
-
-[Footnote]
-
-*1* This cuts both ways and it used to hurt a lot more back when it
-was introduced.
-
-When you have many tracked *.rb files and some throwaway *.rb files
-that are not tracked,
-
-    git checkout -- \*.rb
-
-may checkout only the ones that are tracked (i.e. known to git---in
-this case, known to the index) without molesting the untracked ones.
-But people being people, they can be lazy and say
-
-    git checkout -- *.rb
-
-instead (notice the lack of quoting for the asterisk).  This would
-first let your shell expand it and match untracked ones, and then
-feed the resulting paths as a pathspec to "git checkout", so one of
-the pathspec elements may be the "untracked.rb" throw-away file.
-With the "it is an error for a pathspec element not to match any"
-rule, such a use will now error out.
-
-The good thing is that people can learn, and after getting such an
-error message, they learn to quote the asterisk from the shell when
-they want to Git expand it.  So it may not hurt that much these
-days as it used to.
-
+https://public-inbox.org/git/CA+P7+xpdYMA8L-_Y+W5q7_zbj9RNcH1erY=dVbDG-EDOiHhTwA@mail.gmail.com/
