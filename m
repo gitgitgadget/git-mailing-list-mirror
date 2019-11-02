@@ -7,83 +7,101 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7DFD1F454
-	for <e@80x24.org>; Sat,  2 Nov 2019 04:53:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 333511F454
+	for <e@80x24.org>; Sat,  2 Nov 2019 05:43:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726220AbfKBExc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Nov 2019 00:53:32 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50819 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726080AbfKBExb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Nov 2019 00:53:31 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9AAF92F119;
-        Sat,  2 Nov 2019 00:53:29 -0400 (EDT)
+        id S1726329AbfKBFng (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Nov 2019 01:43:36 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63645 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725842AbfKBFng (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Nov 2019 01:43:36 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A22229CCFE;
+        Sat,  2 Nov 2019 01:43:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9f2isN6kbGJqD/7QKvBVtEuHomQ=; b=k2O4Qi
-        0M5akEuTEKN+tN6Q2EL0XXvxo70Jf8onXyMrGdHdFUbJIhYROFnxIdp8TrPlPzAk
-        eAXgck+bjq5dGUJbpprUHfrc12dyebuB98mWPJ5zSPsGECL3Rcf/MLmB4LDXMAo0
-        P3OS7uaxnOFFX+iMS19D8n3F29G9I4OLgcgQY=
+        :content-type; s=sasl; bh=e8A0L09dNC0o8hkg89g6n+MYuDw=; b=bcJlk2
+        uKZjRYtDRYZdNqE6A/VYVIpRFWRBPGev5Ydyap2tuLQSlxSgTTNcpl5wjx37KK+c
+        G3wzOwj6IijfGIPbGZUTdzLMM/9SBulu5Hsj4iMZumCDd1/GrnxgIqXe9v/0rZPA
+        GBHMvq5p2X7vnywEnxS5rw/PWGUE6wBamVQ00=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=S6/p56uLhwG8v1c3af0zN6sQepIZ3DUM
-        lpLBS304+YiJxKD+zDe2JUTutLf5kjKmHi2FIjQyRsIwfFsA2lLh7c03gEJOWCib
-        SCEgyRz/Ug5G3PVLU4lFDdqPRPlYK24uoiOSctDUPYR0hAjrACvuCoWg+4Tn9Wms
-        B1LkOuQYOD4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 911D02F118;
-        Sat,  2 Nov 2019 00:53:29 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=P4JthMag0uZUpdVnf1IE3kZRClys+dSD
+        LzR74GhcQhsaa3hsaET8T7Gkp5Nypso9+VJKDDR59vBSUa8k0aYPbZoec5TW9uB3
+        wCELXnFO+DVkNEDAqcBShuVm83T2PlmROyAOXxMDMFF/3I+JrrJpfJti32OfShwr
+        7LhBMaJAtD8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8F29B9CCFD;
+        Sat,  2 Nov 2019 01:43:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F31192F117;
-        Sat,  2 Nov 2019 00:53:28 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AEB789CCF2;
+        Sat,  2 Nov 2019 01:43:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     phillip.wood@dunelm.org.uk, Denton Liu <liu.denton@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: git branch --edit-description a custom file
-References: <20191030183950.GA21277@generichostname>
-        <20191030202835.GB29013@sigill.intra.peff.net>
-        <20191030224328.GB44961@generichostname>
-        <20191031061832.GA20830@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1910311119080.46@tvgsbejvaqbjf.bet>
-        <20191031181920.GB70819@generichostname>
-        <4ef79cfb-b970-2b2b-131d-3f47e6b0e308@gmail.com>
-        <20191031200739.GA19313@sigill.intra.peff.net>
-Date:   Sat, 02 Nov 2019 13:53:28 +0900
-In-Reply-To: <20191031200739.GA19313@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 31 Oct 2019 16:07:39 -0400")
-Message-ID: <xmqqk18i516f.fsf@gitster-ct.c.googlers.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [PATCH] git-shortlog.txt: mention commit filtering options
+References: <20191030203603.27497-1-me@yadavpratyush.com>
+Date:   Sat, 02 Nov 2019 14:43:29 +0900
+In-Reply-To: <20191030203603.27497-1-me@yadavpratyush.com> (Pratyush Yadav's
+        message of "Thu, 31 Oct 2019 02:06:03 +0530")
+Message-ID: <xmqqftj64yv2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B6489E0C-FD2C-11E9-8B66-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: B4A3E3B6-FD33-11E9-AB9B-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Pratyush Yadav <me@yadavpratyush.com> writes:
 
-> There was some work by Johan Herland around the v1.8 time-frame, but it
-> stalled:
+> git-shortlog, like git-log, supports options to filter what commits are
+> used to generate the log. These options come from git-rev-list. Add a
+> pointer to these options in the documentation page so readers can know
+> these filtering options can be used with git-shortlog too.
 >
->   https://public-inbox.org/git/AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com/
+> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+> ---
+> Since [0] didn't get any responses, I figured a patch might get some
+> more attention since it is something concrete to comment on.
 >
-> And here's some later discussion:
+> [0] https://public-inbox.org/git/20191024191709.gqkjljuibyashtma@yadavpratyush.com/
 >
->   https://public-inbox.org/git/CA+P7+xpj+8DZ=K0pna299Mu3nsQ4+JV_JUK=WFzzAFnJN+Bkbg@mail.gmail.com/
+>  Documentation/git-shortlog.txt | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> So in short, I agree very much with the direction you're discussing, but
-> I think there's some fundamental work that needs done first.
+> diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
+> index bc80905a8a..acae695388 100644
+> --- a/Documentation/git-shortlog.txt
+> +++ b/Documentation/git-shortlog.txt
+> @@ -76,6 +76,11 @@ them.
+>  Paths may need to be prefixed with `--` to separate them from
+>  options or the revision range, when confusion arises.
+>
+> +In addition to the options above, 'git shortlog' also supports a range of
+> +options to select which subset of commits will be used to generate the
+> +shortlog. A list of these options can be found in the "Commit Limiting"
+> +section of linkgit:git-rev-list[1].
 
-Yes, I think this comes up from time to time in different guise.  I
-thik the latest iteration is in the thread:
+How does "git log --help" handle the corresponding part of its
+documentation?  
 
-https://public-inbox.org/git/CA+P7+xpdYMA8L-_Y+W5q7_zbj9RNcH1erY=dVbDG-EDOiHhTwA@mail.gmail.com/
+	... goes and looks ...
+
+I wonder if it is better to just include rev-list-options.txt like
+"git-log.txt" does, instead of adding these four lines?
+
+Thanks.
+
+>  MAPPING AUTHORS
+>  ---------------
+>
+> --
+> 2.21.0
