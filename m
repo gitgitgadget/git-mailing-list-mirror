@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96FCE1F4C0
-	for <e@80x24.org>; Sat,  2 Nov 2019 19:26:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87D4E1F4C0
+	for <e@80x24.org>; Sat,  2 Nov 2019 19:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727158AbfKBT0t (ORCPT <rfc822;e@80x24.org>);
+        id S1727165AbfKBT0t (ORCPT <rfc822;e@80x24.org>);
         Sat, 2 Nov 2019 15:26:49 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:59072 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:59078 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727102AbfKBT0s (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 2 Nov 2019 15:26:48 -0400
+        by vger.kernel.org with ESMTP id S1726574AbfKBT0t (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 2 Nov 2019 15:26:49 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 22EF661CB5;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9EAAF61CB6;
         Sat,  2 Nov 2019 19:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1572722807;
-        bh=Qf5NsUjDZrZDrLSCefxAUKdg0PmgaxWPN4plBbcqfjM=;
+        bh=TYJOmqsT/cC0WSPdgMWdI+L0br0vqYbAvEz/dj3+Vj8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=kQbNg96XqqnBJC73Qw/gPEsKVsypY/2FD1N+I7UlMDYGli19ADMzjgr0s38rsBkeQ
-         5a//MCiHFtvyewuauLNAkfTeYgFe0BTUDanfI+5rvaQ87hXPUUJpv7kApCjsLxWYTL
-         +jOHChWiQ7yTZNjaO549jkF5JQ1E4Qv7e1X10XokFx2bdV5sKpVzwunJ2kcf0Vtlxh
-         HUjESpfHav4uCmEwQSupVREEJsjRFDP5If7FOiIllI/1vq9kFXCd3bXrCsO6CSKWk/
-         z4etDXTmCLup5niMhtgsfjgf4IDnXtWcS99V3m6bD3ZQIC3npCfju4o3rCwiJHk0w1
-         14dLasLGjsIQPp1Tndt6STRS9LmdDMLJsajbEKmFu5KpAk+VI665GBfKuusS2ukJxe
-         aVCGJe7+E1994cSaCr23HeDgtyctGQReA8eemg4EJQQvwyK5wsK7ExX7DlaNZYjeTb
-         1c6RvMyMVSUdZHD+0koPU9Ay8GVRL2RIi6nXbIsWAyZZMbiPyKE
+        b=s7jIjqsc2zPsKm8csPE0tULFTG/SyAHyPaEWdJ4X+9Ynr7Xjrb/DVjse8Jhw9jp+d
+         QZ9fX2LLpS4mKgw1xeIF3CVqUOFYML4fR9u4BIIsuYot01REZvucqiyCVnw63U4TRL
+         shz4eZOr+/CvAbW/J68skzbm92SSldOcVpillM3aUwDMgfUQTI9WlGB9gk4hShA9dV
+         ZP2v20D4u0MBjsQJ6/aWSMbSfBc2HGoHTEwsb7DrMccavdz7mCO2Z7Gddrx43jW6jt
+         3I9ipULrhA/odpZWCg5h3BDN7j6JCc9OXCitQVQVhZaOQYbT5vqzg9eyilTdTzYdUF
+         SKcT6GlVGiV4qNlu3IBQkLnK3uEBaAiIGA/aSqElHsioB7h7JFcPUFga8iTHgRr5qc
+         xnRZ8zeCzLImxmtOeeGb1qfSZWVj26rd9OGGyOvG1MHmDFEFfpjUYUbuCHGtabKF5u
+         OdJqTN0lk52c/23wKOeeg9bPV7da2boHZ23oPICnI++WVCOnL22
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 3/4] doc: dissuade users from trying to ignore tracked files
-Date:   Sat,  2 Nov 2019 19:26:14 +0000
-Message-Id: <20191102192615.10013-4-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 4/4] docs: mention when increasing http.postBuffer is valuable
+Date:   Sat,  2 Nov 2019 19:26:15 +0000
+Message-Id: <20191102192615.10013-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.24.0.rc2.428.g50e10028f1
 In-Reply-To: <20191102192615.10013-1-sandals@crustytoothpaste.net>
 References: <20191102192615.10013-1-sandals@crustytoothpaste.net>
@@ -51,59 +51,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is quite common for users to want to ignore the changes to a file
-that Git tracks.  Common scenarios for this case are IDE settings and
-configuration files, which should generally not be tracked and possibly
-generated from tracked files using a templating mechanism.
+Users in a wide variety of situations find themselves with HTTP push
+problems.  Oftentimes these issues are due to antivirus software,
+filtering proxies, or other man-in-the-middle situations; other times,
+they are due to simple unreliability of the network.
 
-However, users learn about the assume-unchanged and skip-worktree bits
-and try to use them to do this anyway.  This is problematic, because
-when these bits are set, many operations behave as the user expects, but
-they usually do not help when git checkout needs to replace a file.
+However, a common solution to HTTP push problems found online is to
+increase http.postBuffer.  This works for none of the aforementioned
+situations and is only useful in a small, highly restricted number of
+cases: essentially, when the connection does not properly support
+HTTP/1.1.
 
-There is no sensible behavior in this case, because sometimes the data
-is precious, such as certain configuration files, and sometimes it is
-irrelevant data that the user would be happy to discard.
-
-Since this is not a supported configuration and users are prone to
-misuse the existing features for unintended purposes, causing general
-sadness and confusion, let's document the existing behavior and the
-pitfalls in the documentation for git update-index so that users know
-they should explore alternate solutions.
-
-In additon, let's provide a recommended solution to dealing with the
-common case of configuration files, since there are well-known
-approaches used successfully in many environments.
+Document when raising this value is appropriate and what it actually
+does, and discourage people from using it as a general solution for push
+problems, since it is not effective there.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/git-update-index.txt | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ Documentation/config/http.txt | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 1c4d146a41..11230376c8 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -543,6 +543,22 @@ The untracked cache extension can be enabled by the
- `core.untrackedCache` configuration variable (see
- linkgit:git-config[1]).
+diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
+index 5a32f5b0a5..08b375fe95 100644
+--- a/Documentation/config/http.txt
++++ b/Documentation/config/http.txt
+@@ -199,6 +199,14 @@ http.postBuffer::
+ 	Transfer-Encoding: chunked is used to avoid creating a
+ 	massive pack file locally.  Default is 1 MiB, which is
+ 	sufficient for most requests.
+++
++Note that raising this limit is only effective for disabling chunked
++transfer encoding and therefore should be used only where the remote
++server or a proxy only supports HTTP/1.0 or is noncompliant with the
++HTTP standard.  Raising this is not, in general, an effective solution
++for most push problems, but can increase memory consumption
++significantly since the entire buffer is allocated for even small
++pushes.
  
-+NOTES
-+-----
-+
-+Users often try to use the ``assume unchanged'' and skip-worktree bits
-+to tell Git to ignore changes to files that are tracked.  This does not
-+work as expected, since Git may still check working tree files against
-+the index when performing certain operations.  In general, Git does not
-+provide a way to ignore changes to tracked files, so alternate solutions
-+are recommended.
-+
-+If the file you want to change is some sort of configuration file (say,
-+for a build tool, IDE, or editor), a common solution is to use a
-+templating mechanism, such as Ruby's ERB, to generate the ignored
-+configuration file from a template stored in the repository and a source
-+of data using a script or build step.
-+
- SEE ALSO
- --------
- linkgit:git-config[1],
+ http.lowSpeedLimit, http.lowSpeedTime::
+ 	If the HTTP transfer speed is less than 'http.lowSpeedLimit'
