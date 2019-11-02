@@ -2,97 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2458C1F454
-	for <e@80x24.org>; Sat,  2 Nov 2019 22:50:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 273B51F454
+	for <e@80x24.org>; Sat,  2 Nov 2019 23:03:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727268AbfKBWuu (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Nov 2019 18:50:50 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:50541 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727259AbfKBWuu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Nov 2019 18:50:50 -0400
-X-Originating-IP: 1.186.12.57
-Received: from localhost (unknown [1.186.12.57])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id B27CCE0002;
-        Sat,  2 Nov 2019 22:50:47 +0000 (UTC)
-Date:   Sun, 3 Nov 2019 04:20:45 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
+        id S1727365AbfKBXD4 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Nov 2019 19:03:56 -0400
+Received: from mout.gmx.net ([212.227.17.22]:60331 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727327AbfKBXD4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Nov 2019 19:03:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1572735828;
+        bh=QcOSKSeQYPCXQgkJtSAKbHQvqNMR86rZC6Lo94wyJ28=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=h/iYJd1ZFZxT6hJK23Fjp/z2q2PAwo9ZKC71i9rz35mEXXB9vY0OiTSXUAx4Zc3xH
+         lWCe0nfcuVogaEZr3VSa9gVmRKsl8PINzGjvyR6N647fSMOLdRPaJERiZyOt8aiEil
+         ygUjgMDKy3XuYaV6EPZ5CdW+gLHqbi8nuEET1UZA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTRMi-1iWdX532lQ-00Tiwm; Sun, 03
+ Nov 2019 00:03:47 +0100
+Date:   Sun, 3 Nov 2019 00:03:32 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-shortlog.txt: mention commit filtering options
-Message-ID: <20191102225045.zxxomy357zctxhfh@yadavpratyush.com>
-References: <20191030203603.27497-1-me@yadavpratyush.com>
- <xmqqftj64yv2.fsf@gitster-ct.c.googlers.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] update-index: optionally leave skip-worktree
+ entries alone
+In-Reply-To: <xmqqpnib567f.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1911030002410.46@tvgsbejvaqbjf.bet>
+References: <pull.355.git.gitgitgadget@gmail.com> <pull.355.v2.git.1572261615.gitgitgadget@gmail.com> <86dbb11f159375da281acd6266df019106abeadb.1572261615.git.gitgitgadget@gmail.com> <xmqq5zk7593d.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910300930440.46@tvgsbejvaqbjf.bet>
+ <xmqqpnib567f.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqftj64yv2.fsf@gitster-ct.c.googlers.com>
-User-Agent: NeoMutt/20180716
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:KkvMnkBXM0NDG/Gv4PsK92brT7w5qU5F47RHBS/W/b1eEk6GrJt
+ 07ZGeecAbgQUnoBBxSaXw18bfPu8A9roUmMJvhs5MPpGyBH0UymVmzRS4V26cVhf3O5jju5
+ 5EhBZeC6axqRxRlb29HPEAW7+fXTONm9CYXh6jybbGT9Msgjyct6UHk5VMo8hsLHKJGTMzF
+ Et7YOqFcWWnZOURuZllTg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:I6lyy1x1n24=:Zfdg5Gx0Ulnb0UtTDeJlMa
+ HxtYkDXr07XlADj8eEsZ6tQ4GJM9TLUOdVBaHsCEzRrbvUozRaGOrW9lBvGZfbcF0usz5zxuS
+ KaH08rKyZUq6AZm79NIfE/FY0pQO/Tjnr8v8szmqqdv9Hwt6tqfBFUI2K3OF9ZCnLPTyyykoe
+ zrjks36xfMnBkcnukRkqxaTiporYGHN5fBWLHqMb/7JNY54h+CjHluRpsI5R7fmJIuBDZUr0H
+ TygtpffGYvKjKevU6O8CMgdIBJd3cgIWMp7QdaGZiYJMcXDFA3np5DbKtK9wRacdsLl0K5teM
+ Asd5SN5d/UEdOrSsTjMfQmWWjC7caBSu61Y94kee80CO3qvYfxvwp43LzQrBGcCg1zIVajpCV
+ K+gMMEVewMBb4Qa2WOKuvMMM0PVVBM8Yn+8osdJKb0BKMwoPDK7hDHG2ILNvAO+Immg+96euN
+ F73FHH/9A0/a9bnmg8uemHSHye7ptG3DlhIyCXbWiZjRBLLVzFve6Gp27lsEM8XHL2sLrRn5s
+ MTg3b8r6YGr0c4kUKvQvVa71iGIvqskv2ZG1XU91omSl/WF9luuKgt/0GH4nbn7ibnat3pUYv
+ 3Yg7aWKE4rCEBv4+39KGRESTSgAcM+e+U2O4dGUbf10AZSKHwXA1UK61ftPPDPkYw1i3mJxo7
+ 3aniJ66ARZx+3PfwMnsDS8lh/Kssb7p/wX1MXQidj/C67mHsFDRbIVUMjV1AX/NdFkLzGSrq/
+ t/AOgfPUMQ0PdCPHN4+fA363gHhGBj5o+Yikl4/g409gBlZqOFtEzXfEC+3E6YQCZDjhcWGTb
+ bOBcAptL9XxuQ6gXAXHJBT/2AfWzGOI5HMWXq5aHeRiHbPj/c+LKPKjpbf5JpONoIZ8fwUbQ5
+ vAT8vUCCqM9wouz3M/YHHR5PwTfNzlMIijo4AFk8VKksUHmmVBj4kDumnuv+AnbvEr/xzFoe3
+ HNS+DCnoPNo5q67dl3R3uvALPLuWmFirrOZ/SXHykevybNWRFCN3BROeTovxJxc6+3fZ1xM9+
+ mYATXAP4cnb+LNSCMrchlVtq/p/jPURwG4UK/78JZ8S+8ShmamrCorMhDBxU0+9EpUIddFHde
+ xenxcNpSht3mURbI3ntko9h1YHlTJFB8J5hpJB9Tpm2ioYALbAluwDNYn4T/k9Rq2+vymKUQr
+ kRUx9hc7AqOdiQAtHuYPZ/lKoHZk5t9i6wQi7BYsB5104pGLrOaXGeYnuOBivIfYWF4nk7Prn
+ OGs14Hphfu9O5qBZrlxULFOD650BbudjZbZg0vLj2AIINWNSOJ1zBEvsbpH4=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/11/19 02:43PM, Junio C Hamano wrote:
-> Pratyush Yadav <me@yadavpratyush.com> writes:
-> 
-> > git-shortlog, like git-log, supports options to filter what commits are
-> > used to generate the log. These options come from git-rev-list. Add a
-> > pointer to these options in the documentation page so readers can know
-> > these filtering options can be used with git-shortlog too.
-> >
-> > Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
-> > ---
-> > Since [0] didn't get any responses, I figured a patch might get some
-> > more attention since it is something concrete to comment on.
-> >
-> > [0] https://public-inbox.org/git/20191024191709.gqkjljuibyashtma@yadavpratyush.com/
-> >
-> >  Documentation/git-shortlog.txt | 5 +++++
-> >  1 file changed, 5 insertions(+)
-> >
-> > diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
-> > index bc80905a8a..acae695388 100644
-> > --- a/Documentation/git-shortlog.txt
-> > +++ b/Documentation/git-shortlog.txt
-> > @@ -76,6 +76,11 @@ them.
-> >  Paths may need to be prefixed with `--` to separate them from
-> >  options or the revision range, when confusion arises.
-> >
-> > +In addition to the options above, 'git shortlog' also supports a range of
-> > +options to select which subset of commits will be used to generate the
-> > +shortlog. A list of these options can be found in the "Commit Limiting"
-> > +section of linkgit:git-rev-list[1].
-> 
-> How does "git log --help" handle the corresponding part of its
-> documentation?  
-> 
-> 	... goes and looks ...
-> 
-> I wonder if it is better to just include rev-list-options.txt like
-> "git-log.txt" does, instead of adding these four lines?
+Hi Junio,
 
-Quoting from my initial email [0] about this topic:
+On Sat, 2 Nov 2019, Junio C Hamano wrote:
 
-  rev-list-options.txt is a rather large file and I'm not sure if 
-  including it in both git-log and git-shortlog would be a good idea. 
-  The way I see it, git-log is the "primary" log interface, and 
-  git-shortlog is a "secondary" log interface, so git-log warrants such 
-  a large man page, but git-shortlog doesn't especially since most 
-  options are repeated. So maybe it is a better idea to just include a 
-  pointer to git-rev-list in the shortlog man page. 
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > I changed this locally to `keep-me`. But then I saw that you merged th=
+is
+> > patch pair to `next` already... Do you want an add-on patch, or revert
+> > it out of `next`, or leave as-is?
+> >
+> > I'd like to know because I still want to merge this into Git for Windo=
+ws
+> > v2.24.0-rc2, and I would love to deviate as little as possible from
+> > git.git there.
+>
+> >...
+> > So: revert out of `next`, add-on patch, or leave as-is?
+>
+> Sorry for a late response.  I was under the weather and mostly
+> offline for the past few days.
 
-But if you think including the whole thing is better, I don't mind that 
-either. Will re-roll.
+I hope you are feeling better?
 
-[0] https://public-inbox.org/git/20191024191709.gqkjljuibyashtma@yadavpratyush.com/
+> Whichever is easier for GGG is fine, but for the purpose of
+> resulting history, I think revert-replace would be the best.
 
--- 
-Regards,
-Pratyush Yadav
+Technically, GitGitGadget should be fine with reverting out and
+re-integrating. If not, that's a bug ;-)
+
+Thanks for replacing,
+Dscho
