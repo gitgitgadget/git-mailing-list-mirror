@@ -2,46 +2,49 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DA991F454
+	by dcvr.yhbt.net (Postfix) with ESMTP id 825DD1F454
 	for <e@80x24.org>; Sat,  2 Nov 2019 19:26:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727121AbfKBT0r (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Nov 2019 15:26:47 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:59050 "EHLO
+        id S1727137AbfKBT0s (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Nov 2019 15:26:48 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:59066 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726574AbfKBT0r (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 2 Nov 2019 15:26:47 -0400
+        by vger.kernel.org with ESMTP id S1727091AbfKBT0s (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 2 Nov 2019 15:26:48 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9B5EE6046C;
-        Sat,  2 Nov 2019 19:26:45 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9CD1761C6A;
+        Sat,  2 Nov 2019 19:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1572722805;
-        bh=Q8KdG4tBHR87XoRNZz14sNQQwV0lRnfGvitcqUh+8Iw=;
-        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=FqRxIg3HWk//O6+gEeKVf52btxpbM3x3/4TrJYW7OJJJ4t61FP+ggmC6SyQo641sO
-         cbnMOb34Nfz/lTwnPcCWDyLNlj2pFtWMxUTPKkJEophDWiVWM3+x4vSOKchtLdmou9
-         Kpy0XyMSTt3PdqVByj/RLWTyKQDbg0G+BYCvHZhmHnuh7KIivQJ2z2na1tdG+ll9Ye
-         3p2jK+/zI4x+Rch2TpIK1Wn8D891IkQ80toLkg4CbMPJ/5wQTnLzWxtdTnqfwx0CDC
-         CkYd6W/98449C5f/+ySBGoKmblizsXwi135Xc0IuVWklWw5DQTNFdMg+fzRXxNoyPp
-         BS6yuDfvac1CWktP54b4MWFOLc5agAkbulvUEyYKE+ncIgw9FQOAp2qCUwY9qwT+m8
-         LqjUn7M66M/a7gVaRF0kQsuLqkmeF3MSZYsRSxLLRfzTtIDmQ1eskTpIQf1unRSkDw
-         JczrdNgCu2JJtHgSbkjQZN1l3iCxGufHCopGbiBXxsLLyESa8tP
+        s=default; t=1572722806;
+        bh=awgk/Wcl8OMFu6ZMzyvts9wJbA4f1UZgdWxba6huPEo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=TSIgyHHo3x6U9ODn3R7tuWtOcy+0cePq9QHCmS9dXcuPjtZdBRTfc/BoBNKJc+yaC
+         IK4baeuVmb/eTm0KERoN1D1qdzDXNShHZ+gv9BrTLRrYdm+syIS0gBCBgQCuYK4N73
+         szEwPt0uk8w5wUPJgQM2kyDmB4LX/OzNGdvrFh9yfrV7BzfTtpxqqBrC2SSP9hrrCx
+         sjAfQAqdzmDKcKVdzC2rxOKF4PcksqwKJhPgti1JabFjQ4Fl4yu0NhFY9pPmPPygo/
+         lfpfRcOX9MGvUtCxeu5sMPyntURjijnnpejuUPgsvXWr5ztLRlEF8+5tJ0HdJETa8n
+         6BGxmEI4APTDLLHt4sV+z8YUSaiZzPSk48qLv/H9aixmAlsCiWKMkFML6DlksQGu3b
+         VfS0jq3Z4NFG20BMmRFmaPElZTwUgA5xxhN3lJBXl9h6EH0GmOj8yk/JXOBCH+2SK5
+         SRvmrKyrllvt1T2mbIa6405OLbhpxSmJAULv1aiD0zQw8TAxR/N
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 0/4] Documentation for common user misconceptions
-Date:   Sat,  2 Nov 2019 19:26:11 +0000
-Message-Id: <20191102192615.10013-1-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 2/4] doc: provide guidance on user.name format
+Date:   Sat,  2 Nov 2019 19:26:13 +0000
+Message-Id: <20191102192615.10013-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.24.0.rc2.428.g50e10028f1
+In-Reply-To: <20191102192615.10013-1-sandals@crustytoothpaste.net>
+References: <20191102192615.10013-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -49,75 +52,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series includes four patches that update the documentation to
-address common user misconceptions.
+It's a frequent misconception that the user.name variable controls
+authentication in some way, and as a result, beginning users frequently
+attempt to change it when they're having authentication troubles.
+Document that the convention is that this variable represents some form
+of a human's personal name, although that is not required.  In addition,
+address concerns about whether Unicode is supported.
 
-Changes from v2:
-* Move author and committer information to git-commit(1) where people
-  will look for it.
-* Move guidance on user.name format to git-commit(1) as well and mention
-  a shortened form of the advice in the `user.name` description.
-* Use a parenthetical to describe a "personal name" without contrasting
-  it with a username.
-* Offer a potential solution for people who want to ignore tracked
-  files by recommending a templating mechanism.
-* Be slightly more verbose about why memory is wasted with
-  http.postBuffer.
+Use the term "personal name" as this is likely to draw the intended
+contrast, be applicable across cultures which may have different naming
+conventions, and be easily understandable to people who do not speak
+English as their first language.  Indicate that "some form" is
+conventionally used, as people may use a nickname or preferred name
+instead of a full legal name.
 
-Changes from v1:
-* Remove parenthetical which was confusing.
-* Add two more patches.
+Point users who may be confused about authentication to an appropriate
+configuration option instead.  Provide a shortened form of this
+information in the configuration option description.
 
-brian m. carlson (4):
-  doc: move author and committer information to git-commit(1)
-  doc: provide guidance on user.name format
-  doc: dissuade users from trying to ignore tracked files
-  docs: mention when increasing http.postBuffer is valuable
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ Documentation/config/user.txt | 7 ++++++-
+ Documentation/git-commit.txt  | 6 ++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
- Documentation/config/http.txt      |  8 ++++++
- Documentation/config/user.txt      |  7 +++++-
- Documentation/git-commit-tree.txt  | 39 ++++-------------------------
- Documentation/git-commit.txt       | 40 +++++++++++++++++++++++++++---
- Documentation/git-update-index.txt | 16 ++++++++++++
- 5 files changed, 72 insertions(+), 38 deletions(-)
-
-Range-diff against v2:
-1:  603a9f8f9a < -:  ---------- doc: provide guidance on user.name format
--:  ---------- > 1:  b39b365f54 doc: move author and committer information to git-commit(1)
--:  ---------- > 2:  b7d805427c doc: provide guidance on user.name format
-2:  0da41623a5 ! 3:  7644af0b07 doc: dissuade users from trying to ignore tracked files
-    @@ Commit message
-         pitfalls in the documentation for git update-index so that users know
-         they should explore alternate solutions.
-     
-    +    In additon, let's provide a recommended solution to dealing with the
-    +    common case of configuration files, since there are well-known
-    +    approaches used successfully in many environments.
-    +
-         Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-     
-      ## Documentation/git-update-index.txt ##
-    @@ Documentation/git-update-index.txt: The untracked cache extension can be enabled
-     +the index when performing certain operations.  In general, Git does not
-     +provide a way to ignore changes to tracked files, so alternate solutions
-     +are recommended.
-    ++
-    ++If the file you want to change is some sort of configuration file (say,
-    ++for a build tool, IDE, or editor), a common solution is to use a
-    ++templating mechanism, such as Ruby's ERB, to generate the ignored
-    ++configuration file from a template stored in the repository and a source
-    ++of data using a script or build step.
-     +
-      SEE ALSO
-      --------
-3:  89fe11b951 ! 4:  d096763e7a docs: mention when increasing http.postBuffer is valuable
-    @@ Documentation/config/http.txt: http.postBuffer::
-     +server or a proxy only supports HTTP/1.0 or is noncompliant with the
-     +HTTP standard.  Raising this is not, in general, an effective solution
-     +for most push problems, but can increase memory consumption
-    -+significantly.
-    ++significantly since the entire buffer is allocated for even small
-    ++pushes.
-      
-      http.lowSpeedLimit, http.lowSpeedTime::
-      	If the HTTP transfer speed is less than 'http.lowSpeedLimit'
+diff --git a/Documentation/config/user.txt b/Documentation/config/user.txt
+index a1f80e823c..f0edb06329 100644
+--- a/Documentation/config/user.txt
++++ b/Documentation/config/user.txt
+@@ -13,7 +13,12 @@ committer.email::
+ 	Also, all of these can be overridden by the `GIT_AUTHOR_NAME`,
+ 	`GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_NAME`,
+ 	`GIT_COMMITTER_EMAIL` and `EMAIL` environment variables.
+-	See linkgit:git-commit[1] for more information.
+++
++Note that the `name` forms of these variables conventionally refer to
++some form of a personal name.
++See linkgit:git-commit[1] for more information on these settings and
++the `credential.username` option if you're looking for authentication
++credentials instead.
+ 
+ user.useConfigOnly::
+ 	Instruct Git to avoid trying to guess defaults for `user.email`
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index f684f7fdc2..3a69d82d52 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -467,6 +467,12 @@ if set:
+ 
+ (nb "<", ">" and "\n"s are stripped)
+ 
++The author and committer names are by convention some form of a personal name
++(that is, the name by which other humans refer to you), although Git does not
++enforce or require any particular form. Arbitrary Unicode may be used, subject
++to the constraints listed above. This name has no effect on authentication; for
++that, see the `credential.username` variable in linkgit::git-config[1].
++
+ In case (some of) these environment variables are not set, the information
+ is taken from the configuration items user.name and user.email, or, if not
+ present, the environment variable EMAIL, or, if that is not set,
