@@ -7,82 +7,76 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F09041F454
-	for <e@80x24.org>; Sat,  2 Nov 2019 05:43:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D26421F454
+	for <e@80x24.org>; Sat,  2 Nov 2019 05:45:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726593AbfKBFnt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Nov 2019 01:43:49 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60194 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725842AbfKBFns (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Nov 2019 01:43:48 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF76637892;
-        Sat,  2 Nov 2019 01:43:46 -0400 (EDT)
+        id S1726670AbfKBFpw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Nov 2019 01:45:52 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57509 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725842AbfKBFpv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Nov 2019 01:45:51 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D903F9CD22;
+        Sat,  2 Nov 2019 01:45:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LGkD28lXMc/ZpfidNJokRWRzWRU=; b=J44Cxr
-        TbI86HjJEbyIwx21kM9J23mCETKGaCw1NZH00FvpVxSIWQ/s2U3+nLK8/q7/V2/t
-        BT5UafgjuuLjUpwuysf8HYmETM0y+EmAmrMv+A8I66ju3AdnyCYTsFhC7m7vrQ2x
-        bEQc06TBUG0uGAN2Txr54BjlVCv/99/3NJ7Ro=
+        :content-type:content-transfer-encoding; s=sasl; bh=qwIAKB2QUYG7
+        gxk/ptYK7ixCWm0=; b=WqwITwpK7dbuTwaoreFgZZd4SN+Xyww0kGkSNKtio6Uq
+        dy01oQMfD97yag6HFtrrkfIUutoYUbG2tqjTGh3j31fJ39onEBk+4gPAGT2wfM8J
+        9GD4ggtb6OEpyTNfm4XIekRfgQjAbK0LwX7VnsPrnZERDejqqf+r1w9Bw7p72P8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ISLMTTMk3ONqIRdFpm7tkTNptaL0K9xs
-        f2I5s1mVII8MUHwR2SmAud3WwMOxGoO5rH2GRvR34MaN4P8EEARHMnSKzqky8LD8
-        Nt8iTfxk1/jFXFWwwmtGLMgktdpcmjN98Ww4FZFuijE51nUftMz15HeHls6qxCDu
-        fgOEjxobVY4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B69B737891;
-        Sat,  2 Nov 2019 01:43:46 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=M+/+0v
+        SNWJKIOm/rmMhtrhJoR1honq3nb9+vJB/tETdUt71hKKLZWx658PoNEIf2lHrZE3
+        bPwArmgfqpHWnW55hN9tNvP/og5r6i17ylWBHRkGcqPPX6RlE7hjMsJ0d8/nPbNx
+        DQT2Xl+W2S52fb/MQ9ReEPMIzrwk+jbnomYD8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C494B9CD21;
+        Sat,  2 Nov 2019 01:45:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 23C4A3788F;
-        Sat,  2 Nov 2019 01:43:46 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E28B19CD20;
+        Sat,  2 Nov 2019 01:45:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/2] RelNotes/2.24.0: typofix
-References: <pull.440.git.1572466878.gitgitgadget@gmail.com>
-        <2e1ebe70820fd4cbc40df1f89779c77b9ceea881.1572466878.git.gitgitgadget@gmail.com>
-Date:   Sat, 02 Nov 2019 14:43:45 +0900
-In-Reply-To: <2e1ebe70820fd4cbc40df1f89779c77b9ceea881.1572466878.git.gitgitgadget@gmail.com>
-        (Elijah Newren via GitGitGadget's message of "Wed, 30 Oct 2019
-        20:21:17 +0000")
-Message-ID: <xmqqbltu4yum.fsf@gitster-ct.c.googlers.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] manpage-bold-literal.xsl: provide namespaced template for "d:literal"
+References: <20191030204104.19603-1-martin.agren@gmail.com>
+        <20191031023150.mdbj74sthrftnqie@camp.crustytoothpaste.net>
+        <CAN0heSrY9jOrRmt_ViJZ8Yv96XPNh4atArxqNO1=Tr57wdt0Zw@mail.gmail.com>
+Date:   Sat, 02 Nov 2019 14:45:45 +0900
+In-Reply-To: <CAN0heSrY9jOrRmt_ViJZ8Yv96XPNh4atArxqNO1=Tr57wdt0Zw@mail.gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 31 Oct 2019 07:21:32
+ +0100")
+Message-ID: <xmqq4kzm4yra.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BCA56954-FD33-11E9-A0D9-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 053BCCDA-FD34-11E9-97CE-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-> From: Elijah Newren <newren@gmail.com>
+>> If you want to avoid duplication, you can write the existing template =
+as
+>> follows:
+>>
+>>   <xsl:template match=3D"literal|d:literal">
+>>
+>> That will match both literal and d:literal tags.  You still need the
+>> namespace declaration you added, of course.
 >
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  Documentation/RelNotes/2.24.0.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/RelNotes/2.24.0.txt b/Documentation/RelNotes/2.24.0.txt
-> index b7083cd6b2..26e018078d 100644
-> --- a/Documentation/RelNotes/2.24.0.txt
-> +++ b/Documentation/RelNotes/2.24.0.txt
-> @@ -316,7 +316,7 @@ Fixes since v2.23
->     to access the worktree correctly, which has been corrected.
->     (merge dfd557c978 js/stash-apply-in-secondary-worktree later to maint).
->  
-> - * The merge-recursive machiery is one of the most complex parts of
-> + * The merge-recursive machinery is one of the most complex parts of
->     the system that accumulated cruft over time.  This large series
->     cleans up the implementation quite a bit.
->     (merge b657047719 en/merge-recursive-cleanup later to maint).
+> Thanks. I use this for v2.
 
-Thanks.
+Thanks, both.
