@@ -2,71 +2,36 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 273B51F454
-	for <e@80x24.org>; Sat,  2 Nov 2019 23:03:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C0EF1F454
+	for <e@80x24.org>; Sat,  2 Nov 2019 23:50:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727365AbfKBXD4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Nov 2019 19:03:56 -0400
-Received: from mout.gmx.net ([212.227.17.22]:60331 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727327AbfKBXD4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Nov 2019 19:03:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572735828;
-        bh=QcOSKSeQYPCXQgkJtSAKbHQvqNMR86rZC6Lo94wyJ28=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=h/iYJd1ZFZxT6hJK23Fjp/z2q2PAwo9ZKC71i9rz35mEXXB9vY0OiTSXUAx4Zc3xH
-         lWCe0nfcuVogaEZr3VSa9gVmRKsl8PINzGjvyR6N647fSMOLdRPaJERiZyOt8aiEil
-         ygUjgMDKy3XuYaV6EPZ5CdW+gLHqbi8nuEET1UZA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTRMi-1iWdX532lQ-00Tiwm; Sun, 03
- Nov 2019 00:03:47 +0100
-Date:   Sun, 3 Nov 2019 00:03:32 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1727327AbfKBXuM (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Nov 2019 19:50:12 -0400
+Received: from relay6-d.mail.gandi.net ([217.70.183.198]:42933 "EHLO
+        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727320AbfKBXuM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Nov 2019 19:50:12 -0400
+X-Originating-IP: 1.186.12.57
+Received: from localhost (unknown [1.186.12.57])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 55BCFC0004;
+        Sat,  2 Nov 2019 23:50:08 +0000 (UTC)
+Date:   Sun, 3 Nov 2019 05:20:07 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] update-index: optionally leave skip-worktree
- entries alone
-In-Reply-To: <xmqqpnib567f.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1911030002410.46@tvgsbejvaqbjf.bet>
-References: <pull.355.git.gitgitgadget@gmail.com> <pull.355.v2.git.1572261615.gitgitgadget@gmail.com> <86dbb11f159375da281acd6266df019106abeadb.1572261615.git.gitgitgadget@gmail.com> <xmqq5zk7593d.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1910300930440.46@tvgsbejvaqbjf.bet>
- <xmqqpnib567f.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     git@vger.kernel.org
+Subject: [GIT PULL] git-gui pull request
+Message-ID: <20191102235006.rpguewvbbpfv4wi5@yadavpratyush.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:KkvMnkBXM0NDG/Gv4PsK92brT7w5qU5F47RHBS/W/b1eEk6GrJt
- 07ZGeecAbgQUnoBBxSaXw18bfPu8A9roUmMJvhs5MPpGyBH0UymVmzRS4V26cVhf3O5jju5
- 5EhBZeC6axqRxRlb29HPEAW7+fXTONm9CYXh6jybbGT9Msgjyct6UHk5VMo8hsLHKJGTMzF
- Et7YOqFcWWnZOURuZllTg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:I6lyy1x1n24=:Zfdg5Gx0Ulnb0UtTDeJlMa
- HxtYkDXr07XlADj8eEsZ6tQ4GJM9TLUOdVBaHsCEzRrbvUozRaGOrW9lBvGZfbcF0usz5zxuS
- KaH08rKyZUq6AZm79NIfE/FY0pQO/Tjnr8v8szmqqdv9Hwt6tqfBFUI2K3OF9ZCnLPTyyykoe
- zrjks36xfMnBkcnukRkqxaTiporYGHN5fBWLHqMb/7JNY54h+CjHluRpsI5R7fmJIuBDZUr0H
- TygtpffGYvKjKevU6O8CMgdIBJd3cgIWMp7QdaGZiYJMcXDFA3np5DbKtK9wRacdsLl0K5teM
- Asd5SN5d/UEdOrSsTjMfQmWWjC7caBSu61Y94kee80CO3qvYfxvwp43LzQrBGcCg1zIVajpCV
- K+gMMEVewMBb4Qa2WOKuvMMM0PVVBM8Yn+8osdJKb0BKMwoPDK7hDHG2ILNvAO+Immg+96euN
- F73FHH/9A0/a9bnmg8uemHSHye7ptG3DlhIyCXbWiZjRBLLVzFve6Gp27lsEM8XHL2sLrRn5s
- MTg3b8r6YGr0c4kUKvQvVa71iGIvqskv2ZG1XU91omSl/WF9luuKgt/0GH4nbn7ibnat3pUYv
- 3Yg7aWKE4rCEBv4+39KGRESTSgAcM+e+U2O4dGUbf10AZSKHwXA1UK61ftPPDPkYw1i3mJxo7
- 3aniJ66ARZx+3PfwMnsDS8lh/Kssb7p/wX1MXQidj/C67mHsFDRbIVUMjV1AX/NdFkLzGSrq/
- t/AOgfPUMQ0PdCPHN4+fA363gHhGBj5o+Yikl4/g409gBlZqOFtEzXfEC+3E6YQCZDjhcWGTb
- bOBcAptL9XxuQ6gXAXHJBT/2AfWzGOI5HMWXq5aHeRiHbPj/c+LKPKjpbf5JpONoIZ8fwUbQ5
- vAT8vUCCqM9wouz3M/YHHR5PwTfNzlMIijo4AFk8VKksUHmmVBj4kDumnuv+AnbvEr/xzFoe3
- HNS+DCnoPNo5q67dl3R3uvALPLuWmFirrOZ/SXHykevybNWRFCN3BROeTovxJxc6+3fZ1xM9+
- mYATXAP4cnb+LNSCMrchlVtq/p/jPURwG4UK/78JZ8S+8ShmamrCorMhDBxU0+9EpUIddFHde
- xenxcNpSht3mURbI3ntko9h1YHlTJFB8J5hpJB9Tpm2ioYALbAluwDNYn4T/k9Rq2+vymKUQr
- kRUx9hc7AqOdiQAtHuYPZ/lKoHZk5t9i6wQi7BYsB5104pGLrOaXGeYnuOBivIfYWF4nk7Prn
- OGs14Hphfu9O5qBZrlxULFOD650BbudjZbZg0vLj2AIINWNSOJ1zBEvsbpH4=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -74,33 +39,96 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Junio,
 
-On Sat, 2 Nov 2019, Junio C Hamano wrote:
+There are some changes in git-gui since your last pull. With the 2.24
+release coming up, I figure it is a good time to sync up.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > I changed this locally to `keep-me`. But then I saw that you merged th=
-is
-> > patch pair to `next` already... Do you want an add-on patch, or revert
-> > it out of `next`, or leave as-is?
-> >
-> > I'd like to know because I still want to merge this into Git for Windo=
-ws
-> > v2.24.0-rc2, and I would love to deviate as little as possible from
-> > git.git there.
->
-> >...
-> > So: revert out of `next`, add-on patch, or leave as-is?
->
-> Sorry for a late response.  I was under the weather and mostly
-> offline for the past few days.
+The list of changes is a bit misleading. A lot of these changes are 
+already in Git's tree, and I retroactively pulled them back in my tree, 
+since these bypassed the "main" git-gui tree. Effectively, the merge of 
+the commit 60c60b6 should be a no-op. [0] for a reminder.
 
-I hope you are feeling better?
+Sorry for being so late. I didn't realize the release was so close. So
+if this pull request is too much trouble for 2.24, I'm fine if you don't 
+pull it now. We can sync up in 2.25 :).
 
-> Whichever is easier for GGG is fine, but for the purpose of
-> resulting history, I think revert-replace would be the best.
+[0] https://public-inbox.org/git/CAGr--=KXqFbivuXHPNecb3dBR_hx8QqWoR4pBGXy7uOiT+ESbg@mail.gmail.com/
 
-Technically, GitGitGadget should be fine with reverting out and
-re-integrating. If not, that's a bug ;-)
+---
+The following changes since commit f7a8834ba4aa20ec750833cf8d30d9a9fed5eade:
 
-Thanks for replacing,
-Dscho
+  Merge branch 'bp/amend-toggle-bind' (2019-09-14 23:23:12 +0530)
+
+are available in the Git repository at:
+
+  https://github.com/prati0100/git-gui.git
+
+for you to fetch changes up to b524f6b399c77b40c8bf2b6217585fde4731472a:
+
+  Merge branch 'ka/japanese-translation' (2019-10-14 23:22:50 +0530)
+
+----------------------------------------------------------------
+Anders Kaseorg (1):
+      git-gui: sort entries in optimized tclIndex
+
+Beat Bolli (1):
+      git-gui: search for all current SSH key types
+
+Bert Wesarg (2):
+      git-gui: use existing interface to query a path's attribute
+      git-gui: support for diff3 conflict style
+
+Birger Skogeng Pedersen (1):
+      git-gui: bind CTRL/CMD+numpad ENTER to do_commit
+
+Clemens Buchacher (1):
+      git-gui: workaround ttk:style theme use
+
+Johannes Schindelin (6):
+      git-gui (MinGW): make use of MSys2's msgfmt
+      git gui: fix staging a second line to a 1-line file
+      git-gui: avoid exception upon Ctrl+T in an empty list
+      git-gui: fix exception when trying to stage with empty file list
+      git-gui: allow Ctrl+T to toggle multiple paths
+      Fix build with core.autocrlf=true
+
+Martin Ågren (1):
+      treewide: correct several "up-to-date" to "up to date"
+
+Pratyush Yadav (8):
+      git-gui: call do_quit before destroying the main window
+      Merge branches 'js/msgfmt-on-windows', 'tz/fsf-address-update', 'jn/reproducible-build', 'ls/no-double-utf8-author-name', 'js/misc-git-gui-stuff', 'bb/ssh-key-files', 'bp/bind-kp-enter', 'cb/ttk-style' and 'py/call-do-quit-before-exit' of ../git into py/git-git-extra-stuff
+      Merge branch 'py/git-git-extra-stuff'
+      Merge branch 'js/git-bash-if-available'
+      Merge branch 'bw/diff3-conflict-style'
+      git-gui: add a readme
+      Merge branch 'py/readme'
+      Merge branch 'ka/japanese-translation'
+
+Thomas Klaeger (1):
+      git-gui (Windows): use git-bash.exe if it is available
+
+Todd Zullinger (1):
+      Replace Free Software Foundation address in license notices
+
+kdnakt (1):
+      git-gui: improve Japanese translation
+
+Łukasz Stelmach (1):
+      git-gui: prevent double UTF-8 conversion
+
+ .gitattributes |   1 +
+ Makefile       |   4 +-
+ README.md      | 174 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ git-gui.sh     |  65 ++++++++++++++++++---
+ lib/commit.tcl |  12 +++-
+ lib/diff.tcl   |  34 ++++++-----
+ lib/sshkey.tcl |   5 +-
+ lib/themed.tcl |  15 +++--
+ po/README      |   2 +-
+ po/ja.po       |   9 +--
+ 10 files changed, 284 insertions(+), 37 deletions(-)
+ create mode 100644 README.md
+
+-- 
+Regards,
+Pratyush Yadav
