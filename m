@@ -2,99 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2FB31F454
-	for <e@80x24.org>; Sun,  3 Nov 2019 01:12:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02D281F454
+	for <e@80x24.org>; Sun,  3 Nov 2019 03:52:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727358AbfKCBMb (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Nov 2019 21:12:31 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:46191 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727335AbfKCBMb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Nov 2019 21:12:31 -0400
-X-Originating-IP: 1.186.12.57
-Received: from localhost (unknown [1.186.12.57])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id ACBFCE0003;
-        Sun,  3 Nov 2019 01:12:27 +0000 (UTC)
-Date:   Sun, 3 Nov 2019 06:42:25 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Jonathan Gilbert <logic@deltaq.org>
-Cc:     "Bert Wesarg bert.wesarg-at-googlemail.com |GitHub Public/Example Allow|" 
-        <xlwsizdz58ciy7t@sneakemail.com>,
-        Jonathan Gilbert via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>
-Subject: Re: [PATCH 0/2] git-gui: revert untracked files by deleting them
-Message-ID: <20191103011225.b6emr2ldskktokgd@yadavpratyush.com>
-References: <pull.436.git.1572418123.gitgitgadget@gmail.com>
- <CAKPyHN1p+xRAF3Mjg_XqRiEUviGjj8ifP5FM=1hVb5LZUshzLw@mail.gmail.com>
- <CAPSOpYufF8B0sBUUYqBx5YTxH+02qRom+tz4a0_2iBcNOvvMXA@mail.gmail.com>
+        id S1727416AbfKCDv6 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Nov 2019 23:51:58 -0400
+Received: from mail-wm1-f47.google.com ([209.85.128.47]:54340 "EHLO
+        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727366AbfKCDv6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Nov 2019 23:51:58 -0400
+Received: by mail-wm1-f47.google.com with SMTP id z26so4890wmi.4
+        for <git@vger.kernel.org>; Sat, 02 Nov 2019 20:51:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=KDIk4ffW2RYCRlkFzVFoI+02v8CD5eqDsEAp9MPbdjs=;
+        b=YAXg20tnVDQYRLaUYKC1Ae2JM9ymACETkk7CVjXb4VteownUl3Fpnau62Spj0bXDWl
+         twN4shUewCZBt3onHcU50j5XDUSGTh1IiVKVImNcYATf/rW7L8eOuhTUeUFhrete4jfT
+         3z+YRELkGCy8s5uRl6j81imqAL5OUTIlT6XNCdOTtiNbt2cJIIY+6XzXn30phchh4XqJ
+         ZrRdfNpF6ZuhcJfEyYQckAfH7kbj1+E/uBGO6kk1wjaGKxlfw/j8iBEqm8r/PzV9JzoL
+         298dll0SVW0YeL/QGEAlxYgrbhpgWiXAxaDKXKc+mH6VjVbMy4OaXTNvWotg7KQBXc4g
+         kHAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KDIk4ffW2RYCRlkFzVFoI+02v8CD5eqDsEAp9MPbdjs=;
+        b=S6dJkk49ekyAMV315ZRt8Yw6im3hShoJ1xvckxWg5wiZei83urdBct6eIXrNK1Rk2Q
+         NAkSLrX4QU1ySZE7bYFUPm8bgkkeqlwsWPqqkD0OJQU0R1QKoBnB2I7FRCQEm9qtsChy
+         e7M+ZGhe8j0s77eSaIzkLtOAC1gpEcmXWEsjAlfupEFsUezKKJMt6Q7smBtc9bnuPK8z
+         Fehm4XEqvEyaCWd9DfKi9dz/CRKOmU9crSOXyYiVYCZvRKyFFcP67ohldA2EjeBz3dNh
+         3iJCIVN7lrSJbt2XqaVs/9h2QmlWejQS/fdCRYtb9y2USrXJTePbFUxS9j829VxpyMJ6
+         bksw==
+X-Gm-Message-State: APjAAAWWVkEcOMSOOteBsLGLsWhJYOimEjeqqQAaZUmoKjKhyKJh6rGB
+        Gsxs7+3esTgePTWJ1EMM2ah6zsc9
+X-Google-Smtp-Source: APXvYqw+fRE0RVYoJL02hI1llZe2jvLRP+Bph0j2YA1fTW0Susx5+oaF7xxtevnf+maLNWX5Vx5yhA==
+X-Received: by 2002:a7b:c408:: with SMTP id k8mr11650406wmi.67.1572753115895;
+        Sat, 02 Nov 2019 20:51:55 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c144sm11982975wmd.1.2019.11.02.20.51.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 02 Nov 2019 20:51:55 -0700 (PDT)
+Message-Id: <pull.442.git.1572753114.gitgitgadget@gmail.com>
+From:   "Abimbola Olaitan via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 03 Nov 2019 03:51:49 +0000
+Subject: [PATCH 0/5] Teach git annotate to use parse option instead of its own argv
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPSOpYufF8B0sBUUYqBx5YTxH+02qRom+tz4a0_2iBcNOvvMXA@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+To:     git@vger.kernel.org
+Cc:     Abimbola Olaitan <craftwordltd@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30/10/19 12:16PM, Jonathan Gilbert wrote:
-> On Wed, Oct 30, 2019 at 4:09 AM Bert Wesarg
-> bert.wesarg-at-googlemail.com |GitHub Public/Example Allow|
-> <xlwsizdz58ciy7t@sneakemail.com> wrote:
-> > in Git speak, that operation is called 'clean' (see 'git clean') why
-> > should we overload the 'revert' operation here?
-> 
-> It's less about overloading the 'revert' operation as overloading the
-> UI action which is currently called "Revert". I think it would be a
-> worse experience to have to activate a different option to remove
-> unwanted files as to remove unwanted changes. Maybe the UI option
-> could be renamed "Revert & Clean" or something?
+The file builtIn/annotate.c was removed, letting git annotate use the
+cmd_blame directly.
+===================
 
-I disagree. There are valid workflows where you want to remove all 
-changes to tracked files, but leave untracked ones alone. As an example, 
-say you wrote a small script to fix some textual things, like your 
-variable re-name patch. Now you run a diff before you commit those 
-changes just to be sure, and notice that your script was overzealous and 
-made some changes it shouldn't have. So, you clean up all tracked files,
-and give your script a fresh start. Here, you don't want to delete your 
-script.
+The following files were edited
+===============================
 
-And in the other direction, say you want to delete all untracked files 
-but have unstaged changes in your tracked files. Combining "Revert" and 
-"Clean" does not give you an option to only delete untracked files. So 
-you now either have to stash your changes, or run `git clean` from the 
-command line.
- 
-> As a side note, `git clean untracked-file` won't do anything with a
-> default configuration, you have to explicitly `-f` it. Not sure if
-> that's relevant, but it does feel like a higher barrier to entry than
-> `git revert`.
+--- Makefile --- git.c --- builtIn/annotate.c was removed
 
-`git revert` is different from our "Revert", though I admit the naming 
-is quite confusing. `git revert` creates a new commit that "reverses" 
-the changes made in an earlier commit(s). The important point to note 
-here is that `git revert` is used when you publish some commits, and 
-then realise later they had some bugs. Now you can't just drop those 
-commits because that would re-write the history, and it would change all 
-the commit hashes since that commit. So, you use `git revert` to create 
-a new commit that _textually_ reverses those changes. The buggy commit 
-still exists in the tree, but its changes don't.
+Abimbola (5):
+  remove-annotate: change cmd_annotate to cmd_blame
+  edit the makefile
+  remove-annotate: comment out annotate BUILDIN_OBJS
+  remove-annotate: delete builtin annotate file
+  fix unproper comment in Makefile
 
-In contrast, git-gui's "Revert" works on unstaged changes. It does not 
-create a new commit. In fact, our revert does something similar to `git 
-checkout -- <file>` (it uses `git checkout-index` to be precise).
+ Makefile           |   1 -
+ annotate.txt       | Bin 0 -> 163170 bytes
+ blame.txt          | Bin 0 -> 177882 bytes
+ builtin/annotate.c |  22 -------
+ git.c              | 143 ++++++++++++++++++++++++++-------------------
+ 5 files changed, 82 insertions(+), 84 deletions(-)
+ create mode 100644 annotate.txt
+ create mode 100644 blame.txt
+ delete mode 100644 builtin/annotate.c
 
-So I don't think you should, or _can_, use `git revert` for what you 
-want to do. And so, I don't see why it is being factored in with this 
-discussion. Am I missing something?
 
+base-commit: efd54442381a2792186abc994060b8f7dd8b834b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-442%2Fcraftword%2Fremove-annotate-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-442/craftword/remove-annotate-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/442
 -- 
-Regards,
-Pratyush Yadav
+gitgitgadget
