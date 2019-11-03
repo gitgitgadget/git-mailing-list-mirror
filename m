@@ -2,175 +2,442 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 198761F454
-	for <e@80x24.org>; Sun,  3 Nov 2019 04:41:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A25631F454
+	for <e@80x24.org>; Sun,  3 Nov 2019 07:45:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726502AbfKCElr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Nov 2019 00:41:47 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:46130 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726343AbfKCElr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Nov 2019 00:41:47 -0400
-Received: by mail-lj1-f194.google.com with SMTP id e9so774763ljp.13
-        for <git@vger.kernel.org>; Sat, 02 Nov 2019 21:41:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=deltaq.org; s=deltaq;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/EdOdtUg0DcsFaCguxx9Dhl8J3cdKACU/p3xGBaa/5M=;
-        b=YQWuO2ILpeDBWc2TWs0NNC1v0i6N3KrC5WoHeXWq2tNoXSkPxnjd6gch73pbOgQZOy
-         Jl5gLDXBCNpuIwu10pyCwi67PL9HpjKyG/xNiOKGDnh5bvjk2cwa1UOVctSFG20gPDvO
-         ASmcJ/G1TAjuUN0wemxrqJTFHdCto9ELMoq6Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/EdOdtUg0DcsFaCguxx9Dhl8J3cdKACU/p3xGBaa/5M=;
-        b=EJTn26iLMSBhNSjj9z0kPOvzIZmPB7cPXTEDLCS3i9v3JToQUERcAXAC3I+EZCms6C
-         KcfageHLRSExjBGZPJ1n4UNF2UmAb0TpmwYqxnYEgvn4D0/0k6V4vr0K9R1wGNJrdxwD
-         4wHQh0lUrTstoQxx0EqX3J7mG46+MIlKp9m6Fw8aI1T/2zZX+5CTeC/p+RQz675F72u/
-         8rqlJaFcVYP5JyQM6+OQJSZQ1JjnCQ02u8Hk8OyYsmDVRgo36e2IJB3g4x8qGTkq9L/v
-         AtIMvWxfCGK3l249M9ZnfSOyvSjkIl3XDogToW5wsqT4Ncjhgq+Jg93iqLTekVb5NCBo
-         O4yA==
-X-Gm-Message-State: APjAAAVzIs9vrApq8fel82CowCP694UkGpXWHm7xblRsNC3PjrvQPHrA
-        rTLUxtJ9wnxH4WZMwEr7BnZxhb+mN8LI/uKsjnTg6w==
-X-Google-Smtp-Source: APXvYqwAdCB6O+CdNScmUyOEkgyB4raZXX2PoAZL8HLPOiozKsFAEkEhERzySPF3PDxNk/zF30qPY9Fb/Iz+XoLgZlI=
-X-Received: by 2002:a2e:9cc4:: with SMTP id g4mr6996325ljj.99.1572756103991;
- Sat, 02 Nov 2019 21:41:43 -0700 (PDT)
-MIME-Version: 1.0
+        id S1726719AbfKCHpB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Nov 2019 02:45:01 -0500
+Received: from relay10.mail.gandi.net ([217.70.178.230]:43343 "EHLO
+        relay10.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726408AbfKCHpB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Nov 2019 02:45:01 -0500
+Received: from localhost (unknown [1.186.12.57])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay10.mail.gandi.net (Postfix) with ESMTPSA id 114D1240003;
+        Sun,  3 Nov 2019 07:44:55 +0000 (UTC)
+Date:   Sun, 3 Nov 2019 13:14:53 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Jonathan Gilbert via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>,
+        Jonathan Gilbert <JonathanG@iQmetrix.com>
+Subject: Re: [PATCH 2/2] git-gui: revert untracked files by deleting them
+Message-ID: <20191103074453.56ubga6eitjhp6rf@yadavpratyush.com>
 References: <pull.436.git.1572418123.gitgitgadget@gmail.com>
- <CAKPyHN1p+xRAF3Mjg_XqRiEUviGjj8ifP5FM=1hVb5LZUshzLw@mail.gmail.com>
- <CAPSOpYufF8B0sBUUYqBx5YTxH+02qRom+tz4a0_2iBcNOvvMXA@mail.gmail.com> <20191103011225.b6emr2ldskktokgd@yadavpratyush.com>
-In-Reply-To: <20191103011225.b6emr2ldskktokgd@yadavpratyush.com>
-From:   Jonathan Gilbert <logic@deltaq.org>
-Date:   Sat, 2 Nov 2019 23:41:32 -0500
-Message-ID: <CAPSOpYsBRf4tCXP-wod2h+g_=NZ-Qr0KOSZw3M=96d5FUFpFzw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] git-gui: revert untracked files by deleting them
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     "Bert Wesarg bert.wesarg-at-googlemail.com |GitHub Public/Example Allow|" 
-        <xlwsizdz58ciy7t@sneakemail.com>,
-        Jonathan Gilbert via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>
-Content-Type: text/plain; charset="UTF-8"
+ <0190f6f2f978a674a29a1e2013d00bc289851c76.1572418123.git.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0190f6f2f978a674a29a1e2013d00bc289851c76.1572418123.git.gitgitgadget@gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 2, 2019, 8:12 PM Pratyush Yadav, <me@yadavpratyush.com> wrote:
-> On 30/10/19 12:16PM, Jonathan Gilbert wrote:
-> > It's less about overloading the 'revert' operation as overloading the
-> > UI action which is currently called "Revert". I think it would be a
-> > worse experience to have to activate a different option to remove
-> > unwanted files as to remove unwanted changes. Maybe the UI option
-> > could be renamed "Revert & Clean" or something?
->
-> I disagree. There are valid workflows where you want to remove all
-> changes to tracked files, but leave untracked ones alone. As an example,
-> say you wrote a small script to fix some textual things, like your
-> variable re-name patch. Now you run a diff before you commit those
-> changes just to be sure, and notice that your script was overzealous and
-> made some changes it shouldn't have. So, you clean up all tracked files,
-> and give your script a fresh start. Here, you don't want to delete your
-> script.
->
-> And in the other direction, say you want to delete all untracked files
-> but have unstaged changes in your tracked files. Combining "Revert" and
-> "Clean" does not give you an option to only delete untracked files. So
-> you now either have to stash your changes, or run `git clean` from the
-> command line.
+Hi Jonathan,
 
-But, since this is in this GUI interface, you can clearly see which
-are which and select only the files you want to affect. If you have so
-many files that you have to select indiscriminately, then the
-command-line is probably a better choice anyway. In any case, my
-proposed change prompts for each part of the change, so you _can_ just
-select everything, press ^J, and then say "Yes" to only one of the
-prompts.
+Thanks for the quality re-roll. It was a pleasant read :)
 
-> > As a side note, `git clean untracked-file` won't do anything with a
-> > default configuration, you have to explicitly `-f` it. Not sure if
-> > that's relevant, but it does feel like a higher barrier to entry than
-> > `git revert`.
->
-> `git revert` is different from our "Revert", though I admit the naming
-> is quite confusing.
-[..]
-> So I don't think you should, or _can_, use `git revert` for what you
-> want to do. And so, I don't see why it is being factored in with this
-> discussion. Am I missing something?
+I would have suggested just handing off the paths to `git clean`, but it 
+unfortunately does not do what we want it to do.
 
-You are entirely correct, this was just a massive brain fart. Every
-time I wrote `git revert` in my head I was actually thinking of
-exactly what Git Gui does, reverting working copy changes by checking
-out the file. I should have written "reverting using `git checkout`".
-My apologies!
+Say we have a directory 'foo' which has one file called 'bar.txt'. That 
+file is untracked. Now, I expected `git clean -fd foo/bar.txt` to delete 
+'bar.txt' _and_ 'foo/', but it only deletes bar.txt, and leaves 'foo/' 
+intact. What's worse is that since 'foo' is an empty directory, it 
+doesn't appear in git-status anymore, and so there is no way the user 
+can tell the directory exists unless they go there and do a `ls`.
 
-In my defence, I have over the past few days found myself digging into
-code hosted in SVN repositories, and `svn revert` does exactly what
-`git checkout` does to an unstaged modified file. :-)
+Maybe something to fix upstream?
 
-Jonathan Gilbert
+On 30/10/19 06:48AM, Jonathan Gilbert via GitGitGadget wrote:
+> From: Jonathan Gilbert <JonathanG@iQmetrix.com>
+> 
+> Updates the revert_helper procedure to also detect untracked files. If
 
-On Sat, Nov 2, 2019 at 8:12 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
->
-> On 30/10/19 12:16PM, Jonathan Gilbert wrote:
-> > On Wed, Oct 30, 2019 at 4:09 AM Bert Wesarg
-> > bert.wesarg-at-googlemail.com |GitHub Public/Example Allow|
-> > <xlwsizdz58ciy7t@sneakemail.com> wrote:
-> > > in Git speak, that operation is called 'clean' (see 'git clean') why
-> > > should we overload the 'revert' operation here?
-> >
-> > It's less about overloading the 'revert' operation as overloading the
-> > UI action which is currently called "Revert". I think it would be a
-> > worse experience to have to activate a different option to remove
-> > unwanted files as to remove unwanted changes. Maybe the UI option
-> > could be renamed "Revert & Clean" or something?
->
-> I disagree. There are valid workflows where you want to remove all
-> changes to tracked files, but leave untracked ones alone. As an example,
-> say you wrote a small script to fix some textual things, like your
-> variable re-name patch. Now you run a diff before you commit those
-> changes just to be sure, and notice that your script was overzealous and
-> made some changes it shouldn't have. So, you clean up all tracked files,
-> and give your script a fresh start. Here, you don't want to delete your
-> script.
->
-> And in the other direction, say you want to delete all untracked files
-> but have unstaged changes in your tracked files. Combining "Revert" and
-> "Clean" does not give you an option to only delete untracked files. So
-> you now either have to stash your changes, or run `git clean` from the
-> command line.
->
-> > As a side note, `git clean untracked-file` won't do anything with a
-> > default configuration, you have to explicitly `-f` it. Not sure if
-> > that's relevant, but it does feel like a higher barrier to entry than
-> > `git revert`.
->
-> `git revert` is different from our "Revert", though I admit the naming
-> is quite confusing. `git revert` creates a new commit that "reverses"
-> the changes made in an earlier commit(s). The important point to note
-> here is that `git revert` is used when you publish some commits, and
-> then realise later they had some bugs. Now you can't just drop those
-> commits because that would re-write the history, and it would change all
-> the commit hashes since that commit. So, you use `git revert` to create
-> a new commit that _textually_ reverses those changes. The buggy commit
-> still exists in the tree, but its changes don't.
->
-> In contrast, git-gui's "Revert" works on unstaged changes. It does not
-> create a new commit. In fact, our revert does something similar to `git
-> checkout -- <file>` (it uses `git checkout-index` to be precise).
->
-> So I don't think you should, or _can_, use `git revert` for what you
-> want to do. And so, I don't see why it is being factored in with this
-> discussion. Am I missing something?
->
-> --
-> Regards,
-> Pratyush Yadav
+Typo: s/Updates/Update/ ?
+
+> files are present, the user is asked if they want them deleted. A new
+> proc delete_files with helper delete_helper performs the deletion in
+> batches, to allow the UI to remain responsive.
+> 
+> Signed-off-by: Jonathan Gilbert <JonathanG@iQmetrix.com>
+> ---
+>  lib/index.tcl | 255 +++++++++++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 222 insertions(+), 33 deletions(-)
+> 
+> diff --git a/lib/index.tcl b/lib/index.tcl
+> index 28d4d2a54e..9661ddb556 100644
+> --- a/lib/index.tcl
+> +++ b/lib/index.tcl
+> @@ -393,11 +393,20 @@ proc revert_helper {txt paths} {
+>  
+>  	if {![lock_index begin-update]} return
+>  
+> +	# The index is now locked. Some of the paths below include calls that
+> +	# unlock the index (e.g. checked_index). If we reach the end and the
+
+Typo: s/checked_index/checkout_index/
+
+> +	# index is still locked, we need to unlock it before returning.
+> +	set need_unlock_index 1
+> +
+>  	set path_list [list]
+> +	set untracked_list [list]
+>  	set after {}
+>  	foreach path $paths {
+>  		switch -glob -- [lindex $file_states($path) 0] {
+>  		U? {continue}
+> +		?O {
+> +			lappend untracked_list $path
+> +		}
+>  		?M -
+>  		?T -
+>  		?D {
+> @@ -409,45 +418,225 @@ proc revert_helper {txt paths} {
+>  		}
+>  	}
+>  
+> +	set path_cnt [llength $path_list]
+> +	set untracked_cnt [llength $untracked_list]
+>  
+> -	# Split question between singular and plural cases, because
+> -	# such distinction is needed in some languages. Previously, the
+> -	# code used "Revert changes in" for both, but that can't work
+> -	# in languages where 'in' must be combined with word from
+> -	# rest of string (in different way for both cases of course).
+> -	#
+> -	# FIXME: Unfortunately, even that isn't enough in some languages
+> -	# as they have quite complex plural-form rules. Unfortunately,
+> -	# msgcat doesn't seem to support that kind of string translation.
+> -	#
+> -	set n [llength $path_list]
+> -	if {$n == 0} {
+> -		unlock_index
+> -		return
+> -	} elseif {$n == 1} {
+> -		set query [mc "Revert changes in file %s?" [short_path [lindex $path_list]]]
+> -	} else {
+> -		set query [mc "Revert changes in these %i files?" $n]
+> -	}
+> +	if {$path_cnt > 0} {
+> +		# Split question between singular and plural cases, because
+> +		# such distinction is needed in some languages. Previously, the
+> +		# code used "Revert changes in" for both, but that can't work
+> +		# in languages where 'in' must be combined with word from
+> +		# rest of string (in different way for both cases of course).
+> +		#
+> +		# FIXME: Unfortunately, even that isn't enough in some languages
+> +		# as they have quite complex plural-form rules. Unfortunately,
+> +		# msgcat doesn't seem to support that kind of string
+> +		# translation.
+> +		#
+> +		if {$path_cnt == 1} {
+> +			set query [mc \
+> +				"Revert changes in file %s?" \
+> +				[short_path [lindex $path_list]] \
+> +				]
+> +		} else {
+> +			set query [mc \
+> +				"Revert changes in these %i files?" \
+> +				$path_cnt]
+> +		}
+>  
+> -	set reply [tk_dialog \
+> -		.confirm_revert \
+> -		"[appname] ([reponame])" \
+> -		"$query
+> +		set reply [tk_dialog \
+> +			.confirm_revert \
+> +			"[appname] ([reponame])" \
+> +			"$query
+>  
+>  [mc "Any unstaged changes will be permanently lost by the revert."]" \
+> -		question \
+> -		1 \
+> -		[mc "Do Nothing"] \
+> -		[mc "Revert Changes"] \
+> -		]
+> -	if {$reply == 1} {
+> -		checkout_index \
+> -			$txt \
+> +			question \
+> +			1 \
+> +			[mc "Do Nothing"] \
+> +			[mc "Revert Changes"] \
+> +			]
+> +
+> +		if {$reply == 1} {
+> +			checkout_index \
+> +				$txt \
+> +				$path_list \
+> +				[concat $after [list ui_ready]]
+> +
+> +			set need_unlock_index 0
+> +		}
+> +	}
+> +
+> +	if {$need_unlock_index} { unlock_index }
+
+Are you sure you want to unlock the index _before_ the cleanup of 
+untracked files is done? While it makes sense to unlock the index since 
+our "clean" operation would only touch the working tree, and not the 
+index, it would also mean people can do things like "Revert hunk" (from 
+the context menu). Right now, this operation can not be done on 
+untracked files (so this won't be a problem for now), but I do plan on 
+adding this in the future, and it wouldn't be obvious from that patch's 
+POV that this could be an issue. If someone does a "Revert hunk" on a 
+while that is queued for deletion, there might be problems.
+
+Also, would doing an `unlock_index` early allow people to run multiple 
+"clean" jobs at the same time? Will that create race conditions that we 
+aren't ready to handle?
+
+It also makes sense to evaluate what the downsides of keeping the index 
+locked are. So, does keeping the index locked prevent meaningful usage 
+of git-gui, making your batched deletion pointless? Is there some reason 
+for unlocking it early that I'm missing?
+
+If we do decide keeping the index locked is a good idea, it would be 
+troublesome to implement. `checkout_index` is asynchronous. So, when it 
+returns, the index won't necessarily be unlocked. It would get unlocked 
+some time _after_ the return. I'm not sure how to work around this.
+
+> +
+> +	if {$untracked_cnt > 0} {
+> +		# Split question between singular and plural cases, because
+> +		# such distinction is needed in some languages.
+> +		#
+> +		# FIXME: Unfortunately, even that isn't enough in some languages
+> +		# as they have quite complex plural-form rules. Unfortunately,
+> +		# msgcat doesn't seem to support that kind of string
+> +		# translation.
+> +		#
+> +		if {$untracked_cnt == 1} {
+> +			set query [mc \
+> +				"Delete untracked file %s?" \
+> +				[short_path [lindex $untracked_list]] \
+> +				]
+> +		} else {
+> +			set query [mc \
+> +				"Delete these %i untracked files?" \
+> +				$untracked_cnt \
+> +				]
+> +		}
+> +
+> +		set reply [tk_dialog \
+> +			.confirm_revert \
+> +			"[appname] ([reponame])" \
+> +			"$query
+> +
+> +[mc "Files will be permanently deleted."]" \
+> +			question \
+> +			1 \
+> +			[mc "Do Nothing"] \
+> +			[mc "Delete Files"] \
+> +			]
+> +
+> +		if {$reply == 1} {
+> +			delete_files $untracked_list
+> +		}
+> +	}
+> +}
+> +
+> +# Delete all of the specified files, performing deletion in batches to allow the
+> +# UI to remain responsive and updated.
+> +proc delete_files {path_list} {
+> +	# Enable progress bar status updates
+> +	$::main_status start [mc "Deleting"] [mc "files"]
+> +
+> +	set path_index 0
+> +	set deletion_errors [list]
+> +	set deletion_error_path "not yet captured"
+> +	set batch_size 50
+> +
+> +	delete_helper \
+> +		$path_list \
+> +		$path_index \
+> +		$deletion_errors \
+> +		$deletion_error_path \
+> +		$batch_size
+> +}
+> +
+> +# Helper function to delete a list of files in batches. Each call deletes one
+> +# batch of files, and then schedules a call for the next batch after any UI
+> +# messages have been processed.
+> +proc delete_helper \
+> +	{path_list path_index deletion_errors deletion_error_path batch_size} {
+> +	global file_states
+> +
+> +	set path_cnt [llength $path_list]
+> +
+> +	set batch_remaining $batch_size
+> +
+> +	while {$batch_remaining > 0} {
+> +		if {$path_index >= $path_cnt} { break }
+> +
+> +		set path [lindex $path_list $path_index]
+> +
+> +		set deletion_failed [catch {file delete -- $path} deletion_error]
+> +
+> +		if {$deletion_failed} {
+> +			lappend deletion_errors $deletion_error
+> +
+> +			# Optimistically capture the path that failed, in case
+> +			# there's only one.
+> +			set deletion_error_path $path
+
+I don't see why you would do this for _only_ one path. Either do it for 
+every path. And since you're recording errors for each path, it makes 
+sense to record the corresponding path too. Or, just count how many 
+paths failed, and report that. I don't see why we'd want to be between 
+those two.
+
+> +		} else {
+> +			remove_empty_directories [file dirname $path]
+> +
+> +			# Don't assume the deletion worked. Remove the file from
+> +			# the UI, but only if it no longer exists.
+> +			if {![lexists $path]} {
+> +				unset file_states($path)
+> +				display_file $path __
+> +			}
+> +		}
+> +
+> +		incr path_index 1
+> +		incr batch_remaining -1
+> +	}
+> +
+> +	# Update the progress bar to indicate that this batch has been
+> +	# completed. The update will be visible when this procedure returns
+> +	# and allows the UI thread to process messages.
+> +	$::main_status update $path_index $path_cnt
+> +
+> +	if {$path_index < $path_cnt} {
+> +		# The Tcler's Wiki lists this as the best practice for keeping
+> +		# a UI active and processing messages during a long-running
+> +		# operation.
+> +
+> +		after idle [list after 0 [list \
+> +			delete_helper \
+>  			$path_list \
+> -			[concat $after [list ui_ready]]
+> +			$path_index \
+> +			$deletion_errors \
+> +			$deletion_error_path \
+> +			$batch_size \
+> +			]]
+
+Using `after idle` means in theory we put an undefined maximum time 
+limit on the deletion process. Though I suspect in real life it would be 
+a pretty short time.
+
+Nonetheless, should you instead do this asynchronously, instead of 
+waiting for the event loop to enter an idle state? This means using 
+`after 0` directly, instead of doing `after idle [list after 0...`. I 
+haven't tested it, but AFAIK this should also keep the UI active while 
+not depending on the state of the event loop.
+
+What benefits does your way have over just passing the entire list 
+(without batching) to an async script to do processing in the 
+background?
+
+>  	} else {
+> -		unlock_index
+> +		# Finish the status bar operation.
+> +		$::main_status stop
+> +
+> +		# Report error, if any, based on how many deletions failed.
+> +		set deletion_error_cnt [llength $deletion_errors]
+> +
+> +		if {$deletion_error_cnt == 1} {
+> +			error_popup [mc \
+> +				"File %s could not be deleted: %s" \
+> +				$deletion_error_path \
+> +				[lindex $deletion_errors 0] \
+> +				]
+> +		} elseif {$deletion_error_cnt == $path_cnt} {
+> +			error_popup [mc \
+> +				"None of the selected files could be deleted." \
+> +				]
+> +		} elseif {$deletion_error_cnt > 1} {
+> +			error_popup [mc \
+> +				"%d of the selected files could not be deleted." \
+> +				$deletion_error_cnt]
+> +		}
+
+The same comment as above applies here: either show error messages for 
+all paths, or for none. I don't see why you want to make a single error 
+path a special case.
+
+> +
+> +		reshow_diff
+> +		ui_ready
+> +	}
+> +}
+> +
+> +# This function is from the TCL documentation:
+> +#
+> +#   https://wiki.tcl-lang.org/page/file+exists
+
+Why include the link? My guess is "to give proper credit". Do I guess 
+correctly?
+
+> +#
+> +# [file exists] returns false if the path does exist but is a symlink to a path
+> +# that doesn't exist. This proc returns true if the path exists, regardless of
+> +# whether it is a symlink and whether it is broken.
+> +proc lexists name {
+
+Nitpick: wrap the "name" in braces like:
+
+  proc lexists {name} {
+
+Also, maybe re-name it to 'path_exists'? 'lexists' is not very intuitive 
+unless being used _specifically_ in the context of links. Its _use_ is 
+in context of paths, even though it is used to work around links.
+
+> +	expr {![catch {file lstat $name finfo}]}
+> +}
+> +
+> +# Remove as many empty directories as we can starting at the specified path.
+
+Nitpick: maybe change it to something like this?
+
+  Remove as many empty directories as we can starting at the specified 
+  path, going up in the directory tree.
+
+It was not obvious to me from reading the comment that you were going up 
+the directory tree. I thought you were going across the breadth of the 
+directory, and was puzzled why you'd do that.
+
+But maybe that's just me. So, I don't mind if you keep it the way it is 
+either.
+
+> +# If we encounter a directory that is not empty, or if a directory deletion
+> +# fails, then we stop the operation and return to the caller. Even if this
+> +# procedure fails to delete any directories at all, it does not report failure.
+> +proc remove_empty_directories {directory_path} {
+> +	set parent_path [file dirname $directory_path]
+> +
+> +	while {$parent_path != $directory_path} {
+> +		set contents [glob -nocomplain -dir $directory_path *]
+> +
+> +		if {[llength $contents] > 0} { break }
+> +		if {[catch {file delete -- $directory_path}]} { break }
+> +
+> +		set directory_path $parent_path
+> +		set parent_path [file dirname $directory_path]
+>  	}
+>  }
+
+I did some quick testing on my system, and it works fine. Thanks.
+
+-- 
+Regards,
+Pratyush Yadav
