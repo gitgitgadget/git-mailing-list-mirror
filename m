@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7CC31F454
-	for <e@80x24.org>; Sun,  3 Nov 2019 19:40:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22B561F454
+	for <e@80x24.org>; Sun,  3 Nov 2019 19:59:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728132AbfKCTkl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Nov 2019 14:40:41 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:39719 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727913AbfKCTkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Nov 2019 14:40:41 -0500
-Received: by mail-lf1-f68.google.com with SMTP id 195so10624701lfj.6
-        for <git@vger.kernel.org>; Sun, 03 Nov 2019 11:40:39 -0800 (PST)
+        id S1728159AbfKCT7a (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Nov 2019 14:59:30 -0500
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:38052 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727343AbfKCT73 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Nov 2019 14:59:29 -0500
+Received: by mail-lf1-f67.google.com with SMTP id q28so10680468lfa.5
+        for <git@vger.kernel.org>; Sun, 03 Nov 2019 11:59:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=0GvBV7qedXxyCwPSB5EX2VGAt662eMHBj7Yzs6WFUSg=;
-        b=FIeSR8wb+34vA+r0ungRZkszOv/4D1taIuKEg+fJHpogGlvqtZ3yZxhoQMABg6yq0v
-         CAIpG1p2oNjfftkjjamMmLA2Z7GGHtC93Bncs2YIx7uH/Ig04QV7b7nbFnrlzcFTeqbW
-         a8hL6Q/GeU3lCbOwGwVCR5vmKQ1ojSK6uegm6j7ZAtj7j+SCu8mReOQQRjXcWv1rgo/5
-         +ITsH7WxRjxVH4FlHJt+d1uxyqjYjdfc7O/g9yKRNqub5IWrXb8h5F1qKdghFUBLEZAL
-         oCdWTgCOmKGIl54tdJ6mNerksTbChKhftzd9YIs8pARMmT9SqULx/Y6TpTMnnkoY7go1
-         tN+A==
+        bh=xE68Bf0/4SHc3uPwfvnWmJImikI6lzxGzutnaCUm7EQ=;
+        b=Tkdryba8FLei+p0QWqIDvQs3xex+Lmgpq2s2XFqJ7Swkaqw/rJTD+v94ax0MJI2sOj
+         9Ac5euWgKYUTFHLcmDyw5shyYjivXNivaQTMSS3HG780EMgCbeyXfwQV74nY9M0vCgDV
+         O9MyyKMUOXFaGSXe+KaWd1Y2Hi4MFWFX7h/SVpCA7aOv/1oEUM+SnRbYbI1NKE4wXVfZ
+         gbvE4YtVKpNl7GjgC0HCSJVGXL5SqPp+KgxnFZ3sS363cS/1WHB97Ewfug1LC89I08g4
+         NSL8JYcF3QgU6lhCcHTDuDpfqHIXkVOUoGdGMqutETtX0v7RAccpDmeGYsDxbKrvLuaB
+         lVWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
          :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=0GvBV7qedXxyCwPSB5EX2VGAt662eMHBj7Yzs6WFUSg=;
-        b=EoLv79uxqv3v+Cg9mYTX4LxS7h08OkaAGleHdmC0jkd8wKzC78vm2/9FFTpYR8nNQS
-         aOkJ8iEw0A2/qfw5GOh7K+1vtrivZs0dHXBAbZLj2j29rG0Qq2FV5HSWAWgDa8+Z46jd
-         VCEFKa03j5rJ2VGkiKApUA1PszqhZAU5gA5deTszAxmNKsZJoBOLgUjA4m+kE76e9kU+
-         Ea3p+Yfp5sReLhGio570nWiHvKNHBEzk+RevNM7D0VdZ+6dIdO4TjAakkTwEXICD7REE
-         wmRTclNnRzEQpv1aoTIzuF+XAjckfHPx66159QCNOzYZVLcyRWpmqwKghGqAS4dQkhQE
-         oOSQ==
-X-Gm-Message-State: APjAAAWpL68ZIN3M0Rt6U/+1uVbSOngGPj9xJpXH4FSOOjZ4BKBSIzNA
-        Lqey6or+UN1oeeIq0p0pWVg+F3fATWY=
-X-Google-Smtp-Source: APXvYqxnaL85A2V01olc2Pz7+o4hS9Qq3Jc6/xSbTzXdmZ/KZlZz0D0E0knInE3XmBsk0k3ANVI45Q==
-X-Received: by 2002:a19:8c1c:: with SMTP id o28mr14265110lfd.105.1572810038267;
-        Sun, 03 Nov 2019 11:40:38 -0800 (PST)
+        bh=xE68Bf0/4SHc3uPwfvnWmJImikI6lzxGzutnaCUm7EQ=;
+        b=HqtsfQZmXcMWWwPPEalxxwf3ULN1mDA1voRGJjWZezzLT311Apu8brlKg9jT7jruNu
+         EWQST913K2CuazOPnsoYXL7BipfBpMtXlFLv+Zu439FrMQD/31/sA2lhpqw7BPqN+z6k
+         2xGUKgVUhxT/h5OJXolqI5oVqO2qcGddZgKfyHbzJEAnvUpinCOKOubaXUYyz26DXJnq
+         pPO5pmkaMbLtkmQahhWSbgLodVPA5ShUi3VnQK8fUWULiQ1Mt4jOJD/L1+EH7reln6sd
+         1Df2dALC0y1LXDaBlZlBEzPrPm/p4driFUTqsZ1WgRUtM7bQKlOkHsG1VM3SxxqVYzNj
+         CohQ==
+X-Gm-Message-State: APjAAAXPni52kuYC7ZWjxffr+/x/wujBBLPfdw++twULAeSPY+CmHK9H
+        VS74tLwqVzS4fpnKqMCEDMA=
+X-Google-Smtp-Source: APXvYqw1fsnEXJ8bGKgjrRxEhRn+1QzsvRRt1xTjapy2dV7OPfb3atGl8FUSuQREmbXTJAnl9lan8w==
+X-Received: by 2002:a05:6512:146:: with SMTP id m6mr13729211lfo.98.1572811166663;
+        Sun, 03 Nov 2019 11:59:26 -0800 (PST)
 Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id u13sm5206923ljl.71.2019.11.03.11.40.37
+        by smtp.gmail.com with ESMTPSA id b23sm5929801lfj.49.2019.11.03.11.59.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 03 Nov 2019 11:40:37 -0800 (PST)
+        Sun, 03 Nov 2019 11:59:26 -0800 (PST)
 From:   Jakub Narebski <jnareb@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 3/4] doc: dissuade users from trying to ignore tracked files
-References: <20191102192615.10013-1-sandals@crustytoothpaste.net>
-        <20191102192615.10013-4-sandals@crustytoothpaste.net>
-        <86h83lhugj.fsf@gmail.com>
-        <20191103185908.GA32531@camp.crustytoothpaste.net>
-Date:   Sun, 03 Nov 2019 20:40:36 +0100
-In-Reply-To: <20191103185908.GA32531@camp.crustytoothpaste.net> (brian
-        m. carlson's message of "Sun, 3 Nov 2019 18:59:08 +0000")
-Message-ID: <861ruoiw97.fsf@gmail.com>
+To:     "Abimbola via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Abimbola Olaitan <craftwordltd@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] remove-annotate: change cmd_annotate to cmd_blame
+References: <pull.442.git.1572753114.gitgitgadget@gmail.com>
+        <6e164528059529fe07a53f0cfceb22a388a6758b.1572753114.git.gitgitgadget@gmail.com>
+Date:   Sun, 03 Nov 2019 20:59:24 +0100
+In-Reply-To: <6e164528059529fe07a53f0cfceb22a388a6758b.1572753114.git.gitgitgadget@gmail.com>
+        (Abimbola via GitGitGadget's message of "Sun, 03 Nov 2019 03:51:50
+        +0000")
+Message-ID: <86tv7khgtf.fsf@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -72,108 +71,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> On 2019-11-03 at 15:04:44, Jakub Narebski wrote:
+"Abimbola via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> Why the change between formatting '``assume unchanged''' (with double
->> quotes and space separated) and 'skip-worktree' (without quotes, and
->> kebab-cased)?  In the commit message you write about assume-unchanged
->> and skip-worktree.
->>=20
->> I guess that follows the inconsistency in git-update-index(1) headers,
->> namely we have
->>=20
->>   USING ``ASSUME UNCHANGED'' BIT
->>   ------------------------------
->>=20
->> but
->>=20
->>   SKIP-WORKTREE BIT
->>   -----------------
->>=20
->> This inconsistency is much more visible when both names are on the same
->> line, however.
+> Subject: Re: [PATCH 1/5] remove-annotate: change cmd_annotate to cmd_blame
+> From: Abimbola <craftwordltd@gmail.com>
 >
-> Yeah, I can change them to make them consistent.  I did preserve the
-> existing formatting for both, as you mentioned.
+> Changing this command is to remove the annotate.c file which does almost
+> the same thing as blame.c. git annotate will invoke blame directly
 
-Thanks in advance.  This inconsistence just looks strange in one line.
+Both the summary and the detailed description of the changes is not
+entirely clean.  What is this 'remove-annotate' subsystem?  Why we would
+want to change cmd_annotate to cmd_blame -- and wouldn't we loose
+difference (in defaults, and thus in output format) between git-blame
+and git-annotate?
 
->> I'm not sure if it is a place for it, but the proposed text treats
->> assume-unchanged and skip-worktree as similarly unsuited for intended
->> purpose.  However, their failure modes are different: (ab)using the
->> assume-unchanged for "ignore changed to tracked files" may lead to data
->> loss (as changes are overwritten), while with skip-worktree the trouble
->> is that some operations that should succeed (like unstashing) are
->> unnecessarily blocked - but no data loss.
 >
-> I agree the failure modes can be different, but from my experience there
-> are people who have seen checkout failures with both bits set
-> independently.  I'm not exactly sure what those cases are, but folks do
-> see them on Stack Overflow quite frequently.
+> Signed-off-by: Abimbola <craftwordltd@gmail.com>
+
+Why not
+
+  Signed-off-by: Abimbola Olaitan <craftwordltd@gmail.com>
+
+> ---
+>  git.c | 143 +++++++++++++++++++++++++++++++++-------------------------
+>  1 file changed, 82 insertions(+), 61 deletions(-)
+
+Looks like a big change, strangely.  And annotate.c is not actually
+deleted...
+
 >
-> Even if there is a difference in failure modes, I'd rather encourage
-> people to just not use this mechanism rather than explain why or in
-> which cases it won't do what you want.
+> diff --git a/git.c b/git.c
+> index ce6ab0ece2..84042846b5 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -5,17 +5,17 @@
+>  #include "run-command.h"
+>  #include "alias.h"
+>=20=20
+> -#define RUN_SETUP		(1<<0)
+> -#define RUN_SETUP_GENTLY	(1<<1)
+> -#define USE_PAGER		(1<<2)
+> +#define RUN_SETUP (1 << 0)
+> +#define RUN_SETUP_GENTLY (1 << 1)
+> +#define USE_PAGER (1 << 2)
 
-What I wanted to say here is that if you really, really need to abuse
-those mechanism for "ignore tracked files changes", it is better to use
-skip-worktree bit -- at least you wouldn't loose your data (your
-precious changes).
+Please, please do not include such unnecessary (and possibly accidental)
+changes.
 
-Nb. I have experimented with both assume-unchanged and skip-worktree,
-so I know their annoyances, but I have not had a need to use them.
+It makes review harded (where are the actual changes), and it makes
+merging it harder (as it can much more easily conflict with other
+changes in flight).
 
->> I would really like to see a simple example of such template, so that
->> even people who are unfamiliar with Ruby's ERB can think of equivalent
->> solution for their language or toolchain of choice.
->
-> I hesitated to mention ERB, but I wasn't sure that folks would know what
-> we meant by a "templating mechanism".  The reason I had chosen to
-> mention it is that someone could search for "Ruby ERB" and find out what
-> it looked like and then look for an option in their own language.
+Also, those changes that remove aligning of values make code less
+readable, and would probably be rejected.
 
-I would like to see not an example of template, but example how such
-template can be used in place of "ignore tracked files change".
+[skip whitespace-only changes (I hope)]
 
-> My concern with adding such a template is that an example will likely
-> grow this section quite a bit, and it's meant as a short aside to help
-> people avoid making a common mistake and guide them to a proper solution
-> rather than a comprehensive howto.  I'm planning on adding a FAQ
-> document in the future that covers a lot of these issues in more detail
-> and helps folks figure out solutions to common problems, and I'd prefer
-> to explain this more in depth there.
+> -static void list_builtins(struct string_list *list, unsigned int exclude=
+_option);
+> +static void list_builtins(struct string_list *list,
+> +			  unsigned int exclude_option);
 
-Your proposed change:
+This may be a good cleanup, but is unrelated to the change in question.
+Better leave it to a separate patch.
 
-  +If the file you want to change is some sort of configuration file (say,
-  +for a build tool, IDE, or editor), a common solution is to use a
-  +templating mechanism, such as Ruby's ERB, to generate the ignored
-  +configuration file from a template stored in the repository and a source
-  +of data using a script or build step.
+[skip horizontal and vertical whitespace changes (I hope)]
 
-I don't see how such templating mechanism could be used.  You have some
-kind of configuration file with placeholders comitted, and you have a
-version of this file with local changes -- how templating mechanism
-could solve this?  I would like to see few lines of an example and its
-use.
+> @@ -93,8 +94,7 @@ static int list_cmds(const char *spec)
+>  			strbuf_add(&sb, spec + 5, len - 5);
+>  			list_cmds_by_category(&list, sb.buf);
+>  			strbuf_release(&sb);
+> -		}
+> -		else
+> +		} else
+>  			die(_("unsupported command listing type '%s'"), spec);
+>  		spec +=3D len;
+>  		if (*spec =3D=3D ',')
 
+This may be a good cleanup, but is unrelated to the change in question,
+Better leave it to another separate patch.
 
-Alterantives:
-~~~~~~~~~~~~~
+> @@ -467,7 +476,7 @@ static int run_builtin(struct cmd_struct *p, int argc=
+, const char **argv)
+>  static struct cmd_struct commands[] =3D {
+>  	{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+>  	{ "am", cmd_am, RUN_SETUP | NEED_WORK_TREE },
+> -	{ "annotate", cmd_annotate, RUN_SETUP | NO_PARSEOPT },
+> +	{ "annotate", cmd_blame, RUN_SETUP },
+>  	{ "apply", cmd_apply, RUN_SETUP_GENTLY },
+>  	{ "archive", cmd_archive, RUN_SETUP_GENTLY },
+>  	{ "bisect--helper", cmd_bisect__helper, RUN_SETUP },
 
-In our build system, we have versioned Makefile, and not versioned
-config.mak (with local configuration), which is included by Makefile.
+That looks like the major portion of the change.  How the look and feel
+of git-annotate command is preserved, though?
 
-In many cases using environment variables to provide local changes is
-recommended, something like e.g.
+> @@ -478,10 +487,9 @@ static struct cmd_struct commands[] =3D {
+>  	{ "check-attr", cmd_check_attr, RUN_SETUP },
+>  	{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
+>  	{ "check-mailmap", cmd_check_mailmap, RUN_SETUP },
+> -	{ "check-ref-format", cmd_check_ref_format, NO_PARSEOPT  },
+> +	{ "check-ref-format", cmd_check_ref_format, NO_PARSEOPT },
 
-  AWS::S3::Base.establish_connection!(
-    :access_key_id     =3D> ENV['S3_KEY'],
-    :secret_access_key =3D> ENV['S3_SECRET']
-  )
+This may be a good cleanup, but is unrelated to the change in question.
+Better leave it to a patch.
 
-
-Best,
+Regards,
 --=20
 Jakub Nar=C4=99bski
