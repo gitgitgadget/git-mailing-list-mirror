@@ -2,111 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16F611F454
-	for <e@80x24.org>; Sun,  3 Nov 2019 18:17:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BE221F454
+	for <e@80x24.org>; Sun,  3 Nov 2019 18:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727365AbfKCSRC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Nov 2019 13:17:02 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37046 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726719AbfKCSRB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Nov 2019 13:17:01 -0500
-Received: by mail-wr1-f68.google.com with SMTP id t1so8645634wrv.4
-        for <git@vger.kernel.org>; Sun, 03 Nov 2019 10:17:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=bF8vGpknLDbIE1AiLlzc3Dndi3j+W63B5b052HZVs48=;
-        b=OyNXmLHiZRXxIR9b9NrEtTznOoAeo3XgCT4lJD6SA6Wvo7dUzkEgknR0zdRc46aDcJ
-         hfBrpJX0JQXIcicCFwG6x64g9zjZNc85/J9KgolZJMoEOOkC/ssq3zKQ4BhEUhpOiI6B
-         kLWpYwsHUn5ztq+asYRaoyT+15sK5fyoB6W1LrRsOv2As9WM85HDL+Pa9jHudggoqfva
-         CMb6aW6OejK9+OaKJZhp/LwPIx7D1ylSQZlylSwlehpqNz3mBTOs6Erp/El18mng4vK1
-         dBM6Jl7pTne6QB+SYdpdKmzy+N3LabUDVtenyjT151WaDwes+w33vHflO4aejF5ZWTRl
-         QQ0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=bF8vGpknLDbIE1AiLlzc3Dndi3j+W63B5b052HZVs48=;
-        b=QIi5HmIx1IZ79SaFfkI7TRO9Mpwsu2CVesVlEE122kdQlil4ui87L/9Y7jqzeGYCY6
-         Sw1QlKBwjYYqy8QSJ+5OhJMDjWEZtm12+je6Q+tOGuvRtqGRcn0+IVKARukf2F1qNQtW
-         Y6AEeka4wLzDKHNg6p3J1nmyigDffWx549IUv/OcLZ8b67jm8T4/RumcNilqZfvcfctD
-         uiFg74CgtF+OIje5rwYq8JtG6tpoyzcuh2JSrkCNPuCXpo7/OQJ5sle9JL9mjGB4B2kk
-         0tAlIFELdffp5RS8GvadN2/lKQCC8o2d8zCs5Yn6Sg0CEJ1sRN+yXUWnHA8inS9v0Jim
-         UYbg==
-X-Gm-Message-State: APjAAAXh3YYxy5H/MpCIljqlxLpX1wGGfzhDTfeUbQ25vWsMTQwuq8pE
-        kikKKXCk8om2YDGiwimfLdk=
-X-Google-Smtp-Source: APXvYqzf28F1Q2axeQde6By9C7FNLLtAhe4GsUdyMLzYCkq3wy07yeNZb4XJ+bs5gLQXi8oE3G/J8w==
-X-Received: by 2002:a05:6000:12d1:: with SMTP id l17mr6185348wrx.261.1572805019368;
-        Sun, 03 Nov 2019 10:16:59 -0800 (PST)
-Received: from localhost (host96-200-dynamic.171-212-r.retail.telecomitalia.it. [212.171.200.96])
-        by smtp.gmail.com with ESMTPSA id a7sm15443332wrr.89.2019.11.03.10.16.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 03 Nov 2019 10:16:58 -0800 (PST)
-Date:   Sun, 3 Nov 2019 19:16:57 +0100
-From:   Davide Berardi <berardi.dav@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] Segmentation Fault on non-commit --branch clone
-Message-ID: <20191103181657.GA89185@carpenter.lan>
-References: <20191101002432.GA49846@carpenter.lan>
- <nycvar.QRO.7.76.6.1911012000160.46@tvgsbejvaqbjf.bet>
- <20191101193558.GA1169@sigill.intra.peff.net>
- <xmqqh83m1t3c.fsf@gitster-ct.c.googlers.com>
+        id S1727880AbfKCS7P (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Nov 2019 13:59:15 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:59872 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727322AbfKCS7P (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 3 Nov 2019 13:59:15 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0039D6052F;
+        Sun,  3 Nov 2019 18:59:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1572807553;
+        bh=Fj7TrRsRGFjuMXYGGUCZwRfheJ1KpVjSCQhG/5eZCtM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=c0q/Bg2iMSbhdr1oTufzgnFwNQ/ai7gBTvfBa/Lgc7G+Ft93OItR5nVDO5Vzy6gl/
+         LZgpwyNv874Lm64/dTTdjmmdFdC6C9utXTKmgZvwCOTFhxZ8JpI0VLeEoqZ8wpDNOY
+         rZ+2X+MSmkQF2j4ueat01co3REwn3lo3YhdExfGO2meMaukOjMnaLgN84UPQnhqUfH
+         OeVPgSN0J/DKJeWZIChVg0o+Jtxy5w0VYPLMQGMQS+DVJwpV7qQnd2PVCqXSfyal18
+         zFYL3qZpnV57cTcXI0QBOiT4/tA46nwpbAVCbdbSC6y+0QpswBdppEC4Et7gHx/1Bj
+         PFS+/LZHv34e8r7mYNpMCwDzeoU0Jt/269ODaHyWJ5sAc1WIeLmCYoIEQ9ik+SoQQx
+         6CumrubMKi+FEuTqPQu/era+ZQ2Q7EH+ccJB15/naM+tWoYf5Oy/Px3X8ycTlYIpw0
+         rmI20JUA2erDCBEh4wku8EWc3d/xCPxlC39cE5SrbruruGuNGbG
+Date:   Sun, 3 Nov 2019 18:59:08 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 3/4] doc: dissuade users from trying to ignore tracked
+ files
+Message-ID: <20191103185908.GA32531@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <20191102192615.10013-1-sandals@crustytoothpaste.net>
+ <20191102192615.10013-4-sandals@crustytoothpaste.net>
+ <86h83lhugj.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="7JfCtLOvnd9MIVvH"
 Content-Disposition: inline
-In-Reply-To: <xmqqh83m1t3c.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <86h83lhugj.fsf@gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.3.0-1-amd64)
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 02, 2019 at 07:16:23PM +0900, Junio C Hamano wrote:
->Jeff King <peff@peff.net> writes:
->
->> I don't know how often this would actually help users, though. It _is_ a
->> pretty rare situation to ask for a non-commit. So maybe it's all
->> over-engineering, and we should start with just die(). If somebody comes
->> along later and wants to enhance it, it should be pretty
->> straightforward.
->
->I like that; after update_head() finishes, there are a few clean-up
->things that the caller wants to do besides a checkout() call, but if
->we make update_head() return a failure, perhaps the caller side
->change would be as small as the attached patch.  That would go nicely
->with the "make the result just barely usable" approach of leaving an
->unborn master branch I suggested in a separate message, I would think.
->
-Thank you all for your precious comments, I've tried to implement
-your suggestions and I've sent the patch here.
 
-The problem with the proposed approach was that the code was
-incompatible with some tests (specifically the tests which specifies an
-empty .git directory would fail and fallback to the unborn master
-branch).
+--7JfCtLOvnd9MIVvH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The lookup commit have two error-paths:
+On 2019-11-03 at 15:04:44, Jakub Narebski wrote:
+> Why the change between formatting '``assume unchanged''' (with double
+> quotes and space separated) and 'skip-worktree' (without quotes, and
+> kebab-cased)?  In the commit message you write about assume-unchanged
+> and skip-worktree.
+>=20
+> I guess that follows the inconsistency in git-update-index(1) headers,
+> namely we have
+>=20
+>   USING ``ASSUME UNCHANGED'' BIT
+>   ------------------------------
+>=20
+> but
+>=20
+>   SKIP-WORKTREE BIT
+>   -----------------
+>=20
+> This incconsistency is much more viible when both names are on the same
+> line, however.
 
-1. the commit cannot be found;
-2. the commit is found and cannot be casted to a commit (whoops!).
+Yeah, I can change them to make them consistent.  I did preserve the
+existing formatting for both, as you mentioned.
 
-so, I've returned the second condition using an auxiliary variable and
-declaring a new lookup_commit function keeping compatibility with the
-old one.
+> I'm not sure if it is a place for it, but the proposed text treats
+> assume-unchanged and skip-worktree as similarly unsuited for intended
+> purpose.  However, their failure modes are different: (ab)using the
+> assume-unchanged for "ignore changed to tracked files" may lead to data
+> loss (as changes are overwritten), while with skip-worktree the trouble
+> is that some operations that should succeed (like unstashing) are
+> unnecessarily blocked - but no data loss.
 
-I'm sorry for my errors but I'm far for an expert of git internals,
-thank you (all) for your time and kindness.
+I agree the failure modes can be different, but from my experience there
+are people who have seen checkout failures with both bits set
+independently.  I'm not exactly sure what those cases are, but folks do
+see them on Stack Overflow quite frequently.
 
-ciao,
-D.
+Even if there is a difference in failure modes, I'd rather encourage
+people to just not use this mechanism rather than explain why or in
+which cases it won't do what you want.
+
+> I would really like to see a simple example of such template, so that
+> even people who are unfamiliar with Ruby's ERB can think of equivalent
+> solution for their language or toolchain of choice.
+
+I hesitated to mention ERB, but I wasn't sure that folks would know what
+we meant by a "templating mechanism".  The reason I had chosen to
+mention it is that someone could search for "Ruby ERB" and find out what
+it looked like and then look for an option in their own language.
+
+My concern with adding such a template is that an example will likely
+grow this section quite a bit, and it's meant as a short aside to help
+people avoid making a common mistake and guide them to a proper solution
+rather than a comprehensive howto.  I'm planning on adding a FAQ
+document in the future that covers a lot of these issues in more detail
+and helps folks figure out solutions to common problems, and I'd prefer
+to explain this more in depth there.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--7JfCtLOvnd9MIVvH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl2/I3wACgkQv1NdgR9S
+9osEVg//VAfWcwTwPvYCkFWqa+sfx56a/IgDtVvKupSk5pIykS2UIRsUaANgVHdD
+3QFfHAs4thJvanRg9wTK1nZZAM0WaNdhhrffXVo2XSBOrRydnT8RdUlVO37ESYte
+kH+TWVBLKVa8d719ktDKD6qG+GD4BpwGOQB85HF1EabdoaNFS0O1ab6qhLZK8i+V
+QJq5d5ZWycosI3aZ94awd0wuoidxsvEmWzfAjKbYc+THMuAHR86vIirt6lPU3FqD
+nlE8ZRFEY4sSxEXsugd+/WhnaU5FMM8JqTA6TZlFoG9C8mYad/Bwi68dKnDXv85T
+wJNX3+PJpPteByGjyTILHE/1kTas+eNhek4YHiiXjbIFtXhMpz5BxlJaZFZ0KPQc
+GNRQJGRKjM1zhHz5lKR3Fztx7x/YbTCvorv+jx0DDgPGBwC73frPooht7+8yscTr
+g356xX3AIWZgcB/GxvPx43EsG72Yb3Ei5K3qzEPlYUnm2MeqzJH2VHivcno6CUT9
+e/bzUW003Zn3kX7sXqwusfwaitqH5j4V+gLPt5WZpgQggaqgJi1z9yLpmDubYCSS
+ui6GjZBaC7M8dpp/ynUt9WVatwzpyRrapAGZrxZ9x6xgoEtmK/iGwB5x8mwCC5u2
+E6OFUzQnfNF63mB+wrGW8NTV146mEACp+enaSmcCj2QjSIERP20=
+=IutC
+-----END PGP SIGNATURE-----
+
+--7JfCtLOvnd9MIVvH--
