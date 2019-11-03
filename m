@@ -2,148 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65A241F454
-	for <e@80x24.org>; Sun,  3 Nov 2019 20:17:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4E901F454
+	for <e@80x24.org>; Sun,  3 Nov 2019 20:27:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727332AbfKCURP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Nov 2019 15:17:15 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:36042 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726408AbfKCURO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Nov 2019 15:17:14 -0500
-Received: by mail-lf1-f68.google.com with SMTP id a6so7278037lfo.3
-        for <git@vger.kernel.org>; Sun, 03 Nov 2019 12:17:12 -0800 (PST)
+        id S1727940AbfKCU1C (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Nov 2019 15:27:02 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:45019 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726408AbfKCU1C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Nov 2019 15:27:02 -0500
+Received: by mail-wr1-f65.google.com with SMTP id f2so5874418wrs.11
+        for <git@vger.kernel.org>; Sun, 03 Nov 2019 12:27:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=BPyfOgfVd0BIhqre7yntwXGdBCsCUWWMD5FcK0RIeWU=;
-        b=hB8Hh5yc6CJlydI/I+o1W0SLEZdjd8yAY/F+zNN/7h/AwcBcVO3Fab98fLRylO/n4A
-         OXu0M/Exu6mCsi14aKVwYnE/nUhZBKTlKvJKe8cUWIdFS5d8dRPTJrwsASYntL36W70l
-         2AzGgHpyQCm52vz5XS+rEHuDmBNJImFvrEaETC8JNXy8vkhvTel/Oi4uf7vJgKIQad7k
-         fTO21XGh5+KrEEb2vVSml/d7AhCRaa+0rKf/DhlE/rr4DT94rZa+nKPtAPAapzc2o7in
-         so91rxmEd2z8F4JMQ8qtdjEFwmQJqV9uHRkrz4jubzMUQiUuzBEfc47hvXuf75onSy2h
-         lFnQ==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=U1Td/8WKxmB4dcTpgqaEvtBclWh5EqskS73oQ0jrVy8=;
+        b=e90wxnB6kCv8cd6kDPdASMuC3AIsWl39eFpQKxDP2zO8XxrUpgxMeMbn+pRTi1q3mw
+         yirHRWqV9FYsv2Q7K1nOlMtdPP4QxHACDPi8BUrrANFHD+5KamBjJ6fzUsPeLcz66E+B
+         TtRv6W4dbhuY21RIaUvfh8n+I5IhDpotyBUnyL00zvTpVFFiG0Eqx/5kOFRJD/U+TT1k
+         q/93X7eVUCN8Ds1vr0gFQDT70W4UdBdmVrS18OoJA+xhVFy9UiDl1wDOuEjug9+kI5xk
+         XrsufJDvm9blVYqQFLdFMKzFjD7JJo1tLsO3PDreyN4o9BcIU2OHkEe6pKdQUr8k6i3B
+         ocug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=BPyfOgfVd0BIhqre7yntwXGdBCsCUWWMD5FcK0RIeWU=;
-        b=RrFGD0YyJO2fN99YvdmrWOZ2bIZi833XqPh6LjvvVIhK1cnB5fSNx/C7tYcxINbhUa
-         GijOJ1kr4Bndb2tzAv4A8qrDso2jSOkGk1CaW+HbQ0tDJRoN0TY+/+A05uU02a9g27m/
-         ohjOS428IYBfpaXcTCv0RhTbTyYTDuG2hRYbqkH9Vg5J5YpFDev8HdRzUOARL0RhpkoR
-         UtnXHW39UUmdSX35OVIeQx+eSjbaAsMSG76JJuimaMwZ4rxAdQ33oTNC/jwQbGWgU2Fv
-         ZS2oZ0VBjKnZKrH1mjnyv1IRXXYJOQK7ksf8snbPtgSdWQkxhwxIb5H0ZlRi0pmrwvXb
-         IOOw==
-X-Gm-Message-State: APjAAAX8V6KvQuN3Z8McaSpcSnbF74t9SZ+y3/5hD9Ey2fk60hUtJbX2
-        OFIQQInYOcak5n14PfnhW3F6628s
-X-Google-Smtp-Source: APXvYqztKRfq4aPKz8Y5Ly6e3kIvi+9Obxvf10djfrZ9wC3oSytZyPmU6hQzzfDIBhR2eNP+l9YmKA==
-X-Received: by 2002:a19:f610:: with SMTP id x16mr2255736lfe.141.1572812231354;
-        Sun, 03 Nov 2019 12:17:11 -0800 (PST)
-Received: from [192.168.10.10] (c83-252-115-0.bredband.comhem.se. [83.252.115.0])
-        by smtp.gmail.com with ESMTPSA id s27sm5808335lfc.43.2019.11.03.12.17.10
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=U1Td/8WKxmB4dcTpgqaEvtBclWh5EqskS73oQ0jrVy8=;
+        b=pgxrDzeZ9yxnEgnViCy51TcUZPA4kv/IfHqrblWbgSj03lUnDI0iAp0SIYUC06BXdn
+         qxo4cZfD4X8zKnc8yXMApFT9cqH+f00aZMx0SM3kQ3etzoeWlIKuhiPFgoKCB5AEaTlq
+         arPAM4KRr2Kx1lCAELvlRDkNx8QVCStTsZBHENL8tDgACkNjPoHNDBBLAdOEn+kMV7Qr
+         fakgFdbOZTUAt/U+QP/+QIqMqqrLJKYHssOtuId/xean5QKcz4Ig8ui1zQGAdBnyS8t8
+         yDjUbfVB0SBD06SskbBpEb7HU3Qw2W2RhZ5amYRiutPI7IBUlAty/fVj0v0RIJmRhdvg
+         hgHg==
+X-Gm-Message-State: APjAAAUk00pvxwOT6BxbCUr0T+OAy9K5zZlLL6nwhxGDKmqYkQWT3rW+
+        vWnCX07ohk3tM29UID6hI7wWIoIr
+X-Google-Smtp-Source: APXvYqwHAM3Q8L3Dh2eCy1Zm3ti2bCZsr5b+HhH1DGcV4v0Vn8JL0+QPlqhdCOri77OR9+3cduIc0w==
+X-Received: by 2002:adf:f452:: with SMTP id f18mr21275997wrp.264.1572812819904;
+        Sun, 03 Nov 2019 12:26:59 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 16sm14096211wmj.48.2019.11.03.12.26.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Nov 2019 12:17:10 -0800 (PST)
-Subject: Re: Re: [PATCH 1/1] add: respect `--ignore-errors` when `lstat()`
- reports errors
-To:     Junio C Hamano <gitster@pobox.com>,
-        qusielle via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
+        Sun, 03 Nov 2019 12:26:59 -0800 (PST)
+Message-Id: <pull.432.v2.git.1572812819.gitgitgadget@gmail.com>
+In-Reply-To: <pull.432.git.1572127149.gitgitgadget@gmail.com>
 References: <pull.432.git.1572127149.gitgitgadget@gmail.com>
- <fd022f88f54f6cf0feb61965b2dc47bca64c0937.1572127149.git.gitgitgadget@gmail.com>
- <xmqq36fdbp8v.fsf@gitster-ct.c.googlers.com>
-From:   "qusielle@gmail.com" <qusielle@gmail.com>
-Message-ID: <eac0456e-0f61-9424-975d-0567bb92327d@gmail.com>
-Date:   Sun, 3 Nov 2019 21:17:10 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+From:   "Qusielle via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 03 Nov 2019 20:26:57 +0000
+Subject: [PATCH v2 0/1] add: respect --ignore-errors when lstat() reports errors
 MIME-Version: 1.0
-In-Reply-To: <xmqq36fdbp8v.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Junio,
+"git add --ignore-errors" command fails immediately when lstat returns an
+error, despite the ignore errors' flag is enabled.
 
-Thank you for reviewing my patch. I completely agree with you, that 
-add_to_index() should not be called with undefined data.
+There could be files that triggers an error on stat(), when other files
+proceed correctly. Issue can be reproduced when running git under Cygwin and
+some target files have utf-8 long names (200+ utf chars). Windows can handle
+them, but all operations on them failed under Cygwin. Issue can not be
+reproduced with usual latin/numeric only names. For example, create a file
+with 220 'й' letters by Windows Explorer, then in Cygwin:
 
-I will amend patch now with proposed changes.
+Here and below "ййй..." means the line of й copied 220 times.
+=============================================================
 
-Thank you!
+$ echo -n 'ййй...' | wc -c # check the real size 440
 
-Best regards,
-Qusielle
+$ ls -la ls: cannot access 'ййй...'$'\320': No such file or directory
+-????????? ? ? ? ? ? 'ййй...'$'\320'
+
+$ ls й* ls: cannot access 'ййй...'$'\320': No such file or directory
+
+$ stat й* stat: cannot stat 'ййй...'$'\320': No such file or directory
+
+In my perspective, it's okay to skip these problematic files when ignore
+error flag is specified, but official Git terminates entire git add command
+when such files come up. But with proposed patch it is the desired behavior:
+
+$ git add --ignore-errors . error: ййй... can only add regular files,
+symbolic links or git-directories
+
+All other files have been added correctly.
+==========================================
+
+Signed-off-by: Qusielle <qusielle@gmail.com>
+
+qusielle (1):
+  add: respect `--ignore-errors` when `lstat()` reports errors
+
+ read-cache.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 
-On 28.10.2019 03:03, Junio C Hamano wrote:
-> "qusielle via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: qusielle <31454380+qusielle@users.noreply.github.com>
->>
->> "git add --ignore-errors" command fails immediately when lstat returns
->> an error, despite the ignore errors' flag is enabled.
->> ...
->> diff --git a/read-cache.c b/read-cache.c
->> index 133f790fa4..67237ecd29 100644
->> --- a/read-cache.c
->> +++ b/read-cache.c
->> @@ -801,7 +801,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
->>   int add_file_to_index(struct index_state *istate, const char *path, int flags)
->>   {
->>   	struct stat st;
->> -	if (lstat(path, &st))
->> +	if (lstat(path, &st) && !(flags & ADD_CACHE_IGNORE_ERRORS))
->>   		die_errno(_("unable to stat '%s'"), path);
->>   	return add_to_index(istate, path, &st, flags);
->>   }
-> The only callers of this function that matter calls it and then
-> responds to an error return like so:
->
-> (in builtin/add.c::update_callback())
->
-> 	if (add_file_to_index(&the_index, path,	data->flags)) {
-> 		if (!(data->flags & ADD_CACHE_IGNORE_ERRORS))
-> 			die(_("updating files failed"));
->
->
-> (in builtin/add.c::add_files(), where ignore_add_errors was used to
-> set the ADD_CACHE_IGNORE_ERRORS to flags in its caller)
->
-> 	if (add_file_to_index(&the_index, dir->entries[i]->name, flags)) {
-> 		if (!ignore_add_errors)
-> 			die(_("adding files failed"));
->
-> So you correctly identified what is the right place to fix.  We
-> should not "die_errno()"; we should give the control back to the
-> caller instead.
->
-> But after a failed stat, the code with your patch still calls
-> add_to_index() using the now undefined stat data, which would
-> contaminate the in-core index with wrong data.
->
-> I think we should instead return without touching the index for the
-> path we had trouble lstat()ing.
->
-> IOW
->
-> 	if (lstat(path, &st)) {
-> 		if (flags & ADD_CACHE_IGNORE_ERRORS)
-> 			return -1;
-> 		else
-> 			die_errno(_("unable to ..."));
-> 	}
-> 	return add_to_index(...);
->
->
+base-commit: 566a1439f6f56c2171b8853ddbca0ad3f5098770
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-432%2Fqusielle%2Fmaster-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-432/qusielle/master-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/432
+
+Range-diff vs v1:
+
+ 1:  fd022f88f5 ! 1:  d88ea544d9 add: respect `--ignore-errors` when `lstat()` reports errors
+     @@ -46,7 +46,13 @@
+       {
+       	struct stat st;
+      -	if (lstat(path, &st))
+     -+	if (lstat(path, &st) && !(flags & ADD_CACHE_IGNORE_ERRORS))
+     - 		die_errno(_("unable to stat '%s'"), path);
+     +-		die_errno(_("unable to stat '%s'"), path);
+     ++	if (lstat(path, &st)) {
+     ++		if (flags & ADD_CACHE_IGNORE_ERRORS)
+     ++			return -1;
+     ++		else
+     ++			die_errno(_("unable to stat '%s'"), path);
+     ++	}
+       	return add_to_index(istate, path, &st, flags);
+       }
+     + 
+
+-- 
+gitgitgadget
