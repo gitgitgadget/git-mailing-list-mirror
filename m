@@ -2,133 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 147A91F454
-	for <e@80x24.org>; Sun,  3 Nov 2019 20:27:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCA101F454
+	for <e@80x24.org>; Sun,  3 Nov 2019 20:37:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727942AbfKCU1D (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Nov 2019 15:27:03 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37203 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727358AbfKCU1C (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Nov 2019 15:27:02 -0500
-Received: by mail-wr1-f65.google.com with SMTP id t1so8852884wrv.4
-        for <git@vger.kernel.org>; Sun, 03 Nov 2019 12:27:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=QtPD6aqcB2TUyRJygJP9jevFDJlaBPozvmNdrUNSj04=;
-        b=kyZcYR5Cr6sHVXifpkom56zjk2u0EzFwIADnW+5/3tBLKKkGHdoWK3NUbwbn1Ng9IC
-         q42ss6pY8CJQQDwBhjW7DEVp0WWKlownkQ/Ke6Lb37arQHdsMLoedQMh7saYGFXoymBt
-         I8TKxsQs/aD4CmKeLCmKooPL9sMYklgXx1y/DzTHafMyj+nPUIXbREgNbIwG5OKj4+ol
-         skR1P2IEh7ej0LqE+rA64yqqj+n/W2P1JiP1gZG7AVUIMmkWHfrIwdmkBnGeTRot8SDc
-         n5bz87mEDJ57tupdkeQJxKELoucAdC/69FIwBzo9uuXzhVKyr3hgxUz1TfRWSzqvrqqo
-         MmEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=QtPD6aqcB2TUyRJygJP9jevFDJlaBPozvmNdrUNSj04=;
-        b=CiWMgd4hTqprsimgtH3XLeKoT43dsPKB2v/AHJ6s2yV9tRyDNkIHjge7BIuVuPLo/J
-         ESgkpNzNUmA0FgsAuzIayyj4F3p0EeymmzAKgAMQgBpl+G06GtFx55qeB1H4LQNa8typ
-         50yXqaJ+wtZKo9A0r5pNQDR51t47NMGkoXpgiMTxZRwo2up2PI/u7ZTISzeRT5efPcqt
-         dxQXZgVJebhCkFZ+oeYGQ7LArM8e0Tu8COaTI6UjvhroI1XXRRj8AyRdIFba/X5Rd6hd
-         wG8k9TwiWW50Ko3GJes1a0to1kPSKcKgUEBnw823rWmws0G3ZeLOWud0WjhF8Gq/0gJM
-         v0HQ==
-X-Gm-Message-State: APjAAAXO49BWEDSwOSJ7VJo6wcjMYMv50rJ/Tar7WcVSWk3Mf7dgi9iq
-        KkcmVRhBsifi/FnvOjx/skIv8KBa
-X-Google-Smtp-Source: APXvYqxYINBUTjSgxWoxjO24C/2c+DYPeWoktj+nnO8jieX+c9PFCmjhA6iOoaTacseru5Krqcq0dw==
-X-Received: by 2002:adf:cd8f:: with SMTP id q15mr10857730wrj.21.1572812820544;
-        Sun, 03 Nov 2019 12:27:00 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 62sm16561752wre.38.2019.11.03.12.27.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Nov 2019 12:27:00 -0800 (PST)
-Message-Id: <d88ea544d93ffc9b222ac3a4974df4c499e76430.1572812819.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.432.v2.git.1572812819.gitgitgadget@gmail.com>
-References: <pull.432.git.1572127149.gitgitgadget@gmail.com>
-        <pull.432.v2.git.1572812819.gitgitgadget@gmail.com>
-From:   "qusielle via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 03 Nov 2019 20:26:58 +0000
-Subject: [PATCH v2 1/1] add: respect `--ignore-errors` when `lstat()` reports
- errors
+        id S1727500AbfKCUhz (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Nov 2019 15:37:55 -0500
+Received: from mout.gmx.net ([212.227.17.21]:42657 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727268AbfKCUhz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Nov 2019 15:37:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1572813463;
+        bh=NqJi5sls7gMvvP2ptt+REEh4lIi4y9Pe39mZyxX+/Vg=;
+        h=X-UI-Sender-Class:From:Subject:To:References:Cc:Date:In-Reply-To;
+        b=FBZo+pL/RFGik44fuFNJ5SyMhDJxGJWMTkaoHuOi5mbPBwjCJq/WgCOjsPo3BXL5Y
+         e/gn9LWRDiZg/bqBpUt5v5DoFrJ+QKudMaQz7DKP4Y+Q9ypeZC7hCG1rz7vTPTmXck
+         wGJx0q+aVosknRDqD7xcqZtJH0Oy1ZioxACuc1Ws=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.3.68] ([77.183.241.151]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N79yG-1htPsR05eu-017VxI; Sun, 03
+ Nov 2019 21:37:43 +0100
+From:   Ingo Wolf <ingo.wolf@gmx.de>
+Subject: Windows Git Status doesn't see files on WebDav, everything else do
+To:     Git List <git@vger.kernel.org>,
+        git-for-windows <git-for-windows@googlegroups.com>
+References: <6c355683-726d-c497-d5df-bb7f8ea770d2@gmx.de>
+ <20191027175850.b6le5r3jf3cxtnah@camp.crustytoothpaste.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Message-ID: <fb194341-f7b6-d036-95f1-441c0cb59ed0@gmx.de>
+Date:   Sun, 3 Nov 2019 21:37:40 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        qusielle <31454380+qusielle@users.noreply.github.com>
+In-Reply-To: <20191027175850.b6le5r3jf3cxtnah@camp.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Provags-ID: V03:K1:sWkXtwmmB45NnjOe7qTtiA56exlfxXaGbs1QdymgW77Jv9YHog3
+ Gb+C+Tel36c9CZqcqULpGy/ytobqjNCDrcQZcB4gds4roxJKyAXV32iNlIwMWALb93etMAm
+ z5ETHsyaIkLNL48pzwwQW+Ku+p3ey11N90WpnDi9/JmcOZU5dCAwm4UxCgzQv+hlOc0Xv7Z
+ EttYGYYCT4zlANXngbBoA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dxcNCSDOVsk=:p0pmzHlrDGhsiPWx5UdiYg
+ eJU/iGpKhgxy4AKovrYnUf4HfrcsxQyiYPoTHyng9GRx0yFXP/JKt0p3w1RBLMbSUMbnllbBJ
+ dIfFihwbsdnDqZXcl4kolL4mrgLfQ1ljIfvD9u0NOy8rYZVBKbKH8movqu86ooaa19Ie8kQ2h
+ ttc8se1FAUocZkKASPfDd4dMb82pZPy/8il3Ran2m46zsPB/qWF6Y7Gdb3PpjzkuTl1NgP5tx
+ lwTnxZ5kTuIBNUmWvd0NxIQ8AaIAYas3IZ8Y+KYsYnUcBU3tPnmLkZj+NQIbIir9SO9OQxd4T
+ Uec5Jhhx32ibdIzlNNc7TTc7P8FmvSQhXj5Rf55CvQeUvY/2N5bbFMLydjXFE8p4PzgAxAI+X
+ ZgY/A1imqzpStWNOSlC09WaL8T2Gz4XL6W86HYRorRu/p8w8JcjqLWj1YWz7ldyfpcxkzSmws
+ NfaPKkTSXthrQxMj0o7itPAF/1yrN7io8ZuufU2LcXjnZMDgyvJRHF9rEXfRHXFhPhGTU82Ze
+ ZsQPzTJj5D8eYE1XSUMyEgXiDRcQ32+ko+BzAsO/eZdNIANnh8pdeeGltZKDoomUPpgghHWb5
+ 7KEN+mYf7MaCebENjTWY/TMQ2ti4VesNSHqdOe+7vaYDEKVICrpioufYqYyI3gFM+Ohed3jmz
+ 1dePd0LYPZOPoVqz7AI4ipR2ZkMUKO1cEf3CJx8F0PqLBJwHNkcqSgI1wE9QIru52IC4he3In
+ /VHjF91Zq+7uGylM1jxIUA4y5sAwMYdVRlefYORwo0hXmk5NchmdyPKcGMItjZ4V0pJL8TZNH
+ fZkIXo8N3llkt0TTShC+/IdleRL2taRAakb7Oej8h61zYrmjp2vFLJO6f+09041sGEdvoQVy/
+ Fo4Y8oLSHZuJrBHfZ3dIU/yhtK1zyo0s3psVvm2iy8RJ4Z+7gmYfj3SQwlCP0znIosyVHkdB8
+ 6xU2qL0ieiiAs+sD+iRaz0sTnBJ35N3a7XM8YgXw1WkX9+4+VXQ6+pMCayNlpEeIQXYD7avkd
+ XnKzyitbIOY9VJTPJ0ATr1a/5AtrJA5d7TtgpZMV3DwN8fOR5k/ezRsTBVSIz0zr3Oc6yxOwx
+ V5pYlWuImbCDsCaiaKAmeOv/u2ko6hSSF/T7EVRlbKqRJ6p+hOGIQ5d7xnMG7UyXyuJMwpN2M
+ KljSlTM2K1uF9nkKS5wyZ7CaQqD9k0Qp3IRxHnFKB33sUtLhkjoqqj9XqKA8I9+n4gAQLThzC
+ x3jxkZ+FJVUMjCB7f2Sblvs89SKoSp2FtdyuQecjHOopkyx9+kA05Udt5keA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: qusielle <31454380+qusielle@users.noreply.github.com>
+Hi,
 
-"git add --ignore-errors" command fails immediately when lstat returns
-an error, despite the ignore errors' flag is enabled.
+Are there any more ideas what git configs I can try to make
 
-There could be files that triggers an error on stat(), when other files
-proceed correctly.
-Issue can be reproduced when running git under Cygwin and some target files
-have utf-8 long names (200+ utf chars). Windows can handle them, but all
-operations on them failed under Cygwin.
-Issue can not be reproduced with usual latin/numeric only names.
-For example, create a file with 220 'й' letters by Windows Explorer,
-then in Cygwin:
+Git Windows Status see the files in a WebDav workdir (and not as deleted)
 
- # Here and below "ййй..." means the line of й copied 220 times.
-$ echo -n 'ййй...' | wc -c  # check the real size
-440
+like any other program, even git commit commits them and
+checkout doesn't checkout prompting already there.
 
-$ ls -la
-ls: cannot access 'ййй...'$'\320': No such file or directory
--????????? ? ?              ?        ?            ? 'ййй...'$'\320'
+Settings recommended by brian haven't helped yet.
 
-$ ls й*
-ls: cannot access 'ййй...'$'\320': No such file or directory
-
-$ stat й*
-stat: cannot stat 'ййй...'$'\320': No such file or directory
-
-In my perspective, it's okay to skip these problematic files when ignore
-error flag is specified, but official Git terminates entire git add command
-when such files come up. But with proposed patch it is the desired behavior:
-
-$ git add --ignore-errors .
-error: ййй... can only add regular files, symbolic links or git-directories
- # All other files have been added correctly.
-
-Signed-off-by: Qusielle <qusielle@gmail.com>
----
- read-cache.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index 133f790fa4..791ef65bac 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -801,8 +801,12 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
- int add_file_to_index(struct index_state *istate, const char *path, int flags)
- {
- 	struct stat st;
--	if (lstat(path, &st))
--		die_errno(_("unable to stat '%s'"), path);
-+	if (lstat(path, &st)) {
-+		if (flags & ADD_CACHE_IGNORE_ERRORS)
-+			return -1;
-+		else
-+			die_errno(_("unable to stat '%s'"), path);
-+	}
- 	return add_to_index(istate, path, &st, flags);
- }
- 
--- 
-gitgitgadget
+Am 27.10.2019 um 18:58 wrote brian m. carlson:
+> On 2019-10-26 at 03:07:39, Ingo Wolf wrote:
+>> Hi,
+>> Git Windows somehow does not work with a Webdav Workdir even wenn
+>> connected to a Drive-Letter.
+>>
+>> brian: Knowing how WebDAV works under the hood, I'm not entirely surprised that
+>> you're having this problem.  You can set
+>> core.trustctime to "false" and core.checkStat to "minimal", which may
