@@ -2,161 +2,277 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_DBL_SPAM shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7151B1F454
-	for <e@80x24.org>; Sun,  3 Nov 2019 13:14:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 121851F454
+	for <e@80x24.org>; Sun,  3 Nov 2019 13:28:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727555AbfKCNOD (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Nov 2019 08:14:03 -0500
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:44871 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727505AbfKCNOC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Nov 2019 08:14:02 -0500
-Received: by mail-lj1-f194.google.com with SMTP id g3so8599695ljl.11
-        for <git@vger.kernel.org>; Sun, 03 Nov 2019 05:14:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=J6ZfmMm8TrC1ZjWsgz/WYLDpcuTeNpQkfJp28IvBSSY=;
-        b=jfCGZU2canB+a+p1y/J0jzVNre13Sqsv/kpt5Vg1cSmr0PuZmqApuS5/BEpVqB64+X
-         71VZ8g5cIEEJrbQzGKukSPSmO7Zf37bzk2JdU/kIBIv7uFG6ZkFo6Cg/tQu0VqGcChvn
-         Dn+Uy1bH9FgaRTfjQGeMfLnxADvLElaXlAo+Q4gSYW3uwAinQVxdb67VNd6JRjRWEp/Y
-         bYW+DNI1HalJo58Qt/I7H78uSUk3PaNY5qnzkgd8w8/q7BJmZgan9LXN3IzDfvOvRmpA
-         Dkvw/qSnB7wUKI+ZFF5QV586too+ibsj1/A/qK1tCvaVA7ZmP5itrIubF4aX+pGELdk8
-         79+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=J6ZfmMm8TrC1ZjWsgz/WYLDpcuTeNpQkfJp28IvBSSY=;
-        b=NfMB/lk5lK/UPQgLkCnklYrgZ9eFrVleedF7AHdlJevHqNfFRRUwozSAMe25rlcRYv
-         L/gveFjG4cfQyKVgFfuxAillynAVpDRTCOuENxSY12i9nxULtBKUEklp2ypvjmaIyz0v
-         fv9mpG9GUcccCf7LQM6iuDe7ybNhbx3vZIQnlZbpP//mfko+YRhzYLIMoBAoZHWRZNH6
-         uA54ORTDRePZdIySbhIG3YhTV+vKE8jdWmT33OI7eqISm/g7OpeppObRcGuz4+sTTLDN
-         bCNBktWNEQFZmmYo0FuMZJuX42j4p3Bg80KjzBpkySSrHBwXztj8KH4DsC21arqzOJ30
-         NbdA==
-X-Gm-Message-State: APjAAAXlmUcXW5iaGelWti47UJJOOd977rnTPl38nYT1aGLTEvOV0jC2
-        V4L332J8Vi681ikx3NswgZQ=
-X-Google-Smtp-Source: APXvYqzZoPwuILVX1AeKjUPkGwdxrUM5lXWSg63nRQJi897eBjkyxYNcxKnQOgPZ042mVNISYQUBnw==
-X-Received: by 2002:a2e:9905:: with SMTP id v5mr4643036lji.213.1572786840544;
-        Sun, 03 Nov 2019 05:14:00 -0800 (PST)
-Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id n6sm3605434lji.61.2019.11.03.05.13.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 03 Nov 2019 05:13:59 -0800 (PST)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 2/4] doc: provide guidance on user.name format
-References: <20191102192615.10013-1-sandals@crustytoothpaste.net>
-        <20191102192615.10013-3-sandals@crustytoothpaste.net>
-Date:   Sun, 03 Nov 2019 14:13:57 +0100
-In-Reply-To: <20191102192615.10013-3-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Sat, 2 Nov 2019 19:26:13 +0000")
-Message-ID: <86pni9hzl6.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1727661AbfKCN2x (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Nov 2019 08:28:53 -0500
+Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:46074 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1727377AbfKCN2x (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Nov 2019 08:28:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1572787730;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=RgmB1Ep3fH5yB7uKOhGR0xcOG0euAF2HemJkx48F5i0=;
+        b=EUKgfSZ4vLsPLWMHKXgfb4LAowz8ATOIfK1LSkfYg2QBbJ3uW+FnAGDm9oDGQDw0+eiC9R
+        PQfMsr5yNgILL3KCxxRiqeeg/Zavv//3W4dMnBspAcmtEj1XkxZAuKub01gxk5dzlqrBL2
+        sbtF+oirM5PvOL1Bg3tDVFkbTlJGJS8=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-6-gUxdFxybMya2i0vNBUpgaQ-1; Sun, 03 Nov 2019 08:28:48 -0500
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.14])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 70AF22AD;
+        Sun,  3 Nov 2019 13:28:47 +0000 (UTC)
+Received: from prarit.bos.redhat.com (prarit-guest.khw1.lab.eng.bos.redhat.com [10.16.200.63])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 888DB5D9CD;
+        Sun,  3 Nov 2019 13:28:46 +0000 (UTC)
+Subject: Re: [PATCH v4] pretty: add "%aL" etc. to show local-part of email
+ addresses
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, peff@peff.net,
+        szeder.dev@gmail.com
+References: <20191029120914.14756-1-prarit@redhat.com>
+From:   Prarit Bhargava <prarit@redhat.com>
+Message-ID: <b9516269-3c17-1e7d-27f8-83558b56d1bd@redhat.com>
+Date:   Sun, 3 Nov 2019 08:28:46 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20191029120914.14756-1-prarit@redhat.com>
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-MC-Unique: gUxdFxybMya2i0vNBUpgaQ-1
+X-Mimecast-Spam-Score: 0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Just re-pinging to make sure this didn't get lost.
 
-> It's a frequent misconception that the user.name variable controls
-> authentication in some way, and as a result, beginning users frequently
-> attempt to change it when they're having authentication troubles.
-> Document that the convention is that this variable represents some form
-> of a human's personal name, although that is not required.  In addition,
-> address concerns about whether Unicode is supported.
->
-> Use the term "personal name" as this is likely to draw the intended
-> contrast, be applicable across cultures which may have different naming
-> conventions, and be easily understandable to people who do not speak
-> English as their first language.  Indicate that "some form" is
-> conventionally used, as people may use a nickname or preferred name
-> instead of a full legal name.
+Thanks,
 
-This reminds me of "Personal names around the world" by W3C
-https://www.w3.org/International/questions/qa-personal-names
+P.
 
->
-> Point users who may be confused about authentication to an appropriate
-> configuration option instead.  Provide a shortened form of this
-> information in the configuration option description.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-
-I like this change!  Un-confusing users is always a win.
-
+On 10/29/19 8:09 AM, Prarit Bhargava wrote:
+> In many projects the number of contributors is low enough that users know
+> each other and the full email address doesn't need to be displayed.
+> Displaying only the author's username saves a lot of columns on the scree=
+n.
+>=20
+> Existing 'e/E' (as in "%ae" and "%aE") placeholders would show the
+> author's address as "prarit@redhat.com", which would waste columns to sho=
+w
+> the same domain-part for all contributors when used in redhat-only
+> project.  Introduce 'l/L' placeholders that strip '@' and domain part fro=
+m
+> the e-mail address.
+>=20
+> Signed-off-by: Prarit Bhargava <prarit@redhat.com>
 > ---
->  Documentation/config/user.txt | 7 ++++++-
->  Documentation/git-commit.txt  | 6 ++++++
->  2 files changed, 12 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/config/user.txt b/Documentation/config/user.txt
-> index a1f80e823c..f0edb06329 100644
-> --- a/Documentation/config/user.txt
-> +++ b/Documentation/config/user.txt
-> @@ -13,7 +13,12 @@ committer.email::
->  	Also, all of these can be overridden by the `GIT_AUTHOR_NAME`,
->  	`GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_NAME`,
->  	`GIT_COMMITTER_EMAIL` and `EMAIL` environment variables.
-> -	See linkgit:git-commit[1] for more information.
-> ++
-> +Note that the `name` forms of these variables conventionally refer to
-> +some form of a personal name.
-> +See linkgit:git-commit[1] for more information on these settings and
-> +the `credential.username` option if you're looking for authentication
-> +credentials instead.
-
-Minor nit: should this be one paragraph or two - the linebreak after "of
-a personal name." looks a bit strange?
-
-No need for a change: just idly wondering.
-
->=20=20
->  user.useConfigOnly::
->  	Instruct Git to avoid trying to guess defaults for `user.email`
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index f684f7fdc2..3a69d82d52 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -467,6 +467,12 @@ if set:
->=20=20
->  (nb "<", ">" and "\n"s are stripped)
->=20=20
-> +The author and committer names are by convention some form of a personal=
- name
-> +(that is, the name by which other humans refer to you), although Git doe=
-s not
-> +enforce or require any particular form. Arbitrary Unicode may be used, s=
-ubject
-> +to the constraints listed above. This name has no effect on authenticati=
-on; for
-> +that, see the `credential.username` variable in linkgit::git-config[1].
-
-Just ensuring that I understand it correctly: by "constraints" you mean
-stripping of "<", ">" and "\n" (and by implication "\0")?
-
-Should we say anything about encoding?
-
+> Changes in v2:
+> - Changed option to 'L' based on https://www.ietf.org/rfc/rfc2822.txt
+>   definition of 'local-part' of email addresses.
+> - added additional information to documentation for %cL and %cl
+> - added mailmap output test
+> - modified code to use mailmap output for "L" option
+> - modified code to check if email address field has '@' symbol
+> - modified tests based on input from Peff
+>=20
+> Changes in v3:
+> - Adjust Documentation descriptions for %aL and %cL
+> - remove exports of TEST* variables from test-lib.sh
+> - move testing to t6006 and t4203
+>=20
+> Changes in v4:
+> - Change subject and patch description
+> - Update Documentation descriptions for %aL and %cL
+>=20
+>  Documentation/pretty-formats.txt |  6 ++++++
+>  pretty.c                         |  9 ++++++++-
+>  t/t4203-mailmap.sh               | 28 ++++++++++++++++++++++++++++
+>  t/t6006-rev-list-format.sh       |  8 ++++++--
+>  t/test-lib.sh                    |  8 ++++++--
+>  5 files changed, 54 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-form=
+ats.txt
+> index b87e2e83e6d0..31c6e8d2b86a 100644
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -163,6 +163,9 @@ The placeholders are:
+>  '%ae':: author email
+>  '%aE':: author email (respecting .mailmap, see linkgit:git-shortlog[1]
+>  =09or linkgit:git-blame[1])
+> +'%al':: author email local-part (the part before the '@' sign)
+> +'%aL':: author local-part (see '%al') respecting .mailmap, see
+> +=09linkgit:git-shortlog[1] or linkgit:git-blame[1])
+>  '%ad':: author date (format respects --date=3D option)
+>  '%aD':: author date, RFC2822 style
+>  '%ar':: author date, relative
+> @@ -175,6 +178,9 @@ The placeholders are:
+>  '%ce':: committer email
+>  '%cE':: committer email (respecting .mailmap, see
+>  =09linkgit:git-shortlog[1] or linkgit:git-blame[1])
+> +'%cl':: author email local-part (the part before the '@' sign)
+> +'%cL':: author local-part (see '%cl') respecting .mailmap, see
+> +=09linkgit:git-shortlog[1] or linkgit:git-blame[1])
+>  '%cd':: committer date (format respects --date=3D option)
+>  '%cD':: committer date, RFC2822 style
+>  '%cr':: committer date, relative
+> diff --git a/pretty.c b/pretty.c
+> index b32f0369531c..93eb6e837071 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -696,7 +696,7 @@ static size_t format_person_part(struct strbuf *sb, c=
+har part,
+>  =09mail =3D s.mail_begin;
+>  =09maillen =3D s.mail_end - s.mail_begin;
+> =20
+> -=09if (part =3D=3D 'N' || part =3D=3D 'E') /* mailmap lookup */
+> +=09if (part =3D=3D 'N' || part =3D=3D 'E' || part =3D=3D 'L') /* mailmap=
+ lookup */
+>  =09=09mailmap_name(&mail, &maillen, &name, &namelen);
+>  =09if (part =3D=3D 'n' || part =3D=3D 'N') {=09/* name */
+>  =09=09strbuf_add(sb, name, namelen);
+> @@ -706,6 +706,13 @@ static size_t format_person_part(struct strbuf *sb, =
+char part,
+>  =09=09strbuf_add(sb, mail, maillen);
+>  =09=09return placeholder_len;
+>  =09}
+> +=09if (part =3D=3D 'l' || part =3D=3D 'L') {=09/* local-part */
+> +=09=09const char *at =3D memchr(mail, '@', maillen);
+> +=09=09if (at)
+> +=09=09=09maillen =3D at - mail;
+> +=09=09strbuf_add(sb, mail, maillen);
+> +=09=09return placeholder_len;
+> +=09}
+> =20
+>  =09if (!s.date_begin)
+>  =09=09goto skip;
+> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+> index e8f9c0f5bc8c..586c3a86b1d2 100755
+> --- a/t/t4203-mailmap.sh
+> +++ b/t/t4203-mailmap.sh
+> @@ -412,6 +412,34 @@ test_expect_success 'Log output (complex mapping)' '
+>  =09test_cmp expect actual
+>  '
+> =20
+> +cat >expect << EOF
+> +Author email cto@coompany.xx has local-part cto
+> +Committer email $GIT_COMMITTER_EMAIL has local-part $TEST_COMMITTER_LOCA=
+LNAME
 > +
->  In case (some of) these environment variables are not set, the informati=
-on
->  is taken from the configuration items user.name and user.email, or, if n=
-ot
->  present, the environment variable EMAIL, or, if that is not set,
+> +Author email me@company.xx has local-part me
+> +Committer email $GIT_COMMITTER_EMAIL has local-part $TEST_COMMITTER_LOCA=
+LNAME
+> +
+> +Author email me@company.xx has local-part me
+> +Committer email $GIT_COMMITTER_EMAIL has local-part $TEST_COMMITTER_LOCA=
+LNAME
+> +
+> +Author email nick2@company.xx has local-part nick2
+> +Committer email $GIT_COMMITTER_EMAIL has local-part $TEST_COMMITTER_LOCA=
+LNAME
+> +
+> +Author email bugs@company.xx has local-part bugs
+> +Committer email $GIT_COMMITTER_EMAIL has local-part $TEST_COMMITTER_LOCA=
+LNAME
+> +
+> +Author email bugs@company.xx has local-part bugs
+> +Committer email $GIT_COMMITTER_EMAIL has local-part $TEST_COMMITTER_LOCA=
+LNAME
+> +
+> +Author email author@example.com has local-part author
+> +Committer email $GIT_COMMITTER_EMAIL has local-part $TEST_COMMITTER_LOCA=
+LNAME
+> +EOF
+> +
+> +test_expect_success 'Log output (local-part email address)' '
+> +=09git log --pretty=3Dformat:"Author email %ae has local-part %al%nCommi=
+tter email %ce has local-part %cl%n" >actual &&
+> +=09test_cmp expect actual
+> +'
+> +
+>  cat >expect << EOF
+>  Author: CTO <cto@company.xx>
+>  Author: Santa Claus <santa.claus@northpole.xx>
+> diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+> index 1f7d3f7acc9c..ebdc49c4965e 100755
+> --- a/t/t6006-rev-list-format.sh
+> +++ b/t/t6006-rev-list-format.sh
+> @@ -109,31 +109,35 @@ commit $head1
+>  EOF
+> =20
+>  # we don't test relative here
+> -test_format author %an%n%ae%n%ad%n%aD%n%at <<EOF
+> +test_format author %an%n%ae%n%al%n%ad%n%aD%n%at <<EOF
+>  commit $head2
+>  $GIT_AUTHOR_NAME
+>  $GIT_AUTHOR_EMAIL
+> +$TEST_AUTHOR_LOCALNAME
+>  Thu Apr 7 15:13:13 2005 -0700
+>  Thu, 7 Apr 2005 15:13:13 -0700
+>  1112911993
+>  commit $head1
+>  $GIT_AUTHOR_NAME
+>  $GIT_AUTHOR_EMAIL
+> +$TEST_AUTHOR_LOCALNAME
+>  Thu Apr 7 15:13:13 2005 -0700
+>  Thu, 7 Apr 2005 15:13:13 -0700
+>  1112911993
+>  EOF
+> =20
+> -test_format committer %cn%n%ce%n%cd%n%cD%n%ct <<EOF
+> +test_format committer %cn%n%ce%n%cl%n%cd%n%cD%n%ct <<EOF
+>  commit $head2
+>  $GIT_COMMITTER_NAME
+>  $GIT_COMMITTER_EMAIL
+> +$TEST_COMMITTER_LOCALNAME
+>  Thu Apr 7 15:13:13 2005 -0700
+>  Thu, 7 Apr 2005 15:13:13 -0700
+>  1112911993
+>  commit $head1
+>  $GIT_COMMITTER_NAME
+>  $GIT_COMMITTER_EMAIL
+> +$TEST_COMMITTER_LOCALNAME
+>  Thu Apr 7 15:13:13 2005 -0700
+>  Thu, 7 Apr 2005 15:13:13 -0700
+>  1112911993
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index e06fa02a0eec..46c44408432e 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -404,9 +404,13 @@ unset VISUAL EMAIL LANGUAGE COLUMNS $("$PERL_PATH" -=
+e '
+>  unset XDG_CACHE_HOME
+>  unset XDG_CONFIG_HOME
+>  unset GITPERLLIB
+> -GIT_AUTHOR_EMAIL=3Dauthor@example.com
+> +TEST_AUTHOR_LOCALNAME=3Dauthor
+> +TEST_AUTHOR_DOMAIN=3Dexample.com
+> +GIT_AUTHOR_EMAIL=3D${TEST_AUTHOR_LOCALNAME}@${TEST_AUTHOR_DOMAIN}
+>  GIT_AUTHOR_NAME=3D'A U Thor'
+> -GIT_COMMITTER_EMAIL=3Dcommitter@example.com
+> +TEST_COMMITTER_LOCALNAME=3Dcommitter
+> +TEST_COMMITTER_DOMAIN=3Dexample.com
+> +GIT_COMMITTER_EMAIL=3D${TEST_COMMITTER_LOCALNAME}@${TEST_COMMITTER_DOMAI=
+N}
+>  GIT_COMMITTER_NAME=3D'C O Mitter'
+>  GIT_MERGE_VERBOSITY=3D5
+>  GIT_MERGE_AUTOEDIT=3Dno
+>=20
 
-Best,
---=20
-Jakub Nar=C4=99bski
