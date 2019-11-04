@@ -8,55 +8,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 317AE1F454
-	for <e@80x24.org>; Mon,  4 Nov 2019 09:59:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2BA31F454
+	for <e@80x24.org>; Mon,  4 Nov 2019 09:59:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727444AbfKDJ7a (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Nov 2019 04:59:30 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:34139 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726633AbfKDJ7a (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Nov 2019 04:59:30 -0500
-Received: by mail-wr1-f66.google.com with SMTP id e6so14428664wrw.1
-        for <git@vger.kernel.org>; Mon, 04 Nov 2019 01:59:28 -0800 (PST)
+        id S1727796AbfKDJ7q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Nov 2019 04:59:46 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:55448 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726633AbfKDJ7q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Nov 2019 04:59:46 -0500
+Received: by mail-wm1-f66.google.com with SMTP id m17so6622048wmi.5
+        for <git@vger.kernel.org>; Mon, 04 Nov 2019 01:59:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=9Bv6Sa/pPpzTh7PcHzB7QghBNPzN2NHdW081Foirntg=;
-        b=X3CYw2jzxG2OGnRs7UAeWH5v2+KgtiuqBYjS+24RDNT21YMnamfvdmdAW4RyJKY9eh
-         axnjhK36+e40/BZ408X6sAwvWU7tzljykWJ+NWie1u0I+3RCl/gj9f3F3CE5FpGj1AJ0
-         YgCovvA/AJ9LI2O6nVvaZKHcoBcj9cYZ1pCrKUxLPJG9jlrEAmbXa2gweej7wHkXowYm
-         Xk523VMcYRd0pyAH2jTgSefjOJQmJ3wtjdG2Xib6tVUcgJ8niX4OWdWnt12b6ksIL2LF
-         V4Tso2MuNJVKeUy69uAtRWK0McXrMQqbexKjucvBloizvYFzG89pubZMY7pfQQFxQ7mZ
-         J0mA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=UEXow+GLcFQdob2KSCXujhv+iVrZ+dqu9kyWHDqBLJw=;
+        b=ZZOS9/S+V6dGCJSfX4SWn3OvCbEZ85WiQPsDsagHjp7PIFR8qy+snMJwez7H3smZEB
+         uefzsk3FINftfYT+P4Fhn/fIVpA5aED7CQ7X7qADv97gEKfxv+Y+dAwMhKd/5g3Q2141
+         tQFSaWHR+l4xmob3gMf/nZEDQGf98vgYLSsSrxfxDmURknolDs01n7T6rtAXf0mh8pth
+         Z8UWUKJ3VsYlT4UYw1xr4cYb4MOZAHu/XAOYT3cuQ7HJu1dahnGKxeqrX5Zh6Me7O34e
+         ikCZqBMhntOwbkFE0svp/CM0JQkwv24AZg6U36HJfpyXc4hBI6/Dhb4yX3whB1hJ0C1D
+         Qd7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=9Bv6Sa/pPpzTh7PcHzB7QghBNPzN2NHdW081Foirntg=;
-        b=Be+gorZy5/JF6ixIpuGDr/qwYZwowm2jFNzy6kA1od+6bJ7BCFsdgdYWfsZ7ko3wkM
-         OZ/DZOV5ZA1n247kRL1Td8uoysAivxhQUo1r3IuF/EnJeZvvgsBbmW0ed6oSKGi4xGru
-         XcUQaapDgrDMABEjh1iNqr4lb5CfgnbpbOZQM7+oJbi8Emn2G4QysUbdq+wVSXyTz9h4
-         ZMd8x7oaXo2rc3lbj2L2G0iC2gGeG0jKKIGW2iuHbFEvEdlndQ2OPlkzgxEturtqiDjq
-         8pOOr5oxFdnhWmIBCL+/ykN1fKYP6tyzxCscTgdBUua3GdHJBA9j8ee980UgPLqtSa8C
-         b3qg==
-X-Gm-Message-State: APjAAAUNLHLjQ3DMBb6qk6myY5712IY8RsFVkPbYit2XkcRfRriLtBB9
-        EvAuH8pcAtftJ4P5ZkizfxqbJVx2
-X-Google-Smtp-Source: APXvYqznmQKK+ozq7Mnb4wH0jEXwNj3oWSddDFbwmSfuxTF82PU2QPoG8Rek+WmMZNn/mPTjVjLq5Q==
-X-Received: by 2002:adf:d083:: with SMTP id y3mr21078762wrh.53.1572861567791;
-        Mon, 04 Nov 2019 01:59:27 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=UEXow+GLcFQdob2KSCXujhv+iVrZ+dqu9kyWHDqBLJw=;
+        b=EHhcIqEgNej0gDzxJjtsJgXlQOz/s4867xGxRoorlN3jokhhiKnrYssZMoLeuFgOSB
+         XIT9f/HoCu6xh23hXgPmHW3yCWNhcnZRuz++8atxqxNwILTErm8baAjERdGZE6p+8ufP
+         dfHZTJjzpdAL2r+TYsEYhjyerZe0aJtELH2MFEsr1mDuerd5jqBZByzDHkR9cBIuCvpW
+         yu3TV+2phG2LIpB5PfDeq2og/HojTNrymgkNAGAWrwVrRurQ1ElktlBIzbLtqwnIiaqT
+         1kvknG0YxsMY8Rw+LY3SBeHHg2ohh9Xsx0aII+M0N98QE8dtCMv3F98zXWRezrJOQ6eS
+         lofg==
+X-Gm-Message-State: APjAAAVx8SUWPRSv0/oy/4wNawVuCWoUBQyjAkF2u6WZFAfdz5OPSuYm
+        rGHo85+zJZ7vgQR/TJb3iDJfvsARcmGp0vJt
+X-Google-Smtp-Source: APXvYqyg8plx/GdaLuxTl4mi1hYLs7EReJPqXNN2DZkHGM54w77nmTJYH7gxC/AGt0tFbaJpbc6QSg==
+X-Received: by 2002:a1c:6308:: with SMTP id x8mr22279950wmb.140.1572861583416;
+        Mon, 04 Nov 2019 01:59:43 -0800 (PST)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([13.81.118.113])
-        by smtp.gmail.com with ESMTPSA id j22sm23382554wrd.41.2019.11.04.01.59.26
+        by smtp.gmail.com with ESMTPSA id j22sm23382554wrd.41.2019.11.04.01.59.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2019 01:59:27 -0800 (PST)
+        Mon, 04 Nov 2019 01:59:42 -0800 (PST)
 From:   Elia Pinto <gitter.spiros@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 30/32] ident.c: fix LGTM warning on the possible abuse of the '=' operator
-Date:   Mon,  4 Nov 2019 09:59:21 +0000
-Message-Id: <20191104095923.116086-1-gitter.spiros@gmail.com>
+Subject: [PATCH 31/32] commit-graph.c: fix code that could convert the result of an integer multiplication to a larger type
+Date:   Mon,  4 Nov 2019 09:59:22 +0000
+Message-Id: <20191104095923.116086-2-gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.24.0.rc0.467.g566ccdd3e4.dirty
+In-Reply-To: <20191104095923.116086-1-gitter.spiros@gmail.com>
+References: <20191104095923.116086-1-gitter.spiros@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -64,40 +66,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix the LGTM warning of the rule that finds uses of the assignment
-operator = in places where the equality operator == would
-make more sense.
+Fix the LGTM warning fired by the rule that finds code that could convert the result of an integer
+multiplication to a larger type. Since the conversion applies after the multiplication,
+arithmetic overflow may still occur.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- ident.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ commit-graph.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/ident.c b/ident.c
-index e666ee4e59..07f2f03b0a 100644
---- a/ident.c
-+++ b/ident.c
-@@ -172,12 +172,15 @@ const char *ident_default_email(void)
- 			strbuf_addstr(&git_default_email, email);
- 			committer_ident_explicitly_given |= IDENT_MAIL_GIVEN;
- 			author_ident_explicitly_given |= IDENT_MAIL_GIVEN;
--		} else if ((email = query_user_email()) && email[0]) {
--			strbuf_addstr(&git_default_email, email);
--			free((char *)email);
--		} else
--			copy_email(xgetpwuid_self(&default_email_is_bogus),
-+		} else {
-+			email = query_user_email();
-+			if (email && email[0]) {
-+				strbuf_addstr(&git_default_email, email);
-+				free((char *)email);
-+			} else
-+				copy_email(xgetpwuid_self(&default_email_is_bogus),
- 				   &git_default_email, &default_email_is_bogus);
-+		}
- 		strbuf_trim(&git_default_email);
+diff --git a/commit-graph.c b/commit-graph.c
+index a0f868522b..0be15f1cd4 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1415,8 +1415,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 
+ 	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
+ 	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
+-	chunk_offsets[2] = chunk_offsets[1] + hashsz * ctx->commits.nr;
+-	chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * ctx->commits.nr;
++	chunk_offsets[2] = chunk_offsets[1] + (uint64_t)hashsz * ctx->commits.nr;
++	chunk_offsets[3] = chunk_offsets[2] + ((uint64_t)hashsz + 16) * ctx->commits.nr;
+ 
+ 	num_chunks = 3;
+ 	if (ctx->num_extra_edges) {
+@@ -1426,7 +1426,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
  	}
- 	return git_default_email.buf;
+ 	if (ctx->num_commit_graphs_after > 1) {
+ 		chunk_offsets[num_chunks + 1] = chunk_offsets[num_chunks] +
+-						hashsz * (ctx->num_commit_graphs_after - 1);
++						(uint64_t)hashsz * (ctx->num_commit_graphs_after - 1);
+ 		num_chunks++;
+ 	}
+ 
+@@ -1454,7 +1454,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 			    num_chunks);
+ 		ctx->progress = start_delayed_progress(
+ 			progress_title.buf,
+-			num_chunks * ctx->commits.nr);
++			(uint64_t)num_chunks * ctx->commits.nr);
+ 	}
+ 	write_graph_chunk_fanout(f, ctx);
+ 	write_graph_chunk_oids(f, hashsz, ctx);
 -- 
 2.24.0.rc0.467.g566ccdd3e4.dirty
 
