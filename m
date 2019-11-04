@@ -2,129 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 457501F454
-	for <e@80x24.org>; Mon,  4 Nov 2019 17:36:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 401811F454
+	for <e@80x24.org>; Mon,  4 Nov 2019 17:50:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728766AbfKDRgW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Nov 2019 12:36:22 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:38545 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728174AbfKDRgV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Nov 2019 12:36:21 -0500
-Received: by mail-lj1-f193.google.com with SMTP id v8so2940025ljh.5
-        for <git@vger.kernel.org>; Mon, 04 Nov 2019 09:36:20 -0800 (PST)
+        id S1729398AbfKDRuq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Nov 2019 12:50:46 -0500
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:42027 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728876AbfKDRuq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Nov 2019 12:50:46 -0500
+Received: by mail-wr1-f43.google.com with SMTP id a15so18133231wrf.9
+        for <git@vger.kernel.org>; Mon, 04 Nov 2019 09:50:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=deltaq.org; s=deltaq;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5nZRIJtXKv9d/CTm4haGCyv4qAMDOLbIeF1k/OrKH/I=;
-        b=IcC5zepKtIeoncmVkNDKNpBqN+q7hiVraF0OlCYYCWzMWRvD1qioE06WcwsqCNkPNT
-         g7ZU5TlKGRedzHCf6T7UWjHwM2E/WTaIYZZyUG0+Mt9Q8J+dCbQaUZCe+Vdc1KAI8HkH
-         t8HcIPVneQL4RA/mPKG1ftUTl9nM7igs5Zwg4=
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=pUK3mm4ZguVjlGysokJ72OyK7H27bltT/qQ4jOw7O8A=;
+        b=iOFR0ofkl3ef14fSUmYLO2vRPZLj41dv3doNdpgPW9xxAG9xdZOiHjS8w0MO9eZTvc
+         y+2hfAQUgoKmCRB7kXpqZH+p4lea5lgElvUnQNt+N/x79QtknsCfRVz0J+qV9PMPJzF8
+         +EkbPAJOZ217zm8vDp1ocvJ2WA9szlXQbtZ1NRWdI0rglg2aF+zB1ZjnWBLz/hS/1dpV
+         ilxx4ylRxNL+AzJ9DgDrShF5O4+NvxDnbzx1plz35rpzkSolLbJxRFmvjuVTApozyLKL
+         a2KEcUjS1YSPlEw2DrKwZy80OjdBSIBq1SPdg4Y+dQ03fS2cOVpkujQ3xdKdS+GbgPxt
+         DN9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5nZRIJtXKv9d/CTm4haGCyv4qAMDOLbIeF1k/OrKH/I=;
-        b=l0bgXy+rVG1NKGGnCbapnYzJb3ROHSZifXQFvuPmVRUP26E5zidtHCb0LArXuiBDIw
-         cf4Q4PCHUXi3kktwvZVUYbniqL5xc4RmIvAWTcQsJzgpekBxwplBtmm+zz6fM/txZoAs
-         t8Z6JOu9AYGyhASPLHaTHdooODz3i2QoAA+BQvUp7LNE0Zne3LYLET68nvH45d5QRfV0
-         q/IZWiMgngBOFGJcOhOgBaZSnCTREdITYVSpsxYsmE5h6Zb3T9Y1B+kdTs0JTZIlHNbc
-         6Z3rGUisy1X+bc4p4XfnbiCUH4OV919cmRDK8L1F5KtvMh+19QX/JZfBgsFTUddPfRwe
-         DP7A==
-X-Gm-Message-State: APjAAAXi6/d82gjARUPJyHX4cP3GVTtWXrlEyt61so6bYq9SWWq3Smij
-        IioHkQeeg/YgNY2p0ciDMPSoFRPcrU38wHOfyp4LqQ==
-X-Google-Smtp-Source: APXvYqxnyjqAC5vfp2cykFb7lgO6fyJWRnpBSDZ7jyeHEjfW2EXhEXvzwKN124Tdr3TJQE50EEsi5f/Q+Jim+33hAuw=
-X-Received: by 2002:a2e:9610:: with SMTP id v16mr211572ljh.219.1572888979183;
- Mon, 04 Nov 2019 09:36:19 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=pUK3mm4ZguVjlGysokJ72OyK7H27bltT/qQ4jOw7O8A=;
+        b=kTcbvYRwl04R6rxbtd4jAxGIYaSy9dstf/J6zKMtVfhHA5m9Auxpaf6uv8xtfrKkax
+         dIvtvK+D7TIFkuM4rDeLxNE+Hhp45GORloWGPHZPvCR8Bf+KB6UARsZWCTE0FrWqnctO
+         2xqiWuiacI8cmHTRUAQ8l97nn5Lz6uulJkHAOZgVYJeWkvD/x41VKr/arBlqH39oBH1p
+         N2TEp8xA8Yfup6R3uJQ51xf7S5/2NaqY7a66l5byQx1JZ99Ags1yDiFXiqdAzcJ+ecd7
+         CgQlmvFLTVLPxw9ABDNQYAkd+R82PTK63v49HLEniTuG56TGa6rtCh3RHsxGSIi1quic
+         U5lQ==
+X-Gm-Message-State: APjAAAU3X+8AEJeUslLQDlG+FkGzryunlNrGSOspOHC6+UAqj89VIRrh
+        5KOHTYsv32f6JCMKfKajf4avoAAx
+X-Google-Smtp-Source: APXvYqz8ixarntTQjgGdTeSmQuua36aHWenFXMEwoa9YolYb6kNAKFVsK4bXUWW+BqBsH/tbjxrIGQ==
+X-Received: by 2002:adf:e701:: with SMTP id c1mr20167979wrm.166.1572889842297;
+        Mon, 04 Nov 2019 09:50:42 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g69sm19040952wme.31.2019.11.04.09.50.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 04 Nov 2019 09:50:41 -0800 (PST)
+Message-Id: <pull.444.git.1572889841.gitgitgadget@gmail.com>
+From:   "Kevin Willford via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 04 Nov 2019 17:50:40 +0000
+Subject: [PATCH 0/1] fsmonitor: fix watchman integration
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.436.git.1572418123.gitgitgadget@gmail.com>
- <0190f6f2f978a674a29a1e2013d00bc289851c76.1572418123.git.gitgitgadget@gmail.com>
- <20191103074453.56ubga6eitjhp6rf@yadavpratyush.com>
-In-Reply-To: <20191103074453.56ubga6eitjhp6rf@yadavpratyush.com>
-From:   Jonathan Gilbert <logic@deltaq.org>
-Date:   Mon, 4 Nov 2019 11:36:07 -0600
-Message-ID: <CAPSOpYtBRvDX4by_k_ViuFN66vKx=WM7zcQ_JXivxApDBOGJ1w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] git-gui: revert untracked files by deleting them
-To:     "Pratyush Yadav me-at-yadavpratyush.com |GitHub Public/Example Allow|" 
-        <172q77k4bxwj0zt@sneakemail.com>
-Cc:     Jonathan Gilbert via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>,
-        Jonathan Gilbert <JonathanG@iqmetrix.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Kevin Willford <Kevin.Willford@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 3, 2019 at 1:48 AM Pratyush Yadav me-at-yadavpratyush.com
-|GitHub Public/Example Allow| <172q77k4bxwj0zt@sneakemail.com> wrote:
-> > +             after idle [list after 0 [list \
-> > +                     delete_helper \
-> >                       $path_list \
-> > -                     [concat $after [list ui_ready]]
-> > +                     $path_index \
-> > +                     $deletion_errors \
-> > +                     $deletion_error_path \
-> > +                     $batch_size \
-> > +                     ]]
->
-> Using `after idle` means in theory we put an undefined maximum time
-> limit on the deletion process. Though I suspect in real life it would be
-> a pretty short time.
->
-> Nonetheless, should you instead do this asynchronously, instead of
-> waiting for the event loop to enter an idle state? This means using
-> `after 0` directly, instead of doing `after idle [list after 0...`. I
-> haven't tested it, but AFAIK this should also keep the UI active while
-> not depending on the state of the event loop.
->
-> What benefits does your way have over just passing the entire list
-> (without batching) to an async script to do processing in the
-> background?
+When running Git commands quickly -- such as in a shell script or the test
+suite -- the Git commands frequently complete and start again during the
+same second. The example fsmonitor hooks to integrate with Watchman truncate
+the nanosecond times to seconds. In principle, this is fine, as Watchman
+claims to use inclusive comparisons [1]. The result should only be an
+over-representation of the changed paths since the last Git command.
 
-I forgot to include this in my point-form list at the end of the
-preceding e-mail. What should I be looking into to achieve the same
-sort of behaviour, where the UI isn't frozen and the user is getting
-period updates about the progress of a large deletion, without using
-batches on the UI thread? Is that a thing, or am I misunderstanding
-you w.r.t. to doing this asynchronously?
+However, Watchman's own documentation claims "Using a timestamp is prone to
+race conditions in understanding the complete state of the file tree" [2].
+All of their documented examples use a "clockspec" that looks like
+'c:123:234'. Git should eventually learn how to store this type of string to
+provide a stronger integration, but that will be a more invasive change.
 
-For what it's worth, I used `after idle {after 0 ..}` based on the
-recommendation of the Tcler's Wiki [0]:
+When using GIT_TEST_FSMONITOR="$(pwd)/t7519/fsmonitor-watchman", scripts
+such as t7519-wtstatus.sh fail due to these race conditions. In fact,
+running any test script with GIT_TEST_FSMONITOR pointing at
+t/t7519/fsmonitor-wathcman will cause failures in the test_commit function.
+The 'git add "$indir$file"' command fails due to not enough time between the
+creation of '$file' and the 'git add' command.
 
-> An after idle that reschedules itself causes trouble, as the manual warns (PYK 2012-09: the docs no-longer contain this warning, but it still applies):
->
->      At present it is not safe for an idle callback to reschedule itself
->      continuously.  This will interact badly with certain features of
->      Tk that attempt to wait for all idle callbacks to complete.
->      If you would like for an idle callback to reschedule itself
->      continuously, it is better to use a timer handler with a zero
->      timeout period.
->
-> Even this warning is oversimplified. Simply scheduling a timer handler with a zero timeout period can mean that the event loop will never be idle, keeping other idle callbacks from firing. The truly safe approach combines both:
->
->     proc doOneStep {} {
->      if { [::sim::one_step] } {
->          after idle [list after 0 doOneStep]
->          #this would work just as well:
->          #after 0 [list after idle doOneStep]
->      }
->      return
->     }
->     sim::init .c 640 480
->     doOneStep
->
-> This skeleton should be considered the basic framework for performing long running calculations within a single Tcl interpreter.
+For now, subtract one second from the timestamp we pass to Watchman. This
+will make our window large enough to avoid these race conditions. Increasing
+the window causes tests like t7519-wtstatus.sh to pass.
 
-Thanks,
+When the integration was introduced in def437671 (fsmonitor: add a sample
+integration script for Watchman, 2018-09-22), the query included an
+expression that would ignore files created and deleted in that window. The
+performance reason for this change was to ignore temporary files created by
+a build between Git commands. However, this causes failures in script
+scenarios where Git is creating or deleting files quickly.
 
-Jonathan Gilbert
+When using GIT_TEST_FSMONITOR as before, t2203-add-intent.sh fails due to
+this add-and-delete race condition.
 
-[0] https://wiki.tcl-lang.org/page/Keep+a+GUI+alive+during+a+long+calculation
+By removing the "expression" from the Watchman query, we remove this race
+condition. It will lead to some performance degradation in the case of users
+creating and deleting temporary files inside their working directory between
+Git commands. However, that is a cost we need to pay to be correct.
+
+[1] https://github.com/facebook/watchman/blob/master/query/since.cpp#L35-L39
+[2] https://facebook.github.io/watchman/docs/clockspec.html
+
+Kevin Willford (1):
+  fsmonitor: fix watchman integration
+
+ t/t7519/fsmonitor-watchman                 | 13 ++++---------
+ templates/hooks--fsmonitor-watchman.sample | 13 ++++---------
+ 2 files changed, 8 insertions(+), 18 deletions(-)
+
+
+base-commit: da72936f544fec5a335e66432610e4cef4430991
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-444%2Fkewillford%2Ffsmonitor-watchman-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-444/kewillford/fsmonitor-watchman-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/444
+-- 
+gitgitgadget
