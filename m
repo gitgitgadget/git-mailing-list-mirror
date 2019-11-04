@@ -2,85 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38FCD1F454
-	for <e@80x24.org>; Mon,  4 Nov 2019 05:49:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2954D1F454
+	for <e@80x24.org>; Mon,  4 Nov 2019 06:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727833AbfKDFt2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Nov 2019 00:49:28 -0500
-Received: from mail-pg1-f173.google.com ([209.85.215.173]:46712 "EHLO
-        mail-pg1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726018AbfKDFt1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Nov 2019 00:49:27 -0500
-Received: by mail-pg1-f173.google.com with SMTP id f19so10519302pgn.13
-        for <git@vger.kernel.org>; Sun, 03 Nov 2019 21:49:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=vLPhmFH0lirMn9kftpW2taUAg55QYbU+yuMOsULSwhY=;
-        b=V8fsDNiCq7EMxCvkBUIYI8dLXDN5gKcbc41mHIaV4EG6U1VHznHJiZSxS8Ngo/7EWp
-         HeHKfeCHud1qSafqWuJWYaECSU58AsvcSUVSVAU8DQagSdTwRCZXdPfjEBhxiEmiZPcw
-         JJpv/bjiIfyxtPRfY26VKF0+mASokJp1p4XMAKCZ6QeHdmWDySCapFZsgEwFcDCvHocM
-         81VV7DX/iMKkoLW+s9ZlA/rxgZkNs7bKYNdLZZ5mEbwoWD60bL9cXzRn7RNoVk572XLy
-         I3oopnft+0gnEkVAOnseW54GtSY0We+BUvv+5oUVLLNfcY/OrfNnsJ2aaLQ7Utz5vcKg
-         +NVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vLPhmFH0lirMn9kftpW2taUAg55QYbU+yuMOsULSwhY=;
-        b=AlqVqQmeKdkPZ+UvCHK0TEjS0wvD0vtFDNFbe3N2AC8sQ9Lsimeo8pdXXlB+Ltqgy7
-         d+GEN2ab1s5Lwtp+YZEdVbVpx3a/FQqHsqwnYF0cfN45gDyC6CWVEn9YTXGeLKNXM6Y1
-         P9PjD2StI4Zmmye7JJwU4B/8+axk0teasc8nESgAhhWr4P+YwGzKA9IgqnogOfawA5AT
-         +OeSP/V6DHReml5XS/16R0g5o+l+QzzGBfiKQxNYq6+7YuCePgIA0gicqFL4FSLW2zfG
-         79kVYnHwSD+LEXcsvDm1a3JVOEgNOOvoz/cO/OFBDGmCg8EzpVr/ik2EC9Tq3sJvnnat
-         YptQ==
-X-Gm-Message-State: APjAAAV80t2lN1EzY0PcrjH362FVMI/AC5skYG0uDGU+SRwl+3nnRIF5
-        kikPWv8S8LTciAxtTTVGQS0vFg==
-X-Google-Smtp-Source: APXvYqy2gMtZu93mAqoRUYvZsNfYPi1Lv07OqGl8c4eptZ6pT49OOU7aZV+cJhDYrFN7XVFd0q/UaA==
-X-Received: by 2002:a63:b44e:: with SMTP id n14mr28270433pgu.154.1572846566432;
-        Sun, 03 Nov 2019 21:49:26 -0800 (PST)
-Received: from localhost ([2601:602:9200:32b0:5975:7f6f:59ab:7646])
-        by smtp.gmail.com with ESMTPSA id n62sm20828513pjc.6.2019.11.03.21.49.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Nov 2019 21:49:25 -0800 (PST)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Sun, 3 Nov 2019 21:49:24 -0800
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.24.0
-Message-ID: <20191104054924.GA47418@syl.local>
-References: <xmqq7e4gyzgt.fsf@gitster-ct.c.googlers.com>
+        id S1727444AbfKDGC3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Nov 2019 01:02:29 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57780 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726018AbfKDGC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Nov 2019 01:02:29 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BE7F4331C6;
+        Mon,  4 Nov 2019 01:02:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=5jty2mInbehN9adrmMp1qCmzIIc=; b=pWQ7X/9QSWOC0JXSzR/1
+        9uoqALKorrCAkMiR42r5Nm72mZqrHn0jI65by238HYqODwbGHqUoN/gTxIwfNush
+        ySAnHAvVX2/jjvsI5vxjTN3pCI6PJ4FaVjusZ2ZElwfNOO4D5bannRHNqvLXYplg
+        ofrGZKlhtUvCXzs4s+juiD4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=j/ioG5k2Qf7Vc7z0AX0BpjNlDlwPqrTIrk46Me02kypIeW
+        JzjqQfDidd02v9ueCIsUoFiLLNjXv/5QBjcVpyYtqDxaACx2gBAGwmB7mlxT7rru
+        ynfu2RBxkbCuRkm86e3eBaomh9B7oVzVJQ94llqNjUOtvXK/cRtGSdJ2wYxSI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B4087331C5;
+        Mon,  4 Nov 2019 01:02:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CF367331C4;
+        Mon,  4 Nov 2019 01:02:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Utsav Shah <utsav@dropbox.com>
+Cc:     Kevin Willford <Kevin.Willford@microsoft.com>,
+        Utsav Shah via GitGitGadget <gitgitgadget@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Utsav Shah <ukshah2@illinois.edu>
+Subject: Re: [PATCH 1/1] unpack-trees: skip lstat based on fsmonitor
+References: <pull.424.git.1572017008.gitgitgadget@gmail.com>
+        <609c7c5047719a619ba22425dafc6ecd105e2cda.1572017008.git.gitgitgadget@gmail.com>
+        <xmqq8sp5a6cd.fsf@gitster-ct.c.googlers.com>
+        <CAPYzU3N9mDfHVogfq=mhJFj6VOjS2z4ui4msnDdK6pOtVBa_QA@mail.gmail.com>
+        <BN6PR21MB078676C4FA54391B1954D5F791660@BN6PR21MB0786.namprd21.prod.outlook.com>
+        <CAPYzU3NZZ-H_PWcRH_ooXzrYnRNjvF9ayX4_xeMJeMiHB=8fLg@mail.gmail.com>
+        <BN6PR21MB078689FFE9ED95A31998F41A91610@BN6PR21MB0786.namprd21.prod.outlook.com>
+        <CAPYzU3Mv9fHG_WhCOfsA8KGeegdUCoEzfDCt8-DQ+CEjs=V62Q@mail.gmail.com>
+        <xmqqh83r5bi0.fsf@gitster-ct.c.googlers.com>
+        <CAPYzU3MuacmCJoC0pioL4ymyRA7tku8BbNmSTrtZtJWMHpvJNg@mail.gmail.com>
+Date:   Mon, 04 Nov 2019 15:02:24 +0900
+Message-ID: <xmqqsgn4xjpr.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7e4gyzgt.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: ACDEAEB8-FEC8-11E9-941E-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Utsav Shah <utsav@dropbox.com> writes:
 
-On Mon, Nov 04, 2019 at 02:36:50PM +0900, Junio C Hamano wrote:
-> The latest feature release Git v2.24.0 is now available at the
-> usual places.  It is comprised of 544 non-merge commits since
-> v2.23.0, contributed by 78 people, 21 of which are new faces.
+[jc: we avoid top-posting for readability, so swapped paragraphs in
+this quote]
 
-Thanks for a great release. As always, your release notes were
-very helpful in putting together GitHub's release highlights [1].
+>> Perhaps we can take a polished version of this "'reset --hard' can
+>> and should notice paths known-to-be-uptodate via fsmonitor" as an
+>> independent patch (to reduce the number of things we have to worry
+>> by one) for now?  Taking this patch means we would now have one more
+>> place that checks both ce_uptodate() and FSMONITOR_VALID bit, but if
+>> we would be auditing all such places before we can decide what the
+>> best way to reach the goal of allowing them to just say ce_uptodate()
+>> without having to spell FSMONITOR_VALID, that probably is a cost
+>> worth paying.
+>>
+>> Thanks for working on this topic.
+>
+> Thanks, that makes a lot of sense. ce_uptodate doesn't have too many
+> callers either, so modifying it and checking CE_FSMONITOR_VALID there
+> should not be hard to audit.
 
-Onwards towards 2.25!
+OK, so let's see an updated and hopefully final version of [*1*],
+perhaps with Kevin's help you mentioned in [*2*] for now?
 
-Thanks,
-Taylor
 
-[1]: https://github.blog/2019-11-03-highlights-from-git-2-24
+[References]
+
+*1* <pull.424.git.1572017008.gitgitgadget@gmail.com>
+*2* <CAPYzU3Mv9fHG_WhCOfsA8KGeegdUCoEzfDCt8-DQ+CEjs=V62Q@mail.gmail.com>
