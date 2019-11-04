@@ -8,57 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 275941F454
-	for <e@80x24.org>; Mon,  4 Nov 2019 09:59:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F243E1F454
+	for <e@80x24.org>; Mon,  4 Nov 2019 10:03:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727913AbfKDJ7r (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Nov 2019 04:59:47 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:42922 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727499AbfKDJ7q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Nov 2019 04:59:46 -0500
-Received: by mail-wr1-f68.google.com with SMTP id a15so16248010wrf.9
-        for <git@vger.kernel.org>; Mon, 04 Nov 2019 01:59:45 -0800 (PST)
+        id S1727771AbfKDKDm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Nov 2019 05:03:42 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:37367 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727138AbfKDKDm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Nov 2019 05:03:42 -0500
+Received: by mail-pl1-f193.google.com with SMTP id p13so7372463pll.4
+        for <git@vger.kernel.org>; Mon, 04 Nov 2019 02:03:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZBEGzfb22bgr9/a5p7Q6yLV+a10GeNAN2KIKVQl/ebI=;
-        b=P7xVu1pN1h72z/PNBk6pnfq3TE8f9ksAtoL+qAh80zweXvUj8dzJphDUQ2rRXkcwJ8
-         W3mhpm2GYSoZ7W9QYl3nY5BxWZz6Lrx2TMtrDZoTObQJ01tfNFRN2Yw/SWZjNZ+kXdA9
-         UCtzh2AoH0Bj/E/29OVtJZUhDTkLvHG8BLXplW/B3xYlpeNO0FL0ahSM3jap94Yf8QQ1
-         FsBdIq7mDU9uI8pE85zaU1ts2b2chNke1vJUeAid0RgVOlka5a2QDEXwo7icRc+HtKiM
-         WvPH/kavmcbsICg0cMEY/5+P91neaG5weInTHIJ/LnvPiFe3TxfJcpqpO0pPyKDpJ4ZT
-         wJWA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=89DERGHtWEUJ+XnvopDDL7euwdAyd7sQ/zGkkKgJ9EE=;
+        b=sxW5Xc4SSj7IKLMJps18JUYyMPPxjHbcd9cdiDhU6c8ZQkz2PvRhwFqsNBXawpSKIY
+         /TqLlL7+qROuxUOUWEa7PjTVdt1y/pWBzijb4mwLoDP7Ly+k5gAQu5hjt9yyuCHoIrqL
+         L5L/D/+eeFtv63f9RWInDfmyc2SHhZUnB93AcYM0EqCK2QnyXlv9LWZoeWfEzr3CZIM/
+         /tW+eGWKARShJRG7b3LLzRRb2DikEvv1xWMV15z9xLyr6+cKD+OM3lSxHg3YIHoA1DOo
+         d4IS7GlEAmZNpVIZwCJf34T7VBFGnyuTpUVHypyXqI5y/Lj6T6zfr33z7Xf1lmNBIiX+
+         EEwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZBEGzfb22bgr9/a5p7Q6yLV+a10GeNAN2KIKVQl/ebI=;
-        b=pf0r5UTPZodqAz7YEgrT0Au5z5rq8NzdKMep+JmZVbFJNWxeIA2wsvKs/xMEMO67Nw
-         VhDingBXjaqjFV1fWGIlmIjgmwQo5JJ8LrqUnmOPTY6ugbZGnf7un0dMrhQ9LrMFCmZJ
-         RSrPs+Gz+LhC4CgdZjQfqB9LU/w/kuY+FaC7ADUFUmrbCQ8K6pkEh0CX9rkaQlEWpbTs
-         XtpsbhK/7fn54o7n5sxbZMT6wKdoMuTSK/8RPYodNlb4JLSC/IZYe+KN7yzDyQwur9FL
-         JjjQ174ZuPJXUd10XFAIr8+18i/IYXlUZcDZ/Aq9Gk4+OlkfoExWgJZxtxZIpAFe2tUn
-         hG1g==
-X-Gm-Message-State: APjAAAUvqkSXCY88PHmK0NZo7Wj/2c7Vaevlpz2p8VH/OIg6b5gcfy3n
-        +rNl/XLUOifpMthCWeiF3UrxcQXOBw32jLpa
-X-Google-Smtp-Source: APXvYqzVDWopMVzWX7kpSTVGF/7keHbGObC13cWEt+j5GtL6yoN7w02qW95KgiXYAP8ySKB9G9U5fg==
-X-Received: by 2002:adf:e542:: with SMTP id z2mr20697341wrm.338.1572861584473;
-        Mon, 04 Nov 2019 01:59:44 -0800 (PST)
-Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([13.81.118.113])
-        by smtp.gmail.com with ESMTPSA id j22sm23382554wrd.41.2019.11.04.01.59.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2019 01:59:43 -0800 (PST)
-From:   Elia Pinto <gitter.spiros@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=89DERGHtWEUJ+XnvopDDL7euwdAyd7sQ/zGkkKgJ9EE=;
+        b=CBJ1by4Q6lx0bKzWuxWyn57RkEE5xGL0f1Stg7xLc8ufj/VaMgm3vis8XVBjp05jyh
+         Eb/Mn+s6v4STQSWAsjeQTlsPrcWfZUdyEzhwU6nzwF5tIXrilAeWf7UDjmyLzotwoR6e
+         NjGH/TwzpWTRxToaO0ayd4uuD1UKvA5xGqRxsOwiCkpV1QrGHALGrd6AEpTnzPSqYkvL
+         t2LzOHrlXu/lOdIQHw1GqUbcOXi9CElDgE5XIMOvmDzCYqm1WQxWGKLoJ0mMgZ9gtUt7
+         K/jXGWZ7rQbX64Fa3VT9fhVwln8SukGeteAdWgBFecbmDRz1LdXP9Z8HJ5qy2tFxL1+O
+         ttuw==
+X-Gm-Message-State: APjAAAXE7PrOoS0oBiREZCMV6IxuHQ0v3bJPIFCiREL6+87TnnGbGcIi
+        rQhW21IJaG209KVq0pMOj+Z9bvAC/2c=
+X-Google-Smtp-Source: APXvYqxQNTSQSafkVmQdjePYSf7W1QYlUa6a/vDAR0Nad+6Z2rmNd+VP8zyqVfhgpB3SMoLjBdJvhQ==
+X-Received: by 2002:a17:902:b08e:: with SMTP id p14mr19330221plr.115.1572861820743;
+        Mon, 04 Nov 2019 02:03:40 -0800 (PST)
+Received: from localhost.localdomain ([125.252.103.164])
+        by smtp.gmail.com with ESMTPSA id x2sm18438745pfj.90.2019.11.04.02.03.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 04 Nov 2019 02:03:39 -0800 (PST)
+From:   "Eric N. Vander Weele" <ericvw@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 32/32] date.c: fix code that may overflow 'int' before it is converted to 'time_t'
-Date:   Mon,  4 Nov 2019 09:59:23 +0000
-Message-Id: <20191104095923.116086-3-gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.24.0.rc0.467.g566ccdd3e4.dirty
-In-Reply-To: <20191104095923.116086-1-gitter.spiros@gmail.com>
-References: <20191104095923.116086-1-gitter.spiros@gmail.com>
+Cc:     "Eric N. Vander Weele" <ericvw@gmail.com>
+Subject: [PATCH] status: teach "status --short" to respect "--show-stash"
+Date:   Mon,  4 Nov 2019 18:03:34 +0800
+Message-Id: <20191104100334.60537-1-ericvw@gmail.com>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -66,28 +64,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix the LGTM warning fired by the rule that finds code that could convert the result of an integer
-multiplication to a larger type. Since the conversion applies after the multiplication,
-arithmetic overflow may still occur.
+Enable printing the entries currently stashed away in the short format.
+This prints the stash information after the path status to be symmetric
+with "status --long --show-stash".
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+Signed-off-by: Eric N. Vander Weele <ericvw@gmail.com>
 ---
- date.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/git-status.txt |  4 ++++
+ wt-status.c                  | 17 +++++++++++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/date.c b/date.c
-index 041db7db4e..b8dcbdbb0e 100644
---- a/date.c
-+++ b/date.c
-@@ -1172,7 +1172,7 @@ static const char *approxidate_alpha(const char *date, struct tm *tm, struct tm
- 	while (tl->type) {
- 		int len = strlen(tl->type);
- 		if (match_string(date, tl->type) >= len-1) {
--			update_tm(tm, now, tl->length * *num);
-+			update_tm(tm, now, (time_t)tl->length * *num);
- 			*num = 0;
- 			*touched = 1;
- 			return end;
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 7731b45f07..c1afc3282c 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -244,6 +244,10 @@ If -b is used the short-format status is preceded by a line
+ 
+     ## branchname tracking info
+ 
++If --show-stash is used the short-format status is followed by a line
++
++    ## stash: <n> (entry|entries)
++
+ Porcelain Format Version 1
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+diff --git a/wt-status.c b/wt-status.c
+index cc6f94504d..c6d112081b 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1956,6 +1956,20 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	fputc(s->null_termination ? '\0' : '\n', s->fp);
+ }
+ 
++static void wt_shortstatus_print_stash(struct wt_status *s)
++{
++	int stash_count = 0;
++
++	for_each_reflog_ent("refs/stash", stash_count_refs, &stash_count);
++	if (stash_count > 0) {
++		color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "## ");
++		status_printf_ln(s, GIT_COLOR_NORMAL,
++				 Q_("stash: %d entry",
++				    "stash: %d entries", stash_count),
++				 stash_count);
++	}
++}
++
+ static void wt_shortstatus_print(struct wt_status *s)
+ {
+ 	struct string_list_item *it;
+@@ -1976,6 +1990,9 @@ static void wt_shortstatus_print(struct wt_status *s)
+ 
+ 	for_each_string_list_item(it, &s->ignored)
+ 		wt_shortstatus_other(it, s, "!!");
++
++	if (s->show_stash)
++		wt_shortstatus_print_stash(s);
+ }
+ 
+ static void wt_porcelain_print(struct wt_status *s)
 -- 
-2.24.0.rc0.467.g566ccdd3e4.dirty
+2.24.0
 
