@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3B761F454
-	for <e@80x24.org>; Mon,  4 Nov 2019 19:26:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E4961F454
+	for <e@80x24.org>; Mon,  4 Nov 2019 19:26:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728898AbfKDT0x (ORCPT <rfc822;e@80x24.org>);
+        id S1728741AbfKDT0x (ORCPT <rfc822;e@80x24.org>);
         Mon, 4 Nov 2019 14:26:53 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:43045 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728174AbfKDT0v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Nov 2019 14:26:51 -0500
-Received: by mail-wr1-f68.google.com with SMTP id n1so18460919wra.10
-        for <git@vger.kernel.org>; Mon, 04 Nov 2019 11:26:49 -0800 (PST)
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43046 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728322AbfKDT0w (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Nov 2019 14:26:52 -0500
+Received: by mail-wr1-f66.google.com with SMTP id n1so18460968wra.10
+        for <git@vger.kernel.org>; Mon, 04 Nov 2019 11:26:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=X/p7gyZ/9QkG1wANqK1PHp4afC42dPfzaEm+cbxjCfM=;
-        b=TVLDSj42SfcRsWqKwTuWe8W0eSVKTIxNl6Z/4t9m7CADWLItgpke+O9st6JlXntwTt
-         ynvyW7HMPGhFdKL/YzcbJD4y8pnbYYy66GidWiAfEB+bAZC1Xw+x1vrjF12v6GRK66oa
-         Ht+c7O3bGAtzy2++YL42/7SiZ3ujmzqPqWqmfkF7NADrtLsVmYUaPe2ew9FY6I8XMTmI
-         nE9Gq5ODYa+28odHrBs6p4IYPSbrEFMuk2uu7tLVkBdEXR+re6y0DjXvii8nkVStaiE2
-         vTMFTUJyPvf6B/zQ1nuaFvrpx2puen0a3l/J3FgbZwiGzBun+QjAR7lnSqqCmKJ0UhVY
-         zz6w==
+        bh=jrfEeOPBGJRlH7Qeb9GjMc5Nc5TU5Y54NmdsdIc0kmA=;
+        b=BXEGvF7/niBTsSaFnI8vkczT78TmvvvBGB21yvD0QEZPNoHnt8mHuG7VVpdIFrwS3s
+         uEUvah6b5bRDqUxwQjmknJpIrj03YTb7yUGjjwte96nxcy26IrHmmFA7WChijydcVy0Z
+         dc/1KJfq7RUa3aqe2u5eAksaabmqUM11d+2Tzg+0YK1YG1Yb/4eeMv0ar1O3hl5+4Ug4
+         TOdkfIGCCpTQjFJk/PrLZQKM9Wghywyxk9PMVwVy7QUqWD628dAmSkNarm7Lz3ecbkVj
+         r5Q/k+kKHf9w5o2bRjGDXZea5bXFoo852jN8lauPQaQ3vSqbW4ffHoxx0pSA5vZhVdNx
+         IafA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=X/p7gyZ/9QkG1wANqK1PHp4afC42dPfzaEm+cbxjCfM=;
-        b=bq7fCKGBpIUH6h3UHRJOldPY6G32L+jxzv7GhyVecwOjnI7UTA23xWScX+5ZOzq1qf
-         df6my5vYTx203rNlGATJTZ8YpKczgMRMiV99dKtm0gmMD6yvKjkmJoeamIgYT3EX62vD
-         8QgLJuoSKzRrJj/07HCzBVaNS2BHybF2FRzpdeTsH8gICWtuYT07hVGOkQFYZhySsn5g
-         uWjrB211ik82Dk53ePsCS6aXfLjew6pBCV6HBvKVYO/C8xYHtn5uockBa/18j20UgNrw
-         X+wOVj2BUD7vtrCVaZxjp49SbrkPgpHaQVfg4LTIzeuwW7TSChlywFRK9oJnnxpmgRdH
-         BkLQ==
-X-Gm-Message-State: APjAAAUim4CI6tDhakh7JV/ttQCfFeGB2CxG+5/bMeoFEsymYbD0XVRm
-        IPcv8cmaRNXvpJCHN16QWTmaYVF4
-X-Google-Smtp-Source: APXvYqxPSDM1TeQgawFcpmpv51GO78knFmQOCQVRPRCfenj2WjknJUwFzRzlMj6SQQrgH3zWrpEj7w==
-X-Received: by 2002:adf:a31a:: with SMTP id c26mr7199066wrb.330.1572895608592;
-        Mon, 04 Nov 2019 11:26:48 -0800 (PST)
+        bh=jrfEeOPBGJRlH7Qeb9GjMc5Nc5TU5Y54NmdsdIc0kmA=;
+        b=oio7+F0PKX/Xh4lfBd1qOWZTapXOrDMyqhUqRZMXX6Wkl9wODFTwtyUxn82o3+ud5M
+         FNNYTPRWD+Q1wRPBh66zcPE7/2S8Y53KNT7/MG8HIhJh6RRdGqmzwyi87aJqvnYvRaPv
+         jQ4jM2/BPa+khqs7Lmkurc1s0M/Acryw7DUOgsyn3cVsy7fCqa11nqsu6Uqfhy2I0R9E
+         pyHf8eF+XII25AvwmXGzntNEEFqHOcbeKd3NsDn/JkaW0uUrWxe0MRwGOle+Ey9tuVOo
+         YterNT6OW9v/MJMp/Vk/dd4nHL6pOpC26BW3ed0d2WWV26dKYHcAVSsvuc4CcAUT/E+Q
+         Z6Uw==
+X-Gm-Message-State: APjAAAX0wTyayUU9jJc04CSRVBHP70V92PZ1RjyfxFpuNhxREJecfRms
+        xTo47Sgo5foVc0+lHMLxfC0F5xHS
+X-Google-Smtp-Source: APXvYqxadNREZutGkKswUQEwtsAtSMt57D5vSEDAJ1trxMXPWYR/FTGUOX09tPElqgHPeUBwDlcCUg==
+X-Received: by 2002:a5d:4e89:: with SMTP id e9mr11713651wru.342.1572895609821;
+        Mon, 04 Nov 2019 11:26:49 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l18sm22656933wrn.48.2019.11.04.11.26.47
+        by smtp.gmail.com with ESMTPSA id g5sm9504105wmf.37.2019.11.04.11.26.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Nov 2019 11:26:48 -0800 (PST)
-Message-Id: <8d9f1fbc18346144a0c866a59891b652dcfe9b7f.1572895605.git.gitgitgadget@gmail.com>
+        Mon, 04 Nov 2019 11:26:49 -0800 (PST)
+Message-Id: <f4847046896848d3f16bc5f3cb7a26271cefd97c.1572895605.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.445.git.1572895605.gitgitgadget@gmail.com>
 References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 04 Nov 2019 19:26:43 +0000
-Subject: [PATCH 3/5] reset: support the --pathspec-from-file option
+Date:   Mon, 04 Nov 2019 19:26:45 +0000
+Subject: [PATCH 5/5] commit: support the --pathspec-from-file option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -98,47 +98,33 @@ Also add new '--pathspec-file-null' switch that mirrors '-z' used in
 various places. Some porcelain commands, such as `git commit`, already
 use '-z', therefore it needed a new unambiguous name.
 
-Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-reset.txt    |  18 ++++-
- builtin/reset.c                |  22 +++++-
- t/t7107-reset-pathspec-file.sh | 126 +++++++++++++++++++++++++++++++++
- 3 files changed, 161 insertions(+), 5 deletions(-)
- create mode 100755 t/t7107-reset-pathspec-file.sh
+ Documentation/git-commit.txt    |  14 ++++-
+ builtin/commit.c                |  25 ++++++--
+ t/t7526-commit-pathspec-file.sh | 107 ++++++++++++++++++++++++++++++++
+ 3 files changed, 141 insertions(+), 5 deletions(-)
+ create mode 100755 t/t7526-commit-pathspec-file.sh
 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index b0ea6e0ce5..d484cd2827 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -9,18 +9,20 @@ SYNOPSIS
- --------
- [verse]
- 'git reset' [-q] [<tree-ish>] [--] <pathspec>...
-+'git reset' [-q] [--pathspec-from-file=<file> [--pathspec-file-null]] [<tree-ish>]
- 'git reset' (--patch | -p) [<tree-ish>] [--] [<pathspec>...]
- 'git reset' [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 4341d0e3ab..ec4752298d 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -13,7 +13,8 @@ SYNOPSIS
+ 	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
+ 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+ 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
+-	   [-i | -o] [-S[<keyid>]] [--] [<pathspec>...]
++	   [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-null]]
++	   [-S[<keyid>]] [--] [<pathspec>...]
  
  DESCRIPTION
  -----------
--In the first and second form, copy entries from `<tree-ish>` to the index.
--In the third form, set the current branch head (`HEAD`) to `<commit>`,
-+In the first three forms, copy entries from `<tree-ish>` to the index.
-+In the last form, set the current branch head (`HEAD`) to `<commit>`,
- optionally modifying index and working tree to match.
- The `<tree-ish>`/`<commit>` defaults to `HEAD` in all forms.
- 
- 'git reset' [-q] [<tree-ish>] [--] <pathspec>...::
--	This form resets the index entries for all `<pathspec>` to their
-+'git reset' [-q] [--pathspec-from-file=<file> [--pathspec-file-null]] [<tree-ish>]::
-+	These forms reset the index entries for all `<pathspec>` to their
- 	state at `<tree-ish>`.  (It does not affect the working tree or
- 	the current branch.)
- +
-@@ -107,6 +109,16 @@ OPTIONS
- 	`reset.quiet` config option. `--quiet` and `--no-quiet` will
- 	override the default behavior.
- 
+@@ -277,6 +278,17 @@ FROM UPSTREAM REBASE" section in linkgit:git-rebase[1].)
+ 	the last commit without committing changes that have
+ 	already been staged. If used together with `--allow-empty`
+ 	paths are also not required, and an empty commit will be created.
++	
 +--pathspec-from-file=<file>::
 +	Read `<pathspec>` from `<file>` instead. If `<file>` is exactly `-`
 +	then read from standard input. Pathspecs are separated by LF or
@@ -150,49 +136,31 @@ index b0ea6e0ce5..d484cd2827 100644
 +	Only meaningful with `--pathspec-from-file`. Pathspecs are
 +	separated with NUL character and are not expected to be quoted.
  
- EXAMPLES
- --------
-diff --git a/builtin/reset.c b/builtin/reset.c
-index fdd572168b..0eaa6b0bca 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -31,6 +31,7 @@
- static const char * const git_reset_usage[] = {
- 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
- 	N_("git reset [-q] [<tree-ish>] [--] <paths>..."),
-+	N_("git reset [-q] [--pathspec-from-file [--pathspec-file-null]] [<tree-ish>]"),
- 	N_("git reset --patch [<tree-ish>] [--] [<paths>...]"),
- 	NULL
- };
-@@ -284,8 +285,8 @@ static int git_reset_config(const char *var, const char *value, void *cb)
- int cmd_reset(int argc, const char **argv, const char *prefix)
- {
- 	int reset_type = NONE, update_ref_status = 0, quiet = 0;
--	int patch_mode = 0, unborn;
--	const char *rev;
-+	int patch_mode = 0, pathspec_file_null = 0, unborn;
-+	const char *rev, *pathspec_from_file = NULL;
- 	struct object_id oid;
- 	struct pathspec pathspec;
- 	int intent_to_add = 0;
-@@ -306,6 +307,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL('p', "patch", &patch_mode, N_("select hunks interactively")),
- 		OPT_BOOL('N', "intent-to-add", &intent_to_add,
- 				N_("record only the fact that removed paths will be added later")),
-+		OPT_FILENAME(0, "pathspec-from-file", &pathspec_from_file,
-+				N_("read pathspecs from file")),
-+		OPT_BOOL(0, "pathspec-file-null", &pathspec_file_null,
-+				N_("with --pathspec-from-file, pathspecs are separated with NUL character")),
- 		OPT_END()
- 	};
+ -u[<mode>]::
+ --untracked-files[=<mode>]::
+diff --git a/builtin/commit.c b/builtin/commit.c
+index e588bc6ad3..532f305926 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -107,9 +107,9 @@ static int all, also, interactive, patch_interactive, only, amend, signoff;
+ static int edit_flag = -1; /* unspecified */
+ static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
+ static int config_commit_verbose = -1; /* unspecified */
+-static int no_post_rewrite, allow_empty_message;
++static int no_post_rewrite, allow_empty_message, pathspec_file_null;
+ static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
+-static char *sign_commit;
++static char *sign_commit, *pathspec_from_file;
  
-@@ -316,6 +321,19 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 						PARSE_OPT_KEEP_DASHDASH);
- 	parse_args(&pathspec, argv, prefix, patch_mode, &rev);
+ /*
+  * The default commit message cleanup mode will remove the lines
+@@ -343,6 +343,23 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 		       PATHSPEC_PREFER_FULL,
+ 		       prefix, argv);
  
 +	if (pathspec_from_file) {
-+		if (patch_mode)
-+			die(_("--pathspec-from-file is incompatible with --patch"));
++		if (interactive)
++			die(_("--pathspec-from-file is incompatible with --interactive/--patch"));
 +
 +		if (pathspec.nr)
 +			die(_("--pathspec-from-file is incompatible with path arguments"));
@@ -200,64 +168,86 @@ index fdd572168b..0eaa6b0bca 100644
 +		parse_pathspec_file(&pathspec, 0,
 +				    PATHSPEC_PREFER_FULL,
 +				    prefix, pathspec_from_file, pathspec_file_null);
-+	} else if (pathspec_file_null)
++	}
++	else if (pathspec_file_null)
 +		die(_("--pathspec-file-null requires --pathspec-from-file"));
 +
- 	unborn = !strcmp(rev, "HEAD") && get_oid("HEAD", &oid);
- 	if (unborn) {
- 		/* reset on unborn branch: treat as reset to empty tree */
-diff --git a/t/t7107-reset-pathspec-file.sh b/t/t7107-reset-pathspec-file.sh
++	if (!pathspec.nr && (also || (only && !amend && !allow_empty)))
++		die(_("No paths with --include/--only does not make sense."));
++
+ 	if (read_cache_preload(&pathspec) < 0)
+ 		die(_("index file corrupt"));
+ 
+@@ -1198,8 +1215,6 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 
+ 	if (also + only + all + interactive > 1)
+ 		die(_("Only one of --include/--only/--all/--interactive/--patch can be used."));
+-	if (argc == 0 && (also || (only && !amend && !allow_empty)))
+-		die(_("No paths with --include/--only does not make sense."));
+ 	cleanup_mode = get_cleanup_mode(cleanup_arg, use_editor);
+ 
+ 	handle_untracked_files_arg(s);
+@@ -1535,6 +1550,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "amend", &amend, N_("amend previous commit")),
+ 		OPT_BOOL(0, "no-post-rewrite", &no_post_rewrite, N_("bypass post-rewrite hook")),
+ 		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, N_("mode"), N_("show untracked files, optional modes: all, normal, no. (Default: all)"), PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
++		OPT_FILENAME(0, "pathspec-from-file", &pathspec_from_file, N_("read pathspecs from file")),
++		OPT_BOOL(0, "pathspec-file-null", &pathspec_file_null, N_("with --pathspec-from-file, pathspecs are separated with NUL character")),
+ 		/* end commit contents options */
+ 
+ 		OPT_HIDDEN_BOOL(0, "allow-empty", &allow_empty,
+diff --git a/t/t7526-commit-pathspec-file.sh b/t/t7526-commit-pathspec-file.sh
 new file mode 100755
-index 0000000000..cf7f085ad5
+index 0000000000..c5d68e01e6
 --- /dev/null
-+++ b/t/t7107-reset-pathspec-file.sh
-@@ -0,0 +1,126 @@
++++ b/t/t7526-commit-pathspec-file.sh
+@@ -0,0 +1,107 @@
 +#!/bin/sh
 +
-+test_description='reset --pathspec-from-file'
++test_description='commit --pathspec-from-file'
 +
 +. ./test-lib.sh
 +
++test_tick
++
 +cat > expect.a <<EOF
-+ D fileA.t
++A	fileA.t
 +EOF
 +
 +cat > expect.ab <<EOF
-+ D fileA.t
-+ D fileB.t
++A	fileA.t
++A	fileB.t
 +EOF
 +
-+cat > expect.a_bc_d <<EOF
-+D  fileA.t
-+ D fileB.t
-+ D fileC.t
-+D  fileD.t
++cat > expect.bc <<EOF
++A	fileB.t
++A	fileC.t
 +EOF
 +
 +test_expect_success setup '
++	test_commit file0 &&
++	checkpoint=$(git rev-parse --verify HEAD) &&
++	
 +	echo A >fileA.t &&
 +	echo B >fileB.t &&
 +	echo C >fileC.t &&
 +	echo D >fileD.t &&
-+	git add . &&
-+	git commit --include . -m "Commit" &&
-+	checkpoint=$(git rev-parse --verify HEAD)
++	git add fileA.t fileB.t fileC.t fileD.t
 +'
 +
 +restore_checkpoint () {
-+	git reset --hard "$checkpoint"
++	git reset --soft "$checkpoint"
 +}
 +
 +verify_state () {
-+	git status --porcelain -- fileA.t fileB.t fileC.t fileD.t >actual &&
++	git diff-tree --no-commit-id --name-status -r HEAD >actual &&
 +	test_cmp "$1" actual
 +}
 +
 +test_expect_success '--pathspec-from-file from stdin' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t &&
-+	echo fileA.t | git reset --pathspec-from-file=- &&
++	echo fileA.t | git commit --pathspec-from-file=- -m "Commit" &&
 +
 +	verify_state expect.a
 +'
@@ -265,9 +255,8 @@ index 0000000000..cf7f085ad5
 +test_expect_success '--pathspec-from-file from file' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t &&
 +	echo fileA.t >list &&
-+	git reset --pathspec-from-file=list &&
++	git commit --pathspec-from-file=list -m "Commit" &&
 +
 +	verify_state expect.a
 +'
@@ -275,8 +264,7 @@ index 0000000000..cf7f085ad5
 +test_expect_success 'NUL delimiters' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t fileB.t &&
-+	printf fileA.tQfileB.t | q_to_nul | git reset --pathspec-from-file=- --pathspec-file-null &&
++	printf fileA.tQfileB.t | q_to_nul | git commit --pathspec-from-file=- --pathspec-file-null -m "Commit" &&
 +
 +	verify_state expect.ab
 +'
@@ -284,8 +272,7 @@ index 0000000000..cf7f085ad5
 +test_expect_success 'LF delimiters' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t fileB.t &&
-+	printf "fileA.t\nfileB.t" | git reset --pathspec-from-file=- &&
++	printf "fileA.t\nfileB.t" | git commit --pathspec-from-file=- -m "Commit" &&
 +
 +	verify_state expect.ab
 +'
@@ -293,8 +280,7 @@ index 0000000000..cf7f085ad5
 +test_expect_success 'CRLF delimiters' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t fileB.t &&
-+	printf "fileA.t\r\nfileB.t" | git reset --pathspec-from-file=- &&
++	printf "fileA.t\r\nfileB.t" | git commit --pathspec-from-file=- -m "Commit" &&
 +
 +	verify_state expect.ab
 +'
@@ -302,8 +288,7 @@ index 0000000000..cf7f085ad5
 +test_expect_success 'quotes' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t &&
-+	printf "\"file\\101.t\"" | git reset --pathspec-from-file=- &&
++	printf "\"file\\101.t\"" | git commit --pathspec-from-file=- -m "Commit" &&
 +
 +	verify_state expect.a
 +'
@@ -311,33 +296,18 @@ index 0000000000..cf7f085ad5
 +test_expect_success 'quotes not compatible with --pathspec-file-null' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t &&
 +	printf "\"file\\101.t\"" >list &&
-+	# Note: "git reset" has not yet learned to fail on wrong pathspecs
-+	git reset --pathspec-from-file=list --pathspec-file-null &&
-+	
-+	test_must_fail verify_state expect.a
-+'
-+
-+test_expect_success '--pathspec-from-file is not compatible with --soft --hard' '
-+	restore_checkpoint &&
-+
-+	git rm fileA.t &&
-+	echo fileA.t >list &&
-+	test_must_fail git reset --soft --pathspec-from-file=list &&
-+	test_must_fail git reset --hard --pathspec-from-file=list
++	test_must_fail git commit --pathspec-from-file=list --pathspec-file-null -m "Commit"
 +'
 +
 +test_expect_success 'only touches what was listed' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t fileB.t fileC.t fileD.t &&
-+	printf "fileB.t\nfileC.t" | git reset --pathspec-from-file=- &&
++	printf "fileB.t\nfileC.t" | git commit --pathspec-from-file=- -m "Commit" &&
 +
-+	verify_state expect.a_bc_d
++	verify_state expect.bc
 +'
 +
 +test_done
 -- 
 gitgitgadget
-
