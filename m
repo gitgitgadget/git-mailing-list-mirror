@@ -2,137 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3451D1F454
-	for <e@80x24.org>; Mon,  4 Nov 2019 19:28:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 722051F454
+	for <e@80x24.org>; Mon,  4 Nov 2019 19:50:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728974AbfKDT2K (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Nov 2019 14:28:10 -0500
-Received: from mout.web.de ([212.227.15.4]:36677 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728174AbfKDT2K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Nov 2019 14:28:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1572895677;
-        bh=woZRZ4I7DzExsKGmUG6wQceZhGWvDmACNDz69RySkZ4=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=dZYR2hdPXIJMVgEIReoWfMnIy6/YUTt4I0CZoz3+ROG6qH9pME4AZYwPN3ynlZtEY
-         1Cr3RtW33ENdBuVjrKcCYCqZNzVKt+bYcmHKOnxStJirMyQnLQKUJDgai+RgRlOF5t
-         igQfRFWjnAleqNXzfVCTmkNU6FSH6APs+w6ohl/4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MgqrQ-1iEQM13Lw8-00M6Cy; Mon, 04
- Nov 2019 20:27:57 +0100
-X-Mozilla-News-Host: news://nntp.public-inbox.org:119
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] trace2: add dots directly to strbuf in perf_fmt_prepare()
-Message-ID: <c4237b45-6faf-c1fc-eb13-b6c71b7fb6ef@web.de>
-Date:   Mon, 4 Nov 2019 20:27:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1728510AbfKDTuz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Nov 2019 14:50:55 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38552 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728321AbfKDTuz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Nov 2019 14:50:55 -0500
+Received: (qmail 3889 invoked by uid 109); 4 Nov 2019 19:50:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 04 Nov 2019 19:50:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6067 invoked by uid 111); 4 Nov 2019 19:54:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 04 Nov 2019 14:54:10 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 4 Nov 2019 14:50:53 -0500
+From:   Jeff King <peff@peff.net>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk, Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git branch --edit-description a custom file
+Message-ID: <20191104195053.GA20900@sigill.intra.peff.net>
+References: <20191030183950.GA21277@generichostname>
+ <20191030202835.GB29013@sigill.intra.peff.net>
+ <20191030224328.GB44961@generichostname>
+ <20191031061832.GA20830@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1910311119080.46@tvgsbejvaqbjf.bet>
+ <8b9021fa-f60c-a2e0-1174-a2fc1f11c476@gmail.com>
+ <nycvar.QRO.7.76.6.1910311229150.46@tvgsbejvaqbjf.bet>
+ <9aa1cefc-daeb-e702-95ba-1e83f8f7dcfe@iee.email>
+ <20191031154217.GA30187@sigill.intra.peff.net>
+ <49625b39-61dc-f702-eeba-9bdec60a42d1@iee.email>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:NFxa1JuZkcL6S5iWZy6POOwaEUkzF258m2iiocJThLXfXL3k0JF
- 1hjSN/tzbWTW2fYXFlVW3fjAhpkX9IJiLllt0R45FKpEgR7WKKkdRRKVNly2UBrVcpYs6rb
- 0M1ktTy8wWIOwV/BcZT9rCAMEbN1ykStmsANqgakozYyNI5LCFaI9Y2U/+EVEPLyo6M4Vri
- vFtZHEQzzLJApmbsuDJQw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:a1UyK/cP69I=:cmAlT5AaQHLBmbqL/wz1wX
- jGm/FuMZ4VylYc0G5v1rNRh5XFDHx0/ykE908ZNSF6xF6ZnzH57ZY9DhrO0kr/9LhgOUZGESG
- wI6PCPxCrVSH+aiMYoFmVtYpCXXUIHgyMd84wZL2Zd1vF0Ii+IHK4Vy+eQX30ZK2bqeUSWSo+
- Jmgu6laKfYgvtlRUGwK3PKjRGL1oc7YDEtIPP0p6iXaO3sGBw76OHOgdknhhB7W++Fl/S1XJn
- G6oKv4kLvlXCQSsYYpmc+eOuNC0kYwSPtnTYoSLFohfaGt8k0QIOdvNJL3AeI2I4YDTqQ1vS6
- r8S8nxzscPj/2YKuxqb7AAAHQSE5V6E0cq7VZIH0xs+nyqUJs2Nu2sy/cHIZx/CoxhZEIoAdl
- APCV4CRnfp6IDMq0hzXkOs1UE8f5HsJikQ4pBTjf2e2kRzsxm1BYs4aokC7DdjemTimuYkBwu
- JYFR9ORfVFUaDxmxgSuTAiFsBCjrf7a8XMVQJvUXPjrSV5QnyIAmro4xpiPN8RsL9fCcAaRUl
- x1E5NyL0QGd7XeKHnWCen0H4hOXF19sVilAHibF2zRJbWGO+7xCTg5mt3wEFwL+1NGGmCidTo
- CBacH8JDSNQfnXLsWzHPDeX1sn1w2JRnhMjLFRPx+NBrBK6EsDQ+tMMTOXRYJQdahneIcFi8V
- iBaSk7Pwwwofe+KZSTOTW/KOTE8KTNXYTdK+yIiXygjdpV5kWMJ904o+XAheXB9su/J8t73g0
- DGv0VZHHqVVC6sb7BlCyJXc+5MXU9SvZtYXHSvZjfrp3UFlmPyPpVDK+WQ9yuTr6A6ZkWC3Km
- vmWCDB0FPCz3/hVWk1kG3lwImgWiMJeefrFsOOy8oyagONJZ9Imdm/Ql7gHx+ui9j+8B/5xfT
- yATzi6Mvll1CG28zRI5ycg5GmDiwZTErbP831HK/EP7botxcU5k1yRD3h8txEJcR6ntrmrhhr
- ZT3hwQVbaTJf5N5PYYJWbHCOxSk9OXghTsA86GP5UQe2XtA5z+uj822xxiRCAiNoovAggjSZE
- IsL6k8cM4K6eyNDrUlCAl6AfD/rOmmAnrR/bHLQuGAeTaU7K7gQ0S7fE2OKM5JhqiimtcJ3JY
- 6i8ZId2sFs7eh3JNgAOOiunQPPmYiiy6WtLIxObFF7oiLjmck1IBeUxnBHDFIwIsDzAwWxZ2N
- xpB9bm3Mw7HFQGNOA+n3ybFW2h3R0jX59KzEvPl9RMCJaytCktuEqyaqbB6Bn/rDW38F1Zcsq
- 1jrACnmWPSoCU4n9t912JI85CT0yamKJCEDi2Ug==
+Content-Disposition: inline
+In-Reply-To: <49625b39-61dc-f702-eeba-9bdec60a42d1@iee.email>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The initialization function of the Trace2 performance format target sets
-aside a stash of dots for indenting output.  Get rid of it and use
-strbuf_addchars() to provide dots on demand instead.  This shortens the
-code, gets rid of a small heap allocation and is a bit more efficient.
+On Sun, Nov 03, 2019 at 05:56:04PM +0000, Philip Oakley wrote:
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- trace2/tr2_tgt_perf.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+> > Then upstream comparisons, "git rebase" etc without arguments, do what I
+> > want: compare against master. And "git push" without arguments does what
+> > I want: push this branch to my fork. And if I need to refer to the
+> > pushed version for some reason (e.g., comparing what I just changed to
+> > what I last sent out, "git range-diff @{u} @{push} HEAD" does the right
+> > thing.
+> 
+> I am trying to write myself some 'user' based notes covering the
+> publish-backup-collaborate-upstream viewpoints of the different repo
+> settings as the config pages rarely give that viewpoint (hence my bad
+> setup).
+> 
+> There's also still the 'triangle' workflow to clarify - does it refer to
+> patch based flow, or to a three-way repo config?
 
-diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-index ffac8029ad..a8018f18cc 100644
-=2D-- a/trace2/tr2_tgt_perf.c
-+++ b/trace2/tr2_tgt_perf.c
-@@ -26,12 +26,9 @@ static int tr2env_perf_be_brief;
- #define TR2FMT_PERF_REPO_WIDTH (3)
- #define TR2FMT_PERF_CATEGORY_WIDTH (12)
+I think it's solely about the three-way repo config. The key thing is
+that "somehow" the commits I push to my fork end up in the upstream
+repository. In git.git, that happens via the mailing list workflow. But
+in projects based on GitHub, it's cross-fork pull requests. I guess in a
+project like linux.git, it could even via real "git pull" commands.
 
--#define TR2_DOTS_BUFFER_SIZE (100)
- #define TR2_INDENT (2)
- #define TR2_INDENT_LENGTH(ctx) (((ctx)->nr_open_regions - 1) * TR2_INDENT=
-)
+But in any of those cases, the config I showed would be what you want.
+(I forgot to show that I also set push.default to "current", since the
+default "simple" wouldn't make much sense).
 
--static struct strbuf dots =3D STRBUF_INIT;
--
- static int fn_init(void)
- {
- 	int want =3D tr2_dst_trace_want(&tr2dst_perf);
-@@ -41,8 +38,6 @@ static int fn_init(void)
- 	if (!want)
- 		return want;
+> I suspect there are more configs that need setting up for a proper stable
+> user experience (e.g. the merge setting of '--ff-only' when the local branch
+> "--follow"s the upstream but should never have local changes).
 
--	strbuf_addchars(&dots, '.', TR2_DOTS_BUFFER_SIZE);
--
- 	brief =3D tr2_sysenv_get(TR2_SYSENV_PERF_BRIEF);
- 	if (brief && *brief &&
- 	    ((want_brief =3D git_parse_maybe_bool(brief)) !=3D -1))
-@@ -54,8 +49,6 @@ static int fn_init(void)
- static void fn_term(void)
- {
- 	tr2_dst_trace_disable(&tr2dst_perf);
--
--	strbuf_release(&dots);
- }
+Possibly. I don't actually keep a regular "master" branch in my local
+clone. I use "origin/master" as the upstream base for my branches, and
+for when I need to test the current vanilla behavior to reproduce a bug
+(I just "git checkout origin/master" and work on a detached HEAD).
 
- /*
-@@ -138,14 +131,8 @@ static void perf_fmt_prepare(const char *event_name,
- 	strbuf_addf(buf, "%-*.*s | ", TR2FMT_PERF_CATEGORY_WIDTH,
- 		    TR2FMT_PERF_CATEGORY_WIDTH, (category ? category : ""));
+If you did keep such a branch, though, then yeah, I think you'd want to
+use --ff-only, because it's just tracking upstream.
 
--	if (ctx->nr_open_regions > 0) {
--		int len_indent =3D TR2_INDENT_LENGTH(ctx);
--		while (len_indent > dots.len) {
--			strbuf_addbuf(buf, &dots);
--			len_indent -=3D dots.len;
--		}
--		strbuf_addf(buf, "%.*s", len_indent, dots.buf);
--	}
-+	if (ctx->nr_open_regions > 0)
-+		strbuf_addchars(buf, '.', TR2_INDENT_LENGTH(ctx));
- }
-
- static void perf_io_write_fl(const char *file, int line, const char *even=
-t_name,
-=2D-
-2.24.0
+-Peff
