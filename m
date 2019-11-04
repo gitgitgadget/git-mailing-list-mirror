@@ -2,94 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95F661F4C0
-	for <e@80x24.org>; Mon,  4 Nov 2019 13:42:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FB031F454
+	for <e@80x24.org>; Mon,  4 Nov 2019 13:56:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728647AbfKDNl7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Nov 2019 08:41:59 -0500
-Received: from mout.gmx.net ([212.227.15.19]:41607 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727332AbfKDNl7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Nov 2019 08:41:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1572874912;
-        bh=ZgROd/3B6nC1anAEg9/O+CiTlwRZll+zGH8vuvXTc7g=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=HWSdwc4lsKdskjSLd4NQhUsGpo6EylWdVWKbYGsZW95ghZ1ZYcYstPgaHkGE3xyZJ
-         5FfKfaTKLFingVBZoFBT/oJc/p8NvouBkQILJzLvEjk0frnsXH7tZbktWxkWGxBPF+
-         VelkAGNU8Ggk7ESKRuwt1qKlxOlbV/QPKoyw3/hQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.3.68] ([89.14.244.142]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mg6e4-1i0ozG2bny-00hiMJ; Mon, 04
- Nov 2019 14:41:52 +0100
-Subject: Re: Windows Git Status doesn't see files on WebDav, everything else
- do
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git List <git@vger.kernel.org>,
-        git-for-windows <git-for-windows@googlegroups.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <6c355683-726d-c497-d5df-bb7f8ea770d2@gmx.de>
- <20191027175850.b6le5r3jf3cxtnah@camp.crustytoothpaste.net>
- <fb194341-f7b6-d036-95f1-441c0cb59ed0@gmx.de>
- <nycvar.QRO.7.76.6.1911041326480.46@tvgsbejvaqbjf.bet>
-From:   Ingo Wolf <ingo.wolf@gmx.de>
-Message-ID: <af2692a1-79b1-566b-ed3f-56d5232c62be@gmx.de>
-Date:   Mon, 4 Nov 2019 14:41:50 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1728138AbfKDN4A (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Nov 2019 08:56:00 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:37617 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727663AbfKDN4A (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Nov 2019 08:56:00 -0500
+Received: by mail-qt1-f194.google.com with SMTP id g50so24015149qtb.4
+        for <git@vger.kernel.org>; Mon, 04 Nov 2019 05:55:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Y5JdLEzhx8e/4Y6tFX3w1msKZ2ylf4baTmS3osadcRM=;
+        b=srGRCzvOkK8EQeIZ/DAhuHS/MTqFTIOAb+eUUfL4H3XpuD5xYnTWeJq0nDUEiDHvC9
+         /5Gww3aKH7uW2UP8p9EIwBCoKDS0WAE5Zno9GQaIso0hO4p5/Ueqv4LvOKVGSP3D5Ar3
+         cOshm9wHychOTQnACHgzZPNzw5hBgpPG7yT5yRUzINLC7QMWsCbhWHcB2SBZMnANJERt
+         86pI5n1P24ExYSjAxnUkJ2/Ozb19hj6MYhs5muKNRG8klkA9kR8F3QSaIVoV2mXy+HrT
+         20MdLX0w9xZoF7/JWBuv6E8/7AgRSQ9DkFQA1tck8A3jjLOFrDcydBtn3QoK3BLBFL1R
+         UePQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Y5JdLEzhx8e/4Y6tFX3w1msKZ2ylf4baTmS3osadcRM=;
+        b=P/XxzuuFo+ozJ3rBrXc+F96UgiQLeKcyyimbavYsNyqrPhZmdJtWdCWR+esj3kp4Qr
+         oPhfW0QbA9c4hDYeD+bzdioPiGBRy0OxsTUIykP06DPvWnHewoQIMHmbX17Ko7PcEobd
+         LJPgnFzGb8FtooEZWhKH2C8pOxxbm1+VBpYo7fcHJKvxGwX7V2zF2tUMsoCU7o2l6TQP
+         h1evJh9jo4AIupPTnwImkii09/IlXgNmICydKsMlrMJK62tHf8iy+BwiR6mSGcaDvATl
+         pxXEDFeLoVBYtDfiPNh9aa+sYSMwgKu10zQYZU/iOJpJ7XxzT7Eh70pm4rnl8l5lR4o4
+         8EaQ==
+X-Gm-Message-State: APjAAAVvmx3HkDtyekr43W5EEiqvpv+Eg7qiHLVZOuPI7A+l3WbmZxZu
+        1LRJfyTv2y5GKS1vaLYjm6uVbIPaezA8PXzo8WdH1lcQg9AA2g==
+X-Google-Smtp-Source: APXvYqweDIx8MCnIfgu8hP8IuleqWNyVrZtmoEYqUENVXJD6cqdgYT+hhIwpzEOFFOQUuJ5vivpaUC4uBdGzL8DzUFY=
+X-Received: by 2002:ac8:110d:: with SMTP id c13mr12589684qtj.249.1572875759212;
+ Mon, 04 Nov 2019 05:55:59 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1911041326480.46@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
+References: <20191104095923.116086-1-gitter.spiros@gmail.com> <20191104102612.GE4348@szeder.dev>
+In-Reply-To: <20191104102612.GE4348@szeder.dev>
+From:   Elia Pinto <gitter.spiros@gmail.com>
+Date:   Mon, 4 Nov 2019 14:55:47 +0100
+Message-ID: <CA+EOSBncQa0h1of+R2BBSw=tSNFmSASi2V5EJPaRNEO_ctvbkw@mail.gmail.com>
+Subject: Re: [PATCH 30/32] ident.c: fix LGTM warning on the possible abuse of
+ the '=' operator
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
-X-Provags-ID: V03:K1:foowpaIjkYZ8r3rX8pwm83HerznoPJ+5Pm5KYTH/3ZNflabbOx6
- CnGHc9UPjQ9y5QFdj2PTasNVhdk2EaNwVNXSCZB2wbuasGATC3KvNyhhBctxtGjRd7kyEgm
- uMw7Xz2RDgJmQcyO4j+AlJF2X/RsDCGv0oneFMJX2H5xMBDp+5y4+mgEVktfKrwHRhmg+i8
- OMy3ebSTkIzmUP6qnZWkQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BF0TbxU3bkk=:zcC1KDNcNpIVSXGwiBLOLc
- B0xux1bBIwXxiiYYobcMLHR/dS9/wpeM4Jtvig5FPncIpSpgAwEGZ/7OlPcDNbgXEwfffitaV
- 6QRNssBgk7IFQVEG7Zq7Ko7HA9nnUr7qymmMrmo01yLK4gEJz1fXzsAGpQO+cekSJsJyJXXmI
- ylci69ExUicsHzs3qilV88IONw1x06hH6NvWaVrimCW3Vl99HOuLgsAXoVu1aHWh/b10PWx13
- qVm3JNqrrOk3CzEgi14Rw2SGtrOXfmmkLHyMh2FPWOHlSmQ6AM0m2w8DNjrekvYY12Yvfwzh2
- FfcQK/PIhNudLubDoa5vY70eKheJ4xU8bKsXF7l4QMdBgSbBdiGvP/06wsV0qJSrjlbeLe0O9
- eX5t+E1zlNF8PP5ObTAZyE6IEcESJKAN09frkfsSx9+Q8eNw/vhUmjeocmiYsfOZkWiyadwDJ
- 42+MR43qe+Po+rGXNFkxlL//xoMzei7pO7Z5pVfBLbyb/BTgK44qCwoZYEvwZxtkSFYG78pds
- BNEopzU6lq+1RAKeQmCLT9wzD/2DXXVFlh7866fYcZb0e5qt9bo2+ESN5dzBDcj3uYuEZ9fdM
- 4edKcyiyVrNmsMFmlWgog8tpSKXoP8yvlJHnprBt9knQ5TIQDMi4w9sh+1V3plgz6FAHLzZHS
- HWT0rvl102STYGJ4ID9hX9+oZgdTr6T3J7L2fERbPfnIFnbgPuc3LMuCVmR1GZUZWoQdZzy/a
- R2tbsWXJaZC7hpVMpzLgBG0peSKC0VKLPjvCad06teUTurFsd+VTwvzyL6ni8+gjttx/Q8olF
- gqUunuW086HNwp35HR+Smuxold3Eu2Cv9ML+lwRjxNTwvM1Oe55rrdgq7tQQgP5ndYPd2QQ7B
- 6uNOPW03cRpGKDTTAt6B+iXpPIxmBEAmLel2aFLbmlTyWOyqvqS8y5HscFSd1fcr8Bsk0dzZL
- tbiZyy0Rnn5b1lFqJh7mNKN97QTaVB2xQHorfSaZhO5vBrS176IBCkoS6qvDjpJFUdGE4DPwm
- F9C6YBB5gzITGUdCyhEPs7AMqW66GtiPb/mIktpohKiqWfAqUxd9zvkYNAnLt4lZAFNv/8Bwy
- BQgp9iH/toD+szYBhMxoDZpyD/2jnVTtTkueFwW73BHAZ16TPKDHbwHF9qiiifI+djL33HgmF
- WPeZOQYCsxDCVs7PGS2rlDBpOIMh/L3xeRIA8Kkv7gHUW5YKDAlERBG7OPMGAcuLIrOvT54Xf
- SRONXqj2JWd50ghpEFvbDVr0mHZJzNDiyXGtehHlfL11fxpnClYKmVzBQZo0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-Am 04.11.2019 um 13:29 schrieb Johannes Schindelin:
->> Are there any more ideas what git configs I can try to make Git
->> Windows Status see the files in a WebDav workdir (and not as deleted)
->> like any other program, even git commit commits them and
->> checkout doesn't checkout prompting already there.
-> It probably has little to do with Git configs, if at all.
+Il giorno lun 4 nov 2019 alle ore 11:26 SZEDER G=C3=A1bor
+<szeder.dev@gmail.com> ha scritto:
 >
-If git commit is able to commit the file, git status should also be able
-to see it's there.
+> On Mon, Nov 04, 2019 at 09:59:21AM +0000, Elia Pinto wrote:
+> > Fix the LGTM warning of the rule that finds uses of the assignment
+>
+> What is an "LGTM warning"?
+>
+> I think including the actual compiler warning in the commit message
+> would be great.
+Yes indeed. I thought I did it, do you think i can do better? Thanks
 
-It seems like git status does something special, so may be that is
-configurable.
-
-May be the problem is just thinking to complicated.
-
-
+https://lgtm.com/rules/2158670641/
+>
+> > operator =3D in places where the equality operator =3D=3D would
+> > make more sense.
+> >
+> > Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> > ---
+> >  ident.c | 13 ++++++++-----
+> >  1 file changed, 8 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/ident.c b/ident.c
+> > index e666ee4e59..07f2f03b0a 100644
+> > --- a/ident.c
+> > +++ b/ident.c
+> > @@ -172,12 +172,15 @@ const char *ident_default_email(void)
+> >                       strbuf_addstr(&git_default_email, email);
+> >                       committer_ident_explicitly_given |=3D IDENT_MAIL_=
+GIVEN;
+> >                       author_ident_explicitly_given |=3D IDENT_MAIL_GIV=
+EN;
+> > -             } else if ((email =3D query_user_email()) && email[0]) {
+> > -                     strbuf_addstr(&git_default_email, email);
+> > -                     free((char *)email);
+> > -             } else
+> > -                     copy_email(xgetpwuid_self(&default_email_is_bogus=
+),
+> > +             } else {
+> > +                     email =3D query_user_email();
+> > +                     if (email && email[0]) {
+> > +                             strbuf_addstr(&git_default_email, email);
+> > +                             free((char *)email);
+> > +                     } else
+> > +                             copy_email(xgetpwuid_self(&default_email_=
+is_bogus),
+> >                                  &git_default_email, &default_email_is_=
+bogus);
+> > +             }
+> >               strbuf_trim(&git_default_email);
+> >       }
+> >       return git_default_email.buf;
+> > --
+> > 2.24.0.rc0.467.g566ccdd3e4.dirty
+> >
