@@ -8,55 +8,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 531631F454
-	for <e@80x24.org>; Mon,  4 Nov 2019 20:04:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BEE51F454
+	for <e@80x24.org>; Mon,  4 Nov 2019 20:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729137AbfKDUED (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Nov 2019 15:04:03 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:47052 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729091AbfKDUED (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Nov 2019 15:04:03 -0500
-Received: by mail-pg1-f195.google.com with SMTP id f19so12112422pgn.13
-        for <git@vger.kernel.org>; Mon, 04 Nov 2019 12:04:01 -0800 (PST)
+        id S1729216AbfKDUEF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Nov 2019 15:04:05 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:42699 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729091AbfKDUEF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Nov 2019 15:04:05 -0500
+Received: by mail-pl1-f196.google.com with SMTP id j12so6164592plt.9
+        for <git@vger.kernel.org>; Mon, 04 Nov 2019 12:04:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=ogf9U6bXxjS7eoP2MYn2/FzoYyB0bsV/jjc0VrS5wfc=;
-        b=DBLM2GHpAizPMnpu6InylDa5oJqJJR1p3FGSiIGXBq16suhl7dusogiBssgEjhdSw4
-         pz7cL27qncKpHTDPblCzJHHk1RVG2Ctb3AVb2II4QxU4xrKCWBIMd9yun8f4CeQjj2xv
-         EIFFD+OEQ6ALCDkKp3hYEPD0wLWTPAmV/8v5fiybDtVHaEdXRmwJCLIAP30ULlN0hkF8
-         /Ja84NOiQbCITZYxSjge2CUXoi3yGT0KaP1X56AvyYTrRoEiIZs6G6DM5g+W+lIncEIL
-         BR5HmySGII84QUsRQwmqJBlJ3uYpZc0KBbscVseXFxUjUeK4VWJ5liNG1gk/rwqiBjUw
-         0MIQ==
+        bh=8IwljkIz6CVwZIm90p0bHcVH+CFlFeV4rtuB9hz+2FI=;
+        b=MISWMH/0+AAiiZ71JA1D474+kkbBTJsbkb64OZYg8MpA8pbuR/o8BGdo8PV9/IPJe9
+         +eeNQBJN8SXWOpzvAaaBBrDPEHliyx0JDOrofaPnLAEP8vvPdn1Lm30VntqYCBGY32kH
+         2UNfLcPbyHtNb/srii7UyTjgIQ6ONxBKIscWB4gTMwsvIgJUXd78gMZU9vqB/36/HDhD
+         aup4U9tT1s5yMDs3V8T6/KI/mOsyz+KCrOI5oPnQOoYEVtq0dF9Z1D92jBCapOkuZafT
+         F792rjaAfcwuacty/GZBPXViTSbb6LuorEXdm1+65pibN6ce/YTHYWdgX60ICRQoiEj0
+         2ulA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ogf9U6bXxjS7eoP2MYn2/FzoYyB0bsV/jjc0VrS5wfc=;
-        b=IjyzGHgJqrFLFk0OdRu8JDyAazTDqqG6yPrmGzTYmmXhxGYXyh6KaOCnGKmEUO3yOB
-         nt4I9utgAcMJrxmjYFyvmpjYUlwJq+/YWx+A2lB3UAJYwoyUoL7GuPNwDu54LhIt34Lg
-         mYcDQvSGypiptPf4c91SzrfZMxOVsU35FIB8SgfzVjDuPo5mOmcWL5J1RlRQ9sLIdzr3
-         XRaYVxGzSbzp0wOfhUGkIMdG+hj46MvE2wMPxkTm9ZBI6Z5JK5VkdZ6ZqZcW4Rkpeo4A
-         oTDc7wGfWUS1f5iDSN8FnkWBy1w+u/BQSHuZpYNaqg+8mPWewYzlacpwq1Umt6D4OcJ+
-         ZAww==
-X-Gm-Message-State: APjAAAWcvm+xxOstFyym0TrwZH7OLuiriPQlhTasaS9NGbpaQlBgS1Aj
-        MH+/cCsH8BYVVScnaY4snxSFRlmC
-X-Google-Smtp-Source: APXvYqzoHIR2KE2p1FQo/5JJBkaemFRM0Jj/JrgiJimQh4/aRiKka7IvkhdsWVe83IdP5MwDMMhp9g==
-X-Received: by 2002:a63:ae02:: with SMTP id q2mr32688338pgf.210.1572897841003;
-        Mon, 04 Nov 2019 12:04:01 -0800 (PST)
+        bh=8IwljkIz6CVwZIm90p0bHcVH+CFlFeV4rtuB9hz+2FI=;
+        b=LvR8T/CrnYXsjJufCcxN2Lr8c0OxWU6lRL96hnpPcnF0fB19fVALK5EQjRk6LN0lWA
+         H2jJZ+FLxEQL5pKeuXtvwQYTrDjkSjovwbO8ESiTI4rjlwP3Kl3yFPiyyKoYrmOasy7K
+         bT/Z0j4DNBvxEw4dlSHYTr5QazgY1qDwQ1IjfWQYIN7CZMEpj6pT6EFBl4bAZg4ZhR0c
+         IrqXnZ9HJfPdArh05HPr/fMTJgi2BYP7LApB8wGzCss6QKIhYOOyiYOzA9Q7LUwu+7JM
+         nzAHbqpJQ1eXFRgfEra6gY6YnXEA/pVeAufxAClaK4e264gsbGfLQxeAM0VTo0axT0ra
+         GerQ==
+X-Gm-Message-State: APjAAAUXYz6aLDqAhhuZq+NRQG/xtmxBF93VP0N6Juc8yIucfTReBqmY
+        SdM3b4GW1LJK4NX/SyfA5IOPLzPG
+X-Google-Smtp-Source: APXvYqwpgX4QX8hGFRPGS6gO6iwm7hBbSz/4t8c6VslpikXgG7rBDOzvR3NSq6t0e8JhiP40HsZ0XA==
+X-Received: by 2002:a17:902:aa04:: with SMTP id be4mr29576939plb.279.1572897843777;
+        Mon, 04 Nov 2019 12:04:03 -0800 (PST)
 Received: from generichostname ([204.14.236.210])
-        by smtp.gmail.com with ESMTPSA id s24sm5828884pfh.108.2019.11.04.12.04.00
+        by smtp.gmail.com with ESMTPSA id j22sm15132982pff.42.2019.11.04.12.04.02
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2019 12:04:00 -0800 (PST)
-Date:   Mon, 4 Nov 2019 15:03:58 -0500
+        Mon, 04 Nov 2019 12:04:03 -0800 (PST)
+Date:   Mon, 4 Nov 2019 15:04:01 -0500
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 5/8] pretty.c: extract functionality to
- repo_format_commit_generic()
-Message-ID: <e54b8ef8779b2cafd2aba45074f1b6680f4d7221.1572897736.git.liu.denton@gmail.com>
+Subject: [PATCH 6/8] reflog-walk.c: don't print last newline with oneline
+Message-ID: <449c58009ae46d43ec2bd0499674c9858b706d04.1572897736.git.liu.denton@gmail.com>
 References: <cover.1572897736.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -68,75 +67,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a future commit, we will be reusing common functionality from
-repo_format_commit_message(). Extract this common functionality into
-repo_format_commit_generic() so that it can be reused in the future.
+In a future commit, we want to possibly be able to continue the reflog message on
+the same line without breaking the line. As a result, when
+`oneline == 1`, strip any trailing new lines.
+
+Add these missing newlines back in show_log().
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- pretty.c | 35 ++++++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 7 deletions(-)
+ log-tree.c    | 4 +++-
+ reflog-walk.c | 6 +++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/pretty.c b/pretty.c
-index 6f2b0ad917..a6e5fc115a 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1605,10 +1605,14 @@ void userformat_find_requirements(const char *fmt, struct userformat_want *w)
- 	strbuf_release(&dummy);
- }
+diff --git a/log-tree.c b/log-tree.c
+index 923a299e70..4a7d668af6 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -661,8 +661,10 @@ void show_log(struct rev_info *opt)
+ 					    opt->commit_format == CMIT_FMT_ONELINE,
+ 					    &opt->date_mode,
+ 					    opt->date_mode_explicit);
+-			if (opt->commit_format == CMIT_FMT_ONELINE)
++			if (opt->commit_format == CMIT_FMT_ONELINE) {
++				putc('\n', opt->diffopt.file);
+ 				return;
++			}
+ 		}
+ 	}
  
--void repo_format_commit_message(struct repository *r,
--				const struct commit *commit,
--				const char *format, struct strbuf *sb,
--				const struct pretty_print_context *pretty_ctx)
-+static void repo_format_commit_generic(struct repository *r,
-+				       const struct commit *commit,
-+				       struct strbuf *sb,
-+				       const struct pretty_print_context *pretty_ctx,
-+				       void (*fn)(struct strbuf *,
-+						  struct format_commit_context *,
-+						  void *),
-+				       void *data)
- {
- 	struct format_commit_context context = {
- 		.commit = commit,
-@@ -1625,9 +1629,7 @@ void repo_format_commit_message(struct repository *r,
- 					       &context.commit_encoding,
- 					       utf8);
- 
--	context.wrap_start = sb->len;
--	strbuf_expand(sb, format, format_commit_item, &context);
--	rewrap_message_tail(sb, &context, 0, 0, 0);
-+	fn(sb, &context, data);
- 
- 	/* then convert a commit message to an actual output encoding */
- 	if (output_enc) {
-@@ -1651,6 +1653,25 @@ void repo_format_commit_message(struct repository *r,
- 	repo_unuse_commit_buffer(r, commit, context.message);
- }
- 
-+static void do_repo_format_commit_message(struct strbuf *sb,
-+					  struct format_commit_context *context,
-+					  void *data)
-+{
-+	const char *format = data;
-+	context->wrap_start = sb->len;
-+	strbuf_expand(sb, format, format_commit_item, context);
-+	rewrap_message_tail(sb, context, 0, 0, 0);
-+}
-+
-+void repo_format_commit_message(struct repository *r,
-+				const struct commit *commit,
-+				const char *format, struct strbuf *sb,
-+				const struct pretty_print_context *pretty_ctx)
-+{
-+	repo_format_commit_generic(r, commit, sb, pretty_ctx,
-+				   do_repo_format_commit_message, (void *)format);
-+}
-+
- static void pp_header(struct pretty_print_context *pp,
- 		      const char *encoding,
- 		      const struct commit *commit,
+diff --git a/reflog-walk.c b/reflog-walk.c
+index 3a25b27d8f..e2b4c0b290 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -285,7 +285,11 @@ void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
+ 		info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
+ 		get_reflog_selector(&selector, reflog_info, dmode, force_date, 0);
+ 		if (oneline) {
+-			printf("%s: %s", selector.buf, info->message);
++			struct strbuf message = STRBUF_INIT;
++			strbuf_addstr(&message, info->message);
++			strbuf_trim_trailing_newline(&message);
++			printf("%s: %s", selector.buf, message.buf);
++			strbuf_release(&message);
+ 		}
+ 		else {
+ 			printf("Reflog: %s (%s)\nReflog message: %s",
 -- 
 2.24.0.rc2.262.g2d07a97ef5
 
