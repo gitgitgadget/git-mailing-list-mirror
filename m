@@ -8,54 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26C411F454
-	for <e@80x24.org>; Mon,  4 Nov 2019 20:04:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 531631F454
+	for <e@80x24.org>; Mon,  4 Nov 2019 20:04:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729074AbfKDUD7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Nov 2019 15:03:59 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:42759 "EHLO
+        id S1729137AbfKDUED (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Nov 2019 15:04:03 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:47052 "EHLO
         mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728332AbfKDUD7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Nov 2019 15:03:59 -0500
-Received: by mail-pg1-f195.google.com with SMTP id s23so8750703pgo.9
-        for <git@vger.kernel.org>; Mon, 04 Nov 2019 12:03:58 -0800 (PST)
+        with ESMTP id S1729091AbfKDUED (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Nov 2019 15:04:03 -0500
+Received: by mail-pg1-f195.google.com with SMTP id f19so12112422pgn.13
+        for <git@vger.kernel.org>; Mon, 04 Nov 2019 12:04:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=ajk4p9YJkLKcm/THm7WAAf8oXLtntlz+KmZyJalxkrA=;
-        b=q8KbXz/k4CFXpvrA9BLq4cTB4n0yMr20F95kpolBeNF8/RD4Pdg+Lzo5+058gHDfmZ
-         Yv+8W1klOh51Zg1WM1HnFy93r46IXW0v4lWyQfH4O3WS+8m3DzGkfUraSZb4P/lG8zt2
-         DU1H+30iYRo4hqiumkZ0qV1biDS0UEcWiv9JmKuAYpOBOOJq6HU1ryrHfiS/e6olFcKU
-         58wIofJd4UcW7VS9VAnbKTiX6Wb5CNIvsIsdgB/6TjBCZyvgKjOHtKsEM7Yv31RR8Qlj
-         s+DcAWsadcyqs4F5yeoeNn1qobAm5VBnttwhnV9nspxvTL0VW9p5mWwwnxRLIc62wZAJ
-         kYdw==
+        bh=ogf9U6bXxjS7eoP2MYn2/FzoYyB0bsV/jjc0VrS5wfc=;
+        b=DBLM2GHpAizPMnpu6InylDa5oJqJJR1p3FGSiIGXBq16suhl7dusogiBssgEjhdSw4
+         pz7cL27qncKpHTDPblCzJHHk1RVG2Ctb3AVb2II4QxU4xrKCWBIMd9yun8f4CeQjj2xv
+         EIFFD+OEQ6ALCDkKp3hYEPD0wLWTPAmV/8v5fiybDtVHaEdXRmwJCLIAP30ULlN0hkF8
+         /Ja84NOiQbCITZYxSjge2CUXoi3yGT0KaP1X56AvyYTrRoEiIZs6G6DM5g+W+lIncEIL
+         BR5HmySGII84QUsRQwmqJBlJ3uYpZc0KBbscVseXFxUjUeK4VWJ5liNG1gk/rwqiBjUw
+         0MIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ajk4p9YJkLKcm/THm7WAAf8oXLtntlz+KmZyJalxkrA=;
-        b=IW3NtX3zI0+uPcHkEPDrPYhnbyMo3umArnuerBAfWkmSqxF8M4x8MI2H1xui4cxSM7
-         Wa2vNWUhkxY/ZoUKqnpCK702vSSFnmsUtweiKXpmqx9tj8R0QfripF/dYNEbtv97Fe56
-         yC8ANgF6o/iCKhlblAzxPXL7/8r2ZSWxwMYK4fYsmUbWw9ZZwMBMisAb481rjQIaJPT8
-         YXcU0pVc2KslCGLobpN3ZlsnX5oKXqi4dSdqDhNR6fMJ9zPo0vQtSEqXsU754cNma2NI
-         XRdqBD97WQrCiSKcMmRP6VDGRQYjB3pV2HiCHktKsP5HMMfO2B3gRQP4RQ1+nfi9HGiu
-         lVWw==
-X-Gm-Message-State: APjAAAV3kdMhfRdKVZAGN1NYS3RLxOWlzjn/4RL/DJjb+dLe0VIzfRCq
-        5Vgyb1EeD0y7ELxkgogTkLHxTnjb
-X-Google-Smtp-Source: APXvYqyAdTKD9s9tA9Gp4ZDpbOGFX2DxLTGmaaSWZsICpQfse3bbGlSe6vc/xtKF+PUT/vTieD2fGQ==
-X-Received: by 2002:a62:5c07:: with SMTP id q7mr32447108pfb.159.1572897838148;
-        Mon, 04 Nov 2019 12:03:58 -0800 (PST)
+        bh=ogf9U6bXxjS7eoP2MYn2/FzoYyB0bsV/jjc0VrS5wfc=;
+        b=IjyzGHgJqrFLFk0OdRu8JDyAazTDqqG6yPrmGzTYmmXhxGYXyh6KaOCnGKmEUO3yOB
+         nt4I9utgAcMJrxmjYFyvmpjYUlwJq+/YWx+A2lB3UAJYwoyUoL7GuPNwDu54LhIt34Lg
+         mYcDQvSGypiptPf4c91SzrfZMxOVsU35FIB8SgfzVjDuPo5mOmcWL5J1RlRQ9sLIdzr3
+         XRaYVxGzSbzp0wOfhUGkIMdG+hj46MvE2wMPxkTm9ZBI6Z5JK5VkdZ6ZqZcW4Rkpeo4A
+         oTDc7wGfWUS1f5iDSN8FnkWBy1w+u/BQSHuZpYNaqg+8mPWewYzlacpwq1Umt6D4OcJ+
+         ZAww==
+X-Gm-Message-State: APjAAAWcvm+xxOstFyym0TrwZH7OLuiriPQlhTasaS9NGbpaQlBgS1Aj
+        MH+/cCsH8BYVVScnaY4snxSFRlmC
+X-Google-Smtp-Source: APXvYqzoHIR2KE2p1FQo/5JJBkaemFRM0Jj/JrgiJimQh4/aRiKka7IvkhdsWVe83IdP5MwDMMhp9g==
+X-Received: by 2002:a63:ae02:: with SMTP id q2mr32688338pgf.210.1572897841003;
+        Mon, 04 Nov 2019 12:04:01 -0800 (PST)
 Received: from generichostname ([204.14.236.210])
-        by smtp.gmail.com with ESMTPSA id s66sm5642758pfb.38.2019.11.04.12.03.57
+        by smtp.gmail.com with ESMTPSA id s24sm5828884pfh.108.2019.11.04.12.04.00
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2019 12:03:57 -0800 (PST)
-Date:   Mon, 4 Nov 2019 15:03:55 -0500
+        Mon, 04 Nov 2019 12:04:00 -0800 (PST)
+Date:   Mon, 4 Nov 2019 15:03:58 -0500
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 4/8] pretty.c: inline initalize format_context
-Message-ID: <1551e903225bb4f7652341382d0c1cf71b9bd7d4.1572897736.git.liu.denton@gmail.com>
+Subject: [PATCH 5/8] pretty.c: extract functionality to
+ repo_format_commit_generic()
+Message-ID: <e54b8ef8779b2cafd2aba45074f1b6680f4d7221.1572897736.git.liu.denton@gmail.com>
 References: <cover.1572897736.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -67,50 +68,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of memsetting and then initializing the fields in the struct,
-move the initialization of `format_context` to its assignment.
-
-In preparation for a future commit where we mechanically move lines from
-repo_format_commit_message() into a helper function,
-`format_context.wrap_start` is not generically used so move its
-assignment closer to its use.
+In a future commit, we will be reusing common functionality from
+repo_format_commit_message(). Extract this common functionality into
+repo_format_commit_generic() so that it can be reused in the future.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- pretty.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ pretty.c | 35 ++++++++++++++++++++++++++++-------
+ 1 file changed, 28 insertions(+), 7 deletions(-)
 
 diff --git a/pretty.c b/pretty.c
-index b32f036953..6f2b0ad917 100644
+index 6f2b0ad917..a6e5fc115a 100644
 --- a/pretty.c
 +++ b/pretty.c
-@@ -1610,14 +1610,13 @@ void repo_format_commit_message(struct repository *r,
- 				const char *format, struct strbuf *sb,
- 				const struct pretty_print_context *pretty_ctx)
- {
--	struct format_commit_context context;
-+	struct format_commit_context context = {
-+		.commit = commit,
-+		.pretty_ctx = pretty_ctx
-+	};
- 	const char *output_enc = pretty_ctx->output_encoding;
- 	const char *utf8 = "UTF-8";
+@@ -1605,10 +1605,14 @@ void userformat_find_requirements(const char *fmt, struct userformat_want *w)
+ 	strbuf_release(&dummy);
+ }
  
--	memset(&context, 0, sizeof(context));
--	context.commit = commit;
--	context.pretty_ctx = pretty_ctx;
--	context.wrap_start = sb->len;
- 	/*
- 	 * convert a commit message to UTF-8 first
- 	 * as far as 'format_commit_item' assumes it in UTF-8
-@@ -1626,6 +1625,7 @@ void repo_format_commit_message(struct repository *r,
+-void repo_format_commit_message(struct repository *r,
+-				const struct commit *commit,
+-				const char *format, struct strbuf *sb,
+-				const struct pretty_print_context *pretty_ctx)
++static void repo_format_commit_generic(struct repository *r,
++				       const struct commit *commit,
++				       struct strbuf *sb,
++				       const struct pretty_print_context *pretty_ctx,
++				       void (*fn)(struct strbuf *,
++						  struct format_commit_context *,
++						  void *),
++				       void *data)
+ {
+ 	struct format_commit_context context = {
+ 		.commit = commit,
+@@ -1625,9 +1629,7 @@ void repo_format_commit_message(struct repository *r,
  					       &context.commit_encoding,
  					       utf8);
  
-+	context.wrap_start = sb->len;
- 	strbuf_expand(sb, format, format_commit_item, &context);
- 	rewrap_message_tail(sb, &context, 0, 0, 0);
+-	context.wrap_start = sb->len;
+-	strbuf_expand(sb, format, format_commit_item, &context);
+-	rewrap_message_tail(sb, &context, 0, 0, 0);
++	fn(sb, &context, data);
  
+ 	/* then convert a commit message to an actual output encoding */
+ 	if (output_enc) {
+@@ -1651,6 +1653,25 @@ void repo_format_commit_message(struct repository *r,
+ 	repo_unuse_commit_buffer(r, commit, context.message);
+ }
+ 
++static void do_repo_format_commit_message(struct strbuf *sb,
++					  struct format_commit_context *context,
++					  void *data)
++{
++	const char *format = data;
++	context->wrap_start = sb->len;
++	strbuf_expand(sb, format, format_commit_item, context);
++	rewrap_message_tail(sb, context, 0, 0, 0);
++}
++
++void repo_format_commit_message(struct repository *r,
++				const struct commit *commit,
++				const char *format, struct strbuf *sb,
++				const struct pretty_print_context *pretty_ctx)
++{
++	repo_format_commit_generic(r, commit, sb, pretty_ctx,
++				   do_repo_format_commit_message, (void *)format);
++}
++
+ static void pp_header(struct pretty_print_context *pp,
+ 		      const char *encoding,
+ 		      const struct commit *commit,
 -- 
 2.24.0.rc2.262.g2d07a97ef5
 
