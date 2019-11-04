@@ -8,212 +8,167 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B3A21F454
-	for <e@80x24.org>; Mon,  4 Nov 2019 12:15:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AE021F454
+	for <e@80x24.org>; Mon,  4 Nov 2019 12:15:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728346AbfKDMPf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Nov 2019 07:15:35 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:51482 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727322AbfKDMPf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Nov 2019 07:15:35 -0500
-Received: by mail-wm1-f65.google.com with SMTP id q70so16395557wme.1
-        for <git@vger.kernel.org>; Mon, 04 Nov 2019 04:15:33 -0800 (PST)
+        id S1728562AbfKDMPi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Nov 2019 07:15:38 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43098 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727322AbfKDMPh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Nov 2019 07:15:37 -0500
+Received: by mail-wr1-f67.google.com with SMTP id n1so16797108wra.10
+        for <git@vger.kernel.org>; Mon, 04 Nov 2019 04:15:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=SfmLn9REjipp/wD4CfiKk04OVkxMAOT+kBo/By0k19E=;
-        b=lKiXWdy2s0cDh5OBy+Tsk8PyIoNCjGVkwudRzYXnXLYd9K2wDl2TL6q0Xp5Tlp1jQv
-         DsBzVrsNghI9ny6nxyfCdZwCPr0qvmEW4RFX3PTv6rup7cq1drRaCYMp2Xa6JyQveRxi
-         fMrwxZddzM0KMSDiGYwQPduzSgW7ED21HdikuJUH2PL5l//gJbHM64iIHX3f+1Wl7TCI
-         Zr9MuQuo+L/o0zTU2fKNNcs/nxWXSic0MVeGmsSpsEJMGvK3RCOFtdQ0ktayCVeMiUZ7
-         aWfW6PvvYWwltyFWNoshNLMr0tuMz/w11XcHnzTDntHnDPGLVYJ5tfNKw9oPiCK/sIAc
-         o1aw==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=sdshgj6d0JnATjGjpeuLigTFqXl39TQNKLV3UwDcNBo=;
+        b=KtFQKzLVdzkPI79fxe3T013nce14LPQBg4FoaTkOAwSZ+/R02+6GsBoaW+MH/j3X9u
+         ZHGnVMEoThJJiCjtkU5+A+EDan4P8bpqSD2mOoAVg9YA+8mNlcqRvWiY4ZJy85zI7wZ/
+         vdDcCwq9J16HhpXA/lA1RZk7V+8VNpbNV/EhjXM5tBavyjcFMfQpu5H7ZALucZl1IbGG
+         mkdoidW/9uGtQiyrvK5p1BH+AlPHOm0lLo91zIRrXMZyAB4CcsWn1P6CBqpA1TNKHBxv
+         6+6ynHVpIRBPQderjxAjAwi0x/A4Qr4vyPwyNP6pFWiZQWibOlVCni6WPnBoFWpAlbCW
+         wkkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SfmLn9REjipp/wD4CfiKk04OVkxMAOT+kBo/By0k19E=;
-        b=cdG81aUQfrv8otpH4zL4OGv5qi9ODI4WaNfACY00mkUeDGppfWphUQ7WpMvftzzjFa
-         gqgzCIihnpvsww1zT6X6iJ14eOIEDZLcPExMXEgBH0OHWMmlTmoilr73Qh6Sx4kW0BQf
-         Gv9OnX+/bUbMpUnDOidP4niDgVKrxj9y5yz/U5UKraHgPxXvS5fRGkAqHP1wC2ug0rCQ
-         x3ef1DlPa+5T/kJl6xIVjdZ4Tdk4LR9omg2QTsANaI22GQaJrxeFJ4ii1kURUfcX4KEM
-         Z9tgQ1Q9fvn2IlTC/vj87FEfTs4dTIeK/j5cAuNSqpq2UStp/GSgJRiWpPadyOPgczQG
-         hYnA==
-X-Gm-Message-State: APjAAAWYnrItMa7hmsO2z+4MTIbOMFqOWv3oSXGAKRbHjjMFAwlEUU0z
-        LZyp/AkJuz4XhJLcskSrpBtIrsj6
-X-Google-Smtp-Source: APXvYqyEZQDGGy09wgThlGQ3lRutCQ4wr6asQ3ZJc6whoiqqWlzs7My0joGAz6CDRlgI8Czu7CK2IQ==
-X-Received: by 2002:a1c:410a:: with SMTP id o10mr22665679wma.117.1572869732571;
-        Mon, 04 Nov 2019 04:15:32 -0800 (PST)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=sdshgj6d0JnATjGjpeuLigTFqXl39TQNKLV3UwDcNBo=;
+        b=RuHqfdcUWeiu3ifHnIelnBnQWZnVlAhXDpaY1914HrqvxvBSSGInXlIajvgvLFxnhy
+         grp15J18W9OrM8aWnj4hZ4wQk9LxtEE3axmpToUYld7fwyNMpMz6bQH/XuoSPN3IEY6X
+         WAnbg9sduLzBFql40ecDPHcb1aiPqRJi4MBGP9lKjxEdBty3eqf4IEdkCHeEMHvXBWpy
+         38W0lllb4+IJPClQIVax0LqRbOubcinzKUNMQwMcuVxXuYrLWyLXm7rHgEyZ/hqwf19Q
+         GOLe3lQoGMXvFYyhA8jQ5z79o7Zacqt3zZl/dze3//DpJcXoTU+eG6wcWewlSr7Tv30k
+         72Lg==
+X-Gm-Message-State: APjAAAUdf9tgVUtMjbYmUoFV6vWmRFyOiEQr5bbtPk4pAPJ42zDmUFWs
+        4nfC2W9RqMNHb0f4eMPffg/BjJyz
+X-Google-Smtp-Source: APXvYqzgd8ivK/eNrWueRSUBx4imrXhIXGJq/ceqOX4ZPoz2gnTEtxDEA71Xrk7P672RkFr55/NX0Q==
+X-Received: by 2002:adf:e286:: with SMTP id v6mr17808181wri.241.1572869735447;
+        Mon, 04 Nov 2019 04:15:35 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p14sm6671690wrq.72.2019.11.04.04.15.32
+        by smtp.gmail.com with ESMTPSA id y2sm17629165wmy.2.2019.11.04.04.15.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Nov 2019 04:15:32 -0800 (PST)
-Message-Id: <ff59d2d0b3b8b591a806ef71b4bcfd350000b06e.1572869729.git.gitgitgadget@gmail.com>
+        Mon, 04 Nov 2019 04:15:34 -0800 (PST)
+Message-Id: <e405f071100e1f538207819233565b5845e70708.1572869730.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.170.v5.git.1572869729.gitgitgadget@gmail.com>
 References: <pull.170.v4.git.gitgitgadget@gmail.com>
         <pull.170.v5.git.1572869729.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 04 Nov 2019 12:15:21 +0000
-Subject: [PATCH v5 1/9] Start to implement a built-in version of `git add
- --interactive`
-Fcc:    Sent
+From:   "=?UTF-8?q?Slavica=20=C4=90uki=C4=87?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Mon, 04 Nov 2019 12:15:24 +0000
+Subject: [PATCH v5 4/9] built-in add -i: color the header in the `status`
+ command
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Jeff Hostetler <git@jeffhostetler.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        =?UTF-8?q?Slavica=20=C4=90uki=C4=87?= <slawica92@hotmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: =?UTF-8?q?Slavica=20=C4=90uki=C4=87?= <slawica92@hotmail.com>
 
-This is hardly the first conversion of a Git command that is implemented
-as a script to a built-in. So far, the most successful strategy for such
-conversions has been to add a built-in helper and call that for more and
-more functionality from the script, as more and more parts are
-converted.
+For simplicity, we only implemented the `status` command without colors.
+This patch starts adding color, matching what the Perl script
+`git-add--interactive.perl` does.
 
-With the interactive add, we choose a different strategy. The sole
-reason for this is that on Windows (where such a conversion has the most
-benefits in terms of speed and robustness) we face the very specific
-problem that a `system()` call in Perl seems to close `stdin` in the
-parent process when the spawned process consumes even one character from
-`stdin`. And that just does not work for us here, as it would stop the
-main loop as soon as any interactive command was performed by the
-helper. Which is almost all of the commands in `git add -i`.
-
-It is almost as if Perl told us once again that it does not want us to
-use it on Windows.
-
-Instead, we follow the opposite route where we start with a bare-bones
-version of the built-in interactive add, guarded by the new
-`add.interactive.useBuiltin` config variable, and then add more and more
-functionality to it, until it is feature complete.
-
-At this point, the built-in version of `git add -i` only states that it
-cannot do anything yet ;-)
-
+Original-Patch-By: Daniel Ferreira <bnmvco@gmail.com>
+Signed-off-by: Slavica Đukić <slawica92@hotmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/config/add.txt |  5 +++++
- Makefile                     |  1 +
- add-interactive.c            |  7 +++++++
- add-interactive.h            |  8 ++++++++
- builtin/add.c                | 10 ++++++++++
- t/README                     |  4 ++++
- 6 files changed, 35 insertions(+)
- create mode 100644 add-interactive.c
- create mode 100644 add-interactive.h
+ add-interactive.c | 41 +++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 37 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config/add.txt b/Documentation/config/add.txt
-index 4d753f006e..c9f748f81c 100644
---- a/Documentation/config/add.txt
-+++ b/Documentation/config/add.txt
-@@ -5,3 +5,8 @@ add.ignore-errors (deprecated)::
- 	option of linkgit:git-add[1].  `add.ignore-errors` is deprecated,
- 	as it does not follow the usual naming convention for configuration
- 	variables.
-+
-+add.interactive.useBuiltin::
-+	[EXPERIMENTAL] Set to `true` to use the experimental built-in
-+	implementation of the interactive version of linkgit:git-add[1]
-+	instead of the Perl script version. Is `false` by default.
-diff --git a/Makefile b/Makefile
-index 58b92af54b..6c4a1e0ee5 100644
---- a/Makefile
-+++ b/Makefile
-@@ -823,6 +823,7 @@ LIB_H := $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':!Documentat
- 	-name '*.h' -print)))
- 
- LIB_OBJS += abspath.o
-+LIB_OBJS += add-interactive.o
- LIB_OBJS += advice.o
- LIB_OBJS += alias.o
- LIB_OBJS += alloc.o
 diff --git a/add-interactive.c b/add-interactive.c
-new file mode 100644
-index 0000000000..482e458dc6
---- /dev/null
+index aa35184d87..174e07ce83 100644
+--- a/add-interactive.c
 +++ b/add-interactive.c
-@@ -0,0 +1,7 @@
-+#include "cache.h"
-+#include "add-interactive.h"
-+
-+int run_add_i(struct repository *r, const struct pathspec *ps)
+@@ -1,5 +1,7 @@
+ #include "cache.h"
+ #include "add-interactive.h"
++#include "color.h"
++#include "config.h"
+ #include "diffcore.h"
+ #include "revision.h"
+ #include "refs.h"
+@@ -7,11 +9,40 @@
+ 
+ struct add_i_state {
+ 	struct repository *r;
++	int use_color;
++	char header_color[COLOR_MAXLEN];
+ };
+ 
++static void init_color(struct repository *r, struct add_i_state *s,
++		       const char *slot_name, char *dst,
++		       const char *default_color)
 +{
-+	die(_("No commands are available in the built-in `git add -i` yet!"));
++	char *key = xstrfmt("color.interactive.%s", slot_name);
++	const char *value;
++
++	if (!s->use_color)
++		dst[0] = '\0';
++	else if (repo_config_get_value(r, key, &value) ||
++		 color_parse(value, dst))
++		strlcpy(dst, default_color, COLOR_MAXLEN);
++
++	free(key);
 +}
-diff --git a/add-interactive.h b/add-interactive.h
-new file mode 100644
-index 0000000000..7043b8741d
---- /dev/null
-+++ b/add-interactive.h
-@@ -0,0 +1,8 @@
-+#ifndef ADD_INTERACTIVE_H
-+#define ADD_INTERACTIVE_H
 +
-+struct repository;
-+struct pathspec;
-+int run_add_i(struct repository *r, const struct pathspec *ps);
-+
-+#endif
-diff --git a/builtin/add.c b/builtin/add.c
-index dd18e5c9b6..4f625691b5 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -20,6 +20,7 @@
- #include "bulk-checkin.h"
- #include "argv-array.h"
- #include "submodule.h"
-+#include "add-interactive.h"
- 
- static const char * const builtin_add_usage[] = {
- 	N_("git add [<options>] [--] <pathspec>..."),
-@@ -185,6 +186,14 @@ int run_add_interactive(const char *revision, const char *patch_mode,
+ static void init_add_i_state(struct add_i_state *s, struct repository *r)
  {
- 	int status, i;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
-+	int use_builtin_add_i =
-+		git_env_bool("GIT_TEST_ADD_I_USE_BUILTIN", -1);
-+	if (use_builtin_add_i < 0)
-+		git_config_get_bool("add.interactive.usebuiltin",
-+				    &use_builtin_add_i);
+-       s->r = r;
++	const char *value;
 +
-+	if (use_builtin_add_i == 1 && !patch_mode)
-+		return !!run_add_i(the_repository, pathspec);
- 
- 	argv_array_push(&argv, "add--interactive");
- 	if (patch_mode)
-@@ -319,6 +328,7 @@ static int add_config(const char *var, const char *value, void *cb)
- 		ignore_add_errors = git_config_bool(var, value);
- 		return 0;
- 	}
++	s->r = r;
 +
- 	return git_default_config(var, value, cb);
++	if (repo_config_get_value(r, "color.interactive", &value))
++		s->use_color = -1;
++	else
++		s->use_color =
++			git_config_colorbool("color.interactive", value);
++	s->use_color = want_color(s->use_color);
++
++	init_color(r, s, "header", s->header_color, GIT_COLOR_BOLD);
  }
  
-diff --git a/t/README b/t/README
-index 60d5b77bcc..5132ec83f8 100644
---- a/t/README
-+++ b/t/README
-@@ -397,6 +397,10 @@ GIT_TEST_STASH_USE_BUILTIN=<boolean>, when false, disables the
- built-in version of git-stash. See 'stash.useBuiltin' in
- git-config(1).
+ struct list_options {
+@@ -20,7 +51,8 @@ struct list_options {
+ 	void *print_item_data;
+ };
  
-+GIT_TEST_ADD_I_USE_BUILTIN=<boolean>, when true, enables the
-+built-in version of git add -i. See 'add.interactive.useBuiltin' in
-+git-config(1).
-+
- GIT_TEST_INDEX_THREADS=<n> enables exercising the multi-threaded loading
- of the index for the whole test suite by bypassing the default number of
- cache entries and thread minimums. Setting this to 1 will make the
+-static void list(struct string_list *list, struct list_options *opts)
++static void list(struct add_i_state *s, struct string_list *list,
++		 struct list_options *opts)
+ {
+ 	int i;
+ 
+@@ -28,7 +60,8 @@ static void list(struct string_list *list, struct list_options *opts)
+ 		return;
+ 
+ 	if (opts->header)
+-		printf("%s\n", opts->header);
++		color_fprintf_ln(stdout, s->header_color,
++				 "%s", opts->header);
+ 
+ 	for (i = 0; i < list->nr; i++) {
+ 		opts->print_item(i, list->items + i, opts->print_item_data);
+@@ -213,7 +246,7 @@ static int run_status(struct add_i_state *s, const struct pathspec *ps,
+ 	if (get_modified_files(s->r, files, ps) < 0)
+ 		return -1;
+ 
+-	list(files, opts);
++	list(s, files, opts);
+ 	putchar('\n');
+ 
+ 	return 0;
 -- 
 gitgitgadget
 
