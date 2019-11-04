@@ -8,56 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45B641F454
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6E6E1F454
 	for <e@80x24.org>; Mon,  4 Nov 2019 12:15:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728844AbfKDMPp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Nov 2019 07:15:45 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:37741 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728713AbfKDMPl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Nov 2019 07:15:41 -0500
-Received: by mail-wr1-f67.google.com with SMTP id t1so10867439wrv.4
-        for <git@vger.kernel.org>; Mon, 04 Nov 2019 04:15:40 -0800 (PST)
+        id S1728839AbfKDMPo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Nov 2019 07:15:44 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:50384 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727322AbfKDMPk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Nov 2019 07:15:40 -0500
+Received: by mail-wm1-f67.google.com with SMTP id 11so16435708wmk.0
+        for <git@vger.kernel.org>; Mon, 04 Nov 2019 04:15:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=jkoX4BSraB5J7HguuB4qp/jaTlS4oYRdTv4MEN5DTlQ=;
-        b=GI364TdtXdtK+8JkS7SyCUpRyAUAFSzFWFlpY1jyZhZ5jhNuMftkCrn3eYRSBrvPws
-         HRTJcZwySKR63JmYM/H03s3IN3RenDOcWn0CIqnRP/sTPR0HEa4OwlGEjdncyRUB3nil
-         a0Oy9gVbg4rZd7vUnixu8EkPO19ypbh8QuvkExzju7/3RvitaSDoEOGW0SadzA9O150g
-         XTxCJfn4GDj/l/RiuTE2vAxBhEnDdmuQp3ob3RAU+Hbf559cdVnMljTBIMAoYFLSumh/
-         ZZfj2sEb1+s2RlTx1emhuWMpmRnsTajFDeLuXWKYc7URa24iLe3dW6Bi+Fd7hN08/o4J
-         Smgw==
+        bh=kSYfCLCAHtsmzDNlIaADdzszo1MkBEkH9vO4RVbgBCE=;
+        b=oSly33u8wdG13+LXS6ijRy8sFJ0l9nuofZtWw7vhJn5a81SDMha3AbyIOUrw1svX53
+         tPWa+UagNszrz2Q/8TM9fe1A1NPz0P8Ef1PCVf4q3YBP+XntJCiS0lvH3nlhzfFOV4H3
+         dyAIMLaDm2shD8FycG5as6xWsy8ey6JQ5YoWKyHPL/6WBgJxB4w9McK7mIN6lH1PIVUX
+         xHLURdYUS4n2qB0/EtzmLrGI6R3wA5lCT3EDFetO9Sqt7/wxjWUrnHUamADJATpV3weF
+         8i49V6WgNHSQJoin1jbu4BdeL6CxwZk9z6D65UI1rZbwX2zjrpI39CmoPUfpvYgzwglV
+         NUeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=jkoX4BSraB5J7HguuB4qp/jaTlS4oYRdTv4MEN5DTlQ=;
-        b=EI1LRPBSBoZVjerTt0PbUqqvPcb0ENtYh/gMxzF22Y7V5rulaj2ae5lFU6RFh2CUJv
-         cpelg9iPslTTKYEkXPUmx5zDRyZiQ74AlS+7JEdiF9GGna2uWvE9cf+W7i/G1VnCfdLU
-         c9/x+yRp6a/tUwKOOKqCz/J4IfiMJoQ+AA4mrqTVbIDUe025qyMGzV8eEDJAZIhMrbB0
-         hUkuh2Iwl3LU1xnkDeCly8/UzrZfWD8TsPnBcrWXuGC6vHvAIEASFLD67TajVm6gD7BJ
-         XC31fM5mOWIGD/1rAW3lIxL1EjdA5qOycYfzhDpfA35PiiUNxUUd0431xrhSLY+mgYj0
-         wCSA==
-X-Gm-Message-State: APjAAAWdXHQYKeYHUES/xjngcLBWVpA9MRT5QX43wS2iM/Lc6aKFm6l5
-        qqQOeFIjhCmMcbKgJQvpPqtEMLKT
-X-Google-Smtp-Source: APXvYqxprdnNMmprjomYOJXRCFIgbKM3Mq7XziPGoqL03mMG8Q6f2VBIbijePSXfSkwemV34W5eROw==
-X-Received: by 2002:a5d:4585:: with SMTP id p5mr1957122wrq.134.1572869739425;
-        Mon, 04 Nov 2019 04:15:39 -0800 (PST)
+        bh=kSYfCLCAHtsmzDNlIaADdzszo1MkBEkH9vO4RVbgBCE=;
+        b=V2GI2Qv6TiAvcPxirAylHCO7NA0SOc81hDprGK8xnSYkkN6mL/ugFv4MN5y2ZlpN7u
+         wUahVcX0nofsqTs4qyljT1Nn9ZaS8vp96oie2yGQXjVdRyPn7LV6M1t9MbdHDxsVPuqx
+         jtssHrtW+x+VduZf5XOqbyPgDQmLvtrQBY4/hF/3PoInaqiBQnaKfTERCoaACNPvTqIn
+         sFqDCLCa9KsHBQcYXeoAPIQO93MlB6vMKJFiHsODuwrWeM+WoU5fReBRDeE/w4/DUP9H
+         QQBB8rMl9SiUpQF0S30N0geKLJpH4FcKGnhry47qYJbfflOF6YKlJTrIZ16kvWUUVHGA
+         gkoA==
+X-Gm-Message-State: APjAAAVkhPMgeJ0wdTs9CXDbSObBnhYCH9T+BLXe9+i+Q7+9vQZ7MH18
+        rRv5stXqe+ay/ZUaqZn5YUoCDgH2
+X-Google-Smtp-Source: APXvYqweKhsER+DzsCOm78YChdVx7uXyhD5lPT4LFfZ6pSoR40ztng+N6sQPiZfkImAKIJBCKte5TQ==
+X-Received: by 2002:a1c:2e09:: with SMTP id u9mr21546269wmu.108.1572869737017;
+        Mon, 04 Nov 2019 04:15:37 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y2sm17629384wmy.2.2019.11.04.04.15.38
+        by smtp.gmail.com with ESMTPSA id n13sm9426180wmi.25.2019.11.04.04.15.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Nov 2019 04:15:39 -0800 (PST)
-Message-Id: <85e508ef119658c154da35482095a4f0f15adc80.1572869730.git.gitgitgadget@gmail.com>
+        Mon, 04 Nov 2019 04:15:36 -0800 (PST)
+Message-Id: <57fdc01463b5fe1637dcfa4b027bde8e99f7fe86.1572869730.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.170.v5.git.1572869729.gitgitgadget@gmail.com>
 References: <pull.170.v4.git.gitgitgadget@gmail.com>
         <pull.170.v5.git.1572869729.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?Slavica=20=C4=90uki=C4=87?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Mon, 04 Nov 2019 12:15:29 +0000
-Subject: [PATCH v5 9/9] built-in add -i: implement the `help` command
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 04 Nov 2019 12:15:26 +0000
+Subject: [PATCH v5 6/9] built-in add -i: show unique prefixes of the commands
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,99 +65,309 @@ To:     git@vger.kernel.org
 Cc:     Jeff Hostetler <git@jeffhostetler.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Slavica=20=C4=90uki=C4=87?= <slawica92@hotmail.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?Slavica=20=C4=90uki=C4=87?= <slawica92@hotmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This imitates the code to show the help text from the Perl script
-`git-add--interactive.perl` in the built-in version.
+Just like in the Perl script `git-add--interactive.perl`, for each
+command a unique prefix is determined (if there exists any within the
+given parameters), and shown in the list, and accepted as a shortcut for
+the command.
 
-To make sure that it renders exactly like the Perl version of `git add
--i`, we also add a test case for that to `t3701-add-interactive.sh`.
+To determine the unique prefixes, as well as to look up the command in
+question, we use a copy of the list and sort it.
 
-Signed-off-by: Slavica Đukić <slawica92@hotmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+While this might seem like overkill for a single command, it will make
+much more sense when all the commands are implemented, and when we reuse
+the same logic to present a list of files to edit, with convenient
+unique prefixes.
+
+At the start of the development of this patch series, a dedicated data
+structure was introduced that imitated the Trie that the Perl version
+implements. However, this was deemed overkill, and we now simply sort
+the list before determining the length of the unique prefixes by looking
+at each item's neighbor. As a bonus, we now use the same sorted list to
+perform a binary search using the user-provided prefix as search key.
+
+Original-patch-by: Slavica Đukić <slawica92@hotmail.com>
+Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 ---
- add-interactive.c          | 21 +++++++++++++++++++++
- t/t3701-add-interactive.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
+ add-interactive.c | 188 +++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 177 insertions(+), 11 deletions(-)
 
 diff --git a/add-interactive.c b/add-interactive.c
-index 64d84ba1dc..4e5241e865 100644
+index c6f7fbad36..eb559555ad 100644
 --- a/add-interactive.c
 +++ b/add-interactive.c
-@@ -506,6 +506,26 @@ static int run_status(struct add_i_state *s, const struct pathspec *ps,
- 	return 0;
+@@ -45,6 +45,132 @@ static void init_add_i_state(struct add_i_state *s, struct repository *r)
+ 	init_color(r, s, "header", s->header_color, GIT_COLOR_BOLD);
  }
  
-+static int run_help(struct add_i_state *s, const struct pathspec *unused_ps,
-+		    struct string_list *unused_files,
-+		    struct list_options *unused_opts)
-+{
-+	color_fprintf_ln(stdout, s->help_color, "status        - %s",
-+			 _("show paths with changes"));
-+	color_fprintf_ln(stdout, s->help_color, "update        - %s",
-+			 _("add working tree state to the staged set of changes"));
-+	color_fprintf_ln(stdout, s->help_color, "revert        - %s",
-+			 _("revert staged set of changes back to the HEAD version"));
-+	color_fprintf_ln(stdout, s->help_color, "patch         - %s",
-+			 _("pick hunks and update selectively"));
-+	color_fprintf_ln(stdout, s->help_color, "diff          - %s",
-+			 _("view diff between HEAD and index"));
-+	color_fprintf_ln(stdout, s->help_color, "add untracked - %s",
-+			 _("add contents of untracked files to the staged set of changes"));
++/*
++ * A "prefix item list" is a list of items that are identified by a string, and
++ * a unique prefix (if any) is determined for each item.
++ *
++ * It is implemented in the form of a pair of `string_list`s, the first one
++ * duplicating the strings, with the `util` field pointing at a structure whose
++ * first field must be `size_t prefix_length`.
++ *
++ * That `prefix_length` field will be computed by `find_unique_prefixes()`; It
++ * will be set to zero if no valid, unique prefix could be found.
++ *
++ * The second `string_list` is called `sorted` and does _not_ duplicate the
++ * strings but simply reuses the first one's, with the `util` field pointing at
++ * the `string_item_list` of the first `string_list`. It  will be populated and
++ * sorted by `find_unique_prefixes()`.
++ */
++struct prefix_item_list {
++	struct string_list items;
++	struct string_list sorted;
++	size_t min_length, max_length;
++};
++#define PREFIX_ITEM_LIST_INIT \
++	{ STRING_LIST_INIT_DUP, STRING_LIST_INIT_NODUP, 1, 4 }
 +
-+	return 0;
++static void prefix_item_list_clear(struct prefix_item_list *list)
++{
++	string_list_clear(&list->items, 1);
++	string_list_clear(&list->sorted, 0);
 +}
 +
- typedef int (*command_t)(struct add_i_state *s, const struct pathspec *ps,
++static void extend_prefix_length(struct string_list_item *p,
++				 const char *other_string, size_t max_length)
++{
++	size_t *len = p->util;
++
++	if (!*len || memcmp(p->string, other_string, *len))
++		return;
++
++	for (;;) {
++		char c = p->string[*len];
++
++		/*
++		 * Is `p` a strict prefix of `other`? Or have we exhausted the
++		 * maximal length of the prefix? Or is the current character a
++		 * multi-byte UTF-8 one? If so, there is no valid, unique
++		 * prefix.
++		 */
++		if (!c || ++*len > max_length || !isascii(c)) {
++			*len = 0;
++			break;
++		}
++
++		if (c != other_string[*len - 1])
++			break;
++	}
++}
++
++static void find_unique_prefixes(struct prefix_item_list *list)
++{
++	size_t i;
++
++	if (list->sorted.nr == list->items.nr)
++		return;
++
++	string_list_clear(&list->sorted, 0);
++	/* Avoid reallocating incrementally */
++	list->sorted.items = xmalloc(st_mult(sizeof(*list->sorted.items),
++					     list->items.nr));
++	list->sorted.nr = list->sorted.alloc = list->items.nr;
++
++	for (i = 0; i < list->items.nr; i++) {
++		list->sorted.items[i].string = list->items.items[i].string;
++		list->sorted.items[i].util = list->items.items + i;
++	}
++
++	string_list_sort(&list->sorted);
++
++	for (i = 0; i < list->sorted.nr; i++) {
++		struct string_list_item *sorted_item = list->sorted.items + i;
++		struct string_list_item *item = sorted_item->util;
++		size_t *len = item->util;
++
++		*len = 0;
++		while (*len < list->min_length) {
++			char c = item->string[(*len)++];
++
++			if (!c || !isascii(c)) {
++				*len = 0;
++				break;
++			}
++		}
++
++		if (i > 0)
++			extend_prefix_length(item, sorted_item[-1].string,
++					     list->max_length);
++		if (i + 1 < list->sorted.nr)
++			extend_prefix_length(item, sorted_item[1].string,
++					     list->max_length);
++	}
++}
++
++static ssize_t find_unique(const char *string, struct prefix_item_list *list)
++{
++	int index = string_list_find_insert_index(&list->sorted, string, 1);
++	struct string_list_item *item;
++
++	if (list->items.nr != list->sorted.nr)
++		BUG("prefix_item_list in inconsistent state (%"PRIuMAX
++		    " vs %"PRIuMAX")",
++		    (uintmax_t)list->items.nr, (uintmax_t)list->sorted.nr);
++
++	if (index < 0)
++		item = list->sorted.items[-1 - index].util;
++	else if (index > 0 &&
++		 starts_with(list->sorted.items[index - 1].string, string))
++		return -1;
++	else if (index + 1 < list->sorted.nr &&
++		 starts_with(list->sorted.items[index + 1].string, string))
++		return -1;
++	else if (index < list->sorted.nr)
++		item = list->sorted.items[index].util;
++	else
++		return -1;
++	return item - list->items.items;
++}
++
+ struct list_options {
+ 	int columns;
+ 	const char *header;
+@@ -95,18 +221,21 @@ struct list_and_choose_options {
+  * If an error occurred, returns `LIST_AND_CHOOSE_ERROR`. Upon EOF,
+  * `LIST_AND_CHOOSE_QUIT` is returned.
+  */
+-static ssize_t list_and_choose(struct add_i_state *s, struct string_list *items,
++static ssize_t list_and_choose(struct add_i_state *s,
++			       struct prefix_item_list *items,
+ 			       struct list_and_choose_options *opts)
+ {
+ 	struct strbuf input = STRBUF_INIT;
+ 	ssize_t res = LIST_AND_CHOOSE_ERROR;
+ 
++	find_unique_prefixes(items);
++
+ 	for (;;) {
+ 		char *p, *endp;
+ 
+ 		strbuf_reset(&input);
+ 
+-		list(s, items, &opts->list_opts);
++		list(s, &items->items, &opts->list_opts);
+ 
+ 		printf("%s%s", opts->prompt, "> ");
+ 		fflush(stdout);
+@@ -140,7 +269,10 @@ static ssize_t list_and_choose(struct add_i_state *s, struct string_list *items,
+ 			}
+ 
+ 			p[sep] = '\0';
+-			if (index < 0 || index >= items->nr)
++			if (index < 0)
++				index = find_unique(p, items);
++
++			if (index < 0 || index >= items->items.nr)
+ 				printf(_("Huh (%s)?\n"), p);
+ 			else {
+ 				res = index;
+@@ -306,6 +438,23 @@ static void render_adddel(struct strbuf *buf,
+ 		strbuf_addstr(buf, no_changes);
+ }
+ 
++/* filters out prefixes which have special meaning to list_and_choose() */
++static int is_valid_prefix(const char *prefix, size_t prefix_len)
++{
++	return prefix_len && prefix &&
++		/*
++		 * We expect `prefix` to be NUL terminated, therefore this
++		 * `strcspn()` call is okay, even if it might do much more
++		 * work than strictly necessary.
++		 */
++		strcspn(prefix, " \t\r\n,") >= prefix_len &&	/* separators */
++		*prefix != '-' &&				/* deselection */
++		!isdigit(*prefix) &&				/* selection */
++		(prefix_len != 1 ||
++		 (*prefix != '*' &&				/* "all" wildcard */
++		  *prefix != '?'));				/* prompt help */
++}
++
+ struct print_file_item_data {
+ 	const char *modified_fmt;
+ 	struct strbuf buf, index, worktree;
+@@ -345,10 +494,23 @@ typedef int (*command_t)(struct add_i_state *s, const struct pathspec *ps,
  			 struct string_list *files,
  			 struct list_options *opts);
-@@ -559,6 +579,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
- 		command_t command;
+ 
++struct command_item {
++	size_t prefix_length;
++	command_t command;
++};
++
+ static void print_command_item(int i, struct string_list_item *item,
+ 			       void *print_command_item_data)
+ {
+-	printf(" %2d: %s", i + 1, item->string);
++	struct command_item *util = item->util;
++
++	if (!util->prefix_length ||
++	    !is_valid_prefix(item->string, util->prefix_length))
++		printf(" %2d: %s", i + 1, item->string);
++	else
++		printf(" %2d: [%.*s]%s", i + 1,
++		       (int)util->prefix_length, item->string,
++		       item->string + util->prefix_length);
+ }
+ 
+ int run_add_i(struct repository *r, const struct pathspec *ps)
+@@ -364,7 +526,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
  	} command_list[] = {
  		{ "status", run_status },
-+		{ "help", run_help },
  	};
- 	struct prefix_item_list commands = PREFIX_ITEM_LIST_INIT;
+-	struct string_list commands = STRING_LIST_INIT_NODUP;
++	struct prefix_item_list commands = PREFIX_ITEM_LIST_INIT;
  
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index d50e165ca8..d4f9386621 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -647,4 +647,29 @@ test_expect_success 'checkout -p works with pathological context lines' '
- 	test_write_lines a b a b a a b a b a >expect &&
- 	test_cmp expect a
- '
-+
-+test_expect_success 'show help from add--helper' '
-+	git reset --hard &&
-+	cat >expect <<-EOF &&
-+
-+	<BOLD>*** Commands ***<RESET>
-+	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
-+	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
-+	<BOLD;BLUE>What now<RESET>> <BOLD;RED>status        - show paths with changes<RESET>
-+	<BOLD;RED>update        - add working tree state to the staged set of changes<RESET>
-+	<BOLD;RED>revert        - revert staged set of changes back to the HEAD version<RESET>
-+	<BOLD;RED>patch         - pick hunks and update selectively<RESET>
-+	<BOLD;RED>diff          - view diff between HEAD and index<RESET>
-+	<BOLD;RED>add untracked - add contents of untracked files to the staged set of changes<RESET>
-+	<BOLD>*** Commands ***<RESET>
-+	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
-+	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
-+	<BOLD;BLUE>What now<RESET>>$SP
-+	Bye.
-+	EOF
-+	test_write_lines h | GIT_PAGER_IN_USE=true TERM=vt100 git add -i >actual.colored &&
-+	test_decode_color <actual.colored >actual &&
-+	test_i18ncmp expect actual
-+'
-+
- test_done
+ 	struct print_file_item_data print_file_item_data = {
+ 		"%12s %12s %s", STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
+@@ -377,9 +539,12 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 	ssize_t i;
+ 	int res = 0;
+ 
+-	for (i = 0; i < ARRAY_SIZE(command_list); i++)
+-		string_list_append(&commands, command_list[i].string)
+-			->util = command_list[i].command;
++	for (i = 0; i < ARRAY_SIZE(command_list); i++) {
++		struct command_item *util = xcalloc(sizeof(*util), 1);
++		util->command = command_list[i].command;
++		string_list_append(&commands.items, command_list[i].string)
++			->util = util;
++	}
+ 
+ 	init_add_i_state(&s, r);
+ 
+@@ -404,8 +569,9 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 			break;
+ 		}
+ 		if (i != LIST_AND_CHOOSE_ERROR) {
+-			command_t command = commands.items[i].util;
+-			res = command(&s, ps, &files, &opts);
++			struct command_item *util =
++				commands.items.items[i].util;
++			res = util->command(&s, ps, &files, &opts);
+ 		}
+ 	}
+ 
+@@ -414,7 +580,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 	strbuf_release(&print_file_item_data.index);
+ 	strbuf_release(&print_file_item_data.worktree);
+ 	strbuf_release(&header);
+-	string_list_clear(&commands, 0);
++	prefix_item_list_clear(&commands);
+ 
+ 	return res;
+ }
 -- 
 gitgitgadget
+
