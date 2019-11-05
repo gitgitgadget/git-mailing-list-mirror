@@ -8,88 +8,90 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCDA61F454
-	for <e@80x24.org>; Tue,  5 Nov 2019 17:38:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 856B31F454
+	for <e@80x24.org>; Tue,  5 Nov 2019 18:24:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388983AbfKERiN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 12:38:13 -0500
-Received: from mail-qv1-f66.google.com ([209.85.219.66]:41767 "EHLO
-        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387776AbfKERiM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 12:38:12 -0500
-Received: by mail-qv1-f66.google.com with SMTP id g18so262048qvp.8
-        for <git@vger.kernel.org>; Tue, 05 Nov 2019 09:38:12 -0800 (PST)
+        id S2390682AbfKESY1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 13:24:27 -0500
+Received: from mail-ot1-f52.google.com ([209.85.210.52]:42171 "EHLO
+        mail-ot1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388711AbfKESY1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 13:24:27 -0500
+Received: by mail-ot1-f52.google.com with SMTP id b16so18478214otk.9
+        for <git@vger.kernel.org>; Tue, 05 Nov 2019 10:24:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=LVevEbSL7Gk6chZ7ITgRqvr087pNe+33UJFUJ+Z38qA=;
-        b=L0EhddfjNyS7fCvSOo1oMvqMOEAlWcJEzRlfVlO/ANstN/T0/MR5SCN28uHOcVsJJq
-         4rvfLA0JsefwN72Vx3cIV3K0aN/9+mc+Bpker9haD76ym6Io0lbn81pHiseqQU94CUQi
-         LNauAvtVyCTyd7l30qsH/YhMPgRCyensdNUms1i7ctjmoh2mwFwKSO6b+CqtxG4ztfqI
-         Z5k1jmoBL3JrqqDxxJCOIim4TRBwCqR+IcYEHK27+AmNwEtBinSAGSebO+c5/r2HhIeK
-         +3alhOg5QMapdsvIVgPKK9wN0jCjG9L8QXLTCh5Cag5qu7tV/tbvf3SH+/OfO2WO+2Np
-         vVUA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iJDoGX30qI54UzKeKZvN8hRZcOdo+RuisFAVp5ww+4A=;
+        b=GwrW8K8iZS5L2t6Pq/Ihedssoh21PraX8MM35b2BEeqMAU102V38AretbfyUN3rNLw
+         XkcF8736l3va+kwCdYRx9sg5O0KFDCX21Iro21TEKuPj8gAJQf8wnr7AueI8XS7vL0H2
+         QXsEfa9i6wWWY8rvAvnbWZ563/azuDlev9FsuE83dTOmi6NYecxHzWr1CJyINMKuhYrw
+         t49Cjbo9eUjNhkGXFGfjVxFalq7kPMOG1dzzDZSHhBB5jY44G2LmmPb+KoVdQWuwpBli
+         w7qdXFUfkuEwE+8SkYcrrOsz4xexbpEKdkt+P6iw+cCbLqulJ+ZqmUp1jJKGUKpPsUoe
+         zhpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=LVevEbSL7Gk6chZ7ITgRqvr087pNe+33UJFUJ+Z38qA=;
-        b=s8aqj7tgYDUIbFBp+cvcNRwnhqCq4vSrzRB1t/jJ29PV6rBZEypl++ya7IqecOb6Ac
-         tPChCiWEkSMLhHj140agNQ3MiGIwlvzSYvRP1GdGVfGU0R9PzmGS4nQuXKkUMYSp0eKE
-         Q8vFvFLQUwy6r/MgiN8z3sXeqQEV/JSo5K+AdNREyquARxRWOj0FyJyEo1X1eBzS3CKA
-         3WMMlHOE1JlK49Ln5DeiNwIiktY4jg+DL2aw1bC1Zsu3sSs2H+Vc7xHMBBOJ6R7W3KHG
-         7bmGivmvC21btucJHyfsmZqQAcG5rqQEcuGaJpb/lJPaDf8Ex8cWkAHGG4ZC0yaOZBfz
-         ctAg==
-X-Gm-Message-State: APjAAAXPtcfYNDwxH064WQ8voONwTRkdX2Sb9LOq3yVCExi/nhmtWMSd
-        qb9aAryC+9rEVu35DvllhCM=
-X-Google-Smtp-Source: APXvYqyN+/0AyT/EkHc0BQ4EBlBUCjyzaaX9UT76rPUS56+vMLWv14mioX54oS8xUOwAd2LRiBs7WQ==
-X-Received: by 2002:a05:6214:1343:: with SMTP id b3mr27779865qvw.207.1572975491825;
-        Tue, 05 Nov 2019 09:38:11 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:9d78:3a28:e2ab:8193? ([2001:4898:a800:1012:4eac:3a28:e2ab:8193])
-        by smtp.gmail.com with ESMTPSA id r7sm10878102qkf.124.2019.11.05.09.38.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Nov 2019 09:38:10 -0800 (PST)
-Subject: Re: [PATCH 1/1] commit-graph: use start_delayed_progress()
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     rynus@gmail.com, Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.450.git.1572969955.gitgitgadget@gmail.com>
- <174c05bf29bbd92342aa45132592c348f988cf0b.1572969955.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <18dde6fe-9072-2069-8063-f1cfcdee3f38@gmail.com>
-Date:   Tue, 5 Nov 2019 12:38:10 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
- Thunderbird/71.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iJDoGX30qI54UzKeKZvN8hRZcOdo+RuisFAVp5ww+4A=;
+        b=VjfvGHTwzp/VOpoqqFzh/AgT/XdjPL8mp236jYm3PGqOy/YsqZi/VfbO2wYC5AwJc8
+         +xQvptGGVzEyYUSkaC0fJKAoxj3nLEqvBW7ZSaHQUe4ePz3RZzIs+tKCBtsvd10xeDUN
+         TM9br93IC4YWjVyhD+DdAV3JdOE2P/tzq3Z788XzVLu4ex307iaH4Fmb5RTMgjawMyji
+         Ktq27Asq9L4KXPVdbBOv7s7BDM715i0MzWk1P0IsQsqhPCibMjah8h4IDnBJLT0Vrk++
+         gNr/EXiSatiQhPgfRXZ5EHr6uGnpta/lLoTufo6To5YTzVtv+8atzO08p4Njl9Xefq6P
+         dVrw==
+X-Gm-Message-State: APjAAAWaf+qBhm2NX8EfuXj7MoMuxeBLvBY/Sp9d+9W/HOWt46KA5hnr
+        tdAZNgO2MKH9BnRPMrp3WIlk9mkqlvL4ErZlxVM2xgJk
+X-Google-Smtp-Source: APXvYqw0q7KmKL59kqrCbaoEeMS0L1GMcpecjWCFOBeFy1sOfb0MCacO+OFMNxs+xIOe4Y7+/iB1NGwjmU6A3NOIujg=
+X-Received: by 2002:a05:6830:15c8:: with SMTP id j8mr10767096otr.112.1572978266019;
+ Tue, 05 Nov 2019 10:24:26 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <174c05bf29bbd92342aa45132592c348f988cf0b.1572969955.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <alpine.LSU.2.21.1911041704520.3956@fossies.org> <20191105171107.27379-1-newren@gmail.com>
+In-Reply-To: <20191105171107.27379-1-newren@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 5 Nov 2019 10:24:11 -0800
+Message-ID: <CABPp-BEzSaf2W+rfUOjEAETK0YFa5-2ZFD0WLV6j-D4LjACjJg@mail.gmail.com>
+Subject: Re: Some misspelling errors in the git release 2.24.0
+To:     Fossies Administrator <Jens.Schleusener@fossies.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/5/2019 11:05 AM, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
-> 
-> When writing a commit-graph, we show progress along several commit
-> walks. When we use start_delayed_progress(), the progress line will
-> only appear if that step takes a decent amount of time.
-> 
-> However, one place was missed: computing generation numbers. This is
-> normally a very fast operation as all commits have been parsed in a
-> previous step. But, this is showing up for all users no matter how few
-> commits are being added.
+On Tue, Nov 5, 2019 at 9:11 AM Elijah Newren <newren@gmail.com> wrote:
+> On Mon, Nov 4, 2019 at 8:14 AM Fossies Administrator <Jens.Schleusener@fossies.org> wrote:
+> > > On Mon, Nov 4, 2019 at 7:07 AM Fossies Administrator
+> > > <Jens.Schleusener@fossies.org> wrote:
 
-For course, now that we do not force at least one progress line to show
-up, the tests that check the `--progress` option (or `--no-quiet` for GC)
-will fail with this patch.
+> But I thought it might also be worthwhile to you to report what the
+> false positives found by that program were; I've included them at the
+> end of this email in the form of a patch.  The places where the program
+> seemed to struggle were:
+>
+>   * In dealing with translation files.  It didn't recognize them as
+>     such and often tried to translate foreign words to a nearby English
+>     one.
+>   * In handling variable names: acronyms might be similar to english
+>     words (cas, for compare and swap, looks like case), abbreviations
+>     might look like alternate words (ans, short for answer, looks like
+>     and).
+>   * Testcases with intentional spelling errors
+>   * Proper names that were similar to English words (Ned -> Need,
+>     Claus -> Clause)
+>   * miscellaneous tech jargon or package names (e.g. 'filetest' module
+>     being replaced with 'file test', 'ith' as in not first or second
+>     but the item at position i being replaced with 'with', 'mmaped'
+>     being replaced with 'mapped', 'CREAT' changing to 'CREATE',
+>     'UserA' (out of a sequence of UserB, UserC, etc.) changing to
+>     'users', 'spawnve' function name being replaced with "spawn",
+>     'CAs' (certificate authorities) being replaced with 'case', etc.)
 
-v2 coming soon.
-
--Stolee
-
+Ooh, one more I remembered that I wanted to point out.  It found the
+spelling error 'achiving', but it wanted to replace it with
+'achieving' rather than the correct 'archiving'.  Given that the
+correct is the same edit distance from the spelling error, it made me
+wonder whether the dictionary in use just needed to be expanded a
+little.
