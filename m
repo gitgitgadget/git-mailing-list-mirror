@@ -8,137 +8,83 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F33851F454
-	for <e@80x24.org>; Tue,  5 Nov 2019 19:22:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43B111F454
+	for <e@80x24.org>; Tue,  5 Nov 2019 19:26:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390404AbfKETWN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 14:22:13 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:40437 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389691AbfKETWM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 14:22:12 -0500
-Received: by mail-wm1-f68.google.com with SMTP id f3so563816wmc.5
-        for <git@vger.kernel.org>; Tue, 05 Nov 2019 11:22:11 -0800 (PST)
+        id S2390943AbfKET0X (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 14:26:23 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44005 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390783AbfKET0X (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 14:26:23 -0500
+Received: by mail-wr1-f66.google.com with SMTP id n1so22841631wra.10
+        for <git@vger.kernel.org>; Tue, 05 Nov 2019 11:26:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3tr7Hv2r9mzti6k0qnphLFpO6kDf7O0zOwoYlplBR48=;
-        b=s7hNbJ2bde2e943T00OC9TZOEOBL5MMm1dmTGBlvkcX/KzohPHSizK9upT4eG2jSqk
-         nfT0rXpYbbPTf1HFYbDCfrBKjXkS4rOVxfQPE5fWe9+OlC/rRBY15MM+lh95R4cxBhUi
-         yqQUY3uFhAmWWsz9uJONQdoDm9BD1NWUvwoIyZ1VqbPBwlVEz/8QkUebmMFsEuZbbSYy
-         4BrqUDWLQYnpxU9pnyUon9iIAIW4eFDgMRvwGMBtz6gucwwLV5ksazYEN9JyjNDC1Tp4
-         d2uRDJZUdLKAZCbcm0oiETzaKyNMRAoVxyadlu0wVnwaghTv1MZdMgCK/MrRkDq5Rvig
-         1qTA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=h4Ck8eo6scAiz08TNBl065UrnkqnC9mRISVmQN0v51Q=;
+        b=DXTpyP/UKPVktaPA6chBfEBAJStjF3ARq0jHviJkzFb3eE/h8QQvQt0Gg8J9r8Y976
+         tv4wEPTLYfQIIk/ZzzZFL/q8r2uvCLAORNtkYGUIZqvY9xAVz5uRN8mOC4MeHLrIO6Vb
+         +tHj/61jYZWJ64ix9yAqNYjXk8GuSD536PaZpqMytG7cYG5OleWQav3k5V09amHhZ/dU
+         3Ll6Bj1vM/Os2ku8t7Gfql+3f2oSkNGQ/NeNp2BpWoH9Z/piUeWK98Ltm3Yg1wGlTPKf
+         2M4IErffnakOkiUdIQA5w5oyuRBNgUgL2SU5im8Q8m2hECShFSjPFupcN95KIr/KZFAu
+         l0oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:from:to:cc:references
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=3tr7Hv2r9mzti6k0qnphLFpO6kDf7O0zOwoYlplBR48=;
-        b=HYhliyDAIrfvR2yOm2YpScF0t7APMbG0KbE34DcPvuTfm12ZnGBDs4CF6qRwx8Zp5L
-         PGV9ojVBjR7Q+AVMofvq+RZfdsR+974j2jGDwyHuDGjCMbkh96v17BezPeDhhhNQk1iu
-         Xd3OxVQ2BRV6omB4PezhqpiaKxoWtCKyZ4pvgTpXcmJC+zXFRcnhroGOzTWmxAubNUzC
-         X6+2ENf3wcgK/djqwSQ8TaFmPLpkwyuGflY1R1UfZ3ptnYWMD2sIVSeGY9ZBUh9cX6VZ
-         +aaG0ZQLzrqv59ZNu10T2rXymL+78mEqIIxIaqQuUvXFGRZdJRzX/4saunY0nTUplpj+
-         +D2A==
-X-Gm-Message-State: APjAAAXlQjW+STOMiAKZB+zGZH9LfNK74Gb490MQx70dacH2nCWBTnSt
-        osFlv7Yj+6eM36YjsR6v4+E=
-X-Google-Smtp-Source: APXvYqyWZVBxL2Cvm78AHNZ7pxGEinQMKSZ/QEo//JK5pAA4l7qqhg+cufSPUg6hZGl2q7gun1s5jQ==
-X-Received: by 2002:a05:600c:22cb:: with SMTP id 11mr483028wmg.117.1572981730582;
-        Tue, 05 Nov 2019 11:22:10 -0800 (PST)
-Received: from [192.168.2.240] (host-92-22-7-224.as13285.net. [92.22.7.224])
-        by smtp.gmail.com with ESMTPSA id l4sm37262142wrf.46.2019.11.05.11.22.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Nov 2019 11:22:09 -0800 (PST)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/5] reset: support the --pathspec-from-file option
-From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Alexandr Miloslavskiy via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
- <8d9f1fbc18346144a0c866a59891b652dcfe9b7f.1572895605.git.gitgitgadget@gmail.com>
- <b93592df-561f-36d4-09ce-e02d570c60da@gmail.com>
-Message-ID: <af4ecf54-6353-2307-5905-624919e78683@gmail.com>
-Date:   Tue, 5 Nov 2019 19:22:08 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.0
-MIME-Version: 1.0
-In-Reply-To: <b93592df-561f-36d4-09ce-e02d570c60da@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=h4Ck8eo6scAiz08TNBl065UrnkqnC9mRISVmQN0v51Q=;
+        b=LerXsp8OmxUZl53PUFtEABPdtSSivz7RHhEKlmqbdeGhtkqwGo7xxVpE2P1u6TPmYx
+         hGbtckk7vVbIVewdguCLRn8Guu+3SEsXKAxL2k1IT9kc2mCSQDFMG69+6nfHjmrA7nBF
+         rnoc9KvxpKDWx5OFRWGNLyiY9pPASzlSWxG6ZJLsBD6PsoghiVau0KB+6d/CasKJx5p1
+         v7feJIWAsdngcCdkmrDowIH0D/hs3wGvWRjxqDqsKqp93DUgeQSeB0F1Aonj7gbuqHLN
+         Q4Elf4qr9f5wyZTfpMsy4X6TWKUQjL04rQU1+Nl0ephJPhSFQVOvnSuNojd4+tC8gX4F
+         seXg==
+X-Gm-Message-State: APjAAAX0Um/ezH5lSWuKkAWJE66W3Q13Bujr5h+P4x4VINR7fsTp4hYY
+        Ao8QOToKt37RTjPMc2qTF1RrpaYP
+X-Google-Smtp-Source: APXvYqyCmbdHj13ekKyj/QGNWJk0P9Pf0IxjmkkyD9xWDgVnXrDECy2IDwN8R92njwVL/dETCQmWFA==
+X-Received: by 2002:a5d:694d:: with SMTP id r13mr28071039wrw.395.1572981982159;
+        Tue, 05 Nov 2019 11:26:22 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b1sm14700756wrw.77.2019.11.05.11.26.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Nov 2019 11:26:21 -0800 (PST)
+Message-Id: <pull.451.git.1572981981.gitgitgadget@gmail.com>
+From:   "erik chen via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 05 Nov 2019 19:26:19 +0000
+Subject: [PATCH 0/1] fetch: add trace2 instrumentation
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alexandr
+Add trace2 regions to fetch-pack.c to better track time spent in the various
+phases of a fetch:
 
-On 05/11/2019 15:03, Phillip Wood wrote:
-> [...]
->> +test_expect_success 'quotes' '
->> +    restore_checkpoint &&
->> +
->> +    git rm fileA.t &&
->> +    printf "\"file\\101.t\"" | git reset --pathspec-from-file=- &&
->> +
->> +    verify_state expect.a
-> 
-> If I've understood correctly this doesn't test if a path is correctly 
-> unquoted, only that it is accepted.
+* matching common remote and local refs
+* marking local refs as complete (part of the matching process)
 
-Oh I think I've misunderstood. The '\\' in unquoted by printf, so git 
-sees '\101' which is A so that is a real file.
+Both of these stages can be slow for repositories with many refs.
 
-Sorry for the confusion
+Signed-off-by: Erik Chen erikchen@chromium.org [erikchen@chromium.org]
 
-Phillip
+Erik Chen (1):
+  fetch: add trace2 instrumentation
 
-> 
->> +'
->> +
->> +test_expect_success 'quotes not compatible with --pathspec-file-null' '
->> +    restore_checkpoint &&
->> +
->> +    git rm fileA.t &&
->> +    printf "\"file\\101.t\"" >list &&
->> +    # Note: "git reset" has not yet learned to fail on wrong pathspecs
->> +    git reset --pathspec-from-file=list --pathspec-file-null &&
->> +
->> +    test_must_fail verify_state expect.a
->> +'
->> +
->> +test_expect_success '--pathspec-from-file is not compatible with 
->> --soft --hard' '
-> 
-> s/--soft --hard/--soft or --hard/
-> 
->> +    restore_checkpoint &&
->> +
->> +    git rm fileA.t &&
->> +    echo fileA.t >list &&
->> +    test_must_fail git reset --soft --pathspec-from-file=list &&
->> +    test_must_fail git reset --hard --pathspec-from-file=list
->> +'
->> +
->> +test_expect_success 'only touches what was listed' '
-> 
-> s/^/--pathspec-from-file / ?
-> 
-> Best Wishes
-> 
-> Phillip
-> 
->> +    restore_checkpoint &&
->> +
->> +    git rm fileA.t fileB.t fileC.t fileD.t &&
->> +    printf "fileB.t\nfileC.t" | git reset --pathspec-from-file=- &&
->> +
->> +    verify_state expect.a_bc_d
->> +'
->> +
->> +test_done
->>
+ fetch-pack.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+
+base-commit: 566a1439f6f56c2171b8853ddbca0ad3f5098770
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-451%2Ferikchen%2Ftest12-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-451/erikchen/test12-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/451
+-- 
+gitgitgadget
