@@ -2,78 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DEF11F454
-	for <e@80x24.org>; Tue,  5 Nov 2019 01:21:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3BDF1F454
+	for <e@80x24.org>; Tue,  5 Nov 2019 04:37:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730008AbfKEBVD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Nov 2019 20:21:03 -0500
-Received: from mail-ot1-f53.google.com ([209.85.210.53]:39797 "EHLO
-        mail-ot1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728602AbfKEBVD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Nov 2019 20:21:03 -0500
-Received: by mail-ot1-f53.google.com with SMTP id e17so7681685otk.6
-        for <git@vger.kernel.org>; Mon, 04 Nov 2019 17:21:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wKqZkGHl4gJ1o4Oy32hMduaphuB1rSVBW6TEP0Nh3nA=;
-        b=QJ1FOkxLX06u3itvQK7nXXDnnqGCdOKH4E3u3ZYH7h+xaGfN7GrCjWnTOgnITQQnYF
-         TYXH0lmqxOSppVnI4s70WNnGBwYD9Y8QqxKfx+TBFffeCGyZT0eOikhtNdxFLRKrjADa
-         KYrpQG2lw6f5SFveisjRJk35Z4JINezEIm5qNkfHq0+iPe1lAz6a8bE2tuBPStgAI+uh
-         rCDsR4uhONhziZfaeAhxXwDleh+PH0Ql0vHBgFFRQm7hWpliQ4Ccgvrk3dT+9kpAf1Xq
-         SkvNpEVLpdI2FRlD8IBp5ZMoIQVY7o5NZcqfdLOgL2O+2mRPFapBmkvUnrCuXEqS1TA2
-         61AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wKqZkGHl4gJ1o4Oy32hMduaphuB1rSVBW6TEP0Nh3nA=;
-        b=ajr3ixwvdqJgl43fZP/BFD3wiCwXCbevR27y9Z25XSo1Ys5bHyYGkwsHd04WbIQ8SN
-         3C5bLLdm7EVzddhyrXw0K17YAso2J5Z+0iS0sWpSNjQJhjKF5Iqw8HBzO7/f9FMEhYvj
-         2niSSif/DtCNLpkzn148HE4F3lGJZxzcCQ1BHNFeHrEtTMYB5g3OiiGdbqxfKG6qwz8R
-         eqOVcBDOh1uicTrz1Rj1FOQ5mF8wGIwxo5QmX5buhiIQSxImyXXP6HuvKsINgk8H/u2Y
-         fUq2sBPgJOKri/mrm+gECyd8N6AF1e0qGk4ABQYX6KfMQgz/2OF6zkDTYMRR5iymLRwJ
-         5zDg==
-X-Gm-Message-State: APjAAAWo6BZorrpwvK4LjEJ6GUnJaei+hm8XJYy042DlTLqxenX+Vhzz
-        tQ1JOgMlfG/mC0mLS+4m9i76sMZQ4cIqtycO29A=
-X-Google-Smtp-Source: APXvYqzoqPmhgBHR2ye16iaVsuO/TDIr93tGTsWhdJ4aTJSamuD2IvgQXge1QFb+kAT4Hs9aUUJMXq69h2rJkGUj1qc=
-X-Received: by 2002:a9d:6302:: with SMTP id q2mr7586840otk.345.1572916861996;
- Mon, 04 Nov 2019 17:21:01 -0800 (PST)
+        id S2387416AbfKEEhv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Nov 2019 23:37:51 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38960 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726640AbfKEEhu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Nov 2019 23:37:50 -0500
+Received: (qmail 7984 invoked by uid 109); 5 Nov 2019 04:37:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Nov 2019 04:37:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8541 invoked by uid 111); 5 Nov 2019 04:41:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 04 Nov 2019 23:41:07 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 4 Nov 2019 23:37:49 -0500
+From:   Jeff King <peff@peff.net>
+To:     Davide Berardi <davide.berardi6@unibo.it>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v2] clone: Don't segfault on -b specifing a non-commit
+Message-ID: <20191105043749.GA27601@sigill.intra.peff.net>
+References: <20191101002432.GA49846@carpenter.lan>
+ <20191103180716.GA72007@carpenter.lan>
 MIME-Version: 1.0
-References: <xmqqzhhcxkvx.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqzhhcxkvx.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 4 Nov 2019 17:20:50 -0800
-Message-ID: <CABPp-BFgnAS6E-jAjGB0iowBDaEc9+3B__THMWymVMS0AUPocw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2019, #01; Mon, 4)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191103180716.GA72007@carpenter.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 3, 2019 at 9:48 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
->
-> Git 2.24 has been tagged.  Hopefully there needs no immediate brown
-> paper bag fixes needed for the 'master' branch. The next cycle will
-> start perhaps early next week by first rewinding the 'next' branch,
-> after the dust settles. Topics marked as "will cook in next" can be
-> given a fresh start by ejecting them from 'next' and queueing a new
-> version (please just ask).
+On Sun, Nov 03, 2019 at 06:07:18PM +0000, Davide Berardi wrote:
 
-Please go ahead and eject en/doc-typofix from next; I'll send a
-re-roll with a lot more typofixes.  :-)
+> -static void update_head(const struct ref *our, const struct ref *remote,
+> +static struct commit *lookup_commit_helper(const struct ref *our,
+> +					   const struct ref *remote,
+> +					   const char *msg, int *err)
+> +{
+> +	const struct object_id *tip = NULL;
+> +	struct commit *tip_commit = NULL;
+> +
+> +	if (our)
+> +		tip = &our->old_oid;
+> +	else if (remote)
+> +		tip = &remote->old_oid;
+> +
+> +	if (!tip)
+> +		return NULL;
+> +
+> +	tip_commit = lookup_commit_reference_gently_err(the_repository, tip, 1, err);
+> +	if (!tip_commit) {
+> +		/*
+> +		 * The given non-commit cannot be checked out,
+> +		 * so have a 'master' branch and leave it unborn.
+> +		 */
+> +		warning(_("non-commit cannot be checked out"));
+> +		create_symref("HEAD", "refs/heads/master", msg);
+> +		return NULL;
+> +	}
+> +
+> +	return tip_commit;
+> +}
+
+I like the logic flow in this function, which is IMHO clearer than the
+existing code. But the "err" thing puzzled me for a moment. I think you
+are trying to tell the difference between the case that both "our" and
+"remote" are NULL, and the case that we saw a non-commit. In either case
+we return NULL, but only one is an error.
+
+But:
+
+  - I don't think that logic needs to extend down into
+    lookup_commit_reference_gently(); a NULL return from it would always
+    be an error, wouldn't it?
+
+  - we could probably simplify this by just inlining it into
+    update_head(). Something like:
+
+      if (our)
+              tip = &our->old_oid;
+      else if (remote)
+              tip = &remote->old_oid;
+
+      if (!tip) {
+	      /*
+	       * We have no local branch requested with "-b", and the
+	       * remote HEAD is unborn. There's nothing to update HEAD
+	       * to, but this state is not an error.
+	       */
+              return 0;
+      }
+
+      tip_commit = lookup_commit_reference_gently(...);
+      if (!tip_commit) {
+              /*
+	       * The given non-commit cannot be checked out, etc...
+	       */
+	      warning(...);
+	      create_symref(...);
+	      return -1;
+      }
+
+      ...and then existing code to use tip_commit...
+
+      /*
+       * we'd always return 0 here, because our update_ref calls die on
+       * error
+       */
+      return 0;
+
+> @@ -1268,8 +1303,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  	}
+>  
+>  	junk_mode = JUNK_LEAVE_REPO;
+> -	fetch_if_missing = 1;
+> -	err = checkout(submodule_progress);
+> +	if (!err) {
+> +		fetch_if_missing = 1;
+> +		err = checkout(submodule_progress);
+> +	}
+
+This part makes sense. We might want an explanatory comment along the
+lines of:
+
+  /*
+   * Only try to checkout if we successfully updated HEAD; otherwise
+   * HEAD isn't pointing to the thing the user wanted.
+   /
+   if (!err) {
+       ...
+   
+
+> -struct commit *lookup_commit_reference_gently(struct repository *r,
+> -		const struct object_id *oid, int quiet)
+> +struct commit *lookup_commit_reference_gently_err(struct repository *r,
+> +		const struct object_id *oid, int quiet, int *err)
+
+And this part I think could just go away, if you take my suggestion
+above.
+
+> diff --git a/t/t5609-clone-branch.sh b/t/t5609-clone-branch.sh
+> index 6e7a7be052..d57f750eeb 100755
+> --- a/t/t5609-clone-branch.sh
+> +++ b/t/t5609-clone-branch.sh
+> @@ -20,7 +20,10 @@ test_expect_success 'setup' '
+>  	 echo one >file && git add file && git commit -m one &&
+>  	 git checkout -b two &&
+>  	 echo two >file && git add file && git commit -m two &&
+> -	 git checkout master) &&
+> +	 git checkout master &&
+> +	 blob=$(git rev-parse HEAD:file)  &&
+> +	 echo $blob > .git/refs/heads/broken-tag &&
+> +	 echo $blob > .git/refs/heads/broken-head) &&
+
+Minor style nit, but we usually avoid the space after ">".
+
+> +test_expect_success 'clone -b with a non-commit tag must fallback' '
+> +	test_must_fail git clone -b broken-tag parent clone-broken-tag &&
+> +	(cd clone-broken-tag &&
+> +	 check_HEAD master)
+> +'
+> +test_expect_success 'clone -b with a non-commit head must fallback' '
+> +	test_must_fail git clone -b broken-head parent clone-broken-head &&
+> +	(cd clone-broken-head &&
+> +	 check_HEAD master)
+> +'
+
+OK, this second one covers the first conditional from update_head():
+
+  if (our && skip_prefix(our->name, "refs/heads/", &head)) {
+
+and the first one covers the second conditional:
+
+  } else if (our) {
+
+Should we cover the third conditional, too?
+
+I think it would be the case that the remote HEAD is pointing to a
+non-commit (since that's a corrupt repository, it might make sense
+create a separate sub-repository).
+
+-Peff
