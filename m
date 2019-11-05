@@ -8,76 +8,219 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8C6B1F454
-	for <e@80x24.org>; Tue,  5 Nov 2019 23:58:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 010A41F454
+	for <e@80x24.org>; Tue,  5 Nov 2019 23:58:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730241AbfKEX60 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 18:58:26 -0500
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:35906 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729701AbfKEX60 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 18:58:26 -0500
-Received: by mail-wm1-f45.google.com with SMTP id c22so1358207wmd.1
+        id S1730330AbfKEX62 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 18:58:28 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41070 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729711AbfKEX61 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 18:58:27 -0500
+Received: by mail-wr1-f67.google.com with SMTP id p4so23569697wrm.8
         for <git@vger.kernel.org>; Tue, 05 Nov 2019 15:58:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=xA2OZ9fwFRItuT+1oLzaCL6Jnaz6vDhDQdaAc/aW/bE=;
-        b=EFGNvXoKSlcpnJg5pzDZJYzLJ6c/JOyo2CR5zw07mDffcAf8xwrP7+K0WYty8/CYY3
-         yKYxy8YOgqjzWiNGlhLvZW+eSCvzXWWNrYjMpK3my7vVr55rTSFtG6IWn1+jJrRS/5qh
-         qpF7az/9xjPQuazwtGdzVDh+F49xIs1qdRlVpyX1IeM1RgA5PxAoeec+83STKvTBTMBF
-         TPHs7/6cgOMzFpxqHC5plgHSTRY6Ji4WvyXnRn95q2eHcgWYyfhPS8fCTGLzz6LDQvzi
-         6kNS7a4rBIqZzmyOG8L9APGALxXkkwPryzIihaCWTEL5Y+Z3AAt/0/hwOC+IEIhdkzah
-         dRaw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Q8XxZZN7fc8cdQ6227WCSPSXcAdacDIjWAo7TaM+8w0=;
+        b=hq4n4DB1e0HXhNLvytbJGznEUzWZiD/U7QajBRLtIWnEvymO9GpB7CXhvPsScZFNe0
+         O1lEGYpZNi/C1ZYRD1XDb2/nXhxC3BnALdSiTHhJTcrjxjv/OtN16vKZpCK/MR2L1Dv4
+         ZquhDqpAJx+YT2I2U5kKwtSpSZjjZhIQiaME/iMANGr0Rrnpc6NDbP7nILS81bc+En/I
+         nhMlLPMOoJCnFrQmI1gaO4COmEZaL6YCbAuswacto3M1eMUhkP0pXwgGz3SWHlYGD4Me
+         WDREzrtULw/f44HcvUM1oFYObmjkrc8Cbt2VjzCD3UujPbcHgGUBZEabOJFf71WBpc9D
+         kQgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=xA2OZ9fwFRItuT+1oLzaCL6Jnaz6vDhDQdaAc/aW/bE=;
-        b=KkV5arxKalR7xHa8K9ii3pg1pGAZfLZ+jri6kSBC16ZWL93TRTLuQvV5fnofGTow5q
-         oggNUrgGmQmqy93yWdfNzDFpbqG30hX5pFKZH3Uh4Yh2JJsb9fUgrlwu79S0B+W7WGS3
-         gBhUe/D9fSaR7lC8azSGV/mPQ6kaYwdOOJvbdv8IYzjQBVgz/7bTxJuMd4LAGFqnJMSI
-         EqUStCuSvH5uDs7fWmhR5BY0/5xvMKpWa5MqAh0vY4id0vccYFat/Vuw68Q5jvmHEk44
-         EWRlxZvD/tDATp318UbWZPWHKuSnGHjIn9S0dcfPJp8Xjz2eXeWmb6t7jZGmdFBsd3d2
-         5PKg==
-X-Gm-Message-State: APjAAAXCtoUH2l9AKs24CgP+dL1SIiFUupmJ2RwFUrN39jxRounvTnBA
-        WbkQYtURoVi1NwXaSYZznVY8j+6Z
-X-Google-Smtp-Source: APXvYqwL75vbndqiK+Qwdk5mCXOA0sCgeilJSRgwUFoqjaDJHjn3D5876DbR/+FEAWQYq3GR2W3WiA==
-X-Received: by 2002:a7b:c858:: with SMTP id c24mr1363050wml.174.1572998304385;
-        Tue, 05 Nov 2019 15:58:24 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Q8XxZZN7fc8cdQ6227WCSPSXcAdacDIjWAo7TaM+8w0=;
+        b=rnXsWkHx1NCV7qS2mT+DiaBSF+z/9z793TCO0sMYY7+w6oiOK6+LMP/JOjMSJry/KH
+         9oJ9nIDEGFClNyYjt2U9sT4Qd7S0eXhTp4aUV7d9kTR9cihNUYnX6Muj+pfR5w/gQ5yr
+         3gHHuvA8EoO8PuVOVZFV46qXbUAFCzqVTqUacd5BQq6shWVOQyNSXbd/ep3pYl22gwpa
+         6ZXkiQCEBmCHWsPez9Zr4WfPxBURRy0UuWDWaIwhDRdRBLVnnEX2gq9TPS1RUX55/erI
+         CqMNJxJGDW9oIZdkAs1hUXx13iMHO22nOuvhaEhjEurPoh9LvjnhqcZX9GlaMm7KIKul
+         uYSA==
+X-Gm-Message-State: APjAAAW6wPWAWcxoAxGMsgkKGqJF2E/WVQbASwn4ZST1R/SRfJxjvZgi
+        mXGBIo+CrY15voibVf4E3+9cLwa+
+X-Google-Smtp-Source: APXvYqzVS/IijMNKf4Y11HjnVn4O2W46i1RiRNEimZC1kXYg1nElVPFCBqMdCvUKtmE+rdDUn22Pyg==
+X-Received: by 2002:a5d:6789:: with SMTP id v9mr9904728wru.344.1572998305089;
+        Tue, 05 Nov 2019 15:58:25 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s17sm832548wmh.41.2019.11.05.15.58.23
+        by smtp.gmail.com with ESMTPSA id s17sm832585wmh.41.2019.11.05.15.58.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Nov 2019 15:58:23 -0800 (PST)
-Message-Id: <pull.455.git.1572998303.gitgitgadget@gmail.com>
+        Tue, 05 Nov 2019 15:58:24 -0800 (PST)
+Message-Id: <c6349cdbd057ccbcced3220ff3474b2e2083617e.1572998303.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.455.git.1572998303.gitgitgadget@gmail.com>
+References: <pull.455.git.1572998303.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 05 Nov 2019 23:58:22 +0000
-Subject: [PATCH 0/1] t6024: modernize style
+Date:   Tue, 05 Nov 2019 23:58:23 +0000
+Subject: [PATCH 1/1] t6024: modernize style
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A simple patch to modernize t6024; this was a change I made a few months ago
-that I apparently forgot; found while cleaning out old branches.
+From: Elijah Newren <newren@gmail.com>
 
-Elijah Newren (1):
-  t6024: modernize style
+No substantive changes, just a few cosmetic changes:
+  * Indent steps of an individual test
+  * Don't have logic between the "test_expect_success" blocks that
+    the next block will depend upon, move it into the
+    test_expect_success section itself
+  * Fix spacing around redirection operators to match git style
 
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
  t/t6024-recursive-merge.sh | 121 +++++++++++++++++++------------------
  1 file changed, 62 insertions(+), 59 deletions(-)
 
-
-base-commit: da72936f544fec5a335e66432610e4cef4430991
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-455%2Fnewren%2Ft6024-test-modernization-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-455/newren/t6024-test-modernization-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/455
+diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
+index 27c7de90ce..0cc876360c 100755
+--- a/t/t6024-recursive-merge.sh
++++ b/t/t6024-recursive-merge.sh
+@@ -15,73 +15,76 @@ GIT_COMMITTER_DATE="2006-12-12 23:28:00 +0100"
+ export GIT_COMMITTER_DATE
+ 
+ test_expect_success "setup tests" '
+-echo 1 > a1 &&
+-git add a1 &&
+-GIT_AUTHOR_DATE="2006-12-12 23:00:00" git commit -m 1 a1 &&
+-
+-git checkout -b A master &&
+-echo A > a1 &&
+-GIT_AUTHOR_DATE="2006-12-12 23:00:01" git commit -m A a1 &&
+-
+-git checkout -b B master &&
+-echo B > a1 &&
+-GIT_AUTHOR_DATE="2006-12-12 23:00:02" git commit -m B a1 &&
+-
+-git checkout -b D A &&
+-git rev-parse B > .git/MERGE_HEAD &&
+-echo D > a1 &&
+-git update-index a1 &&
+-GIT_AUTHOR_DATE="2006-12-12 23:00:03" git commit -m D &&
+-
+-git symbolic-ref HEAD refs/heads/other &&
+-echo 2 > a1 &&
+-GIT_AUTHOR_DATE="2006-12-12 23:00:04" git commit -m 2 a1 &&
+-
+-git checkout -b C &&
+-echo C > a1 &&
+-GIT_AUTHOR_DATE="2006-12-12 23:00:05" git commit -m C a1 &&
+-
+-git checkout -b E C &&
+-git rev-parse B > .git/MERGE_HEAD &&
+-echo E > a1 &&
+-git update-index a1 &&
+-GIT_AUTHOR_DATE="2006-12-12 23:00:06" git commit -m E &&
+-
+-git checkout -b G E &&
+-git rev-parse A > .git/MERGE_HEAD &&
+-echo G > a1 &&
+-git update-index a1 &&
+-GIT_AUTHOR_DATE="2006-12-12 23:00:07" git commit -m G &&
+-
+-git checkout -b F D &&
+-git rev-parse C > .git/MERGE_HEAD &&
+-echo F > a1 &&
+-git update-index a1 &&
+-GIT_AUTHOR_DATE="2006-12-12 23:00:08" git commit -m F
++	echo 1 > a1 &&
++	git add a1 &&
++	GIT_AUTHOR_DATE="2006-12-12 23:00:00" git commit -m 1 a1 &&
++
++	git checkout -b A master &&
++	echo A > a1 &&
++	GIT_AUTHOR_DATE="2006-12-12 23:00:01" git commit -m A a1 &&
++
++	git checkout -b B master &&
++	echo B > a1 &&
++	GIT_AUTHOR_DATE="2006-12-12 23:00:02" git commit -m B a1 &&
++
++	git checkout -b D A &&
++	git rev-parse B > .git/MERGE_HEAD &&
++	echo D > a1 &&
++	git update-index a1 &&
++	GIT_AUTHOR_DATE="2006-12-12 23:00:03" git commit -m D &&
++
++	git symbolic-ref HEAD refs/heads/other &&
++	echo 2 > a1 &&
++	GIT_AUTHOR_DATE="2006-12-12 23:00:04" git commit -m 2 a1 &&
++
++	git checkout -b C &&
++	echo C > a1 &&
++	GIT_AUTHOR_DATE="2006-12-12 23:00:05" git commit -m C a1 &&
++
++	git checkout -b E C &&
++	git rev-parse B > .git/MERGE_HEAD &&
++	echo E > a1 &&
++	git update-index a1 &&
++	GIT_AUTHOR_DATE="2006-12-12 23:00:06" git commit -m E &&
++
++	git checkout -b G E &&
++	git rev-parse A > .git/MERGE_HEAD &&
++	echo G > a1 &&
++	git update-index a1 &&
++	GIT_AUTHOR_DATE="2006-12-12 23:00:07" git commit -m G &&
++
++	git checkout -b F D &&
++	git rev-parse C > .git/MERGE_HEAD &&
++	echo F > a1 &&
++	git update-index a1 &&
++	GIT_AUTHOR_DATE="2006-12-12 23:00:08" git commit -m F
+ '
+ 
+ test_expect_success 'combined merge conflicts' '
+ 	test_must_fail env GIT_TEST_COMMIT_GRAPH=0 git merge -m final G
+ '
+ 
+-cat > expect << EOF
+-<<<<<<< HEAD
+-F
+-=======
+-G
+->>>>>>> G
+-EOF
++test_expect_success "result contains a conflict" '
++	cat >expect <<-EOF &&
++		<<<<<<< HEAD
++		F
++		=======
++		G
++		>>>>>>> G
++		EOF
+ 
+-test_expect_success "result contains a conflict" "test_cmp expect a1"
+-
+-git ls-files --stage > out
+-cat > expect << EOF
+-100644 ec3fe2a791706733f2d8fa7ad45d9a9672031f5e 1	a1
+-100644 cf84443e49e1b366fac938711ddf4be2d4d1d9e9 2	a1
+-100644 fd7923529855d0b274795ae3349c5e0438333979 3	a1
+-EOF
++	test_cmp expect a1
++'
+ 
+-test_expect_success "virtual trees were processed" "test_cmp expect out"
++test_expect_success "virtual trees were processed" '
++	git ls-files --stage >out &&
++	cat >expect <<-EOF &&
++		100644 ec3fe2a791706733f2d8fa7ad45d9a9672031f5e 1	a1
++		100644 cf84443e49e1b366fac938711ddf4be2d4d1d9e9 2	a1
++		100644 fd7923529855d0b274795ae3349c5e0438333979 3	a1
++		EOF
++	test_cmp expect out
++'
+ 
+ test_expect_success 'refuse to merge binary files' '
+ 	git reset --hard &&
 -- 
 gitgitgadget
