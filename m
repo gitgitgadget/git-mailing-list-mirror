@@ -2,133 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C74D1F454
-	for <e@80x24.org>; Tue,  5 Nov 2019 23:49:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8C6B1F454
+	for <e@80x24.org>; Tue,  5 Nov 2019 23:58:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729823AbfKEXte (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 18:49:34 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:41693 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729583AbfKEXtd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 18:49:33 -0500
-Received: by mail-ot1-f65.google.com with SMTP id 94so19231998oty.8
-        for <git@vger.kernel.org>; Tue, 05 Nov 2019 15:49:33 -0800 (PST)
+        id S1730241AbfKEX60 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 18:58:26 -0500
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:35906 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729701AbfKEX60 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 18:58:26 -0500
+Received: by mail-wm1-f45.google.com with SMTP id c22so1358207wmd.1
+        for <git@vger.kernel.org>; Tue, 05 Nov 2019 15:58:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IGkq+7MwfrUze5H1xDC30/q0GGll5C/6d05puY9tIPU=;
-        b=WheIZOswSLo4ZAK7Gl6t5eGUftxyWOedidEetmwiuHs1+54JqJbg7XwN/TrmutXlCP
-         q6+imntBPUr7cacW5QoEN/tTIpMhCInfu4kF2Y5NTmxKUuHQqMV30cL9GZNbZsVhWFQs
-         QhXHmdHKdksFkOCI2Ivmg1gD6DNQSyyMMb/jviXuB4uSilhjUYq6H6MD8iAzQsZMuauX
-         ggK9yNeYQ8R0TIPkZ0N8tu5DWHUTgRZvwyOofEYVm3r741zrucAJcH0k+IoQA09q3yKE
-         LtSkzkQmIRQSIRbOrXJbOlRBRCqxQgENFw6Pl58aDLaum4vT5UvmcQ69QL2vS5jzvCTZ
-         lC/A==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=xA2OZ9fwFRItuT+1oLzaCL6Jnaz6vDhDQdaAc/aW/bE=;
+        b=EFGNvXoKSlcpnJg5pzDZJYzLJ6c/JOyo2CR5zw07mDffcAf8xwrP7+K0WYty8/CYY3
+         yKYxy8YOgqjzWiNGlhLvZW+eSCvzXWWNrYjMpK3my7vVr55rTSFtG6IWn1+jJrRS/5qh
+         qpF7az/9xjPQuazwtGdzVDh+F49xIs1qdRlVpyX1IeM1RgA5PxAoeec+83STKvTBTMBF
+         TPHs7/6cgOMzFpxqHC5plgHSTRY6Ji4WvyXnRn95q2eHcgWYyfhPS8fCTGLzz6LDQvzi
+         6kNS7a4rBIqZzmyOG8L9APGALxXkkwPryzIihaCWTEL5Y+Z3AAt/0/hwOC+IEIhdkzah
+         dRaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IGkq+7MwfrUze5H1xDC30/q0GGll5C/6d05puY9tIPU=;
-        b=X4ImtVQvAxtLZN6rTu63gx+VUbCaOsBQRQJfq3LeEqTgTrjTbhmTV5apEK5fGQlbVn
-         maof4wMuf5YlxZFDf/fDlKd0qb/SDg/85hHl6iXK5Lmfrhmon8nAe3cb+p1ccMJ217Lo
-         Fkxo5Ki35qgVWsMeEQ2dd1I0DDUShMgOKRrOuDrNxg+ogrqhYB2HSyJy7mwAUM2qVXmx
-         gHv6schVsvPxKlePDgSAyeGeZvKv435Z5ffdVSvxzFPjHn/KUHnTVEzz4VvBvq0wVxx1
-         jcmyuIlSI5NSUfT7AGy7rfD95YsuQ7/A3jZ3Fi+2uWMqNK8sO0Cz54F5S2JzQEEioAu4
-         yfIQ==
-X-Gm-Message-State: APjAAAXkmAdL2zw2BxzjXYE8g5CoqzGZIL0AmyK+vq+azUNwNvrVjtps
-        PtaFS7RqnXCyL34VFeF8+0iBHWSledG8zX233MM=
-X-Google-Smtp-Source: APXvYqyQVxflw2UEchV8rRpsqiQcnxv5YnuhIVAOz3rZCSzPIrPIzFa2X+xy5y6ZTFKN54GaDd+KEZVWOCwViPKmavA=
-X-Received: by 2002:a05:6830:1507:: with SMTP id k7mr21619518otp.316.1572997772250;
- Tue, 05 Nov 2019 15:49:32 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=xA2OZ9fwFRItuT+1oLzaCL6Jnaz6vDhDQdaAc/aW/bE=;
+        b=KkV5arxKalR7xHa8K9ii3pg1pGAZfLZ+jri6kSBC16ZWL93TRTLuQvV5fnofGTow5q
+         oggNUrgGmQmqy93yWdfNzDFpbqG30hX5pFKZH3Uh4Yh2JJsb9fUgrlwu79S0B+W7WGS3
+         gBhUe/D9fSaR7lC8azSGV/mPQ6kaYwdOOJvbdv8IYzjQBVgz/7bTxJuMd4LAGFqnJMSI
+         EqUStCuSvH5uDs7fWmhR5BY0/5xvMKpWa5MqAh0vY4id0vccYFat/Vuw68Q5jvmHEk44
+         EWRlxZvD/tDATp318UbWZPWHKuSnGHjIn9S0dcfPJp8Xjz2eXeWmb6t7jZGmdFBsd3d2
+         5PKg==
+X-Gm-Message-State: APjAAAXCtoUH2l9AKs24CgP+dL1SIiFUupmJ2RwFUrN39jxRounvTnBA
+        WbkQYtURoVi1NwXaSYZznVY8j+6Z
+X-Google-Smtp-Source: APXvYqwL75vbndqiK+Qwdk5mCXOA0sCgeilJSRgwUFoqjaDJHjn3D5876DbR/+FEAWQYq3GR2W3WiA==
+X-Received: by 2002:a7b:c858:: with SMTP id c24mr1363050wml.174.1572998304385;
+        Tue, 05 Nov 2019 15:58:24 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s17sm832548wmh.41.2019.11.05.15.58.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Nov 2019 15:58:23 -0800 (PST)
+Message-Id: <pull.455.git.1572998303.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 05 Nov 2019 23:58:22 +0000
+Subject: [PATCH 0/1] t6024: modernize style
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.447.git.1572995581.gitgitgadget@gmail.com> <51df6661f772b08eef709fcc36ba11a158ba6fad.1572995581.git.gitgitgadget@gmail.com>
-In-Reply-To: <51df6661f772b08eef709fcc36ba11a158ba6fad.1572995581.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 5 Nov 2019 15:49:21 -0800
-Message-ID: <CABPp-BFDyMxre=gp64sgHyZtMbe-EL=ke3b5FA6CwsqbcdyJBQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] Improve unpack trees error text
-To:     naiduv via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        naiduv <naiduvenkat@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+A simple patch to modernize t6024; this was a change I made a few months ago
+that I apparently forgot; found while cleaning out old branches.
 
-Thanks for the contribution.  Looks like we were on similar
-wavelengths, as I also contributed a fix to this phrasing just a
-quarter of a day before you:
-https://public-inbox.org/git/466aead9af6516ff94a5d217e58ab894e63088b7.1572973651.git.gitgitgadget@gmail.com/
+Elijah Newren (1):
+  t6024: modernize style
 
-On Tue, Nov 5, 2019 at 3:15 PM naiduv via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: naiduv <naiduvenkat@gmail.com>
->
-> Signed-off-by: naiduv <naiduvenkat@gmail.com>
-> ---
->  t/t7110-reset-merge.sh | 4 ++--
->  unpack-trees.c         | 4 ++--
->  2 files changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
-> index a82a07a04a..9b2298bfb3 100755
-> --- a/t/t7110-reset-merge.sh
-> +++ b/t/t7110-reset-merge.sh
-> @@ -173,7 +173,7 @@ test_expect_success 'reset --merge fails with changes in file it touches' '
->      sed -e "s/line 1/changed line 1/" <file1 >file3 &&
->      mv file3 file1 &&
->      test_must_fail git reset --merge HEAD^ 2>err.log &&
-> -    grep file1 err.log | grep "not uptodate"
-> +    grep file1 err.log | grep "not up to date"
->  '
->
->  # The next test will test the following:
-> @@ -189,7 +189,7 @@ test_expect_success 'reset --keep fails with changes in file it touches' '
->      sed -e "s/line 1/changed line 1/" <file1 >file3 &&
->      mv file3 file1 &&
->      test_must_fail git reset --keep HEAD^ 2>err.log &&
-> -    grep file1 err.log | grep "not uptodate"
-> +    grep file1 err.log | grep "not up to date"
->  '
->
->  test_expect_success 'setup 3 different branches' '
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 33ea7810d8..74c348d40e 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -29,7 +29,7 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_ERROR_TYPES] = {
->         "Entry '%s' would be overwritten by merge. Cannot merge.",
->
->         /* ERROR_NOT_UPTODATE_FILE */
-> -       "Entry '%s' not uptodate. Cannot merge.",
-> +       "Entry '%s' is not up to date. Cannot merge.",
+ t/t6024-recursive-merge.sh | 121 +++++++++++++++++++------------------
+ 1 file changed, 62 insertions(+), 59 deletions(-)
 
-According to https://writingexplained.org/up-to-date-hyphenated, "up
-to date" is an adverb phrase (which would not be correct to use here),
-while "up-to-date" is the adjectival phrase.
 
->         /* ERROR_NOT_UPTODATE_DIR */
->         "Updating '%s' would lose untracked files in it",
-> @@ -44,7 +44,7 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_ERROR_TYPES] = {
->         "Entry '%s' overlaps with '%s'.  Cannot bind.",
->
->         /* ERROR_SPARSE_NOT_UPTODATE_FILE */
-> -       "Entry '%s' not uptodate. Cannot update sparse checkout.",
-> +       "Entry '%s' is not up to date. Cannot update sparse checkout.",
->
->         /* ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN */
->         "Working tree file '%s' would be overwritten by sparse checkout update.",
-
-This patch misses a similar usage within gitk that would need to be
-updated for this change.
+base-commit: da72936f544fec5a335e66432610e4cef4430991
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-455%2Fnewren%2Ft6024-test-modernization-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-455/newren/t6024-test-modernization-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/455
+-- 
+gitgitgadget
