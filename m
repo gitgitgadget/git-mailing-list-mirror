@@ -2,82 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF65C1F454
-	for <e@80x24.org>; Tue,  5 Nov 2019 19:42:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82FEE1F454
+	for <e@80x24.org>; Tue,  5 Nov 2019 20:06:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390873AbfKETmp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 14:42:45 -0500
-Received: from smtprelay03.ispgateway.de ([80.67.18.15]:25178 "EHLO
-        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390802AbfKETmp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 14:42:45 -0500
-Received: from [84.175.180.230] (helo=[192.168.2.6])
-        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.92.3)
-        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
-        id 1iS4it-0002A4-QV; Tue, 05 Nov 2019 20:42:39 +0100
-Subject: Re: [PATCH 5/5] commit: support the --pathspec-from-file option
-To:     phillip.wood@dunelm.org.uk,
-        Alexandr Miloslavskiy via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
- <f4847046896848d3f16bc5f3cb7a26271cefd97c.1572895605.git.gitgitgadget@gmail.com>
- <9ca7fa57-c438-7243-6ab1-956d8f132d37@gmail.com>
-From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Message-ID: <73fb5aa2-6cdb-424a-5696-a2609d74a034@syntevo.com>
-Date:   Tue, 5 Nov 2019 20:42:40 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.1
+        id S1728909AbfKEUG1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 15:06:27 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39705 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726612AbfKEUG1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 15:06:27 -0500
+Received: by mail-wr1-f66.google.com with SMTP id a11so22964066wra.6
+        for <git@vger.kernel.org>; Tue, 05 Nov 2019 12:06:25 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+8r7KQeWappmCqKIzY48BS1dz4FgIh/YtSN0IwkJOGc=;
+        b=itW35Zvd5a1cs18SqFZF7gv80+JWv3ujEGY/Jw/J181Qm4gqECSrHHv5KVJP9EZnZj
+         DeNMy+rqswEB5ygN+3MLEw1Nf8uyiBlg44hIe2UUnv0ymfXzysxYOoad2L3KAU/eLhAw
+         AXisXJbO2F04QvdkWxhRwEzZ0uNGSR5DuEy39tkj9gJJS0704l+IStxHSV+4c6SxJuKE
+         8lMogKxXUJIBr0djnVKIqJ6OdGddN4CQ9rSEcbyUhc80vUZEMh/QNgraQKN1839A+LDd
+         mdCDreDmPdhm6bcPlS/is73I5bEmZ2jUwvYk9j0lqWAac51PE1/JIPoU57x75kzEpFV7
+         8wmQ==
+X-Gm-Message-State: APjAAAX/qB6COQjB+1YOer9Q8LWivMQx8otkAsi4O4HHnwcwgWFolWcT
+        MoVWbj+/dEw6WA5zk73C8XTur1KPewB/TqXZR1o=
+X-Google-Smtp-Source: APXvYqxPFI0y53VoxpAHBag9AxuA+sh5SyWM0jdx0db5BpscJmp9tdAaK9bL4E9ZV1A1vSFp8qgxPj3RSXKCzJzQGEE=
+X-Received: by 2002:adf:ea07:: with SMTP id q7mr30080792wrm.78.1572984384895;
+ Tue, 05 Nov 2019 12:06:24 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <9ca7fa57-c438-7243-6ab1-956d8f132d37@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
+References: <20191101203830.231676-1-jonathantanmy@google.com> <20191105185619.207173-1-jonathantanmy@google.com>
+In-Reply-To: <20191105185619.207173-1-jonathantanmy@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 5 Nov 2019 15:06:13 -0500
+Message-ID: <CAPig+cQ6iyJacniLDF_kuc1FhPMXYmL3V1DzdOPa6bX0h2FHFA@mail.gmail.com>
+Subject: Re: [PATCH v2] fetch: remove fetch_if_missing=0
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05.11.2019 17:27, Phillip Wood wrote:
+On Tue, Nov 5, 2019 at 1:56 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+> @@ -296,6 +296,76 @@ test_expect_success 'partial clone with unresolvable sparse filter fails cleanly
+> +setup_triangle () {
+> +       rm -rf big-blob.txt server client promisor-remote &&
+> +
+> +       printf "line %d\n" $(test_seq 1 100) >big-blob.txt
 
->> Also add new '--pathspec-file-null' switch that mirrors '-z' used in
->> various places. Some porcelain commands, such as `git commit`, already
->> use '-z', therefore it needed a new unambiguous name.
-> 
-> It might be worth tailoring the message to the command rather than 
-> having exactly the same message for commit and reset
+Broken &&-chain.
 
-I also was somewhat unhappy about duplication. But I didn't figure how 
-to do that correctly. Currently the messages for 'git reset' and 'git 
-commit' are almost identical.
-
-Maybe in 2nd commit I should say something like "Extend 
-`--pathspec-file-null` support to `git commit` (see previous patch for 
-`git reset`)" ?
-
-> I think my comments from patch 3 about <pathspecs> and the option names 
-> apply here as well
-
-Yes, sure, I will try to apply your suggestions to all patches. 
-Hopefully without forgetting things :)
-
->> +    if (!pathspec.nr && (also || (only && !amend && !allow_empty)))
->> +        die(_("No paths with --include/--only does not make sense."));
-> 
-> I wonder if there is a way of calling parse_pathspec_file() from 
-> parse_and_validate_options() instead. Otherwise we end up validating 
-> options here instead which is a bit messy.
-
-Yes, I was also somewhat unhappy about that. I will give it more thought.
-
-> Overall this series is nicely structured and is looking pretty good
-
-Thanks, and also thanks for reviewing my patches!
-
+> +       # Create a server with 2 commits: a commit with a big blob and a child
+> +       # commit with an incremental change. Also, create a partial clone
+> +       # client that only contains the first commit.
+> +       git init server &&
+> +       git -C server config --local uploadpack.allowfilter 1 &&
+> +       cp big-blob.txt server &&
+> +       git -C server add big-blob.txt &&
+> +       git -C server commit -m "initial" &&
+> +       git clone --bare --filter=tree:0 "file://$(pwd)/server" client &&
+> +       echo another line >>server/big-blob.txt &&
+> +       git -C server commit -am "append line to big blob" &&
+> +
+> +       # Create a promisor remote that only contains the blob from the first
+> +       # commit, and set it as the promisor remote of client. Thus, whenever
+> +       # the client lazy fetches, the lazy fetch will succeed only if it is
+> +       # for this blob.
+> +       git init promisor-remote &&
+> +       test_commit -C promisor-remote one && # so that ref advertisement is not empty
+> +       git -C promisor-remote config --local uploadpack.allowanysha1inwant 1 &&
+> +       git -C promisor-remote hash-object -w --stdin <big-blob.txt &&
+> +       git -C client remote set-url origin "file://$(pwd)/promisor-remote"
+> +}
