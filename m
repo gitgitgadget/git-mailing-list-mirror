@@ -2,92 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46F621F454
-	for <e@80x24.org>; Tue,  5 Nov 2019 18:58:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F10B1F454
+	for <e@80x24.org>; Tue,  5 Nov 2019 19:14:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390747AbfKES6t (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 13:58:49 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:34822 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390514AbfKES6t (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 13:58:49 -0500
-Received: by mail-pl1-f196.google.com with SMTP id x6so9943239pln.2
-        for <git@vger.kernel.org>; Tue, 05 Nov 2019 10:58:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=GUiNfgtVRB10cF5gKeYk/liZWnn7GInRCNQbit/0Qvw=;
-        b=VjN+BtYXIBSqbUVOr4krTv3E2nNPjsBTifTRyrxkG+mKaB7Mw7z8dhnhtECkX58LgX
-         x96eU5d2Z1wu3/OZED3c0keKZWZbe1XIYB7R5JTOScLH6U/B2L36OwRVKDazLeKSMv2V
-         YYJazLHwiPhX3HDVRa9zoWCsr+1SY+Z/f9o200ulvVMlYJvHA9b+d7TgYQz0jkZrKrBt
-         kZr5zCSytSwOQ5+Hjk3mqXG95YMEfGhFO6d/0Fjn1rY9ljGb8xHVJiON1OGXcm9Cd782
-         uerHPvR/W3FyW8Y+a4R9YlWLt/RGX3NAaFNxkmhHFTzN/XKB+iZN77qFOcL1bsP4yPx7
-         P5IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GUiNfgtVRB10cF5gKeYk/liZWnn7GInRCNQbit/0Qvw=;
-        b=BA/urLDdGeYkJL2xNLI4sGXpvdz9riMFAE78RwwQJkYC4JwOV4ls4xMa/ileDspNZr
-         vsJB7aDWI8azfsMoydW/Ep4muahkGBTkkUGBVac1w6MDSGtYxjdsko4Ro0Hvtw/ItjBl
-         Ofiv0IyrItJeUEAVTamDRmK6YWWq49d5/3hULqqCyrQr7TQ00WXz6Fmr/16v+LB705GY
-         MVHnOwYFxwisg5kLmRCPzhiDQlHdtmpfNp1SbjusVbHjIYHrD5FRsNgYTf7tsRZtqp0F
-         qP6nfY7P85drtuLaq2WKtyDlNSjf66zwnrPCb+ZXIfTMbEqh+X8qRF9oVy1bss9tHYiU
-         FN2A==
-X-Gm-Message-State: APjAAAWUjS4W0ZDF3yZl77jg4fRVgjMxi83vjOjg96jzmTSgoExNEOQL
-        aMxuuHwiBKRIg6YZCK3f5Mj4I59C
-X-Google-Smtp-Source: APXvYqxe83TrNd6AnobVApKm1Ok5McVTDmGc8UaReLLkmv4wGNISgHJTlKa15N/xD+Gtb35Mk4kKYw==
-X-Received: by 2002:a17:902:9687:: with SMTP id n7mr35980827plp.166.1572980327984;
-        Tue, 05 Nov 2019 10:58:47 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id u65sm21731864pfb.35.2019.11.05.10.58.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Nov 2019 10:58:47 -0800 (PST)
-Date:   Tue, 5 Nov 2019 10:58:45 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] fetch: remove fetch_if_missing=0
-Message-ID: <20191105185845.GA94320@google.com>
-References: <20191101220537.GA249573@google.com>
- <20191105185322.205317-1-jonathantanmy@google.com>
+        id S2390847AbfKETOH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 14:14:07 -0500
+Received: from smtprelay02.ispgateway.de ([80.67.18.14]:2007 "EHLO
+        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390526AbfKETOH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 14:14:07 -0500
+Received: from [84.175.180.230] (helo=[192.168.2.6])
+        by smtprelay02.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.92.3)
+        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
+        id 1iS4HC-0002OK-EH; Tue, 05 Nov 2019 20:14:02 +0100
+Subject: Re: [PATCH 1/5] pathspec: add new function to parse file
+To:     phillip.wood@dunelm.org.uk,
+        Alexandr Miloslavskiy via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
+ <52e7a84a2ee61d6481286f6a32751107efc234d0.1572895605.git.gitgitgadget@gmail.com>
+ <e34eba95-f413-ddd3-08c6-4f5b2bed3761@gmail.com>
+From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Message-ID: <2145317c-873c-19b9-6ec9-7502656a27ff@syntevo.com>
+Date:   Tue, 5 Nov 2019 20:14:02 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191105185322.205317-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <e34eba95-f413-ddd3-08c6-4f5b2bed3761@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan wrote:
+On 05.11.2019 16:02, Phillip Wood wrote:
 
-> I think it's less error-prone if we always have a "git" command on its
-> own on a line, to avoid losing its error code. When piped into another
-> invocation, or when command-substituted into an argument (e.g. "echo
-> $(git hash-object foo)"), we lose its error code.
+>> +    if (!in)
+>> +        die(_("could not open '%s' for reading"), file);
+> 
+> die_errno() would give a more informative message here
 
-Sure, but assignment is a special case:
+Thanks for the pointer!
 
-	if myvar=$(false)
-	then
-		echo yes
-	else
-		echo no
-	fi
+>> +            if (unquote_c_style(&unquoted, buf.buf, NULL))
+>> +                die(_("line is badly quoted"));
+> 
+> It would be nice to show the offending line in the error message
 
-prints "no".
+Good idea.
 
-See "Don't use command substitution in a way that discards git's exit
-code" in t/README for more details.
+>> +void parse_pathspec_file(struct pathspec *pathspec,
+>> +            unsigned magic_mask,
+>> +            unsigned flags,
+>> +            const char *prefix,
+>> +            const char *file,
+>> +            int nul_term_line);
+> 
+> Do these align with the 's' in "struct pathspec" ?
 
-Thanks,
-Jonathan
+Sorry, still struggling with my VS that tries to do crazy things. Will fix.
