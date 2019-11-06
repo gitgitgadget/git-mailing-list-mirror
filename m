@@ -7,66 +7,82 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99ADB1F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 04:09:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 730521F4C0
+	for <e@80x24.org>; Wed,  6 Nov 2019 04:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730920AbfKFEJ4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 23:09:56 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40126 "HELO cloud.peff.net"
+        id S1731228AbfKFEQp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 23:16:45 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40144 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727266AbfKFEJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 23:09:56 -0500
-Received: (qmail 17718 invoked by uid 109); 6 Nov 2019 04:09:56 -0000
+        id S1725768AbfKFEQp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 23:16:45 -0500
+Received: (qmail 17763 invoked by uid 109); 6 Nov 2019 04:16:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Nov 2019 04:09:56 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Nov 2019 04:16:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19370 invoked by uid 111); 6 Nov 2019 04:13:14 -0000
+Received: (qmail 19464 invoked by uid 111); 6 Nov 2019 04:20:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Nov 2019 23:13:14 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Nov 2019 23:20:04 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 5 Nov 2019 23:09:55 -0500
+Date:   Tue, 5 Nov 2019 23:16:44 -0500
 From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, rynus@gmail.com, stolee@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>,
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/1] commit-graph: use start_delayed_progress()
-Message-ID: <20191106040955.GD4307@sigill.intra.peff.net>
-References: <pull.450.git.1572969955.gitgitgadget@gmail.com>
- <pull.450.v2.git.1572984842.gitgitgadget@gmail.com>
- <78bd6bc2c02f1daf13938a738d8eae56b5f6b74c.1572984842.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 1/1] remote-curl: unbreak http.extraHeader with custom
+ allocators
+Message-ID: <20191106041644.GE4307@sigill.intra.peff.net>
+References: <pull.453.git.1572991158.gitgitgadget@gmail.com>
+ <d47a2aa5949a5dd3a10b89d9a77ebb89af6ba57e.1572991158.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <78bd6bc2c02f1daf13938a738d8eae56b5f6b74c.1572984842.git.gitgitgadget@gmail.com>
+In-Reply-To: <d47a2aa5949a5dd3a10b89d9a77ebb89af6ba57e.1572991158.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 05, 2019 at 08:14:02PM +0000, Derrick Stolee via GitGitGadget wrote:
+On Tue, Nov 05, 2019 at 09:59:18PM +0000, Johannes Schindelin via GitGitGadget wrote:
 
-> From: Derrick Stolee <dstolee@microsoft.com>
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> When writing a commit-graph, we show progress along several commit
-> walks. When we use start_delayed_progress(), the progress line will
-> only appear if that step takes a decent amount of time.
+> In 93b980e58f5 (http: use xmalloc with cURL, 2019-08-15), we started to
+> ask cURL to use `xmalloc()`, and if compiled with nedmalloc, that means
+> implicitly a different allocator than the system one.
 > 
-> However, one place was missed: computing generation numbers. This is
-> normally a very fast operation as all commits have been parsed in a
-> previous step. But, this is showing up for all users no matter how few
-> commits are being added.
+> Which means that all of cURL's allocations and releases now _need_ to
+> use that allocator.
+> 
+> However, the `http_options()` function used `slist_append()` to add any
+> configured extra HTTP header(s) _before_ asking cURL to use `xmalloc()`,
+> and `http_cleanup()` would release them _afterwards_, i.e. in the
+> presence of custom allocators, cURL would attempt to use the wrong
+> allocator to release the memory.
+> 
+> Let's fix this by moving the initialization _before_ the
+> `http_options()` function is called.
 
-Yep, makes sense (especially that it should all the other progress as
-part of the same process).
+Nicely explained.
 
-> Now that we changed this method, very fast commands show no progess at
-> all. This means we need to stop testing for seeing these progress lines
-> in the test suite.
+Another option would be to separate our config mechanism from curl
+entirely by putting the list of headers into a string_list, and then
+transforming it later into a curl_slist. I don't think that really buys
+us much, though. This is all inside http.c, so it's fairly contained.
+It's not like other random parts of Git are using curl's slist before
+calling http_init().
 
-I think this is OK for now, though it does make me wonder if
-"--progress" ought to perhaps override "delayed" in some instances,
-since it's a positive signal from the caller that they're interested in
-seeing progress.
+I did briefly grep around for other slist users, but they're all what
+you'd expect: code in http-push.c and remote-curl.c creating header
+lists while working with an active http request (so well after
+http_init() has been called).
+
+> ---
+>  http.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+
+The patch itself looks good.
 
 -Peff
