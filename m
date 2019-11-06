@@ -8,104 +8,154 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0349A1F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 10:03:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B8291F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 10:05:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726969AbfKFKD1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 05:03:27 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:44605 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726143AbfKFKD0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 05:03:26 -0500
-Received: by mail-pf1-f196.google.com with SMTP id q26so18454486pfn.11
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 02:03:25 -0800 (PST)
+        id S1729031AbfKFKE7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 05:04:59 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:32966 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728434AbfKFKE7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 05:04:59 -0500
+Received: by mail-wr1-f66.google.com with SMTP id w30so2276511wra.0
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 02:04:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RrHRDyK9yjLsJ9ZUUtDqaLuyGtGAqXNxCg2lDpcSGVI=;
-        b=st6p1y9qoBm60H42PYpUtYgJ9erocgnhQSHrxrNeoJk89ePaOOgAMfSUTBznKXXWWY
-         KJ8pY30QgDOmqqu/W0pik4Vgdfx7/1Vuk6YhI8E6DINaQ1WH91ElLoMUfGaaLuGfpKBp
-         sEgtN3ZzVqGUsQPhgKK2ijXh7L2aS+xT5FSD0+0KUnjnPYK8INppcqbXY2esZHHFOuJu
-         JIhWpZgZarweZ7Q+fgZjypSSTAr8TTNtZMvMRNh3UW24/qZ/mPrjrLffi85R4HTHlTTf
-         iLY62ZcL2XEP54at3BO88JttVcDGgdXgcI25RGRsu9mBp4u2bo0OF/GBMD+mPo6IgGOl
-         QFZQ==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=UDEK+pc7ioMD64D4uZ8Gc5rjKyKEaFaG9k4uxscSWR4=;
+        b=E84uToG40pf9WC/XcEH8x/MpTYXIFeddPhxJ1biCW/IJvMmrTP+2iE8zI8+uRnj/a7
+         YZuBXJdbJay902uMc6QUfIbLt2CLiY9cYcALJhUWH8ihr7DFvVqdY18q5u/jIkLNZww2
+         /PaRJRo4WMPX0Qe4x7QDcUgNWY7CHpVLKo0yDeSbiN93lKF+amNQCZo9HTZwMwV2MNLS
+         OQly4erYbTzprAx0MexjALoQEc3O1XQditoSQ/LUYygR9Vky9FhqVCttHINm0xIgZVKQ
+         IumQiDWm9EyR4ottbLaVhRjSryV97BqPK6WH73gmUb0rjPC1i9cK0zwQOb1ijU6rOgnB
+         nuiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RrHRDyK9yjLsJ9ZUUtDqaLuyGtGAqXNxCg2lDpcSGVI=;
-        b=PwHHFrsloPRQFpyap/DRbcFSeW+M5hUnUNPiXnes5tm9yi7pLOKglr3zsk+wtjcY0o
-         BCPvfTPRKGCfbrNbNnVXFeoiTXcjS0g8GjNLjh5XM7xafjxI0x6ykAMVBfyP1Xzo1GYq
-         TWFrDfLJbUnIRQcdM+VNnOksvyvi1/lgq2RIstUZZ6ngeoYSZUBLeQCEY4McJYCpYM89
-         GDGutq0clZaEWI6YoNDMuGbrSL9x8V2/Vj+5ZJ8BiaQsQb5VPMDcbnSG6bV/JO9otHvf
-         CNd5/XURnNOuYlivXmEPNcmhJiBti/zPqEUF690DMbP+19H8gi0yqnI2wX+oOHUjIPed
-         bbGg==
-X-Gm-Message-State: APjAAAUIo4EA+f2DvBNEGMREEP/9xI2Bpq5uCySjNSDNavmI4f61+dRg
-        7X3MoqSs6KIeFoWTm35jV8o=
-X-Google-Smtp-Source: APXvYqxXreXy+Kapg/ZJYI1I5Ed9718FNLSXg5u6HPv8KJDPo4wa3JZS9ihIlDR1Wpd6vMAagez/Mg==
-X-Received: by 2002:aa7:8edd:: with SMTP id b29mr2250954pfr.23.1573034604596;
-        Wed, 06 Nov 2019 02:03:24 -0800 (PST)
-Received: from localhost ([2402:800:6375:4ba:cb41:a2ec:2198:454b])
-        by smtp.gmail.com with ESMTPSA id f189sm32485108pgc.94.2019.11.06.02.03.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 02:03:23 -0800 (PST)
-Date:   Wed, 6 Nov 2019 17:03:22 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] sequencer: reencode to utf-8 before arrange
- rebase's todo list
-Message-ID: <20191106100322.GC6351@danh.dev>
-References: <20191031092618.29073-1-congdanhqx@gmail.com>
- <cover.1572596278.git.congdanhqx@gmail.com>
- <b7927b27235422ac53595cfaa63b4f1cbe009013.1572596278.git.congdanhqx@gmail.com>
- <20191101165921.GD26219@sigill.intra.peff.net>
- <20191102010215.GB17624@danh.dev>
- <20191105080010.GA7415@sigill.intra.peff.net>
- <xmqqftj1yeo5.fsf@gitster-ct.c.googlers.com>
- <20191106040314.GA4307@sigill.intra.peff.net>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=UDEK+pc7ioMD64D4uZ8Gc5rjKyKEaFaG9k4uxscSWR4=;
+        b=hc0SnlebE6Hz/Bf5xrHYCJu6LWJRsaZ302xYHqs5FqSMB3x0mnV/jlotO6KfZsmoG3
+         1iQMQqZuBOdQVjeV4lif3BcSEzKIMlQhpFJIwUB+bXmOzgs6BrwnAJ8XMzr6h3LcNHIY
+         rkZH72b4OpCPBH37DZ1RMehdTuzUHVw0rcYKfUcBZSgPz6da1XIzx/fOp6S4tyFcwQws
+         JztUnrEa5GwJVy27s6nvAEtOkI8A7ue1tI2spn7Bl7zU3e0ldisxAUbr4AADOaoXzxbr
+         rFTYBxB7tjuEd9zKlhWMAbOnrMp5banmRM7puIE9n1XpMQFlJDZkL+3x7ZQv6JpCeDnb
+         oKow==
+X-Gm-Message-State: APjAAAVNW76aFyfXzAToAL0VnmZYkLUikreYR186bMWPKhhOdFGHRmOt
+        bnkz/CETfFbubRwUkxNLTkvLgHCR
+X-Google-Smtp-Source: APXvYqxZC0JtBuH2FvvlJU5IiDeo6W0MldRN0vAw4TDKBz7sYVBzp2fbqrll4wYJggOe7wl1PpJcUg==
+X-Received: by 2002:adf:dbc3:: with SMTP id e3mr1877945wrj.185.1573034696913;
+        Wed, 06 Nov 2019 02:04:56 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c144sm2324018wmd.1.2019.11.06.02.04.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Nov 2019 02:04:56 -0800 (PST)
+Message-Id: <3168ba2c9eadcf0cd7e4f2533c9306b5d2c627d0.1573034695.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.453.v2.git.1573034695.gitgitgadget@gmail.com>
+References: <pull.453.git.1572991158.gitgitgadget@gmail.com>
+        <pull.453.v2.git.1573034695.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 06 Nov 2019 10:04:55 +0000
+Subject: [PATCH v2 1/1] remote-curl: unbreak http.extraHeader with custom
+ allocators
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191106040314.GA4307@sigill.intra.peff.net>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-11-05 23:03:14 -0500, Jeff King wrote:
-> >     3. You are dealing with a project originated on and migrated
-> >        from a foreign SCM, and older parts of the history is stored
-> >        in a non-utf-8, even though recent history is in utf-8
-> > 
-> > to the mix?
-> 
-> I would think you'd want to convert to utf-8 as you do the migration in
-> that case, since you're writing new hashes anyway.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Sorry but I'm confused.
-If we're migrating from foreign SCM, we could make our commit in
-utf-8 (convert their commit message to utf8).
-Even if we need to synchronise history between the foreign SCM in
-question with git, we could use i18n.logoutputencoding for the output
-comestic.
+In 93b980e58f5 (http: use xmalloc with cURL, 2019-08-15), we started to
+ask cURL to use `xmalloc()`, and if compiled with nedmalloc, that means
+implicitly a different allocator than the system one.
 
-> But I think a similar
-> case would just be an old Git repository, where for some reason you
-> thought i18n.commitEncoding was a good idea back then (perhaps because
-> you were in situation (1) then, but now you aren't).
-> 
-> In either case, though, I don't think it's a compelling motivation for
-> optimization, if only because those old commits will be shown less and
-> less (and even without modern optimizations like commit-graph, we'd
-> generally avoid reencoding those old commits unless we're actually going
-> to _show_ them).
+Which means that all of cURL's allocations and releases now _need_ to
+use that allocator.
 
-I'm not sure if we're misunderstood each other.
-I've only suggested to encode _new_ commit from now on in utf-8.
-Reencoding old history in utf-8 is definitely not in that suggestion.
+However, the `http_options()` function used `slist_append()` to add any
+configured extra HTTP header(s) _before_ asking cURL to use `xmalloc()`,
+and `http_cleanup()` would release them _afterwards_, i.e. in the
+presence of custom allocators, cURL would attempt to use the wrong
+allocator to release the memory.
 
+A naïve attempt at fixing this would move the call to
+`curl_global_init()` _before_ the config is parsed (i.e. before that
+call to `slist_append()`).
+
+However, that does work, as we _also_ parse the config setting
+`http.sslbackend` and if found, call `curl_global_sslset()` which *must*
+be called before `curl_global_init()`, for details see:
+https://curl.haxx.se/libcurl/c/curl_global_sslset.html
+
+So let's instead make the config parsing entirely independent from
+cURL's data structures. Incidentally, this deletes two more lines than
+it introduces, which is nice.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ http.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
+
+diff --git a/http.c b/http.c
+index 27aa0a3192..82f493c7fd 100644
+--- a/http.c
++++ b/http.c
+@@ -150,7 +150,7 @@ static unsigned long empty_auth_useless =
+ 
+ static struct curl_slist *pragma_header;
+ static struct curl_slist *no_pragma_header;
+-static struct curl_slist *extra_http_headers;
++static struct string_list extra_http_headers = STRING_LIST_INIT_DUP;
+ 
+ static struct active_request_slot *active_queue_head;
+ 
+@@ -414,11 +414,9 @@ static int http_options(const char *var, const char *value, void *cb)
+ 		if (!value) {
+ 			return config_error_nonbool(var);
+ 		} else if (!*value) {
+-			curl_slist_free_all(extra_http_headers);
+-			extra_http_headers = NULL;
++			string_list_clear(&extra_http_headers, 0);
+ 		} else {
+-			extra_http_headers =
+-				curl_slist_append(extra_http_headers, value);
++			string_list_append(&extra_http_headers, value);
+ 		}
+ 		return 0;
+ 	}
+@@ -1199,8 +1197,7 @@ void http_cleanup(void)
+ #endif
+ 	curl_global_cleanup();
+ 
+-	curl_slist_free_all(extra_http_headers);
+-	extra_http_headers = NULL;
++	string_list_clear(&extra_http_headers, 0);
+ 
+ 	curl_slist_free_all(pragma_header);
+ 	pragma_header = NULL;
+@@ -1624,10 +1621,11 @@ int run_one_slot(struct active_request_slot *slot,
+ 
+ struct curl_slist *http_copy_default_headers(void)
+ {
+-	struct curl_slist *headers = NULL, *h;
++	struct curl_slist *headers = NULL;
++	const struct string_list_item *item;
+ 
+-	for (h = extra_http_headers; h; h = h->next)
+-		headers = curl_slist_append(headers, h->data);
++	for_each_string_list_item(item, &extra_http_headers)
++		headers = curl_slist_append(headers, item->string);
+ 
+ 	return headers;
+ }
 -- 
-Danh
+gitgitgadget
