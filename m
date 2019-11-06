@@ -2,97 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C7701F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 21:26:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8B501F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 21:36:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732439AbfKFV0B (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 16:26:01 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41008 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726779AbfKFV0B (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 16:26:01 -0500
-Received: (qmail 25187 invoked by uid 109); 6 Nov 2019 21:26:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Nov 2019 21:26:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27358 invoked by uid 111); 6 Nov 2019 21:29:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Nov 2019 16:29:21 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 6 Nov 2019 16:25:59 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] "fatal: bad object .alternate" during fetch with alternates
-Message-ID: <20191106212559.GA8521@sigill.intra.peff.net>
-References: <nycvar.QRO.7.76.6.1911041053190.46@tvgsbejvaqbjf.bet>
- <20191106205907.GA4122@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191106205907.GA4122@sigill.intra.peff.net>
+        id S1727351AbfKFVgP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 16:36:15 -0500
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:48372 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726779AbfKFVgP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 16:36:15 -0500
+Received: by mail-pg1-f202.google.com with SMTP id q20so5949700pgj.15
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 13:36:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=/q551BE/JaIM5l/FCo8KYQoh/AB4dk1+N89XrlEhACc=;
+        b=ol0p91GU8sDphWNUkY5VLzSLQ0jQRg0kL0CK64WAcFAEr+MwbbOj/hDDvGXQIIzzIr
+         YjVaKSptaZdfufn1UtsgwOw+aZuKhYWZagfstnlJYkwxXRbvHqBakF3ZCWuvi+AgZcrv
+         rSiO7oL/fiizaukkE9aGXFpY2IB72WMH5Cxdf62vCwjilCLi/YTuRCZgXEmljM7gt2kw
+         mUriFQoM3+XYi0UJ/zKo8XSbmboMkwPUaWuYSYW/a+G8aA/wTtNHiQp2ylkqwEN4teHE
+         QXDurIo4lhnDSdloOmGUqkG4L4o8BldOXd1I6fofmZ0fJA//u1fRan/PFKTPNCQ2M6KW
+         PdCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=/q551BE/JaIM5l/FCo8KYQoh/AB4dk1+N89XrlEhACc=;
+        b=C/6vQBmL6PY4W+CbD7nQ1ltPASh+tQqAa2xiPJX/1jE6NJ1wE74AGAdjjsOmaUyPiH
+         A39RGZD+BVUg1P7l2R1Nvs6HSAUG1QeBBlZ876KQAPt+GI6Bh1ylACwLkXyaNGMoySkT
+         GG2OflyAQbvssUgxgOV4JIHDiGHBXtDIz3G5qS0C6CF9IopDlhYbn3PJH4SIfULYpf6u
+         FjJ9da15C7kz7kL1tIbMXcSVjTZbeSOQtxpnk84aR8BBd2T02wi2RahXAZDKxPC3j2ak
+         ElPK49xoag12NJ4unMcIrzouoTIOuJsvvbMg+XvCKHhpGbslCxtffJ4plYst3fKQrsXL
+         6DPw==
+X-Gm-Message-State: APjAAAXUXBta8wMNbi6NL5WuL5rJ2ZlU/Ym4C8N5diwy7YMiTZMgzU8N
+        AAG9XRb5Rn8KtXvPUBZfBu6vuK3OrHpcc2UJE4B5
+X-Google-Smtp-Source: APXvYqyRLnFLpCqAEVxThhfjAYnqeSKRk6uYnp7DSwwOiURvkjdrywx7gOiddHCvRXFFpPxT508SWoYKGSDBn7ue/h1G
+X-Received: by 2002:a65:5a02:: with SMTP id y2mr31774pgs.104.1573076172843;
+ Wed, 06 Nov 2019 13:36:12 -0800 (PST)
+Date:   Wed,  6 Nov 2019 13:36:09 -0800
+In-Reply-To: <xmqqtv7hvi6r.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20191106213609.57464-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqtv7hvi6r.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.24.0.rc1.363.gb1bccd3e3d-goog
+Subject: Re: [PATCH v7 1/1] Implement rev-list --bisect* --first-parent
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, workingjubilee@gmail.com,
+        git@vger.kernel.org, christian.couder@gmail.com,
+        johannes.schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 06, 2019 at 03:59:07PM -0500, Jeff King wrote:
-
-> On Wed, Nov 06, 2019 at 08:48:05PM +0100, Johannes Schindelin wrote:
+> > Also, clarify in the commit message somewhere that this commit does not
+> > change the behavior of "git bisect".
 > 
-> > Now, I think the two factors that trigger this bug over here are:
-> > 
-> > - I had all the objects locally already, as I had pushed from a topic
-> >   branch to `master` [*1*].
-> > 
-> > - My worktree's `.git/objects` is connected to an alternate that is
-> >   connected to the current Git repository (yes, it is circular, long
-> >   story...) and has refs pointing to commits its alternate that have
-> >   been gc'ed away.
-> 
-> I think this second one is the crux of the issue. Your alternate is a
-> corrupt repository, and I don't think that's something we ought to be
-> worried about supporting in general.
+> s/\.$/ when used without the "--first-parent" option&/; you mean?
 
-Thinking on this a bit more, the whole thing is a bit subtle.
+As far as I know, "git bisect" doesn't support --first-parent, whether
+before or after this patch.
 
-Imagine what would happen in the fetch or push code paths from before my
-patches. We'd tell the other side "hey, I have object X" when in fact we
-don't. So we'd end up missing some objects from the transfer.
-
-Before my patches, we'd have done a full connectivity check, with no
-regard to the alternate, and complained.
-
-After my patches, we make the assumption that the alternate isn't
-corrupt, and trust its refs. So there's an opportunity for corruption in
-the alternate to spread to the child repository. We're actually saved
-somewhat by the current behavior where rev-list bails on the broken
-refs, rather than accepting them at face value. But it wouldn't protect
-us from deeper corruptions in the alternate.
-
-I have trouble getting too worked up about that, though. If your
-alternate is corrupt, this is only one of many ways that the corruption
-can spread to your repository.
-
-However, it would make sense to me that if we can cheaply notice a
-corruption in the alternate, that we should avoid it spreading. And
-noticing that the object pointed to by a ref is missing is reasonably
-cheap (in fact, it's done by most ref iteration; for-each-ref explicitly
-uses FILTER_REFS_INCLUDE_BROKEN). So I think the right direction is
-probably to teach for-each-ref an "--omit-broken" option, and use that
-for enumerating the alternate refs.
-
-That would let us not only notice this corruption, but we'd "route
-around" it by avoiding advertising the broken alternate tip in the first
-place.
-
-And it would fix your problem, too. In your case it sounds like you're
-not working with any of the corrupted objects at all; rather it's just
-an unrelated corruption that's causing rev-list to bail.
-
--Peff
+At first I thought that this patch also teaches "git bisect" to support
+"--first-parent", but that is not the case. Only "git rev-list" learns
+to make "--bisect" work with "--first-parent". So I wanted the
+clarification. (But if you think that the clarification is unnecessary,
+that's fine too.)
