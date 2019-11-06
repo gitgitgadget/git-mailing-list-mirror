@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 689E31F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 10:00:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92B321F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 10:00:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731724AbfKFJ77 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 04:59:59 -0500
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:38903 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725856AbfKFJ76 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1731176AbfKFJ76 (ORCPT <rfc822;e@80x24.org>);
         Wed, 6 Nov 2019 04:59:58 -0500
-Received: by mail-wm1-f47.google.com with SMTP id z19so2579519wmk.3
+Received: from mail-wm1-f42.google.com ([209.85.128.42]:55902 "EHLO
+        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731672AbfKFJ75 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 04:59:57 -0500
+Received: by mail-wm1-f42.google.com with SMTP id m17so2582691wmi.5
         for <git@vger.kernel.org>; Wed, 06 Nov 2019 01:59:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=bIQFN7Giyzj0Cp3ZhrwOhNDIUw+bJ062AZKqqcec2l0=;
-        b=b+/bMPRtJiX91D7SOsYQltNtohrxUm3DaNFS6wg5xW+UbiqqgZ1InT8YZcmho4qCkE
-         paukusb25YaQOirq2hoWp1NDmyR7OsYta/u2XLGXIBLIDgqUnsZn2XPJb7JgegQq5G6r
-         /FYA3r3g79GyTTdgIhEhzHt+g37XH+C6qL2K172JMp2NFsYNLbOO0xQVD0nQCWpPyOLk
-         RFiaQia8tZVX83zezENQ9o4a1YteEjGUWAJRw3wsuwh4FqgBSwyjM30a9RiNbxot08i6
-         5iwr1zRQtHvR2qouo+CMzVbVmXHDTvlplMBsAS6SxCtIDpm6tKtANWcBFNhMdWB3BL1e
-         pe5w==
+        bh=CIlb7vhgvVx3vjpkNksrPt/9jqhoDqOBOGxQUnA8eKA=;
+        b=a3kCbdMdel2E++WLDThR3rKHbFxfymjJ1E9kZgvGj1ojHTyJZc7CRLyGCf+NXk/EsG
+         toNradz0FTHA2uY968VgklwXTRWiw+1dvSH0o1gS7j/pZvtXhpXAPTKIESaKb5soU+0z
+         eNUsO/tqk0L8PvX2TFV8Uvj2ydbx93702G0MFBhREjjVSMsuDSoyiYKGgoV6I+3D/Hbs
+         lw2ZkOzKOW7oNmol6fFiMCzKvCmmr+pLIxMV1NIwmp/Njzeu/DFz1ZJCgY/GfQoxhpqL
+         ye2JFusFdbnFZTpsucKLnRkxH93Lh65yav28/dHcG54pPnl4a2JPdE9GhBPdNZcQtReb
+         BcIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bIQFN7Giyzj0Cp3ZhrwOhNDIUw+bJ062AZKqqcec2l0=;
-        b=mdhrX2NqsibYe+Nq5NS3RSzY8lfn4fRNFZs3Zjdk7f27W5AtBSTRtTKPiuacocenFV
-         4qalhP3TCrUj/kY52aIHWP6TOP/4W0NfB4ctprCgZYFtSztPp0vUmnyUwkmRi9W7zsj/
-         wBdJ6wDIWX0jLm37PtkxnEeeklp+s+Q4hhWudk3ImnWCdvLMnB7LI4tO6Vc8iCl1YE9Y
-         b850oTCkUwj6LFSPwZbnOcQabdfjsMwkINUUyuAHtw8riLqJneWyNUNFSsdmM7p4b2mI
-         6TrYZEwM/tihzfTgWQEfnmolGMmF8Q/P+v+xoswne+MZCAwNrh/rqtCL8BkCOTeG54Ix
-         nkwg==
-X-Gm-Message-State: APjAAAVyXQjrOeXv8EzdjJL0e4SRilS1Ffg7fhmB1IZqvZ8TzcHREP6R
-        Hna3Q66IL08OL8x/AiIbOECRNzM2
-X-Google-Smtp-Source: APXvYqxqE1fmqrdc3/7RGi24+i4QxnfygwJCrfxNVrYU3UpyDpRX02CaSpA8nESlVqkZzcK0/WI9KQ==
-X-Received: by 2002:a1c:a942:: with SMTP id s63mr1599727wme.5.1573034394154;
+        bh=CIlb7vhgvVx3vjpkNksrPt/9jqhoDqOBOGxQUnA8eKA=;
+        b=XwSu3UOCKB4ZZajwAbDsHIaHSb8uUrSb7GMlW065rxZFM3zd+vNg5d+VtEoaapjCHH
+         8WAK/ouzX8BIy6XAs4aP6p3e05CLlR2eO3AtwDNkbXEwFRdAalrFPfmIfAxZusgp4HnN
+         O6cJEhOotBGHju1SYwCqMuYJ/5PcckqoaozUmByOdzrX5ZwEZIdoY1AdHFucgHu8K1pm
+         vLgLab8jpOxqJPF1Qa9ez09iEMnznd90IEt6PvXcwy2Lk5MpZgpFaHa6rUegSHgPcVU9
+         NMDyX7i2iEPHleflmlzqDv3E0MRb/dbd+k5PAPxfi3z/sQr114Qvbgtod6OYGpgTpMCY
+         dYKw==
+X-Gm-Message-State: APjAAAV1bRnLMdylwwWhC9UkTHXPHd8fnQKWB8k6CO8TPbzO6RdT1iEJ
+        VFGfTKspYhAx3KBqBXUMn7rYKIIc
+X-Google-Smtp-Source: APXvYqwNvTWPkfppZirpbsNYXmqfQuHgAjH6O8lwVcad5JZldvJE+d4sJ9nezyjzt6f55BkDe2AXMA==
+X-Received: by 2002:a7b:c94f:: with SMTP id i15mr1723399wml.31.1573034394738;
         Wed, 06 Nov 2019 01:59:54 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d2sm2249792wmd.2.2019.11.06.01.59.53
+        by smtp.gmail.com with ESMTPSA id 11sm2279253wmb.34.2019.11.06.01.59.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 01:59:53 -0800 (PST)
-Message-Id: <24d0765df9891560bb14d127832292abaae5a9bf.1573034387.git.gitgitgadget@gmail.com>
+        Wed, 06 Nov 2019 01:59:54 -0800 (PST)
+Message-Id: <4ea49f76c7ffe662aa593830f5e70303a4f30dc4.1573034387.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
 References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
         <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 06 Nov 2019 09:59:34 +0000
-Subject: [PATCH v2 07/20] refs: move doc to refs.h
+Date:   Wed, 06 Nov 2019 09:59:35 +0000
+Subject: [PATCH v2 08/20] attr: move doc to attr.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,187 +72,351 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-ref-iteration.txt
-to refs.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-gitattributes.txt
+to attr.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-ref-iteration.txt is removed because the
+Also documentation/technical/api-gitattributes.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-ref-iteration.txt | 78 -------------------
- refs.h                                        | 51 ++++++++++++
- 2 files changed, 51 insertions(+), 78 deletions(-)
- delete mode 100644 Documentation/technical/api-ref-iteration.txt
+ Documentation/technical/api-gitattributes.txt | 154 ------------------
+ attr.h                                        | 141 +++++++++++++++-
+ 2 files changed, 134 insertions(+), 161 deletions(-)
+ delete mode 100644 Documentation/technical/api-gitattributes.txt
 
-diff --git a/Documentation/technical/api-ref-iteration.txt b/Documentation/technical/api-ref-iteration.txt
+diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
 deleted file mode 100644
-index ad9d019ff9..0000000000
---- a/Documentation/technical/api-ref-iteration.txt
+index 45f0df600f..0000000000
+--- a/Documentation/technical/api-gitattributes.txt
 +++ /dev/null
-@@ -1,78 +0,0 @@
--ref iteration API
+@@ -1,154 +0,0 @@
+-gitattributes API
 -=================
 -
+-gitattributes mechanism gives a uniform way to associate various
+-attributes to set of paths.
 -
--Iteration of refs is done by using an iterate function which will call a
--callback function for every ref. The callback function has this
--signature:
 -
--	int handle_one_ref(const char *refname, const struct object_id *oid,
--			   int flags, void *cb_data);
+-Data Structure
+---------------
 -
--There are different kinds of iterate functions which all take a
--callback of this type. The callback is then called for each found ref
--until the callback returns nonzero. The returned value is then also
--returned by the iterate function.
+-`struct git_attr`::
 -
--Iteration functions
---------------------
+-	An attribute is an opaque object that is identified by its name.
+-	Pass the name to `git_attr()` function to obtain the object of
+-	this type.  The internal representation of this structure is
+-	of no interest to the calling programs.  The name of the
+-	attribute can be retrieved by calling `git_attr_name()`.
 -
--* `head_ref()` just iterates the head ref.
+-`struct attr_check_item`::
 -
--* `for_each_ref()` iterates all refs.
+-	This structure represents one attribute and its value.
 -
--* `for_each_ref_in()` iterates all refs which have a defined prefix and
--  strips that prefix from the passed variable refname.
+-`struct attr_check`::
 -
--* `for_each_tag_ref()`, `for_each_branch_ref()`, `for_each_remote_ref()`,
--  `for_each_replace_ref()` iterate refs from the respective area.
+-	This structure represents a collection of `attr_check_item`.
+-	It is passed to `git_check_attr()` function, specifying the
+-	attributes to check, and receives their values.
 -
--* `for_each_glob_ref()` iterates all refs that match the specified glob
--  pattern.
 -
--* `for_each_glob_ref_in()` the previous and `for_each_ref_in()` combined.
+-Attribute Values
+-----------------
 -
--* Use `refs_` API for accessing submodules. The submodule ref store could
--  be obtained with `get_submodule_ref_store()`.
+-An attribute for a path can be in one of four states: Set, Unset,
+-Unspecified or set to a string, and `.value` member of `struct
+-attr_check_item` records it.  There are three macros to check these:
 -
--* `for_each_rawref()` can be used to learn about broken ref and symref.
+-`ATTR_TRUE()`::
 -
--* `for_each_reflog()` iterates each reflog file.
+-	Returns true if the attribute is Set for the path.
 -
--Submodules
------------
+-`ATTR_FALSE()`::
 -
--If you want to iterate the refs of a submodule you first need to add the
--submodules object database. You can do this by a code-snippet like
--this:
+-	Returns true if the attribute is Unset for the path.
 -
--	const char *path = "path/to/submodule"
--	if (add_submodule_odb(path))
--		die("Error submodule '%s' not populated.", path);
+-`ATTR_UNSET()`::
 -
--`add_submodule_odb()` will return zero on success. If you
--do not do this you will get an error for each ref that it does not point
--to a valid object.
+-	Returns true if the attribute is Unspecified for the path.
 -
--Note: As a side-effect of this you cannot safely assume that all
--objects you lookup are available in superproject. All submodule objects
--will be available the same way as the superprojects objects.
+-If none of the above returns true, `.value` member points at a string
+-value of the attribute for the path.
 -
--Example:
----------
 -
------
--static int handle_remote_ref(const char *refname,
--		const unsigned char *sha1, int flags, void *cb_data)
+-Querying Specific Attributes
+-----------------------------
+-
+-* Prepare `struct attr_check` using attr_check_initl()
+-  function, enumerating the names of attributes whose values you are
+-  interested in, terminated with a NULL pointer.  Alternatively, an
+-  empty `struct attr_check` can be prepared by calling
+-  `attr_check_alloc()` function and then attributes you want to
+-  ask about can be added to it with `attr_check_append()`
+-  function.
+-
+-* Call `git_check_attr()` to check the attributes for the path.
+-
+-* Inspect `attr_check` structure to see how each of the
+-  attribute in the array is defined for the path.
+-
+-
+-Example
+--------
+-
+-To see how attributes "crlf" and "ident" are set for different paths.
+-
+-. Prepare a `struct attr_check` with two elements (because
+-  we are checking two attributes):
+-
+-------------
+-static struct attr_check *check;
+-static void setup_check(void)
 -{
--	struct strbuf *output = cb_data;
--	strbuf_addf(output, "%s\n", refname);
--	return 0;
+-	if (check)
+-		return; /* already done */
+-	check = attr_check_initl("crlf", "ident", NULL);
 -}
+-------------
 -
--...
+-. Call `git_check_attr()` with the prepared `struct attr_check`:
 -
--	struct strbuf output = STRBUF_INIT;
--	for_each_remote_ref(handle_remote_ref, &output);
--	printf("%s", output.buf);
------
-diff --git a/refs.h b/refs.h
-index 730d05ad91..545029c6d8 100644
---- a/refs.h
-+++ b/refs.h
-@@ -310,19 +310,35 @@ int refs_for_each_branch_ref(struct ref_store *refs,
- int refs_for_each_remote_ref(struct ref_store *refs,
- 			     each_ref_fn fn, void *cb_data);
+-------------
+-	const char *path;
+-
+-	setup_check();
+-	git_check_attr(path, check);
+-------------
+-
+-. Act on `.value` member of the result, left in `check->items[]`:
+-
+-------------
+-	const char *value = check->items[0].value;
+-
+-	if (ATTR_TRUE(value)) {
+-		The attribute is Set, by listing only the name of the
+-		attribute in the gitattributes file for the path.
+-	} else if (ATTR_FALSE(value)) {
+-		The attribute is Unset, by listing the name of the
+-		attribute prefixed with a dash - for the path.
+-	} else if (ATTR_UNSET(value)) {
+-		The attribute is neither set nor unset for the path.
+-	} else if (!strcmp(value, "input")) {
+-		If none of ATTR_TRUE(), ATTR_FALSE(), or ATTR_UNSET() is
+-		true, the value is a string set in the gitattributes
+-		file for the path by saying "attr=value".
+-	} else if (... other check using value as string ...) {
+-		...
+-	}
+-------------
+-
+-To see how attributes in argv[] are set for different paths, only
+-the first step in the above would be different.
+-
+-------------
+-static struct attr_check *check;
+-static void setup_check(const char **argv)
+-{
+-	check = attr_check_alloc();
+-	while (*argv) {
+-		struct git_attr *attr = git_attr(*argv);
+-		attr_check_append(check, attr);
+-		argv++;
+-	}
+-}
+-------------
+-
+-
+-Querying All Attributes
+------------------------
+-
+-To get the values of all attributes associated with a file:
+-
+-* Prepare an empty `attr_check` structure by calling
+-  `attr_check_alloc()`.
+-
+-* Call `git_all_attrs()`, which populates the `attr_check`
+-  with the attributes attached to the path.
+-
+-* Iterate over the `attr_check.items[]` array to examine
+-  the attribute names and values.  The name of the attribute
+-  described by an `attr_check.items[]` object can be retrieved via
+-  `git_attr_name(check->items[i].attr)`.  (Please note that no items
+-  will be returned for unset attributes, so `ATTR_UNSET()` will return
+-  false for all returned `attr_check.items[]` objects.)
+-
+-* Free the `attr_check` struct by calling `attr_check_free()`.
+diff --git a/attr.h b/attr.h
+index b0378bfe5f..404548f028 100644
+--- a/attr.h
++++ b/attr.h
+@@ -1,9 +1,121 @@
+ #ifndef ATTR_H
+ #define ATTR_H
  
-+/* just iterates the head ref. */
- int head_ref(each_ref_fn fn, void *cb_data);
-+
-+/* iterates all refs. */
- int for_each_ref(each_ref_fn fn, void *cb_data);
-+
 +/**
-+ * iterates all refs which have a defined prefix and strips that prefix from
-+ * the passed variable refname.
-+ */
- int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
-+
- int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
- 			     each_ref_fn fn, void *cb_data,
- 			     unsigned int broken);
- int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
- 			unsigned int broken);
-+
-+/**
-+ * iterate refs from the respective area.
-+ */
- int for_each_tag_ref(each_ref_fn fn, void *cb_data);
- int for_each_branch_ref(each_ref_fn fn, void *cb_data);
- int for_each_remote_ref(each_ref_fn fn, void *cb_data);
- int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_data);
-+
-+/* iterates all refs that match the specified glob pattern. */
- int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
-+
- int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
- 			 const char *prefix, void *cb_data);
- 
-@@ -791,6 +807,41 @@ int reflog_expire(const char *refname, const struct object_id *oid,
- int ref_storage_backend_exists(const char *name);
- 
- struct ref_store *get_main_ref_store(struct repository *r);
-+
-+/**
-+ * Submodules
-+ * ----------
++ * gitattributes mechanism gives a uniform way to associate various attributes
++ * to set of paths.
 + *
-+ * If you want to iterate the refs of a submodule you first need to add the
-+ * submodules object database. You can do this by a code-snippet like
-+ * this:
 + *
-+ * 	const char *path = "path/to/submodule"
-+ * 	if (add_submodule_odb(path))
-+ * 		die("Error submodule '%s' not populated.", path);
++ * Querying Specific Attributes
++ * ----------------------------
 + *
-+ * `add_submodule_odb()` will return zero on success. If you
-+ * do not do this you will get an error for each ref that it does not point
-+ * to a valid object.
++ * - Prepare `struct attr_check` using attr_check_initl() function, enumerating
++ *   the names of attributes whose values you are interested in, terminated with
++ *   a NULL pointer.  Alternatively, an empty `struct attr_check` can be
++ *   prepared by calling `attr_check_alloc()` function and then attributes you
++ *   want to ask about can be added to it with `attr_check_append()` function.
 + *
-+ * Note: As a side-effect of this you cannot safely assume that all
-+ * objects you lookup are available in superproject. All submodule objects
-+ * will be available the same way as the superprojects objects.
++ * - Call `git_check_attr()` to check the attributes for the path.
 + *
-+ * Example:
-+ * --------
++ * - Inspect `attr_check` structure to see how each of the attribute in the
++ *   array is defined for the path.
 + *
-+ * ----
-+ * static int handle_remote_ref(const char *refname,
-+ * 		const unsigned char *sha1, int flags, void *cb_data)
++ *
++ * Example
++ * -------
++ *
++ * To see how attributes "crlf" and "ident" are set for different paths.
++ *
++ * - Prepare a `struct attr_check` with two elements (because we are checking
++ *   two attributes):
++ *
++ * ------------
++ * static struct attr_check *check;
++ * static void setup_check(void)
 + * {
-+ * 	struct strbuf *output = cb_data;
-+ * 	strbuf_addf(output, "%s\n", refname);
-+ * 	return 0;
++ * 	if (check)
++ * 		return; // already done
++ * check = attr_check_initl("crlf", "ident", NULL);
 + * }
++ * ------------
 + *
++ * - Call `git_check_attr()` with the prepared `struct attr_check`:
++ *
++ * ------------
++ * const char *path;
++ *
++ * setup_check();
++ * git_check_attr(path, check);
++ * ------------
++ *
++ * - Act on `.value` member of the result, left in `check->items[]`:
++ *
++ * ------------
++ * const char *value = check->items[0].value;
++ *
++ * if (ATTR_TRUE(value)) {
++ * The attribute is Set, by listing only the name of the
++ * attribute in the gitattributes file for the path.
++ * } else if (ATTR_FALSE(value)) {
++ * The attribute is Unset, by listing the name of the
++ *         attribute prefixed with a dash - for the path.
++ * } else if (ATTR_UNSET(value)) {
++ * The attribute is neither set nor unset for the path.
++ * } else if (!strcmp(value, "input")) {
++ * If none of ATTR_TRUE(), ATTR_FALSE(), or ATTR_UNSET() is
++ *         true, the value is a string set in the gitattributes
++ * file for the path by saying "attr=value".
++ * } else if (... other check using value as string ...) {
++ * ...
++ * }
++ * ------------
++ *
++ * To see how attributes in argv[] are set for different paths, only
++ * the first step in the above would be different.
++ *
++ * ------------
++ * static struct attr_check *check;
++ * static void setup_check(const char **argv)
++ * {
++ *     check = attr_check_alloc();
++ *     while (*argv) {
++ *         struct git_attr *attr = git_attr(*argv);
++ *         attr_check_append(check, attr);
++ *         argv++;
++ *     }
++ * }
++ * ------------
++ *
++ *
++ * Querying All Attributes
++ * -----------------------
++ *
++ * To get the values of all attributes associated with a file:
++ *
++ * - Prepare an empty `attr_check` structure by calling `attr_check_alloc()`.
++ *
++ * - Call `git_all_attrs()`, which populates the `attr_check` with the
++ * attributes attached to the path.
++ *
++ * - Iterate over the `attr_check.items[]` array to examine the attribute
++ * names and values. The name of the attribute described by an
++ * `attr_check.items[]` object can be retrieved via
++ * `git_attr_name(check->items[i].attr)`. (Please note that no items will be
++ * returned for unset attributes, so `ATTR_UNSET()` will return false for all
++ * returned `attr_check.items[]` objects.)
++ *
++ * - Free the `attr_check` struct by calling `attr_check_free()`.
 + */
 +
- /*
-  * Return the ref_store instance for the specified submodule. For the
-  * main repository, use submodule==NULL; such a call cannot fail. For
+ struct index_state;
+ 
+-/* An attribute is a pointer to this opaque structure */
++/**
++ * An attribute is an opaque object that is identified by its name. Pass the
++ * name to `git_attr()` function to obtain the object of this type.
++ * The internal representation of this structure is of no interest to the
++ * calling programs. The name of the attribute can be retrieved by calling
++ * `git_attr_name()`.
++ */
+ struct git_attr;
+ 
+ /* opaque structures used internally for attribute collection */
+@@ -21,21 +133,36 @@ const struct git_attr *git_attr(const char *);
+ extern const char git_attr__true[];
+ extern const char git_attr__false[];
+ 
+-/* For public to check git_attr_check results */
++/**
++ * Attribute Values
++ * ----------------
++ *
++ * An attribute for a path can be in one of four states: Set, Unset, Unspecified
++ * or set to a string, and `.value` member of `struct attr_check_item` records
++ * it. The three macros check these, if none of them returns true, `.value`
++ * member points at a string value of the attribute for the path.
++ */
++
++/* Returns true if the attribute is Set for the path. */
+ #define ATTR_TRUE(v) ((v) == git_attr__true)
++
++/* Returns true if the attribute is Unset for the path. */
+ #define ATTR_FALSE(v) ((v) == git_attr__false)
++
++/* Returns true if the attribute is Unspecified for the path. */
+ #define ATTR_UNSET(v) ((v) == NULL)
+ 
+-/*
+- * Send one or more git_attr_check to git_check_attrs(), and
+- * each 'value' member tells what its value is.
+- * Unset one is returned as NULL.
+- */
++/* This structure represents one attribute and its value. */
+ struct attr_check_item {
+ 	const struct git_attr *attr;
+ 	const char *value;
+ };
+ 
++/**
++ * This structure represents a collection of `attr_check_item`. It is passed to
++ * `git_check_attr()` function, specifying the attributes to check, and
++ * receives their values.
++ */
+ struct attr_check {
+ 	int nr;
+ 	int alloc;
 -- 
 gitgitgadget
 
