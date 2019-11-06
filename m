@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE6231F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 10:00:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20C171F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 10:00:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731658AbfKFJ7y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 04:59:54 -0500
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:39858 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728633AbfKFJ7y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 04:59:54 -0500
-Received: by mail-wr1-f50.google.com with SMTP id a11so24943074wra.6
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 01:59:51 -0800 (PST)
+        id S1731764AbfKFKAE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 05:00:04 -0500
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:43648 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731633AbfKFKAB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 05:00:01 -0500
+Received: by mail-wr1-f54.google.com with SMTP id n1so24961983wra.10
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 01:59:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=C4tdvHrsbIUd/BqwlbGvevZdwEQqmIVmLeZz7+YyZvE=;
-        b=jZiBcTROsQAZX/V7HkeGEveumyCKwTCb8D4wS+kUmbQBWpDJuKVTQW0+b4Cb4BPIVB
-         D+GC3no24xobo8b5y1B+bLE5evhrdTWRIIcM0GBqF/ootPoMTYvgbhdp7m6ENRsp3Tnp
-         +SGomv2/Srxic/Nj63KZk/+lAyERy7UTfVQlmJ9XQniTdyJS5WWRZekH0DPWGRy1iknN
-         Xg3kX14SJRfU0cvPjg0HbQNp+ppeZtFsGXZeX2yRwuMC5PbdFTPaFri46pv3IamDumfA
-         vjEyhN4xR+Yu9zrwQJeElGJJPEU6XHUx7MQFj8Fmc3CiHKeyJl0Ek8i9++S5/i0BW6wf
-         s+3w==
+        bh=giO2GU2kHEWuMdLCQf18nZDaZn/nf7zmDq7PVNroH0w=;
+        b=d+TRUvNLzYWPiKE4v+UHyzcLL7ec1jbUIAqIVFu0IGDkdRBkSPTVAVZkSNnpCJOgrF
+         pdf7sHPwP0j4LQrdIdoPJlcpZtz4Sk7opDnCuFRgQvbMQpwn4lnxZj+6AmvvZjPgmfe7
+         043k2FpzXew9eMw469ApCBrFy0OEmTndoPsHQ6g+DXBqiINP02nBRWbI7q2sMScuZKhz
+         SghaR6rvKYtVpCuM2Mpr0ZpsOhXNIjVz/s1estRTJXL5+JyhzRKlJsAuOGJui7JjosHn
+         cAqS1hO3tFgBvkJHHgzItP6Vi35H+3hPCJP08EBtcP1IShKMIBOG6VuMPC4pravaEQUZ
+         3zcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=C4tdvHrsbIUd/BqwlbGvevZdwEQqmIVmLeZz7+YyZvE=;
-        b=QV5oeXB3mYVUf7KmtN6rIPJO8BDE8QDi+d8/aKOAH+Rp9YSesUW4avBhC9w1p/rNQr
-         Oy3woquYR62pK5LTt9sxfNjFcor5l8v9GHLyP3K0K85fqy/nE0V2NK539XVX4DMLEYtj
-         epzHOhEw899vgOMYwBoSQX5+f4Es0tl2w4Nx0YqLiwp+MWvyxavQ6BZ3BqirtZKlK1YX
-         F4LWdCEiDY6i/yN993R/EeFf9JWPVvJjnDnyG1lKP1oreA6RSDJOtwTZXMc3KDU4jLdX
-         GZDjEnccHrEJ7W9veUSuvA5MACVB9A6Nb0Eexyy5pw3MdqBT6Z90KDEG9lBxwWM84TzR
-         5Vqg==
-X-Gm-Message-State: APjAAAX4bwrhspYdfDKcaPkdE60Iyb3w3n3DYScdCTdyCix5rNgFoTZp
-        /TS+t4htwBpSY8Ax4Bt6WBOnpwAP
-X-Google-Smtp-Source: APXvYqx+H6Sic3i4Xb6sXFAKIu5nhC/ms8yzXBN4QKu748ba7FcyNn9f0AajmaLWH6zTOcX2UloSDg==
-X-Received: by 2002:adf:e30d:: with SMTP id b13mr1665992wrj.137.1573034390241;
-        Wed, 06 Nov 2019 01:59:50 -0800 (PST)
+        bh=giO2GU2kHEWuMdLCQf18nZDaZn/nf7zmDq7PVNroH0w=;
+        b=rbJmYK/SwR6qg6Gch/rxS+5kjFiKLP2w7X4J4575RvfcyMk2CkAHZYUj14n29EgUsS
+         eLe10TAinE6mqR+xJTYU0Y6YybdzdzbmL6MjnwxZK+MpxyGFE0zzP6xgneF2Uw3wz2Vd
+         pHGlAnUE+/Yq7OYs51f+0IeKv8JgtMrYSjdFXdVejlNDKjpJ53Z40S7+gQNeZMinWEDI
+         W6r/RiNtiueShZOvnezWbbmxqeShoG/IhJbRsci3klvL6+GYnR6DyxHP966eo3rJXZBf
+         vA4g/TM7M9+f2+hSEJ6M8jSmTRFicKuLB0zx2AJUkvmzQnR3e3qWIA5mS0h2gy+MCU79
+         ckQQ==
+X-Gm-Message-State: APjAAAUP5vsd4o5Y31Sb7VAj23IW/BVV8unF7wJIAPbxquPDHqbolIMa
+        +DWR/PGJrn7I2lKC++EdDDmHhnGG
+X-Google-Smtp-Source: APXvYqw+O8GPfoleIszf6F4KogKZDpRWxmT1hpgSK20VmP8NqhPm6iqoVTV0U7JOipn+Y2bXsfg5hw==
+X-Received: by 2002:a5d:4a50:: with SMTP id v16mr1695103wrs.85.1573034398111;
+        Wed, 06 Nov 2019 01:59:58 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v16sm25051608wrc.84.2019.11.06.01.59.49
+        by smtp.gmail.com with ESMTPSA id g184sm2949350wma.8.2019.11.06.01.59.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 01:59:49 -0800 (PST)
-Message-Id: <cdb32c159a05675d8151c32c71617c6f4070c158.1573034387.git.gitgitgadget@gmail.com>
+        Wed, 06 Nov 2019 01:59:57 -0800 (PST)
+Message-Id: <314864e42c10c64097090d10c42dfba0e407b97d.1573034387.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
 References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
         <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 06 Nov 2019 09:59:29 +0000
-Subject: [PATCH v2 02/20] dir: move doc to dir.h
+Date:   Wed, 06 Nov 2019 09:59:40 +0000
+Subject: [PATCH v2 13/20] argv-array: move doc to argv-array.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,312 +72,185 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-directory-listing.txt
-to dir.h as it's easier for the developers to find the usage information
-beside the code instead of looking for it in another doc file.
+Move the documentation from Documentation/technical/api-argv-array.txt
+to argv-array.h as it's easier for the developers to find the usage
+information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-directory-listing.txt is removed because
-the information it has is now redundant and it'll be hard to keep it up to
-date and synchronized with the documentation in the header files.
+Also documentation/technical/api-argv-array.txt is removed because the
+information it has is now redundant and it'll be hard to keep it up to
+date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- .../technical/api-directory-listing.txt       | 130 ------------------
- dir.h                                         | 118 +++++++++++++++-
- 2 files changed, 113 insertions(+), 135 deletions(-)
- delete mode 100644 Documentation/technical/api-directory-listing.txt
+ Documentation/technical/api-argv-array.txt | 65 ----------------------
+ argv-array.h                               | 62 +++++++++++++++++++++
+ 2 files changed, 62 insertions(+), 65 deletions(-)
+ delete mode 100644 Documentation/technical/api-argv-array.txt
 
-diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
+diff --git a/Documentation/technical/api-argv-array.txt b/Documentation/technical/api-argv-array.txt
 deleted file mode 100644
-index 76b6e4f71b..0000000000
---- a/Documentation/technical/api-directory-listing.txt
+index 870c8edbfb..0000000000
+--- a/Documentation/technical/api-argv-array.txt
 +++ /dev/null
-@@ -1,130 +0,0 @@
--directory listing API
--=====================
+@@ -1,65 +0,0 @@
+-argv-array API
+-==============
 -
--The directory listing API is used to enumerate paths in the work tree,
--optionally taking `.git/info/exclude` and `.gitignore` files per
--directory into account.
+-The argv-array API allows one to dynamically build and store
+-NULL-terminated lists.  An argv-array maintains the invariant that the
+-`argv` member always points to a non-NULL array, and that the array is
+-always NULL-terminated at the element pointed to by `argv[argc]`. This
+-makes the result suitable for passing to functions expecting to receive
+-argv from main(), or the link:api-run-command.html[run-command API].
 -
--Data structure
----------------
+-The string-list API (documented in string-list.h) is similar, but cannot be
+-used for these purposes; instead of storing a straight string pointer,
+-it contains an item structure with a `util` field that is not compatible
+-with the traditional argv interface.
 -
--`struct dir_struct` structure is used to pass directory traversal
--options to the library and to record the paths discovered.  A single
--`struct dir_struct` is used regardless of whether or not the traversal
--recursively descends into subdirectories.
+-Each `argv_array` manages its own memory. Any strings pushed into the
+-array are duplicated, and all memory is freed by argv_array_clear().
 -
--The notable options are:
+-Data Structures
+----------------
 -
--`exclude_per_dir`::
+-`struct argv_array`::
 -
--	The name of the file to be read in each directory for excluded
--	files (typically `.gitignore`).
+-	A single array. This should be initialized by assignment from
+-	`ARGV_ARRAY_INIT`, or by calling `argv_array_init`. The `argv`
+-	member contains the actual array; the `argc` member contains the
+-	number of elements in the array, not including the terminating
+-	NULL.
 -
--`flags`::
+-Functions
+----------
 -
--	A bit-field of options:
+-`argv_array_init`::
+-	Initialize an array. This is no different than assigning from
+-	`ARGV_ARRAY_INIT`.
 -
--`DIR_SHOW_IGNORED`:::
+-`argv_array_push`::
+-	Push a copy of a string onto the end of the array.
 -
--	Return just ignored files in `entries[]`, not untracked
--	files. This flag is mutually exclusive with
--	`DIR_SHOW_IGNORED_TOO`.
+-`argv_array_pushl`::
+-	Push a list of strings onto the end of the array. The arguments
+-	should be a list of `const char *` strings, terminated by a NULL
+-	argument.
 -
--`DIR_SHOW_IGNORED_TOO`:::
+-`argv_array_pushf`::
+-	Format a string and push it onto the end of the array. This is a
+-	convenience wrapper combining `strbuf_addf` and `argv_array_push`.
 -
--	Similar to `DIR_SHOW_IGNORED`, but return ignored files in
--	`ignored[]` in addition to untracked files in
--	`entries[]`. This flag is mutually exclusive with
--	`DIR_SHOW_IGNORED`.
+-`argv_array_pushv`::
+-	Push a null-terminated array of strings onto the end of the array.
 -
--`DIR_KEEP_UNTRACKED_CONTENTS`:::
+-`argv_array_pop`::
+-	Remove the final element from the array. If there are no
+-	elements in the array, do nothing.
 -
--	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is set, the
--	untracked contents of untracked directories are also returned in
--	`entries[]`.
+-`argv_array_clear`::
+-	Free all memory associated with the array and return it to the
+-	initial, empty state.
 -
--`DIR_SHOW_IGNORED_TOO_MODE_MATCHING`:::
--
--	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if
--	this is set, returns ignored files and directories that match
--	an exclude pattern. If a directory matches an exclude pattern,
--	then the directory is returned and the contained paths are
--	not. A directory that does not match an exclude pattern will
--	not be returned even if all of its contents are ignored. In
--	this case, the contents are returned as individual entries.
--+
--If this is set, files and directories that explicitly match an ignore
--pattern are reported. Implicitly ignored directories (directories that
--do not match an ignore pattern, but whose contents are all ignored)
--are not reported, instead all of the contents are reported.
--
--`DIR_COLLECT_IGNORED`:::
--
--	Special mode for git-add. Return ignored files in `ignored[]` and
--	untracked files in `entries[]`. Only returns ignored files that match
--	pathspec exactly (no wildcards). Does not recurse into ignored
--	directories.
--
--`DIR_SHOW_OTHER_DIRECTORIES`:::
--
--	Include a directory that is not tracked.
--
--`DIR_HIDE_EMPTY_DIRECTORIES`:::
--
--	Do not include a directory that is not tracked and is empty.
--
--`DIR_NO_GITLINKS`:::
--
--	If set, recurse into a directory that looks like a Git
--	directory.  Otherwise it is shown as a directory.
--
--The result of the enumeration is left in these fields:
--
--`entries[]`::
--
--	An array of `struct dir_entry`, each element of which describes
--	a path.
--
--`nr`::
--
--	The number of members in `entries[]` array.
--
--`alloc`::
--
--	Internal use; keeps track of allocation of `entries[]` array.
--
--`ignored[]`::
--
--	An array of `struct dir_entry`, used for ignored paths with the
--	`DIR_SHOW_IGNORED_TOO` and `DIR_COLLECT_IGNORED` flags.
--
--`ignored_nr`::
--
--	The number of members in `ignored[]` array.
--
--Calling sequence
------------------
--
--Note: index may be looked at for .gitignore files that are CE_SKIP_WORKTREE
--marked. If you to exclude files, make sure you have loaded index first.
--
--* Prepare `struct dir_struct dir` and clear it with `memset(&dir, 0,
--  sizeof(dir))`.
--
--* To add single exclude pattern, call `add_pattern_list()` and then
--  `add_pattern()`.
--
--* To add patterns from a file (e.g. `.git/info/exclude`), call
--  `add_patterns_from_file()` , and/or set `dir.exclude_per_dir`.  A
--  short-hand function `setup_standard_excludes()` can be used to set
--  up the standard set of exclude settings.
--
--* Set options described in the Data Structure section above.
--
--* Call `read_directory()`.
--
--* Use `dir.entries[]`.
--
--* Call `clear_directory()` when none of the contained elements are no longer in use.
--
--(JC)
-diff --git a/dir.h b/dir.h
-index 2fbdef014f..1b41d29c07 100644
---- a/dir.h
-+++ b/dir.h
-@@ -1,11 +1,43 @@
- #ifndef DIR_H
- #define DIR_H
- 
--/* See Documentation/technical/api-directory-listing.txt */
--
- #include "cache.h"
- #include "strbuf.h"
+-`argv_array_detach`::
+-	Disconnect the `argv` member from the `argv_array` struct and
+-	return it. The caller is responsible for freeing the memory used
+-	by the array, and by the strings it references. After detaching,
+-	the `argv_array` is in a reinitialized state and can be pushed
+-	into again.
+diff --git a/argv-array.h b/argv-array.h
+index a39ba43f57..a7d3b10707 100644
+--- a/argv-array.h
++++ b/argv-array.h
+@@ -1,8 +1,32 @@
+ #ifndef ARGV_ARRAY_H
+ #define ARGV_ARRAY_H
  
 +/**
-+ * The directory listing API is used to enumerate paths in the work tree,
-+ * optionally taking `.git/info/exclude` and `.gitignore` files per directory
-+ * into account.
++ * The argv-array API allows one to dynamically build and store
++ * NULL-terminated lists.  An argv-array maintains the invariant that the
++ * `argv` member always points to a non-NULL array, and that the array is
++ * always NULL-terminated at the element pointed to by `argv[argc]`. This
++ * makes the result suitable for passing to functions expecting to receive
++ * argv from main().
++ *
++ * The string-list API (documented in string-list.h) is similar, but cannot be
++ * used for these purposes; instead of storing a straight string pointer,
++ * it contains an item structure with a `util` field that is not compatible
++ * with the traditional argv interface.
++ *
++ * Each `argv_array` manages its own memory. Any strings pushed into the
++ * array are duplicated, and all memory is freed by argv_array_clear().
 + */
 +
-+/**
-+ * Calling sequence
-+ * ----------------
-+ *
-+ * Note: index may be looked at for .gitignore files that are CE_SKIP_WORKTREE
-+ * marked. If you to exclude files, make sure you have loaded index first.
-+ *
-+ * - Prepare `struct dir_struct dir` and clear it with `memset(&dir, 0,
-+ * sizeof(dir))`.
-+ *
-+ * - To add single exclude pattern, call `add_pattern_list()` and then
-+ *   `add_pattern()`.
-+ *
-+ * - To add patterns from a file (e.g. `.git/info/exclude`), call
-+ *   `add_patterns_from_file()` , and/or set `dir.exclude_per_dir`.  A
-+ *   short-hand function `setup_standard_excludes()` can be used to set
-+ *   up the standard set of exclude settings.
-+ *
-+ * - Set options described in the Data Structure section above.
-+ *
-+ * - Call `read_directory()`.
-+ *
-+ * - Use `dir.entries[]`.
-+ *
-+ * - Call `clear_directory()` when none of the contained elements are no longer in use.
-+ *
-+ */
-+
- struct dir_entry {
- 	unsigned int len;
- 	char name[FLEX_ARRAY]; /* more */
-@@ -144,25 +176,101 @@ struct untracked_cache {
- 	unsigned int use_fsmonitor : 1;
- };
+ extern const char *empty_argv[];
  
 +/**
-+ * pass directory traversal options to the library and to record the paths
-+ * discovered. A single `struct dir_struct` is used regardless of whether or
-+ * not the traversal recursively descends into subdirectories.
++ * A single array. This should be initialized by assignment from
++ * `ARGV_ARRAY_INIT`, or by calling `argv_array_init`. The `argv`
++ * member contains the actual array; the `argc` member contains the
++ * number of elements in the array, not including the terminating
++ * NULL.
 + */
- struct dir_struct {
--	int nr, alloc;
--	int ignored_nr, ignored_alloc;
-+
-+    /* The number of members in `entries[]` array. */
-+    int nr;
-+
-+    /* Internal use; keeps track of allocation of `entries[]` array.*/
-+    int alloc;
-+
-+    /* The number of members in `ignored[]` array. */
-+	int ignored_nr;
-+
-+	int ignored_alloc;
-+
-+	/* bit-field of options */
- 	enum {
-+
-+	    /**
-+	     * Return just ignored files in `entries[]`, not untracked files.
-+	     * This flag is mutually exclusive with `DIR_SHOW_IGNORED_TOO`.
-+	     */
- 		DIR_SHOW_IGNORED = 1<<0,
-+
-+		/* Include a directory that is not tracked. */
- 		DIR_SHOW_OTHER_DIRECTORIES = 1<<1,
-+
-+		/* Do not include a directory that is not tracked and is empty. */
- 		DIR_HIDE_EMPTY_DIRECTORIES = 1<<2,
-+
-+		/**
-+		 * If set, recurse into a directory that looks like a Git directory.
-+		 * Otherwise it is shown as a directory.
-+		 */
- 		DIR_NO_GITLINKS = 1<<3,
-+
-+		/**
-+		 * Special mode for git-add. Return ignored files in `ignored[]` and
-+	     * untracked files in `entries[]`. Only returns ignored files that match
-+	     * pathspec exactly (no wildcards). Does not recurse into ignored
-+	     * directories.
-+		 */
- 		DIR_COLLECT_IGNORED = 1<<4,
-+
-+		/**
-+		 * Similar to `DIR_SHOW_IGNORED`, but return ignored files in
-+		 * `ignored[]` in addition to untracked files in `entries[]`.
-+		 * This flag is mutually exclusive with `DIR_SHOW_IGNORED`.
-+		 */
- 		DIR_SHOW_IGNORED_TOO = 1<<5,
-+
- 		DIR_COLLECT_KILLED_ONLY = 1<<6,
-+
-+        /**
-+         * Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is
-+         * set, the untracked contents of untracked directories are also
-+         * returned in `entries[]`.
-+         */
- 		DIR_KEEP_UNTRACKED_CONTENTS = 1<<7,
-+
-+		/**
-+		 * Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is
-+		 * set, returns ignored files and directories that match an exclude
-+		 * pattern. If a directory matches an exclude pattern, then the
-+		 * directory is returned and the contained paths are not. A directory
-+		 * that does not match an exclude pattern will not be returned even if
-+		 * all of its contents are ignored. In this case, the contents are
-+		 * returned as individual entries.
-+		 *
-+		 * If this is set, files and directories that explicitly match an ignore
-+         * pattern are reported. Implicitly ignored directories (directories that
-+         * do not match an ignore pattern, but whose contents are all ignored)
-+         * are not reported, instead all of the contents are reported.
-+		 */
- 		DIR_SHOW_IGNORED_TOO_MODE_MATCHING = 1<<8,
-+
- 		DIR_SKIP_NESTED_GIT = 1<<9
- 	} flags;
-+
-+	/* An array of `struct dir_entry`, each element of which describes a path. */
- 	struct dir_entry **entries;
-+
-+	/**
-+	 * used for ignored paths with the `DIR_SHOW_IGNORED_TOO` and
-+	 * `DIR_COLLECT_IGNORED` flags.
-+	 */
- 	struct dir_entry **ignored;
+ struct argv_array {
+ 	const char **argv;
+ 	int argc;
+@@ -11,17 +35,55 @@ struct argv_array {
  
--	/* Exclude info */
-+	/**
-+	 * The name of the file to be read in each directory for excluded files
-+	 * (typically `.gitignore`).
-+	 */
- 	const char *exclude_per_dir;
+ #define ARGV_ARRAY_INIT { empty_argv, 0, 0 }
  
- 	/*
++/**
++ * Initialize an array. This is no different than assigning from
++ * `ARGV_ARRAY_INIT`.
++ */
+ void argv_array_init(struct argv_array *);
++
++/* Push a copy of a string onto the end of the array. */
+ const char *argv_array_push(struct argv_array *, const char *);
++
++/**
++ * Format a string and push it onto the end of the array. This is a
++ * convenience wrapper combining `strbuf_addf` and `argv_array_push`.
++ */
+ __attribute__((format (printf,2,3)))
+ const char *argv_array_pushf(struct argv_array *, const char *fmt, ...);
++
++/**
++ * Push a list of strings onto the end of the array. The arguments
++ * should be a list of `const char *` strings, terminated by a NULL
++ * argument.
++ */
+ LAST_ARG_MUST_BE_NULL
+ void argv_array_pushl(struct argv_array *, ...);
++
++/* Push a null-terminated array of strings onto the end of the array. */
+ void argv_array_pushv(struct argv_array *, const char **);
++
++/**
++ * Remove the final element from the array. If there are no
++ * elements in the array, do nothing.
++ */
+ void argv_array_pop(struct argv_array *);
++
+ /* Splits by whitespace; does not handle quoted arguments! */
+ void argv_array_split(struct argv_array *, const char *);
++
++/**
++ * Free all memory associated with the array and return it to the
++ * initial, empty state.
++ */
+ void argv_array_clear(struct argv_array *);
++
++/**
++ * Disconnect the `argv` member from the `argv_array` struct and
++ * return it. The caller is responsible for freeing the memory used
++ * by the array, and by the strings it references. After detaching,
++ * the `argv_array` is in a reinitialized state and can be pushed
++ * into again.
++ */
+ const char **argv_array_detach(struct argv_array *);
+ 
+ #endif /* ARGV_ARRAY_H */
 -- 
 gitgitgadget
 
