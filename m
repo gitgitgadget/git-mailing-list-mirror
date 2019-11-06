@@ -2,92 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B54141F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 09:20:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97D861F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 09:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731465AbfKFJUz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 04:20:55 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:38095 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730144AbfKFJUz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 04:20:55 -0500
-Received: by mail-pg1-f194.google.com with SMTP id 15so3541222pgh.5
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 01:20:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Yo77/4Q8JUxXLzHMAnwKLnWIaV4FjNXvsX03Kuqwvsc=;
-        b=MzsfCXrZJgSgYwL0yNtc0iSc7sUF6b6ZOYTTxA7uefJvHnbGe+H0brAyRixbA1Qog/
-         d4wuDwkNjg3hW+L0YBAtaqNWb8W0AabWq7JLMAg4+taR7rlXXYIUofxBJ1tRtjfl2vdo
-         H9kIc1N0yhsJuIjjYC1Roc12VP2BCHJOnni7Ot6p8/ikJ78rbPnlnXUnKcl7RGECDmie
-         /LT/NudMfcuVtUr7DbNRPja8T3QqqaV9BygcD7TsNbaYUUpxlrZple6rvBcnAtNZSXuS
-         iH7gkCX3nIshchuVh2RK56WN6K5ut1kOB0okoPHGiZFoWRqVho3sHKGQpmPgYCKM9j88
-         tP0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Yo77/4Q8JUxXLzHMAnwKLnWIaV4FjNXvsX03Kuqwvsc=;
-        b=ZA47+AYI2mQRx3KcoSrkSqwbC9aE4CimeZNkGQoEJT3l8DXsKi+z1+cXW/ADCpdQrm
-         DaPxd4AspWNxQgprKeBdCepGyV7dVu+6rGdfYNEgoZpC4zL9RxXoK/8+MYgE0/aS4vby
-         vHZwO+dt6yfGnlbQlbA1MCWmZZlE6ySYd9khhwQCM7h/Yb46jrh5TWTe64An4dnwaD5l
-         GHegwA9OqxOHE63xUK8gZbtJUSDOziNEDzwH6z3WJ+aqRZpb449snDwFA58acXHmm6Lr
-         A3hXvaJY0d2nRjP1YLAqVPhblcIldwaKIRCdVfwo2eC9SVmAJpOVKjYnkNfabqn0ynIP
-         bsQA==
-X-Gm-Message-State: APjAAAUm2c+73tTztceuErOgyPXEIOFU8UdEJeBgk54Snqn2mPG93Qo8
-        to9jUucnXt4gx9dpT0WWwcr7/lNK
-X-Google-Smtp-Source: APXvYqyuVGwFqaAtS9um2lEnfrFbpDg+qZny6G075TlYQziHsLgZ8vgsNEsu9Zyc2innDjdrdFU+PA==
-X-Received: by 2002:a63:555b:: with SMTP id f27mr1722512pgm.66.1573032054700;
-        Wed, 06 Nov 2019 01:20:54 -0800 (PST)
-Received: from localhost.localdomain ([2402:800:6375:4ba:cb41:a2ec:2198:454b])
-        by smtp.gmail.com with ESMTPSA id c1sm4696984pjc.23.2019.11.06.01.20.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 01:20:54 -0800 (PST)
-From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>
-Subject: [PATCH v3 8/8] sequencer: reencode commit message for am/rebase --show-current-patch
-Date:   Wed,  6 Nov 2019 16:20:06 +0700
-Message-Id: <69ec40bb1dbdf7eda21d8fa918164a191ba41875.1573031848.git.congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.24.0.4.g6a51fdd29c
-In-Reply-To: <cover.1573031848.git.congdanhqx@gmail.com>
-References: <20191031092618.29073-1-congdanhqx@gmail.com> <cover.1573031848.git.congdanhqx@gmail.com>
+        id S1728116AbfKFJt4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 04:49:56 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53338 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726811AbfKFJt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 04:49:56 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6E4B8A3AC4;
+        Wed,  6 Nov 2019 04:49:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Q12LzioZrbdwJhFLaOInVEwbQOE=; b=dvXH1N
+        g2Fntm/lfjuxk0ea9ykfnp11fACDzwL1MWPK5BnNgnngKbVINi6cwefNif++OA2n
+        dS6lKMrQCQMHBDnmEh/yIAV3DnbtTx6WAfh//wzvWAp7DFFADtFArhQH4jgfMbk+
+        LBDzY2CMacc8pnwq48cv1NBAc5Wr9Nvp9ffnA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=s57tMWSgNoQ3Oz+AXM7FnZ+cwH3xYtr8
+        CW61+DsjWhZZwXMO8kWvWSuQ8d1ImP2wIMTC8jQLvQMNkgAhxJvyHY+4v4xaYmsM
+        uuEcxA+RtXY/R7XC6kOft8f5YLGSpCq41nmLq+tXXb62bTYdq35aHMw71TTY0QIr
+        toRkB1N+mIc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 65D7EA3AC3;
+        Wed,  6 Nov 2019 04:49:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 95D6CA3ABF;
+        Wed,  6 Nov 2019 04:49:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: Re: [PATCH 1/1] remote-curl: unbreak http.extraHeader with custom allocators
+References: <pull.453.git.1572991158.gitgitgadget@gmail.com>
+        <d47a2aa5949a5dd3a10b89d9a77ebb89af6ba57e.1572991158.git.gitgitgadget@gmail.com>
+        <20191106041644.GE4307@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1911061009230.46@tvgsbejvaqbjf.bet>
+Date:   Wed, 06 Nov 2019 18:49:50 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1911061009230.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 6 Nov 2019 10:14:37 +0100 (CET)")
+Message-ID: <xmqqsgn1tjup.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: C7CC3228-007A-11EA-97C8-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The message file will be used as commit message for the
-git-{am,rebase} --continue.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
----
- sequencer.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> On Tue, 5 Nov 2019, Jeff King wrote:
+>
+>> ... transforming it later into a curl_slist. I don't think that really buys
+>> us much, though.
+>
+> Alas, it _does_ buy us a lot, as I *just* found out (can you imagine how
+> glad I am not to have rushed out another Git for Windows release?).
 
-diff --git a/sequencer.c b/sequencer.c
-index d735d09f98..4c1ffad0f1 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2972,7 +2972,8 @@ static int make_patch(struct repository *r,
- 
- 	strbuf_addf(&buf, "%s/message", get_dir(opts));
- 	if (!file_exists(buf.buf)) {
--		const char *commit_buffer = get_commit_buffer(commit, NULL);
-+		const char *encoding = get_commit_output_encoding()
-+		const char *commit_buffer = logmsg_reencode(commit, NULL, encoding);
- 		find_commit_subject(commit_buffer, &subject);
- 		res |= write_message(subject, strlen(subject), buf.buf, 1);
- 		unuse_commit_buffer(commit, commit_buffer);
--- 
-2.24.0.4.g6a51fdd29c
+Thanks both, and especially thanks Dscho for both for a fix and for
+restraining yourself from the urge to pull trigger too soon ;-)
 
+> I will change the patch to avoid using `slist` early and send another
+> iteration.
+
+Will look forward to seeing it.
+
+Thanks.
