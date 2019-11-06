@@ -2,148 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2496A1F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 09:15:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E46A1F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 09:20:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731147AbfKFJPI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 04:15:08 -0500
-Received: from mout.gmx.net ([212.227.17.20]:40535 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726755AbfKFJPI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 04:15:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573031694;
-        bh=gCilKyGA2c4xnW1oylxV+EteRGwvJwKd93KO/p3Sjjg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=UTzcEtz8kwhNr6JQ9e+osu8xZ5LKrRQk1P2Gg/LPCLWKCV2JeVdmdPYjbtLdfXylp
-         FLMQVKz0vluQdzc2c8/SBj/sep/bVgxr09LvvomAZU1FSry0Ykr8kUDGPl8B2oeQW5
-         1eNPH5XEj9v1eZm7MDKcJzQJ5DnIkwBYqrloshRY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mlw3X-1i1V6c3ovb-00iy8T; Wed, 06
- Nov 2019 10:14:54 +0100
-Date:   Wed, 6 Nov 2019 10:14:37 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] remote-curl: unbreak http.extraHeader with custom
- allocators
-In-Reply-To: <20191106041644.GE4307@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1911061009230.46@tvgsbejvaqbjf.bet>
-References: <pull.453.git.1572991158.gitgitgadget@gmail.com> <d47a2aa5949a5dd3a10b89d9a77ebb89af6ba57e.1572991158.git.gitgitgadget@gmail.com> <20191106041644.GE4307@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727159AbfKFJU0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 04:20:26 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:37563 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726755AbfKFJUZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 04:20:25 -0500
+Received: by mail-pf1-f195.google.com with SMTP id p24so11887129pfn.4
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 01:20:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Ql+fCyjaqpZDjpJ0BRCoLhUdX5j9q/sJg2rbNptvQpE=;
+        b=UgUvVqG2TJE69cQiWCzbKRA/lP5Id4wkl7uMJ6QzaB/KSksUMkL/ke0HaB3GrONq0t
+         86+KRfaGnE4df9NaqEAijSP4aC22aQPGAR7W7fEkxBlNk1eCW0aeX0oGFXoCMMyhnPkS
+         b1agx4p5VK0dpQirsQv8fSbUGXksV8mj2PoMFAEXY0pkK3fPV/Mhn6CaEARch9CQ0rWF
+         4iPB172dHxlOYR5xXo61gnBE1Z6w07UBG97uDQpgQLJjgpQCN5t0SNXa1pl5pZxQgd5x
+         UbLsLfODRGoF2D+kS7Apm28wCkyMrX3e0UD0gXNYq0WwnISkOSKHnHWPOY50oGnYCVDa
+         oeeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Ql+fCyjaqpZDjpJ0BRCoLhUdX5j9q/sJg2rbNptvQpE=;
+        b=q2S7Dw9auyuDxAv7szVdM2QQlYBWzZFuUa+j1GY1b+1ldXdPq5RL4RVZ25M3eLG4u7
+         ePSXawyv3d+yLodGrm9Y1dIeO1rAwVcx+4zJLmSTinVvrCaeVkECJg7RmbrbPPebrEoF
+         4/Rm+x/NstFlxn+VR0bKokOkVjXLDeEhFPukDa/jmc+88sxsa9zwM/JWPROPDweCsd2F
+         YltdWH8ZIIMzXFEy9WPs8MPDoGkktZML5SwFxiDUEfau4C2ZyvkTGvRSLlVLYiHhuYJw
+         C1RPC3Ne1qHxhmkFhFeb0WIPwT//oV4TTST60dFC2d7dkpDGEcC37k+eYUxCeYpcUGSU
+         yKgg==
+X-Gm-Message-State: APjAAAVKtLrMsEauRFG77MTfON2K9l0mNbflgjf7NadrpoEBfMvdlT7E
+        eEhBmwBD0iW2vGCG1mnuJjvkvsKM
+X-Google-Smtp-Source: APXvYqwMvCYWB0wUlpJ/RGNlW/ObTLepqehSVwq4jWE6DFveAQj959Y2PpnSmVdhZXTmeccoCD9Iyw==
+X-Received: by 2002:a63:9543:: with SMTP id t3mr1724040pgn.350.1573032022510;
+        Wed, 06 Nov 2019 01:20:22 -0800 (PST)
+Received: from localhost.localdomain ([2402:800:6375:4ba:cb41:a2ec:2198:454b])
+        by smtp.gmail.com with ESMTPSA id c1sm4696984pjc.23.2019.11.06.01.20.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Nov 2019 01:20:21 -0800 (PST)
+From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>
+Subject: [PATCH v3 0/8] Correct internal working and output encoding
+Date:   Wed,  6 Nov 2019 16:19:58 +0700
+Message-Id: <cover.1573031848.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.24.0.4.g6a51fdd29c
+In-Reply-To: <20191031092618.29073-1-congdanhqx@gmail.com>
+References: <20191031092618.29073-1-congdanhqx@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:M+iX3w8JRaY9SI4JZ71Vk+b2JNGnbIGPlZtn89S2EXqJNUaL8XO
- 9IUUFyzkFyDGzHjzxvgiV63/BMyr23vlRMqhHXAKKSWwuN0F28ggGkiG21Ei+S88vqt+2JR
- tJ1aVGNM6rt9u0AhrqfYzvGN8tWOYYpC07l5zvW6cjfW9SFcuozao94752oQaQcZ78vxFhz
- /g51vZvMmRwo3qAr8mknA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:o4iEmOJpFGc=:uYt/kD/N4r2tz7L2EOuHfS
- RGsOq8I8h+1316qtkupI0xdgy9s57asy/Yy6WmsnluK7eNnDOve4NR2wEMwSN6ahSOl64uJiz
- 9XIG50oB4pvVNZMuXeOGBmULKpVxB0THJGOYPVbxxmIreodjVwjYP3MhJCPLVkRgsjfum+iYn
- mLHSe5yojXzvSgZwYM/pFDweVd07mXdnktpaPdgZvidPYbTsF7BtQ/Nmb56kD8iJ8Ja7YCBeV
- f8ZP0dLMnREuZwrQuxrwkoeJqP594UlFy1yrZmWJKEUvOwALgbbeKmoiGjBHZt/hKoTVtkPDk
- HNgeuRqNTGIBiMVIjBGS9J4Tph3QQq1G5+zqBbeZjLv3pxRdjgNzx8aX2w1Zax7FnXM2BwPOi
- 0de/cV/K4Wb5HGyc35V28e5co792wffHUXL5Wi70Lt30sMINqDUjT91M40eSVwzJno15lL4rj
- a5I4wdjQXnB6ckNbtF2SatX7JzsRhTMndCNGgwGoqiLdUikqJx4jx9/zur0OZUM4LqEA60EY+
- SY6QBOu2CWhOd+OFfbjS2InHwqtvo90+nXVPzQIpRf7569VhFT3XELQI3typZLzWpaNsoOGun
- KEQw8bDeaKFchScBVEj9Gs/h8G8lJxao3o7Ui5Vr8hTqRAyxiyiO7P+kMAH48n3CUjhZufTjC
- VzwOidu4BVsi8zquP8jPVuspJgmLS35nUvTOq4RKr4JX41QTNo//ncYDiZOfOStCPeRqUawjV
- gXUYkDWbBVywCQqmwemevn1Guz0zmtAC9QEN7jDThgDNUSVP4ATHBo/TXzu7stBBl1RtKyt2C
- SkwCI+ZpznvrYq9scqT+v/rDm12niivfVu/56d7mtqmM1xHcWFG6ZrwHX8IKGDfHz4NG7Qu71
- 4k22NqjvWXXyA2X684T6MKtmbXGvLtgFpWz31VzAxmhCCuDtxwfPFJHze6BqhA+q6gIWOB5GT
- XDVwITI7oP4FHLQYABQznQ4DJihSyPrYGOpI2J+MTrFGOyyqcANcye4Krqzw3goyBWp3qMQGS
- xSOU3YQxXZfhLxJJip6VaGrfgnTEBEBJJdigejk+QAscWiPAZx1qUS84/XgvN+iBEKpW7Uiae
- GFCeSj4q/fywYsmAtQEof9JGb7ravyn1ptjd2AoPDMd2apXWrlp0Hla06Sj6KYIEV3AOn0R+H
- blnOGTZx+GgDPoZXN7oujbI9SZ7lX8+eCNjuzga1UX4Dfv3QwSDQOaFzWfSC/Cq3tx7FmRm3G
- LStA2X35XqWpXC7pGFbQwuC5lUe6qlNvCxLnoeaLoQlR+bWRFc52egQXxvn8=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+The series is shifting from fixing test that failed on musl based Linux to
+correct the internal working encoding and output encoding of git-am
+git-cherry-pick git-rebase and git-revert.
 
-On Tue, 5 Nov 2019, Jeff King wrote:
+Doan Tran Cong Danh (8):
+  t0028: eliminate non-standard usage of printf
+  configure.ac: define ICONV_OMITS_BOM if necessary
+  t3900: demonstrate git-rebase problem with multi encoding
+  sequencer: reencode to utf-8 before arrange rebase's todo list
+  sequencer: reencode revert/cherry-pick's todo list
+  sequencer: reencode squashing commit's message
+  sequencer: reencode old merge-commit message
+  sequencer: reencode commit message for am/rebase --show-current-patch
 
-> On Tue, Nov 05, 2019 at 09:59:18PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > In 93b980e58f5 (http: use xmalloc with cURL, 2019-08-15), we started t=
-o
-> > ask cURL to use `xmalloc()`, and if compiled with nedmalloc, that mean=
-s
-> > implicitly a different allocator than the system one.
-> >
-> > Which means that all of cURL's allocations and releases now _need_ to
-> > use that allocator.
-> >
-> > However, the `http_options()` function used `slist_append()` to add an=
-y
-> > configured extra HTTP header(s) _before_ asking cURL to use `xmalloc()=
-`,
-> > and `http_cleanup()` would release them _afterwards_, i.e. in the
-> > presence of custom allocators, cURL would attempt to use the wrong
-> > allocator to release the memory.
-> >
-> > Let's fix this by moving the initialization _before_ the
-> > `http_options()` function is called.
->
-> Nicely explained.
->
-> Another option would be to separate our config mechanism from curl
-> entirely by putting the list of headers into a string_list, and then
-> transforming it later into a curl_slist. I don't think that really buys
-> us much, though.
+ configure.ac                     | 49 ++++++++++++++++++++++++++++++++
+ sequencer.c                      | 21 +++++++++-----
+ t/t0028-working-tree-encoding.sh |  4 +--
+ t/t3900-i18n-commit.sh           | 42 +++++++++++++++++++++++++++
+ 4 files changed, 107 insertions(+), 9 deletions(-)
 
-Alas, it _does_ buy us a lot, as I *just* found out (can you imagine how
-glad I am not to have rushed out another Git for Windows release?). It
-buys us one less bug: my patch introduces the bug where
-`http.sslbackend` can no longer be used, because `curl_global_sslset()`
-needs to be called _before_ `curl_global_init()`, but my patch breaks
-that because we _need_ to parse the config before we can ask cURL for a
-specific backend.
+Range-diff against v2:
+1:  8b30028425 ! 1:  b3d6c4e720 t0028: eliminate non-standard usage of printf
+    @@ Commit message
+            one, two, or three-digit octal number, shall be written as a byte
+            with the numeric value specified by the octal number.
+     
+    -    printf '\xfe\xff' in an extension of some shell.
+    +    printf '\xfe\xff' is an extension of some shell.
+         Dash, a popular yet simple shell, do not implement this extension.
+     
+         This wasn't caught by most people running the tests, even though
+2:  7c2c6f0603 ! 2:  f07566c60c configure.ac: define ICONV_OMITS_BOM if necessary
+    @@ Commit message
+     
+         However, typing the flag all the time is cumbersome and error-prone.
+     
+    -    Add a checking into configure script to detect this flag automatically.
+    +    Add a check into configure script to detect this flag automatically.
+     
+         Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
+     
+-:  ---------- > 3:  662e5bd545 t3900: demonstrate git-rebase problem with multi encoding
+3:  b7927b2723 ! 4:  6a51fdd29c sequencer: reencode to utf-8 before arrange rebase's todo list
+    @@ Commit message
+         first, then format it and convert the message to the actual output
+         encoding on git commit --squash.
+     
+    -    Thus, t3900 is failing on Linux with musl libc.
+    -
+    -    This problem wasn't specific to musl libc. On Linux with glibc, this
+    -    problem can be observed by:
+    -
+    -    for encoding in utf-8 iso-8859-1; do
+    -            # commit using the encoding
+    -            echo $encoding >file && git add file
+    -            echo "éñcödèd with $encoding" | iconv -f utf-8 -t $encoding |
+    -              git -c i18n.commitEncoding=$encoding commit -F -
+    -            # and then fixup without it
+    -            echo "$encoding fixed" >file && git add file
+    -            git commit --fixup HEAD
+    -    done
+    -    git rebase -i --autosquash --root
+    +    Thus, t3900::test_commit_autosquash_flags is failing on musl libc.
+     
+         Reencode to utf-8 before arranging rebase's todo list.
+    +    By doing this, we also remove a breakage introduced in the previous
+    +    commit.
+     
+         Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
+     
+    @@ sequencer.c: int todo_list_rearrange_squash(struct todo_list *todo_list)
+      		find_commit_subject(commit_buffer, &subject);
+      		format_subject(&buf, subject, " ");
+      		subject = subjects[i] = strbuf_detach(&buf, &subject_len);
+    +
+    + ## t/t3900-i18n-commit.sh ##
+    +@@ t/t3900-i18n-commit.sh: test_commit_autosquash_multi_encoding () {
+    + 	old=$2
+    + 	new=$3
+    + 	msg=$4
+    +-	test_expect_failure "commit --$flag into $old from $new" '
+    ++	test_expect_success "commit --$flag into $old from $new" '
+    + 		git checkout -b '$flag-$old-$new' C0 &&
+    + 		git config i18n.commitencoding '$old' &&
+    + 		echo '$old' >>F &&
+-:  ---------- > 5:  d382e35e4e sequencer: reencode revert/cherry-pick's todo list
+-:  ---------- > 6:  340902eb67 sequencer: reencode squashing commit's message
+-:  ---------- > 7:  7f0df0f685 sequencer: reencode old merge-commit message
+-:  ---------- > 8:  69ec40bb1d sequencer: reencode commit message for am/rebase --show-current-patch
+-- 
+2.24.0.4.g6a51fdd29c
 
-> This is all inside http.c, so it's fairly contained.  It's not like
-> other random parts of Git are using curl's slist before calling
-> http_init().
-
-Indeed. We cannot use cURL's slist anywhere outside of the
-cURL-dependent code because we want to keep `NO_CURL=3DYep` working.
-
-> I did briefly grep around for other slist users, but they're all what
-> you'd expect: code in http-push.c and remote-curl.c creating header
-> lists while working with an active http request (so well after
-> http_init() has been called).
-
-Indeed, I came to the same conclusion that Carlo's patch only broke
-support for `http.extraheaders` (and only with custom allocators),
-nothing else.
-
-I will change the patch to avoid using `slist` early and send another
-iteration.
-
-Thanks,
-Dscho
-
-> > ---
-> >  http.c | 6 +++---
-> >  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> The patch itself looks good.
->
-> -Peff
->
