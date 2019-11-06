@@ -2,109 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 544941F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 12:06:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1D011F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 12:12:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731264AbfKFMGP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 07:06:15 -0500
-Received: from mout.gmx.net ([212.227.15.15]:35041 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728550AbfKFMGP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 07:06:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573041960;
-        bh=49s5OzerkaVVWFKJB2SmsiSUyAvhoIQOLb8K6si2HGk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=iD4HmUQg5oRjlaQusEtCpNmEMyYXckQYwcevtsAZn/J5uUCKXCxJt2+Pwx9+Ek+7v
-         p4ngjOKjr7RgKG9LGb9Qf/bZtk5FmZCmM9ezGBDpdZx7ig2P8h61PAbDHdxhFoM7bi
-         L9xvDT6EvTIV+tP45foofJU0X0F1S2uxliTLkP2U=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MYeQr-1iNf7T1czT-00VglE; Wed, 06
- Nov 2019 13:06:00 +0100
-Date:   Wed, 6 Nov 2019 13:05:44 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Fix locking issues with git fetch --multiple --jobs=<n>
- and fetch.writeCommitGraph
-In-Reply-To: <20191104195928.GC20900@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1911061305060.46@tvgsbejvaqbjf.bet>
-References: <pull.443.git.1572740518.gitgitgadget@gmail.com> <20191104195928.GC20900@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730178AbfKFMMJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 07:12:09 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57549 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728550AbfKFMMJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 07:12:09 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 32A062EAD8;
+        Wed,  6 Nov 2019 07:12:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=1P/k18oko/S/
+        LVP7kYX1twHp0c8=; b=NcfW3l8LnLCzzcPUHNa7N1gfAixPDOJTftkNlHgHurKs
+        CVae1mtqqfGndIDMQOvvWKGWM9Ts0fg2JGyhGn7Y8rw0QmWDB2BR5dqz7nj//r3h
+        lCOoXgJQlESDm498L5r8a4Sru597tVlMJnsQfjJ76LNOdy2vkMB1dahCLJmAezI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=L2P/G5
+        JvMP6pCOcyBpF4+IVNtN7m9/59LHMMN3bsC3WQE0WBlSmDv0g8CngE0JdmiPKt2Z
+        x437jOqk4TjeU6wz/Z5uQz+faEsq0XcbLbcFKrq4wTOaRPyIMLRZTKXVqIyYZq7M
+        8iG8NNa+pmWqnQr60gu3ixySOiLflhVw5Zl6M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A6AB2EAD7;
+        Wed,  6 Nov 2019 07:12:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 72FEE2EAD6;
+        Wed,  6 Nov 2019 07:12:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/1] remote-curl: unbreak http.extraHeader with custom allocators
+References: <pull.453.git.1572991158.gitgitgadget@gmail.com>
+        <pull.453.v2.git.1573034695.gitgitgadget@gmail.com>
+        <3168ba2c9eadcf0cd7e4f2533c9306b5d2c627d0.1573034695.git.gitgitgadget@gmail.com>
+Date:   Wed, 06 Nov 2019 21:12:04 +0900
+In-Reply-To: <3168ba2c9eadcf0cd7e4f2533c9306b5d2c627d0.1573034695.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Wed, 06 Nov 2019
+        10:04:55 +0000")
+Message-ID: <xmqq7e4dtd9n.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:eOmcWmyvtqGNdlt5S5x3VjJJWH7OJjXmJBIWX5rTJX5UMnc3wK2
- sKYW1OW5o36JOOJBaMk/tVydXLW5y8XsoHDBW0+fOz37tGy9i8sceOZzok4p0+ZpPZKUFKO
- vP9lI/AvYTfZYaLh+2e0VQPJEBgReUTquedN5jAzT7K0IlJtRryeRByJbB1M50B68gJ6OyM
- WdSXQmUElgMgp8wTjQGpg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:9bplAlPS9IY=:yiBJuftBVCRtacBmoogwAx
- b5UFEmyq/spB3mznhoWPOr6ifc6f/LMnUSSKfrjVuKmBq2WIZZhrJ5cGi2psPtxs4XM6zvRFA
- y8NRu9WIMmwL2q4OZqIoO74afNd2tHe7QtzyiDLLovSoTC6hHfYU19kpG1w89vTv8mURVKAHF
- pF/PEF/8/3FBeoeRbGgJTSNV0E3TAC5vvtSuj6Chn0/PtIwOsI59VD5fZa/pszmFsVOjPj09V
- zk4PKk5kXxXCTGfycc0SaKYDesJMn5uSe2fSagtmEJa187zwJxbl03i+a9FjpmLFzt7gTIRsf
- JJ26UWL3tbmGUowZV/FR3rjfWJ1rPMIXL2mnmCvwgAiNyDGo35Ml0OhkOoFbGbx8q/2No281i
- c866yiJYG27aHWWVOLySac7pXmIv/KRYME6jndrEnQI/4ut67XI/sIqmJTcUf8cWiqtSKuU+g
- sKGrlnkagQzGNBdvnwFKvi49HfkH8MJgQWTHwW1DAApG3qx+UOSnapI3zQe404ixjjxlJorD+
- KznML/eVRih+5TOnYj+iF24tcLggOLBWdP0OCdhKX3NYyqesoVXNkHXMk189ezR/eNdavfoSd
- OKfscPYilFfgHvtTiEvVtbyKdmf/t8MbCSqM7pWQ0Hv14qtvBjt1Y8rkSNMkFaUkWAqhEuG41
- nyZImNQWsngXLXNpTtLaWHsODFa06bpecMSzy2kV8qd9Y5limk71q/GRTVh2fDD0tCUGB4q2g
- 5qFiTkTWn0tGC8PMkcyfQqhkyBRJBqa24D9uBqmCppeGl88FQbJEwyR/U0Ixnjf+bNBXGll7p
- RNgRw+DzOzUGP6F0/zzawqWI5kumC6C0VtJaRu2RSce9ZiPs+jAX1ddXNgrBHURWrUXet9Ln5
- CpRBSEdorQk5LFA/XfhXFokTFBg44ZSYNTe4kPORf0CohaVsimNaBbVOQjWLQCI47QF779poc
- ++JuYieJEQO45zjC00tXqMOviEWrdr6VjK2zHYb/k4VwRCYSDfcH/D2YjaI/KBEqjGj6pLfNz
- kTaVDAfja4kMWnpBZgfC6YRe/2zvM5nAV26S7qgcy7ZQg6IIFLsYld0DA4IA9ssNlInvJz9Db
- K8vEMajRbZJ8BVT4ylWIhzZ/FjPWaKtgFY64lwgsqZxhSMhnB9HyTEXPJnQHXGBwYWfhoFoFF
- ++hy2SpKIxzUi8zPgX2/zUhKPesXnNCmwrzaiNsFwc/RW5+kRNKYyLW/uysOtIMI7QEomHHpB
- OsabUD/9Zdp72G9fhdEI66cSJuF/ny31oVYwiloQTrMpJoE9a7KlDaPxkrVk=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A65FF728-008E-11EA-A164-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On Mon, 4 Nov 2019, Jeff King wrote:
-
-> On Sun, Nov 03, 2019 at 12:21:55AM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> > The git fetch command recently learned to extend the --jobs=3D<n> opti=
-on to
-> > cover the --multiple mode: it will run multiple fetches in parallel.
-> >
-> > Together with the recent support to write commit-graphs automatically =
-after
-> > each fetch by setting fetch.writeCommitGraph, this led to frequent iss=
-ues
-> > where the commit-graph-chain.lock file could not be created because a
-> > parallel job had already created it.
-> >
-> > This pair of patches first introduces the command-line option
-> > --write-commit-graph (together with the --no-* variant) and then uses =
-it to
-> > avoid writing the commit-graph until all fetch jobs are complete.
+> In 93b980e58f5 (http: use xmalloc with cURL, 2019-08-15), we started to
+> ask cURL to use `xmalloc()`, and if compiled with nedmalloc, that means
+> implicitly a different allocator than the system one.
 >
-> Thanks, the whole thing looks clearly explained and the patches
-> themselves look good. And having "--[no-]write-commit-graph" is a good
-> thing even independent of the problem you're fixing.
+> Which means that all of cURL's allocations and releases now _need_ to
+> use that allocator.
 >
-> I wondered if it was worth having a test in the second patch, but I
-> think it would be inherently racy. So it's probably not worth the
-> trouble.
+> However, the `http_options()` function used `slist_append()` to add any
+> configured extra HTTP header(s) _before_ asking cURL to use `xmalloc()`=
+,
+> and `http_cleanup()` would release them _afterwards_, i.e. in the
+> presence of custom allocators, cURL would attempt to use the wrong
+> allocator to release the memory.
 
-Yes, I gave testing a great deal of thought, and I failed at coming up
-with any way to automate it.
+s/allocator/de&/; perhaps, even though it is clear enough from the
+context, so it is probably OK as is.
 
-Thanks,
-Dscho
+> A na=C3=AFve attempt at fixing this would move the call to
+> `curl_global_init()` _before_ the config is parsed (i.e. before that
+> call to `slist_append()`).
+>
+> However, that does work, as we _also_ parse the config setting
+
+s/does work/does not work/; presumably?
+
+> `http.sslbackend` and if found, call `curl_global_sslset()` which *must=
+*
+> be called before `curl_global_init()`, for details see:
+> https://curl.haxx.se/libcurl/c/curl_global_sslset.html
+>
+> So let's instead make the config parsing entirely independent from
+> cURL's data structures. Incidentally, this deletes two more lines than
+> it introduces, which is nice.
+
+Yeah, string_list_clear() is more concise than curl_slist_free_all(),
+and we have already been copying one list to another anyway, so we
+lucked out ;-)
+
+The patch looked good to me, too.
