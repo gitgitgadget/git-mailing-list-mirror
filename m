@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0094C1F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 17:46:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 569731F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 17:48:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728466AbfKFRqC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 12:46:02 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40116 "EHLO
+        id S1732246AbfKFRsv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 12:48:51 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36354 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727286AbfKFRqC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 12:46:02 -0500
-Received: by mail-wr1-f65.google.com with SMTP id i10so6285036wrs.7
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 09:46:01 -0800 (PST)
+        with ESMTP id S1729007AbfKFRsv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 12:48:51 -0500
+Received: by mail-wr1-f65.google.com with SMTP id r10so221369wrx.3
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 09:48:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=niemier-pl.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Bcge2crLz8tQVHkG/4mUUWk7uh1KczCfGNbeyv57+J0=;
-        b=I8+LxKJY93p8SlWXlfCtMTw4NGpwKtorwHxlxzHHiD+WT58WwvBY3nmv/oSJoERCiM
-         txZQ0GFO68B9PzduujNZHhf/MWTw0v8l5zK8020n6o7WgLf2V6MX61HvvZhj6+DmkDBI
-         Gpy7MXrkdexSjoKdKvvGu9Jc/mJmB0vKmsbLNKvE4iVf8y5a5eAyAbMJsakxC6aVdbuG
-         fTbCh6Gsk69oUVhXvyj8lgja/+qqLK14+sde48EBzr+Wk0OXO3Otvqg2d242u68//4P9
-         4rmzkczdk0LeErd81nd16xYNkOOZlpVm7HJ3gcNUsqr/jX+0j3Q+reD7zfdxAemvKIF5
-         xf+A==
+        bh=ye4AwGnOuI7ov3vZHZVimsZn5hd7YEhOaWmUnBmWDXw=;
+        b=eq3w5wQf3BaVNt78ezomLfD5oPLofE9aA9GK2SU7w3qO/goxTlyqM0vMxnfU7LNNCv
+         MHajXLDVly0ge02kgQ/YMXdHq1tww/idwf7hKPgXOu529qQUIABNdDpEu2gjg40bn+z7
+         vEQ7GhN51Oga60wAvyJhHtEQSrv2B9Xr7m0KmrprEZ8/kny2bPg1Jsu6eGbTuCny/6QY
+         pdMnq4LIkTTuUZ6O5CEeRymPPdC0hhihmVpWn+h9xjoB3/wbJb+IkO9ZbOYAXZlmna9p
+         bC66kPWljSpiqf/ZLgG843gFiss0/PEukWvXnmNQ1NPZFWe4C/qNluGePcaMJLrct+86
+         Kqbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Bcge2crLz8tQVHkG/4mUUWk7uh1KczCfGNbeyv57+J0=;
-        b=qEppB78ly2qM1rS3I+TgOJOip/f+a8N6iHx2XK+rTCg2gl/SvZIOpnh1VurwqHUaXg
-         96lI5WvExAREJWd1sh9KpDbssWT/V3GiWBlFa/8N94R7XEe4l74IMX0pscPc/n2Rjf3l
-         GDi6u59nAfpNyBA9Iu2lCRTaR7fDrb/GrZZavUK2QrnAj3jihcQlQuGQEoKNOCwGl+qj
-         mybubxTdLcwab02VnQ9e/QDcbGmp0PyIcVSK7Jfu7A166HCJcwudI3eQ6WJ9nAM7FXno
-         KSsG2FnnIPLrVNwFo078EDlNogxQQdiB+0ByJ8dgQ8L8S2RLLUpjzrNaqZZl4Gy19d46
-         BhwA==
-X-Gm-Message-State: APjAAAX9AiR4Hlaq6/uA/F3/K0GA5lLtDecIixdkN0gk1sQ2DhS/HXIu
-        7fbrDHKB40yVfOB8KSlJzKotDqdG9q+QBg==
-X-Google-Smtp-Source: APXvYqxPxya4mvlDaUH1B+0ZaewGulJS5LFLWEyDx581GqI0n6B9QmDnrNpmW1C8xoQHZeccgUO0GQ==
-X-Received: by 2002:adf:eb8d:: with SMTP id t13mr3738785wrn.321.1573062360110;
-        Wed, 06 Nov 2019 09:46:00 -0800 (PST)
+        bh=ye4AwGnOuI7ov3vZHZVimsZn5hd7YEhOaWmUnBmWDXw=;
+        b=SEJgtN5gxWkMUhM6mZrRuVtsuN2Lc7vxAv6rFC13rP5M+TMFWM1vpG4g2BGG/LE/2Y
+         4RF/t6sS33Vofyd51hQdLlIqChF4P/hVWKq/bpSRcvwcYiUmNlCY3uDBziTo3s+Peuir
+         oy3vYggx7TvKp++DPKuTJXnwR6A4M0TNLDk0+7LHY+iUk0Cql1wG94Qw327CGyJRI1Nz
+         bhzuj9a4XMqDxjtDry/xJOsj6F+oeTamenk6tsZRJGdMjV7cg62tbC+1bOY+CmELWnr2
+         /z5fZe3tFPcrFbMDIhtMu/hWiUWaou5XnBdHt6iozNsynGyQQv4BVjn8YriiCnt1lSgY
+         g88Q==
+X-Gm-Message-State: APjAAAX8W7jauXOT8W9kHsfyz07/IClsmYKLSr1YjcT7n5Pop6NtGIOc
+        YKfW2qE/rVCYuxCkpzICvT3lMeRjl7BJwA==
+X-Google-Smtp-Source: APXvYqyn5Fpjk7Nru7ty/ERrQi14EkJhQ+dx+u4XB5sFwffgv+WZU5JDKu47PnuJ0hzyf7hm4owfUQ==
+X-Received: by 2002:adf:fd4b:: with SMTP id h11mr3700878wrs.191.1573062528857;
+        Wed, 06 Nov 2019 09:48:48 -0800 (PST)
 Received: from localhost.localdomain (83.25.107.61.ipv4.supernova.orange.pl. [83.25.107.61])
-        by smtp.gmail.com with ESMTPSA id u1sm19949548wrp.56.2019.11.06.09.45.59
+        by smtp.gmail.com with ESMTPSA id g4sm17273944wru.75.2019.11.06.09.48.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 09:45:59 -0800 (PST)
+        Wed, 06 Nov 2019 09:48:48 -0800 (PST)
 From:   =?UTF-8?q?=C5=81ukasz=20Niemier?= <lukasz@niemier.pl>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C5=81ukasz=20Niemier?= <lukasz@niemier.pl>
-Subject: [PATCH] feat: add Elixir to supported userdiff languages
-Date:   Wed,  6 Nov 2019 18:45:56 +0100
-Message-Id: <20191106174556.23113-1-lukasz@niemier.pl>
+Subject: [PATCH v2] feat: add Elixir to supported userdiff languages
+Date:   Wed,  6 Nov 2019 18:48:44 +0100
+Message-Id: <20191106174844.23482-1-lukasz@niemier.pl>
 X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -64,137 +64,15 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 ---
- t/t4018-diff-funcname    | 115 +++++++++++++++++++++++++++++++++++++++
- t/t4018-diff-funcname.sh |   1 +
- t/t4018/elixir-function  |   5 ++
- t/t4018/elixir-module    |   9 +++
- userdiff.c               |   7 +++
- 5 files changed, 137 insertions(+)
- create mode 100755 t/t4018-diff-funcname
+Remove file that landed accidentally in the commit
+ t/t4018-diff-funcname.sh | 1 +
+ t/t4018/elixir-function  | 5 +++++
+ t/t4018/elixir-module    | 9 +++++++++
+ userdiff.c               | 7 +++++++
+ 4 files changed, 22 insertions(+)
  create mode 100644 t/t4018/elixir-function
  create mode 100644 t/t4018/elixir-module
 
-diff --git a/t/t4018-diff-funcname b/t/t4018-diff-funcname
-new file mode 100755
-index 0000000000..194310377e
---- /dev/null
-+++ b/t/t4018-diff-funcname
-@@ -0,0 +1,115 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Johannes E. Schindelin
-+#
-+
-+test_description='Test custom diff function name patterns'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	# a non-trivial custom pattern
-+	git config diff.custom1.funcname "!static
-+!String
-+[^ 	].*s.*" &&
-+
-+	# a custom pattern which matches to end of line
-+	git config diff.custom2.funcname "......Beer\$" &&
-+
-+	# alternation in pattern
-+	git config diff.custom3.funcname "Beer$" &&
-+	git config diff.custom3.xfuncname "^[ 	]*((public|static).*)$" &&
-+
-+	# for regexp compilation tests
-+	echo A >A.java &&
-+	echo B >B.java
-+'
-+
-+diffpatterns="
-+	ada
-+	bibtex
-+	cpp
-+	csharp
-+	css
-+	elixir
-+	dts
-+	fortran
-+	fountain
-+	golang
-+	html
-+	java
-+	matlab
-+	objc
-+	pascal
-+	perl
-+	php
-+	python
-+	ruby
-+	rust
-+	tex
-+	custom1
-+	custom2
-+	custom3
-+"
-+
-+for p in $diffpatterns
-+do
-+	test_expect_success "builtin $p pattern compiles" '
-+		echo "*.java diff=$p" >.gitattributes &&
-+		test_expect_code 1 git diff --no-index \
-+			A.java B.java 2>msg &&
-+		test_i18ngrep ! fatal msg &&
-+		test_i18ngrep ! error msg
-+	'
-+	test_expect_success "builtin $p wordRegex pattern compiles" '
-+		echo "*.java diff=$p" >.gitattributes &&
-+		test_expect_code 1 git diff --no-index --word-diff \
-+			A.java B.java 2>msg &&
-+		test_i18ngrep ! fatal msg &&
-+		test_i18ngrep ! error msg
-+	'
-+done
-+
-+test_expect_success 'last regexp must not be negated' '
-+	echo "*.java diff=java" >.gitattributes &&
-+	test_config diff.java.funcname "!static" &&
-+	test_expect_code 128 git diff --no-index A.java B.java 2>msg &&
-+	test_i18ngrep ": Last expression must not be negated:" msg
-+'
-+
-+test_expect_success 'setup hunk header tests' '
-+	for i in $diffpatterns
-+	do
-+		echo "$i-* diff=$i"
-+	done > .gitattributes &&
-+
-+	# add all test files to the index
-+	(
-+		cd "$TEST_DIRECTORY"/t4018 &&
-+		git --git-dir="$TRASH_DIRECTORY/.git" add .
-+	) &&
-+
-+	# place modified files in the worktree
-+	for i in $(git ls-files)
-+	do
-+		sed -e "s/ChangeMe/IWasChanged/" <"$TEST_DIRECTORY/t4018/$i" >"$i" || return 1
-+	done
-+'
-+
-+# check each individual file
-+for i in $(git ls-files)
-+do
-+	if grep broken "$i" >/dev/null 2>&1
-+	then
-+		result=failure
-+	else
-+		result=success
-+	fi
-+	test_expect_$result "hunk header: $i" "
-+		test_when_finished 'cat actual' &&	# for debugging only
-+		git diff -U1 $i >actual &&
-+		grep '@@ .* @@.*RIGHT' actual
-+	"
-+done
-+
-+test_done
 diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
 index 6f5ef0035e..194310377e 100755
 --- a/t/t4018-diff-funcname.sh
