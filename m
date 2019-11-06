@@ -2,151 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2AC01F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 12:30:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 588811F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 12:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731518AbfKFMa0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 07:30:26 -0500
-Received: from mout.gmx.net ([212.227.17.20]:41131 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728716AbfKFMa0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 07:30:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573043419;
-        bh=wkGPOEn3FEVZ0+B+ttoMHvWK2SZQxaWb1pDdhRSUc6w=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=PBqYJLLshJTvHFuT6cjw2puOeN1OU4516/woyb8IDYh41pF2cQzGzu/6flR8fm+6M
-         HzEdZrYnUQVp3ddkun6a1Eianptbt+5tbfdyEaeOldxUOqX3QzLjVTznOB08URXN2e
-         /ktH7ssMzdmRCMw4pBsKeFg471eY2EFffUt5LEWs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N3bSt-1hjxLE2fkh-010dbd; Wed, 06
- Nov 2019 13:30:19 +0100
-Date:   Wed, 6 Nov 2019 13:30:03 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Erik Chen via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Erik Chen <erikchen@chromium.org>
-Subject: Re: [PATCH 1/1] fetch: add trace2 instrumentation
-In-Reply-To: <4fdbb9f504ee59e508b7df520f7890e29fbca7df.1572981981.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1911061329340.46@tvgsbejvaqbjf.bet>
-References: <pull.451.git.1572981981.gitgitgadget@gmail.com> <4fdbb9f504ee59e508b7df520f7890e29fbca7df.1572981981.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1731035AbfKFMsd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 07:48:33 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34253 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729001AbfKFMsd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 07:48:33 -0500
+Received: by mail-wr1-f68.google.com with SMTP id e6so23752106wrw.1
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 04:48:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=M4ub0HFJkUZUPNNfjKiqMFViVeBR2v4pb0/1vLQnHV4=;
+        b=amUXH7W55xDNqxGi/6/tXynK8sxi5m+MnVbY/tNjn5B3nozX5f7tsdf3B3W0UMvs4N
+         pHXfBGSXAf4/w05Uvgy1m9VzuaeZ4rKRHEs//RHXh7E3BnAheTh5GfmGFQzqUbc8oPuL
+         wZBFUGESfqD7pzFabvyWZ88NyX2sNjrBbS052+KLlPSXpjk10FWVa5WBJPOR+xE8bAUd
+         U9z3JF5fhBB+TrHgH9QNqUsy7kUlnmC1nHe0NGzknd5ABkdTODPZPT3aT88YNAvZv9Ma
+         +WydvGuL1F1YnSSog3wsSsBtIhTKphODxg41r9s2zWotW4IPpjH8z238KlARwxbe3x8E
+         Ij/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=M4ub0HFJkUZUPNNfjKiqMFViVeBR2v4pb0/1vLQnHV4=;
+        b=MUJLyDS5zCjwcx44Stj7MC2g7ubrXXn47t5nXG36TivzkDbX83RJeQJWgW95YUU65B
+         NQ2igXhFfYN+Rf/p4C7+MulIyBgdpwu2v/hyqmPb0LVIf+vRD390JGBzASkbibinRHEg
+         DS9WZgHA9XTCZTy0SE3ZYVqGrUSH1LGqDVF8X+t7btzuDVXzvr/Sjd7JsrR5+49TH8ff
+         rtso4f8DNZNXZ0P0vdAkWJReqRQl1KUV9qZlb+rSIynM6OIVDO7zfDhybOdeFvaaIuOp
+         LF5xbPUbPSL+CO55IFCGxm7pbSIxgQs9PNPfS69QcGR0yKTgdlne5Q0Nz2cyVgNoNIg2
+         cGvw==
+X-Gm-Message-State: APjAAAVqN44Zi4EN0VvMagZ9Uf+Fnr673MJPF9hj1rkflDPCnDme2SZz
+        c+NgoWPaX1hQd3wKP+7YOEm2XIEI
+X-Google-Smtp-Source: APXvYqxl6YWoFzwqGPSn0fW0bOcb2hOGXqrm9GL6uywHi2vMq7ucYOwoXXrOZH1hpwc4qZILiUXyGA==
+X-Received: by 2002:adf:ea07:: with SMTP id q7mr2491601wrm.102.1573044510914;
+        Wed, 06 Nov 2019 04:48:30 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y78sm3021986wmd.32.2019.11.06.04.48.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Nov 2019 04:48:30 -0800 (PST)
+Message-Id: <pull.456.git.1573044509.gitgitgadget@gmail.com>
+From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 06 Nov 2019 12:48:28 +0000
+Subject: [PATCH 0/1] [Outreachy] doc: remove api-index
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/IpPGKzSwGtMiPS+8A/p28OD/2h0ePhjeHkdRdIfZvsinztipop
- 4ypeK6MlMnOKxYuk44b1jsRKdeJPd671zmeswj0/gKICVN1eaNqFBzawRD7hA8niRghqnqk
- g3acWSDW739v3GcXxcG+yJff+dQxYlQZ1Kc3zMaWLGG40kEZ63cotY93P+nCan7awNtoWAP
- 0V3bztAsr7TgVzP6M/8Og==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:wXSCeDt9RqM=:MRziod4/pK7KBvJggcw4Kg
- 2DBQYJgnn7R0TmI497WrcP3hquh5xdWr52PoT3pRqE5S5Jvwno1cTrnoekQimtOSk9jdzeykj
- 6GnkvoH4MvvYSyiWc9mgvMox5w05YYdsO//H59eYbOKGEKZU0KHo3pRj5K5U+YtKcBC/xqo80
- IupmX9Jz2K7J4Z4GqeQbHEqohtNlFeVIfxDFhyjIVsSfccdmsxygJmar+5od5/E4cJ4oI6+Dc
- x10xLYwo5evXAx/v2PBjtwU6wtTu8fFeNl//fznyEQs4sZTjx6pGQbSeXpDbTNAXIWAuJHf92
- Rgxke9bap85RgSZN5SujvKxbhDWIEjFjsc4XjTcZ3BXZ34dWTsdQPu8kTmCM+wojUfayeKOni
- S9Ie5LPyCWMeHh+qY0ybZTZov1ir5oW/AtvaPotzb7gGeEsD254e3eHtLFHNaBsduwHe6rPOx
- 0HXQTUdlbuA7RVkI0zdZ2AS5f7zPpTkWJ0tx9edUz2nWPNSywivV9VLvE6Ql5h+3zZY6YNGWG
- glmx3KOXEjaVXjYkFIE2uuoh6AZKeqAGj/emlPwpPTx7vUw+Mb749zL9lZodEpIHdSvAp6d4e
- PsqlPLkD1wyYaBgB/CLIF66a4IIc7fzYf4ZKcyoEyRbllRNcNT6ICORWYFq9fgavNbFnD+PwK
- l3nEm4KkvCol+MtONKYda6DyD5tSFfFtm7u5mEUi8zm1HO9e/2Fds8kv6h2ogXxwAXU7uj0iU
- uWR0F9R8Xwt+5ItpHETtE5VanE1FL1hJzNospCNHAL8y3kftJq6oxtdZFMyN0+Y6CdOWILwFQ
- bXuA49M1wME2qlymuo1hTfEyniDlcHTxMjcd5j/sB5lKtSEuPypbwGt170pGszqHPe3k4EblV
- ozSmMEp9XZXbEHbfM5NclDQNXtEPxpokjhaN5+I1VyQwaOC2QlCgo7k8LE+bNxsp/hyTXs5fx
- vT+BeF0JuHYJZvoL9dkdnpJdQQJJeoMw3+v2MdUPI1wREeH/YVVtky4YT0+OBbEh1b+ES/d0r
- Md7Qp2/XubjLO3HK+JWMStbQJ5KifTJvZIi9mCZZt2/ePyn5cFzwiqUtw9TOTpJTW6N03/9dF
- Y8nLoBnH8kPR6Ty90HKLOIhA2UUFVfxopqzItaK4gpjA8RNafAEzQ3MZlottS1bcvHn62dPGs
- 2ZERFXXj/tnQNEkKW2Dhsf5D9SQC0La4yi+x9DSgZYUKIK7sMrYwwZ7z0eatncylC0HmBRcL0
- zqBAFt8Tq98NBh54oRBlRYOj0JVk7/urJ0cyvEN+5skPp65HenX9iOP6m8lQ=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Heba Waly <heba.waly@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Erik,
+Remove both api-index.txt and api-index-skel.txt as the API documentation is
+being moved to the header files, so the index is not needed anymore because
+the doc files (Documentation/technical/api-*.txt) will be gone.
 
-On Tue, 5 Nov 2019, Erik Chen via GitGitGadget wrote:
+Make changes to Documentation/Makefile accordingly.
 
-> From: Erik Chen <erikchen@chromium.org>
->
-> Add trace2 regions to fetch-pack.c to better track time spent in the var=
-ious
-> phases of a fetch:
->
->     * matching common remote and local refs
->     * marking local refs as complete (part of the matching process)
->
-> Both of these stages can be slow for repositories with many refs.
->
-> Signed-off-by: Erik Chen <erikchen@chromium.org>
-> ---
->  fetch-pack.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 0130b44112..f2f3365bbe 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -666,9 +666,10 @@ static void mark_complete_and_common_ref(struct fet=
-ch_negotiator *negotiator,
->  	struct ref *ref;
->  	int old_save_commit_buffer =3D save_commit_buffer;
->  	timestamp_t cutoff =3D 0;
-> -
+Signed-off-by: Heba Waly heba.waly@gmail.com [heba.waly@gmail.com]
 
-I would keep this empty line. Other than that, this patch looks good to
-me.
+Heba Waly (1):
+  api-index: remove api doc index files
 
-Thanks,
-Johannes
+ Documentation/Makefile                     | 11 +++------
+ Documentation/git.txt                      |  3 ---
+ Documentation/technical/.gitignore         |  1 -
+ Documentation/technical/api-index-skel.txt | 13 ----------
+ Documentation/technical/api-index.sh       | 28 ----------------------
+ 5 files changed, 3 insertions(+), 53 deletions(-)
+ delete mode 100644 Documentation/technical/.gitignore
+ delete mode 100644 Documentation/technical/api-index-skel.txt
+ delete mode 100755 Documentation/technical/api-index.sh
 
->  	save_commit_buffer =3D 0;
->
-> +	trace2_region_enter("fetch-pack", "mark_complete_and_common_ref", NULL=
-);
-> +
->  	for (ref =3D *refs; ref; ref =3D ref->next) {
->  		struct object *o;
->
-> @@ -690,6 +691,10 @@ static void mark_complete_and_common_ref(struct fet=
-ch_negotiator *negotiator,
->  		}
->  	}
->
-> +	/* This block marks all local refs as COMPLETE, and then recursively m=
-arks all
-> +	 * parents of those refs as COMPLETE.
-> +	 */
-> +	trace2_region_enter("fetch-pack", "mark_complete_local_refs", NULL);
->  	if (!args->deepen) {
->  		for_each_ref(mark_complete_oid, NULL);
->  		for_each_cached_alternate(NULL, mark_alternate_complete);
-> @@ -697,6 +702,7 @@ static void mark_complete_and_common_ref(struct fetc=
-h_negotiator *negotiator,
->  		if (cutoff)
->  			mark_recent_complete_commits(args, cutoff);
->  	}
-> +	trace2_region_leave("fetch-pack", "mark_complete_local_refs", NULL);
->
->  	/*
->  	 * Mark all complete remote refs as common refs.
-> @@ -716,6 +722,7 @@ static void mark_complete_and_common_ref(struct fetc=
-h_negotiator *negotiator,
->  	}
->
->  	save_commit_buffer =3D old_save_commit_buffer;
-> +	trace2_region_leave("fetch-pack", "mark_complete_and_common_ref", NULL=
-);
->  }
->
->  /*
-> --
-> gitgitgadget
->
+
+base-commit: da72936f544fec5a335e66432610e4cef4430991
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-456%2FHebaWaly%2Fremove-api-index-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-456/HebaWaly/remove-api-index-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/456
+-- 
+gitgitgadget
