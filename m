@@ -7,83 +7,95 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFE411F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 01:51:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3D661F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 01:55:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730712AbfKFBvS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 20:51:18 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61127 "EHLO
+        id S1730875AbfKFBzl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 20:55:41 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65526 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727252AbfKFBvS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 20:51:18 -0500
+        with ESMTP id S1727252AbfKFBzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 20:55:41 -0500
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B3398A4996;
-        Tue,  5 Nov 2019 20:51:16 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C6FADA49F3;
+        Tue,  5 Nov 2019 20:55:39 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=D1ZDtUog+mM0RH7RqEOuVo2PHIs=; b=QHppXe
-        5Cgk36iaShv5Xng4CcWAVsfZ8s4zXJpt3028l7esskjS11COsNsQFNIoyfgPYhtS
-        Y71Mu8B0UBy0o97dO6oC07yT74idebDHdR+BPAHDjaTWZkb44FFtqrJ2nIbm59/X
-        QdWKntxGGXG37W/2BtzlSHymqCwyq4OSxqQYU=
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=WZKPl8NOblUZVBFucJyV4usNLWk=; b=JJBgyl
+        3F2vjIhGCKUMfGnCuijvJ8ZllXlmYyCZwmmznbhoPmgsE5KrSQpaYS3JOFXF4IJU
+        HvgnSB39JRxAWbaQMHZoq3zS1v8mjLy7ryH333ChJGZ/1Mmr/7t2uIwt3M7UZvrX
+        BpCNl2BWZDEiBkN2oZHBiCxnxrOtSXqBBdGRs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IMGEpjw1Y5f08EMrlmcprT/qdgm251Ms
-        eq00h8jJnuTqW/lya3qTJgHWnDu0GAw1VXDQIJy1ahYnRdqITvGiKe1k76XJJyjR
-        /agmR7KFOexTUlFKSbMzqmJhXZUdKoZhbxJb0iOOhN9eedW2CFJDCh/R9LbssicL
-        CUw3HVNQtkQ=
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oFYneR3vif4rNZWC2NX2bv5I6vyxWhgR
+        ko6YpyUtwwTz+As9H+j9L0Mevum4m/oeSkyDvRvTrcTy7pjMoJLyQ/jMT/RLwndA
+        U68DXxQ98mEBg67uDBecwrcgMfpXWsss7mX2HRwVtF1+U0g/Akg7KtjrUnnJirqp
+        FaHA9TNg1xY=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id ABE54A4995;
-        Tue,  5 Nov 2019 20:51:16 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C0630A49F2;
+        Tue,  5 Nov 2019 20:55:39 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DE5FEA4994;
-        Tue,  5 Nov 2019 20:51:13 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F16BAA49EF;
+        Tue,  5 Nov 2019 20:55:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Cc:     git@vger.kernel.org
-Subject: Re: 'git reset -- NonExistingFile' succeeds
-References: <f6d853ce-6f27-ed58-a850-d9a6f245509a@syntevo.com>
-        <xmqqo8xu51cv.fsf@gitster-ct.c.googlers.com>
-        <df35c20c-669e-35a1-9b2c-22940637b560@syntevo.com>
-Date:   Wed, 06 Nov 2019 10:51:11 +0900
-In-Reply-To: <df35c20c-669e-35a1-9b2c-22940637b560@syntevo.com> (Alexandr
-        Miloslavskiy's message of "Mon, 4 Nov 2019 11:24:01 +0100")
-Message-ID: <xmqq36f1ydps.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v3 1/4] doc: move author and committer information to git-commit(1)
+In-Reply-To: <20191104221822.GA22367@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 4 Nov 2019 17:18:22 -0500")
+References: <20191102192615.10013-1-sandals@crustytoothpaste.net>
+        <20191102192615.10013-2-sandals@crustytoothpaste.net>
+        <20191104221822.GA22367@sigill.intra.peff.net>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Date:   Wed, 06 Nov 2019 10:55:34 +0900
+Message-ID: <xmqqwocdwyy1.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: EA1E0786-0037-11EA-9CBA-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 86EC34C0-0038-11EA-8D66-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On 02.11.2019 5:49, Junio C Hamano wrote:
->> It's sort of expected ;-)
+> I think we might want to keep documentation that gets too low-level out
+> of git-commit(1).
 >
-> Didn't expect such a detailed reply, thanks!
+> So for instance, this part that got moved from commit-tree:
 >
-> Not really a problem for me, just I was surprised and thought that I'd
-> ask about it.
+>> +A commit encapsulates:
+>> +
+>> +- all parent object ids
+>> +- author name, email and date
+>> +- committer name and email and the commit time.
+>> +
 >
-> I came across this issue when writing a test for 'git reset'. I'll
-> simply change the test to verify the repository state instead of
-> expecting 'git reset' to fail.
+> I think could just stay there.
 
-As I said, it is expected that Git is not perfect and there would be
-many little corners like this that can use improvements.  IOW, it is
-not unexpected that "git reset -- NoSuchFile" does not raise an
-error, but that does not make it a bad idea to at least think about
-teaching it to do so.  There _might_ be fallouts, though; there may
-be scripts by people that rely on 'git reset -- "$variable"' with
-some random pathspec in a $variable to quietly become no-op when no
-paths match (in which case, we'd have to mimic ls-files and add a
-"--error-unmatch" option, perhaps).
+Me too ;-)
+
+> ... I wonder if it would make sense to define them there in
+> git.txt, giving a more user-facing description. Something like:
+>
+>   GIT_COMMITTER_NAME::
+> 	The human-readable name used in the committer identity when
+> 	creating commit or tags objects, or when writing reflogs.
+> 	Overrides the user.name config.
+>
+> and so forth for COMMITTER_EMAIL, AUTHOR_NAME, etc.
+
+Yup, I like that.  Then either commit-tree, commit etc. can refer to
+the environment variables section of linkgit:git[1], or perhaps assume
+that the readers know that anything common across all subcommands
+are there in linkgit:git[1] (I prefer the former).
+
+Thanks.
 
 
