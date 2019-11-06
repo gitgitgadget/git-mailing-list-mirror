@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38C491F4C0
-	for <e@80x24.org>; Wed,  6 Nov 2019 09:59:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66D941F4C0
+	for <e@80x24.org>; Wed,  6 Nov 2019 09:59:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731680AbfKFJ74 (ORCPT <rfc822;e@80x24.org>);
+        id S1731685AbfKFJ75 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 04:59:57 -0500
+Received: from mail-wr1-f50.google.com ([209.85.221.50]:44158 "EHLO
+        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731647AbfKFJ74 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 6 Nov 2019 04:59:56 -0500
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:46418 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725856AbfKFJ7z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 04:59:55 -0500
-Received: by mail-wr1-f42.google.com with SMTP id b3so19197156wrs.13
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 01:59:53 -0800 (PST)
+Received: by mail-wr1-f50.google.com with SMTP id f2so16050768wrs.11
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 01:59:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=xXawFyU7upXqvr/vbNOTWiN1EjDFS8qw9umHTjSIxS0=;
-        b=ZXz2TOUCl5rZx4Sz1fpFPNidMLvCY1hibdMDyFFSkfv0C1Qc/cSPLxS9pEExLuSLv0
-         /z4eeOVjTd0BpJlSziXje68/Alu51FldLgctmixlfSLCb5K+gkDhrxiSrr+14EnrfJBk
-         TdIDP3dLP668OnOb7bMsJMNN+gsmGivtBzisJbeeWDjzZgD2IFkxM9HKP+K8mTs2A1Rb
-         h7fo7tJXrMmKXXgxH73dxruBbEYf9W6QTNzYSW/H70GLWd4/4PB2xZpD5qF43qxFeSko
-         jpBNkhJyOjgod8uiDNBAEH4FE3E+abLqgnPCcv5VFKjNSD534fP08PZ5II17EbUwMpkS
-         EG8Q==
+        bh=12WZXDvSSSFUqF+tPHhMpooqo/fLyKCbw1DKsKakPTE=;
+        b=lTU5cDpO66GBNmv9cipOFGdlUabclqtGVF6kzNUSh8QE0q/3GDwrWQCGjFZjIpLDre
+         4bBdM/2Rfr1nRT5KaZb15me8r7nK/A1CJ9GXjmpgZHvZZPHOraOIs4ilmQUqUbBmqZy/
+         MrbHdIIHbLIimwuv76+qfhQ8fzX7gXvF+LlTmjMKbpDalIbgMs/D8d2vWJWesWRwbjHz
+         jXg10gUMC4GVGNxyTCScibgYKIRAYQZToj+tQrgvbs74dSy1kX2PeL56gCM3VMvXVY5L
+         CwqM3lu1ezSDuCfHtPxdOELEvQG72/DVcmVZR3m9mapRffadNPZzcMx3eOSf1P5m2IMV
+         vGSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xXawFyU7upXqvr/vbNOTWiN1EjDFS8qw9umHTjSIxS0=;
-        b=FJz0wMfXiC/6qGYSthiZAwlJHvOaO0gRE+OT85HRCqVVTIi6bE2esjRwAa4d0zsDZr
-         Fz+rL/8R2F4HJzcNIEw5EtDMgDKxTIZFQaMTYMrRPLvlS5KwiYw1LGf3YNkxlajT5nRk
-         Mx86lN0m/2/PNfSlKf0NNla/yFtQbTb4yYfQ0UkBvu/6v9Z0+GIxlr6V7apF2SwN0Jgw
-         Jr7DBNFrmw17yCX6V07LafBf/IZ9JFEtrACPfYMOQvd5zegPA18iSZUGyGGkHOHLDp1T
-         p/ShXPSaYb7FrhYCZaDnvD5bb3seqycnwloePvNAkPUP0F0PVMgJENNd5lvE99xdYdoi
-         RoEw==
-X-Gm-Message-State: APjAAAWjxYcrBBM/0l8EPe1UkWu5rW4ioVyrgbIz98pxIiD+0kUlJd16
-        BCKb/Ln1YhFG7dExqu9XgJeBdpWJ
-X-Google-Smtp-Source: APXvYqzjN8jnXILNPzPSmKMRkfM+8VG51ytjnzB6wuUOA2xMut+eWWpElyMw/DzjABfBMTs83px5XQ==
-X-Received: by 2002:a5d:4dd2:: with SMTP id f18mr1743153wru.4.1573034392682;
-        Wed, 06 Nov 2019 01:59:52 -0800 (PST)
+        bh=12WZXDvSSSFUqF+tPHhMpooqo/fLyKCbw1DKsKakPTE=;
+        b=PCX+t6LsKwbCNpqJMuc2SDIwAGPEuIwK749kBvsTv6BCS6tB9gHjSkPu26bxOGqmJB
+         GiNCxfKuskEYhp4/gUO5dXc8zIRar4w3rveTCpgBlcO/I0Kk4ncAsWHOuMM0IERvZxQ2
+         rAbP+1bKQaBf7mcszhe7b/waj+eIRGzGjnvvWPfsMfyn46wy4lQSbf0V+4LA4brIPQ2X
+         J8Fa4gIA6eRK/wThvH50MZ8/mj/XvBjdF2eXuOooGnTjZO767Wqtds7oGpCl9qfgsjXe
+         qqzAO1fWg0fTyegbYvTYtazWl1HvL36ALKcEfxNWiyvN+ftAnDud3tmcHHa5pofpz99X
+         rNMw==
+X-Gm-Message-State: APjAAAX1PHFBS52he8c9dbAMUOS2QuZMASFWOiQiuMc4FhavSyPg6Wz1
+        HIegx4LwFsxA7PyTYjnEkxyeQ/DL
+X-Google-Smtp-Source: APXvYqzVxErq60qcOERGuj4mS1mQd6nSb1mTV8By9zUwDJM2r8DTJ3fcB3Owbxg4HHgwOTlQoA/rkw==
+X-Received: by 2002:adf:e712:: with SMTP id c18mr1706227wrm.127.1573034393510;
+        Wed, 06 Nov 2019 01:59:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m13sm2266657wmc.41.2019.11.06.01.59.52
+        by smtp.gmail.com with ESMTPSA id v9sm22226493wrs.95.2019.11.06.01.59.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Wed, 06 Nov 2019 01:59:52 -0800 (PST)
-Message-Id: <fc817586448510c0bd49c4a3c4d7a62303d00b8d.1573034387.git.gitgitgadget@gmail.com>
+Message-Id: <eb7adbcbcc8fb3d8728b92f07349902c2c8d5dc8.1573034387.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
 References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
         <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 06 Nov 2019 09:59:32 +0000
-Subject: [PATCH v2 05/20] sha1-array: move doc to sha1-array.h
+Date:   Wed, 06 Nov 2019 09:59:33 +0000
+Subject: [PATCH v2 06/20] remote: move doc to remote.h and refspec.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,227 +72,326 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-oid-array.txt to
-sha1-array.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-remote.txt to
+remote.h and refspec.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-oid-array.txt is removed because the
+N.B. The doc for both push and fetch members of the remote struct aren't
+moved because they are out of date, as the members were changed from arrays
+of rspecs to struct refspec 2 years ago.
+
+Also documentation/technical/api-remote.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-oid-array.txt | 90 -----------------------
- sha1-array.h                              | 80 ++++++++++++++++++++
- 2 files changed, 80 insertions(+), 90 deletions(-)
- delete mode 100644 Documentation/technical/api-oid-array.txt
+ Documentation/technical/api-remote.txt | 127 -------------------------
+ refspec.h                              |  16 ++++
+ remote.h                               |  57 ++++++++++-
+ 3 files changed, 70 insertions(+), 130 deletions(-)
+ delete mode 100644 Documentation/technical/api-remote.txt
 
-diff --git a/Documentation/technical/api-oid-array.txt b/Documentation/technical/api-oid-array.txt
+diff --git a/Documentation/technical/api-remote.txt b/Documentation/technical/api-remote.txt
 deleted file mode 100644
-index c97428c2c3..0000000000
---- a/Documentation/technical/api-oid-array.txt
+index f10941b2e8..0000000000
+--- a/Documentation/technical/api-remote.txt
 +++ /dev/null
-@@ -1,90 +0,0 @@
--oid-array API
--==============
+@@ -1,127 +0,0 @@
+-Remotes configuration API
+-=========================
 -
--The oid-array API provides storage and manipulation of sets of object
--identifiers. The emphasis is on storage and processing efficiency,
--making them suitable for large lists. Note that the ordering of items is
--not preserved over some operations.
+-The API in remote.h gives access to the configuration related to
+-remotes. It handles all three configuration mechanisms historically
+-and currently used by Git, and presents the information in a uniform
+-fashion. Note that the code also handles plain URLs without any
+-configuration, giving them just the default information.
 -
--Data Structures
-----------------
+-struct remote
+--------------
 -
--`struct oid_array`::
+-`name`::
 -
--	A single array of object IDs. This should be initialized by
--	assignment from `OID_ARRAY_INIT`.  The `oid` member contains
--	the actual data. The `nr` member contains the number of items in
--	the set.  The `alloc` and `sorted` members are used internally,
--	and should not be needed by API callers.
+-	The user's nickname for the remote
 -
--Functions
-----------
+-`url`::
 -
--`oid_array_append`::
--	Add an item to the set. The object ID will be placed at the end of
--	the array (but note that some operations below may lose this
--	ordering).
+-	An array of all of the url_nr URLs configured for the remote
 -
--`oid_array_lookup`::
--	Perform a binary search of the array for a specific object ID.
--	If found, returns the offset (in number of elements) of the
--	object ID. If not found, returns a negative integer. If the array
--	is not sorted, this function has the side effect of sorting it.
+-`pushurl`::
 -
--`oid_array_clear`::
--	Free all memory associated with the array and return it to the
--	initial, empty state.
+-	An array of all of the pushurl_nr push URLs configured for the remote
 -
--`oid_array_for_each`::
--	Iterate over each element of the list, executing the callback
--	function for each one. Does not sort the list, so any custom
--	hash order is retained. If the callback returns a non-zero
--	value, the iteration ends immediately and the callback's
--	return is propagated; otherwise, 0 is returned.
+-`push`::
 -
--`oid_array_for_each_unique`::
--	Iterate over each unique element of the list in sorted order,
--	but otherwise behave like `oid_array_for_each`. If the array
--	is not sorted, this function has the side effect of sorting
--	it.
+-	 An array of refspecs configured for pushing, with
+-	 push_refspec being the literal strings, and push_refspec_nr
+-	 being the quantity.
 -
--`oid_array_filter`::
--	Apply the callback function `want` to each entry in the array,
--	retaining only the entries for which the function returns true.
--	Preserve the order of the entries that are retained.
+-`fetch`::
 -
--Examples
----------
+-	An array of refspecs configured for fetching, with
+-	fetch_refspec being the literal strings, and fetch_refspec_nr
+-	being the quantity.
 -
-------------------------------------------
--int print_callback(const struct object_id *oid,
--		    void *data)
--{
--	printf("%s\n", oid_to_hex(oid));
--	return 0; /* always continue */
--}
+-`fetch_tags`::
 -
--void some_func(void)
--{
--	struct sha1_array hashes = OID_ARRAY_INIT;
--	struct object_id oid;
+-	The setting for whether to fetch tags (as a separate rule from
+-	the configured refspecs); -1 means never to fetch tags, 0
+-	means to auto-follow tags based on the default heuristic, 1
+-	means to always auto-follow tags, and 2 means to fetch all
+-	tags.
 -
--	/* Read objects into our set */
--	while (read_object_from_stdin(oid.hash))
--		oid_array_append(&hashes, &oid);
+-`receivepack`, `uploadpack`::
 -
--	/* Check if some objects are in our set */
--	while (read_object_from_stdin(oid.hash)) {
--		if (oid_array_lookup(&hashes, &oid) >= 0)
--			printf("it's in there!\n");
+-	The configured helper programs to run on the remote side, for
+-	Git-native protocols.
 -
+-`http_proxy`::
+-
+-	The proxy to use for curl (http, https, ftp, etc.) URLs.
+-
+-`http_proxy_authmethod`::
+-
+-	The method used for authenticating against `http_proxy`.
+-
+-struct remotes can be found by name with remote_get(), and iterated
+-through with for_each_remote(). remote_get(NULL) will return the
+-default remote, given the current branch and configuration.
+-
+-struct refspec
+---------------
+-
+-A struct refspec holds the parsed interpretation of a refspec.  If it
+-will force updates (starts with a '+'), force is true.  If it is a
+-pattern (sides end with '*') pattern is true.  src and dest are the
+-two sides (including '*' characters if present); if there is only one
+-side, it is src, and dst is NULL; if sides exist but are empty (i.e.,
+-the refspec either starts or ends with ':'), the corresponding side is
+-"".
+-
+-An array of strings can be parsed into an array of struct refspecs
+-using parse_fetch_refspec() or parse_push_refspec().
+-
+-remote_find_tracking(), given a remote and a struct refspec with
+-either src or dst filled out, will fill out the other such that the
+-result is in the "fetch" specification for the remote (note that this
+-evaluates patterns and returns a single result).
+-
+-struct branch
+--------------
+-
+-Note that this may end up moving to branch.h
+-
+-struct branch holds the configuration for a branch. It can be looked
+-up with branch_get(name) for "refs/heads/{name}", or with
+-branch_get(NULL) for HEAD.
+-
+-It contains:
+-
+-`name`::
+-
+-	The short name of the branch.
+-
+-`refname`::
+-
+-	The full path for the branch ref.
+-
+-`remote_name`::
+-
+-	The name of the remote listed in the configuration.
+-
+-`merge_name`::
+-
+-	An array of the "merge" lines in the configuration.
+-
+-`merge`::
+-
+-	An array of the struct refspecs used for the merge lines. That
+-	is, merge[i]->dst is a local tracking ref which should be
+-	merged into this branch by default.
+-
+-`merge_nr`::
+-
+-	The number of merge configurations
+-
+-branch_has_merge_config() returns true if the given branch has merge
+-configuration given.
+-
+-Other stuff
+------------
+-
+-There is other stuff in remote.h that is related, in general, to the
+-process of interacting with remotes.
+-
+-(Daniel Barkalow)
+diff --git a/refspec.h b/refspec.h
+index 9b6e64a824..3f2bd4aaa5 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -20,6 +20,22 @@ struct refspec_item {
+ #define REFSPEC_INIT_FETCH { .fetch = REFSPEC_FETCH }
+ #define REFSPEC_INIT_PUSH { .fetch = REFSPEC_PUSH }
+ 
++/**
++ * A struct refspec holds the parsed interpretation of a refspec.  If it will
++ * force updates (starts with a '+'), force is true.  If it is a pattern
++ * (sides end with '*') pattern is true.  src and dest are the two sides
++ * (including '*' characters if present); if there is only one side, it is src,
++ * and dst is NULL; if sides exist but are empty (i.e., the refspec either
++ * starts or ends with ':'), the corresponding side is "".
++ *
++ * An array of strings can be parsed into an array of struct refspecs using
++ * parse_fetch_refspec() or parse_push_refspec().
++ *
++ * remote_find_tracking(), given a remote and a struct refspec with either src
++ * or dst filled out, will fill out the other such that the result is in the
++ * "fetch" specification for the remote (note that this evaluates patterns and
++ * returns a single result).
++ */
+ struct refspec {
+ 	struct refspec_item *items;
+ 	int alloc;
+diff --git a/remote.h b/remote.h
+index 0e1d2b245b..2277426199 100644
+--- a/remote.h
++++ b/remote.h
+@@ -6,6 +6,14 @@
+ #include "hashmap.h"
+ #include "refspec.h"
+ 
++/**
++ * The API gives access to the configuration related to remotes. It handles
++ * all three configuration mechanisms historically and currently used by Git,
++ * and presents the information in a uniform fashion. Note that the code also
++ * handles plain URLs without any configuration, giving them just the default
++ * information.
++ */
++
+ enum {
+ 	REMOTE_UNCONFIGURED = 0,
+ 	REMOTE_CONFIG,
+@@ -16,16 +24,22 @@ enum {
+ struct remote {
+ 	struct hashmap_entry ent;
+ 
++	/* The user's nickname for the remote */
+ 	const char *name;
++
+ 	int origin, configured_in_repo;
+ 
+ 	const char *foreign_vcs;
+ 
++	/* An array of all of the url_nr URLs configured for the remote */
+ 	const char **url;
++
+ 	int url_nr;
+ 	int url_alloc;
+ 
++	/* An array of all of the pushurl_nr push URLs configured for the remote */
+ 	const char **pushurl;
++
+ 	int pushurl_nr;
+ 	int pushurl_alloc;
+ 
+@@ -34,32 +48,47 @@ struct remote {
+ 	struct refspec fetch;
+ 
+ 	/*
++	 * The setting for whether to fetch tags (as a separate rule from the
++	 * configured refspecs);
+ 	 * -1 to never fetch tags
+ 	 * 0 to auto-follow tags on heuristic (default)
+ 	 * 1 to always auto-follow tags
+ 	 * 2 to always fetch tags
+ 	 */
+ 	int fetch_tags;
++
+ 	int skip_default_update;
+ 	int mirror;
+ 	int prune;
+ 	int prune_tags;
+ 
++	/**
++	 * The configured helper programs to run on the remote side, for
++	 * Git-native protocols.
++	 */
+ 	const char *receivepack;
+ 	const char *uploadpack;
+ 
 -	/*
--	 * Print the unique set of objects. We could also have
--	 * avoided adding duplicate objects in the first place,
--	 * but we would end up re-sorting the array repeatedly.
--	 * Instead, this will sort once and then skip duplicates
--	 * in linear time.
+-	 * for curl remotes only
 -	 */
--	oid_array_for_each_unique(&hashes, print_callback, NULL);
--}
-------------------------------------------
-diff --git a/sha1-array.h b/sha1-array.h
-index 55d016c4bf..dc1bca9c9a 100644
---- a/sha1-array.h
-+++ b/sha1-array.h
-@@ -1,6 +1,52 @@
- #ifndef SHA1_ARRAY_H
- #define SHA1_ARRAY_H
++	/* The proxy to use for curl (http, https, ftp, etc.) URLs. */
+ 	char *http_proxy;
++
++	/* The method used for authenticating against `http_proxy`. */
+ 	char *http_proxy_authmethod;
+ };
  
 +/**
-+ * The API provides storage and manipulation of sets of object identifiers.
-+ * The emphasis is on storage and processing efficiency, making them suitable
-+ * for large lists. Note that the ordering of items is not preserved over some
-+ * operations.
-+ *
-+ * Examples
-+ * --------
-+ * -----------------------------------------
-+ * int print_callback(const struct object_id *oid,
-+ * 		    void *data)
-+ * {
-+ * 	printf("%s\n", oid_to_hex(oid));
-+ * 	return 0; // always continue
-+ * }
-+ *
-+ * void some_func(void)
-+ * {
-+ *     struct sha1_array hashes = OID_ARRAY_INIT;
-+ *     struct object_id oid;
-+ *
-+ *     // Read objects into our set
-+ *     while (read_object_from_stdin(oid.hash))
-+ *         oid_array_append(&hashes, &oid);
-+ *
-+ *     // Check if some objects are in our set
-+ *     while (read_object_from_stdin(oid.hash)) {
-+ *         if (oid_array_lookup(&hashes, &oid) >= 0)
-+ *             printf("it's in there!\n");
-+ *
-+ *          // Print the unique set of objects. We could also have
-+ *          // avoided adding duplicate objects in the first place,
-+ *          // but we would end up re-sorting the array repeatedly.
-+ *          // Instead, this will sort once and then skip duplicates
-+ *          // in linear time.
-+ *
-+ *         oid_array_for_each_unique(&hashes, print_callback, NULL);
-+ *     }
++ * struct remotes can be found by name with remote_get().
++ * remote_get(NULL) will return the default remote, given the current branch
++ * and configuration.
 + */
+ struct remote *remote_get(const char *name);
 +
-+/**
-+ * A single array of object IDs. This should be initialized by assignment from
-+ * `OID_ARRAY_INIT`. The `oid` member contains the actual data. The `nr` member
-+ * contains the number of items in the set. The `alloc` and `sorted` members
-+ * are used internally, and should not be needed by API callers.
-+ */
- struct oid_array {
- 	struct object_id *oid;
- 	int nr;
-@@ -10,18 +56,52 @@ struct oid_array {
+ struct remote *pushremote_get(const char *name);
+ int remote_is_configured(struct remote *remote, int in_repo);
  
- #define OID_ARRAY_INIT { NULL, 0, 0, 0 }
+ typedef int each_remote_fn(struct remote *remote, void *priv);
++
++/* iterate through struct remotes */
+ int for_each_remote(each_remote_fn fn, void *priv);
+ 
+ int remote_has_url(struct remote *remote, const char *url);
+@@ -194,16 +223,36 @@ struct ref *get_remote_ref(const struct ref *remote_refs, const char *name);
+  */
+ int remote_find_tracking(struct remote *remote, struct refspec_item *refspec);
  
 +/**
-+ * Add an item to the set. The object ID will be placed at the end of the array
-+ * (but note that some operations below may lose this ordering).
++ * struct branch holds the configuration for a branch. It can be looked up with
++ * branch_get(name) for "refs/heads/{name}", or with branch_get(NULL) for HEAD.
 + */
- void oid_array_append(struct oid_array *array, const struct object_id *oid);
+ struct branch {
 +
-+/**
-+ * Perform a binary search of the array for a specific object ID. If found,
-+ * returns the offset (in number of elements) of the object ID. If not found,
-+ * returns a negative integer. If the array is not sorted, this function has
-+ * the side effect of sorting it.
-+ */
- int oid_array_lookup(struct oid_array *array, const struct object_id *oid);
++    /* The short name of the branch. */
+ 	const char *name;
 +
-+/**
-+ * Free all memory associated with the array and return it to the initial,
-+ * empty state.
-+ */
- void oid_array_clear(struct oid_array *array);
++	/* The full path for the branch ref. */
+ 	const char *refname;
  
- typedef int (*for_each_oid_fn)(const struct object_id *oid,
- 			       void *data);
-+/**
-+ * Iterate over each element of the list, executing the callback function for
-+ * each one. Does not sort the list, so any custom hash order is retained.
-+ * If the callback returns a non-zero value, the iteration ends immediately
-+ * and the callback's return is propagated; otherwise, 0 is returned.
-+ */
- int oid_array_for_each(struct oid_array *array,
- 		       for_each_oid_fn fn,
- 		       void *data);
++	/* The name of the remote listed in the configuration. */
+ 	const char *remote_name;
 +
-+/**
-+ * Iterate over each unique element of the list in sorted order, but otherwise
-+ * behave like `oid_array_for_each`. If the array is not sorted, this function
-+ * has the side effect of sorting it.
-+ */
- int oid_array_for_each_unique(struct oid_array *array,
- 			      for_each_oid_fn fn,
- 			      void *data);
+ 	const char *pushremote_name;
+ 
++	/* An array of the "merge" lines in the configuration. */
+ 	const char **merge_name;
 +
-+/**
-+ * Apply the callback function `want` to each entry in the array, retaining
-+ * only the entries for which the function returns true. Preserve the order
-+ * of the entries that are retained.
-+ */
- void oid_array_filter(struct oid_array *array,
- 		      for_each_oid_fn want,
- 		      void *cbdata);
++	/**
++	 * An array of the struct refspecs used for the merge lines. That is,
++	 * merge[i]->dst is a local tracking ref which should be merged into this
++	 * branch by default.
++	 */
+ 	struct refspec_item **merge;
++
++	/* The number of merge configurations */
+ 	int merge_nr;
++
+ 	int merge_alloc;
+ 
+ 	const char *push_tracking_ref;
+@@ -215,7 +264,9 @@ const char *pushremote_for_branch(struct branch *branch, int *explicit);
+ const char *remote_ref_for_branch(struct branch *branch, int for_push,
+ 				  int *explicit);
+ 
++/* returns true if the given branch has merge configuration given. */
+ int branch_has_merge_config(struct branch *branch);
++
+ int branch_merge_matches(struct branch *, int n, const char *);
+ 
+ /**
 -- 
 gitgitgadget
 
