@@ -8,136 +8,106 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEFBB1F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 19:35:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 848BF1F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 19:39:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727739AbfKFTfO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 14:35:14 -0500
-Received: from mout.gmx.net ([212.227.15.19]:48347 "EHLO mout.gmx.net"
+        id S1731950AbfKFTjP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 14:39:15 -0500
+Received: from mout.gmx.net ([212.227.17.20]:42769 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726713AbfKFTfO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 14:35:14 -0500
+        id S1727550AbfKFTjP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 14:39:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573068908;
-        bh=rMVfgtx/xP+mV6c65vBv3U5JUxDBGrbTVWq4wf6dICc=;
+        s=badeba3b8450; t=1573069147;
+        bh=RwEL75u8N8lnxvn+6HiQyPfl1Q4TUoRlpVAAn3WGNH0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HN0HabmUHAksF9TiT973eLct41kcx+J6mHHhAQ/lJpGhs7uID6Iq4em/iURFtzDV/
-         VMRQTsB7TKY4HeZgZ7OXcRuzTihBElYq7iJeE3CmrG9XmYVKi19hK+NE1JFtQ7elYp
-         FDT/5vay5tIy3ZmsM3+vU2WmRe/9Vm2i9V6I0el0=
+        b=E4yWxd76KRfEMhfUTWf/TSaEskuk+Nf+/WYJqPgQb96tkJu63J3cOBjxziVgn/Ofb
+         X4PwWD6UrWiPg0deWnT2DGC9+4i6AHPDoh/Bfg2sn+nC27dR2qAu6grPVF9ljGb3Qd
+         bJfcYj0dTKf6Z5RtR+iHSK0QOB94HY4UpZ3TSF/o=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MWzk3-1iQ1Pm3b45-00XKON; Wed, 06
- Nov 2019 20:35:07 +0100
-Date:   Wed, 6 Nov 2019 20:34:51 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MWigq-1iQIT42Ts0-00X10Q; Wed, 06
+ Nov 2019 20:39:07 +0100
+Date:   Wed, 6 Nov 2019 20:38:46 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org,
         =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Subject: Re: [PATCH v2 1/1] remote-curl: unbreak http.extraHeader with custom
+Subject: Re: [PATCH 1/1] remote-curl: unbreak http.extraHeader with custom
  allocators
-In-Reply-To: <xmqq7e4dtd9n.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1911062031480.46@tvgsbejvaqbjf.bet>
-References: <pull.453.git.1572991158.gitgitgadget@gmail.com> <pull.453.v2.git.1573034695.gitgitgadget@gmail.com> <3168ba2c9eadcf0cd7e4f2533c9306b5d2c627d0.1573034695.git.gitgitgadget@gmail.com> <xmqq7e4dtd9n.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsgn1tjup.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1911062029230.46@tvgsbejvaqbjf.bet>
+References: <pull.453.git.1572991158.gitgitgadget@gmail.com> <d47a2aa5949a5dd3a10b89d9a77ebb89af6ba57e.1572991158.git.gitgitgadget@gmail.com> <20191106041644.GE4307@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1911061009230.46@tvgsbejvaqbjf.bet>
+ <xmqqsgn1tjup.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1009258605-1573068722=:46"
-Content-ID: <nycvar.QRO.7.76.6.1911062034040.46@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:JrhMuHWifF+L7BhqgRj6id9pS+z7t2irCeNLZYRuhcDngUEOQ3r
- fS5Tw7skYBTSTN4F//haLYsQJACbFCMxOhHhWPBVXBJ6/0qRg+Q9K1eXqNOL8V7aRyJKJ9h
- UYcMDijUhHiGmfL54Rf29CjklBrso3J7bmx3tbVcjvtgvDXbrEB0HCjCvXktJOEVnbyoP7t
- EJ3Ug8yNbONnSfTl8urvw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:kWjQLEJNEjc=:QoIZJiXEN5Yl8DDDl/WLT3
- eyWQXedZ79T1e8Xy7WfeKCIyX0gYnLlFr5VxCD+zNJ2UtCILmwPh19JiztIMUZ5y1ntE2DVUg
- Vs2BkoG/4r7lPXyzyg0Kad25ouq23Py841qFdtIRl3RXoaf0djJxS4KCjh0WXxehHoqqC1QT1
- xyXeTZJkvu27G2zjMU950Uui/4vWazUAZjRPKk7Opn30UWa3sBj5Oh4PYX1qv78ZbHeNYNKoY
- wGAA2gzuqmjNVLRmZISxKyioc+O6xL0CJ8TgYgYkYm8gDKoJ7FpYwL5/vzvZp60J2rmzHde/y
- ph2NCETrcDp5y52DQEunfJ0u59uC5SvDiUTa7nCiGkZyIkmH3pdbhDUlfWS2wosLXddREbi2m
- +sGON6f49HrlcmIp1LhHn3i2W2K9+n80S/dEC4777gzB6ZOHnzvRcM/razYELJ4MuYqddKYoN
- pry+yeCpu8rxW7yi7c6AJHWTUR/t9utNhmPeXhcku+7rtEPVc/fihn5Dn5mNpSd3pu34IB9us
- TMCfyWzkDzxQtfafgt59U53J95pHbD13L4NqNN2O4FCvNcECYiQWwS2eBZZfBh2Ow711XjsBp
- g+ZN4iyhD79ezy+eqIZIChVco1clr9uI4ZBq2A3oxIXpalsj9ytJrAodAGfxtTYopA/oe9n5C
- SZ0N1nF0Ms0DVxPnE0de/RB0MiMjGuZHTiM9jdcCA5mKJheUjW6ArImHJ4QkADjM9tW401r6F
- hvACZRo5n/UnvAVZOxVwfYpxMnFFkrP9KL0qULMkceLXy1thFe1IegVByoF2n6ZpU+TXbNHqA
- v60fdFf2rooTTuuls2bnqP+k3ofn/5kYrzLd8RQBKjWOlCHyEQ7ke6fePbqfTJCSTIq6q1xxv
- srQn+Y0pKBDMiN8jIRDgYzoJt5d2SWw9VYyWEmP5NOUTPBws3h8a/fMR81xOhWxQI9DvqxhsZ
- XnhF6RqJdt3/Zh9YYImkKZ81zClu+eFA12qVXj48ARWBvPHGo+WDiMw6+l2BG/+3TTybWZNWv
- s3z/MFpv6EgjrvxkaN6EdmzfAfrhT1obm1XbTqfaUIwaVuexELeTsQTfzl5OABZo3/HTl6TW4
- zfOAB+xph9o+ug32YW2oKROWhaKB489FR4C6TYncOIZS5/NifmFop14fuaxnHrSOq2OeGGPeu
- 55Nsx+rBdVd+1PEL5Er4QyYYEwpiWaD/HFlkfQbdKhqu+2nyydtQ3DqooI6NvvhlsNw6niPA2
- iAzSawB7haENiW+R/1Jp3m58Ge137h+5yfxwwCR/YvWE0S55oUoNQ2jy1RWk=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:u8fg3tste6XOFKaWIuOhA5NYTJqxl3h4gUkS2UNn4eNje9fKTir
+ SFWklKl1+74RgJvF21I/BQwGQbWU0OcjVaaWaCU15wCdXwIRIabJVFEaGZwx3EuXIddsgT3
+ KOHCYetvq5Xu5adY5SQ9f35/jVVzYT175l0+QJxLh8Uxg1CX7aYVGl6Kh2SSdKS+sqYj6Do
+ kz8B3vmZFQSy/cRKei0NQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Mau3h6gkb24=:/PbjS+G4xhRZnDsJLBElUN
+ iozuqzm34a8QoezkoEMT6lYFanvVAiQ9QGD5f7+NfoEenPuHfhZy0kySSlos5mOhp+HegCYI5
+ /V52HaVX4zYFGsIVtVAljrYM7YJ7Ifn5vv61qo3mBhPOHlfB6Jz2hU77ShoiNH+Y031CM6CH2
+ wLkI3er3ItCllElqMHaT+oJRPg/o8nAMxj6acyLSo2sa22g9nmj1nyyuP210N5ljDehKzwv0L
+ /RzkYtq8IBo/wljI3GzxC9wr1n55ANnaJujepJ/OU/gdBv7RtwPsMmlvJc55METTLXdg7ub+m
+ YFY9YtVd10mYztiOm0wNwUWevs2evcAEvCZQGo4NfZNUgjI45dfa+xrLfS4Qwby9bZFRa4gYV
+ nWXXWt7Kgk+z/LcplIw4/2Szwi3+ltq/eN1B5XRNbrgsb6KryTpY/6ru2j+46twSIeRGC3hOd
+ IVynJUUOG87EVb4SdYrnIconev0NH9/znCOvfQcBG5BI2Uq18PFsiO8Ha4FmlTxdRlmbFuMCm
+ ELRLAzKoCfALgs/jTtbTsTj33biFl2OxfJ2Mc6h0qM7hCCq6hE1ye7sE4j8wMTfpIjAJYofox
+ Hv4/eVo76i4bt76IliR47kZVlDwT3JjsaBqTQFyhw3QdMibUYcFFKND8+bjpFUS9F/xwb7IVw
+ IctJvoIjAU3HthKDLKoIKhydWdFE8XfzUD3wFttGKkOuDMA7njcrG9r2B+woZvfe6GVzbTYhY
+ Wt7lyR0Mr1zaXoWks3xHmFvo1qj0szI1SvWzuFqtjAAbqprT+p9zUiqzBp5lUpndjd/0GKZ7B
+ XB733RgQ5w/4feojTDg2x//ThMYzTWZ82+o+ktb/9aKeF76z+FVR7uTX40MIwzW01Eai2G5D/
+ jatmcjVrUw+zAiJ48C4yx6+uoXSrkHSuR1IlR7q7vMH3ilvbMnrNpBg2K42x6BvWbRTw3Q4qG
+ KDZWFXK0uGholeBVoRrYZiOJeOhiCm6SzW0F0BicICU4LpckV1QNT5qPmL4+fE8s0I9Frkanh
+ klwOAibjyND/+o8GwrfbRk+F6tOO6K5XT14hDe7v7xko8l+VDM//GO1Z4GqAK6VIxG9dyYC09
+ tNCZnOQD9BTMcRmem9OeF4HEibZyf9iw+Dc/SlwWdVGI1oX7GQWJwyGlBApybaqGAR4EPNas9
+ gPXRYgP7eTSRthhqBfb3t09Jv+6kE18evv9Nyxnh3wIlXsNKetVbsb/yg6/caVupfEr44aROD
+ S+YLh5uKP1v2YbFWAx1bWWNrgi9bSNc0qTREs/zIySzMbbqg0IZsufM99AHA=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1009258605-1573068722=:46
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Content-ID: <nycvar.QRO.7.76.6.1911062034041.46@tvgsbejvaqbjf.bet>
-
 Hi Junio,
 
 On Wed, 6 Nov 2019, Junio C Hamano wrote:
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > On Tue, 5 Nov 2019, Jeff King wrote:
 > >
-> > In 93b980e58f5 (http: use xmalloc with cURL, 2019-08-15), we started t=
-o
-> > ask cURL to use `xmalloc()`, and if compiled with nedmalloc, that mean=
-s
-> > implicitly a different allocator than the system one.
+> >> ... transforming it later into a curl_slist. I don't think that reall=
+y buys
+> >> us much, though.
 > >
-> > Which means that all of cURL's allocations and releases now _need_ to
-> > use that allocator.
-> >
-> > However, the `http_options()` function used `slist_append()` to add an=
-y
-> > configured extra HTTP header(s) _before_ asking cURL to use `xmalloc()=
-`,
-> > and `http_cleanup()` would release them _afterwards_, i.e. in the
-> > presence of custom allocators, cURL would attempt to use the wrong
-> > allocator to release the memory.
+> > Alas, it _does_ buy us a lot, as I *just* found out (can you imagine h=
+ow
+> > glad I am not to have rushed out another Git for Windows release?).
 >
-> s/allocator/de&/; perhaps, even though it is clear enough from the
-> context, so it is probably OK as is.
->
-> > A na=C3=AFve attempt at fixing this would move the call to
-> > `curl_global_init()` _before_ the config is parsed (i.e. before that
-> > call to `slist_append()`).
-> >
-> > However, that does work, as we _also_ parse the config setting
->
-> s/does work/does not work/; presumably?
+> Thanks both, and especially thanks Dscho for both for a fix and for
+> restraining yourself from the urge to pull trigger too soon ;-)
 
-Indeed. Could I ask you to fix up locally, or do you want me to send a
-new revision of the patch?
+Well, I _will_ trigger the pipeline publishing Git for Windows
+v2.24.0(2) in a moment, with this fix, but more importantly with a fix
+for the installer that tries to install some Cygwin-style symlinks,
+which was broken in non-US locales (most notably in a Japanese setup;
+apparently there _still_ are developers who did not yet move away from a
+Japanese locale... at least on Windows).
 
 Ciao,
 Dscho
 
 >
-> > `http.sslbackend` and if found, call `curl_global_sslset()` which *mus=
-t*
-> > be called before `curl_global_init()`, for details see:
-> > https://curl.haxx.se/libcurl/c/curl_global_sslset.html
-> >
-> > So let's instead make the config parsing entirely independent from
-> > cURL's data structures. Incidentally, this deletes two more lines than
-> > it introduces, which is nice.
+> > I will change the patch to avoid using `slist` early and send another
+> > iteration.
 >
-> Yeah, string_list_clear() is more concise than curl_slist_free_all(),
-> and we have already been copying one list to another anyway, so we
-> lucked out ;-)
+> Will look forward to seeing it.
 >
-> The patch looked good to me, too.
+> Thanks.
 >
-
---8323328-1009258605-1573068722=:46--
