@@ -2,171 +2,219 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26BFF1F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 22:07:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 207041F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 22:16:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727126AbfKFWH4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 17:07:56 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:46887 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727073AbfKFWH4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 17:07:56 -0500
-Received: by mail-wr1-f52.google.com with SMTP id b3so383277wrs.13
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 14:07:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=niemier-pl.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=xsPildYjx0lYXi/lUaUiV8/OTAQM3fbRv5QIzxnx87M=;
-        b=b2PKIBRmtUyptSHWuMxcQXmHkh+O+twHJviFOI3W2CAQYM87WnlxdpzDAQGeXwj2zU
-         0nC8S5g+fTqf5+6Uu0LihEUzBs+4b1PJ8ucucJT2J0kGi6lUTSiRyAVpmxnaHM3geDHh
-         rqRx5FKHZpwLbYat6f5ZvG58eUK6VIdzNJAhzuZobaU1ZdE9q1BxXiaZM6b9DmCF7TUM
-         N0Y4tTXPeYQm0oI/U/Z0RHrrkJtN0QBe0oPpALO+O5cO6UURJtqHhWDSw3lghvbBvVZp
-         1MlX40nclW46TR5AjmLkSvisreIkmBk9u+hd1MCIUxB5Ae4os8lML8V43V83ONq4xmKk
-         7lIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=xsPildYjx0lYXi/lUaUiV8/OTAQM3fbRv5QIzxnx87M=;
-        b=ajLdwt7ofpoxvm2kUgdZ0EtCyFZoCdORte0kviPMmxqhR8YPVY6EawMfCUQpIFf6FL
-         dQYlInrujss8LVnEk2OvaFeDNwdF47+W0bVfwFHRJaJDMB1DjXjODZ6bIvj44MMgh3Lm
-         C+bEZ3tqzAYAMqCBbsziyhG7LjHSXmNaQlgPp2n+SnFJbGytTuShXB7mFaUIWLhbbz4c
-         uVkQckZhk/V0/YbqPgF1PEY0ZZOjyPM9Heaxa7Nd+zvf9s3d5JPxlamTIulvlqBWPYEk
-         5URYwxomS2SYZYfiQL4NNkQZn5mjhuCIm/OQDcln/U4ypkOlQHF6W0g31ekvzjxltKqX
-         uUcw==
-X-Gm-Message-State: APjAAAWlS41OQQ++Yd5zWS/osI0jMLAsDxYEwQONA2hBQL8rCHeSoct6
-        XumokCZF5By84oEoGvZDwLOGOsQf9u9vKA==
-X-Google-Smtp-Source: APXvYqxfLD5HU5XuEq/38btTOAbjCW2JyxW1xOhoq9ajlexfnwurRCXIKJ1nbaD21tELwg5znUMgbA==
-X-Received: by 2002:adf:ea07:: with SMTP id q7mr4653112wrm.102.1573078072464;
-        Wed, 06 Nov 2019 14:07:52 -0800 (PST)
-Received: from [192.168.188.32] (83.25.107.61.ipv4.supernova.orange.pl. [83.25.107.61])
-        by smtp.gmail.com with ESMTPSA id x9sm75108wru.32.2019.11.06.14.07.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 14:07:51 -0800 (PST)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: [PATCH v2] feat: add Elixir to supported userdiff languages
-From:   =?utf-8?Q?=C5=81ukasz_Niemier?= <lukasz@niemier.pl>
-In-Reply-To: <672bdea4-180a-89e0-c420-df2704ed887e@kdbg.org>
-Date:   Wed, 6 Nov 2019 23:07:50 +0100
-Cc:     git@vger.kernel.org
+        id S1727123AbfKFWQV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 17:16:21 -0500
+Received: from mout.gmx.net ([212.227.15.15]:47021 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726779AbfKFWQU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 17:16:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1573078560;
+        bh=72qiCgxJllyHjxnKxqBF3VHnoX2Bo5eIF7V4++gkj/Q=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=NiqhNVV82gIU4+WoHe/Vs4SKyFvdZMgimbt7eaEaUbDVEzJaGiZbgZbPYedvRxMpW
+         O6JtNvwlBJ/DQO+w1JwlnbpjpWx+IyrSQqT/XBP0lVjqr72lpdjRdTjUcYONjzwqlU
+         9zwQeeyqqlZoN7CpiVcNIh/wIINwM7VoUoX1Eyx0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MC30Z-1ieL9h0vgT-00CV92; Wed, 06
+ Nov 2019 23:16:00 +0100
+Date:   Wed, 6 Nov 2019 23:15:44 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Ingo Rohloff <ingo.rohloff@lauterbach.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] branch: Forbid to create local branches with confusing
+ names
+In-Reply-To: <20191106165628.28563-1-ingo.rohloff@lauterbach.com>
+Message-ID: <nycvar.QRO.7.76.6.1911062101580.46@tvgsbejvaqbjf.bet>
+References: <20191106165628.28563-1-ingo.rohloff@lauterbach.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:yhbzgwmTh9Nvy8jcXk/j5sGP46f2hCLKBiQZKpwohTecHxuNCmX
+ 3O+xeNBIxV6naU4a1SrydDPynNVaNd9rBkXGt5YE0RrlPfL48R918QKjOgpxOYgj/7tYNnr
+ AFMVnb7IDxALZDRdzYowjibeMLZ5L1zh4QoaiqL7JDyHhbszpcghmRPqFskBJLXsh5QeZzc
+ AbtoFxfMfXvxLHKv2sTGQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:yNF4ZC5p8Hc=:lEYACAjseBb8mZZtIVgk+h
+ wyIK34JhV+/Sp55YxyLifEW3mL9BMRkKNoIyK5pXMBIQs1BEOSMvZZ+yxR8qtmxmhuS1gMhjI
+ eWyQket5HGGTwS2Ly1sHbp0dlV2XK+IKvDXRXT8X/o2fh0SQxfmL6FHyadwsl0v2KIn0B6b8j
+ ECR4t9lvaFuA2tIgVR3slDLU6Gkw34rBf9uzURgGys3EubA273IKQJM0Bz8h0OSrBpKmO3DBR
+ EEK4ldOsGiscuuUuZXZvanV16uNyTosZinrER5JNiCSvlgkkHVGz/JpUXfzjWn0q4YoYZS0sV
+ RxLFnoSXIYe4MXLKsytNZmWeHLdgA6DJrdvacD8Qc9/2+pWLPzdnuNXHoWQZgU3Iv+yoMFdzx
+ 5fn1nlCVCP4ox9JXkFF1cv71m139l2Vf4ohqcY++GKhi+2q22zXguNKeHyHk0LhmZ1iaHn4yh
+ oD6/JwA1rBk8pYu6PI+BSjn7BXpzv5vq1A4txeSBswmhC10s/+Oo2qGeqYmr+F+2zMjiqJbhh
+ iy5KGDVG9KrT/v2z73p0gxorr05lg19nCa9IRKMeE9YCGkS0wzyB9ea6mABvIixocwiB4MarO
+ 5VQ2EuwehnwBXfPKl0mc1BHmsufuCC/a0UJmEuxQAhIJ/tPLijmWsLufdnlVRiyf18SMsn2c5
+ bGaaQH9n1jdOK8h3sJerO0Q7Ph/WaL681nRoCb8jx9urd3/YikTtbBn/ZUr6znNGgk1k22i9Q
+ HUJ229XZFaeaXJmd9/jOdFdSWgOf3JMGiMfWeMoN2cVb4W37p0kpXrkKbkGzTrcICdQaO1NHx
+ 7Dceh08mni+0v69J/4/JYXJfSvx16OAONA9KYajPEU/ZgL0BvWUV2jGympWXdy+wUr/d2U6Tp
+ Prd9Ax7x/HGqR7eeNv08woRHu1d0jr3829M55CEKfdvJ7HXiPKTSIoCEvG6uTEDS9klDkW8u8
+ aOvqYl5d/oS0MuLgiWTrW+zCkkTs95ShJaLo1yYpNop5o84/sF7G9VxEEUdJ9aIlE1ENcW26R
+ H7TDndyC/xrukRVDKPD5dPCqZ56+k3AGREFtXa6DjqzXUffWqg8/gvZ7tRfcFbLj2luZAMY3u
+ R4hcY4ewMdno3NHTSIpYR5AdFXVYVG8QKV29I0e1KVDY2MV7mvgFeVDNWiQZk9/s2xACBULoZ
+ eTboFMzO5IcZVDOxiaLtXEiZl3eptP9nhL0XZs+071aKRMGCecsJeoMLeNEKkR+3ugu1y14CG
+ 73SyGRoQ9E2bA08W13D/ZUWecCLwg2SCyzLCs4tyG7qTAZyzEF/OIwod3FiU=
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <ED332708-76D5-447F-A2D7-6495CC6A76DC@niemier.pl>
-References: <20191106174844.23482-1-lukasz@niemier.pl>
- <672bdea4-180a-89e0-c420-df2704ed887e@kdbg.org>
-To:     Johannes Sixt <j6t@kdbg.org>
-X-Mailer: Apple Mail (2.3445.104.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Please use "subsystem: short description" in the subject. For example:
->=20
->   userdiff: support Elixir
->=20
-> would be sufficient in this case.
+Hi Ingo,
 
-Ok, will fix.
+On Wed, 6 Nov 2019, Ingo Rohloff wrote:
 
-> Please add your sign-off before the three-dash line so that we know =
-that
-> you are entitled to publish this patch. See =
-Documentation/SubmittingPatches.
+> Without this patch, git allows to do something like this:
 
-Yeah, I have seen it too late to fix. Will do.
+Maybe start the patch with a description of the problem it tries to
+solve? In other words, I would have appreciated a first paragraph that
+starts with "Many Git users ...".
 
-> It would be enlightening to know what Elixir is. (I haven't googled =
-it,
-> yet.)
+>   git branch remotes/origin/master
+>   git branch refs/remotes/origin/master
+>   git branch heads/master
+>   git branch tags/v3.4
+> All of these local branch names lead to severe confusion,
+> not only for a user but also for git itself.
+>
+> This patch forbids to create local branches, with names which start
+> with any of
+>
+>   refs/
+>   heads/
+>   remotes/
+>   tags/
+>
+> With this patch, you might still create these kind of local branches,
+> but now you have to additionally specify the '-f' option.
+>
+> Signed-off-by: Ingo Rohloff <ingo.rohloff@lauterbach.com>
+> ---
+>  branch.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+>  This patch refers way back to the discussion from 2014:
+>    From: Josef Wolf
+>    To: git@vger.kernel.org
+>    Subject: error: src refspec refs/heads/master matches more than one.
+>    Date: Fri, 14 Feb 2014 12:31:36 +0100
+>  See for example here:
+>    https://public-inbox.org/git/20140214113136.GA17817@raven.inka.de/
+>
+>  The origin of the problem is, that git has (almost) no constraints
+>  what kind of names are allowed for local branches.
+>  There nowadays is a constraint that you are NOT allowed to create
+>  a branch which is called HEAD. See commit 16169285f1e6 ("Merge
+>  branch 'jc/branch-name-sanity'", 2017-11-28).
+>
+>  In the old mail thread a lot of potential constraints for local
+>  branch names were discussed; in particular a lot of strategies
+>  were discussed what kind of local branch names might be a problem
+>  (the gist is: avoid ambiguities, by finding out which names
+>  lead to ambiguities NOW).
+>
+>  I personally think it makes more sense to forbid a much
+>  bigger class of confusing branch names.
+>  In particular I think all local branch names starting with
+>    refs/
+>    heads/
+>    remotes/
+>    tags/
+>  should be forbidden (per default, can still be forced).
+>  This also avoids trouble for an unforseeable future.
+>  Example:
+>    git branch remotes/blub/master
+>  This might not be a problem now, because you have no
+>  remote called "blub" right now.
+>  But if you later use
+>    git remote add blub <URL>
+>    git fetch blub
+>  you very likely run into trouble.
+>
+>  The above approach still allows you to create local branches
+>  with a name of the form
+>     <remote name>/<something ...>
+>  but I cannot see how this might be avoided; remotes might
+>  be added later so what would you do in the case that a local
+>  branch already existed named like the remote or a remote
+>  tracking branch.
+>
+>  With the proposed constraints you are at least are able to use
+>     heads/<remote name>/<something ...>
+>     remotes/<remote name>/<something ...>
+>  to differentiate between the two.
+>
+>  This really is an issue; people seem to stumble over it
+>  and I guess this is particularly true if you control git
+>  via scripts. See for example (two years later):
+>    From: Duy Nguyen
+>    To: Junio C Hamano
+>    Cc: Git Mailing List <git@vger.kernel.org>,
+>    Subject: Re: error: src refspec refs/heads/master matches more than o=
+ne.
+>    Date: Wed, 23 Mar 2016 18:17:05 +0700
+>
+>  So with this patch I want to pick up this old discussion yet again.
+>
+>  This code can probably be done a lot better I guess, but I wanted to
+>  send in something, to start the discussion.
 
-It is language with Ruby-like syntax for BEAM (Erlang virtual machine).
+A lot of this text should probably go into the commit message itself,
+possibly with accompanying Message-IDs or even public-inbox URLs right
+away.
 
-https://elixir-lang.org
+>
+> diff --git a/branch.c b/branch.c
+> index 579494738a..e74872dac5 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -256,6 +256,16 @@ void create_branch(struct repository *r,
+>  	int dont_change_ref =3D 0;
+>  	int explicit_tracking =3D 0;
+>
+> +	if (!force && (
+> +		starts_with(name, "refs/") ||
+> +		starts_with(name, "heads/") ||
+> +		starts_with(name, "remotes/") ||
+> +		starts_with(name, "tags/")
 
-> If it were a popular language, I think I would have heard about
-> it. But it may well be possible that I have lived under a rock for too
-> long... ;)
+A more common problem for me, personally, is when I manage to fool
+myself by creating a local branch like `origin/master`. Clearly, I want
+to refer to the remote-tracking branch, but by mistake I create a local
+branch that now conflicts with the (short) name of the remote-tracking
+branch.
 
-It is quite popular among few services (Pinterest, Discord, Bleacher =
-Report),
-but it is still pretty new, and still need to get a little more =
-spotlight.
+To remedy this, you would not only have to ensure that `create_branch()`
+verifies that the branch name does not have a `<remote-name>/` prefix
+where `<remote-name>` refers to a valid remote, but you would also need
+a corresponding patch that teaches `git add remote <nick> <url>` to
+verify that no local branch starts with `<nick>/`.
 
-> This list is sorted, basically, but your addition perturbates the =
-order.
+What do you think?
 
-Oh, sorry, I missed dts.
+Ciao,
+Johannes
 
-> The default hunk header pattern picks up lines that begin with a =
-letter
-> without leading whitespace. The tests that you present here do not =
-show
-> that the language specific hunk header pattern is better. The default
-> would have picked up the correct lines. And, in fact, when I remove =
-the
-> pattern from the code, these tests still pass!
->=20
-> I'm not saying that the pattern is bad; I say that the tests do not =
-show
-> its worthiness. More tests are needed. For example:
->=20
-> --- 8< ---
-> defmodule RIGHT do
-> end
-> #
-> #
-> # ChangeMe; do not pick up 'end' line
-> --- 8< =E2=80=94
-
-Yeah, I will provide such
-
-> BTW, I guess that any def, defmodule, etc. as the first word on a line
-> in the docstring would be picked up incorrectly. Is that a problem?
-
-No, as this would (almost?) always be the definition of the =
-module/function,
-so it is not a problem at all.
-
->> +	 "|:'a-zA-Z0-9@_]+'"
->=20
-> The opening bracket is missing here.
-
-Whoops.
-
-> Would it be an option to collapse all but the first pattern (because I
-> do not want to start the pattern with an optional part) to
->=20
-> 	"[:@]['\"]?[a-zA-Z0-9@_]"
->=20
-> This assumes that @"x1 and @'y2 cannot occur in a syntactically valid
-> program.
-
-No, these aren=E2=80=99t valid.
-
-> Remember: the patterns can be loose; they do not have to
-> validate the input, but can assume that it is syntactically valid.
-
-Ok
-
-> Does the language not have any two-character operators, such as =
-'<=3D=E2=80=9A?
-
-It has, I should add them as well (it even has 3 letter operators).
-
---
-
-=C5=81ukasz Niemier
-lukasz@niemier.pl
-
-
-
-
-
+> +	)) {
+> +		die(_("A local branch name should not start with "
+> +		      "\"refs/\", \"heads/\", \"remotes/\" or \"tags/\""));
+> +	}
+> +
+>  	if (track =3D=3D BRANCH_TRACK_EXPLICIT || track =3D=3D BRANCH_TRACK_OV=
+ERRIDE)
+>  		explicit_tracking =3D 1;
+>
+> --
+> 2.24.0.1.g6c2c19214d.dirty
+>
+>
