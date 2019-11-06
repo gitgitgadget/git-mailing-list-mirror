@@ -2,225 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 010A41F454
-	for <e@80x24.org>; Tue,  5 Nov 2019 23:58:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51DB61F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 00:11:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730330AbfKEX62 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 18:58:28 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41070 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729711AbfKEX61 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 18:58:27 -0500
-Received: by mail-wr1-f67.google.com with SMTP id p4so23569697wrm.8
-        for <git@vger.kernel.org>; Tue, 05 Nov 2019 15:58:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Q8XxZZN7fc8cdQ6227WCSPSXcAdacDIjWAo7TaM+8w0=;
-        b=hq4n4DB1e0HXhNLvytbJGznEUzWZiD/U7QajBRLtIWnEvymO9GpB7CXhvPsScZFNe0
-         O1lEGYpZNi/C1ZYRD1XDb2/nXhxC3BnALdSiTHhJTcrjxjv/OtN16vKZpCK/MR2L1Dv4
-         ZquhDqpAJx+YT2I2U5kKwtSpSZjjZhIQiaME/iMANGr0Rrnpc6NDbP7nILS81bc+En/I
-         nhMlLPMOoJCnFrQmI1gaO4COmEZaL6YCbAuswacto3M1eMUhkP0pXwgGz3SWHlYGD4Me
-         WDREzrtULw/f44HcvUM1oFYObmjkrc8Cbt2VjzCD3UujPbcHgGUBZEabOJFf71WBpc9D
-         kQgQ==
+        id S1730184AbfKFALo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 19:11:44 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:32964 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727046AbfKFALo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 19:11:44 -0500
+Received: by mail-wm1-f68.google.com with SMTP id a17so287942wmb.0
+        for <git@vger.kernel.org>; Tue, 05 Nov 2019 16:11:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Q8XxZZN7fc8cdQ6227WCSPSXcAdacDIjWAo7TaM+8w0=;
-        b=rnXsWkHx1NCV7qS2mT+DiaBSF+z/9z793TCO0sMYY7+w6oiOK6+LMP/JOjMSJry/KH
-         9oJ9nIDEGFClNyYjt2U9sT4Qd7S0eXhTp4aUV7d9kTR9cihNUYnX6Muj+pfR5w/gQ5yr
-         3gHHuvA8EoO8PuVOVZFV46qXbUAFCzqVTqUacd5BQq6shWVOQyNSXbd/ep3pYl22gwpa
-         6ZXkiQCEBmCHWsPez9Zr4WfPxBURRy0UuWDWaIwhDRdRBLVnnEX2gq9TPS1RUX55/erI
-         CqMNJxJGDW9oIZdkAs1hUXx13iMHO22nOuvhaEhjEurPoh9LvjnhqcZX9GlaMm7KIKul
-         uYSA==
-X-Gm-Message-State: APjAAAW6wPWAWcxoAxGMsgkKGqJF2E/WVQbASwn4ZST1R/SRfJxjvZgi
-        mXGBIo+CrY15voibVf4E3+9cLwa+
-X-Google-Smtp-Source: APXvYqzVS/IijMNKf4Y11HjnVn4O2W46i1RiRNEimZC1kXYg1nElVPFCBqMdCvUKtmE+rdDUn22Pyg==
-X-Received: by 2002:a5d:6789:: with SMTP id v9mr9904728wru.344.1572998305089;
-        Tue, 05 Nov 2019 15:58:25 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s17sm832585wmh.41.2019.11.05.15.58.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Nov 2019 15:58:24 -0800 (PST)
-Message-Id: <c6349cdbd057ccbcced3220ff3474b2e2083617e.1572998303.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.455.git.1572998303.gitgitgadget@gmail.com>
-References: <pull.455.git.1572998303.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 05 Nov 2019 23:58:23 +0000
-Subject: [PATCH 1/1] t6024: modernize style
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=abcvxjY0IJXPfLsHy8BdRp4Sz6cJlyiig+jTR38fcNQ=;
+        b=VvUuAYr/fXstT8ULeVQ8hDK4OxMVXKbv7ii+++xC+3t+HSXJWH/qZo7seWKmPV5omA
+         8aoFePjk8T7E6noHN/eQg/pfJ7WlscnO9GfAu1X2YJtKF8qcxdCEQu16cWAlLPY9U8av
+         5NXFwiSDCrj/yU3ca4ekL3qLI7pdnwRZpz9cnMqBilQ+gpfyS7EfXDc2aELJkI5ATk5C
+         UPpw4aUhaDpmML4KWbKrUtNTW6iiMUCtQQvRYzT095XnhzjDl/5jps6P62HdxfCw2mTt
+         UvTn8fD9eSlZYrgZnYUv8CbXMfF1M5kDvjr5uBeT4SYpVHBduq8ajjikJOHTg3ud1j+p
+         +SGw==
+X-Gm-Message-State: APjAAAUP/b0yEBNbyPzQe2+dZgSR0wIToeqJlmAxvRtHekjJvtd0yklU
+        jj5zTTC1CdO1OK9bCe+sNF0WeJijhN8n31JqvhQ=
+X-Google-Smtp-Source: APXvYqytxiafcBvW+Ni0mar4zTd9S26vgT7dMjejicjzBFE6iLh2nQfE8GxzpFrfS1kmMXjSKgWmhqZn46VRnAatGQ4=
+X-Received: by 2002:a1c:3843:: with SMTP id f64mr1232070wma.129.1572999100469;
+ Tue, 05 Nov 2019 16:11:40 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+References: <pull.455.git.1572998303.gitgitgadget@gmail.com> <c6349cdbd057ccbcced3220ff3474b2e2083617e.1572998303.git.gitgitgadget@gmail.com>
+In-Reply-To: <c6349cdbd057ccbcced3220ff3474b2e2083617e.1572998303.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 5 Nov 2019 19:11:29 -0500
+Message-ID: <CAPig+cRdG+RZOeXuJLfF7UyiBccHs6yWnCqt2d1oyTTuwp6=YQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] t6024: modernize style
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On Tue, Nov 5, 2019 at 6:58 PM Elijah Newren via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> No substantive changes, just a few cosmetic changes:
+>   * Indent steps of an individual test
+>   * Don't have logic between the "test_expect_success" blocks that
+>     the next block will depend upon, move it into the
+>     test_expect_success section itself
+>   * Fix spacing around redirection operators to match git style
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+> diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
+> @@ -15,73 +15,76 @@ GIT_COMMITTER_DATE="2006-12-12 23:28:00 +0100"
+>  test_expect_success "setup tests" '
 
-No substantive changes, just a few cosmetic changes:
-  * Indent steps of an individual test
-  * Don't have logic between the "test_expect_success" blocks that
-    the next block will depend upon, move it into the
-    test_expect_success section itself
-  * Fix spacing around redirection operators to match git style
+Since you're modernizing, perhaps use single quotes around the test
+title rather than double quotes. Same comment applies to other test
+titles.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t6024-recursive-merge.sh | 121 +++++++++++++++++++------------------
- 1 file changed, 62 insertions(+), 59 deletions(-)
+> +       echo 1 > a1 &&
 
-diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
-index 27c7de90ce..0cc876360c 100755
---- a/t/t6024-recursive-merge.sh
-+++ b/t/t6024-recursive-merge.sh
-@@ -15,73 +15,76 @@ GIT_COMMITTER_DATE="2006-12-12 23:28:00 +0100"
- export GIT_COMMITTER_DATE
- 
- test_expect_success "setup tests" '
--echo 1 > a1 &&
--git add a1 &&
--GIT_AUTHOR_DATE="2006-12-12 23:00:00" git commit -m 1 a1 &&
--
--git checkout -b A master &&
--echo A > a1 &&
--GIT_AUTHOR_DATE="2006-12-12 23:00:01" git commit -m A a1 &&
--
--git checkout -b B master &&
--echo B > a1 &&
--GIT_AUTHOR_DATE="2006-12-12 23:00:02" git commit -m B a1 &&
--
--git checkout -b D A &&
--git rev-parse B > .git/MERGE_HEAD &&
--echo D > a1 &&
--git update-index a1 &&
--GIT_AUTHOR_DATE="2006-12-12 23:00:03" git commit -m D &&
--
--git symbolic-ref HEAD refs/heads/other &&
--echo 2 > a1 &&
--GIT_AUTHOR_DATE="2006-12-12 23:00:04" git commit -m 2 a1 &&
--
--git checkout -b C &&
--echo C > a1 &&
--GIT_AUTHOR_DATE="2006-12-12 23:00:05" git commit -m C a1 &&
--
--git checkout -b E C &&
--git rev-parse B > .git/MERGE_HEAD &&
--echo E > a1 &&
--git update-index a1 &&
--GIT_AUTHOR_DATE="2006-12-12 23:00:06" git commit -m E &&
--
--git checkout -b G E &&
--git rev-parse A > .git/MERGE_HEAD &&
--echo G > a1 &&
--git update-index a1 &&
--GIT_AUTHOR_DATE="2006-12-12 23:00:07" git commit -m G &&
--
--git checkout -b F D &&
--git rev-parse C > .git/MERGE_HEAD &&
--echo F > a1 &&
--git update-index a1 &&
--GIT_AUTHOR_DATE="2006-12-12 23:00:08" git commit -m F
-+	echo 1 > a1 &&
-+	git add a1 &&
-+	GIT_AUTHOR_DATE="2006-12-12 23:00:00" git commit -m 1 a1 &&
-+
-+	git checkout -b A master &&
-+	echo A > a1 &&
-+	GIT_AUTHOR_DATE="2006-12-12 23:00:01" git commit -m A a1 &&
-+
-+	git checkout -b B master &&
-+	echo B > a1 &&
-+	GIT_AUTHOR_DATE="2006-12-12 23:00:02" git commit -m B a1 &&
-+
-+	git checkout -b D A &&
-+	git rev-parse B > .git/MERGE_HEAD &&
-+	echo D > a1 &&
-+	git update-index a1 &&
-+	GIT_AUTHOR_DATE="2006-12-12 23:00:03" git commit -m D &&
-+
-+	git symbolic-ref HEAD refs/heads/other &&
-+	echo 2 > a1 &&
-+	GIT_AUTHOR_DATE="2006-12-12 23:00:04" git commit -m 2 a1 &&
-+
-+	git checkout -b C &&
-+	echo C > a1 &&
-+	GIT_AUTHOR_DATE="2006-12-12 23:00:05" git commit -m C a1 &&
-+
-+	git checkout -b E C &&
-+	git rev-parse B > .git/MERGE_HEAD &&
-+	echo E > a1 &&
-+	git update-index a1 &&
-+	GIT_AUTHOR_DATE="2006-12-12 23:00:06" git commit -m E &&
-+
-+	git checkout -b G E &&
-+	git rev-parse A > .git/MERGE_HEAD &&
-+	echo G > a1 &&
-+	git update-index a1 &&
-+	GIT_AUTHOR_DATE="2006-12-12 23:00:07" git commit -m G &&
-+
-+	git checkout -b F D &&
-+	git rev-parse C > .git/MERGE_HEAD &&
-+	echo F > a1 &&
-+	git update-index a1 &&
-+	GIT_AUTHOR_DATE="2006-12-12 23:00:08" git commit -m F
- '
- 
- test_expect_success 'combined merge conflicts' '
- 	test_must_fail env GIT_TEST_COMMIT_GRAPH=0 git merge -m final G
- '
- 
--cat > expect << EOF
--<<<<<<< HEAD
--F
--=======
--G
-->>>>>>> G
--EOF
-+test_expect_success "result contains a conflict" '
-+	cat >expect <<-EOF &&
-+		<<<<<<< HEAD
-+		F
-+		=======
-+		G
-+		>>>>>>> G
-+		EOF
- 
--test_expect_success "result contains a conflict" "test_cmp expect a1"
--
--git ls-files --stage > out
--cat > expect << EOF
--100644 ec3fe2a791706733f2d8fa7ad45d9a9672031f5e 1	a1
--100644 cf84443e49e1b366fac938711ddf4be2d4d1d9e9 2	a1
--100644 fd7923529855d0b274795ae3349c5e0438333979 3	a1
--EOF
-+	test_cmp expect a1
-+'
- 
--test_expect_success "virtual trees were processed" "test_cmp expect out"
-+test_expect_success "virtual trees were processed" '
-+	git ls-files --stage >out &&
-+	cat >expect <<-EOF &&
-+		100644 ec3fe2a791706733f2d8fa7ad45d9a9672031f5e 1	a1
-+		100644 cf84443e49e1b366fac938711ddf4be2d4d1d9e9 2	a1
-+		100644 fd7923529855d0b274795ae3349c5e0438333979 3	a1
-+		EOF
-+	test_cmp expect out
-+'
- 
- test_expect_success 'refuse to merge binary files' '
- 	git reset --hard &&
--- 
-gitgitgadget
+The commit message talks about fixing spacing around redirection
+operators but neither this instance nor any of the others in this
+function have been fixed.
+
+> +       git add a1 &&
+> +       GIT_AUTHOR_DATE="2006-12-12 23:00:00" git commit -m 1 a1 &&
+> +       ...
+>  '
+> +       cat >expect <<-EOF &&
+
+Since there's no interpolation going on inside the here-doc, perhaps
+use -\EOF instead. Same comment applies to other here-docs.
+
+> +               <<<<<<< HEAD
+> +               F
+> +               =======
+> +               G
+> +               >>>>>>> G
+> +               EOF
+
+Custom in most scripts is to indent the here-doc body only as far as
+the command which opens it (that is, give it the same indentation as
+the 'cat' command). Same comment applies to other here-docs.
