@@ -7,96 +7,85 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9488A1F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 02:42:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D90191F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 03:15:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730678AbfKFCmz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 21:42:55 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52293 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730562AbfKFCmz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 21:42:55 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8FAAC2B13A;
-        Tue,  5 Nov 2019 21:42:54 -0500 (EST)
+        id S1730933AbfKFDP5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 22:15:57 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63855 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730655AbfKFDP5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 22:15:57 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C8655A1677;
+        Tue,  5 Nov 2019 22:15:56 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=neujMBczOGVSo5KqUw/v26v0m8o=; b=q+btfx
-        DeDDUxTR5PntluCapIj3NeDnmJrydAKmFD2xLQpD85PRz4Cepecd4LQyORC2yCEg
-        vAdN0KaD3yn6x7npqaxQTJ5+n3pSh2fZEv+qz9cHj9OnUmuM+Tv51bpk9R+IlUmA
-        2fzT8lIsK2bfXzYc1JB2wv/LhzVjsDc3fpvP4=
+        :content-type; s=sasl; bh=74nu9AarGn2gXvqBG53pWPZS5G0=; b=QrpJVn
+        Ce9Q9/BgyYOJKKfPpBSw4sj5UFbki+rrAE7p2MG9wzyaC/DKl4PzWHS1zyseYJ71
+        fS4/Kvw8NfFAyTqOtEbKDmll5t6i+nOoDUvr3zHjuzErYxUlFzeCbZwszNkYlEn/
+        PR3CviV7j6yRc09hCiQSBHWArfDH+44TpO698=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DA/kkG1lGFP3E7bZnJUAEinmsefXNWdH
-        vwXzqc6X7J681wC1DsQ2QGaLlS2f5mHoVQpfaK/UF97ua8/ktyWjvocQvRajEkOW
-        Hl7lruamDAuRW8W4U3ZwgW5g52ejcy4v1IRbwBZGBVGD6vSMUphCuYSW7uQzRvia
-        T/8/WFrpWyk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87BCE2B139;
-        Tue,  5 Nov 2019 21:42:54 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=jtHFSKDLObVySDAYG4haxB9/Ize5c8O7
+        R70YgOy+O4TBczIU2PaPahFYJchttJ2nD4qi95GlRXsda7fSlVVEuXX1g7P0k9Hx
+        jOUtXrlFj8zAPBWPjEdKh5WFLdZPYyhPmFumrZK6NBiKdaw+Ij3KknA5V2VtLUKK
+        1WtXzQUXW9I=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C0F69A1676;
+        Tue,  5 Nov 2019 22:15:56 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EDCFC2B138;
-        Tue,  5 Nov 2019 21:42:53 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E726EA1672;
+        Tue,  5 Nov 2019 22:15:53 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     workingjubilee@gmail.com, git@vger.kernel.org,
-        christian.couder@gmail.com, johannes.schindelin@gmx.de
-Subject: Re: [PATCH v7 1/1] Implement rev-list --bisect* --first-parent
-References: <20191105052141.15913-2-workingjubilee@gmail.com>
-        <20191105230403.5542-1-jonathantanmy@google.com>
-Date:   Wed, 06 Nov 2019 11:42:52 +0900
-In-Reply-To: <20191105230403.5542-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Tue, 5 Nov 2019 15:04:03 -0800")
-Message-ID: <xmqqtv7hvi6r.fsf@gitster-ct.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH v3 0/4] Documentation for common user misconceptions
+References: <20191102192615.10013-1-sandals@crustytoothpaste.net>
+        <20191104222634.GC22367@sigill.intra.peff.net>
+        <xmqqsgn1wyt2.fsf@gitster-ct.c.googlers.com>
+        <20191106021935.GF32531@camp.crustytoothpaste.net>
+Date:   Wed, 06 Nov 2019 12:15:51 +0900
+In-Reply-To: <20191106021935.GF32531@camp.crustytoothpaste.net> (brian
+        m. carlson's message of "Wed, 6 Nov 2019 02:19:35 +0000")
+Message-ID: <xmqqpni5vgns.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 21E64B18-003F-11EA-9B04-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: BE0DEBFA-0043-11EA-A77A-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> Your commit message title should be of the form "<component>: <change>",
-> e.g.:
+> On 2019-11-06 at 01:58:33, Junio C Hamano wrote:
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > Thanks. I think this is an improvement over v1, but I'm still a little
+>> > iffy on some of the other movement in the first patch.
+>> >
+>> > TBH, I don't think it's making anything _worse_, but I think it
+>> > highlights how some of our documentation is a mish-mash of low-level and
+>> > high-level details. ;) So it might be a good opportunity to at least
+>> > clean up the documentation around ident environment variables.
+>> 
+>> Yeah, I hate to suggest another round, but agree with your comments
+>> on 1/4 wrt the way how and the place where the environment variables
+>> are explained, which invalidates the changes in 2/4.  Fortunately
+>> 3/4 and 4/4 are unaffected ;-)
 >
->   rev-list: support --first-parent with --bisect*
+> Yeah, I agree another round is warranted, and it's not the end of the
+> world: it'll get into 2.25 either way.  I'll try to get a reroll out in
+> the next few days.
 
-Good suggestion.
-
-> I would be much more laconic (in particular, omitting subjective terms
-> like "minutiae" and "mountains of irrelevant data"), but perhaps that is
-> just a matter of subjective style.
-
-FWIW, I had the same reaction.  That part of the message was too
-noisy without adding much actual value.
-
->> Note, bisecting on --first-parent becomes part of findall's previously
->> existing pass-through as an "option state" flag.
->
-> I don't understand this part.
-
-Me neither.
-
-> Also, clarify in the commit message somewhere that this commit does not
-> change the behavior of "git bisect".
-
-s/\.$/ when used without the "--first-parent" option&/; you mean?
-
-> As for the diff, besides my comments below, a change in the user-facing
-> documentation of "rev-list" is needed, since --bisect and --first-parent
-> now work together.
-
-True.  I too am, like you are, happy to see that these two options
-made to work well together.
-
-Thanks, both, for the patch and useful comments.  My own review on
-it may take a bit more time.
+Thanks.  I also agree with what Peff and you said on 3/4 wrt the
+addition of "ship template, tweak it into an untracked config that
+gets used".
 
