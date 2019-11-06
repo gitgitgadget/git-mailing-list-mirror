@@ -2,210 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4951E1F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 12:48:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EBF21F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 13:21:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731055AbfKFMsf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 07:48:35 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:33237 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730392AbfKFMse (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 07:48:34 -0500
-Received: by mail-wm1-f67.google.com with SMTP id a17so1514388wmb.0
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 04:48:32 -0800 (PST)
+        id S1730976AbfKFNVw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 08:21:52 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:38257 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726785AbfKFNVw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 08:21:52 -0500
+Received: by mail-qt1-f195.google.com with SMTP id p20so15377929qtq.5
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 05:21:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=DOPT2UisF57tFDAhc8FYGoKmKi+H9UikSzo+N+QGsDU=;
-        b=qp+XmAvb+QcsIT7Ey49Qi5C7tx18BKQ3ijpVgibkW6bsfSqHhl6UQf9Z0alDqgjOep
-         94TI1LCln2zHt8r+W6PbLFWH4qiUrcXyMx5bqjUZD2i72eXZVh4ZnkyKBVLUg5QvsLhj
-         dgNbGnRbWCxEP0QQoib6tCBi7QzebRP363YeW83RAoCYBNfq5xh0SpujBxsMLpMiBYna
-         z4hxv39qP+NFPrfae1cuqkALgWWZQN89DcucluAukDUvHuMEPFJ63h18uX+LKjzG5c2o
-         ALd7ciOfpZJpGD2QacjpnP4wXCS2XGQbogSUrTX4L+K7qfBeNbT9HAuv0wPoVmpf0+ZD
-         djHA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=TCwGbXVATU89qt3vwbRpHK/bKyQ4GySHcjRHUAaumAw=;
+        b=g7tiDA7VfqH3LUP11c+bhccvpFHrezVhHYNLuAkGCXyb8+PsqBYwxkdwTBYREd7iK5
+         8egPAHMWUA2vZBTqqWMXTs1GPwlczN/DKze3p+mPjBmhKZfni3Y3ew9fsz2UcCGhLbCd
+         mMw/sCQau4xiYgpnH6f0DOu3cAuYweZsu9adLRU41LQ3sYQeFBugFNKwUWqlbH3rWB0W
+         3dyF8T4yBLJdPF4yifWsPDDZgBJPyYvwOC4tzjX3h3ST+EFWt3Rvsf7ZMmgxwUGUICcz
+         BiDRAvpEh8Hu/to0O8WZnhXh5N8bOlcxYgnP5XqR98MQkzVEhBJJFjPxhIe7dxhn+pxA
+         dmoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DOPT2UisF57tFDAhc8FYGoKmKi+H9UikSzo+N+QGsDU=;
-        b=ipwGrVYDpqPLF38kPPiSbrUg1Lgu+8PMF6nxlmjYkUTzEA/ApQ9JrBD0wv4dTqaVsU
-         zucTmgKX8bb/Y0PkPbKRuxLyfH71YPv4BieFgyg6tGLrZCwn/GFUM6fLoo6mai7ClQ5O
-         rNqAQJmaf8K+P2uyCnQGkHl5q7N20ILaV3yRALXh7gaknHaFKvA9npQeJjieIn3dEqoD
-         EbuOihJxYMRSW7vuuTXD6JlnI16dLJnCxvFLLPvL8EFx7YUf3IaA5rCa5Ahodx0rxzx3
-         SZBhByckeSEJ41P1KJUM9rB7jyYI8iuunKuD3aoBKLJSOcO8yXwby71MoR+puvzsgoHG
-         nakg==
-X-Gm-Message-State: APjAAAXlBXn6HttMo7KC8xhQ6JiM2jCmvVgBqfs2UuaEMH4TTxCQxfEw
-        sp7yy4gT3XfRgYPTnK7F9QxqzGnE
-X-Google-Smtp-Source: APXvYqydUjy3Q/P71N4RP0eo/SnBjrgRg6CFkcG2hFzJyX1QQBYGdLTtZmrXL4ED2aqbetyTHiIQ0w==
-X-Received: by 2002:a7b:c7c7:: with SMTP id z7mr2246206wmk.133.1573044511625;
-        Wed, 06 Nov 2019 04:48:31 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e27sm7090711wra.21.2019.11.06.04.48.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 04:48:31 -0800 (PST)
-Message-Id: <796bc03408273097847185f9130d4992e1ee8121.1573044509.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.456.git.1573044509.gitgitgadget@gmail.com>
-References: <pull.456.git.1573044509.gitgitgadget@gmail.com>
-From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 06 Nov 2019 12:48:29 +0000
-Subject: [PATCH 1/1] api-index: remove api doc index files
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=TCwGbXVATU89qt3vwbRpHK/bKyQ4GySHcjRHUAaumAw=;
+        b=NZ25LroW34U6U6i9TqyoSOGu5Ey807AlGeNO7eS67cWK9JaEnRuGtLy+76Uz+SdJJb
+         Nr6AK2IektvVf07F2Tk1d3rdsQphhsPn9wm8UEQCbWWOVNQvINIET6cyArPC5d5aoD/K
+         0WiGdZmpIxfjhlvnfSf8RV0BWuAU2PGsfPSPYI+lb2UPYtpIDniU0421evxvmYEgReyt
+         T5L/wV6qOv20FR/gnt4yhIkWFLpgKWFsz2+N0W9g9fPLSxQtV6QpQYRSwcb/Yis0k10G
+         CA7VEQlVCcQEc8qapr/GlQi0W/H+mA5jNyngYoOZ9n5/o+R3vq+2iVbMEu4ZWaKADeli
+         uTig==
+X-Gm-Message-State: APjAAAU+7H5s0hv5VGsknHfVsIOdb8fcXHOzM089ezMM5nj7wTvkIa5R
+        V/ATBPzksOkuSeMsiwGIRhw=
+X-Google-Smtp-Source: APXvYqzaZGYeakc8GfP+pyvRkuA8b3P8a9iOBXiD3s7ZgdNysv1quuBPx7LRuZTrr3l47RH8cqvg3A==
+X-Received: by 2002:ac8:2f55:: with SMTP id k21mr2379798qta.237.1573046509973;
+        Wed, 06 Nov 2019 05:21:49 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:9d78:3a28:e2ab:8193? ([2001:4898:a800:1010:4eae:3a28:e2ab:8193])
+        by smtp.gmail.com with ESMTPSA id z72sm11615171qka.115.2019.11.06.05.21.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Nov 2019 05:21:49 -0800 (PST)
+Subject: Re: [PATCH v2 1/1] commit-graph: use start_delayed_progress()
+To:     Jeff King <peff@peff.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, rynus@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.450.git.1572969955.gitgitgadget@gmail.com>
+ <pull.450.v2.git.1572984842.gitgitgadget@gmail.com>
+ <78bd6bc2c02f1daf13938a738d8eae56b5f6b74c.1572984842.git.gitgitgadget@gmail.com>
+ <20191106040955.GD4307@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <832b3b8b-63e6-1d32-0013-158b3c6725c8@gmail.com>
+Date:   Wed, 6 Nov 2019 08:21:48 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
+ Thunderbird/71.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Heba Waly <heba.waly@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Heba Waly <heba.waly@gmail.com>
+In-Reply-To: <20191106040955.GD4307@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Heba Waly <heba.waly@gmail.com>
+On 11/5/2019 11:09 PM, Jeff King wrote:
+> On Tue, Nov 05, 2019 at 08:14:02PM +0000, Derrick Stolee via GitGitGadget wrote:
+> 
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> When writing a commit-graph, we show progress along several commit
+>> walks. When we use start_delayed_progress(), the progress line will
+>> only appear if that step takes a decent amount of time.
+>>
+>> However, one place was missed: computing generation numbers. This is
+>> normally a very fast operation as all commits have been parsed in a
+>> previous step. But, this is showing up for all users no matter how few
+>> commits are being added.
+> 
+> Yep, makes sense (especially that it should all the other progress as
+> part of the same process).
+> 
+>> Now that we changed this method, very fast commands show no progess at
+>> all. This means we need to stop testing for seeing these progress lines
+>> in the test suite.
+> 
+> I think this is OK for now, though it does make me wonder if
+> "--progress" ought to perhaps override "delayed" in some instances,
+> since it's a positive signal from the caller that they're interested in
+> seeing progress.
 
-Remove both api-index.txt and api-index-skel.txt as the API documentation
-is being moved to the header files, so the index is not needed anymore
-because the doc files (Documentation/technical/api-*.txt) will be gone.
+I was thinking that we could start with a GIT_TEST_PROGRESS environment
+variable to force all delayed progress to act like non-delayed progress.
+That would at least give us confirmation on these kinds of tests.
 
-Make changes to Documentation/Makefile accordingly.
+The impact of doing that inside the progress code could be large, so
+perhaps that is best left for a follow-up.
 
-Signed-off-by: Heba Waly <heba.waly@gmail.com>
----
- Documentation/Makefile                     | 11 +++------
- Documentation/git.txt                      |  3 ---
- Documentation/technical/.gitignore         |  1 -
- Documentation/technical/api-index-skel.txt | 13 ----------
- Documentation/technical/api-index.sh       | 28 ----------------------
- 5 files changed, 3 insertions(+), 53 deletions(-)
- delete mode 100644 Documentation/technical/.gitignore
- delete mode 100644 Documentation/technical/api-index-skel.txt
- delete mode 100755 Documentation/technical/api-index.sh
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 06d85ad958..0788dd12e8 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -73,7 +73,7 @@ SP_ARTICLES += howto/rebuild-from-update-hook
- SP_ARTICLES += howto/rebase-from-internal-branch
- SP_ARTICLES += howto/keep-canonical-history-correct
- SP_ARTICLES += howto/maintain-git
--API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
-+API_DOCS = $(patsubst %.txt,%,$(wildcard technical/api-*.txt))
- SP_ARTICLES += $(API_DOCS)
- 
- TECH_DOCS += MyFirstContribution
-@@ -96,7 +96,6 @@ TECH_DOCS += technical/shallow
- TECH_DOCS += technical/signature-format
- TECH_DOCS += technical/trivial-merge
- SP_ARTICLES += $(TECH_DOCS)
--SP_ARTICLES += technical/api-index
- 
- ARTICLES_HTML += $(patsubst %,%.html,$(ARTICLES) $(SP_ARTICLES))
- HTML_FILTER ?= $(ARTICLES_HTML) $(OBSOLETE_HTML)
-@@ -352,7 +351,7 @@ clean:
- 	$(RM) *.texi *.texi+ *.texi++ git.info gitman.info
- 	$(RM) *.pdf
- 	$(RM) howto-index.txt howto/*.html doc.dep
--	$(RM) technical/*.html technical/api-index.txt
-+	$(RM) technical/*.html
- 	$(RM) SubmittingPatches.txt
- 	$(RM) $(cmds_txt) $(mergetools_txt) *.made
- 	$(RM) manpage-base-url.xsl
-@@ -385,12 +384,8 @@ user-manual.xml: user-manual.txt user-manual.conf asciidoctor-extensions.rb GIT-
- 	$(TXT_TO_XML) -d book -o $@+ $< && \
- 	mv $@+ $@
- 
--technical/api-index.txt: technical/api-index-skel.txt \
--	technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
--	$(QUIET_GEN)cd technical && '$(SHELL_PATH_SQ)' ./api-index.sh
--
- technical/%.html: ASCIIDOC_EXTRA += -a git-relative-html-prefix=../
--$(patsubst %,%.html,$(API_DOCS) technical/api-index $(TECH_DOCS)): %.html : %.txt \
-+$(patsubst %,%.html,$(API_DOCS) $(TECH_DOCS)): %.html : %.txt \
- 	asciidoc.conf GIT-ASCIIDOCFLAGS
- 	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) $*.txt
- 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 9b82564d1a..0fdd93ac95 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -904,9 +904,6 @@ See linkgit:gitworkflows[7] for an overview of recommended workflows.
- See also the link:howto-index.html[howto] documents for some useful
- examples.
- 
--The internals are documented in the
--link:technical/api-index.html[Git API documentation].
--
- Users migrating from CVS may also want to
- read linkgit:gitcvs-migration[7].
- 
-diff --git a/Documentation/technical/.gitignore b/Documentation/technical/.gitignore
-deleted file mode 100644
-index 8aa891daee..0000000000
---- a/Documentation/technical/.gitignore
-+++ /dev/null
-@@ -1 +0,0 @@
--api-index.txt
-diff --git a/Documentation/technical/api-index-skel.txt b/Documentation/technical/api-index-skel.txt
-deleted file mode 100644
-index eda8c195c1..0000000000
---- a/Documentation/technical/api-index-skel.txt
-+++ /dev/null
-@@ -1,13 +0,0 @@
--Git API Documents
--=================
--
--Git has grown a set of internal API over time.  This collection
--documents them.
--
--////////////////////////////////////////////////////////////////
--// table of contents begin
--////////////////////////////////////////////////////////////////
--
--////////////////////////////////////////////////////////////////
--// table of contents end
--////////////////////////////////////////////////////////////////
-diff --git a/Documentation/technical/api-index.sh b/Documentation/technical/api-index.sh
-deleted file mode 100755
-index 9c3f4131b8..0000000000
---- a/Documentation/technical/api-index.sh
-+++ /dev/null
-@@ -1,28 +0,0 @@
--#!/bin/sh
--
--(
--	c=////////////////////////////////////////////////////////////////
--	skel=api-index-skel.txt
--	sed -e '/^\/\/ table of contents begin/q' "$skel"
--	echo "$c"
--
--	ls api-*.txt |
--	while read filename
--	do
--		case "$filename" in
--		api-index-skel.txt | api-index.txt) continue ;;
--		esac
--		title=$(sed -e 1q "$filename")
--		html=${filename%.txt}.html
--		echo "* link:$html[$title]"
--	done
--	echo "$c"
--	sed -n -e '/^\/\/ table of contents end/,$p' "$skel"
--) >api-index.txt+
--
--if test -f api-index.txt && cmp api-index.txt api-index.txt+ >/dev/null
--then
--	rm -f api-index.txt+
--else
--	mv api-index.txt+ api-index.txt
--fi
--- 
-gitgitgadget
+Thanks,
+-Stolee
