@@ -8,85 +8,92 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88B4C1F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 18:51:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E39911F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 18:51:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728638AbfKFSvp (ORCPT <rfc822;e@80x24.org>);
+        id S1728740AbfKFSvr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 13:51:47 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:34780 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727376AbfKFSvp (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 6 Nov 2019 13:51:45 -0500
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:52020 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727208AbfKFSvp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 13:51:45 -0500
-Received: by mail-wm1-f41.google.com with SMTP id q70so5009220wme.1
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 10:51:43 -0800 (PST)
+Received: by mail-wm1-f66.google.com with SMTP id v3so3009251wmh.1
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 10:51:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=u5aIQL1obfylvb82XDx6BIT7vHYpcS4b2QZUWAuUFRM=;
-        b=msb73YZnHxR2s8Tf5mYOUBS32tnKy1puyORIcN1D7h0yWLFtWaADkHm+ZOfY83N9ry
-         cHuakjnSpDZ/LDoPvtzp3nUT5NdyDe/8YzJTlTas6ZF0ZC/VA/nJVpeZQyL9CgC1MA+h
-         ZebrkKjmKMJ4/tq9HTa5mW44F5f0aAKrQFuHTx5bBUvSRnPFfsXfofkMuwgxx8Xlhi4c
-         cuvwPKq31Lj7Y8CSKgHHExTwHndOFY1RiFPaNavKiUraLqi0gRFDrPKeti8O1A/wPHxa
-         vPOl//u8e05HC2MOxb6nwxraYN5lOI0iLoFAPTiFq9VrbfUU5jDbdB51sXzffdotT6lO
-         FchQ==
+        bh=ekjt67vQTBMrFAQ1564rDVcuyDGLYVOukXLMQrvOH+E=;
+        b=L6z1qj0gWEpYPJO+x7nJB/6OD7jiAuek+K45yVw9Lg+pw1DyqjFrXJ660jVAX3sGAY
+         ptlOA0Faud39FBdCeoPb+wCxoLTHIgYRnrpXxUi+IS4fmO6mbZz/tR+ZJOJ6OkfYxN1c
+         iVcxtDBZnvFWebayDJsVKslEs3PeAv+XkjMhjE/eJIeLdnFaLoZPb9yjYuNpItwg0vFA
+         fvHn31fO6ABRN0ymLtjPAe9yrAxyuEc8Sn01Of/xqo6/x7JC6b4TIb/fFkxdy+q4Xq1i
+         +3qqoQIRbkSZLE91CVIS1w8eHE5/10D5S4ACOQ4canp/MATlN787qf7SoWluxWpc1yop
+         ooKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=u5aIQL1obfylvb82XDx6BIT7vHYpcS4b2QZUWAuUFRM=;
-        b=FRexgRo5MVyv9uzKQ6IEqAdwxIoOUjqVA9AnpNhQhcPfpC+phqrMU6yiWr9PLLApIW
-         38GdDGYBp36+F+XC/USu1NGw4NIrty/bShGdwPpGFPuNBh57sjm6//rN/MKpQE7B7mo9
-         7YjePZeZnaXY3WPC8cTaDaC5M36GFCDhzwLhLXoUKYda6Cq7X458QCCsUVEJuwh92cNS
-         sipXTnQfZFy8WP3+xB9SkzAG4WBikvw3p3fYEoUPTguTyq4DSPBpVsnynUllFACyGO6Y
-         XONiTSE/n2G3kV4iBzNS0CFr0plTJ4i2LbZXEqsiHHgyzN2+hkWOOFB95J4niZ0G/dj5
-         xuwA==
-X-Gm-Message-State: APjAAAV/yQ5s2JvW+E5oHRBQKSRXdQt2J6qIIbMytKj+Shg5TvVgjqxO
-        5BarA1C4tasJOyMjj1+5RBg8an6/
-X-Google-Smtp-Source: APXvYqyqJfMb8FCQp6pn+O6WApfJ7CY5wDiF51GQMLPrLRQLsxsFXzK5aTyctPuEIfTze8GygGsawA==
-X-Received: by 2002:a05:600c:2383:: with SMTP id m3mr3821969wma.166.1573066303128;
-        Wed, 06 Nov 2019 10:51:43 -0800 (PST)
+        bh=ekjt67vQTBMrFAQ1564rDVcuyDGLYVOukXLMQrvOH+E=;
+        b=Rk0WaZcocyrwmjWwhglXfM7Hj7I0NIAHf23c+rN+QCML7JrUxATWdkzcYJ4CWZS+ls
+         fuah35zq1dOgGtOB0MJKKc+fK2rYJo3FiE12XKmNVtV6r+I/iQnlDsp1JHWaV+BFGaeL
+         f6IX3vQukTxbfuqZRzQyjopZpE29hMn/KSXX7LsYam6ftyZ9KzPDneSAMuUHWMxJcqxa
+         AGT6+4G1DcOYlftzOx5noidWuwuQdoaxo5qsxOztkvbCcba/AQwKajqbb4EAlaTQ//ZK
+         Lk7hfbO+ZIgUdd9QyK1aTlax/6xIYRJlx8TaSpZ5dYWAgFWet7sid08TEz1G4HtDweTy
+         TVMw==
+X-Gm-Message-State: APjAAAXRoN2KOL52F3KNNI8rZqewb0z6W7+6+NqqPxkIF1wS0uSREU0u
+        dkZUIGs3y+gIPB1j+L7hniH1Kzhz
+X-Google-Smtp-Source: APXvYqyzAhTWBkMIvKTn/GYVu5FsOs1ocU2nF5hGpBbxnp8pIbEE2cldmW8qG6biDYPWnDIxShhHWQ==
+X-Received: by 2002:a1c:4c10:: with SMTP id z16mr3606024wmf.24.1573066301796;
+        Wed, 06 Nov 2019 10:51:41 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b196sm4206302wmd.24.2019.11.06.10.51.42
+        by smtp.gmail.com with ESMTPSA id v16sm26611726wrc.84.2019.11.06.10.51.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 10:51:42 -0800 (PST)
-Message-Id: <606756d7db834b8c16df6bad9a90c559a2fde1f3.1573066300.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.451.v2.git.1573066300.gitgitgadget@gmail.com>
+        Wed, 06 Nov 2019 10:51:41 -0800 (PST)
+Message-Id: <pull.451.v2.git.1573066300.gitgitgadget@gmail.com>
+In-Reply-To: <pull.451.git.1572981981.gitgitgadget@gmail.com>
 References: <pull.451.git.1572981981.gitgitgadget@gmail.com>
-        <pull.451.v2.git.1573066300.gitgitgadget@gmail.com>
-From:   "Erik Chen via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 06 Nov 2019 18:51:40 +0000
-Subject: [PATCH v2 2/2] add whitespace
+From:   "erik chen via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 06 Nov 2019 18:51:38 +0000
+Subject: [PATCH v2 0/2] fetch: add trace2 instrumentation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Erik Chen <erikchen@chromium.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Erik Chen <erikchen@chromium.org>
+Add trace2 regions to fetch-pack.c to better track time spent in the various
+phases of a fetch:
 
-Signed-off-by: Erik Chen <erikchen@chromium.org>
----
- fetch-pack.c | 1 +
- 1 file changed, 1 insertion(+)
+* matching common remote and local refs
+* marking local refs as complete (part of the matching process)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index f2f3365bbe..5e3eee0477 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -666,6 +666,7 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 	struct ref *ref;
- 	int old_save_commit_buffer = save_commit_buffer;
- 	timestamp_t cutoff = 0;
-+
- 	save_commit_buffer = 0;
- 
- 	trace2_region_enter("fetch-pack", "mark_complete_and_common_ref", NULL);
+Both of these stages can be slow for repositories with many refs.
+
+Signed-off-by: Erik Chen erikchen@chromium.org [erikchen@chromium.org]
+
+Erik Chen (2):
+  fetch: add trace2 instrumentation
+  add whitespace
+
+ fetch-pack.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+
+base-commit: 566a1439f6f56c2171b8853ddbca0ad3f5098770
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-451%2Ferikchen%2Ftest12-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-451/erikchen/test12-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/451
+
+Range-diff vs v1:
+
+ 1:  4fdbb9f504 = 1:  4fdbb9f504 fetch: add trace2 instrumentation
+ -:  ---------- > 2:  606756d7db add whitespace
+
 -- 
 gitgitgadget
