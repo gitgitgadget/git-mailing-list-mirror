@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55F671F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 15:51:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E44641F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 15:51:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731968AbfKFPv1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 10:51:27 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:38679 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726926AbfKFPvX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 10:51:23 -0500
-Received: by mail-wr1-f52.google.com with SMTP id j15so5776633wrw.5
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 07:51:22 -0800 (PST)
+        id S1731957AbfKFPv0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 10:51:26 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:35953 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729021AbfKFPvZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 10:51:25 -0500
+Received: by mail-wm1-f65.google.com with SMTP id c22so3974970wmd.1
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 07:51:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=a7nAOz6S7qxezayNEsjR5/tbUnbYmHKlKuiGEH+fF+0=;
-        b=snDjVsGxPTiYOtEHhmrBnFwlAJ+7+ccAuZez7bVls4CrAkxUozJgFtAq7GfbLgefWg
-         kkc7x39qgIK4QBwMsoGmU87vrU5/yYnrZpKE7sSF+8XMCaTzlBnwzix5URJoZbM/z2PT
-         9N5N/41cv1VqKbVxeEDGVUsgnS9xrtAgpkjxqPX5FoexjlW2UnB77LGW0uiKgOMNe94i
-         fwMyysJnHiLmIVRCM1Rc4r85rdfcCEqrB7SPiUPtcgdUg2BapRWnxHzj9xseHchCaMpP
-         6y4ZdVl1COF8yOBLLtIcTdGYztj0a3n625nuNBtQL3xnfGKW18kNh5oh0uRnJQeVfRV8
-         gT9g==
+        bh=RRNHaoGxe6eBBfNch1ZwKlaup2UOYMeLEiymJFb8b/E=;
+        b=OJDoZVnXvwA/KM+5jcOuu5Atj1im1KE43X3j1hZwxQlVrmdxWohwDLYZOBhvNGiku+
+         GvUWPBuS11/5Dw/IDK3W4rq+Fjn2HmJUw9Osyb92RuR4xWmQkNZg/v5nyvt8b770hTon
+         ShLTZNUZluhqANXn32CyMDpXMQ3rVmuJ7G/ojBkm2EzqLT0ZiuQfwQtavgVSJYrBt+BQ
+         QmTA1y2EXFpVLYuyKwS3wStGNA2Dp4ZhSz0dMKBq0geV0xno79FaFIDSCGYnKCT+SjKP
+         3ieZhooB93nwAhKxKJ/9cXQARKOL33fFE4ALRXykmuMlGCX3yQtOrb8pg1GDu4mk1wxj
+         mGmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=a7nAOz6S7qxezayNEsjR5/tbUnbYmHKlKuiGEH+fF+0=;
-        b=MT3eCSncS7mEwbMqfrf6/JuBlJYIt563MQVj4Rd0iVOxnf1Ym7qI4w9WWWXm0QtDcM
-         pbz+0roCpZztANIF7PQvzQij/vf5bd6JtATGRpPXYjWzCYM9FSB09PobqYAtmOCSj+U3
-         dLeu/inoK3OmvhAPOhnCV/l2OH6leX8HUEi6BfOKo9Kb87ADaJLvckEtEs0kE8usw5VC
-         cJqG/tMcWhI/CF79dmU0z8n3qaSGCkZG5ilP2XlWvW+lhSa9R5edR8B75PZvvRPmHwP1
-         2JbHPCeREkMDzr8Q8hG/pIu4iI+li0BDLMry7KWqGPnd+2mwI3S6Fgwj3Wm5MnWSKB04
-         ogCQ==
-X-Gm-Message-State: APjAAAX4wuSoANCb5sZzUfcQ9W6a5nnXcRuisE1CTr70EzVvQwzhDq8z
-        4vm8IAySVjiCYHpu29m1Pzx43cHx
-X-Google-Smtp-Source: APXvYqyjzL1AZc7HhcIpX72niPMsRnOKEXxYtiuXAf1pDWZCc1wz52wArt/5vpZ8Le0+2UmP2FhnmA==
-X-Received: by 2002:adf:f744:: with SMTP id z4mr3348924wrp.205.1573055481999;
-        Wed, 06 Nov 2019 07:51:21 -0800 (PST)
+        bh=RRNHaoGxe6eBBfNch1ZwKlaup2UOYMeLEiymJFb8b/E=;
+        b=C62AWoE9cKj8oc3IYNLWDle3w4HeGpHgj9U87WYcYPFIa1PAJNhBB9JU08g5yUF4bU
+         Ut8C3KtzutblfZVoK/cudkjRmXEE49yngM47htZuTbZimoLuA2SF870lz6BHVcriJLz/
+         8ufGs10HxlPRihc/amD5EuSw/BkavCU7c2ltj38nUAQ8J3/X27r76Q2mYhSEuiHLKuVt
+         wkAQ70U1tiYJpT0RnO0taJvJMoLekeH1HPYUBz08Br0QovtTl1NsOW5Yq/o9WHkcRNwJ
+         61c/Ur1ZjyR5bviA9f5btTt8XM6quxSEa/NAMu0uxury9A5ikgD0jjYKjFHI1tTL0Fsn
+         7ZPQ==
+X-Gm-Message-State: APjAAAV5tkqVXkRWF4Yupb+StO0oP5C5wL6X7B23hj5YkJwGW2Mj/d0V
+        bWOnOk0tmMPdl3icFXNjSrcPY+4F
+X-Google-Smtp-Source: APXvYqy67/YMBudM2E6zXhrH0SPpHCP57IMa7PfwLXDu5IEcR4brq3Ih5DkXE/0/F5EGtOUJC8NHUA==
+X-Received: by 2002:a05:600c:2253:: with SMTP id a19mr3137032wmm.97.1573055483272;
+        Wed, 06 Nov 2019 07:51:23 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g5sm3103878wma.43.2019.11.06.07.51.21
+        by smtp.gmail.com with ESMTPSA id v10sm3530493wmg.48.2019.11.06.07.51.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 07:51:21 -0800 (PST)
-Message-Id: <f961a5155a5ec1590652ce7b5a549eead71930e1.1573055478.git.gitgitgadget@gmail.com>
+        Wed, 06 Nov 2019 07:51:22 -0800 (PST)
+Message-Id: <20c4495fd31110c56cca84385bee6d1ab4a6f33e.1573055478.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.445.v2.git.1573055478.gitgitgadget@gmail.com>
 References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
         <pull.445.v2.git.1573055478.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 06 Nov 2019 15:51:15 +0000
-Subject: [PATCH v2 3/6] doc: reset: unify <pathspec> description
+Date:   Wed, 06 Nov 2019 15:51:17 +0000
+Subject: [PATCH v2 5/6] doc: commit: unify <pathspec> description
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,77 +73,47 @@ X-Mailing-List: git@vger.kernel.org
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
 Synchronize it to `git add`, which has a pretty good description.
+This also better disambiguates <file>... header.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-reset.txt | 20 +++++++++++---------
- builtin/reset.c             |  4 ++--
- 2 files changed, 13 insertions(+), 11 deletions(-)
+ Documentation/git-commit.txt | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index 97e0544d9e..f2ccb1426c 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -8,8 +8,8 @@ git-reset - Reset current HEAD to the specified state
- SYNOPSIS
- --------
- [verse]
--'git reset' [-q] [<tree-ish>] [--] <paths>...
--'git reset' (--patch | -p) [<tree-ish>] [--] [<paths>...]
-+'git reset' [-q] [<tree-ish>] [--] <pathspec>...
-+'git reset' (--patch | -p) [<tree-ish>] [--] [<pathspec>...]
- 'git reset' [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index afa7b75a23..915c212a0d 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
+ 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+ 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
+-	   [-i | -o] [-S[<keyid>]] [--] [<file>...]
++	   [-i | -o] [-S[<keyid>]] [--] [<pathspec>...]
  
  DESCRIPTION
-@@ -18,24 +18,26 @@ In the first and second form, copy entries from `<tree-ish>` to the index.
- In the third form, set the current branch head (`HEAD`) to `<commit>`,
- optionally modifying index and working tree to match.
- The `<tree-ish>`/`<commit>` defaults to `HEAD` in all forms.
-+The <pathspec> is used to limit the paths affected by the operation
-+(see the entry for 'pathspec' in linkgit:gitglossary[7] for more details).
+ -----------
+@@ -345,12 +345,14 @@ changes to tracked files.
+ \--::
+ 	Do not interpret any more arguments as options.
  
--'git reset' [-q] [<tree-ish>] [--] <paths>...::
--	This form resets the index entries for all `<paths>` to their
-+'git reset' [-q] [<tree-ish>] [--] <pathspec>...::
-+	This form resets the index entries for all `<pathspec>` to their
- 	state at `<tree-ish>`.  (It does not affect the working tree or
- 	the current branch.)
- +
--This means that `git reset <paths>` is the opposite of `git add
--<paths>`. This command is equivalent to
--`git restore [--source=<tree-ish>] --staged <paths>...`.
-+This means that `git reset <pathspec>` is the opposite of `git add
-+<pathspec>`. This command is equivalent to
-+`git restore [--source=<tree-ish>] --staged <pathspec>...`.
- +
--After running `git reset <paths>` to update the index entry, you can
-+After running `git reset <pathspec>` to update the index entry, you can
- use linkgit:git-restore[1] to check the contents out of the index to
- the working tree. Alternatively, using linkgit:git-restore[1]
- and specifying a commit with `--source`, you
- can copy the contents of a path out of a commit to the index and to the
- working tree in one go.
+-<file>...::
+-	When files are given on the command line, the command
+-	commits the contents of the named files, without
+-	recording the changes already staged.  The contents of
+-	these files are also staged for the next commit on top
+-	of what have been staged before.
++<pathspec>...::
++	When pathspec is given on the command line, commit the contents of
++	the files that match the pathspec without recording the changes
++	already added to the index. The contents of these files are also
++	staged for the next commit on top of what have been staged before.
+++
++For more details about the <pathspec> syntax, see the 'pathspec' entry
++in linkgit:gitglossary[7].
  
--'git reset' (--patch | -p) [<tree-ish>] [--] [<paths>...]::
-+'git reset' (--patch | -p) [<tree-ish>] [--] [<pathspec>...]::
- 	Interactively select hunks in the difference between the index
- 	and `<tree-ish>` (defaults to `HEAD`).  The chosen hunks are applied
- 	in reverse to the index.
-diff --git a/builtin/reset.c b/builtin/reset.c
-index fdd572168b..9291c0fd72 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -30,8 +30,8 @@
- 
- static const char * const git_reset_usage[] = {
- 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
--	N_("git reset [-q] [<tree-ish>] [--] <paths>..."),
--	N_("git reset --patch [<tree-ish>] [--] [<paths>...]"),
-+	N_("git reset [-q] [<tree-ish>] [--] <pathspec>..."),
-+	N_("git reset --patch [<tree-ish>] [--] [<pathspec>...]"),
- 	NULL
- };
- 
+ :git-commit: 1
+ include::date-formats.txt[]
 -- 
 gitgitgadget
 
