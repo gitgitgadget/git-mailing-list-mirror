@@ -2,84 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD9271F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 22:04:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26BFF1F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 22:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732655AbfKFWEk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 17:04:40 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:43356 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727196AbfKFWEk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 17:04:40 -0500
-Received: by mail-pf1-f196.google.com with SMTP id 3so73704pfb.10
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 14:04:40 -0800 (PST)
+        id S1727126AbfKFWH4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 17:07:56 -0500
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:46887 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727073AbfKFWH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 17:07:56 -0500
+Received: by mail-wr1-f52.google.com with SMTP id b3so383277wrs.13
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 14:07:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=TUIX5jUArZ+xm9snPIhLBkk7fwvxuU7fyD+W9uXlabg=;
-        b=YDKQ6WW3gFj5yqi6vDSaBnDvC4HKwvzVZ8FzRmCjyEtwmwguZogjTiwaJpreBd29Qv
-         tFvfMcUhJYewSLJOyRxoj3oScHuu/T07ulIHh5svuyzKr/p0oesHdl472vJh+PKNd/BW
-         AYGiKXGNGy3S3PGFGagHxNok9kkWcUpVKk4NWqbjHl0Pt/4UHkjB9w3vM/SpjHsm2toD
-         1KCyMZ+h/toNdXGWv5qdRSccZei2CHcLjij029pvGfCukIltKYHZ7U23o2pexdDtAeVH
-         6hyPjsqkDdM9+U2a1zm0e2oKndWTpiMUhFg+hOqdDjkaW8FAlEhy7KmM0qw/uRzP+tRl
-         bIhA==
+        d=niemier-pl.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=xsPildYjx0lYXi/lUaUiV8/OTAQM3fbRv5QIzxnx87M=;
+        b=b2PKIBRmtUyptSHWuMxcQXmHkh+O+twHJviFOI3W2CAQYM87WnlxdpzDAQGeXwj2zU
+         0nC8S5g+fTqf5+6Uu0LihEUzBs+4b1PJ8ucucJT2J0kGi6lUTSiRyAVpmxnaHM3geDHh
+         rqRx5FKHZpwLbYat6f5ZvG58eUK6VIdzNJAhzuZobaU1ZdE9q1BxXiaZM6b9DmCF7TUM
+         N0Y4tTXPeYQm0oI/U/Z0RHrrkJtN0QBe0oPpALO+O5cO6UURJtqHhWDSw3lghvbBvVZp
+         1MlX40nclW46TR5AjmLkSvisreIkmBk9u+hd1MCIUxB5Ae4os8lML8V43V83ONq4xmKk
+         7lIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TUIX5jUArZ+xm9snPIhLBkk7fwvxuU7fyD+W9uXlabg=;
-        b=sefIRhyF8Z2gnDivAJ+El5k7lEHZgY4QqzbJPDV0KZ+yKOefvxjkgr2rbw+mJbTVPC
-         FXuU31YYKXNGB3GadBaMspABm81aFhCgCzF11IFhvxJI2swG4CZvWsbaPAkczSULCIqs
-         55k91I2VHjGCaQFE8tXRAdDVNRO78vlfqjOzlzvGWzcGxmvKR6SmFJnuelVDKL8nfqBn
-         boItd9q7xJ0gQlT4PHRGbu3AbdhaIT7dK30PLnXOibcE05Nb+UlQIyzH+aGDIeRHYXOL
-         0upE0ws9czgPoA2X7H44krh8k7021H0y02O7g+aiQFoF5DSx3vohYySfsO6TE6VlmDyR
-         3vdg==
-X-Gm-Message-State: APjAAAWWAMmXRAfZGm2w1bzM5whLfJvTD38i44OoWJh5cv3L0tWOZHTo
-        f6PVDiSN2hrL2DNzHkbB6bCGHA==
-X-Google-Smtp-Source: APXvYqz72gycUeVahhCTMyPDpppcqX37liBfvLh0ywLX6JuHgrHIogR4whu8HAsFEJGW1rCPt7ZwyA==
-X-Received: by 2002:a17:90a:c082:: with SMTP id o2mr178079pjs.94.1573077879504;
-        Wed, 06 Nov 2019 14:04:39 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id k32sm4721099pje.10.2019.11.06.14.04.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 14:04:39 -0800 (PST)
-Date:   Wed, 6 Nov 2019 14:04:34 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 12/20] cache: move doc to cache.h
-Message-ID: <20191106220434.GE229589@google.com>
-References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
- <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
- <a280cf7f90f6769202840858ea3684e118b3dc26.1573034387.git.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a280cf7f90f6769202840858ea3684e118b3dc26.1573034387.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=xsPildYjx0lYXi/lUaUiV8/OTAQM3fbRv5QIzxnx87M=;
+        b=ajLdwt7ofpoxvm2kUgdZ0EtCyFZoCdORte0kviPMmxqhR8YPVY6EawMfCUQpIFf6FL
+         dQYlInrujss8LVnEk2OvaFeDNwdF47+W0bVfwFHRJaJDMB1DjXjODZ6bIvj44MMgh3Lm
+         C+bEZ3tqzAYAMqCBbsziyhG7LjHSXmNaQlgPp2n+SnFJbGytTuShXB7mFaUIWLhbbz4c
+         uVkQckZhk/V0/YbqPgF1PEY0ZZOjyPM9Heaxa7Nd+zvf9s3d5JPxlamTIulvlqBWPYEk
+         5URYwxomS2SYZYfiQL4NNkQZn5mjhuCIm/OQDcln/U4ypkOlQHF6W0g31ekvzjxltKqX
+         uUcw==
+X-Gm-Message-State: APjAAAWlS41OQQ++Yd5zWS/osI0jMLAsDxYEwQONA2hBQL8rCHeSoct6
+        XumokCZF5By84oEoGvZDwLOGOsQf9u9vKA==
+X-Google-Smtp-Source: APXvYqxfLD5HU5XuEq/38btTOAbjCW2JyxW1xOhoq9ajlexfnwurRCXIKJ1nbaD21tELwg5znUMgbA==
+X-Received: by 2002:adf:ea07:: with SMTP id q7mr4653112wrm.102.1573078072464;
+        Wed, 06 Nov 2019 14:07:52 -0800 (PST)
+Received: from [192.168.188.32] (83.25.107.61.ipv4.supernova.orange.pl. [83.25.107.61])
+        by smtp.gmail.com with ESMTPSA id x9sm75108wru.32.2019.11.06.14.07.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Nov 2019 14:07:51 -0800 (PST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: [PATCH v2] feat: add Elixir to supported userdiff languages
+From:   =?utf-8?Q?=C5=81ukasz_Niemier?= <lukasz@niemier.pl>
+In-Reply-To: <672bdea4-180a-89e0-c420-df2704ed887e@kdbg.org>
+Date:   Wed, 6 Nov 2019 23:07:50 +0100
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <ED332708-76D5-447F-A2D7-6495CC6A76DC@niemier.pl>
+References: <20191106174844.23482-1-lukasz@niemier.pl>
+ <672bdea4-180a-89e0-c420-df2704ed887e@kdbg.org>
+To:     Johannes Sixt <j6t@kdbg.org>
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 06, 2019 at 09:59:39AM +0000, Heba Waly via GitGitGadget wrote:
-> From: Heba Waly <heba.waly@gmail.com>
-> 
-> Move the documentation from Documentation/technical/api-allocation-growing.txt
-> to cache.h as it's easier for the developers to find the usage
-> information beside the code instead of looking for it in another doc file.
-> 
-> Also documentation/technical/api-allocation-growing.txt is removed because the
-> information it has is now redundant and it'll be hard to keep it up to
-> date and synchronized with the documentation in the header file.
-> 
-> Signed-off-by: Heba Waly <heba.waly@gmail.com>
-Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+> Please use "subsystem: short description" in the subject. For example:
+>=20
+>   userdiff: support Elixir
+>=20
+> would be sufficient in this case.
+
+Ok, will fix.
+
+> Please add your sign-off before the three-dash line so that we know =
+that
+> you are entitled to publish this patch. See =
+Documentation/SubmittingPatches.
+
+Yeah, I have seen it too late to fix. Will do.
+
+> It would be enlightening to know what Elixir is. (I haven't googled =
+it,
+> yet.)
+
+It is language with Ruby-like syntax for BEAM (Erlang virtual machine).
+
+https://elixir-lang.org
+
+> If it were a popular language, I think I would have heard about
+> it. But it may well be possible that I have lived under a rock for too
+> long... ;)
+
+It is quite popular among few services (Pinterest, Discord, Bleacher =
+Report),
+but it is still pretty new, and still need to get a little more =
+spotlight.
+
+> This list is sorted, basically, but your addition perturbates the =
+order.
+
+Oh, sorry, I missed dts.
+
+> The default hunk header pattern picks up lines that begin with a =
+letter
+> without leading whitespace. The tests that you present here do not =
+show
+> that the language specific hunk header pattern is better. The default
+> would have picked up the correct lines. And, in fact, when I remove =
+the
+> pattern from the code, these tests still pass!
+>=20
+> I'm not saying that the pattern is bad; I say that the tests do not =
+show
+> its worthiness. More tests are needed. For example:
+>=20
+> --- 8< ---
+> defmodule RIGHT do
+> end
+> #
+> #
+> # ChangeMe; do not pick up 'end' line
+> --- 8< =E2=80=94
+
+Yeah, I will provide such
+
+> BTW, I guess that any def, defmodule, etc. as the first word on a line
+> in the docstring would be picked up incorrectly. Is that a problem?
+
+No, as this would (almost?) always be the definition of the =
+module/function,
+so it is not a problem at all.
+
+>> +	 "|:'a-zA-Z0-9@_]+'"
+>=20
+> The opening bracket is missing here.
+
+Whoops.
+
+> Would it be an option to collapse all but the first pattern (because I
+> do not want to start the pattern with an optional part) to
+>=20
+> 	"[:@]['\"]?[a-zA-Z0-9@_]"
+>=20
+> This assumes that @"x1 and @'y2 cannot occur in a syntactically valid
+> program.
+
+No, these aren=E2=80=99t valid.
+
+> Remember: the patterns can be loose; they do not have to
+> validate the input, but can assume that it is syntactically valid.
+
+Ok
+
+> Does the language not have any two-character operators, such as =
+'<=3D=E2=80=9A?
+
+It has, I should add them as well (it even has 3 letter operators).
+
+--
+
+=C5=81ukasz Niemier
+lukasz@niemier.pl
+
+
+
+
+
