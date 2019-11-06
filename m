@@ -7,75 +7,45 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68E181F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 04:05:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 374DD1F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 04:06:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731158AbfKFEFY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 23:05:24 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40106 "HELO cloud.peff.net"
+        id S1730780AbfKFEGt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 23:06:49 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40114 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725768AbfKFEFY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 23:05:24 -0500
-Received: (qmail 17676 invoked by uid 109); 6 Nov 2019 04:05:24 -0000
+        id S1727266AbfKFEGt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 23:06:49 -0500
+Received: (qmail 17687 invoked by uid 109); 6 Nov 2019 04:06:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Nov 2019 04:05:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Nov 2019 04:06:49 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19303 invoked by uid 111); 6 Nov 2019 04:08:42 -0000
+Received: (qmail 19309 invoked by uid 111); 6 Nov 2019 04:10:08 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Nov 2019 23:08:42 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Nov 2019 23:10:08 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 5 Nov 2019 23:05:23 -0500
+Date:   Tue, 5 Nov 2019 23:06:48 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Davide Berardi <davide.berardi6@unibo.it>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v2] clone: Don't segfault on -b specifing a non-commit
-Message-ID: <20191106040523.GB4307@sigill.intra.peff.net>
-References: <20191101002432.GA49846@carpenter.lan>
- <20191103180716.GA72007@carpenter.lan>
- <20191105043749.GA27601@sigill.intra.peff.net>
- <xmqqbltpyeel.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] Other doc fixes
+Message-ID: <20191106040648.GC4307@sigill.intra.peff.net>
+References: <pull.454.git.1572996692.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqbltpyeel.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <pull.454.git.1572996692.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 06, 2019 at 10:36:18AM +0900, Junio C Hamano wrote:
+On Tue, Nov 05, 2019 at 11:31:29PM +0000, Elijah Newren via GitGitGadget wrote:
 
-> >   - we could probably simplify this by just inlining it into
-> >     update_head(). Something like:
-> >
-> >       if (our)
-> >               tip = &our->old_oid;
-> >       else if (remote)
-> >               tip = &remote->old_oid;
-> >
-> >       if (!tip) {
-> > 	      /*
-> > 	       * We have no local branch requested with "-b", and the
-> > 	       * remote HEAD is unborn. There's nothing to update HEAD
-> > 	       * to, but this state is not an error.
-> > 	       */
-> >               return 0;
-> >       }
-> 
-> I somehow had an impression that Davide was protecting against the
-> case where tip->old_oid is null_oid (cloning from an empty repo?);
-> NULL return from lookup_commit_reference_gently(null_oid) would not
-> deserve a warning from this codepath, and should work just like the
-> way it has worked before these changes.
+> In addition to the pile of spelling fixes in my other pull request, here are
+> some simple documentation fixes other than spelling errors (remove repeated
+> word, '.' vs '->', missing hyphen).
 
-I'm not sure if we need to worry about that case. Right now it would
-just segfault, I think, which means it's not something that comes up
-regularly (though whether the _best_ thing might be to consider a
-non-error, I don't know without understanding why we'd see a null_oid in
-the first place).
-
-If we did want to handle it, though, I think it would be easy with the
-setup I described; update_head() could check is_null_oid() itself.
+Thanks, these all look trivially correct to me.
 
 -Peff
