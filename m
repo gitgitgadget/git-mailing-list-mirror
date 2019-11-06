@@ -2,95 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51DB61F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 00:11:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFC7F1F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 01:24:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730184AbfKFALo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 19:11:44 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:32964 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727046AbfKFALo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 19:11:44 -0500
-Received: by mail-wm1-f68.google.com with SMTP id a17so287942wmb.0
-        for <git@vger.kernel.org>; Tue, 05 Nov 2019 16:11:41 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=abcvxjY0IJXPfLsHy8BdRp4Sz6cJlyiig+jTR38fcNQ=;
-        b=VvUuAYr/fXstT8ULeVQ8hDK4OxMVXKbv7ii+++xC+3t+HSXJWH/qZo7seWKmPV5omA
-         8aoFePjk8T7E6noHN/eQg/pfJ7WlscnO9GfAu1X2YJtKF8qcxdCEQu16cWAlLPY9U8av
-         5NXFwiSDCrj/yU3ca4ekL3qLI7pdnwRZpz9cnMqBilQ+gpfyS7EfXDc2aELJkI5ATk5C
-         UPpw4aUhaDpmML4KWbKrUtNTW6iiMUCtQQvRYzT095XnhzjDl/5jps6P62HdxfCw2mTt
-         UvTn8fD9eSlZYrgZnYUv8CbXMfF1M5kDvjr5uBeT4SYpVHBduq8ajjikJOHTg3ud1j+p
-         +SGw==
-X-Gm-Message-State: APjAAAUP/b0yEBNbyPzQe2+dZgSR0wIToeqJlmAxvRtHekjJvtd0yklU
-        jj5zTTC1CdO1OK9bCe+sNF0WeJijhN8n31JqvhQ=
-X-Google-Smtp-Source: APXvYqytxiafcBvW+Ni0mar4zTd9S26vgT7dMjejicjzBFE6iLh2nQfE8GxzpFrfS1kmMXjSKgWmhqZn46VRnAatGQ4=
-X-Received: by 2002:a1c:3843:: with SMTP id f64mr1232070wma.129.1572999100469;
- Tue, 05 Nov 2019 16:11:40 -0800 (PST)
+        id S1730250AbfKFBYs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 20:24:48 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57725 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730054AbfKFBYs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 20:24:48 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A7D07A46EB;
+        Tue,  5 Nov 2019 20:24:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HFUZVfI3rQ42xYrX96xlMefAIuo=; b=i7vYnI
+        qRxBj9vwbCXrl2DMu8FrdDKYKrlUyZKjpzkmTblcU9Js9XijRYbOJyF1mWtEkJM4
+        kpoDBGZveTV79iZVJtYpzTVe3CSkR4gKrAZeNNiYP3VSY2iNrEhrmDbljMMpfwj8
+        mKnX3qZrWJy8mo1G4PXya703ZNBEmn9sf087Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=EvJDWxl9WxsHoFA4iO2Wa/dg5OrDO3kg
+        Xdp/qgKC7huGgyOrcb5o2zKb0MLj0cSZV/4evvIiZcsZbmvj8SHZy8Zio2B/BIHY
+        4I+X+LtdljbqxBsIJfEQi243EJ9SqSh90NtlGBRw1IgyktidFRt9iCGdI44DWFSo
+        YKi7ZcuV3lo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A15E2A46EA;
+        Tue,  5 Nov 2019 20:24:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CF3C9A46E8;
+        Tue,  5 Nov 2019 20:24:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [PATCH v2] git-shortlog.txt: include commit limiting options
+References: <20191030203603.27497-1-me@yadavpratyush.com>
+        <20191104130858.23673-1-me@yadavpratyush.com>
+Date:   Wed, 06 Nov 2019 10:24:42 +0900
+In-Reply-To: <20191104130858.23673-1-me@yadavpratyush.com> (Pratyush Yadav's
+        message of "Mon, 4 Nov 2019 18:38:58 +0530")
+Message-ID: <xmqqk18dyexx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.455.git.1572998303.gitgitgadget@gmail.com> <c6349cdbd057ccbcced3220ff3474b2e2083617e.1572998303.git.gitgitgadget@gmail.com>
-In-Reply-To: <c6349cdbd057ccbcced3220ff3474b2e2083617e.1572998303.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 5 Nov 2019 19:11:29 -0500
-Message-ID: <CAPig+cRdG+RZOeXuJLfF7UyiBccHs6yWnCqt2d1oyTTuwp6=YQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] t6024: modernize style
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 36F6CBFA-0034-11EA-8601-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 5, 2019 at 6:58 PM Elijah Newren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> No substantive changes, just a few cosmetic changes:
->   * Indent steps of an individual test
->   * Don't have logic between the "test_expect_success" blocks that
->     the next block will depend upon, move it into the
->     test_expect_success section itself
->   * Fix spacing around redirection operators to match git style
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
+Pratyush Yadav <me@yadavpratyush.com> writes:
+
+> But since rev-list-options.txt contains some other options that don't
+> really apply in the context of shortlog (like diff formatting, commit
+> ordering, etc), add a switch in rev-list-options.txt that excludes those
+> sections from the shortlog documentation. To be more specific, include
+> only the "Commit Limiting" section.
+
+I think this is much better than duplication, and we can improve it
+further with follow-up patches.
+
+Many options for history simplification are useful for shortlog.  I
+very often use "git shortlog -- cache.h" myself (i.e. limiting to
+the given pathspec).  I suspect most of the "--dashed-options"
+listed there would make sense for some workflows, even though I do
+not use them often enough with shortlog.  The only exception I can
+think of that may not be useful at all for the purose of shortlog is
+"--simplify-by-decoration".
+
+I agree with the patch that all other sections (i.e. bisection
+helper, commit ordering, object traversal, commit formatting and
+diff formatting) make little sense to use with shortlog.
+
+> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
 > ---
-> diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
-> @@ -15,73 +15,76 @@ GIT_COMMITTER_DATE="2006-12-12 23:28:00 +0100"
->  test_expect_success "setup tests" '
+> That ifdef covers almost the entire document. Is there a better way in
+> Asciidoc to do something like this?
 
-Since you're modernizing, perhaps use single quotes around the test
-title rather than double quotes. Same comment applies to other test
-titles.
+I would have excluded each section independently with "Heh, this
+part is not needed for shortlog"; that would make it less error
+prone against future shuffling of sections in the file.
 
-> +       echo 1 > a1 &&
-
-The commit message talks about fixing spacing around redirection
-operators but neither this instance nor any of the others in this
-function have been fixed.
-
-> +       git add a1 &&
-> +       GIT_AUTHOR_DATE="2006-12-12 23:00:00" git commit -m 1 a1 &&
-> +       ...
->  '
-> +       cat >expect <<-EOF &&
-
-Since there's no interpolation going on inside the here-doc, perhaps
-use -\EOF instead. Same comment applies to other here-docs.
-
-> +               <<<<<<< HEAD
-> +               F
-> +               =======
-> +               G
-> +               >>>>>>> G
-> +               EOF
-
-Custom in most scripts is to indent the here-doc body only as far as
-the command which opens it (that is, give it the same indentation as
-the 'cat' command). Same comment applies to other here-docs.
+Thanks.
