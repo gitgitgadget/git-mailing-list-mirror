@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92B321F454
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE6231F454
 	for <e@80x24.org>; Wed,  6 Nov 2019 10:00:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731176AbfKFJ76 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 04:59:58 -0500
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:55902 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731672AbfKFJ75 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 04:59:57 -0500
-Received: by mail-wm1-f42.google.com with SMTP id m17so2582691wmi.5
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 01:59:55 -0800 (PST)
+        id S1731658AbfKFJ7y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 04:59:54 -0500
+Received: from mail-wr1-f50.google.com ([209.85.221.50]:39858 "EHLO
+        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728633AbfKFJ7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 04:59:54 -0500
+Received: by mail-wr1-f50.google.com with SMTP id a11so24943074wra.6
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 01:59:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=CIlb7vhgvVx3vjpkNksrPt/9jqhoDqOBOGxQUnA8eKA=;
-        b=a3kCbdMdel2E++WLDThR3rKHbFxfymjJ1E9kZgvGj1ojHTyJZc7CRLyGCf+NXk/EsG
-         toNradz0FTHA2uY968VgklwXTRWiw+1dvSH0o1gS7j/pZvtXhpXAPTKIESaKb5soU+0z
-         eNUsO/tqk0L8PvX2TFV8Uvj2ydbx93702G0MFBhREjjVSMsuDSoyiYKGgoV6I+3D/Hbs
-         lw2ZkOzKOW7oNmol6fFiMCzKvCmmr+pLIxMV1NIwmp/Njzeu/DFz1ZJCgY/GfQoxhpqL
-         ye2JFusFdbnFZTpsucKLnRkxH93Lh65yav28/dHcG54pPnl4a2JPdE9GhBPdNZcQtReb
-         BcIg==
+        bh=C4tdvHrsbIUd/BqwlbGvevZdwEQqmIVmLeZz7+YyZvE=;
+        b=jZiBcTROsQAZX/V7HkeGEveumyCKwTCb8D4wS+kUmbQBWpDJuKVTQW0+b4Cb4BPIVB
+         D+GC3no24xobo8b5y1B+bLE5evhrdTWRIIcM0GBqF/ootPoMTYvgbhdp7m6ENRsp3Tnp
+         +SGomv2/Srxic/Nj63KZk/+lAyERy7UTfVQlmJ9XQniTdyJS5WWRZekH0DPWGRy1iknN
+         Xg3kX14SJRfU0cvPjg0HbQNp+ppeZtFsGXZeX2yRwuMC5PbdFTPaFri46pv3IamDumfA
+         vjEyhN4xR+Yu9zrwQJeElGJJPEU6XHUx7MQFj8Fmc3CiHKeyJl0Ek8i9++S5/i0BW6wf
+         s+3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CIlb7vhgvVx3vjpkNksrPt/9jqhoDqOBOGxQUnA8eKA=;
-        b=XwSu3UOCKB4ZZajwAbDsHIaHSb8uUrSb7GMlW065rxZFM3zd+vNg5d+VtEoaapjCHH
-         8WAK/ouzX8BIy6XAs4aP6p3e05CLlR2eO3AtwDNkbXEwFRdAalrFPfmIfAxZusgp4HnN
-         O6cJEhOotBGHju1SYwCqMuYJ/5PcckqoaozUmByOdzrX5ZwEZIdoY1AdHFucgHu8K1pm
-         vLgLab8jpOxqJPF1Qa9ez09iEMnznd90IEt6PvXcwy2Lk5MpZgpFaHa6rUegSHgPcVU9
-         NMDyX7i2iEPHleflmlzqDv3E0MRb/dbd+k5PAPxfi3z/sQr114Qvbgtod6OYGpgTpMCY
-         dYKw==
-X-Gm-Message-State: APjAAAV1bRnLMdylwwWhC9UkTHXPHd8fnQKWB8k6CO8TPbzO6RdT1iEJ
-        VFGfTKspYhAx3KBqBXUMn7rYKIIc
-X-Google-Smtp-Source: APXvYqwNvTWPkfppZirpbsNYXmqfQuHgAjH6O8lwVcad5JZldvJE+d4sJ9nezyjzt6f55BkDe2AXMA==
-X-Received: by 2002:a7b:c94f:: with SMTP id i15mr1723399wml.31.1573034394738;
-        Wed, 06 Nov 2019 01:59:54 -0800 (PST)
+        bh=C4tdvHrsbIUd/BqwlbGvevZdwEQqmIVmLeZz7+YyZvE=;
+        b=QV5oeXB3mYVUf7KmtN6rIPJO8BDE8QDi+d8/aKOAH+Rp9YSesUW4avBhC9w1p/rNQr
+         Oy3woquYR62pK5LTt9sxfNjFcor5l8v9GHLyP3K0K85fqy/nE0V2NK539XVX4DMLEYtj
+         epzHOhEw899vgOMYwBoSQX5+f4Es0tl2w4Nx0YqLiwp+MWvyxavQ6BZ3BqirtZKlK1YX
+         F4LWdCEiDY6i/yN993R/EeFf9JWPVvJjnDnyG1lKP1oreA6RSDJOtwTZXMc3KDU4jLdX
+         GZDjEnccHrEJ7W9veUSuvA5MACVB9A6Nb0Eexyy5pw3MdqBT6Z90KDEG9lBxwWM84TzR
+         5Vqg==
+X-Gm-Message-State: APjAAAX4bwrhspYdfDKcaPkdE60Iyb3w3n3DYScdCTdyCix5rNgFoTZp
+        /TS+t4htwBpSY8Ax4Bt6WBOnpwAP
+X-Google-Smtp-Source: APXvYqx+H6Sic3i4Xb6sXFAKIu5nhC/ms8yzXBN4QKu748ba7FcyNn9f0AajmaLWH6zTOcX2UloSDg==
+X-Received: by 2002:adf:e30d:: with SMTP id b13mr1665992wrj.137.1573034390241;
+        Wed, 06 Nov 2019 01:59:50 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 11sm2279253wmb.34.2019.11.06.01.59.54
+        by smtp.gmail.com with ESMTPSA id v16sm25051608wrc.84.2019.11.06.01.59.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 01:59:54 -0800 (PST)
-Message-Id: <4ea49f76c7ffe662aa593830f5e70303a4f30dc4.1573034387.git.gitgitgadget@gmail.com>
+        Wed, 06 Nov 2019 01:59:49 -0800 (PST)
+Message-Id: <cdb32c159a05675d8151c32c71617c6f4070c158.1573034387.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
 References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
         <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 06 Nov 2019 09:59:35 +0000
-Subject: [PATCH v2 08/20] attr: move doc to attr.h
+Date:   Wed, 06 Nov 2019 09:59:29 +0000
+Subject: [PATCH v2 02/20] dir: move doc to dir.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,351 +72,312 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-gitattributes.txt
-to attr.h as it's easier for the developers to find the usage
-information beside the code instead of looking for it in another doc file.
+Move the documentation from Documentation/technical/api-directory-listing.txt
+to dir.h as it's easier for the developers to find the usage information
+beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-gitattributes.txt is removed because the
-information it has is now redundant and it'll be hard to keep it up to
-date and synchronized with the documentation in the header file.
+Also documentation/technical/api-directory-listing.txt is removed because
+the information it has is now redundant and it'll be hard to keep it up to
+date and synchronized with the documentation in the header files.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-gitattributes.txt | 154 ------------------
- attr.h                                        | 141 +++++++++++++++-
- 2 files changed, 134 insertions(+), 161 deletions(-)
- delete mode 100644 Documentation/technical/api-gitattributes.txt
+ .../technical/api-directory-listing.txt       | 130 ------------------
+ dir.h                                         | 118 +++++++++++++++-
+ 2 files changed, 113 insertions(+), 135 deletions(-)
+ delete mode 100644 Documentation/technical/api-directory-listing.txt
 
-diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
+diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
 deleted file mode 100644
-index 45f0df600f..0000000000
---- a/Documentation/technical/api-gitattributes.txt
+index 76b6e4f71b..0000000000
+--- a/Documentation/technical/api-directory-listing.txt
 +++ /dev/null
-@@ -1,154 +0,0 @@
--gitattributes API
--=================
+@@ -1,130 +0,0 @@
+-directory listing API
+-=====================
 -
--gitattributes mechanism gives a uniform way to associate various
--attributes to set of paths.
+-The directory listing API is used to enumerate paths in the work tree,
+-optionally taking `.git/info/exclude` and `.gitignore` files per
+-directory into account.
 -
--
--Data Structure
+-Data structure
 ---------------
 -
--`struct git_attr`::
+-`struct dir_struct` structure is used to pass directory traversal
+-options to the library and to record the paths discovered.  A single
+-`struct dir_struct` is used regardless of whether or not the traversal
+-recursively descends into subdirectories.
 -
--	An attribute is an opaque object that is identified by its name.
--	Pass the name to `git_attr()` function to obtain the object of
--	this type.  The internal representation of this structure is
--	of no interest to the calling programs.  The name of the
--	attribute can be retrieved by calling `git_attr_name()`.
+-The notable options are:
 -
--`struct attr_check_item`::
+-`exclude_per_dir`::
 -
--	This structure represents one attribute and its value.
+-	The name of the file to be read in each directory for excluded
+-	files (typically `.gitignore`).
 -
--`struct attr_check`::
+-`flags`::
 -
--	This structure represents a collection of `attr_check_item`.
--	It is passed to `git_check_attr()` function, specifying the
--	attributes to check, and receives their values.
+-	A bit-field of options:
 -
+-`DIR_SHOW_IGNORED`:::
 -
--Attribute Values
+-	Return just ignored files in `entries[]`, not untracked
+-	files. This flag is mutually exclusive with
+-	`DIR_SHOW_IGNORED_TOO`.
+-
+-`DIR_SHOW_IGNORED_TOO`:::
+-
+-	Similar to `DIR_SHOW_IGNORED`, but return ignored files in
+-	`ignored[]` in addition to untracked files in
+-	`entries[]`. This flag is mutually exclusive with
+-	`DIR_SHOW_IGNORED`.
+-
+-`DIR_KEEP_UNTRACKED_CONTENTS`:::
+-
+-	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is set, the
+-	untracked contents of untracked directories are also returned in
+-	`entries[]`.
+-
+-`DIR_SHOW_IGNORED_TOO_MODE_MATCHING`:::
+-
+-	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if
+-	this is set, returns ignored files and directories that match
+-	an exclude pattern. If a directory matches an exclude pattern,
+-	then the directory is returned and the contained paths are
+-	not. A directory that does not match an exclude pattern will
+-	not be returned even if all of its contents are ignored. In
+-	this case, the contents are returned as individual entries.
+-+
+-If this is set, files and directories that explicitly match an ignore
+-pattern are reported. Implicitly ignored directories (directories that
+-do not match an ignore pattern, but whose contents are all ignored)
+-are not reported, instead all of the contents are reported.
+-
+-`DIR_COLLECT_IGNORED`:::
+-
+-	Special mode for git-add. Return ignored files in `ignored[]` and
+-	untracked files in `entries[]`. Only returns ignored files that match
+-	pathspec exactly (no wildcards). Does not recurse into ignored
+-	directories.
+-
+-`DIR_SHOW_OTHER_DIRECTORIES`:::
+-
+-	Include a directory that is not tracked.
+-
+-`DIR_HIDE_EMPTY_DIRECTORIES`:::
+-
+-	Do not include a directory that is not tracked and is empty.
+-
+-`DIR_NO_GITLINKS`:::
+-
+-	If set, recurse into a directory that looks like a Git
+-	directory.  Otherwise it is shown as a directory.
+-
+-The result of the enumeration is left in these fields:
+-
+-`entries[]`::
+-
+-	An array of `struct dir_entry`, each element of which describes
+-	a path.
+-
+-`nr`::
+-
+-	The number of members in `entries[]` array.
+-
+-`alloc`::
+-
+-	Internal use; keeps track of allocation of `entries[]` array.
+-
+-`ignored[]`::
+-
+-	An array of `struct dir_entry`, used for ignored paths with the
+-	`DIR_SHOW_IGNORED_TOO` and `DIR_COLLECT_IGNORED` flags.
+-
+-`ignored_nr`::
+-
+-	The number of members in `ignored[]` array.
+-
+-Calling sequence
 -----------------
 -
--An attribute for a path can be in one of four states: Set, Unset,
--Unspecified or set to a string, and `.value` member of `struct
--attr_check_item` records it.  There are three macros to check these:
+-Note: index may be looked at for .gitignore files that are CE_SKIP_WORKTREE
+-marked. If you to exclude files, make sure you have loaded index first.
 -
--`ATTR_TRUE()`::
+-* Prepare `struct dir_struct dir` and clear it with `memset(&dir, 0,
+-  sizeof(dir))`.
 -
--	Returns true if the attribute is Set for the path.
+-* To add single exclude pattern, call `add_pattern_list()` and then
+-  `add_pattern()`.
 -
--`ATTR_FALSE()`::
+-* To add patterns from a file (e.g. `.git/info/exclude`), call
+-  `add_patterns_from_file()` , and/or set `dir.exclude_per_dir`.  A
+-  short-hand function `setup_standard_excludes()` can be used to set
+-  up the standard set of exclude settings.
 -
--	Returns true if the attribute is Unset for the path.
+-* Set options described in the Data Structure section above.
 -
--`ATTR_UNSET()`::
+-* Call `read_directory()`.
 -
--	Returns true if the attribute is Unspecified for the path.
+-* Use `dir.entries[]`.
 -
--If none of the above returns true, `.value` member points at a string
--value of the attribute for the path.
+-* Call `clear_directory()` when none of the contained elements are no longer in use.
 -
+-(JC)
+diff --git a/dir.h b/dir.h
+index 2fbdef014f..1b41d29c07 100644
+--- a/dir.h
++++ b/dir.h
+@@ -1,11 +1,43 @@
+ #ifndef DIR_H
+ #define DIR_H
+ 
+-/* See Documentation/technical/api-directory-listing.txt */
 -
--Querying Specific Attributes
------------------------------
--
--* Prepare `struct attr_check` using attr_check_initl()
--  function, enumerating the names of attributes whose values you are
--  interested in, terminated with a NULL pointer.  Alternatively, an
--  empty `struct attr_check` can be prepared by calling
--  `attr_check_alloc()` function and then attributes you want to
--  ask about can be added to it with `attr_check_append()`
--  function.
--
--* Call `git_check_attr()` to check the attributes for the path.
--
--* Inspect `attr_check` structure to see how each of the
--  attribute in the array is defined for the path.
--
--
--Example
---------
--
--To see how attributes "crlf" and "ident" are set for different paths.
--
--. Prepare a `struct attr_check` with two elements (because
--  we are checking two attributes):
--
--------------
--static struct attr_check *check;
--static void setup_check(void)
--{
--	if (check)
--		return; /* already done */
--	check = attr_check_initl("crlf", "ident", NULL);
--}
--------------
--
--. Call `git_check_attr()` with the prepared `struct attr_check`:
--
--------------
--	const char *path;
--
--	setup_check();
--	git_check_attr(path, check);
--------------
--
--. Act on `.value` member of the result, left in `check->items[]`:
--
--------------
--	const char *value = check->items[0].value;
--
--	if (ATTR_TRUE(value)) {
--		The attribute is Set, by listing only the name of the
--		attribute in the gitattributes file for the path.
--	} else if (ATTR_FALSE(value)) {
--		The attribute is Unset, by listing the name of the
--		attribute prefixed with a dash - for the path.
--	} else if (ATTR_UNSET(value)) {
--		The attribute is neither set nor unset for the path.
--	} else if (!strcmp(value, "input")) {
--		If none of ATTR_TRUE(), ATTR_FALSE(), or ATTR_UNSET() is
--		true, the value is a string set in the gitattributes
--		file for the path by saying "attr=value".
--	} else if (... other check using value as string ...) {
--		...
--	}
--------------
--
--To see how attributes in argv[] are set for different paths, only
--the first step in the above would be different.
--
--------------
--static struct attr_check *check;
--static void setup_check(const char **argv)
--{
--	check = attr_check_alloc();
--	while (*argv) {
--		struct git_attr *attr = git_attr(*argv);
--		attr_check_append(check, attr);
--		argv++;
--	}
--}
--------------
--
--
--Querying All Attributes
-------------------------
--
--To get the values of all attributes associated with a file:
--
--* Prepare an empty `attr_check` structure by calling
--  `attr_check_alloc()`.
--
--* Call `git_all_attrs()`, which populates the `attr_check`
--  with the attributes attached to the path.
--
--* Iterate over the `attr_check.items[]` array to examine
--  the attribute names and values.  The name of the attribute
--  described by an `attr_check.items[]` object can be retrieved via
--  `git_attr_name(check->items[i].attr)`.  (Please note that no items
--  will be returned for unset attributes, so `ATTR_UNSET()` will return
--  false for all returned `attr_check.items[]` objects.)
--
--* Free the `attr_check` struct by calling `attr_check_free()`.
-diff --git a/attr.h b/attr.h
-index b0378bfe5f..404548f028 100644
---- a/attr.h
-+++ b/attr.h
-@@ -1,9 +1,121 @@
- #ifndef ATTR_H
- #define ATTR_H
+ #include "cache.h"
+ #include "strbuf.h"
  
 +/**
-+ * gitattributes mechanism gives a uniform way to associate various attributes
-+ * to set of paths.
-+ *
-+ *
-+ * Querying Specific Attributes
-+ * ----------------------------
-+ *
-+ * - Prepare `struct attr_check` using attr_check_initl() function, enumerating
-+ *   the names of attributes whose values you are interested in, terminated with
-+ *   a NULL pointer.  Alternatively, an empty `struct attr_check` can be
-+ *   prepared by calling `attr_check_alloc()` function and then attributes you
-+ *   want to ask about can be added to it with `attr_check_append()` function.
-+ *
-+ * - Call `git_check_attr()` to check the attributes for the path.
-+ *
-+ * - Inspect `attr_check` structure to see how each of the attribute in the
-+ *   array is defined for the path.
-+ *
-+ *
-+ * Example
-+ * -------
-+ *
-+ * To see how attributes "crlf" and "ident" are set for different paths.
-+ *
-+ * - Prepare a `struct attr_check` with two elements (because we are checking
-+ *   two attributes):
-+ *
-+ * ------------
-+ * static struct attr_check *check;
-+ * static void setup_check(void)
-+ * {
-+ * 	if (check)
-+ * 		return; // already done
-+ * check = attr_check_initl("crlf", "ident", NULL);
-+ * }
-+ * ------------
-+ *
-+ * - Call `git_check_attr()` with the prepared `struct attr_check`:
-+ *
-+ * ------------
-+ * const char *path;
-+ *
-+ * setup_check();
-+ * git_check_attr(path, check);
-+ * ------------
-+ *
-+ * - Act on `.value` member of the result, left in `check->items[]`:
-+ *
-+ * ------------
-+ * const char *value = check->items[0].value;
-+ *
-+ * if (ATTR_TRUE(value)) {
-+ * The attribute is Set, by listing only the name of the
-+ * attribute in the gitattributes file for the path.
-+ * } else if (ATTR_FALSE(value)) {
-+ * The attribute is Unset, by listing the name of the
-+ *         attribute prefixed with a dash - for the path.
-+ * } else if (ATTR_UNSET(value)) {
-+ * The attribute is neither set nor unset for the path.
-+ * } else if (!strcmp(value, "input")) {
-+ * If none of ATTR_TRUE(), ATTR_FALSE(), or ATTR_UNSET() is
-+ *         true, the value is a string set in the gitattributes
-+ * file for the path by saying "attr=value".
-+ * } else if (... other check using value as string ...) {
-+ * ...
-+ * }
-+ * ------------
-+ *
-+ * To see how attributes in argv[] are set for different paths, only
-+ * the first step in the above would be different.
-+ *
-+ * ------------
-+ * static struct attr_check *check;
-+ * static void setup_check(const char **argv)
-+ * {
-+ *     check = attr_check_alloc();
-+ *     while (*argv) {
-+ *         struct git_attr *attr = git_attr(*argv);
-+ *         attr_check_append(check, attr);
-+ *         argv++;
-+ *     }
-+ * }
-+ * ------------
-+ *
-+ *
-+ * Querying All Attributes
-+ * -----------------------
-+ *
-+ * To get the values of all attributes associated with a file:
-+ *
-+ * - Prepare an empty `attr_check` structure by calling `attr_check_alloc()`.
-+ *
-+ * - Call `git_all_attrs()`, which populates the `attr_check` with the
-+ * attributes attached to the path.
-+ *
-+ * - Iterate over the `attr_check.items[]` array to examine the attribute
-+ * names and values. The name of the attribute described by an
-+ * `attr_check.items[]` object can be retrieved via
-+ * `git_attr_name(check->items[i].attr)`. (Please note that no items will be
-+ * returned for unset attributes, so `ATTR_UNSET()` will return false for all
-+ * returned `attr_check.items[]` objects.)
-+ *
-+ * - Free the `attr_check` struct by calling `attr_check_free()`.
++ * The directory listing API is used to enumerate paths in the work tree,
++ * optionally taking `.git/info/exclude` and `.gitignore` files per directory
++ * into account.
 + */
 +
- struct index_state;
- 
--/* An attribute is a pointer to this opaque structure */
 +/**
-+ * An attribute is an opaque object that is identified by its name. Pass the
-+ * name to `git_attr()` function to obtain the object of this type.
-+ * The internal representation of this structure is of no interest to the
-+ * calling programs. The name of the attribute can be retrieved by calling
-+ * `git_attr_name()`.
-+ */
- struct git_attr;
- 
- /* opaque structures used internally for attribute collection */
-@@ -21,21 +133,36 @@ const struct git_attr *git_attr(const char *);
- extern const char git_attr__true[];
- extern const char git_attr__false[];
- 
--/* For public to check git_attr_check results */
-+/**
-+ * Attribute Values
++ * Calling sequence
 + * ----------------
 + *
-+ * An attribute for a path can be in one of four states: Set, Unset, Unspecified
-+ * or set to a string, and `.value` member of `struct attr_check_item` records
-+ * it. The three macros check these, if none of them returns true, `.value`
-+ * member points at a string value of the attribute for the path.
++ * Note: index may be looked at for .gitignore files that are CE_SKIP_WORKTREE
++ * marked. If you to exclude files, make sure you have loaded index first.
++ *
++ * - Prepare `struct dir_struct dir` and clear it with `memset(&dir, 0,
++ * sizeof(dir))`.
++ *
++ * - To add single exclude pattern, call `add_pattern_list()` and then
++ *   `add_pattern()`.
++ *
++ * - To add patterns from a file (e.g. `.git/info/exclude`), call
++ *   `add_patterns_from_file()` , and/or set `dir.exclude_per_dir`.  A
++ *   short-hand function `setup_standard_excludes()` can be used to set
++ *   up the standard set of exclude settings.
++ *
++ * - Set options described in the Data Structure section above.
++ *
++ * - Call `read_directory()`.
++ *
++ * - Use `dir.entries[]`.
++ *
++ * - Call `clear_directory()` when none of the contained elements are no longer in use.
++ *
 + */
 +
-+/* Returns true if the attribute is Set for the path. */
- #define ATTR_TRUE(v) ((v) == git_attr__true)
-+
-+/* Returns true if the attribute is Unset for the path. */
- #define ATTR_FALSE(v) ((v) == git_attr__false)
-+
-+/* Returns true if the attribute is Unspecified for the path. */
- #define ATTR_UNSET(v) ((v) == NULL)
- 
--/*
-- * Send one or more git_attr_check to git_check_attrs(), and
-- * each 'value' member tells what its value is.
-- * Unset one is returned as NULL.
-- */
-+/* This structure represents one attribute and its value. */
- struct attr_check_item {
- 	const struct git_attr *attr;
- 	const char *value;
+ struct dir_entry {
+ 	unsigned int len;
+ 	char name[FLEX_ARRAY]; /* more */
+@@ -144,25 +176,101 @@ struct untracked_cache {
+ 	unsigned int use_fsmonitor : 1;
  };
  
 +/**
-+ * This structure represents a collection of `attr_check_item`. It is passed to
-+ * `git_check_attr()` function, specifying the attributes to check, and
-+ * receives their values.
++ * pass directory traversal options to the library and to record the paths
++ * discovered. A single `struct dir_struct` is used regardless of whether or
++ * not the traversal recursively descends into subdirectories.
 + */
- struct attr_check {
- 	int nr;
- 	int alloc;
+ struct dir_struct {
+-	int nr, alloc;
+-	int ignored_nr, ignored_alloc;
++
++    /* The number of members in `entries[]` array. */
++    int nr;
++
++    /* Internal use; keeps track of allocation of `entries[]` array.*/
++    int alloc;
++
++    /* The number of members in `ignored[]` array. */
++	int ignored_nr;
++
++	int ignored_alloc;
++
++	/* bit-field of options */
+ 	enum {
++
++	    /**
++	     * Return just ignored files in `entries[]`, not untracked files.
++	     * This flag is mutually exclusive with `DIR_SHOW_IGNORED_TOO`.
++	     */
+ 		DIR_SHOW_IGNORED = 1<<0,
++
++		/* Include a directory that is not tracked. */
+ 		DIR_SHOW_OTHER_DIRECTORIES = 1<<1,
++
++		/* Do not include a directory that is not tracked and is empty. */
+ 		DIR_HIDE_EMPTY_DIRECTORIES = 1<<2,
++
++		/**
++		 * If set, recurse into a directory that looks like a Git directory.
++		 * Otherwise it is shown as a directory.
++		 */
+ 		DIR_NO_GITLINKS = 1<<3,
++
++		/**
++		 * Special mode for git-add. Return ignored files in `ignored[]` and
++	     * untracked files in `entries[]`. Only returns ignored files that match
++	     * pathspec exactly (no wildcards). Does not recurse into ignored
++	     * directories.
++		 */
+ 		DIR_COLLECT_IGNORED = 1<<4,
++
++		/**
++		 * Similar to `DIR_SHOW_IGNORED`, but return ignored files in
++		 * `ignored[]` in addition to untracked files in `entries[]`.
++		 * This flag is mutually exclusive with `DIR_SHOW_IGNORED`.
++		 */
+ 		DIR_SHOW_IGNORED_TOO = 1<<5,
++
+ 		DIR_COLLECT_KILLED_ONLY = 1<<6,
++
++        /**
++         * Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is
++         * set, the untracked contents of untracked directories are also
++         * returned in `entries[]`.
++         */
+ 		DIR_KEEP_UNTRACKED_CONTENTS = 1<<7,
++
++		/**
++		 * Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is
++		 * set, returns ignored files and directories that match an exclude
++		 * pattern. If a directory matches an exclude pattern, then the
++		 * directory is returned and the contained paths are not. A directory
++		 * that does not match an exclude pattern will not be returned even if
++		 * all of its contents are ignored. In this case, the contents are
++		 * returned as individual entries.
++		 *
++		 * If this is set, files and directories that explicitly match an ignore
++         * pattern are reported. Implicitly ignored directories (directories that
++         * do not match an ignore pattern, but whose contents are all ignored)
++         * are not reported, instead all of the contents are reported.
++		 */
+ 		DIR_SHOW_IGNORED_TOO_MODE_MATCHING = 1<<8,
++
+ 		DIR_SKIP_NESTED_GIT = 1<<9
+ 	} flags;
++
++	/* An array of `struct dir_entry`, each element of which describes a path. */
+ 	struct dir_entry **entries;
++
++	/**
++	 * used for ignored paths with the `DIR_SHOW_IGNORED_TOO` and
++	 * `DIR_COLLECT_IGNORED` flags.
++	 */
+ 	struct dir_entry **ignored;
+ 
+-	/* Exclude info */
++	/**
++	 * The name of the file to be read in each directory for excluded files
++	 * (typically `.gitignore`).
++	 */
+ 	const char *exclude_per_dir;
+ 
+ 	/*
 -- 
 gitgitgadget
 
