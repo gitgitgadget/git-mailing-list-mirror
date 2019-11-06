@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20C171F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 10:00:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEDA81F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 10:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731764AbfKFKAE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 05:00:04 -0500
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:43648 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731633AbfKFKAB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 05:00:01 -0500
-Received: by mail-wr1-f54.google.com with SMTP id n1so24961983wra.10
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 01:59:59 -0800 (PST)
+        id S1731801AbfKFKAI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 05:00:08 -0500
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:37751 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731733AbfKFKAF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 05:00:05 -0500
+Received: by mail-wr1-f47.google.com with SMTP id t1so19027638wrv.4
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 02:00:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=giO2GU2kHEWuMdLCQf18nZDaZn/nf7zmDq7PVNroH0w=;
-        b=d+TRUvNLzYWPiKE4v+UHyzcLL7ec1jbUIAqIVFu0IGDkdRBkSPTVAVZkSNnpCJOgrF
-         pdf7sHPwP0j4LQrdIdoPJlcpZtz4Sk7opDnCuFRgQvbMQpwn4lnxZj+6AmvvZjPgmfe7
-         043k2FpzXew9eMw469ApCBrFy0OEmTndoPsHQ6g+DXBqiINP02nBRWbI7q2sMScuZKhz
-         SghaR6rvKYtVpCuM2Mpr0ZpsOhXNIjVz/s1estRTJXL5+JyhzRKlJsAuOGJui7JjosHn
-         cAqS1hO3tFgBvkJHHgzItP6Vi35H+3hPCJP08EBtcP1IShKMIBOG6VuMPC4pravaEQUZ
-         3zcQ==
+        bh=IIawSvbKKpQ9HAkTGl9PptIc06PQYjhGBX9042ZZzA4=;
+        b=ihD6dbHe9cvjsXdEGfnhIhovSjMb4WOj7NBrOkIoHkQXm/Nhd2/NYSbtezyYWputxX
+         DOt0qxKLkk8XyE4rKGAz2eB+J3rE+vja7/vicSeUx+8qdUxJ6WqXgzJmMiWBkHXPsMEF
+         m7OPEtmBOiMVOdmtjlTZpkClJcMpnogh7c4Q02U293XXW3myd+MstPYXmOt9UqH+VDLN
+         YMyv7s7IrXVSk5HYnLg3Kp8QO1MbBZue/p5gcmyAPnZVtw2t3SzjRe0q6slZ0WGWGd/6
+         KVErK3wKaH3SDxmg72hNVga6MvjzMPzpoCWLpLeNND9A3WHlEbtK5Xa6/q6jwdvMKYyi
+         Eqpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=giO2GU2kHEWuMdLCQf18nZDaZn/nf7zmDq7PVNroH0w=;
-        b=rbJmYK/SwR6qg6Gch/rxS+5kjFiKLP2w7X4J4575RvfcyMk2CkAHZYUj14n29EgUsS
-         eLe10TAinE6mqR+xJTYU0Y6YybdzdzbmL6MjnwxZK+MpxyGFE0zzP6xgneF2Uw3wz2Vd
-         pHGlAnUE+/Yq7OYs51f+0IeKv8JgtMrYSjdFXdVejlNDKjpJ53Z40S7+gQNeZMinWEDI
-         W6r/RiNtiueShZOvnezWbbmxqeShoG/IhJbRsci3klvL6+GYnR6DyxHP966eo3rJXZBf
-         vA4g/TM7M9+f2+hSEJ6M8jSmTRFicKuLB0zx2AJUkvmzQnR3e3qWIA5mS0h2gy+MCU79
-         ckQQ==
-X-Gm-Message-State: APjAAAUP5vsd4o5Y31Sb7VAj23IW/BVV8unF7wJIAPbxquPDHqbolIMa
-        +DWR/PGJrn7I2lKC++EdDDmHhnGG
-X-Google-Smtp-Source: APXvYqw+O8GPfoleIszf6F4KogKZDpRWxmT1hpgSK20VmP8NqhPm6iqoVTV0U7JOipn+Y2bXsfg5hw==
-X-Received: by 2002:a5d:4a50:: with SMTP id v16mr1695103wrs.85.1573034398111;
-        Wed, 06 Nov 2019 01:59:58 -0800 (PST)
+        bh=IIawSvbKKpQ9HAkTGl9PptIc06PQYjhGBX9042ZZzA4=;
+        b=pHEcqe00e/x3X2d9A/dOVeZDhHaYHTs/oni1ICYijEuRV3dq8zJDMCMZw/E5D9jfiS
+         jAW7dZZWbPLFun3nnCfCSIGbStbxx42RmdX8HKs+LLqi6jqyziN98Pu7Ih0r7s4YX+Gu
+         nbkTvq+q+Oxa4re6SqGMaP0EjZg/3hPYL4MmmcS8CV+mMPsTwUhoqvUm6Q8osvuspInq
+         txVSTkj0TaIEeFYxCMjA7oh1zoIXJ89jdlHPPD7YUy4G2ckueljIsj0oqqtaDuL+omqu
+         UDpyq1oGqrJENqv5Hhqh7vX0QD/yj7XUr0rByBP6rdK4urXtm9hCY1xhr4MlrLUq8egK
+         pB/A==
+X-Gm-Message-State: APjAAAXdT9zd3JDn3/AwL4oYjP3fhEm+w1euwy/Sp7iSDB0GOENgs/65
+        4VhhelTIdFryucG1TmTyhEdhXG58
+X-Google-Smtp-Source: APXvYqz4633Vo7VxB3hrLQPI1Zs1VI0+nKEvHMmSvqbUB2xTHFFbi4cyCzT4siZ3QwazuDswo9rfEw==
+X-Received: by 2002:a5d:5262:: with SMTP id l2mr1783098wrc.113.1573034400405;
+        Wed, 06 Nov 2019 02:00:00 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g184sm2949350wma.8.2019.11.06.01.59.57
+        by smtp.gmail.com with ESMTPSA id 5sm1848936wmk.48.2019.11.06.01.59.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 01:59:57 -0800 (PST)
-Message-Id: <314864e42c10c64097090d10c42dfba0e407b97d.1573034387.git.gitgitgadget@gmail.com>
+        Wed, 06 Nov 2019 02:00:00 -0800 (PST)
+Message-Id: <5d93cab5d9c3bfebc6f0a6391020e1d40de62c6a.1573034387.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
 References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
         <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 06 Nov 2019 09:59:40 +0000
-Subject: [PATCH v2 13/20] argv-array: move doc to argv-array.h
+Date:   Wed, 06 Nov 2019 09:59:43 +0000
+Subject: [PATCH v2 16/20] run-command: move doc to run-command.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,185 +72,626 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-argv-array.txt
-to argv-array.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-run-command.txt
+to run-command.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-argv-array.txt is removed because the
+Documentation/technical/api-run-command.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-argv-array.txt | 65 ----------------------
- argv-array.h                               | 62 +++++++++++++++++++++
- 2 files changed, 62 insertions(+), 65 deletions(-)
- delete mode 100644 Documentation/technical/api-argv-array.txt
+ Documentation/technical/api-run-command.txt | 264 --------------------
+ run-command.h                               | 254 ++++++++++++++++++-
+ 2 files changed, 246 insertions(+), 272 deletions(-)
+ delete mode 100644 Documentation/technical/api-run-command.txt
 
-diff --git a/Documentation/technical/api-argv-array.txt b/Documentation/technical/api-argv-array.txt
+diff --git a/Documentation/technical/api-run-command.txt b/Documentation/technical/api-run-command.txt
 deleted file mode 100644
-index 870c8edbfb..0000000000
---- a/Documentation/technical/api-argv-array.txt
+index 8bf3e37f53..0000000000
+--- a/Documentation/technical/api-run-command.txt
 +++ /dev/null
-@@ -1,65 +0,0 @@
--argv-array API
--==============
+@@ -1,264 +0,0 @@
+-run-command API
+-===============
 -
--The argv-array API allows one to dynamically build and store
--NULL-terminated lists.  An argv-array maintains the invariant that the
--`argv` member always points to a non-NULL array, and that the array is
--always NULL-terminated at the element pointed to by `argv[argc]`. This
--makes the result suitable for passing to functions expecting to receive
--argv from main(), or the link:api-run-command.html[run-command API].
+-The run-command API offers a versatile tool to run sub-processes with
+-redirected input and output as well as with a modified environment
+-and an alternate current directory.
 -
--The string-list API (documented in string-list.h) is similar, but cannot be
--used for these purposes; instead of storing a straight string pointer,
--it contains an item structure with a `util` field that is not compatible
--with the traditional argv interface.
+-A similar API offers the capability to run a function asynchronously,
+-which is primarily used to capture the output that the function
+-produces in the caller in order to process it.
 -
--Each `argv_array` manages its own memory. Any strings pushed into the
--array are duplicated, and all memory is freed by argv_array_clear().
--
--Data Structures
-----------------
--
--`struct argv_array`::
--
--	A single array. This should be initialized by assignment from
--	`ARGV_ARRAY_INIT`, or by calling `argv_array_init`. The `argv`
--	member contains the actual array; the `argc` member contains the
--	number of elements in the array, not including the terminating
--	NULL.
 -
 -Functions
 ----------
 -
--`argv_array_init`::
--	Initialize an array. This is no different than assigning from
--	`ARGV_ARRAY_INIT`.
+-`child_process_init`::
 -
--`argv_array_push`::
--	Push a copy of a string onto the end of the array.
+-	Initialize a struct child_process variable.
 -
--`argv_array_pushl`::
--	Push a list of strings onto the end of the array. The arguments
--	should be a list of `const char *` strings, terminated by a NULL
--	argument.
+-`start_command`::
 -
--`argv_array_pushf`::
--	Format a string and push it onto the end of the array. This is a
--	convenience wrapper combining `strbuf_addf` and `argv_array_push`.
+-	Start a sub-process. Takes a pointer to a `struct child_process`
+-	that specifies the details and returns pipe FDs (if requested).
+-	See below for details.
 -
--`argv_array_pushv`::
--	Push a null-terminated array of strings onto the end of the array.
+-`finish_command`::
 -
--`argv_array_pop`::
--	Remove the final element from the array. If there are no
--	elements in the array, do nothing.
+-	Wait for the completion of a sub-process that was started with
+-	start_command().
 -
--`argv_array_clear`::
--	Free all memory associated with the array and return it to the
--	initial, empty state.
+-`run_command`::
 -
--`argv_array_detach`::
--	Disconnect the `argv` member from the `argv_array` struct and
--	return it. The caller is responsible for freeing the memory used
--	by the array, and by the strings it references. After detaching,
--	the `argv_array` is in a reinitialized state and can be pushed
--	into again.
-diff --git a/argv-array.h b/argv-array.h
-index a39ba43f57..a7d3b10707 100644
---- a/argv-array.h
-+++ b/argv-array.h
-@@ -1,8 +1,32 @@
- #ifndef ARGV_ARRAY_H
- #define ARGV_ARRAY_H
+-	A convenience function that encapsulates a sequence of
+-	start_command() followed by finish_command(). Takes a pointer
+-	to a `struct child_process` that specifies the details.
+-
+-`run_command_v_opt`, `run_command_v_opt_cd_env`::
+-
+-	Convenience functions that encapsulate a sequence of
+-	start_command() followed by finish_command(). The argument argv
+-	specifies the program and its arguments. The argument opt is zero
+-	or more of the flags `RUN_COMMAND_NO_STDIN`, `RUN_GIT_CMD`,
+-	`RUN_COMMAND_STDOUT_TO_STDERR`, or `RUN_SILENT_EXEC_FAILURE`
+-	that correspond to the members .no_stdin, .git_cmd,
+-	.stdout_to_stderr, .silent_exec_failure of `struct child_process`.
+-	The argument dir corresponds the member .dir. The argument env
+-	corresponds to the member .env.
+-
+-`child_process_clear`::
+-
+-	Release the memory associated with the struct child_process.
+-	Most users of the run-command API don't need to call this
+-	function explicitly because `start_command` invokes it on
+-	failure and `finish_command` calls it automatically already.
+-
+-The functions above do the following:
+-
+-. If a system call failed, errno is set and -1 is returned. A diagnostic
+-  is printed.
+-
+-. If the program was not found, then -1 is returned and errno is set to
+-  ENOENT; a diagnostic is printed only if .silent_exec_failure is 0.
+-
+-. Otherwise, the program is run. If it terminates regularly, its exit
+-  code is returned. No diagnostic is printed, even if the exit code is
+-  non-zero.
+-
+-. If the program terminated due to a signal, then the return value is the
+-  signal number + 128, ie. the same value that a POSIX shell's $? would
+-  report.  A diagnostic is printed.
+-
+-
+-`start_async`::
+-
+-	Run a function asynchronously. Takes a pointer to a `struct
+-	async` that specifies the details and returns a set of pipe FDs
+-	for communication with the function. See below for details.
+-
+-`finish_async`::
+-
+-	Wait for the completion of an asynchronous function that was
+-	started with start_async().
+-
+-`run_hook`::
+-
+-	Run a hook.
+-	The first argument is a pathname to an index file, or NULL
+-	if the hook uses the default index file or no index is needed.
+-	The second argument is the name of the hook.
+-	The further arguments correspond to the hook arguments.
+-	The last argument has to be NULL to terminate the arguments list.
+-	If the hook does not exist or is not executable, the return
+-	value will be zero.
+-	If it is executable, the hook will be executed and the exit
+-	status of the hook is returned.
+-	On execution, .stdout_to_stderr and .no_stdin will be set.
+-	(See below.)
+-
+-
+-Data structures
+----------------
+-
+-* `struct child_process`
+-
+-This describes the arguments, redirections, and environment of a
+-command to run in a sub-process.
+-
+-The caller:
+-
+-1. allocates and clears (using child_process_init() or
+-   CHILD_PROCESS_INIT) a struct child_process variable;
+-2. initializes the members;
+-3. calls start_command();
+-4. processes the data;
+-5. closes file descriptors (if necessary; see below);
+-6. calls finish_command().
+-
+-The .argv member is set up as an array of string pointers (NULL
+-terminated), of which .argv[0] is the program name to run (usually
+-without a path). If the command to run is a git command, set argv[0] to
+-the command name without the 'git-' prefix and set .git_cmd = 1.
+-
+-Note that the ownership of the memory pointed to by .argv stays with the
+-caller, but it should survive until `finish_command` completes. If the
+-.argv member is NULL, `start_command` will point it at the .args
+-`argv_array` (so you may use one or the other, but you must use exactly
+-one). The memory in .args will be cleaned up automatically during
+-`finish_command` (or during `start_command` when it is unsuccessful).
+-
+-The members .in, .out, .err are used to redirect stdin, stdout,
+-stderr as follows:
+-
+-. Specify 0 to request no special redirection. No new file descriptor
+-  is allocated. The child process simply inherits the channel from the
+-  parent.
+-
+-. Specify -1 to have a pipe allocated; start_command() replaces -1
+-  by the pipe FD in the following way:
+-
+-	.in: Returns the writable pipe end into which the caller writes;
+-		the readable end of the pipe becomes the child's stdin.
+-
+-	.out, .err: Returns the readable pipe end from which the caller
+-		reads; the writable end of the pipe end becomes child's
+-		stdout/stderr.
+-
+-  The caller of start_command() must close the so returned FDs
+-  after it has completed reading from/writing to it!
+-
+-. Specify a file descriptor > 0 to be used by the child:
+-
+-	.in: The FD must be readable; it becomes child's stdin.
+-	.out: The FD must be writable; it becomes child's stdout.
+-	.err: The FD must be writable; it becomes child's stderr.
+-
+-  The specified FD is closed by start_command(), even if it fails to
+-  run the sub-process!
+-
+-. Special forms of redirection are available by setting these members
+-  to 1:
+-
+-	.no_stdin, .no_stdout, .no_stderr: The respective channel is
+-		redirected to /dev/null.
+-
+-	.stdout_to_stderr: stdout of the child is redirected to its
+-		stderr. This happens after stderr is itself redirected.
+-		So stdout will follow stderr to wherever it is
+-		redirected.
+-
+-To modify the environment of the sub-process, specify an array of
+-string pointers (NULL terminated) in .env:
+-
+-. If the string is of the form "VAR=value", i.e. it contains '='
+-  the variable is added to the child process's environment.
+-
+-. If the string does not contain '=', it names an environment
+-  variable that will be removed from the child process's environment.
+-
+-If the .env member is NULL, `start_command` will point it at the
+-.env_array `argv_array` (so you may use one or the other, but not both).
+-The memory in .env_array will be cleaned up automatically during
+-`finish_command` (or during `start_command` when it is unsuccessful).
+-
+-To specify a new initial working directory for the sub-process,
+-specify it in the .dir member.
+-
+-If the program cannot be found, the functions return -1 and set
+-errno to ENOENT. Normally, an error message is printed, but if
+-.silent_exec_failure is set to 1, no message is printed for this
+-special error condition.
+-
+-
+-* `struct async`
+-
+-This describes a function to run asynchronously, whose purpose is
+-to produce output that the caller reads.
+-
+-The caller:
+-
+-1. allocates and clears (memset(&asy, 0, sizeof(asy));) a
+-   struct async variable;
+-2. initializes .proc and .data;
+-3. calls start_async();
+-4. processes communicates with proc through .in and .out;
+-5. closes .in and .out;
+-6. calls finish_async().
+-
+-The members .in, .out are used to provide a set of fd's for
+-communication between the caller and the callee as follows:
+-
+-. Specify 0 to have no file descriptor passed.  The callee will
+-  receive -1 in the corresponding argument.
+-
+-. Specify < 0 to have a pipe allocated; start_async() replaces
+-  with the pipe FD in the following way:
+-
+-	.in: Returns the writable pipe end into which the caller
+-	writes; the readable end of the pipe becomes the function's
+-	in argument.
+-
+-	.out: Returns the readable pipe end from which the caller
+-	reads; the writable end of the pipe becomes the function's
+-	out argument.
+-
+-  The caller of start_async() must close the returned FDs after it
+-  has completed reading from/writing from them.
+-
+-. Specify a file descriptor > 0 to be used by the function:
+-
+-	.in: The FD must be readable; it becomes the function's in.
+-	.out: The FD must be writable; it becomes the function's out.
+-
+-  The specified FD is closed by start_async(), even if it fails to
+-  run the function.
+-
+-The function pointer in .proc has the following signature:
+-
+-	int proc(int in, int out, void *data);
+-
+-. in, out specifies a set of file descriptors to which the function
+-  must read/write the data that it needs/produces.  The function
+-  *must* close these descriptors before it returns.  A descriptor
+-  may be -1 if the caller did not configure a descriptor for that
+-  direction.
+-
+-. data is the value that the caller has specified in the .data member
+-  of struct async.
+-
+-. The return value of the function is 0 on success and non-zero
+-  on failure. If the function indicates failure, finish_async() will
+-  report failure as well.
+-
+-
+-There are serious restrictions on what the asynchronous function can do
+-because this facility is implemented by a thread in the same address
+-space on most platforms (when pthreads is available), but by a pipe to
+-a forked process otherwise:
+-
+-. It cannot change the program's state (global variables, environment,
+-  etc.) in a way that the caller notices; in other words, .in and .out
+-  are the only communication channels to the caller.
+-
+-. It must not change the program's state that the caller of the
+-  facility also uses.
+diff --git a/run-command.h b/run-command.h
+index f769e03f01..e7d3aa63ca 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -5,8 +5,60 @@
+ 
+ #include "argv-array.h"
  
 +/**
-+ * The argv-array API allows one to dynamically build and store
-+ * NULL-terminated lists.  An argv-array maintains the invariant that the
-+ * `argv` member always points to a non-NULL array, and that the array is
-+ * always NULL-terminated at the element pointed to by `argv[argc]`. This
-+ * makes the result suitable for passing to functions expecting to receive
-+ * argv from main().
++ * The run-command API offers a versatile tool to run sub-processes with
++ * redirected input and output as well as with a modified environment
++ * and an alternate current directory.
 + *
-+ * The string-list API (documented in string-list.h) is similar, but cannot be
-+ * used for these purposes; instead of storing a straight string pointer,
-+ * it contains an item structure with a `util` field that is not compatible
-+ * with the traditional argv interface.
++ * A similar API offers the capability to run a function asynchronously,
++ * which is primarily used to capture the output that the function
++ * produces in the caller in order to process it.
++ */
++
++
++/**
++ * This describes the arguments, redirections, and environment of a
++ * command to run in a sub-process.
 + *
-+ * Each `argv_array` manages its own memory. Any strings pushed into the
-+ * array are duplicated, and all memory is freed by argv_array_clear().
++ * The caller:
++ *
++ * 1. allocates and clears (using child_process_init() or
++ *    CHILD_PROCESS_INIT) a struct child_process variable;
++ * 2. initializes the members;
++ * 3. calls start_command();
++ * 4. processes the data;
++ * 5. closes file descriptors (if necessary; see below);
++ * 6. calls finish_command().
++ *
++ * Special forms of redirection are available by setting these members
++ * to 1:
++ *
++ *  .no_stdin, .no_stdout, .no_stderr: The respective channel is
++ *		redirected to /dev/null.
++ *
++ *	.stdout_to_stderr: stdout of the child is redirected to its
++ *		stderr. This happens after stderr is itself redirected.
++ *		So stdout will follow stderr to wherever it is
++ *		redirected.
++ */
+ struct child_process {
+-	const char **argv;
++
++    /**
++     * The .argv member is set up as an array of string pointers (NULL
++     * terminated), of which .argv[0] is the program name to run (usually
++     * without a path). If the command to run is a git command, set argv[0] to
++     * the command name without the 'git-' prefix and set .git_cmd = 1.
++     *
++     * Note that the ownership of the memory pointed to by .argv stays with the
++     * caller, but it should survive until `finish_command` completes. If the
++     * .argv member is NULL, `start_command` will point it at the .args
++     * `argv_array` (so you may use one or the other, but you must use exactly
++     * one). The memory in .args will be cleaned up automatically during
++     * `finish_command` (or during `start_command` when it is unsuccessful).
++     *
++     */
++    const char **argv;
++
+ 	struct argv_array args;
+ 	struct argv_array env_array;
+ 	pid_t pid;
+@@ -18,8 +70,8 @@ struct child_process {
+ 
+ 	/*
+ 	 * Using .in, .out, .err:
+-	 * - Specify 0 for no redirections (child inherits stdin, stdout,
+-	 *   stderr from parent).
++	 * - Specify 0 for no redirections. No new file descriptor is allocated.
++	 * (child inherits stdin, stdout, stderr from parent).
+ 	 * - Specify -1 to have a pipe allocated as follows:
+ 	 *     .in: returns the writable pipe end; parent writes to it,
+ 	 *          the readable pipe end becomes child's stdin
+@@ -37,13 +89,43 @@ struct child_process {
+ 	int in;
+ 	int out;
+ 	int err;
++
++	/**
++	 * To specify a new initial working directory for the sub-process,
++     * specify it in the .dir member.
++	 */
+ 	const char *dir;
++
++	/**
++	 * To modify the environment of the sub-process, specify an array of
++     * string pointers (NULL terminated) in .env:
++     *
++     * - If the string is of the form "VAR=value", i.e. it contains '='
++     *   the variable is added to the child process's environment.
++     *
++     * - If the string does not contain '=', it names an environment
++     *   variable that will be removed from the child process's environment.
++     *
++     * If the .env member is NULL, `start_command` will point it at the
++     * .env_array `argv_array` (so you may use one or the other, but not both).
++     * The memory in .env_array will be cleaned up automatically during
++     * `finish_command` (or during `start_command` when it is unsuccessful).
++     */
+ 	const char *const *env;
++
+ 	unsigned no_stdin:1;
+ 	unsigned no_stdout:1;
+ 	unsigned no_stderr:1;
+-	unsigned git_cmd:1; /* if this is to be git sub-command */
++    unsigned git_cmd:1; /* if this is to be git sub-command */
++
++    /**
++     * If the program cannot be found, the functions return -1 and set
++     * errno to ENOENT. Normally, an error message is printed, but if
++     * .silent_exec_failure is set to 1, no message is printed for this
++     * special error condition.
++     */
+ 	unsigned silent_exec_failure:1;
++
+ 	unsigned stdout_to_stderr:1;
+ 	unsigned use_shell:1;
+ 	unsigned clean_on_exit:1;
+@@ -53,13 +135,63 @@ struct child_process {
+ };
+ 
+ #define CHILD_PROCESS_INIT { NULL, ARGV_ARRAY_INIT, ARGV_ARRAY_INIT }
++
++/**
++ * The functions: child_process_init, start_command, finish_command,
++ * run_command, run_command_v_opt, run_command_v_opt_cd_env, child_process_clear
++ * do the following:
++ *
++ * - If a system call failed, errno is set and -1 is returned. A diagnostic
++ *   is printed.
++ *
++ * - If the program was not found, then -1 is returned and errno is set to
++ *   ENOENT; a diagnostic is printed only if .silent_exec_failure is 0.
++ *
++ * - Otherwise, the program is run. If it terminates regularly, its exit
++ *   code is returned. No diagnostic is printed, even if the exit code is
++ *   non-zero.
++ *
++ * - If the program terminated due to a signal, then the return value is the
++ *   signal number + 128, ie. the same value that a POSIX shell's $? would
++ *   report.  A diagnostic is printed.
++ *
 + */
 +
- extern const char *empty_argv[];
++/**
++ * Initialize a struct child_process variable.
++ */
+ void child_process_init(struct child_process *);
++
++/**
++ * Release the memory associated with the struct child_process.
++ * Most users of the run-command API don't need to call this
++ * function explicitly because `start_command` invokes it on
++ * failure and `finish_command` calls it automatically already.
++ */
+ void child_process_clear(struct child_process *);
++
+ int is_executable(const char *name);
  
 +/**
-+ * A single array. This should be initialized by assignment from
-+ * `ARGV_ARRAY_INIT`, or by calling `argv_array_init`. The `argv`
-+ * member contains the actual array; the `argc` member contains the
-+ * number of elements in the array, not including the terminating
-+ * NULL.
++ * Start a sub-process. Takes a pointer to a `struct child_process`
++ * that specifies the details and returns pipe FDs (if requested).
++ * See below for details.
 + */
- struct argv_array {
- 	const char **argv;
- 	int argc;
-@@ -11,17 +35,55 @@ struct argv_array {
+ int start_command(struct child_process *);
++
++/**
++ * Wait for the completion of a sub-process that was started with
++ * start_command().
++ */
+ int finish_command(struct child_process *);
++
+ int finish_command_in_signal(struct child_process *);
++
++/**
++ * A convenience function that encapsulates a sequence of
++ * start_command() followed by finish_command(). Takes a pointer
++ * to a `struct child_process` that specifies the details.
++ */
+ int run_command(struct child_process *);
  
- #define ARGV_ARRAY_INIT { empty_argv, 0, 0 }
- 
-+/**
-+ * Initialize an array. This is no different than assigning from
-+ * `ARGV_ARRAY_INIT`.
-+ */
- void argv_array_init(struct argv_array *);
-+
-+/* Push a copy of a string onto the end of the array. */
- const char *argv_array_push(struct argv_array *, const char *);
+ /*
+@@ -68,6 +200,20 @@ int run_command(struct child_process *);
+  * overwritten by further calls to find_hook and run_hook_*.
+  */
+ const char *find_hook(const char *name);
 +
 +/**
-+ * Format a string and push it onto the end of the array. This is a
-+ * convenience wrapper combining `strbuf_addf` and `argv_array_push`.
-+ */
- __attribute__((format (printf,2,3)))
- const char *argv_array_pushf(struct argv_array *, const char *fmt, ...);
-+
-+/**
-+ * Push a list of strings onto the end of the array. The arguments
-+ * should be a list of `const char *` strings, terminated by a NULL
-+ * argument.
++ * Run a hook.
++ * The first argument is a pathname to an index file, or NULL
++ * if the hook uses the default index file or no index is needed.
++ * The second argument is the name of the hook.
++ * The further arguments correspond to the hook arguments.
++ * The last argument has to be NULL to terminate the arguments list.
++ * If the hook does not exist or is not executable, the return
++ * value will be zero.
++ * If it is executable, the hook will be executed and the exit
++ * status of the hook is returned.
++ * On execution, .stdout_to_stderr and .no_stdin will be set.
 + */
  LAST_ARG_MUST_BE_NULL
- void argv_array_pushl(struct argv_array *, ...);
-+
-+/* Push a null-terminated array of strings onto the end of the array. */
- void argv_array_pushv(struct argv_array *, const char **);
-+
-+/**
-+ * Remove the final element from the array. If there are no
-+ * elements in the array, do nothing.
-+ */
- void argv_array_pop(struct argv_array *);
-+
- /* Splits by whitespace; does not handle quoted arguments! */
- void argv_array_split(struct argv_array *, const char *);
+ int run_hook_le(const char *const *env, const char *name, ...);
+ int run_hook_ve(const char *const *env, const char *name, va_list args);
+@@ -78,6 +224,18 @@ int run_hook_ve(const char *const *env, const char *name, va_list args);
+ #define RUN_SILENT_EXEC_FAILURE 8
+ #define RUN_USING_SHELL 16
+ #define RUN_CLEAN_ON_EXIT 32
 +
 +/**
-+ * Free all memory associated with the array and return it to the
-+ * initial, empty state.
++ * Convenience functions that encapsulate a sequence of
++ * start_command() followed by finish_command(). The argument argv
++ * specifies the program and its arguments. The argument opt is zero
++ * or more of the flags `RUN_COMMAND_NO_STDIN`, `RUN_GIT_CMD`,
++ * `RUN_COMMAND_STDOUT_TO_STDERR`, or `RUN_SILENT_EXEC_FAILURE`
++ * that correspond to the members .no_stdin, .git_cmd,
++ * .stdout_to_stderr, .silent_exec_failure of `struct child_process`.
++ * The argument dir corresponds the member .dir. The argument env
++ * corresponds to the member .env.
 + */
- void argv_array_clear(struct argv_array *);
+ int run_command_v_opt(const char **argv, int opt);
+ int run_command_v_opt_tr2(const char **argv, int opt, const char *tr2_class);
+ /*
+@@ -125,15 +283,84 @@ static inline int capture_command(struct child_process *cmd,
+  * It is expected that no synchronization and mutual exclusion between
+  * the caller and the feed function is necessary so that the function
+  * can run in a thread without interfering with the caller.
++ *
++ * The caller:
++ *
++ * 1. allocates and clears (memset(&asy, 0, sizeof(asy));) a
++ *    struct async variable;
++ * 2. initializes .proc and .data;
++ * 3. calls start_async();
++ * 4. processes communicates with proc through .in and .out;
++ * 5. closes .in and .out;
++ * 6. calls finish_async().
++ *
++ * There are serious restrictions on what the asynchronous function can do
++ * because this facility is implemented by a thread in the same address
++ * space on most platforms (when pthreads is available), but by a pipe to
++ * a forked process otherwise:
++ *
++ * - It cannot change the program's state (global variables, environment,
++ *   etc.) in a way that the caller notices; in other words, .in and .out
++ *   are the only communication channels to the caller.
++ *
++ * - It must not change the program's state that the caller of the
++ *   facility also uses.
++ *
+  */
+ struct async {
+-	/*
+-	 * proc reads from in; closes it before return
+-	 * proc writes to out; closes it before return
+-	 * returns 0 on success, non-zero on failure
 +
-+/**
-+ * Disconnect the `argv` member from the `argv_array` struct and
-+ * return it. The caller is responsible for freeing the memory used
-+ * by the array, and by the strings it references. After detaching,
-+ * the `argv_array` is in a reinitialized state and can be pushed
-+ * into again.
-+ */
- const char **argv_array_detach(struct argv_array *);
++	/**
++	 * The function pointer in .proc has the following signature:
++     *
++     *	int proc(int in, int out, void *data);
++     *
++     * - in, out specifies a set of file descriptors to which the function
++     *  must read/write the data that it needs/produces.  The function
++     *  *must* close these descriptors before it returns.  A descriptor
++     *  may be -1 if the caller did not configure a descriptor for that
++     *  direction.
++     *
++     * - data is the value that the caller has specified in the .data member
++     *  of struct async.
++     *
++     * - The return value of the function is 0 on success and non-zero
++     *  on failure. If the function indicates failure, finish_async() will
++     *  report failure as well.
++     *
+ 	 */
+ 	int (*proc)(int in, int out, void *data);
++
+ 	void *data;
++
++	/**
++	 * The members .in, .out are used to provide a set of fd's for
++     * communication between the caller and the callee as follows:
++     *
++     * - Specify 0 to have no file descriptor passed.  The callee will
++     *   receive -1 in the corresponding argument.
++     *
++     * - Specify < 0 to have a pipe allocated; start_async() replaces
++     *   with the pipe FD in the following way:
++     *
++     * 	.in: Returns the writable pipe end into which the caller
++     * 	writes; the readable end of the pipe becomes the function's
++     * 	in argument.
++     *
++     * 	.out: Returns the readable pipe end from which the caller
++     * 	reads; the writable end of the pipe becomes the function's
++     * 	out argument.
++     *
++     *   The caller of start_async() must close the returned FDs after it
++     *   has completed reading from/writing from them.
++     *
++     * - Specify a file descriptor > 0 to be used by the function:
++     *
++     * 	.in: The FD must be readable; it becomes the function's in.
++     * 	.out: The FD must be writable; it becomes the function's out.
++     *
++     *   The specified FD is closed by start_async(), even if it fails to
++     *   run the function.
++	 */
+ 	int in;		/* caller writes here and closes it */
+ 	int out;	/* caller reads from here and closes it */
+ #ifdef NO_PTHREADS
+@@ -146,8 +373,19 @@ struct async {
+ 	int isolate_sigpipe;
+ };
  
- #endif /* ARGV_ARRAY_H */
++/**
++ * Run a function asynchronously. Takes a pointer to a `struct
++ * async` that specifies the details and returns a set of pipe FDs
++ * for communication with the function. See below for details.
++ */
+ int start_async(struct async *async);
++
++/**
++ * Wait for the completion of an asynchronous function that was
++ * started with start_async().
++ */
+ int finish_async(struct async *async);
++
+ int in_async(void);
+ int async_with_fork(void);
+ void check_pipe(int err);
 -- 
 gitgitgadget
 
