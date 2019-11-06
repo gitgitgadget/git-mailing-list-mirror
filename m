@@ -2,220 +2,258 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A87A1F4C3
-	for <e@80x24.org>; Wed,  6 Nov 2019 04:36:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04C221F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 04:40:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729706AbfKFEgg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Nov 2019 23:36:36 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:41309 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726368AbfKFEgf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Nov 2019 23:36:35 -0500
-Received: by mail-ed1-f65.google.com with SMTP id a21so18185191edj.8
-        for <git@vger.kernel.org>; Tue, 05 Nov 2019 20:36:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dropbox.com; s=corp;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YFSVFtretXJcAuEMBkWq6CGsnEAeQNKAXhRUrzefoCI=;
-        b=ODuTj00FcyfA4j64IlbQEdb8P+jZdi4IuqnNS9KeSGKXT51ok1rdjIlYcIkdjHXTmY
-         zkcZduJGMscyYbIMBzWjqdMPYObQTB1O9hlKZ295ENsXsrXQUbP6gcRKf28hry87Mg9G
-         Ci6OE97KIsw72C2zumgjUFgzs5RZVr4p9CukY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YFSVFtretXJcAuEMBkWq6CGsnEAeQNKAXhRUrzefoCI=;
-        b=TzH/KzhpsGioTn0rM1M1ORR11ehmtumU+mCoxnGw1A66rhgIDMdknILAIj1pAhsLwN
-         mWmFCy9fvnFRS+H2DGN32kBN5AqDsUuxjhgAKtRhh4vHHok5hAR80Jwc9ojIbmXAPwAr
-         OpZvCCVMdaj87ykREtaD/GhXTOoktuCFnFI163DF7xhDp+7b3ppC9HssWLUniU2g1JoH
-         BdKOySRI/HFco503GooT82gefHe2bsb6C6ZjEhMYY2Sa61UvFAhkacjrLNxJDkj7dU2g
-         LbxYZw+p5Zckm6QSeLnnNeHcNFAFKFUj3EtQEPqsc9+R45zTE0/qYYKRPd5svI8b2Fdk
-         Kkhw==
-X-Gm-Message-State: APjAAAVPzdBupk0RuL882L4o8FfjVqneveqv9WrsEX5+uJvfIN5Q1J4G
-        qLrn8BAXy6EEgNJxheWRE4Z1DqCLzjyJKWEGzdv9NQvicCON7Q==
-X-Google-Smtp-Source: APXvYqxSbngnAZ+HbDzt3vv6FZFuNRVwIyuzKgRUGQ9oXU3+FdtoV8mCNvvspGwqloCNgmQOKW/hBEqmuCgbNLM8zD0=
-X-Received: by 2002:aa7:c303:: with SMTP id l3mr480137edq.89.1573014991959;
- Tue, 05 Nov 2019 20:36:31 -0800 (PST)
+        id S1729774AbfKFEky (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Nov 2019 23:40:54 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62045 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726368AbfKFEkx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Nov 2019 23:40:53 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D6395A5ABB;
+        Tue,  5 Nov 2019 23:40:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2JnV1D48huI/vO8ceOUTLPE/M18=; b=BrnvyD
+        ZKZVdc8mOSkgD5An1EWc3S/bYsI1K6rHfoehVV1VZI4Qng40v3odEUWBuZOJnEFS
+        miBDtNBRkYKP1+VkawXbeIRTIGn2hYydbMWuN7zNy74MTA8QpDl9+Yw3WFxChUXY
+        pjUk5KXK7ePRBKR32kUuyjkjp0S70qYw04KIE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VoGZsRgmdcDxOK8L6Ew8ofW4HXbrOqI9
+        kpR5CVK+zcC/7jZZhoPqBYK8XqbR4PTGF3Bx96wL6aLmAIpJq/Ycj9CVWo8TVRd+
+        jChffKehg18g1/QjKh2HZ6AGVP/VQ6DIOf4kQtO7w5X77LZnRgR21bzCf72vnVBi
+        s04S5ULPq2c=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CE0F9A5ABA;
+        Tue,  5 Nov 2019 23:40:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 056F2A5AB8;
+        Tue,  5 Nov 2019 23:40:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Subject: Re: [PATCH 3/5] reset: support the --pathspec-from-file option
+References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
+        <8d9f1fbc18346144a0c866a59891b652dcfe9b7f.1572895605.git.gitgitgadget@gmail.com>
+Date:   Wed, 06 Nov 2019 13:40:46 +0900
+In-Reply-To: <8d9f1fbc18346144a0c866a59891b652dcfe9b7f.1572895605.git.gitgitgadget@gmail.com>
+        (Alexandr Miloslavskiy via GitGitGadget's message of "Mon, 04 Nov 2019
+        19:26:43 +0000")
+Message-ID: <xmqqd0e5vcq9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.424.git.1572017008.gitgitgadget@gmail.com>
- <pull.424.v2.git.1572967644.gitgitgadget@gmail.com> <f76ba554ed25fb9877a223ef6481834f1831c8ca.1572967644.git.gitgitgadget@gmail.com>
- <BN6PR21MB07869D880E1D0111F1A80E42917E0@BN6PR21MB0786.namprd21.prod.outlook.com>
-In-Reply-To: <BN6PR21MB07869D880E1D0111F1A80E42917E0@BN6PR21MB0786.namprd21.prod.outlook.com>
-From:   Utsav Shah <utsav@dropbox.com>
-Date:   Tue, 5 Nov 2019 20:36:21 -0800
-Message-ID: <CAPYzU3PLVhGWcautao1oenbKbgcOB_99PoyVEcK1hnUk5XErKg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] unpack-trees: skip stat on fsmonitor-valid files
-To:     Kevin Willford <Kevin.Willford@microsoft.com>
-Cc:     Utsav Shah via GitGitGadget <gitgitgadget@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Utsav Shah <ukshah2@illinois.edu>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9AF4E6D0-004F-11EA-BC33-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 5, 2019 at 1:40 PM Kevin Willford
-<Kevin.Willford@microsoft.com> wrote:
+"Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
+
+> From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 >
-> > Sent: Tuesday, November 5, 2019 8:27 AM
-> > From: Utsav Shah <utsav@dropbox.com>
-> >
-> > diff --git a/t/t7113-post-index-change-hook.sh b/t/t7113-post-index-change-
-> > hook.sh
-> > index f011ad7eec..5ca2279d0d 100755
-> > --- a/t/t7113-post-index-change-hook.sh
-> > +++ b/t/t7113-post-index-change-hook.sh
-> > @@ -50,9 +50,6 @@ test_expect_success 'test status, add, commit, others
-> > trigger hook without flags
-> >       git checkout -- dir1/file1.txt &&
-> >       test_path_is_file testsuccess && rm -f testsuccess &&
-> >       test_path_is_missing testfailure &&
-> > -     git update-index &&
-> > -     test_path_is_missing testsuccess &&
-> > -     test_path_is_missing testfailure &&
-> >       git reset --soft &&
-> >       test_path_is_missing testsuccess &&
-> >       test_path_is_missing testfailure
+> This option solves the problem of commandline length limit for UI's
+> built on top of git. Plumbing commands are not always a good fit, for
+> two major reasons:
+> 1) Some UI's serve as assistants that help user run git commands. In
+>    this case, replacing familiar commands with plumbing commands will
+>    confuse most users.
+
+"UI's that serve as assistants that help user run git commands" does
+not have to avoid plumbing commands at all.  Only the ones that "show"
+the commands that are run on behalf of the users (perhaps so that the
+users can learn from such examples?) do, and I think I learned that
+it was your motivating use case from an earlier discussion.  Perhaps
+
+	UIs that help users to formulate git commands to run need to
+	present Porcelain commands to be used, as it is not reasonable
+	to demonstrate arcane combination of plumbing commands as an
+	example for their interactive use.
+
+would probably be more readable without bending what you wanted to
+say too much?
+
+> 2) Some UI's have started and grown with porcelain commands. Replacing
+>    existing logic with plumbing commands could be cumbersome and prone
+>    to various new problems.
+
+There is not a lot of sympathy for such argument ;-)
+
+> 2) It is not allowed to pass some refspecs in args and others in file.
+
+Did you mean refspec, not pathspec?
+
+> 3) New options do not have shorthands to avoid shorthand conflicts.
 >
-> Looking into this change and I wonder if instead we should be updating
-> refresh_fsmonitor to only update istate->cache_changed if there was an
-> entry where CE_FSMONITOR_VALID was turned off.
->
-> The reason I bring this up is because with this change, the post-index-change
-> hook will behave differently depending on fsmonitor.  It will pass if
-> GIT_TEST_FSMONITOR is unset or set to fsmonitor-watchman. But when set
-> to fsmonitor-all it will fail because it is going down the code path that
-> invalidates all the entries and sets istate->cache_changed.
+> Also add new '--pathspec-file-null' switch that mirrors '-z' used in
+> various places. Some porcelain commands, such as `git commit`, already
+> use '-z', therefore it needed a new unambiguous name.
 
-Thanks, this observation was correct. v3 of this patch will check if
-the index actually needs to mark its cache as changed, and this test
-passes without modification.
+I do not understand this part.  Wouldn't it natural to expect that
+"-z", when used with "--pathspec-from-file", tell us that the named
+file is NUL delimited collection of records?  What's different about
+"--pathspec-file-null" that it is confusing to all it "-z"?
 
->
-> > diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh index
-> > d8df990972..9cac3d3d8e 100755
-> > --- a/t/t7519-status-fsmonitor.sh
-> > +++ b/t/t7519-status-fsmonitor.sh
-> > @@ -106,6 +106,8 @@ EOF
-> >
-> >  # test that "update-index --fsmonitor-valid" sets the fsmonitor valid bit
-> > test_expect_success 'update-index --fsmonitor-valid" sets the fsmonitor
-> > valid bit' '
-> > +     write_script .git/hooks/fsmonitor-test<<-\EOF &&
-> > +     EOF
-> >       git update-index --fsmonitor &&
-> >       git update-index --fsmonitor-valid dir1/modified &&
-> >       git update-index --fsmonitor-valid dir2/modified && @@ -164,6
-> > +166,8 @@ EOF
-> >
-> >  # test that newly added files are marked valid  test_expect_success 'newly
-> > added files are marked valid' '
-> > +     write_script .git/hooks/fsmonitor-test<<-\EOF &&
-> > +     EOF
-> >       git add new &&
-> >       git add dir1/new &&
-> >       git add dir2/new &&
-> > @@ -218,11 +222,12 @@ test_expect_success '*only* files returned by the
-> > integration script get flagged  # Ensure commands that call refresh_index() to
-> > move the index back in time  # properly invalidate the fsmonitor cache
-> > test_expect_success 'refresh_index() invalidates fsmonitor cache' '
-> > -     write_script .git/hooks/fsmonitor-test<<-\EOF &&
-> > -     EOF
-> >       clean_repo &&
-> > +     write_integration_script &&
-> >       dirty_repo &&
-> >       git add . &&
-> > +     write_script .git/hooks/fsmonitor-test<<-\EOF &&
-> > +     EOF
-> >       git commit -m "to reset" &&
-> >       git reset HEAD~1 &&
-> >       git status >actual &&
->
-> We need to take a close look at all the tests in
-> t7519-status-fsmonitor.sh and see if we are doing the right thing with
-> these changes because before most commands that read the
-> index would only apply the bits from the fsmonitor bitmap to
-> the cache entries.  Whereas now, it does that but also applies what the
-> fsmonitor hooks returns so the content of .git/hooks/fsmonitor-test is
-> now affecting tests and commands where it was not before.
->
-> So if .git/hooks/fsmonitor-test has paths even git ls-files gets those
-> paths marked dirty and that command is being used to validate the state of
-> the CE_FSMONITOR_VALID.  So I think in most cases for these tests we
-> want the .git/hooks/fsmonitor-test to be empty before calling git ls-files
-> so that doesn't change the index state.
+I actually do not mind not having "-z" and using only
+"--pathspec-file-null".  A new option with long name that feels
+similar to existing "-z" but does sufficiently different things so
+that it needs a different name, however, feels counter-productive
+for the purpose of using it in the UI that produces commands to be
+learned by end-users.
 
-I audited these tests very closely, and to the best of my knowledge,
-the modifications made are valid.
+> +--pathspec-from-file=<file>::
+> +	Read `<pathspec>` from `<file>` instead. If `<file>` is exactly `-`
+> +	then read from standard input. Pathspecs are separated by LF or
+> +	CR/LF. Pathspecs can be quoted as explained for the configuration
 
-For test failures of
+When I invented the terms "pathspec", "refspec", etc. for this
+project, I meant them to be collective nouns.  A pathspec is a set
+of pathspec elements, each of which is usually given as a separate
+argument on the command line.  So "Read pathspec from file" is good
+(not "Read pathspecs from file").
 
-test_expect_success 'update-index --fsmonitor-valid sets the fsmonitor
-valid bit'
-test_expect_success 'newly added files are marked valid'
+And "Pathspec elements" are separated by LF or CR/LF.
 
-It's relatively straightforward that our patch now runs the fsmonitor
-hook so we need to make sure the hook doesn't return anything.
+A tangent.  Since we do not allow NUL in a pathspec element, we do
+not even need the "-z" option.  When we read pathspec from a file,
+we can take any of CRLF, LF or NUL as the separator.
 
-The trickiest case was "refresh_index()" test, and I've made a slight
-change to make it clearer why that test was failing.
+Ah, sorry, that would not help very much.  With "-z" we are allowing
+to express pathspec elements inside which there are embedded LF or
+CR/LF.  Sorry about the noise.
 
-@@ -218,11 +222,12 @@ test_expect_success '*only* files returned by
-the integration script get flagged
- # Ensure commands that call refresh_index() to move the index back in time
- # properly invalidate the fsmonitor cache
- test_expect_success 'refresh_index() invalidates fsmonitor cache' '
--       write_script .git/hooks/fsmonitor-test<<-\EOF &&
--       EOF
-        clean_repo &&
-        dirty_repo &&
-+       write_integration_script &&
-        git add . &&
-+       write_script .git/hooks/fsmonitor-test<<-\EOF &&
-+       EOF
-        git commit -m "to reset" &&
-        git reset HEAD~1 &&
-        git status >actual &&
+> +--pathspec-file-null::
+> +	Only meaningful with `--pathspec-from-file`. Pathspecs are
+> +	separated with NUL character and are not expected to be quoted.
 
-With patch v2, git add was failing to add all files, since it now
-consults the fsmonitor hook which wrongly implied that no files were
-modified. This was rectified by the write_integration_script. After
-that, we immediately ensure that the test fsmonitor doesn't return any
-files, and the test passes.
+OK.
 
+> +	if (pathspec_from_file) {
+> +		if (patch_mode)
+> +			die(_("--pathspec-from-file is incompatible with --patch"));
+> +
+> +		if (pathspec.nr)
+> +			die(_("--pathspec-from-file is incompatible with path arguments"));
 
->
-> >
-> >       if (old && same(old, a)) {
-> >               int update = 0;
-> > -             if (o->reset && o->update && !ce_uptodate(old) &&
-> > !ce_skip_worktree(old)) {
-> > +             if (o->reset && o->update && !ce_uptodate(old) &&
-> > !ce_skip_worktree(old) &&
-> > +                     !(old->ce_flags & CE_FSMONITOR_VALID)) {
-> >                       struct stat st;
-> >                       if (lstat(old->name, &st) ||
-> >                           ie_match_stat(o->src_index, old, &st,
-> > CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE))
->
-> FYI I have been testing with the ce_uptodate macro checking the
-> CE_FSMONITOR_VALID flag instead and only have failures when using
-> the fsmonitor-watchman script which I'm not sure if all the tests were
-> ever passing using it.
->
+Shouldn't the error message say pathspec arguments instead?
 
-Yeah, I see the same results.
+> diff --git a/t/t7107-reset-pathspec-file.sh b/t/t7107-reset-pathspec-file.sh
+> new file mode 100755
+> index 0000000000..cf7f085ad5
+> --- /dev/null
+> +++ b/t/t7107-reset-pathspec-file.sh
+> @@ -0,0 +1,126 @@
+> +#!/bin/sh
+> +
+> +test_description='reset --pathspec-from-file'
+> +
+> +. ./test-lib.sh
+> +
+> +cat > expect.a <<EOF
 
-The one part that I don't fully understand if safe is copying over the
-o->src_index->fsmonitor_last_update to the result index in
-unpack-trees. I don't understand the implications of that, and if
-that's the only field worth copying over, or if we should be copying
-over other fields like the bitmap as well.
+Style:
+
+ - Modern test scripts strive to perform these set-up procedure
+   inside (the first) test_expect_success.
+
+ - No SP between the redirection operator and its source/destination
+   filename.
+
+ - Quote end-of-here-document (EOF in the above) if you do not rely
+   on parameter interpolation inside the here document; this helps
+   readers by telling them that what is presented is used verbatim.
+
+> + D fileA.t
+> +EOF
+> +
+> +cat > expect.ab <<EOF
+> + D fileA.t
+> + D fileB.t
+> +EOF
+> +
+> +cat > expect.a_bc_d <<EOF
+> +D  fileA.t
+> + D fileB.t
+> + D fileC.t
+> +D  fileD.t
+> +EOF
+> +
+> +test_expect_success setup '
+> +	echo A >fileA.t &&
+> +	echo B >fileB.t &&
+> +	echo C >fileC.t &&
+> +	echo D >fileD.t &&
+> +	git add . &&
+> +	git commit --include . -m "Commit" &&
+> +	checkpoint=$(git rev-parse --verify HEAD)
+> +'
+> +
+> +restore_checkpoint () {
+> +	git reset --hard "$checkpoint"
+> +}
+
+Hmm, wouldn't it be cleaner to use a lightweight tag or something to
+keep checkpoint, instead of a variable that is hard to examine when
+tests break and needs debugging?
+
+> +verify_state () {
+> +	git status --porcelain -- fileA.t fileB.t fileC.t fileD.t >actual &&
+> +	test_cmp "$1" actual
+> +}
+> +
+> +test_expect_success '--pathspec-from-file from stdin' '
+> +	restore_checkpoint &&
+> +
+> +	git rm fileA.t &&
+> +	echo fileA.t | git reset --pathspec-from-file=- &&
+> +	verify_state expect.a
+> +'
+> +
+> +test_expect_success '--pathspec-from-file from file' '
+> +	restore_checkpoint &&
+> +
+> +	git rm fileA.t &&
+> +	echo fileA.t >list &&
+> +	git reset --pathspec-from-file=list &&
+> +
+> +	verify_state expect.a
+> +'
+> +
+> +test_expect_success 'NUL delimiters' '
+> +	restore_checkpoint &&
+> +
+> +	git rm fileA.t fileB.t &&
+> +	printf fileA.tQfileB.t | q_to_nul | git reset --pathspec-from-file=- --pathspec-file-null &&
+
+This feeds "fileA.t<NUL>fileB.t" without <NUL> after "fileB.t" to
+the command.  Intended?
+
+Rather, perhaps
+
+	printf "%s\0" fileA.t fileB.t
+
+without q-to-nul, once you use printf anyway?
+
+If you truly mean "delimiter" (as opposed to "terminator"),
+
+	printf "fileA.t\0fileB.t"
+
+can also lose " | q_to_nul".
+
+Thanks.
