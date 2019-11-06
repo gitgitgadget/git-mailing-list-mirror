@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 599121F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 10:00:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8AB131F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 10:00:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731776AbfKFKAF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 05:00:05 -0500
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:40399 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731697AbfKFKAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 05:00:04 -0500
-Received: by mail-wm1-f51.google.com with SMTP id f3so2555707wmc.5
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 02:00:03 -0800 (PST)
+        id S1731756AbfKFKAD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 05:00:03 -0500
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:44168 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731647AbfKFKAA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 05:00:00 -0500
+Received: by mail-wr1-f54.google.com with SMTP id f2so16050895wrs.11
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 01:59:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=mPeoWAcBb00eGe8EIY/HsjteDgVd3vEwluZm6lyqWhE=;
-        b=XVoNVhZmrLL3hTbpZ2fGLl7KlxNBCy+iu9eLAlsS8AfbISa8m2O98UW6Yj4a9hMYJk
-         NdqkHVpsbEIAfEOaxiXfV1oYO4Dez7avRAheCJ1QIoyEZJvMFupq5fu0+0HTJNjbi8fB
-         yTKFc27QvV9EiCNl57OxkRQwZt8gRMRiOUjOaX9Jbx1vfaD33Jc9LMCG4JlSHLVqM/We
-         RbtqgU5v+qOdXmADkdpq+dRZKSEUL3DZCOo/sVRFsFDhefEq/c/uOzpcdr3vvoMz1fIy
-         LpQm0VjelDkweRdZD1npqX2CPpTExfzxfr/nrHqEP+2uqyXJ6tarQID3Q8CSZ1L3SxGd
-         cMVw==
+        bh=WlammgDF0L+1RNwpwU1Hv0Eo8cOXgnk5/hW7BCWo5IU=;
+        b=MQZ128OTvg0kjtAmgeYhPuaW6kqbY+HqCm+LFepmlYnRQru1k18e9qHtIGmvTcnoOm
+         lz6XGVM3U1qoLTpp1Bb4GP1oqOBy/2FWbT5W+L6GVJFL3UgzCp56kXsjnQeNEsVOx26R
+         Th14wax93AaiZ8oIqVMnoHH6I7hzrHVvk3GK8ktlDZKmKkT8gQYk/cU1ocNCI2+jsxP8
+         G6CtWXpOPxMQNiJSyuUPQfD8v0exc6T7Hh9kWHk5m/zqi6+afU4iAED8xsyRs98KyML9
+         kFFG1Tc4QdQwEAi1/9GxNFCq+ZJ1VGJDIAL7D5EcOwEAeB0Y6q0PxcXCgz3xibWE/ejF
+         WIhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=mPeoWAcBb00eGe8EIY/HsjteDgVd3vEwluZm6lyqWhE=;
-        b=M3K42DKm7ImqjjqtXgM4yHkg9tkCBCTcCyyupowXDhkLTRsoA/cfcpVqGHj7ba1eXB
-         c3p6kuTNxqnWbjjo9aKPEDBH1k60aDiGOxSt8Z3arQJtbj9jhDC6ZToHmMxROW0/bWkK
-         VOeLYSPSDoapfszdAyMboB2V2Sxe8/HK34PiVVHZuLU67onX7pHbLLxp8WGAnIkAE1P3
-         OOlf2SAb0zU3uE4INtkpuKYgnNW9MokZ3HoCHsOzctyD4mHqJCF1qKsU6RNQ1YhFIq1G
-         1JfwFstbqkE2y8qm6rwNTp8MuFVRvVEjZmICq8c7VjM6GhTWjRmOMTXNnX7koFbsP+oA
-         d0PQ==
-X-Gm-Message-State: APjAAAV/FfSbOq3PyZX+7XyGAc2mWxSYTGMU5RHr+cCfa11aPJaWNbSL
-        /SKyRAhdiZAM9qSIyK9kDEghZP30
-X-Google-Smtp-Source: APXvYqzgAmYWEJ6DLcufRY6V5XtK0Owu0PHaYz4c0ozrX8BZpNcvbGqizMzktHN8X1yZeXaZ5oKGCA==
-X-Received: by 2002:a7b:c747:: with SMTP id w7mr1719929wmk.62.1573034402194;
-        Wed, 06 Nov 2019 02:00:02 -0800 (PST)
+        bh=WlammgDF0L+1RNwpwU1Hv0Eo8cOXgnk5/hW7BCWo5IU=;
+        b=A1ADJRWCBpa4H/y62A/BXfbSr2M2oQW36D5ergvThXBqiQK4P09q/g/JeXAAPyYi9H
+         aHzj7a54VysbkZq4+QmuawOiaYVhlQVR6Xrh6bV6QtJaYwKMtnz5upS3l2fBZVZh9uGQ
+         TaT94Md8+rHd1hnIxnQGdbQuLECl/m13VkJljZIPwPLDeqQqSsdlTCniArgBp5vgeU+i
+         u6LSlJM5wrn1BOb4PjrqmBkFLnyCW1vxCBrhfwgK0mCSAZYBRk17ezDLUGOcb2jtbDZa
+         KjW5tOBDIpT+uq5J2xsfUVctklricveiVM1ogZEBSeNTyRZF71N58JysNDiew8Qzfr4x
+         VgQw==
+X-Gm-Message-State: APjAAAWmtxytCEKHFx2nR0v5U6SRRUt59Pw0wDejTo+Yv0jxyuVwYwYY
+        EvtUyAmLXj+g6rJz3znFCznIa44K
+X-Google-Smtp-Source: APXvYqyNyd2IMxIk6yej9KoxliVgVjhrvxtPN/U6ahH40vKPXDdlEYk85PvXlGC91e3HyUClRgCv3A==
+X-Received: by 2002:a05:6000:12d1:: with SMTP id l17mr1731980wrx.261.1573034395913;
+        Wed, 06 Nov 2019 01:59:55 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v184sm2566830wme.31.2019.11.06.02.00.01
+        by smtp.gmail.com with ESMTPSA id r19sm27626641wrr.47.2019.11.06.01.59.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 02:00:01 -0800 (PST)
-Message-Id: <7fa5cdf83ff7bc4811e30d0a0e038a27154a8809.1573034387.git.gitgitgadget@gmail.com>
+        Wed, 06 Nov 2019 01:59:55 -0800 (PST)
+Message-Id: <dcb78b6708937c3c6af5a86c276918c19e46acd4.1573034387.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
 References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
         <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 06 Nov 2019 09:59:46 +0000
-Subject: [PATCH v2 19/20] submodule-config: move doc to submodule-config.h
+Date:   Wed, 06 Nov 2019 09:59:37 +0000
+Subject: [PATCH v2 10/20] pathspec: move doc to pathspec.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,160 +72,136 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-submodule-config.txt
-to submodule-config.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-setup.txt
+to pathspec.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Documentation/technical/api-submodule-config.txt is removed because the
+Also documentation/technical/api-setup.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
-The documentation of parse_submodule_config_option() is discarded as the
-function was removed 2 years ago.
-
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- .../technical/api-submodule-config.txt        | 66 -------------------
- submodule-config.h                            | 38 ++++++++++-
- 2 files changed, 37 insertions(+), 67 deletions(-)
- delete mode 100644 Documentation/technical/api-submodule-config.txt
+ Documentation/technical/api-setup.txt | 47 ---------------------------
+ pathspec.h                            | 34 ++++++++++++++++++-
+ 2 files changed, 33 insertions(+), 48 deletions(-)
+ delete mode 100644 Documentation/technical/api-setup.txt
 
-diff --git a/Documentation/technical/api-submodule-config.txt b/Documentation/technical/api-submodule-config.txt
+diff --git a/Documentation/technical/api-setup.txt b/Documentation/technical/api-setup.txt
 deleted file mode 100644
-index fb06089393..0000000000
---- a/Documentation/technical/api-submodule-config.txt
+index eb1fa9853e..0000000000
+--- a/Documentation/technical/api-setup.txt
 +++ /dev/null
-@@ -1,66 +0,0 @@
--submodule config cache API
--==========================
+@@ -1,47 +0,0 @@
+-setup API
+-=========
 -
--The submodule config cache API allows to read submodule
--configurations/information from specified revisions. Internally
--information is lazily read into a cache that is used to avoid
--unnecessary parsing of the same .gitmodules files. Lookups can be done by
--submodule path or name.
+-Talk about
 -
--Usage
-------
+-* setup_git_directory()
+-* setup_git_directory_gently()
+-* is_inside_git_dir()
+-* is_inside_work_tree()
+-* setup_work_tree()
 -
--To initialize the cache with configurations from the worktree the caller
--typically first calls `gitmodules_config()` to read values from the
--worktree .gitmodules and then to overlay the local git config values
--`parse_submodule_config_option()` from the config parsing
--infrastructure.
+-(Dscho)
 -
--The caller can look up information about submodules by using the
--`submodule_from_path()` or `submodule_from_name()` functions. They return
--a `struct submodule` which contains the values. The API automatically
--initializes and allocates the needed infrastructure on-demand. If the
--caller does only want to lookup values from revisions the initialization
--can be skipped.
+-Pathspec
+---------
 -
--If the internal cache might grow too big or when the caller is done with
--the API, all internally cached values can be freed with submodule_free().
+-See glossary-context.txt for the syntax of pathspec. In memory, a
+-pathspec set is represented by "struct pathspec" and is prepared by
+-parse_pathspec(). This function takes several arguments:
 -
--Data Structures
-----------------
+-- magic_mask specifies what features that are NOT supported by the
+-  following code. If a user attempts to use such a feature,
+-  parse_pathspec() can reject it early.
 -
--`struct submodule`::
+-- flags specifies other things that the caller wants parse_pathspec to
+-  perform.
 -
--	This structure is used to return the information about one
--	submodule for a certain revision. It is returned by the lookup
--	functions.
+-- prefix and args come from cmd_* functions
 -
--Functions
-----------
+-parse_pathspec() helps catch unsupported features and reject them
+-politely. At a lower level, different pathspec-related functions may
+-not support the same set of features. Such pathspec-sensitive
+-functions are guarded with GUARD_PATHSPEC(), which will die in an
+-unfriendly way when an unsupported feature is requested.
 -
--`void submodule_free(struct repository *r)`::
+-The command designers are supposed to make sure that GUARD_PATHSPEC()
+-never dies. They have to make sure all unsupported features are caught
+-by parse_pathspec(), not by GUARD_PATHSPEC. grepping GUARD_PATHSPEC()
+-should give the designers all pathspec-sensitive codepaths and what
+-features they support.
 -
--	Use these to free the internally cached values.
--
--`int parse_submodule_config_option(const char *var, const char *value)`::
--
--	Can be passed to the config parsing infrastructure to parse
--	local (worktree) submodule configurations.
--
--`const struct submodule *submodule_from_path(const unsigned char *treeish_name, const char *path)`::
--
--	Given a tree-ish in the superproject and a path, return the
--	submodule that is bound at the path in the named tree.
--
--`const struct submodule *submodule_from_name(const unsigned char *treeish_name, const char *name)`::
--
--	The same as above but lookup by name.
--
--Whenever a submodule configuration is parsed in `parse_submodule_config_option`
--via e.g. `gitmodules_config()`, it will overwrite the null_sha1 entry.
--So in the normal case, when HEAD:.gitmodules is parsed first and then overlayed
--with the repository configuration, the null_sha1 entry contains the local
--configuration of a submodule (e.g. consolidated values from local git
--configuration and the .gitmodules file in the worktree).
--
--For an example usage see test-submodule-config.c.
-diff --git a/submodule-config.h b/submodule-config.h
-index 1b4e2da658..42918b55e8 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -7,9 +7,31 @@
- #include "submodule.h"
- #include "strbuf.h"
+-A similar process is applied when a new pathspec magic is added. The
+-designer lifts the GUARD_PATHSPEC restriction in the functions that
+-support the new magic. At the same time (s)he has to make sure this
+-new feature will be caught at parse_pathspec() in commands that cannot
+-handle the new magic in some cases. grepping parse_pathspec() should
+-help.
+diff --git a/pathspec.h b/pathspec.h
+index 1c18a2c90c..0fbd7a051d 100644
+--- a/pathspec.h
++++ b/pathspec.h
+@@ -22,6 +22,10 @@ struct index_state;
+ 
+ #define PATHSPEC_ONESTAR 1	/* the pathspec pattern satisfies GFNM_ONESTAR */
  
 +/**
-+ * The submodule config cache API allows to read submodule
-+ * configurations/information from specified revisions. Internally
-+ * information is lazily read into a cache that is used to avoid
-+ * unnecessary parsing of the same .gitmodules files. Lookups can be done by
-+ * submodule path or name.
-+ *
-+ * Usage
-+ * -----
-+ *
-+ * The caller can look up information about submodules by using the
-+ * `submodule_from_path()` or `submodule_from_name()` functions. They return
-+ * a `struct submodule` which contains the values. The API automatically
-+ * initializes and allocates the needed infrastructure on-demand. If the
-+ * caller does only want to lookup values from revisions the initialization
-+ * can be skipped.
-+ *
-+ * If the internal cache might grow too big or when the caller is done with
-+ * the API, all internally cached values can be freed with submodule_free().
-+ *
++ * In memory, a pathspec set is represented by "struct pathspec" and is
++ * prepared by parse_pathspec().
 + */
-+
- /*
-  * Submodule entry containing the information about a certain submodule
-- * in a certain revision.
-+ * in a certain revision. It is returned by the lookup functions.
+ struct pathspec {
+ 	int nr;
+ 	unsigned int has_wildcard:1;
+@@ -73,18 +77,46 @@ struct pathspec {
   */
- struct submodule {
- 	const char *path;
-@@ -41,13 +63,27 @@ int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
- int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
- void repo_read_gitmodules(struct repository *repo);
- void gitmodules_config_oid(const struct object_id *commit_oid);
-+
+ #define PATHSPEC_LITERAL_PATH (1<<6)
+ 
+-/*
 +/**
-+ * Same as submodule_from_path but lookup by name.
-+ */
- const struct submodule *submodule_from_name(struct repository *r,
- 					    const struct object_id *commit_or_tree,
- 					    const char *name);
+  * Given command line arguments and a prefix, convert the input to
+  * pathspec. die() if any magic in magic_mask is used.
+  *
+  * Any arguments used are copied. It is safe for the caller to modify
+  * or free 'prefix' and 'args' after calling this function.
++ *
++ * - magic_mask specifies what features that are NOT supported by the following
++ * code. If a user attempts to use such a feature, parse_pathspec() can reject
++ * it early.
++ *
++ * - flags specifies other things that the caller wants parse_pathspec to
++ * perform.
++ *
++ * - prefix and args come from cmd_* functions
++ *
++ * parse_pathspec() helps catch unsupported features and reject them politely.
++ * At a lower level, different pathspec-related functions may not support the
++ * same set of features. Such pathspec-sensitive functions are guarded with
++ * GUARD_PATHSPEC(), which will die in an unfriendly way when an unsupported
++ * feature is requested.
++ *
++ * The command designers are supposed to make sure that GUARD_PATHSPEC() never
++ * dies. They have to make sure all unsupported features are caught by
++ * parse_pathspec(), not by GUARD_PATHSPEC. grepping GUARD_PATHSPEC() should
++ * give the designers all pathspec-sensitive codepaths and what features they
++ * support.
++ *
++ * A similar process is applied when a new pathspec magic is added. The designer
++ * lifts the GUARD_PATHSPEC restriction in the functions that support the new
++ * magic. At the same time (s)he has to make sure this new feature will be
++ * caught at parse_pathspec() in commands that cannot handle the new magic in
++ * some cases. grepping parse_pathspec() should help.
+  */
+ void parse_pathspec(struct pathspec *pathspec,
+ 		    unsigned magic_mask,
+ 		    unsigned flags,
+ 		    const char *prefix,
+ 		    const char **args);
 +
-+/**
-+ * Given a tree-ish in the superproject and a path, return the submodule that
-+ * is bound at the path in the named tree.
-+ */
- const struct submodule *submodule_from_path(struct repository *r,
- 					    const struct object_id *commit_or_tree,
- 					    const char *path);
-+
-+/**
-+ * Use these to free the internally cached values.
-+ */
- void submodule_free(struct repository *r);
-+
- int print_config_from_gitmodules(struct repository *repo, const char *key);
- int config_set_in_gitmodules_file_gently(const char *key, const char *value);
+ void copy_pathspec(struct pathspec *dst, const struct pathspec *src);
+ void clear_pathspec(struct pathspec *);
  
 -- 
 gitgitgadget
