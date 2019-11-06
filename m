@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6849D1F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 11:30:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93A781F454
+	for <e@80x24.org>; Wed,  6 Nov 2019 11:33:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731222AbfKFLas (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 06:30:48 -0500
-Received: from mout.gmx.net ([212.227.15.15]:40923 "EHLO mout.gmx.net"
+        id S1729370AbfKFLdU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 06:33:20 -0500
+Received: from mout.gmx.net ([212.227.17.20]:35499 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725856AbfKFLar (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 06:30:47 -0500
+        id S1725856AbfKFLdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 06:33:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573039838;
-        bh=Vi4pNJt1QUvb6VVa0hS+Rndk1NJoChZ0QrlM8HNG8Yg=;
+        s=badeba3b8450; t=1573039994;
+        bh=vpNCfldBNrEw4sgoW2FiJlk3ZERz97wvUBcIS6y+HfA=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FreYlUQPSAvH8SYblO4LMoQDiL6upw8pWdN+qbL0KOK4/3f5XjbODlzytxhJ1aXqY
-         hAbWOm9ecK/g+BTAcia2GJB8azfnLObbwyQbm774nEGAhxEcxLU975M20z5fJKvM7K
-         g/l9zPmBWVVO/v71u2UHNLkvJulrbMIQT1egFMn4=
+        b=ef4FVBXamMpMWGAkC1sViS1oPnNqCFDhCzrvL8/CZVe+FCRtrV60mS+lsP0cLkN/d
+         P0p2A0mcx/880CKReQUV+1WnYlooRbtzMGA6UUmdn+xzNmJZqZhjVYrWUHVhcQmBt4
+         AFucqRQ1dv1DPFC8dH4SBsj7hLgcO6CEk6ExZ0WY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1My36T-1hisKX2Sxr-00zTiA; Wed, 06
- Nov 2019 12:30:38 +0100
-Date:   Wed, 6 Nov 2019 12:30:19 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MuUjC-1hath23AmI-00rXgO; Wed, 06
+ Nov 2019 12:33:14 +0100
+Date:   Wed, 6 Nov 2019 12:32:58 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jonathan Tan <jonathantanmy@google.com>, workingjubilee@gmail.com,
-        git@vger.kernel.org, christian.couder@gmail.com
-Subject: Re: [PATCH v7 1/1] Implement rev-list --bisect* --first-parent
-In-Reply-To: <xmqqtv7hvi6r.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1911061228340.46@tvgsbejvaqbjf.bet>
-References: <20191105052141.15913-2-workingjubilee@gmail.com> <20191105230403.5542-1-jonathantanmy@google.com> <xmqqtv7hvi6r.fsf@gitster-ct.c.googlers.com>
+cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 30/32] ident.c: fix LGTM warning on the possible abuse
+ of the '=' operator
+In-Reply-To: <xmqqbltpwxyd.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1911061231420.46@tvgsbejvaqbjf.bet>
+References: <20191104095923.116086-1-gitter.spiros@gmail.com> <xmqqbltpwxyd.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QYb7n0cNljWwTDDLrEy8XAWMsuC+W7RdjmBzAZX8l/zxkMJra/y
- rKz9dKrbAB+RHxHl+iQYxWp/Je49HW1xtljgCLwQEE1XbrfAv5EKAoa6D7x8HyJXsaDDDdB
- JfUwHwX1n9kBm1s8Rm7RennWQUWxpe50fRkhNG74NgWrJn9Qn+qNJsA1X3qgPX6PYlC/sDo
- OUPO+aTYm9qaelilrsSBg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1388N4d6ukk=:1J05gGsgNL34D+Bsgro3e4
- FaIjWofx6tOYu8egFO0Gh6atsKY42jJGsdLQgDb3tzWzLA3SHemUGTc5TcHYtWHG9EreY3jVQ
- oVNzayd1TZkYEsqc/uSsUg4LBXJgtPZAxy2nFtRmPN9zC3WEKi59d74XUA9Rm8Ic+RoxBpK4L
- r1wz0+Nrby0r5YChK1Y7mB3qvYQYkrUPFT7rQLlFAn+MFTTochJ/OBgGlUraGfjMvtkaTS7WV
- gttFejSXtfl9Tqe8k/2Eltp799DBbewirItodDk8Oq1ekkrPSONdyqPpUpHFHRytjYCkYXgA0
- pm/nAkSVm8yapNczMz31We6d61/IcGahB25W6On1U08VyobZzT2jUdQX304lsqg+p4Rcx+a3v
- 8RqJnPND7Ln7Gk0Zl3GjWdDvTLOeDISk2SijBio7CPC7ORMquWD1h9hn+U4iFKdgCKWJsiyLu
- BszPGRcxpRAqXQnktqo/J0lRvb08JvOEJD3WQGfcgWm4fax/4cv2dJdKKMHjCv+K7MxhfiWqD
- hkE6/XgiPZ9iBY4DuuqqIq+m18sR1Gyh7aGLdxrwml7Sp40qvnSDfxK3b8L9O4KFBVi79W14i
- GPhSTLC8nZdaLiNXhYOLWNUTWP47LKRYD0SqPzSRiWu1EoYG0TfP4J7Pw7njzZpLGwXN3OSdw
- OswXgL9RNU7irnABzLTD+6TNA7ORpaYnC+5mYlbDqx4K9PVdUlss/Li0CG2qp663VWFY0z7S8
- C498mx3eX2UxcVERsK7zsd4z7JVqD3KTOLo05jrOPcJE4ghKcvuIbYB0oEOcQWSIOdYtfBTBr
- RTBZT+oDPK6OzaZXHdJsTkuysZAJNyE+wl/QlCb7u50KBfbIl+ZM2YkyxP54NhP8ORl+/vrMA
- cgfdqp85z3UciqivgH7QJFNWNaxLGTrZl3irbxevoWmWJEbUi1Z+Wx2PjxDPHE4rWcWC33ln6
- Cuh1TZes1T/GFNN8lqzZrK0CNTJg2F7HOEOv2k0TkohU0eGS+7tyMfYUICeodQoqAmqZfXeXL
- RpcvYd+c3BT0+jPfjDtL22poZlvbfncnMdYgfR8MGw0qHxBpYKuQWK41Sa3Qu9s61xi8AACfW
- lonX9/nQUYoV/osbdI+zu86judbJLosb+OS9D69csvvgGB+L3ZQHN/PQMMnehMobwVm+pll/T
- Fu673c6dKy3rPv28Tz0s00UX9FX142+dvyimzEZ8WD9rh0hPCSi3qJCJsywHGdPWu0zNp6ajS
- RtIkE0b6xCUAPljKdvKNZ/eyBpjqHkERLHL08HoHIpqP/7FSiAX9Rad9xk+Y=
+X-Provags-ID: V03:K1:doLTkSGIoNIhkQMgFpFHbEP511LtFN/LxQ9FtANK23erW4ijYj/
+ fnEvOjBXZJJimHXU28kTKA6r24jhiunq60+R9dyWt/inqVlRsaU+GNRD25gpggVgR7bvmKx
+ sG4h1nKpafZaofXVYlvuEcC4bB6YwwETWq6jHrQy+MKM9mW5pNcAsfLY0CT/DnnlbY74Wew
+ B3VhLLHXMAY1AcIY0R+8g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:wqHdJl2fm08=:UJPlW8f91n7dkOKytdkk+K
+ Jj9v2hLnOggqU43puPlIxyN4DL5OIXaSTVj4TIVwp9ncNy+8BgOqm4uVIOSSSc5pL3V6MaO6L
+ IBuTcP/gQ9xiixZouT/SN/QNg8a/n3z/dqCtxWKTNPu+unSgGRVwE3JgC9JkAl4YP96Q/a7eU
+ gC/1RBfEdOe3oaP2Nbzu6dXoLvjuWvy1FtCT3zB6VOsjIPWs+V5daY/c90Ts80gEtmJAjVJBf
+ voRupSicb4W8pl/BMRwgylVNotL9oQe5YuZbiZJGeX2h/waIonipX1LfbuTUVg9BEBTJ+mD58
+ kbQZoPK9B2IpFdT/Ra/J4Bc8KSBIGR+/Pua6l6SzmB7JVgE6T7uF/bfYePFPXqssZVcIRVp2n
+ Luwtp3gHYmtxmAE2ylmGeuo1ei4lYBmaCFQarScSYcngGQsFNO91icXTvnGcxTzSIu7bkerx3
+ VXvDJ6vb7SqxBuXwAPSi+QeTHSeZbt6IgYN1Myg7AXlAk0IE8xe6rxMutzJeCZ3lwhdVpv177
+ f+X0NRE9NqTByEtWywudwLnr5obHqr8sAKKJhjyLOmDiZCJsFQoHKHeZGbphuBlGHrCfOXJ1W
+ j+y813B7aEJ/omGjDOLw8DTea1O9Xnt6ldb7eVylc3BhFQW82diqzs/zttRpYBLbZ0vGNEnzt
+ Aa+28FtsxxdCBFrcCFLj1JvonpkjlOe1hQeTBlLC4yUcwTZsEFSo9YDxHDkJhmwLa0LZ7nbUV
+ uo5y6xEn0ef5oH1IkbloLrGVK+FRm1D/rrRy5fw1HRC1qGjrQSXk75saE0N/eWVM2WPfMiw6b
+ DCWcPL569BO6nz+V5B4bEGph0zY7KYWj6qmfcIf0iyjHVKf4gELv6pDhNHukCT04pynMwy4jH
+ b7ONz1NMYfwHaJl9cYYo9PfICNxhzKeWHj5Qw91tr0ztLi4E3tpyLkpHHl4wfQ2Bac68SYZea
+ ayoIBPG235m2ki/GtazrRhGXRTlNBGIy/vSCSB0fj9qt5uWg4r595QCchqg0XpRIP/CnScNtA
+ 0sVkFr4hGpYTCZoHcr+zDDWgcMwVz1SeBzY4zfIF9NW7iMEHHBXrXm6deNj8Hu7I3kYEJGOne
+ hBdH159+f0BFx585uJMyUX5LReJNVW+lD0/SnFoWFkFczyg9hY/q625CZVlrYCHasKWLghaYg
+ XwpZ+Vh4+MjsK8/iBUl/Accqk8teN3dMbNkTGBzoN+4D50SttKajLkLLwceLfHE/ZMc0z4uMv
+ 3ILnuH/0MMk+alnlI8t8zvzhKI98twLcT1N5uq33xQrjM1AOxnUDHM7VIuGA=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -74,58 +74,87 @@ Hi,
 
 On Wed, 6 Nov 2019, Junio C Hamano wrote:
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
+> Elia Pinto <gitter.spiros@gmail.com> writes:
 >
-> > Your commit message title should be of the form "<component>: <change>=
-",
-> > e.g.:
-> >
-> >   rev-list: support --first-parent with --bisect*
+> Did I miss the first 29 patches (with what I see in this patch, I
+> do not know if I want to see them immediately, though ;-))?
 >
-> Good suggestion.
+> > Fix the LGTM warning of the rule that finds uses of the assignment
+> > operator =3D in places where the equality operator =3D=3D would
+> > make more sense.
 >
-> > I would be much more laconic (in particular, omitting subjective terms
-> > like "minutiae" and "mountains of irrelevant data"), but perhaps that =
-is
-> > just a matter of subjective style.
+> I know you did not mean that existing
 >
-> FWIW, I had the same reaction.  That part of the message was too
-> noisy without adding much actual value.
+> 	} else if ((email =3D query_user_email()) && email[0]) {
 >
-> >> Note, bisecting on --first-parent becomes part of findall's previousl=
-y
-> >> existing pass-through as an "option state" flag.
-> >
-> > I don't understand this part.
+> better reads if it were written like so:
 >
-> Me neither.
+> 	} else if ((email =3D=3D query_user_email()) && email[0]) {
 >
-> > Also, clarify in the commit message somewhere that this commit does no=
-t
-> > change the behavior of "git bisect".
+> but that is the only way how that sentence can be read (at least to
+> me) without looking at what the patch actually does.
 >
-> s/\.$/ when used without the "--first-parent" option&/; you mean?
+> As "email" has already been assigned to at this point in the
+> codeflow, I agree that, to an eye that does not (and is not willing
+> to spend cycles to) understand what the code is doing, the latter do
+> look more natural: "If the value of the variable is the same as the
+> return value of the query_user_email() function, and ...".  And if
+> "email" were a simpler arithmetic type it would have been even more
+> (iow, it is clear "email" is a character string from "&& email[0]",
+> so it is unlikely that "email =3D=3D que()" is what the user intended).
 >
-> > As for the diff, besides my comments below, a change in the user-facin=
-g
-> > documentation of "rev-list" is needed, since --bisect and --first-pare=
-nt
-> > now work together.
+> So I am somewhat sympathetic to the "warnings" here, but not all
+> that much, especially if squelching makes the codeflow harder to
+> follow by introducing otherwise unnecessary nesting levels (like
+> this patch did).  I suspect that it might be possible to futher
+> restructure the code in such a way that we do not have to do an
+> assignment in a conditional without making the code deeply nested,
+> and that may perhaps be worth doing.
 >
-> True.  I too am, like you are, happy to see that these two options
-> made to work well together.
+> But the thing is, assignment in a cascading conditional is so useful
+> in avoiding pointless nesting of the code (imagine a reverse patch
+> of this one---which is easy to sell as cleaning-up and streamlining
+> the code).
 >
-> Thanks, both, for the patch and useful comments.  My own review on
-> it may take a bit more time.
+> So, I dunno.
 
-While I sadly won't have time to review this patch, let me first state
-that I am very excited that you revived this stalled patch. Thank you!
-
-In addition to Jonathan's comments, I would like to add another one: I
-would have loved for this patch to be split in two, the first one
-introducing the `bisect_flags` and using it with `BISECT_FIND_ALL`
-instead of doing the `find_all` thing, the second one building the
-first-parent feature on top.
+For what it's worth, my reaction was exactly the same: I understand
+how some developers might deem the assignment inside an `if ()`
+condition undesirable, in Git's context I do strongly prefer the current
+code over the version proposed in this patch.
 
 Thanks,
-Dscho
+Johannes
+
+>
+> > Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> > ---
+> >  ident.c | 13 ++++++++-----
+> >  1 file changed, 8 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/ident.c b/ident.c
+> > index e666ee4e59..07f2f03b0a 100644
+> > --- a/ident.c
+> > +++ b/ident.c
+> > @@ -172,12 +172,15 @@ const char *ident_default_email(void)
+> >  			strbuf_addstr(&git_default_email, email);
+> >  			committer_ident_explicitly_given |=3D IDENT_MAIL_GIVEN;
+> >  			author_ident_explicitly_given |=3D IDENT_MAIL_GIVEN;
+> > -		} else if ((email =3D query_user_email()) && email[0]) {
+> > -			strbuf_addstr(&git_default_email, email);
+> > -			free((char *)email);
+> > -		} else
+> > -			copy_email(xgetpwuid_self(&default_email_is_bogus),
+> > +		} else {
+> > +			email =3D query_user_email();
+> > +			if (email && email[0]) {
+> > +				strbuf_addstr(&git_default_email, email);
+> > +				free((char *)email);
+> > +			} else
+> > +				copy_email(xgetpwuid_self(&default_email_is_bogus),
+> >  				   &git_default_email, &default_email_is_bogus);
+> > +		}
+> >  		strbuf_trim(&git_default_email);
+> >  	}
+> >  	return git_default_email.buf;
+>
