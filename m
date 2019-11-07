@@ -2,89 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 811961F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 06:43:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25FC61F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 06:49:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726780AbfKGGn5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 01:43:57 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41746 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726094AbfKGGn5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 01:43:57 -0500
-Received: (qmail 29205 invoked by uid 109); 7 Nov 2019 06:43:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Nov 2019 06:43:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32453 invoked by uid 111); 7 Nov 2019 06:47:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Nov 2019 01:47:18 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 7 Nov 2019 01:43:56 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, rynus@gmail.com, stolee@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 1/1] commit-graph: use start_delayed_progress()
-Message-ID: <20191107064356.GH6431@sigill.intra.peff.net>
-References: <pull.450.git.1572969955.gitgitgadget@gmail.com>
- <pull.450.v2.git.1572984842.gitgitgadget@gmail.com>
- <78bd6bc2c02f1daf13938a738d8eae56b5f6b74c.1572984842.git.gitgitgadget@gmail.com>
- <20191106040955.GD4307@sigill.intra.peff.net>
- <xmqqpni4s3mn.fsf@gitster-ct.c.googlers.com>
+        id S1726651AbfKGGs7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 01:48:59 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:33071 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725763AbfKGGs7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 01:48:59 -0500
+Received: by mail-pl1-f194.google.com with SMTP id ay6so778757plb.0
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 22:48:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ZZAIgMDI+BryG7oiYKz6rGyYgFBOkcx0CLHzHDVRRpQ=;
+        b=BQTwnglHO93LSkAk19y57eziOyIQm/wBXo5NtB88gO70+FPpcPMTTXpCEImCcAJ+JS
+         MP4vyj04ITT31145dR+uUQRhEJXmCL1VLeWoZtTw4Vx1YA3lXw/S4/sNSViXHgFwsOX0
+         hH8JAY0P7YtQuSxyOTFujCAunTxHY3TzwDjizHoDD1wsSL7K86D4sc9jdfrGmM8FF7UY
+         UrUpywe+ogo/tIq9H/zcGsnhs3hB4xooHGbwi1RwDHzLAiBtq+FOkc0C9ZtfPLDMa3V7
+         eqUsqjSKavPrdSE1TsHP8WJKInrnFfhQ6p1KzKfjXLBq2tZBEGhFiHbkz10CLCnXgVL9
+         W5YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ZZAIgMDI+BryG7oiYKz6rGyYgFBOkcx0CLHzHDVRRpQ=;
+        b=ai4IyEL3lYP9OLoyd3GDRMxhAklrabyNYGlzX6xahzF1ifZogmciD4btxgbJJz9BQI
+         ht7fKkWp06eLSpmG0KhO4W1SfUYRp/kbBg2239QzeeYmFWss9ybm9YpexR5DoNJQgWHE
+         bmMs04RdwHzoIg5ZPZVXtb7sy0VvGb8veZSFQ8vnpJVm1m0vi62oeeGX6loNGwdxEUSR
+         dWQrJsuqQt0IjBNMS7WC0e+d5SIym9EI2+80hYIkRcmfPM5b8j63G9dw2zB9psMPO1Ad
+         lKaEpoCieNbO1GFqzdMs7L2T/1DJbFVKq08vb3cQcfjmfgbroAzcgOv5SWHLQVJJk+Za
+         9iRQ==
+X-Gm-Message-State: APjAAAWDNEBdRdaCKNjKMM+f0bnLO+GNwwizRdV/MGgyY3UljrrM4yDb
+        EFQMi9I241p9pB2+4OWSdG4=
+X-Google-Smtp-Source: APXvYqzf20ZiwxVo7Q+H65q0CojVhkZFsksoZk04l0HP53unicrEIHzZsh5hd0d/yUaa/GVlnTiGug==
+X-Received: by 2002:a17:902:ba91:: with SMTP id k17mr2078268pls.100.1573109337299;
+        Wed, 06 Nov 2019 22:48:57 -0800 (PST)
+Received: from localhost ([2402:800:6375:16b7:502d:9b82:436:143a])
+        by smtp.gmail.com with ESMTPSA id x20sm1418299pfa.186.2019.11.06.22.48.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Nov 2019 22:48:56 -0800 (PST)
+Date:   Thu, 7 Nov 2019 13:48:54 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 3/8] t3900: demonstrate git-rebase problem with multi
+ encoding
+Message-ID: <20191107064854.GB8096@danh.dev>
+References: <20191031092618.29073-1-congdanhqx@gmail.com>
+ <cover.1573094789.git.congdanhqx@gmail.com>
+ <ca869cef57bcf620a7b5d0519d362dcd9a27eae6.1573094789.git.congdanhqx@gmail.com>
+ <20191107060233.GB6431@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqpni4s3mn.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20191107060233.GB6431@sigill.intra.peff.net>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 07, 2019 at 01:37:52PM +0900, Junio C Hamano wrote:
+On 2019-11-07 01:02:33 -0500, Jeff King wrote:
+> On Thu, Nov 07, 2019 at 09:56:14AM +0700, Doan Tran Cong Danh wrote:
+> 
+> > +test_commit_autosquash_multi_encoding () {
+> > +	flag=$1
+> > +	old=$2
+> > +	new=$3
+> > +	msg=$4
+> > +	test_expect_failure "commit --$flag into $old from $new" '
+> > +		git checkout -b '$flag-$old-$new' C0 &&
+> 
+> These single quotes are funny; they close the test-snippet string, so
+> these variables are outside of any quoting (and thus subject to
+> whitespace splitting).
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I think this is OK for now, though it does make me wonder if
-> > "--progress" ought to perhaps override "delayed" in some instances,
-> > since it's a positive signal from the caller that they're interested in
-> > seeing progress.
-> 
-> I did have the same reaction after seeing the change to 5318 where
-> the expected output from "git commit-graph write --progress" has
-> become unreliable.
-> 
-> I think there are possibly three kinds of folks:
-> 
->  - I do not want the output smudged with any progress (e.g. I am a
->    script);
-> 
->  - I want to see progress if it takes very long, but do not waste
->    vertical screen real estate if it does not make me wait (e.g. I
->    am an interactive user who occasionally wants a cue to leave the
->    keyboard to grab coffee); and
-> 
->  - I want to see all progress (... now who am I?  Taking a
->    screenshot to write a tutorial or something???).
+Yes, those quotes are funny, and I'm also aware that
+they will be subjected to whitespace spliting.
+But those quotes were intentional, they're there in order to have
+better log with:
 
-I think type 3 may be people who want to understand more about the
-program flow, and where it's at when it sees an error.
+    ./t3900-i18n-commit.sh -v
 
-> In the ideal world, the three choices above should probably be
-> "--progress=(no|auto|always)" where not having any defaults to one
-> of them (probably "auto", as the code can use isatty() to further
-> turn it to "no").
+With those funny quotes, we will see this (verbose) log:
 
-I think any no/auto/always here is tricky, because it already has a
-meaning: to use or disregard isatty(2). And overriding that might be
-independent of the "type" (think pack-objects on a server generating
-output that's going over the wire; we have to tell it "yes, definitely
-show progress even though there is no terminal", but that has nothing to
-do with any "delay" decisions).
+    expecting success of 3900.38 'commit --fixup into ISO-2022-JP from UTF-8':
+                git checkout -b fixup-ISO-2022-JP-UTF-8 C0 &&
+                git config i18n.commitencoding ISO-2022-JP &&
+                echo ISO-2022-JP >>F &&
+                git commit -a -F "$TEST_DIRECTORY/t3900/ISO-2022-JP.txt" &&
+                test_tick &&
+                echo intermediate stuff >>G &&
+                git add G &&
+                git commit -a -m "intermediate commit" &&
+                test_tick &&
+                git config i18n.commitencoding UTF-8 &&
+                echo UTF-8-fixup >>F &&
+                git commit -a --fixup HEAD^ &&
+                git rebase --autosquash -i HEAD^^^ &&
+                git rev-list HEAD >actual &&
+                test_line_count = 3 actual &&
+                iconv -f ISO-2022-JP -t utf-8 "$TEST_DIRECTORY/t3900/ISO-2022-JP.txt" >expect &&
+                git cat-file commit HEAD^ >raw &&
+                (sed "1,/^$/d" raw | iconv -f UTF-8 -t utf-8) >actual &&
+                test_cmp expect actual
 
--Peff
+I think it's easier to manual run the test step with this log.
+
+-- 
+Danh
