@@ -2,103 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89EB11F4C0
-	for <e@80x24.org>; Thu,  7 Nov 2019 10:36:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDA111F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 10:51:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387843AbfKGKgR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 05:36:17 -0500
-Received: from mail-yb1-f176.google.com ([209.85.219.176]:32833 "EHLO
-        mail-yb1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726866AbfKGKgR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 05:36:17 -0500
-Received: by mail-yb1-f176.google.com with SMTP id i15so756297ybq.0
-        for <git@vger.kernel.org>; Thu, 07 Nov 2019 02:36:16 -0800 (PST)
+        id S2387638AbfKGKvN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 05:51:13 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:41792 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727528AbfKGKvN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 05:51:13 -0500
+Received: by mail-pl1-f194.google.com with SMTP id d29so1123807plj.8
+        for <git@vger.kernel.org>; Thu, 07 Nov 2019 02:51:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=oQn65EZIqu/d10eri/0+/irypgUG052gMGebYIZRpAg=;
-        b=G6B8OIx2y/FiUZ07tOY4U1BpXOldeCYKC1X+U4LH0NTZVX+L+r+BKrLfjrT0r6LEgh
-         UFEQWX2EhagXoB1Eqh/B5E2a0RjgL8xNfY/ByHmxNALlDYmtPO2bL2VNNJjK2aMV65D5
-         htht9yzxQdht7c8rm4U5OcNvNCv/4asU+39gbZMnceEiRfVENREjdRfdUCntqvqqYsvA
-         VaIyyFUjAZ//AJxKm4p+Ok66G6e/TL7BMjH4LKJAmR37swjuNXWMOn5hfKHWYkzm3wQP
-         JAus6dhZUgQDPCPIUfKbJpu/5j+W4oAmdZaTRjGqJKLvOU4hT1jA2+ekftWWXEru6eWJ
-         ZRSQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=FYJfgfFzwlkAWF0fdJpUixmMdokCDGQHYwTv8mlyzBc=;
+        b=goY7O4vMeh4b2gJvyZxypnSEoRGSbDQ1XiMbKAwyB6ojFHLDL6lTB1N8WAYMZUnwI7
+         5WjrymlvHMl/m7abZ2/D/CE3xJ9cD69zS3nExCfPoRlh2O4w3TQIOUbiY9wuO28Vp1eP
+         AHN95mCdsoDwlS8N0zYdXqo/prS8wFXiijTE2QojjYl/y1T8dTFbZ720exJ/UYaJA/iv
+         mjHFnzKLy/vl1FP6SZCBtrjj44gCm0lnDZvtpNTrDKqXlfNOukslLDns25u79sihO5A+
+         s28zTEVrpS67lXvHKtTYlKziBx79ZBY/dCg4lsBodpd4PuNQ0fExb1bESf9nt3de4wBw
+         8QMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=oQn65EZIqu/d10eri/0+/irypgUG052gMGebYIZRpAg=;
-        b=pF4Fl4avy+2jWK2H8lr5i9QTLZd2/elFQU0ajaQZp8qBkv4iigNDawnYOLvpY15Gne
-         ajeAPafrFZRUISL1jinaILNhzaDhd60uCX6B7N/fer0oyE9Kl80+6zvN5BlHZIUQlh5G
-         d2uEkx023G3FnPspOEpx59+2QyqS02dUSX69+X4U0Bk1KfvbC3LshPr0hFfMLKpbzx9i
-         6tYMYb/2bPxJGqFhP/dEXcfVbQjq6or6m7DMNNy1LZkkg/XjNsS5qy4Ce/QjpXuFFWPb
-         DorU+jeV/yBgH4dELXR0uWFMFzaNfh46oBiQWxPQNGJ3OKlaxrRoR883pJPW20+uqHrI
-         DuJg==
-X-Gm-Message-State: APjAAAX755wZ7qFqurC4ScW3hkH29BAW8txNMAKy7WDo2urCIJZXFnf7
-        TgAiPNmq7vhm/fKgxm9M2djOb6egdyBNTGq98ZD5gfslBrw=
-X-Google-Smtp-Source: APXvYqyWQE7t7xA8gdPELsFub8h7jsN1HilC43NEIMDsPCJbpZ1x8bcx5es7mEo4xRVpJCNvklNszOQ+HT/jsPFcZbQ=
-X-Received: by 2002:a5b:98a:: with SMTP id c10mr2494442ybq.5.1573122975937;
- Thu, 07 Nov 2019 02:36:15 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FYJfgfFzwlkAWF0fdJpUixmMdokCDGQHYwTv8mlyzBc=;
+        b=eXZCBF0QK7jVti4TlYj5Jo8FsKxEKqDDYx01YAqhFxDTdzgi38SlKJcBfMyDpwferh
+         xPpuXmrXIOWkTZymBZL9uVdWMhVZUF0G0g0m0CrpB2yx0IdrEDDnW16auHFOlV+CAqKp
+         9Qx2n3RBxItZdpjdVjLbEkmByyrv/e1bArWnXrQfFwh31eJzbHR4VTiMIgpcCd2HoIJV
+         2IvbWnZPFb879WjY/aUdLMCAxUSoiJK7XBIalnjvsFLzUBwRNza6q0rrrTIUIIPzk75T
+         Ntml5ZI6KjshPBvU5Vi7Re/SbwQDFhjyXg3rt00wdZOLG7Bxih7lDh7uO6/Fh+0YChlI
+         UfrA==
+X-Gm-Message-State: APjAAAXJdWfhWU2fHBCsJhTuyWgXI4iKnRmr094mQC5GFK059C5JNt4T
+        wdDQIRw2ZuZhcOLhW8/s2VwApI1V
+X-Google-Smtp-Source: APXvYqxrwupekBKejNI2STyocEwNLvubjmXHrbP2C/+tTcAZ1bKlshsyjz4FeOSUcWPs1BKpp6zyxA==
+X-Received: by 2002:a17:902:8509:: with SMTP id bj9mr3086760plb.328.1573123872311;
+        Thu, 07 Nov 2019 02:51:12 -0800 (PST)
+Received: from localhost ([2402:800:6375:16b7:502d:9b82:436:143a])
+        by smtp.gmail.com with ESMTPSA id z25sm2148482pfa.88.2019.11.07.02.51.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Nov 2019 02:51:11 -0800 (PST)
+Date:   Thu, 7 Nov 2019 17:51:09 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 3/8] t3900: demonstrate git-rebase problem with multi
+ encoding
+Message-ID: <20191107105109.GD8096@danh.dev>
+References: <20191031092618.29073-1-congdanhqx@gmail.com>
+ <cover.1573094789.git.congdanhqx@gmail.com>
+ <ca869cef57bcf620a7b5d0519d362dcd9a27eae6.1573094789.git.congdanhqx@gmail.com>
+ <20191107060233.GB6431@sigill.intra.peff.net>
+ <20191107064854.GB8096@danh.dev>
+ <20191107080218.GA11245@sigill.intra.peff.net>
 MIME-Version: 1.0
-From:   Grzegorz Rajchman <rayman17@gmail.com>
-Date:   Thu, 7 Nov 2019 10:36:05 +0000
-Message-ID: <CAMcnqp22tEFva4vYHYLzY83JqDHGzDbDGoUod21Dhtnvv=h_Pg@mail.gmail.com>
-Subject: [BUG] git stash pop --quiet deletes files in git 2.24.0
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191107080218.GA11245@sigill.intra.peff.net>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, this is the first time I report an issue in git so I hope I'm
-doing it right.
+On 2019-11-07 03:02:18 -0500, Jeff King wrote:
+> >                 git config i18n.commitencoding ISO-2022-JP &&
+> >                 echo ISO-2022-JP >>F &&
+> >                 git commit -a -F "$TEST_DIRECTORY/t3900/ISO-2022-JP.txt" &&
+> 
+> ...you still can't just run this manually because of other lines like
+> this one.
 
-I have experienced some unexpected behaviour with git stash pop
---quiet in git 2.24.0. I use stash in a pre-commit hook script. In it,
-I stash non-staged changes to keep the working directory clean while
-running some linters, then I restore the stash by running pop, but
-after the recent git update I noticed that it stages all previously
-checked files as deleted.
+Except we can with a little effort:
 
-Steps to reproduce:
+    export TEST_DIRECTORY=..
 
-  mkdir test-git-stash
-  cd test-git-stash/
-  git init
-  echo foo > foo.txt
-  git add . && git commit -m 'init'
-  echo bar > foo.txt
-  git stash save --quiet --include-untracked --keep-index
-  git stash pop --quiet
-  git status
+> It's also weirdly unlike all of the other tests, which creates confusion
+> for people reading the code. IMHO the tradeoff isn't worth it.
 
-This will unexpectedly output:
+Hm, I think it's the test_commit_autosquash_flag is the one that is weird
+in this file. Most of other sets of tests (line 89-176) use the same quote.
 
-  On branch master
-  Changes to be committed:
-    (use "git restore --staged <file>..." to unstage)
-      deleted:    foo.txt
+test_commit_autosquash_flag is the inconsistent one,
+for the most part, it doesn't employ the funny quote,
+but it uses the funny one in the `git cat-file` line.
 
-  Untracked files:
-    (use "git add <file>..." to include in what will be committed)
-      foo.txt
-
-Notice that foo.txt was staged as deleted whilst still being present
-on the disk.
-
-However, if I remove --quiet flag from stash pop:
-
-  git restore --staged foo.txt
-  git stash save --quiet --include-untracked --keep-index
-  git stash pop
-  git status
-
-Then it works as expected. It used to work as expected in git prior to 2.24.0
-
-My OS is Ubuntu 19.04.
+-- 
+Danh
