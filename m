@@ -2,85 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFBC01F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 21:26:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 421741F4C0
+	for <e@80x24.org>; Thu,  7 Nov 2019 21:34:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726101AbfKGV0P (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 16:26:15 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42470 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725906AbfKGV0P (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 16:26:15 -0500
-Received: (qmail 7680 invoked by uid 109); 7 Nov 2019 21:26:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Nov 2019 21:26:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5911 invoked by uid 111); 7 Nov 2019 21:29:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Nov 2019 16:29:37 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 7 Nov 2019 16:26:14 -0500
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, ryenus@gmail.com, stolee@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] commit-graph: use start_delayed_progress()
-Message-ID: <20191107212614.GC29042@sigill.intra.peff.net>
-References: <pull.450.v2.git.1572984842.gitgitgadget@gmail.com>
- <pull.450.v3.git.1573148818.gitgitgadget@gmail.com>
- <3c0c9675e125f9357aeadd76f290413aaa09e4cf.1573148818.git.gitgitgadget@gmail.com>
+        id S1725928AbfKGVef (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 16:34:35 -0500
+Received: from mout.gmx.net ([212.227.17.21]:41643 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725870AbfKGVef (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 16:34:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1573162473;
+        bh=Tym60imX/GXFIp61OO7GXJJcuz6UzSZnBZSQD5WYxlo=;
+        h=X-UI-Sender-Class:To:From:Subject:Date;
+        b=KM4dse3u/M1n/BfSsdD6SF/uSaPs9Ge0HQ1Fgc20NQj2KIpNSHEN/2qZValmoJXrx
+         7TT7Pi5hZTysO9VL5N/+gU+4wwXQKMfdxc2ha1wWFRUNVTF/UBE7Pq3W/qlX8YegYp
+         DYA3YmPkL9LSz3qcYjIVz2TlD9pfYVxPtu75h3UI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.3.68] ([77.183.98.232]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M6DWi-1iZR8D3BKi-006hpe for
+ <git@vger.kernel.org>; Thu, 07 Nov 2019 22:34:33 +0100
+To:     Git List <git@vger.kernel.org>
+From:   Ingo Wolf <ingo.wolf@gmx.de>
+Subject: No Checkout / Read Only config Flag
+Message-ID: <f3378b7b-c745-58db-55ed-c2c2a6818734@gmx.de>
+Date:   Thu, 7 Nov 2019 22:34:32 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3c0c9675e125f9357aeadd76f290413aaa09e4cf.1573148818.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+X-Provags-ID: V03:K1:J0FMKqabY6v6OakpnETrF3h5clEKAiWw36/DExgoTAPDM2a26m4
+ AJCjBE+174kdhYomBw+j/bzAdZeuC7vJFvoVODGygGlq9sjLVEaN1y7fbt6RRmF81PgzqKz
+ 3rXBz+yU+Qltf57aQlxmAGegu5z+xlH+2uzlf0TDLTjpI46u6IyNC5WlbJ2sB8heqWndn/n
+ vc7pdnns43lSXw2MgVEFg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1EIOfZZlYZs=:F3xp19O3Mi4vs/Dguplf0f
+ gQica1fgFHH72W3hytg/VJXyOvRQtxQTgzveKaDAg2jdl1/1vBvz+nJc0Xn9/VnbMW7Kctb3e
+ Y4EOW3NxknDS4+Mo3GadQ2H8is5bn5u2Fuoc0ZyfnIgZUk0MUqgibkPFIW/C1H/cOQZtaGhLz
+ 2jKyH3kQxHlf0DVkFRobMmhvxbFyNxnYyrWg9C6qcwQ8Q0RWIO+yw5b8o4nKDlnG7wbHmVPEF
+ bGEDKvdfll5EveUfdILS3vTsnQt8HgrZkNHGCo9M7CLYacD3GW2BAYHzi3pyW4KQEsgN0tpN1
+ 9EMzvXwhsTQJXJdDZOUSyMgB35wtdnzHW69rf67ADraBZ8o7mwkOUk5r6WiWSdC9tndo1FWYH
+ kILmjJhKpl1xdE2PWleI0Aj2hrF5n81/vqEv0pDfXBWL9GtwPAz13TsOO03Vytqf7jBf8BZhY
+ PAGLJiR8qd4ZNk6OK0S9rhOR+YZEa/BFLTBTc/V1jAniokUo8fNwFcwETF5MpZjMbNsvcMa31
+ 5M+er1Zo8nLAgdcmC9SvzE882naNxJeBTwOBV+In4gvNADZR+cqytjlahs6CaNwbHsITAMEgH
+ L0HQTAvCUZpHyy1eEAX0wLQig6O9T2EwjIa3umN/ocgpG+/V+IAjBWMmZr1HhbUcjCj1YRwmG
+ 14DwlsAQNTRDf2dG8OeRDJHNkbawbDd/0C6UuSXcWk2LYPh2M8bwJe9JP508dksJtYtxrwPYt
+ Zo4mzd+0xK4Hhx+Xchx80h1GiwOnecGnWEoXASUaXG73hSNh/bNi/UOKQ5sWGwYftDSm6Q3S+
+ yUvq6Z4oFoN/2QaBSMSwoq03tY3i2O1l/9egCSnOgVe7YdYKN3dCKjmrMoPlRK55bC2qjelaF
+ xtSs04ALbm9pCJE+NRZtjOaBIq0LP8AiiJT8UoeoNzz5a+18JbDGtDdMIsqF/hdWwxoERB9ot
+ /LI3zF/Z5B8x4F0yIO7MUm3g0VakByI4Jw1Rx+ifuG2NIJXARIqZfBreU2csWu3b3sng76bFA
+ 6H8+umtKIuY9/NvOBf6QPpe3Hd4Fg8Er3LyXbM2DTEL/tnjXl4pZJ74t0UwLeJWYVmjHZsieA
+ 6VhvEddNN4NITYiXlxfFnRn59iJ7KfGGG8X3d3SNrheyHxQrHlzpy3rAdndHXzqqo3Q2fUF/0
+ 4eqcWCWsdLESp3mLUDI7+dW8q69Tx+UYtax6/jgG0u07tzIUGu3+gQkbAAeZC80AejDDJGpXN
+ G5X0wtW1IFUiypHmIIs0v8A+g9XCBPKMKQtVoX1RjGUxolv/XwEvGDxs8rj8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 07, 2019 at 05:46:58PM +0000, Derrick Stolee via GitGitGadget wrote:
+Hi,
 
-> From: Derrick Stolee <dstolee@microsoft.com>
-> 
-> When writing a commit-graph, we show progress along several commit
-> walks. When we use start_delayed_progress(), the progress line will
-> only appear if that step takes a decent amount of time.
-> 
-> However, one place was missed: computing generation numbers. This is
-> normally a very fast operation as all commits have been parsed in a
-> previous step. But, this is showing up for all users no matter how few
-> commits are being added.
+is there a readonly / no checkout flag in the git configs?
 
-This part of the patch is a good thing, and obviously correct. But I
-wondered...
+I use Git to trace / Backup some worktrees and would like to prevent
+changing them accidentally with git.
 
-> The tests that check for the progress output have already been updated
-> to use GIT_PROGRESS_DELAY=0 to force the expected output. However, there
-> is one test in t6500-gc.sh that uses the test_terminal method. This
-> mechanism does not preserve the GIT_PROGRESS_DELAY environment variable,
-
-Why doesn't GIT_PROGRESS_DELAY make it through? Overall it's not that
-big a deal to me if it doesn't, but in this test:
-
->  test_expect_success TTY 'with TTY: gc --no-quiet' '
->  	test_terminal git -c gc.writeCommitGraph=true gc --no-quiet >stdout 2>stderr &&
->  	test_must_be_empty stdout &&
-> -	test_i18ngrep "Enumerating objects" stderr &&
-> -	test_i18ngrep "Computing commit graph generation numbers" stderr
-> +	test_i18ngrep "Enumerating objects" stderr
->  '
-
-We're not actually checking anything related to gc.writeCommitGraph
-anymore.
-
-> so we need to modify check on the output. We still watch for the
-
-Minor typo: s/modify/& the/ or similar?
-
--Peff
