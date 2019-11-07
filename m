@@ -2,121 +2,372 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25FC61F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 06:49:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E88A21F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 07:05:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726651AbfKGGs7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 01:48:59 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:33071 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725763AbfKGGs7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 01:48:59 -0500
-Received: by mail-pl1-f194.google.com with SMTP id ay6so778757plb.0
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 22:48:57 -0800 (PST)
+        id S1727010AbfKGHFm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 02:05:42 -0500
+Received: from mail-wm1-f41.google.com ([209.85.128.41]:37235 "EHLO
+        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726618AbfKGHFl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 02:05:41 -0500
+Received: by mail-wm1-f41.google.com with SMTP id q130so1132731wme.2
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 23:05:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZZAIgMDI+BryG7oiYKz6rGyYgFBOkcx0CLHzHDVRRpQ=;
-        b=BQTwnglHO93LSkAk19y57eziOyIQm/wBXo5NtB88gO70+FPpcPMTTXpCEImCcAJ+JS
-         MP4vyj04ITT31145dR+uUQRhEJXmCL1VLeWoZtTw4Vx1YA3lXw/S4/sNSViXHgFwsOX0
-         hH8JAY0P7YtQuSxyOTFujCAunTxHY3TzwDjizHoDD1wsSL7K86D4sc9jdfrGmM8FF7UY
-         UrUpywe+ogo/tIq9H/zcGsnhs3hB4xooHGbwi1RwDHzLAiBtq+FOkc0C9ZtfPLDMa3V7
-         eqUsqjSKavPrdSE1TsHP8WJKInrnFfhQ6p1KzKfjXLBq2tZBEGhFiHbkz10CLCnXgVL9
-         W5YA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=sbqQKPFLwqefjSeatY3TgmSApYsc1DIwXSJjnSoXqzg=;
+        b=rGkW4W6CfrN6kL/K83J8n+OdDx9N5n30M21DBCMOTsM9uAJlWl5dE+FS+eJEO2l3Eb
+         rJvAioK5TvGgCfKDLwcMyNwX74cpU/hd96HWX9W+yeIDweFTTqXWE8Q8tArL610FC2WT
+         w1n4qOVwEoKZg4tQfn8buOnTbkDSWCARs69BQaIllkMZS4hQATBBQCIFMGDZE04nFP/c
+         2Odpm3WmBtNGHtw59SRk1WWZ4ppAOU3pF9PTTwHTCZ62xBqGiCJn2g1Fp2MeTfrQPrLm
+         H+TIbRKTQdyXEplIVE7+wbK1jq+mU5jrLLAz2DQtRu0lq5RgC8jhl8d+sapbGHdzsfCD
+         671g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZZAIgMDI+BryG7oiYKz6rGyYgFBOkcx0CLHzHDVRRpQ=;
-        b=ai4IyEL3lYP9OLoyd3GDRMxhAklrabyNYGlzX6xahzF1ifZogmciD4btxgbJJz9BQI
-         ht7fKkWp06eLSpmG0KhO4W1SfUYRp/kbBg2239QzeeYmFWss9ybm9YpexR5DoNJQgWHE
-         bmMs04RdwHzoIg5ZPZVXtb7sy0VvGb8veZSFQ8vnpJVm1m0vi62oeeGX6loNGwdxEUSR
-         dWQrJsuqQt0IjBNMS7WC0e+d5SIym9EI2+80hYIkRcmfPM5b8j63G9dw2zB9psMPO1Ad
-         lKaEpoCieNbO1GFqzdMs7L2T/1DJbFVKq08vb3cQcfjmfgbroAzcgOv5SWHLQVJJk+Za
-         9iRQ==
-X-Gm-Message-State: APjAAAWDNEBdRdaCKNjKMM+f0bnLO+GNwwizRdV/MGgyY3UljrrM4yDb
-        EFQMi9I241p9pB2+4OWSdG4=
-X-Google-Smtp-Source: APXvYqzf20ZiwxVo7Q+H65q0CojVhkZFsksoZk04l0HP53unicrEIHzZsh5hd0d/yUaa/GVlnTiGug==
-X-Received: by 2002:a17:902:ba91:: with SMTP id k17mr2078268pls.100.1573109337299;
-        Wed, 06 Nov 2019 22:48:57 -0800 (PST)
-Received: from localhost ([2402:800:6375:16b7:502d:9b82:436:143a])
-        by smtp.gmail.com with ESMTPSA id x20sm1418299pfa.186.2019.11.06.22.48.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 22:48:56 -0800 (PST)
-Date:   Thu, 7 Nov 2019 13:48:54 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 3/8] t3900: demonstrate git-rebase problem with multi
- encoding
-Message-ID: <20191107064854.GB8096@danh.dev>
-References: <20191031092618.29073-1-congdanhqx@gmail.com>
- <cover.1573094789.git.congdanhqx@gmail.com>
- <ca869cef57bcf620a7b5d0519d362dcd9a27eae6.1573094789.git.congdanhqx@gmail.com>
- <20191107060233.GB6431@sigill.intra.peff.net>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=sbqQKPFLwqefjSeatY3TgmSApYsc1DIwXSJjnSoXqzg=;
+        b=tg1/cG38fhpR8lN56tdqK4YLb3Ee0u10r/ffZMltnxiExgW6zs1IyDExQIg5ARFXOJ
+         fehmgRuWf7BGIymvODx7CoexZIMBoWh2MHZYUV2X+Ra0ZsWjcXjpVrKyDV+XJscQraLG
+         vHXCCcqlB+ZA3sirD5sB8dBIpK9QnTqv3ja4+Gmv5tHlTt6+Z/o1fO91pTgb695ixaS7
+         SZAjsK2+gykNeI7tp+s7M9Xeq+ZPTUaMSs9lWheO2Hs4+t21kHWIuKLER+YGq9mvaZyl
+         INJU96yho4LVg6611Ejo65ckqrysPl93SAiWO4aJxJSSzAlKfRiD3sPFefkySGIZsjYN
+         khBg==
+X-Gm-Message-State: APjAAAVmdQhmCaEj9OndJ82uNZGIG+3A1i2gt0wdNmdLzt9L5weG/u8T
+        CTSwankKPoJ5H1vMLODxucpdMd1W
+X-Google-Smtp-Source: APXvYqwX07R/64R0VLHZVVlQ+O+GMDw+DApbeHwy7gyxPFM1/wEWpHwxTW7hZ6ZNdZlOMvFpLQgPFw==
+X-Received: by 2002:a1c:7f54:: with SMTP id a81mr1382092wmd.48.1573110337185;
+        Wed, 06 Nov 2019 23:05:37 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a5sm1139530wrv.56.2019.11.06.23.05.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Nov 2019 23:05:36 -0800 (PST)
+Message-Id: <da1704c56e0bd3f1ac53af96b702e3777bb3eb37.1573110335.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.436.v2.git.1573110335.gitgitgadget@gmail.com>
+References: <pull.436.git.1572418123.gitgitgadget@gmail.com>
+        <pull.436.v2.git.1573110335.gitgitgadget@gmail.com>
+From:   "Jonathan Gilbert via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 07 Nov 2019 07:05:34 +0000
+Subject: [PATCH v2 1/2] git-gui: consolidate naming conventions
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191107060233.GB6431@sigill.intra.peff.net>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+To:     git@vger.kernel.org
+Cc:     Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        Jonathan Gilbert <JonathanG@iQmetrix.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-11-07 01:02:33 -0500, Jeff King wrote:
-> On Thu, Nov 07, 2019 at 09:56:14AM +0700, Doan Tran Cong Danh wrote:
-> 
-> > +test_commit_autosquash_multi_encoding () {
-> > +	flag=$1
-> > +	old=$2
-> > +	new=$3
-> > +	msg=$4
-> > +	test_expect_failure "commit --$flag into $old from $new" '
-> > +		git checkout -b '$flag-$old-$new' C0 &&
-> 
-> These single quotes are funny; they close the test-snippet string, so
-> these variables are outside of any quoting (and thus subject to
-> whitespace splitting).
+From: Jonathan Gilbert <JonathanG@iQmetrix.com>
 
-Yes, those quotes are funny, and I'm also aware that
-they will be subjected to whitespace spliting.
-But those quotes were intentional, they're there in order to have
-better log with:
+A few variables in this file use camelCase, while the overall standard
+is snake_case. A consistent naming scheme will improve readability of
+future changes. To avoid mixing naming changes with semantic changes,
+this commit contains only naming changes.
 
-    ./t3900-i18n-commit.sh -v
+Signed-off-by: Jonathan Gilbert <JonathanG@iQmetrix.com>
+---
+ lib/index.tcl | 92 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 46 insertions(+), 46 deletions(-)
 
-With those funny quotes, we will see this (verbose) log:
-
-    expecting success of 3900.38 'commit --fixup into ISO-2022-JP from UTF-8':
-                git checkout -b fixup-ISO-2022-JP-UTF-8 C0 &&
-                git config i18n.commitencoding ISO-2022-JP &&
-                echo ISO-2022-JP >>F &&
-                git commit -a -F "$TEST_DIRECTORY/t3900/ISO-2022-JP.txt" &&
-                test_tick &&
-                echo intermediate stuff >>G &&
-                git add G &&
-                git commit -a -m "intermediate commit" &&
-                test_tick &&
-                git config i18n.commitencoding UTF-8 &&
-                echo UTF-8-fixup >>F &&
-                git commit -a --fixup HEAD^ &&
-                git rebase --autosquash -i HEAD^^^ &&
-                git rev-list HEAD >actual &&
-                test_line_count = 3 actual &&
-                iconv -f ISO-2022-JP -t utf-8 "$TEST_DIRECTORY/t3900/ISO-2022-JP.txt" >expect &&
-                git cat-file commit HEAD^ >raw &&
-                (sed "1,/^$/d" raw | iconv -f UTF-8 -t utf-8) >actual &&
-                test_cmp expect actual
-
-I think it's easier to manual run the test step with this log.
-
+diff --git a/lib/index.tcl b/lib/index.tcl
+index e07b7a3762..28d4d2a54e 100644
+--- a/lib/index.tcl
++++ b/lib/index.tcl
+@@ -56,15 +56,15 @@ proc _close_updateindex {fd after} {
+ 	uplevel #0 $after
+ }
+ 
+-proc update_indexinfo {msg pathList after} {
++proc update_indexinfo {msg path_list after} {
+ 	global update_index_cp
+ 
+ 	if {![lock_index update]} return
+ 
+ 	set update_index_cp 0
+-	set pathList [lsort $pathList]
+-	set totalCnt [llength $pathList]
+-	set batch [expr {int($totalCnt * .01) + 1}]
++	set path_list [lsort $path_list]
++	set total_cnt [llength $path_list]
++	set batch [expr {int($total_cnt * .01) + 1}]
+ 	if {$batch > 25} {set batch 25}
+ 
+ 	$::main_status start $msg [mc "files"]
+@@ -78,26 +78,26 @@ proc update_indexinfo {msg pathList after} {
+ 	fileevent $fd writable [list \
+ 		write_update_indexinfo \
+ 		$fd \
+-		$pathList \
+-		$totalCnt \
++		$path_list \
++		$total_cnt \
+ 		$batch \
+ 		$after \
+ 		]
+ }
+ 
+-proc write_update_indexinfo {fd pathList totalCnt batch after} {
++proc write_update_indexinfo {fd path_list total_cnt batch after} {
+ 	global update_index_cp
+ 	global file_states current_diff_path
+ 
+-	if {$update_index_cp >= $totalCnt} {
++	if {$update_index_cp >= $total_cnt} {
+ 		_close_updateindex $fd $after
+ 		return
+ 	}
+ 
+ 	for {set i $batch} \
+-		{$update_index_cp < $totalCnt && $i > 0} \
++		{$update_index_cp < $total_cnt && $i > 0} \
+ 		{incr i -1} {
+-		set path [lindex $pathList $update_index_cp]
++		set path [lindex $path_list $update_index_cp]
+ 		incr update_index_cp
+ 
+ 		set s $file_states($path)
+@@ -119,18 +119,18 @@ proc write_update_indexinfo {fd pathList totalCnt batch after} {
+ 		display_file $path $new
+ 	}
+ 
+-	$::main_status update $update_index_cp $totalCnt
++	$::main_status update $update_index_cp $total_cnt
+ }
+ 
+-proc update_index {msg pathList after} {
++proc update_index {msg path_list after} {
+ 	global update_index_cp
+ 
+ 	if {![lock_index update]} return
+ 
+ 	set update_index_cp 0
+-	set pathList [lsort $pathList]
+-	set totalCnt [llength $pathList]
+-	set batch [expr {int($totalCnt * .01) + 1}]
++	set path_list [lsort $path_list]
++	set total_cnt [llength $path_list]
++	set batch [expr {int($total_cnt * .01) + 1}]
+ 	if {$batch > 25} {set batch 25}
+ 
+ 	$::main_status start $msg [mc "files"]
+@@ -144,26 +144,26 @@ proc update_index {msg pathList after} {
+ 	fileevent $fd writable [list \
+ 		write_update_index \
+ 		$fd \
+-		$pathList \
+-		$totalCnt \
++		$path_list \
++		$total_cnt \
+ 		$batch \
+ 		$after \
+ 		]
+ }
+ 
+-proc write_update_index {fd pathList totalCnt batch after} {
++proc write_update_index {fd path_list total_cnt batch after} {
+ 	global update_index_cp
+ 	global file_states current_diff_path
+ 
+-	if {$update_index_cp >= $totalCnt} {
++	if {$update_index_cp >= $total_cnt} {
+ 		_close_updateindex $fd $after
+ 		return
+ 	}
+ 
+ 	for {set i $batch} \
+-		{$update_index_cp < $totalCnt && $i > 0} \
++		{$update_index_cp < $total_cnt && $i > 0} \
+ 		{incr i -1} {
+-		set path [lindex $pathList $update_index_cp]
++		set path [lindex $path_list $update_index_cp]
+ 		incr update_index_cp
+ 
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -190,18 +190,18 @@ proc write_update_index {fd pathList totalCnt batch after} {
+ 		display_file $path $new
+ 	}
+ 
+-	$::main_status update $update_index_cp $totalCnt
++	$::main_status update $update_index_cp $total_cnt
+ }
+ 
+-proc checkout_index {msg pathList after} {
++proc checkout_index {msg path_list after} {
+ 	global update_index_cp
+ 
+ 	if {![lock_index update]} return
+ 
+ 	set update_index_cp 0
+-	set pathList [lsort $pathList]
+-	set totalCnt [llength $pathList]
+-	set batch [expr {int($totalCnt * .01) + 1}]
++	set path_list [lsort $path_list]
++	set total_cnt [llength $path_list]
++	set batch [expr {int($total_cnt * .01) + 1}]
+ 	if {$batch > 25} {set batch 25}
+ 
+ 	$::main_status start $msg [mc "files"]
+@@ -221,26 +221,26 @@ proc checkout_index {msg pathList after} {
+ 	fileevent $fd writable [list \
+ 		write_checkout_index \
+ 		$fd \
+-		$pathList \
+-		$totalCnt \
++		$path_list \
++		$total_cnt \
+ 		$batch \
+ 		$after \
+ 		]
+ }
+ 
+-proc write_checkout_index {fd pathList totalCnt batch after} {
++proc write_checkout_index {fd path_list total_cnt batch after} {
+ 	global update_index_cp
+ 	global file_states current_diff_path
+ 
+-	if {$update_index_cp >= $totalCnt} {
++	if {$update_index_cp >= $total_cnt} {
+ 		_close_updateindex $fd $after
+ 		return
+ 	}
+ 
+ 	for {set i $batch} \
+-		{$update_index_cp < $totalCnt && $i > 0} \
++		{$update_index_cp < $total_cnt && $i > 0} \
+ 		{incr i -1} {
+-		set path [lindex $pathList $update_index_cp]
++		set path [lindex $path_list $update_index_cp]
+ 		incr update_index_cp
+ 		switch -glob -- [lindex $file_states($path) 0] {
+ 		U? {continue}
+@@ -253,7 +253,7 @@ proc write_checkout_index {fd pathList totalCnt batch after} {
+ 		}
+ 	}
+ 
+-	$::main_status update $update_index_cp $totalCnt
++	$::main_status update $update_index_cp $total_cnt
+ }
+ 
+ proc unstage_helper {txt paths} {
+@@ -261,7 +261,7 @@ proc unstage_helper {txt paths} {
+ 
+ 	if {![lock_index begin-update]} return
+ 
+-	set pathList [list]
++	set path_list [list]
+ 	set after {}
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -269,19 +269,19 @@ proc unstage_helper {txt paths} {
+ 		M? -
+ 		T? -
+ 		D? {
+-			lappend pathList $path
++			lappend path_list $path
+ 			if {$path eq $current_diff_path} {
+ 				set after {reshow_diff;}
+ 			}
+ 		}
+ 		}
+ 	}
+-	if {$pathList eq {}} {
++	if {$path_list eq {}} {
+ 		unlock_index
+ 	} else {
+ 		update_indexinfo \
+ 			$txt \
+-			$pathList \
++			$path_list \
+ 			[concat $after [list ui_ready]]
+ 	}
+ }
+@@ -305,7 +305,7 @@ proc add_helper {txt paths} {
+ 
+ 	if {![lock_index begin-update]} return
+ 
+-	set pathList [list]
++	set path_list [list]
+ 	set after {}
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -321,19 +321,19 @@ proc add_helper {txt paths} {
+ 		?M -
+ 		?D -
+ 		?T {
+-			lappend pathList $path
++			lappend path_list $path
+ 			if {$path eq $current_diff_path} {
+ 				set after {reshow_diff;}
+ 			}
+ 		}
+ 		}
+ 	}
+-	if {$pathList eq {}} {
++	if {$path_list eq {}} {
+ 		unlock_index
+ 	} else {
+ 		update_index \
+ 			$txt \
+-			$pathList \
++			$path_list \
+ 			[concat $after {ui_status [mc "Ready to commit."]}]
+ 	}
+ }
+@@ -393,7 +393,7 @@ proc revert_helper {txt paths} {
+ 
+ 	if {![lock_index begin-update]} return
+ 
+-	set pathList [list]
++	set path_list [list]
+ 	set after {}
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -401,7 +401,7 @@ proc revert_helper {txt paths} {
+ 		?M -
+ 		?T -
+ 		?D {
+-			lappend pathList $path
++			lappend path_list $path
+ 			if {$path eq $current_diff_path} {
+ 				set after {reshow_diff;}
+ 			}
+@@ -420,12 +420,12 @@ proc revert_helper {txt paths} {
+ 	# as they have quite complex plural-form rules. Unfortunately,
+ 	# msgcat doesn't seem to support that kind of string translation.
+ 	#
+-	set n [llength $pathList]
++	set n [llength $path_list]
+ 	if {$n == 0} {
+ 		unlock_index
+ 		return
+ 	} elseif {$n == 1} {
+-		set query [mc "Revert changes in file %s?" [short_path [lindex $pathList]]]
++		set query [mc "Revert changes in file %s?" [short_path [lindex $path_list]]]
+ 	} else {
+ 		set query [mc "Revert changes in these %i files?" $n]
+ 	}
+@@ -444,7 +444,7 @@ proc revert_helper {txt paths} {
+ 	if {$reply == 1} {
+ 		checkout_index \
+ 			$txt \
+-			$pathList \
++			$path_list \
+ 			[concat $after [list ui_ready]]
+ 	} else {
+ 		unlock_index
 -- 
-Danh
+gitgitgadget
+
