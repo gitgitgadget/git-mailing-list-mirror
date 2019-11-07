@@ -7,97 +7,91 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A5821F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 06:32:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7F861F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 06:41:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727054AbfKGGcZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 01:32:25 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41718 "HELO cloud.peff.net"
+        id S1726604AbfKGGk7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 01:40:59 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41726 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726925AbfKGGcY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 01:32:24 -0500
-Received: (qmail 29100 invoked by uid 109); 7 Nov 2019 06:32:25 -0000
+        id S1726094AbfKGGk7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 01:40:59 -0500
+Received: (qmail 29180 invoked by uid 109); 7 Nov 2019 06:40:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Nov 2019 06:32:25 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Nov 2019 06:40:59 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32341 invoked by uid 111); 7 Nov 2019 06:35:45 -0000
+Received: (qmail 32375 invoked by uid 111); 7 Nov 2019 06:44:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Nov 2019 01:35:45 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Nov 2019 01:44:20 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 7 Nov 2019 01:32:23 -0500
+Date:   Thu, 7 Nov 2019 01:40:58 -0500
 From:   Jeff King <peff@peff.net>
-To:     Doan Tran Cong Danh <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 8/8] sequencer: reencode commit message for am/rebase
- --show-current-patch
-Message-ID: <20191107063223.GF6431@sigill.intra.peff.net>
-References: <20191031092618.29073-1-congdanhqx@gmail.com>
- <cover.1573094789.git.congdanhqx@gmail.com>
- <36796e2b679cd8b2d341058e775db401f9abcef7.1573094789.git.congdanhqx@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, rynus@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/1] commit-graph: use start_delayed_progress()
+Message-ID: <20191107064058.GG6431@sigill.intra.peff.net>
+References: <pull.450.git.1572969955.gitgitgadget@gmail.com>
+ <pull.450.v2.git.1572984842.gitgitgadget@gmail.com>
+ <78bd6bc2c02f1daf13938a738d8eae56b5f6b74c.1572984842.git.gitgitgadget@gmail.com>
+ <20191106040955.GD4307@sigill.intra.peff.net>
+ <832b3b8b-63e6-1d32-0013-158b3c6725c8@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <36796e2b679cd8b2d341058e775db401f9abcef7.1573094789.git.congdanhqx@gmail.com>
+In-Reply-To: <832b3b8b-63e6-1d32-0013-158b3c6725c8@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 07, 2019 at 09:56:19AM +0700, Doan Tran Cong Danh wrote:
+On Wed, Nov 06, 2019 at 08:21:48AM -0500, Derrick Stolee wrote:
 
-> The message file will be used as commit message for the
-> git-{am,rebase} --continue.
->
-> [...]
->  	strbuf_addf(&buf, "%s/message", get_dir(opts));
->  	if (!file_exists(buf.buf)) {
-> -		const char *commit_buffer = get_commit_buffer(commit, NULL);
-> +		const char *encoding = get_commit_output_encoding();
-> +		const char *commit_buffer = logmsg_reencode(commit, NULL, encoding);
+> >> Now that we changed this method, very fast commands show no progess at
+> >> all. This means we need to stop testing for seeing these progress lines
+> >> in the test suite.
+> > 
+> > I think this is OK for now, though it does make me wonder if
+> > "--progress" ought to perhaps override "delayed" in some instances,
+> > since it's a positive signal from the caller that they're interested in
+> > seeing progress.
+> 
+> I was thinking that we could start with a GIT_TEST_PROGRESS environment
+> variable to force all delayed progress to act like non-delayed progress.
+> That would at least give us confirmation on these kinds of tests.
 
-That makes sense, though it's hard to understand the flow of this data
-through multiple sequencer invocations. I _think_ this would be fixing a
-case like this:
+I think this could actually be a non-test variable. E.g., something like
+this:
 
--- >8 --
-git init repo
-cd repo
+diff --git a/progress.c b/progress.c
+index 0063559aab..74b90e8898 100644
+--- a/progress.c
++++ b/progress.c
+@@ -14,6 +14,7 @@
+ #include "strbuf.h"
+ #include "trace.h"
+ #include "utf8.h"
++#include "config.h"
+ 
+ #define TP_IDX_MAX      8
+ 
+@@ -269,7 +270,8 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
+ 
+ struct progress *start_delayed_progress(const char *title, uint64_t total)
+ {
+-	return start_progress_delay(title, total, 2, 0);
++	int delay_in_secs = git_env_ulong("GIT_PROGRESS_DELAY", 2);
++	return start_progress_delay(title, total, delay_in_secs, 0);
+ }
+ 
+ struct progress *start_progress(const char *title, uint64_t total)
 
-# some commits to build off of
-echo base >file
-git add file
-git commit -m base
 
-echo side >file
-git add file
-git commit -m side
-
-# now make a commit in iso8859-1
-git checkout -b side HEAD^
-echo iso8859-1 >file
-git add file
-iconv -f utf8 -t iso8859-1 <<-\EOF |
-súbject
-
-bödy
-EOF
-git -c i18n.commitEncoding=iso8859-1 commit -F -
-
-# and rebase it with the merge strategy, which will fail;
-# now .git/rebase-merge/message has iso8859-1 in it
-git rebase -m master
-
-# and if we resolve and commit, presumably we'd get a broken commit,
-# with iso8859-1 and no encoding header
-echo resolved >file
-git add file
-GIT_EDITOR=: git rebase --continue
--- 8< --
-
-But somehow it all seems to work. The resulting commit has real utf8 in
-it. I'm not sure if we pull it from the original commit via "commit -c",
-or if it's in one of the other files. But it's not clear to me how
-this "message" file is being used.
+which lets you ask for more verbose progress. There are times when I'd
+use something like this for general debugging. Though these days I might
+suggest that something like GIT_TRACE2_PERF hook the progress code to
+output. That's a bit more complicated to implement, though.
 
 -Peff
