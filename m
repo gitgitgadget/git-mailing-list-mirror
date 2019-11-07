@@ -2,71 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6EC11F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 06:21:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A5821F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 06:32:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbfKGGVT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 01:21:19 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60576 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725938AbfKGGVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 01:21:19 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 16F5691AD0;
-        Thu,  7 Nov 2019 01:21:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8D77q/e//UordkhwYuNeF3p6L/w=; b=fU6qP7
-        kt/26z2IoAC+HRC88ogo5tshN77wG8QThf8pSCG4kyPvp/wvFp+/vAotv3A0KUY2
-        xj1uII7Qj1fI8tYpMtoWrOWyh+m45Q2nHbnCMg4+h8nTmxpOOC3L/kf05gdKswNd
-        QHhPRrmNjtfVczqWC1Al/tTygaeRZEgILDP68=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EMXMa469GgEcAs3DVJCYpFimQBbzQOWS
-        HLFAZAjukYUCnMtlOa0zobSD7z3bthVet+Qrjz8uIMOsI37EAcGM8aHgsIIFUGNo
-        i5ngzTX6qYqmjrjLaEaDR1bshqS8VxscgDIf2KBXKGqL4zTdjuMazq2hWF70MUNz
-        jYYRUv3klEY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EFCF391ACF;
-        Thu,  7 Nov 2019 01:21:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0F95091ACA;
-        Thu,  7 Nov 2019 01:21:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
-Subject: Re: [PATCH 0/1] [Outreachy] doc: remove api-index
-References: <pull.456.git.1573044509.gitgitgadget@gmail.com>
-Date:   Thu, 07 Nov 2019 15:21:13 +0900
-In-Reply-To: <pull.456.git.1573044509.gitgitgadget@gmail.com> (Heba Waly via
-        GitGitGadget's message of "Wed, 06 Nov 2019 12:48:28 +0000")
-Message-ID: <xmqq7e4cqk9y.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727054AbfKGGcZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 01:32:25 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41718 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726925AbfKGGcY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 01:32:24 -0500
+Received: (qmail 29100 invoked by uid 109); 7 Nov 2019 06:32:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Nov 2019 06:32:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32341 invoked by uid 111); 7 Nov 2019 06:35:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Nov 2019 01:35:45 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 7 Nov 2019 01:32:23 -0500
+From:   Jeff King <peff@peff.net>
+To:     Doan Tran Cong Danh <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 8/8] sequencer: reencode commit message for am/rebase
+ --show-current-patch
+Message-ID: <20191107063223.GF6431@sigill.intra.peff.net>
+References: <20191031092618.29073-1-congdanhqx@gmail.com>
+ <cover.1573094789.git.congdanhqx@gmail.com>
+ <36796e2b679cd8b2d341058e775db401f9abcef7.1573094789.git.congdanhqx@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CDC448C6-0126-11EA-B3AE-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <36796e2b679cd8b2d341058e775db401f9abcef7.1573094789.git.congdanhqx@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Nov 07, 2019 at 09:56:19AM +0700, Doan Tran Cong Danh wrote:
 
-> Remove both api-index.txt and api-index-skel.txt as the API documentation is
-> being moved to the header files, so the index is not needed anymore because
-> the doc files (Documentation/technical/api-*.txt) will be gone.
+> The message file will be used as commit message for the
+> git-{am,rebase} --continue.
 >
-> Make changes to Documentation/Makefile accordingly.
+> [...]
+>  	strbuf_addf(&buf, "%s/message", get_dir(opts));
+>  	if (!file_exists(buf.buf)) {
+> -		const char *commit_buffer = get_commit_buffer(commit, NULL);
+> +		const char *encoding = get_commit_output_encoding();
+> +		const char *commit_buffer = logmsg_reencode(commit, NULL, encoding);
 
-Why is this not part of the other series?  Without any of them this
-step does not make sense, no?
+That makes sense, though it's hard to understand the flow of this data
+through multiple sequencer invocations. I _think_ this would be fixing a
+case like this:
+
+-- >8 --
+git init repo
+cd repo
+
+# some commits to build off of
+echo base >file
+git add file
+git commit -m base
+
+echo side >file
+git add file
+git commit -m side
+
+# now make a commit in iso8859-1
+git checkout -b side HEAD^
+echo iso8859-1 >file
+git add file
+iconv -f utf8 -t iso8859-1 <<-\EOF |
+súbject
+
+bödy
+EOF
+git -c i18n.commitEncoding=iso8859-1 commit -F -
+
+# and rebase it with the merge strategy, which will fail;
+# now .git/rebase-merge/message has iso8859-1 in it
+git rebase -m master
+
+# and if we resolve and commit, presumably we'd get a broken commit,
+# with iso8859-1 and no encoding header
+echo resolved >file
+git add file
+GIT_EDITOR=: git rebase --continue
+-- 8< --
+
+But somehow it all seems to work. The resulting commit has real utf8 in
+it. I'm not sure if we pull it from the original commit via "commit -c",
+or if it's in one of the other files. But it's not clear to me how
+this "message" file is being used.
+
+-Peff
