@@ -8,83 +8,140 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F7C61F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 02:23:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2B841F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 02:56:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732777AbfKGCXv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 21:23:51 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:39059 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732064AbfKGCXv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 21:23:51 -0500
-Received: by mail-pf1-f195.google.com with SMTP id x28so1140710pfo.6
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 18:23:51 -0800 (PST)
+        id S1732382AbfKGC4a (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 21:56:30 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:34661 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728134AbfKGC43 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 21:56:29 -0500
+Received: by mail-pg1-f195.google.com with SMTP id e4so867004pgs.1
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 18:56:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=d79hEc7mZA/HrSoVzdqqpsCnJOidnTZJwUekHM1yK+M=;
-        b=SGG2FftmV8IJJhWYTSl6kYNtjivfzg2knO1qfPclbI3IZJkj/V2rSaEquhyLDvzE35
-         HQ1OftsCprVPT+uvQC4u4Ty7dd8R19z+1e/yg9RfeQkRGKU+KM/rlOwTMQmyggqeo7B9
-         /NyjHU3caxg30OWa+zhGrVHNGMXKO4h/63m3sIJGMHwp0tb6EyiVzI4HkWGJtAgq66cC
-         4udcqUfm6qZNbbMCW6JeXSyX8APWaLe2fZHf3hHUFOq8naFH5Q+5biz3F5ompCENJePz
-         uA5vf9OhI7DIL2LDAgs/YPAL7CYmuZjf05Y9jSewBCsFlg95JRPa9tPse8k7XqKVAUAa
-         2GwQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3KsJfnLp2l/N4Yf8Z4bsXEXEB/mtob7Oh26bRGT/CXg=;
+        b=j09odh5e/06rVKEehbfOFSaXwj5GMdWmXHvs3ZqQ1MzN85UWXrgUiWVTAqMQ0AxjV+
+         IRudCbrHuxBqvVS3TsT5ZjQLAq0VPS3NRiDKWKYaoWh/hYLl9lizacJU+m+ZShHIrOnB
+         UukE8mklwumPPC60y6NTgFiP46Q+fo9rfGXv4T76+QZn8jVgHPrs2KaLHNrdbDFYaIE2
+         xA0RcqK8SM1tyTp4EFLjR+haXDjgqh40kzqABT+Vug5/fS0bphFlTqCeJ1rekSFwnuR/
+         m558cka+08yLYPe1oAd6HZiN2UscxBVtGEnrMX/9OWpiO0zAlETNQe5e7eHPVxYwErtb
+         laBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=d79hEc7mZA/HrSoVzdqqpsCnJOidnTZJwUekHM1yK+M=;
-        b=U06+27JFMnYakDrbDkaaM+g76tmIo2Ic02p1l/i0vkeNWVHxy3nMovUZFlEXsQq8ts
-         2F2FVGELyQrZt8QCK90XjYKlRv9SaejzteVh8PeYWe90Npvo6HOeuOe0B86DAtJnkGo4
-         L4SFoLbkOleuMJ6PqLbgN0JM7qgMQSYDBB3T/fd69T1AXBTXSk4tJqb5WHTjK7MT9BDT
-         trzcs4uPaaG54C7eNV3ePa5ioQL+hlgNWjSJg5181mwUSOFWdaMzLWJxnJX3WsNc6nFq
-         edbRzTZDWDH0QUOEie6+Qe+Sit0KVrvnPETHoZNjTYrzRIxhvszN+5FszKalGAaY9mqd
-         KAZQ==
-X-Gm-Message-State: APjAAAW3+UzfXN3yP0x+qhkzr/Qb3zvEqF0NJ2lbXiL9hqQv3MEy4Kho
-        o5QJwtrZEtqupQL+6ccpJlc=
-X-Google-Smtp-Source: APXvYqxh8Jms97XyOOTTbz/HHVc62AnA2S+E9kdzCUUx+IivapaaTTWZTb14OcUxer4it2EDGjPOXQ==
-X-Received: by 2002:a63:b909:: with SMTP id z9mr1407940pge.136.1573093430724;
-        Wed, 06 Nov 2019 18:23:50 -0800 (PST)
-Received: from localhost ([2402:800:6375:16b7:502d:9b82:436:143a])
-        by smtp.gmail.com with ESMTPSA id j24sm329346pff.71.2019.11.06.18.23.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 18:23:50 -0800 (PST)
-Date:   Thu, 7 Nov 2019 09:23:47 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 31/32] commit-graph.c: fix code that could convert the
- result of an integer multiplication to a larger type
-Message-ID: <20191107022347.GE6351@danh.dev>
-References: <20191104095923.116086-1-gitter.spiros@gmail.com>
- <20191104095923.116086-2-gitter.spiros@gmail.com>
- <xmqq7e4dwxob.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3KsJfnLp2l/N4Yf8Z4bsXEXEB/mtob7Oh26bRGT/CXg=;
+        b=bWBah7K9WOU7dvLqJNcokF/y1R/Gz6xwAcNLO4a/bTdo/jGwInl8rt8Zq7ESOCEiKe
+         6h+wb/RjywEGWxeO6gkdXSjhO+OLoCEIt9ZLHrQI3frlnFs6nvWqvjIanRRwuq4SzBxh
+         8xWL4/thWJe9eZgnMwFVgF8JIg/dya28vmZ5JifTXVJlZHPM2DATj7+WJluLwTENp1/0
+         HxRdcCNGfW+GHL04sPrSjoQJO8sU3g0zFoO31b8Bzhm8TTvDSk7/yiSAdC+q1uNVreQh
+         5AcXNB4WZeJ74GvjhCu8Jttd/cohQ5OkDLwg3hbwacEBE52AsfsMTXXldxTszrBioZq+
+         RvGw==
+X-Gm-Message-State: APjAAAVwqlbcT+HNQXrrdXcgMW50avXyZ23yqnm+0uui4fVKI0XoqRVC
+        LK510xQTbqfpi8dMxbjhHk62LoRSCgs=
+X-Google-Smtp-Source: APXvYqzGpVBodYPVDph3Y5McEcB4zrxkkMBxx1C3HvZ8l3zbLvTROnsftS8EUEvhNmh1YyTRP9/3nQ==
+X-Received: by 2002:a63:ec4f:: with SMTP id r15mr1492611pgj.17.1573095388607;
+        Wed, 06 Nov 2019 18:56:28 -0800 (PST)
+Received: from localhost.localdomain ([2402:800:6375:16b7:502d:9b82:436:143a])
+        by smtp.gmail.com with ESMTPSA id n15sm393767pfq.146.2019.11.06.18.56.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Nov 2019 18:56:27 -0800 (PST)
+From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v4 0/8] Correct internal working and output encoding
+Date:   Thu,  7 Nov 2019 09:56:11 +0700
+Message-Id: <cover.1573094789.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.24.0.8.g36796e2b67
+In-Reply-To: <20191031092618.29073-1-congdanhqx@gmail.com>
+References: <20191031092618.29073-1-congdanhqx@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq7e4dwxob.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-11-06 11:23:00 +0900, Junio C Hamano wrote:
-> > @@ -1454,7 +1454,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
-> >  			    num_chunks);
-> >  		ctx->progress = start_delayed_progress(
-> >  			progress_title.buf,
-> > -			num_chunks * ctx->commits.nr);
-> > +			(uint64_t)num_chunks * ctx->commits.nr);
-> 
-> Hmph, do we need this?  I understand that the second parameter to
-> the callee is u64, so the caller needs to come up with u64 without
-> overflow, but doesn't that automatically get promoted?
+The series is shifting from fixing test that failed on musl based Linux to
+correct the internal working encoding and output encoding of git-am
+git-cherry-pick git-rebase and git-revert.
 
-Neither num_chunks nor ctx->commits.nr is promoted because both of
-them are int. The result of `num_chunks * ctx->commits.nr' will be int
-and will be promoted to u64 to pass to caller.
+Change from v3:
+- Fix grammar and spelling in commit message.
+- Add mising semicolon (I ran the test with dirty workspace right before
+  making last change). Everything is OK this time, though.
 
+Cc: Eric Sunshine <sunshine@sunshineco.com>
+
+Apparantly, I couldn't spell unusable.
+
+
+Doan Tran Cong Danh (8):
+  t0028: eliminate non-standard usage of printf
+  configure.ac: define ICONV_OMITS_BOM if necessary
+  t3900: demonstrate git-rebase problem with multi encoding
+  sequencer: reencode to utf-8 before arrange rebase's todo list
+  sequencer: reencode revert/cherry-pick's todo list
+  sequencer: reencode squashing commit's message
+  sequencer: reencode old merge-commit message
+  sequencer: reencode commit message for am/rebase --show-current-patch
+
+ configure.ac                     | 49 ++++++++++++++++++++++++++++++++
+ sequencer.c                      | 21 +++++++++-----
+ t/t0028-working-tree-encoding.sh |  4 +--
+ t/t3900-i18n-commit.sh           | 41 ++++++++++++++++++++++++++
+ 4 files changed, 106 insertions(+), 9 deletions(-)
+
+Range-diff against v3:
+1:  b3d6c4e720 = 1:  b3d6c4e720 t0028: eliminate non-standard usage of printf
+2:  f07566c60c = 2:  f07566c60c configure.ac: define ICONV_OMITS_BOM if necessary
+3:  662e5bd545 ! 3:  ca869cef57 t3900: demonstrate git-rebase problem with multi encoding
+    @@ t/t3900-i18n-commit.sh: test_commit_autosquash_flags eucJP fixup
+     +		git config i18n.commitencoding '$new' &&
+     +		echo '$new-$flag' >>F &&
+     +		git commit -a --'$flag' HEAD^ &&
+    -+		git config --unset-all i18n.commitencoding &&
+     +		git rebase --autosquash -i HEAD^^^ &&
+     +		git rev-list HEAD >actual &&
+     +		test_line_count = 3 actual
+4:  6a51fdd29c = 4:  15c33fc245 sequencer: reencode to utf-8 before arrange rebase's todo list
+5:  d382e35e4e = 5:  304ac6c289 sequencer: reencode revert/cherry-pick's todo list
+6:  340902eb67 ! 6:  97ab88e5d8 sequencer: reencode squashing commit's message
+    @@ t/t3900-i18n-commit.sh: test_commit_autosquash_multi_encoding () {
+      		git checkout -b '$flag-$old-$new' C0 &&
+      		git config i18n.commitencoding '$old' &&
+     @@ t/t3900-i18n-commit.sh: test_commit_autosquash_multi_encoding () {
+    - 		git config --unset-all i18n.commitencoding &&
+    + 		git commit -a --'$flag' HEAD^ &&
+      		git rebase --autosquash -i HEAD^^^ &&
+      		git rev-list HEAD >actual &&
+     -		test_line_count = 3 actual
+7:  7f0df0f685 ! 7:  f295d32d7b sequencer: reencode old merge-commit message
+    @@ Commit message
+         will be used as message for new merge commit (created by rebase).
+     
+         In case of the value of i18n.commitencoding has been changed after the
+    -    old merge time. We will receive an usable message for this new merge.
+    +    old merge time. We will receive an unusable message for this new merge.
+     
+         Correct it.
+     
+8:  69ec40bb1d ! 8:  36796e2b67 sequencer: reencode commit message for am/rebase --show-current-patch
+    @@ sequencer.c: static int make_patch(struct repository *r,
+      	strbuf_addf(&buf, "%s/message", get_dir(opts));
+      	if (!file_exists(buf.buf)) {
+     -		const char *commit_buffer = get_commit_buffer(commit, NULL);
+    -+		const char *encoding = get_commit_output_encoding()
+    ++		const char *encoding = get_commit_output_encoding();
+     +		const char *commit_buffer = logmsg_reencode(commit, NULL, encoding);
+      		find_commit_subject(commit_buffer, &subject);
+      		res |= write_message(subject, strlen(subject), buf.buf, 1);
 -- 
-Danh
+2.24.0.8.g36796e2b67
+
