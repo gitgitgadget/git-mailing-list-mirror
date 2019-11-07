@@ -2,111 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8A7D1F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 10:12:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C04DE1F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 10:23:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733264AbfKGKMz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 05:12:55 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45507 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727434AbfKGKMy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 05:12:54 -0500
-Received: by mail-wr1-f68.google.com with SMTP id h3so2267043wrx.12
-        for <git@vger.kernel.org>; Thu, 07 Nov 2019 02:12:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=HKMu2SAWFmMMrshpdbVzIl06Y9+Vs1JQ460smvVZRKQ=;
-        b=vf8un2l1GwVUshPfWLmcJcYYHTmVhJpNlR0vEbjJEtB3dtmyqROAFtUL5jLnnopO25
-         iqqT4wufefBg10VLcxRAae90BZ/HXwiUqefjCQFMCj/AWv9so7CVuzmfjZkKR3jovPti
-         DYAqX+ctzm3m1rJIABS+ClCf6GwfzSHq+/w158i03BT51tFIIns1ATUPs6K2PSGQynU8
-         Swo+0NzfHCWSU4hU/PH9Rxx85Dd2ZcQWsXBwKVuaghX3InK/zfYD3dvLYLhnoaPV+UZB
-         +849r+f3WpW5+uEUFGkNfktIECcdWit6Sy5yN0JH3iCWJgBUo8eVdi3FxH6SXqaHeyhI
-         Tf8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=HKMu2SAWFmMMrshpdbVzIl06Y9+Vs1JQ460smvVZRKQ=;
-        b=J//zK8NkeO7eF7T3hvLRZIJjXKM4Gd9dfedR6NMHytaWSu3YxGIdgdr1zIQr6EAbon
-         9K9Df9MSfL3ll5tFAtJCcssumEmYZfymr9VLxQGo9kLsbNfH7CruBPnrHB6QTiPOVKfh
-         SDhUhJLz7zQeHGarJ0IoWicyyNkWs2YXDxgoIe/5D+9pEAgTN29LFA2WdA2/HwDRU1w+
-         +oQe//BC2cXzypWWhZGdQZKF2KAOCr21hJ4T+5L3MACeyFf5VsNmYpke04+NQeED08XU
-         jnN629/tNRI241Rcj7skfFK8zscrxJKUzD4X0xETaEk6x8XiLiHsguC2xJtxskA//hwk
-         ItWA==
-X-Gm-Message-State: APjAAAVzSxB+6bpBgWNxAbVK03kyNEw8jAXEW6fLOWxjf8odDA5aNsSz
-        Ew0qCxvQXnCRKuyq7aVwIK2CE37w
-X-Google-Smtp-Source: APXvYqxYrLK23QjkGz90DBf0QCgrRc2CIteTnz9VHJ5SozXGokFyw3l+NJcxfMIRXcBb43p+8XLKEA==
-X-Received: by 2002:adf:eed2:: with SMTP id a18mr2197294wrp.273.1573121572516;
-        Thu, 07 Nov 2019 02:12:52 -0800 (PST)
-Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([13.81.118.113])
-        by smtp.gmail.com with ESMTPSA id f143sm2669485wme.40.2019.11.07.02.12.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Nov 2019 02:12:51 -0800 (PST)
-From:   Elia Pinto <gitter.spiros@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH] kset.h, tar.h: add missing header guard to prevent multiple inclusion
-Date:   Thu,  7 Nov 2019 10:12:43 +0000
-Message-Id: <20191107101243.99744-1-gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.24.0.rc0.467.g566ccdd3e4.dirty
+        id S1733271AbfKGKXe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 05:23:34 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61975 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726866AbfKGKXe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 05:23:34 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4638D8EB47;
+        Thu,  7 Nov 2019 05:23:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ALGj1HQj7RyXLbiPxZKCVZ4JUgQ=; b=LyrYyK
+        A4SamnSJhg6Lq1uDnzpNtL31eIp/v7486sQ65+BIEBIfnyRtiuDEgiZJCJxWAME2
+        rPSwg7VvIxvoa1oA1WVo0fP4Q3uQgsNDpwE6DzKA25549ReAVbSksGu7bmkIVgjv
+        YkJgMeWwLaRpo39hnKVi8FAI8bqQGRplfjVHU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=A1wzlm17DLSMIP8h4cWVPqS1RcfPB9LA
+        wX5STkVRx/HY2BRJypk09ZKsprUO3UfznMR8JLcu+6P6J5XMWQ3jgPzuTcm+CgYD
+        yuj1U97FyzuK5iFEX+mVt0xzEAANzkOqw3KaD1aIda6C3dJgHMTZQ/dCDgR1zPIE
+        p1X3GbjqGi4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3E8078EB46;
+        Thu,  7 Nov 2019 05:23:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1A8078EB43;
+        Thu,  7 Nov 2019 05:23:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "george espinoza via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, George Espinoza <gespinoz2019@gmail.com>
+Subject: Re: [PATCH 3/6] This file wasn't supposed to change during my git push for check-ref-format :(
+References: <pull.449.git.1573114201.gitgitgadget@gmail.com>
+        <078a19e86af6fcf1348d8988dc10cfac2e689ba4.1573114201.git.gitgitgadget@gmail.com>
+Date:   Thu, 07 Nov 2019 19:23:26 +0900
+In-Reply-To: <078a19e86af6fcf1348d8988dc10cfac2e689ba4.1573114201.git.gitgitgadget@gmail.com>
+        (george espinoza via GitGitGadget's message of "Thu, 07 Nov 2019
+        08:09:57 +0000")
+Message-ID: <xmqqo8xoouht.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: A4237768-0148-11EA-AD6C-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add missing headers to prevent ill-effects from multiple inclusion.
+"george espinoza via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Found by the LGTM source code analyzer.
+> From: george espinoza <gespinoz2019@gmail.com>
+>
+> Signed-off-by: george espinoza <gespinoz2019@gmail.com>
+> ---
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- kwset.h | 4 ++++
- tar.h   | 5 +++++
- 2 files changed, 9 insertions(+)
+While developing your first patch, it is expected that you make
+mistake in an earlier step (e.g. 2/6) and then later realize it and
+want to fix, like this one.  Instead of going back to the earlier
+mistake and fixing it right there before building more on top,
+tentatively fixing with "oops that was wrong" like this one and
+building further (i.e. 4 and later steps) is an expedient way.
 
-diff --git a/kwset.h b/kwset.h
-index df99a92178..f50ecae573 100644
---- a/kwset.h
-+++ b/kwset.h
-@@ -1,3 +1,6 @@
-+#ifndef KWSET_H
-+#define KWSET_H
-+
- /* This file has been copied from commit e7ac713d^ in the GNU grep git
-  * repository. A few small changes have been made to adapt the code to
-  * Git.
-@@ -59,3 +62,4 @@ size_t kwsexec(kwset_t, char const *, size_t, struct kwsmatch *);
- /* Deallocate the given keyword set and all its associated storage. */
- void kwsfree(kwset_t);
- 
-+#endif /* KWSET_H */
-diff --git a/tar.h b/tar.h
-index 3467705e9b..6b258c4d4a 100644
---- a/tar.h
-+++ b/tar.h
-@@ -1,3 +1,6 @@
-+#ifndef TAR_H
-+#define TAR_H
-+
- #define TYPEFLAG_AUTO		'\0'
- #define TYPEFLAG_REG		'0'
- #define TYPEFLAG_LNK		'2'
-@@ -23,3 +26,5 @@ struct ustar_header {
- 	char devminor[8];	/* 337 */
- 	char prefix[155];	/* 345 */
- };
-+
-+#endif /* TAR_H */
--- 
-2.24.0.rc0.467.g566ccdd3e4.dirty
+But once you are done, you need to get your act together before
+presenting the resulting series to the general public.
 
+Please learn to use "rebase -i" to clean up the series before
+asking GGG to publish it to the list.
+
+Thanks.
+
+>  builtin/merge-ours.c | 5 -----
+>  1 file changed, 5 deletions(-)
+>
+> diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
+> index 3980f4899a..4594507420 100644
+> --- a/builtin/merge-ours.c
+> +++ b/builtin/merge-ours.c
+> @@ -11,11 +11,6 @@
+>  #include "git-compat-util.h"
+>  #include "builtin.h"
+>  #include "diff.h"
+> -#include "parse-options.h"
+> -
+> -/* parse-options.h added to initiate replacement of manual option parsing
+> - * with parse-options. 
+> - */
+>  
+>  static const char builtin_merge_ours_usage[] =
+>  	"git merge-ours <base>... -- HEAD <remote>...";
