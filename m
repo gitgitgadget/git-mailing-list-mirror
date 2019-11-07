@@ -2,258 +2,402 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05B511F454
-	for <e@80x24.org>; Wed,  6 Nov 2019 23:49:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADF3E1F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 01:16:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728065AbfKFXtu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 18:49:50 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34228 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725937AbfKFXtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 18:49:50 -0500
-Received: by mail-wr1-f65.google.com with SMTP id e6so808484wrw.1
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 15:49:46 -0800 (PST)
+        id S1732278AbfKGBQ2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 20:16:28 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:36208 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725989AbfKGBQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 20:16:27 -0500
+Received: by mail-pl1-f196.google.com with SMTP id g9so239341plp.3
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 17:16:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=niemier-pl.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=4Y7JbxZ9cunUUsvqIIE8vQFUXgW3JKfd6BA5/PNbAXM=;
-        b=JgUlu4vqacyCMAkA0JLqDZPRkqnpzg1AzWZxaZKf0qeqwDKEcYDujUakeUpfn7SXll
-         O8Bp/wSL6ete3MLENXz6ozpX7AGyPRo95PvimtQ5BxEhHbGGQbWbwNOl9/izsvLFlcAf
-         RlNJsQBo5jcItcm1rFen+SqIYs3KH+mSRGKNUz2zWWwPMUXxCfGXscraAaNi7ebL56pa
-         gIiOcbYQw+r8xyBFR5hY2PLEQo+O+X7ITDp+mQHGjj0SSNfW2u+Y1uiiL/i6Ci7MN2l7
-         kLLjvj5kq99wuBnVU19UF3CSwXWiklMw1wRDIAoW0KDGzHg51brGcb3hT9DbHVzbqqvJ
-         ksnw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=tkpQtb0y3TUtDDQmc48M7WCOanQq2C2OapzEGnKv91A=;
+        b=n37A3YAy/YPeZK3KTywe+zPFRPZ23oDmGs2H4xFteN6RJAGiCgQx4+jsVT1nqsquXn
+         Gfoe/xLmZPz0sZc/aRIZV/d+oOMPR9ZBY53eqse1afrrPyRdUtmcZZLXcJoz1hzlCyeA
+         PlRyRE2hXenEiUA8UZHlxxBPD1WjHHaYZLHQ0H5Ncyiw8GMVlBjTwjt7w/LGG8PBwApO
+         JGPC0gMWYYRiK5nxZZUfjTTvfhpG0taCNINqd1xJGNi1yPOjKKhP8O8+TKNT9MA7bUVz
+         VVHVDwpFpmuydkYknk2sAcdUjOT/MoUAgAfpfiih4+A1MEUgvCDQXL7Lvp3OVfHVld4h
+         LkMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=4Y7JbxZ9cunUUsvqIIE8vQFUXgW3JKfd6BA5/PNbAXM=;
-        b=mHZhzEWVj7ou7j4DYvbN4OJCnO6yTLZ3X2Ge9B7kWc4H98F5Hq6ASuPbxDssSp9Oti
-         7IAqZgdcb/1K5wEkjSeJ2G0C3oQJU7EEnNS0GA4dv0wpBUVZtLIiji9+JObAztfwO+yC
-         veg0q8MvgyP/FSpabNVA+shllS6xJs+/RwcQXB23BB9yMytYCeQQ3o1qitfyllO4rwJY
-         tr5nxJrvOLmMHuBqx1itdZNIb6UVTBwkIQMwyNYgIFZWnRwl7+/HsCJJchmcIaOf2LAU
-         XOei0vPkOywOl1rm0pzKj6xams2ImOX1iUaSMEN3H6idLj7KHIK7igAwwymQdJyp8/mS
-         EhiQ==
-X-Gm-Message-State: APjAAAWoOyrtPd1y45qukiLPWuZP78wl0wQPsKdnHxB1FO4pO4jMpBhA
-        DxvMp/qZFykBWrT4CxPu/QZ7uAejOf0qeQ==
-X-Google-Smtp-Source: APXvYqzIpmjjnaPNThDhhisCT/l9gxw+nrKfhXlzJdtxnECuSYEwSobSpE1KiZ3GIWyW4v7e6PsQwQ==
-X-Received: by 2002:adf:ed4e:: with SMTP id u14mr181729wro.132.1573084185421;
-        Wed, 06 Nov 2019 15:49:45 -0800 (PST)
-Received: from localhost.localdomain (83.25.107.61.ipv4.supernova.orange.pl. [83.25.107.61])
-        by smtp.gmail.com with ESMTPSA id r19sm368163wrr.47.2019.11.06.15.49.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tkpQtb0y3TUtDDQmc48M7WCOanQq2C2OapzEGnKv91A=;
+        b=nzQbccKxVtu3o5i8aa7EUieJ30RpQSmMFLhRTWStssWN13IWybzjnkc1XbIF/VJG6A
+         SNoBpzKIemK3nL2K9GesQ4TXtAxp5dRpzdvVrvyCWgmja69e5M+tKFLkkkK8anbHL7vA
+         zuxjO6eB3GaWcCtrbdPopqEkt8ueOv4t59aT/Vw8x6boMexiZV80gJUj4BzRLM559ivm
+         Rd1bR7LcB3QcOUSK2B6I4PQFgOiNL7Ia/drGjA3OGcSusxzqpTkETL5TIOAJpOKCrdF+
+         +TXKPY6yTahgim5U87ZyDtNMfoLwaojlaQPgetHT0wKxX1NDLyiyegg6/6PQVUenZx+l
+         S/FA==
+X-Gm-Message-State: APjAAAW6zJW1WweBvI1vYP/+fPiZzrssoNuTSqBWCJfxnIpjLYJSXSJ4
+        cH4wf2Hmq3NRQJMAio9/SDq+Dw==
+X-Google-Smtp-Source: APXvYqx4wTlEaXOK/Pqj39ZZxrlEDA/OB3bkVNrcr8RTXxBjqDQ6bAIMsfNMmRhIFQ128zjnB3wBQQ==
+X-Received: by 2002:a17:902:8208:: with SMTP id x8mr743676pln.232.1573089386084;
+        Wed, 06 Nov 2019 17:16:26 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id v14sm224940pfe.94.2019.11.06.17.16.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 15:49:44 -0800 (PST)
-From:   =?UTF-8?q?=C5=81ukasz=20Niemier?= <lukasz@niemier.pl>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C5=81ukasz=20Niemier?= <lukasz@niemier.pl>
-Subject: [PATCH v3] userdiff: add Elixir to supported userdiff languages
-Date:   Thu,  7 Nov 2019 00:49:41 +0100
-Message-Id: <20191106234941.48926-1-lukasz@niemier.pl>
-X-Mailer: git-send-email 2.23.0
+        Wed, 06 Nov 2019 17:16:25 -0800 (PST)
+Date:   Wed, 6 Nov 2019 17:16:20 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 02/20] dir: move doc to dir.h
+Message-ID: <20191107011620.GF229589@google.com>
+References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
+ <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
+ <cdb32c159a05675d8151c32c71617c6f4070c158.1573034387.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cdb32c159a05675d8151c32c71617c6f4070c158.1573034387.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adds support for xfuncref in Elixir[1] language which is Ruby-like
-language that runs on Erlang[3] Virtual Machine (BEAM).
+On Wed, Nov 06, 2019 at 09:59:29AM +0000, Heba Waly via GitGitGadget wrote:
+> From: Heba Waly <heba.waly@gmail.com>
+> 
+> Move the documentation from Documentation/technical/api-directory-listing.txt
+> to dir.h as it's easier for the developers to find the usage information
+> beside the code instead of looking for it in another doc file.
+> 
+> Also documentation/technical/api-directory-listing.txt is removed because
+> the information it has is now redundant and it'll be hard to keep it up to
+> date and synchronized with the documentation in the header files.
+> 
+> Signed-off-by: Heba Waly <heba.waly@gmail.com>
+> ---
+>  .../technical/api-directory-listing.txt       | 130 ------------------
+>  dir.h                                         | 118 +++++++++++++++-
+>  2 files changed, 113 insertions(+), 135 deletions(-)
+>  delete mode 100644 Documentation/technical/api-directory-listing.txt
+> 
+> diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
+> deleted file mode 100644
+> index 76b6e4f71b..0000000000
+> --- a/Documentation/technical/api-directory-listing.txt
+> +++ /dev/null
+> @@ -1,130 +0,0 @@
+> -directory listing API
+> -=====================
+> -
+> -The directory listing API is used to enumerate paths in the work tree,
+> -optionally taking `.git/info/exclude` and `.gitignore` files per
+> -directory into account.
+> -
+> -Data structure
+> ---------------
+> -
+> -`struct dir_struct` structure is used to pass directory traversal
+> -options to the library and to record the paths discovered.  A single
+> -`struct dir_struct` is used regardless of whether or not the traversal
+> -recursively descends into subdirectories.
+> -
+> -The notable options are:
+> -
+> -`exclude_per_dir`::
+> -
+> -	The name of the file to be read in each directory for excluded
+> -	files (typically `.gitignore`).
+> -
+> -`flags`::
+> -
+> -	A bit-field of options:
+> -
+> -`DIR_SHOW_IGNORED`:::
+> -
+> -	Return just ignored files in `entries[]`, not untracked
+> -	files. This flag is mutually exclusive with
+> -	`DIR_SHOW_IGNORED_TOO`.
+> -
+> -`DIR_SHOW_IGNORED_TOO`:::
+> -
+> -	Similar to `DIR_SHOW_IGNORED`, but return ignored files in
+> -	`ignored[]` in addition to untracked files in
+> -	`entries[]`. This flag is mutually exclusive with
+> -	`DIR_SHOW_IGNORED`.
+> -
+> -`DIR_KEEP_UNTRACKED_CONTENTS`:::
+> -
+> -	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is set, the
+> -	untracked contents of untracked directories are also returned in
+> -	`entries[]`.
+> -
+> -`DIR_SHOW_IGNORED_TOO_MODE_MATCHING`:::
+> -
+> -	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if
+> -	this is set, returns ignored files and directories that match
+> -	an exclude pattern. If a directory matches an exclude pattern,
+> -	then the directory is returned and the contained paths are
+> -	not. A directory that does not match an exclude pattern will
+> -	not be returned even if all of its contents are ignored. In
+> -	this case, the contents are returned as individual entries.
+> -+
+> -If this is set, files and directories that explicitly match an ignore
+> -pattern are reported. Implicitly ignored directories (directories that
+> -do not match an ignore pattern, but whose contents are all ignored)
+> -are not reported, instead all of the contents are reported.
+> -
+> -`DIR_COLLECT_IGNORED`:::
+> -
+> -	Special mode for git-add. Return ignored files in `ignored[]` and
+> -	untracked files in `entries[]`. Only returns ignored files that match
+> -	pathspec exactly (no wildcards). Does not recurse into ignored
+> -	directories.
+> -
+> -`DIR_SHOW_OTHER_DIRECTORIES`:::
+> -
+> -	Include a directory that is not tracked.
+> -
+> -`DIR_HIDE_EMPTY_DIRECTORIES`:::
+> -
+> -	Do not include a directory that is not tracked and is empty.
+> -
+> -`DIR_NO_GITLINKS`:::
+> -
+> -	If set, recurse into a directory that looks like a Git
+> -	directory.  Otherwise it is shown as a directory.
+> -
+> -The result of the enumeration is left in these fields:
+> -
+> -`entries[]`::
+> -
+> -	An array of `struct dir_entry`, each element of which describes
+> -	a path.
+> -
+> -`nr`::
+> -
+> -	The number of members in `entries[]` array.
+> -
+> -`alloc`::
+> -
+> -	Internal use; keeps track of allocation of `entries[]` array.
+> -
+> -`ignored[]`::
+> -
+> -	An array of `struct dir_entry`, used for ignored paths with the
+> -	`DIR_SHOW_IGNORED_TOO` and `DIR_COLLECT_IGNORED` flags.
+> -
+> -`ignored_nr`::
+> -
+> -	The number of members in `ignored[]` array.
+> -
+> -Calling sequence
+> -----------------
+> -
+> -Note: index may be looked at for .gitignore files that are CE_SKIP_WORKTREE
+> -marked. If you to exclude files, make sure you have loaded index first.
+> -
+> -* Prepare `struct dir_struct dir` and clear it with `memset(&dir, 0,
+> -  sizeof(dir))`.
+> -
+> -* To add single exclude pattern, call `add_pattern_list()` and then
+> -  `add_pattern()`.
+> -
+> -* To add patterns from a file (e.g. `.git/info/exclude`), call
+> -  `add_patterns_from_file()` , and/or set `dir.exclude_per_dir`.  A
+> -  short-hand function `setup_standard_excludes()` can be used to set
+> -  up the standard set of exclude settings.
+> -
+> -* Set options described in the Data Structure section above.
+> -
+> -* Call `read_directory()`.
+> -
+> -* Use `dir.entries[]`.
+> -
+> -* Call `clear_directory()` when none of the contained elements are no longer in use.
+> -
+> -(JC)
+> diff --git a/dir.h b/dir.h
+> index 2fbdef014f..1b41d29c07 100644
+> --- a/dir.h
+> +++ b/dir.h
+> @@ -1,11 +1,43 @@
+>  #ifndef DIR_H
+>  #define DIR_H
+>  
+> -/* See Documentation/technical/api-directory-listing.txt */
+> -
+>  #include "cache.h"
+>  #include "strbuf.h"
+>  
+> +/**
+> + * The directory listing API is used to enumerate paths in the work tree,
+> + * optionally taking `.git/info/exclude` and `.gitignore` files per directory
+> + * into account.
+> + */
+> +
+> +/**
+> + * Calling sequence
+> + * ----------------
+> + *
+> + * Note: index may be looked at for .gitignore files that are CE_SKIP_WORKTREE
+> + * marked. If you to exclude files, make sure you have loaded index first.
 
-[1]: https://elixir-lang.org
-[2]: https://www.erlang.org
+I know this is verbatim from the old doc, but the grammar is a little
+off. Might be a good chance to fix it up (or add another patch on top
+doing so?)
 
-Signed-off-by: Łukasz Niemier <lukasz@niemier.pl>
----
- t/t4018-diff-funcname.sh               |  1 +
- t/t4018/elixir-do-not-pick-end         |  5 +++++
- t/t4018/elixir-ex-unit-test            |  6 ++++++
- t/t4018/elixir-function                |  5 +++++
- t/t4018/elixir-macro                   |  5 +++++
- t/t4018/elixir-module                  |  9 +++++++++
- t/t4018/elixir-module-func             |  8 ++++++++
- t/t4018/elixir-nested-module           |  9 +++++++++
- t/t4018/elixir-private-function        |  5 +++++
- t/t4018/elixir-protocol                |  6 ++++++
- t/t4018/elixir-protocol-implementation |  5 +++++
- userdiff.c                             | 12 ++++++++++++
- 12 files changed, 76 insertions(+)
- create mode 100644 t/t4018/elixir-do-not-pick-end
- create mode 100644 t/t4018/elixir-ex-unit-test
- create mode 100644 t/t4018/elixir-function
- create mode 100644 t/t4018/elixir-macro
- create mode 100644 t/t4018/elixir-module
- create mode 100644 t/t4018/elixir-module-func
- create mode 100644 t/t4018/elixir-nested-module
- create mode 100644 t/t4018/elixir-private-function
- create mode 100644 t/t4018/elixir-protocol
- create mode 100644 t/t4018/elixir-protocol-implementation
+> + *
+> + * - Prepare `struct dir_struct dir` and clear it with `memset(&dir, 0,
+> + * sizeof(dir))`.
+> + *
+> + * - To add single exclude pattern, call `add_pattern_list()` and then
+> + *   `add_pattern()`.
+> + *
+> + * - To add patterns from a file (e.g. `.git/info/exclude`), call
+> + *   `add_patterns_from_file()` , and/or set `dir.exclude_per_dir`.  A
+> + *   short-hand function `setup_standard_excludes()` can be used to set
+> + *   up the standard set of exclude settings.
+> + *
+> + * - Set options described in the Data Structure section above.
+> + *
+> + * - Call `read_directory()`.
+> + *
+> + * - Use `dir.entries[]`.
+> + *
+> + * - Call `clear_directory()` when none of the contained elements are no longer in use.
+> + *
+> + */
+> +
+>  struct dir_entry {
+>  	unsigned int len;
+>  	char name[FLEX_ARRAY]; /* more */
+> @@ -144,25 +176,101 @@ struct untracked_cache {
+>  	unsigned int use_fsmonitor : 1;
+>  };
+>  
+> +/**
+> + * pass directory traversal options to the library and to record the paths
+> + * discovered. A single `struct dir_struct` is used regardless of whether or
+> + * not the traversal recursively descends into subdirectories.
 
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 6f5ef0035e..c0f4839543 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -32,6 +32,7 @@ diffpatterns="
- 	csharp
- 	css
- 	dts
-+	elixir
- 	fortran
- 	fountain
- 	golang
-diff --git a/t/t4018/elixir-do-not-pick-end b/t/t4018/elixir-do-not-pick-end
-new file mode 100644
-index 0000000000..fae08ba7e8
---- /dev/null
-+++ b/t/t4018/elixir-do-not-pick-end
-@@ -0,0 +1,5 @@
-+defmodule RIGHT do
-+end
-+#
-+#
-+# ChangeMe; do not pick up 'end' line
-diff --git a/t/t4018/elixir-ex-unit-test b/t/t4018/elixir-ex-unit-test
-new file mode 100644
-index 0000000000..0560a2b697
---- /dev/null
-+++ b/t/t4018/elixir-ex-unit-test
-@@ -0,0 +1,6 @@
-+defmodule Test do
-+  test "RIGHT" do
-+    assert true == true
-+    assert ChangeMe
-+  end
-+end
-diff --git a/t/t4018/elixir-function b/t/t4018/elixir-function
-new file mode 100644
-index 0000000000..d452f495a7
---- /dev/null
-+++ b/t/t4018/elixir-function
-@@ -0,0 +1,5 @@
-+def function(RIGHT, arg) do
-+  # comment
-+  # comment
-+  ChangeMe
-+end
-diff --git a/t/t4018/elixir-macro b/t/t4018/elixir-macro
-new file mode 100644
-index 0000000000..4f925e9ad4
---- /dev/null
-+++ b/t/t4018/elixir-macro
-@@ -0,0 +1,5 @@
-+defmacro foo(RIGHT) do
-+  # Code
-+  # Code
-+  ChangeMe
-+end
-diff --git a/t/t4018/elixir-module b/t/t4018/elixir-module
-new file mode 100644
-index 0000000000..91a4e7aa20
---- /dev/null
-+++ b/t/t4018/elixir-module
-@@ -0,0 +1,9 @@
-+defmodule RIGHT do
-+  @moduledoc """
-+  Foo bar
-+  """
-+
-+  def ChangeMe(a) where is_map(a) do
-+    a
-+  end
-+end
-diff --git a/t/t4018/elixir-module-func b/t/t4018/elixir-module-func
-new file mode 100644
-index 0000000000..c9910d0675
---- /dev/null
-+++ b/t/t4018/elixir-module-func
-@@ -0,0 +1,8 @@
-+defmodule Foo do
-+  def fun(RIGHT) do
-+     # Code
-+     # Code
-+     # Code
-+     ChangeMe
-+  end
-+end
-diff --git a/t/t4018/elixir-nested-module b/t/t4018/elixir-nested-module
-new file mode 100644
-index 0000000000..771ebc5c42
---- /dev/null
-+++ b/t/t4018/elixir-nested-module
-@@ -0,0 +1,9 @@
-+defmodule MyApp.RIGHT do
-+  @moduledoc """
-+  Foo bar
-+  """
-+
-+  def ChangeMe(a) where is_map(a) do
-+    a
-+  end
-+end
-diff --git a/t/t4018/elixir-private-function b/t/t4018/elixir-private-function
-new file mode 100644
-index 0000000000..1aabe33b7a
---- /dev/null
-+++ b/t/t4018/elixir-private-function
-@@ -0,0 +1,5 @@
-+defp function(RIGHT, arg) do
-+  # comment
-+  # comment
-+  ChangeMe
-+end
-diff --git a/t/t4018/elixir-protocol b/t/t4018/elixir-protocol
-new file mode 100644
-index 0000000000..7d9173691e
---- /dev/null
-+++ b/t/t4018/elixir-protocol
-@@ -0,0 +1,6 @@
-+defprotocol RIGHT do
-+  @doc """
-+  Calculates the size (and not the length!) of a data structure
-+  """
-+  def size(data, ChangeMe)
-+end
-diff --git a/t/t4018/elixir-protocol-implementation b/t/t4018/elixir-protocol-implementation
-new file mode 100644
-index 0000000000..f9234bbfc4
---- /dev/null
-+++ b/t/t4018/elixir-protocol-implementation
-@@ -0,0 +1,5 @@
-+defimpl RIGHT do
-+  # Docs
-+  # Docs
-+  def foo(ChangeMe), do: :ok
-+end
-diff --git a/userdiff.c b/userdiff.c
-index e187d356f6..577053c10a 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -32,6 +32,18 @@ PATTERNS("dts",
- 	 /* Property names and math operators */
- 	 "[a-zA-Z0-9,._+?#-]+"
- 	 "|[-+*/%&^|!~]|>>|<<|&&|\\|\\|"),
-+PATTERNS("elixir",
-+	 "^[ \t]*((def(macro|module|impl|protocol|p)?|test)[ \t].*)$",
-+	 /* Atoms, names, and module attributes */
-+	 "|[@:]?[a-zA-Z0-9@_?!]+"
-+	 /* Numbers with specific base */
-+	 "|[-+]?0[xob][0-9a-fA-F]+"
-+	 /* Numbers */
-+	 "|[-+]?[0-9][0-9_.]*([eE][-+]?[0-9_]+)?"
-+	 /* Operators and atoms that represent them */
-+	 "|:?(\\+\\+|--|\\.\\.|~~~|<>|\\^\\^\\^|<?\\|>|<<<?|>?>>|<<?~|~>?>|<~>|<=|>=|===?|!==?|=~|&&&?|\\|\\|\\|?|=>|<-|\\\\\\\\|->)"
-+	 /* Not real operators, but should be grouped */
-+	 "|:?%[A-Za-z0-9_.]\\{\\}?"),
- IPATTERN("fortran",
- 	 "!^([C*]|[ \t]*!)\n"
- 	 "!^[ \t]*MODULE[ \t]+PROCEDURE[ \t]\n"
--- 
-2.23.0
+I wouldn't mind seeing some minor rewording to make the language here
+agree with itself, since it's no longer being led with a subject noun.
+Or, you could still tack "This struct is used to" or even "Used to" onto
+the front so that the language makes sense again.
 
+The way the language is now with the subject cropped out, it sounds like
+you're describing a function which does the pass + record for you (to
+me).
+
+> + */
+>  struct dir_struct {
+> -	int nr, alloc;
+> -	int ignored_nr, ignored_alloc;
+> +
+> +    /* The number of members in `entries[]` array. */
+> +    int nr;
+> +
+> +    /* Internal use; keeps track of allocation of `entries[]` array.*/
+> +    int alloc;
+> +
+> +    /* The number of members in `ignored[]` array. */
+> +	int ignored_nr;
+> +
+> +	int ignored_alloc;
+> +
+> +	/* bit-field of options */
+>  	enum {
+> +
+> +	    /**
+> +	     * Return just ignored files in `entries[]`, not untracked files.
+> +	     * This flag is mutually exclusive with `DIR_SHOW_IGNORED_TOO`.
+> +	     */
+
+I think something went wrong with the whitespace on this section (most of
+the rest looks OK).
+
+>  		DIR_SHOW_IGNORED = 1<<0,
+> +
+> +		/* Include a directory that is not tracked. */
+>  		DIR_SHOW_OTHER_DIRECTORIES = 1<<1,
+> +
+> +		/* Do not include a directory that is not tracked and is empty. */
+>  		DIR_HIDE_EMPTY_DIRECTORIES = 1<<2,
+> +
+> +		/**
+> +		 * If set, recurse into a directory that looks like a Git directory.
+> +		 * Otherwise it is shown as a directory.
+> +		 */
+>  		DIR_NO_GITLINKS = 1<<3,
+> +
+> +		/**
+> +		 * Special mode for git-add. Return ignored files in `ignored[]` and
+> +	     * untracked files in `entries[]`. Only returns ignored files that match
+> +	     * pathspec exactly (no wildcards). Does not recurse into ignored
+> +	     * directories.
+> +		 */
+>  		DIR_COLLECT_IGNORED = 1<<4,
+> +
+> +		/**
+> +		 * Similar to `DIR_SHOW_IGNORED`, but return ignored files in
+> +		 * `ignored[]` in addition to untracked files in `entries[]`.
+> +		 * This flag is mutually exclusive with `DIR_SHOW_IGNORED`.
+> +		 */
+>  		DIR_SHOW_IGNORED_TOO = 1<<5,
+> +
+>  		DIR_COLLECT_KILLED_ONLY = 1<<6,
+> +
+> +        /**
+> +         * Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is
+> +         * set, the untracked contents of untracked directories are also
+> +         * returned in `entries[]`.
+> +         */
+>  		DIR_KEEP_UNTRACKED_CONTENTS = 1<<7,
+> +
+> +		/**
+> +		 * Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is
+> +		 * set, returns ignored files and directories that match an exclude
+> +		 * pattern. If a directory matches an exclude pattern, then the
+> +		 * directory is returned and the contained paths are not. A directory
+> +		 * that does not match an exclude pattern will not be returned even if
+> +		 * all of its contents are ignored. In this case, the contents are
+> +		 * returned as individual entries.
+> +		 *
+> +		 * If this is set, files and directories that explicitly match an ignore
+> +         * pattern are reported. Implicitly ignored directories (directories that
+> +         * do not match an ignore pattern, but whose contents are all ignored)
+> +         * are not reported, instead all of the contents are reported.
+> +		 */
+>  		DIR_SHOW_IGNORED_TOO_MODE_MATCHING = 1<<8,
+> +
+>  		DIR_SKIP_NESTED_GIT = 1<<9
+>  	} flags;
+> +
+> +	/* An array of `struct dir_entry`, each element of which describes a path. */
+>  	struct dir_entry **entries;
+> +
+> +	/**
+> +	 * used for ignored paths with the `DIR_SHOW_IGNORED_TOO` and
+> +	 * `DIR_COLLECT_IGNORED` flags.
+> +	 */
+>  	struct dir_entry **ignored;
+>  
+> -	/* Exclude info */
+> +	/**
+> +	 * The name of the file to be read in each directory for excluded files
+> +	 * (typically `.gitignore`).
+> +	 */
+>  	const char *exclude_per_dir;
+>  
+>  	/*
+> -- 
+> gitgitgadget
+> 
