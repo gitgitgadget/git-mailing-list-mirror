@@ -7,82 +7,103 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C8241F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 11:09:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 610891F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 11:11:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387858AbfKGLJm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 06:09:42 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51529 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727707AbfKGLJm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 06:09:42 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F289F9381B;
-        Thu,  7 Nov 2019 06:09:39 -0500 (EST)
+        id S2387725AbfKGLLP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 06:11:15 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55263 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727278AbfKGLLP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 06:11:15 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E27FC3222E;
+        Thu,  7 Nov 2019 06:11:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=au7u6lKV+mb3Z6ivnDK8zWwajw8=; b=CMUBn7
-        hMuVeGZMUk/aQ3uc8OEDnkeUTt326WcHCTgkMVgF3jztWdk5Jazo3jLwfv8eGxXK
-        qPUJBTufxyvfZ7RoRsDHAijPRflKzOjhWLJz9hsbcwUqql5Pnij8Lo3cDfHc9B01
-        0APwxtkaD4LSdbX4HR+TPfOWy/tBO4s05NBxI=
+        :content-type; s=sasl; bh=dIYwgXSfkhGRr6O6uBAe2dkkHa4=; b=q7UFYw
+        5+JnxKNqUjbrewfeLYf4CtkC9w0fETvX8N8R2TBgSwlel2y+tMoqUXS03VTNvtti
+        fTviFlZMaknsQ8OLdX5DpBZNHb7oCQX6KMlFBeQf2hHlzrvldPjQTeAJDK8dCA/t
+        kIsHwVYotuWSlUkVfmEDytrfNMTSjoRLjzLys=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YXKi/xEAWvAzOvzf9IN53yZnSoem/dq/
-        lXNio3EVuNLlolYL1DAs37ecr30aKzq+QtkdXWZKfbcmElcWx/I/w9y18HR6Ri9Y
-        R/ahdBNQLBIAymm8+cfzSzmEb5mFIdCmt4BsFXsd6Io+Gzv87CPTZBcPjLvzZhdF
-        8CCYpr4YjTw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EACE49381A;
-        Thu,  7 Nov 2019 06:09:39 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Ey+wuKN8hu00JHoJLQUCROEVu412b/i0
+        MKwRRew2QoQ8/IDPaemHt2LF9smTz99osH63RBPLj2nJr8pOG+eWoeCdBzS4O+Tf
+        8C6uiPKdIF5ukwJSa2k2C9p0R++J4YDols+zilxwpJQjePUjZcD2IZQyNjhWmD1H
+        rF9GLMSPnZE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DB0223222D;
+        Thu,  7 Nov 2019 06:11:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1FF2793816;
-        Thu,  7 Nov 2019 06:09:36 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4E1AB3222C;
+        Thu,  7 Nov 2019 06:11:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Eric N. Vander Weele" <ericvw@gmail.com>
+To:     Elia Pinto <gitter.spiros@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] status: teach "status --short" to respect "--show-stash"
-References: <20191104100334.60537-1-ericvw@gmail.com>
-        <xmqq36f1wx6h.fsf@gitster-ct.c.googlers.com>
-        <20191107103141.GA87008@helium>
-Date:   Thu, 07 Nov 2019 20:09:34 +0900
-In-Reply-To: <20191107103141.GA87008@helium> (Eric N. Vander Weele's message
-        of "Thu, 7 Nov 2019 18:31:41 +0800")
-Message-ID: <xmqqimnwoscx.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH] kset.h, tar.h: add missing header guard to prevent multiple inclusion
+References: <20191107101243.99744-1-gitter.spiros@gmail.com>
+Date:   Thu, 07 Nov 2019 20:11:11 +0900
+In-Reply-To: <20191107101243.99744-1-gitter.spiros@gmail.com> (Elia Pinto's
+        message of "Thu, 7 Nov 2019 10:12:43 +0000")
+Message-ID: <xmqqeeykosa8.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 16016790-014F-11EA-9A90-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 4EBE325C-014F-11EA-8F63-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Eric N. Vander Weele" <ericvw@gmail.com> writes:
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
->> Isn't this information available to scripts that want to read from
->> porcelain v2 output format (which is meant to be extensible by
->> allowing easy-to-parse optional headers, which this stash thing
->> exactly is).
+> Add missing headers to prevent ill-effects from multiple inclusion.
 >
-> It is not available in Porcelain Format v2... yet :).
+> Found by the LGTM source code analyzer.
 >
->
-> I'm happy making '--show-stash' congruent with '--branch' in v1', which
-> is would be in line with documented behavior, displaying something in
-> v2 only, or both.  Let me know how you would like to proceed and I'll
-> rework the patch accordingly.
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> ---
+>  kwset.h | 4 ++++
+>  tar.h   | 5 +++++
+>  2 files changed, 9 insertions(+)
 
-Quite honestly, you do not want to ask _me_.  If you left it to
-me, I may say that, among the possible next step you listed, the
-best one is to do nothing, as I do not want to see the stash info in
-the "status --short" output ;-)
+Makes sense; thanks.
 
-It probably is the safest to make it available first only in v2
-format.  I do not know if that makes its utility too limited for the
-purpose of the application you have in mind.
-
+> diff --git a/kwset.h b/kwset.h
+> index df99a92178..f50ecae573 100644
+> --- a/kwset.h
+> +++ b/kwset.h
+> @@ -1,3 +1,6 @@
+> +#ifndef KWSET_H
+> +#define KWSET_H
+> +
+>  /* This file has been copied from commit e7ac713d^ in the GNU grep git
+>   * repository. A few small changes have been made to adapt the code to
+>   * Git.
+> @@ -59,3 +62,4 @@ size_t kwsexec(kwset_t, char const *, size_t, struct kwsmatch *);
+>  /* Deallocate the given keyword set and all its associated storage. */
+>  void kwsfree(kwset_t);
+>  
+> +#endif /* KWSET_H */
+> diff --git a/tar.h b/tar.h
+> index 3467705e9b..6b258c4d4a 100644
+> --- a/tar.h
+> +++ b/tar.h
+> @@ -1,3 +1,6 @@
+> +#ifndef TAR_H
+> +#define TAR_H
+> +
+>  #define TYPEFLAG_AUTO		'\0'
+>  #define TYPEFLAG_REG		'0'
+>  #define TYPEFLAG_LNK		'2'
+> @@ -23,3 +26,5 @@ struct ustar_header {
+>  	char devminor[8];	/* 337 */
+>  	char prefix[155];	/* 345 */
+>  };
+> +
+> +#endif /* TAR_H */
