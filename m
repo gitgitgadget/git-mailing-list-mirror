@@ -2,109 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 405DE1F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 04:06:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9159E1F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 04:37:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733119AbfKGEGK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 23:06:10 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:33203 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727279AbfKGEGJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 23:06:09 -0500
-Received: by mail-pg1-f193.google.com with SMTP id h27so1014127pgn.0
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 20:06:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9kbENoZUSxH4c9iLGOpS4LxCPXLqnwLM1GRMP2M5awg=;
-        b=D/91t044rMLU/nFOGXAJkz/UOH0GtAak6J85qSoaRY+5+j7s0Ox2ctfv6NHCCX5D/Z
-         3kS/0BjmBL4fkcyqLz1GSvWaMfFOVYtlXg54bzGcnuiNJPIi25bftogbx9ebHLrL61SS
-         BFt69kwC+wteCozJPGZaw4Uh2exVws9db7A1XWMQeL+VVHHxfavQ7l0SdsYeK3FDzzWk
-         z/chSmTxzvZTB4mD7qMr2mO1p49xDwSDL5g9UoAMa6YgM6VnY+frZCZ63K3qbgZzAFfz
-         s34slcUY/ooyqplsjN5GBXNjVf/BYXidtetJU2e9/DOleJ5CJEH89bfTJ8aQNZf7nT2v
-         BoGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9kbENoZUSxH4c9iLGOpS4LxCPXLqnwLM1GRMP2M5awg=;
-        b=LZaop3SuHkPDB/pL2XigQqv8XaYkJRtm7+VzgAArD1hW959jzNN4eVHSwzHONfMo5P
-         h0tIJhnXva36BJgtQBbEprhgewxUeFx13j0abGUC2MPQWoSqrF9dkfAuk1+/bK46DFHV
-         uipMDAetreNSynGrpWf3tx+DWyTO5LUTDUOmjwLoFFBNf0oa9iGNuE2Ks2yBdOWgUNiE
-         X60sl2RBmLzqZh5UQz9hzrqzo4upxijL9t4OVJeiCeYFYiOXGz/HFx7AzGxJrxYBxqqh
-         m+TxJNlvc5ELmpT3DdmnhUiIF+KWesfamyGeuv0NZqY8OZ2B796WxNFtEe4vtdMD1lpG
-         Uu/A==
-X-Gm-Message-State: APjAAAXjl5LEKIKrh2VIy8qadgG+bgTeIQu0PWi1G7g1lVK21fB6RlfY
-        D8uKa61KcYD5BJbiEgJHzF0Z7Ug3FZ8=
-X-Google-Smtp-Source: APXvYqwboym+7HKNfky0agpnM1AsrRMrQeBFH+NFI2hMGPc6Y0iKXhAYECykoSmDqFqLG4v+RWeTAA==
-X-Received: by 2002:a63:5960:: with SMTP id j32mr1838423pgm.281.1573099568782;
-        Wed, 06 Nov 2019 20:06:08 -0800 (PST)
-Received: from localhost ([2402:800:6375:16b7:502d:9b82:436:143a])
-        by smtp.gmail.com with ESMTPSA id f59sm5393272pje.0.2019.11.06.20.06.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 20:06:07 -0800 (PST)
-Date:   Thu, 7 Nov 2019 11:06:05 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 31/32] commit-graph.c: fix code that could convert the
- result of an integer multiplication to a larger type
-Message-ID: <20191107040605.GA8096@danh.dev>
-References: <20191104095923.116086-1-gitter.spiros@gmail.com>
- <20191104095923.116086-2-gitter.spiros@gmail.com>
- <xmqq7e4dwxob.fsf@gitster-ct.c.googlers.com>
- <20191107022347.GE6351@danh.dev>
- <xmqqtv7gs6g3.fsf@gitster-ct.c.googlers.com>
+        id S1733038AbfKGEh4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 23:37:56 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58853 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726582AbfKGEh4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 23:37:56 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 45E982FA66;
+        Wed,  6 Nov 2019 23:37:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+VA8SSGdyvzud1SCNeJitiLeLFo=; b=PZwg6e
+        kJqAAZGghe023Iktvt6bkpftb4hSxPprijaaU3PydN53/sb+/sLdo3a1AOZ+xO3K
+        eFhwmG4R8vMHOC2rID+23CR4FWzXdX6wMltXyeQQfz/Xnpwe16ozIuZWtYDMqki0
+        2LIQwB4Bd90G3hyTxMtjAxY7HMkjxrqFLvqVk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=AT6tn0Ha+JaL7XRqWqm3xzpK58y7EnBX
+        tAf8M5oc4JHTfBMPXTc32oeImrG83AYID9paSKzVS4kBCk4Fb5PlJk3sF5zg9Che
+        kRoJ44udMzh09QF+0zZDxae4C28xG9GvcSTmlUrrC8zvdkGH+d/jElzAh7CROPcW
+        0WsrvEx7mTw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D9BC2FA65;
+        Wed,  6 Nov 2019 23:37:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9E60A2FA63;
+        Wed,  6 Nov 2019 23:37:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, rynus@gmail.com, stolee@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 1/1] commit-graph: use start_delayed_progress()
+References: <pull.450.git.1572969955.gitgitgadget@gmail.com>
+        <pull.450.v2.git.1572984842.gitgitgadget@gmail.com>
+        <78bd6bc2c02f1daf13938a738d8eae56b5f6b74c.1572984842.git.gitgitgadget@gmail.com>
+        <20191106040955.GD4307@sigill.intra.peff.net>
+Date:   Thu, 07 Nov 2019 13:37:52 +0900
+In-Reply-To: <20191106040955.GD4307@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 5 Nov 2019 23:09:55 -0500")
+Message-ID: <xmqqpni4s3mn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtv7gs6g3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5CD71D9A-0118-11EA-89FE-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-11-07 12:37:00 +0900, Junio C Hamano wrote:
-> Danh Doan <congdanhqx@gmail.com> writes:
-> 
-> > On 2019-11-06 11:23:00 +0900, Junio C Hamano wrote:
-> >> > @@ -1454,7 +1454,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
-> >> >  			    num_chunks);
-> >> >  		ctx->progress = start_delayed_progress(
-> >> >  			progress_title.buf,
-> >> > -			num_chunks * ctx->commits.nr);
-> >> > +			(uint64_t)num_chunks * ctx->commits.nr);
-> >> 
-> >> Hmph, do we need this?  I understand that the second parameter to
-> >> the callee is u64, so the caller needs to come up with u64 without
-> >> overflow, but doesn't that automatically get promoted?
-> >
-> > Neither num_chunks nor ctx->commits.nr is promoted because both of
-> > them are int. The result of `num_chunks * ctx->commits.nr' will be int
-> > and will be promoted to u64 to pass to caller.
-> 
-> Ah, yes.  Thanks.
-> 
-> The commit title is about "integer multiplication", but can the same
-> issue arise with addition and subtraction as well, by the way?
+Jeff King <peff@peff.net> writes:
 
-Yes, the same issue will arise with all binary (and ternary) arithmetic operators
-(+, -, *, /, %, ^, &, |, <<, >> and ?:).
+> I think this is OK for now, though it does make me wonder if
+> "--progress" ought to perhaps override "delayed" in some instances,
+> since it's a positive signal from the caller that they're interested in
+> seeing progress.
 
-IIRC, gcc doesn't have any warning for this kind of issue.
+I did have the same reaction after seeing the change to 5318 where
+the expected output from "git commit-graph write --progress" has
+become unreliable.
 
-Microsoft Visual Studio (2017+) has C26451 for this.
-https://docs.microsoft.com/en-us/visualstudio/code-quality/c26451?view=vs-2017
-If our friends at Microsoft could help, we can check the remaining one
-in our codebase.
+I think there are possibly three kinds of folks:
 
--- 
-Danh
+ - I do not want the output smudged with any progress (e.g. I am a
+   script);
+
+ - I want to see progress if it takes very long, but do not waste
+   vertical screen real estate if it does not make me wait (e.g. I
+   am an interactive user who occasionally wants a cue to leave the
+   keyboard to grab coffee); and
+
+ - I want to see all progress (... now who am I?  Taking a
+   screenshot to write a tutorial or something???).
+
+In the ideal world, the three choices above should probably be
+"--progress=(no|auto|always)" where not having any defaults to one
+of them (probably "auto", as the code can use isatty() to further
+turn it to "no").
+
+Making "--progress" to mean "--progress=always" is OK, but it leaves
+no way to override an earlier --[no-]progress on the command line,
+which feels somewhat satisfying.
+
+Thanks.
+
+
+
