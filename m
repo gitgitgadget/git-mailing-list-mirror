@@ -2,108 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58BDF1F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 04:46:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FD921F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 05:07:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733066AbfKGEqV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 23:46:21 -0500
-Received: from mail-ot1-f48.google.com ([209.85.210.48]:40592 "EHLO
-        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726935AbfKGEqV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 23:46:21 -0500
-Received: by mail-ot1-f48.google.com with SMTP id m15so889898otq.7
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 20:46:20 -0800 (PST)
+        id S1725916AbfKGFHU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 00:07:20 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:37714 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725870AbfKGFHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 00:07:20 -0500
+Received: by mail-lf1-f66.google.com with SMTP id b20so531969lfp.4
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 21:07:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=S/LwhqaxFGUeaR/bofu0CPd1cfuF5axISOICXGSZHg4=;
-        b=tPzBgQff5H5jKOJa9CN9nvxB+53Kd5BZEvdg/MKD9KsoeSsaDXs6ZANBPbZMl9ulnX
-         hdQFshb9TMipkK29PsK7Iww7UGsOGeTBylxNIWJQRMl0rW6U+K1Rbx3ZDGPXYw+/z7L8
-         f8K7XmkjNouwSWhtci/LYI7waAXQj20Yo8Y7HurzwRUKz/4n53MG8kgCtTJ9ikCl6S3S
-         Xnm94jGDSoZg7YKp4CsMFagT7zvI7R5eFdq2vJVMxqRY0gTZ81QvzZXoLRUNV8kPEjGw
-         xM2/Gvq69O+/QRwAH9LrNnvlcgeMePlz2ZSfR8fTs1Z9jIP5kajpFO8YuoKZS/Dur5bx
-         /7ow==
+        bh=jBVv/QoNbdp03L+OlJ0MvFyPKpRbYNKNXDKeNkUTy2E=;
+        b=iEu92QwqCEcl/WSyTfuSE20KNxnKTG8OpbBod9OfQar1YCvTM0rVuWK0hIjXQHhTzo
+         4w931F1gmILOJxDz7/3D3yOVsF+11Ar2OOB6Hxe2N2Wuw3yhRuBG2Dh50bib69peWUdt
+         dKyBby78Z00BMQPXmWhMpq85pzWmS/ISYOeOWlvgYsFwnjPUsyifmuo36CqLntfBdFIL
+         r2FQDrXNasrgoZEgkM7ex+1f270Nosmz1Y3vCQV7NCwHVsVLJriPrahiFSysTY+/dsS4
+         pgkw7HGSTrgCOuU5N+BwH+g4bK4Z4FpvHF25f0IIHsybqJKXcZk1Z1NZHJ7aF2rUKCeM
+         4EeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=S/LwhqaxFGUeaR/bofu0CPd1cfuF5axISOICXGSZHg4=;
-        b=DyPTJFp/xcogHNeo0/zCG3cza4ayNcmFOfTRhsdIRK7wsNaOM+qZmBbzhwINyBIuUu
-         89E0QqZuMDexUqC8dM4iMSY3uyD0fK+CW2YplW6ngEcgUNSZn0XbnrX3HrS8xCWYyfid
-         7iqp83/8KENZLJxWhuwgyEQMX65aN6BfLFv3n9QwhQwEMyiix70ipaGa4T1vcryj74Ue
-         PuZw4tKWrTgjMpaPbzYuFsBcdsnBhP+07YLq5jHVsn7+48bjWO+1ymFzm5vrkRgEJPMc
-         CTUtHenOFjrL9GCQalwTqCAfOxAQ4FO23nRRbZVuIWK+E0yjrulGKZCa83za0lg09QhI
-         mRag==
-X-Gm-Message-State: APjAAAWXrBRqgCK3zKIF9KOz9ANdj1hkHiYbJh4Ekol1Mby9NDLdqBJ4
-        cKZ7b8uu9/NQVtjDVFmOIsx+zQ+5Zy2bTGY+ifN76g6S5L4=
-X-Google-Smtp-Source: APXvYqyDqe55Qi8Bhd9Xthk3JfZZ0RjjE+WU7ssGl8P5tSMEzKZqTD24RTCr6FD0KzLOxu4qLb+jMqYyfWe4PGHgeAU=
-X-Received: by 2002:a9d:6285:: with SMTP id x5mr1181116otk.267.1573101979964;
- Wed, 06 Nov 2019 20:46:19 -0800 (PST)
+        bh=jBVv/QoNbdp03L+OlJ0MvFyPKpRbYNKNXDKeNkUTy2E=;
+        b=gkMZ590vBXURY+maS20OcpuzrM2I2SjGTP2xJfp3PdxP25GbZND8vGrRn5RtylkFTc
+         QazjfklK3eofrkfvKUva47okhalBNZ73s9HC47J5YSWhucssDcR5/eEDMPKvZtbCaIsy
+         UqSwLhRtLPxrbpjZ8wNmysbB74IG+3tp7ZrvF9aqLkKRKIdt9Ipx5kqO42SUuXHDqbod
+         SDsQg1I3Qb4RWjD/K+XvfQh4cmzyuMeu477wqE5cv9jCienWj2ICw23LTpkYAiClOY/b
+         OvBqhM6cpUqFFL5lkzU0YsntaWt1jxzvKGZXLRBGZ05JQXnW7yHWzMCd/A/bRLMQ1zrF
+         j10w==
+X-Gm-Message-State: APjAAAUIsNeNtdRLv9ba7WwsdZOdaNZK8+qD9lVRGKHamRKazU/ys02Y
+        yUqhiCVHSdk0iEAlJgK/KtA+nWyWQuRdD9RsqxT7MWuk
+X-Google-Smtp-Source: APXvYqylGFGQ3OOwSWZgV6YP+0/svW38INXgcrTXkj5P3G6bFQUsCZ/IMLTAVz8Jiyfo8kNolqBvX+luFPhHSOkJlYQ=
+X-Received: by 2002:a19:41c8:: with SMTP id o191mr832595lfa.101.1573103238125;
+ Wed, 06 Nov 2019 21:07:18 -0800 (PST)
 MIME-Version: 1.0
-References: <alpine.LSU.2.21.1911041704520.3956@fossies.org>
- <20191105171107.27379-1-newren@gmail.com> <alpine.LSU.2.21.1911061026130.15790@fossies.org>
-In-Reply-To: <alpine.LSU.2.21.1911061026130.15790@fossies.org>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 6 Nov 2019 20:46:09 -0800
-Message-ID: <CABPp-BH=XxwJod8XpXYzpmXuo2-8LBozQGH4eEps_r4C798+ag@mail.gmail.com>
-Subject: Re: Some misspelling errors in the git release 2.24.0
-To:     Fossies Administrator <Jens.Schleusener@fossies.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <xmqqtv7hvi6r.fsf@gitster-ct.c.googlers.com> <20191106213609.57464-1-jonathantanmy@google.com>
+In-Reply-To: <20191106213609.57464-1-jonathantanmy@google.com>
+From:   Jubilee Young <workingjubilee@gmail.com>
+Date:   Wed, 6 Nov 2019 21:07:06 -0800
+Message-ID: <CAPNHn3oCOQRriDLmLFag0DWgvq2t3TLMiu25HyBKcuBuwLgb2g@mail.gmail.com>
+Subject: Re: [PATCH v7 1/1] Implement rev-list --bisect* --first-parent
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Jonathan Tan <jonathantanmy@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        johannes.schindelin@gmx.de
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 6, 2019 at 3:08 AM Fossies Administrator
-<Jens.Schleusener@fossies.org> wrote:
+Hi! Thanks for all the feedback.
+
+On Wed, Nov 6, 2019 at 1:36 PM Jonathan Tan <jonathantanmy@google.com>
+wrote:
 >
-> Hi Elijah,
+> > > Also, clarify in the commit message somewhere that this commit does
+not
+> > > change the behavior of "git bisect".
+> >
+> > s/\.$/ when used without the "--first-parent" option&/; you mean?
 >
-> > On Mon, Nov 4, 2019 at 8:14 AM Fossies Administrator <Jens.Schleusener@fossies.org> wrote:
-> >>
-> >> Hi Elijah,
-> >>
-> >>> On Mon, Nov 4, 2019 at 7:07 AM Fossies Administrator
-> >>> <Jens.Schleusener@fossies.org> wrote:
+> As far as I know, "git bisect" doesn't support --first-parent, whether
+> before or after this patch.
 
-> > So, I used your codespell program
->
-> That seems to be a misunderstanding: I'm not the author of the codespell
-> program but I only use that program to detect spelling errors and point to
-> their existence while offering the option to inspect the context of the
-> probably misspelled words in a fast and comfortable way via a Web page.
+Correct, it still provides the usual "usage: git bisect ..." error.
+This provides plumbing but no porcelain right now.
 
-Oops, sorry for the misunderstanding; thanks for clearing it up.
+> At first I thought that this patch also teaches "git bisect" to support
+> "--first-parent", but that is not the case. Only "git rev-list" learns
+> to make "--bisect" work with "--first-parent". So I wanted the
+> clarification. (But if you think that the clarification is unnecessary,
+> that's fine too.)
 
-[...]
-> Some of the according FPs are excluded by Fossies generally, some other
-> obvious FPs are excluded by Fossies specifically for each FOSS project
-> (see always the bold item "Codespell configuration" with a link to
-> "Project-specific additions" or to "(no project-specific adaptions yet
-> done)" that shows all the excluded words and directories/files).
-[...]
-> As one can see on the page
->
->   https://fossies.org/linux/misc/git-2.24.0.tar.xz/codespell_conf_info.html
->
-> there are already done some according attempts.
+I had been trying to deduce the best approach for writing the commit
+message but in the end I retained a hunch that I didn't yet know enough
+to write the best one so this conversation is quite illuminating re:
+commit style.
 
-Ah, thanks for the pointer.  Could you add t/t9150/svk-merge.dump and
-t/t9151/svn-mergeinfo.dump the the list of files to exclude?  Both
-have the 'hapenning' typo, but both are a dump of some repository and
-editing it means recomputing sha1sums and whatnot for tests that just
-isn't worth it.  I thought maybe I could get away with correcting
-those spelling errors but backed out once I saw further knock-on
-effects.
+If it's even slightly confusing I would like to clarify, since bisect.c
+and git bisect are... very different!
 
-Thanks for the report and the background and corrections!
-
-Elijah
+I think Dscho's recommendation also will result in the patch overall
+being far more lucid.
